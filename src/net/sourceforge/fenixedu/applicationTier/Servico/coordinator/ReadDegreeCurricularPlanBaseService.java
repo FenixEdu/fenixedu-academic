@@ -56,53 +56,43 @@ abstract public class ReadDegreeCurricularPlanBaseService extends Service {
     }
 
     // Read all curricular course scope of this year
-    protected List<InfoCurricularCourseScope> readActiveCurricularCourseScopesInExecutionYear(DegreeCurricularPlan degreeCurricularPlan,
-            ExecutionYear executionYear) throws FenixServiceException, ExcepcaoPersistencia {
-        List<InfoCurricularCourseScope> infoActiveScopes = null;
+    protected List<InfoCurricularCourseScope> readActiveCurricularCourseScopesInExecutionYear(
+	    final DegreeCurricularPlan degreeCurricularPlan, final ExecutionYear executionYear) {
+	final List<InfoCurricularCourseScope> result = new ArrayList<InfoCurricularCourseScope>();
 
-        if (degreeCurricularPlan != null) {
-            Set<CurricularCourseScope> allActiveScopes = degreeCurricularPlan.findCurricularCourseScopesIntersectingPeriod(executionYear.getBeginDate(), executionYear.getEndDate());
-            if (allActiveScopes != null && allActiveScopes.size() > 0) {
-                infoActiveScopes = new ArrayList<InfoCurricularCourseScope>();
+	if (degreeCurricularPlan != null) {
+	    for (final CurricularCourseScope curricularCourseScope : degreeCurricularPlan
+		    .findCurricularCourseScopesIntersectingPeriod(executionYear.getBeginDate(),
+			    executionYear.getEndDate())) {
+		result.add(InfoCurricularCourseScope.newInfoFromDomain(curricularCourseScope));
+	    }
+	}
 
-                CollectionUtils.collect(allActiveScopes, new Transformer() {
-                    public Object transform(Object input) {
-                        CurricularCourseScope curricularCourseScope = (CurricularCourseScope) input;
-                        return InfoCurricularCourseScope
-                                .newInfoFromDomain(curricularCourseScope);
-                    }
-
-                }, infoActiveScopes);
-            }
-        }
-
-        return infoActiveScopes;
-
+	return result;
     }
 
     // Read all curricular course scope of this year and curricular year
     protected List<InfoCurricularCourseScope> readActiveCurricularCourseScopesInCurricularYearAndExecutionPeriodAndExecutionDegree(
-            ExecutionPeriod executionPeriod, ExecutionDegree executionDegree, Integer curricularYear)
-            throws FenixServiceException, ExcepcaoPersistencia {
-        List<InfoCurricularCourseScope> infoActiveScopes = null;
+	    final ExecutionPeriod executionPeriod, final ExecutionDegree executionDegree,
+	    final Integer curricularYear) {
+	final List<InfoCurricularCourseScope> result = new ArrayList<InfoCurricularCourseScope>();
 
-        if (executionPeriod != null) {
+	if (executionPeriod != null) {
+	    final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
+	    final ExecutionYear executionYear = executionPeriod.getExecutionYear();
+	    final Set<CurricularCourseScope> curricularCourseScopes = degreeCurricularPlan
+		    .findCurricularCourseScopesIntersectingPeriod(executionYear.getBeginDate(),
+			    executionYear.getEndDate());
 
-            final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
-            final Set<CurricularCourseScope> curricularCourseScopes = degreeCurricularPlan.findCurricularCourseScopesIntersectingPeriod(
-                    executionPeriod.getExecutionYear().getBeginDate(), executionPeriod.getExecutionYear().getEndDate());
+	    for (final CurricularCourseScope curricularCourseScope : curricularCourseScopes) {
+		if (curricularCourseScope.getCurricularSemester().getCurricularYear().getYear().equals(
+			curricularYear)) {
+		    result.add(InfoCurricularCourseScope.newInfoFromDomain(curricularCourseScope));
+		}
+	    }
+	}
 
-            infoActiveScopes = new ArrayList<InfoCurricularCourseScope>();
-            for (final CurricularCourseScope curricularCourseScope : curricularCourseScopes) {
-                if (curricularCourseScope.getCurricularSemester().getCurricularYear().getYear().equals(curricularYear)) {
-                    infoActiveScopes.add(InfoCurricularCourseScope.
-                            newInfoFromDomain(curricularCourseScope));
-                }
-            }
-        }
-
-        return infoActiveScopes;
-
+	return result;
     }
 
 }
