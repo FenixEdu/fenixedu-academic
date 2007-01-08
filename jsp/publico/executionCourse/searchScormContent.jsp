@@ -169,7 +169,7 @@
 <p>
 <bean:message key="label.page" bundle="SITE_RESOURCES"/>: 
 <cp:collectionPages url="<%= 
-	"/publico/searchScormContent.do?method=moveIndex&amp;untyped=" + bean.getSearchElementsAsParameters() + 
+	"/publico/searchScormContent.do?method=moveIndex&amp" + bean.getSearchElementsAsParameters() + 
 	"&amp;executionCourseID=" + request.getParameter("executionCourseID") %>" 
 	pageNumberAttributeName="page" numberOfPagesAttributeName="numberOfPages"/>
 </p>
