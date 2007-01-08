@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.apache.commons.lang.StringUtils;
+
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseEquivalence;
@@ -128,7 +130,7 @@ public class StudentCurriculum implements Serializable {
 	
 	public abstract double getWeigth();
 	
-	public abstract double getWeigthTimesClassification();
+	public abstract Double getWeigthTimesClassification();
 
 	public boolean isEnrolmentEntry() {
 	    return false;
@@ -197,8 +199,9 @@ public class StudentCurriculum implements Serializable {
 	}
 
 	@Override
-	public double getWeigthTimesClassification() {
-	    return getWeigth() * Double.valueOf(getEnrolment().getLatestEnrolmentEvaluation().getGrade());
+	public Double getWeigthTimesClassification() {
+	    final String grade = getEnrolment().getLatestEnrolmentEvaluation().getGrade();
+	    return StringUtils.isNumeric(grade) ? Double.valueOf(getWeigth() * Integer.valueOf(grade)) : null;
 	}
 
     }
@@ -231,8 +234,8 @@ public class StudentCurriculum implements Serializable {
 	}
 	
 	@Override
-	public double getWeigthTimesClassification() {
-	    throw new RuntimeException();
+	public Double getWeigthTimesClassification() {
+	    return null;
 	}
 
     }
@@ -280,15 +283,15 @@ public class StudentCurriculum implements Serializable {
 	}
 	
 	@Override
-	public double getWeigthTimesClassification() {
+	public Double getWeigthTimesClassification() {
 	    double result = 0;
 	    for (final SimpleEntry simpleEntry : getEntries()) {
-		if (!simpleEntry.isNotNeedToEnrolEntry()) {
-		    result += simpleEntry.getWeigthTimesClassification();
+		if (simpleEntry.getWeigthTimesClassification() != null) {
+		    result += simpleEntry.getWeigthTimesClassification().doubleValue();
 		}
 	    }
 	    
-	    return result;
+	    return result == 0 ? null : result;
 	}
 
     }
@@ -321,8 +324,9 @@ public class StudentCurriculum implements Serializable {
 	}
 	
 	@Override
-	public double getWeigthTimesClassification() {
-	    return getWeigth() * Double.valueOf(getEnrolment().getLatestEnrolmentEvaluation().getGrade());
+	public Double getWeigthTimesClassification() {
+	    final String grade = getEnrolment().getLatestEnrolmentEvaluation().getGrade();
+	    return StringUtils.isNumeric(grade) ? Double.valueOf(getWeigth() * Integer.valueOf(grade)) : null;
 	}
 
     }
@@ -507,7 +511,7 @@ public class StudentCurriculum implements Serializable {
 	}
 
 	public void add(final Entry entry) {
-	    if (!entry.isNotNeedToEnrolEntry()) {
+	    if (entry.getWeigthTimesClassification() != null) {
 		sumPi += entry.getWeigth();
 		sumPiCi += entry.getWeigthTimesClassification();
 	    }
