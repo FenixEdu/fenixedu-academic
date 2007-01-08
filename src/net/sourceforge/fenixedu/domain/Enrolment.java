@@ -961,7 +961,15 @@ public class Enrolment extends Enrolment_Base {
 	}
 	
 	final Double weigth = super.getWeigth();
-	return weigth == null ? getCurricularCourse().getWeigth() : weigth;
+	return (weigth == null || weigth == 0) ? getCurricularCourse().getWeigth() : weigth;
+    }
+
+    public Double getEctsCredits() {
+	if (isExtraCurricular()) {
+	    return Double.valueOf(0);
+	}
+	
+	return getCurricularCourse().getEctsCredits();
     }
 
     public boolean isExtraCurricular() {
