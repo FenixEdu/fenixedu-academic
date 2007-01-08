@@ -33,7 +33,7 @@ public abstract class Event extends Event_Base {
 	super.setRootDomainObject(RootDomainObject.getInstance());
 	super.setOjbConcreteClass(getClass().getName());
 	super.setWhenOccured(new DateTime());
-	changeState(EventState.OPEN);
+	changeState(EventState.OPEN, new DateTime());
     }
 
     protected void init(EventType eventType, Person person) {
@@ -125,7 +125,19 @@ public abstract class Event extends Event_Base {
     }
 
     protected void closeEvent() {
-	changeState(EventState.CLOSED);
+	final AccountingTransaction accountingTransaction = getLastNonAdjustingAccountingTransaction();
+	changeState(EventState.CLOSED, accountingTransaction == null ? new DateTime()
+		: accountingTransaction.getWhenRegistered());
+    }
+
+    public AccountingTransaction getLastNonAdjustingAccountingTransaction() {
+	if (hasAnyNonAdjustingAccountingTransactions()) {
+	    return Collections.max(getNonAdjustingTransactions(),
+		    AccountingTransaction.COMPARATOR_BY_WHEN_REGISTERED);
+	}
+
+	return null;
+
     }
 
     @Override
@@ -155,6 +167,11 @@ public abstract class Event extends Event_Base {
     @Override
     public Iterator<AccountingTransaction> getAccountingTransactionsIterator() {
 	return getAccountingTransactionsSet().iterator();
+    }
+
+    @Override
+    public boolean hasAccountingTransactions(AccountingTransaction accountingTransactions) {
+	return !getAccountingTransactionsSet().isEmpty();
     }
 
     @Override
@@ -237,6 +254,10 @@ public abstract class Event extends Event_Base {
 
     }
 
+    public boolean hasAnyNonAdjustingAccountingTransactions() {
+	return !getNonAdjustingTransactions().isEmpty();
+    }
+
     public Money getPayedAmount() {
 	if (isCancelled()) {
 	    throw new DomainException(
@@ -256,7 +277,7 @@ public abstract class Event extends Event_Base {
 	    throw new DomainException(
 		    "error.accounting.Event.cannot.calculatePayedAmount.on.invalid.events");
 	}
-	
+
 	Money result = Money.ZERO;
 	for (final Entry entry : getPayedEntries(civilYear)) {
 	    result = result.add(entry.getAmountWithAdjustment());
@@ -265,7 +286,7 @@ public abstract class Event extends Event_Base {
 	return result;
     }
 
-    private Set<Entry> getPayedEntries(final int civilYear) {
+    public Set<Entry> getPayedEntries(final int civilYear) {
 	final Set<Entry> result = new HashSet<Entry>();
 	for (final AccountingTransaction accountingTransaction : getNonAdjustingTransactions()) {
 	    if (accountingTransaction.isPayed(civilYear)) {
@@ -276,10 +297,20 @@ public abstract class Event extends Event_Base {
 	return result;
     }
 
+    public boolean hasPaymentsForCivilYear(final int civilYear) {
+	for (final AccountingTransaction accountingTransaction : getNonAdjustingTransactions()) {
+	    if (accountingTransaction.isPayed(civilYear)) {
+		return true;
+	    }
+	}
+
+	return false;
+    }
+
     public void recalculateState(final DateTime whenRegistered) {
 	if (canCloseEvent(whenRegistered)) {
 	    closeNonProcessedCodes();
-	    changeState(EventState.CLOSED);
+	    closeEvent();
 	}
     }
 
@@ -291,8 +322,7 @@ public abstract class Event extends Event_Base {
 
     public Money calculateAmountToPay(DateTime whenRegistered) {
 	final Money totalAmountToPay = calculateTotalAmountToPay(whenRegistered);
-	return totalAmountToPay.isPositive() ? totalAmountToPay.subtract(getPayedAmount())
-		: Money.ZERO;
+	return totalAmountToPay.isPositive() ? totalAmountToPay.subtract(getPayedAmount()) : Money.ZERO;
 
     }
 
@@ -323,7 +353,7 @@ public abstract class Event extends Event_Base {
     public void cancel(final Employee responsibleEmployee, final String cancelJustification) {
 	checkRulesToCancel();
 
-	changeState(EventState.CANCELLED);
+	changeState(EventState.CANCELLED, new DateTime());
 	super.setEmployeeResponsibleForCancel(responsibleEmployee);
 	super.setCancelJustification(cancelJustification);
 	closeNonProcessedCodes();
@@ -450,17 +480,18 @@ public abstract class Event extends Event_Base {
     }
 
     public Money getExtraPayedAmount() {
-	return calculateTotalAmountToPay(getDateToCalculateEventAmount()).subtract(
-		getPayedAmount()).abs();
+	final Money extraPayedAmount = getPayedAmount().subtract(
+		calculateTotalAmountToPay(getDateToCalculateEventAmount()));
+	return extraPayedAmount.isPositive() ? extraPayedAmount : Money.ZERO;
     }
 
     private DateTime getDateToCalculateEventAmount() {
 	return !isClosed() ? new DateTime() : getEventStateDate();
     }
 
-    private void changeState(EventState state) {
+    private void changeState(EventState state, DateTime when) {
 	super.setEventState(state);
-	super.setEventStateDate(new DateTime());
+	super.setEventStateDate(when);
     }
 
     public boolean isOtherPartiesPaymentsSupported() {
@@ -505,8 +536,21 @@ public abstract class Event extends Event_Base {
     protected abstract PostingRule getPostingRule();
 
     public void delete() {
-        removeRootDomainObject();
-        deleteDomainObject();
+	removeRootDomainObject();
+	deleteDomainObject();
+    }
+
+    public static List<Event> readBy(final EventType eventType) {
+
+	final List<Event> result = new ArrayList<Event>();
+	for (final Event event : RootDomainObject.getInstance().getAccountingEvents()) {
+	    if (event.getEventType() == eventType) {
+		result.add(event);
+	    }
+	}
+
+	return result;
+
     }
 
 }

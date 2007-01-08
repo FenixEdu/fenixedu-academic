@@ -333,12 +333,12 @@ public class AcademicAdminOfficePaymentsManagementDispatchAction extends
 	return mapping.findForward("otherPartyPayment.prepareCreate");
     }
 
-    public ActionForward showPayedEvents(ActionMapping mapping, ActionForm form,
+    public ActionForward showEventsWithPayments(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
 
 	request.setAttribute("person", getPerson(request));
 
-	return mapping.findForward("extract.showPayedEvents");
+	return mapping.findForward("extract.showEventsWithPayments");
     }
 
 }

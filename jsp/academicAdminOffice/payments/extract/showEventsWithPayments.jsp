@@ -18,8 +18,8 @@
 	</fr:layout>
 </fr:view>
 
-<logic:notEmpty name="person" property="payedEvents">
-	<fr:view name="person" property="payedEvents" schema="AccountingEvent.view-with-extra-payed-amount">
+<logic:notEmpty name="person" property="eventsWithPayments">
+	<fr:view name="person" property="eventsWithPayments" schema="AccountingEvent.view-with-extra-payed-amount">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4 tdleftm mtop025" />
 			<fr:property name="columnClasses" value=",," />
@@ -28,7 +28,7 @@
 	</fr:view>
 </logic:notEmpty>
 
-<logic:empty name="person" property="payedEvents">
+<logic:empty name="person" property="eventsWithPayments">
 	<em><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.events.noEvents" />.</em>
 </logic:empty>
 	

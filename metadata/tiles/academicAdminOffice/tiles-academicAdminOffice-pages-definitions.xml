@@ -216,8 +216,8 @@
 	</definition>
 	
 	
-	<definition name="payments.management.extract.showPayedEvents" extends="academicAdminOffice.masterPage">
-		<put name="body" value="/academicAdminOffice/payments/extract/showPayedEvents.jsp"/>
+	<definition name="payments.management.extract.showEventsWithPayments" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/payments/extract/showEventsWithPayments.jsp"/>
 	</definition>
 	
 	<!-- ************* Contributors ************* -->

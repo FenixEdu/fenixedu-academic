@@ -124,7 +124,7 @@
 
 <ul>
 	<li>
-		<html:link action="<%="/payments.do?method=showPayedEvents&amp;personId=" + personId%>">
+		<html:link action="<%="/payments.do?method=showEventsWithPayments&amp;personId=" + personId%>">
 			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.extract" />
 		</html:link>
 	</li>

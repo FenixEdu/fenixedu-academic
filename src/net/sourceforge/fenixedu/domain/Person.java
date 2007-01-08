@@ -1772,6 +1772,17 @@ public class Person extends Person_Base {
 	return result;
     }
 
+    public List<Event> getEventsWithPayments() {
+	final List<Event> result = new ArrayList<Event>();
+	for (final Event event : getEventsSet()) {
+	    if (event.hasAnyNonAdjustingAccountingTransactions()) {
+		result.add(event);
+	    }
+	}
+
+	return result;
+    }
+
     public Set<Entry> getPaymentsWithoutReceipt() {
 	return getPaymentsWithoutReceiptByAdministrativeOffice(null);
     }
@@ -2313,6 +2324,18 @@ public class Person extends Person_Base {
 	}
 
 	return result;
+    }
+
+    public Set<Entry> getPaymentsForCivilYear(int civilYear) {
+
+	final Set<Entry> result = new HashSet<Entry>();
+
+	for (final Event event : getEvents()) {
+	    result.addAll(event.getPayedEntries(civilYear));
+	}
+
+	return result;
+
     }
 
 }

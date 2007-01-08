@@ -109,8 +109,8 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable {
     }
 
     public ExecutionPeriod getLastExecutionPeriod() {
-        return (ExecutionPeriod) Collections.max(this.getExecutionPeriods(),
-                ExecutionPeriod.EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR);
+	return (ExecutionPeriod) Collections.max(this.getExecutionPeriods(),
+		ExecutionPeriod.EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR);
     }
 
     public List<ExecutionPeriod> readNotClosedPublicExecutionPeriods() {
@@ -231,12 +231,31 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable {
     }
 
     public void delete() {
-        if (!getExecutionDegreesSet().isEmpty()) {
-            throw new Error("cannot.delete.execution.year.because.execution.degrees.exist");
-        }
-        for (final Set<ExecutionPeriod> executionPeriods = getExecutionPeriodsSet(); !executionPeriods.isEmpty(); executionPeriods.iterator().next().delete());
-        removeRootDomainObject();
-        deleteDomainObject();
+	if (!getExecutionDegreesSet().isEmpty()) {
+	    throw new Error("cannot.delete.execution.year.because.execution.degrees.exist");
+	}
+	for (final Set<ExecutionPeriod> executionPeriods = getExecutionPeriodsSet(); !executionPeriods
+		.isEmpty(); executionPeriods.iterator().next().delete())
+	    ;
+	removeRootDomainObject();
+	deleteDomainObject();
+    }
+
+    public boolean belongsToCivilYear(int civilYear) {
+	return (getBeginDateYearMonthDay().getYear() == civilYear || getEndDateYearMonthDay().getYear() == civilYear);
+    }
+
+    public static List<ExecutionYear> readExecutionYearsByCivilYear(int civilYear) {
+
+	final List<ExecutionYear> result = new ArrayList<ExecutionYear>();
+	for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYears()) {
+	    if (executionYear.belongsToCivilYear(civilYear)) {
+		result.add(executionYear);
+	    }
+	}
+
+	return result;
+
     }
 
 }
