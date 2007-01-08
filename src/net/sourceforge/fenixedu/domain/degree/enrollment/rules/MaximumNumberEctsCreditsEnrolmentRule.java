@@ -30,7 +30,7 @@ public class MaximumNumberEctsCreditsEnrolmentRule implements IEnrollmentRule {
         Double maxECTS = 40.0;
         Double ects = 0.0;
         for (Enrolment enrolment : (List<Enrolment>) allStudentEnrolledEnrollments) {
-	    ects += enrolment.getEctsCredits();
+	    ects += enrolment.getAccumulatedEctsCredits();
 	}
         
         Double availableECTS = ((maxECTS - ects) > 0) ? maxECTS - ects : 0.0;  

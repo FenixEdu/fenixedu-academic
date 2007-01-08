@@ -475,7 +475,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     private void initEctsCredits(List<Enrolment> enrolments) {
 	for (final Enrolment enrolment : enrolments) {
-	    enrolment.setEctsCredits(this.getEctsCredits(enrolment.getCurricularCourse(), enrolment
+	    enrolment.setAccumulatedEctsCredits(this.getEctsCredits(enrolment.getCurricularCourse(), enrolment
 		    .getExecutionPeriod()));
 	}
     }

@@ -53,7 +53,7 @@ public class Enrolment extends Enrolment_Base {
 
     private Integer accumulatedWeight;
 
-    private Double ectsCredits;
+    private Double accumulatedEctsCredits;
 
     /*
          * static {
@@ -872,12 +872,12 @@ public class Enrolment extends Enrolment_Base {
 		.max(enrolmentEvaluations);
     }
 
-    public Double getEctsCredits() {
-	return ectsCredits;
+    public Double getAccumulatedEctsCredits() {
+	return accumulatedEctsCredits;
     }
 
-    public void setEctsCredits(Double ectsCredits) {
-	this.ectsCredits = ectsCredits;
+    public void setAccumulatedEctsCredits(Double ectsCredits) {
+	this.accumulatedEctsCredits = ectsCredits;
     }
 
     public ExecutionCourse getExecutionCourseFor(final ExecutionPeriod executionPeriod) {
