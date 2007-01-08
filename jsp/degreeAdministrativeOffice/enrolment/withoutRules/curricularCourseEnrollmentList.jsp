@@ -63,7 +63,7 @@
 						<bean:message key="label.unenroll"/>
 					</th>
 				</tr>
-				<logic:iterate id="enrollment" name="studentCurrentSemesterEnrollments">
+				<logic:iterate id="enrollment" name="studentCurrentSemesterEnrollments" type="net.sourceforge.fenixedu.domain.Enrolment">
 					<bean:define id="enrollmentId" name="enrollment" property="idInternal" />
 					<tr>
 						<td class="listClasses">
