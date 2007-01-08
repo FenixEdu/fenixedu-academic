@@ -190,7 +190,7 @@ public class StudentCurriculum implements Serializable {
 
 	@Override
 	public double getEctsCredits() {
-	    return getEnrolment().getCurricularCourse().getEctsCredits().doubleValue();
+	    return getEnrolment().getEctsCredits().doubleValue();
 	}
 
 	@Override
@@ -315,7 +315,7 @@ public class StudentCurriculum implements Serializable {
 
 	@Override
 	public double getEctsCredits() {
-	    return getEnrolment().getCurricularCourse().getEctsCredits().doubleValue();
+	    return getEnrolment().getEctsCredits().doubleValue();
 	}
 	
 	@Override
