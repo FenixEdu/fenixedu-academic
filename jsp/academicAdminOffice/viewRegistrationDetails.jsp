@@ -92,7 +92,7 @@
 <%-- Curricular Plans --%>
 
 <h3 class="mbottom05 mtop15"><bean:message key="label.studentCurricularPlans" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
-<fr:view name="registration" property="studentCurricularPlans" schema="student.studentCurricularPlans" >
+<fr:view name="registration" property="studentCurricularPlansExceptPast" schema="student.studentCurricularPlans" >
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle4 thright thlight mtop0"/>
 		<fr:property name="linkFormat(enrol)" value="/studentEnrolments.do?method=prepare&amp;scpID=${idInternal}" />
