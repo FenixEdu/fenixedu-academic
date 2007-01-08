@@ -778,22 +778,23 @@ public class Timeline {
     public void plotListInTimeline(List<AssiduousnessRecord> clockingList, List<Leave> leaveList,
             Iterator<AttributeType> attributesIt, YearMonthDay day) {
         List<TimePoint> pointList = new ArrayList<TimePoint>();
-
+        
         Iterator<AssiduousnessRecord> clockingIt = clockingList.iterator();
         DateTime lastClock = null;
         while (clockingIt.hasNext()) {
             final AssiduousnessRecord clockIn = clockingIt.next();
+            DateTime clockInDate = clockIn.getDate().minusSeconds(clockIn.getDate().getSecondOfMinute());
             for (Leave leave : leaveList) {
                 if ((lastClock == null || leave.getDate().isAfter(lastClock) || leave.getDate().isEqual(
                         lastClock))
-                        && leave.getDate().isBefore(clockIn.getDate())) {
+                        && leave.getDate().isBefore(clockInDate)) {
                     pointList.addAll(leave.toTimePoints((AttributeType) attributesIt.next()));
                 }
             }
             final AttributeType attribute = attributesIt.next();
             final TimePoint timePointIn = constructTimePoint(clockIn, day, attribute);
             pointList.add(timePointIn);
-            lastClock = timePointIn.getTime().toDateTime(clockIn.getDate());
+            lastClock = timePointIn.getTime().toDateTime(clockInDate);            
             if (clockingIt.hasNext()) {
                 final AssiduousnessRecord clockOut = clockingIt.next();
                 final TimePoint timePointOut = constructTimePoint(clockOut, day, attribute);
