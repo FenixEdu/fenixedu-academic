@@ -150,11 +150,11 @@ public class StudentCurriculum implements Serializable {
 	public boolean getIsEquivalentEnrolmentEntry() {
 	    return isEquivalentEnrolmentEntry();
 	}
-	public boolean isExtraCurricularEnrolmentEntry() {
+	public boolean isNotInDegreeCurriculumEnrolmentEntry() {
 	    return false;
 	}
-	public boolean getIsExtraCurricularEnrolmentEntry() {
-	    return isExtraCurricularEnrolmentEntry();
+	public boolean getIsNotInDegreeCurriculumEnrolmentEntry() {
+	    return isNotInDegreeCurriculumEnrolmentEntry();
 	}
     }
 
@@ -296,16 +296,16 @@ public class StudentCurriculum implements Serializable {
 
     }
 
-    public static class ExtraCurricularEnrolmentEntry extends Entry {
+    public static class NotInDegreeCurriculumEnrolmentEntry extends Entry {
         private final DomainReference<Enrolment> enrolmentDomainReference;
 
-        public ExtraCurricularEnrolmentEntry(final Enrolment enrolment) {
+        public NotInDegreeCurriculumEnrolmentEntry(final Enrolment enrolment) {
             super();
             this.enrolmentDomainReference = new DomainReference<Enrolment>(enrolment);
         }
 
         @Override
-        public boolean isExtraCurricularEnrolmentEntry() {
+        public boolean isNotInDegreeCurriculumEnrolmentEntry() {
             return true;
         }
 
@@ -349,7 +349,7 @@ public class StudentCurriculum implements Serializable {
 
         addCurricularEnrolments(entries, approvedEnrolments);
 
-        addExtraCurricularEnrolments(entries, approvedEnrolments);
+        addNotInDegreeCurriculumEnrolments(entries, approvedEnrolments);
 
         return entries;
     }
@@ -455,10 +455,10 @@ public class StudentCurriculum implements Serializable {
 	}
     }
 
-    private void addExtraCurricularEnrolments(final Collection<Entry> entries, final Set<Enrolment> approvedEnrolments) {
+    private void addNotInDegreeCurriculumEnrolments(final Collection<Entry> entries, final Set<Enrolment> approvedEnrolments) {
 	for (final Enrolment enrolment : approvedEnrolments) {
-	    if (enrolment.getStudentCurricularPlan().getDegree() == studentCurricularPlan.getDegree() || enrolment.isExtraCurricular()) {
-	    	entries.add(new ExtraCurricularEnrolmentEntry(enrolment));
+	    if (enrolment.getStudentCurricularPlan().getDegree() == studentCurricularPlan.getDegree()) {
+	    	entries.add(new NotInDegreeCurriculumEnrolmentEntry(enrolment));
 	    }
 	}
     }

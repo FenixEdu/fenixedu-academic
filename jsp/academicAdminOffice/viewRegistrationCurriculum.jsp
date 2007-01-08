@@ -251,13 +251,13 @@
 
 		<table class="tstyle4">
 			<tr>
-				<th rowspan="3">
+				<th rowspan="2">
 					<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.curricular.course.from.curriculum"/>
 				</th>
-				<th rowspan="3" colspan="2">
+				<th rowspan="2" colspan="2">
 					<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.type.of.aproval"/>
 				</th>
-				<th rowspan="3">
+				<th rowspan="2">
 					<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.curricular.course.aproved"/>
 				</th>
 				<th colspan="4">
@@ -281,25 +281,18 @@
 					ECTS
 				</th>
 			</tr>
-			<tr>
-				<th colspan="2">
-					Discriminado
-				</th>
-				<th colspan="2">
-					Total
-				</th>
-				<th>
-					Discriminado
-				</th>
-				<th>
-					Total
-				</th>
-			</tr>
 			<logic:iterate id="curriculumEntry" name="curriculumEntries">
 				<logic:equal name="curriculumEntry" property="class.name" value="net.sourceforge.fenixedu.domain.student.StudentCurriculum$EnrolmentEntry">
 					<tr>
 						<td><bean:write name="curriculumEntry" property="curricularCourse.name"/></td>
-						<td colspan="2"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.directly.approved"/></td>
+						<td colspan="2">
+							<logic:equal name="curriculumEntry" property="enrolment.extraCurricular" value="true">
+								<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.extra.curricular.course"/>
+							</logic:equal>
+							<logic:equal name="curriculumEntry" property="enrolment.extraCurricular" value="false">
+								<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.directly.approved"/>
+							</logic:equal>
+						</td>
 						<td><bean:write name="curriculumEntry" property="enrolment.curricularCourse.name"/></td>
 						<td class="acenter"><bean:write name="curriculumEntry" property="enrolment.latestEnrolmentEvaluation.grade"/></td>
 						<td class="acenter">-</td>
@@ -318,43 +311,6 @@
 				</logic:equal>
 			</logic:iterate>				
 			<logic:iterate id="curriculumEntry" name="curriculumEntries">
-				<logic:equal name="curriculumEntry" property="class.name" value="net.sourceforge.fenixedu.domain.student.StudentCurriculum$ExtraCurricularEnrolmentEntry">
-					<tr>
-						<td></td>
-						<td colspan="2"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.extra.curricular.course"/></td>
-						<td><bean:write name="curriculumEntry" property="enrolment.curricularCourse.name"/></td>
-						<td class="acenter"><bean:write name="curriculumEntry" property="enrolment.latestEnrolmentEvaluation.grade"/></td>						
-						<td class="acenter">-</td>
-						<td class="acenter"><bean:write name="curriculumEntry" property="weigth"/></td>
-						<td class="acenter">
-							<logic:empty name="curriculumEntry" property="weigthTimesClassification">
-								-
-							</logic:empty>
-							<logic:notEmpty name="curriculumEntry" property="weigthTimesClassification">
-								<bean:write name="curriculumEntry" property="weigthTimesClassification"/>
-							</logic:notEmpty>
-						</td>
-						<td class="acenter">-</td>
-						<td class="acenter"><bean:write name="curriculumEntry" property="ectsCredits"/></td>
-					</tr>
-				</logic:equal>
-			</logic:iterate>				
-			<logic:iterate id="curriculumEntry" name="curriculumEntries">
-				<logic:equal name="curriculumEntry" property="class.name" value="net.sourceforge.fenixedu.domain.student.StudentCurriculum$NotNeedToEnrolEntry">
-					<tr>
-						<td></td>
-						<td colspan="2"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.not.need.to.enrol"/></td>
-						<td><bean:write name="curriculumEntry" property="curricularCourse.name"/></td>
-						<td class="acenter">-</td>
-						<td class="acenter">-</td>
-						<td class="acenter">-</td>
-						<td class="acenter">-</td>
-						<td class="acenter">-</td>
-						<td class="acenter"><bean:write name="curriculumEntry" property="ectsCredits"/></td>
-					</tr>
-				</logic:equal>
-			</logic:iterate>				
-			<logic:iterate id="curriculumEntry" name="curriculumEntries">
 				<logic:equal name="curriculumEntry" property="class.name" value="net.sourceforge.fenixedu.domain.student.StudentCurriculum$EquivalentEnrolmentEntry">
 					<bean:size id="numberEntries" name="curriculumEntry" property="entries"/>
 					<logic:iterate id="simpleEntry" name="curriculumEntry" property="entries" indexId="index">
@@ -364,7 +320,14 @@
 									<td rowspan="<%= numberEntries %>"><bean:write name="curriculumEntry" property="curricularCourse.name"/></td>
 									<td rowspan="<%= numberEntries %>"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.equivalency"/></td>
 								</logic:equal>
-								<td><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.directly.approved"/></td>
+								<td>
+									<logic:equal name="simpleEntry" property="enrolment.extraCurricular" value="true">
+										<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.extra.curricular.course"/>
+									</logic:equal>
+									<logic:equal name="simpleEntry" property="enrolment.extraCurricular" value="false">
+										<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.directly.approved"/>
+									</logic:equal>
+								</td>
 								<td><bean:write name="simpleEntry" property="enrolment.curricularCourse.name"/></td>
 								<td class="acenter"><bean:write name="simpleEntry" property="enrolment.latestEnrolmentEvaluation.grade"/></td>
 								<td class="acenter"><bean:write name="simpleEntry" property="weigth"/></td>
@@ -410,6 +373,47 @@
 					</logic:iterate>
 				</logic:equal>
 			</logic:iterate>
+			<logic:iterate id="curriculumEntry" name="curriculumEntries">
+				<logic:equal name="curriculumEntry" property="class.name" value="net.sourceforge.fenixedu.domain.student.StudentCurriculum$NotNeedToEnrolEntry">
+					<tr>
+						<td><bean:write name="curriculumEntry" property="curricularCourse.name"/></td>
+						<td colspan="2"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.not.need.to.enrol"/></td>
+						<td></td>
+						<td class="acenter">-</td>
+						<td class="acenter">-</td>
+						<td class="acenter">-</td>
+						<td class="acenter">-</td>
+						<td class="acenter">-</td>
+						<td class="acenter"><bean:write name="curriculumEntry" property="ectsCredits"/></td>
+					</tr>
+				</logic:equal>
+			</logic:iterate>				
+			<logic:iterate id="curriculumEntry" name="curriculumEntries">
+				<logic:equal name="curriculumEntry" property="class.name" value="net.sourceforge.fenixedu.domain.student.StudentCurriculum$NotInDegreeCurriculumEnrolmentEntry">
+					<tr>
+						<td></td>
+						<td colspan="2">
+							<logic:equal name="curriculumEntry" property="enrolment.extraCurricular" value="true">
+								<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.extra.curricular.course"/>
+							</logic:equal>
+						</td>
+						<td><bean:write name="curriculumEntry" property="enrolment.curricularCourse.name"/></td>
+						<td class="acenter"><bean:write name="curriculumEntry" property="enrolment.latestEnrolmentEvaluation.grade"/></td>						
+						<td class="acenter">-</td>
+						<td class="acenter"><bean:write name="curriculumEntry" property="weigth"/></td>
+						<td class="acenter">
+							<logic:empty name="curriculumEntry" property="weigthTimesClassification">
+								-
+							</logic:empty>
+							<logic:notEmpty name="curriculumEntry" property="weigthTimesClassification">
+								<bean:write name="curriculumEntry" property="weigthTimesClassification"/>
+							</logic:notEmpty>
+						</td>
+						<td class="acenter">-</td>
+						<td class="acenter"><bean:write name="curriculumEntry" property="ectsCredits"/></td>
+					</tr>
+				</logic:equal>
+			</logic:iterate>				
 			<tr>
 				<td colspan="6" style="text-align: right;">
 					Somatórios
