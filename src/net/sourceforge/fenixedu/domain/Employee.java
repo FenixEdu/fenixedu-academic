@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -79,6 +77,20 @@ public class Employee extends Employee_Base {
 	return contracts;
     }
 
+    public List<Contract> getContractsByContractType(ContractType contractType, YearMonthDay begin,
+	    YearMonthDay end) {
+
+	final List<Contract> contracts = new ArrayList();
+	for (final Contract accountability : (Collection<Contract>) getPerson()
+		.getParentAccountabilities(AccountabilityTypeEnum.EMPLOYEE_CONTRACT, Contract.class)) {
+	    if (accountability.getContractType().equals(contractType)
+		    && accountability.belongsToPeriod(begin, end)) {
+		contracts.add(accountability);
+	    }
+	}
+	return contracts;
+    }
+
     public Contract getCurrentContractByContractType(ContractType contractType) {
 	YearMonthDay current = new YearMonthDay();
 	for (final Contract accountability : (Collection<Contract>) getPerson()
@@ -92,23 +104,37 @@ public class Employee extends Employee_Base {
     }
 
     public Contract getLastContractByContractType(ContractType type) {
-	SortedSet<Contract> contracts = new TreeSet<Contract>(Contract.CONTRACT_COMPARATOR_BY_BEGIN_DATE);
-	contracts.addAll(getContractsByContractType(type));
-	return (!contracts.isEmpty()) ? contracts.last() : null;
+	YearMonthDay date = null, current = new YearMonthDay();
+	Contract contractToReturn = null;
+	for (Contract contract : getContractsByContractType(type)) {
+	    if (!contract.getBeginDate().isAfter(current)) {
+		if (contract.isActive(current)) {
+		    return contract;
+		} else if (date == null || contract.getBeginDate().isAfter(date)) {
+		    date = contract.getBeginDate();
+		    contractToReturn = contract;
+		}
+	    }
+	}
+	return contractToReturn;
+
     }
 
     public Contract getLastContractByContractType(ContractType contractType, YearMonthDay begin,
 	    YearMonthDay end) {
-	final SortedSet<Contract> contracts = new TreeSet<Contract>(
-		Contract.CONTRACT_COMPARATOR_BY_BEGIN_DATE);
-	for (final Contract accountability : (Collection<Contract>) getPerson()
-		.getParentAccountabilities(AccountabilityTypeEnum.EMPLOYEE_CONTRACT, Contract.class)) {
-	    if (accountability.getContractType().equals(contractType)
-		    && accountability.belongsToPeriod(begin, end)) {
-		contracts.add(accountability);
+	YearMonthDay date = null, current = new YearMonthDay();
+	Contract contractToReturn = null;
+	for (Contract contract : getContractsByContractType(contractType, begin, end)) {
+	    if (!contract.getBeginDate().isAfter(current)) {
+		if (contract.isActive(current)) {
+		    return contract;
+		} else if (date == null || contract.getBeginDate().isAfter(date)) {
+		    date = contract.getBeginDate();
+		    contractToReturn = contract;
+		}
 	    }
 	}
-	return (!contracts.isEmpty()) ? contracts.last() : null;
+	return contractToReturn;
     }
 
     public List<Contract> getWorkingContracts() {
@@ -213,24 +239,24 @@ public class Employee extends Employee_Base {
 	}
 	return null;
     }
-    
+
     public Campus getCurrentCampus() {
 	final YearMonthDay now = new YearMonthDay();
-	
+
 	final List<Campus> campus = getAssiduousness().getCampusForInterval(now, now);
 	if (campus.size() > 1) {
 	    throw new DomainException("Employee.with.more.than.one.campus.for.same.day");
 	} else if (!campus.isEmpty()) {
 	    return campus.iterator().next();
 	}
-	
-	return null; 
+
+	return null;
     }
 
     public void delete() {
-        removePerson();
-        removeRootDomainObject();
-        deleteDomainObject();
+	removePerson();
+	removeRootDomainObject();
+	deleteDomainObject();
     }
 
     public AdministrativeOffice getAdministrativeOffice() {
@@ -240,5 +266,5 @@ public class Employee extends Employee_Base {
     public boolean isAdministrativeOfficeEmployee() {
 	return getCurrentWorkingPlace().getAdministrativeOffice() != null;
     }
-    
+
 }

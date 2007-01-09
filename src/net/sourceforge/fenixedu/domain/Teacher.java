@@ -252,19 +252,36 @@ public class Teacher extends Teacher_Base {
     }
 
     public TeacherLegalRegimen getLastLegalRegimenWithoutEndSituations() {
-	SortedSet<TeacherLegalRegimen> legalRegimens = new TreeSet<TeacherLegalRegimen>(
-		TeacherLegalRegimen.TEACHER_LEGAL_REGIMEN_COMPARATOR_BY_BEGIN_DATE);
-	legalRegimens.addAll(getAllLegalRegimensWithoutEndSituations());
-	return (!legalRegimens.isEmpty()) ? legalRegimens.last() : null;
+	YearMonthDay date = null, current = new YearMonthDay();
+	TeacherLegalRegimen regimenToReturn = null;
+	for (TeacherLegalRegimen regimen : getAllLegalRegimensWithoutEndSituations()) {
+	    if (!regimen.getBeginDateYearMonthDay().isAfter(current)) {
+		if (regimen.isActive(current)) {
+		    return regimen;
+		} else if (date == null || regimen.getBeginDateYearMonthDay().isAfter(date)) {
+		    date = regimen.getBeginDateYearMonthDay();
+		    regimenToReturn = regimen;
+		}
+	    }
+	}
+	return regimenToReturn;
     }
 
     public TeacherLegalRegimen getLastLegalRegimenWithoutEndSituations(YearMonthDay begin,
 	    YearMonthDay end) {
-	SortedSet<TeacherLegalRegimen> legalRegimens = new TreeSet<TeacherLegalRegimen>(
-		TeacherLegalRegimen.TEACHER_LEGAL_REGIMEN_COMPARATOR_BY_BEGIN_DATE);
-
-	legalRegimens.addAll(getAllLegalRegimensWithoutEndSituations(begin, end));
-	return (!legalRegimens.isEmpty()) ? legalRegimens.last() : null;
+	YearMonthDay date = null, current = new YearMonthDay();
+	TeacherLegalRegimen regimenToReturn = null;
+	for (TeacherLegalRegimen regimen : getAllLegalRegimensWithoutEndSituations(begin, end)) {
+	    if (!regimen.getBeginDateYearMonthDay().isAfter(current)) {
+		if (regimen.isActive(current)) {
+		    return regimen;
+		} else if (date == null || regimen.getBeginDateYearMonthDay().isAfter(date)) {
+		    date = regimen.getBeginDateYearMonthDay();
+		    regimenToReturn = regimen;
+		}
+	    }
+	}
+	return regimenToReturn;
     }
 
     public List<TeacherLegalRegimen> getAllLegalRegimensWithoutEndSituations(YearMonthDay beginDate,
@@ -579,7 +596,7 @@ public class Teacher extends Teacher_Base {
 	return getLastCategory(occupationPeriod.getStartYearMonthDay(), occupationPeriod
 		.getEndYearMonthDay());
     }
-    
+
     public List<TeacherServiceExemption> getValidTeacherServiceExemptionsToCountInCredits(
 	    ExecutionPeriod executionPeriod) {
 
@@ -683,7 +700,7 @@ public class Teacher extends Teacher_Base {
 
 	return 0.0;
     }
-    
+
     private List<Interval> getNotOverlapedIntervals(Interval overlapInterval,
 	    Interval notYetOverlapedInterval) {
 
@@ -788,7 +805,7 @@ public class Teacher extends Teacher_Base {
 
 	return 0.0;
     }
-       
+
     private TeacherServiceExemption chooseDominantServiceExemptionInLessonsPeriod(
 	    List<TeacherServiceExemption> serviceExemptions, OccupationPeriod lessonsPeriod) {
 
