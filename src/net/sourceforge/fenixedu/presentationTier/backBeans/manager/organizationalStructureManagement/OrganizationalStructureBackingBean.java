@@ -147,7 +147,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	    
 	    for (Unit unit : UnitUtils.readAllUnitsWithoutParents()) {
 		buffer.append("<ul class='padding1 nobullet'>"); 
-		if(!unit.equals(unit)) {
+		if(!this.getUnit().equals(unit)) {
 		    getSubUnitsListToChooseParentUnit(unit, null, buffer, currentDate);
 		}
 		closeULTag(buffer);
