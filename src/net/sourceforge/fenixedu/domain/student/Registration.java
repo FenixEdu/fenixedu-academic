@@ -377,11 +377,11 @@ public class Registration extends Registration_Base {
     }
 
     public double getAverage() {
-	return new StudentCurriculum(this).getAverage();
+	return getAverage(null);
     }
 
     public double getAverage(final ExecutionYear executionYear) {
-	return new StudentCurriculum(this, executionYear).getAverage();
+	return new StudentCurriculum(this).calculateAverage(executionYear);
     }
 
     public int getFinalAverage() {
@@ -1277,15 +1277,15 @@ public class Registration extends Registration_Base {
     }
 
     public double getEctsCredits() {
-	return new StudentCurriculum(this).getTotalEctsCredits();
+	return new StudentCurriculum(this).getTotalEctsCredits(null);
     }
 
     public int getCurricularYear() {
-	return new StudentCurriculum(this).getCurricularYear();
+	return new StudentCurriculum(this).calculateCurricularYear(null);
     }
 
     public int getCurricularYear(ExecutionYear executionYear) {
-	return new StudentCurriculum(this, executionYear).getCurricularYear();
+	return new StudentCurriculum(this).calculateCurricularYear(executionYear);
     }
 
     public boolean isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegree() {

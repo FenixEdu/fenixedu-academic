@@ -8,6 +8,7 @@
 <%@page import="net.sourceforge.fenixedu.domain.student.Registration"%>
 <%@page import="net.sourceforge.fenixedu.domain.student.StudentCurriculum"%>
 <%@page import="net.sourceforge.fenixedu.dataTransferObject.student.RegistrationSelectExecutionYearBean"%>
+<%@page import="net.sourceforge.fenixedu.domain.student.curriculum.CurriculumEntry"%>
 <html:xhtml />
 
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
@@ -75,28 +76,28 @@
 
 
 <%
-	final StudentCurriculum studentCurriculum = (executionYear == null) ? new StudentCurriculum(registration) : new StudentCurriculum(registration, executionYear);
+	final StudentCurriculum studentCurriculum = new StudentCurriculum(registration);
 	request.setAttribute("studentCurriculum", studentCurriculum);
 
-	final StudentCurricularPlan studentCurricularPlan = studentCurriculum.getStudentCurricularPlan();
+	final StudentCurricularPlan studentCurricularPlan = studentCurriculum.getStudentCurricularPlan(executionYear);
 	request.setAttribute("studentCurricularPlan", studentCurricularPlan);
 
-	final Collection<StudentCurriculum.Entry> curriculumEntries = studentCurriculum.getCurriculumEntries();
+	final Collection<CurriculumEntry> curriculumEntries = studentCurriculum.getCurriculumEntries(executionYear);
 	request.setAttribute("curriculumEntries", curriculumEntries);
 	
-	final double totalEctsCredits = studentCurriculum.getTotalEctsCredits();
+	final double totalEctsCredits = studentCurriculum.getTotalEctsCredits(executionYear);
 	request.setAttribute("totalEctsCredits", totalEctsCredits);
 	
 	final double average = studentCurriculum.getRoundedAverage(true);
 	request.setAttribute("average", average);
 
-	final int curricularYear = studentCurriculum.getCurricularYear();
+	final int curricularYear = studentCurriculum.calculateCurricularYear(executionYear);
 	request.setAttribute("curricularYear", curricularYear);
 
-	final double sumPiCi = studentCurriculum.getSumPiCi();
+	final double sumPiCi = studentCurriculum.getSumPiCi(executionYear);
 	request.setAttribute("sumPiCi", sumPiCi);
 
-	final double sumPi = studentCurriculum.getSumPi();
+	final double sumPi = studentCurriculum.getSumPi(executionYear);
 	request.setAttribute("sumPi", sumPi);
 %>
 
@@ -282,7 +283,7 @@
 				</th>
 			</tr>
 			<logic:iterate id="curriculumEntry" name="curriculumEntries">
-				<logic:equal name="curriculumEntry" property="class.name" value="net.sourceforge.fenixedu.domain.student.StudentCurriculum$EnrolmentEntry">
+				<logic:equal name="curriculumEntry" property="class.name" value="net.sourceforge.fenixedu.domain.student.curriculum.EnrolmentCurriculumEntry">
 					<tr>
 						<td><bean:write name="curriculumEntry" property="curricularCourse.code"/></td>
 						<td><bean:write name="curriculumEntry" property="curricularCourse.name"/></td>						
@@ -313,10 +314,10 @@
 				</logic:equal>
 			</logic:iterate>				
 			<logic:iterate id="curriculumEntry" name="curriculumEntries">
-				<logic:equal name="curriculumEntry" property="class.name" value="net.sourceforge.fenixedu.domain.student.StudentCurriculum$EquivalentEnrolmentEntry">
+				<logic:equal name="curriculumEntry" property="class.name" value="net.sourceforge.fenixedu.domain.student.curriculum.EquivalanteCurriculumEntry">
 					<bean:size id="numberEntries" name="curriculumEntry" property="entries"/>
 					<logic:iterate id="simpleEntry" name="curriculumEntry" property="entries" indexId="index">
-						<logic:equal name="simpleEntry" property="class.name" value="net.sourceforge.fenixedu.domain.student.StudentCurriculum$EnrolmentEntry">
+						<logic:equal name="simpleEntry" property="class.name" value="net.sourceforge.fenixedu.domain.student.curriculum.EnrolmentCurriculumEntry">
 							<tr>
 								<logic:equal name="index" value="0">
 									<td rowspan="<%= numberEntries %>"><bean:write name="curriculumEntry" property="curricularCourse.code"/></td>
@@ -354,7 +355,7 @@
 						</logic:equal>
 					</logic:iterate>
 					<logic:iterate id="simpleEntry" name="curriculumEntry" property="entries">
-						<logic:equal name="simpleEntry" property="class.name" value="net.sourceforge.fenixedu.domain.student.StudentCurriculum$NotNeedToEnrolEntry">
+						<logic:equal name="simpleEntry" property="class.name" value="net.sourceforge.fenixedu.domain.student.curriculum.NotNeedToEnrolCurriculumEntry">
 							<tr>
 								<logic:equal name="index" value="0">
 									<td rowspan="<%= numberEntries %>"><bean:write name="curriculumEntry" property="curricularCourse.code"/></td>
@@ -380,7 +381,7 @@
 				</logic:equal>
 			</logic:iterate>
 			<logic:iterate id="curriculumEntry" name="curriculumEntries">
-				<logic:equal name="curriculumEntry" property="class.name" value="net.sourceforge.fenixedu.domain.student.StudentCurriculum$NotNeedToEnrolEntry">
+				<logic:equal name="curriculumEntry" property="class.name" value="net.sourceforge.fenixedu.domain.student.curriculum.NotNeedToEnrolCurriculumEntry">
 					<tr>
 						<td><bean:write name="curriculumEntry" property="curricularCourse.code"/></td>
 						<td><bean:write name="curriculumEntry" property="curricularCourse.name"/></td>
@@ -397,7 +398,7 @@
 				</logic:equal>
 			</logic:iterate>				
 			<logic:iterate id="curriculumEntry" name="curriculumEntries">
-				<logic:equal name="curriculumEntry" property="class.name" value="net.sourceforge.fenixedu.domain.student.StudentCurriculum$NotInDegreeCurriculumEnrolmentEntry">
+				<logic:equal name="curriculumEntry" property="class.name" value="net.sourceforge.fenixedu.domain.student.curriculum.NotInDegreeCurriculumCurriculumEntry">
 					<tr>
 						<td></td>
 						<td></td>
