@@ -33,10 +33,12 @@
 	
 		<fr:edit id="search" name="bean" visible="false"/>
 
-		<table class="tstyle5">
+		<table class="tstyle5 thright thlight">
 		<tr>
+			<th>
+				<bean:message key="label.executionYear" bundle="ADMIN_OFFICE_RESOURCES"/>:
+			</th>
 			<td>
-				<bean:message key="label.executionYear" bundle="ADMIN_OFFICE_RESOURCES"/>: 
 				<fr:edit id="executionYearField" name="bean" slot="executionYear">
 				<fr:layout name="menu-select-postback">
 					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.OpenExecutionYearsProvider"/>
@@ -62,8 +64,10 @@
 			</td>
 		</tr>
 		<tr>
+			<th>
+				<bean:message key="label.educationalLearningResourceType" bundle="SITE_RESOURCES"/>:
+			</th>
 			<td>
-				<bean:message key="label.educationalLearningResourceType" bundle="SITE_RESOURCES"/>: 
 				<div id="noType" class="dinline">
 					<logic:empty name="bean" property="educationalResourceTypes">  
 					<input id="noTypeCheckbox" type="checkbox" checked="checked" onclick="javascript:uncheckall('typesCheckBoxes')"/>
@@ -94,21 +98,23 @@
 
 		<logic:iterate id="searchElement" indexId="index" name="bean" property="searchElements">
 		<tr>
-			<td>
+			<th>
 				<logic:equal name="index" value="0">
 					<span style="padding: 0 2em;">&nbsp;</span>
 				</logic:equal>
 				
 				<logic:notEqual name="index" value="0">
-				<fr:edit id="<%="conjunctionType" + index%>" name="searchElement" slot="conjunction">
-				<fr:layout>
-					<fr:property name="defaultText" value=""/>
-				</fr:layout>
-				</fr:edit>
+					<fr:edit id="<%="conjunctionType" + index%>" name="searchElement" slot="conjunction">
+					<fr:layout>
+						<fr:property name="defaultText" value=""/>
+					</fr:layout>
+					</fr:edit>
 				</logic:notEqual>
 
+				<bean:message key="label.searchField"/>:
+			</th>
 
-				<bean:message key="label.searchField"/> 
+			<td>
 				<fr:edit id="<%="valueField" + index%>" name="searchElement" slot="queryValue" >
 					<fr:layout>
 						<fr:property name="size" value="40"/>
@@ -121,7 +127,6 @@
 					<fr:property name="excludedValues" value="TYPE, DATE"/>
 				</fr:layout>
 				</fr:edit>
-
 
  
 				<logic:equal name="index" value="0">
@@ -140,6 +145,7 @@
 					</logic:greaterThan>
 					</div>
 				</logic:equal>
+				
 				<logic:notEqual name="index" value="0">
 					<div class="switchNone">
 					<html:link page="<%="/searchScormContent.do?method=addNewSearchCriteria&amp;executionCourseID=" + request.getParameter("executionCourseID") + bean.getSearchElementsAsParameters() %>"><bean:message key="label.add" bundle="APPLICATION_RESOURCES"/></html:link> , 			
@@ -207,7 +213,9 @@
 </logic:notEmpty>
 
 <logic:empty name="bean" property="results">
-	<bean:message key="label.search.noResultsFound" /> 
+	<p>
+		<em><bean:message key="label.search.noResultsFound" /></em>.
+	</p>
 </logic:empty>
 </logic:present>
 
