@@ -7,7 +7,6 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.Student;
 
 import org.joda.time.YearMonthDay;
 
@@ -28,18 +27,12 @@ public abstract class StudentCurriculumBase implements Serializable {
     }
 
     public abstract Collection<CurriculumEntry> getCurriculumEntries(final ExecutionYear executionYear);
+    
+    protected abstract EnrolmentSet getApprovedEnrolments(final ExecutionYear executionYear);
 
     public StudentCurricularPlan getStudentCurricularPlan(final ExecutionYear executionYear) {
 	final Registration registration = getRegistration();
 	return executionYear == null ? registration.getStudentCurricularPlan(new YearMonthDay()) : registration.getStudentCurricularPlan(executionYear);
-    }
-
-    protected EnrolmentSet getApprovedEnrolments(final ExecutionYear executionYear) {
-	final Registration registration = getRegistration();
-        final Student student = registration.getStudent();
-        final EnrolmentSet approvedEnrolments = new EnrolmentSet(executionYear);
-        student.addApprovedEnrolments(approvedEnrolments);
-        return approvedEnrolments;
     }
 
     public double getTotalEctsCredits(final ExecutionYear executionYear) {
@@ -101,12 +94,8 @@ public abstract class StudentCurriculumBase implements Serializable {
 	return averageCalculator.result();
     }
 
-    public long calculateRoundedAverage(final ExecutionYear executionYear) {
-	return Math.round(calculateAverage(executionYear));
-    }
-
-    public Double getRoundedAverage(boolean decimal) {
-	final double average = calculateAverage(null);
+    public Double getRoundedAverage(final ExecutionYear executionYear, final boolean decimal) {
+	final double average = calculateAverage(executionYear);
 	return decimal ? Math.round((average * 100)) / 100.0 : Math.round((average));
     }
 

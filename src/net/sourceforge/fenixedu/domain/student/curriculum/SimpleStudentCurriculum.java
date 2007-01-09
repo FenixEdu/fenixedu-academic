@@ -34,6 +34,15 @@ public class SimpleStudentCurriculum extends StudentCurriculumBase {
         return curriculumEntries;
     }
 
+    protected EnrolmentSet getApprovedEnrolments(final ExecutionYear executionYear) {
+	final EnrolmentSet approvedEnrolments = new EnrolmentSet(executionYear);
+	
+	final Registration registration = getRegistration();
+        
+        registration.addApprovedEnrolments(approvedEnrolments);
+        return approvedEnrolments;
+    }
+
     private void addCurricularEnrolments(final Collection<CurriculumEntry> curriculumEntries,
 	    final StudentCurricularPlan studentCurricularPlan, final EnrolmentSet approvedEnrolments) {
         for (final Enrolment enrolment : approvedEnrolments) {

@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.Student;
 
 public class DegreeCurricularPlanBasedStudentCurriculum extends StudentCurriculumBase {
 
@@ -36,6 +37,16 @@ public class DegreeCurricularPlanBasedStudentCurriculum extends StudentCurriculu
         addNotInDegreeCurriculumEnrolments(entries, studentCurricularPlan, approvedEnrolments);
 
         return entries;
+    }
+
+    protected EnrolmentSet getApprovedEnrolments(final ExecutionYear executionYear) {
+	final EnrolmentSet approvedEnrolments = new EnrolmentSet(executionYear);
+	
+	final Registration registration = getRegistration();
+	final Student student = registration.getStudent();
+        
+        student.addApprovedEnrolments(approvedEnrolments);
+        return approvedEnrolments;
     }
 
     private void addCurricularEnrolments(final Collection<CurriculumEntry> curriculumEntries, final StudentCurricularPlan studentCurricularPlan,

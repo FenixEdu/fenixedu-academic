@@ -88,7 +88,7 @@
 	final double totalEctsCredits = studentCurriculum.getTotalEctsCredits(executionYear);
 	request.setAttribute("totalEctsCredits", totalEctsCredits);
 	
-	final double average = studentCurriculum.getRoundedAverage(true);
+	final double average = studentCurriculum.getRoundedAverage(executionYear, true);
 	request.setAttribute("average", average);
 
 	final int curricularYear = studentCurriculum.calculateCurricularYear(executionYear);
@@ -239,7 +239,7 @@
 					Resultado
 				</th>
 				<td>
-					AC = mínimo (inteiro ( (<bean:write name="totalEctsCredits"/> + 24) / 60 + 1) ; 5) = 4;
+					AC = mínimo (inteiro ( (<bean:write name="totalEctsCredits"/> + 24) / 60 + 1) ; 5) = <bean:write name="curricularYear"/>;
 				</td>
 			</tr>	
 		</table>
