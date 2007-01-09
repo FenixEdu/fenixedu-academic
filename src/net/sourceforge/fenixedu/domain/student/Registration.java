@@ -390,7 +390,7 @@ public class Registration extends Registration_Base {
 		    "Registration.getting.final.average.mean.from.non.concluded.registration");
 	}
 
-	return new StudentCurriculum(this).getRoundedAverage(false).intValue();
+	return new StudentCurriculum(this).getRoundedAverage(null, false).intValue();
     }
 
     public void calculateApprovationRatioAndArithmeticMeanIfActive(boolean onlyPreviousExecutionYear) {
