@@ -30,3 +30,4 @@ function executeWithTempFile() {
 execute "Fixing Vigilancy Convoking Problem" fixVigilancyDataProblems.sql
 execute "alterTableExtraWorkRequest.sql" alterTableExtraWorkRequest.sql
 execute "createClosedMonthTables.sql" createClosedMonthTables.sql
+execute "Delete ParkingRequest with keyParty zerp" deleteSpecificParkingRequest.sql

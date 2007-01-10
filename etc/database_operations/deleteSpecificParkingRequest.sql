@@ -1,0 +1,1 @@
+delete from PARKING_PARTY where ID_INTERNAL = 17363;
