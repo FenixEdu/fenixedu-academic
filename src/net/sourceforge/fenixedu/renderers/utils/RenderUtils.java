@@ -90,6 +90,10 @@ public class RenderUtils {
         return getResourceString(null, key);
     }
         
+    public static String getEnumString(Enum enumerate) {
+    	return getEnumString(enumerate,null);
+    }
+    
     public static String getEnumString(Enum enumerate, String bundle) {
         Enum e = (Enum) enumerate;
         String description = null;
