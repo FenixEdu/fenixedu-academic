@@ -107,7 +107,8 @@ public class FileItemCreationBean implements Serializable {
         EXAM ("exam"),
         TEST ("test"),
         MARKSHEET ("marksheet"),
-        PROJECT_SUBMISSION("projectSubmission")
+        PROJECT_SUBMISSION("projectSubmission"),
+        SUPPORT_TEXT("supportText")
         ;
    	
    	private String type;
