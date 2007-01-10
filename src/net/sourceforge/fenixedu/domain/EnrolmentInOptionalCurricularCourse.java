@@ -28,6 +28,11 @@ public class EnrolmentInOptionalCurricularCourse extends EnrolmentInOptionalCurr
     	createEnrolmentLog(EnrolmentAction.ENROL);
     }
     
+    @Override
+    public boolean isOptional() {
+	return true;
+    }
+
     // new student structure methods
     public EnrolmentInOptionalCurricularCourse(StudentCurricularPlan studentCurricularPlan, CurriculumGroup curriculumGroup,
 	    CurricularCourse curricularCourse, ExecutionPeriod executionPeriod,
