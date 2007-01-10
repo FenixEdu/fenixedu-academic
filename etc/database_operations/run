@@ -27,3 +27,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Fixing Vigilancy Convoking Problem" fixVigilancyDataProblems.sql
+
