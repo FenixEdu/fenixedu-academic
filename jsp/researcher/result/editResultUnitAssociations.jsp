@@ -83,17 +83,7 @@
 	<p class="mtop2 mbottom0"><b><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultUnitAssociation.add"/></b></p>
 	<logic:present name="unitBean">
 		
-		<logic:equal name="unitBean" property="externalUnit" value="true">
-				<bean:define id="schema" value="resultUnitAssociation.create.external" toScope="request"/>
-		</logic:equal>
-		<logic:equal name="unitBean" property="externalUnit" value="false">
-			<bean:define id="schema" value="resultUnitAssociation.create.internal" toScope="request"/>
-		</logic:equal>
-		
-		<bean:define id="schema" name="schema" type="java.lang.String"/>
-		
-
-		<fr:edit id="unitBean" name="unitBean" schema="<%= schema %>" action="<%= create %>">
+		<fr:edit id="unitBean" name="unitBean" schema="resultUnitAssociation.create.internal" action="<%= create %>">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle1 thright thlight"/>
 				<fr:property name="columnClasses" value=",,tdclear tderror1"/>

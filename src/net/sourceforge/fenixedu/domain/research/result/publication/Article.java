@@ -27,27 +27,28 @@ public class Article extends Article_Base {
 	super();
     }
 
-    public Article(Person participator, String title, String journal, Integer year, Unit publisher,
+    public Article(Person participator, String title, MultiLanguageString keywords, String journal, Integer year, Unit publisher,
 	    String volume, String number, Integer firstPage, Integer lastPage, MultiLanguageString note,
 	    Integer issn, String language, Country country, ScopeType scope, Month month, String url) {
 	this();
+	super.checkRequiredParameters(keywords, note);
 	checkRequiredParameters(title, journal, year);
 	super.setCreatorParticipation(participator, ResultParticipationRole.Author);
-	fillAllAttributes(title, journal, year, publisher, volume, number, firstPage, lastPage, note,
+	fillAllAttributes(title, keywords, journal, year, publisher, volume, number, firstPage, lastPage, note,
 		issn, language, country, scope, month, url);
     }
 
     @Checked("ResultPredicates.writePredicate")
-    public void setEditAll(String title, String journal, Integer year, Unit publisher, String volume,
+    public void setEditAll(String title, MultiLanguageString keywords, String journal, Integer year, Unit publisher, String volume,
 	    String number, Integer firstPage, Integer lastPage, MultiLanguageString note, Integer issn,
 	    String language, Country country, ScopeType scope, Month month, String url) {
 	checkRequiredParameters(title, journal, year);
-	fillAllAttributes(title, journal, year, publisher, volume, number, firstPage, lastPage, note,
+	fillAllAttributes(title, keywords, journal, year, publisher, volume, number, firstPage, lastPage, note,
 		issn, language, country, scope, month, url);
 	super.setModifiedByAndDate();
     }
 
-    private void fillAllAttributes(String title, String journal, Integer year, Unit publisher,
+    private void fillAllAttributes(String title, MultiLanguageString keywords, String journal, Integer year, Unit publisher,
 	    String volume, String number, Integer firstPage, Integer lastPage, MultiLanguageString note,
 	    Integer issn, String language, Country country, ScopeType scope, Month month, String url) {
 	super.setTitle(title);
@@ -65,6 +66,7 @@ public class Article extends Article_Base {
 	super.setScope(scope);
 	super.setMonth(month);
 	super.setUrl(url);
+	super.setKeywords(keywords);
     }
 
     private void checkRequiredParameters(String title, String journal, Integer year) {

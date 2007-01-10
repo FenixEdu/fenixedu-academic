@@ -2337,5 +2337,9 @@ public class Person extends Person_Base {
 	return result;
 
     }
+    
+    public boolean isHomePageAvailable() {
+    	return hasHomepage();
+    }
 
 }

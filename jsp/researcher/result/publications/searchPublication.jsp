@@ -7,138 +7,107 @@
 <%@ taglib uri="/WEB-INF/collectionPager.tld" prefix="cp" %>
 
 <h2><bean:message bundle="RESEARCHER_RESOURCES" key="label.search"/></h2>
+<bean:define id="bean" name="bean" type="net.sourceforge.fenixedu.dataTransferObject.SearchDSpaceBean"/>
 
-<logic:equal name="searchType" value="simple">
+	<div class="infoop2">
+		__SOME INFORMATION__?
+	</div>
 
-	<fr:form action="<%= "/publications/search.do?method=searchPublication&searchType=" + request.getAttribute("searchType") %>">
+	<fr:form id="searchForm" action="<%= "/publications/search.do?method=searchPublication&searchType=" + request.getAttribute("searchType") %>">
 		<fr:hasMessages for="search" type="validation">
 			<p>
-			<span class="error0"><bean:message key="label.requiredFieldsNotPresent" bundle="RESEARCHER_RESOURCES"/></span>
+			<span class="error0"><bean:message key="label.requiredFieldsNotPresent"/></span>
 			</p>
 		</fr:hasMessages>
-
-		<fr:edit id="search" name="bean" schema="publicationSearch"> 
-			<fr:layout name="flow">
-				<fr:property name="classes" value="tstyle5 thright thlight"/>
-				<fr:property name="labelExcluded" value="true"/>
-				<fr:property name="hideValidators" value="true"/>
-			</fr:layout>
-		</fr:edit>
-
-		<html:submit><bean:message key="label.search" bundle="RESEARCHER_RESOURCES"/></html:submit>
-	</fr:form>
-
-	<p class="mtop025 mbottom15"><html:link page="/publications/search.do?method=prepareSearchPublication&searchType=advanced"><bean:message key="label.search.advanced" bundle="RESEARCHER_RESOURCES"/></html:link> </p>
-
-</logic:equal>
-
-<logic:equal name="searchType" value="advanced">
-
-	<logic:messagesPresent message="true">
-		<html:messages id="messages" message="true" bundle="RESEARCHER_RESOURCES">
-		<p>
-			<span class="error0"><bean:write name="messages" /></span>
-		</p>
-		</html:messages>
-	</logic:messagesPresent>
 	
-	<fr:hasMessages for="editf1" type="validation">
-		<span class="error0"><bean:message key="required.searchField" bundle="RESEARCHER_RESOURCES"/></span>
-	</fr:hasMessages>
-	<fr:hasMessages for="editv1" type="validation">
-		<span class="error0"><bean:message key="required.value" bundle="RESEARCHER_RESOURCES"/></span>
-	</fr:hasMessages>
-		
-	<fr:form action="<%= "/publications/search.do?method=searchPublication&searchType=" + request.getAttribute("searchType") %>">
-		<fr:edit id="search" name="bean" nested="true" visible="false" />
+		<fr:edit id="search" name="bean" visible="false"/>
+
 		<table class="tstyle5">
+		<logic:iterate id="searchElement" indexId="index" name="bean" property="searchElements">
 		<tr>
-		<td></td>
-		<td>
-			<fr:edit id="editf1" name="bean" slot="field1" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+			<td>
+				<logic:equal name="index" value="0">
+					<span style="padding: 0 2em;">&nbsp;</span>
+				</logic:equal>
+				
+				<logic:notEqual name="index" value="0">
+				<fr:edit id="<%="conjunctionType" + index%>" name="searchElement" slot="conjunction">
 				<fr:layout>
 					<fr:property name="defaultText" value=""/>
 				</fr:layout>
-			</fr:edit>
-		</td>
-		<td>
-			<fr:edit id="editv1" name="bean" slot="value1" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+				</fr:edit>
+				</logic:notEqual>
+
+
+				<bean:message key="label.searchField"/> 
+				<fr:edit id="<%="valueField" + index%>" name="searchElement" slot="queryValue" >
+					<fr:layout>
+						<fr:property name="size" value="40"/>
+					</fr:layout>
+				</fr:edit>
+
+				<bean:message key="label.in" bundle="APPLICATION_RESOURCES"/>
+				<fr:edit id="<%= "searchTypeField" + index%>" name="searchElement" slot="searchField">
 				<fr:layout>
-					<fr:property name="size" value="40"/>
+					<fr:property name="excludedValues" value="TYPE, DATE"/>
 				</fr:layout>
-			</fr:edit>
-		</td>
+				</fr:edit>
+
+
+ 
+				<logic:equal name="index" value="0">
+					<div class="switchNone">
+					<html:link page="<%="/search.do?method=addNewSearchCriteria" + bean.getSearchElementsAsParameters() %>"><bean:message key="label.add" bundle="APPLICATION_RESOURCES"/></html:link>			
+					<logic:greaterThan name="bean" property="searchElementsSize" value="1">
+					 , 
+					<html:link page="<%="/search.do?method=removeSearchCriteria" + bean.getSearchElementsAsParameters() %>"><bean:message key="label.remove" bundle="APPLICATION_RESOURCES"/></html:link>								
+					</logic:greaterThan>
+					</div>
+					<div class="switchInline">
+					<a href="#" onclick="<%= "javascript:getElementById('searchForm').action='search.do?method=addNewSearchCriteria" + bean.getSearchElementsAsParameters() + "&amp;addIndex=" + (index+1) + "'; getElementById('searchForm').submit();" %>"><bean:message key="label.add" bundle="APPLICATION_RESOURCES"/></a>
+					<logic:greaterThan name="bean" property="searchElementsSize" value="1">
+					 , 
+					<a href="#" onclick="<%= "javascript:getElementById('searchForm').action='search.do?method=removeSearchCriteria" + bean.getSearchElementsAsParameters() + "&amp;removeIndex=" + index + "'; getElementById('searchForm').submit();" %>"><bean:message key="label.remove" bundle="APPLICATION_RESOURCES"/></a>
+					</logic:greaterThan>
+					</div>
+				</logic:equal>
+				<logic:notEqual name="index" value="0">
+					<div class="switchNone">
+					<html:link page="<%="/search.do?method=addNewSearchCriteria" + bean.getSearchElementsAsParameters() %>"><bean:message key="label.add" bundle="APPLICATION_RESOURCES"/></html:link> , 			
+					<html:link page="<%="/search.do?method=removeSearchCriteria" + bean.getSearchElementsAsParameters() + "&amp;removeIndex=" + index%>"><bean:message key="link.remove" bundle="APPLICATION_RESOURCES"/></html:link>
+					</div>
+					<div class="switchInline">
+					<a href="#" onclick="<%= "javascript:getElementById('searchForm').action='search.do?method=addNewSearchCriteria" + bean.getSearchElementsAsParameters() + "&amp;addIndex=" + (index+1) +  "'; getElementById('searchForm').submit();" %>"><bean:message key="label.add" bundle="APPLICATION_RESOURCES"/></a> , 
+					<a href="#" onclick="<%= "javascript:getElementById('searchForm').action='search.do?method=removeSearchCriteria" + bean.getSearchElementsAsParameters() + "&amp;removeIndex=" + index + "'; getElementById('searchForm').submit();"%>"><bean:message key="link.remove" bundle="APPLICATION_RESOURCES"/></a>
+					</div>
+				</logic:notEqual>
+			</td>
 		</tr>
-		<tr>
-		<td>
-			<fr:edit id="c1" name="bean" slot="firstConjunction">
-			<fr:layout>
-				<fr:property name="defaultText" value=""/>
-			</fr:layout>
-			</fr:edit>
-		</td>
-		<td>
-			<fr:edit id="editf2" name="bean" slot="field2">
-			<fr:layout>
-				<fr:property name="defaultText" value=""/>
-			</fr:layout>
-			</fr:edit>
-		</td>
-		<td>
-			<fr:edit id="editv2" name="bean" slot="value2">
-			<fr:layout>
-				<fr:property name="size" value="40"/>
-			</fr:layout>
-			</fr:edit>
-		</td>
-		</tr>
-		<tr>
-		<td>
-			<fr:edit id="c2" name="bean" slot="secondConjunction">
-			<fr:layout>
-				<fr:property name="defaultText" value=""/>
-			</fr:layout>
-			</fr:edit>
-		</td>
-		<td>
-			<fr:edit id="editf3" name="bean" slot="field3">
-			<fr:layout>
-				<fr:property name="defaultText" value=""/>
-			</fr:layout>
-			</fr:edit>
-		</td>
-		<td>
-			<fr:edit id="editv3" name="bean" slot="value3">
-			<fr:layout>
-				<fr:property name="size" value="40"/>
-			</fr:layout>
-			</fr:edit>
-		</td>
-		</tr>	
+		</logic:iterate>
+
+
 		</table>
-			<html:submit><bean:message key="label.search" bundle="RESEARCHER_RESOURCES"/></html:submit>
-		</fr:form>
-		
-	<p class="mtop025 mbottom15"><html:link page="/publications/search.do?method=prepareSearchPublication&searchType=simple"><bean:message key="label.search.simple" bundle="RESEARCHER_RESOURCES"/></html:link></p>
+			<html:submit><bean:message key="label.search" /></html:submit>
+	</fr:form>
 
-</logic:equal>
+<logic:present name="bean" property="results">
+<logic:notEmpty name="bean" property="results">
 
-<logic:present name="searchResult">
-<logic:notEmpty name="searchResult">
+<p><bean:message key="label.hitCount" />: <strong><fr:view name="bean" property="totalItems"/></strong></p>
 
-<p><em><bean:message key="label.hitCount" bundle="RESEARCHER_RESOURCES"/>: <strong><fr:view name="totalItems"/></strong></em></p>
 
 <logic:notEqual name="numberOfPages" value="1">
+<p>
+<bean:message key="label.page" bundle="SITE_RESOURCES"/>: 
 <cp:collectionPages url="<%= 
-	"/researcher/publications/search.do?method=moveIndex&searchType=" + request.getAttribute("searchType")  
-	+ "&field1=" + request.getAttribute("field1") + "&value1=" + request.getAttribute("value1") 
-	+ "&field2=" + request.getAttribute("field2") + "&value1=" + request.getAttribute("value2") 
-	+ "&field3=" + request.getAttribute("field3") + "&value1=" + request.getAttribute("value3") 
-	+ "&c1=" + request.getAttribute("c1") + "&c2=" + request.getAttribute("c2") %>" 
+	"/researcher/publications/search.do?method=moveIndex&amp" + bean.getSearchElementsAsParameters() %>" 
 	pageNumberAttributeName="page" numberOfPagesAttributeName="numberOfPages"/>
+</p>
 </logic:notEqual>
+
+
 <ul>
-<logic:iterate id="result" name="searchResult" type="net.sourceforge.fenixedu.domain.research.result.ResearchResult">
+<logic:iterate id="result" name="bean" property="results" type="net.sourceforge.fenixedu.domain.research.result.ResearchResult">
 	<bean:define id="resultId" name="result" property="idInternal"/>
 	<bean:define id="schema" name="result" property="schema" type="java.lang.String"/>
 	
@@ -169,21 +138,23 @@
 </ul>
 
 <logic:notEqual name="numberOfPages" value="1">
+<p>
+<bean:message key="label.page" bundle="SITE_RESOURCES"/>: 
 <cp:collectionPages url="<%= 
-	"/researcher/publications/search.do?method=moveIndex&searchType=" + request.getAttribute("searchType")  
-	+ "&field1=" + request.getAttribute("field1") + "&value1=" + request.getAttribute("value1") 
-	+ "&field2=" + request.getAttribute("field2") + "&value1=" + request.getAttribute("value2") 
-	+ "&field3=" + request.getAttribute("field3") + "&value1=" + request.getAttribute("value3") 
-	+ "&c1=" + request.getAttribute("c1") + "&c2=" + request.getAttribute("c2") %>" 
+    "//researcher/publications/search.do?method=moveIndex" + bean.getSearchElementsAsParameters() %>" 
 	pageNumberAttributeName="page" numberOfPagesAttributeName="numberOfPages"/>
+</p>
 </logic:notEqual>
+
+
+</logic:notEmpty>
+
+<logic:empty name="bean" property="results">
+	<bean:message key="label.search.noResultsFound" /> 
+</logic:empty>
+</logic:present>
 
 <script type="text/javascript" language="javascript">
 switchGlobal();
 </script>
-</logic:notEmpty>
 
-<logic:empty name="searchResult">
-	<bean:message key="label.search.noResultsFound" bundle="RESEARCHER_RESOURCES"/> 
-</logic:empty>
-</logic:present>

@@ -29,23 +29,25 @@ public class Proceedings extends Proceedings_Base {
 	super();
     }
 
-    public Proceedings(Person participator, String title, Integer year, String conference, ScopeType scope,
+    public Proceedings(Person participator, String title, MultiLanguageString keywords, Integer year, String conference, ScopeType scope,
 	    Unit publisher, Unit organization, String address, MultiLanguageString note, Month month, String url) {
 	this();
+	super.checkRequiredParameters(keywords, note);
 	checkRequiredParameters(title, year, conference);
 	super.setCreatorParticipation(participator, ResultParticipationRole.Editor);
-	fillAllAttributes(title, year, conference, scope, publisher, organization, address, note, month, url);
+	fillAllAttributes(title, keywords, year, conference, scope, publisher, organization, address, note, month, url);
     }
 
     @Checked("ResultPredicates.writePredicate")
-    public void setEditAll(String title, Integer year, String conference, ScopeType scope, Unit publisher,
+    public void setEditAll(String title, MultiLanguageString keywords, Integer year, String conference, ScopeType scope, Unit publisher,
 	    Unit organization, String address, MultiLanguageString note, Month month, String url) {
-	checkRequiredParameters(title, year, conference);
-	fillAllAttributes(title, year, conference, scope, publisher, organization, address, note, month, url);
+    super.checkRequiredParameters(keywords, note);
+    checkRequiredParameters(title, year, conference);
+	fillAllAttributes(title, keywords, year, conference, scope, publisher, organization, address, note, month, url);
 	super.setModifiedByAndDate();
     }
 
-    private void fillAllAttributes(String title, Integer year, String conference, ScopeType scope,
+    private void fillAllAttributes(String title, MultiLanguageString keywords, Integer year, String conference, ScopeType scope,
 	    Unit publisher, Unit organization, String address, MultiLanguageString note, Month month, String url) {
 	super.setTitle(title);
 	super.setYear(year);
@@ -57,6 +59,7 @@ public class Proceedings extends Proceedings_Base {
 	super.setNote(note);
 	super.setMonth(month);
 	super.setUrl(url);
+	super.setKeywords(keywords);
     }
 
     private void checkRequiredParameters(String title, Integer year, String conference) {

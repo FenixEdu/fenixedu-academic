@@ -111,6 +111,8 @@ public abstract class ResultPublicationBean implements Serializable {
 
     private Boolean createEvent = false;
 
+    private MultiLanguageString keywords;
+    
     public abstract ResultPublicationBean convertTo(ResultPublicationType type);
 
     protected abstract void fillSpecificFields(ResearchResultPublication publication);
@@ -211,6 +213,7 @@ public abstract class ResultPublicationBean implements Serializable {
 	this.setPublisher(publication.getPublisher());
 	this.setOrganization(publication.getOrganization());
 	this.setCountry(publication.getCountry());
+	this.setKeywords(publication.getKeywords());
     }
 
     protected void fillCommonBeanFields(ResultPublicationBean bean) {
@@ -493,4 +496,12 @@ public abstract class ResultPublicationBean implements Serializable {
 	else
 	    return this.getClass().getSimpleName().replace("Bean", "");
     }
+
+	public MultiLanguageString getKeywords() {
+		return keywords;
+	}
+
+	public void setKeywords(MultiLanguageString keywords) {
+		this.keywords = keywords;
+	}
 }

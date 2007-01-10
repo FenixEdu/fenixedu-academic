@@ -18,7 +18,7 @@
 	<logic:notEmpty name="participations">
 		<fr:view name="participations" schema="<%= newParticipationsSchema %>">
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle1"/>
+				<fr:property name="classes" value="tstyle2 thlight"/>
 				<fr:property name="columnClasses" value="acenter,,,aleft"/>
 				<fr:property name="sortBy" value="personOrder"/>
 			</fr:layout>

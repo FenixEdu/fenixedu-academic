@@ -25,23 +25,25 @@ public class Manual extends Manual_Base {
 	super();
     }
 
-    public Manual(Person participator, String title, Unit organization, Integer year, String address,
+    public Manual(Person participator, String title, MultiLanguageString keywords, Unit organization, Integer year, String address,
     		MultiLanguageString note, String edition, Month month, String url) {
 	this();
+	super.checkRequiredParameters(keywords, note);
 	checkRequiredParameters(title);
 	super.setCreatorParticipation(participator, ResultParticipationRole.Author);
-	fillAllAttributes(title, organization, year, address, note, edition, month, url);
+	fillAllAttributes(title, keywords, organization, year, address, note, edition, month, url);
     }
 
     @Checked("ResultPredicates.writePredicate")
-    public void setEditAll(String title, Unit organization, Integer year, String address, MultiLanguageString note,
+    public void setEditAll(String title, MultiLanguageString keywords, Unit organization, Integer year, String address, MultiLanguageString note,
 	    String edition, Month month, String url) {
-	checkRequiredParameters(title);
-	fillAllAttributes(title, organization, year, address, note, edition, month, url);
+	super.checkRequiredParameters(keywords, note);
+    checkRequiredParameters(title);
+	fillAllAttributes(title, keywords, organization, year, address, note, edition, month, url);
 	super.setModifiedByAndDate();
     }
 
-    private void fillAllAttributes(String title, Unit organization, Integer year, String address,
+    private void fillAllAttributes(String title, MultiLanguageString keywords, Unit organization, Integer year, String address,
     		MultiLanguageString note, String edition, Month month, String url) {
 	super.setTitle(title);
 	super.setOrganization(organization);
@@ -51,6 +53,7 @@ public class Manual extends Manual_Base {
 	super.setEdition(edition);
 	super.setMonth(month);
 	super.setUrl(url);
+	super.setKeywords(keywords);
     }
 
     private void checkRequiredParameters(String title) {

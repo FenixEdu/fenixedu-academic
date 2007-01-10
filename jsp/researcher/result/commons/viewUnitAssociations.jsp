@@ -14,7 +14,7 @@
 	<logic:notEmpty name="unitAssociations">
 		<fr:view name="unitAssociations" schema="resultUnitAssociation.details">
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle2"/>
+				<fr:property name="classes" value="tstyle2 thlight"/>
 				<fr:property name="columnClasses" value=",acenter,acenter"/>
 			</fr:layout>
 		</fr:view>

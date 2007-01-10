@@ -37,13 +37,15 @@ public class BookPart extends BookPart_Base {
      * BookPart - Inbook constructor
      */
     public BookPart(Person participator, ResultParticipationRole participatorRole,
-	    BookPartType bookPartType, String title, String chapter, Integer firstPage,
+	    BookPartType bookPartType, String title, MultiLanguageString keywords, String chapter, Integer firstPage,
 	    Integer lastPage, Unit publisher, Integer year, String volume, String series,
 	    String edition, Country country, String address, MultiLanguageString note, Month month, String url) {
 	this();
+	
+	super.checkRequiredParameters(keywords, note);
 	checkInbookRequiredParameters(bookPartType, title, chapter, firstPage, lastPage, publisher, year);
 	super.setCreatorParticipation(participator, participatorRole);
-	fillAllInbookAttributes(bookPartType, title, chapter, firstPage, lastPage, publisher, year,
+	fillAllInbookAttributes(bookPartType, title, keywords, chapter, firstPage, lastPage, publisher, year,
 		volume, series, edition, country, address, note, month, url);
     }
 
@@ -51,40 +53,43 @@ public class BookPart extends BookPart_Base {
      * BookPart - Incollection constructor
      */
     public BookPart(Person participator, ResultParticipationRole participatorRole,
-	    BookPartType bookPartType, String title, String bookTitle, Unit publisher, Integer year,
+	    BookPartType bookPartType, String title, MultiLanguageString keywords, String bookTitle, Unit publisher, Integer year,
 	    Integer firstPage, Integer lastPage, Unit organization, Country country, String address,
 	    MultiLanguageString note, Month month, String url) {
 	this();
+	super.checkRequiredParameters(keywords, note);
 	checkIncollectionRequiredParameters(bookPartType, title, bookTitle, publisher, year);
 	super.setCreatorParticipation(participator, participatorRole);
-	fillAllIncollectionAttributes(bookPartType, title, bookTitle, publisher, year, firstPage,
+	fillAllIncollectionAttributes(bookPartType, title, keywords, bookTitle, publisher, year, firstPage,
 		lastPage, organization, country, address, note, month, url);
     }
 
     @Checked("ResultPredicates.writePredicate")
-    public void setEditAllInbook(BookPartType bookPartType, String title, String chapter,
+    public void setEditAllInbook(BookPartType bookPartType, String title, MultiLanguageString keywords, String chapter,
 	    Integer firstPage, Integer lastPage, Unit publisher, Integer year, String volume,
 	    String series, String edition, Country country, String address, MultiLanguageString note, Month month,
 	    String url) {
-	checkInbookRequiredParameters(bookPartType, title, chapter, firstPage, lastPage, publisher, year);
+    super.checkRequiredParameters(keywords, note);
+    checkInbookRequiredParameters(bookPartType, title, chapter, firstPage, lastPage, publisher, year);
 	checkBookPartTypeChange(bookPartType);
-	fillAllInbookAttributes(bookPartType, title, chapter, firstPage, lastPage, publisher, year,
+	fillAllInbookAttributes(bookPartType, title, keywords, chapter, firstPage, lastPage, publisher, year,
 		volume, series, edition, country, address, note, month, url);
 	super.setModifiedByAndDate();
     }
 
     @Checked("ResultPredicates.writePredicate")
-    public void setEditAllIncollection(BookPartType bookPartType, String title, String bookTitle,
+    public void setEditAllIncollection(BookPartType bookPartType, String title, MultiLanguageString keywords, String bookTitle,
 	    Unit publisher, Integer year, Integer firstPage, Integer lastPage, Unit organization,
 	    Country country, String address, MultiLanguageString note, Month month, String url) {
-	checkIncollectionRequiredParameters(bookPartType, title, bookTitle, publisher, year);
+    super.checkRequiredParameters(keywords, note);
+    checkIncollectionRequiredParameters(bookPartType, title, bookTitle, publisher, year);
 	checkBookPartTypeChange(bookPartType);
-	fillAllIncollectionAttributes(bookPartType, title, bookTitle, publisher, year, firstPage,
+	fillAllIncollectionAttributes(bookPartType, title, keywords, bookTitle, publisher, year, firstPage,
 		lastPage, organization, country, address, note, month, url);
 	super.setModifiedByAndDate();
     }
 
-    private void fillAllInbookAttributes(BookPartType bookPartType, String title, String chapter,
+    private void fillAllInbookAttributes(BookPartType bookPartType, String title,MultiLanguageString keywords, String chapter,
 	    Integer firstPage, Integer lastPage, Unit publisher, Integer year, String volume,
 	    String series, String edition, Country country, String address, MultiLanguageString note, Month month,
 	    String url) {
@@ -103,6 +108,7 @@ public class BookPart extends BookPart_Base {
 	super.setNote(note);
 	super.setMonth(month);
 	super.setUrl(url);
+	super.setKeywords(keywords);
     }
 
     private void checkInbookRequiredParameters(BookPartType bookPartType, String title, String chapter,
@@ -116,7 +122,7 @@ public class BookPart extends BookPart_Base {
 	}
     }
 
-    private void fillAllIncollectionAttributes(BookPartType bookPartType, String title,
+    private void fillAllIncollectionAttributes(BookPartType bookPartType, String title,MultiLanguageString keywords,
 	    String bookTitle, Unit publisher, Integer year, Integer firstPage, Integer lastPage,
 	    Unit organization, Country country, String address, MultiLanguageString note, Month month, String url) {
 	super.setBookPartType(bookPartType);
@@ -131,7 +137,8 @@ public class BookPart extends BookPart_Base {
 	super.setAddress(address);
 	super.setNote(note);
 	super.setMonth(month);
-	super.setUrl(url);
+	super.setUrl(url);	
+	super.setKeywords(keywords);
     }
 
     private void checkIncollectionRequiredParameters(BookPartType bookPartType, String title,

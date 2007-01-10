@@ -183,8 +183,9 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
 	public ActionForward prepareDelete(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) {
 		final ResearchResultPublication publication = (ResearchResultPublication) getResultFromRequest(request);
-
 		setRequestAttributes(request, publication);
+		
+		request.setAttribute("confirm", "yes");
 		return mapping.findForward("PreparedToDelete");
 	}
 
@@ -192,6 +193,11 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
 			HttpServletResponse response) {
 		final Integer resultId = getRequestParameterAsInteger(request, "resultId");
 
+		if(getFromRequest(request, "cancel") != null) {
+			final ResearchResultPublication publication = (ResearchResultPublication) getResultFromRequest(request);
+			setRequestAttributes(request, publication);
+			return mapping.findForward("ViewEditPublication");
+		}
 		if (getFromRequest(request, "confirm") != null) {
 			try {
 				final Object[] args = { resultId };

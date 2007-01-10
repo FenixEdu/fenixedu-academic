@@ -210,6 +210,11 @@ Documentation:
     	<property name="linkGroupSeparator" value=", "/>
     </renderer>
     
+    
+    <!--@ Renders a table with a given schema for a domain object but doesn't render fields that are null or empty
+     -->
+    <renderer type="net.sourceforge.fenixedu.domain.DomainObject" layout="tabular-nonNullValues" class="net.sourceforge.fenixedu.renderers.TabularNonNullValuesRenderer"/>
+
     <!--@ This layout intends to provide the control links feature to a list presentation. Each object in the collection
           is presented with their own layout and schema in the left column o the table. -->
     <renderer type="java.util.Collection" layout="tabular-list" class="net.sourceforge.fenixedu.renderers.TabularListRenderer"/>

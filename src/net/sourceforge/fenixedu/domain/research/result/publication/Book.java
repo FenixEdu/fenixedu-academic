@@ -28,27 +28,29 @@ public class Book extends Book_Base {
     }
 
     public Book(Person participator, ResultParticipationRole participatorRole, String title,
-	    Unit publisher, Integer year, String volume, String series, String address, String edition,
+    	MultiLanguageString keywords, Unit publisher, Integer year, String volume, String series, String address, String edition,
 	    Integer isbn, Integer numberPages, String language, Country country, ScopeType scope,
 	    MultiLanguageString note, Month month, String url) {
 	this();
-	checkRequiredParameters(title, publisher, year);
+	super.checkRequiredParameters(keywords, note);
+	checkRequiredParameters(title, note, keywords, publisher, year);
 	super.setCreatorParticipation(participator, participatorRole);
-	fillAllAttributes(title, publisher, year, volume, series, address, edition, isbn, numberPages,
+	fillAllAttributes(title, keywords, publisher, year, volume, series, address, edition, isbn, numberPages,
 		language, country, scope, note, month, url);
     }
 
     @Checked("ResultPredicates.writePredicate")
-    public void setEditAll(String title, Unit publisher, Integer year, String volume, String series,
+    public void setEditAll(String title, MultiLanguageString keywords, Unit publisher, Integer year, String volume, String series,
 	    String address, String edition, Integer isbn, Integer numberPages, String language,
 	    Country country, ScopeType scope, MultiLanguageString note, Month month, String url) {
-	checkRequiredParameters(title, publisher, year);
-	fillAllAttributes(title, publisher, year, volume, series, address, edition, isbn, numberPages,
+    super.checkRequiredParameters(keywords, note);
+    checkRequiredParameters(title, note, keywords, publisher, year);
+	fillAllAttributes(title, keywords, publisher, year, volume, series, address, edition, isbn, numberPages,
 		language, country, scope, note, month, url);
 	super.setModifiedByAndDate();
     }
 
-    private void fillAllAttributes(String title, Unit publisher, Integer year, String volume,
+    private void fillAllAttributes(String title, MultiLanguageString keywords, Unit publisher, Integer year, String volume,
 	    String series, String address, String edition, Integer isbn, Integer numberPages,
 	    String language, Country country, ScopeType scope, MultiLanguageString note, Month month, String url) {
 	super.setTitle(title);
@@ -66,9 +68,10 @@ public class Book extends Book_Base {
 	super.setNote(note);
 	super.setMonth(month);
 	super.setUrl(url);
+	super.setKeywords(keywords);
     }
 
-    private void checkRequiredParameters(String title, Unit publisher, Integer year) {
+    private void checkRequiredParameters(String title, MultiLanguageString note, MultiLanguageString keywords, Unit publisher, Integer year) {
 	if (title == null || title.length() == 0)
 	    throw new DomainException("error.researcher.Book.title.null");
 	if (publisher == null)

@@ -132,7 +132,7 @@
 		    <forward name="ViewEditPublication" path="publications.viewEditPublication"/>
 		    <forward name="PreparedToCreate" path="publications.createPublication"/>
 		    <forward name="PreparedToEdit" path="publications.editPublicationData"/>
-		    <forward name="PreparedToDelete" path="publications.deletePublication"/>
+			<forward name="PreparedToDelete" path="publications.viewEditPublication"/>
 		    <forward name="PublicationDeleted" path="/resultPublications/listPublications.do"/>
 			<forward name="SearchPublication"  path="publications.search"/>
 			<forward name="associatingInCreation"  path="publications.addAssociationsInCreation"/>
@@ -221,6 +221,7 @@
 	<message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
 	<message-resources parameter="resources.ResearcherResources" null="false"/>
 	<message-resources parameter="resources.ResearcherResources" key="RESEARCHER_RESOURCES" null="false"/>
+    <message-resources parameter="resources.ApplicationResources" key="APPLICATION_RESOURCES" null="false"/>
 
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">

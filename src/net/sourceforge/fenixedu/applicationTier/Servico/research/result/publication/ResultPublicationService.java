@@ -48,7 +48,7 @@ public abstract class ResultPublicationService extends Service {
 	 * create publications with one participator
 	 */
 	protected Book createBookFromBean(BookBean bean) {
-		return new Book(bean.getPerson(), bean.getRole(), bean.getTitle(),
+		return new Book(bean.getPerson(), bean.getRole(), bean.getTitle(), bean.getKeywords(),
 				getPublisher(bean), bean.getYear(), bean.getVolume(), bean
 						.getSeries(), bean.getAddress(), bean.getEdition(),
 				bean.getIsbn(), bean.getNumberPages(), bean.getLanguage(), bean
@@ -58,7 +58,7 @@ public abstract class ResultPublicationService extends Service {
 
 	protected BookPart createInbookFromBean(InbookBean bean) {
 		return new BookPart(bean.getPerson(), bean.getRole(),
-				BookPartType.Inbook, bean.getTitle(), bean.getChapter(), bean
+				BookPartType.Inbook, bean.getTitle(), bean.getKeywords(), bean.getChapter(), bean
 						.getFirstPage(), bean.getLastPage(),
 				getPublisher(bean), bean.getYear(), bean.getVolume(), bean
 						.getSeries(), bean.getEdition(), bean.getCountry(),
@@ -68,7 +68,7 @@ public abstract class ResultPublicationService extends Service {
 
 	protected BookPart createIncollectionFromBean(IncollectionBean bean) {
 		return new BookPart(bean.getPerson(), bean.getRole(),
-				BookPartType.Incollection, bean.getTitle(),
+				BookPartType.Incollection, bean.getTitle(), bean.getKeywords(),
 				bean.getBookTitle(), getPublisher(bean), bean.getYear(), bean
 						.getFirstPage(), bean.getLastPage(),
 				getOrganization(bean), bean.getCountry(), bean.getAddress(),
@@ -76,7 +76,7 @@ public abstract class ResultPublicationService extends Service {
 	}
 
 	protected Article createArticleFromBean(ArticleBean bean) {
-		return new Article(bean.getPerson(), bean.getTitle(),
+		return new Article(bean.getPerson(), bean.getTitle(), bean.getKeywords(),
 				bean.getJournal(), bean.getYear(), getOrganization(bean), bean
 						.getVolume(), bean.getNumber(), bean.getFirstPage(),
 				bean.getLastPage(), bean.getNote(), bean.getIssn(), bean
@@ -88,7 +88,7 @@ public abstract class ResultPublicationService extends Service {
 		
 
 		return new Inproceedings(bean.getPerson(), bean.getRole(), bean
-				.getTitle(), bean.getYear(), bean.getConference(), bean.getScope(),
+				.getTitle(), bean.getKeywords(), bean.getYear(), bean.getConference(), bean.getScope(),
 				getPublisher(bean), getOrganization(bean), bean.getAddress(),
 				bean.getFirstPage(), bean.getLastPage(), bean.getNote(), bean
 						.getLanguage(), bean.getMonth(), bean.getUrl());
@@ -96,7 +96,7 @@ public abstract class ResultPublicationService extends Service {
 
 	protected Proceedings createProceedingsFromBean(ProceedingsBean bean) {
 		
-		return new Proceedings(bean.getPerson(), bean.getTitle(), bean
+		return new Proceedings(bean.getPerson(), bean.getTitle(), bean.getKeywords(), bean
 				.getYear(), bean.getConference(), bean.getScope(), getPublisher(bean),
 				getOrganization(bean), bean.getAddress(), bean.getNote(), bean
 						.getMonth(), bean.getUrl());
@@ -104,14 +104,14 @@ public abstract class ResultPublicationService extends Service {
 
 	protected Thesis createThesisFromBean(ThesisBean bean) {
 		return new Thesis(bean.getPerson(), bean.getThesisType(), bean
-				.getTitle(), getOrganization(bean), bean.getYear(), bean
+				.getTitle(), bean.getKeywords(), getOrganization(bean), bean.getYear(), bean
 				.getAddress(), bean.getNote(), bean.getNumberPages(), bean
 				.getLanguage(), bean.getMonth(), bean.getYearBegin(), bean
 				.getMonthBegin(), bean.getUrl());
 	}
 
 	protected Manual createManualFromBean(ManualBean bean) {
-		return new Manual(bean.getPerson(), bean.getTitle(),
+		return new Manual(bean.getPerson(), bean.getTitle(), bean.getKeywords(),
 				getOrganization(bean), bean.getYear(), bean.getAddress(), bean
 						.getNote(), bean.getEdition(), bean.getMonth(), bean
 						.getUrl());
@@ -119,7 +119,7 @@ public abstract class ResultPublicationService extends Service {
 
 	protected TechnicalReport createTechnicalReportFromBean(
 			TechnicalReportBean bean) {
-		return new TechnicalReport(bean.getPerson(), bean.getTitle(),
+		return new TechnicalReport(bean.getPerson(), bean.getTitle(), bean.getKeywords(),
 				getOrganization(bean), bean.getYear(), bean
 						.getTechnicalReportType(), bean.getNumber(), bean
 						.getAddress(), bean.getNote(), bean.getNumberPages(),
@@ -128,7 +128,7 @@ public abstract class ResultPublicationService extends Service {
 
 	protected OtherPublication createOtherPublicationFromBean(
 			OtherPublicationBean bean) {
-		return new OtherPublication(bean.getPerson(), bean.getTitle(),
+		return new OtherPublication(bean.getPerson(), bean.getTitle(), bean.getKeywords(),
 				getPublisher(bean), bean.getYear(), bean.getHowPublished(),
 				bean.getNote(), bean.getAddress(), bean
 						.getOtherPublicationType(), bean.getNumberPages(), bean

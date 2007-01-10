@@ -27,6 +27,18 @@ import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
 public class SearchPublicationsAction extends SearchDSpaceGeneralAction {
 
+	public ActionForward addNewSearchCriteria(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+			FenixServiceException {
+		return super.addNewSearchCriteria(mapping, form, request, response, "SearchPublication");
+	}
+	
+	public ActionForward removeSearchCriteria(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+			FenixServiceException {
+		return super.removeSearchCriteria(mapping, form, request, response, "SearchPublication");
+	}
+	
 	public ActionForward prepareSearchPublication(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
 			FenixServiceException {

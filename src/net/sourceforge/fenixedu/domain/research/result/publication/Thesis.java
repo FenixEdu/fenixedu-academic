@@ -35,27 +35,29 @@ public class Thesis extends Thesis_Base {
 	super();
     }
 
-    public Thesis(Person participator, ThesisType thesisType, String title, Unit school, Integer year,
+    public Thesis(Person participator, ThesisType thesisType, String title, MultiLanguageString keywords, Unit school, Integer year,
 	    String address, MultiLanguageString note, Integer numberPages, String language, Month month,
 	    Integer yearBegin, Month monthBegin, String url) {
 	this();
+	super.checkRequiredParameters(keywords,note);
 	checkRequiredParameters(thesisType, title, school, year);
 	super.setCreatorParticipation(participator, ResultParticipationRole.Author);
-	fillAllAttributes(thesisType, title, school, year, address, note, numberPages, language, month,
+	fillAllAttributes(thesisType, title, keywords, school, year, address, note, numberPages, language, month,
 		yearBegin, monthBegin, url);
     }
 
     @Checked("ResultPredicates.writePredicate")
-    public void setEditAll(ThesisType thesisType, String title, Unit school, Integer year,
+    public void setEditAll(ThesisType thesisType, String title, MultiLanguageString keywords, Unit school, Integer year,
 	    String address, MultiLanguageString note, Integer numberPages, String language, Month month,
 	    Integer yearBegin, Month monthBegin, String url) {
-	checkRequiredParameters(thesisType, title, school, year);
-	fillAllAttributes(thesisType, title, school, year, address, note, numberPages, language, month,
+    super.checkRequiredParameters(keywords,note);
+    checkRequiredParameters(thesisType, title, school, year);
+	fillAllAttributes(thesisType, title, keywords, school, year, address, note, numberPages, language, month,
 		yearBegin, monthBegin, url);
 	super.setModifiedByAndDate();
     }
 
-    private void fillAllAttributes(ThesisType thesisType, String title, Unit school, Integer year,
+    private void fillAllAttributes(ThesisType thesisType, String title, MultiLanguageString keywords, Unit school, Integer year,
 	    String address, MultiLanguageString note, Integer numberPages, String language, Month month,
 	    Integer yearBegin, Month monthBegin, String url) {
 	if(year<yearBegin || (year.compareTo(yearBegin)==0 && month.ordinal()<monthBegin.ordinal())) {
@@ -73,6 +75,7 @@ public class Thesis extends Thesis_Base {
 	super.setYearBegin(yearBegin);
 	super.setMonthBegin(monthBegin);
 	super.setUrl(url);
+	super.setKeywords(keywords);
     }
 
     private void checkRequiredParameters(ThesisType thesisType, String title, Unit school, Integer year) {

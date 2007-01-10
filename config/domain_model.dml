@@ -3714,6 +3714,7 @@ class net.sourceforge.fenixedu.domain.research.result.ResearchResult extends net
 		Month month;
 		Integer keyPublisher;
 		Integer keyOrganization;
+		MultiLanguageString keywords;
 	}
 
 		class net.sourceforge.fenixedu.domain.research.result.publication.Book extends net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication {

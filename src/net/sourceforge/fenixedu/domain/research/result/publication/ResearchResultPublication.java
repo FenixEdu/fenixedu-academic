@@ -6,15 +6,17 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
-import bibtex.dom.BibtexEntry;
-import bibtex.dom.BibtexFile;
-import bibtex.dom.BibtexPerson;
-import bibtex.dom.BibtexPersonList;
-import net.sourceforge.fenixedu.injectionCode.Checked;
+
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
+import net.sourceforge.fenixedu.injectionCode.Checked;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
+import bibtex.dom.BibtexEntry;
+import bibtex.dom.BibtexFile;
+import bibtex.dom.BibtexPerson;
+import bibtex.dom.BibtexPersonList;
 
 public abstract class ResearchResultPublication extends ResearchResultPublication_Base {
 
@@ -114,7 +116,7 @@ public abstract class ResearchResultPublication extends ResearchResultPublicatio
 	}
 	return null;
     }
-
+    						   
     protected BibtexPersonList getBibtexEditorsList(BibtexFile bibtexFile, List<Person> editors) {
 	if ((editors != null) && (editors.size() > 0)) {
 	    BibtexPersonList editorsList = bibtexFile.makePersonList();
@@ -163,7 +165,30 @@ public abstract class ResearchResultPublication extends ResearchResultPublicatio
 	return personList;
     }
     
+    protected void checkRequiredParameters(MultiLanguageString keywords, MultiLanguageString note) {
+    	if(note == null)
+    		throw new DomainException("error.researcher.Book.description.null");
+    	if(keywords == null)
+    		throw new DomainException("error.researcher.Book.keywords.null");
+    }
+    
     public abstract String getSchema();
     	
-    
+    public List<String> getKeywordsList() {
+    	List<String> keywordList = new ArrayList<String>();
+    	if(keywordHasContent()) {
+    		String[] keywords = this.getKeywords().getContent().split(",");
+    		for(int i=0; i<keywords.length;i++) {
+    			keywordList.add(keywords[i].trim());
+    		}
+    	}
+    	return keywordList;
+    }
+
+	private boolean keywordHasContent() {
+		if(this.getKeywords()==null || this.getKeywords().getContent()==null)  
+			return false;
+		else 
+			return true;
+	}
 }

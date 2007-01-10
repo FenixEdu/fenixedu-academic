@@ -1001,7 +1001,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 		} catch (FileManagerException e) {
 			addErrorMessage(request, "unableToStoreFile", "errors.unableToStoreFile", bean.getFileName());
 
-			return (service.equalsIgnoreCase("CreateScormPackageForItem") ? prepareCreateScormFile(mapping,
+			return (service.equalsIgnoreCase("CreateScormPackageForItem") ? prepareUploadScormFile(mapping,
 					form, request, response) : uploadFile(mapping, form, request, response));
 
 		} finally {

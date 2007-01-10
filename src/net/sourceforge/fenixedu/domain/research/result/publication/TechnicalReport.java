@@ -28,27 +28,29 @@ public class TechnicalReport extends TechnicalReport_Base {
 	super();
     }
 
-    public TechnicalReport(Person participator, String title, Unit institution, Integer year,
+    public TechnicalReport(Person participator, String title, MultiLanguageString keywords, Unit institution, Integer year,
 	    String technicalReportType, String number, String address, MultiLanguageString note, Integer numberPages,
 	    String language, Month month, String url) {
 	this();
+	super.checkRequiredParameters(keywords, note);
 	checkRequiredParameters(title, institution, year);
 	super.setCreatorParticipation(participator, ResultParticipationRole.Author);
-	fillAllAttributes(title, institution, year, technicalReportType, number, address, note,
+	fillAllAttributes(title, keywords, institution, year, technicalReportType, number, address, note,
 		numberPages, language, month, url);
     }
 
     @Checked("ResultPredicates.writePredicate")
-    public void setEditAll(String title, Unit institution, Integer year, String technicalReportType,
+    public void setEditAll(String title, MultiLanguageString keywords, Unit institution, Integer year, String technicalReportType,
 	    String number, String address, MultiLanguageString note, Integer numberPages, String language,
 	    Month month, String url) {
-	checkRequiredParameters(title, institution, year);
-	fillAllAttributes(title, institution, year, technicalReportType, number, address, note,
+	super.checkRequiredParameters(keywords, note);
+    checkRequiredParameters(title, institution, year);
+	fillAllAttributes(title, keywords, institution, year, technicalReportType, number, address, note,
 		numberPages, language, month, url);
 	super.setModifiedByAndDate();
     }
 
-    private void fillAllAttributes(String title, Unit institution, Integer year,
+    private void fillAllAttributes(String title, MultiLanguageString keywords, Unit institution, Integer year,
 	    String technicalReportType, String number, String address, MultiLanguageString note, Integer numberPages,
 	    String language, Month month, String url) {
 	super.setTitle(title);
@@ -62,6 +64,7 @@ public class TechnicalReport extends TechnicalReport_Base {
 	super.setLanguage(language);
 	super.setMonth(month);
 	super.setUrl(url);
+	super.setKeywords(keywords);
     }
 
     private void checkRequiredParameters(String title, Unit institution, Integer year) {

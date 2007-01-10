@@ -29,27 +29,29 @@ public class Inproceedings extends Inproceedings_Base {
     }
 
     public Inproceedings(Person participator, ResultParticipationRole participatorRole, String title,
-	    Integer year, String conference, ScopeType scope, Unit publisher, Unit organization,
+    	MultiLanguageString keywords, Integer year, String conference, ScopeType scope, Unit publisher, Unit organization,
 	    String address, Integer firstPage, Integer lastPage, MultiLanguageString note, String language,
 	    Month month, String url) {
 	this();
+	super.checkRequiredParameters(keywords, note);
 	checkRequiredParameters(title, year, conference);
 	super.setCreatorParticipation(participator, participatorRole);
-	fillAllAttributes(title, year, conference, scope, publisher, organization, address, firstPage,
+	fillAllAttributes(title, keywords, year, conference, scope, publisher, organization, address, firstPage,
 		lastPage, note, language, month, url);
     }
 
     @Checked("ResultPredicates.writePredicate")
-    public void setEditAll(String title, Integer year, String conference, ScopeType scope, Unit publisher,
+    public void setEditAll(String title, MultiLanguageString keywords, Integer year, String conference, ScopeType scope, Unit publisher,
 	    Unit organization, String address, Integer firstPage, Integer lastPage, MultiLanguageString note,
 	    String language, Month month, String url) {
-	checkRequiredParameters(title, year, conference);
-	fillAllAttributes(title, year, conference, scope, publisher, organization, address, firstPage,
+	super.checkRequiredParameters(keywords, note);
+    checkRequiredParameters(title, year, conference);
+	fillAllAttributes(title, keywords, year, conference, scope, publisher, organization, address, firstPage,
 		lastPage, note, language, month, url);
 	super.setModifiedByAndDate();
     }
 
-    private void fillAllAttributes(String title, Integer year, String conference, ScopeType scope,
+    private void fillAllAttributes(String title,MultiLanguageString keywords, Integer year, String conference, ScopeType scope,
 	    Unit publisher, Unit organization, String address, Integer firstPage, Integer lastPage,
 	    MultiLanguageString note, String language, Month month, String url) {
 	super.setTitle(title);
@@ -65,6 +67,7 @@ public class Inproceedings extends Inproceedings_Base {
 	super.setLanguage(language);
 	super.setMonth(month);
 	super.setUrl(url);
+	super.setKeywords(keywords);
     }
 
     private void checkRequiredParameters(String title, Integer year, String conference) {

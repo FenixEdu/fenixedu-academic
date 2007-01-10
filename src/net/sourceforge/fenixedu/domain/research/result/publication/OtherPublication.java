@@ -27,27 +27,29 @@ public class OtherPublication extends OtherPublication_Base {
 	super();
     }
 
-    public OtherPublication(Person participator, String title, Unit publisher, Integer year,
+    public OtherPublication(Person participator, String title, MultiLanguageString keywords, Unit publisher, Integer year,
 	    String howPublished, MultiLanguageString note, String address, String otherPublicationType,
 	    Integer numberPages, String language, Country country, Month month, String url) {
 	this();
+	super.checkRequiredParameters(keywords, note);
 	checkRequiredParameters(title);
 	super.setCreatorParticipation(participator, ResultParticipationRole.Author);
-	fillAllAttributes(title, publisher, year, howPublished, note, address, otherPublicationType,
+	fillAllAttributes(title, keywords, publisher, year, howPublished, note, address, otherPublicationType,
 		numberPages, language, country, month, url);
     }
 
     @Checked("ResultPredicates.writePredicate")
-    public void setEditAll(String title, Unit publisher, Integer year, String howPublished, MultiLanguageString note,
+    public void setEditAll(String title, MultiLanguageString keywords, Unit publisher, Integer year, String howPublished, MultiLanguageString note,
 	    String address, String otherPublicationType, Integer numberPages, String language,
 	    Country country, Month month, String url) {
-	checkRequiredParameters(title);
-	fillAllAttributes(title, publisher, year, howPublished, note, address, otherPublicationType,
+	super.checkRequiredParameters(keywords, note);
+    checkRequiredParameters(title);
+	fillAllAttributes(title, keywords, publisher, year, howPublished, note, address, otherPublicationType,
 		numberPages, language, country, month, url);
 	super.setModifiedByAndDate();
     }
 
-    private void fillAllAttributes(String title, Unit publisher, Integer year, String howPublished,
+    private void fillAllAttributes(String title, MultiLanguageString keywords, Unit publisher, Integer year, String howPublished,
     		MultiLanguageString note, String address, String otherPublicationType, Integer numberPages,
 	    String language, Country country, Month month, String url) {
 	super.setTitle(title);
@@ -62,6 +64,7 @@ public class OtherPublication extends OtherPublication_Base {
 	super.setCountry(country);
 	super.setMonth(month);
 	super.setUrl(url);
+	super.setKeywords(keywords);
     }
 
     @Override
