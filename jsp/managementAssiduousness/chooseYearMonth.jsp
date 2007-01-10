@@ -8,6 +8,34 @@
 <h2><bean:message key="link.exportWorkSheets" /></h2>
 <p class="mtop2"><span class="error0"><html:errors /></span></p>
 
+
+<%
+out.write("----");
+    out.write(request.getPathInfo());
+    out.write("----");
+	out.write(request.getParameter("action"));
+	out.write("----");
+	out.write(request.getRequestURI());
+	out.write("----");
+	out.write(request.getRemoteAddr());
+	out.write("----");
+	out.write(request.getServletPath());
+	out.write("----");
+	out.write(request.getServerName());
+	out.write("----");
+	out.write(request.getRealPath("/"));
+	out.write("----");
+	out.write(request.getQueryString());
+	out.write("----");
+	while (request.getParameterNames().hasMoreElements()){
+	    out.write("----");
+	    out.write(request.getParameterNames().nextElement().toString());
+	}
+
+%>
+
+
+
 <fr:form action="/exportAssiduousness.do?method=exportToPDFWorkDaySheet">
 	<fr:edit name="yearMonth" schema="choose.date">
 		<fr:layout>

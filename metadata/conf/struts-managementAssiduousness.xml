@@ -104,6 +104,21 @@
 			<forward name="show-extra-work-authorizations" path="show-extra-work-authorizations"/>
 			<forward name="view-extra-work-authorization" path="view-extra-work-authorization"/>
 		</action>
+		<action path="/extraWorkPaymentRequest"
+	    		type="net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness.ExtraWorkPaymentRequestDispatchAction"
+				parameter="method"
+				scope="request"
+				validate="true">
+			<forward name="prepare-insert-payment-request" path="prepare-insert-payment-request"/>
+			<forward name="insert-payment-request" path="insert-payment-request"/>
+		</action>
+		<action path="/monthClosure"
+	    		type="net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness.MonthClosureDispatchAction"
+				parameter="method"
+				scope="request"
+				validate="true">
+			<forward name="choose-year-month" path="choose-year-month"/>
+		</action>
  	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->

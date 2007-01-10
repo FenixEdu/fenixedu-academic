@@ -13,11 +13,11 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.assiduousness.Anulation;
 import net.sourceforge.fenixedu.domain.assiduousness.Assiduousness;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord;
+import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth;
 import net.sourceforge.fenixedu.domain.assiduousness.Justification;
 import net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive;
 import net.sourceforge.fenixedu.domain.assiduousness.Leave;
 import net.sourceforge.fenixedu.domain.assiduousness.MissingClocking;
-import net.sourceforge.fenixedu.domain.assiduousness.MonthClosure;
 import net.sourceforge.fenixedu.domain.assiduousness.Schedule;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkWeek;
@@ -86,7 +86,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
                         if (getBeginDate() == null) {
                             return new ActionMessage("errors.required", bundle.getString("label.date"));
                         }
-                        if (isBeginDateInClosedMonth(getBeginDate())) {
+                        if (ClosedMonth.isMonthClosed(getBeginDate())) {
                             return new ActionMessage("errors.datesInClosedMonth");
                         }
                         if (getBeginTime() == null) {
@@ -139,7 +139,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
                         if (getBeginDate() == null) {
                             return new ActionMessage("errors.required", bundle.getString("label.date"));
                         }
-                        if (isBeginDateInClosedMonth(getBeginDate())) {
+                        if (ClosedMonth.isMonthClosed(getBeginDate())) {
                             return new ActionMessage("errors.datesInClosedMonth");
                         }
                         if (!hasScheduleAndActive(getBeginDate(), dayDuration)) {
@@ -170,7 +170,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
                         if (getBeginDate() == null) {
                             return new ActionMessage("errors.required", bundle.getString("label.date"));
                         }
-                        if (isBeginDateInClosedMonth(getBeginDate())) {
+                        if (ClosedMonth.isMonthClosed(getBeginDate())) {
                             return new ActionMessage("errors.datesInClosedMonth");
                         }
                         if (getBeginTime() == null) {
@@ -226,7 +226,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
                         if (getBeginDate() == null) {
                             return new ActionMessage("errors.required", bundle.getString("label.date"));
                         }
-                        if (isBeginDateInClosedMonth(getBeginDate())) {
+                        if (ClosedMonth.isMonthClosed(getBeginDate())) {
                             return new ActionMessage("errors.datesInClosedMonth");
                         }
                         if (getBeginTime() == null) {
@@ -278,7 +278,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
                         if (getBeginDate() == null) {
                             return new ActionMessage("errors.required", bundle.getString("label.date"));
                         }
-                        if (isBeginDateInClosedMonth(getBeginDate())) {
+                        if (ClosedMonth.isMonthClosed(getBeginDate())) {
                             return new ActionMessage("errors.datesInClosedMonth");
                         }
                         if (!hasScheduleAndActive(getBeginDate(), dayDuration)) {
@@ -309,7 +309,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
                         if (getBeginDate() == null) {
                             return new ActionMessage("errors.required", bundle.getString("label.date"));
                         }
-                        if (isBeginDateInClosedMonth(getBeginDate())) {
+                        if (ClosedMonth.isMonthClosed(getBeginDate())) {
                             return new ActionMessage("errors.datesInClosedMonth");
                         }
                         if (getBeginTime() == null) {
@@ -361,7 +361,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
                     return new ActionMessage("errors.cantDelete.datesInClosedMonth");
                 }
             } else {
-                if (isBeginDateInClosedMonth(getJustification().getDate().toYearMonthDay())) {
+                if (ClosedMonth.isMonthClosed(getJustification().getDate().toYearMonthDay())) {
                     return new ActionMessage("errors.cantDelete.datesInClosedMonth");
                 }
             }
@@ -387,33 +387,16 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
         return new Duration(begin.toDateMidnight(), end.toDateMidnight());
     }
 
-    protected boolean isBeginDateInClosedMonth(YearMonthDay day) {
-        Partial yearMonth = new Partial().with(DateTimeFieldType.monthOfYear(), day.getMonthOfYear())
-                .with(DateTimeFieldType.year(), day.getYear());
-        return isBeginDateInClosedMonth(yearMonth);
-    }
-
-    protected boolean isBeginDateInClosedMonth(Partial yearMonth) {
-        for (MonthClosure monthClosure : RootDomainObject.getInstance().getMonthsClosures()) {
-            if (monthClosure.getYearMonth().equals(yearMonth)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     protected boolean isDateIntervalInClosedMonth(YearMonthDay day, Duration duration) {
         YearMonthDay endDate = (day.plus(duration.toPeriod()));
         Partial end = new Partial().with(DateTimeFieldType.monthOfYear(), endDate.getMonthOfYear())
                 .with(DateTimeFieldType.year(), endDate.getYear());
-
         for (Partial yearMonth = new Partial().with(DateTimeFieldType.monthOfYear(),
                 day.getMonthOfYear()).with(DateTimeFieldType.year(), day.getYear()); !yearMonth
                 .isAfter(end); yearMonth = yearMonth.withFieldAdded(DurationFieldType.months(), 1)) {
-            if (isBeginDateInClosedMonth(yearMonth)) {
+            if (ClosedMonth.isMonthClosed(yearMonth)) {
                 return true;
             }
-
         }
         return false;
     }

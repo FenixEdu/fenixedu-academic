@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.dataTransferObject.assiduousness;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.assiduousness.MonthClosure;
+import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth;
 import net.sourceforge.fenixedu.util.Month;
 
 import org.joda.time.DateTimeFieldType;
@@ -42,13 +42,9 @@ public class YearMonth implements Serializable {
     }
 
     public boolean getIsThisYearMonthClosed() {
-        for (MonthClosure monthClosure : RootDomainObject.getInstance().getMonthsClosures()) {
-            Partial yearMonth = new Partial().with(DateTimeFieldType.monthOfYear(),
-                    getMonth().ordinal() + 1).with(DateTimeFieldType.year(), getYear());
-            if (monthClosure.getYearMonth().equals(yearMonth)) {
-                return true;
-            }
-        }
-        return false;
+        Partial yearMonth = new Partial()
+                .with(DateTimeFieldType.monthOfYear(), getMonth().ordinal() + 1).with(
+                        DateTimeFieldType.year(), getYear());
+        return ClosedMonth.isMonthClosed(yearMonth);
     }
 }

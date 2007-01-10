@@ -129,7 +129,10 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.assiduousness.StaffManagementSection" table="STAFF_MANAGEMENT_SECTION">
 </class-descriptor>
 
-<class-descriptor class="net.sourceforge.fenixedu.domain.assiduousness.MonthClosure" table="MONTH_CLOSURE">
+<class-descriptor class="net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth" table="CLOSED_MONTH">
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedMonth" table="ASSIDUOUSNESS_CLOSED_MONTH">
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.assiduousness.EmployeeExtraWorkAuthorization" table="EMPLOYEE_EXTRA_WORK_AUTHORIZATION">

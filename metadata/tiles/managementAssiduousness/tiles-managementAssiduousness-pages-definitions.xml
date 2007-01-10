@@ -45,6 +45,13 @@
 	<definition name="insert-schedule" extends="definition.managementAssiduousness.masterPage">
 		<put name="body" value="/managementAssiduousness/insertSchedule.jsp"/>
 	</definition>
+	<!-- Extra Work -->
+	<definition name="prepare-insert-payment-request" extends="definition.managementAssiduousness.masterPage">
+		<put name="body" value="/managementAssiduousness/extraWork/prepareInsertPaymentRequest.jsp"/>
+	</definition>
+	<definition name="insert-payment-request" extends="definition.managementAssiduousness.masterPage">
+		<put name="body" value="/managementAssiduousness/extraWork/insertPaymentRequest.jsp"/>
+	</definition>
 	<definition name="create-extra-work-authorization" extends="definition.managementAssiduousness.masterPage">
 		<put name="body" value="/managementAssiduousness/createExtraWorkAuthorization.jsp"/>
 	</definition>	

@@ -3524,6 +3524,17 @@ class net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatusHistory e
 	Integer keyModifiedBy;
 }
 
+class net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedMonth extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyAssiduousness;
+	Integer keyClosedMonth;
+}
+
+class net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth extends net.sourceforge.fenixedu.domain.DomainObject {
+	Partial closedYearMonth;
+	Boolean closedForBalance;
+	Boolean closedForExtraWork;
+}
+
 class net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkAuthorization extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyWorkingUnit;
 	Integer keyPayingUnit;
@@ -3549,7 +3560,7 @@ class net.sourceforge.fenixedu.domain.assiduousness.EmployeeExtraWorkAuthorizati
 
 class net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkRequest extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyAssiduousness;
-	Integer keyWorkingUnit;
+	Integer keyUnit;
 	Integer keyModifiedBy;	
 	Integer nightHours;
 	Integer extraNightHours;
@@ -3560,13 +3571,8 @@ class net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkRequest extends net
 	Integer workdayHours;
 	Boolean addToVacations;
 	Boolean addToWeekRestTime;
-	Partial yearMonth;
+	Partial partialDate;
 	DateTime lastModifiedDate;
-}
-
-class net.sourceforge.fenixedu.domain.assiduousness.MonthClosure extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer keyAssiduousness;
-	Partial yearMonth;
 }
 
 class net.sourceforge.fenixedu.domain.assiduousness.Schedule extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -4681,13 +4687,22 @@ relation AssiduousnessExtraWorkRequest {
 	}
 }
 
-relation AssiduousnessMonthClosure {
+relation AssiduousnessClosedMonthAssiduousness {
 	net.sourceforge.fenixedu.domain.assiduousness.Assiduousness playsRole assiduousness;
 	
-	net.sourceforge.fenixedu.domain.assiduousness.MonthClosure playsRole monthsClosures {
+	net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedMonth playsRole assiduousnessClosedMonths {
 		multiplicity *;
 	}
 }
+
+relation ClosedMonthAssiduousnessClosedMonth {
+	net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth playsRole closedMonth;
+	
+	net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedMonth playsRole assiduousnessClosedMonths {
+		multiplicity *;
+	}
+}
+
 
 relation AssiduousnessStatusAssiduousnessStatusHistory {
 	net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatus playsRole assiduousnessStatus;
@@ -5421,8 +5436,8 @@ relation ExtraWorkAuthorizationWorkingUnit {
 	}
 }
 
-relation ExtraWorkRequestWorkingUnit {
-	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole workingUnit;	
+relation ExtraWorkRequestUnit {
+	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole unit;	
 	net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkRequest playsRole extraWorkRequests {
 		multiplicity *;
 	}
@@ -8843,9 +8858,16 @@ relation RootDomainObjectExtraWorkRequest {
 	}
 }
 
-relation RootDomainObjectMonthClosure {
+relation RootDomainObjectClosedMonth {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.assiduousness.MonthClosure playsRole monthsClosures {
+	net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth playsRole closedMonths {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectAssiduousnessClosedMonth {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedMonth playsRole assiduousnessClosedMonths {
 		multiplicity *;
 	}
 }

@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.util.LanguageUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -131,7 +132,8 @@ public class AssiduousnessParametrizationDispatchAction extends FenixDispatchAct
             setError(request, "timeout", "error.timeout");
             return mapping.findForward("edit-schedule");
         }
-        if (validateWorkScheduleTypeFactory(request, workScheduleTypeFactory)) {
+        if (hasWorkScheduleAcronym(request, workScheduleTypeFactory)
+                && validateWorkScheduleTypeFactory(request, workScheduleTypeFactory)) {
             Object result = executeService(request, "ExecuteFactoryMethod",
                     new Object[] { workScheduleTypeFactory });
             if (result == null) {
@@ -156,8 +158,25 @@ public class AssiduousnessParametrizationDispatchAction extends FenixDispatchAct
         return workScheduleList;
     }
 
+    private boolean hasWorkScheduleAcronym(HttpServletRequest request,
+            WorkScheduleTypeFactory workScheduleTypeFactory) {
+        if (StringUtils.isEmpty(workScheduleTypeFactory.getAcronym())) {
+            ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources",
+                    LanguageUtils.getLocale());
+            setError(request, "validation", "errors.required", bundle.getString("label.acronym"));
+            return false;
+        }
+        return true;
+    }
+
     private boolean validateWorkScheduleAcronym(HttpServletRequest request,
             WorkScheduleTypeFactory workScheduleTypeFactory) {
+        if (StringUtils.isEmpty(workScheduleTypeFactory.getAcronym())) {
+            ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources",
+                    LanguageUtils.getLocale());
+            setError(request, "validation", "errors.required", bundle.getString("label.acronym"));
+            return false;
+        }
         if (alreadyExistsWorkScheduleTypeAcronym(workScheduleTypeFactory.getAcronym())) {
             setError(request, "validation", "error.acronymAlreadyExists");
             return false;
@@ -169,12 +188,11 @@ public class AssiduousnessParametrizationDispatchAction extends FenixDispatchAct
             WorkScheduleTypeFactory workScheduleTypeFactory) {
         ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources",
                 LanguageUtils.getLocale());
-
-        if (!workScheduleTypeFactory.getBeginValidDate().isBefore(
-                workScheduleTypeFactory.getEndValidDate())) {
-            setError(request, "validation", "error.invalidDates", bundle.getString("label.date"));// datas
-            // de
-            // validade
+        if (workScheduleTypeFactory.getBeginValidDate() == null
+                || workScheduleTypeFactory.getEndValidDate() == null
+                || (!workScheduleTypeFactory.getBeginValidDate().isBefore(
+                        workScheduleTypeFactory.getEndValidDate()))) {
+            setError(request, "validation", "error.invalidDates", bundle.getString("label.validity"));
             return false;
         }
         Interval emptyInterval = new Interval(0, 0);
@@ -182,8 +200,8 @@ public class AssiduousnessParametrizationDispatchAction extends FenixDispatchAct
                 .getBeginDayTime(), workScheduleTypeFactory.getEndDayTime(), workScheduleTypeFactory
                 .getEndDayNextDay());
         if (dayInterval == null || dayInterval.equals(emptyInterval)) {
-            setError(request, "validation", "error.invalidDates", bundle.getString("label.date"));// horário
-            // dia
+            setError(request, "validation", "error.invalidDates", bundle
+                    .getString("label.dayTimeSchedule"));
             return false;
         }
 
@@ -191,8 +209,8 @@ public class AssiduousnessParametrizationDispatchAction extends FenixDispatchAct
                 .getBeginClockingTime(), workScheduleTypeFactory.getEndClockingTime(),
                 workScheduleTypeFactory.getEndClockingNextDay());
         if (clockingInterval == null || clockingInterval.equals(emptyInterval)) {
-            setError(request, "validation", "error.invalidDates", bundle.getString("label.date"));// horário
-            // marcações
+            setError(request, "validation", "error.invalidDates", bundle
+                    .getString("label.clockingTimeSchedule"));
             return false;
         }
 
@@ -206,8 +224,9 @@ public class AssiduousnessParametrizationDispatchAction extends FenixDispatchAct
                 workScheduleTypeFactory.getBeginNormalWorkFirstPeriod(), workScheduleTypeFactory
                         .getEndNormalWorkFirstPeriod(), workScheduleTypeFactory
                         .getEndNormalWorkFirstPeriodNextDay());
-        if (firstNormalWorkPeriodInterval == null || dayInterval.equals(emptyInterval)) {
-            setError(request, "validation", "error.invalidDates", bundle.getString("label.date"));// firstNormalWorkPeriodInterval
+        if (firstNormalWorkPeriodInterval == null || firstNormalWorkPeriodInterval.equals(emptyInterval)) {
+            setError(request, "validation", "error.invalidDates", bundle
+                    .getString("label.normalFirstWorkPeriod"));
             return false;
         }
         overlap = firstNormalWorkPeriodInterval.overlap(clockingInterval);
@@ -231,7 +250,8 @@ public class AssiduousnessParametrizationDispatchAction extends FenixDispatchAct
                         .getEndNormalWorkSecondPeriod(), workScheduleTypeFactory
                         .getEndNormalWorkSecondPeriodNextDay());
         if (secondNormalWorkPeriodInterval == null) {
-            setError(request, "validation", "error.invalidDates", bundle.getString("label.date"));// secondNormalWorkPeriodInterval
+            setError(request, "validation", "error.invalidDates", bundle
+                    .getString("label.normalSecondWorkPeriod"));
             return false;
         }
         if (!secondNormalWorkPeriodInterval.equals(emptyInterval)) {
@@ -260,7 +280,8 @@ public class AssiduousnessParametrizationDispatchAction extends FenixDispatchAct
                 .getBeginFixedWorkFirstPeriod(), workScheduleTypeFactory.getEndFixedWorkFirstPeriod(),
                 workScheduleTypeFactory.getEndFixedWorkFirstPeriodNextDay());
         if (firstFixedWorkPeriodInterval == null) {
-            setError(request, "validation", "error.invalidDates", bundle.getString("label.date"));// firstFixedWorkPeriodInterval
+            setError(request, "validation", "error.invalidDates", bundle
+                    .getString("label.fixedFirstWorkPeriod"));
             return false;
         }
         if (!firstFixedWorkPeriodInterval.equals(emptyInterval)) {
@@ -275,7 +296,8 @@ public class AssiduousnessParametrizationDispatchAction extends FenixDispatchAct
                         .getEndFixedWorkSecondPeriod(), workScheduleTypeFactory
                         .getEndFixedWorkSecondPeriodNextDay());
         if (secondFixedWorkPeriodInterval == null) {
-            setError(request, "validation", "error.invalidDates", bundle.getString("label.date"));// secondFixedWorkPeriodInterval
+            setError(request, "validation", "error.invalidDates", bundle
+                    .getString("label.fixedSecondWorkPeriod"));
             return false;
         }
         if (!secondFixedWorkPeriodInterval.equals(emptyInterval)) {
@@ -293,7 +315,7 @@ public class AssiduousnessParametrizationDispatchAction extends FenixDispatchAct
         Interval mealInterval = verifyTimeOfDayAndReturnInterval(workScheduleTypeFactory
                 .getMealBeginTime(), workScheduleTypeFactory.getMealEndTime(), false);
         if (mealInterval == null) {
-            setError(request, "validation", "error.invalidDates", bundle.getString("label.date"));// mealInterval
+            setError(request, "validation", "error.invalidDates", bundle.getString("label.mealPeriod"));
             return false;
         }
         if (!mealInterval.equals(emptyInterval)) {

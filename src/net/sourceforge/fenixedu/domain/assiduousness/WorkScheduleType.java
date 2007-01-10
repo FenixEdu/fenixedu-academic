@@ -79,10 +79,10 @@ public class WorkScheduleType extends WorkScheduleType_Base {
         return false;
     }
 
-    public void update(String className, Boolean mandatoryClocking, YearMonthDay beginValidDate, YearMonthDay endValidDate,
-            String acronym, TimeOfDay dayTime, Duration dayTimeDuration, TimeOfDay clockingTime,
-            Duration clockingTimeDuration, WorkPeriod normalWorkPeriod, WorkPeriod fixedWorkPeriod,
-            Meal meal, DateTime lastModifiedDate, Employee modifiedBy) {
+    public void update(String className, Boolean mandatoryClocking, YearMonthDay beginValidDate,
+            YearMonthDay endValidDate, String acronym, TimeOfDay dayTime, Duration dayTimeDuration,
+            TimeOfDay clockingTime, Duration clockingTimeDuration, WorkPeriod normalWorkPeriod,
+            WorkPeriod fixedWorkPeriod, Meal meal, DateTime lastModifiedDate, Employee modifiedBy) {
         setOjbConcreteClass(className);
         setAcronym(acronym);
         setMandatoryClocking(mandatoryClocking);
@@ -267,7 +267,7 @@ public class WorkScheduleType extends WorkScheduleType_Base {
 
     public boolean equals(YearMonthDay beginValid, YearMonthDay endValid, TimeOfDay workTime,
             Duration workTimeDuration, TimeOfDay clockingTime, Duration clockingTimeDuration,
-            TimeOfDay firstNormalPeriod, Duration firstNormalPeriodDuration,
+            Boolean mandatoryClocking, TimeOfDay firstNormalPeriod, Duration firstNormalPeriodDuration,
             TimeOfDay secondNormalPeriod, Duration secondNormalPeriodDuration,
             TimeOfDay firstFixedPeriod, Duration firstFixedPeriodDuration, TimeOfDay secondFixedPeriod,
             Duration secondFixedPeriodDuration, TimeOfDay beginMeal, TimeOfDay endMeal, Duration minium,
@@ -276,16 +276,17 @@ public class WorkScheduleType extends WorkScheduleType_Base {
         if (getBeginValidDate().equals(beginValid)
                 && getEndValidDate().equals(endValid)
                 && equivalent(workTime, workTimeDuration, clockingTime, clockingTimeDuration,
-                        firstNormalPeriod, firstNormalPeriodDuration, secondNormalPeriod,
-                        secondNormalPeriodDuration, firstFixedPeriod, firstFixedPeriodDuration,
-                        secondFixedPeriod, secondFixedPeriodDuration, beginMeal, endMeal, minium, maxium)) {
+                        mandatoryClocking, firstNormalPeriod, firstNormalPeriodDuration,
+                        secondNormalPeriod, secondNormalPeriodDuration, firstFixedPeriod,
+                        firstFixedPeriodDuration, secondFixedPeriod, secondFixedPeriodDuration,
+                        beginMeal, endMeal, minium, maxium)) {
             return true;
         }
         return false;
     }
 
     public boolean equivalent(TimeOfDay workTime, Duration workTimeDuration, TimeOfDay clockingTime,
-            Duration clockingTimeDuration, TimeOfDay firstNormalPeriod,
+            Duration clockingTimeDuration, Boolean mandatoryClocking, TimeOfDay firstNormalPeriod,
             Duration firstNormalPeriodDuration, TimeOfDay secondNormalPeriod,
             Duration secondNormalPeriodDuration, TimeOfDay firstFixedPeriod,
             Duration firstFixedPeriodDuration, TimeOfDay secondFixedPeriod,
@@ -294,6 +295,7 @@ public class WorkScheduleType extends WorkScheduleType_Base {
         if ((getWorkTime().equals(workTime) && getWorkTimeDuration().equals(workTimeDuration)
                 && getClockingTime().equals(clockingTime) && getClockingTimeDuration().equals(
                 clockingTimeDuration))
+                && (getMandatoryClocking().equals(mandatoryClocking))
                 && ((!hasNormalWorkPeriod() && firstNormalPeriod == null) || (hasNormalWorkPeriod() && getNormalWorkPeriod()
                         .equivalent(firstNormalPeriod, firstNormalPeriodDuration, secondNormalPeriod,
                                 secondNormalPeriodDuration)))
@@ -329,9 +331,10 @@ public class WorkScheduleType extends WorkScheduleType_Base {
 
         return equivalent(workScheduleType.getWorkTime(), workScheduleType.getWorkTimeDuration(),
                 workScheduleType.getClockingTime(), workScheduleType.getClockingTimeDuration(),
-                workScheduleType.getNormalWorkPeriod().getFirstPeriod(), workScheduleType
-                        .getNormalWorkPeriod().getFirstPeriodDuration(), workScheduleType
-                        .getNormalWorkPeriod().getSecondPeriod(), workScheduleType.getNormalWorkPeriod()
+                workScheduleType.getMandatoryClocking(), workScheduleType.getNormalWorkPeriod()
+                        .getFirstPeriod(), workScheduleType.getNormalWorkPeriod()
+                        .getFirstPeriodDuration(), workScheduleType.getNormalWorkPeriod()
+                        .getSecondPeriod(), workScheduleType.getNormalWorkPeriod()
                         .getSecondPeriodDuration(), firstFixedPeriod, firstFixedPeriodDuration,
                 secondFixedPeriod, secondFixedPeriodDuration, beginMeal, endMeal, minium, maxium);
     }

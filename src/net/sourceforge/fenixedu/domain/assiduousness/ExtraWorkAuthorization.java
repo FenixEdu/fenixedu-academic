@@ -100,7 +100,8 @@ public class ExtraWorkAuthorization extends ExtraWorkAuthorization_Base {
         DateInterval dateInterval = new DateInterval(getBeginDate(), getEndDate());
         if (begin != null && end != null) {
             DateInterval internalInterval = new DateInterval(begin, end);
-            return dateInterval.containsInterval(internalInterval);
+            return dateInterval.containsInterval(internalInterval)
+                    || internalInterval.containsInterval(dateInterval);
         } else if (begin != null && end == null) {
             return dateInterval.containsDate(begin);
         } else if (begin == null && end != null) {
@@ -108,7 +109,7 @@ public class ExtraWorkAuthorization extends ExtraWorkAuthorization_Base {
         }
         return true;
     }
-
+    
     private void deleteEmployeeExtraWorkAuthorization(
             List<EmployeeExtraWorkAuthorizationBean> employeeExtraWorkAuthorizationBeansToDelete) {
         for (EmployeeExtraWorkAuthorizationBean employeeExtraWorkAuthorizationBean : employeeExtraWorkAuthorizationBeansToDelete) {

@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.domain.assiduousness;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
 
 public class StaffManagementSection extends StaffManagementSection_Base {
 
@@ -12,6 +11,7 @@ public class StaffManagementSection extends StaffManagementSection_Base {
     }
 
     public static boolean isMember(Person person) {
+        System.out.println("");
         return RootDomainObject.getInstance().getStaffManagementSections().isEmpty() ? false
                 : RootDomainObject.getInstance().getStaffManagementSectionsIterator().next()
                         .getSectionManagers().isMember(person);
