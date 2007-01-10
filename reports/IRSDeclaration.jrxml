@@ -56,8 +56,8 @@
 				</staticText>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="290"
-						y="147"
+						x="287"
+						y="107"
 						width="261"
 						height="22"
 						key="textField-27"
@@ -70,8 +70,8 @@
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="290"
-						y="173"
+						x="287"
+						y="133"
 						width="261"
 						height="22"
 						key="textField-28"
@@ -84,8 +84,8 @@
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="290"
-						y="213"
+						x="287"
+						y="173"
 						width="261"
 						height="22"
 						key="textField-29"
@@ -98,8 +98,8 @@
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="290"
-						y="195"
+						x="287"
+						y="155"
 						width="261"
 						height="22"
 						key="textField-30"
