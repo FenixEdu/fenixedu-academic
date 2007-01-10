@@ -186,8 +186,8 @@ public class Vigilant extends Vigilant_Base {
 	}
 	
 	public String getTeacherCategoryCode() {
-		Teacher teacher = this.getTeacher();
-		return (teacher == null) ? "" : teacher.getCategory().getCode();
+		Category category = getTeacherCategory();
+		return (category == null) ? "" : category.getCode();
 	}
 
 	public List<Campus> getCampus() {
