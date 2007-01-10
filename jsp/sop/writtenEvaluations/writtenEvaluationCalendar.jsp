@@ -115,7 +115,7 @@
 							<c:url var="commentURL" value="commentExecutionCourse.faces">
 								<c:param name="executionDegreeID" value="${SOPEvaluationManagementBackingBean.executionDegreeID}"/>
 								<c:param name="executionPeriodID" value="${SOPEvaluationManagementBackingBean.executionPeriodID}"/>
-								<c:param name="executionCourseID" value="${executionCourse.idInternal}"/>
+								<c:param name="executionCourseID" value="${executionCourseWrittenEvaluationAgregationBean.executionCourse.idInternal}"/>
 								<c:param name="executionPeriodOID" value="${SOPEvaluationManagementBackingBean.executionPeriodOID}"/>
 								<c:param name="curricularYearIDsParameterString" value="${SOPEvaluationManagementBackingBean.curricularYearIDsParameterString}"/>
 							</c:url>
