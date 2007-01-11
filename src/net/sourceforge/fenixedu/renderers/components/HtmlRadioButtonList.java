@@ -9,16 +9,14 @@ import net.sourceforge.fenixedu.renderers.components.tags.HtmlTag;
 
 import org.apache.commons.collections.Predicate;
 
-public class HtmlRadioButtonList extends HtmlSimpleValueComponent {
+public class HtmlRadioButtonList extends HtmlRadioButtonGroup {
 
     private HtmlList list;
-    private List<HtmlRadioButton> radioButtons;
 
     public HtmlRadioButtonList() {
         super();
         
         this.list = new HtmlList();
-        this.radioButtons = new ArrayList<HtmlRadioButton>();
     }
 
     public void addClass(String newClass) {
@@ -165,26 +163,8 @@ public class HtmlRadioButtonList extends HtmlSimpleValueComponent {
         this.list.setVisible(visible);
     }
 
-    public List<HtmlRadioButton> getRadioButtons() {
-        return this.radioButtons;
-    }
-
     public HtmlList getList() {
         return this.list;
-    }
-
-    @Override
-    public void setValue(String value) {
-        super.setValue(value);
-        
-        for (HtmlRadioButton radio : getRadioButtons()) {
-            if (value != null && value.equals(radio.getValue())) {
-                radio.setChecked(true);
-            }
-            else {
-                radio.setChecked(false);
-            }
-        }
     }
 
     public HtmlRadioButton addOption(HtmlComponent component, String value) {
@@ -195,49 +175,17 @@ public class HtmlRadioButtonList extends HtmlSimpleValueComponent {
     }
     
     public HtmlRadioButton addOption(HtmlComponent component) {
-        HtmlRadioButton radio = new HtmlRadioButton() {
-
-            @Override
-            public void setChecked(boolean checked) {
-                HtmlRadioButtonList.this.setChecked(this, checked);
-                
-                super.setChecked(checked);
-            }
-            
-        };
-        
-        getRadioButtons().add(radio);
+        HtmlRadioButton radio = createRadioButton();        
         
         HtmlListItem item = this.list.createItem();
         item.addChild(component);
         
-        radio.setName(getName());
         return radio;
-    }
-
-    protected void setChecked(HtmlRadioButton button, boolean checked) {
-        if (! checked) {
-            return;
-        }
-
-        for (HtmlRadioButton radio : getRadioButtons()) {
-            if (radio.equals(button)) {
-                continue;
-            }
-            
-            radio.setChecked(false);
-        }
     }
 
     @Override
     public HtmlTag getOwnTag(PageContext context) {
-        for (HtmlRadioButton radio : getRadioButtons()) {
-            radio.setName(getName());
-            
-            if (getTargetSlot() != null) {
-                radio.setTargetSlot(getTargetSlot());
-            }
-        }
+        super.getOwnTag(context);
 
         for (int i = 0; i < this.list.getItems().size(); i++) {
             HtmlListItem item = this.list.getItems().get(i);

@@ -61,7 +61,7 @@ public class HtmlRadioButton extends HtmlInputComponent {
 
     @Override
     public void setValue(String value) {
-        setChecked(value != null);
+        setChecked(String.valueOf(getUserValue()).equals(value));
     }
 
     @Override
