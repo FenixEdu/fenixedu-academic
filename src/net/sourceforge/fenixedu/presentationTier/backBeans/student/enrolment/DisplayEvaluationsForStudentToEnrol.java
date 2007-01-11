@@ -124,30 +124,34 @@ public class DisplayEvaluationsForStudentToEnrol extends FenixBackingBean {
 
     private void processEnroledEvaluations() {
         if (getEvaluationType().equals(ALL) || getEvaluationType().equals(EXAMS)) {
-            for (final Exam exam : getStudent().getEnroledExams(getExecutionPeriod())) {
-                try {
-                    exam.isInEnrolmentPeriod();
-                    this.enroledEvaluations.add(exam);
-                } catch (final DomainException e) {
-                    getEvaluationsWithoutEnrolmentPeriod().add(exam);
-                } finally {
-                    getExecutionCourses().put(exam.getIdInternal(),
-                            exam.getAttendingExecutionCoursesFor(getStudent()));
-                }
+            for (final Registration registration : getStudent().getStudent().getRegistrationsSet()) {
+        	for (final Exam exam : registration.getEnroledExams(getExecutionPeriod())) {
+        	    try {
+        		exam.isInEnrolmentPeriod();
+        		this.enroledEvaluations.add(exam);
+        	    } catch (final DomainException e) {
+        		getEvaluationsWithoutEnrolmentPeriod().add(exam);
+        	    } finally {
+        		getExecutionCourses().put(exam.getIdInternal(),
+        			exam.getAttendingExecutionCoursesFor(registration));
+        	    }
+        	}
             }
         }
         if (getEvaluationType().equals(ALL) || getEvaluationType().equals(WRITTENTESTS)) {
-            for (final WrittenTest writtenTest : getStudent().getEnroledWrittenTests(
-                    getExecutionPeriod())) {
-                try {
-                    writtenTest.isInEnrolmentPeriod();
-                    this.enroledEvaluations.add(writtenTest);
-                } catch (final DomainException e) {
-                    getEvaluationsWithoutEnrolmentPeriod().add(writtenTest);
-                } finally {
-                    getExecutionCourses().put(writtenTest.getIdInternal(),
-                            writtenTest.getAttendingExecutionCoursesFor(getStudent()));
-                }
+            for (final Registration registration : getStudent().getStudent().getRegistrationsSet()) {
+        	for (final WrittenTest writtenTest : registration.getEnroledWrittenTests(
+        		getExecutionPeriod())) {
+        	    try {
+        		writtenTest.isInEnrolmentPeriod();
+        		this.enroledEvaluations.add(writtenTest);
+        	    } catch (final DomainException e) {
+        		getEvaluationsWithoutEnrolmentPeriod().add(writtenTest);
+        	    } finally {
+        		getExecutionCourses().put(writtenTest.getIdInternal(),
+        			writtenTest.getAttendingExecutionCoursesFor(registration));
+        	    }
+        	}
             }
         }
         Collections.sort(this.enroledEvaluations, comparatorChain);
@@ -155,32 +159,36 @@ public class DisplayEvaluationsForStudentToEnrol extends FenixBackingBean {
 
     private void processNotEnroledEvaluations() {
         if (getEvaluationType().equals(ALL) || getEvaluationType().equals(EXAMS)) {
-            for (final Exam exam : getStudent().getUnenroledExams(getExecutionPeriod())) {
-            	if (exam.isExamsMapPublished()) {
-            		try {
-            			exam.isInEnrolmentPeriod();
-            			this.notEnroledEvaluations.add(exam);
-            		} catch (final DomainException e) {
-            			getEvaluationsWithoutEnrolmentPeriod().add(exam);
-            		} finally {
-            			getExecutionCourses().put(exam.getIdInternal(),
-            					exam.getAttendingExecutionCoursesFor(getStudent()));
+            for (final Registration registration : getStudent().getStudent().getRegistrationsSet()) {
+        	for (final Exam exam : registration.getUnenroledExams(getExecutionPeriod())) {
+            		if (exam.isExamsMapPublished()) {
+            		    try {
+            				exam.isInEnrolmentPeriod();
+            				this.notEnroledEvaluations.add(exam);
+            		    } catch (final DomainException e) {
+            				getEvaluationsWithoutEnrolmentPeriod().add(exam);
+            		    } finally {
+            				getExecutionCourses().put(exam.getIdInternal(),
+            					exam.getAttendingExecutionCoursesFor(registration));
+            		    }
             		}
-            	}
+        	}
             }
         }
         if (getEvaluationType().equals(ALL) || getEvaluationType().equals(WRITTENTESTS)) {
-            for (final WrittenTest writtenTest : getStudent().getUnenroledWrittenTests(
-                    getExecutionPeriod())) {
-                try {
-                    writtenTest.isInEnrolmentPeriod();
-                    this.notEnroledEvaluations.add(writtenTest);
-                } catch (final DomainException e) {
-                    getEvaluationsWithoutEnrolmentPeriod().add(writtenTest);
-                } finally {
-                    getExecutionCourses().put(writtenTest.getIdInternal(),
-                            writtenTest.getAttendingExecutionCoursesFor(getStudent()));
-                }
+            for (final Registration registration : getStudent().getStudent().getRegistrationsSet()) {
+        	for (final WrittenTest writtenTest : registration.getUnenroledWrittenTests(
+        		getExecutionPeriod())) {
+        	    try {
+        		writtenTest.isInEnrolmentPeriod();
+        		this.notEnroledEvaluations.add(writtenTest);
+        	    } catch (final DomainException e) {
+        		getEvaluationsWithoutEnrolmentPeriod().add(writtenTest);
+        	    } finally {
+        		getExecutionCourses().put(writtenTest.getIdInternal(),
+        			writtenTest.getAttendingExecutionCoursesFor(registration));
+        	    }
+        	}
             }
         }
         Collections.sort(this.notEnroledEvaluations, comparatorChain);

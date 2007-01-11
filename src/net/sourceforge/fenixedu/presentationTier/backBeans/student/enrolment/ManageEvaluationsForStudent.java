@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -60,36 +61,38 @@ public class ManageEvaluationsForStudent extends DisplayEvaluationsForStudentToE
         this.evaluationsWithEnrolmentPeriodOpened = new ArrayList();
 
         final String evaluationType = getEvaluationTypeString();
-        for (final WrittenEvaluation writtenEvaluation : this.getStudent().getWrittenEvaluations(
-                getExecutionPeriod())) {
-        	if (writtenEvaluation instanceof Exam) {
-        		final Exam exam = (Exam) writtenEvaluation;
-        		if (!exam.isExamsMapPublished()) {
+        for (final Registration registration : getStudent().getStudent().getRegistrationsSet()) {
+            for (final WrittenEvaluation writtenEvaluation : registration.getWrittenEvaluations(
+        	    getExecutionPeriod())) {
+        		if (writtenEvaluation instanceof Exam) {
+        		    final Exam exam = (Exam) writtenEvaluation;
+        		    if (!exam.isExamsMapPublished()) {
         			continue;
+        		    }
         		}
-        	}
 
-            if (writtenEvaluation.getClass().getName().equals(evaluationType)) {
-                try {
-                    if (writtenEvaluation.isInEnrolmentPeriod()) {
-                        this.evaluationsWithEnrolmentPeriodOpened.add(writtenEvaluation);
-                    } else {
-                        this.evaluationsWithEnrolmentPeriodClosed.add(writtenEvaluation);
-                        final OldRoom room = getStudent().getRoomFor(writtenEvaluation);
-                        getStudentRooms().put(writtenEvaluation.getIdInternal(),
-                                room != null ? room.getNome() : "-");
-                    }
-                    getEnroledEvaluationsForStudent().put(writtenEvaluation.getIdInternal(),
-                            Boolean.valueOf(getStudent().isEnroledIn(writtenEvaluation)));
-                } catch (final DomainException e) {
-                    getEvaluationsWithoutEnrolmentPeriod().add(writtenEvaluation);
-                    final OldRoom room = getStudent().getRoomFor(writtenEvaluation);
-                    getStudentRooms().put(writtenEvaluation.getIdInternal(),
-                            room != null ? room.getNome() : "-");
-                } finally {
-                    getExecutionCourses().put(writtenEvaluation.getIdInternal(),
-                            writtenEvaluation.getAttendingExecutionCoursesFor(getStudent()));
-                }
+        		if (writtenEvaluation.getClass().getName().equals(evaluationType)) {
+        		    try {
+        			if (writtenEvaluation.isInEnrolmentPeriod()) {
+        			    this.evaluationsWithEnrolmentPeriodOpened.add(writtenEvaluation);
+        			} else {
+        			    this.evaluationsWithEnrolmentPeriodClosed.add(writtenEvaluation);
+        			    final OldRoom room = registration.getRoomFor(writtenEvaluation);
+        			    getStudentRooms().put(writtenEvaluation.getIdInternal(),
+        				    room != null ? room.getNome() : "-");
+        			}
+        		    } catch (final DomainException e) {
+        			getEvaluationsWithoutEnrolmentPeriod().add(writtenEvaluation);
+        			final OldRoom room = registration.getRoomFor(writtenEvaluation);
+        			getStudentRooms().put(writtenEvaluation.getIdInternal(),
+        				room != null ? room.getNome() : "-");
+        		    } finally {
+        			getEnroledEvaluationsForStudent().put(writtenEvaluation.getIdInternal(),
+        				Boolean.valueOf(registration.isEnroledIn(writtenEvaluation)));
+        			getExecutionCourses().put(writtenEvaluation.getIdInternal(),
+        				writtenEvaluation.getAttendingExecutionCoursesFor(registration));
+        		    }
+        		}
             }
         }
         Collections.sort(this.evaluationsWithEnrolmentPeriodClosed, new BeanComparator("dayDate"));
