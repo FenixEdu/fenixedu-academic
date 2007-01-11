@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarDateComparator;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarHourComparator;
+import net.sourceforge.fenixedu.dataTransferObject.comparators.MetadataComparator;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoInquiryStatistics;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteDistributedTestAdvisory;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteStudentTestFeedback;
@@ -146,17 +147,18 @@ public class TestsManagementAction extends FenixDispatchAction {
         }
         final ExecutionCourse executionCourse = rootDomainObject
                 .readExecutionCourseByOID(executionCourseId);
-        Set<Metadata> metadataList = Metadata.findVisibleMetadataFromExecutionCourseNotOfTest(
-                executionCourse, test);
-        final String asc = request.getParameter("asc");
+        List<Metadata> metadataList = new ArrayList<Metadata>(Metadata
+                .findVisibleMetadataFromExecutionCourseNotOfTest(executionCourse, test));
         String order = request.getParameter("order");
+        final String asc = request.getParameter("asc");
+
         if (order != null) {
-            // MetadataComparator metadataComparator = new
-            // MetadataComparator(order, asc);
-            // Collections.sort(infoMetadataList, metadataComparator);
+            MetadataComparator metadataComparator = new MetadataComparator(order, asc);
+            Collections.sort(metadataList, metadataComparator);
         } else {
             order = new String();
         }
+
         request.setAttribute("metadataList", metadataList);
         request.setAttribute("objectCode", executionCourseId);
         request.setAttribute("testCode", testCode);
