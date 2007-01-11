@@ -494,6 +494,9 @@ ul.indent0 { margin-left: 0; padding-left: 0; }
 .wauto { width: auto; }
 .width100 { width: 100%; }
 .width05em { width: 0.5em; }
+.width1em { width: 1em; }
+.width2em { width: 2em; }
+.width3em { width: 3em; }
 .width4em { width: 4em; }
 .width5em { width: 5em; }
 .width6em { width: 6em; }
