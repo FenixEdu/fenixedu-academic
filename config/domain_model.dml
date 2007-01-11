@@ -2920,6 +2920,7 @@ class net.sourceforge.fenixedu.domain.student.Registration extends net.sourcefor
     Character approvationRatioClassification;
     Character arithmeticMeanClassification;  
     YearMonthDay startDate;
+    Integer finalAverage;
     Integer keySenior;
     Integer keyAssociatedGaugingTestResult;
 	Integer keyPrecedentDegreeInformation;
