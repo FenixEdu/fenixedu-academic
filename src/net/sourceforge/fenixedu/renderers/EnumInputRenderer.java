@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
@@ -17,6 +19,8 @@ import net.sourceforge.fenixedu.renderers.model.MetaSlotKey;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.log4j.Logger;
+
+import pt.ist.utl.fenix.utils.Pair;
 
 /**
  * This renderer presents an html menu with one option for each possible enum value.
@@ -129,15 +133,27 @@ public class EnumInputRenderer extends InputRenderer {
                 
                 Collection<Object> constants = getIncludedEnumValues(type);
                 Collection<Object> excludedValues = getExcludedEnumValues(type);
+                List<Pair<Enum,String>> pairList = new ArrayList<Pair<Enum,String>>();
                 
-                for (Object object : constants) {
-                    Enum oneEnum = (Enum) object;
+                for(Object object : constants) {
+                	Enum oneEnum = (Enum) object;
+                	pairList.add(new Pair<Enum,String>(oneEnum,RenderUtils.getEnumString(oneEnum, getBundle())));
+                }
+                
+                Collections.sort(pairList, new Comparator<Pair<Enum,String>>() {
+					public int compare(Pair<Enum, String> o1, Pair<Enum, String> o2) {
+						return o1.getValue().compareTo(o2.getValue());
+					}
+                });
+                
+                for (Pair<Enum,String> pair : pairList) {
+                    
+                	Enum oneEnum = pair.getKey();
+                	String description = pair.getValue();
 
-                    if (excludedValues.contains(object)) {
-                	continue;
+                    if (excludedValues.contains(oneEnum)) {
+                    	continue;
                     }
-
-                    String description = RenderUtils.getEnumString(oneEnum, getBundle());
 
                     HtmlMenuOption option = menu.createOption(description);
                     option.setValue(oneEnum.toString());
