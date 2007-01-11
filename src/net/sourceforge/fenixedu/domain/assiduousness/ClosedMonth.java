@@ -37,4 +37,14 @@ public class ClosedMonth extends ClosedMonth_Base {
         return isMonthClosed(yearMonth);
     }
 
+    public static ClosedMonth getLastMonthClosed() {
+        ClosedMonth resultClosedMonth = null;
+        for (ClosedMonth closedMonth : RootDomainObject.getInstance().getClosedMonths()) {
+            if (resultClosedMonth == null
+                    || closedMonth.getClosedYearMonth().isAfter(resultClosedMonth.getClosedYearMonth())) {
+                resultClosedMonth = closedMonth;
+            }
+        }
+        return resultClosedMonth;
+    }
 }
