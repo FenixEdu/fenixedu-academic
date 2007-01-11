@@ -60,6 +60,9 @@
 	<definition name="df.page.notAuthorized" extends="definition.student.masterPage" >
 		<put name="body" value="/student/notAuthorized_bd.jsp" />
 	</definition>	
+	<definition name="df.page.curriculum.chooseRegistration" extends="definition.student.masterPage">
+		<put name="body" value="/student/curriculum/chooseRegistration.jsp" />
+	</definition>
 	<definition name="df.page.showStudentCurriculum" extends="definition.student.masterPage" >
 		<put name="body" value="/student/curriculum/displayStudentCurriculum_bd.jsp" />
 	</definition>	
