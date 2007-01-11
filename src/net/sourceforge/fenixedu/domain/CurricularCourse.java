@@ -46,13 +46,15 @@ import org.joda.time.YearMonthDay;
 public class CurricularCourse extends CurricularCourse_Base {
 
     private static final double ECTS_CREDITS_FOR_PRE_BOLONHA = 6;
-    
+
     public static final Comparator<CurricularCourse> CURRICULAR_COURSE_COMPARATOR_BY_DEGREE_AND_NAME = new ComparatorChain();
     static {
 	((ComparatorChain) CURRICULAR_COURSE_COMPARATOR_BY_DEGREE_AND_NAME)
-		.addComparator(new BeanComparator("degreeCurricularPlan.degree.tipoCurso.name", Collator.getInstance()));
+		.addComparator(new BeanComparator("degreeCurricularPlan.degree.tipoCurso.name", Collator
+			.getInstance()));
 	((ComparatorChain) CURRICULAR_COURSE_COMPARATOR_BY_DEGREE_AND_NAME)
-		.addComparator(new BeanComparator("degreeCurricularPlan.degree.nome", Collator.getInstance()));
+		.addComparator(new BeanComparator("degreeCurricularPlan.degree.nome", Collator
+			.getInstance()));
 	((ComparatorChain) CURRICULAR_COURSE_COMPARATOR_BY_DEGREE_AND_NAME)
 		.addComparator(new BeanComparator("name", Collator.getInstance()));
 	((ComparatorChain) CURRICULAR_COURSE_COMPARATOR_BY_DEGREE_AND_NAME)
@@ -73,14 +75,14 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     protected CurricularCourse() {
 	super();
-        final Double d = Double.valueOf(0d);
-        setTheoreticalHours(d);
-        setTheoPratHours(d);
-        setLabHours(d);
-        setPraticalHours(d);
-        setCredits(d);
-        setEctsCredits(d);
-        setWeigth(d);
+	final Double d = Double.valueOf(0d);
+	setTheoreticalHours(d);
+	setTheoPratHours(d);
+	setLabHours(d);
+	setPraticalHours(d);
+	setCredits(d);
+	setEctsCredits(d);
+	setWeigth(d);
     }
 
     protected CurricularCourse(String name, String code, String acronym, Boolean enrolmentAllowed,
@@ -107,7 +109,6 @@ public class CurricularCourse extends CurricularCourse_Base {
 	setType(CurricularCourseType.NORMAL_COURSE);
 	new Context(parentCourseGroup, this, curricularPeriod, beginExecutionPeriod, endExecutionPeriod);
     }
-
 
     public GradeScale getGradeScaleChain() {
 	return super.getGradeScale() != null ? super.getGradeScale() : getDegreeCurricularPlan()
@@ -999,11 +1000,11 @@ public class CurricularCourse extends CurricularCourse_Base {
 	    final Double ectsCredits = super.getEctsCredits();
 	    if (ectsCredits == null || ectsCredits == 0.0) {
 		return ECTS_CREDITS_FOR_PRE_BOLONHA;
-	    } 
+	    }
 
-	    return ectsCredits;	    
+	    return ectsCredits;
 	}
-	
+
 	throw new DomainException("CurricularCourse.with.no.ects.credits");
     }
 
@@ -1017,16 +1018,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     @Override
     public Double getWeigth() {
-	if (isBolonha()) {
-	    return getEctsCredits();
-	} else {
-	    final Double weigth = super.getWeigth();
-	    if (weigth != null && weigth != 0.0) {
-		return weigth;
-	    } 
-	}
-	
-	throw new DomainException("CurricularCourse.with.no.weight");
+	return isBolonha() ? getEctsCredits() : super.getWeigth();
     }
 
     public CurricularSemester getCurricularSemesterWithLowerYearBySemester(Integer semester, Date date) {
@@ -1273,7 +1265,6 @@ public class CurricularCourse extends CurricularCourse_Base {
 		|| (this.getCompetenceCourse() != null && this.getCompetenceCourse()
 			.getAssociatedCurricularCourses().contains(oldCurricularCourse));
     }
-
 
     public boolean hasScopeForCurricularYear(final Integer curricularYear,
 	    ExecutionPeriod executionPeriod) {
@@ -1584,34 +1575,34 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public List<ExecutionCourse> getMostRecentExecutionCourses() {
-        ExecutionPeriod period = ExecutionPeriod.readActualExecutionPeriod();
+	ExecutionPeriod period = ExecutionPeriod.readActualExecutionPeriod();
 
-        while (period != null) {
-            List<ExecutionCourse> executionCourses = getExecutionCoursesByExecutionPeriod(period);
-            if (executionCourses != null && !executionCourses.isEmpty()) {
-                return executionCourses;
-            }
-            
-            period = period.getPreviousExecutionPeriod();
-        }
-        
-        return new ArrayList<ExecutionCourse>();
+	while (period != null) {
+	    List<ExecutionCourse> executionCourses = getExecutionCoursesByExecutionPeriod(period);
+	    if (executionCourses != null && !executionCourses.isEmpty()) {
+		return executionCourses;
+	    }
+
+	    period = period.getPreviousExecutionPeriod();
+	}
+
+	return new ArrayList<ExecutionCourse>();
     }
-    
+
     public boolean isOptionalCurricularCourse() {
 	return false;
     }
 
     public boolean isActive(final ExecutionYear executionYear) {
-        final ExecutionYear executionYearToCheck = executionYear == null ?
-                ExecutionYear.readCurrentExecutionYear() : executionYear;
-        for (final ExecutionPeriod executionPeriod : executionYearToCheck.getExecutionPeriodsSet()) {
-            if (getActiveScopesInExecutionPeriod(executionPeriod).size() > 0
-                    || getActiveDegreeModuleScopesInExecutionPeriod(executionPeriod).size() > 0) {
-                return true;
-            }
-        }
-        return false;
+	final ExecutionYear executionYearToCheck = executionYear == null ? ExecutionYear
+		.readCurrentExecutionYear() : executionYear;
+	for (final ExecutionPeriod executionPeriod : executionYearToCheck.getExecutionPeriodsSet()) {
+	    if (getActiveScopesInExecutionPeriod(executionPeriod).size() > 0
+		    || getActiveDegreeModuleScopesInExecutionPeriod(executionPeriod).size() > 0) {
+		return true;
+	    }
+	}
+	return false;
     }
 
 }
