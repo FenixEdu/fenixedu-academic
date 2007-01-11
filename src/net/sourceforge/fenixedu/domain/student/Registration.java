@@ -377,20 +377,22 @@ public class Registration extends Registration_Base {
     }
 
     public double getAverage() {
-	return getAverage(null);
+	return isConcluded() ? getFinalAverage() : getAverage(null);
     }
 
     public double getAverage(final ExecutionYear executionYear) {
 	return new StudentCurriculum(this).calculateAverage(executionYear);
     }
 
-    public int getFinalAverage() {
+    @Override
+    public Integer getFinalAverage() {
 	if (!isConcluded()) {
 	    throw new DomainException(
 		    "Registration.getting.final.average.mean.from.non.concluded.registration");
 	}
 
-	return new StudentCurriculum(this).getRoundedAverage(null, false).intValue();
+	return super.getFinalAverage() != null ? super.getFinalAverage() : new StudentCurriculum(this)
+		.getRoundedAverage(null, false).intValue();
     }
 
     public void calculateApprovationRatioAndArithmeticMeanIfActive(boolean onlyPreviousExecutionYear) {
@@ -1115,11 +1117,11 @@ public class Registration extends Registration_Base {
 
     public boolean hasAnyEnrolmentsIn(final ExecutionYear executionYear) {
 	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
-		for (final Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
-			if (enrolment.getExecutionPeriod().getExecutionYear() == executionYear) {
-				return true;
-			}
+	    for (final Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
+		if (enrolment.getExecutionPeriod().getExecutionYear() == executionYear) {
+		    return true;
 		}
+	    }
 	}
 	return false;
 
@@ -1204,11 +1206,8 @@ public class Registration extends Registration_Base {
 
     @Override
     public Degree getDegree() {
-	if (super.getDegree() != null) {
-	    return super.getDegree();
-	}
-	final StudentCurricularPlan scp = getLastStudentCurricularPlanExceptPast();
-	return scp == null ? null : scp.getDegree();
+	return super.getDegree() != null ? super.getDegree() : getLastStudentCurricularPlan()
+		.getDegree();
     }
 
     public DegreeType getDegreeType() {
@@ -1225,8 +1224,8 @@ public class Registration extends Registration_Base {
     }
 
     public boolean getIsForOffice() {
-	final AdministrativeOffice administrativeOffice = AccessControl.getPerson()
-		.getEmployee().getAdministrativeOffice();
+	final AdministrativeOffice administrativeOffice = AccessControl.getPerson().getEmployee()
+		.getAdministrativeOffice();
 	return isForOffice(administrativeOffice);
     }
 
@@ -1355,7 +1354,8 @@ public class Registration extends Registration_Base {
     }
 
     public StudentCurricularPlan getStudentCurricularPlan(final ExecutionYear executionYear) {
-	return executionYear == null ? getStudentCurricularPlan(new YearMonthDay()) : getStudentCurricularPlan(executionYear.getEndDateYearMonthDay());
+	return executionYear == null ? getStudentCurricularPlan(new YearMonthDay())
+		: getStudentCurricularPlan(executionYear.getEndDateYearMonthDay());
     }
 
     public StudentCurricularPlan getStudentCurricularPlan(final YearMonthDay date) {
@@ -1368,6 +1368,15 @@ public class Registration extends Registration_Base {
 	    }
 	}
 	return result;
+    }
+
+    public StudentCurricularPlan getStudentCurricularPlan(final DegreeCurricularPlan degreeCurricularPlan) {
+	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
+	    if (studentCurricularPlan.getDegreeCurricularPlan().equals(degreeCurricularPlan)) {
+		return studentCurricularPlan;
+	    }
+	}
+	return null;
     }
 
     @Override
@@ -1452,29 +1461,29 @@ public class Registration extends Registration_Base {
 	return (registrationStatesTypes.contains(RegistrationStateType.REGISTERED) || hasAnyEnrolmentsIn(executionYear))
 		&& (!registrationStatesTypes.contains(RegistrationStateType.CANCELED)
 			&& !registrationStatesTypes.contains(RegistrationStateType.INTERRUPTED)
-			&& !registrationStatesTypes.contains(RegistrationStateType.INTERNAL_ABANDON) 
-			&& !registrationStatesTypes.contains(RegistrationStateType.EXTERNAL_ABANDON));
+			&& !registrationStatesTypes.contains(RegistrationStateType.INTERNAL_ABANDON) && !registrationStatesTypes
+			.contains(RegistrationStateType.EXTERNAL_ABANDON));
     }
 
     public Set<RegistrationState> getRegistrationStates(final ExecutionYear executionYear) {
 	final Set<RegistrationState> result = new HashSet<RegistrationState>();
-	
+
 	for (final RegistrationState registrationState : getRegistrationStatesSet()) {
 	    if (executionYear.containsDate(registrationState.getStateDate())) {
 		result.add(registrationState);
 	    }
 	}
-	
+
 	return result;
     }
 
     public Set<RegistrationStateType> getRegistrationStatesTypes(final ExecutionYear executionYear) {
 	final Set<RegistrationStateType> result = new HashSet<RegistrationStateType>();
-	
+
 	for (final RegistrationState registrationState : getRegistrationStates(executionYear)) {
 	    result.add(registrationState.getStateType());
 	}
-	
+
 	return result;
     }
 
@@ -1521,20 +1530,20 @@ public class Registration extends Registration_Base {
 
     public Collection<? extends AcademicServiceRequest> getAcademicServiceRequests(
 	    final AcademicServiceRequestSituationType academicServiceRequestSituationType) {
-	
+
 	final Set<AcademicServiceRequest> result = new HashSet<AcademicServiceRequest>();
 
 	for (final AcademicServiceRequest academicServiceRequest : getAcademicServiceRequestsSet()) {
 	    if ((academicServiceRequestSituationType == null && academicServiceRequest.isNewRequest())
 		    || academicServiceRequest.getAcademicServiceRequestSituationType() == academicServiceRequestSituationType) {
-		
+
 		result.add(academicServiceRequest);
 	    }
 	}
 
 	return result;
     }
-    
+
     public Collection<AcademicServiceRequest> getNewAcademicServiceRequests() {
 	return (Collection<AcademicServiceRequest>) getAcademicServiceRequests(AcademicServiceRequestSituationType.NEW);
     }
