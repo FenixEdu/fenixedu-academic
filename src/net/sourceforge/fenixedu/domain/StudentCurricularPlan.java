@@ -800,7 +800,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return null;
     }
 
-    protected boolean notNeedToEnroll(final CurricularCourse curricularCourse) {
+    public boolean notNeedToEnroll(final CurricularCourse curricularCourse) {
 	return findNotNeddToEnrol(curricularCourse) != null;
     }
 
@@ -1196,6 +1196,17 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 			&& (enrolment.getExecutionPeriod().equals(executionPeriod));
 	    }
 	});
+    }
+    
+    public Enrolment getEnrolment(String executionYear, Integer semester, String code) {
+	for (Enrolment enrolment : this.getEnrolmentsSet()) {
+	    if (enrolment.getCurricularCourse().getCode().equals(code)
+		    && enrolment.getExecutionPeriod().getSemester().equals(semester)
+		    && enrolment.getExecutionPeriod().getExecutionYear().getYear().equals(executionYear)) {
+		return enrolment;
+	    }
+	}
+	return null;
     }
 
     public void setStudentAreasWithoutRestrictions(Branch specializationArea, Branch secundaryArea)
