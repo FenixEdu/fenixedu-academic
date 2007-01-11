@@ -44,9 +44,9 @@ public class StudentsSearchBean implements Serializable {
 	final Set<Student> students = new HashSet<Student>();
 
 	if (getNumber() != null) {
-	    final Student student = Student.readStudentByNumber(getNumber());
-	    if (student != null) {
-		students.add(student);
+	    final Registration registration = Registration.readByNumber(getNumber());
+	    if (registration != null) {
+		students.add(registration.getStudent());
 	    }
 	} else if (getIdentificationNumber() != null && getDocumentType() != null) {
 	    Person person = Person.readByDocumentIdNumberAndIdDocumentType(getIdentificationNumber(),
