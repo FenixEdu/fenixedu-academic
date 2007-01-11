@@ -27,3 +27,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "alterTableExtraWorkRequest.sql" alterTableExtraWorkRequest.sql
+execute "createClosedMonthTables.sql" createClosedMonthTables.sql
