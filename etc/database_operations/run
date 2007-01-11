@@ -26,7 +26,3 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
-
-execute "Alter Table Registration" alterTableRegistration.sql
-execute "add new attribute to RoomInformation entity" alterSpaceInformationTable.sql
-

@@ -29,3 +29,5 @@ function executeWithTempFile() {
 
 execute "alterTableExtraWorkRequest.sql" alterTableExtraWorkRequest.sql
 execute "createClosedMonthTables.sql" createClosedMonthTables.sql
+execute "Alter Table Registration" alterTableRegistration.sql
+execute "add new attribute to RoomInformation entity" alterSpaceInformationTable.sql
