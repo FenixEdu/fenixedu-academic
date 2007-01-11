@@ -34,7 +34,7 @@ public abstract class RegistrationState extends RegistrationState_Base implement
 	setOjbConcreteClass(this.getClass().getName());
     }
 
-    protected static RegistrationState createState(Registration registration, Person person,
+    public static RegistrationState createState(Registration registration, Person person,
 	    DateTime dateTime, RegistrationStateType stateType) {
 
 	switch (stateType) {
