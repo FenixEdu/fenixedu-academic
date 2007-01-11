@@ -108,7 +108,9 @@
 				Ano Lectivo
 			</th>
 			<td>
-				A informação constante nesta página refere-se ao <span class="error0"><b>início do ano lectivo <bean:write name="executionYear" property="year"/></b></span>
+				<span class="warning0">
+					<bean:message key="following.info.refers.to" bundle="ACADEMIC_OFFICE_RESOURCES"/><bean:message key="begin.of.execution.year" bundle="ACADEMIC_OFFICE_RESOURCES"/><bean:write name="executionYear" property="year"/>
+				</span>
 			</td>
 		</tr>
 	</logic:notEmpty>
@@ -119,7 +121,7 @@
 			</th>
 			<td>
 				<span class="warning0">
-					A informação constante nesta página refere-se a toda a informação curricular do aluno.
+					<bean:message key="following.info.refers.to" bundle="ACADEMIC_OFFICE_RESOURCES"/><bean:message key="all.curriculum" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 				</span>			
 			</td>
 		</tr>
@@ -132,20 +134,6 @@
 			<bean:write name="studentCurricularPlan" property="name"/>
 		</td>
 	</tr>
-<%-- 
-		<tr>
-			<%
-				final int enrolmentsCount = registration.getEnrolments(executionYear).size();
-				request.setAttribute("enrolmentsCount", enrolmentsCount);
-			%>
-			<th>
-				<bean:message key="label.numberEnroledCurricularCourses" bundle="ACADEMIC_OFFICE_RESOURCES"/> <bean:write name="executionYear" property="year"/>
-			</th>
-			<td>
-				<bean:write name="enrolmentsCount"/>
-			</td>
-		</tr>
---%>
 	<tr>
 		<th>
 			<bean:message key="label.numberAprovedCurricularCourses" bundle="ACADEMIC_OFFICE_RESOURCES"/>
@@ -193,29 +181,29 @@
 <logic:greaterThan name="curricularEntriesCount" value="0">
 	<p>
 		<span class="warning0">
-			As regras seguintes constam do livro <em>Regulamentos dos Cursos de 1º e 2º Ciclo, 2006/2007</em> do Instituto Superior Técnico.
+			<bean:message key="rules.info" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 		</span>
 
 		<table class="tstyle4">
 			<tr>
 				<th colspan="2">
-					Média de Curso
+					<bean:message key="degree.average" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 				</th>
 			</tr>	
 			<tr>
 				<th>
-					Regra
+					<bean:message key="rule" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 				</th>
 				<td>
-					MC = Somatório (Peso x Classificação) das Unidades Curriculares / Somatório (Peso) das Unidades Curriculares
+					<bean:message key="average.rule" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 				</td>
 			</tr>	
 			<tr>
 				<th>
-					Resultado
+					<bean:message key="result" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 				</th>
 				<td>
-					MC = <bean:write name="sumPiCi"/> / <bean:write name="sumPi"/> = <bean:write name="average"/>
+					<bean:message key="degree.average.abbreviation" bundle="ACADEMIC_OFFICE_RESOURCES"/> = <bean:write name="sumPiCi"/> / <bean:write name="sumPi"/> = <bean:write name="average"/>
 				</td>
 			</tr>	
 		</table>
@@ -223,23 +211,23 @@
 		<table class="tstyle4">
 			<tr>
 				<th colspan="2">
-					Ano Curricular
+					<bean:message key="curricular.year" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 				</th>
 			</tr>	
 			<tr>
 				<th>
-					Regra
+					<bean:message key="rule" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 				</th>
 				<td>
-					AC = mínimo (inteiro ( (créditos ECTS aprovados + 24) / 60 + 1) ; Nº de anos do curso)
+					<bean:message key="curricular.year.rule" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 				</td>
 			</tr>	
 			<tr>
 				<th>
-					Resultado
+					<bean:message key="result" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 				</th>
 				<td>
-					AC = mínimo (inteiro ( (<bean:write name="totalEctsCredits"/> + 24) / 60 + 1) ; 5) = <bean:write name="curricularYear"/>;
+					<bean:message key="curricular.year.abbreviation" bundle="ACADEMIC_OFFICE_RESOURCES"/> = <bean:message key="minimum" bundle="ACADEMIC_OFFICE_RESOURCES"/> (<bean:message key="int" bundle="ACADEMIC_OFFICE_RESOURCES"/> ( (<bean:write name="totalEctsCredits"/> + 24) / 60 + 1) ; <bean:write name="registration" property="degreeType.years"/>) = <bean:write name="curricularYear"/>;
 				</td>
 			</tr>	
 		</table>
