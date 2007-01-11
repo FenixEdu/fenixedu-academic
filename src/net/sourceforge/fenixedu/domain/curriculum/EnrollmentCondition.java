@@ -21,4 +21,8 @@ public enum EnrollmentCondition {
     	return name();
     }
     
+    public String getQualifiedName() {
+	return EnrollmentCondition.class.getSimpleName() + "." + name();
+    }
+
 }

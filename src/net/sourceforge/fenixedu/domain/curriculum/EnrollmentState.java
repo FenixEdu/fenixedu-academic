@@ -19,8 +19,12 @@ public enum EnrollmentState {
 
     NOT_EVALUATED;
 
-	public String getName() {
-		return name();
-	}
+    public String getName() {
+	return name();
+    }
+
+    public String getQualifiedName() {
+	return EnrollmentState.class.getSimpleName() + "." + name();
+    }
 
 }

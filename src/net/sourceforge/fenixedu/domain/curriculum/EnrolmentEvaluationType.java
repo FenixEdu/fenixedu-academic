@@ -61,4 +61,9 @@ public enum EnrolmentEvaluationType {
     public String getName() {
 	return name();
     }
+
+    public String getQualifiedName() {
+	return EnrolmentEvaluationType.class.getSimpleName() + "." + name();
+    }
+    
 }
