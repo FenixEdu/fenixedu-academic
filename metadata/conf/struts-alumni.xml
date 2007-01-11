@@ -63,6 +63,7 @@
 	<message-resources parameter="resources.AlumniResources" key="ALUMNI" null="false"/>
     <message-resources parameter="resources.StudentResources" key="STUDENT_RESOURCES"  null="false"/>
 	<message-resources parameter="resources.BolonhaManagerResources" key="BOLONHA_MANAGER_RESOURCES" null="false"/>
+	<message-resources parameter="resources.AcademicAdminOffice" key="ACADEMIC_OFFICE_RESOURCES" null="false"/>
 
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
