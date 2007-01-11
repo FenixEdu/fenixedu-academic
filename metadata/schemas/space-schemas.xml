@@ -76,6 +76,7 @@
 <schema name="RoomFactoryCreator" type="net.sourceforge.fenixedu.domain.space.Room$RoomFactoryCreator" bundle="SPACE_RESOURCES">
 	<slot name="blueprintNumber" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="identification" />
+	<slot name="doorNumber" />
 	<slot name="description" />
 	<slot name="roomClassification"  key="label.classification" layout="menu-select">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.RoomClassificationsProvider"/>		
@@ -94,6 +95,7 @@
 <schema name="RoomFactoryEditor" type="net.sourceforge.fenixedu.domain.space.Room$RoomFactoryEditor" bundle="SPACE_RESOURCES">
 	<slot name="blueprintNumber" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="identification"/>
+	<slot name="doorNumber" />
 	<slot name="description"/>
 	<slot name="roomClassification" key="label.classification" layout="menu-select">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.RoomClassificationsProvider"/>		
@@ -109,9 +111,36 @@
 	<slot name="begin" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="end"/>	
 </schema>
+<schema name="LimitedRoomFactoryCreator" type="net.sourceforge.fenixedu.domain.space.Room$RoomFactoryCreator" bundle="SPACE_RESOURCES">
+	<slot name="blueprintNumber" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="identification" />
+	<slot name="doorNumber" />
+	<slot name="description" />
+	<slot name="roomClassification"  key="label.classification" layout="menu-select">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.RoomClassificationsProvider"/>		
+		<property name="format"	value="${presentationCode} - ${name}" />
+	</slot>							
+	<slot name="observations"/>
+	<slot name="begin" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="end"/>
+</schema>
+<schema name="LimitedRoomFactoryEditor" type="net.sourceforge.fenixedu.domain.space.Room$RoomFactoryEditor" bundle="SPACE_RESOURCES">
+	<slot name="blueprintNumber" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="identification"/>
+	<slot name="doorNumber" />
+	<slot name="description"/>
+	<slot name="roomClassification" key="label.classification" layout="menu-select">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.RoomClassificationsProvider"/>		
+		<property name="format"	value="${presentationCode} - ${name}" />
+	</slot>							
+	<slot name="observations"/>
+	<slot name="begin" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="end"/>	
+</schema>
 <schema name="ViewRoomInformation" type="net.sourceforge.fenixedu.domain.space.RoomInformation" bundle="SPACE_RESOURCES">
 	<slot name="blueprintNumber" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="identification"/>
+	<slot name="doorNumber" />
 	<slot name="description"/>
 	<slot name="roomClassification" layout="null-as-label">
 		<property name="label" value=""/>
@@ -130,6 +159,7 @@
 <schema name="EditRoomInformation" type="net.sourceforge.fenixedu.domain.space.RoomInformation" bundle="SPACE_RESOURCES">
 	<slot name="blueprintNumber" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="identification"/>
+	<slot name="doorNumber" />
 	<slot name="description"/>
 	<slot name="roomClassification" key="label.classification" layout="menu-select">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.RoomClassificationsProvider"/>		
@@ -144,8 +174,23 @@
 	<slot name="observations"/>
 	<slot name="validFrom" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="validUntil"/>
-    <setter signature="editRoomCharacteristics(blueprintNumber, identification, description, roomClassification, area, heightQuality, illuminationQuality, distanceFromSanitaryInstalationsQuality, securityQuality, ageQuality, observations, validFrom, validUntil)" />
+    <setter signature="editRoomCharacteristics(blueprintNumber, identification, description, roomClassification, area, heightQuality, illuminationQuality, distanceFromSanitaryInstalationsQuality, securityQuality, ageQuality, observations, validFrom, validUntil, doorNumber)" />
 </schema>
+<schema name="EditRoomInformationLimited" type="net.sourceforge.fenixedu.domain.space.RoomInformation" bundle="SPACE_RESOURCES">
+	<slot name="blueprintNumber" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="identification"/>
+	<slot name="doorNumber" />
+	<slot name="description"/>
+	<slot name="roomClassification" key="label.classification" layout="menu-select">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.RoomClassificationsProvider"/>		
+		<property name="format"	value="${presentationCode} - ${name}" />
+	</slot>						
+	<slot name="observations"/>
+	<slot name="validFrom" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="validUntil"/>
+    <setter signature="editLimitedRoomCharacteristics(blueprintNumber, identification, description, roomClassification, observations, validFrom, validUntil, doorNumber)" />
+</schema>
+
 <schema name="RoomClassificationFactory" type="net.sourceforge.fenixedu.domain.space.RoomClassification$RoomClassificationFactory" bundle="SPACE_RESOURCES">
 	<slot name="code" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="name" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator"/>

@@ -84,6 +84,11 @@
 
 <logic:equal name="spaceContextForm" property="classname" value="net.sourceforge.fenixedu.domain.space.Room">
     <p class="mtop15 mbottom05"><strong><bean:message key="label.space.details" bundle="SPACE_RESOURCES"/></strong></p>
+	
+	<bean:define id="person" name="UserView" property="person" type="net.sourceforge.fenixedu.domain.Person"/>
+	<%
+		if(net.sourceforge.fenixedu.domain.space.Space.personIsSpacesAdministrator(person)){
+	%>
 	<fr:create type="net.sourceforge.fenixedu.domain.space.Room$RoomFactoryCreator"
 			schema="RoomFactoryCreator"
 			action="/manageSpaces.do?method=executeFactoryMethod">
@@ -95,4 +100,21 @@
 			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 		</fr:layout>	
 	</fr:create>
+	<%
+		} else {
+	%>
+	<fr:create type="net.sourceforge.fenixedu.domain.space.Room$RoomFactoryCreator"
+			schema="LimitedRoomFactoryCreator"
+			action="/manageSpaces.do?method=executeFactoryMethod">
+		<fr:hidden slot="surroundingSpace" name="selectedSpace"/>
+		<fr:destination name="cancel" path="<%= cancelPath %>"/>
+		<fr:destination name="invalid" path="<%= invalidLink %>"/>		
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle5 thlight thright thmiddle mtop0 mbottom1"/>
+			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+		</fr:layout>	
+	</fr:create>		
+	<%
+		}
+	%>	
 </logic:equal>

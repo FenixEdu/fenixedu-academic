@@ -28,3 +28,5 @@ function executeWithTempFile() {
 }
 
 execute "Alter Table Registration" alterTableRegistration.sql
+execute "add new attribute to RoomInformation entity" alterSpaceInformationTable.sql
+

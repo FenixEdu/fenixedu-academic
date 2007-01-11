@@ -48,6 +48,7 @@
 		</tr>		
 		<logic:iterate id="space" name="spaces">
 			<logic:notPresent name="space" property="suroundingSpace">
+				<bean:define id="urlToManage">/manageSpaces.do?method=manageSpace&page=0&spaceInformationID=<bean:write name="space" property="spaceInformation.idInternal"/></bean:define>
 				<tr>
 					<td>
 						<logic:equal name="space" property="class.name" value="net.sourceforge.fenixedu.domain.space.Campus">
@@ -57,8 +58,8 @@
 							<bean:message bundle="SPACE_RESOURCES" key="select.item.building"/>
 						</logic:equal>
 					</td>
-					<td>
-						<html:link page="/manageSpaces.do?method=manageSpace&page=0" paramId="spaceInformationID" paramName="space" paramProperty="spaceInformation.idInternal">
+					<td>						
+						<html:link page="<%= urlToManage %>">
 							<logic:equal name="space" property="class.name" value="net.sourceforge.fenixedu.domain.space.Campus">
 								<bean:write name="space" property="spaceInformation.presentationName"/>
 							</logic:equal>
@@ -75,7 +76,7 @@
 						<%
 							if(!thisSpace.personHasPermissionsToManageSpace(person)){
 						%>
-						<html:link page="/manageSpaces.do?method=manageSpace&page=0" paramId="spaceInformationID" paramName="space" paramProperty="spaceInformation.idInternal">
+						<html:link page="<%= urlToManage %>">
 							<logic:equal name="space" property="class.name" value="net.sourceforge.fenixedu.domain.space.Campus">
 								<bean:message bundle="SPACE_RESOURCES" key="label.view"/>
 							</logic:equal>
@@ -86,7 +87,7 @@
 						<%
 							} else {
 						%>						
-						<html:link page="/manageSpaces.do?method=manageSpace&page=0" paramId="spaceInformationID" paramName="space" paramProperty="spaceInformation.idInternal">
+						<html:link page="<%= urlToManage %>">
 							<bean:message bundle="SPACE_RESOURCES" key="link.manage.space"/>
 						</html:link>
 						<%

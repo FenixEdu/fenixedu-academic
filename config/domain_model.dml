@@ -2737,6 +2737,7 @@ class net.sourceforge.fenixedu.domain.space.SpaceInformation extends net.sourcef
 
 	class net.sourceforge.fenixedu.domain.space.RoomInformation extends net.sourceforge.fenixedu.domain.space.SpaceInformation {
 		String identification;
+		String doorNumber;
 		String description;
 		BigDecimal area;
 		Boolean heightQuality;

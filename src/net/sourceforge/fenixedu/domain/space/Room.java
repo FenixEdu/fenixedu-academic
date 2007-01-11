@@ -50,6 +50,8 @@ public class Room extends Room_Base {
 	private YearMonthDay begin;
 
 	private YearMonthDay end;
+	
+	private String doorNumber;
 
 	private DomainReference<RoomClassification> roomClassificationReference;
 
@@ -160,6 +162,14 @@ public class Room extends Room_Base {
 		    roomClassification)
 		    : null;
 	}
+
+	public String getDoorNumber() {
+	    return doorNumber;
+	}
+
+	public void setDoorNumber(String doorNumber) {
+	    this.doorNumber = doorNumber;
+	}
     }
 
     public static class RoomFactoryCreator extends RoomFactory {
@@ -179,7 +189,7 @@ public class Room extends Room_Base {
 	    return new Room(getSurroundingSpace(), getBlueprintNumber(), getIdentification(),
 		    getDescription(), getRoomClassification(), getArea(), getHeightQuality(),
 		    getIlluminationQuality(), getDistanceFromSanitaryInstalationsQuality(),
-		    getSecurityQuality(), getAgeQuality(), getObservations(), getBegin(), getEnd());
+		    getSecurityQuality(), getAgeQuality(), getObservations(), getBegin(), getEnd(), getDoorNumber());
 	}
     }
 
@@ -200,7 +210,7 @@ public class Room extends Room_Base {
 	    return new RoomInformation(getSpace(), getBlueprintNumber(), getIdentification(),
 		    getDescription(), getRoomClassification(), getArea(), getHeightQuality(),
 		    getIlluminationQuality(), getDistanceFromSanitaryInstalationsQuality(),
-		    getSecurityQuality(), getAgeQuality(), getObservations(), getBegin(), getEnd());
+		    getSecurityQuality(), getAgeQuality(), getObservations(), getBegin(), getEnd(), getDoorNumber());
 	}
     }
 
@@ -214,7 +224,7 @@ public class Room extends Room_Base {
 	    String description, RoomClassification roomClassification, BigDecimal area,
 	    Boolean heightQuality, Boolean illuminationQuality,
 	    Boolean distanceFromSanitaryInstalationsQuality, Boolean securityQuality,
-	    Boolean ageQuality, String observations, YearMonthDay begin, YearMonthDay end) {
+	    Boolean ageQuality, String observations, YearMonthDay begin, YearMonthDay end, String doorNumber) {
 
 	this();
 
@@ -224,7 +234,7 @@ public class Room extends Room_Base {
 	setSuroundingSpace(suroundingSpace);
 	new RoomInformation(this, blueprintNumber, identification, description, roomClassification,
 		area, heightQuality, illuminationQuality, distanceFromSanitaryInstalationsQuality,
-		securityQuality, ageQuality, observations, begin, end);
+		securityQuality, ageQuality, observations, begin, end, doorNumber);
     }
     
     @Override

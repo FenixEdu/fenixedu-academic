@@ -151,6 +151,53 @@ public class ManageSpaceBlueprintsDA extends FenixDispatchAction {
 	return mapping.findForward("showBlueprintVersions");
     }
 
+    public ActionForward view(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws IOException {
+	
+	Boolean isSuroundingSpaceBlueprint = isSuroundingSpaceBlueprint(request);
+	Boolean isToViewOriginalSpaceBlueprint = isToViewOriginalSpaceBlueprint(request);
+	
+	Boolean viewBlueprintNumbers = isToViewBlueprintNumbers(request);
+	Boolean isToViewIdentifications = isToViewSpaceIdentifications(request);
+	Boolean isToViewDoorNumbers = isToViewDoorNumbers(request); 
+
+	final String blueprintIdString = request.getParameter("blueprintId");
+	final Integer blueprintId = Integer.valueOf(blueprintIdString);
+	final Blueprint blueprint = rootDomainObject.readBlueprintByOID(blueprintId);
+	final BlueprintFile blueprintFile = blueprint.getBlueprintFile();
+
+	// If dspace worked properly we could do this...
+	// final byte[] blueprintBytes =
+	// FileManagerFactory.getFileManager().retrieveFile(blueprintFile.getExternalStorageIdentification());
+	// Science it doesn't, we'll do...
+	
+	final byte[] blueprintBytes = blueprintFile.getContent().getBytes();
+	final InputStream inputStream = new ByteArrayInputStream(blueprintBytes);
+
+	response.setContentType("text/plain");
+	response.setHeader("Content-disposition", "attachment; filename=blueprint.jpeg");
+	final ServletOutputStream writer = response.getOutputStream();
+
+	SpaceBlueprintsDWGProcessor processor = null;
+
+	if (isToViewOriginalSpaceBlueprint != null && isToViewOriginalSpaceBlueprint) {
+	    processor = new SpaceBlueprintsDWGProcessor();
+
+	} else if (isSuroundingSpaceBlueprint != null && isSuroundingSpaceBlueprint) {
+	    SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
+	    processor = new SpaceBlueprintsDWGProcessor(blueprint.getSpace(), spaceInformation.getSpace(), viewBlueprintNumbers, isToViewIdentifications, isToViewDoorNumbers);
+
+	} else {
+	    processor = new SpaceBlueprintsDWGProcessor(blueprint.getSpace(), viewBlueprintNumbers, isToViewIdentifications, isToViewDoorNumbers);
+	}
+
+	if (processor != null) {
+	    processor.generateJPEGImage(inputStream, writer);
+	}
+
+	return null;
+    }
+    
     private void setSpaceInfo(HttpServletRequest request, SpaceInformation spaceInformation) {
 	if (spaceInformation != null) {
 	    request.setAttribute("selectedSpaceInformation", spaceInformation);
@@ -204,54 +251,26 @@ public class ManageSpaceBlueprintsDA extends FenixDispatchAction {
 	return viewOriginalSpaceBlueprintString != null ? Boolean
 		.valueOf(viewOriginalSpaceBlueprintString) : null;
     }
+    
+    private Boolean isToViewSpaceIdentifications(HttpServletRequest request) {
+	final String viewSpaceIdentificationsString = request.getParameterMap().containsKey(
+		"viewSpaceIdentifications") ? request.getParameter("viewSpaceIdentifications")
+		: (String) request.getAttribute("viewSpaceIdentifications");
+	return viewSpaceIdentificationsString != null ? Boolean
+		.valueOf(viewSpaceIdentificationsString) : null;
+    }
+    
+    private Boolean isToViewDoorNumbers(HttpServletRequest request) {
+	final String viewDoorNumbersString = request.getParameterMap().containsKey(
+		"viewDoorNumbers") ? request.getParameter("viewDoorNumbers")
+		: (String) request.getAttribute("viewDoorNumbers");
+	return viewDoorNumbersString != null ? Boolean
+		.valueOf(viewDoorNumbersString) : null;
+    }
 
     private void saveActionMessageOnRequest(HttpServletRequest request, String errorKey, String[] args) {
 	ActionMessages actionMessages = new ActionMessages();
 	actionMessages.add(errorKey, new ActionMessage(errorKey, args));
 	saveMessages(request, actionMessages);
-    }
-
-    public ActionForward view(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws IOException {
-
-	Boolean viewBlueprintNumbers = isToViewBlueprintNumbers(request);
-	Boolean isSuroundingSpaceBlueprint = isSuroundingSpaceBlueprint(request);
-	Boolean isToViewOriginalSpaceBlueprint = isToViewOriginalSpaceBlueprint(request);
-
-	final String blueprintIdString = request.getParameter("blueprintId");
-	final Integer blueprintId = Integer.valueOf(blueprintIdString);
-	final Blueprint blueprint = rootDomainObject.readBlueprintByOID(blueprintId);
-	final BlueprintFile blueprintFile = blueprint.getBlueprintFile();
-
-	// If dspace worked properly we could do this...
-	// final byte[] blueprintBytes =
-	// FileManagerFactory.getFileManager().retrieveFile(blueprintFile.getExternalStorageIdentification());
-	// Science it doesn't, we'll do...
-	final byte[] blueprintBytes = blueprintFile.getContent().getBytes();
-	final InputStream inputStream = new ByteArrayInputStream(blueprintBytes);
-
-	response.setContentType("text/plain");
-	response.setHeader("Content-disposition", "attachment; filename=blueprint.jpeg");
-	final ServletOutputStream writer = response.getOutputStream();
-
-	SpaceBlueprintsDWGProcessor processor = null;
-
-	if (isToViewOriginalSpaceBlueprint != null && isToViewOriginalSpaceBlueprint) {
-	    processor = new SpaceBlueprintsDWGProcessor();
-
-	} else if (isSuroundingSpaceBlueprint != null && isSuroundingSpaceBlueprint) {
-	    SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
-	    processor = new SpaceBlueprintsDWGProcessor(blueprint.getSpace(), spaceInformation
-		    .getSpace(), viewBlueprintNumbers);
-
-	} else if (viewBlueprintNumbers != null) {
-	    processor = new SpaceBlueprintsDWGProcessor(blueprint.getSpace(), viewBlueprintNumbers);
-	}
-
-	if (processor != null) {
-	    processor.generateJPEGImage(inputStream, writer);
-	}
-
-	return null;
-    }
+    } 
 }

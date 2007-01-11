@@ -81,7 +81,7 @@ public class ManageSpacesDA extends FenixDispatchAction {
 	SortedSet<Space> spaces = new TreeSet<Space>(SpaceComparator.SPACE_COMPARATOR_BY_CLASS);
 	spaces.addAll(space.getContainedSpaces());
 	setBlueprintTextRectangles(request, space);
-	
+
 	request.setAttribute("selectedSpace", space);
 	request.setAttribute("spaces", spaces);
 	request.setAttribute("selectedSpaceInformation", spaceInformation);
@@ -91,7 +91,7 @@ public class ManageSpacesDA extends FenixDispatchAction {
     public ActionForward manageSpace(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws IOException {
 
-	final SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);	
+	final SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
 	return manageSpace(mapping, request, spaceInformation);
     }
 
@@ -116,7 +116,7 @@ public class ManageSpacesDA extends FenixDispatchAction {
 	if (space == null) {
 	    throw new DomainException("error.spaces.cannot.delete.inexistent.space");
 	}
-	
+
 	final Space surroundingSpace = space.getSuroundingSpace();
 
 	final Object[] args = { space };
@@ -168,12 +168,12 @@ public class ManageSpacesDA extends FenixDispatchAction {
     public ActionForward deleteSpaceInformation(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
 	    FenixServiceException, IOException {
-	
+
 	final SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
 	if (spaceInformation == null) {
 	    throw new DomainException("error.spaces.cannot.delete.inexistent.spaceInformation");
 	}
-	
+
 	final Space space = spaceInformation.getSpace();
 
 	final Object[] args = { spaceInformation };
@@ -244,6 +244,8 @@ public class ManageSpacesDA extends FenixDispatchAction {
 
 	Boolean viewBlueprintNumbers = isToViewBlueprintNumbers(request);
 	Boolean viewOriginalSpaceBlueprint = isToViewOriginalSpaceBlueprint(request);
+	Boolean viewSpaceIdentifications = isToViewSpaceIdentifications(request);
+	Boolean viewDoorNumbers = isToViewDoorNumbers(request);
 
 	Blueprint mostRecentBlueprint = space.getMostRecentBlueprint();
 	Boolean suroundingSpaceBlueprint = mostRecentBlueprint == null;
@@ -251,16 +253,25 @@ public class ManageSpacesDA extends FenixDispatchAction {
 		.getSuroundingSpaceMostRecentBlueprint() : mostRecentBlueprint;
 
 	if (mostRecentBlueprint != null) {
+	    
+	    if (!viewDoorNumbers && !viewSpaceIdentifications && !viewBlueprintNumbers
+		    && !viewOriginalSpaceBlueprint) {
+		viewSpaceIdentifications = Boolean.TRUE;
+	    }
+	    
 	    final BlueprintFile blueprintFile = mostRecentBlueprint.getBlueprintFile();
 	    final byte[] blueprintBytes = blueprintFile.getContent().getBytes();
 	    final InputStream inputStream = new ByteArrayInputStream(blueprintBytes);
 	    BlueprintTextRectangles blueprintTextRectangles = SpaceBlueprintsDWGProcessor
 		    .getBlueprintTextRectangles(inputStream, mostRecentBlueprint.getSpace(),
-			    viewBlueprintNumbers, viewOriginalSpaceBlueprint);
+			    viewBlueprintNumbers, viewOriginalSpaceBlueprint, viewSpaceIdentifications,
+			    viewDoorNumbers);
 
 	    request.setAttribute("mostRecentBlueprint", mostRecentBlueprint);
-	    request.setAttribute("blueprintTextRectangles", blueprintTextRectangles);
+	    request.setAttribute("blueprintTextRectangles", blueprintTextRectangles);    
 
+	    request.setAttribute("viewDoorNumbers", viewDoorNumbers);
+	    request.setAttribute("viewSpaceIdentifications", viewSpaceIdentifications);
 	    request.setAttribute("viewBlueprintNumbers", viewBlueprintNumbers);
 	    request.setAttribute("viewOriginalSpaceBlueprint", viewOriginalSpaceBlueprint);
 	    request.setAttribute("suroundingSpaceBlueprint", suroundingSpaceBlueprint);
@@ -294,6 +305,22 @@ public class ManageSpacesDA extends FenixDispatchAction {
 		"viewBlueprintNumbers") ? request.getParameter("viewBlueprintNumbers")
 		: (String) request.getAttribute("viewBlueprintNumbers");
 	return viewBlueprintNumbersString != null ? Boolean.valueOf(viewBlueprintNumbersString)
+		: Boolean.FALSE;
+    }
+
+    private Boolean isToViewDoorNumbers(HttpServletRequest request) {
+	final String isToViewDoorNumbersString = request.getParameterMap()
+		.containsKey("viewDoorNumbers") ? request.getParameter("viewDoorNumbers")
+		: (String) request.getAttribute("viewDoorNumbers");
+	return isToViewDoorNumbersString != null ? Boolean.valueOf(isToViewDoorNumbersString)
+		: Boolean.FALSE;
+    }
+
+    private Boolean isToViewSpaceIdentifications(HttpServletRequest request) {
+	final String viewSpaceIdentificationsString = request.getParameterMap().containsKey(
+		"viewSpaceIdentifications") ? request.getParameter("viewSpaceIdentifications")
+		: (String) request.getAttribute("viewSpaceIdentifications");
+	return viewSpaceIdentificationsString != null ? Boolean.valueOf(viewSpaceIdentificationsString)
 		: Boolean.FALSE;
     }
 
