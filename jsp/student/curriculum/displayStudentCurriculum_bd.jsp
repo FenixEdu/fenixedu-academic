@@ -222,7 +222,7 @@
 				<%-- groupHeaderRowClasses--%>
 				<fr:property name="groupNameClasses" value="aleft"/>
 				<%-- groupHeaderClasses--%>
-				<fr:property name="enrolmentClasses" value="smalltxt acenter width6em,smalltxt acenter width5em,smalltxt acenter width7em,smalltxt acenter width5em,aright width6em"/>
+				<fr:property name="enrolmentClasses" value="width5em acenter, width05em acenter, width2em acenter, width05em aright, aleft, width7em acenter, width6em acenter, width5em acenter, width1em acenter, width1em acenter, width1em aright, width1em aright, width1em aright"/>
 				<%-- enrolmentColumnClasses--%>
 				<fr:property name="enrolmentStateSelectionType" value="<%=enrolmentStateSelectionType.toString()%>"/>
 			</fr:layout>
