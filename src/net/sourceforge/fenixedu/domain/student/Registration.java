@@ -381,7 +381,7 @@ public class Registration extends Registration_Base {
     }
 
     public double getAverage(final ExecutionYear executionYear) {
-	return new StudentCurriculum(this).calculateAverage(executionYear);
+	return new StudentCurriculum(this).getRoundedAverage(executionYear, true);
     }
 
     @Override
