@@ -57,10 +57,10 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
 	    final List<Registration> registrations = loggedStudent.getRegistrations();
 	    if (registrations.size() == 1) {
 		registration = registrations.get(0);
-	    } 
-	    
-	    request.setAttribute("student", loggedStudent);
-	    return mapping.findForward("chooseRegistration");
+	    } else {
+		request.setAttribute("student", loggedStudent);
+		return mapping.findForward("chooseRegistration");
+	    }
 	}
 
 	if (registration == null || (loggedStudent != null && !loggedStudent.hasRegistrations(registration))) {
