@@ -6,8 +6,14 @@
 <html:xhtml/>
 
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
-<h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.documentRequestsManagement.searchDocumentRequests" /></h2>
-
+<h2>
+<logic:equal name="academicSituationType" value="NEW">
+	<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.documentRequestsManagement.searchNewDocumentRequests" />
+</logic:equal>
+<logic:equal name="academicSituationType" value="PROCESSING">
+	<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.documentRequestsManagement.searchProcessingDocumentRequests" />
+</logic:equal>
+</h2>
 
 <logic:messagesPresent message="true">
 		<ul>
@@ -31,6 +37,9 @@
 		
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4 tdcenter" />
+			<fr:property name="rowClasses" value="bgwhite," />
+			
+			<fr:property name="columnClasses" value="smalltxt,smalltxt,smalltxt  aleft nowrap,smalltxt,smalltxt,smalltxt nowrap,smalltxt nowrap," />
 			<fr:property name="linkFormat(processing)" value="<%= newRequestUrl + "&academicServiceRequestId=${idInternal}" %>"/>
 			<fr:property name="key(processing)" value="processing"/>
 			<fr:property name="visibleIf(processing)" value="newRequest"/>

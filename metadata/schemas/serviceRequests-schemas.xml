@@ -170,7 +170,9 @@
 </schema>
 
 <schema name="DocumentRequestCreateBean.notes" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="notes" key="label.documentRequestsManagement.searchDocumentRequests.notes"/>
+	<slot name="notes" key="label.documentRequestsManagement.searchDocumentRequests.notes">
+		<property name="size" value="50"/>
+	</slot>
 </schema>
 
 <schema name="DocumentRequestCreateBean.viewToConfirmCreation" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
@@ -183,16 +185,18 @@
 	<slot name="average" read-only="true" key="label.documentRequestsManagement.searchDocumentRequests.average"/>
 </schema>
 
-<schema name="DocumentRequest.view-documentPurposeTypeInformation" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest" bundle="ACADEMIC_OFFICE_RESOURCES" extends="DocumentRequest.view">
-	<remove name="numberOfPages"  read-only="true" />
-	<remove name="documentPurposeType"  read-only="true" />
-	<remove name="otherDocumentPurposeTypeDescription"  read-only="true" />
-	<slot name="academicServiceRequestSituationType"  read-only="true" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.academicServiceRequestSituationType" />
-	<slot name="registration.number" layout="link">
+<schema name="DocumentRequest.view-documentPurposeTypeInformation" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="serviceRequestNumber" key="label.serviceRequestNumber.withLineBreak" />
+	<slot name="registration.number" layout="link" key="label.registration.number.withLineBreak">
         <property name="linkFormat" value="/academicAdminOffice/student.do?method=visualizeRegistration&amp;registrationID=${registration.idInternal}"/>
         <property name="contextRelative" value="true"/>
         <property name="useParent" value="true"/>
 	</slot>
+	<slot name="description" read-only="true" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.description"/>
+	<slot name="executionYear.year" key="label.serviceRequests.documentRequests.executionYear.withLineBreak"/>
+	<slot name="urgentRequest" key="label.net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest.urgentRequest"/>	
+	<slot name="creationDate" read-only="true" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.creationDate.withLineBreak"/>
+	<slot name="activeSituation.creationDate" read-only="true" key="last.modification.withLineBreak"/>
 </schema>
 
 <schema name="DocumentRequestSearchBean.view" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestSearchBean" bundle="ACADEMIC_OFFICE_RESOURCES">
