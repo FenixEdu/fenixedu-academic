@@ -2325,19 +2325,8 @@ public class Person extends Person_Base {
 
 	return result;
     }
-
-    public Set<Entry> getPaymentsForCivilYear(int civilYear) {
-
-	final Set<Entry> result = new HashSet<Entry>();
-
-	for (final Event event : getEvents()) {
-	    result.addAll(event.getPayedEntries(civilYear));
-	}
-
-	return result;
-
-    }
     
+     
     public boolean isHomePageAvailable() {
     	return hasHomepage();
     }

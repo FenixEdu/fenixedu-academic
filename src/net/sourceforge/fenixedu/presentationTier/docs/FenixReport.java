@@ -31,7 +31,9 @@ public abstract class FenixReport implements Serializable {
 	return dataSource;
     }
 
-    public abstract String getReportTemplateKey();
+    public String getReportTemplateKey() {
+	return getClass().getName();
+    }
     
     public abstract String getReportFileName();
     

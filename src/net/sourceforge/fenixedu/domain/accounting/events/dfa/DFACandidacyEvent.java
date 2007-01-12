@@ -114,4 +114,14 @@ public class DFACandidacyEvent extends DFACandidacyEvent_Base {
 	return getCandidacy().getCandidacyDate();
     }
 
+    @Override
+    public LabelFormatter getDescription() {
+	final LabelFormatter labelFormatter = super.getDescription();
+	labelFormatter.appendLabel(" ");
+	labelFormatter.appendLabel(getDegree().getDegreeType().name(), "enum").appendLabel(" - ");
+	labelFormatter.appendLabel(getDegree().getName()).appendLabel(" - ");
+	labelFormatter.appendLabel(getExecutionYear().getYear());
+	return labelFormatter;
+    }
+
 }

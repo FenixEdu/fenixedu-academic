@@ -845,6 +845,7 @@
 				<include name="net/sourceforge/fenixedu/persistenceTierJDBC/**/*.class"/>
 				<include name="net/sourceforge/fenixedu/persistenceTierOracle/**/*.class"/>
 				<include name="net/sourceforge/fenixedu/presentationTier/renderers/htmlEditor/*.class"/>
+				<include name="net/sourceforge/fenixedu/presentationTier/docs/*.class"/>
 				<include name="net/sourceforge/fenixedu/util/**/*.class"/>
 				<include name="net/sourceforge/fenixedu/utilInsc/**/*.class"/>
 				<include name="net/sourceforge/fenixedu/utilTests/**/*.class"/>
@@ -853,16 +854,19 @@
 				<include name="net/sourceforge/fenixedu/framework/**/*.class"/>
 				<include name="relations/*.class"/>
 				<include name="org/**/*.class"/>
+				<include name="reports/**/*.*"/>
+				<include name="reports.properties"/>
+				
 			</fileset>
 		</jar>
 	</target>
 
 	<target name="jar"
-    		depends="compile, base-jar"
+    		depends="compile, compile-reports, base-jar"
             description="Generates a java archive applications 'core' (services and domain)."/>
 
 	<target name="jar-without-injectionCode"
-    		depends="compile-without-injectionCode, base-jar"
+    		depends="compile-without-injectionCode,compile-reports, base-jar"
             description="Generates a java archive applications 'core' (services and domain), without code injection"/>
 
 	<target name="war"

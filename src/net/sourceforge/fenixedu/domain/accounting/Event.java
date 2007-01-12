@@ -278,23 +278,18 @@ public abstract class Event extends Event_Base {
 		    "error.accounting.Event.cannot.calculatePayedAmount.on.invalid.events");
 	}
 
-	Money result = Money.ZERO;
-	for (final Entry entry : getPayedEntries(civilYear)) {
-	    result = result.add(entry.getAmountWithAdjustment());
-	}
-
-	return result;
-    }
-
-    public Set<Entry> getPayedEntries(final int civilYear) {
-	final Set<Entry> result = new HashSet<Entry>();
+	Money amountForCivilYear = Money.ZERO;
 	for (final AccountingTransaction accountingTransaction : getNonAdjustingTransactions()) {
 	    if (accountingTransaction.isPayed(civilYear)) {
-		result.add(accountingTransaction.getToAccountEntry());
+		amountForCivilYear = amountForCivilYear.add(accountingTransaction.getToAccountEntry()
+			.getAmountWithAdjustment());
 	    }
 	}
 
-	return result;
+	final Money maxAmountForCivilYear = amountForCivilYear.subtract(getExtraPayedAmount());
+
+	return maxAmountForCivilYear.isPositive() ? maxAmountForCivilYear : amountForCivilYear;
+
     }
 
     public boolean hasPaymentsForCivilYear(final int civilYear) {
@@ -545,6 +540,18 @@ public abstract class Event extends Event_Base {
 	final List<Event> result = new ArrayList<Event>();
 	for (final Event event : RootDomainObject.getInstance().getAccountingEvents()) {
 	    if (event.getEventType() == eventType) {
+		result.add(event);
+	    }
+	}
+
+	return result;
+
+    }
+
+    public static List<Event> readByEventsWithPaymentsForCivilYear(int civilYear) {
+	final List<Event> result = new ArrayList<Event>();
+	for (final Event event : RootDomainObject.getInstance().getAccountingEvents()) {
+	    if (event.hasPaymentsForCivilYear(civilYear)) {
 		result.add(event);
 	    }
 	}

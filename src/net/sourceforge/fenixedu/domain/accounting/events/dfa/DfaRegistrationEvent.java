@@ -127,6 +127,7 @@ public class DfaRegistrationEvent extends DfaRegistrationEvent_Base {
     public LabelFormatter getDescription() {
 	final LabelFormatter labelFormatter = super.getDescription();
 	labelFormatter.appendLabel(" ");
+	labelFormatter.appendLabel(getDegree().getDegreeType().name(), "enum").appendLabel(" - ");
 	labelFormatter.appendLabel(getDegree().getName()).appendLabel(" - ");
 	labelFormatter.appendLabel(getExecutionYear().getYear());
 	return labelFormatter;
