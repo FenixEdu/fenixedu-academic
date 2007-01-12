@@ -13,7 +13,7 @@
 	</p>
 </html:messages>
 
-<h3 class="mbottom025"><bean:message key="label.student.enrolment.chooseExecutionPeriod" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
+<h3 class="mtop15 mbottom025"><bean:message key="label.student.enrolment.chooseExecutionPeriod" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 
 <fr:form action="/studentEnrolments.do?method=showDegreeModulesToEnrol">
 	<fr:edit id="studentEnrolment"
@@ -29,9 +29,7 @@
 </fr:form>	
 
 <logic:present name="studentEnrolmentBean" property="executionPeriod">
-	<br/>
-	<br/>	
-	<ul>
+	<ul class="mvert15">
 		<li>
 			<bean:define id="url1">/studentEnrolments.do?method=showDegreeModulesToEnrol&amp;scpID=<bean:write name="studentEnrolmentBean" property="studentCurricularPlan.idInternal"/>&amp;executionPeriodID=<bean:write name="studentEnrolmentBean" property="executionPeriod.idInternal"/></bean:define>
 			<html:link action='<%= url1 %>'><bean:message key="label.course.enrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
@@ -45,7 +43,6 @@
 			<html:link action='<%= url3 %>'><bean:message key="label.course.enrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/> <bean:message key="EXTRA_CURRICULAR" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
 		</li>
 	</ul>
-	<br/>
 
 	<logic:notEmpty name="studentEnrolments">
 		<strong><bean:message key="label.student.enrolments.executionPeriod" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong>

@@ -19,7 +19,9 @@
 	
 	<logic:equal name="numberStudents" value="0">
 		<logic:present name="studentsSearchBean" property="number">
-			<bean:message key="message.no.students.found" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+			<p>
+				<em><bean:message key="message.no.students.found" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
+			</p>
 		</logic:present>
 	</logic:equal>
 	
