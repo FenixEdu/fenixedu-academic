@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSit
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
+import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -77,7 +78,7 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
 
     public List<DocumentRequest> searchDocumentsBy(DocumentRequestType documentRequestType,
 	    AcademicServiceRequestSituationType requestSituationType, Boolean isUrgent,
-	    Registration registration) {
+	    Registration registration, Campus campus) {
 
 	final List<DocumentRequest> result = new ArrayList<DocumentRequest>();
 
@@ -94,6 +95,10 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
 
 		if (requestSituationType != null
 			&& documentRequest.getAcademicServiceRequestSituationType() != requestSituationType) {
+		    continue;
+		}
+
+		if (campus != null && !documentRequest.getCampus().equals(campus)) {
 		    continue;
 		}
 
@@ -155,7 +160,7 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
 	    }
 	}
 
-        System.out.println("getAdministratedDegrees.size()= " + result.size());
+	System.out.println("getAdministratedDegrees.size()= " + result.size());
 	return result;
     }
 
@@ -174,8 +179,8 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
     }
 
     public void delete() {
-        removeRootDomainObject();
-        deleteDomainObject();
+	removeRootDomainObject();
+	deleteDomainObject();
     }
 
 }
