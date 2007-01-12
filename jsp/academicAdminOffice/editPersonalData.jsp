@@ -20,6 +20,14 @@
 		</fr:layout>
 	</fr:edit>
 	
+	<h3 class="mbottom025"><bean:message key="label.identification" bundle="ACADEMIC_OFFICE_RESOURCES" /></h3>
+	<fr:edit id="personDocumentId" name="personBean" schema="student.documentId-edit" >
+		<fr:layout name="tabular" >
+			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
+	        <fr:property name="columnClasses" value="width14em,,tdclear tderror1"/>
+		</fr:layout>
+	</fr:edit>
+	
 	<h3 class="mbottom025"><bean:message key="label.person.title.filiation" bundle="ACADEMIC_OFFICE_RESOURCES" /></h3>
 	<fr:edit id="personFiliation" name="personBean" schema="student.filiation-edit" >
 		<fr:layout name="tabular" >
