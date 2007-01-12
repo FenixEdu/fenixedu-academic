@@ -17,7 +17,7 @@
 
 <body>
 	
-	<div id="container" style="width: 620px;">
+	<div id="container" style="width: 650px;">
 
 		<html:form action="/exceptionHandlingAction.do?method=sendEmail">
 
@@ -63,7 +63,7 @@
 					   		<bean:message key="property.message"/>
 				   		</td>
 				   		<td>
-					    	<html:textarea cols="30" rows="5" bundle="HTMLALT_RESOURCES" altKey="textarea.body" property="body" value=""/>
+					    	<html:textarea cols="36" rows="5" bundle="HTMLALT_RESOURCES" altKey="textarea.body" property="body" value=""/>
 				    	</td>
 			   		</tr>
 			    	<tr>
