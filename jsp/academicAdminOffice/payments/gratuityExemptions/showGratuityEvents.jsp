@@ -42,7 +42,7 @@
 	
 	<bean:define id="personId" name="person" property="idInternal" />
 	<fr:form action="<%="/payments.do?method=backToShowOperations&personId=" + personId%>">
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
 			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.back" />
 		</html:submit>
 	</fr:form>

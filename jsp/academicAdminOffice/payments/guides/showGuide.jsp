@@ -40,7 +40,7 @@
 	<html:form action="/payments.do" target="_blank">
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" />
 		<fr:edit id="paymentsManagementDTO" name="paymentsManagementDTO" visible="false"/>
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick="this.form.method.value='printGuide';"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.print"/></html:submit>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='printGuide';"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.print"/></html:submit>
 	</html:form>
 	
 </logic:notEmpty>

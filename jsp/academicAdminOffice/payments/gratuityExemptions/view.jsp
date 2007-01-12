@@ -41,12 +41,12 @@
 
 		<input alt="input.method" type="hidden" name="method" value="" />
 
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"
 			onclick="this.form.method.value='deleteExemption';">
 			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.payments.gratuityExemption.delete" />
 		</html:submit>
 
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"
 			onclick="this.form.method.value='showGratuityEvents';">
 			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.back" />
 		</html:submit>

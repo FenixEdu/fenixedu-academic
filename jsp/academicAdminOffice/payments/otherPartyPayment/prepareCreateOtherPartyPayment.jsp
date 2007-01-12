@@ -39,13 +39,13 @@
 			</fr:layout>
 			<fr:destination name="invalid" path="/payments.do?method=prepareCreateOtherPartyPaymentInvalid"/>
 		</fr:edit>
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick="this.form.method.value='preparePrintGuideForOtherParty';">
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='preparePrintGuideForOtherParty';">
 			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.guide" />
 		</html:submit>
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick="this.form.method.value='confirmCreateOtherPartyPayment';">
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='confirmCreateOtherPartyPayment';">
 			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payment" />
 		</html:submit>
-		<html:cancel bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick="this.form.method.value='showOtherPartyPaymentsForEvent';">
+		<html:cancel bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='showOtherPartyPaymentsForEvent';">
 			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.back" />
 		</html:cancel>
 	</fr:form>

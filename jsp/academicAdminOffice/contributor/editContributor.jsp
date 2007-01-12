@@ -56,6 +56,6 @@
    </table>
 	
 	<p>   
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.ok" value="Alterar" styleClass="inputbutton" property="ok"/>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.ok" value="Alterar" property="ok"/>
 	</p>
 </html:form>

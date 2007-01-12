@@ -68,7 +68,7 @@
 	</table>
 
 	<p>
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.ok" value="Criar" styleClass="inputbutton" property="ok" />
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.ok" value="Criar" property="ok" />
 	</p>
 
 </html:form>

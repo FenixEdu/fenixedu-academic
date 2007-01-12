@@ -51,7 +51,7 @@
 <bean:define id="personId" name="person" property="idInternal"/>
 <html:form action='<%= "/payments.do?method=backToShowOperations&amp;personId=" + personId %>'>
 	<br/>
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.payments.back"/></html:submit>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.payments.back"/></html:submit>
 </html:form>
 
 </logic:present>

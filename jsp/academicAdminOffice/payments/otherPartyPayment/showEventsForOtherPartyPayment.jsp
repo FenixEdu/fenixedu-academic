@@ -40,7 +40,7 @@
 	<bean:define id="personId" name="person" property="idInternal" />
 	<fr:form action="<%="/payments.do?personId=" + personId + "&amp;method=backToShowOperations"%>">
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value=""/>
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
 			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.back" />
 		</html:submit>
 	</fr:form>

@@ -80,8 +80,8 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="cancelReceipt" />
 	<br/>
 	<fr:edit id="receiptToCancel" name="receipt" visible="false" />
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.yes"/></html:submit>
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick="this.form.method.value='showReceipts';"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.no"/></html:submit>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.yes"/></html:submit>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='showReceipts';"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.no"/></html:submit>
 </html:form>
 
 </logic:present>

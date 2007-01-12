@@ -56,6 +56,6 @@
 		<bean:define id="documentRequestId" name="documentRequest" property="idInternal" />
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.documentRequestId" property="documentRequestId" value="<%= documentRequestId.toString() %>"/>
 		
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.documentRequestsManagement.back" /></html:submit>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.documentRequestsManagement.back" /></html:submit>
 	</html:form>
 </logic:notEqual>

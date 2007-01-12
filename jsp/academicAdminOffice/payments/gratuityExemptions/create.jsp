@@ -7,7 +7,6 @@
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
 
 	<h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.gratuityExemptions" /></h2>
-	<br />
 
 
 	<logic:messagesPresent message="true">
@@ -61,12 +60,12 @@
 			</fr:layout>
 		</fr:edit>
 		
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"
 			onclick="this.form.method.value='createExemption';">
 			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.payments.gratuityExemption.create" />
 		</html:submit>
 		
-		<html:cancel bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"
+		<html:cancel bundle="HTMLALT_RESOURCES" altKey="submit.submit"
 			onclick="this.form.method.value='showGratuityEvents';">
 			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.cancel" />
 		</html:cancel>

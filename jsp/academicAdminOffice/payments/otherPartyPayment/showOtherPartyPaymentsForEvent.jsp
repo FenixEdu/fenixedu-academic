@@ -38,10 +38,10 @@
 	<bean:define id="personId" name="person" property="idInternal" />
 	<fr:form action="<%="/payments.do?personId=" + personId + "&amp;eventId=" + eventId%>">
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value=""/>
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick="this.form.method.value='prepareCreateOtherPartyPayment';">
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='prepareCreateOtherPartyPayment';">
 			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.create" />
 		</html:submit>
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick="this.form.method.value='backToShowOperations';">
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='backToShowOperations';">
 			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.back" />
 		</html:submit>
 	</fr:form>

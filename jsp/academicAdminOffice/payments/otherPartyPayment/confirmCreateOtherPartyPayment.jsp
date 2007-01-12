@@ -33,10 +33,10 @@
 		</fr:view>
 		<span class="warning0"><bean:message  key="label.payments.confirmCreateOtherPartyPayment" bundle="ACADEMIC_OFFICE_RESOURCES"/></span>
 		<br/><br/>
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick="this.form.method.value='createOtherPartyPayment';">
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='createOtherPartyPayment';">
 			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.yes" />
 		</html:submit>
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick="this.form.method.value='prepareCreateOtherPartyPayment';">
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='prepareCreateOtherPartyPayment';">
 			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.no" />
 		</html:submit>
 	</html:form>

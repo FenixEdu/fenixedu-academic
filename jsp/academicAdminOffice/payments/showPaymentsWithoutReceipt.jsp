@@ -51,8 +51,8 @@
 			</fr:layout>
 		</fr:edit>
 		
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick="this.form.method.value='confirmCreateReceipt';"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.payments.continue"/></html:submit>
-		<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton" onclick="this.form.method.value='backToShowOperations';"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.payments.back"/></html:cancel>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='confirmCreateReceipt';"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.payments.continue"/></html:submit>
+		<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" onclick="this.form.method.value='backToShowOperations';"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.payments.back"/></html:cancel>
 	</logic:notEmpty>
 
 	<logic:empty name="createReceiptBean" property="entries">
@@ -62,7 +62,7 @@
 			</em>
 		</p>
 		<br/>
-		<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton" onclick="this.form.method.value='backToShowOperations';"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.payments.back"/></html:cancel>
+		<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" onclick="this.form.method.value='backToShowOperations';"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.payments.back"/></html:cancel>
 	</logic:empty>
 </fr:form>
 

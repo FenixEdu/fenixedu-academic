@@ -84,12 +84,12 @@
 		<p class="mtop15">
 			<span>
 					<html:form action="<%="/academicServiceRequestsManagement.do?method=concludeAcademicServiceRequest&amp;academicServiceRequestId=" + academicServiceRequest.getIdInternal().toString()%>">
-						<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="conclude" bundle="APPLICATION_RESOURCES"/></html:submit>
+						<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message key="conclude" bundle="APPLICATION_RESOURCES"/></html:submit>
 					</html:form>		
 			</span>
 			<span>
 					<html:form action="<%="/student.do?method=visualizeRegistration&amp;registrationID=" + academicServiceRequest.getRegistration().getIdInternal().toString()%>">
-						<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="cancel" bundle="APPLICATION_RESOURCES"/></html:submit>
+						<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message key="cancel" bundle="APPLICATION_RESOURCES"/></html:submit>
 					</html:form>
 			</span>
 		</p>
