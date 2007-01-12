@@ -158,7 +158,7 @@
 					<h:outputText value="#{bundle['label.number']}" />
 				</h:outputLink>
 			</f:facet>
-			<h:outputText value="<a href='#{CoordinatorStudentsBackingBean.contextPath}/coordinator/viewCurriculum.do?method=getStudentCP&degreeCurricularPlanID=#{CoordinatorStudentsBackingBean.degreeCurricularPlanID}&studentNumber=#{studentCurricularPlan.student.number}'>" escape="false"/>
+			<h:outputText value="<a href='#{CoordinatorStudentsBackingBean.contextPath}/coordinator/viewCurriculum.do?method=prepare&degreeCurricularPlanID=#{CoordinatorStudentsBackingBean.degreeCurricularPlanID}&studentNumber=#{studentCurricularPlan.student.number}'>" escape="false"/>
 				<h:outputText value="#{studentCurricularPlan.student.number}"/>
 			<h:outputText value="</a>" escape="false"/>
 		</h:column>
@@ -178,7 +178,7 @@
 					<h:outputText value="#{bundle['label.name']}" />
 				</h:outputLink>
 			</f:facet>
-			<h:outputText value="<a href='#{CoordinatorStudentsBackingBean.contextPath}/coordinator/viewCurriculum.do?method=getStudentCP&degreeCurricularPlanID=#{CoordinatorStudentsBackingBean.degreeCurricularPlanID}&studentNumber=#{studentCurricularPlan.student.number}'>" escape="false"/>
+			<h:outputText value="<a href='#{CoordinatorStudentsBackingBean.contextPath}/coordinator/viewCurriculum.do?method=prepare&degreeCurricularPlanID=#{CoordinatorStudentsBackingBean.degreeCurricularPlanID}&studentNumber=#{studentCurricularPlan.student.number}'>" escape="false"/>
 				<h:outputText value="#{studentCurricularPlan.student.person.nome}"/>
 			<h:outputText value="</a>" escape="false"/>
 		</h:column>

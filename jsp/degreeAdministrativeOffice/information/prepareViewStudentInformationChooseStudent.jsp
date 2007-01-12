@@ -7,7 +7,7 @@
 <html:errors/>
 <h2><bean:message key="title.student.information"/></h2>
 <html:form action="/viewInformation" focus="studentNumber">
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="getStudentCP"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepare"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 	
 	<logic:present name="executionDegreeId">

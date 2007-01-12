@@ -795,7 +795,7 @@
 		<forward name="show-final-degree-work-list" path="df.page.showFinalDegreeWorkList"/>
 		<forward name="show-final-degree-work-proposal" path="df.page.showFinalDegreeWorkProposal"/>
 		<forward name="prepare-show-final-degree-work-proposal" path="/manageFinalDegreeWork.do?method=prepare&amp;page=0"/>
-		<forward name="show-student-curricular-plan" path="/viewCurriculum.do?method=getStudentCP&amp;page=0"/>
+		<forward name="show-student-curricular-plan" path="/viewCurriculum.do?method=prepare&amp;page=0"/>
 	</action>
 
 	<action path="/setFinalDegreeWorkCandidacyPeriod"

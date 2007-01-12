@@ -8,7 +8,7 @@
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 
 <html:form action="/viewCurriculum" focus="studentNumber">
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="getStudentCP"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepare"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 	
 	<logic:present name="executionDegreeId">

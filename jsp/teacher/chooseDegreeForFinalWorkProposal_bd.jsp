@@ -206,7 +206,7 @@
 												<bean:define id="studentNumber" name="student" property="number"/>
 												<bean:define id="executionDegreeId" name="finalDegreeWorkProposalHeader" property="executionDegreeOID"/>
 												<bean:define id="curriculumLink">
-													/viewCurriculum.do?method=getStudentCP&amp;studentNumber=<%= studentNumber.toString() %>&amp;executionDegreeId=<%= executionDegreeId.toString() %>
+													/viewCurriculum.do?method=prepare&amp;studentNumber=<%= studentNumber.toString() %>&amp;executionDegreeId=<%= executionDegreeId.toString() %>
 												</bean:define>
 												<html:link page='<%= curriculumLink.toString() %>'>
 													<bean:write name="student" property="infoPerson.username"/>
@@ -216,7 +216,7 @@
 												<bean:define id="studentNumber" name="student" property="number"/>
 												<bean:define id="executionDegreeId" name="finalDegreeWorkProposalHeader" property="executionDegreeOID"/>
 												<bean:define id="curriculumLink">
-													/viewCurriculum.do?method=getStudentCP&amp;studentNumber=<%= studentNumber.toString() %>&amp;executionDegreeId=<%= executionDegreeId.toString() %>
+													/viewCurriculum.do?method=prepare&amp;studentNumber=<%= studentNumber.toString() %>&amp;executionDegreeId=<%= executionDegreeId.toString() %>
 												</bean:define>
 												<html:link page='<%= curriculumLink.toString() %>'>
 													<bean:write name="student" property="infoPerson.nome"/>
@@ -238,7 +238,7 @@
 												<bean:define id="studentNumber" name="student" property="number"/>
 												<bean:define id="executionDegreeId" name="finalDegreeWorkProposalHeader" property="executionDegreeOID"/>
 												<bean:define id="curriculumLink">
-													/viewCurriculum.do?method=getStudentCP&amp;studentNumber=<%= studentNumber.toString() %>&amp;executionDegreeId=<%= executionDegreeId.toString() %>
+													/viewCurriculum.do?method=prepare&amp;studentNumber=<%= studentNumber.toString() %>&amp;executionDegreeId=<%= executionDegreeId.toString() %>
 												</bean:define>
 												<html:link page='<%= curriculumLink.toString() %>'>
 													<bean:write name="student" property="infoPerson.username"/> 
@@ -248,7 +248,7 @@
 												<bean:define id="studentNumber" name="student" property="number"/>
 												<bean:define id="executionDegreeId" name="finalDegreeWorkProposalHeader" property="executionDegreeOID"/>
 												<bean:define id="curriculumLink">
-													/viewCurriculum.do?method=getStudentCP&amp;studentNumber=<%= studentNumber.toString() %>&amp;executionDegreeId=<%= executionDegreeId.toString() %>
+													/viewCurriculum.do?method=prepare&amp;studentNumber=<%= studentNumber.toString() %>&amp;executionDegreeId=<%= executionDegreeId.toString() %>
 												</bean:define>
 												<html:link page='<%= curriculumLink.toString() %>'>
 													<bean:write name="student" property="infoPerson.nome"/>

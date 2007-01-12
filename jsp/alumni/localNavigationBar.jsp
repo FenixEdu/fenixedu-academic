@@ -7,7 +7,7 @@
 <logic:present role="ALUMNI">
 	<ul>
 	  	<li>
-	  		<html:link page="/viewCurriculum.do?method=getStudentCP" >
+	  		<html:link page="/viewCurriculum.do?method=prepare" >
 	  			<bean:message key="link.student.curriculum"/>
 	  		</html:link>
 	  	</li>

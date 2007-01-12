@@ -47,7 +47,7 @@
 				<tr class="listClasses">					
 					<td><bean:write name="studentNumber"/></td>					
 					<td>
-						<html:link page="<%= "/viewCurriculum.do?method=getStudentCP&amp;studentNumber=" + studentNumber.toString() %>">
+						<html:link page="<%= "/viewCurriculum.do?method=prepare&amp;studentNumber=" + studentNumber.toString() %>">
 							<bean:write name="infoTutor" property="infoStudent.infoPerson.nome"/>
 						</html:link>
 					</td>

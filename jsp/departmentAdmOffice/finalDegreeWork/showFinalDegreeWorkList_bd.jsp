@@ -462,7 +462,7 @@
 								<logic:present name="student" property="number">
 									<bean:define id="studentNumber" name="student" property="number"/>
 									<bean:define id="curriculumLink">
-										/manageFinalDegreeWork.do?method=getStudentCP&amp;page=0&amp;studentNumber=<%= studentNumber.toString() %>
+										/manageFinalDegreeWork.do?method=prepare&amp;page=0&amp;studentNumber=<%= studentNumber.toString() %>
 									</bean:define>
 		<%-- 
 									<html:link page='<%= curriculumLink.toString() %>'>
@@ -476,7 +476,7 @@
 								<logic:present name="student" property="number">
 									<bean:define id="studentNumber" name="student" property="number"/>
 									<bean:define id="curriculumLink">
-										/manageFinalDegreeWork.do?method=getStudentCP&amp;page=0&amp;studentNumber=<%= studentNumber.toString() %>
+										/manageFinalDegreeWork.do?method=prepare&amp;page=0&amp;studentNumber=<%= studentNumber.toString() %>
 									</bean:define>
 		<%-- 
 									<html:link page='<%= curriculumLink.toString() %>'>
@@ -520,7 +520,7 @@
 						<td bgcolor="<%= bgColor %>" align="center">
 							<bean:define id="studentNumber" name="student" property="number"/>
 							<bean:define id="curriculumLink">
-								/manageFinalDegreeWork.do?method=getStudentCP&amp;page=0&amp;studentNumber=<%= studentNumber.toString() %>
+								/manageFinalDegreeWork.do?method=prepare&amp;page=0&amp;studentNumber=<%= studentNumber.toString() %>
 							</bean:define>
 <%-- 
 							<html:link page='<%= curriculumLink.toString() %>'>
@@ -532,7 +532,7 @@
 						<td bgcolor="<%= bgColor %>" align="center">
 							<bean:define id="studentNumber" name="student" property="number"/>
 							<bean:define id="curriculumLink">
-								/manageFinalDegreeWork.do?method=getStudentCP&amp;page=0&amp;studentNumber=<%= studentNumber.toString() %>
+								/manageFinalDegreeWork.do?method=prepare&amp;page=0&amp;studentNumber=<%= studentNumber.toString() %>
 							</bean:define>
 <%-- 
 							<html:link page='<%= curriculumLink.toString() %>'>
