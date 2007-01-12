@@ -96,6 +96,10 @@ public class Enrolment extends Enrolment_Base {
 	setEnrolmentCondition(enrollmentCondition);
     }
 
+    public boolean isEnrollmentConditionFinal() {
+	return getEnrolmentCondition() == EnrollmentCondition.FINAL;
+    }
+    
     public boolean isSpecialSeason() {
 	boolean result = false;
 	for (EnrolmentEvaluation enrolmentEvaluation : this.getEvaluations()) {
@@ -650,6 +654,10 @@ public class Enrolment extends Enrolment_Base {
 	return this.getEnrollmentState().equals(EnrollmentState.ENROLLED);
     }
 
+    public boolean isEnrolmentStateApproved() {
+	return this.getEnrollmentState() == EnrollmentState.APROVED;
+    }
+
     public Boolean isFirstTime() {
 	List<Enrolment> enrollments = getStudentCurricularPlan().getActiveEnrolments(
 		getCurricularCourse());
@@ -921,8 +929,18 @@ public class Enrolment extends Enrolment_Base {
 	return this.getCurricularCourse().getAssociatedExecutionCourses();
     }
 
-    public boolean isNormal() {
-	return getCurricularCourse().getType() == CurricularCourseType.NORMAL_COURSE;
+    public boolean isEnrolmentTypeNormal() {
+	return getCurricularCourse().getType() == CurricularCourseType.NORMAL_COURSE && !isExtraCurricular() && !isOptional();
+    }
+    
+    public String getEnrolmentTypeName() {
+	if (isExtraCurricular()) {
+	    return "EXTRA_CURRICULAR_ENROLMENT";
+        } else if (isOptional()) {
+            return "ENROLMENT_IN_OPTIONAL_DEGREE_MODULE";
+        } else {
+            return getCurricularCourse().getType().name();
+        }
     }
 
     public Attends getAttendsFor(final ExecutionPeriod executionPeriod) {
@@ -975,5 +993,5 @@ public class Enrolment extends Enrolment_Base {
     public boolean isExtraCurricular() {
 	return getIsExtraCurricular() != null && getIsExtraCurricular();
     }
-
+    
 }

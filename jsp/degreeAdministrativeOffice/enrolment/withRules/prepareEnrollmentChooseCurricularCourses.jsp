@@ -207,16 +207,7 @@
 				
 				<td class="listClasses courses"><bean:write name="enrollmentElem" property="curricularCourse.degreeCurricularPlan.degree.sigla"/></td>
 				
-				<% if (enrollmentElem.isExtraCurricular()) { %>
-					<td class="listClasses"><bean:message bundle="APPLICATION_RESOURCES" key="option.curricularCourse.extra"/></td>
-					
-				<% } else if (enrollmentElem instanceof net.sourceforge.fenixedu.domain.EnrolmentInOptionalCurricularCourse) { %>
-					<td class="listClasses"><bean:message bundle="APPLICATION_RESOURCES" key="option.curricularCourse.optional"/></td>
-					
-            	<% } else { %> 
-		            <td class="listClasses"><bean:message bundle="APPLICATION_RESOURCES" name="enrollmentElem" property="curricularCourse.type.keyName" /></td>
-		            
-				<%} %>
+	            <td class="listClasses"><bean:message bundle="ENUMERATION_RESOURCES" name="enrollmentElem" property="enrolmentTypeName"/></td>
 				
 				<td class="listClasses"><bean:write name="enrollmentElem" property="ectsCredits"/></td>
 				<td class="listClasses">

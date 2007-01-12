@@ -6,7 +6,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
-import net.sourceforge.fenixedu.domain.EnrolmentInOptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
@@ -161,13 +160,7 @@ public class InfoEnrolmentEditor extends InfoObject {
 	    setInfoStudentCurricularPlan(InfoStudentCurricularPlan.newInfoFromDomain(enrollment
 		    .getStudentCurricularPlan()));
 
-	    if (enrollment.isExtraCurricular()) {
-		setEnrollmentTypeResourceKey("option.curricularCourse.extra");
-	    } else if (enrollment instanceof EnrolmentInOptionalCurricularCourse) {
-		setEnrollmentTypeResourceKey("option.curricularCourse.optional");
-	    } else {
-		setEnrollmentTypeResourceKey(enrollment.getCurricularCourse().getType().getKeyName());
-	    }
+	    setEnrollmentTypeResourceKey(enrollment.getEnrolmentTypeName());
 	}
     }
 

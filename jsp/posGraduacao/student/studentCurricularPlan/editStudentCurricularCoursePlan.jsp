@@ -141,7 +141,7 @@
 									<bean:write name="infoEnrolment" property="infoCurricularCourse.infoDegreeCurricularPlan.name" />
 								</td>									
 								<td>
-									<bean:message name="infoEnrolment" property="enrollmentTypeResourceKey" bundle="APPLICATION_RESOURCES"/>
+									<bean:message name="infoEnrolment" property="enrollmentTypeResourceKey" bundle="ENUMERATION_RESOURCES"/>
 								</td>
 								<td>
 									<bean:define id="state" name="infoEnrolment" property="enrollmentState" />
