@@ -11,14 +11,14 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 
 public class SearchStudentsWithEnrolmentsByDepartment implements Serializable {
 
     private DomainReference<Department> departmentDomainReference; 
     private Set<DomainReference<Degree>> degreeDomainReferences;
-    private DomainReference<ExecutionPeriod> executionPeriodDomainReference;
+    private DomainReference<ExecutionYear> executionYearDomainReference;
 
     public SearchStudentsWithEnrolmentsByDepartment(final Department department) {
         departmentDomainReference = department == null ? null : new DomainReference<Department>(department);
@@ -50,15 +50,16 @@ public class SearchStudentsWithEnrolmentsByDepartment implements Serializable {
         }
     }
 
-    public ExecutionPeriod getExecutionPeriod() {
-        return executionPeriodDomainReference == null ? null : executionPeriodDomainReference.getObject();
+    public ExecutionYear getExecutionYear() {
+        return executionYearDomainReference == null ? null : executionYearDomainReference.getObject();
     }
 
-    public void setExecutionPeriod(final ExecutionPeriod executionPeriod) {
-        executionPeriodDomainReference = executionPeriod == null ? null : new DomainReference<ExecutionPeriod>(executionPeriod);
+    public void setExecutionYear(final ExecutionYear executionYear) {
+        executionYearDomainReference = executionYear == null ? null : new DomainReference<ExecutionYear>(executionYear);
     }
 
     public Set<StudentCurricularPlan> search() {
+	final ExecutionYear executionYear = getExecutionYear();
 	final Set<StudentCurricularPlan> studentCurricularPlans = new HashSet<StudentCurricularPlan>();
 	if (degreeDomainReferences != null) {
 	    for (final DomainReference<Degree> degreeDomainReference : degreeDomainReferences) {
@@ -66,7 +67,7 @@ public class SearchStudentsWithEnrolmentsByDepartment implements Serializable {
 		for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlansSet()) {
 		    if (degreeCurricularPlan.isActive()) {
 			for (final StudentCurricularPlan studentCurricularPlan : degreeCurricularPlan.getStudentCurricularPlansSet()) {
-			    if (studentCurricularPlan.isActive()) {
+			    if (studentCurricularPlan.hasEnrolments(executionYear)) {
 				studentCurricularPlans.add(studentCurricularPlan);
 			    }
 			}

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -45,8 +46,9 @@ public class SearchStudentsDA extends FenixDispatchAction {
         response.setHeader("Content-disposition", "attachment; filename=students.xls");
 
         final SearchStudentsWithEnrolmentsByDepartment searchStudentsWithEnrolmentsByDepartment = (SearchStudentsWithEnrolmentsByDepartment) getRenderedObject();
-        final Spreadsheet spreadsheet = getSpreadsheet();
         final Set<StudentCurricularPlan> studentCurricularPlans = searchStudentsWithEnrolmentsByDepartment.search();
+        final ExecutionYear executionYear = searchStudentsWithEnrolmentsByDepartment.getExecutionYear();
+        final Spreadsheet spreadsheet = getSpreadsheet(executionYear);
         for (final StudentCurricularPlan studentCurricularPlan : studentCurricularPlans) {
             final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
             final Degree degree = degreeCurricularPlan.getDegree();
@@ -59,6 +61,7 @@ public class SearchStudentsDA extends FenixDispatchAction {
             row.setCell(student.getNumber().toString());
             row.setCell(person.getName());
             row.setCell(person.getEmail());
+            row.setCell(Integer.toString(registration.getCurricularYear(executionYear)));
         }
         final OutputStream outputStream = response.getOutputStream();
         spreadsheet.exportToXLSSheet(outputStream);
@@ -66,13 +69,14 @@ public class SearchStudentsDA extends FenixDispatchAction {
         return null;
     }
 
-    private Spreadsheet getSpreadsheet() {
+    private Spreadsheet getSpreadsheet(final ExecutionYear executionYear) {
 	final ResourceBundle enumResourceBundle = ResourceBundle.getBundle("resources.ApplicationResources", new Locale("pt", "PT"));
-	final Spreadsheet spreadsheet = new Spreadsheet("Students");
+	final Spreadsheet spreadsheet = new Spreadsheet(enumResourceBundle.getString("label.student.for.academic.year") + " " + executionYear.getYear().replace('/', ' '));
 	spreadsheet.setHeader(enumResourceBundle.getString("label.degree.code"));
 	spreadsheet.setHeader(enumResourceBundle.getString("label.student.number"));
 	spreadsheet.setHeader(enumResourceBundle.getString("label.person.name"));
 	spreadsheet.setHeader(enumResourceBundle.getString("label.person.email"));
+	spreadsheet.setHeader(enumResourceBundle.getString("label.student.curricular.year"));
 	return spreadsheet;
     }
 

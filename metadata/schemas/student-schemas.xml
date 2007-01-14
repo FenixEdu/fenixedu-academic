@@ -1,6 +1,10 @@
 <schema name="net.sourceforge.fenixedu.domain.student.SearchStudentsWithEnrolmentsByDepartment"
 		type="net.sourceforge.fenixedu.domain.student.SearchStudentsWithEnrolmentsByDepartment"
 		bundle="APPLICATION_RESOURCES">
+	<slot name="executionYear" layout="menu-select" key="label.executionYear">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider"/>
+		<property name="format" value="${year}"/>
+	</slot>
 	<slot name="degrees" layout="option-select" key="label.degrees">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DegreeSelectManySearchStudentsWithEnrolmentsByDepartment"/>
 		<property name="eachLayout" value="values"/>
