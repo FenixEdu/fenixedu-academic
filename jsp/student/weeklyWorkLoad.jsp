@@ -124,13 +124,12 @@
 
 </table>					
 
-	<html:form action="/weeklyWorkLoad.do">
-	
-		
 		<table class="tstyle3 mtop0 tdcenter">				
 		<logic:iterate id="attend" name="attends">
 
 		<logic:notPresent name="attend" property="weeklyWorkLoadOfPreviousWeek">
+
+	<html:form action="/weeklyWorkLoad.do">
 
 				 <bean:define id="attendsID" type="java.lang.Integer" name="attend" property="idInternal"/>		
 				 <tr class="dnone">
@@ -168,10 +167,11 @@
 					</td>
 				</tr>
 
+</html:form>					
+
 		</logic:notPresent>
 	</logic:iterate>
 </table>	
-</html:form>					
 </logic:present>
 
 
