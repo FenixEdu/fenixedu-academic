@@ -4,6 +4,9 @@
     <definition name="index" extends="alumni.masterPage">
         <put name="body" value="/alumni/index.jsp"></put>
     </definition>
+	<definition name="df.page.curriculum.chooseRegistration" extends="alumni.masterPage" >
+		<put name="body" value="/student/curriculum/chooseRegistration.jsp" />
+	</definition>	
 	<definition name="df.page.showStudentCurriculum" extends="alumni.masterPage" >
 		<put name="body" value="/student/curriculum/displayStudentCurriculum_bd.jsp" />
 	</definition>	

@@ -48,6 +48,7 @@
 				scope="request"		
 		        parameter="method"
 			    type="net.sourceforge.fenixedu.presentationTier.Action.commons.student.CurriculumDispatchAction">
+	        <forward name="chooseRegistration" path="df.page.curriculum.chooseRegistration" />
 			<forward name="ShowStudentCurriculum" path="df.page.showStudentCurriculum"/>
 			<forward name="NotAuthorized" path="df.page.notAuthorized"/>
 		</action>

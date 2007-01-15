@@ -119,7 +119,7 @@
 
 
 <%-- Choose Student Curricular Plan form --%>
-<html:form action="<%="/viewCurriculum.do?method=viewRegistrationStudentCurricularPlans&registrationOID=" + registration.getIdInternal()%>">
+<html:form action="<%="/viewCurriculum.do?method=prepare&registrationOID=" + registration.getIdInternal()%>">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanID" property="degreeCurricularPlanID"/>
 	<logic:present property="studentNumber" name="studentCurricularPlanAndEnrollmentsSelectionForm">
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentNumber" name="studentCurricularPlanAndEnrollmentsSelectionForm" property="studentNumber"/>

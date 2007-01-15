@@ -45,18 +45,19 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
     private final static ResourceBundle applicationResources = ResourceBundle.getBundle("resources.ApplicationResources", LanguageUtils.getLocale());
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-
 	Registration registration = null;
-
-	final String studentNumber = getStudentNumber(request);
+	
+	final Integer registrationOID = getRegistrationOID(request);
+	final Integer studentNumber = getStudentNumber(request);
 	final Student loggedStudent = getUserView(request).getPerson().getStudent();
 	
-	if (studentNumber != null) {
-	    registration = Registration.readByNumber(Integer.valueOf(studentNumber));
+	if (registrationOID != null) {
+	    registration = rootDomainObject.readRegistrationByOID(registrationOID);
+	} else if (studentNumber != null) {
+	    registration = Registration.readByNumber(studentNumber);
 	} else if (loggedStudent != null) {
-	    final List<Registration> registrations = loggedStudent.getRegistrations();
-	    if (registrations.size() == 1) {
-		registration = registrations.get(0);
+	    if (loggedStudent.getRegistrations().size() == 1) {
+		registration = loggedStudent.getRegistrations().get(0);
 	    } else {
 		request.setAttribute("student", loggedStudent);
 		return mapping.findForward("chooseRegistration");
@@ -65,33 +66,28 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
 
 	if (registration == null || (loggedStudent != null && !loggedStudent.hasRegistrations(registration))) {
 	    return mapping.findForward("NotAuthorized");
+	} else {
+	    return getStudentCP(registration, mapping, request);
 	}
-
-	return getStudentCP(registration, mapping, request);
     }
 
-    private String getStudentNumber(HttpServletRequest request) {
-	String studentNumber = request.getParameter("studentNumber");
-	if (studentNumber == null || !StringUtils.isNumeric(studentNumber)) {
-	    studentNumber = (String) request.getAttribute("studentNumber");
-	}
-	
-	request.setAttribute("studentNumber", studentNumber);
-	return studentNumber;
-    }
-
-    public ActionForward viewRegistrationStudentCurricularPlans(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-	final Registration registration = getRegistration(request);
-	return getStudentCP(registration, mapping, request);
-    }
-
-    private Registration getRegistration(HttpServletRequest request) {
+    private Integer getRegistrationOID(HttpServletRequest request) {
 	String registrationOID = request.getParameter("registrationOID");
 	if (registrationOID == null || !StringUtils.isNumeric(registrationOID)) {
 	    registrationOID = (String) request.getAttribute("registrationOID");
 	}
 	
-	return rootDomainObject.readRegistrationByOID(Integer.valueOf(registrationOID));
+	return (registrationOID == null || !StringUtils.isNumeric(registrationOID)) ? null : Integer.valueOf(registrationOID);
+    }
+
+    private Integer getStudentNumber(HttpServletRequest request) {
+	String studentNumber = request.getParameter("studentNumber");
+	if (studentNumber == null || !StringUtils.isNumeric(studentNumber)) {
+	    studentNumber = (String) request.getAttribute("studentNumber");
+	}
+
+	request.setAttribute("studentNumber", studentNumber);
+	return (studentNumber == null || !StringUtils.isNumeric(studentNumber)) ? null : Integer.valueOf(studentNumber);
     }
 
     private ActionForward getStudentCP(final Registration registration, final ActionMapping mapping, final HttpServletRequest request) {

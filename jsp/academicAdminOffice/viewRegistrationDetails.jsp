@@ -106,7 +106,7 @@
 <p class="mtop0">
 	<span>
 		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-		<html:link page="/viewCurriculum.do?method=viewRegistrationStudentCurricularPlans" paramId="registrationOID" paramName="registration" paramProperty="idInternal">
+		<html:link page="/viewCurriculum.do?method=prepare" paramId="registrationOID" paramName="registration" paramProperty="idInternal">
 			<bean:message key="link.registration.viewStudentCurricularPlans" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 		</html:link>
 	</span>
