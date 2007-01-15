@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.accounting.Account;
 import net.sourceforge.fenixedu.domain.accounting.AccountType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.parking.ParkingPartyClassification;
+import net.sourceforge.fenixedu.util.StringNormalizer;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -31,10 +32,10 @@ public abstract class Party extends Party_Base {
 	createAccount(AccountType.INTERNAL);
 	createAccount(AccountType.EXTERNAL);
     }
-    
+
     @Override
     public void setName(String name) {
-	if(name == null || StringUtils.isEmpty(name.trim())) {
+	if (name == null || StringUtils.isEmpty(name.trim())) {
 	    throw new DomainException("error.unit.empty.name");
 	}
 	super.setName(name);
@@ -201,7 +202,7 @@ public abstract class Party extends Party_Base {
 
 	for (; !getAccounts().isEmpty(); getAccounts().get(0).delete())
 	    ;
-	
+
 	removeRootDomainObject();
 	super.deleteDomainObject();
     }
@@ -271,5 +272,34 @@ public abstract class Party extends Party_Base {
     }
 
     public abstract ParkingPartyClassification getPartyClassification();
+
+    public boolean verifyNameEquality(String[] nameWords) {
+
+	if (nameWords == null) {
+	    return true;
+	}
+
+	if (getName() != null) {
+	    String[] personNameWords = getName().trim().split(" ");
+	    StringNormalizer.normalize(personNameWords);
+	    int j, i;
+	    for (i = 0; i < nameWords.length; i++) {
+		if (!nameWords[i].equals("")) {
+		    for (j = 0; j < personNameWords.length; j++) {
+			if (personNameWords[j].equals(nameWords[i])) {
+			    break;
+			}
+		    }
+		    if (j == personNameWords.length) {
+			return false;
+		    }
+		}
+	    }
+	    if (i == nameWords.length) {
+		return true;
+	    }
+	}
+	return false;
+    }
 
 }
