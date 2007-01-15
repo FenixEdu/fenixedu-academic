@@ -45,11 +45,12 @@ public class SearchPerson extends Service {
 		String roleType, String degreeTypeString, Integer degreeId, Integer departmentId) {
 
 	    this.nameWords = (name != null && !name.equals("")) ? getNameWords(name) : null;
-	    this.email = (email != null && !email.equals("")) ? normalize(email.trim()) : null;
-	    this.username = (username != null && !username.equals("")) ? normalize(username.trim())
+	    this.email = (email != null && !email.equals("")) ? StringNormalizer.normalize(email.trim())
 		    : null;
-	    this.documentIdNumber = (documentIdNumber != null && !documentIdNumber.equals("")) ? normalize(documentIdNumber
-		    .trim())
+	    this.username = (username != null && !username.equals("")) ? StringNormalizer
+		    .normalize(username.trim()) : null;
+	    this.documentIdNumber = (documentIdNumber != null && !documentIdNumber.equals("")) ? StringNormalizer
+		    .normalize(documentIdNumber.trim())
 		    : null;
 
 	    if (roleType != null && roleType.length() > 0) {
@@ -80,7 +81,7 @@ public class SearchPerson extends Service {
 	    String[] nameWords = null;
 	    if (name != null && !StringUtils.isEmpty(name.trim())) {
 		nameWords = name.trim().split(" ");
-		normalizeName(nameWords);
+		StringNormalizer.normalize(nameWords);
 	    }
 	    return nameWords;
 	}
@@ -162,16 +163,6 @@ public class SearchPerson extends Service {
 	return new CollectionPager<InfoPerson>(infoPersons, 25);
     }
 
-    private static void normalizeName(String[] nameWords) {
-	for (int i = 0; i < nameWords.length; i++) {
-	    nameWords[i] = normalize(nameWords[i]);
-	}
-    }
-
-    private static String normalize(String string) {
-	return StringNormalizer.normalize(string).toLowerCase();
-    }
-
     // --------------- Search Person Predicate
     // -------------------------------------------
 
@@ -196,13 +187,13 @@ public class SearchPerson extends Service {
 	}
 
 	private boolean verifyUsernameEquality(String usernameToSearch, Person person) {
-	    if(usernameToSearch == null) {
+	    if (usernameToSearch == null) {
 		return true;
 	    }
-	    String normalizedUsername = normalize(usernameToSearch.trim());	    
+	    String normalizedUsername = StringNormalizer.normalize(usernameToSearch.trim());
 	    for (LoginAlias alias : person.getLoginAlias()) {
-		String normalizedAlias = normalize(alias.getAlias());
-		if(normalizedAlias.indexOf(normalizedUsername) != -1) {
+		String normalizedAlias = StringNormalizer.normalize(alias.getAlias());
+		if (normalizedAlias.indexOf(normalizedUsername) != -1) {
 		    return true;
 		}
 	    }
@@ -232,37 +223,12 @@ public class SearchPerson extends Service {
 	}
 
 	private boolean normalizeAndCompare(String parameter, String searchParameter) {
-	    String personParameter = normalize(parameter.trim());
+	    String personParameter = StringNormalizer.normalize(parameter.trim());
 	    return (personParameter.indexOf(searchParameter) == -1) ? false : true;
 	}
 
 	private static boolean verifyNameEquality(String[] nameWords, Person person) {
-
-	    if (nameWords == null) {
-		return true;
-	    }
-
-	    if (person.getNome() != null) {
-		String[] personNameWords = person.getNome().trim().split(" ");
-		normalizeName(personNameWords);
-		int j, i;
-		for (i = 0; i < nameWords.length; i++) {
-		    if (!nameWords[i].equals("")) {
-			for (j = 0; j < personNameWords.length; j++) {
-			    if (personNameWords[j].equals(nameWords[i])) {
-				break;
-			    }
-			}
-			if (j == personNameWords.length) {
-			    return false;
-			}
-		    }
-		}
-		if (i == nameWords.length) {
-		    return true;
-		}
-	    }
-	    return false;
+	    return person.verifyNameEquality(nameWords);
 	}
 
 	public SearchParameters getSearchParameters() {
