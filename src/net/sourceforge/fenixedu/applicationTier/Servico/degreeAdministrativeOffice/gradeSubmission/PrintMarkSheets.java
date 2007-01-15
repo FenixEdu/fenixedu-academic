@@ -7,12 +7,12 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.domain.MarkSheet;
 
 
-public class PrintMarkSheets extends PrintMarkSheet{
+public class PrintMarkSheets extends AbstractPrintMarkSheet{
 	
 	public void run(Collection<MarkSheet> markSheets, String printerName) throws FenixServiceException {
 		for (MarkSheet markSheet : markSheets) {
 			try {
-				super.run(markSheet, printerName);
+				print(markSheet, printerName);
 			} catch(InvalidArgumentsServiceException e) {
 				
 			}
