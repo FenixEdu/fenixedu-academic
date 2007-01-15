@@ -436,7 +436,12 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 		// Name
 		final HtmlTableCell nameCell = lineRow.createCell();
 		nameCell.setClasses(getEnrolmentNameClasses());
-		nameCell.setBody(generateEnrolmentLink(enrolment.getCurricularCourse().getCode() + " - " + enrolment.getName().getContent(LanguageUtils.getLanguage()), enrolment));
+		StringBuilder codeName = new StringBuilder();
+		if (!StringUtils.isEmpty(enrolment.getCurricularCourse().getCode())) {
+		    codeName.append(enrolment.getCurricularCourse().getCode()).append(" - ");
+		}
+		codeName.append(enrolment.getName().getContent(LanguageUtils.getLanguage()));
+		nameCell.setBody(generateEnrolmentLink(codeName.toString(), enrolment));
 		
 		// Degree Curricular Plan
 		generateEnrolmentSmallInfoCell(lineRow, generateEnrolmentDegreeCurricularPlanLink(enrolment), getEnrolmentDegreeCurricularPlanClasses(), null);
