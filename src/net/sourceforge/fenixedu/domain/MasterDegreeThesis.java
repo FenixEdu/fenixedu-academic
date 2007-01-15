@@ -14,34 +14,42 @@ import net.sourceforge.fenixedu.util.State;
 public class MasterDegreeThesis extends MasterDegreeThesis_Base {
 
     public MasterDegreeThesis() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
+    }
+
+    public MasterDegreeThesisDataVersion getActiveMasterDegreeThesisDataVersion() {
+
+	for (MasterDegreeThesisDataVersion masterDegreeThesisDataVersion : getMasterDegreeThesisDataVersions()) {
+	    if (masterDegreeThesisDataVersion.getCurrentState().getState().equals(State.ACTIVE)) {
+		return masterDegreeThesisDataVersion;
+	    }
 	}
 
-	public MasterDegreeThesisDataVersion getActiveMasterDegreeThesisDataVersion(){
-        
-        for (MasterDegreeThesisDataVersion masterDegreeThesisDataVersion : getMasterDegreeThesisDataVersions()) {
-            if(masterDegreeThesisDataVersion.getCurrentState().getState().equals(State.ACTIVE)){
-                return masterDegreeThesisDataVersion;
-            }
-        }
-        
-        return null;
+	return null;
     }
-    
+
     public MasterDegreeProofVersion getActiveMasterDegreeProofVersion() {
-        MasterDegreeProofVersion activeMasterDegreeProofVersion = null;
+	MasterDegreeProofVersion activeMasterDegreeProofVersion = null;
 
-        for (MasterDegreeProofVersion candidateMasterDegreeProofVersion : this
-                .getMasterDegreeProofVersions()) {
-            if (candidateMasterDegreeProofVersion.getCurrentState().getState().equals(State.ACTIVE)) {
-                activeMasterDegreeProofVersion = candidateMasterDegreeProofVersion;
-                break;
-            }
-        }
+	for (MasterDegreeProofVersion candidateMasterDegreeProofVersion : this
+		.getMasterDegreeProofVersions()) {
+	    if (candidateMasterDegreeProofVersion.getCurrentState().getState().equals(State.ACTIVE)) {
+		activeMasterDegreeProofVersion = candidateMasterDegreeProofVersion;
+		break;
+	    }
+	}
 
-        return activeMasterDegreeProofVersion;
+	return activeMasterDegreeProofVersion;
     }
-        
 
+    public boolean isConcluded() {
+	MasterDegreeProofVersion activeMasterDegreeProofVersion = getActiveMasterDegreeProofVersion();
+	return activeMasterDegreeProofVersion != null && activeMasterDegreeProofVersion.isConcluded();
+    }
+
+    public boolean isConcluded(Integer year) {
+	return isConcluded()
+		&& getActiveMasterDegreeProofVersion().getProofDateYearMonthDay().getYear() == year;
+    }
 }
