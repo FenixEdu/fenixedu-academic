@@ -77,7 +77,7 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
 	    registrationOID = (String) request.getAttribute("registrationOID");
 	}
 	
-	return (registrationOID == null || !StringUtils.isNumeric(registrationOID)) ? null : Integer.valueOf(registrationOID);
+	return (registrationOID == null || registrationOID.equals("") || !StringUtils.isNumeric(registrationOID)) ? null : Integer.valueOf(registrationOID);
     }
 
     private Integer getStudentNumber(HttpServletRequest request) {
@@ -87,7 +87,7 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
 	}
 
 	request.setAttribute("studentNumber", studentNumber);
-	return (studentNumber == null || !StringUtils.isNumeric(studentNumber)) ? null : Integer.valueOf(studentNumber);
+	return (studentNumber == null || studentNumber.equals("")  || !StringUtils.isNumeric(studentNumber)) ? null : Integer.valueOf(studentNumber);
     }
 
     private ActionForward getStudentCP(final Registration registration, final ActionMapping mapping, final HttpServletRequest request) {
