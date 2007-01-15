@@ -228,6 +228,8 @@
 	<slot name="number" key="label.studentNumber" />
 	<slot name="identificationNumber" key="label.identificationNumber.descriptive" />
 	<slot name="documentType" key="label.idDocumentType.descriptive" />
+	<slot name="name" />
+	<slot name="username" />
 </schema>
 
 <schema name="student.StudentsSearchBeanByNumber" type="net.sourceforge.fenixedu.domain.student.StudentsSearchBean" bundle="ACADEMIC_OFFICE_RESOURCES">
@@ -261,6 +263,7 @@
 
 <schema name="student.searchResult" type="net.sourceforge.fenixedu.domain.student.Student" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="number" key="label.studentNumber"/>
+	<slot name="person.name" key="label.name"/>
 </schema>
 
 <schema name="student.registrationsWithStartData" type="net.sourceforge.fenixedu.domain.student.Registration" bundle="ACADEMIC_OFFICE_RESOURCES">

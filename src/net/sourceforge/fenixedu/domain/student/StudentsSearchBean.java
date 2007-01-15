@@ -3,10 +3,14 @@ package net.sourceforge.fenixedu.domain.student;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
+
+import org.apache.commons.lang.StringUtils;
 
 public class StudentsSearchBean implements Serializable {
 
@@ -15,6 +19,10 @@ public class StudentsSearchBean implements Serializable {
     private String identificationNumber;
 
     private IDDocumentType documentType;
+
+    private String name;
+
+    private String username;
 
     public Integer getNumber() {
 	return number;
@@ -40,6 +48,22 @@ public class StudentsSearchBean implements Serializable {
 	this.identificationNumber = identificationNumber;
     }
 
+    public String getName() {
+	return name;
+    }
+
+    public void setName(String name) {
+	this.name = name;
+    }
+
+    public String getUsername() {
+	return username;
+    }
+
+    public void setUsername(String username) {
+	this.username = username;
+    }
+
     public Set<Student> search() {
 	final Set<Student> students = new HashSet<Student>();
 
@@ -48,12 +72,21 @@ public class StudentsSearchBean implements Serializable {
 	    if (registration != null) {
 		students.add(registration.getStudent());
 	    }
-	} else if (getIdentificationNumber() != null && getDocumentType() != null) {
+	} else if (!StringUtils.isEmpty(getIdentificationNumber()) && getDocumentType() != null) {
 	    Person person = Person.readByDocumentIdNumberAndIdDocumentType(getIdentificationNumber(),
 		    getDocumentType());
 	    if (person != null && person.hasStudent()) {
 		students.add(person.getStudent());
 
+	    }
+	} else if (!StringUtils.isEmpty(getName())) {
+	    for (Person person : Person.searchPersons(getName().split(" "))) {
+		students.add(person.getStudent());
+	    }
+	} else if (!StringUtils.isEmpty(getUsername())) {
+	    Login login = Login.readLoginByUsername(getUsername());
+	    if (login != null && login.getUser().getPerson().hasStudent()) {
+		students.add(login.getUser().getPerson().getStudent());
 	    }
 	}
 
@@ -61,9 +94,9 @@ public class StudentsSearchBean implements Serializable {
     }
 
     public Set<Student> searchForOffice(final AdministrativeOffice administrativeOffice) {
-	final Set<Student> students = new HashSet<Student>();
+	final Set<Student> students = new TreeSet<Student>(Student.NUMBER_COMPARATOR);
 	for (Student student : search()) {
-	    if (student.hasRegistrationForOffice(administrativeOffice)) {
+	    if (student != null && student.hasRegistrationForOffice(administrativeOffice)) {
 		students.add(student);
 	    }
 	}
