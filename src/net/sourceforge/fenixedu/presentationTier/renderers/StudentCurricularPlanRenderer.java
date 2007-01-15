@@ -54,8 +54,8 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
     
     private String organizedBy;
 
-    private Double initialWidth = Double.valueOf(70);
-
+    private String initialWidth = "65em";
+    
     private Double widthDecreasePerLevel = Double.valueOf(3);
 
     private String tablesClasses = "showinfo3 mvert0";
@@ -94,12 +94,81 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 	return organizedBy.equals("executionYears");
     }
 
-    public Double getInitialWidth() {
+    public String getInitialWidth() {
 	return initialWidth;
     }
-
-    public void setInitialWidth(Double initialWidth) {
+    
+    public void setInitialWidth(String initialWidth) {
 	this.initialWidth = initialWidth;
+    }
+
+    public static enum LengthUnit {
+
+	/**
+	 * Relative units
+	 */
+
+	FONTSIZE("em"),
+	XHEIGHT("ex"),
+	PIXEL("px"),
+	
+        /**
+         * Absolute units
+         */
+
+	INCHES("in"),
+	CENTIMETERS("cm"),
+	MILIMETERS("mm"),
+	POINTS("pt"),
+	PICAS("pc"),
+	PERCENTAGE("%");
+	
+	private String unitIdentifier;
+
+	private LengthUnit(String unitIdentifier) {
+	    this.unitIdentifier = unitIdentifier;	    
+	}
+
+	public String getUnitIdentifier() {
+	    return unitIdentifier;
+	}
+
+    };
+    
+    private Double initialWidthValue;
+    
+    public Double getInitialWidthValue() {
+	if (initialWidthValue == null) {
+	    for (final LengthUnit lengthUnit : LengthUnit.values()) {
+		if (initialWidth.contains(lengthUnit.getUnitIdentifier())) {
+		    initialWidthValue = Double.valueOf(initialWidth.split(lengthUnit.getUnitIdentifier())[0]); 
+		}
+	    }
+	}
+	
+	if (initialWidthValue == null) {
+	    throw new RuntimeException();
+	}
+	
+	return initialWidthValue;
+    }
+
+    private String unitIdentifier;
+    
+    public String getUnitIdentifier() {
+	if (unitIdentifier == null) {
+	    for (final LengthUnit lengthUnit : LengthUnit.values()) {
+		if (initialWidth.contains(lengthUnit.getUnitIdentifier())) {
+		    unitIdentifier = lengthUnit.getUnitIdentifier(); 
+		}
+	    }
+	}
+
+	if (unitIdentifier == null) {
+	    throw new RuntimeException();
+	}
+	
+	return unitIdentifier;
     }
 
     public Double getWidthDecreasePerLevel() {
@@ -243,7 +312,7 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 		final HtmlTable scpTable = new HtmlTable();
 		scpDiv.addChild(scpTable);
 		scpTable.setClasses(getTablesClasses());
-		scpTable.setStyle("width: " + getInitialWidth() + "em;");
+		scpTable.setStyle("width: " + getInitialWidthValue() + getUnitIdentifier() + ";");
 
 		final HtmlTableRow scpRow = scpTable.createRow();
 		scpRow.setClasses(getGroupRowClasses());
@@ -267,7 +336,7 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 	    final HtmlTable groupTable = new HtmlTable();
 	    scpDiv.addChild(groupTable);
 	    groupTable.setClasses(getTablesClasses());
-	    groupTable.setStyle("width: " + (getInitialWidth() - depth) + "em; margin-left: " + depth + "em;");
+	    groupTable.setStyle("width: " + (getInitialWidthValue() - depth) + getUnitIdentifier() + "; margin-left: " + depth + getUnitIdentifier() + ";");
 
 	    final HtmlTableRow groupRow = groupTable.createRow();
 	    groupRow.setClasses(getGroupRowClasses());
@@ -324,8 +393,8 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 		scpDiv.addChild(groupLinesTable);
 		groupLinesTable.setClasses(getTablesClasses());
 		groupLinesTable.setStyle("width: "
-			+ (getInitialWidth() - depth - getWidthDecreasePerLevel()) + "em; margin-left: "
-			+ (depth + getWidthDecreasePerLevel()) + "em;");
+			+ (getInitialWidthValue() - depth - getWidthDecreasePerLevel()) + getUnitIdentifier() + "; margin-left: "
+			+ (depth + getWidthDecreasePerLevel()) +  getUnitIdentifier() + ";");
 
 		for (final CurriculumLine curriculumLine : sortedCurriculumLines) {
 		    generateLine(groupLinesTable, curriculumLine);
@@ -564,7 +633,7 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 	    final HtmlTable executionPeriodTable = new HtmlTable();
 	    scpDiv.addChild(executionPeriodTable);
 	    executionPeriodTable.setClasses(getTablesClasses());
-	    executionPeriodTable.setStyle("width: " + (getInitialWidth() - getWidthDecreasePerLevel()) + "em; margin-left: " + getWidthDecreasePerLevel() + "em;");
+	    executionPeriodTable.setStyle("width: " + (getInitialWidthValue() - getWidthDecreasePerLevel()) + getUnitIdentifier() + "; margin-left: " + getWidthDecreasePerLevel() + getUnitIdentifier() + ";");
 
 	    final HtmlTableRow executionPeriodRow = executionPeriodTable.createRow();
 	    executionPeriodRow.setClasses(getGroupRowClasses());
@@ -600,7 +669,7 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 	    final HtmlTable executionPeriodTable = new HtmlTable();
 	    scpDiv.addChild(executionPeriodTable);
 	    executionPeriodTable.setClasses(getTablesClasses());
-	    executionPeriodTable.setStyle("width: " + (getInitialWidth() - getWidthDecreasePerLevel()) + "em; margin-left: " + getWidthDecreasePerLevel() + "em;");
+	    executionPeriodTable.setStyle("width: " + (getInitialWidthValue() - getWidthDecreasePerLevel()) + getUnitIdentifier() + "; margin-left: " + getWidthDecreasePerLevel() + getUnitIdentifier() + ";");
 
 	    final HtmlTableRow executionPeriodRow = executionPeriodTable.createRow();
 	    executionPeriodRow.setClasses(getGroupRowClasses());

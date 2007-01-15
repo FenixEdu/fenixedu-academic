@@ -214,7 +214,7 @@
 		<fr:view name="studentCurricularPlan">
 			<fr:layout>
 				<fr:property name="organizedBy" value="<%=organizedBy%>"/>
-				<fr:property name="initialWidth" value="65"/>
+				<fr:property name="initialWidth" value="65em"/>
 				<fr:property name="widthDecreasePerLevel" value="1"/>
 				<fr:property name="tablesClasses" value="showinfo3 mvert0"/>
 				<%-- tableClasses--%>
