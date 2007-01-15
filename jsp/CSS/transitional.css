@@ -245,6 +245,13 @@ padding: 5px; /*padding em "em"� problemas de rendering no firefox, faz arredo
 .tstyle8 td { padding: 4px; }
 
 
+/* table classes - tr properties */
+
+table tr.bgwhite td {
+background: #fff;	
+}
+
+
 /* ------------ */
 /* Miscelaneous */
 
@@ -421,6 +428,7 @@ padding-right: 0.5em;
 .attention2 { background-color: #ffa; color: #d60; }
 .underline1 { border-bottom: 2px solid #ec8; padding-bottom: 0.1em; }
 .valigntop { vertical-align: top; }
+.acronym { border-bottom: 1px dotted #888; }
 
 /* floats */
 .fright { float: right; }

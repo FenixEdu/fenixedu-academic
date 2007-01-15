@@ -167,6 +167,7 @@
 		</span>
 	</p>
 </logic:empty>
+
 <logic:notEmpty name="selectedStudentCurricularPlans">
 	<bean:define id="organizedBy" name="organizedBy" scope="request" type="java.lang.String" />
 	<bean:define id="enrolmentStateSelectionType" name="enrolmentStateSelectionType" scope="request" type="java.lang.Integer" />	
@@ -183,7 +184,7 @@
 		</bean:define>
 
 		<div class="mvert2 mtop0">
-			<p>
+			<p class="mvert05">
 				<strong>
 					<bean:message key="label.curricularplan" bundle="STUDENT_RESOURCES" />: 
 				</strong> 
@@ -196,20 +197,23 @@
 				</logic:present>
 			</p>
 			<logic:present name="studentCurricularPlan" property="branch">
-				<p>
+				<p class="mvert05">
 					<strong>
 						Grupo: 
 					</strong> 
 					<bean:write name="studentCurricularPlan" property="branch.name"/>
 				</p>
 			</logic:present>
-			<p>
+			<p class="mvert05">
 				<strong>
 					<bean:message key="label.beginDate" bundle="STUDENT_RESOURCES" />: 
 				</strong> 
 				<bean:write name="dateFormated"/>
 			</p>
 		</div>
+
+
+
 
 		<fr:view name="studentCurricularPlan">
 			<fr:layout>
@@ -229,4 +233,23 @@
 		</fr:view>
 
 	</logic:iterate>
+
+
+<p class="mtop2 mbottom0"><strong><bean:message key="label.legend" bundle="STUDENT_RESOURCES"/></strong></p>
+<div style="width: 250px; float: left;">
+	<p class="mvert05"><em><bean:message key="EnrollmentCondition.TEMPORARY.acronym" bundle="ENUMERATION_RESOURCES"/>: <bean:message key="EnrollmentCondition.TEMPORARY" bundle="ENUMERATION_RESOURCES"/></em></p>
+	<p class="mvert05"><em><bean:message key="EnrollmentCondition.FINAL.acronym" bundle="ENUMERATION_RESOURCES"/>: <bean:message key="EnrollmentCondition.FINAL" bundle="ENUMERATION_RESOURCES"/></em></p>
+	<p class="mvert05"><em><bean:message key="EnrollmentCondition.IMPOSSIBLE.acronym" bundle="ENUMERATION_RESOURCES"/>: <bean:message key="EnrollmentCondition.IMPOSSIBLE" bundle="ENUMERATION_RESOURCES"/></em></p>
+	<p class="mvert05"><em><bean:message key="EnrollmentCondition.VALIDATED.acronym" bundle="ENUMERATION_RESOURCES"/>: <bean:message key="EnrollmentCondition.VALIDATED" bundle="ENUMERATION_RESOURCES"/></em></p>
+	<p class="mvert05"><em><bean:message key="EnrollmentCondition.INVISIBLE.acronym" bundle="ENUMERATION_RESOURCES"/>: <bean:message key="EnrollmentCondition.INVISIBLE" bundle="ENUMERATION_RESOURCES"/></em></p>
+</div>
+<div style="width: 250px; float: left;>
+	<p class="mvert05"><em><bean:message key="EnrolmentEvaluationType.NORMAL.acronym" bundle="ENUMERATION_RESOURCES"/>: <bean:message key="EnrolmentEvaluationType.NORMAL" bundle="ENUMERATION_RESOURCES"/></em></p>
+	<p class="mvert05"><em><bean:message key="EnrolmentEvaluationType.IMPROVEMENT.acronym" bundle="ENUMERATION_RESOURCES"/>: <bean:message key="EnrolmentEvaluationType.IMPROVEMENT" bundle="ENUMERATION_RESOURCES"/></em></p>
+	<p class="mvert05"><em><bean:message key="EnrolmentEvaluationType.SPECIAL_SEASON.acronym" bundle="ENUMERATION_RESOURCES"/>: <bean:message key="EnrolmentEvaluationType.SPECIAL_SEASON" bundle="ENUMERATION_RESOURCES"/></em></p>
+	<p class="mvert05"><em><bean:message key="EnrolmentEvaluationType.EQUIVALENCE.acronym" bundle="ENUMERATION_RESOURCES"/>: <bean:message key="EnrolmentEvaluationType.EQUIVALENCE" bundle="ENUMERATION_RESOURCES"/></em></p>
+</div>
+
+
+	
 </logic:notEmpty>
