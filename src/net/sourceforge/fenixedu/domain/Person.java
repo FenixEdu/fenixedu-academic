@@ -2325,10 +2325,19 @@ public class Person extends Person_Base {
 
 	return result;
     }
-    
-     
+
     public boolean isHomePageAvailable() {
-    	return hasHomepage();
+	return hasHomepage();
     }
 
+    public static Collection<Person> searchPersons(String[] personName){
+	Collection<Person> result = new ArrayList<Person>();
+	for (Party party : RootDomainObject.getInstance().getPartys()) {
+	    if (party.isPerson() && party.verifyNameEquality(personName)) {
+		result.add((Person) party);
+	    }
+	}
+	return result;
+    }
+    
 }
