@@ -489,7 +489,7 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 	    final HtmlTableCell cell = lineRow.createCell();
 	    cell.setClasses(cellClasses);
 	    final HtmlInlineContainer span = new HtmlInlineContainer();
-	    span.setClasses("smalltxt" + ((title == null) ? StringUtils.EMPTY : "acronym"));
+	    span.setClasses("smalltxt" + ((title == null) ? StringUtils.EMPTY : " acronym"));
 	    span.setTitle(title);
 	    span.addChild(htmlComponent);
 	    cell.setBody(span);
