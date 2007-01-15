@@ -27,5 +27,5 @@ function executeWithTempFile() {
 	echo
 }
 
-
 execute "Fixing Receipt Contributor Party" FixReceiptContributorParty.sql
+execute "inserted new employee to manage department credits" alterTablePersonDepartment.sql
