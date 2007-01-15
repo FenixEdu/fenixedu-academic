@@ -64,7 +64,7 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 
     private String groupNameClasses = "aleft";
 
-    private String enrolmentClasses = "width5em acenter, width05em acenter, width2em acenter, width05em aright, aleft, width7em acenter, width6em acenter, width5em acenter, width1em acenter, width1em acenter, width1em aright, width1em aright, width1em aright";
+    private String enrolmentClasses = "width5em acenter 0, width05em acenter 1, width2em acenter 2, aleft 3, width7em acenter 4, width6em acenter 5, width5em acenter 6, width1em acenter 7, width1em acenter 8, width1em aright 9, width1em aright 10, width1em aright 11";
     
     private Integer enrolmentStateSelectionType = EnrollmentStateSelectionType.ALL_TYPE;
     
@@ -223,44 +223,40 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
         return getEnrolmentClasses()[2];
     }
 
-    private String getEnrolmentCodeClasses() {
+    private String getEnrolmentNameClasses() {
         return getEnrolmentClasses()[3];
     }
 
-    private String getEnrolmentNameClasses() {
+    private String getEnrolmentDegreeCurricularPlanClasses() {
         return getEnrolmentClasses()[4];
     }
 
-    private String getEnrolmentDegreeCurricularPlanClasses() {
+    private String getEnrolmentYearClasses() {
         return getEnrolmentClasses()[5];
     }
 
-    private String getEnrolmentYearClasses() {
+    private String getEnrolmentSemesterClasses() {
         return getEnrolmentClasses()[6];
     }
 
-    private String getEnrolmentSemesterClasses() {
+    private String getEnrolmentTypeClasses() {
         return getEnrolmentClasses()[7];
     }
 
-    private String getEnrolmentTypeClasses() {
+    private String getEnrolmentStateClasses() {
         return getEnrolmentClasses()[8];
     }
 
-    private String getEnrolmentStateClasses() {
+    private String getEnrolmentEvaluationClasses() {
         return getEnrolmentClasses()[9];
     }
 
-    private String getEnrolmentEvaluationClasses() {
+    private String getEnrolmentWeightClasses() {
         return getEnrolmentClasses()[10];
     }
 
-    private String getEnrolmentWeightClasses() {
-        return getEnrolmentClasses()[11];
-    }
-
     private String getEnrolmentCreditsClasses() {
-        return getEnrolmentClasses()[12];
+        return getEnrolmentClasses()[11];
     }
 
     public Integer getEnrolmentStateSelectionType() {
@@ -417,57 +413,54 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 		final HtmlTableRow lineRow = parentTable.createRow();
 
 		// Enrolment Condition 
-		final String enrolmentCondition = enrolment.isEnrollmentConditionFinal() ? StringUtils.EMPTY : enumerationResources.getString(enrolment.getEnrolmentCondition().getQualifiedName());
-		generateEnrolmentSmallInfoCell(lineRow, new HtmlText(enrolmentCondition), getEnrolmentConditionClasses());
+		final String enrolmentCondition = enrolment.isEnrollmentConditionFinal() ? StringUtils.EMPTY : enumerationResources.getString(enrolment.getEnrolmentCondition().getAcronym());
+		generateEnrolmentSmallInfoCell(lineRow, new HtmlText(enrolmentCondition), getEnrolmentConditionClasses(), enumerationResources.getString(enrolment.getEnrolmentCondition().getQualifiedName()));
 		
 		// Creation
 		final StringBuilder creation = new StringBuilder();
 		creation.append(enrolment.getCreationDateDateTime().toString("yyyy/MM/dd"));
+		String createdBy = null;
 		if (!StringUtils.isEmpty(enrolment.getCreatedBy())) {
 		    final Person person = Person.readPersonByUsername(enrolment.getCreatedBy());
 		    if (AccessControl.getPerson() != person) {
-			creation.append(", ").append(enrolment.getCreatedBy());    
+			createdBy = enrolment.getCreatedBy();    
 		    }
 		}
-		generateEnrolmentSmallInfoCell(lineRow, new HtmlText(creation.toString()), getEnrolmentCreationClasses());
+		generateEnrolmentSmallInfoCell(lineRow, new HtmlText(creation.toString()), getEnrolmentCreationClasses(), createdBy);
 
 		// Enrolment Evaluation Type 
-		final String enrolmentEvaluationType = enumerationResources.getString(enrolment.getEnrolmentEvaluationType().getQualifiedName());
-		generateEnrolmentSmallInfoCell(lineRow, new HtmlText(enrolmentEvaluationType), getEnrolmentEvaluationTypeClasses());
+		final String enrolmentEvaluationType = enumerationResources.getString(enrolment.getEnrolmentEvaluationType().getAcronym());
+		generateEnrolmentSmallInfoCell(lineRow, new HtmlText(enrolmentEvaluationType), getEnrolmentEvaluationTypeClasses(), enumerationResources.getString(enrolment.getEnrolmentEvaluationType().getQualifiedName()));
 		
 		// Code
-		final HtmlTableCell codeCell = lineRow.createCell();
-		codeCell.setClasses(getEnrolmentCodeClasses());
-		codeCell.setBody(generateEnrolmentLink(enrolment.getCurricularCourse().getCode(), enrolment));
-
 		// Name
 		final HtmlTableCell nameCell = lineRow.createCell();
-		codeCell.setClasses(getEnrolmentNameClasses());
-		nameCell.setBody(generateEnrolmentLink(enrolment.getName().getContent(LanguageUtils.getLanguage()), enrolment));
+		nameCell.setClasses(getEnrolmentNameClasses());
+		nameCell.setBody(generateEnrolmentLink(enrolment.getCurricularCourse().getCode() + " - " + enrolment.getName().getContent(LanguageUtils.getLanguage()), enrolment));
 		
 		// Degree Curricular Plan
-		generateEnrolmentSmallInfoCell(lineRow, generateEnrolmentDegreeCurricularPlanLink(enrolment), getEnrolmentDegreeCurricularPlanClasses());
+		generateEnrolmentSmallInfoCell(lineRow, generateEnrolmentDegreeCurricularPlanLink(enrolment), getEnrolmentDegreeCurricularPlanClasses(), null);
 		
 		// Execution Period
 		if (isOrganizedByGroups() || isOrganizedByCurricularYears()) {
 		    // Year
-		    generateEnrolmentSmallInfoCell(lineRow, new HtmlText(enrolment.getExecutionPeriod().getYear()), getEnrolmentYearClasses());
+		    generateEnrolmentSmallInfoCell(lineRow, new HtmlText(enrolment.getExecutionPeriod().getYear()), getEnrolmentYearClasses(), null);
 
 		    // Semester
 		    final StringBuilder semester = new StringBuilder();
 		    semester.append(enrolment.getExecutionPeriod().getSemester().toString());
 		    semester.append(" ");
 		    semester.append(enumerationResources.getString("SEMESTER.ABBREVIATION"));
-		    generateEnrolmentSmallInfoCell(lineRow, new HtmlText(semester.toString()), getEnrolmentSemesterClasses());
+		    generateEnrolmentSmallInfoCell(lineRow, new HtmlText(semester.toString()), getEnrolmentSemesterClasses(), null);
 		} 
 
 		// Enrolment Type 
 		String enrolmentType = enrolment.isEnrolmentTypeNormal() ? StringUtils.EMPTY : enumerationResources.getString(enrolment.getEnrolmentTypeName());
-		generateEnrolmentSmallInfoCell(lineRow, new HtmlText(enrolmentType), getEnrolmentTypeClasses());
+		generateEnrolmentSmallInfoCell(lineRow, new HtmlText(enrolmentType), getEnrolmentTypeClasses(), null);
 
 		// Enrolment State
 		final String enrolmentState = enrolment.isEnrolmentStateApproved() ? StringUtils.EMPTY : enumerationResources.getString(enrolment.getEnrollmentState().getQualifiedName());
-		generateEnrolmentSmallInfoCell(lineRow, new HtmlText(enrolmentState), getEnrolmentStateClasses());
+		generateEnrolmentSmallInfoCell(lineRow, new HtmlText(enrolmentState), getEnrolmentStateClasses(), null);
 		
 		// Enrolment Evaluation
 		final HtmlTableCell enrolmentEvaluationCell = lineRow.createCell();
@@ -492,11 +485,12 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 	    }
 	}
 
-	private void generateEnrolmentSmallInfoCell(final HtmlTableRow lineRow, HtmlComponent htmlComponent, final String cellClasses) {
+	private void generateEnrolmentSmallInfoCell(final HtmlTableRow lineRow, HtmlComponent htmlComponent, final String cellClasses, final String title) {
 	    final HtmlTableCell cell = lineRow.createCell();
 	    cell.setClasses(cellClasses);
 	    final HtmlInlineContainer span = new HtmlInlineContainer();
-	    span.setClasses("smalltxt");
+	    span.setClasses("smalltxt" + ((title == null) ? StringUtils.EMPTY : "acronym"));
+	    span.setTitle(title);
 	    span.addChild(htmlComponent);
 	    cell.setBody(span);
 	}
@@ -677,8 +671,16 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 	    final HtmlTableCell executionPeriodNameCell = executionPeriodRow.createCell();
 	    executionPeriodNameCell.setType(CellType.HEADER);
 	    executionPeriodNameCell.setClasses(getGroupNameClasses());
-	    executionPeriodNameCell.setColspan(NUMBER_OF_CELLS_PER_ENROLMENT - 2);
+	    executionPeriodNameCell.setColspan(NUMBER_OF_CELLS_PER_ENROLMENT - 3);
 	    executionPeriodNameCell.setBody(new HtmlText(executionPeriod.getYear() + ", " + executionPeriod.getName()));
+
+	    final HtmlTableCell gradeCell = executionPeriodRow.createCell();
+	    gradeCell.setType(CellType.HEADER);
+	    gradeCell.setClasses("acenter width1em");
+	    final HtmlInlineContainer gradeSpan = new HtmlInlineContainer();
+	    gradeSpan.setClasses("smalltxt");
+	    gradeSpan.addChild(new HtmlText("Nota"));
+	    gradeCell.setBody(gradeSpan);
 
 	    final HtmlTableCell weightCell = executionPeriodRow.createCell();
 	    weightCell.setType(CellType.HEADER);

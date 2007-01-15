@@ -25,4 +25,8 @@ public enum EnrollmentCondition {
 	return EnrollmentCondition.class.getSimpleName() + "." + name();
     }
 
+    public String getAcronym() {
+	return getQualifiedName() + ".acronym";
+    }
+
 }
