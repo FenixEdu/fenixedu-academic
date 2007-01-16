@@ -923,7 +923,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 			RenderUtils.invalidateViewState("file");
 			
 			for (String error : errors) {
-				addActionMessage(request, error,null);
+				addActionMessage(request, error);
 			}
 			selectItem(request);	
 			request.setAttribute("fileItemCreator", bean);
@@ -946,7 +946,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 			bean.setFile(null); 
 			RenderUtils.invalidateViewState("file");
 			for (String error : errors) {
-				addActionMessage(request, error,null);
+				addActionMessage(request, error);
 			}
 			return prepareUploadScormFile(mapping, form, request, response);
 		}
@@ -1048,7 +1048,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 			return createScormFile(mapping, form, request, response);
 		}
 
-		addActionMessage(request, "label.missingRequiredFields", null);
+		addActionMessage(request, "label.missingRequiredFields");
 		return prepareCreateScormFile(mapping, form, request, response);
 
 	}
@@ -1090,11 +1090,11 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 			executeService(request, "CreateScormFileItemForItem", args);
 
 		} catch (FenixServiceException e) {
-			addActionMessage(request, "error.scormfilupload", null);
+			addActionMessage(request, "error.scormfilupload");
 			RenderUtils.invalidateViewState("scormPackage");
 			return prepareCreateScormFile(mapping, form, request, response);
 		} catch (IOException e) {
-			addActionMessage(request, "error.unableToReadVCard", null);
+			addActionMessage(request, "error.unableToReadVCard");
 			RenderUtils.invalidateViewState("scormPackage");
 			return prepareCreateScormFile(mapping, form, request, response);
 		} finally {

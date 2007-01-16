@@ -255,7 +255,7 @@ public class UnavailablePeriodManagement extends FenixDispatchAction {
             Object[] args = { idInternal };
             executeService(request, "DeleteUnavailablePeriodByOID", args);
         } catch (DomainException e) {
-            addActionMessage(request, e.getMessage(), null);
+            addActionMessage(request, e.getMessage());
         }
     }
 

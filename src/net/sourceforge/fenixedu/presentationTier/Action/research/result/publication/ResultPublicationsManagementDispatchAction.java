@@ -203,7 +203,7 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
 				final Object[] args = { resultId };
 				executeService(request, "DeleteResultPublication", args);
 			} catch (Exception e) {
-				addActionMessage(request, e.getMessage(), null);
+				addActionMessage(request, e.getMessage());
 				return listPublications(mapping, form, request, response);
 			}
 		}

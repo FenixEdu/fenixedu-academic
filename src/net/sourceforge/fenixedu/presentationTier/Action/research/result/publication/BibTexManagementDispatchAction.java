@@ -481,7 +481,7 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
 				}
 			}
 		} catch (FenixActionException e) {
-			addActionMessage(request, e.getMessage(), null);
+			addActionMessage(request, e.getMessage());
 		}
 
 		RenderUtils.invalidateViewState();

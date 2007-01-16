@@ -272,12 +272,21 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 	}
 
 	protected void addActionMessage(HttpServletRequest request, String key, String... args) {
-		this.getActionMessages(request).add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(key, args));
+	    	this.addActionMessage(ActionMessages.GLOBAL_MESSAGE, request, key, args);
 	}
 
 	protected void addActionMessage(HttpServletRequest request, String key) {
-		this.getActionMessages(request).add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(key));
+	    	this.addActionMessage(ActionMessages.GLOBAL_MESSAGE, request, key);
 	}
+	
+	protected void addActionMessage(String propertyName, HttpServletRequest request, String key) {
+		this.getActionMessages(request).add(propertyName, new ActionMessage(key));
+	}
+	
+	protected void addActionMessage(String propertyName, HttpServletRequest request, String key, String... args) {
+		this.getActionMessages(request).add(propertyName, new ActionMessage(key, args));
+	}
+
 
 	protected String[] solveLabelFormatterArgs(HttpServletRequest request, LabelFormatter[] labelFormatterArgs) {
 		final String[] args = new String[labelFormatterArgs.length];

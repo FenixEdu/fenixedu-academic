@@ -61,7 +61,7 @@ public class ConvokeManagement extends FenixDispatchAction {
 			Object[] args = { idInternal, value };
 			executeService(request, "ConvokesAttended", args);
 		} catch (DomainException exception) {
-			addActionMessage(request, exception.getMessage(), null);
+			addActionMessage(request, exception.getMessage());
 		}
 
 		return prepareEditConvoke(mapping, form, request, response);
@@ -81,7 +81,7 @@ public class ConvokeManagement extends FenixDispatchAction {
 			Object[] args = { idInternal, value, coordinator };
 			executeService(request, "ChangeConvokeActive", args);
 		} catch (DomainException exception) {
-			addActionMessage(request, exception.getMessage(), null);
+			addActionMessage(request, exception.getMessage());
 		}
 
 		return prepareEditConvoke(mapping, form, request, response);
@@ -154,7 +154,7 @@ public class ConvokeManagement extends FenixDispatchAction {
 		try {
 			executeService(request, "CreateConvokes", args);
 		} catch (DomainException e) {
-			addActionMessage(request, e.getMessage(), null);
+			addActionMessage(request, e.getMessage());
 		}
 		recoverBeanFromRequest(request);
 		return mapping.findForward("prepareEditConvoke");

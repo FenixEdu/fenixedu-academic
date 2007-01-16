@@ -109,7 +109,7 @@ public class VigilancyCourseGroupManagement extends FenixDispatchAction {
         		Object[] args = { group, courses };
         		executeService(request, "AddExecutionCourseToGroup", args);
         	} catch (DomainException e) {
-        		addActionMessage(request, e.getMessage(), null);
+        		addActionMessage(request, e.getMessage());
         	}
         }
         if(RenderUtils.getViewState("addExternalCourse-withoutjs")!=null) {

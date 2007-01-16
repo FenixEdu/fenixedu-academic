@@ -162,7 +162,7 @@ public class SpecialSeasonEnrolmentDispatchAction extends FenixDispatchAction {
 		    specialSeasonEnrolmentBean.getExecutionYear(),
 		    specialSeasonEnrolmentBean.getSpecialSeasonCode() });
 	} catch (DomainException e) {
-	    addActionMessage(request, e.getMessage(), null);
+	    addActionMessage(request, e.getMessage());
 	}
 
 	return specialSeasonEnrolments(specialSeasonEnrolmentBean, mapping, form, request, response);

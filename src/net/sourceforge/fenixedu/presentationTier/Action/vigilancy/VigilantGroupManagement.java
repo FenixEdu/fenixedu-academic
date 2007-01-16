@@ -329,7 +329,7 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 		try {
 			executeService(request, "DeleteVigilantGroupByOID", args);
 		} catch (DomainException e) {
-			addActionMessage(request, e.getMessage(), null);
+			addActionMessage(request, e.getMessage());
 		}
 		prepareManagementBean(request, ExecutionYear.readCurrentExecutionYear());
 		return mapping.findForward("manageVigilantGroups");
@@ -694,8 +694,7 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 			Object[] args = { personToAdd };
 			executeService(request, "AddVigilantsToGroup", args);
 		} else {
-			addActionMessage(request, "label.vigilancy.inexistingUsername",
-					null);
+			addActionMessage(request, "label.vigilancy.inexistingUsername");
 		}
 		
 		return prepareManageVigilantsInGroup(mapping,form,request,response);

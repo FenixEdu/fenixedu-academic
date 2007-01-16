@@ -52,8 +52,7 @@ public class ExamCoordinatorManagement extends FenixDispatchAction {
 			Object args[] = { user.getPerson(), bean.getExecutionYear(), bean.getSelectedUnit() };
 	        executeService(request, "AddExamCoordinator", args);
 		} else {
-			addActionMessage(request, "label.vigilancy.inexistingUsername",
-					null);
+			addActionMessage(request, "label.vigilancy.inexistingUsername");
 		}
 
         return mapping.findForward("prepareExamCoordinator");

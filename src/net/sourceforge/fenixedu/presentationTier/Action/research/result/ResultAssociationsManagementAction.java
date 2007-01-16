@@ -66,7 +66,7 @@ public class ResultAssociationsManagementAction extends ResultsManagementAction 
 	    final Object[] args = { bean };
 	    executeService(request, "CreateResultUnitAssociation", args);
 	} catch (Exception e) {
-	    addActionMessage(request, "error.label.invalidNameForInternalUnit",null);
+	    addActionMessage(request, "error.label.invalidNameForInternalUnit");
 	}
 	
 	return prepareEditUnitAssociations(mapping, form, request, response);
