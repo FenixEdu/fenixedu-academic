@@ -40,7 +40,7 @@ import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
 
 public class Unit extends Unit_Base {
-
+    
     public final static Comparator<Unit> UNIT_COMPARATOR_BY_NAME = new ComparatorChain();
     static {
 	((ComparatorChain) UNIT_COMPARATOR_BY_NAME).addComparator(new BeanComparator("name", Collator

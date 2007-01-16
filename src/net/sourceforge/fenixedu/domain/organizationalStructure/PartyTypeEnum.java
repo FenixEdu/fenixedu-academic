@@ -37,6 +37,12 @@ public enum PartyTypeEnum {
     OUT,
     SERVICES,
     AGGREGATE_UNIT,
+    
+    PLANET,
+    COUNTRY,
+    UNIVERSITY,
+    SCHOOL,
+    
 
     // PERSON ENUMERATIONS
     

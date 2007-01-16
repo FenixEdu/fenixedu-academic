@@ -3,37 +3,43 @@ package net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismiss
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
-import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
+import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 
 public class DismissalBean implements Serializable{
     
     private DomainReference<StudentCurricularPlan> studentCurricularPlan;
+    
+    private Collection<SelectedDismissal> dismissals;
 
     private DomainReference<CurriculumGroup> curriculumGroup;
     
     private Collection<SelectedEnrolment> enrolments;
     
-    private Collection<SelectedCurricularCourse> curricularCourses;
+    private Collection<SelectedExternalEnrolment> externalEnrolments;
+    
+    private DismissalType dismissalType;
+    
+    private DismissalClass dismissalClass;
     
     private Double credits;
     
     private String grade;
-
-    public Collection<SelectedCurricularCourse> getCurricularCourses() {
-        return curricularCourses;
+  
+    public Collection<SelectedDismissal> getDismissals() {
+        return dismissals;
     }
 
-    public void setCurricularCourses(Collection<SelectedCurricularCourse> curricularCourses) {
-        this.curricularCourses = curricularCourses;
+    public void setDismissals(Collection<SelectedDismissal> dismissals) {
+        this.dismissals = dismissals;
     }
-
+    
     public Collection<SelectedEnrolment> getEnrolments() {
         return enrolments;
     }
@@ -41,7 +47,7 @@ public class DismissalBean implements Serializable{
     public void setEnrolments(Collection<SelectedEnrolment> enrolments) {
         this.enrolments = enrolments;
     }
-
+    
     public CurriculumGroup getCurriculumGroup() {
 	return (this.curriculumGroup != null) ? this.curriculumGroup.getObject() : null;
     }
@@ -56,6 +62,22 @@ public class DismissalBean implements Serializable{
 
     public void setStudentCurricularPlan(StudentCurricularPlan studentCurricularPlan) {
 	this.studentCurricularPlan = (studentCurricularPlan != null) ? new DomainReference<StudentCurricularPlan>(studentCurricularPlan) : null;
+    }
+    
+    public DismissalType getDismissalType() {
+        return dismissalType;
+    }
+
+    public void setDismissalType(DismissalType dismissalType) {
+        this.dismissalType = dismissalType;
+    }
+
+    public DismissalClass getDismissalClass() {
+        return dismissalClass;
+    }
+
+    public void setDismissalClass(DismissalClass dismissalClass) {
+        this.dismissalClass = dismissalClass;
     }
 
     public String getGrade() {
@@ -72,6 +94,47 @@ public class DismissalBean implements Serializable{
 
     public void setCredits(Double credits) {
         this.credits = credits;
+    }
+    
+    public Collection<SelectedExternalEnrolment> getExternalEnrolments() {
+        return externalEnrolments;
+    }
+
+    public void setExternalEnrolments(Collection<SelectedExternalEnrolment> externalEnrolments) {
+        this.externalEnrolments = externalEnrolments;
+    }
+
+    public boolean containsDismissal(CurriculumGroup curriculumGroup, CurricularCourse curricularCourse) {
+	if(getDismissals() != null) {
+	    for (SelectedDismissal selectedDismissal : getDismissals()) {
+		if(selectedDismissal.equals(curriculumGroup, curricularCourse)) {
+		    return true;
+		}
+	    }
+	}
+	return false;
+    }
+    
+    public Collection<IEnrolment> getSelectedEnrolments() {
+	final Collection<IEnrolment> result = new ArrayList<IEnrolment>();
+	
+	if (getEnrolments() != null) {
+	    for (final SelectedEnrolment selectedEnrolment : getEnrolments()) {
+		if(selectedEnrolment.getSelected()) {
+		    result.add(selectedEnrolment.getEnrolment());
+		}
+	    }	    
+	}
+	
+	if (getExternalEnrolments() != null) {
+	    for (final SelectedExternalEnrolment selectedEnrolment : getExternalEnrolments()) {
+		if(selectedEnrolment.getSelected()) {
+		    result.add(selectedEnrolment.getExternalEnrolment());
+		}
+	    }	
+	}
+	
+	return result;
     }
     
     public static class SelectedEnrolment implements Serializable {
@@ -102,26 +165,22 @@ public class DismissalBean implements Serializable{
 	
     }
     
-    public static class SelectedCurricularCourse implements Serializable {
+    public static class SelectedExternalEnrolment implements Serializable {
 	
 	private Boolean selected = Boolean.FALSE;
 	
-	private GenericPair<DomainReference<CurriculumGroup>, DomainReference<CurricularCourse>> curricularCourse;
+	private DomainReference<ExternalEnrolment> externalEnrolment;
 	
-	public SelectedCurricularCourse(GenericPair<CurriculumGroup, CurricularCourse> curricularCourse) {
-	    
+	public SelectedExternalEnrolment(ExternalEnrolment externalEnrolment) {
+	    setExternalEnrolment(externalEnrolment);
 	}
 
-	public GenericPair<CurriculumGroup, CurricularCourse> getCurricularCourse() {
-	    return new GenericPair<CurriculumGroup, CurricularCourse>((this.curricularCourse.getLeft() != null) ? this.curricularCourse.getLeft().getObject() : null, 
-	    (this.curricularCourse.getRight() != null) ? this.curricularCourse.getRight().getObject() : null);   
+	public ExternalEnrolment getExternalEnrolment() {
+	    return (this.externalEnrolment != null) ? this.externalEnrolment.getObject() : null;
 	}
 
-	public void setCurricularCourse(
-		GenericPair<CurriculumGroup, CurricularCourse> curricularCourse) {
-	    this.curricularCourse = new GenericPair<DomainReference<CurriculumGroup>, DomainReference<CurricularCourse>>(
-		    (curricularCourse.getLeft() != null) ? new DomainReference<CurriculumGroup>(curricularCourse.getLeft()) : null,
-			    (curricularCourse.getRight() != null) ? new DomainReference<CurricularCourse>(curricularCourse.getRight()) : null);
+	public void setExternalEnrolment(ExternalEnrolment externalEnrolment) {
+	    this.externalEnrolment = (externalEnrolment != null) ? new DomainReference<ExternalEnrolment>(externalEnrolment) : null;
 	}
 
 	public Boolean getSelected() {
@@ -130,7 +189,25 @@ public class DismissalBean implements Serializable{
 
 	public void setSelected(Boolean selected) {
 	    this.selected = selected;
-	}	
+	}
+    }
+
+    public static enum DismissalType {
+	CURRICULUM_GROUP_CREDITS,
+	CURRICULAR_COURSE_CREDITS;
+	
+	public String getName() {
+	    return name();
+	}
     }
     
-}
+    public static enum DismissalClass {
+	CREDITS,
+	EQUIVALENCE;
+	
+	public String getName() {
+	    return name();
+	}
+    }
+
+ }

@@ -863,6 +863,12 @@ class net.sourceforge.fenixedu.domain.Curriculum extends net.sourceforge.fenixed
 	String program;
 }
 
+class net.sourceforge.fenixedu.domain.ExternalCurricularCourse extends net.sourceforge.fenixedu.domain.DomainObject {
+	String name;
+	String code;
+	Integer keyUnit;
+}
+
 
 class net.sourceforge.fenixedu.domain.Degree extends net.sourceforge.fenixedu.domain.DomainObject {
 	String concreteClassForDegreeCurricularPlans;
@@ -1319,6 +1325,14 @@ class net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule extends
     class net.sourceforge.fenixedu.domain.EnrolmentInOptionalCurricularCourse extends net.sourceforge.fenixedu.domain.Enrolment {
     }
 
+class net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment extends net.sourceforge.fenixedu.domain.DomainObject {
+	String grade;
+    String createdBy;
+	DateTime creationDateDateTime;
+	Integer keyExternalCurricularCourse;
+	Integer keyStudent;
+	Integer keyExecutionPeriod;
+}
     
 class net.sourceforge.fenixedu.domain.studentCurriculum.Credits extends net.sourceforge.fenixedu.domain.DomainObject {
 	String ojbConcreteClass;
@@ -1326,9 +1340,16 @@ class net.sourceforge.fenixedu.domain.studentCurriculum.Credits extends net.sour
 	Integer keyStudentCurricularPlan;
 }
 
+
 	class net.sourceforge.fenixedu.domain.studentCurriculum.Equivalence extends net.sourceforge.fenixedu.domain.studentCurriculum.Credits {
 		String givenGrade;
 	}
+
+class net.sourceforge.fenixedu.domain.studentCurriculum.EnrolmentWrapper extends net.sourceforge.fenixedu.domain.DomainObject {
+	String className;
+	Integer objectId;
+	Integer keyCredits;
+}
 
     
 
@@ -5524,13 +5545,39 @@ relation EnrolmentExecutionPeriod {
 	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
 }
 
-relation EnrolmentCredits {
-	net.sourceforge.fenixedu.domain.Enrolment playsRole enrolments {
+relation EnrolmentWrapperCredits {
+	net.sourceforge.fenixedu.domain.studentCurriculum.EnrolmentWrapper playsRole enrolments {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.studentCurriculum.Credits playsRole credits {
+	net.sourceforge.fenixedu.domain.studentCurriculum.Credits playsRole credits;
+}
+
+relation ExternalCurricularCourseExternalEnrolment {
+	net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment playsRole externalEnrolments {
 		multiplicity *;
 	}
+	net.sourceforge.fenixedu.domain.ExternalCurricularCourse playsRole externalCurricularCourse;	
+}
+
+relation ExternalCurricularCourseUnit {
+	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole unit;	
+	net.sourceforge.fenixedu.domain.ExternalCurricularCourse playsRole externalCurricularCourses {
+		multiplicity *;
+	}	
+}
+
+relation ExternalEnrolmentExecutionPeriod {
+	net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment playsRole externalEnrolments {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;	
+}
+
+relation StudentExternalEnrolment {
+	net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment playsRole externalEnrolments {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.student.Student playsRole student;	
 }
 
 relation StudentCurricularPlanCredits {
@@ -8931,6 +8978,26 @@ relation RootDomainObjectCredits {
 	}
 }
 
+relation RootDomainObjectEnrolmentWrapper {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.studentCurriculum.EnrolmentWrapper playsRole enrolmentWrappers {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectExternalEnrolment {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment playsRole externalEnrolments {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectExternalCurricularCourse {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.ExternalCurricularCourse playsRole externalCurricularCourses {
+		multiplicity *;
+	}
+}
 
 relation RootDomainObjectConversationThread {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;

@@ -11208,8 +11208,6 @@
         	<chain name="AcademicAdministrativeOfficeAuthorization"></chain>
         </filterChains>     
     </service>
-    
-    
     <service>
     	<name>CancelReceipt</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.CancelReceipt</implementationClass>
@@ -11229,9 +11227,6 @@
         	<chain name="AcademicAdministrativeOfficeAuthorization"></chain>
         </filterChains>     
     </service>
-    
-    
-  
     <service>
     	<name>ReadStudentSenior</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.student.senior.ReadStudentSenior</implementationClass>
@@ -11248,5 +11243,32 @@
         <isTransactional>true</isTransactional>  
         <filterChains>
         </filterChains>     
-    </service>  
+    </service>
+    <service>
+    	<name>CreateNewCreditsDismissal</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.dismissal.CreateNewCreditsDismissal</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="AcademicAdministrativeOfficeAuthorization"></chain>
+        </filterChains>     
+    </service>
+    <service>
+    	<name>CreateNewEquivalenceDismissal</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.dismissal.CreateNewEquivalenceDismissal</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="AcademicAdministrativeOfficeAuthorization"></chain>
+        </filterChains>     
+    </service>
+    <service>
+    	<name>DeleteCredits</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.dismissal.DeleteCredits</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="AcademicAdministrativeOfficeAuthorization"></chain>
+        </filterChains>     
+    </service>    
 </serviceDefinitions>

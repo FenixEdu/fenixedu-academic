@@ -38,7 +38,7 @@ import org.joda.time.YearMonthDay;
  * 24/Mar/2003
  */
 
-public class Enrolment extends Enrolment_Base {
+public class Enrolment extends Enrolment_Base implements IEnrolment{
 
     public static final Comparator<Enrolment> COMPARATOR_BY_EXECUTION_PERIOD = new BeanComparator(
 	    "executionPeriod");
@@ -874,6 +874,14 @@ public class Enrolment extends Enrolment_Base {
 	return getLatestEnrolmentEvalution(getEnrolmentEvaluationsByEnrolmentEvaluationType(evaluationType));
     }
 
+    public String getGrade() {
+	final EnrolmentEvaluation enrolmentEvaluation = getLatestEnrolmentEvaluation();
+	if(enrolmentEvaluation != null) {
+	    return enrolmentEvaluation.getGrade();
+	}
+	return null;
+    }
+    
     private EnrolmentEvaluation getLatestEnrolmentEvalution(
 	    List<EnrolmentEvaluation> enrolmentEvaluations) {
 	return (enrolmentEvaluations == null || enrolmentEvaluations.isEmpty()) ? null : Collections
@@ -982,12 +990,21 @@ public class Enrolment extends Enrolment_Base {
 	return (weigth == null || weigth == 0) ? getCurricularCourse().getWeigth() : weigth;
     }
 
+    @Override
     public Double getEctsCredits() {
 	if (isExtraCurricular()) {
 	    return Double.valueOf(0);
 	}
 	
 	return getCurricularCourse().getEctsCredits();
+    }
+    
+    @Override
+    public Double getAprovedEctsCredits() {
+        if(isApproved()) {
+            return getEctsCredits();
+        }
+        return Double.valueOf(0);
     }
 
     public boolean isExtraCurricular() {

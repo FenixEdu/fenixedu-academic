@@ -26,3 +26,8 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "Add new Accoutability Type" addNewAccountabilityType.sql
+execute "Create ENROLMENT_WRAPPER table" createEnrolmentWrapperTable.sql
+execute "Create ExternalEnrolment table" createExternalEnrolmentTable.sql
+execute "Create ExternalCurricularCourse table" createExternalCurricularCourse.sql

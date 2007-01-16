@@ -457,3 +457,100 @@
 		<property name="format" value="${name}" />
 	</slot>
 </schema>
+
+<schema name="DismissalBean.view" bundle="ACADEMIC_OFFICE_RESOURCES"
+	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean" >
+	<slot name="studentCurricularPlan.registration.student.person.name" key="label.name"/>
+	<slot name="studentCurricularPlan.registration.student.number" key="label.studentNumber"/>
+	<slot name="studentCurricularPlan.degreeCurricularPlan.name" key="label.curricularPlan"/>
+</schema>
+
+<schema name="DismissalBean.CURRICULUM_GROUP_CREDITS" bundle="ACADEMIC_OFFICE_RESOURCES"
+	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean" >
+	
+	<slot name="dismissalType" layout="radio-postback" key="label.dismissalType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="destination" value="dismissalTypePostBack"/>
+		<property name="classes" value="nobullet liinline"/>
+	</slot>
+	<slot name="credits" key="label.creditsNumber" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
+</schema>
+
+<schema name="DismissalBean.CURRICULAR_COURSE_CREDITS" bundle="ACADEMIC_OFFICE_RESOURCES"
+	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean" >
+	
+	<slot name="dismissalType" layout="radio-postback" key="label.dismissalType"
+		  validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="destination" value="dismissalTypePostBack"/>
+		<property name="classes" value="nobullet liinline"/>
+	</slot>
+</schema>
+
+<schema name="student.Dismissal.choose.internal.enrolments" bundle="ACADEMIC_OFFICE_RESOURCES"
+	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean$SelectedEnrolment" >
+	<slot name="enrolment.studentCurricularPlan.degreeCurricularPlan.name" key="label.name" read-only="true"/>	
+	<slot name="enrolment.name" key="label.name" read-only="true"/>
+	<slot name="enrolment.executionPeriod" layout="format" key="lable.year.semester" read-only="true">
+		<property name="format" value="${executionYear.year} ${semester}º Sem"/>
+	</slot>	
+	<slot name="enrolment.grade" key="label.grade" read-only="true"/>	
+	<slot name="selected" />	
+</schema>
+
+<schema name="student.Dismissal.choose.external.enrolments" bundle="ACADEMIC_OFFICE_RESOURCES"
+	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean$SelectedExternalEnrolment" >
+	<slot name="externalEnrolment.name" key="label.name" read-only="true"/>	
+	<slot name="externalEnrolment.executionPeriod" layout="format" key="lable.year.semester" read-only="true">
+		<property name="format" value="${executionYear.year} ${semester}º Sem"/>
+	</slot>	
+	<slot name="externalEnrolment.grade" key="label.grade" read-only="true"/>	
+	<slot name="selected" />	
+</schema>
+
+<schema name="student.Dismissal.view.dismissals" bundle="ACADEMIC_OFFICE_RESOURCES"
+	type="net.sourceforge.fenixedu.domain.studentCurriculum.Credits" >
+	<slot name="dismissals" key="label.dismissals" layout="list">
+		<property name="eachLayout" value="values" />
+		<property name="eachSchema" value="dismissal.view" />
+		<property name="classes" value="nobullet"/>
+	</slot>
+	<slot name="IEnrolments" key="label.equivalences" layout="list">
+		<property name="eachLayout" value="values" />
+		<property name="eachSchema" value="equivalence.view" />
+		<property name="classes" value="nobullet"/>
+	</slot>
+	<slot name="givenCredits" />	
+	<slot name="givenGrade" />	
+</schema>
+
+<schema name="dismissal.view" bundle="ACADEMIC_OFFICE_RESOURCES"
+	type="net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal" >
+	<slot name="name"/>
+</schema>
+
+<schema name="equivalence.view" bundle="ACADEMIC_OFFICE_RESOURCES"
+	type="net.sourceforge.fenixedu.domain.IEnrolment" >
+	<slot name="name"/>
+</schema>
+
+<schema name="DismissalBean.DismissalClass.CREDITS" bundle="ACADEMIC_OFFICE_RESOURCES"
+	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean" >
+	
+	<slot name="dismissalClass" layout="radio-postback" key="label.dismissalClass" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="destination" value="dismissalClassPostBack"/>
+		<property name="classes" value="nobullet liinline"/>
+	</slot>
+</schema>
+
+<schema name="DismissalBean.DismissalClass.EQUIVALENCE" bundle="ACADEMIC_OFFICE_RESOURCES"
+	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean" >
+	
+	<slot name="dismissalClass" layout="radio-postback" key="label.dismissalClass"
+		  validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="destination" value="dismissalClassPostBack"/>
+		<property name="classes" value="nobullet liinline"/>
+	</slot>
+	<slot name="grade" key="label.grade" />	
+</schema>
+
+
+	

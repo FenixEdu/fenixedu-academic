@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.studentCurriculum;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -223,6 +224,17 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	}
 	return result;
     }
+    
+    public Collection<CurricularCourse> getCurricularCoursesToDismissal() {
+	Set<CurricularCourse> result = new HashSet<CurricularCourse>();
+	for (Context context : this.getDegreeModule().getChildContexts(CurricularCourse.class, (ExecutionPeriod) null)) {
+	    CurricularCourse curricularCourse = (CurricularCourse) context.getChildDegreeModule();
+	    if(!getStudentCurricularPlan().getRoot().isAproved(curricularCourse, null)) {
+		result.add(curricularCourse);
+	    }
+	}
+	return result;
+    }
 
     @Override
     public boolean isAproved(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod) {
@@ -362,4 +374,23 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     public boolean isNoCourseGroupCurriculumGroup() {
 	return false;
     }
+    
+    @Override
+    public Double getEctsCredits() {
+	BigDecimal bigDecimal = BigDecimal.ZERO;
+        for (CurriculumModule curriculumModule : getCurriculumModulesSet()) {
+            bigDecimal = bigDecimal.add(new BigDecimal(curriculumModule.getEctsCredits()));
+	}
+        return Double.valueOf(bigDecimal.doubleValue());
+    }
+    
+    @Override
+    public Double getAprovedEctsCredits() {
+	BigDecimal bigDecimal = BigDecimal.ZERO;
+        for (CurriculumModule curriculumModule : getCurriculumModulesSet()) {
+            bigDecimal = bigDecimal.add(new BigDecimal(curriculumModule.getAprovedEctsCredits()));
+	}
+        return Double.valueOf(bigDecimal.doubleValue());
+    }
+
 }

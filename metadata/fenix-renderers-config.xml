@@ -182,6 +182,8 @@ Documentation:
 	<renderer mode="input" type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.StudentEnrolmentBean" layout="student-enrolments" class="net.sourceforge.fenixedu.presentationTier.renderers.StudentCurricularPlanEnrolmentsRenderer"/>
 	
 	<renderer mode="input" type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.StudentOptionalEnrolmentBean" layout="student-optional-enrolments" class="net.sourceforge.fenixedu.presentationTier.renderers.DegreeCurricularPlanOptionalEnrolmentsRenderer"/>
+	
+	<renderer mode="input" type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean" layout="student-dismissal" class="net.sourceforge.fenixedu.presentationTier.renderers.StudentDismissalRenderer"/>	
     
     <renderer mode="input" type="net.sourceforge.fenixedu.domain.DomainObject" layout="autoComplete" class="net.sourceforge.fenixedu.presentationTier.renderers.AutoCompleteInputRenderer">
         <property name="autoCompleteItemsStyleClass" value="autoCompleteItems"/>

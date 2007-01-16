@@ -1,10 +1,12 @@
 package net.sourceforge.fenixedu.domain.studentCurriculum;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
@@ -60,6 +62,11 @@ public abstract class NoCourseGroupCurriculumGroup extends NoCourseGroupCurricul
     @Override
     public List<Context> getCourseGroupContextsToEnrol(ExecutionPeriod executionPeriod) {
         return Collections.emptyList();
+    }
+    
+    @Override
+    public Collection<CurricularCourse> getCurricularCoursesToDismissal() {
+        return Collections.emptySet();
     }
     
     @Override

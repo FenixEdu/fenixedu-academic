@@ -16,7 +16,7 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.BothAreasAreTheSameServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedBranchChangeException;
-import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
+import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.SelectedDismissal;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
@@ -1930,11 +1930,11 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
     
     public void createNewCreditsDismissal(StudentCurricularPlan studentCurricularPlan, CurriculumGroup curriculumGroup, 
-	    Collection<GenericPair<CurriculumGroup, CurricularCourse>> dismissals, Collection<Enrolment> enrolments, 
+	    Collection<SelectedDismissal> dismissals, Collection<IEnrolment> enrolments, 
 	    Double givenCredits) {
 	if((curriculumGroup == null && (dismissals == null || dismissals.isEmpty())) || 
 		(curriculumGroup != null && dismissals != null && !dismissals.isEmpty())) {
-	    throw new DomainException("");
+	    throw new DomainException("error.credits.dismissal.wrong.arguments");
 	}
 	
 	if(curriculumGroup != null) {
@@ -1945,11 +1945,11 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
     
     public void createNewEquivalenceDismissal(StudentCurricularPlan studentCurricularPlan, CurriculumGroup curriculumGroup, 
-	    Collection<GenericPair<CurriculumGroup, CurricularCourse>> dismissals, Collection<Enrolment> enrolments, 
+	    Collection<SelectedDismissal> dismissals, Collection<IEnrolment> enrolments, 
 	    Double givenCredits, String givenGrade) {
 	if((curriculumGroup == null && (dismissals == null || dismissals.isEmpty())) || 
 		(curriculumGroup != null && dismissals != null && !dismissals.isEmpty())) {
-	    throw new DomainException("");
+	    throw new DomainException("error.equivalence.wrong.arguments");
 	}
 	
 	if(curriculumGroup != null) {

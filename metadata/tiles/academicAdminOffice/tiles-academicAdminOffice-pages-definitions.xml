@@ -254,5 +254,14 @@
 		<put name="body" value="/academicAdminOffice/pricesManagement/viewPrices.jsp"/>
 	</definition>
 	<!-- ************************************* -->
+	<definition name="studentDismissal.chooseEquivalents" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/dismissal/chooseEquivalents.jsp"/>
+	</definition>
+	<definition name="studentDismissal.chooseDismissalEnrolments" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/dismissal/chooseDismissalEnrolments.jsp"/>
+	</definition>
+	<definition name="studentDismissal.management" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/dismissal/managementDismissals.jsp"/>
+	</definition>
 	
 </tiles-definitions>

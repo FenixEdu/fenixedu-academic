@@ -86,6 +86,14 @@
          <form-property name="page" type="java.lang.Integer" />
          <form-property name="contributorNumber" type="java.lang.String" />
       </form-bean>
+      
+      <!-- Bean for Student Dismissal -->
+      <form-bean name="studentDismissalForm" 
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+         <form-property name="creditsToDelete" type="java.lang.String[]" />
+      </form-bean>
+      
 
     </form-beans>
 
@@ -377,6 +385,19 @@
 	         <forward name="EditReady" path="contributor.editContributor"/>  
 	         <forward name="EditSuccess" path="contributor.editContributorSuccess"/>  
       </action>
+      
+  	  <action path="/studentDismissals"
+				scope="request"		
+		        parameter="method"
+		        name="studentDismissalForm"
+			    type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.StudentDismissalsDA">
+			
+			<forward name="manage" path="studentDismissal.management"/>
+			<forward name="chooseEquivalents" path="studentDismissal.chooseEquivalents"/>
+			<forward name="visualizeRegistration" path="/student.do?method=visualizeRegistration"/>
+			<forward name="chooseDismissalEnrolments" path="studentDismissal.chooseDismissalEnrolments"/>
+	  </action>         
+      
 		
 	
     </action-mappings>

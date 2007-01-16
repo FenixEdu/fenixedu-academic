@@ -45,5 +45,9 @@
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.studentCurriculum.Credits" table="CREDITS_DISMISSAL">
     <extent-class class-ref="net.sourceforge.fenixedu.domain.studentCurriculum.Equivalence" />    
-    				
 </class-descriptor>
+<class-descriptor class="net.sourceforge.fenixedu.domain.studentCurriculum.Equivalence" table="CREDITS_DISMISSAL"/>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.studentCurriculum.EnrolmentWrapper" table="ENROLMENT_WRAPPER"/>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment" table="EXTERNAL_ENROLMENT"/>
