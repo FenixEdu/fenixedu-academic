@@ -6,12 +6,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
@@ -260,4 +260,19 @@ public class AccountingTransaction extends AccountingTransaction_Base {
 	return getFromAccount().getParty() == party;
     }
 
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    public void delete() {
+	
+	super.setAdjustedTransaction(null);
+	for (;!getAdjustmentTransactions().isEmpty();getAdjustmentTransactions().get(0).delete());
+	
+	getTransactionDetail().delete();
+	for (; !getEntries().isEmpty();getEntries().get(0).delete());
+	
+	super.setResponsibleUser(null);
+	super.setEvent(null);
+	removeRootDomainObject();
+	
+	super.deleteDomainObject();
+    }
 }

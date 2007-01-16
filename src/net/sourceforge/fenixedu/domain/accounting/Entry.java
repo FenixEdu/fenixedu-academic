@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
+import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
@@ -193,6 +194,23 @@ public class Entry extends Entry_Base {
 	}
 
 	return false;
+    }
+
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    public void delete() {
+	if (!canBeDeleted()) {
+	    throw new DomainException("error.accounting.Entry.belongs.to.receipt");
+	}
+	
+	super.setAccount(null);
+	super.setAccountingTransaction(null);
+	removeRootDomainObject();
+	
+	super.deleteDomainObject();
+    }
+
+    private boolean canBeDeleted() {
+	return !hasAnyReceipts();
     }
 
 }

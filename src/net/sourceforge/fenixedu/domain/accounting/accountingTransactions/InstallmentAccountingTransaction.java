@@ -18,7 +18,7 @@ public class InstallmentAccountingTransaction extends InstallmentAccountingTrans
 	    public void beforeAdd(AccountingTransaction accountingTransaction, Event event) {
 		if (accountingTransaction instanceof InstallmentAccountingTransaction) {
 		    InstallmentAccountingTransaction installmentAccountingTransaction = (InstallmentAccountingTransaction) accountingTransaction;
-		    if (event.hasAccountingTransactionFor(installmentAccountingTransaction
+		    if (event != null && event.hasAccountingTransactionFor(installmentAccountingTransaction
 			    .getInstallment())) {
 			throw new DomainException(
 				"error.accounting.accountingTransactions.InstallmentAccountingTransaction.event.already.has.accounting.transaction.for.same.installment");
@@ -57,5 +57,11 @@ public class InstallmentAccountingTransaction extends InstallmentAccountingTrans
     public void setInstallment(Installment installment) {
 	throw new DomainException(
 		"error.accounting.accountingTransactions.InstallmentAccountingTransaction.cannot.modify.installment");
+    }
+    
+    @Override
+    public void delete() {
+        super.setInstallment(null);
+        super.delete();
     }
 }

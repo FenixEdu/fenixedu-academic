@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPa
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
@@ -211,7 +212,8 @@ public abstract class Event extends Event_Base {
 
     @Override
     public void setEventStateDate(DateTime eventStateDate) {
-	throw new DomainException("error.accounting.Event.cannot.modify.eventStateDate");
+	//throw new DomainException("error.accounting.Event.cannot.modify.eventStateDate");
+	super.setEventStateDate(eventStateDate);
     }
 
     protected boolean canCloseEvent(DateTime whenRegistered) {
@@ -253,11 +255,15 @@ public abstract class Event extends Event_Base {
 	return result;
 
     }
+    
+    public boolean hasNonAdjustingAccountingTransactions(final AccountingTransaction accountingTransactions) {
+        return getNonAdjustingTransactions().contains(accountingTransactions);
+    }
 
     public boolean hasAnyNonAdjustingAccountingTransactions() {
 	return !getNonAdjustingTransactions().isEmpty();
     }
-
+    
     public Money getPayedAmount() {
 	if (isCancelled()) {
 	    throw new DomainException(
@@ -520,6 +526,25 @@ public abstract class Event extends Event_Base {
 	}
 
 	return result;
+    }
+    
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    public void rollbackIncorrectAccountingTransaction(final AccountingTransaction accountingTransaction) {
+	
+	if (isClosed()) {
+	    throw new DomainException("error.accounting.Event.is.already.closed");
+	}
+	
+	if (accountingTransaction != null && hasNonAdjustingAccountingTransactions(accountingTransaction)) {
+	    accountingTransaction.delete();
+	} else {
+	    throw new DomainException("error.accounting.Event.transaction.doesnot.belong.to.event");
+	}
+    }
+    
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    public List<AccountingEventPaymentCode> getExistingPaymentCodes() {
+	return Collections.unmodifiableList(super.getPaymentCodes());
     }
 
     protected abstract Account getFromAccount();

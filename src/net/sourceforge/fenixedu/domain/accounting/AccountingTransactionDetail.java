@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.accounting;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.injectionCode.Checked;
 
 import org.joda.time.DateTime;
 
@@ -56,6 +57,13 @@ public class AccountingTransactionDetail extends AccountingTransactionDetail_Bas
     public void setTransaction(AccountingTransaction transaction) {
 	throw new DomainException(
 		"error.accounting.AccountingTransactionDetail.cannot.modify.transaction");
+    }
+    
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    public void delete() {
+	super.setTransaction(null);
+	removeRootDomainObject();
+	super.deleteDomainObject();
     }
 
 }
