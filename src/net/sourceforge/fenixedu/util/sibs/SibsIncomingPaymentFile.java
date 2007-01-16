@@ -149,5 +149,8 @@ public class SibsIncomingPaymentFile {
     public List<DetailLine> getDetailLines() {
 	return Collections.unmodifiableList(detailLines);
     }
-
+    
+    public int getDetailLinesCount() {
+	return this.detailLines.size();
+    }
 }
