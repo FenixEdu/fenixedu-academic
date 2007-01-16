@@ -75,18 +75,10 @@
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad" table="COMPETENCE_COURSE_LOAD">
-	
-	
-	
-	
-	
-	
-		
-	
-	
-	
-	
-	
-	
-</class-descriptor>
+<class-descriptor class="net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad" table="COMPETENCE_COURSE_LOAD" />
+
+
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.ExternalCurricularCourse -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.ExternalCurricularCourse" table="EXTERNAL_CURRICULAR_COURSE" />
