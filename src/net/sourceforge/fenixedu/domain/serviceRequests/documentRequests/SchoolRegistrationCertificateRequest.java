@@ -46,7 +46,7 @@ public class SchoolRegistrationCertificateRequest extends SchoolRegistrationCert
 		    "error.serviceRequests.documentRequests.SchoolRegistrationCertificateRequest.executionYear.cannot.be.null");
 	} else if (!getRegistration().isInRegisteredState(executionYear)) {
 	    throw new DomainException(
-		    "error.serviceRequests.documentRequests.no.school.registration.for.given.executionYear");
+		    "SchoolRegistrationCertificateRequest.registration.not.in.registered.state.in.given.executionYear");
 	}
     }
 
