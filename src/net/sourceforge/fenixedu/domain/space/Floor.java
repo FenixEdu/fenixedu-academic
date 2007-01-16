@@ -135,4 +135,10 @@ public class Floor extends Floor_Base {
     public void delete() {
 	super.delete();
     }
+
+    @Override
+    public boolean isFloor() {
+	return true;
+    }
+
 }

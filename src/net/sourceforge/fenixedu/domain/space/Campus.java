@@ -143,4 +143,9 @@ public class Campus extends Campus_Base {
 	return result;
     }
 
+    @Override
+    public boolean isCampus() {
+	return true;
+    }
+
 }

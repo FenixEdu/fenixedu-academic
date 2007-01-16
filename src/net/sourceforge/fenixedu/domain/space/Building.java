@@ -134,4 +134,10 @@ public class Building extends Building_Base {
     public void delete() {
 	super.delete();
     }
+
+    @Override
+    public boolean isBuilding() {
+	return true;
+    }
+
 }

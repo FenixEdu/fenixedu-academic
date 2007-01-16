@@ -252,4 +252,10 @@ public class Room extends Room_Base {
     public void delete() {
 	super.delete();
     }
+
+    @Override
+    public boolean isRoom() {
+	return true;
+    }
+
 }

@@ -393,5 +393,22 @@ public abstract class Space extends Space_Base {
 	    return spaceAccessGroupSlotName;
 	}
     }
-    
+
+
+    public boolean isCampus() {
+	return false;
+    }
+
+    public boolean isBuilding() {
+	return false;
+    }
+
+    public boolean isFloor() {
+	return false;
+    }
+
+    public boolean isRoom() {
+	return false;
+    }
+
 }
