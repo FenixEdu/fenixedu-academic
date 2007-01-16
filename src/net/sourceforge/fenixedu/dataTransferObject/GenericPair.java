@@ -3,11 +3,13 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
+import java.io.Serializable;
+
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-public class GenericPair<T, V> {
+public class GenericPair<T, V> implements Serializable {
 
     private T left;
 
