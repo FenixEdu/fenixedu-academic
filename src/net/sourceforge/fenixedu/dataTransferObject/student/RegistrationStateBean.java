@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 
-import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 /**

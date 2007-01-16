@@ -63,14 +63,23 @@
 	</fr:layout>
 </fr:edit>
 
-
+<bean:define id="deleteConfirm">
+	return confirm('<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="message.confirm.delete.registrationState"/>')
+</bean:define>
 
 <logic:notEmpty name="registration" property="registrationStates" >
 	<h3 class="mtop2 mbottom025"><bean:message key="label.registration.historic" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 	<fr:view name="registration" property="registrationStates" schema="student.viewRegistrationStatesHistoric" >
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4 thright thlight mtop025"/>
+			
+			<fr:property name="customLink(delete)">
+		        <a href="manageRegistrationState.do?method=deleteState&registrationId=${registration.idInternal}&amp;registrationStateId=${idInternal}" onclick="<%= deleteConfirm %>" >
+		        	<bean:message key="link.student.deleteRegistrationState" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+		        </a>
+			</fr:property>			
+			
+			<fr:property name="sortBy" value="stateDate=asc"/>
 		</fr:layout>
 	</fr:view>
 </logic:notEmpty>
-

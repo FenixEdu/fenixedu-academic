@@ -9,6 +9,7 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -1449,6 +1450,24 @@ public class Registration extends Registration_Base {
     public RegistrationStateType getActiveStateType() {
 	final RegistrationState activeState = getActiveState();
 	return activeState != null ? activeState.getStateType() : RegistrationStateType.REGISTERED;
+    }
+
+    public RegistrationState getStateInDate(YearMonthDay date) {
+
+	List<RegistrationState> sortedRegistrationStates = new ArrayList<RegistrationState>(
+		getRegistrationStates());
+	Collections.sort(sortedRegistrationStates, RegistrationState.DATE_COMPARATOR);
+
+	for (ListIterator<RegistrationState> iterator = sortedRegistrationStates
+		.listIterator(sortedRegistrationStates.size()); iterator.hasPrevious();) {
+
+	    RegistrationState registrationState = iterator.previous();
+	    if (date.toDateTimeAtMidnight().isAfter(registrationState.getStateDate())) {
+		return registrationState;
+	    }
+	}
+
+	return null;
     }
 
     public boolean isInRegisteredState() {
