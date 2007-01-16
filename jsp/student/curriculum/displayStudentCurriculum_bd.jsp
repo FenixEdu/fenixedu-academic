@@ -125,7 +125,8 @@
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentNumber" name="studentCurricularPlanAndEnrollmentsSelectionForm" property="studentNumber"/>
 	</logic:present>
 	
-	<table class="tstyle4 thright thlight mtop2">
+	<p class="mbottom025"><strong><bean:message key="label.visualize" bundle="STUDENT_RESOURCES" />:</strong></p>
+	<table class="tstyle4 thright thlight mtop025">
 		<tr>
 			<th><bean:message key="label.studentCurricularPlan.basic" bundle="STUDENT_RESOURCES" /></th>
 			<td>
@@ -174,7 +175,7 @@
 	<logic:iterate id="studentCurricularPlan" name="selectedStudentCurricularPlans" indexId="index">
 		
 		<logic:greaterThan name="index" value="0">
-			<hr style="margin-bottom: 3em; margin-top: 3em;">
+			<div class="mvert3"></div>
 		</logic:greaterThan>
 
 		<bean:define id="dateFormated">
@@ -214,11 +215,42 @@
 
 
 
+<%-- inline styles to remove --%>
+<style type="text/css">
+.bgcolor01 { background: #efe; }
+.bgcolor02 { background: #eff; }
+.bgcolor03 { background: #ffe; }
+.bgcolor04 { background: #eef; }
+.bgcolor05 { background: #fee; }
+.bgcolor06 { background: #fde; }
+.bgcolor07 { background: #efd; }
+.bgcolor08 { background: #dfe; }
+.bgcolor09 { background: #edf; }
+.bgcolor10 { background: #def; }
+.bgcolor11 { background: #fed; }
+.bgcolor12 { background: #fcd; }
+
+.bgcolor01 { background: #fdfdfa; }
+.bgcolor02 { background: #fdfdfa; }
+.bgcolor03 { background: #fdfdfa; }
+.bgcolor04 { background: #fdfdfa; }
+.bgcolor05 { background: #fdfdfa; }
+.bgcolor06 { background: #fdfdfa; }
+.bgcolor07 { background: #fdfdfa; }
+.bgcolor08 { background: #fdfdfa; }
+.bgcolor09 { background: #fdfdfa; }
+.bgcolor10 { background: #f9f9f5; }
+.bgcolor11 { background: #fdfdfa; }
+.bgcolor12 { background: #fdfdfa; }
+</style>
+
+
+
 
 		<fr:view name="studentCurricularPlan">
 			<fr:layout>
 				<fr:property name="organizedBy" value="<%=organizedBy%>"/>
-				<fr:property name="initialWidth" value="65em"/>
+				<fr:property name="initialWidth" value="800px"/>
 				<fr:property name="widthDecreasePerLevel" value="1"/>
 				<fr:property name="tablesClasses" value="showinfo3 mvert0"/>
 				<%-- tableClasses--%>
@@ -226,7 +258,20 @@
 				<%-- groupHeaderRowClasses--%>
 				<fr:property name="groupNameClasses" value="aleft"/>
 				<%-- groupHeaderClasses--%>
-				<fr:property name="enrolmentClasses" value="width05em acenter 0, width05em acenter 1, width2em acenter 2, aleft 3, width7em acenter 4, width6em acenter 5, width5em acenter 6, width1em acenter 7, width1em acenter 8, width1em aright 9, width1em aright 10, width1em aright 11"/>
+				<fr:property name="enrolmentClasses" value="
+					width1p5em acenter bgcolor01,		<!-- Inscrição Confirmada etc -->
+					width6em acenter bgcolor02,			<!-- Data da Inscrição -->
+					width1p5em acenter bgcolor03,		<!-- Época Normal -->
+					aleft bgcolor04,					<!-- Código e Disciplina -->
+					width7em acenter bgcolor05,			<!-- Curso  -->
+					grupos bgcolor06,					<!--   -->
+					grupos bgcolor07,					<!--   -->
+					width7em acenter bgcolor08,			<!-- Opcional  -->
+					width7em acenter bgcolor09,			<!-- Reprovado Não Avaliado  -->
+					width2em aright bgcolor10,			<!-- Nota  -->
+					color888 width2em aright bgcolor11,			<!-- Peso  -->
+					color888 width2em aright bgcolor12			<!-- ECTS  -->
+				"/>
 				<%-- enrolmentColumnClasses--%>
 				<fr:property name="enrolmentStateSelectionType" value="<%=enrolmentStateSelectionType.toString()%>"/>
 			</fr:layout>
@@ -235,7 +280,7 @@
 	</logic:iterate>
 
 
-<p class="mtop2 mbottom0"><strong><bean:message key="label.legend" bundle="STUDENT_RESOURCES"/></strong></p>
+<p class="mtop3 mbottom0"><strong><bean:message key="label.legend" bundle="STUDENT_RESOURCES"/></strong></p>
 <div style="width: 250px; float: left;">
 	<p class="mvert05"><em><bean:message key="EnrollmentCondition.TEMPORARY.acronym" bundle="ENUMERATION_RESOURCES"/>: <bean:message key="EnrollmentCondition.TEMPORARY" bundle="ENUMERATION_RESOURCES"/></em></p>
 	<p class="mvert05"><em><bean:message key="EnrollmentCondition.FINAL.acronym" bundle="ENUMERATION_RESOURCES"/>: <bean:message key="EnrollmentCondition.FINAL" bundle="ENUMERATION_RESOURCES"/></em></p>
@@ -249,7 +294,6 @@
 	<p class="mvert05"><em><bean:message key="EnrolmentEvaluationType.SPECIAL_SEASON.acronym" bundle="ENUMERATION_RESOURCES"/>: <bean:message key="EnrolmentEvaluationType.SPECIAL_SEASON" bundle="ENUMERATION_RESOURCES"/></em></p>
 	<p class="mvert05"><em><bean:message key="EnrolmentEvaluationType.EQUIVALENCE.acronym" bundle="ENUMERATION_RESOURCES"/>: <bean:message key="EnrolmentEvaluationType.EQUIVALENCE" bundle="ENUMERATION_RESOURCES"/></em></p>
 </div>
+<div class="cboth"></div>
 
-
-	
 </logic:notEmpty>

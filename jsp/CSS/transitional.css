@@ -503,13 +503,15 @@ ul.indent0 { margin-left: 0; padding-left: 0; }
 .width100 { width: 100%; }
 .width05em { width: 0.5em; }
 .width1em { width: 1em; }
+.width1p5em { width: 1.5em; }
 .width2em { width: 2em; }
 .width3em { width: 3em; }
 .width4em { width: 4em; }
 .width5em { width: 5em; }
 .width6em { width: 6em; }
 .width7em { width: 7em; }
-.width8em { width: 8em; } /*used in forums*/
+.width8em { width: 8em; }
+.width9em { width: 9em; }
 .width10em { width: 10em; }
 .width12em { width: 12em; }
 .width13em { width: 13em; }
@@ -542,17 +544,20 @@ ul.indent0 { margin-left: 0; padding-left: 0; }
 .input_hidden { display: none; }
 .input_inline { display: inline; }
 
-/* colors */
+/* text colors */
 .color1 { color: #808060; }
 .color2 { color: #806d5b; }
 .color3 { color: #336699; }
+.lowlight1 { color: #999; }
+.color888 { color: #888;}
+
+/* background-colors */
 .highlight1 { background-color: #fff7bb; } /* amarelo */
 .highlight2 { background-color: #f5f5f5; } 
 .highlight3 { background-color: #def; } /* azul */
 .highlight4 { background-color: #dfb ; } /* verde */
 .highlight5 { background-color: #fdfbdd; } /* amarelo */
 .highlight6 { background-color: #ffc; }
-.lowlight1 { color: #999; }
 .bgcolor1 { background-color: #fcfcf0; }
 .bgcolor2 { background-color: #fbfbdd; }
 .bgcolor3 { background-color: #fafaf6; }
