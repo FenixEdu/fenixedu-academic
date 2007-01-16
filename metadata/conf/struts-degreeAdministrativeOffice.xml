@@ -176,30 +176,7 @@
 			<form-property name="oldCurricularCourseID" type="java.lang.String"/>
 			<form-property name="curricularCourseEquivalencyID" type="java.lang.String"/>
 		</form-bean>
-		
-		<form-bean name="markSheetManagementForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-			<form-property name="epID" type="java.lang.Integer" />
-			<form-property name="dID" type="java.lang.Integer" />
-			<form-property name="dcpID" type="java.lang.Integer" />
-			<form-property name="ccID" type="java.lang.Integer" />
-			<form-property name="msID" type="java.lang.Integer" />
-			<form-property name="tn" type="java.lang.String" />
-			<form-property name="ed" type="java.lang.String"/>
-			<form-property name="mss" type="java.lang.String" />
-			<form-property name="mst" type="java.lang.String" />
-			<form-property name="evaluationID" type="java.lang.Integer" />			
-		</form-bean>
-		
-		<form-bean name="printMarkSheetForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-			<form-property name="markSheet" type="java.lang.String" />
-			<form-property name="printerName" type="java.lang.String" />
-			<form-property name="page" type="java.lang.Integer" initial="0"/>
-		</form-bean>
-		<form-bean name="markSheetSendMailForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-			<form-property name="method" type="java.lang.String" />
-			<form-property name="markSheetIDs" type="java.lang.Integer[]" />
-		</form-bean>
-	    		
+			    		
 	</form-beans>
 
     <!-- ========== Global Exception Definitions ============================== -->
@@ -478,96 +455,6 @@
        		<forward name="showCreateEquivalencyForm" path="show-create-curricular-course-equivalencies"/>
        	</action>
        	
-		<!-- ==================== MarkSheet Management ================== -->
-		<action path="/markSheetManagement"
-				type="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.gradeSubmission.MarkSheetSearchDispatchAction"
-				input="show.markSheetManagement.search.page"
-				parameter="method"
-				name="markSheetManagementForm"
-				scope="request">
-				
-       		<forward name="searchMarkSheet" path="show.markSheetManagement.search.page"/>
-       		<forward name="viewMarkSheet" path="markSheetManagement.viewMarkSheet"/>
-       		<forward name="removeMarkSheet" path="show.markSheetManagement.remove"/>
-       		<forward name="searchMarkSheetFilled" path="/markSheetManagement.do?method=prepareSearchMarkSheetFilled"/>       		
-       		<forward name="confirmMarkSheet" path="show.markSheetManagement.confirm.page"/>       		       		       		
-       		<forward name="choosePrinter" path="/printMarkSheet.do?method=choosePrinterMarkSheet"/>       		
-		</action>
-		
-		<action path="/createMarkSheet"
-				type="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.gradeSubmission.MarkSheetCreateDispatchAction"
-				input="show.markSheetManagement.create.page.step1"
-				parameter="method"
-				name="markSheetManagementForm"
-				scope="request">
-				
-       		<forward name="createMarkSheetStep1" path="show.markSheetManagement.create.page.step1"/>
-       		<forward name="createMarkSheetStep2" path="show.markSheetManagement.create.page.step2"/>       		
-       		<forward name="searchMarkSheetFilled" path="/markSheetManagement.do?method=prepareSearchMarkSheetFilled"/>
-			<forward name="rectifyMarkSheetStep1" path="show.markSheetManagement.rectify.page.step1"/>
-       		<forward name="rectifyMarkSheetStep2" path="show.markSheetManagement.rectify.page.step2"/>
-       		<forward name="viewMarkSheet" path="markSheetManagement.viewMarkSheet"/>
-		</action>
-		
-		<action path="/rectifyMarkSheet"
-				type="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.gradeSubmission.MarkSheetCreateDispatchAction"
-				input="/rectifyMarkSheet.do?page=0&amp;method=validationError"
-				parameter="method"
-				name="markSheetManagementForm"
-				scope="request">
-       		<forward name="rectifyMarkSheetStep1" path="show.markSheetManagement.rectify.page.step1"/>
-       		<forward name="rectifyMarkSheetStep2" path="show.markSheetManagement.rectify.page.step2"/>
-			<forward name="searchMarkSheet" path="/markSheetManagement.do?method=prepareSearchMarkSheet"/>
-       		<forward name="searchMarkSheetFilled" path="/markSheetManagement.do?method=prepareSearchMarkSheetFilled"/>
-       		<forward name="showRectificationHistoric" path="show.markSheetManagement.showRectificationHistoric"/>
-		</action>		
-		
-		<action path="/editMarkSheet"
-				type="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.gradeSubmission.MarkSheetEditDispatchAction"
-				input="/markSheetManagement.do?method=prepareSearchMarkSheet"
-				parameter="method"
-				name="markSheetManagementForm"
-				scope="request">
-				
-       		<forward name="editMarkSheet" path="show.markSheetManagement.edit.page"/>
-			<forward name="editArchiveInformation" path="show.markSheetManagement.edit.archiveInformation"/>
-       		<forward name="searchMarkSheetFilled" path="/markSheetManagement.do?method=prepareSearchMarkSheetFilled"/>
-		</action>
-
-		<action path="/printMarkSheet"
-				type="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.gradeSubmission.PrintMarkSheetDispatchAction"
-				input="/printMarkSheet.do?method=choosePrinterMarkSheet&amp;page=0"
-				parameter="method"
-				name="printMarkSheetForm"
-				scope="request">
-       		<forward name="choosePrinterMarkSheet" path="show.printMarkSheet.choosePrinterMarkSheet"/>       		       		
-       		<forward name="searchMarkSheetFilled" path="/markSheetManagement.do?method=prepareSearchMarkSheetFilled"/>
-       		<forward name="searchMarkSheet" path="/markSheetManagement.do?method=prepareSearchMarkSheet"/>       		
-		</action>		
-		
-		<action path="/printMarkSheetWeb"
-				type="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.gradeSubmission.PrintMarkSheetDispatchAction"
-				input="/printMarkSheetWeb.do?method=choosePrinterMarkSheetsWeb&amp;page=0"
-				parameter="method"
-				name="printMarkSheetForm"
-				scope="request">
-       		<forward name="choosePrinterMarkSheetsWeb" path="show.printMarkSheet.choosePrinterMarkSheetsWeb"/>
-       		<forward name="searchMarkSheetFilled" path="/markSheetManagement.do?method=prepareSearchMarkSheetFilled"/>
-       		<forward name="searchMarkSheet" path="/markSheetManagement.do?method=prepareSearchMarkSheet"/>       		
-		</action>				
-		
-		<action path="/markSheetSendMail"
-				type="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.gradeSubmission.SendMailMarkSheetDispatchAction"
-				input="show.markSheetSendMail.searchSendMail"
-				parameter="method"
-				name="markSheetSendMailForm"
-				scope="request">
-       		<forward name="searchSendMail" path="show.markSheetSendMail.searchSendMail"/>
-       		<forward name="prepareMarkSheetsToConfirmSendMail" path="show.markSheetSendMail.prepareMarkSheetsToConfirmSendMail"/>
-       		<forward name="prepareGradesToSubmitSendMail" path="show.markSheetSendMail.prepareGradesToSubmitSendMail"/>
-       		
-		</action>
-
 		<action path="/declarations"
 				parameter="method"
 				type="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.DeclarationsDA"

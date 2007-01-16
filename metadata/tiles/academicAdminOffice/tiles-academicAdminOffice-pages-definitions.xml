@@ -263,5 +263,55 @@
 	<definition name="studentDismissal.management" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/dismissal/managementDismissals.jsp"/>
 	</definition>
+
+	<!-- ===================== MarkSheet Management ====================== -->
+	<definition name="show.markSheetManagement.search.page" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/gradeSubmission/markSheetManagement.jsp"></put>
+	</definition>
+	<definition name="show.markSheetManagement.create.page.step1" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/gradeSubmission/createMarkSheetStep1.jsp"></put>
+	</definition>
+	<definition name="show.markSheetManagement.create.page.step2" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/gradeSubmission/createMarkSheetStep2.jsp"></put>
+	</definition>
+	<definition name="markSheetManagement.viewMarkSheet" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/gradeSubmission/viewMarkSheet.jsp"></put>
+	</definition>
+	<definition name="show.markSheetManagement.remove" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/gradeSubmission/removeMarkSheet.jsp"></put>
+	</definition>
+	<definition name="show.markSheetManagement.rectify.page.step1" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/gradeSubmission/rectifyMarkSheetStep1.jsp"></put>
+	</definition>
+	<definition name="show.markSheetManagement.rectify.page.step2" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/gradeSubmission/rectifyMarkSheetStep2.jsp"></put>
+	</definition>
+	<definition name="show.markSheetManagement.confirm.page" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/gradeSubmission/confirmMarkSheet.jsp"></put>
+	</definition>
+	<definition name="show.markSheetManagement.edit.page" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/gradeSubmission/editMarkSheet.jsp"></put>
+	</definition>
+	<definition name="show.markSheetManagement.edit.archiveInformation" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/gradeSubmission/editMarkSheetArchiveInformation.jsp"></put>
+	</definition>
+	<definition name="show.markSheetManagement.showRectificationHistoric" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/gradeSubmission/showRectificationHistoric.jsp"></put>
+	</definition>
+	<definition name="show.printMarkSheet.choosePrinterMarkSheetsWeb" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/gradeSubmission/choosePrinterMarkSheetsWeb_bd.jsp"></put>
+	</definition>	
+	<definition name="show.printMarkSheet.choosePrinterMarkSheet" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/gradeSubmission/choosePrinterMarkSheet_bd.jsp"></put>
+	</definition>	
+	<definition name="show.markSheetSendMail.searchSendMail" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/gradeSubmission/searchSendMail.jsp"></put>
+	</definition>	
+	<definition name="show.markSheetSendMail.prepareMarkSheetsToConfirmSendMail" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/gradeSubmission/prepareMarkSheetsToConfirmSendMail.jsp"></put>
+	</definition>	
+	<definition name="show.markSheetSendMail.prepareGradesToSubmitSendMail" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/gradeSubmission/prepareGradesToSubmitSendMail.jsp"></put>
+	</definition>	
 	
 </tiles-definitions>

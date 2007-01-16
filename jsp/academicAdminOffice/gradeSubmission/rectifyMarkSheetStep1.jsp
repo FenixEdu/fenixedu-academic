@@ -6,11 +6,11 @@
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 
 <%@page import="net.sourceforge.fenixedu.util.EnrolmentEvaluationState"%>
-<h2><bean:message key="label.rectifyMarkSheet"/></h2>
+<h2><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.rectifyMarkSheet"/></h2>
 
 <br/>
 
-<h3><u><bean:message key="label.rectifyMarkSheet.step.one"/></u> &gt; <bean:message key="label.rectifyMarkSheet.step.two"/></h3>
+<h3><u><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.rectifyMarkSheet.step.one"/></u> &gt; <bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.rectifyMarkSheet.step.two"/></h3>
 
 <fr:view name="rectifyBean" property="markSheet" schema="degreeAdministrativeOffice.markSheet.view">
 	<fr:layout name="tabular">
@@ -32,8 +32,8 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.mss" name="markSheetManagementForm" property="mss" />
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.mst" name="markSheetManagementForm" property="mst" />
 
-	<strong><bean:message key="label.rectifyMarkSheet.chooseStudent"/></strong><br/><br/>
-	a) <bean:message key="label.rectifyMarkSheet.chooseStudent.studentNumber"/><br/><br/>
+	<strong><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.rectifyMarkSheet.chooseStudent"/></strong><br/><br/>
+	a) <bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.rectifyMarkSheet.chooseStudent.studentNumber"/><br/><br/>
 
 
 	<fr:hasMessages for="step1">
@@ -43,7 +43,7 @@
 	</fr:hasMessages>
 
 	<logic:messagesPresent message="true">
-		<html:messages id="messages" message="true">
+		<html:messages bundle="DEGREE_OFFICE_RESOURCES" id="messages" message="true">
 			<span class="error0"><bean:write name="messages" /></span>
 		</html:messages>
 	</logic:messagesPresent>
@@ -57,26 +57,26 @@
 				</fr:edit>
 			</td>
 			<td>
-				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="label.continue"/></html:submit>
+				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.continue"/></html:submit>
 			</td>				
 		</tr>
 	</table>
 	<br/><br/>
-	b) <bean:message key="label.rectifyMarkSheet.chooseStudent.fromList"/><br/><br/>
+	b) <bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.rectifyMarkSheet.chooseStudent.fromList"/><br/><br/>
 	<table class="tstyle4">
 		<tr>
 			<th>
-				<bean:message key="label.student.number"/>
+				<bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.student.number"/>
 			</th>
 		
 			<th>
-				<bean:message key="label.student.name"/>
+				<bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.student.name"/>
 			</th>
 			<th>
-				<bean:message key="label.evaluationDate"/>
+				<bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.evaluationDate"/>
 			</th>
 			<th>
-				<bean:message key="label.student.grade"/>
+				<bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.student.grade"/>
 			</th>		
 			<th>
 				&nbsp;
@@ -119,7 +119,7 @@
 				<td>				
 					<logic:equal name="evaluation" property="enrolmentEvaluationState" value="<%= EnrolmentEvaluationState.RECTIFIED_OBJ.toString() %>">
 						<html:link action='<%= "/rectifyMarkSheet.do?method=showRectificationHistoric" + url %>' paramId="evaluationID" paramName="evaluationID">
-							<bean:message key="label.markSheet.rectificationHistoric" />		
+							<bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.markSheet.rectificationHistoric" />		
 						</html:link>										
 					</logic:equal>
 					&nbsp;
@@ -128,5 +128,5 @@
 		</logic:iterate>
 	</table>
 	<br />
-	<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton" onclick="this.form.method.value='prepareSearchMarkSheetFilled';this.form.submit();"><bean:message key="label.back"/></html:cancel>
+	<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton" onclick="this.form.method.value='prepareSearchMarkSheetFilled';this.form.submit();"><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.back"/></html:cancel>
 </fr:form>

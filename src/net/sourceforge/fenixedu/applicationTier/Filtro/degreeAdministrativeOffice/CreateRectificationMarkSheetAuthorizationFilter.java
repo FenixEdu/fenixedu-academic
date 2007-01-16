@@ -7,12 +7,16 @@ public class CreateRectificationMarkSheetAuthorizationFilter extends MarkSheetAu
 
     @Override
     public Set<String> getAuthorizedEmployees() {
-        Set<String> authorizedEmployees = new HashSet<String>();
-        authorizedEmployees.add("1272");
-        authorizedEmployees.add("1268");
-        authorizedEmployees.add("2675");
-        authorizedEmployees.add("3978");
-        return authorizedEmployees;
+	Set<String> authorizedEmployees = new HashSet<String>();
+	authorizedEmployees.add("1272");
+	authorizedEmployees.add("1268");
+	authorizedEmployees.add("2675");
+	authorizedEmployees.add("3978");
+
+	authorizedEmployees.add("3068");
+	authorizedEmployees.add("2973");
+
+	return authorizedEmployees;
     }
 
 }

@@ -4,11 +4,11 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
-<h2><bean:message key="label.createMarkSheet"/></h2>
+<h2><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.createMarkSheet"/></h2>
 
 <br/>
 
-<h3><bean:message key="label.createMarkSheet.step.one"/> &gt; <u><bean:message key="label.createMarkSheet.step.two"/></u></h3>
+<h3><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.createMarkSheet.step.one"/> &gt; <u><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.createMarkSheet.step.two"/></u></h3>
 
 <fr:view name="edit" 
 		schema="markSheet.view.step2">
@@ -22,7 +22,7 @@
 
 <logic:messagesPresent message="true">
 	<ul>
-	<html:messages id="messages" message="true">
+	<html:messages bundle="DEGREE_OFFICE_RESOURCES" id="messages" message="true">
 		<li><span class="error0"><bean:write name="messages" /></span></li>
 	</html:messages>
 	</ul>
@@ -52,7 +52,7 @@
 
 	<fr:edit id="edit-invisible" name="edit" visible="false"/>
 
-	<bean:message key="label.markSheet.students.capitalized"/>:
+	<bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.markSheet.students.capitalized"/>:
 	<fr:edit id="edit-enrolments" name="edit" property="enrolmentEvaluationBeans" 
 			 schema="markSheet.create.step.two" layout="tabular-editable">
 		<fr:layout>
@@ -63,6 +63,6 @@
 		<fr:destination name="invalid" path="/createMarkSheet.do?method=createMarkSheetStepTwoInvalid"/>
 	</fr:edit>
 	<br/>
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="label.markSheet.submit" /></html:submit>
-	<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton" onclick="this.form.method.value='backSearchMarkSheet';"><bean:message key="button.cancel"/></html:cancel>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.markSheet.submit" /></html:submit>
+	<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton" onclick="this.form.method.value='backSearchMarkSheet';"><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="button.cancel"/></html:cancel>
 </fr:form>

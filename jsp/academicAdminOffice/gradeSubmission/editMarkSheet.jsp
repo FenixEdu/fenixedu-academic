@@ -17,12 +17,12 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.mss" name="markSheetManagementForm" property="mss" />
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.mst" name="markSheetManagementForm" property="mst" />
 	
-	<h2><bean:message key="label.markSheet.edit"/> <bean:message key="label.markSheet"/></h2>
+	<h2><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.markSheet.edit"/> <bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.markSheet"/></h2>
 	<br/>
 	
 	<logic:messagesPresent message="true">
 		<ul>
-			<html:messages id="messages" message="true">
+			<html:messages bundle="DEGREE_OFFICE_RESOURCES" id="messages" message="true">
 				<li><span class="error0"><bean:write name="messages" /></span></li>
 			</html:messages>
 		</ul>
@@ -39,7 +39,7 @@
 	<logic:equal name="edit" property="markSheet.markSheetState.name" value="NOT_CONFIRMED">
 		<br/>
 		<br/>
-		<bean:message key="label.markSheet.edit"/>:
+		<bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.markSheet.edit"/>:
 		<fr:edit id="edit-markSheet" name="edit" schema="markSheet.edit">
 			<fr:layout name="tabular" >
 				<fr:property name="classes" value="tstyle4"/>
@@ -47,7 +47,7 @@
 			</fr:layout>
 		</fr:edit>
 		
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick="this.form.method.value='updateMarkSheet';"><bean:message key="label.markSheet.update" /></html:submit>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick="this.form.method.value='updateMarkSheet';"><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.markSheet.update" /></html:submit>
 		<br/>
 	</logic:equal>
 	
@@ -57,7 +57,7 @@
 	
 	<logic:notEmpty name="edit" property="enrolmentEvaluationBeansToEdit">
 		<br/><br/>
-		<bean:message key="label.markSheet.students.with.grade" />:
+		<bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.markSheet.students.with.grade" />:
 		
 		<fr:hasMessages for="edit-marksheet-enrolments">
 			<ul>
@@ -82,7 +82,7 @@
 	
 	<logic:notEmpty name="edit" property="enrolmentEvaluationBeansToAppend">
 		<br/><br/>
-		<bean:message key="label.markSheet.students.without.grade" />:
+		<bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.markSheet.students.without.grade" />:
 		
 		<fr:hasMessages for="append-enrolments">
 			<ul>
@@ -105,6 +105,6 @@
 	</logic:notEmpty>
 	<br/>
 	
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="label.markSheet.change" /></html:submit>
-	<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton" onclick="this.form.method.value='backSearchMarkSheet';"><bean:message key="label.back"/></html:cancel>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.markSheet.change" /></html:submit>
+	<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton" onclick="this.form.method.value='backSearchMarkSheet';"><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.back"/></html:cancel>
 </fr:form>

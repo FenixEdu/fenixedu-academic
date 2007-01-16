@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
-<h2><strong><bean:message key="label.send.mail"/> / <bean:message key="label.send.mail.search.criteria"/></strong></h2>
+<h2><strong><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.send.mail"/> / <bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.send.mail.search.criteria"/></strong></h2>
 
 <fr:form action="/markSheetSendMail.do?method=searchSendMail">
 	<fr:edit id="search"
@@ -19,14 +19,14 @@
 		        <fr:property name="columnClasses" value="listClasses,,"/>
 		</fr:layout>
 	</fr:edit>
-	<html:submit><bean:message key="label.search"/></html:submit>
+	<html:submit><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.search"/></html:submit>
 </fr:form>
 
 <br/>
 <br/>
 
 <logic:present name="bean" property="markSheetToConfirmSendMailBean">
-	<p><h3><bean:message key="label.markSheets.to.confirm"/></h3></p>
+	<p><h3><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.markSheets.to.confirm"/></h3></p>
 	<fr:form action="/markSheetSendMail.do?method=prepareMarkSheetsToConfirmSendMail">
 		<fr:edit id="sendMailBean" name="bean" visible="false"/>
 		<fr:edit id="markSheetsToSubmit" name="bean" property="markSheetToConfirmSendMailBean" 
@@ -36,14 +36,14 @@
 			    <fr:property name="columnClasses" value="listClasses,,"/>
 			</fr:layout>
 		</fr:edit>
-		<html:submit><bean:message key="label.write.mail"/></html:submit>
+		<html:submit><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.write.mail"/></html:submit>
 	</fr:form>
 </logic:present>
 
 <br/>
 <br/>
 <logic:present name="bean" property="gradesToSubmitExecutionCourseSendMailBean">
-	<p><h3><bean:message key="label.markSheets.executionCourse.grades.to.submit"/></h3></p>
+	<p><h3><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.markSheets.executionCourse.grades.to.submit"/></h3></p>
 	<fr:form action="/markSheetSendMail.do?method=prepareGradesToSubmitSendMail">
 		<fr:edit id="sendMailBean" name="bean" visible="false"/>
 		<fr:edit id="markSheetsToSubmit" name="bean" property="gradesToSubmitExecutionCourseSendMailBean" 
@@ -53,7 +53,7 @@
 			    <fr:property name="columnClasses" value="listClasses,,"/>
 			</fr:layout>
 		</fr:edit>
-		<html:submit><bean:message key="label.write.mail"/></html:submit>
+		<html:submit><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.write.mail"/></html:submit>
 	</fr:form>
 </logic:present>
 

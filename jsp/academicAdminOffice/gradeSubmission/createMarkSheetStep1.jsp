@@ -4,13 +4,13 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
-<h2><bean:message key="label.createMarkSheet"/></h2>
+<h2><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.createMarkSheet"/></h2>
 <br/>
-<h3><u><bean:message key="label.createMarkSheet.step.one"/></u> &gt; <bean:message key="label.createMarkSheet.step.two"/></h3>
+<h3><u><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.createMarkSheet.step.one"/></u> &gt; <bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.createMarkSheet.step.two"/></h3>
 
 <logic:messagesPresent message="true">
 	<ul>
-	<html:messages id="messages" message="true">
+	<html:messages bundle="DEGREE_OFFICE_RESOURCES" id="messages" message="true">
 		<li><span class="error0"><bean:write name="messages" /></span></li>
 	</html:messages>
 	</ul>

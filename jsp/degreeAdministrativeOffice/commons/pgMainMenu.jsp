@@ -16,8 +16,10 @@
 
 
 	<li class="navheader"><bean:message key="label.navheader.marksSheet" /></li>
-	<li><html:link page="/chooseExecutionYearAndDegreeCurricularPlan.do?method=prepare"><bean:message key="link.consult" /></html:link></li>
+<%-- 
 	<li><html:link page="/markSheetManagement.do?method=prepareSearchMarkSheet"><bean:message key="link.markSheet.management"/></html:link></li>
+--%>	
+	<li><html:link page="/chooseExecutionYearAndDegreeCurricularPlan.do?method=prepare"><bean:message key="link.consult" /></html:link></li>
 	<li class="navheader"><bean:message key="label.navheader.equivalences" /></li>
 	<li><html:link page="/prepareNotNeedToEnroll.do"><bean:message key="link.notNeedToEnroll" /></html:link></li>
 	<li><html:link page="/curricularCourseEquivalencies.do?method=prepare"><bean:message key="label.navheader.equivalences" /></html:link></li>

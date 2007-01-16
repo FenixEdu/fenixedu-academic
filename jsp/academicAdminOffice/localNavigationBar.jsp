@@ -18,6 +18,11 @@
 	</ul>
 
 	<ul>
+		<li class="navheader"><bean:message key="label.navheader.marksSheet" bundle="DEGREE_OFFICE_RESOURCES"/></li>
+		<li><html:link page="/markSheetManagement.do?method=prepareSearchMarkSheet"><bean:message key="link.markSheet.management" bundle="DEGREE_OFFICE_RESOURCES"/></html:link></li>
+	</ul>
+	
+	<ul>
 		<li class="navheader"><bean:message key="label.masterDegree.administrativeOffice.contributor" bundle="APPLICATION_RESOURCES"/></li>
 		<li><html:link page="/createContributorDispatchAction.do?method=prepare"><bean:message key="link.masterDegree.administrativeOffice.createContributor" bundle="APPLICATION_RESOURCES" /></html:link></li>
 		<li><html:link page="/visualizeContributors.do?method=prepare&amp;action=visualize&amp;page=0"><bean:message key="link.masterDegree.administrativeOffice.visualizeContributor" bundle="APPLICATION_RESOURCES" /></html:link></li>

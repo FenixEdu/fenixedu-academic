@@ -6,11 +6,11 @@
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
 
 <bean:define id="markSheets" name="totalMarkSheetsCount"/>
-<h2><bean:message key="label.markSheet.leftToPrint" arg0="<%= markSheets.toString() %>"/></h2>
+<h2><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.markSheet.leftToPrint" arg0="<%= markSheets.toString() %>"/></h2>
 <br/>
-<h3><bean:message key="label.choosePrinter"/></h3>
+<h3><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.choosePrinter"/></h3>
 <logic:messagesPresent message="true">
-	<html:messages id="messages" message="true">
+	<html:messages bundle="DEGREE_OFFICE_RESOURCES" id="messages" message="true">
 		<p><span class="error0"><bean:write name="messages" /></span></p>
 	</html:messages>
 </logic:messagesPresent>
@@ -38,8 +38,8 @@
 		</tr>
 	</table>
 	<br/>
-	<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" onclick="this.form.method.value='searchMarkSheet';this.form.submit();" styleClass="inputbutton"><bean:message key="label.back"/></html:cancel>
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="label.print"/></html:submit>
+	<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" onclick="this.form.method.value='searchMarkSheet';this.form.submit();" styleClass="inputbutton"><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.back"/></html:cancel>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.print"/></html:submit>
 </html:form>
 
 <logic:notEmpty name="curricularCourseMap">
@@ -47,14 +47,14 @@
 	<br/><br/><hr/>
 	<h3><bean:write name="executionPeriod" property="executionYear.year"/> - <bean:write name="executionPeriod" property="semester"/>� Sem</h3>
 	<br/>
-	<strong><bean:message key="label.markSheet.printMarkSheetsWeb.markSheets.lefToPrint"/></strong>:
+	<strong><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.markSheet.printMarkSheetsWeb.markSheets.lefToPrint"/></strong>:
 	<br/>
 	<table class="tstyle4">
 		<tr>
-			<th><bean:message key="label.markSheet.printMarkSheetsWeb.degree"/></th>
-			<th><bean:message key="label.markSheet.printMarkSheetsWeb.degreeCurricularPlan"/></th>
-			<th><bean:message key="label.markSheet.printMarkSheetsWeb.curricularCourse"/></th>
-			<th><bean:message key="label.markSheet.printMarkSheetsWeb.numberOfMarkSheets"/></th>
+			<th><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.markSheet.printMarkSheetsWeb.degree"/></th>
+			<th><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.markSheet.printMarkSheetsWeb.degreeCurricularPlan"/></th>
+			<th><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.markSheet.printMarkSheetsWeb.curricularCourse"/></th>
+			<th><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.markSheet.printMarkSheetsWeb.numberOfMarkSheets"/></th>
 		</tr>
 	
 	<logic:iterate id="entry" name="curricularCourseMap">

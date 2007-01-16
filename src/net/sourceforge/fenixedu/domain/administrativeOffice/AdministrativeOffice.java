@@ -19,8 +19,6 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Document
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
-import org.apache.commons.beanutils.BeanComparator;
-
 public class AdministrativeOffice extends AdministrativeOffice_Base {
 
     private AdministrativeOffice() {
@@ -152,7 +150,7 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
     }
 
     public Set<Degree> getAdministratedDegrees() {
-	final Set<Degree> result = new TreeSet<Degree>(new BeanComparator("name"));
+	final Set<Degree> result = new TreeSet<Degree>(Degree.DEGREE_COMPARATOR_BY_NAME_AND_DEGREE_TYPE);
 	for (Degree degree : RootDomainObject.getInstance().getDegreesSet()) {
 	    final DegreeType degreeType = degree.getDegreeType();
 	    if (degreeType.getAdministrativeOfficeType().equals(this.getAdministrativeOfficeType())) {
@@ -160,7 +158,21 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
 	    }
 	}
 
-	System.out.println("getAdministratedDegrees.size()= " + result.size());
+	return result;
+    }
+
+    public Set<Degree> getAdministratedDegreesForMarkSheets() {
+	final Set<Degree> result = new TreeSet<Degree>(Degree.DEGREE_COMPARATOR_BY_NAME_AND_DEGREE_TYPE);
+	for (Degree degree : RootDomainObject.getInstance().getDegreesSet()) {
+	    final DegreeType degreeType = degree.getDegreeType();
+	    if (degreeType.getAdministrativeOfficeType().equals(this.getAdministrativeOfficeType())
+		    && !degreeType.equals(DegreeType.MASTER_DEGREE)
+		    && !degreeType.equals(DegreeType.BOLONHA_PHD_PROGRAM)
+		    && !degreeType.equals(DegreeType.BOLONHA_SPECIALIZATION_DEGREE)) {
+		result.add(degree);
+	    }
+	}
+
 	return result;
     }
 

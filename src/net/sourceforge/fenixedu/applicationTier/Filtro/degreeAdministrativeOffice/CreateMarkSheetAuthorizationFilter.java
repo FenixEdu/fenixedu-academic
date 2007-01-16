@@ -16,6 +16,10 @@ public class CreateMarkSheetAuthorizationFilter extends MarkSheetAuthorizationFi
         authorizedEmployees.add("4065");
         authorizedEmployees.add("4280");
         authorizedEmployees.add("3978");
+        
+        authorizedEmployees.add("3068");
+        authorizedEmployees.add("2973");
+        
         return authorizedEmployees;
     }
 

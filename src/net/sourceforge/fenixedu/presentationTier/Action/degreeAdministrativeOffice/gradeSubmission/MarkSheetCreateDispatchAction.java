@@ -27,6 +27,7 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
@@ -184,21 +185,23 @@ public class MarkSheetCreateDispatchAction extends MarkSheetDispatchAction {
     	MarkSheetRectifyBean rectifyBean = (MarkSheetRectifyBean) RenderUtils.getViewState().getMetaObject().getObject();
     	
     	Integer studentNumber = rectifyBean.getStudentNumber();
-    	Registration registration = Registration.readStudentByNumberAndDegreeType(studentNumber, DegreeType.DEGREE);
-    	if(registration == null) {
+    	Student student = Student.readStudentByNumber(studentNumber);
+    	//Registration registration = Registration.readStudentByNumberAndDegreeType(studentNumber, DegreeType.DEGREE);
+    	if(student == null) {
     		ActionMessages actionMessages = new ActionMessages();
     		addMessage(request, actionMessages, "error.no.student", studentNumber.toString());
     		return prepareRectifyMarkSheet(mapping, actionForm, request, response);
     	}
     	MarkSheet markSheet = rectifyBean.getMarkSheet();
-    	EnrolmentEvaluation enrolmentEvaluation = markSheet.getEnrolmentEvaluationByStudent(registration);
+    	EnrolmentEvaluation enrolmentEvaluation = markSheet.getEnrolmentEvaluationByStudent(student);
     	
     	if(enrolmentEvaluation == null) {
     		ActionMessages actionMessages = new ActionMessages();
     		addMessage(request, actionMessages, "error.no.student.in.markSheet", studentNumber.toString());    		
     		return prepareRectifyMarkSheet(mapping, actionForm, request, response);
     	}
-    	if(enrolmentEvaluation.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.RECTIFIED_OBJ)) {
+    	if(!enrolmentEvaluation.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.FINAL_OBJ) && 
+    		!enrolmentEvaluation.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.RECTIFICATION_OBJ)) {
     		ActionMessages actionMessages = new ActionMessages();
     		addMessage(request, actionMessages, "error.markSheet.student.alreadyRectified", studentNumber.toString());    		
     		return prepareRectifyMarkSheet(mapping, actionForm, request, response);

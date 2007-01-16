@@ -149,66 +149,6 @@
 		<put name="body" value="/degreeAdministrativeOffice/equivalences/createCurricularCourseEquivalencies.jsp"></put>
 	</definition>
 	
-	<!-- ===================== MarkSheet Management ====================== -->
-	<definition name="show.markSheetManagement.search.page" extends="definition.degreeAdministrativeOffice.masterPage">
-		<put name="body" value="/degreeAdministrativeOffice/gradeSubmission/markSheetManagement.jsp"></put>
-	</definition>
-	
-	<definition name="show.markSheetManagement.create.page.step1" extends="definition.degreeAdministrativeOffice.masterPage">
-		<put name="body" value="/degreeAdministrativeOffice/gradeSubmission/createMarkSheetStep1.jsp"></put>
-	</definition>
-	
-	<definition name="show.markSheetManagement.create.page.step2" extends="definition.degreeAdministrativeOffice.masterPage">
-		<put name="body" value="/degreeAdministrativeOffice/gradeSubmission/createMarkSheetStep2.jsp"></put>
-	</definition>
-
-	<definition name="markSheetManagement.viewMarkSheet" extends="definition.degreeAdministrativeOffice.masterPage">
-		<put name="body" value="/degreeAdministrativeOffice/gradeSubmission/viewMarkSheet.jsp"></put>
-	</definition>
-	
-	<definition name="show.markSheetManagement.remove" extends="definition.degreeAdministrativeOffice.masterPage">
-		<put name="body" value="/degreeAdministrativeOffice/gradeSubmission/removeMarkSheet.jsp"></put>
-	</definition>
-	
-		<definition name="show.markSheetManagement.rectify.page.step1" extends="definition.degreeAdministrativeOffice.masterPage">
-		<put name="body" value="/degreeAdministrativeOffice/gradeSubmission/rectifyMarkSheetStep1.jsp"></put>
-	</definition>
-
-	<definition name="show.markSheetManagement.rectify.page.step2" extends="definition.degreeAdministrativeOffice.masterPage">
-		<put name="body" value="/degreeAdministrativeOffice/gradeSubmission/rectifyMarkSheetStep2.jsp"></put>
-	</definition>
-	
-	<definition name="show.markSheetManagement.confirm.page" extends="definition.degreeAdministrativeOffice.masterPage">
-		<put name="body" value="/degreeAdministrativeOffice/gradeSubmission/confirmMarkSheet.jsp"></put>
-	</definition>
-	
-	<definition name="show.markSheetManagement.edit.page" extends="definition.degreeAdministrativeOffice.masterPage">
-		<put name="body" value="/degreeAdministrativeOffice/gradeSubmission/editMarkSheet.jsp"></put>
-	</definition>
-	
-	<definition name="show.markSheetManagement.edit.archiveInformation" extends="definition.degreeAdministrativeOffice.masterPage">
-		<put name="body" value="/degreeAdministrativeOffice/gradeSubmission/editMarkSheetArchiveInformation.jsp"></put>
-	</definition>
-	
-	<definition name="show.markSheetManagement.showRectificationHistoric" extends="definition.degreeAdministrativeOffice.masterPage">
-		<put name="body" value="/degreeAdministrativeOffice/gradeSubmission/showRectificationHistoric.jsp"></put>
-	</definition>
-	<definition name="show.printMarkSheet.choosePrinterMarkSheetsWeb" extends="definition.degreeAdministrativeOffice.masterPage">
-		<put name="body" value="/degreeAdministrativeOffice/gradeSubmission/choosePrinterMarkSheetsWeb_bd.jsp"></put>
-	</definition>	
-	<definition name="show.printMarkSheet.choosePrinterMarkSheet" extends="definition.degreeAdministrativeOffice.masterPage">
-		<put name="body" value="/degreeAdministrativeOffice/gradeSubmission/choosePrinterMarkSheet_bd.jsp"></put>
-	</definition>	
-	<definition name="show.markSheetSendMail.searchSendMail" extends="definition.degreeAdministrativeOffice.masterPage">
-		<put name="body" value="/degreeAdministrativeOffice/gradeSubmission/searchSendMail.jsp"></put>
-	</definition>	
-	<definition name="show.markSheetSendMail.prepareMarkSheetsToConfirmSendMail" extends="definition.degreeAdministrativeOffice.masterPage">
-		<put name="body" value="/degreeAdministrativeOffice/gradeSubmission/prepareMarkSheetsToConfirmSendMail.jsp"></put>
-	</definition>	
-	<definition name="show.markSheetSendMail.prepareGradesToSubmitSendMail" extends="definition.degreeAdministrativeOffice.masterPage">
-		<put name="body" value="/degreeAdministrativeOffice/gradeSubmission/prepareGradesToSubmitSendMail.jsp"></put>
-	</definition>	
-	
 	
 	<definition name="examCoordinator-management" extends="definition.degreeAdministrativeOffice.masterPage" >
 		<put name="body" value="/vigilancy/manageExamCoordinator.jsp" />

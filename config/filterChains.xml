@@ -1027,7 +1027,7 @@
     </filterChain>
     <filterChain>
         <name>MarkSheetManagementAuthorization</name>
-        <expression>DegreeAdministrativeOfficeAuthorization || DegreeAdministrativeOfficeSuperUserAuthorization</expression>
+        <expression>DegreeAdministrativeOfficeAuthorization || DegreeAdministrativeOfficeSuperUserAuthorization || AcademicAdministrativeOfficeAuthorization</expression>
         <description/>
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>

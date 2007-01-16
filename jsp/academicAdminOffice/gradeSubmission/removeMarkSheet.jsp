@@ -17,7 +17,7 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.mss" property="mss" />
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.mst" property="mst" />
 	
-	<h2><bean:message key="label.markSheet.remove"/> <bean:message key="label.markSheet"/></h2>
+	<h2><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.markSheet.remove"/> <bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.markSheet"/></h2>
 	
 	<fr:view name="markSheet" schema="degreeAdministrativeOffice.markSheet.view">
 		<fr:layout name="tabular" >
@@ -26,11 +26,11 @@
 		</fr:layout>
 	</fr:view>
 	<br/><br/>
-	<span class="warning0"><bean:message key="label.markSheet.removeMarkSheet"/></span>
+	<span class="warning0"><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.markSheet.removeMarkSheet"/></span>
 	<br/><br/>	
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="label.markSheet.yes"/> </html:submit>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.markSheet.yes"/> </html:submit>
 	<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton" onclick="this.form.method.value='prepareSearchMarkSheetFilled';">
-		<bean:message key="label.markSheet.no"/>
+		<bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.markSheet.no"/>
 	</html:cancel>
 	
 </html:form>
