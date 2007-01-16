@@ -214,7 +214,7 @@
 			    type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.studentEnrolment.StudentEnrolmentsDA">
 			<forward name="prepareChooseExecutionPeriod" path="student.enrolment.prepareChooseExecutionPeriod"/>
 			<forward name="showDegreeModulesToEnrol" path="student.enrolment.showDegreeModulesToEnrol"/>
-			<forward name="viewCurriculum" path="/viewCurriculum.do?method=getCurriculum"/>
+			<forward name="viewCurriculum" path="/viewCurriculum.do?method=prepare"/>
 		</action>        
 		
 		<action path="/studentOptionalEnrolments"
