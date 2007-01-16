@@ -201,7 +201,7 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
         for (final CompetenceCourseLoad competenceCourseLoad : getCompetenceCourseLoads()) {
             if (order == null || getCompetenceCourseLoadsCount() == 1) {
                 result += competenceCourseLoad.getEctsCredits();
-            } else if (competenceCourseLoad.getOrder().equals(order)) {
+            } else if (competenceCourseLoad.getLoadOrder().equals(order)) {
                 result += competenceCourseLoad.getEctsCredits();
                 break;
             }
