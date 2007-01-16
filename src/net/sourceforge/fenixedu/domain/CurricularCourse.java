@@ -1011,7 +1011,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     public Double getEctsCredits(CurricularPeriod curricularPeriod) {
 	double result = 0.0;
 	if (this.getCompetenceCourse() != null) {
-	    result = this.getCompetenceCourse().getEctsCredits(curricularPeriod.getOrder());
+	    result = this.getCompetenceCourse().getEctsCredits(curricularPeriod.getChildOrder());
 	}
 	return result;
     }
