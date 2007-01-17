@@ -693,4 +693,9 @@ Documentation:
         <property name="format" value="${presentationCode} - ${name}"/>
     </renderer>
     
+    <renderer type="net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal" layout="dismissal-label" class="net.sourceforge.fenixedu.renderers.FormatRenderer">
+        <property name="format" value="${name}  (${curriculumGroup.name})"/>
+    </renderer>
+    
+    
 </renderers-config>
