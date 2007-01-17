@@ -12,7 +12,9 @@ import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Contract;
+import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
+import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.util.ContractType;
@@ -260,11 +262,23 @@ public class Employee extends Employee_Base {
     }
 
     public AdministrativeOffice getAdministrativeOffice() {
-	return getCurrentWorkingPlace().getAdministrativeOffice();
+	AdministrativeOffice administrativeOffice = getCurrentWorkingPlace().getAdministrativeOffice();
+
+	if (administrativeOffice == null) {
+	    for (PersonFunction personFunction : getPerson().getActivePersonFunctions()) {
+		if (personFunction.getFunction().getFunctionType().equals(
+			FunctionType.ASSIDUOUSNESS_RESPONSIBLE)
+			&& personFunction.getUnit().getAdministrativeOffice() != null) {
+		    administrativeOffice = personFunction.getUnit().getAdministrativeOffice();
+		}
+	    }
+	}
+
+	return administrativeOffice;
     }
 
     public boolean isAdministrativeOfficeEmployee() {
-	return getCurrentWorkingPlace().getAdministrativeOffice() != null;
+	return getAdministrativeOffice() != null;
     }
 
 }

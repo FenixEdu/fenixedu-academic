@@ -9,12 +9,15 @@
 <html:link action="/createMarkSheet.do?method=prepareCreateMarkSheet"><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.createMarkSheet"/></html:link>
 <br/>
 <br/>
-<html:link action="/printMarkSheetWeb.do?method=choosePrinterMarkSheetsWeb"><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.print.web.markSheets"/></html:link>
-<br/>
-<br/>
-<html:link action="/markSheetSendMail.do?method=prepareSearchSendMail"><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.markSheet.send.mail"/></html:link>
-<br/>
-<br/>
+
+<logic:equal name="UserView" property="person.employee.administrativeOffice.administrativeOfficeType" value="DEGREE">
+	<html:link action="/printMarkSheetWeb.do?method=choosePrinterMarkSheetsWeb"><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.print.web.markSheets"/></html:link>
+	<br/>
+	<br/>
+	<html:link action="/markSheetSendMail.do?method=prepareSearchSendMail"><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.markSheet.send.mail"/></html:link>
+	<br/>
+	<br/>
+</logic:equal>
 
 <h2><strong><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.searchMarkSheet"/></strong></h2>
 
