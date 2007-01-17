@@ -268,6 +268,9 @@
 
 <schema name="student.registrationsWithStartData" type="net.sourceforge.fenixedu.domain.student.Registration" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="firstStudentCurricularPlan.startDateYearMonthDay" key="label.startDate" />
+    <slot name="number" layout="null-as-label" key="label.number">
+        <property name="label" value="-"/>
+    </slot>	
 	<slot name="activeOrConcludedOrLastStudentCurricularPlan.degreeCurricularPlan" layout="format" key="label.degree" >
 		<property name="format" value="${degree.tipoCurso.localizedName} - ${degree.name}" />
 	</slot>	
