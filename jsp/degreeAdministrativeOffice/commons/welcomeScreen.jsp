@@ -6,7 +6,15 @@
 
 <h2><bean:message key="title.welcome"/></h2>
 
-<p>
+<p class="mtop3">
+	<span class="warning0">17.01.2007 - Migração de Funcionalidades para o novo portal da Secretaria Académica<br/></span>
+	<p>
+		<b>Pautas</b>
+		<br/>- 'Gestão de Pautas' está agora disponível no menu lateral da nova Secretaria
+	</p>
+</p>
+
+<p class="mtop3">
 	<span class="warning0">29.12.2006 - Migração de Funcionalidades para o novo portal da Secretaria Académica<br/></span>
 	<p>
 		<b>Aluno</b>
