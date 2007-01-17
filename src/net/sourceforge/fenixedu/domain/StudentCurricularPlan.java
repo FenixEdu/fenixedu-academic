@@ -141,6 +141,9 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    creditsInScientificArea.removeStudentCurricularPlan();
 	    creditsInScientificArea.delete();
 	}
+	
+	for (; hasAnyCredits() ; getCredits().get(0).delete()) 
+	    ;
 
 	removeRootDomainObject();
 	deleteDomainObject();
