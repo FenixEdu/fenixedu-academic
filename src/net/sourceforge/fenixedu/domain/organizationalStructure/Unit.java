@@ -128,7 +128,8 @@ public class Unit extends Unit_Base {
 		&& !hasAnyPayedGuides()
 		&& !hasAnyPayedReceipts()
 		&& !hasAdministrativeOffice()
-		&& !hasUnitServiceAgreementTemplate();
+		&& !hasUnitServiceAgreementTemplate()
+		&& !hasAnyExternalCurricularCourses();
     }
 
     public boolean isActive(YearMonthDay currentDate) {
