@@ -102,39 +102,6 @@ public class StudentDismissalsDA extends FenixDispatchAction {
 	return mapping.findForward("chooseEquivalents");
     }
     
-    public ActionForward prepareChooseCreditsDismissalEnrolments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	return prepareChooseDismissalEnrolments(mapping, form, request, response, DismissalClass.CREDITS);
-    }
-    
-    public ActionForward prepareChooseEquivalenceDismissalEnrolments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	return prepareChooseDismissalEnrolments(mapping, form, request, response, DismissalClass.EQUIVALENCE);
-    }
-
-    private ActionForward prepareChooseDismissalEnrolments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response, DismissalClass dismissalClass) {
-	DismissalBean dismissalBean = (DismissalBean) getRenderedObject();
-	dismissalBean.setDismissalClass(dismissalClass);
-	request.setAttribute("dismissalBean", dismissalBean);
-	
-	try {
-	    checkArguments(request, dismissalBean);
-	} catch (FenixActionException e) {
-	    return mapping.findForward("chooseDismissalEnrolments");
-	}
-	
-	Collection<SelectedEnrolment> enrolments = new HashSet<SelectedEnrolment>();
-	for (StudentCurricularPlan studentCurricularPlan : dismissalBean.getStudentCurricularPlan().getRegistration().getStudent().getAllStudentCurricularPlans()) {
-	    for (Enrolment enrolment : studentCurricularPlan.getAprovedEnrolments()) {
-		enrolments.add(new DismissalBean.SelectedEnrolment(enrolment));
-	    }
-	}
-	dismissalBean.setEnrolments(enrolments);
-	
-	return mapping.findForward("chooseDismissalEnrolments");
-    }
-
     private void checkArguments(HttpServletRequest request, DismissalBean dismissalBean) throws FenixActionException {
 	if(dismissalBean.getDismissalType() == DismissalType.CURRICULAR_COURSE_CREDITS) {
 	    if(dismissalBean.getDismissals() == null || dismissalBean.getDismissals().isEmpty()) {
@@ -196,10 +163,9 @@ public class StudentDismissalsDA extends FenixDispatchAction {
 			dismissalBean.getSelectedEnrolments(), dismissalBean.getCredits(),
 			dismissalBean.getGrade() });
 	    }
-	} catch (NotAuthorizedException e) {
-	    
 	} catch (DomainException e) {
-	    
+	    addActionMessage(request, e.getMessage());
+	    return stepTwo(mapping, form, request, response);
 	}
 
 	return back(mapping, form, request, response);
@@ -213,7 +179,7 @@ public class StudentDismissalsDA extends FenixDispatchAction {
 	try {
 	    executeService(request, "DeleteCredits", new Object[] { dismissalBean.getStudentCurricularPlan(), creditsIDs });
 	} catch (DomainException e) {
-	    
+	    addActionMessage(request, e.getMessage());
 	}
 	
 	request.setAttribute("dismissalBean", dismissalBean);
