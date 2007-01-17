@@ -14,6 +14,10 @@ import net.sourceforge.fenixedu.dataTransferObject.RoomKey;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
+import net.sourceforge.fenixedu.util.DateFormatUtil;
+
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeFieldType;
 
 /**
  * @author Jo�o Mota
@@ -23,15 +27,20 @@ import net.sourceforge.fenixedu.domain.space.OldRoom;
  */
 public class RoomSiteComponentServiceByExecutionPeriodID extends Service {
 
-    public static Object run(ISiteComponent bodyComponent, RoomKey roomKey, Calendar day, Integer executionPeriodID) throws Exception {
+    public static Object run(ISiteComponent bodyComponent, RoomKey roomKey, Calendar someDay, Integer executionPeriodID) throws Exception {
+	final Calendar day = findMonday(someDay);
         final ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodID);
         return (executionPeriod != null) ? runService(bodyComponent, roomKey, day, executionPeriod) : RoomSiteComponentService.run(bodyComponent, roomKey, day);
+    }
+
+    private static Calendar findMonday(final Calendar someDay) {
+	final DateTime dateTime = new DateTime(someDay.getTimeInMillis());
+	return dateTime.withField(DateTimeFieldType.dayOfWeek(), 1).toCalendar(null);
     }
 
     public static Object runService(ISiteComponent bodyComponent, RoomKey roomKey, Calendar day,
             ExecutionPeriod executionPeriod) throws Exception {
         SiteView siteView = null;
-
 
         OldRoom room = OldRoom.findOldRoomByName(roomKey.getNomeSala());
         RoomSiteComponentBuilder componentBuilder = RoomSiteComponentBuilder.getInstance();

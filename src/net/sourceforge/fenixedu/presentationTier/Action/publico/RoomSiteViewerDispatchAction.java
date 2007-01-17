@@ -38,8 +38,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
-
-import pt.utl.ist.fenix.tools.file.FileManagerFactory;
+import org.joda.time.DateMidnight;
 
 public class RoomSiteViewerDispatchAction extends FenixContextDispatchAction {
 
@@ -153,13 +152,14 @@ public class RoomSiteViewerDispatchAction extends FenixContextDispatchAction {
                 } catch (IllegalArgumentException ex) {
                 }
             }
-            Calendar today = Calendar.getInstance();
+            Calendar today = new DateMidnight().toCalendar(null);
             ArrayList weeks = new ArrayList();
 
             InfoExecutionPeriod executionPeriod;
             if (executionPeriodID == null) {
                 executionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService(userView,
                         "ReadCurrentExecutionPeriod", new Object[] {});
+                executionPeriodID = executionPeriod.getIdInternal();
                 try {
                     indexForm.set("selectedExecutionPeriodID", executionPeriod.getIdInternal()
                             .toString());
