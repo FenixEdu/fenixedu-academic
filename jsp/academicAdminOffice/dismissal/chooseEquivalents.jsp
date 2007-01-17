@@ -20,7 +20,7 @@
 	</fr:layout>
 </fr:view>
 <br/>
-<h3><bean:message key="label.createMarkSheet.step.one"/> &gt; <u><bean:message key="label.createMarkSheet.step.two"/></u></h3>
+<h3><bean:message key="label.studentDismissal.step.one" bundle="ACADEMIC_OFFICE_RESOURCES"/> &gt; <u><bean:message key="label.studentDismissal.step.two" bundle="ACADEMIC_OFFICE_RESOURCES"/></u></h3>
 <br/>
 <bean:define id="dismissalTypeName" name="dismissalBean" property="dismissalType.name" />
 <fr:form action="/studentDismissals.do">
@@ -41,7 +41,7 @@
 	<fr:edit id="b" name="dismissalBean" layout="student-dismissal"/>
 	<br/>
 	<br/>
-	<html:submit><bean:message key="label.studentDismissal.chooseEquivalenceDismissalEnrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit>	
-	<html:cancel onclick="this.form.method.value='back'; return true;"><bean:message key="button.back" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:cancel>
+	<html:submit><bean:message key="button.submit" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit>	
+	<html:cancel onclick="this.form.method.value='stepOne'; return true;"><bean:message key="button.back" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:cancel>
 	<html:cancel onclick="this.form.method.value='back'; return true;"><bean:message key="button.cancel" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:cancel>		
 </fr:form>

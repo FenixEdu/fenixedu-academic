@@ -19,9 +19,7 @@
 	</fr:layout>
 </fr:view>
 <br/>
-<h3><u><bean:message key="label.createMarkSheet.step.one"/></u> &gt; <bean:message key="label.createMarkSheet.step.two"/></h3>
-<br/>
-<h3><bean:message key="label.studentDismissal.enrolments.for.equivalence" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
+<h3><u><bean:message key="label.studentDismissal.step.one" bundle="ACADEMIC_OFFICE_RESOURCES"/></u> &gt; <bean:message key="label.studentDismissal.step.two" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <br/>
 <fr:form action="/studentDismissals.do">
 	<html:hidden property="method" value="chooseEquivalents"/>
@@ -48,7 +46,7 @@
 	<logic:empty name="dismissalBean" property="externalEnrolments">
 		<br/>			
 		<br/>				
-		<bean:message key="label.studentDismissal.externalEnrolments.empty" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+		<em><bean:message key="label.studentDismissal.externalEnrolments.empty" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 		<br/>				
 	</logic:empty>
 	<br/>	
@@ -64,7 +62,7 @@
 	<logic:empty name="dismissalBean" property="enrolments">
 		<br/>			
 		<br/>				
-		<bean:message key="label.studentDismissal.internalEnrolments.empty" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+		<em><bean:message key="label.studentDismissal.internalEnrolments.empty" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 		<br/>				
 	</logic:empty>
 	<br/>

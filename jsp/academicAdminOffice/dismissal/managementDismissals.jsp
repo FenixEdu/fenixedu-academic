@@ -34,6 +34,7 @@
 		<fr:view name="dismissalBean" property="studentCurricularPlan.credits" schema="student.Dismissal.view.dismissals">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4 thlight thcenter" />
+				<fr:property name="columnClasses" value=",inobullet ulmvert0,inobullet ulmvert0,," />
 				<fr:property name="checkable" value="true" />
 				<fr:property name="checkboxName" value="creditsToDelete" />
 				<fr:property name="checkboxValue" value="idInternal" />	
@@ -47,5 +48,5 @@
 		<br/>
 		<br/>
 	</logic:empty>
-	<html:submit onclick="this.form.method.value='backViewRegistration'; return true;"><bean:message key="button.back" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit>
+	<html:cancel onclick="this.form.method.value='backViewRegistration'; return true;"><bean:message key="button.back" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:cancel>
 </fr:form>
