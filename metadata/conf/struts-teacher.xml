@@ -2178,7 +2178,8 @@
     <message-resources parameter="resources.BolonhaManagerResources" key="BOLONHA_MANAGER_RESOURCES" null="false"/> 
     <message-resources parameter="resources.TestsResources" key="TESTS_RESOURCES" null="false"/>
     <message-resources parameter="resources.SiteResources" key="SITE_RESOURCES" null="false"/>
-    <message-resources parameter="resources.AdminOffice" key="ADMIN_OFFICE_RESOURCES" null="false"/>  
+    <message-resources parameter="resources.AdminOffice" key="ADMIN_OFFICE_RESOURCES" null="false"/>
+    <message-resources parameter="resources.DegreeAdministrativeOfficeResources" key="DEGREE_OFFICE_RESOURCES" null="false"/>
 
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
