@@ -259,7 +259,7 @@
 				<fr:property name="groupNameClasses" value="aleft"/>
 				<%-- groupHeaderClasses--%>
 				<fr:property name="enrolmentClasses" value="
-					width1p5em acenter bgcolor01,		<!-- Inscrição Confirmada etc -->
+					width2em acenter bgcolor01,			<!-- Inscrição Confirmada etc -->
 					width6em acenter bgcolor02,			<!-- Data da Inscrição -->
 					width1p5em acenter bgcolor03,		<!-- Época Normal -->
 					aleft bgcolor04,					<!-- Código e Disciplina -->
@@ -267,7 +267,7 @@
 					grupos bgcolor06,					<!--   -->
 					grupos bgcolor07,					<!--   -->
 					width7em acenter bgcolor08,			<!-- Opcional  -->
-					width7em acenter bgcolor09,			<!-- Reprovado Não Avaliado  -->
+					width8em acenter bgcolor09,			<!-- Reprovado Não Avaliado  -->
 					width2em aright bgcolor10,			<!-- Nota  -->
 					color888 width2em aright bgcolor11,			<!-- Peso  -->
 					color888 width2em aright bgcolor12			<!-- ECTS  -->

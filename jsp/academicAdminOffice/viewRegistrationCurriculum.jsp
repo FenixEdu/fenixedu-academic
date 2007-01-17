@@ -68,9 +68,11 @@
 <logic:equal name="registration" property="concluded" value="true">
 </logic:equal>
 
+<p class="mtop15 mbottom025"><strong>Visualizar Currículo:</strong></p>
 <fr:edit id="bean" name="bean" schema="registration-select-execution-year" >
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle4 thright thlight mtop025"/>
+		<fr:property name="columnClasses" value=",,tdclear"/>
 	</fr:layout>
 </fr:edit>
 
@@ -101,142 +103,57 @@
 	request.setAttribute("sumPi", sumPi);
 %>
 
-<table class="tstyle4 thright thlight">
-	<logic:notEmpty name="executionYear">
-		<tr>
-			<th>
-				Ano Lectivo
-			</th>
-			<td>
-				<span class="warning0">
-					<bean:message key="following.info.refers.to" bundle="ACADEMIC_OFFICE_RESOURCES"/><bean:message key="begin.of.execution.year" bundle="ACADEMIC_OFFICE_RESOURCES"/><bean:write name="executionYear" property="year"/>
-				</span>
-			</td>
-		</tr>
-	</logic:notEmpty>
-	<logic:empty name="executionYear">
-		<tr>
-			<th>
-				Nota
-			</th>
-			<td>
-				<span class="warning0">
-					<bean:message key="following.info.refers.to" bundle="ACADEMIC_OFFICE_RESOURCES"/><bean:message key="all.curriculum" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-				</span>			
-			</td>
-		</tr>
-	</logic:empty>
-	<tr>
-		<th>
-			Plano Curricular
-		</th>
-		<td>
-			<bean:write name="studentCurricularPlan" property="name"/>
-		</td>
-	</tr>
-	<tr>
-		<th>
-			<bean:message key="label.numberAprovedCurricularCourses" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-		</th>
-		<td>
-			<bean:size id="curricularEntriesCount" name="curriculumEntries"/>
-			<bean:write name="curricularEntriesCount"/>
-		</td>
-	</tr>
-	<tr>
-		<th>
-			<bean:message key="label.total.ects.credits" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-		</th>
-		<td>
-			<bean:write name="totalEctsCredits"/>
-		</td>
-	</tr>
-	<tr>
-		<th>
-			<bean:message key="average" bundle="STUDENT_RESOURCES"/>
-		</th>
-		<td>
-			<bean:write name="average"/>
-		</td>
-	</tr>
-	<tr>
-		<th>
-			<bean:message key="label.curricular.year" bundle="STUDENT_RESOURCES"/>
-		</th>
-		<td>
-			<bean:write name="curricularYear"/>
-		</td>
-	</tr>
-</table>
-
+<bean:size id="curricularEntriesCount" name="curriculumEntries"/>
 
 <logic:equal name="curricularEntriesCount" value="0">
 	<p class="mvert15">
-		<span class="warning0"><em>
+		<em>
 			<bean:message key="no.approvements" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-		</em></span>
+		</em>
 	</p>	
 </logic:equal>
 
 <logic:greaterThan name="curricularEntriesCount" value="0">
-	<p>
-		<span class="warning0">
-			<bean:message key="rules.info" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-		</span>
 
-		<table class="tstyle4">
-			<tr>
-				<th colspan="2">
-					<bean:message key="degree.average" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-				</th>
-			</tr>	
-			<tr>
-				<th>
-					<bean:message key="rule" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-				</th>
-				<td>
-					<bean:message key="average.rule" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-				</td>
-			</tr>	
-			<tr>
-				<th>
-					<bean:message key="result" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-				</th>
-				<td>
-					<bean:message key="degree.average.abbreviation" bundle="ACADEMIC_OFFICE_RESOURCES"/> = <bean:write name="sumPiCi"/> / <bean:write name="sumPi"/> = <bean:write name="average"/>
-				</td>
-			</tr>	
-		</table>
+	<div class="infoop3 mtop2">
+		<logic:notEmpty name="executionYear">
+			<bean:message key="following.info.refers.to" bundle="ACADEMIC_OFFICE_RESOURCES"/> <bean:message key="begin.of.execution.year" bundle="ACADEMIC_OFFICE_RESOURCES"/> <bean:write name="executionYear" property="year"/>.
+		</logic:notEmpty>
+		<logic:empty name="executionYear">
+			<bean:message key="following.info.refers.to" bundle="ACADEMIC_OFFICE_RESOURCES"/> <bean:message key="all.curriculum" bundle="ACADEMIC_OFFICE_RESOURCES"/>.
+		</logic:empty>
+		<p class="mvert05"><bean:message key="rules.info" bundle="ACADEMIC_OFFICE_RESOURCES"/></p>
+		<p class="mvert05">Os cálculos acima baseam-se nas informações na tabela em baixo.</p>
 
-		<table class="tstyle4">
-			<tr>
-				<th colspan="2">
-					<bean:message key="curricular.year" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-				</th>
-			</tr>	
-			<tr>
-				<th>
-					<bean:message key="rule" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-				</th>
-				<td>
-					<bean:message key="curricular.year.rule" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-				</td>
-			</tr>	
-			<tr>
-				<th>
-					<bean:message key="result" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-				</th>
-				<td>
-					<bean:message key="curricular.year.abbreviation" bundle="ACADEMIC_OFFICE_RESOURCES"/> = <bean:message key="minimum" bundle="ACADEMIC_OFFICE_RESOURCES"/> (<bean:message key="int" bundle="ACADEMIC_OFFICE_RESOURCES"/> ( (<bean:write name="totalEctsCredits"/> + 24) / 60 + 1) ; <bean:write name="registration" property="degreeType.years"/>) = <bean:write name="curricularYear"/>;
-				</td>
-			</tr>	
-		</table>
-	</p>
+		<p class="mbottom05"><strong>Cálculo da <bean:message key="degree.average" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
+		<p class="mvert05"><bean:message key="rule" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <bean:message key="average.rule" bundle="ACADEMIC_OFFICE_RESOURCES"/></p>
+		<p class="mvert05"><bean:message key="result" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <bean:message key="degree.average.abbreviation" bundle="ACADEMIC_OFFICE_RESOURCES"/> = <bean:write name="sumPiCi"/> / <bean:write name="sumPi"/> = <b class="highlight1"><bean:write name="average"/></b></p>
+	
+		<p class="mbottom05"><strong>Cálculo do <bean:message key="curricular.year" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
+		<p class="mvert05"><bean:message key="rule" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <bean:message key="curricular.year.rule" bundle="ACADEMIC_OFFICE_RESOURCES"/></p>
+		<p class="mvert05"><bean:message key="result" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <bean:message key="curricular.year.abbreviation" bundle="ACADEMIC_OFFICE_RESOURCES"/> = <bean:message key="minimum" bundle="ACADEMIC_OFFICE_RESOURCES"/> (<bean:message key="int" bundle="ACADEMIC_OFFICE_RESOURCES"/> ( (<bean:write name="totalEctsCredits"/> + 24) / 60 + 1) ; <bean:write name="registration" property="degreeType.years"/>) = <b class="highlight1"><bean:write name="curricularYear"/></b></p>
+	</div>
 
-	<p>
-		<span class="warning0">
-			Os cálculos acima baseam-se nas seguintes informações:
-		</span>
+
+
+	<table class="tstyle4 thlight tdcenter mtop15">
+	<tr>
+		<th>Plano Curricular</th>
+		<th><bean:message key="label.numberAprovedCurricularCourses" bundle="ACADEMIC_OFFICE_RESOURCES"/></th>
+		<th><bean:message key="label.total.ects.credits" bundle="ACADEMIC_OFFICE_RESOURCES"/></th>
+		<th><bean:message key="average" bundle="STUDENT_RESOURCES"/></th>
+		<th><bean:message key="label.curricular.year" bundle="STUDENT_RESOURCES"/></th>
+	</tr>
+	<tr>
+		<td><bean:write name="studentCurricularPlan" property="name"/></td>
+		<td><bean:write name="curricularEntriesCount"/></td>
+		<td><bean:write name="totalEctsCredits"/></td>
+		<td><bean:write name="average"/></td>
+		<td><bean:write name="curricularYear"/></td>
+	</tr>
+	</table>
+
+
 
 		<table class="tstyle4">
 			<tr>
@@ -429,6 +346,5 @@
 				</td>
 			</tr>
 		</table>
-	</p>
 
 </logic:greaterThan>

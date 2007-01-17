@@ -91,10 +91,11 @@
 
 <%-- Curricular Plans --%>
 
-<h3 class="mbottom05 mtop15"><bean:message key="label.studentCurricularPlans" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
+<h3 class="mbottom05 mtop2"><bean:message key="label.studentCurricularPlans" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
+
 <fr:view name="registration" property="studentCurricularPlans" schema="student.studentCurricularPlans" >
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle4 thright thlight mtop0"/>
+		<fr:property name="classes" value="tstyle4 thright thlight thcenter mtop05"/>
 		<fr:property name="groupLinks" value="false"/>
 		<fr:property name="linkFormat(enrol)" value="/studentEnrolments.do?method=prepare&amp;scpID=${idInternal}" />
 		<fr:property name="key(enrol)" value="link.student.enrolInCourses"/>
@@ -129,18 +130,10 @@
 </p>
 
 
-<logic:present name="registration" property="studentCandidacy">
-	<h3 class="mtop15 mbottom05"><bean:message key="label.person.title.precedenceDegreeInfo" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
-	<fr:view name="registration" property="studentCandidacy.precedentDegreeInformation" schema="student.precedentDegreeInformation" >
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4 thright thlight mtop0"/>
-		</fr:layout>
-	</fr:view>
-</logic:present>
 
+<%-- Academic Services --%>
 
-
-<h3 class="mtop15 mbottom05"><bean:message key="academic.services" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
+<h3 class="mtop2 mbottom05 separator2"><bean:message key="academic.services" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <bean:define id="registration" name="registration" scope="request" type="net.sourceforge.fenixedu.domain.student.Registration"/>
 <p>
 	<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.documentRequestsManagement.createDocumentRequest"/>:
@@ -156,7 +149,7 @@
 	</html:link>	
 </p>
 
-<p class="mtop15">
+<p class="mtop2">
 	<b><bean:message key="new.requests" bundle="ACADEMIC_OFFICE_RESOURCES"/></b>
 	<bean:define id="newAcademicServiceRequests" name="registration" property="newAcademicServiceRequests"/>
 	<logic:notEmpty name="newAcademicServiceRequests">
@@ -185,7 +178,7 @@
 </p>
 
 
-<p class="mtop15">
+<p class="mtop2">
 	<b><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="processing.requests"/></b>
 	<bean:define id="processingAcademicServiceRequests" name="registration" property="processingAcademicServiceRequests"/>
 	<logic:notEmpty name="processingAcademicServiceRequests">
@@ -214,7 +207,7 @@
 </p>
 
 
-<p>
+<p class="mtop2">
 	<b><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="concluded.requests"/></b>
 	<bean:define id="concludedAcademicServiceRequests" name="registration" property="concludedAcademicServiceRequests"/>
 	<logic:notEmpty name="concludedAcademicServiceRequests">
@@ -238,6 +231,19 @@
 		</p>
 	</logic:empty>
 </p>
+
+
+<%-- Precedence Info --%>
+
+<logic:present name="registration" property="studentCandidacy">
+	<h3 class="mtop2 mbottom05 separator2"><bean:message key="label.person.title.precedenceDegreeInfo" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
+	<fr:view name="registration" property="studentCandidacy.precedentDegreeInformation" schema="student.precedentDegreeInformation" >
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle4 thright thlight mtop05"/>
+		</fr:layout>
+	</fr:view>
+</logic:present>
+
 
 <ul class="mtop2">
 	<li>
