@@ -1,17 +1,10 @@
 package net.sourceforge.fenixedu.renderers;
 
-import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlLabel;
 import net.sourceforge.fenixedu.renderers.components.HtmlRadioButton;
 import net.sourceforge.fenixedu.renderers.components.HtmlRadioButtonList;
-import net.sourceforge.fenixedu.renderers.contexts.PresentationContext;
-import net.sourceforge.fenixedu.renderers.converters.EnumConverter;
-import net.sourceforge.fenixedu.renderers.layouts.Layout;
-import net.sourceforge.fenixedu.renderers.model.MetaObject;
-import net.sourceforge.fenixedu.renderers.model.MetaObjectFactory;
-import net.sourceforge.fenixedu.renderers.model.MetaSlotKey;
-import net.sourceforge.fenixedu.renderers.utils.RenderKit;
-import net.sourceforge.fenixedu.renderers.utils.RenderMode;
+import net.sourceforge.fenixedu.renderers.components.HtmlSimpleValueComponent;
+import net.sourceforge.fenixedu.renderers.components.HtmlText;
 
 /**
  * The <code>EnumRadioInputRenderer</code> provides a way of doing the
@@ -31,41 +24,24 @@ import net.sourceforge.fenixedu.renderers.utils.RenderMode;
 public class EnumRadioInputRenderer extends EnumInputRenderer {
 
     @Override
-    protected Layout getLayout(Object object, Class type) {
-        return new Layout() {
-
-            @Override
-            public HtmlComponent createComponent(Object object, Class type) {
-                Enum enumerate = (Enum) object;
-                
-                HtmlRadioButtonList radioList = new HtmlRadioButtonList();
-                
-                Object[] constants = type.getEnumConstants();
-                for (Object constant : constants) {
-                    Enum oneEnum = (Enum) constant;
-                    MetaObject enumMetaObject = MetaObjectFactory.createObject(oneEnum, null);
-                    
-                    PresentationContext newContext = getContext().createSubContext(enumMetaObject);
-                    newContext.setRenderMode(RenderMode.getMode("output"));
-                    
-                    HtmlComponent component = RenderKit.getInstance().render(newContext, oneEnum);
-                    HtmlLabel label = new HtmlLabel();
-                    label.setBody(component);
-                    HtmlRadioButton radioButton = radioList.addOption(label, oneEnum.toString());
-                    label.setFor(radioButton);
-                    
-                    if (oneEnum.equals(enumerate)) {
-                        radioButton.setChecked(true);
-                    }
-                }
-                
-                radioList.setTargetSlot((MetaSlotKey) getInputContext().getMetaObject().getKey());
-                radioList.setConverter(new EnumConverter(type));
-                
-                return radioList;
-            }
-            
-        };
+    protected void addEnumElement(Enum enumerate, HtmlSimpleValueComponent holder, Enum oneEnum, String description) {
+	HtmlRadioButtonList radioList = (HtmlRadioButtonList) holder;
+	
+	HtmlText descriptionComponent = new HtmlText(description);
+	HtmlLabel label = new HtmlLabel();
+	label.setBody(descriptionComponent);
+	
+	HtmlRadioButton radioButton = radioList.addOption(label, oneEnum.toString());
+	label.setFor(radioButton);
+	
+	if (oneEnum.equals(enumerate)) {
+            radioButton.setChecked(true);
+        }
     }
 
+    @Override
+    protected HtmlSimpleValueComponent createInputContainerComponent(Enum enumerate) {
+	return new HtmlRadioButtonList();
+    }
+    
 }

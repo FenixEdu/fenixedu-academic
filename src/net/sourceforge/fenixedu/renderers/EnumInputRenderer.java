@@ -6,13 +6,12 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlMenu;
 import net.sourceforge.fenixedu.renderers.components.HtmlMenuOption;
+import net.sourceforge.fenixedu.renderers.components.HtmlSimpleValueComponent;
 import net.sourceforge.fenixedu.renderers.converters.EnumConverter;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.renderers.model.MetaSlotKey;
@@ -126,11 +125,6 @@ public class EnumInputRenderer extends InputRenderer {
             public HtmlComponent createComponent(Object targetObject, Class type) {
                 Enum enumerate = (Enum) targetObject;
                 
-                HtmlMenu menu = new HtmlMenu();
-                
-                String defaultOptionTitle = getDefaultTitle();
-                menu.createDefaultOption(defaultOptionTitle).setSelected(enumerate == null);
-                
                 Collection<Object> constants = getIncludedEnumValues(type);
                 Collection<Object> excludedValues = getExcludedEnumValues(type);
                 List<Pair<Enum,String>> pairList = new ArrayList<Pair<Enum,String>>();
@@ -146,6 +140,8 @@ public class EnumInputRenderer extends InputRenderer {
 					}
                 });
                 
+                HtmlSimpleValueComponent holderComponent = createInputContainerComponent(enumerate);
+                
                 for (Pair<Enum,String> pair : pairList) {
                     
                 	Enum oneEnum = pair.getKey();
@@ -155,36 +151,51 @@ public class EnumInputRenderer extends InputRenderer {
                     	continue;
                     }
 
-                    HtmlMenuOption option = menu.createOption(description);
-                    option.setValue(oneEnum.toString());
-
-                    if (enumerate != null && oneEnum.equals(enumerate)) {
-                	option.setSelected(true);
-                    }
+                    addEnumElement(enumerate, holderComponent, oneEnum, description);
                 }
                 
-                menu.setConverter(new EnumConverter());
-                menu.setTargetSlot((MetaSlotKey) getInputContext().getMetaObject().getKey());
+                holderComponent.setConverter(new EnumConverter());
+                holderComponent.setTargetSlot((MetaSlotKey) getInputContext().getMetaObject().getKey());
                 
-                return menu;
+                return holderComponent;
             }
 
-            // TODO: refactor this, probably mode to HtmlMenu, duplicate id=menu.getDefaultTitle
-            private String getDefaultTitle() {
-                if (getDefaultText() == null) {
-                    return RenderUtils.getResourceString("renderers.menu.default.title");
-                }
-                else {
-                    if (isKey()) {
-                        return RenderUtils.getResourceString(getBundle(), getDefaultText());
-                    }
-                    else {
-                        return getDefaultText();
-                    }
-                }
-            }
-            
         };
+    }
+    
+    protected void addEnumElement(Enum enumerate, HtmlSimpleValueComponent holder, Enum oneEnum, String description) {
+	HtmlMenu menu = (HtmlMenu) holder;
+	
+	HtmlMenuOption option = menu.createOption(description);
+	option.setValue(oneEnum.toString());
+
+	if (enumerate != null && oneEnum.equals(enumerate)) {
+	    option.setSelected(true);
+	}
+    }
+
+    protected HtmlSimpleValueComponent createInputContainerComponent(Enum enumerate) {
+	HtmlMenu menu = new HtmlMenu();
+        
+        String defaultOptionTitle = getDefaultTitle();
+        menu.createDefaultOption(defaultOptionTitle).setSelected(enumerate == null);
+        
+	return menu;
+    }
+    
+    // TODO: refactor this, probably mode to HtmlMenu, duplicate id=menu.getDefaultTitle
+    private String getDefaultTitle() {
+        if (getDefaultText() == null) {
+            return RenderUtils.getResourceString("renderers.menu.default.title");
+        }
+        else {
+            if (isKey()) {
+                return RenderUtils.getResourceString(getBundle(), getDefaultText());
+            }
+            else {
+                return getDefaultText();
+            }
+        }
     }
     
     private Collection<Object> getIncludedEnumValues(Class type) {
