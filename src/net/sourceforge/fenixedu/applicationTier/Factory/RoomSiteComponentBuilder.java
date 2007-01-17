@@ -140,7 +140,6 @@ public class RoomSiteComponentBuilder {
 		}
 	    }
 	}
-	System.out.println("infoShowOccupations: " + infoShowOccupations.size());
 
 	component.setInfoShowOccupation(infoShowOccupations);
 	component.setInfoRoom(InfoRoom.newInfoFromDomain(room));
