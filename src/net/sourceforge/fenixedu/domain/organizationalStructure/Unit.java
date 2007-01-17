@@ -40,7 +40,7 @@ import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
 
 public class Unit extends Unit_Base {
-    
+
     public final static Comparator<Unit> UNIT_COMPARATOR_BY_NAME = new ComparatorChain();
     static {
 	((ComparatorChain) UNIT_COMPARATOR_BY_NAME).addComparator(new BeanComparator("name", Collator
@@ -128,8 +128,7 @@ public class Unit extends Unit_Base {
 		&& !hasAnyPayedGuides()
 		&& !hasAnyPayedReceipts()
 		&& !hasAdministrativeOffice()
-		&& !hasUnitServiceAgreementTemplate()
-		&& !hasAnyExternalCurricularCourses();
+		&& !hasUnitServiceAgreementTemplate() && !hasAnyExternalCurricularCourses();
     }
 
     public boolean isActive(YearMonthDay currentDate) {
@@ -624,8 +623,13 @@ public class Unit extends Unit_Base {
 		&& !acronym.equals("")
 		&& partyTypeEnum != null
 		&& (partyTypeEnum.equals(PartyTypeEnum.DEGREE_UNIT)
-			|| partyTypeEnum.equals(PartyTypeEnum.DEPARTMENT) || partyTypeEnum
-			.equals(PartyTypeEnum.ACADEMIC_SERVICES_SUPERVISION))) {
+			|| partyTypeEnum.equals(PartyTypeEnum.DEPARTMENT)
+			|| partyTypeEnum.equals(PartyTypeEnum.ACADEMIC_SERVICES_SUPERVISION)
+			|| partyTypeEnum.equals(PartyTypeEnum.PLANET)
+			|| partyTypeEnum.equals(PartyTypeEnum.COUNTRY)
+			|| partyTypeEnum.equals(PartyTypeEnum.DEPARTMENT)
+			|| partyTypeEnum.equals(PartyTypeEnum.UNIVERSITY) || partyTypeEnum
+			.equals(PartyTypeEnum.SCHOOL))) {
 
 	    for (Unit unit : readAllUnits()) {
 		if (unit.getAcronym() != null && unit.getAcronym().equals(acronym)
@@ -723,6 +727,69 @@ public class Unit extends Unit_Base {
 		.readAccountabilityTypeByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE));
 
 	return institutionUnit;
+    }
+
+    public static Unit createNewAcademicInstitution(String institutionName, String institutionCode,
+	    PartyTypeEnum institutionType, Unit parentUnit) {
+
+	if (StringUtils.isEmpty(institutionName)) {
+	    throw new DomainException("error.exception.commons.institution.nameIsEmpty");
+	}
+
+	if (StringUtils.isEmpty(institutionCode)) {
+	    throw new DomainException("error.exception.commons.institution.codeIsEmpty");
+	}
+
+	if (parentUnit == null) {
+	    throw new DomainException("error.exception.commons.institution.rootInstitutionNotFound");
+	}
+
+	if (readUnitByAcronymAndType(institutionCode, institutionType) != null) {
+	    throw new DomainException("error.exception.commons.institution.alreadyExistsWithSameCodeAndType");
+	}
+
+	Unit institutionUnit = new Unit();
+	institutionUnit.setName(institutionName);
+	institutionUnit.setAcronym(institutionCode);
+	institutionUnit.setBeginDateYearMonthDay(new YearMonthDay());
+	institutionUnit.setType(institutionType);
+	institutionUnit.addParentUnit(parentUnit, getAccountabilityType(parentUnit, institutionType));
+
+	return institutionUnit;
+    }
+
+    private static AccountabilityType getAccountabilityType(Unit parentUnit,
+	    PartyTypeEnum institutionType) {
+
+	switch (institutionType) {
+	case UNIVERSITY:
+	    if (!parentUnit.getType().equals(PartyTypeEnum.PLANET)
+		    && !parentUnit.getType().equals(PartyTypeEnum.COUNTRY)) {
+		throw new DomainException("error.exception.commons.institution.invalidParentUnit");
+	    }
+	    return AccountabilityType.readAccountabilityTypeByType(AccountabilityTypeEnum.GEOGRAPHIC);
+	case DEPARTMENT:
+	    if (!parentUnit.getType().equals(PartyTypeEnum.SCHOOL)
+		    && !parentUnit.getType().equals(PartyTypeEnum.UNIVERSITY)) {
+		throw new DomainException("error.exception.commons.institution.invalidParentUnit");
+	    }
+	    return AccountabilityType
+		    .readAccountabilityTypeByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE);
+	case SCHOOL:
+	    if (parentUnit.getType().equals(PartyTypeEnum.COUNTRY)) {
+		return AccountabilityType
+			.readAccountabilityTypeByType(AccountabilityTypeEnum.GEOGRAPHIC);
+
+	    } else if (parentUnit.getType().equals(PartyTypeEnum.UNIVERSITY)) {
+		return AccountabilityType
+			.readAccountabilityTypeByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE);
+
+	    } else {
+		throw new DomainException("error.exception.commons.institution.invalidParentUnit");
+	    }
+	default:
+	    throw new DomainException("error.exception.commons.institution.invalidType");
+	}
     }
 
     public static Party createContributor(String contributorName, String contributorNumber,
