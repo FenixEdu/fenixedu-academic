@@ -257,7 +257,7 @@
 						<bean:message bundle="APPLICATION_RESOURCES" key="option.curricularCourse.optional" />
 						
 					<% } else { %>
-						<bean:message bundle="APPLICATION_RESOURCES" name="curricularCourse2Enrol" property="curricularCourse.type.keyName" />
+						<bean:message bundle="ENUMERATION_RESOURCES" name="curricularCourse2Enrol" property="curricularCourse.type.name" />
 						
 					<% } %>
 				</td>
