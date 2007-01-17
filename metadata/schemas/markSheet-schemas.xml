@@ -228,7 +228,7 @@
 	</slot>
 </schema>
 
-<schema name="markSheet.teacher.gradeSubmission" bundle="DEGREE_OFFICE_RESOURCES"
+<schema name="markSheet.teacher.gradeSubmission" bundle="APPLICATION_RESOURCES"
 		type="net.sourceforge.fenixedu.dataTransferObject.teacher.gradeSubmission.MarkSheetTeacherGradeSubmissionBean">
 		
 	<slot name="evaluationDate" key="label.markSheet.evaluationDate">
@@ -240,7 +240,7 @@
 	</slot>
 </schema>
 
-<schema name="markSheet.teacher.gradeSubmission.step.one" bundle="DEGREE_OFFICE_RESOURCES"
+<schema name="markSheet.teacher.gradeSubmission.step.one" bundle="APPLICATION_RESOURCES"
 		type="net.sourceforge.fenixedu.dataTransferObject.teacher.gradeSubmission.MarkSheetTeacherGradeSubmissionBean">
 		
 	<slot name="selectedCurricularCourse" key="label.markSheet.curricularCourse" layout="menu-select">
@@ -263,13 +263,13 @@
 	</slot>
 </schema>
 
-<schema name="degreeCurricularPlan.and.curricularCourse" bundle="DEGREE_OFFICE_RESOURCES"
+<schema name="degreeCurricularPlan.and.curricularCourse" bundle="APPLICATION_RESOURCES"
 	type="net.sourceforge.fenixedu.domain.CurricularCourse">
 	<slot name="degreeCurricularPlan.name" />
 	<slot name="name" />
 </schema>
 
-<schema name="markSheet.teacher.gradeSubmission.step.two.view" bundle="DEGREE_OFFICE_RESOURCES"
+<schema name="markSheet.teacher.gradeSubmission.step.two.view" bundle="APPLICATION_RESOURCES"
 		type="net.sourceforge.fenixedu.dataTransferObject.teacher.gradeSubmission.MarkSheetTeacherGradeSubmissionBean">
 		
 	<slot name="curricularCoursesAvailableToGradeSubmission" key="label.curricularCourses">
@@ -279,7 +279,7 @@
 	<slot name="evaluationDate" key="label.markSheet.evaluationDate" />
 </schema>
 
-<schema name="markSheet.teacher.gradeSubmission.marksToSubmit" bundle="DEGREE_OFFICE_RESOURCES"
+<schema name="markSheet.teacher.gradeSubmission.marksToSubmit" bundle="APPLICATION_RESOURCES"
 		type="net.sourceforge.fenixedu.dataTransferObject.teacher.gradeSubmission.MarkSheetTeacherMarkBean">
 		
 	<slot name="toSubmitMark" key="label.toSubmit" />		
@@ -368,7 +368,7 @@
 
 
 
-<schema name="markSheet.teacher.gradeSubmission.view.submited.marks" bundle="DEGREE_OFFICE_RESOURCES"
+<schema name="markSheet.teacher.gradeSubmission.view.submited.marks" bundle="APPLICATION_RESOURCES"
 	type="net.sourceforge.fenixedu.domain.EnrolmentEvaluation">
 	<slot name="enrolment.studentCurricularPlan.student.number" key="label.number"/>
 	<slot name="enrolment.studentCurricularPlan.student.person.name" key="label.name"/>	
