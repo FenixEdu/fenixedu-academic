@@ -24,21 +24,23 @@ public class ReadStudentTestQuestionImage extends Service {
         return run(registration, distributedTest, questionId, imageId, feedbackId, itemIndex, path);
     }
 
-    public String run(Registration registration, DistributedTest distributedTest, Integer questionId,
+    public String run(Registration otherRegistration, DistributedTest distributedTest, Integer questionId,
             Integer imageId, String feedbackId, Integer itemIndex, String path)
             throws FenixServiceException, ExcepcaoPersistencia {
-        for (StudentTestQuestion studentTestQuestion : registration.getStudentTestsQuestions()) {
-            if (studentTestQuestion.getKeyDistributedTest().equals(distributedTest.getIdInternal())
-                    && studentTestQuestion.getKeyQuestion().equals(questionId)) {
-                ParseSubQuestion parse = new ParseSubQuestion();
-                try {
-                    parse.parseStudentTestQuestion(studentTestQuestion, path.replace('\\', '/'));
-                } catch (Exception e) {
-                    throw new FenixServiceException(e);
-                }
-                return studentTestQuestion.getStudentSubQuestions().get(itemIndex).getImage(imageId);
-            }
-        }
+	for (final Registration registration : otherRegistration.getStudent().getRegistrationsSet()) {
+	    for (StudentTestQuestion studentTestQuestion : registration.getStudentTestsQuestions()) {
+		if (studentTestQuestion.getKeyDistributedTest().equals(distributedTest.getIdInternal())
+			&& studentTestQuestion.getKeyQuestion().equals(questionId)) {
+		    ParseSubQuestion parse = new ParseSubQuestion();
+		    try {
+			parse.parseStudentTestQuestion(studentTestQuestion, path.replace('\\', '/'));
+		    } catch (Exception e) {
+			throw new FenixServiceException(e);
+		    }
+		    return studentTestQuestion.getStudentSubQuestions().get(itemIndex).getImage(imageId);
+		}
+	    }
+	}
         return null;
     }
 

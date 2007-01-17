@@ -581,19 +581,6 @@ public class Registration extends Registration_Base {
 	return result;
     }
 
-    public Set<DistributedTest> getDistributedTestsByExecutionCourse(ExecutionCourse executionCourse) {
-	Set<DistributedTest> result = new HashSet<DistributedTest>();
-	for (StudentTestQuestion studentTestQuestion : this.getStudentTestsQuestions()) {
-	    if (studentTestQuestion.getDistributedTest().getTestScope().getClassName().equals(
-		    ExecutionCourse.class.getName())
-		    && studentTestQuestion.getDistributedTest().getTestScope().getKeyClass().equals(
-			    executionCourse.getIdInternal())) {
-		result.add(studentTestQuestion.getDistributedTest());
-	    }
-	}
-	return result;
-    }
-
     public List<Attends> readAttendsInCurrentExecutionPeriod() {
 	final List<Attends> attends = new ArrayList<Attends>();
 	for (final Attends attend : this.getAssociatedAttendsSet()) {
@@ -613,15 +600,6 @@ public class Registration extends Registration_Base {
 	    }
 	}
 	return attends;
-    }
-
-    public Attends readAttendByExecutionCourse(ExecutionCourse executionCourse) {
-	for (Attends attend : this.getAssociatedAttends()) {
-	    if (attend.getDisciplinaExecucao().equals(executionCourse)) {
-		return attend;
-	    }
-	}
-	return null;
     }
 
     public static Registration readByUsername(String username) {
@@ -788,10 +766,6 @@ public class Registration extends Registration_Base {
 	    }
 	}
 	return null;
-    }
-
-    public int countDistributedTestsByExecutionCourse(final ExecutionCourse executionCourse) {
-	return getDistributedTestsByExecutionCourse(executionCourse).size();
     }
 
     public Collection<DocumentRequest> getDocumentRequests() {
@@ -1038,7 +1012,7 @@ public class Registration extends Registration_Base {
 
 	checkIfReachedAttendsLimit();
 
-	if (readAttendByExecutionCourse(executionCourse) == null) {
+	if (getStudent().readAttendByExecutionCourse(executionCourse) == null) {
 	    final Enrolment enrolment = findEnrolment(getActiveStudentCurricularPlan(), executionCourse,
 		    executionCourse.getExecutionPeriod());
 	    if (enrolment != null) {
@@ -1090,7 +1064,7 @@ public class Registration extends Registration_Base {
     }
 
     public void removeAttendFor(final ExecutionCourse executionCourse) {
-	final Attends attend = readAttendByExecutionCourse(executionCourse);
+	final Attends attend = getStudent().readAttendByExecutionCourse(executionCourse);
 	if (attend != null) {
 	    checkIfHasEnrolmentFor(attend);
 	    checkIfHasShiftsFor(executionCourse);
@@ -1639,6 +1613,10 @@ public class Registration extends Registration_Base {
 	}
 
 	return false;
+    }
+
+    public Attends readAttendByExecutionCourse(ExecutionCourse executionCourse) {
+	return getStudent().readAttendByExecutionCourse(executionCourse);
     }
 
 }

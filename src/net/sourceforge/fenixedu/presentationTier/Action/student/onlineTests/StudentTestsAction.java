@@ -30,6 +30,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -75,8 +76,8 @@ public class StudentTestsAction extends FenixDispatchAction {
         final Integer objectCode = new Integer(request.getParameter("objectCode"));
         final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(objectCode);
 
-        Registration registration = Registration.readByUsername(userView.getUtilizador());
-        Set<DistributedTest> distributedTestList = registration
+        final Student student = userView.getPerson().getStudent();
+        Set<DistributedTest> distributedTestList = student
                 .getDistributedTestsByExecutionCourse(executionCourse);
         List<DistributedTest> testToDoList = new ArrayList<DistributedTest>();
         List<DistributedTest> doneTestsList = new ArrayList<DistributedTest>();

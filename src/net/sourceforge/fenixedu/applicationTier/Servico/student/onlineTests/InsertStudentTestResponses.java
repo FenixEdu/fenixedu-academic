@@ -171,7 +171,7 @@ public class InsertStudentTestResponses extends Service {
 
             if (distributedTest.getTestType().equals(new TestType(TestType.EVALUATION))) {
                 OnlineTest onlineTest = distributedTest.getOnlineTest();
-                Attends attend = registration
+                Attends attend = registration.getStudent()
                         .readAttendByExecutionCourse(((ExecutionCourse) distributedTest.getTestScope()
                                 .getDomainObject()));
                 Mark mark = onlineTest.getMarkByAttend(attend);

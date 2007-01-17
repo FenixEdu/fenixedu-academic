@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -19,16 +20,20 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadExecutionCoursesByStudentTests extends Service {
 
-    public Object run(final Registration registration) throws ExcepcaoPersistencia {
-        final List<Attends> attends = registration.getAssociatedAttends();
+    public Object run(final Registration someRegistration) throws ExcepcaoPersistencia {
+	final List<InfoExecutionCourse> infoExecutionCourses = new ArrayList<InfoExecutionCourse>();
 
-        final List<InfoExecutionCourse> infoExecutionCourses = new ArrayList<InfoExecutionCourse>();
-        for (Attends attend : attends) {
-            final ExecutionCourse executionCourse = attend.getDisciplinaExecucao();
-            if (registration.countDistributedTestsByExecutionCourse(executionCourse) != 0) {
-                infoExecutionCourses.add(InfoExecutionCourse.newInfoFromDomain(executionCourse));
-            }
-        }
-        return infoExecutionCourses;
+	final Student student = someRegistration.getStudent();
+	for (final Registration registration : student.getRegistrationsSet()) {
+	    for (Attends attend : registration.getAssociatedAttendsSet()) {
+		final ExecutionCourse executionCourse = attend.getDisciplinaExecucao();
+		if (student.countDistributedTestsByExecutionCourse(executionCourse) != 0) {
+		    infoExecutionCourses.add(InfoExecutionCourse.newInfoFromDomain(executionCourse));
+		}
+	    }
+	}
+
+	return infoExecutionCourses;
     }
+
 }

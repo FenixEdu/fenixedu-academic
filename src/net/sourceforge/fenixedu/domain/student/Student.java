@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.dataTransferObject.student.StudentStatuteBean;
+import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
@@ -23,6 +24,8 @@ import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
+import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.Money;
@@ -479,4 +482,36 @@ public class Student extends Student_Base {
 	}
 	return result;
     }
+
+    public Set<DistributedTest> getDistributedTestsByExecutionCourse(ExecutionCourse executionCourse) {
+	Set<DistributedTest> result = new HashSet<DistributedTest>();
+	for (final Registration registration : getRegistrationsSet()) {
+	    for (StudentTestQuestion studentTestQuestion : registration.getStudentTestsQuestions()) {
+		if (studentTestQuestion.getDistributedTest().getTestScope().getClassName().equals(
+			ExecutionCourse.class.getName())
+			&& studentTestQuestion.getDistributedTest().getTestScope().getKeyClass().equals(
+				executionCourse.getIdInternal())) {
+		    result.add(studentTestQuestion.getDistributedTest());
+		}
+	    }
+	}
+	return result;
+    }
+
+    public int countDistributedTestsByExecutionCourse(final ExecutionCourse executionCourse) {
+	return getDistributedTestsByExecutionCourse(executionCourse).size();
+    }
+
+    public Attends readAttendByExecutionCourse(ExecutionCourse executionCourse) {
+	for (final Registration registration : getRegistrationsSet()) {
+	    for (Attends attend : registration.getAssociatedAttends()) {
+		if (attend.getDisciplinaExecucao().equals(executionCourse)) {
+		    return attend;
+		}
+	    }
+	}
+	return null;
+    }
+
+
 }
