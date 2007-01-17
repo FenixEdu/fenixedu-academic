@@ -34,4 +34,18 @@ public class ExternalCurricularCourse extends ExternalCurricularCourse_Base {
         setUnit(unit);
     }
     
+    public void delete() {
+	if(canBeDeleted()) {
+	    removeRootDomainObject();
+	    removeUnit();
+	    super.deleteDomainObject();
+	} else {
+	    throw new DomainException("error.external.enrolment.cannot.be.deleted");
+	}
+    }
+    
+    private boolean canBeDeleted() {
+	return !hasAnyExternalEnrolments();
+    }
+    
 }

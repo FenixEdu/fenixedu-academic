@@ -40,6 +40,13 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
 	return multiLanguageString;
     }
     
+    public void delete() {
+	removeExecutionPeriod();
+	removeExternalCurricularCourse();
+	removeRootDomainObject();
+	removeStudent();
+	super.deleteDomainObject();
+    }
     
     
 }
