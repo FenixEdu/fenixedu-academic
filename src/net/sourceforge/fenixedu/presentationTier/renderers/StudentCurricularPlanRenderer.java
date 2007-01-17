@@ -413,8 +413,8 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 		final HtmlTableRow lineRow = parentTable.createRow();
 
 		// Enrolment Condition 
-		final String enrolmentCondition = enrolment.isEnrollmentConditionFinal() ? StringUtils.EMPTY : enumerationResources.getString(enrolment.getEnrolmentCondition().getAcronym());
-		generateEnrolmentSmallInfoCell(lineRow, new HtmlText(enrolmentCondition), getEnrolmentConditionClasses(), enumerationResources.getString(enrolment.getEnrolmentCondition().getQualifiedName()));
+		final HtmlComponent enrolmentCondition = enrolment.isEnrollmentConditionFinal() ? null : new HtmlText(enumerationResources.getString(enrolment.getEnrolmentCondition().getAcronym()));
+		generateEnrolmentSmallInfoCell(lineRow, enrolmentCondition, getEnrolmentConditionClasses(), enumerationResources.getString(enrolment.getEnrolmentCondition().getQualifiedName()));
 		
 		// Creation
 		final StringBuilder creation = new StringBuilder();
@@ -434,14 +434,17 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 		
 		// Code
 		// Name
-		final HtmlTableCell nameCell = lineRow.createCell();
-		nameCell.setClasses(getEnrolmentNameClasses());
-		StringBuilder codeName = new StringBuilder();
+		final HtmlTableCell codeNameCell = lineRow.createCell();
+		codeNameCell.setClasses(getEnrolmentNameClasses());
+		final HtmlInlineContainer codeNameSpan =  new HtmlInlineContainer();
 		if (!StringUtils.isEmpty(enrolment.getCurricularCourse().getCode())) {
-		    codeName.append(enrolment.getCurricularCourse().getCode()).append(" - ");
+		    final HtmlInlineContainer codeSpan =  new HtmlInlineContainer();
+		    codeSpan.setClasses("");
+		    codeSpan.addChild(new HtmlText(enrolment.getCurricularCourse().getCode() + " - "));
+		    codeNameSpan.addChild(codeSpan);
 		}
-		codeName.append(enrolment.getName().getContent(LanguageUtils.getLanguage()));
-		nameCell.setBody(generateEnrolmentLink(codeName.toString(), enrolment));
+		codeNameSpan.addChild(new HtmlText(enrolment.getName().getContent(LanguageUtils.getLanguage())));
+		codeNameCell.setBody(generateEnrolmentLink(codeNameSpan, enrolment));
 		
 		// Degree Curricular Plan
 		generateEnrolmentSmallInfoCell(lineRow, generateEnrolmentDegreeCurricularPlanLink(enrolment), getEnrolmentDegreeCurricularPlanClasses(), null);
@@ -460,12 +463,12 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 		} 
 
 		// Enrolment Type 
-		String enrolmentType = enrolment.isEnrolmentTypeNormal() ? StringUtils.EMPTY : enumerationResources.getString(enrolment.getEnrolmentTypeName());
-		generateEnrolmentSmallInfoCell(lineRow, new HtmlText(enrolmentType), getEnrolmentTypeClasses(), null);
+		final HtmlComponent enrolmentType = enrolment.isEnrolmentTypeNormal() ? null : new HtmlText(enumerationResources.getString(enrolment.getEnrolmentTypeName()));
+		generateEnrolmentSmallInfoCell(lineRow, enrolmentType, getEnrolmentTypeClasses(), null);
 
 		// Enrolment State
-		final String enrolmentState = enrolment.isEnrolmentStateApproved() ? StringUtils.EMPTY : enumerationResources.getString(enrolment.getEnrollmentState().getQualifiedName());
-		generateEnrolmentSmallInfoCell(lineRow, new HtmlText(enrolmentState), getEnrolmentStateClasses(), null);
+		final HtmlComponent enrolmentState = enrolment.isEnrolmentStateApproved() ? null : new HtmlText(enumerationResources.getString(enrolment.getEnrollmentState().getQualifiedName()));
+		generateEnrolmentSmallInfoCell(lineRow, enrolmentState, getEnrolmentStateClasses(), null);
 		
 		// Enrolment Evaluation
 		final HtmlTableCell enrolmentEvaluationCell = lineRow.createCell();
@@ -479,13 +482,13 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 		// Enrolment Weight
 		final HtmlTableCell enrolmentWeightCell = lineRow.createCell();
 		enrolmentWeightCell.setClasses(getEnrolmentWeightClasses());
-		final String enrolmentWeight = enrolment.isEnrolmentStateApproved() && StringUtils.isNumeric(latestEnrolmentEvaluation.getGrade()) ? enrolment.getWeigth().toString() : StringUtils.EMPTY;
+		final String enrolmentWeight = enrolment.isEnrolmentStateApproved() && StringUtils.isNumeric(latestEnrolmentEvaluation.getGrade()) ? enrolment.getWeigth().toString() : "-";
 		enrolmentWeightCell.setBody(new HtmlText(enrolmentWeight));
 
 		// Enrolment Credits
 		final HtmlTableCell enrolmentEctsCreditsCell = lineRow.createCell();
 		enrolmentEctsCreditsCell.setClasses(getEnrolmentCreditsClasses());
-		final String enrolmentEctsCredits = enrolment.isEnrolmentStateApproved() ? enrolment.getEctsCredits().toString() : StringUtils.EMPTY;
+		final String enrolmentEctsCredits = enrolment.isEnrolmentStateApproved() ? enrolment.getEctsCredits().toString() : "-";
 		enrolmentEctsCreditsCell.setBody(new HtmlText(enrolmentEctsCredits));
 	    }
 	}
@@ -493,16 +496,20 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 	private void generateEnrolmentSmallInfoCell(final HtmlTableRow lineRow, HtmlComponent htmlComponent, final String cellClasses, final String title) {
 	    final HtmlTableCell cell = lineRow.createCell();
 	    cell.setClasses(cellClasses);
-	    final HtmlInlineContainer span = new HtmlInlineContainer();
-	    span.setClasses("smalltxt" + ((title == null) ? StringUtils.EMPTY : " acronym"));
-	    span.setTitle(title);
-	    span.addChild(htmlComponent);
-	    cell.setBody(span);
+	    if (htmlComponent == null) {
+		cell.setBody(new HtmlText("-"));
+	    } else {
+		final HtmlInlineContainer span = new HtmlInlineContainer();
+		span.setClasses("smalltxt" + ((title == null) ? StringUtils.EMPTY : " acronym"));
+		span.setTitle(title);
+		span.addChild(htmlComponent);
+		cell.setBody(span);
+	    }
 	}
 
-	private HtmlComponent generateEnrolmentLink(final String text, final Enrolment enrolment) {
+	private HtmlComponent generateEnrolmentLink(final HtmlComponent htmlComponent, final Enrolment enrolment) {
 	    final HtmlLink result = new HtmlLink();
-	    result.setText(text);
+	    result.setBody(htmlComponent);
 	    result.setModuleRelative(false);
 	    result.setTarget(HtmlLink.Target.BLANK);
 	    
@@ -527,7 +534,7 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 	    } else {
 		final ExecutionCourse executionCourse = enrolment.getExecutionCourseFor(enrolment.getExecutionPeriod());
 		if (executionCourse == null) {
-		    return new HtmlText(text);
+		    return htmlComponent;
 		} else {
 		    result.setUrl("/publico/executionCourse.do?method=firstPage");
 
@@ -541,7 +548,7 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 	private HtmlComponent generateEnrolmentDegreeCurricularPlanLink(final Enrolment enrolment) {
 	    final HtmlComponent degreeCurricularPlan;
 	    if (studentCurricularPlan.getDegreeCurricularPlan() == enrolment.getDegreeModule().getParentDegreeCurricularPlan()) {
-	        degreeCurricularPlan = new HtmlText(StringUtils.EMPTY);
+	        degreeCurricularPlan = new HtmlText("-");
 	    } else {
 	        degreeCurricularPlan = generateDegreeCurricularPlanNameLink(enrolment.getDegreeModule().getParentDegreeCurricularPlan(), enrolment.getExecutionPeriod());
 	    }
