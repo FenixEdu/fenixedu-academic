@@ -1206,7 +1206,7 @@ color: #888;
 
 .inobullet ul { list-style: none; padding-left: 0; }
 .inobullet ul li { list-style: none; }
-
+.ulmvert0 ul { margin-top: 0; margin-bottom: 0;}
 
 /* evaluation calendar */
 table.style2u {
@@ -1404,4 +1404,3 @@ border: 1px solid #ccc;
 text-align: left;
 height: 30px;
 }
-
