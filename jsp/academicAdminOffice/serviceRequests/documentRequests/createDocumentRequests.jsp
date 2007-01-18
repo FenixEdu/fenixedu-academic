@@ -4,6 +4,7 @@
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <%@ page import="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType" %> 
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" %> 
 <html:xhtml/>
 
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
@@ -59,7 +60,8 @@
 
 <p class="mbottom025"><strong><bean:message key="message.document.to.request" bundle="ACADEMIC_OFFICE_RESOURCES"/>:</strong></p>
 
-	<fr:edit name="documentRequestCreateBean" schema="DocumentRequestCreateBean.chooseDocumentRequestType" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean">
+	<bean:define id="schema" name="documentRequestCreateBean" property="schema" type="java.lang.String"/>
+	<fr:edit name="documentRequestCreateBean" schema="<%=schema%>" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean">
 		<fr:destination name="documentRequestTypeChoosedPostBack" path="/documentRequestsManagement.do?method=documentRequestTypeChoosedPostBack"/>	
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4 thright thlight mtop025 mbottom0"/>

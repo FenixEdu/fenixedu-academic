@@ -1,8 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.serviceRequests;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -11,6 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -75,11 +73,9 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 
 	final AcademicServiceRequest academicServiceRequest = getAndSetAcademicServiceRequest(request);
 
-	final List<Integer> documentIdsToProcess = new ArrayList<Integer>();
-	documentIdsToProcess.add(academicServiceRequest.getIdInternal());
-
 	try {
 	    executeService("ProcessNewAcademicServiceRequests", academicServiceRequest);
+	    addActionMessage(request, "academic.service.request.processed.with.success");
 	} catch (DomainException ex) {
 	    addActionMessage(request, ex.getKey());
 	    request.setAttribute("failingCondition", ex.getKey());
@@ -177,10 +173,15 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	try {
 	    ServiceManagerServiceFactory.executeService(SessionUtils.getUserView(request),
 		    "ConcludeAcademicServiceRequest", new Object[] { academicServiceRequest });
+	    addActionMessage(request, "academic.service.request.concluded.with.success");
+	    
+	    if (academicServiceRequest.isDocumentRequest() && ((DocumentRequest) academicServiceRequest).getDocumentRequestType().isAllowedToQuickDeliver()) {
+		return deliveredAcademicServiceRequest(mapping, actionForm, request, response);
+	    }
 	} catch (DomainException ex) {
 	    addActionMessage(request, ex.getKey());
 	}
-
+	
 	request.setAttribute("registration", academicServiceRequest.getRegistration());
 	return mapping.findForward("viewRegistrationDetails");
     }
@@ -190,10 +191,11 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	    FenixServiceException {
 
 	final AcademicServiceRequest academicServiceRequest = getAndSetAcademicServiceRequest(request);
-
+	
 	try {
 	    ServiceManagerServiceFactory.executeService(SessionUtils.getUserView(request),
 		    "DeliveredAcademicServiceRequest", new Object[] { academicServiceRequest });
+	    addActionMessage(request, "academic.service.request.delivered.with.success");
 	} catch (DomainException ex) {
 	    addActionMessage(request, ex.getKey());
 	}

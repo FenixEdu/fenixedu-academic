@@ -26,6 +26,8 @@ public class DocumentRequestCreateBean extends RegistrationSelectExecutionYearBe
     private Boolean detailed;
 
     private Boolean toBeCreated;
+    
+    private String schema;
 
     private Collection<String> warningsToReport;
 
@@ -152,6 +154,14 @@ public class DocumentRequestCreateBean extends RegistrationSelectExecutionYearBe
 
 	this.chosenDocumentPurposeType = chosenDocumentPurposeType;
 	this.otherPurpose = otherPurpose;
+    }
+
+    public String getSchema() {
+        return schema;
+    }
+
+    public void setSchema(String schema) {
+        this.schema = schema;
     }
 
 }
