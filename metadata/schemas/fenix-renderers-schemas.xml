@@ -420,7 +420,7 @@
 	</schema>	
 
 	<schema name="degree.info.description" type="net.sourceforge.fenixedu.domain.DegreeInfo">
-		<slot name="description" layout="rich-text">
+		<slot name="description" layout="rich-text" key="label.brief.introduction">
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
 			<property name="columns" value="60"/>
@@ -476,42 +476,42 @@
     	    <property name="eachClasses" value="multi-language-line"/>
     	    <property name="classes" value="pbottom3"/>
 		</slot>
-		<slot name="schoolCalendar" layout="rich-text">
+		<slot name="schoolCalendar" layout="rich-text" key="label.schoolCalendar.deadline.box">
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
 			<property name="columns" value="60"/>
     	    <property name="eachClasses" value="multi-language-line"/>
     	    <property name="classes" value="pbottom3"/>
 		</slot>
-		<slot name="candidacyPeriod" layout="rich-text">
+		<slot name="candidacyPeriod" layout="rich-text" key="label.candidacyPeriod.deadline.box">
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
 			<property name="columns" value="60"/>
     	    <property name="eachClasses" value="multi-language-line"/>
     	    <property name="classes" value="pbottom3"/>
 		</slot>
-		<slot name="selectionResultDeadline" layout="rich-text">
+		<slot name="selectionResultDeadline" layout="rich-text" key="label.selectionResult.deadline.box">
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
 			<property name="columns" value="60"/>
     	    <property name="eachClasses" value="multi-language-line"/>
     	    <property name="classes" value="pbottom3"/>
 		</slot>
-		<slot name="enrolmentPeriod" layout="rich-text">
+		<slot name="enrolmentPeriod" layout="rich-text" key="label.enrolmentPeriod.deadline.box">
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
 			<property name="columns" value="60"/>
     	       <property name="eachClasses" value="multi-language-line"/>
     	    <property name="classes" value="pbottom3"/>
 		</slot>
-		<slot name="additionalInfo" layout="rich-text">
+		<slot name="additionalInfo" layout="rich-text" key="label.additionalInfo.box">
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
 			<property name="columns" value="60"/>
     	    <property name="eachClasses" value="multi-language-line"/>
     	    <property name="classes" value="pbottom3"/>
 		</slot>
-		<slot name="links" layout="rich-text">
+		<slot name="links" layout="rich-text" key="label.links.box">
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
 			<property name="columns" value="60"/>

@@ -82,11 +82,6 @@
 	<p><em><bean:message bundle="DEFAULT" key="error.public.DegreeInfoNotPresent"/></em></p>
 </logic:notPresent>
 <logic:present name="degreeInfo">
-	<!-- DESCRIPTION -->
-	<logic:notEmpty name="degreeInfo" property="description" >
-		<h2 class="arrow_bullet"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.overview"/></h2>
-		<p><bean:write name="degreeInfo" property="description.content" filter="false"/></p>
-	</logic:notEmpty>
 	
 		<!-- DEADLINES -->	
 		<logic:empty name="degreeInfo" property="schoolCalendar">
@@ -109,14 +104,14 @@
 						</tr>						
 						<logic:notEmpty name="degreeInfo" property="schoolCalendar">
 							<tr>
-									<td class="box_cell">
-										<p>
-											<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.schoolCalendar"/>: 
-											<em>
-												<bean:write name="degreeInfo" property="schoolCalendar.content" filter="false"/>
-											</em>
-										</p>
-									</td>
+								<td class="box_cell">
+									<p>
+										<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.schoolCalendar"/>: 
+										<em>
+											<bean:write name="degreeInfo" property="schoolCalendar.content" filter="false"/>
+										</em>
+									</p>
+								</td>
 							</tr>
 						</logic:notEmpty>
 						<logic:notEmpty name="degreeInfo" property="candidacyPeriod">
@@ -161,7 +156,8 @@
 				</logic:empty>
 			</logic:empty>
 		</logic:notPresent>
-		
+
+
 		<!-- ADDITIONAL INFO -->
 		<logic:notEmpty name="degreeInfo" property="additionalInfo" >	
 			<logic:present name="doNotRenderDeadLines">
@@ -204,7 +200,13 @@
 					</table>
 		</logic:notEmpty>
 
-	
+
+	<!-- DESCRIPTION -->
+	<logic:notEmpty name="degreeInfo" property="description" >
+		<h2 class="arrow_bullet"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.overview"/></h2>
+		<p><bean:write name="degreeInfo" property="description.content" filter="false"/></p>
+	</logic:notEmpty>
+		
 	<!-- HISTORY -->
 	<logic:notEmpty name="degreeInfo" property="history" >
 		<h2 class="arrow_bullet"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.history"/></h2>

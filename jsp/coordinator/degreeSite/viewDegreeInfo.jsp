@@ -22,7 +22,7 @@
 	<logic:equal name="info" value="description">
 		<fr:edit type="net.sourceforge.fenixedu.domain.DegreeInfo" name="currentDegreeInfo" schema="degree.info.description" nested="true">
 		    <fr:layout>
-	    	    <fr:property name="classes" value="thtop width8em"/>
+	    	    <fr:property name="classes" value="thtop width8em mbottom2"/>
 	        	<fr:property name="columnClasses" value=",pbottom1,valigntop"/>
 		    </fr:layout>
 		</fr:edit>
@@ -31,7 +31,7 @@
 	<logic:equal name="info" value="acess">
 		<fr:edit type="net.sourceforge.fenixedu.domain.DegreeInfo" name="currentDegreeInfo" schema="degree.info.access" nested="true">
 			<fr:layout>
-	    	    <fr:property name="classes" value="thtop width8em"/>
+	    	    <fr:property name="classes" value="thtop width8em mbottom2"/>
 	        	<fr:property name="columnClasses" value=",pbottom1,valigntop"/>
 		    </fr:layout>
 		</fr:edit>
@@ -40,7 +40,7 @@
 	<logic:equal name="info" value="professionalStatus">
 		<fr:edit type="net.sourceforge.fenixedu.domain.DegreeInfo" name="currentDegreeInfo" schema="degree.info.professional.status" nested="true">
 			<fr:layout>
-	    	    <fr:property name="classes" value="thtop width8em"/>
+	    	    <fr:property name="classes" value="thtop width8em mbottom2"/>
 	        	<fr:property name="columnClasses" value=",pbottom1,valigntop"/>
 		    </fr:layout>
 		</fr:edit>
