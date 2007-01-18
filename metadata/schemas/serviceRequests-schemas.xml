@@ -125,6 +125,15 @@
 	</slot>
 </schema>
 
+<schema name="DocumentRequestCreateBean.chooseDocumentRequestQuickType"
+	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="chosenDocumentRequestType" key="label.documentRequestsManagement.searchDocumentRequests.documentRequestType" layout="menu-select-postback" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" >
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DocumentRequestQuickTypeProvider" />
+		<property name="eachLayout" value=""/>
+		<property name="destination" value="documentRequestTypeChoosedPostBack"/>
+	</slot>
+</schema>
+
 <schema name="DocumentRequestCreateBean.SCHOOL_REGISTRATION_CERTIFICATE.AdditionalInformation" 
 	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="executionYear" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
