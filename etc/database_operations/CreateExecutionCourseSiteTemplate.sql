@@ -19,3 +19,6 @@ UPDATE `ACCESSIBLE_ITEM` AS AI, `SITE` AS S
 	SET AI.`KEY_SITE` = S.`ID_INTERNAL`
 	WHERE AI.`OJB_CONCRETE_CLASS` LIKE 'net.sourceforge.fenixedu.domain.FunctionalitySection'
 	  AND S.`OJB_CONCRETE_CLASS`  LIKE 'net.sourceforge.fenixedu.domain.SiteTemplate';
+
+-- Reset sequence number
+DELETE FROM `OJB_HL_SEQ` WHERE `TABLENAME` = 'SEQ_ACCESSIBLE_ITEM';
