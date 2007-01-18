@@ -72,6 +72,7 @@
 		<fr:edit id="documentRequestConclude" name="documentRequest" 
 				schema="DocumentRequest.conclude-info"
 				action="<%="/academicServiceRequestsManagement.do?method=concludeAcademicServiceRequest&amp;academicServiceRequestId=" + academicServiceRequest.getIdInternal().toString()%>">
+			<fr:destination name="invalid" path="<%="/documentRequestsManagement.do?method=prepareConcludeDocumentRequest&amp;academicServiceRequestId=" + academicServiceRequest.getIdInternal().toString()%>"/>
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4 thright thlight mtop025 mbottom1"/>
 				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
