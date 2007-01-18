@@ -33,15 +33,16 @@ public class DocumentRequestTypeProvider implements DataProvider {
 		.getAdministrativeOfficeType())) {
 	    result.add(DocumentRequestType.ENROLMENT_CERTIFICATE);
 	}
-	if (administrativeOfficeType.equals(DocumentRequestType.SCHOOL_REGISTRATION_DECLARATION
-		.getAdministrativeOfficeType())) {
-	    result.add(DocumentRequestType.SCHOOL_REGISTRATION_DECLARATION);
-	}
-	if (administrativeOfficeType.equals(DocumentRequestType.ENROLMENT_DECLARATION
-		.getAdministrativeOfficeType())) {
-	    result.add(DocumentRequestType.ENROLMENT_DECLARATION);
-	}
-
+	
+// Once all DocumentRequestTypes are allowed, this provider should look like this:
+//
+//	for (final DocumentRequestType documentRequestType : DocumentRequestType.values()) {
+//	    if (administrativeOfficeType.equals(documentRequestType.getAdministrativeOfficeType())
+//		    && !documentRequestType.isAllowedToQuickDeliver()) {
+//		result.add(documentRequestType);
+//	    }
+//	}
+	
 	return result;
     }
 
