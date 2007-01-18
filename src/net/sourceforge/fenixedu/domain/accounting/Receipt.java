@@ -44,6 +44,7 @@ public class Receipt extends Receipt_Base {
 
     private void init(Employee employee, Person person, Party contributor, List<Entry> entries) {
 	checkParameters(employee, person, contributor, entries);
+	checkRulesToCreate(entries);
 	super.setPerson(person);
 	super.setYear(new DateTime().getYear());
 	super.setContributorParty(contributor);
@@ -51,6 +52,16 @@ public class Receipt extends Receipt_Base {
 
 	for (final Entry entry : entries) {
 	    entry.setActiveReceipt(this);
+	}
+    }
+
+    private void checkRulesToCreate(List<Entry> entries) {
+	final int year = entries.iterator().next().getWhenRegistered().getYear();
+	for (final Entry entry : entries) {
+	    if (entry.getWhenRegistered().getYear() != year) {
+		throw new DomainException(
+			"error.accounting.Receipt.entries.in.receipt.must.belong.to.same.civil.year");
+	    }
 	}
     }
 

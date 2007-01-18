@@ -426,3 +426,18 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.accounting.CreditNoteEntry" table="CREDIT_NOTE_ENTRY">
 
 </class-descriptor>	
+
+
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.events.gratuity.exemption.penalty.PenaltyExemption -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.events.gratuity.exemption.penalty.PenaltyExemption" table="PENALTY_EXEMPTION">
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.events.gratuity.exemption.penalty.InstallmentPenaltyExemption" />
+</class-descriptor>	
+
+	<!-- ************************************************************************************************************ -->
+	<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.events.gratuity.exemption.penalty.InstallmentPenaltyExemption -->
+	<!-- ************************************************************************************************************ -->
+	<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.events.gratuity.exemption.penalty.InstallmentPenaltyExemption" table="PENALTY_EXEMPTION">
+	
+	</class-descriptor>

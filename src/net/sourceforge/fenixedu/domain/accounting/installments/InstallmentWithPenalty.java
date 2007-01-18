@@ -15,8 +15,8 @@ public abstract class InstallmentWithPenalty extends InstallmentWithPenalty_Base
 	super();
     }
 
-    protected void init(final PaymentPlan paymentCondition, final Money amount,
-	    YearMonthDay startDate, YearMonthDay endDate, final BigDecimal penaltyPercentage) {
+    protected void init(final PaymentPlan paymentCondition, final Money amount, YearMonthDay startDate,
+	    YearMonthDay endDate, final BigDecimal penaltyPercentage) {
 
 	super.init(paymentCondition, amount, startDate, endDate);
 	checkParameters(penaltyPercentage);
@@ -33,9 +33,9 @@ public abstract class InstallmentWithPenalty extends InstallmentWithPenalty_Base
     }
 
     @Override
-    public Money calculateAmount(DateTime when, BigDecimal discountPercentage) {
-	return super.calculateAmount(when, discountPercentage).add(
-		calculatePenaltyAmount(when, discountPercentage));
+    public Money calculateAmount(DateTime when, BigDecimal discountPercentage, boolean applyPenalty) {
+	return super.calculateAmount(when, discountPercentage, applyPenalty).add(
+		(applyPenalty ? calculatePenaltyAmount(when, discountPercentage) : Money.ZERO));
     }
 
     abstract protected Money calculatePenaltyAmount(DateTime when, BigDecimal discountPercentage);

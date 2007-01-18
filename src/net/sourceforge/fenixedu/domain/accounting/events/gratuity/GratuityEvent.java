@@ -1,6 +1,10 @@
 package net.sourceforge.fenixedu.domain.accounting.events.gratuity;
 
 import java.math.BigDecimal;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -11,6 +15,7 @@ import net.sourceforge.fenixedu.domain.accounting.Account;
 import net.sourceforge.fenixedu.domain.accounting.AccountType;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
+import net.sourceforge.fenixedu.domain.accounting.events.gratuity.exemption.penalty.PenaltyExemption;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -42,6 +47,7 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
 			}
 		    }
 		});
+
     }
 
     protected GratuityEvent() {
@@ -171,6 +177,37 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
 
     public boolean canApplyExemption() {
 	return true;
+    }
+
+    @Override
+    public void addPenaltyExemptions(PenaltyExemption penaltyExemption) {
+	throw new DomainException(
+		"error.net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent.cannot.add.penaltyExemption");
+    }
+
+    @Override
+    public List<PenaltyExemption> getPenaltyExemptions() {
+	return Collections.unmodifiableList(super.getPenaltyExemptions());
+    }
+
+    @Override
+    public Set<PenaltyExemption> getPenaltyExemptionsSet() {
+	return Collections.unmodifiableSet(super.getPenaltyExemptionsSet());
+    }
+
+    @Override
+    public Iterator<PenaltyExemption> getPenaltyExemptionsIterator() {
+	return getPenaltyExemptionsSet().iterator();
+    }
+
+    @Override
+    public void removePenaltyExemptions(PenaltyExemption penaltyExemption) {
+	throw new DomainException(
+		"error.net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent.cannot.remove.penaltyExemption");
+    }
+
+    public boolean isPenaltyExemptionApplicable() {
+	return false;
     }
 
 }

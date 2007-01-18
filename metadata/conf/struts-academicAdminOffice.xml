@@ -301,7 +301,7 @@
 		 		name="paymentsForm"
 		 		scope="request">
 		 		
-		 		<forward name="viewStudentDetails" path="students.viewStudentDetails"/> 
+		 		<forward name="showOperations" path="payments.management.showOperations"/> 
 		 	    <forward name="showEvents" path="payments.management.showEvents"/>
 		 	    <forward name="showEventsWithInstallments" path="payments.management.showEventsWithInstallments"/>
 		 	    <forward name="showGuide" path="payments.management.showGuide"/>
@@ -315,9 +315,11 @@
 		 	    <forward name="confirmCreateReceipt" path="payments.management.confirmCreateReceipt"/> 
 		 	    <forward name="paymentConfirmed" path="payments.management.paymentConfirmed"/> 
 		 	    
-		 	    <forward name="gratuityExemptions.showGratuityEvents" path="payments.management.gratuityExemptions.showGratuityEvents"/> 
-		 	    <forward name="gratuityExemptions.view" path="payments.management.gratuityExemptions.view"/>
-		 	    <forward name="gratuityExemptions.create" path="payments.management.gratuityExemptions.create"/>
+		 	    <forward name="exemptions.showGratuityEvents" path="payments.management.exemptions.showGratuityEvents"/> 
+		 	    <forward name="exemptions.gratuity.view" path="payments.management.exemptions.gratuity.view"/>
+		 	    <forward name="exemptions.gratuity.create" path="payments.management.exemptions.gratuity.create"/>
+   		 	    <forward name="exemptions.penalty.listForGratuityEventWithPaymentPlan" path="payments.management.exemptions.penalty.listForGratuityEventWithPaymentPlan"/>
+		 	    <forward name="exemptions.penalty.createInstallmentExemption" path="payments.management.exemptions.penalty.createInstallmentExemption"/>
 		 	    	 	    
    		 	    <forward name="creditNotes.list" path="payments.management.creditNotes.list"/> 
 		 	    <forward name="creditNotes.create" path="payments.management.creditNotes.create"/>
@@ -333,6 +335,7 @@
 		 	    <forward name="otherPartyPayment.printGuide" path="/payments/otherPartyPayment/printGuideForOtherPartyPayment.jsp"/>
 		 	    
 		 	    <forward name="extract.showEventsWithPayments" path="payments.management.extract.showEventsWithPayments" />
+		 	   
 		</action>
 		<!-- End Payments -->
 		

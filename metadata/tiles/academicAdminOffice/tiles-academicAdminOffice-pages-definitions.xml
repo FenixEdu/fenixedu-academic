@@ -122,8 +122,8 @@
 	</definition>
 
 	<!-- ************* Payments ************* -->
-	<definition name="payments.management.searchPerson" extends="academicAdminOffice.masterPage">
-		<put name="body" value="/academicAdminOffice/payments/searchPerson.jsp"/>
+	<definition name="payments.management.showOperations" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/payments/showOperations.jsp"/>
 	</definition>
 	
 	<definition name="payments.management.showEvents" extends="academicAdminOffice.masterPage">
@@ -170,19 +170,7 @@
 	<definition name="payments.management.paymentConfirmed" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/payments/paymentConfirmed.jsp"/>
 	</definition>
-	
-	<definition name="payments.management.gratuityExemptions.showGratuityEvents" extends="academicAdminOffice.masterPage">
-		<put name="body" value="/academicAdminOffice/payments/gratuityExemptions/showGratuityEvents.jsp"/>
-	</definition>
-	
-	<definition name="payments.management.gratuityExemptions.create" extends="academicAdminOffice.masterPage">
-		<put name="body" value="/academicAdminOffice/payments/gratuityExemptions/create.jsp"/>
-	</definition>
-	
-	<definition name="payments.management.gratuityExemptions.view" extends="academicAdminOffice.masterPage">
-		<put name="body" value="/academicAdminOffice/payments/gratuityExemptions/view.jsp"/>
-	</definition>
-	
+		
 	<definition name="payments.management.creditNotes.list" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/payments/creditNotes/listCreditNotes.jsp"/>
 	</definition>
@@ -219,6 +207,35 @@
 	<definition name="payments.management.extract.showEventsWithPayments" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/payments/extract/showEventsWithPayments.jsp"/>
 	</definition>
+	
+	<!-- Exemptions -->
+	
+	<definition name="payments.management.exemptions.showGratuityEvents" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/payments/exemptions/showGratuityEvents.jsp"/>
+	</definition>
+	
+	<definition name="payments.management.exemptions.gratuity.create" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/payments/exemptions/gratuity/create.jsp"/>
+	</definition>
+	
+	<definition name="payments.management.exemptions.gratuity.view" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/payments/exemptions/gratuity/view.jsp"/>
+	</definition>
+	
+	<definition name="payments.management.exemptions.penalty.listForGratuityEventWithPaymentPlan" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/payments/exemptions/penalty/listForGratuityEventWithPaymentPlan.jsp"/>
+	</definition>
+	
+	<definition name="payments.management.exemptions.penalty.show" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/payments/exemptions/penalty/show.jsp"/>
+	</definition>
+	
+	<definition name="payments.management.exemptions.penalty.createInstallmentExemption" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/payments/exemptions/penalty/createInstallmentExemption.jsp"/>
+	</definition>
+	
+	<!-- End of Exemptions -->	
+	
 	
 	<!-- ************* Contributors ************* -->
 	<definition name="contributor.createContributorSuccess" extends="academicAdminOffice.masterPage">

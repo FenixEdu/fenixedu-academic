@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
-
+	<em><bean:message key="label.payments" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 	<h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.gratuityExemptions" /></h2>
 	<br />
 	
@@ -41,8 +41,8 @@
 
 		<input alt="input.method" type="hidden" name="method" value="" />
 
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"
-			onclick="this.form.method.value='deleteExemption';">
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" 
+			onclick="this.form.method.value='deleteGratuityExemption';">
 			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.payments.gratuityExemption.delete" />
 		</html:submit>
 

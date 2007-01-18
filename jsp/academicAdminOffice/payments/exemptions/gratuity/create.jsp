@@ -5,8 +5,9 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
-
+	<em><bean:message key="label.payments" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 	<h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.gratuityExemptions" /></h2>
+	<br />
 
 
 	<logic:messagesPresent message="true">
@@ -61,7 +62,7 @@
 		</fr:edit>
 		
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"
-			onclick="this.form.method.value='createExemption';">
+			onclick="this.form.method.value='createGratuityExemption';">
 			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.payments.gratuityExemption.create" />
 		</html:submit>
 		

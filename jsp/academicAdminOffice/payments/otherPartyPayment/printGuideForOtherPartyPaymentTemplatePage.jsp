@@ -65,15 +65,15 @@
 		            <td width="80%">&nbsp;</td>
 		          </tr>
 		          <tr>
-		            <td> <bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.net.sourceforge.fenixedu.domain.Person.name" bundle="APPLICATION_RESOURCES" /> </td>
+		            <td> <bean:message key="label.net.sourceforge.fenixedu.domain.Person.name" bundle="APPLICATION_RESOURCES" /> </td>
 		            <td> <bean:write name="person" property="name"/> </td>
 		          </tr>
 		          <tr>
-		            <td> <bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.net.sourceforge.fenixedu.domain.Person.idDocumentType" bundle="APPLICATION_RESOURCES" /> </td>
-		            <td> <bean:message bundle="ACADEMIC_OFFICE_RESOURCES" name="person" property="idDocumentType.name" bundle="ENUMERATION_RESOURCES"/> </td>
+		            <td> <bean:message key="label.net.sourceforge.fenixedu.domain.Person.idDocumentType" bundle="APPLICATION_RESOURCES" /> </td>
+		            <td> <bean:message name="person" property="idDocumentType.name" bundle="ENUMERATION_RESOURCES"/> </td>
 		          </tr>
 		          <tr>
-		            <td> <bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.net.sourceforge.fenixedu.domain.Person.documentIdNumber" bundle="APPLICATION_RESOURCES" /> </td>
+		            <td> <bean:message key="label.net.sourceforge.fenixedu.domain.Person.documentIdNumber" bundle="APPLICATION_RESOURCES" /> </td>
 		            <td> <bean:write name="person" property="documentIdNumber"/> </td>
 		          </tr>
 			  </table>
@@ -91,11 +91,11 @@
 		            <td width="80%">&nbsp;</td>
 		          </tr>
 		          <tr>
-		            <td> <bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.net.sourceforge.fenixedu.domain.organizationalStructure.Party.name" bundle="APPLICATION_RESOURCES" /> </td>
+		            <td> <bean:message key="label.net.sourceforge.fenixedu.domain.organizationalStructure.Party.name" bundle="APPLICATION_RESOURCES" /> </td>
 		            <td> <bean:write name="contributor" property="name"/> </td>
 		          </tr>
 		          <tr>
-		            <td> <bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.net.sourceforge.fenixedu.domain.organizationalStructure.Party.socialSecurityNumber" bundle="APPLICATION_RESOURCES" /> </td>
+		            <td> <bean:message key="label.net.sourceforge.fenixedu.domain.organizationalStructure.Party.socialSecurityNumber" bundle="APPLICATION_RESOURCES" /> </td>
 		            <td> <bean:write name="contributor" property="socialSecurityNumber"/> </td>
 		          </tr>
 			  </table>

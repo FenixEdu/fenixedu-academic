@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.accounting.events.gratuity;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -17,6 +18,8 @@ import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.Installment;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeState;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
+import net.sourceforge.fenixedu.domain.accounting.events.gratuity.exemption.penalty.InstallmentPenaltyExemption;
+import net.sourceforge.fenixedu.domain.accounting.events.gratuity.exemption.penalty.PenaltyExemption;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.InstallmentPaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityPaymentPlan;
@@ -229,6 +232,49 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
 	return !isClosed()
 		&& getGratuityPaymentPlan().getLastInstallment().getEndDate().isBefore(
 			new YearMonthDay());
+    }
+
+    public InstallmentPenaltyExemption getInstallmentPenaltyExemptionFor(final Installment installment) {
+	for (final PenaltyExemption penaltyExemption : getPenaltyExemptionsSet()) {
+	    if (penaltyExemption instanceof InstallmentPenaltyExemption) {
+		final InstallmentPenaltyExemption installmentPenaltyExemption = (InstallmentPenaltyExemption) penaltyExemption;
+		if (installmentPenaltyExemption.getInstallment() == installment) {
+		    return installmentPenaltyExemption;
+		}
+	    }
+	}
+
+	return null;
+    }
+
+    public boolean hasPenaltyExemptionFor(final Installment installment) {
+	for (final PenaltyExemption penaltyExemption : getPenaltyExemptionsSet()) {
+	    if (penaltyExemption instanceof InstallmentPenaltyExemption) {
+		if (((InstallmentPenaltyExemption) penaltyExemption).getInstallment() == installment) {
+		    return true;
+		}
+
+	    }
+	}
+
+	return false;
+    }
+
+    public Set<Installment> getInstallmentsWithoutPenalty() {
+	final Set<Installment> result = new HashSet<Installment>();
+	for (final PenaltyExemption penaltyExemption : getPenaltyExemptionsSet()) {
+	    if (penaltyExemption instanceof InstallmentPenaltyExemption) {
+		result.add(((InstallmentPenaltyExemption) penaltyExemption).getInstallment());
+	    }
+	}
+
+	return result;
+
+    }
+
+    @Override
+    public boolean isPenaltyExemptionApplicable() {
+	return true;
     }
 
 }

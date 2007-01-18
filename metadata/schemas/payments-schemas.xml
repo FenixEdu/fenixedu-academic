@@ -144,6 +144,39 @@
 
 </schema>
 
+<schema name="CreateInstallmentPenaltyExemptionBean.edit" 
+		type="net.sourceforge.fenixedu.dataTransferObject.accounting.penaltyExemption.CreateInstallmentPenaltyExemptionBean" 
+		bundle="APPLICATION_RESOURCES" >
+   	<slot name="installments" layout="option-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" key="label.net.sourceforge.fenixedu.domain.accounting.events.gratuity.exemption.penalty.InstallmentPenaltyExemption.installment">
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.payments.InstallmentsForCreateInstallmentPenaltyExemptionBeanProvider" />
+        <property name="saveOptions" value="true"/>
+        <property name="eachLayout" value="values" />
+        <property name="eachSchema" value="Installment.view-description-only" />
+		<property name="style" value="list-style: none; padding: 0; margin: 0;" />
+    </slot>
+   	<slot name="exemptionType" layout="radio-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" key="label.net.sourceforge.fenixedu.domain.accounting.events.gratuity.exemption.penalty.PenaltyExemption.exemptionType">
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.payments.PenaltyExemptionTypeProvider" />
+        <property name="saveOptions" value="true"/>
+    </slot>
+    <slot name="comments" key="label.net.sourceforge.fenixedu.domain.accounting.events.gratuity.exemption.penalty.PenaltyExemption.comments" layout="longText" />
+</schema>
+
+<schema name="PenaltyExemption.view" 
+		type="net.sourceforge.fenixedu.domain.accounting.events.gratuity.exemption.penalty.PenaltyExemption" 
+		bundle="APPLICATION_RESOURCES" >
+	<slot name="exemptionType" key="label.net.sourceforge.fenixedu.domain.accounting.events.gratuity.exemption.penalty.PenaltyExemption.exemptionType" />
+    <slot name="comments" key="label.net.sourceforge.fenixedu.domain.accounting.events.gratuity.exemption.penalty.PenaltyExemption.comments" />
+</schema>
+
+<schema name="InstallmentPenaltyExemption.view" 
+		type="net.sourceforge.fenixedu.domain.accounting.events.gratuity.exemption.penalty.InstallmentPenaltyExemption" 
+		bundle="APPLICATION_RESOURCES">
+	<slot name="installment.description" key="label.net.sourceforge.fenixedu.domain.accounting.events.gratuity.exemption.penalty.InstallmentPenaltyExemption.installment" />
+	<slot name="exemptionType" key="label.net.sourceforge.fenixedu.domain.accounting.events.gratuity.exemption.penalty.PenaltyExemption.exemptionType" />
+    <slot name="comments" key="label.net.sourceforge.fenixedu.domain.accounting.events.gratuity.exemption.penalty.PenaltyExemption.comments" />
+</schema>
+
+
 <schema name="CreateGratuityExemptionBean.edit-user-defined-percentage-or-amount" type="net.sourceforge.fenixedu.dataTransferObject.accounting.gratuityExemption.CreateGratuityExemptionBean" bundle="APPLICATION_RESOURCES">
     <slot name="otherPercentage">
        	<property name="size" value="5"/>
@@ -233,3 +266,9 @@
 	</slot>
 	<slot name="executionYear.year" />
 </schema>
+
+<schema name="Installment.view-description-only" type="net.sourceforge.fenixedu.domain.accounting.Installment" bundle="APPLICATION_RESOURCES">
+	<slot name="description" />
+</schema>
+
+

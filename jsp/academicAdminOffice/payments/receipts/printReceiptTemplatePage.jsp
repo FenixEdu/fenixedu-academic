@@ -59,15 +59,15 @@
 						<td width="80%">&nbsp;</td>
 					</tr>
 					<tr>
-					  <td> <bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.net.sourceforge.fenixedu.domain.Person.name" bundle="APPLICATION_RESOURCES" /> </td>
+					  <td> <bean:message key="label.net.sourceforge.fenixedu.domain.Person.name" bundle="APPLICATION_RESOURCES" /> </td>
 					  <td> <bean:write name="receipt" property="person.name"/> </td>
 					</tr>
 					<tr>
-					  <td> <bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.net.sourceforge.fenixedu.domain.Person.idDocumentType" bundle="APPLICATION_RESOURCES"/> </td>
-					  <td> <bean:message bundle="ACADEMIC_OFFICE_RESOURCES" name="receipt" property="person.idDocumentType.name" bundle="ENUMERATION_RESOURCES"/> </td>
+					  <td> <bean:message key="label.net.sourceforge.fenixedu.domain.Person.idDocumentType" bundle="APPLICATION_RESOURCES"/> </td>
+					  <td> <bean:message name="receipt" property="person.idDocumentType.name" bundle="ENUMERATION_RESOURCES"/> </td>
 					</tr>
 					<tr>
-					  <td> <bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.net.sourceforge.fenixedu.domain.Person.documentIdNumber" bundle="APPLICATION_RESOURCES" /> </td>
+					  <td> <bean:message key="label.net.sourceforge.fenixedu.domain.Person.documentIdNumber" bundle="APPLICATION_RESOURCES" /> </td>
 					  <td> <bean:write name="receipt" property="person.documentIdNumber"/> </td>
 					</tr>
 					<tr>
@@ -81,24 +81,23 @@
 					</tr>
 
 					<tr>
-						<td><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" bundle="ACADEMIC_OFFICE_RESOURCES" 
-							key="label.net.sourceforge.fenixedu.domain.organizationalStructure.Party.name" bundle="APPLICATION_RESOURCES" />:</td>
+						<td><bean:message bundle="APPLICATION_RESOURCES" 
+							key="label.net.sourceforge.fenixedu.domain.organizationalStructure.Party.name" />:</td>
 						<td><bean:write name="receipt"
 							property="contributorParty.name" /></td>
 					</tr>
 					<tr>
-						<td><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" bundle="ACADEMIC_OFFICE_RESOURCES" 
-							key="label.net.sourceforge.fenixedu.domain.organizationalStructure.Party.socialSecurityNumber" bundle="APPLICATION_RESOURCES" />:</td>
+						<td><bean:message key="label.net.sourceforge.fenixedu.domain.organizationalStructure.Party.socialSecurityNumber" bundle="APPLICATION_RESOURCES" />:</td>
 						<td><bean:write name="receipt"
 							property="contributorParty.socialSecurityNumber" /></td>
 					</tr>
 					<tr>
-						<td><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.net.sourceforge.fenixedu.domain.organizationalStructure.Party.address" bundle="APPLICATION_RESOURCES" />:</td>
+						<td><bean:message bundle="APPLICATION_RESOURCES" key="label.net.sourceforge.fenixedu.domain.organizationalStructure.Party.address" />:</td>
 						<td><bean:write name="receipt" property="contributorParty.address" /></td>
 					</tr>
 					<logic:notEmpty name="receipt" property="contributorParty.areaCode">
 					<tr>
-						<td><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.net.sourceforge.fenixedu.domain.organizationalStructure.Party.areaCode" bundle="APPLICATION_RESOURCES" /></td>
+						<td><bean:message key="label.net.sourceforge.fenixedu.domain.organizationalStructure.Party.areaCode" bundle="APPLICATION_RESOURCES" /></td>
 						<td><bean:write name="receipt" property="contributorParty.areaCode" /> - <bean:write name="receipt" property="contributorParty.areaOfAreaCode" /></td>
 					</tr>
 					</logic:notEmpty>
@@ -130,7 +129,7 @@
 					</td>
 					<td>.........................................&nbsp;</td>
 					<td><bean:define id="amount" name="entry" property="originalAmount"
-						type="Money" /> <%=amount.toPlainString()%> &nbsp;<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" bundle="ACADEMIC_OFFICE_RESOURCES" 
+						type="Money" /> <%=amount.toPlainString()%> &nbsp;<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" 
 						key="label.currencySymbol" /></td>
 				</tr>
 			</logic:iterate>
@@ -143,7 +142,7 @@
 				<td><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.payments.printTemplates.totalAmountToPay"/> </strong></td>
 				<td>_____________________&nbsp;</td>
 				<td><strong><bean:define id="totalAmount" name="receipt"
-					property="totalAmount" type="Money" /><%=totalAmount.toPlainString()%>&nbsp;<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" bundle="ACADEMIC_OFFICE_RESOURCES" 
+					property="totalAmount" type="Money" /><%=totalAmount.toPlainString()%>&nbsp;<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" 
 					key="label.currencySymbol" /></strong></td>
 			</tr>
 		</table>

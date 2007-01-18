@@ -66,14 +66,14 @@
 				<html:form action='<%= "/payments.do?personId=" + personId %>' target="_blank">
 					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="printReceipt" />
 						<fr:edit id="receipt" name="receipt" visible="false" />
-						<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.print"/></html:submit>
+						<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.print"/></html:submit>
 				</html:form>
 			</td>
 			<%--
 			<td>
 				<html:form action="<%="/payments.do?method=showCreditNotes&amp;personId=" + personId%>">
 					<fr:edit id="receipt" name="receipt" visible="false" />
-					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
+					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
 						<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.payments.creditNotes"/>
 					</html:submit>
 				</html:form>
@@ -81,7 +81,7 @@
 			 --%>
 			<td>
 				<html:form action="<%="/payments.do?method=showReceipts&amp;personId=" + personId%>">
-					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
+					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
 						<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.payments.back"/>
 					</html:submit>
 				</html:form>	
@@ -96,7 +96,7 @@
 		<tr>
 			<td>
 				<html:form action="<%="/payments.do?method=showReceipts&amp;personId=" + personId%>">
-					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
+					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
 						<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.payments.back"/>
 					</html:submit>
 				</html:form>	

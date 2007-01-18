@@ -173,8 +173,10 @@ valueType net.sourceforge.fenixedu.domain.accounting.PaymentCodeType												
 valueType net.sourceforge.fenixedu.domain.accounting.CreditNoteState												as CreditNoteState;
 valueType net.sourceforge.fenixedu.domain.student.StudentStatuteType												as StudentStatuteType;
 valueType net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityExemptionType							as GratuityExemptionType;
+valueType net.sourceforge.fenixedu.domain.accounting.events.gratuity.exemption.penalty.PenaltyExemptionType							as PenaltyExemptionType;
 valueType net.sourceforge.fenixedu.domain.parking.DocumentDeliveryType											as DocumentDeliveryType;
 valueType net.sourceforge.fenixedu.domain.parking.NewParkingDocumentType											as NewParkingDocumentType;
+
 
 /*
 *
@@ -307,8 +309,20 @@ class net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityExempti
 	class net.sourceforge.fenixedu.domain.accounting.events.gratuity.ValueGratuityExemption extends net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityExemption {
 		Money value;
 	}
+	
 
+class net.sourceforge.fenixedu.domain.accounting.events.gratuity.exemption.penalty.PenaltyExemption extends net.sourceforge.fenixedu.domain.DomainObject {
+	PenaltyExemptionType exemptionType;
+	Integer keyGratuityEvent;
+	Integer keyEmployee;
+	String ojbConcreteClass;
+	String comments;
+	DateTime whenCreated;
+}
 
+	class net.sourceforge.fenixedu.domain.accounting.events.gratuity.exemption.penalty.InstallmentPenaltyExemption extends net.sourceforge.fenixedu.domain.accounting.events.gratuity.exemption.penalty.PenaltyExemption {
+		Integer keyInstallment;	 
+ 	}
 
 class net.sourceforge.fenixedu.domain.accounting.Receipt extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyPerson;
@@ -870,7 +884,6 @@ class net.sourceforge.fenixedu.domain.ExternalCurricularCourse extends net.sourc
 	Integer keyUnit;
 }
 
-
 class net.sourceforge.fenixedu.domain.Degree extends net.sourceforge.fenixedu.domain.DomainObject {
 	String concreteClassForDegreeCurricularPlans;
 	String nome;
@@ -1341,7 +1354,6 @@ class net.sourceforge.fenixedu.domain.studentCurriculum.Credits extends net.sour
 	Integer keyStudentCurricularPlan;
 }
 
-
 	class net.sourceforge.fenixedu.domain.studentCurriculum.Equivalence extends net.sourceforge.fenixedu.domain.studentCurriculum.Credits {
 		String givenGrade;
 	}
@@ -1351,7 +1363,6 @@ class net.sourceforge.fenixedu.domain.studentCurriculum.EnrolmentWrapper extends
 	Integer objectId;
 	Integer keyCredits;
 }
-
     
 
 class net.sourceforge.fenixedu.domain.EnrolmentEquivalence extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -8690,6 +8701,34 @@ relation AccountingEntryCreditNoteEntry {
 relation AdjustmentAccountingEntryCreditNoteEntry {
 	net.sourceforge.fenixedu.domain.accounting.Entry playsRole adjustmentAccountingEntry;
 	net.sourceforge.fenixedu.domain.accounting.CreditNoteEntry playsRole adjustmentCreditNoteEntry;
+}
+
+relation PenaltyExemptionGratuityEvent {
+	net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent playsRole gratuityEvent;
+	net.sourceforge.fenixedu.domain.accounting.events.gratuity.exemption.penalty.PenaltyExemption playsRole penaltyExemptions {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectPenaltyExemption {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.accounting.events.gratuity.exemption.penalty.PenaltyExemption playsRole penaltyExemptions {
+		multiplicity *;
+	}
+}
+
+relation PenaltyExemptionEmployee {
+	net.sourceforge.fenixedu.domain.Employee playsRole employee;
+	net.sourceforge.fenixedu.domain.accounting.events.gratuity.exemption.penalty.PenaltyExemption playsRole penaltyExemptions {
+		multiplicity *;
+	}
+}
+
+relation InstallmentPenaltyExemptionInstallment {
+	net.sourceforge.fenixedu.domain.accounting.Installment playsRole installment;
+	net.sourceforge.fenixedu.domain.accounting.events.gratuity.exemption.penalty.InstallmentPenaltyExemption playsRole installmentPenaltyExemptions {
+		multiplicity *;
+	}
 }
 
 //End Of Accounting Relations

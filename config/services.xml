@@ -11218,6 +11218,8 @@
         	<chain name="AcademicAdministrativeOfficeAuthorization"></chain>
         </filterChains>     
     </service>
+    
+    
     <service>
     	<name>CancelReceipt</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.CancelReceipt</implementationClass>
@@ -11237,6 +11239,9 @@
         	<chain name="AcademicAdministrativeOfficeAuthorization"></chain>
         </filterChains>     
     </service>
+    
+    
+  
     <service>
         <name>CreateSiteTemplateInstance</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateSiteTemplateInstance</implementationClass>
@@ -11290,4 +11295,25 @@
         	<chain name="AcademicAdministrativeOfficeAuthorization"></chain>
         </filterChains>     
     </service>    
+    <service>
+    	<name>DeletePenaltyExemption</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.gratuity.DeletePenaltyExemption</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="AcademicAdministrativeOfficeAuthorization"></chain>
+        </filterChains>     
+    </service>    
+    
+    <service>
+    	<name>CreateInstallmentPenaltyExemption</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.gratuity.CreateInstallmentPenaltyExemption</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="AcademicAdministrativeOfficeAuthorization"></chain>
+        </filterChains>     
+    </service>
+    
+    
 </serviceDefinitions>

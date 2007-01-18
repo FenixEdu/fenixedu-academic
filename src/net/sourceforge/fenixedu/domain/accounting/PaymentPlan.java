@@ -162,7 +162,9 @@ public abstract class PaymentPlan extends PaymentPlan_Base {
     }
 
     public Map<Installment, Money> calculateInstallmentRemainingAmounts(final Event event,
-	    final DateTime when, final BigDecimal discountPercentage) {
+	    final DateTime when, final BigDecimal discountPercentage,
+	    final Set<Installment> installmentsWithoutPenalty) {
+
 	final Map<Installment, Money> result = new HashMap<Installment, Money>();
 	Money totalPayedAmount = calculateTotalPayedAmountForInstallments(event).add(
 		event.calculateOtherPartiesPayedAmount());
@@ -174,7 +176,8 @@ public abstract class PaymentPlan extends PaymentPlan_Base {
 	    final InstallmentAccountingTransaction accountingTransaction = event
 		    .getAccountingTransactionFor(installment);
 	    final Money installmentAmount = calculateInstallmentAmount(when, discountPercentage,
-		    installment, accountingTransaction);
+		    installment, accountingTransaction, !installmentsWithoutPenalty
+			    .contains(installment));
 	    final Money amountToDiscount = calculateTransportAmountToDiscount(totalPayedAmount,
 		    installmentAmount);
 	    final Money installmentFinalAmount = installmentAmount.subtract(amountToDiscount);
@@ -217,11 +220,12 @@ public abstract class PaymentPlan extends PaymentPlan_Base {
 
     private Money calculateInstallmentAmount(final DateTime when, final BigDecimal discountPercentage,
 	    final Installment installment,
-	    final InstallmentAccountingTransaction installmentAccountingTransaction) {
+	    final InstallmentAccountingTransaction installmentAccountingTransaction,
+	    final boolean applyPenalty) {
 	final DateTime whenToCalculate = (installmentAccountingTransaction != null) ? installmentAccountingTransaction
 		.getWhenRegistered()
 		: when;
-	return installment.calculateAmount(whenToCalculate, discountPercentage);
+	return installment.calculateAmount(whenToCalculate, discountPercentage, applyPenalty);
     }
 
     private Money calculateInstallmentPayedAmount(
@@ -238,9 +242,11 @@ public abstract class PaymentPlan extends PaymentPlan_Base {
     }
 
     public Money calculateRemainingAmountFor(final Installment installment, final Event event,
-	    final DateTime when, final BigDecimal discountPercentage) {
+	    final DateTime when, final BigDecimal discountPercentage,
+	    final Set<Installment> installmentsWithoutPenalty) {
+	
 	final Map<Installment, Money> amountsByInstallment = calculateInstallmentRemainingAmounts(event,
-		when, discountPercentage);
+		when, discountPercentage, installmentsWithoutPenalty);
 	final Money installmentAmount = amountsByInstallment.get(installment);
 
 	return (installmentAmount != null) ? installmentAmount : Money.ZERO;

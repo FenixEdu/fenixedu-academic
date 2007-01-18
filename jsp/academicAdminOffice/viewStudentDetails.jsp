@@ -82,50 +82,10 @@
 	</html:link>
 </p>
 
-
-<!-- Payments -->
-<bean:define id="personId" name="student" property="person.idInternal" />
-<h3 class="mtop15 mbottom025"><bean:message key="label.payments" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
-<ul>
-	<li>
-			<html:link action="<%="/payments.do?method=showEvents&amp;personId=" + personId %>">
-					<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.currentEvents" />
-			</html:link>
-	</li>
-	<li>
-			<html:link action="<%="/payments.do?method=showEventsWithInstallments&amp;personId=" + personId%>">
-				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.eventsWithInstallments" />
-			</html:link>
-	</li>
-	<li>
-			<html:link action="<%="/payments.do?method=showPaymentsWithoutReceipt&amp;personId=" + personId %>">
-				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.paymentsWithoutReceipt" />
-			</html:link>
-	</li>
-	<li>
-		<html:link action="<%="/payments.do?method=showReceipts&amp;personId=" + personId%>">
-			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.receipts" />
-		</html:link>
-	</li>
-	<li>
-		<html:link action="<%="/payments.do?method=showGratuityEvents&amp;personId=" + personId%>">
-			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.gratuityExemptions" />
-		</html:link>
-	</li>
-<%-- 
-	<li>
-		<html:link action="<%="/payments.do?method=showEventsForOtherPartyPayment&personId=" + personId%>">
-			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.otherPartyPayment" />
-		</html:link>
-	</li>
---%>	
-
-</ul>
-
-<ul>
-	<li>
-		<html:link action="<%="/payments.do?method=showEventsWithPayments&amp;personId=" + personId%>">
-			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.extract" />
-		</html:link>
-	</li>
-</ul>
+<h3 class="mbottom025"><bean:message key="label.payments" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
+<p class="mvert05">
+	<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
+	<html:link action="/payments.do?method=showOperations" paramName="student" paramProperty="person.idInternal" paramId="personId">
+		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.management" />
+	</html:link>
+</p>

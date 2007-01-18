@@ -31,3 +31,5 @@ execute "Add order column to bibliographic references" ChangeBiblioReferences.sq
 execute "Added functionality to manager portal" CreateManageSitesFunctionality.sql
 execute "Create SiteTemplate table and relations" CreateSiteTemplate.sql
 execute "Create ExecutionCourse site template" CreateExecutionCourseSiteTemplate.sql
+
+execute "Create Penalty Exemption Table" CreatePenaltyExemptionTable.sql

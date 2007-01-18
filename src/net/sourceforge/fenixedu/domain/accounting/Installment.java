@@ -5,7 +5,9 @@ import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.Money;
+import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
@@ -101,11 +103,7 @@ public abstract class Installment extends Installment_Base {
 	throw new DomainException("error.accounting.Installment.cannot.modify.installmentOrder");
     }
 
-    public Money calculateAmount(DateTime when) {
-	return calculateAmount(when, BigDecimal.ZERO);
-    }
-
-    public Money calculateAmount(DateTime when, BigDecimal discountPercentage) {
+    public Money calculateAmount(DateTime when, BigDecimal discountPercentage, boolean applyPenalty) {
 	return calculateAmountWithDiscount(discountPercentage);
     }
 
@@ -117,4 +115,14 @@ public abstract class Installment extends Installment_Base {
 	return getInstallmentOrder().intValue();
     }
 
+    public LabelFormatter getDescription() {
+	final LabelFormatter labelFormatter = new LabelFormatter();
+	labelFormatter.appendLabel("label.installment", "application").appendLabel(" ").appendLabel(
+		getInstallmentOrder().toString()).appendLabel(" (").appendLabel(
+		getStartDate().toString(DateFormatUtil.DEFAULT_DATE_FORMAT)).appendLabel(" - ")
+		.appendLabel(getEndDate().toString(DateFormatUtil.DEFAULT_DATE_FORMAT)).appendLabel(")");
+
+	return labelFormatter;
+
+    }
 }
