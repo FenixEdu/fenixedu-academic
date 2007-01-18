@@ -9,9 +9,13 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.Site"
                   table="SITE">
     <extent-class class-ref="net.sourceforge.fenixedu.domain.ExecutionCourseSite"/>
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.SiteTemplate"/>
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.ExecutionCourseSite" table="SITE">
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.SiteTemplate" table="SITE">
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.AccessibleItem"
@@ -33,6 +37,11 @@
    
 <!-- Definitions for net.sourceforge.fenixedu.domain.Section -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.Section"
+  table="ACCESSIBLE_ITEM">
+  <extent-class class-ref="net.sourceforge.fenixedu.domain.FunctionalitySection"/>
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.FunctionalitySection"
   table="ACCESSIBLE_ITEM">
 </class-descriptor>
 

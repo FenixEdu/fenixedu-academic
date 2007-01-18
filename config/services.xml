@@ -2695,6 +2695,16 @@
 			<chain name="TeacherAuthorization" />
 		</filterChains>
 	</service>
+	<service>
+		<name>OrderBibliographicReferences</name>
+		<implementationClass> 
+            net.sourceforge.fenixedu.applicationTier.Servico.teacher.OrderBibliographicReferences</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="TeacherAuthorization" />
+		</filterChains>
+	</service>
     <service>
         <name>RearrangeSiteSections</name>
         <implementationClass> 
@@ -2702,7 +2712,7 @@
         <description />
         <isTransactional>true</isTransactional>
         <filterChains>
-            <chain name="TeacherFromSiteContainingSectionsAuthorization" />
+            <chain name="SiteManagerAuthorization" />
         </filterChains>
     </service>
     <service>
@@ -2712,7 +2722,7 @@
         <description />
         <isTransactional>true</isTransactional>
         <filterChains>
-            <chain name="TeacherFromSiteContainingFilesAuthorization" />
+            <chain name="SiteManagerAuthorization" />
         </filterChains>
     </service>
     <service>
@@ -2722,7 +2732,7 @@
         <description />
         <isTransactional>true</isTransactional>
         <filterChains>
-            <chain name="TeacherFromSiteContainingItemsAuthorization" />
+            <chain name="SiteManagerAuthorization" />
         </filterChains>
     </service>
 	<service>
@@ -2947,11 +2957,11 @@
 	</service>
 	<service>
 		<name>DeleteSection</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteSection</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteSection</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="ExecutionCourseLecturingTeacherAuthorization" />
+			<chain name="SiteManagerAuthorization" />
 		</filterChains>
 	</service>
 	<service>
@@ -2966,11 +2976,11 @@
 	</service>
 	<service>
 		<name>DeleteItem</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteItem</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteItem</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="ExecutionCourseLecturingTeacherAuthorization" />
+			<chain name="SiteManagerAuthorization" />
 		</filterChains>
 	</service>
 	<service>
@@ -9221,38 +9231,38 @@
 	</service>
 	<service>
 		<name>CreateFileItemForItem</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.CreateFileItemForItem</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateFileItemForItem</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="TeacherAuthorization" />
+			<chain name="SiteManagerAuthorization" />
 		</filterChains>
 	</service>
 	<service>
 		<name>CreateScormPackageForItem</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.CreateScormPackageForItem</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateScormPackageForItem</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="TeacherAuthorization" />
+			<chain name="SiteManagerAuthorization" />
 		</filterChains>
 	</service>
 	<service>
 		<name>CreateScormFileItemForItem</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.CreateScormFileItemForItem</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateScormFileItemForItem</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="TeacherAuthorization" />
+			<chain name="SiteManagerScormFileAuthorization" />
 		</filterChains>
 	</service>
 	<service>
 		<name>DeleteFileItemFromItem</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteFileItemFromItem</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteFileItemFromItem</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="TeacherAuthorization" />
+			<chain name="SiteManagerAuthorization" />
 		</filterChains>
 	</service>
 	<service>
@@ -9280,11 +9290,11 @@
 	</service>	
 	<service>
 		<name>EditItemFilePermissions</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.EditItemFilePermissions</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.EditItemFilePermissions</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="TeacherAuthorization" />
+			<chain name="SiteManagerAuthorization" />
 		</filterChains>
 	</service>
 	<service>
@@ -11226,6 +11236,15 @@
         <filterChains>
         	<chain name="AcademicAdministrativeOfficeAuthorization"></chain>
         </filterChains>     
+    </service>
+    <service>
+        <name>CreateSiteTemplateInstance</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateSiteTemplateInstance</implementationClass>
+        <description />
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ManagerAuthorization" />
+        </filterChains>
     </service>
     <service>
     	<name>ReadStudentSenior</name>

@@ -58,6 +58,7 @@ import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftProfessorship;
 import net.sourceforge.fenixedu.domain.ShiftType;
+import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.SupportLesson;
@@ -271,8 +272,8 @@ public class CreateTestData {
         System.out.println("Deleting bibliographic references.");
         for (final Set<BibliographicReference> bibliographicReferences = rootDomainObject.getBibliographicReferencesSet(); !bibliographicReferences.isEmpty(); bibliographicReferences.iterator().next().delete());
 
-        System.out.println("Deleting execution course sites.");
-        for (final Set<ExecutionCourseSite> sites = rootDomainObject.getExecutionCourseSitesSet(); !sites.isEmpty(); sites.iterator().next().delete());
+        System.out.println("Deleting sites.");
+        for (final Set<Site> sites = rootDomainObject.getSitesSet(); !sites.isEmpty(); sites.iterator().next().delete());
         System.out.println("Deleting forums.");
         for (final Set<Forum> forums = rootDomainObject.getForunsSet(); !forums.isEmpty(); forums.iterator().next().delete());
         System.out.println("Deleting announcements.");

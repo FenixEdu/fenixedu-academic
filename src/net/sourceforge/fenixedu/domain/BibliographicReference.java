@@ -1,7 +1,31 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.Comparator;
+
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
+import org.apache.commons.collections.comparators.NullComparator;
+
 public class BibliographicReference extends BibliographicReference_Base {
 
+    public static final Comparator<BibliographicReference> COMPARATOR_BY_ORDER = new Comparator<BibliographicReference>() {
+
+        private ComparatorChain chain = null;
+        
+        public int compare(BibliographicReference one, BibliographicReference other) {
+            if (this.chain == null) {
+                chain = new ComparatorChain();
+                
+                chain.addComparator(new BeanComparator("referenceOrder", new NullComparator(true)));
+                chain.addComparator(new BeanComparator("title"));
+                chain.addComparator(new BeanComparator("year"));
+                chain.addComparator(new BeanComparator("idInternal"));
+            }
+            
+            return chain.compare(one, other);
+        }
+    };
+    
     public BibliographicReference() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
@@ -25,4 +49,7 @@ public class BibliographicReference extends BibliographicReference_Base {
 	super.deleteDomainObject();
     }
 
+    public boolean isOptional() {
+        return getOptional() == null || getOptional();
+    }
 }

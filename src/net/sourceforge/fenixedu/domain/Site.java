@@ -5,6 +5,8 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -17,7 +19,7 @@ import net.sourceforge.fenixedu.util.MultiLanguageString;
 import net.sourceforge.fenixedu.util.domain.OrderedRelationAdapter;
 
 /**
- * @author Ivo Brandï¿½o
+ * @author Ivo Brandão
  */
 public abstract class Site extends Site_Base {
 
@@ -29,13 +31,17 @@ public abstract class Site extends Site_Base {
     
     public Site() {
         super();
+        
         setOjbConcreteClass(this.getClass().getName());
+        setRootDomainObject(RootDomainObject.getInstance());
     }
 
     public Section createSection(MultiLanguageString sectionName, Section parentSection,
             Integer sectionOrder) {
         return new Section(this, sectionName, sectionOrder, parentSection);
     }
+
+    public abstract IGroup getOwner();
 
     public boolean canBeDeleted() {
         return !hasAnyAssociatedSections();
@@ -58,6 +64,21 @@ public abstract class Site extends Site_Base {
         return getAssociatedSections(null);
     }
     
+    private Site getSiteTemplate() {
+        Site template = getTemplate();
+        if (template != null) {
+            return template;
+        }
+
+        template = SiteTemplate.getTemplateForType(getClass());
+        if (template != null) {
+            //setTemplate(template); // can only happen in a write tx 
+            return template;
+        }
+        
+        return null;
+    }
+
     public List<Section> getAssociatedSections(final Section parentSection) {
         final List<Section> result;
         if (parentSection != null) {
@@ -121,5 +142,58 @@ public abstract class Site extends Site_Base {
 
     public void setTopLevelSectionsOrder(List<Section> sections) {
         SECTION_ORDER_ADAPTER.updateOrder(this, sections);
+    }
+
+    public String getAuthorName() {
+        return null;
+    }
+
+    public ExecutionPeriod getExecutionPeriod() {
+        return null;
+    }
+
+    public List<Section> getOrderedTemplateSections() {
+        List<Section> sections = new ArrayList<Section>();
+        
+        Site template = getSiteTemplate();
+        if (template != null) {
+            sections.addAll(template.getOrderedTemplateSections());
+            sections.addAll(template.getOrderedTopLevelSections());
+        }
+        
+        return sections;
+    }
+
+    public List<Section> getTemplateSections() {
+        List<Section> sections = new ArrayList<Section>();
+        
+        Site template = getSiteTemplate();
+        if (template != null) {
+            sections.addAll(template.getTemplateSections());
+            sections.addAll(template.getTopLevelSections());
+        }
+        
+        return sections;
+    }
+
+    public List<Section> getAllOrderedTopLevelSections() {
+        List<Section> sections = getOrderedTemplateSections();
+        sections.addAll(getOrderedTopLevelSections());
+        
+        return sections;
+    }
+
+    public List<Section> getAllTopLevelSections() {
+        List<Section> sections = getTemplateSections();
+        sections.addAll(getTopLevelSections());
+        
+        return sections;
+    }
+    
+    public static List<Section> getOrderedSections(Collection<Section> sections) {
+        List<Section> orderedSections = new ArrayList<Section>(sections);
+        Collections.sort(orderedSections, Section.COMPARATOR_BY_ORDER);
+        
+        return orderedSections;
     }
 }

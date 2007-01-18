@@ -570,6 +570,11 @@
 	<definition name="manage-execution-course-bibliographicReference-create" extends="execution-course-administration">
 		<put name="body" value="/teacher/executionCourse/createBibliographicReference.jsp" />
 	</definition>
+
+	<definition name="manage-execution-course-bibliographicReference-order" extends="execution-course-administration">
+        <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
+		<put name="body" value="/teacher/executionCourse/orderBibliographicReferences.jsp" />
+	</definition>
 	
 	<definition name="view-foruns" extends="execution-course-administration">
 		<put name="body" value="/teacher/viewExecutionCourseForuns.jsp" />
@@ -587,72 +592,76 @@
 		<put name="body" value="/messaging/viewThread.jsp" />
 	</definition>
 
-	<definition name="manage-execution-course-createSection" extends="execution-course-administration">
-		<put name="body" value="/teacher/executionCourse/createSection.jsp" />
+    <definition name="manage-execution-course-site-createSection" extends="execution-course-administration">
+        <put name="body-context" value="/teacher/executionCourse/site/context.jsp" />
+    </definition>
+
+	<definition name="manage-execution-course-createSection" extends="manage-execution-course-site-createSection">
+		<put name="body" value="/commons/sites/createSection.jsp" />
 	</definition>
 
-	<definition name="manage-execution-course-sectionsManagement" extends="execution-course-administration">
+	<definition name="manage-execution-course-sectionsManagement" extends="manage-execution-course-site-createSection">
         <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
-		<put name="body" value="/teacher/executionCourse/sectionsManagement.jsp" />
+		<put name="body" value="/teacher/executionCourse/site/sectionsManagement.jsp" />
 	</definition>
 
 	<definition name="manage-execution-course-sections-import" extends="execution-course-administration">
-		<put name="body" value="/teacher/executionCourse/importSections.jsp" />
+		<put name="body" value="/teacher/executionCourse/site/importSections.jsp" />
 	</definition>
 	
-	<definition name="manage-execution-course-section" extends="execution-course-administration">
+	<definition name="manage-execution-course-section" extends="manage-execution-course-site-createSection">
         <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
-		<put name="body" value="/teacher/executionCourse/section.jsp" />
+		<put name="body" value="/teacher/executionCourse/site/section.jsp" />
 	</definition>
 
-	<definition name="manage-execution-course-editSection" extends="execution-course-administration">
-		<put name="body" value="/teacher/executionCourse/editSection.jsp" />
+	<definition name="manage-execution-course-editSection" extends="manage-execution-course-site-createSection">
+		<put name="body" value="/commons/sites/editSection.jsp" />
 	</definition>
 
-	<definition name="manage-execution-course-createItem" extends="execution-course-administration">
-		<put name="body" value="/teacher/executionCourse/createItem.jsp" />
+	<definition name="manage-execution-course-createItem" extends="manage-execution-course-site-createSection">
+		<put name="body" value="/commons/sites/createItem.jsp" />
 	</definition>
 
-	<definition name="manage-execution-course-editItem" extends="execution-course-administration">
-		<put name="body" value="/teacher/executionCourse/editItem.jsp" />
+	<definition name="manage-execution-course-editItem" extends="manage-execution-course-site-createSection">
+		<put name="body" value="/commons/sites/editItem.jsp" />
 	</definition>
 
-	<definition name="manage-execution-course-uploadFile" extends="execution-course-administration">
-		<put name="body" value="/teacher/executionCourse/uploadFile.jsp" />
+	<definition name="manage-execution-course-uploadFile" extends="manage-execution-course-site-createSection">
+		<put name="body" value="/commons/sites/uploadFile.jsp" />
 	</definition>
 
-	<definition name="manage-execution-course-editFile" extends="execution-course-administration">
-		<put name="body" value="/teacher/executionCourse/editFile.jsp" />
+	<definition name="manage-execution-course-editFile" extends="manage-execution-course-site-createSection">
+		<put name="body" value="/commons/sites/editFile.jsp" />
 	</definition>
 
-	<definition name="create-scorm" extends="execution-course-administration">
-		<put name="body" value="/teacher/executionCourse/createScorm.jsp" />
+	<definition name="create-scorm" extends="manage-execution-course-site-createSection">
+		<put name="body" value="/commons/sites/createScorm.jsp" />
 	</definition>
 
-	<definition name="upload-scorm" extends="execution-course-administration">
-		<put name="body" value="/teacher/executionCourse/uploadScorm.jsp" />
+	<definition name="upload-scorm" extends="manage-execution-course-site-createSection">
+		<put name="body" value="/commons/sites/uploadScorm.jsp" />
 	</definition>
 	
-    <definition name="manage-execution-course-organizeItems" extends="execution-course-administration">
+    <definition name="manage-execution-course-organizeItems" extends="manage-execution-course-site-createSection">
         <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
-        <put name="body" value="/teacher/executionCourse/organizeItems.jsp" />
+        <put name="body" value="/commons/sites/organizeItems.jsp" />
     </definition>
 
-    <definition name="manage-execution-course-organizeFiles" extends="execution-course-administration">
+    <definition name="manage-execution-course-organizeFiles" extends="manage-execution-course-site-createSection">
         <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
-        <put name="body" value="/teacher/executionCourse/organizeFiles.jsp" />
+        <put name="body" value="/commons/sites/organizeFiles.jsp" />
     </definition>
 
-    <definition name="manage-execution-course-confirmSectionDelete" extends="execution-course-administration">
-        <put name="body" value="/teacher/executionCourse/confirmSectionDelete.jsp" />
+    <definition name="manage-execution-course-confirmSectionDelete" extends="manage-execution-course-site-createSection">
+        <put name="body" value="/commons/sites/confirmSectionDelete.jsp" />
     </definition>
 
-    <definition name="manage-execution-course-editSectionPermissions" extends="execution-course-administration">
-        <put name="body" value="/teacher/executionCourse/editSectionPermissions.jsp" />
+    <definition name="manage-execution-course-editSectionPermissions" extends="manage-execution-course-site-createSection">
+        <put name="body" value="/commons/sites/editSectionPermissions.jsp" />
     </definition>
 
-    <definition name="manage-execution-course-editItemPermissions" extends="execution-course-administration">
-        <put name="body" value="/teacher/executionCourse/editItemPermissions.jsp" />
+    <definition name="manage-execution-course-editItemPermissions" extends="manage-execution-course-site-createSection">
+        <put name="body" value="/commons/sites/editItemPermissions.jsp" />
     </definition>
 
 	<!-- =================== MarkSheetManagement ============== -->

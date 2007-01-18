@@ -29,7 +29,7 @@ public class ExecutionCourseSiteComponentService extends Service {
             NonExistingAssociatedCurricularCoursesServiceException, ExcepcaoPersistencia {
         final ExecutionCourseSite site;
         if (infoSiteCode != null)
-            site = rootDomainObject.readExecutionCourseSiteByOID(infoSiteCode);
+            site = ExecutionCourseSite.readExecutionCourseSiteByOID(infoSiteCode);
         else {
         	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID( infoExecutionCourseCode);
             site = executionCourse.getSite();

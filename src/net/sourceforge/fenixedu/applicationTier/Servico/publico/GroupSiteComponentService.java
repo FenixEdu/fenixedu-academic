@@ -17,7 +17,7 @@ public class GroupSiteComponentService extends Service {
             Integer value) throws FenixServiceException, ExcepcaoPersistencia {
         ExecutionCourseSite site = null;
         if (infoSiteCode != null) {
-            site = rootDomainObject.readExecutionCourseSiteByOID(infoSiteCode);
+            site = ExecutionCourseSite.readExecutionCourseSiteByOID(infoSiteCode);
             if (site == null) {
                 throw new NonExistingServiceException();
             }

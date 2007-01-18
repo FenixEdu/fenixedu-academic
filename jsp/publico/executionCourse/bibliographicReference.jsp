@@ -41,7 +41,7 @@
 				</logic:iterate>
 			</logic:present>
 		</logic:iterate>
-		<logic:iterate id="bibliographicReference" name="executionCourse" property="associatedBibliographicReferences">
+		<logic:iterate id="bibliographicReference" name="executionCourse" property="orderedBibliographicReferences">
 			<logic:notEqual name="bibliographicReference" property="optional" value="true">
 			<li>
 				<em><bean:write name="bibliographicReference" property="title" filter="false"/></em>, 
@@ -85,7 +85,7 @@
 				</logic:iterate>
 			</logic:present>
 		</logic:iterate>
-		<logic:iterate id="bibliographicReference" name="executionCourse" property="associatedBibliographicReferences">
+		<logic:iterate id="bibliographicReference" name="executionCourse" property="orderedBibliographicReferences">
 			<logic:equal name="bibliographicReference" property="optional" value="true">
 				<li>
 					<em><bean:write name="bibliographicReference" property="title" filter="false"/></em>, 

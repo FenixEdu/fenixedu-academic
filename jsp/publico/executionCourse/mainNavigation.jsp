@@ -11,10 +11,10 @@
 <logic:present name="<%= net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext.CONTEXT_KEY %>">
     <bean:define id="executionCourseId" name="executionCourse" property="idInternal"/>
 
-    <fr:view name="<%= net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext.CONTEXT_KEY %>"
-             type="net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext" layout="site-side-menu">
+    <fr:view name="executionCourse" property="site" type="net.sourceforge.fenixedu.domain.Site" layout="side-menu">
         <fr:layout>
             <fr:property name="sectionUrl" value="/executionCourse.do?method=section"/>
+            <fr:property name="contextParam" value="executionCourseID"/>
         </fr:layout>
     </fr:view>
 </logic:present>

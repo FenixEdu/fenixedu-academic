@@ -51,6 +51,7 @@
     </td>
     <td id="bodycontent" width="100%" align="left" valign="top">
       	 <tiles:insert attribute="executionCourseName"  ignore="true"/>
+         <tiles:insert attribute="body-context" ignore="true"/>
          <tiles:insert attribute="body" />
 	</td>
   </tr>

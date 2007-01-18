@@ -179,7 +179,7 @@
 	</slot>
 </schema>
 <schema name="net.sourceforge.fenixedu.domain.SectionCreator"
-		type="net.sourceforge.fenixedu.presentationTier.Action.teacher.SectionCreator"
+		type="net.sourceforge.fenixedu.presentationTier.Action.manager.SectionCreator"
 		bundle="DEFAULT">
 	<slot name="name" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator"/>
     <slot name="nextSection" key="label.sectionOrder.before" layout="menu-select">
@@ -197,6 +197,47 @@
         <property name="saveOptions" value="true"/>
     </slot>
     <setter signature="createSection()"/>
+</schema>
+<schema name="net.sourceforge.fenixedu.domain.FunctionalitySectionCreator.details"
+        type="net.sourceforge.fenixedu.presentationTier.Action.manager.FunctionalitySectionCreator"
+        bundle="DEFAULT">
+    <slot name="nextSection" key="label.sectionOrder.before" layout="menu-select">
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionCourse.SectionOrderProvider" />
+        <property name="format" value="${name}" />
+        <property name="defaultText" value="label.section.last"/>
+        <property name="bundle" value="SITE_RESOURCES"/>
+        <property name="key" value="true"/>
+    </slot>
+</schema>
+<schema name="net.sourceforge.fenixedu.domain.FunctionalitySectionEditor.details"
+        type="net.sourceforge.fenixedu.domain.FunctionalitySection"
+        bundle="DEFAULT">
+    <slot name="nextSection" key="label.sectionOrder.before" layout="menu-select">
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionCourse.SectionOrderProvider" />
+        <property name="format" value="${name}" />
+        <property name="defaultText" value="label.section.last"/>
+        <property name="bundle" value="SITE_RESOURCES"/>
+        <property name="key" value="true"/>
+    </slot>
+</schema>
+<schema name="net.sourceforge.fenixedu.domain.FunctionalitySectionCreator.functionality"
+        type="net.sourceforge.fenixedu.domain.FunctionalitySection"
+        bundle="DEFAULT">
+    <slot name="functionality" layout="functionalities-tree" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+        <property name="eachLayout" value="values-dash"/>
+        <property name="schemaFor(Module)" value="functionalities.module.tree"/>
+        <property name="schemaFor(Functionality)" value="functionalities.functionality.tree"/>
+    </slot>
+    <setter signature="createSection()"/>
+</schema>
+<schema name="net.sourceforge.fenixedu.domain.FunctionalitySectionEditor.functionality"
+        type="net.sourceforge.fenixedu.domain.FunctionalitySection"
+        bundle="DEFAULT">
+    <slot name="functionality" layout="functionalities-tree" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+        <property name="eachLayout" value="values-dash"/>
+        <property name="schemaFor(Module)" value="functionalities.module.tree"/>
+        <property name="schemaFor(Functionality)" value="functionalities.functionality.tree"/>
+    </slot>
 </schema>
 <schema name="net.sourceforge.fenixedu.domain.SectionEditor"
 		type="net.sourceforge.fenixedu.domain.Section"
@@ -231,7 +272,7 @@
     </slot>
 </schema>
 <schema name="net.sourceforge.fenixedu.domain.ItemCreator"
-		type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ItemCreator"
+		type="net.sourceforge.fenixedu.presentationTier.Action.manager.ItemCreator"
 		bundle="DEFAULT"
 		>
 	<slot name="name" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator"/>
@@ -331,7 +372,7 @@
    		<property name="safe" value="true" />
    		<property name="columns" value="75"/>
    		<property name="rows" value="20"/>
-   		<property name="config" value="intermediate" />	
+   		<property name="config" value="summaries" />	
 	</slot>
 </schema>
 <schema name="CreateSummaryToNormalSummary" type="net.sourceforge.fenixedu.dataTransferObject.SummariesManagementBean" bundle="DEFAULT">	
@@ -520,7 +561,7 @@
     <slot name="filename"/>
 </schema>
 
-<schema name="item.file.permittedGroup" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.FileItemPermissionBean" bundle="SITE_RESOURCES">
+<schema name="item.file.permittedGroup" type="net.sourceforge.fenixedu.presentationTier.Action.manager.FileItemPermissionBean" bundle="SITE_RESOURCES">
     <slot name="permittedGroup" layout="radio-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
         <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionCourse.FileItemGroupProvider" />
         <property name="eachSchema" value="permittedGroup.class.text"/>
@@ -529,7 +570,7 @@
     </slot>
 </schema>
 
-<schema name="item.file.create" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.FileItemCreationBean" bundle="SITE_RESOURCES">
+<schema name="item.file.create" type="net.sourceforge.fenixedu.presentationTier.Action.manager.FileItemCreationBean" bundle="SITE_RESOURCES">
     <slot name="permittedGroup" layout="radio-select" >
         <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionCourse.FileItemGroupProvider" />
         <property name="eachSchema" value="permittedGroup.class.text"/>
@@ -568,4 +609,10 @@
 	<slot name="value" key="label.value" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="40"/>
 	</slot>
+</schema>
+
+<schema name="executionCourse.bibliographicReference.simple" type="net.sourceforge.fenixedu.domain.BibliographicReference">
+    <slot name="title">
+        <property name="escaped" value="false"/>
+    </slot>
 </schema>

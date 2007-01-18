@@ -213,11 +213,14 @@
 	<definition name="execution-course-section" extends="definition.public.executionCourse">
 		<put name="body" value="/publico/executionCourse/section.jsp"/>
 	</definition>
-    <definition name="execution-course-section-deny" extends="definition.public.executionCourse">
-        <put name="body" value="/publico/executionCourse/section-deny.jsp"/>
+    <definition name="definition.public.executionCourse.site" extends="definition.public.executionCourse">
+        <put name="body-context" value="/publico/executionCourse/siteContext.jsp"/>
     </definition>
-    <definition name="execution-course-section-adviseLogin" extends="definition.public.executionCourse">
-        <put name="body" value="/publico/executionCourse/section-adviseLogin.jsp"/>
+    <definition name="execution-course-section-deny" extends="definition.public.executionCourse.site">
+        <put name="body" value="/commons/sites/public/section-deny.jsp"/>
+    </definition>
+    <definition name="execution-course-section-adviseLogin" extends="definition.public.executionCourse.site">
+        <put name="body" value="/commons/sites/public/section-adviseLogin.jsp"/>
     </definition>
 	<definition name="execution-course-item" extends="definition.public.executionCourse">
 		<put name="body" value="/publico/executionCourse/item.jsp"/>

@@ -12,7 +12,6 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.exceptions.DuplicatedNameException;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 import net.sourceforge.fenixedu.util.domain.OrderedRelationAdapter;
@@ -92,15 +91,19 @@ public class Section extends Section_Base {
         if (name == null || name.isEmpty()) {
             throw new NullPointerException();
         }
-
-        if (! isNameUnique(getSiblings(), name)) {
-            throw new DuplicatedNameException("site.section.name.duplicated");
-        }
+        
+        // NOTE: removed restriction because it introduces techinal problems
+        // that are not really necessary or good for any of the parts: developer
+        // and user
+        
+//        if (! isNameUnique(getSiblings(), name)) {
+//            throw new DuplicatedNameException("site.section.name.duplicated");
+//        }
         
         super.setName(name);
     }
 
-    private List<Section> getSiblings() {
+    public List<Section> getSiblings() {
         return getSite().getAssociatedSections(getSuperiorSection());
     }
 
@@ -281,4 +284,11 @@ public class Section extends Section_Base {
         SECTION_ORDER_ADAPTER.updateOrder(this, sections);
     }
 
+    public boolean isSubSectionAllowed() {
+        return true;
+    }
+    
+    public boolean isItemAllowed() {
+        return true;
+    }
 }

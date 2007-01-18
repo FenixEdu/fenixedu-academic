@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
+import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -66,7 +67,7 @@ public class AlternativeSiteManagementAction extends FenixDispatchAction {
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
-        session.setAttribute(SessionConstants.INFO_SITE, InfoSite.newInfoFromDomain(rootDomainObject.readExecutionCourseSiteByOID(infoSite.getIdInternal())));
+        session.setAttribute(SessionConstants.INFO_SITE, InfoSite.newInfoFromDomain(ExecutionCourseSite.readExecutionCourseSiteByOID(infoSite.getIdInternal())));
         session.setAttribute("alternativeSiteForm", alternativeSiteForm);
 
         return mapping.findForward("viewSite");

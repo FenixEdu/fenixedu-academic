@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.renderers.providers.executionC
 
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Section;
-import net.sourceforge.fenixedu.presentationTier.Action.teacher.ItemCreator;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.ItemCreator;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
 import net.sourceforge.fenixedu.renderers.DataProvider;
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;

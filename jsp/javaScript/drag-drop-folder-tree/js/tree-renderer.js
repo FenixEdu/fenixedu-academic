@@ -80,6 +80,7 @@ function treeRenderer_init(id, options) {
 	    options.requestParameter && tree.setRequestParameter(options.requestParameter);
 	    options.onComplete       && tree.setOnComplete(options.onComplete);
 	    options.onError          && tree.setError(options.onError);
+	    options.disableDrag      && tree.setAllowDrag(! options.disableDrag);
 	
 	    tree.initTree();
 	    

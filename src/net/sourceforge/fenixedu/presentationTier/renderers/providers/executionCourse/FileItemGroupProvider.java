@@ -2,8 +2,8 @@ package net.sourceforge.fenixedu.presentationTier.renderers.providers.executionC
 
 import net.sourceforge.fenixedu.domain.FileItem;
 import net.sourceforge.fenixedu.domain.Item;
-import net.sourceforge.fenixedu.presentationTier.Action.teacher.FileItemCreationBean;
-import net.sourceforge.fenixedu.presentationTier.Action.teacher.FileItemPermissionBean;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.FileItemCreationBean;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.FileItemPermissionBean;
 import net.sourceforge.fenixedu.renderers.DataProvider;
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 

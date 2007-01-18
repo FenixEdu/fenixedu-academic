@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.renderers.providers;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.presentationTier.Action.teacher.FileItemCreationBean.EducationalResourceType;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.FileItemCreationBean.EducationalResourceType;
 import net.sourceforge.fenixedu.renderers.DataProvider;
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 

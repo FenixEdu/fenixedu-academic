@@ -815,27 +815,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	return filenameOnly;
     }
 
-    public ActionForward deleteFile(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixActionException, FenixFilterException,
-	    FenixServiceException {
-
-	Integer itemCode = getItemCode(request);
-	Integer fileItemId = getFileItemId(request);
-
-	HttpSession session = request.getSession(false);
-	IUserView userView = getUserView(request);
-	Object[] args = { itemCode, fileItemId };
-	try {
-	    ServiceUtils.executeService(userView, "DeleteFileItemFromItem", args);
-	} catch (FileManagerException e1) {
-	    ActionErrors actionErrors = new ActionErrors();
-	    actionErrors.add("unableToDeleteFile", new ActionError("errors.unableToDeleteFile"));
-	    saveErrors(request, actionErrors);
-	}
-
-	return viewSection(mapping, form, request, response);
-    }
-
     private Integer getItemCode(HttpServletRequest request) {
 	Integer itemCode = null;
 	String itemCodeString = request.getParameter("itemCode");

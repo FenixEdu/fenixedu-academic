@@ -11,8 +11,6 @@ public class ExecutionCourseSite extends ExecutionCourseSite_Base {
     protected ExecutionCourseSite() {
         super();
         
-        setRootDomainObject(RootDomainObject.getInstance());
-        
         setDynamicMailDistribution(false);
         setLessonPlanningAvailable(false);
     }
@@ -58,5 +56,34 @@ public class ExecutionCourseSite extends ExecutionCourseSite_Base {
         
         return groups;
     }
+
+    @Override
+    public IGroup getOwner() {
+        return new ExecutionCourseTeachersGroup(getExecutionCourse());
     
+    }
+
+    @Override
+    public String getAuthorName() {
+        return getExecutionCourse().getNome();
+    }
+ 
+    @Override
+    public ExecutionPeriod getExecutionPeriod() {
+        return getExecutionCourse().getExecutionPeriod();
+    }
+
+    public static ExecutionCourseSite readExecutionCourseSiteByOID(Integer oid) {
+        Site site = (Site) RootDomainObject.readDomainObjectByOID(ExecutionCourseSite.class, oid);
+        if (site == null) {
+            return null;
+        }
+        
+        if (site instanceof ExecutionCourseSite) {
+            return (ExecutionCourseSite) site;
+        }
+        else {
+            return null;
+        }
+    }
 }

@@ -53,6 +53,7 @@
 						</td>
 						<td width="100%" colspan="3" id="main">
 							<tiles:insert attribute="body_header" ignore="true"/>
+                            <tiles:insert attribute="body-context" ignore="true"/>
 							<tiles:insert attribute="body" ignore="true"/>
 						</td>
 					</tr>

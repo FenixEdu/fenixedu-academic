@@ -86,20 +86,14 @@
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
-        <name>TeacherFromSiteContainingSectionsAuthorization</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.TeacherFromSiteContainingSectionsAuthorization</implementationClass>
+        <name>SiteManagerAuthorization</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.SiteManagerAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
-        <name>TeacherFromSiteContainingItemsAuthorization</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.TeacherFromSiteContainingItemsAuthorization</implementationClass>
-        <description/>
-        <isTransactional>false</isTransactional>
-    </filter>
-    <filter>
-        <name>TeacherFromSiteContainingFilesAuthorization</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.TeacherFromSiteContainingFilesAuthorization</implementationClass>
+        <name>SiteManagerScormFileAuthorization</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.SiteManagerScormFileAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>

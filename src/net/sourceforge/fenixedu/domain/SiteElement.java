@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.domain.functionalities.GroupAvailability;
@@ -25,12 +26,15 @@ public abstract class SiteElement extends SiteElement_Base {
     public Group getPermittedGroup() {
         GroupAvailability groupAvailability = (GroupAvailability) getAvailabilityPolicy();
         
+        Group result;
         if (groupAvailability == null) {
-            return null;
+            result = null;
         }
         else {
-            return groupAvailability.getTargetGroup();
+            result = groupAvailability.getTargetGroup();
         }
+        
+        return result == null ? new EveryoneGroup() : result;
     }
     
     public void setPermittedGroup(Group group) {
@@ -80,4 +84,7 @@ public abstract class SiteElement extends SiteElement_Base {
         return true;
     }
 
+    public boolean isAllowedToEditPermissions() {
+        return true;
+    }
 }

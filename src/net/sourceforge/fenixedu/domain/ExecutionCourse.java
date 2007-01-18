@@ -38,6 +38,7 @@ import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 import net.sourceforge.fenixedu.util.ProposalState;
+import net.sourceforge.fenixedu.util.domain.OrderedRelationAdapter;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -69,6 +70,12 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         ((ComparatorChain) EXECUTION_COURSE_NAME_COMPARATOR).addComparator(new BeanComparator("idInternal"));
     }
 
+    public static OrderedRelationAdapter<ExecutionCourse, BibliographicReference> BIBLIOGRAPHIC_REFERENCE_ORDER_ADAPTER;
+    static {
+        BIBLIOGRAPHIC_REFERENCE_ORDER_ADAPTER = new OrderedRelationAdapter<ExecutionCourse, BibliographicReference>("associatedBibliographicReferences", "referenceOrder");
+        ExecutionCourseBibliographicReference.addListener(BIBLIOGRAPHIC_REFERENCE_ORDER_ADAPTER);
+    }
+    
     public ExecutionCourse(final String nome, final String sigla, final ExecutionPeriod executionPeriod) {
 	super();
 	init();
@@ -1487,4 +1494,37 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	return null;
     }
 
+    public SortedSet<BibliographicReference> getOrderedBibliographicReferences() {
+        TreeSet<BibliographicReference> references = new TreeSet<BibliographicReference>(BibliographicReference.COMPARATOR_BY_ORDER);
+        references.addAll(getAssociatedBibliographicReferences());
+        return references;
+    }
+    
+    public void setBibliographicReferencesOrder(List<BibliographicReference> references) {
+        BIBLIOGRAPHIC_REFERENCE_ORDER_ADAPTER.updateOrder(this, references);
+    }
+    
+    public List<BibliographicReference> getMainBibliographicReferences() {
+        List<BibliographicReference> references = new ArrayList<BibliographicReference>();
+        
+        for (BibliographicReference reference : getAssociatedBibliographicReferences()) {
+            if (! reference.isOptional()) {
+                references.add(reference);
+            }
+        }
+        
+        return references;
+    }
+    
+    public List<BibliographicReference> getSecondaryBibliographicReferences() {
+        List<BibliographicReference> references = new ArrayList<BibliographicReference>();
+        
+        for (BibliographicReference reference : getAssociatedBibliographicReferences()) {
+            if (reference.isOptional()) {
+                references.add(reference);
+            }
+        }
+        
+        return references;
+    }
 }

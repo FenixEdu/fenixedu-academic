@@ -108,7 +108,7 @@ public class SectionProcessor extends SiteElementPathProcessor {
                 }
                 
                 ExecutionCourseSite site = executionCourse.getSite();
-                return site.getAssociatedSections(null);
+                return site.getAllOrderedTopLevelSections();
             }
             else {
                 return section.getAssociatedSections();

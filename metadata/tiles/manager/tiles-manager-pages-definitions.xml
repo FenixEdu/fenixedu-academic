@@ -757,5 +757,72 @@
 	<definition name="prepare-create-new-login-time-interval" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/loginsManagement/createNewLoginPeriod.jsp" />
 	</definition>	
-		
+
+    <!-- ################### Sites Management #######################-->
+    <definition name="definition.manager.manageSiteMasterPage" extends="definition.manager.masterPage" >
+        <put name="body-context" value="/manager/sites/siteContext.jsp" />
+        <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
+    </definition>
+    
+    <definition name="site.list" extends="definition.manager.masterPage" >
+        <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
+        <put name="body" value="/commons/sites/listSites.jsp" />
+    </definition>   
+    <definition name="manage-execution-course-sectionsManagement" extends="definition.manager.manageSiteMasterPage" >
+        <put name="body" value="/manager/sites/sectionsManagement.jsp"/>
+    </definition>   
+    <definition name="manage-execution-course-section" extends="definition.manager.manageSiteMasterPage" >
+        <put name="body" value="/manager/sites/section.jsp"/>
+    </definition>
+    <definition name="manage-execution-course-editSection" extends="definition.manager.manageSiteMasterPage" >
+        <put name="body" value="/commons/sites/editSection.jsp"/>
+    </definition>   
+    <definition name="manage-execution-course-createSection" extends="definition.manager.manageSiteMasterPage" >
+        <put name="body" value="/commons/sites/createSection.jsp"/>
+    </definition>   
+    <definition name="manage-execution-course-createItem" extends="definition.manager.manageSiteMasterPage" >
+        <put name="body" value="/commons/sites/createItem.jsp"/>
+    </definition>   
+    <definition name="manage-execution-course-editItem" extends="definition.manager.manageSiteMasterPage" >
+        <put name="body" value="/commons/sites/editItem.jsp"/>
+    </definition>   
+    <definition name="manage-execution-course-uploadFile" extends="definition.manager.manageSiteMasterPage" >
+        <put name="body" value="/commons/sites/uploadFile.jsp"/>
+    </definition>   
+    <definition name="manage-execution-course-editFile" extends="definition.manager.manageSiteMasterPage" >
+        <put name="body" value="/commons/sites/editFile.jsp"/>
+    </definition>             
+    <definition name="manage-execution-course-organizeItems" extends="definition.manager.manageSiteMasterPage" >
+        <put name="body" value="/commons/sites/organizeItems.jsp"/>
+    </definition>   
+    <definition name="manage-execution-course-organizeFiles" extends="definition.manager.manageSiteMasterPage" >
+        <put name="body" value="/commons/sites/organizeFiles.jsp"/>
+    </definition>   
+    <definition name="manage-execution-course-confirmSectionDelete" extends="definition.manager.manageSiteMasterPage" >
+        <put name="body" value="/commons/sites/confirmSectionDelete.jsp"/>
+    </definition>   
+    <definition name="manage-execution-course-editSectionPermissions" extends="definition.manager.manageSiteMasterPage" >
+        <put name="body" value="/commons/sites/editSectionPermissions.jsp"/>
+    </definition>   
+    <definition name="manage-execution-course-editItemPermissions" extends="definition.manager.manageSiteMasterPage" >
+        <put name="body" value="/commons/sites/editItemPermissions.jsp"/>
+    </definition>   
+    <definition name="manage-execution-course-editFile" extends="definition.manager.manageSiteMasterPage" >
+        <put name="body" value="/commons/sites/editFile.jsp"/>
+    </definition>   
+    <definition name="create-scorm" extends="definition.manager.manageSiteMasterPage" >
+        <put name="body" value="/commons/sites/createScorm.jsp"/>
+    </definition>   
+    <definition name="upload-scorm" extends="definition.manager.manageSiteMasterPage" >
+        <put name="body" value="/commons/sites/uploadScorm.jsp"/>
+    </definition>   
+    <definition name="manage-execution-course-chooseFunctionality" extends="definition.manager.manageSiteMasterPage" >
+        <put name="body" value="/manager/sites/createFunctionalitySection.jsp"/>
+    </definition>   
+    <definition name="manage-execution-course-functionalitySection" extends="definition.manager.manageSiteMasterPage" >
+        <put name="body" value="/manager/sites/functionalitySection.jsp"/>
+    </definition>   
+    <definition name="manage-execution-course-editFunctionalitySection" extends="definition.manager.manageSiteMasterPage" >
+        <put name="body" value="/manager/sites/editFunctionalitySection.jsp"/>
+    </definition>   
 </tiles-definitions>

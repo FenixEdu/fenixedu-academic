@@ -42,7 +42,7 @@ public class ReadPublishedMarksByExam extends Service {
         InfoEvaluation infoEvaluation = null;
 
         //Site
-        site = rootDomainObject.readExecutionCourseSiteByOID(siteCode);
+        site = ExecutionCourseSite.readExecutionCourseSiteByOID(siteCode);
 
         //Execution Course
         ExecutionCourse executionCourse = site.getExecutionCourse();

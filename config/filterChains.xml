@@ -58,22 +58,15 @@
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>
     <filterChain>
-        <name>TeacherFromSiteContainingSectionsAuthorization</name>
-        <expression>TeacherFromSiteContainingSectionsAuthorization</expression>
+        <name>SiteManagerAuthorization</name>
+        <expression>SiteManagerAuthorization</expression>
         <description/>
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>
     <filterChain>
-        <name>TeacherFromSiteContainingItemsAuthorization</name>
-        <expression>TeacherFromSiteContainingItemsAuthorization</expression>
-        <description/>
-        <invocationTiming>1</invocationTiming>
-        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
-    </filterChain>
-    <filterChain>
-        <name>TeacherFromSiteContainingFilesAuthorization</name>
-        <expression>TeacherFromSiteContainingFilesAuthorization</expression>
+        <name>SiteManagerScormFileAuthorization</name>
+        <expression>SiteManagerScormFileAuthorization</expression>
         <description/>
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>

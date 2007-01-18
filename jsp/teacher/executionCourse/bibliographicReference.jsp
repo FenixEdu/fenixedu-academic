@@ -1,9 +1,9 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
+<html:xhtml/>
 
 <h2><bean:message key="link.bibliography" /></h2>
 
@@ -42,33 +42,34 @@
 		<bean:message key="message.recommendedBibliography"/>
 	</h3>
 	<blockquote>
-		<logic:iterate id="competenceCourse" name="executionCourse" property="competenceCourses">
-			<logic:present name="competenceCourse" property="competenceCourseInformation">
-				<logic:present name="competenceCourse" property="competenceCourseInformation.bibliographicReferences">
-					<logic:iterate id="bibliographicReference" name="competenceCourse" property="competenceCourseInformation.bibliographicReferences.bibliographicReferencesSortedByOrder">
-						<logic:equal name="bibliographicReference" property="type" value="MAIN">
-							<logic:empty name="bibliographicReference" property="url">
-								<bean:write name="bibliographicReference" property="title" filter="false"/>
-							</logic:empty>
-							<logic:notEmpty name="bibliographicReference" property="url">
-								<html:link name="bibliographicReference" property="url">
-									<bean:write name="bibliographicReference" property="title" filter="false"/>
-								</html:link>>
-							</logic:notEmpty>
-							<br/>
-							<bean:write name="bibliographicReference" property="authors" filter="false" />
-							<br/>
-							<bean:write name="bibliographicReference" property="reference"  filter="false" />
-							<br/>
-							<bean:write name="bibliographicReference" property="year" filter="false" />
-							<br/>
-							<br/>
-						</logic:equal>
-					</logic:iterate>
-				</logic:present>
-			</logic:present>
-		</logic:iterate>
-		<logic:iterate id="bibliographicReference" name="executionCourse" property="associatedBibliographicReferences">
+        <%-- Recommended bibliography from competence course --%>
+        <logic:iterate id="competenceCourseInformation" name="executionCourse" property="competenceCoursesInformations">
+            <logic:present name="competenceCourseInformation" property="bibliographicReferences">
+                <logic:iterate id="bibliographicReference" name="competenceCourse" property="competenceCourseInformation.bibliographicReferences.bibliographicReferencesSortedByOrder">
+                    <logic:equal name="bibliographicReference" property="type" value="MAIN">
+                        <logic:empty name="bibliographicReference" property="url">
+                            <bean:write name="bibliographicReference" property="title" filter="false"/>
+                        </logic:empty>
+                        <logic:notEmpty name="bibliographicReference" property="url">
+                            <html:link name="bibliographicReference" property="url">
+                                <bean:write name="bibliographicReference" property="title" filter="false"/>
+                            </html:link>>
+                        </logic:notEmpty>
+                        <br/>
+                        <bean:write name="bibliographicReference" property="authors" filter="false" />
+                        <br/>
+                        <bean:write name="bibliographicReference" property="reference"  filter="false" />
+                        <br/>
+                        <bean:write name="bibliographicReference" property="year" filter="false" />
+                        <br/>
+                        <br/>
+                    </logic:equal>
+                </logic:iterate>
+            </logic:present>
+        </logic:iterate>
+    
+        <%-- Recommended bibliography from execution course --%>
+		<logic:iterate id="bibliographicReference" name="executionCourse" property="orderedBibliographicReferences">
 			<logic:notEqual name="bibliographicReference" property="optional" value="true">
 				<bean:write name="bibliographicReference" property="title" filter="false"/>
 				<br/>
@@ -89,39 +90,49 @@
 				<br/>
 			</logic:notEqual>
 		</logic:iterate>		
+
+        <logic:notEmpty name="executionCourse" property="mainBibliographicReferences">
+            <p>
+                <img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
+                <html:link page="/manageExecutionCourse.do?method=prepareSortBibliography" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+                    <bean:message key="message.sortRecommendedBibliography"/>
+                </html:link>
+            </p>
+        </logic:notEmpty>
 	</blockquote>
 
 	<h3>
 		<bean:message key="message.optionalBibliography"/>
 	</h3>
 	<blockquote>
-		<logic:iterate id="competenceCourse" name="executionCourse" property="competenceCourses">
-			<logic:present name="competenceCourse" property="competenceCourseInformation">
-				<logic:present name="competenceCourse" property="competenceCourseInformation.bibliographicReferences">
-					<logic:iterate id="bibliographicReference" name="competenceCourse" property="competenceCourseInformation.bibliographicReferences.bibliographicReferencesSortedByOrder">
-						<logic:equal name="bibliographicReference" property="type" value="SECONDARY">
-							<logic:empty name="bibliographicReference" property="url">
-								<bean:write name="bibliographicReference" property="title" filter="false"/>
-							</logic:empty>
-							<logic:notEmpty name="bibliographicReference" property="url">
-								<html:link name="bibliographicReference" property="url">
-									<bean:write name="bibliographicReference" property="title" filter="false"/>
-								</html:link>>
-							</logic:notEmpty>
-							<br/>
-							<bean:write name="bibliographicReference" property="authors" filter="false" />
-							<br/>
-							<bean:write name="bibliographicReference" property="reference"  filter="false" />
-							<br/>
-							<bean:write name="bibliographicReference" property="year" filter="false" />
-							<br/>
-							<br/>
-						</logic:equal>
-					</logic:iterate>
-				</logic:present>
-			</logic:present>
-		</logic:iterate>
-		<logic:iterate id="bibliographicReference" name="executionCourse" property="associatedBibliographicReferences">
+        <%-- Secondary bibliography from competence course --%>
+        <logic:iterate id="competenceCourseInformation" name="executionCourse" property="competenceCoursesInformations">
+            <logic:present name="competenceCourseInformation" property="bibliographicReferences">
+                <logic:iterate id="bibliographicReference" name="competenceCourse" property="competenceCourseInformation.bibliographicReferences.bibliographicReferencesSortedByOrder">
+                    <logic:equal name="bibliographicReference" property="type" value="SECONDARY">
+                        <logic:empty name="bibliographicReference" property="url">
+                            <bean:write name="bibliographicReference" property="title" filter="false"/>
+                        </logic:empty>
+                        <logic:notEmpty name="bibliographicReference" property="url">
+                            <html:link name="bibliographicReference" property="url">
+                                <bean:write name="bibliographicReference" property="title" filter="false"/>
+                            </html:link>>
+                        </logic:notEmpty>
+                        <br/>
+                        <bean:write name="bibliographicReference" property="authors" filter="false" />
+                        <br/>
+                        <bean:write name="bibliographicReference" property="reference"  filter="false" />
+                        <br/>
+                        <bean:write name="bibliographicReference" property="year" filter="false" />
+                        <br/>
+                        <br/>
+                    </logic:equal>
+                </logic:iterate>
+            </logic:present>
+        </logic:iterate>
+    
+        <%-- Secondary bibliography from execution course --%>
+		<logic:iterate id="bibliographicReference" name="executionCourse" property="orderedBibliographicReferences">
 			<logic:equal name="bibliographicReference" property="optional" value="true">
 				<bean:write name="bibliographicReference" property="title" filter="false"/>
 				<br/>
@@ -142,6 +153,15 @@
 				<br/>
 			</logic:equal>
 		</logic:iterate>		
+
+        <logic:notEmpty name="executionCourse" property="secondaryBibliographicReferences">
+            <p>
+                <img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
+                <html:link page="/manageExecutionCourse.do?method=prepareSortBibliography&amp;optional=true" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+                    <bean:message key="message.sortOptionalBibliography"/>
+                </html:link>
+            </p>
+        </logic:notEmpty>
 	</blockquote>
 
 </logic:present>

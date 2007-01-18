@@ -5,6 +5,21 @@
     </slot>
 </schema>
 
+<schema name="site.functionalitySection.name" type="net.sourceforge.fenixedu.domain.FunctionalitySection">
+    <slot name="name" layout="link">
+        <property name="useParent" value="true"/>
+        <property name="destination" value="functionalitySection.view"/>
+    </slot>
+</schema>
+
+<schema name="site.functionalitySection.simpleDetails" type="net.sourceforge.fenixedu.domain.Section">
+    <slot name="name" layout="link">
+        <property name="useParent" value="true"/>
+        <property name="destination" value="functionality.view"/>
+    </slot>
+    <slot name="functionality.publicPath" key="label.publicPath" bundle="SITE_RESOURCES"/>
+</schema>
+
 <schema name="site.item.name" type="net.sourceforge.fenixedu.domain.Item">
     <slot name="name"/>
 </schema>

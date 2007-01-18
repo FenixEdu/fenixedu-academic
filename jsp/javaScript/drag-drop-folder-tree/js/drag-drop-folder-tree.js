@@ -55,7 +55,10 @@
 		var includeImage;
 		var movedClass;
 
+		var allowDrag;
+
 		this.saveParameter = 'saveString';
+		this.allowDrag = true;
 
 		this.imageFolder = 'images/';
 		this.folderImage = 'folder.gif';
@@ -149,6 +152,11 @@
 		setPlusImage : function(imagePath)
 		{
 			this.plusImage = imagePath;				
+		}
+		,
+		setAllowDrag : function(allow) 
+		{
+			this.allowDrag = allow;
 		}
 		,
 		setMinusImage : function(imagePath)
@@ -656,6 +664,10 @@
 				var tmpVar = menuItems[no].getAttribute('noDrag');
 				if(!tmpVar)tmpVar = menuItems[no].noDrag;
 				if(tmpVar=='true')noDrag=true;
+						 
+				if (! JSTreeObj.allowDrag) {
+					noDrag = true;
+				}
 						 
 				nodeId++;
 				var subItems = menuItems[no].getElementsByTagName('UL');

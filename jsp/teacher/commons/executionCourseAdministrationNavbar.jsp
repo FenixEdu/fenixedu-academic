@@ -42,7 +42,7 @@
 			</html:link>
 		</li>
 		<li>
-			<html:link page="/manageExecutionCourse.do?method=sections" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+			<html:link page="/manageExecutionCourseSite.do?method=sections" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
 				<bean:message key="label.executionCourseManagement.menu.sections"/>
 			</html:link>
 		</li>	

@@ -236,6 +236,14 @@ Documentation:
         <property name="enabledClass" value="fEnabled"/>
         <property name="disabledClass" value="fDisabled"/>
     </renderer>
+    <renderer mode="input" type="net.sourceforge.fenixedu.domain.functionalities.Functionality" layout="functionalities-tree" class="net.sourceforge.fenixedu.presentationTier.renderers.FunctionalityInputTreeRenderer">
+        <property name="moduleEnabledImage" value="/images/functionalities/folder.gif"/>
+        <property name="moduleDisabledImage" value="/images/functionalities/folder-disabled.gif"/>
+        <property name="functionalityEnabledImage" value="/images/functionalities/sheet.gif"/>
+        <property name="functionalityDisabledImage" value="/images/functionalities/sheet-disabled.gif"/>
+        <property name="enabledClass" value="fEnabled"/>
+        <property name="disabledClass" value="fDisabled"/>
+    </renderer>
 
     <!--@ Special layout to present a vigilant table with a slightly different organization. -->
     <renderer type="java.util.Collection" layout="vigilant-table" class="net.sourceforge.fenixedu.presentationTier.renderers.VigilantTableRender">
@@ -263,7 +271,8 @@ Documentation:
     <renderer type="net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext" layout="side-menu" class="net.sourceforge.fenixedu.presentationTier.renderers.functionalities.MenuRenderer"/>
     <renderer type="net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext" layout="top-menu" class="net.sourceforge.fenixedu.presentationTier.renderers.functionalities.TopLevelMenuRenderer"/>
     <renderer type="net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext" layout="bread-crumbs" class="net.sourceforge.fenixedu.presentationTier.renderers.functionalities.BreadCrumbsRenderer"/>
-    <renderer type="net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext" layout="site-side-menu" class="net.sourceforge.fenixedu.presentationTier.renderers.functionalities.SiteMenuRenderer"/>
+
+    <renderer type="net.sourceforge.fenixedu.domain.Site" layout="side-menu" class="net.sourceforge.fenixedu.presentationTier.renderers.SiteMenuRenderer" />
     
 	<!--@ File displayed as an html picture -->
     <renderer type="net.sourceforge.fenixedu.domain.File"

@@ -530,6 +530,7 @@ class net.sourceforge.fenixedu.domain.BibliographicReference extends net.sourcef
 	String authors;
 	String title;
 	String reference;
+	Integer referenceOrder;
 }
 
 class net.sourceforge.fenixedu.domain.homepage.Blog extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -4176,8 +4177,13 @@ class net.sourceforge.fenixedu.domain.Site extends net.sourceforge.fenixedu.doma
 	String alternativeSite;
 	
 	String ojbConcreteClass;
+	Integer keyTemplate;
 }
 
+	class net.sourceforge.fenixedu.domain.SiteTemplate extends net.sourceforge.fenixedu.domain.Site {
+		String siteType;
+	}
+	
 	class net.sourceforge.fenixedu.domain.ExecutionCourseSite extends net.sourceforge.fenixedu.domain.Site {
 		Integer keyExecutionCourse;
 	
@@ -4216,6 +4222,10 @@ class net.sourceforge.fenixedu.domain.AccessibleItem extends net.sourceforge.fen
 			YearMonthDay lastModifiedDateYearMonthDay;
 		}
 
+		class net.sourceforge.fenixedu.domain.FunctionalitySection extends net.sourceforge.fenixedu.domain.Section {
+			Integer keyFunctionality;
+		}
+		
 		class net.sourceforge.fenixedu.domain.Item extends net.sourceforge.fenixedu.domain.SiteElement {
 			Integer keySection;
 			Integer itemOrder;
@@ -7047,6 +7057,12 @@ relation SectionSuperiorSection {
 	net.sourceforge.fenixedu.domain.Section playsRole superiorSection;
 }
 
+relation FunctionalitySectionPointsFunctionality {
+	net.sourceforge.fenixedu.domain.FunctionalitySection playsRole siteSection {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.functionalities.Functionality playsRole functionality;
+}
 
 relation ServiceProviderRegimeTeacher {
     net.sourceforge.fenixedu.domain.teacher.ServiceProviderRegime playsRole serviceProviderRegime;
@@ -7173,11 +7189,25 @@ relation SibsPaymentFileEntrySibsPaymentFile {
 	net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFile playsRole sibsPaymentFile;
 }
 
+relation SiteRootDomainObject {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.Site playsRole sites {
+		multiplicity *;
+	}
+}
+
 relation SiteSection {
 	net.sourceforge.fenixedu.domain.Section playsRole associatedSections {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Site playsRole site;
+}
+
+relation SitePointsTemplate {
+	net.sourceforge.fenixedu.domain.Site playsRole template;
+	net.sourceforge.fenixedu.domain.Site playsRole templatedSites {
+		multiplicity *;
+	}
 }
 
 relation SpaceSpace {
@@ -9058,14 +9088,6 @@ relation RootDomainObjectGrantType {
 relation RootDomainObjectPrecedence {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.precedences.Precedence playsRole precedences {
-		multiplicity *;
-	}
-}
-
-
-relation RootDomainObjectExecutionCourseSite {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.ExecutionCourseSite playsRole executionCourseSites {
 		multiplicity *;
 	}
 }

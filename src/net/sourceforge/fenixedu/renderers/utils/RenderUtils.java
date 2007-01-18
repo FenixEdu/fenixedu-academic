@@ -91,14 +91,14 @@ public class RenderUtils {
     }
         
     public static String getEnumString(Enum enumerate) {
-    	return getEnumString(enumerate,null);
+    	    return getEnumString(enumerate, null);
     }
     
     public static String getEnumString(Enum enumerate, String bundle) {
         Enum e = (Enum) enumerate;
         String description = null;
         
-        if(bundle == null) {
+        if (bundle == null) {
             bundle = "ENUMERATION_RESOURCES";
         }
         

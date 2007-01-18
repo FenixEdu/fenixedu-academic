@@ -69,6 +69,7 @@ public class TreeRenderer extends OutputRenderer {
 
     private String treeId;
     
+    private boolean expandable;
     private String fieldId;
     private String saveUrl;
     private boolean moduleRelative;
@@ -98,16 +99,20 @@ public class TreeRenderer extends OutputRenderer {
     private Map<String, String> schemasMap;
     
     private Map<String, String> childrenMap;
+    private Map<String, String> noChildrenMap;
     private Map<String, String> classesMap;
     private Map<String, String> styleMap;
     private Map<String, String> linksMap;
     private Map<String, String> hiddenLinksMap;
     private Map<String, String> imagesMap;
 
+    private LevelDecorator decorator;
+    
     public TreeRenderer() {
         super();
         
         this.childrenMap = new HashMap<String, String>();
+        this.noChildrenMap = new HashMap<String, String>();
         this.classesMap = new HashMap<String, String>();
         this.styleMap = new HashMap<String, String>();
         this.linksMap = new HashMap<String, String>();
@@ -213,7 +218,7 @@ public class TreeRenderer extends OutputRenderer {
 
     /**
      * This property specifies the name of the method that should be used, by default, to
-     * obtain the list of children for each item. If this property is not specified then,
+     * obtain the list of children for each item. If             this property is not specified then,
      * by default, items are considered to be leaf items.
      * 
      * @property
@@ -224,6 +229,19 @@ public class TreeRenderer extends OutputRenderer {
 
     public String getChildrenFor(String type) {
         return this.childrenMap.get(type);
+    }
+    
+    /**
+     * Allows you to filter some subclasses and avoid them to have children.
+     * 
+     * @property
+     */
+    public void setNoChildrenFor(String type, String value) {
+        this.noChildrenMap.put(type, value);
+    }
+
+    public String getNoChildrenFor(String type) {
+        return this.noChildrenMap.get(type);
     }
     
     /**
@@ -561,24 +579,50 @@ public class TreeRenderer extends OutputRenderer {
         return getTreeId() != null && (getFieldId() != null || getSaveUrl() != null);
     }
 
+    public boolean isExpandable() {
+        return this.expandable || isDraggable();
+    }
+
+    public void setExpandable(boolean expandable) {
+        this.expandable = expandable;
+    }
+    
+    public LevelDecorator getDecorator() {
+        return this.decorator;
+    }
+
+    public void setDecorator(LevelDecorator decorator) {
+        this.decorator = decorator;
+    }
+
     private class TreeLayout extends Layout {
 
         @Override
         public HtmlComponent createComponent(Object object, Class type) {
             HtmlList list = createList((Collection) object);
             
-            if (!isDraggable()) {
-                return list;
+            if (isDraggable()) {
+                return createScript(list, true);
             }
             else {
-                return createDragScript(list);
+                if (isExpandable()) {
+                    return createScript(list, false);
+                }
+                else {
+                    return list;
+                }
             }
         }
 
-        private HtmlComponent createDragScript(HtmlList list) {
+        private HtmlComponent createScript(HtmlList list, boolean drag) {
             String id = getTreeId();
-            list.setId(id);
+            
+            if (id == null && !drag) {
+                id = "topLevelTree";
+            }
 
+            list.setId(id);
+            
             HtmlLink imagesUrlLink = new HtmlLink();
             imagesUrlLink.setModuleRelative(false);
             imagesUrlLink.setUrl("/javaScript/drag-drop-folder-tree/images/");
@@ -591,11 +635,11 @@ public class TreeRenderer extends OutputRenderer {
             
             HtmlScript scriptA = new HtmlScript();
             scriptA.setContentType("text/javascript");
-            scriptA.setScript(getTreeScript(id, requestUrl, imagesUrlLink.calculateUrl()));
+            scriptA.setScript(getTreeScript(id, requestUrl, imagesUrlLink.calculateUrl(), drag));
             
             HtmlStyle style = new HtmlStyle();
             style.setStyleBody(
-                    String.format("#%s,#%s-container { %s }", id, id, getStyle()) + "\n" +
+                    (getStyle() != null ? String.format("#%s,#%s-container { %s }", id, id, getStyle()) : "") + "\n" +
                     String.format("#%s ul { %s }", id, getListStyle()) + "\n" + 
                     String.format("#%s li,#%s-container li { %s }", id, id, getItemStyle()) + "\n"
             );
@@ -609,7 +653,7 @@ public class TreeRenderer extends OutputRenderer {
             return container;
         }
 
-        private String getTreeScript(String id, String requestUrl, String imagesFolder) {
+        private String getTreeScript(String id, String requestUrl, String imagesFolder, boolean drag) {
             StringBuilder script = new StringBuilder();
             
             script.append("treeRenderer_init('" + id + "', {");
@@ -617,30 +661,35 @@ public class TreeRenderer extends OutputRenderer {
             script.append("imageFolder: '" + imagesFolder + "'");
             script.append(", includeImage: " + isIncludeImage());
             
-            if (requestUrl != null) {
-                script.append(", requestUrl: '" + requestUrl + "'");
+            if (drag) {
+                if (requestUrl != null) {
+                    script.append(", requestUrl: '" + requestUrl + "'");
+                }
+                
+                if (getSaveParameter() != null) {
+                    script.append(", requestParameter: '" + getSaveParameter() + "'");
+                }
+                
+                if (getFieldId() != null) {
+                    script.append(", fieldId: '" + getFieldId() + "'");
+                }
+    
+                if (getOnComplete() != null) {
+                    script.append(", onComplete: " + getOnComplete());
+                }
+                
+                if (getOnError() != null) {
+                    script.append(", onError: " + getOnError());
+                }
+    
+                if (getMovedClass() != null) {
+                    script.append(", movedClass: '" + getMovedClass() + "'");
+                }
+            }
+            else {
+                script.append(", disableDrag: true");
             }
             
-            if (getSaveParameter() != null) {
-                script.append(", requestParameter: '" + getSaveParameter() + "'");
-            }
-            
-            if (getFieldId() != null) {
-                script.append(", fieldId: '" + getFieldId() + "'");
-            }
-
-            if (getOnComplete() != null) {
-                script.append(", onComplete: " + getOnComplete());
-            }
-            
-            if (getOnError() != null) {
-                script.append(", onError: " + getOnError());
-            }
-
-            if (getMovedClass() != null) {
-                script.append(", movedClass: '" + getMovedClass() + "'");
-            }
-
             if (getUsableLinksClasses() != null) {
                 script.append(", linkClasses: '" + getUsableLinksClasses() + "'");
             }
@@ -680,6 +729,14 @@ public class TreeRenderer extends OutputRenderer {
                     item.addChild(image);
                 }
                 
+                LevelDecorator decorator = getDecorator();
+                if (decorator != null) {
+                    HtmlComponent decoratorComponent = decorator.decorate(object);
+                    if (decoratorComponent != null) {
+                        item.addChild(decoratorComponent);
+                    }
+                }
+                
                 item.addChild(component);
                 
                 String linksForItem = getLinksFor(object);
@@ -702,8 +759,9 @@ public class TreeRenderer extends OutputRenderer {
                 
                 try {
                     String children = getChildrenFor(object);
-                 
-                    if (children != null) {
+                    boolean noChildren = getNoChildrenFor(object) != null;
+                    
+                    if (children != null && !noChildren) {
                         Collection subCollection = (Collection) RendererPropertyUtils.getProperty(object, children, false);
                         
                         if (subCollection != null && ! subCollection.isEmpty()) {
@@ -742,6 +800,10 @@ public class TreeRenderer extends OutputRenderer {
         return getValueFor(object, TreeRenderer.this.childrenMap, getChildren());
     }
     
+    protected String getNoChildrenFor(Object object) {
+        return getValueFor(object, TreeRenderer.this.noChildrenMap, null);
+    }
+
     protected String getClassFor(Object object) {
         return getValueFor(object, TreeRenderer.this.classesMap, getItemClass());
     }
@@ -789,4 +851,9 @@ public class TreeRenderer extends OutputRenderer {
         
         return value;
     }
+
+    public interface LevelDecorator {
+        public HtmlComponent decorate(Object object);
+    }
+
 }

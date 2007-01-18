@@ -913,30 +913,36 @@
 			<forward name="program" path="manage-execution-course-program"/>
 			<forward name="objectives" path="manage-execution-course-objectives"/>
 			<forward name="evaluationMethod" path="manage-execution-course-evaluationMethod"/>
+            <forward name="importSections" path="manage-execution-course-sections-import"/>
 			<forward name="importEvaluationMethod" path="manage-execution-course-evaluationMethod-import"/>
 			<forward name="bibliographicReference" path="manage-execution-course-bibliographicReference"/>
+			<forward name="orderBibliographicReferences" path="manage-execution-course-bibliographicReference-order"/>
 			<forward name="importBibliographicReferences" path="manage-execution-course-bibliographicReferences-import"/>
 			<forward name="lessonPlannings" path="manage-execution-course-lessonPlannings"/>
 			<forward name="importLessonPlannings" path="manage-execution-course-lessonPlannings-import"/>
 			<forward name="create-lessonPlanning" path="manage-execution-course-lessonPlanning-create"/>
-			<forward name="createSection" path="manage-execution-course-createSection"/>
-			<forward name="sectionsManagement" path="manage-execution-course-sectionsManagement"/>
-			<forward name="section" path="manage-execution-course-section"/>
-			<forward name="importSections" path="manage-execution-course-sections-import"/>
-			<forward name="editSection" path="manage-execution-course-editSection"/>
-			<forward name="createItem" path="manage-execution-course-createItem"/>
-			<forward name="editItem" path="manage-execution-course-editItem"/>
-			<forward name="uploadFile" path="manage-execution-course-uploadFile"/>
-			<forward name="editFile" path="manage-execution-course-editFile"/>			
+            <forward name="sectionsManagement" path="/manageExecutionCourseSite.do?method=sections"/>
+        </action>
+        <action path="/manageExecutionCourseSite"
+                parameter="method"
+                type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ManageExecutionCourseSiteDA">
+            <forward name="createSection" path="manage-execution-course-createSection"/>
+            <forward name="sectionsManagement" path="manage-execution-course-sectionsManagement"/>
+            <forward name="section" path="manage-execution-course-section"/>
+            <forward name="editSection" path="manage-execution-course-editSection"/>
+            <forward name="createItem" path="manage-execution-course-createItem"/>
+            <forward name="editItem" path="manage-execution-course-editItem"/>
+            <forward name="uploadFile" path="manage-execution-course-uploadFile"/>
+            <forward name="editFile" path="manage-execution-course-editFile"/>          
             <forward name="organizeItems" path="manage-execution-course-organizeItems"/>
             <forward name="organizeFiles" path="manage-execution-course-organizeFiles"/>
             <forward name="confirmSectionDelete" path="manage-execution-course-confirmSectionDelete"/>
             <forward name="editSectionPermissions" path="manage-execution-course-editSectionPermissions"/>
             <forward name="editItemPermissions" path="manage-execution-course-editItemPermissions"/>
             <forward name="editFile" path="manage-execution-course-editFile"/>
-   			<forward name="createScorm" path="create-scorm"/>
-   			<forward name="uploadScorm" path="upload-scorm"/>
-        </action>
+            <forward name="createScorm" path="create-scorm"/>
+            <forward name="uploadScorm" path="upload-scorm"/>
+        </action> 
         <action path="/createProgram"
         		parameter="method"
         		name="programForm"
@@ -1552,7 +1558,7 @@
             <forward name="uploadItemFile" path="/uploadItemFile.jsp"/>
         </action>
         <action path="/fileUpload" name="fileForm" parameter="method" 
-            type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ManageExecutionCourseDA" scope="request">
+            type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ManageExecutionCourseSiteDA" scope="request">
             <forward name="section" path="manage-execution-course-section"/>
   			<forward name="uploadFile" path="manage-execution-course-uploadFile"/>
    			<forward name="createScorm" path="create-scorm"/>
