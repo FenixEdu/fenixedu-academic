@@ -137,7 +137,13 @@
 <bean:define id="registration" name="registration" scope="request" type="net.sourceforge.fenixedu.domain.student.Registration"/>
 <p>
 	<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.documentRequestsManagement.createDocumentRequest"/>:
-	<html:link action="/documentRequestsManagement.do?method=prepareCreateDocumentRequest" paramId="registrationId" paramName="registration" paramProperty="idInternal">
+<%--
+	<html:link action="/documentRequestsManagement.do?method=prepareCreateDocumentRequest&schema=DocumentRequestCreateBean.chooseDocumentRequestQuickType" paramId="registrationId" paramName="registration" paramProperty="idInternal">
+		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.documentRequestsManagement.document"/> (<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="quick"/>)
+	</html:link>	
+	|
+--%>
+	<html:link action="/documentRequestsManagement.do?method=prepareCreateDocumentRequest&schema=DocumentRequestCreateBean.chooseDocumentRequestType" paramId="registrationId" paramName="registration" paramProperty="idInternal">
 		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.documentRequestsManagement.document"/>
 	</html:link>	
 </p>
@@ -217,8 +223,14 @@
 				<fr:property name="linkFormat(deliver)" value="/academicServiceRequestsManagement.do?method=deliveredAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}"/>
 				<fr:property name="key(deliver)" value="deliver"/>
 				<%--<fr:property name="visibleIf(deliver)" value="availableForEmployeeToActUpon"/>--%>
+				<fr:property name="linkFormat(print)" value="/documentRequestsManagement.do?method=printDocument&amp;documentRequestId=${idInternal}&amp;"/>
+				<fr:property name="key(print)" value="print"/>
+				<fr:property name="visibleIf(print)" value="documentRequest"/>
 				<fr:property name="linkFormat(view)" value="/academicServiceRequestsManagement.do?method=viewAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}&amp;backAction=student&amp;backMethod=visualizeRegistration"/>
 				<fr:property name="key(view)" value="view"/>
+				<fr:property name="order(view)" value="1"/>
+				<fr:property name="order(print)" value="2"/>
+				<fr:property name="order(deliver)" value="3"/>
 				<fr:property name="sortBy" value="creationDate=desc, activeSituation.creationDate=desc, urgentRequest=desc, description=asc"/>
 			</fr:layout>
 		</fr:view>
