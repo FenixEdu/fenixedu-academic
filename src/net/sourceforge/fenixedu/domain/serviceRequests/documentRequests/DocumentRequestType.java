@@ -4,22 +4,26 @@ import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice
 
 public enum DocumentRequestType {
 
-    SCHOOL_REGISTRATION_CERTIFICATE(true, AdministrativeOfficeType.DEGREE), ENROLMENT_CERTIFICATE(true,
-	    AdministrativeOfficeType.DEGREE), APPROVEMENT_CERTIFICATE(true,
-	    AdministrativeOfficeType.DEGREE), DEGREE_FINALIZATION_CERTIFICATE(true,
-	    AdministrativeOfficeType.DEGREE), SCHOOL_REGISTRATION_DECLARATION(false,
-	    AdministrativeOfficeType.DEGREE), ENROLMENT_DECLARATION(false,
-	    AdministrativeOfficeType.DEGREE), IRS_DECLARATION(true, AdministrativeOfficeType.DEGREE), DEGREE_DIPLOMA(
-	    false, AdministrativeOfficeType.DEGREE);
+    SCHOOL_REGISTRATION_CERTIFICATE(true, AdministrativeOfficeType.DEGREE, false), 
+    ENROLMENT_CERTIFICATE(true, AdministrativeOfficeType.DEGREE, false), 
+    APPROVEMENT_CERTIFICATE(true, AdministrativeOfficeType.DEGREE, false), 
+    DEGREE_FINALIZATION_CERTIFICATE(true, AdministrativeOfficeType.DEGREE, false), 
+    SCHOOL_REGISTRATION_DECLARATION(false, AdministrativeOfficeType.DEGREE, true), 
+    ENROLMENT_DECLARATION(false, AdministrativeOfficeType.DEGREE, true), 
+    IRS_DECLARATION(true, AdministrativeOfficeType.DEGREE, false), 
+    DEGREE_DIPLOMA(false, AdministrativeOfficeType.DEGREE, false);
 
     private boolean hasAdditionalInformation;
-
+    
     private AdministrativeOfficeType administrativeOfficeType;
+    
+    private boolean allowedToQuickDeliver;
 
     private DocumentRequestType(boolean hasAdditionalInformation,
-	    AdministrativeOfficeType administrativeOfficeType) {
+	    AdministrativeOfficeType administrativeOfficeType, boolean allowedToQuickDeliver) {
 	this.hasAdditionalInformation = hasAdditionalInformation;
 	this.administrativeOfficeType = administrativeOfficeType;
+	this.allowedToQuickDeliver = allowedToQuickDeliver;
     }
 
     public String getName() {
@@ -50,6 +54,14 @@ public enum DocumentRequestType {
 
     public boolean getHasAdditionalInformation() {
 	return hasAdditionalInformation;
+    }
+
+    public boolean isAllowedToQuickDeliver() {
+        return allowedToQuickDeliver;
+    }
+
+    public void setAllowedToQuickDeliver(boolean allowedToQuickDeliver) {
+        this.allowedToQuickDeliver = allowedToQuickDeliver;
     }
 
 }
