@@ -97,7 +97,7 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 	List<DocumentRequest> documentRequests = getAdministrativeOffice().searchDocumentsBy(
 		null,
 		AcademicServiceRequestSituationType.valueOf(request
-			.getParameter("academicSituationType")), null, null, getEmployee().getCurrentCampus());
+			.getParameter("academicSituationType")), null, null, getEmployee().getCurrentCampus(), null);
 	request.setAttribute("documentRequestsResult", documentRequests);
 	request.setAttribute("academicSituationType", AcademicServiceRequestSituationType
 		.valueOf(request.getParameter("academicSituationType")));
@@ -107,27 +107,16 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
     public ActionForward search(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 
-	DocumentRequestSearchBean documentRequestSearchBean = (DocumentRequestSearchBean) getRenderedObject("documentRequestSearch");
+	final DocumentRequestSearchBean documentRequestSearchBean = (DocumentRequestSearchBean) getRenderedObject("documentRequestSearch");
 
-	// final DocumentRequestType chosenType = documentRequestSearchBean ==
-	// null ? DocumentRequestType
-	// .valueOf(request.getParameter("chosenType")) :
-	// documentRequestSearchBean
-	// .getChosenDocumentRequestType();
 	final AcademicServiceRequestSituationType academicSituationType = documentRequestSearchBean == null ? AcademicServiceRequestSituationType
 		.valueOf(request.getParameter("academicSituationType"))
 		: documentRequestSearchBean.getAcademicServiceRequestSituationType();
-	// final boolean urgent = documentRequestSearchBean == null ?
-	// Boolean.valueOf(request
-	// .getParameter("urgent")) :
-	// documentRequestSearchBean.getUrgentRequest();
 
 	List<DocumentRequest> documentRequests = getAdministrativeOffice().searchDocumentsBy(null,
-		academicSituationType, null, null, getEmployee().getCurrentCampus());
+		academicSituationType, null, null, getEmployee().getCurrentCampus(), null);
 
-	// request.setAttribute("chosenType", chosenType);
 	request.setAttribute("academicSituationType", academicSituationType);
-	// request.setAttribute("urgent", urgent);
 	request.setAttribute("documentRequestsResult", documentRequests);
 
 	return mapping.findForward("prepareSearch");

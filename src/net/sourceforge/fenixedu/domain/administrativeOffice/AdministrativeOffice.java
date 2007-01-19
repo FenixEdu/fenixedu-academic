@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -76,7 +77,7 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
 
     public List<DocumentRequest> searchDocumentsBy(DocumentRequestType documentRequestType,
 	    AcademicServiceRequestSituationType requestSituationType, Boolean isUrgent,
-	    Registration registration, Campus campus) {
+	    Registration registration, Campus campus, Employee employee) {
 
 	final List<DocumentRequest> result = new ArrayList<DocumentRequest>();
 
@@ -97,6 +98,10 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
 		}
 
 		if (campus != null && !documentRequest.getCampus().equals(campus)) {
+		    continue;
+		}
+
+		if (employee != null && !documentRequest.isNewRequest() && !documentRequest.getActiveSituation().getEmployee().equals(employee)) {
 		    continue;
 		}
 
