@@ -211,10 +211,12 @@
 									    
 									    // Ended before last day of this month
 									    else {	
-											entryDays = Days.daysBetween(entry.getBegin(), entry.getEnd()).getDays() + 1;											
+											int beginDay = entry.getBegin().getDayOfMonth() - 1;
+											entryDays = Days.daysBetween(entry.getBegin(), entry.getEnd()).getDays() + 1;
+											remainingDays = monthNumberOfDays - (entryDays + beginDay);																							
 											classString = "tdbar";
 											spaceString = "&nbsp;";
-											styleString = "margin: 0 " + entryDays + "px 0 " + entryDays + "px; width: " + entryDays + "px;";											
+											styleString = "margin: 0 " + remainingDays + "px 0 " + beginDay + "px; width: " + entryDays + "px;";											
 									    }									    									    
 									}																																
 							    } 							    
