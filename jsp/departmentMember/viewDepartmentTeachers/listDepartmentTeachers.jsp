@@ -14,7 +14,6 @@
 	<h:form>
 	
 		<h:outputText value="<h2>#{bundle['label.teacher.list.title']}</h2>" escape="false" />
-
 		<h:outputText value="<h3>#{viewDepartmentTeachers.department.realName}</h3>" escape="false" />
 
 	
@@ -23,13 +22,14 @@
 			<fc:selectOneMenu id="dropDownListExecutionYearID" value="#{viewDepartmentTeachers.selectedExecutionYearID}" valueChangeListener="#{viewDepartmentTeachers.onSelectedExecutionYearChanged}" onchange="this.form.submit();">
 				<f:selectItems value="#{viewDepartmentTeachers.executionYears}" />
 			</fc:selectOneMenu>
-			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
 		</h:panelGrid>
+		<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
+		
 	
 		<h:outputText value="<br/>" escape="false" />
 			
 		<h:dataTable value="#{viewDepartmentTeachers.departmentTeachers}"
-			var="teacher" columnClasses="listClasses" headerClass="listClasses-header" style="width: 70%;">
+			var="teacher" styleClass="tstyle2 thleft" columnClasses="width5em,," style="">
 			<h:column>
 				<f:facet name="header">
 					<h:outputText value="#{bundle['label.teacher.number']}"></h:outputText>
