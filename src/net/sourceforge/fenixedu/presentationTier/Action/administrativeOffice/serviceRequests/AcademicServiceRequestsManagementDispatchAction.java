@@ -23,9 +23,13 @@ import org.apache.struts.action.DynaActionForm;
 public class AcademicServiceRequestsManagementDispatchAction extends FenixDispatchAction {
 
     private AcademicServiceRequest getAndSetAcademicServiceRequest(final HttpServletRequest request) {
+	Integer academicServiceRequestId = getRequestParameterAsInteger(request,
+		"academicServiceRequestId");
+	if (academicServiceRequestId == null) {
+	    academicServiceRequestId = (Integer) request.getAttribute("academicServiceRequestId");
+	}
 	final AcademicServiceRequest academicServiceRequest = rootDomainObject
-		.readAcademicServiceRequestByOID(getRequestParameterAsInteger(request,
-			"academicServiceRequestId"));
+		.readAcademicServiceRequestByOID(academicServiceRequestId);
 	request.setAttribute("academicServiceRequest", academicServiceRequest);
 	return academicServiceRequest;
     }

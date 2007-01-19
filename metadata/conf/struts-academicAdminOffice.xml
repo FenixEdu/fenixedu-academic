@@ -291,7 +291,7 @@
 				<forward name="confirmCreateDocumentRequest" path="documentRequests.management.confirmCreateDocumentRequest"/>		
 				<forward name="viewDocumentRequestsToCreate" path="documentRequest.viewDocumentRequestsToCreate"/>		
 				<forward name="viewRegistrationDetails" path="student.viewRegistrationDetails"/>
-				
+				<forward name="prepareRejectAcademicServiceRequest" path="/academicServiceRequestsManagement.do?method=prepareRejectAcademicServiceRequest"/>
 		</action>
 		
 		<!-- Begin Payments -->
