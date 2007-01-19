@@ -97,8 +97,8 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base {
 	    if(parentEntry.getBegin().isAfter(begin) || parentEntry.getEnd().isBefore(end)) {
 		throw new DomainException("error.AcademicCalendarEntry.invalid.dates");
 	    }
-	    for (AcademicCalendarEntry academicCalendarEntry : parentEntry.getChildEntries()) {
-		if(!academicCalendarEntry.equals(this) && entriesTimeIntervalIntersection(begin, end)) {
+	    for (AcademicCalendarEntry childEntry : parentEntry.getChildEntries()) {
+		if(!childEntry.equals(this) && childEntry.entriesTimeIntervalIntersection(begin, end)) {
 		    throw new DomainException("error.AcademicCalendarEntry.dates.intersection");
 		}
 	    }

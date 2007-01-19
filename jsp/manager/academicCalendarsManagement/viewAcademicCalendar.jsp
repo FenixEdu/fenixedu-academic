@@ -74,7 +74,7 @@
 			<bean:message bundle="MANAGER_RESOURCES" key="label.insert.calendar.entry"/>
 		</html:link>,	
 		<html:link page="/academicCalendarsManagement.do?method=prepareEditAcademicCalendar" paramId="academicCalendarID" paramName="academicCalendar" paramProperty="idInternal">
-			<bean:message bundle="MANAGER_RESOURCES" key="label.edit.academic.calendar"/>
+			<bean:message bundle="MANAGER_RESOURCES" key="label.edit.academic.calendar.entry"/>
 		</html:link>,		
 		<html:link page="/academicCalendarsManagement.do?method=deleteAcademicCalendar" paramId="academicCalendarID" paramName="academicCalendar" paramProperty="idInternal" onclick="return confirm('Tem a certeza que deseja apagar o calendário?')">
 			<bean:message bundle="MANAGER_RESOURCES" key="label.delete.academic.calendar"/>
@@ -94,7 +94,7 @@
 			<bean:message bundle="MANAGER_RESOURCES" key="label.insert.calendar.entry"/>
 		</html:link>,	
 		<html:link page="/academicCalendarsManagement.do?method=prepareEditAcademicCalendarEntry" paramId="academicCalendarEntryID" paramName="calendarEntry" paramProperty="idInternal">		
-			<bean:message bundle="MANAGER_RESOURCES" key="label.edit.academic.calendar"/>
+			<bean:message bundle="MANAGER_RESOURCES" key="label.edit.academic.calendar.entry"/>
 		</html:link>,
 		<html:link page="/academicCalendarsManagement.do?method=deleteAcademicCalendarEntry" paramId="academicCalendarEntryID" paramName="calendarEntry" paramProperty="idInternal" onclick="return confirm('Tem a certeza que deseja apagar a entrada?')">
 			<bean:message bundle="MANAGER_RESOURCES" key="label.delete.academic.calendar"/>

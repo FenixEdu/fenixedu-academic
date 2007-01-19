@@ -50,10 +50,7 @@ public class AcademicCalendarsManagementDA extends FenixDispatchAction {
     public ActionForward chooseCalendarEntryTypePostBack(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	IViewState viewState = RenderUtils.getViewState("calendarEntryBeanWithType");
-	if(viewState == null) {
-	    viewState = RenderUtils.getViewState("calendarEntryBeanWithInfo");
-	}
+	IViewState viewState = RenderUtils.getViewState();	
 	CalendarEntryBean bean = (CalendarEntryBean) viewState.getMetaObject().getObject();		
 	request.setAttribute("calendarEntryBean", bean);
 	return mapping.findForward("prepareCreateCalendarEntry");

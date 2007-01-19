@@ -20,6 +20,7 @@
 	</logic:messagesPresent>
 	
 	<logic:empty name="academicCalendar">
+		<p class="mtop05"><b><bean:message key="label.create.academic.calendar" bundle="MANAGER_RESOURCES"/></b></p>
 		<fr:create type="net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendar" schema="CreateAcademicCalendar"
 			action="/academicCalendarsManagement.do?method=prepareChooseCalendar" >
 			<fr:layout name="tabular">
@@ -28,7 +29,9 @@
 			</fr:layout>	
 		</fr:create>
 	</logic:empty>	
+	
 	<logic:notEmpty name="academicCalendar">
+		<p class="mtop05"><b><bean:message key="label.edit.academic.calendar" bundle="MANAGER_RESOURCES"/></b></p>
 		<bean:define id="viewCalendarURL">/academicCalendarsManagement.do?method=viewAcademicCalendar&amp;academicCalendarID=<bean:write name="academicCalendar" property="idInternal"/></bean:define>
 		<fr:edit schema="CreateAcademicCalendar" type="net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendar" name="academicCalendar"
 			action="<%= viewCalendarURL %>">
