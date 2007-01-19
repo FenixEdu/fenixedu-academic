@@ -11294,8 +11294,8 @@
         <filterChains>
         	<chain name="AcademicAdministrativeOfficeAuthorization"></chain>
         </filterChains>     
-    </service>    
-    <service>
+    </service> 
+	<service>
     	<name>DeletePenaltyExemption</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.gratuity.DeletePenaltyExemption</implementationClass>
         <description></description>
@@ -11313,7 +11313,24 @@
         <filterChains>
         	<chain name="AcademicAdministrativeOfficeAuthorization"></chain>
         </filterChains>     
-    </service>
-    
+    </service>   
+    <service>
+    	<name>DeleteAcademicCalendar</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.academicCalendarManagement.DeleteAcademicCalendar</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="ManagerAuthorization"></chain>
+        </filterChains>     
+    </service> 
+    <service>
+    	<name>DeleteAcademicCalendarEntry</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.academicCalendarManagement.DeleteAcademicCalendarEntry</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="ManagerAuthorization"></chain>
+        </filterChains>     
+    </service>    
     
 </serviceDefinitions>

@@ -27,3 +27,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Changes in Functionalities" changes-20070117194619.sql
+execute "Create Academic Calendar Tables" createAcademicCalendarTables.sql

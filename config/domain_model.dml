@@ -202,6 +202,45 @@ class net.sourceforge.fenixedu.domain.space.Blueprint extends net.sourceforge.fe
 	YearMonthDay validUntil;
 }
 
+class net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendar extends net.sourceforge.fenixedu.domain.DomainObject {
+	MultiLanguageString title;
+	MultiLanguageString description;
+}
+
+class net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry extends net.sourceforge.fenixedu.domain.DomainObject {
+	MultiLanguageString title;
+	MultiLanguageString description;
+	Integer keyAcademicCalendar;
+	Integer keyParentEntry;
+	DateTime begin;
+	DateTime end;
+	String ojbConcreteClass;
+}
+
+	class net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicYearCE extends net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry {
+		
+	}
+	
+	class net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicSemesterCE extends net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry {
+		
+	}	
+	
+	class net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicTrimesterCE extends net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry {
+		
+	}
+	
+	class net.sourceforge.fenixedu.domain.time.calendarStructure.LessonsPeriodCE extends net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry {
+		
+	}
+	
+	class net.sourceforge.fenixedu.domain.time.calendarStructure.ExamsPeriodCE extends net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry {
+		
+	}
+	
+	class net.sourceforge.fenixedu.domain.time.calendarStructure.EnrolmentsPeriodCE extends net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry {
+		
+	}	
+	
 
 //Start of Accounting
 class net.sourceforge.fenixedu.domain.accounting.Account extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -11688,6 +11727,34 @@ relation LoginLoginPeriod {
 relation RootDomainObjectLoginPeriod {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.LoginPeriod playsRole loginPeriods {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectAcademicCalendar {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendar playsRole academicCalendars {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectAcademicCalendarEntry {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry playsRole academicCalendarEntries {
+		multiplicity *;
+	}
+}
+
+relation AcademicCalendarAcademicCalendarEntry {
+	net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendar playsRole academicCalendar;
+	net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry playsRole entries {
+		multiplicity *;
+	}
+}
+
+relation AcademicCalendarEntryAcademicCalendarEntry {
+	net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry playsRole parentEntry;
+	net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry playsRole childEntries {
 		multiplicity *;
 	}
 }

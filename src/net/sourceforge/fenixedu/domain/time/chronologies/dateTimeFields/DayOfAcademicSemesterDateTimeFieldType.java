@@ -1,7 +1,7 @@
-package net.sourceforge.fenixedu.domain.time.dateTimeFields;
+package net.sourceforge.fenixedu.domain.time.chronologies.dateTimeFields;
 
 import net.sourceforge.fenixedu.domain.time.chronologies.AcademicChronology;
-import net.sourceforge.fenixedu.domain.time.durationFields.AcademicSemestersDurationFieldType;
+import net.sourceforge.fenixedu.domain.time.chronologies.durationFields.AcademicSemestersDurationFieldType;
 
 import org.joda.time.Chronology;
 import org.joda.time.DateTimeField;
@@ -28,7 +28,7 @@ public class DayOfAcademicSemesterDateTimeFieldType extends DateTimeFieldType {
 	if(chronology instanceof AcademicChronology) {
 	    return ((AcademicChronology)chronology).dayOfAcademicSemester();
 	}
-	return null;	
+	throw unsupported();
     }
     
     @Override
@@ -39,5 +39,9 @@ public class DayOfAcademicSemesterDateTimeFieldType extends DateTimeFieldType {
     @Override
     public DurationFieldType getRangeDurationType() {
 	return AcademicSemestersDurationFieldType.ACADEMIC_SEMESTERS_TYPE;
+    }
+    
+    private UnsupportedOperationException unsupported() {
+        return new UnsupportedOperationException(DAY_OF_ACADEMIC_SEMESTER_TYPE + " field is unsupported");
     }
 }

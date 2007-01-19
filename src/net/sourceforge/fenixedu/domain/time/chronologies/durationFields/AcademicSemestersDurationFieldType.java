@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.domain.time.durationFields;
+package net.sourceforge.fenixedu.domain.time.chronologies.durationFields;
 
 import net.sourceforge.fenixedu.domain.time.chronologies.AcademicChronology;
 

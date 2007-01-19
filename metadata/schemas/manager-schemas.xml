@@ -354,3 +354,75 @@
 	<slot name="endDate" />
 	<slot name="login" hidden="true"/>
 </schema>
+
+<schema name="AcademicCalendarInfo" type="net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendar" bundle="MANAGER_RESOURCES">
+	<slot name="title" layout="link" key="label.academicCalendar.title">
+		<property name="linkFormat" value="/academicCalendarsManagement.do?method=viewAcademicCalendar&amp;academicCalendarID=${idInternal}"/>
+    	<property name="contextRelative" value="true"/>
+    	<property name="moduleRelative" value="true"/>    	    	
+        <property name="useParent" value="true"/>
+	</slot>
+	<slot name="description"  key="label.academicCalendar.description"/>
+</schema>
+
+<schema name="CreateAcademicCalendar" type="net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendar" bundle="MANAGER_RESOURCES"
+	constructor="title, description">
+	<slot name="title" key="label.academicCalendar.title" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="description" key="label.academicCalendar.description"/>
+</schema>
+
+<schema name="AcademicCalendarInfoWithoutLinks" type="net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendar" bundle="MANAGER_RESOURCES">
+	<slot name="title" key="label.academicCalendar.title" />
+	<slot name="type" key="label.type" />
+	<slot name="description" key="label.academicCalendar.description"/>
+</schema>
+
+<schema name="AcademicCalendarEntryInfo" type="net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry" bundle="MANAGER_RESOURCES">
+	<slot name="title" key="label.academicCalendar.title" />
+	<slot name="type" key="label.type" />
+	<slot name="description" key="label.academicCalendar.description"/>
+	<slot name="begin" key="label.begin"/>
+	<slot name="end" key="label.end"/>	
+</schema>
+
+<schema name="ChooseAcademicCalendarEntryType" type="net.sourceforge.fenixedu.dataTransferObject.manager.academicCalendarManagement.CalendarEntryBean" bundle="MANAGER_RESOURCES">	
+	<slot name="type" layout="menu-select-postback" key="label.type" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">				
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.manager.AcademicCalendarEntryTypes"/>
+		<property name="eachLayout" value="label-to-academicCalendar-management"/>
+		<property name="destination" value="postBack"/>	
+    </slot>        				
+</schema>
+
+<schema name="CreateAcademicCalendarEntryType" type="net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry" bundle="MANAGER_RESOURCES">
+	<slot hidden="true" name="academicCalendar" />
+	<slot hidden="true" name="parentEntry" />
+	<slot name="title" key="label.academicCalendar.title" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="description" key="label.academicCalendar.description"/>
+	<slot name="begin" key="label.begin" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="end" key="label.end" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>	    				
+</schema>
+
+<schema name="CreateAcademicSemesterCECalendarEntryType" type="net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicSemesterCE" bundle="MANAGER_RESOURCES" extends="CreateAcademicCalendarEntryType" constructor="academicCalendar, parentEntry, title, description, begin, end">
+</schema>
+
+<schema name="CreateAcademicYearCECalendarEntryType" type="net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicYearCE" bundle="MANAGER_RESOURCES" extends="CreateAcademicCalendarEntryType" constructor="academicCalendar, parentEntry, title, description, begin, end">
+</schema>
+
+<schema name="CreateAcademicTrimesterCECalendarEntryType" type="net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicTrimesterCE" bundle="MANAGER_RESOURCES" extends="CreateAcademicCalendarEntryType" constructor="academicCalendar, parentEntry, title, description, begin, end">
+</schema>
+
+<schema name="CreateLessonsPeriodCECalendarEntryType" type="net.sourceforge.fenixedu.domain.time.calendarStructure.LessonsPeriodCE" bundle="MANAGER_RESOURCES" extends="CreateAcademicCalendarEntryType" constructor="academicCalendar, title, description, begin, end">
+</schema>
+
+<schema name="CreateEnrolmentsPeriodCECalendarEntryType" type="net.sourceforge.fenixedu.domain.time.calendarStructure.EnrolmentsPeriodCE" bundle="MANAGER_RESOURCES" extends="CreateAcademicCalendarEntryType" constructor="academicCalendar, title, description, begin, end">
+</schema>
+
+<schema name="CreateExamsPeriodCECalendarEntryType" type="net.sourceforge.fenixedu.domain.time.calendarStructure.ExamsPeriodCE" bundle="MANAGER_RESOURCES" extends="CreateAcademicCalendarEntryType" constructor="academicCalendar, title, description, begin, end">
+</schema>
+
+<schema name="EditAcademicCalendarEntryType" type="net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry" bundle="MANAGER_RESOURCES">	
+	<slot name="title" key="label.academicCalendar.title" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="description" key="label.academicCalendar.description"/>
+	<slot name="begin" key="label.begin" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="end" key="label.end" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>	    					
+</schema>

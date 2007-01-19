@@ -1,27 +1,29 @@
 package net.sourceforge.fenixedu.domain.time.chronologies;
 
-import net.sourceforge.fenixedu.domain.time.dateTimeFields.AcademicSemesterOfAcademicYearDateTimeFieldType;
-import net.sourceforge.fenixedu.domain.time.dateTimeFields.AcademicYearDateTimeField;
-import net.sourceforge.fenixedu.domain.time.dateTimeFields.AcademicYearDateTimeFieldType;
-import net.sourceforge.fenixedu.domain.time.dateTimeFields.DayOfAcademicSemesterDateTimeFieldType;
-import net.sourceforge.fenixedu.domain.time.durationFields.AcademicSemestersDurationFieldType;
-import net.sourceforge.fenixedu.domain.time.durationFields.AcademicYearsDurationFieldType;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendar;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicSemesterCE;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicYearCE;
+import net.sourceforge.fenixedu.domain.time.chronologies.dateTimeFields.AcademicSemesterDateTimeField;
+import net.sourceforge.fenixedu.domain.time.chronologies.dateTimeFields.AcademicSemesterOfAcademicYearDateTimeField;
+import net.sourceforge.fenixedu.domain.time.chronologies.dateTimeFields.AcademicYearDateTimeField;
+import net.sourceforge.fenixedu.domain.time.chronologies.dateTimeFields.DayOfAcademicSemesterDateTimeField;
+import net.sourceforge.fenixedu.domain.time.chronologies.durationFields.AcademicSemestersDurationField;
+import net.sourceforge.fenixedu.domain.time.chronologies.durationFields.AcademicYearsDurationField;
 
 import org.joda.time.Chronology;
+import org.joda.time.DateTime;
 import org.joda.time.DateTimeField;
 import org.joda.time.DateTimeZone;
 import org.joda.time.DurationField;
-import org.joda.time.YearMonthDay;
+import org.joda.time.Interval;
 import org.joda.time.chrono.AssembledChronology;
-import org.joda.time.field.PreciseDateTimeField;
-import org.joda.time.field.PreciseDurationField;
+import org.joda.time.chrono.ISOChronology;
 
 public class AcademicChronology extends AssembledChronology {
+      
+    private transient AcademicCalendar academicCalendar;
     
-    private transient long academicYearMillis;
-
-    private transient long academicSemesterMillis;
-
     
     private transient DurationField acAcademicYearsField;
 
@@ -30,59 +32,30 @@ public class AcademicChronology extends AssembledChronology {
     
     private transient DateTimeField acAcademicYear;
     
+    private transient DateTimeField acAcademicSemester;    
+    
     private transient DateTimeField acAcademicSemesterOfAcademicYear;
 
     private transient DateTimeField acDayOfAcademicSemester;
 
     
-    public AcademicChronology(Chronology base, YearMonthDay academiceYearBeginDate,
-	    YearMonthDay academiceYearEndDate, YearMonthDay academicSemesterBeginDate,
-	    YearMonthDay academicSemesterEndDate) {
-	
-	super(base, null);
-	this.academicYearMillis = getAcademicYearMillis(academiceYearBeginDate, academiceYearEndDate);
-	this.academicSemesterMillis = getAcademicSemesterMillis(academicSemesterBeginDate, academicSemesterEndDate);
-    }
-  
+    public AcademicChronology(AcademicCalendar academicCalendar_) {
+	super(ISOChronology.getInstance(), null);
+	academicCalendar = academicCalendar_;	
+    }     
+    
+    // Overrided Methods
+    
     @Override
-    protected void assemble(Fields fields) {
-	if(this.academicYearMillis > 0) {
-	    acAcademicYearsField = new PreciseDurationField(AcademicYearsDurationFieldType.ACADEMIC_YEARS_TYPE, academicYearMillis);
-	    acAcademicYear = new AcademicYearDateTimeField(AcademicYearDateTimeFieldType.ACADEMIC_YEAR_TYPE, acAcademicYearsField);
-	}
-	
-	if(this.academicSemesterMillis > 0) {
-            acAcademicSemestersField = new PreciseDurationField(AcademicSemestersDurationFieldType.ACADEMIC_SEMESTERS_TYPE, academicSemesterMillis);
-            acAcademicSemesterOfAcademicYear = new PreciseDateTimeField(AcademicSemesterOfAcademicYearDateTimeFieldType.ACADEMIC_SEMESTER_OF_ACADEMIC_YEAR, acAcademicSemestersField, acAcademicYearsField);	
-            acDayOfAcademicSemester = new PreciseDateTimeField(DayOfAcademicSemesterDateTimeFieldType.DAY_OF_ACADEMIC_SEMESTER_TYPE, getBase().days(), acAcademicSemestersField);
-	}	
+    protected void assemble(Fields fields) {	
+	acAcademicYearsField = new AcademicYearsDurationField(this);
+	acAcademicYear = new AcademicYearDateTimeField(this);		
+        
+	acAcademicSemester = new AcademicSemesterDateTimeField(this);
+	acAcademicSemestersField = new AcademicSemestersDurationField(this);
+        acAcademicSemesterOfAcademicYear = new AcademicSemesterOfAcademicYearDateTimeField(this);	
+        acDayOfAcademicSemester = new DayOfAcademicSemesterDateTimeField(this); 	
     }
-
-    // DateTime Fields
-   
-    public DateTimeField academicYear() {
-	return acAcademicYear;
-    }
-    
-    public DateTimeField academicSemesterOfAcademicYear() {	
-	return acAcademicSemesterOfAcademicYear;
-    }
-    
-    public DateTimeField dayOfAcademicSemester() {
-	return acDayOfAcademicSemester;
-    }
-
-    // Duration Fields
-
-    public DurationField academicYears() {
-	return acAcademicYearsField;
-    }
-
-    public DurationField academicSemesters() {
-	return acAcademicSemestersField;
-    }
-    
-    // -------
 
     @Override
     public Chronology withUTC() {
@@ -102,21 +75,76 @@ public class AcademicChronology extends AssembledChronology {
 	    str = str + '[' + zone.getID() + ']';
 	}
 	return str;
+    }       
+    
+    // DateTime Fields
+   
+    public DateTimeField academicYear() {
+	return acAcademicYear;
     }
     
-    private long getAcademicYearMillis(YearMonthDay academiceYearsBeginDate,
-	    YearMonthDay academiceYearsEndDate) {
-	return (academiceYearsBeginDate != null && academiceYearsEndDate != null) ? academiceYearsEndDate
-		.toDateTimeAtMidnight().getMillis()
-		- academiceYearsBeginDate.toDateTimeAtMidnight().getMillis()
-		: 0;
+    public DateTimeField academicSemester() {	
+	return acAcademicSemester;
+    }    
+    
+    public DateTimeField academicSemesterOfAcademicYear() {	
+	return acAcademicSemesterOfAcademicYear;
+    }
+    
+    public DateTimeField dayOfAcademicSemester() {
+	return acDayOfAcademicSemester;
     }
 
-    private long getAcademicSemesterMillis(YearMonthDay academicSemesterBeginDate,
-	    YearMonthDay academicSemesterEndDate) {
-	return (academicSemesterBeginDate != null && academicSemesterEndDate != null) ? academicSemesterEndDate
-		.toDateTimeAtMidnight().getMillis()
-		- academicSemesterBeginDate.toDateTimeAtMidnight().getMillis()
-		: 0;
-    }   
+    // Duration Fields
+
+    public DurationField academicYears() {
+	return acAcademicYearsField;
+    }
+
+    public DurationField academicSemesters() {
+	return acAcademicSemestersField;
+    }
+    
+    // Auxiliar Methods
+
+    public int getAcademicYear(long instant) {
+	Integer entryValueByInstant = academicCalendar.getEntryValueByInstant(instant, AcademicYearCE.class, null);
+	if(entryValueByInstant != null) {
+	    return entryValueByInstant;
+	}
+	return 0;
+    }
+    
+    public int getDayOfAcademicSemester(long instant) {
+	AcademicCalendarEntry entryByInstant = academicCalendar.getEntryByInstant(instant, AcademicSemesterCE.class, AcademicYearCE.class);	
+	if (entryByInstant != null) {
+	    DateTime instantDateTime = new DateTime(instant);
+	    Interval interval = new Interval(entryByInstant.getBegin(), instantDateTime);
+	    int days = interval.toPeriod().getDays();
+	    if (days > 0) {
+		return days;
+	    }
+	}	
+	return 0;
+    }
+    
+    public int getAcademicSemesterOfAcademicYear(long instant) {
+	Integer entryValueByInstant = academicCalendar.getEntryValueByInstant(instant, AcademicSemesterCE.class, AcademicYearCE.class);	
+	if (entryValueByInstant != null) {
+	    return entryValueByInstant;
+	}
+	return 0;
+    }
+    
+    public int getMaximumValueForAcademicSemesterOfAcademicYear(long instant) {
+	Integer entryValueByInstant = academicCalendar.getEntryValueByInstant(instant, AcademicSemesterCE.class, AcademicYearCE.class);	
+	if (entryValueByInstant == null) {
+	    return getMaximumValueForAcademicSemesterOfAcademicYear();
+	}	
+	return getMaximumValueForAcademicSemesterOfAcademicYear() - entryValueByInstant.intValue();   
+    }
+    
+    public int getMaximumValueForAcademicSemesterOfAcademicYear() {
+	return 2;   
+    }
 }

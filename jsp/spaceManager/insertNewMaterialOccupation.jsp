@@ -27,9 +27,9 @@
 	<fr:form>
 		<fr:edit nested="true" name="materialTypeBean" id="materialTypeWithMaterialType" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.MaterialTypeBean" schema="ChooseMaterialType">						
 			<fr:destination name="postBack" path="/manageMaterialSpaceOccupations.do?method=prepareChooseMaterial&page=0"/>
-				<fr:layout name="tabular">      										  
-		   			<fr:property name="classes" value="tstyle5 thmiddle thlight mtop05"/>
-      			</fr:layout> 
+			<fr:layout name="tabular">      										  
+	   			<fr:property name="classes" value="tstyle5 thmiddle thlight mtop05"/>
+     		</fr:layout> 
 		</fr:edit>
 	</fr:form>						
 	

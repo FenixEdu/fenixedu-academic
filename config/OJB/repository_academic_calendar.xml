@@ -1,0 +1,29 @@
+<class-descriptor class="net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendar" table="ACADEMIC_CALENDAR">
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry" table="ACADEMIC_CALENDAR_ENTRY">
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicYearCE"/>
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicSemesterCE"/>
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicTrimesterCE"/>
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.time.calendarStructure.LessonsPeriodCE"/>
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.time.calendarStructure.ExamsPeriodCE"/>			
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.time.calendarStructure.EnrolmentsPeriodCE"/>	
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicYearCE" table="ACADEMIC_CALENDAR_ENTRY">
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicSemesterCE" table="ACADEMIC_CALENDAR_ENTRY">
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicTrimesterCE" table="ACADEMIC_CALENDAR_ENTRY">
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.time.calendarStructure.LessonsPeriodCE" table="ACADEMIC_CALENDAR_ENTRY">
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.time.calendarStructure.ExamsPeriodCE" table="ACADEMIC_CALENDAR_ENTRY">
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.time.calendarStructure.EnrolmentsPeriodCE" table="ACADEMIC_CALENDAR_ENTRY">
+</class-descriptor>

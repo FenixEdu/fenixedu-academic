@@ -2190,8 +2190,7 @@
        		<forward name="prepareGenerateSibsOutgoingFile"   path="manager.payments.prepareGenerateSibsOutgoingFile"/>
        		<forward name="prepareUploadSibsPaymentsFile"   path="manager.payments.prepareUploadSibsPaymentsFile"/>
        		<forward name="uploadSibsPaymentsFileSuccess"   path="manager.payments.uploadSibsPaymentsFileSuccess"/>
-       	</action>
-       	
+       	</action>       	
        	
    		<!-- =================== Logins Management =================== -->
         <action path="/loginsManagement"
@@ -2207,8 +2206,8 @@
        			<forward name="prepareEditLoginTimeInterval" path="prepare-edit-login-time-interval"/>   
        			<forward name="prepareCreateNewLoginTimeInterval" path="prepare-create-new-login-time-interval"/>          			         			  			       			       			
        	</action>
-        
-        <!-- =================== Sites Management =================== -->
+       	
+		<!-- =================== Sites Management =================== -->
        	<action path="/manageSites"
                 type="net.sourceforge.fenixedu.presentationTier.Action.manager.ManageSitesDA"
                 parameter="method">
@@ -2233,7 +2232,25 @@
                 <forward name="functionalitySection" path="manage-execution-course-functionalitySection"/>
                 <forward name="editFunctionalitySection" path="manage-execution-course-editFunctionalitySection"/>
         </action>
-        
+
+       	<!-- =================== Academic Calendar Management =================== -->
+        <action path="/academicCalendarsManagement"
+				type="net.sourceforge.fenixedu.presentationTier.Action.manager.AcademicCalendarsManagementDA"
+       			scope="request"       			
+				input="/index.do"
+       			parameter="method">       			       			
+       			<forward name="prepareChooseCalendar" path="prepare-choose-calendar"/>
+       			<forward name="viewAcademicCalendar" path="view-academic-calendar"/>
+       			<forward name="prepareCreateCalendarEntry" path="prepare-create-calendar-entry"/>
+       			<forward name="prepareEditAcademicCalendar" path="prepare-edit-academic-calendar"/>
+       	</action>
+       	
+      	<action path="/prepareCreateAcademicCalendar"
+     			scope="request"
+	    	    type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction">
+      		  	<forward name="Success" path="create-academic-calendar"/>      	      
+      	</action>
+      
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->

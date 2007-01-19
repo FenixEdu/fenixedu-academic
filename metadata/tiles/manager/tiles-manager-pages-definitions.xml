@@ -758,7 +758,7 @@
 		<put name="body" value="/manager/loginsManagement/createNewLoginPeriod.jsp" />
 	</definition>	
 
-    <!-- ################### Sites Management #######################-->
+	<!-- ################### Sites Management #######################-->
     <definition name="definition.manager.manageSiteMasterPage" extends="definition.manager.masterPage" >
         <put name="body-context" value="/manager/sites/siteContext.jsp" />
         <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
@@ -824,5 +824,24 @@
     </definition>   
     <definition name="manage-execution-course-editFunctionalitySection" extends="definition.manager.manageSiteMasterPage" >
         <put name="body" value="/manager/sites/editFunctionalitySection.jsp"/>
-    </definition>   
+    </definition>  	
+
+	<!--  ###################  Academic Calendar Management ####################### -->
+	<definition name="prepare-choose-calendar" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/academicCalendarsManagement/chooseCalendar.jsp" />
+	</definition>	
+	<definition name="view-academic-calendar" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/academicCalendarsManagement/viewAcademicCalendar.jsp" />
+	</definition>	
+	<definition name="create-academic-calendar" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/academicCalendarsManagement/createAcademicCalendar.jsp" />
+	</definition>	
+	<definition name="prepare-create-calendar-entry" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/academicCalendarsManagement/createCalendarEntry.jsp" />
+	</definition>
+	<definition name="prepare-edit-academic-calendar" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/academicCalendarsManagement/createAcademicCalendar.jsp" />
+	</definition>	
+	
+				
 </tiles-definitions>

@@ -57,6 +57,12 @@ Documentation:
     </renderer>
 
     <!--@ The default presentation for every object. -->
+    <renderer type="java.lang.Class" layout="label-to-academicCalendar-management" class="net.sourceforge.fenixedu.renderers.ClassAsLabelRenderer">
+    	<property name="labelFormat" value="label.${simpleName}.type"/>
+    	<property name="bundle" value="MANAGER_RESOURCES"/>
+    </renderer>
+
+    <!--@ The default presentation for every object. -->
     <renderer type="java.lang.Object" class="net.sourceforge.fenixedu.renderers.StandardObjectRenderer">
     		<property name="labelTerminator" value=":"/>
     </renderer>

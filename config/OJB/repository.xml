@@ -91,6 +91,7 @@
 <!ENTITY vigilancy SYSTEM "repository_vigilancy.xml">
 <!ENTITY newTests SYSTEM "repository-tests.xml">
 <!ENTITY domainObjectActionLogs SYSTEM "repository-domainObjectActionLogs.xml">
+<!ENTITY academicCalendar SYSTEM "repository_academic_calendar.xml">
 ]>
 <descriptor-repository version="1.0" isolation-level="repeatable-read">
 
@@ -186,5 +187,6 @@
 	&vigilancy;
     &newTests;
     &domainObjectActionLogs;
+    &academicCalendar;
     
 </descriptor-repository>
