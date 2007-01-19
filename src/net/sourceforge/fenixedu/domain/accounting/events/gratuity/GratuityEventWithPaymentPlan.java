@@ -170,6 +170,10 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
 	return getGratuityPaymentPlan().getFirstInstallment();
     }
 
+    private Installment getLastInstallment() {
+	return getGratuityPaymentPlan().getLastInstallment();
+    }
+
     public GratuityPaymentPlan getGratuityPaymentPlan() {
 	final GratuityPaymentPlan gratuityPaymentPlanFor = getServiceAgreementTemplate()
 		.getGratuityPaymentPlanFor(getStudentCurricularPlan(), getExecutionYear());
@@ -227,11 +231,15 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
 	}
     }
 
+    public boolean installmentIsInDebt(Installment installment) {
+	return !hasAccountingTransactionFor(installment)
+		&& new YearMonthDay().isAfter(installment.getEndDate());
+    }
+
     @Override
     public boolean isInDebt() {
 	return !isClosed()
-		&& getGratuityPaymentPlan().getLastInstallment().getEndDate().isBefore(
-			new YearMonthDay());
+		&& (installmentIsInDebt(getFirstInstallment()) || installmentIsInDebt(getLastInstallment()));
     }
 
     public InstallmentPenaltyExemption getInstallmentPenaltyExemptionFor(final Installment installment) {
