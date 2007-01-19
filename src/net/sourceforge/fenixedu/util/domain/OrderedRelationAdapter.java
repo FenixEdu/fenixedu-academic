@@ -146,8 +146,16 @@ public class OrderedRelationAdapter<HolderType, ObjectType> extends RelationAdap
     private void pack(HolderType holder, ObjectType object, int offset) {
         Integer objectOrder = getOrder(object);
         
+        if (objectOrder == null) {
+            return;
+        }
+        
         for (ObjectType other : getRelation(holder)) {
             Integer otherOrder = getOrder(other);
+
+            if (otherOrder == null) {
+                continue;
+            }
             
             if (otherOrder >= objectOrder) {
                 setOrder(other, otherOrder + offset);
