@@ -27,13 +27,12 @@
 		    <fr:destination name="section.view" path="<%= "/executionCourse.do?method=section&amp;sectionID=${idInternal}&amp;executionCourseID=" + executionCourse.getIdInternal() %>"/>
 		</fr:view>
     </logic:notEmpty>
-    
+
     <bean:define id="item" name="item" type="net.sourceforge.fenixedu.domain.Item"/>
-            
+
 	<h3 class="mtop2">
-        <a name="<%= "item" + item.getIdInternal() %>" />
         <fr:view name="item" property="name"/>
-   		<span class="permalink1">(<a href="<%= request.getContextPath() + ItemProcessor.getItemAbsolutePath(executionCourse, item) %>"><bean:message key="label.link" bundle="SITE_RESOURCES"/></a>)</span>
+   		<span class="permalink1">(<a href="<%= request.getContextPath() + ItemProcessor.getItemAbsolutePath(executionCourse, item) %>" name="<%= "item" + item.getIdInternal() %>"><bean:message key="label.link" bundle="SITE_RESOURCES"/></a>)</span>
     </h3>
 
     <logic:notEmpty name="item" property="information">

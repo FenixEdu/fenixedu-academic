@@ -53,9 +53,8 @@
             <bean:define id="available" name="protectedItem" property="available"/>
             
        		<h3 class="mtop2">
-                <a name="<%= "item" + item.getIdInternal() %>" ></a>
                 <fr:view name="item" property="name"/>
-           		<span class="permalink1">(<a href="<%= request.getContextPath() + ItemProcessor.getItemAbsolutePath(executionCourse, item) %>"><bean:message key="label.link" bundle="SITE_RESOURCES"/></a>)</span>
+           		<span class="permalink1">(<a href="<%= request.getContextPath() + ItemProcessor.getItemAbsolutePath(executionCourse, item) %>" name="<%= "item" + item.getIdInternal() %>"><bean:message key="label.link" bundle="SITE_RESOURCES"/></a>)</span>
             </h3>
 
             <logic:equal name="available" value="true">
