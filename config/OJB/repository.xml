@@ -91,6 +91,7 @@
 <!ENTITY newTests SYSTEM "repository-tests.xml">
 <!ENTITY domainObjectActionLogs SYSTEM "repository-domainObjectActionLogs.xml">
 <!ENTITY academicCalendar SYSTEM "repository_academic_calendar.xml">
+<!ENTITY site SYSTEM "repository_site.xml">
 ]>
 <descriptor-repository version="1.0" isolation-level="repeatable-read">
 
@@ -109,7 +110,7 @@
     &sop;
     &masterDegree;
     &treasury;
-    &website;
+    &site;
     &gesdis;
     &authentication-roles;
     &teacher-credits;
