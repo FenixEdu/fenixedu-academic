@@ -47,16 +47,14 @@
 	</fr:view>
 </logic:present>
 
-<logic:messagesNotPresent message="true">
-	<p>
-		<span class="gen-button">
-		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-		<html:link page="/documentRequestsManagement.do?method=printDocument" paramId="documentRequestId" paramName="academicServiceRequest" paramProperty="idInternal">
-			<bean:message key="print" bundle="APPLICATION_RESOURCES"/>
-		</html:link>
-		</span>
-	</p>
-</logic:messagesNotPresent>
+<p>
+	<span class="gen-button">
+	<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
+	<html:link page="/documentRequestsManagement.do?method=printDocument" paramId="documentRequestId" paramName="academicServiceRequest" paramProperty="idInternal">
+		<bean:message key="print" bundle="APPLICATION_RESOURCES"/>
+	</html:link>
+	</span>
+</p>
 
 <html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<p class="mvert0">
