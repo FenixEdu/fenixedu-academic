@@ -130,6 +130,19 @@ public class Unit extends Unit_Base {
 		&& !hasAdministrativeOffice()
 		&& !hasUnitServiceAgreementTemplate() && !hasAnyExternalCurricularCourses();
     }
+    
+    public boolean isInternal() {
+	if(this.equals(UnitUtils.readInstitutionUnit())){
+	    return true;
+	}
+	
+	for (final Unit subUnit : getParentUnits()) {
+	    if(subUnit.isInternal()) {
+		return true;
+	    }
+	}	
+	return false;
+    }
 
     public boolean isActive(YearMonthDay currentDate) {
 	return (!this.getBeginDateYearMonthDay().isAfter(currentDate) && (this.getEndDateYearMonthDay() == null || !this
@@ -545,6 +558,10 @@ public class Unit extends Unit_Base {
     public Collection<Unit> getSubUnits(List<AccountabilityTypeEnum> accountabilityTypeEnums) {
 	return (Collection<Unit>) getChildParties(accountabilityTypeEnums, getClass());
     }
+    
+    public Collection<Unit> getSubUnits(final PartyTypeEnum type) {
+	return (Collection<Unit>) getChildParties(type, getClass());
+    }
 
     public boolean hasAnyParentUnits() {
 	return !getParentUnits().isEmpty();
@@ -747,6 +764,8 @@ public class Unit extends Unit_Base {
 	if (readUnitByAcronymAndType(institutionCode, institutionType) != null) {
 	    throw new DomainException("error.exception.commons.institution.alreadyExistsWithSameCodeAndType");
 	}
+	
+	checkChildsWithSameNameAndType(parentUnit, institutionType, institutionName);
 
 	Unit institutionUnit = new Unit();
 	institutionUnit.setName(institutionName);
@@ -757,11 +776,26 @@ public class Unit extends Unit_Base {
 
 	return institutionUnit;
     }
+    
+    private static void checkChildsWithSameNameAndType(final Unit parentUnit, final PartyTypeEnum type, final String unitName) {
+	final String name = unitName.toLowerCase();
+	for (final Unit child : parentUnit.getSubUnits(type)) {
+	    if (child.getName().toLowerCase().equals(name)) {
+		throw new DomainException(
+			"error.exception.commons.institution.parent.already.has.child.with.same.name.and.type");
+	    }
+	}
+    }
 
     private static AccountabilityType getAccountabilityType(Unit parentUnit,
 	    PartyTypeEnum institutionType) {
 
 	switch (institutionType) {
+	case COUNTRY:
+	    if (!parentUnit.getType().equals(PartyTypeEnum.PLANET)) {
+		throw new DomainException("error.exception.commons.institution.invalidParentUnit");
+	    }
+	    return AccountabilityType.readAccountabilityTypeByType(AccountabilityTypeEnum.GEOGRAPHIC);
 	case UNIVERSITY:
 	    if (!parentUnit.getType().equals(PartyTypeEnum.PLANET)
 		    && !parentUnit.getType().equals(PartyTypeEnum.COUNTRY)) {
