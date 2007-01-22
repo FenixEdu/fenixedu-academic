@@ -3,11 +3,12 @@ package net.sourceforge.fenixedu.presentationTier.Action.manager;
 import java.io.InputStream;
 import java.io.Serializable;
 
+import pt.utl.ist.fenix.tools.util.StringNormalizer;
+
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
-import net.sourceforge.fenixedu.util.StringNormalizer;
 
 public class FileItemCreationBean implements Serializable {
 
@@ -102,12 +103,15 @@ public class FileItemCreationBean implements Serializable {
         FIGURE ("figure"),
         //GRAPH ("graph"),
         //INDEX ("index"),
-        //SLIDE ("slide"),
+        SLIDE ("slide"),
         TABLE ("table"),
         EXAM ("exam"),
         TEST ("test"),
         MARKSHEET ("marksheet"),
-        PROJECT_SUBMISSION("projectSubmission")
+        PROJECT_SUBMISSION("projectSubmission"),
+        LABORATORY_GUIDE("laboratoryGuide"),
+        DIDACTIL_TEXT("didactilText"),
+        STUDY_BOOK("studyBook")
         ;
    	
    	private String type;

@@ -291,7 +291,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
 
         String displayName = bean.getDisplayName();
         if (displayName == null || displayName.length() == 0 || displayName.trim().length() == 0) {
-            errors.add("errors.titleRequired");
+            bean.setDisplayName(filename);
         }
 
         String name = bean.getAuthorsName();
