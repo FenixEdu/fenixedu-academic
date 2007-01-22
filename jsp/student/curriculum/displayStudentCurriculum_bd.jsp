@@ -9,9 +9,19 @@
 
 <h2><bean:message key="message.student.curriculum" bundle="STUDENT_RESOURCES" /></h2>
 
-<p><span class="error0"><!-- Error messages go here --><html:errors /></span></p>
-
 <bean:define id="registration" name="registration" type="net.sourceforge.fenixedu.domain.student.Registration"/>
+
+<logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
+	<ul class="mtop2">
+		<li>
+		<html:link page="/student.do?method=visualizeRegistration" paramId="registrationID" paramName="registration" paramProperty="idInternal">
+			<bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+		</html:link>
+		</li>
+	</ul>
+</logic:present>
+
+<p><span class="error0"><!-- Error messages go here --><html:errors /></span></p>
 
 <%-- Foto --%>
 <div style="float: right;">
