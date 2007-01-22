@@ -1400,7 +1400,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 	}
 
 	enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
-	enrolmentEvaluation.setWhenDateTime(new DateTime());
+	//enrolmentEvaluation.setWhenDateTime(new DateTime());
 
 	MarkSheet rectificationMarkSheet = createRectificationMarkSheet(markSheet.getExecutionPeriod(),
 		evaluationDate, markSheet.getResponsibleTeacher(), markSheet.getMarkSheetType(), reason,
