@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.util.ContractType;
 
@@ -281,4 +282,18 @@ public class Employee extends Employee_Base {
 	return getAdministrativeOffice() != null;
     }
 
+    private RoleType getRoleType() {
+	return RoleType.EMPLOYEE;
+    }
+    
+    public String getRoleLoginAlias() {
+	final List<LoginAlias> roleLoginAlias = getPerson().getLoginIdentification().getRoleLoginAlias(getRoleType());
+	
+	if (roleLoginAlias.isEmpty() || roleLoginAlias.size() > 1) {
+	    return "F" + getEmployeeNumber();
+	} else {
+	    return roleLoginAlias.get(0).getAlias(); 
+	}
+    }
+    
 }
