@@ -269,6 +269,7 @@
 				<forward name="prepareRejectAcademicServiceRequest" path="academicServiceRequests.management.prepareRejectAcademicServiceRequest"/>
 				<forward name="prepareCancelAcademicServiceRequest" path="academicServiceRequests.management.prepareCancelAcademicServiceRequest"/>
 				<forward name="prepareConcludeDocumentRequest" path="/documentRequestsManagement.do?method=prepareConcludeDocumentRequest"/>
+				<forward name="searchResults" path="academicServiceRequests.management.searchResults"/>
 		</action>
 
 		<!-- Document Requests Management -->
@@ -283,15 +284,11 @@
 				<forward name="createDocumentRequests" path="documentRequests.management.createDocumentRequests"/>				
 				<forward name="confirmCreateDocumentRequest" path="documentRequests.management.confirmCreateDocumentRequest"/>
 				<forward name="printDocument" path="documentRequests.management.printDocument"/>
-				<forward name="prepareSearch" path="documentRequests.management.prepareSearch"/>
-				<forward name="showDocumentRequests" path="documentRequests.management.showDocumentRequests"/>
-				<forward name="editDocumentRequest" path="documentRequests.management.editDocumentRequest"/>
 				<forward name="prepareCreateDocumentRequest" path="documentRequests.management.prepareCreateDocumentRequest"/>
-				<forward name="chooseStudentToCreateDocumentRequest" path="documentRequests.management.chooseStudentToCreateDocumentRequest"/>				
 				<forward name="confirmCreateDocumentRequest" path="documentRequests.management.confirmCreateDocumentRequest"/>		
 				<forward name="viewDocumentRequestsToCreate" path="documentRequest.viewDocumentRequestsToCreate"/>		
 				<forward name="viewRegistrationDetails" path="student.viewRegistrationDetails"/>
-				<forward name="prepareRejectAcademicServiceRequest" path="/academicServiceRequestsManagement.do?method=prepareRejectAcademicServiceRequest"/>
+				<forward name="processNewAcademicServiceRequest" path="/academicServiceRequestsManagement.do?method=processNewAcademicServiceRequest"/>
 		</action>
 		
 		<!-- Begin Payments -->

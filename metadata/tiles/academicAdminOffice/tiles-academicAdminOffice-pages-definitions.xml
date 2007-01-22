@@ -84,6 +84,11 @@
 	<definition name="academicServiceRequests.management.prepareCancelAcademicServiceRequest" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/serviceRequests/prepareCancelAcademicServiceRequest.jsp"/>
 	</definition>
+	
+	<definition name="academicServiceRequests.management.searchResults" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/serviceRequests/searchResults.jsp"/>
+	</definition>
+
 
 	<!-- ************* Document Requests Management ************* -->
 	<definition name="documentRequests.management.printDocument" extends="academicAdminOffice.masterPage">
@@ -92,10 +97,6 @@
 	
 	<definition name="documentRequests.management.viewNewDocumentRequests" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/serviceRequests/documentRequests/viewNewDocumentRequests.jsp"/>
-	</definition>
-	
-	<definition name="documentRequests.management.prepareSearch" extends="academicAdminOffice.masterPage">
-		<put name="body" value="/academicAdminOffice/serviceRequests/documentRequests/prepareSearch.jsp"/>
 	</definition>
 	
 	<definition name="documentRequests.management.showDocumentRequests" extends="academicAdminOffice.masterPage">

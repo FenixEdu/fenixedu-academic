@@ -1,16 +1,26 @@
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.serviceRequests;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 
@@ -85,9 +95,15 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	    request.setAttribute("failingCondition", ex.getKey());
 	    return mapping.findForward("prepareRejectAcademicServiceRequest");
 	}
-
-	request.setAttribute("registration", academicServiceRequest.getRegistration());
-	return mapping.findForward("viewRegistrationDetails");
+	
+	if (academicServiceRequest.isDocumentRequest() && ((DocumentRequest) academicServiceRequest).getDocumentRequestType().isAllowedToQuickDeliver()) {
+	    return prepareConcludeAcademicServiceRequest(mapping, actionForm, request, response);
+	} else if (request.getParameter("academicSituationType") != null) {
+	    return search(mapping, actionForm, request, response);
+	} else {
+	    request.setAttribute("registration", academicServiceRequest.getRegistration());
+	    return mapping.findForward("viewRegistrationDetails");
+	}
     }
 
     public ActionForward prepareRejectAcademicServiceRequest(ActionMapping mapping,
@@ -206,6 +222,43 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 
 	request.setAttribute("registration", academicServiceRequest.getRegistration());
 	return mapping.findForward("viewRegistrationDetails");
+    }
+
+    public ActionForward search(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+	final AcademicServiceRequestSituationType academicServiceRequestSituationType = AcademicServiceRequestSituationType.valueOf(request.getParameter("academicSituationType"));
+	request.setAttribute("academicSituationType", academicServiceRequestSituationType);
+	
+	final Collection<AcademicServiceRequest> academicServiceRequests = getAdministrativeOffice().searchAcademicServiceRequests(
+		(Employee) null,
+		academicServiceRequestSituationType,
+		(Registration) null,
+		(Boolean) null,
+		(DocumentRequestType) null,
+		getEmployee().getCurrentCampus());
+	
+	final Collection<AcademicServiceRequest> employeeRequests = new ArrayList<AcademicServiceRequest>();
+	if (academicServiceRequestSituationType != AcademicServiceRequestSituationType.NEW) {
+	    for (Iterator iter = academicServiceRequests.iterator(); iter.hasNext();) {
+		AcademicServiceRequest academicServiceRequest = (AcademicServiceRequest) iter.next();
+		if (academicServiceRequest.getActiveSituation().getEmployee() == getEmployee()) {
+		    iter.remove();
+		    employeeRequests.add(academicServiceRequest);
+		}
+	    }
+	}
+
+	request.setAttribute("academicServiceRequests", academicServiceRequests);
+	request.setAttribute("employeeRequests", employeeRequests);
+	request.setAttribute("employee", getEmployee());
+	return mapping.findForward("searchResults");
+    }
+
+    private Employee getEmployee() {
+	return AccessControl.getPerson().getEmployee();
+    }   
+
+    private AdministrativeOffice getAdministrativeOffice() {
+	return getEmployee().getAdministrativeOffice();
     }
 
 }

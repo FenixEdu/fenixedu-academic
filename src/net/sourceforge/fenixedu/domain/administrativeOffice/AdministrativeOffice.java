@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.administrativeOffice;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -14,7 +15,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 import net.sourceforge.fenixedu.domain.space.Campus;
@@ -75,25 +75,37 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
 	throw new DomainException("error.administrativeOffice.AdministrativeOffice.cannot.modify.unit");
     }
 
-    public List<DocumentRequest> searchDocumentsBy(DocumentRequestType documentRequestType,
-	    AcademicServiceRequestSituationType requestSituationType, Boolean isUrgent,
-	    Registration registration, Campus campus, Employee employee) {
+    public Collection<AcademicServiceRequest> searchAcademicServiceRequests(
+	    Employee employee,
+	    AcademicServiceRequestSituationType requestSituationType,
+	    Registration registration,
+	    Boolean isUrgent,
+	    DocumentRequestType documentRequestType,
+	    Campus campus) {
 
-	final List<DocumentRequest> result = new ArrayList<DocumentRequest>();
+	final Collection<AcademicServiceRequest> result = new ArrayList<AcademicServiceRequest>();
 
-	for (final AcademicServiceRequest serviceRequest : getAcademicServiceRequestsSet()) {
+	for (final AcademicServiceRequest academicServiceRequest : getAcademicServiceRequestsSet()) {
+	    if (employee != null && !academicServiceRequest.isNewRequest() && !academicServiceRequest.getActiveSituation().getEmployee().equals(employee)) {
+		continue;
+	    }
+	    
+	    if (requestSituationType != null && academicServiceRequest.getAcademicServiceRequestSituationType() != requestSituationType) {
+		continue;
+	    }
 
-	    if (serviceRequest instanceof DocumentRequest) {
+	    if (registration != null && academicServiceRequest.getRegistration() != registration) {
+		continue;
+	    }
 
-		final DocumentRequest documentRequest = (DocumentRequest) serviceRequest;
+	    if (isUrgent != null && academicServiceRequest.isUrgentRequest() != isUrgent.booleanValue()) {
+		continue;
+	    }
 
-		if (documentRequestType != null
-			&& documentRequest.getDocumentRequestType() != documentRequestType) {
-		    continue;
-		}
+	    if (academicServiceRequest.isDocumentRequest()) {
+		final DocumentRequest documentRequest = (DocumentRequest) academicServiceRequest;
 
-		if (requestSituationType != null
-			&& documentRequest.getAcademicServiceRequestSituationType() != requestSituationType) {
+		if (documentRequestType != null && documentRequest.getDocumentRequestType() != documentRequestType) {
 		    continue;
 		}
 
@@ -101,23 +113,9 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
 		    continue;
 		}
 
-		if (employee != null && !documentRequest.isNewRequest() && !documentRequest.getActiveSituation().getEmployee().equals(employee)) {
-		    continue;
-		}
-
-		if (isUrgent != null
-			&& documentRequest.isCertificate()
-			&& ((CertificateRequest) documentRequest).isUrgentRequest() != isUrgent
-				.booleanValue()) {
-		    continue;
-		}
-
-		if (registration != null && documentRequest.getRegistration() != registration) {
-		    continue;
-		}
-
-		result.add(documentRequest);
 	    }
+	    
+	    result.add(academicServiceRequest);
 	}
 
 	return result;
