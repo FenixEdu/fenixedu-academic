@@ -20,11 +20,7 @@ public enum EnrolmentEvaluationType {
     
     SPECIAL_SEASON,
     
-    EXTERNAL,
-    
-    EQUIVALENCE,
-    
-    CLOSED;
+    EQUIVALENCE;
     
     //FIRST_SEASON,
     
