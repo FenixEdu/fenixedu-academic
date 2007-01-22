@@ -1122,7 +1122,9 @@ public class Teacher extends Teacher_Base {
     public boolean isResponsibleFor(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod) {
 	for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCoursesSet()) {
 	    if (executionCourse.getExecutionPeriod() == executionPeriod) {
-		return isResponsibleFor(executionCourse) != null;
+		if(isResponsibleFor(executionCourse) != null) {
+		    return true;
+		}
 	    }
 	}
 	return false;
