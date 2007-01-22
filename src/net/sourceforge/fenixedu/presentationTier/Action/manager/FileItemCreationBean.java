@@ -3,12 +3,11 @@ package net.sourceforge.fenixedu.presentationTier.Action.manager;
 import java.io.InputStream;
 import java.io.Serializable;
 
-import pt.utl.ist.fenix.tools.util.StringNormalizer;
-
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.util.StringNormalizer;
 
 public class FileItemCreationBean implements Serializable {
 
