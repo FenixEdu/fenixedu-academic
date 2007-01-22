@@ -10,6 +10,8 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.commons.CollectionUtils;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
@@ -865,7 +867,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment{
     }
 
     public EnrolmentEvaluation getLatestEnrolmentEvaluation() {
-	return (getStudentCurricularPlan().getDegreeType() == DegreeType.DEGREE) ? getLatestEnrolmentEvalution(this
+	return (getStudentCurricularPlan().getDegreeType().getAdministrativeOfficeType() == AdministrativeOfficeType.DEGREE) ? getLatestEnrolmentEvalution(this
 		.getAllFinalEnrolmentEvaluations())
 		: getLatestEnrolmentEvalution(this.getEvaluations());
     }
