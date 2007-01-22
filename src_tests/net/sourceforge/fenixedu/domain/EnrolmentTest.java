@@ -322,7 +322,7 @@ public class EnrolmentTest extends DomainTestBase {
 		
 		existingTemporaryEnrolmentEvaluation = new EnrolmentEvaluation();
 
-		notExistingEnrolmentEvaluationType = EnrolmentEvaluationType.CLOSED;
+		notExistingEnrolmentEvaluationType = EnrolmentEvaluationType.IMPROVEMENT;
 		existingEnrolmentEvaluationType = EnrolmentEvaluationType.NORMAL;
 		existingTemporaryEnrolmentEvaluation.setEnrolmentEvaluationType(existingEnrolmentEvaluationType);
 		existingTemporaryEnrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
@@ -382,7 +382,7 @@ public class EnrolmentTest extends DomainTestBase {
 		impossibleGrade = "300";
 		enrolmentEvaluationTypeToSearchFor = EnrolmentEvaluationType.EQUIVALENCE;
 		String otherGrade = "10";
-		EnrolmentEvaluationType otherType = EnrolmentEvaluationType.CLOSED;
+		EnrolmentEvaluationType otherType = EnrolmentEvaluationType.NORMAL;
 		
 		// with required type and grade
 		EnrolmentEvaluation ee1 = createEnrolmentEvaluation(enrolmentToReadFrom,enrolmentEvaluationTypeToSearchFor,gradeToSearchFor);
