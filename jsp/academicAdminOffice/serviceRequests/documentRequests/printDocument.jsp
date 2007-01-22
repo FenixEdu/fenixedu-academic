@@ -47,6 +47,14 @@
 	</fr:view>
 </logic:present>
 
+<html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<p class="mtop1">
+		<span class="warning0">
+			<bean:write name="message" />
+		</span>
+	</p>
+</html:messages>
+
 <p>
 	<span class="gen-button">
 	<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
@@ -55,14 +63,6 @@
 	</html:link>
 	</span>
 </p>
-
-<html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<p class="mvert0">
-		<span class="warning0">
-			<bean:write name="message" />
-		</span>
-	</p>
-</html:messages>
 
 <p class="mtop15 mbottom025"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="documentRequest.confirmDocumentSuccessfulPrinting"/></strong></p>
 <bean:define id="documentRequest" name="academicServiceRequest" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest"/>
