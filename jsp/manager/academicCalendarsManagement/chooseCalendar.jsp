@@ -21,6 +21,10 @@
 
 	<p class="mtop05"><b><bean:message key="label.academic.calendars" bundle="MANAGER_RESOURCES"/></b></p>
 	
+	<p><html:link page="/prepareCreateAcademicCalendar.do">
+		<bean:message bundle="MANAGER_RESOURCES" key="label.insert.academic.calendar"/>
+	</html:link></p>
+	
 	<logic:notEmpty name="academicCalendars">
 		<fr:view schema="AcademicCalendarInfo" name="academicCalendars">
 			<fr:layout name="tabular">      			
@@ -31,10 +35,6 @@
 		
 	<logic:empty name="academicCalendars">
 		<p class="mtop05"><em><bean:message key="label.empty.academic.calendars" bundle="MANAGER_RESOURCES"/>.</em></p>				
-	</logic:empty>	
-	
-	<html:link page="/prepareCreateAcademicCalendar.do">
-		<bean:message bundle="MANAGER_RESOURCES" key="label.insert.academic.calendar"/>
-	</html:link>	
+	</logic:empty>			
 	
 </logic:present>	

@@ -33,7 +33,7 @@ public class RoomClassification extends RoomClassification_Base {
 	return CollectionUtils.constructSortedSet(roomClassifications,
 		COMPARATORY_BY_PARENT_ROOM_CLASSIFICATION_AND_CODE);
     }
-
+    
     public static abstract class RoomClassificationFactory implements Serializable, FactoryExecutor {
 	private String code;
 
@@ -171,10 +171,13 @@ public class RoomClassification extends RoomClassification_Base {
     
     @FenixDomainObjectActionLogAnnotation(actionName = "Deleted room classification", parameters = {})
     public void delete() {
-	if (getChildRoomClassificationsSet().isEmpty()) {
-	    setRootDomainObject(null);
+	if (getChildRoomClassificationsSet().isEmpty()) {	    
+	    while(hasAnyRoomInformations()) {
+		getRoomInformations().get(0).setRoomClassification(null);
+	    }	    
 	    super.setParentRoomClassification(null);
-	    super.deleteDomainObject();
+	    setRootDomainObject(null);
+	    deleteDomainObject();
 	} else {
 	    throw new DomainException(
 		    "error.cannot.delete.room.classification.with.existing.child.classifications");
