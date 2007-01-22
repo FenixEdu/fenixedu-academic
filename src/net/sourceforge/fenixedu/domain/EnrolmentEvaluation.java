@@ -44,6 +44,8 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
     };
 
     private static final String RECTIFICATION = "RECTIFICAÇÃO";
+    
+    private static final String RECTIFIED = "RECTIFICADO";
 
     public EnrolmentEvaluation() {
         super();
@@ -92,38 +94,83 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
 		setEnrolmentEvaluationState(evaluationState);
 	}
 
+    
     public int compareTo(Object o) {
-        EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) o;
-        EnrollmentState myEnrolmentState = this.getEnrollmentStateByGrade(this.getGrade());
-        EnrollmentState otherEnrolmentState = this.getEnrollmentStateByGrade(enrolmentEvaluation
-                .getGrade());
-        String otherGrade = enrolmentEvaluation.getGrade();
-        Date otherWhenAltered = enrolmentEvaluation.getWhen();
-
-        if (this.getEnrolment().getStudentCurricularPlan().getRegistration().getDegreeType().equals(
+	EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) o;
+	if (this.getEnrolment().getStudentCurricularPlan().getDegreeType().equals(
                 DegreeType.MASTER_DEGREE)) {
-            return compareMyWhenAlteredDateToAnotherWhenAlteredDate(otherWhenAltered);
-        } else if (this.getObservation() != null && this.getObservation().equals(RECTIFICATION)
-                && enrolmentEvaluation.getObservation() != null
-                && enrolmentEvaluation.getObservation().equals(RECTIFICATION)) {
-            return compareMyWhenAlteredDateToAnotherWhenAlteredDate(otherWhenAltered);
-        } else if (this.getObservation() != null && this.getObservation().equals(RECTIFICATION)) {
-            return 1;
-        } else if (enrolmentEvaluation.getObservation() != null
-                && enrolmentEvaluation.getObservation().equals(RECTIFICATION)) {
-            if (this.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.IMPROVEMENT)) {
-                return compareForEqualStates(myEnrolmentState, otherEnrolmentState, otherGrade,
-                        otherWhenAltered);
-            }
-            return -1;
-        } else if (myEnrolmentState.equals(otherEnrolmentState)) {
-            return compareForEqualStates(myEnrolmentState, otherEnrolmentState, otherGrade,
-                    otherWhenAltered);
-        } else {
-            return compareForNotEqualStates(myEnrolmentState, otherEnrolmentState);
-        }
+            return compareMyWhenAlteredDateToAnotherWhenAlteredDate(enrolmentEvaluation.getWhen());
+	}
+	if(this.getEnrolmentEvaluationType() == enrolmentEvaluation.getEnrolmentEvaluationType()) {
+	    if((this.isRectification() && enrolmentEvaluation.isRectification()) || (this.isRectified() && enrolmentEvaluation.isRectified())) {
+		return compareMyWhenAlteredDateToAnotherWhenAlteredDate(enrolmentEvaluation.getWhen());
+	    }
+	    if(this.isRectification()) {
+		return 1;
+	    }
+	    if(enrolmentEvaluation.isRectification()) {
+		return -1;
+	    }
+	    return compareByGrade(this.getGrade(), enrolmentEvaluation.getGrade());
+	    
+	} else {
+	    return compareByGrade(this.getGrade(), enrolmentEvaluation.getGrade());
+	}
     }
 
+    private int compareByGrade(final String grade, final String otherGrade) {
+	EnrollmentState gradeEnrolmentState = getEnrollmentStateByGrade(grade);
+	EnrollmentState otherGradeEnrolmentState = getEnrollmentStateByGrade(otherGrade);
+	if(gradeEnrolmentState == EnrollmentState.APROVED && otherGradeEnrolmentState == EnrollmentState.APROVED) {
+	    return compareAprovedGrades(grade, otherGrade);
+	}
+	
+	return compareByGradeState(gradeEnrolmentState, otherGradeEnrolmentState);
+    }
+
+    private int compareAprovedGrades(String grade, String otherGrade) {
+	if(grade.equals(otherGrade)) {
+	    return 0;
+	}
+	if(grade.equals("AP")) {
+	    return 1;
+	}
+	if(otherGrade.equals("AP")) {
+	    return -1;
+	}
+	
+	return Integer.valueOf(grade).compareTo(Integer.valueOf(otherGrade));
+    }
+
+    private int compareByGradeState(EnrollmentState gradeEnrolmentState, EnrollmentState otherGradeEnrolmentState) {
+	if(gradeEnrolmentState == EnrollmentState.APROVED) {
+	    return 1;
+	}
+	if(otherGradeEnrolmentState == EnrollmentState.APROVED) {
+	    return -1;
+	}
+	if(gradeEnrolmentState == EnrollmentState.NOT_APROVED && otherGradeEnrolmentState == EnrollmentState.NOT_EVALUATED) {
+	    return 1;
+	}
+	if(gradeEnrolmentState == EnrollmentState.NOT_EVALUATED && otherGradeEnrolmentState == EnrollmentState.NOT_APROVED) {
+	    return -1;
+	}
+	
+	return 0;
+    }
+
+    private int compareMyExamDateToAnotherExamDate(Date examDate) {
+	if(this.getExamDate() == null) {
+	    return -1;
+	}
+        if (examDate == null) {
+            return 1;
+        }
+        
+        return this.getExamDate().compareTo(examDate);
+
+    }
+    
     private int compareMyWhenAlteredDateToAnotherWhenAlteredDate(Date whenAltered) {
         if (this.getWhen() == null) {
             return -1;
@@ -131,11 +178,8 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         if (whenAltered == null) {
             return 1;
         }
-        if (this.getWhen().compareTo(whenAltered) >= 0) {
-            return 1;
-        }
 
-        return -1;
+        return this.getWhen().compareTo(whenAltered);
 
     }
 
@@ -163,11 +207,11 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
     }
 
     private int compareForEqualStates(EnrollmentState myEnrolmentState,
-            EnrollmentState otherEnrolmentState, String otherGrade, Date otherWhenAltered) {
+            EnrollmentState otherEnrolmentState, String otherGrade, Date otherExamDate) {
         if (myEnrolmentState.equals(EnrollmentState.APROVED)) {
             return compareMyGradeToAnotherGrade(otherGrade);
         }
-        return compareMyWhenAlteredDateToAnotherWhenAlteredDate(otherWhenAltered);
+        return compareMyExamDateToAnotherExamDate(otherExamDate);
     }
 
     private int compareForNotEqualStates(EnrollmentState myEnrolmentState,
@@ -194,6 +238,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         if (grade == null) {
             return EnrollmentState.NOT_EVALUATED;
         }
+        grade = grade.trim();
         if (grade.equals("")) {
             return EnrollmentState.NOT_EVALUATED;
         }
@@ -278,12 +323,15 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         setEmployee(employee);
         setObservation(observation);
 
-        EnrollmentState newEnrolmentState = EnrollmentState.APROVED;
-        if (MarkType.getRepMarks().contains(getGrade())) {
-            newEnrolmentState = EnrollmentState.NOT_APROVED;
-        } else if (MarkType.getNaMarks().contains(getGrade())) {
-            newEnrolmentState = EnrollmentState.NOT_EVALUATED;
+        EnrollmentState newEnrolmentState = EnrollmentState.APROVED;        
+        if(!this.isImprovment()) {
+            if (MarkType.getRepMarks().contains(getGrade())) {
+        	newEnrolmentState = EnrollmentState.NOT_APROVED;
+            } else if (MarkType.getNaMarks().contains(getGrade())) {
+        	newEnrolmentState = EnrollmentState.NOT_EVALUATED;
+            }
         }
+
         this.getEnrolment().setEnrollmentState(newEnrolmentState);
     }
 
@@ -300,6 +348,17 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         		|| getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.RECTIFICATION_OBJ)
         		|| getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.RECTIFIED_OBJ);
     }
+    
+    public boolean isRectification() {
+	return (this.getObservation() != null && this.getObservation().equals(RECTIFICATION)) 
+		|| (this.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.RECTIFICATION_OBJ));
+    }
+    
+    public boolean isRectified() {
+	return (this.getObservation() != null && this.getObservation().equals(RECTIFIED)) 
+		|| (this.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.RECTIFIED_OBJ));
+    }
+
 
     public void delete() {
 
