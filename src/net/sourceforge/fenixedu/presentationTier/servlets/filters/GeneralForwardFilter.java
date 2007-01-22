@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.ExamProcessor;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.ExecutionCourseProcessor;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.ExecutionCoursesProcessor;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.HomepageProcessor;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.ItemProcessor;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.PathElementsProvider;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.PathProcessor;
@@ -38,25 +39,25 @@ public class GeneralForwardFilter implements Filter {
         //this.notFoundURI = config.getInitParameter("notFoundURI");
         
         String siteListURI = config.getInitParameter("siteListURI");
-        String siteURI = config.getInitParameter("siteURI");
+        String executionCouseSiteURI = config.getInitParameter("executionCourseSiteURI");
+        String homepageSiteURI = config.getInitParameter("homepageSiteURI");
         String scheduleListURI = config.getInitParameter("scheduleListURI");
         String classScheduleURI = config.getInitParameter("classScheduleURI");
         String examListURI = config.getInitParameter("examListURI");
         String degreeURI = config.getInitParameter("degreeURI");
-        String sectionURI = config.getInitParameter("sectionURI");
-        String itemURI = config.getInitParameter("itemURI");
 
         DegreeProcessor degreeProcessor = new DegreeProcessor(degreeURI);
         ExecutionCoursesProcessor executionCourses = new ExecutionCoursesProcessor(siteListURI);
         DegreeCurricularPlanProcessor degreeCurricularPlan = new DegreeCurricularPlanProcessor();
-        ExecutionCourseProcessor executionCourse = new ExecutionCourseProcessor(siteURI);
-        YearProcessor year = new YearProcessor(siteURI);
-        SemesterProcessor semester = new SemesterProcessor(siteURI);
+        ExecutionCourseProcessor executionCourse = new ExecutionCourseProcessor(executionCouseSiteURI);
+        YearProcessor year = new YearProcessor(executionCouseSiteURI);
+        SemesterProcessor semester = new SemesterProcessor(executionCouseSiteURI);
         ScheduleProcessor schedule = new ScheduleProcessor(scheduleListURI);
         SchoolClassProcessor schoolClass = new SchoolClassProcessor(classScheduleURI);
         ExamProcessor exams = new ExamProcessor(examListURI);
-        SectionProcessor section = new SectionProcessor(sectionURI);
-        ItemProcessor item = new ItemProcessor(itemURI);
+        SectionProcessor section = new SectionProcessor();
+        ItemProcessor item = new ItemProcessor();
+        HomepageProcessor homepage = new HomepageProcessor(homepageSiteURI);
         
         SectionProcessor sectionAndItem = section.add(item);
         
@@ -80,6 +81,8 @@ public class GeneralForwardFilter implements Filter {
                     .add(schoolClass))
                 .add(exams)
         );
+        
+        processors.add(homepage.add(sectionAndItem));
     }
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)

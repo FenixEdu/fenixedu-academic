@@ -1,0 +1,54 @@
+<!-- ******************************************************************************************************************************* -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.Site -->
+<!-- ******************************************************************************************************************************* -->
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.Site"
+                  table="SITE">
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.ExecutionCourseSite"/>
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.SiteTemplate"/>
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.ExecutionCourseSite" table="SITE">
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.homepage.Homepage" table="SITE">
+    
+</class-descriptor>
+<class-descriptor class="net.sourceforge.fenixedu.domain.SiteTemplate" table="SITE">
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.AccessibleItem"
+                  table="ACCESSIBLE_ITEM">
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.SiteElement"/>
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.functionalities.Functionality"/>
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.SiteElement"
+                  table="ACCESSIBLE_ITEM">
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.Section"/>
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.Item"/>
+</class-descriptor>
+
+<!-- ******************************** -->
+<!-- **********   SECTION  ********** -->
+<!-- ******************************** -->
+   
+   
+<!-- Definitions for net.sourceforge.fenixedu.domain.Section -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.Section"
+  table="ACCESSIBLE_ITEM">
+  <extent-class class-ref="net.sourceforge.fenixedu.domain.FunctionalitySection"/>
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.FunctionalitySection"
+  table="ACCESSIBLE_ITEM">
+</class-descriptor>
+
+<!-- ****************************** -->
+<!-- **********   ITEM   ********** -->
+<!-- ****************************** --> 
+
+<!-- Definitions for net.sourceforge.fenixedu.domain.Item -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.Item"
+  table="ACCESSIBLE_ITEM">
+</class-descriptor>

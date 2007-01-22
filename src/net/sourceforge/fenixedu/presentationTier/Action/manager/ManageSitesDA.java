@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Site;
+import net.sourceforge.fenixedu.domain.homepage.Homepage;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 
@@ -25,6 +26,7 @@ import org.apache.struts.action.ActionMapping;
 public class ManageSitesDA extends SiteManagementDA {
 
     public static Class[] SITE_TYPES = {
+        Homepage.class,
         ExecutionCourseSite.class
     };
     
@@ -64,7 +66,7 @@ public class ManageSitesDA extends SiteManagementDA {
     }
 
     @Override
-    protected String getAuthorNameForFile(Item item) {
+    protected String getAuthorNameForFile(HttpServletRequest request, Item item) {
         return UnitUtils.readInstitutionUnit().getName();
     }
 

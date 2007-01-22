@@ -75,7 +75,6 @@
 <!ENTITY party SYSTEM "repository_organizational_structure.xml">
 <!ENTITY weeklyWorkLoad SYSTEM "repository_weeklyWorkLoad.xml">
 <!ENTITY studentCurriculum SYSTEM "repository_student_curriculum.xml">
-<!ENTITY homepage SYSTEM "repository_homepage.xml">
 <!ENTITY file SYSTEM "repository_file.xml">
 <!ENTITY markSheet SYSTEM "repository_marksheet.xml">
 <!ENTITY messaging SYSTEM "repository_messaging.xml">
@@ -110,6 +109,7 @@
     &sop;
     &masterDegree;
     &treasury;
+    &website;
     &gesdis;
     &authentication-roles;
     &teacher-credits;
@@ -171,7 +171,6 @@
     &party;
     &weeklyWorkLoad;
     &studentCurriculum;
-    &homepage;
     &file;
     &markSheet;
 	&messaging;

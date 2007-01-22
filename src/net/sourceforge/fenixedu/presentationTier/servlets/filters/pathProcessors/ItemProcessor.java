@@ -4,17 +4,12 @@ import java.io.IOException;
 
 import javax.servlet.ServletException;
 
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.SectionProcessor.SectionContext;
 
 public class ItemProcessor extends SiteElementPathProcessor {
 
-    public ItemProcessor(String forwardURI) {
-        super(forwardURI);
-    }
-    
     @Override
     public ProcessingContext getProcessingContext(ProcessingContext parentContext) {
         return new ItemContext(parentContext);
@@ -44,8 +39,10 @@ public class ItemProcessor extends SiteElementPathProcessor {
                 return false;
             }
             
-            return doForward(context, 
-                    ownContext.getExecutionCourse().getIdInternal(), 
+            String contextURI = ownContext.getContextURI();
+            return doForward(context,
+                    contextURI,
+                    "item",
                     ownContext.getSection().getIdInternal(), 
                     item.getIdInternal());
         }
@@ -73,8 +70,8 @@ public class ItemProcessor extends SiteElementPathProcessor {
             return (SectionContext) super.getParent();
         }
 
-        public ExecutionCourse getExecutionCourse() {
-            return getParent().getExecutionCourse();
+        public String getContextURI() {
+            return getParent().getContextURI() + "&itemID=%s";
         }
         
         public Section getSection() {
@@ -115,10 +112,6 @@ public class ItemProcessor extends SiteElementPathProcessor {
     
     public static String getItemPath(Item item) {
         return SectionProcessor.getSectionPath(item.getSection()) + "/" + getElementPathName(item);
-    }
-    
-    public static String getItemAbsolutePath(ExecutionCourse executionCourse, Item item) {
-        return SectionProcessor.getSectionAbsolutePath(executionCourse, item.getSection()) + "/" + getElementPathName(item);
     }
     
 }

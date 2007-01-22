@@ -26,11 +26,13 @@ import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.executionCourse.SummariesSearchBean;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.SiteVisualizationDA;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.ExecutionCourseProcessor;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.apache.struts.util.RequestUtils;
 
 public class ExecutionCourseDA extends SiteVisualizationDA {
 
@@ -41,6 +43,10 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
         final Integer executionCourseID = Integer.valueOf(executionCourseIDString);
         final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
         request.setAttribute("executionCourse", executionCourse);
+        
+        String directLinkContext = RequestUtils.absoluteURL(request, ExecutionCourseProcessor.getExecutionCourseAbsolutePath(executionCourse)).toString();
+        request.setAttribute("directLinkContext", directLinkContext);
+        
         return super.execute(mapping, actionForm, request, response);
     }
 

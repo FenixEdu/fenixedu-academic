@@ -33,6 +33,12 @@ public class PathElementsProvider {
         return peek(1) != null;
     }
     
+    /**
+     * Advances the path provider and returns the current element, that is, the
+     * same as {@link #current()} before the class to {@link #next()}.
+     * 
+     * @return the current element
+     */
     public String next() {
         String next = current();
         this.index++;

@@ -1,42 +1,26 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
+
+<html:xhtml/>
 
 <ul class="treemenu">
 	<logic:present name="homepage">
-		<logic:present name="homepage" property="person.employee.currentDepartmentWorkingPlace">
-			<bean:define id="departmentUrl" type="java.lang.String">
-				<bean:write name="homepage" property="person.employee.currentDepartmentWorkingPlace.departmentUnit.webAddress"/>
-			</bean:define>
-			<bean:define id="departmentUnitID" type="java.lang.String">
-				<bean:write name="homepage" property="person.employee.currentDepartmentWorkingPlace.departmentUnit.idInternal"/>
-			</bean:define>
-			<li>
-				<html:link href="<%=departmentUrl%>">
-					<bean:write name="homepage" property="person.employee.currentDepartmentWorkingPlace.acronym"/>
-				</html:link>
-		    </li>
-			<li>
-				<html:link href="<%= "department/showDepartmentTeachers.faces?selectedDepartmentUnitID=" + departmentUnitID %>">
-					<bean:message bundle="PUBLIC_DEPARTMENT_RESOURCES" key="department.faculty"/>
-				</html:link>
-		    </li>
-			<li>
-				<html:link href="<%= "department/showDepartmentCompetenceCourses.faces?selectedDepartmentUnitID=" + departmentUnitID %>">
-					<bean:message bundle="PUBLIC_DEPARTMENT_RESOURCES" key="department.courses"/>
-				</html:link>
-		    </li>
-	    </logic:present>
-		<logic:notPresent name="homepage" property="person.employee.currentDepartmentWorkingPlace">
-			<li>
-				<bean:define id="homepageID" name="homepage" property="idInternal"/>
-				<html:link page="<%= "/viewHomepage.do?method=show&amp;homepageID=" + homepageID.toString() %>">
-					<bean:message bundle="HOMEPAGE_RESOURCES" key="link.homepage.home"/>
-				</html:link>
-		    </li>
-		</logic:notPresent>
+        <li>
+            <bean:define id="homepageID" name="homepage" property="idInternal"/>
+            <html:link page="<%= "/viewHomepage.do?method=show&amp;homepageID=" + homepageID.toString() %>">
+                <bean:message bundle="HOMEPAGE_RESOURCES" key="link.homepage.home"/>
+            </html:link>
+        </li>
+        
+        <fr:view name="homepage" layout="side-menu">
+            <fr:layout>
+                <fr:property name="sectionUrl" value="/viewHomepage.do?method=section"/>
+                <fr:property name="contextParam" value="homepageID"/>
+            </fr:layout>
+        </fr:view>
     </logic:present>
 	<logic:notPresent name="homepage">
 		<li>

@@ -34,10 +34,66 @@
 	  <put name="body" value="/commons/renderers/view.jsp" />
 	</definition>
 
+    <!-- ========== HOMEPAGE =========== -->
+
     <definition name="show-manage-homepage" extends="definition.person.masterPage" >
 	  <put name="body" value="/person/manageHomepage.jsp" />
 	</definition>
-	
+    
+    <definition name="definition.person.homepage" extends="definition.person.masterPage" >
+        <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
+        <put name="body-context" value="/person/homepageContext.jsp" />
+    </definition>   
+    
+    <definition name="homepage-sectionsManagement" extends="definition.person.homepage" >
+        <put name="body" value="/commons/sites/sectionsManagement.jsp"/>
+    </definition>
+    <definition name="homepage-section" extends="definition.person.homepage" >
+        <put name="body" value="/commons/sites/section.jsp"/>
+    </definition>
+    <definition name="homepage-editSection" extends="definition.person.homepage" >
+        <put name="body" value="/commons/sites/editSection.jsp"/>
+    </definition>   
+    <definition name="homepage-createSection" extends="definition.person.homepage" >
+        <put name="body" value="/commons/sites/createSection.jsp"/>
+    </definition>   
+    <definition name="homepage-createItem" extends="definition.person.homepage" >
+        <put name="body" value="/commons/sites/createItem.jsp"/>
+    </definition>   
+    <definition name="homepage-editItem" extends="definition.person.homepage" >
+        <put name="body" value="/commons/sites/editItem.jsp"/>
+    </definition>   
+    <definition name="homepage-uploadFile" extends="definition.person.homepage" >
+        <put name="body" value="/commons/sites/uploadFile.jsp"/>
+    </definition>   
+    <definition name="homepage-editFile" extends="definition.person.homepage" >
+        <put name="body" value="/commons/sites/editFile.jsp"/>
+    </definition>             
+    <definition name="homepage-organizeItems" extends="definition.person.homepage" >
+        <put name="body" value="/commons/sites/organizeItems.jsp"/>
+    </definition>   
+    <definition name="homepage-organizeFiles" extends="definition.person.homepage" >
+        <put name="body" value="/commons/sites/organizeFiles.jsp"/>
+    </definition>   
+    <definition name="homepage-confirmSectionDelete" extends="definition.person.homepage" >
+        <put name="body" value="/commons/sites/confirmSectionDelete.jsp"/>
+    </definition>   
+    <definition name="homepage-editSectionPermissions" extends="definition.person.homepage" >
+        <put name="body" value="/commons/sites/editSectionPermissions.jsp"/>
+    </definition>   
+    <definition name="homepage-editItemPermissions" extends="definition.person.homepage" >
+        <put name="body" value="/commons/sites/editItemPermissions.jsp"/>
+    </definition>   
+    <definition name="homepage-editFile" extends="definition.person.homepage" >
+        <put name="body" value="/commons/sites/editFile.jsp"/>
+    </definition>   
+    <definition name="homepage-create-scorm" extends="definition.person.homepage" >
+        <put name="body" value="/commons/sites/createScorm.jsp"/>
+    </definition>   
+    <definition name="homepage-upload-scorm" extends="definition.person.homepage" >
+        <put name="body" value="/commons/sites/uploadScorm.jsp"/>
+    </definition>
+    
 	<!--  ============== Messaging ===================== -->
 	
 	<definition name="index" extends="definition.person.masterPage">

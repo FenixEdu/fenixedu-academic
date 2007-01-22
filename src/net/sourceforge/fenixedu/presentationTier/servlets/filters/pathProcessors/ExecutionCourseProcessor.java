@@ -34,7 +34,7 @@ public class ExecutionCourseProcessor extends PathProcessor {
 
     @Override
     public ProcessingContext getProcessingContext(ProcessingContext parentContext) {
-        return new Context(parentContext);
+        return new Context(parentContext, getForwardURI());
     }
 
     @Override
@@ -61,7 +61,7 @@ public class ExecutionCourseProcessor extends PathProcessor {
                 return false;
             }
             else {
-                return doForward(context, executionCourse.getIdInternal());
+                return doForward(context, new Object[] { "firstPage", executionCourse.getIdInternal() });
             }
         }
     }
@@ -71,8 +71,8 @@ public class ExecutionCourseProcessor extends PathProcessor {
         private String acronym;
         private CurricularCourse curricularCourse;
         
-        public Context(ProcessingContext parent) {
-            super(parent);
+        public Context(ProcessingContext parent, String contextURI) {
+            super(parent, contextURI);
         }
 
         public String getAcronym() {
@@ -117,6 +117,7 @@ public class ExecutionCourseProcessor extends PathProcessor {
                 return executionCourses.get(executionCourses.size() - 1);
             }
         }
+
     }
     
     public static String getExecutionCourseAbsolutePath(ExecutionCourse executionCourse) {

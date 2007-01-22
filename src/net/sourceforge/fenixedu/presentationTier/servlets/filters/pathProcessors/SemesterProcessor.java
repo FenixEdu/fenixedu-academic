@@ -24,7 +24,7 @@ public class SemesterProcessor extends PathProcessor {
     
     @Override
     public ProcessingContext getProcessingContext(ProcessingContext parentContext) {
-        return new SemesterContext(parentContext);
+        return new SemesterContext(parentContext, getForwardURI());
     }
 
     @Override
@@ -60,8 +60,8 @@ public class SemesterProcessor extends PathProcessor {
 
         private String semester;
         
-        public SemesterContext(ProcessingContext parent) {
-            super(parent);
+        public SemesterContext(ProcessingContext parent, String contextURI) {
+            super(parent, contextURI);
         }
 
         public String getSemester() {

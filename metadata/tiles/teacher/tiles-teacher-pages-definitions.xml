@@ -611,7 +611,7 @@
 	
 	<definition name="manage-execution-course-section" extends="manage-execution-course-site-createSection">
         <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
-		<put name="body" value="/teacher/executionCourse/site/section.jsp" />
+		<put name="body" value="/commons/sites/section.jsp" />
 	</definition>
 
 	<definition name="manage-execution-course-editSection" extends="manage-execution-course-site-createSection">

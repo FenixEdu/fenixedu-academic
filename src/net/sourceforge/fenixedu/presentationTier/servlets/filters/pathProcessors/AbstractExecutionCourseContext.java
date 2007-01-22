@@ -3,11 +3,16 @@ package net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessor
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Site;
 
 public abstract class AbstractExecutionCourseContext extends ProcessingContext implements ExecutionCourseContext {
 
-    public AbstractExecutionCourseContext(ProcessingContext parent) {
+    private String contexURI;
+
+    public AbstractExecutionCourseContext(ProcessingContext parent, String contextURI) {
         super(parent);
+        
+        this.contexURI = contextURI;
     }
 
     public ExecutionCourse getExecutionCourse() {
@@ -21,4 +26,12 @@ public abstract class AbstractExecutionCourseContext extends ProcessingContext i
         }
     }
 
+    public Site getSite() {
+        return getExecutionCourse().getSite();
+    }
+    
+    public String getSiteBasePath() {
+        return String.format(this.contexURI, "%s", getExecutionCourse().getIdInternal());
+    }
+    
 }

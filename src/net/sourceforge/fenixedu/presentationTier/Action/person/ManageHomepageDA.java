@@ -4,6 +4,7 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.person;
 
+import java.net.MalformedURLException;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -11,17 +12,34 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Section;
+import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.homepage.Homepage;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.SiteManagementDA;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.apache.struts.util.RequestUtils;
 
-public class ManageHomepageDA extends FenixDispatchAction {
+public class ManageHomepageDA extends SiteManagementDA {
+
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        Homepage homepage = getUserView(request).getPerson().getHomepage();
+        if (homepage != null) {
+            request.setAttribute("homepage", homepage);
+        }
+        
+        String homepagePath = RequestUtils.absoluteURL(request, "/homepage/" + getUserView(request).getPerson().getUser().getUserUId()).toString();
+        request.setAttribute("directLinkContext", homepagePath);
+        
+        return super.execute(mapping, actionForm, request, response);
+    }
 
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -106,6 +124,26 @@ public class ManageHomepageDA extends FenixDispatchAction {
     	executeService(request, "SubmitHomepage", args);
 
         return prepare(mapping, actionForm, request, response);
+    }
+
+    @Override
+    protected Site getSite(HttpServletRequest request) {
+        return getUserView(request).getPerson().getHomepage();
+    }
+
+    @Override
+    protected String getAuthorNameForFile(HttpServletRequest request, Item item) {
+        return getUserView(request).getPerson().getName();
+    }
+
+    @Override
+    protected String getItemLocationForFile(HttpServletRequest request, Item item, Section section) {
+        String userUId = getUserView(request).getPerson().getUser().getUserUId();
+        try {
+            return RequestUtils.absoluteURL(request, "/homepage/" + userUId).toString();
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

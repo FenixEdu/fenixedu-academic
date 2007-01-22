@@ -32,3 +32,6 @@ execute "Create Academic Calendar Tables" createAcademicCalendarTables.sql
 
 execute "Add Column keyEarthUnit" alterTableRootDomainObject.sql
 execute "Add Column keyRootDomainObjectForEarthUnit" alterTableParty.sql
+
+execute "Merge Homepage in Site" MergeHomepageInSite.sql
+execute "Drop old blog tables" DropBlogTables.sql

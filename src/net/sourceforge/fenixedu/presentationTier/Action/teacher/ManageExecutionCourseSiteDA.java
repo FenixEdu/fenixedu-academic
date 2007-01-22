@@ -13,18 +13,29 @@ import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.SiteManagementDA;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.ExecutionCourseProcessor;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.ItemProcessor;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.util.RequestUtils;
 
 public class ManageExecutionCourseSiteDA extends SiteManagementDA {
     
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         propageContextIds(request);
+        
+        ExecutionCourse executionCourse = getExecutionCourse(request);
+        String directLinkContext = RequestUtils.absoluteURL(request, ExecutionCourseProcessor.getExecutionCourseAbsolutePath(executionCourse)).toString();
+        request.setAttribute("directLinkContext", directLinkContext);
+        
         return super.execute(mapping, actionForm, request, response);
+    }
+    
+    public ExecutionCourse getExecutionCourse(HttpServletRequest request) {
+        return (ExecutionCourse) request.getAttribute("executionCourse");
     }
     
     public static void propageContextIds(final HttpServletRequest request) {
@@ -64,7 +75,7 @@ public class ManageExecutionCourseSiteDA extends SiteManagementDA {
     }
     
     @Override
-    protected String getAuthorNameForFile(Item item) {
+    protected String getAuthorNameForFile(HttpServletRequest request, Item item) {
         return ((ExecutionCourseSite)item.getSection().getSite()).getExecutionCourse().getNome();
     }
 
@@ -83,7 +94,7 @@ public class ManageExecutionCourseSiteDA extends SiteManagementDA {
     protected String getItemLocationForFile(HttpServletRequest request, Item item, Section section) {
         ExecutionCourse executionCourse = ((ExecutionCourseSite)section.getSite()).getExecutionCourse();
         
-        String resourceLocation = request.getScheme() + "://" + request.getServerName() + request.getContextPath() + ItemProcessor.getItemAbsolutePath(executionCourse, item);
+        String resourceLocation = request.getScheme() + "://" + request.getServerName() + request.getContextPath() + ExecutionCourseProcessor.getExecutionCourseAbsolutePath(executionCourse) + ItemProcessor.getItemPath(item);
         return resourceLocation;
     }
 

@@ -587,26 +587,6 @@ class net.sourceforge.fenixedu.domain.BibliographicReference extends net.sourcef
 	Integer referenceOrder;
 }
 
-class net.sourceforge.fenixedu.domain.homepage.Blog extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer keyHomepage;
-	String name;
-	String about;
-}
-
-class net.sourceforge.fenixedu.domain.homepage.BlogEntry extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer keyBlog;
- 	DateTime postedDateTime;
-	String title;
-	String content;
-}
-
-class net.sourceforge.fenixedu.domain.homepage.BlogEntryComment extends net.sourceforge.fenixedu.domain.DomainObject {
-    Integer keyBlogEntry;
-	DateTime postedDateTime;
-	String comment;
-}
-
-
 class net.sourceforge.fenixedu.domain.Branch extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer secondaryCredits;
     String code;
@@ -2055,27 +2035,6 @@ class net.sourceforge.fenixedu.domain.FileEntry extends net.sourceforge.fenixedu
 class net.sourceforge.fenixedu.domain.Holiday extends net.sourceforge.fenixedu.domain.DomainObject {
 	Partial date;
 	Integer keyLocality;
-}
-
-class net.sourceforge.fenixedu.domain.homepage.Homepage extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer keyPerson;
-	Integer keyBlog;
-	Boolean activated;
-	Boolean showUnit;
-	Boolean showCategory;
-	Boolean showPhoto;
-	Boolean showEmail;
-	Boolean showTelephone;
-	Boolean showWorkTelephone;
-	Boolean showMobileTelephone;
-	Boolean showAlternativeHomepage;
-	Boolean showResearchUnitHomepage;
-	Boolean showCurrentExecutionCourses;
-	Boolean showActiveStudentCurricularPlans;
-	Boolean showAlumniDegrees;
-	MultiLanguageString researchUnit;
-	String researchUnitHomepage;
-	Boolean showCurrentAttendingExecutionCourses;
 }
 
 class net.sourceforge.fenixedu.domain.Identification extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -4235,7 +4194,28 @@ class net.sourceforge.fenixedu.domain.Site extends net.sourceforge.fenixedu.doma
 	class net.sourceforge.fenixedu.domain.SiteTemplate extends net.sourceforge.fenixedu.domain.Site {
 		String siteType;
 	}
+
+	class net.sourceforge.fenixedu.domain.homepage.Homepage extends net.sourceforge.fenixedu.domain.Site {
+		Integer keyPerson;
+		Boolean activated;
+		Boolean showUnit;
+		Boolean showCategory;
+		Boolean showPhoto;
+		Boolean showEmail;
+		Boolean showTelephone;
+		Boolean showWorkTelephone;
+		Boolean showMobileTelephone;
+		Boolean showAlternativeHomepage;
+		Boolean showResearchUnitHomepage;
+		Boolean showCurrentExecutionCourses;
+		Boolean showActiveStudentCurricularPlans;
+		Boolean showAlumniDegrees;
+		MultiLanguageString researchUnit;
+		String researchUnitHomepage;
+		Boolean showCurrentAttendingExecutionCourses;
+	}
 	
+
 	class net.sourceforge.fenixedu.domain.ExecutionCourseSite extends net.sourceforge.fenixedu.domain.Site {
 		Integer keyExecutionCourse;
 	
@@ -6328,25 +6308,6 @@ relation GuideSituationGuide {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Guide playsRole guide;
-}
-
-relation HomepageBlog {
-	net.sourceforge.fenixedu.domain.homepage.Homepage playsRole homepage;
-	net.sourceforge.fenixedu.domain.homepage.Blog playsRole blog;
-}
-
-relation BlogBlogEntry {
-	net.sourceforge.fenixedu.domain.homepage.Blog playsRole blog;
-	net.sourceforge.fenixedu.domain.homepage.BlogEntry playsRole blogEntries {
-		multiplicity *;
-	}
-}
-
-relation BlogEntryBlogEntryComment {
-	net.sourceforge.fenixedu.domain.homepage.BlogEntry playsRole blogEntry;
-	net.sourceforge.fenixedu.domain.homepage.BlogEntryComment playsRole blogEntryComments {
-		multiplicity *;
-	}
 }
 
 relation InquiriesCourseExecutionCourse {
@@ -9256,13 +9217,6 @@ relation RootDomainObjectPublicationsNumber {
 	}
 }
 
-relation RootDomainObjectBlogEntry {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.homepage.BlogEntry playsRole blogEntrys {
-		multiplicity *;
-	}
-}
-
 relation RootDomainObjectDistrict {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.District playsRole districts {
@@ -9427,13 +9381,6 @@ relation RootDomainObjectAssiduousness {
 relation RootDomainObjectSection {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.Section playsRole sections {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectBlogEntryComment {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.homepage.BlogEntryComment playsRole blogEntryComments {
 		multiplicity *;
 	}
 }
@@ -9949,13 +9896,6 @@ relation RootDomainObjectAdvise {
 	}
 }
 
-relation RootDomainObjectHomepage {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.homepage.Homepage playsRole homepages {
-		multiplicity *;
-	}
-}
-
 relation RootDomainObjectStudentTestQuestion {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion playsRole studentTestQuestions {
@@ -10078,13 +10018,6 @@ relation RootDomainObjectGuideSituation {
 relation RootDomainObjectFAQEntry {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.support.FAQEntry playsRole fAQEntrys {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectBlog {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.homepage.Blog playsRole blogs {
 		multiplicity *;
 	}
 }

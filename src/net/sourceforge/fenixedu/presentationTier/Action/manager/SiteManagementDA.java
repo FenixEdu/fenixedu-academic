@@ -107,7 +107,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
         Item item = selectItem(request);
         
         FileItemCreationBean bean = new FileItemCreationBean(item);
-        bean.setAuthorsName(getAuthorNameForFile(item));
+        bean.setAuthorsName(getAuthorNameForFile(request, item));
         request.setAttribute("fileItemCreator", bean);
 
         return mapping.findForward("uploadFile");
@@ -694,6 +694,6 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
         return (Site) RootDomainObject.readDomainObjectByOID(Site.class, siteId);
     }
 
-    protected abstract String getAuthorNameForFile(Item item);
+    protected abstract String getAuthorNameForFile(HttpServletRequest request, Item item);
     protected abstract String getItemLocationForFile(HttpServletRequest request, Item item, Section section);
 }

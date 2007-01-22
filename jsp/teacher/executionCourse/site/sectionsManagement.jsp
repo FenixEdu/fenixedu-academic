@@ -29,7 +29,7 @@
 	
 	<span class="pleft1">
 		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
-		<html:link page="<%= "/manageExecutionCourse.do?method=prepareImportSections&amp;" + context %>">
+		<html:link page="<%= actionName + "?method=prepareImportSections&amp;" + context %>">
 			<bean:message key="label.import.sections"/>
 		</html:link>
 	</span>

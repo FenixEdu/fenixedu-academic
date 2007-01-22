@@ -354,11 +354,6 @@
 		<slot name="showResearchUnitHomepage"/>
 	</schema>
 
-	<schema name="person.homepage.blog.manage" type="net.sourceforge.fenixedu.domain.homepage.Blog">
-		<slot name="name"/>
-		<slot name="about"/>
-	</schema>
-
 	<schema name="student.curricular.plan.start.date" type="net.sourceforge.fenixedu.domain.StudentCurricularPlan">
 		<slot name="startDate"/>
 	</schema>

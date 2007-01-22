@@ -770,6 +770,12 @@
     		<forward name="list-homepages-employees" path="list-homepages-employees"/>
     		<forward name="list-homepages-students" path="list-homepages-students"/>
     		<forward name="list-homepages-alumni" path="list-homepages-alumni"/>
+        <forward name="site-section" path="view-homepage-section"/>
+        <forward name="site-section-deny" path="view-homepage-section-deny"/>
+        <forward name="site-section-adviseLogin" path="view-homepage-section-adviseLogin"/>
+        <forward name="site-item" path="view-homepage-item"/>
+        <forward name="site-item-deny" path="view-homepage-item-deny"/>
+        <forward name="site-item-adviseLogin" path="view-homepage-item-adviseLogin"/>
     		<forward name="homepage-stats" path="homepage-stats"/>
     		<forward name="not-found-homepage" path="not-found-homepage"/>
 		</action>

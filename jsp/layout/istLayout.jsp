@@ -92,6 +92,7 @@
 			</html:form>
 	</div> 
 
+<tiles:insert attribute="body-context" ignore="true"/>
 <tiles:insert attribute="body" ignore="true"/>
 <tiles:getAsString name="body-inline" ignore="true"/>
 

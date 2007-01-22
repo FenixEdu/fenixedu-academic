@@ -39,7 +39,7 @@
     </p>
 </logic:notEmpty>
 
-<fr:form action="<%= String.format("%?method=confirmSectionDelete&%s&sectionID=%s", actionName, context, section.getIdInternal()) %>">
+<fr:form action="<%= String.format("%s?method=confirmSectionDelete&%s&sectionID=%s", actionName, context, section.getIdInternal()) %>">
     <p class="mtop15">
         <bean:message key="message.section.delete.confirm" bundle="SITE_RESOURCES"/>
     </p>

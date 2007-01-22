@@ -90,8 +90,12 @@
             <param-value>/publico/showExecutionCourseSites.do?method=listSites&amp;degreeOID=%s</param-value>
         </init-param>
         <init-param>
-            <param-name>siteURI</param-name>
-            <param-value>/publico/executionCourse.do?method=firstPage&amp;executionCourseID=%s</param-value>
+            <param-name>executionCourseSiteURI</param-name>
+            <param-value>/publico/executionCourse.do?method=%s&amp;executionCourseID=%s</param-value>
+        </init-param>
+        <init-param>
+            <param-name>homepageSiteURI</param-name>
+            <param-value>/publico/viewHomepage.do?method=%s&amp;homepageID=%s</param-value>
         </init-param>
         <init-param>            
             <param-name>scheduleListURI</param-name>
@@ -109,22 +113,10 @@
             <param-name>degreeURI</param-name>
             <param-value>/publico/showDegreeSite.do?method=showDescription&amp;executionPeriodOID=%s&amp;degreeID=%s</param-value>
         </init-param>
-        <init-param>            
-            <param-name>sectionURI</param-name>
-            <param-value>/publico/executionCourse.do?method=section&amp;executionCourseID=%s&amp;sectionID=%s</param-value>
-        </init-param>
-        <init-param>            
-            <param-name>itemURI</param-name>
-            <param-value>/publico/executionCourse.do?method=item&amp;executionCourseID=%s&amp;sectionID=%s&amp;itemID=%s</param-value>
-        </init-param>
     </filter>
 	<filter>
 		<filter-name>CASFilter</filter-name>
 		<filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.authentication.cas.CASFilter</filter-class>
-    </filter>
-	<filter>
-		<filter-name>HomepageFilter</filter-name>
-		<filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.HomepageFilter</filter-class>
     </filter>
     <filter>
         <filter-name>PathAccessControlFilter</filter-name>
@@ -214,10 +206,6 @@
 		<url-pattern>/publico/*</url-pattern>
 	</filter-mapping>
 -->
-	<filter-mapping>
-		<filter-name>HomepageFilter</filter-name>
-		<url-pattern>/homepage/*</url-pattern>
-	</filter-mapping>
     <filter-mapping>
         <filter-name>GeneralForwardFilter</filter-name>
         <url-pattern>/*</url-pattern>

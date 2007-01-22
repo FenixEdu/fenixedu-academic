@@ -30,7 +30,7 @@ public class YearProcessor extends PathProcessor {
     
     @Override
     public ProcessingContext getProcessingContext(ProcessingContext parentContext) {
-        return new YearContext(parentContext);
+        return new YearContext(parentContext, getForwardURI());
     }
 
     @Override
@@ -66,8 +66,8 @@ public class YearProcessor extends PathProcessor {
         
         private String year;
         
-        public YearContext(ProcessingContext parent) {
-            super(parent);
+        public YearContext(ProcessingContext parent, String contextURI) {
+            super(parent, contextURI);
         }
 
         public String getYear() {

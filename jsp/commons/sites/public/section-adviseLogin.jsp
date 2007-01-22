@@ -1,4 +1,5 @@
 <%@ page language="java" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.SectionProcessor" %>
 
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
@@ -14,7 +15,15 @@
 <bean:define id="context" value="<%= contextParam + "=" + contextParamValue %>"/>
 
 <logic:present name="section">
-    <h2><fr:view name="section" property="name" type="net.sourceforge.fenixedu.util.MultiLanguageString"/></h2>
+    <bean:define id="section" name="section" type="net.sourceforge.fenixedu.domain.Section"/>
+
+    <h2>
+        <fr:view name="section" property="name" type="net.sourceforge.fenixedu.util.MultiLanguageString"/>
+        <logic:present name="directLinkContext">
+            <bean:define id="directLinkContext" name="directLinkContext"/>
+            <span class="permalink1">(<a href="<%= directLinkContext + SectionProcessor.getSectionPath(section) %>"><bean:message key="label.link" bundle="SITE_RESOURCES"/></a>)</span>
+        </logic:present>  
+    </h2>
 
     <bean:define id="sectionId" name="section" property="idInternal"/>
 

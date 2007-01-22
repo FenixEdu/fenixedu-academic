@@ -41,6 +41,10 @@ public abstract class PathProcessor {
         this.forwardURI = forwardURI;
     }
     
+    public String getForwardURI() {
+        return this.forwardURI;
+    }
+
     /**
      * Generic method to add a child processor to the processor chain.
      * 

@@ -7,15 +7,10 @@ import java.util.List;
 
 import javax.servlet.ServletException;
 
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.Section;
+import net.sourceforge.fenixedu.domain.Site;
 
 public class SectionProcessor extends SiteElementPathProcessor {
-
-    public SectionProcessor(String forwardURI) {
-        super(forwardURI);
-    }
 
     public SectionProcessor add(ItemProcessor processor) {
         addChild(processor);
@@ -62,8 +57,8 @@ public class SectionProcessor extends SiteElementPathProcessor {
                 return false;
             }
             
-            ExecutionCourse executionCourse = ownContext.getExecutionCourse();
-            return doForward(context, executionCourse.getIdInternal(), section.getIdInternal());
+            String contextURI = ownContext.getContextURI();
+            return doForward(context, contextURI, "section", section.getIdInternal());
         }
     }
 
@@ -77,10 +72,6 @@ public class SectionProcessor extends SiteElementPathProcessor {
             this.sections = new ArrayList<Section>();
         }
 
-        public ExecutionCourse getExecutionCourse() {
-            return ((ExecutionCourseContext) super.getParent()).getExecutionCourse();
-        }
-        
         public boolean addSection(String name) {
             for (Section section : getCurrentPossibilities()) {
                 String pathName = getElementPathName(section);
@@ -98,16 +89,23 @@ public class SectionProcessor extends SiteElementPathProcessor {
             return false;
         }
         
+        public Site getSite() {
+            return ((SiteContext) getParent()).getSite();
+        }
+        
+        public String getContextURI() {
+            return ((SiteContext) getParent()).getSiteBasePath() + "&sectionID=%s";
+        }
+        
         private List<Section> getCurrentPossibilities() {
             Section section = getLastSection();
             
             if (section == null) {
-                ExecutionCourse executionCourse = getExecutionCourse();
-                if (executionCourse == null) {
+                Site site = getSite();
+                if (site == null) {
                     return Collections.emptyList();
                 }
                 
-                ExecutionCourseSite site = executionCourse.getSite();
                 return site.getAllOrderedTopLevelSections();
             }
             else {
@@ -145,8 +143,4 @@ public class SectionProcessor extends SiteElementPathProcessor {
         }
     }
     
-    public static String getSectionAbsolutePath(ExecutionCourse executionCourse, Section section) {
-        return ExecutionCourseProcessor.getExecutionCourseAbsolutePath(executionCourse) + getSectionPath(section);
-    }
-
 }

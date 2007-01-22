@@ -22,20 +22,40 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Contract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.SiteVisualizationDA;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
+import org.apache.struts.util.RequestUtils;
 
 import pt.utl.ist.fenix.tools.image.TextPngCreator;
 
-public class ViewHomepageDA extends FenixDispatchAction {
+public class ViewHomepageDA extends SiteVisualizationDA {
+
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String homepageIDString = request.getParameter("homepageID");
+        
+        if (homepageIDString != null) {
+            Integer homepageID = Integer.valueOf(homepageIDString);
+            Homepage homepage = (Homepage) readDomainObject(request, Homepage.class, homepageID);
+            
+            if (homepage.getActivated()) {
+                request.setAttribute("homepage", homepage);
+            }
+            
+            String homepagePath = RequestUtils.absoluteURL(request, "/homepage/" + homepage.getPerson().getUser().getUserUId()).toString();
+            request.setAttribute("directLinkContext", homepagePath);
+        }
+        
+        return super.execute(mapping, actionForm, request, response);
+    }
 
     public ActionForward show(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+	    HttpServletResponse response) {
 	final String homepageIDString = request.getParameter("homepageID");
 	final Integer homepageID = Integer.valueOf(homepageIDString);
 	final Homepage homepage = (Homepage) readDomainObject(request, Homepage.class, homepageID);
@@ -62,12 +82,12 @@ public class ViewHomepageDA extends FenixDispatchAction {
     }
 
     public ActionForward list(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+	    HttpServletResponse response) {
 	final SortedMap<String, SortedSet<Homepage>> homepages = new TreeMap<String, SortedSet<Homepage>>();
 	for (int i = (int) 'A'; i <= (int) 'Z'; i++) {
 	    homepages.put("" + ((char) i), new TreeSet<Homepage>(Homepage.HOMEPAGE_COMPARATOR_BY_NAME));
 	}
-	for (final Homepage homepage : rootDomainObject.getHomepagesSet()) {
+	for (final Homepage homepage : Homepage.getAllHomepages()) {
 	    if (homepage.getActivated().booleanValue()) {
 		final String key = homepage.getName().substring(0, 1);
 		final SortedSet<Homepage> sortedSet;
@@ -245,7 +265,7 @@ public class ViewHomepageDA extends FenixDispatchAction {
 
     public ActionForward stats(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	request.setAttribute("homepages", rootDomainObject.getHomepages());
+	request.setAttribute("homepages", Homepage.getAllHomepages());
 	return mapping.findForward("homepage-stats");
     }
 
@@ -283,6 +303,11 @@ public class ViewHomepageDA extends FenixDispatchAction {
 	}
 
 	return null;
+    }
+
+    @Override
+    protected ActionForward getSiteDefaultView(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+        return show(mapping, form, request, response);
     }
 
 }

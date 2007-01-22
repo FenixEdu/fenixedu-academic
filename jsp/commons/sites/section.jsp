@@ -1,4 +1,6 @@
 <%@ page language="java" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.SectionProcessor"%>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.ItemProcessor"%>
 
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
@@ -14,6 +16,7 @@
 <bean:define id="context" value="<%= contextParam + "=" + contextParamValue %>"/>
 
 <bean:define id="site" name="site" type="net.sourceforge.fenixedu.domain.Site"/>
+<bean:define id="section" name="section" type="net.sourceforge.fenixedu.domain.Section"/>
 <bean:define id="sectionId" name="section" property="idInternal"/>
 
 <h2>
@@ -36,20 +39,32 @@
 </div>
 
 <div class="infoop2">
-<p>
-    <span style="color: #888;">
-        <bean:message key="label.section.availableFor" bundle="SITE_RESOURCES"/>:
-        <fr:view name="section" property="permittedGroup" layout="null-as-label" type="net.sourceforge.fenixedu.domain.accessControl.Group">
-            <fr:layout>
-                <fr:property name="label" value="<%= String.format("label.%s", net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup.class.getName()) %>"/>
-                <fr:property name="key" value="true"/>
-                <fr:property name="bundle" value="SITE_RESOURCES"/>
-                <fr:property name="subLayout" value="values"/>
-                <fr:property name="subSchema" value="permittedGroup.class.text"/>
-            </fr:layout>
-        </fr:view>    
-    </span>
-</p>
+    <p>
+        <span style="color: #888;">
+            <bean:message key="label.section.availableFor" bundle="SITE_RESOURCES"/>:
+            <fr:view name="section" property="permittedGroup" layout="null-as-label" type="net.sourceforge.fenixedu.domain.accessControl.Group">
+                <fr:layout>
+                    <fr:property name="label" value="<%= String.format("label.%s", net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup.class.getName()) %>"/>
+                    <fr:property name="key" value="true"/>
+                    <fr:property name="bundle" value="SITE_RESOURCES"/>
+                    <fr:property name="subLayout" value="values"/>
+                    <fr:property name="subSchema" value="permittedGroup.class.text"/>
+                </fr:layout>
+            </fr:view>    
+        </span>
+    </p>
+    <logic:present name="directLinkContext">
+        <p>
+            <span style="color: #888;" class="anchorcaaa">
+                <bean:message key="label.section.directLink" bundle="SITE_RESOURCES"/>:
+                
+                <bean:define id="directLinkContext" name="directLinkContext"/>
+                <html:link href="<%= directLinkContext + SectionProcessor.getSectionPath(section) %>">
+                    <%= directLinkContext + SectionProcessor.getSectionPath(section) %>
+                </html:link>
+            </span>
+        </p>
+    </logic:present>
 </div>
 
 <p>
@@ -216,6 +231,10 @@
 		<p class="mtop0 mbottom05">
 			<%--<span style="color: #888;"><bean:message key="label.item"/></span><br/>--%>
 			<strong><fr:view name="item" property="name"/></strong>
+            <logic:present name="directLinkContext">
+                <bean:define id="directLinkContext" name="directLinkContext"/>
+                (<a href="<%= directLinkContext + ItemProcessor.getItemPath(item) %>"><bean:message key="label.item.directLink" bundle="SITE_RESOURCES"/></a>)
+            </logic:present>
             
             <span style="color: #888; padding-left: 1em;">
                 <bean:message key="label.item.availableFor" bundle="SITE_RESOURCES"/>:

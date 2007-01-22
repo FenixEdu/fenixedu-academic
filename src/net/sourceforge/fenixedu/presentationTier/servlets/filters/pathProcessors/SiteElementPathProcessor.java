@@ -6,8 +6,8 @@ import net.sourceforge.fenixedu.util.StringUtils;
 
 public abstract class SiteElementPathProcessor extends PathProcessor {
 
-    public SiteElementPathProcessor(String forwardURI) {
-        super(forwardURI);
+    public SiteElementPathProcessor() {
+        super();
     }
 
     public static String getElementPathName(SiteElement element) {
