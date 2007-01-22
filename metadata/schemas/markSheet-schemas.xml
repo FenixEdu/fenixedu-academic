@@ -75,8 +75,8 @@
 
 	<slot name="curricularCourse.degree.name" key="label.degree"/>
 	<slot name="curricularCourse.degreeCurricularPlan.name" key="label.degreeCurricularPlan" />
-	<slot name="curricularCourse.name" key="label.name" />
-	<slot name="curricularCourse.code" key="label.code" />	
+	<slot name="curricularCourse.name" key="label.curricular.course.name" />
+	<slot name="curricularCourse.code" key="label.curricular.course.code" />	
 	<slot name="executionPeriod" layout="format" key="label.executionPeriod">
 		<property name="format" value="${semester}ºS ${executionYear.year}" />
 	</slot>
@@ -222,7 +222,7 @@
 		<property name="size" value="12" />
 		<property name="maxLength" value="10" />
 	</slot>
-	<slot name="reason" key="label.markSheet.reason" layout="longText">
+	<slot name="reason" key="label.markSheet.reason" layout="longText" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="columns" value="50"/>
 		<property name="rows" value="3"/>		
 	</slot>
