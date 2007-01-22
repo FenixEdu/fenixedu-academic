@@ -1,0 +1,2 @@
+alter table ROOT_DOMAIN_OBJECT add column KEY_EARTH_UNIT int(11) NULL;
+alter table ROOT_DOMAIN_OBJECT add key KEY_EARTH_UNIT (KEY_EARTH_UNIT);

@@ -192,6 +192,7 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 class net.sourceforge.fenixedu.domain.RootDomainObject extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyExternalInstitutionUnit;
 	Integer keyInstitutionUnit;
+	Integer keyEarthUnit;
 }
 
 class net.sourceforge.fenixedu.domain.space.Blueprint extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -3272,6 +3273,7 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 		Integer keyRootDomainObjectForInstitutionUnit;
 		Integer keyRootDomainObjectForExternalInstitutionUnit;
 		Integer keyUnitServiceAgreementTemplate;
+		Integer keyRootDomainObjectForEarthUnit;
 	}
 
 	class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.domain.organizationalStructure.Party {
@@ -11459,6 +11461,11 @@ relation RootDomainObjectInstitutionUnit {
 relation RootDomainObjectExternalInstitutionUnit {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObjectForExternalInstitutionUnit;
 	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole externalInstitutionUnit;	
+}
+
+relation RootDomainObjectEarthUnit {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObjectForEarthUnit;
+	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole earthUnit;	
 }
 
 /*******************************************

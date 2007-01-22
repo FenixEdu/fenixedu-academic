@@ -11,6 +11,8 @@ public class SetRootUnit extends Service{
 	    rootDomainObject.setInstitutionUnit(unit);
 	} else if(partyTypeEnum.equals(PartyTypeEnum.EXTERNAL_INSTITUTION)) {
 	    rootDomainObject.setExternalInstitutionUnit(unit);
+	} else if (unit.getType().equals(PartyTypeEnum.PLANET)) {
+	    rootDomainObject.setEarthUnit(unit);
 	}
     }    
 }

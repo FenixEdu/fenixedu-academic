@@ -16,4 +16,9 @@
 		column="KEY_INSTITUTION_UNIT"
 		jdbc-type="INTEGER"
 	/>		
+	<field-descriptor
+		name="keyEarthUnit"
+		column="KEY_EARTH_UNIT"
+		jdbc-type="INTEGER"
+	/>		
 </class-descriptor>

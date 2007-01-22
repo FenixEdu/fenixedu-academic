@@ -63,7 +63,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     private HashMap<Integer, String> unitRelationsAccountabilityTypes;
 
-    private Boolean toRemoveParentUnit, viewExternalUnits, institutionUnit, externalInstitutionUnit;
+    private Boolean toRemoveParentUnit, viewExternalUnits, institutionUnit, externalInstitutionUnit, earthUnit;
 
     public OrganizationalStructureBackingBean() {
 	if (!StringUtils.isEmpty(getRequestParameter("unitID"))) {
@@ -1256,5 +1256,19 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	    ServiceUtils.executeService(getUserView(), "SetRootUnit", argsToRead);
 	    this.institutionUnit = institutionUnit;
 	}
+    }
+
+    public Boolean getEarthUnit() throws FenixFilterException, FenixServiceException {
+	if (getUnit() != null && UnitUtils.readEarthUnit() != null && getUnit() == UnitUtils.readEarthUnit()) {
+	    this.earthUnit = Boolean.TRUE;
+	}
+        return this.earthUnit;
+    }
+
+    public void setEarthUnit(Boolean earthUnit) throws FenixFilterException, FenixServiceException {
+	if (earthUnit && getUnit() != null && UnitUtils.readEarthUnit() != getUnit()) {
+	    ServiceUtils.executeService(getUserView(), "SetRootUnit", new Object[] {getUnit(), null});
+	    this.earthUnit = earthUnit;
+	} 
     }
 }

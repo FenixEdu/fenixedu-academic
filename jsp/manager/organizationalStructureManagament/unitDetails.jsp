@@ -112,6 +112,9 @@
 
 		<h:outputText value="<b>#{bundle['label.rootExternalInstitution']}</b>" escape="false" />
 		<h:selectBooleanCheckbox value="#{organizationalStructureBackingBean.externalInstitutionUnit}" onclick="this.form.submit()"/>					
+
+		<h:outputText value="<b>#{bundle['label.earthUnit']}</b>" escape="false" />
+		<h:selectBooleanCheckbox value="#{organizationalStructureBackingBean.earthUnit}" onclick="this.form.submit()"/>					
 					
 					
 		<h:outputText value="<br/><h3>#{bundle['message.subUnits']}</h3>" escape="false" />
