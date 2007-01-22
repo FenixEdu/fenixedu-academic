@@ -242,6 +242,7 @@ Documentation:
         <property name="enabledClass" value="fEnabled"/>
         <property name="disabledClass" value="fDisabled"/>
     </renderer>
+
     <renderer mode="input" type="net.sourceforge.fenixedu.domain.functionalities.Functionality" layout="functionalities-tree" class="net.sourceforge.fenixedu.presentationTier.renderers.FunctionalityInputTreeRenderer">
         <property name="moduleEnabledImage" value="/images/functionalities/folder.gif"/>
         <property name="moduleDisabledImage" value="/images/functionalities/folder-disabled.gif"/>
@@ -707,11 +708,12 @@ Documentation:
     <renderer type="net.sourceforge.fenixedu.domain.space.RoomClassification" layout="roomClassification-label" class="net.sourceforge.fenixedu.renderers.FormatRenderer">
         <property name="format" value="${presentationCode} - ${name}"/>
     </renderer>
-  
-    
-    <renderer type="net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal" layout="dismissal-label" class="net.sourceforge.fenixedu.renderers.FormatRenderer">
+
+	<renderer type="net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal" layout="dismissal-label" class="net.sourceforge.fenixedu.renderers.FormatRenderer">
         <property name="format" value="${name}  (${curriculumGroup.name})"/>
     </renderer>
     
+     <!--@ Each LinkObject in the collection is presented like a HtmlLink. LinkObject has the necessary information for each link. -->
+    <renderer type="java.util.List" layout="list-link" class="net.sourceforge.fenixedu.presentationTier.renderers.ListLinkRenderer" />
     
 </renderers-config>
