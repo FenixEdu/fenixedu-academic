@@ -55,8 +55,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState;
-import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
-import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
@@ -1262,6 +1260,17 @@ public class Registration extends Registration_Base {
 	return new StudentCurriculum(this).calculateCurricularYear(executionYear);
     }
 
+    public boolean hasApprovement(ExecutionYear executionYear) {
+	int curricularYearInTheBegin = getCurricularYear(executionYear);
+	int curricularYearAtTheEnd = getCurricularYear(executionYear.getNextExecutionYear());
+	
+	if (curricularYearInTheBegin > curricularYearAtTheEnd) {
+	    throw new DomainException("Registration.curricular.year.has.decreased");
+	}
+	
+	return curricularYearAtTheEnd > curricularYearInTheBegin;
+    }
+    
     public boolean isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegree() {
 	final DegreeType degreeType = getDegreeType();
 	return (degreeType == DegreeType.DEGREE || degreeType == DegreeType.BOLONHA_DEGREE || degreeType == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
@@ -1302,6 +1311,23 @@ public class Registration extends Registration_Base {
 	return null;
     }
 
+    @Override
+    public ExecutionYear getRegistrationYear() {
+	return super.getRegistrationYear() == null ? getFirstEnrolmentExecutionYear() : super.getRegistrationYear();
+    }
+    
+    public boolean isFirstTime(ExecutionYear executionYear) {
+	return getRegistrationYear() == executionYear;
+    }
+    
+    public boolean isFirstTime() {
+	return isFirstTime(ExecutionYear.readCurrentExecutionYear());
+    }
+
+    public ExecutionYear getFirstEnrolmentExecutionYear() {
+	return getEnrolmentsExecutionYears().iterator().next();
+    }
+    
     public Set<ExecutionYear> getEnrolmentsExecutionYears() {
 	final Set<ExecutionYear> sortedExecutionYears = new TreeSet<ExecutionYear>(
 		ExecutionYear.EXECUTION_YEAR_COMPARATOR_BY_YEAR);
