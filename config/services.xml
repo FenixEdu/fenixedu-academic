@@ -11294,7 +11294,7 @@
         <filterChains>
         	<chain name="AcademicAdministrativeOfficeAuthorization"></chain>
         </filterChains>     
-    </service> 
+    </service>
 	<service>
     	<name>DeletePenaltyExemption</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.gratuity.DeletePenaltyExemption</implementationClass>
@@ -11304,7 +11304,6 @@
         	<chain name="AcademicAdministrativeOfficeAuthorization"></chain>
         </filterChains>     
     </service>    
-    
     <service>
     	<name>CreateInstallmentPenaltyExemption</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.gratuity.CreateInstallmentPenaltyExemption</implementationClass>
@@ -11313,8 +11312,8 @@
         <filterChains>
         	<chain name="AcademicAdministrativeOfficeAuthorization"></chain>
         </filterChains>     
-    </service>   
-    <service>
+    </service>
+	<service>
     	<name>DeleteAcademicCalendar</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.academicCalendarManagement.DeleteAcademicCalendar</implementationClass>
         <description></description>
@@ -11331,6 +11330,32 @@
         <filterChains>
         	<chain name="ManagerAuthorization"></chain>
         </filterChains>     
+    </service> 
+    <service>
+    	<name>CreateExternalUnit</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.externalUnits.CreateExternalUnit</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="AcademicAdministrativeOfficeAuthorization"></chain>
+        </filterChains>     
+    </service>
+    <service>
+    	<name>CreateExternalCurricularCourse</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.externalUnits.CreateExternalCurricularCourse</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="AcademicAdministrativeOfficeAuthorization"></chain>
+        </filterChains>     
+    </service>
+    <service>
+    	<name>CreateExternalEnrolment</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.externalUnits.CreateExternalEnrolment</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="AcademicAdministrativeOfficeAuthorization"></chain>
+        </filterChains>     
     </service>    
-    
 </serviceDefinitions>

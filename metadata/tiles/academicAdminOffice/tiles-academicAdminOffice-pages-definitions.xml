@@ -270,7 +270,8 @@
 	<definition name="prices.management.viewPrices" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/pricesManagement/viewPrices.jsp"/>
 	</definition>
-	<!-- ************************************* -->
+		
+	<!-- ************* Student Dismissals ************* -->
 	<definition name="studentDismissal.chooseEquivalents" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/dismissal/chooseEquivalents.jsp"/>
 	</definition>
@@ -331,4 +332,32 @@
 		<put name="body" value="/academicAdminOffice/gradeSubmission/prepareGradesToSubmitSendMail.jsp"></put>
 	</definition>	
 	
+	<!-- ************* External Units ************* -->
+	<definition name="externalUnits.searchExternalUnits" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/externalUnits/searchExternalUnit.jsp"/>
+	</definition>
+	<definition name="externalUnits.viewCountryUnit" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/externalUnits/viewCountryUnit.jsp"/>
+	</definition>
+	<definition name="externalUnits.viewUniversityUnit" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/externalUnits/viewUniversityUnit.jsp"/>
+	</definition>
+	<definition name="externalUnits.viewSchoolUnit" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/externalUnits/viewSchoolUnit.jsp"/>
+	</definition>
+	<definition name="externalUnits.viewDepartmentUnit" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/externalUnits/viewDepartmentUnit.jsp"/>
+	</definition>
+	<definition name="externalUnits.viewExternalCurricularCourse" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/externalUnits/viewExternalCurricularCourse.jsp"/>
+	</definition>
+	<definition name="externalUnits.prepareCreateUnit" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/externalUnits/createExternalUnit.jsp"/>
+	</definition>
+	<definition name="externalUnits.prepareCreateExternalCurricularCourse" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/externalUnits/createExternalCurricularCourse.jsp"/>
+	</definition>
+	<definition name="externalUnits.prepareCreateExternalEnrolment" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/externalUnits/createExternalEnrolment.jsp"/>
+	</definition>
 </tiles-definitions>

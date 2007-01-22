@@ -1864,10 +1864,9 @@ public class Person extends Person_Base {
 	}
 	final Collection<AnnouncementBoard> result = new HashSet<AnnouncementBoard>();
 	for (final Professorship professorship : getTeacher().getProfessorships()) {
-	    if (professorship.getExecutionCourse().getExecutionPeriod() == ExecutionPeriod
-		    .readActualExecutionPeriod()) {
+	    if (professorship.getExecutionCourse().getExecutionPeriod() == ExecutionPeriod.readActualExecutionPeriod()) {
 		final AnnouncementBoard board = professorship.getExecutionCourse().getBoard();
-		if (board != null && (board.hasReader(this) || board.hasWriter(this))) {
+		if (board != null && board.hasReaderOrWriter(this)) {
 		    result.add(board);
 		}
 	    }
@@ -1882,10 +1881,9 @@ public class Person extends Person_Base {
 	final Collection<AnnouncementBoard> result = new HashSet<AnnouncementBoard>();
 	for (final Registration registration : getStudent().getRegistrationsSet()) {
 	    for (final Attends attends : registration.getAssociatedAttendsSet()) {
-		if (attends.getDisciplinaExecucao().isLecturedIn(
-			ExecutionPeriod.readActualExecutionPeriod())) {
+		if (attends.getDisciplinaExecucao().isLecturedIn(ExecutionPeriod.readActualExecutionPeriod())) {
 		    final AnnouncementBoard board = attends.getDisciplinaExecucao().getBoard();
-		    if (board != null && (board.hasReader(this) || board.hasWriter(this))) {
+		    if (board != null && board.hasReaderOrWriter(this)) {
 			result.add(board);
 		    }
 		}
@@ -2158,7 +2156,7 @@ public class Person extends Person_Base {
 	return false;
     }
 
-    private Set<? extends Event> getEventsByEventType(final EventType eventType) {
+    public Set<? extends Event> getEventsByEventType(final EventType eventType) {
 	final Set<Event> result = new HashSet<Event>();
 
 	for (final Event event : getEventsSet()) {

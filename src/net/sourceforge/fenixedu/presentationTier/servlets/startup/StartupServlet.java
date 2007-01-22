@@ -70,7 +70,7 @@ public class StartupServlet extends HttpServlet {
                 ex.printStackTrace();
             }
 
-            loadLogins();
+            //loadLogins();
         } finally {
             Transaction.forceFinish();
         }

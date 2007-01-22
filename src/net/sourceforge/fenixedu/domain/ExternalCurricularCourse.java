@@ -1,6 +1,10 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
+import org.apache.commons.lang.StringUtils;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
@@ -24,18 +28,30 @@ public class ExternalCurricularCourse extends ExternalCurricularCourse_Base {
 	});
     }
 
-    public ExternalCurricularCourse(Unit unit, String name, String code) {
+    public ExternalCurricularCourse(final Unit unit, final String name, final String code) {
 	super();
 	if (unit == null) {
 	    throw new DomainException("error.externalCurricularCourse.unit.cannot.be.null");
 	}
-	if (name == null || name.length() == 0) {
+	if (StringUtils.isEmpty(name)) {
 	    throw new DomainException("error.externalCurricularCourse.name.cannot.be.empty");
 	}
+	
+	checkForExternalCurricularCourseWithSameName(unit, name);
+	
 	setRootDomainObject(RootDomainObject.getInstance());
+	setUnit(unit);
 	setName(name);
 	setCode(code);
-	setUnit(unit);
+    }
+
+    private void checkForExternalCurricularCourseWithSameName(final Unit unit, final String name) {
+	final String nameToSearch = name.toLowerCase();
+	for (final ExternalCurricularCourse externalCurricularCourse : unit.getExternalCurricularCourses()) {
+	    if (externalCurricularCourse.getName().toLowerCase().equals(nameToSearch)) {
+		throw new DomainException("error.externalCurricularCourse.parent.unit.already.has.externalCurricularCourse.with.same.type");
+	    }
+	}
     }
 
     public void delete() {
@@ -52,7 +68,8 @@ public class ExternalCurricularCourse extends ExternalCurricularCourse_Base {
 	return !hasAnyExternalEnrolments();
     }
 
-    public static ExternalCurricularCourse readExternalCurricularCourse(String code) {
+    
+    static public ExternalCurricularCourse readExternalCurricularCourse(String code) {
 	for (final ExternalCurricularCourse externalCurricularCourse : RootDomainObject.getInstance()
 		.getExternalCurricularCourses()) {
 	    if (externalCurricularCourse.getCode().equals(code)) {
@@ -62,4 +79,17 @@ public class ExternalCurricularCourse extends ExternalCurricularCourse_Base {
 	return null;
     }
 
+    static public List<ExternalCurricularCourse> readByName(final String regex) {
+	if (regex == null) {
+	    return Collections.emptyList();
+	}
+	final String nameToMatch = regex.replaceAll("%", ".*").toLowerCase();
+	final List<ExternalCurricularCourse> result = new ArrayList<ExternalCurricularCourse>();
+	for (final ExternalCurricularCourse externalCurricularCourse : RootDomainObject.getInstance().getExternalCurricularCoursesSet()) {
+	    if (externalCurricularCourse.getName().toLowerCase().matches(nameToMatch)) {
+		result.add(externalCurricularCourse);
+	    }
+	}
+	return result;
+    }
 }

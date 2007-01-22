@@ -513,9 +513,26 @@
 			<forward name="chooseEquivalents" path="studentDismissal.chooseEquivalents"/>
 			<forward name="visualizeRegistration" path="/student.do?method=visualizeRegistration"/>
 			<forward name="chooseDismissalEnrolments" path="studentDismissal.chooseDismissalEnrolments"/>
-	  </action>         
+	  </action>
+	  
+      <!-- ExternalUnits -->
+      <action path="/externalUnits"
+			  scope="request"
+		      parameter="method"
+		      type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.externalUnits.ExternalUnitsDispatchAction">
       
-		
+      		<forward name="searchExternalUnits" path="externalUnits.searchExternalUnits"/>
+      		
+      		<forward name="viewCountryUnit" path="externalUnits.viewCountryUnit"/>
+      		<forward name="viewUniversityUnit" path="externalUnits.viewUniversityUnit"/>
+      		<forward name="viewSchoolUnit" path="externalUnits.viewSchoolUnit"/>
+      		<forward name="viewDepartmentUnit" path="externalUnits.viewDepartmentUnit"/>
+      		<forward name="viewExternalCurricularCourse" path="externalUnits.viewExternalCurricularCourse"/>
+      		
+      		<forward name="prepareCreateUnit" path="externalUnits.prepareCreateUnit"/>
+      		<forward name="prepareCreateExternalCurricularCourse" path="externalUnits.prepareCreateExternalCurricularCourse"/>
+      		<forward name="prepareCreateExternalEnrolment" path="externalUnits.prepareCreateExternalEnrolment"/>
+      </action>
 	
     </action-mappings>
 
