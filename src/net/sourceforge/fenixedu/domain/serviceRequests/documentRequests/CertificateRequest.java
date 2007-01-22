@@ -39,10 +39,6 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
 	}
     }
 
-    public boolean isUrgentRequest() {
-	return getUrgentRequest().booleanValue();
-    }
-
     public static CertificateRequest create(Registration registration,
 	    DocumentRequestType chosenDocumentRequestType,
 	    DocumentPurposeType chosenDocumentPurposeType, String otherPurpose, String notes,

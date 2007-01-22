@@ -69,6 +69,10 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
 	}
     }
 
+    public boolean isUrgentRequest() {
+	return getUrgentRequest().booleanValue();
+    }
+
     public final boolean isPayable() {
 	return hasEvent();
     }
