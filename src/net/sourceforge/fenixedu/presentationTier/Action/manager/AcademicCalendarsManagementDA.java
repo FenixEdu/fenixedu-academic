@@ -1,7 +1,10 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -160,15 +163,21 @@ public class AcademicCalendarsManagementDA extends FenixDispatchAction {
 	    DateTime firstMonthDateTime = entries.get(0).getBegin().withDayOfMonth(1);
 	    DateTime lastMontDateTime = entries.get(entries.size() - 1).getEnd().withDayOfMonth(1);
 	    List<DateTime> months = new ArrayList<DateTime>();
-	    	    	      	   	  
+	    Map<Integer, Integer> years = new TreeMap<Integer, Integer>();
+	    
 	    while ((firstMonthDateTime.getYear() < lastMontDateTime.getYear())
 		    || (firstMonthDateTime.getYear() == lastMontDateTime.getYear() && firstMonthDateTime
 			    .getMonthOfYear() <= lastMontDateTime.getMonthOfYear())) {
 		
-		months.add(firstMonthDateTime);
-		firstMonthDateTime = firstMonthDateTime.plusMonths(1);
-	    }
-	    
+		months.add(firstMonthDateTime);				
+		if(years.containsKey(Integer.valueOf(firstMonthDateTime.getYear()))) {
+		   years.put(Integer.valueOf(firstMonthDateTime.getYear()), years.get(Integer.valueOf(firstMonthDateTime.getYear())) + 1);
+		} else {
+		    years.put(Integer.valueOf(firstMonthDateTime.getYear()), 1);
+		}		
+		firstMonthDateTime = firstMonthDateTime.plusMonths(1);		
+	    }	    
+	    request.setAttribute("years", years);
 	    request.setAttribute("months", months);
 	}
     }

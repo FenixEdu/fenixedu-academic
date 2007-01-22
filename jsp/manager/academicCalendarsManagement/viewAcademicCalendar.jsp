@@ -109,14 +109,16 @@
 		<table class="tcalendar thlight">
 			<tr>
 				<bean:size name="months" id="monthsSize"/>
-				<th rowspan="2"><bean:message key="label.type" bundle="MANAGER_RESOURCES"/></th>
-				<th rowspan="2"><bean:message key="label.academicCalendar.title" bundle="MANAGER_RESOURCES"/> </th>
-				<th colspan="<%= monthsSize.toString() %>"><bean:message key="label.year" bundle="MANAGER_RESOURCES"/></th>
+				<th rowspan="2"><bean:message key="label.academicCalendar.type.and.title" bundle="MANAGER_RESOURCES"/></th>				
+				<logic:iterate id="year" name="years">				
+					<bean:define id="yearSize" name="year" property="value"></bean:define>
+					<th colspan="<%= yearSize %>"><bean:write name="year" property="key"/></th>				
+				</logic:iterate>				
+				<th rowspan="2"><bean:message key="label.academicCalendar.period" bundle="MANAGER_RESOURCES"/></th>
 			</tr>
+			
 			<tr>
-				<%
-					Locale locale = new Locale("pt", "PT");
-				%>
+				<%	Locale locale = new Locale("pt", "PT");	%>
 				<logic:iterate id="month" name="months" type="org.joda.time.DateTime">										
 					<th><%= month.toString("MMM", locale) %></th>		
 				</logic:iterate>	
@@ -130,32 +132,22 @@
 				<bean:define id="entryURL">/academicCalendarsManagement.do?method=viewAcademicCalendarEntry&amp;academicCalendarEntryID=<bean:write name="entry" property="idInternal"/></bean:define>
 				
 				<logic:notEmpty name="calendarEntry">					
-					<%
-						if(entry.equals(pageContext.findAttribute("calendarEntrySelected"))){						    												    
-					%>				
+					<% if(entry.equals(pageContext.findAttribute("calendarEntrySelected"))){ %>				
 						<tr title="<%= title %>" class="selected">				
-					<%
-						} else { 
-					%>
+					<% } else { %>
 						<tr title="<%= title %>">				
-					<%
-						}
-					%>
+					<% } %>
 				</logic:notEmpty>																								
 				<logic:notEmpty name="academicCalendar">
 					<tr title="<%= title %>">
 				</logic:notEmpty>
-										
-					<td class="padded">						
-						<span style="<%= paddingStyle %>">														
-							<bean:write name="entry" property="type"/>							
-						</span>
-					</td>
-											
+																	
 					<td class="padded">
-						<html:link page="<%= entryURL %>">
-							<bean:write name="entry" property="title.content"/>
-						</html:link>		
+						<span style="<%= paddingStyle %>">														
+							<html:link page="<%= entryURL %>">												
+								*<bean:write name="entry" property="type"/>: <bean:write name="entry" property="title.content"/>
+							</html:link>		
+						</span>	
 					</td>																				
 																							
 					<logic:iterate id="month" name="months" type="org.joda.time.DateTime">					
@@ -298,8 +290,14 @@
 							}						
 						%>
 																														
-						<td><div style="<%= styleString %>" class="<%= classString %>"><%= spaceString %></div></td>											
+						<td><div style="<%= styleString %>" class="<%= classString %>"><%= spaceString %></div></td>			
+																									
 					</logic:iterate>																		
+					<td class="padded smalltxt">
+						<%=	entry.getBegin().toString("dd/MM/yyyy HH:mm")	%>
+						<bean:message key="label.until" bundle="MANAGER_RESOURCES"/>
+						<%=	entry.getEnd().toString("dd/MM/yyyy HH:mm") %>
+					</td>
 				</tr>
 				
 			</logic:iterate>									

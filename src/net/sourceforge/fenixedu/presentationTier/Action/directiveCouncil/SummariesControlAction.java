@@ -234,8 +234,7 @@ public class SummariesControlAction extends FenixDispatchAction {
 
         if (degreeTeachingService != null) {
             percentage = degreeTeachingService.getPercentage();
-            lessonHours += getLessonHoursByExecutionCourseAndExecutionPeriod(percentage, teacherService,
-                    professorship, shift);
+            lessonHours += getLessonHoursByExecutionCourseAndExecutionPeriod(percentage, shift);
         }
         return lessonHours;
     }
@@ -367,8 +366,7 @@ public class SummariesControlAction extends FenixDispatchAction {
         return difference;
     }
 
-    private Double getLessonHoursByExecutionCourseAndExecutionPeriod(Double percentage,
-            TeacherService teacherService, Professorship professorship, Shift shift) {
+    private Double getLessonHoursByExecutionCourseAndExecutionPeriod(Double percentage, Shift shift) {
 
         Double shiftLessonHoursSum = 0.0;
         for (Lesson lesson : shift.getAssociatedLessons()) {
