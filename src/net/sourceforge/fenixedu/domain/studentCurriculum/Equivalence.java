@@ -2,6 +2,8 @@ package net.sourceforge.fenixedu.domain.studentCurriculum;
 
 import java.util.Collection;
 
+import org.apache.commons.lang.StringUtils;
+
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.SelectedDismissal;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -38,8 +40,8 @@ public class Equivalence extends Equivalence_Base {
     }
 
     private void initGrade(Collection<IEnrolment> enrolments, String grade) {
-	if ((enrolments == null || enrolments.isEmpty()) && grade == null) {
-	    throw new DomainException("error.equivalence.wrong.arguments");
+	if ((enrolments == null || enrolments.isEmpty()) && StringUtils.isEmpty(grade)) {
+	    throw new DomainException("error.equivalence.must.define.enrolments.and.grade");
 	}
 	setGivenGrade(grade);
     }
