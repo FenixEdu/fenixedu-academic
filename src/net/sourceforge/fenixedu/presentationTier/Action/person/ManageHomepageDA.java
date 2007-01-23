@@ -41,7 +41,20 @@ public class ManageHomepageDA extends SiteManagementDA {
         return super.execute(mapping, actionForm, request, response);
     }
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm,
+    public ActionForward activation(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+        final Person person = getUserView(request).getPerson();
+        final Homepage homepage = person.getHomepage();
+        
+        final DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
+        if (homepage != null) {
+            dynaActionForm.set("activated", homepage.getActivated().toString());
+        }
+        
+        return mapping.findForward("show-homepage-activation");
+    }
+    
+    public ActionForward options(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
     	final Person person = getUserView(request).getPerson();
     	final Homepage homepage = person.getHomepage();
@@ -71,15 +84,45 @@ public class ManageHomepageDA extends SiteManagementDA {
         personAttendsSortedByExecutionCourseName.addAll(person.getCurrentAttends());
         request.setAttribute("personAttends", personAttendsSortedByExecutionCourseName);
 
-        return mapping.findForward("show-manage-homepage");
+        return mapping.findForward("show-homepage-options");
     }
 
-    public ActionForward submitHomepage(ActionMapping mapping, ActionForm actionForm,
+    public ActionForward activateHomepage(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+        
+        Homepage homepage = getUserView(request).getPerson().getHomepage();
+        final DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
+        
+        final String activated = (String) dynaActionForm.get("activated");
+        final Object[] args = {
+                getUserView(request).getPerson(),
+                Boolean.valueOf(activated),
+                homepage.getShowUnit(),
+                homepage.getShowCategory(),
+                homepage.getShowPhoto(),
+                homepage.getShowEmail(),
+                homepage.getShowTelephone(),
+                homepage.getShowWorkTelephone(),
+                homepage.getShowMobileTelephone(),
+                homepage.getShowAlternativeHomepage(),
+                homepage.getShowResearchUnitHomepage(),
+                homepage.getShowCurrentExecutionCourses(),
+                homepage.getShowActiveStudentCurricularPlans(),
+                homepage.getShowAlumniDegrees(),
+                homepage.getResearchUnitHomepage(),
+                homepage.getResearchUnit(),
+                homepage.getShowCurrentAttendingExecutionCourses() };
+        executeService(request, "SubmitHomepage", args);
+
+        return activation(mapping, actionForm, request, response);
+    }
+    
+    public ActionForward changeHomepageOptions(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
+    Homepage homepage = getUserView(request).getPerson().getHomepage();
     	final DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
 
-    	final String activated = (String) dynaActionForm.get("activated");
     	final String showUnit = (String) dynaActionForm.get("showUnit");
     	final String showCategory = (String) dynaActionForm.get("showCategory");
     	final String showPhoto = (String) dynaActionForm.get("showPhoto");
@@ -105,7 +148,7 @@ public class ManageHomepageDA extends SiteManagementDA {
 
     	final Object[] args = {
     			getUserView(request).getPerson(),
-    			Boolean.valueOf(activated),
+    			homepage.getActivated(),
     			Boolean.valueOf(showUnit),
     			Boolean.valueOf(showCategory),
     			Boolean.valueOf(showPhoto),
@@ -123,7 +166,7 @@ public class ManageHomepageDA extends SiteManagementDA {
     			Boolean.valueOf(showCurrentAttendingExecutionCourses) };
     	executeService(request, "SubmitHomepage", args);
 
-        return prepare(mapping, actionForm, request, response);
+        return options(mapping, actionForm, request, response);
     }
 
     @Override

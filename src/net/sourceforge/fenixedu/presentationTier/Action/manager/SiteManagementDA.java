@@ -60,11 +60,14 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
         Site site = getSite(request);
-        request.setAttribute("site", site);
+        
+        if (site != null) {
+            request.setAttribute("site", site);
+        }
         
         ActionForward forward = super.execute(mapping, actionForm, request, response);
         
-        if (site.hasQuota()) {
+        if (site != null && site.hasQuota()) {
             request.setAttribute("siteQuota", site.getQuota());
             request.setAttribute("siteUsedQuota", site.getUsedQuota());
         }

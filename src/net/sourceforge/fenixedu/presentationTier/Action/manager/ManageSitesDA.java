@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Site;
+import net.sourceforge.fenixedu.domain.SiteTemplate;
 import net.sourceforge.fenixedu.domain.homepage.Homepage;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -100,6 +101,27 @@ public class ManageSitesDA extends SiteManagementDA {
         
         return mapping.findForward("editFunctionalitySection");
     }
-    
+
+    @Override
+    protected Site getSite(HttpServletRequest request) {
+        Site site = super.getSite(request);
+        
+        if (site != null) {
+            return site;
+        }
+        else {
+            String type = request.getParameter("type");
+            if (type == null) {
+                return null;
+            }
+            else {
+                try {
+                    return SiteTemplate.getTemplateForType(Class.forName(type));
+                } catch (ClassNotFoundException e) {
+                    return null;
+                }
+            }
+        }
+    }
     
 }

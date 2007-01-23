@@ -36,8 +36,12 @@
 
     <!-- ========== HOMEPAGE =========== -->
 
-    <definition name="show-manage-homepage" extends="definition.person.masterPage" >
-	  <put name="body" value="/person/manageHomepage.jsp" />
+    <definition name="show-homepage-activation" extends="definition.person.masterPage" >
+	  <put name="body" value="/person/homepageActivation.jsp" />
+	</definition>
+    
+    <definition name="show-homepage-options" extends="definition.person.masterPage" >
+	  <put name="body" value="/person/homepageOptions.jsp" />
 	</definition>
     
     <definition name="definition.person.homepage" extends="definition.person.masterPage" >

@@ -13,10 +13,13 @@
 	<%-- <li><html:link page="/sendSms.do?method=prepare" ><bean:message key="label.person.sendSms"  /></html:link></li>  --%>
 
     <li class="navheader"><bean:message key="label.homepage"  /></li>
-    <li><html:link page="/manageHomepage.do?method=prepare" titleKey="link.manage.homepage"><bean:message key="link.manage.homepage"  /></html:link></li>
+    <li><html:link page="/manageHomepage.do?method=activation" titleKey="link.homepage.activation"><bean:message key="link.homepage.activation"  /></html:link></li>
     
     <logic:notEmpty name="UserView" property="person.homepage">
-        <li><html:link page="/manageHomepage.do?method=sections" titleKey="link.manage.homepage.content"><bean:message key="link.manage.homepage.content"  /></html:link></li>
+        <logic:equal name="UserView" property="person.homepage.activated" value="true">
+            <li><html:link page="/manageHomepage.do?method=options" titleKey="link.homepage.options"><bean:message key="link.homepage.options"  /></html:link></li>
+            <li><html:link page="/manageHomepage.do?method=sections" titleKey="link.manage.homepage.content"><bean:message key="link.manage.homepage.content"  /></html:link></li>
+        </logic:equal>
     </logic:notEmpty>
 
 	<!-- Vigilancy link for people who do not have ROLE TEACHER -->

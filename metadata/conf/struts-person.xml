@@ -277,7 +277,8 @@
         		scope="request"
 	        		parameter="method"
         		input="/manageHomepage.do?method=prepare">
-            <forward name="show-manage-homepage" path="show-manage-homepage"/>
+            <forward name="show-homepage-activation" path="show-homepage-activation"/>
+            <forward name="show-homepage-options" path="show-homepage-options"/>
             <forward name="createSection" path="homepage-createSection"/>
             <forward name="sectionsManagement" path="homepage-sectionsManagement"/>
             <forward name="section" path="homepage-section"/>
