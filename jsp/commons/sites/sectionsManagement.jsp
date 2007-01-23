@@ -12,8 +12,10 @@
 <bean:define id="contextParamValue" name="siteContextParamValue"/>
 <bean:define id="context" value="<%= contextParam + "=" + contextParamValue %>"/>
 
+<jsp:include page="siteQuota.jsp"/>
+
 <h2>
-	<bean:message key="label.executionCourseManagement.menu.sections"/>
+    <bean:message key="label.executionCourseManagement.menu.sections"/>
 </h2>
 
 <p>

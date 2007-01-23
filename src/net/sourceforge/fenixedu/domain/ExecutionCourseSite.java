@@ -86,4 +86,15 @@ public class ExecutionCourseSite extends ExecutionCourseSite_Base {
             return null;
         }
     }
+
+    @Override
+    public boolean isFileClassificationSupported() {
+        return true;
+    }
+    
+    @Override
+    public boolean isScormContentAccepted() {
+        return true;
+    }
+
 }

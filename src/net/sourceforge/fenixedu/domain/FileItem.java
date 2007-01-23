@@ -37,7 +37,7 @@ public class FileItem extends FileItem_Base {
         ItemFileItem.addListener(ORDERED_ADAPTER);
     }
     
-    public FileItem(Item item) {
+    protected FileItem(Item item) {
         super();
 
         setVisible(true);

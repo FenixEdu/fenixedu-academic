@@ -1416,3 +1416,11 @@ height: 30px;
 	margin-top: 0;
 	margin-bottom: 0;
 }
+
+img.percentImage {
+  background: white url(../images/percentImage_back.png) top left no-repeat;
+  padding: 0;
+  margin: 5px 0 0 0;
+  background-position: 1px 0;
+ }
+ 

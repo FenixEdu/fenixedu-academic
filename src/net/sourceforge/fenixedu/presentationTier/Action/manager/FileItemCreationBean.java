@@ -110,7 +110,8 @@ public class FileItemCreationBean implements Serializable {
         PROJECT_SUBMISSION("projectSubmission"),
         LABORATORY_GUIDE("laboratoryGuide"),
         DIDACTIL_TEXT("didactilText"),
-        STUDY_BOOK("studyBook")
+        STUDY_BOOK("studyBook"),
+        SITE_CONTENT("siteContent")
         ;
    	
    	private String type;

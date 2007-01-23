@@ -19,6 +19,8 @@
 <bean:define id="section" name="section" type="net.sourceforge.fenixedu.domain.Section"/>
 <bean:define id="sectionId" name="section" property="idInternal"/>
 
+<jsp:include page="siteQuota.jsp"/>
+
 <h2>
 	<bean:message key="label.section"/>
 	<fr:view name="section" property="name" />

@@ -39,12 +39,21 @@ public class CreateFileItemForItem extends FileItemService {
 		final FileDescriptor fileDescriptor = saveFile(filePath, originalFilename, !isPublic(permittedGroup),
 				metaData, inputStream);
 
+        checkSiteQuota(site, fileDescriptor.getSize());
 		new FileItem(item, fileDescriptor.getFilename(), displayName, fileDescriptor.getMimeType(),
 				fileDescriptor.getChecksum(), fileDescriptor.getChecksumAlgorithm(),
 				fileDescriptor.getSize(), fileDescriptor.getUniqueId(), permittedGroup);
 	}
 
-	protected FileDescriptor saveFile(VirtualPath filePath, String originalFilename, boolean permission,
+	private void checkSiteQuota(Site site, int size) {
+        if (site.hasQuota()) {
+            if (site.getUsedQuota() + size > site.getQuota()) {
+                throw new SiteFileQuotaExceededException(site, size);
+            }
+        }
+    }
+
+    protected FileDescriptor saveFile(VirtualPath filePath, String originalFilename, boolean permission,
 			Collection<FileSetMetaData> metaData, InputStream inputStream) {
 		final IFileManager fileManager = FileManagerFactory.getFileManager();
 		return fileManager.saveFile(filePath, originalFilename, permission, metaData, inputStream);

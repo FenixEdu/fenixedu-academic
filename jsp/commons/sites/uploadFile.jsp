@@ -31,6 +31,7 @@
 </li>
 </ul>
 
+<logic:equal name="site" property="scormContentAccepted" value="true">
 <p>
 <span>
 	<span class="pleft1">
@@ -51,6 +52,7 @@
 	</span>
 </span>
 </p>
+</logic:equal>
 
 <logic:messagesPresent message="true">
 	<html:messages id="messages" message="true">
@@ -59,6 +61,12 @@
 		</p>
 	</html:messages>
 </logic:messagesPresent>
+
+<p class="mvert1">
+    <span class="error">
+        <html:errors property="section" bundle="SITE_RESOURCES"/>
+    </span>
+</p>
 
 <div class="dinline forminline">
 <fr:form action="<%= actionName + "?method=fileUpload&amp;" + context + "&amp;itemID=" + item.getIdInternal()  %>" encoding="multipart/form-data" >
@@ -87,16 +95,18 @@
 	        </fr:edit>
 		</td>
 	</tr>
-	<tr>
-		<th><bean:message key="label.teacher.siteAdministration.uploadFile.ResourceType"/>:</th>
-		<td>
-	        <fr:edit id="educationalLearningResourceType" name="fileItemCreator" slot="educationalLearningResourceType">
-			<fr:layout>
-				<fr:property name="excludedValues" value="PROJECT_SUBMISSION"/>
-			</fr:layout>
-	        </fr:edit>
-		</td>
-	</tr>
+    <logic:notPresent name="skipFileClassification">
+        	<tr>
+        		<th><bean:message key="label.teacher.siteAdministration.uploadFile.ResourceType"/>:</th>
+        		<td>
+        	        <fr:edit id="educationalLearningResourceType" name="fileItemCreator" slot="educationalLearningResourceType">
+        			<fr:layout>
+        				<fr:property name="excludedValues" value="PROJECT_SUBMISSION,SITE_CONTENT"/>
+        			</fr:layout>
+        	        </fr:edit>
+        		</td>
+        	</tr>
+    </logic:notPresent>
 	<tr>
 		<th><bean:message key="label.teacher.siteAdministration.uploadFile.file"/>:</th>
 		<td>

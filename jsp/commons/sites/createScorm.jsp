@@ -31,6 +31,7 @@
 	</li>
 </ul>
 	
+<logic:equal name="site" property="scormContentAccepted" value="true">
 <p>
 <span>
 	<span class="pleft1">
@@ -51,6 +52,7 @@
 	</span>
 </span>
 </p>
+</logic:equal>
 
 <div class="infoop2" style="width: 700px">
 	<p><bean:message key="label.scorm.description" bundle="SITE_RESOURCES"/></p>
@@ -116,16 +118,18 @@ encoding="multipart/form-data"
 		</fr:edit>
 	</td>
 </tr>
+<logic:notPresent name="skipFileClassification">
 	<tr>
 		<th><span class="required">*</span> <bean:message key="label.teacher.siteAdministration.uploadFile.ResourceType"/>:</th>
 		<td>
 	        <fr:edit name="bean" slot="educationalLearningResourceType">
 	        <fr:layout>
-      				<fr:property name="excludedValues" value="PROJECT_SUBMISSION"/>
+      				<fr:property name="excludedValues" value="PROJECT_SUBMISSION,SITE_CONTENT"/>
 	        </fr:layout>
 	        </fr:edit>
 		</td>
 	</tr>  
+</logic:notPresent>
 <tr>
 	<th><span class="required">*</span> <bean:message key="label.permitions" bundle="SITE_RESOURCES"/>:</th>
 	<td>

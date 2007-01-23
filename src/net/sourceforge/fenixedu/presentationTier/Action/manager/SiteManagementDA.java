@@ -60,11 +60,16 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
         Site site = getSite(request);
-        if (site != null) {
-            request.setAttribute("site", site);
+        request.setAttribute("site", site);
+        
+        ActionForward forward = super.execute(mapping, actionForm, request, response);
+        
+        if (site.hasQuota()) {
+            request.setAttribute("siteQuota", site.getQuota());
+            request.setAttribute("siteUsedQuota", site.getUsedQuota());
         }
         
-        return super.execute(mapping, actionForm, request, response);
+        return forward;
     }
 
     public ActionForward createItem(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -107,6 +112,13 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
         Item item = selectItem(request);
         
         FileItemCreationBean bean = new FileItemCreationBean(item);
+        
+        Site site = getSite(request);
+        if (! site.isFileClassificationSupported()) {
+            bean.setEducationalLearningResourceType(FileItemCreationBean.EducationalResourceType.SITE_CONTENT);
+            request.setAttribute("skipFileClassification", true);
+        }
+        
         bean.setAuthorsName(getAuthorNameForFile(request, item));
         request.setAttribute("fileItemCreator", bean);
 
@@ -243,41 +255,66 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
                 .getViewState("creator").getMetaObject().getObject();
         List<String> errors = validationErrors(bean);
         if (errors.isEmpty()) {
-            return fileUpload(mapping, form, request, response,
+            try {
+                return fileUpload(mapping, form, request, response,
                     "CreateFileItemForItem");
-        } else {
-            bean.setFile(null);
-            RenderUtils.invalidateViewState("file");
-
-            for (String error : errors) {
-                addActionMessage(request, error, (String[]) null);
             }
-            selectItem(request);
-            request.setAttribute("fileItemCreator", bean);
-
-            return mapping.findForward("uploadFile");
-
+            catch (DomainException e) {
+                addErrorMessage(request, "section", e.getKey(), (Object[]) e.getArgs());
+                return reportUploadError(mapping, request, bean, errors);
+            }
+        } else {
+            return reportUploadError(mapping, request, bean, errors);
         }
 
+    }
+
+    private ActionForward reportUploadError(ActionMapping mapping, HttpServletRequest request, FileItemCreationBean bean, List<String> errors) {
+        bean.setFile(null);
+        RenderUtils.invalidateViewState("file");
+
+        for (String error : errors) {
+            addActionMessage(request, error, (String[]) null);
+        }
+        selectItem(request);
+        request.setAttribute("fileItemCreator", bean);
+
+        return mapping.findForward("uploadFile");
     }
     
     public ActionForward scormFileUpload(ActionMapping mapping,
             ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
+
+        Site site = getSite(request);
+        if (! site.isScormContentAccepted()) {
+            throw new DomainException("site.scorm.notAccepted");
+        }
+        
         FileItemCreationBean bean = (FileItemCreationBean) RenderUtils
                 .getViewState("creator").getMetaObject().getObject();
         List<String> errors = validationErrors(bean);
         if (errors.isEmpty()) {
-            return fileUpload(mapping, form, request, response,
-                    "CreateScormPackageForItem");
-        } else {
-            bean.setFile(null);
-            RenderUtils.invalidateViewState("file");
-            for (String error : errors) {
-                addActionMessage(request, error, (String[]) null);
+            try {
+                return fileUpload(mapping, form, request, response,
+                        "CreateScormPackageForItem");
+            } catch (DomainException e) {
+                addErrorMessage(request, "section", e.getKey(), (Object[]) e
+                        .getArgs());
+                return reportScormUploadError(mapping, form, request, response, bean, errors);
             }
-            return prepareUploadScormFile(mapping, form, request, response);
+        } else {
+            return reportScormUploadError(mapping, form, request, response, bean, errors);
         }
+    }
+
+    private ActionForward reportScormUploadError(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response, FileItemCreationBean bean, List<String> errors) throws Exception {
+        bean.setFile(null);
+        RenderUtils.invalidateViewState("file");
+        for (String error : errors) {
+            addActionMessage(request, error, (String[]) null);
+        }
+        return prepareUploadScormFile(mapping, form, request, response);
     }
     
     private List<String> validationErrors(FileItemCreationBean bean) {
@@ -358,8 +395,15 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
     private void putScormCreationBeanInRequest(HttpServletRequest request) {
         Item item = selectItem(request);
         ScormCreationBean bean = new ScormCreationBean(item);
+        
+        Site site = getSite(request);
+        if (! site.isFileClassificationSupported()) {
+            bean.setEducationalLearningResourceType(FileItemCreationBean.EducationalResourceType.SITE_CONTENT);
+            request.setAttribute("skipFileClassification", true);
+        }
+        
         bean.setAuthorsName(item.getSection().getSite().getAuthorName());
-        ScormCreationBean possibleBean = (ScormCreationBean) getRenderedObject();
+        ScormCreationBean possibleBean = (ScormCreationBean) getRenderedObject("scormPackage");
         if (possibleBean != null) {
             bean.copyValuesFrom(possibleBean);
         }
@@ -386,6 +430,11 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
     public ActionForward createScormFile(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
+        Site site = getSite(request);
+        if (! site.isScormContentAccepted()) {
+            throw new DomainException("site.scorm.notAccepted");
+        }
+        
         ScormCreationBean bean = (ScormCreationBean) getRenderedObject("scormPackage");
 
         Item item = selectItem(request);
@@ -414,8 +463,13 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
                             .getMetaInformation(), getLoggedPerson(request),bean.getEducationalLearningResourceType()) };
 
             executeService(request, "CreateScormFileItemForItem", args);
-
-        } catch (FenixServiceException e) {
+        }
+        catch (DomainException e) {
+            addActionMessage(request, e.getMessage(), e.getArgs());
+            RenderUtils.invalidateViewState("scormPackage");
+            return prepareCreateScormFile(mapping, form, request, response);
+        }
+        catch (FenixServiceException e) {
             addActionMessage(request, "error.scormfilupload", (String[]) null);
             RenderUtils.invalidateViewState("scormPackage");
             return prepareCreateScormFile(mapping, form, request, response);

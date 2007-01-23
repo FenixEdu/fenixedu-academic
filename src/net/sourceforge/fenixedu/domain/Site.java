@@ -196,4 +196,50 @@ public abstract class Site extends Site_Base {
         
         return orderedSections;
     }
+    
+    /**
+     * If this site has quota policy or not.
+     * 
+     * @return <code>true</code> if we should not exceed the size in
+     *         {@link #getQuota()}
+     */
+    public boolean hasQuota() {
+        return false;
+    }
+
+    /**
+     * The maximum size that can be occupied by files in this site.
+     * 
+     * @return the maximum combined sizes (in bytes) of all files in this site.
+     */
+    public long getQuota() {
+        return 0;
+    }
+    
+    /**
+     * Computes the current size (in bytes) occupied by all the files in this site.
+     * 
+     * @return
+     */
+    public long getUsedQuota() {
+        long size = 0;
+        
+        for (Section section : getAssociatedSections()) {
+            for (Item item : section.getAssociatedItems()) {
+                for (FileItem file : item.getFileItems()) {
+                    size += file.getSize();
+                }
+            }
+        }
+        
+        return size;
+    }
+
+    public boolean isFileClassificationSupported() {
+        return false;
+    }
+    
+    public boolean isScormContentAccepted() {
+        return false;
+    }
 }

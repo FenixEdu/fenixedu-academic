@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
@@ -13,6 +14,11 @@ import org.apache.commons.beanutils.BeanComparator;
 
 public class Homepage extends Homepage_Base {
 
+    public static final long MB = 1024 * 1024;
+    
+    public static final long REGULAR_QUOTA = 10*MB;
+    public static final long TEACHER_QUOTA = 50*MB;
+    
     public static final Comparator HOMEPAGE_COMPARATOR_BY_NAME = new BeanComparator("name", Collator.getInstance());
 
     public Homepage() {
@@ -30,8 +36,7 @@ public class Homepage extends Homepage_Base {
 
     @Override
     public IGroup getOwner() {
-        return null;
-        //return getPerson().getPersonGroup();
+        return getPerson().getPersonGroup();
     }
 
     public static List<Homepage> getAllHomepages() {
@@ -52,4 +57,22 @@ public class Homepage extends Homepage_Base {
         
         return groups;
     }
+
+    @Override
+    public boolean hasQuota() {
+        return true;
+    }
+
+    @Override
+    public long getQuota() {
+        Person person = getPerson();
+
+        if (person.hasTeacher()) {
+            return TEACHER_QUOTA;
+        }
+        else {
+            return REGULAR_QUOTA;
+        }
+    }
+    
 }

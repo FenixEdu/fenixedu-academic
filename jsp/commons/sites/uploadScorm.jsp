@@ -32,26 +32,28 @@
 </li>
 </ul>
 
-<p>
-<span>
-	<span class="pleft1">
-		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
-		<html:link page="<%= actionName + "?method=uploadFile&amp;itemID=" + item.getIdInternal() + "&amp;" + context %>">			
-			<bean:message key="label.teacher.siteAdministration.uploadFile.insertFile"/>
-		</html:link>
-	</span>
-	<span class="pleft1">
-		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
-		<bean:message key="link.scorm.uploadScormFile" bundle="SITE_RESOURCES"/>
-	</span>
-	<span class="pleft1">
-		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
-		<html:link page="<%= actionName + "?method=prepareCreateScormFile&amp;itemID=" + item.getIdInternal() + "&amp;" + context %>">			
-			<bean:message key="link.scorm.createScormFile" bundle="SITE_RESOURCES"/>
-		</html:link>
-	</span>
-</span>
-</p>
+<logic:equal name="site" property="scormContentAccepted" value="true">
+    <p>
+    <span>
+    	<span class="pleft1">
+    		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
+    		<html:link page="<%= actionName + "?method=uploadFile&amp;itemID=" + item.getIdInternal() + "&amp;" + context %>">			
+    			<bean:message key="label.teacher.siteAdministration.uploadFile.insertFile"/>
+    		</html:link>
+    	</span>
+        	<span class="pleft1">
+        		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
+        		<bean:message key="link.scorm.uploadScormFile" bundle="SITE_RESOURCES"/>
+        	</span>
+        	<span class="pleft1">
+        		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
+        		<html:link page="<%= actionName + "?method=prepareCreateScormFile&amp;itemID=" + item.getIdInternal() + "&amp;" + context %>">			
+        			<bean:message key="link.scorm.createScormFile" bundle="SITE_RESOURCES"/>
+        		</html:link>
+        	</span>
+    </span>
+    </p>
+</logic:equal>
 
 <div class="infoop2">
 <p><bean:message key="label.scorm.description" bundle="SITE_RESOURCES"/></p>
@@ -90,16 +92,18 @@
 	        </fr:edit>
 		</td>
 	</tr>
-	<tr>
-		<th><bean:message key="label.teacher.siteAdministration.uploadFile.ResourceType"/>:</th>
-		<td>
-	        <fr:edit name="bean" slot="educationalLearningResourceType">
-	        <fr:layout>
-      				<fr:property name="excludedValues" value="PROJECT_SUBMISSION"/>
-	        </fr:layout>
-	        </fr:edit>
-		</td>
-	</tr>
+    <logic:notPresent name="skipFileClassification">
+        	<tr>
+        		<th><bean:message key="label.teacher.siteAdministration.uploadFile.ResourceType"/>:</th>
+        		<td>
+        	        <fr:edit name="bean" slot="educationalLearningResourceType">
+        	        <fr:layout>
+              				<fr:property name="excludedValues" value="PROJECT_SUBMISSION,SITE_CONTENT"/>
+        	        </fr:layout>
+        	        </fr:edit>
+        		</td>
+        	</tr>
+    </logic:notPresent>
 	<tr>
 		<th><bean:message key="label.teacher.siteAdministration.uploadFile.file"/>:</th>
 		<td>

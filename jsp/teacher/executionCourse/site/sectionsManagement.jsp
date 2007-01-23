@@ -15,6 +15,8 @@
 
 <bean:define id="executionCourseId" name="executionCourse" property="idInternal"/>
 
+<jsp:include page="/commons/sites/siteQuota.jsp"/>
+
 <h2>
 	<bean:message key="label.executionCourseManagement.menu.sections"/>
 </h2>

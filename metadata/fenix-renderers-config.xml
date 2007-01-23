@@ -138,7 +138,7 @@ Documentation:
     
     <renderer type="java.lang.Number" class="net.sourceforge.fenixedu.renderers.IntegerRenderer"/>
     <renderer type="java.lang.Number" layout="fileSize" class="net.sourceforge.fenixedu.presentationTier.renderers.FileSizeRenderer">
-    	<property name="shortUnit" value="true"/>
+    	   <property name="shortUnit" value="true"/>
     </renderer>
 
     <renderer type="int" class="net.sourceforge.fenixedu.renderers.IntegerRenderer"/>
