@@ -21,8 +21,7 @@ public class TeacherServiceExemption extends TeacherServiceExemption_Base {
 
     public static final Comparator<TeacherServiceExemption> COMPARATOR_BY_BEGIN_DATE = new ComparatorChain();
     static {
-	((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(new BeanComparator(
-		"startYearMonthDay"));
+	((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(new BeanComparator("startYearMonthDay"));
 	((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(new BeanComparator("idInternal"));
     }
 
@@ -88,15 +87,14 @@ public class TeacherServiceExemption extends TeacherServiceExemption_Base {
 	return (this.getType().equals(ServiceExemptionType.MEDICAL_SITUATION)
 		|| this.getType().equals(ServiceExemptionType.MATERNAL_LICENSE_WITH_SALARY_80PERCENT)
 		|| this.getType().equals(ServiceExemptionType.MATERNAL_LICENSE)
-		|| this.getType().equals(ServiceExemptionType.DANGER_MATERNAL_LICENSE) || this.getType()
-		.equals(ServiceExemptionType.CHILDBIRTH_LICENSE));
+		|| this.getType().equals(ServiceExemptionType.DANGER_MATERNAL_LICENSE) 
+		|| this.getType().equals(ServiceExemptionType.CHILDBIRTH_LICENSE));
     }
 
     public boolean isLongDuration() {
 	Integer daysBetween = null;
 	if (getEndYearMonthDay() != null) {
-	    daysBetween = new Interval(getStartYearMonthDay().toDateMidnight(), getEndYearMonthDay()
-		    .toDateMidnight()).toPeriod(PeriodType.days()).getDays();
+	    daysBetween = new Interval(getStartYearMonthDay().toDateMidnight(), getEndYearMonthDay().toDateMidnight()).toPeriod(PeriodType.days()).getDays();
 	}
 	return (daysBetween == null || daysBetween > 90);
     }
@@ -113,22 +111,17 @@ public class TeacherServiceExemption extends TeacherServiceExemption_Base {
 	if (isLongDuration() && !isForCountInCreditsBecauseIsSabbaticalOrEquivalent()) {
 
 	    if (getType().equals(ServiceExemptionType.GRANT_OWNER_EQUIVALENCE_WITHOUT_SALARY)
-		    || getType().equals(
-			    ServiceExemptionType.GRANT_OWNER_EQUIVALENCE_WITH_SALARY_WITH_DEBITS)
-		    || getType().equals(
-			    ServiceExemptionType.TEACHER_SERVICE_EXEMPTION_DL24_84_ART51_N6_EST_DISC)) {
+		    || getType().equals(ServiceExemptionType.GRANT_OWNER_EQUIVALENCE_WITH_SALARY_WITH_DEBITS)
+		    || getType().equals(ServiceExemptionType.TEACHER_SERVICE_EXEMPTION_DL24_84_ART51_N6_EST_DISC)) {
 		return true;
 	    }
 
 	    if (getType().equals(ServiceExemptionType.GRANT_OWNER_EQUIVALENCE_WITH_SALARY)) {
 
 		Category teacherCategory = teacher.getCategoryForCreditsByPeriod(executionPeriod);
-		Category pax_category = Category.readCategoryByCodeAndNameInPT("PAX",
-			"Professor Auxiliar");
-		if (teacherCategory != null
-			&& pax_category != null
-			&& (!teacherCategory.equals(pax_category) && !teacherCategory
-				.isMostImportantThan(pax_category))) {
+		Category pax_category = Category.readCategoryByCodeAndNameInPT("PAX", "Professor Auxiliar");
+		if (teacherCategory != null && pax_category != null && (!teacherCategory.equals(pax_category) 
+			&& !teacherCategory.isMostImportantThan(pax_category))) {
 		    return true;
 		}
 	    }
@@ -142,8 +135,7 @@ public class TeacherServiceExemption extends TeacherServiceExemption_Base {
 		|| this.getType().equals(ServiceExemptionType.CONTRACT_SUSPEND)
 		|| this.getType().equals(ServiceExemptionType.GOVERNMENT_MEMBER)
 		|| this.getType().equals(ServiceExemptionType.LICENSE_WITHOUT_SALARY_FOR_ACCOMPANIMENT)
-		|| this.getType().equals(
-			ServiceExemptionType.LICENSE_WITHOUT_SALARY_FOR_INTERNATIONAL_EXERCISE)
+		|| this.getType().equals(ServiceExemptionType.LICENSE_WITHOUT_SALARY_FOR_INTERNATIONAL_EXERCISE)
 		|| this.getType().equals(ServiceExemptionType.LICENSE_WITHOUT_SALARY_LONG)
 		|| this.getType().equals(ServiceExemptionType.LICENSE_WITHOUT_SALARY_UNTIL_NINETY_DAYS)
 		|| this.getType().equals(ServiceExemptionType.LICENSE_WITHOUT_SALARY_YEAR)
@@ -154,8 +146,8 @@ public class TeacherServiceExemption extends TeacherServiceExemption_Base {
 		|| this.getType().equals(ServiceExemptionType.SPECIAL_LICENSE)
 		|| this.getType().equals(ServiceExemptionType.DETACHED_TO)
 		|| this.getType().equals(ServiceExemptionType.INCAPACITY_FOR_TOGETHER_DOCTOR_OF_THE_CGA)
-		|| this.getType().equals(ServiceExemptionType.FUNCTIONS_MANAGEMENT_SERVICE_EXEMPTION) || this
-		.getType().equals(ServiceExemptionType.PUBLIC_MANAGER));
+		|| this.getType().equals(ServiceExemptionType.FUNCTIONS_MANAGEMENT_SERVICE_EXEMPTION) 
+		|| this.getType().equals(ServiceExemptionType.PUBLIC_MANAGER));
     }
     
     private void checkTeacherServiceExemptionsDatesIntersection(Teacher teacher, YearMonthDay begin,

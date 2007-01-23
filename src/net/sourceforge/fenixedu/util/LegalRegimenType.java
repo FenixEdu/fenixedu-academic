@@ -14,7 +14,10 @@ public enum LegalRegimenType {
     PROVISORY_NOMINATION,
     DEFINITIVE_NOMINATION,
     COMMISSION_OVERTIME_NOMINATION,
-        
+    
+    //Functions Accumulation    
+    FUNCTIONS_ACCUMULATION_WITH_LEADING_POSITIONS,
+    
     //End Situations
     TERM_WORK_CONTRACT_END,
     CERTAIN_FORWARD_CONTRACT_END, 

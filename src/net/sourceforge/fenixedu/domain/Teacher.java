@@ -288,7 +288,8 @@ public class Teacher extends Teacher_Base {
 	    YearMonthDay endDate) {
 	Set<TeacherLegalRegimen> legalRegimens = new HashSet<TeacherLegalRegimen>();
 	for (TeacherLegalRegimen legalRegimen : this.getLegalRegimens()) {
-	    if (!legalRegimen.isEndSituation() && legalRegimen.belongsToPeriod(beginDate, endDate)) {
+	    if (!legalRegimen.isEndSituation() && !legalRegimen.isFunctionAccumulation()
+		    && legalRegimen.belongsToPeriod(beginDate, endDate)) {
 		legalRegimens.add(legalRegimen);
 	    }
 	}
@@ -298,7 +299,7 @@ public class Teacher extends Teacher_Base {
     public List<TeacherLegalRegimen> getAllLegalRegimensWithoutEndSituations() {
 	Set<TeacherLegalRegimen> legalRegimens = new HashSet<TeacherLegalRegimen>();
 	for (TeacherLegalRegimen legalRegimen : getLegalRegimens()) {
-	    if (!legalRegimen.isEndSituation()) {
+	    if (!legalRegimen.isEndSituation() && !legalRegimen.isFunctionAccumulation()) {
 		legalRegimens.add(legalRegimen);
 	    }
 	}
@@ -597,8 +598,7 @@ public class Teacher extends Teacher_Base {
 		.getEndYearMonthDay());
     }
 
-    public List<TeacherServiceExemption> getValidTeacherServiceExemptionsToCountInCredits(
-	    ExecutionPeriod executionPeriod) {
+    public List<TeacherServiceExemption> getValidTeacherServiceExemptionsToCountInCredits(ExecutionPeriod executionPeriod) {
 
 	List<TeacherServiceExemption> result = new ArrayList<TeacherServiceExemption>();
 	OccupationPeriod lessonsPeriod = executionPeriod.getLessonsPeriod();
@@ -606,18 +606,16 @@ public class Teacher extends Teacher_Base {
 	    return result;
 	}
 
-	List<TeacherServiceExemption> serviceExemptions = getServiceExemptionsWithoutMedicalSituations(
-		lessonsPeriod.getStartYearMonthDay(), lessonsPeriod.getEndYearMonthDay());
-	TeacherServiceExemption dominantExemption = chooseDominantServiceExemptionInLessonsPeriod(
-		serviceExemptions, lessonsPeriod);
+	List<TeacherServiceExemption> serviceExemptions = getServiceExemptionsWithoutMedicalSituations(lessonsPeriod.getStartYearMonthDay(), lessonsPeriod.getEndYearMonthDay());
+	TeacherServiceExemption dominantExemption = chooseDominantServiceExemptionInLessonsPeriod(serviceExemptions, lessonsPeriod);
 
 	if (dominantExemption != null) {
 	    if (dominantExemption.isForNotCountInCredits()) {
 		return result;
-
+	   
 	    } else if (dominantExemption.isForCountInCreditsBecauseIsSabbaticalOrEquivalent()) {
 		result.add(dominantExemption);
-
+	    
 	    } else {
 		for (TeacherServiceExemption exemption : serviceExemptions) {
 		    if (exemption.isForCountInCreditsButDontIsSabbatical(this, executionPeriod)) {
@@ -636,22 +634,14 @@ public class Teacher extends Teacher_Base {
 	if (!validServiceExemptions.isEmpty()) {
 	    OccupationPeriod lessonsPeriod = executionPeriod.getLessonsPeriod();
 
-	    if (validServiceExemptions.size() == 1
-		    && validServiceExemptions.get(0)
-			    .isForCountInCreditsBecauseIsSabbaticalOrEquivalent()) {
-
+	    if (validServiceExemptions.size() == 1 && validServiceExemptions.get(0).isForCountInCreditsBecauseIsSabbaticalOrEquivalent()) {
 		TeacherServiceExemption exemption = validServiceExemptions.get(0);
-		Interval serviceExemptionsInterval = new Interval(exemption.getStartYearMonthDay()
-			.toDateMidnight(), exemption.getEndYearMonthDay().toDateMidnight());
-		int sabbaticalMonths = serviceExemptionsInterval.toPeriod(PeriodType.months())
-			.getMonths();
-		return calculateSabbaticalCredits(sabbaticalMonths, lessonsPeriod, exemption,
-			executionPeriod);
+		Interval serviceExemptionsInterval = new Interval(exemption.getStartYearMonthDay().toDateMidnight(), exemption.getEndYearMonthDay().toDateMidnight());
+		int sabbaticalMonths = serviceExemptionsInterval.toPeriod(PeriodType.months()).getMonths();
+		return calculateSabbaticalCredits(sabbaticalMonths, lessonsPeriod, exemption, executionPeriod);
 
 	    } else {
-
-		Interval lessonsInterval = new Interval(lessonsPeriod.getStartYearMonthDay()
-			.toDateMidnight(), lessonsPeriod.getEndYearMonthDay().toDateMidnight());
+		Interval lessonsInterval = new Interval(lessonsPeriod.getStartYearMonthDay().toDateMidnight(), lessonsPeriod.getEndYearMonthDay().toDateMidnight());
 		int lessonsDays = lessonsInterval.toPeriod(PeriodType.days()).getDays();
 		List<Interval> notYetOverlapedIntervals = new ArrayList<Interval>();
 		List<Interval> newIntervals = new ArrayList<Interval>();
@@ -659,22 +649,17 @@ public class Teacher extends Teacher_Base {
 
 		for (TeacherServiceExemption exemption : validServiceExemptions) {
 
-		    YearMonthDay exemptionBegin = exemption.getStartYearMonthDay().isAfter(
-			    lessonsPeriod.getStartYearMonthDay()) ? exemption.getStartYearMonthDay()
-			    : lessonsPeriod.getStartYearMonthDay();
+		    YearMonthDay exemptionBegin = exemption.getStartYearMonthDay().isAfter(lessonsPeriod.getStartYearMonthDay()) ? 
+			    exemption.getStartYearMonthDay() : lessonsPeriod.getStartYearMonthDay();
 
-		    YearMonthDay exemptionEnd = exemption.getEndYearMonthDay() == null
-			    || exemption.getEndYearMonthDay()
-				    .isAfter(lessonsPeriod.getEndYearMonthDay()) ? lessonsPeriod
-			    .getEndYearMonthDay() : exemption.getEndYearMonthDay();
+		    YearMonthDay exemptionEnd = exemption.getEndYearMonthDay() == null || exemption.getEndYearMonthDay()
+		    	.isAfter(lessonsPeriod.getEndYearMonthDay()) ? lessonsPeriod.getEndYearMonthDay() : exemption.getEndYearMonthDay();
 
 		    for (Interval notYetOverlapedInterval : notYetOverlapedIntervals) {
-			Interval exemptionInterval = new Interval(exemptionBegin.toDateMidnight(),
-				exemptionEnd.toDateMidnight());
+			Interval exemptionInterval = new Interval(exemptionBegin.toDateMidnight(), exemptionEnd.toDateMidnight());
 			Interval overlapInterval = exemptionInterval.overlap(notYetOverlapedInterval);
 			if (overlapInterval != null) {
-			    newIntervals.addAll(getNotOverlapedIntervals(overlapInterval,
-				    notYetOverlapedInterval));
+			    newIntervals.addAll(getNotOverlapedIntervals(overlapInterval, notYetOverlapedInterval));
 			} else {
 			    newIntervals.add(notYetOverlapedInterval);
 			}
@@ -691,13 +676,11 @@ public class Teacher extends Teacher_Base {
 		}
 
 		int overlapedDays = lessonsDays - notOverlapedDays;
-		Double overlapedPercentage = round(Double.valueOf(overlapedDays)
-			/ Double.valueOf(lessonsDays));
+		Double overlapedPercentage = round(Double.valueOf(overlapedDays) / Double.valueOf(lessonsDays));
 		int lessonHours = getLessonHours(lessonsPeriod);
 		return round(overlapedPercentage * lessonHours);
 	    }
 	}
-
 	return 0.0;
     }
 
@@ -734,27 +717,26 @@ public class Teacher extends Teacher_Base {
     private int calculateSabbaticalCredits(int sabbaticalMonths, OccupationPeriod lessonsPeriod,
 	    TeacherServiceExemption teacherServiceExemption, ExecutionPeriod executionPeriod) {
 
-	double overlapPercentage1 = calculateLessonsIntervalAndExemptionOverlapPercentage(lessonsPeriod,
-		teacherServiceExemption), overlapPercentage2 = 0.0;
-
+	double overlapPercentage1 = calculateLessonsIntervalAndExemptionOverlapPercentage(lessonsPeriod, teacherServiceExemption); 
+	double overlapPercentage2 = 0.0;
+	
 	if (overlapPercentage1 == 1.0) {
-	    return calculateSabbaticalOrEquivalentCreditsByType(teacherServiceExemption.getType(),
-		    lessonsPeriod);
+	    return calculateSabbaticalOrEquivalentCreditsByType(teacherServiceExemption.getType(), lessonsPeriod);
 
 	} else if (executionPeriod.containsDay(teacherServiceExemption.getStart())) {
+	    
 	    ExecutionPeriod nextExecutionPeriod = executionPeriod.getNextExecutionPeriod();
 	    if (sabbaticalMonths >= 11) {
-		nextExecutionPeriod = (nextExecutionPeriod != null) ? nextExecutionPeriod
-			.getNextExecutionPeriod() : null;
+		nextExecutionPeriod = (nextExecutionPeriod != null) ? nextExecutionPeriod.getNextExecutionPeriod() : null;
 	    }
+	    
 	    if (nextExecutionPeriod != null) {
 		OccupationPeriod nextLessonsPeriod = nextExecutionPeriod.getLessonsPeriod();
-		overlapPercentage2 = calculateLessonsIntervalAndExemptionOverlapPercentage(
-			nextLessonsPeriod, teacherServiceExemption);
+		overlapPercentage2 = calculateLessonsIntervalAndExemptionOverlapPercentage(nextLessonsPeriod, teacherServiceExemption);
 	    }
+	    
 	    if (overlapPercentage1 > overlapPercentage2) {
-		return calculateSabbaticalOrEquivalentCreditsByType(teacherServiceExemption.getType(),
-			lessonsPeriod);
+		return calculateSabbaticalOrEquivalentCreditsByType(teacherServiceExemption.getType(), lessonsPeriod);
 	    }
 
 	} else {
@@ -762,12 +744,11 @@ public class Teacher extends Teacher_Base {
 	    if (sabbaticalMonths >= 11) {
 		previousExecutionPeriod = previousExecutionPeriod.getPreviousExecutionPeriod();
 	    }
+	    
 	    OccupationPeriod previousLessonsPeriod = previousExecutionPeriod.getLessonsPeriod();
-	    overlapPercentage2 = calculateLessonsIntervalAndExemptionOverlapPercentage(
-		    previousLessonsPeriod, teacherServiceExemption);
+	    overlapPercentage2 = calculateLessonsIntervalAndExemptionOverlapPercentage(previousLessonsPeriod, teacherServiceExemption);
 	    if (overlapPercentage1 > overlapPercentage2) {
-		return calculateSabbaticalOrEquivalentCreditsByType(teacherServiceExemption.getType(),
-			lessonsPeriod);
+		return calculateSabbaticalOrEquivalentCreditsByType(teacherServiceExemption.getType(), lessonsPeriod);
 	    }
 	}
 	return 0;
@@ -775,6 +756,7 @@ public class Teacher extends Teacher_Base {
 
     private int calculateSabbaticalOrEquivalentCreditsByType(ServiceExemptionType serviceExemptionType,
 	    OccupationPeriod occupationPeriod) {
+	
 	if (serviceExemptionType.equals(ServiceExemptionType.SABBATICAL)) {
 	    return 6;
 	}
@@ -790,6 +772,7 @@ public class Teacher extends Teacher_Base {
 
 	Interval lessonsInterval = new Interval(lessonsPeriod.getStartYearMonthDay().toDateMidnight(),
 		lessonsPeriod.getEndYearMonthDay().toDateMidnight());
+	
 	Interval serviceExemptionsInterval = new Interval(teacherServiceExemption.getStartYearMonthDay()
 		.toDateMidnight(),
 		(teacherServiceExemption.getEndYearMonthDay() != null) ? teacherServiceExemption
@@ -943,6 +926,15 @@ public class Teacher extends Teacher_Base {
 	return totalCredits;
     }
 
+    public boolean isInFunctionsAccumulation(YearMonthDay begin, YearMonthDay end) {	
+	for (TeacherLegalRegimen legalRegimen : getLegalRegimens()) {
+	    if (legalRegimen.isFunctionAccumulation() && legalRegimen.belongsToPeriod(begin, end)) {
+		return true;
+	    }
+	}
+	return false;
+    }
+    
     public int getMandatoryLessonHours(ExecutionPeriod executionPeriod) {
 
 	OccupationPeriod lessonsPeriod = executionPeriod.getLessonsPeriod();
@@ -950,19 +942,16 @@ public class Teacher extends Teacher_Base {
 	    return 0;
 	}
 
-	TeacherLegalRegimen lastLegalRegimen = getLastLegalRegimenWithoutEndSituations(lessonsPeriod
-		.getStartYearMonthDay(), lessonsPeriod.getEndYearMonthDay());
-
-	if (lastLegalRegimen != null) {
+	TeacherLegalRegimen lastLegalRegimen = getLastLegalRegimenWithoutEndSituations(lessonsPeriod.getStartYearMonthDay(), lessonsPeriod.getEndYearMonthDay());
+	
+	if (lastLegalRegimen != null) {    
 	    Category category = lastLegalRegimen.getCategory();
 	    if (category != null && category.isMonitorCategory()) {
 		return 0;
 	    }
 
-	    List<TeacherServiceExemption> serviceExemptions = getServiceExemptionsWithoutMedicalSituations(
-		    lessonsPeriod.getStartYearMonthDay(), lessonsPeriod.getEndYearMonthDay());
-	    TeacherServiceExemption teacherServiceExemption = chooseDominantServiceExemptionInLessonsPeriod(
-		    serviceExemptions, lessonsPeriod);
+	    List<TeacherServiceExemption> serviceExemptions = getServiceExemptionsWithoutMedicalSituations(lessonsPeriod.getStartYearMonthDay(), lessonsPeriod.getEndYearMonthDay());
+	    TeacherServiceExemption teacherServiceExemption = chooseDominantServiceExemptionInLessonsPeriod(serviceExemptions, lessonsPeriod);
 
 	    if (teacherServiceExemption != null && teacherServiceExemption.isForNotCountInCredits()) {
 		return 0;

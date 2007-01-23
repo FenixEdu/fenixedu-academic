@@ -61,6 +61,10 @@ public class TeacherLegalRegimen extends TeacherLegalRegimen_Base {
     public boolean isEndSituation() {
 	return isEndLegalRegimenType(getLegalRegimenType());
     }
+    
+    public boolean isFunctionAccumulation() {
+	return isFunctionsAccumulation(getLegalRegimenType());
+    }
 
     @Override
     public void setBeginDateYearMonthDay(YearMonthDay beginDate) {
@@ -150,18 +154,20 @@ public class TeacherLegalRegimen extends TeacherLegalRegimen_Base {
 		|| legalRegimenType.equals(LegalRegimenType.RETIREMENT)
 		|| legalRegimenType.equals(LegalRegimenType.RETIREMENT_IN_PROGRESS)
 		|| legalRegimenType.equals(LegalRegimenType.CERTAIN_FORWARD_CONTRACT_END)
-		|| legalRegimenType
-			.equals(LegalRegimenType.CERTAIN_FORWARD_CONTRACT_END_PROPER_PRESCRIPTIONS)
+		|| legalRegimenType.equals(LegalRegimenType.CERTAIN_FORWARD_CONTRACT_END_PROPER_PRESCRIPTIONS)
 		|| legalRegimenType.equals(LegalRegimenType.CERTAIN_FORWARD_CONTRACT_RESCISSION)
-		|| legalRegimenType
-			.equals(LegalRegimenType.CERTAIN_FORWARD_CONTRACT_RESCISSION_PROPER_PRESCRIPTIONS)
+		|| legalRegimenType.equals(LegalRegimenType.CERTAIN_FORWARD_CONTRACT_RESCISSION_PROPER_PRESCRIPTIONS)
 		|| legalRegimenType.equals(LegalRegimenType.CONTRACT_END)
 		|| legalRegimenType.equals(LegalRegimenType.DENUNCIATION)
 		|| legalRegimenType.equals(LegalRegimenType.IST_OUT_NOMINATION)
 		|| legalRegimenType.equals(LegalRegimenType.SERVICE_TURN_OFF)
 		|| legalRegimenType.equals(LegalRegimenType.TEMPORARY_SUBSTITUTION_CONTRACT_END)
 		|| legalRegimenType.equals(LegalRegimenType.EXONERATION)
-		|| legalRegimenType.equals(LegalRegimenType.RESCISSION) || legalRegimenType
-		.equals(LegalRegimenType.TRANSFERENCE));
+		|| legalRegimenType.equals(LegalRegimenType.RESCISSION) 
+		|| legalRegimenType.equals(LegalRegimenType.TRANSFERENCE));
+    }
+    
+    public boolean isFunctionsAccumulation(LegalRegimenType legalRegimenType) {
+	return legalRegimenType.equals(LegalRegimenType.FUNCTIONS_ACCUMULATION_WITH_LEADING_POSITIONS);
     }
 }
