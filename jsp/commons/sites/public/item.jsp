@@ -39,7 +39,7 @@
     
     <bean:define id="item" name="item" type="net.sourceforge.fenixedu.domain.Item"/>
             
-	<h3 class="mtop2">
+	<h3 class="mtop2 mbottom05">
         <a name="<%= "item" + item.getIdInternal() %>" ></a>
         <fr:view name="item" property="name"/>
         <logic:present name="directLinkContext">

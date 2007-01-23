@@ -60,7 +60,7 @@
             <bean:define id="item" name="protectedItem" property="item" type="net.sourceforge.fenixedu.domain.Item"/>
             <bean:define id="available" name="protectedItem" property="available"/>
             
-       		<h3 class="mtop2">
+       		<h3 class="mtop2 mbottom05">
                 <a name="<%= "item" + item.getIdInternal() %>" ></a>
                 <fr:view name="item" property="name"/>
                 <logic:present name="directLinkContext">
@@ -83,7 +83,7 @@
             		<logic:notEmpty name="item" property="sortedVisibleFileItems">
                         <fr:view name="item" property="sortedVisibleFileItems">
                             <fr:layout name="list">
-	                            <fr:property name="classes" value="coutput1 mvert0" />
+	                            <fr:property name="classes" value="coutput1 mvert025" />
                                 <fr:property name="eachSchema" value="site.item.file.basic"/>
                                 <fr:property name="eachLayout" value="values"/>
                                 <fr:property name="style" value="<%= "list-style-image: url(" + request.getContextPath() + "/images/icon_file.gif);" %>"/>
