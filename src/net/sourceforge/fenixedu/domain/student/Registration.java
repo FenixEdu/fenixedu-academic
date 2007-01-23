@@ -1263,14 +1263,14 @@ public class Registration extends Registration_Base {
     public boolean hasApprovement(ExecutionYear executionYear) {
 	int curricularYearInTheBegin = getCurricularYear(executionYear);
 	int curricularYearAtTheEnd = getCurricularYear(executionYear.getNextExecutionYear());
-	
+
 	if (curricularYearInTheBegin > curricularYearAtTheEnd) {
 	    throw new DomainException("Registration.curricular.year.has.decreased");
 	}
-	
+
 	return curricularYearAtTheEnd > curricularYearInTheBegin;
     }
-    
+
     public boolean isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegree() {
 	final DegreeType degreeType = getDegreeType();
 	return (degreeType == DegreeType.DEGREE || degreeType == DegreeType.BOLONHA_DEGREE || degreeType == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
@@ -1327,7 +1327,7 @@ public class Registration extends Registration_Base {
     public ExecutionYear getFirstEnrolmentExecutionYear() {
 	return getEnrolmentsExecutionYears().iterator().next();
     }
-    
+
     public Set<ExecutionYear> getEnrolmentsExecutionYears() {
 	final Set<ExecutionYear> sortedExecutionYears = new TreeSet<ExecutionYear>(
 		ExecutionYear.EXECUTION_YEAR_COMPARATOR_BY_YEAR);
@@ -1487,13 +1487,47 @@ public class Registration extends Registration_Base {
     public Set<RegistrationState> getRegistrationStates(final ExecutionYear executionYear) {
 	final Set<RegistrationState> result = new HashSet<RegistrationState>();
 
-	for (final RegistrationState registrationState : getRegistrationStatesSet()) {
-	    if (executionYear.containsDate(registrationState.getStateDate())) {
-		result.add(registrationState);
+	List<RegistrationState> sortedRegistrationsStates = new ArrayList<RegistrationState>(
+		getRegistrationStates());
+	Collections.sort(sortedRegistrationsStates, RegistrationState.DATE_COMPARATOR);
+
+	for (ListIterator<RegistrationState> iter = sortedRegistrationsStates
+		.listIterator(sortedRegistrationsStates.size()); iter.hasPrevious();) {
+	    RegistrationState state = (RegistrationState) iter.previous();
+
+	    if (state.getStateDate().isAfter(
+		    executionYear.getEndDateYearMonthDay().toDateTimeAtMidnight())) {
+		continue;
 	    }
+
+	    result.add(state);
+
+	    if (state.getStateDate().isBefore(
+		    executionYear.getBeginDateYearMonthDay().toDateTimeAtMidnight())) {
+		break;
+	    }
+
 	}
 
 	return result;
+    }
+
+    public RegistrationState getLastRegistrationState(final ExecutionYear executionYear) {
+	List<RegistrationState> sortedRegistrationsStates = new ArrayList<RegistrationState>(
+		getRegistrationStates());
+	Collections.sort(sortedRegistrationsStates, RegistrationState.DATE_COMPARATOR);
+
+	for (ListIterator<RegistrationState> iter = sortedRegistrationsStates
+		.listIterator(sortedRegistrationsStates.size()); iter.hasPrevious();) {
+	    RegistrationState state = (RegistrationState) iter.previous();
+	    if (state.getStateDate().isAfter(
+		    executionYear.getEndDateYearMonthDay().toDateTimeAtMidnight())) {
+		continue;
+	    }
+	    return state;
+	}
+
+	return null;
     }
 
     public Set<RegistrationStateType> getRegistrationStatesTypes(final ExecutionYear executionYear) {
