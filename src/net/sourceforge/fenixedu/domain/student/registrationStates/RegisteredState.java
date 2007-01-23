@@ -51,5 +51,10 @@ public class RegisteredState extends RegisteredState_Base {
     public void nextState() {
 	// TODO Auto-generated method stub	
     }
+    
+    @Override
+    public boolean isActive() {
+	return true;
+    }
 
 }

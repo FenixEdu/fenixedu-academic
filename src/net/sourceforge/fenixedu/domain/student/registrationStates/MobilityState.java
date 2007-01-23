@@ -52,4 +52,9 @@ public class MobilityState extends MobilityState_Base {
 	// TODO Auto-generated method stub	
     }
     
+    @Override
+    public boolean isActive() {
+        return true;
+    }
+    
 }
