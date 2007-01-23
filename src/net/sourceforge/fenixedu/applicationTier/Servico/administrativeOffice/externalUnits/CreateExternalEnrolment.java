@@ -8,8 +8,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 
 public class CreateExternalEnrolment extends Service {
     
-    public ExternalEnrolment run(final CreateExternalEnrolmentBean bean) throws FenixServiceException {
-	final Student student = Student.readStudentByNumber(bean.getStudentNumber());
+    public ExternalEnrolment run(final CreateExternalEnrolmentBean bean, final Student student) throws FenixServiceException {
 	if (student == null) {
 	    throw new FenixServiceException("error.CreateExternalEnrolment.student.cannot.be.null");
 	}

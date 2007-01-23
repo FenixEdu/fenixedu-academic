@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
+import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
@@ -234,9 +235,9 @@ public class ExternalUnitsDispatchAction extends FenixDispatchAction {
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	final CreateExternalEnrolmentBean externalEnrolmentBean = (CreateExternalEnrolmentBean) getRenderedObject();
-	
+	final Student student = Student.readStudentByNumber(externalEnrolmentBean.getStudentNumber());	
 	try {
-	    executeService("CreateExternalEnrolment", new Object[] {externalEnrolmentBean});
+	    executeService("CreateExternalEnrolment", new Object[] {externalEnrolmentBean, student});
 	    
 	    request.setAttribute("oid", externalEnrolmentBean.getExternalCurricularCourse().getIdInternal());
 	    return viewExternalCurricularCourse(mapping, actionForm, request, response);
