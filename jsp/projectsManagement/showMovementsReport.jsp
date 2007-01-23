@@ -28,7 +28,7 @@
 					<bean:define id="projectCode" name="infoProject" property="projectCode" />
 					<td class="infoop" width="20"><html:link
 						page="<%="/projectReport.do?method=exportToExcel&amp;reportType="+reportType+"&amp;projectCode="+projectCode+code%>">
-						<html:img border="0" src="<%= request.getContextPath() + "/images/excel.bmp"%>" altKey="excel" bundle="IMAGE_RESOURCES" align="right" />
+						<html:img border="0" src="<%= request.getContextPath() + "/images/excel.gif"%>" altKey="excel" bundle="IMAGE_RESOURCES" align="right" />
 					</html:link></td>
 				</logic:notEmpty>
 			</tr>

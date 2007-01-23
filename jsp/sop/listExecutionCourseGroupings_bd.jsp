@@ -21,6 +21,6 @@
 <logic:present name="executionPeriod">
 	<html:link page="/listExecutionCourseGroupings.do?method=downloadExecutionCourseGroupings"
 			paramId="executionPeriodID" paramName="executionPeriod" paramProperty="idInternal">
-		<html:img border="0" src="<%= request.getContextPath() + "/images/excel.bmp"%>" altKey="excel" bundle="IMAGE_RESOURCES"/>
+		<html:img border="0" src="<%= request.getContextPath() + "/images/excel.gif"%>" altKey="excel" bundle="IMAGE_RESOURCES"/>
 	</html:link>
 </logic:present>
