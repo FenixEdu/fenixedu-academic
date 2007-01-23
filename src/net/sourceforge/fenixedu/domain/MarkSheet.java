@@ -200,6 +200,10 @@ public class MarkSheet extends MarkSheet_Base {
         return hasMarkSheetState(MarkSheetState.CONFIRMED) || hasMarkSheetState(MarkSheetState.RECTIFICATION);
     }
     
+    public boolean isRectification() {
+	return hasMarkSheetState(MarkSheetState.RECTIFICATION) || hasMarkSheetState(MarkSheetState.RECTIFICATION_NOT_CONFIRMED);
+    }
+    
     public void editNormal(Teacher responsibleTeacher, Date newEvaluationDate) {
         
         if (isConfirmed()) {
