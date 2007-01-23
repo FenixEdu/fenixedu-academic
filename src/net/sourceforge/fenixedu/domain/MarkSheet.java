@@ -384,7 +384,6 @@ public class MarkSheet extends MarkSheet_Base {
     private void changeRectifiedEnrolmentEvaluationToPreviowsState() {
         EnrolmentEvaluation enrolmentEvaluation = this.getEnrolmentEvaluations().get(0).getRectified();
         enrolmentEvaluation.setEnrolmentEvaluationState((enrolmentEvaluation.getMarkSheet().getMarkSheetState() == MarkSheetState.RECTIFICATION) ? EnrolmentEvaluationState.RECTIFICATION_OBJ : EnrolmentEvaluationState.FINAL_OBJ);
-        enrolmentEvaluation.setWhenDateTime(new DateTime());
     }
 
     protected void generateCheckSum() {

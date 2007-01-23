@@ -319,7 +319,6 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         }
         
         setEnrolmentEvaluationState(enrolmentEvaluationState); // TODO:
-        setWhenDateTime(new DateTime());
         setEmployee(employee);
         setObservation(observation);
 

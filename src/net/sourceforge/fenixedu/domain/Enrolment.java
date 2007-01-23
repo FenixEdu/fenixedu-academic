@@ -411,7 +411,6 @@ public class Enrolment extends Enrolment_Base implements IEnrolment{
 	enrolmentEvaluation.setPersonResponsibleForGrade(personResponsibleForGrade);
 
 	enrolmentEvaluation.setEmployee(employee);
-	enrolmentEvaluation.setWhenDateTime(new DateTime());
 
 	final YearMonthDay yearMonthDay = new YearMonthDay();
 	enrolmentEvaluation.setGradeAvailableDateYearMonthDay(yearMonthDay);
@@ -491,7 +490,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment{
 	EnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation();
 
 	enrolmentEvaluation.setEmployee(employee);
-	enrolmentEvaluation.setWhen(new Date());
+	enrolmentEvaluation.setWhenDateTime(new DateTime());
 	enrolmentEvaluation.setEnrolment(this);
 	enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
 	enrolmentEvaluation.setEnrolmentEvaluationType(EnrolmentEvaluationType.IMPROVEMENT);
