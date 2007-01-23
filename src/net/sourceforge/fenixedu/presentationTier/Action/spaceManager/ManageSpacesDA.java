@@ -3,9 +3,13 @@ package net.sourceforge.fenixedu.presentationTier.Action.spaceManager;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -14,19 +18,28 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.spaceManager.AccessGroupPersonBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.space.Blueprint;
 import net.sourceforge.fenixedu.domain.space.BlueprintFile;
+import net.sourceforge.fenixedu.domain.space.Building;
+import net.sourceforge.fenixedu.domain.space.Floor;
 import net.sourceforge.fenixedu.domain.space.OldBuilding;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
+import net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation;
+import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.space.SpaceComparator;
 import net.sourceforge.fenixedu.domain.space.SpaceInformation;
+import net.sourceforge.fenixedu.domain.space.SpaceResponsibility;
+import net.sourceforge.fenixedu.domain.space.UnitSpaceOccupation;
 import net.sourceforge.fenixedu.domain.space.Blueprint.BlueprintTextRectangles;
 import net.sourceforge.fenixedu.domain.space.Space.SpaceAccessGroupType;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
+import net.sourceforge.fenixedu.util.report.Spreadsheet;
+import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
 import net.sourceforge.fenixedu.util.spaceBlueprints.SpaceBlueprintsDWGProcessor;
 
 import org.apache.struts.action.ActionForm;
@@ -34,6 +47,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
+import org.joda.time.DateTime;
 
 public class ManageSpacesDA extends FenixDispatchAction {
 
@@ -238,8 +252,139 @@ public class ManageSpacesDA extends FenixDispatchAction {
 	}
 	return manageAccessGroups(mapping, form, request, response);
     }
+    
+    public ActionForward exportSpaceInfoToExcel(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
+            FenixFilterException {
+        
+	Space space = getSpaceFromParameter(request);
+	
+        try {
+            String filename;
+            Building spaceBuilding = space.getSpaceBuilding();
+            if(spaceBuilding != null && !spaceBuilding.equals(space)) {
+        	filename = spaceBuilding.getClass().getSimpleName() + "_" + spaceBuilding.getSpaceInformation().getPresentationName().replace(' ', '_') 
+        	+ "_" + space.getClass().getSimpleName() + "_" + space.getSpaceInformation().getPresentationName().replace(' ', '_')  
+        	+  "_" + new DateTime().toString("dd-MM-yyyy_hh:mm");	
+            } else {
+        	filename = space.getClass().getSimpleName() + "_" + space.getSpaceInformation().getPresentationName().replace(' ', '_')
+        	+ "_" + new DateTime().toString("dd-MM-yyyy_hh:mm");
+            }
+                        
+            response.setContentType("application/vnd.ms-excel");
+            response.setHeader("Content-disposition", "attachment; filename=" + filename + ".xls");
 
+            ServletOutputStream writer = response.getOutputStream();
+            exportToXls(space, writer);
+
+            writer.flush();
+            response.flushBuffer();
+
+        } catch (IOException e) {
+            throw new FenixServiceException();
+        }
+        return null;
+    }
+        
     // Private Methods
+    
+    private void exportToXls(Space space, OutputStream outputStream) throws IOException {
+        final List<Object> headers = getHeaders();
+        final Spreadsheet spreadsheet = new Spreadsheet("GestãoDeEspaços", headers);
+        fillSpreadSheet(space, spreadsheet);
+        spreadsheet.exportToXLSSheet(outputStream);
+    }
+   
+    private void fillSpreadSheet(Space space, final Spreadsheet spreadsheet) {        	
+	for (Space subSpace : space.getContainedSpacesSet()) {	    	   
+            if(subSpace instanceof Room) {
+        	Room room = (Room) subSpace;
+        	final Row row = spreadsheet.addRow();
+        	
+        	Building spaceBuilding = room.getSpaceBuilding();        	
+        	row.setCell((spaceBuilding != null) ? spaceBuilding.getSpaceInformation().getPresentationName() : "--");
+        	
+        	Floor spaceFloor = room.getSpaceFloor();                
+        	if(spaceFloor != null && spaceFloor.getSuroundingSpace() instanceof Floor) {
+        	    if(spaceFloor.getSpaceInformation().getLevel().intValue() == 1) {
+        		row.setCell(spaceFloor.getSuroundingSpace().getSpaceInformation().getPresentationName() + "i");        	    
+        	    } else {
+        		row.setCell(spaceFloor.getSuroundingSpace().getSpaceInformation().getPresentationName());
+        	    }
+        	} else {
+        	    row.setCell((spaceFloor != null) ? spaceFloor.getSpaceInformation().getPresentationName() : "--");        	
+        	}
+        	        	               
+        	row.setCell(room.getSpaceInformation().getDescription());
+                row.setCell(room.getSpaceInformation().getIdentification());
+                row.setCell(room.getSpaceInformation().getDoorNumber());
+                row.setCell(room.getSpaceInformation().getBlueprintNumber());                
+                row.setCell((room.getSpaceInformation().getRoomClassification() != null) ? room.getSpaceInformation().getRoomClassification().getPresentationCode() : "--");
+                row.setCell((room.getSpaceInformation().getArea() != null) ? room.getSpaceInformation().getArea().toString() : "--");
+                
+                row.setCell(room.getSpaceInformation().getHeightQuality().toString());
+                row.setCell(room.getSpaceInformation().getIlluminationQuality().toString());
+                row.setCell(room.getSpaceInformation().getDistanceFromSanitaryInstalationsQuality().toString());
+                row.setCell(room.getSpaceInformation().getSecurityQuality().toString());
+                row.setCell(room.getSpaceInformation().getAgeQuality().toString());
+                
+                StringBuilder builder = new StringBuilder();
+                for (SpaceResponsibility responsibility : room.getSpaceResponsibilitySet()) {
+                    Unit unit = responsibility.getUnit();
+                    builder.append(unit.getPresentationName()).append("; ");
+		}                
+                row.setCell(builder.toString());
+                
+                builder = new StringBuilder();
+                for (UnitSpaceOccupation occupation : room.getUnitSpaceOccupations()) {
+                    Unit unit = occupation.getUnit();
+                    builder.append(unit.getPresentationName()).append("; ");
+		}                
+                row.setCell(builder.toString());
+                
+                builder = new StringBuilder();
+                for (PersonSpaceOccupation occupation : room.getPersonSpaceOccupations()) {
+                    Person person = occupation.getPerson();
+                    builder.append(person.getName() + " (" + person.getUsername() + "); ");
+		}                
+                row.setCell(builder.toString());
+                
+                row.setCell(room.getSpaceInformation().getObservations());
+            }	
+            
+	    if(subSpace.hasAnyContainedSpaces()) {
+		fillSpreadSheet(subSpace, spreadsheet);
+	    }
+        }
+    }
+
+    private List<Object> getHeaders() {
+        final List<Object> headers = new ArrayList<Object>();
+        
+        headers.add("Edifício");
+        headers.add("Piso");
+        headers.add("Espaço");
+        headers.add("Identificação do Espaço");
+        headers.add("Número na Porta");        
+        headers.add("Número na Planta");            
+        headers.add("Classificação");        
+        headers.add("Área");
+        
+        headers.add("Qualid. em Pé Direito");
+        headers.add("Qualid. em Iluminação");
+        headers.add("Qualid. em Dist. às Instalações Sanitárias");     
+        headers.add("Qualid. em Segurança");        
+        headers.add("Qualid. em Vetustez");
+        
+        headers.add("Unidade(s) responsáveis");
+        headers.add("Ocupantes (Unidades)");        
+        headers.add("Ocupantes (Pessoas)");
+        
+        headers.add("Observações");
+        
+        return headers;
+    }
+    
     private void setBlueprintTextRectangles(HttpServletRequest request, Space space) throws IOException {
 
 	Boolean viewBlueprintNumbers = isToViewBlueprintNumbers(request);

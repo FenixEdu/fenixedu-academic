@@ -1,9 +1,10 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
-<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
+<%@page import="net.sourceforge.fenixedu.domain.space.Space"%>
+<html:xhtml/>
 
 <logic:present name="selectedSpaceInformation">
 	
@@ -95,7 +96,7 @@
 			</td>
 		</tr>
 	</table>
-	
+		 
 	<%
 		if(thisSpace.personHasPermissionsToManageSpace(person)){
 	%>
@@ -103,7 +104,7 @@
 		<html:link page="/manageSpaces.do?method=prepareEditSpace&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
 			<bean:message bundle="SPACE_RESOURCES" key="link.edit.space.information"/>
 		</html:link>&nbsp;,
-		<html:link page="/manageSpaces.do?method=deleteSpaceInformation&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
+		<html:link page="/manageSpaces.do?method=deleteSpaceInformation&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal" onclick="return confirm('Tem a certeza que deseja apagar a versão?')">
 			<bean:message bundle="SPACE_RESOURCES" key="link.delete.space.information"/>
 		</html:link>&nbsp;,
 		<html:link page="/manageSpaces.do?method=prepareCreateSpaceInformation&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
@@ -111,8 +112,16 @@
 		</html:link>&nbsp;,
 		<html:link page="/manageSpaces.do?method=deleteSpace&page=0" paramId="spaceID" paramName="selectedSpaceInformation" paramProperty="space.idInternal" onclick="return confirm('Tem a certeza que deseja apagar o espaço?')">
 			<bean:message bundle="SPACE_RESOURCES" key="link.delete.space"/>
-		</html:link>		
-	</p>
+		</html:link>			
+	</p>	
+	<%
+		}		   			
+		if(Space.personIsSpacesAdministrator(person)) {		 
+	%>
+		<html:link page="/manageSpaces.do?method=exportSpaceInfoToExcel" paramId="spaceID" paramName="selectedSpaceInformation" paramProperty="space.idInternal">
+			<html:img border="0" src="<%= request.getContextPath() + "/images/excel.bmp"%>" altKey="excel" bundle="IMAGE_RESOURCES" />
+			<bean:message key="link.export.to.excel" bundle="SPACE_RESOURCES"/>						
+		</html:link> 
 	<%
 		}
 	%>

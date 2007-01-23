@@ -230,8 +230,9 @@ public abstract class Space extends Space_Base {
 	    classs.add(PersonSpaceOccupation.class);
 	    classs.add(ExtensionSpaceOccupation.class);
 	    classs.add(UnitSpaceOccupation.class);
+	    classs.add(RoomClassification.class);
 	    classs.add(SpaceResponsibility.class);
-	    classs.add(Blueprint.class);
+	    classs.add(Blueprint.class);	    
 	    return DomainObjectActionLog.readDomainObjectActionLogsOrderedByInstant(classs);
 	}
 	return new HashSet<DomainObjectActionLog>();
@@ -394,7 +395,6 @@ public abstract class Space extends Space_Base {
 	}
     }
 
-
     public boolean isCampus() {
 	return false;
     }
@@ -411,4 +411,23 @@ public abstract class Space extends Space_Base {
 	return false;
     }
 
+    public Building getSpaceBuilding() {
+	if(this instanceof Building) {
+	    return (Building) this;
+	}	
+	if(getSuroundingSpace() == null) {
+	    return null;
+	}	
+	return getSuroundingSpace().getSpaceBuilding();
+    }
+    
+    public Floor getSpaceFloor() {
+	if(this instanceof Floor) {
+	    return (Floor) this;
+	}	
+	if(getSuroundingSpace() == null) {
+	    return null;
+	}	
+	return getSuroundingSpace().getSpaceFloor();
+    }
 }
