@@ -65,65 +65,81 @@
 <%-- Registration Average and Curricular Year calculations --%>
 <logic:notPresent role="ACADEMIC_ADMINISTRATIVE_OFFICE">
 	<logic:equal name="registration" property="degreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegree" value="true">
-		<%
-			final StudentCurriculum studentCurriculum = new StudentCurriculum(registration);
-			request.setAttribute("studentCurriculum", studentCurriculum);
-		
-			final double totalEctsCredits = studentCurriculum.getTotalEctsCredits(null);
-			request.setAttribute("totalEctsCredits", totalEctsCredits);
+
+		<logic:equal name="registration" property="concluded" value="true">
+			<p class="mtop2">
+				<span class="warning0">
+					<bean:message key="final.degree.average.info" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+				</span>
+			</p>
+			<table class="tstyle4 thright thlight mtop0">
+				<tr>
+					<th><bean:message key="final.degree.average" bundle="ACADEMIC_OFFICE_RESOURCES"/></th>
+					<td><bean:write name="registration" property="average"/></td>
+				</tr>	
+			</table>
+		</logic:equal>
+		<logic:equal name="registration" property="concluded" value="false">
+			<%
+				final StudentCurriculum studentCurriculum = new StudentCurriculum(registration);
+				request.setAttribute("studentCurriculum", studentCurriculum);
 			
-			final double average = studentCurriculum.getRoundedAverage(null, true);
-			request.setAttribute("average", average);
+				final double totalEctsCredits = studentCurriculum.getTotalEctsCredits(null);
+				request.setAttribute("totalEctsCredits", totalEctsCredits);
+				
+				final double average = studentCurriculum.getRoundedAverage(null, true);
+				request.setAttribute("average", average);
+			
+				final int curricularYear = studentCurriculum.calculateCurricularYear(null);
+				request.setAttribute("curricularYear", curricularYear);
+			
+				final double sumPiCi = studentCurriculum.getSumPiCi(null);
+				request.setAttribute("sumPiCi", sumPiCi);
+			
+				final double sumPi = studentCurriculum.getSumPi(null);
+				request.setAttribute("sumPi", sumPi);
+			%>
 		
-			final int curricularYear = studentCurriculum.calculateCurricularYear(null);
-			request.setAttribute("curricularYear", curricularYear);
-		
-			final double sumPiCi = studentCurriculum.getSumPiCi(null);
-			request.setAttribute("sumPiCi", sumPiCi);
-		
-			final double sumPi = studentCurriculum.getSumPi(null);
-			request.setAttribute("sumPi", sumPi);
-		%>
-	
-		<p class="mtop2">
-			<span class="warning0">
-				<bean:message key="rules.info" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-			</span>
-		</p>
-		<table class="tstyle4 thright thlight mtop0">
-			<tr>
-				<th><bean:message key="degree.average" bundle="ACADEMIC_OFFICE_RESOURCES"/></th>
-				<td><bean:write name="average"/></td>
-			</tr>	
-			<tr>
-				<th><bean:message key="rule" bundle="ACADEMIC_OFFICE_RESOURCES"/></th>
-				<td><bean:message key="average.rule" bundle="ACADEMIC_OFFICE_RESOURCES"/></td>
-			</tr>	
-			<tr>
-				<th><bean:message key="result" bundle="ACADEMIC_OFFICE_RESOURCES"/></th>
-				<td>
-					<bean:message key="degree.average.abbreviation" bundle="ACADEMIC_OFFICE_RESOURCES"/> = <bean:write name="sumPiCi"/> / <bean:write name="sumPi"/> = <bean:write name="average"/>
-				</td>
-			</tr>	
-		</table>
-		<table class="tstyle4 thright thlight mtop0">
-			<tr>
-				<th><bean:message key="curricular.year" bundle="ACADEMIC_OFFICE_RESOURCES"/></th>
-				<td><bean:write name="curricularYear"/></td>
-			</tr>	
-			<tr>
-				<th><bean:message key="rule" bundle="ACADEMIC_OFFICE_RESOURCES"/></th>
-				<td>
-					<bean:message key="curricular.year.rule" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-				</td>
-			</tr>	
-			<tr>
-				<th><bean:message key="result" bundle="ACADEMIC_OFFICE_RESOURCES"/></th>
-				<td>
-					<bean:message key="curricular.year.abbreviation" bundle="ACADEMIC_OFFICE_RESOURCES"/> = <bean:message key="minimum" bundle="ACADEMIC_OFFICE_RESOURCES"/> (<bean:message key="int" bundle="ACADEMIC_OFFICE_RESOURCES"/> ( (<bean:write name="totalEctsCredits"/> + 24) / 60 + 1) ; <bean:write name="registration" property="degreeType.years"/>) = <bean:write name="curricularYear"/>;
-				</td>
-			</tr>	
-		</table>
+			<p class="mtop2">
+				<span class="warning0">
+					<bean:message key="rules.info" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+				</span>
+			</p>
+			<table class="tstyle4 thright thlight mtop0">
+				<tr>
+					<th><bean:message key="degree.average" bundle="ACADEMIC_OFFICE_RESOURCES"/></th>
+					<td><bean:write name="average"/></td>
+				</tr>	
+				<tr>
+					<th><bean:message key="rule" bundle="ACADEMIC_OFFICE_RESOURCES"/></th>
+					<td><bean:message key="average.rule" bundle="ACADEMIC_OFFICE_RESOURCES"/></td>
+				</tr>	
+				<tr>
+					<th><bean:message key="result" bundle="ACADEMIC_OFFICE_RESOURCES"/></th>
+					<td>
+						<bean:message key="degree.average.abbreviation" bundle="ACADEMIC_OFFICE_RESOURCES"/> = <bean:write name="sumPiCi"/> / <bean:write name="sumPi"/> = <bean:write name="average"/>
+					</td>
+				</tr>	
+			</table>
+			<table class="tstyle4 thright thlight mtop0">
+				<tr>
+					<th><bean:message key="curricular.year" bundle="ACADEMIC_OFFICE_RESOURCES"/></th>
+					<td><bean:write name="curricularYear"/></td>
+				</tr>	
+				<tr>
+					<th><bean:message key="rule" bundle="ACADEMIC_OFFICE_RESOURCES"/></th>
+					<td>
+						<bean:message key="curricular.year.rule" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+					</td>
+				</tr>	
+				<tr>
+					<th><bean:message key="result" bundle="ACADEMIC_OFFICE_RESOURCES"/></th>
+					<td>
+						<bean:message key="curricular.year.abbreviation" bundle="ACADEMIC_OFFICE_RESOURCES"/> = <bean:message key="minimum" bundle="ACADEMIC_OFFICE_RESOURCES"/> (<bean:message key="int" bundle="ACADEMIC_OFFICE_RESOURCES"/> ( (<bean:write name="totalEctsCredits"/> + 24) / 60 + 1) ; <bean:write name="registration" property="degreeType.years"/>) = <bean:write name="curricularYear"/>;
+					</td>
+				</tr>	
+			</table>
+		</logic:equal>
 	</logic:equal>
 </logic:notPresent>
 
