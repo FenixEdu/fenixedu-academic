@@ -34,7 +34,7 @@
 	</fr:edit>
 	<br/>
 	
-	<bean:message key="label.studentDismissal.externalEnrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+	<h3><bean:message key="label.studentDismissal.externalEnrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 	<logic:notEmpty name="dismissalBean" property="externalEnrolments">	
 		<fr:edit id="externalEnrolments" name="dismissalBean" property="externalEnrolments" schema="student.Dismissal.choose.external.enrolments">
 			<fr:layout name="tabular-editable">
@@ -50,7 +50,7 @@
 		<br/>				
 	</logic:empty>
 	<br/>	
-	<bean:message key="label.studentDismissal.internalEnrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+	<h3><bean:message key="label.studentDismissal.internalEnrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 	<logic:notEmpty name="dismissalBean" property="enrolments">
 		<fr:edit id="internalEnrolments" name="dismissalBean" property="enrolments" schema="student.Dismissal.choose.internal.enrolments">
 			<fr:layout name="tabular-editable">

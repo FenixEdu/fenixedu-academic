@@ -282,6 +282,13 @@
 	<definition name="studentDismissal.management" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/dismissal/managementDismissals.jsp"/>
 	</definition>
+	<definition name="studentDismissal.chooseExternalCurricularCourse" extends="academicAdminOffice.masterPage">
+		<put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
+		<put name="body" value="/academicAdminOffice/dismissal/chooseExternalCurricularCourse.jsp"/>
+	</definition>
+	<definition name="studentDismissal.prepareCreateExternalEnrolment" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/dismissal/createExternalEnrolment.jsp"/>
+	</definition>
 
 	<!-- ===================== MarkSheet Management ====================== -->
 	<definition name="show.markSheetManagement.search.page" extends="academicAdminOffice.masterPage">

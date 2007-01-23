@@ -498,9 +498,8 @@
 	     		<forward name="prepareGradesToSubmitSendMail" path="show.markSheetSendMail.prepareGradesToSubmitSendMail"/>
 	     		
 	</action>      
-      
-      
-  	  <action path="/studentDismissals"
+
+  	 <action path="/studentDismissals"
 				scope="request"		
 		        parameter="method"
 		        name="studentDismissalForm"
@@ -510,6 +509,9 @@
 			<forward name="chooseEquivalents" path="studentDismissal.chooseEquivalents"/>
 			<forward name="visualizeRegistration" path="/student.do?method=visualizeRegistration"/>
 			<forward name="chooseDismissalEnrolments" path="studentDismissal.chooseDismissalEnrolments"/>
+
+			<forward name="chooseExternalCurricularCourse" path="studentDismissal.chooseExternalCurricularCourse"/>
+			<forward name="prepareCreateExternalEnrolment" path="studentDismissal.prepareCreateExternalEnrolment"/>
 	  </action>
 	  
       <!-- ExternalUnits -->
