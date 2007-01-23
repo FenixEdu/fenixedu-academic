@@ -13,6 +13,7 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -121,9 +122,9 @@ public class MarkSheetCreateDispatchAction extends MarkSheetDispatchAction {
         createBean.setTeacher(Teacher.readByNumber(createBean.getTeacherNumber()));
 
         ActionMessages actionMessages = createActionMessages();
+        IUserView userView = getUserView(request);
         try {
-
-            MarkSheet markSheet = (MarkSheet) ServiceUtils.executeService(getUserView(request), "CreateMarkSheet", new Object[] { createBean });
+            MarkSheet markSheet = (MarkSheet) ServiceUtils.executeService(userView, "CreateMarkSheet", new Object[] { createBean, userView.getPerson().getEmployee()});
             ((DynaActionForm) actionForm).set("msID", markSheet.getIdInternal());
             return viewMarkSheet(mapping, actionForm, request, response);
 
@@ -222,8 +223,9 @@ public class MarkSheetCreateDispatchAction extends MarkSheetDispatchAction {
     	MarkSheetRectifyBean rectifyBean = (MarkSheetRectifyBean) RenderUtils.getViewState().getMetaObject().getObject();
     	
         ActionMessages actionMessages = new ActionMessages();
+        IUserView userView = getUserView(request);
         try {
-            ServiceUtils.executeService(getUserView(request), "CreateRectificationMarkSheet", new Object[] {rectifyBean.getMarkSheet(), rectifyBean.getEnrolmentEvaluation(), rectifyBean.getNewGrade(), rectifyBean.getEvaluationDate(), rectifyBean.getReason()});
+	    ServiceUtils.executeService(userView, "CreateRectificationMarkSheet", new Object[] {rectifyBean.getMarkSheet(), rectifyBean.getEnrolmentEvaluation(), rectifyBean.getNewGrade(), rectifyBean.getEvaluationDate(), rectifyBean.getReason(), userView.getPerson().getEmployee()});
             return mapping.findForward("searchMarkSheetFilled");
         } catch (NotAuthorizedFilterException e) {
             addMessage(request, actionMessages, "error.notAuthorized");

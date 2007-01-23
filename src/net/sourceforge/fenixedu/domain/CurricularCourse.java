@@ -1373,14 +1373,14 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     public MarkSheet createNormalMarkSheet(ExecutionPeriod executionPeriod, Teacher responsibleTeacher,
 	    Date evaluationDate, MarkSheetType markSheetType, Boolean submittedByTeacher,
-	    Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeans) {
+	    Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeans, Employee employee) {
 
 	return MarkSheet.createNormal(this, executionPeriod, responsibleTeacher, evaluationDate,
-		markSheetType, submittedByTeacher, evaluationBeans);
+		markSheetType, submittedByTeacher, evaluationBeans, employee);
     }
 
     public MarkSheet rectifyEnrolmentEvaluation(MarkSheet markSheet,
-	    EnrolmentEvaluation enrolmentEvaluation, Date evaluationDate, String grade, String reason) {
+	    EnrolmentEvaluation enrolmentEvaluation, Date evaluationDate, String grade, String reason, Employee employee) {
 
 	if (markSheet == null || evaluationDate == null || grade == null || grade.length() == 0) {
 	    throw new DomainException("error.markSheet.invalid.arguments");
@@ -1405,7 +1405,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 	MarkSheet rectificationMarkSheet = createRectificationMarkSheet(markSheet.getExecutionPeriod(),
 		evaluationDate, markSheet.getResponsibleTeacher(), markSheet.getMarkSheetType(), reason,
 		new MarkSheetEnrolmentEvaluationBean(enrolmentEvaluation.getEnrolment(), evaluationDate,
-			grade));
+			grade), employee);
 
 	// Rectification MarkSheet MUST have only ONE EnrolmentEvaluation
 	rectificationMarkSheet.getEnrolmentEvaluations().get(0).setRectified(enrolmentEvaluation);
@@ -1414,10 +1414,10 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     public MarkSheet createRectificationMarkSheet(ExecutionPeriod executionPeriod, Date evaluationDate,
 	    Teacher responsibleTeacher, MarkSheetType markSheetType, String reason,
-	    MarkSheetEnrolmentEvaluationBean evaluationBean) {
+	    MarkSheetEnrolmentEvaluationBean evaluationBean, Employee employee) {
 
 	return MarkSheet.createRectification(this, executionPeriod, responsibleTeacher, evaluationDate,
-		markSheetType, reason, evaluationBean);
+		markSheetType, reason, evaluationBean, employee);
     }
 
     public Collection<MarkSheet> searchMarkSheets(ExecutionPeriod executionPeriod, Teacher teacher,

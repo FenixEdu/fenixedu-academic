@@ -78,7 +78,7 @@ public class CreateMarkSheetByTeacher extends Service {
                 if (markSheetEnrolmentEvaluationBeans != null) {
                     MarkSheet markSheet = curricularCourse.createNormalMarkSheet(executionCourse.getExecutionPeriod(),
                             responsibleTeacher, evaluationDate, markSheetType, Boolean.TRUE,
-                            markSheetEnrolmentEvaluationBeans);
+                            markSheetEnrolmentEvaluationBeans, responsibleTeacher.getPerson().getEmployee());
                     enrolmetnEvaluations.addAll(markSheet.getEnrolmentEvaluations());
                 }
             }

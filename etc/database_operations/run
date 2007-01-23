@@ -27,3 +27,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Change MARKSHEET table" markSheetTableChanges.sql
+

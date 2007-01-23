@@ -27,11 +27,11 @@ public class MarkSheet extends MarkSheet_Base {
     private MarkSheet(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod,
             Teacher responsibleTeacher, Date evaluationDate, MarkSheetType markSheetType,
             MarkSheetState markSheetState, Boolean submittedByTeacher,
-            Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeans) {
+            Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeans, Employee employee) {
 
         this();
-        checkParameters(curricularCourse, executionPeriod, responsibleTeacher, evaluationDate, markSheetType, markSheetState, evaluationBeans);
-        init(curricularCourse, executionPeriod, responsibleTeacher, evaluationDate, markSheetType, markSheetState, submittedByTeacher);
+        checkParameters(curricularCourse, executionPeriod, responsibleTeacher, evaluationDate, markSheetType, markSheetState, evaluationBeans, employee);
+        init(curricularCourse, executionPeriod, responsibleTeacher, evaluationDate, markSheetType, markSheetState, submittedByTeacher, employee);
 
         if (hasMarkSheetState(MarkSheetState.RECTIFICATION_NOT_CONFIRMED)) {
             addEnrolmentEvaluationsWithoutResctrictions(responsibleTeacher, evaluationBeans, EnrolmentEvaluationState.TEMPORARY_OBJ);
@@ -44,29 +44,29 @@ public class MarkSheet extends MarkSheet_Base {
     public static MarkSheet createNormal(CurricularCourse curricularCourse,
             ExecutionPeriod executionPeriod, Teacher responsibleTeacher, Date evaluationDate,
             MarkSheetType markSheetType, Boolean submittedByTeacher,
-            Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeans) {
+            Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeans, Employee employee) {
         
         return new MarkSheet(curricularCourse, executionPeriod, responsibleTeacher, evaluationDate,
-                markSheetType, MarkSheetState.NOT_CONFIRMED, submittedByTeacher, evaluationBeans);
+                markSheetType, MarkSheetState.NOT_CONFIRMED, submittedByTeacher, evaluationBeans, employee);
     }
     
     public static MarkSheet createRectification(CurricularCourse curricularCourse,
             ExecutionPeriod executionPeriod, Teacher responsibleTeacher, Date evaluationDate,
-            MarkSheetType markSheetType, String reason, MarkSheetEnrolmentEvaluationBean evaluationBean) {
+            MarkSheetType markSheetType, String reason, MarkSheetEnrolmentEvaluationBean evaluationBean, Employee employee) {
 
         MarkSheet markSheet = new MarkSheet(curricularCourse, executionPeriod, responsibleTeacher, evaluationDate,
                 markSheetType, MarkSheetState.RECTIFICATION_NOT_CONFIRMED, Boolean.FALSE,
-                (evaluationBean != null) ? Collections.singletonList(evaluationBean) : null);
+                (evaluationBean != null) ? Collections.singletonList(evaluationBean) : null, employee);
         markSheet.setReason(reason);
         return markSheet;
     }
 
     private void checkParameters(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod,
             Teacher responsibleTeacher, Date evaluationDate, MarkSheetType markSheetType,
-            MarkSheetState markSheetState, Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeans) {
+            MarkSheetState markSheetState, Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeans, Employee employee) {
 
         if (curricularCourse == null || executionPeriod == null || responsibleTeacher == null
-                || evaluationDate == null || markSheetType == null || markSheetState == null) {
+                || evaluationDate == null || markSheetType == null || markSheetState == null || employee == null) {
             throw new DomainException("error.markSheet.invalid.arguments");
         }
         if (evaluationBeans == null || evaluationBeans.size() == 0) {
@@ -112,7 +112,7 @@ public class MarkSheet extends MarkSheet_Base {
 
     private void init(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod,
             Teacher responsibleTeacher, Date evaluationDate, MarkSheetType markSheetType,
-            MarkSheetState markSheetState, Boolean submittedByTeacher) {
+            MarkSheetState markSheetState, Boolean submittedByTeacher, Employee employee) {
         
         setMarkSheetState(markSheetState);
         setCurricularCourse(curricularCourse);
@@ -121,6 +121,7 @@ public class MarkSheet extends MarkSheet_Base {
         setEvaluationDate(evaluationDate);
         setMarkSheetType(markSheetType);
         setSubmittedByTeacher(submittedByTeacher);
+        setCreationEmployee(employee);
     }
 
     private void addEnrolmentEvaluationsWithoutResctrictions(Teacher responsibleTeacher,
@@ -329,7 +330,7 @@ public class MarkSheet extends MarkSheet_Base {
     		throw new DomainException("error.markSheet.invalid.arguments");
     	}
         if (isNotConfirmed()) {
-            setEmployee(employee);
+            setConfirmationEmployee(employee);
             for (final EnrolmentEvaluation enrolmentEvaluation : this.getEnrolmentEvaluationsSet()) {
                 enrolmentEvaluation.confirmSubmission(getEnrolmentEvaluationStateToConfirm(), employee, "");
             }
@@ -368,7 +369,8 @@ public class MarkSheet extends MarkSheet_Base {
         
         removeCurricularCourse();
         removeResponsibleTeacher();
-        removeEmployee();
+        removeConfirmationEmployee();
+        removeCreationEmployee();
         
         if(hasMarkSheetState(MarkSheetState.RECTIFICATION_NOT_CONFIRMED)) {
             changeRectifiedEnrolmentEvaluationToPreviowsState();
@@ -440,11 +442,20 @@ public class MarkSheet extends MarkSheet_Base {
     }
 
     @Override
-    public void removeEmployee() {
+    public void removeConfirmationEmployee() {
         if (isConfirmed()) {
             throw new DomainException("error.markSheet.already.confirmed");
         } else {
-            super.removeEmployee();
+            super.removeConfirmationEmployee();
+        }
+    }
+    
+    @Override
+    public void removeCreationEmployee() {
+        if (isConfirmed()) {
+            throw new DomainException("error.markSheet.already.confirmed");
+        } else {
+            super.removeCreationEmployee();
         }
     }
 
@@ -521,13 +532,22 @@ public class MarkSheet extends MarkSheet_Base {
     }
 
     @Override
-    public void setEmployee(Employee employee) {
+    public void setConfirmationEmployee(Employee confirmationEmployee) {
         if (isConfirmed()) {
             throw new DomainException("error.markSheet.already.confirmed");
         } else {
-            super.setEmployee(employee);
+            super.setConfirmationEmployee(confirmationEmployee);
         }
     }
+    
+   /* @Override
+    public void setCreationEmployee(Employee creationEmployee) {
+        if (isConfirmed()) {
+            throw new DomainException("error.markSheet.already.confirmed");
+        } else {
+            super.setCreationEmployee(creationEmployee);
+        }
+    }*/
 
     @Override
     public void setEvaluationDate(Date evaluationDate) {

@@ -1392,7 +1392,8 @@ class net.sourceforge.fenixedu.domain.EnrolmentEquivalence extends net.sourcefor
 class net.sourceforge.fenixedu.domain.MarkSheet extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyExecutionPeriod;
     Integer keyResponsibleTeacher;
-    Integer keyEmployee;
+    Integer keyCreationEmployee;
+    Integer keyConfirmationEmployee;    
     Integer keyCurricularCourse;
     String checkSum;
     String reason;    
@@ -10610,12 +10611,20 @@ relation MarkSheetTeacher {
     net.sourceforge.fenixedu.domain.Teacher playsRole responsibleTeacher;
 }
 
-relation MarkSheetEmployee {
-    net.sourceforge.fenixedu.domain.MarkSheet playsRole markSheets {
+relation MarkSheetCreationEmployee {
+    net.sourceforge.fenixedu.domain.MarkSheet playsRole createdMarkSheets {
         multiplicity *;
     }
-    net.sourceforge.fenixedu.domain.Employee playsRole employee;
+    net.sourceforge.fenixedu.domain.Employee playsRole creationEmployee;
 }
+
+relation MarkSheetConfirmationEmployee {
+    net.sourceforge.fenixedu.domain.MarkSheet playsRole confirmedMarkSheets {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.Employee playsRole confirmationEmployee;
+}
+
 
 relation MarkSheetCurricularCourse {
     net.sourceforge.fenixedu.domain.MarkSheet playsRole markSheets {
