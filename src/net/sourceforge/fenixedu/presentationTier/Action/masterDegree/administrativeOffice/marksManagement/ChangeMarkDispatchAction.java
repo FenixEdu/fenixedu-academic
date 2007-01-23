@@ -249,7 +249,7 @@ public class ChangeMarkDispatchAction extends FenixDispatchAction {
         } else {
             studentNumberForm.set("teacherNumber", "");
         }
-        request.setAttribute(SessionConstants.ENROLMENT_EVALUATION_TYPE_LIST, Arrays.asList(EnrolmentEvaluationType.getSexLabelValues(null)));
+        request.setAttribute(SessionConstants.ENROLMENT_EVALUATION_TYPE_LIST, Arrays.asList(EnrolmentEvaluationType.getLabelValues(null)));
         request.setAttribute(SessionConstants.MONTH_DAYS_KEY, Data.getMonthDays());
         request.setAttribute(SessionConstants.MONTH_LIST_KEY, Data.getMonths());
         request.setAttribute(SessionConstants.YEARS_KEY, Data.getYears());
