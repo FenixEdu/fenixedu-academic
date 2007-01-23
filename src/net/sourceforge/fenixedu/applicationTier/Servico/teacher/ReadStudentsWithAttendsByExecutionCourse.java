@@ -81,7 +81,7 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
 	InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);
 
 	final ExecutionCourseSite site = executionCourse.getSite();
-	List attends = executionCourse.getAttends();
+	List attends = executionCourse.getAttendsEnrolledOrWithActiveSCP();
 
 	List allDegreeCurricularPlans = getDegreeCurricularPlansFromAttends(attends);
 	List allShifts = executionCourse.getAssociatedShifts();

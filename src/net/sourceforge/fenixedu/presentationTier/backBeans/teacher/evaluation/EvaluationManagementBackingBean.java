@@ -935,7 +935,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 
     public List<Attends> getExecutionCourseAttends() throws FenixFilterException, FenixServiceException {
         ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(getExecutionCourseID());
-        List<Attends> executionCourseAttends = new ArrayList(executionCourse.getAttends());
+        List<Attends> executionCourseAttends = getExecutionCourse().getAttendsEnrolledOrWithActiveSCP();
         Collections.sort(executionCourseAttends, new BeanComparator("aluno.number"));
         return executionCourseAttends;
     }

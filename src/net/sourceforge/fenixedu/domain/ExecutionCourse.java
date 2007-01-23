@@ -1527,4 +1527,14 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         
         return references;
     }
+    
+    public List<Attends> getAttendsEnrolledOrWithActiveSCP() {
+	List<Attends> result = new ArrayList<Attends>();
+	for (Attends attends : this.getAttendsSet()) {
+	    if(attends.getEnrolment() != null || attends.getAluno().getLastRegistrationState(this.getExecutionYear()).isActive()) {
+		result.add(attends);
+	    }
+	}
+	return result;
+    }
 }
