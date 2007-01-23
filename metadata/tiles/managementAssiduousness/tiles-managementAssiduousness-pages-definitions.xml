@@ -64,4 +64,10 @@
 	<definition name="edit-extra-work-authorization" extends="definition.managementAssiduousness.masterPage">
 		<put name="body" value="/managementAssiduousness/editExtraWorkAuthorization.jsp"/>
 	</definition>	
+	<definition name="prepare-associate-schedule" extends="definition.managementAssiduousness.masterPage">
+		<put name="body" value="/managementAssiduousness/employee/prepareAssociateSchedule.jsp"/>
+	</definition>
+	<definition name="associate-schedule" extends="definition.managementAssiduousness.masterPage">
+		<put name="body" value="/managementAssiduousness/employee/associateWorkSchedule.jsp"/>
+	</definition>	
 </tiles-definitions>

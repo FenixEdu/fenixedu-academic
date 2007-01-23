@@ -26,6 +26,6 @@ public class Periodicity extends Periodicity_Base {
     }
 
     public boolean canBeDeleted() {
-        return !hasAnyWorkSchedule();
+        return !hasAnyWorkSchedules();
     }
 }

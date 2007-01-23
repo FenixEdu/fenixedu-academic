@@ -288,4 +288,20 @@ public class Assiduousness extends Assiduousness_Base {
         return campus;
     }
 
+    public boolean overlapsOtherSchedules(final Schedule schedule, YearMonthDay beginDate,
+            YearMonthDay endDate) {
+        DateInterval scheduleInterval = new DateInterval(beginDate, endDate);
+        for (final Schedule otherSchedule : getSchedules()) {
+            if (schedule != otherSchedule) {
+                DateInterval otherScheduleInterval = new DateInterval(otherSchedule.getBeginDate(),
+                        otherSchedule.getEndDate());
+                if (scheduleInterval.containsInterval(otherScheduleInterval)
+                        || otherScheduleInterval.containsInterval(scheduleInterval)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 }

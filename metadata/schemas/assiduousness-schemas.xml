@@ -552,6 +552,21 @@
 	</slot>
 </schema>
 	
+<schema name="edit.employeeScheduleFactory.dates" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeScheduleFactory">
+	<slot name="beginDate" key="label.beginDate" bundle="ASSIDUOUSNESS_RESOURCES"
+	    validator="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+		<property name="format" value="dd/MM/yyyy"/>
+		<property name="size" value="10"/>
+	</slot>
+	<slot name="endDate" key="label.endDate" bundle="ASSIDUOUSNESS_RESOURCES">
+	    <validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+            <property name="required" value="false"/>
+         </validator>
+		<property name="format" value="dd/MM/yyyy" />
+		<property name="size" value="10"/>
+	</slot>
+</schema>
+		
 <schema name="view.extraWorkAuthorizations" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.ExtraWorkAuthorizationSearchBean">	
 	<slot name="extraWorkAuthorizations">
 		<property name="eachSchema" value="show.extraWorkAuthorization" />

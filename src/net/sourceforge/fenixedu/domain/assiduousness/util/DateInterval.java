@@ -49,7 +49,8 @@ public class DateInterval {
 
     // Returns true if this DateInterval contains interval
     public boolean containsInterval(DateInterval interval) {
-        return (containsDate(interval.getStartDate()) || containsDate(interval.getEndDate()));
+        return (containsDate(interval.getStartDate()) || (interval.getEndDate() != null && containsDate(interval
+                .getEndDate())));
     }
 
     // Return the interval number of weeks

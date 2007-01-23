@@ -1,27 +1,41 @@
 package net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory;
+import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeScheduleFactory;
+import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeWorkWeekScheduleBean;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory.EmployeeAnulateJustificationFactory;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory.EmployeeJustificationFactoryCreator;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory.EmployeeJustificationFactoryEditor;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.assiduousness.Justification;
+import net.sourceforge.fenixedu.domain.assiduousness.Schedule;
+import net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule;
+import net.sourceforge.fenixedu.domain.assiduousness.WorkScheduleType;
+import net.sourceforge.fenixedu.domain.assiduousness.WorkWeek;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.util.Month;
 
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
+import org.apache.struts.action.DynaActionForm;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.file.FileManagerException;
@@ -148,6 +162,163 @@ public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
 
         return new ViewEmployeeAssiduousnessDispatchAction().showJustifications(mapping, form, request,
                 response);
+    }
+
+    public ActionForward prepareAssociateEmployeeWorkSchedule(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
+
+        EmployeeScheduleFactory employeeScheduleFactory = (EmployeeScheduleFactory) getFactoryObject();
+        if (employeeScheduleFactory != null) {
+            DynaActionForm actionForm = (DynaActionForm) form;
+            String addWorkWeek = actionForm.getString("addWorkWeek");
+            if (addWorkWeek.equalsIgnoreCase("yes")) {
+                employeeScheduleFactory.addEmployeeWorkWeekSchedule();
+                RenderUtils.invalidateViewState();
+            } else if (addWorkWeek.equalsIgnoreCase("remove")) {
+                employeeScheduleFactory.removeEmployeeWorkWeekSchedule();
+            }
+        } else {
+            Integer employeeID = getIntegerFromRequest(request, "employeeID");
+            Employee employee = rootDomainObject.readEmployeeByOID(employeeID);
+            employeeScheduleFactory = new EmployeeScheduleFactory(employee, SessionUtils.getUserView(
+                    request).getPerson().getEmployee());
+        }
+        request.setAttribute("employeeScheduleBean", employeeScheduleFactory);
+        return mapping.findForward("prepare-associate-schedule");
+    }
+
+    public ActionForward chooseWorkSchedule(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
+
+        EmployeeScheduleFactory employeeScheduleFactory = (EmployeeScheduleFactory) getFactoryObject();
+        Schedule currenteSchedule = employeeScheduleFactory.getEmployee().getAssiduousness()
+                .getCurrentSchedule();
+        if (employeeScheduleFactory.getEmployee().getAssiduousness().overlapsOtherSchedules(
+                currenteSchedule, employeeScheduleFactory.getBeginDate(),
+                employeeScheduleFactory.getEndDate())) {
+            setError(request, "errorMessage", (ActionMessage) new ActionMessage(
+                    "error.schedule.overlapsWithOther"));
+            return mapping.getInputForward();
+        }
+
+        List<WorkScheduleType> workScheduleList = new ArrayList<WorkScheduleType>();
+        for (WorkScheduleType workScheduleType : rootDomainObject.getWorkScheduleTypes()) {
+            workScheduleList.add(workScheduleType);
+        }
+        ComparatorChain comparatorChain = new ComparatorChain();
+        comparatorChain.addComparator(new BeanComparator("ojbConcreteClass"));
+        comparatorChain.addComparator(new BeanComparator("acronym"));
+        Collections.sort(workScheduleList, comparatorChain);
+        request.setAttribute("workScheduleList", workScheduleList);
+
+        request.setAttribute("employeeScheduleBean", employeeScheduleFactory);
+        return mapping.findForward("associate-schedule");
+    }
+
+    public ActionForward associateEmployeeWorkSchedule(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+            FenixServiceException {
+
+        EmployeeScheduleFactory employeeScheduleFactory = (EmployeeScheduleFactory) getFactoryObject();
+        Integer workScheduleTypeID = getInteger((DynaActionForm) form, "workScheduleID");
+        WorkScheduleType workScheduleType = rootDomainObject
+                .readWorkScheduleTypeByOID(workScheduleTypeID);
+        employeeScheduleFactory.setChoosenWorkSchedule(workScheduleType);
+
+        if (hasAnythingChanged(employeeScheduleFactory)) {
+            executeService(request, "ExecuteFactoryMethod", new Object[] { employeeScheduleFactory });
+        }
+        RenderUtils.invalidateViewState();
+        request.setAttribute("employeeID", employeeScheduleFactory.getEmployee().getIdInternal());
+        return prepareAssociateEmployeeWorkSchedule(mapping, form, request, response);
+    }
+
+    public ActionForward deleteWorkScheduleDays(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+            FenixServiceException {
+
+        EmployeeScheduleFactory employeeScheduleFactory = (EmployeeScheduleFactory) getFactoryObject();
+        Schedule currenteSchedule = employeeScheduleFactory.getEmployee().getAssiduousness()
+                .getCurrentSchedule();
+        if (employeeScheduleFactory.getEmployee().getAssiduousness().overlapsOtherSchedules(
+                currenteSchedule, employeeScheduleFactory.getBeginDate(),
+                employeeScheduleFactory.getEndDate())) {
+            setError(request, "errorMessage", (ActionMessage) new ActionMessage(
+                    "error.schedule.overlapsWithOther"));
+            return mapping.getInputForward();
+        }
+
+        DynaActionForm actionForm = (DynaActionForm) form;
+        String workWeek = actionForm.getString("workWeek");
+        if (!StringUtils.isEmpty(workWeek)) {
+            employeeScheduleFactory.selectAllCheckBoxes(new Integer(workWeek));
+        }
+        employeeScheduleFactory.setToDeleteDays(true);
+        if (canDeleteDays(employeeScheduleFactory)) {
+            if (!areEmptyDays(employeeScheduleFactory)) {
+                executeService(request, "ExecuteFactoryMethod", new Object[] { employeeScheduleFactory });
+            }
+        } else {
+            setError(request, "errorMessage", (ActionMessage) new ActionMessage(
+                    "error.schedule.canNotDeleteAllDays"));
+            return mapping.getInputForward();
+        }
+        RenderUtils.invalidateViewState();
+        request.setAttribute("employeeID", employeeScheduleFactory.getEmployee().getIdInternal());
+        return prepareAssociateEmployeeWorkSchedule(mapping, form, request, response);
+    }
+
+    private boolean areEmptyDays(EmployeeScheduleFactory employeeScheduleFactory) {
+        for (EmployeeWorkWeekScheduleBean workWeekScheduleBean : employeeScheduleFactory
+                .getEmployeeWorkWeekScheduleList()) {
+            if (!workWeekScheduleBean.areSelectedDaysEmpty()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean canDeleteDays(EmployeeScheduleFactory employeeScheduleFactory) {
+        for (EmployeeWorkWeekScheduleBean workWeekScheduleBean : employeeScheduleFactory
+                .getEmployeeWorkWeekScheduleList()) {
+            if (!workWeekScheduleBean.isValidWeekChecked()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean hasAnythingChanged(EmployeeScheduleFactory employeeScheduleFactory) {
+        //TODO it should be the schedule we're editing...
+        Schedule currentSchedule = employeeScheduleFactory.getEmployee().getAssiduousness()
+                .getCurrentSchedule();
+        boolean differencesInWorkSchedules = true;
+        boolean differencesInDates = true;
+        if (currentSchedule.getBeginDate().isEqual(employeeScheduleFactory.getBeginDate())
+                && ((currentSchedule.getEndDate() == null && employeeScheduleFactory.getEndDate() == null) || (currentSchedule
+                        .getEndDate() != null
+                        && employeeScheduleFactory.getEndDate() != null && currentSchedule.getEndDate()
+                        .isEqual(employeeScheduleFactory.getEndDate())))) {
+            differencesInDates = false;
+        }
+        for (EmployeeWorkWeekScheduleBean workWeekScheduleBean : employeeScheduleFactory
+                .getEmployeeWorkWeekScheduleList()) {
+            WorkWeek workWeek = workWeekScheduleBean.getWorkWeekByCheckedBox();
+            for (WorkSchedule workSchedule : currentSchedule.getWorkSchedules()) {
+                if (workSchedule.getPeriodicity().getWorkWeekNumber().equals(
+                        workWeekScheduleBean.getWorkWeekNumber())) {
+                    if (workSchedule.getWorkScheduleType() == employeeScheduleFactory
+                            .getChoosenWorkSchedule()
+                            && workWeek != null && workSchedule.getWorkWeek().contains(workWeek)) {
+                        differencesInWorkSchedules = false;
+                        break;
+                    }
+                }
+            }
+        }
+        employeeScheduleFactory.setDifferencesInDates(differencesInDates);
+        employeeScheduleFactory.setDifferencesInWorkSchedules(differencesInWorkSchedules);
+        return differencesInWorkSchedules || differencesInDates;
     }
 
     private void setError(HttpServletRequest request, String error, ActionMessage actionMessage) {

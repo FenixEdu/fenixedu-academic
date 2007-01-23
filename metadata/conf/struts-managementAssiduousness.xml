@@ -13,6 +13,10 @@
 	    	<form-property name="method" type="java.lang.String" />
 	    	<form-property name="action" type="java.lang.String" />
 	    	<form-property name="page" type="java.lang.Integer"/>
+	    	<form-property name="employeeID" type="java.lang.String"/>
+	    	<form-property name="workScheduleID" type="java.lang.String"/>
+	    	<form-property name="addWorkWeek" type="java.lang.String" />	    	
+	    	<form-property name="workWeek" type="java.lang.String" />
 	    </form-bean>
 	    <form-bean name="extraWorkAuthorizationForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 	    	<form-property name="method" type="java.lang.String" />
@@ -74,9 +78,14 @@
 	    		type="net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness.EmployeeAssiduousnessDispatchAction" 
 				parameter="method"
 				scope="request"
-				validate="true">
+				validate="true"
+				input="/employeeAssiduousness.do?method=prepareAssociateEmployeeWorkSchedule">
+				<exception type="net.sourceforge.fenixedu.domain.exceptions.DomainException" key="" 
+				handler="net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler"/> 
 			<forward name="show-employee-work-sheet" path="show-employee-work-sheet"/>
 			<forward name="show-justifications" path="show-justifications"/>
+			<forward name="prepare-associate-schedule" path="prepare-associate-schedule"/>
+			<forward name="associate-schedule" path="associate-schedule"/>
 		</action>	
 		
 		<action path="/createExtraWorkAuthorization"

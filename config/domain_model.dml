@@ -8008,11 +8008,11 @@ relation WorkScheduleTypeMeal{
 }
 
 relation WorkSchedulePeriodicity {
-	net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule playsRole workSchedule {
+	net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule playsRole workSchedules {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.assiduousness.Periodicity playsRole periodicity;
- 	}
+}
 
 relation ClockUnitClocking {
 	net.sourceforge.fenixedu.domain.assiduousness.Clocking playsRole clockings {

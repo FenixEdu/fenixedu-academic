@@ -89,4 +89,10 @@ public class WorkWeek implements Serializable {
             }
         }
     }
+
+    public void removeOverLayedDays(WorkWeek workWeek) {
+        for(WeekDay weekDay : workWeek.getDays()){
+            getDays().remove(weekDay);
+        }        
+    }
 }

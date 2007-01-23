@@ -287,11 +287,11 @@ public class WorkSchedule extends WorkSchedule_Base {
         if (canBeDeleted()) {
             removeRootDomainObject();
             Periodicity periodicity = getPeriodicity();
-            removePeriodicity();
             periodicity.delete();
+            removePeriodicity();
             WorkScheduleType workScheduleType = getWorkScheduleType();
-            removeWorkScheduleType();
             workScheduleType.delete();
+            removeWorkScheduleType();
             deleteDomainObject();
         }
     }

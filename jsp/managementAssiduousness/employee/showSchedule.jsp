@@ -12,9 +12,9 @@
 
 	<bean:define id="month" name="yearMonth" property="month" />
 	<bean:define id="year" name="yearMonth" property="year" />
-	<bean:define id="employeeNumber" name="employee"
-		property="employeeNumber" />
-
+	<bean:define id="employeeNumber" name="employee" property="employeeNumber" />
+	<bean:define id="employeeID" name="employee" property="idInternal" />
+	
 	<p><bean:message key="label.show" />: <html:link
 		page="<%="/viewEmployeeAssiduousness.do?method=showWorkSheet&month="+month.toString()+"&year="+year.toString()+"&employeeNumber="+employeeNumber.toString()%>">
 		<bean:message key="link.workSheet" />
@@ -38,9 +38,17 @@
 			<fr:property name="classes" value="showinfo1 thbold" />
 		</fr:layout>
 	</fr:view>
+
+		<%net.sourceforge.fenixedu.applicationTier.IUserView user = (net.sourceforge.fenixedu.applicationTier.IUserView) session
+                    .getAttribute(net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants.U_VIEW);
+		if (net.sourceforge.fenixedu.domain.assiduousness.StaffManagementSection.isMember(user.getPerson())) {%>
+			<p><html:link page="<%="/employeeAssiduousness.do?method=prepareAssociateEmployeeWorkSchedule&amp;employeeID="+employeeID.toString()%>">
+					<bean:message key="link.associateWorkSchedule" />
+				</html:link>
+			</p>	
+		<% } %>
 </logic:present>
-
-
+	
 <logic:present name="workScheduleDayList">
 	<table class="tstyle1 thtop thlight printborder">
 		<tr>
