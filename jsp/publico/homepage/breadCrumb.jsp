@@ -31,7 +31,7 @@
                     <bean:message bundle="PUBLIC_DEPARTMENT_RESOURCES" key="structure"/>
                 </html:link>
                 &nbsp;&gt;&nbsp;
-                <html:link href="department/showDepartments.faces">
+                <html:link page="/publico/department/showDepartments.faces" module="">
                     <bean:message bundle="PUBLIC_DEPARTMENT_RESOURCES" key="academic.units"/>
                 </html:link>
                 &nbsp;&gt;&nbsp;            
@@ -39,7 +39,7 @@
                     <bean:write name="homepage" property="person.employee.currentDepartmentWorkingPlace.realName"/>
                 </html:link>
                 &nbsp;&gt;&nbsp;            
-                <html:link href="<%= "department/showDepartmentTeachers.faces?selectedDepartmentUnitID=" + departmentUnitID %>">
+                <html:link page="<%= "/publico/department/showDepartmentTeachers.faces?selectedDepartmentUnitID=" + departmentUnitID %>" module="">
                     <bean:message bundle="PUBLIC_DEPARTMENT_RESOURCES" key="department.faculty"/>
                 </html:link>
                 &nbsp;&gt;&nbsp;
