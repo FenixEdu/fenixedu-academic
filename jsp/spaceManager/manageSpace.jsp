@@ -115,14 +115,6 @@
 		</html:link>			
 	</p>	
 	<%
-		}		   			
-		if(Space.personIsSpacesAdministrator(person)) {		 
-	%>
-		<html:link page="/manageSpaces.do?method=exportSpaceInfoToExcel" paramId="spaceID" paramName="selectedSpaceInformation" paramProperty="space.idInternal">
-			<html:img border="0" src="<%= request.getContextPath() + "/images/excel.bmp"%>" altKey="excel" bundle="IMAGE_RESOURCES" />
-			<bean:message key="link.export.to.excel" bundle="SPACE_RESOURCES"/>						
-		</html:link> 
-	<%
 		}
 	%>
 
@@ -141,34 +133,34 @@
 				<html:link page="<%= urlToViewIdentifications %>"><bean:message bundle="SPACE_RESOURCES" key="link.view.blueprint.identification"/></html:link> 	
 		   	</logic:equal>
 		   	<logic:equal name="viewSpaceIdentifications" value="true">	
-				<b><bean:message bundle="SPACE_RESOURCES" key="link.view.blueprint.identification"/></b> 									
+				<bean:message bundle="SPACE_RESOURCES" key="link.view.blueprint.identification"/>
 			</logic:equal>								
 			|
 		   	<logic:equal name="viewDoorNumbers" value="false">
 				<html:link page="<%= urlToViewDoorNumbers %>"><bean:message bundle="SPACE_RESOURCES" key="link.view.blueprint.door.numbers"/></html:link> 	
 		   	</logic:equal>
 		   	<logic:equal name="viewDoorNumbers" value="true">	
-				<b><bean:message bundle="SPACE_RESOURCES" key="link.view.blueprint.door.numbers"/></b> 									
+				<bean:message bundle="SPACE_RESOURCES" key="link.view.blueprint.door.numbers"/>
 			</logic:equal>														
 			|
 			<logic:equal name="viewBlueprintNumbers" value="false">
 		   		<html:link page="<%= urlToViewBlueprinNumbers %>"><bean:message bundle="SPACE_RESOURCES" key="link.view.blueprint.numbers"/></html:link> 	
 			</logic:equal>
 			<logic:equal name="viewBlueprintNumbers" value="true">
-					<b><bean:message bundle="SPACE_RESOURCES" key="link.view.blueprint.numbers"/></b>
+					<bean:message bundle="SPACE_RESOURCES" key="link.view.blueprint.numbers"/>
 			</logic:equal>											
 			|
 			<logic:equal name="viewOriginalSpaceBlueprint" value="false">
 		   		<html:link page="<%= urlToViewOriginalSpaceBlueprint %>"><bean:message bundle="SPACE_RESOURCES" key="link.view.original.blueprint"/></html:link> 	
 			</logic:equal>
 			<logic:equal name="viewOriginalSpaceBlueprint" value="true">
-				<b><bean:message bundle="SPACE_RESOURCES" key="link.view.original.blueprint"/></b>
+				<bean:message bundle="SPACE_RESOURCES" key="link.view.original.blueprint"/>
 			</logic:equal>	   						   		
 		)
-								
+
 		<p>
 			<bean:define id="urlToImage"><%= request.getContextPath() %>/SpaceManager/manageBlueprints.do?method=view&blueprintId=<bean:write name="mostRecentBlueprint" property="idInternal"/>&viewBlueprintNumbers=<bean:write name="viewBlueprintNumbers"/>&viewDoorNumbers=<bean:write name="viewDoorNumbers"/>&viewSpaceIdentifications=<bean:write name="viewSpaceIdentifications"/>&suroundingSpaceBlueprint=<bean:write name="suroundingSpaceBlueprint"/>&viewOriginalSpaceBlueprint=<bean:write name="viewOriginalSpaceBlueprint"/>&spaceInformationID=<bean:write name="selectedSpaceInformation" property="idInternal"/></bean:define>				
-			<html:img src="<%= urlToImage %>" altKey="clip_image002" bundle="IMAGE_RESOURCES" usemap="#roomLinksMap"/>
+			<html:img src="<%= urlToImage %>" altKey="clip_image002" bundle="IMAGE_RESOURCES" usemap="#roomLinksMap" style="border: 1px dotted #ccc; padding: 4px;"/>
 			<map id ="roomLinksMap" name="roomLinksMap">
 				<logic:iterate id="blueprintTextRectanglesEntry" name="blueprintTextRectangles">																	
 					<bean:define id="blueprintSpace" name="blueprintTextRectanglesEntry" property="key" />					
@@ -192,7 +184,7 @@
 	<%
 		if(thisSpace.personIsSpacesAdministrator(person)){
 	%>	
-	<p class="mtop05">
+	<p class="mtop025">
 		<html:link page="/manageBlueprints.do?method=showBlueprintVersions&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
 			<bean:message bundle="SPACE_RESOURCES" key="link.manage.blueprints"/>
 		</html:link>
@@ -200,15 +192,6 @@
 	<%
 		}
 	%>
-	
-	<%-- Space Details --%>
-	<bean:define id="SpaceInformationDetailsSchema">View<bean:write name="selectedSpaceInformation" property="space.class.simpleName"/>Information</bean:define>
-	<h3 class="mtop2 mbottom05"><bean:message bundle="SPACE_RESOURCES" key="label.space.details"/></h3>
-	<fr:view name="selectedSpaceInformation" schema="<%= SpaceInformationDetailsSchema %>" layout="tabular">
-		<fr:layout name="tabular">      			
-   			<fr:property name="classes" value="tstyle4 thlight thright mvert0"/>
-   		</fr:layout>
-	</fr:view>
 
 	<%-- Subspaces --%>
 	<logic:present name="spaces">
@@ -298,7 +281,7 @@
 	<%
 		if(thisSpace.personHasPermissionsToManageSpace(person)){
 	%>	
-	<p class="mtop05">
+	<p class="mtop025">
 		<html:link page="/manageSpaces.do?method=showCreateSubSpaceForm&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
 			<bean:message bundle="SPACE_RESOURCES" key="link.create.subspace"/>
 		</html:link>
@@ -306,6 +289,29 @@
 	<%
 		}
 	%>
+
+
+	<%-- Space Details --%>
+	<bean:define id="SpaceInformationDetailsSchema">View<bean:write name="selectedSpaceInformation" property="space.class.simpleName"/>Information</bean:define>
+	<h3 class="mtop2 mbottom05"><bean:message bundle="SPACE_RESOURCES" key="label.space.details"/></h3>
+	<fr:view name="selectedSpaceInformation" schema="<%= SpaceInformationDetailsSchema %>" layout="tabular">
+		<fr:layout name="tabular">      			
+   			<fr:property name="classes" value="tstyle4 thlight thright mvert0"/>
+   		</fr:layout>
+	</fr:view>
+	<%	
+		if(Space.personIsSpacesAdministrator(person)) {		 
+	%>
+		<p>
+		<html:img border="0" src="<%= request.getContextPath() + "/images/excel.gif"%>" altKey="excel" bundle="IMAGE_RESOURCES" />
+		<html:link page="/manageSpaces.do?method=exportSpaceInfoToExcel" paramId="spaceID" paramName="selectedSpaceInformation" paramProperty="space.idInternal">
+			<bean:message key="link.export.to.excel" bundle="SPACE_RESOURCES"/>						
+		</html:link>
+		</p>
+	<%
+		}
+	%>
+
 
 	<%-- Responsability --%>	
 	<h3 class="mtop2 mbottom05"><bean:message bundle="SPACE_RESOURCES" key="label.active.responsible.units"/></h3>
@@ -317,12 +323,12 @@
 		</fr:view>
 	</logic:notEmpty>
 	<logic:empty name="selectedSpaceInformation" property="space.activeSpaceResponsibility">
-		<p class="mtop05"><em><bean:message key="label.empty.responsibility" bundle="SPACE_RESOURCES"/>.</em></p>		
+		<p class="mtop05 mbottom025"><em><bean:message key="label.empty.responsibility" bundle="SPACE_RESOURCES"/>.</em></p>		
 	</logic:empty>
 	<%
 		if(thisSpace.personHasPermissionsToManageSpace(person)){
 	%>	
-	<p class="mtop05">
+	<p class="mtop025">
 		<html:link page="/manageSpaceResponsibility.do?method=showSpaceResponsibility&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
 			<bean:message bundle="SPACE_RESOURCES" key="link.manage.space.responsibility"/>
 		</html:link>
@@ -341,13 +347,13 @@
 		</fr:view>
 	</logic:notEmpty>
 	<logic:empty name="selectedSpaceInformation" property="space.activeUnitSpaceOccupations">
-		<p class="mtop05"><em><bean:message key="label.empty.unitSpaceOccupations" bundle="SPACE_RESOURCES"/>.</em></p>		
+		<p class="mtop05 mbottom025"><em><bean:message key="label.empty.unitSpaceOccupations" bundle="SPACE_RESOURCES"/>.</em></p>		
 	</logic:empty>
 	<%
 		if(thisSpace.personHasPermissionsToManageSpace(person)){
 	%>	
-	<p class="mtop05">
-		<p class="mtop05"><html:link page="/manageUnitSpaceOccupations.do?method=prepareManageUnitSpaceOccupations&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
+	<p class="mtop025">
+		<html:link page="/manageUnitSpaceOccupations.do?method=prepareManageUnitSpaceOccupations&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
 			<bean:message bundle="SPACE_RESOURCES" key="link.manage.unit.space.occupations"/>
 		</html:link>
 	</p>
@@ -365,12 +371,12 @@
 		</fr:view>	
 	</logic:notEmpty>
 	<logic:empty name="selectedSpaceInformation" property="space.activePersonSpaceOccupations">
-		<p class="mtop05"><em><bean:message key="label.empty.person.occupations" bundle="SPACE_RESOURCES"/>.</em></p>		
+		<p class="mtop05 mbottom025"><em><bean:message key="label.empty.person.occupations" bundle="SPACE_RESOURCES"/>.</em></p>		
 	</logic:empty>
 	<%
 		if(thisSpace.personHasPermissionToManagePersonOccupations(person) || thisSpace.personHasPermissionsToManageSpace(person)){
 	%>
-	<p class="mtop05"><html:link page="/managePersonSpaceOccupations.do?method=showSpaceOccupations&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
+	<p class="mtop025"><html:link page="/managePersonSpaceOccupations.do?method=showSpaceOccupations&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
 		<bean:message bundle="SPACE_RESOURCES" key="link.manage.person.occupations"/>
 	</html:link></p>
 	<% 
@@ -387,12 +393,12 @@
 		</fr:view>			
 	</logic:notEmpty>
 	<logic:empty name="selectedSpaceInformation" property="space.activeSpaceMaterial">
-		<p class="mtop05"><em><bean:message key="label.empty.material.occupations" bundle="SPACE_RESOURCES"/>.</em></p>		
+		<p class="mtop05 mbottom025"><em><bean:message key="label.empty.material.occupations" bundle="SPACE_RESOURCES"/>.</em></p>		
 	</logic:empty>
 	<%
 		if(thisSpace.personHasPermissionToManageExtensionOccupations(person) || thisSpace.personHasPermissionsToManageSpace(person)){
 	%>
-	<p class="mtop05"><html:link page="/manageMaterialSpaceOccupations.do?method=showMaterialSpaceOccupations&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
+	<p class="mtop025"><html:link page="/manageMaterialSpaceOccupations.do?method=showMaterialSpaceOccupations&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
 		<bean:message bundle="SPACE_RESOURCES" key="link.manage.material.occupations"/>
 	</html:link></p>
 	<%
@@ -404,11 +410,13 @@
 	%>
 	<%-- Access Groups --%>
 	<h3 class="mtop2 mbottom0"><bean:message bundle="SPACE_RESOURCES" key="label.access.groups"/></h3>
-	<p class="mtop05"><html:link page="/manageSpaces.do?method=manageAccessGroups&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
+	<p class="mtop025"><html:link page="/manageSpaces.do?method=manageAccessGroups&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
 		<bean:message bundle="SPACE_RESOURCES" key="link.manage.access.groups"/>
 	</html:link></p>	
 	<% 
 		}
 	%>
+
+
 	
 </logic:present>	
