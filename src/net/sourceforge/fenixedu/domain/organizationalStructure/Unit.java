@@ -1017,4 +1017,21 @@ public class Unit extends Unit_Base {
 
 	return null;
     }
+    
+    /**
+     * This method return a list of external childs in the "organizational structure",
+     * that may be <Units> or <ExternalCurricularCourses>.
+     * @return SortedSet<Object>
+     */
+    public SortedSet<Object> getSortedExternalChilds() {
+	final SortedSet<Object> result = new TreeSet<Object>(new BeanComparator("name"));
+	
+	for (final Unit unit : getSubUnits()) {
+	    if (!unit.isInternal()) {
+		result.add(unit);
+	    }
+	}
+	result.addAll(getExternalCurricularCoursesSet());
+	return result;
+    }
 }
