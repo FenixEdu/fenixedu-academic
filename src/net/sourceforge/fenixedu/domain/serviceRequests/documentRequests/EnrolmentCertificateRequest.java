@@ -4,14 +4,11 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
-import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class EnrolmentCertificateRequest extends EnrolmentCertificateRequest_Base {
@@ -86,21 +83,6 @@ public class EnrolmentCertificateRequest extends EnrolmentCertificateRequest_Bas
 	throw new DomainException(
 		"error.serviceRequests.documentRequests.EnrolmentCertificateRequest.cannot.modify.detailed");
     }
-
-    @Override
-    protected void internalChangeState(
-	    AcademicServiceRequestSituationType academicServiceRequestSituationType, Employee employee) {
-
-	super.internalChangeState(academicServiceRequestSituationType, employee);
-
-	if (academicServiceRequestSituationType == AcademicServiceRequestSituationType.CONCLUDED
-		&& !isFree()) {
-	    new CertificateRequestEvent(getAdministrativeOffice(),
-		    getEventType(), getRegistration().getPerson(), this);
-	}
-    }
-    
-    
 
     @Override
     public EventType getEventType() {

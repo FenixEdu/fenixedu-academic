@@ -3,13 +3,10 @@ package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
-import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class SchoolRegistrationCertificateRequest extends SchoolRegistrationCertificateRequest_Base {
@@ -73,19 +70,6 @@ public class SchoolRegistrationCertificateRequest extends SchoolRegistrationCert
     public void setExecutionYear(ExecutionYear executionYear) {
 	throw new DomainException(
 		"error.serviceRequests.documentRequests.SchoolRegistrationCertificateRequest.cannot.modify.executionYear");
-    }
-
-    @Override
-    protected void internalChangeState(
-	    AcademicServiceRequestSituationType academicServiceRequestSituationType, Employee employee) {
-
-	super.internalChangeState(academicServiceRequestSituationType, employee);
-
-	if (academicServiceRequestSituationType == AcademicServiceRequestSituationType.CONCLUDED
-		&& !isFree()) {
-	    new CertificateRequestEvent(getAdministrativeOffice(),
-		    getEventType(), getRegistration().getPerson(), this);
-	}
     }
 
     @Override
