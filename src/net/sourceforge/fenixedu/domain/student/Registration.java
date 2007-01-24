@@ -44,7 +44,6 @@ import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.YearStudentSpecialSeasonCode;
-import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
@@ -1676,19 +1675,7 @@ public class Registration extends Registration_Base {
 
     @Override
     public Boolean getPayedTuition() {
-	return super.getPayedTuition() && !hasAnyGratuityToPay();
-    }
-
-    private boolean hasAnyGratuityToPay() {
-	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
-	    for (final GratuityEvent gratuityEvent : studentCurricularPlan.getGratuityEventsSet()) {
-		if (gratuityEvent.isInDebt()) {
-		    return true;
-		}
-	    }
-	}
-
-	return false;
+	return super.getPayedTuition() && !hasAnyNotPayedGratuityEvents();
     }
 
     public Attends readAttendByExecutionCourse(ExecutionCourse executionCourse) {
