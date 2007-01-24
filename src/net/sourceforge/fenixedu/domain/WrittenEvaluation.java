@@ -344,12 +344,17 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
             throw new DomainException("error.notAuthorizedWrittenEvaluationDelete.withStudent");
         }
         //getAssociatedExecutionCourses().clear();
+        deleteAllVigilanciesAssociated();
         deleteAllRoomOccupations();
         getAssociatedCurricularCourseScope().clear();
         super.delete();
     }
 
-    public List<OldRoom> getAssociatedRooms() {
+    private void deleteAllVigilanciesAssociated() {
+    	for(;!this.getVigilancys().isEmpty();this.getVigilancys().get(0).delete());
+	}
+
+	public List<OldRoom> getAssociatedRooms() {
         final List<OldRoom> result = new ArrayList<OldRoom>();
         for (final RoomOccupation roomOccupation : this.getAssociatedRoomOccupation()) {
             result.add(roomOccupation.getRoom());
