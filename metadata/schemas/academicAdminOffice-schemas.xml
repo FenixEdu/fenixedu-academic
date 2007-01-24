@@ -503,7 +503,7 @@
 
 <schema name="student.Dismissal.choose.external.enrolments" bundle="ACADEMIC_OFFICE_RESOURCES"
 	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean$SelectedExternalEnrolment" >
-	<slot name="externalEnrolment.name" key="label.name" read-only="true"/>	
+	<slot name="externalEnrolment.fullPathName" key="label.name" read-only="true"/>	
 	<slot name="externalEnrolment.executionPeriod" layout="format" key="lable.year.semester" read-only="true">
 		<property name="format" value="${executionYear.year} ${semester}º Sem"/>
 	</slot>	
