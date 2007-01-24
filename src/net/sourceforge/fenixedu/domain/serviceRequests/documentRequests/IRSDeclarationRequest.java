@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -66,6 +67,10 @@ public class IRSDeclarationRequest extends IRSDeclarationRequest_Base {
 
     @Override
     public ExecutionYear getExecutionYear() {
+	return null;
+    }
+    
+    public EventType getEventType() {
 	return null;
     }
 

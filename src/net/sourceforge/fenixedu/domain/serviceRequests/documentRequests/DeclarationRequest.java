@@ -40,11 +40,6 @@ public abstract class DeclarationRequest extends DeclarationRequest_Base {
 
     }
 
-    @Override
-    public EventType getEventType() {
-	return null;
-    }
-
     protected static DeclarationRequest create(Registration registration,
 	    DocumentRequestType chosenDocumentRequestType,
 	    DocumentPurposeType chosenDocumentPurposeType, String otherPurpose, String notes,
