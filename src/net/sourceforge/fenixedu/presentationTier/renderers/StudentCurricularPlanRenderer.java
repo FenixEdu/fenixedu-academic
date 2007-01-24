@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
@@ -416,7 +417,7 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 		final HtmlTableRow lineRow = parentTable.createRow();
 
 		// Enrolment Condition 
-		final HtmlComponent enrolmentCondition = enrolment.isEnrollmentConditionFinal() || enrolment.getExecutionPeriod() != ExecutionPeriod.readActualExecutionPeriod() ? null : new HtmlText(enumerationResources.getString(enrolment.getEnrolmentCondition().getAcronym()));
+		final HtmlComponent enrolmentCondition = enrolment.isEnrollmentConditionFinal() || enrolment.getExecutionPeriod().getExecutionYear() != ExecutionYear.readCurrentExecutionYear() ? null : new HtmlText(enumerationResources.getString(enrolment.getEnrolmentCondition().getAcronym()));
 		generateEnrolmentSmallInfoCell(lineRow, enrolmentCondition, getEnrolmentConditionClasses(), enumerationResources.getString(enrolment.getEnrolmentCondition().getQualifiedName()));
 		
 		// Creation
@@ -427,7 +428,7 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 			createdBy = enrolment.getCreatedBy();    
 		    }
 		}
-		final HtmlComponent creation = enrolment.getExecutionPeriod().containsDay(enrolment.getCreationDate()) ? new HtmlText(enrolment.getCreationDateDateTime().toString("yyyy/MM/dd")) : null; 
+		final HtmlComponent creation = enrolment.getExecutionPeriod().getExecutionYear().containsDate(enrolment.getCreationDateDateTime()) ? new HtmlText(enrolment.getCreationDateDateTime().toString("yyyy/MM/dd")) : null; 
 		generateEnrolmentSmallInfoCell(lineRow, creation, getEnrolmentCreationClasses(), createdBy);
 
 		// Enrolment Evaluation Type 
