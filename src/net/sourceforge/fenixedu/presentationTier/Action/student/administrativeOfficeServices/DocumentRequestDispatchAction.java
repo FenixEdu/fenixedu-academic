@@ -50,7 +50,7 @@ public class DocumentRequestDispatchAction extends FenixDispatchAction {
                             .getStudentCurricularPlans());
                 }
 
-                request.setAttribute("executionYears", registration.getEnrolmentsExecutionYears());
+                request.setAttribute("executionYears", registration.getSortedEnrolmentsExecutionYears());
             }
         }
         request.setAttribute("documentRequestCreateBean", new DocumentRequestCreator(registration));

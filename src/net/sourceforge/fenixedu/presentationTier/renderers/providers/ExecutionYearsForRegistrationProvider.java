@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 public class ExecutionYearsForRegistrationProvider implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
-	return ((RegistrationSelectExecutionYearBean) source).getRegistration().getEnrolmentsExecutionYears();
+	return ((RegistrationSelectExecutionYearBean) source).getRegistration().getSortedEnrolmentsExecutionYears();
     }
 
     public Converter getConverter() {
