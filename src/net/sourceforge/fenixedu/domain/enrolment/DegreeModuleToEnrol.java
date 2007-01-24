@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.domain.enrolment;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 
