@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
-import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
@@ -58,7 +57,7 @@ public class CreditsLimit extends CreditsLimit_Base {
     public List<GenericPair<Object, Boolean>> getLabel() {
         List<GenericPair<Object, Boolean>> labelList = new ArrayList<GenericPair<Object, Boolean>>();
 
-        labelList.add(new GenericPair<Object, Boolean>("label.creditsForApprovation", true));
+        labelList.add(new GenericPair<Object, Boolean>("label.creditsForApproval", true));
         labelList.add(new GenericPair<Object, Boolean>(": ", false));
         if (getMinimum().doubleValue() == getMaximum().doubleValue()) {
             labelList.add(new GenericPair<Object, Boolean>(getMinimum(), false));
