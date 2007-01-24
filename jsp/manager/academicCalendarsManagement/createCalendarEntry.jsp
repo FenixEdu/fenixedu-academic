@@ -67,7 +67,6 @@
 						<fr:edit id="calendarEntryBeanWithType2" visible="false" name="calendarEntryBean" />	
 						<fr:create id="calendarEntryBeanWithInfo" type="<%= entryType.toString() %>" schema="<%= schemaName.toString() %>">								
 							<fr:hidden slot="parentEntry" name="calendarEntryBean" property="parentEntry"/>																		
-				
 							<fr:layout name="tabular">      										  
 					   			<fr:property name="classes" value="tstyle5 thmiddle thlight mtop05"/>
 					   			<fr:property name="columnClasses" value=",,tdclear tderror1"/>

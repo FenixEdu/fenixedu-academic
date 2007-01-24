@@ -11,18 +11,35 @@ import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.time.chronologies.AcademicChronology;
+import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public class AcademicCalendar extends AcademicCalendar_Base {
 
     private transient AcademicChronology academicChronology;
 
+    @Checked("AcademicCalendarPredicates.checkPermissionsToManageAcademicCalendar")
     public AcademicCalendar(MultiLanguageString title, MultiLanguageString description) {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 	setTitle(title);
 	setDescription(description);
     }
+
+    @Checked("AcademicCalendarPredicates.checkPermissionsToManageAcademicCalendar")
+    public void edit(MultiLanguageString title, MultiLanguageString description) {
+	setTitle(title);
+	setDescription(description);
+    }
+             
+    @Checked("AcademicCalendarPredicates.checkPermissionsToManageAcademicCalendar")
+    public void delete() {
+	if(!getEntries().isEmpty()) {
+	    throw new DomainException("error.academicCalendar.has.entries");
+	}
+	removeRootDomainObject();	
+	deleteDomainObject();
+    }  
 
     @Override
     public void setTitle(MultiLanguageString title) {
@@ -32,14 +49,6 @@ public class AcademicCalendar extends AcademicCalendar_Base {
 	super.setTitle(title);
     }
     
-    public void delete() {
-	if(!getEntries().isEmpty()) {
-	    throw new DomainException("error.academicCalendar.has.entries");
-	}
-	removeRootDomainObject();	
-	deleteDomainObject();
-    }  
-
     public AcademicChronology getAcademicChronology() {
 	if (academicChronology == null) {
 	    academicChronology = new AcademicChronology(this);

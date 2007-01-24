@@ -12,6 +12,7 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -25,11 +26,34 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base {
 	((ComparatorChain) COMPARATOR_BEGIN_DATE).addComparator(new BeanComparator("begin"));
 	((ComparatorChain) COMPARATOR_BEGIN_DATE).addComparator(new BeanComparator("idInternal"));
     }
+    
+    public abstract boolean isParentEntryInvalid(AcademicCalendarEntry parentEntry);
+    
+    public abstract boolean exceededNumberOfSubEntries(AcademicCalendarEntry childEntry);
 
+    @Checked("AcademicCalendarPredicates.checkPermissionsToManageAcademicCalendarEntry")
     protected AcademicCalendarEntry() {
 	super();	
 	setRootDomainObject(RootDomainObject.getInstance());
 	setOjbConcreteClass(getClass().getName());	
+    }
+    
+    @Checked("AcademicCalendarPredicates.checkPermissionsToManageAcademicCalendarEntry")
+    public void edit(MultiLanguageString title, MultiLanguageString description, DateTime begin, DateTime end) {
+	setTitle(title);
+	setDescription(description);
+	setTimeInterval(begin, end, getParentEntry());
+    }
+    
+    @Checked("AcademicCalendarPredicates.checkPermissionsToManageAcademicCalendarEntry")
+    public void delete() {
+	if(!getChildEntries().isEmpty()) {
+	    throw new DomainException("error.academicCalendarEntry.has.childs");
+	}
+	removeAcademicCalendar();
+	removeParentEntry();
+	removeRootDomainObject();
+	deleteDomainObject();
     }
     
     protected void init(AcademicCalendar academicCalendar, AcademicCalendarEntry parentEntry,
@@ -44,21 +68,7 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base {
 	setTitle(title);
 	setDescription(description);
 	setTimeInterval(begin, end, parentEntry);	
-    }
-    
-    public void delete() {
-	if(!getChildEntries().isEmpty()) {
-	    throw new DomainException("error.academicCalendarEntry.has.childs");
-	}
-	removeAcademicCalendar();
-	removeParentEntry();
-	removeRootDomainObject();
-	deleteDomainObject();
-    }
-    
-    public abstract boolean isParentEntryInvalid(AcademicCalendarEntry parentEntry);
-    
-    public abstract boolean exceededNumberOfSubEntries(AcademicCalendarEntry childEntry);
+    }          
    
     @Override
     public void setParentEntry(AcademicCalendarEntry parentEntry) {
@@ -80,38 +90,7 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base {
     public void setEnd(DateTime end) {
 	setTimeInterval(getBegin(), end, getParentEntry());
     }
-
-    private void setTimeInterval(DateTime begin, DateTime end, AcademicCalendarEntry parentEntry) {
-	
-	if (begin == null) {
-	    throw new DomainException("error.AcademicCalendarEntry.empty.begin.dateTime");
-	}
-	if (end == null) {
-	    throw new DomainException("error.AcademicCalendarEntry.empty.end.dateTime");
-	}
-	if (!end.isAfter(begin)) {
-	    throw new DomainException("error.begin.after.end");
-	}	
-	
-	if(parentEntry != null) {	    
-	    if(parentEntry.getBegin().isAfter(begin) || parentEntry.getEnd().isBefore(end)) {
-		throw new DomainException("error.AcademicCalendarEntry.invalid.dates");
-	    }
-	    for (AcademicCalendarEntry childEntry : parentEntry.getChildEntries()) {
-		if(!childEntry.equals(this) && childEntry.entriesTimeIntervalIntersection(begin, end)) {
-		    throw new DomainException("error.AcademicCalendarEntry.dates.intersection");
-		}
-	    }
-	}
-	
-	super.setBegin(begin);
-	super.setEnd(end);
-    }
-
-    private boolean entriesTimeIntervalIntersection(DateTime begin, DateTime end) {
-	return (!this.getBegin().isAfter(end) && !this.getEnd().isBefore(begin));
-    }
-    
+  
     @Override
     public void setTitle(MultiLanguageString title) {
 	if (title.isEmpty()) {
@@ -206,5 +185,36 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base {
     
     public boolean isEnrolmentsPeriod() {
 	return false;
-    }    
+    }
+    
+    private void setTimeInterval(DateTime begin, DateTime end, AcademicCalendarEntry parentEntry) {
+	
+	if (begin == null) {
+	    throw new DomainException("error.AcademicCalendarEntry.empty.begin.dateTime");
+	}
+	if (end == null) {
+	    throw new DomainException("error.AcademicCalendarEntry.empty.end.dateTime");
+	}
+	if (!end.isAfter(begin)) {
+	    throw new DomainException("error.begin.after.end");
+	}	
+	
+	if(parentEntry != null) {	    
+	    if(parentEntry.getBegin().isAfter(begin) || parentEntry.getEnd().isBefore(end)) {
+		throw new DomainException("error.AcademicCalendarEntry.invalid.dates");
+	    }
+	    for (AcademicCalendarEntry childEntry : parentEntry.getChildEntries()) {
+		if(!childEntry.equals(this) && childEntry.entriesTimeIntervalIntersection(begin, end)) {
+		    throw new DomainException("error.AcademicCalendarEntry.dates.intersection");
+		}
+	    }
+	}
+	
+	super.setBegin(begin);
+	super.setEnd(end);
+    }
+    
+    private boolean entriesTimeIntervalIntersection(DateTime begin, DateTime end) {
+	return (!this.getBegin().isAfter(end) && !this.getEnd().isBefore(begin));
+    }
 }

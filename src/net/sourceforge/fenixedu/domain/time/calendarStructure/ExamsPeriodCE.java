@@ -6,10 +6,10 @@ import org.joda.time.DateTime;
 
 public class ExamsPeriodCE extends ExamsPeriodCE_Base {
     
-    public ExamsPeriodCE(AcademicCalendar academicCalendar, MultiLanguageString title, 
+    public ExamsPeriodCE(AcademicCalendarEntry academicCalendarEntry, MultiLanguageString title, 
 	    MultiLanguageString description, DateTime begin, DateTime end) {
 	super();
-	super.init(academicCalendar, null, title, description, begin, end);
+	super.init(null, academicCalendarEntry, title, description, begin, end);
     }
     
     @Override
