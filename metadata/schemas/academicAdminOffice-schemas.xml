@@ -492,13 +492,13 @@
 
 <schema name="student.Dismissal.choose.internal.enrolments" bundle="ACADEMIC_OFFICE_RESOURCES"
 	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean$SelectedEnrolment" >
-	<slot name="enrolment.studentCurricularPlan.degreeCurricularPlan.name" key="label.name" read-only="true"/>	
+	<slot name="enrolment.studentCurricularPlan.degreeCurricularPlan.name" key="label.degree" read-only="true"/>	
 	<slot name="enrolment.name" key="label.name" read-only="true"/>
 	<slot name="enrolment.executionPeriod" layout="format" key="lable.year.semester" read-only="true">
 		<property name="format" value="${executionYear.year} ${semester}º Sem"/>
 	</slot>	
 	<slot name="enrolment.grade" key="label.grade" read-only="true"/>	
-	<slot name="selected" />	
+	<slot name="selected" key="label.studentDismissal.selected"/>	
 </schema>
 
 <schema name="student.Dismissal.choose.external.enrolments" bundle="ACADEMIC_OFFICE_RESOURCES"
@@ -685,7 +685,7 @@
 	</slot>
 	<slot name="externalEnrolmentBean.studentNumber" key="label.number" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="externalEnrolmentBean.grade" key="label.grade" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-	<slot name="externalEnrolmentBean.executionPeriod" layout="menu-select" key="label.executionPeriod" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="externalEnrolmentBean.executionPeriod" layout="menu-select" key="label.executionPeriod">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionPeriodsReverseOrderProvider" />
 		<property name="format" value="${semester} º semestre - ${executionYear.year}" />
 	</slot>
@@ -697,7 +697,7 @@
 	<slot name="externalCurricularCourse.name" read-only="true" key="label.externalUnits.externalCurricularCourse"/>
 	<slot name="studentNumber" key="label.number" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="grade" key="label.grade" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.GradeValidator"/>
-	<slot name="executionPeriod" layout="menu-select" key="label.executionPeriod" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="executionPeriod" layout="menu-select">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionPeriodsReverseOrderProvider" />
 		<property name="format" value="${semester} º semestre - ${executionYear.year}" />
 	</slot>
