@@ -42,7 +42,10 @@ public class Dismissal extends Dismissal_Base {
 
     @Override
     public StringBuilder print(String tabs) {
-	return null;
+	final StringBuilder builder = new StringBuilder();
+	builder.append(tabs);
+	builder.append("[D ").append(hasDegreeModule() ? getDegreeModule().getName() :  "").append(" ]\n");
+	return builder;
     }
     
     @Override
