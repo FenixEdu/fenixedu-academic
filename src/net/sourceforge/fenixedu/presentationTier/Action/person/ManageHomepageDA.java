@@ -97,21 +97,21 @@ public class ManageHomepageDA extends SiteManagementDA {
         final Object[] args = {
                 getUserView(request).getPerson(),
                 Boolean.valueOf(activated),
-                homepage.getShowUnit(),
-                homepage.getShowCategory(),
-                homepage.getShowPhoto(),
-                homepage.getShowEmail(),
-                homepage.getShowTelephone(),
-                homepage.getShowWorkTelephone(),
-                homepage.getShowMobileTelephone(),
-                homepage.getShowAlternativeHomepage(),
-                homepage.getShowResearchUnitHomepage(),
-                homepage.getShowCurrentExecutionCourses(),
-                homepage.getShowActiveStudentCurricularPlans(),
-                homepage.getShowAlumniDegrees(),
-                homepage.getResearchUnitHomepage(),
-                homepage.getResearchUnit(),
-                homepage.getShowCurrentAttendingExecutionCourses() };
+                homepage != null ? homepage.getShowUnit() : false,
+                homepage != null ? homepage.getShowCategory() : false,
+                homepage != null ? homepage.getShowPhoto() : false,
+                homepage != null ? homepage.getShowEmail() : false,
+                homepage != null ? homepage.getShowTelephone() : false,
+                homepage != null ? homepage.getShowWorkTelephone() : false,
+                homepage != null ? homepage.getShowMobileTelephone() : false,
+                homepage != null ? homepage.getShowAlternativeHomepage() : false,
+                homepage != null ? homepage.getShowResearchUnitHomepage() : false,
+                homepage != null ? homepage.getShowCurrentExecutionCourses() : false,
+                homepage != null ? homepage.getShowActiveStudentCurricularPlans() : false,
+                homepage != null ? homepage.getShowAlumniDegrees() : false,
+                homepage != null ? homepage.getResearchUnitHomepage() : null,
+                homepage != null ? homepage.getResearchUnit() : null,
+                homepage != null ? homepage.getShowCurrentAttendingExecutionCourses() : false};
         executeService(request, "SubmitHomepage", args);
 
         return activation(mapping, actionForm, request, response);
