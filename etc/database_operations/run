@@ -26,6 +26,6 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
-
 execute "Change MARKSHEET table" markSheetTableChanges.sql
 execute "Remove not null ExecutionPeriod restriction from ExternalEnrolment table" alterTableExternalEnrolment.sql
+execute "fixing vigilancy data" fix-vigilancy-data-incoherence.sql
