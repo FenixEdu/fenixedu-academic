@@ -6,7 +6,6 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
-import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
@@ -37,27 +36,29 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
     }
 
     @Override
-    protected void assertProcessingStatePreConditions() throws DomainException {
-	super.assertProcessingStatePreConditions();
-	
-	if (!getRegistration().hasAnyApprovedEnrolment()) {
-	    throw new DomainException("ApprovementCertificateRequest.registration.without.approvements");
-	}
+    protected void internalChangeState(AcademicServiceRequestSituationType academicServiceRequestSituationType, Employee employee) {
+	super.internalChangeState(academicServiceRequestSituationType, employee);
 
-	if (getRegistration().isConcluded()) {
-	    throw new DomainException("ApprovementCertificateRequest.registration.is.concluded");
-	}
+	if (academicServiceRequestSituationType == AcademicServiceRequestSituationType.PROCESSING) {
+	    if (!getRegistration().hasAnyApprovedEnrolment()) {
+		throw new DomainException("ApprovementCertificateRequest.registration.without.approvements");
+	    }
 
-	// FIXME For now, the following conditions are only valid for 5 year
-	// degrees
-	if (getRegistration().getDegreeType().getYears() == 5
-		&& getDocumentPurposeType() == DocumentPurposeType.PROFESSIONAL) {
+	    if (getRegistration().isConcluded()) {
+		throw new DomainException("ApprovementCertificateRequest.registration.is.concluded");
+	    }
 
-	    int curricularYear = getRegistration().getCurricularYear();
+	    // FIXME For now, the following conditions are only valid for 5 year
+	    // degrees
+	    if (getRegistration().getDegreeType().getYears() == 5
+		    && getDocumentPurposeType() == DocumentPurposeType.PROFESSIONAL) {
 
-	    if (curricularYear <= 3) {
-		throw new DomainException(
-			"ApprovementCertificateRequest.registration.hasnt.finished.third.year");
+		int curricularYear = getRegistration().getCurricularYear();
+
+		if (curricularYear <= 3) {
+		    throw new DomainException(
+			    "ApprovementCertificateRequest.registration.hasnt.finished.third.year");
+		}
 	    }
 	}
     }
@@ -70,19 +71,6 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
     @Override
     public String getDocumentTemplateKey() {
 	return getClass().getName();
-    }
-
-    @Override
-    protected void internalChangeState(
-	    AcademicServiceRequestSituationType academicServiceRequestSituationType, Employee employee) {
-
-	super.internalChangeState(academicServiceRequestSituationType, employee);
-
-	if (academicServiceRequestSituationType == AcademicServiceRequestSituationType.CONCLUDED) {
-
-	    new CertificateRequestEvent(getAdministrativeOffice(),
-		    getEventType(), getRegistration().getPerson(), this);
-	}
     }
 
     @Override

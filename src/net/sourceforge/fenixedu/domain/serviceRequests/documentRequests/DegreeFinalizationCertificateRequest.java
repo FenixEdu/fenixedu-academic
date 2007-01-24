@@ -6,7 +6,6 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
-import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
@@ -58,15 +57,17 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
     }
 
     @Override
-    protected void assertProcessingStatePreConditions() throws DomainException {
-	super.assertProcessingStatePreConditions();
-	
-	if (!getRegistration().hasDegreeDiplomaDocumentRequest()) {
-	    throw new DomainException(
-		    "DegreeFinalizationCertificateRequest.registration.withoutDegreeDiplomaDocumentRequest");
-    	}
-    }
+    protected void internalChangeState(AcademicServiceRequestSituationType academicServiceRequestSituationType, Employee employee) {
+	super.internalChangeState(academicServiceRequestSituationType, employee);
 
+	if (academicServiceRequestSituationType == AcademicServiceRequestSituationType.PROCESSING) {
+	    if (!getRegistration().hasDegreeDiplomaDocumentRequest()) {
+		throw new DomainException(
+		    "DegreeFinalizationCertificateRequest.registration.withoutDegreeDiplomaDocumentRequest");
+	    }
+	}
+    }
+    
     @Override
     public DocumentRequestType getDocumentRequestType() {
 	return DocumentRequestType.DEGREE_FINALIZATION_CERTIFICATE;
@@ -89,18 +90,6 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 		"error.serviceRequests.documentRequests.DegreeFinalizationCertificateRequest.cannot.modify.detailed");
     }
 
-    @Override
-    protected void internalChangeState(
-	    AcademicServiceRequestSituationType academicServiceRequestSituationType, Employee employee) {
-
-	super.internalChangeState(academicServiceRequestSituationType, employee);
-
-	if (academicServiceRequestSituationType == AcademicServiceRequestSituationType.CONCLUDED) {
-	    new CertificateRequestEvent(getAdministrativeOffice(),
-		    getEventType(), getRegistration().getPerson(), this);
-	}
-    }
-    
     @Override
     public EventType getEventType() {
 	return EventType.DEGREE_FINALIZATION_CERTIFICATE_REQUEST;

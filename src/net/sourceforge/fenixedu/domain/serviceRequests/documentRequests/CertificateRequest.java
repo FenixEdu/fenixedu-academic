@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -83,7 +84,7 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
     public void edit(AcademicServiceRequestSituationType academicServiceRequestSituationType,
 	    Employee employee, String justification, Integer numberOfPages) {
 
-	if (isPayed() && !getNumberOfPages().equals(numberOfPages)) {
+	if (isPayable() && isPayed() && !getNumberOfPages().equals(numberOfPages)) {
 	    throw new DomainException(
 		    "error.serviceRequests.documentRequests.cannot.change.numberOfPages.on.payed.documents");
 	}
@@ -95,17 +96,26 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
     abstract public Integer getNumberOfUnits();
     
     @Override
-    protected void internalChangeState(
-	    AcademicServiceRequestSituationType academicServiceRequestSituationType, Employee employee) {
+    protected void internalChangeState(AcademicServiceRequestSituationType academicServiceRequestSituationType, Employee employee) {
 	super.internalChangeState(academicServiceRequestSituationType, employee);
 
-	if ((academicServiceRequestSituationType == AcademicServiceRequestSituationType.CANCELLED || academicServiceRequestSituationType == AcademicServiceRequestSituationType.REJECTED)
-		&& hasEvent()) {
-	    getEvent().cancel(employee);
+	if (academicServiceRequestSituationType == AcademicServiceRequestSituationType.CONCLUDED) {
+	    if (getNumberOfPages() == null || getNumberOfPages().intValue() == 0) {
+		throw new DomainException("error.serviceRequests.documentRequests.numberOfPages.must.be.set");
+	    }
+	    
+	    if (!isFree()) {
+		new CertificateRequestEvent(getAdministrativeOffice(), 
+			getEventType(), getRegistration().getPerson(), this);
+	    }
 	}
     }
 
     protected boolean isFree() {
+	if (!isPayable()) {
+	    return true;
+	}
+	
 	if (getDocumentRequestType() == DocumentRequestType.SCHOOL_REGISTRATION_CERTIFICATE
 		|| getDocumentRequestType() == DocumentRequestType.ENROLMENT_CERTIFICATE) {
 	    return !isRequestForPreviousExecutionYear() && isFirstRequestOfCurrentExecutionYear();
@@ -121,13 +131,6 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
     private boolean isFirstRequestOfCurrentExecutionYear() {
 	return getRegistration().getSucessfullyFinishedDocumentRequestsBy(
 		ExecutionYear.readCurrentExecutionYear(), getDocumentRequestType()).isEmpty();
-    }
-
-    @Override
-    protected void assertConcludedStatePreConditions() throws DomainException {
-	if (getNumberOfPages() == null || getNumberOfPages().intValue() == 0) {
-	    throw new DomainException("error.serviceRequests.documentRequests.numberOfPages.must.be.set");
-	}
     }
 
 }

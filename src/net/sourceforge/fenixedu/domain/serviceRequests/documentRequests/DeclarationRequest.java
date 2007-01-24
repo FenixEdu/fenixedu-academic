@@ -4,7 +4,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.accounting.EventType;
+import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DeclarationRequestEvent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -74,7 +74,7 @@ public abstract class DeclarationRequest extends DeclarationRequest_Base {
     public void edit(AcademicServiceRequestSituationType academicServiceRequestSituationType,
 	    Employee employee, String justification, Integer numberOfPages) {
 	
-	if (isPayed() && !getNumberOfPages().equals(numberOfPages)) {
+	if (isPayable() && isPayed() && !getNumberOfPages().equals(numberOfPages)) {
 	    throw new DomainException(
 		    "error.serviceRequests.documentRequests.cannot.change.numberOfPages.on.payed.documents");
 	}
@@ -84,9 +84,18 @@ public abstract class DeclarationRequest extends DeclarationRequest_Base {
     }
 
     @Override
-    public void assertConcludedStatePreConditions() throws DomainException {
-	if (getNumberOfPages() == null || getNumberOfPages().intValue() == 0) {
-	    throw new DomainException("error.serviceRequests.documentRequests.numberOfPages.must.be.set");
+    protected void internalChangeState(AcademicServiceRequestSituationType academicServiceRequestSituationType, Employee employee) {
+	super.internalChangeState(academicServiceRequestSituationType, employee);
+
+	if (academicServiceRequestSituationType == AcademicServiceRequestSituationType.CONCLUDED) {
+	    if (getNumberOfPages() == null || getNumberOfPages().intValue() == 0) {
+		throw new DomainException("error.serviceRequests.documentRequests.numberOfPages.must.be.set");
+	    }
+
+	    if (!isFree()) {
+		new DeclarationRequestEvent(getAdministrativeOffice(), 
+			getEventType(), getRegistration().getPerson(), this);
+	    }
 	}
     }
 
@@ -96,6 +105,14 @@ public abstract class DeclarationRequest extends DeclarationRequest_Base {
     }
     
     protected boolean isFree() {
+	if (!isPayable()) {
+	    return true;
+	}
+	
+	if (getDocumentPurposeType() == DocumentPurposeType.PPRE) {
+	    return false;
+	}
+	
 	final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
 
 	final Set<DocumentRequest> schoolRegistrationDeclarations = getRegistration()

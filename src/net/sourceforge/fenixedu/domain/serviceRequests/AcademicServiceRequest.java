@@ -73,13 +73,15 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
 	return getUrgentRequest().booleanValue();
     }
 
-    public final boolean isPayable() {
-	return hasEvent();
+    protected final boolean isPayable() {
+	return getEventType() != null;
     }
 
     protected boolean isPayed() {
-	return isPayable() && getEvent().isPayed();
+	return !hasEvent() || getEvent().isPayed();
     }
+
+    abstract protected boolean isFree();
 
     abstract public EventType getEventType();
 
@@ -108,17 +110,7 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
 
     public abstract Set<AdministrativeOfficeType> getPossibleAdministrativeOffices();
 
-    /**
-         * Each AcademicServiceRequest must verify the conditions necessary for
-         * it to begin processing and throw DomainExceptions if otherwise
-         * 
-         * @throws DomainException
-         */
-    protected abstract void assertProcessingStatePreConditions() throws DomainException;
-
     final public void process() throws DomainException {
-	assertProcessingStatePreConditions();
-
 	final Employee employee = AccessControl.getPerson().getEmployee();
 	edit(AcademicServiceRequestSituationType.PROCESSING, employee, null);
     }
@@ -133,26 +125,12 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
 	edit(AcademicServiceRequestSituationType.CANCELLED, employee, justification);
     }
 
-    /**
-         * Each AcademicServiceRequest must verify the conditions necessary for
-         * it to begin processing and throw DomainExceptions if otherwise
-         * 
-         * @throws DomainException
-         */
-    protected abstract void assertConcludedStatePreConditions() throws DomainException;
-
     final public void conclude() {
-	assertConcludedStatePreConditions();
-
 	final Employee employee = AccessControl.getPerson().getEmployee();
 	edit(AcademicServiceRequestSituationType.CONCLUDED, employee, null);
     }
 
     final public void delivered() {
-	if (this.isPayable() && this.getEvent().isInDebt()) {
-	    throw new DomainException("AcademicServiceRequest.hasnt.been.payed");
-	}
-
 	final Employee employee = AccessControl.getPerson().getEmployee();
 	edit(AcademicServiceRequestSituationType.DELIVERED, employee, null);
     }
@@ -296,9 +274,18 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
 	}
     }
 
-    protected void internalChangeState(
-	    AcademicServiceRequestSituationType academicServiceRequestSituationType, Employee employee) {
-	// nothing to be done
+    protected void internalChangeState(AcademicServiceRequestSituationType academicServiceRequestSituationType, Employee employee) {
+	if ((academicServiceRequestSituationType == AcademicServiceRequestSituationType.CANCELLED 
+		|| academicServiceRequestSituationType == AcademicServiceRequestSituationType.REJECTED)
+		&& hasEvent()) {
+	    getEvent().cancel(employee);
+	}
+	
+	if (academicServiceRequestSituationType == AcademicServiceRequestSituationType.DELIVERED) {
+	    if (isPayable() && !isPayed()) {
+		throw new DomainException("AcademicServiceRequest.hasnt.been.payed");
+	    }
+	}
     }
 
     public boolean isNewRequest() {

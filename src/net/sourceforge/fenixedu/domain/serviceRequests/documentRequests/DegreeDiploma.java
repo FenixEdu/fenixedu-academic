@@ -6,7 +6,6 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class DegreeDiploma extends DegreeDiploma_Base {
     
@@ -29,14 +28,6 @@ public class DegreeDiploma extends DegreeDiploma_Base {
     }
 
     @Override
-    protected void assertProcessingStatePreConditions() throws DomainException {
-    }
-
-    @Override
-    public void assertConcludedStatePreConditions() throws DomainException {
-    }
-
-    @Override
     public String getDocumentTemplateKey() {
 	return getClass().getName();
     }
@@ -49,6 +40,11 @@ public class DegreeDiploma extends DegreeDiploma_Base {
     @Override
     public ExecutionYear getExecutionYear() {
 	return null;
+    }
+
+    @Override
+    protected boolean isFree() {
+	return false;
     }
 
 }
