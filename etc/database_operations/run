@@ -28,4 +28,4 @@ function executeWithTempFile() {
 }
 
 execute "Change MARKSHEET table" markSheetTableChanges.sql
-
+execute "Remove not null ExecutionPeriod restriction from ExternalEnrolment table" alterTableExternalEnrolment.sql
