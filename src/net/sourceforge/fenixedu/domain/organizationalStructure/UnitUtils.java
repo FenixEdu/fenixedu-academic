@@ -108,6 +108,25 @@ public class UnitUtils {
 	throw new DomainException("error.unitUtils.unit.full.path.has.more.than.one.parent");
     }
     
+    public static StringBuilder getUnitFullPathName(final Unit unit, final List<AccountabilityTypeEnum> validAccountabilityTypes) {
+
+	if (unit == readEarthUnit()) {
+	    return new StringBuilder(0);
+	}
+	
+	final Collection<Unit> parentUnits = unit.getParentUnits(validAccountabilityTypes);
+	if (parentUnits.isEmpty()) {
+	    return new StringBuilder(unit.getName());
+	}
+	if (parentUnits.size() == 1){
+	    final StringBuilder builder = new StringBuilder();
+	    builder.append(parentUnits.iterator().next() == readEarthUnit() ? "" : " > ").append(unit.getName());
+	    builder.insert(0, getUnitFullPathName(parentUnits.iterator().next(), validAccountabilityTypes));
+	    return builder;
+	} 
+	throw new DomainException("error.unitUtils.unit.full.path.has.more.than.one.parent");
+    }
+    
     public static List<Unit> readExternalUnitsByNameAndTypesStartingAtEarth(final String unitName, List<PartyTypeEnum> types) {
 	
 	if (unitName == null) {
