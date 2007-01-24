@@ -100,7 +100,7 @@
 		<tr>
 			<th>
 				<logic:equal name="index" value="0">
-					<span style="padding: 0 2em;">&nbsp;</span>
+					<bean:message key="label.searchField"/>:
 				</logic:equal>
 				
 				<logic:notEqual name="index" value="0">
@@ -111,7 +111,6 @@
 					</fr:edit>
 				</logic:notEqual>
 
-				<bean:message key="label.searchField"/>:
 			</th>
 
 			<td>
@@ -124,7 +123,8 @@
 				<bean:message key="label.in" bundle="APPLICATION_RESOURCES"/>
 				<fr:edit id="<%= "searchTypeField" + index%>" name="searchElement" slot="searchField">
 				<fr:layout>
-					<fr:property name="excludedValues" value="TYPE, DATE"/>
+					<fr:property name="excludedValues" value="TYPE, DATE, UNIT, SITE_CONTENT"/>
+					<fr:property name="sort" value="true"/>
 				</fr:layout>
 				</fr:edit>
 
