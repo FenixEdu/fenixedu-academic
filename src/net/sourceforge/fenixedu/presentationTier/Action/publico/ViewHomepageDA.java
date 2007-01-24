@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.FileEntry;
 import net.sourceforge.fenixedu.domain.Person;
@@ -41,72 +42,90 @@ public class ViewHomepageDA extends SiteVisualizationDA {
         
         if (homepageIDString != null) {
             Integer homepageID = Integer.valueOf(homepageIDString);
-            Homepage homepage = (Homepage) readDomainObject(request, Homepage.class, homepageID);
             
-            if (homepage.getActivated()) {
-                request.setAttribute("homepage", homepage);
+            DomainObject possibleHomepage = readDomainObject(request, Homepage.class, homepageID);
+            if (possibleHomepage instanceof Homepage) {
+                Homepage homepage = (Homepage) possibleHomepage;
+            
+                if (homepage.getActivated() != null && homepage.getActivated()) {
+                    request.setAttribute("homepage", homepage);
+                }
+            
+                String homepagePath = RequestUtils.absoluteURL(request, "/homepage/" + homepage.getPerson().getUser().getUserUId()).toString();
+                request.setAttribute("directLinkContext", homepagePath);
             }
-            
-            String homepagePath = RequestUtils.absoluteURL(request, "/homepage/" + homepage.getPerson().getUser().getUserUId()).toString();
-            request.setAttribute("directLinkContext", homepagePath);
         }
         
         return super.execute(mapping, actionForm, request, response);
     }
 
-    public ActionForward show(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-	final String homepageIDString = request.getParameter("homepageID");
-	final Integer homepageID = Integer.valueOf(homepageIDString);
-	final Homepage homepage = (Homepage) readDomainObject(request, Homepage.class, homepageID);
-	if (homepage == null || !homepage.getActivated().booleanValue()) {
-	    final ActionMessages actionMessages = new ActionMessages();
-	    actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("homepage.not.found"));
-	    saveMessages(request, actionMessages);
-	    return list(mapping, actionForm, request, response);
-	} else {
-	    SortedSet<Attends> personAttendsSortedByExecutionCourseName = new TreeSet<Attends>(
-		    Attends.ATTENDS_COMPARATOR_BY_EXECUTION_COURSE_NAME);
-	    personAttendsSortedByExecutionCourseName.addAll(homepage.getPerson().getCurrentAttends());
+    public ActionForward show(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+        final String homepageIDString = request.getParameter("homepageID");
+        final Integer homepageID = Integer.valueOf(homepageIDString);
+        
+        final Homepage homepage;
+        DomainObject possibleHomepage = readDomainObject(request, Homepage.class, homepageID);
+        if (possibleHomepage instanceof Homepage) {
+            homepage = (Homepage) possibleHomepage;
+        }
+        else {
+            homepage = null;
+        }
+        
+        if (homepage == null || !homepage.getActivated().booleanValue()) {
+            final ActionMessages actionMessages = new ActionMessages();
+            actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("homepage.not.found"));
+            saveMessages(request, actionMessages);
+            
+            return list(mapping, actionForm, request, response);
+        } else {
+            SortedSet<Attends> personAttendsSortedByExecutionCourseName = new TreeSet<Attends>(
+                    Attends.ATTENDS_COMPARATOR_BY_EXECUTION_COURSE_NAME);
+            personAttendsSortedByExecutionCourseName.addAll(homepage
+                    .getPerson().getCurrentAttends());
 
-	    request.setAttribute("personAttends", personAttendsSortedByExecutionCourseName);
-	    request.setAttribute("homepage", homepage);
+            request.setAttribute("personAttends",
+                    personAttendsSortedByExecutionCourseName);
+            request.setAttribute("homepage", homepage);
 
-	    return mapping.findForward("view-homepage");
-	}
+            return mapping.findForward("view-homepage");
+        }
     }
 
     public ActionForward notFound(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	return mapping.findForward("not-found-homepage");
+        return mapping.findForward("not-found-homepage");
     }
 
-    public ActionForward list(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-	final SortedMap<String, SortedSet<Homepage>> homepages = new TreeMap<String, SortedSet<Homepage>>();
-	for (int i = (int) 'A'; i <= (int) 'Z'; i++) {
-	    homepages.put("" + ((char) i), new TreeSet<Homepage>(Homepage.HOMEPAGE_COMPARATOR_BY_NAME));
-	}
-	for (final Homepage homepage : Homepage.getAllHomepages()) {
-	    if (homepage.getActivated().booleanValue()) {
-		final String key = homepage.getName().substring(0, 1);
-		final SortedSet<Homepage> sortedSet;
-		if (homepages.containsKey(key)) {
-		    sortedSet = homepages.get(key);
-		    sortedSet.add(homepage);
-		}
-	    }
-	}
-	request.setAttribute("homepages", homepages);
+    public ActionForward list(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) {
+        final SortedMap<String, SortedSet<Homepage>> homepages = new TreeMap<String, SortedSet<Homepage>>();
+        for (int i = (int) 'A'; i <= (int) 'Z'; i++) {
+            homepages.put("" + ((char) i), new TreeSet<Homepage>(
+                    Homepage.HOMEPAGE_COMPARATOR_BY_NAME));
+        }
+        
+        for (final Homepage homepage : Homepage.getAllHomepages()) {
+            if (homepage.getActivated().booleanValue()) {
+                final String key = homepage.getName().substring(0, 1);
+                final SortedSet<Homepage> sortedSet;
+                if (homepages.containsKey(key)) {
+                    sortedSet = homepages.get(key);
+                    sortedSet.add(homepage);
+                }
+            }
+        }
+        
+        request.setAttribute("homepages", homepages);
 
-	final String selectedPage = request.getParameter("selectedPage");
-	if (selectedPage != null) {
-	    request.setAttribute("selectedPage", selectedPage);
-	} else {
-	    request.setAttribute("selectedPage", "");
-	}
+        final String selectedPage = request.getParameter("selectedPage");
+        if (selectedPage != null) {
+            request.setAttribute("selectedPage", selectedPage);
+        } else {
+            request.setAttribute("selectedPage", "");
+        }
 
-	return mapping.findForward("list-homepages");
+        return mapping.findForward("list-homepages");
     }
 
     public ActionForward listTeachers(ActionMapping mapping, ActionForm actionForm,
