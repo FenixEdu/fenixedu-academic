@@ -44,7 +44,6 @@
 		</fr:edit>		
 	</logic:notEmpty>	
 	<logic:empty name="dismissalBean" property="externalEnrolments">
-		<br/>			
 		<br/>				
 		<em><bean:message key="label.studentDismissal.externalEnrolments.empty" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 		<br/>				
@@ -60,7 +59,6 @@
 		</fr:edit>
 	</logic:notEmpty>
 	<logic:empty name="dismissalBean" property="enrolments">
-		<br/>			
 		<br/>				
 		<em><bean:message key="label.studentDismissal.internalEnrolments.empty" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 		<br/>				
