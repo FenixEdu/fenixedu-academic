@@ -18,14 +18,12 @@ import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.assiduousness.Assiduousness;
 import net.sourceforge.fenixedu.domain.assiduousness.util.DateInterval;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption;
 
 import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
@@ -33,15 +31,13 @@ import org.joda.time.YearMonthDay;
 
 public class Vigilant extends Vigilant_Base {
 
-	public static final Comparator<Vigilant> POINTS_COMPARATOR = new BeanComparator("totalPoints");
+	public static final Comparator<Vigilant> POINTS_COMPARATOR = new BeanComparator("points");
 	public static final Comparator<Vigilant> NAME_COMPARATOR = new BeanComparator("person.name"); 
 	public static final Comparator<Vigilant> USERNAME_COMPARATOR = new ReverseComparator(new BeanComparator("person.username"));	
-	public static final Comparator<Vigilant> CATEGORY_COMPARATOR = new Comparator() {
+	public static final Comparator<Vigilant> CATEGORY_COMPARATOR = new Comparator<Vigilant>() {
 
-		public int compare(Object o1, Object o2) {
-				Vigilant v1 = (Vigilant) o1;
-				Vigilant v2 = (Vigilant) o2;
-				
+		public int compare(Vigilant v1, Vigilant v2) {
+			
 				Category c1 = v1.getTeacherCategory();
 				Category c2 = v2.getTeacherCategory();
 				
