@@ -57,7 +57,8 @@ public class YearProcessor extends PathProcessor {
                 return false;
             }
             else {
-                return doForward(context, executionCourse.getIdInternal());
+                String contextURI = ownContext.getSiteBasePath();
+                return doForward(context, contextURI, "firstPage", executionCourse.getIdInternal());
             }
         }
     }
