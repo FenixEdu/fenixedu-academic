@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
 public enum DocumentPurposeType {
-    FAMILY_ALLOWANCE, PUBLIC_TRANSPORTS, MILITARY, PROFESSIONAL, OTHER;
+    FAMILY_ALLOWANCE, PUBLIC_TRANSPORTS, MILITARY, PROFESSIONAL, PPRE, OTHER;
 
     public String getName() {
         return name();

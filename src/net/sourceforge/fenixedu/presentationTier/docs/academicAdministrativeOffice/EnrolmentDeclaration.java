@@ -31,9 +31,20 @@ public class EnrolmentDeclaration extends AdministrativeOfficeDocument {
 	final List<Enrolment> enrolments = registration.getStudentCurricularPlan(executionYear).getEnrolmentsByExecutionYear(executionYear);
 	parameters.put("numberEnrolments", Integer.valueOf(enrolments.size()));
 
+	StringBuilder approvementInfo = new StringBuilder();
+	if (enrolmentDeclarationRequest.getDocumentPurposeType() == DocumentPurposeType.PPRE) {
+	    if (registration.isFirstTime(executionYear)) {
+		approvementInfo.append(", pela 1ª vez");
+	    } else if (registration.hasApprovement(executionYear.getPreviousExecutionYear())) {
+		approvementInfo.append(" e teve aproveitamento no ano lectivo " + executionYear.getPreviousExecutionYear().getYear());
+	    } else {
+		approvementInfo.append(" e não teve aproveitamento no ano lectivo " + executionYear.getPreviousExecutionYear().getYear());
+	    }
+	}
+	parameters.put("approvementInfo", approvementInfo.toString());
+	
+	StringBuilder documentPurpose = new StringBuilder();
 	if (enrolmentDeclarationRequest.getDocumentPurposeType() != null) {
-	    StringBuilder documentPurpose = new StringBuilder();
-    
 	    documentPurpose.append(resourceBundle.getString("documents.declaration.valid.purpose")).append(" ");
 	    if (enrolmentDeclarationRequest.getDocumentPurposeType() == DocumentPurposeType.OTHER
 		    && !StringUtils.isEmpty(enrolmentDeclarationRequest.getOtherDocumentPurposeTypeDescription())) {
@@ -42,11 +53,8 @@ public class EnrolmentDeclaration extends AdministrativeOfficeDocument {
 		documentPurpose.append(enumerationBundle.getString(enrolmentDeclarationRequest.getDocumentPurposeType().name()).toUpperCase());
 	    }
 	    documentPurpose.append(".");
-	    
-	    parameters.put("documentPurpose", documentPurpose.toString());
-	} else {
-	    parameters.put("documentPurpose", "");
-	}
+	} 
+	parameters.put("documentPurpose", documentPurpose.toString());
     }
 
 }
