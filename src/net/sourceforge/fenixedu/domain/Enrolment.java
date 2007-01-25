@@ -10,7 +10,6 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.commons.CollectionUtils;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
@@ -18,7 +17,6 @@ import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.curriculum.GradeFactory;
 import net.sourceforge.fenixedu.domain.curriculum.IGrade;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.log.EnrolmentLog;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -614,40 +612,24 @@ public class Enrolment extends Enrolment_Base implements IEnrolment{
     }
 
     public Integer getFinalGrade() {
-	final EnrolmentEvaluation enrolmentEvaluation = getFinalEnrolmentEvaluation();
+	final EnrolmentEvaluation enrolmentEvaluation = getLatestEnrolmentEvaluation();
 	return (enrolmentEvaluation == null || !StringUtils.isNumeric(enrolmentEvaluation.getGrade())) ? null
 		: Integer.valueOf(enrolmentEvaluation.getGrade());
 
     }
 
-    public EnrolmentEvaluation getFinalEnrolmentEvaluation() {
-	EnrolmentEvaluation finalEnrolmentEvaluation = null;
-	for (final EnrolmentEvaluation enrolmentEvaluation : getEvaluations()) {
-	    if (enrolmentEvaluation.getEnrolmentEvaluationState().equals(
-		    EnrolmentEvaluationState.FINAL_OBJ)
-		    || enrolmentEvaluation.getEnrolmentEvaluationState().equals(
-			    EnrolmentEvaluationState.RECTIFICATION_OBJ)) {
-		if (finalEnrolmentEvaluation == null
-			|| enrolmentEvaluation.compareTo(finalEnrolmentEvaluation) > 0) {
-		    finalEnrolmentEvaluation = enrolmentEvaluation;
-		}
-	    }
-	}
-	return finalEnrolmentEvaluation;
-    }
-
     public boolean isNotEvaluated() {
-	final EnrolmentEvaluation finalEnrolmentEvaluation = getFinalEnrolmentEvaluation();
+	final EnrolmentEvaluation finalEnrolmentEvaluation = getLatestEnrolmentEvaluation();
 	return finalEnrolmentEvaluation == null || finalEnrolmentEvaluation.isNotEvaluated();
     }
 
     public boolean isFlunked() {
-	final EnrolmentEvaluation finalEnrolmentEvaluation = getFinalEnrolmentEvaluation();
+	final EnrolmentEvaluation finalEnrolmentEvaluation = getLatestEnrolmentEvaluation();
 	return finalEnrolmentEvaluation != null && finalEnrolmentEvaluation.isFlunked();
     }
 
     public boolean isApproved() {
-	final EnrolmentEvaluation finalEnrolmentEvaluation = getFinalEnrolmentEvaluation();
+	final EnrolmentEvaluation finalEnrolmentEvaluation = getLatestEnrolmentEvaluation();
 	return finalEnrolmentEvaluation != null && finalEnrolmentEvaluation.isApproved();
     }
 
@@ -863,6 +845,11 @@ public class Enrolment extends Enrolment_Base implements IEnrolment{
 	} else {
 	    throw new DomainException("error.invalid.enrolment.state");
 	}
+    }
+
+    @Deprecated
+    public EnrolmentEvaluation getFinalEnrolmentEvaluation() {
+	return getLatestEnrolmentEvaluation();
     }
 
     public EnrolmentEvaluation getLatestEnrolmentEvaluation() {
