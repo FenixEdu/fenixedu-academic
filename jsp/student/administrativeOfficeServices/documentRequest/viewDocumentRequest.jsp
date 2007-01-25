@@ -26,6 +26,16 @@
 	</fr:layout>
 </fr:view>
 
+<logic:present name="documentRequest" property="activeSituation">
+	<p class="mbottom025"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="request.situation"/></strong></p>
+	<fr:view name="documentRequest" property="activeSituation" schema="AcademicServiceRequestSituation.view">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle4 thright thlight mtop025"/>
+		<fr:property name="rowClasses" value=",,tdhl1,"/>
+		</fr:layout>
+	</fr:view>
+</logic:present>
+
 <html:form action="/documentRequest.do?method=viewDocumentRequests">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.registrationId" property="registrationId"/>
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.back" /></html:submit>
