@@ -14,12 +14,14 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
+import net.sourceforge.fenixedu.util.renderer.GanttDiagramEvent;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.DateTime;
+import org.joda.time.Interval;
 
-public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base {
+public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base implements GanttDiagramEvent{
 
     public static final Comparator COMPARATOR_BEGIN_DATE = new ComparatorChain();
     static {
@@ -216,5 +218,30 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base {
     
     private boolean entriesTimeIntervalIntersection(DateTime begin, DateTime end) {
 	return (!this.getBegin().isAfter(end) && !this.getEnd().isBefore(begin));
+    }
+    
+    public List<Interval> getEventSortedIntervalsForGanttDiagram() {
+	List<Interval> result = new ArrayList<Interval>();
+	result.add(new Interval(getBegin(), getEnd()));
+	return result;
+    }
+    
+    public MultiLanguageString getEventNameForGanttDiagram() {
+	return new MultiLanguageString(getType() + ": " + getTitle().getContent());
+    }
+    
+    public int getEventOffsetForGanttDiagram() {
+	if(getParentEntry() == null) {
+	    return 0;
+	}
+	return getParentEntry().getEventOffsetForGanttDiagram() + 1;
+    }
+    
+    public String getEventObservationsForGanttDiagram() {
+	return getBegin().toString("dd/MM/yyyy HH:mm") + " - " + getEnd().toString("dd/MM/yyyy HH:mm"); 
+    }
+    
+    public String getEventIdentifierForGanttDiagram() {
+	return getIdInternal().toString();
     }
 }

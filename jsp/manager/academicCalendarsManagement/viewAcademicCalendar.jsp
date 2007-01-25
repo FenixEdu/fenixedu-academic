@@ -3,11 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
-
-<%@page import="org.joda.time.Days"%>
-<%@page import="org.joda.time.DateTime"%>
-<%@page import="net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry"%>
-<%@page import="java.util.Locale"%>
+<%@ taglib uri="/WEB-INF/ganttDiagrams.tld" prefix="gd" %>
 
 <html:xhtml/>
 
@@ -15,33 +11,47 @@
 
 <logic:present role="MANAGER">
 	
+	
 	<style>
-		.tcalendar {
-		border-collapse: collapse;
-		}
-		.tcalendar th, .tcalendar td {
-		border: 1px solid #ddd;	
-		}
-		.tcalendar th {
-		text-align: center;
-		background-color: #f5f5f5;
-		padding: 3px 4px;
-		}
-		.tcalendar td {
-		background-color: #fff;
-		padding: 0;
-		}
-		.tcalendar td.padded {
-		padding: 2px 6px;
-		}
-		.tdbar {
-		background-color: #fed;
-		border-top: 2px solid #fed;
-		border-bottom: 2px solid #fed;
-		}
-		tr.selected td {
-		background-color: #fdfdde;
-		}
+	.tcalendar {
+	border-collapse: collapse;
+	border: 1px solid #ccc;
+	}
+	.tcalendar th {
+	border: 1px solid #ccc;
+	overflow: hidden;
+	}
+	.tcalendar td {
+	border: 1px solid #ccc;
+	}
+	
+	.tcalendar th {
+	text-align: center;
+	background-color: #f5f5f5;
+	background-color: #f5f5f5;
+	padding: 3px 4px;
+	}
+	.tcalendar td {
+	background-color: #fff;
+	padding: 0;
+	}
+	.tcalendar td.padded {
+	padding: 2px 6px;
+	border: 1px solid #ccc;
+	}
+	td.padded { }
+	.tdbar {
+	background-color: #fed;
+	}
+	tr.active td {
+	background-color: #fefeea;
+	}
+	.color555 {
+	color: #555;
+	}
+	tr.selected td {
+	background-color: #fdfdde;
+	}
 	</style>
 	
 	
@@ -104,205 +114,7 @@
 	</logic:notEmpty>		
 	
 	<p>
-	<logic:notEmpty name="entries">
-		
-		<table class="tcalendar thlight">
-			<tr>
-				<bean:size name="months" id="monthsSize"/>
-				<th rowspan="2"><bean:message key="label.academicCalendar.type.and.title" bundle="MANAGER_RESOURCES"/></th>				
-				<logic:iterate id="year" name="years">				
-					<bean:define id="yearSize" name="year" property="value"></bean:define>
-					<th colspan="<%= yearSize %>"><bean:write name="year" property="key"/></th>				
-				</logic:iterate>				
-				<th rowspan="2"><bean:message key="label.academicCalendar.period" bundle="MANAGER_RESOURCES"/></th>
-			</tr>
-			
-			<tr>
-				<%	Locale locale = new Locale("pt", "PT");	%>
-				<logic:iterate id="month" name="months" type="org.joda.time.DateTime">										
-					<th><%= month.toString("MMM", locale) %></th>		
-				</logic:iterate>	
-			</tr>	
-			
-			<logic:iterate id="entryInfo" name="entries">										    				
-			    <bean:define id="entry" name="entryInfo" property="value" type="net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry"/>
-			    <bean:define id="entryIndex" name="entryInfo" property="key" type="java.lang.Integer"/>			    
-				<bean:define id="title" type="java.lang.String"><bean:write name="entry" property="presentationTimeInterval"/></bean:define>					
-				<bean:define id="paddingStyle" type="java.lang.String">padding-left:<%= (entryIndex.intValue() * 15) %>px;</bean:define>
-				<bean:define id="entryURL">/academicCalendarsManagement.do?method=viewAcademicCalendarEntry&amp;academicCalendarEntryID=<bean:write name="entry" property="idInternal"/></bean:define>
-				
-				<logic:notEmpty name="calendarEntry">					
-					<% if(entry.equals(pageContext.findAttribute("calendarEntrySelected"))){ %>				
-						<tr title="<%= title %>" class="selected">				
-					<% } else { %>
-						<tr title="<%= title %>">				
-					<% } %>
-				</logic:notEmpty>																								
-				<logic:notEmpty name="academicCalendar">
-					<tr title="<%= title %>">
-				</logic:notEmpty>
-																	
-					<td class="padded">
-						<span style="<%= paddingStyle %>">														
-							<html:link page="<%= entryURL %>">												
-								*<bean:write name="entry" property="type"/>: <bean:write name="entry" property="title.content"/>
-							</html:link>		
-						</span>	
-					</td>																				
-																							
-					<logic:iterate id="month" name="months" type="org.joda.time.DateTime">					
-						
-						<%							
-							String styleString = "", classString = "", spaceString = "";		
-							DateTime firstDayOfMonth = month.withDayOfMonth(1);
-							DateTime lastDayOfMonth = month.plusMonths(1).withDayOfMonth(1).minusDays(1);										
-							int monthNumberOfDays = Days.daysBetween(firstDayOfMonth, lastDayOfMonth).getDays() + 1;
-							int entryDays = 0, remainingDays = 0;
-							
-							
-							// Started in this month
-							if(entry.getBegin().getMonthOfYear() == month.getMonthOfYear() && 
-								entry.getBegin().getYear() == month.getYear()){																							    
-							    
-							    // Ended in this month
-							    if(entry.getEnd().getMonthOfYear() == month.getMonthOfYear() && 
-									entry.getEnd().getYear() == month.getYear()){										
-									
-									// Started in first day of this month
-									if(entry.getBegin().getDayOfMonth() == 1){									    
-									  
-									    // Ended in the last day of this month
-									    if(entry.getEnd().getDayOfMonth() == monthNumberOfDays){										
-											classString = "tdbar";
-											spaceString = "&nbsp;";
-											styleString = "margin: 0 0 0 0; width: " + monthNumberOfDays + "px;";
-									    }									    
-									    
-									    // Ended before last day of this month
-									    else {		
-											entryDays = Days.daysBetween(entry.getBegin(), entry.getEnd()).getDays() + 1;
-											remainingDays = monthNumberOfDays - entryDays;
-											classString = "tdbar";
-											spaceString = "&nbsp;";
-											styleString = "margin: 0 " + remainingDays + "px 0 0; width: " + entryDays + "px;";											
-									    }																		
-									}									
-									
-									// Started after first day of this month    								
-									else {									    
-									
-									    // Ended in the last day of this month
-									    if(entry.getEnd().getDayOfMonth() == monthNumberOfDays){		
-										
-											entryDays = Days.daysBetween(entry.getBegin(), lastDayOfMonth).getDays() + 1;
-											remainingDays = monthNumberOfDays - entryDays;	
-											classString = "tdbar";
-											spaceString = "&nbsp;";
-											styleString = "margin: 0 0 0 " + remainingDays + "px; width: " + entryDays + "px;";
-									    }									    
-									    
-									    // Ended before last day of this month
-									    else {	
-											int beginDay = entry.getBegin().getDayOfMonth() - 1;
-											entryDays = Days.daysBetween(entry.getBegin(), entry.getEnd()).getDays() + 1;
-											remainingDays = monthNumberOfDays - (entryDays + beginDay);																							
-											classString = "tdbar";
-											spaceString = "&nbsp;";
-											styleString = "margin: 0 " + remainingDays + "px 0 " + beginDay + "px; width: " + entryDays + "px;";											
-									    }									    									    
-									}																																
-							    } 							    
-								
-							    // Ended after this month
-							    else { 									
-									
-									// Started in first day of this month
-									if(entry.getBegin().getDayOfMonth() == 1) {	
-									    
-									    classString = "tdbar";
-									    spaceString = "&nbsp;";
-										styleString = "margin: 0 0 0 0; width: " + monthNumberOfDays + "px;";									    									
-									}									
-									
-									// Started after first day of this month      
-									else {	
-									    entryDays = Days.daysBetween(entry.getBegin(), lastDayOfMonth).getDays() + 1;
-										remainingDays = monthNumberOfDays - entryDays;	
-									    spaceString = "&nbsp;";
-										classString = "tdbar";
-										styleString = "margin: 0 0 0 " + remainingDays + "px; width: " + entryDays + "px;";									    
-									}																
-							    }							 
-							
-							// Not Started in this month    
-							} else { 
-							    
-							    // Started before this month
-							    if(entry.getBegin().getYear() < month.getYear() || 
-								    (entry.getBegin().getYear() == month.getYear() && 
-									    entry.getBegin().getMonthOfYear() < month.getMonthOfYear())) {								
-									
-									// Ended after this month
-									if(entry.getEnd().getYear() > month.getYear() || 
-										    (entry.getEnd().getYear() == month.getYear() && 
-											    entry.getEnd().getMonthOfYear() > month.getMonthOfYear())){
-									    									    
-									    classString = "tdbar";
-									    spaceString = "&nbsp;";
-									    styleString = "margin: 0 0 0 0; width: " + monthNumberOfDays + "px;";
-									} 
-									
-									// Not Ended after this month
-									else {	
-									    
-									    //Ended in this month
-									    if(entry.getEnd().getMonthOfYear() == month.getMonthOfYear() && 
-										    entry.getEnd().getYear() == month.getYear()){
-									
-											// Ended in the last day of this month
-										    if(entry.getEnd().getDayOfMonth() == monthNumberOfDays){										
-												classString = "tdbar";
-												spaceString = "&nbsp;";
-												styleString = "margin: 0 0 0 0; width: " + monthNumberOfDays + "px;";
-										    }									    
-										    
-										    // Ended before last day of this month
-										    else {		
-												entryDays = Days.daysBetween(firstDayOfMonth, entry.getEnd()).getDays() + 1;
-												remainingDays = monthNumberOfDays - entryDays;
-												classString = "tdbar";
-												spaceString = "&nbsp;";
-												styleString = "margin: 0 " + remainingDays + "px 0 0; width: " + entryDays + "px;";											
-										    }													
-									    } 
-									    
-									    // Ended before this month
-									    else {
-	 										classString = "tdbar";
-										    styleString = "margin: 0 0 0 " + monthNumberOfDays + "px; width: 0px;";	
-									    }									    									    									   																								    									    									    									    										    
-									}																																
-								// Started after this month
-							    } else {						
-									classString = "tdbar";
-									styleString = "margin: 0 0 0 " + monthNumberOfDays + "px; width: 0px;";																
-							    }
-							}						
-						%>
-																														
-						<td><div style="<%= styleString %>" class="<%= classString %>"><%= spaceString %></div></td>			
-																									
-					</logic:iterate>																		
-					<td class="padded smalltxt">
-						<%=	entry.getBegin().toString("dd/MM/yyyy HH:mm")	%>
-						<bean:message key="label.until" bundle="MANAGER_RESOURCES"/>
-						<%=	entry.getEnd().toString("dd/MM/yyyy HH:mm") %>
-					</td>
-				</tr>
-				
-			</logic:iterate>									
-		</table>	
-	</logic:notEmpty>
+		<gd:ganttDiagram ganttDiagram="ganttDiagram" eventParameter="academicCalendarEntryID" eventUrl="/manager/academicCalendarsManagement.do?method=viewAcademicCalendarEntry" bundle="MANAGER_RESOURCES"/>		
 	</p>
 	
 </logic:present>	

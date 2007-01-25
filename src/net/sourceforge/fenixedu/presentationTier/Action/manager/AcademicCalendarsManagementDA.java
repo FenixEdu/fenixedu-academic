@@ -2,8 +2,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,13 +13,12 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEn
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
+import net.sourceforge.fenixedu.util.renderer.GanttDiagram;
+import net.sourceforge.fenixedu.util.renderer.GanttDiagramEvent;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.joda.time.DateTime;
-
-import pt.ist.utl.fenix.utils.Pair;
 
 public class AcademicCalendarsManagementDA extends FenixDispatchAction {
 
@@ -104,6 +101,7 @@ public class AcademicCalendarsManagementDA extends FenixDispatchAction {
 	}
 	
 	if(parentEntry != null) {
+	    request.setAttribute("academicCalendarEntryID", parentEntry.getIdInternal());
 	    return viewAcademicCalendarForEntries(mapping, request, parentEntry);
 	} else {
 	    return viewAcademicCalendarForAcademicCalendar(mapping, request, academicCalendar);
@@ -130,65 +128,36 @@ public class AcademicCalendarsManagementDA extends FenixDispatchAction {
     private ActionForward viewAcademicCalendarForAcademicCalendar(ActionMapping mapping, HttpServletRequest request, AcademicCalendar academicCalendar) {
 	List<AcademicCalendarEntry> entries = academicCalendar.getEntriesOrderByDate();
 	request.setAttribute("academicCalendar", academicCalendar);
-	generateTimeLine(request, entries);
-	
+	generateTimeLine(request, entries);	
 	return mapping.findForward("viewAcademicCalendar");
     }
 
     private ActionForward viewAcademicCalendarForEntries(ActionMapping mapping, HttpServletRequest request, AcademicCalendarEntry academicCalendarEntry) {
 	List<AcademicCalendarEntry> entries = academicCalendarEntry.getAcademicCalendar().getEntriesOrderByDate();
 	request.setAttribute("calendarEntry", academicCalendarEntry);
-	generateTimeLine(request, entries);
-	
+	generateTimeLine(request, entries);	
 	return mapping.findForward("viewAcademicCalendar");
     } 
     
-    private void generateTimeLine(HttpServletRequest request, List<AcademicCalendarEntry> entries) {
-	generateEntriesTree(request, entries);
-	generateMonths(request, entries);	
+    private void generateTimeLine(HttpServletRequest request, List<AcademicCalendarEntry> entries) {	
+	List<GanttDiagramEvent> newEntries = generateEntriesTree(request, entries);	
+	GanttDiagram diagram = new GanttDiagram(newEntries);
+	request.setAttribute("ganttDiagram", diagram);
     }
 
-    private void generateEntriesTree(HttpServletRequest request, List<AcademicCalendarEntry> entries) {
-	List<Pair<Integer, AcademicCalendarEntry>> result = new ArrayList<Pair<Integer, AcademicCalendarEntry>>();
+    private List<GanttDiagramEvent> generateEntriesTree(HttpServletRequest request, List<AcademicCalendarEntry> entries) {
+	List<GanttDiagramEvent> result = new ArrayList<GanttDiagramEvent>();
 	for (AcademicCalendarEntry entry : entries) {
-	    getSubEntriesTree(entry, result, -1);
-	}
-	request.setAttribute("entries", result);
-    }
-
-    private void generateMonths(HttpServletRequest request, List<AcademicCalendarEntry> entries) {
-	if (!entries.isEmpty()) {
-	    
-	    DateTime firstMonthDateTime = entries.get(0).getBegin().withDayOfMonth(1);
-	    DateTime lastMontDateTime = entries.get(entries.size() - 1).getEnd().withDayOfMonth(1);
-	    List<DateTime> months = new ArrayList<DateTime>();
-	    Map<Integer, Integer> years = new TreeMap<Integer, Integer>();
-	    
-	    while ((firstMonthDateTime.getYear() < lastMontDateTime.getYear())
-		    || (firstMonthDateTime.getYear() == lastMontDateTime.getYear() && firstMonthDateTime
-			    .getMonthOfYear() <= lastMontDateTime.getMonthOfYear())) {
-		
-		months.add(firstMonthDateTime);				
-		if(years.containsKey(Integer.valueOf(firstMonthDateTime.getYear()))) {
-		   years.put(Integer.valueOf(firstMonthDateTime.getYear()), years.get(Integer.valueOf(firstMonthDateTime.getYear())) + 1);
-		} else {
-		    years.put(Integer.valueOf(firstMonthDateTime.getYear()), 1);
-		}		
-		firstMonthDateTime = firstMonthDateTime.plusMonths(1);		
-	    }	    
-	    request.setAttribute("years", years);
-	    request.setAttribute("months", months);
-	}
-    }
-    
-    private List<Pair<Integer, AcademicCalendarEntry>> getSubEntriesTree(AcademicCalendarEntry entry,
-	    List<Pair<Integer, AcademicCalendarEntry>> result, int order) {
-	Integer newOrder = order + 1;
-	result.add(new Pair<Integer, AcademicCalendarEntry>(newOrder, entry));
-	for (AcademicCalendarEntry subEntry : entry.getSubEntriesOrderByDate()) {
-	    getSubEntriesTree(subEntry, result, newOrder.intValue());
+	    getSubEntriesTree(entry, result);
 	}
 	return result;
+    }
+       
+    private void getSubEntriesTree(AcademicCalendarEntry entry, List<GanttDiagramEvent> result) {	
+	result.add(entry);
+	for (AcademicCalendarEntry subEntry : entry.getSubEntriesOrderByDate()) {
+	    getSubEntriesTree(subEntry, result);
+	}
     }
 
     private AcademicCalendar getAcademicCalendarFromParameter(final HttpServletRequest request) {
