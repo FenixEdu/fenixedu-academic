@@ -51,10 +51,10 @@ public class ChangeStudentTestQuestion extends Service {
             TestQuestionStudentsChangesType studentsType, String path) throws FenixServiceException,
             ExcepcaoPersistencia {
         List<InfoSiteDistributedTestAdvisory> infoSiteDistributedTestAdvisoryList = new ArrayList<InfoSiteDistributedTestAdvisory>();
-        
+
         DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
-        Question oldQuestion = distributedTest.findQuestionByOID(oldQuestionId); 
-        
+        Question oldQuestion = distributedTest.findQuestionByOID(oldQuestionId);
+
         if (oldQuestion == null)
             throw new InvalidArgumentsServiceException();
 
@@ -95,15 +95,19 @@ public class ChangeStudentTestQuestion extends Service {
                 Registration registration = rootDomainObject.readRegistrationByOID(studentId);
                 if (registration == null)
                     throw new InvalidArgumentsServiceException();
-            	studentsTestQuestionList.add(StudentTestQuestion.findStudentTestQuestion(oldQuestion, registration, currentDistributedTest));
+                studentsTestQuestionList.add(StudentTestQuestion.findStudentTestQuestion(oldQuestion,
+                        registration, currentDistributedTest));
             } else if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.STUDENTS_FROM_TEST) {
                 Registration registration = rootDomainObject.readRegistrationByOID(studentId);
                 if (registration == null)
                     throw new InvalidArgumentsServiceException();
-                Integer order = StudentTestQuestion.findStudentTestQuestion(oldQuestion, registration, currentDistributedTest).getTestQuestionOrder();
-                studentsTestQuestionList = currentDistributedTest.findStudentTestQuestionsByTestQuestionOrder(order);
+                Integer order = StudentTestQuestion.findStudentTestQuestion(oldQuestion, registration,
+                        currentDistributedTest).getTestQuestionOrder();
+                studentsTestQuestionList = currentDistributedTest
+                        .findStudentTestQuestionsByTestQuestionOrder(order);
             } else
-                studentsTestQuestionList = StudentTestQuestion.findStudentTestQuestions(oldQuestion, currentDistributedTest);
+                studentsTestQuestionList = StudentTestQuestion.findStudentTestQuestions(oldQuestion,
+                        currentDistributedTest);
 
             List<InfoStudent> group = new ArrayList<InfoStudent>();
 
@@ -123,6 +127,7 @@ public class ChangeStudentTestQuestion extends Service {
                         throw new InvalidArgumentsServiceException();
 
                     studentTestQuestion.setQuestion(newQuestion);
+                    studentTestQuestion.setItemId(null);
                     studentTestQuestion.setResponse(null);
                     studentTestQuestion.setOptionShuffle(null);
                     availableQuestions.remove(newQuestion);
@@ -134,7 +139,8 @@ public class ChangeStudentTestQuestion extends Service {
                             new TestType(TestType.EVALUATION))) {
                         OnlineTest onlineTest = studentTestQuestion.getDistributedTest().getOnlineTest();
                         Attends attend = studentTestQuestion.getStudent().readAttendByExecutionCourse(
-                                ((ExecutionCourse) currentDistributedTest.getTestScope().getDomainObject()));
+                                ((ExecutionCourse) currentDistributedTest.getTestScope()
+                                        .getDomainObject()));
                         Mark mark = onlineTest.getMarkByAttend(attend);
                         if (mark != null) {
                             mark.setMark(getNewStudentMark(studentTestQuestion.getDistributedTest(),
@@ -145,7 +151,8 @@ public class ChangeStudentTestQuestion extends Service {
                     studentTestLog.setDistributedTest(studentTestQuestion.getDistributedTest());
                     studentTestLog.setStudent(studentTestQuestion.getStudent());
                     studentTestLog.setDate(Calendar.getInstance().getTime());
-                    ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources", LanguageUtils.getLocale());
+                    ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources",
+                            LanguageUtils.getLocale());
                     studentTestLog.setEvent(MessageFormat.format(bundle
                             .getString("message.changeStudentQuestionLogMessage"),
                             new Object[] { studentTestQuestion.getTestQuestionOrder() }));
@@ -241,7 +248,8 @@ public class ChangeStudentTestQuestion extends Service {
     private String getNewStudentMark(DistributedTest dt, Registration s, double mark2Remove)
             throws ExcepcaoPersistencia {
         double totalMark = 0;
-        Set<StudentTestQuestion> studentTestQuestionList = StudentTestQuestion.findStudentTestQuestions(s, dt);
+        Set<StudentTestQuestion> studentTestQuestionList = StudentTestQuestion.findStudentTestQuestions(
+                s, dt);
         for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
             totalMark += studentTestQuestion.getTestQuestionMark().doubleValue();
         }
@@ -253,7 +261,8 @@ public class ChangeStudentTestQuestion extends Service {
     }
 
     private Advisory getAdvisory(DistributedTest distributedTest, String path) {
-        ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources", LanguageUtils.getLocale());
+        ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources", LanguageUtils
+                .getLocale());
         // Create Advisory
         Advisory advisory = new Advisory();
         advisory.setCreated(Calendar.getInstance().getTime());
