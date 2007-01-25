@@ -581,17 +581,15 @@ public class Enrolment extends Enrolment_Base implements IEnrolment{
     }
 
     public List<EnrolmentEvaluation> getAllFinalEnrolmentEvaluations() {
-	return (List<EnrolmentEvaluation>) CollectionUtils.select(getEvaluations(), new Predicate() {
-
-	    public boolean evaluate(Object arg0) {
-		EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) arg0;
-		return enrolmentEvaluation.getEnrolmentEvaluationState().equals(
-			EnrolmentEvaluationState.FINAL_OBJ)
-			|| enrolmentEvaluation.getEnrolmentEvaluationState().equals(
-				EnrolmentEvaluationState.RECTIFICATION_OBJ);
+	final List<EnrolmentEvaluation> result = new ArrayList<EnrolmentEvaluation>();
+	
+	for (final EnrolmentEvaluation enrolmentEvaluation : getEvaluationsSet()) {
+	    if (enrolmentEvaluation.isFinal()) {
+		result.add(enrolmentEvaluation);
 	    }
-
-	});
+	}
+	
+	return result;
     }
 
     private boolean hasEnrolmentEvaluationByType(EnrolmentEvaluationType enrolmentEvaluationType) {
