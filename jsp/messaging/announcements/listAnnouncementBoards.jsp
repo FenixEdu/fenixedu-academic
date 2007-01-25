@@ -70,7 +70,7 @@
 				{
 				%>
 				<th>
-					<bean:message key="label.permissions" bundle="MESSAGING_REOSURCES"/>
+					<bean:message key="label.permissions" bundle="MESSAGING_RESOURCES"/>
 				</th>
 				<%
 				}
@@ -115,10 +115,10 @@
 					</td>
 					<td>
 						<logic:empty name="announcementBoard" property="readers">
-							<bean:message key="label.public" bundle="MESSAGING_REOSURCES"/>
+							<bean:message key="label.public" bundle="MESSAGING_RESOURCES"/>
 						</logic:empty>
 						<logic:notEmpty name="announcementBoard" property="readers">
-							<bean:message key="label.private" bundle="MESSAGING_REOSURCES"/>
+							<bean:message key="label.private" bundle="MESSAGING_RESOURCES"/>
 						</logic:notEmpty>					
 					</td>
 					<%
@@ -128,7 +128,7 @@
 						{
 					%>						
 					<td>
-						<bean:message key="label.no" bundle="MESSAGING_REOSURCES"/>
+						<bean:message key="label.no" bundle="MESSAGING_RESOURCES"/>
 						(<html:link page="<%= contextPrefix + "method=addBookmark" + "&amp;" + extraParameters +"&amp;announcementBoardId="+announcementBoard.getIdInternal() + "&amp;returnAction="+request.getAttribute("returnAction") + "&amp;returnMethod="+request.getAttribute("returnMethod")%>">Adicionar</html:link>)
 					</td>									
 					<%
@@ -137,7 +137,7 @@
 						{
 					%>
 					<td>
-						<bean:message key="label.yes" bundle="MESSAGING_REOSURCES"/>
+						<bean:message key="label.yes" bundle="MESSAGING_RESOURCES"/>
 						(<html:link page="<%= contextPrefix + "method=removeBookmark" + "&amp;" + extraParameters +"&amp;announcementBoardId="+announcementBoard.getIdInternal() + "&amp;returnAction="+request.getAttribute("returnAction") + "&amp;returnMethod="+request.getAttribute("returnMethod")%>">Remover</html:link>)
 					</td>										
 					<%				
