@@ -6,8 +6,6 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
@@ -15,8 +13,6 @@ import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
-import net.sourceforge.fenixedu.domain.curriculum.GradeFactory;
-import net.sourceforge.fenixedu.domain.curriculum.IGrade;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.log.EnrolmentLog;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -609,13 +605,6 @@ public class Enrolment extends Enrolment_Base implements IEnrolment{
 	return hasEnrolmentEvaluationByType(EnrolmentEvaluationType.SPECIAL_SEASON);
     }
 
-    public Integer getFinalGrade() {
-	final EnrolmentEvaluation enrolmentEvaluation = getLatestEnrolmentEvaluation();
-	return (enrolmentEvaluation == null || !StringUtils.isNumeric(enrolmentEvaluation.getGrade())) ? null
-		: Integer.valueOf(enrolmentEvaluation.getGrade());
-
-    }
-
     public boolean isNotEvaluated() {
 	final EnrolmentEvaluation finalEnrolmentEvaluation = getLatestEnrolmentEvaluation();
 	return finalEnrolmentEvaluation == null || finalEnrolmentEvaluation.isNotEvaluated();
@@ -693,89 +682,6 @@ public class Enrolment extends Enrolment_Base implements IEnrolment{
 	return false;
     }
 
-    private EnrolmentEvaluation getEnrolmentEvaluationFinal() {
-	final SortedSet<EnrolmentEvaluation> normal = new TreeSet<EnrolmentEvaluation>(
-		EnrolmentEvaluation.SORT_SAME_TYPE_GRADE);
-	final SortedSet<EnrolmentEvaluation> specialSeason = new TreeSet<EnrolmentEvaluation>(
-		EnrolmentEvaluation.SORT_SAME_TYPE_GRADE);
-	final SortedSet<EnrolmentEvaluation> improvment = new TreeSet<EnrolmentEvaluation>(
-		EnrolmentEvaluation.SORT_SAME_TYPE_GRADE);
-
-	for (final EnrolmentEvaluation enrolmentEvaluation : this.getEvaluationsSet()) {
-
-	    if (enrolmentEvaluation.getEnrolmentEvaluationState().equals(
-		    EnrolmentEvaluationState.FINAL_OBJ)
-		    || enrolmentEvaluation.getEnrolmentEvaluationState().equals(
-			    EnrolmentEvaluationState.RECTIFICATION_OBJ)) {
-
-		switch (enrolmentEvaluation.getEnrolmentEvaluationType()) {
-		case NORMAL:
-		case EQUIVALENCE:
-		    normal.add(enrolmentEvaluation);
-		    break;
-		case IMPROVEMENT:
-		    improvment.add(enrolmentEvaluation);
-		    break;
-		case SPECIAL_SEASON:
-		    specialSeason.add(enrolmentEvaluation);
-		    break;
-		default:
-		    break;
-		}
-	    }
-	}
-
-	final SortedSet<EnrolmentEvaluation> finalGrade = new TreeSet<EnrolmentEvaluation>(
-		EnrolmentEvaluation.SORT_BY_GRADE);
-
-	if (!normal.isEmpty()) {
-	    finalGrade.add(normal.last());
-	}
-	if (!specialSeason.isEmpty()) {
-	    finalGrade.add(specialSeason.last());
-	}
-	if (!improvment.isEmpty()) {
-	    finalGrade.add(improvment.last());
-	}
-
-	return finalGrade.last();
-    }
-
-    public IGrade getGradeFinal() {
-	switch (this.getEnrollmentState()) {
-	case APROVED:
-	    return getEnrolmentEvaluationFinal().getGradeWrapper();
-	case TEMPORARILY_ENROLLED:
-	case ENROLLED:
-	    return null;
-	case NOT_EVALUATED:
-	    return GradeFactory.getInstance().getGrade("NA");
-	case NOT_APROVED:
-	    return GradeFactory.getInstance().getGrade("RE");
-	default:
-	    throw new DomainException("error.enrolment.invalid.enrolment.state");
-	}
-    }
-
-    /*
-         * private static class EnrolmentEnrolmentEvaluationListener extends
-         * dml.runtime.RelationAdapter<EnrolmentEvaluation, Enrolment> {
-         * 
-         * @Override public void afterAdd(EnrolmentEvaluation
-         * enrolmentEvaluation, Enrolment enrolment) { if(enrolmentEvaluation !=
-         * null && enrolment != null) {
-         * enrolment.calculateNewEnrolmentState(enrolmentEvaluation.getEnrolmentEvaluationState()); } } }
-         */
-    public void calculateNewEnrolmentState(EnrolmentEvaluationState enrolmentEvaluationState) {
-	// TODO: anulled
-	if (enrolmentEvaluationState == EnrolmentEvaluationState.FINAL_OBJ
-		|| enrolmentEvaluationState == EnrolmentEvaluationState.RECTIFICATION_OBJ) {
-
-	    EnrolmentEvaluation enrolmentEvaluationFinal = getEnrolmentEvaluationFinal();
-	    this.setEnrollmentState(enrolmentEvaluationFinal.getEnrollmentStateByGrade());
-	}
-    }
-
     public List<EnrolmentEvaluation> getConfirmedEvaluations(MarkSheetType markSheetType) {
 	List<EnrolmentEvaluation> evaluations = new ArrayList<EnrolmentEvaluation>();
 	for (EnrolmentEvaluation evaluation : this.getEvaluationsSet()) {
@@ -851,9 +757,15 @@ public class Enrolment extends Enrolment_Base implements IEnrolment{
     }
 
     public EnrolmentEvaluation getLatestEnrolmentEvaluation() {
-	return (getStudentCurricularPlan().getDegreeType().getAdministrativeOfficeType() == AdministrativeOfficeType.DEGREE) ? getLatestEnrolmentEvalution(this
-		.getAllFinalEnrolmentEvaluations())
+	return (getStudentCurricularPlan().getDegreeType().getAdministrativeOfficeType() == AdministrativeOfficeType.DEGREE) ? 
+		getLatestEnrolmentEvalution(this.getAllFinalEnrolmentEvaluations())
 		: getLatestEnrolmentEvalution(this.getEvaluations());
+    }
+
+    private EnrolmentEvaluation getLatestEnrolmentEvalution(
+	    List<EnrolmentEvaluation> enrolmentEvaluations) {
+	return (enrolmentEvaluations == null || enrolmentEvaluations.isEmpty()) ? null : Collections
+		.max(enrolmentEvaluations);
     }
 
     public EnrolmentEvaluation getLatestEnrolmentEvaluationBy(EnrolmentEvaluationType evaluationType) {
@@ -862,16 +774,12 @@ public class Enrolment extends Enrolment_Base implements IEnrolment{
 
     public String getGrade() {
 	final EnrolmentEvaluation enrolmentEvaluation = getLatestEnrolmentEvaluation();
-	if(enrolmentEvaluation != null) {
-	    return enrolmentEvaluation.getGrade();
-	}
-	return null;
+	return (enrolmentEvaluation == null) ? null : enrolmentEvaluation.getGrade();
     }
     
-    private EnrolmentEvaluation getLatestEnrolmentEvalution(
-	    List<EnrolmentEvaluation> enrolmentEvaluations) {
-	return (enrolmentEvaluations == null || enrolmentEvaluations.isEmpty()) ? null : Collections
-		.max(enrolmentEvaluations);
+    public Integer getFinalGrade() {
+	final String grade = getGrade();
+	return (grade == null || StringUtils.isEmpty(grade) || !StringUtils.isNumeric(grade)) ? null : Integer.valueOf(grade);
     }
 
     public Double getAccumulatedEctsCredits() {
