@@ -1186,6 +1186,10 @@ public class Registration extends Registration_Base {
 	return getDegree().getDegreeType();
     }
 
+    public boolean isBolonha() {
+	return getDegreeType().isBolonhaType();
+    }
+    
     public boolean isActiveForOffice(Unit office) {
 	return isActive() && isForOffice(office.getAdministrativeOffice());
     }
