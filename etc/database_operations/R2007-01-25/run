@@ -26,3 +26,5 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "Remove not null ExecutionPeriod restriction from ExternalEnrolment table" alterTableExternalEnrolment.sql
