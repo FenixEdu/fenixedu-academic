@@ -39,10 +39,10 @@ public abstract class DegreeModule extends DegreeModule_Base {
 	boolean pt = !(LanguageUtils.getUserLanguage() == Language.en);
 	
         if (isRoot()) {
-            return ((pt) ? getName() : getNameEn()) + "(" + getIdInternal() + ")";
+            return ((pt) ? getName() : getNameEn());
         } else {
             final CourseGroup parentCourseGroup = getParentContexts().get(0).getParentCourseGroup();
-            return parentCourseGroup.getOneFullName() + " > " + (((pt) ? getName() : getNameEn()) + "(" + getIdInternal() + ")");
+            return parentCourseGroup.getOneFullName() + " > " + (((pt) ? getName() : getNameEn()));
         }
     }
     
