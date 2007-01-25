@@ -9,7 +9,11 @@ import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
+import org.joda.time.YearMonthDay;
+
 public class IRSDeclarationRequest extends IRSDeclarationRequest_Base {
+    
+    static final private int FIRST_VALID_YEAR = 2006;
     
     public  IRSDeclarationRequest() {
         super();
@@ -29,11 +33,23 @@ public class IRSDeclarationRequest extends IRSDeclarationRequest_Base {
 
 	super.init(registration, documentPurposeType, otherDocumentPurposeTypeDescription);
 
+	if (!registration.isActive()) {
+	    throw new DomainException("IRSDeclarationRequest.registration.is.not.active");
+	}
+	
+	if (!registration.isBolonha()) {
+	    throw new DomainException("IRSDeclarationRequest.only.available.for.bolonha.registrations");
+	}
+	
 	checkParameters(year);
 	super.setYear(year);
     }
 
     private void checkParameters(Integer year) {
+	if (new YearMonthDay(year, 1, 1).isBefore(new YearMonthDay(FIRST_VALID_YEAR, 1, 1))) {
+	    throw new DomainException("IRSDeclarationRequest.only.available.after.first.valid.year");
+	}
+	
 	if (year == null) {
 	    throw new DomainException(
 		    "error.serviceRequests.documentRequests.SchoolRegistrationDeclarationRequest.year.cannot.be.null");
