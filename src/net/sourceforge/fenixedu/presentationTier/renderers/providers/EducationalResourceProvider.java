@@ -16,7 +16,7 @@ public class EducationalResourceProvider implements DataProvider {
 	        List<EducationalResourceType> types = new ArrayList<EducationalResourceType>();
 
 	        for (EducationalResourceType type : EducationalResourceType.values()) {
-	        	if(!type.equals(EducationalResourceType.PROJECT_SUBMISSION)) { 
+	        	if(!type.equals(EducationalResourceType.PROJECT_SUBMISSION) && !type.equals(EducationalResourceType.SITE_CONTENT)) { 
 	        		types.add(type);
 	        	}
 	        }
