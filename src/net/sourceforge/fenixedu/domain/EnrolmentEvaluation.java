@@ -321,6 +321,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         setEnrolmentEvaluationState(enrolmentEvaluationState); // TODO:
         setEmployee(employee);
         setObservation(observation);
+        setWhenDateTime(new DateTime());
 
         EnrollmentState newEnrolmentState = EnrollmentState.APROVED;        
         if(!this.isImprovment()) {
