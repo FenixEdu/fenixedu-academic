@@ -2307,14 +2307,6 @@ public class Person extends Person_Base {
 	return (Set<GratuityEvent>) getEventsByEventType(EventType.GRATUITY);
     }
 
-    public Money getGratuityEventsPayedAmount(final int civilYear) {
-	return getPayedAmount(EventType.GRATUITY, civilYear);
-    }
-
-    public Money getAdministrativeOfficeFeeAndInsuranceEventsPayedAmount(final int civilYear) {
-	return getPayedAmount(EventType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE, civilYear);
-    }
-
     public Money getPayedAmount(final EventType eventType, final int civilYear) {
 	Money result = Money.ZERO;
 	for (final Event event : (Set<Event>) getEventsByEventType(eventType)) {
