@@ -104,7 +104,7 @@
 	
 	
 	<bean:size id="entriesSize" name="paymentsManagementDTO" property="selectedEntries" />
-	<div style="<%= "margin-top: " + (14 - ((entriesSize - 1) * 2))  + "em;"%>">
+	<div style="<%= "margin-top: " + (12 - ((entriesSize - 1) * 1.5))  + "em;"%>">
 		<jsp:include page="/academicAdminOffice/payments/commons/footer.jsp" flush="true" />
 	</div>
 	
