@@ -57,8 +57,7 @@ public class AssiduousnessParametrizationDispatchAction extends FenixDispatchAct
     public ActionForward sendErrorToEditJustificationMotive(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
             FenixFilterException {
-        RenderUtils.invalidateViewState();
-        setError(request, "message", "error.acronymAlreadyExists");
+        request.setAttribute("justificationMotive", getRenderedObject());
         return mapping.findForward("edit-justification-motive");
     }
 
@@ -81,8 +80,7 @@ public class AssiduousnessParametrizationDispatchAction extends FenixDispatchAct
     public ActionForward sendErrorToEditRegularizationMotive(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
             FenixFilterException {
-        RenderUtils.invalidateViewState();
-        setError(request, "message", "error.acronymAlreadyExists");
+        request.setAttribute("justificationMotive", getRenderedObject());
         return mapping.findForward("edit-regularization-motive");
     }
 

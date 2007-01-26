@@ -98,7 +98,9 @@
 <schema name="create.justificationMotives" type="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive"
 	constructor="acronym, description, justificationType, dayType, justificationGroup, modifiedBy">
 	<slot name="acronym" key="label.acronym" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-	<slot name="description" key="label.description" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="description" key="label.description" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="50"/>
+	</slot>
 	<slot name="justificationType" key="label.type" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="choiceType"	value="net.sourceforge.fenixedu.domain.assiduousness.JustificationType" />
 		<property name="eachLayout" value="this-does-not-exist" />
@@ -116,7 +118,9 @@
 
 <schema name="edit.justificationMotives" type="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive">
 	<slot name="acronym" key="label.acronym" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-	<slot name="description" key="label.description" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="description" key="label.description" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="50"/>
+	</slot>
 	<slot name="justificationType" key="label.type" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="choiceType"	value="net.sourceforge.fenixedu.domain.assiduousness.JustificationType" />
 		<property name="eachLayout" value="this-does-not-exist" />
@@ -135,18 +139,18 @@
 
 <schema name="show.regularizationMotives" type="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive" 
 	constructor="acronym, description, modifiedBy">
-	<slot name="acronym" key="label.acronym" bundle="ASSIDUOUSNESS_RESOURCES"
-	validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-	<slot name="description" key="label.description" bundle="ASSIDUOUSNESS_RESOURCES"
-	validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="acronym" key="label.acronym" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="description" key="label.description" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="50"/>
+	</slot>
 	<slot name="modifiedBy" hidden="true"/>
 </schema>
 
 <schema name="edit.regularizationMotives" type="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive">
-	<slot name="acronym" key="label.acronym" bundle="ASSIDUOUSNESS_RESOURCES"
-	validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-	<slot name="description" key="label.description" bundle="ASSIDUOUSNESS_RESOURCES"
-	validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="acronym" key="label.acronym" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="description" key="label.description" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="50"/>
+	</slot>
 	<slot name="modifiedBy" hidden="true"/>
 	<setter signature="editJustificationMotive(acronym,description,modifiedBy)"/>
 </schema>
