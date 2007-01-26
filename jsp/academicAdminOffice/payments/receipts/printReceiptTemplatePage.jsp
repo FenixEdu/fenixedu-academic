@@ -12,9 +12,9 @@
 <div style="font-family: Arial; padding: 0 1em;">
 
 
-<table style="width: 100%;">
+<table style="width: 95%%;">
 <tr>
-	<td rowspan="2" style="width: 100px;">
+	<td rowspan="2" style="width: 95%px;">
 		<img src="<%= request.getContextPath() %>/images/LogoIST.gif" alt="<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="LogoIST" bundle="IMAGE_RESOURCES" />"/>
 	</td>
 	<td style="padding-left: 1em;">
@@ -40,9 +40,9 @@
 
 
 
-<p style="margin-top: 2em;"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.payments.printTemplates.processFrom"/></strong></p>
+<p style="margin-bottom: 0.5em; margin-top: 2em;"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.payments.printTemplates.processFrom"/></strong></p>
 
-<table>
+<table style="margin-top: 0.5em;">
 	<tr>
 		<td style="width: 300px"><bean:message key="label.net.sourceforge.fenixedu.domain.Person.name" bundle="APPLICATION_RESOURCES" />:</td>
 		<td><bean:write name="receipt" property="person.name"/></td>
@@ -59,9 +59,9 @@
 
 
 
-<p style="margin-top: 2em;"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.payments.printTemplates.receipt.contributor"/> </strong></p>
+<p style="margin-bottom: 0.5em; margin-top: 2em;"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.payments.printTemplates.receipt.contributor"/> </strong></p>
 
-<table style="margin-bottom: 4em;">
+<table style="margin-top: 0.5em; margin-bottom: 4em;">
 	<tr>
 		<td style="width: 300px"><bean:message bundle="APPLICATION_RESOURCES" key="label.net.sourceforge.fenixedu.domain.organizationalStructure.Party.name" />:</td>
 		<td><bean:write name="receipt" property="contributorParty.name" /></td>
@@ -86,7 +86,7 @@
 
 					
 	<logic:iterate id="entry" name="sortedEntries">
-		<table style="width: 100%;">
+		<table style="width: 95%%;">
 			<tr>
 				<td style="text-align: right;">
 					<app:labelFormatter name="entry" property="description">
@@ -95,7 +95,7 @@
 						<app:property name="default" value="APPLICATION_RESOURCES"/>
 					</app:labelFormatter>
 				</td>
-				<td style="text-align: right; width: 210px;">
+				<td style="text-align: right; width: 190px;">
 					_______________
 					<bean:define id="amount" name="entry" property="originalAmount" type="Money" /> <%=amount.toPlainString()%><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.currencySymbol" />
 				</td>
@@ -104,31 +104,33 @@
 	</logic:iterate>
 	
 	
-	<table style="width: 100%; padding-top: 1em;">
+	<table style="width: 95%%; padding-top: 1em;">
 	<tr>
 		<td style="text-align: right;">
 			<strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.payments.printTemplates.totalAmountToPay"/></strong>
 		</td>
-		<td style="text-align: right; width: 210px;">
+		<td style="text-align: right; width: 190px;">
 			<strong>_______________ <bean:define id="totalAmount" name="receipt" property="totalAmount" type="Money" /><%=totalAmount.toPlainString()%><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.currencySymbol" /></strong>
 		</td>
 	</tr>
 	</table>
 
 
-	<p style="text-align: center; margin-top: 6em;">
+
+
+	<p style="text-align: left; margin-top: 8em; font-size: 10pt;">
 		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.payments.printTemplates.city"/>, <%= new java.text.SimpleDateFormat("dd MMMM yyyy", request.getLocale()).format(new java.util.Date()) %>
 	</p>
 
-	<p style="text-align: center; margin-top: 2em;">
+	<p style="text-align: right; margin-top: 2em; padding-right: 15em; font-size: 10pt;">
 		<b><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.payments.printTemplates.theEmployee"/></b>
 	</p>
-	<p style="text-align: center;">
-		___________________
+	<p style="text-align: right; padding-right: 10em; font-size: 10pt;">
+		_____________________________
 	</p>
 
 
-	<div style="margin-top: 9em;">
+	<div style="margin-top: 10em;">
 		<jsp:include page="/academicAdminOffice/payments/commons/footer.jsp" flush="true" />
 	</div>
 

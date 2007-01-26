@@ -16,7 +16,7 @@
 <div style="font-family: Arial; padding: 0 1em;">
 
 
-<table style="width: 100%;">
+<table style="width: 95%;">
 <tr>
 	<td rowspan="2" style="width: 100px;">
 		<img src="<%= request.getContextPath() %>/images/LogoIST.gif" alt="<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="LogoIST" bundle="IMAGE_RESOURCES" />"/>
@@ -40,9 +40,9 @@
 
 <bean:define id="person" name="createOtherPartyPayment" property="event.person" />
 
-<p style="margin-top: 2em;"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.payments.printTemplates.processFrom"/></strong></p>
+<p style="margin-bottom: 0.5em; margin-top: 2em;"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.payments.printTemplates.processFrom"/></strong></p>
 
-<table>
+<table style="margin-top: 0.5em;">
 	<tr>
 		<td style="width: 300px"><bean:message key="label.net.sourceforge.fenixedu.domain.Person.name" bundle="APPLICATION_RESOURCES" />:</td>
 		<td><bean:write name="person" property="name"/></td>
@@ -61,9 +61,9 @@
 
 <bean:define id="contributor" name="createOtherPartyPayment" property="contributorParty" />
 
-<p style="margin-top: 2em;"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.payments.printTemplates.guideForOtherPartyPayments.contributor"/></strong></p>
+<p style="margin-bottom: 0.5em; margin-top: 2em;"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.payments.printTemplates.guideForOtherPartyPayments.contributor"/></strong></p>
 
-<table style="margin-bottom: 4em;">
+<table style="margin-top: 0.5em; margin-bottom: 4em;"> 
 	<tr>
 		<td style="width: 300px"><bean:message key="label.net.sourceforge.fenixedu.domain.organizationalStructure.Party.name" bundle="APPLICATION_RESOURCES" />:</td>
 		<td><bean:write name="contributor" property="name"/></td>
@@ -76,16 +76,16 @@
 
 
 
-	<table style="width: 100%;">
+	<table style="width: 95%; margin-top: 2em;">
 		<tr>
 			<td style="text-align: right;">
-	     				<app:labelFormatter name="createOtherPartyPayment" property="event.description">
-	     					<app:property name="enum" value="ENUMERATION_RESOURCES"/>
-	     					<app:property name="application" value="APPLICATION_RESOURCES"/>
+   				<app:labelFormatter name="createOtherPartyPayment" property="event.description">
+   					<app:property name="enum" value="ENUMERATION_RESOURCES"/>
+   					<app:property name="application" value="APPLICATION_RESOURCES"/>
 					<app:property name="default" value="APPLICATION_RESOURCES"/>	
-	     				</app:labelFormatter>
+   				</app:labelFormatter>
 			</td>
-			<td style="text-align: right; width: 230px;">
+			<td style="text-align: right; width: 190px;">
 				_______________
 				<bean:define id="amountToPay" name="createOtherPartyPayment" property="amount" type="Money" /> <%= amountToPay.toPlainString() %><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.currencySymbol"/>
 			</td>
@@ -95,35 +95,37 @@
 
 
 
-	<table style="width: 100%; padding-top: 1em;">
+	<table style="width: 95%; padding-top: 1em;">
 	<tr>
 		<td style="text-align: right;">
 			<strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.payments.printTemplates.totalAmountToPay"/></strong>
 		</td>
-		<td style="text-align: right; width: 230px;">
-			<strong>_______________ <bean:define id="amountToPay" name="createOtherPartyPayment" property="amount" type="Money" /> <%= amountToPay.toPlainString() %><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.currencySymbol"/></strong>
+		<td style="text-align: right; width: 190px;">
+			_______________
+			<bean:define id="amountToPay" name="createOtherPartyPayment" property="amount" type="Money" /> <%= amountToPay.toPlainString() %><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.currencySymbol"/>
 		</td>
 	</tr>
 	</table>
 
 
 
-	<p style="text-align: center; margin-top: 6em;">
+	<p style="text-align: left; margin-top: 8em; font-size: 10pt;">
 		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.payments.printTemplates.city"/>, <%= new java.text.SimpleDateFormat("dd MMMM yyyy", request.getLocale()).format(new java.util.Date()) %>
 	</p>
 
-	<p style="text-align: center; margin-top: 2em;">
+		
+	<p style="text-align: right; margin-top: 2em; padding-right: 15em; font-size: 10pt;">
 		<b><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.payments.printTemplates.theEmployee"/></b>
 	</p>
-	<p style="text-align: center;">
-		___________________
+	<p style="text-align: right; padding-right: 10em; font-size: 10pt;">
+		_____________________________
 	</p>
 
 
 
 
 
-	<div style="margin-top: 15em;">
+	<div style="margin-top: 10em;">
 		<jsp:include page="/academicAdminOffice/payments/commons/footer.jsp" flush="true" />
 	</div>
 
