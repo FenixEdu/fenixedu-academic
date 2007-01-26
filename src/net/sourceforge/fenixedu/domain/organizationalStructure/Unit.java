@@ -1021,6 +1021,7 @@ public class Unit extends Unit_Base {
     /**
      * This method return a list of external childs in the "organizational structure",
      * that may be <Units> or <ExternalCurricularCourses>.
+     * Its used by a tree renderer
      * @return SortedSet<Object>
      */
     public SortedSet<Object> getSortedExternalChilds() {
