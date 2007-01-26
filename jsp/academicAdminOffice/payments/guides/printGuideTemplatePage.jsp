@@ -10,7 +10,7 @@
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
 
 
-<div style="font-family: Arial; height: 90%; padding: 0 1em;">
+<div style="font-family: Arial; padding: 0 1em;">
 
 
 <table style="width: 100%;">
@@ -64,7 +64,7 @@
 						<app:property name="default" value="APPLICATION_RESOURCES"/>	
 					</app:labelFormatter>
 				</td>
-				<td style="text-align: right; width: 200px;">
+				<td style="text-align: right; width: 210px;">
 					_______________
 					<bean:define id="amountToPay" name="entryDTO" property="amountToPay" type="Money" /> <%= amountToPay.toPlainString() %><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.currencySymbol"/>
 				</td>
@@ -79,10 +79,12 @@
 		<td style="text-align: right;">
 			<strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.payments.printTemplates.totalAmountToPay"/></strong>
 		</td>
-		<td style="text-align: right; width: 200px;">
+		<td style="text-align: right; width: 210px;">
 			<strong>_______________ <bean:define id="totalAmountToPay" name="paymentsManagementDTO" property="totalAmountToPay" type="Money"/><%= totalAmountToPay.toPlainString() %><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.currencySymbol"/></strong>
 		</td>
 	</tr>
+
+
 	</table>
 
 
@@ -100,8 +102,8 @@
 	
 	
 
-	<div style="margin-top: 9em;">
-		<jsp:include page="/degreeAdministrativeOffice/payments/commons/footer.jsp" flush="true" />
+	<div style="margin-top: 18em;">
+		<jsp:include page="/academicAdminOffice/payments/commons/footer.jsp" flush="true" />
 	</div>
 
 
@@ -109,5 +111,6 @@
 
 
 <div class="breakafter"></div>
+
 
 </logic:present>

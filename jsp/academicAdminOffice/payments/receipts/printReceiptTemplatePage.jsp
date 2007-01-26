@@ -9,7 +9,7 @@
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
 
 
-<div style="font-family: Arial; height: 90%; padding: 0 1em;">
+<div style="font-family: Arial; padding: 0 1em;">
 
 
 <table style="width: 100%;">
@@ -95,7 +95,7 @@
 						<app:property name="default" value="APPLICATION_RESOURCES"/>
 					</app:labelFormatter>
 				</td>
-				<td style="text-align: right; width: 200px;">
+				<td style="text-align: right; width: 210px;">
 					_______________
 					<bean:define id="amount" name="entry" property="originalAmount" type="Money" /> <%=amount.toPlainString()%><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.currencySymbol" />
 				</td>
@@ -109,7 +109,7 @@
 		<td style="text-align: right;">
 			<strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.payments.printTemplates.totalAmountToPay"/></strong>
 		</td>
-		<td style="text-align: right; width: 200px;">
+		<td style="text-align: right; width: 210px;">
 			<strong>_______________ <bean:define id="totalAmount" name="receipt" property="totalAmount" type="Money" /><%=totalAmount.toPlainString()%><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.currencySymbol" /></strong>
 		</td>
 	</tr>
