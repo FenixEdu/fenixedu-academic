@@ -6,6 +6,8 @@ package net.sourceforge.fenixedu.presentationTier.Action.directiveCouncil;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -35,7 +37,6 @@ import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.util.NumberUtils;
 import net.sourceforge.fenixedu.util.report.Spreadsheet;
 import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
 
@@ -50,6 +51,12 @@ import org.apache.struts.util.LabelValueBean;
 
 public class SummariesControlAction extends FenixDispatchAction {
 
+    private BigDecimal EMPTY = BigDecimal.valueOf(0.00);
+    
+    private BigDecimal ONE = BigDecimal.valueOf(1.00);
+    
+    private BigDecimal HUNDRED = BigDecimal.valueOf(100.00);
+    
     public ActionForward prepareSummariesControl(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
@@ -118,8 +125,7 @@ public class SummariesControlAction extends FenixDispatchAction {
         return mapping.findForward("success");
     }
 
-    private void saveDepartmentAndExecutionPeriod(HttpServletRequest request, String departmentID,
-            String executionPeriodID) {
+    private void saveDepartmentAndExecutionPeriod(HttpServletRequest request, String departmentID, String executionPeriodID) {
         request.setAttribute("department", departmentID);
         request.setAttribute("executionPeriod", executionPeriodID);
     }
@@ -127,57 +133,50 @@ public class SummariesControlAction extends FenixDispatchAction {
     private List<SummariesControlElementDTO> getListing(HttpServletRequest request, String departmentID,
             String executionPeriodID) throws FenixFilterException, FenixServiceException {
 
-        final Department department = rootDomainObject
-                .readDepartmentByOID(Integer.valueOf(departmentID));
-        ;
-        final ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(Integer
-                .valueOf(executionPeriodID));
-        ;
-
+        final Department department = rootDomainObject.readDepartmentByOID(Integer.valueOf(departmentID));       
+        final ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(Integer.valueOf(executionPeriodID));
+       
         List<Teacher> allDepartmentTeachers = (department != null && executionPeriod != null) ? department
                 .getAllTeachers(executionPeriod.getBeginDateYearMonthDay(), executionPeriod.getEndDateYearMonthDay())
                 : new ArrayList<Teacher>();
 
         List<SummariesControlElementDTO> allListElements = new ArrayList<SummariesControlElementDTO>();
-
+             
         for (Teacher teacher : allDepartmentTeachers) {
+                       
             TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
-            for (Professorship professorship : teacher.getProfessorships()) {
+            for (Professorship professorship : teacher.getProfessorships()) {       	
+        	
+                BigDecimal lessonHours = EMPTY, summaryHours = EMPTY, courseDifference = EMPTY;
+                BigDecimal shiftDifference = EMPTY, courseSummaryHours = EMPTY;
 
-                Double lessonHours = 0.0, summaryHours = 0.0, courseDifference = 0.0;
-                Double percentage = 0.0, shiftDifference = 0.0, courseSummaryHours = 0.0;
-
-                if (professorship.belongsToExecutionPeriod(executionPeriod)
-                        && !professorship.getExecutionCourse().isMasterDegreeOnly()) {
+                if (professorship.belongsToExecutionPeriod(executionPeriod) && !professorship.getExecutionCourse().isMasterDegreeOnly()) {
 
                     for (Shift shift : professorship.getExecutionCourse().getAssociatedShifts()) {
 
-                        DegreeTeachingService degreeTeachingService = readDegreeTeachingService(
-                                teacherService, shift, professorship);
-
-                        // GET LESSON HOURS
-                        lessonHours = readLessonHours(degreeTeachingService, teacherService,
-                                professorship, shift, percentage, lessonHours);
-
-                        // GET SHIFT SUMMARIES HOURS
+                        DegreeTeachingService degreeTeachingService = readDegreeTeachingService(teacherService, shift, professorship);                                                
                         if (degreeTeachingService != null) {
-                            summaryHours = readSummaryHours(professorship, shift, summaryHours);
+                            
+                            // GET LESSON HOURS
+                            lessonHours = readLessonHours(degreeTeachingService.getPercentage(), shift, lessonHours);
+                            
+                            // GET SHIFT SUMMARIES HOURS
+                            summaryHours = readSummaryHours(professorship, shift, summaryHours);                            
                         }
 
-                        // GET TOTAL SUMMARY HOURS
+                        // GET COURSE SUMMARY HOURS
                         courseSummaryHours = readSummaryHours(professorship, shift, courseSummaryHours);
-                    }
-
-                    summaryHours = NumberUtils.formatNumber(summaryHours, 1);
-                    lessonHours = NumberUtils.formatNumber(lessonHours, 1);
-                    courseSummaryHours = NumberUtils.formatNumber(courseSummaryHours, 1);
+                    }                  
+                    
+                    summaryHours = summaryHours.setScale(2, RoundingMode.HALF_UP);
+                    lessonHours = lessonHours.setScale(2, RoundingMode.HALF_UP);
+                    courseSummaryHours = courseSummaryHours.setScale(2, RoundingMode.HALF_UP);
 
                     shiftDifference = getDifference(lessonHours, summaryHours);
                     courseDifference = getDifference(lessonHours, courseSummaryHours);
 
                     Category category = teacher.getCategory();
                     String categoryName = (category != null) ? category.getCode() : "";
-
                     String siglas = getSiglas(professorship);
 
                     SummariesControlElementDTO listElementDTO = new SummariesControlElementDTO(teacher
@@ -196,6 +195,46 @@ public class SummariesControlAction extends FenixDispatchAction {
         return allListElements;
     }
 
+    private DegreeTeachingService readDegreeTeachingService(TeacherService teacherService, Shift shift, Professorship professorship) {
+        DegreeTeachingService degreeTeachingService = null;
+        if (teacherService != null) {
+            degreeTeachingService = teacherService.getDegreeTeachingServiceByShiftAndProfessorship(shift, professorship);
+        }
+        return degreeTeachingService;
+    }
+
+    private BigDecimal readLessonHours(Double percentage, Shift shift, BigDecimal lessonHours) {                                     
+        BigDecimal shiftLessonHoursSum = EMPTY;
+	for (Lesson lesson : shift.getAssociatedLessons()) {
+	    shiftLessonHoursSum = shiftLessonHoursSum.add(BigDecimal.valueOf(lesson.getAllLessonDates().size() * lesson.hours()));
+	}
+	return lessonHours.add(BigDecimal.valueOf((percentage / 100)).multiply(shiftLessonHoursSum));                
+    }
+
+    private BigDecimal readSummaryHours(Professorship professorship, Shift shift, BigDecimal summaryHours) {	
+	for (Summary summary : shift.getAssociatedSummaries()) {
+	    if(summary.getProfessorship() != null && summary.getProfessorship().equals(professorship)) {
+                BigDecimal lessonHours = EMPTY;
+                if(summary.getLesson() != null) {
+                    lessonHours = BigDecimal.valueOf(summary.getLesson().hours());		
+                } else if(!shift.getAssociatedLessons().isEmpty()) {	
+                    lessonHours = BigDecimal.valueOf(shift.getAssociatedLessons().get(0).hours());		
+                }	
+                summaryHours = summaryHours.add(lessonHours);
+	    }
+	}		
+	return summaryHours;
+    }
+    
+    private BigDecimal getDifference(BigDecimal lessonHours, BigDecimal summaryHours) {		 
+        Double difference;
+        difference = (1 - ((lessonHours.doubleValue() - summaryHours.doubleValue()) / lessonHours.doubleValue())) * 100;
+        if (difference.isNaN() || difference.isInfinite()) {
+            difference = 0.0;
+        }        
+        return  BigDecimal.valueOf(difference).setScale(2, RoundingMode.HALF_UP);
+    }
+      
     private String getSiglas(Professorship professorship) {
         ExecutionCourse executionCourse = professorship.getExecutionCourse();
         int numberOfCurricularCourse = executionCourse.getAssociatedCurricularCourses().size();
@@ -216,45 +255,7 @@ public class SummariesControlAction extends FenixDispatchAction {
         }
         return buffer.toString();
     }
-
-    private DegreeTeachingService readDegreeTeachingService(TeacherService teacherService, Shift shift,
-            Professorship professorship) {
-
-        DegreeTeachingService degreeTeachingService = null;
-        if (teacherService != null) {
-            degreeTeachingService = teacherService.getDegreeTeachingServiceByShiftAndProfessorship(
-                    shift, professorship);
-        }
-        return degreeTeachingService;
-    }
-
-    private Double readLessonHours(DegreeTeachingService degreeTeachingService,
-            TeacherService teacherService, Professorship professorship, Shift shift, Double percentage,
-            Double lessonHours) {
-
-        if (degreeTeachingService != null) {
-            percentage = degreeTeachingService.getPercentage();
-            lessonHours += getLessonHoursByExecutionCourseAndExecutionPeriod(percentage, shift);
-        }
-        return lessonHours;
-    }
-
-    private Double readSummaryHours(Professorship professorship, Shift shift, Double summaryHours) {
-        for (Summary summary : shift.getAssociatedSummaries()) {
-            if (summary.getProfessorship() != null && summary.getProfessorship().equals(professorship)) {
-                Lesson lesson = summary.getLesson();
-                if (lesson != null) {
-                    summaryHours += lesson.hours();
-                } else {
-                    if (!shift.getAssociatedLessons().isEmpty()) {
-                        summaryHours += shift.getAssociatedLessons().get(0).hours();
-                    }
-                }
-            }
-        }
-        return summaryHours;
-    }
-
+    
     public ActionForward exportToExcel(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
             FenixFilterException {
@@ -353,35 +354,14 @@ public class SummariesControlAction extends FenixDispatchAction {
         headers.add("Sumários na Disciplina");
         headers.add("Percentagem na Disciplina");
         return headers;
-    }
-
-    private Double getDifference(Double lessonHours, Double summaryHours) {
-        Double difference;
-        difference = (1 - ((lessonHours - summaryHours) / lessonHours)) * 100;
-        if (difference.isNaN() || difference.isInfinite()) {
-            difference = 0.0;
-        } else {
-            difference = NumberUtils.formatNumber(difference, 2);
-        }
-        return difference;
-    }
-
-    private Double getLessonHoursByExecutionCourseAndExecutionPeriod(Double percentage, Shift shift) {
-
-        Double shiftLessonHoursSum = 0.0;
-        for (Lesson lesson : shift.getAssociatedLessons()) {
-            shiftLessonHoursSum += lesson.hours();
-        }
-        return ((percentage / 100) * shiftLessonHoursSum) * 14; // 14 weeks
-    }
-
+    }   
+    
     private List<LabelValueBean> getNotClosedExecutionPeriods(
             List<InfoExecutionPeriod> allExecutionPeriods) {
         List<LabelValueBean> executionPeriods = new ArrayList<LabelValueBean>();
         for (InfoExecutionPeriod infoExecutionPeriod : allExecutionPeriods) {
             LabelValueBean labelValueBean = new LabelValueBean();
-            labelValueBean.setLabel(infoExecutionPeriod.getInfoExecutionYear().getYear() + " - "
-                    + infoExecutionPeriod.getSemester() + "º Semestre");
+            labelValueBean.setLabel(infoExecutionPeriod.getInfoExecutionYear().getYear() + " - " + infoExecutionPeriod.getSemester() + "º Semestre");
             labelValueBean.setValue(infoExecutionPeriod.getIdInternal().toString());
             executionPeriods.add(labelValueBean);
         }

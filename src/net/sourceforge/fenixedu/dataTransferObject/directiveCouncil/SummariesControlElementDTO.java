@@ -4,19 +4,21 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject.directiveCouncil;
 
+import java.math.BigDecimal;
+
 import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
 
 public class SummariesControlElementDTO extends DataTranferObject {
 
     String teacherName, executionCourseName, categoryName, executionPeriodName, departmentName, siglas;
 
-    Double lessonHours, summaryHours, courseSummaryHours, shiftDifference, courseDifference;
+    BigDecimal lessonHours, summaryHours, courseSummaryHours, shiftDifference, courseDifference;
     
     Integer teacherNumber;
        
     public SummariesControlElementDTO(String teacherName, String executionCourseName,
-            Integer teacherNumber, String categoryName, Double lessonHours, Double summaryHours,
-            Double totalSummaryHours, Double shiftDifference, Double courseDifference, String siglas) {
+            Integer teacherNumber, String categoryName, BigDecimal lessonHours, BigDecimal summaryHours,
+            BigDecimal courseSummaryHours, BigDecimal shiftDifference, BigDecimal courseDifference, String siglas) {
        
         this.siglas = siglas;
         this.shiftDifference = shiftDifference;
@@ -26,11 +28,11 @@ public class SummariesControlElementDTO extends DataTranferObject {
         this.summaryHours = summaryHours;
         this.teacherName = teacherName;
         this.teacherNumber = teacherNumber;
-        this.courseSummaryHours = totalSummaryHours;
+        this.courseSummaryHours = courseSummaryHours;
         this.categoryName = categoryName;
     }
 
-    public Double getShiftDifference() {
+    public BigDecimal getShiftDifference() {
         return shiftDifference;
     }
 
@@ -38,11 +40,11 @@ public class SummariesControlElementDTO extends DataTranferObject {
         return executionCourseName;
     }
 
-    public Double getLessonHours() {
+    public BigDecimal getLessonHours() {
         return lessonHours;
     }
 
-    public Double getSummaryHours() {
+    public BigDecimal getSummaryHours() {
         return summaryHours;
     }
 
@@ -54,7 +56,7 @@ public class SummariesControlElementDTO extends DataTranferObject {
         return teacherNumber;
     }
 
-    public Double getCourseSummaryHours() {
+    public BigDecimal getCourseSummaryHours() {
         return courseSummaryHours;
     }
 
@@ -62,7 +64,7 @@ public class SummariesControlElementDTO extends DataTranferObject {
         return categoryName;
     }
 
-    public Double getCourseDifference() {
+    public BigDecimal getCourseDifference() {
         return courseDifference;
     }
 
