@@ -17,37 +17,24 @@
 
 	<br />
 	<strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.events"/></strong>
-	<logic:notEmpty name="gratuityEvents">
-		<fr:view name="gratuityEvents" schema="GratuityEvent.view">
+	<logic:notEmpty name="eventsToApplyExemption">
+		<fr:view name="eventsToApplyExemption" schema="AccountingEvent.view">
 			<fr:layout name="tabular">
 				
 				<fr:property name="classes" value="tstyle4" />
 				<fr:property name="columnClasses" value=",,,nowrap" />
 				
-				<fr:property name="linkFormat(createGratuityExemption)" value="/payments.do?method=prepareCreateGratuityExemption&gratuityEventId=${idInternal}" />
-				<fr:property name="key(createGratuityExemption)" value="label.payments.gratuityExemptions.createExemption" />
-				<fr:property name="bundle(createGratuityExemption)" value="ACADEMIC_OFFICE_RESOURCES" />
-				<fr:property name="visibleIf(createGratuityExemption)" value="gratuityExemptionNotAvailable" />
-				
-				<fr:property name="linkFormat(viewGratuityExemption)" value="/payments.do?method=viewGratuityExemption&gratuityEventId=${idInternal}" />
-				<fr:property name="key(viewGratuityExemption)" value="label.payments.gratuityExemptions.viewExemption" />
-				<fr:property name="bundle(viewGratuityExemption)" value="ACADEMIC_OFFICE_RESOURCES" />
-				<fr:property name="visibleIf(viewGratuityExemption)" value="gratuityExemptionAvailable" />
-				
-				
-<%--				<fr:property name="linkFormat(showPenaltyExemptions)" value="/payments.do?method=showPenaltyExemptions&gratuityEventId=${idInternal}" />
-				<fr:property name="key(showPenaltyExemptions)" value="label.payments.penaltyExemptions" />
-				<fr:property name="bundle(showPenaltyExemptions)" value="ACADEMIC_OFFICE_RESOURCES" />
-				<fr:property name="visibleIf(showPenaltyExemptions)" value="penaltyExemptionApplicable" />
---%>
-				
+				<fr:property name="linkFormat(showExemptions)" value="/exemptionsManagement.do?method=showExemptions&eventId=${idInternal}" />
+				<fr:property name="key(showExemptions)" value="label.payments.exemptions" />
+				<fr:property name="bundle(showExemptions)" value="ACADEMIC_OFFICE_RESOURCES" />
+								
 			</fr:layout>
 		</fr:view>
 	</logic:notEmpty>
-	<logic:empty name="gratuityEvents">
+	<logic:empty name="eventsToApplyExemption">
 		<p>
 			<em><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"
-				key="label.payments.exemptions.noGratuityEvents" />
+				key="label.payments.exemptions.noEventsToApplyExemption" />
 			</em>
 		</p>
 	</logic:empty>

@@ -430,6 +430,20 @@
 	<slot name="title" key="label.academicCalendar.title" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="description" key="label.academicCalendar.description"/>
 	<slot name="begin" key="label.begin" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-	<slot name="end" key="label.end" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>	  
+	<slot name="end" key="label.end" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>	    					
 	<setter signature="edit(title, description, begin, end)" />
+</schema>
+
+<schema name="EditAcademicCalendarEntryType" type="net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry" bundle="MANAGER_RESOURCES">	
+	<slot name="title" key="label.academicCalendar.title" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="description" key="label.academicCalendar.description"/>
+	<slot name="begin" key="label.begin" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="end" key="label.end" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>	    					
+</schema>
+
+<schema name="PaymentsFileBean.edit" type="net.sourceforge.fenixedu.presentationTier.Action.manager.payments.PaymentsFileBean" bundle="MANAGER_RESOURCES">	
+	<slot name="file">
+		<property name="fileNameSlot" value="filename"/>
+		<property name="size" value="40"/>
+	</slot>	
 </schema>

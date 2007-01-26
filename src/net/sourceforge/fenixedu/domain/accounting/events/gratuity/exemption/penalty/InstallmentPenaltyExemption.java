@@ -1,9 +1,12 @@
 package net.sourceforge.fenixedu.domain.accounting.events.gratuity.exemption.penalty;
 
+import org.joda.time.YearMonthDay;
+
 import net.sourceforge.fenixedu.domain.Employee;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.accounting.Event;
+import net.sourceforge.fenixedu.domain.accounting.Exemption;
 import net.sourceforge.fenixedu.domain.accounting.Installment;
-import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
+import net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemptionJustificationType;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import dml.runtime.RelationAdapter;
@@ -11,39 +14,40 @@ import dml.runtime.RelationAdapter;
 public class InstallmentPenaltyExemption extends InstallmentPenaltyExemption_Base {
 
     static {
-	PenaltyExemptionGratuityEvent
-		.addListener(new RelationAdapter<PenaltyExemption, GratuityEvent>() {
-		    @Override
-		    public void beforeAdd(PenaltyExemption penaltyExemption, GratuityEvent gratuityEvent) {
-			if (penaltyExemption != null && gratuityEvent != null) {
-			    if (penaltyExemption instanceof InstallmentPenaltyExemption) {
-				if (!(gratuityEvent instanceof GratuityEventWithPaymentPlan)) {
-				    throw new DomainException(
-					    "error.accounting.events.gratuity.exemption.penalty.InstallmentPenaltyExemption.cannot.add.installment.penalty.exemption.to.events.without.payment.plan");
-				}
-			    }
+	ExemptionEvent.addListener(new RelationAdapter<Exemption, Event>() {
+	    @Override
+	    public void beforeAdd(Exemption exemption, Event event) {
+		if (exemption != null && event != null) {
+		    if (exemption instanceof InstallmentPenaltyExemption) {
+			if (!(event instanceof GratuityEventWithPaymentPlan)) {
+			    throw new DomainException(
+				    "error.accounting.events.gratuity.exemption.penalty.InstallmentPenaltyExemption.cannot.add.installment.penalty.exemption.to.events.without.payment.plan");
 			}
 		    }
-		});
+		}
+	    }
+	});
     }
 
     protected InstallmentPenaltyExemption() {
 	super();
-	super.setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public InstallmentPenaltyExemption(final PenaltyExemptionType penaltyExemptionType,
+    public InstallmentPenaltyExemption(final PenaltyExemptionJustificationType penaltyExemptionType,
 	    final GratuityEventWithPaymentPlan gratuityEventWithPaymentPlan, final Employee employee,
-	    final Installment installment, final String notes) {
+	    final Installment installment, final String comments,
+	    final YearMonthDay directiveCouncilDispatchDate) {
 	this();
-	init(penaltyExemptionType, gratuityEventWithPaymentPlan, employee, installment, notes);
+	init(penaltyExemptionType, gratuityEventWithPaymentPlan, employee, installment, comments,
+		directiveCouncilDispatchDate);
 
     }
 
-    protected void init(PenaltyExemptionType penaltyExemptionType,
+    protected void init(PenaltyExemptionJustificationType penaltyExemptionType,
 	    GratuityEventWithPaymentPlan gratuityEventWithPaymentPlan, Employee employee,
-	    Installment installment, String notes) {
-	super.init(penaltyExemptionType, gratuityEventWithPaymentPlan, employee, notes);
+	    Installment installment, String comments, YearMonthDay directiveCouncilDispatchDate) {
+	super.init(penaltyExemptionType, gratuityEventWithPaymentPlan, employee, comments,
+		directiveCouncilDispatchDate);
 	checkParameters(installment);
 	checkRulesToCreate(gratuityEventWithPaymentPlan, installment);
 	super.setInstallment(installment);

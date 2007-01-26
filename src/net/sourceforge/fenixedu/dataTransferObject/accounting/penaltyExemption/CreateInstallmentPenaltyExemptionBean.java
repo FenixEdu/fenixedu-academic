@@ -7,35 +7,26 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.accounting.Installment;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
-import net.sourceforge.fenixedu.domain.accounting.events.gratuity.exemption.penalty.PenaltyExemptionType;
 
-public class CreateInstallmentPenaltyExemptionBean implements Serializable {
-
-    private DomainReference<GratuityEventWithPaymentPlan> gratuityEventWithPaymentPlan;
-
-    private PenaltyExemptionType exemptionType;
+public class CreateInstallmentPenaltyExemptionBean extends CreatePenaltyExemptionBean implements
+	Serializable {
 
     private List<DomainReference<Installment>> installments;
 
-    private String comments;
-
     public CreateInstallmentPenaltyExemptionBean(
 	    GratuityEventWithPaymentPlan gratuityEventWithPaymentPlan) {
-	super();
+	super(gratuityEventWithPaymentPlan);
 	setGratuityEventWithPaymentPlan(gratuityEventWithPaymentPlan);
 	setInstallments(new ArrayList<Installment>());
     }
 
     public GratuityEventWithPaymentPlan getGratuityEventWithPaymentPlan() {
-	return (this.gratuityEventWithPaymentPlan != null) ? this.gratuityEventWithPaymentPlan
-		.getObject() : null;
+	return (GratuityEventWithPaymentPlan) getEvent();
     }
 
     private void setGratuityEventWithPaymentPlan(
 	    GratuityEventWithPaymentPlan gratuityEventWithPaymentPlan) {
-	this.gratuityEventWithPaymentPlan = (gratuityEventWithPaymentPlan != null) ? new DomainReference<GratuityEventWithPaymentPlan>(
-		gratuityEventWithPaymentPlan)
-		: null;
+	setEvent(gratuityEventWithPaymentPlan);
     }
 
     public List<Installment> getInstallments() {
@@ -54,22 +45,6 @@ public class CreateInstallmentPenaltyExemptionBean implements Serializable {
 	}
 
 	this.installments = result;
-    }
-
-    public PenaltyExemptionType getExemptionType() {
-	return exemptionType;
-    }
-
-    public void setExemptionType(PenaltyExemptionType exemptionType) {
-	this.exemptionType = exemptionType;
-    }
-
-    public String getComments() {
-	return comments;
-    }
-
-    public void setComments(String notes) {
-	this.comments = notes;
     }
 
 }

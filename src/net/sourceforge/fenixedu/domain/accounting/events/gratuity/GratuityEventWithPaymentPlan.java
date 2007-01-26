@@ -15,11 +15,12 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
+import net.sourceforge.fenixedu.domain.accounting.Exemption;
 import net.sourceforge.fenixedu.domain.accounting.Installment;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeState;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
+import net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemption;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.exemption.penalty.InstallmentPenaltyExemption;
-import net.sourceforge.fenixedu.domain.accounting.events.gratuity.exemption.penalty.PenaltyExemption;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.InstallmentPaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityPaymentPlan;
@@ -243,9 +244,9 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
     }
 
     public InstallmentPenaltyExemption getInstallmentPenaltyExemptionFor(final Installment installment) {
-	for (final PenaltyExemption penaltyExemption : getPenaltyExemptionsSet()) {
-	    if (penaltyExemption instanceof InstallmentPenaltyExemption) {
-		final InstallmentPenaltyExemption installmentPenaltyExemption = (InstallmentPenaltyExemption) penaltyExemption;
+	for (final Exemption exemption : getExemptionsSet()) {
+	    if (exemption instanceof InstallmentPenaltyExemption) {
+		final InstallmentPenaltyExemption installmentPenaltyExemption = (InstallmentPenaltyExemption) exemption;
 		if (installmentPenaltyExemption.getInstallment() == installment) {
 		    return installmentPenaltyExemption;
 		}
@@ -256,9 +257,9 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
     }
 
     public boolean hasPenaltyExemptionFor(final Installment installment) {
-	for (final PenaltyExemption penaltyExemption : getPenaltyExemptionsSet()) {
-	    if (penaltyExemption instanceof InstallmentPenaltyExemption) {
-		if (((InstallmentPenaltyExemption) penaltyExemption).getInstallment() == installment) {
+	for (final Exemption exemption : getExemptionsSet()) {
+	    if (exemption instanceof InstallmentPenaltyExemption) {
+		if (((InstallmentPenaltyExemption) exemption).getInstallment() == installment) {
 		    return true;
 		}
 
@@ -270,9 +271,9 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
 
     public Set<Installment> getInstallmentsWithoutPenalty() {
 	final Set<Installment> result = new HashSet<Installment>();
-	for (final PenaltyExemption penaltyExemption : getPenaltyExemptionsSet()) {
-	    if (penaltyExemption instanceof InstallmentPenaltyExemption) {
-		result.add(((InstallmentPenaltyExemption) penaltyExemption).getInstallment());
+	for (final Exemption exemption : getExemptionsSet()) {
+	    if (exemption instanceof InstallmentPenaltyExemption) {
+		result.add(((InstallmentPenaltyExemption) exemption).getInstallment());
 	    }
 	}
 
@@ -281,8 +282,19 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
     }
 
     @Override
-    public boolean isPenaltyExemptionApplicable() {
+    public boolean isExemptionAppliable() {
 	return true;
+    }
+
+    public List<InstallmentPenaltyExemption> getInstallmentPenaltyExemptions() {
+	final List<InstallmentPenaltyExemption> result = new ArrayList<InstallmentPenaltyExemption>();
+	for (final Exemption exemption : getExemptionsSet()) {
+	    if (exemption instanceof InstallmentPenaltyExemption) {
+		result.add((InstallmentPenaltyExemption) exemption);
+	    }
+	}
+
+	return result;
     }
 
 }

@@ -154,26 +154,39 @@
         <property name="eachSchema" value="Installment.view-description-only" />
 		<property name="style" value="list-style: none; padding: 0; margin: 0;" />
     </slot>
-   	<slot name="exemptionType" layout="radio-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" key="label.net.sourceforge.fenixedu.domain.accounting.events.gratuity.exemption.penalty.PenaltyExemption.exemptionType">
-        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.payments.PenaltyExemptionTypeProvider" />
+   	<slot name="justificationType" layout="radio-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" key="label.net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemption.justificationType">
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.payments.PenaltyExemptionTypeProviderForCreatePenaltyExemptionBean" />
         <property name="saveOptions" value="true"/>
     </slot>
-    <slot name="comments" key="label.net.sourceforge.fenixedu.domain.accounting.events.gratuity.exemption.penalty.PenaltyExemption.comments" layout="longText" />
+    <slot name="directiveCouncilDispatchDate" key="label.net.sourceforge.fenixedu.dataTransferObject.accounting.penaltyExemption.directiveCouncilDispatchDate" />    
+    <slot name="comments" key="label.net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemption.comments" layout="longText" />
 </schema>
 
-<schema name="PenaltyExemption.view" 
-		type="net.sourceforge.fenixedu.domain.accounting.events.gratuity.exemption.penalty.PenaltyExemption" 
+<schema name="CreateAdministrativeOfficeFeeAndInsurancePenaltyExemptionBean.edit" 
+		type="net.sourceforge.fenixedu.dataTransferObject.accounting.penaltyExemption.CreateAdministrativeOfficeFeeAndInsurancePenaltyExemptionBean" 
 		bundle="APPLICATION_RESOURCES" >
-	<slot name="exemptionType" key="label.net.sourceforge.fenixedu.domain.accounting.events.gratuity.exemption.penalty.PenaltyExemption.exemptionType" />
-    <slot name="comments" key="label.net.sourceforge.fenixedu.domain.accounting.events.gratuity.exemption.penalty.PenaltyExemption.comments" />
+   	<slot name="justificationType" layout="radio-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" key="label.net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemption.justificationType">
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.payments.PenaltyExemptionTypeProviderForCreatePenaltyExemptionBean" />
+        <property name="saveOptions" value="true"/>
+    </slot>
+    <slot name="directiveCouncilDispatchDate" key="label.net.sourceforge.fenixedu.dataTransferObject.accounting.penaltyExemption.directiveCouncilDispatchDate" />
+    <slot name="comments" key="label.net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemption.comments" layout="longText" />
 </schema>
+
 
 <schema name="InstallmentPenaltyExemption.view" 
 		type="net.sourceforge.fenixedu.domain.accounting.events.gratuity.exemption.penalty.InstallmentPenaltyExemption" 
 		bundle="APPLICATION_RESOURCES">
 	<slot name="installment.description" key="label.net.sourceforge.fenixedu.domain.accounting.events.gratuity.exemption.penalty.InstallmentPenaltyExemption.installment" />
-	<slot name="exemptionType" key="label.net.sourceforge.fenixedu.domain.accounting.events.gratuity.exemption.penalty.PenaltyExemption.exemptionType" />
-    <slot name="comments" key="label.net.sourceforge.fenixedu.domain.accounting.events.gratuity.exemption.penalty.PenaltyExemption.comments" />
+	<slot name="description" key="label.net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemption.description" />
+    <slot name="comments" key="label.net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemption.comments" />
+</schema>
+
+<schema name="AdministrativeOfficeFeeAndInsurancePenaltyExemption.view" 
+		type="net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsurancePenaltyExemption" 
+		bundle="APPLICATION_RESOURCES">
+	<slot name="description" key="label.net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemption.description" />
+    <slot name="comments" key="label.net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemption.comments" />
 </schema>
 
 
@@ -189,7 +202,7 @@
 </schema>
 
 <schema name="GratuityExemption.view" type="net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityExemption" bundle="APPLICATION_RESOURCES">
-	<slot name="exemptionType" key="label.net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityExemption.exemptionType" />
+	<slot name="gratuityExemptionType" key="label.net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityExemption.gratuityExemptionType" />
 </schema>
 
 <schema name="PercentageGratuityExemption.view" type="net.sourceforge.fenixedu.domain.accounting.events.gratuity.PercentageGratuityExemption"  extends="GratuityExemption.view" bundle="APPLICATION_RESOURCES">

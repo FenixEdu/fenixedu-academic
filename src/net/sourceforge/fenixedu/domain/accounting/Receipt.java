@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.accounting;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -30,9 +31,21 @@ public class Receipt extends Receipt_Base {
 	}
     };
 
+    public static Comparator<Receipt> COMPARATOR_BY_NUMBER = new Comparator<Receipt>() {
+	public int compare(Receipt leftReceipt, Receipt rightReceipt) {
+	    int comparationResult = leftReceipt.getNumber().compareTo(rightReceipt.getNumber());
+	    return (comparationResult == 0) ? leftReceipt.getIdInternal().compareTo(
+		    rightReceipt.getIdInternal()) : comparationResult;
+	}
+    };
+
     private Receipt() {
 	super();
-	super.setNumber(generateReceiptNumber());
+
+	// Generate number before adding to root domain object
+	final int year = new DateTime().getYear();
+	super.setNumber(generateReceiptNumber(year));
+	super.setYear(year);
 	super.setRootDomainObject(RootDomainObject.getInstance());
 	super.setWhenCreated(new DateTime());
     }
@@ -46,7 +59,6 @@ public class Receipt extends Receipt_Base {
 	checkParameters(employee, person, contributor, entries);
 	checkRulesToCreate(entries);
 	super.setPerson(person);
-	super.setYear(new DateTime().getYear());
 	super.setContributorParty(contributor);
 	changeState(employee, ReceiptState.ACTIVE);
 
@@ -56,11 +68,11 @@ public class Receipt extends Receipt_Base {
     }
 
     private void checkRulesToCreate(List<Entry> entries) {
-	final int year = entries.iterator().next().getWhenRegistered().getYear();
+	final int year = getYear();
 	for (final Entry entry : entries) {
 	    if (entry.getWhenRegistered().getYear() != year) {
 		throw new DomainException(
-			"error.accounting.Receipt.entries.in.receipt.must.belong.to.same.civil.year");
+			"error.accounting.Receipt.entries.must.belong.to.receipt.civil.year");
 	    }
 	}
     }
@@ -170,10 +182,21 @@ public class Receipt extends Receipt_Base {
 	throw new DomainException("error.accounting.Receipt.cannot.modify.state");
     }
 
-    private Integer generateReceiptNumber() {
-	final List<Receipt> receipts = RootDomainObject.getInstance().getReceipts();
-	return receipts.isEmpty() ? 1 : Collections.max(receipts, Receipt.COMPARATOR_BY_YEAR_AND_NUMBER)
+    private Integer generateReceiptNumber(int year) {
+	final List<Receipt> receipts = getReceiptsFor(year);
+	return receipts.isEmpty() ? 1 : Collections.max(receipts, Receipt.COMPARATOR_BY_NUMBER)
 		.getNumber() + 1;
+    }
+
+    public static List<Receipt> getReceiptsFor(int year) {
+	final List<Receipt> result = new ArrayList<Receipt>();
+	for (final Receipt receipt : RootDomainObject.getInstance().getReceipts()) {
+	    if (receipt.getYear().intValue() == year) {
+		result.add(receipt);
+	    }
+	}
+
+	return result;
     }
 
     public ReceiptPrintVersion createReceiptVersion(Employee employee) {

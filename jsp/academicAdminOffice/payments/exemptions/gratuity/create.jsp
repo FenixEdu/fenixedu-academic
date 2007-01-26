@@ -38,8 +38,9 @@
 
 	<br />
 
+	<bean:define id="eventId" name="createGratuityExemptionBean" property="gratuityEvent.idInternal" />
 	<bean:define id="personId" name="createGratuityExemptionBean" property="gratuityEvent.person.idInternal" />
-	<fr:form action="<%="/payments.do?personId=" + personId%>">
+	<fr:form action="<%="/exemptionsManagement.do?personId=" + personId + "&amp;eventId=" + eventId%>">
 
 		<input alt="input.method" type="hidden" name="method" value="" />
 
@@ -49,6 +50,7 @@
 			schema="CreateGratuityExemptionBean">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4" />
+				<fr:property name="columnClasses" value=",,tdclear tderror1" />
 			</fr:layout>
 		</fr:edit>
 
@@ -67,7 +69,7 @@
 		</html:submit>
 		
 		<html:cancel bundle="HTMLALT_RESOURCES" altKey="submit.submit"
-			onclick="this.form.method.value='showGratuityEvents';">
+			onclick="this.form.method.value='showExemptions';">
 			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.cancel" />
 		</html:cancel>
 

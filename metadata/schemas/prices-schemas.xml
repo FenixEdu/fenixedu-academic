@@ -29,6 +29,12 @@
 	<slot name="whenToApplyFixedAmountPenalty" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountWithPenaltyFromDatePR.whenToApplyFixedAmountPenalty" />
 </schema>
 
+<schema name="AdministrativeOfficeFeePR.view"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.AdministrativeOfficeFeePR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountWithPenaltyFromDatePR.view">
+
+</schema>
+
 <schema name="DFACandidacyPR.view"
 	type="net.sourceforge.fenixedu.domain.accounting.postingRules.dfa.DFACandidacyPR"
 	bundle="APPLICATION_RESOURCES" extends="FixedAmountWithPenaltyPR.view">
@@ -76,6 +82,12 @@
 	bundle="APPLICATION_RESOURCES" extends="FixedAmountWithPenaltyPR.edit">
 	<slot name="whenToApplyFixedAmountPenalty" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountWithPenaltyFromDatePR.whenToApplyFixedAmountPenalty" />
 	<setter signature="edit(fixedAmount,fixedAmountPenalty,whenToApplyFixedAmountPenalty)"/>
+</schema>
+
+<schema name="AdministrativeOfficeFeePR.edit"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.AdministrativeOfficeFeePR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountWithPenaltyFromDatePR.edit">
+	
 </schema>
 
 <schema name="DFACandidacyPR.edit"

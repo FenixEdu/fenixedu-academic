@@ -71,4 +71,9 @@ public class DfaGratuityEvent extends DfaGratuityEvent_Base {
 	return calculateNextEndDate(new YearMonthDay());
     }
     
+    @Override
+    public boolean isExemptionAppliable() {
+	return true;
+    }
+    
 }

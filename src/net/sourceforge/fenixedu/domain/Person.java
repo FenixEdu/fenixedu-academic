@@ -2307,6 +2307,17 @@ public class Person extends Person_Base {
 	return (Set<GratuityEvent>) getEventsByEventType(EventType.GRATUITY);
     }
 
+    public List<Event> getEventsWithExemptionAppliable() {
+	final List<Event> result = new ArrayList<Event>();
+	for (final Event event : getEventsSet()) {
+	    if (event.isExemptionAppliable()) {
+		result.add(event);
+	    }
+	}
+
+	return result;
+    }
+    
     public Money getPayedAmount(final EventType eventType, final int civilYear) {
 	Money result = Money.ZERO;
 	for (final Event event : (Set<Event>) getEventsByEventType(eventType)) {
@@ -2320,14 +2331,15 @@ public class Person extends Person_Base {
 	return hasHomepage();
     }
 
-    public static Collection<Person> searchPersons(String[] personName){
+    public static Collection<Person> searchPersons(String[] personName) {
 	Collection<Person> result = new ArrayList<Person>();
 	for (Party party : RootDomainObject.getInstance().getPartys()) {
 	    if (party.isPerson() && party.verifyNameEquality(personName)) {
 		result.add((Person) party);
 	    }
 	}
+
 	return result;
     }
-    
+
 }

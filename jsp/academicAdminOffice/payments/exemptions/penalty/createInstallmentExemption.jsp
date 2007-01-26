@@ -41,7 +41,7 @@
 	<br />
 
 	<bean:define id="gratuityEventId" name="gratuityEvent" property="idInternal" />
-	<fr:form action='<%="/payments.do?gratuityEventId=" + gratuityEventId%>'>
+	<fr:form action='<%="/exemptionsManagement.do?eventId=" + gratuityEventId%>'>
 
 		<html:hidden property="method" value="" />
 
@@ -52,7 +52,7 @@
 				<fr:property name="columnClasses" value=",,tdclear tderror1" />
 			</fr:layout>
 			<fr:destination name="invalid"
-				path='<%="/payments.do?method=prepareCreatePenaltyExemptionInvalid&amp;gratuityEventId=" + gratuityEventId%>' />
+				path='<%="/exemptionsManagement.do?method=prepareCreateInstallmentPenaltyExemptionInvalid&amp;eventId=" + gratuityEventId%>'/>
 		</fr:edit>
 
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"
@@ -60,7 +60,7 @@
 			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.payments.create" />
 		</html:submit>
 		<html:cancel bundle="HTMLALT_RESOURCES" altKey="submit.cancel" 
-			onclick="this.form.method.value='showPenaltyExemptions';">
+			onclick="this.form.method.value='showExemptions';">
 			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.payments.cancel" />
 		</html:cancel>
 	</fr:form>

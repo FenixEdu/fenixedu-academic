@@ -8,17 +8,27 @@ public class PaymentsFileBean implements Serializable {
     private static final long serialVersionUID = 1L;
 
     transient private InputStream file;
-    
+
+    private String filename;
+
     public PaymentsFileBean() {
-        super();
+	super();
     }
 
     public InputStream getFile() {
-        return this.file;
+	return this.file;
     }
 
     public void setFile(InputStream file) {
-        this.file = file;
+	this.file = file;
+    }
+
+    public String getFilename() {
+	return filename;
+    }
+
+    public void setFilename(String filename) {
+	this.filename = filename;
     }
 
 }

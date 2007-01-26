@@ -13,11 +13,12 @@ public class CreateInstallmentPenaltyExemption extends Service {
     }
 
     public void run(final Employee employee,
-	    final CreateInstallmentPenaltyExemptionBean createInstallmentPenaltyExemptionBean) {
-	for (final Installment installment : createInstallmentPenaltyExemptionBean.getInstallments()) {
-	    new InstallmentPenaltyExemption(createInstallmentPenaltyExemptionBean.getExemptionType(),
-		    createInstallmentPenaltyExemptionBean.getGratuityEventWithPaymentPlan(), employee,
-		    installment, createInstallmentPenaltyExemptionBean.getComments());
+	    final CreateInstallmentPenaltyExemptionBean penaltyExemptionBean) {
+	for (final Installment installment : penaltyExemptionBean.getInstallments()) {
+	    new InstallmentPenaltyExemption(penaltyExemptionBean.getJustificationType(),
+		    penaltyExemptionBean.getGratuityEventWithPaymentPlan(), employee, installment,
+		    penaltyExemptionBean.getComments(), penaltyExemptionBean
+			    .getDirectiveCouncilDispatchDate());
 	}
     }
 

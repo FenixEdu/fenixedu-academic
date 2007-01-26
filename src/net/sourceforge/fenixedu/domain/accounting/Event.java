@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.accounting;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -16,6 +17,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.accounting.accountingTransactions.InstallmentAccountingTransaction;
+import net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemption;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -212,7 +214,8 @@ public abstract class Event extends Event_Base {
 
     @Override
     public void setEventStateDate(DateTime eventStateDate) {
-	//throw new DomainException("error.accounting.Event.cannot.modify.eventStateDate");
+	// throw new
+	// DomainException("error.accounting.Event.cannot.modify.eventStateDate");
 	super.setEventStateDate(eventStateDate);
     }
 
@@ -255,15 +258,16 @@ public abstract class Event extends Event_Base {
 	return result;
 
     }
-    
-    public boolean hasNonAdjustingAccountingTransactions(final AccountingTransaction accountingTransactions) {
-        return getNonAdjustingTransactions().contains(accountingTransactions);
+
+    public boolean hasNonAdjustingAccountingTransactions(
+	    final AccountingTransaction accountingTransactions) {
+	return getNonAdjustingTransactions().contains(accountingTransactions);
     }
 
     public boolean hasAnyNonAdjustingAccountingTransactions() {
 	return !getNonAdjustingTransactions().isEmpty();
     }
-    
+
     public Money getPayedAmount() {
 	if (isCancelled()) {
 	    throw new DomainException(
@@ -527,21 +531,22 @@ public abstract class Event extends Event_Base {
 
 	return result;
     }
-    
+
     @Checked("RolePredicates.MANAGER_PREDICATE")
     public void rollbackIncorrectAccountingTransaction(final AccountingTransaction accountingTransaction) {
-	
+
 	if (isClosed()) {
 	    throw new DomainException("error.accounting.Event.is.already.closed");
 	}
-	
-	if (accountingTransaction != null && hasNonAdjustingAccountingTransactions(accountingTransaction)) {
+
+	if (accountingTransaction != null
+		&& hasNonAdjustingAccountingTransactions(accountingTransaction)) {
 	    accountingTransaction.delete();
 	} else {
 	    throw new DomainException("error.accounting.Event.transaction.doesnot.belong.to.event");
 	}
     }
-    
+
     @Checked("RolePredicates.MANAGER_PREDICATE")
     public List<AccountingEventPaymentCode> getExistingPaymentCodes() {
 	return Collections.unmodifiableList(super.getPaymentCodes());
@@ -578,6 +583,73 @@ public abstract class Event extends Event_Base {
 	for (final Event event : RootDomainObject.getInstance().getAccountingEvents()) {
 	    if (event.hasPaymentsForCivilYear(civilYear)) {
 		result.add(event);
+	    }
+	}
+
+	return result;
+
+    }
+
+    @Override
+    public void addExemptions(Exemption exemption) {
+	throw new DomainException(
+		"error.net.sourceforge.fenixedu.domain.accounting.Event.cannot.add.exemption");
+    }
+
+    @Override
+    public List<Exemption> getExemptions() {
+	return Collections.unmodifiableList(super.getExemptions());
+    }
+
+    @Override
+    public Set<Exemption> getExemptionsSet() {
+	return Collections.unmodifiableSet(super.getExemptionsSet());
+    }
+
+    @Override
+    public Iterator<Exemption> getExemptionsIterator() {
+	return getExemptionsSet().iterator();
+    }
+
+    @Override
+    public void removeExemptions(Exemption exemption) {
+	throw new DomainException(
+		"error.net.sourceforge.fenixedu.domain.accounting.Event.cannot.remove.exemption");
+    }
+
+    public boolean isExemptionAppliable() {
+	return false;
+    }
+
+    public List<PenaltyExemption> getPenaltyExemptions() {
+	final List<PenaltyExemption> result = new ArrayList<PenaltyExemption>();
+
+	for (final Exemption exemption : getExemptionsSet()) {
+	    if (exemption instanceof PenaltyExemption) {
+		result.add((PenaltyExemption) exemption);
+	    }
+	}
+
+	return result;
+    }
+    
+    public boolean hasAnyPenaltyExemptionsFor(Class type) {
+	for (final Exemption exemption : getExemptionsSet()) {
+	    if (exemption.getClass().equals(type)) {
+		return true;
+	    }
+	}
+
+	return false;
+	
+    }
+
+    public List<PenaltyExemption> getPenaltyExemptionsFor(Class type) {
+	final List<PenaltyExemption> result = new ArrayList<PenaltyExemption>();
+
+	for (final Exemption exemption : getExemptionsSet()) {
+	    if (exemption.getClass().equals(type)) {
+		result.add((PenaltyExemption) exemption);
 	    }
 	}
 

@@ -11179,8 +11179,8 @@
     </service>  
     
     <service>
-    	<name>DeleteGratuityExemption</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.gratuity.DeleteGratuityExemption</implementationClass>
+    	<name>DeleteExemption</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.DeleteExemption</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
@@ -11294,19 +11294,21 @@
         <filterChains>
         	<chain name="AcademicAdministrativeOfficeAuthorization"></chain>
         </filterChains>     
-    </service>
-	<service>
-    	<name>DeletePenaltyExemption</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.gratuity.DeletePenaltyExemption</implementationClass>
+    </service>    
+    
+    <service>
+    	<name>CreateInstallmentPenaltyExemption</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.gratuity.CreateInstallmentPenaltyExemption</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
         	<chain name="AcademicAdministrativeOfficeAuthorization"></chain>
         </filterChains>     
-    </service>    
+    </service>
+    
     <service>
-    	<name>CreateInstallmentPenaltyExemption</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.gratuity.CreateInstallmentPenaltyExemption</implementationClass>
+    	<name>CreateAdministrativeOfficeFeeAndInsurancePenaltyExemption</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.CreateAdministrativeOfficeFeeAndInsurancePenaltyExemption</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
@@ -11357,5 +11359,5 @@
         <filterChains>
         	<chain name="AcademicAdministrativeOfficeAuthorization"></chain>
         </filterChains>     
-    </service>    
+    </service>   
 </serviceDefinitions>

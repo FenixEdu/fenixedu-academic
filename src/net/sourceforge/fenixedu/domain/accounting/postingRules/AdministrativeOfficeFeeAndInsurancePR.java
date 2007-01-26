@@ -108,9 +108,9 @@ public class AdministrativeOfficeFeeAndInsurancePR extends AdministrativeOfficeF
 		EventType.INSURANCE, startDate, endDate);
     }
 
-    private FixedAmountWithPenaltyFromDatePR getPostingRuleForAdministrativeOfficeFee(
-	    DateTime startDate, DateTime endDate) {
-	return (FixedAmountWithPenaltyFromDatePR) getServiceAgreementTemplate().findPostingRuleBy(
+    private AdministrativeOfficeFeePR getPostingRuleForAdministrativeOfficeFee(DateTime startDate,
+	    DateTime endDate) {
+	return (AdministrativeOfficeFeePR) getServiceAgreementTemplate().findPostingRuleBy(
 		EventType.ADMINISTRATIVE_OFFICE_FEE, startDate, endDate);
     }
 

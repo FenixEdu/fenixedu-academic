@@ -15,9 +15,9 @@
 	
 	<p>
 		<strong><bean:message key="label.payments.uploadPaymentsFile.filename" bundle="MANAGER_RESOURCES" />:</strong>
-		<fr:edit name="paymentsFileBean" slot="file">
-			<fr:layout>
-            	<fr:property name="size" value="40"/>
+		<fr:edit name="paymentsFileBean" schema="PaymentsFileBean.edit">
+			<fr:layout name="tabular">
+            	
 	        </fr:layout>
 		</fr:edit>
 	</p>

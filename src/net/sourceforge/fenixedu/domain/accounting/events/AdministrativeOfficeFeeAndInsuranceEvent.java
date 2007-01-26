@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
 import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
+import net.sourceforge.fenixedu.domain.accounting.Exemption;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
 import net.sourceforge.fenixedu.domain.accounting.PaymentMode;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode;
@@ -199,5 +200,24 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends
 	final LabelFormatter labelFormatter = super.getDescription();
 	labelFormatter.appendLabel(" ").appendLabel(getExecutionYear().getYear());
 	return labelFormatter;
+    }
+
+    @Override
+    public boolean isExemptionAppliable() {
+	return true;
+    }
+
+    public boolean hasAdministrativeOfficeFeeAndInsuranceExemption() {
+	return getAdministrativeOfficeFeeAndInsurancePenaltyExemption() != null;
+    }
+
+    public AdministrativeOfficeFeeAndInsurancePenaltyExemption getAdministrativeOfficeFeeAndInsurancePenaltyExemption() {
+	for (final Exemption exemption : getExemptionsSet()) {
+	    if (exemption instanceof AdministrativeOfficeFeeAndInsurancePenaltyExemption) {
+		return (AdministrativeOfficeFeeAndInsurancePenaltyExemption) exemption;
+	    }
+	}
+
+	return null;
     }
 }

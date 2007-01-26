@@ -311,13 +311,7 @@
 	 	        <forward name="showPaymentsWithoutReceipt" path="payments.management.showPaymentsWithoutReceipt"/> 
 		 	    <forward name="confirmCreateReceipt" path="payments.management.confirmCreateReceipt"/> 
 		 	    <forward name="paymentConfirmed" path="payments.management.paymentConfirmed"/> 
-		 	    
-		 	    <forward name="exemptions.showGratuityEvents" path="payments.management.exemptions.showGratuityEvents"/> 
-		 	    <forward name="exemptions.gratuity.view" path="payments.management.exemptions.gratuity.view"/>
-		 	    <forward name="exemptions.gratuity.create" path="payments.management.exemptions.gratuity.create"/>
-   		 	    <forward name="exemptions.penalty.listForGratuityEventWithPaymentPlan" path="payments.management.exemptions.penalty.listForGratuityEventWithPaymentPlan"/>
-		 	    <forward name="exemptions.penalty.createInstallmentExemption" path="payments.management.exemptions.penalty.createInstallmentExemption"/>
-		 	    	 	    
+		 	    		 	    	 	    
    		 	    <forward name="creditNotes.list" path="payments.management.creditNotes.list"/> 
 		 	    <forward name="creditNotes.create" path="payments.management.creditNotes.create"/>
 		 	    <forward name="creditNotes.show" path="payments.management.creditNotes.show"/>
@@ -334,6 +328,23 @@
 		 	    <forward name="extract.showEventsWithPayments" path="payments.management.extract.showEventsWithPayments" />
 		 	   
 		</action>
+		
+		
+		<action path="/exemptionsManagement"
+				parameter="method"
+		        type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.payments.ExemptionsManagementDispatchAction"
+		 		name="paymentsForm"
+		 		scope="request">
+
+		 	    <forward name="showEventsToApplyExemption" path="payments.management.exemptions.showEventsToApplyExemption"/> 		 	      
+				<forward name="showForGratuityEvent" path="payments.management.exemptions.showForGratuityEvent"/> 
+				<forward name="showForAdministrativeOfficeFeeAndInsuranceEvent" path="payments.management.exemptions.showForAdministrativeOfficeFeeAndInsuranceEvent"/> 
+				<forward name="createGratuityExemption" path="payments.management.exemptions.gratuity.create"/> 
+		 	    <forward name="createInstallmentPenaltyExemption" path="payments.management.exemptions.penalty.createInstallmentExemption"/>
+		 	    <forward name="createAdministrativeOfficeFeeAndInsurancePenaltyExemption" path="payments.management.exemptions.penalty.createAdministrativeOfficeFeeAndInsuranceExemption"/>
+		 	    	 	    		 	   
+		</action>
+		
 		<!-- End Payments -->
 		
 		<!-- Begin Prices Management -->
