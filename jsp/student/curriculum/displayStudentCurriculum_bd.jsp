@@ -14,7 +14,7 @@
 <bean:define id="registration" name="registration" type="net.sourceforge.fenixedu.domain.student.Registration"/>
 
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
-	<ul class="mtop2">
+	<ul class="mtop2 printhidden">
 		<li>
 		<html:link page="/student.do?method=visualizeRegistration" paramId="registrationID" paramName="registration" paramProperty="idInternal">
 			<bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES"/>
@@ -26,7 +26,7 @@
 <p><span class="error0"><!-- Error messages go here --><html:errors /></span></p>
 
 <%-- Foto --%>
-<div style="float: right;">
+<div style="float: right;" class="printhidden">
 	<bean:define id="personID" name="registration" property="student.person.idInternal"/>
 	<html:img align="middle" height="100" width="100" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
 </div>
@@ -153,7 +153,7 @@
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentNumber" name="studentCurricularPlanAndEnrollmentsSelectionForm" property="studentNumber"/>
 	</logic:present>
 	
-	<p class="mbottom025"><strong><bean:message key="label.visualize" bundle="STUDENT_RESOURCES" />:</strong></p>
+	<p class="mbottom025 printhidden"><strong><bean:message key="label.visualize" bundle="STUDENT_RESOURCES" />:</strong></p>
 	<table class="tstyle4 thright thlight mtop025">
 		<tr>
 			<th><bean:message key="label.studentCurricularPlan.basic" bundle="STUDENT_RESOURCES" /></th>
@@ -280,25 +280,25 @@
 				<fr:property name="organizedBy" value="<%=organizedBy%>"/>
 				<fr:property name="initialWidth" value="800px"/>
 				<fr:property name="widthDecreasePerLevel" value="10"/>
-				<fr:property name="tablesClasses" value="showinfo3 mvert0"/>
+				<fr:property name="tablesClasses" value="showinfo3 mvert0 prtwidth100pc"/>
 				<%-- tableClasses--%>
 				<fr:property name="groupRowClasses" value="bgcolor2"/>
 				<%-- groupHeaderRowClasses--%>
 				<fr:property name="groupNameClasses" value="aleft"/>
 				<%-- groupHeaderClasses--%>
 				<fr:property name="enrolmentClasses" value="
-					width2em acenter bgcolor01,			<!-- Inscrição Confirmada etc -->
-					width6em acenter bgcolor02,			<!-- Data da Inscrição -->
-					width1p5em acenter bgcolor03,		<!-- Época Normal -->
-					aleft bgcolor04,					<!-- Código e Disciplina -->
-					width7em acenter bgcolor05,			<!-- Curso  -->
-					grupos bgcolor06,					<!--   -->
-					grupos bgcolor07,					<!--   -->
-					width7em acenter bgcolor08,			<!-- Opcional  -->
-					width8em acenter bgcolor09,			<!-- Reprovado Não Avaliado  -->
-					width2em aright bgcolor10,			<!-- Nota  -->
-					color888 width2em aright bgcolor11,			<!-- Peso  -->
-					color888 width2em aright bgcolor12			<!-- ECTS  -->
+					col1 width2em acenter bgcolor01,			<!-- Inscrição Confirmada etc -->
+					col2 width6em acenter bgcolor02,			<!-- Data da Inscrição -->
+					col3 width1p5em acenter bgcolor03,		<!-- Época Normal -->
+					col4 aleft bgcolor04,					<!-- Código e Disciplina -->
+					col5 width7em acenter bgcolor05,			<!-- Curso  -->
+					col6 grupos bgcolor06,					<!--   -->
+					col7 grupos bgcolor07,					<!--   -->
+					col8 width7em acenter bgcolor08,			<!-- Opcional  -->
+					col9 width8em acenter bgcolor09,			<!-- Reprovado Não Avaliado  -->
+					col10 width2em aright bgcolor10,			<!-- Nota  -->
+					col11 color888 width2em aright bgcolor11,			<!-- Peso  -->
+					col12 color888 width2em aright bgcolor12			<!-- ECTS  -->
 				"/>
 				<%-- enrolmentColumnClasses--%>
 				<fr:property name="enrolmentStateSelectionType" value="<%=enrolmentStateSelectionType.toString()%>"/>
@@ -324,3 +324,4 @@
 <div class="cboth"></div>
 
 </logic:notEmpty>
+

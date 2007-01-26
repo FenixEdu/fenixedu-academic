@@ -357,9 +357,8 @@ h3.registration	{
 	for hidden misc elements
 ******************************************************************/
 
-.invisible {
-	display: none;
-	}
+.invisible { display: none;	}
+.printhidden { display: none; } /**/ 
 
 
 	
@@ -432,12 +431,19 @@ table.printborder { border-collapse: collapse; }
 table.printborder th, table.printborder td { border: 1px solid #888; }
 table.tpadding1 th, table.tpadding1 td { padding: 0.15em 0.5em;}
 
-/*
-.tstyle1b { border-collapse: collapse; }
-.tstyle1b th, .tstyle1b td { padding: 0.25em 0.5em; }
-.tstyle1b th { border: 1px solid #888; }
-.tstyle1b td { border: 1px solid #888; }
 
-.tstyle1b th { border: 11px solid #888; }
-.tstyle1b th, .tstyle1b td { padding: 5.25em 0.5em; margin: 5em; }
-*/
+.prtwidth100pc { width: 100%; }
+
+/* student curriculum display */
+.col1 { width: 5%; }
+.col2 { width: 10%; }
+.col3 { width: 5%; }
+.col4 { width: auto; }
+.col5 { width: auto; }
+.col6 { width: 10%; }
+.col7 { width: 10%; }
+.col8 { width: 10%; }
+.col9 { width: 10%; }
+.col10 { width: 5%; }
+.col11 { width: 5%; }
+.col12 { width: 5%; }
