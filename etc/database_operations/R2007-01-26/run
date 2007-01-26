@@ -26,3 +26,13 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "Alter Table DFACandidacy" AlterTableDFACandidacy.sql
+executeWithTempFile "Updating DFA Candidacy keys to DFA Candidacy Event" UpdateDFACandidacyKeyToDFACandidacyEvent.sql
+execute "Renaming table GratuityExemption to Exemption" RenameGratuityExemptionToExemption.sql
+execute "Alter Table Exemption" AlterTableExemption.sql
+execute "Drop Table PenaltyExemption" DropTablePenaltyExemption.sql
+execute "Creating Table Penalty Exemption Justification" CreateTablePenaltyExemptionJustification.sql
+execute "Alter table AccountingEvent" AlterTableAccountingEvent.sql
+execute "Create SibsPaymentFileProcessReport" CreateSibsPaymentFileProcesssReport.sql
+execute "Fixing Receipt Print Version" FixReceiptPrintVersion.sql
