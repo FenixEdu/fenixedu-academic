@@ -16,7 +16,6 @@
 
 <h2><bean:message key="label.professorships"/></h2>
 
-
 <table border="0" cellspacing="0" cellpadding="0" class="mtop1 mbottom15">
 	<tr>
 		<td nowrap="nowrap">
@@ -56,13 +55,13 @@
 	</tr>
 	<logic:iterate id="executionCourse" name="executionCourses" type="net.sourceforge.fenixedu.domain.ExecutionCourse">
 		<tr>
-			<td class="listClasses" style="text-align:left">
+			<td class="listClasses nowrap" style="text-align:left">
 				<html:link page="/manageExecutionCourse.do?method=instructions" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
 					<bean:write name="executionCourse" property="nome"/>
                     (<bean:write name="executionCourse" property="sigla"/>)
 				</html:link>
 			</td>
-			<td class="listClasses" style="text-align:left">
+			<td class="listClasses nowrap" style="text-align:left">
 				<logic:iterate id="degree" name="executionCourse" property="degreesSortedByDegreeName">
 					<bean:define id="degreeCode" type="java.lang.String" name="degree" property="sigla"/>
 					<bean:define id="degreeLabel" type="java.lang.String"><bean:message bundle="ENUMERATION_RESOURCES" name="degree" property="tipoCurso.name"/> <bean:message key="label.in"/> <bean:write name="degree" property="name"/></bean:define>
@@ -71,7 +70,7 @@
 					</html:link>
 				</logic:iterate>
 			</td>
-			<td class="listClasses" style="text-align:left">
+			<td class="listClasses nowrap" style="text-align:left">
 				<bean:write name="executionCourse" property="executionPeriod.qualifiedName"/>
 			</td>
             <td class="listClasses">
