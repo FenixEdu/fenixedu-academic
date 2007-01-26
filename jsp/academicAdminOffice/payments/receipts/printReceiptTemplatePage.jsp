@@ -86,7 +86,7 @@
 
 					
 	<logic:iterate id="entry" name="sortedEntries">
-		<table style="width: 95%%;">
+		<table style="width: 95%;">
 			<tr>
 				<td style="text-align: right;">
 					<app:labelFormatter name="entry" property="description">
@@ -104,7 +104,7 @@
 	</logic:iterate>
 	
 	
-	<table style="width: 95%%; padding-top: 1em;">
+	<table style="width: 95%; padding-top: 1em;">
 	<tr>
 		<td style="text-align: right;">
 			<strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.payments.printTemplates.totalAmountToPay"/></strong>
