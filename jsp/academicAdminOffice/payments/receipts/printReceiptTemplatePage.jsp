@@ -12,7 +12,7 @@
 <div style="font-family: Arial; padding: 0 1em;">
 
 
-<table style="width: 95%%;">
+<table style="width: 95%;">
 <tr>
 	<td rowspan="2" style="width: 95%px;">
 		<img src="<%= request.getContextPath() %>/images/LogoIST.gif" alt="<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="LogoIST" bundle="IMAGE_RESOURCES" />"/>
