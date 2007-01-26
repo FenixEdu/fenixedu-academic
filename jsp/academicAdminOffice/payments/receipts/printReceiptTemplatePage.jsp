@@ -118,8 +118,8 @@
 
 
 
-	<p style="text-align: left; margin-top: 8em; font-size: 10pt;">
-		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.payments.printTemplates.city"/>, <%= new java.text.SimpleDateFormat("dd MMMM yyyy", request.getLocale()).format(new java.util.Date()) %>
+	<p style="text-align: left; margin-top: 4em; font-size: 10pt;">
+		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.payments.printTemplates.city"/>, <%= new java.text.SimpleDateFormat("dd MMMM yyyy", net.sourceforge.fenixedu.util.LanguageUtils.getLocale()).format(new java.util.Date()) %>
 	</p>
 
 	<p style="text-align: right; margin-top: 2em; padding-right: 15em; font-size: 10pt;">
@@ -130,15 +130,13 @@
 	</p>
 
 
-	<div style="margin-top: 10em;">
+	<bean:size id="entriesSize" name="sortedEntries"/>
+	<div style="<%= "margin-top: " + (12 - ((entriesSize - 1) * 2))  + "em;"%>">
 		<jsp:include page="/academicAdminOffice/payments/commons/footer.jsp" flush="true" />
 	</div>
 
 
 </div>
-
-
-<div class="breakafter"></div>
 
 
 </logic:present>

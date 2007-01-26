@@ -17,6 +17,9 @@
 	<%-- The Original Payment-Guide --%>
 	<jsp:include page="./printGuideForOtherPartyPaymentTemplatePage.jsp" flush="true" />
 
+
+	<div class="breakafter"></div>
+
 	<%-- Copy of Payment-Guide --%>
 	<jsp:include page="./printGuideForOtherPartyPaymentTemplatePage.jsp" flush="true" />
 

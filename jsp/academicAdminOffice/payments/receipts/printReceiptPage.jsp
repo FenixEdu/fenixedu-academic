@@ -16,6 +16,8 @@
 	<%-- The Original Payment-Receipt --%>
 	<jsp:include page="./printReceiptTemplatePage.jsp" flush="true" />
 
+	<div class="breakafter"></div>
+	
 	<%-- Copy of Payment-Receipt --%>
 	<jsp:include page="./printReceiptTemplatePage.jsp" flush="true" />
 

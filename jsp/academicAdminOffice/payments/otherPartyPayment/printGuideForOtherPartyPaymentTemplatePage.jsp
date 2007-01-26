@@ -110,7 +110,7 @@
 
 
 	<p style="text-align: left; margin-top: 8em; font-size: 10pt;">
-		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.payments.printTemplates.city"/>, <%= new java.text.SimpleDateFormat("dd MMMM yyyy", request.getLocale()).format(new java.util.Date()) %>
+		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.payments.printTemplates.city"/>, <%= new java.text.SimpleDateFormat("dd MMMM yyyy", net.sourceforge.fenixedu.util.LanguageUtils.getLocale()).format(new java.util.Date()) %>
 	</p>
 
 		
@@ -134,7 +134,6 @@
 
 
 
-<div class="breakafter"></div>
 
 
 </logic:present>

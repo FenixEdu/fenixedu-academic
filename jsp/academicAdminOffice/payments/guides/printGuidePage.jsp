@@ -22,7 +22,7 @@
 
 	<%-- The Original Payment-Guide --%>
 	<jsp:include page="./printGuideTemplatePage.jsp" flush="true" />
-	<div style="margin: 500px 0px 0px 0px">
+	<div class="breakafter"></div>
 	<%-- Copy of Payment-Guide --%>
 	<jsp:include page="./printGuideTemplatePage.jsp" flush="true" />
 	</div>
