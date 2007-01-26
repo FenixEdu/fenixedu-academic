@@ -2,17 +2,16 @@ package net.sourceforge.fenixedu.presentationTier.renderers;
 
 import java.text.Collator;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean;
-import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.SelectedDismissal;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean.DismissalType;
+import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean.SelectedCurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
+import net.sourceforge.fenixedu.domain.degreeStructure.Context;
+import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
 import net.sourceforge.fenixedu.renderers.InputRenderer;
 import net.sourceforge.fenixedu.renderers.components.HtmlBlockContainer;
@@ -27,22 +26,15 @@ import net.sourceforge.fenixedu.renderers.components.HtmlTableCell;
 import net.sourceforge.fenixedu.renderers.components.HtmlTableRow;
 import net.sourceforge.fenixedu.renderers.components.HtmlText;
 import net.sourceforge.fenixedu.renderers.components.controllers.HtmlController;
-import net.sourceforge.fenixedu.renderers.components.converters.ConversionException;
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
-import net.sourceforge.fenixedu.renderers.model.MetaObject;
 import net.sourceforge.fenixedu.renderers.model.MetaObjectFactory;
 import net.sourceforge.fenixedu.renderers.schemas.Schema;
 
 import org.apache.commons.beanutils.BeanComparator;
 
 public class StudentDismissalRenderer extends InputRenderer {
-    
-    private static final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources");
-    
-    private final ResourceBundle academicAdminOfficeResources = ResourceBundle.getBundle("resources.AcademicAdminOffice");
-
     
     private Integer initialWidth = 50;
 
@@ -131,8 +123,6 @@ public class StudentDismissalRenderer extends InputRenderer {
 	return getCurricularCourseCellClasses()[1];
     }
 
-
-
     public StudentDismissalRenderer() {
 	super();
     }
@@ -145,11 +135,8 @@ public class StudentDismissalRenderer extends InputRenderer {
     private class StudentDismissalLayout extends Layout {
 
 	private final CopyCheckBoxValuesController curricularCoursesController = new CopyCheckBoxValuesController();
-	
 	private HtmlRadioButtonGroup radioButtonGroup = null;
-	
 	private DismissalBean dismissalBean = null;
-
 	
 	@Override
 	public HtmlComponent createComponent(Object object, Class type) {
@@ -162,116 +149,82 @@ public class StudentDismissalRenderer extends InputRenderer {
 	    
 	    if(dismissalBean.getDismissalType() == DismissalType.CURRICULUM_GROUP_CREDITS) {
 		radioButtonGroup = new HtmlRadioButtonGroup();
-		radioButtonGroup.bind(getInputContext().getMetaObject(), "curriculumGroup"); // slot refered by name
+		radioButtonGroup.bind(getInputContext().getMetaObject(), "courseGroup"); // slot refered by name
 		radioButtonGroup.setConverter(new DomainObjectKeyConverter());
 		container.addChild(radioButtonGroup);
-		generateCurriculumGroup(container, dismissalBean.getStudentCurricularPlan(), dismissalBean.getStudentCurricularPlan().getRoot(), 0);
+		generateCourseGroups(container, dismissalBean.getStudentCurricularPlan(), dismissalBean.getStudentCurricularPlan().getDegreeCurricularPlan().getRoot(), 0);
 		
 	    } else {
 		HtmlMultipleHiddenField hiddenCurricularCourses = new HtmlMultipleHiddenField();
 		hiddenCurricularCourses.bind(getInputContext().getMetaObject(), "dismissals"); // slot refered by name
-		hiddenCurricularCourses.setConverter(new SelectedDismissalsKeyConverter());
+		hiddenCurricularCourses.setConverter(new SelectedCurricularCoursesKeyConverter());
 		hiddenCurricularCourses.setController(curricularCoursesController);
 		container.addChild(hiddenCurricularCourses);
-		generateCurricularCourses(container, dismissalBean.getStudentCurricularPlan(), dismissalBean.getStudentCurricularPlan().getRoot(), 0);
+		generateCurricularCourses(container, dismissalBean.getStudentCurricularPlan());
 	    }
 
 	    return container;
 	}
 
-	
-	private void generateCurricularCourses(HtmlBlockContainer blockContainer, StudentCurricularPlan studentCurricularPlan, CurriculumGroup curriculumGroup, int depth) {
+	private void generateCurricularCourses(final HtmlBlockContainer blockContainer, final StudentCurricularPlan studentCurricularPlan) {
 	    final HtmlTable groupTable = new HtmlTable();
 	    blockContainer.addChild(groupTable);
 	    groupTable.setClasses(getTablesClasses());
-	    groupTable.setStyle("width: " + (getInitialWidth() - depth) + "em; margin-left: " + depth + "em;");
+	    groupTable.setStyle("width: " + getInitialWidth() + "em; margin-left: 0em;");
 	    
-	    HtmlTableRow htmlTableRow = groupTable.createRow();
-	    htmlTableRow.setClasses(getGroupRowClasses());
+	    final List<CurricularCourse> orderedCurricularCourses = new ArrayList<CurricularCourse>(studentCurricularPlan.getAllCurricularCoursesToDismissal());
+	    Collections.sort(orderedCurricularCourses, new BeanComparator("name", Collator.getInstance()));
 	    
-	    HtmlTableCell nameCell = htmlTableRow.createCell();
-	    nameCell.setBody(new HtmlText(curriculumGroup.getName().getContent()));
-	    nameCell.setClasses(getGroupNameClasses());
-	    
-	    generateGroupCurricularCourses(blockContainer, curriculumGroup, curriculumGroup.getCurricularCoursesToDismissal(), depth + getWidthDecreasePerLevel());
-	    
-	    List<CurriculumGroup> ordered = new ArrayList<CurriculumGroup>(curriculumGroup.getCurriculumGroups());
-	    Collections.sort(ordered, new BeanComparator("childOrder"));
-	    
-	    for (CurriculumGroup group : ordered) {
-		generateCurricularCourses(blockContainer, studentCurricularPlan, group, depth + getWidthDecreasePerLevel());
-	    }
-	}
-
-
-	private void generateGroupCurricularCourses(HtmlBlockContainer blockContainer, CurriculumGroup curriculumGroup, Collection<CurricularCourse> curricularCoursesToDismissal, int depth) {
-	    if(!curricularCoursesToDismissal.isEmpty()) {
-		final HtmlTable groupTable = new HtmlTable();
-		blockContainer.addChild(groupTable);
-		groupTable.setClasses(getTablesClasses());
-		groupTable.setStyle("width: " + (getInitialWidth() - depth) + "em; margin-left: " + depth + "em;");
-
-		List<CurricularCourse> ordered = new ArrayList<CurricularCourse>(curricularCoursesToDismissal);
-		Collections.sort(ordered, new BeanComparator("name", Collator.getInstance()));
+	    for (final CurricularCourse curricularCourse : orderedCurricularCourses) {
+		final HtmlTableRow htmlTableRow = groupTable.createRow();
+		htmlTableRow.setClasses(getCurricularCourseRowClasses());
 		
-		for (CurricularCourse curricularCourse : ordered) {
-		    HtmlTableRow htmlTableRow = groupTable.createRow();
-		    htmlTableRow.setClasses(getCurricularCourseRowClasses());
-		    
-		    HtmlTableCell nameCell = htmlTableRow.createCell(); 
-		    nameCell.setBody(new HtmlText(curricularCourse.getName()));
-		    nameCell.setClasses(getCurricularCourseNameClasses());
-		    
-		    HtmlTableCell checkBoxCell = htmlTableRow.createCell();
-		    checkBoxCell.setClasses(getCurricularCourseCheckBoxClasses());
-		    
-		    HtmlCheckBox checkBox = new HtmlCheckBox(dismissalBean.containsDismissal(curriculumGroup, curricularCourse));
-		    checkBox.setName("curricularCourseCheckBox" + curriculumGroup.getIdInternal() + "|" + curricularCourse.getIdInternal());
-		    checkBox.setUserValue(SelectedDismissal.getKey(curriculumGroup, curricularCourse));
-		    checkBoxCell.setBody(checkBox);
-		    curricularCoursesController.addCheckBox(checkBox);
-		}
+		final HtmlTableCell nameCell = htmlTableRow.createCell(); 
+    	    	nameCell.setBody(new HtmlText(curricularCourse.getName()));
+    	    	nameCell.setClasses(getCurricularCourseNameClasses());
+    	    
+    	    	final HtmlTableCell checkBoxCell = htmlTableRow.createCell();
+    	    	checkBoxCell.setClasses(getCurricularCourseCheckBoxClasses());
+    	    	
+    	    	final HtmlCheckBox checkBox = new HtmlCheckBox(dismissalBean.containsDismissal(curricularCourse));
+    	    	checkBox.setName("curricularCourseCheckBox" + curricularCourse.getIdInternal());
+    	    	checkBox.setUserValue(MetaObjectFactory.createObject(curricularCourse, new Schema(CurricularCourse.class)).getKey().toString());
+    	    	checkBoxCell.setBody(checkBox);
+    	    	curricularCoursesController.addCheckBox(checkBox);
 	    }
 	}
-	
-	private void generateCurriculumGroup(final HtmlBlockContainer blockContainer, final StudentCurricularPlan studentCurricularPlan, final CurriculumGroup curriculumGroup, int depth) {
+
+	private void generateCourseGroups(final HtmlBlockContainer blockContainer, final StudentCurricularPlan studentCurricularPlan, final CourseGroup courseGroup, int depth) {
 	    final HtmlTable groupTable = new HtmlTable();
 	    blockContainer.addChild(groupTable);
 	    groupTable.setClasses(getTablesClasses());
 	    groupTable.setStyle("width: " + (getInitialWidth() - depth) + "em; margin-left: " + depth + "em;");
 	    
-	    HtmlTableRow htmlTableRow = groupTable.createRow();
+	    final HtmlTableRow htmlTableRow = groupTable.createRow();
 	    htmlTableRow.setClasses(getGroupRowClasses());
 	    
-	    HtmlTableCell nameCell = htmlTableRow.createCell();
-	    nameCell.setBody(new HtmlText(curriculumGroup.getName().getContent()));
+	    final HtmlTableCell nameCell = htmlTableRow.createCell();
+	    nameCell.setBody(new HtmlText(courseGroup.getName()));
 	    nameCell.setClasses(getGroupNameClasses());
 	    
-	    HtmlTableCell radioButtonCell = htmlTableRow.createCell();
-	    HtmlRadioButton radioButton = radioButtonGroup.createRadioButton();
-	    MetaObject curriculumGroupMetaObject = MetaObjectFactory.createObject(curriculumGroup, new Schema(CurriculumGroup.class));
-	    radioButton.setUserValue(curriculumGroupMetaObject.getKey().toString());
-	    radioButton.setChecked(curriculumGroup == dismissalBean.getCurriculumGroup());
+	    final HtmlTableCell radioButtonCell = htmlTableRow.createCell();
+	    final HtmlRadioButton radioButton = radioButtonGroup.createRadioButton();
+	    radioButton.setUserValue(MetaObjectFactory.createObject(courseGroup, new Schema(CourseGroup.class)).getKey().toString());
+	    radioButton.setChecked(courseGroup == dismissalBean.getCourseGroup());
 	    radioButtonCell.setBody(radioButton);
 	    radioButtonCell.setClasses(getGroupRadioClasses());
 	    
-	    List<CurriculumGroup> ordered = new ArrayList<CurriculumGroup>(curriculumGroup.getCurriculumGroups());
-	    Collections.sort(ordered, new BeanComparator("childOrder"));
-	    
-	    for (CurriculumGroup group : ordered) {
-		generateCurriculumGroup(blockContainer, studentCurricularPlan, group, depth + getWidthDecreasePerLevel());
+	    for (final Context context : courseGroup.getSortedChildContextsWithCourseGroups()) {
+		generateCourseGroups(blockContainer, studentCurricularPlan, (CourseGroup) context.getChildDegreeModule(), depth + getWidthDecreasePerLevel());
 	    }
 	}
-
     }
 
     private static class CopyCheckBoxValuesController extends HtmlController {
-
 	private List<HtmlCheckBox> checkboxes;
 	
 	public CopyCheckBoxValuesController() {
 	    super();
-
 	    this.checkboxes = new ArrayList<HtmlCheckBox>();
 	}
 
@@ -281,49 +234,33 @@ public class StudentDismissalRenderer extends InputRenderer {
 
 	@Override
 	public void execute(IViewState viewState) {
-	    HtmlMultipleValueComponent component = (HtmlMultipleValueComponent) getControlledComponent();
-	    
-	    List<String> values = new ArrayList<String>();
-
-	    for (HtmlCheckBox checkBox : this.checkboxes) {
+	    final HtmlMultipleValueComponent component = (HtmlMultipleValueComponent) getControlledComponent();
+	    final List<String> values = new ArrayList<String>();
+	    for (final HtmlCheckBox checkBox : this.checkboxes) {
 		if (checkBox.isChecked()) {
 		    values.add(checkBox.getValue());
 		}
 	    }
-	    
 	    component.setValues(values.toArray(new String[0]));
 	}
     }
-
     
-    public static class SelectedDismissalsKeyConverter extends Converter {
+    public static class SelectedCurricularCoursesKeyConverter extends Converter {
 
 	@Override
 	public Object convert(Class type, Object value) {
-	    DomainObjectKeyConverter converter = new DomainObjectKeyConverter();
-	    List<SelectedDismissal> result = new ArrayList<SelectedDismissal>();
-
+	    
 	    if (value == null) {
 		return null;
 	    }
-
-	    String[] values = (String[]) value;
-	    for (int i = 0; i < values.length; i++) {
-		String key = values[i];
-
-		String[] parts = key.split(",");
-		if (parts.length != 2) {
-		    throw new ConversionException("invalid key format: " + key);
-		}
-
-		CurriculumGroup curriculumGroup = (CurriculumGroup) converter.convert(type, parts[0]);
-		CurricularCourse curricularCourse = (CurricularCourse) converter.convert(type, parts[1]);
-		
-		SelectedDismissal selectedCurricularCourse = new SelectedDismissal(curriculumGroup, curricularCourse);
-		
-		result.add(selectedCurricularCourse);
-	    }
 	    
+	    final DomainObjectKeyConverter converter = new DomainObjectKeyConverter();
+	    final List<SelectedCurricularCourse> result = new ArrayList<SelectedCurricularCourse>();
+
+	    final String[] values = (String[]) value;
+	    for (int i = 0; i < values.length; i++) {
+		result.add(new SelectedCurricularCourse((CurricularCourse) converter.convert(type, values[i])));
+	    }
 	    return result;
 	}
     }    
