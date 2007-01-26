@@ -5,7 +5,8 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <em><bean:message key="title.assiduousness" /></em>
-<h2><bean:message key="link.workSheet" /></h2>
+<bean:define id="nextAction" name="action" type="java.lang.String"/>
+<h2><bean:message key="<%= "title." + nextAction %>" /></h2>
 <p class="mtop2"><span class="error0"><html:errors/></span></p>
 <logic:messagesPresent message="true">
 	<html:messages id="message" message="true">
@@ -14,8 +15,7 @@
 </logic:messagesPresent>
 
 <html:form action="viewEmployeeAssiduousness">
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1" />
-	<bean:define id="nextAction" name="action" type="java.lang.String"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1" />	
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="<%=nextAction%>" />
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.action" property="action" value="<%=nextAction%>" />
 	<bean:message key="label.employeeNumber" />
