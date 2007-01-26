@@ -157,19 +157,7 @@ public abstract class DegreeModule extends DegreeModule_Base {
 	}
 	return result;
     }
-
     
-    public abstract Double getEctsCredits();
-    public abstract void print(StringBuilder stringBuffer, String tabs, Context previousContext);
-    public abstract boolean isLeaf();
-    public abstract boolean isRoot();
-    public abstract DegreeCurricularPlan getParentDegreeCurricularPlan();
-    protected abstract void checkContextsFor(final CourseGroup parentCourseGroup,
-            final CurricularPeriod curricularPeriod, final Context context);
-    protected abstract void addOwnPartipatingCurricularRules(final List<CurricularRule> result);
-    protected abstract void checkOwnRestrictions(final CourseGroup parentCourseGroup,
-            final CurricularPeriod curricularPeriod);
-
     public boolean isOptional() {
 	return false;
     }
@@ -178,4 +166,13 @@ public abstract class DegreeModule extends DegreeModule_Base {
 	return getParentDegreeCurricularPlan().getDegree();
     }
     
+    public abstract Double getEctsCredits();
+    public abstract void print(StringBuilder stringBuffer, String tabs, Context previousContext);
+    public abstract boolean isLeaf();
+    public abstract boolean isRoot();
+    public abstract DegreeCurricularPlan getParentDegreeCurricularPlan();
+    
+    protected abstract void checkContextsFor(final CourseGroup parentCourseGroup, final CurricularPeriod curricularPeriod, final Context context);
+    protected abstract void addOwnPartipatingCurricularRules(final List<CurricularRule> result);
+    protected abstract void checkOwnRestrictions(final CourseGroup parentCourseGroup, final CurricularPeriod curricularPeriod);
 }
