@@ -31,6 +31,7 @@ import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.tests.NewTestGroup;
 import net.sourceforge.fenixedu.domain.tests.TestGroupStatus;
@@ -1531,7 +1532,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     public List<Attends> getAttendsEnrolledOrWithActiveSCP() {
 	List<Attends> result = new ArrayList<Attends>();
 	for (Attends attends : this.getAttendsSet()) {
-	    if(attends.getEnrolment() != null || attends.getAluno().getLastRegistrationState(this.getExecutionYear()).isActive()) {
+	    RegistrationState lastRegistrationState = attends.getAluno().getLastRegistrationState(this.getExecutionYear());
+	    if(attends.getEnrolment() != null || lastRegistrationState == null || lastRegistrationState.isActive()) {
 		result.add(attends);
 	    }
 	}
