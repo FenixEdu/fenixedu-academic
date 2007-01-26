@@ -428,6 +428,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment{
 	    enrolmentEvaluation = new EnrolmentEvaluation();
 	    enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
 	    enrolmentEvaluation.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL);
+	    enrolmentEvaluation.setWhenDateTime(new DateTime());
 
 	    addEvaluations(enrolmentEvaluation);
 	}
