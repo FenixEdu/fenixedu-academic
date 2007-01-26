@@ -8,8 +8,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import dml.runtime.RelationAdapter;
-
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
@@ -19,9 +17,9 @@ import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
-import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import dml.runtime.RelationAdapter;
 
 public class CurriculumGroup extends CurriculumGroup_Base {
     
@@ -50,13 +48,15 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     }
 
     public CurriculumGroup(CurriculumGroup curriculumGroup, CourseGroup courseGroup) {
+	this();
+	
 	if (courseGroup == null || curriculumGroup == null) {
 	    throw new DomainException(
 		    "error.studentCurriculum.curriculumGroup.courseGroup.cannot.be.null");
 	}
 	checkInitConstraints(curriculumGroup.getStudentCurricularPlan(), courseGroup);
-	setDegreeModule(courseGroup);
 	setCurriculumGroup(curriculumGroup);
+	setDegreeModule(courseGroup);
     }
     
     private void checkInitConstraints(StudentCurricularPlan studentCurricularPlan, CourseGroup courseGroup) {
@@ -108,23 +108,19 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	addChildCurriculumGroups(courseGroup, executionPeriod);
     }
 
-    private void checkParameters(CurriculumGroup parentCurriculumGroup, CourseGroup courseGroup,
-	    ExecutionPeriod executionPeriod) {
+    private void checkParameters(CurriculumGroup parentCurriculumGroup, CourseGroup courseGroup, ExecutionPeriod executionPeriod) {
 	if (parentCurriculumGroup == null) {
-	    throw new DomainException(
-		    "error.studentCurriculum.curriculumGroup.parentCurriculumGroup.cannot.be.null");
+	    throw new DomainException("error.studentCurriculum.curriculumGroup.parentCurriculumGroup.cannot.be.null");
 	}
 	checkParameters(courseGroup, executionPeriod);
     }
 
-    private void addChildCurriculumGroups(final CourseGroup courseGroup,
-	    final ExecutionPeriod executionPeriod) {
-	for (final CourseGroup childCourseGroup : courseGroup
-		.getNotOptionalChildCourseGroups(executionPeriod)) {
+    private void addChildCurriculumGroups(final CourseGroup courseGroup, final ExecutionPeriod executionPeriod) {
+	for (final CourseGroup childCourseGroup : courseGroup.getNotOptionalChildCourseGroups(executionPeriod)) {
 	    new CurriculumGroup(this, childCourseGroup, executionPeriod);
 	}
     }
-
+ 
     public boolean isLeaf() {
 	return false;
     }
@@ -217,7 +213,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	List<Context> result = new ArrayList<Context>();
 	for (Context context : this.getDegreeModulesToEnrol(executionPeriod)) {
 	    if(!context.getChildDegreeModule().isLeaf()) {
-		if(!this.getStudentCurricularPlan().getRoot().hasDegreModule(context.getChildDegreeModule())) {
+		if(!this.getStudentCurricularPlan().getRoot().hasDegreeModule(context.getChildDegreeModule())) {
 		    result.add(context);
 		}
 	    }
@@ -258,12 +254,12 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     }
 
     @Override
-    public boolean hasDegreModule(DegreeModule degreeModule) {
-	if (super.hasDegreModule(degreeModule)) {
+    public boolean hasDegreeModule(DegreeModule degreeModule) {
+	if (super.hasDegreeModule(degreeModule)) {
 	    return true;
 	} else {
 	    for (final CurriculumModule curriculumModule : this.getCurriculumModules()) {
-		if (curriculumModule.hasDegreModule(degreeModule)) {
+		if (curriculumModule.hasDegreeModule(degreeModule)) {
 		    return true;
 		}
 	    }
@@ -276,14 +272,28 @@ public class CurriculumGroup extends CurriculumGroup_Base {
         if(super.hasCurriculumModule(curriculumModule)) {
             return true;
         }
-        for (CurriculumModule module : getCurriculumModulesSet()) {
-	    if(module.hasCurriculumModule(module)) {
+        for (final CurriculumModule module : getCurriculumModulesSet()) {
+	    if (module.hasCurriculumModule(module)) {
 		return true;
 	    }
 	}
         return false;
     }
-
+    
+    @Override
+    public CurriculumModule findCurriculumModuleFor(final DegreeModule degreeModule) {
+        if (super.findCurriculumModuleFor(degreeModule) != null) {
+            return this;
+        }
+        for (final CurriculumModule each : getCurriculumModulesSet()) {
+            final CurriculumModule module = each.findCurriculumModuleFor(degreeModule);
+            if (module != null) {
+        	return module;
+            }
+        }
+        return null;
+    }
+    
     public Set<CurriculumLine> getCurriculumLines() {
 	Set<CurriculumLine> result = new TreeSet<CurriculumLine>(CurriculumModule.COMPARATOR_BY_NAME);
 
@@ -312,12 +322,17 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	return getChildOrder(ExecutionPeriod.readActualExecutionPeriod());
     }
     
-    public Integer getChildOrder(ExecutionPeriod executionPeriod) {
-	final CourseGroup parentCourseGroup = getCurriculumGroup().getDegreeModule();
-	final CourseGroup courseGroup = getDegreeModule();
-	
-	for (final Context context : parentCourseGroup.getChildContexts(executionPeriod)) {
-	    if (context.getChildDegreeModule() == courseGroup) {
+    public Integer getChildOrder(final ExecutionPeriod executionPeriod) {
+	return getParentCurriculumGroup().searchChildOrderForChild(this, executionPeriod);
+    }
+    
+    private CurriculumGroup getParentCurriculumGroup() {
+	return getCurriculumGroup();
+    }
+    
+    protected Integer searchChildOrderForChild(final CurriculumGroup child, final ExecutionPeriod executionPeriod) {
+	for (final Context context : getDegreeModule().getChildContexts(executionPeriod)) {
+	    if (context.getChildDegreeModule() == child.getDegreeModule()) {
 		return context.getChildOrder();
 	    }
 	}
@@ -340,7 +355,6 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	
 	return false;
     }
-
     
     public void createNoCourseGroupCurriculumGroupEnrolment(final StudentCurricularPlan studentCurricularPlan,
 	    final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod,

@@ -16,7 +16,7 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.BothAreasAreTheSameServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedBranchChangeException;
-import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.SelectedDismissal;
+import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean.SelectedCurricularCourse;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
@@ -32,6 +32,7 @@ import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurric
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.IEnrollmentRule;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
+import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.enrolment.DegreeModuleToEnrol;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
@@ -1925,38 +1926,43 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	getRoot().createNoCourseGroupCurriculumGroupEnrolment(this, curricularCourse, executionPeriod, groupType);	
     }
     
-    public NoCourseGroupCurriculumGroup getNoCourseGroupCurriculumGroup(NoCourseGroupCurriculumGroupType groupType) {
-	if(getRoot() != null) {
-	    return getRoot().getNoCourseGroupCurriculumGroup(groupType);
-	}
-	return null;
+    public NoCourseGroupCurriculumGroup getNoCourseGroupCurriculumGroup(final NoCourseGroupCurriculumGroupType groupType) {
+	return (getRoot() != null) ? getRoot().getNoCourseGroupCurriculumGroup(groupType) : null;
     }
     
-    public void createNewCreditsDismissal(StudentCurricularPlan studentCurricularPlan, CurriculumGroup curriculumGroup, 
-	    Collection<SelectedDismissal> dismissals, Collection<IEnrolment> enrolments, 
+    public NoCourseGroupCurriculumGroup createNoCourseGroupCurriculumGroup(final NoCourseGroupCurriculumGroupType groupType) {
+	final NoCourseGroupCurriculumGroup noCourseGroupCurriculumGroup = getNoCourseGroupCurriculumGroup(groupType);
+	if (noCourseGroupCurriculumGroup != null) {
+	    throw new DomainException("error.studentCurricularPlan.already.has.noCourseGroupCurriculumGroup.with.same.groupType");
+	}
+	return NoCourseGroupCurriculumGroup.createNewNoCourseGroupCurriculumGroup(groupType, getRoot());
+    }
+    
+    public void createNewCreditsDismissal(StudentCurricularPlan studentCurricularPlan, CourseGroup courseGroup, 
+	    Collection<SelectedCurricularCourse> dismissals, Collection<IEnrolment> enrolments, 
 	    Double givenCredits) {
-	if((curriculumGroup == null && (dismissals == null || dismissals.isEmpty())) || 
-		(curriculumGroup != null && dismissals != null && !dismissals.isEmpty())) {
+	if((courseGroup == null && (dismissals == null || dismissals.isEmpty())) || 
+		(courseGroup != null && dismissals != null && !dismissals.isEmpty())) {
 	    throw new DomainException("error.credits.dismissal.wrong.arguments");
 	}
 	
-	if(curriculumGroup != null) {
-	    new Credits(this, curriculumGroup, enrolments, givenCredits);
+	if(courseGroup != null) {
+	    new Credits(this, courseGroup, enrolments, givenCredits);
 	} else {
 	    new Credits(this, dismissals, enrolments);
 	}
     }
     
-    public void createNewEquivalenceDismissal(StudentCurricularPlan studentCurricularPlan, CurriculumGroup curriculumGroup, 
-	    Collection<SelectedDismissal> dismissals, Collection<IEnrolment> enrolments, 
+    public void createNewEquivalenceDismissal(StudentCurricularPlan studentCurricularPlan, CourseGroup courseGroup, 
+	    Collection<SelectedCurricularCourse> dismissals, Collection<IEnrolment> enrolments, 
 	    Double givenCredits, String givenGrade) {
-	if((curriculumGroup == null && (dismissals == null || dismissals.isEmpty())) || 
-		(curriculumGroup != null && dismissals != null && !dismissals.isEmpty())) {
+	if((courseGroup == null && (dismissals == null || dismissals.isEmpty())) || 
+		(courseGroup != null && dismissals != null && !dismissals.isEmpty())) {
 	    throw new DomainException("error.equivalence.wrong.arguments");
 	}
 	
-	if(curriculumGroup != null) {
-	    new Equivalence(this, curriculumGroup, enrolments, givenCredits, givenGrade);
+	if(courseGroup != null) {
+	    new Equivalence(this, courseGroup, enrolments, givenCredits, givenGrade);
 	} else {
 	    new Equivalence(this, dismissals, enrolments, givenGrade);
 	}
@@ -1990,6 +1996,20 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
             }
         }
         return false;
+    }
+    
+    public Collection<CurricularCourse> getAllCurricularCoursesToDismissal() {
+	final Set<CurricularCourse> result = new HashSet<CurricularCourse>();
+	for (final CurricularCourse curricularCourse : getDegreeCurricularPlan().getCurricularCoursesSet()) {
+	    if (!getRoot().isAproved(curricularCourse)) {
+		result.add(curricularCourse);
+	    }
+	}
+	return result;
+    }
+
+    public CurriculumModule findCurriculumModuleFor(final DegreeModule degreeModule) {
+	return getRoot().findCurriculumModuleFor(degreeModule);
     }
 
 }

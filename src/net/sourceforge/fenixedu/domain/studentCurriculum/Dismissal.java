@@ -6,6 +6,8 @@ import java.util.ResourceBundle;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Language;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
@@ -16,7 +18,7 @@ public class Dismissal extends Dismissal_Base {
         super();
     }
     
-    protected  Dismissal(Credits credits, CurriculumGroup curriculumGroup) {
+    protected Dismissal(Credits credits, CurriculumGroup curriculumGroup) {
         super();
         if(credits == null || curriculumGroup == null) {
             throw new DomainException("error.dismissal.wrong.arguments");
@@ -25,7 +27,7 @@ public class Dismissal extends Dismissal_Base {
         setCurriculumGroup(curriculumGroup);
     }
     
-    protected  Dismissal(Credits credits, CurriculumGroup curriculumGroup, CurricularCourse curricularCourse) {
+    protected Dismissal(Credits credits, CurriculumGroup curriculumGroup, CurricularCourse curricularCourse) {
         this(credits, curriculumGroup);
         if( curricularCourse == null) {
             throw new DomainException("error.dismissal.wrong.arguments");
@@ -35,9 +37,36 @@ public class Dismissal extends Dismissal_Base {
     }
 
     private void checkCurriculumGroupCurricularCourse(CurriculumGroup curriculumGroup, CurricularCourse curricularCourse) {
-	if(!curriculumGroup.getCurricularCoursesToDismissal().contains(curricularCourse)) {
-	    throw new DomainException("error.dismissal.invalid.curricular.course.to.dismissal");
+	if (!(curriculumGroup instanceof NoCourseGroupCurriculumGroup)) {
+	    if(!curriculumGroup.getCurricularCoursesToDismissal().contains(curricularCourse)) {
+		throw new DomainException("error.dismissal.invalid.curricular.course.to.dismissal");
+	    }
 	}
+    }
+    
+    static protected Dismissal createNewDismissal(final Credits credits, final StudentCurricularPlan studentCurricularPlan, final CourseGroup courseGroup) {
+	return new Dismissal(credits, findCurriculumGroupForCourseGroup(studentCurricularPlan, courseGroup));
+    }
+    
+    static private CurriculumGroup findCurriculumGroupForCourseGroup(final StudentCurricularPlan studentCurricularPlan, final CourseGroup courseGroup) {
+	final CurriculumGroup curriculumGroup = (CurriculumGroup) studentCurricularPlan.findCurriculumModuleFor(courseGroup);
+	if (curriculumGroup != null) {
+	    return curriculumGroup;
+	}
+	return new CurriculumGroup(getOrCreateExtraCurricularCurriculumGroup(studentCurricularPlan), courseGroup);
+    }
+
+    static private NoCourseGroupCurriculumGroup getOrCreateExtraCurricularCurriculumGroup(final StudentCurricularPlan studentCurricularPlan) {
+	final NoCourseGroupCurriculumGroup result = studentCurricularPlan.getNoCourseGroupCurriculumGroup(NoCourseGroupCurriculumGroupType.EXTRA_CURRICULAR);
+	return (result == null) ? studentCurricularPlan.createNoCourseGroupCurriculumGroup(NoCourseGroupCurriculumGroupType.EXTRA_CURRICULAR) : result; 
+    }
+    
+    static protected Dismissal createNewDismissal(final Credits credits, final StudentCurricularPlan studentCurricularPlan, final CurricularCourse curricularCourse) {
+	return new Dismissal(credits, findCurriculumGroupForCurricularCourse(studentCurricularPlan, curricularCourse), curricularCourse);
+    }
+
+    static private CurriculumGroup findCurriculumGroupForCurricularCourse(final StudentCurricularPlan studentCurricularPlan, final CurricularCourse curricularCourse) {
+	return getOrCreateExtraCurricularCurriculumGroup(studentCurricularPlan);
     }
 
     @Override
@@ -71,12 +100,13 @@ public class Dismissal extends Dismissal_Base {
     }
     
     @Override
-    public boolean hasDegreModule(DegreeModule degreeModule) {
-        if(hasDegreeModule()) {
-            return super.hasDegreModule(degreeModule);
-        } else {
-            return false;
-        }
+    public boolean hasDegreeModule(DegreeModule degreeModule) {
+	return hasDegreeModule() ? super.hasDegreeModule(degreeModule) : false;
+    }
+    
+    @Override
+    public CurriculumModule findCurriculumModuleFor(DegreeModule degreeModule) {
+	return hasDegreeModule() ? super.findCurriculumModuleFor(degreeModule) : null;
     }
     
     @Override

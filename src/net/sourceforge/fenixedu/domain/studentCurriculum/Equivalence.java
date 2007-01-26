@@ -2,12 +2,13 @@ package net.sourceforge.fenixedu.domain.studentCurriculum;
 
 import java.util.Collection;
 
-import org.apache.commons.lang.StringUtils;
-
-import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.SelectedDismissal;
+import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean.SelectedCurricularCourse;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
+import org.apache.commons.lang.StringUtils;
 
 public class Equivalence extends Equivalence_Base {
 
@@ -16,25 +17,25 @@ public class Equivalence extends Equivalence_Base {
     }
 
     public Equivalence(StudentCurricularPlan studentCurricularPlan,
-	    Collection<SelectedDismissal> dismissals, Collection<IEnrolment> enrolments, String grade) {
+	    Collection<SelectedCurricularCourse> dismissals, Collection<IEnrolment> enrolments, String grade) {
 	this();
 	init(studentCurricularPlan, dismissals, enrolments, grade);
     }
 
-    public Equivalence(StudentCurricularPlan studentCurricularPlan, CurriculumGroup curriculumGroup,
+    public Equivalence(StudentCurricularPlan studentCurricularPlan, CourseGroup courseGroup,
 	    Collection<IEnrolment> enrolments, Double credits, String grade) {
 	this();
-	init(studentCurricularPlan, curriculumGroup, enrolments, credits, grade);
+	init(studentCurricularPlan, courseGroup, enrolments, credits, grade);
     }
 
-    protected void init(StudentCurricularPlan studentCurricularPlan, CurriculumGroup curriculumGroup,
+    protected void init(StudentCurricularPlan studentCurricularPlan, CourseGroup courseGroup,
 	    Collection<IEnrolment> enrolments, Double credits, String grade) {
 	initGrade(enrolments, grade);
-	super.init(studentCurricularPlan, curriculumGroup, enrolments, credits);
+	super.init(studentCurricularPlan, courseGroup, enrolments, credits);
     }
 
     protected void init(StudentCurricularPlan studentCurricularPlan,
-	    Collection<SelectedDismissal> dismissals, Collection<IEnrolment> enrolments, String grade) {
+	    Collection<SelectedCurricularCourse> dismissals, Collection<IEnrolment> enrolments, String grade) {
 	initGrade(enrolments, grade);
 	super.init(studentCurricularPlan, dismissals, enrolments);
     }

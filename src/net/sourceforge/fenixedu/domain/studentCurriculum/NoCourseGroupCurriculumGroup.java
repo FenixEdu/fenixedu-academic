@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.studentCurriculum;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -66,13 +67,13 @@ public abstract class NoCourseGroupCurriculumGroup extends NoCourseGroupCurricul
     
     @Override
     public Collection<CurricularCourse> getCurricularCoursesToDismissal() {
-        return Collections.emptySet();
+        return Collections.EMPTY_LIST;
     }
     
     @Override
-    public boolean hasDegreModule(DegreeModule degreeModule) {
+    public boolean hasDegreeModule(DegreeModule degreeModule) {
 	for (final CurriculumModule curriculumModule : this.getCurriculumModules()) {
-	    if (curriculumModule.hasDegreModule(degreeModule)) {
+	    if (curriculumModule.hasDegreeModule(degreeModule)) {
 		return true;
 	    }
 	}
@@ -83,8 +84,8 @@ public abstract class NoCourseGroupCurriculumGroup extends NoCourseGroupCurricul
     public boolean hasCourseGroup(CourseGroup courseGroup) {
 	for (final CurriculumModule curriculumModule : getCurriculumModules()) {
 	    if (!curriculumModule.isLeaf()) {
-		CurriculumGroup group = (CurriculumGroup) curriculumModule;
-		if(group.hasCourseGroup(courseGroup)) {
+		final CurriculumGroup group = (CurriculumGroup) curriculumModule;
+		if (group.hasCourseGroup(courseGroup)) {
 		    return true;
 		}
 	    }
@@ -93,9 +94,29 @@ public abstract class NoCourseGroupCurriculumGroup extends NoCourseGroupCurricul
 	return false;
     }
     
+    /**
+     *  Flat structure below NoCourseGroupCurriculumGroup
+     */
+    @Override
+    public CurriculumModule findCurriculumModuleFor(final DegreeModule degreeModule) {
+        for (final CurriculumModule each : getCurriculumModulesSet()) {
+            if (each.getDegreeModule() == degreeModule) {
+        	return each;
+            }
+        }
+        return null;
+    }
+    
     @Override
     public Integer getChildOrder(ExecutionPeriod executionPeriod) {
         return Integer.MAX_VALUE;
+    }
+    
+    @Override
+    protected Integer searchChildOrderForChild(final CurriculumGroup child, final ExecutionPeriod executionPeriod) {
+	final List<CurriculumModule> result = new ArrayList<CurriculumModule>(getCurriculumModulesSet());
+	Collections.sort(result, CurriculumModule.COMPARATOR_BY_NAME);
+        return result.indexOf(child);
     }
     
     public abstract NoCourseGroupCurriculumGroupType getNoCourseGroupCurriculumGroupType();

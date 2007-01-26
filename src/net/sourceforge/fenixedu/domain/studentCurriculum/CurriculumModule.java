@@ -69,16 +69,24 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
 	return multiLanguageString;
     }
     
+    public boolean isAproved(final CurricularCourse curricularCourse) {
+	return isAproved(curricularCourse, null);
+    }
+    
     public abstract boolean isAproved(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod);
     
     public abstract boolean isEnroledInExecutionPeriod(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod);
     
-    public boolean hasDegreModule(final DegreeModule degreeModule) {
+    public boolean hasDegreeModule(final DegreeModule degreeModule) {
 	return this.getDegreeModule().equals(degreeModule);
     }
     
     public boolean hasCurriculumModule(final CurriculumModule curriculumModule) {
 	return this.equals(curriculumModule);
+    }
+    
+    public CurriculumModule findCurriculumModuleFor(final DegreeModule degreeModule) {
+	return getDegreeModule().equals(degreeModule) ? this : null;
     }
     
     public Set<CurricularRule> getCurricularRules(ExecutionPeriod executionPeriod){
