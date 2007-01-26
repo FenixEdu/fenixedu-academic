@@ -4,7 +4,9 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
+<%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 <%@page import="net.sourceforge.fenixedu.domain.student.StudentCurriculum"%>
+<%@page import="org.apache.struts.util.LabelValueBean"%>
 <html:xhtml/>
 
 <h2><bean:message key="message.student.curriculum" bundle="STUDENT_RESOURCES" /></h2>
@@ -308,17 +310,16 @@
 
 <p class="mtop3 mbottom0"><strong><bean:message key="label.legend" bundle="STUDENT_RESOURCES"/></strong></p>
 <div style="width: 250px; float: left;">
-	<p class="mvert05"><em><bean:message key="EnrollmentCondition.TEMPORARY.acronym" bundle="ENUMERATION_RESOURCES"/>: <bean:message key="EnrollmentCondition.TEMPORARY" bundle="ENUMERATION_RESOURCES"/></em></p>
-	<p class="mvert05"><em><bean:message key="EnrollmentCondition.FINAL.acronym" bundle="ENUMERATION_RESOURCES"/>: <bean:message key="EnrollmentCondition.FINAL" bundle="ENUMERATION_RESOURCES"/></em></p>
-	<p class="mvert05"><em><bean:message key="EnrollmentCondition.IMPOSSIBLE.acronym" bundle="ENUMERATION_RESOURCES"/>: <bean:message key="EnrollmentCondition.IMPOSSIBLE" bundle="ENUMERATION_RESOURCES"/></em></p>
-	<p class="mvert05"><em><bean:message key="EnrollmentCondition.VALIDATED.acronym" bundle="ENUMERATION_RESOURCES"/>: <bean:message key="EnrollmentCondition.VALIDATED" bundle="ENUMERATION_RESOURCES"/></em></p>
-	<p class="mvert05"><em><bean:message key="EnrollmentCondition.INVISIBLE.acronym" bundle="ENUMERATION_RESOURCES"/>: <bean:message key="EnrollmentCondition.INVISIBLE" bundle="ENUMERATION_RESOURCES"/></em></p>
+    <e:labelValues id="enrolmentConditions" enumeration="net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition" />
+	<logic:iterate id="enrolmentCondition" name="enrolmentConditions" type="LabelValueBean">
+		<p class="mvert05"><em><bean:message key="<%="EnrollmentCondition." + enrolmentCondition.getValue() + ".acronym"%>" bundle="ENUMERATION_RESOURCES"/>: <bean:message key="<%="EnrollmentCondition." + enrolmentCondition.getValue()%>" bundle="ENUMERATION_RESOURCES"/></em></p>
+	</logic:iterate>
 </div>
-<div style="width: 250px; float: left;>
-	<p class="mvert05"><em><bean:message key="EnrolmentEvaluationType.NORMAL.acronym" bundle="ENUMERATION_RESOURCES"/>: <bean:message key="EnrolmentEvaluationType.NORMAL" bundle="ENUMERATION_RESOURCES"/></em></p>
-	<p class="mvert05"><em><bean:message key="EnrolmentEvaluationType.IMPROVEMENT.acronym" bundle="ENUMERATION_RESOURCES"/>: <bean:message key="EnrolmentEvaluationType.IMPROVEMENT" bundle="ENUMERATION_RESOURCES"/></em></p>
-	<p class="mvert05"><em><bean:message key="EnrolmentEvaluationType.SPECIAL_SEASON.acronym" bundle="ENUMERATION_RESOURCES"/>: <bean:message key="EnrolmentEvaluationType.SPECIAL_SEASON" bundle="ENUMERATION_RESOURCES"/></em></p>
-	<p class="mvert05"><em><bean:message key="EnrolmentEvaluationType.EQUIVALENCE.acronym" bundle="ENUMERATION_RESOURCES"/>: <bean:message key="EnrolmentEvaluationType.EQUIVALENCE" bundle="ENUMERATION_RESOURCES"/></em></p>
+<div style="width: 250px; float: left;">
+    <e:labelValues id="enrolmentEvaluationTypes" enumeration="net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType" />
+	<logic:iterate id="enrolmentEvaluationType" name="enrolmentEvaluationTypes" type="LabelValueBean">
+		<p class="mvert05"><em><bean:message key="<%="EnrolmentEvaluationType." + enrolmentEvaluationType.getValue() + ".acronym"%>" bundle="ENUMERATION_RESOURCES"/>: <bean:message key="<%="EnrolmentEvaluationType." + enrolmentEvaluationType.getValue()%>" bundle="ENUMERATION_RESOURCES"/></em></p>
+	</logic:iterate>
 </div>
 <div class="cboth"></div>
 
