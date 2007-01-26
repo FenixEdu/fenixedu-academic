@@ -520,6 +520,7 @@
 			<forward name="chooseEquivalents" path="studentDismissal.chooseEquivalents"/>
 			<forward name="visualizeRegistration" path="/student.do?method=visualizeRegistration"/>
 			<forward name="chooseDismissalEnrolments" path="studentDismissal.chooseDismissalEnrolments"/>
+			<forward name="confirmCreateDismissals" path="studentDismissal.confirmCreateDismissals"/>
 
 			<forward name="chooseExternalCurricularCourse" path="studentDismissal.chooseExternalCurricularCourse"/>
 			<forward name="prepareCreateExternalEnrolment" path="studentDismissal.prepareCreateExternalEnrolment"/>

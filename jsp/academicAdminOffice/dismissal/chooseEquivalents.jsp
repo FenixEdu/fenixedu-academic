@@ -24,8 +24,8 @@
 <br/>
 <bean:define id="dismissalTypeName" name="dismissalBean" property="dismissalType.name" />
 <fr:form action="/studentDismissals.do">
-	<html:hidden property="method" value="createDismissals"/>
-	<fr:edit id="dismissalType" name="dismissalBean" schema="<%= "DismissalBean." +  dismissalTypeName %>">
+	<html:hidden property="method" value="confirmCreateDismissals"/>
+	<fr:edit id="dismissalType" name="dismissalBean" schema="DismissalBean.chooseEquivalents">
 		<fr:destination name="dismissalTypePostBack" path="/studentDismissals.do?method=dismissalTypePostBack"/>
 		<fr:destination name="invalid" path="/studentDismissals.do?method=stepTwo"/>
 		<fr:layout name="tabular-editable">

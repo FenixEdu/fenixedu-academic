@@ -23,17 +23,9 @@
 <br/>
 <fr:form action="/studentDismissals.do">
 	<html:hidden property="method" value="chooseEquivalents"/>
-	<fr:edit id="dismissalBean" name="dismissalBean" visible="false"/>
-	<bean:define id="dismissalClassName" name="dismissalBean" property="dismissalClass.name" />	
-	<fr:edit id="dismissalClass" name="dismissalBean" schema="<%= "DismissalBean.DismissalClass." +  dismissalClassName %>">
-		<fr:destination name="dismissalClassPostBack" path="/studentDismissals.do?method=dismissalClassPostBack"/>
-		<fr:destination name="invalid" path="/studentDismissals.do?method=stepOne"/>
-		<fr:layout name="tabular-editable">
-			<fr:property name="classes" value="tstyle4"/>
-		</fr:layout>
-	</fr:edit>
-	<br/>
 	
+	<fr:edit id="dismissalBean" name="dismissalBean" visible="false"/>
+
 	<h3><bean:message key="label.studentDismissal.externalEnrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 	<logic:notEmpty name="dismissalBean" property="externalEnrolments">	
 		<fr:edit id="externalEnrolments" name="dismissalBean" property="externalEnrolments" schema="student.Dismissal.choose.external.enrolments">
@@ -48,7 +40,8 @@
 		<em><bean:message key="label.studentDismissal.externalEnrolments.empty" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 		<br/>				
 	</logic:empty>
-	<br/>	
+	<br/>
+	
 	<h3><bean:message key="label.studentDismissal.internalEnrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 	<logic:notEmpty name="dismissalBean" property="enrolments">
 		<fr:edit id="internalEnrolments" name="dismissalBean" property="enrolments" schema="student.Dismissal.choose.internal.enrolments">
@@ -59,8 +52,8 @@
 		</fr:edit>
 	</logic:notEmpty>
 	<logic:empty name="dismissalBean" property="enrolments">
-		<br/>				
 		<em><bean:message key="label.studentDismissal.internalEnrolments.empty" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
+		<br/>
 		<br/>				
 	</logic:empty>
 	<br/>
