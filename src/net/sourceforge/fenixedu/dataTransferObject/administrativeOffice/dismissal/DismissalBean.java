@@ -9,34 +9,25 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
+import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 
-public class DismissalBean implements Serializable{
+public class DismissalBean implements Serializable {
     
     private DomainReference<StudentCurricularPlan> studentCurricularPlan;
-    
-    private Collection<SelectedDismissal> dismissals;
-
-    private DomainReference<CurriculumGroup> curriculumGroup;
-    
+    private Collection<SelectedCurricularCourse> dismissals;
+    private DomainReference<CourseGroup> courseGroup;
     private Collection<SelectedEnrolment> enrolments;
-    
     private Collection<SelectedExternalEnrolment> externalEnrolments;
-    
     private DismissalType dismissalType;
-    
-    private DismissalClass dismissalClass;
-    
     private Double credits;
-    
     private String grade;
   
-    public Collection<SelectedDismissal> getDismissals() {
+    public Collection<SelectedCurricularCourse> getDismissals() {
         return dismissals;
     }
 
-    public void setDismissals(Collection<SelectedDismissal> dismissals) {
+    public void setDismissals(Collection<SelectedCurricularCourse> dismissals) {
         this.dismissals = dismissals;
     }
     
@@ -48,12 +39,12 @@ public class DismissalBean implements Serializable{
         this.enrolments = enrolments;
     }
     
-    public CurriculumGroup getCurriculumGroup() {
-	return (this.curriculumGroup != null) ? this.curriculumGroup.getObject() : null;
+    public CourseGroup getCourseGroup() {
+	return (this.courseGroup != null) ? this.courseGroup.getObject() : null;
     }
 
-    public void setCurriculumGroup(CurriculumGroup curriculumGroup) {
-	this.curriculumGroup = (curriculumGroup != null) ? new DomainReference<CurriculumGroup>(curriculumGroup) : null;
+    public void setCourseGroup(CourseGroup courseGroup) {
+	this.courseGroup = (courseGroup != null) ? new DomainReference<CourseGroup>(courseGroup) : null;
     }
     
     public StudentCurricularPlan getStudentCurricularPlan() {
@@ -70,14 +61,6 @@ public class DismissalBean implements Serializable{
 
     public void setDismissalType(DismissalType dismissalType) {
         this.dismissalType = dismissalType;
-    }
-
-    public DismissalClass getDismissalClass() {
-        return dismissalClass;
-    }
-
-    public void setDismissalClass(DismissalClass dismissalClass) {
-        this.dismissalClass = dismissalClass;
     }
 
     public String getGrade() {
@@ -104,10 +87,10 @@ public class DismissalBean implements Serializable{
         this.externalEnrolments = externalEnrolments;
     }
 
-    public boolean containsDismissal(CurriculumGroup curriculumGroup, CurricularCourse curricularCourse) {
+    public boolean containsDismissal(CurricularCourse curricularCourse) {
 	if(getDismissals() != null) {
-	    for (SelectedDismissal selectedDismissal : getDismissals()) {
-		if(selectedDismissal.equals(curriculumGroup, curricularCourse)) {
+	    for (SelectedCurricularCourse selectedCurricularCourse : getDismissals()) {
+		if(selectedCurricularCourse.getCurricularCourse().equals(curricularCourse)) {
 		    return true;
 		}
 	    }
@@ -135,6 +118,29 @@ public class DismissalBean implements Serializable{
 	}
 	
 	return result;
+    }
+    
+    public static class SelectedCurricularCourse implements Serializable {
+	private Boolean selected = Boolean.FALSE;
+	private DomainReference<CurricularCourse> curricularCourse;
+	
+	public SelectedCurricularCourse(CurricularCourse curricularCourse) {
+	    setCurricularCourse(curricularCourse);
+	}
+
+	public CurricularCourse getCurricularCourse() {
+	    return (this.curricularCourse != null) ? this.curricularCourse.getObject() : null;
+	}
+
+	public void setCurricularCourse(CurricularCourse curricularCourse) {
+	    this.curricularCourse = (curricularCourse != null) ? new DomainReference<CurricularCourse>(curricularCourse) : null;
+	}
+	public Boolean getSelected() {
+	    return selected;
+	}
+	public void setSelected(Boolean selected) {
+	    this.selected = selected;
+	}
     }
     
     public static class SelectedEnrolment implements Serializable {
@@ -201,13 +207,4 @@ public class DismissalBean implements Serializable{
 	}
     }
     
-    public static enum DismissalClass {
-	CREDITS,
-	EQUIVALENCE;
-	
-	public String getName() {
-	    return name();
-	}
-    }
-
  }
