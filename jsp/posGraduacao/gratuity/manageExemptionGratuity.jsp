@@ -112,7 +112,7 @@
 				</tr>	
 				<tr>
 					<td colspan="2">																							
-						<html:text bundle="HTMLALT_RESOURCES" altKey="text.otherJustificationExemptionGratuity" property="otherJustificationExemptionGratuity" size="40"/>
+						<html:text bundle="HTMLALT_RESOURCES" altKey="text.otherJustificationExemptionGratuity" property="otherJustificationExemptionGratuity" size="40" maxlength="49" />
 					</td>
 				</tr>					
 			</table>
