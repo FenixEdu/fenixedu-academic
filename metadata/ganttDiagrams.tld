@@ -11,7 +11,6 @@
 
 
 <taglib>
-
 	<!-- ========== Tag Library Description Elements ========================= -->
 	<tlib-version>1.0</tlib-version>
 	<jsp-version>1.2</jsp-version>
@@ -20,36 +19,42 @@
 	<description>
 		Gantt Diagrams Render
 	</description>
- 
-	<tag>
-	   
-	   <name>ganttDiagram</name>
-	   <tag-class>net.sourceforge.fenixedu.presentationTier.TagLib.GanttDiagramTagLib</tag-class>
-	   <body-content>empty</body-content>
-	   <description>
-	   	  Renders Gantt Diagrams
-	   </description>
-	   
-	   <attribute>
+	<tag>	   
+		<name>ganttDiagram</name>
+		<tag-class>net.sourceforge.fenixedu.presentationTier.TagLib.GanttDiagramTagLib</tag-class>
+		<body-content>empty</body-content>
+		<description>
+			Renders Gantt Diagrams
+		</description>	   
+	   	<attribute>
 	 	  	<name>ganttDiagram</name>
 	  	 	<required>true</required>
 	  	 	<rtexprvalue>true</rtexprvalue>
-	   </attribute>
-	   <attribute>
+	   	</attribute>
+	   	<attribute>
 	  	 	<name>eventUrl</name>
 	  	 	<required>true</required>
 	   		<rtexprvalue>true</rtexprvalue>
-	   </attribute>
-	   <attribute>
+	   	</attribute>
+		<attribute>
 			<name>eventParameter</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
-		</attribute>    
-	   <attribute>
+		</attribute>
+		<attribute>
+			<name>nextUrl</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>		
+		<attribute>
+			<name>firstDayParameter</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>								     
+		<attribute>
 	   		<name>bundle</name>
 	   		<required>false</required>
 	   		<rtexprvalue>true</rtexprvalue>
-	   </attribute>
+	   </attribute>	   
 	</tag>
-
 </taglib>

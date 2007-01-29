@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.util.renderer.GanttDiagram;
 import net.sourceforge.fenixedu.util.renderer.GanttDiagramEvent;
 
+import org.apache.jcs.access.exception.InvalidArgumentException;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -125,24 +126,24 @@ public class AcademicCalendarsManagementDA extends FenixDispatchAction {
     
     // Private Methods
     
-    private ActionForward viewAcademicCalendarForAcademicCalendar(ActionMapping mapping, HttpServletRequest request, AcademicCalendar academicCalendar) {
+    private ActionForward viewAcademicCalendarForAcademicCalendar(ActionMapping mapping, HttpServletRequest request, AcademicCalendar academicCalendar) throws InvalidArgumentException {
 	List<AcademicCalendarEntry> entries = academicCalendar.getEntriesOrderByDate();
 	request.setAttribute("academicCalendar", academicCalendar);
 	generateTimeLine(request, entries);	
 	return mapping.findForward("viewAcademicCalendar");
     }
 
-    private ActionForward viewAcademicCalendarForEntries(ActionMapping mapping, HttpServletRequest request, AcademicCalendarEntry academicCalendarEntry) {
+    private ActionForward viewAcademicCalendarForEntries(ActionMapping mapping, HttpServletRequest request, AcademicCalendarEntry academicCalendarEntry) throws InvalidArgumentException {
 	List<AcademicCalendarEntry> entries = academicCalendarEntry.getAcademicCalendar().getEntriesOrderByDate();
 	request.setAttribute("calendarEntry", academicCalendarEntry);
 	generateTimeLine(request, entries);	
 	return mapping.findForward("viewAcademicCalendar");
     } 
     
-    private void generateTimeLine(HttpServletRequest request, List<AcademicCalendarEntry> entries) {	
+    private void generateTimeLine(HttpServletRequest request, List<AcademicCalendarEntry> entries) throws InvalidArgumentException {	
 	List<GanttDiagramEvent> newEntries = generateEntriesTree(request, entries);	
-	GanttDiagram diagram = new GanttDiagram(newEntries);
-	request.setAttribute("ganttDiagram", diagram);
+	GanttDiagram diagram = GanttDiagram.getNewTotalGanttDiagram(newEntries);	
+	request.setAttribute("ganttDiagram", diagram);	
     }
 
     private List<GanttDiagramEvent> generateEntriesTree(HttpServletRequest request, List<AcademicCalendarEntry> entries) {
@@ -165,6 +166,21 @@ public class AcademicCalendarsManagementDA extends FenixDispatchAction {
 	final Integer calendarID = Integer.valueOf(calendarIDString);
 	return rootDomainObject.readAcademicCalendarByOID(calendarID);
     }
+    
+//    private YearMonthDay getFirstDayFromParameter(final HttpServletRequest request) {
+//	final String firstDayString = request.getParameter("firstDay");
+//	if (!StringUtils.isEmpty(firstDayString)) {
+//	    int day = Integer.parseInt(firstDayString.substring(0, 2));
+//	    int month = Integer.parseInt(firstDayString.substring(2, 4));
+//	    int year = Integer.parseInt(firstDayString.substring(4, 8));
+//
+//	    if (year == 0 || month == 0 || day == 0) {
+//		return null;
+//	    }
+//	    return new YearMonthDay(year, month, day);
+//	}
+//	return null;
+//    }
     
     private AcademicCalendarEntry getAcademicCalendarEntryFromParameter(final HttpServletRequest request) {
 	final String calendarIDString = request.getParameter("academicCalendarEntryID");

@@ -5,7 +5,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeSet;
+
+import org.joda.time.DateTime;
 
 import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -67,6 +70,18 @@ public class AcademicCalendar extends AcademicCalendar_Base {
 	Set<AcademicCalendarEntry> result = new TreeSet(AcademicCalendarEntry.COMPARATOR_BEGIN_DATE);
 	result.addAll(getEntries());
 	return new ArrayList<AcademicCalendarEntry>(result);
+    }
+    
+    public DateTime getBegin() {
+	SortedSet<AcademicCalendarEntry> result = new TreeSet(AcademicCalendarEntry.COMPARATOR_BEGIN_DATE);
+	result.addAll(getEntries());
+	return (result.isEmpty()) ? null : result.first().getBegin();
+    }
+    
+    public DateTime getEnd() {
+	SortedSet<AcademicCalendarEntry> result = new TreeSet(AcademicCalendarEntry.COMPARATOR_BEGIN_DATE);
+	result.addAll(getEntries());
+	return (result.isEmpty()) ? null : result.last().getEnd();
     }
     
     public List<? extends AcademicCalendarEntry> getAllEntriesOrderByDate(

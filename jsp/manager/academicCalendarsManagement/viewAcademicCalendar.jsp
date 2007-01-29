@@ -15,7 +15,7 @@
 	<style>
 	.tcalendar {
 	border-collapse: collapse;
-	border: 1px solid #ccc;
+	/*border: 1px solid #ccc;*/
 	}
 	.tcalendar th {
 	border: 1px solid #ccc;
@@ -52,6 +52,14 @@
 	tr.selected td {
 	background-color: #fdfdde;
 	}
+	td.tcalendarlinks {
+	padding: 0.5em 0;
+	border-bottom: none;
+	border-left: none;
+	border-right: none;
+	}
+	td.tcalendarlinks span { color: #888; }
+	td.tcalendarlinks span a { color: #888; }
 	</style>
 	
 	
