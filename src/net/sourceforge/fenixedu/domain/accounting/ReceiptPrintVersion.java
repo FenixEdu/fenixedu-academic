@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.accounting;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.injectionCode.Checked;
 
 import org.joda.time.DateTime;
 
@@ -52,4 +53,11 @@ public class ReceiptPrintVersion extends ReceiptPrintVersion_Base {
         throw new DomainException("error.accounting.receiptVersion.cannot.modify.whenCreated");
     }
 
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    void delete() {
+	super.setEmployee(null);
+	super.setReceipt(null);
+	removeRootDomainObject();
+	super.deleteDomainObject();
+    }
 }
