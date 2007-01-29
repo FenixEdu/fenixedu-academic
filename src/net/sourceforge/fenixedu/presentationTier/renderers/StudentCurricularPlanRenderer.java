@@ -18,13 +18,11 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.renderers.OutputRenderer;
 import net.sourceforge.fenixedu.renderers.components.HtmlBlockContainer;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
@@ -212,51 +210,51 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 	this.enrolmentClasses = enrolmentClasses;
     }
 
-    private String getEnrolmentConditionClasses() {
+    private String getEnrolmentDegreeCurricularPlanClasses() {
         return getEnrolmentClasses()[0];
     }
 
-    private String getEnrolmentCreationClasses() {
+    private String getEnrolmentNameClasses() {
         return getEnrolmentClasses()[1];
     }
 
-    private String getEnrolmentEvaluationTypeClasses() {
+    private String getEnrolmentTypeClasses() {
         return getEnrolmentClasses()[2];
     }
 
-    private String getEnrolmentNameClasses() {
+    private String getEnrolmentStateClasses() {
         return getEnrolmentClasses()[3];
     }
 
-    private String getEnrolmentDegreeCurricularPlanClasses() {
+    private String getEnrolmentEvaluationClasses() {
         return getEnrolmentClasses()[4];
     }
 
-    private String getEnrolmentYearClasses() {
+    private String getEnrolmentWeightClasses() {
         return getEnrolmentClasses()[5];
     }
 
-    private String getEnrolmentSemesterClasses() {
+    private String getEnrolmentCreditsClasses() {
         return getEnrolmentClasses()[6];
     }
 
-    private String getEnrolmentTypeClasses() {
+    private String getEnrolmentEvaluationTypeClasses() {
         return getEnrolmentClasses()[7];
     }
 
-    private String getEnrolmentStateClasses() {
+    private String getEnrolmentYearClasses() {
         return getEnrolmentClasses()[8];
     }
 
-    private String getEnrolmentEvaluationClasses() {
+    private String getEnrolmentSemesterClasses() {
         return getEnrolmentClasses()[9];
     }
 
-    private String getEnrolmentWeightClasses() {
+    private String getEnrolmentCreationClasses() {
         return getEnrolmentClasses()[10];
     }
 
-    private String getEnrolmentCreditsClasses() {
+    private String getEnrolmentConditionClasses() {
         return getEnrolmentClasses()[11];
     }
 
@@ -415,41 +413,55 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 			    (enrolment.isApproved() || enrolment.isEnroled()))) {
 		final HtmlTableRow lineRow = parentTable.createRow();
 
-		// Enrolment Condition 
-		final HtmlComponent enrolmentCondition = enrolment.isEnrollmentConditionFinal() || enrolment.getExecutionPeriod().getExecutionYear() != ExecutionYear.readCurrentExecutionYear() ? null : new HtmlText(enumerationResources.getString(enrolment.getEnrolmentCondition().getAcronym()));
-		generateEnrolmentSmallInfoCell(lineRow, enrolmentCondition, getEnrolmentConditionClasses(), enumerationResources.getString(enrolment.getEnrolmentCondition().getQualifiedName()));
-		
-		// Creation
-		String createdBy = null;
-		if (!StringUtils.isEmpty(enrolment.getCreatedBy())) {
-		    final Person person = Person.readPersonByUsername(enrolment.getCreatedBy());
-		    if (AccessControl.getPerson() != person) {
-			createdBy = enrolment.getCreatedBy();    
-		    }
-		}
-		final HtmlComponent creation = enrolment.getExecutionPeriod().getExecutionYear().containsDate(enrolment.getCreationDateDateTime()) ? new HtmlText(enrolment.getCreationDateDateTime().toString("yyyy/MM/dd")) : null; 
-		generateEnrolmentSmallInfoCell(lineRow, creation, getEnrolmentCreationClasses(), createdBy);
-
-		// Enrolment Evaluation Type 
-		final String enrolmentEvaluationType = enumerationResources.getString(enrolment.getEnrolmentEvaluationType().getAcronym());
-		generateEnrolmentSmallInfoCell(lineRow, new HtmlText(enrolmentEvaluationType), getEnrolmentEvaluationTypeClasses(), enumerationResources.getString(enrolment.getEnrolmentEvaluationType().getQualifiedName()));
-		
 		// Code
 		// Name
 		final HtmlTableCell codeNameCell = lineRow.createCell();
 		codeNameCell.setClasses(getEnrolmentNameClasses());
 		final HtmlInlineContainer codeNameSpan =  new HtmlInlineContainer();
 		if (!StringUtils.isEmpty(enrolment.getCurricularCourse().getCode())) {
-		    final HtmlInlineContainer codeSpan =  new HtmlInlineContainer();
-		    codeSpan.setClasses("");
-		    codeSpan.addChild(new HtmlText(enrolment.getCurricularCourse().getCode() + " - "));
-		    codeNameSpan.addChild(codeSpan);
+		    codeNameSpan.addChild(new HtmlText(enrolment.getCurricularCourse().getCode() + " - "));
 		}
 		codeNameSpan.addChild(new HtmlText(enrolment.getName().getContent(LanguageUtils.getLanguage())));
 		codeNameCell.setBody(generateEnrolmentLink(codeNameSpan, enrolment));
 		
 		// Degree Curricular Plan
 		generateEnrolmentSmallInfoCell(lineRow, generateEnrolmentDegreeCurricularPlanLink(enrolment), getEnrolmentDegreeCurricularPlanClasses(), null);
+		
+		// Enrolment Type 
+		final HtmlComponent enrolmentType = enrolment.isEnrolmentTypeNormal() ? null : new HtmlText(enumerationResources.getString(enrolment.getEnrolmentTypeName()));
+		generateEnrolmentSmallInfoCell(lineRow, enrolmentType, getEnrolmentTypeClasses(), null);
+
+		// Enrolment State
+		final HtmlComponent enrolmentState = enrolment.isEnrolmentStateApproved() ? null : new HtmlText(enumerationResources.getString(enrolment.getEnrollmentState().getQualifiedName()));
+		generateEnrolmentSmallInfoCell(lineRow, enrolmentState, getEnrolmentStateClasses(), null);
+		
+		// Enrolment Grade
+		final HtmlTableCell enrolmentEvaluationCell = lineRow.createCell();
+		enrolmentEvaluationCell.setClasses(getEnrolmentEvaluationClasses());
+		final String grade = enrolment.getGrade();
+		enrolmentEvaluationCell.setBody(new HtmlText(grade == null ? "-" : grade));
+		
+		// Enrolment Weight
+		final HtmlTableCell enrolmentWeightCell = lineRow.createCell();
+		enrolmentWeightCell.setClasses(getEnrolmentWeightClasses());
+		final String enrolmentWeight = enrolment.getFinalGrade() == null ? "-" : enrolment.getWeigth().toString();
+		enrolmentWeightCell.setBody(new HtmlText(enrolmentWeight));
+
+		// Enrolment Credits
+		final HtmlTableCell enrolmentEctsCreditsCell = lineRow.createCell();
+		enrolmentEctsCreditsCell.setClasses(getEnrolmentCreditsClasses());
+		final String enrolmentEctsCredits = enrolment.isEnrolmentStateApproved() ? enrolment.getEctsCredits().toString() : "-";
+		enrolmentEctsCreditsCell.setBody(new HtmlText(enrolmentEctsCredits));
+		
+		// Latest Enrolment Evaluation Type
+		final EnrolmentEvaluation latestEnrolmentEvaluation = enrolment.getLatestEnrolmentEvaluation();
+		HtmlText latestEnrolmentEvaluationType = null;
+		String latestEnrolmentEvaluationTypeQualifiedName = null;
+		if (latestEnrolmentEvaluation != null && latestEnrolmentEvaluation.getEnrolmentEvaluationType() != null) {
+		    latestEnrolmentEvaluationType = new HtmlText(enumerationResources.getString(latestEnrolmentEvaluation.getEnrolmentEvaluationType().getAcronym()));
+		    latestEnrolmentEvaluationTypeQualifiedName = enumerationResources.getString(latestEnrolmentEvaluation.getEnrolmentEvaluationType().getQualifiedName());
+		}
+		generateEnrolmentSmallInfoCell(lineRow, latestEnrolmentEvaluationType, getEnrolmentEvaluationTypeClasses(), latestEnrolmentEvaluationTypeQualifiedName);
 		
 		// Execution Period
 		if (isOrganizedByGroups() || isOrganizedByCurricularYears()) {
@@ -464,48 +476,30 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 		    generateEnrolmentSmallInfoCell(lineRow, new HtmlText(semester.toString()), getEnrolmentSemesterClasses(), null);
 		} 
 
-		// Enrolment Type 
-		final HtmlComponent enrolmentType = enrolment.isEnrolmentTypeNormal() ? null : new HtmlText(enumerationResources.getString(enrolment.getEnrolmentTypeName()));
-		generateEnrolmentSmallInfoCell(lineRow, enrolmentType, getEnrolmentTypeClasses(), null);
-
-		// Enrolment State
-		final HtmlComponent enrolmentState = enrolment.isEnrolmentStateApproved() ? null : new HtmlText(enumerationResources.getString(enrolment.getEnrollmentState().getQualifiedName()));
-		generateEnrolmentSmallInfoCell(lineRow, enrolmentState, getEnrolmentStateClasses(), null);
+		// Latest Enrolment Evaluation Exam Date
+		generateEnrolmentSmallInfoCell(lineRow, (latestEnrolmentEvaluation == null || latestEnrolmentEvaluation.getExamDateYearMonthDay() == null) ? null : new HtmlText(latestEnrolmentEvaluation.getExamDateYearMonthDay().toString("yyyy/MM/dd")), getEnrolmentCreationClasses(), "Data da Avaliação");
 		
-		// Enrolment Evaluation
-		final HtmlTableCell enrolmentEvaluationCell = lineRow.createCell();
-		enrolmentEvaluationCell.setClasses(getEnrolmentEvaluationClasses());
-		final EnrolmentEvaluation latestEnrolmentEvaluation = enrolment.getLatestEnrolmentEvaluation();
-		if (latestEnrolmentEvaluation != null) {
-		    final String grade = latestEnrolmentEvaluation.getGrade();
-		    enrolmentEvaluationCell.setBody(new HtmlText(grade));
+		// Latest Enrolment Evaluation Person Responsible For Grade
+		if (latestEnrolmentEvaluation != null && latestEnrolmentEvaluation.getPersonResponsibleForGrade() != null) {
+		    final Person person = latestEnrolmentEvaluation.getPersonResponsibleForGrade();
+		    generateEnrolmentSmallInfoCell(lineRow, new HtmlText(person.hasEmployee() ? person.getEmployee().getRoleLoginAlias() : person.getIstUsername()), getEnrolmentConditionClasses(), "Pessoa Responsável pela Nota");     
+		} else {
+		    generateEnrolmentSmallInfoCell(lineRow, null, getEnrolmentConditionClasses(), null);
 		}
 		
-		// Enrolment Weight
-		final HtmlTableCell enrolmentWeightCell = lineRow.createCell();
-		enrolmentWeightCell.setClasses(getEnrolmentWeightClasses());
-		final String enrolmentWeight = enrolment.isEnrolmentStateApproved() && StringUtils.isNumeric(latestEnrolmentEvaluation.getGrade()) ? enrolment.getWeigth().toString() : "-";
-		enrolmentWeightCell.setBody(new HtmlText(enrolmentWeight));
-
-		// Enrolment Credits
-		final HtmlTableCell enrolmentEctsCreditsCell = lineRow.createCell();
-		enrolmentEctsCreditsCell.setClasses(getEnrolmentCreditsClasses());
-		final String enrolmentEctsCredits = enrolment.isEnrolmentStateApproved() ? enrolment.getEctsCredits().toString() : "-";
-		enrolmentEctsCreditsCell.setBody(new HtmlText(enrolmentEctsCredits));
-		
-		// EnrolmentEvaluations
+		// Enrolment Evaluations
 //		final HtmlTableRow enrolmentEvaluationsLine = parentTable.createRow();
 //		final HtmlTableCell enrolmentEvaluationsCell = enrolmentEvaluationsLine.createCell();
 //		enrolmentEvaluationsCell.setColspan(NUMBER_OF_CELLS_PER_ENROLMENT);
 //		enrolmentEvaluationsCell.setStyle("padding:0; margin: 0;");
 //		
 //		final HtmlTable enrolmentEvaluationsTable = new HtmlTable();
-//		enrolmentEvaluationsTable.setBorder("0");
+//		enrolmentEvaluationsTable.setBorder("1");
 //		enrolmentEvaluationsTable.setClasses("smalltxt noborder");
 //		enrolmentEvaluationsTable.setWidth("100%");
 //		enrolmentEvaluationsCell.setBody(enrolmentEvaluationsTable);
 //		
-//		SortedSet<EnrolmentEvaluation> enrolmentEvaluations = new TreeSet<EnrolmentEvaluation>();
+//		final SortedSet<EnrolmentEvaluation> enrolmentEvaluations = new TreeSet<EnrolmentEvaluation>(EnrolmentEvaluation.SORT_BY_EXAM_DATE);
 //		enrolmentEvaluations.addAll(enrolment.getEvaluations());
 //		for (final EnrolmentEvaluation enrolmentEvaluation : enrolmentEvaluations) {
 //		    final HtmlTableRow enrolmentEvaluationsRow = enrolmentEvaluationsTable.createRow();
@@ -520,14 +514,21 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 //		    generateEnrolmentSmallInfoCell(enrolmentEvaluationsRow, new HtmlText(enumerationResources.getString(enrolmentEvaluation.getEnrolmentEvaluationType().getAcronym())), "", enumerationResources.getString(enrolmentEvaluation.getEnrolmentEvaluationType().getQualifiedName()));
 //		    
 //		    // Grade
-//		    StringBuilder gradeInfo = new StringBuilder();
+//		    generateEnrolmentSmallInfoCell(enrolmentEvaluationsRow, new HtmlText(enrolmentEvaluation.getGrade()), "", null);
+//		    
+//		    // Exam Date
+//		    HtmlComponent examDate = null;
 //		    if (enrolmentEvaluation.getExamDateYearMonthDay() != null) {
-//			gradeInfo.append(enrolmentEvaluation.getExamDateYearMonthDay().toString("yyyy/MM/dd"));
+//			examDate = new HtmlText(enrolmentEvaluation.getExamDateYearMonthDay().toString("yyyy/MM/dd"));
 //		    }
+//		    generateEnrolmentSmallInfoCell(enrolmentEvaluationsRow, examDate, "", null);
+//		    
+//		    // Person Responsible
+//		    HtmlComponent personResponsible = null;
 //		    if (enrolmentEvaluation.getPersonResponsibleForGrade() != null && AccessControl.getPerson() != enrolmentEvaluation.getPersonResponsibleForGrade()) {
-//			gradeInfo.append("\n").append(enrolmentEvaluation.getPersonResponsibleForGrade().getIstUsername());
+//			personResponsible = new HtmlText(enrolmentEvaluation.getPersonResponsibleForGrade().getIstUsername());
 //		    }
-//		    generateEnrolmentSmallInfoCell(enrolmentEvaluationsRow, new HtmlText(enrolmentEvaluation.getGrade()), "", gradeInfo.toString());
+//		    generateEnrolmentSmallInfoCell(enrolmentEvaluationsRow, personResponsible, "", null);
 //		    
 //		    // EnrolmentEvaluationState
 //		    generateEnrolmentSmallInfoCell(enrolmentEvaluationsRow, new HtmlText(enumerationResources.getString(enrolmentEvaluation.getEnrolmentEvaluationState().toString())), "", null);
@@ -628,7 +629,7 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 	    final HtmlTableCell executionPeriodNameCell = executionPeriodRow.createCell();
 	    executionPeriodNameCell.setType(CellType.HEADER);
 	    executionPeriodNameCell.setClasses(getGroupNameClasses());
-	    executionPeriodNameCell.setColspan(NUMBER_OF_CELLS_PER_ENROLMENT - 3);
+	    executionPeriodNameCell.setColspan(NUMBER_OF_CELLS_PER_ENROLMENT - 6);
 	    executionPeriodNameCell.setBody(new HtmlText(executionPeriod.getYear() + ", " + executionPeriod.getName()));
 
 	    final HtmlTableCell gradeCell = executionPeriodRow.createCell();
@@ -654,6 +655,11 @@ public class StudentCurricularPlanRenderer extends OutputRenderer {
 	    ectsCreditsSpan.addChild(new HtmlText("ECTS"));
 	    ectsCreditsCell.setBody(ectsCreditsSpan);
 
+	    final HtmlTableCell emptyCell = executionPeriodRow.createCell();
+	    emptyCell.setType(CellType.HEADER);
+	    emptyCell.setClasses(getGroupNameClasses());
+	    emptyCell.setColspan(NUMBER_OF_CELLS_PER_ENROLMENT - (NUMBER_OF_CELLS_PER_ENROLMENT - 6));
+	    
 	    final ComparatorChain comparatorChain = new ComparatorChain();
 	    comparatorChain.addComparator(CurriculumLine.COMPARATOR_BY_NAME);
 	    comparatorChain.addComparator(new BeanComparator("idInternal"));

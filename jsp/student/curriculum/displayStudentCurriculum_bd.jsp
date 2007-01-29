@@ -287,18 +287,18 @@
 				<fr:property name="groupNameClasses" value="aleft"/>
 				<%-- groupHeaderClasses--%>
 				<fr:property name="enrolmentClasses" value="
-					col1 width2em acenter bgcolor01,			<!-- Inscrição Confirmada etc -->
-					col2 width6em acenter bgcolor02,			<!-- Data da Inscrição -->
-					col3 width1p5em acenter bgcolor03,		<!-- Época Normal -->
-					col4 aleft bgcolor04,					<!-- Código e Disciplina -->
-					col5 width7em acenter bgcolor05,			<!-- Curso  -->
-					col6 grupos bgcolor06,					<!--   -->
-					col7 grupos bgcolor07,					<!--   -->
-					col8 width7em acenter bgcolor08,			<!-- Opcional  -->
-					col9 width8em acenter bgcolor09,			<!-- Reprovado Não Avaliado  -->
-					col10 width2em aright bgcolor10,			<!-- Nota  -->
-					col11 color888 width2em aright bgcolor11,			<!-- Peso  -->
-					col12 color888 width2em aright bgcolor12			<!-- ECTS  -->
+					<!-- Curso  --> 					col5 bgcolor05 width7em acenter,
+					<!-- Código e Disciplina --> 		col4 bgcolor04 aleft,
+					<!-- Opcional  -->					col8 bgcolor08 width7em acenter,
+					<!-- Reprovado Não Avaliado  -->	col9 bgcolor09 width8em acenter,
+					<!-- Nota  -->						col10 bgcolor10 width2em aright,
+					<!-- Peso  -->						col11 bgcolor11 color888 width2em aright,
+					<!-- ECTS  -->						col12 bgcolor12 color888 width2em aright,
+					<!-- Época Normal -->				col3 bgcolor03 width1p5em acenter,
+					<!-- Ano -->						col6 bgcolor06 grupos,
+					<!-- Semestre -->					col7 bgcolor07 grupos,
+					<!-- Data do Exame -->				col2 bgcolor02 width6em acenter,
+					<!-- Pessoa Responsável Nota -->	col1 bgcolor01 width2em acenter
 				"/>
 				<%-- enrolmentColumnClasses--%>
 				<fr:property name="enrolmentStateSelectionType" value="<%=enrolmentStateSelectionType.toString()%>"/>
@@ -310,12 +310,6 @@
 
 <p class="mtop3 mbottom0"><strong><bean:message key="label.legend" bundle="STUDENT_RESOURCES"/></strong></p>
 <div style="width: 250px; float: left;">
-    <e:labelValues id="enrolmentConditions" enumeration="net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition" />
-	<logic:iterate id="enrolmentCondition" name="enrolmentConditions" type="LabelValueBean">
-		<p class="mvert05"><em><bean:message key="<%="EnrollmentCondition." + enrolmentCondition.getValue() + ".acronym"%>" bundle="ENUMERATION_RESOURCES"/>: <bean:message key="<%="EnrollmentCondition." + enrolmentCondition.getValue()%>" bundle="ENUMERATION_RESOURCES"/></em></p>
-	</logic:iterate>
-</div>
-<div style="width: 250px; float: left;">
     <e:labelValues id="enrolmentEvaluationTypes" enumeration="net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType" />
 	<logic:iterate id="enrolmentEvaluationType" name="enrolmentEvaluationTypes" type="LabelValueBean">
 		<p class="mvert05"><em><bean:message key="<%="EnrolmentEvaluationType." + enrolmentEvaluationType.getValue() + ".acronym"%>" bundle="ENUMERATION_RESOURCES"/>: <bean:message key="<%="EnrolmentEvaluationType." + enrolmentEvaluationType.getValue()%>" bundle="ENUMERATION_RESOURCES"/></em></p>
@@ -324,4 +318,3 @@
 <div class="cboth"></div>
 
 </logic:notEmpty>
-
