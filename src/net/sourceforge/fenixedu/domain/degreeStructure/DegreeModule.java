@@ -148,7 +148,7 @@ public abstract class DegreeModule extends DegreeModule_Base {
 	return result;
     }
 
-    public List<Context> getParentContextsByExecutionPeriod(ExecutionPeriod executionPeriod) {
+    public List<Context> getParentContextsByExecutionPeriod(final ExecutionPeriod executionPeriod) {
 	final List<Context> result = new ArrayList<Context>();
 	for (final Context context : this.getParentContexts()) {
 	    if (executionPeriod == null || context.isValid(executionPeriod)) {
@@ -164,6 +164,23 @@ public abstract class DegreeModule extends DegreeModule_Base {
 
     public Degree getDegree() {
 	return getParentDegreeCurricularPlan().getDegree();
+    }
+    
+    public boolean hasOnlyOneParentCourseGroup() {
+	return hasOnlyOneParentCourseGroup(null);
+    }
+    
+    public boolean hasOnlyOneParentCourseGroup(final ExecutionPeriod executionPeriod) {
+	DegreeModule degreeModule = null;
+	for (final Context context : getParentContextsByExecutionPeriod(executionPeriod)) {
+	    if (degreeModule == null) {
+		degreeModule = context.getParentCourseGroup();
+		
+	    } else if (degreeModule != context.getParentCourseGroup()) {
+		return false;
+	    }
+	}
+	return true;
     }
     
     public abstract Double getEctsCredits();
