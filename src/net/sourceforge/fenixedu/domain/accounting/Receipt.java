@@ -9,12 +9,14 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.accounting.CreditNoteEntryDTO;
+import net.sourceforge.fenixedu.domain.Contributor;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
@@ -156,6 +158,21 @@ public class Receipt extends Receipt_Base {
     public void addCreditNotes(CreditNote creditNote) {
 	throw new DomainException("error.accounting.Receipt.cannot.add.creditNote");
     }
+    
+    @Override
+    public void setEmployee(Employee employee) {
+	throw new DomainException("error.accounting.receipt.cannot.modify.employee");
+    }
+    
+    @Override
+    public void setContributor(Contributor contributor) {
+	throw new DomainException("error.accounting.receipt.cannot.modify.contributor");
+    }
+    
+    @Override
+    public void setContributorParty(Party contributorParty) {
+	throw new DomainException("error.accounting.receipt.cannot.modify.contributorParty");
+    }
 
     @Override
     public List<CreditNote> getCreditNotes() {
@@ -269,6 +286,30 @@ public class Receipt extends Receipt_Base {
 	}
 
 	return result;
+    }
+    
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    public void delete() {
+	
+	if (!canBeDeleted()) {
+	    throw new DomainException("error.accounting.Receipt.cannot.be.deleted");
+	}
+	
+	for (; hasAnyReceiptsVersions() ; getReceiptsVersions().get(0).delete());
+	
+	super.setContributor(null);
+	super.setContributorParty(null);
+	super.setEmployee(null);
+	super.getEntries().clear();
+	super.setPerson(null);
+	
+	removeRootDomainObject();
+	
+	super.deleteDomainObject();
+    }
+
+    private boolean canBeDeleted() {
+	return !hasAnyCreditNotes();
     }
 
 }
