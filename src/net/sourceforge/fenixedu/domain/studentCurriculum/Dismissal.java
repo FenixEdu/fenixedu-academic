@@ -66,7 +66,17 @@ public class Dismissal extends Dismissal_Base {
     }
 
     static private CurriculumGroup findCurriculumGroupForCurricularCourse(final StudentCurricularPlan studentCurricularPlan, final CurricularCourse curricularCourse) {
+	if (curricularCourse.hasOnlyOneParentCourseGroup()) {
+	    final CurriculumGroup curriculumGroup = (CurriculumGroup) studentCurricularPlan.findCurriculumModuleFor(getFirstParentCourseGroup(curricularCourse));
+	    if (curriculumGroup != null && !curriculumGroup.parentCurriculumGroupIsNoCourseGroupCurriculumGroup()) {
+		return curriculumGroup;
+	    }
+	}
 	return getOrCreateExtraCurricularCurriculumGroup(studentCurricularPlan);
+    }
+
+    private static CourseGroup getFirstParentCourseGroup(final CurricularCourse curricularCourse) {
+	return curricularCourse.getParentContexts().get(0).getParentCourseGroup();
     }
 
     @Override
