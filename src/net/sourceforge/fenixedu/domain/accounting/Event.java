@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.accounting;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -533,17 +532,15 @@ public abstract class Event extends Event_Base {
     }
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
-    public void rollbackIncorrectAccountingTransaction(final AccountingTransaction accountingTransaction) {
-
-	if (isClosed()) {
-	    throw new DomainException("error.accounting.Event.is.already.closed");
+    public void rollbackCompletly() {
+	while (!getNonAdjustingTransactions().isEmpty()) {
+	    getNonAdjustingTransactions().get(0).delete();
 	}
 
-	if (accountingTransaction != null
-		&& hasNonAdjustingAccountingTransactions(accountingTransaction)) {
-	    accountingTransaction.delete();
-	} else {
-	    throw new DomainException("error.accounting.Event.transaction.doesnot.belong.to.event");
+	changeState(EventState.OPEN, new DateTime());
+
+	for (final PaymentCode paymentCode : getExistingPaymentCodes()) {
+	    paymentCode.setState(PaymentCodeState.NEW);
 	}
     }
 
@@ -632,7 +629,7 @@ public abstract class Event extends Event_Base {
 
 	return result;
     }
-    
+
     public boolean hasAnyPenaltyExemptionsFor(Class type) {
 	for (final Exemption exemption : getExemptionsSet()) {
 	    if (exemption.getClass().equals(type)) {
@@ -641,7 +638,7 @@ public abstract class Event extends Event_Base {
 	}
 
 	return false;
-	
+
     }
 
     public List<PenaltyExemption> getPenaltyExemptionsFor(Class type) {
