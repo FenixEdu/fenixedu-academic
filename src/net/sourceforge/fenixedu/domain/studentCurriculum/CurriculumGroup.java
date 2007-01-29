@@ -330,6 +330,10 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	return getCurriculumGroup();
     }
     
+    public boolean parentCurriculumGroupIsNoCourseGroupCurriculumGroup() {
+	return hasCurriculumGroup() && getParentCurriculumGroup().isNoCourseGroupCurriculumGroup();
+    }
+    
     protected Integer searchChildOrderForChild(final CurriculumGroup child, final ExecutionPeriod executionPeriod) {
 	for (final Context context : getDegreeModule().getChildContexts(executionPeriod)) {
 	    if (context.getChildDegreeModule() == child.getDegreeModule()) {
@@ -406,5 +410,4 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	}
         return Double.valueOf(bigDecimal.doubleValue());
     }
-
 }
