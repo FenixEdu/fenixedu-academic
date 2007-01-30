@@ -13,7 +13,11 @@
                     .getPerson())) {
 
             %>
-	<html:link page="/assiduousnessParametrization.do?method=prepareInsertRegularizationMotive"><bean:message key="link.createRegularization" /></html:link>
+<ul class="list5 mtop15">
+	<li>
+		<html:link page="/assiduousnessParametrization.do?method=prepareInsertRegularizationMotive"><bean:message key="link.createRegularization" /></html:link>
+	</li>
+</ul>
 <%}%>
 <logic:present name="regularizationMotives">
 	<fr:view name="regularizationMotives" schema="show.regularizationMotives">

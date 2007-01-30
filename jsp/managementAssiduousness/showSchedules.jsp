@@ -13,10 +13,14 @@
                     .getPerson())) {
 
                 %>
-<html:link
-	page="/assiduousnessParametrization.do?method=prepareInsertSchedule">
-	<bean:message key="link.insertSchedule" />
-</html:link>
+<ul class="list5 mtop15">
+	<li>
+		<html:link
+			page="/assiduousnessParametrization.do?method=prepareInsertSchedule">
+			<bean:message key="link.insertSchedule" />
+		</html:link>
+	</li>
+</ul>
 <%}%>
 
 <logic:present name="workScheduleList">
