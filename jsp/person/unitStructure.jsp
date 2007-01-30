@@ -8,8 +8,19 @@
 
 <logic:present name="currentUnit">
 	<bean:define id="initialCurrentUnit" name="currentUnit" toScope="request"/>
-	<bean:write name="initialCurrentUnit" property="name"/>
-	<br/>
+	
+	<logic:empty name="initialCurrentUnit" property="type">
+		<bean:write name="initialCurrentUnit" property="name"/>	
+		<br/>
+	</logic:empty>	
+	
+	<logic:notEmpty name="initialCurrentUnit" property="type">
+		<logic:notEqual name="initialCurrentUnit" property="type.name" value="AGGREGATE_UNIT">
+			<bean:write name="initialCurrentUnit" property="name"/>
+			<br/>
+		</logic:notEqual>		
+	</logic:notEmpty>
+		
 	<logic:iterate id="parentUnit" name="initialCurrentUnit" property="parentByOrganizationalStructureAccountabilityType">
 		<logic:notEmpty name="parentUnit" property="parentByOrganizationalStructureAccountabilityType">
 			<logic:iterate id="grandParentUnit" name="parentUnit" property="parentByOrganizationalStructureAccountabilityType">
