@@ -39,11 +39,12 @@ public class Timeline {
         plotList(pointList);
     }
 
-    public Timeline(YearMonthDay day) {
+    public Timeline(YearMonthDay day, DateTime endDateTime) {
         timePoints = new ArrayList<TimePoint>();
         timePoints
                 .add(new TimePoint(new TimeOfDay(7, 30, 0, 0), AttributeType.NULL, AttributeType.NULL));
-        timePoints.add(new TimePoint(new TimeOfDay(23, 59, 59, 99), false, AttributeType.NULL));
+        timePoints.add(new TimePoint(endDateTime.toTimeOfDay(),
+                day.equals(endDateTime.toYearMonthDay()) ? false : true, AttributeType.NULL));
     }
 
     public List<TimePoint> getTimePoints() {
@@ -778,7 +779,7 @@ public class Timeline {
     public void plotListInTimeline(List<AssiduousnessRecord> clockingList, List<Leave> leaveList,
             Iterator<AttributeType> attributesIt, YearMonthDay day) {
         List<TimePoint> pointList = new ArrayList<TimePoint>();
-        
+
         Iterator<AssiduousnessRecord> clockingIt = clockingList.iterator();
         DateTime lastClock = null;
         while (clockingIt.hasNext()) {
@@ -794,7 +795,7 @@ public class Timeline {
             final AttributeType attribute = attributesIt.next();
             final TimePoint timePointIn = constructTimePoint(clockIn, day, attribute);
             pointList.add(timePointIn);
-            lastClock = timePointIn.getTime().toDateTime(clockInDate);            
+            lastClock = timePointIn.getTime().toDateTime(clockInDate);
             if (clockingIt.hasNext()) {
                 final AssiduousnessRecord clockOut = clockingIt.next();
                 final TimePoint timePointOut = constructTimePoint(clockOut, day, attribute);
@@ -819,9 +820,9 @@ public class Timeline {
 
     public TimePoint getNextWorkedPoint(TimePoint timePoint) {
         int timepointPosition = getTimePointIndex(timePoint);
-        for (int iter=timepointPosition+1; iter < getTimePoints().size(); iter++) {
+        for (int iter = timepointPosition + 1; iter < getTimePoints().size(); iter++) {
             TimePoint tempTimePoint = getTimePoints().get(iter);
-            if(tempTimePoint.getPointAttributes().contains(DomainConstants.WORKED_ATTRIBUTES)){
+            if (tempTimePoint.getPointAttributes().contains(DomainConstants.WORKED_ATTRIBUTES)) {
                 return tempTimePoint;
             }
         }

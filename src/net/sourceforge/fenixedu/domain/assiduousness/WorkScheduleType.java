@@ -1,12 +1,10 @@
 package net.sourceforge.fenixedu.domain.assiduousness;
 
 import net.sourceforge.fenixedu.domain.Employee;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.assiduousness.util.AttributeType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.TimeInterval;
 import net.sourceforge.fenixedu.domain.assiduousness.util.TimePoint;
 import net.sourceforge.fenixedu.domain.assiduousness.util.Timeline;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
@@ -18,65 +16,8 @@ public class WorkScheduleType extends WorkScheduleType_Base {
 
     public static Duration maximumContinuousWorkPeriod = new Duration(18000000); // 5 hours
 
-    // public WorkScheduleType(String acronym, TimeOfDay beginWorkTime, TimeOfDay endWorkTime,
-    // TimeOfDay beginClockingTime, TimeOfDay endClockingTime, TimeOfDay beginFirstPeriod,
-    // TimeOfDay endFirstPeriod, TimeOfDay beginSecondPeriod, TimeOfDay endSecondPeriod,
-    // TimeOfDay beginFirstFixedPeriod, TimeOfDay endFirstFixedPeriod,
-    // TimeOfDay beginSecondFixedPeriod, TimeOfDay endSecondFixedPeriod, TimeOfDay mealBeginTime,
-    // TimeOfDay mealEndTime, Duration mandatoryMealDiscount, Duration minimumMealBreakInterval,
-    // YearMonthDay beginValidDate, YearMonthDay endValidDate, Employee modifiedBy) {
-    // setRootDomainObject(RootDomainObject.getInstance());
-    // setAcronym(acronym);
-    // // /setOjbConcreteClass(className);
-    // setWorkTime(beginWorkTime);
-    // //
-    // setWorkTimeDuration(new Duration(beginWorkTime.toDateTimeToday(), endWorkTime.toDateTimeToday()));
-    // setClockingTime(beginClockingTime);
-    // //
-    // setClockingTimeDuration(new Duration(beginClockingTime.toDateTimeToday(), endClockingTime
-    // .toDateTimeToday()));
-    //
-    // WorkPeriod normalWorkPeriod = null;
-    // // new WorkPeriod(TimeOfDay beginFirstPeriod, TimeOfDay endFirstPeriod, TimeOfDay
-    // // beginSecondPeriod,
-    // // TimeOfDay endSecondPeriod) ;
-    // WorkPeriod fixedWorkPeriod = null;
-    // // new WorkPeriod(TimeOfDay beginFirstFixedPeriod, TimeOfDay endFirstFixedPeriod, TimeOfDay
-    // // beginSecondFixedPeriod,
-    // // TimeOfDay endSecondFixedPeriod) ;
-    //
-    // setNormalWorkPeriod(normalWorkPeriod);
-    // setFixedWorkPeriod(fixedWorkPeriod);
-    // Meal meal = null;
-    // // (mealBeginTime, mealEndTime, mandatoryMealDiscount, minimumMealBreakInterval)
-    // setMeal(meal);
-    // setBeginValidDate(beginValidDate);
-    // setEndValidDate(endValidDate);
-    // setLastModifiedDate(new DateTime());
-    // setModifiedBy(modifiedBy);
-    // }
-
     public WorkScheduleType() {
         super();
-    }
-
-    public WorkScheduleType(String acronym, WorkPeriod normalWorkPeriod, Employee modifiedBy) {
-        if (alreadyExistsWorkScheduleTypeAcronym(acronym)) {
-            throw new DomainException("error.workScheduleTypeAcronymAlreadyExists");
-        }
-        setRootDomainObject(RootDomainObject.getInstance());
-        setAcronym(acronym);
-        // setNormalWorkPeriod(normalWorkPeriod);
-        setModifiedBy(modifiedBy);
-    }
-
-    private boolean alreadyExistsWorkScheduleTypeAcronym(String acronym) {
-        for (WorkScheduleType workScheduleType : RootDomainObject.getInstance().getWorkScheduleTypes()) {
-            if (workScheduleType.getAcronym().equalsIgnoreCase(acronym)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public void update(String className, Boolean mandatoryClocking, YearMonthDay beginValidDate,

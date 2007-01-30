@@ -30,24 +30,6 @@ import org.apache.struts.action.ActionMapping;
 import org.joda.time.YearMonthDay;
 
 public class ExportAssiduousnessDispatchAction extends FenixDispatchAction {
-    // public ActionForward choosePrinter(ActionMapping mapping, ActionForm
-    // actionForm,
-    // HttpServletRequest request, HttpServletResponse response) {
-    // String[] printerNames =
-    // PrinterManager.getFunctionPrinterNames("assiduousness");
-    // request.setAttribute("printerNames", Arrays.asList(printerNames));
-    // return mapping.findForward("choose-printer");
-    // }
-    //
-    // public ActionForward printWorkDaySheet(ActionMapping mapping, ActionForm
-    // actionForm,
-    // HttpServletRequest request, HttpServletResponse response) throws
-    // FenixFilterException,
-    // FenixServiceException {
-    // DynaActionForm form = (DynaActionForm) actionForm;
-    // String printerName = form.getString("printerName");
-    // return mapping.findForward("");
-    // }
 
     public ActionForward chooseYearMonth(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) {
@@ -55,6 +37,8 @@ public class ExportAssiduousnessDispatchAction extends FenixDispatchAction {
         yearMonth.setYear(new YearMonthDay().getYear());
         yearMonth.setMonth(Month.values()[new YearMonthDay().getMonthOfYear() - 1]);
         request.setAttribute("yearMonth", yearMonth);
+        request.setAttribute("actionPath", mapping.getPath());
+        request.setAttribute("action", request.getParameter("action"));
         return mapping.findForward("choose-year-month");
     }
 
@@ -84,11 +68,13 @@ public class ExportAssiduousnessDispatchAction extends FenixDispatchAction {
         YearMonthDay endDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1,
                 endDay);
 
-        ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", LanguageUtils.getLocale());
+        ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources",
+                LanguageUtils.getLocale());
         final IUserView userView = SessionUtils.getUserView(request);
         List<EmployeeWorkSheet> employeeWorkSheetList = null;
         Map parameters = new HashMap();
-        ResourceBundle bundleEnumeration = ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale());
+        ResourceBundle bundleEnumeration = ResourceBundle.getBundle("resources.EnumerationResources",
+                LanguageUtils.getLocale());
         String month = bundleEnumeration.getString(yearMonth.getMonth().toString());
         StringBuilder stringBuilder = new StringBuilder(month).append(" ").append(yearMonth.getYear());
 

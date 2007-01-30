@@ -86,6 +86,11 @@
 	</slot>
 </schema>
 
+<schema name="show.date" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth">
+	<slot name="month" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="year" bundle="ASSIDUOUSNESS_RESOURCES" />
+</schema>
+
 <schema name="show.justificationMotives"
 	type="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive">
 	<slot name="acronym" key="label.acronym" bundle="ASSIDUOUSNESS_RESOURCES"/>

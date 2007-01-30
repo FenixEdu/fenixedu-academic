@@ -26,3 +26,6 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "AlterTableAssiduousnessClosedMonth" AlterTableAssiduousnessClosedMonth.sql
+execute "CreateClosedMonthJustificationAndExtraWorkTables" CreateClosedMonthJustificationAndExtraWorkTables.sql

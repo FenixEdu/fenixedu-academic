@@ -19,9 +19,16 @@
                     .getPerson())) {
 
     %>
+    <%-- 
     <li class="navheader"><bean:message key="title.extraWork" /></li>
 	<li><html:link page="/createExtraWorkAuthorization.do?method=prepareCreateExtraWorkAuthorization"><bean:message key="link.insertAuthorization" /></html:link></li>
 	<li><html:link page="/manageExtraWorkAuthorization.do?method=prepareExtraWorkAuthorizationsSearch"><bean:message key="link.showAuthorizations" /></html:link></li>	<li><html:link page="/extraWorkPaymentRequest.do?method=chooseUnitYearMonth"><bean:message key="link.paymentRequests" /></html:link></li>
+	--%>
+	<li class="navheader"><bean:message key="title.monthClosure" /></li>
+    <li><html:link page="/monthClosure.do?method=prepareToCloseMonth"><bean:message key="link.closeMonth" /></html:link></li>
+    <%--
+     <li><html:link page="/monthClosure.do?method=prepareToCloseExtraWorkMonth"><bean:message key="link.sendGIAF" /></html:link></li>
+     --%>
 	<%}%>
     <%-- 
     <li><bean:message key="link.consult" />

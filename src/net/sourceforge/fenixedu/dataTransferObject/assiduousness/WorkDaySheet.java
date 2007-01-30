@@ -1,12 +1,14 @@
 package net.sourceforge.fenixedu.dataTransferObject.assiduousness;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord;
 import net.sourceforge.fenixedu.domain.assiduousness.Leave;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule;
+import net.sourceforge.fenixedu.domain.assiduousness.util.Timeline;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.WeekDay;
 
@@ -32,6 +34,8 @@ public class WorkDaySheet implements Serializable {
 
     Duration complementaryWeeklyRest;
 
+    Duration holidayRest;
+
     Duration weeklyRest;
 
     String notes;
@@ -42,9 +46,19 @@ public class WorkDaySheet implements Serializable {
 
     List<Leave> leaves;
 
+    Timeline timeline;
+
     public WorkDaySheet() {
         setBalanceTime(Duration.ZERO.toPeriod());
         setUnjustifiedTime(Duration.ZERO);
+    }
+
+    public Timeline getTimeline() {
+        return timeline;
+    }
+
+    public void setTimeline(Timeline timeline) {
+        this.timeline = timeline;
     }
 
     public Period getBalanceTime() {
@@ -142,7 +156,8 @@ public class WorkDaySheet implements Serializable {
         if (getDate() == null) {
             return "";
         }
-        ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", LanguageUtils.getLocale());
+        ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources",
+                LanguageUtils.getLocale());
         return bundle.getString(WeekDay.fromJodaTimeToWeekDay(getDate().toDateTimeAtMidnight())
                 .toString()
                 + "_ACRONYM");
@@ -168,11 +183,18 @@ public class WorkDaySheet implements Serializable {
     }
 
     public List<Leave> getLeaves() {
+        if (leaves == null) {
+            setLeaves(new ArrayList<Leave>());
+        }
         return leaves;
     }
 
     public void setLeaves(List<Leave> leaves) {
         this.leaves = leaves;
+    }
+
+    public void addLeaves(List<Leave> list) {
+        getLeaves().addAll(list);
     }
 
     public WorkSchedule getWorkSchedule() {
@@ -217,4 +239,13 @@ public class WorkDaySheet implements Serializable {
             setUnjustifiedTime(newFixedPeriodAbsence);
         }
     }
+
+    public Duration getHolidayRest() {
+        return holidayRest;
+    }
+
+    public void setHolidayRest(Duration holidayRest) {
+        this.holidayRest = holidayRest;
+    }
+
 }

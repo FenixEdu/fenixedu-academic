@@ -9772,6 +9772,33 @@
 		</filterChains>		
 	</service>
 	<service>
+		<name>CloseAssiduousnessMonth</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.CloseAssiduousnessMonth</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagementAssiduousnessAuthorization" />
+		</filterChains>		
+	</service>
+	<service>
+		<name>ExportClosedMonth</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ExportClosedMonth</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagementAssiduousnessAuthorization" />
+		</filterChains>		
+	</service>
+	<service>
+		<name>CloseExtraWorkMonth</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.CloseExtraWorkMonth</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagementAssiduousnessAuthorization" />
+		</filterChains>		
+	</service>
+	<service>
 		<name>DeletePersonSpaceOccupation</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.space.DeletePersonSpaceOccupation</implementationClass>
 		<description />

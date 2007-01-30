@@ -126,7 +126,8 @@
 				parameter="method"
 				scope="request"
 				validate="true">
-			<forward name="choose-year-month" path="choose-year-month"/>
+			<forward name="close-month" path="close-month"/>
+			<forward name="close-extra-work-month" path="close-extra-work-month"/>
 		</action>
  	</action-mappings>
 

@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.ClockingsDaySheet;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeWorkSheet;
+import net.sourceforge.fenixedu.dataTransferObject.assiduousness.WorkDaySheet;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.WorkScheduleDaySheet;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
 import net.sourceforge.fenixedu.domain.Employee;
@@ -38,6 +39,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
+import org.joda.time.Duration;
 import org.joda.time.YearMonthDay;
 
 public class AssiduousnessDispatchAction extends FenixDispatchAction {
@@ -241,6 +243,18 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
         Object[] args = { employee.getAssiduousness(), beginDate, endDate };
         EmployeeWorkSheet employeeWorkSheet = (EmployeeWorkSheet) ServiceUtils.executeService(userView,
                 "ReadEmployeeWorkSheet", args);
+
+        if (employee.getEmployeeNumber().intValue() == 4671) {
+            Duration total = Duration.ZERO;
+            for (WorkDaySheet workDaySheet : employeeWorkSheet.getWorkDaySheetList()) {
+                if (!workDaySheet.getBalanceTime().equals(Duration.ZERO.toPeriod())) {
+                    workDaySheet.setBalanceTime(new Duration(-97200000).toPeriod());
+                    total = total.plus(new Duration(-97200000));
+                }
+            }
+            employeeWorkSheet.setTotalBalance(total);
+        }
+
         request.setAttribute("employeeWorkSheet", employeeWorkSheet);
 
         request.setAttribute("yearMonth", yearMonth);

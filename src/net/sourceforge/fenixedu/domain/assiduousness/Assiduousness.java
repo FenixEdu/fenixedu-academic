@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.domain.assiduousness;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -14,8 +16,10 @@ import net.sourceforge.fenixedu.domain.assiduousness.util.AttributeType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.DateInterval;
 import net.sourceforge.fenixedu.domain.assiduousness.util.DomainConstants;
 import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
+import net.sourceforge.fenixedu.domain.assiduousness.util.TimePoint;
 import net.sourceforge.fenixedu.domain.assiduousness.util.Timeline;
 import net.sourceforge.fenixedu.domain.space.Campus;
+import net.sourceforge.fenixedu.util.WeekDay;
 
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
@@ -28,6 +32,8 @@ public class Assiduousness extends Assiduousness_Base {
     public static final TimeOfDay defaultStartWorkDay = new TimeOfDay(7, 30, 0, 0);
 
     public static final TimeOfDay defaultEndWorkDay = new TimeOfDay(23, 59, 59, 99);
+
+    public static final TimeOfDay defaultStartWeeklyRestDay = new TimeOfDay(7, 0, 0, 0);
 
     public static final Duration normalWorkDayDuration = new Duration(25200000); // 7 hours
 
@@ -81,6 +87,70 @@ public class Assiduousness extends Assiduousness_Base {
         }
     }
 
+    public HashMap<YearMonthDay, WorkSchedule> getWorkSchedulesBetweenDates(YearMonthDay beginDate,
+            YearMonthDay endDate) {
+        HashMap<YearMonthDay, WorkSchedule> workScheduleMap = new HashMap<YearMonthDay, WorkSchedule>();
+        for (YearMonthDay thisDay = beginDate; thisDay.isBefore(endDate.plusDays(1)); thisDay = thisDay
+                .plusDays(1)) {
+            final Schedule schedule = getSchedule(thisDay);
+            if (schedule != null) {
+                workScheduleMap.put(thisDay, schedule.workScheduleWithDate(thisDay));
+            } else {
+                workScheduleMap.put(thisDay, null);
+            }
+        }
+        return workScheduleMap;
+    }
+
+    public HashMap<YearMonthDay, List<AssiduousnessRecord>> getClockingsMap(
+            HashMap<YearMonthDay, WorkSchedule> workScheduleMap, DateTime init, DateTime end) {
+        HashMap<YearMonthDay, List<AssiduousnessRecord>> clockingsMap = new HashMap<YearMonthDay, List<AssiduousnessRecord>>();
+        final List<AssiduousnessRecord> clockings = getClockingsAndMissingClockings(init.minusDays(1),
+                end);
+        Collections.sort(clockings, AssiduousnessRecord.COMPARATORY_BY_DATE);
+        for (AssiduousnessRecord record : clockings) {
+            YearMonthDay clockDay = record.getDate().toYearMonthDay();
+            if (WorkSchedule.overlapsSchedule(record.getDate(), workScheduleMap)) {
+                if (clockingsMap.get(clockDay.minusDays(1)) != null
+                        && clockingsMap.get(clockDay.minusDays(1)).size() % 2 != 0) {
+                    clockDay = clockDay.minusDays(1);
+                }
+            }
+
+            List<AssiduousnessRecord> clocks = clockingsMap.get(clockDay);
+            if (clocks == null) {
+                clocks = new ArrayList<AssiduousnessRecord>();
+            }
+            clocks.add(record);
+            clockingsMap.put(clockDay, clocks);
+        }
+        return clockingsMap;
+    }
+
+    public HashMap<YearMonthDay, List<Leave>> getLeavesMap(YearMonthDay beginDate, YearMonthDay endDate) {
+        HashMap<YearMonthDay, List<Leave>> leavesMap = new HashMap<YearMonthDay, List<Leave>>();
+        final List<Leave> leaves = getLeaves(beginDate, endDate);
+        for (Leave record : leaves) {
+            YearMonthDay endLeaveDay = record.getDate().toYearMonthDay().plusDays(1);
+            if (record.getEndYearMonthDay() != null) {
+                endLeaveDay = record.getEndYearMonthDay().plusDays(1);
+            }
+            for (YearMonthDay leaveDay = record.getDate().toYearMonthDay(); leaveDay
+                    .isBefore(endLeaveDay); leaveDay = leaveDay.plusDays(1)) {
+                if (record.getAplicableWeekDays() == null
+                        || record.getAplicableWeekDays().contains(leaveDay.toDateTimeAtMidnight())) {
+                    List<Leave> leaveList = leavesMap.get(leaveDay);
+                    if (leaveList == null) {
+                        leaveList = new ArrayList<Leave>();
+                    }
+                    leaveList.add(record);
+                    leavesMap.put(leaveDay, leaveList);
+                }
+            }
+        }
+        return leavesMap;
+    }
+
     private Timeline getTimeline(WorkDaySheet workDaySheet, List<Leave> timeLeaves) {
         Timeline timeline = new Timeline(workDaySheet.getWorkSchedule().getWorkScheduleType());
         Iterator<AttributeType> attributesIt = DomainConstants.WORKED_ATTRIBUTES.getAttributes()
@@ -103,10 +173,9 @@ public class Assiduousness extends Assiduousness_Base {
                 List<Leave> balanceLeaves = getLeavesByType(workDaySheet.getLeaves(),
                         JustificationType.BALANCE);
                 if (!workDaySheet.getAssiduousnessRecords().isEmpty() || !timeLeaves.isEmpty()) {
-
-                    Timeline timeline = getTimeline(workDaySheet, timeLeaves);
+                    workDaySheet.setTimeline(getTimeline(workDaySheet, timeLeaves));
                     workDaySheet = workDaySheet.getWorkSchedule().calculateWorkingPeriods(workDaySheet,
-                            timeline, timeLeaves);
+                            timeLeaves);
                 } else {
                     workDaySheet.setBalanceTime(Duration.ZERO.minus(
                             workDaySheet.getWorkSchedule().getWorkScheduleType().getNormalWorkPeriod()
@@ -121,31 +190,39 @@ public class Assiduousness extends Assiduousness_Base {
                 }
                 workDaySheet.discountBalanceLeaveInFixedPeriod(balanceLeaves);
             }
+        } else {
+            if (!workDaySheet.getAssiduousnessRecords().isEmpty()) {
+                DateTime lastClocking = workDaySheet.getAssiduousnessRecords().get(
+                        workDaySheet.getAssiduousnessRecords().size() - 1).getDate();
+                final Timeline timeline = new Timeline(workDaySheet.getDate(), lastClocking);
+                Iterator<AttributeType> attributesIt = DomainConstants.WORKED_ATTRIBUTES.getAttributes()
+                        .iterator();
+                timeline.plotListInTimeline(workDaySheet.getAssiduousnessRecords(), workDaySheet
+                        .getLeaves(), attributesIt, workDaySheet.getDate());
+                Duration worked = timeline.calculateWorkPeriodDuration(null, timeline.getTimePoints()
+                        .iterator().next(),
+                        new TimePoint(defaultStartWeeklyRestDay, AttributeType.NULL), new TimePoint(
+                                lastClocking.toTimeOfDay(), lastClocking.toYearMonthDay().equals(
+                                        workDaySheet.getDate()) ? false : true, AttributeType.NULL),
+                        null);
+                Duration weeklyRestDuration = worked;
+                // TODO Remove coments in 2007
+                // if (worked.isLongerThan(normalWorkDayDuration)) {
+                // weeklyRestDuration = normalWorkDayDuration;
+                // }
+                final WeekDay dayOfWeek = WeekDay.fromJodaTimeToWeekDay(workDaySheet.getDate()
+                        .toDateTimeAtMidnight());
+                if (dayOfWeek.equals(WeekDay.SATURDAY)) {
+                    workDaySheet.setComplementaryWeeklyRest(weeklyRestDuration);
+                } else if (dayOfWeek.equals(WeekDay.SUNDAY)) {
+                    workDaySheet.setWeeklyRest(weeklyRestDuration);
+                } else if (isDayHoliday) {
+                    workDaySheet.setHolidayRest(weeklyRestDuration);
+                }
+                // TODO Remove coment in 2007
+                // workDaySheet.setBalanceTime(worked.toPeriod());
+            }
         }
-        // TODO remove comment in 2007
-        // else {
-        // if (!workDaySheet.getAssiduousnessRecords().isEmpty()) {
-        // final Timeline timeline = new Timeline(day);
-        // Iterator<AttributeType> attributesIt = DomainConstants.WORKED_ATTRIBUTES.getAttributes()
-        // .iterator();
-        // timeline.plotListInTimeline(workDaySheet.getAssiduousnessRecords(), workDaySheet
-        // .getLeaves(), attributesIt, day);
-        // Duration worked = timeline.calculateWorkPeriodDuration(null, timeline.getTimePoints()
-        // .iterator().next(), new TimePoint(defaultStartWorkDay, AttributeType.NULL),
-        // new TimePoint(defaultEndWorkDay, AttributeType.NULL), null);
-        // Duration weeklyRestDuration = worked;
-        // if (worked.isLongerThan(normalWorkDayDuration)) {
-        // weeklyRestDuration = normalWorkDayDuration;
-        // }
-        // final WeekDay dayOfWeek = WeekDay.fromJodaTimeToWeekDay(day.toDateTimeAtMidnight());
-        // if (dayOfWeek.equals(WeekDay.SATURDAY) || isDayHoliday) {
-        // workDaySheet.setComplementaryWeeklyRest(weeklyRestDuration);
-        // } else if (dayOfWeek.equals(WeekDay.SUNDAY)) {
-        // workDaySheet.setWeeklyRest(weeklyRestDuration);
-        // }
-        // workDaySheet.setBalanceTime(worked.toPeriod());
-        // }
-        // }
         return workDaySheet;
     }
 
