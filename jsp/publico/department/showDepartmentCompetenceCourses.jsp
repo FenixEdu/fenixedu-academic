@@ -47,7 +47,7 @@
 				</h:panelGroup>
 				
 				<h:panelGroup rendered="#{!empty scientificAreaUnit.competenceCourseGroupUnits}">
-					<h:dataTable style="padding-left: 40px;" value="#{scientificAreaUnit.competenceCourseGroupUnits}" var="competenceCourseGroupUnit">
+					<h:dataTable value="#{scientificAreaUnit.competenceCourseGroupUnits}" var="competenceCourseGroupUnit">
 							<h:column>
 								<h:outputText value="<h2 class='arrow_bullet'>#{competenceCourseGroupUnit.name}</h2>" escape="false"/>
 								<h:panelGroup rendered="#{!empty competenceCourseGroupUnit.competenceCourses}">
