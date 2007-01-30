@@ -62,13 +62,19 @@ function removeExistingWorkWeek(iter){
 			<br />
 		</html:messages>
 	</span>
-	<fr:edit id="dates" name="employeeScheduleBean" schema="edit.employeeScheduleFactory.dates" layout="tabular"/>
+	
+	<fr:edit id="dates" name="employeeScheduleBean" schema="edit.employeeScheduleFactory.dates" layout="tabular">
+		<fr:layout>
+			<fr:property name="classes" value="tstyle5 thlight thright thmiddle"/>
+			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+		</fr:layout>
+	</fr:edit>
 
 	<logic:iterate indexId="index" id="employeeWorkScheduleBean" name="employeeScheduleBean" property="employeeWorkWeekScheduleList">
 		<% int iter = new Integer(index) + 1 ;%>
-		<table class="tstyle1 thtop thlight printborder">
+		<table class="tstyle1 thtop thlight printborder width600px">
 			<tr>
-				<th class="cornerleft"></th>
+				<th class="cornerleft2 width8em"></th>
 				<th colspan="5">
 					<bean:message key="label.week"/> <bean:write name="employeeWorkScheduleBean" property="workWeekNumber"/>
 					<logic:equal name="employeeWorkScheduleBean" property="isEmptyWeek" value="true">
@@ -170,7 +176,9 @@ function removeExistingWorkWeek(iter){
 		</li>
 	</ul>
 
-	<p><html:submit><bean:message key="button.chooseWorkSchedule"/></html:submit> 
-	<html:submit onclick="this.form.method.value='deleteWorkScheduleDays'"><bean:message key="button.deleteWorkScheduleDays"/></html:submit></p>
+	<p class="mtop15">
+		<html:submit><bean:message key="button.chooseWorkSchedule"/></html:submit> 
+		<html:submit onclick="this.form.method.value='deleteWorkScheduleDays'"><bean:message key="button.deleteWorkScheduleDays"/></html:submit>
+	</p>
 
 </fr:form>
