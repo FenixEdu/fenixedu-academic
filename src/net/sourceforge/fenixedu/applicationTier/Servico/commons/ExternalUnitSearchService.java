@@ -5,11 +5,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import pt.utl.ist.fenix.tools.util.StringNormalizer;
+
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.util.StringNormalizer;
 
 public class ExternalUnitSearchService extends Service implements AutoCompleteSearchService {
 

@@ -760,6 +760,28 @@
     	<forward name="Sucess" path="viewAllExamsByDegreeAndCurricularYear"/>
 	</action>
 
+		
+		<action path="/showPublications"
+    			type="net.sourceforge.fenixedu.presentationTier.Action.publico.ViewHomepageDA"
+    			parameter="method"
+    			>
+    		<forward name="showPublications" path="show-publications"/>	
+		</action>
+
+		<action path="/showPatents"
+    			type="net.sourceforge.fenixedu.presentationTier.Action.publico.ViewHomepageDA"
+    			parameter="method"
+    			>
+    		<forward name="showPatents" path="show-patents"/>
+		</action>
+		
+		<action path="/showInterests"
+    			type="net.sourceforge.fenixedu.presentationTier.Action.publico.ViewHomepageDA"
+    			parameter="method"
+    			>
+    		<forward name="showInterests" path="show-interests"/>
+		</action>
+				
 		<action path="/viewHomepage"
     			type="net.sourceforge.fenixedu.presentationTier.Action.publico.ViewHomepageDA"
     			parameter="method"
@@ -770,14 +792,17 @@
     		<forward name="list-homepages-employees" path="list-homepages-employees"/>
     		<forward name="list-homepages-students" path="list-homepages-students"/>
     		<forward name="list-homepages-alumni" path="list-homepages-alumni"/>
-        <forward name="site-section" path="view-homepage-section"/>
-        <forward name="site-section-deny" path="view-homepage-section-deny"/>
-        <forward name="site-section-adviseLogin" path="view-homepage-section-adviseLogin"/>
-        <forward name="site-item" path="view-homepage-item"/>
-        <forward name="site-item-deny" path="view-homepage-item-deny"/>
-        <forward name="site-item-adviseLogin" path="view-homepage-item-adviseLogin"/>
+	        <forward name="site-section" path="view-homepage-section"/>
+	        <forward name="site-section-deny" path="view-homepage-section-deny"/>
+	        <forward name="site-section-adviseLogin" path="view-homepage-section-adviseLogin"/>
+	        <forward name="site-item" path="view-homepage-item"/>
+	        <forward name="site-item-deny" path="view-homepage-item-deny"/>
+	        <forward name="site-item-adviseLogin" path="view-homepage-item-adviseLogin"/>
     		<forward name="homepage-stats" path="homepage-stats"/>
     		<forward name="not-found-homepage" path="not-found-homepage"/>
+    		<forward name="showPublications" path="show-publications"/>
+    		<forward name="showPatents" path="show-patents"/>
+    		<forward name="showInterests" path="show-interests"/>
 		</action>
 		
         <action path="/announcementManagement"
@@ -797,6 +822,13 @@
 				<forward name="search" path="search-scorm-content"/>
         </action>
         
+        
+     <!-- View Research Result -->  
+     <action path="/showResearchResult"
+            parameter="method"
+            type="net.sourceforge.fenixedu.presentationTier.Action.publico.ShowResearchResult">
+            <forward name="showResult" path="show-result"/>
+     </action>
 	<!-- =========== RSS ======================== -->
 		<action path="/announcementsRSS"
     			type="net.sourceforge.fenixedu.presentationTier.Action.publico.rss.GenerateAnnoucementsRSS"
@@ -835,6 +867,7 @@
     <message-resources parameter="resources.SiteResources" key="SITE_RESOURCES" null="false"/>
     <message-resources parameter="resources.AdminOffice" key="ADMIN_OFFICE_RESOURCES" null="false"/>
     <message-resources parameter="resources.ApplicationResources" key="APPLICATION_RESOURCES" null="false"/>  
+   	<message-resources parameter="resources.ResearcherResources" key="RESEARCHER_RESOURCES" null="false"/>
     
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">

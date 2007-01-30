@@ -16,7 +16,10 @@ public class SearchInternalUnits extends AbstractSearchObjects {
 		 units.addAll(UnitUtils.readAllUnitsByType(PartyTypeEnum.DEGREE_UNIT));
 		 units.addAll(UnitUtils.readAllUnitsByType(PartyTypeEnum.SCIENCE_INFRASTRUCTURE));
 		 units.addAll(UnitUtils.readAllUnitsByType(PartyTypeEnum.RESEARCH_UNIT));
-		 units.add(Unit.readUnitsByAcronym("INESC").get(0));
+		 units.addAll(UnitUtils.readAllUnitsByType(PartyTypeEnum.SECTION));
+		 units.addAll(UnitUtils.readAllUnitsByType(PartyTypeEnum.SCIENTIFIC_AREA));
+		 units.addAll(UnitUtils.readAllUnitsByType(PartyTypeEnum.ASSOCIATED_LABORATORY));
+		 		
 		 List<DomainObject> list = new ArrayList<DomainObject> ();
 		 list.addAll(units);
 		 

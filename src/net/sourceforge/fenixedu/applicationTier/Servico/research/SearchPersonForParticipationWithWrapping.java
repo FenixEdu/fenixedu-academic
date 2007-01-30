@@ -3,14 +3,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.research;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 public class SearchPersonForParticipationWithWrapping extends SearchPersonsForParticipations {
 

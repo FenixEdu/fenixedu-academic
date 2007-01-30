@@ -26,7 +26,7 @@ public class ParkingFile extends ParkingFile_Base {
         setNewParkingDocument(null);
         setPermittedGroup(null);
         String externalIdentifier = getExternalStorageIdentification();
-        FileManagerFactory.getFileManager().deleteFile(externalIdentifier);
+        FileManagerFactory.getFactoryInstance().getFileManager().deleteFile(externalIdentifier);
         deleteDomainObject();
     }
 }

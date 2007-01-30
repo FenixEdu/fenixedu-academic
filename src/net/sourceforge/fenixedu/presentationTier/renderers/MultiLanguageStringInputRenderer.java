@@ -240,7 +240,7 @@ public class MultiLanguageStringInputRenderer extends InputRenderer {
         return new MultiLanguageStringInputLayout();
     }
 
-    private class MultiLanguageStringInputLayout extends Layout {
+    protected class MultiLanguageStringInputLayout extends Layout {
         private static final String STATE_MAP_NAME = "mlsMap";
         private static final String STATE_INDEX = "lastIndex";
 

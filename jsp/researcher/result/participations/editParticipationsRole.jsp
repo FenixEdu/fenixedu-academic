@@ -17,7 +17,7 @@
 	<logic:notEmpty name="participations">
 		<fr:edit id="editRole" name="participations" schema="<%= listSchema %>" action="<%= prepareEdit %>">
 			<fr:layout name="tabular-row">
-				<fr:property name="classes" value="tstyle2"/>
+				<fr:property name="classes" value="tstyle2 thlight"/>
 				<fr:property name="columnClasses" value=",aleft,acenter,aleft"/>
 			</fr:layout>
 			<fr:destination name="exception" path="<%= prepareEdit + "&editRoles=true"%>"/>

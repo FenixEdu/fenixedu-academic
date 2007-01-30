@@ -319,9 +319,50 @@
 			</logic:present>
 		</logic:present>
 	
+		<logic:present role="RESEARCHER">
 		<tr>
-			<th>
-			</th>
+			<logic:notEmpty name="UserView" property="person.researchInterests">
+				<th><bean:message key="label.homepage.showInterests" bundle="HOMEPAGE_RESOURCES"/>:</th>
+				<td colspan="2"><html:checkbox bundle="HTMLALT_RESOURCES" property="showInterests" value="true"/></td>
+  			</logic:notEmpty>
+  			
+  			<logic:empty name="UserView" property="person.researchInterests">
+				<th><span class="color888"><bean:message key="label.homepage.showInterests" bundle="HOMEPAGE_RESOURCES"/>:</span></th>
+				<td><input type="checkbox" disabled="disabled"/></td>
+				<td><span class="color888"><bean:message key="label.homepage.options.interests.disabled" bundle="HOMEPAGE_RESOURCES"/>.</span></td>
+  			</logic:empty>
+		</tr>
+
+		<tr>
+			<logic:notEmpty name="UserView" property="person.researchResultPublications">
+				<th><bean:message key="label.homepage.showPublications" bundle="HOMEPAGE_RESOURCES"/>:</th>
+				<td colspan="2"><html:checkbox bundle="HTMLALT_RESOURCES" property="showPublications" value="true"/></td>
+  			</logic:notEmpty>
+  			
+  			<logic:empty name="UserView" property="person.researchResultPublications">
+				<th><span class="color888"><bean:message key="label.homepage.showPublications" bundle="HOMEPAGE_RESOURCES"/>:</span></th>
+				<td><input type="checkbox" disabled="disabled"/></td>
+				<td><span class="color888"><bean:message key="label.homepage.options.publications.disabled" bundle="HOMEPAGE_RESOURCES"/>.</span></td>
+  			</logic:empty>
+		</tr>
+
+		<tr>
+			<logic:notEmpty name="UserView" property="person.researchResultPatents">
+				<th><bean:message key="label.homepage.showPatents" bundle="HOMEPAGE_RESOURCES"/>:</th>
+				<td colspan="2"><html:checkbox bundle="HTMLALT_RESOURCES" property="showPatents" value="true"/></td>
+  			</logic:notEmpty>
+
+  			<logic:empty name="UserView" property="person.researchResultPatents">
+				<th><span class="color888"><bean:message key="label.homepage.showPatents" bundle="HOMEPAGE_RESOURCES"/>:</span></th>
+				<td><input type="checkbox" disabled="disabled"/></td>
+				<td><span class="color888"><bean:message key="label.homepage.options.patents.disabled" bundle="HOMEPAGE_RESOURCES"/>.</span></td>
+  			</logic:empty>
+		</tr>
+		
+		</logic:present>
+		
+		<tr>
+			<th></th>
 			<td colspan="3">
 				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="mvert05">
 					<bean:message key="person.homepage.update" bundle="HOMEPAGE_RESOURCES"/>

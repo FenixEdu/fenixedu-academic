@@ -11,6 +11,8 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.WordUtils;
 
+import pt.utl.ist.fenix.tools.util.StringNormalizer;
+
 /**
  * 
  * @author Carla Penedo (carla.penedo@ist.utl.pt)
@@ -46,11 +48,11 @@ public class StringFormatter {
         allLowerSet.add("por");
         allLowerSet.add("sobre");
 
-        // contracções de artigos com preposições
+        // contracï¿½ï¿½es de artigos com preposiï¿½ï¿½es
         allLowerSet.add("ao");
         allLowerSet.add("aos");
-        allLowerSet.add("à");
-        allLowerSet.add("às");
+        allLowerSet.add("ï¿½");
+        allLowerSet.add("ï¿½s");
         allLowerSet.add("do");
         allLowerSet.add("dos");
         allLowerSet.add("da");
@@ -60,7 +62,7 @@ public class StringFormatter {
         allLowerSet.add("na");
         allLowerSet.add("nas");
 
-        // conjunções
+        // conjunï¿½ï¿½es
         allLowerSet.add("e");
 
         // EN
@@ -182,7 +184,7 @@ public class StringFormatter {
             } else {
                 // The first word is always capitalized (some courses' name
                 // begin with an article)
-                // (ex: Os L‡seres na Instrumenta‹o e Medida)
+                // (ex: Os Lï¿½seres na Instrumentaï¿½ï¿½o e Medida)
                 if (i == 0) {
                     capitalizedName.append(WordUtils.capitalize(lowerCaseName[i]));
                 } else {

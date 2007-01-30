@@ -461,7 +461,7 @@ markSheet.printers=
 #----------------------------------------------------------------
 # File Manager
 #----------------------------------------------------------------
-file.manager.implementation.class=pt.utl.ist.fenix.tools.file.dspace.DSpaceFileManager
+file.manager.factory.implementation.class=pt.utl.ist.fenix.tools.file.DSpaceFileManagerFactory
 dspace.client.transport.class=pt.utl.ist.fenix.tools.file.dspace.DSpaceHttpClient
 dspace.rmi.server.name=DSpaceRMIRemoteManager
 

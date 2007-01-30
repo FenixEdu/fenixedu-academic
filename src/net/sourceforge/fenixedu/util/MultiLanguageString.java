@@ -79,8 +79,11 @@ public class MultiLanguageString implements Serializable, Comparable<MultiLangua
     }
 
     public void setContent(Language language, String content) {
-	contentsMap.put(language, content);
-    }
+		if (language == null) {
+			throw new IllegalArgumentException("language cannot be null");
+		}
+		contentsMap.put(language, content == null ? "" : content);
+	}
 
     public String removeContent(Language language) {
 	return contentsMap.remove(language);

@@ -3,6 +3,8 @@ package net.sourceforge.fenixedu.util;
 import java.util.Arrays;
 import java.util.List;
 
+import pt.utl.ist.fenix.tools.util.StringNormalizer;
+
 public class StringUtils {
 
     public static boolean verifyContainsWithEquality(String originalString, String stringToCompare) {

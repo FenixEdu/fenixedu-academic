@@ -1,6 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.Action.publico;
 
 import java.io.DataOutputStream;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.SortedMap;
 import java.util.SortedSet;
 import java.util.TreeMap;
@@ -16,15 +19,30 @@ import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.FileEntry;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.homepage.Homepage;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Contract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent;
+import net.sourceforge.fenixedu.domain.research.result.publication.Article;
+import net.sourceforge.fenixedu.domain.research.result.publication.Book;
+import net.sourceforge.fenixedu.domain.research.result.publication.BookPart;
+import net.sourceforge.fenixedu.domain.research.result.publication.Inproceedings;
+import net.sourceforge.fenixedu.domain.research.result.publication.Manual;
+import net.sourceforge.fenixedu.domain.research.result.publication.OtherPublication;
+import net.sourceforge.fenixedu.domain.research.result.publication.Proceedings;
+import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
+import net.sourceforge.fenixedu.domain.research.result.publication.TechnicalReport;
+import net.sourceforge.fenixedu.domain.research.result.publication.Thesis;
+import net.sourceforge.fenixedu.domain.research.result.publication.Unstructured;
+import net.sourceforge.fenixedu.domain.research.result.publication.BookPart.BookPartType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.SiteVisualizationDA;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -323,6 +341,68 @@ public class ViewHomepageDA extends SiteVisualizationDA {
 
 	return null;
     }
+
+    public ActionForward showPublications(ActionMapping mapping, ActionForm form,
+    	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    
+    	final String homepageId = request.getParameter("homepageID");
+    	Homepage homepage = (Homepage) RootDomainObject.readDomainObjectByOID(Homepage.class, Integer.valueOf(homepageId));
+    	
+    	setRequestAttributesToList(request,homepage.getPerson());
+    	
+    	return mapping.findForward("showPublications");
+    }
+    
+    public ActionForward showPatents(ActionMapping mapping, ActionForm form,
+    	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    
+    	final String homepageId = request.getParameter("homepageID");
+    	Homepage homepage = (Homepage) RootDomainObject.readDomainObjectByOID(Homepage.class, Integer.valueOf(homepageId));
+    	
+    	List<ResearchResultPatent> patents = homepage.getPerson().getResearchResultPatents();
+    	Collections.sort(patents, new BeanComparator("approvalYear"));
+    	request.setAttribute("patents", patents);
+    	return mapping.findForward("showPatents");
+    }
+    
+    public ActionForward showInterests(ActionMapping mapping, ActionForm form,
+    	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    
+    	final String homepageId = request.getParameter("homepageID");
+    	Homepage homepage = (Homepage) RootDomainObject.readDomainObjectByOID(Homepage.class, Integer.valueOf(homepageId));
+    	
+    	request.setAttribute("interests", homepage.getPerson().getResearchInterests());
+    	return mapping.findForward("showInterests");
+    }
+    
+	private void setRequestAttributesToList(HttpServletRequest request, Person person) {
+	
+		request.setAttribute("books", person.getResearchResultPublicationsByType(Book.class));
+		
+		request.setAttribute("inbooks", getFilteredBookParts(person, BookPartType.Inbook));
+		request.setAttribute("incollections", getFilteredBookParts(person, BookPartType.Incollection));
+		request.setAttribute("articles", person.getResearchResultPublicationsByType(Article.class));
+		request.setAttribute("inproceedings", person.getResearchResultPublicationsByType(Inproceedings.class));
+		request.setAttribute("proceedings", person.getResearchResultPublicationsByType(Proceedings.class));
+		request.setAttribute("theses", person.getResearchResultPublicationsByType(Thesis.class));
+		request.setAttribute("manuals", person.getResearchResultPublicationsByType(Manual.class));
+		request.setAttribute("technicalReports", person.getResearchResultPublicationsByType(TechnicalReport.class));
+		request.setAttribute("otherPublications", person.getResearchResultPublicationsByType(OtherPublication.class));
+		request.setAttribute("unstructureds", person.getResearchResultPublicationsByType(Unstructured.class));
+
+		request.setAttribute("person", getLoggedPerson(request));
+	}
+
+	private List getFilteredBookParts(Person person, BookPartType type) {
+		List<ResearchResultPublication> bookParts = person.getResearchResultPublicationsByType(BookPart.class);
+		List<BookPart> filteredBookParts = new ArrayList<BookPart>();
+		for (ResearchResultPublication publication : bookParts) {
+			BookPart bookPart = (BookPart) publication;
+			if (bookPart.getBookPartType().equals(type))
+				filteredBookParts.add(bookPart);
+		}
+		return filteredBookParts;
+	}
 
     @Override
     protected ActionForward getSiteDefaultView(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {

@@ -48,7 +48,7 @@ public class ResultsManagementAction extends FenixDispatchAction {
         return null;
     }
 
-    private ResearchResult getResultByIdFromRequest(HttpServletRequest request) {
+    protected ResearchResult getResultByIdFromRequest(HttpServletRequest request) {
         final Integer resultId = Integer.valueOf(getFromRequest(request, "resultId").toString());
 
         if (resultId != null) {

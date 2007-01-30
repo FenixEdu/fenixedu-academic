@@ -6,20 +6,21 @@
 
 <logic:present role="RESEARCHER">
 	<ul>
-		<li><html:link page="/viewCurriculum.do?method=prepare"> <bean:message bundle="RESEARCHER_RESOURCES" key="link.viewCurriculum"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</html:link> </li>
-		<li><html:link page="/publications/search.do?method=prepareSearchPublication&searchType=simple"> <bean:message bundle="RESEARCHER_RESOURCES" key="label.search"/> </html:link>
+		<li><html:link page="/viewCurriculum.do"> <bean:message bundle="RESEARCHER_RESOURCES" key="link.viewCurriculum"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</html:link> </li>
+		<li><html:link page="/publications/search.do?method=prepareSearchPublication"> <bean:message bundle="RESEARCHER_RESOURCES" key="label.search"/> </html:link>
 	</ul>
 
 	<ul style="margin-top: 0.75em;">
 		<li><html:link page="/interests/interestsManagement.do?method=prepare"><bean:message bundle="RESEARCHER_RESOURCES" key="link.interestsManagement"/></html:link></li>
-		<li><html:link page="/resultPatents/management.do"><bean:message bundle="RESEARCHER_RESOURCES" key="link.patentsManagement"/></html:link></li>			
 		<li><html:link page="/resultPublications/listPublications.do"><bean:message bundle="RESEARCHER_RESOURCES" key="link.Publications"/></html:link></li>
+		<li><html:link page="/resultPatents/management.do"><bean:message bundle="RESEARCHER_RESOURCES" key="link.patentsManagement"/></html:link></li>			
 		<%--
 		<li class="navheader"><bean:message bundle="RESEARCHER_RESOURCES" key="link.participationsTitle"/></li>
 		--%>
+		<%-- 
 		<li><html:link page="/events/eventsManagement.do?method=listEvents"><bean:message bundle="RESEARCHER_RESOURCES" key="link.cientificActivities.title"/></html:link></li>
 		<li><html:link page="/projects/projectsManagement.do?method=listProjects"><bean:message bundle="RESEARCHER_RESOURCES" key="link.projectsManagement"/></html:link></li>
-
+		--%>
 	</ul>
 	
 </logic:present>

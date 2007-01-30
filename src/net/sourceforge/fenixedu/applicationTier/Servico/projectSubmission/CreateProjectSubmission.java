@@ -79,7 +79,7 @@ public class CreateProjectSubmission extends Service {
         metaData.add(FileSetMetaData.createTitleMeta(filename));
         metaData.add(new FileSetMetaData("type",null,null,EducationalResourceType.PROJECT_SUBMISSION.toString()));
         
-        final FileDescriptor fileDescriptor = FileManagerFactory.getFileManager().saveFile(filePath,
+        final FileDescriptor fileDescriptor = FileManagerFactory.getFactoryInstance().getFileManager().saveFile(filePath,
                 filename, (permittedGroup != null) ? true : false, metaData, inputStream);
 
         final ProjectSubmissionFile projectSubmissionFile = new ProjectSubmissionFile(filename,
@@ -94,7 +94,7 @@ public class CreateProjectSubmission extends Service {
                 fileDescriptor.getSize(), studentGroup, attends, project);
 
         if (fileToDeleteExternalId != null) {
-            FileManagerFactory.getFileManager().deleteFile(fileToDeleteExternalId);
+            FileManagerFactory.getFactoryInstance().getFileManager().deleteFile(fileToDeleteExternalId);
         }
 
         return projectSubmission;

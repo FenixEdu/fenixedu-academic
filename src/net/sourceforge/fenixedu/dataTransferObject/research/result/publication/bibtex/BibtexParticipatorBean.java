@@ -186,7 +186,7 @@ public class BibtexParticipatorBean implements Serializable {
 	
 	public void reset() {
 		this.setParticipatorProcessed(false);
-		this.setActiveSchema("bibtex.participator");
+		this.setActiveSchema("bibtex.participator.internal");
 		this.setPersonType(ParticipationType.INTERNAL);
 		this.setOrganizationType(ParticipationType.INTERNAL);
 		this.setPerson(null);

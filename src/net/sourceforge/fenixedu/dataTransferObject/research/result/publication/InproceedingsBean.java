@@ -18,7 +18,7 @@ public class InproceedingsBean extends ConferenceArticlesBean implements Seriali
     public InproceedingsBean() {
 	this.setPublicationType(ResultPublicationType.Inproceedings);
 	this.setActiveSchema("result.publication.create.Inproceedings");
-	this.setParticipationSchema("resultParticipation.simpleWithRole");
+	this.setParticipationSchema("resultParticipation.simple");
     }
 
     public InproceedingsBean(Inproceedings inproceedings) {

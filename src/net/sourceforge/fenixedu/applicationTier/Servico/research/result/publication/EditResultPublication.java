@@ -24,197 +24,233 @@ import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResul
 import net.sourceforge.fenixedu.domain.research.result.publication.TechnicalReport;
 import net.sourceforge.fenixedu.domain.research.result.publication.Thesis;
 import net.sourceforge.fenixedu.domain.research.result.publication.BookPart.BookPartType;
+import net.sourceforge.fenixedu.util.researcher.ResearchResultMetaDataManager;
 
 public class EditResultPublication extends ResultPublicationService {
 
-    public ResearchResultPublication run(BookBean bean) throws FenixServiceException {
-	final ResearchResultPublication publication = getResultPublication(bean);
-
-	if (publication instanceof Book) {
-	    ((Book) publication).setEditAll(bean.getTitle(), bean.getKeywords(), getPublisher(bean), bean.getYear(), bean
-		    .getVolume(), bean.getSeries(), bean.getAddress(), bean.getEdition(),
-		    bean.getIsbn(), bean.getNumberPages(), bean.getLanguage(), bean.getCountry(), bean
-			    .getScope(), bean.getNote(), bean.getMonth(), bean.getUrl());
-	} else {
-	    final Book book = getCreateService().createBookFromBean(bean);
-	    updateResultReferences(publication, book);
-	    getDeleteService().run(publication.getIdInternal());
-	    return book;
+	public ResearchResultPublication run(BookBean bean) throws FenixServiceException {
+		final ResearchResultPublication publication = getResultPublication(bean);
+		final ResearchResultPublication finalPublication;
+		
+		if (publication instanceof Book) {
+			((Book) publication).setEditAll(bean.getTitle(), bean.getKeywords(), getPublisher(bean), bean
+					.getYear(), bean.getVolume(), bean.getSeries(), bean.getAddress(), bean.getEdition(),
+					bean.getIsbn(), bean.getNumberPages(), bean.getLanguage(), bean.getCountry(), bean
+							.getScope(), bean.getNote(), bean.getMonth(), bean.getUrl());
+			finalPublication = publication;
+		} else {
+			final Book book = getCreateService().createBookFromBean(bean);
+			updateResultReferences(publication, book);
+			getDeleteService().run(publication.getIdInternal());
+			finalPublication = book;
+		}
+		ResearchResultMetaDataManager.updateMetaDataInStorageFor(finalPublication);
+		return finalPublication;
 	}
-	return publication;
-    }
 
-    public ResearchResultPublication run(InbookBean bean) throws FenixServiceException {
-	final ResearchResultPublication publication = getResultPublication(bean);
-
-	if (publication instanceof BookPart) {
-	    if (((BookPart) publication).getBookPartType().equals(BookPartType.Inbook)) {
-		((BookPart) publication)
-			.setEditAllInbook(BookPartType.Inbook, bean.getTitle(), bean.getKeywords(), bean.getChapter(), bean
-				.getFirstPage(), bean.getLastPage(), getPublisher(bean), bean.getYear(),
-				bean.getVolume(), bean.getSeries(), bean.getEdition(),
-				bean.getCountry(), bean.getAddress(), bean.getNote(), bean.getMonth(),
-				bean.getUrl());
-	    }
-	} else {
-	    final BookPart inbook = getCreateService().createInbookFromBean(bean);
-	    updateResultReferences(publication, inbook);
-	    getDeleteService().run(publication.getIdInternal());
-	    return inbook;
+	public ResearchResultPublication run(InbookBean bean) throws FenixServiceException {
+		final ResearchResultPublication publication = getResultPublication(bean);
+		final ResearchResultPublication finalPublication;
+		
+		if (publication instanceof BookPart) {
+			if (((BookPart) publication).getBookPartType().equals(BookPartType.Inbook)) {
+				((BookPart) publication).setEditAllInbook(BookPartType.Inbook, bean.getTitle(), bean
+						.getKeywords(), bean.getChapter(), bean.getFirstPage(), bean.getLastPage(),
+						getPublisher(bean), bean.getYear(), bean.getVolume(), bean.getSeries(), bean
+								.getEdition(), bean.getCountry(), bean.getAddress(), bean.getNote(), bean
+								.getMonth(), bean.getUrl());
+			}
+			finalPublication = publication;
+			
+		} else {
+			final BookPart inbook = getCreateService().createInbookFromBean(bean);
+			updateResultReferences(publication, inbook);
+			getDeleteService().run(publication.getIdInternal());
+			finalPublication = inbook;
+		}
+		ResearchResultMetaDataManager.updateMetaDataInStorageFor(finalPublication);
+		return finalPublication;
 	}
-	return publication;
-    }
 
-    public ResearchResultPublication run(IncollectionBean bean) throws FenixServiceException {
-	final ResearchResultPublication publication = getResultPublication(bean);
+	public ResearchResultPublication run(IncollectionBean bean) throws FenixServiceException {
+		final ResearchResultPublication publication = getResultPublication(bean);
+		final ResearchResultPublication finalPublication;
+		
+		if (publication instanceof BookPart) {
+			if (((BookPart) publication).getBookPartType().equals(BookPartType.Incollection)) {
+				((BookPart) publication).setEditAllIncollection(BookPartType.Incollection, bean.getTitle(),
+						bean.getKeywords(), bean.getBookTitle(), getPublisher(bean), bean.getYear(), bean
+								.getFirstPage(), bean.getLastPage(), getOrganization(bean),
+						bean.getCountry(), bean.getAddress(), bean.getNote(), bean.getMonth(), bean.getUrl());
 
-	if (publication instanceof BookPart) {
-	    if (((BookPart) publication).getBookPartType().equals(BookPartType.Incollection)) {
-		((BookPart) publication).setEditAllIncollection(BookPartType.Incollection, bean
-			.getTitle(), bean.getKeywords(), bean.getBookTitle(), getPublisher(bean), bean.getYear(), bean
-			.getFirstPage(), bean.getLastPage(), getOrganization(bean), bean.getCountry(),
-			bean.getAddress(), bean.getNote(), bean.getMonth(), bean.getUrl());
-
-	    }
-	} else {
-	    final BookPart incollection = getCreateService().createIncollectionFromBean(bean);
-	    updateResultReferences(publication, incollection);
-	    getDeleteService().run(publication.getIdInternal());
-	    return incollection;
+			}
+			finalPublication = publication;
+		} else {
+			final BookPart incollection = getCreateService().createIncollectionFromBean(bean);
+			updateResultReferences(publication, incollection);
+			getDeleteService().run(publication.getIdInternal());
+			finalPublication = incollection;
+		}
+		
+		ResearchResultMetaDataManager.updateMetaDataInStorageFor(finalPublication);
+		return finalPublication;
 	}
-	return publication;
-    }
 
-    public ResearchResultPublication run(ArticleBean bean) throws FenixServiceException {
-	final ResearchResultPublication publication = getResultPublication(bean);
-
-	if (publication instanceof Article) {
-	    ((Article) publication).setEditAll(bean.getTitle(), bean.getKeywords(), bean.getJournal(), bean.getYear(),
-		    getPublisher(bean), bean.getVolume(), bean.getNumber(), bean.getFirstPage(), bean
-			    .getLastPage(), bean.getNote(), bean.getIssn(), bean.getLanguage(), bean
-			    .getCountry(), bean.getScope(), bean.getMonth(), bean.getUrl());
-	} else {
-	    final Article article = getCreateService().createArticleFromBean(bean);
-	    updateResultReferences(publication, article);
-	    getDeleteService().run(publication.getIdInternal());
-	    return article;
+	public ResearchResultPublication run(ArticleBean bean) throws FenixServiceException {
+		final ResearchResultPublication publication = getResultPublication(bean);
+		final ResearchResultPublication finalPublication;
+		
+		if (publication instanceof Article) {
+			((Article) publication).setEditAll(bean.getTitle(), bean.getKeywords(), bean.getJournal(), bean
+					.getYear(), getPublisher(bean), bean.getVolume(), bean.getNumber(), bean.getFirstPage(),
+					bean.getLastPage(), bean.getNote(), bean.getIssn(), bean.getLanguage(),
+					bean.getCountry(), bean.getScope(), bean.getMonth(), bean.getUrl());
+			finalPublication = publication;
+		} else {
+			final Article article = getCreateService().createArticleFromBean(bean);
+			updateResultReferences(publication, article);
+			getDeleteService().run(publication.getIdInternal());
+			finalPublication = article;
+		}
+		ResearchResultMetaDataManager.updateMetaDataInStorageFor(finalPublication);
+		return finalPublication;
 	}
-	return publication;
-    }
 
-    public ResearchResultPublication run(InproceedingsBean bean) throws FenixServiceException {
-	final ResearchResultPublication publication = getResultPublication(bean);
+	public ResearchResultPublication run(InproceedingsBean bean) throws FenixServiceException {
+		final ResearchResultPublication publication = getResultPublication(bean);
+		final ResearchResultPublication finalPublication;
+		
+		if (publication instanceof Inproceedings) {
 
-	if (publication instanceof Inproceedings) {
-	    
-
-	    ((Inproceedings) publication).setEditAll(bean.getTitle(), bean.getKeywords(), bean.getYear(), bean.getConference(), bean
-		    .getScope(), getPublisher(bean), getOrganization(bean), bean.getAddress(), bean
-		    .getFirstPage(), bean.getLastPage(), bean.getNote(), bean.getLanguage(), bean
-		    .getMonth(), bean.getUrl());
-	} else {
-	    final Inproceedings inproceedings = getCreateService().createInproceedingsFromBean(bean);
-	    updateResultReferences(publication, inproceedings);
-	    getDeleteService().run(publication.getIdInternal());
-	    return inproceedings;
+			((Inproceedings) publication).setEditAll(bean.getTitle(), bean.getKeywords(), bean.getYear(),
+					bean.getConference(), bean.getScope(), getPublisher(bean), getOrganization(bean), bean
+							.getAddress(), bean.getFirstPage(), bean.getLastPage(), bean.getNote(), bean
+							.getLanguage(), bean.getMonth(), bean.getUrl());
+		
+			finalPublication = publication;
+		} else {
+			final Inproceedings inproceedings = getCreateService().createInproceedingsFromBean(bean);
+			updateResultReferences(publication, inproceedings);
+			getDeleteService().run(publication.getIdInternal());
+			finalPublication = inproceedings;
+		}
+		ResearchResultMetaDataManager.updateMetaDataInStorageFor(finalPublication);
+		return finalPublication;
 	}
-	return publication;
-    }
 
-    public ResearchResultPublication run(ProceedingsBean bean) throws FenixServiceException {
-	final ResearchResultPublication publication = getResultPublication(bean);
+	public ResearchResultPublication run(ProceedingsBean bean) throws FenixServiceException {
+		final ResearchResultPublication publication = getResultPublication(bean);
+		final ResearchResultPublication finalPublication;
+		
+		if (publication instanceof Proceedings) {
 
-	if (publication instanceof Proceedings) {
-	    
-	    ((Proceedings) publication).setEditAll(bean.getTitle(), bean.getKeywords(), bean.getYear(), bean.getConference(), bean
-		    .getScope(), getPublisher(bean), getOrganization(bean), bean.getAddress(), bean
-		    .getNote(), bean.getMonth(), bean.getUrl());
-	} else {
-	    final Proceedings proceedings = getCreateService().createProceedingsFromBean(bean);
-	    updateResultReferences(publication, proceedings);
-	    getDeleteService().run(publication.getIdInternal());
-	    return proceedings;
+			((Proceedings) publication).setEditAll(bean.getTitle(), bean.getKeywords(), bean.getYear(), bean
+					.getConference(), bean.getScope(), getPublisher(bean), getOrganization(bean), bean
+					.getAddress(), bean.getNote(), bean.getMonth(), bean.getUrl());
+			finalPublication = publication;
+			
+		} else {
+			final Proceedings proceedings = getCreateService().createProceedingsFromBean(bean);
+			updateResultReferences(publication, proceedings);
+			getDeleteService().run(publication.getIdInternal());
+			finalPublication = proceedings;
+		}
+		ResearchResultMetaDataManager.updateMetaDataInStorageFor(finalPublication);
+		return finalPublication;
 	}
-	return publication;
-    }
 
-    public ResearchResultPublication run(ThesisBean bean) throws FenixServiceException {
-	final ResearchResultPublication publication = getResultPublication(bean);
-
-	if (publication instanceof Thesis) {
-	    ((Thesis) publication).setEditAll(bean.getThesisType(), bean.getTitle(), bean.getKeywords(),
-		    getOrganization(bean), bean.getYear(), bean.getAddress(), bean.getNote(), bean
-			    .getNumberPages(), bean.getLanguage(), bean.getMonth(), bean.getYearBegin(),
-		    bean.getMonthBegin(), bean.getUrl());
-	} else {
-	    final Thesis thesis = getCreateService().createThesisFromBean(bean);
-	    updateResultReferences(publication, thesis);
-	    getDeleteService().run(publication.getIdInternal());
-	    return thesis;
+	public ResearchResultPublication run(ThesisBean bean) throws FenixServiceException {
+		final ResearchResultPublication publication = getResultPublication(bean);
+		final ResearchResultPublication finalPublication;
+		
+		if (publication instanceof Thesis) {
+			((Thesis) publication).setEditAll(bean.getThesisType(), bean.getTitle(), bean.getKeywords(),
+					getOrganization(bean), bean.getYear(), bean.getAddress(), bean.getNote(), bean
+							.getNumberPages(), bean.getLanguage(), bean.getMonth(), bean.getYearBegin(), bean
+							.getMonthBegin(), bean.getUrl());
+		
+			finalPublication = publication;
+		} else {
+			final Thesis thesis = getCreateService().createThesisFromBean(bean);
+			updateResultReferences(publication, thesis);
+			getDeleteService().run(publication.getIdInternal());
+			finalPublication = thesis;
+		}
+		ResearchResultMetaDataManager.updateMetaDataInStorageFor(finalPublication);
+		return finalPublication;
 	}
-	return publication;
-    }
 
-    public ResearchResultPublication run(ManualBean bean) throws FenixServiceException {
-	final ResearchResultPublication publication = getResultPublication(bean);
-
-	if (publication instanceof Manual) {
-	    ((Manual) publication)
-		    .setEditAll(bean.getTitle(), bean.getKeywords(),getOrganization(bean), bean.getYear(), bean
-			    .getAddress(), bean.getNote(), bean.getEdition(), bean.getMonth(), bean
-			    .getUrl());
-	} else {
-	    final Manual manual = getCreateService().createManualFromBean(bean);
-	    updateResultReferences(publication, manual);
-	    getDeleteService().run(publication.getIdInternal());
-	    return manual;
+	public ResearchResultPublication run(ManualBean bean) throws FenixServiceException {
+		final ResearchResultPublication publication = getResultPublication(bean);
+		final ResearchResultPublication finalPublication;
+		
+		if (publication instanceof Manual) {
+			((Manual) publication).setEditAll(bean.getTitle(), bean.getKeywords(), getOrganization(bean),
+					bean.getYear(), bean.getAddress(), bean.getNote(), bean.getEdition(), bean.getMonth(),
+					bean.getUrl());
+			finalPublication = publication;
+			
+		} else {
+			final Manual manual = getCreateService().createManualFromBean(bean);
+			updateResultReferences(publication, manual);
+			getDeleteService().run(publication.getIdInternal());
+			finalPublication =  manual;
+		}
+		ResearchResultMetaDataManager.updateMetaDataInStorageFor(finalPublication);
+		return finalPublication;
 	}
-	return publication;
-    }
 
-    public ResearchResultPublication run(TechnicalReportBean bean) throws FenixServiceException {
-	final ResearchResultPublication publication = getResultPublication(bean);
-
-	if (publication instanceof TechnicalReport) {
-	    ((TechnicalReport) publication).setEditAll(bean.getTitle(), bean.getKeywords(), getOrganization(bean), bean
-		    .getYear(), bean.getTechnicalReportType(), bean.getNumber(), bean.getAddress(), bean
-		    .getNote(), bean.getNumberPages(), bean.getLanguage(), bean.getMonth(), bean
-		    .getUrl());
-	} else {
-	    final TechnicalReport techReport = getCreateService().createTechnicalReportFromBean(bean);
-	    updateResultReferences(publication, techReport);
-	    getDeleteService().run(publication.getIdInternal());
-	    return techReport;
+	public ResearchResultPublication run(TechnicalReportBean bean) throws FenixServiceException {
+		final ResearchResultPublication publication = getResultPublication(bean);
+		final ResearchResultPublication finalPublication;
+		
+		if (publication instanceof TechnicalReport) {
+			((TechnicalReport) publication).setEditAll(bean.getTitle(), bean.getKeywords(),
+					getOrganization(bean), bean.getYear(), bean.getTechnicalReportType(), bean.getNumber(),
+					bean.getAddress(), bean.getNote(), bean.getNumberPages(), bean.getLanguage(), bean
+							.getMonth(), bean.getUrl());
+			finalPublication = publication;
+		} else {
+			final TechnicalReport techReport = getCreateService().createTechnicalReportFromBean(bean);
+			updateResultReferences(publication, techReport);
+			getDeleteService().run(publication.getIdInternal());
+			finalPublication = techReport;
+		}
+		ResearchResultMetaDataManager.updateMetaDataInStorageFor(finalPublication);
+		return finalPublication;
 	}
-	return publication;
-    }
 
-    public ResearchResultPublication run(OtherPublicationBean bean) throws FenixServiceException {
-	final ResearchResultPublication publication = getResultPublication(bean);
+	public ResearchResultPublication run(OtherPublicationBean bean) throws FenixServiceException {
+		final ResearchResultPublication publication = getResultPublication(bean);
+		final ResearchResultPublication finalPublication;
+		if (publication instanceof OtherPublication) {
+			((OtherPublication) publication).setEditAll(bean.getTitle(), bean.getKeywords(),
+					getPublisher(bean), bean.getYear(), bean.getHowPublished(), bean.getNote(), bean
+							.getAddress(), bean.getOtherPublicationType(), bean.getNumberPages(), bean
+							.getLanguage(), bean.getCountry(), bean.getMonth(), bean.getUrl());
+			finalPublication = publication;
 
-	if (publication instanceof OtherPublication) {
-	    ((OtherPublication) publication).setEditAll(bean.getTitle(), bean.getKeywords(), getPublisher(bean), bean
-		    .getYear(), bean.getHowPublished(), bean.getNote(), bean.getAddress(), bean
-		    .getOtherPublicationType(), bean.getNumberPages(), bean.getLanguage(), bean
-		    .getCountry(), bean.getMonth(), bean.getUrl());
-
-	} else {
-	    final OtherPublication other = getCreateService().createOtherPublicationFromBean(bean);
-	    updateResultReferences(publication, other);
-	    getDeleteService().run(publication.getIdInternal());
-	    return other;
+		} else {
+			final OtherPublication other = getCreateService().createOtherPublicationFromBean(bean);
+			updateResultReferences(publication, other);
+			getDeleteService().run(publication.getIdInternal());
+			finalPublication = other;
+		}
+		ResearchResultMetaDataManager.updateMetaDataInStorageFor(finalPublication);
+		return finalPublication;
 	}
-	return publication;
-    }
 
-    private ResearchResultPublication getResultPublication(ResultPublicationBean bean)
-	    throws FenixServiceException {
-	if ((bean == null) || (bean.getIdInternal() == null))
-	    throw new FenixServiceException();
+	private ResearchResultPublication getResultPublication(ResultPublicationBean bean)
+			throws FenixServiceException {
+		if ((bean == null) || (bean.getIdInternal() == null))
+			throw new FenixServiceException();
 
-	ResearchResultPublication publication = (ResearchResultPublication) ResearchResult.readByOid(bean.getIdInternal());
-	if (publication == null)
-	    throw new FenixServiceException();
-	return publication;
-    }
+		ResearchResultPublication publication = (ResearchResultPublication) ResearchResult.readByOid(bean
+				.getIdInternal());
+		if (publication == null)
+			throw new FenixServiceException();
+		return publication;
+	}
+
+	
 }

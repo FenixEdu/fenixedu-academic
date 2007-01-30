@@ -11,10 +11,11 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.util.StringNormalizer;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.beanutils.PropertyUtils;
+
+import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public class SearchObjects extends Service implements AutoCompleteSearchService {
 

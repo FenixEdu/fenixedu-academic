@@ -43,7 +43,7 @@ public abstract class BlueprintVersionManagmentService extends Service {
         final byte[] contents = readInputStream(blueprintSubmissionBean.getInputStream());
         final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(contents);
 
-        final FileDescriptor fileDescriptor = FileManagerFactory.getFileManager().saveFile(
+        final FileDescriptor fileDescriptor = FileManagerFactory.getFactoryInstance().getFileManager().saveFile(
         		getVirtualPath(space.getMostRecentSpaceInformation()), filename, true, person.getName(),filename,
                 byteArrayInputStream);
 

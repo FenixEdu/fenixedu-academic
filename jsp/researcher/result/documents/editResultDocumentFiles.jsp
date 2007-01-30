@@ -24,7 +24,7 @@
 	
 	<%-- Use Case Titles --%>
 	<logic:equal name="resultType" value="ResultPatent">
-		<em>Patentes</em> <!-- tobundle -->
+		<em><bean:message key="link.patentsManagement" bundle="RESEARCHER_RESOURCES"/></em> 
 	</logic:equal>
 	<logic:notEqual name="resultType" value="ResultPatent">
 		<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.publications"/></em>
@@ -49,16 +49,17 @@
 	</logic:messagesPresent>
 	
 	<%-- Documents List--%>
-	<p class="mbottom0"><b><bean:message bundle="RESEARCHER_RESOURCES" key="label.documents"/></b></p>
+	<strong><bean:message bundle="RESEARCHER_RESOURCES" key="label.documents"/></strong>
 	<logic:empty name="documents">
 		<p><em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultDocumentFiles.emptyList"/></em></p>
 	</logic:empty>
 	<logic:notEmpty name="documents">
 		<logic:notPresent name="editExisting">
+		    (<html:link page="<%=prepareAlter%>"><bean:message bundle="RESEARCHER_RESOURCES" key="link.edit"/></html:link>)
 			<jsp:include page="viewDocuments.jsp"/>
-			<html:link page="<%=prepareAlter%>"><bean:message bundle="RESEARCHER_RESOURCES" key="link.edit"/></html:link>
 		</logic:notPresent>
 		<logic:present name="editExisting">
+		
 			<jsp:include page="editDocuments.jsp"/>
 		</logic:present>
 	</logic:notEmpty>
@@ -68,7 +69,7 @@
 	
 	<fr:edit id="editBean" name="bean" schema="resultDocumentFile.submission.edit" action="<%= create %>">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle1 thlight thright thtop" />
+			<fr:property name="classes" value="tstyle5 thlight thright thtop" />
 			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 		</fr:layout>
 		<fr:destination name="exception" path="<%= prepareEdit %>"/>

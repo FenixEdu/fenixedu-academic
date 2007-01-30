@@ -8,13 +8,14 @@
 
 <ul class="treemenu">
 	<logic:present name="homepage">
+	<%--  
         <li>
             <bean:define id="homepageID" name="homepage" property="idInternal"/>
             <html:link page="<%= "/viewHomepage.do?method=show&amp;homepageID=" + homepageID.toString() %>">
                 <bean:message bundle="HOMEPAGE_RESOURCES" key="link.homepage.home"/>
             </html:link>
         </li>
-        
+        --%>
         <fr:view name="homepage" layout="side-menu">
             <fr:layout>
                 <fr:property name="sectionUrl" value="/viewHomepage.do?method=section"/>

@@ -40,12 +40,9 @@
 				<f:facet name="header">
 					<h:outputText value="#{bundle['label.teacher.name']}"></h:outputText>
 				</f:facet>
-				<fc:commandLink value="#{teacher.person.nome}"
-					action="viewDetails"
-					actionListener="#{viewDepartmentTeachers.selectTeacher}">
-					<f:param id="teacherId" name="teacherID"
-						value="#{teacher.idInternal}" />
-				</fc:commandLink>
+
+			<h:outputLink value="#{viewDepartmentTeachers.contextPath}/researcher/viewCurriculum.do?personOID=#{teacher.person.idInternal}" ><h:outputText value="#{teacher.person.nome}" styleClass="aright"/></h:outputLink>
+
 			</h:column>
 			<h:column>
 				<f:facet name="header">

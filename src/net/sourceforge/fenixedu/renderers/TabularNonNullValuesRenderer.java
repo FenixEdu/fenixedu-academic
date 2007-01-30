@@ -3,15 +3,12 @@ package net.sourceforge.fenixedu.renderers;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlText;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.renderers.layouts.TabularLayout;
 import net.sourceforge.fenixedu.renderers.model.MetaObject;
 import net.sourceforge.fenixedu.renderers.model.MetaSlot;
-import net.sourceforge.fenixedu.renderers.schemas.Schema;
-import net.sourceforge.fenixedu.renderers.utils.RenderKit;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public class TabularNonNullValuesRenderer extends OutputRenderer{
@@ -21,7 +18,16 @@ public class TabularNonNullValuesRenderer extends OutputRenderer{
 	private String label;
 	private String schema;
 	private String columnClasses;
+	private String rowClasses;
 	
+	public String getRowClasses() {
+		return rowClasses;
+	}
+
+	public void setRowClasses(String rowClasses) {
+		this.rowClasses = rowClasses;
+	}
+
 	public String getColumnClasses() {
 		return columnClasses;
 	}
@@ -48,27 +54,20 @@ public class TabularNonNullValuesRenderer extends OutputRenderer{
 
 	@Override
 	protected Layout getLayout(Object object, Class type) {
-		DomainObject objectToRender = (DomainObject) object;
-		return new TabularNonNullValuesLayout(objectToRender);
+		return new TabularNonNullValuesLayout();
 	}
 	
 	private class TabularNonNullValuesLayout extends TabularLayout {
 
-		private DomainObject object;
 		private MetaObject metaObject;
 		private List<MetaSlot> slots;
 		private int indexSkipped=0;
 		
-		public TabularNonNullValuesLayout(DomainObject object) {
-			this.object = object;
+		public TabularNonNullValuesLayout() {
 			this.metaObject = getContext().getMetaObject();
 			this.slots = metaObject.getSlots();
 		}
-		
-		private Schema translateSchema(String name) {
-			return RenderKit.getInstance().findSchema(name);
-		}
-		
+				
 		@Override
         protected boolean isHeader(int rowIndex, int columnIndex) {
             return columnIndex == 0;
@@ -119,8 +118,15 @@ public class TabularNonNullValuesRenderer extends OutputRenderer{
 		private boolean isValidObject(Object object) {
 			return !(object==null || (object instanceof String && ((String)object).length()==0)
 			|| (object instanceof Collection && ((Collection)object).size()==0) 
-			|| (object instanceof MultiLanguageString && ((MultiLanguageString)object).getAllContents().size()==0)
+			|| (object instanceof MultiLanguageString && !validMultiLanguage((MultiLanguageString)object))
 			);
+		}
+
+		private boolean validMultiLanguage(MultiLanguageString multiLanguageString) {
+			for(String content: multiLanguageString.getAllContents()) {
+				if(content.trim().length()>0) return true;
+			}
+			return false;
 		}
 		
 	}

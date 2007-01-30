@@ -32,7 +32,7 @@ public abstract class ResultPublicationBean implements Serializable {
 	Article, Book, Inbook, Incollection, Inproceedings, Proceedings, Thesis, Manual, TechnicalReport, OtherPublication;
 
 	public static ResultPublicationType getDefaultType() {
-	    return Book;
+	    return Article;
 	}
 
 	public static ResultPublicationType getTypeFromPublication(ResearchResultPublication publication) {
@@ -227,6 +227,7 @@ public abstract class ResultPublicationBean implements Serializable {
 	this.setOrganization(bean.getOrganization());
 	this.setCountry(bean.getCountry());
 	this.setPerson(bean.getPerson());
+	this.setKeywords(bean.getKeywords());
     }
 
     protected String getStringValueFromBibtexEntry(String field, BibtexEntry entry) {

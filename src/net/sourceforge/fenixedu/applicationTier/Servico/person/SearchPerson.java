@@ -18,12 +18,12 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.util.StringNormalizer;
 
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
 
 import pt.utl.ist.fenix.tools.util.CollectionPager;
+import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public class SearchPerson extends Service {
 

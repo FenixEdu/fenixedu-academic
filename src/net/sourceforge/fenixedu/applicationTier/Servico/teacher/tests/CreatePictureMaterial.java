@@ -22,7 +22,7 @@ public class CreatePictureMaterial extends Service {
 			InputStream inputStream, String originalFilename, String displayName)
 			throws FenixServiceException, ExcepcaoPersistencia, DomainException {
 
-		final IFileManager fileManager = FileManagerFactory.getFileManager();
+		final IFileManager fileManager = FileManagerFactory.getFactoryInstance().getFileManager();
 		final VirtualPath filePath = getVirtualPath();
 		
 		final FileDescriptor fileDescriptor = fileManager.saveFile(filePath, originalFilename, false,

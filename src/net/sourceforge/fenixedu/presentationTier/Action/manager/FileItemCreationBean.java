@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
-import net.sourceforge.fenixedu.util.StringNormalizer;
+import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public class FileItemCreationBean implements Serializable {
 

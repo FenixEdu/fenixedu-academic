@@ -6,18 +6,16 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultDocumentFileSubmissionBean;
-import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultEventAssociationCreationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultUnitAssociationCreationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean.ResultPublicationType;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
-import net.sourceforge.fenixedu.domain.research.result.ResultEventAssociation;
 import net.sourceforge.fenixedu.domain.research.result.publication.Article;
 import net.sourceforge.fenixedu.domain.research.result.publication.Book;
 import net.sourceforge.fenixedu.domain.research.result.publication.BookPart;
@@ -32,11 +30,8 @@ import net.sourceforge.fenixedu.domain.research.result.publication.Unstructured;
 import net.sourceforge.fenixedu.domain.research.result.publication.BookPart.BookPartType;
 import net.sourceforge.fenixedu.presentationTier.Action.research.result.ResultsManagementAction;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
-import net.sourceforge.fenixedu.renderers.components.state.ViewState;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -45,11 +40,11 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
 
 	public ActionForward listPublications(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) {
-		setRequestAttributesToList(request);
+		setRequestAttributesToList(request, getLoggedPerson(request));
 		return mapping.findForward("ListPublications");
 	}
 
-	public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	public ActionForward showPublication(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) {
 		final ResearchResultPublication publication = (ResearchResultPublication) getResultFromRequest(request);
 
@@ -57,6 +52,17 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
 		return mapping.findForward("ViewEditPublication");
 	}
 
+	public ActionForward showResultForOthers(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+
+		ResearchResult result = getResultFromRequest(request);
+		if(result instanceof ResearchResultPublication) {
+			setRequestAttributes(request, (ResearchResultPublication)result);	
+		}
+		request.setAttribute("result", result);
+		return mapping.findForward("ShowResult");
+	}
+	
 	public ActionForward prepareCreate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 		ResultPublicationBean publicationBean = (ResultPublicationBean) getRenderedObject(null);
@@ -95,7 +101,7 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
 
 		request.setAttribute("resultId", publication.getIdInternal());		
 		setRequestAttributes(request, publication);
-		return showAssociations(mapping,form,request,response);
+		return mapping.findForward("ViewEditPublication");
 		
 	}
 	
@@ -177,7 +183,7 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
 		}
 
 		request.setAttribute("resultId", publicationChanged.getIdInternal());
-		return prepareEdit(mapping, form, request, response);
+		return showPublication(mapping, form, request, response);
 	}
 
 	public ActionForward prepareDelete(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -264,54 +270,34 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
 		}
 	}
 
-	private void setRequestAttributesToList(HttpServletRequest request) {
-		final IUserView userView = getUserView(request);
-		final List<ResearchResultPublication> publications = ResearchResultPublication.sort(userView
-				.getPerson().getResearchResultPublications());
-
-		request.setAttribute("books", filterBySubType(publications, Book.class));
-		request.setAttribute("inbooks", getFilteredBookParts(publications, BookPartType.Inbook));
-		request.setAttribute("incollections", getFilteredBookParts(publications, BookPartType.Incollection));
-		request.setAttribute("articles", filterBySubType(publications, Article.class));
-		request.setAttribute("inproceedings", filterBySubType(publications, Inproceedings.class));
-		request.setAttribute("proceedings", filterBySubType(publications, Proceedings.class));
-		request.setAttribute("theses", filterBySubType(publications, Thesis.class));
-		request.setAttribute("manuals", filterBySubType(publications, Manual.class));
-		request.setAttribute("technicalReports", filterBySubType(publications, TechnicalReport.class));
-		request.setAttribute("otherPublications", filterBySubType(publications, OtherPublication.class));
-		request.setAttribute("unstructureds", filterBySubType(publications, Unstructured.class));
+	private void setRequestAttributesToList(HttpServletRequest request, Person person) {
+		
+		request.setAttribute("books", person.getResearchResultPublicationsByType(Book.class));
+		
+		request.setAttribute("inbooks", getFilteredBookParts(person, BookPartType.Inbook));
+		request.setAttribute("incollections", getFilteredBookParts(person, BookPartType.Incollection));
+		
+		request.setAttribute("articles", person.getResearchResultPublicationsByType(Article.class));
+		request.setAttribute("inproceedings", person.getResearchResultPublicationsByType(Inproceedings.class));
+		request.setAttribute("proceedings", person.getResearchResultPublicationsByType(Proceedings.class));
+		request.setAttribute("theses", person.getResearchResultPublicationsByType(Thesis.class));
+		request.setAttribute("manuals", person.getResearchResultPublicationsByType(Manual.class));
+		request.setAttribute("technicalReports", person.getResearchResultPublicationsByType(TechnicalReport.class));
+		request.setAttribute("otherPublications", person.getResearchResultPublicationsByType(OtherPublication.class));
+		request.setAttribute("unstructureds", person.getResearchResultPublicationsByType(Unstructured.class));
 
 		request.setAttribute("person", getLoggedPerson(request));
 	}
 
-	private List getFilteredBookParts(List<ResearchResultPublication> publications, BookPartType type) {
-		List<BookPart> bookParts = filterBySubType(publications, BookPart.class);
+	private List getFilteredBookParts(Person person, BookPartType type) {
+		List<ResearchResultPublication> bookParts = person.getResearchResultPublicationsByType(BookPart.class);
 		List<BookPart> filteredBookParts = new ArrayList<BookPart>();
-		for (BookPart bookPart : bookParts) {
+		for (ResearchResultPublication publication : bookParts) {
+			BookPart bookPart = (BookPart) publication;
 			if (bookPart.getBookPartType().equals(type))
 				filteredBookParts.add(bookPart);
 		}
 		return filteredBookParts;
-	}
-
-	private List filterBySubType(List<ResearchResultPublication> publications,
-			Class<? extends ResearchResultPublication> clazz) {
-		return (List) CollectionUtils.select(publications, new PublicationSubTypePredicate(clazz));
-	}
-
-	private class PublicationSubTypePredicate implements Predicate {
-		private Class<? extends ResearchResultPublication> clazz;
-
-		public PublicationSubTypePredicate(Class<? extends ResearchResultPublication> clazz) {
-			if (clazz == null) {
-				throw new DomainException("");
-			}
-			this.clazz = clazz;
-		}
-
-		public boolean evaluate(Object arg0) {
-			return this.clazz.equals(arg0.getClass());
-		}
 	}
 
 	// TODO: Verifiy if this method is necessary

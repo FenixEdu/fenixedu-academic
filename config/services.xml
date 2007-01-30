@@ -8331,7 +8331,29 @@
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains/>
+    </service>
+        <service>
+    	<name>SearchOrganizationalUnits</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.SearchOrganizationalUnits</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains/>
     </service>   
+        <service>
+    	<name>SearchResearchUnits</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.SearchResearchUnits</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains/>
+    </service>   
+        <service>
+    	<name>SearchAcademicUnits</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.SearchAcademicUnits</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains/>
+    </service>   
+       
     <service>
     	<name>CreateUnit</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.CreateUnit</implementationClass>
@@ -9465,6 +9487,7 @@
         <filterChains>
         </filterChains>
     </service>
+
 	<service>
         <name>SearchPersonsForParticipations</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.SearchPersonsForParticipations</implementationClass>
@@ -9473,7 +9496,8 @@
         <isTransactional>true</isTransactional>
         <filterChains>
         </filterChains>
-    </service>        
+    </service>    
+        
 	<service>
         <name>SearchPersonForParticipationWithWrapping</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.SearchPersonForParticipationWithWrapping</implementationClass>
@@ -9484,6 +9508,22 @@
         </filterChains>
     </service>            
 
+	<service>
+		<name>SearchExternalPersonForParticipations</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.SearchExternalPersonForParticipations</implementationClass>
+		<description/>
+        <isTransactional>true</isTransactional>
+        <filterChains/>
+	</service>
+	
+	<service>
+		<name>SearchExternalPersonForParticipationWithWrapping</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.SearchExternalPersonForParticipationWithWrapping</implementationClass>
+		<description/>
+        <isTransactional>true</isTransactional>
+        <filterChains/>
+	</service>
+	
 	<service>
 		<name>ChangeResultParticipationsOrder</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.result.ChangeResultParticipationsOrder</implementationClass>
@@ -9532,6 +9572,19 @@
 		<description />
 		<isTransactional>true</isTransactional>
 	</service>
+	<service>
+		<name>AddDefaultDocumentToResearchResult</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.result.patent.AddDefaultDocumentToResearchResult</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+	</service>
+	<service>
+		<name>UpdateMetaInformation</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.result.patent.UpdateMetaInformation</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+	</service>		
+
 	<service>
 		<name>DeleteResultPatent</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.result.patent.DeleteResultPatent</implementationClass>

@@ -36,6 +36,7 @@ import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.b
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.bibtex.ParticipatorBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import net.sourceforge.fenixedu.domain.research.result.publication.Unstructured;
@@ -220,7 +221,7 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
 				BibtexParticipatorBean participator = new BibtexParticipatorBean();
 				participator.setBibtexPerson(person);
 				participator.setPersonRole(role);
-				participator.setActiveSchema("bibtex.participator");
+				participator.setActiveSchema("bibtex.participator.internal");
 
 				participator.setPersonsFound(searchPersons(request, participator.getBibtexPerson()));
 				if (participator.getPersonsFound().size() == 1)
@@ -329,13 +330,35 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
 
 		ImportBibtexBean importBean = (ImportBibtexBean) RenderUtils.getViewState("importBibtexBean")
 				.getMetaObject().getObject();
-
-		request.setAttribute("importBibtexBean", importBean);
+		
 		RenderUtils.invalidateViewState("externalPerson");
+		request.setAttribute("needsUnit","true");
+		request.setAttribute("importBibtexBean", importBean);
+		return mapping.findForward("ImportBibtex");
+	}
+
+	public ActionForward changePersonType(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+
+		ImportBibtexBean importBean = (ImportBibtexBean) RenderUtils.getViewState("importBibtexBean")
+				.getMetaObject().getObject();
+
+		BibtexParticipatorBean bean = importBean.getNextAuthor();
+		if(bean!=null)
+			bean.setActiveSchema((bean.getPersonType().equals(ParticipationType.INTERNAL) ? "bibtex.participator.internal" : "bibtex.participator.external"));
+		bean = importBean.getNextEditor();
+		if(bean!=null)
+			bean.setActiveSchema((bean.getPersonType().equals(ParticipationType.INTERNAL) ? "bibtex.participator.internal" : "bibtex.participator.external"));
+		request.setAttribute("importBibtexBean", importBean);
+		RenderUtils.invalidateViewState("author");
+		RenderUtils.invalidateViewState("editor");
+		
 
 		return mapping.findForward("ImportBibtex");
 	}
 
+
+	
 	public ActionForward createPublication(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) {
 
@@ -363,7 +386,7 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
 
 		request.setAttribute("importBibtexBean", importBibtexBean);
 
-		return mapping.findForward("dealWithAssociations");
+		return mapping.findForward("PublicationsManagement");
 
 	}
 
@@ -470,7 +493,8 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
 		try {
 			if (participatorNeedsToBeCreated(participatorBean)) {
 				RenderUtils.invalidateViewState();
-				
+				participatorBean.setOrganizationType(ParticipationType.EXTERNAL);
+				request.setAttribute("needsUnit", "true");
 				request.setAttribute("importBibtexBean", bean);
 				return mapping.findForward("ImportBibtex");
 			} else {
@@ -481,6 +505,8 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
 				}
 			}
 		} catch (FenixActionException e) {
+			String needsUnit = (String) request.getAttribute("needsUnit");
+			request.setAttribute("needsUnit", needsUnit);
 			addActionMessage(request, e.getMessage());
 		}
 

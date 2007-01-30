@@ -21,7 +21,7 @@ public class DeletePresentationMaterial extends Service {
 
 	public void run(NewPictureMaterial pictureMaterial) throws FenixServiceException,
 			ExcepcaoPersistencia {
-		IFileManager fileManager = FileManagerFactory.getFileManager();
+		IFileManager fileManager = FileManagerFactory.getFactoryInstance().getFileManager();
 
 		PictureMaterialFile pictureMaterialFile = pictureMaterial.getPictureMaterialFile();
 

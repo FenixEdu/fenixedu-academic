@@ -1,4 +1,4 @@
-/* transitional.css - 01.2006 by João Alfaiate @ Fenix */
+/* transitional.css - 01.2006 by Joï¿½o Alfaiate @ Fenix */
 
 /* ----------------------
  ---- Headings ---------
@@ -120,6 +120,8 @@ ul.list3 { }
 ul.list3 li { padding-left: 12px; background: url(../images/transitional/bullet08.gif) left no-repeat; }
 ul.list4 li { padding: 0.25em 0; }
 ul.list5 { padding-left: 2.5em; margin-left: 0; }
+ul.list6 { margin: 0; padding: 0; } /* list without margins */
+ul.list6 li { margin: 0; padding: 0; }
 
 
 /* ----------------------
@@ -550,6 +552,21 @@ ul.indent0 { margin-left: 0; padding-left: 0; }
 .color3 { color: #336699; }
 .lowlight1 { color: #999; }
 .color888 { color: #888;}
+
+.color2 {
+	color: #806d5b;
+}
+
+.color3 {
+	color: #336699;
+}
+
+.lowlight1 {
+	color: #999;
+}
+
+.color888 { color: #888; }
+.color555 { color: #555; }
 
 /* background-colors */
 .highlight1 { background-color: #fff7bb; } /* amarelo */
@@ -1007,7 +1024,7 @@ border-width: 1px;
 border-color: #CCCCCC;
 }
 
-/* Vigilância */
+/* Vigilï¿½ncia */
 .mvert15 { margin-top: 1.5em; margin-bottom: 1.5em; }
 .greytxt1 { color: #777; }
 .greytxt2 { color: #777; }
@@ -1407,10 +1424,6 @@ border: 1px solid #ccc;
 text-align: left;
 height: 30px;
 }
-
-
-
-
 
 .ulmvert0 ul {
 	margin-top: 0;

@@ -162,7 +162,7 @@ public class Vehicle extends Vehicle_Base {
         for (NewParkingDocument parkingDocument : getNewParkingDocuments()) {
             if (parkingDocument.getParkingDocumentType() == NewParkingDocumentType.VEHICLE_PROPERTY_REGISTER) {
                 ParkingFile parkingFile = parkingDocument.getParkingFile();
-                return FileManagerFactory.getFileManager().formatDownloadUrl(
+                return FileManagerFactory.getFactoryInstance().getFileManager().formatDownloadUrl(
                         parkingFile.getExternalStorageIdentification(), parkingFile.getFilename());
             }
         }
@@ -173,7 +173,7 @@ public class Vehicle extends Vehicle_Base {
         for (NewParkingDocument parkingDocument : getNewParkingDocuments()) {
             if (parkingDocument.getParkingDocumentType() == NewParkingDocumentType.VEHICLE_INSURANCE) {
                 ParkingFile parkingFile = parkingDocument.getParkingFile();
-                return FileManagerFactory.getFileManager().formatDownloadUrl(
+                return FileManagerFactory.getFactoryInstance().getFileManager().formatDownloadUrl(
                         parkingFile.getExternalStorageIdentification(), parkingFile.getFilename());
             }
         }
@@ -184,7 +184,7 @@ public class Vehicle extends Vehicle_Base {
         for (NewParkingDocument parkingDocument : getNewParkingDocuments()) {
             if (parkingDocument.getParkingDocumentType() == NewParkingDocumentType.VEHICLE_OWNER_ID) {
                 ParkingFile parkingFile = parkingDocument.getParkingFile();
-                return FileManagerFactory.getFileManager().formatDownloadUrl(
+                return FileManagerFactory.getFactoryInstance().getFileManager().formatDownloadUrl(
                         parkingFile.getExternalStorageIdentification(), parkingFile.getFilename());
             }
         }
@@ -195,7 +195,7 @@ public class Vehicle extends Vehicle_Base {
         for (NewParkingDocument parkingDocument : getNewParkingDocuments()) {
             if (parkingDocument.getParkingDocumentType() == NewParkingDocumentType.DECLARATION_OF_AUTHORIZATION) {
                 ParkingFile parkingFile = parkingDocument.getParkingFile();
-                return FileManagerFactory.getFileManager().formatDownloadUrl(
+                return FileManagerFactory.getFactoryInstance().getFileManager().formatDownloadUrl(
                         parkingFile.getExternalStorageIdentification(), parkingFile.getFilename());
             }
         }

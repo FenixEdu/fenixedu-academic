@@ -446,7 +446,7 @@ public class ParkingRequest extends ParkingRequest_Base {
             }
             if (documentDeliveryType == DocumentDeliveryType.ELECTRONIC_DELIVERY && inputStream != null) {
                 final Group group = getGroup(vehicle.getParkingRequest().getParkingParty().getParty());
-                final FileDescriptor fileDescriptor = FileManagerFactory.getFileManager().saveFile(
+                final FileDescriptor fileDescriptor = FileManagerFactory.getFactoryInstance().getFileManager().saveFile(
                         filePath, filename, false, getParkingParty()
                         .getParty().getName(), filename, inputStream);
 
@@ -469,13 +469,13 @@ public class ParkingRequest extends ParkingRequest_Base {
                         .getExternalStorageIdentification();
                 parkingDocument.delete();
                 if (externalIdentifier != null) {
-                    FileManagerFactory.getFileManager().deleteFile(externalIdentifier);
+                    FileManagerFactory.getFactoryInstance().getFileManager().deleteFile(externalIdentifier);
                 }
             }
             if (documentDeliveryType == DocumentDeliveryType.ELECTRONIC_DELIVERY
                     && getDriverLicenseInputStream() != null) {
                 final Group group = getGroup(getParkingParty().getParty());
-                final FileDescriptor fileDescriptor = FileManagerFactory.getFileManager().saveFile(
+                final FileDescriptor fileDescriptor = FileManagerFactory.getFactoryInstance().getFileManager().saveFile(
                         filePath, filename, false, getParkingParty()
                         .getParty().getName(), filename, getDriverLicenseInputStream());
 
@@ -888,7 +888,7 @@ public class ParkingRequest extends ParkingRequest_Base {
         if (parkingDocument != null
                 && parkingDocument.getParkingDocumentType() == NewParkingDocumentType.DRIVER_LICENSE) {
             ParkingFile parkingFile = parkingDocument.getParkingFile();
-            return FileManagerFactory.getFileManager().formatDownloadUrl(
+            return FileManagerFactory.getFactoryInstance().getFileManager().formatDownloadUrl(
                     parkingFile.getExternalStorageIdentification(), parkingFile.getFilename());
         }
         return "";

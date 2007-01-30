@@ -137,5 +137,12 @@ public class ResultParticipationCreationBean implements Serializable {
 		this.unitParticipationType = unitParticipationType;
 	}
 
+	public void reset() {
+		this.setParticipator(null);
+		this.setParticipatorName(null);
+		this.setOrganizationName(null);
+		this.setOrganization(null);
+	}
+
 	
 }

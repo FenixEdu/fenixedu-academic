@@ -99,11 +99,12 @@ public abstract class SearchDSpaceGeneralAction extends FenixDispatchAction {
 	}
     
 	protected ActionForward searchContent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response, String forwardTo) {
-		SearchDSpaceBean bean = (SearchDSpaceBean) RenderUtils.getViewState("search").getMetaObject()
-		.getObject();
-		
-
+			HttpServletResponse response, String forwardTo) throws FenixFilterException, FenixServiceException {
+		IViewState viewState = RenderUtils.getViewState("search");
+		if(viewState==null) {
+			return prepareSearch(mapping, form, request, response, forwardTo);
+		}
+		SearchDSpaceBean bean = (SearchDSpaceBean) viewState.getMetaObject().getObject();
 		FileSearchResult searchResults = getSearchResults(request, bean,getSearchPath(request));
 		putResearchResultsInBean(bean, searchResults.getSearchResults());
 
@@ -116,7 +117,7 @@ public abstract class SearchDSpaceGeneralAction extends FenixDispatchAction {
 		String index = request.getParameter("page");
 		Integer start = (index == null) ? 1 : Integer.valueOf(index);
 		Integer searchOffset = (start-1)*bean.getPageSize();
-		FileSearchResult searchResults =  FileManagerFactory.getFileManager().searchFiles(bean.getSearchCriteria(searchOffset),restrictTo);
+		FileSearchResult searchResults =  FileManagerFactory.getFactoryInstance().getFileManager().searchFiles(bean.getSearchCriteria(searchOffset),restrictTo);
 		request.setAttribute("page", start);
 		bean.setPage(start);
 		bean.setTotalItems(searchResults.getTotalElements());

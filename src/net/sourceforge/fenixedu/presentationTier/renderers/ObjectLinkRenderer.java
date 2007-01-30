@@ -4,6 +4,7 @@ import net.sourceforge.fenixedu.renderers.OutputRenderer;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlLink;
 import net.sourceforge.fenixedu.renderers.components.HtmlText;
+import net.sourceforge.fenixedu.renderers.components.HtmlLink.Target;
 import net.sourceforge.fenixedu.renderers.components.state.ViewDestination;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.renderers.schemas.Schema;
@@ -45,8 +46,24 @@ public class ObjectLinkRenderer extends OutputRenderer {
     private String bundle;
 
     private String text;
+    
+    private boolean blankTarget=false;
+    
+    
+    /**
+     * This property allows you to specify if the link opens in a new
+     * window or not. Defaults to false.
+     * @property
+     */
+	public boolean isBlankTarget() {
+		return blankTarget;
+	}
 
-    public String getLinkFormat() {
+	public void setBlankTarget(boolean blankTarget) {
+		this.blankTarget = blankTarget;
+	}
+
+	public String getLinkFormat() {
         return this.linkFormat;
     }
 
@@ -222,7 +239,11 @@ public class ObjectLinkRenderer extends OutputRenderer {
                 } else {
                     link.setBody(getLinkBody(object));
                 }
-
+                
+                if(isBlankTarget()) {
+                	link.setTarget(Target.BLANK);
+                }
+                
                 return link;
             }
 

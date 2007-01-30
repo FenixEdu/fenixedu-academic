@@ -135,7 +135,7 @@
 			<forward name="PreparedToDelete" path="publications.viewEditPublication"/>
 		    <forward name="PublicationDeleted" path="/resultPublications/listPublications.do"/>
 			<forward name="SearchPublication"  path="publications.search"/>
-			<forward name="associatingInCreation"  path="publications.addAssociationsInCreation"/>
+			<forward name="ShowResult" path="show-result-loggedin"/>
 		</action>
 		
 		<!-- Bibtex Publications Management Action Mapping -->
@@ -146,7 +146,6 @@
 		    <forward name="OpenBibtexFile" path="publications.openBibtexFile"/>
 		    <forward name="ImportBibtex" path="publications.importBibtex"/>
 		    <forward name="PublicationsManagement" path="/resultPublications/listPublications.do"/>
-		    <forward name="dealWithAssociations" path="publications.import.associations"/>
 		</action>
 		
 		<!-- Result Publication Search Action  Mapping -->
@@ -173,8 +172,8 @@
 				parameter="method"
 				type="net.sourceforge.fenixedu.presentationTier.Action.research.result.ResultParticipationManagementAction">
 			<forward name="editParticipation" path="result.participation"/>
-			<forward name="editPatent" path="/resultPatents/prepareEdit.do"/>
-			<forward name="viewEditPublication" path="/resultPublications/prepareEdit.do"/>
+			<forward name="editPatent" path="/resultPatents/showPatent.do"/>
+			<forward name="viewEditPublication" path="/resultPublications/showPublication.do"/>
 			<forward name="listPatents" path="/resultPatents/management.do"/>
 			<forward name="ListPublications" path="/resultPublications/listPublications.do"/>
 		</action>
@@ -184,12 +183,10 @@
 				parameter="method"
 				type="net.sourceforge.fenixedu.presentationTier.Action.research.result.ResultDocumentFilesManagementAction">
 			<forward name="editDocumentFiles" path="result.documentFiles"/>
-			<forward name="editPatent" path="/resultPatents/prepareEdit.do"/>
+			<forward name="editPatent" path="/resultPatents/showPatent.do"/>
 			<forward name="listPatents" path="/resultPatents/management.do"/>
-			<forward name="viewEditPublication" path="/resultPublications/prepareEdit.do"/>
+			<forward name="viewEditPublication" path="/resultPublications/showPublication.do"/>
 			<forward name="ListPublications" path="/resultPublications/listPublications.do"/>
-			<forward name="fileAssociation" path="/resultPublications/showAssociations.do"/>
-			<forward name="bibTexImport" path="/bibtexManagement/showAssociations.do"/>
 		</action>
 
 		<!-- Result Associations Management Action Mapping -->
@@ -198,12 +195,10 @@
 				type="net.sourceforge.fenixedu.presentationTier.Action.research.result.ResultAssociationsManagementAction">
 			<forward name="editUnitAssociations" path="result.unitAssociations"/>
 			<forward name="editEventAssociations" path="result.eventAssociations"/>
-			<forward name="editPatent" path="/resultPatents/prepareEdit.do"/>
+			<forward name="editPatent" path="/resultPatents/showPatent.do"/>
 			<forward name="listPatents" path="/resultPatents/management.do"/>
-			<forward name="viewEditPublication" path="/resultPublications/prepareEdit.do"/>
+			<forward name="viewEditPublication" path="/resultPublications/showPublication.do"/>
 			<forward name="ListPublications" path="/resultPublications/listPublications.do"/>
-			<forward name="unitAssociation" path="/resultPublications/showAssociations.do"/>
-			<forward name="bibTexImport" path="/bibtexManagement/showAssociations.do"/>
 		</action>
 	
 		<action path="/changeLocaleTo"
@@ -222,7 +217,7 @@
 	<message-resources parameter="resources.ResearcherResources" null="false"/>
 	<message-resources parameter="resources.ResearcherResources" key="RESEARCHER_RESOURCES" null="false"/>
     <message-resources parameter="resources.ApplicationResources" key="APPLICATION_RESOURCES" null="false"/>
-
+    <message-resources parameter="resources.DepartmentMemberResources" key="DEPARTMENT_MEMBER_RESOURCES" null="false"/>
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
         <set-property property="pathnames" 

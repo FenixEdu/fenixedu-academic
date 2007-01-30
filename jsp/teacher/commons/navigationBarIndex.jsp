@@ -14,11 +14,13 @@
   		<bean:message key="link.teacher.tutor.operations"/>
   	</html:link>  
   </li>
+<%-- 
   <li>
   	<html:link href="<%= request.getContextPath() + "/teacher/teacherInformation.do?method=prepareEdit&amp;page=0" %>">
   		<bean:message key="link.manage.teacherInformation"/>
   	</html:link>
   </li>
+  --%>
  <%--
   <li>
   	<html:link href="<%= request.getContextPath() + "/teacher/prepareTeacherCreditsSheet.do" %>">
@@ -36,10 +38,10 @@
   	</html:link>
   </li>
    <li>
-  	<html:link href="<%= request.getContextPath() + "/teacher/publicationManagement.do" %>">
+<%--   	<html:link href="<%= request.getContextPath() + "/teacher/publicationManagement.do" %>">
   		<bean:message key="link.manage.publications"/>
   	</html:link>  
-  </li>
+  </li>--%>
   <li>
   	<html:link href="<%= request.getContextPath() + "/teacher/chooseExecutionYearAndDegreeCurricularPlan.do?method=prepare" %>">
   		<bean:message key="link.curriculumHistoric.consult" bundle="CURRICULUM_HISTORIC_RESOURCES" />

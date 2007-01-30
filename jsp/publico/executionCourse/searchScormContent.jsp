@@ -123,7 +123,7 @@
 				<bean:message key="label.in" bundle="APPLICATION_RESOURCES"/>
 				<fr:edit id="<%= "searchTypeField" + index%>" name="searchElement" slot="searchField">
 				<fr:layout>
-					<fr:property name="excludedValues" value="TYPE, DATE"/> <!--  inserir Unit -->
+					<fr:property name="excludedValues" value="TYPE, DATE, UNIT"/> 
 					<fr:property name="sort" value="true"/>
 				</fr:layout>
 				</fr:edit>

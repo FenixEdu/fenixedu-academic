@@ -77,7 +77,10 @@ public class ManageHomepageDA extends SiteManagementDA {
             dynaActionForm.set("researchUnitHomepage", homepage.getResearchUnitHomepage());
             dynaActionForm.set("researchUnit", homepage.getResearchUnit() != null ? homepage.getResearchUnit().getContent() : null);
             dynaActionForm.set("showCurrentAttendingExecutionCourses", homepage.getShowCurrentAttendingExecutionCourses().toString());
-        }
+            dynaActionForm.set("showPublications", homepage.getShowPublications()!=null ? homepage.getShowPublications().toString() : Boolean.FALSE.toString());
+            dynaActionForm.set("showPatents", homepage.getShowPatents()!=null ? homepage.getShowPatents().toString() : Boolean.FALSE.toString());
+            dynaActionForm.set("showInterests", homepage.getShowInterests()!=null ? homepage.getShowInterests().toString() : Boolean.FALSE.toString());
+    	}
         
         SortedSet<Attends> personAttendsSortedByExecutionCourseName = new TreeSet<Attends>(
                 Attends.ATTENDS_COMPARATOR_BY_EXECUTION_COURSE_NAME);
@@ -111,7 +114,12 @@ public class ManageHomepageDA extends SiteManagementDA {
                 homepage != null ? homepage.getShowAlumniDegrees() : false,
                 homepage != null ? homepage.getResearchUnitHomepage() : null,
                 homepage != null ? homepage.getResearchUnit() : null,
-                homepage != null ? homepage.getShowCurrentAttendingExecutionCourses() : false};
+                homepage != null ? homepage.getShowCurrentAttendingExecutionCourses() : false,
+                homepage != null ? homepage.getShowPublications() : false,
+                homepage != null ? homepage.getShowPatents() : false,
+                homepage != null ? homepage.getShowInterests() : false
+        
+        };
         executeService(request, "SubmitHomepage", args);
 
         return activation(mapping, actionForm, request, response);
@@ -137,6 +145,9 @@ public class ManageHomepageDA extends SiteManagementDA {
     	final String showAlumniDegrees = (String) dynaActionForm.get("showAlumniDegrees");
     	final String researchUnitHomepage = (String) dynaActionForm.get("researchUnitHomepage");
     	final String researchUnit = (String) dynaActionForm.get("researchUnit");
+    	final String showPublications = (String) dynaActionForm.get("showPublications");
+    	final String showPatents = (String) dynaActionForm.get("showPatents");
+    	final String showInterests = (String) dynaActionForm.get("showInterests");
     	final MultiLanguageString researchUnitMultiLanguageString;
     	if (researchUnit != null && researchUnit.length() > 0) {
     		researchUnitMultiLanguageString = new MultiLanguageString();
@@ -163,7 +174,11 @@ public class ManageHomepageDA extends SiteManagementDA {
     			Boolean.valueOf(showAlumniDegrees),
     			researchUnitHomepage,
     			researchUnitMultiLanguageString,
-    			Boolean.valueOf(showCurrentAttendingExecutionCourses) };
+    			Boolean.valueOf(showCurrentAttendingExecutionCourses),
+    			Boolean.valueOf(showPublications),
+    		    Boolean.valueOf(showPatents),
+    		    Boolean.valueOf(showInterests)
+    		                		};
     	executeService(request, "SubmitHomepage", args);
 
         return options(mapping, actionForm, request, response);

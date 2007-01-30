@@ -35,25 +35,33 @@
 
 	<logic:notEmpty name="resultPatents">
 		<p class="mtop2 mbottom0"><strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResearchResultPatent.management.title"/></strong></p>
-		<ul style="width: 600px;">
+		<ul class="nobullet" style="width: 600px;">
 		<logic:iterate id="patent" name="resultPatents">
 			<bean:define id="patentId" name="patent" property="idInternal"/>
-			
 			<li class="mtop1">
-	 			<span><strong><fr:view name="patent" property="title"/></strong></span><br/>
+				<p class="mvert0">
+		 			<strong>
+					<a href="<%= request.getContextPath() + "/researcher/resultPatents/showPatent.do?resultId=" + patentId %>">
+		 			<fr:view name="patent" property="title"/>
+					</a>	 			
+		 			</strong>
+	 			</p>
+	 			<p class="mvert0">
 	 			<span style="color: #888;">
-	 			<bean:message key="label.registrationDate" bundle="RESEARCHER_RESOURCES"/>
-	 			<fr:view name="patent" property="registrationDate"/></span> 
+		 			<bean:message key="label.registrationDate" bundle="RESEARCHER_RESOURCES"/>
+		 			<fr:view name="patent" property="registrationDate"/>
+		 		</span>
+		 		 - 
 	 			<span style="color: #888;">
-	 			<bean:message key="label.approvalDate" bundle="RESEARCHER_RESOURCES"/>
-	 			<fr:view name="patent" property="approvalDate"/></span>
-	 			<logic:equal name="patent" property="note.empty" value="false">
-				<br/><span><fr:view name="patent" property="note"/></span><br/>
-				</logic:equal>
-	 			<p class="mtop025">
-			 		<a href="<%= request.getContextPath() + "/researcher/resultPatents/prepareEdit.do?resultId=" + patentId %>"><bean:message key="link.edit" bundle="RESEARCHER_RESOURCES"/></a>, 
-		 			<a href="<%= request.getContextPath() + "/researcher/resultPatents/prepareDelete.do?&amp;resultId=" + patentId %>"><bean:message key="link.delete" bundle="RESEARCHER_RESOURCES"/></a>
+	 				<bean:message key="label.approvalDate" bundle="RESEARCHER_RESOURCES"/>
+		 			<fr:view name="patent" property="approvalDate"/>
+		 		</span>
 		 		</p>
+	 			<logic:equal name="patent" property="note.empty" value="false">
+					<p class="mvert0">
+						<fr:view name="patent" property="note"/>
+					</p>
+				</logic:equal>
  			</li>
 		</logic:iterate>		
 		</ul>

@@ -9,9 +9,10 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.parking.ParkingParty;
-import net.sourceforge.fenixedu.util.StringNormalizer;
 
 import org.apache.commons.lang.StringUtils;
+
+import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 /**
  * @author Ricardo Rodrigues

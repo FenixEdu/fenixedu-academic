@@ -13,10 +13,11 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.assiduousness.Assiduousness;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.util.StringNormalizer;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.beanutils.PropertyUtils;
+
+import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public class SearchEmployeeAssiduousness extends Service implements AutoCompleteSearchService {
 

@@ -51,7 +51,7 @@ public abstract class File extends File_Base {
          */
     public String getDownloadUrl() {
         // TODO: remove the dependancy between the domain and the dspace infrastructure
-        return FileManagerFactory.getFileManager().formatDownloadUrl(getExternalStorageIdentification(), getFilename());
+        return FileManagerFactory.getFactoryInstance().getFileManager().formatDownloadUrl(getExternalStorageIdentification(), getFilename());
     }
 
     // -------------------------------------------------------------

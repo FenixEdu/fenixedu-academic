@@ -12,10 +12,10 @@
 			<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.changeLanguage"/>:
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.windowLocation" property="windowLocation" value=""/>
 		 	<enum:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.Language" bundle="ENUMERATION_RESOURCES" />
-		 	<html:select bundle="HTMLALT_RESOURCES" altKey="select.newLanguage" property="newLanguage" onchange="this.form.windowLocation.value=window.location; this.form.submit();" value="<%= net.sourceforge.fenixedu.util.LanguageUtils.getLanguage().toString() %>">
+		 	<html:select bundle="HTMLALT_RESOURCES" property="newLanguage" onchange="this.form.windowLocation.value=window.location; this.form.submit();" value="<%= net.sourceforge.fenixedu.util.LanguageUtils.getLanguage().toString() %>">
 				<html:options collection="values" property="value" labelProperty="label"/>
 			</html:select>
-			<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+			<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="select.newLanguage">
 				<bean:message key="button.submit"/>
 			</html:submit>
 		</html:form>

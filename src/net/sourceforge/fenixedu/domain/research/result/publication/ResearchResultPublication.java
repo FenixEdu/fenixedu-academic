@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
 import net.sourceforge.fenixedu.injectionCode.Checked;
+import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 import bibtex.dom.BibtexEntry;
 import bibtex.dom.BibtexFile;
@@ -171,24 +172,30 @@ public abstract class ResearchResultPublication extends ResearchResultPublicatio
     	if(keywords == null)
     		throw new DomainException("error.researcher.Book.keywords.null");
     }
-    
-    public abstract String getSchema();
     	
     public List<String> getKeywordsList() {
     	List<String> keywordList = new ArrayList<String>();
     	if(keywordHasContent()) {
-    		String[] keywords = this.getKeywords().getContent().split(",");
-    		for(int i=0; i<keywords.length;i++) {
-    			keywordList.add(keywords[i].trim());
+    		for(String keywordsForLanguage : this.getKeywords().getAllContents()) {
+    			String[] keywords = keywordsForLanguage.split(",");
+    			for(int i=0; i<keywords.length;i++) {
+    				keywordList.add(keywords[i].trim());
+    			}
     		}
     	}
     	return keywordList;
     }
 
 	private boolean keywordHasContent() {
-		if(this.getKeywords()==null || this.getKeywords().getContent()==null)  
+		if(this.getKeywords()==null)  
 			return false;
-		else 
-			return true;
+		for(String content : getKeywords().getAllContents()) {
+			if(content.length()>0) return true;
+		}
+		return false;
+	}
+	
+	public String getLocalizedType() {
+		return RenderUtils.getResourceString("RESEARCHER_RESOURCES", "researcher.ResultPublication.type." + getClass().getSimpleName());
 	}
 }

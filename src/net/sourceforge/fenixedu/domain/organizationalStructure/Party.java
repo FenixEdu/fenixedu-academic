@@ -17,11 +17,12 @@ import net.sourceforge.fenixedu.domain.accounting.Account;
 import net.sourceforge.fenixedu.domain.accounting.AccountType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.parking.ParkingPartyClassification;
-import net.sourceforge.fenixedu.util.StringNormalizer;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
+
+import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public abstract class Party extends Party_Base {
 

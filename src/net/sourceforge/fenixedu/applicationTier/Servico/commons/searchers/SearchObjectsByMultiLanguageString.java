@@ -14,10 +14,11 @@ import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
-import net.sourceforge.fenixedu.util.StringNormalizer;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.beanutils.PropertyUtils;
+
+import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public class SearchObjectsByMultiLanguageString extends Service implements AutoCompleteSearchService {
 

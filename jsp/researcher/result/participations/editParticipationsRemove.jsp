@@ -15,15 +15,42 @@
 	<bean:define id="prepareEditRoles" value="<%="/resultParticipations/prepareEditRoles.do?" + parameters%>"/>
 	<bean:define id="prepareAlterOrder" value="<%="/resultParticipations/prepareAlterOrder.do?" + parameters%>"/>
 	<bean:define id="remove" value="<%="/resultParticipations/remove.do?" + parameters%>"/>
-	
-	<b><bean:message bundle="RESEARCHER_RESOURCES" key="label.resultParticipations"/></b>
+
+	<strong><bean:message bundle="RESEARCHER_RESOURCES" key="label.resultParticipations"/></strong>
+	<logic:notPresent name="deleteConfirmation">
+			
+			
+			<logic:greaterThan name="result" property="resultParticipationsCount" value="1">
+			  <bean:define id="showOptions" value="true" toScope="request"/>
+			</logic:greaterThan>
+			<logic:lessThan name="result" property="resultParticipationsCount" value="2">
+			  		<logic:equal name="result" property="isPossibleSelectPersonRole" value="true">
+						  <bean:define id="showOptions" value="true" toScope="request"/>
+			  		</logic:equal>
+			</logic:lessThan>
+
+			
+			<logic:present name="showOptions"> ( </logic:present>
+			<logic:greaterThan name="result" property="resultParticipationsCount" value="1">
+				<html:link page="<%= prepareAlterOrder %>"><bean:message bundle="RESEARCHER_RESOURCES" key="link.alterOrder"/></html:link>
+			</logic:greaterThan>
+			<logic:equal name="result" property="isPossibleSelectPersonRole" value="true">
+				<logic:greaterThan name="result" property="resultParticipationsCount" value="1">, 
+				</logic:greaterThan>
+				<html:link page="<%= prepareEditRoles %>"><bean:message bundle="RESEARCHER_RESOURCES" key="link.editRoles"/></html:link>
+			</logic:equal>
+			<logic:present name="showOptions"> ) </logic:present>
+
+			
+			
+	</logic:notPresent>
 	<logic:empty name="participations">
  		<p><em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultParticipation.emptyList"/></em></p>
  	</logic:empty>	
 	<logic:notEmpty name="participations">
 		<fr:view name="participations" schema="<%= listSchema %>">
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle2"/>
+				<fr:property name="classes" value="tstyle2 thlight"/>
 				<fr:property name="columnClasses" value="acenter,,,aleft,"/>
 				<fr:property name="sortBy" value="personOrder"/>
 				
@@ -34,15 +61,6 @@
 				<fr:property name="visibleIfNot(remove)" value="isLastParticipation"/>
 			</fr:layout>
 		</fr:view>
-		
-		<logic:notPresent name="deleteConfirmation">
-			<logic:greaterThan name="result" property="resultParticipationsCount" value="1">
-				<html:link page="<%= prepareAlterOrder %>"><bean:message bundle="RESEARCHER_RESOURCES" key="link.alterOrder"/></html:link>
-			</logic:greaterThan>
-			<logic:equal name="result" property="isPossibleSelectPersonRole" value="true">
-				<html:link page="<%= prepareEditRoles %>"><bean:message bundle="RESEARCHER_RESOURCES" key="link.editRoles"/></html:link>
-			</logic:equal>
-		</logic:notPresent>
 		
 		<logic:present name="deleteConfirmation">
 			<bean:define id="deleteConfirmationId" name="deleteConfirmation"/>

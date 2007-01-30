@@ -28,9 +28,8 @@ public class ResultAssociationsManagementAction extends ResultsManagementAction 
 	    return backToResultList(mapping, form, request, response);
 	}
 	setResUnitAssRequestAttributes(request, result);
-	String forwardTo = request.getParameter("forwardTo");
 		
-	return mapping.findForward(forwardTo);
+	return mapping.findForward("editUnitAssociations");
     }
     
     public ActionForward changeTypeOfUnit(ActionMapping mapping, ActionForm form,
@@ -46,8 +45,8 @@ public class ResultAssociationsManagementAction extends ResultsManagementAction 
     	final ResearchResult result = getResultFromRequest(request);
     	request.setAttribute("result", result);
     	
-    	String forwardTo = request.getParameter("forwardTo");
-    	return mapping.findForward(forwardTo);
+    	RenderUtils.invalidateViewState("unitBean");
+    	return mapping.findForward("editUnitAssociations");
     }
     
     public ActionForward prepareEditUnitRole(ActionMapping mapping, ActionForm form,
@@ -66,7 +65,7 @@ public class ResultAssociationsManagementAction extends ResultsManagementAction 
 	    final Object[] args = { bean };
 	    executeService(request, "CreateResultUnitAssociation", args);
 	} catch (Exception e) {
-	    addActionMessage(request, "error.label.invalidNameForInternalUnit");
+	    addActionMessage(request, e.getMessage());
 	}
 	
 	return prepareEditUnitAssociations(mapping, form, request, response);
@@ -185,5 +184,6 @@ public class ResultAssociationsManagementAction extends ResultsManagementAction 
 	
 	request.setAttribute("unitBean", new ResultUnitAssociationCreationBean(result));
 	request.setAttribute("result", result);
+	RenderUtils.invalidateViewState("unitBean");
     }
 }

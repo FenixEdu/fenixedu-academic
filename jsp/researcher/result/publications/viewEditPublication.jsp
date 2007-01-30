@@ -12,23 +12,28 @@
 	<bean:define id="result" name="result" type="net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication"/>	
 	<bean:define id="parameters" value="<%="resultId=" + resultId + "&resultType=" + resultType %>"/>
 
-	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.publications"/></em>
-	<h2><fr:view name="result" property="title"/></h2>
-	
-	
+	<em><bean:message bundle="RESEARCHER_RESOURCES" key="label.research"/></em>
+	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.publications"/></h2>
+
 	<ul class="mvert2 list5">
 		<li>
 			<html:link page="/resultPublications/listPublications.do">
 				<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.backTo.link" />
 			</html:link>
 		</li>
-		<li>
-		<html:link page="<%="/resultPublications/prepareDelete.do?&resultId="+ resultId%>"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.delete" /></html:link> 
-		</li>
+		<logic:equal name="result" property="deletableByCurrentUser" value="true">
+			<li>
+			<html:link page="<%="/resultPublications/prepareDelete.do?&resultId="+ resultId%>"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.delete" /></html:link> 
+			</li>
+		</logic:equal>
 	</ul>
 	
+	<!--
+	<h3><fr:view name="result" property="title"/></h3>
+	-->
+	
 	<logic:equal name="confirm" value="yes">
-	<p class="mbottom1 mtop2"><span class="warning0"><bean:message key="researcher.ResultPublication.delete.useCase.title"/></span></p>
+	<p class="mvert15"><span class="warning0"><bean:message key="researcher.ResultPublication.delete.useCase.title"/></span></p>
 	<fr:form action="<%= "/resultPublications/delete.do?resultId=" + resultId %>">
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.confirm" property="confirm">
 			<bean:message bundle="RESEARCHER_RESOURCES" key="button.delete"/>
@@ -40,22 +45,12 @@
 	</logic:equal>
 		
 	<%-- Last Modification Date --%>
-	<p class="mtop15 mbottom2">
+	<p>
 		<span class="greytxt1">
 			<bean:message key="label.lastModificationDate"/>
 				<fr:view name="result" property="lastModificationDate"/> (<fr:view name="result" property="modifiedBy"/>)
 		</span>
 	</p>
-
-
-	<%-- Participations --%>
-	<%-- <p class="mtop2 mbottom0"><strong><bean:message bundle="RESEARCHER_RESOURCES" key="label.resultParticipations"/></strong>
-		(<html:link page="<%="/resultParticipations/prepareEdit.do?" + parameters %>">
-			<bean:message bundle="RESEARCHER_RESOURCES" key="link.edit" />
-		</html:link>)
-	</p>
-	<jsp:include page="../commons/viewParticipations.jsp"/>
-	--%>
 	
 	<%-- Event Associations --%>
 	<%-- 
@@ -70,22 +65,7 @@
 	</ul>
 	--%>
 	
-	<%-- Unit Associations --%>
-	<%-- <p class="mtop2 mbottom0"><b><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultUnitAssociation.title.label"/></b>
-		(<html:link page="<%="/resultAssociations/prepareEditUnitAssociations.do?forwardTo=editUnitAssociations&" + parameters %>">
-			<bean:message bundle="RESEARCHER_RESOURCES" key="link.edit" />
-		</html:link>)
-	</p>
-	<jsp:include page="../commons/viewUnitAssociations.jsp"/>
-	--%>
-
-	<%-- Data --%>
-	<%-- <p class="mtop2 mbottom0"><strong><bean:message key="label.publicationData" bundle="RESEARCHER_RESOURCES"/></strong>
-		(<html:link page="<%="/resultPublications/prepareEditData.do?" + parameters %>">
-			<bean:message bundle="RESEARCHER_RESOURCES" key="link.edit" />
-		</html:link>)
-	</p>--%>
-
+	<logic:equal name="result" property="editableByCurrentUser" value="true">
 	<bean:message key="link.edit" bundle="RESEARCHER_RESOURCES"/>: 
 	<html:link page="<%="/resultPublications/prepareEditData.do?" + parameters %>">
 			<bean:message bundle="RESEARCHER_RESOURCES" key="label.publicationData" />
@@ -93,33 +73,29 @@
 	<html:link page="<%="/resultParticipations/prepareEdit.do?" + parameters %>">
 			<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.importBibtex.authors" />
 	</html:link>, 
-	<html:link page="<%="/resultAssociations/prepareEditUnitAssociations.do?forwardTo=editUnitAssociations&" + parameters %>">
+	<html:link page="<%="/resultAssociations/prepareEditUnitAssociations.do?" + parameters %>">
 			<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultUnitAssociation.title.label" />
 	</html:link>
-			
+	</logic:equal>
+				
 	<fr:view name="result" schema="<%="result.publication.presentation."+resultPublicationType + ".mainInfo" %>">
 	<fr:layout name="tabular-nonNullValues">
 		<fr:property name="classes" value="tstyle2 thleft thlight thtop"/>
+		<fr:property name="rowClasses" value="tdbold,,,,,,,,,,,,"/>
 		<fr:property name="columnClasses" value="width10em, width50em"/>
+		<fr:property name="rowClasses" value="tdbold,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,"/>
 	</fr:layout>
 	</fr:view>
+
 	
 		<%-- Documents --%>
 	<p class="mtop2 mbottom0"><b><bean:message bundle="RESEARCHER_RESOURCES" key="label.documents"/></b>
-		(<html:link page="<%="/resultDocumentFiles/prepareEdit.do?forwardTo=editDocumentFiles&" + parameters %>">
-			<bean:message bundle="RESEARCHER_RESOURCES" key="link.edit" />
+		<logic:equal name="result" property="editableByCurrentUser" value="true">
+		(<html:link page="<%="/resultDocumentFiles/prepareEdit.do?" + parameters %>">
+			<bean:message bundle="RESEARCHER_RESOURCES" key="link.managed.associated.documents" />
 		</html:link>)
+		</logic:equal>
 	</p>
 	<jsp:include page="../commons/viewDocumentFiles.jsp"/>
 	
-	
-	<%-- 
-	<fr:view name="result" layout="tabular"  schema="<%="result.publication.details."+resultPublicationType %>" >
- 		<fr:layout name="tabular">
-    	    <fr:property name="classes" value="tstyle1 thlight thright thtop width600px"/>
-        	<fr:property name="columnClasses" value="width12em,,"/>
-		</fr:layout>
-	</fr:view> 
-	--%>
-
 </logic:present>

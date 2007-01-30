@@ -10,7 +10,7 @@
 	<bean:define id="parameter" value="<%= "resultId=" + resultId %>"/>
 	
 	<%-- Title messages --%>
-	<em>Patentes</em> <!-- tobundle -->
+	<em><bean:message key="link.patentsManagement" bundle="RESEARCHER_RESOURCES"/></em>
 	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.Result.edit.data"/></h2>
 	
 	<%-- Warning/Error messages --%>
@@ -21,9 +21,9 @@
 	</logic:messagesPresent>
 	
 	<%-- Form edit Patent Data --%>
-	<p class="mtop2 mbottom0"><b>Detalhes da patente:</b></p> <!-- tobundle -->
+	<p class="mtop2 mbottom0"><strong><bean:message key="researcher.ResearchResultPatent.details.useCase.title" bundle="RESEARCHER_RESOURCES"/>:</strong></p>
 	<fr:edit id="editPatent" name="result" schema="patent.edit" 
-				action="<%= "/resultPatents/prepareEdit.do?" + parameter %>">
+				action="<%= "/resultPatents/updateMetaInformation.do?" + parameter %>">
 	    <fr:layout name="tabular">
 	        <fr:property name="classes" value="tstyle1 thlight thright thtop"/>
 	        <fr:property name="columnClasses" value=",,tdclear tderror1"/>

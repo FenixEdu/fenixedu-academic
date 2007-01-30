@@ -125,6 +125,7 @@ encoding="multipart/form-data"
 	        <fr:edit name="bean" slot="educationalLearningResourceType">
 	        <fr:layout>
       				<fr:property name="excludedValues" value="PROJECT_SUBMISSION,SITE_CONTENT"/>
+					<fr:property name="sort" value="true"/>
 	        </fr:layout>
 	        </fr:edit>
 		</td>

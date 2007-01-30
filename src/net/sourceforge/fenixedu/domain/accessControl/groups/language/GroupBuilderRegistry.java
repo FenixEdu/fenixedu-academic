@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseTeachersAndS
 import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseTeachersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.domain.accessControl.IfTrueGroup;
 import net.sourceforge.fenixedu.domain.accessControl.InternalPersonGroup;
 import net.sourceforge.fenixedu.domain.accessControl.MasterDegreeCoordinatorsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.NoOneGroup;
@@ -150,6 +151,7 @@ public class GroupBuilderRegistry {
         register("departmentStudentsByYear", DepartmentStudentsByExecutionYearGroup.class, new DepartmentStudentsByExecutionYearGroup.Builder());
         register("departmentTeachersByYear", DepartmentTeachersByExecutionYearGroup.class, new DepartmentTeachersByExecutionYearGroup.Builder());
         register("curricularCourseStudentsByPeriod", CurricularCourseStudentsByExecutionPeriodGroup.class, new CurricularCourseStudentsByExecutionPeriodGroup.Builder());
+        register("ifTrue", IfTrueGroup.class, new IfTrueGroup.Builder());
         
         registerGroupsWithNoArguments();
     }

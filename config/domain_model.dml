@@ -2054,6 +2054,7 @@ class net.sourceforge.fenixedu.domain.File extends net.sourceforge.fenixedu.doma
 	}
 
 	class net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFile extends net.sourceforge.fenixedu.domain.File {
+		Boolean visible;
 		Integer keyResult;
 		FileResultPermittedGroupType fileResultPermittedGroupType;
 	}
@@ -3799,6 +3800,7 @@ class net.sourceforge.fenixedu.domain.research.result.ResearchResult extends net
 	Integer keyCountry;
     String ojbConcreteClass;
 	Integer keyCreator;
+	String uniqueStorageId;
 
 	DateTime lastModificationDate;
 	String modifiedBy;
@@ -4271,6 +4273,9 @@ class net.sourceforge.fenixedu.domain.Site extends net.sourceforge.fenixedu.doma
 		Boolean showCurrentExecutionCourses;
 		Boolean showActiveStudentCurricularPlans;
 		Boolean showAlumniDegrees;
+		Boolean showPublications;
+		Boolean showPatents;
+		Boolean showInterests;
 		MultiLanguageString researchUnit;
 		String researchUnitHomepage;
 		Boolean showCurrentAttendingExecutionCourses;

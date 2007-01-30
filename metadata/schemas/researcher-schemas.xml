@@ -334,12 +334,29 @@
 <schema name="resultParticipation.result" type="net.sourceforge.fenixedu.domain.research.result.ResultParticipation">
 	<slot name="result.title"/>
 </schema>
-<schema name="result.simple.detail" type="net.sourceforge.fenixedu.domain.research.result.ResearchResult">
-	<slot name="title"/>
+
+<schema name="result.simple.detail.publication" type="net.sourceforge.fenixedu.domain.research.result.ResearchResult">
+	<slot name="title" layout="link">
+		<property name="useParent" value="true"/>
+ 		<property name="linkFormat" value="/researcher/resultPublications/showPublication.do?resultId=${idInternal}"/>
+		<property name="contextRelative" value="true"/>
+		<property name="classes" value="bold"/>
+	</slot>
 </schema>
+
+<schema name="result.simple.detail.patent" type="net.sourceforge.fenixedu.domain.research.result.ResearchResult">	
+	<slot name="title" layout="link">
+		<property name="useParent" value="true"/>
+ 		<property name="linkFormat" value="/researcher/resultPatents/showPatent.do?resultId=${idInternal}"/>
+		<property name="contextRelative" value="true"/>
+		<property name="classes" value="bold"/>
+	</slot>
+</schema>
+
 <schema name="unit.name" type="net.sourceforge.fenixedu.domain.organizationalStructure.Unit">
 	<slot name="name"/>
 </schema>
+
 <schema name="country.name" type="net.sourceforge.fenixedu.domain.Country">
 	<slot name="name"/>
 </schema>
@@ -349,6 +366,53 @@
 
 <!-- Schemas used for Result Patents Management -->
 <schema name="patent-default" type="net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent" bundle="RESEARCHER_RESOURCES">
+	<slot name="title" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"> 
+		<property name="size" value="45"/>
+	</slot>
+	<slot name="orderedResultParticipations" layout="flowLayout" key="label.resultParticipations">
+		<property name="eachLayout" value="values"/>
+		<property name="eachSchema" value="publication.resultParticipation"/>
+		<property name="htmlSeparator" value=", "/>
+	</slot>
+	<slot name="resultUnitAssociations" layout="flowLayout" key="researcher.project.editProject.units">
+		<property name="eachLayout" value="values"/>
+		<property name="eachSchema" value="resultUnit.name"/>
+		<property name="htmlSeparator" value=","/>
+	</slot>
+	<slot name="note" layout="area">
+		<property name="rows" value="5"/>
+		<property name="columns" value="60"/>
+	</slot>
+	<slot name="patentType"/>
+	<slot name="patentStatus"/>
+	<slot name="registrationDate" layout="year-month">
+		<property name="size" value="10"/>
+	  	<property name="maxLength" value="7"/>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+			<property name="dateFormat" value="MM/yyyy"/>
+		</validator>
+	</slot>
+	<slot name="approvalDate" layout="year-month">
+		<property name="size" value="10"/>
+		<property name="maxLength" value="7"/>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+			<property name="dateFormat" value="MM/yyyy"/>
+		</validator>
+	</slot>
+	<slot name="country" layout="menu-select">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CountryProvider"/> 
+		<property name="format" value="${name}"/>
+		<property name="sortBy" value="name"/>
+	</slot>
+	<slot name="local"/>
+	<slot name="patentNumber"/>
+	<slot name="url">
+		<property name="size" value="30"/>
+		<property name="link" value="true"/>
+	</slot>
+</schema>
+
+<schema name="patent-default-edit" type="net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent" bundle="RESEARCHER_RESOURCES">
 	<slot name="title" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"> 
 		<property name="size" value="45"/>
 	</slot>
@@ -383,15 +447,19 @@
 		<property name="size" value="30"/>
 	</slot>
 </schema>
-<schema name="patent.create" extends="patent-default" bundle="RESEARCHER_RESOURCES"
+
+
+<schema name="patent.create" extends="patent-default-edit" bundle="RESEARCHER_RESOURCES"
 		type="net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent" 
 		constructor="participation,title,note,patentType,patentStatus,registrationDate,approvalDate,country,local,patentNumber,url">
 	<slot name="participation" hidden="true"/>
 </schema>
+
 <schema name="patent.edit" type="net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent" 
-		bundle="RESEARCHER_RESOURCES" extends="patent-default">
+		bundle="RESEARCHER_RESOURCES" extends="patent-default-edit">
 	<setter signature="setEditAll(title,note,patentType,patentStatus,registrationDate,approvalDate,country,local,patentNumber,url)"/>
 </schema>
+
 <schema name="patent.viewEditData" extends="patent-default" bundle="RESEARCHER_RESOURCES"
 		type="net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent">
 	<slot name="title"/>
@@ -401,8 +469,12 @@
 	<slot name="country" layout="format">
 		<property name="format" value="${name}"/>
 	</slot>
-	<slot name="url"/>
+	<slot name="url">
+		<property name="link" value="true"/>
+		<property name="link" value="true"/>
+	</slot>
 </schema>
+
 <schema name="result.patentShortList" type="net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent">
 	<slot name="title" layout="link">
         <property name="linkFormat"><![CDATA[/resultPatents/prepareDetails.do?resultId=${idInternal}]]></property>
@@ -434,9 +506,9 @@
 	<remove name="role"/>
 </schema>
 
-<schema name="resultParticipation.creation" bundle="RESEARCHER_RESOURCES"
+<schema name="resultParticipation.creation.internal" bundle="RESEARCHER_RESOURCES"
 		type="net.sourceforge.fenixedu.dataTransferObject.research.result.ResultParticipationCreationBean">
-	<slot name="personParticipationType" key="label.person" layout="radio">
+	<slot name="personParticipationType" key="label.person" layout="radio-postback">
 		<property name="classes" value="nobullet liinline"/>
 	</slot>
 	<slot name="participator" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
@@ -452,18 +524,63 @@
 	</slot>
 </schema>
 
-<schema name="resultParticipation.creationWithRole" bundle="RESEARCHER_RESOURCES" extends="resultParticipation.creation" 
+<schema name="resultParticipation.creation.external" bundle="RESEARCHER_RESOURCES"
+		type="net.sourceforge.fenixedu.dataTransferObject.research.result.ResultParticipationCreationBean">
+	<slot name="personParticipationType" key="label.person" layout="radio-postback">
+		<property name="classes" value="nobullet liinline"/>
+	</slot>
+	<slot name="participator" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="70"/>
+		<property name="rawSlotName" value="participatorName"/>
+		<property name="labelField" value="text"/>
+		<property name="format" value="${text}"/>
+		<property name="indicatorShown" value="true"/>
+		<property name="serviceName" value="SearchExternalPersonForParticipationWithWrapping"/>
+		<property name="serviceArgs" value="slot=name"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.Person"/>				
+		<property name="minChars" value="3"/>
+	</slot>
+</schema>
+
+<schema name="resultParticipation.creationWithRole.internal" bundle="RESEARCHER_RESOURCES" extends="resultParticipation.creation.internal" 
 		type="net.sourceforge.fenixedu.dataTransferObject.research.result.ResultParticipationCreationBean">
 	<slot name="role" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 </schema>
 
-<schema name="resultParticipation.fullCreation" bundle="RESEARCHER_RESOURCES"
+<schema name="resultParticipation.creationWithRole.external" bundle="RESEARCHER_RESOURCES" extends="resultParticipation.creation.external" 
+		type="net.sourceforge.fenixedu.dataTransferObject.research.result.ResultParticipationCreationBean">
+	<slot name="role" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+</schema>
+
+<schema name="resultParticipation.fullCreation.external" bundle="RESEARCHER_RESOURCES"
 		type="net.sourceforge.fenixedu.dataTransferObject.research.result.ResultParticipationCreationBean" >
 	<slot name="personParticipationType" key="label.person" layout="radio" read-only="true">
 		<property name="classes" value="nobullet liinline"/>
 	</slot>
 	<slot name="participatorName" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" read-only="true"/>
 	<slot name="unitParticipationType" key="label.unit" layout="radio-postback">
+		<property name="classes" value="nobullet liinline"/>
+		<property name="destination" value="change.unitType"/>
+	</slot>
+	<slot name="organization" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="40"/>
+		<property name="rawSlotName" value="organizationName"/>
+		<property name="labelField" value="name"/>
+		<property name="indicatorShown" value="true"/>		
+		<property name="serviceName" value="SearchExternalUnits"/>
+		<property name="serviceArgs" value="slot=name"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"/>				
+		<property name="minChars" value="3"/>
+	</slot>
+</schema>
+
+<schema name="resultParticipation.fullCreation.external.readOnly" bundle="RESEARCHER_RESOURCES"
+		type="net.sourceforge.fenixedu.dataTransferObject.research.result.ResultParticipationCreationBean" >
+	<slot name="personParticipationType" key="label.person" layout="radio" read-only="true">
+		<property name="classes" value="nobullet liinline"/>
+	</slot>
+	<slot name="participatorName" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" read-only="true"/>
+	<slot name="unitParticipationType" key="label.unit" layout="radio" read-only="true">
 		<property name="classes" value="nobullet liinline"/>
 	</slot>
 	<slot name="organization" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
@@ -477,7 +594,40 @@
 		<property name="minChars" value="3"/>
 	</slot>
 </schema>
-<schema name="resultParticipation.fullCreationWithRole" bundle="RESEARCHER_RESOURCES" extends="resultParticipation.fullCreation" 
+
+<schema name="resultParticipation.fullCreation.internal" bundle="RESEARCHER_RESOURCES"
+		type="net.sourceforge.fenixedu.dataTransferObject.research.result.ResultParticipationCreationBean" >
+	<slot name="personParticipationType" key="label.person" layout="radio" read-only="true">
+		<property name="classes" value="nobullet liinline"/>
+	</slot>
+	<slot name="participatorName" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" read-only="true"/>
+	<slot name="unitParticipationType" key="label.unit" layout="radio-postback">
+		<property name="classes" value="nobullet liinline"/>
+		<property name="destination" value="change.unitType"/>
+	</slot>
+	<slot name="organization" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="40"/>
+		<property name="rawSlotName" value="organizationName"/>
+		<property name="labelField" value="name"/>
+		<property name="indicatorShown" value="true"/>		
+		<property name="serviceName" value="SearchInternalUnits"/>
+		<property name="serviceArgs" value="slot=name"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"/>				
+		<property name="minChars" value="3"/>
+	</slot>
+</schema>
+
+<schema name="resultParticipation.fullCreationWithRole.external" bundle="RESEARCHER_RESOURCES" extends="resultParticipation.fullCreation.external" 
+		type="net.sourceforge.fenixedu.dataTransferObject.research.result.ResultParticipationCreationBean">
+		<slot name="role" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+</schema>
+
+<schema name="resultParticipation.fullCreationWithRole.external.readOnly" bundle="RESEARCHER_RESOURCES" extends="resultParticipation.fullCreation.external.readOnly" 
+		type="net.sourceforge.fenixedu.dataTransferObject.research.result.ResultParticipationCreationBean">
+		<slot name="role" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+</schema>
+
+<schema name="resultParticipation.fullCreationWithRole.internal" bundle="RESEARCHER_RESOURCES" extends="resultParticipation.fullCreation.internal" 
 		type="net.sourceforge.fenixedu.dataTransferObject.research.result.ResultParticipationCreationBean">
 		<slot name="role" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 </schema>
@@ -497,6 +647,7 @@
 </schema>
 <schema name="resultDocumentFile.submited.edit" bundle="RESEARCHER_RESOURCES" extends="resultDocumentFile.summary"
 		type="net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFile">
+	<slot name="filename" read-only="true"/>
 	<setter signature="setEdit(displayName,fileResultPermittedGroupType)"/>
 </schema>
 <schema name="resultDocumentFile.submission.edit" bundle="RESEARCHER_RESOURCES" 
@@ -580,6 +731,57 @@
 	</slot>
 </schema>
 
+<schema name="resutlUnitAssociation.create.types" bundle="RESEARCHER_RESOURCES"
+		type="net.sourceforge.fenixedu.dataTransferObject.research.result.ResultUnitAssociationCreationBean" >
+	<slot name="unitType" layout="radio-postback" key="label.unitType">
+ 			<property name="classes" value="nobullet liinline"/>
+ 			<property name="destination" value="change.unit.searchType"/>
+	</slot>		
+</schema>
+
+<schema name="resultUnitAssociation.create.ACADEMIC_UNIT" bundle="RESEARCHER_RESOURCES" extends="resutlUnitAssociation.create.types"
+		type="net.sourceforge.fenixedu.dataTransferObject.research.result.ResultUnitAssociationCreationBean" >
+
+	<slot name="unit" layout="autoComplete" key="label.party.name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="50"/>
+		<property name="rawSlotName" value="unitName"/>
+		<property name="labelField" value="name"/>
+		<property name="indicatorShown" value="true"/>		
+		<property name="serviceName" value="SearchAcademicUnits"/>
+		<property name="serviceArgs" value="slot=name"/>
+		<property name="minChars" value="3"/>
+		<property name="format" value="${name} (${parentUnitsPresentationName})"/>
+	</slot>
+</schema>
+
+<schema name="resultUnitAssociation.create.RESEARCH_UNIT" extends="resutlUnitAssociation.create.types" bundle="RESEARCHER_RESOURCES"
+		type="net.sourceforge.fenixedu.dataTransferObject.research.result.ResultUnitAssociationCreationBean" >
+	<slot name="unit" layout="autoComplete" key="label.party.name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="50"/>
+		<property name="rawSlotName" value="unitName"/>
+		<property name="labelField" value="name"/>
+		<property name="indicatorShown" value="true"/>		
+		<property name="serviceName" value="SearchResearchUnits"/>
+		<property name="serviceArgs" value="slot=name"/>
+		<property name="minChars" value="3"/>
+		<property name="format" value="${name} (${parentUnitsPresentationName})"/>
+	</slot>
+</schema>
+
+<schema name="resultUnitAssociation.create.ORGANIZATIONAL_UNIT" extends="resutlUnitAssociation.create.types" bundle="RESEARCHER_RESOURCES"
+		type="net.sourceforge.fenixedu.dataTransferObject.research.result.ResultUnitAssociationCreationBean" >
+	<slot name="unit" layout="autoComplete" key="label.party.name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="50"/>
+		<property name="rawSlotName" value="unitName"/>
+		<property name="labelField" value="name"/>
+		<property name="indicatorShown" value="true"/>		
+		<property name="serviceName" value="SearchOrganizationalUnits"/>
+		<property name="serviceArgs" value="slot=name"/>
+		<property name="minChars" value="3"/>
+		<property name="format" value="${name} (${parentUnitsPresentationName})"/>
+	</slot>
+</schema>
+
 <schema name="resultUnitAssociation.details" bundle="RESEARCHER_RESOURCES"
 		type="net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation">
 	<slot name="unit" layout="null-as-label" read-only="true">
@@ -587,7 +789,6 @@
 		<property name="subLayout" value="values"/>
 		<property name="subSchema" value="unit.name"/>
 	</slot>
-	<slot name="role"/>
 </schema>
 
 <!-- PUBLICATION SCHEMAS -->
@@ -597,26 +798,29 @@
 		type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean">
   	<slot name="publicationType" layout="menu-select-postback" key="researcher.ResultPublication.type"
 			validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.PublicationTypes"/>
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ResultPublicationTypeProvider"/>
 		<property name="destination" value="typePostBack"/>
 		<property name="eachLayout" value="default"/>
+	</slot>
+	<slot name="title" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="60"/>
+	</slot>
+	<slot name="note" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator" layout="area">	
+	    <property name="rows" value="5"/>
+		<property name="columns" value="60"/>
+	</slot>
+	<slot name="keywords" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator" layout="input-with-comment">
+		<property name="rows" value="2"/>
+		<property name="columns" value="60"/>
+		<property name="comment" value="label.keyword.explanation"/>
+		<property name="commentClasses" value="smalltxt color555"/>
+		<property name="bundle" value="RESEARCHER_RESOURCES"/>
 	</slot>
 </schema>
 
 <!-- Create/edit Book -->
 <schema name="result.publication.create.Book" bundle="RESEARCHER_RESOURCES" extends="resultPublication.editType"
 		type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.BookBean">
-	<slot name="title" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="size" value="60"/>
-	</slot>
-	<slot name="note" layout="area" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">	
-	    <property name="rows" value="5"/>
-		<property name="columns" value="60"/>
-	</slot>
-	<slot name="keywords" layout="area">
-		<property name="rows" value="2"/>
-		<property name="columns" value="60"/>
-	</slot>
  	<slot name="publisher" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="40"/>
 		<property name="rawSlotName" value="publisherName"/>
@@ -662,18 +866,18 @@
 		<property name="format" value="${name}  (${nationality})"/>
 		<property name="minChars" value="3"/>
 	</slot>
-	<slot name="scope"/>
+	<slot name="scope" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="url"><property name="size" value="40"/></slot>
 </schema>
 
 <schema name="result.publication.details.Book" bundle="RESEARCHER_RESOURCES"
 		type="net.sourceforge.fenixedu.domain.research.result.publication.Book">
 	<slot name="title"/>
-	<slot name="note" layout="area" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="note" layout="area" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
 		<property name="rows" value="5"/>
 		<property name="columns" value="60"/>
 	</slot>
-	<slot name="keywords" layout="area">
+	<slot name="keywords" layout="area" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
 		<property name="rows" value="2"/>
 		<property name="columns" value="60"/>
 	</slot>
@@ -696,25 +900,16 @@
 		<property name="subLayout" value="values"/>
 		<property name="subSchema" value="country.name"/>
 	</slot>
-	<slot name="scope"/>
-	<slot name="url"/>
+	<slot name="scope" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="url">
+			<property name="link" value="true"/>
+	</slot>
 </schema>
 
 <!-- Create/edit Inbook -->
 <schema name="result.publication.create.Inbook" bundle="RESEARCHER_RESOURCES" 
 		extends="resultPublication.editType"
 		type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.InbookBean">
-	<slot name="title" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="size" value="60"/>
-	</slot>
-	<slot name="note" layout="area" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="rows" value="5"/>
-		<property name="columns" value="60"/>
-	</slot>
-	<slot name="keywords" layout="area">
-		<property name="rows" value="2"/>
-		<property name="columns" value="60"/>
-	</slot>
 	<slot name="chapter" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"><property name="size" value="40"/></slot>
  	<slot name="publisher" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="40"/>
@@ -766,11 +961,11 @@
 <schema name="result.publication.details.Inbook" bundle="RESEARCHER_RESOURCES" 
 		type="net.sourceforge.fenixedu.domain.research.result.publication.BookPart">
 	<slot name="title"/>
-	<slot name="note" layout="area" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="note" layout="area" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
 		<property name="rows" value="5"/>
 		<property name="columns" value="60"/>
 	</slot>
-	<slot name="keywords" layout="area">
+	<slot name="keywords" layout="area" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
 		<property name="rows" value="2"/>
 		<property name="columns" value="60"/>
 	</slot>
@@ -793,24 +988,15 @@
 		<property name="subLayout" value="values"/>
 		<property name="subSchema" value="country.name"/>
 	</slot>
-	<slot name="url"/>
+	<slot name="url">
+			<property name="link" value="true"/>
+	</slot>
 </schema>
 
 <!-- Create/edit Incollection -->
 <schema name="result.publication.create.Incollection" bundle="RESEARCHER_RESOURCES"
 		extends="resultPublication.editType"
 		type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.IncollectionBean">
-	<slot name="title" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="size" value="60"/>
-	</slot>
-	<slot name="note" layout="area" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="rows" value="5"/>
-		<property name="columns" value="60"/>
-	</slot>
-	<slot name="keywords" layout="area">
-		<property name="rows" value="2"/>
-		<property name="columns" value="60"/>
-	</slot>
 	<slot name="bookTitle" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="40"/>
 	</slot>
@@ -871,11 +1057,11 @@
 <schema name="result.publication.details.Incollection" bundle="RESEARCHER_RESOURCES"
 		type="net.sourceforge.fenixedu.domain.research.result.publication.BookPart">
 	<slot name="title"/>
-	<slot name="note" layout="area" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="note" layout="area" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
 		<property name="rows" value="5"/>
 		<property name="columns" value="60"/>
 	</slot>
-	<slot name="keywords" layout="area">
+	<slot name="keywords" layout="area" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
 		<property name="rows" value="2"/>
 		<property name="columns" value="60"/>
 	</slot>
@@ -900,24 +1086,16 @@
 		<property name="subLayout" value="values"/>
 		<property name="subSchema" value="country.name"/>
 	</slot>
-	<slot name="url"/>
+	<slot name="url">
+			<property name="link" value="true"/>
+	</slot>
 </schema>
 
 <!-- Create/edit Article -->
 <schema name="result.publication.create.Article" bundle="RESEARCHER_RESOURCES"
 		extends="resultPublication.editType"
 		type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ArticleBean">
-	<slot name="title" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="size" value="60"/>
-	</slot>
-	<slot name="note" layout="area" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="rows" value="5"/>
-		<property name="columns" value="60"/>
-	</slot>
-	<slot name="keywords" layout="area">
-		<property name="rows" value="2"/>
-		<property name="columns" value="60"/>
-	</slot>	<slot name="journal" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="journal" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="40"/>
 	</slot>
  	<slot name="year">
@@ -969,18 +1147,18 @@
 		<property name="format" value="${name}  (${nationality})"/>
 		<property name="minChars" value="3"/>
 	</slot>
-	<slot name="scope"/>
+	<slot name="scope" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="url"><property name="size" value="40"/></slot>
 </schema>
 
 <schema name="result.publication.details.Article" bundle="RESEARCHER_RESOURCES"
 		type="net.sourceforge.fenixedu.domain.research.result.publication.Article">
 	<slot name="title"/>
-	<slot name="note" layout="area" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="note" layout="area" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
 		<property name="rows" value="5"/>
 		<property name="columns" value="60"/>
 	</slot>
-	<slot name="keywords" layout="area">
+	<slot name="keywords" layout="area" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
 		<property name="rows" value="2"/>
 		<property name="columns" value="60"/>
 	</slot>
@@ -1003,8 +1181,10 @@
 		<property name="subLayout" value="values"/>
 		<property name="subSchema" value="country.name"/>
 	</slot>
-	<slot name="scope"/>
-	<slot name="url"/>
+	<slot name="scope" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="url">
+			<property name="link" value="true"/>
+	</slot>
 </schema>
 
 <!-- CONFERENCE ARTICLES -->
@@ -1034,17 +1214,6 @@
 <schema name="result.publication.create.Inproceedings" bundle="RESEARCHER_RESOURCES"
 		extends="resultPublication.editType"
 		type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.InproceedingsBean">
-	<slot name="title" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="size" value="60"/>
-	</slot>
-	<slot name="note" layout="area" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="rows" value="5"/>
-		<property name="columns" value="60"/>
-	</slot>
-	<slot name="keywords" layout="area">
-		<property name="rows" value="2"/>
-		<property name="columns" value="60"/>
-	</slot>
  	<slot name="year">
  		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
 			<property name="dateFormat" value="yyyy"/>
@@ -1052,7 +1221,9 @@
 		<property name="size" value="5"/>
 	</slot>
 	<slot name="month"/>
-	<slot name="conference" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="conference" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="60"/>
+	</slot>
 	<slot name="scope"/>
 	<slot name="publisher" layout="autoComplete">
 		<property name="size" value="40"/>
@@ -1094,18 +1265,20 @@
 <schema name="result.publication.details.Inproceedings" bundle="RESEARCHER_RESOURCES"
 		type="net.sourceforge.fenixedu.domain.research.result.publication.Inproceedings">
 	<slot name="title"/>
-	<slot name="note" layout="area" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="note" layout="area" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
 		<property name="rows" value="5"/>
 		<property name="columns" value="60"/>
 	</slot>
-	<slot name="keywords" layout="area">
+	<slot name="keywords" layout="area" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
 		<property name="rows" value="2"/>
 		<property name="columns" value="60"/>
 	</slot>
  	<slot name="year"/>
 	<slot name="month"/>
-	<slot name="conference" key="label.conference"/>
-	<slot name="scope"/>
+	<slot name="conference" key="label.conference">
+	<property name="size" value="60"/>
+	</slot>
+	<slot name="scope" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="publisher" layout="null-as-label">
 		<property name="label" value=""/>
 		<property name="subLayout" value="values"/>
@@ -1120,24 +1293,15 @@
 	<slot name="firstPage"/>
 	<slot name="lastPage"/>
 	<slot name="language"/>
-	<slot name="url"/>
+	<slot name="url">
+			<property name="link" value="true"/>
+	</slot>
 </schema>
 
 <!-- Create/edit Proceedings (Conference Article) -->
 <schema name="result.publication.create.Proceedings" bundle="RESEARCHER_RESOURCES"
 		extends="resultPublication.editType"
-		type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ProceedingsBean">
-	<slot name="title" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="size" value="60"/>
-	</slot>
-	<slot name="note" layout="area" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="rows" value="5"/>
-		<property name="columns" value="60"/>
-	</slot>
-	<slot name="keywords" layout="area">
-		<property name="rows" value="2"/>
-		<property name="columns" value="60"/>
-	</slot> 
+		type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ProceedingsBean"> 
 	<slot name="year">
  		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
 			<property name="dateFormat" value="yyyy"/>
@@ -1145,8 +1309,10 @@
 		<property name="size" value="5"/>
 	</slot>	
 	<slot name="month"/>
-	<slot name="conference" key="label.conference" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-	<slot name="scope"/>
+	<slot name="conference" key="label.conference" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="60"/>
+	</slot>
+	<slot name="scope" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="publisher" layout="autoComplete">
 		<property name="size" value="40"/>
 		<property name="rawSlotName" value="publisherName"/>
@@ -1175,18 +1341,20 @@
 <schema name="result.publication.details.Proceedings" bundle="RESEARCHER_RESOURCES"
 		type="net.sourceforge.fenixedu.domain.research.result.publication.Proceedings">
 	<slot name="title"/>
-	<slot name="note" layout="area" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="note" layout="area" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
 		<property name="rows" value="5"/>
 		<property name="columns" value="60"/>
 	</slot>
-	<slot name="keywords" layout="area">
+	<slot name="keywords" layout="area" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
 		<property name="rows" value="2"/>
 		<property name="columns" value="60"/>
 	</slot> 	
 	<slot name="year"/>	
 	<slot name="month"/>
-	<slot name="conference" key="label.conference" />
-	<slot name="scope"/>
+	<slot name="conference" key="label.conference">
+		<property name="size" value="200"/>
+	</slot>
+	<slot name="scope" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="publisher" layout="null-as-label">
 		<property name="label" value=""/>
 		<property name="subLayout" value="values"/>
@@ -1198,24 +1366,15 @@
 		<property name="subLayout" value="values"/>
 		<property name="subSchema" value="unit.name"/>
 	</slot>
-	<slot name="url"/>
+	<slot name="url">
+			<property name="link" value="true"/>
+	</slot>
 </schema>
 
 <!-- Create/edit Thesis -->
 <schema name="result.publication.create.Thesis" bundle="RESEARCHER_RESOURCES"
 		extends="resultPublication.editType"
 		type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ThesisBean">
-	<slot name="title" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="size" value="60"/>
-	</slot>
-	<slot name="note" layout="area" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="rows" value="5"/>
-		<property name="columns" value="60"/>
-	</slot>
-	<slot name="keywords" layout="area">
-		<property name="rows" value="2"/>
-		<property name="columns" value="60"/>
-	</slot>
 	<slot name="thesisType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
  	<slot name="year" key="label.yearEnd">
  		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
@@ -1256,11 +1415,11 @@
 <schema name="result.publication.details.Thesis" bundle="RESEARCHER_RESOURCES"
 		type="net.sourceforge.fenixedu.domain.research.result.publication.Thesis">
 	<slot name="title"/>
-	<slot name="note" layout="area" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="note" layout="area" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
 		<property name="rows" value="5"/>
 		<property name="columns" value="60"/>
 	</slot>
-	<slot name="keywords" layout="area">
+	<slot name="keywords" layout="area" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
 		<property name="rows" value="2"/>
 		<property name="columns" value="60"/>
 	</slot>	
@@ -1277,24 +1436,16 @@
 	<slot name="address"/>
 	<slot name="numberPages"/>
 	<slot name="language"/>
-	<slot name="url"/>
+	<slot name="url">
+			<property name="link" value="true"/>
+	</slot>
+	
 </schema>
 
 <!-- Create/edit Manual -->
 <schema name="result.publication.create.Manual" bundle="RESEARCHER_RESOURCES"
 		extends="resultPublication.editType"
-		type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ManualBean">
-	<slot name="title" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="size" value="60"/>
-	</slot>
-	<slot name="note" layout="area" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="rows" value="5"/>
-		<property name="columns" value="60"/>
-	</slot>
-	<slot name="keywords" layout="area">
-		<property name="rows" value="2"/>
-		<property name="columns" value="60"/>
-	</slot> 	
+		type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ManualBean"> 	
 	<slot name="year">
 		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
 			<property name="required" value="false"/>
@@ -1320,11 +1471,11 @@
 <schema name="result.publication.details.Manual" bundle="RESEARCHER_RESOURCES"
 		type="net.sourceforge.fenixedu.domain.research.result.publication.Manual">
 	<slot name="title"/>
-	<slot name="note" layout="area" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="note" layout="area" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
 		<property name="rows" value="5"/>
 		<property name="columns" value="60"/>
 	</slot>
-	<slot name="keywords" layout="area">
+	<slot name="keywords" layout="area" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
 		<property name="rows" value="2"/>
 		<property name="columns" value="60"/>
 	</slot>
@@ -1336,24 +1487,15 @@
 		<property name="subSchema" value="unit.name"/>
 	</slot>
 	<slot name="address"/>
-	<slot name="url"/>
+	<slot name="url">
+			<property name="link" value="true"/>
+	</slot>
 </schema>
 
 <!-- Create/edit Technical Report -->
 <schema name="result.publication.create.TechnicalReport" bundle="RESEARCHER_RESOURCES"
 		extends="resultPublication.editType"
 		type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.TechnicalReportBean">
-	<slot name="title" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="size" value="60"/>
-	</slot>
-	<slot name="note" layout="area" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="rows" value="5"/>
-		<property name="columns" value="60"/>
-	</slot>
-	<slot name="keywords" layout="area">
-		<property name="rows" value="2"/>
-		<property name="columns" value="60"/>
-	</slot>
 	<slot name="year">
 		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
 			<property name="dateFormat" value="yyyy"/>
@@ -1387,11 +1529,11 @@
 <schema name="result.publication.details.TechnicalReport" bundle="RESEARCHER_RESOURCES"
 		type="net.sourceforge.fenixedu.domain.research.result.publication.TechnicalReport">
 	<slot name="title"/>
-	<slot name="note" layout="area" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="note" layout="area" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
 		<property name="rows" value="5"/>
 		<property name="columns" value="60"/>
 	</slot>
-	<slot name="keywords" layout="area">
+	<slot name="keywords" layout="area" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
 		<property name="rows" value="2"/>
 		<property name="columns" value="60"/>
 	</slot>
@@ -1407,24 +1549,15 @@
 	<slot name="number"/>
 	<slot name="numberPages"/>
 	<slot name="language"/>
-	<slot name="url"/>
+	<slot name="url">
+			<property name="link" value="true"/>
+	</slot>
 </schema>
 
 <!-- Create/edit OtherPublication -->
 <schema name="result.publication.create.OtherPublication" bundle="RESEARCHER_RESOURCES"
 		extends="resultPublication.editType"
 		type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.OtherPublicationBean">
-	<slot name="title" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="size" value="60"/>
-	</slot>
-	<slot name="note" layout="area" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="rows" value="5"/>
-		<property name="columns" value="60"/>
-	</slot>
-	<slot name="keywords" layout="area">
-		<property name="rows" value="2"/>
-		<property name="columns" value="60"/>
-	</slot>
  	<slot name="year">
 		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
 			<property name="required" value="false"/>
@@ -1470,11 +1603,11 @@
 <schema name="result.publication.details.OtherPublication" bundle="RESEARCHER_RESOURCES"
 		type="net.sourceforge.fenixedu.domain.research.result.publication.OtherPublication">
 	<slot name="title"/>
-	<slot name="note" layout="area" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="note" layout="area" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
 		<property name="rows" value="5"/>
 		<property name="columns" value="60"/>
 	</slot>
-	<slot name="keywords" layout="area">
+	<slot name="keywords" layout="area" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
 		<property name="rows" value="2"/>
 		<property name="columns" value="60"/>
 	</slot>
@@ -1495,7 +1628,9 @@
 		<property name="subLayout" value="values"/>
 		<property name="subSchema" value="country.name"/>
 	</slot>
-	<slot name="url"/>
+	<slot name="url">
+		<property name="link" value="true"/>
+	</slot>
 </schema>
 
 <!-- Create/edit Unstructured -->
@@ -1514,10 +1649,12 @@
 <schema name="participators.found" type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.bibtex.ParticipatorBean" bundle="RESEARCHER_RESOURCES">
 	<slot name="personName"/>
 </schema>
-<schema name="bibtex.participator" type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.bibtex.BibtexParticipatorBean">
+
+<schema name="bibtex.participator.internal" type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.bibtex.BibtexParticipatorBean">
 	<slot name="bibtexPerson" read-only="true"/>
- 	<slot name="personType" key="label.person" layout="radio">
+ 	<slot name="personType" key="label.person" layout="radio-postback">
  			<property name="classes" value="nobullet liinline"/>
+ 			<property name="destination" value="change.person.type"/>
  	</slot>
  	<slot name="person" key="label.name" layout="autoComplete">
 		<property name="size" value="70"/>
@@ -1531,6 +1668,26 @@
 		<property name="minChars" value="4"/>
 	</slot>
 </schema>
+
+<schema name="bibtex.participator.external" type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.bibtex.BibtexParticipatorBean">
+	<slot name="bibtexPerson" read-only="true"/>
+ 	<slot name="personType" key="label.person" layout="radio-postback">
+ 			<property name="classes" value="nobullet liinline"/>
+ 			<property name="destination" value="change.person.type"/>
+ 	</slot>
+ 	<slot name="person" key="label.name" layout="autoComplete">
+		<property name="size" value="70"/>
+		<property name="rawSlotName" value="personName"/>
+		<property name="labelField" value="text"/>
+		<property name="format" value="${text}"/>
+		<property name="indicatorShown" value="true"/>
+		<property name="serviceName" value="SearchExternalPersonForParticipationWithWrapping"/>
+		<property name="serviceArgs" value="slot=name"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.Person"/>				
+		<property name="minChars" value="4"/>
+	</slot>
+</schema>
+
 <schema name="bibtex.participatorChosed" type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.bibtex.BibtexParticipatorBean">
 	<slot name="bibtexPerson" read-only="true"/>
  	<slot name="personDescription" read-only="true"/>
@@ -1547,7 +1704,7 @@
 	<slot name="organizationType" key="label.unit" layout="radio-postback">
 	 			<property name="classes" value="nobullet liinline"/>
 	</slot>
-	<slot name="organization" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="organization" layout="autoComplete">
 		<property name="size" value="40"/>
 		<property name="rawSlotName" value="organizationName"/>
 		<property name="labelField" value="name"/>
@@ -1558,6 +1715,23 @@
 		<property name="minChars" value="4"/>
 	</slot>
 </schema>
+
+<schema name="bibtex.participatorExternal.externalUnit.readOnly" type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.bibtex.BibtexParticipatorBean" bundle="RESEARCHER_RESOURCES">
+	<slot name="organizationType" key="label.unit" layout="radio" read-only="true">
+	 			<property name="classes" value="nobullet liinline"/>
+	</slot>
+	<slot name="organization" layout="autoComplete">
+		<property name="size" value="40"/>
+		<property name="rawSlotName" value="organizationName"/>
+		<property name="labelField" value="name"/>
+		<property name="indicatorShown" value="true"/>		
+		<property name="serviceName" value="SearchExternalUnits"/>
+		<property name="serviceArgs" value="slot=name"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"/>				
+		<property name="minChars" value="4"/>
+	</slot>
+</schema>
+
 <schema name="bibtex.participatorExternal.internalUnit" type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.bibtex.BibtexParticipatorBean" bundle="RESEARCHER_RESOURCES">
 	<slot name="organizationType" key="label.unit" layout="radio-postback">
 	 			<property name="classes" value="nobullet liinline"/>
@@ -1629,6 +1803,7 @@
 	<property name="linkFormat" value="/homepage/${istUsername}"/>	
 	<property name="subLayout" value="values"/>
 	<property name="subSchema" value="showName"/>
+	<property name="blankTarget" value="true"/>
 	</slot>
 </schema>
 
@@ -1639,6 +1814,7 @@
 <schema name="publication.mainInfo" bundle="RESEARCHER_RESOURCES"
 	type="net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication">
 	<slot name="title"/>
+	<slot name="localizedType" key="researcher.ResultPublication.type"/>
 	<slot name="orderedResultParticipations" layout="flowLayout" key="label.resultParticipations">
 		<property name="eachLayout" value="values"/>
 		<property name="eachSchema" value="publication.resultParticipation"/>
@@ -1646,19 +1822,18 @@
 	</slot>
 	<slot name="note"/>
 	<slot name="keywords"/>
-	<slot name="resultUnitAssociations" layout="flowLayout" key="researcher.project.editProject.units">
+	<slot name="resultUnitAssociations" key="researcher.project.editProject.units">
 		<property name="eachLayout" value="values"/>
 		<property name="eachSchema" value="resultUnit.name"/>
-		<property name="htmlSeparator" value=","/>
+		<property name="sortBy" value="unit.name"/>
+		<property name="classes" value="nobullet list6"/>
 	</slot>
 </schema>
  
 <schema name="publication.TitleAndAuthors" bundle="RESEARCHER_RESOURCES"
 	type="net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication">
 	<slot name="title" layout="link">
-			<property name="useParent" value="true"/>
- 			<property name="linkFormat" value="/researcher/resultPublications/prepareEdit.do?resultId=${idInternal}"/>
-			<property name="contextRelative" value="true"/>
+ 			<property name="destination" value="view.publication"/>
 			<property name="classes" value="bold"/>
 	</slot>
 	<slot name="orderedResultParticipations" layout="flowLayout" key="label.resultParticipations">
@@ -1717,21 +1892,7 @@
 	<slot name="edition"/>
 	<slot name="url">
 		<property name="classes" value="greytxt1"/>
-	</slot>
-</schema>
-
-<schema name="result.publication.presentation.Inbook.mainInfo" extends="publication.mainInfo" bundle="RESEARCHER_RESOURCES"
-		type="net.sourceforge.fenixedu.domain.research.result.publication.BookPart">
-	<slot name="chapter"/>
-	<slot name="publisher" layout="null-as-label">
-		<property name="label" value=""/>
-		<property name="subLayout" value="values"/>
-		<property name="subSchema" value="unit.name"/>
-	</slot>
- 	<slot name="year"/>
-	<slot name="edition"/>
-	<slot name="url">
-		<property name="classes" value="greytxt1"/>
+		<property name="link" value="true"/>
 	</slot>
 </schema>
 
@@ -1747,6 +1908,7 @@
 	<slot name="edition"/>
 	<slot name="url">
 		<property name="classes" value="greytxt1"/>
+		<property name="link" value="true"/>
 	</slot>
 </schema>
 
@@ -1761,6 +1923,7 @@
  	<slot name="year"/>
 	<slot name="url">
 		<property name="classes" value="greytxt1"/>
+		<property name="link" value="true"/>
 	</slot>
 </schema>
 
@@ -1775,6 +1938,7 @@
  	<slot name="year"/>
 	<slot name="url">
 		<property name="classes" value="greytxt1"/>
+		<property name="link" value="true"/>
 	</slot>
 </schema>
 
@@ -1789,6 +1953,7 @@
 	</slot>
 	<slot name="url">
 		<property name="classes" value="greytxt1"/>
+		<property name="link" value="true"/>
 	</slot>
 </schema>
 
@@ -1803,6 +1968,7 @@
 	</slot>
 	<slot name="url">
 		<property name="classes" value="greytxt1"/>
+		<property name="link" value="true"/>
 	</slot>
 </schema>
 
@@ -1817,6 +1983,7 @@
 	</slot>
 	<slot name="url">
 		<property name="classes" value="greytxt1"/>
+		<property name="link" value="true"/>
 	</slot>
 </schema>
 
@@ -1831,6 +1998,7 @@
 	</slot>
 	<slot name="url">
 		<property name="classes" value="greytxt1"/>
+		<property name="link" value="true"/>
 	</slot>
 </schema>
 
@@ -1839,6 +2007,7 @@
  	<slot name="year"/>	
 	<slot name="url">
 		<property name="classes" value="greytxt1"/>
+		<property name="link" value="true"/>
 	</slot>
 </schema>
 
@@ -1847,6 +2016,7 @@
  	<slot name="year"/>	
 	<slot name="url">
 		<property name="classes" value="greytxt1"/>
+		<property name="link" value="true"/>
 	</slot>
 </schema>
 
@@ -1861,6 +2031,7 @@
 	</slot>
 	<slot name="url">
 		<property name="classes" value="greytxt1"/>
+		<property name="link" value="true"/>
 	</slot>
 </schema>
 
@@ -1874,6 +2045,7 @@
 	</slot>
 	<slot name="url">
 		<property name="classes" value="greytxt1"/>
+		<property name="link" value="true"/>
 	</slot>
 </schema>
 
@@ -1882,6 +2054,7 @@
  	<slot name="year"/>
 	<slot name="url">
 		<property name="classes" value="greytxt1"/>
+		<property name="link" value="true"/>
 	</slot>
 </schema>
 
@@ -1890,6 +2063,7 @@
  	<slot name="year"/>
 	<slot name="url">
 		<property name="classes" value="greytxt1"/>
+		<property name="link" value="true"/>
 	</slot>
 </schema>
 
@@ -1903,6 +2077,7 @@
 	</slot>
 	<slot name="url">
 		<property name="classes" value="greytxt1"/>
+		<property name="link" value="true"/>
 	</slot>
 </schema>
 
@@ -1916,6 +2091,7 @@
 	</slot>
 	<slot name="url">
 		<property name="classes" value="greytxt1"/>
+		<property name="link" value="true"/>
 	</slot>
 </schema>
 
@@ -1925,6 +2101,7 @@
 	<slot name="otherPublicationType"/>
 	<slot name="url">
 		<property name="classes" value="greytxt1"/>
+		<property name="link" value="true"/>
 	</slot>
 	<slot name="note"/>
 </schema>
@@ -1935,6 +2112,7 @@
 	<slot name="otherPublicationType"/>
 	<slot name="url">
 		<property name="classes" value="greytxt1"/>
+		<property name="link" value="true"/>
 	</slot>
 	<slot name="note"/>
 </schema>

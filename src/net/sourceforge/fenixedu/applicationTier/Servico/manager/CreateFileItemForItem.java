@@ -55,7 +55,7 @@ public class CreateFileItemForItem extends FileItemService {
 
     protected FileDescriptor saveFile(VirtualPath filePath, String originalFilename, boolean permission,
 			Collection<FileSetMetaData> metaData, InputStream inputStream) {
-		final IFileManager fileManager = FileManagerFactory.getFileManager();
+		final IFileManager fileManager = FileManagerFactory.getFactoryInstance().getFileManager();
 		return fileManager.saveFile(filePath, originalFilename, permission, metaData, inputStream);
 	}
 

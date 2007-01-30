@@ -23,7 +23,7 @@ public class InbookBean extends ResultPublicationBean implements Serializable {
     public InbookBean() {
 	this.setPublicationType(ResultPublicationType.Inbook);
 	this.setActiveSchema("result.publication.create.Inbook");
-	this.setParticipationSchema("resultParticipation.simpleWithRole");
+	this.setParticipationSchema("resultParticipation.simple");
     }
 
     public InbookBean(BookPart bookPart) {

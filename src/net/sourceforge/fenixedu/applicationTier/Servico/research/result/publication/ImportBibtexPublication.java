@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.research.result.publication;
 
 import java.util.List;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.externalPerson.InsertExternalPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ArticleBean;
@@ -17,6 +18,7 @@ import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.b
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.bibtex.BibtexPublicationBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
+import net.sourceforge.fenixedu.util.researcher.ResearchResultMetaDataManager;
 
 public class ImportBibtexPublication extends ResultPublicationService {
 
@@ -30,7 +32,7 @@ public class ImportBibtexPublication extends ResultPublicationService {
         
         ResearchResultPublication publication = createBookFromBean(bean);
         createRestOfParticipations(personImporting, bibtexPublicationBean.getParticipators(), publication);
-        return publication;
+        return (ResearchResultPublication) ResearchResultMetaDataManager.addDefaultDocument(publication);
     }
     
     public ResearchResultPublication run(Person personImporting, InbookBean bean, BibtexPublicationBean bibtexPublicationBean) throws FenixServiceException {
@@ -43,7 +45,7 @@ public class ImportBibtexPublication extends ResultPublicationService {
         
         ResearchResultPublication publication = createInbookFromBean(bean);
         createRestOfParticipations(personImporting, bibtexPublicationBean.getParticipators(), publication);
-        return publication;
+        return (ResearchResultPublication) ResearchResultMetaDataManager.addDefaultDocument(publication);
     }
     
     public ResearchResultPublication run(Person personImporting, IncollectionBean bean, BibtexPublicationBean bibtexPublicationBean) throws FenixServiceException {
@@ -56,7 +58,7 @@ public class ImportBibtexPublication extends ResultPublicationService {
         
         ResearchResultPublication publication = createIncollectionFromBean(bean);
         createRestOfParticipations(personImporting, bibtexPublicationBean.getParticipators(), publication);
-        return publication;
+        return (ResearchResultPublication) ResearchResultMetaDataManager.addDefaultDocument(publication);
     }
     
     public ResearchResultPublication run(Person personImporting, ArticleBean bean, BibtexPublicationBean bibtexPublicationBean) throws FenixServiceException {
@@ -68,7 +70,7 @@ public class ImportBibtexPublication extends ResultPublicationService {
         
         ResearchResultPublication publication = createArticleFromBean(bean);
         createRestOfParticipations(personImporting, bibtexPublicationBean.getParticipators(), publication);
-        return publication;
+        return (ResearchResultPublication) ResearchResultMetaDataManager.addDefaultDocument(publication);
     }
     
     public ResearchResultPublication run(Person personImporting, InproceedingsBean bean, BibtexPublicationBean bibtexPublicationBean) throws FenixServiceException {
@@ -81,7 +83,7 @@ public class ImportBibtexPublication extends ResultPublicationService {
         
         ResearchResultPublication publication = createInproceedingsFromBean(bean);
         createRestOfParticipations(personImporting, bibtexPublicationBean.getParticipators(), publication);
-        return publication;
+        return (ResearchResultPublication) ResearchResultMetaDataManager.addDefaultDocument(publication);
     }
 
     public ResearchResultPublication run(Person personImporting, ProceedingsBean bean, BibtexPublicationBean bibtexPublicationBean) throws FenixServiceException {
@@ -93,7 +95,7 @@ public class ImportBibtexPublication extends ResultPublicationService {
         
         ResearchResultPublication publication = createProceedingsFromBean(bean);
         createRestOfParticipations(personImporting, bibtexPublicationBean.getParticipators(), publication);
-        return publication;
+        return (ResearchResultPublication) ResearchResultMetaDataManager.addDefaultDocument(publication);
     }
     
     public ResearchResultPublication run(Person personImporting, ThesisBean bean, BibtexPublicationBean bibtexPublicationBean) throws FenixServiceException {
@@ -105,7 +107,7 @@ public class ImportBibtexPublication extends ResultPublicationService {
         
         ResearchResultPublication publication = createThesisFromBean(bean);
         createRestOfParticipations(personImporting, bibtexPublicationBean.getParticipators(), publication);
-        return publication;
+        return (ResearchResultPublication) ResearchResultMetaDataManager.addDefaultDocument(publication);
     }
     
     public ResearchResultPublication run(Person personImporting, ManualBean bean, BibtexPublicationBean bibtexPublicationBean) throws FenixServiceException {
@@ -117,7 +119,7 @@ public class ImportBibtexPublication extends ResultPublicationService {
         
         ResearchResultPublication publication = createManualFromBean(bean);
         createRestOfParticipations(personImporting, bibtexPublicationBean.getParticipators(), publication);
-        return publication;
+        return (ResearchResultPublication) ResearchResultMetaDataManager.addDefaultDocument(publication);
     }
     
     public ResearchResultPublication run(Person personImporting, TechnicalReportBean bean, BibtexPublicationBean bibtexPublicationBean) throws FenixServiceException {
@@ -129,7 +131,7 @@ public class ImportBibtexPublication extends ResultPublicationService {
         
         ResearchResultPublication publication = createTechnicalReportFromBean(bean);
         createRestOfParticipations(personImporting, bibtexPublicationBean.getParticipators(), publication);
-        return publication;
+        return (ResearchResultPublication) ResearchResultMetaDataManager.addDefaultDocument(publication);
     }
     
     public ResearchResultPublication run(Person personImporting, OtherPublicationBean bean, BibtexPublicationBean bibtexPublicationBean) throws FenixServiceException {
@@ -141,7 +143,7 @@ public class ImportBibtexPublication extends ResultPublicationService {
         
         ResearchResultPublication publication = createOtherPublicationFromBean(bean);
         createRestOfParticipations(personImporting, bibtexPublicationBean.getParticipators(), publication);
-        return publication;
+        return (ResearchResultPublication) ResearchResultMetaDataManager.addDefaultDocument(publication);
     }
     
     private void createRestOfParticipations(Person personImporting,

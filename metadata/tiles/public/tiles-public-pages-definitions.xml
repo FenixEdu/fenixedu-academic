@@ -145,6 +145,15 @@
 	<definition name="view-homepage" extends="definition.public.homepage">
 		<put name="body" value="/publico/homepage/home.jsp"/>
 	</definition>
+	<definition name="show-publications" extends="definition.public.homepage">
+		<put name="body" value="/publico/homepage/research/publications.jsp"/>
+	</definition>
+	<definition name="show-patents" extends="definition.public.homepage">
+		<put name="body" value="/publico/homepage/research/patents.jsp"/>
+	</definition>
+	<definition name="show-interests" extends="definition.public.homepage">
+		<put name="body" value="/publico/homepage/research/interests.jsp"/>
+	</definition>
     <definition name="view-homepage-section" extends="definition.public.homepage">
         <put name="body" value="/commons/sites/public/section.jsp"/>
     </definition>
@@ -298,4 +307,12 @@
 		<put name="body" value="/publico/executionCourse/searchScormContent.jsp" />
 	</definition>
 
+
+	<!--  View Research Result -->
+	<definition name="show-result" extends="definition.public.homepage">
+		<put name="body" value="/publico/researcher/showResearchResult.jsp" />
+	</definition>
+
+
+   
 </tiles-definitions>

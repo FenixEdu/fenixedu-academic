@@ -19,7 +19,7 @@ public class ResultUnitAssociationCreationBean implements Serializable {
 	setUnit(null);
 	setUnitName(null);
 	setRole(ResultUnitAssociationRole.getDefaultRole());
-	setUnitType(UnitType.INTERNAL_UNIT);
+	setUnitType(UnitType.ACADEMIC_UNIT);
     }
     
     public ResultUnitAssociationRole getRole() {
@@ -54,19 +54,10 @@ public class ResultUnitAssociationCreationBean implements Serializable {
         this.result = result;
     }
 
-
-    public Boolean getExternalUnit() {
-    	return isExternalUnit();
-    }
-    
-	public Boolean isExternalUnit() {
-		return getUnitType().equals(UnitType.EXTERNAL_UNIT);
-	}
-	
 	public static enum UnitType {
-		INTERNAL_UNIT ("Internal"),
-		EXTERNAL_UNIT ("External");
-		
+		ACADEMIC_UNIT ("Academic"),
+		RESEARCH_UNIT ("Research"),
+		ORGANIZATIONAL_UNIT ("Organizational");
 		private String type;
 		
 		private UnitType(String type) {

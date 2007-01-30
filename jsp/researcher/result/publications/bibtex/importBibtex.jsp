@@ -84,11 +84,6 @@
 		<strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.importBibtex.step"/> 2 : </strong>
 		<bean:message key="researcher.result.publication.importBibtex.publicationData" bundle="RESEARCHER_RESOURCES"/></span>
 		</span>
-		>
-		<span>
-		<strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.importBibtex.step"/> 3 : </strong>
-		<bean:message key="label.associatingDocumentsAndUnits" bundle="RESEARCHER_RESOURCES"/></span>
-		</span>
  	</p>
 
 				<logic:notEmpty name="importBibtexBean" property="processedBeans"> 
@@ -116,15 +111,16 @@
 					<bean:define id="participatorBean" name="importBibtexBean" property="nextAuthor" type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.bibtex.BibtexParticipatorBean"/>
 					<fr:edit id="author" name="importBibtexBean" property="nextAuthor" schema="<%=participatorBean.getActiveSchema()%>">
 						<fr:layout name="tabular">
-		    			    <fr:property name="classes" value="tstyle1 thright thlight thtop mtop025"/>
+		    			    <fr:property name="classes" value="tstyle5 thright thlight thtop mtop025"/>
 			        		<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 					    </fr:layout>
+   					    <fr:destination name="change.person.type" path="/bibtexManagement/changePersonType.do"/>
 				   		<fr:destination name="invalid" path="/bibtexManagement/invalidSubmit.do"/>
 			   		</fr:edit>
-			   		<logic:equal name="participatorBean" property="externalPerson" value="true">
 
+			   		<logic:equal name="needsUnit" value="true">
 						<logic:equal name="participatorBean" property="externalUnit" value="true">	
-							<bean:define id="unitSchema" value="bibtex.participatorExternal.externalUnit" toScope="request"/>
+							<bean:define id="unitSchema" value="bibtex.participatorExternal.externalUnit.readOnly" toScope="request"/>
 						</logic:equal>
 						<logic:equal name="participatorBean" property="externalUnit" value="false">						
 							<bean:define id="unitSchema" value="bibtex.participatorExternal.internalUnit" toScope="request"/>
@@ -134,12 +130,13 @@
 						<p class="mtop05 mbottom025"><bean:message key="label.unit" bundle="RESEARCHER_RESOURCES"/>:</p>
 			   			<fr:edit id="externalPerson" name="importBibtexBean" property="nextAuthor" schema="<%= unitSchema %>">
 						<fr:layout name="tabular">
-		    			    <fr:property name="classes" value="tstyle1 thright thlight thtop mtop025"/>
+		    			    <fr:property name="classes" value="tstyle5 thright thlight thtop mtop025"/>
 			        		<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 					    </fr:layout>			 
     				   		<fr:destination name="postBack" path="/bibtexManagement/changeUnitType.do"/>  			
 			   			</fr:edit>
 			   		</logic:equal>
+			   		
 			<html:submit><bean:message bundle="RESEARCHER_RESOURCES" key="button.submit"/></html:submit>
 		</fr:form>
 	</logic:present>
@@ -186,11 +183,11 @@
 					<bean:define id="participatorBean" name="importBibtexBean" property="nextEditor" type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.bibtex.BibtexParticipatorBean"/>
 					<fr:edit id="editor" name="importBibtexBean" property="nextEditor" schema="<%=participatorBean.getActiveSchema()%>">
 						<fr:layout name="tabular">
-		    			    <fr:property name="classes" value="tstyle1 thright thlight thtop mtop05"/>
+		    			    <fr:property name="classes" value="tstyle5 thright thlight thtop mtop05"/>
 			        		<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 					    </fr:layout>
+					    <fr:destination name="change.person.type" path="/bibtexManagement/changePersonType.do"/>
 				   		<fr:destination name="invalid" path="/bibtexManagement/invalidSubmit.do"/>
-
 			   		</fr:edit>
 			   		<logic:equal name="participatorBean" property="externalPerson" value="true">
 
@@ -279,11 +276,6 @@
 		<span class="actual">
 		<strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.importBibtex.step"/> 2 : </strong>
 			<bean:message key="researcher.result.publication.importBibtex.publicationData" bundle="RESEARCHER_RESOURCES"/></span>
-		</span>
-		>
-		<span>
-		<strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.importBibtex.step"/> 3 : </strong>
-		<bean:message key="label.associatingDocumentsAndUnits" bundle="RESEARCHER_RESOURCES"/></span>
 		</span>
  	</p>
 			 	

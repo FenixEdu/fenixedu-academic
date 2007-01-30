@@ -76,7 +76,8 @@ public class IdOperator extends OperatorArgument {
      */
     protected NumberOperator getNumberOperator() {
         if (this.number == null) {
-            this.number = new NumberOperator((GroupContextProvider) this, argument(PARAMETER));
+            this.number = new NumberOperator((GroupContextProvider) this, new ParameterOperator(
+					(GroupContextProvider) this, argument(PARAMETER)));
         }
 
         return this.number;

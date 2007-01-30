@@ -22,9 +22,7 @@ public class ResultDocumentFilesManagementAction extends ResultsManagementAction
         }
 
         setResDocFileRequestAttributes(request, result);
-        String forwardTo = request.getParameter("forwardTo");
-    	
-        return mapping.findForward(forwardTo);
+        return mapping.findForward("editDocumentFiles");
     }
 
     public ActionForward prepareAlter(ActionMapping mapping, ActionForm form,

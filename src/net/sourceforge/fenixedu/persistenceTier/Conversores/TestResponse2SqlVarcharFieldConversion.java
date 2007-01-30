@@ -6,10 +6,11 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 
-import net.sourceforge.fenixedu.util.StringNormalizer;
 import net.sourceforge.fenixedu.util.tests.Response;
 
 import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
+
+import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public class TestResponse2SqlVarcharFieldConversion implements FieldConversion {
 

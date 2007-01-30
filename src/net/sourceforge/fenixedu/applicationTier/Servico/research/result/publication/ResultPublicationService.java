@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.research.result.publica
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ArticleBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.BookBean;
-import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ConferenceArticlesBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.InbookBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.IncollectionBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.InproceedingsBean;
@@ -14,7 +13,6 @@ import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.R
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.TechnicalReportBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ThesisBean;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.research.event.Event;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFile;
 import net.sourceforge.fenixedu.domain.research.result.ResultEventAssociation;
@@ -49,91 +47,72 @@ public abstract class ResultPublicationService extends Service {
 	 */
 	protected Book createBookFromBean(BookBean bean) {
 		return new Book(bean.getPerson(), bean.getRole(), bean.getTitle(), bean.getKeywords(),
-				getPublisher(bean), bean.getYear(), bean.getVolume(), bean
-						.getSeries(), bean.getAddress(), bean.getEdition(),
-				bean.getIsbn(), bean.getNumberPages(), bean.getLanguage(), bean
-						.getCountry(), bean.getScope(), bean.getNote(), bean
-						.getMonth(), bean.getUrl());
+				getPublisher(bean), bean.getYear(), bean.getVolume(), bean.getSeries(), bean.getAddress(),
+				bean.getEdition(), bean.getIsbn(), bean.getNumberPages(), bean.getLanguage(), bean
+						.getCountry(), bean.getScope(), bean.getNote(), bean.getMonth(), bean.getUrl());
 	}
 
 	protected BookPart createInbookFromBean(InbookBean bean) {
-		return new BookPart(bean.getPerson(), bean.getRole(),
-				BookPartType.Inbook, bean.getTitle(), bean.getKeywords(), bean.getChapter(), bean
-						.getFirstPage(), bean.getLastPage(),
-				getPublisher(bean), bean.getYear(), bean.getVolume(), bean
-						.getSeries(), bean.getEdition(), bean.getCountry(),
-				bean.getAddress(), bean.getNote(), bean.getMonth(), bean
-						.getUrl());
+		return new BookPart(bean.getPerson(), bean.getRole(), BookPartType.Inbook, bean.getTitle(), bean
+				.getKeywords(), bean.getChapter(), bean.getFirstPage(), bean.getLastPage(),
+				getPublisher(bean), bean.getYear(), bean.getVolume(), bean.getSeries(), bean.getEdition(),
+				bean.getCountry(), bean.getAddress(), bean.getNote(), bean.getMonth(), bean.getUrl());
 	}
 
 	protected BookPart createIncollectionFromBean(IncollectionBean bean) {
-		return new BookPart(bean.getPerson(), bean.getRole(),
-				BookPartType.Incollection, bean.getTitle(), bean.getKeywords(),
-				bean.getBookTitle(), getPublisher(bean), bean.getYear(), bean
-						.getFirstPage(), bean.getLastPage(),
-				getOrganization(bean), bean.getCountry(), bean.getAddress(),
-				bean.getNote(), bean.getMonth(), bean.getUrl());
+		return new BookPart(bean.getPerson(), bean.getRole(), BookPartType.Incollection, bean.getTitle(),
+				bean.getKeywords(), bean.getBookTitle(), getPublisher(bean), bean.getYear(), bean
+						.getFirstPage(), bean.getLastPage(), getOrganization(bean), bean.getCountry(), bean
+						.getAddress(), bean.getNote(), bean.getMonth(), bean.getUrl());
 	}
 
 	protected Article createArticleFromBean(ArticleBean bean) {
-		return new Article(bean.getPerson(), bean.getTitle(), bean.getKeywords(),
-				bean.getJournal(), bean.getYear(), getOrganization(bean), bean
-						.getVolume(), bean.getNumber(), bean.getFirstPage(),
-				bean.getLastPage(), bean.getNote(), bean.getIssn(), bean
-						.getLanguage(), bean.getCountry(), bean.getScope(),
-				bean.getMonth(), bean.getUrl());
+		return new Article(bean.getPerson(), bean.getTitle(), bean.getKeywords(), bean.getJournal(), bean
+				.getYear(), getOrganization(bean), bean.getVolume(), bean.getNumber(), bean.getFirstPage(),
+				bean.getLastPage(), bean.getNote(), bean.getIssn(), bean.getLanguage(), bean.getCountry(),
+				bean.getScope(), bean.getMonth(), bean.getUrl());
 	}
 
 	protected Inproceedings createInproceedingsFromBean(InproceedingsBean bean) {
-		
 
-		return new Inproceedings(bean.getPerson(), bean.getRole(), bean
-				.getTitle(), bean.getKeywords(), bean.getYear(), bean.getConference(), bean.getScope(),
-				getPublisher(bean), getOrganization(bean), bean.getAddress(),
-				bean.getFirstPage(), bean.getLastPage(), bean.getNote(), bean
+		return new Inproceedings(bean.getPerson(), bean.getRole(), bean.getTitle(), bean.getKeywords(), bean
+				.getYear(), bean.getConference(), bean.getScope(), getPublisher(bean), getOrganization(bean),
+				bean.getAddress(), bean.getFirstPage(), bean.getLastPage(), bean.getNote(), bean
 						.getLanguage(), bean.getMonth(), bean.getUrl());
 	}
 
 	protected Proceedings createProceedingsFromBean(ProceedingsBean bean) {
-		
-		return new Proceedings(bean.getPerson(), bean.getTitle(), bean.getKeywords(), bean
-				.getYear(), bean.getConference(), bean.getScope(), getPublisher(bean),
-				getOrganization(bean), bean.getAddress(), bean.getNote(), bean
-						.getMonth(), bean.getUrl());
+
+		return new Proceedings(bean.getPerson(), bean.getTitle(), bean.getKeywords(), bean.getYear(), bean
+				.getConference(), bean.getScope(), getPublisher(bean), getOrganization(bean), bean
+				.getAddress(), bean.getNote(), bean.getMonth(), bean.getUrl());
 	}
 
 	protected Thesis createThesisFromBean(ThesisBean bean) {
-		return new Thesis(bean.getPerson(), bean.getThesisType(), bean
-				.getTitle(), bean.getKeywords(), getOrganization(bean), bean.getYear(), bean
-				.getAddress(), bean.getNote(), bean.getNumberPages(), bean
-				.getLanguage(), bean.getMonth(), bean.getYearBegin(), bean
-				.getMonthBegin(), bean.getUrl());
+		return new Thesis(bean.getPerson(), bean.getThesisType(), bean.getTitle(), bean.getKeywords(),
+				getOrganization(bean), bean.getYear(), bean.getAddress(), bean.getNote(), bean
+						.getNumberPages(), bean.getLanguage(), bean.getMonth(), bean.getYearBegin(), bean
+						.getMonthBegin(), bean.getUrl());
 	}
 
 	protected Manual createManualFromBean(ManualBean bean) {
-		return new Manual(bean.getPerson(), bean.getTitle(), bean.getKeywords(),
-				getOrganization(bean), bean.getYear(), bean.getAddress(), bean
-						.getNote(), bean.getEdition(), bean.getMonth(), bean
-						.getUrl());
+		return new Manual(bean.getPerson(), bean.getTitle(), bean.getKeywords(), getOrganization(bean), bean
+				.getYear(), bean.getAddress(), bean.getNote(), bean.getEdition(), bean.getMonth(), bean
+				.getUrl());
 	}
 
-	protected TechnicalReport createTechnicalReportFromBean(
-			TechnicalReportBean bean) {
+	protected TechnicalReport createTechnicalReportFromBean(TechnicalReportBean bean) {
 		return new TechnicalReport(bean.getPerson(), bean.getTitle(), bean.getKeywords(),
-				getOrganization(bean), bean.getYear(), bean
-						.getTechnicalReportType(), bean.getNumber(), bean
-						.getAddress(), bean.getNote(), bean.getNumberPages(),
-				bean.getLanguage(), bean.getMonth(), bean.getUrl());
+				getOrganization(bean), bean.getYear(), bean.getTechnicalReportType(), bean.getNumber(), bean
+						.getAddress(), bean.getNote(), bean.getNumberPages(), bean.getLanguage(), bean
+						.getMonth(), bean.getUrl());
 	}
 
-	protected OtherPublication createOtherPublicationFromBean(
-			OtherPublicationBean bean) {
+	protected OtherPublication createOtherPublicationFromBean(OtherPublicationBean bean) {
 		return new OtherPublication(bean.getPerson(), bean.getTitle(), bean.getKeywords(),
-				getPublisher(bean), bean.getYear(), bean.getHowPublished(),
-				bean.getNote(), bean.getAddress(), bean
-						.getOtherPublicationType(), bean.getNumberPages(), bean
-						.getLanguage(), bean.getCountry(), bean.getMonth(),
-				bean.getUrl());
+				getPublisher(bean), bean.getYear(), bean.getHowPublished(), bean.getNote(),
+				bean.getAddress(), bean.getOtherPublicationType(), bean.getNumberPages(), bean.getLanguage(),
+				bean.getCountry(), bean.getMonth(), bean.getUrl());
 	}
 
 	/*
@@ -144,49 +123,41 @@ public abstract class ResultPublicationService extends Service {
 		Unit publisher = publicationBean.getPublisher();
 		if ((publisher == null) && (publicationBean.getPublisherName() != null)
 				&& (publicationBean.getPublisherName().length() > 0))
-			publisher = Unit.createNewExternalInstitution(publicationBean
-					.getPublisherName());
+			publisher = Unit.createNewExternalInstitution(publicationBean.getPublisherName());
 		return publisher;
 	}
 
 	protected Unit getOrganization(ResultPublicationBean publicationBean) {
 		Unit organization = publicationBean.getOrganization();
-		if ((organization == null)
-				&& (publicationBean.getOrganizationName() != null)
+		if ((organization == null) && (publicationBean.getOrganizationName() != null)
 				&& (publicationBean.getOrganizationName().length() > 0))
-			organization = Unit.createNewExternalInstitution(publicationBean
-					.getOrganizationName());
+			organization = Unit.createNewExternalInstitution(publicationBean.getOrganizationName());
 		return organization;
 	}
 
-	protected void updateResultReferences(ResearchResultPublication from,
-			ResearchResultPublication to) {
+	protected void updateResultReferences(ResearchResultPublication from, ResearchResultPublication to) {
 		createNewParticipations(from, to);
 		createNewEventAssociations(from, to);
 		createNewUnitAssociations(from, to);
-		moveFiles(from,to);
+		moveFiles(from, to);
+		to.setUniqueStorageId(from.getUniqueStorageId());
 	}
 
 	private void moveFiles(ResearchResult from, ResearchResult to) {
-		for(ResearchResultDocumentFile file : from.getResultDocumentFiles()) {
+		for (ResearchResultDocumentFile file : from.getAllResultDocumentFiles()) {
 			file.moveFileToNewResearchResultType(to);
 		}
 	}
-	
-	private void createNewUnitAssociations(ResearchResultPublication from,
-			ResearchResultPublication to) {
-		for (ResultUnitAssociation association : from
-				.getResultUnitAssociations()) {
+
+	private void createNewUnitAssociations(ResearchResultPublication from, ResearchResultPublication to) {
+		for (ResultUnitAssociation association : from.getResultUnitAssociations()) {
 			to.addUnitAssociation(association.getUnit(), association.getRole());
 		}
 	}
 
-	private void createNewEventAssociations(ResearchResultPublication from,
-			ResearchResultPublication to) {
-		for (ResultEventAssociation association : from
-				.getResultEventAssociations()) {
-			to.addEventAssociation(association.getEvent(), association
-					.getRole());
+	private void createNewEventAssociations(ResearchResultPublication from, ResearchResultPublication to) {
+		for (ResultEventAssociation association : from.getResultEventAssociations()) {
+			to.addEventAssociation(association.getEvent(), association.getRole());
 		}
 	}
 
@@ -205,10 +176,10 @@ public abstract class ResultPublicationService extends Service {
 			if (!to.acceptsParticipationRole(role)) {
 				role = ResultParticipationRole.Author;
 			}
-			if (!to.hasPersonParticipationWithRole(participation.getPerson(),
-					role)) {
+			if (!to.hasPersonParticipationWithRole(participation.getPerson(), role)) {
 				to.addParticipation(participation.getPerson(), role);
 			}
 		}
 	}
+
 }

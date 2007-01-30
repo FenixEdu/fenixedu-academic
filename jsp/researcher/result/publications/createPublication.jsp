@@ -20,23 +20,16 @@
 		</html:messages>
 		</p>
 	</logic:messagesPresent>
-
-
-	<p class="mvert1 breadcumbs">
-		<span class="actual">
-		<strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.importBibtex.step"/> 1 : </strong>
-		<bean:message key="researcher.result.publication.importBibtex.publicationData" bundle="RESEARCHER_RESOURCES"/></span>
-			 > 
-		<span>
-			<strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.importBibtex.step"/> 2 : </strong>
-		<bean:message key="label.associatingDocumentsAndUnits" bundle="RESEARCHER_RESOURCES"/></span>
-		</span>
- 	</p>
-
 	<fr:form action="/resultPublications/create.do">
 		<logic:equal name="publicationBean" property="createEvent" value="false">
+
 			<!-- Present Author -->
+			<logic:notEqual name="publicationBean" property="class.simpleName" value="ProceedingsBean">
 			<p class="mtop15 mbottom0"><b><bean:message bundle="RESEARCHER_RESOURCES" key="label.author"/></b></p>
+			</logic:notEqual>
+			<logic:equal name="publicationBean" property="class.simpleName" value="ProceedingsBean">
+			<p class="mtop15 mbottom0"><b><bean:message bundle="RESEARCHER_RESOURCES" key="label.editor"/></b></p>
+			</logic:equal>
 			<fr:edit id="author" name="publicationBean" schema="<%= publicationBean.getParticipationSchema() %>" nested="true">
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="tstyle5 thright thlight"/>

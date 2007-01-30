@@ -24,7 +24,7 @@ public class FileAsPictureRenderer extends StringRenderer {
         
         HtmlImage image = new HtmlImage();
 
-        image.setSource(FileManagerFactory.getFileManager().formatDownloadUrl(file.getExternalStorageIdentification(), file.getFilename()));
+        image.setSource(FileManagerFactory.getFactoryInstance().getFileManager().formatDownloadUrl(file.getExternalStorageIdentification(), file.getFilename()));
         image.setTitle(file.getDisplayName());
         
         image.setClasses(classes);

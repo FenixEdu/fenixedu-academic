@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
+import net.sourceforge.fenixedu.util.researcher.ResearchResultMetaDataManager;
 
 public class CreateResultParticipation extends Service {
 
@@ -39,5 +40,6 @@ public class CreateResultParticipation extends Service {
 			}
 		}
 		result.addParticipation(participator, role);
+		ResearchResultMetaDataManager.updateMetaDataInStorageFor(result);
 	}
 }

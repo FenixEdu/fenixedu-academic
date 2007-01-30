@@ -14,11 +14,11 @@
 	
 	<!-- Action paths definitions -->
 
-	<bean:define id="create" value="<%="/resultAssociations/createUnitAssociation.do?forwardTo=editUnitAssociations&" + parameters%>" />
-	<bean:define id="prepareEdit" value="<%="/resultAssociations/prepareEditUnitAssociations.do?forwardTo=editUnitAssociations&" + parameters%>" />
-	<bean:define id="prepareAlter" value="<%="/resultAssociations/prepareEditUnitRole.do?forwardTo=editUnitAssociations&" + parameters%>"/>	
-	<bean:define id="remove" value="<%="/resultAssociations/removeUnitAssociation.do?forwardTo=editUnitAssociations&" + parameters%>"/>
-	<bean:define id="backLink" value="<%="/resultAssociations/backToResult.do?forwardTo=editUnitAssociations&" + parameters%>" />
+	<bean:define id="create" value="<%="/resultAssociations/createUnitAssociation.do?" + parameters%>" />
+	<bean:define id="prepareEdit" value="<%="/resultAssociations/prepareEditUnitAssociations.do?" + parameters%>" />
+	<bean:define id="prepareAlter" value="<%="/resultAssociations/prepareEditUnitRole.do?" + parameters%>"/>	
+	<bean:define id="remove" value="<%="/resultAssociations/removeUnitAssociation.do?" + parameters%>"/>
+	<bean:define id="backLink" value="<%="/resultAssociations/backToResult.do?" + parameters%>" />
 
 <%-- Title --%>		
 	<logic:equal name="resultType" value="ResultPatent">
@@ -82,18 +82,22 @@
 	<%-- Create new result unit association --%>
 	<p class="mtop2 mbottom0"><b><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultUnitAssociation.add"/></b></p>
 	<logic:present name="unitBean">
-		
-		<fr:edit id="unitBean" name="unitBean" schema="resultUnitAssociation.create.internal" action="<%= create %>">
+		<bean:define id="beanForUnit" name="unitBean" type="net.sourceforge.fenixedu.dataTransferObject.research.result.ResultUnitAssociationCreationBean"/>
+		<fr:form action="<%= create %>">
+		<fr:edit id="unitBean" name="unitBean" schema="<%= "resultUnitAssociation.create." + beanForUnit.getUnitType()%>">
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle1 thright thlight"/>
+				<fr:property name="classes" value="tstyle5 thright thlight"/>
 				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 			</fr:layout>
 			<fr:destination name="exception" path="<%= prepareEdit %>"/>
 			<fr:destination name="invalid" path="<%= prepareEdit %>"/>	
 			<fr:destination name="cancel" path="<%= backLink %>"/>	
-			<fr:destination name="postBack" path="<%= "/resultAssociations/changeTypeOfUnit.do?forwardTo=editUnitAssociations&" + parameters %>"/>
+			<fr:destination name="postBack" path="<%= "/resultAssociations/changeTypeOfUnit.do?" + parameters %>"/>
+			<fr:destination name="change.unit.searchType" path="<%= "/resultAssociations/changeTypeOfUnit.do?" + parameters %>"/>
 		</fr:edit>
-
+		<html:submit><bean:message key="label.submit" bundle="APPLICATION_RESOURCES"/></html:submit>
+		<html:cancel><bean:message key="label.finish" bundle="APPLICATION_RESOURCES"/></html:cancel>
+		</fr:form>
 	</logic:present>
 
 </logic:present>

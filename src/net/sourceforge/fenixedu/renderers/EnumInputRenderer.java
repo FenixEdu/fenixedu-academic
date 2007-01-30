@@ -50,6 +50,7 @@ public class EnumInputRenderer extends InputRenderer {
     private boolean key;
     private String excludedValues;
     private String includedValues;
+    private boolean sort;
     
     public String getBundle() {
         return this.bundle;
@@ -134,11 +135,13 @@ public class EnumInputRenderer extends InputRenderer {
                 	pairList.add(new Pair<Enum,String>(oneEnum,RenderUtils.getEnumString(oneEnum, getBundle())));
                 }
                 
-                Collections.sort(pairList, new Comparator<Pair<Enum,String>>() {
-					public int compare(Pair<Enum, String> o1, Pair<Enum, String> o2) {
-						return o1.getValue().compareTo(o2.getValue());
-					}
-                });
+                if(isSort()) {
+	                Collections.sort(pairList, new Comparator<Pair<Enum,String>>() {
+						public int compare(Pair<Enum, String> o1, Pair<Enum, String> o2) {
+							return o1.getValue().compareTo(o2.getValue());
+						}
+	                });
+                }
                 
                 HtmlSimpleValueComponent holderComponent = createInputContainerComponent(enumerate);
                 
@@ -233,4 +236,12 @@ public class EnumInputRenderer extends InputRenderer {
 
 	return result;
     }
+
+	public boolean isSort() {
+		return sort;
+	}
+
+	public void setSort(boolean sort) {
+		this.sort = sort;
+	}
 }

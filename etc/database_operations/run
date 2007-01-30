@@ -29,3 +29,8 @@ function executeWithTempFile() {
 
 execute "AlterTableAssiduousnessClosedMonth" AlterTableAssiduousnessClosedMonth.sql
 execute "CreateClosedMonthJustificationAndExtraWorkTables" CreateClosedMonthJustificationAndExtraWorkTables.sql
+execute "Adding publications functionalities" changes-20070130163908.sql
+execute "Adding publication sections in public page" sections.sql
+execute "Adding publication options to homePage" addPublicationOptionsToSite.sql
+execute "Fixing values in publications" fixValuesInTablePublication.sql
+execute "Performing Researcher modifications" researcherModifications.sql

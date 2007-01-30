@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.util.PeriodState;
-import net.sourceforge.fenixedu.util.StringNormalizer;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -21,10 +20,12 @@ import org.joda.time.DateTimeFieldType;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
+import pt.utl.ist.fenix.tools.util.StringNormalizer;
+
 /**
  * Created on 11/Fev/2003
  * 
- * @author João Mota
+ * @author Joï¿½o Mota
  * @author jpvl
  * 
  */

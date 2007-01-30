@@ -20,7 +20,7 @@ public class EditItemFilePermissions extends FileItemService {
             throws FenixServiceException, ExcepcaoPersistencia, DomainException, FileManagerException {
 
         fileItem.setPermittedGroup(group);
-        FileManagerFactory.getFileManager().changeFilePermissions(
+        FileManagerFactory.getFactoryInstance().getFileManager().changeFilePermissions(
                 fileItem.getExternalStorageIdentification(), !isPublic(group));
 
     }

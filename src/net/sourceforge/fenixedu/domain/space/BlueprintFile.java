@@ -41,12 +41,12 @@ public class BlueprintFile extends BlueprintFile_Base {
     }
 
     private void deleteFile() {
-	final IFileManager fileManager = FileManagerFactory.getFileManager();
+	final IFileManager fileManager = FileManagerFactory.getFactoryInstance().getFileManager();
 	fileManager.deleteFile(getExternalStorageIdentification());
     }
 
     public String getDirectDownloadUrlFormat() {
-        return FileManagerFactory.getFileManager().formatDownloadUrl(
+        return FileManagerFactory.getFactoryInstance().getFileManager().formatDownloadUrl(
                 getExternalStorageIdentification(), getFilename());
     }
 

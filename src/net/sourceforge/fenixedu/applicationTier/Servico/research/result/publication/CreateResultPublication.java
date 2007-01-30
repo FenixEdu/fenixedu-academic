@@ -19,66 +19,68 @@ import net.sourceforge.fenixedu.domain.research.result.publication.OtherPublicat
 import net.sourceforge.fenixedu.domain.research.result.publication.Proceedings;
 import net.sourceforge.fenixedu.domain.research.result.publication.TechnicalReport;
 import net.sourceforge.fenixedu.domain.research.result.publication.Thesis;
+import net.sourceforge.fenixedu.util.researcher.ResearchResultMetaDataManager;
 
 public class CreateResultPublication extends ResultPublicationService {
 
-    public Book run(BookBean bean) {
-        if (bean == null)
-            throw new NullPointerException();
-        return createBookFromBean(bean);
-    }
+	public Book run(BookBean bean) {
+		if (bean == null)
+			throw new NullPointerException();
+		return (Book) ResearchResultMetaDataManager.addDefaultDocument(createBookFromBean(bean));
+	}
 
-    public BookPart run(InbookBean bean) {
-        if (bean == null)
-            throw new NullPointerException();
-        return createInbookFromBean(bean);
-    }
+	public BookPart run(InbookBean bean) {
+		if (bean == null)
+			throw new NullPointerException();
+		return (BookPart) ResearchResultMetaDataManager.addDefaultDocument(createInbookFromBean(bean));
+	}
 
-    public BookPart run(IncollectionBean bean) {
-        if (bean == null)
-            throw new NullPointerException();
-        return createIncollectionFromBean(bean);
-    }
+	public BookPart run(IncollectionBean bean) {
+		if (bean == null)
+			throw new NullPointerException();
+		return (BookPart) ResearchResultMetaDataManager.addDefaultDocument(createIncollectionFromBean(bean));
+	}
 
-    public Article run(ArticleBean bean) {
-        if (bean == null)
-            throw new NullPointerException();
-        return createArticleFromBean(bean);
-    }
+	public Article run(ArticleBean bean) {
+		if (bean == null)
+			throw new NullPointerException();
+		return (Article) ResearchResultMetaDataManager.addDefaultDocument(createArticleFromBean(bean));
+	}
 
-    public Inproceedings run(InproceedingsBean bean) {
-        if (bean == null)
-            throw new NullPointerException();
-        return createInproceedingsFromBean(bean);
-    }
+	public Inproceedings run(InproceedingsBean bean) {
+		if (bean == null)
+			throw new NullPointerException();
+		return (Inproceedings) ResearchResultMetaDataManager.addDefaultDocument(createInproceedingsFromBean(bean));
+	}
 
-    public Proceedings run(ProceedingsBean bean) {
-        if (bean == null)
-            throw new NullPointerException();
-        return createProceedingsFromBean(bean);
-    }
+	public Proceedings run(ProceedingsBean bean) {
+		if (bean == null)
+			throw new NullPointerException();
+		return (Proceedings) ResearchResultMetaDataManager.addDefaultDocument(createProceedingsFromBean(bean));
+	}
 
-    public Thesis run(ThesisBean bean) {
-        if (bean == null)
-            throw new NullPointerException();
-        return createThesisFromBean(bean);
-    }
+	public Thesis run(ThesisBean bean) {
+		if (bean == null)
+			throw new NullPointerException();
+		return (Thesis) ResearchResultMetaDataManager.addDefaultDocument(createThesisFromBean(bean));
+	}
 
-    public Manual run(ManualBean bean) {
-        if (bean == null)
-            throw new NullPointerException();
-        return createManualFromBean(bean);
-    }
+	public Manual run(ManualBean bean) {
+		if (bean == null)
+			throw new NullPointerException();
+		return (Manual) ResearchResultMetaDataManager.addDefaultDocument(createManualFromBean(bean));
+	}
 
-    public TechnicalReport run(TechnicalReportBean bean) {
-        if (bean == null)
-            throw new NullPointerException();
-        return createTechnicalReportFromBean(bean);
-    }
+	public TechnicalReport run(TechnicalReportBean bean) {
+		if (bean == null)
+			throw new NullPointerException();
+		return (TechnicalReport) ResearchResultMetaDataManager.addDefaultDocument(createTechnicalReportFromBean(bean));
+	}
 
-    public OtherPublication run(OtherPublicationBean bean) {
-        if (bean == null)
-            throw new NullPointerException();
-        return createOtherPublicationFromBean(bean);
-    }
+	public OtherPublication run(OtherPublicationBean bean) {
+		if (bean == null)
+			throw new NullPointerException();
+		return (OtherPublication) ResearchResultMetaDataManager.addDefaultDocument(createOtherPublicationFromBean(bean));
+	}
+
 }

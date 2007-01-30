@@ -43,7 +43,7 @@ public class SaveCandidacyDocumentFiles extends Service {
                 Candidacy candidacy = candidacyDocument.getCandidacy();
                 Person person = candidacy.getPerson();
               
-                final FileDescriptor fileDescriptor = FileManagerFactory.getFileManager().saveFile(
+                final FileDescriptor fileDescriptor = FileManagerFactory.getFactoryInstance().getFileManager().saveFile(
                 		getVirtualPath(candidacy), filename, true, person.getName(), filename,
                         candidacyDocumentUploadBean.getFileInputStream());
                 

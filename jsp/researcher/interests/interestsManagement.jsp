@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@page import="net.sourceforge.fenixedu.domain.research.ResearchInterest"%>
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
@@ -56,7 +57,11 @@
 			</fr:layout>
 		</fr:view>
 
+		<bean:size id="size" name="researchInterests"/>
+				
+		<logic:greaterEqual name="size" value="2">
 		<html:link page="/interests/interestsManagement.do?method=alterOrder"> <bean:message key="link.alterOrder" bundle="RESEARCHER_RESOURCES"/></html:link>
+		</logic:greaterEqual>
 	</logic:notPresent> 
 		
 	<logic:present name="alterOrder">

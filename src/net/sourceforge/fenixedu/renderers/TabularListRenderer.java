@@ -147,7 +147,10 @@ public class TabularListRenderer extends CollectionRenderer {
 
     @Override
     protected Layout getLayout(Object object, Class type) {
-        return new TabularListRendererLayout((Collection) object);
+    	Collection sortedCollection = RenderUtils.sortCollectionWithCriteria((Collection) object,
+                getSortBy());
+    	
+    	return new TabularListRendererLayout((Collection) sortedCollection);
     }
     
     public class TabularListRendererLayout extends CollectionTabularLayout {

@@ -15,7 +15,7 @@ import pt.utl.ist.fenix.tools.file.FileDescriptor;
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
 import pt.utl.ist.fenix.tools.file.FileSetType;
-import pt.utl.ist.fenix.tools.file.IFileManager;
+import pt.utl.ist.fenix.tools.file.IScormFileManager;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 
 public class CreateScormPackageForItem extends CreateFileItemForItem {
@@ -33,7 +33,7 @@ public class CreateScormPackageForItem extends CreateFileItemForItem {
     protected FileDescriptor saveFile(VirtualPath filePath,
             String originalFilename, boolean permission,
             Collection<FileSetMetaData> metaData, InputStream inputStream) {
-        final IFileManager fileManager = FileManagerFactory.getFileManager();
+        final IScormFileManager fileManager = FileManagerFactory.getFactoryInstance().getScormFileManager();
 
         return fileManager.saveScormFile(filePath, originalFilename,
                 permission, metaData, inputStream,

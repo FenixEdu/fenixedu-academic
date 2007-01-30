@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.Resul
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
+import org.joda.time.DateTimeFieldType;
 import org.joda.time.Partial;
 
 /**
@@ -19,6 +20,8 @@ import org.joda.time.Partial;
 
 public class ResearchResultPatent extends ResearchResultPatent_Base {
 
+	private static final String usedSchema = "result.patentShortList";
+	
     public enum ResultPatentType {
 	LOCAL, NATIONAL, INTERNATIONAL;
 
@@ -173,4 +176,13 @@ public class ResearchResultPatent extends ResearchResultPatent_Base {
 	throw new DomainException("error.researcher.ResearchResultPatent.illegal.call","setUrl");
     }
 
+	@Override
+	public String getSchema() {
+		return usedSchema;
+	}
+
+	public Integer getApprovalYear() {
+		Partial approvalDate = getApprovalDate();
+		return approvalDate.get(DateTimeFieldType.year());
+	}
 }

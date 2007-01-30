@@ -221,7 +221,7 @@ Documentation:
     
     <!--@ Renders a table with a given schema for a domain object but doesn't render fields that are null or empty
      -->
-    <renderer type="net.sourceforge.fenixedu.domain.DomainObject" layout="tabular-nonNullValues" class="net.sourceforge.fenixedu.renderers.TabularNonNullValuesRenderer"/>
+    <renderer type="java.lang.Object" layout="tabular-nonNullValues" class="net.sourceforge.fenixedu.renderers.TabularNonNullValuesRenderer"/>
 
     <!--@ This layout intends to provide the control links feature to a list presentation. Each object in the collection
           is presented with their own layout and schema in the left column o the table. -->
@@ -345,7 +345,8 @@ Documentation:
     <renderer mode="input" type="net.sourceforge.fenixedu.util.MultiLanguageString" class="net.sourceforge.fenixedu.presentationTier.renderers.MultiLanguageStringInputRenderer"/>
     <renderer mode="input" type="net.sourceforge.fenixedu.util.MultiLanguageString" layout="area" class="net.sourceforge.fenixedu.presentationTier.renderers.MultiLanguageTextInputRenderer"/>
     <renderer mode="input" type="net.sourceforge.fenixedu.util.MultiLanguageString" layout="rich-text" class="net.sourceforge.fenixedu.presentationTier.renderers.MultiLanguageRichTextInputRenderer"/>
-    
+	<renderer mode="input" type="net.sourceforge.fenixedu.util.MultiLanguageString" layout="input-with-comment" class="net.sourceforge.fenixedu.presentationTier.renderers.MultiLanguageTextInputRendererWithComment"/>
+	    
     <renderer mode="input" type="java.lang.Number" class="net.sourceforge.fenixedu.renderers.IntegerInputRenderer"/>
 
     <renderer mode="input" type="int" class="net.sourceforge.fenixedu.renderers.IntegerInputRenderer"/>

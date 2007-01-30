@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.util.MultiLanguageString;
  */
 public class BookPart extends BookPart_Base {
 
-	private static final String usedSchema = "result.publication.presentation.Inbook";
+	private static final String usedSchema = "result.publication.presentation.";
 	
     public enum BookPartType {
 	Inbook, Incollection;
@@ -350,6 +350,6 @@ public class BookPart extends BookPart_Base {
 
 	@Override
 	public String getSchema() {
-		return usedSchema;
+		return usedSchema + getBookPartType();
 	}
 }

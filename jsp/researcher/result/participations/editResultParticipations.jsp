@@ -42,10 +42,13 @@
 	<logic:present name="editRoles"><jsp:include page="editParticipationsRole.jsp"/></logic:present>
  	
  	<!-- Create new Result Participation  -->
+ 	<logic:notPresent name="editRoles">
+ 	<logic:notPresent name="alterOrder">
  	<logic:notPresent name="deleteConfirmation">
 		<jsp:include page="createParticipation.jsp"/>
 	</logic:notPresent>
-	
+	</logic:notPresent>
+	</logic:notPresent>
 	<!-- Go to previous page -->
 	
 </logic:present>

@@ -33,14 +33,19 @@
  	</logic:equal>
  	
  	<%-- From to Create Participation --%>
-	<fr:edit id="bean" name="bean" schema="<%= createSchema %>" action="<%= create %>">
-		<fr:layout name="tabular">
-	        <fr:property name="classes" value="tstyle1 mtop05"/>
-	        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
-		</fr:layout>
-		<fr:destination name="exception" path="<%= prepareEdit %>"/>	
-		<fr:destination name="invalid" path="<%= prepareEdit %>"/>	
-		<fr:destination name="cancel" path="<%= cancel %>"/>
-		<fr:destination name="postBack" path="/resultParticipations/changeParticipationType.do"/>	
-	</fr:edit>
+	<fr:form action="<%= create %>">
+		<fr:edit id="bean" name="bean" schema="<%= createSchema %>" >
+			<fr:layout name="tabular">
+		        <fr:property name="classes" value="tstyle5 thlight mtop05"/>
+		        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
+			</fr:layout>
+			<fr:destination name="exception" path="<%= prepareEdit %>"/>	
+			<fr:destination name="invalid" path="<%= prepareEdit %>"/>	
+			<fr:destination name="cancel" path="<%= cancel %>"/>
+			<fr:destination name="postBack" path="/resultParticipations/changeParticipationType.do"/>	
+			<fr:destination name="change.unitType" path="/resultParticipations/changeUnitType.do"/>
+		</fr:edit>
+		<html:submit><bean:message key="label.submit" bundle="APPLICATION_RESOURCES"/></html:submit>
+		<html:cancel><bean:message key="button.cancel" bundle="APPLICATION_RESOURCES"/></html:cancel>
+	</fr:form>
 </logic:present>

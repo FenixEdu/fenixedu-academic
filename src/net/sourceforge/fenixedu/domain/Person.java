@@ -72,14 +72,17 @@ import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.PeriodState;
-import net.sourceforge.fenixedu.util.StringNormalizer;
 import net.sourceforge.fenixedu.util.UsernameUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
+
+import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public class Person extends Person_Base {
 
@@ -508,7 +511,26 @@ public class Person extends Person_Base {
 	}
 	return resultPublications;
     }
-
+    
+    public List<ResearchResultPublication> getResearchResultPublicationsByType(final Class <? extends ResearchResultPublication> clazz) {
+    	return (List) CollectionUtils.select(getResearchResultPublications(), new Predicate() {
+    		public boolean evaluate(Object arg0) {
+    			return clazz.equals(arg0.getClass());
+    		}
+    	});
+    }
+    
+    public List<ResearchResultPublication> getResearchResultPublicationsByExecutionYear(ExecutionYear executionYear) {
+    	
+    	List<ResearchResultPublication> publicationsForExecutionYear = new ArrayList<ResearchResultPublication>();
+    	for(ResearchResultPublication publication : getResearchResultPublications()) {
+    		if(executionYear.belongsToCivilYear(publication.getYear())) {
+    			publicationsForExecutionYear.add(publication);
+    		}
+    	}
+    	return publicationsForExecutionYear;
+    }
+    
     public List<ResearchResultPatent> getResearchResultPatents() {
 	List<ResearchResultPatent> resultPatents = new ArrayList<ResearchResultPatent>();
 	ResearchResult result = null;
@@ -522,6 +544,16 @@ public class Person extends Person_Base {
 	return resultPatents;
     }
 
+    public List<ResearchResultPatent> getResearchResultPatentsByExecutionYear(ExecutionYear executionYear) {
+    	List<ResearchResultPatent> resultPatents = new ArrayList<ResearchResultPatent>();
+    	for(ResearchResultPatent patent : getResearchResultPatents()) {
+    		if(executionYear.belongsToCivilYear(patent.getApprovalYear())) {
+    			resultPatents.add(patent);
+    		}
+    	}
+    	return resultPatents;
+    }
+    
     @Override
     public List<Advisory> getAdvisories() {
 	Date currentDate = Calendar.getInstance().getTime();
@@ -1612,6 +1644,17 @@ public class Person extends Person_Base {
 	return allPersons;
     }
 
+    public static List<Person> readAllExternalPersons() {
+    	List<Person> allPersons = new ArrayList<Person>();
+    	for (Party party : RootDomainObject.getInstance().getPartys()) {
+    	    if (party.isPerson() && ((Person)party).hasExternalPerson()) {
+    	    	allPersons.add((Person) party);
+    	    }
+    	}
+    	return allPersons;	
+    }
+    
+    
     public SortedSet<StudentCurricularPlan> getActiveStudentCurricularPlansSortedByDegreeTypeAndDegreeName() {
 	final SortedSet<StudentCurricularPlan> studentCurricularPlans = new TreeSet<StudentCurricularPlan>(
 		StudentCurricularPlan.STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_DEGREE_NAME);

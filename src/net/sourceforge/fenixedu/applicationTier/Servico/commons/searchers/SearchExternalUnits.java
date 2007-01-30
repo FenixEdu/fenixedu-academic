@@ -12,10 +12,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.commons.AutoCompleteSear
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
-import net.sourceforge.fenixedu.util.StringNormalizer;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.beanutils.PropertyUtils;
+
+import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public class SearchExternalUnits extends Service implements AutoCompleteSearchService {
 

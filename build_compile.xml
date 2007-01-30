@@ -496,8 +496,8 @@
 			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
 					 propertyFile="build.properties">
 				<include name="FileManagerConfiguration.properties"/>
-				<replacefilter token="@file.manager.implementation.class@" 
-			    			   property="file.manager.implementation.class"/>
+				<replacefilter token="@file.manager.factory.implementation.class@" 
+			    			   property="file.manager.factory.implementation.class"/>
 				<replacefilter token="@dspace.serverUrl@"
 							property="dspace.serverUrl"/>
 				<replacefilter token="@dspace.downloadUriFormat@"
