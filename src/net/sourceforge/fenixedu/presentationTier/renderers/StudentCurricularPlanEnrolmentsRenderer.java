@@ -403,7 +403,7 @@ public class StudentCurricularPlanEnrolmentsRenderer extends InputRenderer {
 	}
     }
     
-    private static class CopyCheckBoxValuesController extends HtmlController {
+    protected static class CopyCheckBoxValuesController extends HtmlController {
 
 	private List<HtmlCheckBox> checkboxes;
 	
