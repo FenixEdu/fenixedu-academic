@@ -537,6 +537,10 @@
 	<slot name="name"/>
 </schema>
 
+<schema name="Enrolment.edit-extra-curricular-status" bundle="ACADEMIC_OFFICE_RESOURCES" type="net.sourceforge.fenixedu.domain.Enrolment" >
+	<slot name="isExtraCurricular"/>
+</schema>
+
 <schema name="DismissalBean.CourseGroup" bundle="ACADEMIC_OFFICE_RESOURCES"
 		type="net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup">
 	<slot name="name" key="label.name" />
