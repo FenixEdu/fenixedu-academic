@@ -161,7 +161,7 @@
 		</tr>
 		
 		<tr>
-			<th><bean:message key="label.mealPeriod" bundle="ASSIDUOUSNESS_RESOURCES"/>:<span class="required">*</span></th>
+			<th><bean:message key="label.mealPeriod" bundle="ASSIDUOUSNESS_RESOURCES"/>:</th>
 			<td>
 				<fr:edit name="workScheduleTypeFactory" id="mealInterval"
 					schema="workScheduleTypeFactory.mealInterval"
