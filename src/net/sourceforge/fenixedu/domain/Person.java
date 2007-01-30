@@ -2342,4 +2342,8 @@ public class Person extends Person_Base {
 	return result;
     }
 
+    public boolean isAdministrativeOfficeEmployee() {
+	return getEmployee() != null && getEmployee().getAdministrativeOffice() != null;
+    }
+
 }
