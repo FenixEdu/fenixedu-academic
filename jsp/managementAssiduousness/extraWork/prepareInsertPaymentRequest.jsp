@@ -6,7 +6,8 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <em><bean:message key="title.extraWork" /></em>
 <h2><bean:message key="link.paymentRequests" /></h2>
-<p class="mtop2"><span class="error0"><html:errors /></span></p>
+
+<p class="mtop15"><span class="error0"><html:errors /></span></p>
 
 
 <logic:present name="extraWorkRequestFactory">
@@ -16,7 +17,8 @@
 		<fr:edit id="1" name="extraWorkRequestFactory"
 			schema="choose.unitYearMonth">
 			<fr:layout>
-				<fr:property name="classes" value="thlight thright" />
+				<fr:property name="classes" value="tstyle5 thlight thright" />
+				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 			</fr:layout>
 		</fr:edit>
 		<p><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"
@@ -29,7 +31,9 @@
 			<fr:edit id="2" name="extraWorkRequestFactory" schema="choose.extraWorkEmployee"/>
 			--%>
 			<logic:empty name="extraWorkRequestFactory" property="employeeList">
-				<bean:message key="message.noPaymentRequests"/>
+				<p class="mtop15">
+					<em><bean:message key="message.noPaymentRequests"/></em>
+				</p>
 			</logic:empty>
 			<logic:notEmpty name="extraWorkRequestFactory" property="employeeList">
 			<bean:define id="year" name="extraWorkRequestFactory" property="year"/>
@@ -50,7 +54,9 @@
 			</logic:notEmpty>
 		</logic:notEmpty>
 		<logic:empty name="extraWorkRequestFactory" property="unit">
-			<bean:message key="message.inexistentCostCenter"/>
+			<p class="mtop15">
+				<em><bean:message key="message.inexistentCostCenter"/></em>
+			</p>
 		</logic:empty>
 		</logic:notEmpty>
 	</fr:form>

@@ -1,4 +1,4 @@
-<%@ page language="java"%>
+<%@ page language	="java"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <html:xhtml />
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
@@ -23,27 +23,40 @@ function addEmployee(){
 <fr:form action="/createExtraWorkAuthorization.do">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" name="extraWorkAuthorizationForm" property="method" value="createExtraWorkAuthorization" />
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" name="extraWorkAuthorizationForm" property="addEmployee" value="no"/>
+	
 	<fr:edit id="extraWorkAuthorization" name="extraWorkAuthorizationFactory" schema="edit.extraWorkAuthorization">
+		<fr:layout>
+			<fr:property name="classes" value="tstyle5 thlight thright thmiddle"/>
+			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+		</fr:layout>
 	</fr:edit>
 	
-	<p><html:link href="javascript:addEmployee()"><bean:message key="link.addEmployee" bundle="ASSIDUOUSNESS_RESOURCES"/></html:link></p>
+	<ul class="list5">
+		<li>
+			<html:link href="javascript:addEmployee()"><bean:message key="link.addEmployee" bundle="ASSIDUOUSNESS_RESOURCES"/></html:link>
+		</li>
+	</ul>
 	
 	<logic:notEmpty name="extraWorkAuthorizationFactory" property="employeesExtraWorkAuthorizations">
 		<fr:edit id="employees" name="extraWorkAuthorizationFactory" property="employeesExtraWorkAuthorizations" 
 			layout="tabular-editable" schema="edit.EmployeeExtraWorkAuthorizationBean">
 			<fr:layout>
-				<fr:property name="classes" value="tstyle8 thlet thlight emphasis2"/>
+				<fr:property name="classes" value="tstyle5 thleft thlight"/>
 			</fr:layout>
 		</fr:edit>
-		<i><bean:message key="label.subtitle" bundle="ASSIDUOUSNESS_RESOURCES"/>:</i><br/>
-		<strong><bean:message key="label.A" bundle="ASSIDUOUSNESS_RESOURCES"/></strong> - <bean:message key="label.normalExtraWork" bundle="ASSIDUOUSNESS_RESOURCES"/><br/>
-		<strong><bean:message key="label.B" bundle="ASSIDUOUSNESS_RESOURCES"/></strong> - <bean:message key="label.normalExtraWorkB" bundle="ASSIDUOUSNESS_RESOURCES"/><br/>
-		<strong><bean:message key="label.C" bundle="ASSIDUOUSNESS_RESOURCES"/></strong> - <bean:message key="label.nightExtraWork" bundle="ASSIDUOUSNESS_RESOURCES"/><br/>
-		<strong><bean:message key="label.D" bundle="ASSIDUOUSNESS_RESOURCES"/></strong> - <bean:message key="label.weeklyRestExtraWork" bundle="ASSIDUOUSNESS_RESOURCES"/><br/>
-		<strong><bean:message key="label.E" bundle="ASSIDUOUSNESS_RESOURCES"/></strong> - <bean:message key="label.auxiliarPersonel" bundle="ASSIDUOUSNESS_RESOURCES"/><br/>
-		<strong><bean:message key="label.F" bundle="ASSIDUOUSNESS_RESOURCES"/></strong> - <bean:message key="label.executiveAuxiliarPersonel" bundle="ASSIDUOUSNESS_RESOURCES"/><br/>
+
+		<p><em><bean:message key="label.subtitle" bundle="ASSIDUOUSNESS_RESOURCES"/>:</em></p>
+		<ul class="nobullet" style="margin-left: 0; padding-left: 0;">
+			<li><em><bean:message key="label.A" bundle="ASSIDUOUSNESS_RESOURCES"/> - <bean:message key="label.normalExtraWork" bundle="ASSIDUOUSNESS_RESOURCES"/></em></li>
+			<li><em><bean:message key="label.B" bundle="ASSIDUOUSNESS_RESOURCES"/> - <bean:message key="label.normalExtraWorkB" bundle="ASSIDUOUSNESS_RESOURCES"/></em></li>
+			<li><em><bean:message key="label.C" bundle="ASSIDUOUSNESS_RESOURCES"/> - <bean:message key="label.nightExtraWork" bundle="ASSIDUOUSNESS_RESOURCES"/></em></li>
+			<li><em><bean:message key="label.D" bundle="ASSIDUOUSNESS_RESOURCES"/> - <bean:message key="label.weeklyRestExtraWork" bundle="ASSIDUOUSNESS_RESOURCES"/></em></li>
+			<li><em><bean:message key="label.E" bundle="ASSIDUOUSNESS_RESOURCES"/> - <bean:message key="label.auxiliarPersonel" bundle="ASSIDUOUSNESS_RESOURCES"/></em></li>
+			<li><em><bean:message key="label.F" bundle="ASSIDUOUSNESS_RESOURCES"/> - <bean:message key="label.executiveAuxiliarPersonel" bundle="ASSIDUOUSNESS_RESOURCES"/></em></li>
+		</ul>
 	</logic:notEmpty>
-			
-	<br/>											
-	<html:submit><bean:message key="button.confirm" bundle="ASSIDUOUSNESS_RESOURCES"/></html:submit>
+
+	<p class="mvert15">
+		<html:submit><bean:message key="button.confirm" bundle="ASSIDUOUSNESS_RESOURCES"/></html:submit>
+	</p>
 </fr:form>

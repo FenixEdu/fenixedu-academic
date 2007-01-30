@@ -7,7 +7,7 @@
 <em><bean:message key="title.assiduousness" /></em>
 <bean:define id="nextAction" name="action" type="java.lang.String"/>
 <h2><bean:message key="<%= "title." + nextAction %>" /></h2>
-<p class="mtop2"><span class="error0"><html:errors/></span></p>
+<p class="mtop15"><span class="error0"><html:errors/></span></p>
 <logic:messagesPresent message="true">
 	<html:messages id="message" message="true">
 		<p><span class="error0"><bean:write name="message" /></span></p>
@@ -22,7 +22,7 @@
 		<bean:message key="label.employeeNumber" />: 
 		<html:text bundle="HTMLALT_RESOURCES" altKey="text.employeeNumber" property="employeeNumber" size="4" maxlength="4" />
 	</p>
-	<p class="mtop15">
+	<p class="mtop1">
 		<html:submit>
 			<bean:message key="button.submit" />
 		</html:submit>

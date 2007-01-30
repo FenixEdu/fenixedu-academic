@@ -14,16 +14,19 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" name="extraWorkAuthorizationForm" property="method" value="showExtraWorkAuthorizations" />
 
 	<fr:edit id="extraWorkAuthorizationSearch" name="extraWorkAuthorizationSearchBean" schema="input.extraWorkAuthorizationSearch">
+		<fr:layout>
+			<fr:property name="classes" value="tstyle5 thlight thright thmiddle"/>
+			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+		</fr:layout>
 	</fr:edit>
-
-	<br/>											
+	
 	<html:submit><bean:message key="button.confirm" bundle="ASSIDUOUSNESS_RESOURCES"/></html:submit>
 </fr:form>
 			
 <logic:notEmpty name="extraWorkAuthorizationSearchBean" property="extraWorkAuthorizations">
 	<fr:view name="extraWorkAuthorizationSearchBean" property="extraWorkAuthorizations" schema="show.extraWorkAuthorization">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle8 thlet thlight emphasis2"/>
+			<fr:property name="classes" value="tstyle1 thleft thlight"/>
 			<fr:property name="link(viewExtraWorkAuthorization)" value="/manageExtraWorkAuthorization.do?method=viewExtraWorkAuthorization" />
 			<fr:property name="key(viewExtraWorkAuthorization)" value="link.viewExtraWorkAuthorization" />
 			<fr:property name="param(viewExtraWorkAuthorization)" value="extraWorkAuthorization.idInternal/authorizationID" />

@@ -32,7 +32,8 @@ function addEmployee(){
 		<fr:edit id="employees" name="extraWorkAuthorizationFactory" property="employeesExtraWorkAuthorizations" 
 			layout="tabular-editable" schema="edit.EmployeeExtraWorkAuthorizationBean">
 			<fr:layout>
-				<fr:property name="classes" value="tstyle8 thlet thlight emphasis2"/>
+				<fr:property name="classes" value="tstyle5 thlight thright thmiddle"/>
+				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 			</fr:layout>
 		</fr:edit>
 		<i><bean:message key="label.subtitle" bundle="ASSIDUOUSNESS_RESOURCES"/>:</i><br/>
