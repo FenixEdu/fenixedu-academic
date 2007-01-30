@@ -52,7 +52,7 @@ public class CloseAssiduousnessMonth extends Service {
             YearMonthDay beginDate, YearMonthDay endDate) {
         YearMonthDay lowerBeginDate = beginDate.minusDays(8);
         HashMap<YearMonthDay, WorkSchedule> workScheduleMap = assiduousness
-                .getWorkSchedulesBetweenDates(endDate, lowerBeginDate);
+                .getWorkSchedulesBetweenDates(lowerBeginDate, endDate);
         DateTime init = getInit(lowerBeginDate, workScheduleMap);
         DateTime end = getEnd(endDate, workScheduleMap);
         HashMap<YearMonthDay, List<AssiduousnessRecord>> clockingsMap = getClockingsMap(
@@ -249,7 +249,7 @@ public class CloseAssiduousnessMonth extends Service {
         }
         Duration hourDuration = new Duration(3600000);
         Duration thisDayExtraWork = thisDayBalance.plus(thisDayUnjustified);
-        if (!thisDayBalance.equals(Duration.ZERO)) {            
+        if (!thisDayBalance.equals(Duration.ZERO)) {
             if (thisDayExtraWork.isLongerThan(hourDuration)) {
                 Duration extra125 = extra125Map
                         .get(workDaySheet.getWorkSchedule().getWorkScheduleType());

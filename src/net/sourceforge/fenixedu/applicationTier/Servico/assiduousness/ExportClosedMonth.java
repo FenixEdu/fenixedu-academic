@@ -61,7 +61,7 @@ public class ExportClosedMonth extends Service {
                 LanguageUtils.getLocale());
         YearMonthDay lowerBeginDate = beginDate.minusDays(8);
         HashMap<YearMonthDay, WorkSchedule> workScheduleMap = assiduousness
-                .getWorkSchedulesBetweenDates(endDate, lowerBeginDate);
+                .getWorkSchedulesBetweenDates(lowerBeginDate, endDate);
         HashMap<YearMonthDay, List<Leave>> leavesMap = getLeavesMap(assiduousnessRecords, beginDate,
                 endDate);
         for (YearMonthDay thisDay = beginDate; thisDay.isBefore(endDate.plusDays(1)); thisDay = thisDay
