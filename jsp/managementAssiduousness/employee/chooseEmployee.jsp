@@ -18,10 +18,13 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1" />	
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="<%=nextAction%>" />
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.action" property="action" value="<%=nextAction%>" />
-	<bean:message key="label.employeeNumber" />
-	<html:text bundle="HTMLALT_RESOURCES" altKey="text.employeeNumber" property="employeeNumber" size="4" maxlength="4" />
-	<br /><br />
-	<html:submit>
-		<bean:message key="button.submit" />
-	</html:submit>
+	<p>
+		<bean:message key="label.employeeNumber" />: 
+		<html:text bundle="HTMLALT_RESOURCES" altKey="text.employeeNumber" property="employeeNumber" size="4" maxlength="4" />
+	</p>
+	<p class="mtop15">
+		<html:submit>
+			<bean:message key="button.submit" />
+		</html:submit>
+	</p>
 </html:form>

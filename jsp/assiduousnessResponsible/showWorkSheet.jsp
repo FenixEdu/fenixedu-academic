@@ -29,7 +29,9 @@
 	<br/>
 	<!-- escrever mes ano -->
 	<logic:empty name="employeeWorkSheet" property="workDaySheetList">
-		<bean:message key="message.employee.noWorkSheet" bundle="ASSIDUOUSNESS_RESOURCES"/>
+		<p>
+			<em><bean:message key="message.employee.noWorkSheet" bundle="ASSIDUOUSNESS_RESOURCES"/></em>
+		</p>
 	</logic:empty>
 	<logic:notEmpty name="employeeWorkSheet" property="workDaySheetList">
 		<fr:view name="employeeWorkSheet" property="workDaySheetList" schema="show.workDaySheet">

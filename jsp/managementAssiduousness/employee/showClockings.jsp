@@ -79,7 +79,9 @@
 
 <logic:present name="clockings">
 	<logic:empty name="clockings">
-		<em><bean:message key="message.employee.noClocking" /></em>
+		<p>
+			<em><bean:message key="message.employee.noClocking" /></em>
+		</p>
 	</logic:empty>
 	<logic:notEmpty name="clockings">
 		<fr:view name="clockings" schema="show.clockingsDaySheet">
@@ -93,5 +95,7 @@
 	</logic:notEmpty>
 </logic:present>
 <logic:notPresent name="clockings">
-	<bean:message key="message.employee.noClocking" />
+	<p>
+		<em><bean:message key="message.employee.noClocking" /></em>
+	</p>
 </logic:notPresent>

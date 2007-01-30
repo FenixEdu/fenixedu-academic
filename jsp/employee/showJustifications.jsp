@@ -54,7 +54,9 @@
 
 <logic:present name="justifications">
 	<logic:empty name="justifications">
-		<em><bean:message key="message.employee.noJustifications" /></em>
+		<p>
+			<em><bean:message key="message.employee.noJustifications" /></em>
+		</p>
 	</logic:empty>
 	<logic:notEmpty name="justifications">
 		<fr:view name="justifications" schema="show.justifications">
@@ -67,5 +69,7 @@
 	</logic:notEmpty>
 </logic:present>
 <logic:notPresent name="justifications">
-	<bean:message key="message.employee.noJustifications" />
+	<p>
+		<em><bean:message key="message.employee.noJustifications" /></em>
+	</p>
 </logic:notPresent>

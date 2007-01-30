@@ -42,10 +42,13 @@
 		<%net.sourceforge.fenixedu.applicationTier.IUserView user = (net.sourceforge.fenixedu.applicationTier.IUserView) session
                     .getAttribute(net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants.U_VIEW);
 		if (net.sourceforge.fenixedu.domain.assiduousness.StaffManagementSection.isMember(user.getPerson())) {%>
-			<p><html:link page="<%="/employeeAssiduousness.do?method=prepareAssociateEmployeeWorkSchedule&amp;employeeID="+employeeID.toString()%>">
+			<ul>
+				<li>
+				<html:link page="<%="/employeeAssiduousness.do?method=prepareAssociateEmployeeWorkSchedule&amp;employeeID="+employeeID.toString()%>">
 					<bean:message key="link.associateWorkSchedule" />
 				</html:link>
-			</p>	
+				</li>
+			</ul>	
 		<% } %>
 </logic:present>
 	
@@ -102,5 +105,7 @@
 </logic:present>
 
 <logic:notPresent name="workScheduleDayList">
-	<bean:message key="message.employee.noInfo" />
+	<p>
+		<em><bean:message key="message.employee.noInfo" />.</em>
+	</p>
 </logic:notPresent>

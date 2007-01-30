@@ -149,7 +149,9 @@
 	
 
 	<logic:empty name="employeeWorkSheet" property="workDaySheetList">
-		<bean:message key="message.employee.noWorkSheet" />
+		<p>
+			<em><bean:message key="message.employee.noWorkSheet" /></em>
+		</p>
 	</logic:empty>
 	<logic:notEmpty name="employeeWorkSheet" property="workDaySheetList">
 		<fr:view name="employeeWorkSheet" property="workDaySheetList"
@@ -199,5 +201,7 @@
 </logic:present>
 
 <logic:notPresent name="employeeWorkSheet">
-	<bean:message key="message.employee.noWorkSheet" />
+	<p>
+		<em><bean:message key="message.employee.noWorkSheet" /></em>
+	</p>
 </logic:notPresent>

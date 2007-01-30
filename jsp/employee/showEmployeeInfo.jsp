@@ -61,5 +61,7 @@
 </logic:present>
 
 <logic:notPresent name="workScheduleDayList">
-	<bean:message key="message.employee.noInfo" />
+	<p>
+		<em><bean:message key="message.employee.noInfo" /></em>
+	</p>
 </logic:notPresent>
