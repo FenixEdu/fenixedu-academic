@@ -38,13 +38,13 @@
 	<h:outputText rendered="#{!CompetenceCourseManagement.renderInEnglish}" value="#{CompetenceCourseManagement.competenceCourse.name}"/>
 	<h:outputText rendered="#{CompetenceCourseManagement.renderInEnglish}" value="#{CompetenceCourseManagement.competenceCourse.nameEn}"/>
 	
-	<h:outputText value="<br/><br/><h1>" escape="false"/>
+	<h:outputText value="<h1>" escape="false"/>
 	<h:outputText rendered="#{!CompetenceCourseManagement.renderInEnglish}" value="#{CompetenceCourseManagement.competenceCourse.name}"/>
 	<h:outputText rendered="#{CompetenceCourseManagement.renderInEnglish}" value="#{CompetenceCourseManagement.competenceCourse.nameEn}"/>
 	<h:outputText value="(#{CompetenceCourseManagement.competenceCourse.acronym})"/>
 	<h:outputText value="</h1>" escape="false"/>
 
-	<h:outputText value="<br/><h2 class='arrow_bullet'>#{bolonhaBundle['area']}</h2>" escape="false"/>
+	<h:outputText value="<h2 class='arrow_bullet'>#{bolonhaBundle['area']}</h2>" escape="false"/>
 	<fc:dataRepeater value="#{CompetenceCourseManagement.competenceCourse.competenceCourseGroupUnit.parentUnits}" var="scientificAreaUnit">
 		<h:outputText value="<p style='margin-left: 0px;'>#{scientificAreaUnit.name} > #{CompetenceCourseManagement.competenceCourse.competenceCourseGroupUnit.name}</p>" escape="false"/>
 	</fc:dataRepeater>
@@ -147,7 +147,7 @@
 	
 	<!-- BIBLIOGRAPHIC REFERENCE -->
 	<h:outputText value="<h2 class='arrow_bullet'>#{bolonhaBundle['bibliographicReference']}</h2>" escape="false"/>
-	<h:outputText value="<h2 class='greytxt' style='margin-top: 10px; margin-left: 0px;'>#{enumerationBundle['MAIN']}</h2>" escape="false"/>
+	<h:outputText value="<h2 class='greytxt' style='margin-top: 15px; margin-left: 0px;'>#{enumerationBundle['MAIN']}</h2>" escape="false"/>
 	<h:panelGroup rendered="#{empty CompetenceCourseManagement.mainBibliographicReferences}">
 		<h:outputText value="<p style='margin-left: 0px;'><i>#{bolonhaBundle['noBibliographicReferences']}</i></p>" escape="false"/>
 	</h:panelGroup>
@@ -180,7 +180,7 @@
 	
 	<h:outputText value="<h2 class='greytxt' style='margin-top: 10px; margin-left: 0px;'>#{enumerationBundle['SECONDARY']}</h2>" escape="false"/>
 	<h:panelGroup rendered="#{empty CompetenceCourseManagement.secondaryBibliographicReferences}">
-		<h:outputText value="<p style='margin-left: 0px;'><i>#{bolonhaBundle['noBibliographicReferences']}</i></p>" escape="false"/>
+		<h:outputText value="<p style='margin-left: 0px;'><i>#{bolonhaBundle['noSecundaryBibliographicReferences']}</i></p>" escape="false"/>
 	</h:panelGroup>	
 	<fc:dataRepeater value="#{CompetenceCourseManagement.secondaryBibliographicReferences}" var="bibliographicReference" rendered="#{!empty CompetenceCourseManagement.secondaryBibliographicReferences}">
 		<h:panelGroup rendered="#{bibliographicReference.type.name == 'SECONDARY'}">

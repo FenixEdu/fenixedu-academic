@@ -9,26 +9,29 @@
 	<f:loadBundle basename="resources/PublicDepartmentResources" var="publicDepartmentBundle"/>
 	<f:loadBundle basename="resources/GlobalResources" var="globalBundle"/>
 
-	<h:outputLink value="#{globalBundle['institution.url']}">
-		<h:outputText value="#{globalBundle['institution.name.abbreviation']}"/>
-	</h:outputLink>
-	&nbsp;&gt;&nbsp;
-	<h:outputLink target="_blank" value="#{globalBundle['institution.url']}#{globalBundle['link.institution.structure']}">
-		<h:outputText value="#{publicDepartmentBundle['structure']}"/>
-	</h:outputLink>
-	&nbsp;&gt;&nbsp;
-	<h:outputLink value="showDepartments.faces">
-		<h:outputText value="#{publicDepartmentBundle['academic.units']}"/>
-	</h:outputLink>
-	&nbsp;&gt;&nbsp;
-	<h:outputText rendered="#{empty CompetenceCourseManagement.selectedDepartmentUnit.webAddress}" value="#{CompetenceCourseManagement.selectedDepartmentUnit.department.realName}"/>
-	<h:outputLink rendered="#{!empty CompetenceCourseManagement.selectedDepartmentUnit.webAddress}" value="#{CompetenceCourseManagement.selectedDepartmentUnit.webAddress}" target="_blank">
-		<h:outputText value="#{CompetenceCourseManagement.selectedDepartmentUnit.department.realName}"/>
-	</h:outputLink>
-	&nbsp;&gt;&nbsp;
-	<h:outputText value="#{publicDepartmentBundle['department.faculty']}"/>
+	<h:outputText value="<div class='breadcumbs mvert0'>" escape="false"/>
+		<h:outputLink value="#{globalBundle['institution.url']}">
+			<h:outputText value="#{globalBundle['institution.name.abbreviation']}"/>
+		</h:outputLink>
+		&nbsp;&gt;&nbsp;
+		<h:outputLink target="_blank" value="#{globalBundle['institution.url']}#{globalBundle['link.institution.structure']}">
+			<h:outputText value="#{publicDepartmentBundle['structure']}"/>
+		</h:outputLink>
+		&nbsp;&gt;&nbsp;
+		<h:outputLink value="showDepartments.faces">
+			<h:outputText value="#{publicDepartmentBundle['academic.units']}"/>
+		</h:outputLink>
+		&nbsp;&gt;&nbsp;
+		<h:outputText rendered="#{empty CompetenceCourseManagement.selectedDepartmentUnit.webAddress}" value="#{CompetenceCourseManagement.selectedDepartmentUnit.department.realName}"/>
+		<h:outputLink rendered="#{!empty CompetenceCourseManagement.selectedDepartmentUnit.webAddress}" value="#{CompetenceCourseManagement.selectedDepartmentUnit.webAddress}" target="_blank">
+			<h:outputText value="#{CompetenceCourseManagement.selectedDepartmentUnit.department.realName}"/>
+		</h:outputLink>
+		&nbsp;&gt;&nbsp;
+		<h:outputText value="#{publicDepartmentBundle['department.faculty']}"/>
+	<h:outputText value="</div>" escape="false"/>
 	
-	<h:outputText value="<br/><br/><h1>#{publicDepartmentBundle['department.faculty']} #{publicDepartmentBundle['of.masculine']} #{CompetenceCourseManagement.selectedDepartmentUnit.department.realName}</h1>" escape="false"/>
+	
+	<h:outputText value="<h1>#{publicDepartmentBundle['department.faculty']} #{publicDepartmentBundle['of.masculine']} #{CompetenceCourseManagement.selectedDepartmentUnit.department.realName}</h1>" escape="false"/>
 	
 	<h:form>
 

@@ -8,18 +8,21 @@
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 	<f:loadBundle basename="resources/PublicDepartmentResources" var="publicDepartmentBundle"/>
 	<f:loadBundle basename="resources/GlobalResources" var="globalBundle"/>
+	
+	<h:outputText value="<div class='breadcumbs mvert0'>" escape="false"/>
+		<h:outputLink value="#{globalBundle['institution.url']}">
+			<h:outputText value="#{globalBundle['institution.name.abbreviation']}"/>
+		</h:outputLink>
+		&nbsp;&gt;&nbsp;
+		<h:outputLink target="_blank" value="#{globalBundle['institution.url']}#{globalBundle['link.institution.structure']}">
+			<h:outputText value="#{publicDepartmentBundle['structure']}"/>
+		</h:outputLink>
+		&nbsp;&gt;&nbsp;
+		<h:outputText value="#{publicDepartmentBundle['academic.units']}"/>
+	<h:outputText value="</div>" escape="false"/>
 
-	<h:outputLink value="#{globalBundle['institution.url']}">
-		<h:outputText value="#{globalBundle['institution.name.abbreviation']}"/>
-	</h:outputLink>
-	&nbsp;&gt;&nbsp;
-	<h:outputLink target="_blank" value="#{globalBundle['institution.url']}#{globalBundle['link.institution.structure']}">
-		<h:outputText value="#{publicDepartmentBundle['structure']}"/>
-	</h:outputLink>
-	&nbsp;&gt;&nbsp;
-	<h:outputText value="#{publicDepartmentBundle['academic.units']}"/>
 
-	<h:outputText value="<br/><br/><h1>#{publicDepartmentBundle['structure']}</h1>" escape="false"/>
+	<h:outputText value="<h1>#{publicDepartmentBundle['structure']}</h1>" escape="false"/>
 	<h:outputText value="<h2>#{publicDepartmentBundle['academic.units']}</h2>" escape="false"/>
 	
 	<h:dataTable value="#{DepartmentManagement.departmentUnits}" var="departmentUnit" style="padding-left: 3em; width: 70em;" columnClasses=",aright">
