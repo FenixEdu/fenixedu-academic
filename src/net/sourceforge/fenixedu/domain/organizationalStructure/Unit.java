@@ -923,6 +923,19 @@ public class Unit extends Unit_Base {
 	return null;
     }
 
+    public static Unit findFirstUnitByName(final String unitName) {
+        if (StringUtils.isEmpty(unitName)) {
+            return null;
+        }
+        for (final Party party : RootDomainObject.getInstance().getPartys()) {
+            if (party instanceof Unit && unitName.equalsIgnoreCase(party.getName())) {
+                final Unit unit = (Unit) party;
+                return unit;
+            }
+        }
+        return null;
+    }
+    
     public String getNameWithAcronym() {
 	String name = super.getName().trim();
 	return (getAcronym() == null || StringUtils.isEmpty(getAcronym().trim())) ? name : name + " ("

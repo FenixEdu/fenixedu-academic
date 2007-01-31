@@ -2005,10 +2005,13 @@ public class Person extends Person_Base {
 
 	public Object execute() {
 	    final Person person = new Person(this, true);
-	    final Unit unit = Unit.findFirstExternalUnitByName(getUnitName());
-	    if (unit == null) {
-		throw new DomainException("error.unit.does.not.exist");
-	    }
+            Unit unit = getUnit();
+            if (unit == null) {
+                unit = Unit.findFirstUnitByName(getUnitName());
+                if (unit == null) {
+                    throw new DomainException("error.unit.does.not.exist");
+                }
+            }
 	    new ExternalContract(person, unit, new YearMonthDay(), null);
 	    return person;
 	}
