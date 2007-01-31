@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
-import net.sourceforge.fenixedu.domain.curricularRules.RuleResult;
+import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.RuleResult;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
@@ -1823,6 +1823,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     public void createModules(Collection<DegreeModuleToEnrol> degreeModulesToEnrol,
 	    ExecutionPeriod executionPeriod, EnrollmentCondition enrollmentCondition) {
+	
 	for (DegreeModuleToEnrol degreeModuleToEnrol : degreeModulesToEnrol) {
 	    if (degreeModuleToEnrol.getContext().getChildDegreeModule().isLeaf()) {
 		new Enrolment(this, degreeModuleToEnrol.getCurriculumGroup(),
@@ -2011,7 +2012,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public CurriculumModule findCurriculumModuleFor(final DegreeModule degreeModule) {
 	return getRoot().findCurriculumModuleFor(degreeModule);
     }
-
+    
     public Collection<Enrolment> getExtraCurricularEnrolments() {
 	final Collection<Enrolment> result = new ArrayList<Enrolment>();
 
@@ -2030,4 +2031,19 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	}
     }
     
+    public boolean isApproved(final CurricularCourse curricularCourse) {
+	return getRoot().isAproved(curricularCourse);
+    }
+    
+    public boolean isApproved(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
+	return getRoot().isAproved(curricularCourse, executionPeriod);
+    }
+    
+    public boolean isEnroledInExecutionPeriod(final CurricularCourse curricularCourse) {
+	return isEnroledInExecutionPeriod(curricularCourse, ExecutionPeriod.readActualExecutionPeriod());
+    }
+    
+    public boolean isEnroledInExecutionPeriod(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
+	return getRoot().isEnroledInExecutionPeriod(curricularCourse, executionPeriod);
+    }
 }
