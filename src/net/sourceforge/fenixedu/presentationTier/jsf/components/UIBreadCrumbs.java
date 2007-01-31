@@ -58,8 +58,8 @@ public class UIBreadCrumbs extends UIInput {
             responseWriter.write(CRUMB_SEPERATOR);
             responseWriter.write(trailingCrumb);
         }
-        writeBR(responseWriter);
-        writeBR(responseWriter);
+        //writeBR(responseWriter);
+        //writeBR(responseWriter);
     }
 
     private void writeLink(final ResponseWriter responseWriter, final String link, final String text) throws IOException {
