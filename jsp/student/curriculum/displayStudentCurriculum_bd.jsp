@@ -68,19 +68,36 @@
 <logic:notPresent role="ACADEMIC_ADMINISTRATIVE_OFFICE">
 	<logic:equal name="registration" property="degreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegree" value="true">
 
+		<script language="JavaScript">	
+		function check(e,v){
+			if (e.className == "dnone")
+		  	{
+			  e.className = "dblock";
+			  v.value = "-";
+			}
+			else {
+			  e.className = "dnone";
+		  	  v.value = "+";
+			}
+		}
+		</script>
+
+	<div class="mtop1 mbottom15">
+
+	<p class="mbottom05">
+		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
+		<a href="#" class="dnone" id="instructionsButton" onclick="javascript:check(document.getElementById('instructions'), document.getElementById('instructionsButton')); return false;">Consultar Média</a>
+	</p>
+
+	<div id="instructions" class="dblock mvert0">
+
+	<div class="infoop3">
+	
 		<logic:equal name="registration" property="concluded" value="true">
-			<p class="mtop2">
-				<span class="warning0">
-					<bean:message key="final.degree.average.info" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-				</span>
-			</p>
-			<table class="tstyle4 thright thlight mtop0">
-				<tr>
-					<th><bean:message key="final.degree.average" bundle="ACADEMIC_OFFICE_RESOURCES"/></th>
-					<td><bean:write name="registration" property="average"/></td>
-				</tr>	
-			</table>
+			<p class="mvert05"><strong><bean:message key="final.degree.average.info" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
+			<p class="mvert05"><bean:message key="final.degree.average" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <bean:write name="registration" property="average"/></p>
 		</logic:equal>
+		
 		<logic:equal name="registration" property="concluded" value="false">
 			<%
 				final StudentCurriculum studentCurriculum = new StudentCurriculum(registration);
@@ -101,49 +118,78 @@
 				final double sumPi = studentCurriculum.getSumPi(null);
 				request.setAttribute("sumPi", sumPi);
 			%>
-		
-			<p class="mtop2">
-				<span class="warning0">
-					<bean:message key="rules.info" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-				</span>
-			</p>
-			<table class="tstyle4 thright thlight mtop0">
-				<tr>
-					<th><bean:message key="degree.average" bundle="ACADEMIC_OFFICE_RESOURCES"/></th>
-					<td><bean:write name="average"/></td>
-				</tr>	
-				<tr>
-					<th><bean:message key="rule" bundle="ACADEMIC_OFFICE_RESOURCES"/></th>
-					<td><bean:message key="average.rule" bundle="ACADEMIC_OFFICE_RESOURCES"/></td>
-				</tr>	
-				<tr>
-					<th><bean:message key="result" bundle="ACADEMIC_OFFICE_RESOURCES"/></th>
-					<td>
-						<bean:message key="degree.average.abbreviation" bundle="ACADEMIC_OFFICE_RESOURCES"/> = <bean:write name="sumPiCi"/> / <bean:write name="sumPi"/> = <bean:write name="average"/>
-					</td>
-				</tr>	
-			</table>
-			<table class="tstyle4 thright thlight mtop0">
-				<tr>
-					<th><bean:message key="curricular.year" bundle="ACADEMIC_OFFICE_RESOURCES"/></th>
-					<td><bean:write name="curricularYear"/></td>
-				</tr>	
-				<tr>
-					<th><bean:message key="rule" bundle="ACADEMIC_OFFICE_RESOURCES"/></th>
-					<td>
-						<bean:message key="curricular.year.rule" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-					</td>
-				</tr>	
-				<tr>
-					<th><bean:message key="result" bundle="ACADEMIC_OFFICE_RESOURCES"/></th>
-					<td>
-						<bean:message key="curricular.year.abbreviation" bundle="ACADEMIC_OFFICE_RESOURCES"/> = <bean:message key="minimum" bundle="ACADEMIC_OFFICE_RESOURCES"/> (<bean:message key="int" bundle="ACADEMIC_OFFICE_RESOURCES"/> ( (<bean:write name="totalEctsCredits"/> + 24) / 60 + 1) ; <bean:write name="registration" property="degreeType.years"/>) = <bean:write name="curricularYear"/>;
-					</td>
-				</tr>	
-			</table>
+			<p class="mvert05"><strong><bean:message key="rules.info" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
+			<p class="mvert05"><bean:message key="degree.average" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <b class="highlight1"><bean:write name="average"/></b></p>
+			<p class="mvert05"><bean:message key="rule" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <bean:message key="average.rule" bundle="ACADEMIC_OFFICE_RESOURCES"/></p>
+			<p class="mvert05"><bean:message key="result" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <bean:message key="degree.average.abbreviation" bundle="ACADEMIC_OFFICE_RESOURCES"/> = <bean:write name="sumPiCi"/> / <bean:write name="sumPi"/> = <b class="highlight1"><bean:write name="average"/></b></p>
+			<p class="mtop1 mbottom05"><bean:message key="curricular.year" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <bean:write name="curricularYear"/></p>
+			<p class="mvert05"><bean:message key="rule" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <bean:message key="curricular.year.rule" bundle="ACADEMIC_OFFICE_RESOURCES"/></p>
+			<p class="mvert05"><bean:message key="result" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <bean:message key="curricular.year.abbreviation" bundle="ACADEMIC_OFFICE_RESOURCES"/> = <bean:message key="minimum" bundle="ACADEMIC_OFFICE_RESOURCES"/> (<bean:message key="int" bundle="ACADEMIC_OFFICE_RESOURCES"/> ( (<bean:write name="totalEctsCredits"/> + 24) / 60 + 1) ; <bean:write name="registration" property="degreeType.years"/>) = <b class="highlight1"><bean:write name="curricularYear"/></b>;</p>
 		</logic:equal>
+	</div>
+	</div>
+	</div>
+
+	<script>
+		check(document.getElementById('instructions'), document.getElementById('instructionsButton'));
+		document.getElementById('instructionsButton').className="dinline";
+	</script>
+
 	</logic:equal>
 </logic:notPresent>
+
+
+
+
+
+<%--
+	<div class="infoop3 mtop2">
+		<logic:notEmpty name="executionYear">
+			<p class="mvert05"><bean:message key="rules.info" bundle="ACADEMIC_OFFICE_RESOURCES"/></p>
+			<p class="mvert05">Os cálculos acima baseam-se nas informações na tabela em baixo.</p>
+	
+			<p class="mbottom05"><strong>Cálculo da <bean:message key="degree.average" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
+			<p class="mvert05"><bean:message key="rule" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <bean:message key="average.rule" bundle="ACADEMIC_OFFICE_RESOURCES"/></p>
+			<p class="mvert05"><bean:message key="result" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <bean:message key="degree.average.abbreviation" bundle="ACADEMIC_OFFICE_RESOURCES"/> = <bean:write name="sumPiCi"/> / <bean:write name="sumPi"/> = <b class="highlight1"><bean:write name="average"/></b></p>
+		
+			<p class="mbottom05"><strong>Cálculo do <bean:message key="curricular.year" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
+			<p class="mvert05"><bean:message key="rule" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <bean:message key="curricular.year.rule" bundle="ACADEMIC_OFFICE_RESOURCES"/></p>
+			<p class="mvert05"><bean:message key="result" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <bean:message key="curricular.year.abbreviation" bundle="ACADEMIC_OFFICE_RESOURCES"/> = <bean:message key="minimum" bundle="ACADEMIC_OFFICE_RESOURCES"/> (<bean:message key="int" bundle="ACADEMIC_OFFICE_RESOURCES"/> ( (<bean:write name="totalEctsCredits"/> + 24) / 60 + 1) ; <bean:write name="registration" property="degreeType.years"/>) = <b class="highlight1"><bean:write name="curricularYear"/></b></p>
+		</logic:notEmpty>
+		<logic:empty name="executionYear">
+			<bean:message key="following.info.refers.to" bundle="ACADEMIC_OFFICE_RESOURCES"/> <bean:message key="all.curriculum" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+			<logic:equal name="registration" property="concluded" value="false">
+				<p class="mvert05"><bean:message key="rules.info" bundle="ACADEMIC_OFFICE_RESOURCES"/></p>
+				<p class="mvert05">Os cálculos acima baseam-se nas informações na tabela em baixo.</p>
+		
+				<p class="mbottom05"><strong>Cálculo da <bean:message key="degree.average" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
+				<p class="mvert05"><bean:message key="rule" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <bean:message key="average.rule" bundle="ACADEMIC_OFFICE_RESOURCES"/></p>
+				<p class="mvert05"><bean:message key="result" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <bean:message key="degree.average.abbreviation" bundle="ACADEMIC_OFFICE_RESOURCES"/> = <bean:write name="sumPiCi"/> / <bean:write name="sumPi"/> = <b class="highlight1"><bean:write name="average"/></b></p>
+			
+				<p class="mbottom05"><strong>Cálculo do <bean:message key="curricular.year" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
+				<p class="mvert05"><bean:message key="rule" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <bean:message key="curricular.year.rule" bundle="ACADEMIC_OFFICE_RESOURCES"/></p>
+				<p class="mvert05"><bean:message key="result" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <bean:message key="curricular.year.abbreviation" bundle="ACADEMIC_OFFICE_RESOURCES"/> = <bean:message key="minimum" bundle="ACADEMIC_OFFICE_RESOURCES"/> (<bean:message key="int" bundle="ACADEMIC_OFFICE_RESOURCES"/> ( (<bean:write name="totalEctsCredits"/> + 24) / 60 + 1) ; <bean:write name="registration" property="degreeType.years"/>) = <b class="highlight1"><bean:write name="curricularYear"/></b></p>
+			</logic:equal>
+			<logic:equal name="registration" property="concluded" value="true">
+				<bean:message key="final.degree.average.info" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+
+				<p class="mbottom05"><strong><bean:message key="degree.average" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
+				<p class="mvert05"><bean:message key="degree.average.abbreviation" bundle="ACADEMIC_OFFICE_RESOURCES"/> = <bean:write name="registration" property="average"/></b></p>
+			</logic:equal>
+		</logic:empty>
+		<logic:notEmpty name="executionYear">
+			<bean:message key="following.info.refers.to" bundle="ACADEMIC_OFFICE_RESOURCES"/> <bean:message key="begin.of.execution.year" bundle="ACADEMIC_OFFICE_RESOURCES"/> <bean:write name="executionYear" property="year"/>.
+		</logic:notEmpty>
+	</div>
+--%>
+
+
+
+
+
+
+
+
 
 
 <%-- Choose Student Curricular Plan form --%>
@@ -245,18 +291,20 @@
 
 <%-- inline styles to remove --%>
 <style type="text/css">
-.bgcolor01 { background: #efe; }
-.bgcolor02 { background: #eff; }
-.bgcolor03 { background: #ffe; }
-.bgcolor04 { background: #eef; }
-.bgcolor05 { background: #fee; }
-.bgcolor06 { background: #fde; }
-.bgcolor07 { background: #efd; }
-.bgcolor08 { background: #dfe; }
-.bgcolor09 { background: #edf; }
-.bgcolor10 { background: #def; }
-.bgcolor11 { background: #fed; }
-.bgcolor12 { background: #fcd; }
+<%--
+.col01 { background: #efe; }
+.col02 { background: #eff; }
+.col03 { background: #ffe; }
+.col04 { background: #eef; }
+.col05 { background: #fee; }
+.col06 { background: #fde; }
+.col07 { background: #efd; }
+.col08 { background: #dfe; }
+.col09 { background: #edf; }
+.col10 { background: #def; }
+.col11 { background: #fed; }
+.col12 { background: #fcd; }
+--%>
 
 .bgcolor01 { background: #fdfdfa; }
 .bgcolor02 { background: #fdfdfa; }
@@ -271,7 +319,9 @@
 .bgcolor11 { background: #fdfdfa; }
 .bgcolor12 { background: #fdfdfa; }
 .bgcolor13 { background: #fdfdfa; }
+
 </style>
+
 
 		<bean:define id="initialWidth" value="800px"/>
 		<bean:define id="widthDecreasePerLevel" value="10"/>
@@ -279,19 +329,19 @@
 		<bean:define id="groupRowClasses" value="bgcolor2"/>
 		<bean:define id="groupNameClasses" value="aleft"/>
 		<bean:define id="enrolmentClasses" value="
-			<!-- Código e Disciplina --> 		col4 bgcolor04 aleft,
-			<!-- Curso  --> 					col5 bgcolor05 width7em acenter,
-			<!-- Opcional  -->					col8 bgcolor08 width7em acenter,
-			<!-- Caixa  -->						col13 bgcolor13 width05em acenter printhidden,
-			<!-- Reprovado Não Avaliado  -->	col9 bgcolor09 width8em acenter,
-			<!-- Nota  -->						col10 bgcolor10 width2em aright,
-			<!-- Peso  -->						col11 bgcolor11 color888 width2em aright,
-			<!-- ECTS  -->						col12 bgcolor12 color888 width2em aright,
-			<!-- Época Normal -->				col3 bgcolor03 width1p5em acenter,
-			<!-- Ano -->						col6 bgcolor06 grupos,
-			<!-- Semestre -->					col7 bgcolor07 grupos,
-			<!-- Data do Exame -->				col2 bgcolor02 width6em acenter,
-			<!-- Pessoa Responsável Nota -->	col1 bgcolor01 width2em acenter
+			<!-- Código e Disciplina --> 		col01 bgcolor04 aleft,
+			<!-- Curso  --> 					col02 bgcolor05 width5em acenter,
+			<!-- Opcional  -->					col03 bgcolor08 width5em acenter,
+			<!-- Caixa  -->						col04 bgcolor13 width2em acenter printhidden,
+			<!-- Reprovado Não Avaliado  -->	col05 bgcolor09 width8em acenter,
+			<!-- Nota  -->						col06 bgcolor10 width2em acenter,
+			<!-- Peso  -->						col07 bgcolor11 color888 width2em acenter,
+			<!-- ECTS  -->						col08 bgcolor12 color888 width2em acenter,
+			<!-- Época Normal -->				col09 bgcolor03 width1p5em acenter,
+			<!-- Ano -->						col10 bgcolor06 width5em acenter,
+			<!-- Semestre -->					col11 bgcolor07 width5em acenter,
+			<!-- Data do Exame -->				col12 bgcolor02 width6em acenter,
+			<!-- Pessoa Responsável Nota -->	col13 bgcolor01 width3em acenter
 		"/>
 
 		<fr:edit name="studentCurricularPlan">
@@ -310,7 +360,7 @@
 	</logic:iterate>
 
 
-<p class="mtop3 mbottom0"><strong><bean:message key="label.legend" bundle="STUDENT_RESOURCES"/></strong></p>
+<p class="mtop2 mbottom0"><strong><bean:message key="label.legend" bundle="STUDENT_RESOURCES"/></strong></p>
 <div style="width: 250px; float: left;">
     <e:labelValues id="enrolmentEvaluationTypes" enumeration="net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType" />
 	<logic:iterate id="enrolmentEvaluationType" name="enrolmentEvaluationTypes" type="LabelValueBean">
