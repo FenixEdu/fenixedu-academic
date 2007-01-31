@@ -2012,4 +2012,22 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return getRoot().findCurriculumModuleFor(degreeModule);
     }
 
+    public Collection<Enrolment> getExtraCurricularEnrolments() {
+	final Collection<Enrolment> result = new ArrayList<Enrolment>();
+
+	for (final Enrolment enrolment : getEnrolmentsSet()) {
+	    if (enrolment.isExtraCurricular()) {
+		result.add(enrolment);
+	    }
+	}
+	
+	return result;
+    }
+    
+    public void setExtraCurricularEnrolments(final Collection<Enrolment> extraCurricularEnrolments) {
+	for (final Enrolment enrolment : getEnrolmentsSet()) {
+	    enrolment.setIsExtraCurricular(extraCurricularEnrolments.contains(enrolment));
+	}
+    }
+    
 }
