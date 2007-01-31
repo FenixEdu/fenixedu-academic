@@ -162,7 +162,9 @@
 			</fr:layout>
 			<fr:destination name="view.publication" module="" path="<%="/researcher/resultPublications/showResultForOthers.do?resultId=" + resultId %>"/>
 		</fr:view>
+		<logic:notEqual name="result" property="class.simpleName" value="Unstructured">
 		(<html:link target="_blank" page="<%="/publications/bibtexManagement.do?method=exportPublicationToBibtex&publicationId=" + resultId%>"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.exportToBibTeX" /></html:link>)
+		</logic:notEqual>
 		</logic:notEqual>
 		
 			<%-- <p class="mvert0" style="color: #777;"><bean:message key="label.files" bundle="RESEARCHER_RESOURCES"/>:</p> --%>
