@@ -35,10 +35,12 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="search"/>
 
 	<logic:notEqual name="academicSituationType" value="NEW">
-		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="academic.service.requests.treated.by.employee"/> <bean:write name="employee" property="roleLoginAlias"/>:
+		<p class="mtop2 mbottom05">
+			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="academic.service.requests.treated.by.employee"/> <bean:write name="employee" property="roleLoginAlias"/>:
+		</p>
 
 		<logic:empty name="employeeRequests">
-			<p class="mtop1 mleft1">
+			<p class="mtop05">
 				<em>
 					<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="no.academic.service.requests.found" />
 				</em>
@@ -62,13 +64,13 @@
 			</fr:view>
 		</logic:notEmpty>
 
-		<p class="mtop2">
+		<p class="mtop2 mbottom05">
 			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="academic.service.requests.treated.by.others"/>:
 		</p>
 	</logic:notEqual>
 
 	<logic:empty name="academicServiceRequests">
-		<p class="mtop1 mleft1">
+		<p>
 			<em>
 				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="no.academic.service.requests.found" />
 			</em>
@@ -77,7 +79,7 @@
 	<logic:notEmpty name="academicServiceRequests">
 		<fr:view name="academicServiceRequests" schema="DocumentRequest.view-documentPurposeTypeInformation">
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle4 tdcenter" />
+				<fr:property name="classes" value="tstyle4 tdcenter mtop05" />
 				<fr:property name="rowClasses" value="bgwhite," />
 				
 				<fr:property name="columnClasses" value="smalltxt,smalltxt,smalltxt  aleft nowrap,smalltxt,smalltxt,smalltxt nowrap,smalltxt nowrap," />
