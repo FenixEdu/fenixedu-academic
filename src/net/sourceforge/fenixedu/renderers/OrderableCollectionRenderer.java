@@ -180,7 +180,7 @@ public class OrderableCollectionRenderer extends CollectionRenderer {
                 if (columnIndex == 0 && isCheckable()) {
                     return new HtmlText();
                 }
-                else if (columnIndex < getNumberOfColumns() - getNumberOfLinks()) {
+                else if (columnIndex < getNumberOfColumns() - getNumberOfLinkColumns()) {
                     String slotName = getObject(0).getSlots().get(columnIndex - (isCheckable() ? 1 : 0)).getName();
                     
                     HtmlLink link = new HtmlLink();

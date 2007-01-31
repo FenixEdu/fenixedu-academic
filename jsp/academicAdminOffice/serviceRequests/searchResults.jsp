@@ -31,6 +31,13 @@
 	/academicServiceRequestsManagement.do?method=prepareConcludeAcademicServiceRequest
 </bean:define>
 
+<%
+	String sortCriteria = request.getParameter("sortBy");
+    if (sortCriteria == null) {
+    	sortCriteria = "urgentRequest=desc";
+    }
+%>
+
 <fr:form action="/academicServiceRequestsManagement.do">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="search"/>
 
@@ -46,12 +53,12 @@
 				</em>
 			</p>
 		</logic:empty>
+		
 		<logic:notEmpty name="employeeRequests">
 			<fr:view name="employeeRequests" schema="DocumentRequest.view-documentPurposeTypeInformation">
-				<fr:layout name="tabular">
+				<fr:layout name="tabular-sortable">
 					<fr:property name="classes" value="tstyle4 tdcenter" />
 					<fr:property name="rowClasses" value="bgwhite," />
-					
 					<fr:property name="columnClasses" value="smalltxt,smalltxt,smalltxt  aleft nowrap,smalltxt,smalltxt,smalltxt nowrap,smalltxt nowrap," />
 					<fr:property name="linkFormat(processing)" value="<%= newRequestUrl + "&academicServiceRequestId=${idInternal}" %>"/>
 					<fr:property name="key(processing)" value="processing"/>
@@ -59,7 +66,10 @@
 					<fr:property name="linkFormat(concluded)" value="<%= processRequestUrl + "&academicServiceRequestId=${idInternal}" %>"/>
 					<fr:property name="key(concluded)" value="conclude"/>
 					<fr:property name="visibleIf(concluded)" value="processing"/>
-					<fr:property name="sortBy" value="urgentRequest=desc,creationDate=asc"/>
+
+					<fr:property name="sortBy" value="<%= sortCriteria + ",creationDate=asc" %>"/>
+					<fr:property name="sortUrl" value="<%= "/academicServiceRequestsManagement.do?method=search&academicSituationType=" + request.getParameter("academicSituationType") %>"/>
+					<fr:property name="sortParameter" value="sortBy"/>
 				</fr:layout>
 			</fr:view>
 		</logic:notEmpty>
@@ -78,10 +88,10 @@
 	</logic:empty>
 	<logic:notEmpty name="academicServiceRequests">
 		<fr:view name="academicServiceRequests" schema="DocumentRequest.view-documentPurposeTypeInformation">
-			<fr:layout name="tabular">
+			<fr:layout name="tabular-sortable">
 				<fr:property name="classes" value="tstyle4 tdcenter mtop05" />
 				<fr:property name="rowClasses" value="bgwhite," />
-				
+				<fr:property name="groupLinks" value="true" />
 				<fr:property name="columnClasses" value="smalltxt,smalltxt,smalltxt  aleft nowrap,smalltxt,smalltxt,smalltxt nowrap,smalltxt nowrap," />
 				<fr:property name="linkFormat(processing)" value="<%= newRequestUrl + "&academicServiceRequestId=${idInternal}" %>"/>
 				<fr:property name="key(processing)" value="processing"/>
@@ -89,7 +99,10 @@
 				<fr:property name="linkFormat(concluded)" value="<%= processRequestUrl + "&academicServiceRequestId=${idInternal}" %>"/>
 				<fr:property name="key(concluded)" value="conclude"/>
 				<fr:property name="visibleIf(concluded)" value="processing"/>
-				<fr:property name="sortBy" value="urgentRequest=desc,creationDate=asc"/>
+				
+				<fr:property name="sortBy" value="<%= sortCriteria + ",creationDate=asc" %>"/>
+				<fr:property name="sortUrl" value="<%= "/academicServiceRequestsManagement.do?method=search&academicSituationType=" + request.getParameter("academicSituationType") %>"/>
+				<fr:property name="sortParameter" value="sortBy"/>
 			</fr:layout>
 		</fr:view>
 	</logic:notEmpty>
