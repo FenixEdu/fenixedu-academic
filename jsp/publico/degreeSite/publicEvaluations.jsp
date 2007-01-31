@@ -13,8 +13,9 @@
 	<h:form>
 		<h:outputText escape="false" value="<input alt='input.degreeID' id='degreeID' name='degreeID' type='hidden' value='#{publicEvaluations.degreeID}'/>"/>
 
-		<fc:breadCrumbs degree="#{publicEvaluations.degree}" trailingCrumb="#{bundle['public.degree.information.label.evaluations']}"/>
-	
+		<h:outputText value="<div class='breadcumbs mvert0'>" escape="false"/>
+			<fc:breadCrumbs degree="#{publicEvaluations.degree}" trailingCrumb="#{bundle['public.degree.information.label.evaluations']}"/>
+		<h:outputText value="</div>" escape="false"/>
 				
 		<h:outputText value="<h1>" escape="false"/>
 		<h:outputText rendered="#{!publicEvaluations.degree.bolonhaDegree}" value="#{bundleEnum[publicEvaluations.degree.tipoCurso.name]}"/>
