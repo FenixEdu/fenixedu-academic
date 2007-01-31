@@ -5,6 +5,7 @@ import java.util.List;
 import dml.runtime.RelationAdapter;
 
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
+import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.RuleResult;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -47,11 +48,4 @@ public class NotRule extends NotRule_Base {
     protected void removeOwnParameters() {
 	getWrappedRule().delete();
     }
-    
-    @Override
-    public RuleResult evaluate(EnrolmentContext enrolmentContext) {
-	// TODO Auto-generated method stub
-	return null;
-    }
-    
 }

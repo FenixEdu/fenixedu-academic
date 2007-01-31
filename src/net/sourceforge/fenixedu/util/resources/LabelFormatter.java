@@ -92,5 +92,9 @@ public class LabelFormatter implements Serializable {
     public List<Label> getLabels() {
         return Collections.unmodifiableList(this.labels);
     }
+    
+    public boolean isEmpty() {
+	return this.labels.isEmpty();
+    }
 
 }

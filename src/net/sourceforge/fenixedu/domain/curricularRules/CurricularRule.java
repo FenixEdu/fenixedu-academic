@@ -6,6 +6,9 @@ import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.RuleFactory;
+import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.RuleLevel;
+import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.RuleResult;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
@@ -99,7 +102,6 @@ public abstract class CurricularRule extends CurricularRule_Base {
             throw new DomainException("curricular.rule.begin.is.after.end.execution.period");
         }
     }
-    
 
     public static CurricularRule createCurricularRule(LogicOperators logicOperator, CurricularRule... curricularRules) {
 	switch (logicOperator) {
@@ -117,8 +119,15 @@ public abstract class CurricularRule extends CurricularRule_Base {
 	}
     }
     
-    protected abstract void removeOwnParameters();
-    public abstract boolean isLeaf();    
-    public abstract List<GenericPair<Object, Boolean>> getLabel();
-    public abstract RuleResult evaluate(EnrolmentContext enrolmentContext);
+    public RuleResult evaluate(final EnrolmentContext enrolmentContext) {
+	return evaluate(enrolmentContext, RuleLevel.defaultLevel());
+    }
+    
+    public RuleResult evaluate(final EnrolmentContext enrolmentContext, final RuleLevel level) {
+	return RuleFactory.findExecutor(this).execute(this, level, enrolmentContext);
+    }
+    
+    abstract protected void removeOwnParameters();
+    abstract public boolean isLeaf();    
+    abstract public List<GenericPair<Object, Boolean>> getLabel();
 }
