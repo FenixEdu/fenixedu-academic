@@ -439,7 +439,12 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 		    checkBox.setOnChange("this.form.submit();");
 		    enrollmentsController.addCheckBox(checkBox);
 		    
-		    checkBoxCell.setBody(checkBox);
+		    final HtmlInlineContainer span = new HtmlInlineContainer();
+		    span.addChild(checkBox);
+		    span.setTitle("Extra Curricular?");
+		    span.setClasses("acronym");
+		    
+		    checkBoxCell.setBody(span);
 		} else {
 		    checkBoxCell.setBody(new HtmlText("-"));
 		}
