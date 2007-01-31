@@ -1941,6 +1941,7 @@ class net.sourceforge.fenixedu.domain.GratuityValues extends net.sourceforge.fen
 	Double finalProofValue;
 	Integer keyExecutionDegree;
 	Integer keyEmployee;
+    Boolean penaltyApplicable;
 }
 
 class net.sourceforge.fenixedu.domain.finalDegreeWork.Group extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -4821,6 +4822,7 @@ relation AssiduousnessExtraWorkRequest {
 
 relation AssiduousnessClosedMonthAssiduousness {
 	net.sourceforge.fenixedu.domain.assiduousness.Assiduousness playsRole assiduousness;
+	
 	net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedMonth playsRole assiduousnessClosedMonths {
 		multiplicity *;
 	}
@@ -4843,6 +4845,7 @@ relation AssiduousnessExtraWorkWorkScheduleType {
 
 relation ClosedMonthAssiduousnessClosedMonth {
 	net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth playsRole closedMonth;
+	
 	net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedMonth playsRole assiduousnessClosedMonths {
 		multiplicity *;
 	}

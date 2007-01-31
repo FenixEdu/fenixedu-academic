@@ -8,7 +8,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.gratuity.masterDegree.DuplicateSibsPaymentFileProcessingServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.GratuitySituation;
@@ -29,7 +28,6 @@ import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
 import net.sourceforge.fenixedu.domain.transactions.PaymentType;
 import net.sourceforge.fenixedu.domain.transactions.TransactionType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.util.gratuity.fileParsers.sibs.SibsPaymentFileUtils;
 
 public class ProcessSibsPaymentFile extends Service {
 
@@ -43,21 +41,23 @@ public class ProcessSibsPaymentFile extends Service {
      */
     public void run(String filename, List fileEntries, IUserView userView) throws FenixServiceException,
             ExcepcaoPersistencia {
-
-        if (filename.trim().length() == 0) {
-            throw new DuplicateSibsPaymentFileProcessingServiceException(
-                    "error.exception.duplicateSibsPaymentFileProcessing");
-        }
-
-        final SibsPaymentFile storedPaymentFile = SibsPaymentFile.readByFilename(filename);
-        if (storedPaymentFile != null) {
-            throw new DuplicateSibsPaymentFileProcessingServiceException(
-                    "error.exception.duplicateSibsPaymentFileProcessing");
-        }
-
-        SibsPaymentFile sibsPaymentFile = SibsPaymentFileUtils.buildPaymentFile(filename, fileEntries);
-
-        buildTransactionsAndStoreFile(sibsPaymentFile, userView);
+	
+	throw new UnsupportedOperationException("TO REMOVE");
+//
+//        if (filename.trim().length() == 0) {
+//            throw new DuplicateSibsPaymentFileProcessingServiceException(
+//                    "error.exception.duplicateSibsPaymentFileProcessing");
+//        }
+//
+//        final SibsPaymentFile storedPaymentFile = SibsPaymentFile.readByFilename(filename);
+//        if (storedPaymentFile != null) {
+//            throw new DuplicateSibsPaymentFileProcessingServiceException(
+//                    "error.exception.duplicateSibsPaymentFileProcessing");
+//        }
+//
+//        SibsPaymentFile sibsPaymentFile = SibsPaymentFileUtils.buildPaymentFile(filename, fileEntries);
+//
+//        buildTransactionsAndStoreFile(sibsPaymentFile, userView);
     }
 
     private void buildTransactionsAndStoreFile(SibsPaymentFile sibsPaymentFile, IUserView userView)
@@ -198,16 +198,8 @@ public class ProcessSibsPaymentFile extends Service {
             new GratuityTransaction(sibsPaymentFileEntry.getPayedValue(), new Timestamp(
                     new Date().getTime()), null, PaymentType.SIBS, transactionType, new Boolean(false),
                     responsiblePerson, personAccount, null, gratuitySituation);
-
-            // update remaining value of gratuity
-            double oldRemainingValue = 0;
-            if (gratuitySituation.getRemainingValue() != null) {
-                oldRemainingValue = gratuitySituation.getRemainingValue().doubleValue();
-            }
-            double newRemainingValue = oldRemainingValue
-                    - sibsPaymentFileEntry.getPayedValue().doubleValue();
-
-            gratuitySituation.setRemainingValue(new Double(newRemainingValue));
+            
+            gratuitySituation.updateValues();
 
         }
 

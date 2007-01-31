@@ -119,11 +119,7 @@ public class ChangeGuideSituation extends Service {
                                 TransactionType.GRATUITY_ADHOC_PAYMENT, Boolean.FALSE, employeePerson,
                                 personAccount, guideEntry, gratuitySituation);
 
-                        // Update GratuitySituation
-                        Double remainingValue = gratuitySituation.getRemainingValue();
-
-                        gratuitySituation.setRemainingValue(new Double(remainingValue.doubleValue()
-                                - paymentTransaction.getValue().doubleValue()));
+                        gratuitySituation.updateValues();
 
                     }
 

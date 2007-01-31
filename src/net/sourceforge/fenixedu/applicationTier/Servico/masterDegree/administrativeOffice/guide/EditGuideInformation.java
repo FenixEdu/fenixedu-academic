@@ -181,11 +181,8 @@ public class EditGuideInformation extends Service {
                                 Boolean.FALSE, guide.getPerson(), personAccount, guideEntry,
                                 gratuitySituation);
 
-                        // Update GratuitySituation
-                        Double remainingValue = gratuitySituation.getRemainingValue();
-
-                        gratuitySituation.setRemainingValue(remainingValue
-                                + paymentTransaction.getValue());
+                        
+                        gratuitySituation.updateValues();
                     }
 
                     // Write Insurance Transaction

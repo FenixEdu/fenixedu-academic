@@ -5,6 +5,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
@@ -45,17 +46,7 @@ public class GratuitySituation extends GratuitySituation_Base {
 	setStudentCurricularPlan(studentCurricularPlan);
 	setWhenDateTime(new DateTime());
 
-	Double totalValue = null;
-	if (studentCurricularPlan.getSpecialization().equals(
-		Specialization.STUDENT_CURRICULAR_PLAN_MASTER_DEGREE)) {
-	    totalValue = gratuityValues.calculateTotalValueForMasterDegree();
-	} else if (studentCurricularPlan.getSpecialization().equals(
-		Specialization.STUDENT_CURRICULAR_PLAN_SPECIALIZATION)) {
-	    totalValue = gratuityValues.calculateTotalValueForSpecialization(studentCurricularPlan);
-	}
-
-	setRemainingValue(totalValue);
-	setTotalValue(totalValue);
+	updateValues();
     }
 
     public void delete() {
@@ -70,7 +61,18 @@ public class GratuitySituation extends GratuitySituation_Base {
     }
 
     private void updateTotalValue() {
+	super.setTotalValue(calculateTotalAmountWithPenalty());
+    }
 
+    private double calculateTotalAmountWithPenalty() {
+	if (hasPenalty()) {
+	    return calculateOriginalTotalValue() + calculatePenalty(calculateOriginalTotalValue());
+	} else {
+	    return calculateOriginalTotalValue();
+	}
+    }
+
+    private double calculateOriginalTotalValue() {
 	double totalValue = 0.0;
 
 	Specialization specialization = getStudentCurricularPlan().getSpecialization();
@@ -81,32 +83,36 @@ public class GratuitySituation extends GratuitySituation_Base {
 	    totalValue = this.getGratuityValues().calculateTotalValueForMasterDegree();
 	}
 
-	final Money totalValueWithPenalty = calculatePenalty(new Money(totalValue - calculatePayedValue())).add(new BigDecimal(totalValue));
-
-	setTotalValue(totalValueWithPenalty.getAmount().doubleValue());
+	return totalValue;
     }
 
     private void updateRemainingValue() {
-	double valueToSubtract = calculatePayedValue();
-	this.setRemainingValue(getTotalValue() - valueToSubtract);
+	super.setRemainingValue(getTotalValue() - calculatePayedValue() - calculateExemptionValue());
     }
 
-    private double calculatePayedValue() {
-
+    private double calculateExemptionValue() {
 	double exemptionValue = 0;
 	if (this.getExemptionPercentage() != null) {
-	    exemptionValue = this.getTotalValue().doubleValue()
-		    * (this.getExemptionPercentage().doubleValue() / 100.0);
+	    exemptionValue = getTotalValue() * (this.getExemptionPercentage().doubleValue() / 100.0);
 	}
 
 	if (this.getExemptionValue() != null) {
 	    exemptionValue += this.getExemptionValue().doubleValue();
 	}
+	return exemptionValue;
+    }
 
+    public double calculatePayedValue() {
+	return calculatePayedValue(null);
+    }
+
+    public double calculatePayedValue(final YearMonthDay date) {
 	double payedValue = 0;
 	double reimbursedValue = 0;
 
-	for (GratuityTransaction gratuityTransaction : this.getTransactionList()) {
+	final List<GratuityTransaction> transactions = (date == null ? getTransactionList()
+		: getTransactionsUntil(date));
+	for (GratuityTransaction gratuityTransaction : transactions) {
 
 	    payedValue += gratuityTransaction.getValue();
 
@@ -125,7 +131,19 @@ public class GratuitySituation extends GratuitySituation_Base {
 	    }
 	}
 
-	return (exemptionValue + payedValue - reimbursedValue);
+	return payedValue - reimbursedValue;
+    }
+
+    private List<GratuityTransaction> getTransactionsUntil(final YearMonthDay date) {
+	final List<GratuityTransaction> result = new ArrayList<GratuityTransaction>();
+
+	for (final GratuityTransaction gratuityTransaction : getTransactionList()) {
+	    if (gratuityTransaction.getTransactionDateDateTime().toYearMonthDay().compareTo(date) <= 0) {
+		result.add(gratuityTransaction);
+	    }
+	}
+
+	return result;
     }
 
     public GratuitySituationPaymentCode calculatePaymentCode() {
@@ -146,9 +164,9 @@ public class GratuitySituation extends GratuitySituation_Base {
     }
 
     private void createPaymentCode() {
-	GratuitySituationPaymentCode.create(PaymentCodeType.PRE_BOLONHA_MASTER_DEGREE_TOTAL_GRATUITY, new YearMonthDay(),
-		calculatePaymentCodeEndDate(), new Money(getRemainingValue()), new Money(
-			getRemainingValue()), getStudent(), this);
+	GratuitySituationPaymentCode.create(PaymentCodeType.PRE_BOLONHA_MASTER_DEGREE_TOTAL_GRATUITY,
+		new YearMonthDay(), calculatePaymentCodeEndDate(), new Money(getRemainingValue()),
+		new Money(getRemainingValue()), getStudent(), this);
     }
 
     private Student getStudent() {
@@ -165,18 +183,29 @@ public class GratuitySituation extends GratuitySituation_Base {
 	return (super.getPaymentCode() != null);
     }
 
-    private Money calculatePenalty(final Money remainingValue) {
-	final YearMonthDay now = new YearMonthDay();
-	final YearMonthDay endPaymentDate = getEndPaymentDate();
+    private double calculatePenalty(final double remainingValue) {
+	if (getGratuityValues().isPenaltyApplicable()) {
+	    final YearMonthDay endPaymentDate = getEndPaymentDate();
+	    final int extraMonths = endPaymentDate.plusDays(1).getMonthOfYear() == endPaymentDate
+		    .getMonthOfYear() ? 1 : 0;
+	    final Period period = new Period(endPaymentDate.plusDays(1), new YearMonthDay());
+	    final int monthsToChargePenalty = period.getMonths() + extraMonths + 1;
+	    return new Money(remainingValue).multiply(PENALTY_PERCENTAGE).multiply(
+		    new BigDecimal(monthsToChargePenalty)).getAmount().doubleValue();
 
-	if (now.isAfter(endPaymentDate)) {
-	    final int monthsToChargePenalty = new Period(getEndPaymentDate(), new YearMonthDay())
-		    .getMonths() + 1;
-	    return remainingValue.multiply(PENALTY_PERCENTAGE).multiply(
-		    new BigDecimal(monthsToChargePenalty));
-	} else {
-	    return Money.ZERO;
 	}
+
+	return 0;
+
+    }
+
+    private boolean hasPenalty() {
+	if (new YearMonthDay().isAfter(getEndPaymentDate())) {
+	    final double payedValue = calculatePayedValue(getEndPaymentDate());
+	    return payedValue < (calculateOriginalTotalValue() - calculateExemptionValue());
+	}
+
+	return false;
 
     }
 
@@ -233,6 +262,18 @@ public class GratuitySituation extends GratuitySituation_Base {
 
     private PersonAccount getPersonAccount() {
 	return getStudent().getPerson().getAssociatedPersonAccount();
+    }
+
+    @Override
+    public void setTotalValue(Double value) {
+	throw new DomainException(
+		"error.net.sourceforge.fenixedu.domain.GratuitySituation.cannot.modify.value");
+    }
+
+    @Override
+    public void setRemainingValue(Double value) {
+	throw new DomainException(
+		"error.net.sourceforge.fenixedu.domain.GratuitySituation.cannot.modify.value");
     }
 
 }

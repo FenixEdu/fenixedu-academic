@@ -134,11 +134,8 @@ public class EditReimbursementGuide extends Service {
                         throw new FenixServiceException(
                                 "Database is inconsistent. The gratuity situation is supposed to exist");
                     }
-
-                    Double remainingValue = gratuitySituation.getRemainingValue();
-
-                    gratuitySituation.setRemainingValue(new Double(remainingValue.doubleValue()
-                            + reimbursementTransaction.getValue().doubleValue()));
+                    
+                    gratuitySituation.updateValues();
 
                 }
 

@@ -54,8 +54,7 @@ public abstract class PaymentTransaction extends PaymentTransaction_Base {
 	    GratuitySituation gratuitySituation = gratuityTransaction.getGratuitySituation();
 	    gratuityTransaction.removeGratuitySituation();
 
-	    double guideEntryValue = getGuideEntry().getPrice() * getGuideEntry().getQuantity();
-	    gratuitySituation.setRemainingValue(gratuitySituation.getRemainingValue() + guideEntryValue);
+	    gratuitySituation.updateValues();
 	}
 
 	removeGuideEntry();

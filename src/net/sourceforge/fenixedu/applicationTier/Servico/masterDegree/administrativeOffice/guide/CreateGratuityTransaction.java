@@ -50,10 +50,7 @@ public class CreateGratuityTransaction extends Service {
                 TransactionType.GRATUITY_ADHOC_PAYMENT, Boolean.FALSE, responsible, personAccount,
                 guideEntry, gratuitySituation);
 
-        // Update GratuitySituation
-        Double remainingValue = gratuitySituation.getRemainingValue();
-        gratuitySituation.setRemainingValue(new Double(remainingValue.doubleValue()
-                - value.doubleValue()));
+        gratuitySituation.updateValues();
 
     }
 

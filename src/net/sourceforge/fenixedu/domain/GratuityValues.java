@@ -7,6 +7,7 @@ public class GratuityValues extends GratuityValues_Base {
     public GratuityValues() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
+	super.setPenaltyApplicable(true);
     }
 
     public void delete() {
@@ -25,7 +26,7 @@ public class GratuityValues extends GratuityValues_Base {
 	    totalValue = annualValue;
 	} else {
 	    // we have to use the components information (scholarship +
-                // final
+	    // final
 	    // proof)
 	    totalValue = this.getScholarShipValue()
 		    + (this.getFinalProofValue() == null ? 0.0 : this.getFinalProofValue());
@@ -72,6 +73,10 @@ public class GratuityValues extends GratuityValues_Base {
     public PaymentPhase getLastPaymentPhase() {
 	return hasAnyPaymentPhaseList() ? Collections.max(getPaymentPhaseList(),
 		PaymentPhase.COMPARATOR_BY_END_DATE) : null;
+    }
+
+    public boolean isPenaltyApplicable() {
+	return getPenaltyApplicable().booleanValue();
     }
 
 }

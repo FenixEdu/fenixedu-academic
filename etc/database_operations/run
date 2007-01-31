@@ -27,3 +27,6 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Alter Table GratuityValues" AlterTableGratuityValues.sql
+executeWithTempFile "Updating Old GratuityValues" UpdateOldGratuityValuesPenaltyField.sql
+execute "Alter Table GratuityValues" ChangeGratuityValuesPenaltyApplicableField.sql

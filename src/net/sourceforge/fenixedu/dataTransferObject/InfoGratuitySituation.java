@@ -14,12 +14,12 @@ import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.Sessi
 
 /**
  * @author Tânia Pousão
- *  
+ * 
  */
 public class InfoGratuitySituation extends InfoObject {
 
     private Integer exemptionPercentage;
-    
+
     private Double exemptionValue;
 
     private ExemptionGratuityType exemptionType;
@@ -36,277 +36,259 @@ public class InfoGratuitySituation extends InfoObject {
 
     private List transactionList;
 
-    private Double payedValue;//attributes auxiliaries for calculations
+    private Double payedValue;// attributes auxiliaries for calculations
 
     private Double remainingValue;
 
     private Double totalValue;
 
-    private GratuitySituationType situationType; //attributes auxiliaries for
+    private GratuitySituationType situationType; // attributes
+                                                        // auxiliaries for
 
     // calculations
 
-    private String insurancePayed = SessionConstants.NOT_PAYED_INSURANCE; //attributes
+    private String insurancePayed = SessionConstants.NOT_PAYED_INSURANCE; // attributes
 
     // auxiliaries
     // for
     // calculations
 
     /**
-     * @return Returns the insurancePayed.
-     */
+         * @return Returns the insurancePayed.
+         */
     public String getInsurancePayed() {
-        return insurancePayed;
+	return insurancePayed;
     }
 
     /**
-     * @param insurancePayed
-     *            The insurancePayed to set.
-     */
+         * @param insurancePayed
+         *                The insurancePayed to set.
+         */
     public void setInsurancePayed(String insurancePayed) {
-        this.insurancePayed = insurancePayed;
+	this.insurancePayed = insurancePayed;
     }
 
     /**
-     * @return Returns the situationType.
-     */
+         * @return Returns the situationType.
+         */
     public GratuitySituationType getSituationType() {
-        return situationType;
+	return situationType;
     }
 
     /**
-     * @param situationType
-     *            The situationType to set.
-     */
+         * @param situationType
+         *                The situationType to set.
+         */
     public void setSituationType(GratuitySituationType situationType) {
-        this.situationType = situationType;
+	this.situationType = situationType;
     }
 
     /**
-     * @return Returns the infoEmployee.
-     */
+         * @return Returns the infoEmployee.
+         */
     public InfoEmployee getInfoEmployee() {
-        return infoEmployee;
+	return infoEmployee;
     }
 
     /**
-     * @param infoEmployee
-     *            The infoEmployee to set.
-     */
+         * @param infoEmployee
+         *                The infoEmployee to set.
+         */
     public void setInfoEmployee(InfoEmployee infoEmployee) {
-        this.infoEmployee = infoEmployee;
+	this.infoEmployee = infoEmployee;
     }
 
     /**
-     * @return Returns the when.
-     */
+         * @return Returns the when.
+         */
     public Date getWhen() {
-        return when;
+	return when;
     }
 
     /**
-     * @param when
-     *            The when to set.
-     */
+         * @param when
+         *                The when to set.
+         */
     public void setWhen(Date when) {
-        this.when = when;
+	this.when = when;
     }
 
     /**
-     * @return Returns the exemptionDescription.
-     */
+         * @return Returns the exemptionDescription.
+         */
     public String getExemptionDescription() {
-        return exemptionDescription;
+	return exemptionDescription;
     }
 
     /**
-     * @param exemptionDescription
-     *            The exemptionDescription to set.
-     */
+         * @param exemptionDescription
+         *                The exemptionDescription to set.
+         */
     public void setExemptionDescription(String exemptionDescription) {
-        this.exemptionDescription = exemptionDescription;
+	this.exemptionDescription = exemptionDescription;
     }
 
     /**
-     * @return Returns the exemptionPercentage.
-     */
+         * @return Returns the exemptionPercentage.
+         */
     public Integer getExemptionPercentage() {
-        return exemptionPercentage;
+	return exemptionPercentage;
     }
 
     /**
-     * @param exemptionPercentage
-     *            The exemptionPercentage to set.
-     */
+         * @param exemptionPercentage
+         *                The exemptionPercentage to set.
+         */
     public void setExemptionPercentage(Integer exemptionPercentage) {
-        this.exemptionPercentage = exemptionPercentage;
+	this.exemptionPercentage = exemptionPercentage;
     }
 
     /**
-     * @return Returns the exemptionType.
-     */
+         * @return Returns the exemptionType.
+         */
     public ExemptionGratuityType getExemptionType() {
-        return exemptionType;
+	return exemptionType;
     }
 
     /**
-     * @param exemptionType
-     *            The exemptionType to set.
-     */
+         * @param exemptionType
+         *                The exemptionType to set.
+         */
     public void setExemptionType(ExemptionGratuityType exemptionType) {
-        this.exemptionType = exemptionType;
+	this.exemptionType = exemptionType;
     }
 
     /**
-     * @return Returns the gratuity.
-     */
+         * @return Returns the gratuity.
+         */
     public InfoGratuityValues getInfoGratuityValues() {
-        return infoGratuityValues;
+	return infoGratuityValues;
     }
 
     /**
-     * @param gratuity
-     *            The gratuity to set.
-     */
+         * @param gratuity
+         *                The gratuity to set.
+         */
     public void setInfoGratuityValues(InfoGratuityValues gratuity) {
-        this.infoGratuityValues = gratuity;
+	this.infoGratuityValues = gratuity;
     }
 
     /**
-     * @return Returns the payedValue.
-     */
+         * @return Returns the payedValue.
+         */
     public Double getPayedValue() {
-        return payedValue;
+	return payedValue;
     }
 
     /**
-     * @param payedValue
-     *            The payedValue to set.
-     */
+         * @param payedValue
+         *                The payedValue to set.
+         */
     public void setPayedValue(Double payedValue) {
-        this.payedValue = payedValue;
+	this.payedValue = payedValue;
     }
 
     /**
-     * @return Returns the remainingValue.
-     */
+         * @return Returns the remainingValue.
+         */
     public Double getRemainingValue() {
-        return remainingValue;
+	return remainingValue;
     }
 
     /**
-     * @param remainingValue
-     *            The remainingValue to set.
-     */
+         * @param remainingValue
+         *                The remainingValue to set.
+         */
     public void setRemainingValue(Double remainingValue) {
-        this.remainingValue = remainingValue;
+	this.remainingValue = remainingValue;
     }
 
     /**
-     * @return Returns the totalValue.
-     */
-    public Double getTotalValue() {
-        return totalValue;
-    }
-
-    /**
-     * @param totalValue
-     *            The totalValue to set.
-     */
-    public void setTotalValue(Double totalValue) {
-        this.totalValue = totalValue;
-    }
-
-    /**
-     * @return Returns the student.
-     */
+         * @return Returns the student.
+         */
     public InfoStudentCurricularPlan getInfoStudentCurricularPlan() {
-        return infoStudentCurricularPlan;
+	return infoStudentCurricularPlan;
     }
 
     /**
-     * @param student
-     *            The student to set.
-     */
+         * @param student
+         *                The student to set.
+         */
     public void setInfoStudentCurricularPlan(InfoStudentCurricularPlan studentCurricularPlan) {
-        this.infoStudentCurricularPlan = studentCurricularPlan;
+	this.infoStudentCurricularPlan = studentCurricularPlan;
     }
 
     /**
-     * @return Returns the transactionList.
-     */
+         * @return Returns the transactionList.
+         */
     public List getTransactionList() {
-        return transactionList;
+	return transactionList;
     }
 
     /**
-     * @param transactionList
-     *            The transactionList to set.
-     */
+         * @param transactionList
+         *                The transactionList to set.
+         */
     public void setTransactionList(List transactionList) {
-        this.transactionList = transactionList;
+	this.transactionList = transactionList;
     }
 
     /**
-     * @return Returns the exemptionValue.
-     */
+         * @return Returns the exemptionValue.
+         */
     public Double getExemptionValue() {
-        return exemptionValue;
+	return exemptionValue;
     }
-    
+
     /**
-     * @param exemptionValue The exemptionValue to set.
-     */
+         * @param exemptionValue
+         *                The exemptionValue to set.
+         */
     public void setExemptionValue(Double exemptionValue) {
-        this.exemptionValue = exemptionValue;
+	this.exemptionValue = exemptionValue;
     }
-    
+
     public String toString() {
-        String result = new String();
-        result += "[InfoGratuitySituation: exemptionPercentage" + this.exemptionPercentage;
-        result += "\nexemptionType: " + this.exemptionType;
-        result += "\nexemptionDescription: " + this.exemptionDescription;
-        result += "\npayedValue: " + this.payedValue;
-        result += "\nremainingValue: " + this.remainingValue;
-        result += "\ninfoGratuityValues: " + this.infoGratuityValues;
-        result += "\ninfoStudentCurricularPlan: " + this.infoStudentCurricularPlan;
-        return result;
+	String result = new String();
+	result += "[InfoGratuitySituation: exemptionPercentage" + this.exemptionPercentage;
+	result += "\nexemptionType: " + this.exemptionType;
+	result += "\nexemptionDescription: " + this.exemptionDescription;
+	result += "\npayedValue: " + this.payedValue;
+	result += "\nremainingValue: " + this.remainingValue;
+	result += "\ninfoGratuityValues: " + this.infoGratuityValues;
+	result += "\ninfoStudentCurricularPlan: " + this.infoStudentCurricularPlan;
+	return result;
     }
 
     /*
-     * (non-Javadoc)
-     * 
-     * @see net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain(Dominio.DomainObject)
-     */
+         * (non-Javadoc)
+         * 
+         * @see net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain(Dominio.DomainObject)
+         */
     public void copyFromDomain(GratuitySituation gratuitySituation) {
-        super.copyFromDomain(gratuitySituation);
-        if (gratuitySituation != null) {
-            setExemptionPercentage(gratuitySituation.getExemptionPercentage());
-            setExemptionValue(gratuitySituation.getExemptionValue());
-            setExemptionDescription(gratuitySituation.getExemptionDescription());
-            setExemptionType(gratuitySituation.getExemptionType());
-            //setPayedValue(gratuitySituation.getPayedValue());
-            if (gratuitySituation.getRemainingValue() == null) {
-                setRemainingValue(new Double(0));
-            } else {
-                setRemainingValue(gratuitySituation.getRemainingValue());
-            }
-            if (gratuitySituation.getTotalValue() == null) {
-                setTotalValue(new Double(0));
-            } else {
-                setTotalValue(gratuitySituation.getTotalValue());
-            }
-            setWhen(gratuitySituation.getWhen());
-        }
+	super.copyFromDomain(gratuitySituation);
+	if (gratuitySituation != null) {
+	    setExemptionPercentage(gratuitySituation.getExemptionPercentage());
+	    setExemptionValue(gratuitySituation.getExemptionValue());
+	    setExemptionDescription(gratuitySituation.getExemptionDescription());
+	    setExemptionType(gratuitySituation.getExemptionType());
+	    // setPayedValue(gratuitySituation.getPayedValue());
+	    if (gratuitySituation.getRemainingValue() == null) {
+		setRemainingValue(new Double(0));
+	    } else {
+		setRemainingValue(gratuitySituation.getRemainingValue());
+	    }
+	    setWhen(gratuitySituation.getWhen());
+	}
     }
 
     public static InfoGratuitySituation newInfoFromDomain(GratuitySituation gratuitySituation) {
-        InfoGratuitySituation infoGratuitySituation = null;
-        if (gratuitySituation != null) {
-            infoGratuitySituation = new InfoGratuitySituation();
-            infoGratuitySituation.copyFromDomain(gratuitySituation);
-        }
-        return infoGratuitySituation;
+	InfoGratuitySituation infoGratuitySituation = null;
+	if (gratuitySituation != null) {
+	    infoGratuitySituation = new InfoGratuitySituation();
+	    infoGratuitySituation.copyFromDomain(gratuitySituation);
+	}
+	return infoGratuitySituation;
     }
 
 }

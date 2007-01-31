@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity;
 
 import java.util.Calendar;
-import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -12,86 +11,46 @@ import net.sourceforge.fenixedu.domain.GratuitySituation;
 import net.sourceforge.fenixedu.domain.GratuityValues;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState;
-import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
-import net.sourceforge.fenixedu.domain.transactions.GratuityTransaction;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class EditGratuitySituationById extends Service {
 
     public Object run(InfoGratuitySituation infoGratuitySituation) throws FenixServiceException,
-            ExcepcaoPersistencia {
-        if (infoGratuitySituation == null) {
-            throw new FenixServiceException();
-        }
+	    ExcepcaoPersistencia {
+	if (infoGratuitySituation == null) {
+	    throw new FenixServiceException();
+	}
 
-        StudentCurricularPlan studentCurricularPlan = rootDomainObject
-                .readStudentCurricularPlanByOID(infoGratuitySituation.getInfoStudentCurricularPlan()
-                        .getIdInternal());
-        
-        GratuityValues gratuityValues = rootDomainObject.readGratuityValuesByOID(infoGratuitySituation
-                .getInfoGratuityValues().getIdInternal());
-        
-        final GratuitySituation gratuitySituation = studentCurricularPlan
-                .getGratuitySituationByGratuityValues(gratuityValues);
-        
-        if (gratuitySituation == null) {
-            throw new NonExistingServiceException("Gratuity Situation not exist yet.");
-        }
+	StudentCurricularPlan studentCurricularPlan = rootDomainObject
+		.readStudentCurricularPlanByOID(infoGratuitySituation.getInfoStudentCurricularPlan()
+			.getIdInternal());
 
-        // set employee who made register
-        final Person person = Person.readPersonByUsername(infoGratuitySituation.getInfoEmployee()
-                .getPerson().getUsername());
-        if (person != null) {
-            gratuitySituation.setEmployee(person.getEmployee());
-        }
+	GratuityValues gratuityValues = rootDomainObject.readGratuityValuesByOID(infoGratuitySituation
+		.getInfoGratuityValues().getIdInternal());
 
-        // Update Remaining Value
-        updateRemainingValue(infoGratuitySituation, gratuitySituation);
+	final GratuitySituation gratuitySituation = studentCurricularPlan
+		.getGratuitySituationByGratuityValues(gratuityValues);
 
-        gratuitySituation.setWhen(Calendar.getInstance().getTime());
-        gratuitySituation.setExemptionDescription(infoGratuitySituation.getExemptionDescription());
-        gratuitySituation.setExemptionPercentage(infoGratuitySituation.getExemptionPercentage());
-        gratuitySituation.setExemptionValue(infoGratuitySituation.getExemptionValue());
-        gratuitySituation.setExemptionType(infoGratuitySituation.getExemptionType());
+	if (gratuitySituation == null) {
+	    throw new NonExistingServiceException("Gratuity Situation not exist yet.");
+	}
 
-        return InfoGratuitySituationWithAll.newInfoFromDomain(gratuitySituation);
-    }
+	// set employee who made register
+	final Person person = Person.readPersonByUsername(infoGratuitySituation.getInfoEmployee()
+		.getPerson().getUsername());
+	if (person != null) {
+	    gratuitySituation.setEmployee(person.getEmployee());
+	}
 
-    private void updateRemainingValue(InfoGratuitySituation infoGratuitySituation,
-            final GratuitySituation gratuitySituation) {
-        double exemptionValue = gratuitySituation.getTotalValue()
-                * (infoGratuitySituation.getExemptionPercentage() / 100.0);
+	gratuitySituation.setWhen(Calendar.getInstance().getTime());
+	gratuitySituation.setExemptionDescription(infoGratuitySituation.getExemptionDescription());
+	gratuitySituation.setExemptionPercentage(infoGratuitySituation.getExemptionPercentage());
+	gratuitySituation.setExemptionValue(infoGratuitySituation.getExemptionValue());
+	gratuitySituation.setExemptionType(infoGratuitySituation.getExemptionType());
 
-        if (infoGratuitySituation.getExemptionValue() != null) {
-            exemptionValue += infoGratuitySituation.getExemptionValue();
-        }
+	gratuitySituation.updateValues();
 
-        double newRemainingValue = gratuitySituation.getTotalValue() - exemptionValue;
-        double payedValue = 0;
-        double reimbursedValue = 0;
-        for (GratuityTransaction gratuityTransaction : gratuitySituation.getTransactionList()) {
-            payedValue += gratuityTransaction.getValue();
-
-            if (gratuityTransaction.getGuideEntry() != null) {
-
-                List<ReimbursementGuideEntry> reimbursementGuideEntries = gratuityTransaction
-                        .getGuideEntry().getReimbursementGuideEntries();
-                if (reimbursementGuideEntries != null) {
-
-                    for (ReimbursementGuideEntry reimbursementGuideEntry : reimbursementGuideEntries) {
-
-                        if (reimbursementGuideEntry.getReimbursementGuide()
-                                .getActiveReimbursementGuideSituation().getReimbursementGuideState()
-                                .equals(ReimbursementGuideState.PAYED)) {
-                            reimbursedValue += reimbursementGuideEntry.getValue();
-                        }
-                    }
-                }
-            }
-
-        }
-        gratuitySituation.setRemainingValue(newRemainingValue - payedValue + reimbursedValue);
+	return InfoGratuitySituationWithAll.newInfoFromDomain(gratuitySituation);
     }
 
 }

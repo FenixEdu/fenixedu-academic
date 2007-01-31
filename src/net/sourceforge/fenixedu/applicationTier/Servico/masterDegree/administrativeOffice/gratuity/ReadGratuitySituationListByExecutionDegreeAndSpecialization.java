@@ -31,186 +31,170 @@ import org.apache.commons.collections.Predicate;
 public class ReadGratuitySituationListByExecutionDegreeAndSpecialization extends Service {
 
     /**
-     * Constructor
-     */
+         * Constructor
+         */
     public ReadGratuitySituationListByExecutionDegreeAndSpecialization() {
 
     }
 
     /*
-     * Return an hash map with three objects: 1. at first position a list of
-     * infoGratuitySituation 2. in second, a double with the total of list's
-     * payed values 3. in third, a double with the total of list's remaning
-     * values
-     */
+         * Return an hash map with three objects: 1. at first position a list of
+         * infoGratuitySituation 2. in second, a double with the total of list's
+         * payed values 3. in third, a double with the total of list's remaning
+         * values
+         */
     public Object run(Integer executionDegreeId, String executionYearName,
-            String persistentSupportecializationName, String gratuitySituationTypeName)
-            throws FenixServiceException {
+	    String persistentSupportecializationName, String gratuitySituationTypeName)
+	    throws FenixServiceException {
 
-        // at least one of the arguments it's obligator
-        if (executionDegreeId == null && executionYearName == null) {
-            throw new FenixServiceException(
-                    "error.masterDegree.gratuity.impossible.studentsGratuityList");
-        }
+	// at least one of the arguments it's obligator
+	if (executionDegreeId == null && executionYearName == null) {
+	    throw new FenixServiceException(
+		    "error.masterDegree.gratuity.impossible.studentsGratuityList");
+	}
 
-        HashMap result = null;
+	HashMap result = null;
 
-        try {
-         
-            List executionDegreeList = new ArrayList();
+	try {
 
-            if (executionDegreeId != null) {
+	    List executionDegreeList = new ArrayList();
 
-                ExecutionDegree executionDegree = rootDomainObject
-                        .readExecutionDegreeByOID(executionDegreeId);
-                executionDegreeList.add(executionDegree);
+	    if (executionDegreeId != null) {
 
-            } else {
-                // the execution degree wasn't supplied so
-                // we have to show all execution degrees from the choosen year
-                if (executionYearName != null) {
-                    ExecutionYear executionYear = ExecutionYear
-                            .readExecutionYearByName(executionYearName);
-                    if (executionYear != null) {
-                        executionDegreeList = ExecutionDegree.getAllByExecutionYearAndDegreeType(
-                                executionYear.getYear(), DegreeType.MASTER_DEGREE);
-                    }
-                }
-            }
+		ExecutionDegree executionDegree = rootDomainObject
+			.readExecutionDegreeByOID(executionDegreeId);
+		executionDegreeList.add(executionDegree);
 
-            if (executionDegreeList == null || executionDegreeList.size() == 0) {
-                throw new FenixServiceException(
-                        "error.masterDegree.gratuity.impossible.studentsGratuityList");
-            }
+	    } else {
+		// the execution degree wasn't supplied so
+		// we have to show all execution degrees from the choosen year
+		if (executionYearName != null) {
+		    ExecutionYear executionYear = ExecutionYear
+			    .readExecutionYearByName(executionYearName);
+		    if (executionYear != null) {
+			executionDegreeList = ExecutionDegree.getAllByExecutionYearAndDegreeType(
+				executionYear.getYear(), DegreeType.MASTER_DEGREE);
+		    }
+		}
+	    }
 
-            // GRATUITY SITUATION
-            GratuitySituationType gratuitySituationType = null;
-            if (!gratuitySituationTypeName.equals("all")) {
-                gratuitySituationType = GratuitySituationType.valueOf(gratuitySituationTypeName);
-            }
+	    if (executionDegreeList == null || executionDegreeList.size() == 0) {
+		throw new FenixServiceException(
+			"error.masterDegree.gratuity.impossible.studentsGratuityList");
+	    }
 
-            List infoGratuitySituationList = new ArrayList();
-            double totalPayedValue = 0;
-            double totalRemaingValue = 0;
+	    // GRATUITY SITUATION
+	    GratuitySituationType gratuitySituationType = null;
+	    if (!gratuitySituationTypeName.equals("all")) {
+		gratuitySituationType = GratuitySituationType.valueOf(gratuitySituationTypeName);
+	    }
 
-            for (Iterator iter = executionDegreeList.iterator(); iter.hasNext();) {
-                ExecutionDegree executionDegree = (ExecutionDegree) iter.next();
-                GratuityValues gratuityValues = executionDegree.getGratuityValues();
+	    List infoGratuitySituationList = new ArrayList();
+	    double totalPayedValue = 0;
+	    double totalRemaingValue = 0;
 
-                if (gratuityValues == null) {
-                    continue;
-                }
+	    for (Iterator iter = executionDegreeList.iterator(); iter.hasNext();) {
+		ExecutionDegree executionDegree = (ExecutionDegree) iter.next();
+		GratuityValues gratuityValues = executionDegree.getGratuityValues();
 
-                List allStudentCurricularPlans = executionDegree.getDegreeCurricularPlan()
-                        .getStudentCurricularPlans();
-                List filteredStudentCurricularPlans = (List) CollectionUtils.select(
-                        allStudentCurricularPlans, new Predicate() {
+		if (gratuityValues == null) {
+		    continue;
+		}
 
-                            public boolean evaluate(Object arg0) {
-                                StudentCurricularPlan scp = (StudentCurricularPlan) arg0;
-                                return scp.getSpecialization() != null;
-                            }
-                        });
+		List allStudentCurricularPlans = executionDegree.getDegreeCurricularPlan()
+			.getStudentCurricularPlans();
+		List filteredStudentCurricularPlans = (List) CollectionUtils.select(
+			allStudentCurricularPlans, new Predicate() {
 
-                for (Iterator iterator = filteredStudentCurricularPlans.iterator(); iterator.hasNext();) {
-                    StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) iterator
-                            .next();
+			    public boolean evaluate(Object arg0) {
+				StudentCurricularPlan scp = (StudentCurricularPlan) arg0;
+				return scp.getSpecialization() != null;
+			    }
+			});
 
-                    GratuitySituation gratuitySituation = studentCurricularPlan
-                            .getGratuitySituationByGratuityValuesAndGratuitySituationType(
-                                    gratuitySituationType, gratuityValues);
+		for (Iterator iterator = filteredStudentCurricularPlans.iterator(); iterator.hasNext();) {
+		    StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) iterator
+			    .next();
 
-                    if (gratuitySituation == null) {
-                        // ignore them, because they will be created in the next
-                        // day
-                        // when the gratuity situation creator scheduled task
-                        // runs
-                        continue;
-                    }
+		    GratuitySituation gratuitySituation = studentCurricularPlan
+			    .getGratuitySituationByGratuityValuesAndGratuitySituationType(
+				    gratuitySituationType, gratuityValues);
 
-                    InfoGratuitySituation infoGratuitySituation = InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree
-                            .newInfoFromDomain(gratuitySituation);
+		    if (gratuitySituation == null) {
+			// ignore them, because they will be created in the next
+			// day
+			// when the gratuity situation creator scheduled task
+			// runs
+			continue;
+		    }
 
-                    fillSituationType(infoGratuitySituation);
+		    InfoGratuitySituation infoGratuitySituation = InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree
+			    .newInfoFromDomain(gratuitySituation);
 
-                    List insuranceTransactionList = studentCurricularPlan.getRegistration()
-                            .readAllNonReimbursedInsuranceTransactionsByExecutionYear(
-                                    executionDegree.getExecutionYear());
+		    fillSituationType(infoGratuitySituation);
 
-                    /*
-                     * InsuranceTransaction insuranceTransaction =
-                     * insuranceTransactionDAO
-                     * .readByExecutionYearAndStudent(executionDegree
-                     * .getExecutionYear(), studentCurricularPlan
-                     * .getStudent());
-                     */
+		    List insuranceTransactionList = studentCurricularPlan.getRegistration()
+			    .readAllNonReimbursedInsuranceTransactionsByExecutionYear(
+				    executionDegree.getExecutionYear());
 
-                    if (insuranceTransactionList.size() > 0) {
-                        infoGratuitySituation.setInsurancePayed(SessionConstants.PAYED_INSURANCE);
-                    } else {
-                        infoGratuitySituation.setInsurancePayed(SessionConstants.NOT_PAYED_INSURANCE);
-                    }
+		    /*
+                         * InsuranceTransaction insuranceTransaction =
+                         * insuranceTransactionDAO
+                         * .readByExecutionYearAndStudent(executionDegree
+                         * .getExecutionYear(), studentCurricularPlan
+                         * .getStudent());
+                         */
 
-                    if (infoGratuitySituation.getTotalValue() != null
-                            && infoGratuitySituation.getRemainingValue() != null) {
+		    if (insuranceTransactionList.size() > 0) {
+			infoGratuitySituation.setInsurancePayed(SessionConstants.PAYED_INSURANCE);
+		    } else {
+			infoGratuitySituation.setInsurancePayed(SessionConstants.NOT_PAYED_INSURANCE);
+		    }
 
-                        double exemption = 0;
-                        if (infoGratuitySituation.getExemptionPercentage() != null) {
-                            exemption = infoGratuitySituation.getTotalValue().doubleValue()
-                                    * infoGratuitySituation.getExemptionPercentage().doubleValue() / 100;
-                        }
+		    gratuitySituation.updateValues();
+		    final double payedValue = gratuitySituation.calculatePayedValue();
+		    infoGratuitySituation.setPayedValue(payedValue);
+		    totalPayedValue += payedValue;
 
-                        if (infoGratuitySituation.getExemptionValue() != null) {
-                            exemption += infoGratuitySituation.getExemptionValue().doubleValue();
-                        }
+		    infoGratuitySituationList.add(infoGratuitySituation);
 
-                        Double payedValue = new Double(infoGratuitySituation.getTotalValue()
-                                .doubleValue()
-                                - infoGratuitySituation.getRemainingValue().doubleValue() - exemption);
-                        infoGratuitySituation.setPayedValue(payedValue);
+		    totalRemaingValue += infoGratuitySituation.getRemainingValue().doubleValue();
 
-                        totalPayedValue += payedValue.doubleValue();
+		}
 
-                    }
+	    }
 
-                    infoGratuitySituationList.add(infoGratuitySituation);
+	    // build the result that is a hash map with a list, total payed
+	    // and
+	    // remaining value
+	    result = new HashMap();
+	    result.put(new Integer(0), infoGratuitySituationList);
+	    result.put(new Integer(1), new Double(totalPayedValue));
+	    result.put(new Integer(2), new Double(totalRemaingValue));
+	} catch (Exception e) {
+	    e.printStackTrace();
+	    if (e.getMessage() != null && e.getMessage().length() > 0) {
+		throw new FenixServiceException(e.getMessage());
+	    }
+	    throw new FenixServiceException(
+		    "error.masterDegree.gratuity.impossible.studentsGratuityList");
 
-                    totalRemaingValue += infoGratuitySituation.getRemainingValue().doubleValue();
+	}
 
-                }
-
-            }
-
-            // build the result that is a hash map with a list, total payed and
-            // remaining value
-            result = new HashMap();
-            result.put(new Integer(0), infoGratuitySituationList);
-            result.put(new Integer(1), new Double(totalPayedValue));
-            result.put(new Integer(2), new Double(totalRemaingValue));
-        } catch (Exception e) {
-            e.printStackTrace();
-            if (e.getMessage() != null && e.getMessage().length() > 0) {
-                throw new FenixServiceException(e.getMessage());
-            }
-            throw new FenixServiceException(
-                    "error.masterDegree.gratuity.impossible.studentsGratuityList");
-
-        }
-
-        return result;
+	return result;
     }
 
     private void fillSituationType(InfoGratuitySituation infoGratuitySituation) throws Exception { // infoGratuitySituation.getRemainingValue()
-        // contains the total value that
-        // a student has to
+	// contains the total value that
+	// a student has to
 
-        // payed.
-        if (infoGratuitySituation.getRemainingValue().longValue() > 0) {
-            infoGratuitySituation.setSituationType(GratuitySituationType.DEBTOR);
-        } else if (infoGratuitySituation.getRemainingValue().longValue() == 0) {
-            infoGratuitySituation.setSituationType(GratuitySituationType.REGULARIZED);
-        } else if (infoGratuitySituation.getRemainingValue().longValue() < 0) {
-            infoGratuitySituation.setSituationType(GratuitySituationType.CREDITOR);
-        }
+	// payed.
+	if (infoGratuitySituation.getRemainingValue().longValue() > 0) {
+	    infoGratuitySituation.setSituationType(GratuitySituationType.DEBTOR);
+	} else if (infoGratuitySituation.getRemainingValue().longValue() == 0) {
+	    infoGratuitySituation.setSituationType(GratuitySituationType.REGULARIZED);
+	} else if (infoGratuitySituation.getRemainingValue().longValue() < 0) {
+	    infoGratuitySituation.setSituationType(GratuitySituationType.CREDITOR);
+	}
     }
 }
