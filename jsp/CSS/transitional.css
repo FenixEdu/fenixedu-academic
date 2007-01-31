@@ -1,4 +1,4 @@
-/* transitional.css - 01.2006 by Joï¿½o Alfaiate @ Fenix */
+/* transitional.css - 01.2006 by João Alfaiate @ Fenix */
 
 /* ----------------------
  ---- Headings ---------
@@ -138,6 +138,9 @@ border-collapse: collapse;
 margin: 1em 0;
 }
 
+table.tstylenone { margin: 0; padding: 0; }
+table.tstylenone th { border: none; background: none; margin: 0; padding: 0.1em; }
+table.tstylenone td { border: none; background: none; margin: 0; padding: 0.1em; }
 
 /* --------------------- */
 /* General table classes */
@@ -198,6 +201,7 @@ table.smalltxt tr td { font-size: 0.85em;}
 
 /* corners */
 table th.cornerleft { background: none; border-left: none; border-top: none; }
+table th.cornerleft2 { background: none; border-left: none; border-top: none; border-bottom: none; }
 table td.cornerright { }
 /* error , warning */
 .tderror1 { color: #c00; }
@@ -230,6 +234,7 @@ text-align: center;
 .tstyle5 th { padding: 4px; border: 1px solid #fff; vertical-align: top; background: #f5f5f5; }
 .tstyle7 th { border: 1px solid #eee; background: #eee; }
 .tstyle8 th { padding: 4px; border: 1px solid #fff; background: #f5f5f5; }
+
 
 
 /* table classes - td properties */
@@ -552,20 +557,6 @@ ul.indent0 { margin-left: 0; padding-left: 0; }
 .color3 { color: #336699; }
 .lowlight1 { color: #999; }
 .color888 { color: #888;}
-
-.color2 {
-	color: #806d5b;
-}
-
-.color3 {
-	color: #336699;
-}
-
-.lowlight1 {
-	color: #999;
-}
-
-.color888 { color: #888; }
 .color555 { color: #555; }
 
 /* background-colors */
@@ -1024,7 +1015,7 @@ border-width: 1px;
 border-color: #CCCCCC;
 }
 
-/* Vigilï¿½ncia */
+/* Vigilância */
 .mvert15 { margin-top: 1.5em; margin-bottom: 1.5em; }
 .greytxt1 { color: #777; }
 .greytxt2 { color: #777; }
@@ -1424,6 +1415,10 @@ border: 1px solid #ccc;
 text-align: left;
 height: 30px;
 }
+
+
+
+
 
 .ulmvert0 ul {
 	margin-top: 0;
