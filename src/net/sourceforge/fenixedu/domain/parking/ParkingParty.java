@@ -220,10 +220,10 @@ public class ParkingParty extends ParkingParty_Base {
                     currenteDepartment = teacher.getCurrentWorkingDepartment().getName();
                 }
                 if (teacher.isMonitor(ExecutionPeriod.readActualExecutionPeriod())) {
-                    occupations.add("<strong>Monitor</strong><br/> Nï¿½ " + teacher.getTeacherNumber()
+                    occupations.add("<strong>Monitor</strong><br/> Nº " + teacher.getTeacherNumber()
                             + "<br/>" + currenteDepartment);
                 } else {
-                    occupations.add("<strong>Docente</strong><br/> Nï¿½ " + teacher.getTeacherNumber()
+                    occupations.add("<strong>Docente</strong><br/> Nº " + teacher.getTeacherNumber()
                             + "<br/>" + currenteDepartment);
                 }
             }
@@ -233,11 +233,11 @@ public class ParkingParty extends ParkingParty_Base {
                     && employee.getCurrentContractByContractType(ContractType.WORKING) != null) {
                 Unit currentUnit = employee.getCurrentWorkingPlace();
                 if (currentUnit != null) {
-                    occupations.add("<strong>Funcionï¿½rio</strong><br/> Nï¿½ "
+                    occupations.add("<strong>Funcionário</strong><br/> Nº "
                             + employee.getEmployeeNumber() + "<br/>" + currentUnit.getName() + " - "
                             + currentUnit.getCostCenterCode());
                 } else {
-                    occupations.add("<strong>Funcionï¿½rio</strong><br/> Nï¿½ "
+                    occupations.add("<strong>Funcionário</strong><br/> Nº "
                             + employee.getEmployeeNumber());
                 }
             }
@@ -251,7 +251,7 @@ public class ParkingParty extends ParkingParty_Base {
                     StudentCurricularPlan scp = registration.getActiveStudentCurricularPlan();
                     if (scp != null) {
                         if (stringBuilder == null) {
-                            stringBuilder = new StringBuilder("<strong>Estudante</strong><br/> Nï¿½ ");
+                            stringBuilder = new StringBuilder("<strong>Estudante</strong><br/> Nº ");
                             stringBuilder.append(student.getNumber()).append(" ");
                         }
                         stringBuilder.append("\n").append(scp.getDegreeCurricularPlan().getName());
@@ -266,7 +266,7 @@ public class ParkingParty extends ParkingParty_Base {
             if (grantOwner != null && person.getPersonRole(RoleType.GRANT_OWNER) != null
                     && grantOwner.hasCurrentContract()) {
                 List<GrantContractRegime> contractRegimeList = new ArrayList<GrantContractRegime>();
-                occupations.add("<strong>Bolseiro</strong><br/> Nï¿½ " + grantOwner.getNumber());
+                occupations.add("<strong>Bolseiro</strong><br/> Nº " + grantOwner.getNumber());
                 for (GrantContract contract : grantOwner.getGrantContracts()) {
                     contractRegimeList.addAll(contract.getContractRegimes());
                 }
@@ -274,7 +274,7 @@ public class ParkingParty extends ParkingParty_Base {
                         .sort(contractRegimeList, new BeanComparator("dateBeginContractYearMonthDay"));
                 for (GrantContractRegime contractRegime : contractRegimeList) {
                     StringBuilder stringBuilder = new StringBuilder();
-                    stringBuilder.append("<strong>Inï¿½cio:</strong> "
+                    stringBuilder.append("<strong>Início:</strong> "
                             + contractRegime.getDateBeginContractYearMonthDay().toString("dd/MM/yyyy"));
                     stringBuilder.append("&nbsp&nbsp&nbsp -&nbsp&nbsp&nbsp<strong>Fim:</strong> "
                             + contractRegime.getDateEndContractYearMonthDay().toString("dd/MM/yyyy"));
@@ -356,10 +356,6 @@ public class ParkingParty extends ParkingParty_Base {
             }
             if (person.getGrantOwner() != null && person.getGrantOwner().hasCurrentContract()) {
                 return person.getGrantOwner().getNumber();
-            }
-            if (person.getTeacher() != null
-                    && !person.getTeacher().isMonitor(ExecutionPeriod.readActualExecutionPeriod())) {
-                return person.getTeacher().getTeacherNumber();
             }
         }
         return 0;
