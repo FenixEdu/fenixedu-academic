@@ -9,11 +9,10 @@
 <h2><strong><bean:message key="label.course.enrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/> <bean:message key="<%= type.toString() %>" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></h2>
 
 <html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<br/>
-	<span class="error"><!-- Error messages go here --><bean:write name="message" /></span>
-	<br/>
+	<p>
+		<span class="error0"><!-- Error messages go here --><bean:write name="message" /></span>
+	</p>
 </html:messages>
-<br/>
 
 <fr:form action="/studentExtraEnrolments.do">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="chooseCurricular"/>
@@ -32,11 +31,15 @@
 			</fr:layout>
 		</fr:view>
 	</logic:present>
+	
 	<logic:notPresent name="extraEnrolments">
-		<em><bean:message key="label.no.extra.enrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
+		<p class="mtop2">
+			<em><bean:message key="label.no.extra.enrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/>.</em>
+		</p>
 	</logic:notPresent>
-	<br />
-	<br />	
-	<html:submit><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.enrol"/></html:submit>
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='back'; return true;"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="back"/></html:submit>
+	
+	<p class="mtop15">
+		<html:submit><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.enrol"/></html:submit>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='back'; return true;"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="back"/></html:submit>
+	</p>
 </fr:form>
