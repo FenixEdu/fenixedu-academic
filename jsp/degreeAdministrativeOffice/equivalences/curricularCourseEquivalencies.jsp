@@ -49,7 +49,7 @@
 
 </html:form>
 
-<logic:present name="infoCurricularCourseEquivalences">
+<logic:present name="curricularCourseEquivalences">
 
 	<br/>
 	<br/>
@@ -72,7 +72,7 @@
 
 	<table>
 		<tr>
-			<th colspan="3" class="listClasses-header">
+			<th class="listClasses-header">
 				<bean:message bundle="DEGREE_ADM_OFFICE" key="label.old.curricular.course"/>
 			</th>
 			<th colspan="2" class="listClasses-header">
@@ -81,22 +81,30 @@
 			<th class="listClasses-header">
 			</th>
 		</tr>
-		<logic:iterate id="infoCurricularCourseEquivalence" name="infoCurricularCourseEquivalences">
+		<logic:iterate id="curricularCourseEquivalence" name="curricularCourseEquivalences">
 			<tr>
 				<td class="listClasses">
-					<bean:write name="infoCurricularCourseEquivalence" property="infoOldCurricularCourse.infoDegreeCurricularPlan.name"/>
+					<table align="center" width="100%">
+						<logic:iterate id="oldCourse" name="curricularCourseEquivalence" property="oldCurricularCourses">
+							<tr>
+								<td class="listClasses">
+									<bean:write name="oldCourse" property="degreeCurricularPlan.name"/>
+								</td>								
+								<td class="listClasses">
+									<bean:write name="oldCourse" property="code"/>
+								</td>								
+								<td class="listClasses">
+									<bean:write name="oldCourse" property="name"/>
+								</td>								
+							</tr>
+						</logic:iterate>
+					</table>
 				</td>
 				<td class="listClasses">
-					<bean:write name="infoCurricularCourseEquivalence" property="infoOldCurricularCourse.code"/>
+					<bean:write name="curricularCourseEquivalence" property="equivalentCurricularCourse.code"/>
 				</td>
 				<td class="listClasses">
-					<bean:write name="infoCurricularCourseEquivalence" property="infoOldCurricularCourse.name"/>
-				</td>
-				<td class="listClasses">
-					<bean:write name="infoCurricularCourseEquivalence" property="infoEquivalentCurricularCourse.code"/>
-				</td>
-				<td class="listClasses">
-					<bean:write name="infoCurricularCourseEquivalence" property="infoEquivalentCurricularCourse.name"/>
+					<bean:write name="curricularCourseEquivalence" property="equivalentCurricularCourse.name"/>
 				</td>
 				<td class="listClasses">
 					<html:form action="/curricularCourseEquivalencies">
@@ -106,7 +114,7 @@
 						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeID" property="degreeID" value="<%= degreeID %>"/>
 						<bean:define id="degreeCurricularPlanID" name="curricularCourseEquivalenciesForm" property="degreeCurricularPlanID" type="java.lang.String"/>
 						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanID" property="degreeCurricularPlanID" value="<%= degreeCurricularPlanID %>"/>
-						<bean:define id="curricularCourseEquivalencyID" name="infoCurricularCourseEquivalence" property="idInternal" type="java.lang.Integer"/>
+						<bean:define id="curricularCourseEquivalencyID" name="curricularCourseEquivalence" property="idInternal" type="java.lang.Integer"/>
 						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.curricularCourseEquivalencyID" property="curricularCourseEquivalencyID" value="<%= curricularCourseEquivalencyID.toString() %>"/>
 
 						<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
