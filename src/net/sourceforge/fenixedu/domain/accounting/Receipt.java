@@ -289,13 +289,18 @@ public class Receipt extends Receipt_Base {
     }
     
     @Checked("RolePredicates.MANAGER_PREDICATE")
+    public void deleteReceiptPrintVersions() {
+	for (; hasAnyReceiptsVersions() ; getReceiptsVersions().get(0).delete());
+    }
+    
+    @Checked("RolePredicates.MANAGER_PREDICATE")
     public void delete() {
 	
 	if (!canBeDeleted()) {
 	    throw new DomainException("error.accounting.Receipt.cannot.be.deleted");
 	}
 	
-	for (; hasAnyReceiptsVersions() ; getReceiptsVersions().get(0).delete());
+	deleteReceiptPrintVersions();
 	
 	super.setContributor(null);
 	super.setContributorParty(null);
