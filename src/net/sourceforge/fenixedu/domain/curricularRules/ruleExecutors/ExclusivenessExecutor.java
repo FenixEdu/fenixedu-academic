@@ -23,7 +23,18 @@ public class ExclusivenessExecutor extends RuleExecutor {
 	result &= rule.appliesToContext(moduleToEnrol.getContext());
 	//result &= enrolmentContext.getStudentCurricularPlan().isApproved((CurricularCourse) rule.get());
 	
-	return result ? RuleResult.createTrue() : RuleResult.createFalse(new LabelFormatter().appendLabel("reason"));
+	//return result ? RuleResult.createTrue() : RuleResult.createFalse(new LabelFormatter().appendLabel("reason"));
+	return null;
+    }
+
+    @Override
+    protected RuleResult executeWithRulesAndTemporaryEnrolment(final CurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
+	return executeWithRules(curricularRule, enrolmentContext);
+    }
+    
+    @Override
+    protected RuleResult executeNoRules(EnrolmentContext enrolmentContext) {
+	return null;
     }
 
 }

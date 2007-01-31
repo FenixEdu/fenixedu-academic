@@ -5,28 +5,62 @@ import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.RestrictionDoneDegreeModule;
 import net.sourceforge.fenixedu.domain.enrolment.DegreeModuleToEnrol;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
 public class RestrictionDoneDegreeModuleExecutor extends RuleExecutor {
 
     @Override
-    protected RuleResult executeWithRules(CurricularRule curricularRule, EnrolmentContext enrolmentContext) {
-	
+    protected RuleResult executeWithRules(CurricularRule curricularRule,
+	    EnrolmentContext enrolmentContext) {
+
 	final RestrictionDoneDegreeModule rule = (RestrictionDoneDegreeModule) curricularRule;
-	
-	final DegreeModuleToEnrol moduleToEnrol = getDegreeModuleToEnrolFor(enrolmentContext, rule.getDegreeModuleToApplyRule());
-	if (moduleToEnrol == null) {
-	    throw new DomainException("error.curricularRules.RestrictionDoneDegreeModuleExecutor.cannot.find.degreeModuleToEnrol");
-	}
-	
+	final DegreeModuleToEnrol moduleToEnrol = getDegreeModuleToEnrolFor(enrolmentContext, rule
+		.getDegreeModuleToApplyRule());
 	if (!rule.appliesToContext(moduleToEnrol.getContext())) {
-	    return RuleResult.createFalse(new LabelFormatter().appendLabel("rule.doesnot.apply.to.context"));
+	    return RuleResult.createNA();
 	}
-	if (!enrolmentContext.getStudentCurricularPlan().isApproved((CurricularCourse) rule.getPrecedenceDegreeModule())) {
-	    return RuleResult.createFalse(new LabelFormatter().appendLabel("rule.student.is.not.approved.to.precendenceDegreeModule"));
+
+	if (!enrolmentContext.getStudentCurricularPlan().isApproved(
+		(CurricularCourse) rule.getPrecedenceDegreeModule())) {
+	    return RuleResult
+		    .createFalse(
+			    "curricularRules.ruleExecutors.RestrictionDoneDegreeModuleExecutor.student.is.not.approved.to.precendenceDegreeModule",
+			    rule.getDegreeModuleToApplyRule().getName(), rule
+				    .getPrecedenceDegreeModule().getName());
 	}
-	
+
+	return RuleResult.createTrue();
+    }
+
+    @Override
+    protected RuleResult executeNoRules(EnrolmentContext enrolmentContext) {
+	return RuleResult.createTrue();
+    }
+
+    @Override
+    protected RuleResult executeWithRulesAndTemporaryEnrolment(CurricularRule curricularRule,
+	    EnrolmentContext enrolmentContext) {
+	final RestrictionDoneDegreeModule rule = (RestrictionDoneDegreeModule) curricularRule;
+	final DegreeModuleToEnrol moduleToEnrol = getDegreeModuleToEnrolFor(enrolmentContext, rule
+		.getDegreeModuleToApplyRule());
+	if (!rule.appliesToContext(moduleToEnrol.getContext())) {
+	    return RuleResult.createNA();
+	}
+
+	final CurricularCourse curricularCourse = (CurricularCourse) rule.getPrecedenceDegreeModule();
+	if (!enrolmentContext.getStudentCurricularPlan().isApproved(curricularCourse)) {
+
+	    if (enrolmentContext.getStudentCurricularPlan().isEnroledInExecutionPeriod(curricularCourse,
+		    enrolmentContext.getExecutionPeriod().getPreviousExecutionPeriod())) {
+		return RuleResult.createTrue(EnrolmentResultType.TEMPORARY);
+	    }
+
+	    return RuleResult
+		    .createFalse(
+			    "curricularRules.ruleExecutors.RestrictionDoneDegreeModuleExecutor.student.is.not.approved.to.precendenceDegreeModule",
+			    rule.getDegreeModuleToApplyRule().getName(), rule
+				    .getPrecedenceDegreeModule().getName());
+	}
+
 	return RuleResult.createTrue();
     }
 

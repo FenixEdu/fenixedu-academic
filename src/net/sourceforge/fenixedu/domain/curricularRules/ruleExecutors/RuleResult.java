@@ -1,44 +1,57 @@
 package net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors;
 
-import net.sourceforge.fenixedu.util.resources.LabelFormatter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class RuleResult {
 
     private RuleResultType result;
 
-    private LabelFormatter message;
+    private List<RuleResultMessage> messages;
 
-    private RuleResult(final RuleResultType result) {
+    private EnrolmentResultType enrolmentResultType;
+
+    private RuleResult(final RuleResultType result, final EnrolmentResultType enrolmentResultType) {
 	this.result = result;
+	this.enrolmentResultType = enrolmentResultType;
+	this.messages = new ArrayList<RuleResultMessage>();
     }
 
-    private RuleResult(final RuleResultType result, final LabelFormatter message) {
-	this(result);
-	this.message = message;
+    private RuleResult(final RuleResultType result, final EnrolmentResultType enrolmentResultType,
+	    final List<RuleResultMessage> messages) {
+	this(result, enrolmentResultType);
+	this.messages.addAll(messages);
     }
 
     private RuleResultType getResult() {
 	return this.result;
     }
 
-    public LabelFormatter getMessage() {
-	return message;
+    public List<RuleResultMessage> getMessages() {
+	return messages;
     }
 
-    public boolean hasMessage() {
-	return this.message != null && !this.message.isEmpty();
+    public RuleResult and(final RuleResult ruleResult) {
+	final RuleResultType andResult = this.getResult().and(ruleResult.getResult());
+	final List<RuleResultMessage> messages = new ArrayList<RuleResultMessage>(getMessages());
+	if (andResult == RuleResultType.FALSE && ruleResult.isFalse()) {
+	    messages.addAll(ruleResult.getMessages());
+	}
+
+	return new RuleResult(andResult, getEnrolmentResultType().and(
+		ruleResult.getEnrolmentResultType()), messages);
     }
 
-    public RuleResult and(RuleResult ruleResult) {
-	return new RuleResult(AND_TABLE[this.getResult().order()][ruleResult.getResult().order()]);
-    }
+    public RuleResult or(final RuleResult ruleResult) {
+	final RuleResultType orResult = this.getResult().or(ruleResult.getResult());
+	final List<RuleResultMessage> messages = new ArrayList<RuleResultMessage>(getMessages());
+	if (orResult == RuleResultType.FALSE) {
+	    messages.addAll(ruleResult.getMessages());
+	}
 
-    public RuleResult or(RuleResult ruleResult) {
-	return new RuleResult(OR_TABLE[this.getResult().order()][ruleResult.getResult().order()]);
-    }
-
-    public RuleResult not() {
-	return new RuleResult(NOT_TABLE[this.getResult().order()]);
+	return new RuleResult(orResult, getEnrolmentResultType()
+		.and(ruleResult.getEnrolmentResultType()), messages);
     }
 
     public boolean isTrue() {
@@ -52,58 +65,59 @@ public class RuleResult {
     public boolean isNA() {
 	return getResult() == RuleResultType.NA;
     }
-    
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) { return true; }
-        if (obj instanceof RuleResult) { return this.result == ((RuleResult) obj).getResult(); }
-        return false;
+
+    public boolean isFinalEnrolment() {
+	return this.enrolmentResultType == EnrolmentResultType.FINAL;
     }
 
-    private enum RuleResultType {
-	FALSE(0), TRUE(1), NA(2);
+    public boolean isTemporaryEnrolment() {
+	return this.enrolmentResultType == EnrolmentResultType.TEMPORARY;
+    }
 
-	private int order;
+    public EnrolmentResultType getEnrolmentResultType() {
+	return enrolmentResultType;
+    }
 
-	private RuleResultType(int order) {
-	    this.order = order;
+    @Override
+    public boolean equals(Object obj) {
+	if (this == obj) {
+	    return true;
 	}
-
-	public int order() {
-	    return this.order;
+	if (obj instanceof RuleResult) {
+	    return this.result == ((RuleResult) obj).getResult();
 	}
-
-	public String value() {
-	    return name();
-	}
+	return false;
     }
 
     static public RuleResult createTrue() {
-	return new RuleResult(RuleResultType.TRUE);
-    }
-    
-    static public RuleResult createFalse() {
-	return new RuleResult(RuleResultType.FALSE);
+	return new RuleResult(RuleResultType.TRUE, EnrolmentResultType.FINAL);
     }
 
-    static public RuleResult createFalse(final LabelFormatter message) {
-	return new RuleResult(RuleResultType.FALSE, message);
+    static public RuleResult createTrue(final EnrolmentResultType enrolmentResultType) {
+	return new RuleResult(RuleResultType.TRUE, enrolmentResultType);
+    }
+
+    static public RuleResult createFalse(final EnrolmentResultType enrolmentResultType) {
+	return new RuleResult(RuleResultType.FALSE, enrolmentResultType);
+    }
+
+    static public RuleResult createFalse() {
+	return new RuleResult(RuleResultType.FALSE, EnrolmentResultType.FINAL);
+    }
+
+    static public RuleResult createFalse(final String message, final String... args) {
+	return new RuleResult(RuleResultType.FALSE, EnrolmentResultType.FINAL, Collections
+		.singletonList(new RuleResultMessage(message, args)));
+    }
+
+    static public RuleResult createFalse(final EnrolmentResultType enrolmentResultType,
+	    RuleResultMessage message) {
+	return new RuleResult(RuleResultType.FALSE, enrolmentResultType, Collections
+		.singletonList(message));
     }
 
     static public RuleResult createNA() {
-	return new RuleResult(RuleResultType.NA);
+	return new RuleResult(RuleResultType.NA, EnrolmentResultType.NULL);
     }
 
-    static private final RuleResultType[][] AND_TABLE = new RuleResultType[][] {
-	    { RuleResultType.FALSE, RuleResultType.FALSE, RuleResultType.FALSE },
-	    { RuleResultType.FALSE, RuleResultType.TRUE, RuleResultType.TRUE },
-	    { RuleResultType.FALSE, RuleResultType.TRUE, RuleResultType.NA } };
-
-    static private final RuleResultType[][] OR_TABLE = new RuleResultType[][] {
-	    { RuleResultType.FALSE, RuleResultType.TRUE, RuleResultType.FALSE },
-	    { RuleResultType.TRUE, RuleResultType.TRUE, RuleResultType.TRUE },
-	    { RuleResultType.FALSE, RuleResultType.TRUE, RuleResultType.NA } };
-
-    static private final RuleResultType[] NOT_TABLE = new RuleResultType[] {
-	RuleResultType.TRUE, RuleResultType.FALSE, RuleResultType.NA };
 }

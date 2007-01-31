@@ -9,30 +9,27 @@ import net.sourceforge.fenixedu.domain.curricularRules.RestrictionDoneDegreeModu
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class RuleFactory {
-    
-    private static final RuleFactory INSTANCE = new RuleFactory();
-    
-    private Map<Class<? extends CurricularRule>, RuleExecutor> executors;
-    
-    private RuleFactory() {
-	executors = new HashMap<Class<? extends CurricularRule>, RuleExecutor>();
-	loadRuleExecutors();
-    }
-    
-    private void loadRuleExecutors() {
-	// TODO: For test only
+
+    private static Map<Class<? extends CurricularRule>, RuleExecutor> executors = new HashMap<Class<? extends CurricularRule>, RuleExecutor>();
+
+    static {
 	executors.put(RestrictionDoneDegreeModule.class, new RestrictionDoneDegreeModuleExecutor());
-	executors.put(EnrolmentToBeApprovedByCoordinator.class, new EnrolmentToBeApprovedByCoordinatorExecutor());
+	executors.put(EnrolmentToBeApprovedByCoordinator.class,
+		new EnrolmentToBeApprovedByCoordinatorExecutor());
+
     }
 
     public static RuleExecutor findExecutor(final CurricularRule curricularRule) {
 	return findExecutor(curricularRule.getClass());
     }
-    
+
     public static RuleExecutor findExecutor(final Class<? extends CurricularRule> clazz) {
-	if (!INSTANCE.executors.containsKey(clazz)) {
-	    throw new DomainException("error.curricularRules.RuleFactory.cannot.find.RuleExecutor.for.class", clazz.getName());
+	if (!executors.containsKey(clazz)) {
+	    throw new DomainException(
+		    "error.curricularRules.RuleFactory.cannot.find.RuleExecutor.for.class", clazz
+			    .getName());
 	}
-	return INSTANCE.executors.get(clazz);
+
+	return executors.get(clazz);
     }
 }

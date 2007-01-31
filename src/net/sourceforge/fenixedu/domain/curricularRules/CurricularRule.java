@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.RuleFactory;
-import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.RuleLevel;
+import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.CurricularRuleLevel;
 import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.RuleResult;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
@@ -120,10 +120,10 @@ public abstract class CurricularRule extends CurricularRule_Base {
     }
     
     public RuleResult evaluate(final EnrolmentContext enrolmentContext) {
-	return evaluate(enrolmentContext, RuleLevel.defaultLevel());
+	return evaluate(enrolmentContext, CurricularRuleLevel.defaultLevel());
     }
     
-    public RuleResult evaluate(final EnrolmentContext enrolmentContext, final RuleLevel level) {
+    public RuleResult evaluate(final EnrolmentContext enrolmentContext, final CurricularRuleLevel level) {
 	return RuleFactory.findExecutor(this).execute(this, level, enrolmentContext);
     }
     

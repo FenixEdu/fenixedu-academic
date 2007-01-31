@@ -113,9 +113,6 @@ public abstract class CompositeRule extends CompositeRule_Base {
     public RuleResult evaluate(final EnrolmentContext enrolmentContext) {
         switch (getCompositeRuleType()) {
 
-        case NOT:
-            return getCurricularRules().get(0).evaluate(enrolmentContext).not();
-        
         case AND:
             RuleResult result = RuleResult.createTrue();
             for (final CurricularRule curricularRule : getCurricularRules()) {
