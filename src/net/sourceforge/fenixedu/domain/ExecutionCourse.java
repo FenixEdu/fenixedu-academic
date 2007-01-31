@@ -1532,8 +1532,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     public List<Attends> getAttendsEnrolledOrWithActiveSCP() {
 	List<Attends> result = new ArrayList<Attends>();
 	for (Attends attends : this.getAttendsSet()) {
-	    RegistrationState lastRegistrationState = attends.getAluno().getLastRegistrationState(this.getExecutionYear());
-	    if(attends.getEnrolment() != null || lastRegistrationState == null || lastRegistrationState.isActive()) {
+	    if(attends.isEnrolledOrWithActiveSCP()) {
 		result.add(attends);
 	    }
 	}

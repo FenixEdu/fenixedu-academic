@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.DateMidnight;
@@ -316,5 +317,15 @@ public class Attends extends Attends_Base {
 
     public ExecutionCourse getExecutionCourse() {
 	return getDisciplinaExecucao();
+    }
+    
+    public boolean isEnrolledOrWithActiveSCP() {
+	if(this.getEnrolment() == null) {
+	    RegistrationState lastRegistrationState = this.getAluno().getLastRegistrationState(this.getExecutionCourse().getExecutionYear());
+	    if(lastRegistrationState != null && !lastRegistrationState.isActive()) {
+		return false;
+	    }
+	}
+	return true;
     }
 }
