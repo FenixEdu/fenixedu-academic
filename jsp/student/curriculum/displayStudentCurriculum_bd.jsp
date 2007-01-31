@@ -270,40 +270,42 @@
 .bgcolor10 { background: #f9f9f5; }
 .bgcolor11 { background: #fdfdfa; }
 .bgcolor12 { background: #fdfdfa; }
+.bgcolor13 { background: #fdfdfa; }
 </style>
 
+		<bean:define id="initialWidth" value="800px"/>
+		<bean:define id="widthDecreasePerLevel" value="10"/>
+		<bean:define id="tablesClasses" value="showinfo3 mvert0 prtwidth100pc"/>
+		<bean:define id="groupRowClasses" value="bgcolor2"/>
+		<bean:define id="groupNameClasses" value="aleft"/>
+		<bean:define id="enrolmentClasses" value="
+			<!-- Código e Disciplina --> 		col4 bgcolor04 aleft,
+			<!-- Curso  --> 					col5 bgcolor05 width7em acenter,
+			<!-- Opcional  -->					col8 bgcolor08 width7em acenter,
+			<!-- Caixa  -->						col13 bgcolor13 width05em acenter printhidden,
+			<!-- Reprovado Não Avaliado  -->	col9 bgcolor09 width8em acenter,
+			<!-- Nota  -->						col10 bgcolor10 width2em aright,
+			<!-- Peso  -->						col11 bgcolor11 color888 width2em aright,
+			<!-- ECTS  -->						col12 bgcolor12 color888 width2em aright,
+			<!-- Época Normal -->				col3 bgcolor03 width1p5em acenter,
+			<!-- Ano -->						col6 bgcolor06 grupos,
+			<!-- Semestre -->					col7 bgcolor07 grupos,
+			<!-- Data do Exame -->				col2 bgcolor02 width6em acenter,
+			<!-- Pessoa Responsável Nota -->	col1 bgcolor01 width2em acenter
+		"/>
 
-
-
-		<fr:view name="studentCurricularPlan">
+		<fr:edit name="studentCurricularPlan">
 			<fr:layout>
 				<fr:property name="organizedBy" value="<%=organizedBy%>"/>
-				<fr:property name="initialWidth" value="800px"/>
-				<fr:property name="widthDecreasePerLevel" value="10"/>
-				<fr:property name="tablesClasses" value="showinfo3 mvert0 prtwidth100pc"/>
-				<%-- tableClasses--%>
-				<fr:property name="groupRowClasses" value="bgcolor2"/>
-				<%-- groupHeaderRowClasses--%>
-				<fr:property name="groupNameClasses" value="aleft"/>
-				<%-- groupHeaderClasses--%>
-				<fr:property name="enrolmentClasses" value="
-					<!-- Curso  --> 					col5 bgcolor05 width7em acenter,
-					<!-- Código e Disciplina --> 		col4 bgcolor04 aleft,
-					<!-- Opcional  -->					col8 bgcolor08 width7em acenter,
-					<!-- Reprovado Não Avaliado  -->	col9 bgcolor09 width8em acenter,
-					<!-- Nota  -->						col10 bgcolor10 width2em aright,
-					<!-- Peso  -->						col11 bgcolor11 color888 width2em aright,
-					<!-- ECTS  -->						col12 bgcolor12 color888 width2em aright,
-					<!-- Época Normal -->				col3 bgcolor03 width1p5em acenter,
-					<!-- Ano -->						col6 bgcolor06 grupos,
-					<!-- Semestre -->					col7 bgcolor07 grupos,
-					<!-- Data do Exame -->				col2 bgcolor02 width6em acenter,
-					<!-- Pessoa Responsável Nota -->	col1 bgcolor01 width2em acenter
-				"/>
-				<%-- enrolmentColumnClasses--%>
+				<fr:property name="initialWidth" value="<%=initialWidth%>"/>
+				<fr:property name="widthDecreasePerLevel" value="<%=widthDecreasePerLevel%>"/>
+				<fr:property name="tablesClasses" value="<%=tablesClasses%>"/>
+				<fr:property name="groupRowClasses" value="<%=groupRowClasses%>"/>
+				<fr:property name="groupNameClasses" value="<%=groupNameClasses%>"/>
+				<fr:property name="enrolmentClasses" value="<%=enrolmentClasses%>"/>
 				<fr:property name="enrolmentStateSelectionType" value="<%=enrolmentStateSelectionType.toString()%>"/>
 			</fr:layout>
-		</fr:view>
+		</fr:edit>
 
 	</logic:iterate>
 

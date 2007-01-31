@@ -183,7 +183,7 @@ Documentation:
     <!--@ The default layout for the a parser report.  -->
     <renderer type="net.sourceforge.fenixedu.presentationTier.Action.manager.functionalities.ParserReport" class="net.sourceforge.fenixedu.presentationTier.renderers.ParserReportRenderer"/>
     
-    <renderer type="net.sourceforge.fenixedu.domain.StudentCurricularPlan" class="net.sourceforge.fenixedu.presentationTier.renderers.StudentCurricularPlanRenderer"/>
+    <renderer mode="input" type="net.sourceforge.fenixedu.domain.StudentCurricularPlan" class="net.sourceforge.fenixedu.presentationTier.renderers.StudentCurricularPlanRenderer"/>
     
 	<renderer mode="input" type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.StudentEnrolmentBean" layout="student-enrolments" class="net.sourceforge.fenixedu.presentationTier.renderers.StudentCurricularPlanEnrolmentsRenderer"/>
 	
