@@ -1,9 +1,5 @@
 package net.sourceforge.fenixedu.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
@@ -32,7 +28,7 @@ public class ExternalPersonTest extends DomainTestBase {
 	
 	Unit institution1;
 	Unit institution2;
-	List<ExternalPerson> allExternalPersons;
+	//List<ExternalPerson> allExternalPersons;
 
     protected void setUp() throws Exception {
         super.setUp();
