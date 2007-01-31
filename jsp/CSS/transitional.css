@@ -203,6 +203,7 @@ table.smalltxt tr td { font-size: 0.85em;}
 table th.cornerleft { background: none; border-left: none; border-top: none; }
 table th.cornerleft2 { background: none; border-left: none; border-top: none; border-bottom: none; }
 table td.cornerright { }
+
 /* error , warning */
 .tderror1 { color: #c00; }
 .tderror1 span { background-color: #ffeadd; }

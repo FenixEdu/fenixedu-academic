@@ -154,6 +154,7 @@
 		</logic:notEmpty>
 	</div>
 
+
 	<table class="tstyle4 thlight tdcenter mtop15">
 		<tr>
 			<th>Plano Curricular</th>
@@ -188,10 +189,10 @@
 		<table class="tstyle4">
 			<tr>
 				<th rowspan="2" colspan="2">
-					<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.curricular.course.from.curriculum"/>
+					<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.curricular.course.from.curriculum.withBreak"/>
 				</th>
 				<th rowspan="2" colspan="2">
-					<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.type.of.aproval"/>
+					<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.type.of.aproval.withBreak"/>
 				</th>
 				<th rowspan="2" colspan="2">
 					<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.curricular.course.aproved"/>
@@ -362,7 +363,7 @@
 			</logic:iterate>				
 			<tr>
 				<td colspan="8" style="text-align: right;">
-					Somatórios
+					Sumatórios
 				</td>
 				<td class="acenter">
 					<bean:write name="sumPi"/>

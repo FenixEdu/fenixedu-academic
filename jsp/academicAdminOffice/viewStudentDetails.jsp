@@ -54,7 +54,7 @@
 <fr:view name="student" property="registrations" schema="student.registrationsWithStartData" >
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle4 thlight mtop025 asdasd"/>
-		<fr:property name="columnClasses" value=",tdhl1,,"/>
+		<fr:property name="columnClasses" value=",,tdhl1,,"/>
 		<fr:property name="linkFormat(view)" value="/student.do?method=visualizeRegistration&registrationID=${idInternal}" />
 		<fr:property name="key(view)" value="link.student.visualizeRegistration"/>
 		<fr:property name="bundle(view)" value="ACADEMIC_OFFICE_RESOURCES"/>
@@ -67,6 +67,13 @@
 
 <!-- Student Statues -->
 <h3 class="mbottom025"><bean:message key="label.statutes" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
+<p class="mvert05">
+	<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
+	<html:link action="/studentStatutes.do?method=prepare" paramName="student" paramProperty="idInternal" paramId="studentId">
+		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.studentStatutes.manage" />
+	</html:link>
+</p>
+
 <fr:view name="student" property="currentStatutes" schema="student.statutes.current" >
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle4 thlight mtop025 mbottom0"/>
@@ -75,13 +82,7 @@
 </fr:view>
 
 
-<p class="mvert05">
-	<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-	<html:link action="/studentStatutes.do?method=prepare" paramName="student" paramProperty="idInternal" paramId="studentId">
-		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.studentStatutes.manage" />
-	</html:link>
-</p>
-
+<!-- Payments -->
 <h3 class="mbottom025"><bean:message key="label.payments" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <p class="mvert05">
 	<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
