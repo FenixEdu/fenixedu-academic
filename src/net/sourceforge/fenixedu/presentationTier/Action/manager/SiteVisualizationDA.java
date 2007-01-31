@@ -31,6 +31,16 @@ import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
  */
 public abstract class SiteVisualizationDA extends FenixDispatchAction {
 
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String directLinkContext = getDirectLinkContext(request);
+        if (directLinkContext != null) {
+            request.setAttribute("directLinkContext", directLinkContext);
+        }
+        
+        return super.execute(mapping, actionForm, request, response);
+    }
+
     public ActionForward item(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws IOException {
         Item item = selectItem(request);
         
@@ -149,7 +159,7 @@ public abstract class SiteVisualizationDA extends FenixDispatchAction {
         return userView != null && !userView.isPublicRequester();
     }
 
-    private Section selectSection(HttpServletRequest request) {
+    protected Section selectSection(HttpServletRequest request) {
         return selectSection(request, getSection(request));
     }
 
@@ -168,7 +178,7 @@ public abstract class SiteVisualizationDA extends FenixDispatchAction {
         return section;
     }
     
-    private Item selectItem(HttpServletRequest request) {
+    protected Item selectItem(HttpServletRequest request) {
        Item item = getItem(request);
        
        if (item != null) {
@@ -180,14 +190,30 @@ public abstract class SiteVisualizationDA extends FenixDispatchAction {
     }
     
     private Item getItem(HttpServletRequest request) {
-        final Integer itemID = Integer.valueOf(request.getParameter("itemID"));
+        String parameter = request.getParameter("itemID");
+        
+        if (parameter == null) {
+            return null;
+        }
+        
+        Integer itemID = Integer.valueOf(parameter);
         return rootDomainObject.readItemByOID(itemID);
     }
 
     protected Section getSection(final HttpServletRequest request) {
-        final Integer sectionID = Integer.valueOf(request.getParameter("sectionID"));
+        String parameter = request.getParameter("sectionID");
+        
+        if (parameter == null) {
+            return null;
+        }
+        
+        final Integer sectionID = Integer.valueOf(parameter);
         return rootDomainObject.readSectionByOID(sectionID);
     }
 
     protected abstract ActionForward getSiteDefaultView(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response);
+    
+    protected String getDirectLinkContext(HttpServletRequest request) {
+        return null;
+    }
 }

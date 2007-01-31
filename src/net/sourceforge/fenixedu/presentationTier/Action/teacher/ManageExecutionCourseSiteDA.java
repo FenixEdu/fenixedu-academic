@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.teacher;
 
+import java.net.MalformedURLException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -27,11 +29,17 @@ public class ManageExecutionCourseSiteDA extends SiteManagementDA {
             HttpServletResponse response) throws Exception {
         propageContextIds(request);
         
-        ExecutionCourse executionCourse = getExecutionCourse(request);
-        String directLinkContext = RequestUtils.absoluteURL(request, ExecutionCourseProcessor.getExecutionCourseAbsolutePath(executionCourse)).toString();
-        request.setAttribute("directLinkContext", directLinkContext);
-        
         return super.execute(mapping, actionForm, request, response);
+    }
+    
+    @Override
+    protected String getDirectLinkContext(HttpServletRequest request) {
+        ExecutionCourse executionCourse = getExecutionCourse(request);
+        try {
+            return RequestUtils.absoluteURL(request, ExecutionCourseProcessor.getExecutionCourseAbsolutePath(executionCourse)).toString();
+        } catch (MalformedURLException e) {
+            return null;
+        }
     }
     
     public ExecutionCourse getExecutionCourse(HttpServletRequest request) {

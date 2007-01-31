@@ -45,8 +45,9 @@ public class GeneralForwardFilter implements Filter {
         String classScheduleURI = config.getInitParameter("classScheduleURI");
         String examListURI = config.getInitParameter("examListURI");
         String degreeURI = config.getInitParameter("degreeURI");
+        String degreeSiteURI = config.getInitParameter("degreeSiteURI");
 
-        DegreeProcessor degreeProcessor = new DegreeProcessor(degreeURI);
+        DegreeProcessor degreeProcessor = new DegreeProcessor(degreeURI, degreeSiteURI);
         ExecutionCoursesProcessor executionCourses = new ExecutionCoursesProcessor(siteListURI);
         DegreeCurricularPlanProcessor degreeCurricularPlan = new DegreeCurricularPlanProcessor();
         ExecutionCourseProcessor executionCourse = new ExecutionCourseProcessor(executionCouseSiteURI);
@@ -80,6 +81,7 @@ public class GeneralForwardFilter implements Filter {
                 .add(schedule
                     .add(schoolClass))
                 .add(exams)
+                .add(sectionAndItem)
         );
         
         processors.add(homepage.add(sectionAndItem));

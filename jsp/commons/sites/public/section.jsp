@@ -81,14 +81,14 @@
             		</logic:notEmpty>
                     
             		<logic:notEmpty name="item" property="sortedVisibleFileItems">
-                        <fr:view name="item" property="sortedVisibleFileItems">
-                            <fr:layout name="list">
-	                            <fr:property name="classes" value="coutput1 mvert025" />
-                                <fr:property name="eachSchema" value="site.item.file.basic"/>
-                                <fr:property name="eachLayout" value="values"/>
-                                <fr:property name="style" value="<%= "list-style-image: url(" + request.getContextPath() + "/images/icon_file.gif);" %>"/>
-                            </fr:layout>
-                        </fr:view>
+                    <fr:view name="item" property="sortedVisibleFileItems">
+                        <fr:layout name="list">
+                            <fr:property name="classes" value="coutput1 mvert025" />
+                            <fr:property name="eachSchema" value="site.item.file.basic"/>
+                            <fr:property name="eachLayout" value="values"/>
+                            <fr:property name="style" value="<%= "list-style-image: url(" + request.getContextPath() + "/images/icon_file.gif);" %>"/>
+                        </fr:layout>
+                    </fr:view>
             		</logic:notEmpty>
             </logic:equal>
             

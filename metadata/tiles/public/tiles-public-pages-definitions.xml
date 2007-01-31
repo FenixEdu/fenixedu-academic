@@ -10,6 +10,48 @@
 		<put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />
 		<put name="body" value="/publico/degreeSite/showDegreeSiteDescription.jsp" />
 	</definition>
+	<definition name="public-degree-list-announcements" extends="definition.public.mainPageIST">
+		<put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />
+		<put name="body" value="/publico/degreeSite/listAnnouncements.jsp" />
+	</definition>
+    <definition name="degree-section" extends="definition.public.mainPageIST">
+        <put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />
+        <put name="body" value="/commons/sites/public/section.jsp"/>
+        <put name="body-context" value="/publico/degreeSite/siteContext.jsp"/>
+    </definition>
+    <definition name="degree-section-deny" extends="definition.public.mainPageIST">
+        <put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />
+        <put name="body" value="/commons/sites/public/section-deny.jsp"/>
+        <put name="body-context" value="/publico/degreeSite/siteContext.jsp"/>
+    </definition>
+    <definition name="degree-section-adviseLogin" extends="definition.public.mainPageIST">
+        <put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />
+        <put name="body" value="/commons/sites/public/section-adviseLogin.jsp"/>
+        <put name="body-context" value="/publico/degreeSite/siteContext.jsp"/>
+    </definition>
+    <definition name="degree-item" extends="definition.public.mainPageIST">
+        <put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />
+        <put name="body" value="/commons/sites/public/item.jsp"/>
+        <put name="body-context" value="/publico/degreeSite/siteContext.jsp"/>
+    </definition>
+    <definition name="degree-item-deny" extends="definition.public.mainPageIST">
+        <put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />
+        <put name="body" value="/commons/sites/public/item-deny.jsp"/>
+        <put name="body-context" value="/publico/degreeSite/siteContext.jsp"/>
+    </definition>
+    <definition name="degree-item-adviseLogin" extends="definition.public.mainPageIST">
+        <put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />
+        <put name="body" value="/commons/sites/public/item-adviseLogin.jsp"/>
+        <put name="body-context" value="/publico/degreeSite/siteContext.jsp"/>
+    </definition>
+	<definition name="degree-view-announcement" extends="definition.public.mainPageIST">
+		<put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />
+		<put name="body" value="/publico/degreeSite/viewAnnouncement.jsp" />
+	</definition>
+	<definition name="showDescription" extends="definition.public.mainPageIST">
+		<put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />
+		<put name="body" value="/publico/degreeSite/showDegreeSiteDescription.jsp" />
+	</definition>
 	<definition name="showDescriptionEnglish" extends="definition.public.mainPageIST">
 		<put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />
 		<put name="body" value="/publico/degreeSite/showDegreeSiteDescriptionEnglish.jsp" />

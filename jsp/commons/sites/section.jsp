@@ -359,7 +359,7 @@
            	                			<fr:view name="fileItem" property="displayName"/>
            	                		</html:link>
             	                		
-            	    		        <bean:define id="message">
+            	    		            <bean:define id="message">
         	                            <bean:message key="message.item.file.delete.confirm" bundle="SITE_RESOURCES" arg0="<%= fileItem.getDisplayName() %>"/>
         	                        </bean:define>
             							

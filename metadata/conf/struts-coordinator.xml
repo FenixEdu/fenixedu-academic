@@ -644,7 +644,41 @@
 			<forward name="viewInformation" path="viewInformation" />
 			<forward name="viewHistoric" path="viewHistoric" />
 			<forward name="viewDescriptionCurricularPlan" path="viewDescriptionCurricularPlan" />
+            
+            <forward name="createSection" path="manage-degree-createSection"/>
+            <forward name="sectionsManagement" path="manage-degree-sectionsManagement"/>
+            <forward name="section" path="manage-degree-section"/>
+            <forward name="editSection" path="manage-degree-editSection"/>
+            <forward name="createItem" path="manage-degree-createItem"/>
+            <forward name="editItem" path="manage-degree-editItem"/>
+            <forward name="uploadFile" path="manage-degree-uploadFile"/>
+            <forward name="editFile" path="manage-degree-editFile"/>          
+            <forward name="organizeItems" path="manage-degree-organizeItems"/>
+            <forward name="organizeFiles" path="manage-degree-organizeFiles"/>
+            <forward name="confirmSectionDelete" path="manage-degree-confirmSectionDelete"/>
+            <forward name="editSectionPermissions" path="manage-degree-editSectionPermissions"/>
+            <forward name="editItemPermissions" path="manage-degree-editItemPermissions"/>
+            <forward name="editFile" path="manage-degree-editFile"/>
+            
 		</action>			
+
+        <action path="/announcementsManagement"
+                parameter="method"
+                type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.AnnouncementsManagementDA">
+            <forward name="noBoards" path="coordinator-announcements-no-boards"/>
+            <forward name="viewAnnouncementsRedirect" path="/announcementsManagement.do?method=viewAnnouncements&amp;tabularVersion=true"/>
+            <forward name="listAnnouncementBoards" path="coordinator-announcements-list-boards"/>
+            <forward name="listAnnouncements" path="coordinator-announcements-list-announcements"/>
+            <forward name="add" path="coordinator-announcements-add-announcement"/>
+            <forward name="viewAnnouncement" path="coordinator-announcements-view-announcement"/>
+            <forward name="edit" path="coordinator-announcements-edit-announcement"/>
+        </action>
+
+        <action path="/announcements/manageUnitAnnouncementBoard"
+                parameter="method"
+                type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.AnnouncementsManagementDA">
+            <forward name="listAnnouncements" path="coordinator-announcements-list-announcements"/>
+        </action>
 
 		<!-- ======== degree curricular plan management mappings -->
 		<action path="/degreeCurricularPlanManagement"
@@ -875,7 +909,9 @@
     
     <!-- ========== Message Resources Definitions ============================ -->
 	<message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
+    <message-resources parameter="resources.ApplicationResources" key="DEFAULT" null="false"/>
 	<message-resources parameter="resources.ApplicationResources" key="APPLICATION_RESOURCES" null="false"/>
+	<message-resources parameter="resources.SiteResources" key="SITE_RESOURCES" null="false"/>
     <message-resources parameter="resources.CmsResources" key="CMS_RESOURCES" null="false" />
    	<message-resources parameter="resources.BolonhaManagerResources" key="BOLONHA_MANAGER_RESOURCES" null="false"/>
 	<message-resources parameter="resources.AcademicAdminOffice" key="ACADEMIC_OFFICE_RESOURCES" null="false"/>

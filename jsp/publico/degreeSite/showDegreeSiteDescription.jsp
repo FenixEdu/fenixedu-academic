@@ -59,7 +59,7 @@
 				<%
 					} else {
 				%>
-					<a target="_blank" href="<%= "../" + homepageWebAddres %>"><bean:write name="responsibleCoordinatorTeacher" property="person.nickname"/></a>
+					<a target="_blank" href="<%= ".." + homepageWebAddres %>"><bean:write name="responsibleCoordinatorTeacher" property="person.nickname"/></a>
 				<%
 					}
 				%>

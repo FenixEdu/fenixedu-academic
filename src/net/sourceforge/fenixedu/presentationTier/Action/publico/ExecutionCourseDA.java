@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.publico;
 
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -44,10 +45,17 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
         final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
         request.setAttribute("executionCourse", executionCourse);
         
-        String directLinkContext = RequestUtils.absoluteURL(request, ExecutionCourseProcessor.getExecutionCourseAbsolutePath(executionCourse)).toString();
-        request.setAttribute("directLinkContext", directLinkContext);
-        
         return super.execute(mapping, actionForm, request, response);
+    }
+
+    @Override
+    protected String getDirectLinkContext(HttpServletRequest request) {
+        ExecutionCourse executionCourse = getExecutionCourse(request);
+        try {
+            return RequestUtils.absoluteURL(request, ExecutionCourseProcessor.getExecutionCourseAbsolutePath(executionCourse)).toString();
+        } catch (MalformedURLException e) {
+            return null;
+        }
     }
 
     protected ExecutionCourse getExecutionCourse(final HttpServletRequest request) {

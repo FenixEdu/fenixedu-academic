@@ -91,12 +91,6 @@
     <definition name="homepage-editFile" extends="definition.person.homepage" >
         <put name="body" value="/commons/sites/editFile.jsp"/>
     </definition>   
-    <definition name="homepage-create-scorm" extends="definition.person.homepage" >
-        <put name="body" value="/commons/sites/createScorm.jsp"/>
-    </definition>   
-    <definition name="homepage-upload-scorm" extends="definition.person.homepage" >
-        <put name="body" value="/commons/sites/uploadScorm.jsp"/>
-    </definition>
     
 	<!--  ============== Messaging ===================== -->
 	

@@ -643,16 +643,39 @@
      		scope="request"
      		>
      		
-	     <forward  name="showDescription" path="showDescription"/>
-	     <forward  name="showDescriptionEnglish" path="showDescriptionEnglish"/>   	
-	     <forward  name="showAccessRequirements" path="showAccessRequirements"/> 
-   	     <forward  name="showProfessionalStatus" path="showProfessionalStatus"/>
-	     <forward  name="showAccessRequirementsEnglish" path="showAccessRequirementsEnglish"/>  
-	     <forward  name="showCurricularPlans" path="showCurricularPlans"/>
-	     <forward  name="showCurricularPlansEnglish" path="showCurricularPlansEnglish"/>  	  
-	     <forward  name="viewDegreeEvaluation" path="viewDegreeEvaluation"/>  	  
+	     <forward name="showDescription" path="showDescription"/>
+	     <forward name="showDescriptionEnglish" path="showDescriptionEnglish"/>   	
+	     <forward name="showAccessRequirements" path="showAccessRequirements"/> 
+   	     <forward name="showProfessionalStatus" path="showProfessionalStatus"/>
+	     <forward name="showAccessRequirementsEnglish" path="showAccessRequirementsEnglish"/>  
+	     <forward name="showCurricularPlans" path="showCurricularPlans"/>
+	     <forward name="showCurricularPlansEnglish" path="showCurricularPlansEnglish"/>  	  
+	     <forward name="viewDegreeEvaluation" path="viewDegreeEvaluation"/>  	  
+     </action>
+
+     <action path="/showDegreeAnnouncements"
+             type="net.sourceforge.fenixedu.presentationTier.Action.publico.DegreeAnnouncementsDA" 
+             parameter="method"
+             scope="request"
+            >
+         <forward name="listAnnouncements" path="public-degree-list-announcements"/>
+         <forward name="viewAnnouncement" path="degree-view-announcement"/>
      </action>
      
+     <action path="/showDegreeSiteContent"
+             type="net.sourceforge.fenixedu.presentationTier.Action.publico.DegreeSiteVisualizationDA" 
+             parameter="method"
+             scope="request"
+            >
+        <forward name="degree-description" path="showDescription"/>
+        <forward name="site-section" path="degree-section"/>
+        <forward name="site-section-deny" path="degree-section-deny"/>
+        <forward name="site-section-adviseLogin" path="degree-section-adviseLogin"/>
+        <forward name="site-item" path="degree-item"/>
+        <forward name="site-item-deny" path="degree-item-deny"/>
+        <forward name="site-item-adviseLogin" path="degree-item-adviseLogin"/>
+     </action>
+
      <action path="/showDegreeCurricularPlan" 
      		type="net.sourceforge.fenixedu.presentationTier.Action.publico.ShowDegreeCurricularPlanAction" 
      		parameter="method"

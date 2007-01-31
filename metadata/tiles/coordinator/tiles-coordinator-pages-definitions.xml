@@ -40,6 +40,30 @@
 		<put name="navLocalExtra" value="/coordinator/degreeSite/degreeSiteMenu.jsp" />
 		<put name="body" value="/coordinator/degreeSite/viewDegreeInfo.jsp" />
 	</definition>
+    <definition name="coordinator-announcements-no-boards" extends="definition.coordinator.two-column.extra-menu">
+        <put name="navLocalExtra" value="/coordinator/degreeSite/degreeSiteMenu.jsp" />
+        <put name="body" value="/coordinator/degreeSite/announcements/noBoards.jsp" />
+    </definition>
+    <definition name="coordinator-announcements-list-boards" extends="definition.coordinator.two-column.extra-menu">
+        <put name="navLocalExtra" value="/coordinator/degreeSite/degreeSiteMenu.jsp" />
+        <put name="body" value="/messaging/announcements/listAnnouncementBoards.jsp" />
+    </definition>
+    <definition name="coordinator-announcements-list-announcements" extends="definition.coordinator.two-column.extra-menu">
+        <put name="navLocalExtra" value="/coordinator/degreeSite/degreeSiteMenu.jsp" />
+        <put name="body" value="/messaging/announcements/listBoardAnnouncements.jsp" />
+    </definition>
+    <definition name="coordinator-announcements-add-announcement" extends="definition.coordinator.two-column.extra-menu">
+        <put name="navLocalExtra" value="/coordinator/degreeSite/degreeSiteMenu.jsp" />
+        <put name="body" value="/messaging/announcements/addAnnouncement.jsp" />
+    </definition>
+    <definition name="coordinator-announcements-view-announcement" extends="definition.coordinator.two-column.extra-menu">
+        <put name="navLocalExtra" value="/coordinator/degreeSite/degreeSiteMenu.jsp" />
+        <put name="body" value="/messaging/announcements/viewAnnouncement.jsp" />
+    </definition>
+    <definition name="coordinator-announcements-edit-announcement" extends="definition.coordinator.two-column.extra-menu">
+        <put name="navLocalExtra" value="/coordinator/degreeSite/degreeSiteMenu.jsp" />
+        <put name="body" value="/messaging/announcements/editAnnouncement.jsp" />
+    </definition>
 	<definition name="coordinatorDegreeCurricularPlan" extends="definition.coordinator.two-column.extra-menu">
 		<put name="navLocalExtra" value="/coordinator/degreeCurricularPlan/degreeCurricularPlanMenu.jsp"/>
 	</definition>
@@ -194,5 +218,54 @@
 		<put name="body" value="/cms/messaging/sendMail.jsp" />
 	</definition>
 
+    <!-- ===================== SITE ====================== -->
 
+    <definition name="definition.coordinator.siteManagement" extends="definition.coordinator.two-column.extra-menu" >
+        <put name="navLocalExtra" value="/coordinator/degreeSite/degreeSiteMenu.jsp" />
+        <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
+        <put name="body-context" value="/coordinator/degreeSite/siteContext.jsp" />
+    </definition>
+    
+    <definition name="manage-degree-sectionsManagement" extends="definition.coordinator.siteManagement" >
+        <put name="body" value="/commons/sites/sectionsManagement.jsp"/>
+    </definition>
+    <definition name="manage-degree-section" extends="definition.coordinator.siteManagement" >
+        <put name="body" value="/commons/sites/section.jsp"/>
+    </definition>
+    <definition name="manage-degree-editSection" extends="definition.coordinator.siteManagement" >
+        <put name="body" value="/commons/sites/editSection.jsp"/>
+    </definition>   
+    <definition name="manage-degree-createSection" extends="definition.coordinator.siteManagement" >
+        <put name="body" value="/commons/sites/createSection.jsp"/>
+    </definition>   
+    <definition name="manage-degree-createItem" extends="definition.coordinator.siteManagement" >
+        <put name="body" value="/commons/sites/createItem.jsp"/>
+    </definition>   
+    <definition name="manage-degree-editItem" extends="definition.coordinator.siteManagement" >
+        <put name="body" value="/commons/sites/editItem.jsp"/>
+    </definition>   
+    <definition name="manage-degree-uploadFile" extends="definition.coordinator.siteManagement" >
+        <put name="body" value="/commons/sites/uploadFile.jsp"/>
+    </definition>   
+    <definition name="manage-degree-editFile" extends="definition.coordinator.siteManagement" >
+        <put name="body" value="/commons/sites/editFile.jsp"/>
+    </definition>             
+    <definition name="manage-degree-organizeItems" extends="definition.coordinator.siteManagement" >
+        <put name="body" value="/commons/sites/organizeItems.jsp"/>
+    </definition>   
+    <definition name="manage-degree-organizeFiles" extends="definition.coordinator.siteManagement" >
+        <put name="body" value="/commons/sites/organizeFiles.jsp"/>
+    </definition>   
+    <definition name="manage-degree-confirmSectionDelete" extends="definition.coordinator.siteManagement" >
+        <put name="body" value="/commons/sites/confirmSectionDelete.jsp"/>
+    </definition>   
+    <definition name="manage-degree-editSectionPermissions" extends="definition.coordinator.siteManagement" >
+        <put name="body" value="/commons/sites/editSectionPermissions.jsp"/>
+    </definition>   
+    <definition name="manage-degree-editItemPermissions" extends="definition.coordinator.siteManagement" >
+        <put name="body" value="/commons/sites/editItemPermissions.jsp"/>
+    </definition>   
+    <definition name="manage-degree-editFile" extends="definition.coordinator.siteManagement" >
+        <put name="body" value="/commons/sites/editFile.jsp"/>
+    </definition>   
 </tiles-definitions>

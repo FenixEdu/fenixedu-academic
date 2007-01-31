@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.publico;
 
 import java.io.DataOutputStream;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -68,13 +69,24 @@ public class ViewHomepageDA extends SiteVisualizationDA {
                 if (homepage.getActivated() != null && homepage.getActivated()) {
                     request.setAttribute("homepage", homepage);
                 }
-            
-                String homepagePath = RequestUtils.absoluteURL(request, "/homepage/" + homepage.getPerson().getUser().getUserUId()).toString();
-                request.setAttribute("directLinkContext", homepagePath);
             }
         }
         
         return super.execute(mapping, actionForm, request, response);
+    }
+
+    @Override
+    protected String getDirectLinkContext(HttpServletRequest request) {
+        Homepage homepage = (Homepage) request.getAttribute("homepage");
+        if (homepage == null) {
+            return null;
+        }
+        
+        try {
+            return RequestUtils.absoluteURL(request, "/homepage/" + homepage.getPerson().getUser().getUserUId()).toString();
+        } catch (MalformedURLException e) {
+            return null;
+        }
     }
 
     public ActionForward show(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {

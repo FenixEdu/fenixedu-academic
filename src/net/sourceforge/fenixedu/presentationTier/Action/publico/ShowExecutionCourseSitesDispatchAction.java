@@ -29,7 +29,7 @@ public class ShowExecutionCourseSitesDispatchAction extends FenixContextDispatch
 
     public ActionForward listSites(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
 	// degreeID
-	final Integer degreeOID = getFromRequest("degreeOID", request);
+	final Integer degreeOID = getFromRequest("degreeID", request);
 	request.setAttribute("degreeID", degreeOID);
 
 	final Degree degree = getDegreeAndSetInfoDegree(request, degreeOID);

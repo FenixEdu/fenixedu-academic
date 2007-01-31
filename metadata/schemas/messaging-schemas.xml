@@ -110,3 +110,16 @@
 	<slot name="subject" key="net.sourceforge.fenixedu.domain.messaging.Announcement.title.label"/>	
 	<slot name="body" key="net.sourceforge.fenixedu.domain.messaging.Announcement.body.label"/>	
 </schema>
+
+<schema name="announcementBoard.coordinator.view" type="net.sourceforge.fenixedu.domain.messaging.UnitAnnouncementBoard" bundle="MESS">
+    <slot name="name" layout="link">
+        <property name="userParent" value="true"/>
+        <property name="destination" value="board.view"/>
+    </slot>
+    <slot name="fullName"/>
+    <slot name="publicToRead">
+        <property name="trueLabel" value="label.public"/>
+        <property name="falseLabel" value="label.private"/>
+        <property name="bundle" value="MESSAGING_RESOURCES"/>
+    </slot>
+</schema>

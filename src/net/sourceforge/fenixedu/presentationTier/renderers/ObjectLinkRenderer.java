@@ -11,6 +11,8 @@ import net.sourceforge.fenixedu.renderers.schemas.Schema;
 import net.sourceforge.fenixedu.renderers.utils.RenderKit;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
+import org.apache.commons.beanutils.PropertyUtils;
+
 /**
  * This render is used to create a link out of an object. You choose the link
  * format and some properties can be used to configure the link. You can also
@@ -46,24 +48,26 @@ public class ObjectLinkRenderer extends OutputRenderer {
     private String bundle;
 
     private String text;
+
+    private String linkIf;
     
-    private boolean blankTarget=false;
-    
-    
-    /**
-     * This property allows you to specify if the link opens in a new
-     * window or not. Defaults to false.
-     * @property
-     */
+    private boolean blankTarget = false;
+        
 	public boolean isBlankTarget() {
 		return blankTarget;
 	}
 
+    /**
+     * This property allows you to specify if the link opens in a new
+     * window or not. Defaults to false.
+     *
+     * @property
+     */
 	public void setBlankTarget(boolean blankTarget) {
 		this.blankTarget = blankTarget;
 	}
-
-	public String getLinkFormat() {
+    
+    public String getLinkFormat() {
         return this.linkFormat;
     }
 
@@ -219,6 +223,19 @@ public class ObjectLinkRenderer extends OutputRenderer {
         this.subSchema = subSchema;
     }
 
+    public String getLinkIf() {
+        return this.linkIf;
+    }
+
+    /**
+     * Name of the property to use when determining if we should really do a link or not.
+     * 
+     * @property
+     */
+    public void setLinkIf(String linkIf) {
+        this.linkIf = linkIf;
+    }
+
     @Override
     protected Layout getLayout(Object object, Class type) {
         return new Layout() {
@@ -231,20 +248,45 @@ public class ObjectLinkRenderer extends OutputRenderer {
                     return new HtmlText();
                 }
 
-                HtmlLink link = getLink(usedObject);
+                if (isAllowedToLink(usedObject)) {
+                    HtmlLink link = getLink(usedObject);
+    
+                    String text = getLinkText();
+                    if (text != null) {
+                        link.setText(text);
+                    } else {
+                        link.setBody(getLinkBody(object));
+                    }
+    
+                    if (isBlankTarget()) {
+                	        link.setTarget(Target.BLANK);
+                    }
+    
+                    return link;
+                }
+                else {
+                    return getLinkBody(object);
+                }
+            }
 
-                String text = getLinkText();
-                if (text != null) {
-                    link.setText(text);
-                } else {
-                    link.setBody(getLinkBody(object));
+            private boolean isAllowedToLink(Object usedObject) {
+                if (getLinkIf() == null) {
+                    return true;
                 }
-                
-                if(isBlankTarget()) {
-                	link.setTarget(Target.BLANK);
+                else {
+                    try {
+                        Object object = PropertyUtils.getProperty(usedObject, getLinkIf());
+                        if (object == null) {
+                            return true;
+                        }
+                        else {
+                            return (Boolean) object;
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        return false;
+                    } 
                 }
-                
-                return link;
             }
 
             public HtmlComponent getLinkBody(Object object) {

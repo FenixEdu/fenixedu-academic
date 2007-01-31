@@ -40,8 +40,10 @@ public class Degree extends Degree_Base {
     }
 
     protected Degree() {
-	super();
-	setRootDomainObject(RootDomainObject.getInstance());
+        super();
+        
+	    setRootDomainObject(RootDomainObject.getInstance());
+        new DegreeSite(this);
     }
 
     public Degree(String name, String nameEn, String code, DegreeType degreeType, GradeScale gradeScale,

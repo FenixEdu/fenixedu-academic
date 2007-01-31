@@ -20,15 +20,67 @@ import net.sourceforge.fenixedu.renderers.components.HtmlListItem;
 import net.sourceforge.fenixedu.renderers.components.HtmlText;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
 
+/**
+ * This renderer is responsible for presenting a
+ * {@link net.sourceforge.fenixedu.domain.Site} as a menu. It uses all the
+ * sections defined in the site and it's template to generate the menu and
+ * expands some sections if they were selected. The renderer uses parameters to
+ * interact with the environment, so some parameters like <tt>sectionID</tt>
+ * are appended automatically and others, like the one indicated by
+ * {@link #setContextParam(String)}, are appened to mantain the required
+ * context for the target site.
+ */
 public class SiteMenuRenderer extends OutputRenderer {
 
+    private boolean contextRelative;
+    private boolean moduleRelative;
     private String sectionUrl;
     private String contextParam;
+
+    public SiteMenuRenderer() {
+        super();
+        
+        setModuleRelative(true);
+        setContextRelative(true);
+    }
     
+    public boolean isContextRelative() {
+        return this.contextRelative;
+    }
+
+    /**
+     * Indicates that the url for the sections ir not relative to the
+     * applications context. This can be usefull to redirect to another
+     * application or the remove dependencies on Struts.
+     * 
+     * @property
+     */
+    public void setContextRelative(boolean contextRelative) {
+        this.contextRelative = contextRelative;
+    }
+
+    public boolean isModuleRelative() {
+        return this.moduleRelative;
+    }
+
+    /**
+     * Indicates that the link for sections is not relative to the module.
+     * 
+     * @property
+     */
+    public void setModuleRelative(boolean moduleRelative) {
+        this.moduleRelative = moduleRelative;
+    }
+
     public String getSectionUrl() {
         return this.sectionUrl;
     }
 
+    /**
+     * The url of the action responsible for showing the section content.
+     * 
+     * @property
+     */
     public void setSectionUrl(String sectionUrl) {
         this.sectionUrl = sectionUrl;
     }
@@ -37,6 +89,11 @@ public class SiteMenuRenderer extends OutputRenderer {
         return this.contextParam;
     }
 
+    /**
+     * The name of the parameters that provides a context for this site.
+     * 
+     * @property
+     */
     public void setContextParam(String contextParam) {
         this.contextParam = contextParam;
     }
@@ -47,6 +104,10 @@ public class SiteMenuRenderer extends OutputRenderer {
 
             @Override
             public HtmlComponent createComponent(Object object, Class type) {
+                if (object == null) {
+                    return new HtmlText();
+                }
+
                 HtmlList list = new HtmlList();
                 
                 HttpServletRequest request = getContext().getViewState().getRequest();
@@ -131,9 +192,15 @@ public class SiteMenuRenderer extends OutputRenderer {
                 else {
                     HtmlLink link = new HtmlLink();
                 
+                    link.setModuleRelative(isModuleRelative());
+                    link.setContextRelative(isContextRelative());
                     link.setUrl(getSectionUrl());
                     link.setParameter("sectionID", section.getIdInternal());
-                    link.setParameter(getContextParam(), getContextParamValue());
+                    
+                    String contextParamValue = getContextParamValue();
+                    if (contextParamValue != null) {
+                        link.setParameter(getContextParam(), contextParamValue);
+                    }
                     
                     link.setBody(new HtmlText(section.getName().getContent()));
                     

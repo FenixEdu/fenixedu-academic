@@ -6,6 +6,7 @@ import java.util.Map;
 
 import net.sourceforge.fenixedu.domain.accessControl.AllDegreesStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.AllMasterDegreesStudents;
+import net.sourceforge.fenixedu.domain.accessControl.CurrentDegreeCoordinatorsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.CurricularCourseStudentsByExecutionPeriodGroup;
 import net.sourceforge.fenixedu.domain.accessControl.DegreeCoordinatorsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.DegreeStudentsGroup;
@@ -152,6 +153,7 @@ public class GroupBuilderRegistry {
         register("departmentTeachersByYear", DepartmentTeachersByExecutionYearGroup.class, new DepartmentTeachersByExecutionYearGroup.Builder());
         register("curricularCourseStudentsByPeriod", CurricularCourseStudentsByExecutionPeriodGroup.class, new CurricularCourseStudentsByExecutionPeriodGroup.Builder());
         register("ifTrue", IfTrueGroup.class, new IfTrueGroup.Builder());
+        register("currentDegreeCoordinators", CurrentDegreeCoordinatorsGroup.class, new CurrentDegreeCoordinatorsGroup.Builder());
         
         registerGroupsWithNoArguments();
     }

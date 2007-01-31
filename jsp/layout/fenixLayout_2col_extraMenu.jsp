@@ -13,6 +13,7 @@
 <script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/hideButtons.js"></script>
 <tiles:insert attribute="rss" ignore="true" />
 <tiles:insert attribute="keywords" ignore="true" />
+<tiles:insert attribute="head" ignore="true" />
 </head>
 <body>
 <%-- Layout component parameters : title, context, header, navGeral, navLocal, body, footer --%>

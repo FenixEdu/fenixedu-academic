@@ -43,10 +43,9 @@ public class CreateUnitAnnouncementBoard extends Service {
     }
 
     public void run(UnitAnnouncementBoardParameters parameters) throws FenixServiceException {
-        UnitAnnouncementBoard board = new UnitAnnouncementBoard();
         Unit unit = (Unit) rootDomainObject.readPartyByOID(parameters.unitId);
+        UnitAnnouncementBoard board = new UnitAnnouncementBoard(unit);
 
-        board.setUnit(unit);
         board.setUnitPermittedReadGroupType(parameters.readersGroupType);
         board.setUnitPermittedWriteGroupType(parameters.writersGroupType);
         board.setUnitPermittedManagementGroupType(parameters.managementGroupType);

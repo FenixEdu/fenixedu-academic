@@ -4,17 +4,22 @@
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.Site"
                   table="SITE">
-    <extent-class class-ref="net.sourceforge.fenixedu.domain.ExecutionCourseSite"/>
     <extent-class class-ref="net.sourceforge.fenixedu.domain.SiteTemplate"/>
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.ExecutionCourseSite"/>
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.homepage.Homepage"/>
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.DegreeSite"/>
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.SiteTemplate" table="SITE">
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.ExecutionCourseSite" table="SITE">
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.homepage.Homepage" table="SITE">
-    
 </class-descriptor>
-<class-descriptor class="net.sourceforge.fenixedu.domain.SiteTemplate" table="SITE">
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.DegreeSite" table="SITE">
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.AccessibleItem"

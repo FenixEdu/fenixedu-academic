@@ -109,9 +109,13 @@
             <param-name>examListURI</param-name>
             <param-value>/publico/chooseExamsMapContextDANew.do?method=choose&amp;degreeID=%s</param-value>
         </init-param>
-        <init-param>            
+        <init-param>
             <param-name>degreeURI</param-name>
             <param-value>/publico/showDegreeSite.do?method=showDescription&amp;executionPeriodOID=%s&amp;degreeID=%s</param-value>
+        </init-param>
+        <init-param>
+            <param-name>degreeSiteURI</param-name>
+            <param-value>/publico/showDegreeSiteContent.do?method=%s&amp;degreeID=%s</param-value>
         </init-param>
     </filter>
 	<filter>

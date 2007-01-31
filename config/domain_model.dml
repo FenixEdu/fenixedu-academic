@@ -951,6 +951,7 @@ class net.sourceforge.fenixedu.domain.Degree extends net.sourceforge.fenixedu.do
     GradeScale gradeScale;
     Double ectsCredits;
     String prevailingScientificArea;
+    Integer keySite;
 }
 
 
@@ -4293,6 +4294,10 @@ class net.sourceforge.fenixedu.domain.Site extends net.sourceforge.fenixedu.doma
 	
 		Boolean lessonPlanningAvailable;
 		Boolean dynamicMailDistribution;
+	}
+
+	class net.sourceforge.fenixedu.domain.DegreeSite extends net.sourceforge.fenixedu.domain.Site {
+		Integer keyDegree;
 	}
 
 //
@@ -8231,6 +8236,11 @@ relation ConnectionRuleAccountabilityType {
 relation PersonHomepage {
     net.sourceforge.fenixedu.domain.Person playsRole person;
 	net.sourceforge.fenixedu.domain.homepage.Homepage playsRole homepage;
+}
+
+relation DegreeHasSite {
+    net.sourceforge.fenixedu.domain.Degree playsRole degree;
+	net.sourceforge.fenixedu.domain.DegreeSite playsRole site;
 }
 
 relation AccountabilityParentParty {

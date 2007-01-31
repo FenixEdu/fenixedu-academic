@@ -15,6 +15,7 @@ public enum UnitBoardPermittedGroupType {
     UB_PUBLIC,
     UB_MANAGER,
     UB_DEGREE_COORDINATOR,
+    UB_CURRENT_DEGREE_COORDINATOR,
     UB_TEACHER,
     UB_WEBSITE_MANAGER,
     UB_EMPLOYEE,

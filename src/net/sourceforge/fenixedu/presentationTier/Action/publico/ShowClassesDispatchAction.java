@@ -31,7 +31,7 @@ public class ShowClassesDispatchAction extends FenixContextDispatchAction {
 
     public ActionForward listClasses(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        final Integer degreeOID = new Integer(request.getParameter("degreeOID"));
+        final Integer degreeOID = new Integer(request.getParameter("degreeID"));
         request.setAttribute("degreeID", degreeOID);
         request.setAttribute("degree", rootDomainObject.readDegreeByOID(degreeOID));
         

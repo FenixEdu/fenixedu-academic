@@ -35,12 +35,23 @@ public class ManageHomepageDA extends SiteManagementDA {
             request.setAttribute("homepage", homepage);
         }
         
-        String homepagePath = RequestUtils.absoluteURL(request, "/homepage/" + getUserView(request).getPerson().getUser().getUserUId()).toString();
-        request.setAttribute("directLinkContext", homepagePath);
-        
         return super.execute(mapping, actionForm, request, response);
     }
 
+    @Override
+    protected String getDirectLinkContext(HttpServletRequest request) {
+        Homepage homepage = (Homepage) request.getAttribute("homepage");
+        if (homepage == null) {
+            return null;
+        }
+        
+        try {
+            return RequestUtils.absoluteURL(request, "/homepage/" + homepage.getPerson().getUser().getUserUId()).toString();
+        } catch (MalformedURLException e) {
+            return null;
+        }
+    }
+    
     public ActionForward activation(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         final Person person = getUserView(request).getPerson();

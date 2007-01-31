@@ -6,7 +6,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 
-<em><bean:message bundle="MESSAGING_RESOURCES" key="label.manageChannels"/></em>
+<%-- <em><bean:message bundle="MESSAGING_RESOURCES" key="label.manageChannels"/></em> --%>
 <h2><bean:message bundle="MESSAGING_RESOURCES" key="messaging.annoucenment.edit.label"/></h2>
 
 
@@ -14,8 +14,14 @@
 <bean:define id="extraParameters" name="extraParameters" />
 <bean:define id="announcementBoardId" name="announcementBoard" property="idInternal"/>
 
+<%
+    String returnMethod = (String) pageContext.findAttribute("returnMethod");
+    if (returnMethod == null) {
+        returnMethod = "prepareEditAnnouncementBoard";
+    }
+%>
 
-<bean:define id="action"><%= "method=prepareEditAnnouncementBoard&amp;announcementBoardId=" + announcementBoardId + "&amp;" + extraParameters %></bean:define>
+<bean:define id="action"><%= "method=" + returnMethod + "&amp;announcementBoardId=" + announcementBoardId + "&amp;" + extraParameters %></bean:define>
 
 <fr:form action="<%=  contextPrefix + action %>">
 

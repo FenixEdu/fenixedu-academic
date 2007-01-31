@@ -65,6 +65,11 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
             request.setAttribute("site", site);
         }
         
+        String directLinkContext = getDirectLinkContext(request);
+        if (directLinkContext != null) {
+            request.setAttribute("directLinkContext", directLinkContext);
+        }
+        
         ActionForward forward = super.execute(mapping, actionForm, request, response);
         
         if (site != null && site.hasQuota()) {
@@ -753,4 +758,9 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
 
     protected abstract String getAuthorNameForFile(HttpServletRequest request, Item item);
     protected abstract String getItemLocationForFile(HttpServletRequest request, Item item, Section section);
+
+    protected String getDirectLinkContext(HttpServletRequest request) {
+        return null;
+    }
+
 }

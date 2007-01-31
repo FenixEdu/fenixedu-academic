@@ -6,11 +6,21 @@ import javax.servlet.ServletException;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Site;
 
 public class DegreeProcessor extends PathProcessor {
 
-    public DegreeProcessor(String forwardURI) {
+    private String degreeSiteURI;
+    
+    public DegreeProcessor(String forwardURI, String degreeSiteURI) {
         super(forwardURI);
+        
+        this.degreeSiteURI = degreeSiteURI;
+    }
+
+    public DegreeProcessor add(SectionProcessor processor) {
+        addChild(processor);
+        return this;
     }
 
     public DegreeProcessor add(ExecutionCoursesProcessor processor) {
@@ -30,7 +40,7 @@ public class DegreeProcessor extends PathProcessor {
     
     @Override
     public ProcessingContext getProcessingContext(ProcessingContext parent) {
-        return new DegreeContext(parent);
+        return new DegreeContext(parent, this.degreeSiteURI);
     }
 
     @Override
@@ -62,10 +72,14 @@ public class DegreeProcessor extends PathProcessor {
         }
     }
 
-    public static class DegreeContext extends ProcessingContext {
+    public static class DegreeContext extends ProcessingContext implements SiteContext {
         
-        public DegreeContext(ProcessingContext parent) {
+        private String contextURI;
+        
+        public DegreeContext(ProcessingContext parent, String contextURI) {
             super(parent);
+            
+            this.contextURI = contextURI;
         }
 
         private Degree degree;
@@ -76,6 +90,14 @@ public class DegreeProcessor extends PathProcessor {
 
         public void setDegree(Degree degree) {
             this.degree = degree;
+        }
+
+        public Site getSite() {
+            return getDegree().getSite();
+        }
+
+        public String getSiteBasePath() {
+            return String.format(this.contextURI, "%s", getDegree().getIdInternal()) ;
         }
         
     }
