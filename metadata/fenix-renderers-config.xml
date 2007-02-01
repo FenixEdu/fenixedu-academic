@@ -214,8 +214,8 @@ Documentation:
           Control links are link that are parameterized with values from the object beeing presented in each row.
           Check the renderer documentation for more details.  -->
     <renderer type="java.util.Collection" layout="tabular" class="net.sourceforge.fenixedu.renderers.CollectionRenderer">
-    	<property name="groupLinks" value="true"/>
-    	<property name="linkGroupSeparator" value=", "/>
+        	<property name="groupLinks" value="true"/>
+        	<property name="linkGroupSeparator" value=", "/>
     </renderer>
     
     
@@ -463,7 +463,10 @@ Documentation:
 	</renderer>	
 	
     <!--@ Allows to present a collection in a table were rows can be sorted by pressing the table headers. -->
-    <renderer type="java.util.Collection" layout="tabular-sortable" class="net.sourceforge.fenixedu.renderers.OrderableCollectionRenderer"/>
+    <renderer type="java.util.Collection" layout="tabular-sortable" class="net.sourceforge.fenixedu.renderers.OrderableCollectionRenderer">
+        <property name="groupLinks" value="true"/>
+        <property name="linkGroupSeparator" value=", "/>
+    </renderer>
 
     <!--@ Allows to edit all objects of a collection by presenting each object in a table row and each slot editor in a table cell. -->
     <renderer mode="input" type="java.util.Collection" layout="tabular-editable" class="net.sourceforge.fenixedu.renderers.TabularInputRenderer"/>
