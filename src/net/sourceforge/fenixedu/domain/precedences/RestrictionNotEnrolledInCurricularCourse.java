@@ -16,7 +16,7 @@ public class RestrictionNotEnrolledInCurricularCourse extends RestrictionNotEnro
 		super();
 		
 		setPrecedence(precedence);
-        setPrecedentCurricularCourse(precedentCurricularCourse);
+		setPrecedentCurricularCourse(precedentCurricularCourse);
 	}
 	
 
@@ -24,11 +24,13 @@ public class RestrictionNotEnrolledInCurricularCourse extends RestrictionNotEnro
         CurricularCourse curricularCourse = this.getPrecedentCurricularCourse();
         CurricularCourseEnrollmentType result1 = null;
         CurricularCourseEnrollmentType result2 = null;
-
-        if (!precedenceContext.getStudentCurricularPlan().isCurricularCourseEnrolled(curricularCourse)) {
-            result1 = CurricularCourseEnrollmentType.DEFINITIVE;
-        } else {
+        
+        if(precedenceContext.getStudentCurricularPlan().isCurricularCourseEnrolledInExecutionPeriod(curricularCourse, precedenceContext.getExecutionPeriod())) {
             result1 = CurricularCourseEnrollmentType.NOT_ALLOWED;
+        } else if(precedenceContext.getStudentCurricularPlan().isCurricularCourseEnrolledInExecutionPeriod(curricularCourse, precedenceContext.getExecutionPeriod().getPreviousExecutionPeriod())){
+            result1 = CurricularCourseEnrollmentType.TEMPORARY;
+        } else {
+            result1 = CurricularCourseEnrollmentType.DEFINITIVE;
         }
 
         result2 = super.evaluate(precedenceContext);
