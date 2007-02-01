@@ -185,7 +185,6 @@ valueType net.sourceforge.fenixedu.domain.parking.NewParkingDocumentType								
 */
 
 class net.sourceforge.fenixedu.domain.DomainObject {
-	Integer idInternal;
 	Integer keyRootDomainObject;
 }
 

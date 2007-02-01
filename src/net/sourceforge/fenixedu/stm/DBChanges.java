@@ -203,18 +203,20 @@ class DBChanges {
 	    time11 = System.currentTimeMillis();
 	}
 
-        System.out.println(
-                "makePersistent: ,1: " + (time1 == 0 || time2 == 0 ? "" : (time2 - time1))
-              + "   ,2: " + (time2 == 0 || time3 == 0 ? "" : (time3 - time2))
-              + "   ,3: " + (time3 == 0 || time4 == 0 ? "" : (time4 - time3))
-              + "   ,4: " + (time4 == 0 || time5 == 0 ? "" : (time5 - time4))
-              + "   ,5: " + (time5 == 0 || time6 == 0 ? "" : (time6 - time5))
-              + "   ,6: " + (time6 == 0 || time7 == 0 ? "" : (time7 - time6))
-              + "   ,7: " + (time7 == 0 || time8 == 0 ? "" : (time8 - time7))
-              + "   ,8: " + (time8 == 0 || time9 == 0 ? "" : (time9 - time8))
-              + "   ,9: " + (time8 == 0 || time9 == 0 ? "" : (time10 - time9))
-              + "   ,10: " + (time8 == 0 || time9 == 0 ? "" : (time11 - time10))
-              );
+        if ((time8 - time1) > 500) {
+            System.out.println(
+                    "makePersistent: ,1: " + (time1 == 0 || time2 == 0 ? "" : (time2 - time1))
+                  + "   ,2: " + (time2 == 0 || time3 == 0 ? "" : (time3 - time2))
+                  + "   ,3: " + (time3 == 0 || time4 == 0 ? "" : (time4 - time3))
+                  + "   ,4: " + (time4 == 0 || time5 == 0 ? "" : (time5 - time4))
+                  + "   ,5: " + (time5 == 0 || time6 == 0 ? "" : (time6 - time5))
+                  + "   ,6: " + (time6 == 0 || time7 == 0 ? "" : (time7 - time6))
+                  + "   ,7: " + (time7 == 0 || time8 == 0 ? "" : (time8 - time7))
+                  + "   ,8: " + (time8 == 0 || time9 == 0 ? "" : (time9 - time8))
+                  + "   ,9: " + (time8 == 0 || time9 == 0 ? "" : (time10 - time9))
+                  + "   ,10: " + (time8 == 0 || time9 == 0 ? "" : (time11 - time10))
+                  );
+        }
     }
 
     private void writeAttrChangeLogs(Connection conn, int txNumber) throws SQLException {
@@ -271,7 +273,7 @@ class DBChanges {
                     throw new CommitException();
                 }
 	    }
-            System.out.println("Appends took: " + appendTime + " statements took: " + statementTime);
+            //System.out.println("Appends took: " + appendTime + " statements took: " + statementTime);
 	}
     }
 

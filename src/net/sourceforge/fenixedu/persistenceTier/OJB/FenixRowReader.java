@@ -23,15 +23,6 @@ public class FenixRowReader extends RowReaderDefaultImpl {
     }
 
     protected Object buildOrRefreshObject(Map row, ClassDescriptor targetClassDescriptor, Object targetObject) {
-	boolean previous = VBox.setLoading(true);
-	try {
-	    return origBuildOrRefreshObject(row, targetClassDescriptor, targetObject);
-	} finally {
-	    VBox.setLoading(previous);
-	}
-    }
-
-    protected Object origBuildOrRefreshObject(Map row, ClassDescriptor targetClassDescriptor, Object targetObject) {
         Object result = targetObject;
         FieldDescriptor fmd = null;
 
@@ -40,18 +31,12 @@ public class FenixRowReader extends RowReaderDefaultImpl {
 
 	    // if it is a domain object
 	    if (targetClassDescriptor.getFactoryClass() == DomainAllocator.class) {
-		// we need to lock on the CHANGE_LOGS to avoid concurrent updates
-		// while the object is being constructed and not in the cache
-		synchronized (TransactionChangeLogs.CHANGE_LOGS) {
-		    ((DomainObject)result).addKnownVersionsFromLogs();
-		    
-		    // read idInternal
-		    fmd = targetClassDescriptor.getFieldDescriptorByName("idInternal");
-		    fmd.getPersistentField().set(result, row.get(fmd.getColumnName()));
-
-		    // cache object
-		    result = Transaction.getCache().cache((DomainObject)result);
-		}
+                // read idInternal
+                fmd = targetClassDescriptor.getFieldDescriptorByName("idInternal");
+                fmd.getPersistentField().set(result, row.get(fmd.getColumnName()));
+                
+                // cache object
+                result = Transaction.getCache().cache((DomainObject)result);
 	    }
         }
 
@@ -77,31 +62,6 @@ public class FenixRowReader extends RowReaderDefaultImpl {
                 }
             }
         }
-        return result;
-    }
-
-
-    private void forceFactoryClassAndMethod(ClassDescriptor cld) {
-        if (cld.getFactoryClass() != DomainAllocator.class) {
-            String className = cld.getClassOfObject().getName();
-	    if (! "org.apache.ojb.broker.util.sequence.HighLowSequence".equals(className)) {
-		try {
-		    Method m = DomainAllocator.class.getMethod("allocate_" + className.replace('.', '_'));
-		    if (m != null) {
-			//System.out.println("FenixRowReader: setting factoryMethod for class " + className + " to " + m.getName());
-			cld.setFactoryClass(DomainAllocator.class);
-			cld.setFactoryMethod(m.getName());
-		    }
-		} catch (Exception e) {
-		    System.out.println("FenixRowReader: NOT setting factoryMethod for class " + className + " because " + e);
-		}
-	    }
-        }
-    }
-
-    protected ClassDescriptor selectClassDescriptor(Map row) throws PersistenceBrokerException {
-        ClassDescriptor result = super.selectClassDescriptor(row);
-        forceFactoryClassAndMethod(result);
         return result;
     }
 }

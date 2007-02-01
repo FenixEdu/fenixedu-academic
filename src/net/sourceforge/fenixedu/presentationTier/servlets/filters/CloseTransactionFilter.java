@@ -82,7 +82,7 @@ public class CloseTransactionFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
         try {
-            Transaction.begin();
+            Transaction.begin(true);
             Transaction.currentFenixTransaction().setReadOnly();
             setTransactionOwner(request);
 			chain.doFilter(request, response);

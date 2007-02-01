@@ -61,6 +61,8 @@ public abstract class DomainObject extends DomainObject_Base implements dml.runt
         autoDetermineId = false;
     }
 
+    private Integer idInternal;
+
     public DomainObject() {
         super();
         // All domain objects become persistent upon there creation.
@@ -71,7 +73,28 @@ public abstract class DomainObject extends DomainObject_Base implements dml.runt
         Transaction.storeNewObject(this);
     }
 
-	private void ensureIdInternal() {
+    public Integer getIdInternal() {
+        return idInternal;
+    }
+    
+    public Integer get$idInternal() {
+        return idInternal;
+    }
+    
+    public void setIdInternal(Integer idInternal) {
+        if ((this.idInternal != null) && (! this.idInternal.equals(idInternal))) {
+            System.out.println("!!!!!! WARNING !!!!!! Changing the idInternal of an object: " + this);
+            //throw new Error("Cannot change the idInternal of an object");
+        }
+        this.idInternal = idInternal;
+    }
+    
+    public void set$idInternal(Integer idInternal) {
+        setIdInternal(idInternal);
+    }
+
+
+    private void ensureIdInternal() {
         if (!lockMode || autoDetermineId) {
             setIdInternal(Integer.valueOf(nextIdInternal++));
 	} else {
@@ -102,14 +125,13 @@ public abstract class DomainObject extends DomainObject_Base implements dml.runt
         }
     }
 
-    public void addNewVersion(String attrName, int txNumber) {
+    public jvstm.VBoxBody addNewVersion(String attrName, int txNumber) {
 	Class myClass = this.getClass();
 	while (myClass != Object.class) {
 	    try {
 		Field f = myClass.getDeclaredField(attrName);
 		f.setAccessible(true);
-		((VersionedSubject)f.get(this)).addNewVersion(txNumber);
-		return;
+		return ((VersionedSubject)f.get(this)).addNewVersion(attrName, txNumber);
 	    } catch (NoSuchFieldException nsfe) {
 		myClass = myClass.getSuperclass();
 	    } catch (IllegalAccessException iae) {
@@ -118,30 +140,11 @@ public abstract class DomainObject extends DomainObject_Base implements dml.runt
 		throw new Error("Couldn't addNewVersion to attribute " + attrName + ": " + se);
 	    }
 	}
+        
+        System.out.println("!!! WARNING !!!: addNewVersion couldn't find the appropriate slot");
+        return null;
     }
 
-    public void addKnownVersionsFromLogs() {
-	Class myClass = this.getClass();
-	while (myClass != Object.class) {
-	    try {
-		Method m = myClass.getDeclaredMethod("initKnownVersions");
-		m.setAccessible(true);
-		m.invoke(this);
-	    } catch (NoSuchMethodException nsme) {
-		// ok
-	    } catch (IllegalAccessException iae) {
-		throw new Error("Couldn't addKnownVersions to obj from class " + this.getClass() + ": " + iae);
-	    } catch (IllegalArgumentException iae) {
-		throw new Error("Couldn't addKnownVersions to obj from class " + this.getClass() + ": " + iae);
-	    } catch (InvocationTargetException ite) {
-		throw new Error("Couldn't addKnownVersions to obj from class " + this.getClass() + ": " + ite);
-	    } catch (SecurityException se) {
-		throw new Error("Couldn't addKnownVersions to obj from class " + this.getClass() + ": " + se);
-	    }
-	    myClass = myClass.getSuperclass();
-	}
-    }
-    
     protected String getCurrentUser() {
     	if(AccessControl.getUserView() != null) {
     		return AccessControl.getUserView().getUtilizador();

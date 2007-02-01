@@ -53,11 +53,30 @@ public class VBox<E> extends jvstm.VBox<E> implements VersionedSubject,dml.runti
 	}
     }
 
-    public synchronized void addNewVersion(int txNumber) {
+    public VBoxBody addNewVersion(String attr, int txNumber) {
+        return addNewVersion(attr, txNumber, false);
+    }
+
+    // This version of the addNewVersion method exists only because the special needs of
+    // a RelationList which holds a SoftReference to its VBox.
+    // For further explanations see the comment on the class SpecialBody at the end of this file
+    synchronized VBoxBody addNewVersion(String attr, int txNumber, boolean specialBody) {
 	if (body.version < txNumber) {
-	    commit(allocateBody(txNumber));
+            VBoxBody newBody = (VBoxBody)allocateBody(txNumber, specialBody, this);
+	    commit(newBody);
+            return newBody;
 	} else {
-	    //System.out.println("WARNING: adding older version for a box.  This should not happen...");
+            // when adding a new version to a box it may happen that a
+	    // version with the same number exists already, if we are
+	    // processing the change logs in the same server that
+	    // committed those changelogs, between the time when the
+	    // changelog were written to the database and the commit
+	    // finishes setting the committed tx number
+            //
+            // so, do nothing and just return null
+            
+	    //System.out.println("!!! WARNING !!!: adding older version for a box attr " + attr + " -> " + body.version + " not < " + txNumber);
+            return null;
 	}
     }
 
@@ -69,7 +88,6 @@ public class VBox<E> extends jvstm.VBox<E> implements VersionedSubject,dml.runti
     }
 
     boolean reload(Object obj, String attr) {
-	boolean loading = VBox.setLoading(true);
 	try {
 	    doReload(obj, attr);
 	    return true;
@@ -78,8 +96,6 @@ public class VBox<E> extends jvstm.VBox<E> implements VersionedSubject,dml.runti
 	    System.err.println("Couldn't reload attribute '" + attr + "': " + e.getMessage());
 	    //e.printStackTrace();
 	    return false;
-	} finally {
-	    VBox.setLoading(loading);
 	}
     }
 
@@ -87,59 +103,81 @@ public class VBox<E> extends jvstm.VBox<E> implements VersionedSubject,dml.runti
 	throw new Error("Can't reload a simple VBox.  Use a PrimitiveBox or a ReferenceBox instead.");
     }
 
-    public synchronized void initKnownVersions(Object obj, String attr) {
-	this.body = TransactionChangeLogs.allocateBodiesFor(this, obj, attr);
+    public void initKnownVersions(Object obj, String attr) {
+        // remove this when the DML compiler no longer generates the initKnownVersions calls
+    }    
+
+    public static <T> VBoxBody<T> allocateBody(int txNumber) {
+        return allocateBody(txNumber, false, null);
     }
 
-
-    public VBoxBody<E> allocateBody(int txNumber) {
-	VBoxBody<E> body = makeNewBody();
+    // see comment on the class SpecialBody at the end of this file
+    private static <T> VBoxBody<T> allocateBody(int txNumber, boolean specialBody, VBox owner) {
+	VBoxBody<T> body = (specialBody ? new SpecialBody(owner) : VBoxBody.makeNewBody());
 	body.version = txNumber;
-	body.value = (E)NOT_LOADED_VALUE;
+	body.value = (T)NOT_LOADED_VALUE;
 	return body;
     }
 
     public static <T> VBox<T> makeNew(boolean allocateOnly, boolean isReference) {
 	if (isReference) {
 	    if (allocateOnly) {
-		return new ReferenceBox<T>((VBoxBody)null);
+                // when a box is allocated, it is safe 
+                // to say that the version number is 0
+		return new ReferenceBox<T>((VBoxBody)allocateBody(0));
 	    } else {
 		return new ReferenceBox<T>();
 	    }
 	} else {
 	    if (allocateOnly) {
-		return new PrimitiveBox<T>((VBoxBody)null);
+                // when a box is allocated, it is safe 
+                // to say that the version number is 0
+		return new PrimitiveBox<T>((VBoxBody)allocateBody(0));
 	    } else {
 		return new PrimitiveBox<T>();
 	    }
 	}
     }
 
-
-    protected static final ThreadLocal<Boolean> isLoading = new ThreadLocal<Boolean>() {
-         protected Boolean initialValue() {
-             return Boolean.FALSE;
-         }
-    };
-
-    public static boolean isLoading() {
-	return isLoading.get().booleanValue();
-    }
-
-    public static boolean setLoading(boolean loading) {
-	boolean previous = isLoading();
-	isLoading.set(loading ? Boolean.TRUE : Boolean.FALSE);
-	return previous;
-    }
-
-    
-
     public void setFromOJB(Object obj, String attr, E value) {
-	if (isLoading()) {
-	    persistentLoad(value);
-	} else {
-	    Transaction.storeObject((DomainObject) obj, attr);
-	    put(value);
-	}
+        persistentLoad(value);
+    }
+
+
+
+    /*
+     * This SpecialBody class is a hack that will eventually disappear.
+     * It is a simple extension of a MultiVersionBoxBody so that it holds a 
+     * strong reference to the box which is owning it.  Instances of this class
+     * are created only during the processing of an AlientTransaction
+     * (see TransactionChangeLogs) when a new version is added to a RelationList.
+     * Because RelationLists use a SoftReference to keep the VBox (so that the 
+     * bi-directional relations do not prevent the GC from working), it could happen
+     * that the VBox of a RelationList got GCed after the processing of an AlientTransaction 
+     * but before older running transactions finished.  If meanwhile a more recent transaction
+     * accessed the RelationList, it would load its value and associate it with version 0, which 
+     * is wrong.  So, until the AlientTransaction gets cleaned up (see the 
+     * TransactionChangeLogs.cleanOldAlienTxs method), we must prevent that the VBox be GCed.
+     * This class ensures it, because the AlientTransaction keeps strong a reference to an instance of 
+     * this class which has also a strong reference to the VBox.
+     * Finally, when the cleanOldAlienTxs method runs and calls the freeResources on the AlienTransaction,
+     * it calls the clearPrevious method of each body, which, in this case, also removes the reference to
+     * the VBox.
+     *
+     * It's a *little* bit confusing, I know, but...
+     */
+    private static class SpecialBody extends jvstm.MultiVersionBoxBody {
+        private VBox owner;
+
+        SpecialBody(VBox owner) {
+            this.owner = owner;
+        }
+
+        public void clearPrevious() {
+            super.clearPrevious();
+
+            // loose the reference to the owner so that it may be GCed, if needed
+            owner = null;
+        }
     }
 }

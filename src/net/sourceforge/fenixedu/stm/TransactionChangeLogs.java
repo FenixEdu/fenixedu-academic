@@ -5,136 +5,140 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.LinkedList;
+
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.locks.ReentrantLock;
 
 import jvstm.VBoxBody;
 import net.sourceforge.fenixedu.domain.DomainObject;
 
-import org.apache.ojb.broker.Identity;
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.PersistenceBrokerFactory;
 import org.apache.ojb.broker.accesslayer.LookupException;
+import org.apache.ojb.broker.metadata.ClassDescriptor;
+import org.apache.ojb.broker.util.ClassHelper;
 
 public class TransactionChangeLogs {
 
-    private static class OIDInfo {
-	final Class realClass;
+    private static final ReentrantLock PROCESS_ALIEN_TX_LOCK = new ReentrantLock(true);
+
+    private static class ClassInfo {
+	final ClassDescriptor classDescriptor;
 	final Class topLevelClass;
 	
-	OIDInfo(Class realClass, Class topLevelClass) {
-	    this.realClass = realClass;
+	ClassInfo(ClassDescriptor classDescriptor, Class topLevelClass) {
+	    this.classDescriptor = classDescriptor;
 	    this.topLevelClass = topLevelClass;
 	}
     }
 
-    private static HashMap<String,OIDInfo> CLASS_OIDS = new HashMap<String,OIDInfo>();
+    private static Map<String,ClassInfo> CLASS_INFOS = new ConcurrentHashMap<String,ClassInfo>();
 
-    static Identity getObjectIdentity(PersistenceBroker pb, String className, int idInternal) {
-	OIDInfo info = CLASS_OIDS.get(className);
+    static DomainObject getDomainObject(PersistenceBroker pb, String className, int idInternal) {
+	ClassInfo info = CLASS_INFOS.get(className);
 	if (info == null) {
 	    try {
 		Class realClass = Class.forName(className);
-		pb.getClassDescriptor(realClass);
+		ClassDescriptor cld = pb.getClassDescriptor(realClass);
 		Class topLevelClass = pb.getTopLevelClass(realClass);
-		info = new OIDInfo(realClass, topLevelClass);
-		CLASS_OIDS.put(className, info);
+		info = new ClassInfo(cld, topLevelClass);
+		CLASS_INFOS.put(className, info);
 	    } catch (ClassNotFoundException cnfe) {
 		throw new Error("Couldn't find class " + className + ": " + cnfe);
 	    }
 	}
 
-	return new Identity(info.realClass, info.topLevelClass, new Object[] { new Integer(idInternal) });
+        DomainObject obj = (DomainObject)Transaction.getCache().lookup(info.topLevelClass, idInternal);
+
+        if (obj == null) {
+            obj = (DomainObject)ClassHelper.buildNewObjectInstance(info.classDescriptor);
+            obj.setIdInternal(idInternal);
+                
+            // cache object
+            obj = (DomainObject)Transaction.getCache().cache(obj);
+        }
+
+        return obj;
     }
 
 
 
     // ------------------------------------------------------------
 
-    private static class ChangeLog {
-	final Identity oid;
-	final String attr;
-
-	ChangeLog(Identity oid, String attr) {
-	    this.oid = oid;
-	    this.attr = attr;
-	}
-    }
-
-    private static class ChangeLogSet {
+    private static class AlienTransaction {
 	final int txNumber;
-	final List<ChangeLog> changeLogs;
 
-	ChangeLogSet(int txNumber) {
+        // the set of objects is kept so that a strong reference exists 
+        // for each of the objects modified by another server until no running 
+        // transaction in the current VM may need to access it
+	private Map<DomainObject,List<String>> objectAttrChanges = new HashMap<DomainObject,List<String>>();
+
+        private List<VBoxBody> newBodies = new ArrayList<VBoxBody>();
+
+	AlienTransaction(int txNumber) {
 	    this.txNumber = txNumber;
-	    this.changeLogs = new ArrayList<ChangeLog>();
 	}
+
+        void register(DomainObject obj, String attrName) {
+            List<String> allAttrs = objectAttrChanges.get(obj);
+
+            if (allAttrs == null) {
+                allAttrs = new LinkedList<String>();
+                objectAttrChanges.put(obj, allAttrs);
+            }
+
+            allAttrs.add(attrName);
+        }
+
+        void commit() {
+            for (Map.Entry<DomainObject,List<String>> entry : objectAttrChanges.entrySet()) {
+                DomainObject obj = entry.getKey();
+                List<String> allAttrs = entry.getValue();
+
+                for (String attr : allAttrs) {
+                    newBodies.add(obj.addNewVersion(attr, txNumber));
+                }
+            }
+        }
+
+        void freeResources() {
+            // remove reference to the previous body, making it GCable
+	    for (VBoxBody body : newBodies) {
+                // the bodies may be null in some cases: see the 
+                // comment on the VBox.addNewVersion method
+                if (body != null) {
+                    body.clearPrevious();
+                }
+	    }
+	    
+            newBodies = null;
+            objectAttrChanges = null;
+        }
     }
 
-    // this var is public because we need to access it in
-    // FenixRowReader.  See comment on the allocateBodiesFor method
-    public static final ConcurrentLinkedQueue<ChangeLogSet> CHANGE_LOGS = new ConcurrentLinkedQueue<ChangeLogSet>();
+
+    // Alien transactions not yet GCed
+    private static final ConcurrentLinkedQueue<AlienTransaction> ALIEN_TRANSACTIONS = new ConcurrentLinkedQueue<AlienTransaction>();
 
     static {
 	Transaction.addTxQueueListener(new jvstm.TxQueueListener() {
 		public void noteOldestTransaction(int previousOldest, int newOldest) {
 		    if (previousOldest != newOldest) {
-			cleanOldLogs(newOldest);
+			cleanOldAlienTxs(newOldest);
 		    }
 		}
 	    });
     }
 
-    public static void cleanOldLogs(int txNumber) {
-	synchronized (CHANGE_LOGS) {
-	    while ((! CHANGE_LOGS.isEmpty()) && (CHANGE_LOGS.peek().txNumber <= txNumber)) {
-		CHANGE_LOGS.poll();
-	    }
-	}
-    }
-
-    private static void registerChangeLogSet(PersistenceBroker pb, ChangeLogSet clSet) {
-	synchronized (CHANGE_LOGS) {
-	    if (CHANGE_LOGS.isEmpty() || (CHANGE_LOGS.peek().txNumber < clSet.txNumber)) {
-		CHANGE_LOGS.add(clSet);
-
-		// add new version to cached object
-		for (ChangeLog log : clSet.changeLogs) {
-		    DomainObject existingObject = (DomainObject)pb.serviceObjectCache().lookup(log.oid);
-		    if (existingObject != null) {
-			existingObject.addNewVersion(log.attr, clSet.txNumber);
-		    }
-		}
-	    }
-	}
-    }
-
-    public static VBoxBody allocateBodiesFor(VBox box, Object obj, String attr) {
-	Class objClass = obj.getClass();
-	VBoxBody body = box.allocateBody(0);
-	    
-	synchronized (CHANGE_LOGS) {
-	    // We acquire the lock here so that we have a coherent view of 
-	    // the CHANGE_LOGS.
-	    // However, the lock should be acquired also when an object is 
-	    // being constructed, because all of the objects slots are
-	    // initialized before the object enters the cache, so that no 
-	    // version is missed by a concurrent registerChangeLogSet while 
-	    // the object is being constructed
-	    // For now, this lock is acquired also in the class FenixRowReader
-	    for (ChangeLogSet clSet : CHANGE_LOGS) {
-		for (ChangeLog log : clSet.changeLogs) {
-		    if ((log.oid.getObjectsRealClass() == objClass) && log.attr.equals(attr)) {
-			VBoxBody newBody = box.allocateBody(clSet.txNumber);
-			newBody.setPrevious(body);
-			body = newBody;
-		    }
-		}
-	    }
-	}
-
-	return body;
+    public static void cleanOldAlienTxs(int txNumber) {
+        while ((! ALIEN_TRANSACTIONS.isEmpty()) && (ALIEN_TRANSACTIONS.peek().txNumber <= txNumber)) {
+            ALIEN_TRANSACTIONS.poll().freeResources();
+        }
     }
 
 
@@ -147,65 +151,98 @@ public class TransactionChangeLogs {
 
 	// ensure that the connection is up-to-date
 	conn.commit();
-
+        
 	Statement stmt = conn.createStatement();
-
+        
 	// read tx logs
 	int maxTxNumber = txNumber;
-        final long start = System.currentTimeMillis();
+
 	ResultSet rs = stmt.executeQuery("SELECT OBJ_CLASS,OBJ_ID,OBJ_ATTR,TX_NUMBER FROM TX_CHANGE_LOGS WHERE TX_NUMBER > " 
 					 + maxTxNumber 
 					 + " ORDER BY TX_NUMBER"
 					 + (forUpdate ? " FOR UPDATE" : ""));
-        final long end = System.currentTimeMillis();
-        final long diff = end - start;
-        if (diff > 1000) {
-            System.out.println("select for update took: " + diff);
-        }
 
-	int previousTxNum = -1;
-	ChangeLogSet clSet = null;
-
-        long dif2 = 0;
-
-	while (rs.next()) {
-	    int txNum = rs.getInt(4);
-
-	    if (txNum != previousTxNum) {
-		if (clSet != null) {
-                    long start2 = System.currentTimeMillis();
-		    registerChangeLogSet(pb, clSet);
-                    long end2 = System.currentTimeMillis();
-                    dif2 += end2 - start2;
-		}
-		maxTxNumber = Math.max(maxTxNumber, txNum);
-		clSet = new ChangeLogSet(txNum);
-		previousTxNum = txNum;
-	    }
-
-	    String className = rs.getString(1);
-	    int idInternal = rs.getInt(2);
-	    String attr = rs.getString(3);
-
-	    clSet.changeLogs.add(new ChangeLog(getObjectIdentity(pb, className, idInternal), attr));
+        // if there are any results to be processed, process them
+	if (rs.next()) {
+            maxTxNumber = processAlienTransaction(pb, rs);
 	}
-
-	// add last built ChangeLogSet, if any
-	if (clSet != null) {
-            long start2 = System.currentTimeMillis();
-	    registerChangeLogSet(pb, clSet);
-            long end2 = System.currentTimeMillis();
-            dif2 += end2 - start2;
-	}
-    if (dif2 > 1000) {
-        System.out.println("registerChangeLogSet took: " + dif2 + "ms.");
-        System.out.println("TX change log set contains: " + CHANGE_LOGS.size() + " registers.");
-    }
-
-	Transaction.setCommitted(maxTxNumber);
 
 	return maxTxNumber;
     }
+
+    private static int processAlienTransaction(PersistenceBroker pb, ResultSet rs) throws SQLException {
+        // Acquire an exclusion lock to process the result set.
+        // Even though the processing of alien transactions could be made concurrently,
+        // there is no point in doing so, as they would be repeating their work
+        // therefore, at least for machines with a small number of processors, it 
+        // is preferable to let just one thread work its way through the alien records.
+        // Then, the concurrent threads can skip through the already processed records
+        PROCESS_ALIEN_TX_LOCK.lock();
+
+        try {
+            // Here, after acquiring the lock, we know that no new transactions can start, because
+            // all transactions must call the updateFromTxLogsOnDatabase method with a number which 
+            // is necessarily less than the number we are processing, and, therefore, will have to
+            // come into this method, blocking in the lock.
+            // Likewise for a commit of a write transaction.
+            
+            int currentCommittedNumber = Transaction.getCommitted();
+
+            int txNum = rs.getInt(4);
+
+            // skip all the records already processed
+            while ((txNum <= currentCommittedNumber) && rs.next()) {
+                txNum = rs.getInt(4);
+            }
+
+            if (txNum <= currentCommittedNumber) {
+                // the records ended, so simply get out of here, with the higher number we got
+                return txNum;
+            }
+            
+            // now, it's time to process the new changeLog records
+
+            AlienTransaction alienTx = new AlienTransaction(txNum);
+
+            while (alienTx != null) {
+                String className = rs.getString(1);
+                int idInternal = rs.getInt(2);
+                String attr = rs.getString(3);
+
+                DomainObject obj = getDomainObject(pb, className, idInternal);
+                alienTx.register(obj, attr);
+
+                int nextTxNum = -1;
+                if (rs.next()) {
+                    nextTxNum = rs.getInt(4);
+                }
+
+                if (nextTxNum != txNum) {
+                    // finished the records for an alien transaction, so "commit" it
+                    alienTx.commit();
+
+                    // add it to the queue of alienTxs to be GCed later
+                    ALIEN_TRANSACTIONS.offer(alienTx);
+
+                    Transaction.setCommitted(txNum);
+
+                    if (nextTxNum != -1) {
+                        // there are more to process, create a new alien transaction
+                        txNum = nextTxNum;
+                        alienTx = new AlienTransaction(txNum);
+                    } else {
+                        // finish the loop
+                        alienTx = null;
+                    }
+                }
+            }
+
+            return txNum;
+        } finally {
+            PROCESS_ALIEN_TX_LOCK.unlock();
+        }
+    }
+    
 
     public static int initializeTransactionSystem() {
 	// find the last committed transaction

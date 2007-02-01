@@ -55,8 +55,24 @@ public abstract class Transaction extends jvstm.Transaction {
 	}
     }
 
+
+    private static final ThreadLocal<Boolean> DEFAULT_READ_ONLY = new ThreadLocal<Boolean>() {
+         protected Boolean initialValue() {
+             return Boolean.FALSE;
+         }
+    };
+
+    public static boolean getDefaultReadOnly() {
+	return DEFAULT_READ_ONLY.get().booleanValue();
+    }
+
+    public static void setDefaultReadOnly(boolean readOnly) {
+	DEFAULT_READ_ONLY.set(readOnly ? Boolean.TRUE : Boolean.FALSE);
+    }
+
+
     public static jvstm.Transaction begin() {
-        return Transaction.begin(false);
+        return Transaction.begin(getDefaultReadOnly());
     }
 
     public static jvstm.Transaction begin(boolean readOnly) {

@@ -4,6 +4,7 @@
 package net.sourceforge.fenixedu.tools;
 
 import java.lang.reflect.Modifier;
+import java.lang.reflect.Method;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.MissingResourceException;
@@ -14,6 +15,9 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.framework.FenixPersistentField;
 import net.sourceforge.fenixedu.stm.OJBFunctionalSetWrapper;
 import net.sourceforge.fenixedu.util.StringFormatter;
+
+import net.sourceforge.fenixedu.persistenceTier.OJB.DomainAllocator;
+
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.ojb.broker.metadata.ClassDescriptor;
@@ -99,6 +103,9 @@ public class OJBMetadataGenerator {
                     .getFullName());
 
             if (classDescriptor != null) {
+
+                setFactoryMethodAndClass(classDescriptor);
+
                 final Class clazz = Class.forName(domClass.getFullName());
                 updateFields(classDescriptor, domClass, ojbMetadata, clazz);
                 if (!Modifier.isAbstract(clazz.getModifiers())) {
@@ -114,50 +121,73 @@ public class OJBMetadataGenerator {
 
     }
 
+    private static void setFactoryMethodAndClass(ClassDescriptor cld) {
+        String className = cld.getClassOfObject().getName();
+        try {
+            Method m = DomainAllocator.class.getMethod("allocate_" + className.replace('.', '_'));
+            if (m != null) {
+                //System.out.println("FenixRowReader: setting factoryMethod for class " + className + " to " + m.getName());
+                cld.setFactoryClass(DomainAllocator.class);
+                cld.setFactoryMethod(m.getName());
+            }
+        } catch (Exception e) {
+            System.out.println("FenixRowReader: NOT setting factoryMethod for class " + className + " because " + e);
+        }
+    }
+
+
     protected static void updateFields(final ClassDescriptor classDescriptor,
             final DomainClass domClass, Map ojbMetadata, Class persistentFieldClass) throws Exception {
 
         DomainEntity domEntity = domClass;
         int fieldID = 1;
+
+        addFieldDescriptor("idInternal", "java.lang.Integer", fieldID++, classDescriptor, persistentFieldClass);
+
         while (domEntity instanceof DomainClass) {
             DomainClass dClass = (DomainClass) domEntity;
 
             Iterator<Slot> slots = dClass.getSlots();
             while (slots.hasNext()) {
                 Slot slot = slots.next();
-                String slotName = slot.getName();
 
-                if(classDescriptor.getFieldDescriptorByName(slotName) == null){
-                    FieldDescriptor fieldDescriptor = new FieldDescriptor(classDescriptor, fieldID++);
-                    fieldDescriptor.setColumnName(StringFormatter.convertToDBStyle(slotName));
-                    // System.out.println(">> " + slot.getType());
-                    // System.out.println("\t" +
-                    // java2JdbcConversion.get(slot.getType()));
-                    fieldDescriptor.setColumnType(rbJDBCTypes.getString(slot.getType()).trim());
-
-                    fieldDescriptor.setAccess("readwrite");
-
-                    try {
-                        String conversor = rbConversors.getString(slot.getType()).trim();
-                        fieldDescriptor.setFieldConversionClassName(conversor);
-                    } catch (MissingResourceException e) {
-                    }
-
-                    if (slotName.equals("idInternal")) {
-                        fieldDescriptor.setPrimaryKey(true);
-                        fieldDescriptor.setAutoIncrement(true);
-                    }
-                    PersistentField persistentField = new FenixPersistentField(persistentFieldClass,
-                            slotName);
-                    fieldDescriptor.setPersistentField(persistentField);
-                    classDescriptor.addFieldDescriptor(fieldDescriptor);
-                }
-
+                addFieldDescriptor(slot.getName(), slot.getType(), fieldID++, classDescriptor, persistentFieldClass);
             }
 
             domEntity = dClass.getSuperclass();
         }
 
+    }
+
+    protected static void addFieldDescriptor(String slotName,
+                                             String slotType,
+                                             int fieldID, 
+                                             ClassDescriptor classDescriptor,
+                                             Class persistentFieldClass) {
+        if (classDescriptor.getFieldDescriptorByName(slotName) == null){
+            FieldDescriptor fieldDescriptor = new FieldDescriptor(classDescriptor, fieldID);
+            fieldDescriptor.setColumnName(StringFormatter.convertToDBStyle(slotName));
+            // System.out.println(">> " + slotType);
+            // System.out.println("\t" +
+            // java2JdbcConversion.get(slotType));
+            fieldDescriptor.setColumnType(rbJDBCTypes.getString(slotType).trim());
+
+            fieldDescriptor.setAccess("readwrite");
+
+            try {
+                String conversor = rbConversors.getString(slotType).trim();
+                fieldDescriptor.setFieldConversionClassName(conversor);
+            } catch (MissingResourceException e) {
+            }
+
+            if (slotName.equals("idInternal")) {
+                fieldDescriptor.setPrimaryKey(true);
+                fieldDescriptor.setAutoIncrement(true);
+            }
+            PersistentField persistentField = new FenixPersistentField(persistentFieldClass, slotName);
+            fieldDescriptor.setPersistentField(persistentField);
+            classDescriptor.addFieldDescriptor(fieldDescriptor);
+        }
     }
 
     protected static void updateRelations(final ClassDescriptor classDescriptor,

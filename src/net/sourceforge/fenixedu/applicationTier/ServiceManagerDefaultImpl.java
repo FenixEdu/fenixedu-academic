@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -12,7 +13,9 @@ import net.sourceforge.fenixedu.applicationTier.logging.SystemInfo;
 import net.sourceforge.fenixedu.applicationTier.logging.UserExecutionLog;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.stm.IllegalWriteException;
 import net.sourceforge.fenixedu.stm.ServiceInfo;
+import net.sourceforge.fenixedu.stm.Transaction;
 
 import org.apache.commons.collections.FastHashMap;
 import org.apache.log4j.Logger;
@@ -40,6 +43,8 @@ public class ServiceManagerDefaultImpl implements IServiceManagerWrapper {
     private static boolean userLoggingIsOn;
 
     private static FastHashMap mapUsersToWatch;
+
+    private static final Map<String,String> KNOWN_WRITE_SERVICES = new ConcurrentHashMap<String,String>();
 
     static {
         serviceLoggingIsOn = false;
@@ -95,20 +100,31 @@ public class ServiceManagerDefaultImpl implements IServiceManagerWrapper {
 
             ServiceInfo.setCurrentServiceInfo((id == null) ? null : id.getUtilizador(), service, args);
 
+            // try read-only transaction first, but only for non-public sessions...
+            Transaction.setDefaultReadOnly(! KNOWN_WRITE_SERVICES.containsKey(service));
+
             Object serviceResult = null;
-            while (true) {
-                try {
-                    serviceResult = manager.execute(id, service, method, args);
-                    break;
-                } catch (jvstm.CommitException ce) {
-//                    ce.printStackTrace();
-                    System.out.println("Restarting TX because of CommitException");
-                    // repeat service
-                } catch (DomainObject.UnableToDetermineIdException ce) {
-//                    ce.printStackTrace();
-                    System.out.println("Restarting TX because of UnableToDetermineIdException");
-                    // repeat service
+            try {
+                while (true) {
+                    try {
+                        serviceResult = manager.execute(id, service, method, args);
+                        break;
+                    } catch (jvstm.CommitException ce) {
+                        //                    ce.printStackTrace();
+                        System.out.println("Restarting TX because of CommitException");
+                        // repeat service
+                    } catch (DomainObject.UnableToDetermineIdException ce) {
+                        //                    ce.printStackTrace();
+                        System.out.println("Restarting TX because of UnableToDetermineIdException");
+                        // repeat service
+                    } catch (IllegalWriteException iwe) {
+                        KNOWN_WRITE_SERVICES.put(service, service);
+                        Transaction.setDefaultReadOnly(false);
+                        // repeat service
+                    }
                 }
+            } finally {
+                Transaction.setDefaultReadOnly(false);
             }
 
             if (serviceLoggingIsOn || (userLoggingIsOn && id != null)) {

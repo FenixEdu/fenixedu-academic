@@ -70,9 +70,13 @@ public class FenixCache implements ObjectCache {
 
 
     public Object lookup(Identity oid) {
+        return lookup(oid.getObjectsTopLevelClass(), (Integer)oid.getPrimaryKeyValues()[0]);
+    }
+
+    public Object lookup(Class topLevelClass, Integer id) {
 	processQueue();
-	ConcurrentHashMap<Integer,CacheEntry> classCache = getCacheForClass(oid.getObjectsTopLevelClass());
-	CacheEntry entry = classCache.get((Integer)oid.getPrimaryKeyValues()[0]);
+	ConcurrentHashMap<Integer,CacheEntry> classCache = getCacheForClass(topLevelClass);
+	CacheEntry entry = classCache.get(id);
 
 	if (entry != null) {
 	    Object result = entry.get();

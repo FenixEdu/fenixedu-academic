@@ -1,5 +1,5 @@
 package net.sourceforge.fenixedu.stm;
 
 public interface VersionedSubject {
-    public void addNewVersion(int txNumber);
+    public jvstm.VBoxBody addNewVersion(String attr, int txNumber);
 }

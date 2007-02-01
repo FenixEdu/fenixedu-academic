@@ -42,28 +42,24 @@ public class RelationList<E1,E2> extends AbstractList<E2> implements VersionedSu
 	this.elementsRef = new SoftReference<VBox<FunctionalSet<E2>>>(elementsBox);
     }
 
+    public void initKnownVersions(Object obj, String attr) {
+        // remove this when the DML compiler no longer generates the initKnownVersions calls
+    }    
+
+
     // The access to the elementsRef field should be synchronized
     private synchronized VBox<FunctionalSet<E2>> getElementsBox() {
 	VBox<FunctionalSet<E2>> box = elementsRef.get();
 	if (box == null) {
 	    box = VBox.makeNew(true, true);
-	    box.initKnownVersions(listHolder, attributeName);
 	    this.elementsRef = new SoftReference<VBox<FunctionalSet<E2>>>(box);
 	}
 	return box;
     }
 
 
-    // The access to the elementsRef field should be synchronized
-    public synchronized void addNewVersion(int txNumber) {
-	VBox<FunctionalSet<E2>> box = elementsRef.get();
-	if (box != null) {
-	    box.addNewVersion(txNumber);
-	}
-    }
-
-    public void initKnownVersions(Object obj, String attr) {
-	getElementsBox().initKnownVersions(obj, attr);
+    public jvstm.VBoxBody addNewVersion(String attr, int txNumber) {
+        return getElementsBox().addNewVersion(attr, txNumber, true);
     }
 
     private FunctionalSet<E2> elementSet() {
