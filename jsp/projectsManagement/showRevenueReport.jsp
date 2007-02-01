@@ -95,9 +95,6 @@
 					<td class="report-line-total"><report:sumColumn id="revenueLines" column="5" /></td>
 				</tr>
 			</table>
-			<br />
-			<bean:message key="message.listReport" />
-			<br />
 		</logic:notEmpty>
 		<br />
 		<br />

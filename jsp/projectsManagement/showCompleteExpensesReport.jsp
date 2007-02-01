@@ -187,9 +187,6 @@
 <td class="report-line-total-last"></td>
 </tr>
 </table>
-<br />
-<bean:message key="message.listReport" />
-<br />
 </logic:notEmpty>
 <logic:empty name="infoExpensesReport" property="lines">
 	<span class="error"><!-- Error messages go here --><bean:message key="message.noMovements" /></span>

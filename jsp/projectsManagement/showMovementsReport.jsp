@@ -185,9 +185,6 @@
 				</tr>
 			</table>
 			<br />
-			<br />
-			<bean:message key="message.listReport" />
-			<br />
 		</logic:notEmpty>
 		<logic:empty name="infoReport" property="lines">
 			<span class="error"><!-- Error messages go here --><bean:message key="message.noMovements" /></span>
