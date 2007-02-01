@@ -45,11 +45,11 @@
 	</tr>
 	<tr>
 		<th><bean:message key="label.sendEmail.CC" bundle="APPLICATION_RESOURCES"/>:</th>
-		<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.copyTo" property="copyTo" size="50"/><font size="-2"> (separe os endereï¿½os por vï¿½rgulas)</font></td>
+		<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.copyTo" property="copyTo" size="50"/><font size="-2"> (separe os endereços por vírgulas)</font></td>
 	</tr>
 	<tr>
 		<th><bean:message key="label.sendEmail.copyToSender" bundle="APPLICATION_RESOURCES"/>:</th>
-		<td><html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.copyToSender" property="copyToSender"/>(assinale caso deseje receber uma cï¿½pia da mensagem no endereï¿½o do remetente)</td>
+		<td><html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.copyToSender" property="copyToSender"/>(assinale caso deseje receber uma cópia da mensagem no endereço do remetente)</td>
 	</tr>
 	<tr>
 		<th><bean:message key="label.sendEmail.subject" bundle="APPLICATION_RESOURCES"/>:</th>
