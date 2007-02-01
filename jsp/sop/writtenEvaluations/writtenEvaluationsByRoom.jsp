@@ -79,7 +79,7 @@
 				<f:facet name="header">
 				<h:outputText value="#{bundle['property.room.building']}"/>
 				</f:facet>
-				<h:outputText value="#{room.building.name}"/>
+				<h:outputText value="#{room.buildingName}"/>
 			</h:column>
 			<h:column>
 				<f:facet name="header">
@@ -124,7 +124,7 @@
 				<h:outputText value="#{bundle['property.room.capacity.exame']}"/>
 
 				<h:outputText value="#{calendarLinks.key.nome}"/>
-				<h:outputText value="#{calendarLinks.key.building.name}"/>
+				<h:outputText value="#{calendarLinks.key.buildingName}"/>
 				<h:outputText value="#{calendarLinks.key.piso}"/>
 				<h:outputText value="#{calendarLinks.key.tipo}"/>
 				<h:outputText value="#{calendarLinks.key.capacidadeNormal}"/>

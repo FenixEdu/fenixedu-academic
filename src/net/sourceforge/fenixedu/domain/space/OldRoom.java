@@ -192,4 +192,8 @@ public class OldRoom extends OldRoom_Base {
 	}
 	return oldRooms;
     }
+    
+    public String getBuildingName() {
+	return (hasBuilding()) ? getBuilding().getName() : "";
+    }
 }
