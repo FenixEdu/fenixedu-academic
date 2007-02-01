@@ -82,11 +82,11 @@ public abstract class Group implements Serializable, IGroup {
      * override this method
      */
     public boolean isMember(Person person) {
-	return (person == null) ? false : getElements().contains(person);
+        return (person == null) ? false : getElements().contains(person);
     }
 
     public boolean allows(IUserView userView) {
-	return (userView == null) ? false : isMember(userView.getPerson());
+        return isMember(userView == null ? null : userView.getPerson());
     }
 
     protected Set<Person> freezeSet(Set<Person> elements) {

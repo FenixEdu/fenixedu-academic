@@ -32,7 +32,7 @@ public class EveryoneGroup extends Group {
 
     @Override
     public boolean isMember(Person person) {
-        return person != null;
+        return true;
     }
 
     @Override

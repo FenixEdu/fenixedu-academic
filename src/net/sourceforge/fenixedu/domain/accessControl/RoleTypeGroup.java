@@ -29,12 +29,7 @@ public class RoleTypeGroup extends Group {
     
     @Override
     public boolean isMember(Person person) {
-	return (person == null) ? false : person.hasRole(getRoleType());
-    }
-
-    @Override
-    public boolean allows(IUserView userView) {
-	return (userView == null) ? false : isMember(userView.getPerson());
+        return (person == null) ? false : person.hasRole(getRoleType());
     }
 
     public String getExpression() {
