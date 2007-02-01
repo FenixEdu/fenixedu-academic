@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 
 import net.sourceforge.fenixedu._development.Custodian;
 import net.sourceforge.fenixedu._development.MetadataManager;
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -42,7 +43,7 @@ public class StartupServlet extends HttpServlet {
 
         SuportePersistenteOJB.fixDescriptors();
 
-        RootDomainObject.init();
+        Service.init(RootDomainObject.getInstance());
 
         try {
             try {
