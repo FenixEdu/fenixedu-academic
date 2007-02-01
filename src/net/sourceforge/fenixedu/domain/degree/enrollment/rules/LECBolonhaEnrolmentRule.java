@@ -15,13 +15,24 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
 import net.sourceforge.fenixedu.domain.exceptions.EnrolmentRuleDomainException;
 
-public class LEMBolonhaEnrolmentRule extends BolonhaEnrolmentRule {
+public class LECBolonhaEnrolmentRule extends BolonhaEnrolmentRule {
     
-    private static final String TERMODINAMICA_CODE = "310";
+    private static final String CONSTRUCAO_ESTRUTURA_CODE = "111";
     
-    private static final String PRODUCAO_CODE = "320";
+    private static final String CONSTRUCAO_CONSTRUCAO_CODE = "112";
     
-    private static final String AUTOMACAO_ROBOTICA_CODE = "330";
+    private static final String HIDRAULICA_CODE = "120";
+    
+    private static final String PLANEAMENTO_CODE = "130";
+    
+    private static final String DISSERTACAO_CE_CODE = "BAR";
+    
+    private static final String DISSERTACAO_CC_CODE = "BAS";
+    
+    private static final String DISSERTACAO_H_CODE = "BAT";
+    
+    private static final String DISSERTACAO_P_CODE = "BAU";
+    
 
     private static final String DISSERTACAO_CODE = "B80";
     
@@ -38,7 +49,7 @@ public class LEMBolonhaEnrolmentRule extends BolonhaEnrolmentRule {
     private static final String[] TERMO_DEGREE_2_SEM = { "A9P" };
     
 
-    public LEMBolonhaEnrolmentRule(StudentCurricularPlan studentCurricularPlan,
+    public LECBolonhaEnrolmentRule(StudentCurricularPlan studentCurricularPlan,
 	    ExecutionPeriod executionPeriod) {
 	super(studentCurricularPlan, executionPeriod);
     }
@@ -48,15 +59,46 @@ public class LEMBolonhaEnrolmentRule extends BolonhaEnrolmentRule {
 	    throws EnrolmentRuleDomainException {
 
 	if(studentCurricularPlan.getBranch() != null) {
-	    if(studentCurricularPlan.getBranch().getCode().equals(TERMODINAMICA_CODE)) {
-		return applyTermodinamica(curricularCoursesToBeEnrolledIn);
-	    } if(studentCurricularPlan.getBranch().getCode().equals(PRODUCAO_CODE)) {
-		return applyProducao(curricularCoursesToBeEnrolledIn);
-	    } if(studentCurricularPlan.getBranch().getCode().equals(AUTOMACAO_ROBOTICA_CODE)) {
-		return applyAutomacaoRobotica(curricularCoursesToBeEnrolledIn);
+	    if(studentCurricularPlan.getBranch().getCode().equals(CONSTRUCAO_ESTRUTURA_CODE)) {
+		return applyConstrucaoEstruturas(curricularCoursesToBeEnrolledIn);
+	    } if(studentCurricularPlan.getBranch().getCode().equals(CONSTRUCAO_CONSTRUCAO_CODE)) {
+		return applyConstrucaoConstrucao(curricularCoursesToBeEnrolledIn);
+	    } if(studentCurricularPlan.getBranch().getCode().equals(HIDRAULICA_CODE)) {
+		return applyHidraulica(curricularCoursesToBeEnrolledIn);
+	    } if(studentCurricularPlan.getBranch().getCode().equals(PLANEAMENTO_CODE)) {
+		return applyPlaneamento(curricularCoursesToBeEnrolledIn);
 	    }
+
 	}
 	return curricularCoursesToBeEnrolledIn;
+    }
+    
+    
+    
+    
+    
+
+    private List<CurricularCourse2Enroll> applyPlaneamento(List<CurricularCourse2Enroll> curricularCoursesToBeEnrolledIn) {
+	if(isEnrolledInPreviousExecutionPeriodOrAproved(DISSERTACAO_P_CODE) || isEnrolledInExecutionPeriod(DISSERTACAO_P_CODE)) {
+	    removeCurricularCourse(curricularCoursesToBeEnrolledIn, DISSERTACAO_P_CODE);
+	}
+
+	return null;
+    }
+
+    private List<CurricularCourse2Enroll> applyHidraulica(List<CurricularCourse2Enroll> curricularCoursesToBeEnrolledIn) {
+	// TODO Auto-generated method stub
+	return null;
+    }
+
+    private List<CurricularCourse2Enroll> applyConstrucaoConstrucao(List<CurricularCourse2Enroll> curricularCoursesToBeEnrolledIn) {
+	// TODO Auto-generated method stub
+	return null;
+    }
+
+    private List<CurricularCourse2Enroll> applyConstrucaoEstruturas(List<CurricularCourse2Enroll> curricularCoursesToBeEnrolledIn) {
+	// TODO Auto-generated method stub
+	return null;
     }
 
     private List<CurricularCourse2Enroll> applyProducao(List<CurricularCourse2Enroll> curricularCoursesToBeEnrolledIn) {

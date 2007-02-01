@@ -39,7 +39,7 @@ public class StudentCurricularPlanLEM extends StudentCurricularPlanLEM_Base {
      * @param optionalCurricularCourseGroup
      */
     //  FIXME: MÉTODO PARA O 2º SEMSTERE
-   /* protected void selectOptionalCoursesToBeRemoved(List curricularCoursesToRemove,
+    protected void selectOptionalCoursesToBeRemoved(List curricularCoursesToRemove,
             List curricularCoursesToKeep, CurricularCourseGroup optionalCurricularCourseGroup, ExecutionPeriod executionPeriod) {
         int count = 0;
 
@@ -90,11 +90,11 @@ public class StudentCurricularPlanLEM extends StudentCurricularPlanLEM_Base {
         } else {
             curricularCoursesToKeep.addAll(optionalCurricularCourseGroup.getCurricularCourses());
         }
-    }*/
+    }
 
     
     //FIXME: MÉTODO PARA O 1º SEMSTERE
-    protected void selectOptionalCoursesToBeRemoved(List curricularCoursesToRemove,
+   /* protected void selectOptionalCoursesToBeRemoved(List curricularCoursesToRemove,
             List curricularCoursesToKeep, CurricularCourseGroup optionalCurricularCourseGroup, ExecutionPeriod executionPeriod) {
         int count = 0;
 
@@ -145,7 +145,7 @@ public class StudentCurricularPlanLEM extends StudentCurricularPlanLEM_Base {
         } else {
             curricularCoursesToKeep.addAll(optionalCurricularCourseGroup.getCurricularCourses());
         }
-    }
+    }*/
 
     /**
      * @param optionalGroupName

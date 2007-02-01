@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.degree.enrollment.rules.LEAMBolonhaEnrolm
  *
  */
 
-public class DegreeCurricularPlanLEAM extends DegreeCurricularPlanLET_Base {
+public class DegreeCurricularPlanLEAM extends DegreeCurricularPlanLEAM_Base {
     
     public DegreeCurricularPlanLEAM() {
         setOjbConcreteClass(getClass().getName());

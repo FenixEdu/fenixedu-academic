@@ -28,7 +28,7 @@ public class MaximumNumberEctsCreditsEnrolmentRule implements IEnrollmentRule {
         .getAllStudentEnrolledEnrollmentsInExecutionPeriod(this.executionPeriod);
 
         Double maxECTS = 40.0;
-        Double ects = 0.0;
+        Double ects = getAnualCurricularCoursesECTS();
         for (Enrolment enrolment : (List<Enrolment>) allStudentEnrolledEnrollments) {
 	    ects += enrolment.getAccumulatedEctsCredits();
 	}
@@ -44,6 +44,16 @@ public class MaximumNumberEctsCreditsEnrolmentRule implements IEnrollmentRule {
         
         curricularCoursesToBeEnrolledIn.removeAll(curricularCourse2Remove);
 	return curricularCoursesToBeEnrolledIn;
+    }
+    
+    private Double getAnualCurricularCoursesECTS() {
+	Double ects = 0.0;
+	for (Enrolment enrolment : studentCurricularPlan.getEnrolmentsByExecutionPeriod(executionPeriod.getPreviousExecutionPeriod())) {
+	    if(enrolment.getCurricularCourse().isAnual()) {
+		ects += enrolment.getCurricularCourse().getEctsCredits();
+	    }
+	}
+	return ects;
     }
 
 }

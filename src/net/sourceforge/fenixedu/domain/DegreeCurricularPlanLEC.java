@@ -22,7 +22,7 @@ public class DegreeCurricularPlanLEC extends DegreeCurricularPlanLEC_Base {
         List result = new ArrayList();
         result.add(new LECEvenAndOddNumbersEnrollmentRule(studentCurricularPlan, executionPeriod));
         result.addAll(super.getListOfEnrollmentRules(studentCurricularPlan, executionPeriod));
-        /*result.add(new LECOptionalPairGroupsEnrollmentRule(studentCurricularPlan));*/
+        result.add(new LECOptionalPairGroupsEnrollmentRule(studentCurricularPlan));
         return result;
     }
 

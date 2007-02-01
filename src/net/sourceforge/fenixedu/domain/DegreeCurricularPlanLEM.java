@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.degree.enrollment.rules.AMIIICDIIRule;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.LEMAUBranchPSIRule;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.LEMBolonhaEnrolmentRule;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.LEMOptionalPairGroupsEnrollmentRule;
@@ -30,6 +31,7 @@ public class DegreeCurricularPlanLEM extends DegreeCurricularPlanLEM_Base {
         result.add(new MaximumNumberEctsCreditsEnrolmentRule(studentCurricularPlan, executionPeriod));
         result.add(new PrecedencesEnrollmentRule(studentCurricularPlan, executionPeriod));
         //result.add(new LEMAUBranchPSIRule(studentCurricularPlan, executionPeriod));
+        result.add(new AMIIICDIIRule(studentCurricularPlan));
         result.add(new LEMOptionalPairGroupsEnrollmentRule(studentCurricularPlan, executionPeriod));
         result.add(new PreviousYearsCurricularCourseEnrollmentRuleIgnoringLastYears(
                 studentCurricularPlan, executionPeriod, 4));        

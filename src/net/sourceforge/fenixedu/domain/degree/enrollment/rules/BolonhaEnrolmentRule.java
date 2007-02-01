@@ -41,13 +41,24 @@ public abstract class BolonhaEnrolmentRule implements IEnrollmentRule {
 	}
 	return res;
     }
+    
+    protected int countEnroledInPreviousExecutionPeriodOrAprovedEnrolments(String[] group) {
+	int res = 0;
+	for (String code : group) {
+	    if(isEnrolledInPreviousExecutionPeriodOrAproved(code)) {
+		res++;
+	    }
+	}
+	return res;
+    }
+
 
 
     protected boolean isGroupCompleted(CurricularCourseGroup optionalCurricularCourse, List<CurricularCourse2Enroll> curricularCoursesToBeEnrolledIn) {
 	
 	int count = 0;
 	for (CurricularCourse curricularCourse : optionalCurricularCourse.getCurricularCoursesSet()) {
-	    if (isEnrolledInExecutionPeriodOrAproved(curricularCourse)) {
+	    if (isEnrolledInExecutionPeriodOrAproved(curricularCourse, executionPeriod)) {
 		count++;
 	    }
 	}
@@ -73,15 +84,23 @@ public abstract class BolonhaEnrolmentRule implements IEnrollmentRule {
 	});
     }
 
-    protected boolean isEnrolledInExecutionPeriod(final CurricularCourse curricularCourse) {
+    protected boolean isEnrolledInExecutionPeriod(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
 	
 	return studentCurricularPlan.isCurricularCourseEnrolledInExecutionPeriod(curricularCourse,executionPeriod);
     }
     
-    private boolean isEnrolledInExecutionPeriodOrAproved(final CurricularCourse curricularCourse) {
+    private boolean isEnrolledInExecutionPeriodOrAproved(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
 	
 	return studentCurricularPlan.isCurricularCourseEnrolledInExecutionPeriod(curricularCourse,executionPeriod)
 		|| studentCurricularPlan.isCurricularCourseApproved(curricularCourse);
+
+    }
+    
+    protected boolean isEnrolledInPreviousExecutionPeriod(final String code) {
+
+	final CurricularCourse curricularCourse = studentCurricularPlan.getDegreeCurricularPlan().getCurricularCourseByCode(code);
+	
+	return isEnrolledInExecutionPeriod(curricularCourse, executionPeriod.getPreviousExecutionPeriod());
 
     }
     
@@ -89,16 +108,22 @@ public abstract class BolonhaEnrolmentRule implements IEnrollmentRule {
 
 	final CurricularCourse curricularCourse = studentCurricularPlan.getDegreeCurricularPlan().getCurricularCourseByCode(code);
 	
-	return isEnrolledInExecutionPeriod(curricularCourse);
+	return isEnrolledInExecutionPeriod(curricularCourse, executionPeriod);
 
     }
     
-    private boolean isEnrolledInExecutionPeriodOrAproved(final String code) {
+    protected boolean isEnrolledInExecutionPeriodOrAproved(final String code) {
 
 	final CurricularCourse curricularCourse = studentCurricularPlan.getDegreeCurricularPlan().getCurricularCourseByCode(code);
 	
-	return isEnrolledInExecutionPeriodOrAproved(curricularCourse);
+	return isEnrolledInExecutionPeriodOrAproved(curricularCourse, executionPeriod);
 
+    }
+    
+    protected boolean isEnrolledInPreviousExecutionPeriodOrAproved(final String code) {
+	final CurricularCourse curricularCourse = studentCurricularPlan.getDegreeCurricularPlan().getCurricularCourseByCode(code);
+	
+	return isEnrolledInExecutionPeriodOrAproved(curricularCourse, executionPeriod.getPreviousExecutionPeriod());
     }
 
 

@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.degree.enrollment.rules.LEGIBolonhaEnrolm
  * 
  */
 
-public class DegreeCurricularPlanLEGI extends DegreeCurricularPlanLEA_Base {
+public class DegreeCurricularPlanLEGI extends DegreeCurricularPlanLEGI_Base {
 
     public DegreeCurricularPlanLEGI() {
         setOjbConcreteClass(getClass().getName());

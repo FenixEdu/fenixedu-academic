@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
+import net.sourceforge.fenixedu.domain.degree.enrollment.rules.AMIIICDIIRule;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.IEnrollmentRule;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.MaximumNumberEctsCreditsEnrolmentRule;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.PrecedencesEnrollmentRule;
@@ -561,6 +562,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
 	result.add(new MaximumNumberEctsCreditsEnrolmentRule(studentCurricularPlan, executionPeriod));
 	result.add(new PrecedencesEnrollmentRule(studentCurricularPlan, executionPeriod));
+	result.add(new AMIIICDIIRule(studentCurricularPlan));
 	result.add(new PreviousYearsCurricularCourseEnrollmentRule(studentCurricularPlan,
 		executionPeriod));
 

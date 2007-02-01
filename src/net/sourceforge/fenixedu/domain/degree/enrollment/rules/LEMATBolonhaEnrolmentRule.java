@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.degree.enrollment.rules;
 
-import java.util.Arrays;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
@@ -10,13 +9,10 @@ import net.sourceforge.fenixedu.domain.exceptions.EnrolmentRuleDomainException;
 
 public class LEMATBolonhaEnrolmentRule extends BolonhaEnrolmentRule {
 
-
     private static final String DISSERTACAO_CODE = "B81";
     
-    private static final String MECANICA_COMPUTACIONAL = "A6P";
-
-    private static final String[] OPTIONAL_GROUP = { "ASG", "ASH", "ASI", "B31"};
-
+    private static final String TFC = "A1L";
+    
     public LEMATBolonhaEnrolmentRule(StudentCurricularPlan studentCurricularPlan,
 	    ExecutionPeriod executionPeriod) {
 	super(studentCurricularPlan, executionPeriod);
@@ -25,14 +21,19 @@ public class LEMATBolonhaEnrolmentRule extends BolonhaEnrolmentRule {
     public List<CurricularCourse2Enroll> apply(
 	    List<CurricularCourse2Enroll> curricularCoursesToBeEnrolledIn)
 	    throws EnrolmentRuleDomainException {
-
-	final boolean dissertacao = isEnrolledInExecutionPeriod(DISSERTACAO_CODE);
-
-	if (dissertacao) {
-	    if(studentCurricularPlan.isCurricularCourseApproved(studentCurricularPlan.getDegreeCurricularPlan().getCurricularCourseByCode(MECANICA_COMPUTACIONAL))) {
-		removeCurricularCourses(curricularCoursesToBeEnrolledIn, Arrays.asList(OPTIONAL_GROUP));
-	    }
+	
+	if(isEnrolledInExecutionPeriod(TFC)) {
+	    removeCurricularCourse(curricularCoursesToBeEnrolledIn, DISSERTACAO_CODE);
 	}
+	
+	if(isEnrolledInExecutionPeriod(DISSERTACAO_CODE)) {
+	    removeCurricularCourse(curricularCoursesToBeEnrolledIn, TFC);
+	}
+	
+	if(isEnrolledInPreviousExecutionPeriodOrAproved(DISSERTACAO_CODE)) {
+	    removeCurricularCourse(curricularCoursesToBeEnrolledIn, TFC);
+	    removeCurricularCourse(curricularCoursesToBeEnrolledIn, DISSERTACAO_CODE);
+	}	
 
 	return curricularCoursesToBeEnrolledIn;
     }

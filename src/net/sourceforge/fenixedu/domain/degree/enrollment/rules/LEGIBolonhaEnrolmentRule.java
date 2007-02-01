@@ -13,18 +13,22 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
 public class LEGIBolonhaEnrolmentRule extends BolonhaEnrolmentRule {
+    
+    private static final String DISSERTACAO_PRODUCAO = "B9W";
+    
+    private static final String DISSERTACAO_EMPREENDIMENTOS = "B9X";
 
-    private static final String[] DEGREE_PRODUCAO = { "B5T", "B31"};
+    private static final String[] DEGREE_PRODUCAO = { "B5T", "B31", "AFS", "B32"};
     
-    private static final String[] DEGREE_EMPREENDIMENTOS = { "B5T", "B31", "AA9"};
+    private static final String[] DEGREE_EMPREENDIMENTOS = { "B5T", "B31", "AA9", "A4B", "AFS", "B32"};
     
-    private static final String[] PRODUCAO = { "B9W"};
+    private static final String[] PRODUCAO = { "B9W", "B9E"};
     
-    private static final String[] EMPREENDIMENTOS = { "A4O", "1A", "A4H", "B9X"};
+    private static final String[] EMPREENDIMENTOS = { "A4O", "1A", "AA7", "B9X", "B9G"};
     
-    private static final String[] COMMONS_PRODUCAO = { "A4G", "AA9", "A4B", "AFY", "B98"}; 
+    private static final String[] COMMONS_PRODUCAO = { "A4G", "AA9", "A4B", "AFY", "B98", "A4H", "ABX"}; 
     
-    private static final String[] COMMONS_EMPREENDIMENTOS = { "A4G", "AFY", "B98"};
+    private static final String[] COMMONS_EMPREENDIMENTOS = { "A4G", "AFY", "B98", "A4H", "ABX"};
     
     private static final String PRODUCAO_CODE = "1120";
 
@@ -41,10 +45,10 @@ public class LEGIBolonhaEnrolmentRule extends BolonhaEnrolmentRule {
 
 	if(studentCurricularPlan.getBranch() != null) {
 	    if(studentCurricularPlan.getBranch().getCode().equals(PRODUCAO_CODE)) {
-		return applyBranch(curricularCoursesToBeEnrolledIn, COMMONS_PRODUCAO, DEGREE_PRODUCAO, PRODUCAO);
+		return applyBranch(curricularCoursesToBeEnrolledIn, COMMONS_PRODUCAO, DEGREE_PRODUCAO, PRODUCAO, DISSERTACAO_PRODUCAO);
 	    }
 	    if(studentCurricularPlan.getBranch().getCode().equals(EMPREENDIMENTOS_CODE)) {
-		return applyBranch(curricularCoursesToBeEnrolledIn, COMMONS_EMPREENDIMENTOS, DEGREE_EMPREENDIMENTOS, EMPREENDIMENTOS);
+		return applyBranch(curricularCoursesToBeEnrolledIn, COMMONS_EMPREENDIMENTOS, DEGREE_EMPREENDIMENTOS, EMPREENDIMENTOS, DISSERTACAO_EMPREENDIMENTOS);
 	    }
 	}
 	
@@ -52,19 +56,21 @@ public class LEGIBolonhaEnrolmentRule extends BolonhaEnrolmentRule {
     }
     
     public List<CurricularCourse2Enroll> applyBranch(
-	    List<CurricularCourse2Enroll> curricularCoursesToBeEnrolledIn, String[] commons, String[] degree, String[] masterDegree)
+	    List<CurricularCourse2Enroll> curricularCoursesToBeEnrolledIn, String[] commons, String[] degree, String[] masterDegree, 
+	    String dissertacao)
 	    throws EnrolmentRuleDomainException {
-
-	if(countEnrolments(degree) >= 1) {
+	
+	if(countEnroledInPreviousExecutionPeriodOrAprovedEnrolments(degree) > 0 || countEnroledOrAprovedEnrolments(degree) > 0) {
 	    removeCurricularCourses(curricularCoursesToBeEnrolledIn, Arrays.asList(masterDegree));
 	}
-	
-	if(countEnrolments(masterDegree) >= 1) {
-	    removeCurricularCourses(curricularCoursesToBeEnrolledIn, Arrays.asList(degree));
+
+	if(countEnroledInPreviousExecutionPeriodOrAprovedEnrolments(degree) > 0 || countEnroledOrAprovedEnrolments(degree) > 0) {
+	    removeCurricularCourses(curricularCoursesToBeEnrolledIn, Arrays.asList(masterDegree));
+	    if(isEnrolledInPreviousExecutionPeriod(dissertacao)) {
+		removeCurricularCourse(curricularCoursesToBeEnrolledIn, dissertacao);
+	    }
 	}
 	
 	return curricularCoursesToBeEnrolledIn;
     }
-
-
 }
