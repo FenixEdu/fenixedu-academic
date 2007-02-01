@@ -6,7 +6,10 @@
 package net.sourceforge.fenixedu.utilTests;
 
 import java.io.StringReader;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Vector;
 
 import javax.xml.parsers.SAXParser;
@@ -14,15 +17,12 @@ import javax.xml.parsers.SAXParserFactory;
 
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 
-import org.apache.tools.ant.util.StringUtils;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.AttributesImpl;
 import org.xml.sax.helpers.DefaultHandler;
-
-import bsh.StringUtil;
 
 import com.sun.faces.el.impl.parser.ParseException;
 
@@ -36,6 +36,8 @@ public class ParseMetadata extends DefaultHandler {
     private Vector<Element> vector = new Vector<Element>();
 
     private Element current = null;
+
+    private List<String> members = new ArrayList<String>();
 
     public Metadata parseMetadata(Vector<Element> vector, Metadata metadata) {
         this.vector = vector;
@@ -59,6 +61,7 @@ public class ParseMetadata extends DefaultHandler {
             throw new ParseException();
         }
 
+        setMembers(vector);
         return vector;
     }
 
@@ -83,6 +86,9 @@ public class ParseMetadata extends DefaultHandler {
     public void endElement(String uri, String localName, String qName) {
         if (current != null && text != null) {
             current.setValue(text.trim());
+        } else if (qName.equals("members")) {
+            current = new Element(uri, localName, "not" + qName, null);
+            vector.addElement(current);
         }
         current = null;
     }
@@ -95,7 +101,6 @@ public class ParseMetadata extends DefaultHandler {
     }
 
     private Metadata vector2Metadata(Vector<Element> vector, Metadata metadata) {
-
         boolean difficulty = false, description = false, mainsubject = false, secondarysubject = false, level = false, author = false, value = false, typicallearningtime = false;
         String secondarySubjectString = new String(), authorString = new String();
         for (Element element : vector) {
@@ -160,9 +165,7 @@ public class ParseMetadata extends DefaultHandler {
                 if (!authorString.equals(""))
                     authorString = authorString.concat(" / ");
                 authorString = authorString.concat(element.getValue());
-            }
-
-            else if ((tag.equals("datetime")) && typicallearningtime == true) {
+            } else if ((tag.equals("datetime")) && typicallearningtime == true) {
                 if (!org.apache.commons.lang.StringUtils.isEmpty(element.getValue())) {
                     String[] hourTokens = element.getValue().split(":");
                     Calendar result = Calendar.getInstance();
@@ -177,5 +180,32 @@ public class ParseMetadata extends DefaultHandler {
         metadata.setSecondarySubject(secondarySubjectString);
         metadata.setAuthor(authorString);
         return metadata;
+    }
+
+    private void setMembers(Vector<Element> vector2) {
+        boolean members = false;
+        for (Element element : vector) {
+            String tag = element.getQName();
+            if ((tag.equals("members"))) {
+                members = true;
+            } else if ((tag.equals("notmembers"))) {
+                members = false;
+            } else if ((tag.equals("location")) && members == true) {
+                try {
+                    addMembers(new String(element.getValue().getBytes(), "utf8"));
+                } catch (UnsupportedEncodingException e) {
+                    addMembers(element.getValue());
+                }
+
+            }
+        }
+    }
+
+    public List<String> getMembers() {
+        return members;
+    }
+
+    public void addMembers(String member) {
+        this.members.add(member);
     }
 }
