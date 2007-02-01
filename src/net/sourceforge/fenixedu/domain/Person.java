@@ -511,7 +511,7 @@ public class Person extends Person_Base {
 	}
 	return resultPublications;
     }
-    
+
     public List<ResearchResultPublication> getResearchResultPublicationsByType(final Class <? extends ResearchResultPublication> clazz) {
     	return (List) CollectionUtils.select(getResearchResultPublications(), new Predicate() {
     		public boolean evaluate(Object arg0) {
@@ -668,9 +668,11 @@ public class Person extends Person_Base {
 	    setPassword(PasswordEncryptor.encryptPassword(GeneratePassword.getInstance()
 		    .generatePassword(this)));
 
-	setAvailableEmail(infoPerson.getAvailableEmail());
+	setAvailableEmail(infoPerson.getAvailableEmail() != null ? infoPerson.getAvailableEmail()
+		: Boolean.TRUE);
 	setAvailablePhoto(Boolean.TRUE);
-	setAvailableWebSite(infoPerson.getAvailableWebSite());
+	setAvailableWebSite(infoPerson.getAvailableWebSite() != null ? infoPerson.getAvailableWebSite()
+		: Boolean.TRUE);
 	setWorkPhone(infoPerson.getWorkPhone());
     }
 
@@ -1907,7 +1909,8 @@ public class Person extends Person_Base {
 	}
 	final Collection<AnnouncementBoard> result = new HashSet<AnnouncementBoard>();
 	for (final Professorship professorship : getTeacher().getProfessorships()) {
-	    if (professorship.getExecutionCourse().getExecutionPeriod() == ExecutionPeriod.readActualExecutionPeriod()) {
+	    if (professorship.getExecutionCourse().getExecutionPeriod() == ExecutionPeriod
+		    .readActualExecutionPeriod()) {
 		final AnnouncementBoard board = professorship.getExecutionCourse().getBoard();
 		if (board != null && board.hasReaderOrWriter(this)) {
 		    result.add(board);
@@ -1924,7 +1927,8 @@ public class Person extends Person_Base {
 	final Collection<AnnouncementBoard> result = new HashSet<AnnouncementBoard>();
 	for (final Registration registration : getStudent().getRegistrationsSet()) {
 	    for (final Attends attends : registration.getAssociatedAttendsSet()) {
-		if (attends.getDisciplinaExecucao().isLecturedIn(ExecutionPeriod.readActualExecutionPeriod())) {
+		if (attends.getDisciplinaExecucao().isLecturedIn(
+			ExecutionPeriod.readActualExecutionPeriod())) {
 		    final AnnouncementBoard board = attends.getDisciplinaExecucao().getBoard();
 		    if (board != null && board.hasReaderOrWriter(this)) {
 			result.add(board);
@@ -2006,11 +2010,11 @@ public class Person extends Person_Base {
 	public Object execute() {
 	    final Person person = new Person(this, true);
             Unit unit = getUnit();
-            if (unit == null) {
+	    if (unit == null) {
                 unit = Unit.findFirstUnitByName(getUnitName());
                 if (unit == null) {
-                    throw new DomainException("error.unit.does.not.exist");
-                }
+		throw new DomainException("error.unit.does.not.exist");
+	    }
             }
 	    new ExternalContract(person, unit, new YearMonthDay(), null);
 	    return person;
@@ -2363,7 +2367,7 @@ public class Person extends Person_Base {
 
 	return result;
     }
-    
+
     public Money getPayedAmount(final EventType eventType, final int civilYear) {
 	Money result = Money.ZERO;
 	for (final Event event : (Set<Event>) getEventsByEventType(eventType)) {
@@ -2391,5 +2395,5 @@ public class Person extends Person_Base {
     public boolean isAdministrativeOfficeEmployee() {
 	return getEmployee() != null && getEmployee().getAdministrativeOffice() != null;
     }
-
+    
 }
