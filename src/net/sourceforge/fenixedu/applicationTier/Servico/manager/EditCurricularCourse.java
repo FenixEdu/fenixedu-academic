@@ -76,6 +76,7 @@ public class EditCurricularCourse extends Service {
             oldCurricularCourse.setMandatoryEnrollment(newInfoCurricularCourse.getMandatoryEnrollment());
             oldCurricularCourse.setEnrollmentAllowed(newInfoCurricularCourse.getEnrollmentAllowed());
             oldCurricularCourse.setGradeScale(newInfoCurricularCourse.getGradeScale());
+            oldCurricularCourse.setRegimeType(newInfoCurricularCourse.getRegimeType());
         } else {
         	throw new ExistingAcronymException();
         }

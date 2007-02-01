@@ -93,6 +93,9 @@ public class CurricularCourse extends CurricularCourse_Base {
 	setAcronym(acronym);
 	setEnrollmentAllowed(enrolmentAllowed);
 	setCurricularStage(curricularStage);
+	if(curricularStage == CurricularStage.OLD) {
+	    setRegimeType(RegimeType.SEMESTRIAL);
+	}
     }
 
     public CurricularCourse(Double weight, String prerequisites, String prerequisitesEn,
@@ -1253,6 +1256,10 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public boolean isAnual() {
+	if(getCurricularStage() == CurricularStage.OLD) {
+	    return getRegimeType() == RegimeType.ANUAL;
+	}
+	
 	if (this.getCompetenceCourse() != null) {
 	    return this.getCompetenceCourse().isAnual();
 	}

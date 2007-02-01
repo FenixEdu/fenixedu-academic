@@ -80,6 +80,17 @@
 		</tr>							
 		<tr>
 			<td>
+				<bean:message bundle="MANAGER_RESOURCES" key="message.manager.regimeType"/>
+			</td>
+			<td>
+				<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.degreeStructure.RegimeType" bundle="ENUMERATION_RESOURCES"/>
+				<html:select bundle="HTMLALT_RESOURCES" altKey="select.gradeType" property="regimeType">
+					<html:options collection="values" property="value" labelProperty="label"/>
+				</html:select>
+			</td>
+		</tr>									
+		<tr>
+			<td>
 				<bean:message bundle="MANAGER_RESOURCES" key="message.manager.mandatory"/>
 			</td>
 			<td>

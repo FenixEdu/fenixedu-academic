@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
+import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.util.CurricularCourseExecutionScope;
 
 public class InfoCurricularCourseEditor extends InfoObject implements ISiteComponent {
@@ -50,6 +51,8 @@ public class InfoCurricularCourseEditor extends InfoObject implements ISiteCompo
     private String nameEn;
     
     private GradeScale gradeScale;
+    
+    private RegimeType regimeType;
 
     private InfoDegreeCurricularPlan infoDegreeCurricularPlan;
 
@@ -437,6 +440,14 @@ public class InfoCurricularCourseEditor extends InfoObject implements ISiteCompo
 
 	public void setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan infoDegreeCurricularPlan) {
 		this.infoDegreeCurricularPlan = infoDegreeCurricularPlan;
+	}
+
+	public RegimeType getRegimeType() {
+	    return regimeType;
+	}
+
+	public void setRegimeType(RegimeType regimeType) {
+	    this.regimeType = regimeType;
 	}
 
 }

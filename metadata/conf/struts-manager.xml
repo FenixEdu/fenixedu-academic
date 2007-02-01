@@ -82,6 +82,7 @@
 				<form-property name="enrollmentWeigth" type="java.lang.String"/>
 				<form-property name="mandatoryEnrollment" type="java.lang.String"/>
 				<form-property name="enrollmentAllowed" type="java.lang.String"/>
+				<form-property name="regimeType" type="java.lang.String"/>
 
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>

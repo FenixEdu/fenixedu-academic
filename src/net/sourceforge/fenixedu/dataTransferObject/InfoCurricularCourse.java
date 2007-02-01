@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
+import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.util.CurricularCourseExecutionScope;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 
@@ -245,6 +246,10 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
 
     public boolean getIsBolonha() {
 	return getCurricularCourse().isBolonha();
+    }
+    
+    public RegimeType getRegimeType() {
+	return getCurricularCourse().getRegimeType();
     }
 
 }

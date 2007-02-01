@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseEditor;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
+import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -93,7 +94,9 @@ public class EditCurricularCourseDA extends FenixDispatchAction {
         if (oldInfoCurricularCourse.getGradeScale() != null) {
             dynaForm.set("gradeType", oldInfoCurricularCourse.getGradeScale().toString());
         }
-
+        
+        dynaForm.set("regimeType", oldInfoCurricularCourse.getRegimeType().toString());
+        
         return mapping.findForward("editCurricularCourse");
     }
 
@@ -177,6 +180,14 @@ public class EditCurricularCourseDA extends FenixDispatchAction {
             gradeScale = GradeScale.valueOf(gradeTypeString);
         }
         newInfoCurricularCourse.setGradeScale(gradeScale);
+        
+        String regimeTypeString = (String) dynaForm.get("regimeType");
+        RegimeType regimeType = null;
+        if (regimeTypeString != null && regimeTypeString.length() > 0) {
+            regimeType = RegimeType.valueOf(regimeTypeString);
+        }
+        newInfoCurricularCourse.setRegimeType(regimeType);
+
 
         Object args[] = { newInfoCurricularCourse };
 
