@@ -26,3 +26,11 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "Alter Table GratuityValues" AlterTableGratuityValues.sql
+executeWithTempFile "Updating Old GratuityValues" UpdateOldGratuityValuesPenaltyField.sql
+execute "Alter Table GratuityValues" ChangeGratuityValuesPenaltyApplicableField.sql
+
+execute "Create DegreeSite reference fields" CreateDegreeSite.sql
+execute "Introduce Degree site functionalities" CreateDegreeSiteFunctionalities.sql
+execute "Create Degree site template and sections" CreateDegreeSiteTemplate.sql
