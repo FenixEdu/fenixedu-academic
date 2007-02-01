@@ -209,7 +209,7 @@
 				
 	            <td class="listClasses"><bean:message bundle="ENUMERATION_RESOURCES" name="enrollmentElem" property="enrolmentTypeName"/></td>
 				
-				<td class="listClasses"><bean:write name="enrollmentElem" property="ectsCredits"/></td>
+				<td class="listClasses"><bean:write name="enrollmentElem" property="accumulatedEctsCredits"/></td>
 				<td class="listClasses">
 					<bean:message name="enrollmentElem" property="condition.name" bundle="ENUMERATION_RESOURCES"/>
 				</td>
