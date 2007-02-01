@@ -9,6 +9,7 @@
 		<slot name="person.username" key="label.vigilancy.username"/>
 		<slot name="person.name" key="label.vigilancy.name"/>
 		<slot name="points" key="label.vigilancy.points"/>
+		<slot name="activeVigilancyWithCreditsCount" key="label.vigilancy.vigilancyCount"/>
 </schema>
 
 <schema name="presentTeacherCategoryCode" type="net.sourceforge.fenixedu.domain.Teacher" bundle="VIGILANCY_RESOURCES">
@@ -360,7 +361,13 @@
 			<property name="format" value="${name}"/>
 		</slot>		
 		<slot name="writtenEvaluation.dayDateYearMonthDay" key="label.vigilancy.date"/>		
-		<slot name="active" key="label.vigilancy.active.header"/>
+		<slot name="active" key="label.vigilancy.active.header" layout="boolean-changer">
+			<property name="trueDestination" value="deactivate"/>
+			<property name="falseDestination" value="activate"/>
+			<property name="trueMessageKey" value="label.deactivate"/>
+			<property name="falseMessageKey" value="label.activate"/>
+			<property name="messageBundle" value="VIGILANCY_RESOURCES"/>
+		</slot>
 		<slot name="confirmed" key="label.vigilancy.confirmed.header"/>
 		<slot name="attendedToConvoke" key="label.vigilancy.attended"  layout="boolean-changer">
 			<property name="trueDestination" value="unconfirm"/>

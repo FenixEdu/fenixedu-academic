@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.domain.vigilancy;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -63,7 +62,7 @@ public class VigilancyWithCredits extends VigilancyWithCredits_Base {
 			return this.POINTS_WON_FOR_NON_ATTENDING_CONVOKE;
 		if (this.getAttendedToConvoke())
 			return this.POINTS_WON_FOR_ATTENDING_CONVOKE;
-		if(!atLeastOneVigilancyWithCreditsIsAttended()) {
+		if(!hasPointsAttributed()) {
 			// no vigilancy has been yet setted to attended so maybe the 
 			// coordinator did not yet filled the report. Let's just give
 			// 0 points yet.
@@ -73,18 +72,18 @@ public class VigilancyWithCredits extends VigilancyWithCredits_Base {
 		return this.POINTS_WON_FOR_MISSING_CONVOKE;
 	}
 
-	@Override
-	public void setActive(Boolean bool) {
-		YearMonthDay examDate = this.getWrittenEvaluation()
-				.getDayDateYearMonthDay();
-		YearMonthDay currentDate = new YearMonthDay();
-
-		if (examDate.isAfter(currentDate)) {
-			super.setActive(bool);
-		} else {
-			throw new DomainException("vigilancy.error.cannotChangeActive");
-		}
-	}
+//	@Override
+//	public void setActive(Boolean bool) {
+//		YearMonthDay examDate = this.getWrittenEvaluation()
+//				.getDayDateYearMonthDay();
+//		YearMonthDay currentDate = new YearMonthDay();
+//
+//		if (examDate.isAfter(currentDate)) {
+//			super.setActive(bool);
+//		} else {
+//			throw new DomainException("vigilancy.error.cannotChangeActive");
+//		}
+//	}
 
 	@Override
 	public void setAttendedToConvoke(Boolean bool) {
@@ -129,13 +128,12 @@ public class VigilancyWithCredits extends VigilancyWithCredits_Base {
 		return !this.getActive();
 	}
 
-	private boolean atLeastOneVigilancyWithCreditsIsAttended() {
+	public boolean hasPointsAttributed() {
 		List<VigilancyWithCredits> vigilancies = this.getWrittenEvaluation().getVigilancysWithCredits();
 		for(VigilancyWithCredits vigilancy : vigilancies) {
 			if(vigilancy.isAttended()) return true;
 		}
-		
-		return false;
+		return false;	
 	}
 	
 }

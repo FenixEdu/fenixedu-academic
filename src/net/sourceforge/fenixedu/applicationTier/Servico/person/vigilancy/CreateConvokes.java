@@ -1,16 +1,10 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
-import org.joda.time.DateTime;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
@@ -18,6 +12,9 @@ import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
+
+import org.joda.time.DateTime;
+
 import pt.utl.ist.fenix.tools.smtp.EmailSender;
 
 public class CreateConvokes extends Service {
@@ -48,9 +45,10 @@ public class CreateConvokes extends Service {
         	}
         	
         	DateTime date = writtenEvaluation.getBeginningDateTime();
-        	String convokeTitle = RenderUtils.getResourceString("VIGILANCY_RESOURCES", "email.convoke.subject");
+        	String beginDateString = date.getDayOfMonth() + "/" + date.getMonthOfYear() + "/" + date.getYear();
         	
-        	String subject = convokeTitle + writtenEvaluation.getName() + " " + group.getName() + " " + date.getDayOfMonth() + "/" + date.getMonthOfYear() + "/" + date.getYear();  
+        	String subject = RenderUtils.getResourceString("VIGILANCY_RESOURCES", "email.convoke.subject",new Object[] {writtenEvaluation.getName(), group.getName(), beginDateString});
+        	  
         	EmailSender.send(person.getName(), (groupEmail == null) ? person.getEmail() : groupEmail, replyTo, tos, null, null, subject,
                     emailMessage);
         }

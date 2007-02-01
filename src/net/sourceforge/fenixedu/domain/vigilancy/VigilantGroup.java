@@ -6,7 +6,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.FindTeachersService;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -17,7 +16,6 @@ import net.sourceforge.fenixedu.domain.vigilancy.strategies.Strategy;
 import net.sourceforge.fenixedu.domain.vigilancy.strategies.StrategyFactory;
 import net.sourceforge.fenixedu.domain.vigilancy.strategies.StrategySugestion;
 
-import org.apache.poi.hssf.util.HSSFColor.VIOLET;
 import org.joda.time.DateTime;
 
 public class VigilantGroup extends VigilantGroup_Base {

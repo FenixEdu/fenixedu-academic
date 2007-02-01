@@ -2,10 +2,9 @@ package net.sourceforge.fenixedu.domain.vigilancy;
 
 import java.util.Comparator;
 
-import org.apache.commons.beanutils.BeanComparator;
-
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.teacher.Category;
+
+import org.apache.commons.beanutils.BeanComparator;
 
 public class VigilantBound extends VigilantBound_Base {
     

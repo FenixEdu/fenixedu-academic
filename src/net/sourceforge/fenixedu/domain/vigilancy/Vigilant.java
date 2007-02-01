@@ -362,6 +362,10 @@ public class Vigilant extends Vigilant_Base {
 		return false;
 	}
 
+	public Integer getActiveVigilancyWithCreditsCount() {
+		return getActiveVigilancyWithCredits().size();
+	}
+	
 	public List<Vigilancy> getAllConvokes() {
 		List<Vigilancy> convokes = new ArrayList<Vigilancy>(super.getVigilancys());
 		Collections.sort(convokes,
