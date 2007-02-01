@@ -1005,6 +1005,9 @@ class net.sourceforge.fenixedu.domain.DegreeCurricularPlan extends net.sourcefor
 	class net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEBL extends net.sourceforge.fenixedu.domain.DegreeCurricularPlan {
     }
     
+    class net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEBM extends net.sourceforge.fenixedu.domain.DegreeCurricularPlan {
+    }
+    
     class net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEQ extends net.sourceforge.fenixedu.domain.DegreeCurricularPlan {
     }
     
@@ -1122,7 +1125,8 @@ class net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule extends net.s
 		Double theoreticalHours; 
 		Double labHours; 
 		Double praticalHours; 
-		CurricularCourseType type; 
+		CurricularCourseType type;
+		RegimeType regimeType; 
 	
 		Boolean mandatory; 
 		Double weigth;

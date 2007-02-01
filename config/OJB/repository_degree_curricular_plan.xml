@@ -11,6 +11,7 @@
     <extent-class class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLET"/>    
     <extent-class class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEAN"/> 
     <extent-class class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEBL"/>     
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEBM"/>         
     <extent-class class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEQ"/>         
     <extent-class class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEGM"/>     
     <extent-class class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEMAT"/>    
@@ -323,6 +324,11 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEBL --> 
 <!-- *************************************************************************************************************** -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEBL" table="DEGREE_CURRICULAR_PLAN"/>
+
+<!-- *************************************************************************************************************** -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEBM --> 
+<!-- *************************************************************************************************************** -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEBM" table="DEGREE_CURRICULAR_PLAN"/>
 
 <!-- *************************************************************************************************************** -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEQ --> 

@@ -26,3 +26,6 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "Add RegimeType Column to DEGREE_MODULE" addRegimeTypeToDegreeModule.sql
+execute "Add RegimeType Column to DEGREE_MODULE" updateDCPLEBM.sql
