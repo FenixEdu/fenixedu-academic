@@ -45,7 +45,7 @@
         <%-- Recommended bibliography from competence course --%>
         <logic:iterate id="competenceCourseInformation" name="executionCourse" property="competenceCoursesInformations">
             <logic:present name="competenceCourseInformation" property="bibliographicReferences">
-                <logic:iterate id="bibliographicReference" name="competenceCourse" property="competenceCourseInformation.bibliographicReferences.bibliographicReferencesSortedByOrder">
+                <logic:iterate id="bibliographicReference" name="competenceCourseInformation" property="bibliographicReferences.bibliographicReferencesSortedByOrder">
                     <logic:equal name="bibliographicReference" property="type" value="MAIN">
                         <logic:empty name="bibliographicReference" property="url">
                             <bean:write name="bibliographicReference" property="title" filter="false"/>
@@ -108,7 +108,7 @@
         <%-- Secondary bibliography from competence course --%>
         <logic:iterate id="competenceCourseInformation" name="executionCourse" property="competenceCoursesInformations">
             <logic:present name="competenceCourseInformation" property="bibliographicReferences">
-                <logic:iterate id="bibliographicReference" name="competenceCourse" property="competenceCourseInformation.bibliographicReferences.bibliographicReferencesSortedByOrder">
+                <logic:iterate id="bibliographicReference" name="competenceCourseInformation" property="bibliographicReferences.bibliographicReferencesSortedByOrder">
                     <logic:equal name="bibliographicReference" property="type" value="SECONDARY">
                         <logic:empty name="bibliographicReference" property="url">
                             <bean:write name="bibliographicReference" property="title" filter="false"/>
