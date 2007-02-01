@@ -121,19 +121,5 @@ public class RuleResultTest extends TestCase {
 	}
 	assertTrue("AND: Result should be NA", result.isNA());
     }
-    
-    public void testNOT() {
-	
-	RuleResult result = RuleResult.createFalse();
-	
-	result = result.not();
-	assertTrue("NOT: Result should be true", result.isTrue());
-	
-	result = result.not();
-	assertTrue("NOT: Result should be false", result.isFalse());
-	
-	result = RuleResult.createNA();
-	assertTrue("NOT: Result should be NA", result.isNA());
-    }
 
 }
