@@ -59,14 +59,18 @@
 				<fr:layout name="tabular-sortable">
 					<fr:property name="classes" value="tstyle4 tdcenter" />
 					<fr:property name="rowClasses" value="bgwhite," />
+					<fr:property name="groupLinks" value="true" />
 					<fr:property name="columnClasses" value="smalltxt,smalltxt,smalltxt  aleft nowrap,smalltxt,smalltxt,smalltxt nowrap,smalltxt nowrap," />
-					<fr:property name="linkFormat(processing)" value="<%= newRequestUrl + "&academicServiceRequestId=${idInternal}" %>"/>
-					<fr:property name="key(processing)" value="processing"/>
-					<fr:property name="visibleIf(processing)" value="newRequest"/>
-					<fr:property name="linkFormat(concluded)" value="<%= processRequestUrl + "&academicServiceRequestId=${idInternal}" %>"/>
-					<fr:property name="key(concluded)" value="conclude"/>
-					<fr:property name="visibleIf(concluded)" value="processing"/>
-
+					
+					<logic:notEqual name="academicSituationType" value="CONCLUDED">
+						<fr:property name="linkFormat(processing)" value="<%= newRequestUrl + "&academicServiceRequestId=${idInternal}" %>"/>
+						<fr:property name="key(processing)" value="processing"/>
+						<fr:property name="visibleIf(processing)" value="newRequest"/>
+						<fr:property name="linkFormat(concluded)" value="<%= processRequestUrl + "&academicServiceRequestId=${idInternal}" %>"/>
+						<fr:property name="key(concluded)" value="conclude"/>
+						<fr:property name="visibleIf(concluded)" value="processing"/>
+					</logic:notEqual>
+					
 					<fr:property name="sortBy" value="<%= sortCriteria + ",creationDate=asc" %>"/>
 					<fr:property name="sortUrl" value="<%= "/academicServiceRequestsManagement.do?method=search&academicSituationType=" + request.getParameter("academicSituationType") %>"/>
 					<fr:property name="sortParameter" value="sortBy"/>
@@ -93,12 +97,15 @@
 				<fr:property name="rowClasses" value="bgwhite," />
 				<fr:property name="groupLinks" value="true" />
 				<fr:property name="columnClasses" value="smalltxt,smalltxt,smalltxt  aleft nowrap,smalltxt,smalltxt,smalltxt nowrap,smalltxt nowrap," />
-				<fr:property name="linkFormat(processing)" value="<%= newRequestUrl + "&academicServiceRequestId=${idInternal}" %>"/>
-				<fr:property name="key(processing)" value="processing"/>
-				<fr:property name="visibleIf(processing)" value="newRequest"/>
-				<fr:property name="linkFormat(concluded)" value="<%= processRequestUrl + "&academicServiceRequestId=${idInternal}" %>"/>
-				<fr:property name="key(concluded)" value="conclude"/>
-				<fr:property name="visibleIf(concluded)" value="processing"/>
+
+				<logic:notEqual name="academicSituationType" value="CONCLUDED">
+					<fr:property name="linkFormat(processing)" value="<%= newRequestUrl + "&academicServiceRequestId=${idInternal}" %>"/>
+					<fr:property name="key(processing)" value="processing"/>
+					<fr:property name="visibleIf(processing)" value="newRequest"/>
+					<fr:property name="linkFormat(concluded)" value="<%= processRequestUrl + "&academicServiceRequestId=${idInternal}" %>"/>
+					<fr:property name="key(concluded)" value="conclude"/>
+					<fr:property name="visibleIf(concluded)" value="processing"/>
+				</logic:notEqual>
 				
 				<fr:property name="sortBy" value="<%= sortCriteria + ",creationDate=asc" %>"/>
 				<fr:property name="sortUrl" value="<%= "/academicServiceRequestsManagement.do?method=search&academicSituationType=" + request.getParameter("academicSituationType") %>"/>

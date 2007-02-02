@@ -202,7 +202,11 @@
         <property name="useParent" value="true"/>
 	</slot>
 	<slot name="description" read-only="true" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.description"/>
-	<slot name="executionYear.year" key="label.serviceRequests.documentRequests.executionYear.withLineBreak"/>
+	<slot name="executionYear" layout="null-as-label">
+        <property name="label" value="-"/>
+        <property name="subLayout" value="values"/>
+        <property name="subSchema" value="net.sourceforge.fenixedu.domain.ExecutionYear.view"/>
+	</slot>
 	<slot name="urgentRequest" key="label.net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest.urgentRequest"/>	
 	<slot name="creationDate" read-only="true" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.creationDate.withLineBreak"/>
 	<slot name="activeSituation.creationDate" read-only="true" key="last.modification.withLineBreak"/>
