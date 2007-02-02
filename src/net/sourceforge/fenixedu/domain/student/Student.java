@@ -239,8 +239,7 @@ public class Student extends Student_Base {
 
     // Convenience method for invocation as bean.
     public boolean getHasActiveRegistrationForOffice() {
-	Unit workingPlace = AccessControl.getPerson().getEmployee()
-		.getCurrentWorkingPlace();
+	Unit workingPlace = AccessControl.getPerson().getEmployee().getCurrentWorkingPlace();
 	return hasActiveRegistrationForOffice(workingPlace);
     }
 
@@ -252,6 +251,11 @@ public class Student extends Student_Base {
 	    }
 	}
 	return false;
+    }
+
+    public boolean getHasRegistrationForOffice() {
+	Unit workingPlace = AccessControl.getPerson().getEmployee().getCurrentWorkingPlace();
+	return hasRegistrationForOffice(workingPlace.getAdministrativeOffice());
     }
 
     public boolean attends(ExecutionCourse executionCourse) {
@@ -282,8 +286,8 @@ public class Student extends Student_Base {
 	if (getStudentDataByExecutionYearCount() > 0) {
 	    throw new DomainException("error.person.cannot.be.deleted");
 	}
-	
-	for(; hasAnyExternalEnrolments() ; getExternalEnrolments().get(0).delete())
+
+	for (; hasAnyExternalEnrolments(); getExternalEnrolments().get(0).delete())
 	    ;
 
 	removePerson();
@@ -474,7 +478,7 @@ public class Student extends Student_Base {
 	}
 	return false;
     }
-    
+
     public Collection<StudentCurricularPlan> getAllStudentCurricularPlans() {
 	Set<StudentCurricularPlan> result = new HashSet<StudentCurricularPlan>();
 	for (Registration registration : getRegistrationsSet()) {
@@ -512,6 +516,5 @@ public class Student extends Student_Base {
 	}
 	return null;
     }
-
 
 }
