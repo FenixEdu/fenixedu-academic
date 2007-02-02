@@ -16,16 +16,16 @@ public class EnrolmentDeclarationRequest extends EnrolmentDeclarationRequest_Bas
     }
 
     public EnrolmentDeclarationRequest(Registration registration,
-	    DocumentPurposeType documentPurposeType, String otherDocumentPurposeTypeDescription) {
+	    DocumentPurposeType documentPurposeType, String otherDocumentPurposeTypeDescription, Boolean freeProcessed) {
 
 	this();
-	this.init(registration, documentPurposeType, otherDocumentPurposeTypeDescription);
+	this.init(registration, documentPurposeType, otherDocumentPurposeTypeDescription, freeProcessed);
     }
 
     protected void init(Registration registration,DocumentPurposeType documentPurposeType,
-            String otherDocumentPurposeTypeDescription) {
+            String otherDocumentPurposeTypeDescription, Boolean freeProcessed) {
 
-        super.init(registration, documentPurposeType, otherDocumentPurposeTypeDescription);
+        super.init(registration, documentPurposeType, otherDocumentPurposeTypeDescription, freeProcessed);
 
         final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
         if (!getRegistration().hasAnyEnrolmentsIn(currentExecutionYear)) {

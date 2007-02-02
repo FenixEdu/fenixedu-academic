@@ -59,7 +59,7 @@ public abstract class DocumentRequest extends DocumentRequest_Base {
 	    } else if (getChosenDocumentRequestType().isDeclaration()) {
 		return DeclarationRequest.create(getRegistration(), getChosenDocumentRequestType(),
 			getChosenDocumentPurposeType(), getOtherPurpose(),
-			getNotes(), getAverage(), getDetailed(), getYear());
+			getNotes(), getAverage(), getDetailed(), getYear(), getFreeProcessed());
 
 	    }
 	    return null;
@@ -83,6 +83,10 @@ public abstract class DocumentRequest extends DocumentRequest_Base {
 		throw new DomainException("DocumentRequest.registration.has.not.payed.gratuities");
 	    }
 	}
+    }
+
+    public boolean isToBePrintedInAplica() {
+	return !getRegistration().isBolonha() && getDocumentRequestType() == DocumentRequestType.ENROLMENT_CERTIFICATE && ((EnrolmentCertificateRequest)this).getDetailed();
     }
 
 }

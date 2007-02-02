@@ -20,6 +20,8 @@ public class DocumentRequestCreateBean extends RegistrationSelectExecutionYearBe
     private String notes;
 
     private Boolean urgentRequest;
+    
+    private Boolean freeProcessed;
 
     private Boolean average;
 
@@ -75,6 +77,14 @@ public class DocumentRequestCreateBean extends RegistrationSelectExecutionYearBe
 
     public void setUrgentRequest(Boolean urgentRequest) {
 	this.urgentRequest = urgentRequest;
+    }
+
+    public Boolean getFreeProcessed() {
+        return freeProcessed;
+    }
+
+    public void setFreeProcessed(Boolean freeProcessed) {
+        this.freeProcessed = freeProcessed;
     }
 
     public Boolean getAverage() {

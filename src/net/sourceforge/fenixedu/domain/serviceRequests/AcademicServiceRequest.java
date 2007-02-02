@@ -73,6 +73,14 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
 	return getUrgentRequest().booleanValue();
     }
 
+    final public boolean isFreeProcessed() {
+	return getFreeProcessed();
+    }
+    
+    protected boolean isFree() {
+	return !isPayable() || isFreeProcessed();
+    }
+
     protected final boolean isPayable() {
 	return getEventType() != null;
     }
@@ -80,8 +88,6 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
     protected boolean isPayed() {
 	return !hasEvent() || getEvent().isPayed();
     }
-
-    abstract protected boolean isFree();
 
     abstract public EventType getEventType();
 

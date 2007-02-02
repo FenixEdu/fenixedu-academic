@@ -4103,6 +4103,7 @@ class net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest ext
 	Integer serviceRequestNumber;
 	Boolean urgentRequest;
 	Integer keyEvent;
+	Boolean freeProcessed;
 }
 
 		class net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest extends net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest {

@@ -21,17 +21,16 @@ public class IRSDeclarationRequest extends IRSDeclarationRequest_Base {
 
     public IRSDeclarationRequest(Registration registration,
 	    DocumentPurposeType documentPurposeType, String otherDocumentPurposeTypeDescription,
-	    Integer year) {
+	    Integer year, Boolean freeProcessed) {
 
 	this();
-
-	init(registration, documentPurposeType, otherDocumentPurposeTypeDescription, year);
+	this.init(registration, documentPurposeType, otherDocumentPurposeTypeDescription, year, freeProcessed);
     }
 
     protected void init(Registration registration, DocumentPurposeType documentPurposeType,
-	    String otherDocumentPurposeTypeDescription, Integer year) {
+	    String otherDocumentPurposeTypeDescription, Integer year, Boolean freeProcessed) {
 
-	super.init(registration, documentPurposeType, otherDocumentPurposeTypeDescription);
+	super.init(registration, documentPurposeType, otherDocumentPurposeTypeDescription, freeProcessed);
 
 	if (!registration.isActive()) {
 	    throw new DomainException("IRSDeclarationRequest.registration.is.not.active");

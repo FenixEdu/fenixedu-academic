@@ -19,14 +19,14 @@ public abstract class DeclarationRequest extends DeclarationRequest_Base {
     }
 
     protected void init(Registration registration, DocumentPurposeType documentPurposeType,
-	    String otherDocumentPurposeTypeDescription) {
+	    String otherDocumentPurposeTypeDescription, Boolean freeProcessed) {
 
 	init(registration);
 	checkParameters(documentPurposeType, otherDocumentPurposeTypeDescription);
 
 	super.setDocumentPurposeType(documentPurposeType);
 	super.setOtherDocumentPurposeTypeDescription(otherDocumentPurposeTypeDescription);
-
+	super.setFreeProcessed(freeProcessed);
     }
 
     private void checkParameters(DocumentPurposeType documentPurposeType,
@@ -43,17 +43,17 @@ public abstract class DeclarationRequest extends DeclarationRequest_Base {
     protected static DeclarationRequest create(Registration registration,
 	    DocumentRequestType chosenDocumentRequestType,
 	    DocumentPurposeType chosenDocumentPurposeType, String otherPurpose, String notes,
-	    Boolean average, Boolean detailed, Integer year) {
+	    Boolean average, Boolean detailed, Integer year, Boolean freeProcessed) {
 
 	switch (chosenDocumentRequestType) {
 	case SCHOOL_REGISTRATION_DECLARATION:
 	    return new SchoolRegistrationDeclarationRequest(registration, chosenDocumentPurposeType,
-		    otherPurpose);
+		    otherPurpose, freeProcessed);
 	case ENROLMENT_DECLARATION:
 	    return new EnrolmentDeclarationRequest(registration, chosenDocumentPurposeType,
-		    otherPurpose);
+		    otherPurpose, freeProcessed);
 	case IRS_DECLARATION:
-	    return new IRSDeclarationRequest(registration, chosenDocumentPurposeType, otherPurpose, year);
+	    return new IRSDeclarationRequest(registration, chosenDocumentPurposeType, otherPurpose, year, freeProcessed);
 	}
 
 	return null;
@@ -69,6 +69,13 @@ public abstract class DeclarationRequest extends DeclarationRequest_Base {
     public void setOtherDocumentPurposeTypeDescription(String otherDocumentTypeDescription) {
 	throw new DomainException(
 		"error.serviceRequests.documentRequests.DeclarationRequest.cannot.modify.otherDocumentTypeDescription");
+    }
+
+    @Override
+    public void setFreeProcessed(Boolean freeProcessed) {
+	throw new DomainException(
+		"error.serviceRequests.documentRequests.DeclarationRequest.cannot.modify.freeProcessed");
+
     }
 
     public void edit(AcademicServiceRequestSituationType academicServiceRequestSituationType,
@@ -105,10 +112,6 @@ public abstract class DeclarationRequest extends DeclarationRequest_Base {
     }
     
     protected boolean isFree() {
-	if (!isPayable()) {
-	    return true;
-	}
-	
 	if (getDocumentPurposeType() == DocumentPurposeType.PPRE) {
 	    return false;
 	}
@@ -117,13 +120,13 @@ public abstract class DeclarationRequest extends DeclarationRequest_Base {
 
 	final Set<DocumentRequest> schoolRegistrationDeclarations = getRegistration()
 		.getSucessfullyFinishedDocumentRequestsBy(currentExecutionYear,
-			DocumentRequestType.SCHOOL_REGISTRATION_DECLARATION);
+			DocumentRequestType.SCHOOL_REGISTRATION_DECLARATION, false);
 	
 	final Set<DocumentRequest> enrolmentDeclarations = getRegistration()
 		.getSucessfullyFinishedDocumentRequestsBy(currentExecutionYear,
-			DocumentRequestType.ENROLMENT_DECLARATION);
+			DocumentRequestType.ENROLMENT_DECLARATION, false);
 
-	return (schoolRegistrationDeclarations.size() + enrolmentDeclarations.size()) < MAX_FREE_DECLARATIONS_PER_EXECUTION_YEAR;
+	return super.isFree() || ((schoolRegistrationDeclarations.size() + enrolmentDeclarations.size()) < MAX_FREE_DECLARATIONS_PER_EXECUTION_YEAR);
     }
 
 }

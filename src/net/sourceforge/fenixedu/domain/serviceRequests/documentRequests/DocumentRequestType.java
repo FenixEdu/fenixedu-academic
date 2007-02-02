@@ -64,4 +64,8 @@ public enum DocumentRequestType {
         this.allowedToQuickDeliver = allowedToQuickDeliver;
     }
 
+    public boolean getCanBeFreeProcessed() {
+	return isDeclaration();
+    }
+
 }

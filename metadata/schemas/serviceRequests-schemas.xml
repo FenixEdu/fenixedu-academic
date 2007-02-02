@@ -10,6 +10,7 @@
         <property name="subLayout" value="values"/>
         <property name="subSchema" value="net.sourceforge.fenixedu.domain.ExecutionYear.view"/>
 	</slot>
+	<slot name="freeProcessed" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.freeProcessed" />	
 </schema>
 
 <schema name="AcademicServiceRequest.registration"  type="net.sourceforge.fenixedu.domain.student.Registration" bundle="ACADEMIC_OFFICE_RESOURCES">
@@ -182,6 +183,10 @@
 	<slot name="notes" key="label.documentRequestsManagement.searchDocumentRequests.notes">
 		<property name="size" value="50"/>
 	</slot>
+</schema>
+
+<schema name="DocumentRequestCreateBean.freeProcessed" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="freeProcessed" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.freeProcessed"/>
 </schema>
 
 <schema name="DocumentRequestCreateBean.viewToConfirmCreation" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">

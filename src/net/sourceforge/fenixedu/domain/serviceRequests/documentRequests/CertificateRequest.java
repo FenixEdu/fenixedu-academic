@@ -23,6 +23,7 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
 	super.setDocumentPurposeType(documentPurposeType);
 	super.setOtherDocumentPurposeTypeDescription(otherDocumentPurposeTypeDescription);
 	super.setUrgentRequest(urgentRequest);
+	super.setFreeProcessed(false);
     }
 
     private void checkParameters(DocumentPurposeType documentPurposeType,
@@ -81,6 +82,13 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
 		"error.serviceRequests.documentRequests.CertificateRequest.cannot.modify.urgentRequest");
     }
 
+    @Override
+    public void setFreeProcessed(Boolean freeProcessed) {
+	throw new DomainException(
+		"error.serviceRequests.documentRequests.CertificateRequest.cannot.modify.freeProcessed");
+    }
+
+
     public void edit(AcademicServiceRequestSituationType academicServiceRequestSituationType,
 	    Employee employee, String justification, Integer numberOfPages) {
 
@@ -112,16 +120,12 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
     }
 
     protected boolean isFree() {
-	if (!isPayable()) {
-	    return true;
-	}
-	
 	if (getDocumentRequestType() == DocumentRequestType.SCHOOL_REGISTRATION_CERTIFICATE
 		|| getDocumentRequestType() == DocumentRequestType.ENROLMENT_CERTIFICATE) {
-	    return !isRequestForPreviousExecutionYear() && isFirstRequestOfCurrentExecutionYear();
-	} else {
-	    return false;
-	}
+	    return super.isFree() || (!isRequestForPreviousExecutionYear() && isFirstRequestOfCurrentExecutionYear());
+	} 
+
+	return super.isFree();
     }
     
     private boolean isRequestForPreviousExecutionYear() {
@@ -130,7 +134,7 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
 
     private boolean isFirstRequestOfCurrentExecutionYear() {
 	return getRegistration().getSucessfullyFinishedDocumentRequestsBy(
-		ExecutionYear.readCurrentExecutionYear(), getDocumentRequestType()).isEmpty();
+		ExecutionYear.readCurrentExecutionYear(), getDocumentRequestType(), false).isEmpty();
     }
 
 }

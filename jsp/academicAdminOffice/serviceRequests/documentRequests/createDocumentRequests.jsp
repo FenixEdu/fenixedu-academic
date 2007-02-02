@@ -94,6 +94,15 @@
 				<fr:property name="columnClasses" value="width14em,width20em,tdclear tderror1"/>
 			</fr:layout>	
 		</fr:edit>
+		
+		<logic:equal name="documentRequestCreateBean" property="chosenDocumentRequestType.canBeFreeProcessed" value="true">
+			<fr:edit name="documentRequestCreateBean" schema="DocumentRequestCreateBean.freeProcessed" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean">
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle4 thright thlight mvert0"/>
+					<fr:property name="columnClasses" value="width14em,width20em,tdclear tderror1"/>
+				</fr:layout>	
+			</fr:edit>
+		</logic:equal>
 	
 	</logic:notEmpty>
 	

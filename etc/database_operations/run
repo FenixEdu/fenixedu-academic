@@ -29,3 +29,4 @@ function executeWithTempFile() {
 
 execute "Add RegimeType Column to DEGREE_MODULE" addRegimeTypeToDegreeModule.sql
 execute "Add RegimeType Column to DEGREE_MODULE" updateDCPLEBM.sql
+execute "alterTableAcademicServiceRequestAddFreeProcessed" alterTableAcademicServiceRequestAddFreeProcessed.sql

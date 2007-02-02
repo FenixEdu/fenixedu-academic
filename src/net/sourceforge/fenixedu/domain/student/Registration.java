@@ -1569,7 +1569,7 @@ public class Registration extends Registration_Base {
     }
 
     public Set<DocumentRequest> getSucessfullyFinishedDocumentRequestsBy(ExecutionYear executionYear,
-	    DocumentRequestType documentRequestType) {
+	    DocumentRequestType documentRequestType, boolean collectDocumentsMarkedAsFreeProcessed) {
 
 	final Set<DocumentRequest> result = new HashSet<DocumentRequest>();
 
@@ -1578,7 +1578,8 @@ public class Registration extends Registration_Base {
 		final DocumentRequest documentRequest = (DocumentRequest) academicServiceRequest;
 		if (documentRequest.getDocumentRequestType() == documentRequestType
 			&& documentRequest.finishedSuccessfully()
-			&& executionYear.containsDate(documentRequest.getCreationDate())) {
+			&& executionYear.containsDate(documentRequest.getCreationDate())
+			&& (!collectDocumentsMarkedAsFreeProcessed || documentRequest.isFreeProcessed())) {
 
 		    result.add((DocumentRequest) academicServiceRequest);
 		}
