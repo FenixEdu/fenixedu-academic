@@ -2008,9 +2008,13 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	}
 	return result;
     }
+    
+    public boolean hasDegreeModule(final DegreeModule degreeModule) {
+	return isBolonha() ? getRoot().hasDegreeModule(degreeModule) : false;
+    }
 
     public CurriculumModule findCurriculumModuleFor(final DegreeModule degreeModule) {
-	return getRoot().findCurriculumModuleFor(degreeModule);
+	return isBolonha() ? getRoot().findCurriculumModuleFor(degreeModule) : null;
     }
     
     public Collection<Enrolment> getExtraCurricularEnrolments() {
@@ -2032,18 +2036,18 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
     
     public boolean isApproved(final CurricularCourse curricularCourse) {
-	return getRoot().isAproved(curricularCourse);
+	return isBolonha() ? getRoot().isAproved(curricularCourse) : isCurricularCourseApproved(curricularCourse);
     }
     
     public boolean isApproved(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
-	return getRoot().isAproved(curricularCourse, executionPeriod);
+	return isBolonha() ? getRoot().isAproved(curricularCourse, executionPeriod) : isCurricularCourseApprovedInCurrentOrPreviousPeriod(curricularCourse, executionPeriod);
     }
     
     public boolean isEnroledInExecutionPeriod(final CurricularCourse curricularCourse) {
-	return isEnroledInExecutionPeriod(curricularCourse, ExecutionPeriod.readActualExecutionPeriod());
+	return isBolonha() ? isEnroledInExecutionPeriod(curricularCourse, ExecutionPeriod.readActualExecutionPeriod()) : isCurricularCourseEnrolled(curricularCourse);
     }
     
     public boolean isEnroledInExecutionPeriod(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
-	return getRoot().isEnroledInExecutionPeriod(curricularCourse, executionPeriod);
+	return isBolonha() ? getRoot().isEnroledInExecutionPeriod(curricularCourse, executionPeriod) : isCurricularCourseEnrolledInExecutionPeriod(curricularCourse, executionPeriod);
     }
 }
