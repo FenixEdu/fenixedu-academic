@@ -54,12 +54,6 @@ public class EnrolmentToBeApprovedByCoordinator extends EnrolmentToBeApprovedByC
     }
 
     @Override
-    public RuleResult evaluate(final EnrolmentContext enrolmentContext) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
     protected void removeOwnParameters() {
         // no domain parameters
     }

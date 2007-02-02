@@ -5,12 +5,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
-import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.RuleResult;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
-import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class Exclusiveness extends Exclusiveness_Base {
@@ -74,12 +71,6 @@ public class Exclusiveness extends Exclusiveness_Base {
             labelList.add(new GenericPair<Object, Boolean>(getContextCourseGroup().getOneFullName(), false));
         }
         return labelList;
-    }
-
-    @Override
-    public RuleResult evaluate(final EnrolmentContext enrolmentContext) {
-        // TODO Auto-generated method stub
-        return null;
     }
 
     @Override

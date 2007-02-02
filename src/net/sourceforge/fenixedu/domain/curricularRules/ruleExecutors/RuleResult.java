@@ -45,8 +45,9 @@ public class RuleResult {
 
     public RuleResult or(final RuleResult ruleResult) {
 	final RuleResultType orResult = this.getResult().or(ruleResult.getResult());
-	final List<RuleResultMessage> messages = new ArrayList<RuleResultMessage>(getMessages());
+	final List<RuleResultMessage> messages = new ArrayList<RuleResultMessage>(); 
 	if (orResult == RuleResultType.FALSE) {
+	    messages.addAll(getMessages());
 	    messages.addAll(ruleResult.getMessages());
 	}
 

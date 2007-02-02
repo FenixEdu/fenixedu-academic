@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.RuleFactory;
+import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.CurricularRuleExecutorFactory;
 import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.CurricularRuleLevel;
 import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.RuleResult;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
@@ -46,11 +46,11 @@ public abstract class CurricularRule extends CurricularRule_Base {
         removeRootDomainObject();
     }
 
-    public boolean appliesToContext(Context context) {
+    public boolean appliesToContext(final Context context) {
         return this.appliesToCourseGroup(context);
     }
     
-    private boolean appliesToCourseGroup(Context context) {
+    private boolean appliesToCourseGroup(final Context context) {
         return (this.getContextCourseGroup() == null || this.getContextCourseGroup() == context.getParentCourseGroup());
     }
     
@@ -103,6 +103,18 @@ public abstract class CurricularRule extends CurricularRule_Base {
         }
     }
 
+    public RuleResult evaluate(final EnrolmentContext enrolmentContext) {
+	return evaluate(enrolmentContext, CurricularRuleLevel.defaultLevel());
+    }
+    
+    public RuleResult evaluate(final EnrolmentContext enrolmentContext, final CurricularRuleLevel level) {
+	return CurricularRuleExecutorFactory.findExecutor(this).execute(this, level, enrolmentContext);
+    }
+    
+    abstract protected void removeOwnParameters();
+    abstract public boolean isLeaf();    
+    abstract public List<GenericPair<Object, Boolean>> getLabel();
+    
     public static CurricularRule createCurricularRule(LogicOperators logicOperator, CurricularRule... curricularRules) {
 	switch (logicOperator) {
 	case AND:
@@ -118,16 +130,4 @@ public abstract class CurricularRule extends CurricularRule_Base {
 	    throw new DomainException("error.unsupported.logic.operator");
 	}
     }
-    
-    public RuleResult evaluate(final EnrolmentContext enrolmentContext) {
-	return evaluate(enrolmentContext, CurricularRuleLevel.defaultLevel());
-    }
-    
-    public RuleResult evaluate(final EnrolmentContext enrolmentContext, final CurricularRuleLevel level) {
-	return RuleFactory.findExecutor(this).execute(this, level, enrolmentContext);
-    }
-    
-    abstract protected void removeOwnParameters();
-    abstract public boolean isLeaf();    
-    abstract public List<GenericPair<Object, Boolean>> getLabel();
 }

@@ -4,12 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
-import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.RuleResult;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
-import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class MinimumNumberOfCreditsToEnrol extends MinimumNumberOfCreditsToEnrol_Base {
@@ -17,7 +14,7 @@ public class MinimumNumberOfCreditsToEnrol extends MinimumNumberOfCreditsToEnrol
     private MinimumNumberOfCreditsToEnrol(Double minimumNumberOfCredits) {
         super();
         checkCredits(minimumNumberOfCredits);
-        setMinimum(minimumNumberOfCredits);
+        setMinimumCredits(minimumNumberOfCredits);
         setCurricularRuleType(CurricularRuleType.MINIMUM_NUMBER_OF_CREDITS_TO_ENROL);
     }
 
@@ -47,7 +44,7 @@ public class MinimumNumberOfCreditsToEnrol extends MinimumNumberOfCreditsToEnrol
     protected void edit(CourseGroup contextCourseGroup, Double minimumNumberOfCredits) {
         checkCredits(minimumNumberOfCredits);
         setContextCourseGroup(contextCourseGroup);
-        setMinimum(minimumNumberOfCredits);
+        setMinimumCredits(minimumNumberOfCredits);
     }
 
     @Override
@@ -61,7 +58,7 @@ public class MinimumNumberOfCreditsToEnrol extends MinimumNumberOfCreditsToEnrol
 
         labelList.add(new GenericPair<Object, Boolean>("label.minimumNumberOfCreditsToEnrol", true));
         labelList.add(new GenericPair<Object, Boolean>(": ", false));
-        labelList.add(new GenericPair<Object, Boolean>(getMinimum(), false));
+        labelList.add(new GenericPair<Object, Boolean>(getMinimumCredits(), false));
         
         if (getContextCourseGroup() != null) {
             labelList.add(new GenericPair<Object, Boolean>(", ", false));
@@ -72,23 +69,8 @@ public class MinimumNumberOfCreditsToEnrol extends MinimumNumberOfCreditsToEnrol
 
         return labelList;
     }
-
-    @Override
-    public RuleResult evaluate(final EnrolmentContext enrolmentContext) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Deprecated
-    public Double getMinimum() {
-        return super.getMinimumCredits();
-    }
-
-    @Deprecated
-    public void setMinimum(Double minimum) {
-        super.setMinimumCredits(minimum);
-    }
     
-    
-    
+    public boolean allowCredits(final Double credits) {
+	return credits.doubleValue() >= getMinimumCredits().doubleValue() ;
+    }
 }

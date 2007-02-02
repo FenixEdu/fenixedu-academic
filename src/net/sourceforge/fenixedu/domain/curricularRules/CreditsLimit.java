@@ -14,8 +14,8 @@ public class CreditsLimit extends CreditsLimit_Base {
     private CreditsLimit(Double minimum, Double maximum) {
         super();
         checkCredits(minimum, maximum);
-        setMinimum(minimum);
-        setMaximum(maximum);
+        setMinimumCredits(minimum);
+        setMaximumCredits(maximum);
         setCurricularRuleType(CurricularRuleType.CREDITS_LIMIT);
     }
 
@@ -39,8 +39,8 @@ public class CreditsLimit extends CreditsLimit_Base {
     protected void edit(CourseGroup contextCourseGroup, Double minimumCredits, Double maximumCredits) {
         checkCredits(minimumCredits, maximumCredits);
         setContextCourseGroup(contextCourseGroup);
-        setMinimum(minimumCredits);
-        setMaximum(maximumCredits);
+        setMinimumCredits(minimumCredits);
+        setMaximumCredits(maximumCredits);
     }
     
     private void checkCredits(Double minimum, Double maximum) throws DomainException {
@@ -58,14 +58,14 @@ public class CreditsLimit extends CreditsLimit_Base {
 
         labelList.add(new GenericPair<Object, Boolean>("label.creditsForApproval", true));
         labelList.add(new GenericPair<Object, Boolean>(": ", false));
-        if (getMinimum().doubleValue() == getMaximum().doubleValue()) {
-            labelList.add(new GenericPair<Object, Boolean>(getMinimum(), false));
+        if (getMinimumCredits().doubleValue() == getMaximumCredits().doubleValue()) {
+            labelList.add(new GenericPair<Object, Boolean>(getMinimumCredits(), false));
         } else {
-            labelList.add(new GenericPair<Object, Boolean>(getMinimum(), false));
+            labelList.add(new GenericPair<Object, Boolean>(getMinimumCredits(), false));
             labelList.add(new GenericPair<Object, Boolean>(" ", false));
             labelList.add(new GenericPair<Object, Boolean>("label.to", true));
             labelList.add(new GenericPair<Object, Boolean>(" ", false));
-            labelList.add(new GenericPair<Object, Boolean>(getMaximum(), false));
+            labelList.add(new GenericPair<Object, Boolean>(getMaximumCredits(), false));
         }
         if (getContextCourseGroup() != null) {
             labelList.add(new GenericPair<Object, Boolean>(", ", false));
@@ -82,25 +82,7 @@ public class CreditsLimit extends CreditsLimit_Base {
         // no domain parameters
     }
 
-    @Deprecated
-    public Double getMaximum() {
-        return super.getMaximumCredits();
+    public boolean allowCredits(final Double numberOfCredits) {
+	return !(numberOfCredits.compareTo(getMinimumCredits()) < 0 || numberOfCredits.compareTo(getMaximumCredits()) > 0);
     }
-
-    @Deprecated
-    public Double getMinimum() {
-        return super.getMinimumCredits();
-    }
-
-    @Deprecated
-    public void setMaximum(Double maximum) {
-        super.setMaximumCredits(maximum);
-    }
-
-    @Deprecated
-    public void setMinimum(Double minimum) {
-        super.setMinimumCredits(minimum);
-    }
-
-    
 }

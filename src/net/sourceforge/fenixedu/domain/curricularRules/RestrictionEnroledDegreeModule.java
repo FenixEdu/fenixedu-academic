@@ -7,10 +7,8 @@ import net.sourceforge.fenixedu.dataTransferObject.CurricularPeriodInfoDTO;
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.RuleResult;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
-import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.util.LogicOperators;
 
@@ -88,12 +86,6 @@ public class RestrictionEnroledDegreeModule extends RestrictionEnroledDegreeModu
         }
 
         return labelList;
-    }
-
-    @Override
-    public RuleResult evaluate(final EnrolmentContext enrolmentContext) {
-        // TODO Auto-generated method stub
-        return null;
     }
 
 }

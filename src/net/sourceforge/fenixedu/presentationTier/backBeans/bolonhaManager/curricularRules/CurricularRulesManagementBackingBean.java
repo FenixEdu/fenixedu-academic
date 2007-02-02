@@ -253,7 +253,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
     public Integer getMinimumLimit() {
         if (getViewState().getAttribute("minimumLimit") == null) {
             if (getCurricularRule() != null && getCurricularRule() instanceof DegreeModulesSelectionLimit) {
-                setMinimumLimit(((DegreeModulesSelectionLimit) getCurricularRule()).getMinimum());               
+                setMinimumLimit(((DegreeModulesSelectionLimit) getCurricularRule()).getMinimumLimit());               
             } else {
                 setMinimumLimit(Integer.valueOf(0));
             }
@@ -268,7 +268,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
     public Integer getMaximumLimit() {
         if (getViewState().getAttribute("maximumLimit") == null) {
             if (getCurricularRule() != null && getCurricularRule() instanceof DegreeModulesSelectionLimit) {
-                setMaximumLimit(((DegreeModulesSelectionLimit) getCurricularRule()).getMaximum());               
+                setMaximumLimit(((DegreeModulesSelectionLimit) getCurricularRule()).getMaximumLimit());               
             } else {
                 setMaximumLimit(Integer.valueOf(0));
             }
@@ -283,11 +283,11 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
     public Double getMinimumCredits() {
         if (getViewState().getAttribute("minimumCredits") == null) {
             if (getCurricularRule() != null && getCurricularRule() instanceof CreditsLimit) {
-                setMinimumCredits(((CreditsLimit) getCurricularRule()).getMinimum());               
+                setMinimumCredits(((CreditsLimit) getCurricularRule()).getMinimumCredits());               
             } else if (getCurricularRule() != null && getCurricularRule() instanceof RestrictionBetweenDegreeModules) {
-                setMinimumCredits(((RestrictionBetweenDegreeModules) getCurricularRule()).getMinimum());
+                setMinimumCredits(((RestrictionBetweenDegreeModules) getCurricularRule()).getMinimumCredits());
             } else if (getCurricularRule() != null && getCurricularRule() instanceof MinimumNumberOfCreditsToEnrol) {
-                setMinimumCredits(((MinimumNumberOfCreditsToEnrol) getCurricularRule()).getMinimum());
+                setMinimumCredits(((MinimumNumberOfCreditsToEnrol) getCurricularRule()).getMinimumCredits());
             } else {
                 setMinimumCredits(Double.valueOf(0));
             }
@@ -302,7 +302,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
     public Double getMaximumCredits() {
         if (getViewState().getAttribute("maximumCredits") == null) {
             if (getCurricularRule() != null && getCurricularRule() instanceof CreditsLimit) {
-                setMaximumCredits(((CreditsLimit) getCurricularRule()).getMaximum());               
+                setMaximumCredits(((CreditsLimit) getCurricularRule()).getMaximumCredits());               
             } else {
                 setMaximumCredits(Double.valueOf(0));
             }

@@ -124,6 +124,9 @@ public abstract class CompositeRule extends CompositeRule_Base {
             RuleResult resultOR = RuleResult.createFalse(null);
             for (final CurricularRule curricularRule : getCurricularRules()) {
                 resultOR = resultOR.or(curricularRule.evaluate(enrolmentContext));
+                if (resultOR.isTrue()) {
+                    return resultOR;
+                }
             }
             return resultOR;
             

@@ -4,12 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
-import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.RuleResult;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
-import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.util.LogicOperators;
 
@@ -19,7 +16,7 @@ public class RestrictionBetweenDegreeModules extends RestrictionBetweenDegreeMod
         super();
         checkParameters(precedenceDegreeModule, minimumCredits);
         setPrecedenceDegreeModule(precedenceDegreeModule);
-        setMinimum(minimumCredits);
+        setMinimumCredits(minimumCredits);
         setCurricularRuleType(CurricularRuleType.PRECEDENCY_BETWEEN_DEGREE_MODULES);
     }
 
@@ -49,7 +46,7 @@ public class RestrictionBetweenDegreeModules extends RestrictionBetweenDegreeMod
     protected void edit(DegreeModule precedenceDegreeModule, Double minimumCredits, CourseGroup contextCourseGroup) {
         checkParameters(precedenceDegreeModule, minimumCredits);
         setPrecedenceDegreeModule(precedenceDegreeModule);
-        setMinimum(minimumCredits);
+        setMinimumCredits(minimumCredits);
         setContextCourseGroup(contextCourseGroup);
     }
 
@@ -57,8 +54,7 @@ public class RestrictionBetweenDegreeModules extends RestrictionBetweenDegreeMod
     public List<GenericPair<Object, Boolean>> getLabel() {
         final List<GenericPair<Object, Boolean>> labelList = new ArrayList<GenericPair<Object, Boolean>>();
         
-        if (belongsToCompositeRule()
-                && getParentCompositeRule().getCompositeRuleType().equals(LogicOperators.NOT)) {
+        if (belongsToCompositeRule() && getParentCompositeRule().getCompositeRuleType().equals(LogicOperators.NOT)) {
             labelList.add(new GenericPair<Object, Boolean>("label.precedence", true));
         } else {
             labelList.add(new GenericPair<Object, Boolean>("label.precedence", true));
@@ -74,19 +70,19 @@ public class RestrictionBetweenDegreeModules extends RestrictionBetweenDegreeMod
         String precedenceDegreeModule = (getPrecedenceDegreeModule().isLeaf()) ? getPrecedenceDegreeModule().getName() : getPrecedenceDegreeModule().getOneFullName();
         labelList.add(new GenericPair<Object, Boolean>(precedenceDegreeModule, false));
         
-        if (getMinimum().doubleValue() != 0.0) {
-        labelList.add(new GenericPair<Object, Boolean>(" ", false));
-        labelList.add(new GenericPair<Object, Boolean>("label.with", true));
-        labelList.add(new GenericPair<Object, Boolean>(", ", false));
-        
-        labelList.add(new GenericPair<Object, Boolean>("label.in", true));
-        labelList.add(new GenericPair<Object, Boolean>(" ", false));
-        labelList.add(new GenericPair<Object, Boolean>("label.minimum", true));
-        labelList.add(new GenericPair<Object, Boolean>(", ", false));
-        
-        labelList.add(new GenericPair<Object, Boolean>(getMinimum(), false));
-        labelList.add(new GenericPair<Object, Boolean>(" ", false));
-        labelList.add(new GenericPair<Object, Boolean>("label.credits", true));
+        if (getMinimumCredits().doubleValue() != 0.0) {
+            labelList.add(new GenericPair<Object, Boolean>(" ", false));
+            labelList.add(new GenericPair<Object, Boolean>("label.with", true));
+            labelList.add(new GenericPair<Object, Boolean>(", ", false));
+            
+            labelList.add(new GenericPair<Object, Boolean>("label.in", true));
+            labelList.add(new GenericPair<Object, Boolean>(" ", false));
+            labelList.add(new GenericPair<Object, Boolean>("label.minimum", true));
+            labelList.add(new GenericPair<Object, Boolean>(", ", false));
+            
+            labelList.add(new GenericPair<Object, Boolean>(getMinimumCredits(), false));
+            labelList.add(new GenericPair<Object, Boolean>(" ", false));
+            labelList.add(new GenericPair<Object, Boolean>("label.credits", true));
         }
         
         if (getContextCourseGroup() != null) {
@@ -97,23 +93,12 @@ public class RestrictionBetweenDegreeModules extends RestrictionBetweenDegreeMod
         }
         return labelList;
     }
-
-    @Override
-    public RuleResult evaluate(final EnrolmentContext enrolmentContext) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Deprecated
-    public Double getMinimum() {
-        // TODO Auto-generated method stub
-        return super.getMinimumCredits();
-    }
-
-    @Deprecated
-    public void setMinimum(Double minimum) {
-        // TODO Auto-generated method stub
-        super.setMinimumCredits(minimum);
+    
+    public boolean hasMinimumCredits() {
+	return super.getMinimumCredits().doubleValue() != 0.0;
     }
     
+    public boolean allowCredits(final Double credits) {
+	return credits.doubleValue() >= getMinimumCredits().doubleValue() ;
+    }
 }

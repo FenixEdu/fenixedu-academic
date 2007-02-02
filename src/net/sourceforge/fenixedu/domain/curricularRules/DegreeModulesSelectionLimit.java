@@ -4,12 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
-import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.RuleResult;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
-import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class DegreeModulesSelectionLimit extends DegreeModulesSelectionLimit_Base {
@@ -93,36 +90,12 @@ public class DegreeModulesSelectionLimit extends DegreeModulesSelectionLimit_Bas
     }
 
     @Override
-    public RuleResult evaluate(final EnrolmentContext enrolmentContext) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
     protected void removeOwnParameters() {
         // no domain parameters 
     }
-
-    @Deprecated
-    public Integer getMaximum() {
-        return super.getMaximumLimit();
-    }
-
-    @Deprecated
-    public Integer getMinimum() {
-        return super.getMinimumLimit();
-    }
-
-    @Deprecated
-    public void setMaximum(Integer maximum) {
-        super.setMaximumLimit(maximum);
-    }
-
-    @Deprecated
-    public void setMinimum(Integer minimum) {
-        super.setMinimumLimit(minimum);
-    }
     
-    
+    public boolean allowNumberOfDegreeModules(final Integer value) {
+	return !(value.compareTo(getMinimumLimit()) < 0 || value.compareTo(getMaximumLimit()) > 0);
+    }
 
 }

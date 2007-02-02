@@ -1,40 +1,51 @@
 package net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors;
 
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.Exclusiveness;
+import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.enrolment.DegreeModuleToEnrol;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
-public class ExclusivenessExecutor extends RuleExecutor {
+public class ExclusivenessExecutor extends CurricularRuleExecutor {
 
     @Override
     protected RuleResult executeWithRules(CurricularRule curricularRule, EnrolmentContext enrolmentContext) {
 	
 	final Exclusiveness rule = (Exclusiveness) curricularRule;
+	final DegreeModuleToEnrol moduleToEnrol = getDegreeModuleToEnrol(enrolmentContext, rule.getDegreeModuleToApplyRule());
 	
-	final DegreeModuleToEnrol moduleToEnrol = getDegreeModuleToEnrolFor(enrolmentContext, rule.getDegreeModuleToApplyRule());
-	if (moduleToEnrol == null) {
-	    throw new DomainException("error.curricularRules.RestrictionDoneDegreeModuleExecutor.cannot.find.degreeModuleToEnrol");
+	if (!rule.appliesToContext(moduleToEnrol.getContext())) {
+	    return RuleResult.createNA();
 	}
 	
-	boolean result = true;
-	result &= rule.appliesToContext(moduleToEnrol.getContext());
-	//result &= enrolmentContext.getStudentCurricularPlan().isApproved((CurricularCourse) rule.get());
+	final DegreeModule degreeModule = rule.getExclusiveDegreeModule();
 	
-	//return result ? RuleResult.createTrue() : RuleResult.createFalse(new LabelFormatter().appendLabel("reason"));
-	return null;
+	if (isToEnrol(enrolmentContext, degreeModule) || isEnroled(enrolmentContext, degreeModule)) {
+	    return RuleResult
+		.createFalse(
+		   "curricularRules.ruleExecutors.ExclusivenessExecutor.exclusive.degreeModule",
+		   rule.getDegreeModuleToApplyRule().getName(), rule.getExclusiveDegreeModule().getName());
+	}
+	
+	if (degreeModule.isLeaf() && isApproved(enrolmentContext, (CurricularCourse) degreeModule)) {
+	    return RuleResult
+		.createFalse(
+		   "curricularRules.ruleExecutors.ExclusivenessExecutor.exclusive.degreeModule",
+		   rule.getDegreeModuleToApplyRule().getName(), rule.getExclusiveDegreeModule().getName());
+	}
+	
+	return RuleResult.createTrue();
     }
-
+    
     @Override
     protected RuleResult executeWithRulesAndTemporaryEnrolment(final CurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
 	return executeWithRules(curricularRule, enrolmentContext);
     }
     
     @Override
-    protected RuleResult executeNoRules(EnrolmentContext enrolmentContext) {
-	return null;
+    protected RuleResult executeNoRules(final CurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
+	return RuleResult.createTrue();
     }
 
 }

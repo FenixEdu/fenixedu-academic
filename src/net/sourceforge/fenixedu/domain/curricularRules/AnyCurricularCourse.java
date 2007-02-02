@@ -9,11 +9,11 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.RuleResult;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -71,6 +71,36 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
             throw new DomainException("error.minimum.greater.than.maximum");
         }
     }
+    
+
+    
+    @Override
+    public boolean appliesToContext(final Context context) {
+        return super.appliesToContext(context) && appliesToPeriod(context);
+    }
+
+    private boolean appliesToPeriod(final Context context) {
+	return !hasCurricularPeriodOrder();
+    }
+    
+  
+    private boolean hasCurricularPeriodOrder() {
+	return getCurricularPeriodOrder().intValue() != 0;
+    }
+    /*     
+    private boolean appliesToPeriod(Context context) {
+        return (hasNoCurricularPeriodOrder()
+                || (this.getCurricularPeriodType().equals(context.getCurricularPeriod().getPeriodType()) 
+                        && this.getCurricularPeriodOrder().equals(context.getCurricularPeriod().getChildOrder())));
+    }
+    
+    private boolean hasNoCurricularPeriodOrder() {
+        return (this.getCurricularPeriodType() == null || this.getCurricularPeriodOrder() == null 
+                || (this.getCurricularPeriodType().equals(CurricularPeriodType.SEMESTER) 
+                        && this.getCurricularPeriodOrder().equals(0)));
+    }
+
+*/
 
     @Override
     public List<GenericPair<Object, Boolean>> getLabel() {
