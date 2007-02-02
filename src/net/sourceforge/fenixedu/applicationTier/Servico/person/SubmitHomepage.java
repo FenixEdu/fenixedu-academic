@@ -18,8 +18,7 @@ public class SubmitHomepage extends Service {
 
 		Homepage homepage = person.getHomepage();
 		if (homepage == null) {
-			homepage = new Homepage();
-			homepage.setPerson(person);
+			homepage = new Homepage(person);
 		}
 
 		homepage.setActivated(activated);

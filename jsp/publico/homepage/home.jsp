@@ -18,8 +18,20 @@
 	<table class="invisible thleft">
 		<!-- photo -->
 		<logic:equal name="homepage" property="showPhoto" value="true">
-			<bean:define id="homepageID" name="homepage" property="idInternal"/>
-			<tr><th></th><td><html:img src="<%= request.getContextPath() +"/publico/viewHomepage.do?method=retrievePhoto&amp;homepageID=" + homepageID.toString() %>" style="padding: 1em 0;" altKey="personPhoto" bundle="IMAGE_RESOURCES" /></td></tr>
+        <tr>
+            <th></th>
+            <td>
+                <logic:notEmpty name="homepage" property="person.personalPhoto">
+            			<bean:define id="homepageID" name="homepage" property="idInternal"/>
+            			<html:img src="<%= request.getContextPath() +"/publico/viewHomepage.do?method=retrievePhoto&amp;homepageID=" + homepageID.toString() %>" style="padding: 1em 0;" altKey="personPhoto" bundle="IMAGE_RESOURCES" />
+                </logic:notEmpty>
+<%--
+                <logic:empty name="homepage" property="person.personalPhoto">
+                    <html:img src="<%= request.getContextPath() +"/images/photoPlaceHolder.jpg" %>" style="padding: 1em 0;" altKey="personPhoto" bundle="IMAGE_RESOURCES" />
+                </logic:empty>
+--%>                
+            </td>
+        </tr>
 		</logic:equal>
 
 		<!-- units -->
@@ -102,6 +114,7 @@
 
 		<!--  -->
 		<logic:equal name="homepage" property="showActiveStudentCurricularPlans" value="true">
+            <logic:notEmpty name="homepage" property="person.activeStudentCurricularPlansSortedByDegreeTypeAndDegreeName">
 		<tr>
 			<th><bean:message key="label.homepage.showActiveStudentCurricularPlans" bundle="HOMEPAGE_RESOURCES"/>:</th>
 			<td>
@@ -144,11 +157,12 @@
 				</logic:iterate>
 			</td>
 		</tr>
+        </logic:notEmpty>
 		</logic:equal>
 
 
 		<!--  -->
-		<logic:notEmpty name="homepage" property="person.activeStudentCurricularPlansSortedByDegreeTypeAndDegreeName">
+		<logic:notEmpty name="personAttends">
 		<logic:equal name="homepage" property="showCurrentAttendingExecutionCourses" value="true">
 		<tr>
 			<th><bean:message key="label.homepage.showCurrentAttendingExecutionCourses" bundle="HOMEPAGE_RESOURCES"/>:</th>
@@ -176,6 +190,7 @@
 
 		<!--  -->
 		<logic:equal name="homepage" property="showAlumniDegrees" value="true">
+        <logic:notEmpty name="homepage" property="person.completedStudentCurricularPlansSortedByDegreeTypeAndDegreeName">
 		<tr>
 			<th><bean:message key="label.homepage.showAlumniDegrees" bundle="HOMEPAGE_RESOURCES"/>:</th>
 			<td>
@@ -218,11 +233,13 @@
 				</logic:iterate>
 			</td>
 		</tr>
+        </logic:notEmpty>
 		</logic:equal>
 		
 		
 		<!--  E-mail -->
 		<logic:equal name="homepage" property="showEmail" value="true">
+        <logic:notEmpty name="homepage" property="person.email">
 		<tr>
 			<th>E-mail:</th>
 			<td>
@@ -232,36 +249,44 @@
 				<html:img align="middle" src="<%= emailURL %>" altKey="email" bundle="IMAGE_RESOURCES"/>
 			</td>
 		</tr>
+        </logic:notEmpty>
 		</logic:equal>
 		
 		
 		<!--  Telephone-->
 		<logic:equal name="homepage" property="showTelephone" value="true">
+        <logic:notEmpty name="homepage" property="person.phone">
 		<tr>
 			<th><bean:message key="label.homepage.showTelephone" bundle="HOMEPAGE_RESOURCES"/>:</th>
 			<td><bean:write name="homepage" property="person.phone"/></td>
 		</tr>
+        </logic:notEmpty>
 		</logic:equal>
 		
 	
 		<!--  -->
 		<logic:equal name="homepage" property="showWorkTelephone" value="true">
+        <logic:notEmpty name="homepage" property="person.workPhone">
 		<tr>
 			<th><bean:message key="label.homepage.showWorkTelephone" bundle="HOMEPAGE_RESOURCES"/>:</th>
 			<td><bean:write name="homepage" property="person.workPhone"/></td>
 		</tr>
+        </logic:notEmpty>
 		</logic:equal>
 		
 		<!--  -->
 		<logic:equal name="homepage" property="showMobileTelephone" value="true">
+        <logic:notEmpty name="homepage" property="person.mobile">
 		<tr>
 			<th><bean:message key="label.homepage.showMobileTelephone" bundle="HOMEPAGE_RESOURCES"/>:</th>
 			<td><bean:write name="homepage" property="person.mobile"/></td>
 		</tr>
+        </logic:notEmpty>
 		</logic:equal>
 		
 		<!--  -->
 		<logic:equal name="homepage" property="showAlternativeHomepage" value="true">
+        <logic:notEmpty name="homepage" property="person.webAddress">
 		<tr>
 			<th><bean:message key="label.homepage.showAlternativeHomepage" bundle="HOMEPAGE_RESOURCES"/>:</th>
 			<td>
@@ -271,33 +296,34 @@
 				</html:link>
 			</td>
 		</tr>
+        </logic:notEmpty>
 		</logic:equal>
 		
 
 		<!--  -->
 		<logic:equal name="homepage" property="showCurrentExecutionCourses" value="true">
-		<tr>
-			<th><bean:message key="label.homepage.showCurrentExecutionCourses" bundle="HOMEPAGE_RESOURCES"/>:</th>
-			<td>
-				<logic:present name="homepage" property="person.teacher">
-					<logic:present name="homepage" property="person.employee.currentWorkingContract">
-						<logic:iterate id="executionCourse" name="homepage" property="person.teacher.currentExecutionCourses" length="1">
-							<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/executionCourse.do?method=firstPage&amp;executionCourseID=<bean:write name="executionCourse" property="idInternal"/></bean:define>
-							<html:link href="<%= url %>">
-								<bean:write name="executionCourse" property="nome"/>
-							</html:link>
-						</logic:iterate>
-						<logic:iterate id="executionCourse" name="homepage" property="person.teacher.currentExecutionCourses" offset="1">
-							,
-							<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/executionCourse.do?method=firstPage&amp;executionCourseID=<bean:write name="executionCourse" property="idInternal"/></bean:define>
-							<html:link href="<%= url %>">
-								<bean:write name="executionCourse" property="nome"/>
-							</html:link>
-						</logic:iterate>
-					</logic:present>
-				</logic:present>
-			</td>
-		</tr>
+            <logic:present name="homepage" property="person.teacher">
+                <logic:present name="homepage" property="person.employee.currentWorkingContract">
+                		<tr>
+                			<th><bean:message key="label.homepage.showCurrentExecutionCourses" bundle="HOMEPAGE_RESOURCES"/>:</th>
+                			<td>
+        						<logic:iterate id="executionCourse" name="homepage" property="person.teacher.currentExecutionCourses" length="1">
+        							<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/executionCourse.do?method=firstPage&amp;executionCourseID=<bean:write name="executionCourse" property="idInternal"/></bean:define>
+        							<html:link href="<%= url %>">
+        								<bean:write name="executionCourse" property="nome"/>
+        							</html:link>
+        						</logic:iterate>
+        						<logic:iterate id="executionCourse" name="homepage" property="person.teacher.currentExecutionCourses" offset="1">
+        							,
+        							<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/executionCourse.do?method=firstPage&amp;executionCourseID=<bean:write name="executionCourse" property="idInternal"/></bean:define>
+        							<html:link href="<%= url %>">
+        								<bean:write name="executionCourse" property="nome"/>
+        							</html:link>
+        						</logic:iterate>
+                			</td>
+                		</tr>
+                </logic:present>
+            </logic:present>
 		</logic:equal>
 		
 						

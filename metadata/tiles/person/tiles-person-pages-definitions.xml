@@ -36,10 +36,6 @@
 
     <!-- ========== HOMEPAGE =========== -->
 
-    <definition name="show-homepage-activation" extends="definition.person.masterPage" >
-	  <put name="body" value="/person/homepageActivation.jsp" />
-	</definition>
-    
     <definition name="show-homepage-options" extends="definition.person.masterPage" >
 	  <put name="body" value="/person/homepageOptions.jsp" />
 	</definition>

@@ -23,7 +23,32 @@ public class Homepage extends Homepage_Base {
 
     public Homepage() {
         super();
+        
         setRootDomainObject(RootDomainObject.getInstance());
+        
+        setActivated(false);
+        setShowUnit(false);
+        setShowCategory(false);
+        setShowPhoto(false);
+        setShowEmail(false);
+        setShowTelephone(false);
+        setShowWorkTelephone(false);
+        setShowMobileTelephone(false);
+        setShowAlternativeHomepage(false);
+        setShowResearchUnitHomepage(false);
+        setShowCurrentExecutionCourses(false);
+        setShowActiveStudentCurricularPlans(false);
+        setShowAlumniDegrees(false);
+        setShowPublications(false);
+        setShowPatents(false);
+        setShowInterests(false);
+        setShowCurrentAttendingExecutionCourses(false);
+    }
+    
+    public Homepage(Person person) {
+        this();
+        
+        setPerson(person);
     }
 
     public String getName() {

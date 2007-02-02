@@ -10,7 +10,7 @@
 <h2><bean:message key="title.manage.homepage" bundle="HOMEPAGE_RESOURCES"/></h2>
 
 <div class="infoop2">
-<p class="mvert0"><bean:message key="message.homepage.options" bundle="HOMEPAGE_RESOURCES"/></p>
+    <p class="mvert0"><bean:message key="message.homepage.activation" bundle="HOMEPAGE_RESOURCES"/></p>
 </div>
 
 <p><span class="error"><!-- Error messages go here --><html:errors /></span></p>
@@ -25,7 +25,47 @@
 <html:form action="/manageHomepage">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="changeHomepageOptions"/>
 
-	<p><strong><bean:message key="label.homepage.components" bundle="HOMEPAGE_RESOURCES"/>:</strong></p>
+    <p>
+        <bean:message key="label.homepage.activated" bundle="HOMEPAGE_RESOURCES"/>
+        <html:radio bundle="HTMLALT_RESOURCES" altKey="radio.activated" property="activated" value="true" onchange="this.form.submit()"/><bean:message key="label.homepage.activated.yes" bundle="HOMEPAGE_RESOURCES"/>
+        <html:radio bundle="HTMLALT_RESOURCES" altKey="radio.activated" property="activated" value="false" onchange="this.form.submit()"/><bean:message key="label.homepage.activated.no" bundle="HOMEPAGE_RESOURCES"/>
+        <html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+            <bean:message key="button.submit"/>
+        </html:submit>
+    </p>
+    
+
+    <% final String appContext = net.sourceforge.fenixedu._development.PropertiesManager.getProperty("app.context"); %>
+    <% final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : ""; %>
+
+    <bean:define id="homepageURL" type="java.lang.String"><%= request.getScheme() %>://<%= request.getServerName() %>:<%= request.getServerPort() %><%= context %>/homepage/<bean:write name="UserView" property="person.user.userUId"/></bean:define>
+    <p>
+    <bean:message key="person.homepage.adress" bundle="HOMEPAGE_RESOURCES"/>:
+    <logic:notPresent name="UserView" property="person.homepage">
+        <bean:write name="homepageURL"/>
+    </logic:notPresent>
+    <logic:present name="UserView" property="person.homepage">
+        <logic:notPresent name="UserView" property="person.homepage.activated">
+                <bean:write name="homepageURL"/>
+        </logic:notPresent>
+        <logic:present name="UserView" property="person.homepage.activated">
+            <logic:equal name="UserView" property="person.homepage.activated" value="true">
+                <html:link href="<%= homepageURL %>"><bean:write name="homepageURL"/></html:link>
+            </logic:equal>
+            <logic:equal name="UserView" property="person.homepage.activated" value="false">
+                <bean:write name="homepageURL"/>
+            </logic:equal>
+        </logic:present>
+    </logic:present>
+    </p>
+
+	<p>
+        <h3 class="mtop2"><bean:message key="label.homepage.components" bundle="HOMEPAGE_RESOURCES"/></h3>
+    </p>
+
+    <div class="infoop2">
+        <p class="mvert0"><bean:message key="message.homepage.options" bundle="HOMEPAGE_RESOURCES"/></p>
+    </div>
 
 	<table class="tstyle5 thlight thright">
 		<logic:present name="UserView" property="person.employee.currentWorkingContract.workingUnit">
@@ -74,7 +114,6 @@
 
 			</logic:present>
 		</logic:present>
-		<logic:notEmpty name="UserView" property="person.activeStudentCurricularPlansSortedByDegreeTypeAndDegreeName">
 			<tr>
 				<th>
 					<bean:message key="label.homepage.showActiveStudentCurricularPlans" bundle="HOMEPAGE_RESOURCES"/>:
@@ -147,8 +186,6 @@
 					</logic:iterate>
 				</td>
 			</tr>
-		</logic:notEmpty>
-		<logic:notEmpty name="UserView" property="person.completedStudentCurricularPlansSortedByDegreeTypeAndDegreeName">
 			<tr>
 				<th>
 					<bean:message key="label.homepage.showAlumniDegrees" bundle="HOMEPAGE_RESOURCES"/>:
@@ -196,7 +233,6 @@
 					</logic:iterate>
 				</td>
 			</tr>
-		</logic:notEmpty>
 <%--
 	<tr><td class="leftcol"><bean:message key="label.homepage.showUnit" bundle="HOMEPAGE_RESOURCES"/>:</td>
 		<td>
@@ -220,7 +256,14 @@
 				<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.showPhoto" property="showPhoto" value="true"/>
 			</td>
 			<td>
-				<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveOwnPhoto" %>" altKey="personPhoto" bundle="IMAGE_RESOURCES" />
+                <logic:equal name="hasPhoto" value="true">
+                    <html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveOwnPhoto" %>" altKey="personPhoto" bundle="IMAGE_RESOURCES" />
+                </logic:equal>
+<%--
+                <logic:equal name="hasPhoto" value="false">
+                    <html:img align="middle" src="<%= request.getContextPath() +"/images/photoPlaceHolder.jpg" %>" altKey="personPhoto" bundle="IMAGE_RESOURCES" />
+                </logic:equal>
+--%>
 			</td>
 		</tr>
 

@@ -15,9 +15,9 @@ import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Section;
-import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.homepage.Homepage;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.SiteManagementDA;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.struts.action.ActionForm;
@@ -30,7 +30,7 @@ public class ManageHomepageDA extends SiteManagementDA {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        Homepage homepage = getUserView(request).getPerson().getHomepage();
+        Homepage homepage = getSite(request);
         if (homepage != null) {
             request.setAttribute("homepage", homepage);
         }
@@ -52,152 +52,119 @@ public class ManageHomepageDA extends SiteManagementDA {
         }
     }
     
-    public ActionForward activation(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-        final Person person = getUserView(request).getPerson();
-        final Homepage homepage = person.getHomepage();
-        
-        final DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
-        if (homepage != null) {
-            dynaActionForm.set("activated", homepage.getActivated().toString());
-        }
-        
-        return mapping.findForward("show-homepage-activation");
-    }
-    
     public ActionForward options(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
     	final Person person = getUserView(request).getPerson();
-    	final Homepage homepage = person.getHomepage();
+    	final Homepage homepage = getSite(request);
 
         final DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
     	if (homepage != null) {
-            dynaActionForm.set("activated", homepage.getActivated().toString());
-            dynaActionForm.set("showUnit", homepage.getShowUnit().toString());
-            dynaActionForm.set("showCategory", homepage.getShowCategory().toString());
-            dynaActionForm.set("showPhoto", homepage.getShowPhoto().toString());
-            dynaActionForm.set("showEmail", homepage.getShowEmail().toString());
-            dynaActionForm.set("showTelephone", homepage.getShowTelephone().toString());
-            dynaActionForm.set("showWorkTelephone", homepage.getShowWorkTelephone().toString());
-            dynaActionForm.set("showMobileTelephone", homepage.getShowMobileTelephone().toString());
-            dynaActionForm.set("showAlternativeHomepage", homepage.getShowAlternativeHomepage().toString());
-            dynaActionForm.set("showResearchUnitHomepage", homepage.getShowResearchUnitHomepage().toString());
-            dynaActionForm.set("showCurrentExecutionCourses", homepage.getShowCurrentExecutionCourses().toString());
-            dynaActionForm.set("showActiveStudentCurricularPlans", homepage.getShowActiveStudentCurricularPlans().toString());
-            dynaActionForm.set("showAlumniDegrees", homepage.getShowAlumniDegrees().toString());
+            dynaActionForm.set("activated", booleanString(homepage.getActivated()));
+            dynaActionForm.set("showUnit", booleanString(homepage.getShowUnit()));
+            dynaActionForm.set("showCategory", booleanString(homepage.getShowCategory()));
+            dynaActionForm.set("showPhoto", booleanString(homepage.getShowPhoto()));
+            dynaActionForm.set("showEmail", booleanString(homepage.getShowEmail()));
+            dynaActionForm.set("showTelephone", booleanString(homepage.getShowTelephone()));
+            dynaActionForm.set("showWorkTelephone", booleanString(homepage.getShowWorkTelephone()));
+            dynaActionForm.set("showMobileTelephone", booleanString(homepage.getShowMobileTelephone()));
+            dynaActionForm.set("showAlternativeHomepage", booleanString(homepage.getShowAlternativeHomepage()));
+            dynaActionForm.set("showResearchUnitHomepage", booleanString(homepage.getShowResearchUnitHomepage()));
+            dynaActionForm.set("showCurrentExecutionCourses", booleanString(homepage.getShowCurrentExecutionCourses()));
+            dynaActionForm.set("showActiveStudentCurricularPlans", booleanString(homepage.getShowActiveStudentCurricularPlans()));
+            dynaActionForm.set("showAlumniDegrees", booleanString(homepage.getShowAlumniDegrees()));
             dynaActionForm.set("researchUnitHomepage", homepage.getResearchUnitHomepage());
             dynaActionForm.set("researchUnit", homepage.getResearchUnit() != null ? homepage.getResearchUnit().getContent() : null);
-            dynaActionForm.set("showCurrentAttendingExecutionCourses", homepage.getShowCurrentAttendingExecutionCourses().toString());
-            dynaActionForm.set("showPublications", homepage.getShowPublications()!=null ? homepage.getShowPublications().toString() : Boolean.FALSE.toString());
-            dynaActionForm.set("showPatents", homepage.getShowPatents()!=null ? homepage.getShowPatents().toString() : Boolean.FALSE.toString());
-            dynaActionForm.set("showInterests", homepage.getShowInterests()!=null ? homepage.getShowInterests().toString() : Boolean.FALSE.toString());
+            dynaActionForm.set("showCurrentAttendingExecutionCourses", booleanString(homepage.getShowCurrentAttendingExecutionCourses()));
+            dynaActionForm.set("showPublications", booleanString(homepage.getShowPublications()));
+            dynaActionForm.set("showPatents", booleanString(homepage.getShowPatents()));
+            dynaActionForm.set("showInterests", booleanString(homepage.getShowInterests()));
     	}
         
         SortedSet<Attends> personAttendsSortedByExecutionCourseName = new TreeSet<Attends>(
                 Attends.ATTENDS_COMPARATOR_BY_EXECUTION_COURSE_NAME);
         personAttendsSortedByExecutionCourseName.addAll(person.getCurrentAttends());
+
         request.setAttribute("personAttends", personAttendsSortedByExecutionCourseName);
+        request.setAttribute("hasPhoto", person.getPersonalPhoto() != null);
 
         return mapping.findForward("show-homepage-options");
     }
 
-    public ActionForward activateHomepage(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-        
-        Homepage homepage = getUserView(request).getPerson().getHomepage();
-        final DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
-        
-        final String activated = (String) dynaActionForm.get("activated");
-        final Object[] args = {
-                getUserView(request).getPerson(),
-                Boolean.valueOf(activated),
-                homepage != null ? homepage.getShowUnit() : false,
-                homepage != null ? homepage.getShowCategory() : false,
-                homepage != null ? homepage.getShowPhoto() : false,
-                homepage != null ? homepage.getShowEmail() : false,
-                homepage != null ? homepage.getShowTelephone() : false,
-                homepage != null ? homepage.getShowWorkTelephone() : false,
-                homepage != null ? homepage.getShowMobileTelephone() : false,
-                homepage != null ? homepage.getShowAlternativeHomepage() : false,
-                homepage != null ? homepage.getShowResearchUnitHomepage() : false,
-                homepage != null ? homepage.getShowCurrentExecutionCourses() : false,
-                homepage != null ? homepage.getShowActiveStudentCurricularPlans() : false,
-                homepage != null ? homepage.getShowAlumniDegrees() : false,
-                homepage != null ? homepage.getResearchUnitHomepage() : null,
-                homepage != null ? homepage.getResearchUnit() : null,
-                homepage != null ? homepage.getShowCurrentAttendingExecutionCourses() : false,
-                homepage != null ? homepage.getShowPublications() : false,
-                homepage != null ? homepage.getShowPatents() : false,
-                homepage != null ? homepage.getShowInterests() : false
-        
-        };
-        executeService(request, "SubmitHomepage", args);
-
-        return activation(mapping, actionForm, request, response);
+    private Object booleanString(Boolean values) {
+        if (values == null) {
+            return Boolean.FALSE.toString();
+        }
+        else {
+            return values.toString();
+        }
     }
-    
+
     public ActionForward changeHomepageOptions(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-    Homepage homepage = getUserView(request).getPerson().getHomepage();
-    	final DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
-
-    	final String showUnit = (String) dynaActionForm.get("showUnit");
-    	final String showCategory = (String) dynaActionForm.get("showCategory");
-    	final String showPhoto = (String) dynaActionForm.get("showPhoto");
-    	final String showEmail = (String) dynaActionForm.get("showEmail");
-    	final String showTelephone = (String) dynaActionForm.get("showTelephone");
-    	final String showWorkTelephone = (String) dynaActionForm.get("showWorkTelephone");
-    	final String showMobileTelephone = (String) dynaActionForm.get("showMobileTelephone");
-    	final String showAlternativeHomepage = (String) dynaActionForm.get("showAlternativeHomepage");
-    	final String showResearchUnitHomepage = (String) dynaActionForm.get("showResearchUnitHomepage");
-    	final String showCurrentExecutionCourses = (String) dynaActionForm.get("showCurrentExecutionCourses");
-    	final String showActiveStudentCurricularPlans = (String) dynaActionForm.get("showActiveStudentCurricularPlans");
-    	final String showAlumniDegrees = (String) dynaActionForm.get("showAlumniDegrees");
-    	final String researchUnitHomepage = (String) dynaActionForm.get("researchUnitHomepage");
-    	final String researchUnit = (String) dynaActionForm.get("researchUnit");
-    	final String showPublications = (String) dynaActionForm.get("showPublications");
-    	final String showPatents = (String) dynaActionForm.get("showPatents");
-    	final String showInterests = (String) dynaActionForm.get("showInterests");
-    	final MultiLanguageString researchUnitMultiLanguageString;
-    	if (researchUnit != null && researchUnit.length() > 0) {
-    		researchUnitMultiLanguageString = new MultiLanguageString();
-    		researchUnitMultiLanguageString.setContent(researchUnit);
-    	} else {
-    		researchUnitMultiLanguageString = null;
-    	}
-    	final String showCurrentAttendingExecutionCourses = (String) dynaActionForm.get("showCurrentAttendingExecutionCourses");
-
-    	final Object[] args = {
-    			getUserView(request).getPerson(),
-    			homepage.getActivated(),
-    			Boolean.valueOf(showUnit),
-    			Boolean.valueOf(showCategory),
-    			Boolean.valueOf(showPhoto),
-    			Boolean.valueOf(showEmail),
-    			Boolean.valueOf(showTelephone),
-    			Boolean.valueOf(showWorkTelephone),
-    			Boolean.valueOf(showMobileTelephone),
-    			Boolean.valueOf(showAlternativeHomepage),
-    			Boolean.valueOf(showResearchUnitHomepage),
-    			Boolean.valueOf(showCurrentExecutionCourses),
-    			Boolean.valueOf(showActiveStudentCurricularPlans),
-    			Boolean.valueOf(showAlumniDegrees),
-    			researchUnitHomepage,
-    			researchUnitMultiLanguageString,
-    			Boolean.valueOf(showCurrentAttendingExecutionCourses),
-    			Boolean.valueOf(showPublications),
-    		    Boolean.valueOf(showPatents),
-    		    Boolean.valueOf(showInterests)
-    		                		};
-    	executeService(request, "SubmitHomepage", args);
+        	final DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
+    
+        final String activated = (String) dynaActionForm.get("activated");
+        	final String showUnit = (String) dynaActionForm.get("showUnit");
+        	final String showCategory = (String) dynaActionForm.get("showCategory");
+        	final String showPhoto = (String) dynaActionForm.get("showPhoto");
+        	final String showEmail = (String) dynaActionForm.get("showEmail");
+        	final String showTelephone = (String) dynaActionForm.get("showTelephone");
+        	final String showWorkTelephone = (String) dynaActionForm.get("showWorkTelephone");
+        	final String showMobileTelephone = (String) dynaActionForm.get("showMobileTelephone");
+        	final String showAlternativeHomepage = (String) dynaActionForm.get("showAlternativeHomepage");
+        	final String showResearchUnitHomepage = (String) dynaActionForm.get("showResearchUnitHomepage");
+        	final String showCurrentExecutionCourses = (String) dynaActionForm.get("showCurrentExecutionCourses");
+        	final String showActiveStudentCurricularPlans = (String) dynaActionForm.get("showActiveStudentCurricularPlans");
+        	final String showAlumniDegrees = (String) dynaActionForm.get("showAlumniDegrees");
+        	final String researchUnitHomepage = (String) dynaActionForm.get("researchUnitHomepage");
+        	final String researchUnit = (String) dynaActionForm.get("researchUnit");
+        	final String showPublications = (String) dynaActionForm.get("showPublications");
+        	final String showPatents = (String) dynaActionForm.get("showPatents");
+        	final String showInterests = (String) dynaActionForm.get("showInterests");
+        	final MultiLanguageString researchUnitMultiLanguageString;
+        	if (researchUnit != null && researchUnit.length() > 0) {
+        		researchUnitMultiLanguageString = new MultiLanguageString();
+        		researchUnitMultiLanguageString.setContent(researchUnit);
+        	} else {
+        		researchUnitMultiLanguageString = null;
+        	}
+        	final String showCurrentAttendingExecutionCourses = (String) dynaActionForm.get("showCurrentAttendingExecutionCourses");
+    
+        	final Object[] args = {
+        			getUserView(request).getPerson(),
+        			Boolean.valueOf(activated),
+        			Boolean.valueOf(showUnit),
+        			Boolean.valueOf(showCategory),
+        			Boolean.valueOf(showPhoto),
+        			Boolean.valueOf(showEmail),
+        			Boolean.valueOf(showTelephone),
+        			Boolean.valueOf(showWorkTelephone),
+        			Boolean.valueOf(showMobileTelephone),
+        			Boolean.valueOf(showAlternativeHomepage),
+        			Boolean.valueOf(showResearchUnitHomepage),
+        			Boolean.valueOf(showCurrentExecutionCourses),
+        			Boolean.valueOf(showActiveStudentCurricularPlans),
+        			Boolean.valueOf(showAlumniDegrees),
+        			researchUnitHomepage,
+        			researchUnitMultiLanguageString,
+        			Boolean.valueOf(showCurrentAttendingExecutionCourses),
+        			Boolean.valueOf(showPublications),
+        		    Boolean.valueOf(showPatents),
+        		    Boolean.valueOf(showInterests)
+        		                		};
+        	executeService(request, "SubmitHomepage", args);
 
         return options(mapping, actionForm, request, response);
     }
 
     @Override
-    protected Site getSite(HttpServletRequest request) {
-        return getUserView(request).getPerson().getHomepage();
+    protected Homepage getSite(HttpServletRequest request) {
+        try {
+            return (Homepage) ServiceUtils.executeService(getUserView(request), "GetHomepage", getUserView(request).getPerson(), true);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
