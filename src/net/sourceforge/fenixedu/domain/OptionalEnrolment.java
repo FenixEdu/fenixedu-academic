@@ -84,4 +84,10 @@ public class OptionalEnrolment extends OptionalEnrolment_Base {
     public CurriculumModule findCurriculumModuleFor(final DegreeModule degreeModule) {
 	return hasDegreeModule(degreeModule) ? this : null;
     }
+    
+    @Override
+    public void delete() {
+	removeOptionalCurricularCourse();
+        super.delete();
+    }
 }

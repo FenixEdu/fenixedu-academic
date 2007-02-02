@@ -214,7 +214,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment{
 
     public void delete() {
 	createEnrolmentLog(EnrolmentAction.UNENROL);
-	// TODO: falta ver se ï¿½ dos antigos enrolments ou dos novos
+	// TODO: falta ver se é dos antigos enrolments ou dos novos
 	final Registration registration = getStudentCurricularPlan().getRegistration();
 
 	removeExecutionPeriod();
