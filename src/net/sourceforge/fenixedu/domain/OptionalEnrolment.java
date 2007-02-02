@@ -1,9 +1,11 @@
 package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
+import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public class OptionalEnrolment extends OptionalEnrolment_Base {
@@ -67,5 +69,19 @@ public class OptionalEnrolment extends OptionalEnrolment_Base {
 		multiLanguageString.setContent(language, multiLanguageString.getContent(language) + " (" + content + ")");
 	    }
 	}
+    }
+    
+    @Override
+    public boolean hasDegreeModule(final DegreeModule degreeModule) {
+        return super.hasDegreeModule(degreeModule) || hasOptionalCurricularCourse(degreeModule);
+    }
+    
+    private boolean hasOptionalCurricularCourse(final DegreeModule degreeModule) {
+	return getOptionalCurricularCourse() == degreeModule;
+    }
+    
+    @Override
+    public CurriculumModule findCurriculumModuleFor(final DegreeModule degreeModule) {
+	return hasDegreeModule(degreeModule) ? this : null;
     }
 }
