@@ -64,6 +64,9 @@
     <definition name="student.showRegistrationStates" extends="academicAdminOffice.masterPage">
         <put name="body" value="/academicAdminOffice/manageRegistrationState.jsp"></put>
     </definition>      
+    <definition name="student.showEditIngression" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/manageIngression.jsp"></put>
+    </definition>      
     <definition name="student.showCreateNewStudentCurricularPlan" extends="academicAdminOffice.masterPage">
         <put name="body" value="/academicAdminOffice/createStudentCurricularPlan.jsp"></put>
     </definition>      

@@ -71,6 +71,12 @@
 			<bean:message key="link.student.manageRegistrationState" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 		</html:link>
 	</span>
+	<span class="pleft1">
+		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
+		<html:link page="/manageIngression.do?method=prepare" paramId="registrationId" paramName="registration" paramProperty="idInternal">
+			<bean:message key="link.student.manageIngression" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+		</html:link>
+	</span>
 	<span class="pleft1">	
 		<logic:equal name="registration" property="degreeType.name" value="BOLONHA_ADVANCED_FORMATION_DIPLOMA">
 			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
@@ -102,7 +108,7 @@
 		<fr:property name="bundle(enrol)" value="ACADEMIC_OFFICE_RESOURCES"/>
 		<fr:property name="visibleIf(enrol)" value="enrolable"/>
 		<fr:property name="contextRelative(enrol)" value="true"/>      
-		<fr:property name="order(enrol)" value="1"/> 
+		<fr:property name="order(enrol)" value="1"/>      					
 <%-- 
 		<fr:property name="linkFormat(dismissal)" value="/studentDismissals.do?method=manage&amp;scpID=${idInternal}" />
 		<fr:property name="key(dismissal)" value="link.student.dismissal.management"/>

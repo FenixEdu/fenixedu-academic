@@ -220,6 +220,15 @@
 			input="/manageRegistrationState.do?method=prepare">
 	        	<forward name="showRegistrationStates" path="student.showRegistrationStates"/>
 	    </action>		    		
+
+		<action path="/manageIngression"
+		  	type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.ManageIngressionDA"
+	        parameter="method"
+			scope="request"
+			validate="true"
+			input="/manageIngression.do?method=prepare">
+	        	<forward name="showEditIngression" path="student.showEditIngression"/>
+	    </action>		    		
 	    
 	    <action path="/addNewStudentCurricularPlan"
 		  	type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.StudentCurricularPlanDA"
