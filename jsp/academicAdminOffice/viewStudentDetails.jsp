@@ -40,7 +40,7 @@
 		<bean:message key="link.student.viewPersonalData" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 	</html:link>
 
-	<logic:equal name="student" property="hasActiveRegistrationForOffice" value="true">
+	<logic:equal name="student" property="hasRegistrationForOffice" value="true">
 		<span class="pleft05">
 			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
 			<html:link page="/student.do?method=prepareEditPersonalData" paramId="studentID" paramName="student" paramProperty="idInternal">
