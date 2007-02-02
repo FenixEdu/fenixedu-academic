@@ -228,7 +228,7 @@
 			<td>
 				<% final String appContext = net.sourceforge.fenixedu._development.PropertiesManager.getProperty("app.context"); %>
 				<% final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : ""; %>
-				<bean:define id="emailURL" type="java.lang.String"><%= request.getScheme() %>://<%= request.getServerName() %>:<%= request.getServerPort() %><%= context %>/publico/viewHomepage.do?method=emailPng&amp;personID=<bean:write name="homepage" property="person.idInternal"/></bean:define>
+				<bean:define id="emailURL" type="java.lang.String"><%= request.getScheme() %>://<%= request.getServerName() %>:<%= request.getServerPort() %><%= context %>/publico/viewHomepage.do?method=emailPng&amp;homepageID=<bean:write name="homepage" property="idInternal"/></bean:define>
 				<html:img align="middle" src="<%= emailURL %>" altKey="email" bundle="IMAGE_RESOURCES"/>
 			</td>
 		</tr>
