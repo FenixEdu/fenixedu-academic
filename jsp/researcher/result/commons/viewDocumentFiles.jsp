@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-<logic:present role="RESEARCHER">
+
 	<bean:define id="documents" name="result" property="resultDocumentFiles"/>
 	
 	<logic:empty name="documents">
@@ -20,4 +20,3 @@
 			</fr:layout>
 		</fr:view>
 	</logic:notEmpty>
-</logic:present>

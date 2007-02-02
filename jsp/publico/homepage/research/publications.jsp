@@ -4,10 +4,6 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
-
-	<bean:define id="publications" name="UserView" property="person.researchResultPublications"/>
-	<bean:define id="person" name="UserView" property="person"/>
-	<bean:define id="personId" name="person" property="idInternal"/>
 	
 	<h1><bean:message key="link.Publications" bundle="RESEARCHER_RESOURCES"/></h1>
 	
@@ -16,10 +12,6 @@
 			<p><span class="error1"><!-- Error messages go here --><bean:write name="messages"/></span></p>
 		</html:messages>
 	</logic:messagesPresent>
-
-	<logic:empty name="publications">
-		<p><em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.emptyList"/></em></p>
-	</logic:empty>
 
 	<logic:notEmpty name="books">
 		<p id='books' class="mtop2 mbottom0"><strong><span><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.Books"/></span></strong></p>
