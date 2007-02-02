@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.functionalities;
 
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupContext;
@@ -31,7 +31,7 @@ public class GroupContextFromFunctionality implements GroupContext {
     }
 
     private void setupVariables() {
-        this.variables = new Hashtable<String, Object>();
+        this.variables = new HashMap<String, Object>();
         
         this.variables.put(VAR_USER, getContext().getLoggedUser());
         this.variables.put(VAR_USERVIEW, getContext().getLoggedUser());

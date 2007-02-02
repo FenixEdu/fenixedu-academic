@@ -22,8 +22,10 @@ public class DynamicGroup extends Group implements GroupContextProvider {
 
     private static final long serialVersionUID = 1L;
 
-    private GroupContextProvider provider;
-    private String name;
+    private transient Group concreteGroup;
+
+    private final GroupContextProvider provider;
+    private final String name;
 
     private ArgumentList arguments;
 
@@ -82,18 +84,26 @@ public class DynamicGroup extends Group implements GroupContextProvider {
         return assembleGroup().getElements();
     }
 
-    /**
+    @Override
+	public boolean isMember(Person person) {
+		return assembleGroup().isMember(person);
+	}
+
+	/**
      * Creates the group from the current context.
      * 
      * @return the newly created group
      */
     protected Group assembleGroup() {
+    	if (this.concreteGroup != null) {
+    		return this.concreteGroup;
+    	}
+    	
         Object[] argumentValues = getArgumentList().getArgumentValues();
-
-        return getGroupBuilder().build(argumentValues);
+        return this.concreteGroup = getGroupBuilder().build(argumentValues);
     }
 
-    /**
+	/**
      * Gets a group builder from the registry.
      * 
      * @return the registered group builder
