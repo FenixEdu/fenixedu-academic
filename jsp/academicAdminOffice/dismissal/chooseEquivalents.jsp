@@ -6,22 +6,33 @@
 <%@ page import="org.apache.struts.action.ActionMessages" %>
 
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
-<h2><bean:message key="label.studentDismissal.management" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
-<br/>
+<h2><bean:message key="link.student.create.dismissal" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
+
 <html:messages id="message" property="<%= ActionMessages.GLOBAL_MESSAGE %>" message="true" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<p>
-		<span class="error"><!-- Error messages go here --><bean:write name="message" /></span>
+		<span class="error0"><!-- Error messages go here --><bean:write name="message" /></span>
 	</p>
-	<br/>
 </html:messages>
-<fr:view name="dismissalBean" schema="DismissalBean.view">
-	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle4" />
-	</fr:layout>
-</fr:view>
-<br/>
-<h3><bean:message key="label.studentDismissal.step.one" bundle="ACADEMIC_OFFICE_RESOURCES"/> &gt; <u><bean:message key="label.studentDismissal.step.two" bundle="ACADEMIC_OFFICE_RESOURCES"/></u></h3>
-<br/>
+
+<p class="mtop2">
+<span style="background-color: #ecf3e1; border-bottom: 1px solid #ccdeb2; padding: 0.4em 0.6em;">
+	<bean:message key="label.student" bundle="ACADEMIC_OFFICE_RESOURCES"/>: 
+	<fr:view name="dismissalBean" property="studentCurricularPlan.student" schema="student.show.personAndStudentInformation.short">
+		<fr:layout name="flow">
+			<fr:property name="labelExcluded" value="true"/>
+		</fr:layout>
+	</fr:view>
+</span>
+</p>
+
+
+<p class="breadcumbs">
+	<span><bean:message key="label.studentDismissal.step.one" bundle="ACADEMIC_OFFICE_RESOURCES"/></span> &gt; 
+	<span class="actual"><bean:message key="label.studentDismissal.step.two" bundle="ACADEMIC_OFFICE_RESOURCES"/> <bean:message key="label.studentDismissal.confirmCreateDismissals" bundle="ACADEMIC_OFFICE_RESOURCES"/></span> &gt; 
+	<span><bean:message key="label.studentDismissal.step.three" bundle="ACADEMIC_OFFICE_RESOURCES"/></span>
+</p>
+
+
 <bean:define id="dismissalTypeName" name="dismissalBean" property="dismissalType.name" />
 <fr:form action="/studentDismissals.do">
 	<html:hidden property="method" value="confirmCreateDismissals"/>
@@ -29,19 +40,23 @@
 		<fr:destination name="dismissalTypePostBack" path="/studentDismissals.do?method=dismissalTypePostBack"/>
 		<fr:destination name="invalid" path="/studentDismissals.do?method=stepTwo"/>
 		<fr:layout name="tabular-editable">
-			<fr:property name="classes" value="tstyle4"/>
+			<fr:property name="classes" value="tstyle4 thlight"/>
+			<fr:property name="columnClasses" value=",,tdclear"/>
 		</fr:layout>
 	</fr:edit>
-	<br/>
+
 	
 	<html:messages property="error" message="true" id="errMsg" bundle="ACADEMIC_OFFICE_RESOURCES">
-		<span class="error"><!-- Error messages go here --><bean:write name="errMsg" /></span>
-		<br/><br/>
+		<p>
+			<span class="error0"><!-- Error messages go here --><bean:write name="errMsg" /></span>
+		</p>
 	</html:messages>
+
 	<fr:edit id="b" name="dismissalBean" layout="student-dismissal"/>
-	<br/>
-	<br/>
-	<html:submit><bean:message key="button.submit" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit>	
-	<html:cancel onclick="this.form.method.value='stepOne'; return true;"><bean:message key="button.back" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:cancel>
-	<html:cancel onclick="this.form.method.value='back'; return true;"><bean:message key="button.cancel" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:cancel>		
+	
+	<p class="mtop15">
+		<html:submit><bean:message key="button.submit" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit>	
+		<html:cancel onclick="this.form.method.value='stepOne'; return true;"><bean:message key="button.back" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:cancel>
+		<html:cancel onclick="this.form.method.value='back'; return true;"><bean:message key="button.cancel" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:cancel>		
+	</p>
 </fr:form>
