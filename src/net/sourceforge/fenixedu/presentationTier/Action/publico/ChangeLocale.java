@@ -18,8 +18,21 @@ public class ChangeLocale extends FenixAction {
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         final Locale locale = constructNewLocale(request);
         request.getSession(true).setAttribute(Globals.LOCALE_KEY, locale);
-        final String windowLocation = request.getParameter("windowLocation");
+        
+        // HACK: remove locale parameter if present
+        final String windowLocation = filterLocaleFromLocation(request.getParameter("windowLocation"));
+        
         return forward(windowLocation);
+    }
+
+    private String filterLocaleFromLocation(String parameter) {
+        if (parameter == null) {
+            return parameter;
+        }
+        
+        return parameter
+            .replaceAll("&locale=[\\p{Alpha}-]*", "")
+            .replaceAll("\\?locale=[\\p{Alpha}-]*", "");
     }
 
     private Locale constructNewLocale(HttpServletRequest request) {
