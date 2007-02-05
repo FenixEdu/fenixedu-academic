@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
 import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.RuleResult;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -72,36 +73,42 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
         }
     }
     
-
-    
     @Override
     public boolean appliesToContext(final Context context) {
-        return super.appliesToContext(context) && appliesToPeriod(context);
+        return super.appliesToContext(context) && appliesToPeriod(context) && appliesToYears(context);
     }
 
     private boolean appliesToPeriod(final Context context) {
-	return !hasCurricularPeriodOrder();
+	return !hasCurricularPeriodOrder() || hasCurricularPeriodOrderFor(context);
     }
     
-  
+    private boolean hasCurricularPeriodOrderFor(final Context context) {
+	return context.containsSemester(getCurricularPeriodOrder())
+		&& context.getCurricularPeriod().getPeriodType() == CurricularPeriodType.SEMESTER;
+    }
+
     private boolean hasCurricularPeriodOrder() {
-	return getCurricularPeriodOrder().intValue() != 0;
-    }
-    /*     
-    private boolean appliesToPeriod(Context context) {
-        return (hasNoCurricularPeriodOrder()
-                || (this.getCurricularPeriodType().equals(context.getCurricularPeriod().getPeriodType()) 
-                        && this.getCurricularPeriodOrder().equals(context.getCurricularPeriod().getChildOrder())));
+	return getCurricularPeriodOrder() != null && getCurricularPeriodOrder().intValue() != 0;
     }
     
-    private boolean hasNoCurricularPeriodOrder() {
-        return (this.getCurricularPeriodType() == null || this.getCurricularPeriodOrder() == null 
-                || (this.getCurricularPeriodType().equals(CurricularPeriodType.SEMESTER) 
-                        && this.getCurricularPeriodOrder().equals(0)));
+    private boolean hasYearsLimit() {
+	return getMinimumYear() != null && getMinimumYear().intValue() != 0 && getMaximumYear() != null && getMaximumYear().intValue() != 0;
     }
-
-*/
-
+    
+    private boolean appliesToYears(final Context context) {
+	if (!hasYearsLimit()) {
+	    return true;
+	}
+	
+	if (hasCurricularPeriodOrder()) {
+	    
+	} else {
+	    
+	}
+	//TODO:
+	return true;
+    }
+    
     @Override
     public List<GenericPair<Object, Boolean>> getLabel() {
         final List<GenericPair<Object, Boolean>> labelList = new ArrayList<GenericPair<Object, Boolean>>();
