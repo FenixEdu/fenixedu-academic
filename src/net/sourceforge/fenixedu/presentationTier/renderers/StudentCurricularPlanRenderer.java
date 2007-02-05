@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
@@ -529,19 +530,19 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 //		    final HtmlTableRow enrolmentEvaluationsRow = enrolmentEvaluationsTable.createRow();
 //		    enrolmentEvaluationsRow.setStyle("color: #888;");
 //		    
-//		    // EnrolmentEvaluationType
-//		    generateEnrolmentSmallInfoCell(
-//			    enrolmentEvaluationsRow, 
-//			    new HtmlText(enumerationResources.getString(enrolmentEvaluation.getEnrolmentEvaluationType().getAcronym())), 
-//			    "", 
-//			    enumerationResources.getString(enrolmentEvaluation.getEnrolmentEvaluationType().getQualifiedName()));
-//		    
 //		    // Grade
 //		    generateEnrolmentSmallInfoCell(
 //			    enrolmentEvaluationsRow, 
 //			    new HtmlText(enrolmentEvaluation.getGrade()), 
 //			    "", 
 //			    null);
+//		    
+//		    // EnrolmentEvaluationType
+//		    generateEnrolmentSmallInfoCell(
+//			    enrolmentEvaluationsRow, 
+//			    new HtmlText(enumerationResources.getString(enrolmentEvaluation.getEnrolmentEvaluationType().getAcronym())), 
+//			    "", 
+//			    enumerationResources.getString(enrolmentEvaluation.getEnrolmentEvaluationType().getQualifiedName()));
 //		    
 //		    // Exam Date
 //		    HtmlComponent examDate = null;
