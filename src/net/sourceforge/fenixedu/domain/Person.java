@@ -61,7 +61,18 @@ import net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
 import net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent;
+import net.sourceforge.fenixedu.domain.research.result.publication.Article;
+import net.sourceforge.fenixedu.domain.research.result.publication.Book;
+import net.sourceforge.fenixedu.domain.research.result.publication.BookPart;
+import net.sourceforge.fenixedu.domain.research.result.publication.Inproceedings;
+import net.sourceforge.fenixedu.domain.research.result.publication.Manual;
+import net.sourceforge.fenixedu.domain.research.result.publication.OtherPublication;
+import net.sourceforge.fenixedu.domain.research.result.publication.Proceedings;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
+import net.sourceforge.fenixedu.domain.research.result.publication.TechnicalReport;
+import net.sourceforge.fenixedu.domain.research.result.publication.Thesis;
+import net.sourceforge.fenixedu.domain.research.result.publication.Unstructured;
+import net.sourceforge.fenixedu.domain.research.result.publication.BookPart.BookPartType;
 import net.sourceforge.fenixedu.domain.sms.SentSms;
 import net.sourceforge.fenixedu.domain.sms.SmsDeliveryType;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -511,15 +522,128 @@ public class Person extends Person_Base {
 	}
 	return resultPublications;
     }
+    
+	public List<ResearchResultPublication> getBooks() {
+		return ResearchResultPublication.sort(this.getResearchResultPublicationsByType(Book.class));
+	}
+    
+	public List<ResearchResultPublication> getBooks(ExecutionYear executionYear) {
+		return ResearchResultPublication.sort(this.getResearchResultPublicationsByType(Book.class,executionYear));
+	}
+	
+	public List<ResearchResultPublication> getArticles() {
+		return ResearchResultPublication.sort(this.getResearchResultPublicationsByType(Article.class));	
+	}
+	
+	public List<ResearchResultPublication> getArticles(ExecutionYear executionYear) {
+		return ResearchResultPublication.sort(this.getResearchResultPublicationsByType(Article.class,executionYear));
+	}
+	
+	public List<ResearchResultPublication> getInproceedings() {
+		return ResearchResultPublication.sort(this.getResearchResultPublicationsByType(Inproceedings.class));
+	}
+	
+	public List<ResearchResultPublication> getInproceedings(ExecutionYear executionYear) {
+		return ResearchResultPublication.sort(this.getResearchResultPublicationsByType(Inproceedings.class,executionYear));
+	}
 
-    public List<ResearchResultPublication> getResearchResultPublicationsByType(final Class <? extends ResearchResultPublication> clazz) {
-    	return (List) CollectionUtils.select(getResearchResultPublications(), new Predicate() {
+	public List<ResearchResultPublication> getProceedings() {
+		return ResearchResultPublication.sort(this.getResearchResultPublicationsByType(Proceedings.class));
+	}
+	
+	public List<ResearchResultPublication> getProceedings(ExecutionYear executionYear) {
+		return ResearchResultPublication.sort(this.getResearchResultPublicationsByType(Proceedings.class,executionYear));
+	}
+	
+	public List<ResearchResultPublication> getTheses() {
+		return ResearchResultPublication.sort(this.getResearchResultPublicationsByType(Thesis.class));
+	}
+
+	public List<ResearchResultPublication> getTheses(ExecutionYear executionYear) {
+		return ResearchResultPublication.sort(this.getResearchResultPublicationsByType(Thesis.class,executionYear));
+	}
+	
+	public List<ResearchResultPublication> getManuals() {
+		return ResearchResultPublication.sort(this.getResearchResultPublicationsByType(Manual.class));
+	}
+
+	public List<ResearchResultPublication> getManuals(ExecutionYear executionYear) {
+		return ResearchResultPublication.sort(this.getResearchResultPublicationsByType(Manual.class,executionYear));
+	}
+	
+	public List<ResearchResultPublication> getTechnicalReports() {
+		return ResearchResultPublication.sort(this.getResearchResultPublicationsByType(TechnicalReport.class));
+	}
+
+	public List<ResearchResultPublication> getTechnicalReports(ExecutionYear executionYear) {
+		return ResearchResultPublication.sort(this.getResearchResultPublicationsByType(TechnicalReport.class,executionYear));
+	}
+
+	public List<ResearchResultPublication> getOtherPublications() {
+		return ResearchResultPublication.sort(this.getResearchResultPublicationsByType(OtherPublication.class));
+	}
+
+	public List<ResearchResultPublication> getOtherPublications(ExecutionYear executionYear) {
+		return ResearchResultPublication.sort(this.getResearchResultPublicationsByType(OtherPublication.class,executionYear));
+	}
+
+	public List<ResearchResultPublication> getUnstructureds() {
+		return ResearchResultPublication.sort(this.getResearchResultPublicationsByType(Unstructured.class));
+	}
+
+	public List<ResearchResultPublication> getUnstructureds(ExecutionYear executionYear) {
+		return ResearchResultPublication.sort(this.getResearchResultPublicationsByType(Unstructured.class,executionYear));
+	}
+	
+	public List<ResearchResultPublication> getInbooks() {
+		return ResearchResultPublication.sort(this.getFilteredBookParts(BookPartType.Inbook));
+	}
+
+	public List<ResearchResultPublication> getInbooks(ExecutionYear executionYear) {
+		return ResearchResultPublication.sort(this.getFilteredBookParts(BookPartType.Inbook,executionYear));
+	}
+	
+	public List<ResearchResultPublication> getIncollections() {
+		return ResearchResultPublication.sort(this.getFilteredBookParts(BookPartType.Incollection));
+	}
+
+	public List<ResearchResultPublication> getIncollections(ExecutionYear executionYear) {
+		return ResearchResultPublication.sort(this.getFilteredBookParts(BookPartType.Incollection,executionYear));
+	}
+
+	private List<ResearchResultPublication> getFilteredBookParts(BookPartType type) {
+		return getFilteredBookParts(type,null);
+	}
+	
+	private List<ResearchResultPublication> getFilteredBookParts(BookPartType type, ExecutionYear executionYear) {
+		List<ResearchResultPublication> bookParts = this.getResearchResultPublicationsByType(BookPart.class);
+		List<ResearchResultPublication> filteredBookParts = new ArrayList<ResearchResultPublication>();
+		for (ResearchResultPublication publication : bookParts) {
+			if (executionYear==null || (executionYear!=null && executionYear.belongsToCivilYear(publication.getYear())))  {
+			BookPart bookPart = (BookPart) publication;
+			if (bookPart.getBookPartType().equals(type))
+				filteredBookParts.add(bookPart);
+			}
+		}
+		return filteredBookParts;
+	}
+	
+	private List<ResearchResultPublication> filterResultPublicationsByType(final Class <? extends ResearchResultPublication> clazz, List<ResearchResultPublication> publications) {
+    	return (List) CollectionUtils.select(publications, new Predicate() {
     		public boolean evaluate(Object arg0) {
     			return clazz.equals(arg0.getClass());
     		}
     	});
     }
     
+    private List<ResearchResultPublication> getResearchResultPublicationsByType(final Class <? extends ResearchResultPublication> clazz) {
+    	return filterResultPublicationsByType(clazz, getResearchResultPublications());
+    }
+    
+    private List<ResearchResultPublication> getResearchResultPublicationsByType(final Class <? extends ResearchResultPublication> clazz, ExecutionYear executionYear) {
+    	return filterResultPublicationsByType(clazz, getResearchResultPublicationsByExecutionYear(executionYear));
+    }
+        
     public List<ResearchResultPublication> getResearchResultPublicationsByExecutionYear(ExecutionYear executionYear) {
     	
     	List<ResearchResultPublication> publicationsForExecutionYear = new ArrayList<ResearchResultPublication>();

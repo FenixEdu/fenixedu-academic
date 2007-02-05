@@ -18,7 +18,7 @@
 		 					<fr:property name="indentation" value="false"/>
 		 				</fr:layout>
 		 				<fr:destination name="view.publication" path="<%= "/showResearchResult.do?method=showPublication&amp;result=" + resultId + "&amp;homepageID=" + request.getParameter("homepageID")%>"/>
-		 			</fr:view> 
+		 			</fr:view> (<html:link target="_blank" page="<%="/bibtexExport.do?method=exportPublicationToBibtex&publicationId="+ resultId%>"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.exportToBibTeX" /></html:link>)
 		 			<p class="mtop025">
 			 		</p>
 	 			</li>

@@ -184,9 +184,101 @@
 		--%>
 		
 		<!-- Publications -->
-		<logic:notEmpty name="resultPublications">
+	
+	<logic:notEmpty name="resultPublications">
 	    <p id='publicationsTitle' class="separator2" style="float: left; display: inline;"> <span class="fleft"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.viewCurriculum.publicationsTitle"/></span> <span class="fright"><a href="#header"><bean:message key="label.top" /></a></span> </p>
 		<div class="cboth"></div>
+	<logic:notEmpty name="books">
+		<p id='books' class="mtop2 mbottom0"><strong><span><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.Books"/></span></strong></p>
+		<bean:define id="currentSchema" value="result.publication.presentation.Book" toScope="request"/>
+		<bean:define id="results" name="books" toScope="request"/>
+		<jsp:include page="result/publications/publicationsResume.jsp"/>
+	</logic:notEmpty>
+
+	<logic:notEmpty name="inbooks">
+		<p id='inbooks' class="mtop2 mbottom0"><strong><span><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.Inbooks"/></span></strong></p>
+		<bean:define id="currentSchema" value="result.publication.presentation.Inbook" toScope="request"/>
+		<bean:define id="results" name="inbooks" toScope="request"/>
+		<jsp:include page="result/publications/publicationsResume.jsp"/>
+	</logic:notEmpty>
+	
+	<logic:notEmpty name="incollections">
+		<p id='incollections' class="mtop2 mbottom0"/><span><strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.Incollections"/></span></strong></p>
+		<bean:define id="currentSchema" value="result.publication.presentation.Incollection" toScope="request"/>
+		<bean:define id="results" name="incollections" toScope="request"/>
+		<jsp:include page="result/publications/publicationsResume.jsp"/>
+	</logic:notEmpty>
+
+	<logic:notEmpty name="articles">
+		<p id='books' class="mtop2 mbottom0"/><span><strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.Articles"/></span></strong></p>
+		<bean:define id="currentSchema" value="result.publication.presentation.Article" toScope="request"/>
+		<bean:define id="results" name="articles" toScope="request"/>
+		<jsp:include page="result/publications/publicationsResume.jsp"/>
+	</logic:notEmpty>
+	
+	<logic:notEmpty name="inproceedings">
+		<p id='inproceedings' class="mtop2 mbottom0"/><span><strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.Inproceedings"/></span></strong></p>
+		<bean:define id="currentSchema" value="result.publication.presentation.Inproceedings" toScope="request"/>
+		<bean:define id="results" name="inproceedings" toScope="request"/>
+		<jsp:include page="result/publications/publicationsResume.jsp"/>
+	</logic:notEmpty>
+	
+	<logic:notEmpty name="proceedings">
+		<p id='proceedings' class="mtop2 mbottom0"/><span><strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.Proceedings"/></span></strong></p>
+		<bean:define id="currentSchema" value="result.publication.presentation.Proceedings" toScope="request"/>
+		<bean:define id="results" name="proceedings" toScope="request"/>
+		<jsp:include page="result/publications/publicationsResume.jsp"/>
+	</logic:notEmpty>
+	
+	<logic:notEmpty name="theses">
+		<p id='theses' class="mtop2 mbottom0"/><span><strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.Theses"/></span></strong></p>
+		<bean:define id="currentSchema" value="result.publication.presentation.Thesis" toScope="request"/>
+		<bean:define id="results" name="theses" toScope="request"/>
+		<jsp:include page="result/publications/publicationsResume.jsp"/>
+	</logic:notEmpty>
+	
+	<logic:notEmpty name="manuals">
+		<p id='manuals' class="mtop2 mbottom0"/><span><strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.Manuals"/></span></strong></p>
+		<bean:define id="currentSchema" value="result.publication.presentation.Manual" toScope="request"/>
+		<bean:define id="results" name="manuals" toScope="request"/>
+		<jsp:include page="result/publications/publicationsResume.jsp"/>
+	</logic:notEmpty>
+	
+	<logic:notEmpty name="technicalReports">
+		<p id='technicalReports' class="mtop2 mbottom0"/><span><strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.TechnicalReports"/></span></strong></p>
+		<bean:define id="currentSchema" value="result.publication.presentation.TechnicalReport" toScope="request"/>
+		<bean:define id="results" name="technicalReports" toScope="request"/>
+		<jsp:include page="result/publications/publicationsResume.jsp"/>
+	</logic:notEmpty>
+	
+	<logic:notEmpty name="otherPublications">
+		<p id='otherPublications' class="mtop2 mbottom0"/><span><strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.OtherPublications"/></span></strong></p>
+		<bean:define id="currentSchema" value="result.publication.presentation.OtherPublication" toScope="request"/>
+		<bean:define id="results" name="otherPublications" toScope="request"/>
+		<jsp:include page="result/publications/publicationsResume.jsp"/>
+	</logic:notEmpty>
+	
+	<logic:notEmpty name="unstructureds">
+		<p id='unstructureds' class="mtop2 mbottom0"/><span><strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.Unstructureds"/></span></strong></p>
+		<bean:define id="results" name="unstructureds" toScope="request"/>
+		<ul>
+			<logic:iterate id="result" name="results" scope="request">
+	 			<bean:define id="resultId" name="result" property="idInternal"/>
+				<li class="mtop1">
+		 			<fr:view name="result" layout="values" schema="result.publication.presentation.Unstructured">
+		 				<fr:layout>
+		 					<fr:property name="htmlSeparator" value=", "/>
+		 					<fr:property name="indentation" value="false"/>
+		 				</fr:layout>
+	 				</fr:view>
+		 	     </li>
+			</logic:iterate>
+		</ul>
+	</logic:notEmpty>
+	</logic:notEmpty>
+
+
+<%-- 
 			<ul>
 			<logic:iterate id="result" name="resultPublications" type="net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication">
 
@@ -201,6 +293,7 @@
 			</li>
 			</logic:iterate>	
 			</ul>
+	
 			</logic:notEmpty>
 			<!--  
 			<logic:empty name="resultPublications">
@@ -208,6 +301,7 @@
 			</logic:empty>
 			-->			
 	
+	--%>
 		
 		<!-- Patents -->
 		<logic:notEmpty name="resultPatents">
@@ -230,7 +324,7 @@
 		 		</span></li>
 			</logic:iterate>
 			</ul>
-			</logic:notEmpty>
+		</logic:notEmpty>
 			<!--  
 			<logic:empty name="resultPatents">
 				<p><em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResearchResultPatent.emptyList"/></em></p>

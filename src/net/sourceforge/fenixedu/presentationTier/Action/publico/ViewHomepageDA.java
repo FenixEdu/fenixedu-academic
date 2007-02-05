@@ -389,36 +389,19 @@ public class ViewHomepageDA extends SiteVisualizationDA {
 
 	private void setRequestAttributesToList(HttpServletRequest request, Person person) {
 
-		request.setAttribute("books", person.getResearchResultPublicationsByType(Book.class));
-
-		request.setAttribute("inbooks", getFilteredBookParts(person, BookPartType.Inbook));
-		request.setAttribute("incollections", getFilteredBookParts(person, BookPartType.Incollection));
-		request.setAttribute("articles", person.getResearchResultPublicationsByType(Article.class));
-		request
-				.setAttribute("inproceedings", person
-						.getResearchResultPublicationsByType(Inproceedings.class));
-		request.setAttribute("proceedings", person.getResearchResultPublicationsByType(Proceedings.class));
-		request.setAttribute("theses", person.getResearchResultPublicationsByType(Thesis.class));
-		request.setAttribute("manuals", person.getResearchResultPublicationsByType(Manual.class));
-		request.setAttribute("technicalReports", person
-				.getResearchResultPublicationsByType(TechnicalReport.class));
-		request.setAttribute("otherPublications", person
-				.getResearchResultPublicationsByType(OtherPublication.class));
-		request.setAttribute("unstructureds", person.getResearchResultPublicationsByType(Unstructured.class));
+		request.setAttribute("books", person.getBooks());
+		request.setAttribute("articles", person.getArticles());
+		request.setAttribute("inproceedings", person.getInproceedings());
+		request.setAttribute("proceedings", person.getProceedings());
+		request.setAttribute("theses", person.getTheses());
+		request.setAttribute("manuals", person.getManuals());
+		request.setAttribute("technicalReports", person.getTechnicalReports());
+		request.setAttribute("otherPublications", person.getOtherPublications());
+		request.setAttribute("unstructureds", person.getUnstructureds());
+		request.setAttribute("inbooks", person.getInbooks());
+		request.setAttribute("incollections", person.getIncollections());
 
 		request.setAttribute("person", getLoggedPerson(request));
-	}
-
-	private List getFilteredBookParts(Person person, BookPartType type) {
-		List<ResearchResultPublication> bookParts = person
-				.getResearchResultPublicationsByType(BookPart.class);
-		List<BookPart> filteredBookParts = new ArrayList<BookPart>();
-		for (ResearchResultPublication publication : bookParts) {
-			BookPart bookPart = (BookPart) publication;
-			if (bookPart.getBookPartType().equals(type))
-				filteredBookParts.add(bookPart);
-		}
-		return filteredBookParts;
 	}
 
 	@Override
