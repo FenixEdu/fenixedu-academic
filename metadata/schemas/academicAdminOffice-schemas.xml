@@ -474,13 +474,22 @@
 
 <schema name="DismissalBean.DismissalType.CURRICULUM_GROUP_CREDITS" bundle="ACADEMIC_OFFICE_RESOURCES"
 	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean" >
-	<slot name="credits" key="label.creditsNumber" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-	<slot name="grade" key="label.grade"/>
+	<slot name="credits" key="label.creditsNumber" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="7"/>
+		<property name="maxLength" value="6"/>
+	</slot>
+	<slot name="grade" key="label.grade">
+		<property name="size" value="7"/>
+		<property name="maxLength" value="6"/>
+	</slot>
 </schema>
 
 <schema name="DismissalBean.DismissalType.CURRICULAR_COURSE_CREDITS" bundle="ACADEMIC_OFFICE_RESOURCES"
 	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean" >
-	<slot name="grade" key="label.grade"/>
+	<slot name="grade" key="label.grade">
+		<property name="size" value="7"/>
+		<property name="maxLength" value="6"/>
+	</slot>
 </schema>
 
 <schema name="DismissalBean.chooseEquivalents" bundle="ACADEMIC_OFFICE_RESOURCES"
