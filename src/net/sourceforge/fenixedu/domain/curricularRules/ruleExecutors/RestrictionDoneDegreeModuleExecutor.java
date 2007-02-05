@@ -13,7 +13,7 @@ public class RestrictionDoneDegreeModuleExecutor extends CurricularRuleExecutor 
     protected RuleResult executeWithRules(final CurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
 
 	final RestrictionDoneDegreeModule rule = (RestrictionDoneDegreeModule) curricularRule;
-	final DegreeModuleToEnrol moduleToEnrol = getDegreeModuleToEnrol(enrolmentContext, rule.getDegreeModuleToApplyRule());
+	final DegreeModuleToEnrol moduleToEnrol = searchDegreeModuleToEnrol(enrolmentContext, rule.getDegreeModuleToApplyRule());
 	
 	if (!rule.appliesToContext(moduleToEnrol.getContext())) {
 	    return RuleResult.createNA();
@@ -33,14 +33,13 @@ public class RestrictionDoneDegreeModuleExecutor extends CurricularRuleExecutor 
     protected RuleResult executeWithRulesAndTemporaryEnrolment(final CurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
 	
 	final RestrictionDoneDegreeModule rule = (RestrictionDoneDegreeModule) curricularRule;
-	final DegreeModuleToEnrol moduleToEnrol = getDegreeModuleToEnrol(enrolmentContext, rule.getDegreeModuleToApplyRule());
+	final DegreeModuleToEnrol moduleToEnrol = searchDegreeModuleToEnrol(enrolmentContext, rule.getDegreeModuleToApplyRule());
 	
 	if (!rule.appliesToContext(moduleToEnrol.getContext())) {
 	    return RuleResult.createNA();
 	}
 
 	final CurricularCourse curricularCourse = (CurricularCourse) rule.getPrecedenceDegreeModule();
-	
 	if (!isApproved(enrolmentContext, curricularCourse)) {
 	    
 	    final ExecutionPeriod previous = enrolmentContext.getExecutionPeriod().getPreviousExecutionPeriod();

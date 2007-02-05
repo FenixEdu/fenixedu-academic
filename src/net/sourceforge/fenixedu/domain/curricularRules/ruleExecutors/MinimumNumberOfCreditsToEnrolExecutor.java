@@ -12,9 +12,9 @@ public class MinimumNumberOfCreditsToEnrolExecutor extends CurricularRuleExecuto
     protected RuleResult executeWithRules(CurricularRule curricularRule, EnrolmentContext enrolmentContext) {
 	
 	final MinimumNumberOfCreditsToEnrol rule = (MinimumNumberOfCreditsToEnrol) curricularRule;
-	final DegreeModuleToEnrol moduleToEnrol = getDegreeModuleToEnrol(enrolmentContext, rule.getDegreeModuleToApplyRule());
+	final DegreeModuleToEnrol moduleToEnrol = searchDegreeModuleToEnrol(enrolmentContext, rule.getDegreeModuleToApplyRule());
 
-	if (!rule.appliesToContext(moduleToEnrol.getContext())) {
+	if (ruleWasSelectedFromAnyModuleToEnrol(enrolmentContext, curricularRule) && !rule.appliesToContext(moduleToEnrol.getContext())) {
 	    return RuleResult.createNA();
 	}
 	

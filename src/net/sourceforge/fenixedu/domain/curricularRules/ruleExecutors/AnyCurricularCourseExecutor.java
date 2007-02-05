@@ -11,7 +11,7 @@ public class AnyCurricularCourseExecutor extends CurricularRuleExecutor {
     protected RuleResult executeWithRules(final CurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
 	
 	final AnyCurricularCourse rule = (AnyCurricularCourse) curricularRule;
-	final DegreeModuleToEnrol moduleToEnrol = getDegreeModuleToEnrol(enrolmentContext, rule.getDegreeModuleToApplyRule());
+	final DegreeModuleToEnrol moduleToEnrol = searchDegreeModuleToEnrol(enrolmentContext, rule.getDegreeModuleToApplyRule());
 
 	if (!rule.appliesToContext(moduleToEnrol.getContext())) {
 	    return RuleResult.createNA();

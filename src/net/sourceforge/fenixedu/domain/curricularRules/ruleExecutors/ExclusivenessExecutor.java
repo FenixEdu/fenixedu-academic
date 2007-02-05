@@ -13,7 +13,7 @@ public class ExclusivenessExecutor extends CurricularRuleExecutor {
     protected RuleResult executeWithRules(CurricularRule curricularRule, EnrolmentContext enrolmentContext) {
 	
 	final Exclusiveness rule = (Exclusiveness) curricularRule;
-	final DegreeModuleToEnrol moduleToEnrol = getDegreeModuleToEnrol(enrolmentContext, rule.getDegreeModuleToApplyRule());
+	final DegreeModuleToEnrol moduleToEnrol = searchDegreeModuleToEnrol(enrolmentContext, rule.getDegreeModuleToApplyRule());
 	
 	if (!rule.appliesToContext(moduleToEnrol.getContext())) {
 	    return RuleResult.createNA();

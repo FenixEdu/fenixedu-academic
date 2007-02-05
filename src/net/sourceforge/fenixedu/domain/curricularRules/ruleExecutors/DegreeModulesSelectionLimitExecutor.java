@@ -6,7 +6,6 @@ import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.DegreeModulesSelectionLimit;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
-import net.sourceforge.fenixedu.domain.enrolment.DegreeModuleToEnrol;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 
 public class DegreeModulesSelectionLimitExecutor extends CurricularRuleExecutor {
@@ -15,9 +14,9 @@ public class DegreeModulesSelectionLimitExecutor extends CurricularRuleExecutor 
     protected RuleResult executeWithRules(final CurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
 	
 	final DegreeModulesSelectionLimit rule = (DegreeModulesSelectionLimit) curricularRule;
-	final DegreeModuleToEnrol moduleToEnrol = getDegreeModuleToEnrol(enrolmentContext, rule.getDegreeModuleToApplyRule());
 
-	if (!rule.appliesToContext(moduleToEnrol.getContext())) {
+	if (ruleWasSelectedFromAnyModuleToEnrol(enrolmentContext, curricularRule)
+		&& !rule.appliesToContext(searchDegreeModuleToEnrol(enrolmentContext,rule.getDegreeModuleToApplyRule()).getContext())) {
 	    return RuleResult.createNA();
 	}
 	

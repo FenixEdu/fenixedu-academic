@@ -31,14 +31,6 @@ abstract public class CurricularRuleExecutor {
 	}
     }
 
-    protected DegreeModuleToEnrol getDegreeModuleToEnrol(final EnrolmentContext enrolmentContext, final DegreeModule degreeModule) {
-	final DegreeModuleToEnrol degreeModuleToEnrol = searchDegreeModuleToEnrol(enrolmentContext, degreeModule);
-	if (degreeModuleToEnrol != null) {
-	    return degreeModuleToEnrol;
-	}
-	throw new DomainException("error.curricularRules.RuleExecutor.cannot.find.degreeModuleToEnrol");
-    }
-    
     protected DegreeModuleToEnrol searchDegreeModuleToEnrol(final EnrolmentContext enrolmentContext, final DegreeModule degreeModule) {
 	for (final DegreeModuleToEnrol degreeModuleToEnrol : enrolmentContext.getDegreeModuleToEnrol()) {
 	    if (degreeModuleToEnrol.getContext().getChildDegreeModule() == degreeModule) {
@@ -46,6 +38,10 @@ abstract public class CurricularRuleExecutor {
 	    }
 	}
 	return null;
+    }
+    
+    protected boolean ruleWasSelectedFromAnyModuleToEnrol(final EnrolmentContext enrolmentContext, final CurricularRule curricularRule) {
+	return searchDegreeModuleToEnrol(enrolmentContext, curricularRule.getDegreeModuleToApplyRule()) != null;
     }
     
     protected CurriculumModule searchCurriculumModule(final EnrolmentContext enrolmentContext, final DegreeModule degreeModule) {

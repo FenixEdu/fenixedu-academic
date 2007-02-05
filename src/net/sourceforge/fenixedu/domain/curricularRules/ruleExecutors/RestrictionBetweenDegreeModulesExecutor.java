@@ -12,7 +12,7 @@ public class RestrictionBetweenDegreeModulesExecutor extends CurricularRuleExecu
     protected RuleResult executeWithRules(final CurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
 	
 	final RestrictionBetweenDegreeModules rule = (RestrictionBetweenDegreeModules) curricularRule;
-	final DegreeModuleToEnrol moduleToEnrol = getDegreeModuleToEnrol(enrolmentContext, rule.getDegreeModuleToApplyRule());
+	final DegreeModuleToEnrol moduleToEnrol = searchDegreeModuleToEnrol(enrolmentContext, rule.getDegreeModuleToApplyRule());
 	
 	if (!rule.appliesToContext(moduleToEnrol.getContext())) {
 	    return RuleResult.createNA();
