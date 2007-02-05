@@ -1,7 +1,9 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
-<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
+
+<html:xhtml/>
 
 
 <bean:define id="institutionUrl" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/></bean:define>
@@ -95,6 +97,35 @@
 		</logic:empty>
 		<logic:notPresent name="doNotRenderDeadLines">
 					<table class="box" cellspacing="0" style="float: right;">
+                        <logic:present name="announcements">
+                            <logic:notEmpty name="announcements">
+                                <tr>
+                                    <td class="box_header">
+                                        <strong><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.latestAnnouncements"/></strong>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="box_cell">
+                                        <bean:define id="degreeId" name="degree" property="idInternal"/>
+                                        <logic:iterate id="announcement" name="announcements">
+                                            <p style="padding-bottom: 0.9em;">
+                                                <fr:view name="announcement" property="lastModification" layout="no-time"/><br/> 
+                                                
+                                                <bean:define id="announcementId" name="announcement" property="idInternal"/>
+                                                <html:link page="<%= String.format("/showDegreeAnnouncements.do?method=viewAnnouncement&amp;degreeID=%s&amp;announcementId=%s", degreeId, announcementId) %>">
+                                                    <fr:view name="announcement" property="subject"/>
+                                                </html:link>
+                                            </p>
+                                        </logic:iterate>
+                                        <p class="aright">
+                                            <html:link page="<%= String.format("/showDegreeAnnouncements.do?method=viewAnnouncements&amp;degreeID=%s", degreeId) %>">
+                                                <bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.latestAnnouncements.showAll"/>
+                                            </html:link>
+                                        </p>
+                                    </td>
+                                </tr>
+                            </logic:notEmpty>
+                        </logic:present>
 						<tr>
 							<td class="box_header">
 								<strong>

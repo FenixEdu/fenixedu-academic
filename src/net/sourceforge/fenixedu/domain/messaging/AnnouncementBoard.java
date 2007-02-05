@@ -142,13 +142,14 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
     }
 
     public List<Announcement> getActiveAnnouncements() {
-	final List<Announcement> activeAnnouncements = new ArrayList<Announcement>();
-	for (final Announcement announcement : getAnnouncementsSet()) {
-	    if (announcement.isActive() && announcement.getVisible()) {
-		activeAnnouncements.add(announcement);
-	    }
-	}
-	return activeAnnouncements;
+        	final List<Announcement> activeAnnouncements = new ArrayList<Announcement>();
+        	for (final Announcement announcement : getAnnouncementsSet()) {
+        	    if (announcement.isActive() && announcement.getVisible()) {
+        	        activeAnnouncements.add(announcement);
+        	    }
+        	}
+            
+        	return activeAnnouncements;
     }
 
     public Collection<Announcement> getVisibleAnnouncements() {
@@ -189,15 +190,15 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
 	}
     }
     
-    private boolean isPublicToRead() {
+    public boolean isPublicToRead() {
 	return getReaders() == null;
     }
     
-    private boolean isPublicToWrite() {
+    public boolean isPublicToWrite() {
 	return getWriters() == null;
     }
     
-    private boolean isPublicToManage() {
+    public boolean isPublicToManage() {
 	return getManagers() == null;
     }
     

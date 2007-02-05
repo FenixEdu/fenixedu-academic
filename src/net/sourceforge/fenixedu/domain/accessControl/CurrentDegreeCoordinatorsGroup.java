@@ -2,9 +2,9 @@ package net.sourceforge.fenixedu.domain.accessControl;
 
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.WrongTypeOfArgumentException;
@@ -32,9 +32,10 @@ public class CurrentDegreeCoordinatorsGroup extends DegreeGroup {
         Degree degree = getDegree();
 
         Set<Person> persons = buildSet();
-        for (Teacher teacher : degree
-                .getCurrentResponsibleCoordinatorsTeachers()) {
-            persons.add(teacher.getPerson());
+        
+        for (Coordinator coordinator: degree
+                .getCurrentResponsibleCoordinators()) {
+            persons.add(coordinator.getPerson());
         }
 
         return persons;

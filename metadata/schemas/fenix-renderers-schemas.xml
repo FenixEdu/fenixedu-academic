@@ -647,6 +647,10 @@
 		<slot name="idDocumentType"/>
 		<slot name="documentIdNumber"/>
 	</schema>
+
+    <schema name="group.description" type="java.lang.Object">
+        <slot name="class" layout="label"/>
+    </schema>
 		
 	&researcher;
 	&markSheet;

@@ -36,6 +36,12 @@
 				</html:link> 
 			</li>
 		</logic:equal>
+        <li>
+            <html:link page="<%="/sendMail.do?method=prepare&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString() %>">
+                <bean:message key="link.coordinator.sendMail" />
+            </html:link>
+        </li>
+        
 		<logic:equal name="infoExecutionDegree" property="bolonha" value="false">
 			<li>
 				<html:link page="<%="/degreeCurricularPlanManagement.do?method=showActiveCurricularCourses&amp;degreeCurricularPlanID=" + degreeCurricularPlanID %>">
@@ -54,9 +60,9 @@
 				</html:link>
 			</li>
 	       	<li>
-	        	<html:link page="<%= "/manageFinalDegreeWork.do?method=showChooseExecutionDegreeForm&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString()%>">
+	        	  <html:link page="<%= "/manageFinalDegreeWork.do?method=showChooseExecutionDegreeForm&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString()%>">
 		        	<bean:message key="link.coordinator.managefinalDegreeWorks" />
-		        </html:link>
+	          </html:link>
 	        </li>
 	
 			<li class="navheader">
@@ -64,7 +70,7 @@
 			</li>
 			<li>
 				<html:link page="<%="/evaluation/evaluationsCalendar.faces?degreeCurricularPlanID=" + degreeCurricularPlanID.toString() %>">
-		        	<bean:message key="link.calendar" />
+		        	 <bean:message key="link.calendar" />
 		        </html:link>
 			</li>
 	<%--

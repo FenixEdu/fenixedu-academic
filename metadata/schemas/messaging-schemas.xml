@@ -123,3 +123,30 @@
         <property name="bundle" value="MESSAGING_RESOURCES"/>
     </slot>
 </schema>
+
+<schema name="MailBean.compose" type="net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.mailSender.MailBean" bundle="MESSAGING_RESOURCES">
+    <slot name="fromName" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+        <property name="size" value="40"/>
+    </slot>
+    <slot name="fromAddress" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+        <property name="size" value="40"/>
+    </slot>
+    <slot name="receiversGroup" layout="menu-select">
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.mailSender.MailBeanGroupProvider" />
+        <property name="eachSchema" value="group.description"/>
+        <property name="eachLayout" value="values"/>
+        <property name="saveOptions" value="true"/>
+    </slot>
+    <slot name="receiversOfCopy">
+        <property name="size" value="60"/>
+    </slot>
+    <slot name="copyToSenderRequested"/>
+    <slot name="subject" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+        <property name="size" value="60"/>
+    </slot>
+    <slot name="message" layout="longText">
+        <property name="columns" value="60"/>
+        <property name="rows" value="20"/>
+    </slot>
+</schema>
+

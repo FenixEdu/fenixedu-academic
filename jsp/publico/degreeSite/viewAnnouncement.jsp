@@ -22,9 +22,17 @@
         <html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;degreeID=" + degreeId %>">
             <bean:write name="degree" property="sigla"/>
         </html:link>
+
+        &nbsp;&gt;&nbsp;
+        <html:link page="<%= "/showDegreeAnnouncements.do?method=viewAnnouncements&amp;degreeID=" + degreeId %>">
+            <bean:message key="public.degree.information.label.announcements"  bundle="PUBLIC_DEGREE_INFORMATION" />
+        </html:link>
+        &nbsp;&gt;&nbsp;
+        
+        <logic:present name="announcement">
+            <fr:view name="announcement" property="subject" type="net.sourceforge.fenixedu.util.MultiLanguageString"/>
+        </logic:present>
     </logic:present>
-    &nbsp;&gt;&nbsp;
-    <bean:message key="public.degree.information.label.announcements"  bundle="PUBLIC_DEGREE_INFORMATION" />
 </div>
 
 <!-- COURSE NAME -->

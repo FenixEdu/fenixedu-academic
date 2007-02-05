@@ -215,7 +215,7 @@ if (month != null && year!=null)
                 }
                     
                 if (sortCriteria == null) {
-                    sortCriteria = "subject";
+                    sortCriteria = "creationDate=desc";
                 }
 
                 String returnMethod = (String) pageContext.findAttribute("returnMethod");

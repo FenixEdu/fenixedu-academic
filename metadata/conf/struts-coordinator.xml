@@ -449,13 +449,15 @@
 
 	  </action>
 	  	  		
- 		<action path="/mailSender"
-            type="net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.mailSender.SendMailToDegreeCurricularPlanStudents"
+ 		<action path="/sendMail"
+            type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.SendEmail"
             parameter="method"
             name="sendMailForm"
             scope="request">
             
-            <forward name="sendMail" path="sendMail"/>
+            <forward name="compose-mail" path="sendMail"/>
+            <forward name="success" path="sendMail"/>
+            <forward name="problem" path="sendMail"/>
         </action>
         
 
@@ -915,6 +917,7 @@
     <message-resources parameter="resources.CmsResources" key="CMS_RESOURCES" null="false" />
    	<message-resources parameter="resources.BolonhaManagerResources" key="BOLONHA_MANAGER_RESOURCES" null="false"/>
 	<message-resources parameter="resources.AcademicAdminOffice" key="ACADEMIC_OFFICE_RESOURCES" null="false"/>
+	<message-resources parameter="resources.MessagingResources" key="MESSAGING_RESOURCES" null="false"/>
     
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">

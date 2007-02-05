@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain;
 import java.lang.ref.SoftReference;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Hashtable;
@@ -615,6 +616,32 @@ public class Degree extends Degree_Base {
 	return result;
     }
 
+    public Collection<Coordinator> getCurrentResponsibleCoordinators() {
+        for (ExecutionYear ey = ExecutionYear.readCurrentExecutionYear(); ey != null; ey = ey.getNextExecutionYear()) {
+            Collection<Coordinator> coordinators = getResponsibleCoordinators(ExecutionYear.readCurrentExecutionYear());
+            
+            if (! coordinators.isEmpty()) {
+                return coordinators;
+            }
+        }
+        
+        return Collections.emptyList();
+    }
+    
+    public Collection<Coordinator> getResponsibleCoordinators(ExecutionYear executionYear) {
+        List<Coordinator> coordinators = new ArrayList<Coordinator>();
+        
+        for (DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlansForYear(executionYear)) {
+            ExecutionDegree executionDegree = degreeCurricularPlan.getExecutionDegreeByYear(executionYear);
+            
+            if (executionDegree != null) {
+                coordinators.addAll(executionDegree.getCoordinatorsList());
+            }
+        }
+        
+        return coordinators;
+    }
+    
     public Collection<Teacher> getResponsibleCoordinatorsTeachers(ExecutionYear executionYear) {
 	Set<Teacher> result = new TreeSet<Teacher>(Teacher.TEACHER_COMPARATOR_BY_CATEGORY_AND_NUMBER);
 	for (final DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlans()) {

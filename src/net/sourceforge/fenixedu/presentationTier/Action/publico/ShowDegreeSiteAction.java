@@ -21,6 +21,9 @@ import net.sourceforge.fenixedu.domain.DegreeInfo;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.messaging.Announcement;
+import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -38,6 +41,8 @@ import org.apache.struts.action.DynaActionForm;
 
 public class ShowDegreeSiteAction extends FenixContextDispatchAction {
 
+    public static int ANNOUNCEMENTS_NUMBER = 3;
+    
     public ActionForward showDescription(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
         prepareInfo(request);
 
@@ -61,6 +66,23 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
         request.setAttribute("degreeID", degreeId);
         request.setAttribute("degree", degree);
 
+        Unit unit = degree.getUnit();
+        if (unit != null) {
+            AnnouncementBoard board = null;
+            for (AnnouncementBoard unitBoard : unit.getBoards()) {
+                if (unitBoard.isPublicToRead()) {
+                    board = unitBoard;
+                    break;
+                }
+            }
+            
+            if (board != null) {
+                List<Announcement> announcements = board.getActiveAnnouncements();
+                announcements = announcements.subList(0, Math.min(announcements.size(), ANNOUNCEMENTS_NUMBER));
+                request.setAttribute("announcements", announcements);
+            }
+        }
+        
         // execution year
         ExecutionYear executionYearToShow = getExecutionYearToShow(request, degree);
         request.setAttribute("executionYear", executionYearToShow);

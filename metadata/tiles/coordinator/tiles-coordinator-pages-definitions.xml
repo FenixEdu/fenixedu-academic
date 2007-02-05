@@ -215,7 +215,7 @@
 
 
 	<definition name="sendMail" extends="definition.coordinator.two-column">
-		<put name="body" value="/cms/messaging/sendMail.jsp" />
+		<put name="body" value="/coordinator/composeMail.jsp" />
 	</definition>
 
     <!-- ===================== SITE ====================== -->
