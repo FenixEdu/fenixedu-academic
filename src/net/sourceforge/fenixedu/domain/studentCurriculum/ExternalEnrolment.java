@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.studentCurriculum;
 
+import java.util.Comparator;
+
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExternalCurricularCourse;
 import net.sourceforge.fenixedu.domain.IEnrolment;
@@ -11,7 +13,14 @@ import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.joda.time.DateTime;
 
-public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolment{
+public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolment {
+    
+    public final static Comparator<ExternalEnrolment> COMPARATOR_BY_NAME = new Comparator<ExternalEnrolment>() {
+	public int compare(ExternalEnrolment o1, ExternalEnrolment o2) {
+	    int result = o1.getName().compareTo(o2.getName());
+	    return (result != 0) ? result : o1.getIdInternal().compareTo(o2.getIdInternal());
+	}
+    };
     
     protected ExternalEnrolment() {
 	super();
@@ -51,4 +60,5 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
 	removeStudent();
 	super.deleteDomainObject();
     }
+
 }
