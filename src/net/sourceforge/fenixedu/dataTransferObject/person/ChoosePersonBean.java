@@ -6,6 +6,8 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 
+import org.joda.time.YearMonthDay;
+
 public class ChoosePersonBean implements Serializable {
 
     private DomainReference<Person> person;
@@ -13,6 +15,8 @@ public class ChoosePersonBean implements Serializable {
     private String identificationNumber;
 
     private IDDocumentType documentType;
+
+    private YearMonthDay dateOfBirth;
 
     public ChoosePersonBean() {
 	super();
@@ -45,6 +49,14 @@ public class ChoosePersonBean implements Serializable {
 
     public void setIdentificationNumber(String identificationNumber) {
 	this.identificationNumber = identificationNumber;
+    }
+
+    public YearMonthDay getDateOfBirth() {
+	return dateOfBirth;
+    }
+
+    public void setDateOfBirth(YearMonthDay dateOfBirth) {
+	this.dateOfBirth = dateOfBirth;
     }
 
 }
