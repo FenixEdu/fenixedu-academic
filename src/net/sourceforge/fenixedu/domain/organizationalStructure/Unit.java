@@ -1048,4 +1048,27 @@ public class Unit extends Unit_Base {
 	result.addAll(getExternalCurricularCoursesSet());
 	return result;
     }
+    
+    @Override
+    public boolean hasCompetenceCourses(final CompetenceCourse competenceCourse) {
+	switch (getType()) {
+	case DEPARTMENT:
+	    return searchCompetenceCourseInChilds(competenceCourse, PartyTypeEnum.SCIENTIFIC_AREA);
+	case SCIENTIFIC_AREA:
+	    return searchCompetenceCourseInChilds(competenceCourse, PartyTypeEnum.COMPETENCE_COURSE_GROUP);
+	case COMPETENCE_COURSE_GROUP:
+	    return super.hasCompetenceCourses(competenceCourse);
+	default:
+	    return false;
+	}
+    }
+
+    private boolean searchCompetenceCourseInChilds(final CompetenceCourse competenceCourse, final PartyTypeEnum type) {
+	for (final Unit unit : getSubUnits(type)) {
+	    if (unit.hasCompetenceCourses(competenceCourse)) {
+		return true;
+	    }
+	}
+	return false;
+    }
 }
