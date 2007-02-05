@@ -23,7 +23,8 @@
 	<bean:define id="method" value="editSchedule"/>
 </logic:notEmpty>		
 
-	<fr:form action="<%="/assiduousnessParametrization.do?method="+method.toString()%>" encoding="multipart/form-data">
+	<fr:form action="/assiduousnessParametrization.do" encoding="multipart/form-data">
+	<html:hidden property="method" value="<%= method.toString() %>"/>
 	<table class="tstyle3 thright thlight mbottom05">
 		<tr>
 			<th><bean:message key="label.acronym" bundle="ASSIDUOUSNESS_RESOURCES"/>:<span class="required">*</span></th>
@@ -192,6 +193,9 @@
 		<p class="mtop1">
 			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="invisible">
 				<bean:message key="button.confirm" />
+			</html:submit>
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="invisible" onclick="this.form.method.value='cancelSchedule'">
+				<bean:message key="button.cancel" />
 			</html:submit>
 		</p>
 	</fr:form>

@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.domain.assiduousness.util.WorkScheduleTypeFactor
 import net.sourceforge.fenixedu.domain.assiduousness.util.WorkScheduleTypeFactory.WorkScheduleTypeFactoryCreator;
 import net.sourceforge.fenixedu.domain.assiduousness.util.WorkScheduleTypeFactory.WorkScheduleTypeFactoryEditor;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -142,6 +141,12 @@ public class AssiduousnessParametrizationDispatchAction extends FenixDispatchAct
         }
         request.setAttribute("workScheduleTypeFactory", workScheduleTypeFactory);
         return mapping.findForward("insert-schedule");
+    }
+
+    public ActionForward cancelSchedule(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
+        request.setAttribute("workScheduleList", getScheduleList());
+        return mapping.findForward("show-all-schedules");
     }
 
     private List<WorkScheduleType> getScheduleList() {

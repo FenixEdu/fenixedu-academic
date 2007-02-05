@@ -22,6 +22,9 @@
 	    	<form-property name="method" type="java.lang.String" />
 	    	<form-property name="addEmployee" type="java.lang.String" />
 	    </form-bean>
+   	    <form-bean name="parametrizationForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+	    	<form-property name="method" type="java.lang.String" />
+	    </form-bean>
 	</form-beans>
 	
 	<!-- ========== Global Forward Definitions =============================== -->
@@ -66,7 +69,8 @@
 	    		type="net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness.AssiduousnessParametrizationDispatchAction" 
 				parameter="method"
 				scope="request"
-				validate="true">
+				validate="true"
+				name="parametrizationForm">
 				<exception type="net.sourceforge.fenixedu.domain.exceptions.DomainException" key="error.justificationMotiveAcronymAlreadyExists" 
 				handler="net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler"/> 
 				<forward name="edit-justification-motive" path="edit-justification-motive"/>
