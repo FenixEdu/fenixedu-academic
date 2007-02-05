@@ -11,12 +11,11 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
-import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.RuleResult;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
-import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
+import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
@@ -101,12 +100,20 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
 	}
 	
 	if (hasCurricularPeriodOrder()) {
-	    
+	    for (int year = getMinimumYear().intValue() ; year <= getMaximumYear().intValue() ; year++) {
+		if (context.containsSemesterAndCurricularYear(getCurricularPeriodOrder(), Integer.valueOf(year), RegimeType.SEMESTRIAL)) {
+		    return true;
+		}
+	    }
 	} else {
-	    
+	    for (int year = getMinimumYear().intValue() ; year <= getMaximumYear().intValue() ; year++) {
+		if (context.containsSemesterAndCurricularYear(Integer.valueOf(1), Integer.valueOf(year), RegimeType.SEMESTRIAL)
+			|| context.containsSemesterAndCurricularYear(Integer.valueOf(2), Integer.valueOf(year), RegimeType.SEMESTRIAL)) {
+		    return true;
+		}
+	    }
 	}
-	//TODO:
-	return true;
+	return false;
     }
     
     @Override
@@ -132,7 +139,7 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
             labelList.add(new GenericPair<Object, Boolean>("º ", false));
             labelList.add(new GenericPair<Object, Boolean>("SEMESTER", true));
         }
-        if (getMinimumYear() != null && getMaximumYear() != null) {
+        if (hasYearsLimit()) {
             if (getMinimumYear().compareTo(getMaximumYear()) == 0) {
                 labelList.add(new GenericPair<Object, Boolean>(", ", false));
                 labelList.add(new GenericPair<Object, Boolean>("label.of", true));
@@ -156,10 +163,10 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
         
         labelList.add(new GenericPair<Object, Boolean>(", ", false));
         if (getDegree() == null) {
-            if (getBolonhaDegreeType() == null) {
+            if (!hasBolonhaDegreeType()) {
                 labelList.add(new GenericPair<Object, Boolean>("label.of", true));
                 labelList.add(new GenericPair<Object, Boolean>(" ", false));
-                labelList.add(new GenericPair<Object, Boolean>("IST", false));
+                labelList.add(new GenericPair<Object, Boolean>("institution.name.abbreviation", true));
             } else {
                 labelList.add(new GenericPair<Object, Boolean>("label.of1", true));
                 labelList.add(new GenericPair<Object, Boolean>(" ", false));
@@ -195,17 +202,7 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
         removeDepartmentUnit();
     }
 
-    @Override
-    public RuleResult evaluate(final EnrolmentContext enrolmentContext) {
-        // TODO Auto-generated method stub
-        /**
-         * ? if getDegree() == null 
-         *      ? getBolonhaDegreeType() == null ? any degree from IST
-         *      ? getBolonhaDegreeType() != null ? any degree from DEGREE / MASTER_DEGREE / INTEGRATED_MASTER_DEGREE
-         * ? else use selected degree
-         * 
-         * if departmentUnit != null ? curricular courses from competence courses that belong to that department      
-         */
-        return null;
+    public boolean hasBolonhaDegreeType() {
+	return getBolonhaDegreeType() != null;
     }
 }
