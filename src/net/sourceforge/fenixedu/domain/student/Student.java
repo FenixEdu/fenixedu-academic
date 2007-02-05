@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.dataTransferObject.student.StudentStatuteBean;
@@ -27,6 +28,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.StudentPersonalDataAuthorizationChoice;
@@ -515,6 +517,12 @@ public class Student extends Student_Base {
 	    }
 	}
 	return null;
+    }
+    
+    public SortedSet<ExternalEnrolment> getSortedExternalEnrolments() {
+	final SortedSet<ExternalEnrolment> result = new TreeSet<ExternalEnrolment>(ExternalEnrolment.COMPARATOR_BY_NAME);
+	result.addAll(getExternalEnrolmentsSet());
+        return result;
     }
 
 }
