@@ -7,12 +7,10 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InterceptingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceMultipleException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InterceptingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidTimeIntervalServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.sop.CreateLesson;
 import net.sourceforge.fenixedu.applicationTier.Servico.sop.EditLesson;
@@ -28,7 +26,6 @@ import net.sourceforge.fenixedu.dataTransferObject.comparators.RoomAlphabeticCom
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InterceptingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidTimeIntervalActionException;
@@ -162,7 +159,7 @@ public class ManageLessonDA extends
             if (action != null && action.equals("edit") && lessonBeingEdited.getInfoRoomOccupation() != null) {
                 oldRoomOccupationId = lessonBeingEdited.getInfoRoomOccupation().getIdInternal();
             }
-            Integer frequency = new Integer(RoomOccupation.DIARIA);
+            Integer frequency = null;
             if (quinzenal.booleanValue()) {
                 frequency = new Integer(RoomOccupation.QUINZENAL);
             }
@@ -364,11 +361,7 @@ public class ManageLessonDA extends
     public ActionForward deleteLesson(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        HttpSession sessao = request.getSession(false);
-
-        IUserView userView = (IUserView) sessao.getAttribute("UserView");
-
-        List<Integer> lessons = new ArrayList<Integer>();
+	List<Integer> lessons = new ArrayList<Integer>();
         lessons.add(Integer.valueOf(request.getParameter(SessionConstants.LESSON_OID)));
 
         final Object argsApagarAula[] = { lessons };

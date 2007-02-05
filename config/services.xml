@@ -11450,4 +11450,30 @@
         	<chain name="AcademicAdministrativeOfficeAuthorization"></chain>
         </filterChains>     
     </service>   
+    <service>
+    	<name>CreateOccupationPeriod</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.CreateOccupationPeriod</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>        	
+        </filterChains>     
+    </service>
+	<service>
+    	<name>CreateRoomsPunctualScheduling</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.CreateRoomsPunctualScheduling</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+			<chain name="TimeTableManagerAuthorization" />
+        </filterChains>     
+    </service>
+	<service>
+    	<name>DeleteGenericEvent</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.DeleteGenericEvent</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+			<chain name="TimeTableManagerAuthorization" />
+        </filterChains>     
+    </service>
 </serviceDefinitions>

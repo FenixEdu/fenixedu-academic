@@ -377,7 +377,7 @@ public class SummariesControlAction extends FenixDispatchAction {
         return departments;
     }
 
-    private void readAndSaveAllDepartments(HttpServletRequest request) throws FenixFilterException,
+    protected void readAndSaveAllDepartments(HttpServletRequest request) throws FenixFilterException,
             FenixServiceException {
         Collection<Department> allDepartments = rootDomainObject.getDepartments();
         List<LabelValueBean> departments = getAllDepartments(allDepartments);

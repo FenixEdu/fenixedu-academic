@@ -39,7 +39,7 @@ public class CalendarUtil {
         return date1String.equals(date2String);
     }
 
-    private static String date2string(Calendar date) {
+    public static String date2string(Calendar date) {
         return DateFormatUtils.format(date.getTime(), "yyyyMMdd");
     }
 
@@ -51,6 +51,7 @@ public class CalendarUtil {
         
         boolean doesNotIntersect = (endTime2String.compareTo(startTime1String) <= 0)
                 || (startTime2String.compareTo(endTime1String) >= 0);
+        
         return !doesNotIntersect;
     }
 
@@ -59,7 +60,7 @@ public class CalendarUtil {
         return intersectTimes(startTime1.getTime(), endTime1.getTime(), startTime2.getTime(), endTime2.getTime());
     }
 
-    private static String time2string(Date time) {
+    public static String time2string(Date time) {
         return DateFormatUtils.format(time, "HHmmss");
     }
 

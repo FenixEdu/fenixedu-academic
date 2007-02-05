@@ -92,6 +92,8 @@
 <!ENTITY domainObjectActionLogs SYSTEM "repository-domainObjectActionLogs.xml">
 <!ENTITY academicCalendar SYSTEM "repository_academic_calendar.xml">
 <!ENTITY site SYSTEM "repository_site.xml">
+<!ENTITY genericEvent SYSTEM "repository_generic_event.xml">
+
 ]>
 <descriptor-repository version="1.0" isolation-level="repeatable-read">
 
@@ -188,5 +190,6 @@
     &newTests;
     &domainObjectActionLogs;
     &academicCalendar;
+    &genericEvent;
     
 </descriptor-repository>

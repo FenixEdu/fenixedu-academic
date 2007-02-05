@@ -219,47 +219,14 @@
 
    
 <!-- Definitions for net.sourceforge.fenixedu.domain.space.RoomOccupation -->
-   <class-descriptor class="net.sourceforge.fenixedu.domain.space.RoomOccupation"
-   	  table="ROOM_OCCUPATION"
-   >
-      
-      
-      
-     
-      
-      
-     
-           
-      
-      
-      
-      
-      
-      
-      
-   </class-descriptor>
+<class-descriptor class="net.sourceforge.fenixedu.domain.space.RoomOccupation" table="ROOM_OCCUPATION">     
+
+</class-descriptor>
 
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.OccupationPeriod -->
-   <class-descriptor class="net.sourceforge.fenixedu.domain.OccupationPeriod"
-   	  table="PERIOD"
-   >
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-
-   </class-descriptor>
+<class-descriptor class="net.sourceforge.fenixedu.domain.OccupationPeriod" table="PERIOD">
+</class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.Evaluation -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.Evaluation" table="EVALUATION">

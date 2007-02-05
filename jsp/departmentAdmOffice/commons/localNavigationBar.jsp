@@ -21,6 +21,11 @@
 				<bean:message key="link.teacherService" />
 			</html:link>
 		</li>
+		<li>
+			<html:link page="/summariesControl.do?method=prepareSummariesControl">
+				<bean:message key="link.summaries.control" />
+			</html:link>
+		</li>		
 	</ul>
 	
 	<ul>

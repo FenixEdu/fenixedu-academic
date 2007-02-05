@@ -9,8 +9,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.beanutils.BeanComparator;
-
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
@@ -20,6 +18,8 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.TipoSala;
+
+import org.apache.commons.beanutils.BeanComparator;
 
 public class OldRoom extends OldRoom_Base {
 
@@ -32,15 +32,15 @@ public class OldRoom extends OldRoom_Base {
     }
 
     /** @deprecated */
-    public void createRoomOccupation(OccupationPeriod period, Calendar startTime, Calendar endTime,
+    public void createRoomOccupationForWrittenEvaluations(OccupationPeriod period, Calendar startTime, Calendar endTime,
 	    DiaSemana dayOfWeek, Integer frequency, Integer week, WrittenEvaluation writtenEvaluation) {
-	boolean isFree = isFree(period, startTime, endTime, dayOfWeek, RoomOccupation.DIARIA, null);
+	
+	boolean isFree = isFree(period, startTime, endTime, dayOfWeek, null, null);
 	if (!isFree) {
 	    throw new DomainException("error.roomOccupied");
 	}
 
-	RoomOccupation roomOccupation = new RoomOccupation(this, startTime, endTime, dayOfWeek,
-		RoomOccupation.DIARIA);
+	RoomOccupation roomOccupation = new RoomOccupation(this, startTime, endTime, dayOfWeek, frequency);
 	roomOccupation.setPeriod(period);
 	roomOccupation.setWrittenEvaluation(writtenEvaluation);
     }
@@ -60,9 +60,9 @@ public class OldRoom extends OldRoom_Base {
     /** @deprecated */
     public boolean isFree(OccupationPeriod period, Calendar startTime, Calendar endTime,
 	    DiaSemana dayOfWeek, Integer frequency, Integer week) {
+	
 	for (final RoomOccupation roomOccupation : getRoomOccupations()) {
-	    if (roomOccupation.roomOccupationForDateAndTime(period, startTime, endTime, dayOfWeek,
-		    frequency, week, this)) {
+	    if (roomOccupation.roomOccupationForDateAndTime(period, startTime, endTime, dayOfWeek, frequency, week, this)) {
 		return false;
 	    }
 	}
@@ -72,10 +72,10 @@ public class OldRoom extends OldRoom_Base {
     /** @deprecated */
     public Set<RoomOccupation> findOccupationSet(OccupationPeriod period, Calendar startTime,
 	    Calendar endTime, DiaSemana dayOfWeek, Integer frequency, Integer week) {
+	
 	final Set<RoomOccupation> roomOccupations = new HashSet<RoomOccupation>();
 	for (final RoomOccupation roomOccupation : getRoomOccupations()) {
-	    if (roomOccupation.roomOccupationForDateAndTime(period, startTime, endTime, dayOfWeek,
-		    frequency, week, this)) {
+	    if (roomOccupation.roomOccupationForDateAndTime(period, startTime, endTime, dayOfWeek, frequency, week, this)) {
 		roomOccupations.add(roomOccupation);
 	    }
 	}
@@ -111,6 +111,7 @@ public class OldRoom extends OldRoom_Base {
     public static Set<OldRoom> findOldRoomsBySpecifiedArguments(String nome, String edificio,
 	    Integer piso, Integer tipo, Integer capacidadeNormal, Integer capacidadeExame)
 	    throws ExcepcaoPersistencia {
+	
 	final Set<OldRoom> oldRooms = OldRoom.getOldRooms();
 	final Set<OldRoom> result = new HashSet<OldRoom>();
 	for (OldRoom room : oldRooms) {

@@ -29,6 +29,7 @@
     <!ENTITY student SYSTEM "student-schemas.xml">
     <!ENTITY department SYSTEM "department-schemas.xml">
     <!ENTITY manager SYSTEM "manager-schemas.xml">
+    <!ENTITY sop SYSTEM "sop-schemas.xml">
 ]>
 
 <schemas>
@@ -677,5 +678,6 @@
     &student;
     &department;
     &manager;
+    &sop;
     
 </schemas>

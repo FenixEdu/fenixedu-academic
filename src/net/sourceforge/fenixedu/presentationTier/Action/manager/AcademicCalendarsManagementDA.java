@@ -166,22 +166,7 @@ public class AcademicCalendarsManagementDA extends FenixDispatchAction {
 	final Integer calendarID = Integer.valueOf(calendarIDString);
 	return rootDomainObject.readAcademicCalendarByOID(calendarID);
     }
-    
-//    private YearMonthDay getFirstDayFromParameter(final HttpServletRequest request) {
-//	final String firstDayString = request.getParameter("firstDay");
-//	if (!StringUtils.isEmpty(firstDayString)) {
-//	    int day = Integer.parseInt(firstDayString.substring(0, 2));
-//	    int month = Integer.parseInt(firstDayString.substring(2, 4));
-//	    int year = Integer.parseInt(firstDayString.substring(4, 8));
-//
-//	    if (year == 0 || month == 0 || day == 0) {
-//		return null;
-//	    }
-//	    return new YearMonthDay(year, month, day);
-//	}
-//	return null;
-//    }
-    
+        
     private AcademicCalendarEntry getAcademicCalendarEntryFromParameter(final HttpServletRequest request) {
 	final String calendarIDString = request.getParameter("academicCalendarEntryID");
 	final Integer calendarID = Integer.valueOf(calendarIDString);

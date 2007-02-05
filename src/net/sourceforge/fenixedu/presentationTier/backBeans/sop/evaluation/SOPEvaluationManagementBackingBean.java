@@ -45,7 +45,6 @@ import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context.DegreeModuleScopeContext;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
-import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -976,7 +975,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         examEndTime.set(Calendar.MILLISECOND, 0);
 
         Object args[] = { examDate, examDate, examStartTime, examEndTime, dayOfWeek, null, null,
-                Integer.valueOf(RoomOccupation.DIARIA), null, Boolean.FALSE };
+                null, null, Boolean.FALSE };
         List<InfoRoom> availableInfoRoom = (List<InfoRoom>) ServiceUtils.executeService(this
                 .getUserView(), "ReadAvailableRoomsForExam", args);
 

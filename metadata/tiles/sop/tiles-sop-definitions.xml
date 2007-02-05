@@ -50,4 +50,15 @@
       <put name="body" value="/commons/blank.jsp" />
       <put name="footer" value="/copyright.jsp" />
 	</definition>
+	
+	<definition name="definition.sop.roomsManagement" extends="df.layout.two-column">
+	  <put name="title" value="SOP" />
+	  <put name="serviceName" value="Serviço de Organização Pedagógica" />
+	  <put name="navGeral" value="/sop/commonNavGeralSopRoom.jsp" />
+	  <put name="navLocal" value="/sop/commonNavLocalSalasSop.jsp" />
+	  <put name="body-context" value="/commons/blank.jsp"/>  
+	  <put name="body" value="/sop/principalSalas_bd.jsp" />
+	  <put name="footer" value="/copyright.jsp" />
+	</definition>
+	
 </tiles-definitions>

@@ -14,7 +14,10 @@ public interface GanttDiagramEvent {
     
     public int getEventOffsetForGanttDiagram();  
     
+    public String getEventPeriodForGanttDiagram();
+    
     public String getEventObservationsForGanttDiagram();
     
     public String getEventIdentifierForGanttDiagram();
+        
 }

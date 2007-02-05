@@ -22,8 +22,9 @@ import net.sourceforge.fenixedu.util.TipoSala;
 public class ReadAvailableRoomsForExam extends Service {
 
     public List run(Calendar periodStart, Calendar periodEnd, Calendar startTime, Calendar endTime,
-            DiaSemana dayOfWeek, Integer roomOccupationToRemoveId, Integer normalCapacity,
+            DiaSemana dayOfWeek, Integer roomOccupationToRemoveId, Integer normalCapacity,            
             Integer frequency, Integer weekOfStart, Boolean withLabs) throws ExcepcaoPersistencia {
+	
         final Collection<OldRoom> rooms = new HashSet<OldRoom>();
         if (normalCapacity != null) {
             rooms.addAll(OldRoom.findOldRoomsWithNormalCapacity(normalCapacity));

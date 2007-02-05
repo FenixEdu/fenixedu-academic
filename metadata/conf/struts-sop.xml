@@ -466,7 +466,8 @@
 
 		<form-bean name="listExecutionCourseGroupingsForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 				<form-property name="executionPeriodID" type="java.lang.String" />
-		</form-bean>
+		</form-bean>						
+				
     </form-beans>
 
     <!-- ========== Global Exception Definitions ============================== -->
@@ -512,14 +513,14 @@
       <action path="/home" forward="/switchAction.do?prefix=&amp;page=/home.do"/>
       <action path="/switchAction" type="org.apache.struts.actions.SwitchAction"/>
 
-		<action path="/manageSchedules" forward="/manageSchedules.jsp"/>
+	  <action path="/manageSchedules" forward="/manageSchedules.jsp"/>
 
       <action path="/principalSalas" 
               type="net.sourceforge.fenixedu.presentationTier.Action.base.FenixForwardAction" 
               parameter="/sop/principalSalas.jsp"/>
     
-	  <!-- CONTEXTO -->
-
+	  <!-- CONTEXTO -->	   	
+		
 	<action path="/chooseExecutionPeriod"
 			name="pagedIndexForm"
 			input="/chooseExecutionPeriod.do?method=prepare"
@@ -1450,6 +1451,19 @@
 				scope="request">
 			<forward name="show-choose-execution-period-page" path="/listExecutionCourseGroupings.jsp"/>
 		</action>
+		
+		
+		<!-- =================== Rooms Punctual Scheduling  =================== -->
+		<action path="/roomsPunctualScheduling"	
+	    		type="net.sourceforge.fenixedu.presentationTier.Action.sop.RoomsPunctualSchedulingDA"
+	    		parameter="method" 	    		
+	    		scope="request">    		
+	    		<forward name="prepareRoomsPunctualScheduling" path="prepare-rooms-punctual-scheduling"/>    		
+	    		<forward name="prepareCreateNewRoomPunctualScheduling" path="prepare-create-room-punctual-scheduling"/>    		    		
+	    		<forward name="prepareFinalizeCreation" path="prepare-finalize-creation-of-rooms-punctual-scheduling"/>    		
+	    		<forward name="prepareViewRoomsPunctualScheduling" path="prepare-view-rooms-punctual-scheduling"/>    			    		    			    		
+	   	</action> 		
+		
     </action-mappings>     
 
     
@@ -1459,6 +1473,7 @@
     
     <!-- ========== Message Resources Definitions ============================ -->
     <message-resources parameter="resources.ApplicationResourcesSOP" null="false"/>
+    <message-resources parameter="resources.ApplicationResourcesSOP" key="SOP_RESOURCES" null="false"/>
 	<message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
     <message-resources parameter="resources.EnumerationResources" key="ENUMERATION_RESOURCES" null="false"/>
 

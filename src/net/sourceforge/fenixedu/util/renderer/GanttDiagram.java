@@ -64,6 +64,10 @@ public class GanttDiagram {
 	return new GanttDiagram(events_, ViewType.MONTHLY, begin);
     }
     
+    public static GanttDiagram getNewMonthlyTotalGanttDiagram(List<GanttDiagramEvent> events_, YearMonthDay begin) throws InvalidArgumentException {
+	return new GanttDiagram(events_, ViewType.MONTHLY_TOTAL, begin);
+    }
+    
             
     private GanttDiagram(List<GanttDiagramEvent> events_, ViewType type) throws InvalidArgumentException {
 	setViewType(type);
@@ -90,10 +94,15 @@ public class GanttDiagram {
 	    calculateFirstAndLastInstantInTotalMode(begin, end);
 	    generateYearsViewAndMonths();
 	    break;
+	
+	case MONTHLY_TOTAL:
+	    calculateFirstAndLastInstantInMonthlyMode(begin);
+	    generateYearsViewAndMonths();	    
+	    break;
 	    
 	case MONTHLY:
 	    calculateFirstAndLastInstantInMonthlyMode(begin);
-	    generateYearsViewAndMonths();	    
+	    generateYearsViewMonthsViewAndDays();	    
 	    break;
 	    
 	case WEEKLY:
@@ -307,6 +316,7 @@ public class GanttDiagram {
     public enum ViewType {
 	TOTAL,
 	MONTHLY,
+	MONTHLY_TOTAL,
 	WEEKLY,
 	DAILY;
     }

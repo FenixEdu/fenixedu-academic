@@ -238,6 +238,10 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
     }
     
     public String getEventObservationsForGanttDiagram() {
+	return "-"; 
+    }
+    
+    public String getEventPeriodForGanttDiagram() {
 	return getBegin().toString("dd/MM/yyyy HH:mm") + " - " + getEnd().toString("dd/MM/yyyy HH:mm"); 
     }
     

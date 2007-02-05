@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupation;
-import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
@@ -708,7 +707,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
         }
 
         Object args[] = { examDate, examDate, examStartTime, examEndTime, dayOfWeek, null,
-                null, new Integer(RoomOccupation.DIARIA), null, new Boolean(false) };
+                null, null, null, new Boolean(false) };
 
         List availableInfoRoom = (List) ServiceUtils.executeService(userView,
                 "ReadAvailableRoomsForExam", args);

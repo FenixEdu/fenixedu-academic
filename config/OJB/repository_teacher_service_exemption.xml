@@ -1,15 +1,4 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption -->
 
-<class-descriptor class="net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption" table="TEACHER_SERVICE_EXEMPTION">
-
-      
-      
-      
-      
-       
-                  
-      
-      
-      
-      
+<class-descriptor class="net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption" table="TEACHER_SERVICE_EXEMPTION">      
 </class-descriptor>

@@ -13,8 +13,7 @@ public abstract class Material extends Material_Base {
 
     public final static Comparator COMPARATOR_BY_CLASS_NAME = new ComparatorChain();
     static {
-	((ComparatorChain) COMPARATOR_BY_CLASS_NAME)
-		.addComparator(new BeanComparator("class.simpleName"));
+	((ComparatorChain) COMPARATOR_BY_CLASS_NAME).addComparator(new BeanComparator("class.simpleName"));
 	((ComparatorChain) COMPARATOR_BY_CLASS_NAME).addComparator(new BeanComparator("acquisition"));
 	((ComparatorChain) COMPARATOR_BY_CLASS_NAME).addComparator(new BeanComparator("idInternal"));
     }

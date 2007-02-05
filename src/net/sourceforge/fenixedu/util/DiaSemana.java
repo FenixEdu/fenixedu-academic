@@ -11,6 +11,7 @@ package net.sourceforge.fenixedu.util;
  * @author tfc130
  */
 public class DiaSemana extends FenixUtil {
+   
     public static final int DOMINGO = 1;
 
     public static final int SEGUNDA_FEIRA = 2;
@@ -82,5 +83,9 @@ public class DiaSemana extends FenixUtil {
             return "Sábado";
         }
         return "Erro: Invalid week day";
+    }
+    
+    public int getDiaSemanaInDayOfWeekJodaFormat() {
+	return (getDiaSemana().intValue() == 1) ? 7 : (getDiaSemana().intValue() - 1);
     }
 }

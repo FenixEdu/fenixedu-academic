@@ -395,6 +395,14 @@
             <form-property name="teacherNumber" type="java.lang.String" initial=""/>            
         </form-bean>
         
+        <form-bean name="summariesControlForm" 
+	  			 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+            <form-property name="page" type="java.lang.Integer" initial="0" />
+            <form-property name="executionPeriod" type="java.lang.String"/>
+            <form-property name="department" type="java.lang.String"/>           
+    	</form-bean>
+        
     </form-beans>
 
     <!-- ========== Global Exception Definitions ============================== -->
@@ -985,6 +993,16 @@
 				parameter="method"
 				scope="request">
 		</action>
+
+	<!--  SUMMARIES CONTROL -->
+	<action path="/summariesControl"
+		type="net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.DepartmentAdmOfficeSummariesControlAction"
+		parameter="method"
+		name="summariesControlForm"
+		scope="request"
+		input="/index.do">
+		<forward name="success" path="teacherSummariesControlList" />			
+	</action>      		 
 
     </action-mappings>
 

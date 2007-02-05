@@ -31,7 +31,6 @@ import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.util.CalendarUtil;
-import net.sourceforge.fenixedu.util.DateFormatUtil;
 
 /**
  * @author João Mota

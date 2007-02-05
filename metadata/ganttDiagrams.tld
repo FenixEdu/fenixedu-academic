@@ -42,15 +42,25 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>nextUrl</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>		
-		<attribute>
 			<name>firstDayParameter</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-		</attribute>								     
+		</attribute>			
+		<attribute>
+			<name>monthlyViewUrl</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>	
+		<attribute>
+			<name>weeklyViewUrl</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>			
+		<attribute>
+			<name>dailyViewUrl</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>			     
 		<attribute>
 	   		<name>bundle</name>
 	   		<required>false</required>

@@ -1,21 +1,4 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.teacher.TeacherLegalRegimen -->
 
-<class-descriptor class="net.sourceforge.fenixedu.domain.teacher.TeacherLegalRegimen" 
-	table="TEACHER_LEGAL_REGIMEM">
-	
-	
-	
-	
-	
-	
-    
-    
-    
-    
-        
-		
-	
-
-	
-
+<class-descriptor class="net.sourceforge.fenixedu.domain.teacher.TeacherLegalRegimen" table="TEACHER_LEGAL_REGIMEM">
 </class-descriptor>

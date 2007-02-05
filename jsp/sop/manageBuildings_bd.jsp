@@ -25,7 +25,7 @@
 
 <logic:present name="buildings">
 	<table class="tstyle4">
-		<logic:iterate id="building" name="buildings">
+		<logic:iterate id="building" name="buildings" type="net.sourceforge.fenixedu.domain.space.OldBuilding">
 			<bean:define id="buildingId" name="building" property="idInternal"/>
 			<tr>
 				<td>
@@ -36,11 +36,12 @@
 						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="editBuilding"/>
 						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.buildingID" property="buildingID" value="<%= buildingId.toString() %>"/>
-
-						<bean:define id="campusID" type="java.lang.String"><bean:write name="building" property="campus.idInternal"/></bean:define>
-						<html:select bundle="HTMLALT_RESOURCES" property="campusID" size="1" value="<%= campusID %>" onchange="this.form.submit();">
+					
+						<bean:define id="campusID" name="building" property="campus.idInternal" type="java.lang.Integer"/>
+						<html:select bundle="HTMLALT_RESOURCES" property="campusID" size="1" value="<%= campusID.toString() %>" onchange="this.form.submit();">
 							<html:options collection="campuss" property="idInternal" labelProperty="name"/>
-						</html:select>
+						</html:select>				
+						
 						<div class="switchNone">
 						<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
 							<bean:message key="button.submit"/>

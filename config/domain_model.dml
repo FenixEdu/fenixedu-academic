@@ -167,15 +167,16 @@ valueType net.sourceforge.fenixedu.domain.LoginAliasType														as LoginAl
 valueType net.sourceforge.fenixedu.domain.UnitBoardPermittedGroupType											as UnitBoardPermittedGroupType;
 valueType net.sourceforge.fenixedu.domain.ExecutionCourseBoardPermittedGroupType								as ExecutionCourseBoardPermittedGroupType;
 valueType net.sourceforge.fenixedu.domain.student.EnrolmentModel												as EnrolmentModel;
-valueType net.sourceforge.fenixedu.util.Money												as Money;
-valueType net.sourceforge.fenixedu.domain.accounting.PaymentCodeState												as PaymentCodeState;
-valueType net.sourceforge.fenixedu.domain.accounting.PaymentCodeType												as PaymentCodeType;
-valueType net.sourceforge.fenixedu.domain.accounting.CreditNoteState												as CreditNoteState;
-valueType net.sourceforge.fenixedu.domain.student.StudentStatuteType												as StudentStatuteType;
-valueType net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityExemptionType							as GratuityExemptionType;
-valueType net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemptionJustificationType							as PenaltyExemptionJustificationType;
+valueType net.sourceforge.fenixedu.util.Money																	as Money;
+valueType net.sourceforge.fenixedu.domain.accounting.PaymentCodeState											as PaymentCodeState;
+valueType net.sourceforge.fenixedu.domain.accounting.PaymentCodeType											as PaymentCodeType;
+valueType net.sourceforge.fenixedu.domain.accounting.CreditNoteState											as CreditNoteState;
+valueType net.sourceforge.fenixedu.domain.student.StudentStatuteType											as StudentStatuteType;
+valueType net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityExemptionType						as GratuityExemptionType;
+valueType net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemptionJustificationType					as PenaltyExemptionJustificationType;
 valueType net.sourceforge.fenixedu.domain.parking.DocumentDeliveryType											as DocumentDeliveryType;
-valueType net.sourceforge.fenixedu.domain.parking.NewParkingDocumentType											as NewParkingDocumentType;
+valueType net.sourceforge.fenixedu.domain.parking.NewParkingDocumentType										as NewParkingDocumentType;
+valueType net.sourceforge.fenixedu.domain.FrequencyType															as FrequencyType;
 
 
 /*
@@ -240,7 +241,12 @@ class net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEnt
 	class net.sourceforge.fenixedu.domain.time.calendarStructure.EnrolmentsPeriodCE extends net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry {
 		
 	}	
-	
+
+class net.sourceforge.fenixedu.domain.GenericEvent extends net.sourceforge.fenixedu.domain.DomainObject {
+	MultiLanguageString title;
+	MultiLanguageString description;
+	FrequencyType frequency;	
+}
 
 //Start of Accounting
 class net.sourceforge.fenixedu.domain.accounting.Account extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -2844,16 +2850,17 @@ class net.sourceforge.fenixedu.domain.space.SpaceOccupation extends net.sourcefo
 		Integer keyPerson;
 	}
 
-	class net.sourceforge.fenixedu.domain.space.RoomOccupation extends net.sourceforge.fenixedu.domain.DomainObject {
+	class net.sourceforge.fenixedu.domain.space.RoomOccupation extends net.sourceforge.fenixedu.domain.DomainObject {		
 		Integer keyRoom;
-		Integer keyPeriod;
+		Integer keyPeriod;	
+		Integer keyWrittenEvaluation;
+	    Integer keyLesson;	    
+    	Integer keyGenericEvent;
 	    DiaSemana dayOfWeek;
 		HourMinuteSecond startTimeDateHourMinuteSecond;
-		HourMinuteSecond endTimeDateHourMinuteSecond;
-	    Integer keyWrittenEvaluation;
-	    Integer keyLesson;
+		HourMinuteSecond endTimeDateHourMinuteSecond;	    
 	}
-	
+		
 	class net.sourceforge.fenixedu.domain.space.UnitSpaceOccupation extends net.sourceforge.fenixedu.domain.space.SpaceOccupation {
 		YearMonthDay begin;
 		YearMonthDay end;
@@ -7151,7 +7158,6 @@ relation RoomRoomOccupation {
 	}
 	net.sourceforge.fenixedu.domain.space.OldRoom playsRole room;
 }
-
 
 relation RoomSummary {
 	net.sourceforge.fenixedu.domain.Summary playsRole associatedSummaries {
@@ -11828,6 +11834,20 @@ relation AcademicCalendarAcademicCalendarEntry {
 relation AcademicCalendarEntryAcademicCalendarEntry {
 	net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry playsRole parentEntry;
 	net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry playsRole childEntries {
+		multiplicity *;
+	}
+}
+
+relation GenericEventRoomOccupation {	
+	net.sourceforge.fenixedu.domain.GenericEvent playsRole genericEvent;
+	net.sourceforge.fenixedu.domain.space.RoomOccupation playsRole roomOccupations {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectGenericEvent {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.GenericEvent playsRole genericEvents {
 		multiplicity *;
 	}
 }

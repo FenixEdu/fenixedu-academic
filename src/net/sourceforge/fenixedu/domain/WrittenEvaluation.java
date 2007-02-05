@@ -288,7 +288,7 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
 
         final Set<OldRoom> occupiedRooms = new HashSet<OldRoom>();
         for (final RoomOccupation roomOccupation : getAssociatedRoomOccupationSet()) {
-            if (roomOccupation.getRoom().findOccupationSet(period, this.getBeginning(), this.getEnd(), roomOccupation.getDayOfWeek(), RoomOccupation.DIARIA, null).size() > 1) {
+            if (roomOccupation.getRoom().findOccupationSet(period, this.getBeginning(), this.getEnd(), roomOccupation.getDayOfWeek(), null, null).size() > 1) {
                 occupiedRooms.add(roomOccupation.getRoom());
             }
         }
@@ -316,8 +316,8 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
         final DiaSemana dayOfWeek = new DiaSemana(this.getDay().get(Calendar.DAY_OF_WEEK));
         for (final OldRoom room : rooms) {
             if (!hasOccupationForRoom(room)) {
-                room.createRoomOccupation(period, this.getBeginning(), this.getEnd(), dayOfWeek,
-                        RoomOccupation.DIARIA, null, this);
+                room.createRoomOccupationForWrittenEvaluations(period, this.getBeginning(), this.getEnd(), dayOfWeek,
+                        null, null, this);
             }
         }
     }

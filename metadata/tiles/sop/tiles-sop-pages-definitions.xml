@@ -102,4 +102,20 @@
 	<definition name="df.page.chooseExecutionCoursesForExecutionCourseMerge" extends="definition.sop.executionCourses" >
 		<put name="body" value="/manager/chooseExecutionCoursesForExecutionCourseMerge.jsp" />
 	</definition>
+	
+	<!-- =================== Rooms Punctual Scheduling  =================== -->	
+	<definition name="prepare-rooms-punctual-scheduling" extends="definition.sop.roomsManagement" >
+		<put name="body" value="/sop/roomsPunctualScheduling/roomsPunctualScheduling.jsp" />
+	</definition>
+	<definition name="prepare-create-room-punctual-scheduling" extends="definition.sop.roomsManagement" >
+		<put name="body" value="/sop/roomsPunctualScheduling/createRoomsPunctualSchedulings.jsp" />
+	</definition>	
+	<definition name="prepare-finalize-creation-of-rooms-punctual-scheduling" extends="definition.sop.roomsManagement" >
+		<put name="body" value="/sop/roomsPunctualScheduling/finalizeCreationOfRoomsPunctualSchedulings.jsp" />
+	</definition>	
+	<definition name="prepare-view-rooms-punctual-scheduling" extends="definition.sop.roomsManagement" >
+		<put name="body" value="/sop/roomsPunctualScheduling/editRoomsPunctualScheduling.jsp" />
+	</definition>	
+	
+	
 </tiles-definitions>

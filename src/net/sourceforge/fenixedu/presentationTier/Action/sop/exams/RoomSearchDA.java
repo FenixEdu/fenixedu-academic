@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
-import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
@@ -93,7 +92,7 @@ public class RoomSearchDA extends FenixContextDispatchAction {
         DiaSemana dayOfWeek = new DiaSemana(dayOfWeekInt);
 
         Object args[] = { searchDate, searchDate, searchStartTime, searchEndTime, dayOfWeek,
-                null, null, new Integer(RoomOccupation.DIARIA), null, new Boolean(false) };
+                null, null, null, null, new Boolean(false) };
         List availableInfoRoom = null;
         try {
             availableInfoRoom = (List) ServiceUtils.executeService(userView,

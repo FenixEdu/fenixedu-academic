@@ -1,0 +1,63 @@
+<schema name="ChooseRoomsPunctualSchedulingPeriodType" type="net.sourceforge.fenixedu.dataTransferObject.sop.RoomsPunctualSchedulingBean" bundle="SOP_RESOURCES">	
+	<slot name="periodType" layout="radio-postback" key="label.period.type">
+		<property name="classes" value="list2 liinline" />
+		<property name="destination" value="postBack"/>
+	</slot>       				
+</schema>
+
+<schema name="CreateDailyRoomsPunctualScheduling" type="net.sourceforge.fenixedu.dataTransferObject.sop.RoomsPunctualSchedulingBean" bundle="SOP_RESOURCES">	
+	<slot name="begin" key="label.day" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
+	<slot name="beginTime" key="label.begin.hour" layout="hour-minute" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="endTime" key="label.end.hour" layout="hour-minute" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>		
+	<setter signature="editDailyType(begin, beginTime, endTime)"/>
+</schema>
+
+<schema name="CreateFrequencyRoomsPunctualScheduling" type="net.sourceforge.fenixedu.dataTransferObject.sop.RoomsPunctualSchedulingBean" bundle="SOP_RESOURCES">	
+	<slot name="begin" key="label.day" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
+	<slot name="beginTime" key="label.begin.hour" layout="hour-minute" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="endTime" key="label.end.hour" layout="hour-minute" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>		
+	<slot name="end" key="label.until" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
+	<slot name="frequency" key="label.frequency" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
+</schema>
+
+<schema name="CreateContinuousRoomsPunctualScheduling" type="net.sourceforge.fenixedu.dataTransferObject.sop.RoomsPunctualSchedulingBean" bundle="SOP_RESOURCES">	
+	<slot name="begin" key="label.day" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
+	<slot name="beginTime" key="label.begin.hour" layout="hour-minute" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="end" key="label.until" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
+	<slot name="endTime" key="label.end.hour" layout="hour-minute" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>		
+</schema>
+
+<schema name="AddNewRoomsToPunctualScheduling" type="net.sourceforge.fenixedu.dataTransferObject.sop.RoomsPunctualSchedulingBean" bundle="SOP_RESOURCES">	
+	<slot name="selectedRoom" key="label.room" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" layout="menu-select">	
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.FreeRoomsToPunctualSchedulingProvider"/>		
+		<property name="format"	value="${name}" />	
+	</slot>	
+</schema>
+
+<schema name="RemoveRoomsToPunctualScheduling" type="net.sourceforge.fenixedu.dataTransferObject.sop.RoomsPunctualSchedulingBean" bundle="SOP_RESOURCES">	
+	<slot name="selectedRoom" key="label.room" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" layout="menu-select">	
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.FreeRoomsToPunctualSchedulingProvider"/>		
+		<property name="format"	value="${name}" />	
+	</slot>	
+</schema>
+
+<schema name="ViewSelectedRooms" type="net.sourceforge.fenixedu.domain.space.OldRoom" bundle="SOP_RESOURCES">	
+	<slot name="name" />
+</schema>
+
+<schema name="FinalizeCreationOfRoomsPunctualScheduling" type="net.sourceforge.fenixedu.dataTransferObject.sop.RoomsPunctualSchedulingBean" bundle="SOP_RESOURCES">	
+	<slot name="smallDescription" key="label.small.description" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator" />
+	<slot name="completeDescription" layout="area" key="label.complete.description">
+		<property name="rows" value="6" />
+		<property name="columns" value="40"/>
+	</slot>	
+</schema>
+
+<schema name="EditRoomsPunctualSchedulingDescriptions" type="net.sourceforge.fenixedu.domain.GenericEvent" bundle="SOP_RESOURCES">	
+	<slot name="title" key="label.small.description" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator" />
+	<slot name="description" layout="area" key="label.complete.description">
+		<property name="rows" value="6" />
+		<property name="columns" value="40"/>
+	</slot>	
+</schema>
+

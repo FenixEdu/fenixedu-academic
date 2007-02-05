@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.util.renderer.GanttDiagram;
 import net.sourceforge.fenixedu.util.renderer.GanttDiagramEvent;
 import net.sourceforge.fenixedu.util.renderer.GanttDiagram.ViewType;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.taglib.TagUtils;
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
@@ -30,11 +31,15 @@ public class GanttDiagramTagLib extends TagSupport {
     private String eventParameter;
     
     private String bundle;
-    
-    private String nextUrl;
-        
+           
     private String firstDayParameter;
     
+    private String monthlyViewUrl;
+    
+    private String weeklyViewUrl;
+    
+    private String dailyViewUrl;
+        
     
     // Auxiliar variables 
     private GanttDiagram ganttDiagramObject;
@@ -46,15 +51,14 @@ public class GanttDiagramTagLib extends TagSupport {
     private ViewType viewTypeEnum;
     
     private BigDecimal PX_TO_EM_CONVERSION_DIVISOR = BigDecimal.valueOf(10);
-    
-    private BigDecimal ONE_UNIT = BigDecimal.valueOf(0.1);
-    
+        
     private BigDecimal EMPTY_UNIT = BigDecimal.valueOf(0);
+        
+    private int numberOf5MinUnits = 288;  
     
     private int numberOfDayHalfHours = 48;
     
-    private int numberOf5MinUnits = 288;  
-    
+    private int numberOfHours = 24;
     
     
     public int doStartTag() throws JspException {
@@ -84,8 +88,11 @@ public class GanttDiagramTagLib extends TagSupport {
 	case TOTAL:
 	    return generateGanttDiagramInTotalMode().toString();	   
 		   
-	case MONTHLY:
+	case MONTHLY_TOTAL:
 	    return generateGanttDiagramInTotalMode().toString();
+	    
+	case MONTHLY:
+	    return generateGanttDiagramInTimeMode().toString();
 	    
 	case WEEKLY:	    	    
 	    return generateGanttDiagramInTimeMode().toString();
@@ -96,7 +103,7 @@ public class GanttDiagramTagLib extends TagSupport {
 	default:
 	    return "";
 	}
-    }
+    }     
            
     private StringBuilder generateGanttDiagramInTimeMode() throws JspException {
 	StringBuilder builder = new StringBuilder();
@@ -151,7 +158,7 @@ public class GanttDiagramTagLib extends TagSupport {
 				
 				if(interval.getStart().getDayOfMonth() == dayOfMonth) {				    		   				    
 				    startIndex = calculateTimeOfDay(interval.getStart());				    				    
-				    addSpecialDiv(builder, convertToEm(numberOfUnits - startIndex).add(ONE_UNIT), convertToEm(startIndex - 1));
+				    addSpecialDiv(builder, convertToEm(numberOfUnits - (startIndex - 1)), convertToEm(startIndex - 1));
 				    
 				} else if(interval.getStart().getDayOfMonth() < dayOfMonth) {
 				    addSpecialDiv(builder, convertToEm(numberOfUnits), EMPTY_UNIT);				    
@@ -171,7 +178,7 @@ public class GanttDiagramTagLib extends TagSupport {
 
 				} else if(interval.getEnd().getDayOfMonth() == dayOfMonth) {				    		   				    
 				    endIndex = calculateTimeOfDay(interval.getEnd());				    				    
-				    addSpecialDiv(builder, convertToEm(numberOfUnits - endIndex).add(ONE_UNIT), EMPTY_UNIT);				    
+				    addSpecialDiv(builder, convertToEm(endIndex), EMPTY_UNIT);				    
 				}				
 			    }	
 			}
@@ -184,7 +191,7 @@ public class GanttDiagramTagLib extends TagSupport {
 				    
 				    if (interval.getStart().getDayOfMonth() == dayOfMonth) {
 					startIndex = calculateTimeOfDay(interval.getStart());
-					addSpecialDiv(builder, convertToEm(numberOfUnits - startIndex).add(ONE_UNIT), convertToEm(startIndex - 1));
+					addSpecialDiv(builder, convertToEm(numberOfUnits - (startIndex - 1)), convertToEm(startIndex - 1));
 					
 				    } else if(interval.getStart().getDayOfMonth() < dayOfMonth) {
 					addSpecialDiv(builder, convertToEm(numberOfUnits), EMPTY_UNIT);				    
@@ -197,8 +204,7 @@ public class GanttDiagramTagLib extends TagSupport {
 
 				    } else if (interval.getEnd().getDayOfMonth() == dayOfMonth) {
 					endIndex = calculateTimeOfDay(interval.getEnd());
-					addSpecialDiv(builder, convertToEm(numberOfUnits	- endIndex).add(ONE_UNIT), EMPTY_UNIT);
-				    
+					addSpecialDiv(builder, convertToEm(endIndex), EMPTY_UNIT);				    
 				    } 
 
 				} else if (interval.getStart().getMonthOfYear() == monthOfYear && interval.getEnd().getMonthOfYear() == monthOfYear) {
@@ -207,18 +213,22 @@ public class GanttDiagramTagLib extends TagSupport {
 					
 					if(interval.getStart().getDayOfMonth() == dayOfMonth && interval.getEnd().getDayOfMonth() > dayOfMonth) {
 					    startIndex = calculateTimeOfDay(interval.getStart());
-					    addSpecialDiv(builder, convertToEm(numberOfUnits - startIndex).add(ONE_UNIT), convertToEm(startIndex - 1));				    
+					    addSpecialDiv(builder, convertToEm(numberOfUnits - (startIndex - 1)), convertToEm(startIndex - 1));				    
 					}
 					
 					else if(interval.getStart().getDayOfMonth() < dayOfMonth && interval.getEnd().getDayOfMonth() == dayOfMonth) {
 					    endIndex = calculateTimeOfDay(interval.getEnd());
-					    addSpecialDiv(builder, convertToEm(numberOfUnits - endIndex).add(ONE_UNIT), EMPTY_UNIT);
+					    addSpecialDiv(builder, convertToEm(endIndex), EMPTY_UNIT);
 					}
 					
 					else if(interval.getStart().getDayOfMonth() == dayOfMonth && interval.getEnd().getDayOfMonth() == dayOfMonth) {
 					    startIndex = calculateTimeOfDay(interval.getStart());
 					    endIndex = calculateTimeOfDay(interval.getEnd());
-					    addSpecialDiv(builder, convertToEm(numberOfUnits - (startIndex - endIndex)).add(ONE_UNIT), convertToEm(startIndex - 1));					    
+					    if(startIndex == endIndex) {
+						addSpecialDiv(builder, convertToEm(1), convertToEm(startIndex - 1));
+					    } else {
+						addSpecialDiv(builder, convertToEm(endIndex - startIndex), convertToEm(startIndex - 1));					    
+					    }
 					}					
 				    }
 				}
@@ -228,6 +238,7 @@ public class GanttDiagramTagLib extends TagSupport {
 		}		
 		builder.append("</div></td>");			
 	    }	    
+	    builder.append("<td class=\"padded smalltxt\">").append(event.getEventPeriodForGanttDiagram()).append("</td>");
 	    builder.append("<td class=\"padded smalltxt\">").append(event.getEventObservationsForGanttDiagram()).append("</td>");		
 	}
 		
@@ -359,76 +370,119 @@ public class GanttDiagramTagLib extends TagSupport {
                     }                                                           
 		}
 		builder.append("</div></td>");		
-	    }	    
+	    }
+	    builder.append("<td class=\"padded smalltxt\">").append(event.getEventPeriodForGanttDiagram()).append("</td>");
 	    builder.append("<td class=\"padded smalltxt\">").append(event.getEventObservationsForGanttDiagram()).append("</td>");		
 	}
 	
 	insertNextAndBeforeLinks(builder);
 	builder.append("</table>");
 	return builder;
-    }
-    
-    private int getScale() {
-	switch (getViewTypeEnum()) {
-	case TOTAL:
-	    return 1;
-	    
-	case MONTHLY:
-	    return 10;
-
-	default:
-	    return 0;
-	}			
-    }
+    }       
 
     private void generateHeaders(StringBuilder builder) throws JspException {
 	
 	switch (getViewTypeEnum()) {
 	
-	case WEEKLY:
+	case WEEKLY:	    	    	  
+	    
 	    builder.append("<tr>");
             builder.append("<th rowspan=\"4\">").append(getMessage("label.ganttDiagram.event")).append("</th>");	
             for (Integer year : getGanttDiagramObject().getYearsView().keySet()) {
                 builder.append("<th colspan=\"").append(getGanttDiagramObject().getYearsView().get(year)).append("\">").append(year).append("</th>");	
             }	
+            builder.append("<th rowspan=\"4\">").append(getMessage("label.ganttDiagram.period")).append("</th>");
             builder.append("<th rowspan=\"4\">").append(getMessage("label.ganttDiagram.observations")).append("</th>");
             builder.append("</tr>");
             
-            builder.append("<tr>");		
-            for (YearMonthDay month : getGanttDiagramObject().getMonthsView().keySet()) {
-                builder.append("<th colspan=\"").append(getGanttDiagramObject().getMonthsView().get(month)).append("\">").append(month.toString("MMM", getGanttDiagramObject().getLocale())).append("</th>");	    
-            }	
+            builder.append("<tr>");
+            if(!StringUtils.isEmpty(getMonthlyViewUrl())) {
+		String monthlyViewUrl_ = getRequest().getContextPath() + getMonthlyViewUrl() + "&amp;" + getFirstDayParameter() + "=";
+		for (YearMonthDay month : getGanttDiagramObject().getMonthsView().keySet()) {        	        	        
+		    builder.append("<th colspan=\"").append(getGanttDiagramObject().getMonthsView().get(month)).append("\">").append("<a href=\"").append(monthlyViewUrl_)
+		    .append(month.toString("ddMMyyyy")).append("\">").append(month.toString("MMM", getGanttDiagramObject().getLocale())).append("</a>").append("</th>");	    
+	        }
+	    } else {            	
+                for (YearMonthDay month : getGanttDiagramObject().getMonthsView().keySet()) {        	        	        
+                    builder.append("<th colspan=\"").append(getGanttDiagramObject().getMonthsView().get(month)).append("\">")
+                    .append(month.toString("MMM", getGanttDiagramObject().getLocale())).append("</th>");	    
+                }	
+	    }
             builder.append("</tr>");	
             
-            builder.append("<tr>");		
+            builder.append("<tr>");	            
             for (DateTime day : getGanttDiagramObject().getDays()) {
                 builder.append("<th>").append(day.toString("E", getGanttDiagramObject().getLocale())).append("</th>");	    
-            }	
+            }
             builder.append("</tr>");
             
-            builder.append("<tr>");		
-            for (DateTime day : getGanttDiagramObject().getDays()) {
-                builder.append("<th>").append(day.getDayOfMonth()).append("</th>");	    
-            }	
+            builder.append("<tr>");
+            if(!StringUtils.isEmpty(getDailyViewUrl())) {
+        	String dailyViewUrl_ = getRequest().getContextPath() + getDailyViewUrl() + "&amp;" + getFirstDayParameter() + "=";
+                for (DateTime day : getGanttDiagramObject().getDays()) {
+                    builder.append("<th>").append("<a href=\"").append(dailyViewUrl_).append(day.toString("ddMMyyyy")).append("\">").append(day.getDayOfMonth()).append("</a>").append("</th>");	    
+                }
+            } else {
+        	for (DateTime day : getGanttDiagramObject().getDays()) {
+                    builder.append("<th>").append(day.getDayOfMonth()).append("</th>");	    
+                }
+            }
+                       
             builder.append("</tr>");	    
 	    break;
 	
+	case MONTHLY:	    	    	  
+		    
+	    builder.append("<tr>");
+            builder.append("<th rowspan=\"2\">").append(getMessage("label.ganttDiagram.event")).append("</th>");	                     
+            for (YearMonthDay month : getGanttDiagramObject().getMonthsView().keySet()) {        	        	        
+                builder.append("<th colspan=\"").append(getGanttDiagramObject().getMonthsView().get(month)).append("\">")
+                .append(month.toString("MMM yyyy", getGanttDiagramObject().getLocale())).append("</th>");	    
+            }		             
+            builder.append("<th rowspan=\"2\">").append(getMessage("label.ganttDiagram.period")).append("</th>");
+            builder.append("<th rowspan=\"2\">").append(getMessage("label.ganttDiagram.observations")).append("</th>");
+            builder.append("</tr>");                              
+            
+            builder.append("<tr>");
+            if(!StringUtils.isEmpty(getDailyViewUrl())) {
+        	String dailyViewUrl_ = getRequest().getContextPath() + getDailyViewUrl() + "&amp;" + getFirstDayParameter() + "=";
+                for (DateTime day : getGanttDiagramObject().getDays()) {
+                    builder.append("<th>").append("<a href=\"").append(dailyViewUrl_).append(day.toString("ddMMyyyy")).append("\">").append(day.getDayOfMonth()).append("</a>").append("</th>");	    
+                }
+            } else {
+        	for (DateTime day : getGanttDiagramObject().getDays()) {
+                    builder.append("<th>").append(day.getDayOfMonth()).append("</th>");	    
+                }
+            }
+                       
+            builder.append("</tr>");	    
+	    break;
+	    
 	case DAILY:
+	    
 	    builder.append("<tr>");
             builder.append("<th>").append(getMessage("label.ganttDiagram.event")).append("</th>");	
-            builder.append("<th>").append(getGanttDiagramObject().getFirstInstant().toString("E", getGanttDiagramObject().getLocale())).append(", ")
-                .append(getGanttDiagramObject().getFirstInstant().getDayOfMonth()).append("-").append(getGanttDiagramObject().getFirstInstant().getMonthOfYear())
-                .append("-").append(getGanttDiagramObject().getFirstInstant().getYear()).append("</th>");	    	
+            builder.append("<th>").append(getGanttDiagramObject().getFirstInstant().toString("E", getGanttDiagramObject().getLocale())).append(", ").append(getGanttDiagramObject().getFirstInstant().getDayOfMonth()).append(" ");
+            if(!StringUtils.isEmpty(getMonthlyViewUrl())) {
+        	String monthlyViewUrl_ = getRequest().getContextPath() + getMonthlyViewUrl() + "&amp;" + getFirstDayParameter() + "=";
+        	builder.append("<a href=\"").append(monthlyViewUrl_).append("\">").append(getGanttDiagramObject().getFirstInstant().toString("MMM", getGanttDiagramObject().getLocale())).append("</a>");
+            } else {
+        	builder.append(getGanttDiagramObject().getFirstInstant().toString("MMM", getGanttDiagramObject().getLocale()));
+            }
+            builder.append(" ").append(getGanttDiagramObject().getFirstInstant().getYear()).append("</th>");
+            builder.append("<th>").append(getMessage("label.ganttDiagram.period")).append("</th>");
             builder.append("<th>").append(getMessage("label.ganttDiagram.observations")).append("</th>");
             builder.append("</tr>");                
 	    break;
 	    
 	case TOTAL:
+	    
 	    builder.append("<tr>");
             builder.append("<th rowspan=\"2\">").append(getMessage("label.ganttDiagram.event")).append("</th>");	
             for (Integer year : getGanttDiagramObject().getYearsView().keySet()) {
                 builder.append("<th colspan=\"").append(getGanttDiagramObject().getYearsView().get(year)).append("\">").append(year).append("</th>");	
             }	
+            builder.append("<th rowspan=\"2\">").append(getMessage("label.ganttDiagram.period")).append("</th>");
             builder.append("<th rowspan=\"2\">").append(getMessage("label.ganttDiagram.observations")).append("</th>");
             builder.append("</tr>");
             
@@ -439,10 +493,12 @@ public class GanttDiagramTagLib extends TagSupport {
             builder.append("</tr>");
 	    break;
 	
-	case MONTHLY:
+	case MONTHLY_TOTAL:
+	    
 	    builder.append("<tr>");
             builder.append("<th>").append(getMessage("label.ganttDiagram.event")).append("</th>");	                           
             builder.append("<th>").append(getGanttDiagramObject().getFirstInstant().toString("MMM", getGanttDiagramObject().getLocale())).append(" ").append(getGanttDiagramObject().getFirstInstant().getYear()).append("</th>");	           
+            builder.append("<th>").append(getMessage("label.ganttDiagram.period")).append("</th>");
             builder.append("<th>").append(getMessage("label.ganttDiagram.observations")).append("</th>");
             builder.append("</tr>");                          
 	    break;
@@ -453,42 +509,68 @@ public class GanttDiagramTagLib extends TagSupport {
     }
     
     private void insertNextAndBeforeLinks(StringBuilder builder) throws JspException {
-	YearMonthDay firstDay = getGanttDiagramObject().getFirstInstant().toYearMonthDay();
+	
+	YearMonthDay firstDay = getGanttDiagramObject().getFirstInstant().toYearMonthDay();	
 	if(firstDay != null) {	
 	    
 	    String nextUrl = "";
-	    String beforeUrl = "";
+	    String beforeUrl = "";	    	   
 	    
 	    switch (getViewTypeEnum()) {
 	    
 	    case WEEKLY:
-		nextUrl = getRequest().getContextPath() + getNextUrl() + "&amp;" + getFirstDayParameter() + "=" + firstDay.plusDays(8).toString("ddMMyyyy");
-		beforeUrl = getRequest().getContextPath() + getNextUrl() + "&amp;" + getFirstDayParameter() + "=" + firstDay.minusDays(8).toString("ddMMyyyy");
-		builder.append("<tr><td colspan=\"9\" class=\"acenter tcalendarlinks\"> <span class=\"smalltxt\"><a href=\"").append(beforeUrl).append("\">").append("&lt;&lt; ").append(getMessage("label.previous.week")).append("</a>");
-		builder.append(" , ").append("<a href=\"").append(nextUrl).append("\">").append(getMessage("label.next.week")).append(" &gt;&gt;").append("</a>").append("</span></td></tr>");
+		
+		if(!StringUtils.isEmpty(getWeeklyViewUrl())) {
+                    nextUrl = getRequest().getContextPath() + getWeeklyViewUrl() + "&amp;" + getFirstDayParameter() + "=" + firstDay.plusDays(7).toString("ddMMyyyy");
+                    beforeUrl = getRequest().getContextPath() + getWeeklyViewUrl() + "&amp;" + getFirstDayParameter() + "=" + firstDay.minusDays(7).toString("ddMMyyyy");
+                    builder.append("<tr><td colspan=\"10\" class=\"acenter tcalendarlinks\"> <span class=\"smalltxt\"><a href=\"").append(beforeUrl).append("\">").append("&lt;&lt; ").append(getMessage("label.previous.week")).append("</a>");
+                    builder.append(" , ").append("<a href=\"").append(nextUrl).append("\">").append(getMessage("label.next.week")).append(" &gt;&gt;").append("</a>").append("</span></td></tr>");
+		}
 		break;
 	    
 	    case DAILY:
-		nextUrl = getRequest().getContextPath() + getNextUrl() + "&amp;" + getFirstDayParameter() + "=" + firstDay.plusDays(1).toString("ddMMyyyy");
-		beforeUrl = getRequest().getContextPath() + getNextUrl() + "&amp;" + getFirstDayParameter() + "=" + firstDay.minusDays(1).toString("ddMMyyyy");
-		builder.append("<tr><td colspan=\"3\" class=\"acenter tcalendarlinks\"><span class=\"smalltxt\"><a href=\"").append(beforeUrl).append("\">").append("&lt;&lt; ").append(getMessage("label.previous.day")).append("</a>");
-		builder.append(" , ").append("<a href=\"").append(nextUrl).append("\">").append(getMessage("label.next.day")).append(" &gt;&gt;").append("</a>").append("</span></td></tr>");
-		break;
-			
-	    case MONTHLY:
-		nextUrl = getRequest().getContextPath() + getNextUrl() + "&amp;" + getFirstDayParameter() + "=" + firstDay.plusMonths(1).toString("ddMMyyyy");
-		beforeUrl = getRequest().getContextPath() + getNextUrl() + "&amp;" + getFirstDayParameter() + "=" + firstDay.minusMonths(1).toString("ddMMyyyy");
-		builder.append("<tr><td colspan=\"3\" class=\"acenter tcalendarlinks\"><span class=\"smalltxt\"><a href=\"").append(beforeUrl).append("\">").append("&lt;&lt; ").append(getMessage("label.previous.month")).append("</a>");
-		builder.append(" , ").append("<a href=\"").append(nextUrl).append("\">").append(getMessage("label.next.month")).append(" &gt;&gt;").append("</a>").append("</span></td></tr>");
-		break;
 		
+		if(!StringUtils.isEmpty(getDailyViewUrl())) {
+                    nextUrl = getRequest().getContextPath() + getDailyViewUrl() + "&amp;" + getFirstDayParameter() + "=" + firstDay.plusDays(1).toString("ddMMyyyy");
+                    beforeUrl = getRequest().getContextPath() + getDailyViewUrl() + "&amp;" + getFirstDayParameter() + "=" + firstDay.minusDays(1).toString("ddMMyyyy");
+                    builder.append("<tr><td colspan=\"4\" class=\"acenter tcalendarlinks\"><span class=\"smalltxt\"><a href=\"").append(beforeUrl).append("\">").append("&lt;&lt; ").append(getMessage("label.previous.day")).append("</a>");
+                    builder.append(" , ").append("<a href=\"").append(nextUrl).append("\">").append(getMessage("label.next.day")).append(" &gt;&gt;").append("</a>").append("</span></td></tr>");
+		}
+		break;
+		    		
+	    case MONTHLY:
+		
+		if(!StringUtils.isEmpty(getMonthlyViewUrl())) {		    
+		    DateTime month = firstDay.toDateTimeAtMidnight();
+		    DateTime firstDayOfMonth = (month.getDayOfMonth() != 1) ? month.withDayOfMonth(1) : month;
+		    DateTime lastDayOfMonth = firstDayOfMonth.plusMonths(1).minusDays(1);										
+		    int monthNumberOfDays = Days.daysBetween(firstDayOfMonth, lastDayOfMonth).getDays() + 1;
+                    nextUrl = getRequest().getContextPath() + getMonthlyViewUrl() + "&amp;" + getFirstDayParameter() + "=" + firstDay.plusMonths(1).toString("ddMMyyyy");
+                    beforeUrl = getRequest().getContextPath() + getMonthlyViewUrl() + "&amp;" + getFirstDayParameter() + "=" + firstDay.minusMonths(1).toString("ddMMyyyy");
+                    builder.append("<tr><td colspan=\"").append(monthNumberOfDays + 3).append("\" class=\"acenter tcalendarlinks\"><span class=\"smalltxt\"><a href=\"").append(beforeUrl).append("\">").append("&lt;&lt; ").append(getMessage("label.previous.month")).append("</a>");
+                    builder.append(" , ").append("<a href=\"").append(nextUrl).append("\">").append(getMessage("label.next.month")).append(" &gt;&gt;").append("</a>").append("</span></td></tr>");
+		}
+		break;		
 		
 	    default:
 		break;
-	    }
-	   
+	    }	   
 	}
     }    
+    
+    private int getScale() {
+	switch (getViewTypeEnum()) {
+	
+	case TOTAL:
+	    return 1;
+	    
+	case MONTHLY_TOTAL:
+	    return 10;
+
+	default:
+	    return 0;
+	}			
+    }
     
     private int calculateTimeOfDay(DateTime time) {
 	int hourOfDay = time.getHourOfDay();
@@ -515,6 +597,11 @@ public class GanttDiagramTagLib extends TagSupport {
 		}
 	    }            
             
+        case MONTHLY:
+            
+            // unit = hour of day
+            return hourOfDay;
+            
 	default:	   
 	    return 0;
 	}	
@@ -522,12 +609,18 @@ public class GanttDiagramTagLib extends TagSupport {
     
     private int getNumberOfUnits() {
 	switch (getViewTypeEnum()) {
-	    case WEEKLY:
-		return getNumberOfDayHalfHours();		
-	    case DAILY:
-		return getNumberOf5MinUnits();	
-	    default:
-		break;	   
+	    
+	case WEEKLY:
+	    return getNumberOfDayHalfHours();
+
+	case DAILY:
+	    return getNumberOf5MinUnits();
+
+	case MONTHLY:
+	    return getNumberOfHours();
+
+	default:
+	    break;	   
 	}	
 	return 0;
     }
@@ -617,14 +710,6 @@ public class GanttDiagramTagLib extends TagSupport {
         this.viewTypeEnum = viewTypeEnum;
     }
     
-    public String getNextUrl() {
-        return nextUrl;
-    }
-
-    public void setNextUrl(String nextUrl) {
-        this.nextUrl = nextUrl;
-    }
-
     public String getFirstDayParameter() {
         return firstDayParameter;
     }
@@ -647,5 +732,37 @@ public class GanttDiagramTagLib extends TagSupport {
 
     public void setNumberOfDayHalfHours(int numberOfDayHalfHours) {
         this.numberOfDayHalfHours = numberOfDayHalfHours;
-    }   
+    }
+
+    public String getDailyViewUrl() {
+        return dailyViewUrl;
+    }
+
+    public void setDailyViewUrl(String dailyViewMode) {
+        this.dailyViewUrl = dailyViewMode;
+    }
+
+    public String getMonthlyViewUrl() {
+        return monthlyViewUrl;
+    }
+
+    public void setMonthlyViewUrl(String monthlyViewUrl) {
+        this.monthlyViewUrl = monthlyViewUrl;
+    }
+
+    public String getWeeklyViewUrl() {
+        return weeklyViewUrl;
+    }
+
+    public void setWeeklyViewUrl(String weeklyViewUrl) {
+        this.weeklyViewUrl = weeklyViewUrl;
+    }
+
+    public int getNumberOfHours() {
+        return numberOfHours;
+    }
+
+    public void setNumberOfHours(int numberOfHalfDays) {
+        this.numberOfHours = numberOfHalfDays;
+    }
 }

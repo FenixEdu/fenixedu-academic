@@ -6,7 +6,7 @@
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
-<logic:present role="DIRECTIVE_COUNCIL">
+<logic:present role="DIRECTIVE_COUNCIL,DEPARTMENT_ADMINISTRATIVE_OFFICE">
 
 	<span class="error"><!-- Error messages go here --><html:errors /></span>
 	<html:messages id="message" message="true" bundle="DEFAULT">
