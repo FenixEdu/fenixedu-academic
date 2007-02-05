@@ -284,8 +284,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 		final HtmlTable scpTable = new HtmlTable();
 		scpTable.setBorder("0");
 		scpDiv.addChild(scpTable);
-		scpTable.setClasses(getTablesClasses());
-		scpTable.setStyle("width: " + getInitialWidthValue() + getUnitIdentifier() + ";");
+		scpTable.setClasses(getTablesClasses() + " " + getInitialWidth());
 
 		final HtmlTableRow scpRow = scpTable.createRow();
 		scpRow.setClasses(getGroupRowClasses());
@@ -350,8 +349,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	    final HtmlTable groupTable = new HtmlTable();
 	    groupTable.setBorder("0");
 	    scpDiv.addChild(groupTable);
-	    groupTable.setClasses(getTablesClasses());
-	    groupTable.setStyle("width: " + (getInitialWidthValue() - depth) + getUnitIdentifier() + "; margin-left: " + depth + getUnitIdentifier() + ";");
+	    groupTable.setClasses(getTablesClasses() + " " + getInitialWidth() + (group.isRoot() ? "" : String.valueOf(Double.valueOf(depth).intValue())));
 
 	    final HtmlTableRow groupRow = groupTable.createRow();
 	    groupRow.setClasses(getGroupRowClasses());
@@ -362,8 +360,8 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	    groupNameCell.setColspan(RENDERED_CELLS_PER_ENROLMENT - RENDERED_CELLS_UNTIL_GRADE);
 	    groupNameCell.setBody((group.isRoot()) ? generateDegreeCurricularPlanNameLink(studentCurricularPlan.getDegreeCurricularPlan(), null) : new HtmlText(group.getName().getContent(LanguageUtils.getLanguage())));
 
-	    generateGroupLines(depth, group);
-	    generateGroupChilds(depth, group);
+	    generateGroupLines(depth + 1, group);
+	    generateGroupChilds(depth + 1, group);
 	}
 
 	private void generateGroupChilds(double depth, final CurriculumGroup group) {
@@ -371,7 +369,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	    sortedCurriculumGroups.addAll(group.getCurriculumGroups());
 	    
 	    for (final CurriculumGroup curriculumGroup : sortedCurriculumGroups) {
-		generateGroup(curriculumGroup, depth + getWidthDecreasePerLevel());
+		generateGroup(curriculumGroup, depth);
 	    }
 	}
 
@@ -382,11 +380,8 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 		final HtmlTable groupLinesTable = new HtmlTable();
 		groupLinesTable.setBorder("0");
 		scpDiv.addChild(groupLinesTable);
-		groupLinesTable.setClasses(getTablesClasses());
-		groupLinesTable.setStyle("width: "
-			+ (getInitialWidthValue() - depth - getWidthDecreasePerLevel()) + getUnitIdentifier() + "; margin-left: "
-			+ (depth + getWidthDecreasePerLevel()) +  getUnitIdentifier() + ";");
-
+		groupLinesTable.setClasses(getTablesClasses() + " " + getInitialWidth() + String.valueOf(Double.valueOf(depth).intValue()));
+		
 		for (final CurriculumLine curriculumLine : sortedCurriculumLines) {
 		    generateLine(groupLinesTable, curriculumLine);
 		}
@@ -508,7 +503,8 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 			final Person person = latestEnrolmentEvaluation.getPersonResponsibleForGrade();
 			generateEnrolmentSmallInfoCell(
 				lineRow, 
-				new HtmlText(person.hasEmployee() ? person.getEmployee().getRoleLoginAlias() : person.getIstUsername()), getEnrolmentClasses()[12],
+				new HtmlText(person.hasEmployee() ? person.getEmployee().getRoleLoginAlias() : person.getIstUsername()), 
+				getEnrolmentClasses()[12],
 				"Pessoa Responsável pela Nota");
 		    } else {
 			generateEnrolmentSmallInfoCell(lineRow, null, getEnrolmentClasses()[12], null);
@@ -518,31 +514,34 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 		// Enrolment Evaluations
 //		final HtmlTableRow enrolmentEvaluationsLine = parentTable.createRow();
 //		final HtmlTableCell enrolmentEvaluationsCell = enrolmentEvaluationsLine.createCell();
-//		enrolmentEvaluationsCell.setColspan(NUMBER_OF_CELLS_PER_ENROLMENT);
+//		enrolmentEvaluationsCell.setColspan(RENDERED_CELLS_PER_ENROLMENT);
 //		enrolmentEvaluationsCell.setStyle("padding:0; margin: 0;");
 //		
 //		final HtmlTable enrolmentEvaluationsTable = new HtmlTable();
-//		enrolmentEvaluationsTable.setBorder("1");
+//		enrolmentEvaluationsTable.setBorder("0");
 //		enrolmentEvaluationsTable.setClasses("smalltxt noborder");
 //		enrolmentEvaluationsTable.setWidth("100%");
 //		enrolmentEvaluationsCell.setBody(enrolmentEvaluationsTable);
 //		
-//		final SortedSet<EnrolmentEvaluation> enrolmentEvaluations = new TreeSet<EnrolmentEvaluation>(EnrolmentEvaluation.SORT_BY_EXAM_DATE);
+//		final SortedSet<EnrolmentEvaluation> enrolmentEvaluations = new TreeSet<EnrolmentEvaluation>();
 //		enrolmentEvaluations.addAll(enrolment.getEvaluations());
 //		for (final EnrolmentEvaluation enrolmentEvaluation : enrolmentEvaluations) {
 //		    final HtmlTableRow enrolmentEvaluationsRow = enrolmentEvaluationsTable.createRow();
 //		    enrolmentEvaluationsRow.setStyle("color: #888;");
 //		    
-//		    // WhenDate / Employee
-//		    HtmlText whenDate = enrolmentEvaluation.getWhenDateTime() == null ? null : new HtmlText(enrolmentEvaluation.getWhenDateTime().toString("yyyy/MM/dd"));
-//		    String employee = enrolmentEvaluation.getEmployee() == null ? null : enrolmentEvaluation.getEmployee().getRoleLoginAlias();
-//		    generateEnrolmentSmallInfoCell(enrolmentEvaluationsRow, whenDate, "", employee);
-//
 //		    // EnrolmentEvaluationType
-//		    generateEnrolmentSmallInfoCell(enrolmentEvaluationsRow, new HtmlText(enumerationResources.getString(enrolmentEvaluation.getEnrolmentEvaluationType().getAcronym())), "", enumerationResources.getString(enrolmentEvaluation.getEnrolmentEvaluationType().getQualifiedName()));
+//		    generateEnrolmentSmallInfoCell(
+//			    enrolmentEvaluationsRow, 
+//			    new HtmlText(enumerationResources.getString(enrolmentEvaluation.getEnrolmentEvaluationType().getAcronym())), 
+//			    "", 
+//			    enumerationResources.getString(enrolmentEvaluation.getEnrolmentEvaluationType().getQualifiedName()));
 //		    
 //		    // Grade
-//		    generateEnrolmentSmallInfoCell(enrolmentEvaluationsRow, new HtmlText(enrolmentEvaluation.getGrade()), "", null);
+//		    generateEnrolmentSmallInfoCell(
+//			    enrolmentEvaluationsRow, 
+//			    new HtmlText(enrolmentEvaluation.getGrade()), 
+//			    "", 
+//			    null);
 //		    
 //		    // Exam Date
 //		    HtmlComponent examDate = null;
@@ -553,13 +552,10 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 //		    
 //		    // Person Responsible
 //		    HtmlComponent personResponsible = null;
-//		    if (enrolmentEvaluation.getPersonResponsibleForGrade() != null && AccessControl.getPerson() != enrolmentEvaluation.getPersonResponsibleForGrade()) {
-//			personResponsible = new HtmlText(enrolmentEvaluation.getPersonResponsibleForGrade().getIstUsername());
+//		    if (enrolmentEvaluation.getPersonResponsibleForGrade() != null) {
+//			personResponsible = new HtmlText(enrolmentEvaluation.getPersonResponsibleForGrade().hasEmployee() ? enrolmentEvaluation.getPersonResponsibleForGrade().getEmployee().getRoleLoginAlias() : enrolmentEvaluation.getPersonResponsibleForGrade().getIstUsername());
 //		    }
 //		    generateEnrolmentSmallInfoCell(enrolmentEvaluationsRow, personResponsible, "", null);
-//		    
-//		    // EnrolmentEvaluationState
-//		    generateEnrolmentSmallInfoCell(enrolmentEvaluationsRow, new HtmlText(enumerationResources.getString(enrolmentEvaluation.getEnrolmentEvaluationState().toString())), "", null);
 //		}
 	    }
 	}
@@ -646,8 +642,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	    final HtmlTable executionPeriodTable = new HtmlTable();
 	    executionPeriodTable.setBorder("0");
 	    scpDiv.addChild(executionPeriodTable);
-	    executionPeriodTable.setClasses(getTablesClasses());
-	    executionPeriodTable.setStyle("width: " + (getInitialWidthValue() - getWidthDecreasePerLevel()) + getUnitIdentifier() + "; margin-left: " + getWidthDecreasePerLevel() + getUnitIdentifier() + ";");
+	    executionPeriodTable.setClasses(getTablesClasses() + " " + getInitialWidth() + String.valueOf(1));
 
 	    final HtmlTableRow executionPeriodRow = executionPeriodTable.createRow();
 	    executionPeriodRow.setClasses(getGroupRowClasses());
@@ -775,8 +770,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	    final HtmlTable executionPeriodTable = new HtmlTable();
 	    executionPeriodTable.setBorder("0");
 	    scpDiv.addChild(executionPeriodTable);
-	    executionPeriodTable.setClasses(getTablesClasses());
-	    executionPeriodTable.setStyle("width: " + (getInitialWidthValue() - getWidthDecreasePerLevel()) + getUnitIdentifier() + "; margin-left: " + getWidthDecreasePerLevel() + getUnitIdentifier() + ";");
+	    executionPeriodTable.setClasses(getTablesClasses() + " " + getInitialWidth() + String.valueOf(1));
 
 	    final HtmlTableRow executionPeriodRow = executionPeriodTable.createRow();
 	    executionPeriodRow.setClasses(getGroupRowClasses());

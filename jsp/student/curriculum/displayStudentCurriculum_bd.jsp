@@ -268,37 +268,37 @@
 .bgcolor12 { background: #fdfdfa; }
 .bgcolor13 { background: #fdfdfa; }
 
-.scurriculum { width: 800px; }
-.scurriculum1 { width: 790px; }
-.scurriculum2 { width: 780px; }
-.scurriculum3 { width: 770px; }
-.scurriculum4 { width: 760px; }
-.scurriculum5 { width: 750px; }
-.scurriculum6 { width: 740px; }
-.scurriculum7 { width: 730px; }
-.scurriculum8 { width: 720px; }
-.scurriculum9 { width: 710px; }
-.scurriculum10 { width: 700px; }
+.scurriculum { width: 800px; margin-left: 0px; }
+.scurriculum1 { width: 790px; margin-left: 10px; }
+.scurriculum2 { width: 780px; margin-left: 20px; }
+.scurriculum3 { width: 770px; margin-left: 30px; }
+.scurriculum4 { width: 760px; margin-left: 40px; }
+.scurriculum5 { width: 750px; margin-left: 50px; }
+.scurriculum6 { width: 740px; margin-left: 60px; }
+.scurriculum7 { width: 730px; margin-left: 70px; }
+.scurriculum8 { width: 720px; margin-left: 80px; }
+.scurriculum9 { width: 710px; margin-left: 90px; }
+.scurriculum10 { width: 700px; margin-left: 100px; }
 </style>
 
 <style type="text/css" media="print">
-.scurriculum { width: 700px; }
-.scurriculum1 { width: 690px; }
-.scurriculum2 { width: 680px; }
-.scurriculum3 { width: 670px; }
-.scurriculum4 { width: 660px; }
-.scurriculum5 { width: 650px; }
-.scurriculum6 { width: 640px; }
-.scurriculum7 { width: 630px; }
-.scurriculum8 { width: 620px; }
-.scurriculum9 { width: 610px; }
-.scurriculum10 { width: 600px; }
+.scurriculum { width: 700px; margin-left: 0px; }
+.scurriculum1 { width: 690px; margin-left: 10px; }
+.scurriculum2 { width: 680px; margin-left: 20px; }
+.scurriculum3 { width: 670px; margin-left: 30px; }
+.scurriculum4 { width: 660px; margin-left: 40px; }
+.scurriculum5 { width: 650px; margin-left: 50px; }
+.scurriculum6 { width: 640px; margin-left: 60px; }
+.scurriculum7 { width: 630px; margin-left: 70px; }
+.scurriculum8 { width: 620px; margin-left: 80px; }
+.scurriculum9 { width: 610px; margin-left: 90px; }
+.scurriculum10 { width: 600px; margin-left: 100px; }
 </style>
 
 
-		<bean:define id="initialWidth" value="750px"/>
+		<bean:define id="initialWidth" value="scurriculum"/>
 		<bean:define id="widthDecreasePerLevel" value="10"/>
-		<bean:define id="tablesClasses" value="showinfo3 mvert0 prtwidth100pc"/>
+		<bean:define id="tablesClasses" value="showinfo3 mvert0"/>
 		<bean:define id="groupRowClasses" value="bgcolor2"/>
 		<bean:define id="groupNameClasses" value="aleft"/>
 		<bean:define id="enrolmentClasses" value="
