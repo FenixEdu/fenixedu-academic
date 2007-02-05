@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors;
 import net.sourceforge.fenixedu.domain.curricularRules.CreditsLimit;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 
 public class CreditsLimitExecutor extends CurricularRuleExecutor {
 
@@ -16,7 +17,8 @@ public class CreditsLimitExecutor extends CurricularRuleExecutor {
 	    return RuleResult.createNA();
 	}
 	
-	if (rule.allowCredits(rule.getDegreeModuleToApplyRule().getEctsCredits())) {
+	final CurriculumModule curriculumModule = searchCurriculumModule(enrolmentContext, rule.getDegreeModuleToApplyRule());
+	if (rule.allowCredits(curriculumModule.getEctsCredits())) {
 	    return RuleResult.createTrue();
 	}
 	
