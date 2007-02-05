@@ -16,7 +16,6 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.commons.CollectionUtils;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;

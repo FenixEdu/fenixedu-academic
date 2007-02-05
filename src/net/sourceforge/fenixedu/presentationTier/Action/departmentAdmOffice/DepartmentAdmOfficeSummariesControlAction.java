@@ -22,14 +22,12 @@ public class DepartmentAdmOfficeSummariesControlAction extends SummariesControlA
 
 	List<LabelValueBean> departments = new ArrayList<LabelValueBean>();
 	Person person = SessionUtils.getUserView(request).getPerson();
-	if (person.getEmployee() != null) {
-	    Department department = person.getEmployee().getCurrentDepartmentWorkingPlace();
-	    if (department != null) {
-		LabelValueBean bean = new LabelValueBean();
-		bean.setLabel(department.getRealName());
-		bean.setValue(department.getIdInternal().toString());
-		departments.add(bean);
-	    }	    
+	List<Department> manageableDepartments = person.getManageableDepartmentCredits();
+	for (Department department : manageableDepartments) {
+	    LabelValueBean bean = new LabelValueBean();
+	    bean.setLabel(department.getRealName());
+	    bean.setValue(department.getIdInternal().toString());
+	    departments.add(bean);
 	}
 	request.setAttribute("departments", departments);
     }

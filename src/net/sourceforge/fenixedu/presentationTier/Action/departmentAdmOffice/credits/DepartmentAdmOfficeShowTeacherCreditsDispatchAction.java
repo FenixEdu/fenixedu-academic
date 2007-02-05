@@ -28,16 +28,10 @@ public class DepartmentAdmOfficeShowTeacherCreditsDispatchAction extends ShowTea
             FenixFilterException, FenixServiceException, ParseException {
 
         DynaActionForm teacherCreditsForm = (DynaActionForm) form;
-        ExecutionPeriod executionPeriod = rootDomainObject
-                .readExecutionPeriodByOID((Integer) teacherCreditsForm.get("executionPeriodId"));
+        ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID((Integer) teacherCreditsForm.get("executionPeriodId"));
+        Teacher teacher = rootDomainObject.readTeacherByOID((Integer) teacherCreditsForm.get("teacherId"));
 
-        Teacher teacher = rootDomainObject.readTeacherByOID((Integer) teacherCreditsForm
-                .get("teacherId"));
-
-        if (teacher == null
-                || getTeacherOfManageableDepartments(teacher.getTeacherNumber(), executionPeriod,
-                        request) == null) {
-            
+        if (teacher == null || getTeacherOfManageableDepartments(teacher.getTeacherNumber(), executionPeriod, request) == null) {            
             request.setAttribute("teacherNotFound", "teacherNotFound");            
             return mapping.findForward("teacher-not-found");
         }
@@ -54,8 +48,7 @@ public class DepartmentAdmOfficeShowTeacherCreditsDispatchAction extends ShowTea
         List<Department> manageableDepartments = userView.getPerson().getManageableDepartmentCredits();
         Teacher teacher = null;
         for (Department department : manageableDepartments) {
-            teacher = department.getTeacherByPeriod(teacherNumber, executionPeriod.getBeginDateYearMonthDay(),
-                    executionPeriod.getEndDateYearMonthDay());
+            teacher = department.getTeacherByPeriod(teacherNumber, executionPeriod.getBeginDateYearMonthDay(), executionPeriod.getEndDateYearMonthDay());
             if (teacher != null) {
                 break;
             }
