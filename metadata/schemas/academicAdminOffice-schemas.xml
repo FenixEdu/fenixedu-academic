@@ -30,7 +30,11 @@
 		<property name="maxLength" value="20" />
 	</slot>		
 	<slot name="documentType" key="label.idDocumentType" 
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>		
+		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="dateOfBirth" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" >
+		<property name="size" value="12"/>
+		<property name="maxLength" value="10"/>
+	</slot>
 </schema>	
 
 <schema name="student.personalData-edit" type="net.sourceforge.fenixedu.dataTransferObject.person.PersonBean" bundle="ACADEMIC_OFFICE_RESOURCES" >

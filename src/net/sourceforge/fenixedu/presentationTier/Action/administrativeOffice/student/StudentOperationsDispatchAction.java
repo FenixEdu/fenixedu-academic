@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.joda.time.YearMonthDay;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -142,22 +143,24 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
 	    ChoosePersonBean choosePersonBean = (ChoosePersonBean) RenderUtils.getViewState(
 		    "choosePerson").getMetaObject().getObject();
 
-	    String identificationNumber = choosePersonBean.getIdentificationNumber();
-	    IDDocumentType documentType = choosePersonBean.getDocumentType();
+	    final String identificationNumber = choosePersonBean.getIdentificationNumber();
+	    final YearMonthDay dateOfBirth = choosePersonBean.getDateOfBirth();
 
-	    Person person = Person.readByDocumentIdNumberAndIdDocumentType(identificationNumber,
-		    documentType);
+	    Person person = Person.readByDocumentIdNumberAndDateOfBirth(identificationNumber,
+		    dateOfBirth);
 
 	    if (person != null) {
 		personBean = new PersonBean(person);
 
-		if (person.getEmployee() != null && person.getEmployee().getCurrentWorkingContract() != null) {
+		if (person.getEmployee() != null
+			&& person.getEmployee().getCurrentWorkingContract() != null) {
 		    request.setAttribute("personBean", personBean);
 		    return mapping.findForward("fillNewPersonDataForEmployee");
 		}
 
 	    } else {
-		personBean = new PersonBean(identificationNumber, documentType);
+		personBean = new PersonBean(identificationNumber, choosePersonBean.getDocumentType(),
+			dateOfBirth);
 	    }
 
 	} else if (RenderUtils.getViewState("person") != null) { // Postback
@@ -210,7 +213,7 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
 		    "CreateStudent", args);
 	    request.setAttribute("registration", registration);
 	} catch (DomainException e) {
-	    addActionMessage(request, e.getMessage());	    
+	    addActionMessage(request, e.getMessage());
 	    return prepareShowCreateStudentConfirmation(mapping, actionForm, request, response);
 	}
 
