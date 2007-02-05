@@ -13,7 +13,7 @@
 <bean:define id="unitId">&oid=<bean:write name="createUnitBean" property="parentUnit.idInternal" /></bean:define>
 
 <html:messages property="error" message="true" id="errMsg" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<span class="error"><!-- Error messages go here --><bean:write name="errMsg" /></span>
+	<span class="error0"><!-- Error messages go here --><bean:write name="errMsg" /></span>
 	<br/>
 </html:messages>
 
