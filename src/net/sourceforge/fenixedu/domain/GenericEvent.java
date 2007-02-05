@@ -26,7 +26,7 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
     
     @Override
     public void setTitle(MultiLanguageString title) {
-	if (title.isEmpty()) {
+	if (title == null || title.isEmpty()) {
 	    throw new DomainException("error.genericCalendar.empty.title");
 	}
 	super.setTitle(title);
