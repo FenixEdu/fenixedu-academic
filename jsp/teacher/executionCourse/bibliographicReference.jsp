@@ -43,6 +43,9 @@
 	</h3>
 	<blockquote>
         <%-- Recommended bibliography from competence course --%>
+        <logic:equal name="executionCourse" property="compentenceCourseMainBibliographyAvailable" value="false">
+        </logic:equal>
+        
         <logic:iterate id="competenceCourseInformation" name="executionCourse" property="competenceCoursesInformations">
             <logic:present name="competenceCourseInformation" property="bibliographicReferences">
                 <logic:iterate id="bibliographicReference" name="competenceCourseInformation" property="bibliographicReferences.bibliographicReferencesSortedByOrder">
@@ -67,31 +70,34 @@
                 </logic:iterate>
             </logic:present>
         </logic:iterate>
-    
-        <%-- Recommended bibliography from execution course --%>
-		<logic:iterate id="bibliographicReference" name="executionCourse" property="orderedBibliographicReferences">
-			<logic:notEqual name="bibliographicReference" property="optional" value="true">
-				<bean:write name="bibliographicReference" property="title" filter="false"/>
-				<br/>
-				<bean:write name="bibliographicReference" property="authors" filter="false" />
-				<br/>
-				<bean:write name="bibliographicReference" property="reference"  filter="false" />
-				<br/>
-				<bean:write name="bibliographicReference" property="year" filter="false" />
-				<br/>
-				<bean:define id="url" type="java.lang.String">bibliographicReferenceID=<bean:write name="bibliographicReference" property="idInternal"/></bean:define>
-				<html:link page="<%= "/editBibliographicReference.do?method=prepareEditBibliographicReference&amp;" + url %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
-					<bean:message key="button.edit"/>
-				</html:link>
-				<html:link page="<%= "/manageExecutionCourse.do?method=deleteBibliographicReference&amp;" + url %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
-					<bean:message key="button.delete"/>
-				</html:link>
-				<br/>
-				<br/>
-			</logic:notEqual>
-		</logic:iterate>		
 
-        <logic:notEmpty name="executionCourse" property="mainBibliographicReferences">
+        <%-- Recommended bibliography from execution course --%>
+        <logic:empty name="executionCourse" property="orderedBibliographicReferences">
+        </logic:empty>
+
+        <logic:notEmpty name="executionCourse" property="orderedBibliographicReferences">
+        		<logic:iterate id="bibliographicReference" name="executionCourse" property="orderedBibliographicReferences">
+        			<logic:notEqual name="bibliographicReference" property="optional" value="true">
+        				<bean:write name="bibliographicReference" property="title" filter="false"/>
+        				<br/>
+        				<bean:write name="bibliographicReference" property="authors" filter="false" />
+        				<br/>
+        				<bean:write name="bibliographicReference" property="reference"  filter="false" />
+        				<br/>
+        				<bean:write name="bibliographicReference" property="year" filter="false" />
+        				<br/>
+        				<bean:define id="url" type="java.lang.String">bibliographicReferenceID=<bean:write name="bibliographicReference" property="idInternal"/></bean:define>
+        				<html:link page="<%= "/editBibliographicReference.do?method=prepareEditBibliographicReference&amp;" + url %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+        					<bean:message key="button.edit"/>
+        				</html:link>
+        				<html:link page="<%= "/manageExecutionCourse.do?method=deleteBibliographicReference&amp;" + url %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+        					<bean:message key="button.delete"/>
+        				</html:link>
+        				<br/>
+        				<br/>
+        			</logic:notEqual>
+        		</logic:iterate>
+
             <p>
                 <img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
                 <html:link page="/manageExecutionCourse.do?method=prepareSortBibliography" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
@@ -106,6 +112,9 @@
 	</h3>
 	<blockquote>
         <%-- Secondary bibliography from competence course --%>
+        <logic:equal name="executionCourse" property="compentenceCourseSecondaryBibliographyAvailable" value="false">
+        </logic:equal>
+        
         <logic:iterate id="competenceCourseInformation" name="executionCourse" property="competenceCoursesInformations">
             <logic:present name="competenceCourseInformation" property="bibliographicReferences">
                 <logic:iterate id="bibliographicReference" name="competenceCourseInformation" property="bibliographicReferences.bibliographicReferencesSortedByOrder">
@@ -132,29 +141,32 @@
         </logic:iterate>
     
         <%-- Secondary bibliography from execution course --%>
-		<logic:iterate id="bibliographicReference" name="executionCourse" property="orderedBibliographicReferences">
-			<logic:equal name="bibliographicReference" property="optional" value="true">
-				<bean:write name="bibliographicReference" property="title" filter="false"/>
-				<br/>
-				<bean:write name="bibliographicReference" property="authors" filter="false" />
-				<br/>
-				<bean:write name="bibliographicReference" property="reference"  filter="false" />
-				<br/>
-				<bean:write name="bibliographicReference" property="year" filter="false" />
-				<br/>
-				<bean:define id="url" type="java.lang.String">bibliographicReferenceID=<bean:write name="bibliographicReference" property="idInternal"/></bean:define>
-				<html:link page="<%= "/editBibliographicReference.do?method=prepareEditBibliographicReference&amp;" + url %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
-					<bean:message key="button.edit"/>
-				</html:link>
-				<html:link page="<%= "/manageExecutionCourse.do?method=deleteBibliographicReference&amp;" + url %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
-					<bean:message key="button.delete"/>
-				</html:link>
-				<br/>
-				<br/>
-			</logic:equal>
-		</logic:iterate>		
-
+        <logic:empty name="executionCourse" property="secondaryBibliographicReferences">
+        </logic:empty>
+        
         <logic:notEmpty name="executionCourse" property="secondaryBibliographicReferences">
+        		<logic:iterate id="bibliographicReference" name="executionCourse" property="orderedBibliographicReferences">
+        			<logic:equal name="bibliographicReference" property="optional" value="true">
+        				<bean:write name="bibliographicReference" property="title" filter="false"/>
+        				<br/>
+        				<bean:write name="bibliographicReference" property="authors" filter="false" />
+        				<br/>
+        				<bean:write name="bibliographicReference" property="reference"  filter="false" />
+        				<br/>
+        				<bean:write name="bibliographicReference" property="year" filter="false" />
+        				<br/>
+        				<bean:define id="url" type="java.lang.String">bibliographicReferenceID=<bean:write name="bibliographicReference" property="idInternal"/></bean:define>
+        				<html:link page="<%= "/editBibliographicReference.do?method=prepareEditBibliographicReference&amp;" + url %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+        					<bean:message key="button.edit"/>
+        				</html:link>
+        				<html:link page="<%= "/manageExecutionCourse.do?method=deleteBibliographicReference&amp;" + url %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+        					<bean:message key="button.delete"/>
+        				</html:link>
+        				<br/>
+        				<br/>
+        			</logic:equal>
+        		</logic:iterate>		
+
             <p>
                 <img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
                 <html:link page="/manageExecutionCourse.do?method=prepareSortBibliography&amp;optional=true" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">

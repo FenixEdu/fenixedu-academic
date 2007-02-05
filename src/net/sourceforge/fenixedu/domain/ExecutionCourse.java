@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseTeachersGrou
 import net.sourceforge.fenixedu.domain.accessControl.RoleTypeGroup;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -1537,5 +1538,27 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	    }
 	}
 	return result;
+    }
+    
+    public boolean isCompentenceCourseMainBibliographyAvailable() {
+        for (CompetenceCourseInformation information : getCompetenceCoursesInformations()) {
+            BibliographicReferences bibliographicReferences = information.getBibliographicReferences();
+            if (bibliographicReferences != null && ! bibliographicReferences.getMainBibliographicReferences().isEmpty()) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
+    public boolean isCompentenceCourseSecondaryBibliographyAvailable() {
+        for (CompetenceCourseInformation information : getCompetenceCoursesInformations()) {
+            BibliographicReferences bibliographicReferences = information.getBibliographicReferences();
+            if (bibliographicReferences != null && ! bibliographicReferences.getSecondaryBibliographicReferences().isEmpty()) {
+                return true;
+            }
+        }
+        
+        return false;
     }
 }
