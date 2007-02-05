@@ -101,9 +101,11 @@ public class PersonBean implements Serializable {
 	super();
     }
 
-    public PersonBean(String identificationNumber, IDDocumentType documentType) {
-	setIdDocumentType(documentType);
+    public PersonBean(String identificationNumber, IDDocumentType idDocumentType,
+	    YearMonthDay dateOfBirth) {
 	setDocumentIdNumber(identificationNumber);
+	setIdDocumentType(idDocumentType);
+	setDateOfBirth(dateOfBirth);
     }
 
     public PersonBean(Person person) {
