@@ -50,3 +50,6 @@
     
     	
 </class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.TeacherAutoEvaluationDefinitionPeriod" table="TEACHER_AUTO_EVALUATION_DEFINITION_PERIOD">
+</class-descriptor>

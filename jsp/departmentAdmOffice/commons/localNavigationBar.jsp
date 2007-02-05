@@ -63,6 +63,11 @@
 							<bean:message key="link.teacherExpectationDefinitionPeriodManagement"/>
 						</html:link>
 					</li>
+					<li>
+						<html:link page="/autoEvaluationTeacherExpectationManagementAction.do?method=showPeriod">
+							<bean:message key="label.defineAutoAvaliationPeriod"/>
+						</html:link>
+					</li>
 				</logic:equal>
 			</logic:notEmpty>
 		<li>

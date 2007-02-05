@@ -3556,12 +3556,20 @@ class net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation extends
     String companySocialOrgans;
     String companyPositions;
     String tutorComment;
-           
+    String autoEvaluation;
+    
     Integer keyTeacher;
     Integer keyExecutionYear;
 }
 
 class net.sourceforge.fenixedu.domain.TeacherExpectationDefinitionPeriod extends net.sourceforge.fenixedu.domain.DomainObject {         
+	YearMonthDay startDateYearMonthDay;
+	YearMonthDay endDateYearMonthDay;
+    Integer keyDepartment;
+    Integer keyExecutionYear;
+}
+
+class net.sourceforge.fenixedu.domain.TeacherAutoEvaluationDefinitionPeriod extends net.sourceforge.fenixedu.domain.DomainObject {         
 	YearMonthDay startDateYearMonthDay;
 	YearMonthDay endDateYearMonthDay;
     Integer keyDepartment;
@@ -7975,8 +7983,22 @@ relation TeacherExpectationDefinitionPeriodExecutionYear {
 	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
 }
 
+relation TeacherAutoEvaluationDefinitionPeriodExecutionYear {
+	net.sourceforge.fenixedu.domain.TeacherAutoEvaluationDefinitionPeriod playsRole teacherAutoEvaluationDefinitionPeriods  {
+    	multiplicity *;
+    }
+	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
+}
+
 relation TeacherExpectationDefinitionPeriodDepartment {
 	net.sourceforge.fenixedu.domain.TeacherExpectationDefinitionPeriod playsRole teacherExpectationDefinitionPeriods  {
+    	multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.Department playsRole department;
+}
+
+relation TeacherAutoEvaluationDefinitionPeriodDepartment {
+	net.sourceforge.fenixedu.domain.TeacherAutoEvaluationDefinitionPeriod playsRole teacherAutoEvaluationDefinitionPeriods  {
     	multiplicity *;
     }
     net.sourceforge.fenixedu.domain.Department playsRole department;
@@ -9408,6 +9430,13 @@ relation RootDomainObjectTutor {
 relation RootDomainObjectCreditsInScientificArea {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.CreditsInScientificArea playsRole creditsInScientificAreas {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectTeacherAutoEvaluationDefinitionPeriod {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.TeacherAutoEvaluationDefinitionPeriod playsRole teacherAutoEvaluationDefinitionPeriods {
 		multiplicity *;
 	}
 }

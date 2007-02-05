@@ -15,9 +15,18 @@
 	</definition>   
 	
 	<definition name="df.page.viewDepartmentTeacherExpectations.viewDepartmentTeacherExpectations" extends="departmentMember.masterPage"> 
-		<put name="body" value="/departmentMember/viewDepartmentTeachersExpectations/viewDepartmentTeachersExpectations.jsp" />
+		<put name="body" value="/departmentMember/viewDepartmentTeachersExpectations/editTeachersExpectationAutoEvaluation.jsp" />
 	</definition>
 	
+	<definition name="show-autoEvaluation" extends="departmentMember.masterPage"> 
+		<put name="body" value="/departmentMember/viewDepartmentTeachersExpectations/showTeachersExpectationAutoEvaluation.jsp" />
+	</definition>	
+
+	<definition name="edit-autoEvaluation" extends="departmentMember.masterPage"> 
+		<put name="body" value="/departmentMember/viewDepartmentTeachersExpectations/editTeachersExpectationAutoEvaluation.jsp" />
+	</definition>	
+
+
 	<definition name="df.page.viewDepartmentTeacherExpectations.print" extends="df.layout.print"> 
 		<put name="body" value="/departmentMember/viewDepartmentTeachersExpectations/printDepartmentTeachersExpectations.jsp" />
 	</definition>

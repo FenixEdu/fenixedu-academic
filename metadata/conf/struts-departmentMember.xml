@@ -310,6 +310,14 @@
             <forward name="print" path="df.page.viewDepartmentTeacherExpectations.print"/>
         </action>
         
+        <action path="/teacherExpectationAutoAvaliation" 	    
+   	        parameter="method"
+   	        scope="request"
+            type="net.sourceforge.fenixedu.presentationTier.Action.departmentMember.AutoEvaluationTeacherExpectationAction">            
+          <forward name="editAutoEvaluation" path="edit-autoEvaluation"/>
+          <forward name="showAutoEvaluation" path="show-autoEvaluation"/>
+        </action>
+        
         <!-- ============================================================ -->
     	<action path="/degreeTeachingServiceManagement" 
         	input="/degreeTeachingServiceManagement.do?method=showTeachingServiceDetails" 

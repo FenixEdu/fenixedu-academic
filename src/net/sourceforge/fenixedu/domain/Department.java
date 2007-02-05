@@ -221,6 +221,15 @@ public class Department extends Department_Base {
 	}
 	return courses;
     }
+    
+    public TeacherAutoEvaluationDefinitionPeriod getTeacherAutoEvaluationDefinitionPeriodForExecutionYear(ExecutionYear executionYear) {
+    	for(TeacherAutoEvaluationDefinitionPeriod period : this.getTeacherAutoEvaluationDefinitionPeriods()) {
+    		if(period.getExecutionYear().equals(executionYear)) {
+    			return period;
+    		}
+    	}
+    	return null;
+    }
 
     // -------------------------------------------------------------
     // read static methods

@@ -971,6 +971,14 @@
 			<forward name="showGlobalTeacherServiceDistributionsValuationByTeachersAndCourses" path="df.page.teacherServiceDistribution.showGlobalTeacherServiceDistributionsValuationByTeachersAndCourses"/>
 		</action>
 
+	<action path="/autoEvaluationTeacherExpectationManagementAction" 
+	type="net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.AutoEvaluationTeacherExpectationManagementAction"
+	parameter="method"
+	scope="request">
+	<forward name="showDefinitionPeriod" path="show-definition-autoEvaluation-period"/>
+	<forward name="editDefinitionPeriod" path="edit-definition-autoEvaluation-period"/>
+	<forward name="createDefinitionPeriod" path="create-definition-autoEvaluation-period"/>
+	</action>
 	<!--  VIGILANCY -->
 	<action path="/vigilancy/examCoordinatorManagement" 
 			type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.ExamCoordinatorManagement"

@@ -49,6 +49,11 @@
 						<bean:message key="link.personalExpectationsManagement"/>
 					</html:link>
 				</li>
+				<li>
+					<html:link page="/teacherExpectationAutoAvaliation.do?method=show">
+						<bean:message key="label.autoEvaluation"/>
+					</html:link>
+				</li>
 			</logic:equal>
 		</logic:notEmpty>	
 
