@@ -1,7 +1,10 @@
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,6 +28,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -61,7 +65,7 @@ public class StudentDismissalsDA extends FenixDispatchAction {
 
     private Collection<SelectedExternalEnrolment> buildStudentExternalEnrolmentsInformation(final DismissalBean dismissalBean) {
 	final Collection<SelectedExternalEnrolment> externalEnrolments = new HashSet<SelectedExternalEnrolment>();
-	for (final ExternalEnrolment externalEnrolment : dismissalBean.getStudentCurricularPlan().getRegistration().getStudent().getExternalEnrolmentsSet()) {
+	for (final ExternalEnrolment externalEnrolment : dismissalBean.getStudentCurricularPlan().getRegistration().getStudent().getSortedExternalEnrolments()) {
 	    externalEnrolments.add(new DismissalBean.SelectedExternalEnrolment(externalEnrolment));
 	}
 	return externalEnrolments;
@@ -70,7 +74,9 @@ public class StudentDismissalsDA extends FenixDispatchAction {
     private Collection<SelectedEnrolment> buildStudentEnrolmentsInformation(final DismissalBean dismissalBean) {
 	final Collection<SelectedEnrolment> enrolments = new HashSet<SelectedEnrolment>();
 	for (final StudentCurricularPlan studentCurricularPlan : dismissalBean.getStudentCurricularPlan().getRegistration().getStudent().getAllStudentCurricularPlans()) {
-	    for (Enrolment enrolment : studentCurricularPlan.getAprovedEnrolments()) {
+	    final List<Enrolment> approvedEnrolments = new ArrayList<Enrolment>(studentCurricularPlan.getAprovedEnrolments());
+	    Collections.sort(approvedEnrolments, new BeanComparator("name"));
+	    for (Enrolment enrolment : approvedEnrolments) {
 		enrolments.add(new DismissalBean.SelectedEnrolment(enrolment));
 	    }
 	}
