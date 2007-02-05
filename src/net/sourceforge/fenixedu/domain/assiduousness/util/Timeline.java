@@ -455,9 +455,8 @@ public class Timeline {
                 } else {
                     return totalDuration;
                 }
-            } while ((countNumberOfWorkedAttributes(point2) > 1)
-                    || (countNumberOfWorkedAttributesInInterval(point2) > 1)
-                    || (point.getPointAttributes().contains(AttributeType.JUSTIFICATION))
+            } while (countNumberOfWorkedAttributes(point2) > 1
+                    || (countNumberOfWorkedAttributesInInterval(point2) > 1)                  
                     || (point2.getPointAttributes().contains(AttributeType.JUSTIFICATION)));
         }
 
@@ -538,9 +537,10 @@ public class Timeline {
                         totalDuration = totalDuration.plus(temp);
                     }
                 }
-            } else {
-                break;
-            }
+            } 
+//            else {
+//                break;
+//            }
         }
         for (Interval justificationInterval : justificationsIntervals) {
             for (Interval workedInterval : timePointIntervals) {

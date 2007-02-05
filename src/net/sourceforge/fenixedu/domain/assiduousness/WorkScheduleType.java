@@ -123,10 +123,10 @@ public class WorkScheduleType extends WorkScheduleType_Base {
                     && (timeline.isOpeningAndNotClosingWorkedPeriod(timePoint)
                             || timeline.isClosingAndNotOpeningWorkedPeriod(timePoint) || timePoint
                             .isAtSameTime(firstClocking))) {
-                if (!timePoint.getTime().isAfter(beginLunch)) {
+                if (timePoint.isAtSameTime(firstClocking)) {
                     totalDuration = totalDuration.plus(new Duration(scheduleMealBreak.getStart(),
                             timePointDateTime));
-                } else if (!timePoint.getTime().isBefore(endLunch)) {
+                } else  {
                     TimePoint nextWorkedTimePoint = timeline.getNextWorkedPoint(timePoint);
                     DateTime endDateTime = scheduleMealBreak.getEnd();
                     if (nextWorkedTimePoint != null
