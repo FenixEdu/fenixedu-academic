@@ -522,7 +522,7 @@ public class Person extends Person_Base {
 	}
 	return resultPublications;
     }
-    
+
 	public List<ResearchResultPublication> getBooks() {
 		return ResearchResultPublication.sort(this.getResearchResultPublicationsByType(Book.class));
 	}
@@ -654,7 +654,7 @@ public class Person extends Person_Base {
     	}
     	return publicationsForExecutionYear;
     }
-    
+
     public List<ResearchResultPatent> getResearchResultPatents() {
 	List<ResearchResultPatent> resultPatents = new ArrayList<ResearchResultPatent>();
 	ResearchResult result = null;
@@ -669,15 +669,15 @@ public class Person extends Person_Base {
     }
 
     public List<ResearchResultPatent> getResearchResultPatentsByExecutionYear(ExecutionYear executionYear) {
-    	List<ResearchResultPatent> resultPatents = new ArrayList<ResearchResultPatent>();
-    	for(ResearchResultPatent patent : getResearchResultPatents()) {
-    		if(executionYear.belongsToCivilYear(patent.getApprovalYear())) {
-    			resultPatents.add(patent);
-    		}
-    	}
-    	return resultPatents;
+	List<ResearchResultPatent> resultPatents = new ArrayList<ResearchResultPatent>();
+	for (ResearchResultPatent patent : getResearchResultPatents()) {
+	    if (executionYear.belongsToCivilYear(patent.getApprovalYear())) {
+		resultPatents.add(patent);
+	    }
+	}
+	return resultPatents;
     }
-    
+
     @Override
     public List<Advisory> getAdvisories() {
 	Date currentDate = Calendar.getInstance().getTime();
@@ -1732,6 +1732,17 @@ public class Person extends Person_Base {
 	return null;
     }
 
+    public static Person readByDocumentIdNumberAndDateOfBirth(final String documentIdNumber,
+	    final YearMonthDay dateOfBirth) {
+	for (final Person person : Person.readAllPersons()) {
+	    if (person.getDocumentIdNumber().equalsIgnoreCase(documentIdNumber)
+		    && person.getDateOfBirthYearMonthDay().equals(dateOfBirth)) {
+		return person;
+	    }
+	}
+	return null;
+    }
+
     // used by grant owner
     public static List<Person> readPersonsByName(final String name, final Integer startIndex,
 	    final Integer numberOfElementsInSpan) {
@@ -1771,16 +1782,15 @@ public class Person extends Person_Base {
     }
 
     public static List<Person> readAllExternalPersons() {
-    	List<Person> allPersons = new ArrayList<Person>();
-    	for (Party party : RootDomainObject.getInstance().getPartys()) {
-    	    if (party.isPerson() && ((Person)party).hasExternalPerson()) {
-    	    	allPersons.add((Person) party);
-    	    }
-    	}
-    	return allPersons;	
+	List<Person> allPersons = new ArrayList<Person>();
+	for (Party party : RootDomainObject.getInstance().getPartys()) {
+	    if (party.isPerson() && ((Person) party).hasExternalPerson()) {
+		allPersons.add((Person) party);
+	    }
+	}
+	return allPersons;
     }
-    
-    
+
     public SortedSet<StudentCurricularPlan> getActiveStudentCurricularPlansSortedByDegreeTypeAndDegreeName() {
 	final SortedSet<StudentCurricularPlan> studentCurricularPlans = new TreeSet<StudentCurricularPlan>(
 		StudentCurricularPlan.STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_DEGREE_NAME);
@@ -2133,13 +2143,13 @@ public class Person extends Person_Base {
 
 	public Object execute() {
 	    final Person person = new Person(this, true);
-            Unit unit = getUnit();
+	    Unit unit = getUnit();
 	    if (unit == null) {
-                unit = Unit.findFirstUnitByName(getUnitName());
-                if (unit == null) {
-		throw new DomainException("error.unit.does.not.exist");
+		unit = Unit.findFirstUnitByName(getUnitName());
+		if (unit == null) {
+		    throw new DomainException("error.unit.does.not.exist");
+		}
 	    }
-            }
 	    new ExternalContract(person, unit, new YearMonthDay(), null);
 	    return person;
 	}
@@ -2519,5 +2529,5 @@ public class Person extends Person_Base {
     public boolean isAdministrativeOfficeEmployee() {
 	return getEmployee() != null && getEmployee().getAdministrativeOffice() != null;
     }
-    
+
 }
