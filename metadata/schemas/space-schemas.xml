@@ -379,3 +379,19 @@
 		<property name="classes" value="list2 liinline" />
 	</slot>
 </schema>	
+
+<!-- Move Space -->
+<schema name="SpaceMoveUp" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.MoveSpaceBean" bundle="SPACE_RESOURCES">
+	<slot name="selectedParentSpace" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">				
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.spaceManager.PossibleParentSpacesToMoveSpaceUpProvider"/>
+		<property name="format"	value="${spaceInformation.presentationName}" />  
+     </slot>        
+</schema>	
+
+<schema name="SpaceMoveDown" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.MoveSpaceBean" bundle="SPACE_RESOURCES">
+	<slot name="selectedParentSpace" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">				
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.spaceManager.PossibleParentSpacesToMoveSpaceDownProvider"/>
+		<property name="format"	value="${spaceInformation.presentationName}" />  
+     </slot>        
+</schema>	
+

@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.spaceManager.AccessGroupPersonBean;
+import net.sourceforge.fenixedu.dataTransferObject.spaceManager.MoveSpaceBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -92,14 +93,7 @@ public class ManageSpacesDA extends FenixDispatchAction {
 	    final SpaceInformation spaceInformation) throws IOException {
 
 	final Space space = spaceInformation.getSpace();
-	SortedSet<Space> spaces = new TreeSet<Space>(SpaceComparator.SPACE_COMPARATOR_BY_CLASS);
-	spaces.addAll(space.getContainedSpaces());
-	setBlueprintTextRectangles(request, space);
-
-	request.setAttribute("selectedSpace", space);
-	request.setAttribute("spaces", spaces);
-	request.setAttribute("selectedSpaceInformation", spaceInformation);
-	return mapping.findForward("ManageSpace");
+	return returnToManageSpacePage(mapping, request, space, spaceInformation);
     }
 
     public ActionForward manageSpace(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -285,8 +279,42 @@ public class ManageSpacesDA extends FenixDispatchAction {
         }
         return null;
     }
+    
+    public ActionForward prepareMoveSpace(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
         
+	SpaceInformation spaceInformationFromParameter = getSpaceInformationFromParameter(request);
+	Space space = spaceInformationFromParameter.getSpace();
+	request.setAttribute("moveSpaceBean", new MoveSpaceBean(space));
+	return mapping.findForward("PrepareMoveSpace");
+    }
+        
+    
+    public ActionForward moveSpace(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException, IOException {
+        
+	final IViewState viewState = RenderUtils.getViewState();
+	MoveSpaceBean bean = (MoveSpaceBean) viewState.getMetaObject().getObject();
+	
+	executeService("MoveSpace", new Object[]{bean});    	
+	Space space = bean.getSpace();
+	SpaceInformation spaceInformation = space.getSpaceInformation();	
+	return returnToManageSpacePage(mapping, request, space, spaceInformation);	
+    }
+   
     // Private Methods
+    
+    private ActionForward returnToManageSpacePage(ActionMapping mapping, HttpServletRequest request, Space space, SpaceInformation spaceInformation) throws IOException {
+	
+	SortedSet<Space> spaces = new TreeSet<Space>(SpaceComparator.SPACE_COMPARATOR_BY_CLASS);
+	spaces.addAll(space.getContainedSpaces());
+	setBlueprintTextRectangles(request, space);
+	
+	request.setAttribute("selectedSpace", space);
+	request.setAttribute("spaces", spaces);
+	request.setAttribute("selectedSpaceInformation", spaceInformation);
+	return mapping.findForward("ManageSpace");
+    }
     
     private void exportToXls(Space space, OutputStream outputStream) throws IOException {
         final List<Object> headers = getHeaders();

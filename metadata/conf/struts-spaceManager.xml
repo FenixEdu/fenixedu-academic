@@ -56,6 +56,7 @@
             <forward name="CreateSpaceInformation" path="show-create-space-information-form"/>
             <forward name="ViewSpaceInformation" path="show-space-information"/>
             <forward name="ManageSpaceAccessGroups" path="manage-space-access-groups"/>
+            <forward name="PrepareMoveSpace" path="prepare-move-space"/>
         </action>
         
         <action path="/managePersonSpaceOccupations"

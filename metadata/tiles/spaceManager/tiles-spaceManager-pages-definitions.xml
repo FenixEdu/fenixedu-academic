@@ -60,5 +60,8 @@
     </definition>    
     <definition name="manage-unit-space-occupation-interval" extends="spaceManager.masterPage">
         <put name="body" value="/spaceManager/manageUnitSpaceOccupationInterval.jsp"></put>
+    </definition>  
+    <definition name="prepare-move-space" extends="spaceManager.masterPage">
+        <put name="body" value="/spaceManager/moveSpace.jsp"></put>
     </definition>                            	    
 </tiles-definitions>

@@ -9017,6 +9017,14 @@
         </filterChains>
     </service>
 	<service>
+   	 	<name>MoveSpace</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.space.MoveSpace</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        </filterChains>
+    </service>
+    <service>
    	 	<name>DeleteSpaceInformation</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.space.DeleteSpaceInformation</implementationClass>
         <description></description>

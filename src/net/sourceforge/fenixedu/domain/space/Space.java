@@ -15,6 +15,8 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.material.Material;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.injectionCode.Checked;
+import net.sourceforge.fenixedu.injectionCode.FenixDomainObjectActionLogAnnotation;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
@@ -430,4 +432,43 @@ public abstract class Space extends Space_Base {
 	}	
 	return getSuroundingSpace().getSpaceFloor();
     }
+
+    public Set<Space> getPossibleParentSpacesToMoveSpaceUp() {
+	Set<Space> result = new HashSet<Space>();
+	if(!(this instanceof Campus)) {
+	    result = getPossibleParentSpacesToMoveSpaceUp(result);			
+	    result.addAll(Space.getAllCampus());    	
+            if(getSuroundingSpace() != null) {
+                result.remove(getSuroundingSpace());
+            }
+	}
+	return result;
+    }
+    
+    private Set<Space> getPossibleParentSpacesToMoveSpaceUp(Set<Space> result) {
+	if(getSuroundingSpace() != null) {
+	    result.add(getSuroundingSpace());
+	    getSuroundingSpace().getPossibleParentSpacesToMoveSpaceUp(result);
+	}		
+	return result;
+    } 
+    
+    public List<Space> getPossibleParentSpacesToMoveSpaceDown() {
+	List<Space> result = new ArrayList<Space>();
+	if(!(this instanceof Campus)) {
+            if(getSuroundingSpace() != null) {
+                result.addAll(getSuroundingSpace().getContainedSpaces());	
+            }
+            result.remove(this);
+	}
+	return result;
+    }
+    
+    @Checked("SpacePredicates.checkPermissionsToManageSpace")
+    @FenixDomainObjectActionLogAnnotation(actionName = "Set new Parent space", parameters = {"this", "newParentSpace" })
+    public void setNewPossibleParentSpace(Space newParentSpace) {
+	if(newParentSpace != null) {
+	    setSuroundingSpace(newParentSpace);
+	}
+    }       
 }

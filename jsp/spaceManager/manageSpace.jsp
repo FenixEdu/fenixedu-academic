@@ -110,6 +110,9 @@
 		<html:link page="/manageSpaces.do?method=prepareCreateSpaceInformation&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
 			<bean:message bundle="SPACE_RESOURCES" key="link.create.space.information"/>
 		</html:link>&nbsp;,
+		<html:link page="/manageSpaces.do?method=prepareMoveSpace&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
+			<bean:message bundle="SPACE_RESOURCES" key="link.move.space"/>
+		</html:link>&nbsp;,
 		<html:link page="/manageSpaces.do?method=deleteSpace&page=0" paramId="spaceID" paramName="selectedSpaceInformation" paramProperty="space.idInternal" onclick="return confirm('Tem a certeza que deseja apagar o espaço?')">
 			<bean:message bundle="SPACE_RESOURCES" key="link.delete.space"/>
 		</html:link>			
