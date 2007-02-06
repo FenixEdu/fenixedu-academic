@@ -24,6 +24,17 @@ public abstract class CurricularRule extends CurricularRule_Base {
         setOjbConcreteClass(getClass().getName());        
     }
     
+    protected void init(final DegreeModule degreeModuleToApplyRule, final CourseGroup contextCourseGroup,
+	    final ExecutionPeriod begin, final ExecutionPeriod end, final CurricularRuleType type) {
+
+	checkExecutionPeriods(begin, end);
+	setDegreeModuleToApplyRule(degreeModuleToApplyRule);
+	setContextCourseGroup(contextCourseGroup);
+	setBegin(begin);
+	setEnd(end);
+	setCurricularRuleType(type);
+    }
+    
     protected void edit(ExecutionPeriod beginExecutionPeriod, ExecutionPeriod endExecutionPeriod) {
         checkExecutionPeriods(beginExecutionPeriod, endExecutionPeriod);
         setBegin(beginExecutionPeriod);
