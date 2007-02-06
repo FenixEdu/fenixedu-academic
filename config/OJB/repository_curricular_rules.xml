@@ -6,16 +6,6 @@
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.curricularRules.Rule" />
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.curricularRules.NotRule" />
 	
-	
-	
-	    
-    	
-	
-	
-	
-	
-	
-	
 </class-descriptor>
 
 
@@ -31,15 +21,6 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.curricularRules.CompositeRule" table="CURRICULAR_RULE">
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.curricularRules.AndRule" />
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.curricularRules.OrRule" />
-	
-	
-	    
-    	
-	
-	
-	
-	
-	
 	
 </class-descriptor>
 
@@ -66,16 +47,8 @@
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.curricularRules.Exclusiveness" />
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.curricularRules.AnyCurricularCourse" />
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.curricularRules.MinimumNumberOfCreditsToEnrol" />
-	
-	
-	    
-    	
-	
-	
-	
-	
-	
-	
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.curricularRules.MaximumNumberOfCreditsForEnrolmentPeriod" />
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.curricularRules.PreviousYearsEnrolmentCurricularRule" />
 </class-descriptor>
 
 
@@ -87,178 +60,71 @@
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.curricularRules.RestrictionDoneDegreeModule" />
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.curricularRules.RestrictionEnroledDegreeModule" />
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.curricularRules.RestrictionBetweenDegreeModules" />
-
 	
-	    
-    	
-	
-	
-	
-	
-	
-	
-	
-		
 </class-descriptor>
 
 
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.curricularRules.RestrictionDoneDegreeModule -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.curricularRules.RestrictionDoneDegreeModule" table="CURRICULAR_RULE">	
-	
-	    
-    	
-	
-	
-	
-	
-	
-	
-	
-		
-</class-descriptor>
+<class-descriptor class="net.sourceforge.fenixedu.domain.curricularRules.RestrictionDoneDegreeModule" table="CURRICULAR_RULE" />
+
 
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.curricularRules.RestrictionEnroledDegreeModule -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.curricularRules.RestrictionEnroledDegreeModule" table="CURRICULAR_RULE">	
-	
-	    
-    	
-	
-	
-	
-	
-	
-	
-	
-		
-</class-descriptor>
+<class-descriptor class="net.sourceforge.fenixedu.domain.curricularRules.RestrictionEnroledDegreeModule" table="CURRICULAR_RULE" />
 
 
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.curricularRules.RestrictionBetweenDegreeModules -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.curricularRules.RestrictionBetweenDegreeModules" table="CURRICULAR_RULE">	
-	
-	    
-    	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-</class-descriptor>
+<class-descriptor class="net.sourceforge.fenixedu.domain.curricularRules.RestrictionBetweenDegreeModules" table="CURRICULAR_RULE" />
 
 
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.curricularRules.DegreeModulesSelectionLimit -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.curricularRules.DegreeModulesSelectionLimit" table="CURRICULAR_RULE">	
-	
-	
-	    
-    	
-	
-	
-	
-	
-	
-	
-	
-</class-descriptor>
+<class-descriptor class="net.sourceforge.fenixedu.domain.curricularRules.DegreeModulesSelectionLimit" table="CURRICULAR_RULE" />
 
 
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.curricularRules.CreditsLimit -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.curricularRules.CreditsLimit" table="CURRICULAR_RULE">	
-	
-	
-	    
-    	
-	
-	
-	
-	
-	
-	
-	
-</class-descriptor>
+<class-descriptor class="net.sourceforge.fenixedu.domain.curricularRules.CreditsLimit" table="CURRICULAR_RULE" />
 
 
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.curricularRules.EnrolmentToBeApprovedByCoordinator -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.curricularRules.EnrolmentToBeApprovedByCoordinator" table="CURRICULAR_RULE">	
-	
-	
-	    
-    	
-	
-	
-	
-	
-	
-</class-descriptor>
+<class-descriptor class="net.sourceforge.fenixedu.domain.curricularRules.EnrolmentToBeApprovedByCoordinator" table="CURRICULAR_RULE" />
 
 
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.curricularRules.Exclusiveness -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.curricularRules.Exclusiveness" table="CURRICULAR_RULE">	
-
-	
-	    
-    	
-	
-	
-	
-	
-	
-	
-</class-descriptor>
+<class-descriptor class="net.sourceforge.fenixedu.domain.curricularRules.Exclusiveness" table="CURRICULAR_RULE" />
 
 
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.curricularRules.AnyCurricularCourse -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.curricularRules.AnyCurricularCourse" table="CURRICULAR_RULE">	
+<class-descriptor class="net.sourceforge.fenixedu.domain.curricularRules.AnyCurricularCourse" table="CURRICULAR_RULE" />
 
-	
-	    
-    	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-</class-descriptor>
 
 <!-- ************************************************************************************************************ -->
-<!-- Definitions for net.sourceforge.fenixedu.domain.curricularRules.Rule -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.curricularRules.MinimumNumberOfCreditsToEnrol -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.curricularRules.MinimumNumberOfCreditsToEnrol" table="CURRICULAR_RULE">	
-	
-	
-	    
-    	
-	
-	
-	
-	
-	
-	
-</class-descriptor>
+<class-descriptor class="net.sourceforge.fenixedu.domain.curricularRules.MinimumNumberOfCreditsToEnrol" table="CURRICULAR_RULE" />
+
+
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.curricularRules.MaximumNumberOfCreditsForEnrolmentPeriod -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.curricularRules.MaximumNumberOfCreditsForEnrolmentPeriod" table="CURRICULAR_RULE" />
+
+
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.curricularRules.PreviousYearsEnrolmentCurricularRule -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.curricularRules.PreviousYearsEnrolmentCurricularRule" table="CURRICULAR_RULE" />

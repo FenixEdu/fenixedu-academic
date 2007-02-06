@@ -1234,7 +1234,9 @@ class net.sourceforge.fenixedu.domain.curricularRules.CurricularRule extends net
         class net.sourceforge.fenixedu.domain.curricularRules.MinimumNumberOfCreditsToEnrol extends net.sourceforge.fenixedu.domain.curricularRules.Rule {
             Double minimumCredits;
         }
-        class net.sourceforge.fenixedu.domain.curricularRules.MaximumNumberOfCreditsForEnrolmentPeriod extends net.sourceforge.fenixedu.domain.curricularRules.Rule {
+		class net.sourceforge.fenixedu.domain.curricularRules.MaximumNumberOfCreditsForEnrolmentPeriod extends net.sourceforge.fenixedu.domain.curricularRules.Rule {
+        }
+        class net.sourceforge.fenixedu.domain.curricularRules.PreviousYearsEnrolmentCurricularRule extends net.sourceforge.fenixedu.domain.curricularRules.Rule {
         }
 
 class net.sourceforge.fenixedu.domain.student.Delegate extends net.sourceforge.fenixedu.domain.DomainObject {

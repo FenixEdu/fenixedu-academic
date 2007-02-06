@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.curricularRules.EnrolmentToBeApprovedByCo
 import net.sourceforge.fenixedu.domain.curricularRules.Exclusiveness;
 import net.sourceforge.fenixedu.domain.curricularRules.MaximumNumberOfCreditsForEnrolmentPeriod;
 import net.sourceforge.fenixedu.domain.curricularRules.MinimumNumberOfCreditsToEnrol;
+import net.sourceforge.fenixedu.domain.curricularRules.PreviousYearsEnrolmentCurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.RestrictionBetweenDegreeModules;
 import net.sourceforge.fenixedu.domain.curricularRules.RestrictionDoneDegreeModule;
 import net.sourceforge.fenixedu.domain.curricularRules.RestrictionEnroledDegreeModule;
@@ -31,6 +32,7 @@ public class CurricularRuleExecutorFactory {
 	executors.put(CreditsLimit.class,				new CreditsLimitExecutor());
 	executors.put(AnyCurricularCourse.class,			new AnyCurricularCourseExecutor());
 	executors.put(MaximumNumberOfCreditsForEnrolmentPeriod.class,	new MaximumNumberOfCreditsForEnrolmentPeriodExecutor());
+	executors.put(PreviousYearsEnrolmentCurricularRule.class,	new PreviousYearsEnrolmentExecutor());
     }
 
     public static CurricularRuleExecutor findExecutor(final CurricularRule curricularRule) {
