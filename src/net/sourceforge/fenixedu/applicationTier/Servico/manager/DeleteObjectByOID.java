@@ -15,11 +15,18 @@ import org.apache.commons.beanutils.MethodUtils;
  */
 public class DeleteObjectByOID extends Service {
 
-    public boolean run(Class clazz, Integer idInternal) throws NoSuchMethodException,
-	    IllegalAccessException, InvocationTargetException {
+    public boolean run(Class clazz, Integer idInternal) throws Throwable {
 
-	MethodUtils.invokeMethod(rootDomainObject.readDomainObjectByOID(clazz, idInternal), "delete",
-		null);
+	try {
+	    MethodUtils.invokeMethod(rootDomainObject.readDomainObjectByOID(clazz, idInternal),
+		    "delete", null);
+	} catch (InvocationTargetException e) {
+	    if (e.getTargetException() != null) {
+		throw e.getTargetException();
+	    }
+	    throw e;
+	}
+
 	return true;
     }
 }
