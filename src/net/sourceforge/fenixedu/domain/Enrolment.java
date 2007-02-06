@@ -896,7 +896,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment{
 	    return Double.valueOf(0);
 	}
 	
-	return getCurricularCourse().getEctsCredits();
+	return getCurricularCourse().getEctsCredits(getExecutionPeriod());
     }
     
     @Override
