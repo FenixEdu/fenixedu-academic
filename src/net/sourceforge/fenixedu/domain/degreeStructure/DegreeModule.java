@@ -115,23 +115,30 @@ public abstract class DegreeModule extends DegreeModule_Base {
         return result;
     }
 
-    public List<CurricularRule> getCurricularRules(ExecutionYear executionYear) {
-        List<CurricularRule> result = new ArrayList<CurricularRule>();
+    public Set<CurricularRule> getCurricularRules(final ExecutionYear executionYear) {
+        Set<CurricularRule> result = new HashSet<CurricularRule>();
         for (CurricularRule curricularRule : this.getCurricularRules()) {
             if (executionYear == null || curricularRule.isValid(executionYear)) {
                 result.add(curricularRule);
             }
         }
+        for (final Context context : getParentContextsByExecutionYear(executionYear)) {
+            result.addAll(context.getParentCourseGroup().getCurricularRules(executionYear));
+        }
         
         return result;
     }
     
-    public List<CurricularRule> getCurricularRules(ExecutionPeriod executionPeriod) {
-        List<CurricularRule> result = new ArrayList<CurricularRule>();
+    public Set<CurricularRule> getCurricularRules(final ExecutionPeriod executionPeriod) {
+        Set<CurricularRule> result = new HashSet<CurricularRule>();
         for (CurricularRule curricularRule : this.getCurricularRules()) {
             if (executionPeriod == null || curricularRule.isValid(executionPeriod)) {
                 result.add(curricularRule);
             }
+        }
+        
+        for (final Context context : getParentContextsByExecutionPeriod(executionPeriod)) {
+            result.addAll(context.getParentCourseGroup().getCurricularRules(executionPeriod));
         }
         
         return result;
