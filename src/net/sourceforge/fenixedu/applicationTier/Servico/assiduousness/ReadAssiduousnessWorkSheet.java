@@ -35,7 +35,11 @@ public class ReadAssiduousnessWorkSheet extends Service {
         if (assiduousness == null) {
             return null;
         }
-
+        YearMonthDay lastActiveStatus = assiduousness.getLastActiveStatusBetween(beginDate,endDate);
+        if(lastActiveStatus == null){
+            return getEmployeeWorkSheetBalanceFree(assiduousness, beginDate, endDate);
+        }
+        endDate = lastActiveStatus;
         YearMonthDay lowerBeginDate = beginDate.minusDays(8);
         HashMap<YearMonthDay, WorkSchedule> workScheduleMap = assiduousness
                 .getWorkSchedulesBetweenDates(lowerBeginDate, endDate);
@@ -49,6 +53,25 @@ public class ReadAssiduousnessWorkSheet extends Service {
                 endDate, new YearMonthDay());
     }
 
+    private EmployeeWorkSheet getEmployeeWorkSheetBalanceFree(Assiduousness assiduousness, YearMonthDay beginDate, YearMonthDay endDate) {
+        EmployeeWorkSheet employeeWorkSheet = new EmployeeWorkSheet();
+        employeeWorkSheet.setEmployee(assiduousness.getEmployee());
+        Unit unit = assiduousness.getEmployee().getLastWorkingPlace(beginDate, endDate);
+        if (assiduousness.getEmployee().getLastContractByContractType(ContractType.MAILING) != null
+                && assiduousness.getEmployee().getLastContractByContractType(ContractType.MAILING)
+                        .getMailingUnit() != null) {
+            unit = assiduousness.getEmployee().getLastContractByContractType(ContractType.MAILING)
+                    .getMailingUnit();
+        }
+        employeeWorkSheet.setUnit(unit);
+        if (unit != null) {
+            employeeWorkSheet.setUnitCode((new DecimalFormat("0000")).format(unit.getCostCenterCode()));
+        } else {
+            employeeWorkSheet.setUnitCode("");
+        }
+        return employeeWorkSheet;
+    }
+
     public EmployeeWorkSheet run(Assiduousness assiduousness,
             HashMap<YearMonthDay, WorkSchedule> workScheduleMap,
             HashMap<YearMonthDay, List<AssiduousnessRecord>> clockingsMap,
@@ -57,8 +80,12 @@ public class ReadAssiduousnessWorkSheet extends Service {
         if (assiduousness == null) {
             return null;
         }
+        YearMonthDay lastActiveStatus = assiduousness.getLastActiveStatusBetween(beginDate,endDate);
+        if(lastActiveStatus == null){
+            return getEmployeeWorkSheetBalanceFree(assiduousness, beginDate, endDate);
+        }
         return getEmployeeWorkSheet(assiduousness, workScheduleMap, clockingsMap, leavesMap, beginDate,
-                endDate, today);
+                lastActiveStatus, today);
     }
 
     private EmployeeWorkSheet getEmployeeWorkSheet(Assiduousness assiduousness,

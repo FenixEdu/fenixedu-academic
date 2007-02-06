@@ -167,7 +167,7 @@ public class Assiduousness extends Assiduousness_Base {
             List<Leave> dayOccurrences = getLeavesByType(workDaySheet.getLeaves(),
                     JustificationType.OCCURRENCE);
 
-            if (dayOccurrences.isEmpty()) {
+            if (dayOccurrences.isEmpty() || !workDaySheet.getAssiduousnessRecords().isEmpty()) {
                 List<Leave> timeLeaves = getLeavesByType(workDaySheet.getLeaves(),
                         JustificationType.TIME);
                 List<Leave> balanceLeaves = getLeavesByType(workDaySheet.getLeaves(),
@@ -325,6 +325,37 @@ public class Assiduousness extends Assiduousness_Base {
             }
         }
         return null;
+    }
+
+    public YearMonthDay getLastActiveStatusBetween(YearMonthDay beginDate, YearMonthDay endDate) {
+        YearMonthDay lastActiveStatus = null;
+        for (AssiduousnessStatusHistory assiduousnessStatusHistory : getAssiduousnessStatusHistories()) {
+            if (assiduousnessStatusHistory.getEndDate() != null) {
+                Interval statusInterval = new Interval(assiduousnessStatusHistory.getBeginDate()
+                        .toDateMidnight(), assiduousnessStatusHistory.getEndDate().toDateMidnight()
+                        .plusDays(1));
+                Interval interval = new Interval(beginDate.toDateMidnight(), endDate.toDateMidnight()
+                        .plusDays(1));
+                if (interval.overlaps(statusInterval)
+                        && assiduousnessStatusHistory.getAssiduousnessStatus().getState() == AssiduousnessState.ACTIVE) {
+                    if (lastActiveStatus == null
+                            || !lastActiveStatus.isAfter(assiduousnessStatusHistory.getEndDate())) {
+                        lastActiveStatus = assiduousnessStatusHistory.getEndDate();
+                    }
+                }
+            } else {
+                if ((assiduousnessStatusHistory.getBeginDate().isBefore(endDate) || assiduousnessStatusHistory
+                        .getBeginDate().isEqual(endDate))
+                        && assiduousnessStatusHistory.getAssiduousnessStatus().getState() == AssiduousnessState.ACTIVE) {
+                    lastActiveStatus = endDate;
+                }
+            }
+
+        }
+        if(lastActiveStatus != null && lastActiveStatus.isAfter(endDate)){
+            lastActiveStatus = endDate;
+        }
+        return lastActiveStatus;
     }
 
     public boolean isStatusActive(YearMonthDay beginDate, YearMonthDay endDate) {

@@ -65,6 +65,9 @@ public class WorkScheduleType extends WorkScheduleType_Base {
 
         if (definedMeal()) {
 
+            if(lunchBreak.overlap(getMeal().getMealBreak()) == null){
+                return null;
+            }
             Duration discount = calculateNotWorkedMealDuration(timeline, lunchBreak.getStartTime(),
                     lunchBreak.getEndTime(), firstClocking);
             if (discount.isLongerThan(getMeal().getMandatoryMealDiscount())
