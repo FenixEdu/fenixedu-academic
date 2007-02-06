@@ -9,7 +9,6 @@
 
 	<bean:define id="announcement" name="announcement" type="net.sourceforge.fenixedu.domain.messaging.Announcement"/>
 		
-	<em><bean:message key="label.messaging.portal" bundle="MESSAGING_RESOURCES"/></em>
 	<h2><bean:write name="announcement" property="announcementBoard.name"/></h2>
 
 	<%
