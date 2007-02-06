@@ -23,6 +23,8 @@ import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
+import net.sourceforge.fenixedu.domain.curricularRules.MaximumNumberOfCreditsForEnrolmentPeriod;
+import net.sourceforge.fenixedu.domain.curricularRules.PreviousYearsEnrolmentCurricularRule;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
@@ -178,9 +180,15 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	}
 	this.setDegreeStructure(curricularPeriod);
 
-	this.setRoot(new CourseGroup(name, name));
-	this.setState(DegreeCurricularPlanState.ACTIVE);
+	setRoot(new CourseGroup(name, name));
+	setState(DegreeCurricularPlanState.ACTIVE);
 	newStructureFieldsChange(CurricularStage.DRAFT, null);
+	createDefaultCurricularRules();
+    }
+
+    private void createDefaultCurricularRules() {
+	new PreviousYearsEnrolmentCurricularRule(getRoot(), ExecutionPeriod.readActualExecutionPeriod());
+	new MaximumNumberOfCreditsForEnrolmentPeriod(getRoot(), ExecutionPeriod.readActualExecutionPeriod());
     }
 
     private void newStructureFieldsChange(CurricularStage curricularStage,
