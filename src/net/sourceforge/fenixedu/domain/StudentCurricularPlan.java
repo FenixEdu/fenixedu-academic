@@ -2063,4 +2063,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return isBolonha() ? getRoot().isEnroledInExecutionPeriod(curricularCourse, executionPeriod) : isCurricularCourseEnrolledInExecutionPeriod(curricularCourse, executionPeriod);
     }
     
+    public Integer getDegreeDuration() {
+	return getDegreeCurricularPlan().getDegreeDuration();
+    }
 }
