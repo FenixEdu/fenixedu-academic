@@ -41,6 +41,6 @@ public class CreateRule extends Service {
                 : rootDomainObject.readExecutionPeriodByOID(endExecutionPeriodID);
 
         CurricularRulesManager.createCurricularRule(degreeModuleToApplyRule, beginExecutionPeriod,
-                endExecutionPeriod, selectedCurricularRuleType, parametersDTO, rootDomainObject);
+                endExecutionPeriod, selectedCurricularRuleType, parametersDTO);
     }
 }
