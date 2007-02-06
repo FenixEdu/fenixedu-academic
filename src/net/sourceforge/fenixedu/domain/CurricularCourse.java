@@ -995,9 +995,13 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     @Override
     public Double getEctsCredits() {
+	return getEctsCredits((ExecutionPeriod) null);
+    }
+
+    public Double getEctsCredits(final ExecutionPeriod executionPeriod) {
 	if (isBolonha()) {
 	    if (hasCompetenceCourse()) {
-		return getCompetenceCourse().getEctsCredits();
+		return getCompetenceCourse().getEctsCredits(executionPeriod);
 	    }
 	} else {
 	    final Double ectsCredits = super.getEctsCredits();
@@ -1011,7 +1015,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 	throw new DomainException("CurricularCourse.with.no.ects.credits");
     }
 
-    public Double getEctsCredits(CurricularPeriod curricularPeriod) {
+    public Double getEctsCredits(final CurricularPeriod curricularPeriod) {
 	double result = 0.0;
 	if (this.getCompetenceCourse() != null) {
 	    result = this.getCompetenceCourse().getEctsCredits(curricularPeriod.getChildOrder());
