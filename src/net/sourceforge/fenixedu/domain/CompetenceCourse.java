@@ -39,8 +39,6 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     public static final Comparator<CompetenceCourse> COMPETENCE_COURSE_COMPARATOR_BY_NAME = new BeanComparator(
 	    "name", Collator.getInstance());
 
-    private CompetenceCourseInformation recentCompetenceCourseInformation;
-
     protected CompetenceCourse() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
@@ -244,18 +242,34 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     private CompetenceCourseInformation getRecentCompetenceCourseInformation() {
-	return (recentCompetenceCourseInformation != null) ? recentCompetenceCourseInformation
-		: (recentCompetenceCourseInformation = findRecentCompetenceCourseInformation());
-    }
-
-    private CompetenceCourseInformation findRecentCompetenceCourseInformation() {
-	for (final CompetenceCourseInformation competenceCourseInformation : getCompetenceCourseInformations()) {
-	    if (competenceCourseInformation.getEndDate() == null) {
-		// endDate not defined: most recent information
+	for (final CompetenceCourseInformation competenceCourseInformation : getCompetenceCourseInformationsSet()) {
+	    if (competenceCourseInformation.getEndDateYearMonthDay() == null) {
 		return competenceCourseInformation;
 	    }
 	}
+
 	return null;
+    }
+
+    public CompetenceCourseInformation findCompetenceCourseInformationForExecutionPeriod(final ExecutionPeriod executionPeriod) {
+	final YearMonthDay endOfExecutionPeriod = executionPeriod.getEndDateYearMonthDay();
+	
+	CompetenceCourseInformation minCompetenceCourseInformation = null;
+	
+	for (final CompetenceCourseInformation competenceCourseInformation : getCompetenceCourseInformationsSet()) {
+	    if (competenceCourseInformation.getEndDateYearMonthDay() == null
+		    || !competenceCourseInformation.getEndDateYearMonthDay().isBefore(endOfExecutionPeriod)) {
+		
+		if (minCompetenceCourseInformation == null || minCompetenceCourseInformation.getEndDateYearMonthDay() == null) {
+		    minCompetenceCourseInformation = competenceCourseInformation;
+		} else if (competenceCourseInformation.getEndDateYearMonthDay() != null 
+			&& competenceCourseInformation.getEndDateYearMonthDay().isBefore(minCompetenceCourseInformation.getEndDateYearMonthDay())) {
+		    minCompetenceCourseInformation = competenceCourseInformation;
+		}
+	    }
+	}
+	
+	return minCompetenceCourseInformation;
     }
 
     @Override
@@ -461,15 +475,25 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     public double getEctsCredits() {
-	return getEctsCredits(null);
+	return getEctsCredits((Integer) null, (ExecutionPeriod) null);
     }
 
-    public Double getEctsCredits(Integer order) {
-	double result = 0.0;
-	if (getRecentCompetenceCourseInformation() != null) {
-	    result = getRecentCompetenceCourseInformation().getEctsCredits(order);
+    public double getEctsCredits(final Integer order) {
+	return getEctsCredits(order, (ExecutionPeriod) null);
+    }
+
+    public double getEctsCredits(final ExecutionPeriod executionPeriod) {
+	return getEctsCredits((Integer) null, executionPeriod);
+    }
+
+    public Double getEctsCredits(final Integer order, final ExecutionPeriod executionPeriod) {
+	final CompetenceCourseInformation competenceCourseInformation = executionPeriod == null ? getRecentCompetenceCourseInformation() : findCompetenceCourseInformationForExecutionPeriod(executionPeriod);
+	
+	if (competenceCourseInformation != null) {
+	    return competenceCourseInformation.getEctsCredits(order);
 	}
-	return result;
+	
+	return 0.0;
     }
 
     public Map<Degree, List<CurricularCourse>> getAssociatedCurricularCoursesGroupedByDegree() {
@@ -686,27 +710,6 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	    }
 	}
 	return false;
-    }
-
-    public CompetenceCourseInformation findCompetenceCourseInformationForExecutionPeriod(
-	    final ExecutionPeriod executionPeriod) {
-	final YearMonthDay endOfExecutionPeriod = executionPeriod.getEndDateYearMonthDay();
-	CompetenceCourseInformation minCompetenceCourseInformation = null;
-	for (final CompetenceCourseInformation competenceCourseInformation : getCompetenceCourseInformationsSet()) {
-	    if (competenceCourseInformation.getEndDateYearMonthDay() == null
-		    || !competenceCourseInformation.getEndDateYearMonthDay().isBefore(
-			    endOfExecutionPeriod)) {
-		if (minCompetenceCourseInformation == null
-			|| minCompetenceCourseInformation.getEndDateYearMonthDay() == null) {
-		    minCompetenceCourseInformation = competenceCourseInformation;
-		} else if (competenceCourseInformation.getEndDateYearMonthDay() != null
-			&& competenceCourseInformation.getEndDateYearMonthDay().isBefore(
-				minCompetenceCourseInformation.getEndDateYearMonthDay())) {
-		    minCompetenceCourseInformation = competenceCourseInformation;
-		}
-	    }
-	}
-	return minCompetenceCourseInformation;
     }
 
     public MultiLanguageString getNameI18N() {
