@@ -19,7 +19,7 @@ public class RestrictionBetweenDegreeModulesExecutor extends CurricularRuleExecu
 	}
 	
 	final DegreeModule degreeModule = rule.getPrecedenceDegreeModule();
-	if (isToEnrol(enrolmentContext, degreeModule) || isEnroled(enrolmentContext, degreeModule)) {
+	if (isEnrolling(enrolmentContext, degreeModule) || isEnroled(enrolmentContext, degreeModule)) {
 
 	    if (!rule.hasMinimumCredits() || rule.allowCredits(degreeModule.getEctsCredits())) {
 		return RuleResult.createTrue();

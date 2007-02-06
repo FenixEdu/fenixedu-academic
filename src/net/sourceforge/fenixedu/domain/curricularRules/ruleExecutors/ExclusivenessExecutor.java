@@ -21,7 +21,7 @@ public class ExclusivenessExecutor extends CurricularRuleExecutor {
 	
 	final DegreeModule degreeModule = rule.getExclusiveDegreeModule();
 	
-	if (isToEnrol(enrolmentContext, degreeModule) || isEnroled(enrolmentContext, degreeModule)) {
+	if (isEnrolling(enrolmentContext, degreeModule) || isEnroled(enrolmentContext, degreeModule)) {
 	    return RuleResult
 		.createFalse(
 		   "curricularRules.ruleExecutors.ExclusivenessExecutor.exclusive.degreeModule",

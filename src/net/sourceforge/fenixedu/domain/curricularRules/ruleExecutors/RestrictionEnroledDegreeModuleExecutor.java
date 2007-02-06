@@ -19,7 +19,7 @@ public class RestrictionEnroledDegreeModuleExecutor extends CurricularRuleExecut
 	}
 	
 	final CurricularCourse curricularCourseToBeEnroled = (CurricularCourse) rule.getPrecedenceDegreeModule();
-	if (isEnroled(enrolmentContext, curricularCourseToBeEnroled) || isToEnrol(enrolmentContext, curricularCourseToBeEnroled)) {
+	if (isEnroled(enrolmentContext, curricularCourseToBeEnroled) || isEnrolling(enrolmentContext, curricularCourseToBeEnroled)) {
 	    return RuleResult.createTrue();
 	}
 	

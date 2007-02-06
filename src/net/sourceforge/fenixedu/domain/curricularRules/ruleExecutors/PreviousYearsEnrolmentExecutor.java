@@ -6,6 +6,7 @@ import java.util.Map;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
@@ -51,6 +52,8 @@ public class PreviousYearsEnrolmentExecutor extends CurricularRuleExecutor {
 	final Map<Integer, Pair<Integer, Integer>> result = new HashMap<Integer, Pair<Integer,Integer>>();
 	
 	final DegreeCurricularPlan degreeCurricularPlan = enrolmentContext.getStudentCurricularPlan().getDegreeCurricularPlan();
+	final ExecutionPeriod executionPeriod = enrolmentContext.getExecutionPeriod();
+	
 	final int numberOfYears = enrolmentContext.getStudentCurricularPlan().getDegreeDuration().intValue();
 	final int semester = enrolmentContext.getExecutionPeriod().getSemester().intValue();
 	
@@ -64,11 +67,14 @@ public class PreviousYearsEnrolmentExecutor extends CurricularRuleExecutor {
 	    for (final Context context : contexts) {
 		final CurricularCourse curricularCourse = (CurricularCourse) context.getChildDegreeModule();
 
-		if (!isApproved(enrolmentContext, curricularCourse) && !isEnroled(enrolmentContext, curricularCourse)) {
-		    if (isToEnrol(enrolmentContext, curricularCourse)) {
+		if (!isApproved(enrolmentContext, curricularCourse)
+			&& !isEnroled(enrolmentContext, curricularCourse) 
+			&& !isEnroled(enrolmentContext, curricularCourse, executionPeriod.getPreviousExecutionPeriod())) {
+		    
+		    if (isEnrolling(enrolmentContext, curricularCourse)) {
 			numberOfCurricularCoursesToEnrol++;
-		    }
-		    else {
+			
+		    } else {
 			numberOfNotChosenCurricularCoursesToEnrol++;
 		    }
 		}

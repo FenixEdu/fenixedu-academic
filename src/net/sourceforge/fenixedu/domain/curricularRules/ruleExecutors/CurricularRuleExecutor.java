@@ -74,7 +74,7 @@ abstract public class CurricularRuleExecutor {
 	return enrolmentContext.getStudentCurricularPlan().isEnroledInExecutionPeriod(curricularCourse, executionPeriod);
     }
 
-    protected boolean isToEnrol(final EnrolmentContext enrolmentContext, final DegreeModule degreeModule) {
+    protected boolean isEnrolling(final EnrolmentContext enrolmentContext, final DegreeModule degreeModule) {
         return searchDegreeModuleToEnrol(enrolmentContext, degreeModule) != null;
     }
 
