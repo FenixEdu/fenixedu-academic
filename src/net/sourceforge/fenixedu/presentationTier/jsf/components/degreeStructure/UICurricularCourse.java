@@ -238,7 +238,7 @@ public class UICurricularCourse extends UIDegreeModule {
             writer.writeAttribute("class", "smalltxt", null);
             writer.writeAttribute("align", "right", null);
             writer.append(this.getBundleValue("BolonhaManagerResources", "credits.abbreviation")).append(" ");
-            writer.append(this.curricularCourse.getCompetenceCourse().getEctsCredits(previousContext.getCurricularPeriod().getChildOrder() + 1).toString());
+            writer.append(String.valueOf(this.curricularCourse.getCompetenceCourse().getEctsCredits(previousContext.getCurricularPeriod().getChildOrder() + 1)));
         } else {
             writer.append("&nbsp;");
             writer.endElement("td");
