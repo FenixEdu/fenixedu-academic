@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "altering teacher personal expectations" alterTeacherPersonalExpectations.sql
