@@ -4,11 +4,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.CurricularPeriodInfoDTO;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.degreeStructure.Context;
+import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.CurricularPeriodLabelFormatter;
 
@@ -266,5 +272,23 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
             return (absoluteOrderOfParent - 1) * numberOfBrothersAndSisters + getChildOrder().intValue();
         }
     }
+    
+    public List<Context> getContextsWithCurricularCourses() {
+	return getContextsWithCurricularCourses(null);
+    }
+    
+    public List<Context> getContextsWithCurricularCourses(final ExecutionPeriod executionPeriod) {
+	return getChildContexts(CurricularCourse.class, executionPeriod);
+    }
 
+    public List<Context> getChildContexts(final Class<? extends DegreeModule> clazz, final ExecutionPeriod executionPeriod) {
+        final List<Context> result = new ArrayList<Context>();
+        for (final Context context : super.getContextsSet()) {
+            if ((clazz == null || clazz.isAssignableFrom(context.getChildDegreeModule().getClass())) 
+        	    && (executionPeriod == null || context.isValid(executionPeriod))) {
+        	result.add(context);
+            }
+        }
+        return result;
+    }
 }
