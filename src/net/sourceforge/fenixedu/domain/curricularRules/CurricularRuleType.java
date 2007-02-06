@@ -22,7 +22,9 @@ public enum CurricularRuleType {
     
     ANY_CURRICULAR_COURSE,
     
-    MINIMUM_NUMBER_OF_CREDITS_TO_ENROL;
+    MINIMUM_NUMBER_OF_CREDITS_TO_ENROL,
+    
+    MAXIMUM_NUMBER_OF_CREDITS_FOR_ENROLMENT_PERIOD;
 
     public String getName() {
         return name();
