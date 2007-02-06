@@ -8,6 +8,7 @@ import java.util.ListIterator;
 
 import net.sourceforge.fenixedu.dataTransferObject.IdInternalBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationStateBean;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -87,6 +88,10 @@ public abstract class RegistrationState extends RegistrationState_Base implement
     }
 
     public abstract RegistrationStateType getStateType();
+
+    public ExecutionYear getExecutionYear() {
+	return ExecutionYear.readByDateTime(getStateDate());
+    }
 
     @Checked("RegistrationStatePredicates.deletePredicate")
     public void delete() {
@@ -180,7 +185,7 @@ public abstract class RegistrationState extends RegistrationState_Base implement
 	}
 
     }
-    
+
     public boolean isActive() {
 	return false;
     }
