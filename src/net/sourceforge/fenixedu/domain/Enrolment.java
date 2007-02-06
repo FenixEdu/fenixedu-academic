@@ -827,6 +827,11 @@ public class Enrolment extends Enrolment_Base implements IEnrolment{
 	return this.getExecutionPeriod().equals(executionPeriod)
 		&& this.getCurricularCourse().equals(curricularCourse);
     }
+    
+    protected boolean isValid(final ExecutionPeriod executionPeriod) {
+	return getExecutionPeriod() == executionPeriod
+		|| (getCurricularCourse().isAnual() && getExecutionPeriod().getExecutionYear() == executionPeriod.getExecutionYear());
+    }
 
     public List<ExecutionCourse> getExecutionCourses() {
 	return this.getCurricularCourse().getAssociatedExecutionCourses();
