@@ -8,7 +8,6 @@ import java.util.Collection;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.DomainObject;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.beanutils.PropertyUtils;
 
@@ -18,21 +17,28 @@ import org.apache.commons.beanutils.PropertyUtils;
  */
 public class TransferDomainObjectProperty extends Service {
 
-    public void run(DomainObject srcObject, DomainObject dstObject, String slotName)
-            throws ExcepcaoPersistencia, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
-        Object srcProperty = PropertyUtils.getSimpleProperty(srcObject, slotName);
-        if (srcProperty != null && srcProperty instanceof Collection) {
-            Collection srcCollection = (Collection) srcProperty;
+    public void run(DomainObject srcObject, DomainObject dstObject, String slotName) throws Throwable {
+	try {
+	    Object srcProperty = PropertyUtils.getSimpleProperty(srcObject, slotName);
+	    
+	    if (srcProperty != null && srcProperty instanceof Collection) {
+	        Collection srcCollection = (Collection) srcProperty;
 
-            Object dstProperty = PropertyUtils.getSimpleProperty(dstObject, slotName);
-            if (dstProperty instanceof Collection) {
-                Collection dstCollection = (Collection) dstProperty;
-                dstCollection.addAll(srcCollection);
-            }
+	        Object dstProperty = PropertyUtils.getSimpleProperty(dstObject, slotName);
+	        if (dstProperty instanceof Collection) {
+	            Collection dstCollection = (Collection) dstProperty;
+	            dstCollection.addAll(srcCollection);
+	        }
 
-        } else {
-            PropertyUtils.setSimpleProperty(dstObject, slotName, srcProperty);
-        }
+	    } else {
+	        PropertyUtils.setSimpleProperty(dstObject, slotName, srcProperty);
+	    }
+	} catch (InvocationTargetException e) {
+	    if (e.getTargetException() != null) {
+		throw e.getTargetException();
+	    }
+	    throw e;
+	} 
 
     }
 
