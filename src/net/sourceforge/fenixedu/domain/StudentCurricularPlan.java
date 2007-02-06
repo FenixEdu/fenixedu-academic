@@ -460,7 +460,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return curricularCourseAcumulatedEnrolments;
     }
 
-    public List getAllStudentEnrolledEnrollmentsInExecutionPeriod(final ExecutionPeriod executionPeriod) {
+    public List<Enrolment> getAllStudentEnrolledEnrollmentsInExecutionPeriod(final ExecutionPeriod executionPeriod) {
 
 	// calculateStudentAcumulatedEnrollments(executionPeriod);
 	List<Enrolment> enrolments = (List) CollectionUtils.select(
@@ -668,6 +668,18 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     // END: Only for enrollment purposes (PUBLIC)
     // -------------------------------------------------------------
 
+    public double getEctsCredits(final ExecutionPeriod executionPeriod) {
+	double result = 0.0;
+	
+	for (final Enrolment enrolment : getEnrolmentsSet()) {
+	    if (enrolment.isValid(executionPeriod)) {
+		 result += enrolment.getEctsCredits(); 
+	     }
+	 }
+	
+	return result;
+    }
+    
     // -------------------------------------------------------------
     // BEGIN: Only for enrollment purposes (PROTECTED)
     // -------------------------------------------------------------
@@ -2050,4 +2062,5 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public boolean isEnroledInExecutionPeriod(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
 	return isBolonha() ? getRoot().isEnroledInExecutionPeriod(curricularCourse, executionPeriod) : isCurricularCourseEnrolledInExecutionPeriod(curricularCourse, executionPeriod);
     }
+    
 }
