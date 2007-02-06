@@ -36,8 +36,7 @@
 					<bean:define id="announcementId" name ="announcement" property="idInternal" />
 					<li class="more-announc"><span class="more-announc-date">
 						<fr:view name="announcement" property="lastModification"/> - </span>
-						<html:link  page="<%="/announcementManagement.do"+"?method=viewAnnouncements&amp;executionCourseID=" + request.getParameter("executionCourseID") %>"
-									anchor="<%= "ID_" + announcementId.toString() %>">
+						<html:link page="<%="/announcementManagement.do?method=viewAnnouncement&amp;executionCourseID=" + request.getParameter("executionCourseID") + "&amp;announcementId=" + announcementId %>">
 							<fr:view name="announcement" property="subject"/>
 						</html:link></li>
 				</logic:iterate>
