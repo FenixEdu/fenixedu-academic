@@ -171,7 +171,10 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization extends
 	    result.put(new Integer(0), infoGratuitySituationList);
 	    result.put(new Integer(1), new Double(totalPayedValue));
 	    result.put(new Integer(2), new Double(totalRemaingValue));
+	} catch (net.sourceforge.fenixedu.stm.IllegalWriteException e) {
+	    throw e;
 	} catch (Exception e) {
+
 	    e.printStackTrace();
 	    if (e.getMessage() != null && e.getMessage().length() > 0) {
 		throw new FenixServiceException(e.getMessage());
