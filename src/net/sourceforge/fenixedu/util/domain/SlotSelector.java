@@ -31,9 +31,18 @@ public class SlotSelector<HolderType, ObjectType> implements OrdinalAccessor<Hol
         } catch (IllegalAccessException e) {
             throw new DomainException("adapter.ordered.relation.no.slot.access", e);
         } catch (InvocationTargetException e) {
-            throw new DomainException("adapter.ordered.relation.invocation.exception", e.getCause());
+            throw handleInvocationTargetException(e, "adapter.ordered.relation.invocation.exception");
         } catch (NoSuchMethodException e) {
             throw new DomainException("adapter.ordered.relation.no.slot", e);
+        }
+    }
+
+    private RuntimeException handleInvocationTargetException(InvocationTargetException e, String message) {
+        if (e.getCause() instanceof RuntimeException) {
+            return (RuntimeException) e.getCause();
+        }
+        else {
+            return new DomainException(message, e.getCause());
         }
     }
 
@@ -43,7 +52,7 @@ public class SlotSelector<HolderType, ObjectType> implements OrdinalAccessor<Hol
         } catch (IllegalAccessException e) {
             throw new DomainException("adapter.ordered.relation.no.slot.access", e);
         } catch (InvocationTargetException e) {
-            throw new DomainException("adapter.ordered.relation.invocation.exception", e.getCause());
+            throw handleInvocationTargetException(e, "adapter.ordered.relation.invocation.exception");
         } catch (NoSuchMethodException e) {
             throw new DomainException("adapter.ordered.relation.no.slot", e);
         }
@@ -55,7 +64,7 @@ public class SlotSelector<HolderType, ObjectType> implements OrdinalAccessor<Hol
         } catch (IllegalAccessException e) {
             throw new DomainException("adapter.ordered.relation.no.slot.access", e);
         } catch (InvocationTargetException e) {
-            throw new DomainException("adapter.ordered.relation.invocation.exception", e.getCause());
+            throw handleInvocationTargetException(e, "adapter.ordered.relation.invocation.exception");
         } catch (NoSuchMethodException e) {
             throw new DomainException("adapter.ordered.relation.no.slot", e);
         }
