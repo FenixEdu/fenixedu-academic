@@ -75,7 +75,7 @@
         <logic:empty name="executionCourse" property="orderedBibliographicReferences">
         </logic:empty>
 
-        <logic:notEmpty name="executionCourse" property="orderedBibliographicReferences">
+        <logic:notEmpty name="executionCourse" property="mainBibliographicReferences">
         		<logic:iterate id="bibliographicReference" name="executionCourse" property="orderedBibliographicReferences">
         			<logic:notEqual name="bibliographicReference" property="optional" value="true">
         				<bean:write name="bibliographicReference" property="title" filter="false"/>
@@ -98,12 +98,15 @@
         			</logic:notEqual>
         		</logic:iterate>
 
-            <p>
-                <img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-                <html:link page="/manageExecutionCourse.do?method=prepareSortBibliography" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
-                    <bean:message key="message.sortRecommendedBibliography"/>
-                </html:link>
-            </p>
+            <bean:size id="referencesSize" name="executionCourse" property="mainBibliographicReferences"/>
+            <logic:greaterThan name="referencesSize" value="1">
+                <p>
+                    <img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
+                    <html:link page="/manageExecutionCourse.do?method=prepareSortBibliography" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+                        <bean:message key="message.sortRecommendedBibliography"/>
+                    </html:link>
+                </p>
+            </logic:greaterThan>
         </logic:notEmpty>
 	</blockquote>
 
@@ -167,12 +170,15 @@
         			</logic:equal>
         		</logic:iterate>		
 
-            <p>
-                <img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-                <html:link page="/manageExecutionCourse.do?method=prepareSortBibliography&amp;optional=true" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
-                    <bean:message key="message.sortOptionalBibliography"/>
-                </html:link>
-            </p>
+            <bean:size id="referencesSize" name="executionCourse" property="secondaryBibliographicReferences"/>
+            <logic:greaterThan name="referencesSize" value="1">
+                <p>
+                    <img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
+                    <html:link page="/manageExecutionCourse.do?method=prepareSortBibliography&amp;optional=true" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+                        <bean:message key="message.sortOptionalBibliography"/>
+                    </html:link>
+                </p>
+            </logic:greaterThan>
         </logic:notEmpty>
 	</blockquote>
 
