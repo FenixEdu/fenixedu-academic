@@ -187,8 +187,8 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     private void createDefaultCurricularRules() {
-	new PreviousYearsEnrolmentCurricularRule(getRoot(), ExecutionPeriod.readActualExecutionPeriod());
 	new MaximumNumberOfCreditsForEnrolmentPeriod(getRoot(), ExecutionPeriod.readActualExecutionPeriod());
+	new PreviousYearsEnrolmentCurricularRule(getRoot(), ExecutionPeriod.readActualExecutionPeriod());
     }
 
     private void newStructureFieldsChange(CurricularStage curricularStage,
