@@ -200,8 +200,8 @@ public class RoomOccupation extends RoomOccupation_Base {
 	    HourMinuteSecond beginTime, HourMinuteSecond endTime, Integer frequency, Integer startWeek, DiaSemana diaSemana) {
 
 	List<Interval> result = new ArrayList<Interval>();		
-	if (startWeek != null && startWeek.intValue() == 2) {
-	    begin = begin.plusDays(7);	    
+	if (startWeek != null && startWeek.intValue() > 0) {
+	    begin = begin.plusDays((startWeek - 1) * 7);	    
 	}	
 	if(diaSemana != null) {
 	    begin = begin.toDateTimeAtMidnight().withDayOfWeek(diaSemana.getDiaSemanaInDayOfWeekJodaFormat()).toYearMonthDay();
@@ -227,8 +227,8 @@ public class RoomOccupation extends RoomOccupation_Base {
              
     private static Interval createNewInterval(YearMonthDay begin, YearMonthDay end, HourMinuteSecond beginTime, HourMinuteSecond endTime) {	
 	return new Interval(
-		begin.toDateTime(new TimeOfDay(beginTime.getHour(), beginTime.getMinuteOfHour(), 0)),			
-		end.toDateTime(new TimeOfDay(endTime.getHour(), endTime.getMinuteOfHour(), 0)));
+		begin.toDateTime(new TimeOfDay(beginTime.getHour(), beginTime.getMinuteOfHour(), 0, 0)),			
+		end.toDateTime(new TimeOfDay(endTime.getHour(), endTime.getMinuteOfHour(), 0, 0)));
     }
         
     
