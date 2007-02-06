@@ -129,7 +129,7 @@
 				<bean:message key="link.coordinator.student"/>
 			</li>
 			<li>
-				<bean:define id="link21">/mailSender.do?method=start&degreeCurricularPlanID=
+				<bean:define id="link21">/sendMail.do?method=prepare&students=true&degreeCurricularPlanID=
 		      		</bean:define>
 		       	<bean:define id="listStudentsForCoordinator">
 		 					<bean:write name="link21"/><bean:write name="degreeCurricularPlanID"/>
@@ -199,7 +199,7 @@
 			</li>			
 			<logic:equal name="infoExecutionDegree" property="bolonha" value="false">
 				<li>
-					<html:link page="<%= "/mailSender.do?method=start&degreeCurricularPlanID=" + degreeCurricularPlanID %>">
+					<html:link page="<%= "/sendMail.do?method=prepare&amp;students=true&amp;degreeCurricularPlanID=" + degreeCurricularPlanID %>">
 					    <bean:message key="sendMail.students"/>
 					</html:link>			
 				</li>

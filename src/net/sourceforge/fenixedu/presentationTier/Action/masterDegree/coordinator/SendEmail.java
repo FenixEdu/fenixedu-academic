@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.accessControl.CurrentDegreeCoordinatorsGr
 import net.sourceforge.fenixedu.domain.accessControl.DegreeStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.DegreeTeachersGroup;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
+import net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.mailSender.MailBean;
 import net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.mailSender.SimpleMailSenderAction;
 
 import org.apache.struts.action.ActionForm;
@@ -20,16 +21,6 @@ import org.apache.struts.action.ActionMapping;
 
 public class SendEmail extends SimpleMailSenderAction {
 
-    @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
-        if (degreeCurricularPlan != null) {
-            request.setAttribute("degreeCurricularPlan", degreeCurricularPlan);
-        }
-        
-        return super.execute(mapping, actionForm, request, response);
-    }
-    
     public DegreeCurricularPlan getDegreeCurricularPlan(HttpServletRequest request) {
         String parameter = request.getParameter("degreeCurricularPlanID");
         
@@ -43,6 +34,33 @@ public class SendEmail extends SimpleMailSenderAction {
         } catch (NumberFormatException e) {
             return null;
         }
+    }
+    
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
+        if (degreeCurricularPlan != null) {
+            request.setAttribute("degreeCurricularPlan", degreeCurricularPlan);
+        }
+        
+        return super.execute(mapping, actionForm, request, response);
+    }
+    
+    @Override
+    protected MailBean createMailBean(HttpServletRequest request) {
+        MailBean mailBean = super.createMailBean(request);
+
+        boolean studentsPreselected = request.getParameter("students") != null;
+        if (studentsPreselected) {
+            DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
+            if (degreeCurricularPlan != null) {
+                Degree degree = degreeCurricularPlan.getDegree();
+                
+                mailBean.setReceiversGroup(new DegreeStudentsGroup(degree));
+            }
+        }
+        
+        return mailBean;
     }
 
     @Override

@@ -338,8 +338,6 @@
 			<form-property name="executionCourseID" type="java.lang.String" />
 		</form-bean>
 
-       <form-bean name="sendMailForm" type="net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.SendMailForm" dynamic="false"/>
-
     </form-beans>
     
     <!-- ========== Global Exception Definitions ============================== -->
@@ -452,7 +450,6 @@
  		<action path="/sendMail"
             type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.SendEmail"
             parameter="method"
-            name="sendMailForm"
             scope="request">
             
             <forward name="compose-mail" path="sendMail"/>
