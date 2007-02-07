@@ -63,17 +63,14 @@ public class PreviousYearsEnrolmentExecutor extends CurricularRuleExecutor {
 	    int numberOfCurricularCoursesToEnrol = 0;
 	    int numberOfNotChosenCurricularCoursesToEnrol = 0;
 	    
-	    final List<Context> contexts = curricularPeriod.getContextsWithCurricularCourses(enrolmentContext.getExecutionPeriod());
+	    final List<Context> contexts = curricularPeriod.getContextsWithCurricularCourses(executionPeriod);
 	    for (final Context context : contexts) {
 		final CurricularCourse curricularCourse = (CurricularCourse) context.getChildDegreeModule();
 
-		if (!isApproved(enrolmentContext, curricularCourse)
-			&& !isEnroled(enrolmentContext, curricularCourse) 
-			&& !isEnroled(enrolmentContext, curricularCourse, executionPeriod.getPreviousExecutionPeriod())) {
-		    
+		if (!isApproved(enrolmentContext, curricularCourse) && !isEnroled(enrolmentContext, curricularCourse)) {
+
 		    if (isEnrolling(enrolmentContext, curricularCourse)) {
 			numberOfCurricularCoursesToEnrol++;
-			
 		    } else {
 			numberOfNotChosenCurricularCoursesToEnrol++;
 		    }
@@ -85,6 +82,7 @@ public class PreviousYearsEnrolmentExecutor extends CurricularRuleExecutor {
 	return result;
     }
     
+
     private void addInformationToResult(final Map<Integer, Pair<Integer, Integer>> result,
 	    final int year, final int numberOfCurricularCoursesToEnrol,
 	    final int numberOfNotChosenCurricularCoursesToEnrol) {
