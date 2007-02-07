@@ -8,7 +8,7 @@
 <!--
 
 function confirmation(){
-	var result = confirm("Os ficheiros submetidos electronicamente vï¿½o ser apagados. Deseja continuar ?");
+	var result = confirm("Os ficheiros submetidos electronicamente vão ser apagados. Deseja continuar ?");
 	if( result ) {
 		document.forms[0].accepted.value="true";
 		document.forms[0].submit();
@@ -119,7 +119,7 @@ function hideCardValidPeriod(toShow){
 			
 			<br/><br/><bean:message key="label.cardValidPeriod" bundle="PARKING_RESOURCES"/>	
 			<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.cardAlwaysValid" styleId="cardValidPeriodIdYes" name="parkingForm" property="cardAlwaysValid" value="yes" onclick="displayCardValidPeriod(false)">sim</html:radio>
-			<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.cardAlwaysValid" styleId="cardValidPeriodIdNo" name="parkingForm" property="cardAlwaysValid" value="no" onclick="displayCardValidPeriod(true)">nï¿½o</html:radio>	
+			<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.cardAlwaysValid" styleId="cardValidPeriodIdNo" name="parkingForm" property="cardAlwaysValid" value="no" onclick="displayCardValidPeriod(true)">não</html:radio>	
 			<br/><html:messages id="message" property="mustFillInDates" message="true" bundle="PARKING_RESOURCES"><span class="error0"><bean:write name="message"/><br/></span></html:messages>
 			<html:messages id="message" property="invalidPeriod" message="true" bundle="PARKING_RESOURCES"><span class="error0"><bean:write name="message"/></span></html:messages>				
 			<div id="cardValidPeriodDivId" style="display:block">
