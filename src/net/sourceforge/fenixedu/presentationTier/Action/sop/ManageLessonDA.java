@@ -414,11 +414,14 @@ public class ManageLessonDA extends
 	inicio.set(Calendar.HOUR_OF_DAY, Integer.parseInt((String) manageLessonForm.get("horaInicio")));
 	inicio.set(Calendar.MINUTE, Integer.parseInt((String) manageLessonForm.get("minutosInicio")));
 	inicio.set(Calendar.SECOND, 0);
+	inicio.set(Calendar.MILLISECOND, 0);
+	
 	Calendar fim = Calendar.getInstance();
 	fim.setTimeInMillis(inicio.getTimeInMillis());
 	fim.set(Calendar.HOUR_OF_DAY, Integer.parseInt((String) manageLessonForm.get("horaFim")));
 	fim.set(Calendar.MINUTE, Integer.parseInt((String) manageLessonForm.get("minutosFim")));
 	fim.set(Calendar.SECOND, 0);
+	fim.set(Calendar.MILLISECOND, 0);
 
 	InfoRoom infoSala = null;
 	if (manageLessonForm.get("nomeSala") != null
@@ -443,7 +446,9 @@ public class ManageLessonDA extends
 	    final Integer frequency;
 	    Integer weekOfQuinzenalStart = null;
 	    if (quinzenal.booleanValue()) {
+		
 		frequency = RoomOccupation.QUINZENAL;
+		
 		if (manageLessonForm.get("week") == null || manageLessonForm.get("week").equals("")) {
 		    ActionError actionError = new ActionError("errors.emptyField.checkBoxTrue");
 		    ActionErrors newActionErrors = new ActionErrors();
@@ -451,11 +456,16 @@ public class ManageLessonDA extends
 		    saveErrors(request, newActionErrors);
 		    return prepareEdit(mapping, form, request, response);
 		}
+		
 		weekOfQuinzenalStart = Integer.valueOf(manageLessonForm.getString("week"));
+		infoRoomOccupation.setWeekOfQuinzenalStart(weekOfQuinzenalStart);
+		
 	    } else {
 		frequency = RoomOccupation.SEMANAL;
 	    }
-
+	    
+	    infoRoomOccupation.setFrequency(frequency);
+	    
 	    InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
 		    .getAttribute(SessionConstants.EXECUTION_PERIOD);
 	    InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request
