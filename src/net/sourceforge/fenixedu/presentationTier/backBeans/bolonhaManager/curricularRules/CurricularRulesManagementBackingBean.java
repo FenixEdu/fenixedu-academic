@@ -134,7 +134,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
             case CREDITS_LIMIT:
                 if (getDegreeModule().isLeaf()) {
                     final CurricularCourse curricularCourse = (CurricularCourse) getDegreeModule();
-                    if (curricularCourse.getType() == CurricularCourseType.OPTIONAL_COURSE) {
+                    if (curricularCourse.isOptionalCurricularCourse()) {
                         result.add(new SelectItem(curricularRuleType.getName(), enumerationResources
                                 .getString(curricularRuleType.getName())));
                         break;
