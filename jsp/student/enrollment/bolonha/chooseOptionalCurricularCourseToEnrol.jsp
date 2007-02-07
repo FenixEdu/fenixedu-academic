@@ -21,6 +21,16 @@
 	</fr:edit>
 
 	<br />
+	
+	<logic:messagesPresent message="true">
+		<ul class="nobullet">
+			<html:messages id="messages" message="true" bundle="APPLICATION_RESOURCES">
+				<li><span class="error0"><bean:write name="messages" /></span></li>
+			</html:messages>
+		</ul>
+	</logic:messagesPresent>
+	
+	
 	<br />
 	<br />
 

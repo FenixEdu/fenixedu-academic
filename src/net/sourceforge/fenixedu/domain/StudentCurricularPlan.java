@@ -465,7 +465,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return curricularCourseAcumulatedEnrolments;
     }
 
-    public List<Enrolment> getAllStudentEnrolledEnrollmentsInExecutionPeriod(final ExecutionPeriod executionPeriod) {
+    public List<Enrolment> getAllStudentEnrolledEnrollmentsInExecutionPeriod(
+	    final ExecutionPeriod executionPeriod) {
 
 	// calculateStudentAcumulatedEnrollments(executionPeriod);
 	List<Enrolment> enrolments = (List) CollectionUtils.select(
@@ -675,16 +676,16 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     public double getEctsCredits(final ExecutionPeriod executionPeriod) {
 	double result = 0.0;
-	
+
 	for (final Enrolment enrolment : getEnrolmentsSet()) {
 	    if (enrolment.isValid(executionPeriod)) {
-		 result += enrolment.getEctsCredits(); 
-	     }
-	 }
-	
+		result += enrolment.getEctsCredits();
+	    }
+	}
+
 	return result;
     }
-    
+
     // -------------------------------------------------------------
     // BEGIN: Only for enrollment purposes (PROTECTED)
     // -------------------------------------------------------------
@@ -1944,10 +1945,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    final DegreeModuleToEnrol degreeModuleToEnrol, final CurriculumGroup curriculumGroup) {
 
 	final OptionalDegreeModuleToEnrol optionalDegreeModuleToEnrol = (OptionalDegreeModuleToEnrol) degreeModuleToEnrol;
-	final CurricularCourse curricularCourse = (CurricularCourse) optionalDegreeModuleToEnrol
-		.getContext().getChildDegreeModule();
 	final OptionalCurricularCourse optionalCurricularCourse = (OptionalCurricularCourse) optionalDegreeModuleToEnrol
-		.getCurricularCourse();
+		.getContext().getChildDegreeModule();
+	final CurricularCourse curricularCourse = optionalDegreeModuleToEnrol.getCurricularCourse();
+
 	createOptionalEnrolment(curriculumGroup, enrolmentContext.getExecutionPeriod(),
 		optionalCurricularCourse, curricularCourse, enrollmentCondition);
     }
@@ -2192,7 +2193,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return isBolonha() ? getRoot().isEnroledInExecutionPeriod(curricularCourse, executionPeriod)
 		: isCurricularCourseEnrolledInExecutionPeriod(curricularCourse, executionPeriod);
     }
-    
+
     public Integer getDegreeDuration() {
 	return getDegreeCurricularPlan().getDegreeDuration();
     }
