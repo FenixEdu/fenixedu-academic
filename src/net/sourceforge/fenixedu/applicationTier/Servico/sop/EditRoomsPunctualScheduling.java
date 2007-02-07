@@ -25,6 +25,9 @@ public class EditRoomsPunctualScheduling extends Service {
 	GenericEvent genericEvent = bean.getGenericEvent();
 	if (genericEvent != null && !selectedRooms.isEmpty()) {	    
 	    
+	    genericEvent.setTitle(bean.getSmallDescription());
+	    genericEvent.setDescription(bean.getCompleteDescription());
+	    
 	    // Remove Occupations
 	    List<RoomOccupation> roomOccupations = genericEvent.getRoomOccupations();
 	    List<RoomOccupation> eventOccupations = new ArrayList<RoomOccupation>();

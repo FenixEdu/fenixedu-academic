@@ -62,10 +62,8 @@
 							<td><bean:write name="genericEvent" property="presentationEndTime"/></td>
 						</tr>								
 						<tr>
-							<td>							
-								<bean:message key="label.frequency" bundle="SOP_RESOURCES"/>:
-								<bean:message name="genericEvent" property="frequency.name" bundle="ENUMERATION_RESOURCES"/>
-							</td>				
+							<td><bean:message key="label.frequency" bundle="SOP_RESOURCES"/>:</td>				
+							<td><bean:message name="genericEvent" property="frequency.name" bundle="ENUMERATION_RESOURCES"/></td>
 						</tr>														
 					</table>				
 				</logic:notEmpty>					
