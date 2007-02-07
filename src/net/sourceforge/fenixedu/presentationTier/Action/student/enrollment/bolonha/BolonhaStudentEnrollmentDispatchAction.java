@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.student.enrollment.bolonha;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +26,7 @@ import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.DynaActionForm;
 
 public class BolonhaStudentEnrollmentDispatchAction extends FenixDispatchAction {
 
@@ -33,11 +36,10 @@ public class BolonhaStudentEnrollmentDispatchAction extends FenixDispatchAction 
 	final List<Registration> registrations = getRegistrations(request);
 
 	if (registrations.size() > 1) {
-	    throw new RuntimeException("TODO: REDIRECT TO CHOOSE REGISTRATION");
+	    return prepareChooseRegistration(mapping, form, request, response);
 	}
 
 	final Registration registration = registrations.iterator().next();
-
 	if (!registration.isActive()) {
 	    throw new RuntimeException("TODO: FIX FOR INACTIVE REGISTRATIONS");
 	}
@@ -45,6 +47,31 @@ public class BolonhaStudentEnrollmentDispatchAction extends FenixDispatchAction 
 	return prepareShowDegreeModulesToEnrol(mapping, form, request, response, registration
 		.getLastStudentCurricularPlan());
 
+    }
+
+    public ActionForward prepareChooseRegistration(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	request.setAttribute("registrations", getRegistrations(request));
+
+	return mapping.findForward("chooseRegistration");
+    }
+
+    public ActionForward chooseRegistration(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	final Registration registration = getRegistration((DynaActionForm) form);
+	if (!registration.isActive()) {
+	    throw new RuntimeException("TODO: FIX FOR INACTIVE REGISTRATIONS");
+	}
+
+	return prepareShowDegreeModulesToEnrol(mapping, form, request, response, registration
+		.getLastStudentCurricularPlan());
+
+    }
+
+    private Registration getRegistration(DynaActionForm form) {
+	return rootDomainObject.readRegistrationByOID((Integer) form.get("registrationId"));
     }
 
     private ActionForward prepareShowDegreeModulesToEnrol(ActionMapping mapping, ActionForm form,
@@ -72,11 +99,7 @@ public class BolonhaStudentEnrollmentDispatchAction extends FenixDispatchAction 
 		    bolonhaStudentEnrollmentBean.getDegreeModulesToEnrol(),
 		    bolonhaStudentEnrollmentBean.getCurriculumModulesToRemove() });
 	} catch (EnrollmentDomainException ex) {
-	    for (final RuleResult ruleResult : ex.getFalseRuleResults()) {
-		for (final RuleResultMessage message : ruleResult.getMessages()) {
-		    addActionMessage(request, message.getMessage(), message.getArgs());
-		}
-	    }
+	    addRuleResultMessagesToActionMessages(request, ex);
 
 	    request.setAttribute("bolonhaStudentEnrollmentBean", bolonhaStudentEnrollmentBean);
 
@@ -94,6 +117,15 @@ public class BolonhaStudentEnrollmentDispatchAction extends FenixDispatchAction 
 		bolonhaStudentEnrollmentBean.getStudentCurricularPlan());
     }
 
+    private void addRuleResultMessagesToActionMessages(HttpServletRequest request,
+	    EnrollmentDomainException ex) {
+	for (final RuleResult ruleResult : ex.getFalseRuleResults()) {
+	    for (final RuleResultMessage message : ruleResult.getMessages()) {
+		addActionMessage(request, message.getMessage(), message.getArgs());
+	    }
+	}
+    }
+
     private BolonhaStudentEnrollmentBean getBolonhaStudentEnrollmentBeanFromViewState() {
 	return (BolonhaStudentEnrollmentBean) getRenderedObject("bolonhaStudentEnrolments");
     }
@@ -102,19 +134,44 @@ public class BolonhaStudentEnrollmentDispatchAction extends FenixDispatchAction 
 	    ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
 	final BolonhaStudentEnrollmentBean bolonhaStudentEnrollmentBean = getBolonhaStudentEnrollmentBeanFromViewState();
-	request.setAttribute("bolonhaStudentEnrollmentBean", bolonhaStudentEnrollmentBean);
 	request.setAttribute("optionalEnrolmentBean", new BolonhaStudentOptionalEnrollmentBean(
-		bolonhaStudentEnrollmentBean.getExecutionPeriod(), bolonhaStudentEnrollmentBean
+		bolonhaStudentEnrollmentBean.getStudentCurricularPlan(), bolonhaStudentEnrollmentBean
+			.getExecutionPeriod(), bolonhaStudentEnrollmentBean
 			.getOptionalDegreeModuleToEnrol()));
 
 	return mapping.findForward("chooseOptionalCurricularCourseToEnrol");
     }
 
-    public ActionForward chooseOptionalCurricularCourseToEnrol(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward enrolInOptionalCurricularCourse(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+	    FenixServiceException {
 
 	final BolonhaStudentOptionalEnrollmentBean optionalStudentEnrollmentBean = getBolonhaStudentOptionalEnrollmentBeanFromViewState();
+	try {
+	    executeService(request, "EnrolBolonhaStudent", new Object[] {
+		    optionalStudentEnrollmentBean.getStudentCurricularPlan(),
+		    optionalStudentEnrollmentBean.getExecutionPeriod(),
+		    buildOptionalDegreeModuleToEnrolList(optionalStudentEnrollmentBean),
+		    Collections.EMPTY_LIST });
+	} catch (EnrollmentDomainException ex) {
+	    addRuleResultMessagesToActionMessages(request, ex);
 
+	    request.setAttribute("optionalEnrolmentBean", optionalStudentEnrollmentBean);
+
+	    return mapping.findForward("chooseOptionalCurricularCourseToEnrol");
+	} catch (DomainException ex) {
+	    addActionMessage(request, ex.getKey(), ex.getArgs());
+	    request.setAttribute("optionalEnrolmentBean", optionalStudentEnrollmentBean);
+
+	    return mapping.findForward("chooseOptionalCurricularCourseToEnrol");
+	}
+
+	return prepareShowDegreeModulesToEnrol(mapping, form, request, response,
+		optionalStudentEnrollmentBean.getStudentCurricularPlan());
+    }
+
+    private List<DegreeModuleToEnrol> buildOptionalDegreeModuleToEnrolList(
+	    final BolonhaStudentOptionalEnrollmentBean optionalStudentEnrollmentBean) {
 	final DegreeModuleToEnrol selectedDegreeModuleToEnrol = optionalStudentEnrollmentBean
 		.getSelectedDegreeModuleToEnrol();
 	final OptionalDegreeModuleToEnrol optionalDegreeModuleToEnrol = new OptionalDegreeModuleToEnrol(
@@ -122,19 +179,21 @@ public class BolonhaStudentEnrollmentDispatchAction extends FenixDispatchAction 
 			.getContext(), optionalStudentEnrollmentBean
 			.getSelectedOptionalCurricularCourse());
 
-	request.setAttribute("bolonhaStudentEnrollmentBean",
-		getBolonhaStudentEnrollmentBeanFromViewState());
+	final List<DegreeModuleToEnrol> result = new ArrayList<DegreeModuleToEnrol>();
+	result.add(optionalDegreeModuleToEnrol);
 
-	return mapping.findForward("showDegreeModulesToEnrol");
+	return result;
     }
 
     public ActionForward cancelChooseOptionalCurricularCourseToEnrol(ActionMapping mapping,
 	    ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+	return prepareShowDegreeModulesToEnrol(mapping, form, request, response,
+		getStudentCurricularPlan(request));
+    }
 
-	request.setAttribute("bolonhaStudentEnrollmentBean",
-		getBolonhaStudentEnrollmentBeanFromViewState());
-
-	return mapping.findForward("showDegreeModulesToEnrol");
+    private StudentCurricularPlan getStudentCurricularPlan(final HttpServletRequest request) {
+	return rootDomainObject.readStudentCurricularPlanByOID(getRequestParameterAsInteger(request,
+		"studentCurricularPlanId"));
     }
 
     private BolonhaStudentOptionalEnrollmentBean getBolonhaStudentOptionalEnrollmentBeanFromViewState() {

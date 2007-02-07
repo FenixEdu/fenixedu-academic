@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.enrolment.DegreeModuleToEnrol;
 
@@ -22,14 +23,17 @@ public class BolonhaStudentOptionalEnrollmentBean implements Serializable {
 
     private DomainReference<CurricularCourse> selectedOptionalCurricularCourse;
 
+    private DomainReference<StudentCurricularPlan> studentCurricularPlan;
+
     private DegreeModuleToEnrol selectedDegreeModuleToEnrol;
 
-    public BolonhaStudentOptionalEnrollmentBean(final ExecutionPeriod executionPeriod,
-	    final DegreeModuleToEnrol degreeModuleToEnrol) {
+    public BolonhaStudentOptionalEnrollmentBean(final StudentCurricularPlan studentCurricularPlan,
+	    final ExecutionPeriod executionPeriod, final DegreeModuleToEnrol degreeModuleToEnrol) {
 	super();
 
 	setExecutionPeriod(executionPeriod);
 	setSelectedDegreeModuleToEnrol(degreeModuleToEnrol);
+	setStudentCurricularPlan(studentCurricularPlan);
 
     }
 
@@ -93,6 +97,16 @@ public class BolonhaStudentOptionalEnrollmentBean implements Serializable {
 
     public void setSelectedDegreeModuleToEnrol(DegreeModuleToEnrol selectedDegreeModuleToEnrol) {
 	this.selectedDegreeModuleToEnrol = selectedDegreeModuleToEnrol;
+    }
+
+    public StudentCurricularPlan getStudentCurricularPlan() {
+	return (this.studentCurricularPlan != null) ? this.studentCurricularPlan.getObject() : null;
+    }
+
+    public void setStudentCurricularPlan(StudentCurricularPlan studentCurricularPlan) {
+	this.studentCurricularPlan = (studentCurricularPlan != null) ? new DomainReference<StudentCurricularPlan>(
+		studentCurricularPlan)
+		: null;
     }
 
 }

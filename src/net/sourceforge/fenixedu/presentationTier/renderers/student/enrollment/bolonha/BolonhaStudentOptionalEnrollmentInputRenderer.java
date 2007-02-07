@@ -203,10 +203,11 @@ public class BolonhaStudentOptionalEnrollmentInputRenderer extends InputRenderer
 		    linkTableCell.setClasses(getCurricularCourseLinkClasses());
 
 		    final HtmlActionLink actionLink = new HtmlActionLink();
-		    actionLink.setText(studentResources
-			    .getString("label.chooseOptionalCurricularCourse"));
+		    actionLink.setText(studentResources.getString("label.enroll"));
+		    actionLink.setName("optionalCurricularCourseEnrolLink"
+			    + curricularCourse.getIdInternal());
 		    actionLink
-			    .setOnClick("document.forms[0].method.value='chooseOptionalCurricularCourseToEnrol';");
+			    .setOnClick("document.forms[0].method.value='enrolInOptionalCurricularCourse';");
 		    actionLink.setController(new UpdateSelectedOptionalCurricularCourseController(
 			    curricularCourse));
 		    linkTableCell.setBody(actionLink);

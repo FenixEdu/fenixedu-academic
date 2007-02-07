@@ -4,14 +4,12 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES" /></em>
-<h2><strong><bean:message key="label.student.optional.enrolments"
-	bundle="ACADEMIC_OFFICE_RESOURCES" /></strong></h2>
+<h2><strong><bean:message key="label.enrollment.optional.course"
+	bundle="STUDENT_RESOURCES" /></strong></h2>
 <br />
 
 <fr:form action="/bolonhaStudentEnrollment.do">
 	<input type="hidden" name="method" value="" />
-	<fr:edit id="bolonhaStudentEnrolments" name="bolonhaStudentEnrollmentBean" visible="false" />
 	<fr:edit id="optionalEnrolment" name="optionalEnrolmentBean"
 		schema="BolonhaStudentOptionalEnrollmentBean">
 		<fr:destination name="updateComboBoxes"
@@ -37,9 +35,14 @@
 		<br />
 	</logic:present>
 
-	<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" onclick="this.form.method.value='cancelChooseOptionalCurricularCourseToEnrol';">
-		<bean:message bundle="APPLICATION_RESOURCES" key="label.cancel" />
-	</html:cancel>
 
+
+</fr:form>
+
+<bean:define id="studentCurricularPlanId" name="optionalEnrolmentBean" property="studentCurricularPlan.idInternal" />
+<fr:form action="<%="/bolonhaStudentEnrollment.do?method=cancelChooseOptionalCurricularCourseToEnrol&amp;studentCurricularPlanId=" + studentCurricularPlanId %>">
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+		<bean:message bundle="APPLICATION_RESOURCES" key="label.cancel"/>
+	</html:submit>
 </fr:form>
 

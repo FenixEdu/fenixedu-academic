@@ -299,6 +299,10 @@
 	
 	
 	<!-- Begin: Bolonha Student Enrolment -->
+	
+	<definition name="enrolment.bolonha.chooseRegistration" extends="definition.student.masterPage">
+		<put name="body" value="/student/enrollment/bolonha/chooseRegistration.jsp"/>
+	</definition>
 	<definition name="enrolment.bolonha.showDegreeModulesToEnrol" extends="definition.student.masterPage">
 		<put name="body" value="/student/enrollment/bolonha/showDegreeModulesToEnrol.jsp"/>
 	</definition>

@@ -6,8 +6,7 @@
 
 <logic:present role="STUDENT">
 
-	<h2><bean:message bundle="STUDENT_RESOURCES"  key="label.pricesManagement" /></h2>
-
+	<h2><bean:message bundle="STUDENT_RESOURCES"  key="label.enrollment.courses" /></h2>
 	<logic:messagesPresent message="true">
 		<ul class="nobullet">
 			<html:messages id="messages" message="true" bundle="APPLICATION_RESOURCES">
@@ -33,8 +32,4 @@
 	
 	</fr:form>
 	
-	
-
-	
-
 </logic:present>
