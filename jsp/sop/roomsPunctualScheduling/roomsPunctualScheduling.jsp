@@ -91,9 +91,9 @@
 			</p>
 			
 			<p><bean:message bundle="SOP_RESOURCES" key="label.legend"/>:</p>
-			[C] -> <bean:message bundle="SOP_RESOURCES" key="label.continuous"/>
-			[D] -> <bean:message bundle="SOP_RESOURCES" key="label.daily"/>
-			[S] -> <bean:message bundle="SOP_RESOURCES" key="label.weekly"/>
+			[C] -> <bean:message bundle="SOP_RESOURCES" key="label.continuous"/><br/>
+			[D] -> <bean:message bundle="SOP_RESOURCES" key="label.daily"/><br/>
+			[S] -> <bean:message bundle="SOP_RESOURCES" key="label.weekly"/><br/>
 			[Q] -> <bean:message bundle="SOP_RESOURCES" key="label.biweekly"/>
 						
 		</logic:notEmpty>			

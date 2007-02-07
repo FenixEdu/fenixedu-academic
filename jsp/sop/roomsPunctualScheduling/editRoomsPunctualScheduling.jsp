@@ -72,7 +72,7 @@
 			</logic:notEmpty>
 			
 			<bean:define id="deleteURL">/roomsPunctualScheduling.do?method=deleteRoomsPunctualScheduling&amp;genericEventID=<bean:write name="genericEvent" property="idInternal"/></bean:define>
-			<p><html:link page="<%= deleteURL %>">		
+			<p><html:link page="<%= deleteURL %>" onclick="return confirm('Tem a certeza que deseja apagar a marcação?')">		
 				<bean:message bundle="SOP_RESOURCES" key="label.delete.room.punctual.scheduling"/>
 			</html:link></p>
 				
