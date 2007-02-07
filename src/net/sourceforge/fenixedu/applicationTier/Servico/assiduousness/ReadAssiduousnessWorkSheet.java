@@ -35,8 +35,8 @@ public class ReadAssiduousnessWorkSheet extends Service {
         if (assiduousness == null) {
             return null;
         }
-        YearMonthDay lastActiveStatus = assiduousness.getLastActiveStatusBetween(beginDate,endDate);
-        if(lastActiveStatus == null){
+        YearMonthDay lastActiveStatus = assiduousness.getLastActiveStatusBetween(beginDate, endDate);
+        if (lastActiveStatus == null) {
             return getEmployeeWorkSheetBalanceFree(assiduousness, beginDate, endDate);
         }
         endDate = lastActiveStatus;
@@ -53,7 +53,8 @@ public class ReadAssiduousnessWorkSheet extends Service {
                 endDate, new YearMonthDay());
     }
 
-    private EmployeeWorkSheet getEmployeeWorkSheetBalanceFree(Assiduousness assiduousness, YearMonthDay beginDate, YearMonthDay endDate) {
+    private EmployeeWorkSheet getEmployeeWorkSheetBalanceFree(Assiduousness assiduousness,
+            YearMonthDay beginDate, YearMonthDay endDate) {
         EmployeeWorkSheet employeeWorkSheet = new EmployeeWorkSheet();
         employeeWorkSheet.setEmployee(assiduousness.getEmployee());
         Unit unit = assiduousness.getEmployee().getLastWorkingPlace(beginDate, endDate);
@@ -80,8 +81,8 @@ public class ReadAssiduousnessWorkSheet extends Service {
         if (assiduousness == null) {
             return null;
         }
-        YearMonthDay lastActiveStatus = assiduousness.getLastActiveStatusBetween(beginDate,endDate);
-        if(lastActiveStatus == null){
+        YearMonthDay lastActiveStatus = assiduousness.getLastActiveStatusBetween(beginDate, endDate);
+        if (lastActiveStatus == null) {
             return getEmployeeWorkSheetBalanceFree(assiduousness, beginDate, endDate);
         }
         return getEmployeeWorkSheet(assiduousness, workScheduleMap, clockingsMap, leavesMap, beginDate,
@@ -108,7 +109,6 @@ public class ReadAssiduousnessWorkSheet extends Service {
             final Schedule schedule = assiduousness.getSchedule(thisDay);
 
             if (schedule == null || !assiduousness.isStatusActive(thisDay, thisDay)) {
-                workDaySheet.setNotes("");
                 workDaySheet.setBalanceTime(new Period(0));
                 workDaySheet.setUnjustifiedTime(Duration.ZERO);
                 workSheet.add(workDaySheet);

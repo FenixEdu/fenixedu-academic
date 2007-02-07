@@ -32,6 +32,8 @@ public class WorkDaySheet implements Serializable {
 
     Duration unjustifiedTime;
 
+    Duration unjustifiedTimeWithoutBalanceDiscount;
+
     Duration complementaryWeeklyRest;
 
     Duration holidayRest;
@@ -48,9 +50,21 @@ public class WorkDaySheet implements Serializable {
 
     Timeline timeline;
 
+    Boolean irregular;
+
     public WorkDaySheet() {
         setBalanceTime(Duration.ZERO.toPeriod());
         setUnjustifiedTime(Duration.ZERO);
+    }
+
+    public WorkDaySheet(YearMonthDay day, WorkSchedule workSchedule,
+            List<AssiduousnessRecord> clockings, List<Leave> list) {
+        setBalanceTime(Duration.ZERO.toPeriod());
+        setUnjustifiedTime(Duration.ZERO);
+        setDate(day);
+        setWorkSchedule(workSchedule);
+        setLeaves(list);
+        setAssiduousnessRecords(clockings);
     }
 
     public Timeline getTimeline() {
@@ -86,8 +100,10 @@ public class WorkDaySheet implements Serializable {
     }
 
     public void addNote(String note) {
-        if (notes.length() != 0) {
+        if (notes != null && notes.length() != 0) {
             this.notes = notes.concat(" / ");
+        } else if (notes == null) {
+            notes = new String();
         }
         this.notes = notes.concat(note);
     }
@@ -228,6 +244,7 @@ public class WorkDaySheet implements Serializable {
     }
 
     public void discountBalanceLeaveInFixedPeriod(List<Leave> balanceLeaveList) {
+        setUnjustifiedTimeWithoutBalanceDiscount(getUnjustifiedTime());
         Duration balance = Duration.ZERO;
         for (Leave balanceLeave : balanceLeaveList) {
             balance = balance.plus(balanceLeave.getDuration());
@@ -246,6 +263,29 @@ public class WorkDaySheet implements Serializable {
 
     public void setHolidayRest(Duration holidayRest) {
         this.holidayRest = holidayRest;
+    }
+
+    public Duration getUnjustifiedTimeWithoutBalanceDiscount() {
+        return unjustifiedTimeWithoutBalanceDiscount;
+    }
+
+    public void setUnjustifiedTimeWithoutBalanceDiscount(Duration unjustifiedTimeWithoutBalanceDiscount) {
+        this.unjustifiedTimeWithoutBalanceDiscount = unjustifiedTimeWithoutBalanceDiscount;
+    }
+
+    public Boolean getIrregular() {
+        return irregular == null ? false : irregular;
+    }
+
+    public void setIrregular(Boolean irregular) {
+        this.irregular = irregular;
+    }
+
+    public void setIrregularDay(Boolean irregular) {
+        this.irregular = irregular;
+        ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources",
+                LanguageUtils.getLocale());
+        addNote(bundle.getString("label.irregular"));
     }
 
 }

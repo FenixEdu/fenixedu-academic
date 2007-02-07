@@ -10,7 +10,9 @@ import net.sourceforge.fenixedu.domain.assiduousness.util.TimePoint;
 
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
+import org.joda.time.Interval;
 import org.joda.time.TimeOfDay;
+import org.joda.time.YearMonthDay;
 
 public class WorkPeriod extends WorkPeriod_Base {
 
@@ -136,6 +138,13 @@ public class WorkPeriod extends WorkPeriod_Base {
             return true;
         }
         return false;
+    }
+
+    public Interval getNotWorkingPeriod(YearMonthDay day) {
+        if (isSecondWorkPeriodDefined()) {
+            return new Interval(day.toDateTime(getEndFirstPeriod()), day.toDateTime(getSecondPeriod()));
+        }
+        return null;
     }
 
 }

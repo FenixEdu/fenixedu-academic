@@ -35,6 +35,10 @@ public class Assiduousness extends Assiduousness_Base {
 
     public static final TimeOfDay defaultStartWeeklyRestDay = new TimeOfDay(7, 0, 0, 0);
 
+    public static final TimeOfDay defaultStartNightWorkDay = new TimeOfDay(20, 0, 0, 0);
+
+    public static final TimeOfDay defaultEndNightWorkDay = new TimeOfDay(7, 0, 0, 0);
+
     public static final Duration normalWorkDayDuration = new Duration(25200000); // 7 hours
 
     public Assiduousness(Employee employee) {
@@ -176,6 +180,9 @@ public class Assiduousness extends Assiduousness_Base {
                     workDaySheet.setTimeline(getTimeline(workDaySheet, timeLeaves));
                     workDaySheet = workDaySheet.getWorkSchedule().calculateWorkingPeriods(workDaySheet,
                             timeLeaves);
+                    if (!dayOccurrences.isEmpty()) {
+                        workDaySheet.setIrregular(true);
+                    }
                 } else {
                     workDaySheet.setBalanceTime(Duration.ZERO.minus(
                             workDaySheet.getWorkSchedule().getWorkScheduleType().getNormalWorkPeriod()
@@ -185,16 +192,18 @@ public class Assiduousness extends Assiduousness_Base {
                                 .getWorkScheduleType().getFixedWorkPeriod().getWorkPeriodDuration());
                     }
                     if (balanceLeaves.isEmpty()) {
-                        workDaySheet.setNotes(workDaySheet.getNotes().concat("FALTA"));
+                        workDaySheet.addNote("FALTA");
                     }
                 }
                 workDaySheet.discountBalanceLeaveInFixedPeriod(balanceLeaves);
             }
         } else {
             if (!workDaySheet.getAssiduousnessRecords().isEmpty()) {
+                DateTime firstClocking = workDaySheet.getAssiduousnessRecords().get(0).getDate();
                 DateTime lastClocking = workDaySheet.getAssiduousnessRecords().get(
                         workDaySheet.getAssiduousnessRecords().size() - 1).getDate();
-                final Timeline timeline = new Timeline(workDaySheet.getDate(), lastClocking);
+                final Timeline timeline = new Timeline(workDaySheet.getDate(), firstClocking,
+                        lastClocking);
                 Iterator<AttributeType> attributesIt = DomainConstants.WORKED_ATTRIBUTES.getAttributes()
                         .iterator();
                 timeline.plotListInTimeline(workDaySheet.getAssiduousnessRecords(), workDaySheet
@@ -352,7 +361,7 @@ public class Assiduousness extends Assiduousness_Base {
             }
 
         }
-        if(lastActiveStatus != null && lastActiveStatus.isAfter(endDate)){
+        if (lastActiveStatus != null && lastActiveStatus.isAfter(endDate)) {
             lastActiveStatus = endDate;
         }
         return lastActiveStatus;

@@ -29,7 +29,6 @@ import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.Interval;
-import org.joda.time.TimeOfDay;
 import org.joda.time.YearMonthDay;
 
 public class CloseAssiduousnessMonth extends Service {
@@ -80,21 +79,33 @@ public class CloseAssiduousnessMonth extends Service {
             if (schedule != null && assiduousness.isStatusActive(thisDay, thisDay)) {
                 final boolean isDayHoliday = assiduousness.isHoliday(thisDay);
                 final WorkSchedule workSchedule = workScheduleMap.get(thisDay);
-                workDaySheet.setNotes("");
                 workDaySheet.setWorkSchedule(workSchedule);
                 workDaySheet.setAssiduousnessRecords(getDayClockings(clockingsMap, thisDay));
                 List<Leave> leavesList = getDayLeaves(leavesMap, thisDay);
                 workDaySheet.setLeaves(leavesList);
+                workDaySheet = assiduousness.calculateDailyBalance(workDaySheet, isDayHoliday);
                 if (workSchedule != null && !isDayHoliday) {
                     for (Leave leave : leavesList) {
                         if (leave.getJustificationMotive().getJustificationType().equals(
                                 JustificationType.TIME)) {
+                            Duration overlapsDuration = Duration.ZERO;
                             Duration justificationDuration = justificationsDuration.get(leave
                                     .getJustificationMotive());
                             if (justificationDuration == null) {
                                 justificationDuration = Duration.ZERO;
                             }
-                            justificationDuration = justificationDuration.plus(leave.getDuration());
+                            if (!workDaySheet.getIrregular()) {
+                                Interval interval = workSchedule.getWorkScheduleType()
+                                        .getNormalWorkPeriod().getNotWorkingPeriod(thisDay);
+                                if (interval != null) {
+                                    Interval overlaps = interval.overlap(leave.getTotalInterval());
+                                    if (overlaps != null) {
+                                        overlapsDuration = overlaps.toDuration();
+                                    }
+                                }
+                                justificationDuration = justificationDuration.plus(leave.getDuration()
+                                        .minus(overlapsDuration));
+                            }
                             justificationsDuration.put(leave.getJustificationMotive(),
                                     justificationDuration);
                         }
@@ -124,7 +135,6 @@ public class CloseAssiduousnessMonth extends Service {
                             article66 = article66 + 0.5;
                         }
                     }
-                    workDaySheet = assiduousness.calculateDailyBalance(workDaySheet, isDayHoliday);
                     Duration thisDayBalance = workDaySheet.getBalanceTime().toDurationFrom(
                             new DateMidnight());
                     totalBalance = totalBalance.plus(thisDayBalance);
@@ -132,7 +142,6 @@ public class CloseAssiduousnessMonth extends Service {
                     setExtraWork(workDaySheet, thisDayBalance, extra125Map, extra150Map);
                     setUnjustified(workDaySheet, unjustifiedMap);
                 } else {
-                    workDaySheet = assiduousness.calculateDailyBalance(workDaySheet, isDayHoliday);
                     totalComplementaryWeeklyRestBalance = totalComplementaryWeeklyRestBalance
                             .plus(workDaySheet.getComplementaryWeeklyRest());
                     totalWeeklyRestBalance = totalWeeklyRestBalance.plus(workDaySheet.getWeeklyRest());
@@ -248,8 +257,9 @@ public class CloseAssiduousnessMonth extends Service {
             thisDayUnjustified = Duration.ZERO;
         }
         Duration hourDuration = new Duration(3600000);
+        // TODO Duration thisDayExtraWork = thisDayBalance; ignore unjustified
         Duration thisDayExtraWork = thisDayBalance.plus(thisDayUnjustified);
-        if (!thisDayBalance.equals(Duration.ZERO)) {
+        if (!thisDayExtraWork.equals(Duration.ZERO)) {
             if (thisDayExtraWork.isLongerThan(hourDuration)) {
                 Duration extra125 = extra125Map
                         .get(workDaySheet.getWorkSchedule().getWorkScheduleType());
@@ -273,51 +283,31 @@ public class CloseAssiduousnessMonth extends Service {
                 }
                 extra125 = extra125.plus(thisDayExtraWork);
                 extra125Map.put(workDaySheet.getWorkSchedule().getWorkScheduleType(), extra125);
-            } else {
-                // este else é para remover. Está mal, esta a dar saldo extra a mais(só cá está para
-                // ficar igual ao teleponto)
-                if (!thisDayUnjustified.equals(Duration.ZERO)) {
-                    thisDayExtraWork = thisDayBalance.plus(thisDayUnjustified);
-                    if (thisDayExtraWork.isLongerThan(Duration.ZERO)) {
-                        Duration extra125 = extra125Map.get(workDaySheet.getWorkSchedule()
-                                .getWorkScheduleType());
-                        if (extra125 == null) {
-                            extra125 = Duration.ZERO;
-                        }
-                        extra125 = extra125.plus(thisDayExtraWork);
-                        extra125Map.put(workDaySheet.getWorkSchedule().getWorkScheduleType(), extra125);
-                    }
-                }
             }
-
         }
     }
 
     private void setNightExtraWork(WorkDaySheet workDaySheet,
             HashMap<WorkScheduleType, Duration> extra25Map) {
-        final DateTime nightHour = new TimeOfDay(20, 0).toDateTimeToday();
-        final Duration midHour = new Duration(1800000);
-        DateTime lastClockingDate = null;
-        if (workDaySheet.getTimeline() != null
-                && workDaySheet.getTimeline().getLastWorkTimePoint() != null) {
-            lastClockingDate = workDaySheet.getTimeline().getLastWorkTimePoint().getTime()
-                    .toDateTimeToday();
-            if (workDaySheet.getTimeline().getLastWorkTimePoint().isNextDay()) {
-                lastClockingDate = lastClockingDate.plusDays(1);
-            }
-        }
-        if (lastClockingDate != null && lastClockingDate.isAfter(nightHour)) {
-            Duration diference = new Duration(nightHour, lastClockingDate);
-            if (!diference.isShorterThan(midHour)) {
-                Duration extra25 = extra25Map.get(workDaySheet.getWorkSchedule().getWorkScheduleType());
-                if (extra25 == null) {
-                    extra25 = Duration.ZERO;
+        if (!workDaySheet.getIrregular() && workDaySheet.getTimeline() != null) {
+            final Duration midHour = new Duration(1800000);
+            Duration extraWorkDuration = workDaySheet.getTimeline()
+                    .calculateWorkPeriodDurationBetweenDates(
+                            workDaySheet.getDate().toDateTime(Assiduousness.defaultStartNightWorkDay),
+                            workDaySheet.getDate().toDateTime(Assiduousness.defaultEndNightWorkDay)
+                                    .plusDays(1));
+            if (!extraWorkDuration.equals(Duration.ZERO)) {
+                if (!extraWorkDuration.isShorterThan(midHour)) {
+                    Duration extra25 = extra25Map.get(workDaySheet.getWorkSchedule()
+                            .getWorkScheduleType());
+                    if (extra25 == null) {
+                        extra25 = Duration.ZERO;
+                    }
+                    extra25 = extra25.plus(extraWorkDuration);
+                    extra25Map.put(workDaySheet.getWorkSchedule().getWorkScheduleType(), extra25);
                 }
-                extra25 = extra25.plus(diference);
-                extra25Map.put(workDaySheet.getWorkSchedule().getWorkScheduleType(), extra25);
             }
         }
-
     }
 
     private List<Leave> getDayLeaves(HashMap<YearMonthDay, List<Leave>> leavesMap, YearMonthDay thisDay) {

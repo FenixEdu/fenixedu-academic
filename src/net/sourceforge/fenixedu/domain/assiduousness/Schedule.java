@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.util.Month;
 import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
+import org.joda.time.Duration;
 import org.joda.time.Partial;
 import org.joda.time.YearMonthDay;
 
@@ -80,10 +81,11 @@ public class Schedule extends Schedule_Base {
         if (isCloseMonthInsideScheduleInterval(closedMonth) && closedMonth.getClosedForBalance()) {
             Month month = Month.values()[closedMonth.getClosedYearMonth().get(
                     DateTimeFieldType.monthOfYear()) - 1];
-            throw new DomainException("error.schedule.monthClose", ResourceBundle.getBundle(
-                    "resources.EnumerationResources", LanguageUtils.getLocale()).getString(month.name()),
-                    ((Integer) closedMonth.getClosedYearMonth().get(DateTimeFieldType.year()))
-                            .toString());
+            throw new DomainException("error.schedule.monthClose",
+                    ResourceBundle
+                            .getBundle("resources.EnumerationResources", LanguageUtils.getLocale())
+                            .getString(month.name()), ((Integer) closedMonth.getClosedYearMonth().get(
+                            DateTimeFieldType.year())).toString());
         }
         setRootDomainObject(RootDomainObject.getInstance());
         setModifiedBy(employeeScheduleFactory.getModifiedBy());
@@ -112,9 +114,9 @@ public class Schedule extends Schedule_Base {
                 Month month = Month.values()[closedMonth.getClosedYearMonth().get(
                         DateTimeFieldType.monthOfYear()) - 1];
                 throw new DomainException("error.schedule.monthClose", ResourceBundle.getBundle(
-                        "resources.EnumerationResources", LanguageUtils.getLocale()).getString(month.name()),
-                        ((Integer) closedMonth.getClosedYearMonth().get(DateTimeFieldType.year()))
-                                .toString());
+                        "resources.EnumerationResources", LanguageUtils.getLocale()).getString(
+                        month.name()), ((Integer) closedMonth.getClosedYearMonth().get(
+                        DateTimeFieldType.year())).toString());
             }
             eliminateDays(employeeScheduleFactory);
         }
@@ -169,9 +171,9 @@ public class Schedule extends Schedule_Base {
                 Month month = Month.values()[closedMonth.getClosedYearMonth().get(
                         DateTimeFieldType.monthOfYear()) - 1];
                 throw new DomainException("error.schedule.monthClose", ResourceBundle.getBundle(
-                        "resources.EnumerationResources", LanguageUtils.getLocale()).getString(month.name()),
-                        ((Integer) closedMonth.getClosedYearMonth().get(DateTimeFieldType.year()))
-                                .toString());
+                        "resources.EnumerationResources", LanguageUtils.getLocale()).getString(
+                        month.name()), ((Integer) closedMonth.getClosedYearMonth().get(
+                        DateTimeFieldType.year())).toString());
             }
             if (employeeScheduleFactory.isDifferencesInDates()
                     && !employeeScheduleFactory.isDifferencesInWorkSchedules()) {
@@ -340,6 +342,20 @@ public class Schedule extends Schedule_Base {
             }
         }
         return false;
+    }
+
+    public Duration getEqualWorkPeriodDuration() {
+        Duration workPeriodDuration = Duration.ZERO;
+        for (WorkSchedule workSchedule : getWorkSchedules()) {
+            if (workPeriodDuration.equals(Duration.ZERO)) {
+                workPeriodDuration = workSchedule.getWorkScheduleType().getNormalWorkPeriod()
+                        .getWorkPeriodDuration();
+            } else if (!workSchedule.getWorkScheduleType().getNormalWorkPeriod().getWorkPeriodDuration()
+                    .equals(workPeriodDuration)) {
+                return Duration.ZERO;
+            }
+        }
+        return workPeriodDuration;
     }
 
     public void delete() {
