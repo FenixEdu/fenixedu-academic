@@ -20,7 +20,7 @@
 	</logic:messagesPresent>	
 	
 	<logic:notEmpty name="roomsPunctualSchedulingBean">				
-		<logic:notEmpty name="roomsPunctualSchedulingBean" property="periodType">
+		<logic:notEmpty name="roomsPunctualSchedulingBean" property="periodType">					
 			
 			<p><b><bean:message key="label.scheduling.period" bundle="SOP_RESOURCES"/></b></p>
 														
@@ -97,13 +97,18 @@
 							<fr:property name="checkboxName" value="selectedRoom"/>
 							<fr:property name="checkboxValue" value="idInternal"/>
 							<fr:property name="classes" value="tstyle5 vamiddle thlight"/>
-							<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 						</fr:layout>							
 					</fr:view>
-					<html:submit><bean:message key="label.remove.room"/></html:submit>
-				</fr:form>																			
+					
+					<bean:message key="label.available.room.space" bundle="SOP_RESOURCES"/> 
+					<bean:write name="roomsPunctualSchedulingBean" property="totalAvailableRoomSpace.key"/><bean:message key="label.normal.capacity.abbreviation" bundle="SOP_RESOURCES"/> 
+					/ <bean:write name="roomsPunctualSchedulingBean" property="totalAvailableRoomSpace.value"/><bean:message key="label.exams.capacity.abbreviation" bundle="SOP_RESOURCES"/> 
+					
+					<p><html:submit><bean:message key="label.remove.room"/></html:submit></p>
+					
+				</fr:form>																															
 			</logic:notEmpty>
-
+	
 			<br/>
 			<logic:notEmpty name="roomsPunctualSchedulingBean" property="rooms">
 				<b><bean:message key="label.choose.descriptions" bundle="SOP_RESOURCES"/></b>	

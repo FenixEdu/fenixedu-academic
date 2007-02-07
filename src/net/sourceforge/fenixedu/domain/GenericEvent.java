@@ -10,19 +10,44 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.util.DiaSemana;
+import net.sourceforge.fenixedu.util.HourMinuteSecond;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 import net.sourceforge.fenixedu.util.renderer.GanttDiagramEvent;
 
 import org.joda.time.Interval;
+import org.joda.time.YearMonthDay;
 
 public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent {
     
-    public GenericEvent(MultiLanguageString title, MultiLanguageString description) {
-        super();
-        setRootDomainObject(RootDomainObject.getInstance());
+    public GenericEvent(MultiLanguageString title, MultiLanguageString description, List<OldRoom> rooms, 
+	    Calendar startTime, Calendar endTime, DiaSemana dayOfWeek, FrequencyType frequencyType, 
+	    OccupationPeriod occupationPeriod) {
+	
+	super();        	
+	
+	if(rooms.isEmpty()) {
+	    throw new DomainException("error.empty.room.to.create.room.occupation");
+	}	
+	
+	setRootDomainObject(RootDomainObject.getInstance());
         setTitle(title);
         setDescription(description);        
-    }        
+	setFrequency(frequencyType);
+        
+	for (OldRoom room : rooms) {	
+          createNewRoomOccupation(room, startTime, endTime, dayOfWeek, occupationPeriod);
+	}
+    }  
+
+    public void createNewRoomOccupation(OldRoom room, Calendar startTime, Calendar endTime, DiaSemana dayOfWeek, 
+	    OccupationPeriod occupationPeriod) {
+	
+	Integer frequency = (getFrequency() != null) ? getFrequency().ordinal() + 1 : null;
+	if(!room.isFree(occupationPeriod, startTime, endTime, dayOfWeek, frequency, 1)) {
+            throw new DomainException("error.GenericEvent.roomOccupation.room.is.not.free");
+        }            
+        new RoomOccupation(room, startTime, endTime, dayOfWeek, getFrequency(), this, occupationPeriod);	
+    }
     
     @Override
     public void setTitle(MultiLanguageString title) {
@@ -39,17 +64,7 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
 	removeRootDomainObject();
 	deleteDomainObject();
     }
-    
-    public void createRoomOccupation(OldRoom room, Calendar startTime, Calendar endTime, 
-	    DiaSemana dayOfWeek, FrequencyType frequencyType, OccupationPeriod occupationPeriod) {
-	
-	Integer frequency = (frequencyType != null) ? frequencyType.ordinal() + 1 : null;
-	if(!room.isFree(occupationPeriod, startTime, endTime, dayOfWeek, frequency, 1)) {
-	    throw new DomainException("error.GenericEvent.roomOccupation.room.is.not.free");
-	}
-	new RoomOccupation(room, startTime, endTime, dayOfWeek, frequencyType, this, occupationPeriod);
-    }
-    
+              
     public static Set<GenericEvent> getActiveGenericEventsForRoomOccupations(){
 	Set<RoomOccupation> punctualRoomOccupations = RoomOccupation.getActivePunctualRoomOccupations();
 	Set<GenericEvent> result = new HashSet<GenericEvent>();
@@ -57,6 +72,30 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
 	    result.add(occupation.getGenericEvent());
 	}
 	return result;
+    }
+    
+    public List<OldRoom> getAssociatedRooms(){
+	List<OldRoom> result = new ArrayList<OldRoom>();
+	for (RoomOccupation occupation : getRoomOccupationsSet()) {
+	    result.add(occupation.getRoom());	
+	}
+	return result;
+    }
+    
+    public YearMonthDay getBeginDate() {
+	return (!getRoomOccupations().isEmpty()) ? getRoomOccupations().get(0).getPeriod().getStartYearMonthDay() : null;
+    }
+    
+    public YearMonthDay getEndDate() {
+	return (!getRoomOccupations().isEmpty()) ? getRoomOccupations().get(0).getPeriod().getEndYearMonthDay() : null;
+    }
+    
+    public HourMinuteSecond getBeginTime() {
+	return (!getRoomOccupations().isEmpty()) ? getRoomOccupations().get(0).getStartTimeDateHourMinuteSecond() : null;
+    }
+    
+    public HourMinuteSecond getEndTime() {
+	return (!getRoomOccupations().isEmpty()) ? getRoomOccupations().get(0).getEndTimeDateHourMinuteSecond() : null;
     }
     
     public String getPresentationBeginTime() {

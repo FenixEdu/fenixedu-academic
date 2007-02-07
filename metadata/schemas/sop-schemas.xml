@@ -43,6 +43,8 @@
 
 <schema name="ViewSelectedRooms" type="net.sourceforge.fenixedu.domain.space.OldRoom" bundle="SOP_RESOURCES">	
 	<slot name="name" />
+	<slot name="capacidadeNormal" key="label.normal.capacity"/>	
+	<slot name="capacidadeExame" key="label.exams.capacity"/>	
 </schema>
 
 <schema name="FinalizeCreationOfRoomsPunctualScheduling" type="net.sourceforge.fenixedu.dataTransferObject.sop.RoomsPunctualSchedulingBean" bundle="SOP_RESOURCES">	
@@ -52,12 +54,3 @@
 		<property name="columns" value="40"/>
 	</slot>	
 </schema>
-
-<schema name="EditRoomsPunctualSchedulingDescriptions" type="net.sourceforge.fenixedu.domain.GenericEvent" bundle="SOP_RESOURCES">	
-	<slot name="title" key="label.small.description" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator" />
-	<slot name="description" layout="area" key="label.complete.description">
-		<property name="rows" value="6" />
-		<property name="columns" value="40"/>
-	</slot>	
-</schema>
-

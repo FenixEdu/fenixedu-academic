@@ -11476,6 +11476,15 @@
         </filterChains>     
     </service>
 	<service>
+    	<name>EditRoomsPunctualScheduling</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.EditRoomsPunctualScheduling</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+			<chain name="TimeTableManagerAuthorization" />
+        </filterChains>     
+    </service>
+	<service>
     	<name>DeleteGenericEvent</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.DeleteGenericEvent</implementationClass>
         <description></description>

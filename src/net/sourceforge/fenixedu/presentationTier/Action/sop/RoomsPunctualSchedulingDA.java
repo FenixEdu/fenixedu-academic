@@ -60,8 +60,9 @@ public class RoomsPunctualSchedulingDA extends FenixDispatchAction {
     }  
          
     public ActionForward prepareView(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws InvalidArgumentException {		
-	GenericEvent genericEventFromParameter = getGenericEventFromParameter(request);
-	request.setAttribute("genericEvent", genericEventFromParameter);	
+	GenericEvent genericEvent = getGenericEventFromParameter(request);
+	request.setAttribute("genericEvent", genericEvent);
+	request.setAttribute("roomsPunctualSchedulingBean", new RoomsPunctualSchedulingBean(genericEvent));
 	return mapping.findForward("prepareViewRoomsPunctualScheduling");
     }  
     
@@ -152,6 +153,16 @@ public class RoomsPunctualSchedulingDA extends FenixDispatchAction {
 	return mapping.findForward("prepareFinalizeCreation");
     }  
     
+    public ActionForward associateNewRoomToEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {		
+	associateNewRoom(mapping, form, request, response);	
+	return mapping.findForward("prepareViewRoomsPunctualScheduling");	
+    } 
+    
+    public ActionForward removeRoomToEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {	
+	removeRoom(mapping, form, request, response);	
+	return mapping.findForward("prepareViewRoomsPunctualScheduling");		
+    }  
+    
     public ActionForward createRoomsPunctualScheduling(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) 
     	throws FenixServiceException, FenixFilterException, InvalidArgumentException {	
 		
@@ -169,6 +180,26 @@ public class RoomsPunctualSchedulingDA extends FenixDispatchAction {
 	
 	return prepare(mapping, form, request, response);
     }    
+    
+    public ActionForward editRoomsPunctualScheduling(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) 
+	throws FenixServiceException, FenixFilterException, InvalidArgumentException {	
+			
+	IViewState viewState = RenderUtils.getViewState("roomsPunctualSchedulingWithDescriptions");
+	RoomsPunctualSchedulingBean bean = (RoomsPunctualSchedulingBean) viewState.getMetaObject().getObject();
+	
+	try {
+            executeService("EditRoomsPunctualScheduling", new Object[] {bean});	    
+       
+	} catch(DomainException domainException) {
+            saveMessages(request, domainException);
+            request.setAttribute("roomsPunctualSchedulingBean", bean);	
+            return mapping.findForward("prepareFinalizeCreation");        
+	} 
+	
+	return prepare(mapping, form, request, response);
+    }
+    
+    
     
     private YearMonthDay getFirstDay(HttpServletRequest request) {
 	YearMonthDay firstDay = getFirstDayFromParameter(request);

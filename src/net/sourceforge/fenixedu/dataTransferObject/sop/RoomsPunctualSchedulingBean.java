@@ -7,12 +7,15 @@ import java.util.Locale;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.FrequencyType;
+import net.sourceforge.fenixedu.domain.GenericEvent;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.joda.time.Partial;
 import org.joda.time.YearMonthDay;
+
+import pt.ist.utl.fenix.utils.Pair;
 
 public class RoomsPunctualSchedulingBean implements Serializable {
 
@@ -36,12 +39,26 @@ public class RoomsPunctualSchedulingBean implements Serializable {
     
     private DomainReference<OldRoom> selectedRoomReference;
     
+    private DomainReference<GenericEvent> genericEventReference;
+    
     private transient Locale locale = LanguageUtils.getLocale(); 
     
-    
-    public RoomsPunctualSchedulingBean() {}
-            
-    
+    public RoomsPunctualSchedulingBean() {
+	
+    }
+        
+    public RoomsPunctualSchedulingBean(GenericEvent genericEvent) {	
+	setRooms(genericEvent.getAssociatedRooms());
+	setBegin(genericEvent.getBeginDate());
+	setEnd(genericEvent.getEndDate());
+	setBeginTime(new Partial(genericEvent.getBeginTime()));
+	setEndTime(new Partial(genericEvent.getEndTime()));	
+	setFrequency(genericEvent.getFrequency());
+	setSmallDescription(genericEvent.getTitle());
+	setCompleteDescription(genericEvent.getDescription());
+	setGenericEvent(genericEvent);
+    }
+  
     public void editDailyType(YearMonthDay begin, Partial beginTime, Partial endTime) {
 	setBegin(begin);
 	setEnd(begin);
@@ -56,7 +73,22 @@ public class RoomsPunctualSchedulingBean implements Serializable {
 	    return name();
 	}
     }
-      
+    
+    public Pair<Integer, Integer> getTotalAvailableRoomSpace(){
+	Integer availableSpaceForExam = Integer.valueOf(0), availableNormalSpace = Integer.valueOf(0);
+	for (OldRoom room : getRooms()) {
+	    Integer capacidadeExame = room.getCapacidadeExame();
+	    Integer capacidadeNormal = room.getCapacidadeNormal();
+	    if(capacidadeNormal != null) {
+		availableNormalSpace += capacidadeNormal;
+	    }
+	    if(capacidadeExame != null) {
+		availableSpaceForExam += capacidadeExame;
+	    }	    
+	}
+	return new Pair<Integer, Integer>(availableNormalSpace, availableSpaceForExam);
+    }
+    
     public String getPresentationBeginTime() {
 	return getBeginTime().toString("HH:mm");
     }
@@ -132,6 +164,15 @@ public class RoomsPunctualSchedulingBean implements Serializable {
 	return result;
     }
     
+    public void setRooms(List<OldRoom> rooms) {
+	if(roomsReferences == null) {
+	    roomsReferences = new ArrayList<DomainReference<OldRoom>>();
+	}
+	for (OldRoom room : rooms) {
+	    roomsReferences.add(new DomainReference<OldRoom>(room));
+	}
+    }
+    
     public void addNewRoom(OldRoom oldRoom) {
 	if(oldRoom != null) {
             if(roomsReferences == null) {
@@ -163,7 +204,14 @@ public class RoomsPunctualSchedulingBean implements Serializable {
         this.selectedRoomReference = (selectedRoom != null) ? new DomainReference<OldRoom>(selectedRoom) : null;        
     }
 
+    public GenericEvent getGenericEvent() {
+        return (this.genericEventReference != null) ? this.genericEventReference.getObject() : null;
+    }
 
+    public void setGenericEvent(GenericEvent genericEvent) {
+        this.genericEventReference = (genericEvent != null) ? new DomainReference<GenericEvent>(genericEvent) : null;        
+    }
+    
     public MultiLanguageString getCompleteDescription() {
         return completeDescription;
     }

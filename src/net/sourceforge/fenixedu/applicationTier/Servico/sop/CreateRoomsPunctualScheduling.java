@@ -24,8 +24,6 @@ public class CreateRoomsPunctualScheduling extends Service {
 	
 	if (!selectedRooms.isEmpty()) {
 	
-	    GenericEvent event = new GenericEvent(bean.getSmallDescription(), bean.getCompleteDescription());
-	    
 	    Calendar beginTimeCalendar = bean.getBegin().toDateTime(new TimeOfDay(bean.getBeginTime().get(DateTimeFieldType.hourOfDay()), 
 		    bean.getBeginTime().get(DateTimeFieldType.minuteOfHour()), 0))
 		    .toCalendar(LanguageUtils.getLocale());
@@ -35,11 +33,11 @@ public class CreateRoomsPunctualScheduling extends Service {
 		    .toCalendar(LanguageUtils.getLocale());
 	    	   
 	    DiaSemana diaSemana = new DiaSemana(getDayOfWeek(bean.getBegin()));
-	    OccupationPeriod period = OccupationPeriod.readFor(bean.getBegin(), bean.getEnd());            	  		
-	    	    
-	    for (OldRoom room : bean.getRooms()) {								
-		event.createRoomOccupation(room, beginTimeCalendar, endTimeCalendar, diaSemana, bean.getFrequency(), period);		
-	    }
+	    OccupationPeriod period = OccupationPeriod.readFor(bean.getBegin(), bean.getEnd());   
+	    
+	    new GenericEvent(bean.getSmallDescription(), bean.getCompleteDescription(), selectedRooms,
+		    beginTimeCalendar, endTimeCalendar, diaSemana, bean.getFrequency(), period);
+	    	             	  			    	   
 	}
     }
     
