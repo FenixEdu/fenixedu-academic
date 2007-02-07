@@ -9,6 +9,8 @@
 <fr:edit name="expectation" slot="autoEvaluation" layout="rich-text">
 	<fr:layout name="rich-text">
 		<fr:property name="config" value="simple"/>
+		<fr:property name="columns" value="100"/>
+		<fr:property name="rows" value="30"/>
 	</fr:layout>
 	<fr:destination name="success" path="<%= "/teacherExpectationAutoAvaliation.do?method=show&amp;executionYearId=" + executionYearId %>"/>
 	<fr:destination name="cancel" path="<%= "/teacherExpectationAutoAvaliation.do?method=show&amp;executionYearId=" + executionYearId %>"/>
