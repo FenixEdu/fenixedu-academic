@@ -297,4 +297,14 @@
 	</definition>
 	<!-- End: Prices -->
 	
+	
+	<!-- Begin: Bolonha Student Enrolment -->
+	<definition name="enrolment.bolonha.showDegreeModulesToEnrol" extends="definition.student.masterPage">
+		<put name="body" value="/student/enrollment/bolonha/showDegreeModulesToEnrol.jsp"/>
+	</definition>
+	<definition name="enrolment.bolonha.chooseOptionalCurricularCourseEnrol" extends="definition.student.masterPage">
+		<put name="body" value="/student/enrollment/bolonha/chooseOptionalCurricularCourseToEnrol.jsp"/>
+	</definition>
+	<!-- End: Bolonha Student Enrolment -->
+	
 </tiles-definitions>

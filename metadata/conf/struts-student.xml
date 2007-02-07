@@ -898,6 +898,22 @@
 		</action>
 		
 		<!-- End : Payments -->
+		
+		
+		<!-- Begin : Bolonha Student Enrollment -->
+		<action path="/bolonhaStudentEnrollment"
+				type="net.sourceforge.fenixedu.presentationTier.Action.student.enrollment.bolonha.BolonhaStudentEnrollmentDispatchAction" 
+				parameter="method"
+				scope="request">
+				
+			<forward name="showDegreeModulesToEnrol" path="enrolment.bolonha.showDegreeModulesToEnrol" />
+			<forward name="chooseOptionalCurricularCourseToEnrol" path="enrolment.bolonha.chooseOptionalCurricularCourseEnrol" />
+		</action>
+		
+		<!-- End : Bolonha Student Enrollment -->
+		
+		
+		
   		
 	</action-mappings>     
 

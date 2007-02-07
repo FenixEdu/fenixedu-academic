@@ -45,4 +45,8 @@ public class DegreeModuleToEnrol implements Serializable{
     public String getKey() {
 	return this.getContext().getClass().getName() + ":" + this.getContext().getIdInternal() + "," + this.getCurriculumGroup().getClass().getName() + ":" + this.getCurriculumGroup().getIdInternal(); 
     }
+
+    public boolean isOptional() {
+	return false;
+    }
 }

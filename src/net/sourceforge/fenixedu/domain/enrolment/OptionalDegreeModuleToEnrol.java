@@ -39,4 +39,9 @@ public class OptionalDegreeModuleToEnrol extends DegreeModuleToEnrol {
 	return super.getKey() + getCurricularCourse().getClass().getName() + ":"
 		+ getCurricularCourse().getIdInternal();
     }
+    
+    @Override
+    public boolean isOptional() {
+	return true;
+    }
 }

@@ -1,7 +1,13 @@
 package net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors;
 
+import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
+
 public enum EnrolmentResultType {
-    TEMPORARY(0), FINAL(1), NULL(2);
+    TEMPORARY(0, EnrollmentCondition.TEMPORARY),
+
+    FINAL(1, EnrollmentCondition.FINAL),
+
+    NULL(2, EnrollmentCondition.IMPOSSIBLE);
 
     static private final EnrolmentResultType[][] AND_TABLE = new EnrolmentResultType[][] {
 	    { TEMPORARY, TEMPORARY, TEMPORARY },
@@ -23,12 +29,19 @@ public enum EnrolmentResultType {
 
     private int order;
 
-    private EnrolmentResultType(int order) {
+    private EnrollmentCondition enrollmentCondition;
+
+    private EnrolmentResultType(int order, EnrollmentCondition enrollmentCondition) {
 	this.order = order;
+	this.enrollmentCondition = enrollmentCondition;
     }
 
     public int order() {
 	return this.order;
+    }
+
+    public EnrollmentCondition getEnrollmentCondition() {
+	return enrollmentCondition;
     }
 
     public String value() {

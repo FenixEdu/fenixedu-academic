@@ -7,13 +7,17 @@ public abstract class HtmlActionLinkController extends HtmlController {
 
     @Override
     public void execute(IViewState viewState) {
-        HtmlActionLink link = (HtmlActionLink) getControlledComponent();
-        
-        if (link.isActivated()) {
-            viewState.setSkipUpdate(true);
+	HtmlActionLink link = (HtmlActionLink) getControlledComponent();
 
-            linkPressed(viewState, link);
-        }
+	if (link.isActivated()) {
+	    viewState.setSkipUpdate(isToSkipUpdate());
+
+	    linkPressed(viewState, link);
+	}
+    }
+
+    protected boolean isToSkipUpdate() {
+	return true;
     }
 
     public abstract void linkPressed(IViewState viewState, HtmlActionLink link);

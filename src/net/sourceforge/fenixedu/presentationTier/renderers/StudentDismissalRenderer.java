@@ -12,22 +12,20 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
+import net.sourceforge.fenixedu.presentationTier.renderers.controllers.CopyCheckBoxValuesController;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
 import net.sourceforge.fenixedu.renderers.InputRenderer;
 import net.sourceforge.fenixedu.renderers.components.HtmlBlockContainer;
 import net.sourceforge.fenixedu.renderers.components.HtmlCheckBox;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlMultipleHiddenField;
-import net.sourceforge.fenixedu.renderers.components.HtmlMultipleValueComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlRadioButton;
 import net.sourceforge.fenixedu.renderers.components.HtmlRadioButtonGroup;
 import net.sourceforge.fenixedu.renderers.components.HtmlTable;
 import net.sourceforge.fenixedu.renderers.components.HtmlTableCell;
 import net.sourceforge.fenixedu.renderers.components.HtmlTableRow;
 import net.sourceforge.fenixedu.renderers.components.HtmlText;
-import net.sourceforge.fenixedu.renderers.components.controllers.HtmlController;
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
-import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.renderers.model.MetaObjectFactory;
 import net.sourceforge.fenixedu.renderers.schemas.Schema;
@@ -217,31 +215,6 @@ public class StudentDismissalRenderer extends InputRenderer {
 	    for (final Context context : courseGroup.getSortedChildContextsWithCourseGroups()) {
 		generateCourseGroups(blockContainer, studentCurricularPlan, (CourseGroup) context.getChildDegreeModule(), depth + getWidthDecreasePerLevel());
 	    }
-	}
-    }
-
-    private static class CopyCheckBoxValuesController extends HtmlController {
-	private List<HtmlCheckBox> checkboxes;
-	
-	public CopyCheckBoxValuesController() {
-	    super();
-	    this.checkboxes = new ArrayList<HtmlCheckBox>();
-	}
-
-	public void addCheckBox(HtmlCheckBox checkBox) {
-	    this.checkboxes.add(checkBox);
-	}
-
-	@Override
-	public void execute(IViewState viewState) {
-	    final HtmlMultipleValueComponent component = (HtmlMultipleValueComponent) getControlledComponent();
-	    final List<String> values = new ArrayList<String>();
-	    for (final HtmlCheckBox checkBox : this.checkboxes) {
-		if (checkBox.isChecked()) {
-		    values.add(checkBox.getValue());
-		}
-	    }
-	    component.setValues(values.toArray(new String[0]));
 	}
     }
     

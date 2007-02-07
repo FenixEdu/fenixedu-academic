@@ -11457,7 +11457,7 @@
         <filterChains>
         	<chain name="AcademicAdministrativeOfficeAuthorization"></chain>
         </filterChains>     
-    </service>   
+    </service>
     <service>
     	<name>CreateOccupationPeriod</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.CreateOccupationPeriod</implementationClass>
@@ -11492,5 +11492,14 @@
         <filterChains>
 			<chain name="TimeTableManagerAuthorization" />
         </filterChains>     
+    </service>
+    <service>
+    	<name>EnrolBolonhaStudent</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.student.enrolment.bolonha.EnrolBolonhaStudent</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="StudentAuthorization"></chain>
+        </filterChains>
     </service>
 </serviceDefinitions>

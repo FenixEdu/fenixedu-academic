@@ -16,23 +16,19 @@ import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.enrolment.DegreeModuleToEnrol;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
+import net.sourceforge.fenixedu.presentationTier.renderers.controllers.CopyCheckBoxValuesController;
+import net.sourceforge.fenixedu.presentationTier.renderers.converters.DegreeModuleToEnrolKeyConverter;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyArrayConverter;
-import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
 import net.sourceforge.fenixedu.renderers.InputRenderer;
 import net.sourceforge.fenixedu.renderers.components.HtmlBlockContainer;
 import net.sourceforge.fenixedu.renderers.components.HtmlCheckBox;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlLink;
 import net.sourceforge.fenixedu.renderers.components.HtmlMultipleHiddenField;
-import net.sourceforge.fenixedu.renderers.components.HtmlMultipleValueComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlTable;
 import net.sourceforge.fenixedu.renderers.components.HtmlTableCell;
 import net.sourceforge.fenixedu.renderers.components.HtmlTableRow;
 import net.sourceforge.fenixedu.renderers.components.HtmlText;
-import net.sourceforge.fenixedu.renderers.components.controllers.HtmlController;
-import net.sourceforge.fenixedu.renderers.components.converters.ConversionException;
-import net.sourceforge.fenixedu.renderers.components.converters.Converter;
-import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.renderers.model.MetaObject;
 import net.sourceforge.fenixedu.renderers.model.MetaObjectFactory;
@@ -402,67 +398,7 @@ public class StudentCurricularPlanEnrolmentsRenderer extends InputRenderer {
 	    cellCheckBox.setBody(checkBox);
 	}
     }
-    
-    protected static class CopyCheckBoxValuesController extends HtmlController {
-
-	private List<HtmlCheckBox> checkboxes;
-	
-	public CopyCheckBoxValuesController() {
-	    super();
-
-	    this.checkboxes = new ArrayList<HtmlCheckBox>();
-	}
-
-	public void addCheckBox(HtmlCheckBox checkBox) {
-	    this.checkboxes.add(checkBox);
-	}
-
-	@Override
-	public void execute(IViewState viewState) {
-	    HtmlMultipleValueComponent component = (HtmlMultipleValueComponent) getControlledComponent();
-	    
-	    List<String> values = new ArrayList<String>();
-
-	    for (HtmlCheckBox checkBox : this.checkboxes) {
-		if (checkBox.isChecked()) {
-		    values.add(checkBox.getValue());
-		}
-	    }
-	    
-	    component.setValues(values.toArray(new String[0]));
-	}
-    }
-    
-    public static class DegreeModuleToEnrolKeyConverter extends Converter {
-
-	@Override
-	public Object convert(Class type, Object value) {
-	    DomainObjectKeyConverter converter = new DomainObjectKeyConverter();
-	    List<DegreeModuleToEnrol> result = new ArrayList<DegreeModuleToEnrol>();
-
-	    if (value == null) {
-		return null;
-	    }
-
-	    String[] values = (String[]) value;
-	    for (int i = 0; i < values.length; i++) {
-		String key = values[i];
-
-		String[] parts = key.split(",");
-		if (parts.length < 2) {
-		    throw new ConversionException("invalid key format: " + key);
-		}
-
-		Context context = (Context) converter.convert(type, parts[0]);
-		CurriculumGroup curriculumGroup = (CurriculumGroup) converter.convert(type, parts[1]);
-		DegreeModuleToEnrol degreeModuleToEnrol = new DegreeModuleToEnrol(curriculumGroup, context);
-		result.add(degreeModuleToEnrol);
-	    }
-	    
-	    return result;
-	}
-    }
-    
+         
     public static class CurriculumModuleComparator implements Comparator<CurriculumModuleBean> {
 
 	private ExecutionPeriod executionPeriod; 

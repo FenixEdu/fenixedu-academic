@@ -22,21 +22,23 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import dml.runtime.RelationAdapter;
 
 public class CurriculumGroup extends CurriculumGroup_Base {
-    
+
     static {
-	CurriculumModule.CurriculumModuleCurriculumGroup.addListener(new RelationAdapter<CurriculumModule, CurriculumGroup> (){
-	    @Override
-	    public void afterRemove(CurriculumModule curriculumModule, CurriculumGroup curriculumGroup) {
-		super.afterRemove(curriculumModule, curriculumGroup);
-	        if(curriculumGroup != null && curriculumGroup.isNoCourseGroupCurriculumGroup()) {
-	            if(!curriculumGroup.hasAnyCurriculumModules()) {
-	        	curriculumGroup.delete();
-	            }
-	        }
-	    }
-	});
+	CurriculumModule.CurriculumModuleCurriculumGroup
+		.addListener(new RelationAdapter<CurriculumModule, CurriculumGroup>() {
+		    @Override
+		    public void afterRemove(CurriculumModule curriculumModule,
+			    CurriculumGroup curriculumGroup) {
+			super.afterRemove(curriculumModule, curriculumGroup);
+			if (curriculumGroup != null && curriculumGroup.isNoCourseGroupCurriculumGroup()) {
+			    if (!curriculumGroup.hasAnyCurriculumModules()) {
+				curriculumGroup.delete();
+			    }
+			}
+		    }
+		});
     }
-    
+
     protected CurriculumGroup() {
 	super();
     }
@@ -49,7 +51,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 
     public CurriculumGroup(CurriculumGroup curriculumGroup, CourseGroup courseGroup) {
 	this();
-	
+
 	if (courseGroup == null || curriculumGroup == null) {
 	    throw new DomainException(
 		    "error.studentCurriculum.curriculumGroup.courseGroup.cannot.be.null");
@@ -58,9 +60,10 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	setCurriculumGroup(curriculumGroup);
 	setDegreeModule(courseGroup);
     }
-    
-    private void checkInitConstraints(StudentCurricularPlan studentCurricularPlan, CourseGroup courseGroup) {
-	if(studentCurricularPlan.getRoot().hasCourseGroup(courseGroup)) {
+
+    private void checkInitConstraints(StudentCurricularPlan studentCurricularPlan,
+	    CourseGroup courseGroup) {
+	if (studentCurricularPlan.getRoot().hasCourseGroup(courseGroup)) {
 	    throw new DomainException("error.duplicate.courseGroup");
 	}
     }
@@ -108,19 +111,23 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	addChildCurriculumGroups(courseGroup, executionPeriod);
     }
 
-    private void checkParameters(CurriculumGroup parentCurriculumGroup, CourseGroup courseGroup, ExecutionPeriod executionPeriod) {
+    private void checkParameters(CurriculumGroup parentCurriculumGroup, CourseGroup courseGroup,
+	    ExecutionPeriod executionPeriod) {
 	if (parentCurriculumGroup == null) {
-	    throw new DomainException("error.studentCurriculum.curriculumGroup.parentCurriculumGroup.cannot.be.null");
+	    throw new DomainException(
+		    "error.studentCurriculum.curriculumGroup.parentCurriculumGroup.cannot.be.null");
 	}
 	checkParameters(courseGroup, executionPeriod);
     }
 
-    private void addChildCurriculumGroups(final CourseGroup courseGroup, final ExecutionPeriod executionPeriod) {
-	for (final CourseGroup childCourseGroup : courseGroup.getNotOptionalChildCourseGroups(executionPeriod)) {
+    private void addChildCurriculumGroups(final CourseGroup courseGroup,
+	    final ExecutionPeriod executionPeriod) {
+	for (final CourseGroup childCourseGroup : courseGroup
+		.getNotOptionalChildCourseGroups(executionPeriod)) {
 	    new CurriculumGroup(this, childCourseGroup, executionPeriod);
 	}
     }
- 
+
     public boolean isLeaf() {
 	return false;
     }
@@ -135,7 +142,8 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	    super.delete();
 	} else {
 	    throw new DomainException(
-		    "error.studentCurriculum.curriculumGroup.notEmptyCurriculumGroupModules");
+		    "error.studentCurriculum.CurriculumGroup.notEmptyCurriculumGroupModules", getName()
+			    .getContent());
 	}
     }
 
@@ -183,7 +191,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     }
 
     // alterar isto, colocar as regras
-    private Collection<Context> getDegreeModulesToEnrol(ExecutionPeriod executionPeriod) {
+    private Collection<Context> getDegreeModulesFor(ExecutionPeriod executionPeriod) {
 	Collection<Context> result = new HashSet<Context>();
 	for (Context context : this.getDegreeModule().getChildContexts(executionPeriod)) {
 	    if (context.getCurricularPeriod() == null
@@ -194,38 +202,41 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	}
 	return result;
     }
-    
-    public List<Context> getCurricularCourseContextsToEnrol(ExecutionPeriod executionPeriod){
+
+    public List<Context> getCurricularCourseContextsToEnrol(ExecutionPeriod executionPeriod) {
 	List<Context> result = new ArrayList<Context>();
-	for (Context context : this.getDegreeModulesToEnrol(executionPeriod)) {
-	    if(context.getChildDegreeModule().isLeaf()) {
+	for (Context context : this.getDegreeModulesFor(executionPeriod)) {
+	    if (context.getChildDegreeModule().isLeaf()) {
 		CurricularCourse curricularCourse = (CurricularCourse) context.getChildDegreeModule();
-		if(!this.getStudentCurricularPlan().getRoot().isAproved(curricularCourse, executionPeriod) &&
-			!this.getStudentCurricularPlan().getRoot().isEnroledInExecutionPeriod(curricularCourse, executionPeriod)) {
+		if (!this.getStudentCurricularPlan().isApproved(curricularCourse, executionPeriod)
+			&& !this.getStudentCurricularPlan().isEnroledInExecutionPeriod(curricularCourse,
+				executionPeriod)) {
 		    result.add(context);
 		}
 	    }
 	}
 	return result;
     }
-    
-    public List<Context> getCourseGroupContextsToEnrol(ExecutionPeriod executionPeriod){
+
+    public List<Context> getCourseGroupContextsToEnrol(ExecutionPeriod executionPeriod) {
 	List<Context> result = new ArrayList<Context>();
-	for (Context context : this.getDegreeModulesToEnrol(executionPeriod)) {
-	    if(!context.getChildDegreeModule().isLeaf()) {
-		if(!this.getStudentCurricularPlan().getRoot().hasDegreeModule(context.getChildDegreeModule())) {
+	for (Context context : this.getDegreeModulesFor(executionPeriod)) {
+	    if (!context.getChildDegreeModule().isLeaf()) {
+		if (!this.getStudentCurricularPlan().getRoot().hasDegreeModule(
+			context.getChildDegreeModule())) {
 		    result.add(context);
 		}
 	    }
 	}
 	return result;
     }
-    
+
     public Collection<CurricularCourse> getCurricularCoursesToDismissal() {
 	Set<CurricularCourse> result = new HashSet<CurricularCourse>();
-	for (Context context : this.getDegreeModule().getChildContexts(CurricularCourse.class, (ExecutionPeriod) null)) {
+	for (Context context : this.getDegreeModule().getChildContexts(CurricularCourse.class,
+		(ExecutionPeriod) null)) {
 	    CurricularCourse curricularCourse = (CurricularCourse) context.getChildDegreeModule();
-	    if(!getStudentCurricularPlan().getRoot().isAproved(curricularCourse, null)) {
+	    if (!getStudentCurricularPlan().getRoot().isAproved(curricularCourse, null)) {
 		result.add(curricularCourse);
 	    }
 	}
@@ -266,34 +277,34 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	    return false;
 	}
     }
-    
+
     @Override
     public boolean hasCurriculumModule(CurriculumModule curriculumModule) {
-        if(super.hasCurriculumModule(curriculumModule)) {
-            return true;
-        }
-        for (final CurriculumModule module : getCurriculumModulesSet()) {
+	if (super.hasCurriculumModule(curriculumModule)) {
+	    return true;
+	}
+	for (final CurriculumModule module : getCurriculumModulesSet()) {
 	    if (module.hasCurriculumModule(module)) {
 		return true;
 	    }
 	}
-        return false;
+	return false;
     }
-    
+
     @Override
     public CurriculumModule findCurriculumModuleFor(final DegreeModule degreeModule) {
-        if (super.findCurriculumModuleFor(degreeModule) != null) {
-            return this;
-        }
-        for (final CurriculumModule each : getCurriculumModulesSet()) {
-            final CurriculumModule module = each.findCurriculumModuleFor(degreeModule);
-            if (module != null) {
-        	return module;
-            }
-        }
-        return null;
+	if (super.findCurriculumModuleFor(degreeModule) != null) {
+	    return this;
+	}
+	for (final CurriculumModule each : getCurriculumModulesSet()) {
+	    final CurriculumModule module = each.findCurriculumModuleFor(degreeModule);
+	    if (module != null) {
+		return module;
+	    }
+	}
+	return null;
     }
-    
+
     public Set<CurriculumLine> getCurriculumLines() {
 	Set<CurriculumLine> result = new TreeSet<CurriculumLine>(CurriculumModule.COMPARATOR_BY_NAME);
 
@@ -317,24 +328,25 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 
 	return result;
     }
-        
+
     public Integer getChildOrder() {
 	return getChildOrder(ExecutionPeriod.readActualExecutionPeriod());
     }
-    
+
     public Integer getChildOrder(final ExecutionPeriod executionPeriod) {
 	return getParentCurriculumGroup().searchChildOrderForChild(this, executionPeriod);
     }
-    
+
     private CurriculumGroup getParentCurriculumGroup() {
 	return getCurriculumGroup();
     }
-    
+
     public boolean parentCurriculumGroupIsNoCourseGroupCurriculumGroup() {
 	return hasCurriculumGroup() && getParentCurriculumGroup().isNoCourseGroupCurriculumGroup();
     }
-    
-    protected Integer searchChildOrderForChild(final CurriculumGroup child, final ExecutionPeriod executionPeriod) {
+
+    protected Integer searchChildOrderForChild(final CurriculumGroup child,
+	    final ExecutionPeriod executionPeriod) {
 	for (final Context context : getDegreeModule().getChildContexts(executionPeriod)) {
 	    if (context.getChildDegreeModule() == child.getDegreeModule()) {
 		return context.getChildOrder();
@@ -342,72 +354,74 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	}
 	return null;
     }
-    
+
     public boolean hasCourseGroup(final CourseGroup courseGroup) {
-	if(getDegreeModule().equals(courseGroup)) {
+	if (getDegreeModule().equals(courseGroup)) {
 	    return true;
-	} 
-	
+	}
+
 	for (final CurriculumModule curriculumModule : getCurriculumModules()) {
 	    if (!curriculumModule.isLeaf()) {
 		CurriculumGroup group = (CurriculumGroup) curriculumModule;
-		if(group.hasCourseGroup(courseGroup)) {
+		if (group.hasCourseGroup(courseGroup)) {
 		    return true;
 		}
 	    }
 	}
-	
+
 	return false;
     }
-    
-    public void createNoCourseGroupCurriculumGroupEnrolment(final StudentCurricularPlan studentCurricularPlan,
-	    final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod,
-	    final NoCourseGroupCurriculumGroupType groupType) {
+
+    public void createNoCourseGroupCurriculumGroupEnrolment(
+	    final StudentCurricularPlan studentCurricularPlan, final CurricularCourse curricularCourse,
+	    final ExecutionPeriod executionPeriod, final NoCourseGroupCurriculumGroupType groupType) {
 	if (!isRoot()) {
 	    throw new DomainException("error.no.root.curriculum.group");
 	}
 
 	CurriculumGroup extraCurricularGroup = getNoCourseGroupCurriculumGroup(groupType);
-	if(extraCurricularGroup == null) {
-	    extraCurricularGroup = NoCourseGroupCurriculumGroup.createNewNoCourseGroupCurriculumGroup(groupType, this); 
+	if (extraCurricularGroup == null) {
+	    extraCurricularGroup = NoCourseGroupCurriculumGroup.createNewNoCourseGroupCurriculumGroup(
+		    groupType, this);
 	}
 
 	new Enrolment(studentCurricularPlan, extraCurricularGroup, curricularCourse, executionPeriod,
 		EnrollmentCondition.VALIDATED, AccessControl.getUserView().getUtilizador());
     }
 
-    public NoCourseGroupCurriculumGroup getNoCourseGroupCurriculumGroup(NoCourseGroupCurriculumGroupType groupType) {
+    public NoCourseGroupCurriculumGroup getNoCourseGroupCurriculumGroup(
+	    NoCourseGroupCurriculumGroupType groupType) {
 	for (final CurriculumGroup curriculumGroup : getCurriculumGroups()) {
-	    if(curriculumGroup.isNoCourseGroupCurriculumGroup()) {
+	    if (curriculumGroup.isNoCourseGroupCurriculumGroup()) {
 		NoCourseGroupCurriculumGroup noCourseGroupCurriculumGroup = (NoCourseGroupCurriculumGroup) curriculumGroup;
-		if(noCourseGroupCurriculumGroup.getNoCourseGroupCurriculumGroupType().equals(groupType)) {
+		if (noCourseGroupCurriculumGroup.getNoCourseGroupCurriculumGroupType().equals(groupType)) {
 		    return noCourseGroupCurriculumGroup;
 		}
 	    }
 	}
-	
-	return null; 
+
+	return null;
     }
-    
+
     public boolean isNoCourseGroupCurriculumGroup() {
 	return false;
     }
-    
+
     @Override
     public Double getEctsCredits() {
 	BigDecimal bigDecimal = BigDecimal.ZERO;
-        for (CurriculumModule curriculumModule : getCurriculumModulesSet()) {
-            bigDecimal = bigDecimal.add(new BigDecimal(curriculumModule.getEctsCredits()));
+	for (CurriculumModule curriculumModule : getCurriculumModulesSet()) {
+	    bigDecimal = bigDecimal.add(new BigDecimal(curriculumModule.getEctsCredits()));
 	}
-        return Double.valueOf(bigDecimal.doubleValue());
+	return Double.valueOf(bigDecimal.doubleValue());
     }
-    
+
     @Override
     public Double getAprovedEctsCredits() {
 	BigDecimal bigDecimal = BigDecimal.ZERO;
-        for (CurriculumModule curriculumModule : getCurriculumModulesSet()) {
-            bigDecimal = bigDecimal.add(new BigDecimal(curriculumModule.getAprovedEctsCredits()));
+	for (CurriculumModule curriculumModule : getCurriculumModulesSet()) {
+	    bigDecimal = bigDecimal.add(new BigDecimal(curriculumModule.getAprovedEctsCredits()));
 	}
-        return Double.valueOf(bigDecimal.doubleValue());
+	return Double.valueOf(bigDecimal.doubleValue());
     }
 }

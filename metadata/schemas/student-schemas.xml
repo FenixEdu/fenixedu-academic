@@ -111,3 +111,31 @@
    		<property name="config" value="intermediate" />
     </slot>
 </schema>
+
+<schema name="BolonhaStudentOptionalEnrollmentBean" bundle="STUDENT_RESOURCES"
+	type="net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.BolonhaStudentOptionalEnrollmentBean">
+	<slot name="degreeType" key="label.degreeType"
+		layout="menu-select-postback"
+		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="eachLayout" value="" />
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.BolonhaDegreeTypesProvider" />
+		<property name="destination" value="updateComboBoxes"/>
+	</slot>
+	<slot name="degree" key="label.degree"
+		layout="menu-select-postback"
+		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.enrollment.bolonha.DegreesByDegreeType" />
+		<property name="format" value="${name}" />
+		<property name="destination" value="updateComboBoxes"/>
+	</slot>
+	<slot name="degreeCurricularPlan" key="label.degreeCurricularPlan"
+		layout="menu-select-postback"
+		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.enrollment.bolonha.DegreeCurricularPlansForDegree" />
+		<property name="format" value="${name}" />
+		<property name="destination" value="updateComboBoxes"/>
+	</slot>
+</schema>
