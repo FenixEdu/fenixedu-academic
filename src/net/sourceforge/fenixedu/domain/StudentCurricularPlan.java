@@ -1880,7 +1880,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		enrolmentContext).entrySet()) {
 	    RuleResult ruleResult = RuleResult.createTrue();
 	    for (final CurricularRule rule : entry.getValue()) {
-		ruleResult.and(rule.evaluate(enrolmentContext));
+		ruleResult = ruleResult.and(rule.evaluate(enrolmentContext));
 	    }
 
 	    if (ruleResult.isFalse()) {
