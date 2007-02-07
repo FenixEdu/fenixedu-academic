@@ -39,12 +39,12 @@ public class Timeline {
         plotList(pointList);
     }
 
-    public Timeline(YearMonthDay day, DateTime endDateTime) {
+    public Timeline(YearMonthDay day, DateTime firstClocking, DateTime lastClocking) {
         timePoints = new ArrayList<TimePoint>();
-        timePoints
-                .add(new TimePoint(new TimeOfDay(7, 30, 0, 0), AttributeType.NULL, AttributeType.NULL));
-        timePoints.add(new TimePoint(endDateTime.toTimeOfDay(),
-                day.equals(endDateTime.toYearMonthDay()) ? false : true, AttributeType.NULL));
+        timePoints.add(new TimePoint(new TimeOfDay(firstClocking.toTimeOfDay()), AttributeType.NULL,
+                AttributeType.NULL));
+        timePoints.add(new TimePoint(lastClocking.toTimeOfDay(), day.equals(lastClocking
+                .toYearMonthDay()) ? false : true, AttributeType.NULL));
     }
 
     public List<TimePoint> getTimePoints() {
@@ -578,6 +578,27 @@ public class Timeline {
         }
 
         return new Duration(startDate, endDate);
+    }
+
+    public Duration calculateWorkPeriodDurationBetweenDates(DateTime beginDate, DateTime endDate) {
+        Duration totalDuration = Duration.ZERO;
+        Interval interval = new Interval(beginDate, endDate);
+        for (AttributeType attributeType : DomainConstants.WORKED_ATTRIBUTES.getAttributes()) {
+            TimePoint[] timePoints = findIntervalByAttribute(attributeType);
+            if (timePoints != null) {
+                DateTime end = timePoints[1].getTime().toDateTime(beginDate);
+                if (timePoints[1].isNextDay()) {
+                    end = end.plusDays(1);
+                }
+                Interval workedInterval = new Interval(timePoints[0].getTime().toDateTime(beginDate),
+                        end);
+                Interval overlap = interval.overlap(workedInterval);
+                if (overlap != null) {
+                    totalDuration = totalDuration.plus(overlap.toDuration());
+                }
+            }
+        }
+        return totalDuration;
     }
 
     // Returns a list will all points that contain the specified attributes
