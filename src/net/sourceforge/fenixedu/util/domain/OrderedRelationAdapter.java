@@ -213,8 +213,7 @@ public class OrderedRelationAdapter<HolderType, ObjectType> extends RelationAdap
     }
     
     public void orderChanged(HolderType holder, ObjectType object) {
-        SortedSet<ObjectType> orderedElements = new TreeSet<ObjectType>(new OrderComparator(object));
-        orderedElements.addAll(getRelation(holder));
+        SortedSet<ObjectType> orderedElements = getSortedObjects(holder, object);
      
         updateOrder(holder, orderedElements);
     }
@@ -231,8 +230,7 @@ public class OrderedRelationAdapter<HolderType, ObjectType> extends RelationAdap
     }
     
     public ObjectType getNext(HolderType holder, ObjectType object) {
-        SortedSet<ObjectType> orderedElements = new TreeSet<ObjectType>(new OrderComparator(object));
-        orderedElements.addAll(getRelation(holder));
+        SortedSet<ObjectType> orderedElements = getSortedObjects(holder, object);
         
         Integer ownOrder = getOrder(object);
         for (ObjectType element : orderedElements) {
@@ -247,8 +245,7 @@ public class OrderedRelationAdapter<HolderType, ObjectType> extends RelationAdap
     }
     
     public ObjectType getPrevious(HolderType holder, ObjectType object) {
-        SortedSet<ObjectType> orderedElements = new TreeSet<ObjectType>(new OrderComparator(object));
-        orderedElements.addAll(getRelation(holder));
+        SortedSet<ObjectType> orderedElements = getSortedObjects(holder, object);
         
         Integer ownOrder = getOrder(object);
         for (ObjectType element : orderedElements) {
@@ -266,4 +263,10 @@ public class OrderedRelationAdapter<HolderType, ObjectType> extends RelationAdap
         return null;
     }
     
+    public SortedSet<ObjectType> getSortedObjects(HolderType holder, ObjectType object) {
+	SortedSet<ObjectType> orderedElements = new TreeSet<ObjectType>(new OrderComparator(object));
+        orderedElements.addAll(getRelation(holder));
+        
+        return orderedElements;
+    }
 }
