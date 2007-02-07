@@ -55,17 +55,24 @@
 	</p>
 </html:messages>
 
+<bean:define id="documentRequest" name="academicServiceRequest" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest"/>
 <p>
-	<span class="gen-button">
-	<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-	<html:link page="/documentRequestsManagement.do?method=printDocument" paramId="documentRequestId" paramName="academicServiceRequest" paramProperty="idInternal">
-		<bean:message key="print" bundle="APPLICATION_RESOURCES"/>
-	</html:link>
-	</span>
+	<logic:equal name="documentRequest" property="toBePrintedInAplica" value="true">
+		<span class="warning0">
+			<bean:message key="print.preBolonha.documentRequest.in.aplica" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+		</span>
+	</logic:equal>
+	<logic:equal name="documentRequest" property="toBePrintedInAplica" value="false">
+		<span class="gen-button">
+		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
+		<html:link page="/documentRequestsManagement.do?method=printDocument" paramId="documentRequestId" paramName="academicServiceRequest" paramProperty="idInternal">
+			<bean:message key="print" bundle="APPLICATION_RESOURCES"/>
+		</html:link>
+		</span>
+	</logic:equal>
 </p>
 
 <p class="mtop15 mbottom025"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="documentRequest.confirmDocumentSuccessfulPrinting"/></strong></p>
-<bean:define id="documentRequest" name="academicServiceRequest" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest"/>
 <logic:equal name="documentRequest" property="pagedDocument" value="true">
 	<fr:edit id="documentRequestConclude" name="documentRequest" 
 			schema="DocumentRequest.conclude-info"

@@ -86,7 +86,7 @@ public abstract class DocumentRequest extends DocumentRequest_Base {
     }
 
     public boolean isToBePrintedInAplica() {
-	return !getRegistration().isBolonha() && getDocumentRequestType() == DocumentRequestType.ENROLMENT_CERTIFICATE && ((EnrolmentCertificateRequest)this).getDetailed();
+	return !getRegistration().isBolonha() && getDocumentRequestType() == DocumentRequestType.APPROVEMENT_CERTIFICATE;
     }
 
 }
