@@ -79,7 +79,7 @@ public abstract class DocumentRequest extends DocumentRequest_Base {
 	super.internalChangeState(academicServiceRequestSituationType, employee);
 
 	if (academicServiceRequestSituationType == AcademicServiceRequestSituationType.PROCESSING) {
-	    if (getRegistration().hasAnyNotPayedGratuityEvents()) {
+	    if (getRegistration().hasAnyNotPayedGratuityEvents() && !getFreeProcessed()) {
 		throw new DomainException("DocumentRequest.registration.has.not.payed.gratuities");
 	    }
 	}
