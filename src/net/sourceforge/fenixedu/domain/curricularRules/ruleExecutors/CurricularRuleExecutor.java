@@ -18,13 +18,13 @@ abstract public class CurricularRuleExecutor {
     public RuleResult execute(final CurricularRule curricularRule, final CurricularRuleLevel level, final EnrolmentContext enrolmentContext) {
 	switch (level) {
 	case ENROLMENT_WITH_RULES:
-	    return executeWithRules(curricularRule, enrolmentContext);
+	    return executeEnrolmentWithRules(curricularRule, enrolmentContext);
 
 	case ENROLMENT_WITH_RULES_AND_TEMPORARY_ENROLMENT:
-	    return executeWithRulesAndTemporaryEnrolment(curricularRule, enrolmentContext);
+	    return executeEnrolmentWithRulesAndTemporaryEnrolment(curricularRule, enrolmentContext);
 
 	case ENROLMENT_NO_RULES:
-	    return executeNoRules(curricularRule, enrolmentContext);
+	    return executeEnrolmentWithNoRules(curricularRule, enrolmentContext);
 
 	default:
 	    throw new DomainException("error.curricularRules.RuleExecutor.unimplemented.rule.level");
@@ -48,8 +48,16 @@ abstract public class CurricularRuleExecutor {
 	return searchDegreeModuleToEnrol(enrolmentContext, curricularRule.getDegreeModuleToApplyRule()) != null;
     }
     
+    protected boolean appliesToContext(final EnrolmentContext enrolmentContext, final CurricularRule curricularRule) {
+	return curricularRule.appliesToContext(searchDegreeModuleToEnrol(enrolmentContext, curricularRule).getContext());
+    }
+    
     protected CurriculumModule searchCurriculumModule(final EnrolmentContext enrolmentContext, final DegreeModule degreeModule) {
 	return enrolmentContext.getStudentCurricularPlan().findCurriculumModuleFor(degreeModule);
+    }
+    
+    protected CurriculumModule searchCurriculumModule(final EnrolmentContext enrolmentContext, final CurricularRule curricularRule) {
+	return searchCurriculumModule(enrolmentContext, curricularRule.getDegreeModuleToApplyRule());
     }
     
     protected boolean isApproved(final EnrolmentContext enrolmentContext, final CurricularCourse curricularCourse) {
@@ -78,7 +86,7 @@ abstract public class CurricularRuleExecutor {
         return searchDegreeModuleToEnrol(enrolmentContext, degreeModule) != null;
     }
 
-    abstract protected RuleResult executeWithRules(final CurricularRule curricularRule, final EnrolmentContext enrolmentContext);
-    abstract protected RuleResult executeWithRulesAndTemporaryEnrolment(final CurricularRule curricularRule, final EnrolmentContext enrolmentContext);
-    abstract protected RuleResult executeNoRules(final CurricularRule curricularRule, final EnrolmentContext enrolmentContext);
+    abstract protected RuleResult executeEnrolmentWithRules(final CurricularRule curricularRule, final EnrolmentContext enrolmentContext);
+    abstract protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(final CurricularRule curricularRule, final EnrolmentContext enrolmentContext);
+    abstract protected RuleResult executeEnrolmentWithNoRules(final CurricularRule curricularRule, final EnrolmentContext enrolmentContext);
 }

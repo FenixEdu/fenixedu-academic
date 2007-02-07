@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.util.CurricularRuleLabelFormatter;
 public class AnyCurricularCourseExecutor extends CurricularRuleExecutor {
 
     @Override
-    protected RuleResult executeWithRules(final CurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
+    protected RuleResult executeEnrolmentWithRules(final CurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
 	
 	final AnyCurricularCourse rule = (AnyCurricularCourse) curricularRule;
 	final OptionalDegreeModuleToEnrol moduleToEnrol = (OptionalDegreeModuleToEnrol) searchDegreeModuleToEnrol(enrolmentContext, rule);
@@ -45,12 +45,12 @@ public class AnyCurricularCourseExecutor extends CurricularRuleExecutor {
     }
 
     @Override
-    protected RuleResult executeWithRulesAndTemporaryEnrolment(final CurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
-	return executeWithRules(curricularRule, enrolmentContext);
+    protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(final CurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
+	return executeEnrolmentWithRules(curricularRule, enrolmentContext);
     }
 
     @Override
-    protected RuleResult executeNoRules(final CurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
+    protected RuleResult executeEnrolmentWithNoRules(final CurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
 	return RuleResult.createTrue();
     }
 

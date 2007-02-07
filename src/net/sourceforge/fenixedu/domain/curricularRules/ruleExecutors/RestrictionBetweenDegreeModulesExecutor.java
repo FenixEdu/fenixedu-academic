@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 public class RestrictionBetweenDegreeModulesExecutor extends CurricularRuleExecutor {
 
     @Override
-    protected RuleResult executeWithRules(final CurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
+    protected RuleResult executeEnrolmentWithRules(final CurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
 	
 	final RestrictionBetweenDegreeModules rule = (RestrictionBetweenDegreeModules) curricularRule;
 	final DegreeModuleToEnrol moduleToEnrol = searchDegreeModuleToEnrol(enrolmentContext, rule.getDegreeModuleToApplyRule());
@@ -37,12 +37,12 @@ public class RestrictionBetweenDegreeModulesExecutor extends CurricularRuleExecu
     }
 
     @Override
-    protected RuleResult executeWithRulesAndTemporaryEnrolment(final CurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
-	return executeWithRules(curricularRule, enrolmentContext);
+    protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(final CurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
+	return executeEnrolmentWithRules(curricularRule, enrolmentContext);
     }
 
     @Override
-    protected RuleResult executeNoRules(CurricularRule curricularRule, EnrolmentContext enrolmentContext) {
+    protected RuleResult executeEnrolmentWithNoRules(CurricularRule curricularRule, EnrolmentContext enrolmentContext) {
 	return RuleResult.createTrue();
     }
 }

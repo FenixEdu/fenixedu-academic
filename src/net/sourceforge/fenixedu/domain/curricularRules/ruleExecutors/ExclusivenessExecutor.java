@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 public class ExclusivenessExecutor extends CurricularRuleExecutor {
 
     @Override
-    protected RuleResult executeWithRules(CurricularRule curricularRule, EnrolmentContext enrolmentContext) {
+    protected RuleResult executeEnrolmentWithRules(CurricularRule curricularRule, EnrolmentContext enrolmentContext) {
 	
 	final Exclusiveness rule = (Exclusiveness) curricularRule;
 	final DegreeModuleToEnrol moduleToEnrol = searchDegreeModuleToEnrol(enrolmentContext, rule.getDegreeModuleToApplyRule());
@@ -39,12 +39,12 @@ public class ExclusivenessExecutor extends CurricularRuleExecutor {
     }
     
     @Override
-    protected RuleResult executeWithRulesAndTemporaryEnrolment(final CurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
-	return executeWithRules(curricularRule, enrolmentContext);
+    protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(final CurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
+	return executeEnrolmentWithRules(curricularRule, enrolmentContext);
     }
     
     @Override
-    protected RuleResult executeNoRules(final CurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
+    protected RuleResult executeEnrolmentWithNoRules(final CurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
 	return RuleResult.createTrue();
     }
 

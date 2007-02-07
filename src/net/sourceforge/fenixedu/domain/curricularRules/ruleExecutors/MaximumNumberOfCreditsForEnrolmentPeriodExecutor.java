@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 public class MaximumNumberOfCreditsForEnrolmentPeriodExecutor extends CurricularRuleExecutor {
 
     @Override
-    protected RuleResult executeWithRules(final CurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
+    protected RuleResult executeEnrolmentWithRules(final CurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
 	final StudentCurricularPlan studentCurricularPlan = enrolmentContext.getStudentCurricularPlan();
 
 	final double maxECTS = MaximumNumberOfCreditsForEnrolmentPeriod.MAXIMUM_NUMBER_OF_CREDITS;
@@ -29,12 +29,12 @@ public class MaximumNumberOfCreditsForEnrolmentPeriodExecutor extends Curricular
     }
     
     @Override
-    protected RuleResult executeWithRulesAndTemporaryEnrolment(final CurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
-	return executeWithRules(curricularRule, enrolmentContext);
+    protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(final CurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
+	return executeEnrolmentWithRules(curricularRule, enrolmentContext);
     }
 
     @Override
-    protected RuleResult executeNoRules(final CurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
+    protected RuleResult executeEnrolmentWithNoRules(final CurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
 	return RuleResult.createTrue();
     }
 

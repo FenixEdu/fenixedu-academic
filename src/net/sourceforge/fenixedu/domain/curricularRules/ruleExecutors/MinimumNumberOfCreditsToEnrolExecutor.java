@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 public class MinimumNumberOfCreditsToEnrolExecutor extends CurricularRuleExecutor {
 
     @Override
-    protected RuleResult executeWithRules(CurricularRule curricularRule, EnrolmentContext enrolmentContext) {
+    protected RuleResult executeEnrolmentWithRules(CurricularRule curricularRule, EnrolmentContext enrolmentContext) {
 	
 	final MinimumNumberOfCreditsToEnrol rule = (MinimumNumberOfCreditsToEnrol) curricularRule;
 	final DegreeModuleToEnrol moduleToEnrol = searchDegreeModuleToEnrol(enrolmentContext, rule.getDegreeModuleToApplyRule());
@@ -31,12 +31,12 @@ public class MinimumNumberOfCreditsToEnrolExecutor extends CurricularRuleExecuto
     }
 
     @Override
-    protected RuleResult executeWithRulesAndTemporaryEnrolment(CurricularRule curricularRule, EnrolmentContext enrolmentContext) {
-	return executeWithRules(curricularRule, enrolmentContext);
+    protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(CurricularRule curricularRule, EnrolmentContext enrolmentContext) {
+	return executeEnrolmentWithRules(curricularRule, enrolmentContext);
     }
 
     @Override
-    protected RuleResult executeNoRules(CurricularRule curricularRule, EnrolmentContext enrolmentContext) {
+    protected RuleResult executeEnrolmentWithNoRules(CurricularRule curricularRule, EnrolmentContext enrolmentContext) {
 	return RuleResult.createTrue();
     }
     
