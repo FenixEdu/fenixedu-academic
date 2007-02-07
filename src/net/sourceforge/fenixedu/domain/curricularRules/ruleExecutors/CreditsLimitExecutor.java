@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors;
 import net.sourceforge.fenixedu.domain.curricularRules.CreditsLimit;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
-import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
+import net.sourceforge.fenixedu.domain.enrolment.OptionalDegreeModuleToEnrol;
 
 public class CreditsLimitExecutor extends CurricularRuleExecutor {
 
@@ -12,13 +12,13 @@ public class CreditsLimitExecutor extends CurricularRuleExecutor {
 
 	final CreditsLimit rule = (CreditsLimit) curricularRule;
 
-	if (ruleWasSelectedFromAnyModuleToEnrol(enrolmentContext, curricularRule)
-		&& !rule.appliesToContext(searchDegreeModuleToEnrol(enrolmentContext, rule.getDegreeModuleToApplyRule()).getContext())) {
+	OptionalDegreeModuleToEnrol moduleToEnrol = (OptionalDegreeModuleToEnrol) searchDegreeModuleToEnrol(enrolmentContext, rule.getDegreeModuleToApplyRule());
+	
+	if (!rule.appliesToContext(moduleToEnrol.getContext())) {
 	    return RuleResult.createNA();
 	}
 	
-	final CurriculumModule curriculumModule = searchCurriculumModule(enrolmentContext, rule.getDegreeModuleToApplyRule());
-	if (rule.allowCredits(curriculumModule.getEctsCredits())) {
+	if (rule.allowCredits(moduleToEnrol.getCurricularCourse().getEctsCredits())) {
 	    return RuleResult.createTrue();
 	}
 	
