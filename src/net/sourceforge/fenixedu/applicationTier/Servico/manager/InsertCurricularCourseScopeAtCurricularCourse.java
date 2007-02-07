@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.CurricularSemester;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.stm.IllegalWriteException;
 
 /**
  * @author lmac1
@@ -35,9 +36,10 @@ public class InsertCurricularCourseScopeAtCurricularCourse extends Service {
             if (branch == null)
                 throw new NonExistingServiceException("message.non.existing.branch", null);
 			
-			new CurricularCourseScope(branch, curricularCourse, curricularSemester, infoCurricularCourseScope.getBeginDate(),
+            new CurricularCourseScope(branch, curricularCourse, curricularSemester, infoCurricularCourseScope.getBeginDate(),
 										infoCurricularCourseScope.getEndDate(), infoCurricularCourseScope.getAnotation());
-			
+        } catch(IllegalWriteException iwe) {
+            throw iwe;
         } catch (RuntimeException e) {
             throw new ExistingServiceException("O âmbito pertencente ao ramo " + branch.getCode() + ", no "
                     + curricularSemester.getCurricularYear().getYear() + "º ano,  "
