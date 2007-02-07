@@ -115,35 +115,27 @@ public abstract class DegreeModule extends DegreeModule_Base {
         return result;
     }
 
-    public Set<CurricularRule> getCurricularRules(final ExecutionYear executionYear) {
-        Set<CurricularRule> result = new HashSet<CurricularRule>();
-        for (CurricularRule curricularRule : this.getCurricularRules()) {
+    public List<CurricularRule> getCurricularRules(ExecutionYear executionYear) {
+        final List<CurricularRule> result = new ArrayList<CurricularRule>();
+        for (final CurricularRule curricularRule : this.getCurricularRules()) {
             if (executionYear == null || curricularRule.isValid(executionYear)) {
                 result.add(curricularRule);
             }
-        }
-        for (final Context context : getParentContextsByExecutionYear(executionYear)) {
-            result.addAll(context.getParentCourseGroup().getCurricularRules(executionYear));
         }
         
         return result;
     }
     
-    public Set<CurricularRule> getCurricularRules(final ExecutionPeriod executionPeriod) {
-        Set<CurricularRule> result = new HashSet<CurricularRule>();
-        for (CurricularRule curricularRule : this.getCurricularRules()) {
+    public List<CurricularRule> getCurricularRules(ExecutionPeriod executionPeriod) {
+        final List<CurricularRule> result = new ArrayList<CurricularRule>();
+        for (final CurricularRule curricularRule : this.getCurricularRules()) {
             if (executionPeriod == null || curricularRule.isValid(executionPeriod)) {
                 result.add(curricularRule);
             }
         }
         
-        for (final Context context : getParentContextsByExecutionPeriod(executionPeriod)) {
-            result.addAll(context.getParentCourseGroup().getCurricularRules(executionPeriod));
-        }
-        
         return result;
     }
-
     
     public List<Context> getParentContextsByExecutionYear(ExecutionYear executionYear) {
 	final List<Context> result = new ArrayList<Context>();
