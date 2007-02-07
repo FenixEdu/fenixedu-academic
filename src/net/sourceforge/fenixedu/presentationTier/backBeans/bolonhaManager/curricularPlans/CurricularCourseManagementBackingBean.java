@@ -185,7 +185,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         final List<SelectItem> result = new ArrayList<SelectItem>(years);
         result.add(new SelectItem(this.NO_SELECTION, bolonhaBundle.getString("choose")));
         for (int i = 1; i <= years; i++) {
-            result.add(new SelectItem(Integer.valueOf(i), String.valueOf(i) + "�"));
+            result.add(new SelectItem(Integer.valueOf(i), String.valueOf(i) + bolonhaBundle.getString("label.context.period.sign")));
         }
         return result;
     }
@@ -194,8 +194,8 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         final List<SelectItem> result = new ArrayList<SelectItem>(2);
         
         result.add(new SelectItem(this.NO_SELECTION, bolonhaBundle.getString("choose")));
-        result.add(new SelectItem(Integer.valueOf(1), String.valueOf(1) + "�"));
-        result.add(new SelectItem(Integer.valueOf(2), String.valueOf(2) + "�"));
+        result.add(new SelectItem(Integer.valueOf(1), String.valueOf(1) + bolonhaBundle.getString("label.context.period.sign")));
+        result.add(new SelectItem(Integer.valueOf(2), String.valueOf(2) + bolonhaBundle.getString("label.context.period.sign")));
         return result;
     }
 
