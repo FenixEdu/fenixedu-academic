@@ -100,12 +100,17 @@
 						</fr:layout>							
 					</fr:view>
 					
-					<bean:message key="label.available.room.space" bundle="SOP_RESOURCES"/> 
-					<bean:write name="roomsPunctualSchedulingBean" property="totalAvailableRoomSpace.key"/><bean:message key="label.normal.capacity.abbreviation" bundle="SOP_RESOURCES"/> 
-					/ <bean:write name="roomsPunctualSchedulingBean" property="totalAvailableRoomSpace.value"/><bean:message key="label.exams.capacity.abbreviation" bundle="SOP_RESOURCES"/> 
+					<span class="error0">
+						<bean:message key="label.available.room.space" bundle="SOP_RESOURCES"/>: 
+						
+						<b><bean:write name="roomsPunctualSchedulingBean" property="totalAvailableRoomSpace.key"/></b>
+						<bean:message key="label.normal.capacity.abbreviation" bundle="SOP_RESOURCES"/> 
+						/ 
+						<b><bean:write name="roomsPunctualSchedulingBean" property="totalAvailableRoomSpace.value"/></b>
+						<bean:message key="label.exams.capacity.abbreviation" bundle="SOP_RESOURCES"/> 
+					</span>	
 					
-					<p><html:submit><bean:message key="label.remove.room"/></html:submit></p>
-					
+					<p><html:submit><bean:message key="label.remove.room"/></html:submit></p>					
 				</fr:form>																															
 			</logic:notEmpty>
 	
