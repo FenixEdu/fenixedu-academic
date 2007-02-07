@@ -19,23 +19,20 @@ public class CreditsLimit extends CreditsLimit_Base {
         setCurricularRuleType(CurricularRuleType.CREDITS_LIMIT);
     }
 
-    protected CreditsLimit(DegreeModule degreeModuleToApplyRule, CourseGroup contextCourseGroup,
+    protected CreditsLimit(final DegreeModule degreeModuleToApplyRule, CourseGroup contextCourseGroup,
             ExecutionPeriod begin, ExecutionPeriod end, Double minimum, Double maximum) {
 
         this(minimum, maximum);
-
-        if (degreeModuleToApplyRule == null || begin == null) {
-            throw new DomainException("curricular.rule.invalid.parameters");
-        }
-        
-        checkExecutionPeriods(begin, end);
-
-        setDegreeModuleToApplyRule(degreeModuleToApplyRule);
-        setContextCourseGroup(contextCourseGroup);
-        setBegin(begin);
-        setEnd(end);
+        checkParameters(degreeModuleToApplyRule);
+        init(degreeModuleToApplyRule, contextCourseGroup, begin, end);
     }
     
+    private void checkParameters(final DegreeModule degreeModuleToApplyRule) {
+	if (degreeModuleToApplyRule.isLeaf() && !degreeModuleToApplyRule.isOptional()) {
+	    throw new DomainException("error.curricularRules.CreditsLimit.invalid.degreeModule.must.be.group.or.optional.curricularCourse");
+	}
+    }
+
     protected void edit(CourseGroup contextCourseGroup, Double minimumCredits, Double maximumCredits) {
         checkCredits(minimumCredits, maximumCredits);
         setContextCourseGroup(contextCourseGroup);
@@ -84,5 +81,9 @@ public class CreditsLimit extends CreditsLimit_Base {
 
     public boolean allowCredits(final Double numberOfCredits) {
 	return !(numberOfCredits.compareTo(getMinimumCredits()) < 0 || numberOfCredits.compareTo(getMaximumCredits()) > 0);
+    }
+    
+    public boolean creditsExceedMaximum(final Double numberOfCredits) {
+	return numberOfCredits.compareTo(getMaximumCredits()) > 0;
     }
 }
