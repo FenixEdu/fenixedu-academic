@@ -150,27 +150,35 @@ public class GanttDiagram {
 
     private void calculateFirstAndLastInstantInTotalMode(YearMonthDay begin, YearMonthDay end) throws InvalidArgumentException {		
 	
+	if((begin != null && end == null) || (end != null && begin == null)) {
+            throw new InvalidArgumentException();
+        }
+	
 	if(begin == null) {
-            SortedSet<Interval> allIntervalsSortedByBeginDate = new TreeSet<Interval>(INTERVAL_COMPARATOR_BY_BEGIN);
+         
+	    SortedSet<Interval> allIntervalsSortedByBeginDate = new TreeSet<Interval>(INTERVAL_COMPARATOR_BY_BEGIN);
             for (GanttDiagramEvent event : getEvents()) {
                 allIntervalsSortedByBeginDate.addAll(event.getEventSortedIntervalsForGanttDiagram());
             }
-            setFirstInstant(allIntervalsSortedByBeginDate.first().getStart().toDateMidnight().toDateTime());	
-	} else {
-	  setFirstInstant(begin.toDateTimeAtMidnight());  
-	}
+            if(!allIntervalsSortedByBeginDate.isEmpty()) {
+        	setFirstInstant(allIntervalsSortedByBeginDate.first().getStart().toDateMidnight().toDateTime());	
+            }
 	
-	if(end == null) {
             SortedSet<Interval> allIntervalsSortedByEndDate = new TreeSet<Interval>(INTERVAL_COMPARATOR_BY_END);
             for (GanttDiagramEvent event : getEvents()) {
                 allIntervalsSortedByEndDate.addAll(event.getEventSortedIntervalsForGanttDiagram());
-            }	
-            setLastInstant(allIntervalsSortedByEndDate.last().getEnd().toDateMidnight().toDateTime());
+            }
+            if(!allIntervalsSortedByEndDate.isEmpty()) { 
+        	setLastInstant(allIntervalsSortedByEndDate.last().getEnd().toDateMidnight().toDateTime());
+            }
+	
 	} else {
-	  setLastInstant(end.toDateTimeAtMidnight());  
+	    setFirstInstant(begin.toDateTimeAtMidnight());
+	    setLastInstant(end.toDateTimeAtMidnight());
 	}
 	
-        if(getFirstInstant().isAfter(getLastInstant()) || getFirstInstant().isEqual(getLastInstant())) {
+	if((getFirstInstant() != null && getLastInstant() != null) && 
+        	(getFirstInstant().isAfter(getLastInstant()) || getLastInstant().isBefore(getFirstInstant()))) {
             throw new InvalidArgumentException();
         }
     }
@@ -180,27 +188,29 @@ public class GanttDiagram {
 	DateTime firstMonthDateTime = getFirstInstant();
 	DateTime lastMontDateTime = getLastInstant();
 
-	while ((firstMonthDateTime.getYear() < lastMontDateTime.getYear())
-		|| (firstMonthDateTime.getYear() == lastMontDateTime.getYear() && firstMonthDateTime
-			.getDayOfYear() <= lastMontDateTime.getDayOfYear())) {
-
-	    getDays().add(firstMonthDateTime);
-
-	    YearMonthDay day = firstMonthDateTime.toYearMonthDay().withDayOfMonth(1);
-	    if (getMonthsView().containsKey(day)) {
-		getMonthsView().put(day, getMonthsView().get(day) + 1);
-	    } else {
-		getMonthsView().put(day, 1);
-	    }
-
-	    if (getYearsView().containsKey(Integer.valueOf(firstMonthDateTime.getYear()))) {
-		getYearsView().put(Integer.valueOf(firstMonthDateTime.getYear()), 
-			getYearsView().get(Integer.valueOf(firstMonthDateTime.getYear())) + 1);
-	    } else {
-		getYearsView().put(Integer.valueOf(firstMonthDateTime.getYear()), 1);
-	    }
-
-	    firstMonthDateTime = firstMonthDateTime.plusDays(1);
+	if(firstMonthDateTime != null && lastMontDateTime != null) {	
+            while ((firstMonthDateTime.getYear() < lastMontDateTime.getYear())
+            	|| (firstMonthDateTime.getYear() == lastMontDateTime.getYear() && firstMonthDateTime
+            		.getDayOfYear() <= lastMontDateTime.getDayOfYear())) {
+            
+                getDays().add(firstMonthDateTime);
+            
+                YearMonthDay day = firstMonthDateTime.toYearMonthDay().withDayOfMonth(1);
+                if (getMonthsView().containsKey(day)) {
+                    getMonthsView().put(day, getMonthsView().get(day) + 1);
+                } else {
+                    getMonthsView().put(day, 1);
+                }
+            
+                if (getYearsView().containsKey(Integer.valueOf(firstMonthDateTime.getYear()))) {
+                    getYearsView().put(Integer.valueOf(firstMonthDateTime.getYear()),
+                	    getYearsView().get(Integer.valueOf(firstMonthDateTime.getYear())) + 1);
+                } else {
+                    getYearsView().put(Integer.valueOf(firstMonthDateTime.getYear()), 1);
+                }
+            
+                firstMonthDateTime = firstMonthDateTime.plusDays(1);
+            }
 	}
     }        
         
@@ -209,21 +219,23 @@ public class GanttDiagram {
 	DateTime firstMonthDateTime = getFirstInstant();
 	DateTime lastMontDateTime = getLastInstant();
 
-	while ((firstMonthDateTime.getYear() < lastMontDateTime.getYear())
-		|| (firstMonthDateTime.getYear() == lastMontDateTime.getYear() && firstMonthDateTime
-			.getMonthOfYear() <= lastMontDateTime.getMonthOfYear())) {
-
-	    getMonths().add(firstMonthDateTime);
-
-	    if (getYearsView().containsKey(Integer.valueOf(firstMonthDateTime.getYear()))) {
-		getYearsView().put(Integer.valueOf(firstMonthDateTime.getYear()),
-			getYearsView().get(Integer.valueOf(firstMonthDateTime.getYear())) + 1);
-	    } else {
-		getYearsView().put(Integer.valueOf(firstMonthDateTime.getYear()), 1);
-	    }
-
-	    firstMonthDateTime = firstMonthDateTime.plusMonths(1);
-	}	     	    	 		
+	if(firstMonthDateTime != null && lastMontDateTime != null) {	
+            while ((firstMonthDateTime.getYear() < lastMontDateTime.getYear())
+            	|| (firstMonthDateTime.getYear() == lastMontDateTime.getYear() && firstMonthDateTime
+            		.getMonthOfYear() <= lastMontDateTime.getMonthOfYear())) {
+            
+                getMonths().add(firstMonthDateTime);
+            
+                if (getYearsView().containsKey(Integer.valueOf(firstMonthDateTime.getYear()))) {
+                    getYearsView().put(Integer.valueOf(firstMonthDateTime.getYear()),
+                	    getYearsView().get(Integer.valueOf(firstMonthDateTime.getYear())) + 1);
+                } else {
+                    getYearsView().put(Integer.valueOf(firstMonthDateTime.getYear()), 1);
+                }
+            
+                firstMonthDateTime = firstMonthDateTime.plusMonths(1);
+            }	
+	}
     }
         
     public List<GanttDiagramEvent> getEvents() {

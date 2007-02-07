@@ -106,277 +106,278 @@ public class GanttDiagramTagLib extends TagSupport {
     }     
            
     private StringBuilder generateGanttDiagramInTimeMode() throws JspException {
-	StringBuilder builder = new StringBuilder();
-	
-	builder.append("<table class=\"tcalendar thlight\">");
-	
-	generateHeaders(builder);
-	
-	int numberOfUnits = getNumberOfUnits();
-	
-	for (GanttDiagramEvent event : getEvents()) {	    
-	    
-	    String eventUrl = getRequest().getContextPath() + getEventUrl() + "&amp;" + getEventParameter() + "=" + event.getEventIdentifierForGanttDiagram();
-	    String eventName = event.getEventNameForGanttDiagram().getContent(Language.valueOf(getGanttDiagramObject().getLocale().getLanguage()));
-	    String paddingStyle ="padding-left:" + event.getEventOffsetForGanttDiagram() * 15 + "px";	    	    
-	    String selectedEvent = getRequest().getParameter(getEventParameter());
-	    Object selectedEventObject = getRequest().getAttribute(getEventParameter());	    
-	    
-	    if(event.getEventIdentifierForGanttDiagram().equals(selectedEvent) || 
-		    (selectedEventObject != null && event.getEventIdentifierForGanttDiagram().equals(selectedEventObject.toString()))) {
-		builder.append("<tr class=\"selected\">");
-	    } else {
-		builder.append("<tr>");
-	    }
-	    	    
-	    builder.append("<td class=\"padded\">").append("<span style=\"").append(paddingStyle).append("\">");
-	    builder.append("<a href=\"").append(eventUrl).append("\">").append("*").append(eventName);
-	    builder.append("</a></span></td>");
-	    
-	    for (DateTime day : getGanttDiagramObject().getDays()) {
-		
-		int startIndex = 0, endIndex = 0;
-		int dayOfMonth = day.getDayOfMonth();
-		int monthOfYear = day.getMonthOfYear();
-		int year = day.getYear();		
-				
-		builder.append("<td style=\"width: ").append(convertToEm(numberOfUnits)).append("em;\"><div style=\"position: relative;\">");		
-		for (Interval interval : event.getEventSortedIntervalsForGanttDiagram()) {		    				    		                  
-					    
-		    if(interval.getStart().getYear() <= year && interval.getEnd().getYear() >= year) {
-			
-			if(interval.getStart().getYear() < year && interval.getEnd().getYear() > year) {			    
-			    addSpecialDiv(builder, convertToEm(numberOfUnits), EMPTY_UNIT);
-			}
-			// Started in same year and Ended after
-			else if(interval.getStart().getYear() == year && interval.getEnd().getYear() > year) {			 
-			    
-			    if(interval.getStart().getMonthOfYear() < monthOfYear) {
-				addSpecialDiv(builder, convertToEm(numberOfUnits), EMPTY_UNIT);
-			    
-			    } else if(interval.getStart().getMonthOfYear() == monthOfYear) {
-				
-				if(interval.getStart().getDayOfMonth() == dayOfMonth) {				    		   				    
-				    startIndex = calculateTimeOfDay(interval.getStart());				    				    
-				    addSpecialDiv(builder, convertToEm(numberOfUnits - (startIndex - 1)), convertToEm(startIndex - 1));
-				    
-				} else if(interval.getStart().getDayOfMonth() < dayOfMonth) {
-				    addSpecialDiv(builder, convertToEm(numberOfUnits), EMPTY_UNIT);				    
-				}				
-			    }
-			}		
-			// Ended in same year and started before
-			else if(interval.getStart().getYear() < year && interval.getEnd().getYear() == year) {
-			    
-			    if(interval.getEnd().getMonthOfYear() > monthOfYear) {				
-				addSpecialDiv(builder, convertToEm(numberOfUnits), EMPTY_UNIT);
-				
-			    } else if(interval.getEnd().getMonthOfYear() == monthOfYear) {				
-				
-				if(interval.getEnd().getDayOfMonth() > dayOfMonth) {
-				    addSpecialDiv(builder, convertToEm(numberOfUnits), EMPTY_UNIT);
-
-				} else if(interval.getEnd().getDayOfMonth() == dayOfMonth) {				    		   				    
-				    endIndex = calculateTimeOfDay(interval.getEnd());				    				    
-				    addSpecialDiv(builder, convertToEm(endIndex), EMPTY_UNIT);				    
-				}				
-			    }	
-			}
-			// Ended and Started In Same Year
-			else if(interval.getStart().getYear() == year && interval.getEnd().getYear() == year) {
-			    
-			    if (interval.getStart().getMonthOfYear() <= monthOfYear && interval.getEnd().getMonthOfYear() >= monthOfYear) {
-
-				if (interval.getStart().getMonthOfYear() == monthOfYear && interval.getEnd().getMonthOfYear() > monthOfYear) {
-				    
-				    if (interval.getStart().getDayOfMonth() == dayOfMonth) {
-					startIndex = calculateTimeOfDay(interval.getStart());
-					addSpecialDiv(builder, convertToEm(numberOfUnits - (startIndex - 1)), convertToEm(startIndex - 1));
-					
-				    } else if(interval.getStart().getDayOfMonth() < dayOfMonth) {
-					addSpecialDiv(builder, convertToEm(numberOfUnits), EMPTY_UNIT);				    
-				    }
-
-				} else if (interval.getStart().getMonthOfYear() < monthOfYear && interval.getEnd().getMonthOfYear() == monthOfYear) {
-
-				    if (interval.getEnd().getDayOfMonth() > dayOfMonth) {
-					addSpecialDiv(builder, convertToEm(numberOfUnits), EMPTY_UNIT);
-
-				    } else if (interval.getEnd().getDayOfMonth() == dayOfMonth) {
-					endIndex = calculateTimeOfDay(interval.getEnd());
-					addSpecialDiv(builder, convertToEm(endIndex), EMPTY_UNIT);				    
-				    } 
-
-				} else if (interval.getStart().getMonthOfYear() == monthOfYear && interval.getEnd().getMonthOfYear() == monthOfYear) {
-
-				    if(interval.getStart().getDayOfMonth() <= dayOfMonth && interval.getEnd().getDayOfMonth() >= dayOfMonth) {
-					
-					if(interval.getStart().getDayOfMonth() == dayOfMonth && interval.getEnd().getDayOfMonth() > dayOfMonth) {
-					    startIndex = calculateTimeOfDay(interval.getStart());
-					    addSpecialDiv(builder, convertToEm(numberOfUnits - (startIndex - 1)), convertToEm(startIndex - 1));				    
-					}
-					
-					else if(interval.getStart().getDayOfMonth() < dayOfMonth && interval.getEnd().getDayOfMonth() == dayOfMonth) {
-					    endIndex = calculateTimeOfDay(interval.getEnd());
-					    addSpecialDiv(builder, convertToEm(endIndex), EMPTY_UNIT);
-					}
-					
-					else if(interval.getStart().getDayOfMonth() == dayOfMonth && interval.getEnd().getDayOfMonth() == dayOfMonth) {
-					    startIndex = calculateTimeOfDay(interval.getStart());
-					    endIndex = calculateTimeOfDay(interval.getEnd());
-					    if(startIndex == endIndex) {
-						addSpecialDiv(builder, convertToEm(1), convertToEm(startIndex - 1));
-					    } else {
-						addSpecialDiv(builder, convertToEm(endIndex - startIndex), convertToEm(startIndex - 1));					    
-					    }
-					}					
-				    }
-				}
-			    }
-			}
-		    }					    		    		   
-		}		
-		builder.append("</div></td>");			
-	    }	    
-	    builder.append("<td class=\"padded smalltxt\">").append(event.getEventPeriodForGanttDiagram()).append("</td>");
-	    builder.append("<td class=\"padded smalltxt\">").append(event.getEventObservationsForGanttDiagram()).append("</td>");		
+	StringBuilder builder = new StringBuilder();	
+	if(!getEvents().isEmpty()) {
+            builder.append("<table class=\"tcalendar thlight\">");
+            
+            generateHeaders(builder);
+            
+            int numberOfUnits = getNumberOfUnits();
+            
+            for (GanttDiagramEvent event : getEvents()) {	    
+                
+                String eventUrl = getRequest().getContextPath() + getEventUrl() + "&amp;" + getEventParameter() + "=" + event.getEventIdentifierForGanttDiagram();
+                String eventName = event.getEventNameForGanttDiagram().getContent(Language.valueOf(getGanttDiagramObject().getLocale().getLanguage()));
+                String paddingStyle ="padding-left:" + event.getEventOffsetForGanttDiagram() * 15 + "px";	    	    
+                String selectedEvent = getRequest().getParameter(getEventParameter());
+                Object selectedEventObject = getRequest().getAttribute(getEventParameter());	    
+                
+                if(event.getEventIdentifierForGanttDiagram().equals(selectedEvent) || 
+            	    (selectedEventObject != null && event.getEventIdentifierForGanttDiagram().equals(selectedEventObject.toString()))) {
+                    builder.append("<tr class=\"selected\">");
+                } else {
+                    builder.append("<tr>");
+                }
+                	    
+                builder.append("<td class=\"padded\">").append("<span style=\"").append(paddingStyle).append("\">");
+                builder.append("<a href=\"").append(eventUrl).append("\">").append("*").append(eventName);
+                builder.append("</a></span></td>");
+                
+                for (DateTime day : getGanttDiagramObject().getDays()) {
+            	
+                    int startIndex = 0, endIndex = 0;
+                    int dayOfMonth = day.getDayOfMonth();
+                    int monthOfYear = day.getMonthOfYear();
+                    int year = day.getYear();		
+                    		
+                    builder.append("<td style=\"width: ").append(convertToEm(numberOfUnits)).append("em;\"><div style=\"position: relative;\">");		
+                    for (Interval interval : event.getEventSortedIntervalsForGanttDiagram()) {		    				    		                  
+                    			    
+                        if(interval.getStart().getYear() <= year && interval.getEnd().getYear() >= year) {
+                    	
+                            if(interval.getStart().getYear() < year && interval.getEnd().getYear() > year) {			    
+                                addSpecialDiv(builder, convertToEm(numberOfUnits), EMPTY_UNIT);
+                            }
+                            // Started in same year and Ended after
+                            else if(interval.getStart().getYear() == year && interval.getEnd().getYear() > year) {			 
+                                
+                                if(interval.getStart().getMonthOfYear() < monthOfYear) {
+                            	addSpecialDiv(builder, convertToEm(numberOfUnits), EMPTY_UNIT);
+                                
+                                } else if(interval.getStart().getMonthOfYear() == monthOfYear) {
+                            	
+                            	if(interval.getStart().getDayOfMonth() == dayOfMonth) {				    		   				    
+                            	    startIndex = calculateTimeOfDay(interval.getStart());				    				    
+                            	    addSpecialDiv(builder, convertToEm(numberOfUnits - (startIndex - 1)), convertToEm(startIndex - 1));
+                            	    
+                            	} else if(interval.getStart().getDayOfMonth() < dayOfMonth) {
+                            	    addSpecialDiv(builder, convertToEm(numberOfUnits), EMPTY_UNIT);				    
+                            	}				
+                                }
+                            }		
+                            // Ended in same year and started before
+                            else if(interval.getStart().getYear() < year && interval.getEnd().getYear() == year) {
+                                
+                                if(interval.getEnd().getMonthOfYear() > monthOfYear) {				
+                            	addSpecialDiv(builder, convertToEm(numberOfUnits), EMPTY_UNIT);
+                            	
+                                } else if(interval.getEnd().getMonthOfYear() == monthOfYear) {				
+                            	
+                            	if(interval.getEnd().getDayOfMonth() > dayOfMonth) {
+                            	    addSpecialDiv(builder, convertToEm(numberOfUnits), EMPTY_UNIT);
+                            
+                            	} else if(interval.getEnd().getDayOfMonth() == dayOfMonth) {				    		   				    
+                            	    endIndex = calculateTimeOfDay(interval.getEnd());				    				    
+                            	    addSpecialDiv(builder, convertToEm(endIndex), EMPTY_UNIT);				    
+                            	}				
+                                }	
+                            }
+                            // Ended and Started In Same Year
+                            else if(interval.getStart().getYear() == year && interval.getEnd().getYear() == year) {
+                                
+                                if (interval.getStart().getMonthOfYear() <= monthOfYear && interval.getEnd().getMonthOfYear() >= monthOfYear) {
+                            
+                                    if (interval.getStart().getMonthOfYear() == monthOfYear && interval.getEnd().getMonthOfYear() > monthOfYear) {
+                                        
+                                        if (interval.getStart().getDayOfMonth() == dayOfMonth) {
+                                            startIndex = calculateTimeOfDay(interval.getStart());
+                                            addSpecialDiv(builder, convertToEm(numberOfUnits - (startIndex - 1)), convertToEm(startIndex - 1));
+                                    	
+                                        } else if(interval.getStart().getDayOfMonth() < dayOfMonth) {
+                                            addSpecialDiv(builder, convertToEm(numberOfUnits), EMPTY_UNIT);				    
+                                        }
+                                    
+                                    } else if (interval.getStart().getMonthOfYear() < monthOfYear && interval.getEnd().getMonthOfYear() == monthOfYear) {
+                                    
+                                        if (interval.getEnd().getDayOfMonth() > dayOfMonth) {
+                                            addSpecialDiv(builder, convertToEm(numberOfUnits), EMPTY_UNIT);
+                                    
+                                        } else if (interval.getEnd().getDayOfMonth() == dayOfMonth) {
+                                            endIndex = calculateTimeOfDay(interval.getEnd());
+                                            addSpecialDiv(builder, convertToEm(endIndex), EMPTY_UNIT);				    
+                                        } 
+                                    
+                                    } else if (interval.getStart().getMonthOfYear() == monthOfYear && interval.getEnd().getMonthOfYear() == monthOfYear) {
+                                    
+                                        if(interval.getStart().getDayOfMonth() <= dayOfMonth && interval.getEnd().getDayOfMonth() >= dayOfMonth) {
+                                    	
+                                            if(interval.getStart().getDayOfMonth() == dayOfMonth && interval.getEnd().getDayOfMonth() > dayOfMonth) {
+                                                startIndex = calculateTimeOfDay(interval.getStart());
+                                                addSpecialDiv(builder, convertToEm(numberOfUnits - (startIndex - 1)), convertToEm(startIndex - 1));				    
+                                            }
+                                            
+                                            else if(interval.getStart().getDayOfMonth() < dayOfMonth && interval.getEnd().getDayOfMonth() == dayOfMonth) {
+                                                endIndex = calculateTimeOfDay(interval.getEnd());
+                                                addSpecialDiv(builder, convertToEm(endIndex), EMPTY_UNIT);
+                                            }
+                                            
+                                            else if(interval.getStart().getDayOfMonth() == dayOfMonth && interval.getEnd().getDayOfMonth() == dayOfMonth) {
+                                                startIndex = calculateTimeOfDay(interval.getStart());
+                                                endIndex = calculateTimeOfDay(interval.getEnd());
+                                                if(startIndex == endIndex) {
+                                                    addSpecialDiv(builder, convertToEm(1), convertToEm(startIndex - 1));
+                                                } else {
+                                                    addSpecialDiv(builder, convertToEm(endIndex - startIndex), convertToEm(startIndex - 1));					    
+                                                }
+                                            }					
+                                        }
+                                    }	
+                            	}
+                            }
+                        }
+                    }		
+                    builder.append("</div></td>");
+                    
+                }	    
+                builder.append("<td class=\"padded smalltxt\">").append(event.getEventPeriodForGanttDiagram()).append("</td>");
+                builder.append("<td class=\"padded smalltxt\">").append(event.getEventObservationsForGanttDiagram()).append("</td>");		
+            }            	
+            insertNextAndBeforeLinks(builder);            
+            builder.append("</table>");
 	}
-		
-	insertNextAndBeforeLinks(builder);
-	
-	builder.append("</table>");
 	return builder;
     }
        
     private StringBuilder generateGanttDiagramInTotalMode() throws JspException {
 	
-	StringBuilder builder = new StringBuilder();	
-	builder.append("<table class=\"tcalendar thlight\">");	
-	
-	generateHeaders(builder);
-	
-	int scale = getScale();
-	
-	for (GanttDiagramEvent event : getEvents()) {	    
-	    
-	    String eventUrl = getRequest().getContextPath() + getEventUrl() + "&amp;" + getEventParameter() + "=" + event.getEventIdentifierForGanttDiagram();
-	    String eventName = event.getEventNameForGanttDiagram().getContent(Language.valueOf(getGanttDiagramObject().getLocale().getLanguage()));
-	    String paddingStyle ="padding-left:" + event.getEventOffsetForGanttDiagram() * 15 + "px";	    	    
-	    String selectedEvent = getRequest().getParameter(getEventParameter());
-	    Object selectedEventObject = getRequest().getAttribute(getEventParameter());	    
-	    
-	    if(event.getEventIdentifierForGanttDiagram().equals(selectedEvent) || 
-		    (selectedEventObject != null && event.getEventIdentifierForGanttDiagram().equals(selectedEventObject.toString()))) {
-		builder.append("<tr class=\"selected\">");
-	    } else {
-		builder.append("<tr>");
-	    }
-	    	    
-	    builder.append("<td class=\"padded\">").append("<span style=\"").append(paddingStyle).append("\">");
-	    builder.append("<a href=\"").append(eventUrl).append("\">").append("*").append(eventName);
-	    builder.append("</a></span></td>");
-	    
-	    for (DateTime month : getGanttDiagramObject().getMonths()) {
-						
-		DateTime firstDayOfMonth = (month.getDayOfMonth() != 1) ? month.withDayOfMonth(1) : month;
-		DateTime lastDayOfMonth = firstDayOfMonth.plusMonths(1).minusDays(1);										
-		int monthNumberOfDays = Days.daysBetween(firstDayOfMonth, lastDayOfMonth).getDays() + 1;			
-		BigDecimal entryDays = EMPTY_UNIT, startDay = EMPTY_UNIT;
-		
-		builder.append("<td style=\"width: ").append(convertToEm(monthNumberOfDays * scale)).append("em;\"><div style=\"position: relative;\">");		
-		
-		for (Interval interval : event.getEventSortedIntervalsForGanttDiagram()) {		    
-			
-		    DateMidnight intervalStart = interval.getStart().toDateMidnight();
-		    DateMidnight intervalEnd = interval.getEnd().toDateMidnight();
-		    
-                    // Started in this month
-                    if(intervalStart.getMonthOfYear() == month.getMonthOfYear() && intervalStart.getYear() == month.getYear()){																							    
-                        
-                        // Ended in this month
-                        if(interval.getEnd().getMonthOfYear() == month.getMonthOfYear() && intervalEnd.getYear() == month.getYear()){										
-                    		
-                            // Started in first day of this month
-                            if(intervalStart.getDayOfMonth() == 1){									    
-                		  
-                        	// Ended in the last day of this month
-                        	if(intervalEnd.getDayOfMonth() == monthNumberOfDays){                       
-                        	    entryDays = convertToEm((Days.daysBetween(intervalStart, lastDayOfMonth).getDays() + 1) * scale);                                	
-                        	    startDay = convertToEm((intervalStart.getDayOfMonth() - 1) * scale);                                	  
-                        	    addSpecialDiv(builder, entryDays, startDay);
-                        	}									    
-                		    
-                        	// Ended before last day of this month
-                        	else {		                        	   
-                        	    entryDays = convertToEm((Days.daysBetween(intervalStart, intervalEnd).getDays() + 1) * scale);                                	
-                        	    startDay = convertToEm((intervalStart.getDayOfMonth() - 1) * scale);                                	  
-                        	    addSpecialDiv(builder, entryDays, startDay);
-                        	}																		
-                            }									
-                		
-                            // Started after first day of this month    								
-                            else {									    
-                		
-                        	// Ended in the last day of this month
-                        	if(intervalEnd.getDayOfMonth() == monthNumberOfDays){		                    			                     
-                        	    entryDays = convertToEm((Days.daysBetween(intervalStart, lastDayOfMonth).getDays() + 1) * scale);                                	
-                        	    startDay = convertToEm((intervalStart.getDayOfMonth() - 1) * scale);                                	  
-                        	    addSpecialDiv(builder, entryDays, startDay);
-                        	}									    
-                		    
-                        	// Ended before last day of this month
-                        	else {	                                                                                      
-                        	    entryDays = convertToEm((Days.daysBetween(intervalStart, intervalEnd).getDays() + 1) * scale);                                	
-                        	    startDay = convertToEm((intervalStart.getDayOfMonth() - 1) * scale);                                	  
-                        	    addSpecialDiv(builder, entryDays, startDay);
-                        	}									    									    
-                            }																																
-                        } 							    
-                    	
-                        // Ended after this month
-                        else { 									                    		                                           
-                            entryDays = convertToEm((Days.daysBetween(intervalStart, lastDayOfMonth).getDays() + 1) * scale);                                	
-                            startDay = convertToEm((intervalStart.getDayOfMonth() - 1) * scale);                                	  
-                            addSpecialDiv(builder, entryDays, startDay);                            														
-                        }							 
+	StringBuilder builder = new StringBuilder();
+	if(!getEvents().isEmpty()) {
+	    	
+            builder.append("<table class=\"tcalendar thlight\">");	            
+            generateHeaders(builder);            
+            int scale = getScale();
+            
+            for (GanttDiagramEvent event : getEvents()) {	    
+                
+                String eventUrl = getRequest().getContextPath() + getEventUrl() + "&amp;" + getEventParameter() + "=" + event.getEventIdentifierForGanttDiagram();
+                String eventName = event.getEventNameForGanttDiagram().getContent(Language.valueOf(getGanttDiagramObject().getLocale().getLanguage()));
+                String paddingStyle ="padding-left:" + event.getEventOffsetForGanttDiagram() * 15 + "px";	    	    
+                String selectedEvent = getRequest().getParameter(getEventParameter());
+                Object selectedEventObject = getRequest().getAttribute(getEventParameter());	    
+                
+                if(event.getEventIdentifierForGanttDiagram().equals(selectedEvent) || 
+            	    (selectedEventObject != null && event.getEventIdentifierForGanttDiagram().equals(selectedEventObject.toString()))) {
+                    builder.append("<tr class=\"selected\">");
+                } else {
+                    builder.append("<tr>");
+                }
+                	    
+                builder.append("<td class=\"padded\">").append("<span style=\"").append(paddingStyle).append("\">");
+                builder.append("<a href=\"").append(eventUrl).append("\">").append("*").append(eventName);
+                builder.append("</a></span></td>");
+                
+                for (DateTime month : getGanttDiagramObject().getMonths()) {
+            					
+                    DateTime firstDayOfMonth = (month.getDayOfMonth() != 1) ? month.withDayOfMonth(1) : month;
+                    DateTime lastDayOfMonth = firstDayOfMonth.plusMonths(1).minusDays(1);										
+                    int monthNumberOfDays = Days.daysBetween(firstDayOfMonth, lastDayOfMonth).getDays() + 1;			
+                    BigDecimal entryDays = EMPTY_UNIT, startDay = EMPTY_UNIT;
                     
-                    // Not Started in this month    
-                    } else { 
-                        
-                        // Started before this month
-                        if(intervalStart.getYear() < month.getYear() || (intervalStart.getYear() == month.getYear() && 
-                    		    intervalStart.getMonthOfYear() < month.getMonthOfYear())) {								
-                    		
-                            // Ended after this month
-                            if(intervalEnd.getYear() > month.getYear() || 
-                    		    (intervalEnd.getYear() == month.getYear() && 
-                    			    intervalEnd.getMonthOfYear() > month.getMonthOfYear())){
+                    builder.append("<td style=\"width: ").append(convertToEm(monthNumberOfDays * scale)).append("em;\"><div style=\"position: relative;\">");		
+                    
+                    for (Interval interval : event.getEventSortedIntervalsForGanttDiagram()) {		    
                     	
-                        	entryDays = convertToEm((Days.daysBetween(firstDayOfMonth, lastDayOfMonth).getDays() + 1) * scale);                                	
-                        	startDay = convertToEm((firstDayOfMonth.getDayOfMonth() - 1) * scale);                                	  
-                        	addSpecialDiv(builder, entryDays, startDay);
-                            }                     		                          
-                            else {	
-                    		    
-                        	//Ended in this month
-                        	if(intervalEnd.getMonthOfYear() == month.getMonthOfYear() && intervalEnd.getYear() == month.getYear()){        		                        	                          	    
-                        	   
-                        	    entryDays = convertToEm((Days.daysBetween(firstDayOfMonth, intervalEnd).getDays() + 1) * scale);                                	
-                                    startDay = convertToEm((firstDayOfMonth.getDayOfMonth() - 1) * scale);                                	  
-                                    addSpecialDiv(builder, entryDays, startDay);                        	   											
-                        	}                     		                            									    									    									   																								    									    									    									    										 
-                            }
-                        }
-                    }                                                           
-		}
-		builder.append("</div></td>");		
-	    }
-	    builder.append("<td class=\"padded smalltxt\">").append(event.getEventPeriodForGanttDiagram()).append("</td>");
-	    builder.append("<td class=\"padded smalltxt\">").append(event.getEventObservationsForGanttDiagram()).append("</td>");		
+                        DateMidnight intervalStart = interval.getStart().toDateMidnight();
+                        DateMidnight intervalEnd = interval.getEnd().toDateMidnight();
+                        
+                            // Started in this month
+                            if(intervalStart.getMonthOfYear() == month.getMonthOfYear() && intervalStart.getYear() == month.getYear()){																							    
+                                
+                                // Ended in this month
+                                if(interval.getEnd().getMonthOfYear() == month.getMonthOfYear() && intervalEnd.getYear() == month.getYear()){										
+                            		
+                                    // Started in first day of this month
+                                    if(intervalStart.getDayOfMonth() == 1){									    
+                        		  
+                                	// Ended in the last day of this month
+                                	if(intervalEnd.getDayOfMonth() == monthNumberOfDays){                       
+                                	    entryDays = convertToEm((Days.daysBetween(intervalStart, lastDayOfMonth).getDays() + 1) * scale);                                	
+                                	    startDay = convertToEm((intervalStart.getDayOfMonth() - 1) * scale);                                	  
+                                	    addSpecialDiv(builder, entryDays, startDay);
+                                	}									    
+                        		    
+                                	// Ended before last day of this month
+                                	else {		                        	   
+                                	    entryDays = convertToEm((Days.daysBetween(intervalStart, intervalEnd).getDays() + 1) * scale);                                	
+                                	    startDay = convertToEm((intervalStart.getDayOfMonth() - 1) * scale);                                	  
+                                	    addSpecialDiv(builder, entryDays, startDay);
+                                	}																		
+                                    }									
+                        		
+                                    // Started after first day of this month    								
+                                    else {									    
+                        		
+                                	// Ended in the last day of this month
+                                	if(intervalEnd.getDayOfMonth() == monthNumberOfDays){		                    			                     
+                                	    entryDays = convertToEm((Days.daysBetween(intervalStart, lastDayOfMonth).getDays() + 1) * scale);                                	
+                                	    startDay = convertToEm((intervalStart.getDayOfMonth() - 1) * scale);                                	  
+                                	    addSpecialDiv(builder, entryDays, startDay);
+                                	}									    
+                        		    
+                                	// Ended before last day of this month
+                                	else {	                                                                                      
+                                	    entryDays = convertToEm((Days.daysBetween(intervalStart, intervalEnd).getDays() + 1) * scale);                                	
+                                	    startDay = convertToEm((intervalStart.getDayOfMonth() - 1) * scale);                                	  
+                                	    addSpecialDiv(builder, entryDays, startDay);
+                                	}									    									    
+                                    }																																
+                                } 							    
+                            	
+                                // Ended after this month
+                                else { 									                    		                                           
+                                    entryDays = convertToEm((Days.daysBetween(intervalStart, lastDayOfMonth).getDays() + 1) * scale);                                	
+                                    startDay = convertToEm((intervalStart.getDayOfMonth() - 1) * scale);                                	  
+                                    addSpecialDiv(builder, entryDays, startDay);                            														
+                                }							 
+                            
+                            // Not Started in this month    
+                            } else { 
+                                
+                                // Started before this month
+                                if(intervalStart.getYear() < month.getYear() || (intervalStart.getYear() == month.getYear() && 
+                            		    intervalStart.getMonthOfYear() < month.getMonthOfYear())) {								
+                            		
+                                    // Ended after this month
+                                    if(intervalEnd.getYear() > month.getYear() || 
+                            		    (intervalEnd.getYear() == month.getYear() && 
+                            			    intervalEnd.getMonthOfYear() > month.getMonthOfYear())){
+                            	
+                                	entryDays = convertToEm((Days.daysBetween(firstDayOfMonth, lastDayOfMonth).getDays() + 1) * scale);                                	
+                                	startDay = convertToEm((firstDayOfMonth.getDayOfMonth() - 1) * scale);                                	  
+                                	addSpecialDiv(builder, entryDays, startDay);
+                                    }                     		                          
+                                    else {	
+                            		    
+                                	//Ended in this month
+                                	if(intervalEnd.getMonthOfYear() == month.getMonthOfYear() && intervalEnd.getYear() == month.getYear()){        		                        	                          	    
+                                	   
+                                	    entryDays = convertToEm((Days.daysBetween(firstDayOfMonth, intervalEnd).getDays() + 1) * scale);                                	
+                                            startDay = convertToEm((firstDayOfMonth.getDayOfMonth() - 1) * scale);                                	  
+                                            addSpecialDiv(builder, entryDays, startDay);                        	   											
+                                	}                     		                            									    									    									   																								    									    									    									    										 
+                                    }
+                                }
+                          }                                                           
+                    }
+                    builder.append("</div></td>");		
+                }
+                builder.append("<td class=\"padded smalltxt\">").append(event.getEventPeriodForGanttDiagram()).append("</td>");
+                builder.append("<td class=\"padded smalltxt\">").append(event.getEventObservationsForGanttDiagram()).append("</td>");		
+            }
+            
+            insertNextAndBeforeLinks(builder);
+            builder.append("</table>");
 	}
-	
-	insertNextAndBeforeLinks(builder);
-	builder.append("</table>");
 	return builder;
     }       
 
