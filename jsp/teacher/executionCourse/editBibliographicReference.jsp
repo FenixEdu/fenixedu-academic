@@ -7,13 +7,9 @@
 
 <h2><bean:message key="link.bibliography" /></h2>
 
-<table width="100%">
-	<tr>
-		<td class="infoop">
-			<bean:message key="label.bibliography.explanation" />
-		</td>
-	</tr>
-</table>
+<div class="section1">
+	<bean:message key="label.bibliography.explanation" />
+</div>
 
 <logic:present name="bibliographicReference">
 	<blockquote>

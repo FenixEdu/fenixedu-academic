@@ -27,19 +27,21 @@
     </span>
 </p>
 
-<fr:form action="<%= "/manageExecutionCourse.do?method=sortBibliographyReferences&amp;executionCourseID=" + executionCourseId + (optional ? "&amp;optional=true" : "") %>">
-    <input id="referencesOrder" type="hidden" name="referencesOrder" value=""/>
-</fr:form>
-    
+
+	<fr:form action="<%= "/manageExecutionCourse.do?method=sortBibliographyReferences&amp;executionCourseID=" + executionCourseId + (optional ? "&amp;optional=true" : "") %>">
+	    <input id="referencesOrder" type="hidden" name="referencesOrder" value=""/>
+	</fr:form>
+
+<div class="section1">
 <fr:view name="references">
     <fr:layout name="tree">
         <fr:property name="treeId" value="referencesOrderTree"/>
         <fr:property name="fieldId" value="referencesOrder"/>
-        
-        <fr:property name="eachLayout" value="values-comma"/>
+	    <fr:property name="eachLayout" value="values-comma"/>
         <fr:property name="eachSchema" value="executionCourse.bibliographicReference.simple"/>
     </fr:layout>
 </fr:view>
+
 
 <p class="mtop15">
     <fr:form action="<%="/manageExecutionCourse.do?method=bibliographicReference&amp;executionCourseID=" + executionCourseId %>">
@@ -50,4 +52,10 @@
            <bean:message key="button.items.order.reset" bundle="SITE_RESOURCES"/>
        </html:submit>
     </fr:form>
+</p>
+
+</div>
+
+<p style="color: #888;">
+	<em><bean:message key="message.section.reorder.tip" bundle="SITE_RESOURCES"/></em>
 </p>

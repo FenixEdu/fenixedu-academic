@@ -14,15 +14,15 @@
 	<bean:define id="postBackLink">/manageExecutionCourse.do?method=prepareImportBibliographicReferencesPostBack&amp;executionCourseID=<bean:write name="executionCourseID"/></bean:define>	
 	<bean:define id="invalidLink">/manageExecutionCourse.do?method=prepareBiliographicReferencesInvalid&amp;executionCourseID=<bean:write name="executionCourseID"/></bean:define>	
 
-	<H2><bean:message key="label.import.bibliographicReferences.title"/></H2>
+	<h2><bean:message key="label.import.bibliographicReferences.title"/></h2>
 	
 	<fr:form action="<%= showBibliographicReferences %>">
 		<fr:edit nested="true" id="importContentBean" name="importContentBean" schema="ChooseDegreePeriodAndCurricularYearToImportLessonPlannings"
 			 action="<%= submitUrl %>">
 			<fr:destination name="postBack" path="<%= postBackLink %>"/>			
-			<fr:layout name="tabular" >
-					<fr:property name="classes" value="tstyle4"/>
-			        <fr:property name="columnClasses" value="listClasses,,"/>
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle5 thright thlight"/>
+		        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
 			</fr:layout>
 		</fr:edit>
 		<html:cancel><bean:message key="button.cancel"/></html:cancel>
@@ -31,16 +31,15 @@
 	<logic:notEmpty name="importContentBean" property="curricularYear">	
 	 	<logic:notEmpty name="importContentBean" property="executionPeriod">	
 	 		<logic:notEmpty name="importContentBean" property="executionDegree">	
-				<br/>
 				<bean:define id="importBibliographicReferencesUrl">/manageExecutionCourse.do?method=importBibliographicReferences&amp;executionCourseID=<bean:write name="executionCourseID"/></bean:define>		
-				<H3><bean:message key="label.choose.course"/></H3>			
+				<h3 class="mtop2 mbottom025"><bean:message key="label.choose.course"/></h3>
 				<fr:edit id="importContentBeanWithExecutionCourse" name="importContentBean" schema="ListExecutionCoursesToImportContent" 
-					action="<%= importBibliographicReferencesUrl %>" >
+					action="<%= importBibliographicReferencesUrl %>">
 					<fr:destination name="cancel" path="<%= showBibliographicReferences %>"/>
 					<fr:destination name="invalid" path="<%= invalidLink %>"/>
 					<fr:layout name="tabular" >
-							<fr:property name="classes" value="tstyle4"/>
-					        <fr:property name="columnClasses" value="listClasses,,"/>
+						<fr:property name="classes" value="tstyle5 thright thlight mtop05"/>
+				        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
 					</fr:layout>
 				</fr:edit>						
 			</logic:notEmpty>
