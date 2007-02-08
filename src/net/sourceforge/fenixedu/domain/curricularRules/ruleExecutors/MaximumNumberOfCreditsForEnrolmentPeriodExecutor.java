@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors;
 
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.MaximumNumberOfCreditsForEnrolmentPeriod;
@@ -16,8 +17,9 @@ public class MaximumNumberOfCreditsForEnrolmentPeriodExecutor extends Curricular
 	final double ects = studentCurricularPlan.getEctsCredits(enrolmentContext.getExecutionPeriod());
 	double availableEctsCredits = ((maxECTS - ects) > 0) ? maxECTS - ects : 0.0;
 	        
+	final ExecutionPeriod executionPeriod = enrolmentContext.getExecutionPeriod();
 	for (final DegreeModuleToEnrol degreeModuleToEnrol : enrolmentContext.getDegreeModuleToEnrol()) {
-	    final double degreeModuleEctsCredits = degreeModuleToEnrol.getContext().getChildDegreeModule().getEctsCredits();
+	    final double degreeModuleEctsCredits = degreeModuleToEnrol.getContext().getChildDegreeModule().getEctsCredits(executionPeriod);
 	    if (degreeModuleEctsCredits > availableEctsCredits) {
 		return RuleResult.createFalse();
 	    } else {

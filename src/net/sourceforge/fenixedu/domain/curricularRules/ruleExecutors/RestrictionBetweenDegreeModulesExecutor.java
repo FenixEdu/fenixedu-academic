@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors;
 
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.RestrictionBetweenDegreeModules;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
@@ -19,9 +20,10 @@ public class RestrictionBetweenDegreeModulesExecutor extends CurricularRuleExecu
 	}
 	
 	final DegreeModule degreeModule = rule.getPrecedenceDegreeModule();
+	final ExecutionPeriod executionPeriod = enrolmentContext.getExecutionPeriod();
 	if (isEnrolling(enrolmentContext, degreeModule) || isEnroled(enrolmentContext, degreeModule)) {
 
-	    if (!rule.hasMinimumCredits() || rule.allowCredits(degreeModule.getEctsCredits())) {
+	    if (!rule.hasMinimumCredits() || rule.allowCredits(degreeModule.getEctsCredits(executionPeriod))) {
 		return RuleResult.createTrue();
 
 	    } else {
