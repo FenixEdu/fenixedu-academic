@@ -828,7 +828,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment{
 		&& this.getCurricularCourse().equals(curricularCourse);
     }
     
-    protected boolean isValid(final ExecutionPeriod executionPeriod) {
+    public boolean isValid(final ExecutionPeriod executionPeriod) {
 	return getExecutionPeriod() == executionPeriod
 		|| (getCurricularCourse().isAnual() && getExecutionPeriod().getExecutionYear() == executionPeriod.getExecutionYear());
     }
@@ -909,6 +909,11 @@ public class Enrolment extends Enrolment_Base implements IEnrolment{
 
     public boolean isExtraCurricular() {
 	return getIsExtraCurricular() != null && getIsExtraCurricular();
+    }
+    
+    @Override
+    public Double getEnroledEctsCredits(final ExecutionPeriod executionPeriod) {
+	return isValid(executionPeriod) && isEnroled() ? getEctsCredits() : Double.valueOf(0d);
     }
     
 }

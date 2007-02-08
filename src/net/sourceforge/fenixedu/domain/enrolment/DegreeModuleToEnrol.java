@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.enrolment;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 
@@ -48,5 +49,9 @@ public class DegreeModuleToEnrol implements Serializable{
 
     public boolean isOptional() {
 	return false;
+    }
+    
+    public Double getEctsCredits(final ExecutionPeriod executionPeriod) {
+	return getContext().getChildDegreeModule().getEctsCredits(executionPeriod);
     }
 }
