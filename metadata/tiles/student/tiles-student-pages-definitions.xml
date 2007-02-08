@@ -309,6 +309,10 @@
 	<definition name="enrolment.bolonha.chooseOptionalCurricularCourseEnrol" extends="definition.student.masterPage">
 		<put name="body" value="/student/enrollment/bolonha/chooseOptionalCurricularCourseToEnrol.jsp"/>
 	</definition>
+	<definition name="enrolment.bolonha.showOutOfEnrollmentPeriodMessage" extends="definition.student.masterPage">
+		<put name="body" value="/student/enrollment/bolonha/showOutOfEnrollmentPeriodMessage.jsp"/>
+	</definition>
+	
 	<!-- End: Bolonha Student Enrolment -->
 	
 </tiles-definitions>

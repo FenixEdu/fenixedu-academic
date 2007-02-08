@@ -7,16 +7,24 @@
 <logic:present role="STUDENT">
     <h2><bean:message key="label.enrollment.courses" bundle="STUDENT_RESOURCES"/></h2>
     
-    <html:form action="/bolonhaStudentEnrollment.do" >
-        	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="chooseRegistration"/>
-        	<p class="mtop2">
-        		<strong><bean:message  key="label.studentCurricularPlan"/></strong>
-                	<html:select property="registrationId">
-        			<html:options collection="registrations" property="idInternal" labelProperty="lastStudentCurricularPlan.degreeCurricularPlan.presentationName"/>
-        		</html:select>
-        	</p>
-        
-        	<p class="mtop2"><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="APPLICATION_RESOURCES" key="label.continue" /></html:submit></p>
-    </html:form>
+    <logic:empty name="registrationsToEnrol">
+    	<span class="error0">
+	    	<bean:message bundle="STUDENT_RESOURCES"  key="label.enrollment.courses.chooseRegistration.noRegistrationsToEnrol"/>
+    	</span>
+    </logic:empty>
+    <logic:notEmpty name="registrationsToEnrol">
+	    <html:form action="/bolonhaStudentEnrollment.do" >
+	        	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="chooseRegistration"/>
+	        	<p class="mtop2">
+	        		<strong><bean:message  key="label.studentCurricularPlan"/></strong>
+	                	<html:select property="registrationId">
+	        			<html:options collection="registrationsToEnrol" property="idInternal" labelProperty="lastStudentCurricularPlan.degreeCurricularPlan.presentationName"/>
+	        		</html:select>
+	        	</p>
+	        
+	        	<p class="mtop2"><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="APPLICATION_RESOURCES" key="label.continue" /></html:submit></p>
+	    </html:form>
+    </logic:notEmpty>
+    
 </logic:present>
 

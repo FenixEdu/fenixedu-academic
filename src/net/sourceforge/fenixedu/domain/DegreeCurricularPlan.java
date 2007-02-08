@@ -187,7 +187,8 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     private void createDefaultCurricularRules() {
-	new MaximumNumberOfCreditsForEnrolmentPeriod(getRoot(), ExecutionPeriod.readActualExecutionPeriod());
+	new MaximumNumberOfCreditsForEnrolmentPeriod(getRoot(), ExecutionPeriod
+		.readActualExecutionPeriod());
 	new PreviousYearsEnrolmentCurricularRule(getRoot(), ExecutionPeriod.readActualExecutionPeriod());
     }
 
@@ -521,6 +522,20 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	    }
 	}
 	return null;
+    }
+
+    public boolean hasOpenEnrolmentPeriodInCurricularCoursesFor(final ExecutionPeriod executionPeriod) {
+	for (final EnrolmentPeriod enrolmentPeriod : getEnrolmentPeriods()) {
+	    if (enrolmentPeriod instanceof EnrolmentPeriodInCurricularCourses) {
+		final EnrolmentPeriodInCurricularCourses enrolmentPeriodInCurricularCourses = ((EnrolmentPeriodInCurricularCourses) enrolmentPeriod);
+		if (enrolmentPeriodInCurricularCourses.getExecutionPeriod() == executionPeriod
+			&& enrolmentPeriodInCurricularCourses.isValid()) {
+		    return true;
+		}
+	    }
+	}
+
+	return false;
     }
 
     public EnrolmentPeriodInCurricularCourses getNextEnrolmentPeriod() {
@@ -894,8 +909,8 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	    String nameEn, CurricularStage curricularStage, CurricularPeriod curricularPeriod,
 	    ExecutionPeriod beginExecutionPeriod, ExecutionPeriod endExecutionPeriod) {
 
-	return new OptionalCurricularCourse(parentCourseGroup, name, nameEn, curricularStage, curricularPeriod,
-		beginExecutionPeriod, endExecutionPeriod);
+	return new OptionalCurricularCourse(parentCourseGroup, name, nameEn, curricularStage,
+		curricularPeriod, beginExecutionPeriod, endExecutionPeriod);
     }
 
     private void checkIfPresentInDegreeCurricularPlan(final CompetenceCourse competenceCourse,
@@ -949,11 +964,11 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     public Branch getBranchByName(final String branchName) {
 	if (branchName != null) {
-	for (final Branch branch : getAreas()) {
-	    if (branchName.equals(branch.getName())) {
-		return branch;
+	    for (final Branch branch : getAreas()) {
+		if (branchName.equals(branch.getName())) {
+		    return branch;
+		}
 	    }
-	}
 	}
 	return null;
     }
@@ -1122,8 +1137,10 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     public static List<DegreeCurricularPlan> readByDegreeTypeAndState(DegreeType degreeType,
 	    DegreeCurricularPlanState state) {
 	List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
-	for (DegreeCurricularPlan degreeCurricularPlan : RootDomainObject.getInstance().getDegreeCurricularPlans()) {
-	    if (degreeCurricularPlan.getDegree().getTipoCurso() == degreeType && degreeCurricularPlan.getState() == state) {
+	for (DegreeCurricularPlan degreeCurricularPlan : RootDomainObject.getInstance()
+		.getDegreeCurricularPlans()) {
+	    if (degreeCurricularPlan.getDegree().getTipoCurso() == degreeType
+		    && degreeCurricularPlan.getState() == state) {
 		result.add(degreeCurricularPlan);
 	    }
 	}
@@ -1359,30 +1376,30 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	return false;
     }
 
-    public Set<Registration> getRegistrations(){
+    public Set<Registration> getRegistrations() {
 	Set<Registration> registrations = new HashSet<Registration>();
 	for (StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
-	    if(studentCurricularPlan.isActive()){
+	    if (studentCurricularPlan.isActive()) {
 		registrations.add(studentCurricularPlan.getRegistration());
 	    }
 	}
 	return registrations;
     }
 
-    public boolean isPast(){
+    public boolean isPast() {
 	return getState().equals(DegreeCurricularPlanState.PAST);
     }
-    
+
     public net.sourceforge.fenixedu.domain.space.Campus getCampus(final ExecutionYear executionYear) {
 	for (final ExecutionDegree executionDegree : getExecutionDegreesSet()) {
 	    if (executionDegree.getExecutionYear() == executionYear) {
 		return executionDegree.getCampus().getSpaceCampus();
 	    }
 	}
-	
+
 	return null;
     }
-    
+
     public net.sourceforge.fenixedu.domain.space.Campus getCurrentCampus() {
 	for (final ExecutionDegree executionDegree : getExecutionDegreesSet()) {
 	    final ExecutionYear executionYear = executionDegree.getExecutionYear();
@@ -1390,22 +1407,23 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 		return executionDegree.getCampus().getSpaceCampus();
 	    }
 	}
-	
+
 	return null;
     }
-    
+
     public net.sourceforge.fenixedu.domain.space.Campus getLastCampus() {
 	if (hasAnyExecutionDegrees()) {
-	    return getMostRecentExecutionDegree().getCampus().getSpaceCampus();    
+	    return getMostRecentExecutionDegree().getCampus().getSpaceCampus();
 	}
-	
+
 	return net.sourceforge.fenixedu.domain.space.Campus.readOldestCampus();
     }
 
     @Override
     public Integer getDegreeDuration() {
 	final Integer degreeDuration = super.getDegreeDuration();
-	return degreeDuration == null ? Integer.valueOf(getDegree().getTipoCurso().getYears()) : degreeDuration;
+	return degreeDuration == null ? Integer.valueOf(getDegree().getTipoCurso().getYears())
+		: degreeDuration;
     }
 
 }

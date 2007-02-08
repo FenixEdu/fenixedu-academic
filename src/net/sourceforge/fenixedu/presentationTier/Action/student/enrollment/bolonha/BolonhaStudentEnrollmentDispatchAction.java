@@ -33,26 +33,22 @@ public class BolonhaStudentEnrollmentDispatchAction extends FenixDispatchAction 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	final List<Registration> registrations = getRegistrations(request);
-
-	if (registrations.size() > 1) {
-	    return prepareChooseRegistration(mapping, form, request, response);
+	final List<Registration> registrations = getActiveRegistrationsToEnrolByStudent(request);
+	
+	if (registrations.size() == 1) {
+	    final Registration registration = registrations.iterator().next();
+	    return prepareShowDegreeModulesToEnrol(mapping, form, request, response, registration
+		    .getLastStudentCurricularPlan());
 	}
 
-	final Registration registration = registrations.iterator().next();
-	if (!registration.isActive()) {
-	    throw new RuntimeException("TODO: FIX FOR INACTIVE REGISTRATIONS");
-	}
-
-	return prepareShowDegreeModulesToEnrol(mapping, form, request, response, registration
-		.getLastStudentCurricularPlan());
+	return prepareChooseRegistration(mapping, form, request, response);
 
     }
 
     public ActionForward prepareChooseRegistration(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
 
-	request.setAttribute("registrations", getRegistrations(request));
+	request.setAttribute("registrationsToEnrol", getActiveRegistrationsToEnrolByStudent(request));
 
 	return mapping.findForward("chooseRegistration");
     }
@@ -61,10 +57,6 @@ public class BolonhaStudentEnrollmentDispatchAction extends FenixDispatchAction 
 	    HttpServletRequest request, HttpServletResponse response) {
 
 	final Registration registration = getRegistration((DynaActionForm) form);
-	if (!registration.isActive()) {
-	    throw new RuntimeException("TODO: FIX FOR INACTIVE REGISTRATIONS");
-	}
-
 	return prepareShowDegreeModulesToEnrol(mapping, form, request, response, registration
 		.getLastStudentCurricularPlan());
 
@@ -77,14 +69,19 @@ public class BolonhaStudentEnrollmentDispatchAction extends FenixDispatchAction 
     private ActionForward prepareShowDegreeModulesToEnrol(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response,
 	    final StudentCurricularPlan studentCurricularPlan) {
+	if (studentCurricularPlan.getDegreeCurricularPlan().getActualEnrolmentPeriod() == null) {
+	    return mapping.findForward("showOutOfEnrollmentPeriodMessage");
+	}
+
 	request.setAttribute("bolonhaStudentEnrollmentBean", new BolonhaStudentEnrollmentBean(
 		studentCurricularPlan, ExecutionPeriod.readActualExecutionPeriod()));
 
 	return mapping.findForward("showDegreeModulesToEnrol");
+
     }
 
-    private List<Registration> getRegistrations(final HttpServletRequest request) {
-	return getLoggedPerson(request).getStudent().getRegistrations();
+    private List<Registration> getActiveRegistrationsToEnrolByStudent(final HttpServletRequest request) {
+	return getLoggedPerson(request).getStudent().getActiveRegistrationsToEnrolByStudent();
     }
 
     public ActionForward enrolInDegreeModules(ActionMapping mapping, ActionForm form,
@@ -93,11 +90,10 @@ public class BolonhaStudentEnrollmentDispatchAction extends FenixDispatchAction 
 	final BolonhaStudentEnrollmentBean bolonhaStudentEnrollmentBean = getBolonhaStudentEnrollmentBeanFromViewState();
 
 	try {
-	    executeService(request, "EnrolBolonhaStudent", new Object[] {
-		    bolonhaStudentEnrollmentBean.getStudentCurricularPlan(),
-		    bolonhaStudentEnrollmentBean.getExecutionPeriod(),
-		    bolonhaStudentEnrollmentBean.getDegreeModulesToEnrol(),
-		    bolonhaStudentEnrollmentBean.getCurriculumModulesToRemove() });
+	    executeService("EnrolBolonhaStudent", getLoggedPerson(request), bolonhaStudentEnrollmentBean
+		    .getStudentCurricularPlan(), bolonhaStudentEnrollmentBean.getExecutionPeriod(),
+		    bolonhaStudentEnrollmentBean.getDegreeModulesToEnrol(), bolonhaStudentEnrollmentBean
+			    .getCurriculumModulesToRemove());
 	} catch (EnrollmentDomainException ex) {
 	    addRuleResultMessagesToActionMessages(request, ex);
 
@@ -148,11 +144,11 @@ public class BolonhaStudentEnrollmentDispatchAction extends FenixDispatchAction 
 
 	final BolonhaStudentOptionalEnrollmentBean optionalStudentEnrollmentBean = getBolonhaStudentOptionalEnrollmentBeanFromViewState();
 	try {
-	    executeService(request, "EnrolBolonhaStudent", new Object[] {
+	    executeService("EnrolBolonhaStudent", getLoggedPerson(request),
 		    optionalStudentEnrollmentBean.getStudentCurricularPlan(),
 		    optionalStudentEnrollmentBean.getExecutionPeriod(),
 		    buildOptionalDegreeModuleToEnrolList(optionalStudentEnrollmentBean),
-		    Collections.EMPTY_LIST });
+		    Collections.EMPTY_LIST);
 	} catch (EnrollmentDomainException ex) {
 	    addRuleResultMessagesToActionMessages(request, ex);
 

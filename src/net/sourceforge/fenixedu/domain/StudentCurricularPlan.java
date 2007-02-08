@@ -43,6 +43,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.EnrollmentDomainException;
 import net.sourceforge.fenixedu.domain.exceptions.FenixDomainException;
 import net.sourceforge.fenixedu.domain.gratuity.GratuitySituationType;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
@@ -110,6 +111,9 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     public void delete() throws DomainException {
+
+	checkRulesToDelete();
+
 	if (getRoot() != null) {
 	    getRoot().delete();
 	}
@@ -152,6 +156,14 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
 	removeRootDomainObject();
 	deleteDomainObject();
+    }
+
+    private void checkRulesToDelete() {
+	if (hasAnyGratuityEvents()) {
+	    throw new DomainException(
+		    "error.StudentCurricularPlan.cannot.delete.because.already.has.gratuity.events");
+	}
+
     }
 
     public Integer getCreditsInSecundaryArea() {
@@ -1852,9 +1864,11 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return curricularRulesByDegreeModule;
     }
 
-    public void enrol(final ExecutionPeriod executionPeriod,
+    public void enrol(final Person person, final ExecutionPeriod executionPeriod,
 	    final Set<DegreeModuleToEnrol> degreeModulesToEnrol,
 	    final List<CurriculumModule> curriculumModulesToRemove) {
+
+	checkRulesToEnrol(person, executionPeriod, degreeModulesToEnrol, curriculumModulesToRemove);
 
 	unEnrolFromCurriculumModules(curriculumModulesToRemove);
 
@@ -1868,31 +1882,61 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    throw new EnrollmentDomainException(falseResults);
 	}
 
-	performEnrolWithoutRules(enrolmentContext, degreeModulesEnrolMap);
+	performEnrolWithoutRules(person, enrolmentContext, degreeModulesEnrolMap);
 
+    }
+
+    private void checkRulesToEnrol(final Person person, final ExecutionPeriod executionPeriod,
+	    final Set<DegreeModuleToEnrol> degreeModulesToEnrol,
+	    final List<CurriculumModule> curriculumModulesToRemove) {
+
+	for (final DegreeModuleToEnrol degreeModuleToEnrol : degreeModulesToEnrol) {
+	    if (curriculumModulesToRemove.contains(degreeModuleToEnrol.getCurriculumGroup())) {
+		throw new DomainException(
+			"error.StudentCurricularPlan.cannot.remove.enrollment.on.curriculum.group.because.other.enrollments.depend.on.it",
+			degreeModuleToEnrol.getCurriculumGroup().getName().getContent());
+	    }
+	}
+
+	if (!getRegistration().isActive()) {
+	    throw new DomainException(
+		    "error.StudentCurricularPlan.cannot.enrol.with.registration.inactive");
+	}
+
+	if (person.hasRole(RoleType.STUDENT)
+		&& !getDegreeCurricularPlan().hasOpenEnrolmentPeriodInCurricularCoursesFor(
+			executionPeriod)) {
+
+	    throw new DomainException(
+		    "error.StudentCurricularPlan.students.can.only.perform.curricular.course.enrollment.inside.established.periods");
+
+	}
     }
 
     private List<RuleResult> evaluateDegreeModulesToEnrol(final EnrolmentContext enrolmentContext,
 	    final Map<EnrolmentResultType, List<DegreeModuleToEnrol>> degreeModulesEnrolMap) {
-
 	final List<RuleResult> falseRuleResults = new ArrayList<RuleResult>();
-
+	final Map<CurricularRule, RuleResult> ruleResults = new HashMap<CurricularRule, RuleResult>();
 	for (final Entry<DegreeModuleToEnrol, Set<CurricularRule>> entry : getRulesToEvaluate(
 		enrolmentContext).entrySet()) {
 	    RuleResult ruleResult = RuleResult.createTrue();
 	    for (final CurricularRule rule : entry.getValue()) {
-		ruleResult = ruleResult.and(rule.evaluate(enrolmentContext));
+		RuleResult result;
+		if (ruleResults.containsKey(rule)) {
+		    result = ruleResults.get(rule);
+		} else {
+		    result = rule.evaluate(enrolmentContext);
+		    ruleResults.put(rule, result);
+		}
+		ruleResult = ruleResult.and(result);
 	    }
-
 	    if (ruleResult.isFalse()) {
 		falseRuleResults.add(ruleResult);
 	    } else if (falseRuleResults.isEmpty() && ruleResult.isTrue()) {
 		addDegreeModelToEnrolMap(degreeModulesEnrolMap, ruleResult.getEnrolmentResultType(),
 			entry.getKey());
 	    }
-
 	}
-
 	return falseRuleResults;
     }
 
@@ -1910,10 +1954,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	}
     }
 
-    private void performEnrolWithoutRules(final EnrolmentContext enrolmentContext,
+    private void performEnrolWithoutRules(final Person person, final EnrolmentContext enrolmentContext,
 	    final Map<EnrolmentResultType, List<DegreeModuleToEnrol>> degreeModulesEnrolMap) {
 
-	final String createdBy = AccessControl.getPerson().getIstUsername();
+	final String createdBy = person.getIstUsername();
 	for (final Entry<EnrolmentResultType, List<DegreeModuleToEnrol>> entry : degreeModulesEnrolMap
 		.entrySet()) {
 	    final EnrollmentCondition enrollmentCondition = entry.getKey().getEnrollmentCondition();
