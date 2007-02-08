@@ -78,11 +78,11 @@ public abstract class CurricularRule extends CurricularRule_Base {
     }
 
     public boolean appliesToContext(final Context context) {
-        return this.appliesToCourseGroup(context);
+        return this.appliesToCourseGroup(context.getParentCourseGroup());
     }
     
-    private boolean appliesToCourseGroup(final Context context) {
-        return (this.getContextCourseGroup() == null || this.getContextCourseGroup() == context.getParentCourseGroup());
+    public boolean appliesToCourseGroup(final CourseGroup courseGroup) {
+        return (this.getContextCourseGroup() == null || this.getContextCourseGroup() == courseGroup);
     }
     
     public boolean isCompositeRule() {
