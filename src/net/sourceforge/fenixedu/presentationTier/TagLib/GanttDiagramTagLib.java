@@ -206,6 +206,9 @@ public class GanttDiagramTagLib extends TagSupport {
                                             endIndex = calculateTimeOfDay(interval.getEnd());
                                             addSpecialDiv(builder, convertToEm(endIndex), EMPTY_UNIT);				    
                                         } 
+                                        
+                                    } else if (interval.getStart().getMonthOfYear() < monthOfYear && interval.getEnd().getMonthOfYear() > monthOfYear) {                                                                               
+                                        addSpecialDiv(builder, convertToEm(numberOfUnits), EMPTY_UNIT);
                                     
                                     } else if (interval.getStart().getMonthOfYear() == monthOfYear && interval.getEnd().getMonthOfYear() == monthOfYear) {
                                     
@@ -524,8 +527,8 @@ public class GanttDiagramTagLib extends TagSupport {
 		if(!StringUtils.isEmpty(getWeeklyViewUrl())) {
                     nextUrl = getRequest().getContextPath() + getWeeklyViewUrl() + "&amp;" + getFirstDayParameter() + "=" + firstDay.plusDays(7).toString("ddMMyyyy");
                     beforeUrl = getRequest().getContextPath() + getWeeklyViewUrl() + "&amp;" + getFirstDayParameter() + "=" + firstDay.minusDays(7).toString("ddMMyyyy");
-                    builder.append("<tr><td colspan=\"10\" class=\"acenter tcalendarlinks\"> <span class=\"smalltxt\"><a href=\"").append(beforeUrl).append("\">").append("&lt;&lt; ").append(getMessage("label.previous.week")).append("</a>");
-                    builder.append(" , ").append("<a href=\"").append(nextUrl).append("\">").append(getMessage("label.next.week")).append(" &gt;&gt;").append("</a>").append("</span></td></tr>");
+                    builder.append("<tr><td class=\"tcalendarlinks\"></td><td colspan=\"7\" class=\"acenter tcalendarlinks\"> <span class=\"smalltxt\"><a href=\"").append(beforeUrl).append("\">").append("&lt;&lt; ").append(getMessage("label.previous.week")).append("</a>");
+                    builder.append(" , ").append("<a href=\"").append(nextUrl).append("\">").append(getMessage("label.next.week")).append(" &gt;&gt;").append("</a>").append("</span></td><td class=\"tcalendarlinks\"></td><td class=\"tcalendarlinks\"></td></tr>");
 		}
 		break;
 	    
@@ -534,8 +537,8 @@ public class GanttDiagramTagLib extends TagSupport {
 		if(!StringUtils.isEmpty(getDailyViewUrl())) {
                     nextUrl = getRequest().getContextPath() + getDailyViewUrl() + "&amp;" + getFirstDayParameter() + "=" + firstDay.plusDays(1).toString("ddMMyyyy");
                     beforeUrl = getRequest().getContextPath() + getDailyViewUrl() + "&amp;" + getFirstDayParameter() + "=" + firstDay.minusDays(1).toString("ddMMyyyy");
-                    builder.append("<tr><td colspan=\"4\" class=\"acenter tcalendarlinks\"><span class=\"smalltxt\"><a href=\"").append(beforeUrl).append("\">").append("&lt;&lt; ").append(getMessage("label.previous.day")).append("</a>");
-                    builder.append(" , ").append("<a href=\"").append(nextUrl).append("\">").append(getMessage("label.next.day")).append(" &gt;&gt;").append("</a>").append("</span></td></tr>");
+                    builder.append("<tr><td class=\"tcalendarlinks\"></td><td class=\"acenter tcalendarlinks\"><span class=\"smalltxt\"><a href=\"").append(beforeUrl).append("\">").append("&lt;&lt; ").append(getMessage("label.previous.day")).append("</a>");
+                    builder.append(" , ").append("<a href=\"").append(nextUrl).append("\">").append(getMessage("label.next.day")).append(" &gt;&gt;").append("</a>").append("</span></td><td class=\"tcalendarlinks\"></td><td class=\"tcalendarlinks\"></td></tr>");
 		}
 		break;
 		    		
@@ -548,8 +551,8 @@ public class GanttDiagramTagLib extends TagSupport {
 		    int monthNumberOfDays = Days.daysBetween(firstDayOfMonth, lastDayOfMonth).getDays() + 1;
                     nextUrl = getRequest().getContextPath() + getMonthlyViewUrl() + "&amp;" + getFirstDayParameter() + "=" + firstDay.plusMonths(1).toString("ddMMyyyy");
                     beforeUrl = getRequest().getContextPath() + getMonthlyViewUrl() + "&amp;" + getFirstDayParameter() + "=" + firstDay.minusMonths(1).toString("ddMMyyyy");
-                    builder.append("<tr><td colspan=\"").append(monthNumberOfDays + 3).append("\" class=\"acenter tcalendarlinks\"><span class=\"smalltxt\"><a href=\"").append(beforeUrl).append("\">").append("&lt;&lt; ").append(getMessage("label.previous.month")).append("</a>");
-                    builder.append(" , ").append("<a href=\"").append(nextUrl).append("\">").append(getMessage("label.next.month")).append(" &gt;&gt;").append("</a>").append("</span></td></tr>");
+                    builder.append("<tr><td class=\"tcalendarlinks\"></td><td colspan=\"").append(monthNumberOfDays).append("\" class=\"acenter tcalendarlinks\"><span class=\"smalltxt\"><a href=\"").append(beforeUrl).append("\">").append("&lt;&lt; ").append(getMessage("label.previous.month")).append("</a>");
+                    builder.append(" , ").append("<a href=\"").append(nextUrl).append("\">").append(getMessage("label.next.month")).append(" &gt;&gt;").append("</a>").append("</span></td><td class=\"tcalendarlinks\"></td><td class=\"tcalendarlinks\"></td></tr>");
 		}
 		break;		
 		
