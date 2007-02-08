@@ -424,4 +424,52 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	}
 	return Double.valueOf(bigDecimal.doubleValue());
     }
+    
+    @Override
+    public Double getEnroledEctsCredits(final ExecutionPeriod executionPeriod) {
+	BigDecimal bigDecimal = BigDecimal.ZERO;
+	for (CurriculumModule curriculumModule : getCurriculumModulesSet()) {
+	    bigDecimal = bigDecimal.add(new BigDecimal(curriculumModule.getEnroledEctsCredits(executionPeriod)));
+	}
+	return Double.valueOf(bigDecimal.doubleValue());
+    }
+    
+    public int getNumberOfChildCurriculumGroupsWithCourseGroup() {
+	int result = 0;
+	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
+	    if (!curriculumModule.isLeaf()) {
+		final CurriculumGroup curriculumGroup = (CurriculumGroup) curriculumModule;
+		if (!curriculumGroup.isNoCourseGroupCurriculumGroup()) {
+		    result++;
+		}
+	    }
+	}
+	return result;
+    }
+    
+    public int getNumberOfApprovedEnrolments() {
+	int result = 0;
+	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
+	    if (curriculumModule.isLeaf()) {
+		final CurriculumLine curriculumLine = (CurriculumLine) curriculumModule;
+		if (curriculumLine.isEnrolment() && ((Enrolment) curriculumLine).isApproved()) {
+		    result++;
+		}
+	    }
+	}
+	return result;
+    }
+    
+    public int getNumberOfEnrolments(final ExecutionPeriod executionPeriod) {
+	int result = 0;
+	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
+	    if (curriculumModule instanceof Enrolment) {
+		final Enrolment enrolment = (Enrolment) curriculumModule;
+		if (enrolment.isValid(executionPeriod) && enrolment.isEnroled()) {
+		    result++;
+		}
+	    }
+	}
+	return result;
+    }
 }

@@ -110,6 +110,11 @@ public class Dismissal extends Dismissal_Base {
     }
     
     @Override
+    public Double getEnroledEctsCredits(final ExecutionPeriod executionPeriod) {
+        return Double.valueOf(0d);
+    }
+    
+    @Override
     public boolean hasDegreeModule(DegreeModule degreeModule) {
 	return hasDegreeModule() ? super.hasDegreeModule(degreeModule) : false;
     }

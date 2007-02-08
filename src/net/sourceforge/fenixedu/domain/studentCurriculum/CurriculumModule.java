@@ -108,8 +108,7 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
 	}
     }
     
-    public abstract Double getEctsCredits();
-    
-    public abstract Double getAprovedEctsCredits();
-    
+    abstract public Double getEctsCredits();
+    abstract public Double getAprovedEctsCredits();
+    abstract public Double getEnroledEctsCredits(final ExecutionPeriod executionPeriod);
 }
