@@ -182,7 +182,7 @@ public abstract class DegreeModule extends DegreeModule_Base {
 	return true;
     }
     
-    public abstract Double getEctsCredits();
+    public abstract Double getEctsCredits(final ExecutionPeriod executionPeriod);
     public abstract void print(StringBuilder stringBuffer, String tabs, Context previousContext);
     public abstract boolean isLeaf();
     public abstract boolean isRoot();

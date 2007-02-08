@@ -177,14 +177,12 @@ public class CourseGroup extends CourseGroup_Base {
 	return result;
     }
 
-    public Double getEctsCredits() {
-	Double result = 0.0;
+    @Override
+    public Double getEctsCredits(final ExecutionPeriod executionPeriod) {
+	double result = 0.0;
 
 	for (Context context : this.getChildContexts()) {
-	    if (context.getChildDegreeModule() != null
-		    && context.getChildDegreeModule().getEctsCredits() != null) {
-		result += context.getChildDegreeModule().getEctsCredits();
-	    }
+	    result += context.getChildDegreeModule().getEctsCredits(executionPeriod);
 	}
 
 	return result;
