@@ -4,10 +4,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,7 +34,6 @@ import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.b
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.bibtex.ParticipatorBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import net.sourceforge.fenixedu.domain.research.result.publication.Unstructured;
@@ -182,27 +179,6 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
 		return mapping.findForward("ImportBibtex");
 	}
 
-	private List<ParticipatorBean> searchPersons(HttpServletRequest request, String name)
-			throws FenixFilterException, FenixServiceException {
-		List<Person> persons = null;
-		List<ParticipatorBean> personsFound = new ArrayList<ParticipatorBean>();
-		ParticipatorBean participator = null;
-
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("slot", "name");
-
-		persons = (List) executeService(request, "SearchPersonsForParticipations", new Object[] {
-				Person.class, name, 20, map });
-
-		for (Person person : persons) {
-			participator = new ParticipatorBean(person);
-			personsFound.add(participator);
-		}
-
-		personsFound.add(createOtherParticipator());
-		return personsFound;
-	}
-
 	private ParticipatorBean createOtherParticipator() {
 		Locale locale = Locale.getDefault();
 		ResourceBundle bundle = ResourceBundle.getBundle("resources.ResearcherResources", locale);
@@ -222,11 +198,6 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
 				participator.setBibtexPerson(person);
 				participator.setPersonRole(role);
 				participator.setActiveSchema("bibtex.participator.internal");
-
-				participator.setPersonsFound(searchPersons(request, participator.getBibtexPerson()));
-				if (participator.getPersonsFound().size() == 1)
-					participator.setPersonChosen(participator.getPersonsFound().get(0));
-
 				participators.add(participator);
 			}
 		}
