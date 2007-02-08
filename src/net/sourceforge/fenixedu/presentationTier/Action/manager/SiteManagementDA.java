@@ -11,14 +11,6 @@ import java.util.SortedSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.ActionMessage;
-import org.apache.struts.action.ActionMessages;
-
-import pt.ist.utl.fenix.utils.Pair;
-import pt.utl.ist.fenix.tools.file.FileManagerException;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateScormFileItemForItem;
@@ -33,6 +25,15 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
+
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessage;
+import org.apache.struts.action.ActionMessages;
+
+import pt.ist.utl.fenix.utils.Pair;
+import pt.utl.ist.fenix.tools.file.FileManagerException;
 
 /**
  * Generic action to control the management of a website.
@@ -259,8 +260,11 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
     public ActionForward fileUpload(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response)
             throws Exception {
-        FileItemCreationBean bean = (FileItemCreationBean) RenderUtils
-                .getViewState("creator").getMetaObject().getObject();
+        IViewState viewState = RenderUtils.getViewState("creator");
+        if(viewState==null) {
+        	return sections(mapping, form, request, response);
+        }
+    	FileItemCreationBean bean = (FileItemCreationBean) viewState.getMetaObject().getObject();
         List<String> errors = validationErrors(bean);
         if (errors.isEmpty()) {
             try {
