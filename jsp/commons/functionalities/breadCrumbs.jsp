@@ -9,5 +9,5 @@
                 <%-- <fr:property name="" value=""/> --%>
              </fr:layout>
         </fr:view>
-    <div>
+    </div>
 </logic:present>
