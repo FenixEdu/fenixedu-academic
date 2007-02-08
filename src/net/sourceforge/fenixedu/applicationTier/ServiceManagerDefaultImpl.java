@@ -104,8 +104,10 @@ public class ServiceManagerDefaultImpl implements IServiceManagerWrapper {
             Transaction.setDefaultReadOnly(! KNOWN_WRITE_SERVICES.containsKey(service));
 
             Object serviceResult = null;
+            int tries = 0;
             try {
                 while (true) {
+                    tries++;
                     try {
                         serviceResult = manager.execute(id, service, method, args);
                         break;
@@ -125,6 +127,9 @@ public class ServiceManagerDefaultImpl implements IServiceManagerWrapper {
                 }
             } finally {
                 Transaction.setDefaultReadOnly(false);
+                if (tries > 1) {
+                    System.out.println("Service " + service + " took " + tries + " tries.");
+                }
             }
 
             if (serviceLoggingIsOn || (userLoggingIsOn && id != null)) {

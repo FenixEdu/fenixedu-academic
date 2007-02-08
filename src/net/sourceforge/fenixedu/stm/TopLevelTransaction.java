@@ -196,6 +196,10 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
         // in memory everything is ok, but we need to check against the db
         PersistenceBroker pb = getOJBBroker();
 
+        int currentPriority = Thread.currentThread().getPriority();
+        Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
+        try {
+
         long time1 = System.currentTimeMillis();
         long time2 = 0;
         long time3 = 0;
@@ -271,6 +275,9 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
                                    + "   ,8: " + (time8 == 0 || time9 == 0 ? "" : (time9 - time8))
                                    );
             }
+        }
+        } finally {
+            Thread.currentThread().setPriority(currentPriority);
         }
     }
 

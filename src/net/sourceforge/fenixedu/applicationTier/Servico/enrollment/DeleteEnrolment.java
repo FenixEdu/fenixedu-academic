@@ -33,6 +33,8 @@ public class DeleteEnrolment extends Service {
         final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
         final Enrolment enrollment1 = studentCurricularPlan.findEnrolmentByEnrolmentID(enrolmentID);
 
+        if (enrollment1 != null) {
+
         Set<Enrolment> enrollments2Delete = new HashSet<Enrolment>();
         List<Enrolment> studentEnrolledEnrollmentsInExecutionPeriod = enrollment1.getStudentCurricularPlan()
                 .getAllStudentEnrolledEnrollmentsInExecutionPeriod(enrollment1.getExecutionPeriod());
@@ -52,7 +54,6 @@ public class DeleteEnrolment extends Service {
                     }
                 }));
 
-        if (enrollment1 != null) {
         	List<RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse> restrictions = enrollment1.getCurricularCourse().getRestrictionsHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse();
             if (restrictions != null) {
                 Iterator<RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse> iter = restrictions.iterator();
@@ -77,7 +78,6 @@ public class DeleteEnrolment extends Service {
                     }
                 }
             }
-        }
         
         //Código q apaga as cadeiras do 5º ano, caso seja apagada uma cadeira do 5º ano
         CurricularYear curricularYear = enrollment1.getCurricularCourse().getCurricularYearByBranchAndSemester(enrollment1.getStudentCurricularPlan().getBranch(), enrollment1.getExecutionPeriod().getSemester());
@@ -95,6 +95,7 @@ public class DeleteEnrolment extends Service {
         Iterator<Enrolment> iter = finalEnrollments2Delete.iterator();
         while (iter.hasNext()) {
             iter.next().unEnroll();
+        }
         }
 
     }
