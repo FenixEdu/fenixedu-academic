@@ -154,8 +154,9 @@ public class CurricularRulesManager {
 	final CourseGroup contextCourseGroup = (CourseGroup) RootDomainObject.getInstance()
 		.readDegreeModuleByOID(parametersDTO.getContextCourseGroupID());
 
-	return new DegreeModulesSelectionLimit(degreeModuleToApplyRule, contextCourseGroup, begin, end,
-		parametersDTO.getMinimumLimit(), parametersDTO.getMaximumLimit());
+	return new DegreeModulesSelectionLimit((CourseGroup) degreeModuleToApplyRule,
+		contextCourseGroup, begin, end, parametersDTO.getMinimumLimit(), parametersDTO
+			.getMaximumLimit());
     }
 
     private static CurricularRule createRestrictionEnroledDegreeModule(
