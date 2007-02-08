@@ -1,5 +1,8 @@
 package net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
@@ -42,6 +45,16 @@ abstract public class CurricularRuleExecutor {
     
     protected DegreeModuleToEnrol searchDegreeModuleToEnrol(final EnrolmentContext enrolmentContext, final CurricularRule curricularRule) {
 	return searchDegreeModuleToEnrol(enrolmentContext, curricularRule.getDegreeModuleToApplyRule());
+    }
+    
+    protected Collection<DegreeModuleToEnrol> collectDegreeModuleToEnrolFromCourseGroup(final EnrolmentContext enrolmentContext, final CourseGroup courseGroup) {
+	final Collection<DegreeModuleToEnrol> result = new ArrayList<DegreeModuleToEnrol>();
+	for (final DegreeModuleToEnrol degreeModuleToEnrol : enrolmentContext.getDegreeModuleToEnrol()) {
+	    if (degreeModuleToEnrol.getContext().getParentCourseGroup() == courseGroup) {
+		result.add(degreeModuleToEnrol);
+	    }
+	}
+	return result;
     }
     
     protected boolean ruleWasSelectedFromAnyModuleToEnrol(final EnrolmentContext enrolmentContext, final CurricularRule curricularRule) {
