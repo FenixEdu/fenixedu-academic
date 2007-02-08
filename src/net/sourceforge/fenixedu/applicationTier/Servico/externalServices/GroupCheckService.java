@@ -2,6 +2,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.externalServices;
 
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -209,7 +211,7 @@ public class GroupCheckService extends Service {
 	    throws ExcepcaoPersistencia, NonExistingServiceException {
 	String[] unitAcronyms = groupCheckQuery.unitFullPath.split("\\.");
 
-	if (unitAcronyms.length != 3
+	if (unitAcronyms.length != 4
 		|| (groupCheckQuery.roleType != RoleType.TEACHER && groupCheckQuery.roleType != RoleType.STUDENT)) {
 	    throw new NonExistingServiceException();
 	}
@@ -229,7 +231,7 @@ public class GroupCheckService extends Service {
 
     private Degree getDegree(String[] unitAcronyms) throws ExcepcaoPersistencia,
 	    NonExistingServiceException {
-	Unit unit = getUnit(unitAcronyms, 2);
+	Unit unit = getUnit(unitAcronyms, 3);
 
 	if (unit.getType() != PartyTypeEnum.DEGREE_UNIT) {
 	    throw new NonExistingServiceException();
@@ -251,8 +253,9 @@ public class GroupCheckService extends Service {
 
     private Unit getUnit(String[] unitAcronyms, int maxIndex) throws ExcepcaoPersistencia,
 	    NonExistingServiceException {
-	Unit unit = UnitUtils.readUnitWithoutParentstByAcronym(unitAcronyms[0]);
-	if (unit == null) {
+	Unit unit = UnitUtils.readInstitutionUnit();
+	if (unit == null || StringUtils.isEmpty(unit.getAcronym())
+		|| !unit.getAcronym().equals(unitAcronyms[0])) {
 	    throw new NonExistingServiceException();
 	}
 
