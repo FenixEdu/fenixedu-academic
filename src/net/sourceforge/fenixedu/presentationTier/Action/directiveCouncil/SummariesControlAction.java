@@ -51,7 +51,7 @@ import org.apache.struts.util.LabelValueBean;
 
 public class SummariesControlAction extends FenixDispatchAction {
 
-    private BigDecimal EMPTY = BigDecimal.valueOf(0.00);
+    private BigDecimal EMPTY = BigDecimal.ZERO;
         
     public ActionForward prepareSummariesControl(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {

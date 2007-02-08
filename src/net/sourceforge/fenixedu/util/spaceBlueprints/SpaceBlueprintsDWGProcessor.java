@@ -23,6 +23,7 @@ import pt.utl.ist.fenix.tools.util.FileUtils;
 
 import com.iver.cit.jdwglib.dwg.DwgFile;
 import com.iver.cit.jdwglib.dwg.DwgObject;
+import com.iver.cit.jdwglib.dwg.objects.DwgMText;
 import com.iver.cit.jdwglib.dwg.objects.DwgText;
 
 public class SpaceBlueprintsDWGProcessor extends DWGProcessor {
@@ -72,11 +73,27 @@ public class SpaceBlueprintsDWGProcessor extends DWGProcessor {
     }
 
     public SpaceBlueprintsDWGProcessor() throws IOException {
-	super();
-
+	super();	
 	this.viewOriginalSpaceBlueprint = true;
     }
+    
+    @Override
+    protected void drawText(ReferenceConverter referenceConverter, Graphics2D graphics2D, DwgMText dwgText) {
+	
+        String text = getText(dwgText);        
+	if (isToViewOriginalSpaceBlueprint() != null && isToViewOriginalSpaceBlueprint()) {
+	    super.drawText(referenceConverter, graphics2D, dwgText);
 
+	} else {	    
+	    int x = convXCoord(dwgText.getInsertionPoint()[0], referenceConverter);
+	    int y = convYCoord(dwgText.getInsertionPoint()[1], referenceConverter);
+
+	    Space discoveredSpace = getParentSpace().readSubSpaceByBlueprintNumber(text.trim());
+	    String textToInsert = getTextToInsert(text, discoveredSpace, isToViewBlueprintNumbers(), isToViewSpaceIdentifications(), isToViewDoorNumbers());
+	    drawTextAndArc(graphics2D, x, y, discoveredSpace, textToInsert);
+	}		                    
+    }
+       
     @Override
     protected void drawText(ReferenceConverter referenceConverter, Graphics2D graphics2D, DwgText dwgText) {
 
@@ -89,7 +106,7 @@ public class SpaceBlueprintsDWGProcessor extends DWGProcessor {
 	    int y = convYCoord(point2D.getY(), referenceConverter);
 
 	    Space discoveredSpace = getParentSpace().readSubSpaceByBlueprintNumber(dwgText.getText().trim());
-	    String textToInsert = getTextToInsert(dwgText, discoveredSpace, isToViewBlueprintNumbers(), isToViewSpaceIdentifications(), isToViewDoorNumbers());
+	    String textToInsert = getTextToInsert(dwgText.getText(), discoveredSpace, isToViewBlueprintNumbers(), isToViewSpaceIdentifications(), isToViewDoorNumbers());
 	    drawTextAndArc(graphics2D, x, y, discoveredSpace, textToInsert);
 	}
     }
@@ -113,10 +130,18 @@ public class SpaceBlueprintsDWGProcessor extends DWGProcessor {
 	for (final DwgObject dwgObject : dwgObjects) {
 	    if (dwgObject instanceof DwgText) {
 		DwgText dwgText = ((DwgText) dwgObject);
-		final Point2D point2D = dwgText.getInsertionPoint();
+		final Point2D point2D = dwgText.getInsertionPoint();		
 		Space discoveredSpace = parentSpace.readSubSpaceByBlueprintNumber(dwgText.getText().trim());
-		String textToInsert = getTextToInsert(dwgText, discoveredSpace, viewBlueprintNumbers, viewSpaceIdentifications, viewDoorNumbers);
-		putLinksCoordinatesToMap(map, processor, referenceConverter, point2D, textToInsert, discoveredSpace);
+		String textToInsert = getTextToInsert(dwgText.getText(), discoveredSpace, viewBlueprintNumbers, viewSpaceIdentifications, viewDoorNumbers);
+		putLinksCoordinatesToMap(map, processor, referenceConverter, point2D.getX(), point2D.getY(), textToInsert, discoveredSpace);
+	    
+	    } else if(dwgObject instanceof DwgMText) {
+		DwgMText dwgMText = (DwgMText) dwgObject;		
+		String text = getText(dwgMText);		
+		Space discoveredSpace = parentSpace.readSubSpaceByBlueprintNumber(text.trim());		
+		String textToInsert = getTextToInsert(text, discoveredSpace, viewBlueprintNumbers, viewSpaceIdentifications, viewDoorNumbers);
+		putLinksCoordinatesToMap(map, processor, referenceConverter, dwgMText.getInsertionPoint()[0], dwgMText.getInsertionPoint()[1],
+			textToInsert, discoveredSpace);
 	    }
 	}
 	return map;
@@ -124,7 +149,7 @@ public class SpaceBlueprintsDWGProcessor extends DWGProcessor {
 
     private static void putLinksCoordinatesToMap(BlueprintTextRectangles map,
 	    final SpaceBlueprintsDWGProcessor processor, final ReferenceConverter referenceConverter,
-	    final Point2D point2D, String textToInsert, Space space) {
+	    double x, double y, String textToInsert, Space space) {
 
 	if (textToInsert != null) {
 
@@ -133,9 +158,8 @@ public class SpaceBlueprintsDWGProcessor extends DWGProcessor {
 		blueprintTextRectangules = new ArrayList<BlueprintTextRectangle>();
 	    }
 
-	    blueprintTextRectangules.add(new BlueprintTextRectangle(textToInsert, processor.convXCoord(
-		    point2D.getX(), referenceConverter), processor.convYCoord(point2D.getY(),
-		    referenceConverter), processor.fontSize));
+	    blueprintTextRectangules.add(new BlueprintTextRectangle(textToInsert, processor.convXCoord(x, referenceConverter), 
+		    processor.convYCoord(y, referenceConverter), processor.fontSize));
 	    map.put(space, blueprintTextRectangules);
 	}
     }
@@ -174,15 +198,13 @@ public class SpaceBlueprintsDWGProcessor extends DWGProcessor {
 	}
     }
 
-    private static String getTextToInsert(DwgText dwgText, Space space,
+    private static String getTextToInsert(String textToInsert, Space space,
 	    Boolean isToViewBlueprintNumbers, Boolean isToViewSpaceIdentifications, Boolean isToViewDoorNumbers) {
 	
 	if (space != null) {
 	    if (isToViewSpaceIdentifications != null && isToViewSpaceIdentifications) {
-
-		String textToInsert = dwgText.getText();
+	
 		SpaceInformation spaceInformation = space.getSpaceInformation();
-
 		if (spaceInformation instanceof RoomInformation) {
 		    textToInsert = ((RoomInformation) spaceInformation).getIdentification();
 
@@ -199,18 +221,15 @@ public class SpaceBlueprintsDWGProcessor extends DWGProcessor {
 		return textToInsert;
 
 	    } else if (isToViewDoorNumbers != null && isToViewDoorNumbers) {
-	
-		String textToInsert = dwgText.getText();
+			
 		SpaceInformation spaceInformation = space.getSpaceInformation();
-
 		if (spaceInformation instanceof RoomInformation) {
 		    textToInsert = ((RoomInformation) spaceInformation).getDoorNumber();
 		}
-		
 		return textToInsert;
 		
 	    } else if (isToViewBlueprintNumbers != null && isToViewBlueprintNumbers) {		
-		return dwgText.getText();
+		return textToInsert;
 	    }
 	}
 	return null;
