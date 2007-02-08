@@ -50,9 +50,9 @@ public class GanttDiagramTagLib extends TagSupport {
    
     private ViewType viewTypeEnum;
     
-    private BigDecimal PX_TO_EM_CONVERSION_DIVISOR = BigDecimal.valueOf(10);
+    private BigDecimal PX_TO_EM_CONVERSION_DIVISOR = BigDecimal.TEN;
         
-    private BigDecimal EMPTY_UNIT = BigDecimal.valueOf(0);
+    private BigDecimal EMPTY_UNIT = BigDecimal.ZERO;
         
     private int numberOf5MinUnits = 288;  
     
