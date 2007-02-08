@@ -65,7 +65,7 @@
 <!--End Footer -->
 
 <script type="text/javascript">
-	hideButtons()
+	hideButtons();
 </script>
 
 </body>
