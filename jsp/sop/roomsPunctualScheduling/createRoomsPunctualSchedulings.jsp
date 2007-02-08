@@ -33,12 +33,13 @@
 	<logic:notEmpty name="roomsPunctualSchedulingBean">
 
 
+
 		<div class="infoop3">
-			<p class="mvert05">Tipo de períodos, exemplos:</p>
+			<p class="mvert05"><bean:message key="label.instructions.periodTypes" bundle="SOP_RESOURCES"/></p>
 			<ul>
-				<li>Período num dia: <span>dia 10/10/2006 das 14:00 às 16:00, Sala X.</span></li>
-				<li>Período com frequência: <span>todas as 2ªas Feiras, de dia 10/10/2006 a 30/10/2006 das 14:00 às 16:00, Sala X.</span></li>
-				<li>Período contínuo: <span>desde 10/10/2006 ás 14:00 até 14/10/2006 às 18:00.</span></li>
+				<li><bean:message key="label.instructions.periodTypes.item1" bundle="SOP_RESOURCES"/></li>
+				<li><bean:message key="label.instructions.periodTypes.item2" bundle="SOP_RESOURCES"/></li>
+				<li><bean:message key="label.instructions.periodTypes.item3" bundle="SOP_RESOURCES"/></li>
 			</ul>
 			
 		</div>
@@ -48,7 +49,7 @@
 			<fr:edit nested="true" id="roomsPunctualSchedulingWithPeriodType" name="roomsPunctualSchedulingBean" schema="ChooseRoomsPunctualSchedulingPeriodType">
 				<fr:destination name="postBack" path="/roomsPunctualScheduling.do?method=prepareCreate"/>
 				<fr:layout name="tabular">
-					<fr:property name="classes" value="tstyle5 vamiddle thlight mbottom0" />
+					<fr:property name="classes" value="tstyle5 vamiddle thlight thright mbottom0" />
 					<fr:property name="columnClasses" value="width9em,width40em,tdclear tderror1" />
 				</fr:layout>						
 			</fr:edit>
