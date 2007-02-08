@@ -87,7 +87,7 @@
         </init-param>
         <init-param>
             <param-name>siteListURI</param-name>
-            <param-value>/publico/showExecutionCourseSites.do?method=listSites&amp;degreeOID=%s</param-value>
+            <param-value>/publico/showExecutionCourseSites.do?method=listSites&amp;degreeID=%s</param-value>
         </init-param>
         <init-param>
             <param-name>executionCourseSiteURI</param-name>
@@ -99,7 +99,7 @@
         </init-param>
         <init-param>            
             <param-name>scheduleListURI</param-name>
-            <param-value>/publico/showClasses.do?method=listClasses&amp;degreeOID=%s</param-value>
+            <param-value>/publico/showClasses.do?method=listClasses&amp;degreeID=%s</param-value>
         </init-param>
         <init-param>            
             <param-name>classScheduleURI</param-name>
