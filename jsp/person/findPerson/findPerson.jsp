@@ -172,7 +172,7 @@ function check(e,v){
 	</logic:equal>
 
 	<bean:define id="url">/messaging/findPerson.do?method=findPerson&amp;name=<bean:write name="name"/>&amp;roleType=<bean:write name="roleType"/>&amp;degreeId=<bean:write name="degreeId"/>&amp;degreeType=<bean:write name="degreeType"/>&amp;departmentId=<bean:write name="departmentId"/>&amp;viewPhoto=<bean:write name="viewPhoto"/></bean:define>			
-	<p>Páginas:					
+	<p><bean:message key="label.pages" />:					
 		<cp:collectionPages url="<%= url %>" numberOfVisualizedPages="11" pageNumberAttributeName="pageNumber" numberOfPagesAttributeName="numberOfPages"/>			
 	</p>
 	
@@ -182,7 +182,7 @@ function check(e,v){
 		<div class="pp">
 			<table class="ppid" cellpadding="0" cellspacing="0">
 				<tr>
-					<td width="70%"> 
+					<td width="70%">
 						<strong>
 							<%--<bean:write name="personalInfo" property="person.nickname"/>--%>
 							<bean:write name="personalInfo" property="nome"/>
@@ -215,7 +215,7 @@ function check(e,v){
 			<table class="ppdetails">
 		  		<tr class="highlight">
 		  			<td class="ppleft">
-						<logic:notEqual name="personalInfo" property="workPhone" value=""><bean:message key="label.person.workPhone" /></logic:notEqual> 
+						<logic:notEqual name="personalInfo" property="workPhone" value=""><bean:message key="label.person.workPhone.short" /></logic:notEqual> 
 					</td>
 					<td class="ppright2">
 						<logic:notEqual name="personalInfo" property="workPhone" value=""><bean:write name="personalInfo" property="workPhone"/></logic:notEqual>  
