@@ -152,34 +152,34 @@ public class GanttDiagramTagLib extends TagSupport {
                             else if(interval.getStart().getYear() == year && interval.getEnd().getYear() > year) {			 
                                 
                                 if(interval.getStart().getMonthOfYear() < monthOfYear) {
-                            	addSpecialDiv(builder, convertToEm(numberOfUnits), EMPTY_UNIT);
+                            		addSpecialDiv(builder, convertToEm(numberOfUnits), EMPTY_UNIT);
                                 
                                 } else if(interval.getStart().getMonthOfYear() == monthOfYear) {
                             	
-                            	if(interval.getStart().getDayOfMonth() == dayOfMonth) {				    		   				    
-                            	    startIndex = calculateTimeOfDay(interval.getStart());				    				    
-                            	    addSpecialDiv(builder, convertToEm(numberOfUnits - (startIndex - 1)), convertToEm(startIndex - 1));
-                            	    
-                            	} else if(interval.getStart().getDayOfMonth() < dayOfMonth) {
-                            	    addSpecialDiv(builder, convertToEm(numberOfUnits), EMPTY_UNIT);				    
-                            	}				
+                                    if(interval.getStart().getDayOfMonth() == dayOfMonth) {				    		   				    
+                                        startIndex = calculateTimeOfDay(interval.getStart());				    				    
+                                        addSpecialDiv(builder, convertToEm(numberOfUnits - (startIndex - 1)), convertToEm(startIndex - 1));
+                                        
+                                    } else if(interval.getStart().getDayOfMonth() < dayOfMonth) {
+                                        addSpecialDiv(builder, convertToEm(numberOfUnits), EMPTY_UNIT);				    
+                                    }				
                                 }
                             }		
                             // Ended in same year and started before
                             else if(interval.getStart().getYear() < year && interval.getEnd().getYear() == year) {
                                 
                                 if(interval.getEnd().getMonthOfYear() > monthOfYear) {				
-                            	addSpecialDiv(builder, convertToEm(numberOfUnits), EMPTY_UNIT);
+                                    addSpecialDiv(builder, convertToEm(numberOfUnits), EMPTY_UNIT);
                             	
                                 } else if(interval.getEnd().getMonthOfYear() == monthOfYear) {				
                             	
-                            	if(interval.getEnd().getDayOfMonth() > dayOfMonth) {
-                            	    addSpecialDiv(builder, convertToEm(numberOfUnits), EMPTY_UNIT);
-                            
-                            	} else if(interval.getEnd().getDayOfMonth() == dayOfMonth) {				    		   				    
-                            	    endIndex = calculateTimeOfDay(interval.getEnd());				    				    
-                            	    addSpecialDiv(builder, convertToEm(endIndex), EMPTY_UNIT);				    
-                            	}				
+                                    if(interval.getEnd().getDayOfMonth() > dayOfMonth) {
+                                        addSpecialDiv(builder, convertToEm(numberOfUnits), EMPTY_UNIT);
+                                    
+                                    } else if(interval.getEnd().getDayOfMonth() == dayOfMonth) {				    		   				    
+                                        endIndex = calculateTimeOfDay(interval.getEnd());				    				    
+                                        addSpecialDiv(builder, convertToEm(endIndex), EMPTY_UNIT);				    
+                                    }				
                                 }	
                             }
                             // Ended and Started In Same Year
@@ -227,6 +227,7 @@ public class GanttDiagramTagLib extends TagSupport {
                                             else if(interval.getStart().getDayOfMonth() == dayOfMonth && interval.getEnd().getDayOfMonth() == dayOfMonth) {
                                                 startIndex = calculateTimeOfDay(interval.getStart());
                                                 endIndex = calculateTimeOfDay(interval.getEnd());
+                                                
                                                 if(startIndex == endIndex) {
                                                     addSpecialDiv(builder, convertToEm(1), convertToEm(startIndex - 1));
                                                 } else {
@@ -467,13 +468,23 @@ public class GanttDiagramTagLib extends TagSupport {
 	    builder.append("<tr>");
             builder.append("<th>").append(getMessage("label.ganttDiagram.event")).append("</th>");	
             builder.append("<th>").append(getGanttDiagramObject().getFirstInstant().toString("E", getGanttDiagramObject().getLocale())).append(", ").append(getGanttDiagramObject().getFirstInstant().getDayOfMonth()).append(" ");
+            
             if(!StringUtils.isEmpty(getMonthlyViewUrl())) {
         	String monthlyViewUrl_ = getRequest().getContextPath() + getMonthlyViewUrl() + "&amp;" + getFirstDayParameter() + "=";
-        	builder.append("<a href=\"").append(monthlyViewUrl_).append("\">").append(getGanttDiagramObject().getFirstInstant().toString("MMM", getGanttDiagramObject().getLocale())).append("</a>");
+        	builder.append("<a href=\"").append(monthlyViewUrl_).append(getGanttDiagramObject().getFirstInstant().toString("ddMMyyyy")).append("\">").append(getGanttDiagramObject().getFirstInstant().toString("MMM", getGanttDiagramObject().getLocale())).append("</a>");
             } else {
         	builder.append(getGanttDiagramObject().getFirstInstant().toString("MMM", getGanttDiagramObject().getLocale()));
             }
-            builder.append(" ").append(getGanttDiagramObject().getFirstInstant().getYear()).append("</th>");
+                                                         
+            builder.append(" ").append(getGanttDiagramObject().getFirstInstant().getYear());
+            
+            if(!StringUtils.isEmpty(getWeeklyViewUrl())) {
+        	String weeklyViewUrl_ = getRequest().getContextPath() + getWeeklyViewUrl() + "&amp;" + getFirstDayParameter() + "=";
+        	builder.append(" (<a href=\"").append(weeklyViewUrl_).append(getGanttDiagramObject().getFirstInstant().toString("ddMMyyyy")).append("\">");
+        	builder.append(getMessage("label.ganttDiagram.week")).append(getGanttDiagramObject().getFirstInstant().getWeekOfWeekyear()).append(")</a>");        	
+            }
+                        
+            builder.append("</th>");
             builder.append("<th>").append(getMessage("label.ganttDiagram.period")).append("</th>");
             builder.append("<th>").append(getMessage("label.ganttDiagram.observations")).append("</th>");
             builder.append("</tr>");                

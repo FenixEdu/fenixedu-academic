@@ -86,12 +86,16 @@ td.tcalendarlinks span a { color: #888; }
 			<p>
 				<gd:ganttDiagram 
 					 ganttDiagram="ganttDiagram" 
+					 
 					 eventParameter="genericEventID"			
 					 eventUrl="/sop/roomsPunctualScheduling.do?method=prepareView" 					 
+					 
 					 firstDayParameter="firstDay" 					 
+					 
 					 weeklyViewUrl="/sop/roomsPunctualScheduling.do?method=prepare" 
 					 dailyViewUrl="/sop/roomsPunctualScheduling.do?method=prepareViewDailyView" 
 					 monthlyViewUrl="/sop/roomsPunctualScheduling.do?method=prepareViewMonthlyView"
+					 
 					 bundle="SOP_RESOURCES" 
 				/>		
 			</p>
