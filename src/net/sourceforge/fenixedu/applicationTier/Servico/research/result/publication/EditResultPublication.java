@@ -40,7 +40,7 @@ public class EditResultPublication extends ResultPublicationService {
 			finalPublication = publication;
 		} else {
 			final Book book = getCreateService().createBookFromBean(bean);
-			updateResultReferences(publication, book);
+			publication.copyReferecesTo(book);
 			getDeleteService().run(publication.getIdInternal());
 			finalPublication = book;
 		}
@@ -64,7 +64,7 @@ public class EditResultPublication extends ResultPublicationService {
 			
 		} else {
 			final BookPart inbook = getCreateService().createInbookFromBean(bean);
-			updateResultReferences(publication, inbook);
+			publication.copyReferecesTo(inbook);
 			getDeleteService().run(publication.getIdInternal());
 			finalPublication = inbook;
 		}
@@ -87,7 +87,7 @@ public class EditResultPublication extends ResultPublicationService {
 			finalPublication = publication;
 		} else {
 			final BookPart incollection = getCreateService().createIncollectionFromBean(bean);
-			updateResultReferences(publication, incollection);
+			publication.copyReferecesTo(incollection);
 			getDeleteService().run(publication.getIdInternal());
 			finalPublication = incollection;
 		}
@@ -108,7 +108,7 @@ public class EditResultPublication extends ResultPublicationService {
 			finalPublication = publication;
 		} else {
 			final Article article = getCreateService().createArticleFromBean(bean);
-			updateResultReferences(publication, article);
+			publication.copyReferecesTo(article);
 			getDeleteService().run(publication.getIdInternal());
 			finalPublication = article;
 		}
@@ -130,7 +130,7 @@ public class EditResultPublication extends ResultPublicationService {
 			finalPublication = publication;
 		} else {
 			final Inproceedings inproceedings = getCreateService().createInproceedingsFromBean(bean);
-			updateResultReferences(publication, inproceedings);
+			publication.copyReferecesTo(inproceedings);
 			getDeleteService().run(publication.getIdInternal());
 			finalPublication = inproceedings;
 		}
@@ -151,7 +151,7 @@ public class EditResultPublication extends ResultPublicationService {
 			
 		} else {
 			final Proceedings proceedings = getCreateService().createProceedingsFromBean(bean);
-			updateResultReferences(publication, proceedings);
+			publication.copyReferecesTo(proceedings);
 			getDeleteService().run(publication.getIdInternal());
 			finalPublication = proceedings;
 		}
@@ -172,7 +172,7 @@ public class EditResultPublication extends ResultPublicationService {
 			finalPublication = publication;
 		} else {
 			final Thesis thesis = getCreateService().createThesisFromBean(bean);
-			updateResultReferences(publication, thesis);
+			publication.copyReferecesTo(thesis);
 			getDeleteService().run(publication.getIdInternal());
 			finalPublication = thesis;
 		}
@@ -192,7 +192,7 @@ public class EditResultPublication extends ResultPublicationService {
 			
 		} else {
 			final Manual manual = getCreateService().createManualFromBean(bean);
-			updateResultReferences(publication, manual);
+			publication.copyReferecesTo(manual);
 			getDeleteService().run(publication.getIdInternal());
 			finalPublication =  manual;
 		}
@@ -212,7 +212,7 @@ public class EditResultPublication extends ResultPublicationService {
 			finalPublication = publication;
 		} else {
 			final TechnicalReport techReport = getCreateService().createTechnicalReportFromBean(bean);
-			updateResultReferences(publication, techReport);
+			publication.copyReferecesTo(techReport);
 			getDeleteService().run(publication.getIdInternal());
 			finalPublication = techReport;
 		}
@@ -232,7 +232,7 @@ public class EditResultPublication extends ResultPublicationService {
 
 		} else {
 			final OtherPublication other = getCreateService().createOtherPublicationFromBean(bean);
-			updateResultReferences(publication, other);
+			publication.copyReferecesTo(other);
 			getDeleteService().run(publication.getIdInternal());
 			finalPublication = other;
 		}

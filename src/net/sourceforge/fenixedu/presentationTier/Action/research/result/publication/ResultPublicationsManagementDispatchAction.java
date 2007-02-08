@@ -171,10 +171,11 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
 				publicationChanged = (ResearchResultPublication) executeService(request,
 						"EditResultPublication", args);
 			} catch (DomainException ex) {
-				addActionMessage(request, ex.getKey());
+				addActionMessage(request, ex.getMessage());
 				request.setAttribute("publicationBean", bean);
 				return mapping.findForward("PreparedToEdit");
 			} catch (Exception ex) {
+				addActionMessage(request, ex.getMessage());
 				return listPublications(mapping, form, request, response);
 			}
 		} else {

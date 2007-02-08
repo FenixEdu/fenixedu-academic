@@ -58,16 +58,17 @@
 				<fr:property name="param(remove)" value="idInternal/participationId"/>
 				<fr:property name="key(remove)" value="link.remove"/>
 				<fr:property name="bundle(remove)" value="RESEARCHER_RESOURCES"/>
-				<fr:property name="visibleIfNot(remove)" value="isLastParticipation"/>
+				<fr:property name="visibleIf(remove)" value="canBeRemoved"/>
 			</fr:layout>
 		</fr:view>
+
 		
 		<logic:present name="deleteConfirmation">
 			<bean:define id="deleteConfirmationId" name="deleteConfirmation"/>
 
 			<fr:form action="<%= remove + "&participationId=" + deleteConfirmationId %>">
 				<p><b><bean:message bundle="RESEARCHER_RESOURCES" key="label.participation.remove"/></b></p>
-				<p><bean:message bundle="RESEARCHER_RESOURCES" key="label.participation.removeWarning"/></p>
+				<p><span class="warning0"><bean:message bundle="RESEARCHER_RESOURCES" key="label.participation.removeWarning"/></span></p>
 				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.confirm" property="confirm">
 					<bean:message bundle="RESEARCHER_RESOURCES" key="button.delete"/>
 				</html:submit>

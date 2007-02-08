@@ -166,14 +166,15 @@ public abstract class ResearchResult extends ResearchResult_Base {
 	@Checked("ResultPredicates.writePredicate")
 	public void delete() {
 		Person requestingPerson = AccessControl.getPerson();
-		if (!requestingPerson.equals(this.getCreator())) {
-			throw new DomainException("error.researcher.Result.onlyCreatorCanDelete");
+		if (!hasPersonParticipation(requestingPerson)) {
+			throw new DomainException("error.researcher.Result.onlyParticipantsCanDelete");
 		}
 		removeAssociations();
 		removeRootDomainObject();
 		deleteDomainObject();
 	}
 
+	
 	public final static ResearchResult readByOid(Integer oid) {
 		final ResearchResult result = RootDomainObject.getInstance().readResearchResultByOID(oid);
 
@@ -470,8 +471,8 @@ public abstract class ResearchResult extends ResearchResult_Base {
 	}
 	
 	private Set<ResearchResultDocumentFile> getVisibleResultDocumentFilesSet() {
-		Set<ResearchResultDocumentFile> visibleFiles = new HashSet<ResearchResultDocumentFile> ();
 		Collection visibleDocuments = getVisibleFiles();
+		Set<ResearchResultDocumentFile> visibleFiles = new HashSet<ResearchResultDocumentFile> ();
 		
 		if(visibleDocuments.size()>0) {
 			visibleFiles.addAll(visibleDocuments);
@@ -501,7 +502,7 @@ public abstract class ResearchResult extends ResearchResult_Base {
 	}
 
 	public boolean isDeletableByCurrentUser() {
-		return AccessControl.getPerson().equals(this.getCreator());
+		return hasPersonParticipation(AccessControl.getPerson());
 	}
 	
 	public abstract String getSchema();

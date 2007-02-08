@@ -110,9 +110,9 @@ public class Person extends Person_Base {
 	Role.PersonRole.addListener(new PersonRoleListener());
     }
 
-    /***********************************************************************
-         * BUSINESS SERVICES *
-         **********************************************************************/
+    /***************************************************************************
+	 * BUSINESS SERVICES *
+	 **************************************************************************/
 
     @Override
     public void setDocumentIdNumber(String documentIdNumber) {
@@ -750,9 +750,9 @@ public class Person extends Person_Base {
 	return points;
     }
 
-    /***********************************************************************
-         * PRIVATE METHODS *
-         **********************************************************************/
+    /***************************************************************************
+	 * PRIVATE METHODS *
+	 **************************************************************************/
 
     private void setProperties(InfoPersonEditor infoPerson) {
 
@@ -920,9 +920,9 @@ public class Person extends Person_Base {
 
     }
 
-    /***********************************************************************
-         * OTHER METHODS *
-         **********************************************************************/
+    /***************************************************************************
+	 * OTHER METHODS *
+	 **************************************************************************/
 
     public String getSlideName() {
 	return "/photos/person/P" + getIdInternal();
@@ -1040,20 +1040,19 @@ public class Person extends Person_Base {
     }
 
     /**
-         * @return a group that only contains this person
-         */
+	 * @return a group that only contains this person
+	 */
     public PersonGroup getPersonGroup() {
 	return new PersonGroup(this);
     }
 
     /**
-         * 
-         * IMPORTANT: This method is evil and should NOT be used! You are NOT
-         * God!
-         * 
-         * 
-         * @return true if the person have been deleted, false otherwise
-         */
+	 * 
+	 * IMPORTANT: This method is evil and should NOT be used! You are NOT God!
+	 * 
+	 * 
+	 * @return true if the person have been deleted, false otherwise
+	 */
     public void delete() {
 	if (!canBeDeleted()) {
 	    throw new DomainException("error.person.cannot.be.deleted");
@@ -2512,7 +2511,7 @@ public class Person extends Person_Base {
     }
 
     public boolean isHomePageAvailable() {
-	return hasHomepage();
+    	return hasHomepage() && getHomepage().getActivated();
     }
 
     public static Collection<Person> searchPersons(String[] personName) {
@@ -2529,5 +2528,4 @@ public class Person extends Person_Base {
     public boolean isAdministrativeOfficeEmployee() {
 	return getEmployee() != null && getEmployee().getAdministrativeOffice() != null;
     }
-
 }

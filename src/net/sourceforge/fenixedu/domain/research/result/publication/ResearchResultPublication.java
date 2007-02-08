@@ -9,7 +9,11 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
+import net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFile;
+import net.sourceforge.fenixedu.domain.research.result.ResultEventAssociation;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
+import net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
@@ -197,5 +201,45 @@ public abstract class ResearchResultPublication extends ResearchResultPublicatio
 	
 	public String getLocalizedType() {
 		return RenderUtils.getResourceString("RESEARCHER_RESOURCES", "researcher.ResultPublication.type." + getClass().getSimpleName());
+	}
+	
+	public void copyReferecesTo(ResearchResultPublication publication) {
+		createNewParticipationsIn(publication);
+		createNewEventAssociationsIn(publication);
+		createNewUnitAssociationsIn(publication);
+		moveFilesTo(publication);
+		publication.setUniqueStorageId(getUniqueStorageId());
+		publication.setCreator(getCreator());
+	}
+	
+	private void moveFilesTo(ResearchResult publication) {
+		for (ResearchResultDocumentFile file : getAllResultDocumentFiles()) {
+			file.moveFileToNewResearchResultType(publication);
+		}
+	}
+
+	private void createNewUnitAssociationsIn(ResearchResultPublication publication) {
+		for (ResultUnitAssociation association : getResultUnitAssociations()) {
+			publication.addUnitAssociation(association.getUnit(), association.getRole());
+		}
+	}
+
+	private void createNewEventAssociationsIn(ResearchResultPublication publication) {
+		for (ResultEventAssociation association : getResultEventAssociations()) {
+			publication.addEventAssociation(association.getEvent(), association.getRole());
+		}
+	}
+
+	private void createNewParticipationsIn(ResearchResult publication) {
+		for (ResultParticipation participation : getResultParticipations()) {
+			ResultParticipationRole role = participation.getRole();
+
+			if (!publication.acceptsParticipationRole(role)) {
+				role = ResultParticipationRole.Author;
+			}
+			if (!publication.hasPersonParticipationWithRole(participation.getPerson(), role)) {
+				publication.addParticipation(participation.getPerson(), role);
+			}
+		}
 	}
 }

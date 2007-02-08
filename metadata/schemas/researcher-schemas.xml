@@ -1845,7 +1845,10 @@
 
 <schema name="resultUnit.name" bundle="RESEARCHER_RESOURCES"
 		type="net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation">
-	<slot name="unit.name" key="researcher.project.editProject.units"/>
+	<slot name="unit.name" key="researcher.viewCurriculum.name"/>
+	<slot name="unit" layout="format">
+		<property name="format" value=" - ${directParentUnitsPresentationName}"/>
+	</slot>
 </schema>
 
 <schema name="result.publication.presentation.Book" extends="publication.TitleAndAuthors" bundle="RESEARCHER_RESOURCES"

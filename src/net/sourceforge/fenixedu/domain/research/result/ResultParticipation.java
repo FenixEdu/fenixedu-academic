@@ -2,14 +2,12 @@ package net.sourceforge.fenixedu.domain.research.result;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.List; 
+import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
@@ -113,6 +111,10 @@ public class ResultParticipation extends ResultParticipation_Base {
 		return (this.getResult().getResultParticipationsCount() == 1);
 	}
 
+	public boolean getCanBeRemoved() {
+		return !(getIsLastParticipation() || this.getPerson().equals(this.getResult().getCreator()));
+	}
+	
 	public final static ResultParticipation readByOid(Integer oid) {
 		final ResultParticipation participation = RootDomainObject
 				.getInstance().readResultParticipationByOID(oid);

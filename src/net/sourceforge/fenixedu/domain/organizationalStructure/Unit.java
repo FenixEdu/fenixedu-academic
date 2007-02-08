@@ -971,6 +971,16 @@ public class Unit extends Unit_Base {
 	return getParentUnitsPresentationName(" - ");
     }
 
+    public String getDirectParentUnitsPresentationName() {
+    	StringBuilder builder = new StringBuilder();
+    	for(Unit unit : getParentUnits()) {
+    		if(!unit.getType().equals(PartyTypeEnum.AGGREGATE_UNIT)) {
+    			builder.append(unit.getNameWithAcronym());
+    		}
+    	}
+    	return builder.toString();
+    }
+    
     private String getParentUnitsPresentationName(String separator) {
 	StringBuilder builder = new StringBuilder();
 	Unit externalInstitutionUnit = UnitUtils.readExternalInstitutionUnit();
