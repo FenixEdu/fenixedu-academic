@@ -1002,6 +1002,8 @@ public class CurricularCourse extends CurricularCourse_Base {
 	if (isBolonha()) {
 	    if (hasCompetenceCourse()) {
 		return getCompetenceCourse().getEctsCredits(executionPeriod);
+	    } else if (isOptionalCurricularCourse()) {
+		return Double.valueOf(0.0);
 	    }
 	} else {
 	    final Double ectsCredits = super.getEctsCredits();
@@ -1257,6 +1259,10 @@ public class CurricularCourse extends CurricularCourse_Base {
     @Override
     public boolean isOptional() {
 	return getType().equals(CurricularCourseType.OPTIONAL_COURSE);
+    }
+
+    public boolean isOptionalCurricularCourse() {
+	return false;
     }
 
     public boolean isAnual() {
@@ -1598,10 +1604,6 @@ public class CurricularCourse extends CurricularCourse_Base {
 	}
 
 	return new ArrayList<ExecutionCourse>();
-    }
-
-    public boolean isOptionalCurricularCourse() {
-	return false;
     }
 
     public boolean isActive(final ExecutionYear executionYear) {
