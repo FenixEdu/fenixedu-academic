@@ -80,25 +80,56 @@ td.tcalendarlinks span a { color: #888; }
 			</html:link>
 		</li>
 	</ul>
-	
-	<logic:notEmpty name="ganttDiagram">
+		
+	<logic:notEmpty name="ganttDiagram">		
 		<logic:notEmpty name="ganttDiagram" property="events">
-			<p>
-				<gd:ganttDiagram 
-					 ganttDiagram="ganttDiagram" 
-					 
-					 eventParameter="genericEventID"			
-					 eventUrl="/sop/roomsPunctualScheduling.do?method=prepareView" 					 
-					 
-					 firstDayParameter="firstDay" 					 
-					 
-					 weeklyViewUrl="/sop/roomsPunctualScheduling.do?method=prepare" 
-					 dailyViewUrl="/sop/roomsPunctualScheduling.do?method=prepareViewDailyView" 
-					 monthlyViewUrl="/sop/roomsPunctualScheduling.do?method=prepareViewMonthlyView"
-					 
-					 bundle="SOP_RESOURCES" 
-				/>		
-			</p>
+		
+			<fr:form>
+				<fr:edit name="roomsPunctualSchedulingBean" schema="GanttDiagramAvailable">
+					<fr:destination name="postBack" path="/roomsPunctualScheduling.do?method=prepare"/>
+					<fr:layout name="tabular">
+						<fr:property name="classes" value="tstyle5 vamiddle thlight" />
+						<fr:property name="columnClasses" value=",,tdclear tderror1" />
+					</fr:layout>				
+				</fr:edit>
+			</fr:form>
+		
+			<logic:equal name="roomsPunctualSchedulingBean" property="ganttDiagramAvailable" value="true" >
+				<p>
+					<gd:ganttDiagram 
+						 ganttDiagram="ganttDiagram" 						 
+						 eventParameter="genericEventID"			
+						 eventUrl="/sop/roomsPunctualScheduling.do?method=prepareView" 					 						 
+						 firstDayParameter="firstDay" 					 						 
+						 weeklyViewUrl="/sop/roomsPunctualScheduling.do?method=prepare" 
+						 dailyViewUrl="/sop/roomsPunctualScheduling.do?method=prepareViewDailyView" 
+						 monthlyViewUrl="/sop/roomsPunctualScheduling.do?method=prepareViewMonthlyView"						 
+						 bundle="SOP_RESOURCES" 
+					/>		
+				</p>
+			</logic:equal>
+			
+			<logic:equal name="roomsPunctualSchedulingBean" property="ganttDiagramAvailable" value="false" >			
+				<table class="tcalendar thlight">
+					<tr>
+						<th><bean:message key="label.ganttDiagram.event" bundle="SOP_RESOURCES"/></th>
+						<th><bean:message key="label.ganttDiagram.period" bundle="SOP_RESOURCES"/></th>
+						<th><bean:message key="label.ganttDiagram.observations" bundle="SOP_RESOURCES"/></th>
+					</tr>				
+					<logic:iterate id="event" name="ganttDiagram" property="events">					
+						<tr>					
+							<td class="padded">
+								<bean:define id="genericEventURL">/roomsPunctualScheduling.do?method=prepareView&amp;genericEventID=<bean:write name="event" property="idInternal"/></bean:define>
+								<html:link page="<%= genericEventURL %>">
+									<fr:view name="event" property="title"/>
+								</html:link>	
+							</td>
+							<td class="padded smalltxt"><bean:write name="event" property="eventPeriodForGanttDiagram"/></td>
+							<td class="padded smalltxt"><bean:write name="event" property="eventObservationsForGanttDiagram"/></td>						
+						</tr>						
+					</logic:iterate>				
+				</table>			
+			</logic:equal>
 			
 			<p class="mtop2 mbottom025"><em><bean:message bundle="SOP_RESOURCES" key="label.legend"/>:</em></p>
 			<p class="mvert0"><em>[C] <bean:message bundle="SOP_RESOURCES" key="label.continuous"/></em></p>

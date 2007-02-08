@@ -31,10 +31,20 @@ public class RoomsPunctualSchedulingDA extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws InvalidArgumentException {	
 	Set<GenericEvent> genericEvents = GenericEvent.getActiveGenericEventsForRoomOccupations();	
-	if(!genericEvents.isEmpty()) {            
+	if(!genericEvents.isEmpty()) {
+	    
+	    RoomsPunctualSchedulingBean bean = null;
+	    IViewState viewState = RenderUtils.getViewState();
+	    if(viewState == null) {
+                bean = new RoomsPunctualSchedulingBean();
+            } else {
+                bean = (RoomsPunctualSchedulingBean) viewState.getMetaObject().getObject();	    	   	    
+            }
+	    
             YearMonthDay firstDay = getFirstDay(request);
             GanttDiagram diagram = GanttDiagram.getNewWeeklyGanttDiagram(new ArrayList<GanttDiagramEvent>(genericEvents), firstDay);	
             request.setAttribute("ganttDiagram", diagram);
+            request.setAttribute("roomsPunctualSchedulingBean", bean);
 	}
 	return mapping.findForward("prepareRoomsPunctualScheduling");
     }     
@@ -43,7 +53,9 @@ public class RoomsPunctualSchedulingDA extends FenixDispatchAction {
 	Set<GenericEvent> genericEvents = GenericEvent.getActiveGenericEventsForRoomOccupations();	
 	if(!genericEvents.isEmpty()) {            
             YearMonthDay firstDay = getFirstDay(request);
-            GanttDiagram diagram = GanttDiagram.getNewDailyGanttDiagram(new ArrayList<GanttDiagramEvent>(genericEvents), firstDay);	
+            GanttDiagram diagram = GanttDiagram.getNewDailyGanttDiagram(new ArrayList<GanttDiagramEvent>(genericEvents), firstDay);
+            RoomsPunctualSchedulingBean bean = new RoomsPunctualSchedulingBean();
+            request.setAttribute("roomsPunctualSchedulingBean", bean);
             request.setAttribute("ganttDiagram", diagram);
 	}
 	return mapping.findForward("prepareRoomsPunctualScheduling");
@@ -54,6 +66,8 @@ public class RoomsPunctualSchedulingDA extends FenixDispatchAction {
 	if(!genericEvents.isEmpty()) {            
             YearMonthDay firstDay = getFirstDay(request);
             GanttDiagram diagram = GanttDiagram.getNewMonthlyGanttDiagram(new ArrayList<GanttDiagramEvent>(genericEvents), firstDay);	
+            RoomsPunctualSchedulingBean bean = new RoomsPunctualSchedulingBean();
+            request.setAttribute("roomsPunctualSchedulingBean", bean);
             request.setAttribute("ganttDiagram", diagram);
 	}
 	return mapping.findForward("prepareRoomsPunctualScheduling");
@@ -76,8 +90,8 @@ public class RoomsPunctualSchedulingDA extends FenixDispatchAction {
     }  
            
     public ActionForward prepareCreate(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {			
-	RoomsPunctualSchedulingBean bean = null;	
 	
+	RoomsPunctualSchedulingBean bean = null;		
 	IViewState viewState = RenderUtils.getViewState("roomsPunctualSchedulingWithPeriodType");				
 	if(viewState == null) {
 	    viewState = RenderUtils.getViewState("roomsPunctualSchedulingWithInfo");	

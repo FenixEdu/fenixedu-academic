@@ -5,6 +5,13 @@
 	</slot>       				
 </schema>
 
+<schema name="GanttDiagramAvailable" type="net.sourceforge.fenixedu.dataTransferObject.sop.RoomsPunctualSchedulingBean" bundle="SOP_RESOURCES">	
+	<slot name="ganttDiagramAvailable" key="label.ganttDiagram.available" layout="radio-postback">
+		<property name="classes" value="list2 liinline" />
+		<property name="destination" value="postBack"/>
+	</slot>
+</schema>
+
 <schema name="CreateDailyRoomsPunctualScheduling" type="net.sourceforge.fenixedu.dataTransferObject.sop.RoomsPunctualSchedulingBean" bundle="SOP_RESOURCES">	
 	<slot name="begin" key="label.day" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
 	<slot name="beginTime" key="label.begin.hour" layout="hour-minute" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>

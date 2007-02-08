@@ -41,12 +41,14 @@ public class RoomsPunctualSchedulingBean implements Serializable {
     
     private DomainReference<GenericEvent> genericEventReference;
     
+    private Boolean ganttDiagramAvailable;
+    
     private transient Locale locale = LanguageUtils.getLocale(); 
     
-    public RoomsPunctualSchedulingBean() {
-	
-    }
-        
+    public RoomsPunctualSchedulingBean() {  
+	setGanttDiagramAvailable(Boolean.TRUE);	
+    }       
+           
     public RoomsPunctualSchedulingBean(GenericEvent genericEvent) {	
 	setRooms(genericEvent.getAssociatedRooms());
 	setBegin(genericEvent.getBeginDate());
@@ -57,6 +59,7 @@ public class RoomsPunctualSchedulingBean implements Serializable {
 	setSmallDescription(genericEvent.getTitle());
 	setCompleteDescription(genericEvent.getDescription());
 	setGenericEvent(genericEvent);
+	setGanttDiagramAvailable(Boolean.TRUE);
     }
   
     public void editDailyType(YearMonthDay begin, Partial beginTime, Partial endTime) {
@@ -229,5 +232,13 @@ public class RoomsPunctualSchedulingBean implements Serializable {
 
     public void setSmallDescription(MultiLanguageString smallDescription) {
         this.smallDescription = smallDescription;
+    }
+
+    public Boolean getGanttDiagramAvailable() {
+        return ganttDiagramAvailable;
+    }
+
+    public void setGanttDiagramAvailable(Boolean ganttDiagramAvailable) {
+        this.ganttDiagramAvailable = ganttDiagramAvailable;
     }
 }
