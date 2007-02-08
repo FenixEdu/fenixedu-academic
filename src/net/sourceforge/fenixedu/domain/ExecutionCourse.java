@@ -1036,7 +1036,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	for (CurricularCourse curricularCourse : this.getAssociatedCurricularCoursesSet()) {
 	    Degree degree = curricularCourse.getDegree();
 	    if (degree.getTipoCurso() == DegreeType.DEGREE
-		    || degree.getTipoCurso() == DegreeType.BOLONHA_DEGREE) {
+		    || degree.getTipoCurso() == DegreeType.BOLONHA_DEGREE 
+		    || degree.getTipoCurso() == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) {
 		result.add(curricularCourse);
 	    }
 	}
