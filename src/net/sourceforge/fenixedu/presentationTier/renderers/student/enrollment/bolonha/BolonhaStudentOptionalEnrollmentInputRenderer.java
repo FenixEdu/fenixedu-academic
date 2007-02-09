@@ -42,8 +42,6 @@ public class BolonhaStudentOptionalEnrollmentInputRenderer extends InputRenderer
 
     private String linkFormat;
 
-    private String linkFormatted;
-
     public Integer getInitialWidth() {
 	return initialWidth;
     }

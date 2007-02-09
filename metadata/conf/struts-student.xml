@@ -913,7 +913,7 @@
 				parameter="method"
 				name="bolonhaEnrollmentForm"
 				scope="request">
-			
+		
 			<forward name="chooseRegistration" path="enrolment.bolonha.chooseRegistration" />
 			<forward name="showDegreeModulesToEnrol" path="enrolment.bolonha.showDegreeModulesToEnrol" />
 			<forward name="chooseOptionalCurricularCourseToEnrol" path="enrolment.bolonha.chooseOptionalCurricularCourseEnrol" />

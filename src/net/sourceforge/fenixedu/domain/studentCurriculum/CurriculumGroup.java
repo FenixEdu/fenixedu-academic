@@ -64,7 +64,8 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     private void checkInitConstraints(StudentCurricularPlan studentCurricularPlan,
 	    CourseGroup courseGroup) {
 	if (studentCurricularPlan.getRoot().hasCourseGroup(courseGroup)) {
-	    throw new DomainException("error.duplicate.courseGroup");
+	    throw new DomainException("error.studentCurriculum.CurriculumGroup.duplicate.courseGroup",
+		    courseGroup.getName());
 	}
     }
 
@@ -424,16 +425,17 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	}
 	return Double.valueOf(bigDecimal.doubleValue());
     }
-    
+
     @Override
     public Double getEnroledEctsCredits(final ExecutionPeriod executionPeriod) {
 	BigDecimal bigDecimal = BigDecimal.ZERO;
 	for (CurriculumModule curriculumModule : getCurriculumModulesSet()) {
-	    bigDecimal = bigDecimal.add(new BigDecimal(curriculumModule.getEnroledEctsCredits(executionPeriod)));
+	    bigDecimal = bigDecimal.add(new BigDecimal(curriculumModule
+		    .getEnroledEctsCredits(executionPeriod)));
 	}
 	return Double.valueOf(bigDecimal.doubleValue());
     }
-    
+
     public int getNumberOfChildCurriculumGroupsWithCourseGroup() {
 	int result = 0;
 	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
@@ -446,7 +448,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	}
 	return result;
     }
-    
+
     public int getNumberOfApprovedEnrolments() {
 	int result = 0;
 	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
@@ -459,7 +461,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	}
 	return result;
     }
-    
+
     public int getNumberOfEnrolments(final ExecutionPeriod executionPeriod) {
 	int result = 0;
 	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {

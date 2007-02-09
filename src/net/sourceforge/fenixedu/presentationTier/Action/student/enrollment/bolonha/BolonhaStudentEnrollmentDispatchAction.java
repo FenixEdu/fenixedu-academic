@@ -21,6 +21,8 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.EnrollmentDomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.commons.TransactionalDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixTransactionException;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
@@ -31,7 +33,7 @@ import org.apache.struts.action.DynaActionForm;
 public class BolonhaStudentEnrollmentDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
+	    HttpServletResponse response) throws FenixTransactionException {
 
 	final List<Registration> registrations = getActiveRegistrationsToEnrolByStudent(request);
 
@@ -46,7 +48,7 @@ public class BolonhaStudentEnrollmentDispatchAction extends FenixDispatchAction 
     }
 
     public ActionForward prepareChooseRegistration(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+	    HttpServletRequest request, HttpServletResponse response) throws FenixTransactionException {
 
 	request.setAttribute("registrationsToEnrol", getActiveRegistrationsToEnrolByStudent(request));
 
@@ -54,7 +56,7 @@ public class BolonhaStudentEnrollmentDispatchAction extends FenixDispatchAction 
     }
 
     public ActionForward chooseRegistration(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+	    HttpServletRequest request, HttpServletResponse response) throws FenixTransactionException {
 
 	final Registration registration = getRegistration((DynaActionForm) form);
 	if (!getLoggedPerson(request).getStudent().hasRegistrations(registration)) {
@@ -72,7 +74,8 @@ public class BolonhaStudentEnrollmentDispatchAction extends FenixDispatchAction 
 
     private ActionForward prepareShowDegreeModulesToEnrol(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response,
-	    final StudentCurricularPlan studentCurricularPlan) {
+	    final StudentCurricularPlan studentCurricularPlan) throws FenixTransactionException {
+
 	if (studentCurricularPlan.getDegreeCurricularPlan().getActualEnrolmentPeriod() == null) {
 	    return mapping.findForward("showOutOfEnrollmentPeriodMessage");
 	}
@@ -90,7 +93,8 @@ public class BolonhaStudentEnrollmentDispatchAction extends FenixDispatchAction 
 
     public ActionForward enrolInDegreeModules(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-	    FenixServiceException {
+	    FenixServiceException, FenixTransactionException {
+
 	final BolonhaStudentEnrollmentBean bolonhaStudentEnrollmentBean = getBolonhaStudentEnrollmentBeanFromViewState();
 
 	try {
@@ -131,7 +135,8 @@ public class BolonhaStudentEnrollmentDispatchAction extends FenixDispatchAction 
     }
 
     public ActionForward prepareChooseOptionalCurricularCourseToEnrol(ActionMapping mapping,
-	    ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+	    ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws FenixTransactionException {
 
 	final BolonhaStudentEnrollmentBean bolonhaStudentEnrollmentBean = getBolonhaStudentEnrollmentBeanFromViewState();
 	request.setAttribute("optionalEnrolmentBean", new BolonhaStudentOptionalEnrollmentBean(
@@ -144,7 +149,7 @@ public class BolonhaStudentEnrollmentDispatchAction extends FenixDispatchAction 
 
     public ActionForward enrolInOptionalCurricularCourse(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-	    FenixServiceException {
+	    FenixServiceException, FenixTransactionException {
 
 	final BolonhaStudentOptionalEnrollmentBean optionalStudentEnrollmentBean = getBolonhaStudentOptionalEnrollmentBeanFromViewState();
 	try {
@@ -186,7 +191,8 @@ public class BolonhaStudentEnrollmentDispatchAction extends FenixDispatchAction 
     }
 
     public ActionForward cancelChooseOptionalCurricularCourseToEnrol(ActionMapping mapping,
-	    ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+	    ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws FenixTransactionException {
 	return prepareShowDegreeModulesToEnrol(mapping, form, request, response,
 		getStudentCurricularPlan(request));
     }
@@ -201,7 +207,8 @@ public class BolonhaStudentEnrollmentDispatchAction extends FenixDispatchAction 
     }
 
     public ActionForward updateParametersToSearchOptionalCurricularCourses(ActionMapping mapping,
-	    ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+	    ActionForm actionForm, HttpServletRequest request, HttpServletResponse response)
+	    throws FenixTransactionException {
 
 	request.setAttribute("bolonhaStudentEnrollmentBean",
 		getBolonhaStudentEnrollmentBeanFromViewState());
@@ -211,9 +218,10 @@ public class BolonhaStudentEnrollmentDispatchAction extends FenixDispatchAction 
 
 	return mapping.findForward("chooseOptionalCurricularCourseToEnrol");
     }
-    
-    public ActionForward showEnrollmentInstructions(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
+
+    public ActionForward showEnrollmentInstructions(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixTransactionException {
+
 	return mapping.findForward("showEnrollmentInstructions");
     }
 

@@ -34,7 +34,7 @@ import org.joda.time.YearMonthDay;
  * 24/Mar/2003
  */
 
-public class Enrolment extends Enrolment_Base implements IEnrolment{
+public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     public static final Comparator<Enrolment> COMPARATOR_BY_EXECUTION_PERIOD = new BeanComparator(
 	    "executionPeriod");
@@ -95,7 +95,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment{
     public boolean isEnrollmentConditionFinal() {
 	return getEnrolmentCondition() == EnrollmentCondition.FINAL;
     }
-    
+
     public boolean isSpecialSeason() {
 	boolean result = false;
 	for (EnrolmentEvaluation enrolmentEvaluation : this.getEvaluations()) {
@@ -135,7 +135,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment{
 	    CurricularCourse curricularCourse, ExecutionPeriod executionPeriod) {
 	if (studentCurricularPlan.getEnrolmentByCurricularCourseAndExecutionPeriod(curricularCourse,
 		executionPeriod) != null) {
-	    throw new DomainException("error.duplicate.enrolment");
+	    throw new DomainException("error.Enrolment.duplicate.enrolment", curricularCourse.getName());
 	}
     }
 
@@ -579,13 +579,13 @@ public class Enrolment extends Enrolment_Base implements IEnrolment{
 
     public List<EnrolmentEvaluation> getAllFinalEnrolmentEvaluations() {
 	final List<EnrolmentEvaluation> result = new ArrayList<EnrolmentEvaluation>();
-	
+
 	for (final EnrolmentEvaluation enrolmentEvaluation : getEvaluationsSet()) {
 	    if (enrolmentEvaluation.isFinal()) {
 		result.add(enrolmentEvaluation);
 	    }
 	}
-	
+
 	return result;
     }
 
@@ -758,8 +758,8 @@ public class Enrolment extends Enrolment_Base implements IEnrolment{
     }
 
     public EnrolmentEvaluation getLatestEnrolmentEvaluation() {
-	return (getStudentCurricularPlan().getDegreeType().getAdministrativeOfficeType() == AdministrativeOfficeType.DEGREE) ? 
-		getLatestEnrolmentEvalution(this.getAllFinalEnrolmentEvaluations())
+	return (getStudentCurricularPlan().getDegreeType().getAdministrativeOfficeType() == AdministrativeOfficeType.DEGREE) ? getLatestEnrolmentEvalution(this
+		.getAllFinalEnrolmentEvaluations())
 		: getLatestEnrolmentEvalution(this.getEvaluations());
     }
 
@@ -777,10 +777,11 @@ public class Enrolment extends Enrolment_Base implements IEnrolment{
 	final EnrolmentEvaluation enrolmentEvaluation = getLatestEnrolmentEvaluation();
 	return (enrolmentEvaluation == null) ? null : enrolmentEvaluation.getGrade();
     }
-    
+
     public Integer getFinalGrade() {
 	final String grade = getGrade();
-	return (grade == null || StringUtils.isEmpty(grade) || !StringUtils.isNumeric(grade)) ? null : Integer.valueOf(grade);
+	return (grade == null || StringUtils.isEmpty(grade) || !StringUtils.isNumeric(grade)) ? null
+		: Integer.valueOf(grade);
     }
 
     public Double getAccumulatedEctsCredits() {
@@ -827,10 +828,11 @@ public class Enrolment extends Enrolment_Base implements IEnrolment{
 	return this.getExecutionPeriod().equals(executionPeriod)
 		&& this.getCurricularCourse().equals(curricularCourse);
     }
-    
+
     public boolean isValid(final ExecutionPeriod executionPeriod) {
 	return getExecutionPeriod() == executionPeriod
-		|| (getCurricularCourse().isAnual() && getExecutionPeriod().getExecutionYear() == executionPeriod.getExecutionYear());
+		|| (getCurricularCourse().isAnual() && getExecutionPeriod().getExecutionYear() == executionPeriod
+			.getExecutionYear());
     }
 
     public List<ExecutionCourse> getExecutionCourses() {
@@ -838,17 +840,18 @@ public class Enrolment extends Enrolment_Base implements IEnrolment{
     }
 
     public boolean isEnrolmentTypeNormal() {
-	return getCurricularCourse().getType() == CurricularCourseType.NORMAL_COURSE && !isExtraCurricular() && !isOptional();
+	return getCurricularCourse().getType() == CurricularCourseType.NORMAL_COURSE
+		&& !isExtraCurricular() && !isOptional();
     }
-    
+
     public String getEnrolmentTypeName() {
 	if (isExtraCurricular()) {
 	    return "EXTRA_CURRICULAR_ENROLMENT";
-        } else if (isOptional()) {
-            return "ENROLMENT_IN_OPTIONAL_DEGREE_MODULE";
-        } else {
-            return getCurricularCourse().getType().name();
-        }
+	} else if (isOptional()) {
+	    return "ENROLMENT_IN_OPTIONAL_DEGREE_MODULE";
+	} else {
+	    return getCurricularCourse().getType().name();
+	}
     }
 
     public Attends getAttendsFor(final ExecutionPeriod executionPeriod) {
@@ -885,7 +888,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment{
 	if (isExtraCurricular()) {
 	    return Double.valueOf(0);
 	}
-	
+
 	final Double weigth = super.getWeigth();
 	return (weigth == null || weigth == 0) ? getCurricularCourse().getWeigth() : weigth;
     }
@@ -895,25 +898,25 @@ public class Enrolment extends Enrolment_Base implements IEnrolment{
 	if (isExtraCurricular()) {
 	    return Double.valueOf(0);
 	}
-	
+
 	return getCurricularCourse().getEctsCredits(getExecutionPeriod());
     }
-    
+
     @Override
     public Double getAprovedEctsCredits() {
-        if(isApproved()) {
-            return getEctsCredits();
-        }
-        return Double.valueOf(0);
+	if (isApproved()) {
+	    return getEctsCredits();
+	}
+	return Double.valueOf(0);
     }
 
     public boolean isExtraCurricular() {
 	return getIsExtraCurricular() != null && getIsExtraCurricular();
     }
-    
+
     @Override
     public Double getEnroledEctsCredits(final ExecutionPeriod executionPeriod) {
 	return isValid(executionPeriod) && isEnroled() ? getEctsCredits() : Double.valueOf(0d);
     }
-    
+
 }

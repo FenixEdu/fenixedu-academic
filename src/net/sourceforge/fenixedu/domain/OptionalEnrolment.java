@@ -9,52 +9,68 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public class OptionalEnrolment extends OptionalEnrolment_Base {
-    
-    protected  OptionalEnrolment() {
-        super();
+
+    protected OptionalEnrolment() {
+	super();
     }
-    
-    public OptionalEnrolment(StudentCurricularPlan studentCurricularPlan, CurriculumGroup curriculumGroup,
-	    CurricularCourse curricularCourse, ExecutionPeriod executionPeriod,
-            EnrollmentCondition enrolmentCondition, String createdBy, OptionalCurricularCourse optionalCurricularCourse) {
+
+    public OptionalEnrolment(StudentCurricularPlan studentCurricularPlan,
+	    CurriculumGroup curriculumGroup, CurricularCourse curricularCourse,
+	    ExecutionPeriod executionPeriod, EnrollmentCondition enrolmentCondition, String createdBy,
+	    OptionalCurricularCourse optionalCurricularCourse) {
 	if (studentCurricularPlan == null || curriculumGroup == null || curricularCourse == null
-		|| executionPeriod == null || enrolmentCondition == null || createdBy == null || optionalCurricularCourse == null) {
-    		throw new DomainException("invalid arguments");
-    	}
-	checkInitConstraints(studentCurricularPlan, curricularCourse, executionPeriod);
-	//TODO: check this
-	//validateDegreeModuleLink(curriculumGroup, curricularCourse);
+		|| executionPeriod == null || enrolmentCondition == null || createdBy == null
+		|| optionalCurricularCourse == null) {
+	    throw new DomainException("invalid arguments");
+	}
+	checkInitConstraints(studentCurricularPlan, curricularCourse, executionPeriod,
+		optionalCurricularCourse);
+	// TODO: check this
+	// validateDegreeModuleLink(curriculumGroup, curricularCourse);
 	initializeAsNew(studentCurricularPlan, curriculumGroup, curricularCourse, executionPeriod,
 		enrolmentCondition, createdBy);
 	setOptionalCurricularCourse(optionalCurricularCourse);
     }
-    
 
-    protected void checkInitConstraints(StudentCurricularPlan studentCurricularPlan, CurricularCourse curricularCourse, ExecutionPeriod executionPeriod, OptionalCurricularCourse optionalCurricularCourse) {
-        super.checkInitConstraints(studentCurricularPlan, curricularCourse, executionPeriod);
-        //TODO check constraint for OptionalCurricularCourse
+    protected void checkInitConstraints(StudentCurricularPlan studentCurricularPlan,
+	    CurricularCourse curricularCourse, ExecutionPeriod executionPeriod,
+	    OptionalCurricularCourse optionalCurricularCourse) {
+	super.checkInitConstraints(studentCurricularPlan, curricularCourse, executionPeriod);
+
+	final OptionalEnrolment optionalEnrolment = (OptionalEnrolment) studentCurricularPlan
+		.findCurriculumModuleFor(optionalCurricularCourse);
+	if (optionalEnrolment != null && optionalEnrolment.isValid(executionPeriod)) {
+	    throw new DomainException(
+		    "error.OptionalEnrolment.duplicate.enrolment",
+		    optionalCurricularCourse.getName());
+
+	}
     }
-    
+
     @Override
     public boolean isAproved(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod) {
-	if(executionPeriod == null || this.getExecutionPeriod().isBeforeOrEquals(executionPeriod)) {
-            return (this.getCurricularCourse().isEquivalent(curricularCourse) || this.getOptionalCurricularCourse().isEquivalent(curricularCourse)) && this.isApproved();
-        } else {
-            return false;
-        }
+	if (executionPeriod == null || this.getExecutionPeriod().isBeforeOrEquals(executionPeriod)) {
+	    return (this.getCurricularCourse().isEquivalent(curricularCourse) || this
+		    .getOptionalCurricularCourse().isEquivalent(curricularCourse))
+		    && this.isApproved();
+	} else {
+	    return false;
+	}
     }
-    
+
     @Override
-    public boolean isEnroledInExecutionPeriod(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod) {
-	return this.getExecutionPeriod().equals(executionPeriod) && 
-		(this.getCurricularCourse().equals(curricularCourse) || this.getOptionalCurricularCourse().equals(curricularCourse));
+    public boolean isEnroledInExecutionPeriod(CurricularCourse curricularCourse,
+	    ExecutionPeriod executionPeriod) {
+	return this.getExecutionPeriod().equals(executionPeriod)
+		&& (this.getCurricularCourse().equals(curricularCourse) || this
+			.getOptionalCurricularCourse().equals(curricularCourse));
     }
-    
+
     @Override
     public boolean isOptional() {
-        return true;
+	return true;
     }
-    
+
     @Override
     public MultiLanguageString getName() {
 	MultiLanguageString multiLanguageString = super.getName();
@@ -62,32 +78,34 @@ public class OptionalEnrolment extends OptionalEnrolment_Base {
 	setNameContent(multiLanguageString, Language.en, this.getOptionalCurricularCourse().getNameEn());
 	return multiLanguageString;
     }
-    
-    private void setNameContent(MultiLanguageString multiLanguageString, Language language, String content) {
+
+    private void setNameContent(MultiLanguageString multiLanguageString, Language language,
+	    String content) {
 	if (content != null && content.length() > 0) {
-	    if(multiLanguageString.getContent(language) != null) {
-		multiLanguageString.setContent(language, multiLanguageString.getContent(language) + " (" + content + ")");
+	    if (multiLanguageString.getContent(language) != null) {
+		multiLanguageString.setContent(language, multiLanguageString.getContent(language) + " ("
+			+ content + ")");
 	    }
 	}
     }
-    
+
     @Override
     public boolean hasDegreeModule(final DegreeModule degreeModule) {
-        return super.hasDegreeModule(degreeModule) || hasOptionalCurricularCourse(degreeModule);
+	return super.hasDegreeModule(degreeModule) || hasOptionalCurricularCourse(degreeModule);
     }
-    
+
     private boolean hasOptionalCurricularCourse(final DegreeModule degreeModule) {
 	return getOptionalCurricularCourse() == degreeModule;
     }
-    
+
     @Override
     public CurriculumModule findCurriculumModuleFor(final DegreeModule degreeModule) {
 	return hasDegreeModule(degreeModule) ? this : null;
     }
-    
+
     @Override
     public void delete() {
 	removeOptionalCurricularCourse();
-        super.delete();
+	super.delete();
     }
 }
