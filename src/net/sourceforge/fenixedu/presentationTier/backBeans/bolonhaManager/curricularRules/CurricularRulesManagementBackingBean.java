@@ -31,7 +31,6 @@ import net.sourceforge.fenixedu.domain.curricularRules.Exclusiveness;
 import net.sourceforge.fenixedu.domain.curricularRules.MinimumNumberOfCreditsToEnrol;
 import net.sourceforge.fenixedu.domain.curricularRules.PrecedenceRule;
 import net.sourceforge.fenixedu.domain.curricularRules.RestrictionBetweenDegreeModules;
-import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
@@ -166,7 +165,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
             case ANY_CURRICULAR_COURSE:
                 if (getDegreeModule().isLeaf()) {
                     final CurricularCourse curricularCourse = (CurricularCourse) getDegreeModule();
-                    if (curricularCourse.getType() == CurricularCourseType.OPTIONAL_COURSE) {
+                    if (curricularCourse.isOptionalCurricularCourse()) {
                         result.add(new SelectItem(curricularRuleType.getName(), enumerationResources
                                 .getString(curricularRuleType.getName())));
                     }
