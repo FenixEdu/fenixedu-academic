@@ -93,4 +93,7 @@ public class DegreeModulesSelectionLimit extends DegreeModulesSelectionLimit_Bas
 	return !(value.compareTo(getMinimumLimit()) < 0 || value.compareTo(getMaximumLimit()) > 0);
     }
 
+    public boolean numberOfDegreeModulesExceedMaximum(final Integer numberOfDegreeModules) {
+	return numberOfDegreeModules.compareTo(getMaximumLimit()) > 0;
+    }
 }
