@@ -42,10 +42,8 @@ public class CreditsLimitExecutor extends CurricularRuleExecutor {
 	    return evaluateIfCanEnrolToDegreeModule(enrolmentContext, rule);
 	} 
 	
-	final CurriculumModule curriculumModule = searchCurriculumModule(enrolmentContext, rule);
-	final CourseGroup parentCourseGroup = curriculumModule.getCurriculumGroup().getDegreeModule();
-	
-	if (rule.appliesToCourseGroup(parentCourseGroup)) {
+	if (appliesToCourseGroup(enrolmentContext, rule)) {
+	    final CurriculumModule curriculumModule = searchCurriculumModule(enrolmentContext, rule);
 	    
 	    final Double ectsCredits = curriculumModule.getAprovedEctsCredits()
 		    + curriculumModule.getEnroledEctsCredits(enrolmentContext.getExecutionPeriod())
@@ -123,11 +121,9 @@ public class CreditsLimitExecutor extends CurricularRuleExecutor {
 	    return evaluateIfCanEnrolToDegreeModule(enrolmentContext, rule);
 	} 
 	
-	final CurriculumModule curriculumModule = searchCurriculumModule(enrolmentContext, rule);
-	final CourseGroup parentCourseGroup = curriculumModule.getCurriculumGroup().getDegreeModule();
-	
-	if (rule.appliesToCourseGroup(parentCourseGroup)) {
+	if (appliesToCourseGroup(enrolmentContext, rule)) {
 	    
+	    final CurriculumModule curriculumModule = searchCurriculumModule(enrolmentContext, rule);
 	    final ExecutionPeriod executionPeriod = enrolmentContext.getExecutionPeriod();
 	    
 	    Double ectsCredits = curriculumModule.getAprovedEctsCredits()
@@ -138,7 +134,8 @@ public class CreditsLimitExecutor extends CurricularRuleExecutor {
 		return createFalseRuleResult(rule);
 	    }
 	    
-	    ectsCredits = Double.valueOf(ectsCredits.doubleValue() + curriculumModule.getEnroledEctsCredits(executionPeriod.getPreviousExecutionPeriod()).doubleValue());
+	    ectsCredits = Double.valueOf(ectsCredits.doubleValue()
+		    + curriculumModule.getEnroledEctsCredits(executionPeriod.getPreviousExecutionPeriod()).doubleValue());
 	    
 	    return rule.creditsExceedMaximum(ectsCredits) ? RuleResult.createTrue(EnrolmentResultType.TEMPORARY) : RuleResult.createTrue();
 	    
