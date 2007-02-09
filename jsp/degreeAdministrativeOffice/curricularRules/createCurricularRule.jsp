@@ -190,18 +190,6 @@
 					<f:selectItem itemLabel="#{bolonhaBundle['label.operator.and']}" itemValue="AND"/>
 					<f:selectItem itemLabel="#{bolonhaBundle['label.operator.or']}" itemValue="OR"/>
 				</h:selectOneRadio>
-
-				<h:outputText value="<p><label>#{bolonhaBundle['beginExecutionPeriod.validity']}:</label> " escape="false"/>
-				<h:selectOneMenu value="#{CompositeRulesManagement.beginExecutionPeriodID}">
-					<f:selectItems binding="#{CompositeRulesManagement.beginExecutionPeriodItemsForCompositeRule}" />
-				</h:selectOneMenu>
-				<h:outputText value="</p>" escape="false"/>
-		
-				<h:outputText value="<p><label>#{bolonhaBundle['endExecutionPeriod.validity']}:</label> " escape="false"/>
-				<h:selectOneMenu value="#{CompositeRulesManagement.endExecutionPeriodID}">
-					<f:selectItems binding="#{CompositeRulesManagement.endExecutionPeriodItemsForCompositeRule}" />
-				</h:selectOneMenu>
-				<h:outputText value="</p>" escape="false"/>
 				<h:outputText value="</fieldset>" escape="false"/>
 
 			</h:panelGroup>
