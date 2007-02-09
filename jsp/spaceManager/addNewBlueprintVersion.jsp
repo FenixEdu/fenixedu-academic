@@ -15,6 +15,11 @@
 		<em><bean:message bundle="SPACE_RESOURCES" key="space.manager.page.title"/></em>
 		<h2><bean:message key="label.add.new.blueprint.version" bundle="SPACE_RESOURCES"/></h2>		
 
+		<bean:define id="space" name="selectedSpaceInformation" property="space" toScope="request"/>		
+		<div class="mbottom2">
+			<jsp:include page="spaceCrumbs.jsp"/>
+		</div>
+
 		<bean:define id="createLink">
 			/manageBlueprints.do?method=createBlueprintVersion&page=0&spaceInformationID=<bean:write name="selectedSpaceInformation" property="idInternal"/>
 		</bean:define>	
@@ -32,6 +37,12 @@
 	<logic:notEmpty name="editBlueprint">
 		<em><bean:message bundle="SPACE_RESOURCES" key="space.manager.page.title"/></em>			
 		<h2><bean:message key="label.edit.blueprint.version" bundle="SPACE_RESOURCES"/></h2>				
+	
+		<bean:define id="space" name="selectedSpaceInformation" property="space" toScope="request"/>	
+		<div class="mbottom2">
+			<jsp:include page="spaceCrumbs.jsp"/>
+		</div>
+	
 		<bean:define id="editLink">
 			/manageBlueprints.do?method=editBlueprintVersion&page=0&spaceInformationID=<bean:write name="selectedSpaceInformation" property="idInternal"/>&spaceBlueprintID=<bean:write name="selectedSpaceBlueprint" property="idInternal"/>
 		</bean:define>	
