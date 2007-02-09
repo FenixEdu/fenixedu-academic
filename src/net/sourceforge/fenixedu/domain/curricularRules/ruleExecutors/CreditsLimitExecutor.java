@@ -66,11 +66,8 @@ public class CreditsLimitExecutor extends CurricularRuleExecutor {
 	    final CurricularCourse curricularCourse = optionalToEnrol.getCurricularCourse();
 
 	    if (appliesToContext(enrolmentContext, rule)) {
-		if (rule.creditsExceedMaximum(curricularCourse.getEctsCredits(enrolmentContext.getExecutionPeriod()))) {
-		    return createFalseRuleResult(rule);
-		} else {
-		    return RuleResult.createTrue();
-		}
+		final ExecutionPeriod executionPeriod = enrolmentContext.getExecutionPeriod();
+		return rule.allowCredits(curricularCourse.getEctsCredits(executionPeriod)) ? RuleResult.createTrue() : createFalseRuleResult(rule);
 	    }
 	}
 	return RuleResult.createNA();
