@@ -57,9 +57,7 @@ public class CurricularRulesManager {
 	return null;
     }
 
-    public static CurricularRule createCompositeRule(DegreeModule degreeModuleToApplyRule,
-	    LogicOperators logicOperator, ExecutionPeriod begin, ExecutionPeriod end,
-	    CurricularRule... curricularRules) {
+    public static CurricularRule createCompositeRule(LogicOperators logicOperator, CurricularRule... curricularRules) {
 	return CurricularRule.createCurricularRule(logicOperator, curricularRules);
     }
 

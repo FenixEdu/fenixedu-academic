@@ -94,11 +94,9 @@ public class CompositeRulesManagementBackingBean extends CurricularRulesManageme
 
     public String createCompositeRule() throws FenixFilterException {
         try {
-            final Object args[] = { getDegreeModuleID(),
-                    LogicOperators.valueOf(getSelectedLogicOperator()), getSelectedCurricularRuleIDs(),
-                    getBeginExecutionPeriodID(),
-                    (getEndExecutionPeriodID() == null || getEndExecutionPeriodID().equals(NO_SELECTION_INTEGER)) ? null : 
-                        getEndExecutionPeriodID() };
+            final Object args[] = { 
+                    LogicOperators.valueOf(getSelectedLogicOperator()), 
+                    getSelectedCurricularRuleIDs() };
             ServiceUtils.executeService(getUserView(), "CreateCompositeRule", args);
             removeSelectedCurricularRuleIDs();
             getCurricularRuleItems().setValue(readCurricularRulesLabels());
@@ -111,4 +109,5 @@ public class CompositeRulesManagementBackingBean extends CurricularRulesManageme
         }
         return "";
     }
+
 }
