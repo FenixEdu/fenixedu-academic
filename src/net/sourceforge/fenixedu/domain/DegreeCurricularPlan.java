@@ -897,7 +897,9 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	    CourseGroup parentCourseGroup, CurricularPeriod curricularPeriod,
 	    ExecutionPeriod beginExecutionPeriod, ExecutionPeriod endExecutionPeriod) {
 
-	checkIfPresentInDegreeCurricularPlan(competenceCourse, this);
+	if (competenceCourse.getCurricularCourse(this) != null) {
+	    throw new DomainException("competenceCourse.already.has.a.curricular.course.in.degree.curricular.plan");
+	}
 	checkIfAnualBeginsInFirstPeriod(competenceCourse, curricularPeriod);
 
 	return new CurricularCourse(weight, prerequisites, prerequisitesEn, curricularStage,
@@ -911,19 +913,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
 	return new OptionalCurricularCourse(parentCourseGroup, name, nameEn, curricularStage,
 		curricularPeriod, beginExecutionPeriod, endExecutionPeriod);
-    }
-
-    private void checkIfPresentInDegreeCurricularPlan(final CompetenceCourse competenceCourse,
-	    final DegreeCurricularPlan degreeCurricularPlan) {
-
-	final List<DegreeModule> curricularCoursesFromDegreeCurricularPlan = degreeCurricularPlan
-		.getDcpDegreeModules(CurricularCourse.class, null);
-	for (CurricularCourse curricularCourse : competenceCourse.getAssociatedCurricularCourses()) {
-	    if (curricularCoursesFromDegreeCurricularPlan.contains(curricularCourse)) {
-		throw new DomainException(
-			"competenceCourse.already.has.a.curricular.course.in.degree.curricular.plan");
-	    }
-	}
     }
 
     private void checkIfAnualBeginsInFirstPeriod(final CompetenceCourse competenceCourse,
