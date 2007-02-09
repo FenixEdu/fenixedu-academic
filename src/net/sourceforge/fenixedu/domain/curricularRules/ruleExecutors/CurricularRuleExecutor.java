@@ -66,6 +66,9 @@ abstract public class CurricularRuleExecutor {
     }
     
     protected boolean appliesToCourseGroup(final EnrolmentContext enrolmentContext, final CurricularRule curricularRule) {
+	if (!curricularRule.hasContextCourseGroup() || curricularRule.getDegreeModuleToApplyRule().isRoot()) {
+	    return true;
+	}
 	final CurriculumModule curriculumModule = searchCurriculumModule(enrolmentContext, curricularRule);
 	final CourseGroup parentCourseGroup = curriculumModule.getCurriculumGroup().getDegreeModule();
 	return curricularRule.appliesToCourseGroup(parentCourseGroup);
