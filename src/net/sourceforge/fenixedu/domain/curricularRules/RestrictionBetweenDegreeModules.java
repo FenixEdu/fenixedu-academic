@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.util.LogicOperators;
 
 public class RestrictionBetweenDegreeModules extends RestrictionBetweenDegreeModules_Base {
 
-    private RestrictionBetweenDegreeModules(DegreeModule precedenceDegreeModule, Double minimumCredits) {
+    private RestrictionBetweenDegreeModules(final DegreeModule precedenceDegreeModule, final Double minimumCredits) {
         super();
         checkParameters(precedenceDegreeModule, minimumCredits);
         setPrecedenceDegreeModule(precedenceDegreeModule);
@@ -20,34 +20,34 @@ public class RestrictionBetweenDegreeModules extends RestrictionBetweenDegreeMod
         setCurricularRuleType(CurricularRuleType.PRECEDENCY_BETWEEN_DEGREE_MODULES);
     }
 
-    private void checkParameters(DegreeModule precedenceDegreeModule, Double minimumCredits) throws DomainException {
+    private void checkParameters(final DegreeModule precedenceDegreeModule, final Double minimumCredits) throws DomainException {
         if (precedenceDegreeModule == null || minimumCredits == null) {
             throw new DomainException("curricular.rule.invalid.parameters");
         }
     }
     
-    protected RestrictionBetweenDegreeModules(DegreeModule degreeModuleToApplyRule, DegreeModule precedenceDegreeModule,
-            Double minimumCredits, CourseGroup contextCourseGroup, ExecutionPeriod begin, ExecutionPeriod end) {
+    protected RestrictionBetweenDegreeModules(final CourseGroup degreeModuleToApplyRule, final CourseGroup precedenceDegreeModule,
+            final Double minimumCredits, final CourseGroup contextCourseGroup, final ExecutionPeriod begin, final ExecutionPeriod end) {
         
         this(precedenceDegreeModule, minimumCredits);
-        
-        if (degreeModuleToApplyRule == null || begin == null) {
-            throw new DomainException("curricular.rule.invalid.parameters");
-        }
-        
-        checkExecutionPeriods(begin, end);
-        
-        setDegreeModuleToApplyRule(degreeModuleToApplyRule);
-        setBegin(begin);
-        setEnd(end);
-        setContextCourseGroup(contextCourseGroup);
+        init(degreeModuleToApplyRule, contextCourseGroup, begin, end);
     }
     
-    protected void edit(DegreeModule precedenceDegreeModule, Double minimumCredits, CourseGroup contextCourseGroup) {
+    protected void edit(final CourseGroup precedenceDegreeModule, final Double minimumCredits, final CourseGroup contextCourseGroup) {
         checkParameters(precedenceDegreeModule, minimumCredits);
         setPrecedenceDegreeModule(precedenceDegreeModule);
         setMinimumCredits(minimumCredits);
         setContextCourseGroup(contextCourseGroup);
+    }
+    
+    @Override
+    public CourseGroup getDegreeModuleToApplyRule() {
+        return (CourseGroup) super.getDegreeModuleToApplyRule();
+    }
+    
+    @Override
+    public CourseGroup getPrecedenceDegreeModule() {
+        return (CourseGroup) super.getPrecedenceDegreeModule();
     }
 
     @Override
@@ -95,7 +95,7 @@ public class RestrictionBetweenDegreeModules extends RestrictionBetweenDegreeMod
     }
     
     public boolean hasMinimumCredits() {
-	return super.getMinimumCredits().doubleValue() != 0.0;
+	return getMinimumCredits() != null && getMinimumCredits().doubleValue() != 0.0;
     }
     
     public boolean allowCredits(final Double credits) {
