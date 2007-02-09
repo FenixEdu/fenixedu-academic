@@ -114,7 +114,7 @@
 					<f:selectItem itemLabel="#{enumerationBundle['BOLONHA_MASTER_DEGREE']}" itemValue="BOLONHA_MASTER_DEGREE"/>
 					<f:selectItem itemLabel="#{enumerationBundle['BOLONHA_INTEGRATED_MASTER_DEGREE']}" itemValue="BOLONHA_INTEGRATED_MASTER_DEGREE"/>
 				</fc:selectOneMenu>
-<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID2' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
+				<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID2' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
 				<h:outputText value="</p>" escape="false"/>
 				<h:outputText value="<p><label>#{bolonhaBundle['degree']}:</label>" escape="false"/>
 				<fc:selectOneMenu value="#{CurricularRulesManagement.selectedDegreeID}">

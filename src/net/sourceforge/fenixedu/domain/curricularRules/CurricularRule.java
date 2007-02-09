@@ -146,7 +146,7 @@ public abstract class CurricularRule extends CurricularRule_Base {
     abstract public boolean isLeaf();    
     abstract public List<GenericPair<Object, Boolean>> getLabel();
     
-    public static CurricularRule createCurricularRule(LogicOperators logicOperator, CurricularRule... curricularRules) {
+    static public CurricularRule createCurricularRule(final LogicOperators logicOperator, final CurricularRule... curricularRules) {
 	switch (logicOperator) {
 	case AND:
 	    return new AndRule(curricularRules);
