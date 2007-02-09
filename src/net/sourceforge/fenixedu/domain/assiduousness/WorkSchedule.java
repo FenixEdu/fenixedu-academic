@@ -51,7 +51,7 @@ public class WorkSchedule extends WorkSchedule_Base {
             if (mealInterval != null) {
                 Duration lunchDiscount = wsType.checkMealDurationAccordingToRules(mealInterval,
                         justificationInMealBreak(timeLeaves), workDaySheet.getTimeline(),
-                        firstWorkTimePoint);
+                        firstWorkTimePoint, lastWorkTimePoint);
                 if (lunchDiscount != null) {
                     firstWorkPeriod = workDaySheet.getTimeline().calculateWorkPeriodDuration(
                             new TimePoint(mealInterval.getStartTime(), false, null),

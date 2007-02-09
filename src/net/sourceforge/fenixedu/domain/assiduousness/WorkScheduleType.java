@@ -61,15 +61,15 @@ public class WorkScheduleType extends WorkScheduleType_Base {
     }
 
     public Duration checkMealDurationAccordingToRules(TimeInterval lunchBreak, boolean justification,
-            Timeline timeline, TimePoint firstClocking) {
+            Timeline timeline, TimePoint firstClocking, TimePoint lastWorkTimePoint) {
 
         if (definedMeal()) {
 
-            if(lunchBreak.overlap(getMeal().getMealBreak()) == null){
+            if (lunchBreak.overlap(getMeal().getMealBreak()) == null) {
                 return null;
             }
             Duration discount = calculateNotWorkedMealDuration(timeline, lunchBreak.getStartTime(),
-                    lunchBreak.getEndTime(), firstClocking);
+                    lunchBreak.getEndTime(), firstClocking, lastWorkTimePoint);
             if (discount.isLongerThan(getMeal().getMandatoryMealDiscount())
                     || discount.isEqual(getMeal().getMandatoryMealDiscount())) {
                 return Duration.ZERO;
@@ -115,29 +115,56 @@ public class WorkScheduleType extends WorkScheduleType_Base {
     }
 
     private Duration calculateNotWorkedMealDuration(Timeline timeline, TimeOfDay beginLunch,
-            TimeOfDay endLunch, TimePoint firstClocking) {
+            TimeOfDay endLunch, TimePoint firstClocking, TimePoint lastWorkTimePoint) {
         Duration totalDuration = Duration.ZERO;
         Interval scheduleMealBreak = getMeal().getMealBreak().toInterval(
                 new YearMonthDay().toDateTimeAtMidnight());
+        TimePoint previousVerifiedTimePoint = null;
         for (TimePoint timePoint : timeline.getTimePoints()) {
             DateTime timePointDateTime = timePoint.getDateTime(new YearMonthDay());
+            boolean isClosingAndNotOpeningWorkedPeriod = timeline
+                    .isClosingAndNotOpeningWorkedPeriod(timePoint);
             if (scheduleMealBreak.contains(timePointDateTime)
-                    && (!timePoint.getTime().isEqual(beginLunch))
+                    && !timePoint.getTime().isEqual(beginLunch)
+                    && (!timePoint.getTime().isEqual(endLunch) || timePoint
+                            .isAtSameTime(lastWorkTimePoint))
                     && (timeline.isOpeningAndNotClosingWorkedPeriod(timePoint)
-                            || timeline.isClosingAndNotOpeningWorkedPeriod(timePoint) || timePoint
+                            || isClosingAndNotOpeningWorkedPeriod || timePoint
                             .isAtSameTime(firstClocking))) {
                 if (timePoint.isAtSameTime(firstClocking)) {
                     totalDuration = totalDuration.plus(new Duration(scheduleMealBreak.getStart(),
                             timePointDateTime));
-                } else  {
-                    TimePoint nextWorkedTimePoint = timeline.getNextWorkedPoint(timePoint);
-                    DateTime endDateTime = scheduleMealBreak.getEnd();
-                    if (nextWorkedTimePoint != null
-                            && nextWorkedTimePoint.getDateTime(endDateTime.toYearMonthDay()).isBefore(
-                                    endDateTime)) {
-                        endDateTime = nextWorkedTimePoint.getDateTime(endDateTime.toYearMonthDay());
+                } else {
+                    if (isClosingAndNotOpeningWorkedPeriod) {
+                        TimePoint nextWorkedTimePoint = timeline.getNextWorkedPoint(timePoint);
+                        DateTime endDateTime = scheduleMealBreak.getEnd();
+                        if (nextWorkedTimePoint != null
+                                && nextWorkedTimePoint.getDateTime(endDateTime.toYearMonthDay())
+                                        .isBefore(endDateTime)) {
+                            endDateTime = nextWorkedTimePoint.getDateTime(endDateTime.toYearMonthDay());
+                        }
+                        totalDuration = totalDuration.plus(new Duration(timePointDateTime, endDateTime));
+                        previousVerifiedTimePoint = timePoint;
+                    } else { //isOpeningAndNotClosingWorkedPeriod
+                        TimePoint previousWorkedTimePoint = timeline.getPreviousWorkedPoint(timePoint);
+                        if (previousVerifiedTimePoint == null
+                                || !previousWorkedTimePoint.isAtSameTime(previousVerifiedTimePoint)) {
+                            DateTime beginDateTime = scheduleMealBreak.getStart();
+                            if (previousWorkedTimePoint != null
+                                    && previousWorkedTimePoint.getDateTime(
+                                            beginDateTime.toYearMonthDay()).isAfter(beginDateTime)) {
+                                beginDateTime = previousWorkedTimePoint.getDateTime(beginDateTime
+                                        .toYearMonthDay());
+                            }
+                            totalDuration = totalDuration.plus(new Duration(beginDateTime,
+                                    timePointDateTime));
+
+                            if (timePoint.isAtSameTime(lastWorkTimePoint)) {
+                                totalDuration = totalDuration.plus(new Duration(timePointDateTime,
+                                        scheduleMealBreak.getEnd()));
+                            }
+                        }
                     }
-                    totalDuration = totalDuration.plus(new Duration(timePointDateTime, endDateTime));
                 }
             }
         }

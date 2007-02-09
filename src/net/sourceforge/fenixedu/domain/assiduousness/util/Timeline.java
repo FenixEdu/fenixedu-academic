@@ -305,13 +305,22 @@ public class Timeline {
         return null;
     }
 
+    private TimePoint findIntervalEndPoint(AttributeType attribute, TimePoint timePoint) {
+        for (TimePoint point : getTimePoints()) {
+            if (!point.equals(timePoint) && isPointClosingAttributeInterval(point, attribute)) {
+                return point;
+            }
+        }
+        return null;
+    }
+
     public boolean isOpeningAndNotClosingWorkedPeriod(TimePoint point) {
+        boolean isPointEndingAnyWorkedPeriod = isPointEndingAnyWorkedPeriod(point);
         for (AttributeType attributeType : point.getPointAttributes().getAttributes()) {
             if (DomainConstants.WORKED_ATTRIBUTES.contains(attributeType)
-                    && point.getIntervalAttributes().contains(attributeType)) {
-                if (findIntervalEndPointByAttribute(attributeType) == null) {
-                    return true;
-                }
+                    && point.getIntervalAttributes().contains(attributeType)
+                    && !isPointEndingAnyWorkedPeriod) {
+                return true;
             }
         }
         return false;
@@ -370,6 +379,15 @@ public class Timeline {
     private boolean isPointStartingAnyWorkedPeriod(TimePoint point) {
         for (AttributeType attributeType : DomainConstants.WORKED_ATTRIBUTES.getAttributes()) {
             if (isPointStartingAttributeInterval(point, attributeType)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isPointEndingAnyWorkedPeriod(TimePoint point) {
+        for (AttributeType attributeType : DomainConstants.WORKED_ATTRIBUTES.getAttributes()) {
+            if (isPointClosingAttributeInterval(point, attributeType)) {
                 return true;
             }
         }
@@ -456,7 +474,7 @@ public class Timeline {
                     return totalDuration;
                 }
             } while (countNumberOfWorkedAttributes(point2) > 1
-                    || (countNumberOfWorkedAttributesInInterval(point2) > 1)                  
+                    || (countNumberOfWorkedAttributesInInterval(point2) > 1)
                     || (point2.getPointAttributes().contains(AttributeType.JUSTIFICATION)));
         }
 
@@ -537,10 +555,10 @@ public class Timeline {
                         totalDuration = totalDuration.plus(temp);
                     }
                 }
-            } 
-//            else {
-//                break;
-//            }
+            }
+            //            else {
+            //                break;
+            //            }
         }
         for (Interval justificationInterval : justificationsIntervals) {
             for (Interval workedInterval : timePointIntervals) {
@@ -842,6 +860,17 @@ public class Timeline {
     public TimePoint getNextWorkedPoint(TimePoint timePoint) {
         int timepointPosition = getTimePointIndex(timePoint);
         for (int iter = timepointPosition + 1; iter < getTimePoints().size(); iter++) {
+            TimePoint tempTimePoint = getTimePoints().get(iter);
+            if (tempTimePoint.getPointAttributes().contains(DomainConstants.WORKED_ATTRIBUTES)) {
+                return tempTimePoint;
+            }
+        }
+        return null;
+    }
+    
+    public TimePoint getPreviousWorkedPoint(TimePoint timePoint) {
+        int timepointPosition = getTimePointIndex(timePoint);
+        for (int iter = timepointPosition - 1; iter >= 0; iter--) {
             TimePoint tempTimePoint = getTimePoints().get(iter);
             if (tempTimePoint.getPointAttributes().contains(DomainConstants.WORKED_ATTRIBUTES)) {
                 return tempTimePoint;
