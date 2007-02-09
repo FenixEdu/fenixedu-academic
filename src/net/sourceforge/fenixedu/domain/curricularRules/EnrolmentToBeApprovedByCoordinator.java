@@ -4,10 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
-import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class EnrolmentToBeApprovedByCoordinator extends EnrolmentToBeApprovedByCoordinator_Base {
 
@@ -16,21 +15,11 @@ public class EnrolmentToBeApprovedByCoordinator extends EnrolmentToBeApprovedByC
         setCurricularRuleType(CurricularRuleType.ENROLMENT_TO_BE_APPROVED_BY_COORDINATOR);
     }
 
-    protected EnrolmentToBeApprovedByCoordinator(DegreeModule degreeModuleToApplyRule, CourseGroup contextCourseGroup,
-            ExecutionPeriod begin, ExecutionPeriod end) {
+    protected EnrolmentToBeApprovedByCoordinator(final CurricularCourse toApplyRule,
+	    final CourseGroup contextCourseGroup, final ExecutionPeriod begin, final ExecutionPeriod end) {
 
         this();
-
-        if (degreeModuleToApplyRule == null || begin == null) {
-            throw new DomainException("curricular.rule.invalid.parameters");
-        }
-        
-        checkExecutionPeriods(begin, end);
-        
-        setDegreeModuleToApplyRule(degreeModuleToApplyRule);
-        setContextCourseGroup(contextCourseGroup);
-        setBegin(begin);
-        setEnd(end);
+        init(toApplyRule, contextCourseGroup, begin, end);
     }
     
     protected void edit(CourseGroup contextCourseGroup) {

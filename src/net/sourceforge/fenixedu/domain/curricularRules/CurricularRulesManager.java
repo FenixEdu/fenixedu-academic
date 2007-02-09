@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
+import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.util.LogicOperators;
 
@@ -85,7 +86,7 @@ public class CurricularRulesManager {
 	final Unit departmentUnit = (Unit) RootDomainObject.getInstance().readPartyByOID(
 		parametersDTO.getSelectedDepartmentUnitID());
 
-	return new AnyCurricularCourse((CurricularCourse) toApplyRule, contextCourseGroup, begin, end,
+	return new AnyCurricularCourse((OptionalCurricularCourse) toApplyRule, contextCourseGroup, begin, end,
 		parametersDTO.getCredits(), parametersDTO.getCurricularPeriodInfoDTO().getOrder(),
 		parametersDTO.getMinimumYear(), parametersDTO.getMaximumYear(), parametersDTO
 			.getDegreeType(), degree, departmentUnit);
@@ -127,7 +128,8 @@ public class CurricularRulesManager {
 	final CourseGroup contextCourseGroup = (CourseGroup) RootDomainObject.getInstance()
 		.readDegreeModuleByOID(parametersDTO.getContextCourseGroupID());
 
-	return new EnrolmentToBeApprovedByCoordinator(toApplyRule, contextCourseGroup, begin, end);
+	return new EnrolmentToBeApprovedByCoordinator((CurricularCourse) toApplyRule,
+		contextCourseGroup, begin, end);
     }
 
     private static CurricularRule createCreditsLimit(DegreeModule toApplyRule, ExecutionPeriod begin,
@@ -158,8 +160,9 @@ public class CurricularRulesManager {
 	final CourseGroup contextCourseGroup = (CourseGroup) RootDomainObject.getInstance()
 		.readDegreeModuleByOID(parametersDTO.getContextCourseGroupID());
 
-	return new RestrictionEnroledDegreeModule((CurricularCourse) toApplyRule, enroledDegreeModule,
-		contextCourseGroup, parametersDTO.getCurricularPeriodInfoDTO(), begin, end);
+	return new RestrictionEnroledDegreeModule((CurricularCourse) toApplyRule,
+		(CurricularCourse) enroledDegreeModule, contextCourseGroup, parametersDTO
+			.getCurricularPeriodInfoDTO(), begin, end);
     }
 
     private static CurricularRule createRestrictionDoneDegreeModule(DegreeModule toApplyRule,

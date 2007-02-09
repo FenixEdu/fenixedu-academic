@@ -14,33 +14,27 @@ import net.sourceforge.fenixedu.domain.util.LogicOperators;
 
 public class RestrictionEnroledDegreeModule extends RestrictionEnroledDegreeModule_Base {
 
-    private RestrictionEnroledDegreeModule(DegreeModule enroledDegreeModule) {
+    private RestrictionEnroledDegreeModule(final CurricularCourse toBeEnroled) {
         super();
-        if (enroledDegreeModule == null) {
+        if (toBeEnroled == null) {
             throw new DomainException("curricular.rule.invalid.parameters");
         }
-        setPrecedenceDegreeModule(enroledDegreeModule);
+        setPrecedenceDegreeModule(toBeEnroled);
         setCurricularRuleType(CurricularRuleType.PRECEDENCY_ENROLED_DEGREE_MODULE);
     }
 
-    protected RestrictionEnroledDegreeModule(CurricularCourse degreeModuleToApplyRule,
-            DegreeModule enroledDegreeModule, CourseGroup contextCourseGroup,
-            CurricularPeriodInfoDTO curricularPeriodInfoDTO, ExecutionPeriod begin, ExecutionPeriod end) {
+    protected RestrictionEnroledDegreeModule(final CurricularCourse toApplyRule,
+	    final CurricularCourse toBeEnroled, final CourseGroup contextCourseGroup,
+	    final CurricularPeriodInfoDTO curricularPeriodInfoDTO, final ExecutionPeriod begin,
+	    final ExecutionPeriod end) {
 
-        this(enroledDegreeModule);
-
-        if (degreeModuleToApplyRule == null || begin == null) {
-            throw new DomainException("curricular.rule.invalid.parameters");
-        }
-        
-        checkExecutionPeriods(begin, end);
-        
-        setDegreeModuleToApplyRule(degreeModuleToApplyRule);
-        setBegin(begin);
-        setEnd(end);
-        setContextCourseGroup(contextCourseGroup);
-        setCurricularPeriodType(curricularPeriodInfoDTO.getPeriodType());
-        setCurricularPeriodOrder(curricularPeriodInfoDTO.getOrder());
+	this(toBeEnroled);
+	init(toApplyRule, contextCourseGroup, begin, end);
+	
+	if (curricularPeriodInfoDTO != null) {
+	    setCurricularPeriodType(curricularPeriodInfoDTO.getPeriodType());
+	    setCurricularPeriodOrder(curricularPeriodInfoDTO.getOrder());
+	}
     }
     
     protected void edit(DegreeModule enroledDegreeModule, CourseGroup contextCourseGroup, CurricularPeriodInfoDTO curricularPeriodInfoDTO) {
@@ -48,6 +42,16 @@ public class RestrictionEnroledDegreeModule extends RestrictionEnroledDegreeModu
         setContextCourseGroup(contextCourseGroup);
         setCurricularPeriodType(curricularPeriodInfoDTO.getPeriodType());
         setCurricularPeriodOrder(curricularPeriodInfoDTO.getOrder());
+    }
+    
+    @Override
+    public CurricularCourse getDegreeModuleToApplyRule() {
+        return (CurricularCourse) super.getDegreeModuleToApplyRule();
+    }
+    
+    @Override
+    public CurricularCourse getPrecedenceDegreeModule() {
+        return (CurricularCourse) super.getPrecedenceDegreeModule();
     }
 
     @Override

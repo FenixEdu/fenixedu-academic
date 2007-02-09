@@ -7,42 +7,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
-import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
-import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
+import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 public class AnyCurricularCourse extends AnyCurricularCourse_Base {
     
-    protected AnyCurricularCourse(CurricularCourse curricularCourseToApplyRule,
-            CourseGroup contextCourseGroup, ExecutionPeriod begin, ExecutionPeriod end,
-            Double credits, Integer curricularPeriodOrder, Integer minimumYear, Integer maximumYear, 
-            DegreeType degreeType, Degree degree, Unit departmentUnit) {
+    protected AnyCurricularCourse(final OptionalCurricularCourse toApplyRule,
+	    final CourseGroup contextCourseGroup, final ExecutionPeriod begin,
+	    final ExecutionPeriod end, final Double credits, final Integer curricularPeriodOrder,
+	    final Integer minimumYear, final Integer maximumYear, final DegreeType degreeType,
+	    final Degree degree, final Unit departmentUnit) {
         
         super();
-
-        if (curricularCourseToApplyRule == null || begin == null) {
-            throw new DomainException("curricular.rule.invalid.parameters");
-        }
-        if (curricularCourseToApplyRule.getType() != CurricularCourseType.OPTIONAL_COURSE) {
-            throw new DomainException("curricular.rule.invalid.curricular.course.type");
-        }
+        init(toApplyRule, contextCourseGroup, begin, end, CurricularRuleType.ANY_CURRICULAR_COURSE);
         
-        checkExecutionPeriods(begin, end);
         checkYears(minimumYear, maximumYear);
         
-        setDegreeModuleToApplyRule(curricularCourseToApplyRule);
-        setContextCourseGroup(contextCourseGroup);
-        setBegin(begin);
-        setEnd(end);
-        setCurricularRuleType(CurricularRuleType.ANY_CURRICULAR_COURSE);
         setCredits(credits);
         setCurricularPeriodOrder(curricularPeriodOrder);
         setMinimumYear(minimumYear);
@@ -52,24 +40,30 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
         setDepartmentUnit(departmentUnit);
     }
     
-    protected void edit(CourseGroup contextCourseGroup, Double credits, Integer curricularPeriodOrder,
-            Integer minimumYear, Integer maximumYear, DegreeType degreeType, Degree degree, Unit departmentUnit) {
-        
-        checkYears(minimumYear, maximumYear);
-        setContextCourseGroup(contextCourseGroup);
-        setCredits(credits);
-        setCurricularPeriodOrder(curricularPeriodOrder);
-        setMinimumYear(minimumYear);
-        setMaximumYear(maximumYear);
-        setBolonhaDegreeType(degreeType);
-        setDegree(degree);
-        setDepartmentUnit(departmentUnit);
+    protected void edit(final CourseGroup contextCourseGroup, final Double credits,
+	    final Integer curricularPeriodOrder, final Integer minimumYear, final Integer maximumYear,
+	    final DegreeType degreeType, final Degree degree, final Unit departmentUnit) {
+
+	checkYears(minimumYear, maximumYear);
+	setContextCourseGroup(contextCourseGroup);
+	setCredits(credits);
+	setCurricularPeriodOrder(curricularPeriodOrder);
+	setMinimumYear(minimumYear);
+	setMaximumYear(maximumYear);
+	setBolonhaDegreeType(degreeType);
+	setDegree(degree);
+	setDepartmentUnit(departmentUnit);
     }
     
     private void checkYears(Integer minimumYear, Integer maximumYear) throws DomainException {
         if (minimumYear != null && maximumYear != null && minimumYear.intValue() > maximumYear.intValue()) {
             throw new DomainException("error.minimum.greater.than.maximum");
         }
+    }
+    
+    @Override
+    public OptionalCurricularCourse getDegreeModuleToApplyRule() {
+        return (OptionalCurricularCourse) super.getDegreeModuleToApplyRule();
     }
     
     @Override
@@ -204,5 +198,9 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
 
     public boolean hasBolonhaDegreeType() {
 	return getBolonhaDegreeType() != null;
+    }
+    
+    public boolean hasCredits() {
+	return getCredits() != null && getCredits().doubleValue() != 0d;
     }
 }
