@@ -26,7 +26,7 @@ public class DegreeModulesSelectionLimitExecutor extends CurricularRuleExecutor 
 	
 	if (rule.appliesToCourseGroup(parentCourseGroup)) {
 	    int total = countTotalDegreeModules(enrolmentContext, courseGroup, curriculumGroup);
-	    return rule.allowNumberOfDegreeModules(total) ? RuleResult.createTrue() : createFalseRuleResult(rule);
+	    return rule.numberOfDegreeModulesExceedMaximum(total) ? createFalseRuleResult(rule) : RuleResult.createTrue();
 	}
 
 	return RuleResult.createNA();
@@ -38,8 +38,9 @@ public class DegreeModulesSelectionLimitExecutor extends CurricularRuleExecutor 
 	int numberOfDegreeModulesToEnrol = countNumberOfDegreeModulesToEnrol(enrolmentContext, courseGroup);
 	int numberOfApprovedEnrolments = curriculumGroup.getNumberOfApprovedEnrolments();
 	int numberOfEnrolments = curriculumGroup.getNumberOfEnrolments(enrolmentContext.getExecutionPeriod());
+	int numberOfChildCurriculumGroups = curriculumGroup.getNumberOfChildCurriculumGroupsWithCourseGroup();
 	
-	return numberOfApprovedEnrolments + numberOfEnrolments + numberOfDegreeModulesToEnrol;
+	return numberOfApprovedEnrolments + numberOfEnrolments + numberOfDegreeModulesToEnrol + numberOfChildCurriculumGroups;
     }
 
     private RuleResult createFalseRuleResult(final DegreeModulesSelectionLimit rule) {
@@ -73,22 +74,20 @@ public class DegreeModulesSelectionLimitExecutor extends CurricularRuleExecutor 
 	    return RuleResult.createNA();
 	}
 	
-	final CourseGroup courseGroup = rule.getDegreeModuleToApplyRule();
-	final CurriculumGroup curriculumGroup = (CurriculumGroup) searchCurriculumModule(enrolmentContext, rule);
-	final CourseGroup parentCourseGroup = curriculumGroup.getCurriculumGroup().getDegreeModule();
-	
-	if (rule.appliesToCourseGroup(parentCourseGroup)) {
+	if (appliesToCourseGroup(enrolmentContext,rule)) {
+	    
+	    final CourseGroup courseGroup = rule.getDegreeModuleToApplyRule();
+	    final CurriculumGroup curriculumGroup = (CurriculumGroup) searchCurriculumModule(enrolmentContext, rule);
 
 	    int total = countTotalDegreeModules(enrolmentContext, courseGroup, curriculumGroup);
 
-	    if (!rule.allowNumberOfDegreeModules(total)) {
+	    if (rule.numberOfDegreeModulesExceedMaximum(total)) {
 		return createFalseRuleResult(rule);
 	    }
 	    
 	    final ExecutionPeriod executionPeriod = enrolmentContext.getExecutionPeriod();
 	    total += curriculumGroup.getNumberOfEnrolments(executionPeriod.getPreviousExecutionPeriod());
-	    return rule.allowNumberOfDegreeModules(total) ? RuleResult.createTrue() : RuleResult.createTrue(EnrolmentResultType.TEMPORARY);
-	    
+	    return rule.numberOfDegreeModulesExceedMaximum(total) ? RuleResult.createTrue(EnrolmentResultType.TEMPORARY) : RuleResult.createTrue();
 	}
 	
 	return RuleResult.createNA();
