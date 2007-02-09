@@ -78,7 +78,7 @@ public abstract class CurricularRule extends CurricularRule_Base {
     }
 
     public boolean appliesToContext(final Context context) {
-        return this.appliesToCourseGroup(context.getParentCourseGroup());
+        return context == null || this.appliesToCourseGroup(context.getParentCourseGroup());
     }
     
     public boolean appliesToCourseGroup(final CourseGroup courseGroup) {
