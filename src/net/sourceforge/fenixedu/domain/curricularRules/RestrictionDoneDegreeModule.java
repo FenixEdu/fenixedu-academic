@@ -86,7 +86,7 @@ public class RestrictionDoneDegreeModule extends RestrictionDoneDegreeModule_Bas
             labelList.add(new GenericPair<Object, Boolean>(getContextCourseGroup().getOneFullName(), false));
         }
 
-        if (!getCurricularPeriodOrder().equals(0)) {
+        if (!hasNoCurricularPeriodOrder()) {
             labelList.add(new GenericPair<Object, Boolean>(" ", false));
             labelList.add(new GenericPair<Object, Boolean>("label.and", true));
             labelList.add(new GenericPair<Object, Boolean>(" ", false));
