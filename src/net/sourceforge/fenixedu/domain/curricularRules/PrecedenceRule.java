@@ -21,7 +21,7 @@ public abstract class PrecedenceRule extends PrecedenceRule_Base {
                         && this.getCurricularPeriodOrder().equals(context.getCurricularPeriod().getChildOrder())));
     }
     
-    private boolean hasNoCurricularPeriodOrder() {
+    protected boolean hasNoCurricularPeriodOrder() {
         return (this.getCurricularPeriodType() == null || this.getCurricularPeriodOrder() == null 
                 || (this.getCurricularPeriodType().equals(CurricularPeriodType.SEMESTER) 
                         && this.getCurricularPeriodOrder().equals(0)));
