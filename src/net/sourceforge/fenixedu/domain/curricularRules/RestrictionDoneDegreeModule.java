@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.util.LogicOperators;
 
 public class RestrictionDoneDegreeModule extends RestrictionDoneDegreeModule_Base {
        
-    private RestrictionDoneDegreeModule(DegreeModule done) {
+    private RestrictionDoneDegreeModule(final DegreeModule done) {
         super();
         if (done == null) {
             throw new DomainException("curricular.rule.invalid.parameters");
@@ -28,17 +28,7 @@ public class RestrictionDoneDegreeModule extends RestrictionDoneDegreeModule_Bas
             ExecutionPeriod begin, ExecutionPeriod end) {
         
         this(done);
-        
-        if (toApply == null || begin == null) {
-            throw new DomainException("curricular.rule.invalid.parameters");
-        }
-        
-        checkExecutionPeriods(begin, end);
-        
-        setDegreeModuleToApplyRule(toApply);
-        setBegin(begin);
-        setEnd(end);
-        setContextCourseGroup(contextCourseGroup);
+        init(toApply, contextCourseGroup, begin, end);
         if (curricularPeriodInfoDTO != null) {
             setCurricularPeriodType(curricularPeriodInfoDTO.getPeriodType());
             setCurricularPeriodOrder(curricularPeriodInfoDTO.getOrder());
