@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 
 public abstract class PrecedenceRule extends PrecedenceRule_Base {
     
-    public PrecedenceRule() {
+    protected PrecedenceRule() {
         super();
     }
 
