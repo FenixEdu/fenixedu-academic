@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformati
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLevel;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
+import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReference;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
@@ -510,6 +511,55 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	return curricularCoursesMap;
     }
 
+    public Set<DegreeCurricularPlan> presentIn() {
+	Set<DegreeCurricularPlan> result = new HashSet<DegreeCurricularPlan>();
+	for (CurricularCourse curricularCourse : this.getAssociatedCurricularCourses()) {
+	    result.add(curricularCourse.getDegreeCurricularPlan());
+	}
+
+	return result;
+    }
+
+    public boolean isAssociatedToAnyDegree(final Set<Degree> degrees) {
+	for (final CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
+	    final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
+	    final Degree degree = degreeCurricularPlan.getDegree();
+	    if (degrees.contains(degree)) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<CurricularCourse> getCurricularCoursesWithActiveScopesInExecutionPeriod(
+	    final ExecutionPeriod executionPeriod) {
+	return (List<CurricularCourse>) CollectionUtils.select(getAssociatedCurricularCourses(),
+		new Predicate() {
+
+		    public boolean evaluate(Object arg0) {
+			CurricularCourse curricularCourse = (CurricularCourse) arg0;
+
+			for (DegreeModuleScope moduleScope : curricularCourse.getDegreeModuleScopes()) {
+			    if (moduleScope.isActiveForExecutionPeriod(executionPeriod)) {
+				return true;
+			    }
+			}
+			return false;
+		    }
+		});
+    }
+    
+    public CurricularCourse getCurricularCourse(final DegreeCurricularPlan degreeCurricularPlan) {
+	for (final CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
+	    if (curricularCourse.getDegreeCurricularPlan() == degreeCurricularPlan) {
+		return curricularCourse;
+	    }
+	}
+	
+	return null;
+    }
+
     public List<Enrolment> getActiveEnrollments(ExecutionYear executionYear) {
 	List<Enrolment> results = new ArrayList<Enrolment>();
 	for (CurricularCourse curricularCourse : getAssociatedCurricularCourses()) {
@@ -642,15 +692,6 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	return null;
     }
 
-    public Set<DegreeCurricularPlan> presentIn() {
-	Set<DegreeCurricularPlan> result = new HashSet<DegreeCurricularPlan>();
-	for (CurricularCourse curricularCourse : this.getAssociatedCurricularCourses()) {
-	    result.add(curricularCourse.getDegreeCurricularPlan());
-	}
-
-	return result;
-    }
-
     public boolean isAnual() {
 	return this.getRegime() == RegimeType.ANUAL;
     }
@@ -699,17 +740,6 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	    }
 	}
 	return result;
-    }
-
-    public boolean isAssociatedToAnyDegree(final Set<Degree> degrees) {
-	for (final CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
-	    final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
-	    final Degree degree = degreeCurricularPlan.getDegree();
-	    if (degrees.contains(degree)) {
-		return true;
-	    }
-	}
-	return false;
     }
 
     public MultiLanguageString getNameI18N() {
@@ -761,24 +791,5 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 
 	return executionCourseList;
     }
-
-    @SuppressWarnings("unchecked")
-    public List<CurricularCourse> getCurricularCoursesWithActiveScopesInExecutionPeriod(
-	    final ExecutionPeriod executionPeriod) {
-	return (List<CurricularCourse>) CollectionUtils.select(getAssociatedCurricularCourses(),
-		new Predicate() {
-
-		    public boolean evaluate(Object arg0) {
-			CurricularCourse curricularCourse = (CurricularCourse) arg0;
-
-			for (DegreeModuleScope moduleScope : curricularCourse.getDegreeModuleScopes()) {
-			    if (moduleScope.isActiveForExecutionPeriod(executionPeriod)) {
-				return true;
-			    }
-			}
-			return false;
-		    }
-		});
-    }
-
+    
 }
