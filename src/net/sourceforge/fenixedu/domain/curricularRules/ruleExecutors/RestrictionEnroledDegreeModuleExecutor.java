@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.RestrictionEnroledDegreeModule;
-import net.sourceforge.fenixedu.domain.enrolment.DegreeModuleToEnrol;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 
 public class RestrictionEnroledDegreeModuleExecutor extends CurricularRuleExecutor {
@@ -12,13 +11,12 @@ public class RestrictionEnroledDegreeModuleExecutor extends CurricularRuleExecut
     protected RuleResult executeEnrolmentWithRules(final CurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
 
 	final RestrictionEnroledDegreeModule rule = (RestrictionEnroledDegreeModule) curricularRule;
-	final DegreeModuleToEnrol moduleToEnrol = searchDegreeModuleToEnrol(enrolmentContext, rule.getDegreeModuleToApplyRule());
-	
-	if (!rule.appliesToContext(moduleToEnrol.getContext())) {
+
+	if (!appliesToContext(enrolmentContext, rule)) {
 	    return RuleResult.createNA();
 	}
 	
-	final CurricularCourse curricularCourseToBeEnroled = (CurricularCourse) rule.getPrecedenceDegreeModule();
+	final CurricularCourse curricularCourseToBeEnroled = rule.getPrecedenceDegreeModule();
 	if (isEnroled(enrolmentContext, curricularCourseToBeEnroled) || isEnrolling(enrolmentContext, curricularCourseToBeEnroled)) {
 	    return RuleResult.createTrue();
 	}
