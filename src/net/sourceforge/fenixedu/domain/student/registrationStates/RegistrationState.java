@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 
 import org.joda.time.DateTime;
+import org.joda.time.YearMonthDay;
 
 /**
  * 
@@ -162,16 +163,19 @@ public abstract class RegistrationState extends RegistrationState_Base implement
 
 	public Object execute() {
 
+	    final DateTime stateDateTime = new YearMonthDay().equals(getStateDate()) ? getStateDate()
+		    .toDateTimeAtCurrentTime() : getStateDate().toDateTimeAtMidnight();
+
 	    RegistrationState createdState = null;
 
-	    final RegistrationState previousState = getRegistration().getStateInDate(getStateDate());
+	    final RegistrationState previousState = getRegistration().getStateInDate(stateDateTime);
 	    if (previousState == null) {
-		createdState = RegistrationState.createState(getRegistration(), null, getStateDate()
-			.toDateTimeAtMidnight(), getStateType());
+		createdState = RegistrationState.createState(getRegistration(), null, stateDateTime,
+			getStateType());
 	    } else {
 		StateMachine.execute(previousState, getStateType().name());
 		createdState = getRegistration().getActiveState();
-		createdState.setStateDate(getStateDate().toDateTimeAtMidnight());
+		createdState.setStateDate(stateDateTime);
 	    }
 	    createdState.setRemarks(getRemarks());
 

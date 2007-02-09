@@ -1189,7 +1189,7 @@ public class Registration extends Registration_Base {
     public boolean isBolonha() {
 	return getDegreeType().isBolonhaType();
     }
-    
+
     public boolean isActiveForOffice(Unit office) {
 	return isActive() && isForOffice(office.getAdministrativeOffice());
     }
@@ -1266,14 +1266,14 @@ public class Registration extends Registration_Base {
     public boolean hasApprovement(ExecutionYear executionYear) {
 	int curricularYearInTheBegin = getCurricularYear(executionYear);
 	int curricularYearAtTheEnd = getCurricularYear(executionYear.getNextExecutionYear());
-	
+
 	if (curricularYearInTheBegin > curricularYearAtTheEnd) {
 	    throw new DomainException("Registration.curricular.year.has.decreased");
 	}
-	
+
 	return curricularYearAtTheEnd > curricularYearInTheBegin;
     }
-    
+
     public boolean isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegree() {
 	final DegreeType degreeType = getDegreeType();
 	return (degreeType == DegreeType.DEGREE || degreeType == DegreeType.BOLONHA_DEGREE || degreeType == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
@@ -1316,20 +1316,21 @@ public class Registration extends Registration_Base {
 
     @Override
     public ExecutionYear getRegistrationYear() {
-	return super.getRegistrationYear() == null ? getFirstEnrolmentExecutionYear() : super.getRegistrationYear();
+	return super.getRegistrationYear() == null ? getFirstEnrolmentExecutionYear() : super
+		.getRegistrationYear();
     }
-    
+
     public boolean isFirstTime(ExecutionYear executionYear) {
 	return getRegistrationYear() == executionYear;
     }
-    
+
     public boolean isFirstTime() {
 	return isFirstTime(ExecutionYear.readCurrentExecutionYear());
     }
 
     public Collection<ExecutionYear> getEnrolmentsExecutionYears() {
 	final Collection<ExecutionYear> result = new ArrayList<ExecutionYear>();
-	
+
 	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
 	    for (final Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
 		result.add(enrolment.getExecutionPeriod().getExecutionYear());
@@ -1340,7 +1341,8 @@ public class Registration extends Registration_Base {
     }
 
     public SortedSet<ExecutionYear> getSortedEnrolmentsExecutionYears() {
-	final SortedSet<ExecutionYear> result = new TreeSet<ExecutionYear>(ExecutionYear.EXECUTION_YEAR_COMPARATOR_BY_YEAR);
+	final SortedSet<ExecutionYear> result = new TreeSet<ExecutionYear>(
+		ExecutionYear.EXECUTION_YEAR_COMPARATOR_BY_YEAR);
 	result.addAll(getEnrolmentsExecutionYears());
 
 	return result;
@@ -1349,14 +1351,14 @@ public class Registration extends Registration_Base {
     public ExecutionYear getFirstEnrolmentExecutionYear() {
 	return getSortedEnrolmentsExecutionYears().first();
     }
-    
+
     public ExecutionYear getLastEnrolmentExecutionYear() {
 	return getSortedEnrolmentsExecutionYears().last();
     }
-    
+
     public Collection<ExecutionPeriod> getEnrolmentsExecutionPeriods() {
 	final Collection<ExecutionPeriod> result = new ArrayList<ExecutionPeriod>();
-	
+
 	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
 	    for (final Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
 		result.add(enrolment.getExecutionPeriod());
@@ -1367,7 +1369,8 @@ public class Registration extends Registration_Base {
     }
 
     public SortedSet<ExecutionPeriod> getSortedEnrolmentsExecutionPeriods() {
-	final SortedSet<ExecutionPeriod> result = new TreeSet<ExecutionPeriod>(ExecutionPeriod.EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR);
+	final SortedSet<ExecutionPeriod> result = new TreeSet<ExecutionPeriod>(
+		ExecutionPeriod.EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR);
 	result.addAll(getEnrolmentsExecutionPeriods());
 
 	return result;
@@ -1471,7 +1474,7 @@ public class Registration extends Registration_Base {
 	return activeState != null ? activeState.getStateType() : RegistrationStateType.REGISTERED;
     }
 
-    public RegistrationState getStateInDate(YearMonthDay date) {
+    public RegistrationState getStateInDate(DateTime dateTime) {
 
 	List<RegistrationState> sortedRegistrationStates = new ArrayList<RegistrationState>(
 		getRegistrationStates());
@@ -1481,7 +1484,7 @@ public class Registration extends Registration_Base {
 		.listIterator(sortedRegistrationStates.size()); iterator.hasPrevious();) {
 
 	    RegistrationState registrationState = iterator.previous();
-	    if (date.toDateTimeAtMidnight().isAfter(registrationState.getStateDate())) {
+	    if (!dateTime.isBefore(registrationState.getStateDate())) {
 		return registrationState;
 	    }
 	}
@@ -1524,7 +1527,7 @@ public class Registration extends Registration_Base {
 	    if (state.getStateDate().isBefore(
 		    executionYear.getBeginDateYearMonthDay().toDateTimeAtMidnight())) {
 		break;
-	}
+	    }
 
 	}
 
