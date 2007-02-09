@@ -918,6 +918,8 @@
 			<forward name="showDegreeModulesToEnrol" path="enrolment.bolonha.showDegreeModulesToEnrol" />
 			<forward name="chooseOptionalCurricularCourseToEnrol" path="enrolment.bolonha.chooseOptionalCurricularCourseEnrol" />
 			<forward name="showOutOfEnrollmentPeriodMessage" path="enrolment.bolonha.showOutOfEnrollmentPeriodMessage" />
+			<forward name="showEnrollmentInstructions" path="enrolment.bolonha.showEnrollmentInstructions"/>
+			<forward name="notAuthorized" path="df.page.notAuthorized"/>
 			
 		</action>
 		

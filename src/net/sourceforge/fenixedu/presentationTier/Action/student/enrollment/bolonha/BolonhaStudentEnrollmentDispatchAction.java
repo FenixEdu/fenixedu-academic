@@ -34,7 +34,7 @@ public class BolonhaStudentEnrollmentDispatchAction extends FenixDispatchAction 
 	    HttpServletResponse response) {
 
 	final List<Registration> registrations = getActiveRegistrationsToEnrolByStudent(request);
-	
+
 	if (registrations.size() == 1) {
 	    final Registration registration = registrations.iterator().next();
 	    return prepareShowDegreeModulesToEnrol(mapping, form, request, response, registration
@@ -57,6 +57,10 @@ public class BolonhaStudentEnrollmentDispatchAction extends FenixDispatchAction 
 	    HttpServletRequest request, HttpServletResponse response) {
 
 	final Registration registration = getRegistration((DynaActionForm) form);
+	if (!getLoggedPerson(request).getStudent().hasRegistrations(registration)) {
+	    return mapping.findForward("notAuthorized");
+	}
+
 	return prepareShowDegreeModulesToEnrol(mapping, form, request, response, registration
 		.getLastStudentCurricularPlan());
 
@@ -206,6 +210,11 @@ public class BolonhaStudentEnrollmentDispatchAction extends FenixDispatchAction 
 	RenderUtils.invalidateViewState("optionalEnrolment");
 
 	return mapping.findForward("chooseOptionalCurricularCourseToEnrol");
+    }
+    
+    public ActionForward showEnrollmentInstructions(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	return mapping.findForward("showEnrollmentInstructions");
     }
 
 }
