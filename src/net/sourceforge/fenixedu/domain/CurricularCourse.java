@@ -356,6 +356,29 @@ public class CurricularCourse extends CurricularCourse_Base {
 	return getCurricularYearByBranchAndSemester(branch, semester, new Date());
     }
 
+    
+    public CurricularYear getCurricularYearByBranchAndSemester(final Branch branch, final Integer semester, final Date date) {
+	final List<CurricularCourseScope> scopesFound = new ArrayList<CurricularCourseScope>();
+	for (CurricularCourseScope scope : getScopesSet()) {
+	    if(scope.getCurricularSemester().getSemester().equals(semester) && scope.isActive(date) && 
+		    (scope.getBranch().representsCommonBranch() || (branch != null && branch.equals(scope.getBranch())))) {
+		scopesFound.add(scope);
+	    }
+	}
+	if(scopesFound.isEmpty()) {
+	    for (CurricularCourseScope scope : getScopesSet()) {
+		if(scope.getCurricularSemester().getSemester().equals(semester) && scope.isActive(date)) {
+		    scopesFound.add(scope);
+		}
+	    }   
+	}
+	
+	return getCurricularYearWithLowerYear(scopesFound, date);
+    }
+    
+    
+    //Old getCurricularYearByBranchAndSemester
+    /*
     public CurricularYear getCurricularYearByBranchAndSemester(final Branch branch,
 	    final Integer semester, final Date date) {
 
@@ -445,7 +468,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 	}
 
 	return curricularYearToReturn;
-    }
+    }*/
 
     public String getCurricularCourseUniqueKeyForEnrollment() {
 	DegreeType degreeType = (this.getDegreeCurricularPlan() != null && this
