@@ -28,10 +28,10 @@ public class DegreeCurricularPlanLET extends DegreeCurricularPlanLET_Base {
             ExecutionPeriod executionPeriod) {
 
         List result = new ArrayList();
-	result.add(new MaximumNumberEctsCreditsEnrolmentRule(studentCurricularPlan, executionPeriod));
 	result.add(new PrecedencesEnrollmentRule(studentCurricularPlan, executionPeriod));
 	result.add(new PreviousYearsCurricularCourseEnrollmentRule(studentCurricularPlan,
 		executionPeriod));
+	result.add(new MaximumNumberEctsCreditsEnrolmentRule(studentCurricularPlan, executionPeriod));
         //result.add(new LETOptionalExclusiveEnrollmentRule(studentCurricularPlan, executionPeriod));
         result.add(new LETBolonhaEnrolmentRule(studentCurricularPlan, executionPeriod));
         return result;

@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.degree.enrollment.rules.LECBolonhaEnrolmentRule;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.LECEvenAndOddNumbersEnrollmentRule;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.LECOptionalPairGroupsEnrollmentRule;
 
@@ -23,6 +24,7 @@ public class DegreeCurricularPlanLEC extends DegreeCurricularPlanLEC_Base {
         result.add(new LECEvenAndOddNumbersEnrollmentRule(studentCurricularPlan, executionPeriod));
         result.addAll(super.getListOfEnrollmentRules(studentCurricularPlan, executionPeriod));
         result.add(new LECOptionalPairGroupsEnrollmentRule(studentCurricularPlan));
+        result.add(new LECBolonhaEnrolmentRule(studentCurricularPlan, executionPeriod));
         return result;
     }
 

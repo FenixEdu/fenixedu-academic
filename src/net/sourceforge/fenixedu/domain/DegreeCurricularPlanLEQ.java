@@ -19,6 +19,5 @@ public class DegreeCurricularPlanLEQ extends DegreeCurricularPlanLEQ_Base {
         result.add(new LEQBolonhaEnrolmentRule(studentCurricularPlan, executionPeriod));
         return result;
     }
-
     
 }

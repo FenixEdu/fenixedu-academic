@@ -86,17 +86,13 @@ public class DegreeCurricularPlanLEICTAGUS extends DegreeCurricularPlanLEICTAGUS
 
         List result = new ArrayList();
 
-        result.add(new MaximumNumberEctsCreditsEnrolmentRule(studentCurricularPlan, executionPeriod));
-        //result.add(new SecretaryEnrollmentRule(studentCurricularPlan));
-        /*result.add(new MaximumNumberOfAcumulatedEnrollmentsRule(studentCurricularPlan, executionPeriod));
-        result.add(new MaximumNumberOfCurricularCoursesEnrollmentRule(studentCurricularPlan,
-                executionPeriod));*/
+        result.add(new AMIIICDIIRule(studentCurricularPlan, executionPeriod));
         result.add(new PrecedencesEnrollmentRule(studentCurricularPlan, executionPeriod));
         result.add(new PreviousYearsCurricularCourseEnrollmentRuleIgnoringLastYears(
                 studentCurricularPlan, executionPeriod, 4));
-        result.add(new AMIIICDIIRule(studentCurricularPlan));
         result.add(new SpecificLEICTagusEnrollmentRule(studentCurricularPlan, executionPeriod));
         result.add(new LEICBolonhaEnrolmentRule(studentCurricularPlan, executionPeriod));
+        result.add(new MaximumNumberEctsCreditsEnrolmentRule(studentCurricularPlan, executionPeriod));
 
         return result;
     }

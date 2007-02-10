@@ -27,17 +27,11 @@ public class DegreeCurricularPlanLEEC extends DegreeCurricularPlanLEEC_Base {
     public List getListOfEnrollmentRules(StudentCurricularPlan studentCurricularPlan,
             ExecutionPeriod executionPeriod) {
 
-        //        List result = super.getListOfEnrollmentRules(studentCurricularPlan,
-        // executionPeriod);
-
         List result = new ArrayList();
 
-        /*result.add(new MaximumNumberOfAcumulatedEnrollmentsRule(studentCurricularPlan, executionPeriod));
-        result.add(new MaximumNumberOfCurricularCoursesEnrollmentRule(studentCurricularPlan,
-                executionPeriod));*/
-        result.add(new MaximumNumberEctsCreditsEnrolmentRule(studentCurricularPlan, executionPeriod));
+        result.add(new AMIIICDIIRule(studentCurricularPlan, executionPeriod));
         result.add(new PrecedencesEnrollmentRule(studentCurricularPlan, executionPeriod));
-        result.add(new AMIIICDIIRule(studentCurricularPlan));
+        result.add(new MaximumNumberEctsCreditsEnrolmentRule(studentCurricularPlan, executionPeriod));
         result.add(new LEECBolonhaEnrolmentRule(studentCurricularPlan, executionPeriod));
         result.add(new SpecificLEECEnrollmentRule(studentCurricularPlan, executionPeriod));
 

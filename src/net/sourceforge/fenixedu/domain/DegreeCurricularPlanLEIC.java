@@ -66,12 +66,11 @@ public class DegreeCurricularPlanLEIC extends DegreeCurricularPlanLEIC_Base {
 
         List result = new ArrayList();
 
-        //result.add(new SecretaryEnrollmentRule(studentCurricularPlan));
-        result.add(new MaximumNumberEctsCreditsEnrolmentRule(studentCurricularPlan, executionPeriod));
+        result.add(new AMIIICDIIRule(studentCurricularPlan, executionPeriod));
         result.add(new PrecedencesEnrollmentRule(studentCurricularPlan, executionPeriod));
         result.add(new PreviousYearsCurricularCourseEnrollmentRuleIgnoringLastYears(
                 studentCurricularPlan, executionPeriod, 4));
-        result.add(new AMIIICDIIRule(studentCurricularPlan));
+        result.add(new MaximumNumberEctsCreditsEnrolmentRule(studentCurricularPlan, executionPeriod));
         result.add(new SpecificLEICEnrollmentRule(studentCurricularPlan, executionPeriod));
         result.add(new LEICBolonhaEnrolmentRule(studentCurricularPlan, executionPeriod));
         

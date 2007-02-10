@@ -28,13 +28,12 @@ public class DegreeCurricularPlanLEM extends DegreeCurricularPlanLEM_Base {
 
         List result = new ArrayList();
 
-        result.add(new MaximumNumberEctsCreditsEnrolmentRule(studentCurricularPlan, executionPeriod));
+        result.add(new AMIIICDIIRule(studentCurricularPlan, executionPeriod));
         result.add(new PrecedencesEnrollmentRule(studentCurricularPlan, executionPeriod));
-        //result.add(new LEMAUBranchPSIRule(studentCurricularPlan, executionPeriod));
-        result.add(new AMIIICDIIRule(studentCurricularPlan));
         result.add(new LEMOptionalPairGroupsEnrollmentRule(studentCurricularPlan, executionPeriod));
         result.add(new PreviousYearsCurricularCourseEnrollmentRuleIgnoringLastYears(
-                studentCurricularPlan, executionPeriod, 4));        
+                studentCurricularPlan, executionPeriod, 4));
+        result.add(new MaximumNumberEctsCreditsEnrolmentRule(studentCurricularPlan, executionPeriod));
         result.add(new LEMBolonhaEnrolmentRule(studentCurricularPlan, executionPeriod));
         return result;
     }
