@@ -35,17 +35,6 @@ public class RestrictionBetweenDegreeModulesExecutor extends CurricularRuleExecu
 			.getDegreeModuleToApplyRule().getName(), rule.getPrecedenceDegreeModule().getName());
     }
     
-    private boolean canApplyRule(final EnrolmentContext enrolmentContext, final CurricularRule curricularRule) {
-	if (ruleWasSelectedFromAnyModuleToEnrol(enrolmentContext, curricularRule)) {
-	    if (!appliesToContext(enrolmentContext, curricularRule)) {
-		return false;
-	    }
-	} else if (!appliesToCourseGroup(enrolmentContext, curricularRule)) {
-	    return false;
-	}
-	return true;
-    }
-
     @Override
     protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(final CurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
 	
