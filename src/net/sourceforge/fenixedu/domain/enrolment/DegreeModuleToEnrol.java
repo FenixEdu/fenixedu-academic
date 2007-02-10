@@ -54,4 +54,8 @@ public class DegreeModuleToEnrol implements Serializable{
     public Double getEctsCredits(final ExecutionPeriod executionPeriod) {
 	return getContext().getChildDegreeModule().getEctsCredits(executionPeriod);
     }
+
+    public boolean isLeaf() {
+	return getContext().getChildDegreeModule().isLeaf();
+    }
 }
