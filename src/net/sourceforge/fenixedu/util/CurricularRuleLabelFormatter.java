@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 public class CurricularRuleLabelFormatter {
 
     public static String getLabel(CurricularRule curricularRule) {
-        ResourceBundle bundle = ResourceBundle.getBundle("resources/BolonhaManagerResources");
+        ResourceBundle bundle = ResourceBundle.getBundle("resources/BolonhaManagerResources", LanguageUtils.getLocale());
         return buildLabel(curricularRule, bundle);
     }
 
