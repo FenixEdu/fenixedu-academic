@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.util.LogicOperators;
 
 public class RestrictionBetweenDegreeModules extends RestrictionBetweenDegreeModules_Base {
 
-    private RestrictionBetweenDegreeModules(final DegreeModule precedenceDegreeModule, final Double minimumCredits) {
+    private RestrictionBetweenDegreeModules(final CourseGroup precedenceDegreeModule, final Double minimumCredits) {
         super();
         checkParameters(precedenceDegreeModule, minimumCredits);
         setPrecedenceDegreeModule(precedenceDegreeModule);
