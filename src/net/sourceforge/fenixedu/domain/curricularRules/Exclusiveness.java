@@ -12,31 +12,34 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class Exclusiveness extends Exclusiveness_Base {
     
-    protected Exclusiveness(DegreeModule degreeModuleToApplyRule, DegreeModule exclusiveDegreeModule,
-            CourseGroup contextCourseGroup, ExecutionPeriod begin, ExecutionPeriod end) {
+    protected Exclusiveness(final DegreeModule toApplyRule, final DegreeModule exclusiveDegreeModule,
+            final CourseGroup contextCourseGroup, final ExecutionPeriod begin, final ExecutionPeriod end) {
 
         super();
-        
-        if (degreeModuleToApplyRule == null || begin == null || exclusiveDegreeModule == null) {
-            throw new DomainException("curricular.rule.invalid.parameters");
-        }
-        
-        checkExecutionPeriods(begin, end);
-        
-        setDegreeModuleToApplyRule(degreeModuleToApplyRule);
+        checkParameters(toApplyRule, exclusiveDegreeModule);
+        init(toApplyRule, contextCourseGroup, begin, end, CurricularRuleType.EXCLUSIVENESS);
         setExclusiveDegreeModule(exclusiveDegreeModule);
-        setCurricularRuleType(CurricularRuleType.EXCLUSIVENESS);
-        
-        setBegin(begin);
-        setEnd(end);
-        setContextCourseGroup(contextCourseGroup);
     }
     
-    protected void edit(DegreeModule exclusiveDegreeModule, CourseGroup contextCourseGroup) {
-        if (exclusiveDegreeModule == null) {
-            throw new DomainException("curricular.rule.invalid.parameters");
-        }
-        if (exclusiveDegreeModule != this.getExclusiveDegreeModule()) {
+    private void checkParameters(final DegreeModule toApplyRule, final DegreeModule exclusiveDegreeModule) {
+	if (exclusiveDegreeModule == null) {
+	    throw new DomainException("curricular.rule.invalid.parameters");
+	}
+	if (toApplyRule == exclusiveDegreeModule) {
+	    throw new DomainException("curricular.rule.invalid.parameters.degreeModules.must.be.different");
+	}
+	if (toApplyRule.isLeaf()) {
+	    if (!exclusiveDegreeModule.isLeaf()) {
+		throw new DomainException("curricular.rule.invalid.parameters.degreeModules.must.have.same.type");
+	    }
+	} else if (exclusiveDegreeModule.isLeaf()) {
+	    throw new DomainException("curricular.rule.invalid.parameters.degreeModules.must.have.same.type");
+	}
+    }
+
+    protected void edit(final DegreeModule exclusiveDegreeModule, final CourseGroup contextCourseGroup) {
+	checkParameters(getDegreeModuleToApplyRule(), exclusiveDegreeModule);
+        if (exclusiveDegreeModule != getExclusiveDegreeModule()) {
             removeRuleFromCurrentExclusiveDegreeModule(this.getExclusiveDegreeModule().getCurricularRulesIterator());
             new Exclusiveness(exclusiveDegreeModule, getDegreeModuleToApplyRule(), contextCourseGroup, getBegin(), getEnd());
         }
@@ -96,7 +99,7 @@ public class Exclusiveness extends Exclusiveness_Base {
         
         if (exclusiveness.getExclusiveDegreeModule() == getDegreeModuleToApplyRule()) {
             if (exclusiveness.belongsToCompositeRule()) {
-                if (this.belongsToCompositeRule()) { // both belong to composite rules
+                if (this.belongsToCompositeRule()) { // both belong to composite rules ?
                     new Exclusiveness(exclusiveness.getExclusiveDegreeModule(), exclusiveness.getDegreeModuleToApplyRule(), 
                             exclusiveness.getContextCourseGroup(), exclusiveness.getBegin(), exclusiveness.getEnd());
                     return;
