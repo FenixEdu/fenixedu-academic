@@ -5,7 +5,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
+import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class PreviousYearsEnrolmentCurricularRule extends PreviousYearsEnrolmentCurricularRule_Base {
@@ -14,20 +14,20 @@ public class PreviousYearsEnrolmentCurricularRule extends PreviousYearsEnrolment
         super();
     }
     
-    public PreviousYearsEnrolmentCurricularRule(final DegreeModule degreeModuleToApplyRule,
+    public PreviousYearsEnrolmentCurricularRule(final CourseGroup toApplyRule,
             final ExecutionPeriod begin, final ExecutionPeriod end) {
 	this();
-	checkDegreeModule(degreeModuleToApplyRule);
-	init(degreeModuleToApplyRule, null, begin, end, CurricularRuleType.PREVIOUS_YEARS_ENROLMENT_CURRICULAR_RULE);
+	checkDegreeModule(toApplyRule);
+	init(toApplyRule, null, begin, end, CurricularRuleType.PREVIOUS_YEARS_ENROLMENT);
     }
     
-    public PreviousYearsEnrolmentCurricularRule(final DegreeModule degreeModuleToApplyRule, final ExecutionPeriod begin) {
-	this(degreeModuleToApplyRule, begin, null);
+    public PreviousYearsEnrolmentCurricularRule(final CourseGroup toApplyRule, final ExecutionPeriod begin) {
+	this(toApplyRule, begin, null);
     }
 
-    private void checkDegreeModule(final DegreeModule degreeModule) {
-	if (!degreeModule.isRoot()) {
-	    throw new DomainException("error.curricularRules.PreviousYearsEnrolmentCurricularRule.should.be.applied.to.root.degreeModule");
+    private void checkDegreeModule(final CourseGroup courseGroup) {
+	if (!courseGroup.isRoot()) {
+	    throw new DomainException("error.curricularRules.PreviousYearsEnrolmentCurricularRule.should.be.applied.to.root.CourseGroup");
 	}
     }
     
@@ -40,5 +40,4 @@ public class PreviousYearsEnrolmentCurricularRule extends PreviousYearsEnrolment
     protected void removeOwnParameters() {
 	// No additional parameters
     }
-    
 }

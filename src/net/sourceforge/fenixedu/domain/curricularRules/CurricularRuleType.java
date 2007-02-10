@@ -26,7 +26,7 @@ public enum CurricularRuleType {
     
     MAXIMUM_NUMBER_OF_CREDITS_FOR_ENROLMENT_PERIOD,
     
-    PREVIOUS_YEARS_ENROLMENT_CURRICULAR_RULE;
+    PREVIOUS_YEARS_ENROLMENT;
 
     public String getName() {
         return name();
