@@ -55,7 +55,6 @@ public class CreditsLimitExecutor extends CurricularRuleExecutor {
 	    return RuleResult.createNA();
 	}
     }
-
     
     private RuleResult evaluateIfCanEnrolToDegreeModule(final EnrolmentContext enrolmentContext, final CreditsLimit rule) {
 
@@ -72,9 +71,8 @@ public class CreditsLimitExecutor extends CurricularRuleExecutor {
 	}
 	return RuleResult.createNA();
     }
-
     
-    private Double calculateEctsCreditsFromToEnrolCurricularCourses(EnrolmentContext enrolmentContext, CreditsLimit rule) {
+    private Double calculateEctsCreditsFromToEnrolCurricularCourses(final EnrolmentContext enrolmentContext, final CreditsLimit rule) {
 	BigDecimal result = BigDecimal.ZERO;
 	final CourseGroup courseGroup = (CourseGroup) rule.getDegreeModuleToApplyRule();
 	final ExecutionPeriod executionPeriod = enrolmentContext.getExecutionPeriod();
@@ -83,7 +81,6 @@ public class CreditsLimitExecutor extends CurricularRuleExecutor {
 	}
 	return Double.valueOf(result.doubleValue());
     }
-    
 
     private RuleResult createFalseRuleResult(final CreditsLimit rule) {
 	if (rule.getMinimumCredits().equals(rule.getMaximumCredits())) {
