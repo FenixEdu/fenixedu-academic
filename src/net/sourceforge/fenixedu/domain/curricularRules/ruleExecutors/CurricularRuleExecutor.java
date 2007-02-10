@@ -74,6 +74,25 @@ abstract public class CurricularRuleExecutor {
 	return curricularRule.appliesToCourseGroup(parentCourseGroup);
     }
     
+    /**
+     * This method check if a CurricularRule can be applied, checking it Context 
+     * or CourseGroup (when rule was gathered into a collection of rules)
+     * 
+     * - uses ruleWasSelectedFromAnyModuleToEnrol, appliesToContext and appliesToCourseGroup methods
+     * - these methods exist by their own, because some rules may apply them in a different ways
+     * 
+     */
+    protected boolean canApplyRule(final EnrolmentContext enrolmentContext, final CurricularRule curricularRule) {
+	if (ruleWasSelectedFromAnyModuleToEnrol(enrolmentContext, curricularRule)) {
+	    if (!appliesToContext(enrolmentContext, curricularRule)) {
+		return false;
+	    }
+	} else if (!appliesToCourseGroup(enrolmentContext, curricularRule)) {
+	    return false;
+	}
+	return true;
+    }
+    
     protected CurriculumModule searchCurriculumModule(final EnrolmentContext enrolmentContext, final DegreeModule degreeModule) {
 	return enrolmentContext.getStudentCurricularPlan().findCurriculumModuleFor(degreeModule);
     }
