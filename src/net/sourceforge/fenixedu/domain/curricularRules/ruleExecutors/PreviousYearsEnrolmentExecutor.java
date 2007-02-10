@@ -17,18 +17,23 @@ public class PreviousYearsEnrolmentExecutor extends CurricularRuleExecutor {
 
     @Override
     protected RuleResult executeEnrolmentWithRules(final CurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
+	return internalExecuteEnrolmentWithRules(enrolmentContext, false);	
+    }
+    
+    private RuleResult internalExecuteEnrolmentWithRules(final EnrolmentContext enrolmentContext, boolean withTemporaryEnrolment) {
+	final Map<Integer, Pair<Integer, Integer>> enrolmentInformation = groupCurricularCoursesEnrolmentInformationByYear(enrolmentContext, withTemporaryEnrolment);
+	return validateEnrolmentInformation(enrolmentInformation, enrolmentContext.getStudentCurricularPlan().getDegreeDuration().intValue());
+    }
+
+    private RuleResult validateEnrolmentInformation(final Map<Integer, Pair<Integer, Integer>> enrolmentInformation, final int numberOfYears) {
 	
-	final Map<Integer, Pair<Integer, Integer>> enrolmentInformation = groupCurricularCoursesEnrolmentInformationByYear(enrolmentContext);
-	final int numberOfYears = enrolmentContext.getStudentCurricularPlan().getDegreeDuration().intValue();
-
 	for (int year = numberOfYears ; year >= 1; year--) {
-
 	    final Pair<Integer, Integer> values = enrolmentInformation.get(year);
 	    final int numberOfCurricularCoursesToEnrol = values.getKey().intValue();
 	    
 	    if (numberOfCurricularCoursesToEnrol > 0) {
 		if (previousYearsHaveNotChosenCurricularCoursesToEnrol(year - 1, enrolmentInformation)) {
-		    RuleResult.createFalse("curricularRules.rulesExecutor.PreviousYearsEnrolmentExecutor");
+		    return RuleResult.createFalse("curricularRules.rulesExecutor.PreviousYearsEnrolmentExecutor", String.valueOf(year));
 		}
 	    }
 	}
@@ -48,7 +53,7 @@ public class PreviousYearsEnrolmentExecutor extends CurricularRuleExecutor {
 	return false;
     }
 
-    private Map<Integer, Pair<Integer, Integer>> groupCurricularCoursesEnrolmentInformationByYear(final EnrolmentContext enrolmentContext) {
+    private Map<Integer, Pair<Integer, Integer>> groupCurricularCoursesEnrolmentInformationByYear(final EnrolmentContext enrolmentContext, boolean withTemporaryEnrolment) {
 	final Map<Integer, Pair<Integer, Integer>> result = new HashMap<Integer, Pair<Integer,Integer>>();
 	
 	final DegreeCurricularPlan degreeCurricularPlan = enrolmentContext.getStudentCurricularPlan().getDegreeCurricularPlan();
@@ -71,6 +76,8 @@ public class PreviousYearsEnrolmentExecutor extends CurricularRuleExecutor {
 
 		    if (isEnrolling(enrolmentContext, curricularCourse)) {
 			numberOfCurricularCoursesToEnrol++;
+		    } else if (withTemporaryEnrolment && isEnroled(enrolmentContext, curricularCourse, executionPeriod.getPreviousExecutionPeriod())) {
+			continue;
 		    } else {
 			numberOfNotChosenCurricularCoursesToEnrol++;
 		    }
@@ -86,12 +93,14 @@ public class PreviousYearsEnrolmentExecutor extends CurricularRuleExecutor {
     private void addInformationToResult(final Map<Integer, Pair<Integer, Integer>> result,
 	    final int year, final int numberOfCurricularCoursesToEnrol,
 	    final int numberOfNotChosenCurricularCoursesToEnrol) {
-	result.put(year, new Pair<Integer, Integer>(Integer.valueOf(numberOfCurricularCoursesToEnrol), Integer.valueOf(numberOfNotChosenCurricularCoursesToEnrol)));
+	
+	result.put(year, new Pair<Integer, Integer>(Integer.valueOf(numberOfCurricularCoursesToEnrol),
+		Integer.valueOf(numberOfNotChosenCurricularCoursesToEnrol)));
     }
 
     @Override
     protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(final CurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
-	return executeEnrolmentWithRules(curricularRule, enrolmentContext);
+	return internalExecuteEnrolmentWithRules(enrolmentContext, true);
     }
     
     @Override
