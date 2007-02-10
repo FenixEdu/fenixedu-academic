@@ -1,42 +1,64 @@
 package net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors;
 
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.MinimumNumberOfCreditsToEnrol;
-import net.sourceforge.fenixedu.domain.enrolment.DegreeModuleToEnrol;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 
 public class MinimumNumberOfCreditsToEnrolExecutor extends CurricularRuleExecutor {
 
     @Override
-    protected RuleResult executeEnrolmentWithRules(CurricularRule curricularRule, EnrolmentContext enrolmentContext) {
+    protected RuleResult executeEnrolmentWithRules(final CurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
 	
 	final MinimumNumberOfCreditsToEnrol rule = (MinimumNumberOfCreditsToEnrol) curricularRule;
-	final DegreeModuleToEnrol moduleToEnrol = searchDegreeModuleToEnrol(enrolmentContext, rule.getDegreeModuleToApplyRule());
-
-	if (ruleWasSelectedFromAnyModuleToEnrol(enrolmentContext, curricularRule) && !rule.appliesToContext(moduleToEnrol.getContext())) {
+	if (!canApplyRule(enrolmentContext, curricularRule)) {
 	    return RuleResult.createNA();
 	}
 	
-	final StudentCurricularPlan studentCurricularPlan = enrolmentContext.getStudentCurricularPlan();
-	final Double ectsCredits = studentCurricularPlan.getRoot().getEctsCredits();
+	final CurriculumGroup curriculumGroup = enrolmentContext.getStudentCurricularPlan().getRoot();
+	final Double totalEctsCredits = curriculumGroup.getAprovedEctsCredits();
 	
-	if (rule.allowCredits(ectsCredits)) {
+	if (rule.allowCredits(totalEctsCredits)) {
 	    return RuleResult.createTrue();
 	}
 	
+	return createFalseRuleResult(rule, totalEctsCredits);
+    }
+    
+    private RuleResult createFalseRuleResult(final MinimumNumberOfCreditsToEnrol rule, final Double ectsCredits) {
 	return RuleResult.createFalse(
 		"curricularRules.ruleExecutors.MinimumNumberOfCreditsToEnrolExecutor.student.has.not.minimum.number.of.credits", 
 			ectsCredits.toString(), rule.getMinimumCredits().toString(), rule.getDegreeModuleToApplyRule().getName());
     }
 
     @Override
-    protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(CurricularRule curricularRule, EnrolmentContext enrolmentContext) {
-	return executeEnrolmentWithRules(curricularRule, enrolmentContext);
+    protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(final CurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
+	
+	final MinimumNumberOfCreditsToEnrol rule = (MinimumNumberOfCreditsToEnrol) curricularRule;
+	if (!canApplyRule(enrolmentContext, curricularRule)) {
+	    return RuleResult.createNA();
+	}
+	
+	final CurriculumGroup curriculumGroup = enrolmentContext.getStudentCurricularPlan().getRoot();
+	Double totalEctsCredits = curriculumGroup.getAprovedEctsCredits();
+	
+	if (rule.allowCredits(totalEctsCredits)) {
+	    return RuleResult.createTrue();
+	}
+	
+	final ExecutionPeriod previousExecutionPeriod = enrolmentContext.getExecutionPeriod().getPreviousExecutionPeriod(); 
+	totalEctsCredits = Double.valueOf(totalEctsCredits.doubleValue() + curriculumGroup.getEnroledEctsCredits(previousExecutionPeriod).doubleValue());
+	
+	if (rule.allowCredits(totalEctsCredits)) {
+	    return RuleResult.createTrue(EnrolmentResultType.TEMPORARY);
+	}
+	
+	return createFalseRuleResult(rule, totalEctsCredits);	
     }
 
     @Override
-    protected RuleResult executeEnrolmentWithNoRules(CurricularRule curricularRule, EnrolmentContext enrolmentContext) {
+    protected RuleResult executeEnrolmentWithNoRules(final CurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
 	return RuleResult.createTrue();
     }
     
