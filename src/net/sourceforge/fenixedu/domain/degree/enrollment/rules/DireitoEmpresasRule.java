@@ -9,33 +9,34 @@ import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
 import net.sourceforge.fenixedu.domain.exceptions.EnrolmentRuleDomainException;
 
-public class AMIIICDIIRule implements IEnrollmentRule{
+public class DireitoEmpresasRule implements IEnrollmentRule{
     
     private StudentCurricularPlan studentCurricularPlan;
     
     private ExecutionPeriod executionPeriod;
     
-    private static final String AMII_CODE = "P5";
+    private static final String DIREITO_CODE = "B96";
     
-    private static final String CDII_CODE = "B71";
+    private static final String DIREITO_EMPRESAS_CODE = "A4G";
     
-    public AMIIICDIIRule(StudentCurricularPlan studentCurricularPlan, ExecutionPeriod executionPeriod) {
+    public DireitoEmpresasRule(StudentCurricularPlan studentCurricularPlan, ExecutionPeriod executionPeriod) {
 	this.studentCurricularPlan = studentCurricularPlan;
 	this.executionPeriod = executionPeriod;
     }
 
     public List<CurricularCourse2Enroll> apply(List<CurricularCourse2Enroll> curricularCoursesToBeEnrolledIn) throws EnrolmentRuleDomainException {
-	CurricularCourse cdII = studentCurricularPlan.getDegreeCurricularPlan().getCurricularCourseByCode(CDII_CODE);
-	CurricularCourse2Enroll curricularCourse2Enroll = getCourseToEnroll(curricularCoursesToBeEnrolledIn, cdII); 
-	if(curricularCourse2Enroll != null) {
-	    CurricularCourse amII = studentCurricularPlan.getDegreeCurricularPlan().getCurricularCourseByCode(AMII_CODE);
-	    if(studentCurricularPlan.isCurricularCourseApproved(amII) || studentCurricularPlan.isEnroledInExecutionPeriod(amII, executionPeriod.getPreviousExecutionPeriod())) {
-		curricularCourse2Enroll.setEnrollmentType(CurricularCourseEnrollmentType.TEMPORARY);
+	CurricularCourse direito = studentCurricularPlan.getDegreeCurricularPlan().getCurricularCourseByCode(DIREITO_CODE);
+	CurricularCourse2Enroll courseToEnroll = getCourseToEnroll(curricularCoursesToBeEnrolledIn, direito);
+	if(courseToEnroll != null) {
+	    CurricularCourse direitoEmpresas = studentCurricularPlan.getDegreeCurricularPlan().getCurricularCourseByCode(DIREITO_EMPRESAS_CODE);
+	    if(studentCurricularPlan.isEnroledInExecutionPeriod(direitoEmpresas, executionPeriod.getPreviousExecutionPeriod())) {
+		courseToEnroll.setEnrollmentType(CurricularCourseEnrollmentType.TEMPORARY);
 	    }
 	}
 	
 	return curricularCoursesToBeEnrolledIn;
     }
+
 
     private CurricularCourse2Enroll getCourseToEnroll(List<CurricularCourse2Enroll> curricularCoursesToBeEnrolledIn, CurricularCourse curricularCourse) {
 	for (CurricularCourse2Enroll curricularCourse2Enroll : curricularCoursesToBeEnrolledIn) {

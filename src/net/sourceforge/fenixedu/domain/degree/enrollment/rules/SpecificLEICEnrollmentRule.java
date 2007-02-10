@@ -36,7 +36,9 @@ public class SpecificLEICEnrollmentRule extends SpecificEnrolmentRule implements
 
     private final static String PORTFOLIO_V_CODE = "B3K";
     
-    private final static String[] NOT_OPTIONAL_5 = {"B3K", "B3O", "B63", "B64", "$129"};
+    private final static String PORTFOLIO_VI_CODE = "B3O";
+    
+    private final static String[] NOT_OPTIONAL_5 = {"B3K", "B3O", "B63", "B64", "BAI"};
 
     protected Integer optionalCourses = 0;
 
@@ -153,11 +155,11 @@ public class SpecificLEICEnrollmentRule extends SpecificEnrolmentRule implements
 	//FIXME
 	if (result.isEmpty() || allTemporaryOrNotOptional(result)) {
 	    result.addAll(getOptionalCourses(result));
-	    IEnrollmentRule enrollmentRule = new MaximumNumberEctsCreditsEnrolmentRule(studentCurricularPlan, executionPeriod);
+	    /*IEnrollmentRule enrollmentRule = new MaximumNumberEctsCreditsEnrolmentRule(studentCurricularPlan, executionPeriod);
 	    try {
 		result = enrollmentRule.apply(result);
 	    } catch (EnrolmentRuleDomainException e) {
-	    }
+	    }*/
 	} else {
 	    IEnrollmentRule enrollmentRule = new PreviousYearsCurricularCourseEnrollmentRule(
 		    studentCurricularPlan, executionPeriod);
@@ -169,10 +171,6 @@ public class SpecificLEICEnrollmentRule extends SpecificEnrolmentRule implements
 	return result;
     }
 
-    private boolean allNotOptional(List result) {
-	
-	return false;
-    }
 
     protected void calculateGroupsCreditsFromEnrollments(StudentCurricularPlan studentCurricularPlan,
 	    List specializationAndSecundaryAreaCurricularCoursesToCountForCredits,
@@ -263,7 +261,7 @@ public class SpecificLEICEnrollmentRule extends SpecificEnrolmentRule implements
 	List<CurricularCourse> secundaryCourses = getSecundaryAreaCurricularCourses(studentCurricularPlan);
 	List<CurricularCourse> specializationCourses = getSpecializationAreaCurricularCourses(studentCurricularPlan);
 	for (CurricularCourse2Enroll enroll : result) {
-	    if ((!secundaryCourses.contains(enroll.getCurricularCourse()) || specializationCourses.contains(enroll.getCurricularCourse())) && !notOptional5Courses.contains(enroll.getCurricularCourse().getCode()) && !enroll.getEnrollmentType().equals(CurricularCourseEnrollmentType.TEMPORARY)) {
+	    if ((!secundaryCourses.contains(enroll.getCurricularCourse()) || !specializationCourses.contains(enroll.getCurricularCourse())) && !notOptional5Courses.contains(enroll.getCurricularCourse().getCode()) && !enroll.getEnrollmentType().equals(CurricularCourseEnrollmentType.TEMPORARY)) {
 		return false;
 	    }
 	}
@@ -468,8 +466,9 @@ public class SpecificLEICEnrollmentRule extends SpecificEnrolmentRule implements
 		CurricularCourse2Enroll course2Enroll = (CurricularCourse2Enroll) arg0;
 		return (!areasCurricularCourses.contains(course2Enroll.getCurricularCourse())
 			&& !optionalCurricularCourses.contains(course2Enroll.getCurricularCourse())
-			&& !course2Enroll.getCurricularCourse().getCode().equals(PORTFOLIO_V_CODE) && !studentCurricularPlan
-			.getDegreeCurricularPlan().getTFCs().contains(
+			&& !course2Enroll.getCurricularCourse().getCode().equals(PORTFOLIO_V_CODE) 
+			&& !course2Enroll.getCurricularCourse().getCode().equals(PORTFOLIO_VI_CODE)
+			&& !studentCurricularPlan.getDegreeCurricularPlan().getTFCs().contains(
 				course2Enroll.getCurricularCourse()));
 	    }
 

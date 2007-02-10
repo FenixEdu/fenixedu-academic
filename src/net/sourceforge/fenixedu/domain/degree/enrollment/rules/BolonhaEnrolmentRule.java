@@ -137,6 +137,11 @@ public abstract class BolonhaEnrolmentRule implements IEnrollmentRule {
 	    }
 	});
     }
+    
+    protected boolean isAproved(final String code) {
+	final CurricularCourse curricularCourse = studentCurricularPlan.getDegreeCurricularPlan().getCurricularCourseByCode(code);
+	return studentCurricularPlan.isApproved(curricularCourse);
+    }
 
 
 }

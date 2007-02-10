@@ -39,7 +39,7 @@ public class LEICBolonhaEnrolmentRule extends BolonhaEnrolmentRule {
 		    removeCurricularCourse(curricularCoursesToBeEnrolledIn, DISSERTACAO);
 		}
 		
-	    } else if(isEnrolledInPreviousExecutionPeriod(TFCI)){
+	    } else if(isEnrolledInPreviousExecutionPeriod(TFCI) || isEnrolledInExecutionPeriodOrAproved(TFCII)){
 		removeCurricularCourse(curricularCoursesToBeEnrolledIn, DISSERTACAO);
 	    }
 	    

@@ -1,15 +1,8 @@
 package net.sourceforge.fenixedu.domain.degree.enrollment.rules;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
-
-import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.CurricularCourseGroup;
-import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
@@ -25,17 +18,25 @@ public class LEMBolonhaEnrolmentRule extends BolonhaEnrolmentRule {
 
     private static final String DISSERTACAO_CODE = "B80";
     
+    private static final String TURBOMAQUINAS_CODE = "56";
+    
+    private static final String ORGAOS_MAQUINAS_CODE = "56";
+    
     private static final String[] AUTOMACAO_DEGREE_1_SEM = { "A9C" };
     
     private static final String[] AUTOMACAO_DEGREE_2_SEM = { "F2" , "A9D" };
     
     private static final String[] PRODUCAO_DEGREE_1_SEM = { "A9X", "A9Z" };
     
-    private static final String[] PRODUCAO_DEGREE_2_SEM = { "A6U", "AQO", "XG", "F2", "A90", "A9Y", "AA0" };
+    private static final String[] PRODUCAO_DEGREE_2_SEM = { "AQO", "XG", "F2", "A9Y", "AA0" };
     
     private static final String[] TERMO_DEGREE_1_SEM = { "A9N", "A6W", "6Q", "A6V" };
     
     private static final String[] TERMO_DEGREE_2_SEM = { "A9P" };
+    
+    private static final String[] TERMO_4_YEAR_GROUP = { "56", "WU", "68"};
+    
+    private static final String[] PRODUCAO_4_YEAR_2_SEM = { "A6U", "A90"};
     
 
     public LEMBolonhaEnrolmentRule(StudentCurricularPlan studentCurricularPlan,
@@ -63,6 +64,9 @@ public class LEMBolonhaEnrolmentRule extends BolonhaEnrolmentRule {
 	if(isEnrolledInPreviousExecutionPeriodOrAproved(DISSERTACAO_CODE) || isEnrolledInExecutionPeriod(DISSERTACAO_CODE)) {
 	    removeCurricularCourses(curricularCoursesToBeEnrolledIn, Arrays.asList(PRODUCAO_DEGREE_2_SEM));
 	    removeCurricularCourse(curricularCoursesToBeEnrolledIn, DISSERTACAO_CODE);
+	    if(countEnroledOrAprovedEnrolments(PRODUCAO_4_YEAR_2_SEM) >= 1) {
+		removeCurricularCourses(curricularCoursesToBeEnrolledIn, Arrays.asList(PRODUCAO_4_YEAR_2_SEM));
+	    }
 	}
 	
 	if(countEnroledInPreviousExecutionPeriodOrAprovedEnrolments(PRODUCAO_DEGREE_1_SEM) > 0 
@@ -122,12 +126,23 @@ public class LEMBolonhaEnrolmentRule extends BolonhaEnrolmentRule {
 	if(isEnrolledInPreviousExecutionPeriodOrAproved(DISSERTACAO_CODE) || isEnrolledInExecutionPeriod(DISSERTACAO_CODE)) {
 	    removeCurricularCourses(curricularCoursesToBeEnrolledIn, Arrays.asList(TERMO_DEGREE_2_SEM));
 	    removeCurricularCourse(curricularCoursesToBeEnrolledIn, DISSERTACAO_CODE);
-	} 
-	
-	if(countEnroledInPreviousExecutionPeriodOrAprovedEnrolments(TERMO_DEGREE_1_SEM) > 0 
+	    if(countEnroledOrAprovedEnrolments(TERMO_4_YEAR_GROUP) >= 2) {
+		removeCurricularCourses(curricularCoursesToBeEnrolledIn, Arrays.asList(TERMO_4_YEAR_GROUP));
+	    }
+	} else if(countEnroledInPreviousExecutionPeriodOrAprovedEnrolments(TERMO_DEGREE_1_SEM) > 0 
 		|| countEnroledOrAprovedEnrolments(TERMO_DEGREE_2_SEM) > 0) {
 	    removeCurricularCourse(curricularCoursesToBeEnrolledIn, DISSERTACAO_CODE);
-	    //TODO: ver a questão do grupo de opcao do 4º ano
+	    if(isAproved(TURBOMAQUINAS_CODE)) {
+		removeCurricularCourse(curricularCoursesToBeEnrolledIn, ORGAOS_MAQUINAS_CODE);
+	    } else {
+		if(countEnroledOrAprovedEnrolments(TERMO_4_YEAR_GROUP) >= 2) {
+		    removeCurricularCourses(curricularCoursesToBeEnrolledIn, Arrays.asList(TERMO_4_YEAR_GROUP));
+		}
+	    }
+	} else {
+	    if(countEnroledOrAprovedEnrolments(TERMO_4_YEAR_GROUP) >= 2) {
+		removeCurricularCourses(curricularCoursesToBeEnrolledIn, Arrays.asList(TERMO_4_YEAR_GROUP));
+	    }
 	}
 	
 	return curricularCoursesToBeEnrolledIn;

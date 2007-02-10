@@ -18,8 +18,10 @@ public class LEGMBolonhaEnrolmentRule extends BolonhaEnrolmentRule {
 
 
     private static final String DISSERTACAO_CODE = "B7S";
+    
+    private static final String DISSERTACAO_II_CODE = "B7T";
 
-    private static final String[] COMMONS = { "AZY", "AZX", "AZZ", "B7T"};
+    private static final String[] COMMONS = { "AZY", "AZX", "AZZ"};
 
     private static final String[] DEGREE = { "AG3", "5Q", "B0B", "B07", "B04", "B03"};
 
@@ -32,12 +34,10 @@ public class LEGMBolonhaEnrolmentRule extends BolonhaEnrolmentRule {
 	    List<CurricularCourse2Enroll> curricularCoursesToBeEnrolledIn)
 	    throws EnrolmentRuleDomainException {
 
-	final boolean dissertacao = isEnrolledInExecutionPeriod(DISSERTACAO_CODE);
-
-	if (countEnrolments(DEGREE) >= 1) {
+	if (countEnroledOrAprovedEnrolments(DEGREE) >= 1) {
 	    removeCurricularCourse(curricularCoursesToBeEnrolledIn, DISSERTACAO_CODE);
 	}
-	if (dissertacao) {
+	if (isEnrolledInPreviousExecutionPeriodOrAproved(DISSERTACAO_CODE) || isEnrolledInExecutionPeriodOrAproved(DISSERTACAO_II_CODE)) {
 	    removeCurricularCourses(curricularCoursesToBeEnrolledIn, Arrays.asList(DEGREE));
 	}
 

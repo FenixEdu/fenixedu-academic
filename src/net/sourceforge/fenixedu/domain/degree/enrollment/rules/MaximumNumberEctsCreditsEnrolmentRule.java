@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -28,7 +29,7 @@ public class MaximumNumberEctsCreditsEnrolmentRule implements IEnrollmentRule {
         .getAllStudentEnrolledEnrollmentsInExecutionPeriod(this.executionPeriod);
 
         Double maxECTS = 40.0;
-        Double ects = getAnualCurricularCoursesECTS();
+        Double ects = getAnualCurricularCoursesECTS(curricularCoursesToBeEnrolledIn);
         for (Enrolment enrolment : (List<Enrolment>) allStudentEnrolledEnrollments) {
 	    ects += enrolment.getAccumulatedEctsCredits();
 	}
@@ -46,14 +47,24 @@ public class MaximumNumberEctsCreditsEnrolmentRule implements IEnrollmentRule {
 	return curricularCoursesToBeEnrolledIn;
     }
     
-    private Double getAnualCurricularCoursesECTS() {
+    private Double getAnualCurricularCoursesECTS(List<CurricularCourse2Enroll> curricularCoursesToBeEnrolledIn) {
 	Double ects = 0.0;
 	for (Enrolment enrolment : studentCurricularPlan.getEnrolmentsByExecutionPeriod(executionPeriod.getPreviousExecutionPeriod())) {
 	    if(enrolment.getCurricularCourse().isAnual()) {
 		ects += enrolment.getCurricularCourse().getEctsCredits();
+		removeAnualCourseFromCoursesToEnroll(enrolment.getCurricularCourse(), curricularCoursesToBeEnrolledIn);
 	    }
 	}
 	return ects;
+    }
+
+    private void removeAnualCourseFromCoursesToEnroll(CurricularCourse curricularCourse, List<CurricularCourse2Enroll> curricularCoursesToBeEnrolledIn) {
+	for (CurricularCourse2Enroll curricularCourse2Enroll : curricularCoursesToBeEnrolledIn) {
+	    if(curricularCourse2Enroll.getCurricularCourse().equals(curricularCourse)) {
+		curricularCoursesToBeEnrolledIn.remove(curricularCourse2Enroll);
+		return;
+	    }
+	}
     }
 
 }

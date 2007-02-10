@@ -84,7 +84,7 @@ public class LEANBolonhaEnrolmentRule extends BolonhaEnrolmentRule {
     private List<CurricularCourse2Enroll> applyProjectoConstrucaoNaval(List<CurricularCourse2Enroll> curricularCoursesToBeEnrolledIn) {
 	if(isEnrolledInPreviousExecutionPeriodOrAproved(DISSERTACAO_CODE) || isEnrolledInExecutionPeriod(DISSERTACAO_CODE)) {
 	    removeCurricularCourses(curricularCoursesToBeEnrolledIn, Arrays.asList(DEGREE_810_2_SEM));
-	    if(countEnroledOrAprovedEnrolments(GROUP_2) == 1) {
+	    if(countEnroledOrAprovedEnrolments(GROUP_2) > 0) {
 		removeCurricularCourses(curricularCoursesToBeEnrolledIn, Arrays.asList(GROUP_2));
 	    }
 	}

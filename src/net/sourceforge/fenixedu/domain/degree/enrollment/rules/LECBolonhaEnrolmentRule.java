@@ -36,6 +36,8 @@ public class LECBolonhaEnrolmentRule extends BolonhaEnrolmentRule {
 
     private static final String DISSERTACAO_CODE = "B80";
     
+    private static final String[] PLANEAMENTO_GROUP = { "AHA" , "0S", "0T", "A2", "AJF", "VZ", "AFK", "81", "AFL" };
+    
     private static final String[] AUTOMACAO_DEGREE_1_SEM = { "A9C" };
     
     private static final String[] AUTOMACAO_DEGREE_2_SEM = { "F2" , "A9D" };
@@ -81,9 +83,15 @@ public class LECBolonhaEnrolmentRule extends BolonhaEnrolmentRule {
     private List<CurricularCourse2Enroll> applyPlaneamento(List<CurricularCourse2Enroll> curricularCoursesToBeEnrolledIn) {
 	if(isEnrolledInPreviousExecutionPeriodOrAproved(DISSERTACAO_P_CODE) || isEnrolledInExecutionPeriod(DISSERTACAO_P_CODE)) {
 	    removeCurricularCourse(curricularCoursesToBeEnrolledIn, DISSERTACAO_P_CODE);
+	    if(countEnroledOrAprovedEnrolments(PLANEAMENTO_GROUP) == 2) {
+		removeCurricularCourses(curricularCoursesToBeEnrolledIn, Arrays.asList(PLANEAMENTO_GROUP));
+	    }
+	} else {
+	    LECOptionalPairGroupsEnrollmentRule rule = new LECOptionalPairGroupsEnrollmentRule(studentCurricularPlan);
+	    curricularCoursesToBeEnrolledIn = rule.apply(curricularCoursesToBeEnrolledIn);
 	}
 
-	return null;
+	return curricularCoursesToBeEnrolledIn;
     }
 
     private List<CurricularCourse2Enroll> applyHidraulica(List<CurricularCourse2Enroll> curricularCoursesToBeEnrolledIn) {
