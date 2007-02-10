@@ -38,7 +38,7 @@ public class AnyCurricularCourseExecutor extends CurricularRuleExecutor {
 	    
 	    return RuleResult
 		    .createFalse("curricularRules.ruleExecutors.AnyCurricularCourseExecutor.already.approved.or.enroled",
-			    curricularCourseToEnrol.getName());
+			    curricularCourseToEnrol.getName(), rule.getDegreeModuleToApplyRule().getName());
 	}
 	
 	final ExecutionPeriod executionPeriod = enrolmentContext.getExecutionPeriod();
