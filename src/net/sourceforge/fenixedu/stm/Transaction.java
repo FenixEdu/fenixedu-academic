@@ -7,9 +7,6 @@ import org.apache.ojb.broker.PersistenceBroker;
 
 public abstract class Transaction extends jvstm.Transaction {
 
-    private static int WARN_TX_QUEUE_SIZE_LIMIT = 1000;
-    private static int TRANSACTION_MAX_DURATION_MILLIS = 600 * 1000;
-
     public final static TransactionStatistics STATISTICS = new TransactionStatistics();
 
     static {
@@ -38,8 +35,8 @@ public abstract class Transaction extends jvstm.Transaction {
     }
 
     public static void setScriptMode() {
-        WARN_TX_QUEUE_SIZE_LIMIT = -1;
-        TRANSACTION_MAX_DURATION_MILLIS = -1;
+        // empty now...
+        // but it should be changed later to disable the reporting in the JVSTM
     }
 
     static synchronized void initializeIfNeeded() {
@@ -77,28 +74,7 @@ public abstract class Transaction extends jvstm.Transaction {
 
     public static jvstm.Transaction begin(boolean readOnly) {
 	initializeIfNeeded();	
-//        if ((WARN_TX_QUEUE_SIZE_LIMIT > 0) && (ACTIVE_TXS.getQueueSize() > WARN_TX_QUEUE_SIZE_LIMIT)) {
-//            System.out.printf("WARNING: the number of active transactions is %d\n", ACTIVE_TXS.getQueueSize());
-//            final jvstm.Transaction transaction = ACTIVE_TXS.getOldestTx();
-//            System.out.printf("    The oldest active transaction is %s\n", transaction);
-//            final StringBuilder stringBuilder = new StringBuilder();
-//            stringBuilder.append("### Begin #########################################");
-//            for (final StackTraceElement stackTraceElement : transaction.getThread().getStackTrace()) {
-//                stringBuilder.append("\n");
-//                stringBuilder.append(stackTraceElement.getClassName());
-//                stringBuilder.append(" : ");
-//                stringBuilder.append(stackTraceElement.getMethodName());
-//                stringBuilder.append(" : ");
-//                stringBuilder.append(stackTraceElement.getLineNumber());
-//            }
-//            System.out.println(stringBuilder.toString());
-//            stringBuilder.append("\n--- End -------------------------------------------");
-//        }
-	jvstm.Transaction tx = jvstm.Transaction.begin(readOnly);
-        if (TRANSACTION_MAX_DURATION_MILLIS > 0) {
-            tx.setTimeoutMillis(TRANSACTION_MAX_DURATION_MILLIS);
-        }
-        return tx;
+	return jvstm.Transaction.begin(readOnly);
     }
 
     public static void forceFinish() {

@@ -18,7 +18,9 @@ public class DeleteEnrollment extends Service {
     public void run(final Integer studentNumber, final DegreeType degreeType, final Integer enrollmentId) {
         final Registration registration = Registration.readStudentByNumberAndDegreeType(studentNumber, degreeType);
         final Enrolment enrollment = registration.findEnrolmentByEnrolmentID(enrollmentId);
-        enrollment.delete();
+        if (enrollment != null) {            
+            enrollment.delete();
+        }
     }
 
 }
