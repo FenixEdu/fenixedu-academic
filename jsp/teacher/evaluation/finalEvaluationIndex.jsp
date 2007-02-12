@@ -1,10 +1,22 @@
 <%@ taglib uri="/WEB-INF/jsf_core.tld" prefix="f"%>
 <%@ taglib uri="/WEB-INF/jsf_tiles.tld" prefix="ft"%>
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+
 
 <ft:tilesView definition="df.teacher.evaluation-management" attributeName="body-inline">
 
 	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
+	<logic:messagesPresent message="true">
+		<html:messages bundle="APPLICATION_RESOURCES" id="messages" message="true">
+			<span class="error0"><bean:write name="messages" /></span>
+		</html:messages>
+		<br/>
+		<br/>
+	</logic:messagesPresent>
+	
 	<h:messages layout="table" errorClass="error"/>
 	<h:form>
 		<h:inputHidden binding="#{evaluationManagementBackingBean.executionCourseIdHidden}" />

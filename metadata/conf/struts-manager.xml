@@ -214,6 +214,7 @@
 				<form-property name="curricularCoursesListSize" type="java.lang.Integer" />				
 				<form-property name="internalIds" type="java.lang.Integer[]" />
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
+				<form-property name="availableGradeSubmission" type="java.lang.String"/>
 		</form-bean>
 	
 		<form-bean name="insertExecutionCourseForm"

@@ -49,9 +49,14 @@ public class MarkSheetTeacherManagementDispatchAction extends ManageExecutionCou
     }
     
     public ActionForward prepareSubmitMarks(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-
+	final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
+	if(!executionCourse.getAvailableGradeSubmission()) {
+	    addActionMessage(request, "error.teacher.gradeSubmission.gradeSubmission.not.available");
+	    return mapping.findForward("mainPage");
+	}
+	
         MarkSheetTeacherGradeSubmissionBean submissionBean = new MarkSheetTeacherGradeSubmissionBean();
-        submissionBean.setExecutionCourse((ExecutionCourse) request.getAttribute("executionCourse"));
+        submissionBean.setExecutionCourse(executionCourse);
         
         request.setAttribute("submissionBean", submissionBean);
         return mapping.findForward("gradeSubmission.step.one");

@@ -8,6 +8,8 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.velocity.runtime.parser.node.GetExecutor;
+
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoSiteEvaluationStatistics;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoNonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -281,6 +283,10 @@ public class InfoExecutionCourse extends InfoObject {
 
     public Boolean getAvailableForInquiries() {
 	return getExecutionCourse().getAvailableForInquiries();
+    }
+    
+    public Boolean getAvailableGradeSubmission() {
+	return getExecutionCourse().getAvailableGradeSubmission();
     }
 
 }

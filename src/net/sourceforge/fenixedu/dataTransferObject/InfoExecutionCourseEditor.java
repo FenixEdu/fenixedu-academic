@@ -27,6 +27,8 @@ public class InfoExecutionCourseEditor extends InfoObject {
     private Double _trainingPeriodHours;
 
     private Double _tutorialOrientationHours;
+    
+    private Boolean availableGradeSubmission;
 
     protected String comment;
 
@@ -171,6 +173,14 @@ public class InfoExecutionCourseEditor extends InfoObject {
 
     public void setAssociatedInfoCurricularCourses(List list) {
 	associatedInfoCurricularCourses = list;
+    }
+
+    public Boolean getAvailableGradeSubmission() {
+        return availableGradeSubmission;
+    }
+
+    public void setAvailableGradeSubmission(Boolean availableGradeSubmission) {
+        this.availableGradeSubmission = availableGradeSubmission;
     }
 
 }

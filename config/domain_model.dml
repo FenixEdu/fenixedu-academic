@@ -1613,6 +1613,7 @@ class net.sourceforge.fenixedu.domain.ExecutionCourse extends net.sourceforge.fe
 	Double trainingPeriodHours;
 	Double tutorialOrientationHours;
 	Boolean availableForInquiries;
+	Boolean availableGradeSubmission;
 }
 
 

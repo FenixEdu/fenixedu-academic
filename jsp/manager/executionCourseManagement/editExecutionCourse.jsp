@@ -127,6 +127,15 @@
 					<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.comment" property="comment" rows="3" cols="45" />
 				</td>
 			</tr>
+			<tr>
+				<td>
+					<bean:message bundle="MANAGER_RESOURCES" key="message.manager.execution.course.available.grade.submission"/>
+				</td>
+				<td>
+					<html:checkbox property="availableGradeSubmission" value ="true"/>
+				</td>
+			</tr>
+			
 		</table>
 		<br />
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="button.save"/></html:submit>

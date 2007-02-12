@@ -103,6 +103,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	setTrainingPeriodHours(Double.valueOf(0));
 	setTutorialOrientationHours(Double.valueOf(0));
 	addAssociatedEvaluations(new FinalEvaluation());
+	setAvailableGradeSubmission(Boolean.TRUE);
     }
 
     public List<Grouping> getGroupings() {
@@ -162,7 +163,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     public void edit(String name, String acronym, double theoreticalHours,
 	    double theoreticalPraticalHours, double praticalHours, double laboratoryHours,
 	    double seminaryHours, double problemsHours, double fieldWorkHours,
-	    double trainingPeriodHours, double tutorialOrientationHours, String comment) {
+	    double trainingPeriodHours, double tutorialOrientationHours, String comment, Boolean availableGradeSubmission) {
 
 	if (name == null || acronym == null || theoreticalHours < 0 || theoreticalPraticalHours < 0
 		|| praticalHours < 0 || laboratoryHours < 0 || seminaryHours < 0 || problemsHours < 0
@@ -181,6 +182,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	setTrainingPeriodHours(trainingPeriodHours);
 	setTutorialOrientationHours(tutorialOrientationHours);
 	setComment(comment);
+	setAvailableGradeSubmission(availableGradeSubmission);
     }
 
     public ExecutionCourseSite createSite() {

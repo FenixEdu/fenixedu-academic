@@ -20,7 +20,7 @@ public class EditExecutionCourse extends Service {
                 infoExecutionCourse.getTheoreticalHours(), infoExecutionCourse.getTheoPratHours(),
                 infoExecutionCourse.getPraticalHours(), infoExecutionCourse.getLabHours(), infoExecutionCourse.getSeminaryHours(),
                 infoExecutionCourse.getProblemsHours(), infoExecutionCourse.getFieldWorkHours(), infoExecutionCourse.getTrainingPeriodHours(),
-                infoExecutionCourse.getTutorialOrientationHours(), infoExecutionCourse.getComment());
+                infoExecutionCourse.getTutorialOrientationHours(), infoExecutionCourse.getComment(), infoExecutionCourse.getAvailableGradeSubmission());
 
         return new InfoExecutionCourse(executionCourse);
     }

@@ -396,6 +396,7 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
             infoExecutionCourse.setTrainingPeriodHours(new Double((String) editExecutionCourseForm.get("trainingPeriodHours")));
             infoExecutionCourse.setTutorialOrientationHours(new Double((String) editExecutionCourseForm.get("tutorialOrientationHours")));
             infoExecutionCourse.setComment((String) editExecutionCourseForm.get("comment"));
+            infoExecutionCourse.setAvailableGradeSubmission(Boolean.valueOf(editExecutionCourseForm.getString("availableGradeSubmission")));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -435,6 +436,7 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
         if (infoExecutionCourse.getTutorialOrientationHours() != null) {
             executionCourseForm.set("tutorialOrientationHours", infoExecutionCourse.getTutorialOrientationHours().toString());
         }
-        executionCourseForm.set("comment", infoExecutionCourse.getComment());
+        if(infoExecutionCourse.getAvailableGradeSubmission() != null)
+        executionCourseForm.set("availableGradeSubmission", infoExecutionCourse.getAvailableGradeSubmission().toString());
     }
 }

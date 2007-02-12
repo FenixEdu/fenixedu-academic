@@ -119,6 +119,14 @@
 				<bean:write name="<%=SessionConstants.EXECUTION_COURSE%>" property="comment" />
 			</td>
 		</tr>
+		<tr>
+			<td>
+				<b><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.execution.course.available.grade.submission"/></b>
+			</td>
+			<td>
+				<bean:write name="<%=SessionConstants.EXECUTION_COURSE%>" property="availableGradeSubmission" />
+			</td>
+		</tr>
 	</table>
 
 	<br />
