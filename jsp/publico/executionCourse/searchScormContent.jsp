@@ -214,7 +214,7 @@
 
 <logic:empty name="bean" property="results">
 	<p>
-		<em><bean:message key="label.search.noResultsFound" /></em>.
+		<em><bean:message key="label.search.noContentsFound" /></em>.
 	</p>
 </logic:empty>
 </logic:present>

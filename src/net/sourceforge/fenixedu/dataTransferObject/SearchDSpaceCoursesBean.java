@@ -76,7 +76,7 @@ public class SearchDSpaceCoursesBean extends SearchDSpaceBean{
 		
 		if(hasSearchElements()) {
 			for(EducationalResourceType type : getEducationalResourceTypes()) {
-				criteria.addOrCriteria(SearchField.TYPE,type.getType());
+				criteria.addExactMatchOrCriteria(SearchField.TYPE,type.getType());
 			}
 			for(SearchElement element : elements) {
 				if(element.getConjunction().equals(ConjunctionType.AND)) {
