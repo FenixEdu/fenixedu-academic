@@ -1907,20 +1907,25 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     private List<RuleResult> evaluateDegreeModulesToEnrol(final EnrolmentContext enrolmentContext,
 	    final Map<EnrolmentResultType, List<DegreeModuleToEnrol>> degreeModulesEnrolMap) {
+	
 	final List<RuleResult> falseRuleResults = new ArrayList<RuleResult>();
-	final Map<ICurricularRule, RuleResult> ruleResults = new HashMap<ICurricularRule, RuleResult>();
-	for (final Entry<DegreeModuleToEnrol, Set<ICurricularRule>> entry : getRulesToEvaluate(
-		enrolmentContext).entrySet()) {
+	final Map<ICurricularRule, RuleResult> cachedRuleResults = new HashMap<ICurricularRule, RuleResult>();
+	
+	for (final Entry<DegreeModuleToEnrol, Set<ICurricularRule>> entry : getRulesToEvaluate(enrolmentContext).entrySet()) {
+	    
 	    RuleResult ruleResult = RuleResult.createTrue();
 	    for (final ICurricularRule rule : entry.getValue()) {
-		RuleResult result;
-		if (ruleResults.containsKey(rule)) {
-		    result = ruleResults.get(rule);
+		
+		RuleResult cachedResult;
+		boolean copyMessages = true;
+		if (cachedRuleResults.containsKey(rule)) {
+		    cachedResult = cachedRuleResults.get(rule);
+		    copyMessages = false;
 		} else {
-		    result = rule.evaluate(enrolmentContext);
-		    ruleResults.put(rule, result);
+		    cachedResult = rule.evaluate(enrolmentContext);
+		    cachedRuleResults.put(rule, cachedResult);
 		}
-		ruleResult = ruleResult.and(result);
+		ruleResult = ruleResult.and(cachedResult, copyMessages);
 	    }
 	    if (ruleResult.isFalse()) {
 		falseRuleResults.add(ruleResult);
@@ -1996,8 +2001,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     private Map<EnrolmentResultType, List<DegreeModuleToEnrol>> buildDegreeModulesToEnrolMap() {
-	final Map<EnrolmentResultType, List<DegreeModuleToEnrol>> result = new HashMap<EnrolmentResultType, List<DegreeModuleToEnrol>>(
-		2);
+	final Map<EnrolmentResultType, List<DegreeModuleToEnrol>> result = 
+	    new HashMap<EnrolmentResultType, List<DegreeModuleToEnrol>>(2);
 	result.put(EnrolmentResultType.FINAL, new ArrayList<DegreeModuleToEnrol>());
 	result.put(EnrolmentResultType.TEMPORARY, new ArrayList<DegreeModuleToEnrol>());
 
