@@ -1,5 +1,8 @@
 package net.sourceforge.fenixedu.domain.curricularRules;
 
+import java.util.List;
+
+import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.CurricularRuleLevel;
@@ -10,6 +13,8 @@ import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 
 public interface ICurricularRule {
+
+    public List<GenericPair<Object, Boolean>> getLabel();
     
     public DegreeModule getDegreeModuleToApplyRule();
     public CourseGroup getContextCourseGroup();
