@@ -28,3 +28,10 @@ function executeWithTempFile() {
 }
 
 execute "Alter Table Registration" alterTableRegistration.sql
+
+execute "Drop table ResearchEventParticipation" dropResearchEventParticipationTable.sql
+execute "Create table ResearchResearchActivity" createResearchActivityTable.sql
+execute "Drop table ResearchEvent" dropResearchEventTable.sql
+
+execute 'Add AVAILABLE_GRADE_SUBMISSION column' alterExecutionCourseTable.sql
+
