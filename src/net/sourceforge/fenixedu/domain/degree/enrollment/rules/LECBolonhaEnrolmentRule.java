@@ -33,22 +33,18 @@ public class LECBolonhaEnrolmentRule extends BolonhaEnrolmentRule {
     
     private static final String DISSERTACAO_P_CODE = "BAU";
     
-
-    private static final String DISSERTACAO_CODE = "B80";
+    private static final String[] CE_DEGREE_GROUP = {"VZ", "YB", "AF6", "AHA", "AJF"};
     
-    private static final String[] PLANEAMENTO_GROUP = { "AHA" , "0S", "0T", "A2", "AJF", "VZ", "AFK", "81", "AFL" };
+    private static final String[] CE_MASTER_DEGREE_GROUP = {"VZ", "YB", "AF6", "AHA", "AJF", "AF9", "AFA", "AFB" };
     
-    private static final String[] AUTOMACAO_DEGREE_1_SEM = { "A9C" };
+    private static final String[] CC_MASTER_DEGREE_GROUP = {"YB", "AF6", "AF9", "AFD" };
     
-    private static final String[] AUTOMACAO_DEGREE_2_SEM = { "F2" , "A9D" };
+    private static final String[] H_OPTIONAL_GROUP = {"81", "H5", "AFF", "AFI" };
     
-    private static final String[] PRODUCAO_DEGREE_1_SEM = { "A9X", "A9Z" };
+    private static final String[] H_DEGREE_GROUP = {"AHA"};
     
-    private static final String[] PRODUCAO_DEGREE_2_SEM = { "A6U", "AQO", "XG", "F2", "A90", "A9Y", "AA0" };
+    private static final String[] PLANEAMENTO_GROUP = {"AHA", "0S", "0T", "A2", "AJF", "VZ", "AFK", "81", "AFL" };
     
-    private static final String[] TERMO_DEGREE_1_SEM = { "A9N", "A6W", "6Q", "A6V" };
-    
-    private static final String[] TERMO_DEGREE_2_SEM = { "A9P" };
     
 
     public LECBolonhaEnrolmentRule(StudentCurricularPlan studentCurricularPlan,
@@ -75,129 +71,69 @@ public class LECBolonhaEnrolmentRule extends BolonhaEnrolmentRule {
 	return curricularCoursesToBeEnrolledIn;
     }
     
-    
-    
-    
-    
 
     private List<CurricularCourse2Enroll> applyPlaneamento(List<CurricularCourse2Enroll> curricularCoursesToBeEnrolledIn) {
 	if(isEnrolledInPreviousExecutionPeriodOrAproved(DISSERTACAO_P_CODE) || isEnrolledInExecutionPeriod(DISSERTACAO_P_CODE)) {
 	    removeCurricularCourse(curricularCoursesToBeEnrolledIn, DISSERTACAO_P_CODE);
-	    if(countEnroledOrAprovedEnrolments(PLANEAMENTO_GROUP) == 2) {
+	    if(countEnroledOrAprovedEnrolments(PLANEAMENTO_GROUP) >= 2) {
 		removeCurricularCourses(curricularCoursesToBeEnrolledIn, Arrays.asList(PLANEAMENTO_GROUP));
 	    }
-	} else {
+	} else if(countEnroledOrAprovedEnrolments(PLANEAMENTO_GROUP) >= 2) {
 	    LECOptionalPairGroupsEnrollmentRule rule = new LECOptionalPairGroupsEnrollmentRule(studentCurricularPlan);
 	    curricularCoursesToBeEnrolledIn = rule.apply(curricularCoursesToBeEnrolledIn);
-	}
-
+	    if(countEnroledOrAprovedEnrolments(PLANEAMENTO_GROUP) > 2) {
+		removeCurricularCourse(curricularCoursesToBeEnrolledIn, DISSERTACAO_P_CODE);
+	    }
+	} 
+	
 	return curricularCoursesToBeEnrolledIn;
     }
 
+
     private List<CurricularCourse2Enroll> applyHidraulica(List<CurricularCourse2Enroll> curricularCoursesToBeEnrolledIn) {
-	// TODO Auto-generated method stub
-	return null;
+	if(isEnrolledInPreviousExecutionPeriodOrAproved(DISSERTACAO_H_CODE) || isEnrolledInExecutionPeriod(DISSERTACAO_H_CODE)) {
+	    removeCurricularCourse(curricularCoursesToBeEnrolledIn, DISSERTACAO_H_CODE);
+	    removeCurricularCourses(curricularCoursesToBeEnrolledIn, Arrays.asList(H_DEGREE_GROUP));
+	    if(countEnroledOrAprovedEnrolments(H_OPTIONAL_GROUP) >= 2) {
+		removeCurricularCourses(curricularCoursesToBeEnrolledIn, Arrays.asList(H_OPTIONAL_GROUP));
+	    }
+	} else if(countEnroledOrAprovedEnrolments(H_OPTIONAL_GROUP) > 2 || countEnroledOrAprovedEnrolments(H_DEGREE_GROUP) > 0){
+	    removeCurricularCourse(curricularCoursesToBeEnrolledIn, DISSERTACAO_H_CODE);
+	    if(countEnroledOrAprovedEnrolments(H_OPTIONAL_GROUP) >= 3) {
+		removeCurricularCourses(curricularCoursesToBeEnrolledIn, Arrays.asList(H_OPTIONAL_GROUP));
+	    }
+	}
+	
+	return curricularCoursesToBeEnrolledIn;
     }
 
     private List<CurricularCourse2Enroll> applyConstrucaoConstrucao(List<CurricularCourse2Enroll> curricularCoursesToBeEnrolledIn) {
-	// TODO Auto-generated method stub
-	return null;
+	if(isEnrolledInPreviousExecutionPeriodOrAproved(DISSERTACAO_CC_CODE) || isEnrolledInExecutionPeriod(DISSERTACAO_CC_CODE)) {
+	    removeCurricularCourse(curricularCoursesToBeEnrolledIn, DISSERTACAO_CC_CODE);
+	    if(countEnroledOrAprovedEnrolments(CC_MASTER_DEGREE_GROUP) >= 2) {
+		removeCurricularCourses(curricularCoursesToBeEnrolledIn, Arrays.asList(CC_MASTER_DEGREE_GROUP));
+	    }
+	} else if(countEnroledOrAprovedEnrolments(CC_MASTER_DEGREE_GROUP) > 2){
+	    removeCurricularCourse(curricularCoursesToBeEnrolledIn, DISSERTACAO_CC_CODE);
+	}
+	
+	return curricularCoursesToBeEnrolledIn;
     }
 
     private List<CurricularCourse2Enroll> applyConstrucaoEstruturas(List<CurricularCourse2Enroll> curricularCoursesToBeEnrolledIn) {
-	// TODO Auto-generated method stub
-	return null;
-    }
-
-    private List<CurricularCourse2Enroll> applyProducao(List<CurricularCourse2Enroll> curricularCoursesToBeEnrolledIn) {
-	if(isEnrolledInPreviousExecutionPeriodOrAproved(DISSERTACAO_CODE) || isEnrolledInExecutionPeriod(DISSERTACAO_CODE)) {
-	    removeCurricularCourses(curricularCoursesToBeEnrolledIn, Arrays.asList(PRODUCAO_DEGREE_2_SEM));
-	    removeCurricularCourse(curricularCoursesToBeEnrolledIn, DISSERTACAO_CODE);
-	}
-	
-	if(countEnroledInPreviousExecutionPeriodOrAprovedEnrolments(PRODUCAO_DEGREE_1_SEM) > 0 
-		|| countEnroledOrAprovedEnrolments(PRODUCAO_DEGREE_2_SEM) > 0) {
-	    removeCurricularCourse(curricularCoursesToBeEnrolledIn, DISSERTACAO_CODE);
-	}
-
-	return curricularCoursesToBeEnrolledIn;
-    }
-
-    /*private List<CurricularCourse2Enroll> applyProducao(List<CurricularCourse2Enroll> curricularCoursesToBeEnrolledIn) {
-
-	if(isEnrolledInExecutionPeriod(DISSERTACAO_CODE)) {
-	    removeCurricularCourse(curricularCoursesToBeEnrolledIn, PRODUCAO_MECANICAI_CODE);
-	    removeCurricularCourse(curricularCoursesToBeEnrolledIn, PROJECTO_MECANICOI_CODE);
-	    int common = countEnrolments(GROUP_320_COMMON);
-	    int specific = countEnrolments(GROUP_320);
-	    if(common == 0) {
-		if(specific == 1) {
-		    List<String> coursesToRemove = new ArrayList<String>(GROUP_320.length);
-		    coursesToRemove.addAll(Arrays.asList(GROUP_320));
-		    coursesToRemove.removeAll(Arrays.asList(GROUP_320_COMMON));
-		    removeCurricularCourses(curricularCoursesToBeEnrolledIn, coursesToRemove);
-		}
-	    } else {
-		if(specific == 2) {
-		    removeCurricularCourses(curricularCoursesToBeEnrolledIn, Arrays.asList(GROUP_320));
-		}
+	if(isEnrolledInPreviousExecutionPeriodOrAproved(DISSERTACAO_CE_CODE) || isEnrolledInExecutionPeriod(DISSERTACAO_CE_CODE)) {
+	    removeCurricularCourse(curricularCoursesToBeEnrolledIn, DISSERTACAO_CE_CODE);
+	    if(countEnroledOrAprovedEnrolments(CE_MASTER_DEGREE_GROUP) >= 2) {
+		removeCurricularCourses(curricularCoursesToBeEnrolledIn, Arrays.asList(CE_MASTER_DEGREE_GROUP));
 	    }
-	} else {
-	    if(isEnrolledInExecutionPeriod(PRODUCAO_MECANICAI_CODE) || isEnrolledInExecutionPeriod(PROJECTO_MECANICOI_CODE)) {
-		removeCurricularCourse(curricularCoursesToBeEnrolledIn, DISSERTACAO_CODE);
-	    }
-	    
-	    int common = countEnrolments(GROUP_320_COMMON);
-	    int specific = countEnrolments(GROUP_320);
-	    if(common == 0) {
-		if(specific == 2) {
-		    List<String> coursesToRemove = new ArrayList<String>(GROUP_320.length);
-		    coursesToRemove.addAll(Arrays.asList(GROUP_320));
-		    coursesToRemove.removeAll(Arrays.asList(GROUP_320_COMMON));
-		    removeCurricularCourses(curricularCoursesToBeEnrolledIn, coursesToRemove);
-		    removeCurricularCourse(curricularCoursesToBeEnrolledIn, DISSERTACAO_CODE);
-		}
-	    } else {
-		if(specific == 3) {
-		    removeCurricularCourses(curricularCoursesToBeEnrolledIn, Arrays.asList(GROUP_320));
-		    removeCurricularCourse(curricularCoursesToBeEnrolledIn, DISSERTACAO_CODE);
-		}
+	} else if(countEnroledOrAprovedEnrolments(CE_MASTER_DEGREE_GROUP) > 2){
+	    removeCurricularCourse(curricularCoursesToBeEnrolledIn, DISSERTACAO_CE_CODE);
+	    if(countEnroledOrAprovedEnrolments(CE_DEGREE_GROUP) >= 2) {
+		removeCurricularCourses(curricularCoursesToBeEnrolledIn, Arrays.asList(CE_DEGREE_GROUP));
 	    }
 	}
-	return curricularCoursesToBeEnrolledIn;
-    }*/
-
-    private List<CurricularCourse2Enroll> applyTermodinamica(List<CurricularCourse2Enroll> curricularCoursesToBeEnrolledIn) {
-	
-	if(isEnrolledInPreviousExecutionPeriodOrAproved(DISSERTACAO_CODE) || isEnrolledInExecutionPeriod(DISSERTACAO_CODE)) {
-	    removeCurricularCourses(curricularCoursesToBeEnrolledIn, Arrays.asList(TERMO_DEGREE_2_SEM));
-	    removeCurricularCourse(curricularCoursesToBeEnrolledIn, DISSERTACAO_CODE);
-	} 
-	
-	if(countEnroledInPreviousExecutionPeriodOrAprovedEnrolments(TERMO_DEGREE_1_SEM) > 0 
-		|| countEnroledOrAprovedEnrolments(TERMO_DEGREE_2_SEM) > 0) {
-	    removeCurricularCourse(curricularCoursesToBeEnrolledIn, DISSERTACAO_CODE);
-	    //TODO: ver a questão do grupo de opcao do 4º ano
-	}
 	
 	return curricularCoursesToBeEnrolledIn;
     }
-
-    private List<CurricularCourse2Enroll> applyAutomacaoRobotica(List<CurricularCourse2Enroll> curricularCoursesToBeEnrolledIn) {
-	
-	if(isEnrolledInPreviousExecutionPeriodOrAproved(DISSERTACAO_CODE) || isEnrolledInExecutionPeriod(DISSERTACAO_CODE)) {
-	    removeCurricularCourses(curricularCoursesToBeEnrolledIn, Arrays.asList(AUTOMACAO_DEGREE_2_SEM));
-	    removeCurricularCourse(curricularCoursesToBeEnrolledIn, DISSERTACAO_CODE);
-	}
-	
-	if(countEnroledInPreviousExecutionPeriodOrAprovedEnrolments(AUTOMACAO_DEGREE_1_SEM) > 0 
-		|| countEnroledOrAprovedEnrolments(AUTOMACAO_DEGREE_2_SEM) > 0) {
-	    removeCurricularCourse(curricularCoursesToBeEnrolledIn, DISSERTACAO_CODE);
-	    //TODO: ver grupo de opções G
-	}
-	
-	return curricularCoursesToBeEnrolledIn;
-    }
-
 
 }
