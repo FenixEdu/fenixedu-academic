@@ -79,7 +79,7 @@ abstract public class CurricularRuleExecutor {
      * or CourseGroup (when rule was gathered into a collection of rules)
      * 
      * - uses ruleWasSelectedFromAnyModuleToEnrol, appliesToContext and appliesToCourseGroup methods
-     * - these methods exist by their own, because some rules may apply them in a different ways
+     * - these methods exist by their own, because some rules may apply them in different ways
      * 
      */
     protected boolean canApplyRule(final EnrolmentContext enrolmentContext, final ICurricularRule curricularRule) {
