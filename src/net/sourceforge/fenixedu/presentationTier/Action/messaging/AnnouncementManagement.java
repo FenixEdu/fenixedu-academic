@@ -145,14 +145,14 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
 	return mapping.findForward("listAnnouncements");
     }
 
-    private AnnouncementArchive buildArchive(AnnouncementBoard board, HttpServletRequest request) {
+    protected AnnouncementArchive buildArchive(AnnouncementBoard board, HttpServletRequest request) {
 	AnnouncementArchive archive = new AnnouncementArchive(board, board
 		.hasWriter(getLoggedPerson(request)) ? AnnouncementArchiveAnnouncementsVisibility.ALL
 		: AnnouncementArchiveAnnouncementsVisibility.ACTIVE);
 	return archive;
     }
 
-    private Collection<Announcement> getThisMonthAnnouncements(AnnouncementBoard board, HttpServletRequest request) {
+    protected Collection<Announcement> getThisMonthAnnouncements(AnnouncementBoard board, HttpServletRequest request) {
 	
 	final List<Announcement> announcements = board.hasWriter(getLoggedPerson(request)) ? 
 		new ArrayList<Announcement>(board.getAnnouncements()) : board.getActiveAnnouncements();

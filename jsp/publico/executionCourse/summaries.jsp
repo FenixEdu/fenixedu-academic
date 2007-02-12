@@ -9,6 +9,9 @@
 <h2><bean:message key="label.summaries"/></h2>
 
 <bean:define id="executionCourseID" name="executionCourse" property="idInternal"/>
+<%
+    if (request.getParameter("ommitFilter") == null) {
+%>
 <html:form action="/searchSummaries">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="summaries"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="executionCourseID" value="<%= executionCourseID.toString() %>"/>
@@ -76,7 +79,7 @@
 		</tr>
 	</table>	
 </html:form>
-
+<% } %>
 
 
 

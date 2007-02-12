@@ -29,7 +29,12 @@
 				<bean:message key="link.executionCourseManagement.menu.view.course.page"/>
 			</html:link>
 		</li>
-		
+		<li>
+            <html:link page="/generateArchive.do?method=prepare" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+                <bean:message key="link.executionCourse.archive.generate"/>
+            </html:link>
+        </li>
+        
 	<li class="navheader"><bean:message key="label.executionCourseManagement.menu.communication"/></li>
 		<li>
 			<html:link page="/announcementManagement.do?method=start" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal">

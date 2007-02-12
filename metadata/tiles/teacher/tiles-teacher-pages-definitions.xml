@@ -499,6 +499,10 @@
 		<put name="body" value="/teacher/listProfessorships.jsp" />
 	</definition>
 
+    <definition name="execution-course-archive-options" extends="execution-course-administration">
+        <put name="body" value="/teacher/executionCourse/archiveOptions.jsp" />
+    </definition>
+
 	<definition name="manage-execution-course-instructions" extends="execution-course-administration">
 		<put name="body" value="/teacher/executionCourse/instructions.jsp" />
 	</definition>

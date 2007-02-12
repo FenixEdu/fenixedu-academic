@@ -19,10 +19,8 @@
 
 <ul>
     <li>
-        <bean:define id="imageURL" type="java.lang.String">
-            background: url(<%= request.getContextPath() %>/images/rss_ico.png) 10px 3px no-repeat; padding-left: 20px;
-        </bean:define>
-        <html:link page="/executionCourse.do?method=rss" style="<%=imageURL%>"
+        <img src="<%= request.getContextPath() + "/images/rss_ico.png" %>" style="display: inline; float: left; padding-left: 10px; padding-top: 3px; margin-right: -8px;"/>
+        <html:link page="/executionCourse.do?method=rss"
                 paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
             <bean:message  key="link.rss"/>
         </html:link>

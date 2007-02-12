@@ -6,14 +6,18 @@ package net.sourceforge.fenixedu.presentationTier.Action.publico.messaging;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NotAuthorizedActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.messaging.announcements.dto.AnnouncementArchive;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -45,6 +49,31 @@ public class ExecutionCoursePublicAnnouncementManagement extends PublicAnnouncem
     public ActionForward start(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	return super.viewAnnouncements(mapping, actionForm, request, response);
+    }
+
+    @Override
+    protected Collection<Announcement> getThisMonthAnnouncements(AnnouncementBoard board, HttpServletRequest request) {
+        boolean useArchive = request.getParameter("ommitArchive") == null;
+        if (useArchive) {
+            return super.getThisMonthAnnouncements(board, request);
+        }
+        else {
+            List<Announcement> announcements = new ArrayList<Announcement>(board.getAnnouncements());
+            Collections.sort(announcements, Announcement.NEWEST_FIRST);
+            
+            return announcements;
+        }
+    }
+
+    @Override
+    protected AnnouncementArchive buildArchive(AnnouncementBoard board, HttpServletRequest request) {
+        boolean useArchive = request.getParameter("ommitArchive") == null;
+        if (useArchive) {
+            return super.buildArchive(board, request);
+        }
+        else {
+            return null;
+        }
     }
 
     @Override

@@ -616,3 +616,12 @@
         <property name="escaped" value="false"/>
     </slot>
 </schema>
+
+<schema name="executionCourse.archive.options" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ArchiveOptions">
+    <slot name="announcements" key="label.archive.options.announcements"/>
+    <slot name="planning" key="label.archive.options.planning"/>
+    <slot name="schedule" key="label.archive.options.schedule"/>
+    <slot name="shifts" key="label.archive.options.shifts"/>
+    <slot name="groupings" key="label.archive.options.groupings"/>
+    <slot name="evaluations" key="label.archive.options.evaluations"/>
+</schema>

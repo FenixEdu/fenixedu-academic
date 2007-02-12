@@ -906,6 +906,12 @@
 				validate="false">
 			<forward name="list" path="list-professorships"/>
         </action>
+        <action path="/generateArchive"
+            type="net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.GenerateSiteArchive"
+            parameter="method">
+            <forward name="options" path="execution-course-archive-options"/>
+            <forward name="fallback" path="manage-execution-course-instructions"/>
+        </action>
         <action path="/manageExecutionCourse"
         		parameter="method"
 				type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ManageExecutionCourseDA">	
