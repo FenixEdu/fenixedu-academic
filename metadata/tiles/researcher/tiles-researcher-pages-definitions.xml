@@ -36,8 +36,6 @@
         <put name="body" value="/researcher/projects/createProject.jsp"></put>
     </definition>
     
-    
-    
     <!-- interests definitions -->
     <definition name="interests.interestsManagement" extends="researcher.masterPage">
         <put name="head" value="/commons/renderers/treeRendererHeader.jsp"/>
@@ -50,29 +48,29 @@
         <put name="body" value="/researcher/interests/editInterest.jsp"></put>
     </definition>  
     
-    <!-- events definitions -->
-    <definition name="events.eventsManagement" extends="researcher.masterPage">
-        <put name="body" value="/researcher/events/eventsManagement.jsp"></put>
+    <!-- activities definitions -->
+    <definition name="activities.activitiesManagement" extends="researcher.masterPage">
+        <put name="body" value="/researcher/activities/activitiesManagement.jsp"></put>
     </definition>
-    <definition name="events.viewEvent" extends="researcher.masterPage">
-        <put name="body" value="/researcher/events/viewEvent.jsp"></put>
+    <definition name="activities.createEvent" extends="researcher.masterPage">
+        <put name="body" value="/researcher/activities/createEvent.jsp"></put>
     </definition>
-    <definition name="events.editEventData" extends="researcher.masterPage">
-        <put name="body" value="/researcher/events/editEventData.jsp"></put>
+    <definition name="activities.createScientificJournal" extends="researcher.masterPage">
+        <put name="body" value="/researcher/activities/createScientificJournal.jsp"></put>
     </definition>
-    <definition name="events.editEventParticipants" extends="researcher.masterPage">
-        <put name="body" value="/researcher/events/editEventParticipants.jsp"></put>
+    <definition name="activities.createCooperation" extends="researcher.masterPage">
+        <put name="body" value="/researcher/activities/createCooperation.jsp"></put>
     </definition>
-    <definition name="events.editEventProjectAssociations" extends="researcher.masterPage">
-        <put name="body" value="/researcher/events/editEventProjectAssociations.jsp"></put>
+    <definition name="activities.editResearchActivity" extends="researcher.masterPage">
+        <put name="body" value="/researcher/activities/editResearchActivity.jsp"></put>
+    </definition>     
+    <definition name="activities.editResearchActivityData" extends="researcher.masterPage">
+        <put name="body" value="/researcher/activities/editResearchActivityData.jsp"></put>
     </definition>
-    <definition name="events.editEventParticipantUnits" extends="researcher.masterPage">
-        <put name="body" value="/researcher/events/editEventParticipantUnits.jsp"></put>
+    <definition name="activities.editResearchActivityParticipants" extends="researcher.masterPage">
+        <put name="body" value="/researcher/activities/editResearchActivityParticipants.jsp"></put>
     </definition>
-    <definition name="events.createEvent" extends="researcher.masterPage">
-        <put name="body" value="/researcher/events/createEvent.jsp"></put>
-    </definition>    
-
+    
     <!-- Result definitions -->
 
 
@@ -138,5 +136,5 @@
     </definition> 
     <definition name="publications.search" extends="researcher.masterPage">
         <put name="body" value="/researcher/result/publications/searchPublication.jsp"></put>
-	</definition>
+    </definition>     
 </tiles-definitions>

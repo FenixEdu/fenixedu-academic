@@ -5,6 +5,7 @@
 package net.sourceforge.fenixedu.domain.organizationalStructure;
 
 import java.text.Collator;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -17,6 +18,8 @@ import net.sourceforge.fenixedu.domain.accounting.Account;
 import net.sourceforge.fenixedu.domain.accounting.AccountType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.parking.ParkingPartyClassification;
+import net.sourceforge.fenixedu.domain.research.activity.Participation;
+import net.sourceforge.fenixedu.domain.research.activity.ResearchActivity;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -33,10 +36,10 @@ public abstract class Party extends Party_Base {
 	createAccount(AccountType.INTERNAL);
 	createAccount(AccountType.EXTERNAL);
     }
-
+    
     @Override
     public void setName(String name) {
-	if (name == null || StringUtils.isEmpty(name.trim())) {
+	if(name == null || StringUtils.isEmpty(name.trim())) {
 	    throw new DomainException("error.unit.empty.name");
 	}
 	super.setName(name);
@@ -96,6 +99,7 @@ public abstract class Party extends Party_Base {
 	return result;
     }
 
+
     public Collection<? extends Party> getChildParties(Class childPartyClass) {
 	final Set<Party> result = new HashSet<Party>();
 	for (final Accountability accountability : getChildsSet()) {
@@ -129,7 +133,7 @@ public abstract class Party extends Party_Base {
 	}
 	return result;
     }
-    
+
     protected Collection<? extends Party> getChildParties(final PartyTypeEnum type, final Class<? extends Party> clazz) {
 	final Set<Party> result = new HashSet<Party>();
 	for (final Accountability accountability : getChildsSet()) {
@@ -214,14 +218,14 @@ public abstract class Party extends Party_Base {
 
 	for (; !getAccounts().isEmpty(); getAccounts().get(0).delete())
 	    ;
-
+	
 	removeRootDomainObject();
 	super.deleteDomainObject();
     }
 
     private boolean canBeDeleted() {
 	return !hasAnyResearchInterests() && !hasAnyProjectParticipations()
-		&& !hasAnyEventParticipations() && !hasAnyBoards() && !hasAnyChilds();
+		&& !hasAnyResearchActivities() && !hasAnyBoards() && !hasAnyChilds();
     }
 
     public static Set<Party> readContributors() {
@@ -280,7 +284,11 @@ public abstract class Party extends Party_Base {
     }
 
     public boolean isPerson() {
-	return false;
+    	return false;
+    }
+    
+    public boolean isUnit() {
+    	return false;
     }
 
     public abstract ParkingPartyClassification getPartyClassification();
@@ -313,5 +321,47 @@ public abstract class Party extends Party_Base {
 	}
 	return false;
     }
-
+    public List<ResearchActivity> getResearchActivities() {
+    	List<ResearchActivity> activities = new ArrayList<ResearchActivity> ();
+    	for(Participation participation : this.getParticipations()) {
+    		activities.add(participation.getResearchActivity());
+    	}
+    	return activities;
+    }
+    
+    public List<Participation> getAllEventParticipations(){
+    	List<Participation> eventParticipations = new ArrayList<Participation> ();
+    	for(Participation participation : this.getParticipations()) {
+    		if(participation.isEventParticipation()) {
+    			eventParticipations.add(participation);
+    		}
+    	}
+    	return eventParticipations;
+    }
+    
+    public List<Participation> getAllScientificJournalsParticipations(){
+    	List<Participation> scientifJournalParticipations = new ArrayList<Participation> ();
+    	for(Participation participation : this.getParticipations()) {
+    		if(participation.isScientificJournaltParticipation()) {
+    			scientifJournalParticipations.add(participation);
+    		}
+    	}
+    	return scientifJournalParticipations;
+    }
+    
+    public Integer getResearchActivitiesCount() {
+    	return this.getResearchActivities().size();
+    }
+    
+    public boolean hasAnyResearchActivities() {
+    	return this.hasAnyParticipations();
+    }
+    
+    public void removeResearchActivities(ResearchActivity researchActivity) {
+    	for(Participation participation : this.getParticipations()) {
+    		if(participation.getResearchActivity().equals(researchActivity)) {
+    			participation.delete();
+    		}
+    	}
+    }
 }

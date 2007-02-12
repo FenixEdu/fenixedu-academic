@@ -173,7 +173,7 @@ public class AcademicAdminOfficePaymentsManagementDispatchAction extends
     }
 
     protected Event getEvent(HttpServletRequest request) {
-	return rootDomainObject.readDomainObjectEventByOID(getIntegerFromRequest(request, "eventId"));
+	return rootDomainObject.readEventByOID(getIntegerFromRequest(request, "eventId"));
     }
 
     public ActionForward createOtherPartyPayment(ActionMapping mapping, ActionForm form,

@@ -3,8 +3,8 @@ package net.sourceforge.fenixedu.dataTransferObject.research.result;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.research.event.Event;
-import net.sourceforge.fenixedu.domain.research.event.EventType;
+import net.sourceforge.fenixedu.domain.research.activity.Event;
+import net.sourceforge.fenixedu.domain.research.activity.EventType;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.ResultEventAssociation.ResultEventAssociationRole;
 import net.sourceforge.fenixedu.util.MultiLanguageString;

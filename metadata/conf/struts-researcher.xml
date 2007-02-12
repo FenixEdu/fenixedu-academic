@@ -86,35 +86,45 @@
 			<forward name="EditProjectParticipantUnits" path="projects.editProjectParticipantUnits"/>
 		</action>
 		
-		<!--  EVENTS  -->
-		<action path="/events/eventsManagement" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.research.event.EventsManagementDispatchAction">
-		    <forward name="Success" path="events.eventsManagement"/>
+		<!--  ACTIVITIES  -->
+		<action path="/activities/activitiesManagement" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.research.activity.ActivitiesManagementDispatchAction">
+		    <forward name="ListActivities" path="activities.activitiesManagement"/>
+		    <forward name="EditResearchActivity" path="/activities/editResearchActivity.do?method=prepare"/>
+		    <forward name="EditParticipants" path="/activities/editResearchActivity.do?method=prepareEditParticipants"/>
 		</action>
 		
-		<action path="/events/viewEvent"
-				type="net.sourceforge.fenixedu.presentationTier.Action.research.event.ViewEventDispatchAction"
+		<action path="/activities/editResearchActivity"
+				type="net.sourceforge.fenixedu.presentationTier.Action.research.activity.EditResearchActivityDispatchAction"
 				scope="request"
 				parameter="method">
-			<forward name="ViewEvent" path="events.viewEvent"/>
+			<forward name="EditResearchActivity" path="activities.editResearchActivity"/>
+			<forward name="EditData" path="activities.editResearchActivityData"/>
+			<forward name="EditParticipants" path="activities.editResearchActivityParticipants"/>
 		</action>
-
-		<action path="/events/createEvent"
-				type="net.sourceforge.fenixedu.presentationTier.Action.research.event.CreateEventDispatchAction"
+		
+		<action path="/activities/createEvent"
+				type="net.sourceforge.fenixedu.presentationTier.Action.research.activity.CreateEventDispatchAction"
 				scope="request"
 				parameter="method">
-			<forward name="CreateEvent" path="events.createEvent"/>
-		    <forward name="Success" path="/events/eventsManagement.do?method=listEvents"/>
+			<forward name="CreateEvent" path="activities.createEvent"/>
+			<forward name="Success" path="/activities/activitiesManagement.do?method=listActivities"/>
 		</action>
-
-		<action path="/events/editEvent"
-				type="net.sourceforge.fenixedu.presentationTier.Action.research.event.EditEventDispatchAction"
+		
+		<action path="/activities/createScientificJournal"
+				type="net.sourceforge.fenixedu.presentationTier.Action.research.activity.CreateScientificJournalDispatchAction"
 				scope="request"
 				parameter="method">
-			<forward name="EditEventData" path="events.editEventData"/>
-			<forward name="EditEventParticipants" path="events.editEventParticipants"/>
-			<forward name="EditEventProjectAssociations" path="events.editEventProjectAssociations"/>
-			<forward name="EditEventParticipantUnits" path="events.editEventParticipantUnits"/>
-		</action>		
+			<forward name="CreateScientificJournal" path="activities.createScientificJournal"/>
+			<forward name="Success" path="/activities/activitiesManagement.do?method=listActivities"/>
+		</action>
+		
+		<action path="/activities/createCooperation"
+				type="net.sourceforge.fenixedu.presentationTier.Action.research.activity.CreateCooperationDispatchAction"
+				scope="request"
+				parameter="method">
+			<forward name="CreateCooperation" path="activities.createCooperation"/>		
+		    <forward name="ListActivities" path="/activities/activitiesManagement.do?method=listActivities"/>
+		</action>	
 		
 		<!-- Results Management -->
 		<action path="/resultPublications/*" forward="/publications/management.do?method={1}"/>
@@ -147,7 +157,7 @@
 		    <forward name="ImportBibtex" path="publications.importBibtex"/>
 		    <forward name="PublicationsManagement" path="/resultPublications/listPublications.do"/>
 		</action>
-		
+				
 		<!-- Result Publication Search Action  Mapping -->
 			<action path="/publications/search"
 	        	 parameter="method"
@@ -216,7 +226,7 @@
 	<message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
 	<message-resources parameter="resources.ResearcherResources" null="false"/>
 	<message-resources parameter="resources.ResearcherResources" key="RESEARCHER_RESOURCES" null="false"/>
-    <message-resources parameter="resources.ApplicationResources" key="APPLICATION_RESOURCES" null="false"/>
+	<message-resources parameter="resources.ApplicationResources" key="APPLICATION_RESOURCES" null="false"/>
     <message-resources parameter="resources.DepartmentMemberResources" key="DEPARTMENT_MEMBER_RESOURCES" null="false"/>
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">

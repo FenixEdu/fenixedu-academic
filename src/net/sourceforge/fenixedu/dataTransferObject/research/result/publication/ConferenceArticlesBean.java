@@ -1,8 +1,9 @@
 package net.sourceforge.fenixedu.dataTransferObject.research.result.publication;
 
 import java.io.Serializable;
+import net.sourceforge.fenixedu.domain.research.activity.Event;
+import net.sourceforge.fenixedu.domain.research.activity.EventType;
 
-import net.sourceforge.fenixedu.domain.research.event.EventType;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication.ScopeType;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
@@ -80,7 +81,7 @@ public abstract class ConferenceArticlesBean extends ResultPublicationBean imple
 	this.eventNameAutoComplete = name;
     }
 
-   
+
 
     public ScopeType getScope() {
 	return scope;
@@ -92,8 +93,7 @@ public abstract class ConferenceArticlesBean extends ResultPublicationBean imple
 
 	public String getConference() {
 		return conference;
-	}
-
+}
 	public void setConference(String conference) {
 		this.conference = conference;
 	}

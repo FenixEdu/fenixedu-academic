@@ -130,7 +130,7 @@ public class Unit extends Unit_Base {
 		&& !hasAdministrativeOffice()
 		&& !hasUnitServiceAgreementTemplate() && !hasAnyExternalCurricularCourses();
     }
-    
+
     public boolean isInternal() {
 	if(this.equals(UnitUtils.readInstitutionUnit())){
 	    return true;
@@ -558,7 +558,7 @@ public class Unit extends Unit_Base {
     public Collection<Unit> getSubUnits(List<AccountabilityTypeEnum> accountabilityTypeEnums) {
 	return (Collection<Unit>) getChildParties(accountabilityTypeEnums, getClass());
     }
-    
+
     public Collection<Unit> getSubUnits(final PartyTypeEnum type) {
 	return (Collection<Unit>) getChildParties(type, getClass());
     }
@@ -1024,7 +1024,12 @@ public class Unit extends Unit_Base {
 
 	return builder.toString();
     }
-
+    
+    @Override
+    public boolean isUnit(){
+    	return true;    
+    }
+    
     @Override
     public AdministrativeOffice getAdministrativeOffice() {
 
@@ -1040,6 +1045,7 @@ public class Unit extends Unit_Base {
 
 	return null;
     }
+    
     
     /**
      * This method return a list of external childs in the "organizational structure",
@@ -1070,8 +1076,7 @@ public class Unit extends Unit_Base {
 	    return super.hasCompetenceCourses(competenceCourse);
 	default:
 	    return false;
-	}
-    }
+}    }
 
     private boolean searchCompetenceCourseInChilds(final CompetenceCourse competenceCourse, final PartyTypeEnum type) {
 	for (final Unit unit : getSubUnits(type)) {

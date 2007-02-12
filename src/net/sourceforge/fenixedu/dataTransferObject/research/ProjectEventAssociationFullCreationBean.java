@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.dataTransferObject.research;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.research.event.EventType;
+import net.sourceforge.fenixedu.domain.research.activity.EventType;
 import net.sourceforge.fenixedu.domain.research.project.ProjectEventAssociation.ProjectEventAssociationRole;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 

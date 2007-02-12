@@ -1,11 +1,21 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.research.project.Project" table="RESEARCH_PROJECT"/>
-
-<class-descriptor class="net.sourceforge.fenixedu.domain.research.event.Event" table="RESEARCH_EVENT"/>
 	
 <class-descriptor class="net.sourceforge.fenixedu.domain.research.project.ProjectParticipation" table="RESEARCH_PROJECT_PARTICIPATION"/>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.research.ResearchInterest" table="RESEARCH_INTEREST"/>
-	
-<class-descriptor class="net.sourceforge.fenixedu.domain.research.event.EventParticipation"	table="RESEARCH_EVENT_PARTICIPATION"/>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.research.project.ProjectEventAssociation" table="RESEARCH_PROJECT_RESEARCH_EVENT_ASSOCIATION"/>
+
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.research.activity.ResearchActivity -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.research.activity.ResearchActivity"	table="RESEARCH_ACTIVITY">
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.research.activity.Event"/>
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.research.activity.ScientificJournal"/>
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.research.activity.Cooperation"/>
+</class-descriptor>	
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.research.activity.Participation" table="RESEARCH_ACTIVITY_PARTICIPATION"/>
+<class-descriptor class="net.sourceforge.fenixedu.domain.research.activity.ScientificJournal" table="RESEARCH_ACTIVITY"/>
+<class-descriptor class="net.sourceforge.fenixedu.domain.research.activity.Event" table="RESEARCH_ACTIVITY"/>
+<class-descriptor class="net.sourceforge.fenixedu.domain.research.activity.Cooperation" table="RESEARCH_ACTIVITY"/>

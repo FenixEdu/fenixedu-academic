@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.dataTransferObject.research;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.research.event.Event;
+import net.sourceforge.fenixedu.domain.research.activity.Event;
 import net.sourceforge.fenixedu.domain.research.project.ProjectEventAssociation.ProjectEventAssociationRole;
 
 public class ProjectEventAssociationSimpleCreationBean implements Serializable {

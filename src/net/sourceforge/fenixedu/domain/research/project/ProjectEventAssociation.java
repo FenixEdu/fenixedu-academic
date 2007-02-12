@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.domain.research.project;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.research.event.Event;
+import net.sourceforge.fenixedu.domain.research.activity.Event;
 
 public class ProjectEventAssociation extends ProjectEventAssociation_Base {
     

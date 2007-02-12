@@ -8331,8 +8331,8 @@
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains/>
-    </service>
-        <service>
+    </service>   
+    <service>
     	<name>SearchOrganizationalUnits</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.SearchOrganizationalUnits</implementationClass>
         <description></description>
@@ -9197,8 +9197,8 @@
 		</filterChains>
 	</service> 
 	<service>
-		<name>DeleteResearchEvent</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.event.DeleteResearchEvent</implementationClass>
+		<name>CreateResearchActivityParticipation</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.activity.CreateResearchActivityParticipation</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -9206,8 +9206,8 @@
 		</filterChains>
 	</service> 
 	<service>
-		<name>CreateEventParticipant</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.event.CreateEventParticipant</implementationClass>
+		<name>CreateResearchEvent</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.activity.CreateResearchEvent</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -9215,17 +9215,35 @@
 		</filterChains>
 	</service> 
 	<service>
-		<name>DeleteEventParticipant</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.event.DeleteEventParticipant</implementationClass>
+		<name>CreateScientificJournal</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.activity.CreateScientificJournal</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
 			<chain name="ResearcherAuthorization" />
 		</filterChains>
 	</service> 
+	<service>
+		<name>RemoveResearchActivityParticipation</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.activity.RemoveResearchActivityParticipation</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ResearcherAuthorization" />
+		</filterChains>
+	</service>
+	<service>
+		<name>EditResearchActivityParticipants</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.activity.EditResearchActivityParticipants</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ResearcherAuthorization" />
+		</filterChains>
+	</service>
 	<service>
 		<name>DeleteEventProjectAssociation</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.event.DeleteEventProjectAssociation</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.activity.DeleteEventProjectAssociation</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -9234,7 +9252,7 @@
 	</service> 
 	<service>
 		<name>CreateEventProjectAssociation</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.event.CreateEventProjectAssociation</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.activity.CreateEventProjectAssociation</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -9335,14 +9353,6 @@
 		<isTransactional>true</isTransactional>
 		<filterChains>
 			<chain name="SiteManagerAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>DeleteResearchEvent</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.DeleteResearchEvent</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
 		</filterChains>
 	</service>
     <service>
@@ -9488,7 +9498,7 @@
     </service>    
 	<service>
         <name>SearchEventsByType</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.event.SearchEventsByType</implementationClass>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.activity.SearchEventsByType</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
@@ -9505,7 +9515,6 @@
         <filterChains>
         </filterChains>
     </service>
-
 	<service>
         <name>SearchPersonsForParticipations</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.SearchPersonsForParticipations</implementationClass>
@@ -9514,8 +9523,7 @@
         <isTransactional>true</isTransactional>
         <filterChains>
         </filterChains>
-    </service>    
-        
+    </service>        
 	<service>
         <name>SearchPersonForParticipationWithWrapping</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.SearchPersonForParticipationWithWrapping</implementationClass>
@@ -11284,8 +11292,8 @@
         <filterChains>
         	<chain name="AcademicAdministrativeOfficeAuthorization"></chain>
         </filterChains>     
-    </service>
-
+    </service>  
+  
 	<service>
     	<name>ReadStudentSenior</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.student.senior.ReadStudentSenior</implementationClass>
@@ -11457,7 +11465,7 @@
         <filterChains>
         	<chain name="AcademicAdministrativeOfficeAuthorization"></chain>
         </filterChains>     
-    </service>
+    </service>   
     <service>
     	<name>CreateOccupationPeriod</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.CreateOccupationPeriod</implementationClass>
