@@ -133,7 +133,7 @@ public abstract class Party extends Party_Base {
     protected Collection<? extends Party> getChildParties(final PartyTypeEnum type, final Class<? extends Party> clazz) {
 	final Set<Party> result = new HashSet<Party>();
 	for (final Accountability accountability : getChildsSet()) {
-	    if (accountability.getChildParty().getType().equals(type) 
+	    if (accountability.getChildParty().getType() == type 
 		    && accountability.getChildParty().getClass().equals(clazz)) {
 		result.add(accountability.getChildParty());
 	    }
