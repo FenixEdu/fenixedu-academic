@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors;
 
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
+import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.RestrictionBetweenDegreeModules;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 public class RestrictionBetweenDegreeModulesExecutor extends CurricularRuleExecutor {
 
     @Override
-    protected RuleResult executeEnrolmentWithRules(final CurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
+    protected RuleResult executeEnrolmentWithRules(final ICurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
 	
 	final RestrictionBetweenDegreeModules rule = (RestrictionBetweenDegreeModules) curricularRule;
 	if (!canApplyRule(enrolmentContext, rule)) {
@@ -36,7 +36,7 @@ public class RestrictionBetweenDegreeModulesExecutor extends CurricularRuleExecu
     }
     
     @Override
-    protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(final CurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
+    protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(final ICurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
 	
 	final RestrictionBetweenDegreeModules rule = (RestrictionBetweenDegreeModules) curricularRule;
 	if (!canApplyRule(enrolmentContext, rule)) {
@@ -74,7 +74,7 @@ public class RestrictionBetweenDegreeModulesExecutor extends CurricularRuleExecu
     }
 
     @Override
-    protected RuleResult executeEnrolmentWithNoRules(CurricularRule curricularRule, EnrolmentContext enrolmentContext) {
+    protected RuleResult executeEnrolmentWithNoRules(ICurricularRule curricularRule, EnrolmentContext enrolmentContext) {
 	return RuleResult.createTrue();
     }
 }

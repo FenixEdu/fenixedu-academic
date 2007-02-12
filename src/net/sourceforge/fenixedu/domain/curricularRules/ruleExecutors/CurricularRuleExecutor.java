@@ -5,7 +5,7 @@ import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
+import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.enrolment.DegreeModuleToEnrol;
@@ -18,7 +18,7 @@ abstract public class CurricularRuleExecutor {
     protected CurricularRuleExecutor() {
     }
 
-    public RuleResult execute(final CurricularRule curricularRule, final CurricularRuleLevel level, final EnrolmentContext enrolmentContext) {
+    public RuleResult execute(final ICurricularRule curricularRule, final CurricularRuleLevel level, final EnrolmentContext enrolmentContext) {
 	switch (level) {
 	case ENROLMENT_WITH_RULES:
 	    return executeEnrolmentWithRules(curricularRule, enrolmentContext);
@@ -43,7 +43,7 @@ abstract public class CurricularRuleExecutor {
 	return null;
     }
     
-    protected DegreeModuleToEnrol searchDegreeModuleToEnrol(final EnrolmentContext enrolmentContext, final CurricularRule curricularRule) {
+    protected DegreeModuleToEnrol searchDegreeModuleToEnrol(final EnrolmentContext enrolmentContext, final ICurricularRule curricularRule) {
 	return searchDegreeModuleToEnrol(enrolmentContext, curricularRule.getDegreeModuleToApplyRule());
     }
     
@@ -57,15 +57,15 @@ abstract public class CurricularRuleExecutor {
 	return result;
     }
     
-    protected boolean ruleWasSelectedFromAnyModuleToEnrol(final EnrolmentContext enrolmentContext, final CurricularRule curricularRule) {
+    protected boolean ruleWasSelectedFromAnyModuleToEnrol(final EnrolmentContext enrolmentContext, final ICurricularRule curricularRule) {
 	return searchDegreeModuleToEnrol(enrolmentContext, curricularRule.getDegreeModuleToApplyRule()) != null;
     }
     
-    protected boolean appliesToContext(final EnrolmentContext enrolmentContext, final CurricularRule curricularRule) {
+    protected boolean appliesToContext(final EnrolmentContext enrolmentContext, final ICurricularRule curricularRule) {
 	return curricularRule.appliesToContext(searchDegreeModuleToEnrol(enrolmentContext, curricularRule).getContext());
     }
     
-    protected boolean appliesToCourseGroup(final EnrolmentContext enrolmentContext, final CurricularRule curricularRule) {
+    protected boolean appliesToCourseGroup(final EnrolmentContext enrolmentContext, final ICurricularRule curricularRule) {
 	if (!curricularRule.hasContextCourseGroup() || curricularRule.getDegreeModuleToApplyRule().isRoot()) {
 	    return true;
 	}
@@ -82,7 +82,7 @@ abstract public class CurricularRuleExecutor {
      * - these methods exist by their own, because some rules may apply them in a different ways
      * 
      */
-    protected boolean canApplyRule(final EnrolmentContext enrolmentContext, final CurricularRule curricularRule) {
+    protected boolean canApplyRule(final EnrolmentContext enrolmentContext, final ICurricularRule curricularRule) {
 	if (ruleWasSelectedFromAnyModuleToEnrol(enrolmentContext, curricularRule)) {
 	    if (!appliesToContext(enrolmentContext, curricularRule)) {
 		return false;
@@ -97,7 +97,7 @@ abstract public class CurricularRuleExecutor {
 	return enrolmentContext.getStudentCurricularPlan().findCurriculumModuleFor(degreeModule);
     }
     
-    protected CurriculumModule searchCurriculumModule(final EnrolmentContext enrolmentContext, final CurricularRule curricularRule) {
+    protected CurriculumModule searchCurriculumModule(final EnrolmentContext enrolmentContext, final ICurricularRule curricularRule) {
 	return searchCurriculumModule(enrolmentContext, curricularRule.getDegreeModuleToApplyRule());
     }
     
@@ -127,7 +127,7 @@ abstract public class CurricularRuleExecutor {
         return searchDegreeModuleToEnrol(enrolmentContext, degreeModule) != null;
     }
 
-    abstract protected RuleResult executeEnrolmentWithRules(final CurricularRule curricularRule, final EnrolmentContext enrolmentContext);
-    abstract protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(final CurricularRule curricularRule, final EnrolmentContext enrolmentContext);
-    abstract protected RuleResult executeEnrolmentWithNoRules(final CurricularRule curricularRule, final EnrolmentContext enrolmentContext);
+    abstract protected RuleResult executeEnrolmentWithRules(final ICurricularRule curricularRule, final EnrolmentContext enrolmentContext);
+    abstract protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(final ICurricularRule curricularRule, final EnrolmentContext enrolmentContext);
+    abstract protected RuleResult executeEnrolmentWithNoRules(final ICurricularRule curricularRule, final EnrolmentContext enrolmentContext);
 }

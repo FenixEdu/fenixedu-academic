@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors;
 
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
+import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.MinimumNumberOfCreditsToEnrol;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 public class MinimumNumberOfCreditsToEnrolExecutor extends CurricularRuleExecutor {
 
     @Override
-    protected RuleResult executeEnrolmentWithRules(final CurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
+    protected RuleResult executeEnrolmentWithRules(final ICurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
 	
 	final MinimumNumberOfCreditsToEnrol rule = (MinimumNumberOfCreditsToEnrol) curricularRule;
 	if (!canApplyRule(enrolmentContext, curricularRule)) {
@@ -33,7 +33,7 @@ public class MinimumNumberOfCreditsToEnrolExecutor extends CurricularRuleExecuto
     }
 
     @Override
-    protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(final CurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
+    protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(final ICurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
 	
 	final MinimumNumberOfCreditsToEnrol rule = (MinimumNumberOfCreditsToEnrol) curricularRule;
 	if (!canApplyRule(enrolmentContext, curricularRule)) {
@@ -58,7 +58,7 @@ public class MinimumNumberOfCreditsToEnrolExecutor extends CurricularRuleExecuto
     }
 
     @Override
-    protected RuleResult executeEnrolmentWithNoRules(final CurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
+    protected RuleResult executeEnrolmentWithNoRules(final ICurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
 	return RuleResult.createTrue();
     }
     

@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.DegreeModulesSelectionLimit;
 import net.sourceforge.fenixedu.domain.curricularRules.EnrolmentToBeApprovedByCoordinator;
 import net.sourceforge.fenixedu.domain.curricularRules.Exclusiveness;
+import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.MaximumNumberOfCreditsForEnrolmentPeriod;
 import net.sourceforge.fenixedu.domain.curricularRules.MinimumNumberOfCreditsToEnrol;
 import net.sourceforge.fenixedu.domain.curricularRules.PreviousYearsEnrolmentCurricularRule;
@@ -35,11 +36,11 @@ public class CurricularRuleExecutorFactory {
 	executors.put(PreviousYearsEnrolmentCurricularRule.class,	new PreviousYearsEnrolmentExecutor());
     }
 
-    public static CurricularRuleExecutor findExecutor(final CurricularRule curricularRule) {
+    public static CurricularRuleExecutor findExecutor(final ICurricularRule curricularRule) {
 	return findExecutor(curricularRule.getClass());
     }
 
-    public static CurricularRuleExecutor findExecutor(final Class<? extends CurricularRule> clazz) {
+    public static CurricularRuleExecutor findExecutor(final Class<? extends ICurricularRule> clazz) {
 	if (!executors.containsKey(clazz)) {
 	    throw new DomainException("error.curricularRules.RuleFactory.cannot.find.RuleExecutor.for.class", clazz.getName());
 	}

@@ -22,6 +22,7 @@ public interface ICurricularRule {
     
     public boolean appliesToContext(final Context context);
     public boolean appliesToCourseGroup(final CourseGroup courseGroup);
+    public boolean hasContextCourseGroup();
     
     public boolean isCompositeRule();
     public boolean isValid(ExecutionPeriod executionPeriod);

@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.curricularRules.CreditsLimit;
-import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
+import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.enrolment.DegreeModuleToEnrol;
@@ -34,7 +34,7 @@ public class CreditsLimitExecutor extends CurricularRuleExecutor {
      */
     
     @Override
-    protected RuleResult executeEnrolmentWithRules(final CurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
+    protected RuleResult executeEnrolmentWithRules(final ICurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
 	
 	final CreditsLimit rule = (CreditsLimit) curricularRule;
 	
@@ -107,7 +107,7 @@ public class CreditsLimitExecutor extends CurricularRuleExecutor {
      */
     
     @Override
-    protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(final CurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
+    protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(final ICurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
 	
 	final CreditsLimit rule = (CreditsLimit) curricularRule;
 	
@@ -139,7 +139,7 @@ public class CreditsLimitExecutor extends CurricularRuleExecutor {
     }
 
     @Override
-    protected RuleResult executeEnrolmentWithNoRules(final CurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
+    protected RuleResult executeEnrolmentWithNoRules(final ICurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
 	return RuleResult.createTrue();
     }
 }

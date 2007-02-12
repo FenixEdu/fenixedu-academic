@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.util.LogicOperators;
 
-public abstract class CurricularRule extends CurricularRule_Base {
+public abstract class CurricularRule extends CurricularRule_Base implements ICurricularRule {
  
     protected CurricularRule() {
         super();
