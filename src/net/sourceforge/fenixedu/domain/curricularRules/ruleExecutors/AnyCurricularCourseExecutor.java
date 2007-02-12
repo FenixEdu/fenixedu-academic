@@ -54,7 +54,7 @@ public class AnyCurricularCourseExecutor extends CurricularRuleExecutor {
 	result &= rule.hasDepartmentUnit() ? rule.getDepartmentUnit().hasCompetenceCourses(
 		curricularCourseToEnrol.getCompetenceCourse()) : true;
 	
-	return result ? RuleResult.createTrue() : RuleResult.createFalse(CurricularRuleLabelFormatter.getLabel(rule));
+	return result ? RuleResult.createTrue() : RuleResult.createFalseWithLiteralMessage(CurricularRuleLabelFormatter.getLabel(rule));
     }
 
     @Override
