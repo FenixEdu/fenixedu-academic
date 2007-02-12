@@ -4,7 +4,6 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
-<logic:present role="RESEARCHER">
 
 <script language="JavaScript">
  window.resizeTo(800,390);
@@ -24,7 +23,6 @@
 			</pre>
 		</logic:iterate>
 	</logic:notEmpty>
-</logic:present>
 
 
 

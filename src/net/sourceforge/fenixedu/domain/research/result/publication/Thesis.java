@@ -60,7 +60,7 @@ public class Thesis extends Thesis_Base {
     private void fillAllAttributes(ThesisType thesisType, String title, MultiLanguageString keywords, Unit school, Integer year,
 	    String address, MultiLanguageString note, Integer numberPages, String language, Month month,
 	    Integer yearBegin, Month monthBegin, String url) {
-	if(year<yearBegin || (year.compareTo(yearBegin)==0 && month.ordinal()<monthBegin.ordinal())) {
+	if(yearBegin!=null && (year<yearBegin || (year.compareTo(yearBegin)==0 && month.ordinal()<monthBegin.ordinal()))) {
 		throw new DomainException("error.researcher.Thesis.dateBeginBeforeDateEnd");
 	}
     super.setTitle(title);

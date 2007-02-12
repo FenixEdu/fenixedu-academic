@@ -271,6 +271,9 @@ public abstract class ResearchResult extends ResearchResult_Base {
 			if (role.equals(ResultParticipationRole.Editor)) {
 				return true;
 			}
+			else {
+				return false;
+			}
 		}
 		if (this instanceof Book || this instanceof BookPart || this instanceof Inproceedings) {
 			if (role.equals(ResultParticipationRole.Editor) || role.equals(ResultParticipationRole.Author)) {

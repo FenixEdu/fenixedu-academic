@@ -231,11 +231,11 @@ public abstract class ResearchResultPublication extends ResearchResultPublicatio
 	}
 
 	private void createNewParticipationsIn(ResearchResult publication) {
-		for (ResultParticipation participation : getResultParticipations()) {
+		for (ResultParticipation participation : getOrderedResultParticipations()) {
 			ResultParticipationRole role = participation.getRole();
-
+			
 			if (!publication.acceptsParticipationRole(role)) {
-				role = ResultParticipationRole.Author;
+				role = (publication instanceof Proceedings) ? ResultParticipationRole.Editor : ResultParticipationRole.Author;
 			}
 			if (!publication.hasPersonParticipationWithRole(participation.getPerson(), role)) {
 				publication.addParticipation(participation.getPerson(), role);

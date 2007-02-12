@@ -45,6 +45,7 @@ public class InproceedingsBean extends ConferenceArticlesBean implements Seriali
 	this.setLastPage(((Inproceedings) publication).getLastPage());
 	this.setLanguage(((Inproceedings) publication).getLanguage());
 	this.setConference(((Inproceedings) publication).getConference());
+	this.setScope(((Inproceedings) publication).getScope());
     }
 
     @Override
