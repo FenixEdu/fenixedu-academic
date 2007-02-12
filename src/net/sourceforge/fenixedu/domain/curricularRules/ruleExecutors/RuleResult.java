@@ -31,24 +31,34 @@ public class RuleResult {
     public List<RuleResultMessage> getMessages() {
 	return messages;
     }
-
+    
     public RuleResult and(final RuleResult ruleResult) {
+	return and(ruleResult, true);
+    }
+
+    public RuleResult and(final RuleResult ruleResult, final boolean copyMessages) {
 	final RuleResultType andResult = this.getResult().and(ruleResult.getResult());
 	final List<RuleResultMessage> messages = new ArrayList<RuleResultMessage>(getMessages());
-	if (andResult == RuleResultType.FALSE && ruleResult.isFalse()) {
+	if (copyMessages && (andResult == RuleResultType.FALSE) && ruleResult.isFalse()) {
 	    messages.addAll(ruleResult.getMessages());
 	}
 
 	return new RuleResult(andResult, getEnrolmentResultType().and(
 		ruleResult.getEnrolmentResultType()), messages);
     }
-
+    
     public RuleResult or(final RuleResult ruleResult) {
+	return or(ruleResult, true);
+    }
+
+    public RuleResult or(final RuleResult ruleResult, final boolean copyMessages) {
 	final RuleResultType orResult = this.getResult().or(ruleResult.getResult());
 	final List<RuleResultMessage> messages = new ArrayList<RuleResultMessage>(); 
 	if (orResult == RuleResultType.FALSE) {
 	    messages.addAll(getMessages());
-	    messages.addAll(ruleResult.getMessages());
+	    if (copyMessages) {
+		messages.addAll(ruleResult.getMessages());
+	    }
 	}
 
 	return new RuleResult(orResult, getEnrolmentResultType()
