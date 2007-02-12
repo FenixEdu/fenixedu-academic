@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.dataTransferObject.research.result.OpenFileBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.parking.ParkingGroup;
 import net.sourceforge.fenixedu.domain.parking.ParkingParty;
+import net.sourceforge.fenixedu.domain.parking.Vehicle;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.projectsManagement.ExcelStyle;
@@ -94,10 +95,21 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
         row.setCell(person != null ? getName(person.getNickname()) : getName(parkingParty.getParty()
                 .getName())); // name
         row.setCell(""); // address         
-        row.setCell(parkingParty.getFirstCarPlateNumber() != null ? parkingParty
-                .getFirstCarPlateNumber() : ""); // license
-        row.setCell(parkingParty.getSecondCarPlateNumber() != null ? parkingParty
-                .getSecondCarPlateNumber() : ""); // licenseAlt
+        String vehicle1PlateNumber = "";
+        String vehicle2PlateNumber = "";
+        int counter = 1;
+        for (Vehicle vehicle : parkingParty.getVehicles()) {
+            if (counter == 1) {
+                vehicle1PlateNumber = vehicle.getPlateNumber();
+            } else if (counter == 2) {
+                vehicle2PlateNumber = vehicle.getPlateNumber();
+            } else {
+                break;
+            }
+            counter++;
+        }
+        row.setCell(vehicle1PlateNumber); // license
+        row.setCell(vehicle2PlateNumber); // licenseAlt
         row.setCell(person != null && person.getWorkPhone() != null ? person.getWorkPhone() : ""); // registration
         row.setCell(person != null && person.getMobile() != null ? person.getMobile() : ""); // registrationAlt
         row.setCell(""); // clientRef
@@ -295,10 +307,21 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
         row.setCell(person != null ? getName(person.getNickname()) : getName(parkingParty.getParty()
                 .getName())); // name
         row.setCell((String) accessTableRow.get("Address"));
-        row.setCell(parkingParty.getFirstCarPlateNumber() != null ? parkingParty
-                .getFirstCarPlateNumber() : ""); // license
-        row.setCell(parkingParty.getSecondCarPlateNumber() != null ? parkingParty
-                .getSecondCarPlateNumber() : ""); // licenseAlt
+        String vehicle1PlateNumber = "";
+        String vehicle2PlateNumber = "";
+        int counter = 1;
+        for (Vehicle vehicle : parkingParty.getVehicles()) {
+            if (counter == 1) {
+                vehicle1PlateNumber = vehicle.getPlateNumber();
+            } else if (counter == 2) {
+                vehicle2PlateNumber = vehicle.getPlateNumber();
+            } else {
+                break;
+            }
+            counter++;
+        }
+        row.setCell(vehicle1PlateNumber); // license
+        row.setCell(vehicle2PlateNumber); // licenseAlt
 
         row.setCell(person != null && person.getWorkPhone() != null ? person.getWorkPhone() : ""); // registration
         row.setCell(person != null && person.getMobile() != null ? person.getMobile() : ""); // registrationAlt
