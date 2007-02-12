@@ -110,11 +110,10 @@ public class RuleResult {
 	return new RuleResult(RuleResultType.FALSE, EnrolmentResultType.FINAL, Collections
 		.singletonList(new RuleResultMessage(message, args)));
     }
-
-    static public RuleResult createFalse(final EnrolmentResultType enrolmentResultType,
-	    RuleResultMessage message) {
-	return new RuleResult(RuleResultType.FALSE, enrolmentResultType, Collections
-		.singletonList(message));
+    
+    static public RuleResult createFalseWithLiteralMessage(final String message) {
+	return new RuleResult(RuleResultType.FALSE, EnrolmentResultType.FINAL, Collections
+		.singletonList(new RuleResultMessage(message, false)));
     }
 
     static public RuleResult createNA() {
