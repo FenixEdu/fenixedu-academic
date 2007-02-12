@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
+import net.sourceforge.fenixedu.domain.curricularRules.RestrictionDoneDegreeModule;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
@@ -351,6 +352,26 @@ public class CurricularCourse extends CurricularCourse_Base {
 	return result;
     }
 
+    public boolean hasRestrictionDone(final CurricularCourse precedence) {
+	if (!isBolonha()) {
+	    throw new DomainException("CurricularCourse.method.only.appliable.to.bolonha.structure");
+	}
+	
+	final ExecutionPeriod currentExecutionPeriod = ExecutionPeriod.readActualExecutionPeriod();
+	
+	for (final CurricularRule curricularRule : getCurricularRulesSet()) {
+	    if (curricularRule.isValid(currentExecutionPeriod) && curricularRule instanceof RestrictionDoneDegreeModule) {
+		final RestrictionDoneDegreeModule restrictionDone = (RestrictionDoneDegreeModule) curricularRule;
+		
+		if (restrictionDone.getPrecedenceDegreeModule() == precedence) {
+		    return true;
+		}
+	    }
+	}
+	
+	return false;
+    }
+    
     public CurricularYear getCurricularYearByBranchAndSemester(final Branch branch,
 	    final Integer semester) {
 	return getCurricularYearByBranchAndSemester(branch, semester, new Date());
