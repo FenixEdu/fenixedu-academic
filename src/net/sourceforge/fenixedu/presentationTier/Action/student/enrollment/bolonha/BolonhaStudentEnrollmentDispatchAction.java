@@ -21,7 +21,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.EnrollmentDomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.commons.TransactionalDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixTransactionException;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
@@ -125,7 +124,11 @@ public class BolonhaStudentEnrollmentDispatchAction extends FenixDispatchAction 
 	    EnrollmentDomainException ex) {
 	for (final RuleResult ruleResult : ex.getFalseRuleResults()) {
 	    for (final RuleResultMessage message : ruleResult.getMessages()) {
-		addActionMessage(request, message.getMessage(), message.getArgs());
+		if (message.isToTranslate()) {
+		    addActionMessage(request, message.getMessage(), message.getArgs());
+		} else {
+		    addActionMessageLiteral(request, message.getMessage());
+		}
 	    }
 	}
     }
