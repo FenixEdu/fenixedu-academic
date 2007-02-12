@@ -263,7 +263,7 @@ public class Employee extends Employee_Base {
     }
 
     public AdministrativeOffice getAdministrativeOffice() {
-	AdministrativeOffice administrativeOffice = getCurrentWorkingPlace().getAdministrativeOffice();
+	AdministrativeOffice administrativeOffice = getCurrentWorkingPlace() == null ? null : getCurrentWorkingPlace().getAdministrativeOffice();
 
 	if (administrativeOffice == null) {
 	    for (PersonFunction personFunction : getPerson().getActivePersonFunctions()) {
