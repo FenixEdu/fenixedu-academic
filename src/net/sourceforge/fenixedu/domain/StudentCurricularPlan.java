@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissa
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
+import net.sourceforge.fenixedu.domain.curricularRules.AssertUniqueApprovalInCurricularCourseContexts;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.EnrolmentResultType;
 import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.RuleResult;
@@ -1841,15 +1842,16 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
 	for (final DegreeModuleToEnrol degreeModuleToEnrol : enrolmentContext.getDegreeModuleToEnrol()) {
 	    final HashSet<ICurricularRule> curricularRules = new HashSet<ICurricularRule>();
-	    curricularRules.addAll(degreeModuleToEnrol.getContext().getChildDegreeModule()
-		    .getCurricularRules(enrolmentContext.getExecutionPeriod()));
-	    curricularRules.addAll(degreeModuleToEnrol.getCurriculumGroup().getCurricularRules(
-		    enrolmentContext.getExecutionPeriod()));
+	    final DegreeModule degreeModule = degreeModuleToEnrol.getContext().getChildDegreeModule();
+	    final ExecutionPeriod executionPeriod = enrolmentContext.getExecutionPeriod();
 	    
-	    if (degreeModuleToEnrol.isLeaf()) {
-		curricularRules.add(null);
+	    curricularRules.addAll(degreeModule.getCurricularRules(executionPeriod));
+	    if (degreeModule instanceof CurricularCourse) {
+		//curricularRules.add(new AssertUniqueApprovalInCurricularCourseContexts((CurricularCourse) degreeModule));
 	    }
 
+	    curricularRules.addAll(degreeModuleToEnrol.getCurriculumGroup().getCurricularRules(executionPeriod));
+	    
 	    curricularRulesByDegreeModule.put(degreeModuleToEnrol, curricularRules);
 	}
 
