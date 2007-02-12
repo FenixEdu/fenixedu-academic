@@ -340,7 +340,7 @@ public class ParkingParty extends ParkingParty_Base {
                 return person.getTeacher().getTeacherNumber();
             }
             if (person.getEmployee() != null && person.getEmployee().getCurrentWorkingContract() != null
-                    && person.getTeacher() == null) {
+                    && person.getPersonRole(RoleType.TEACHER) == null) {
                 return person.getEmployee().getEmployeeNumber();
             }
             if (person.getStudent() != null) {

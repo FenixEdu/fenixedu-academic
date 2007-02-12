@@ -29,6 +29,7 @@ import net.sourceforge.fenixedu.domain.parking.ParkingPartyClassification;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequest;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequestSearch;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequestState;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -323,7 +324,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
             return "Nº Mec: " + p.getTeacher().getTeacherNumber();
         }
         if (p.getEmployee() != null && p.getEmployee().getCurrentWorkingContract() != null
-                && p.getTeacher() == null) {
+                && p.getPersonRole(RoleType.TEACHER) == null) {
             return "Nº Mec: " + p.getEmployee().getEmployeeNumber();
         }
         if (p.getStudent() != null && !parkingGroup.getGroupName().equalsIgnoreCase("Bolseiros")) {
