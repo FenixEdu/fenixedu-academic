@@ -78,7 +78,7 @@ valueType net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization  
 valueType net.sourceforge.fenixedu.util.State                                                   				as State;
 valueType net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState     					as StudentCurricularPlanState;
 valueType net.sourceforge.fenixedu.util.StudentState                                            				as StudentState;
-valueType net.sourceforge.fenixedu.domain.student.StudentType													as StudentType;
+valueType net.sourceforge.fenixedu.domain.student.RegistrationAgreement											as RegistrationAgreement;
 valueType net.sourceforge.fenixedu.util.StudentPersonalDataAuthorizationChoice									as StudentPersonalDataAuthorizationChoice;
 valueType net.sourceforge.fenixedu.util.TipoAula                                                				as TipoAula;
 valueType net.sourceforge.fenixedu.util.TipoSala                                                				as TipoSala; 
@@ -3013,9 +3013,9 @@ class net.sourceforge.fenixedu.domain.student.Registration extends net.sourcefor
 	Integer keyPrecedentDegreeInformation;
 	Integer keyStudent;
 	Integer keyStudentCandidacy;
-	Integer keyStudentKind;
 	Integer keyDfaRegistrationEvent;
 	Integer keyDegree;
+	RegistrationAgreement registrationAgreement;
 }
 
 class net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -3128,13 +3128,6 @@ class net.sourceforge.fenixedu.domain.StudentGroup extends net.sourceforge.fenix
     Integer keyShift;
     Integer keyGrouping;
     Integer groupNumber;
-}
-
-class net.sourceforge.fenixedu.domain.StudentKind extends net.sourceforge.fenixedu.domain.DomainObject {
-    Integer minCoursesToEnrol;
-    Integer maxNACToEnrol;
-    Integer maxCoursesToEnrol;
-    StudentType studentType;
 }
 
 class net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -8931,13 +8924,6 @@ relation RegistrationDataByExecutionYearRootDomainObject {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 }
 
-relation RegistrationStudentKind {
-	net.sourceforge.fenixedu.domain.student.Registration playsRole registration {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.StudentKind playsRole studentKind;
-}
-
 relation ParkingRequestParkingParty {
 	net.sourceforge.fenixedu.domain.parking.ParkingParty playsRole parkingParty;
 	net.sourceforge.fenixedu.domain.parking.ParkingRequest playsRole parkingRequests{
@@ -10645,13 +10631,6 @@ relation RootDomainObjectOrientation {
 relation RootDomainObjectSenior {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.student.Senior playsRole seniors {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectStudentKind {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.StudentKind playsRole studentKinds {
 		multiplicity *;
 	}
 }

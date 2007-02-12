@@ -8,8 +8,6 @@ import net.sourceforge.fenixedu.domain.degree.enrollment.rules.LEMAUBranchPSIRul
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.LEMBolonhaEnrolmentRule;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.LEMOptionalPairGroupsEnrollmentRule;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.MaximumNumberEctsCreditsEnrolmentRule;
-import net.sourceforge.fenixedu.domain.degree.enrollment.rules.MaximumNumberOfAcumulatedEnrollmentsRule;
-import net.sourceforge.fenixedu.domain.degree.enrollment.rules.MaximumNumberOfCurricularCoursesEnrollmentRule;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.PrecedencesEnrollmentRule;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.PreviousYearsCurricularCourseEnrollmentRuleIgnoringLastYears;
 
@@ -32,7 +30,7 @@ public class DegreeCurricularPlanLEM extends DegreeCurricularPlanLEM_Base {
         result.add(new PrecedencesEnrollmentRule(studentCurricularPlan, executionPeriod));
         result.add(new LEMOptionalPairGroupsEnrollmentRule(studentCurricularPlan, executionPeriod));
         result.add(new PreviousYearsCurricularCourseEnrollmentRuleIgnoringLastYears(
-                studentCurricularPlan, executionPeriod, 4));
+                studentCurricularPlan, executionPeriod, 4));        
         result.add(new MaximumNumberEctsCreditsEnrolmentRule(studentCurricularPlan, executionPeriod));
         result.add(new LEMBolonhaEnrolmentRule(studentCurricularPlan, executionPeriod));
         return result;

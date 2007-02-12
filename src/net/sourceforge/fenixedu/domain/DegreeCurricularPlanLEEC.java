@@ -9,8 +9,6 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.AMIIICDIIRule;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.LEECBolonhaEnrolmentRule;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.MaximumNumberEctsCreditsEnrolmentRule;
-import net.sourceforge.fenixedu.domain.degree.enrollment.rules.MaximumNumberOfAcumulatedEnrollmentsRule;
-import net.sourceforge.fenixedu.domain.degree.enrollment.rules.MaximumNumberOfCurricularCoursesEnrollmentRule;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.PrecedencesEnrollmentRule;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.SpecificLEECEnrollmentRule;
 import net.sourceforge.fenixedu.tools.enrollment.AreaType;
@@ -34,7 +32,6 @@ public class DegreeCurricularPlanLEEC extends DegreeCurricularPlanLEEC_Base {
         result.add(new MaximumNumberEctsCreditsEnrolmentRule(studentCurricularPlan, executionPeriod));
         result.add(new LEECBolonhaEnrolmentRule(studentCurricularPlan, executionPeriod));
         result.add(new SpecificLEECEnrollmentRule(studentCurricularPlan, executionPeriod));
-
         return result;
     }
 

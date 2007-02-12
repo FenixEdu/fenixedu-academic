@@ -8,10 +8,8 @@ import net.sourceforge.fenixedu.domain.LoginAlias;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.StudentKind;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.student.StudentType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -50,7 +48,6 @@ public class DataInitializer {
     private static void initialize() {
 	createRoles();
 	createCurricularYearsAndSemesters();
-	createStudentKinds();
 	createCountries();
 	createManagerUser();
     }
@@ -103,14 +100,6 @@ public class DataInitializer {
 	new CurricularYear(Integer.valueOf(3), 2);
 	new CurricularYear(Integer.valueOf(4), 2);
 	new CurricularYear(Integer.valueOf(5), 2);
-    }
-
-    private static void createStudentKinds() {
-	new StudentKind(StudentType.NORMAL, 3, 7, 10);
-	new StudentKind(StudentType.WORKING_STUDENT, 0, 10, 10);
-	new StudentKind(StudentType.FOREIGN_STUDENT, 0, 10, 10);
-	new StudentKind(StudentType.EXTERNAL_STUDENT, 0, 10, 10);
-	new StudentKind(StudentType.OTHER, 0, 10, 10);
     }
 
     private static void createCountries() {

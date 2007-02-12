@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.domain.student;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -37,7 +36,6 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.SpecialSeasonCode;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.StudentKind;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutor;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
@@ -84,9 +82,6 @@ import org.joda.time.YearMonthDay;
 
 public class Registration extends Registration_Base {
 
-    private static List<StudentType> studentTypesNotPayingGratuityOrInsurance = Arrays
-	    .asList(new StudentType[] { StudentType.EXTERNAL_STUDENT, StudentType.FOREIGN_STUDENT });
-
     private transient Double approvationRatio;
 
     private transient Double arithmeticMean;
@@ -108,16 +103,16 @@ public class Registration extends Registration_Base {
     }
 
     public Registration(Person person, StudentCandidacy studentCandidacy) {
-	this(person, null, StudentKind.readByStudentType(StudentType.NORMAL), studentCandidacy);
+	this(person, null, RegistrationAgreement.NORMAL, studentCandidacy);
     }
 
     public Registration(Person person, Integer studentNumber) {
-	this(person, studentNumber, StudentKind.readByStudentType(StudentType.NORMAL), null);
+	this(person, studentNumber, RegistrationAgreement.NORMAL, null);
     }
 
     public Registration(Person person, DegreeCurricularPlan degreeCurricularPlan,
 	    StudentCandidacy studentCandidacy) {
-	this(person, null, StudentKind.readByStudentType(StudentType.NORMAL), studentCandidacy,
+	this(person, null, RegistrationAgreement.NORMAL, studentCandidacy,
 		degreeCurricularPlan);
 
 	// create scp
@@ -127,7 +122,7 @@ public class Registration extends Registration_Base {
     }
 
     public Registration(Person person, DegreeCurricularPlan degreeCurricularPlan) {
-	this(person, null, StudentKind.readByStudentType(StudentType.NORMAL), null, degreeCurricularPlan);
+	this(person, null, RegistrationAgreement.NORMAL, null, degreeCurricularPlan);
 
 	// create scp
 	StudentCurricularPlan.createBolonhaStudentCurricularPlan(this, degreeCurricularPlan,
@@ -135,15 +130,15 @@ public class Registration extends Registration_Base {
 			.readActualExecutionPeriod());
     }
 
-    private Registration(Person person, Integer studentNumber, StudentKind studentKind,
+    private Registration(Person person, Integer studentNumber, RegistrationAgreement agreement,
 	    StudentCandidacy studentCandidacy, DegreeCurricularPlan degreeCurricularPlan) {
-	this(person, studentNumber, studentKind, studentCandidacy);
+	this(person, studentNumber, agreement, studentCandidacy);
 	if (degreeCurricularPlan != null) {
 	    setDegree(degreeCurricularPlan.getDegree());
 	}
     }
 
-    private Registration(Person person, Integer studentNumber, StudentKind studentKind,
+    private Registration(Person person, Integer studentNumber, RegistrationAgreement agreement,
 	    StudentCandidacy studentCandidacy) {
 	this();
 	if (person.hasStudent()) {
@@ -152,7 +147,7 @@ public class Registration extends Registration_Base {
 	    setStudent(new Student(person, studentNumber));
 	}
 	setPayedTuition(true);
-	setStudentKind(studentKind);
+	setRegistrationAgreement(agreement);
 	setStudentCandidacy(studentCandidacy);
 	setRegistrationYear(ExecutionYear.readCurrentExecutionYear());
 	setRequestedChangeDegree(false);
@@ -1456,7 +1451,7 @@ public class Registration extends Registration_Base {
 	    return false;
 	}
 
-	return !studentTypesNotPayingGratuityOrInsurance.contains(getStudentKind().getStudentType());
+	return getRegistrationAgreement().equals(RegistrationAgreement.NORMAL);
 
     }
 

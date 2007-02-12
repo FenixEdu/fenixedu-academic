@@ -281,18 +281,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	}
     }
 
-    public Integer getMinimumNumberOfCoursesToEnroll() {
-	return getRegistration().getStudentKind().getMinCoursesToEnrol();
-    }
-
-    public Integer getMaximumNumberOfCoursesToEnroll() {
-	return getRegistration().getStudentKind().getMaxCoursesToEnrol();
-    }
-
-    public Integer getMaximumNumberOfAcumulatedEnrollments() {
-	return getRegistration().getStudentKind().getMaxNACToEnrol();
-    }
-
     public int getNumberOfApprovedCurricularCourses() {
 	int counter = 0;
 

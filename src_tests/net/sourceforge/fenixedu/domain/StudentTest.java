@@ -1,14 +1,12 @@
 package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.StudentType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 
 public class StudentTest extends DomainTestBase {
 
 	private Person person = null;
 	private Integer studentNumber = null;
-	private StudentKind studentKind;
 		
 	private Registration studentWithActiveStudentCurricularPlan = null;
 	private Registration studentWithoutActiveStudentCurricularPlan = null;
@@ -17,7 +15,6 @@ public class StudentTest extends DomainTestBase {
 	private void setUpForNewStudentCase() {
 		person = new Person();
 		studentNumber = 49555;
-		studentKind = StudentKind.readByStudentType(StudentType.NORMAL);
 	}
 	
 	public void testCreate() {
@@ -28,7 +25,6 @@ public class StudentTest extends DomainTestBase {
 		
 		assertEquals("Failed to assign Person", registration.getPerson(),person);
 		assertEquals("Failed to assign studentNumber", registration.getNumber(),studentNumber);
-		assertEquals("Failed to assign studentKind", registration.getStudentKind(),studentKind);
 		assertEquals("Failed to assign state", registration.isInRegisteredState(), true);
 	}
 

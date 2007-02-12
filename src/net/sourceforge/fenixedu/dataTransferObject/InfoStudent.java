@@ -9,7 +9,6 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 
 /**
  * @author tfc130
@@ -33,10 +32,6 @@ public class InfoStudent extends InfoObject {
 
     public DegreeType getDegreeType() {
 	return getRegistration().getDegreeType();
-    }
-
-    public InfoStudentKind getInfoStudentKind() {
-	return InfoStudentKind.newInfoFromDomain(getRegistration().getStudentKind());
     }
 
     public Boolean getPayedTuition() {

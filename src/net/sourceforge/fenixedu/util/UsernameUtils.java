@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.StudentType;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -82,20 +81,14 @@ public class UsernameUtils extends FenixUtil {
 		    registration = person.getStudentByType(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
 		}
 		if (registration != null) {
-		    final StudentType studentType = registration.getStudentKind().getStudentType();
-		    switch (studentType) {
-		    case EXTERNAL_STUDENT:
-		    case FOREIGN_STUDENT:
+		    if (registration.getRegistrationAgreement().isNormal()) {
+			istUsername = ist + sumNumber(person.getStudent().getNumber(), 60000);
+		    } else {
 			istUsername = ist + sumNumber(registration.getNumber(), 50000 - 100000);
 			// we subtract 100000 from the external/foreign student
 			// number to get his original legacy system number
-			break;
-		    default:
-			istUsername = ist + sumNumber(registration.getNumber(), 100000);
-			break;
 		    }
 		} else if (person.hasStudent() && person.getStudent().getNumber() < 10000) {
-
 		    istUsername = ist + sumNumber(person.getStudent().getNumber(), 60000);
 		}
 	    }
@@ -131,66 +124,77 @@ public class UsernameUtils extends FenixUtil {
 	    Registration registration = person
 		    .getStudentByType(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA);
 	    if (registration != null) {
-		StudentType studentType = registration.getStudentKind().getStudentType();
-		if (studentType.equals(StudentType.NORMAL)) {
+
+		if (registration.getRegistrationAgreement().isNormal()) {
 		    return "T" + registration.getNumber();
-		} else if (studentType.equals(StudentType.FOREIGN_STUDENT)) {
-		    return "I" + registration.getNumber(); // International
-		    // students
-		} else if (studentType.equals(StudentType.EXTERNAL_STUDENT)) {
+		} else if (registration.getRegistrationAgreement().isMilitaryAgreement()) {
 		    return "A" + registration.getNumber(); // Academy
 		    // students
+		} else {
+		    return "I" + registration.getNumber(); // International
+		    // students
 		}
+
 	    }
 
 	    registration = person.getStudentByType(DegreeType.MASTER_DEGREE);
 	    if (registration != null) {
-		StudentType studentType = registration.getStudentKind().getStudentType();
-		if (studentType.equals(StudentType.NORMAL)) {
+
+		if (registration.getRegistrationAgreement().isNormal()) {
 		    return "M" + registration.getNumber();
-		} else if (studentType.equals(StudentType.FOREIGN_STUDENT)) {
-		    return "I" + registration.getNumber(); // International
-		    // students
-		} else if (studentType.equals(StudentType.EXTERNAL_STUDENT)) {
+		} else if (registration.getRegistrationAgreement().isMilitaryAgreement()) {
 		    return "A" + registration.getNumber(); // Academy
 		    // students
+		} else {
+		    return "I" + registration.getNumber(); // International
+		    // students
 		}
+
 	    }
 
 	    registration = person.getStudentByType(DegreeType.DEGREE);
 	    if (registration != null) {
-		StudentType studentType = registration.getStudentKind().getStudentType();
-		if (studentType.equals(StudentType.NORMAL)) {
+
+		if (registration.getRegistrationAgreement().isNormal()) {
 		    return "L" + registration.getNumber();
-		} else if (studentType.equals(StudentType.FOREIGN_STUDENT)) {
-		    return "I" + registration.getNumber();
-		} else if (studentType.equals(StudentType.EXTERNAL_STUDENT)) {
-		    return "A" + registration.getNumber();
+		} else if (registration.getRegistrationAgreement().isMilitaryAgreement()) {
+		    return "A" + registration.getNumber(); // Academy
+		    // students
+		} else {
+		    return "I" + registration.getNumber(); // International
+		    // students
 		}
+
 	    }
 
 	    registration = person.getStudentByType(DegreeType.BOLONHA_DEGREE);
 	    if (registration != null) {
-		StudentType studentType = registration.getStudentKind().getStudentType();
-		if (studentType.equals(StudentType.NORMAL)) {
+
+		if (registration.getRegistrationAgreement().isNormal()) {
 		    return "L" + registration.getNumber();
-		} else if (studentType.equals(StudentType.FOREIGN_STUDENT)) {
-		    return "I" + registration.getNumber();
-		} else if (studentType.equals(StudentType.EXTERNAL_STUDENT)) {
-		    return "A" + registration.getNumber();
+		} else if (registration.getRegistrationAgreement().isMilitaryAgreement()) {
+		    return "A" + registration.getNumber(); // Academy
+		    // students
+		} else {
+		    return "I" + registration.getNumber(); // International
+		    // students
 		}
+
 	    }
 
 	    registration = person.getStudentByType(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
 	    if (registration != null) {
-		StudentType studentType = registration.getStudentKind().getStudentType();
-		if (studentType.equals(StudentType.NORMAL)) {
+
+		if (registration.getRegistrationAgreement().isNormal()) {
 		    return "L" + registration.getNumber();
-		} else if (studentType.equals(StudentType.FOREIGN_STUDENT)) {
-		    return "I" + registration.getNumber();
-		} else if (studentType.equals(StudentType.EXTERNAL_STUDENT)) {
-		    return "A" + registration.getNumber();
+		} else if (registration.getRegistrationAgreement().isMilitaryAgreement()) {
+		    return "A" + registration.getNumber(); // Academy
+		    // students
+		} else {
+		    return "I" + registration.getNumber(); // International
+		    // students
 		}
+
 	    }
 
 	    if (person.hasStudent()) {// phd...

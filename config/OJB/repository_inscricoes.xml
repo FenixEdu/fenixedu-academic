@@ -172,22 +172,6 @@
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
-<!-- Definitions for net.sourceforge.fenixedu.domain.StudentKind -->
-<!-- ************************************************************************************************************ -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.StudentKind" table="STUDENT_KIND">
-	
-	
-	
-	
-		
-      
-	  
-	
-	  
-	  
-</class-descriptor>
-
-<!-- ************************************************************************************************************ -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.EnrolmentEvaluation -->
 <!-- ************************************************************************************************************ -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.EnrolmentEvaluation" table="ENROLMENT_EVALUATION">
