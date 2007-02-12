@@ -5071,11 +5071,11 @@ relation CourseEquivalencyTheme {
 
 
 relation CourseGroupContext {
-	net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup playsRole parentCourseGroup;
-	
 	net.sourceforge.fenixedu.domain.degreeStructure.Context playsRole childContexts {
 		multiplicity *;
 	}
+
+	net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup playsRole parentCourseGroup;
 }
 
 
