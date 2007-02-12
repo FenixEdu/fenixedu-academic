@@ -617,7 +617,7 @@
     </slot>
 </schema>
 
-<schema name="executionCourse.archive.options" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ArchiveOptions">
+<schema name="executionCourse.archive.options" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.ArchiveOptions">
     <slot name="announcements" key="label.archive.options.announcements"/>
     <slot name="planning" key="label.archive.options.planning"/>
     <slot name="schedule" key="label.archive.options.schedule"/>
