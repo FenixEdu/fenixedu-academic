@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissa
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
-import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
+import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.EnrolmentResultType;
 import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.RuleResult;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
@@ -1834,17 +1834,21 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	}
     }
 
-    private Map<DegreeModuleToEnrol, Set<CurricularRule>> getRulesToEvaluate(
+    private Map<DegreeModuleToEnrol, Set<ICurricularRule>> getRulesToEvaluate(
 	    final EnrolmentContext enrolmentContext) {
 
-	final Map<DegreeModuleToEnrol, Set<CurricularRule>> curricularRulesByDegreeModule = new HashMap<DegreeModuleToEnrol, Set<CurricularRule>>();
+	final Map<DegreeModuleToEnrol, Set<ICurricularRule>> curricularRulesByDegreeModule = new HashMap<DegreeModuleToEnrol, Set<ICurricularRule>>();
 
 	for (final DegreeModuleToEnrol degreeModuleToEnrol : enrolmentContext.getDegreeModuleToEnrol()) {
-	    final HashSet<CurricularRule> curricularRules = new HashSet<CurricularRule>();
+	    final HashSet<ICurricularRule> curricularRules = new HashSet<ICurricularRule>();
 	    curricularRules.addAll(degreeModuleToEnrol.getContext().getChildDegreeModule()
 		    .getCurricularRules(enrolmentContext.getExecutionPeriod()));
 	    curricularRules.addAll(degreeModuleToEnrol.getCurriculumGroup().getCurricularRules(
 		    enrolmentContext.getExecutionPeriod()));
+	    
+	    if (degreeModuleToEnrol.isLeaf()) {
+		curricularRules.add(null);
+	    }
 
 	    curricularRulesByDegreeModule.put(degreeModuleToEnrol, curricularRules);
 	}
@@ -1904,11 +1908,11 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     private List<RuleResult> evaluateDegreeModulesToEnrol(final EnrolmentContext enrolmentContext,
 	    final Map<EnrolmentResultType, List<DegreeModuleToEnrol>> degreeModulesEnrolMap) {
 	final List<RuleResult> falseRuleResults = new ArrayList<RuleResult>();
-	final Map<CurricularRule, RuleResult> ruleResults = new HashMap<CurricularRule, RuleResult>();
-	for (final Entry<DegreeModuleToEnrol, Set<CurricularRule>> entry : getRulesToEvaluate(
+	final Map<ICurricularRule, RuleResult> ruleResults = new HashMap<ICurricularRule, RuleResult>();
+	for (final Entry<DegreeModuleToEnrol, Set<ICurricularRule>> entry : getRulesToEvaluate(
 		enrolmentContext).entrySet()) {
 	    RuleResult ruleResult = RuleResult.createTrue();
-	    for (final CurricularRule rule : entry.getValue()) {
+	    for (final ICurricularRule rule : entry.getValue()) {
 		RuleResult result;
 		if (ruleResults.containsKey(rule)) {
 		    result = ruleResults.get(rule);
