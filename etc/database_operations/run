@@ -27,6 +27,8 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Create Table External Registration Data" createTableExternalRegistrationData.sql
+
 execute "Drop table ResearchEventParticipation" dropResearchEventParticipationTable.sql
 execute "Create table ResearchResearchActivity" createResearchActivityTable.sql
 execute "Drop table ResearchEvent" dropResearchEventTable.sql

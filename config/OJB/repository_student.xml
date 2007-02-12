@@ -18,6 +18,8 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.student.RegistrationDataByExecutionYear" table="REGISTRATION_DATA_BY_EXECUTION_YEAR">
 </class-descriptor>
 
+<class-descriptor class="net.sourceforge.fenixedu.domain.student.ExternalRegistrationData" table="EXTERNAL_REGISTRATION_DATA" />
+
 <class-descriptor class="net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState" table="REGISTRATION_STATE">
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.student.registrationStates.RegisteredState" />
     <extent-class class-ref="net.sourceforge.fenixedu.domain.student.registrationStates.MobilityState" />
