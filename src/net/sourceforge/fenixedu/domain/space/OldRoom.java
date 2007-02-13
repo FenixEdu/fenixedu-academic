@@ -66,6 +66,7 @@ public class OldRoom extends OldRoom_Base {
 		return false;
 	    }
 	}
+	
 	return true;
     }
 
