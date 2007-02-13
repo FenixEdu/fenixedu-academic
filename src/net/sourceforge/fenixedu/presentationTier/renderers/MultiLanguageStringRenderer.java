@@ -30,6 +30,7 @@ public class MultiLanguageStringRenderer extends StringRenderer {
     private String language; 
     private boolean languageShown;
     private boolean inline;
+    private String languageClasses;
     
     public MultiLanguageStringRenderer() {
         super();
@@ -81,6 +82,20 @@ public class MultiLanguageStringRenderer extends StringRenderer {
         this.languageShown = languageShown;
     }
 
+    public String getLanguageClasses() {
+        return this.languageClasses;
+    }
+
+    /**
+     * Choose the css class to apply to the annotation showing the value's
+     * language when it isn't in the requested language.
+     * 
+     * @property
+     */
+    public void setLanguageClasses(String languageClasses) {
+        this.languageClasses = languageClasses;
+    }
+
     @Override
     protected HtmlComponent renderComponent(Layout layout, Object object, Class type) {
         if (object == null) {
@@ -105,7 +120,8 @@ public class MultiLanguageStringRenderer extends StringRenderer {
         }
         
         HtmlComponent component = super.renderComponent(layout, value, type);
-        
+        component.setLanguage(mlString.getContentLanguage().toString());
+
         if (mlString.isRequestedLanguage()) {
             return component;
         }
@@ -114,22 +130,20 @@ public class MultiLanguageStringRenderer extends StringRenderer {
             return component;
         }
 
-        HtmlContainer container = isInline() ? new HtmlInlineContainer() : new HtmlBlockContainer();
-        container.setLanguage(mlString.getContentLanguage().toString());
-        
-        HtmlComponent languageComponent = renderValue(mlString.getContentLanguage(), null, null);
-        container.addChild(component);
-        
-        if (isLanguageShown()) {
-            HtmlInlineContainer languageContainer = new HtmlInlineContainer();
-            languageContainer.setIndented(false);
-            
-            languageContainer.addChild(new HtmlText(" (<strong>", false));
-            languageContainer.addChild(languageComponent);
-            languageContainer.addChild(new HtmlText("</strong>)", false));
-            
-            container.addChild(languageComponent);
+        if (! isLanguageShown()) {
+            return component;
         }
+
+        HtmlContainer container = isInline() ? new HtmlInlineContainer() : new HtmlBlockContainer();
+        container.addChild(component);
+        container.setIndented(false);
+
+        HtmlComponent languageComponent = renderValue(mlString.getContentLanguage(), null, null);
+        languageComponent.setClasses(getLanguageClasses());
+        
+        container.addChild(new HtmlText(" (", false));
+        container.addChild(languageComponent);
+        container.addChild(new HtmlText(")", false));
         
         return container;
     }
