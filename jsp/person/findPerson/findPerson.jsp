@@ -55,7 +55,7 @@ function check(e,v){
 <table class="search mbottom0">
 	<tr>
 		<td class="leftcolumn width12em"><bean:message key="label.type"/>:</td>
-		<td class="width35em">			<html:form action="/preparePerson" >
+		<td class="width46em">			<html:form action="/preparePerson" >
 				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="preparePerson" />
 				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.countPage" property="countPage" value="1"/>
 				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.departmentId" property="departmentId" name="findPersonForm"/>
@@ -102,10 +102,10 @@ function check(e,v){
 	<table class="search mtop0">
 		<logic:present name="departments">
 			<tr>
-				<td class="leftcolumn">
+				<td class="leftcolumn width12em">
 					<bean:message key="label.teacher.finalWork.department"/>:
 				</td>
-				<td>
+				<td class="width46em">
 					<html:select bundle="HTMLALT_RESOURCES" property="departmentId">	
 						<html:option value=""> <!-- w3c complient --> </html:option>
 						<logic:iterate id="department" name="departments"> 
@@ -134,7 +134,7 @@ function check(e,v){
 		</logic:present>
 		<tr>
 			<td class="leftcolumn width12em"><bean:message key="label.nameWord" />:</td>
-			<td class="width35em">
+			<td class="width46em">
 				<html:text bundle="HTMLALT_RESOURCES" altKey="text.name" name="findPersonForm" property="name" size="50"/>
 				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.name" property="name" name="findPersonForm"/>
 			</td>		
@@ -320,15 +320,17 @@ function check(e,v){
 				</table>			</div>
 		</div>
 	 </logic:iterate>
-	 
-	 <logic:notEqual name="numberOfPages" value="1">
-	 	<br/>
-		<p>Páginas:			
+
+
+	<logic:notEqual name="numberOfPages" value="1">
+		<p class="mtop15"><bean:message key="label.pages" />:			
 			<cp:collectionPages url="<%= url %>" numberOfVisualizedPages="11" pageNumberAttributeName="pageNumber" numberOfPagesAttributeName="numberOfPages"/>			
 		</p>
 	</logic:notEqual>	 
+
 	
 </logic:present>
+
 
 <script type="text/javascript">
 	switchDisplay();
