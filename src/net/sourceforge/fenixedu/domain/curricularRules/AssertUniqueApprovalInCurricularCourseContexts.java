@@ -23,11 +23,11 @@ public class AssertUniqueApprovalInCurricularCourseContexts extends CurricularRu
     }
     
     public List<GenericPair<Object, Boolean>> getLabel() {
-        return Collections.singletonList(new GenericPair<Object, Boolean>("label.previousYearsEnrolment", true));
+        return Collections.singletonList(new GenericPair<Object, Boolean>("label.assertUniqueApprovalInCurricularCourseContexts", true));
     }
 
     public DegreeModule getDegreeModuleToApplyRule() {
-	return null;
+	return toApply;
     }
 
     public CourseGroup getContextCourseGroup() {
