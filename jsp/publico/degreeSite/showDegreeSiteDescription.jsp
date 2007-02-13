@@ -84,7 +84,6 @@
 	<p><em><bean:message bundle="DEFAULT" key="error.public.DegreeInfoNotPresent"/></em></p>
 </logic:notPresent>
 <logic:present name="degreeInfo">
-	
 		<!-- DEADLINES -->	
 		<logic:empty name="degreeInfo" property="schoolCalendar">
 		<logic:empty name="degreeInfo" property="candidacyPeriod">
@@ -97,6 +96,14 @@
 		</logic:empty>
 		<logic:notPresent name="doNotRenderDeadLines">
 					<table class="box" cellspacing="0" style="float: right;">
+        </logic:notPresent>
+        <logic:present name="doNotRenderDeadLines">
+            <logic:present name="announcements">
+                <logic:notEmpty name="announcements">
+                    <table class="box" cellspacing="0" style="float: right;">
+                </logic:notEmpty>
+            </logic:present>
+        </logic:present>
                         <logic:present name="announcements">
                             <logic:notEmpty name="announcements">
                                 <tr>
@@ -126,6 +133,7 @@
                                 </tr>
                             </logic:notEmpty>
                         </logic:present>
+        <logic:notPresent name="doNotRenderDeadLines">
 						<tr>
 							<td class="box_header">
 								<strong>
@@ -187,12 +195,29 @@
 				</logic:empty>
 			</logic:empty>
 		</logic:notPresent>
-
+        <logic:present name="doNotRenderDeadLines">
+            <logic:present name="announcements">
+                <logic:notEmpty name="announcements">
+                    <logic:empty name="degreeInfo" property="additionalInfo" >
+                        <logic:empty name="degreeInfo" property="links" >
+                            </table>
+                        </logic:empty>
+                    </logic:empty>
+                </logic:notEmpty>
+            </logic:present>
+        </logic:present>
 
 		<!-- ADDITIONAL INFO -->
 		<logic:notEmpty name="degreeInfo" property="additionalInfo" >	
-			<logic:present name="doNotRenderDeadLines">
-				<table class="box" cellspacing="0" style="float: right;">	
+        		<logic:present name="doNotRenderDeadLines">
+                <logic:notPresent name="announcements">
+                    <table class="box" cellspacing="0" style="float: right;">   
+                </logic:notPresent>
+                <logic:present name="announcements">
+                    <logic:empty name="announcements">
+                        <table class="box" cellspacing="0" style="float: right;">   
+                    </logic:empty>
+                </logic:present>
 			</logic:present>
 				<tr>
 					<td class="box_header">
@@ -215,7 +240,14 @@
 		<logic:notEmpty name="degreeInfo" property="links" >
 			<logic:present name="doNotRenderDeadLines">
 				<logic:empty name="degreeInfo" property="additionalInfo" >	
-					<table class="box" cellspacing="0" style="float: right;">	
+                    <logic:notPresent name="announcements">
+	          			<table class="box" cellspacing="0" style="float: right;">	
+                    </logic:notPresent>
+                    <logic:present name="announcements">
+                        <logic:empty name="announcements">
+                            <table class="box" cellspacing="0" style="float: right;">   
+                        </logic:empty>
+                    </logic:present>
 				</logic:empty>
 			</logic:present>
 						<tr>
