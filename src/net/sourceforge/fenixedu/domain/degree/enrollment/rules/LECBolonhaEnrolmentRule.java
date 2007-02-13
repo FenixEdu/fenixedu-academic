@@ -78,11 +78,14 @@ public class LECBolonhaEnrolmentRule extends BolonhaEnrolmentRule {
 	    if(countEnroledOrAprovedEnrolments(PLANEAMENTO_GROUP) >= 2) {
 		removeCurricularCourses(curricularCoursesToBeEnrolledIn, Arrays.asList(PLANEAMENTO_GROUP));
 	    }
-	} else if(countEnroledOrAprovedEnrolments(PLANEAMENTO_GROUP) >= 2) {
-	    LECOptionalPairGroupsEnrollmentRule rule = new LECOptionalPairGroupsEnrollmentRule(studentCurricularPlan);
-	    curricularCoursesToBeEnrolledIn = rule.apply(curricularCoursesToBeEnrolledIn);
-	    if(countEnroledOrAprovedEnrolments(PLANEAMENTO_GROUP) > 2) {
-		removeCurricularCourse(curricularCoursesToBeEnrolledIn, DISSERTACAO_P_CODE);
+	} else {
+	    int planeamentoGroup = countEnroledOrAprovedEnrolments(PLANEAMENTO_GROUP);
+	    if(planeamentoGroup >= 2) {
+		LECOptionalPairGroupsEnrollmentRule rule = new LECOptionalPairGroupsEnrollmentRule(studentCurricularPlan);
+		curricularCoursesToBeEnrolledIn = rule.apply(curricularCoursesToBeEnrolledIn);
+		if(planeamentoGroup > 2) {
+		    removeCurricularCourse(curricularCoursesToBeEnrolledIn, DISSERTACAO_P_CODE);
+		}
 	    }
 	} 
 	
@@ -97,10 +100,13 @@ public class LECBolonhaEnrolmentRule extends BolonhaEnrolmentRule {
 	    if(countEnroledOrAprovedEnrolments(H_OPTIONAL_GROUP) >= 2) {
 		removeCurricularCourses(curricularCoursesToBeEnrolledIn, Arrays.asList(H_OPTIONAL_GROUP));
 	    }
-	} else if(countEnroledOrAprovedEnrolments(H_OPTIONAL_GROUP) > 2 || countEnroledOrAprovedEnrolments(H_DEGREE_GROUP) > 0){
-	    removeCurricularCourse(curricularCoursesToBeEnrolledIn, DISSERTACAO_H_CODE);
-	    if(countEnroledOrAprovedEnrolments(H_OPTIONAL_GROUP) >= 3) {
-		removeCurricularCourses(curricularCoursesToBeEnrolledIn, Arrays.asList(H_OPTIONAL_GROUP));
+	} else {
+	    int optionalGroup = countEnroledOrAprovedEnrolments(H_OPTIONAL_GROUP);
+	    if(optionalGroup > 2 || countEnroledOrAprovedEnrolments(H_DEGREE_GROUP) > 0){
+		removeCurricularCourse(curricularCoursesToBeEnrolledIn, DISSERTACAO_H_CODE);
+		if(optionalGroup >= 3) {
+		    removeCurricularCourses(curricularCoursesToBeEnrolledIn, Arrays.asList(H_OPTIONAL_GROUP));
+		}
 	    }
 	}
 	
@@ -126,10 +132,15 @@ public class LECBolonhaEnrolmentRule extends BolonhaEnrolmentRule {
 	    if(countEnroledOrAprovedEnrolments(CE_MASTER_DEGREE_GROUP) >= 2) {
 		removeCurricularCourses(curricularCoursesToBeEnrolledIn, Arrays.asList(CE_MASTER_DEGREE_GROUP));
 	    }
-	} else if(countEnroledOrAprovedEnrolments(CE_MASTER_DEGREE_GROUP) > 2){
-	    removeCurricularCourse(curricularCoursesToBeEnrolledIn, DISSERTACAO_CE_CODE);
-	    if(countEnroledOrAprovedEnrolments(CE_DEGREE_GROUP) >= 2) {
-		removeCurricularCourses(curricularCoursesToBeEnrolledIn, Arrays.asList(CE_DEGREE_GROUP));
+	} else { 
+	    int masterDegreeGroup = countEnroledOrAprovedEnrolments(CE_MASTER_DEGREE_GROUP);
+	    if(masterDegreeGroup >= 2){
+		if(masterDegreeGroup > 2) {
+		    removeCurricularCourse(curricularCoursesToBeEnrolledIn, DISSERTACAO_CE_CODE);
+		}
+		if(countEnroledOrAprovedEnrolments(CE_DEGREE_GROUP) >= 2) {
+		    removeCurricularCourses(curricularCoursesToBeEnrolledIn, Arrays.asList(CE_DEGREE_GROUP));
+		}
 	    }
 	}
 	
