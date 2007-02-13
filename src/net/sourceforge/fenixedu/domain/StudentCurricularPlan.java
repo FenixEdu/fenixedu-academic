@@ -44,6 +44,7 @@ import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Credits;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Equivalence;
 import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroup;
@@ -2018,8 +2019,12 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return isBolonha() ? getRoot().hasDegreeModule(degreeModule) : false;
     }
 
-    public CurriculumModule findCurriculumModuleFor(final DegreeModule degreeModule) {
-	return isBolonha() ? getRoot().findCurriculumModuleFor(degreeModule) : null;
+    public CurriculumGroup findCurriculumGroupFor(final CourseGroup courseGroup) {
+	return isBolonha() ? getRoot().findCurriculumGroupFor(courseGroup) : null;
+    }
+    
+    public CurriculumLine findCurriculumLineFor(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
+	return isBolonha() ? getRoot().findCurriculumLineFor(curricularCourse, executionPeriod) : null;
     }
 
     public Collection<Enrolment> getExtraCurricularEnrolments() {
