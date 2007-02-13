@@ -130,6 +130,10 @@ abstract public class CurricularRuleExecutor {
     protected boolean isEnroled(final EnrolmentContext enrolmentContext, final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
 	return enrolmentContext.getStudentCurricularPlan().isEnroledInExecutionPeriod(curricularCourse, executionPeriod);
     }
+    
+    protected boolean hasEnrolmentWithEnroledState(final EnrolmentContext enrolmentContext, final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
+	return enrolmentContext.getStudentCurricularPlan().getRoot().hasEnrolmentWithEnroledState(curricularCourse, executionPeriod);
+    }
 
     protected boolean isEnrolling(final EnrolmentContext enrolmentContext, final DegreeModule degreeModule) {
         return searchDegreeModuleToEnrol(enrolmentContext, degreeModule) != null;

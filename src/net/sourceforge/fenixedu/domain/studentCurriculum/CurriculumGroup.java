@@ -255,8 +255,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     }
 
     @Override
-    public boolean isEnroledInExecutionPeriod(CurricularCourse curricularCourse,
-	    ExecutionPeriod executionPeriod) {
+    public boolean isEnroledInExecutionPeriod(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod) {
 	for (final CurriculumModule curriculumModule : this.getCurriculumModules()) {
 	    if (curriculumModule.isEnroledInExecutionPeriod(curricularCourse, executionPeriod)) {
 		return true;
@@ -264,7 +263,17 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	}
 	return false;
     }
-
+    
+    @Override
+    public boolean hasEnrolmentWithEnroledState(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
+	for (final CurriculumModule curriculumModule : this.getCurriculumModules()) {
+	    if (curriculumModule.hasEnrolmentWithEnroledState(curricularCourse, executionPeriod)) {
+		return true;
+	    }
+	}
+	return false;
+    }
+    
     @Override
     public boolean hasDegreeModule(DegreeModule degreeModule) {
 	if (super.hasDegreeModule(degreeModule)) {
@@ -474,4 +483,5 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	}
 	return result;
     }
+
 }

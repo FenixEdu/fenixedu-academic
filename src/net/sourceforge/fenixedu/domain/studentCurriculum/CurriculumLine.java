@@ -56,6 +56,11 @@ public abstract class CurriculumLine extends CurriculumLine_Base {
         return false;
     }
     
+    @Override
+    public boolean hasEnrolmentWithEnroledState(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
+        return false;
+    }
+    
     public CurricularCourse getCurricularCourse() {
     	return (CurricularCourse) getDegreeModule();
     }

@@ -73,10 +73,6 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
 	return isAproved(curricularCourse, null);
     }
     
-    public abstract boolean isAproved(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod);
-    
-    public abstract boolean isEnroledInExecutionPeriod(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod);
-    
     public boolean hasDegreeModule(final DegreeModule degreeModule) {
 	return this.getDegreeModule().equals(degreeModule);
     }
@@ -111,4 +107,8 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
     abstract public Double getEctsCredits();
     abstract public Double getAprovedEctsCredits();
     abstract public Double getEnroledEctsCredits(final ExecutionPeriod executionPeriod);
+    
+    abstract public boolean isAproved(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod);
+    abstract public boolean isEnroledInExecutionPeriod(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod);
+    abstract public boolean hasEnrolmentWithEnroledState(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod);
 }
