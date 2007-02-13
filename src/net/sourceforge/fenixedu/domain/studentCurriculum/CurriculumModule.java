@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
+import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
@@ -89,12 +89,12 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
 	return getDegreeModule().equals(degreeModule) ? this : null;
     }
     
-    public Set<CurricularRule> getCurricularRules(ExecutionPeriod executionPeriod){
-	Set<CurricularRule> result = null;
+    public Set<ICurricularRule> getCurricularRules(ExecutionPeriod executionPeriod){
+	Set<ICurricularRule> result = null;
 	if(this.getCurriculumGroup() != null) {
 	    result = this.getCurriculumGroup().getCurricularRules(executionPeriod);
 	} else {
-	    result = new HashSet<CurricularRule>();
+	    result = new HashSet<ICurricularRule>();
 	}
 	result.addAll(this.getDegreeModule().getCurricularRules(executionPeriod));
 	return result;
