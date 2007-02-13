@@ -125,7 +125,7 @@ if (month != null && year!=null)
 			<%
 				if (!request.getRequestURI().contains("public") && announcement.getAnnouncementBoard().hasManager(person)) {
 			%>
-				x<bean:message key="label.permissions" bundle="MESSAGING_RESOURCES"/>:
+				<bean:message key="label.permissions" bundle="MESSAGING_RESOURCES"/>:
 				<html:link action="<%= "/announcements/manage" + announcement.getAnnouncementBoard().getClass().getSimpleName() + ".do?method=prepareEditAnnouncementBoard" + "&amp;announcementBoardId=" + announcement.getAnnouncementBoard().getIdInternal() + "&amp;tabularVersion=true&amp;" + extraParameters %>">
 				  	<bean:message bundle="MESSAGING_RESOURCES" key="messaging.manage.link"/>
 				</html:link>
