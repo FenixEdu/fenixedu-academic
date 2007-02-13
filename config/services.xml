@@ -11324,8 +11324,7 @@
         	<chain name="AcademicAdministrativeOfficeAuthorization"></chain>
         </filterChains>     
     </service>
-    
-    
+
     <service>
     	<name>CancelReceipt</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.CancelReceipt</implementationClass>
@@ -11346,8 +11345,6 @@
         </filterChains>     
     </service>
     
-    
-  
     <service>
         <name>CreateSiteTemplateInstance</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateSiteTemplateInstance</implementationClass>
@@ -11510,4 +11507,31 @@
         	<chain name="StudentAuthorization"></chain>
         </filterChains>
     </service>
+	<service>
+		<name>CreateNewRoomsReserve</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.CreateNewRoomsReserve</implementationClass>
+		<description></description>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="TeacherAuthorization" />
+		</filterChains>
+	</service>
+	<service>
+		<name>CreateNewRoomsReserveComment</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.CreateNewRoomsReserveComment</implementationClass>
+		<description></description>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="TeacherTimeTableManagerOrTeacherAuthorization" />
+		</filterChains>
+	</service>  
+	<service>
+		<name>OpenPunctualRoomsOccupationRequest</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.OpenPunctualRoomsOccupationRequest</implementationClass>
+		<description></description>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="TimeTableManagerAuthorization" />
+		</filterChains>
+	</service>  	  
 </serviceDefinitions>

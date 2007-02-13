@@ -9,6 +9,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
@@ -21,10 +22,9 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
     
     public GenericEvent(MultiLanguageString title, MultiLanguageString description, List<OldRoom> rooms, 
 	    Calendar startTime, Calendar endTime, DiaSemana dayOfWeek, FrequencyType frequencyType, 
-	    OccupationPeriod occupationPeriod) {
+	    OccupationPeriod occupationPeriod, PunctualRoomsOccupationRequest request) {
 	
-	super();        	
-	
+	super();        		
 	if(rooms.isEmpty()) {
 	    throw new DomainException("error.empty.room.to.create.room.occupation");
 	}	
@@ -33,6 +33,11 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
         setTitle(title);
         setDescription(description);        
 	setFrequency(frequencyType);
+        setPunctualRoomsOccupationRequest(request);
+	
+        if(request != null) {
+            request.openRequest(AccessControl.getPerson());            
+        }
         
 	for (OldRoom room : rooms) {	
           createNewRoomOccupation(room, startTime, endTime, dayOfWeek, occupationPeriod);
@@ -61,6 +66,7 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
 	while(hasAnyRoomOccupations()) {
 	    getRoomOccupations().get(0).delete();
 	}
+	removePunctualRoomsOccupationRequest();
 	removeRootDomainObject();
 	deleteDomainObject();
     }

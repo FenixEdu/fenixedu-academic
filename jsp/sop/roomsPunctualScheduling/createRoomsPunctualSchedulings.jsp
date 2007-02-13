@@ -5,10 +5,10 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <html:xhtml/>
 
-<em><bean:message key="title.manage.rooms" bundle="SOP_RESOURCES"/></em>
+<em><bean:message key="link.rooms.reserve.management" bundle="SOP_RESOURCES"/></em>
 <h2><bean:message key="label.create.room.punctual.scheduling.title" bundle="SOP_RESOURCES"/></h2>
 
-<p class="breadcumbs"><span class="actual">Passo1: <bean:message key="label.create.room.punctual.scheduling.choosePeriod" bundle="SOP_RESOURCES"/></span> &gt; <span>Passo 2: <bean:message key="label.create.room.punctual.scheduling.chooseRoom" bundle="SOP_RESOURCES"/></span></p>
+<p class="breadcumbs"><span class="actual"><bean:message key="label.step1" bundle="SOP_RESOURCES"/>: <bean:message key="label.create.room.punctual.scheduling.choosePeriod" bundle="SOP_RESOURCES"/></span> &gt; <span><bean:message key="label.step1" bundle="SOP_RESOURCES"/>: <bean:message key="label.create.room.punctual.scheduling.chooseRoom" bundle="SOP_RESOURCES"/></span></p>
 
 <logic:present role="TIME_TABLE_MANAGER">
 
@@ -32,18 +32,14 @@
 	
 	<logic:notEmpty name="roomsPunctualSchedulingBean">
 
-
-
 		<div class="infoop3">
 			<p class="mvert05"><bean:message key="label.instructions.periodTypes" bundle="SOP_RESOURCES"/></p>
 			<ul>
 				<li><bean:message key="label.instructions.periodTypes.item1" bundle="SOP_RESOURCES"/></li>
 				<li><bean:message key="label.instructions.periodTypes.item2" bundle="SOP_RESOURCES"/></li>
 				<li><bean:message key="label.instructions.periodTypes.item3" bundle="SOP_RESOURCES"/></li>
-			</ul>
-			
+			</ul>			
 		</div>
-
 
 		<fr:form>
 			<fr:edit nested="true" id="roomsPunctualSchedulingWithPeriodType" name="roomsPunctualSchedulingBean" schema="ChooseRoomsPunctualSchedulingPeriodType">
@@ -65,7 +61,13 @@
 						<fr:property name="classes" value="tstyle5 vamiddle thlight thright mtop0" />
 						<fr:property name="columnClasses" value="width9em,width40em,tdclear tderror1" />
 					</fr:layout>
-					<fr:destination name="cancel" path="/roomsPunctualScheduling.do?method=prepare"/>
+					<logic:empty name="roomsPunctualSchedulingBean" property="roomsReserveRequest">
+						<fr:destination name="cancel" path="/roomsPunctualScheduling.do?method=prepare"/>
+					</logic:empty>
+					<logic:notEmpty name="roomsPunctualSchedulingBean" property="roomsReserveRequest">
+						<bean:define id="CancelURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserveRequest&reserveRequestID=<bean:write name="roomsPunctualSchedulingBean" property="roomsReserveRequest.idInternal"/></bean:define>
+						<fr:destination name="cancel" path="<%= CancelURL %>"/>					
+					</logic:notEmpty>					
 				</fr:edit>										
 			</logic:equal>				
 			
@@ -76,7 +78,13 @@
 						<fr:property name="classes" value="tstyle5 vamiddle thlight thright mtop0" />
 						<fr:property name="columnClasses" value="width9em,width40em,tdclear tderror1" />
 					</fr:layout>
-					<fr:destination name="cancel" path="/roomsPunctualScheduling.do?method=prepare"/>	
+					<logic:empty name="roomsPunctualSchedulingBean" property="roomsReserveRequest">
+						<fr:destination name="cancel" path="/roomsPunctualScheduling.do?method=prepare"/>
+					</logic:empty>
+					<logic:notEmpty name="roomsPunctualSchedulingBean" property="roomsReserveRequest">
+						<bean:define id="CancelURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserveRequest&reserveRequestID=<bean:write name="roomsPunctualSchedulingBean" property="roomsReserveRequest.idInternal"/></bean:define>
+						<fr:destination name="cancel" path="<%= CancelURL %>"/>					
+					</logic:notEmpty>
 				</fr:edit>						
 			</logic:equal>				
 			
@@ -87,7 +95,13 @@
 						<fr:property name="classes" value="tstyle5 vamiddle thlight thright mtop0" />
 						<fr:property name="columnClasses" value="width9em,width40em,tdclear tderror1" />
 					</fr:layout>
-					<fr:destination name="cancel" path="/roomsPunctualScheduling.do?method=prepare"/>	
+					<logic:empty name="roomsPunctualSchedulingBean" property="roomsReserveRequest">
+						<fr:destination name="cancel" path="/roomsPunctualScheduling.do?method=prepare"/>
+					</logic:empty>
+					<logic:notEmpty name="roomsPunctualSchedulingBean" property="roomsReserveRequest">						
+						<bean:define id="CancelURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserveRequest&reserveRequestID=<bean:write name="roomsPunctualSchedulingBean" property="roomsReserveRequest.idInternal"/></bean:define>
+						<fr:destination name="cancel" path="<%= CancelURL %>"/>					
+					</logic:notEmpty>					
 				</fr:edit>						
 			</logic:equal>				
 		

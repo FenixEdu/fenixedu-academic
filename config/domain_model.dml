@@ -179,7 +179,7 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemptionJust
 valueType net.sourceforge.fenixedu.domain.parking.DocumentDeliveryType											as DocumentDeliveryType;
 valueType net.sourceforge.fenixedu.domain.parking.NewParkingDocumentType										as NewParkingDocumentType;
 valueType net.sourceforge.fenixedu.domain.FrequencyType															as FrequencyType;
-
+valueType net.sourceforge.fenixedu.domain.RequestState															as RequestState;
 
 /*
 *
@@ -248,6 +248,28 @@ class net.sourceforge.fenixedu.domain.GenericEvent extends net.sourceforge.fenix
 	MultiLanguageString title;
 	MultiLanguageString description;
 	FrequencyType frequency;	
+	Integer keyPunctualRoomsOccupationRequest;
+}
+
+class net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer identification;
+	Integer keyRequestor;	
+	Integer keyOwner;
+	DateTime instant;
+}
+
+class net.sourceforge.fenixedu.domain.PunctualRoomsOccupationComment extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyRequest;
+	Integer keyOwner;
+	DateTime instant;
+	MultiLanguageString subject;
+	MultiLanguageString description;
+}
+
+class net.sourceforge.fenixedu.domain.PunctualRoomsOccupationStateInstant extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyRequest;
+	DateTime instant;
+	RequestState requestState;
 }
 
 //Start of Accounting
@@ -11892,6 +11914,69 @@ relation GenericEventRoomOccupation {
 relation RootDomainObjectGenericEvent {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.GenericEvent playsRole genericEvents {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectPunctualRoomsOccupationRequest {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest playsRole punctualRoomsOccupationRequests {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectPunctualRoomsOccupationComment {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.PunctualRoomsOccupationComment playsRole punctualRoomsOccupationComments {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectPunctualRoomsOccupationStateInstant {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.PunctualRoomsOccupationStateInstant playsRole punctualRoomsOccupationStateInstants {
+		multiplicity *;
+	}
+}
+
+relation PunctualRoomsOccupationRequestGenericEvent {	
+	net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest playsRole punctualRoomsOccupationRequest;
+	net.sourceforge.fenixedu.domain.GenericEvent playsRole genericEvents {
+		multiplicity *;
+	}
+}
+
+relation PunctualRoomsOccupationRequestPunctualRoomsOccupationStateInstant {	
+	net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest playsRole request;
+	net.sourceforge.fenixedu.domain.PunctualRoomsOccupationStateInstant playsRole stateInstants {
+		multiplicity *;
+	}
+}
+
+relation PunctualRoomsOccupationRequestPunctualRoomsOccupationComment {	
+	net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest playsRole request;
+	net.sourceforge.fenixedu.domain.PunctualRoomsOccupationComment playsRole comments {
+		multiplicity *;
+	}
+}
+
+relation PunctualRoomsOccupationRequestPerson {	
+	net.sourceforge.fenixedu.domain.Person playsRole requestor;
+	net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest playsRole punctualRoomsOccupationRequests {
+		multiplicity *;
+	}
+}
+
+relation PunctualRoomsOccupationRequestToProcessPerson {	
+	net.sourceforge.fenixedu.domain.Person playsRole owner;
+	net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest playsRole punctualRoomsOccupationRequestsToProcess {
+		multiplicity *;
+	}
+}
+
+relation PunctualRoomsOccupationCommentPerson {	
+	net.sourceforge.fenixedu.domain.Person playsRole owner;
+	net.sourceforge.fenixedu.domain.PunctualRoomsOccupationComment playsRole punctualRoomsOccupationComments {
 		multiplicity *;
 	}
 }

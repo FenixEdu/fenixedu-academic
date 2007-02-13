@@ -1,3 +1,15 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.GenericEvent" table="GENERIC_EVENT">
 
 </class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest" table="PUNCTUAL_ROOMS_OCCUPATION_REQUEST">
+
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.PunctualRoomsOccupationComment" table="PUNCTUAL_ROOMS_OCCUPATION_COMMENT">
+
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.PunctualRoomsOccupationStateInstant" table="PUNCTUAL_ROOMS_OCCUPATION_STATE_INSTANT">
+
+</class-descriptor>

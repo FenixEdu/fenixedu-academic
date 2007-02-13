@@ -36,8 +36,7 @@ public class CreateRoomsPunctualScheduling extends Service {
 	    OccupationPeriod period = OccupationPeriod.readFor(bean.getBegin(), bean.getEnd());   
 	    
 	    new GenericEvent(bean.getSmallDescription(), bean.getCompleteDescription(), selectedRooms,
-		    beginTimeCalendar, endTimeCalendar, diaSemana, bean.getFrequency(), period);
-	    	             	  			    	   
+		    beginTimeCalendar, endTimeCalendar, diaSemana, bean.getFrequency(), period, bean.getRoomsReserveRequest());	    	             	  			    	  
 	}
     }
     

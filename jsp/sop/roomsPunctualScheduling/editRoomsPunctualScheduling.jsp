@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <html:xhtml/>
 
-<em><bean:message key="title.manage.rooms" bundle="SOP_RESOURCES"/></em>
+<em><bean:message key="link.rooms.reserve.management" bundle="SOP_RESOURCES"/></em>
 <h2><bean:message key="label.edit.room.punctual.scheduling.second" bundle="SOP_RESOURCES"/></h2>
 
 <logic:present role="TIME_TABLE_MANAGER">
@@ -27,6 +27,12 @@
 				
 				<logic:empty name="genericEvent" property="frequency">
 					<table class="tstyle1 thright thlight mtop025">
+						<logic:notEmpty name="roomsPunctualSchedulingBean" property="roomsReserveRequest">
+							<tr>
+								<th><bean:message key="label.rooms.reserve.identification" bundle="SOP_RESOURCES"/>:</th>
+								<td><bean:write name="roomsPunctualSchedulingBean" property="roomsReserveRequest.identification"/></td>						
+							</tr>			
+						</logic:notEmpty>
 						<tr>
 							<th><bean:message key="property.startDate" bundle="SOP_RESOURCES"/>:</th>
 							<td>
@@ -40,12 +46,18 @@
 								<bean:write name="genericEvent" property="presentationEndDate"/>
 								<bean:write name="genericEvent" property="presentationEndTime"/>
 							</td>
-						</tr>							
+						</tr>														
 					</table>						
 				</logic:empty>
 				
 				<logic:notEmpty name="genericEvent" property="frequency">										
 					<table class="tstyle1 thright thlight mtop025 mbottom025">
+						<logic:notEmpty name="roomsPunctualSchedulingBean" property="roomsReserveRequest">
+							<tr>
+								<th><bean:message key="label.rooms.reserve.identification" bundle="SOP_RESOURCES"/>:</th>
+								<td><bean:write name="roomsPunctualSchedulingBean" property="roomsReserveRequest.identification"/></td>						
+							</tr>			
+						</logic:notEmpty>	
 						<tr>
 							<th><bean:message key="label.first.day" bundle="SOP_RESOURCES"/>:</th>
 							<td><bean:write name="genericEvent" property="presentationBeginDate"/></td>
@@ -65,7 +77,7 @@
 						<tr>
 							<th><bean:message key="label.frequency" bundle="SOP_RESOURCES"/>:</th>				
 							<td><bean:message name="genericEvent" property="frequency.name" bundle="ENUMERATION_RESOURCES"/></td>
-						</tr>														
+						</tr>																				
 					</table>				
 				</logic:notEmpty>					
 			</logic:notEmpty>

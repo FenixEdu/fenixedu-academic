@@ -28,3 +28,4 @@ function executeWithTempFile() {
 }
 
 execute "Create Table External Registration Data" createTableExternalRegistrationData.sql
+execute "Create Punctual Rooms Occupation Request Tables" createPunctualRoomsOccupationRequestTables.sql

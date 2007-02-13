@@ -2528,4 +2528,27 @@ public class Person extends Person_Base {
     public boolean isAdministrativeOfficeEmployee() {
 	return getEmployee() != null && getEmployee().getAdministrativeOffice() != null;
     }
+    
+    public List<PunctualRoomsOccupationRequest> getPunctualRoomsOccupationRequestsOrderByDate() {
+	List<PunctualRoomsOccupationRequest> result = new ArrayList<PunctualRoomsOccupationRequest>();	
+	result.addAll(getPunctualRoomsOccupationRequests());
+	if(!result.isEmpty()) {
+	    Collections.sort(result, PunctualRoomsOccupationRequest.COMPARATOR_BY_INSTANT);
+	}
+	return result;
+    }
+    
+    public List<PunctualRoomsOccupationRequest> getPunctualRoomsOccupationRequestsToProcessOrderByDate() {
+	List<PunctualRoomsOccupationRequest> result = new ArrayList<PunctualRoomsOccupationRequest>();	
+	for (PunctualRoomsOccupationRequest request : getPunctualRoomsOccupationRequestsToProcess()) {
+	    if(!request.getCurrentState().equals(RequestState.RESOLVED)) {
+		result.add(request);
+	    }
+	}
+	
+	if(!result.isEmpty()) {
+	    Collections.sort(result, PunctualRoomsOccupationRequest.COMPARATOR_BY_INSTANT);
+	}
+	return result;
+    }
 }

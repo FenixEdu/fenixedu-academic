@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <html:xhtml/>
 
-<em><bean:message key="title.manage.rooms" bundle="SOP_RESOURCES"/></em>
+<em><bean:message key="link.rooms.reserve.management" bundle="SOP_RESOURCES"/></em>
 <h2><bean:message key="label.create.room.punctual.scheduling.title" bundle="SOP_RESOURCES"/></h2>
 
 <p class="breadcumbs"><span>Passo1: <bean:message key="label.create.room.punctual.scheduling.choosePeriod" bundle="SOP_RESOURCES"/></span> &gt; <span class="actual">Passo 2: <bean:message key="label.create.room.punctual.scheduling.chooseRoom" bundle="SOP_RESOURCES"/></span></p>
@@ -29,6 +29,12 @@
 														
 			<logic:notEmpty name="roomsPunctualSchedulingBean" property="frequency">				
 				<table class="tstyle5 thright thlight mtop025">
+					<logic:notEmpty name="roomsPunctualSchedulingBean" property="roomsReserveRequest">
+						<tr>
+							<th><bean:message key="label.rooms.reserve.identification" bundle="SOP_RESOURCES"/>:</th>
+							<td><bean:write name="roomsPunctualSchedulingBean" property="roomsReserveRequest.identification"/></td>						
+						</tr>			
+					</logic:notEmpty>
 					<tr>
 						<th><bean:message key="label.first.day" bundle="SOP_RESOURCES"/>:</th>
 						<td><bean:write name="roomsPunctualSchedulingBean" property="presentationBeginDate"/></td>
@@ -48,12 +54,18 @@
 					<tr>
 						<th><bean:message key="label.frequency" bundle="SOP_RESOURCES"/>:</th>
 						<td><bean:message name="roomsPunctualSchedulingBean" property="frequency.name" bundle="ENUMERATION_RESOURCES"/></td>										
-					</tr>										
+					</tr>												
 				</table>						
 			</logic:notEmpty>				
 						
 			<logic:empty name="roomsPunctualSchedulingBean" property="frequency">
 				<table class="tstyle5 thright thlight mtop025">
+					<logic:notEmpty name="roomsPunctualSchedulingBean" property="roomsReserveRequest">
+						<tr>
+							<th><bean:message key="label.rooms.reserve.identification" bundle="SOP_RESOURCES"/>:</th>
+							<td><bean:write name="roomsPunctualSchedulingBean" property="roomsReserveRequest.identification"/></td>						
+						</tr>			
+					</logic:notEmpty>	
 					<tr>
 						<th><bean:message key="property.startDate" bundle="SOP_RESOURCES"/>:</th>
 						<td>
@@ -67,7 +79,7 @@
 							<bean:write name="roomsPunctualSchedulingBean" property="presentationEndDate"/>
 							<bean:write name="roomsPunctualSchedulingBean" property="presentationEndTime"/>
 						</td>
-					</tr>								
+					</tr>													
 				</table>	
 			</logic:empty>		
 
@@ -86,8 +98,10 @@
 						<td class="width5em"></td>
 						<td class="width20em">
 							<html:submit><bean:message key="label.add.new.room" bundle="SOP_RESOURCES"/></html:submit>
-							<logic:empty name="roomsPunctualSchedulingBean" property="rooms">
-								<html:cancel onclick="this.form.method.value='prepare';this.form.submit();"><bean:message key="label.cancel" bundle="SOP_RESOURCES"/></html:cancel>			
+							<logic:empty name="roomsPunctualSchedulingBean" property="rooms">								
+								<logic:empty name="roomsPunctualSchedulingBean" property="roomsReserveRequest">									
+									<html:cancel onclick="this.form.method.value='prepare';this.form.submit();"><bean:message key="label.cancel" bundle="SOP_RESOURCES"/></html:cancel>												
+								</logic:empty>						
 							</logic:empty>
 						</td>
 					</tr>
@@ -122,13 +136,29 @@
 
 			<logic:notEmpty name="roomsPunctualSchedulingBean" property="rooms">
 				<p class="mtop2 mbottom025"><strong><bean:message key="label.choose.descriptions" bundle="SOP_RESOURCES"/></strong></p>
+				
+				
+				<bean:define id="CreateNewRoomsPunctualSchedulingURL" value=""/>
+				<logic:empty name="roomsPunctualSchedulingBean" property="roomsReserveRequest">
+					<bean:define id="CreateNewRoomsPunctualSchedulingURL" value="/roomsPunctualScheduling.do?method=createRoomsPunctualScheduling"/>
+				</logic:empty>
+				<logic:notEmpty name="roomsPunctualSchedulingBean" property="roomsReserveRequest">						
+					<bean:define id="CreateNewRoomsPunctualSchedulingURL" value="/roomsReserveManagement.do?method=createRoomsPunctualScheduling"/>
+				</logic:notEmpty>
+				
 				<fr:edit id="roomsPunctualSchedulingWithDescriptions" name="roomsPunctualSchedulingBean" schema="FinalizeCreationOfRoomsPunctualScheduling"
-					action="/roomsPunctualScheduling.do?method=createRoomsPunctualScheduling">
+					action="<%= CreateNewRoomsPunctualSchedulingURL %>">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle5 vamiddle thlight mtop025" />
 						<fr:property name="columnClasses" value=",,tdclear tderror1" />
 					</fr:layout>
-					<fr:destination name="cancel" path="/roomsPunctualScheduling.do?method=prepare"/>					
+					<logic:empty name="roomsPunctualSchedulingBean" property="roomsReserveRequest">
+						<fr:destination name="cancel" path="/roomsPunctualScheduling.do?method=prepare"/>
+					</logic:empty>
+					<logic:notEmpty name="roomsPunctualSchedulingBean" property="roomsReserveRequest">						
+						<bean:define id="CancelURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserveRequest&reserveRequestID=<bean:write name="roomsPunctualSchedulingBean" property="roomsReserveRequest.idInternal"/></bean:define>
+						<fr:destination name="cancel" path="<%= CancelURL %>"/>					
+					</logic:notEmpty>				
 				</fr:edit>
 			</logic:notEmpty>			
 		</logic:notEmpty>		
