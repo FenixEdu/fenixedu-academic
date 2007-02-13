@@ -1,9 +1,12 @@
 package net.sourceforge.fenixedu.domain.enrolment;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 
 public class EnrolmentContext {
     
@@ -13,10 +16,20 @@ public class EnrolmentContext {
     
     private Set<DegreeModuleToEnrol> degreeModulesToEnrol;
     
+    private List<CurriculumModule> curriculumModulesToRemove;
+    
+    public EnrolmentContext(StudentCurricularPlan studentCurricularPlan, ExecutionPeriod executionPeriod, Set<DegreeModuleToEnrol> degreeModulesToEnrol, List<CurriculumModule> curriculumModulesToRemove) {
+	this.studentCurricularPlan = studentCurricularPlan;
+	this.degreeModulesToEnrol = degreeModulesToEnrol;
+	this.executionPeriod = executionPeriod;
+	this.curriculumModulesToRemove = curriculumModulesToRemove;
+    }
+    
     public EnrolmentContext(StudentCurricularPlan studentCurricularPlan, ExecutionPeriod executionPeriod, Set<DegreeModuleToEnrol> degreeModulesToEnrol) {
 	this.studentCurricularPlan = studentCurricularPlan;
 	this.degreeModulesToEnrol = degreeModulesToEnrol;
 	this.executionPeriod = executionPeriod;
+	this.curriculumModulesToRemove = Collections.EMPTY_LIST;
     }
 
     public Set<DegreeModuleToEnrol> getDegreeModuleToEnrol() {
@@ -41,6 +54,10 @@ public class EnrolmentContext {
 
     public void setStudentCurricularPlan(StudentCurricularPlan studentCurricularPlan) {
         this.studentCurricularPlan = studentCurricularPlan;
+    }
+
+    public List<CurriculumModule> getCurriculumModulesToRemove() {
+        return curriculumModulesToRemove;
     }
 
 }
