@@ -377,6 +377,9 @@
 	<slot name="stateType" key="label.state" />
 	<slot name="remarks" />
 	<slot name="executionYear.year" key="label.since" />
+    <slot name="responsiblePerson.name" layout="null-as-label" key="label.responsible">
+        <property name="label" value=" - "/>
+    </slot>	
 </schema>
 
 <schema name="studentOptionalEnrolment.base" bundle="ACADEMIC_OFFICE_RESOURCES"
