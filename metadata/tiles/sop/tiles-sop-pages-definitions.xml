@@ -115,7 +115,12 @@
 	</definition>	
 	<definition name="prepare-view-rooms-punctual-scheduling" extends="definition.sop.roomsManagement" >
 		<put name="body" value="/sop/roomsPunctualScheduling/editRoomsPunctualScheduling.jsp" />
+	</definition>		
+	<definition name="see-rooms-reserve-requests" extends="definition.sop.roomsManagement" >
+		<put name="body" value="/sop/roomsPunctualScheduling/seeRoomsReserveRequests.jsp" />
 	</definition>	
-	
+	<definition name="see-specified-rooms-reserve-request" extends="definition.sop.roomsManagement" >
+		<put name="body" value="/sop/roomsPunctualScheduling/seeSpecifiedRoomsReserveRequest.jsp" />
+	</definition>
 	
 </tiles-definitions>

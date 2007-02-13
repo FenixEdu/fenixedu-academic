@@ -8,6 +8,7 @@ import java.util.Locale;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.GenericEvent;
+import net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
@@ -19,6 +20,8 @@ import pt.ist.utl.fenix.utils.Pair;
 
 public class RoomsPunctualSchedulingBean implements Serializable {
 
+    private DomainReference<PunctualRoomsOccupationRequest> roomsReserveRequestReference;
+    
     private MultiLanguageString smallDescription;
     
     private MultiLanguageString completeDescription;
@@ -49,7 +52,8 @@ public class RoomsPunctualSchedulingBean implements Serializable {
 	setGanttDiagramAvailable(Boolean.TRUE);	
     }       
            
-    public RoomsPunctualSchedulingBean(GenericEvent genericEvent) {	
+    public RoomsPunctualSchedulingBean(GenericEvent genericEvent) {
+	setRoomsReserveRequest(genericEvent.getPunctualRoomsOccupationRequest());
 	setRooms(genericEvent.getAssociatedRooms());
 	setBegin(genericEvent.getBeginDate());
 	setEnd(genericEvent.getEndDate());
@@ -215,20 +219,25 @@ public class RoomsPunctualSchedulingBean implements Serializable {
         this.genericEventReference = (genericEvent != null) ? new DomainReference<GenericEvent>(genericEvent) : null;        
     }
     
+    public PunctualRoomsOccupationRequest getRoomsReserveRequest() {
+	return (this.roomsReserveRequestReference != null) ? this.roomsReserveRequestReference.getObject() : null;
+    }
+
+    public void setRoomsReserveRequest(PunctualRoomsOccupationRequest request) {
+	this.roomsReserveRequestReference = (request != null) ? new DomainReference<PunctualRoomsOccupationRequest>(request) : null;
+    }
+        
     public MultiLanguageString getCompleteDescription() {
         return completeDescription;
     }
-
 
     public void setCompleteDescription(MultiLanguageString completeDescription) {
         this.completeDescription = completeDescription;
     }
 
-
     public MultiLanguageString getSmallDescription() {
         return smallDescription;
     }
-
 
     public void setSmallDescription(MultiLanguageString smallDescription) {
         this.smallDescription = smallDescription;
@@ -240,5 +249,5 @@ public class RoomsPunctualSchedulingBean implements Serializable {
 
     public void setGanttDiagramAvailable(Boolean ganttDiagramAvailable) {
         this.ganttDiagramAvailable = ganttDiagramAvailable;
-    }
+    }    
 }

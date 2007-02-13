@@ -2173,9 +2173,20 @@
             <forward name="teacher-not-found" path="/showAllTeacherCreditsResume.do?method=showTeacherCreditsResume&amp;page=0"/>
         </action>
 
+		<!-- ===== Rooms Reserve Management === -->
+        <action path="/roomsReserveManagement"
+        	type="net.sourceforge.fenixedu.presentationTier.Action.teacher.RoomsReserveManagementDA"
+        	parameter="method"
+        	scope="request">        	  
+        	        	
+        	<forward name="viewRoomsReserves" path="view-rooms-reserves"/>        	
+        	<forward name="createNewRoomsReserve" path="create-new-rooms-reserve"/>
+        	<forward name="seeSpecifiedRoomsReserve" path="see-specified-rooms-reserve"/>        	        	        	
+        </action>
+
 		<!-- Action mappings for tests -->
 		&tests-actions;
-		<!-- End of action mappings for tests -->
+		<!-- End of action mappings for tests -->	    	    
 	    
     </action-mappings>
     <!-- ========== Controller Configuration ================================ -->
@@ -2192,6 +2203,7 @@
     <message-resources parameter="resources.SiteResources" key="SITE_RESOURCES" null="false"/>
     <message-resources parameter="resources.AdminOffice" key="ADMIN_OFFICE_RESOURCES" null="false"/>
     <message-resources parameter="resources.DegreeAdministrativeOfficeResources" key="DEGREE_OFFICE_RESOURCES" null="false"/>
+    <message-resources parameter="resources.ApplicationResourcesSOP" key="SOP_RESOURCES" null="false"/>
 
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">

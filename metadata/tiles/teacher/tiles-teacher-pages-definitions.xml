@@ -868,6 +868,16 @@
 	<definition name="teacher-view-announcement" extends="execution-course-administration">
 		<put name="body" value="/teacher/executionCourse/announcements/viewAnnouncement.jsp" />
 	</definition>		
-	<!-- =================== end announcements ============== -->
 
+	<!-- =================== Rooms Reserve Management ============== -->
+	<definition name="view-rooms-reserves" extends="df.page.teacher-index">
+		<put name="body" value="/teacher/roomsReserveManagement/viewRoomsReserves.jsp" />
+	</definition>			
+	<definition name="create-new-rooms-reserve" extends="df.page.teacher-index">
+		<put name="body" value="/teacher/roomsReserveManagement/createNewRoomsReserve.jsp" />
+	</definition>			
+	<definition name="see-specified-rooms-reserve" extends="df.page.teacher-index">
+		<put name="body" value="/teacher/roomsReserveManagement/seeSpecifiedRoomsReserve.jsp" />
+	</definition>			
+				
 </tiles-definitions>

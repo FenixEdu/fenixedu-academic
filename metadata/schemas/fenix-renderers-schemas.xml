@@ -30,6 +30,7 @@
     <!ENTITY department SYSTEM "department-schemas.xml">
     <!ENTITY manager SYSTEM "manager-schemas.xml">
     <!ENTITY sop SYSTEM "sop-schemas.xml">
+    <!ENTITY teacher SYSTEM "teacher-schemas.xml">
 ]>
 
 <schemas>
@@ -649,5 +650,6 @@
     &department;
     &manager;
     &sop;
+    &teacher;
     
 </schemas>

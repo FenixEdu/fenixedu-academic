@@ -89,7 +89,7 @@ public class RoomsPunctualSchedulingDA extends FenixDispatchAction {
 	return prepare(mapping, form, request, response);
     }  
            
-    public ActionForward prepareCreate(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {			
+    public ActionForward prepareCreate(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException, InvalidArgumentException {			
 	
 	RoomsPunctualSchedulingBean bean = null;		
 	IViewState viewState = RenderUtils.getViewState("roomsPunctualSchedulingWithPeriodType");				
@@ -192,6 +192,7 @@ public class RoomsPunctualSchedulingDA extends FenixDispatchAction {
             return mapping.findForward("prepareFinalizeCreation");        
 	} 
 	
+	request.setAttribute("roomsPunctualSchedulingBean", bean);	
 	return prepare(mapping, form, request, response);
     }    
     
@@ -212,8 +213,8 @@ public class RoomsPunctualSchedulingDA extends FenixDispatchAction {
 	
 	return prepare(mapping, form, request, response);
     }
-    
-    
+          
+    // Private Methods     
     
     private YearMonthDay getFirstDay(HttpServletRequest request) {
 	YearMonthDay firstDay = getFirstDayFromParameter(request);
