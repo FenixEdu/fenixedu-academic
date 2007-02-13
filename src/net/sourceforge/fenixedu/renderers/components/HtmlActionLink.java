@@ -70,7 +70,12 @@ public class HtmlActionLink extends HtmlSimpleValueComponent {
 	link.setModuleRelative(false);
 	link.setContextRelative(false);
 
-	setOnClick(getOnClick() + "document.getElementById('" + hidden.getId() + "').value='"
+	String existingScript = getOnClick();
+    if (existingScript == null) {
+        existingScript = "";
+    }
+    
+    setOnClick(existingScript + "document.getElementById('" + hidden.getId() + "').value='"
 		+ getName() + "'; " + "document.getElementById('" + hidden.getId() + "').form.submit();");
 
 	HtmlTag tag = super.getOwnTag(context);
