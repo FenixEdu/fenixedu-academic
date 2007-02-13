@@ -498,31 +498,27 @@ public class CurricularCourse extends CurricularCourse_Base {
 	return constructUniqueEnrollmentKey(this.getCode(), this.getName(), degreeType);
     }
 
+    
+    
     public boolean hasActiveScopeInGivenSemester(final Integer semester) {
-	List scopes = this.getScopes();
-
-	List result = (List) CollectionUtils.select(scopes, new Predicate() {
-	    public boolean evaluate(Object obj) {
-		CurricularCourseScope curricularCourseScope = (CurricularCourseScope) obj;
-		return (curricularCourseScope.getCurricularSemester().getSemester().equals(semester) && curricularCourseScope
-			.isActive().booleanValue());
+	for (CurricularCourseScope curricularCourseScope : getScopesSet()) {
+	    if(curricularCourseScope.getCurricularSemester().getSemester().equals(semester) && curricularCourseScope
+			.isActive().booleanValue()) {
+		return true;
 	    }
-	});
-
-	return !result.isEmpty();
+	}
+	
+	return false;
     }
 
     public boolean hasScopeInGivenSemester(final Integer semester) {
-	List scopes = this.getScopes();
-
-	List result = (List) CollectionUtils.select(scopes, new Predicate() {
-	    public boolean evaluate(Object obj) {
-		CurricularCourseScope curricularCourseScope = (CurricularCourseScope) obj;
-		return curricularCourseScope.getCurricularSemester().getSemester().equals(semester);
+	for (CurricularCourseScope curricularCourseScope : getScopesSet()) {
+	    if(curricularCourseScope.getCurricularSemester().getSemester().equals(semester)) {
+		return true;
 	    }
-	});
-
-	return !result.isEmpty();
+	}
+	
+	return false;
     }
 
     public boolean hasActiveScopeInGivenSemesterForGivenBranch(
