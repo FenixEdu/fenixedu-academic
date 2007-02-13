@@ -33,10 +33,7 @@
 		<li>
 			<html:link action="/viewCurriculum.do?method=prepare" target="_blank"><bean:message bundle="STUDENT_RESOURCES"  key="label.viewStudentCurricularPlan"/></html:link>
 		</li>
-		
-	
 	</ul>
-
 
 	<logic:messagesPresent message="true" property="<%= ActionMessages.GLOBAL_MESSAGE %>">
 		<ul class="mtop15 mbottom1 nobullet list2">
@@ -47,20 +44,22 @@
 	</logic:messagesPresent>
 
 	<logic:messagesPresent message="true" property="enrol">
-		<bean:message bundle="STUDENT_RESOURCES"  key="label.enrollment.errors.in.enrolment" />:
+		<br/>
+		<em><bean:message bundle="STUDENT_RESOURCES"  key="label.enrollment.errors.in.enrolment" />:</em>
 		<p class="mtop15">
 			<html:messages id="messages" message="true" bundle="APPLICATION_RESOURCES">
-				<span class="success0"><bean:write name="messages" /></span>
+				<span class="error0"><bean:write name="messages" /></span>
 			</html:messages>
 		</p>
 	</logic:messagesPresent>
 	
 	
 	<logic:messagesPresent message="true" property="unenrol">
-		<bean:message bundle="STUDENT_RESOURCES"  key="label.enrollment.errors.in.unEnrolment" />
+		<br/>
+		<em><bean:message bundle="STUDENT_RESOURCES"  key="label.enrollment.errors.in.unEnrolment" />:</em>
 		<p class="mtop15">
 			<html:messages id="messages" message="true" bundle="APPLICATION_RESOURCES">
-				<span class="success0"><bean:write name="messages" /></span>
+				<span class="error0"><bean:write name="messages" /></span>
 			</html:messages>
 		</p>
 	</logic:messagesPresent>

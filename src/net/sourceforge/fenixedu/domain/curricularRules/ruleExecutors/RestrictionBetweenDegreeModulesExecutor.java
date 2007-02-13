@@ -59,6 +59,7 @@ public class RestrictionBetweenDegreeModulesExecutor extends CurricularRuleExecu
 	    
 	    final ExecutionPeriod executionPeriod = enrolmentContext.getExecutionPeriod();
 	    ectsCredits = Double.valueOf(ectsCredits.doubleValue() + curriculumModule.getEnroledEctsCredits(executionPeriod.getPreviousExecutionPeriod()).doubleValue());
+	    
 	    return rule.allowCredits(ectsCredits) ? RuleResult.createTrue() : createFalseRuleResultWithInvalidEcts(rule);
 	}
 	
