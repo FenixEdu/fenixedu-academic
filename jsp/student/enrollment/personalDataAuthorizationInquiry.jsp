@@ -10,7 +10,7 @@
 
 <h2><bean:message key="label.enrollment.personalData.inquiry"/></h2>
 
-<div class="infoop">
+<div class="infoop2">
 <p><bean:message key="label.info.dislocatedStudent.inquiry"/>:</p>
 </div>
 
@@ -20,36 +20,35 @@
 			<li><span class="error0"><bean:write name="messages" /></span></li>
 		</html:messages>
 	</ul>
-	<br />
 </logic:messagesPresent>
-<br/>
-<b><bean:message key="label.enrollment.personalData.authorization"/></b>
-<br/><br/>
-<table cellpadding=5>
-<tr>
-	<td>&nbsp;</td>
-	<td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.authorizationAnswer" property="authorizationAnswer" value="<%= StudentPersonalDataAuthorizationChoice.PROFESSIONAL_ENDS.toString() %>" /></td>
-	<td><bean:message key="label.enrollment.personalData.professionalEnds"/></td>	
-</tr>
-<tr>
-	<td>&nbsp;</td>
-	<td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.authorizationAnswer" property="authorizationAnswer" value="<%= StudentPersonalDataAuthorizationChoice.SEVERAL_ENDS.toString() %>" /></td>
-	<td><bean:message key="label.enrollment.personalData.nonComericalEnds"/></td>	
-</tr>
-<tr>
-	<td>&nbsp;</td>
-	<td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.authorizationAnswer" property="authorizationAnswer" value="<%= StudentPersonalDataAuthorizationChoice.ALL_ENDS.toString() %>" /></td>
-	<td><bean:message key="label.enrollment.personalData.allEnds"/></td>	
-</tr>
-</table>
-<br/>
 
-<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.authorizationAnswer" property="authorizationAnswer" value="<%= StudentPersonalDataAuthorizationChoice.NO_END.toString() %>" />&nbsp;&nbsp;
-<b><bean:message key="label.enrollment.personalData.noAuthorization"/></b>
+<p class="mtop2"><b><bean:message key="label.enrollment.personalData.authorization"/></b></p>
 
-<br/><br/>
+
+<p>
+	<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.authorizationAnswer" property="authorizationAnswer" value="<%= StudentPersonalDataAuthorizationChoice.PROFESSIONAL_ENDS.toString() %>" />
+	<bean:message key="label.enrollment.personalData.professionalEnds"/>	
+</p>
+
+<p>
+	<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.authorizationAnswer" property="authorizationAnswer" value="<%= StudentPersonalDataAuthorizationChoice.SEVERAL_ENDS.toString() %>" />
+	<bean:message key="label.enrollment.personalData.nonComericalEnds"/>	
+</p>
+
+<p>
+	<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.authorizationAnswer" property="authorizationAnswer" value="<%= StudentPersonalDataAuthorizationChoice.ALL_ENDS.toString() %>" />
+	<bean:message key="label.enrollment.personalData.allEnds"/>	
+</p>
+
+<p>
+	<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.authorizationAnswer" property="authorizationAnswer" value="<%= StudentPersonalDataAuthorizationChoice.NO_END.toString() %>" />
+	<b><bean:message key="label.enrollment.personalData.noAuthorization"/></b>
+</p>
+
+<p class="mtop15">
 <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.continue"/></html:submit>
+</p>
+
 </html:form>
 
-<br/><br/><br/><br/><br/><br/><br/><br/>
-<bean:message key="label.enrollment.personalData.changes"/>
+<p class="mtop2"><em><bean:message key="label.enrollment.personalData.changes"/></em></p>
