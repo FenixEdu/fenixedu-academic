@@ -13,7 +13,7 @@ public class RestrictionDoneDegreeModuleExecutor extends CurricularRuleExecutor 
 
 	final RestrictionDoneDegreeModule rule = (RestrictionDoneDegreeModule) curricularRule;
 	
-	if (!appliesToContext(enrolmentContext, rule)) {
+	if (!canApplyRule(enrolmentContext, rule)) {
 	    return RuleResult.createNA();
 	}
 
