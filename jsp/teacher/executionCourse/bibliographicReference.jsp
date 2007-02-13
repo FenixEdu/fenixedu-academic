@@ -42,7 +42,7 @@
         <%-- Recommended bibliography from competence course --%>
         <logic:equal name="executionCourse" property="compentenceCourseMainBibliographyAvailable" value="false">
 	        <logic:empty name="executionCourse" property="orderedBibliographicReferences">
-	           	<em>Não foi definida bibliografia principal.</em>
+	           	<em><bean:message key="label.noSecondaryBibliographicReference"/>.</em>
 	        </logic:empty>
         </logic:equal>
         
@@ -114,7 +114,7 @@
         <%-- Secondary bibliography from competence course --%>
         <logic:equal name="executionCourse" property="compentenceCourseSecondaryBibliographyAvailable" value="false">
 	        <logic:empty name="executionCourse" property="secondaryBibliographicReferences">
-				<em>Não foi definida bibliografia secundária.</em>
+				<em><bean:message key="label.noPrimaryBibliographicReference"/>.</em>
 	        </logic:empty>
         </logic:equal>
         
