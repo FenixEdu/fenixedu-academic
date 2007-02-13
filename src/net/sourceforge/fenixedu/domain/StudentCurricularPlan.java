@@ -1847,7 +1847,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    
 	    curricularRules.addAll(degreeModule.getCurricularRules(executionPeriod));
 	    if (degreeModule instanceof CurricularCourse) {
-		//curricularRules.add(new AssertUniqueApprovalInCurricularCourseContexts((CurricularCourse) degreeModule));
+		curricularRules.add(new AssertUniqueApprovalInCurricularCourseContexts((CurricularCourse) degreeModule));
 	    }
 
 	    curricularRules.addAll(degreeModuleToEnrol.getCurriculumGroup().getCurricularRules(executionPeriod));
