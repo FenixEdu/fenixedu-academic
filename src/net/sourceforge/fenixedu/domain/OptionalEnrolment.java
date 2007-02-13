@@ -38,7 +38,7 @@ public class OptionalEnrolment extends OptionalEnrolment_Base {
 	super.checkInitConstraints(studentCurricularPlan, curricularCourse, executionPeriod);
 
 	final OptionalEnrolment optionalEnrolment = (OptionalEnrolment) studentCurricularPlan
-		.findCurriculumModuleFor(optionalCurricularCourse);
+		.findCurriculumLineFor(optionalCurricularCourse, executionPeriod);
 	if (optionalEnrolment != null && optionalEnrolment.isValid(executionPeriod)) {
 	    throw new DomainException(
 		    "error.OptionalEnrolment.duplicate.enrolment",
@@ -96,11 +96,6 @@ public class OptionalEnrolment extends OptionalEnrolment_Base {
 
     private boolean hasOptionalCurricularCourse(final DegreeModule degreeModule) {
 	return getOptionalCurricularCourse() == degreeModule;
-    }
-
-    @Override
-    public CurriculumModule findCurriculumModuleFor(final DegreeModule degreeModule) {
-	return hasDegreeModule(degreeModule) ? this : null;
     }
 
     @Override
