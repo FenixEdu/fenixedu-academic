@@ -65,11 +65,19 @@ abstract public class CurricularRuleExecutor {
 	return curricularRule.appliesToContext(searchDegreeModuleToEnrol(enrolmentContext, curricularRule).getContext());
     }
     
+    /**
+     *	1 - If DegreeModule from CurricularRule has no connection to Student curriculum than return false;
+     *  2 - If CurricularRule has no Context CourseGroup or CurricularRule is connected to a root DegreeModule return true;
+     *  3 - Else, search for parentCourseGroup and check if applies to CurricularRule. 
+     */
     protected boolean appliesToCourseGroup(final EnrolmentContext enrolmentContext, final ICurricularRule curricularRule) {
+	final CurriculumModule curriculumModule = searchCurriculumModule(enrolmentContext, curricularRule);
+	if (curriculumModule == null) {
+	    return false;
+	}
 	if (!curricularRule.hasContextCourseGroup() || curricularRule.getDegreeModuleToApplyRule().isRoot()) {
 	    return true;
 	}
-	final CurriculumModule curriculumModule = searchCurriculumModule(enrolmentContext, curricularRule);
 	final CourseGroup parentCourseGroup = curriculumModule.getCurriculumGroup().getDegreeModule();
 	return curricularRule.appliesToCourseGroup(parentCourseGroup);
     }
