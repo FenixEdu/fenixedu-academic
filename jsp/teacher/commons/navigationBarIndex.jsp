@@ -73,11 +73,11 @@
 	</html:link>
   </li>
   --%>
-  <%--
+  
   <li>
   	<html:link href="<%= request.getContextPath() + "/teacher/roomsReserveManagement.do?method=viewReserves" %>">
   		<bean:message key="link.rooms.reserve" bundle="APPLICATION_RESOURCES"/>
   	</html:link>
   </li>
-   --%>
+  
 </ul>
