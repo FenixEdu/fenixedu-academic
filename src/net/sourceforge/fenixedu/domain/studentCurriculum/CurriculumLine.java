@@ -69,5 +69,8 @@ public abstract class CurriculumLine extends CurriculumLine_Base {
     	setDegreeModule(curricularCourse);
     }
 
-    
+    @Override
+    public CurriculumLine findCurriculumLineFor(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
+        return null;
+    }
 }

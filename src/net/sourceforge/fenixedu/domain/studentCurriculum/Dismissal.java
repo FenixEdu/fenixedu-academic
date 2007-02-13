@@ -49,7 +49,7 @@ public class Dismissal extends Dismissal_Base {
     }
     
     static private CurriculumGroup findCurriculumGroupForCourseGroup(final StudentCurricularPlan studentCurricularPlan, final CourseGroup courseGroup) {
-	final CurriculumGroup curriculumGroup = (CurriculumGroup) studentCurricularPlan.findCurriculumModuleFor(courseGroup);
+	final CurriculumGroup curriculumGroup = studentCurricularPlan.findCurriculumGroupFor(courseGroup);
 	if (curriculumGroup != null) {
 	    return curriculumGroup;
 	}
@@ -67,7 +67,7 @@ public class Dismissal extends Dismissal_Base {
 
     static private CurriculumGroup findCurriculumGroupForCurricularCourse(final StudentCurricularPlan studentCurricularPlan, final CurricularCourse curricularCourse) {
 	if (curricularCourse.hasOnlyOneParentCourseGroup()) {
-	    final CurriculumGroup curriculumGroup = (CurriculumGroup) studentCurricularPlan.findCurriculumModuleFor(getFirstParentCourseGroup(curricularCourse));
+	    final CurriculumGroup curriculumGroup = studentCurricularPlan.findCurriculumGroupFor(getFirstParentCourseGroup(curricularCourse));
 	    if (curriculumGroup != null && !curriculumGroup.parentCurriculumGroupIsNoCourseGroupCurriculumGroup()) {
 		return curriculumGroup;
 	    }
@@ -120,11 +120,6 @@ public class Dismissal extends Dismissal_Base {
     }
     
     @Override
-    public CurriculumModule findCurriculumModuleFor(DegreeModule degreeModule) {
-	return hasDegreeModule() ? super.findCurriculumModuleFor(degreeModule) : null;
-    }
-    
-    @Override
     public MultiLanguageString getName() {
 	if(hasDegreeModule()) {
 	    return super.getName();
@@ -133,7 +128,6 @@ public class Dismissal extends Dismissal_Base {
 	    multiLanguageString.setContent(Language.pt, ResourceBundle.getBundle("resources/AcademicAdminOffice", new Locale("pt", "PT")).getString("label.group.credits"));
 	    return multiLanguageString;
 	}
-	
     }
     
     @Override

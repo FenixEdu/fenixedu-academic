@@ -300,16 +300,29 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	}
 	return false;
     }
-
+    
     @Override
-    public CurriculumModule findCurriculumModuleFor(final DegreeModule degreeModule) {
-	if (super.findCurriculumModuleFor(degreeModule) != null) {
+    public CurriculumLine findCurriculumLineFor(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
+	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
+	    final CurriculumLine search = curriculumModule.findCurriculumLineFor(curricularCourse, executionPeriod);
+	    if (search != null) {
+		return search;
+	    }
+	}
+	return null;
+    }
+
+    public CurriculumGroup findCurriculumGroupFor(final CourseGroup courseGroup) {
+	if (getDegreeModule() == courseGroup) {
 	    return this;
 	}
-	for (final CurriculumModule each : getCurriculumModulesSet()) {
-	    final CurriculumModule module = each.findCurriculumModuleFor(degreeModule);
-	    if (module != null) {
-		return module;
+	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
+	    if (!curriculumModule.isLeaf()) {
+		final CurriculumGroup curriculumGroup = (CurriculumGroup) curriculumModule;
+		final CurriculumGroup searchCurriculumGroup = curriculumGroup.findCurriculumGroupFor(courseGroup);
+		if (searchCurriculumGroup != null) {
+		    return searchCurriculumGroup;
+		}
 	    }
 	}
 	return null;

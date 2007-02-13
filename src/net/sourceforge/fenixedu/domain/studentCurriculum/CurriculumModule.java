@@ -81,10 +81,6 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
 	return this.equals(curriculumModule);
     }
     
-    public CurriculumModule findCurriculumModuleFor(final DegreeModule degreeModule) {
-	return getDegreeModule().equals(degreeModule) ? this : null;
-    }
-    
     public Set<ICurricularRule> getCurricularRules(ExecutionPeriod executionPeriod){
 	Set<ICurricularRule> result = null;
 	if(this.getCurriculumGroup() != null) {
@@ -111,4 +107,6 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
     abstract public boolean isAproved(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod);
     abstract public boolean isEnroledInExecutionPeriod(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod);
     abstract public boolean hasEnrolmentWithEnroledState(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod);
+    
+    abstract public CurriculumLine findCurriculumLineFor(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod);
 }

@@ -102,7 +102,11 @@ abstract public class CurricularRuleExecutor {
     }
     
     protected CurriculumModule searchCurriculumModule(final EnrolmentContext enrolmentContext, final DegreeModule degreeModule) {
-	return enrolmentContext.getStudentCurricularPlan().findCurriculumModuleFor(degreeModule);
+	if (degreeModule.isLeaf()) {
+	    return enrolmentContext.getStudentCurricularPlan().findCurriculumLineFor((CurricularCourse) degreeModule, enrolmentContext.getExecutionPeriod());
+	} else {
+	    return enrolmentContext.getStudentCurricularPlan().findCurriculumGroupFor((CourseGroup) degreeModule);
+	}
     }
     
     protected CurriculumModule searchCurriculumModule(final EnrolmentContext enrolmentContext, final ICurricularRule curricularRule) {

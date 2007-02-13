@@ -98,10 +98,10 @@ public abstract class NoCourseGroupCurriculumGroup extends NoCourseGroupCurricul
      *  Flat structure below NoCourseGroupCurriculumGroup
      */
     @Override
-    public CurriculumModule findCurriculumModuleFor(final DegreeModule degreeModule) {
+    public CurriculumGroup findCurriculumGroupFor(final CourseGroup courseGroup) {
         for (final CurriculumModule each : getCurriculumModulesSet()) {
-            if (each.getDegreeModule() == degreeModule) {
-        	return each;
+            if (!each.isLeaf() && each.getDegreeModule() == courseGroup) {
+        	return (CurriculumGroup) each;
             }
         }
         return null;
