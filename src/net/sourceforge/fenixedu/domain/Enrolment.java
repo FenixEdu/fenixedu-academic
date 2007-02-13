@@ -92,8 +92,16 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	setEnrolmentCondition(enrollmentCondition);
     }
 
-    public boolean isEnrollmentConditionFinal() {
+    public boolean isFinal() {
 	return getEnrolmentCondition() == EnrollmentCondition.FINAL;
+    }
+
+    public boolean isInvisible() {
+	return getEnrolmentCondition() == EnrollmentCondition.INVISIBLE;
+    }
+
+    public boolean isTemporary() {
+	return getEnrolmentCondition() == EnrollmentCondition.TEMPORARY;
     }
 
     public boolean isSpecialSeason() {
@@ -622,11 +630,19 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     public boolean isEnroled() {
-	return this.getEnrollmentState().equals(EnrollmentState.ENROLLED);
+	return this.getEnrollmentState() == EnrollmentState.ENROLLED;
     }
 
     public boolean isEnrolmentStateApproved() {
 	return this.getEnrollmentState() == EnrollmentState.APROVED;
+    }
+
+    public boolean isAnnulled() {
+	return this.getEnrollmentState() == EnrollmentState.ANNULED;
+    }
+
+    public boolean isTemporarilyEnroled() {
+	return this.getEnrollmentState() == EnrollmentState.TEMPORARILY_ENROLLED;
     }
 
     public Boolean isFirstTime() {
