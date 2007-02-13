@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.BothAreasAreTheSameServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -15,9 +16,6 @@ import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.tools.enrollment.AreaType;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
 
 /**
  * @author Jo�o Mota
@@ -203,7 +201,7 @@ public class StudentCurricularPlanLEIC extends StudentCurricularPlanLEIC_Base {
     
     protected List getCommonBranchAndStudentBranchesCourses(ExecutionPeriod executionPeriod) {
 
-        HashSet curricularCourses = new HashSet();
+        Set<CurricularCourse> curricularCourses = new HashSet<CurricularCourse>();
         DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
         List commonAreas = degreeCurricularPlan.getCommonAreas();
         int commonAreasSize = commonAreas.size();
@@ -228,34 +226,25 @@ public class StudentCurricularPlanLEIC extends StudentCurricularPlanLEIC_Base {
         
         List<CurricularCourseGroup> optionalCurricularCourseGroups = degreeCurricularPlan.getAllOptionalCurricularCourseGroups();
         for (CurricularCourseGroup curricularCourseGroup : optionalCurricularCourseGroups) {
-			List<CurricularCourse> optionalCurricularCourses = curricularCourseGroup.getCurricularCourses();
-			curricularCourses.addAll(optionalCurricularCourses);
-		}
-
-        List allCurricularCourses = new ArrayList(curricularCourses.size());
-        allCurricularCourses.addAll(curricularCourses);
-
-        List result = new ArrayList();
-        int curricularCoursesSize = curricularCourses.size();
-
-        for (int i = 0; i < curricularCoursesSize; i++) {
-            CurricularCourse curricularCourse = (CurricularCourse) allCurricularCourses.get(i);
-            result.add(transformToCurricularCourse2Enroll(curricularCourse, executionPeriod));
+            curricularCourses.addAll(curricularCourseGroup.getCurricularCourses());
         }
 
-        List elementsToRemove = (List) CollectionUtils.select(result, new Predicate() {
-            public boolean evaluate(Object obj) {
-                CurricularCourse2Enroll curricularCourse2Enroll = (CurricularCourse2Enroll) obj;
-                return curricularCourse2Enroll.getEnrollmentType().equals(
-                        CurricularCourseEnrollmentType.NOT_ALLOWED)
-                        || !curricularCourse2Enroll.getCurricularCourse().getEnrollmentAllowed()
-                                .booleanValue();
-            }
-        });
+	List<CurricularCourse2Enroll> result = new ArrayList<CurricularCourse2Enroll>();
+	for (final CurricularCourse curricularCourse : curricularCourses) {
+	    if (curricularCourse.getEnrollmentAllowed().booleanValue()) {
+		final CurricularCourseEnrollmentType 
+		curricularCourseEnrollmentType = 
+		    getCurricularCourseEnrollmentType(curricularCourse, executionPeriod);
+		if (curricularCourseEnrollmentType != 
+		    CurricularCourseEnrollmentType.NOT_ALLOWED) {
 
-        result.removeAll(elementsToRemove);
-
-        return result;
+		    result.add(transformToCurricularCourse2Enroll(curricularCourse, 
+			    executionPeriod));
+		}
+	    }
+	}
+	
+	return result;
     }
     
     	
