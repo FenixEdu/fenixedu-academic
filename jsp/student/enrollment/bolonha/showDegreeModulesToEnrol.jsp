@@ -46,8 +46,8 @@
 		</ul>
 	</logic:messagesPresent>
 
-
-	<logic:messagesPresent message="true" property="success">
+	<logic:messagesPresent message="true" property="enrol">
+		<bean:message bundle="STUDENT_RESOURCES"  key="label.enrollment.errors.in.enrolment" />:
 		<p class="mtop15">
 			<html:messages id="messages" message="true" bundle="APPLICATION_RESOURCES">
 				<span class="success0"><bean:write name="messages" /></span>
@@ -55,7 +55,15 @@
 		</p>
 	</logic:messagesPresent>
 	
-		
+	
+	<logic:messagesPresent message="true" property="unenrol">
+		<bean:message bundle="STUDENT_RESOURCES"  key="label.enrollment.errors.in.unEnrolment" />
+		<p class="mtop15">
+			<html:messages id="messages" message="true" bundle="APPLICATION_RESOURCES">
+				<span class="success0"><bean:write name="messages" /></span>
+			</html:messages>
+		</p>
+	</logic:messagesPresent>
 	
 	<fr:form action="/bolonhaStudentEnrollment.do">
 		<input type="hidden" name="method" />
