@@ -16,15 +16,7 @@ public class RestrictionDoneDegreeModuleExecutor extends CurricularRuleExecutor 
 	if (!canApplyRule(enrolmentContext, rule)) {
 	    return RuleResult.createNA();
 	}
-
-	if (!isApproved(enrolmentContext, rule.getPrecedenceDegreeModule())) {
-	    return RuleResult
-		    .createFalse(
-			    "curricularRules.ruleExecutors.RestrictionDoneDegreeModuleExecutor.student.is.not.approved.to.precendenceDegreeModule",
-			    rule.getDegreeModuleToApplyRule().getName(), rule.getPrecedenceDegreeModule().getName());
-	}
-	
-	return RuleResult.createTrue();
+	return isApproved(enrolmentContext, rule.getPrecedenceDegreeModule()) ? RuleResult.createTrue() : createFalseRuleResult(rule);
     }
 
     @Override
@@ -32,24 +24,29 @@ public class RestrictionDoneDegreeModuleExecutor extends CurricularRuleExecutor 
 	
 	final RestrictionDoneDegreeModule rule = (RestrictionDoneDegreeModule) curricularRule;
 	
-	if (!appliesToContext(enrolmentContext, rule)) {
+	if (!canApplyRule(enrolmentContext, rule)) {
 	    return RuleResult.createNA();
 	}
 
 	final CurricularCourse curricularCourse = rule.getPrecedenceDegreeModule();
-	if (!isApproved(enrolmentContext, curricularCourse)) {
-	    
-	    final ExecutionPeriod previous = enrolmentContext.getExecutionPeriod().getPreviousExecutionPeriod();
-	    if (isEnroled(enrolmentContext, curricularCourse, previous)) {
-		return RuleResult.createTrue(EnrolmentResultType.TEMPORARY);
-	    }
-	    return RuleResult
-		    .createFalse(
-			    "curricularRules.ruleExecutors.RestrictionDoneDegreeModuleExecutor.student.is.not.approved.to.precendenceDegreeModule",
-			    rule.getDegreeModuleToApplyRule().getName(), rule.getPrecedenceDegreeModule().getName());
+	
+	if (isApproved(enrolmentContext, curricularCourse)) {
+	    return RuleResult.createTrue();    
+	}
+	
+	final ExecutionPeriod previousExecutionPeriod = enrolmentContext.getExecutionPeriod().getPreviousExecutionPeriod();
+	if (hasEnrolmentWithEnroledState(enrolmentContext, curricularCourse, previousExecutionPeriod)) {
+	    return RuleResult.createTrue(EnrolmentResultType.TEMPORARY);
 	}
 
-	return RuleResult.createTrue();
+	return createFalseRuleResult(rule);
+    }
+
+    private RuleResult createFalseRuleResult(final RestrictionDoneDegreeModule rule) {
+	return RuleResult
+	    .createFalse(
+		    "curricularRules.ruleExecutors.RestrictionDoneDegreeModuleExecutor.student.is.not.approved.to.precendenceDegreeModule",
+		    rule.getDegreeModuleToApplyRule().getName(), rule.getPrecedenceDegreeModule().getName());
     }
     
     @Override
