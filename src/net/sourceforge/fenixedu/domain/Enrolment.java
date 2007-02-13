@@ -825,7 +825,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     @Override
     public boolean isEnroledInExecutionPeriod(CurricularCourse curricularCourse,
 	    ExecutionPeriod executionPeriod) {
-	return this.getExecutionPeriod().equals(executionPeriod)
+	return isValid(executionPeriod)
 		&& this.getCurricularCourse().equals(curricularCourse);
     }
 
