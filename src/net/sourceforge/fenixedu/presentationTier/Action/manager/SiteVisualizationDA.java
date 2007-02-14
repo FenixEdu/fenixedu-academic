@@ -38,6 +38,7 @@ public abstract class SiteVisualizationDA extends FenixDispatchAction {
             request.setAttribute("directLinkContext", directLinkContext);
         }
         
+        setSectionBreadCrumbs(request);
         return super.execute(mapping, actionForm, request, response);
     }
 
@@ -211,6 +212,25 @@ public abstract class SiteVisualizationDA extends FenixDispatchAction {
         return rootDomainObject.readSectionByOID(sectionID);
     }
 
+    protected void setSectionBreadCrumbs(HttpServletRequest request) {
+        Section section = selectSection(request);
+        Item item = selectItem(request);
+        
+        List<Section> sections = new ArrayList<Section>();
+        
+        if (section != null && item == null) {
+            section = section.getSuperiorSection();
+        }
+        
+        while (section != null) {
+            sections.add(0, section);
+            
+            section = section.getSuperiorSection();
+        }
+        
+        request.setAttribute("sectionCrumbs", sections);
+    }
+    
     protected abstract ActionForward getSiteDefaultView(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response);
     
     protected String getDirectLinkContext(HttpServletRequest request) {

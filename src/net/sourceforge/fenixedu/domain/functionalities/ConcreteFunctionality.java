@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.functionalities;
 
 import java.util.UUID;
 
+import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 /**
@@ -40,6 +41,9 @@ public class ConcreteFunctionality extends ConcreteFunctionality_Base {
         super.disconnect();
         
         removeModule();
+        for (Section section : getSiteSection()) {
+            section.delete();
+        }
     }
 
 }

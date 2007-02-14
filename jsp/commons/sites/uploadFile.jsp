@@ -20,13 +20,13 @@
 </h2>
 
 <h3>
-    <bean:message key="label.teacher.siteAdministration.uploadFile.insertFile"/>
+    <bean:message key="title.item.file.upload" bundle="SITE_RESOURCES"/>
 </h3>
 
 <ul>
 <li>
 <html:link page="<%= actionName + "?method=section&amp;sectionID=" + section.getIdInternal() + "&amp;" + context %>">
-<bean:message key="link.goBack"/>
+<bean:message key="link.goBack" bundle="SITE_RESOURCES"/>
 </html:link>
 </li>
 </ul>
@@ -36,7 +36,7 @@
 <span>
 	<span class="pleft1">
 		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
-			<bean:message key="label.teacher.siteAdministration.uploadFile.insertFile"/>
+			<bean:message key="title.section.item.file.upload" bundle="SITE_RESOURCES"/>
 	</span>
 	<span class="pleft1">
 		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
@@ -76,7 +76,7 @@
 
 <table class="tstyle5 thright thlight mtop025">
 	<tr>
-		<th><bean:message key="label.teacher.siteAdministration.uploadFile.fileDisplayName"/>:</th>
+		<th><bean:message key="label.teacher.siteAdministration.uploadFile.fileDisplayName" bundle="SITE_RESOURCES"/>:</th>
 		<td>
 	        <fr:edit id="displayName" name="fileItemCreator" slot="displayName">
 	            <fr:layout>
@@ -86,7 +86,7 @@
 		</td>
 	</tr>
 	<tr>
-		<th><bean:message key="label.teacher.siteAdministration.uploadFile.AuthorsName"/>:</th>
+		<th><bean:message key="label.teacher.siteAdministration.uploadFile.AuthorsName" bundle="SITE_RESOURCES"/>:</th>
 		<td>
 	        <fr:edit id="authorsName" name="fileItemCreator" slot="authorsName">
 	            <fr:layout>
@@ -97,7 +97,7 @@
 	</tr>
     <logic:notPresent name="skipFileClassification">
         	<tr>
-        		<th><bean:message key="label.teacher.siteAdministration.uploadFile.ResourceType"/>:</th>
+        		<th><bean:message key="label.teacher.siteAdministration.uploadFile.ResourceType" bundle="SITE_RESOURCES"/>:</th>
         		<td>
         	        <fr:edit id="educationalLearningResourceType" name="fileItemCreator" slot="educationalLearningResourceType">
         			<fr:layout>
@@ -108,7 +108,7 @@
         	</tr>
     </logic:notPresent>
 	<tr>
-		<th><bean:message key="label.teacher.siteAdministration.uploadFile.file"/>:</th>
+		<th><bean:message key="label.teacher.siteAdministration.uploadFile.file" bundle="SITE_RESOURCES"/>:</th>
 		<td>
 	    <fr:edit id="file" name="fileItemCreator" slot="file">
 	        <fr:layout>
@@ -120,7 +120,7 @@
 		</td>
 	</tr>
 	<tr>
-		<th><bean:message key="label.teacher.siteAdministration.uploadFile.permissions"/>:</th>
+		<th><bean:message key="label.teacher.siteAdministration.uploadFile.permissions" bundle="SITE_RESOURCES"/>:</th>
 		<td>
 	        <fr:edit id="permissions" name="fileItemCreator" schema="item.file.create" layout="flow">
 	            <fr:layout>

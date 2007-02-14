@@ -15,14 +15,14 @@
 <jsp:include page="siteQuota.jsp"/>
 
 <h2>
-    <bean:message key="label.executionCourseManagement.menu.sections"/>
+    <bean:message key="link.sectionsManagement" bundle="SITE_RESOURCES"/>
 </h2>
 
 <p>
 	<span>
 		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
 		<html:link page="<%= actionName + "?method=createSection&amp;" + context %>">
-			<bean:message key="link.createSection"/>
+			<bean:message key="link.createSection" bundle="SITE_RESOURCES"/>
 		</html:link>
 	</span>
 </p>

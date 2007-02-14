@@ -487,6 +487,20 @@ public class Unit extends Unit_Base {
 	return teachers;
     }
 
+    public List<Employee> getAllCurrentNonTeacherEmployees() {
+        List<Employee> employees = getAllCurrentActiveWorkingEmployees();
+        for (Iterator iter = employees.iterator(); iter.hasNext();) {
+            Employee employee = (Employee) iter.next();
+            
+            Teacher teacher = employee.getPerson().getTeacher();
+            if (teacher != null && teacher.getCurrentLegalRegimenWithoutEndSitutions() != null) {
+                iter.remove();
+            }
+        }
+        
+        return employees;
+    }
+    
     public Teacher getTeacherByPeriod(Integer teacherNumber, YearMonthDay begin, YearMonthDay end) {
 	for (Employee employee : getAllWorkingEmployees(begin, end)) {
 	    Teacher teacher = employee.getPerson().getTeacher();

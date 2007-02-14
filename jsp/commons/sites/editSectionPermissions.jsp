@@ -15,7 +15,7 @@
 <bean:define id="sectionId" name="section" property="idInternal"/>
 
 <h2>
-	<bean:message key="label.section"/>
+	<bean:message key="label.section" bundle="SITE_RESOURCES"/>
 	<fr:view name="section" property="name" />
 </h2>
 

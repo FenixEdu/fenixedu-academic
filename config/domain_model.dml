@@ -3307,6 +3307,7 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 		Integer keyRootDomainObjectForExternalInstitutionUnit;
 		Integer keyUnitServiceAgreementTemplate;
 		Integer keyRootDomainObjectForEarthUnit;
+		Integer keySite;
 	}
 
 	class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.domain.organizationalStructure.Party {
@@ -4357,6 +4358,14 @@ class net.sourceforge.fenixedu.domain.Site extends net.sourceforge.fenixedu.doma
 
 	class net.sourceforge.fenixedu.domain.DegreeSite extends net.sourceforge.fenixedu.domain.Site {
 		Integer keyDegree;
+	}
+
+	class net.sourceforge.fenixedu.domain.UnitSite extends net.sourceforge.fenixedu.domain.Site {
+		Integer keyUnit;
+	}
+
+	class net.sourceforge.fenixedu.domain.DepartmentSite extends net.sourceforge.fenixedu.domain.UnitSite {
+		MultiLanguageString description;
 	}
 
 //
@@ -7954,6 +7963,11 @@ relation TeacherPersonalExpectationExecutionYear {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
+}
+
+relation UnitHasSite {
+    net.sourceforge.fenixedu.domain.UnitSite playsRole site;
+	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole unit;
 }
 
 relation DepartmentUnit {

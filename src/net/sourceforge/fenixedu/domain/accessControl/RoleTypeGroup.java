@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.domain.accessControl;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;

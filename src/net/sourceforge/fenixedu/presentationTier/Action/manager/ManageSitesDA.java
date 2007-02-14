@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.DegreeSite;
+import net.sourceforge.fenixedu.domain.DepartmentSite;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Section;
@@ -30,7 +31,8 @@ public class ManageSitesDA extends SiteManagementDA {
     public static Class[] SITE_TYPES = {
         Homepage.class,
         ExecutionCourseSite.class,
-        DegreeSite.class
+        DegreeSite.class,
+        DepartmentSite.class
     };
     
     public ActionForward listSites(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {

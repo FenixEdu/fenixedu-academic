@@ -1,31 +1,27 @@
-<%@ taglib uri="/WEB-INF/jsf_core.tld" prefix="f"%>
-<%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
-<%@ taglib uri="/WEB-INF/jsf_tiles.tld" prefix="ft"%>
-<%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
+<%@ page language="java" %>
+<%@ page import="net.sourceforge.fenixedu.domain.organizationalStructure.Unit" %>
+<%@ page import="net.sourceforge.fenixedu.domain.RootDomainObject" %>
 
-<f:loadBundle basename="resources/PublicDepartmentResources" var="publicDepartmentBundle"/>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
- 	<h:outputText value="<ul class='treemenu'><li>" escape="false"/>
-		<h:outputText rendered="#{empty CompetenceCourseManagement.selectedDepartmentUnit.webAddress}" value="#{CompetenceCourseManagement.selectedDepartmentUnit.department.acronym}" escape="false"/>
-		<h:outputLink 
-				rendered="#{!empty CompetenceCourseManagement.selectedDepartmentUnit.webAddress}" 
-				value="#{CompetenceCourseManagement.selectedDepartmentUnit.webAddress}" 
-				target="_blank"
-				title="#{CompetenceCourseManagement.selectedDepartmentUnit.department.realName}">
-			<h:outputText value="#{CompetenceCourseManagement.selectedDepartmentUnit.department.acronym}" escape="false"/>
-		</h:outputLink>
- 	<h:outputText value="</li><li>" escape="false"/>
-		<h:outputLink value="../department/showDepartmentTeachers.faces">
-			<h:outputText value="#{publicDepartmentBundle['department.faculty']}"/>
-			<f:param name="selectedDepartmentUnitID" value="#{CompetenceCourseManagement.selectedDepartmentUnitID}"/>
-		</h:outputLink>
- 	<h:outputText value="</li><li>" escape="false"/>
-		<h:outputLink value="../department/showDepartmentCompetenceCourses.faces">
-			<h:outputText value="#{publicDepartmentBundle['department.courses']}"/>
-			<f:param name="selectedDepartmentUnitID" value="#{CompetenceCourseManagement.selectedDepartmentUnitID}"/>
-		</h:outputLink>
- 	<h:outputText value="</li></ul>" escape="false"/>
- 	
-<h:form>
-	<h:outputText escape="false" value="<input alt='input.selectedDepartmentUnitID' id='selectedDepartmentUnitID' name='selectedDepartmentUnitID' type='hidden' value='#{CompetenceCourseManagement.selectedDepartmentUnitID}'/>"/>
-</h:form>
+<%
+    Integer departmentUnitId;
+    Unit unit = (Unit) request.getAttribute("unit");
+    if (unit == null) {
+        departmentUnitId = new Integer(request.getParameter("selectedDepartmentUnitID"));
+        unit = (Unit) RootDomainObject.getInstance().readPartyByOID(departmentUnitId);
+        
+        request.setAttribute("unit", unit);
+    }
+%>
+
+<fr:view name="unit" property="site" type="net.sourceforge.fenixedu.domain.Site" layout="side-menu">
+    <fr:layout>
+        <fr:property name="sectionUrl" value="<%= request.getContextPath() + "/publico/department/departmentSite.do?method=section" %>"/>
+        <fr:property name="contextParam" value="selectedDepartmentUnitID"/>
+        <fr:property name="contextRelative" value="false"/>
+    </fr:layout>
+</fr:view>
+

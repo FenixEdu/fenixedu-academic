@@ -22,7 +22,7 @@
 <jsp:include page="siteQuota.jsp"/>
 
 <h2>
-	<bean:message key="label.section"/>
+	<bean:message key="label.section" bundle="SITE_RESOURCES"/>
 	<fr:view name="section" property="name" />
 </h2>
 
@@ -73,7 +73,7 @@
 	<span>
 		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
 		<html:link page="<%= String.format("%s?method=editSection&amp;%s&amp;sectionID=%s", actionName, context, sectionId) %>">
-			<bean:message key="button.editSection"/>
+			<bean:message key="link.editSection" bundle="SITE_RESOURCES"/>
 		</html:link>
 	</span>
 
@@ -83,7 +83,7 @@
         	<span class="pleft1">	
         		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
         		<html:link page="<%= String.format("%s?method=deleteSection&amp;%s&amp;sectionID=%s", actionName, context, sectionId) %>">
-        			<bean:message key="button.deleteSection"/>
+        			<bean:message key="link.deleteSection" bundle="SITE_RESOURCES"/>
         		</html:link>
         	</span>
     </span>
@@ -93,7 +93,7 @@
         <span class="pleft1">
             <img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
             <html:link href="<%= String.format("javascript:showElement('%s');", deleteSectionId) %>">
-                <bean:message key="button.deleteSection"/>
+                <bean:message key="link.deleteSection" bundle="SITE_RESOURCES"/>
             </html:link>
         </span>
     </span>
@@ -101,7 +101,7 @@
     	<span class="pleft1">
     		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
     		<html:link page="<%= String.format("%s?method=createSection&amp;%s&amp;sectionID=%s", actionName, context, sectionId) %>">
-    			<bean:message key="button.insertSubSection"/>
+    			<bean:message key="link.insertSubSection" bundle="SITE_RESOURCES"/>
     		</html:link>
     	</span>
 
@@ -198,7 +198,7 @@
     <logic:equal name="section" property="itemAllowed" value="true">
         <li>
             <html:link page="<%= String.format("%s?method=createItem&amp;%s&amp;sectionID=%s", actionName, context, sectionId) %>">
-                <bean:message key="button.insertItem"/>
+                <bean:message key="link.insertItem" bundle="SITE_RESOURCES"/>
             </html:link>
         </li>
     </logic:equal>
@@ -255,7 +255,7 @@
         <span>
 			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
 			<html:link page="<%= String.format("%s?method=editItem&amp;%s&amp;itemID=%s", actionName, context, itemId) %>">
-				<bean:message key="button.editItem"/>
+				<bean:message key="link.editItem" bundle="SITE_RESOURCES"/>
 			</html:link>
 		</span>
 
@@ -266,7 +266,7 @@
         	   <span class="pleft1">
 	       		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
 	       		<html:link page="<%= deleteUrl %>">
-	       			<bean:message key="button.deleteItem"/>
+	       			<bean:message key="link.deleteItem" bundle="SITE_RESOURCES"/>
 	       		</html:link>
 	       	</span>
         </span>
@@ -275,7 +275,7 @@
 	     	<span class="pleft1">
 	            <img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
 	            <html:link href="<%= String.format("javascript:showElement('%s');", deleteId) %>">
-	                <bean:message key="button.deleteItem"/>
+	                <bean:message key="link.deleteItem" bundle="SITE_RESOURCES"/>
 	            </html:link>
 			</span>
         </span>
@@ -290,7 +290,7 @@
 		<span class="pleft1">
 			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
 			<html:link page="<%= String.format("%s?method=uploadFile&amp;%s&amp;itemID=%s", actionName, context, itemId) %>">
-				<bean:message key="button.insertFile"/>
+				<bean:message key="link.insertFile" bundle="SITE_RESOURCES"/>
 			</html:link>
 		</span>
 
@@ -366,10 +366,10 @@
         							<span class="pleft1">
             		                		(<html:link page="<%= String.format("%s?method=deleteFile&amp;%s&amp;sectionID=%s&amp;itemID=%s&amp;fileItemId=%s", actionName, context, sectionId, itemId, fileItem.getIdInternal()) %>"
             		                                   onclick="<%= String.format("return confirm('%s')", message) %>">
-            			                        <bean:message key="label.teacher.siteAdministration.viewSection.deleteItemFile"/>
+            			                        <bean:message key="link.section.item.deleteItemFile" bundle="SITE_RESOURCES"/>
             			                    </html:link>, 
             			                    <html:link page="<%= String.format("%s?method=prepareEditItemFilePermissions&amp;%s&amp;sectionID=%s&amp;itemID=%s&amp;fileItemId=%s", actionName, context, sectionId, itemId, fileItem.getIdInternal()) %>">
-            			 	                   <bean:message key="label.teacher.siteAdministration.viewSection.editItemFilePermissions"/>
+            			 	                   <bean:message key="link.section.item.editItemFilePermissions" bundle="SITE_RESOURCES"/>
             			    	            </html:link>)
             		    	            </span>
 

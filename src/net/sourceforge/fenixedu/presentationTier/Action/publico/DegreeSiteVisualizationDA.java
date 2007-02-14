@@ -1,17 +1,13 @@
 package net.sourceforge.fenixedu.presentationTier.Action.publico;
 
 import java.net.MalformedURLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.SiteVisualizationDA;
 
 import org.apache.struts.action.ActionForm;
@@ -36,28 +32,7 @@ public class DegreeSiteVisualizationDA extends SiteVisualizationDA {
         }
         
         setPageLanguage(request);
-        setSectionBreadCrumbs(request);
-        
         return super.execute(mapping, actionForm, request, response);
-    }
-
-    private void setSectionBreadCrumbs(HttpServletRequest request) {
-        Section section = selectSection(request);
-        Item item = selectItem(request);
-        
-        List<Section> sections = new ArrayList<Section>();
-        
-        if (section != null && item == null) {
-            section = section.getSuperiorSection();
-        }
-        
-        while (section != null) {
-            sections.add(0, section);
-            
-            section = section.getSuperiorSection();
-        }
-        
-        request.setAttribute("sectionCrumbs", sections);
     }
 
     private void setPageLanguage(HttpServletRequest request) {

@@ -38,7 +38,7 @@ function set_values() {
   local values_section=`echo $line | sed -e 's/[^)]\+ ([^)]\+) VALUES (\(.*\));[ \t]*/\1/'`
   local values_list=`echo $values_section | sed -e "s/\(\('\([^\\\\']\|\\\\[^']\|\\\\'\)*'\)\|\(\"\([^\\\\\"]\|\\\\[^\"]\|\\\\\"\)*\"\)\|[^'\",]\+\),\?/\1\n/g"`
   #local values_list=`echo $values_section | sed -e "s/\('([^'\]|\')*'\|\"([^\"]|\\\")*\"\|[^'\",]\+\),\?/\1\n/g"`
-echo "$values_list"
+
   for (( index=1; index <= $NUM_FIELDS; index++)) ; do
     local value=`echo "$values_list" | cut -d '
 ' -f $index`

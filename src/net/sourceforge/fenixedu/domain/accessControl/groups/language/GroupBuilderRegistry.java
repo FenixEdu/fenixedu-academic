@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.accessControl.DegreeCoordinatorsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.DegreeStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.DegreeTeachersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.DepartmentEmployeesByExecutionYearGroup;
+import net.sourceforge.fenixedu.domain.accessControl.DepartmentEmployeesGroup;
 import net.sourceforge.fenixedu.domain.accessControl.DepartmentStudentsByExecutionYearGroup;
 import net.sourceforge.fenixedu.domain.accessControl.DepartmentTeachersByExecutionYearGroup;
 import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
@@ -154,6 +155,7 @@ public class GroupBuilderRegistry {
         register("curricularCourseStudentsByPeriod", CurricularCourseStudentsByExecutionPeriodGroup.class, new CurricularCourseStudentsByExecutionPeriodGroup.Builder());
         register("ifTrue", IfTrueGroup.class, new IfTrueGroup.Builder());
         register("currentDegreeCoordinators", CurrentDegreeCoordinatorsGroup.class, new CurrentDegreeCoordinatorsGroup.Builder());
+        register("departmentEmployees", DepartmentEmployeesGroup.class, new DepartmentEmployeesGroup.Builder());
         
         registerGroupsWithNoArguments();
     }

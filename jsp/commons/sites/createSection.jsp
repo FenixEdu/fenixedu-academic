@@ -13,7 +13,7 @@
 <bean:define id="context" value="<%= contextParam + "=" + contextParamValue %>"/>
 
 <h2>
-	<bean:message key="link.createSection"/>
+	<bean:message key="link.createSection" bundle="SITE_RESOURCES"/>
 </h2>
 
 <logic:messagesPresent message="true">

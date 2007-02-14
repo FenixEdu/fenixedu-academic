@@ -8,6 +8,7 @@
     <extent-class class-ref="net.sourceforge.fenixedu.domain.ExecutionCourseSite"/>
     <extent-class class-ref="net.sourceforge.fenixedu.domain.homepage.Homepage"/>
     <extent-class class-ref="net.sourceforge.fenixedu.domain.DegreeSite"/>
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.UnitSite"/>
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.SiteTemplate" table="SITE">
@@ -32,6 +33,13 @@
                   table="ACCESSIBLE_ITEM">
     <extent-class class-ref="net.sourceforge.fenixedu.domain.Section"/>
     <extent-class class-ref="net.sourceforge.fenixedu.domain.Item"/>
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.UnitSite" table="SITE">
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.DepartmentSite"/>
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.DepartmentSite" table="SITE">
 </class-descriptor>
 
 <!-- ******************************** -->

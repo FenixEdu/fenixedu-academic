@@ -15,7 +15,7 @@
 <bean:define id="section" name="section" type="net.sourceforge.fenixedu.domain.Section"/>
 
 <h2>
-	<bean:message key="link.createItem"/>
+	<bean:message key="title.item.create" bundle="SITE_RESOURCES"/>
 </h2>
 
 <logic:messagesPresent message="true">

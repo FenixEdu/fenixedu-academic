@@ -22,7 +22,7 @@
 
 <p class="mbottom05">
 	<strong>
-		<bean:message key="label.teacher.siteAdministration.editItemFilePermissions.editPermissions"/>
+		<bean:message key="label.teacher.siteAdministration.editItemFilePermissions.editPermissions" bundle="SITE_RESOURCES"/>
 	</strong>
 </p>
 

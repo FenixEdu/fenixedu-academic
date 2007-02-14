@@ -873,7 +873,30 @@
     			type="net.sourceforge.fenixedu.presentationTier.Action.publico.messaging.PublicAnnouncementDispatchAction">
     			<forward name="viewAnnouncement" path="public-view-announcement"/>
 		</action>
-     </action-mappings>     
+   
+   <!-- Department site -->
+        <action path="/department/departmentSite"
+                parameter="method"
+                type="net.sourceforge.fenixedu.presentationTier.Action.publico.department.PublicDepartmentSiteDA">
+            <forward name="department-presentation" path="department-presentation"/>
+            <forward name="department-employees" path="department-employees"/>
+            <forward name="site-section" path="department-section"/>
+            <forward name="site-section-deny" path="department-section-deny"/>
+            <forward name="site-section-adviseLogin" path="department-section-adviseLogin"/>
+            <forward name="site-item" path="department-item"/>
+            <forward name="site-item-deny" path="department-item-deny"/>
+            <forward name="site-item-adviseLogin" path="department-item-adviseLogin"/>
+        </action>
+
+        <action path="/department/departmentEmployees" forward="/department/departmentSite.do?method=employees"/>
+
+        <action path="/department/announcements"
+                parameter="method"
+                type="net.sourceforge.fenixedu.presentationTier.Action.publico.department.DepartmentAnnouncementsDA">
+            <forward name="listAnnouncements" path="public-department-list-announcements"/>
+            <forward name="viewAnnouncement" path="department-view-announcement"/>
+        </action>
+     </action-mappings>
     
     <!-- ========== Controller Configuration ================================ -->
 	<controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles" />

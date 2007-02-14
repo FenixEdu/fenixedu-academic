@@ -121,5 +121,30 @@
 
 		<li><html:link  page="/vigilancy/examCoordinatorManagement.do?method=prepareExamCoordinator"><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.manageExamCoordinator"/></html:link></li>	
 
+    <li class="navheader">
+        <bean:message key="label.site.title"/>
+    </li>
+    <li>
+        <bean:define id="unitId" name="userView" property="person.employee.currentDepartmentWorkingPlace.departmentUnit.idInternal"/>
+        <html:link page="<%= "/department/departmentSite.do?method=presentation&amp;selectedDepartmentUnitID=" + unitId %>" module="/publico" target="_blank">
+            <bean:message key="link.site.department.view"/>
+        </html:link>
+    </li>
+    <li>
+        <html:link page="/departmentSite.do?method=information">
+            <bean:message key="link.site.department.information"/>
+        </html:link>
+    </li>
+    <li>
+        <html:link page="/departmentSite.do?method=sections">
+            <bean:message key="link.site.sectionsManagement"/>
+        </html:link>
+    </li>
+    <li>
+        <html:link page="/announcements.do?method=viewBoards&amp;tabularVersion=true">
+            <bean:message key="link.site.announcements"/>
+        </html:link>
+    </li>
+    
 	</ul>
 </logic:present>

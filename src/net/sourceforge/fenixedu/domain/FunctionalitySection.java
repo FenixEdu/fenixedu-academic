@@ -78,5 +78,12 @@ public class FunctionalitySection extends FunctionalitySection_Base {
     public boolean isSubSectionAllowed() {
         return false;
     }
-    
+
+    @Override
+    protected void disconnect() {
+        super.disconnect();
+        
+        removeFunctionality();
+    }
+ 
 }

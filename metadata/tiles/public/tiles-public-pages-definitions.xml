@@ -355,6 +355,41 @@
 		<put name="body" value="/publico/researcher/showResearchResult.jsp" />
 	</definition>
 
+    <definition name="department-presentation" extends="definition.public.department">
+        <put name="body" value="/publico/department/department-presentation.jsp"/>
+    </definition>
 
-   
+    <definition name="department-employees" extends="definition.public.department">
+        <put name="body" value="/publico/department/department-employees.jsp"/>
+    </definition>
+
+    <definition name="definition.public.department.site" extends="definition.public.department">
+        <put name="body-context" value="/publico/department/site-context.jsp"/>
+    </definition>
+    <definition name="department-section" extends="definition.public.department.site">
+        <put name="body" value="/commons/sites/public/section.jsp"/>
+    </definition>
+    <definition name="department-section-deny" extends="definition.public.department.site">
+        <put name="body" value="/commons/sites/public/section-deny.jsp"/>
+    </definition>
+    <definition name="department-section-adviseLogin" extends="definition.public.department.site">
+        <put name="body" value="/commons/sites/public/section-adviseLogin.jsp"/>
+    </definition>
+    <definition name="department-item" extends="definition.public.department.site">
+        <put name="body" value="/commons/sites/public/item.jsp"/>
+    </definition>
+    <definition name="department-item-deny" extends="definition.public.department.site">
+        <put name="body" value="/commons/sites/public/item-deny.jsp"/>
+    </definition>
+    <definition name="department-item-adviseLogin" extends="definition.public.department.site">
+        <put name="body" value="/commons/sites/public/item-adviseLogin.jsp"/>
+    </definition>
+    
+    <definition name="public-department-list-announcements" extends="definition.public.department">
+        <put name="body" value="/publico/department/listAnnouncements.jsp" />
+    </definition>
+    <definition name="department-view-announcement" extends="definition.public.department">
+        <put name="body" value="/publico/department/viewAnnouncement.jsp" />
+    </definition>
+    
 </tiles-definitions>
