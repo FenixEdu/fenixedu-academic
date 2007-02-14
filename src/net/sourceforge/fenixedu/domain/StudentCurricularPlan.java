@@ -424,16 +424,13 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public boolean isCurricularCourseEnrolledInExecutionPeriod(CurricularCourse curricularCourse,
 	    ExecutionPeriod executionPeriod) {
 
-	List studentEnrolledEnrollments = getAllStudentEnrolledEnrollmentsInExecutionPeriod(executionPeriod);
-
-	List result = (List) CollectionUtils.collect(studentEnrolledEnrollments, new Transformer() {
-	    public Object transform(Object obj) {
-		Enrolment enrollment = (Enrolment) obj;
-		return enrollment.getCurricularCourse();
+	List<Enrolment> studentEnrolledEnrollments = getAllStudentEnrolledEnrollmentsInExecutionPeriod(executionPeriod);
+	for (Enrolment enrolment : studentEnrolledEnrollments) {
+	    if(enrolment.getCurricularCourse().equals(curricularCourse)) {
+		return true;
 	    }
-	});
-
-	return result.contains(curricularCourse);
+	}
+	return false;
     }
 
     public Integer getCurricularCourseAcumulatedEnrollments(CurricularCourse curricularCourse) {
@@ -462,21 +459,17 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     public List<Enrolment> getAllStudentEnrolledEnrollmentsInExecutionPeriod(
 	    final ExecutionPeriod executionPeriod) {
+	List<Enrolment> result = new ArrayList<Enrolment>();
+	for (Enrolment enrolment : getEnrolments()) {
+	    if(enrolment.getExecutionPeriod().equals(executionPeriod) && enrolment.isEnroled() 
+			&& !enrolment.isInvisible()) {
+		result.add(enrolment);
+	    }
+	}
 
-	// calculateStudentAcumulatedEnrollments(executionPeriod);
-	List<Enrolment> enrolments = (List) CollectionUtils.select(
-		getStudentEnrollmentsWithEnrolledState(), new Predicate() {
-
-		    public boolean evaluate(Object arg0) {
-
-			return ((Enrolment) arg0).getExecutionPeriod().equals(executionPeriod);
-		    }
-		});
-
-	initEctsCredits(enrolments);
-	// return initAcumulatedEnrollments(enrolments);
-	return enrolments;
-    }
+	initEctsCredits(result);
+	return result;
+    } 
 
     private void initEctsCredits(List<Enrolment> enrolments) {
 	for (final Enrolment enrolment : enrolments) {
