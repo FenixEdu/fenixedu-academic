@@ -26,16 +26,9 @@
     <p><tiles:getAsString name="serviceName" /></p>
 </div>
 <bean:define id="supportLink" type="java.lang.String">mailto:<bean:message key="suporte.mail" bundle="GLOBAL_RESOURCES"/></bean:define>
-<div id="hdr-nav">
-	<a href="<%= supportLink %>"><img
-			src="<%= request.getContextPath() %>/images/sup-bar.gif"
-			alt="<bean:message key="sup-bar" bundle="IMAGE_RESOURCES" />" />
-	</a>
-	<a href="<%= request.getContextPath() %>/logoff.do"><img
-			src="<%= request.getContextPath() %>/images/logoff-bar.gif"
-			alt="<bean:message key="logoff-bar" bundle="IMAGE_RESOURCES" />" />
-	</a>
-</div>
+
+<div id="hdr-nav"><a href="<%= supportLink %>"><img src="<%= request.getContextPath() %>/images/sup-bar.gif" alt="<bean:message key="sup-bar" bundle="IMAGE_RESOURCES" />" /></a><a href="<%= request.getContextPath() %>/logoff.do"><img	src="<%= request.getContextPath() %>/images/logoff-bar.gif"	alt="<bean:message key="logoff-bar" bundle="IMAGE_RESOURCES" />" /></a></div>
+
 <div><!-- hack to make "hdr-nav" appear in IE --></div>
 <!-- End Header -->
 <!-- NavGeral -->
