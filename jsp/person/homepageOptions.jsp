@@ -25,6 +25,20 @@
 <html:form action="/manageHomepage">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="changeHomepageOptions"/>
 
+
+    <logic:present name="UserView" property="person.homepage">
+        <logic:present name="UserView" property="person.homepage.activated">
+            <logic:equal name="UserView" property="person.homepage.activated" value="true">
+				<p>
+					<span class="success0">
+						<bean:message key="label.homepage.activated.afirmative" bundle="HOMEPAGE_RESOURCES"/>.
+					</span>
+				</p>
+            </logic:equal>
+        </logic:present>
+    </logic:present>
+
+
     <p>
         <bean:message key="label.homepage.activated" bundle="HOMEPAGE_RESOURCES"/>
         <html:radio bundle="HTMLALT_RESOURCES" altKey="radio.activated" property="activated" value="true" onchange="this.form.submit()"/><bean:message key="label.homepage.activated.yes" bundle="HOMEPAGE_RESOURCES"/>
@@ -58,6 +72,7 @@
         </logic:present>
     </logic:present>
     </p>
+
 
 	<p>
         <h3 class="mtop2"><bean:message key="label.homepage.components" bundle="HOMEPAGE_RESOURCES"/></h3>
