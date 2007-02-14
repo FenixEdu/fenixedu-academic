@@ -8,6 +8,7 @@
 
 <h2><bean:message key="rooms.reserve.title" bundle="APPLICATION_RESOURCES"/></h2>
 
+
 <logic:present role="TEACHER">
 
 	<logic:messagesPresent message="true">
@@ -32,7 +33,7 @@
 
 	<logic:notEmpty name="requests">	
 				
-		<b><bean:message key="label.rooms.reserve.list" bundle="APPLICATION_RESOURCES"/>:</b>
+		<p class="mbottom05"><b><bean:message key="label.rooms.reserve.list" bundle="APPLICATION_RESOURCES"/>:</b></p>
 		<logic:notEqual name="numberOfPages" value="1">
 			<p>
 				<bean:message key="label.pages" bundle="APPLICATION_RESOURCES"/>:
@@ -58,16 +59,11 @@
 							<bean:write name="punctualRequest" property="subject"/>
 						</html:link>										
 					</td>	
-					<td class="nowrap smalltxt"><bean:message name="punctualRequest" property="currentState.name" bundle="APPLICATION_RESOURCES"/></td>					
-					<td class="aleft smalltxt">					
+					<td class="acenter smalltxt"><bean:message name="punctualRequest" property="currentState.name" bundle="APPLICATION_RESOURCES"/></td>					
+					<td class="acenter smalltxt">					
 						<logic:equal name="punctualRequest" property="currentState.name" value="RESOLVED">
 							<logic:notEmpty name="punctualRequest" property="genericEvents">
-								<logic:iterate id="genericEvent" name="punctualRequest" property="genericEvents">
-									<bean:write name="genericEvent" property="eventPeriodForGanttDiagram"/>
-									-								
-									<bean:write name="genericEvent" property="eventObservationsForGanttDiagram"/>
-									<br/>
-								</logic:iterate>
+								<bean:message key="label.yes.capitalized" bundle="SOP_RESOURCES"/>
 							</logic:notEmpty>
 							<logic:empty name="punctualRequest" property="genericEvents">
 								-

@@ -36,7 +36,7 @@
 				<th><bean:message key="label.rooms.reserve.instant" bundle="SOP_RESOURCES"/></th>
 				<th><bean:message key="label.rooms.reserve.order" bundle="SOP_RESOURCES"/></th>
 				<th><bean:message key="label.rooms.reserve.requestor" bundle="SOP_RESOURCES"/></th>	
-				<th><bean:message key="label.rooms.reserve.number.of.new.comments" bundle="SOP_RESOURCES"/></th>				
+				<th><bean:message key="label.rooms.reserve.number.of.new.comments" bundle="SOP_RESOURCES"/></th>
 				<th><bean:message key="label.rooms.reserve.periods" bundle="SOP_RESOURCES"/></th>					
 				<th><bean:message key="label.rooms.reserve.action" bundle="SOP_RESOURCES"/></th>	
 			</tr>
@@ -45,14 +45,14 @@
 					<td class="acenter">
 						<bean:write name="myRequest" property="identification"/>						
 					</td>
-					<td class="nowrap">
+					<td class="nowrap smalltxt">
 						<bean:write name="myRequest" property="presentationInstant"/>						
 					</td>
 					<td>
 						<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserveRequest&amp;reserveRequestID=<bean:write name="myRequest" property="idInternal"/></bean:define>
 						<html:link page="<%= seeReserveURL %>">
 							<bean:write name="myRequest" property="subject"/>
-						</html:link>										
+						</html:link>								
 					</td>						
 					<td class="acenter">
 						<bean:define id="requestorName" name="myRequest" property="requestor.name" type="java.lang.String"/>						
@@ -61,21 +61,18 @@
 					<td class="acenter">	
 						<% Integer numOfNewComments = myRequest.getNumberOfNewComments(person);	%>
 						<%= numOfNewComments.toString() %>
-					</td>										
-					<td class="aleft smalltxt">					
+					</td>
+
+					<td class="acenter smalltxt nowrap">					
 						<logic:notEmpty name="myRequest" property="genericEvents">
-							<logic:iterate id="genericEvent" name="myRequest" property="genericEvents">
-								<bean:write name="genericEvent" property="eventPeriodForGanttDiagram"/>
-								-								
-								<bean:write name="genericEvent" property="eventObservationsForGanttDiagram"/>								
-								<br/>
-							</logic:iterate>
+							<bean:message key="label.yes.capitalized" bundle="SOP_RESOURCES"/>
 						</logic:notEmpty>
 						<logic:empty name="myRequest" property="genericEvents">
 							-
 						</logic:empty>
-					</td>					
-					<td>
+					</td>
+
+					<td class="nowrap">
 						<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=closeRequest&amp;reserveRequestID=<bean:write name="myRequest" property="idInternal"/></bean:define>
 						<html:link page="<%= seeReserveURL %>">
 							<bean:message key="label.resolve.rooms.reserve.request" bundle="SOP_RESOURCES"/>
@@ -108,7 +105,7 @@
 					<td class="acenter">
 						<bean:write name="newRequest" property="identification"/>						
 					</td>				
-					<td class="nowrap">
+					<td class="nowrap smalltxt">
 						<bean:write name="newRequest" property="presentationInstant"/>						
 					</td>
 					<td>
@@ -153,7 +150,7 @@
 					<td class="acenter">
 						<bean:write name="openedRequest" property="identification"/>						
 					</td>				
-					<td class="nowrap">
+					<td class="nowrap smalltxt">
 						<bean:write name="openedRequest" property="presentationInstant"/>						
 					</td>
 					<td>
@@ -177,12 +174,7 @@
 					</td>					
 					<td class="aleft smalltxt">					
 						<logic:notEmpty name="openedRequest" property="genericEvents">
-							<logic:iterate id="genericEvent" name="openedRequest" property="genericEvents">
-								<bean:write name="genericEvent" property="eventPeriodForGanttDiagram"/>
-								-								
-								<bean:write name="genericEvent" property="eventObservationsForGanttDiagram"/>								
-								<br/>
-							</logic:iterate>
+							<bean:message key="label.yes.capitalized" bundle="SOP_RESOURCES"/>
 						</logic:notEmpty>
 						<logic:empty name="openedRequest" property="genericEvents">
 							-
@@ -227,7 +219,7 @@
 					<td class="acenter">
 						<bean:write name="resolvedRequest" property="identification"/>						
 					</td>					
-					<td class="nowrap">
+					<td class="nowrap smalltxt">
 						<bean:write name="resolvedRequest" property="presentationInstant"/>						
 					</td>
 					<td>
@@ -253,14 +245,9 @@
 						<% Integer numOfNewComments = resolvedRequest.getNumberOfNewComments(person);	%>
 						<%= numOfNewComments.toString() %>
 					</td>
-					<td class="aleft smalltxt">
+					<td class="acenter smalltxt">
 						<logic:notEmpty name="resolvedRequest" property="genericEvents">
-							<logic:iterate id="genericEvent" name="resolvedRequest" property="genericEvents">
-								<bean:write name="genericEvent" property="eventPeriodForGanttDiagram"/>
-								-								
-								<bean:write name="genericEvent" property="eventObservationsForGanttDiagram"/>								
-								<br/>
-							</logic:iterate>
+							<bean:message key="label.yes.capitalized" bundle="SOP_RESOURCES"/>
 						</logic:notEmpty>
 						<logic:empty name="resolvedRequest" property="genericEvents">
 							-
