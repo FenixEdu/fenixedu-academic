@@ -40,13 +40,14 @@ public class RoomsReservesManagementDA extends RoomsPunctualSchedulingDA {
 	Set<PunctualRoomsOccupationRequest> openedRequests = PunctualRoomsOccupationRequest.getRequestsByTypeAndDiferentOwnerOrderByDate(RequestState.OPEN, person);
 	Set<PunctualRoomsOccupationRequest> newRequests = PunctualRoomsOccupationRequest.getRequestsByTypeOrderByDate(RequestState.NEW);
 	
-	Set<PunctualRoomsOccupationRequest> resolvedRequests = PunctualRoomsOccupationRequest.getRequestsByTypeOrderByDate(RequestState.RESOLVED);	
+	Set<PunctualRoomsOccupationRequest> resolvedRequests = PunctualRoomsOccupationRequest.getResolvedRequestsOrderByMoreRecentComment();	
 	CollectionPager<DomainObjectActionLog> collectionPager = new CollectionPager<DomainObjectActionLog>(resolvedRequests != null ? resolvedRequests : new ArrayList(), 10);	
 	final String pageNumberString = request.getParameter("pageNumber");
 	final Integer pageNumber = !StringUtils.isEmpty(pageNumberString) ? Integer.valueOf(pageNumberString) : Integer.valueOf(1); 
 	
 	request.setAttribute("pageNumber", pageNumber);	
 	request.setAttribute("numberOfPages", Integer.valueOf(collectionPager.getNumberOfPages()));		
+	
 	request.setAttribute("personRequests", personRequests);
 	request.setAttribute("openedRequests", openedRequests);
 	request.setAttribute("newRequests", newRequests);
@@ -59,8 +60,8 @@ public class RoomsReservesManagementDA extends RoomsPunctualSchedulingDA {
 	throws FenixServiceException, FenixFilterException, InvalidArgumentException {	
 			
 	Person loggedPerson = getLoggedPerson(request);
-	PunctualRoomsOccupationRequest roomsReserveRequest = getRoomsReserveRequest(request);
-	
+	PunctualRoomsOccupationRequest roomsReserveRequest = getRoomsReserveRequest(request);	
+	executeService("MarkPunctualRoomsOccupationCommentsAsRead", new Object[] {roomsReserveRequest, false});	
 	request.setAttribute("roomsReserveBean", new RoomsReserveBean(loggedPerson, roomsReserveRequest));	
 	return mapping.findForward("seeSpecifiedRoomsReserveRequest");
     }
@@ -68,13 +69,13 @@ public class RoomsReservesManagementDA extends RoomsPunctualSchedulingDA {
     public ActionForward createNewRoomsReserveComment(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 		
-	return createNewRoomsReserveComment(mapping, request, Boolean.FALSE, Boolean.FALSE);
+	return createNewRoomsReserveComment(mapping, request, false, false);
     }
        
     public ActionForward createNewRoomsReserveCommentAndMakeRequestResolved(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 		
-	return createNewRoomsReserveComment(mapping, request, Boolean.FALSE, Boolean.TRUE);
+	return createNewRoomsReserveComment(mapping, request, false, true);
     }   
   
     @Override
@@ -96,8 +97,7 @@ public class RoomsReservesManagementDA extends RoomsPunctualSchedulingDA {
 	PunctualRoomsOccupationRequest roomsReserveRequest = bean.getRoomsReserveRequest();
 	if(roomsReserveRequest == null) {
 	    throw new InvalidArgumentException();
-	}
-		
+	}	
 	request.setAttribute("roomsReserveBean", new RoomsReserveBean(getLoggedPerson(request), roomsReserveRequest));	
 	return mapping.findForward("seeSpecifiedRoomsReserveRequest");
     }
@@ -106,23 +106,38 @@ public class RoomsReservesManagementDA extends RoomsPunctualSchedulingDA {
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException, InvalidArgumentException {
 		
 	PunctualRoomsOccupationRequest roomsReserveRequest = getRoomsReserveRequest(request);
-	executeService("OpenPunctualRoomsOccupationRequest", new Object[] {roomsReserveRequest, getLoggedPerson(request), false});	    	
+	executeService("OpenPunctualRoomsOccupationRequest", new Object[] {roomsReserveRequest, getLoggedPerson(request)});	    	
 	return seeRoomsReserveRequests(mapping, form, request, response);	
-    }  
-
-    public ActionForward reOpenRequest(ActionMapping mapping, ActionForm form,
+    } 
+    
+    public ActionForward openRequestAndReturnToSeeRequest(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException, InvalidArgumentException {
 		
 	PunctualRoomsOccupationRequest roomsReserveRequest = getRoomsReserveRequest(request);
-	executeService("OpenPunctualRoomsOccupationRequest", new Object[] {roomsReserveRequest, getLoggedPerson(request), true});	    	
+	executeService("OpenPunctualRoomsOccupationRequest", new Object[] {roomsReserveRequest, getLoggedPerson(request)});	    	
+	return seeSpecifiedRoomsReserveRequest(mapping, form, request, response);	
+    } 
+
+    public ActionForward closeRequest(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException, InvalidArgumentException {
+		
+	PunctualRoomsOccupationRequest roomsReserveRequest = getRoomsReserveRequest(request);
+	executeService("ClosePunctualRoomsOccupationRequest", new Object[] {roomsReserveRequest, getLoggedPerson(request)});	    	
 	return seeRoomsReserveRequests(mapping, form, request, response);	
     }  
-           
+    
+    public ActionForward closeRequestAndReturnToSeeRequest(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException, InvalidArgumentException {
+		
+	PunctualRoomsOccupationRequest roomsReserveRequest = getRoomsReserveRequest(request);
+	executeService("ClosePunctualRoomsOccupationRequest", new Object[] {roomsReserveRequest, getLoggedPerson(request)});	    	
+	return seeSpecifiedRoomsReserveRequest(mapping, form, request, response);	
+    }  
     
     // Private Methods
     
-    private ActionForward createNewRoomsReserveComment(ActionMapping mapping, HttpServletRequest request, Boolean reOpen, Boolean resolveRequest) 
-	throws FenixFilterException, FenixServiceException {
+    private ActionForward createNewRoomsReserveComment(ActionMapping mapping, HttpServletRequest request, boolean reOpen, boolean resolveRequest) 
+		throws FenixFilterException, FenixServiceException {
 	
 	IViewState viewState = RenderUtils.getViewState("roomsReserveBeanWithNewComment");
 	RoomsReserveBean bean = (RoomsReserveBean) viewState.getMetaObject().getObject();

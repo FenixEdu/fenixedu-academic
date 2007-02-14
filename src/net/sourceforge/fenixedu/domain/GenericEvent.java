@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.util.HourMinuteSecond;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 import net.sourceforge.fenixedu.util.renderer.GanttDiagramEvent;
 
+import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
@@ -33,14 +34,13 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
         setTitle(title);
         setDescription(description);        
 	setFrequency(frequencyType);
-        setPunctualRoomsOccupationRequest(request);
-	
+        
         if(request != null) {
-            request.openRequest(AccessControl.getPerson());            
+           request.associateNewGenericEvent(AccessControl.getPerson(), this, new DateTime());
         }
         
 	for (OldRoom room : rooms) {	
-          createNewRoomOccupation(room, startTime, endTime, dayOfWeek, occupationPeriod);
+	    createNewRoomOccupation(room, startTime, endTime, dayOfWeek, occupationPeriod);
 	}
     }  
 

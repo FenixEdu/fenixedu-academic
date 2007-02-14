@@ -30,12 +30,38 @@
 					<bean:message bundle="SOP_RESOURCES" key="label.return"/>
 				</html:link>
 			</li>
-			<li>
-				<bean:define id="createNewPunctualRoomsScheduling">/roomsReserveManagement.do?method=prepareCreate&amp;reserveRequestID=<bean:write name="punctualRequest" property="idInternal"/></bean:define>
-				<html:link page="<%= createNewPunctualRoomsScheduling %>">		
-					<bean:message bundle="SOP_RESOURCES" key="label.create.new.punctual.rooms.scheduling"/>
-				</html:link>
-			</li>
+			<logic:equal name="punctualRequest" property="currentState.name" value="RESOLVED">
+				<li>
+					<bean:define id="createNewPunctualRoomsScheduling">/roomsReserveManagement.do?method=openRequestAndReturnToSeeRequest&amp;reserveRequestID=<bean:write name="punctualRequest" property="idInternal"/></bean:define>
+					<html:link page="<%= createNewPunctualRoomsScheduling %>">		
+						<bean:message bundle="SOP_RESOURCES" key="label.reopen.rooms.reserve.request"/>
+					</html:link>
+				</li>			
+			</logic:equal>
+			<logic:equal name="punctualRequest" property="currentState.name" value="NEW">
+				<li>
+					<bean:define id="createNewPunctualRoomsScheduling">/roomsReserveManagement.do?method=openRequestAndReturnToSeeRequest&amp;reserveRequestID=<bean:write name="punctualRequest" property="idInternal"/></bean:define>
+					<html:link page="<%= createNewPunctualRoomsScheduling %>">		
+						<bean:message bundle="SOP_RESOURCES" key="label.open.rooms.reserve.request"/>
+					</html:link>
+				</li>			
+			</logic:equal>	
+			<logic:equal name="punctualRequest" property="currentState.name" value="OPEN">
+				<li>
+					<bean:define id="createNewPunctualRoomsScheduling">/roomsReserveManagement.do?method=closeRequestAndReturnToSeeRequest&amp;reserveRequestID=<bean:write name="punctualRequest" property="idInternal"/></bean:define>
+					<html:link page="<%= createNewPunctualRoomsScheduling %>">		
+						<bean:message bundle="SOP_RESOURCES" key="label.resolve.rooms.reserve.request"/>
+					</html:link>
+				</li>
+			</logic:equal>				
+			<logic:equal name="punctualRequest" property="currentState.name" value="OPEN">
+				<li>
+					<bean:define id="createNewPunctualRoomsScheduling">/roomsReserveManagement.do?method=prepareCreate&amp;reserveRequestID=<bean:write name="punctualRequest" property="idInternal"/></bean:define>
+					<html:link page="<%= createNewPunctualRoomsScheduling %>">		
+						<bean:message bundle="SOP_RESOURCES" key="label.create.new.punctual.rooms.scheduling"/>
+					</html:link>
+				</li>
+			</logic:equal>										
 		</ul>
 			
 		<table class="tstyle1">			
@@ -120,11 +146,11 @@
 			</fr:edit>		
 			
 			<html:submit><bean:message key="label.submit" bundle="SOP_RESOURCES"/></html:submit>
-			<logic:notEqual name="punctualRequest" property="currentState.name" value="RESOLVED">
+			<logic:equal name="punctualRequest" property="currentState.name" value="OPEN">
 				<html:submit onclick="this.form.method.value='createNewRoomsReserveCommentAndMakeRequestResolved';this.form.sumit();">
 					<bean:message key="label.submit.and.make.request.resolved" bundle="SOP_RESOURCES"/>
 				</html:submit>
-			</logic:notEqual>			
+			</logic:equal>			
 		</fr:form>
 		
 	</logic:notEmpty>

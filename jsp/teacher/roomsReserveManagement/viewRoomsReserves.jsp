@@ -19,7 +19,8 @@
 			</span>
 		<p>
 	</logic:messagesPresent>	
-
+	
+	<bean:define id="person" name="UserView" property="person" type="net.sourceforge.fenixedu.domain.Person"/>
 
 	<ul class="mvert15">
 		<li>
@@ -44,8 +45,9 @@
 				<th><bean:message key="label.rooms.reserve.order" bundle="APPLICATION_RESOURCES"/></th>
 				<th><bean:message key="label.rooms.reserve.state" bundle="APPLICATION_RESOURCES"/></th>
 				<th><bean:message key="label.rooms.reserve.periods" bundle="APPLICATION_RESOURCES"/></th>	
+				<th><bean:message key="label.rooms.reserve.number.of.new.comments" bundle="APPLICATION_RESOURCES"/></th>	
 			</tr>
-			<logic:iterate id="punctualRequest" name="requests">					
+			<logic:iterate id="punctualRequest" name="requests" type="net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest">					
 				<tr>
 					<td>
 						<bean:write name="punctualRequest" property="presentationInstant"/>						
@@ -58,18 +60,27 @@
 					</td>	
 					<td><bean:message name="punctualRequest" property="currentState.name" bundle="APPLICATION_RESOURCES"/></td>					
 					<td>					
-						<logic:notEmpty name="punctualRequest" property="genericEvents">
-							<logic:iterate id="genericEvent" name="punctualRequest" property="genericEvents">
-								<bean:write name="genericEvent" property="eventPeriodForGanttDiagram"/>
-								-								
-								<bean:write name="genericEvent" property="eventObservationsForGanttDiagram"/>
-								<br/>
-							</logic:iterate>
-						</logic:notEmpty>
-						<logic:empty name="punctualRequest" property="genericEvents">
+						<logic:equal name="punctualRequest" property="currentState.name" value="RESOLVED">
+							<logic:notEmpty name="punctualRequest" property="genericEvents">
+								<logic:iterate id="genericEvent" name="punctualRequest" property="genericEvents">
+									<bean:write name="genericEvent" property="eventPeriodForGanttDiagram"/>
+									-								
+									<bean:write name="genericEvent" property="eventObservationsForGanttDiagram"/>
+									<br/>
+								</logic:iterate>
+							</logic:notEmpty>
+							<logic:empty name="punctualRequest" property="genericEvents">
+								-
+							</logic:empty>
+						</logic:equal>
+						<logic:notEqual name="punctualRequest" property="currentState.name" value="RESOLVED">						
 							-
-						</logic:empty>
-					</td>						
+						</logic:notEqual>						
+					</td>	
+					<td>
+						<% Integer numOfNewComments = punctualRequest.getNumberOfNewComments(person);	%>
+						<%= numOfNewComments.toString() %>
+					</td>					
 				</tr>
 			</logic:iterate>		
 		</table>		

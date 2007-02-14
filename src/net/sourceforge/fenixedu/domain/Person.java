@@ -2529,11 +2529,11 @@ public class Person extends Person_Base {
 	return getEmployee() != null && getEmployee().getAdministrativeOffice() != null;
     }
     
-    public List<PunctualRoomsOccupationRequest> getPunctualRoomsOccupationRequestsOrderByDate() {
+    public List<PunctualRoomsOccupationRequest> getPunctualRoomsOccupationRequestsOrderByMoreRecentComment() {
 	List<PunctualRoomsOccupationRequest> result = new ArrayList<PunctualRoomsOccupationRequest>();	
 	result.addAll(getPunctualRoomsOccupationRequests());
 	if(!result.isEmpty()) {
-	    Collections.sort(result, PunctualRoomsOccupationRequest.COMPARATOR_BY_INSTANT);
+	    Collections.sort(result, PunctualRoomsOccupationRequest.COMPARATOR_BY_MORE_RECENT_COMMENT_INSTANT);
 	}
 	return result;
     }

@@ -14,10 +14,14 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.DateTime;
 
 public class PunctualRoomsOccupationRequest extends PunctualRoomsOccupationRequest_Base {
-    
-    public static final Comparator<PunctualRoomsOccupationRequest> COMPARATOR_BY_INSTANT = new ComparatorChain();
+        
     public static final Comparator<PunctualRoomsOccupationRequest> COMPARATOR_BY_IDENTIFICATION = new BeanComparator("identification");
-    static {
+    public static final Comparator<PunctualRoomsOccupationRequest> COMPARATOR_BY_INSTANT = new ComparatorChain();
+    public static final Comparator<PunctualRoomsOccupationRequest> COMPARATOR_BY_MORE_RECENT_COMMENT_INSTANT = new ComparatorChain();
+    static {	
+	((ComparatorChain) COMPARATOR_BY_MORE_RECENT_COMMENT_INSTANT).addComparator(new BeanComparator("moreRecentCommentInstant"), true);
+	((ComparatorChain) COMPARATOR_BY_MORE_RECENT_COMMENT_INSTANT).addComparator(new BeanComparator("idInternal"));
+	
 	((ComparatorChain) COMPARATOR_BY_INSTANT).addComparator(new BeanComparator("instant"), true);	
 	((ComparatorChain) COMPARATOR_BY_INSTANT).addComparator(new BeanComparator("idInternal"));
     }
@@ -25,12 +29,61 @@ public class PunctualRoomsOccupationRequest extends PunctualRoomsOccupationReque
     public PunctualRoomsOccupationRequest(Person requestor, MultiLanguageString subject, MultiLanguageString description) {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
-        setRequestor(requestor);
+        setRequestor(requestor);        
         DateTime now = new DateTime();
         setInstant(now);
         addStateInstants(new PunctualRoomsOccupationStateInstant(this, RequestState.NEW, now));
-        addComments(new PunctualRoomsOccupationComment(this, subject, description, requestor, now, null, null));      
+        addComments(new PunctualRoomsOccupationComment(this, subject, description, requestor, now));
+        setTeacherReadComments(1);
+        setEmployeeReadComments(0);
         setIdentification(getNextRequestIdentification());
+    }
+    
+    public Integer getNumberOfNewComments(Person person) {		
+	if(person.equals(getOwner())) {
+	    return getCommentsCount() - getEmployeeReadComments();	    
+	} else if(person.equals(getRequestor())) {
+	    return getCommentsCount() - getTeacherReadComments();
+	}	
+	return 0;
+    }
+              
+    public DateTime getMoreRecentCommentInstant() {
+	SortedSet<PunctualRoomsOccupationComment> result = new TreeSet<PunctualRoomsOccupationComment>(PunctualRoomsOccupationComment.COMPARATOR_BY_INSTANT);
+	result.addAll(getComments());
+	return result.last().getInstant();
+    }
+    
+    public void associateNewGenericEvent(Person person, GenericEvent event, DateTime instant) {
+	if (getCurrentState().equals(RequestState.RESOLVED)) {
+	    throw new DomainException("error.PunctualRoomsOccupationRequest.impossible.associate.new.genericEvent");
+	}
+	addGenericEvents(event);
+	openRequestWithoutAssociateOwner(instant);
+	setOwner(person);
+    }
+    
+    public void createNewTeacherOrEmployeeComment(MultiLanguageString description, Person commentOwner, DateTime instant) {	
+	new PunctualRoomsOccupationComment(this, null, description, commentOwner, instant);			
+	if(commentOwner.equals(getRequestor())) {
+	    setTeacherReadComments(getCommentsCount());	    
+	} else {
+	    setOwner(commentOwner);
+	    setEmployeeReadComments(getCommentsCount());	    
+	}	
+    }
+    
+    public void createNewTeacherCommentAndOpenRequest(MultiLanguageString description, Person commentOwner, DateTime instant) {
+	new PunctualRoomsOccupationComment(this, null, description, commentOwner, instant);	
+	openRequestWithoutAssociateOwner(instant);	
+	setTeacherReadComments(getCommentsCount());	
+    }
+    
+    public void createNewEmployeeCommentAndCloseRequest(MultiLanguageString description, Person commentOwner, DateTime instant) {
+	new PunctualRoomsOccupationComment(this, null, description, commentOwner, instant);	
+	closeRequestWithoutAssociateOwner(instant);
+	setOwner(commentOwner);
+	setEmployeeReadComments(getCommentsCount());	
     }
     
     @Override
@@ -54,41 +107,36 @@ public class PunctualRoomsOccupationRequest extends PunctualRoomsOccupationReque
 	    throw new DomainException("error.PunctualRoomsOccupationRequest.empty.requestor");
 	}
 	super.setRequestor(requestor);
-    }
-    
-    public void openRequest(Person person) {
-	if(getCurrentState().equals(RequestState.NEW)) {
-	    addStateInstants(new PunctualRoomsOccupationStateInstant(this, RequestState.OPEN, new DateTime()));
-	    setOwner(person);
-	}
-    }
-    
-    public void reOpenRequest(Person person) {
-	if(getCurrentState().equals(RequestState.RESOLVED)) {
-	    addStateInstants(new PunctualRoomsOccupationStateInstant(this, RequestState.OPEN, new DateTime()));
-	    setOwner(person);
-	}
-    }
-    
-    public void reOpenRequest(DateTime instant) {
-	if(getCurrentState().equals(RequestState.RESOLVED)) {
-	    addStateInstants(new PunctualRoomsOccupationStateInstant(this, RequestState.OPEN, instant));
-	}
-    }  
-    
-    public void closeRequest(Person person) {
-	if(!getCurrentState().equals(RequestState.RESOLVED)) {
-	    addStateInstants(new PunctualRoomsOccupationStateInstant(this, RequestState.RESOLVED, new DateTime()));
-	    setOwner(person);
-	}
-    }
-    
-    public void closeRequest(DateTime instant) {
+    }                        
+       
+    private void closeRequestWithoutAssociateOwner(DateTime instant) {
 	if(!getCurrentState().equals(RequestState.RESOLVED)) {
 	    addStateInstants(new PunctualRoomsOccupationStateInstant(this, RequestState.RESOLVED, instant));
 	}
     }  
-           
+
+    private void openRequestWithoutAssociateOwner(DateTime instant) {
+	if(!getCurrentState().equals(RequestState.OPEN)) {
+	    addStateInstants(new PunctualRoomsOccupationStateInstant(this, RequestState.OPEN, instant));
+	}
+    }  
+    
+    public void closeRequestAndAssociateOwnerOnlyForEmployees(DateTime instant, Person person) {
+	closeRequestWithoutAssociateOwner(instant);	
+	if(!getOwner().equals(person)) {	    
+	    setEmployeeReadComments(0);
+	    setOwner(person);
+	}		
+    }  
+
+    public void openRequestAndAssociateOwnerOnlyForEmployess(DateTime instant, Person person) {
+	openRequestWithoutAssociateOwner(instant);	
+	if(getOwner() == null || !getOwner().equals(person)) {
+	    setEmployeeReadComments(0);
+	    setOwner(person);
+	}	
+    }      
+               
     public String getPresentationInstant() {
 	return getInstant().toString("dd/MM/yyyy HH:mm");
     }
@@ -97,6 +145,16 @@ public class PunctualRoomsOccupationRequest extends PunctualRoomsOccupationReque
 	Set<PunctualRoomsOccupationRequest> result = new TreeSet<PunctualRoomsOccupationRequest>(PunctualRoomsOccupationRequest.COMPARATOR_BY_INSTANT);
 	for (PunctualRoomsOccupationRequest request : RootDomainObject.getInstance().getPunctualRoomsOccupationRequestsSet()) {
 	    if(request.getCurrentState().equals(state)) {
+		result.add(request);		
+	    }
+	}
+	return result;
+    }
+    
+    public static Set<PunctualRoomsOccupationRequest> getResolvedRequestsOrderByMoreRecentComment(){
+	Set<PunctualRoomsOccupationRequest> result = new TreeSet<PunctualRoomsOccupationRequest>(PunctualRoomsOccupationRequest.COMPARATOR_BY_MORE_RECENT_COMMENT_INSTANT);
+	for (PunctualRoomsOccupationRequest request : RootDomainObject.getInstance().getPunctualRoomsOccupationRequestsSet()) {
+	    if(request.getCurrentState().equals(RequestState.RESOLVED)) {
 		result.add(request);		
 	    }
 	}

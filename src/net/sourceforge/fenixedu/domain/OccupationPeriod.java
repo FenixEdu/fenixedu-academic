@@ -19,7 +19,7 @@ import org.joda.time.YearMonthDay;
  */
 public class OccupationPeriod extends OccupationPeriod_Base {
 
-    public OccupationPeriod() {
+    private OccupationPeriod() {
     	super();
     	setRootDomainObject(RootDomainObject.getInstance());
     }
@@ -36,6 +36,14 @@ public class OccupationPeriod extends OccupationPeriod_Base {
         checkDates(startDate, endDate);
         setStartYearMonthDay(startDate);
         setEndYearMonthDay(endDate);
+    }   
+    
+    @Override
+    public void setNextPeriod(OccupationPeriod nextPeriod) {
+	if(!nextPeriod.getStartYearMonthDay().isAfter(getEndYearMonthDay())) {
+	    throw new DomainException("error.occupationPeriod.invalid.nextPeriod");
+	}
+	super.setNextPeriod(nextPeriod);
     }
 
     private void checkDates(Date startDate, Date endDate) {
@@ -144,24 +152,37 @@ public class OccupationPeriod extends OccupationPeriod_Base {
         deleteDomainObject();
     }
     
-    public static OccupationPeriod readByDatesAndNextOccupationPeriod(Date startDate, Date endDate, OccupationPeriod nextOccupationPeriod) {
+    public static OccupationPeriod readByDates(Date startDate, Date endDate) {
         for (OccupationPeriod occupationPeriod : RootDomainObject.getInstance().getOccupationPeriods()) {
             if (DateFormatUtil.equalDates("yyyy-MM-dd", occupationPeriod.getStart(), startDate)
-                    && DateFormatUtil.equalDates("yyyy-MM-dd", occupationPeriod.getEnd(), endDate) 
-                    && (nextOccupationPeriod == null || (nextOccupationPeriod != null && occupationPeriod.getNextPeriod().equals(nextOccupationPeriod)))) {
-                        return occupationPeriod;
+                    && DateFormatUtil.equalDates("yyyy-MM-dd", occupationPeriod.getEnd(), endDate)) {
+        	return occupationPeriod;
             }
         }
         return null;
+    }
+    
+    public static OccupationPeriod readFor(YearMonthDay start, YearMonthDay end, OccupationPeriod nextPeriod) {
+	if(nextPeriod != null) {
+            for (final OccupationPeriod occupationPeriod : RootDomainObject.getInstance().getOccupationPeriodsSet()) {
+                if (occupationPeriod.getStartYearMonthDay().equals(start)
+            	    && occupationPeriod.getEndYearMonthDay().equals(end)
+            	    && occupationPeriod.getNextPeriod() != null && nextPeriod.equals(occupationPeriod.getNextPeriod())) {                    
+                    return occupationPeriod;
+                }
+            }
+	}
+	return null;
     }
     
     public static OccupationPeriod readFor(YearMonthDay start, YearMonthDay end) {
-        for (final OccupationPeriod occupationPeriod : RootDomainObject.getInstance().getOccupationPeriodsSet()) {
-            if (occupationPeriod.getStartYearMonthDay().equals(start) && occupationPeriod.getEndYearMonthDay().equals(end)) {
-                return occupationPeriod;
-            }
-        }
-        return null;
-    }
-    
+	for (final OccupationPeriod occupationPeriod : RootDomainObject.getInstance().getOccupationPeriodsSet()) {
+	    if (occupationPeriod.getNextPeriod() == null 
+		    && occupationPeriod.getStartYearMonthDay().equals(start)
+		    && occupationPeriod.getEndYearMonthDay().equals(end)) {
+		return occupationPeriod;
+	    }
+	}
+	return null;
+    }    
 }

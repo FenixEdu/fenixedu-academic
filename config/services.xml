@@ -11533,5 +11533,23 @@
 		<filterChains>
 			<chain name="TimeTableManagerAuthorization" />
 		</filterChains>
-	</service>  	  
+	</service>  	
+	<service>
+		<name>ClosePunctualRoomsOccupationRequest</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.ClosePunctualRoomsOccupationRequest</implementationClass>
+		<description></description>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="TimeTableManagerAuthorization" />
+		</filterChains>
+	</service> 	  	
+	<service>
+		<name>MarkPunctualRoomsOccupationCommentsAsRead</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.MarkPunctualRoomsOccupationCommentsAsRead</implementationClass>
+		<description></description>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="TeacherTimeTableManagerOrTeacherAuthorization" />
+		</filterChains>
+	</service> 
 </serviceDefinitions>

@@ -113,10 +113,9 @@ public class CreateWrittenEvaluation extends Service {
     }
 
     private OccupationPeriod readPeriod(final Date writtenEvaluationDate) throws ExcepcaoPersistencia {
-        OccupationPeriod period = OccupationPeriod.readByDatesAndNextOccupationPeriod(
+        OccupationPeriod period = OccupationPeriod.readByDates(
                 writtenEvaluationDate,
-                writtenEvaluationDate, 
-                null);
+                writtenEvaluationDate);
         if (period == null) {
             period = new OccupationPeriod(writtenEvaluationDate, writtenEvaluationDate);
         }

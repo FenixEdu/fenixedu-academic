@@ -252,6 +252,8 @@ class net.sourceforge.fenixedu.domain.GenericEvent extends net.sourceforge.fenix
 }
 
 class net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer employeeReadComments;
+	Integer teacherReadComments;
 	Integer identification;
 	Integer keyRequestor;	
 	Integer keyOwner;

@@ -6,11 +6,11 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest;
 
-public class OpenPunctualRoomsOccupationRequest extends Service {
+public class ClosePunctualRoomsOccupationRequest extends Service {
 
     public void run(PunctualRoomsOccupationRequest request, Person person) {
 	if(request != null) {
-	    request.openRequestAndAssociateOwnerOnlyForEmployess(new DateTime(), person);	    
+	    request.closeRequestAndAssociateOwnerOnlyForEmployees(new DateTime(), person);	   
 	}
-    }
+    }    
 }

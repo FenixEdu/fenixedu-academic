@@ -2,6 +2,8 @@ CREATE TABLE `PUNCTUAL_ROOMS_OCCUPATION_REQUEST` (
   `ID_INTERNAL` int(11) unsigned NOT NULL auto_increment,
   `IDENTIFICATION` int(11) unsigned NOT NULL,
   `INSTANT` timestamp NOT NULL, 
+  `EMPLOYEE_READ_COMMENTS` int(11) unsigned default 0,
+  `TEACHER_READ_COMMENTS` int(11) unsigned default 0,
   `KEY_REQUESTOR` int(11) NOT NULL default '0',    
   `KEY_OWNER` int(11) default NULL, 
   `KEY_ROOT_DOMAIN_OBJECT` int(11) NOT NULL default '1',

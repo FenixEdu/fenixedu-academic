@@ -78,10 +78,9 @@ public class EditWrittenEvaluation extends Service {
             }
         }
         if (period == null) {
-            period = OccupationPeriod.readByDatesAndNextOccupationPeriod(
+            period = OccupationPeriod.readByDates(
                     writtenEvaluationDate, 
-                    writtenEvaluationDate, 
-                    null);
+                    writtenEvaluationDate);
             if (period == null) {
                 period = new OccupationPeriod(writtenEvaluationDate, writtenEvaluationDate);
             }

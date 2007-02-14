@@ -67,10 +67,9 @@ public class InsertExecutionDegreeAtDegreeCurricularPlan extends Service {
 		int infoPeriodListSize = infoPeriodList.size();
 		InfoPeriod infoPeriodNew = infoPeriodList.get(infoPeriodListSize - 1);
 
-		OccupationPeriod period = OccupationPeriod.readByDatesAndNextOccupationPeriod(
+		OccupationPeriod period = OccupationPeriod.readByDates(
                 infoPeriodNew.getStartDate().getTime(), 
-                infoPeriodNew.getEndDate().getTime(), 
-                null);
+                infoPeriodNew.getEndDate().getTime());
 		if (period == null) {
 			Calendar startDate = infoPeriodNew.getStartDate();
 			Calendar endDate = infoPeriodNew.getEndDate();
@@ -82,10 +81,9 @@ public class InsertExecutionDegreeAtDegreeCurricularPlan extends Service {
             infoPeriodNew = infoPeriodList.get(i);
             
             OccupationPeriod nextPeriod = period;
-			period = OccupationPeriod.readByDatesAndNextOccupationPeriod(
+			period = OccupationPeriod.readByDates(
                     infoPeriodNew.getStartDate().getTime(), 
-                    infoPeriodNew.getEndDate().getTime(), 
-                    nextPeriod);
+                    infoPeriodNew.getEndDate().getTime());
 			if (period == null) {
 				Calendar startDate = infoPeriodNew.getStartDate();
 				Calendar endDate = infoPeriodNew.getEndDate();

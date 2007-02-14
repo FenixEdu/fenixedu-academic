@@ -190,13 +190,26 @@ public class RoomOccupation extends RoomOccupation_Base {
 		roomOccupationIntervals.get(roomOccupationIntervals.size() - 1).getEnd() : null;	
     }                    
     
-    public List<Interval> getRoomOccupationIntervals(){		 
-	return getRoomOccupationIntervals(getPeriod().getStartYearMonthDay(), getPeriod().getEndYearMonthDay(), 
-		    getStartTimeDateHourMinuteSecond(), getEndTimeDateHourMinuteSecond(), getFrequency(), getWeekOfQuinzenalStart(),
-		    getDayOfWeek());	
+    public List<Interval> getRoomOccupationIntervals(){	
+	List<Interval> result = new ArrayList<Interval>();
+	OccupationPeriod period = getPeriod();	
+	if(period.getNextPeriod() != null) {                                       
+	    while(period != null) {
+                result.addAll(getRoomOccupationIntervals(period.getStartYearMonthDay(), period.getEndYearMonthDay(), 
+            	    getStartTimeDateHourMinuteSecond(), getEndTimeDateHourMinuteSecond(), getFrequency(), getWeekOfQuinzenalStart(), 
+            	    getDayOfWeek()));
+                
+                period = period.getNextPeriod();             
+            }            
+            return result;            
+	} else {	
+            return getRoomOccupationIntervals(getPeriod().getStartYearMonthDay(), getPeriod().getEndYearMonthDay(), 
+            	   getStartTimeDateHourMinuteSecond(), getEndTimeDateHourMinuteSecond(), getFrequency(), getWeekOfQuinzenalStart(),
+            	   getDayOfWeek());
+	}
     }	
           
-    public static List<Interval> getRoomOccupationIntervals(YearMonthDay begin, YearMonthDay end,
+    private List<Interval> getRoomOccupationIntervals(YearMonthDay begin, YearMonthDay end,
 	    HourMinuteSecond beginTime, HourMinuteSecond endTime, Integer frequency, Integer startWeek, DiaSemana diaSemana) {
 
 	List<Interval> result = new ArrayList<Interval>();		
@@ -225,7 +238,7 @@ public class RoomOccupation extends RoomOccupation_Base {
 	return result; 
     }
              
-    private static Interval createNewInterval(YearMonthDay begin, YearMonthDay end, HourMinuteSecond beginTime, HourMinuteSecond endTime) {	
+    private Interval createNewInterval(YearMonthDay begin, YearMonthDay end, HourMinuteSecond beginTime, HourMinuteSecond endTime) {	
 	return new Interval(
 		begin.toDateTime(new TimeOfDay(beginTime.getHour(), beginTime.getMinuteOfHour(), 0, 0)),			
 		end.toDateTime(new TimeOfDay(endTime.getHour(), endTime.getMinuteOfHour(), 0, 0)));

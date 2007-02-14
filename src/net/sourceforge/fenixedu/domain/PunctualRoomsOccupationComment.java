@@ -13,27 +13,20 @@ public class PunctualRoomsOccupationComment extends PunctualRoomsOccupationComme
     
     public static final Comparator<PunctualRoomsOccupationComment> COMPARATOR_BY_INSTANT = new ComparatorChain();
     static {
-	((ComparatorChain) COMPARATOR_BY_INSTANT).addComparator(new BeanComparator("instant"), true);	
+	((ComparatorChain) COMPARATOR_BY_INSTANT).addComparator(new BeanComparator("instant"));	
 	((ComparatorChain) COMPARATOR_BY_INSTANT).addComparator(new BeanComparator("idInternal"));
     }
     
     public PunctualRoomsOccupationComment(PunctualRoomsOccupationRequest request, MultiLanguageString subject, 
-	    MultiLanguageString description, Person owner, DateTime instant, Boolean reOpenRequest, Boolean resolveRequest) {
+	    MultiLanguageString description, Person owner, DateTime instant) {
         
 	super();
         setRootDomainObject(RootDomainObject.getInstance());
         setRequest(request);
-        setOwner(owner);            
-        getRequest().setOwner(owner);
+        setOwner(owner);                    
         setSubject(subject);
         setDescription(description);
-        setInstant(instant);        
-        if(reOpenRequest != null && reOpenRequest) {
-            getRequest().reOpenRequest(instant);
-        }
-        if(resolveRequest != null && resolveRequest) {
-            getRequest().closeRequest(instant);
-        }
+        setInstant(instant);               
     }  
        
     public String getPresentationInstant() {

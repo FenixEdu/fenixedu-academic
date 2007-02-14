@@ -20,6 +20,8 @@
 			</span>
 		<p>
 	</logic:messagesPresent>	
+	
+	<bean:define id="person" name="UserView" property="person" type="net.sourceforge.fenixedu.domain.Person"/>
 
 	<br/>
 	<b><bean:message key="label.my.rooms.reserve.requests" bundle="SOP_RESOURCES"/>:</b>
@@ -32,10 +34,12 @@
 				<th><bean:message key="label.rooms.reserve.identification" bundle="SOP_RESOURCES"/></th>		
 				<th><bean:message key="label.rooms.reserve.instant" bundle="SOP_RESOURCES"/></th>
 				<th><bean:message key="label.rooms.reserve.order" bundle="SOP_RESOURCES"/></th>
-				<th><bean:message key="label.rooms.reserve.requestor" bundle="SOP_RESOURCES"/></th>				
-				<th><bean:message key="label.rooms.reserve.periods" bundle="SOP_RESOURCES"/></th>	
+				<th><bean:message key="label.rooms.reserve.requestor" bundle="SOP_RESOURCES"/></th>	
+				<th><bean:message key="label.rooms.reserve.number.of.new.comments" bundle="SOP_RESOURCES"/></th>				
+				<th><bean:message key="label.rooms.reserve.periods" bundle="SOP_RESOURCES"/></th>					
+				<th><bean:message key="label.rooms.reserve.action" bundle="SOP_RESOURCES"/></th>	
 			</tr>
-			<logic:iterate id="myRequest" name="personRequests">					
+			<logic:iterate id="myRequest" name="personRequests" type="net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest">					
 				<tr>
 					<td>
 						<bean:write name="myRequest" property="identification"/>						
@@ -52,6 +56,10 @@
 					<td>
 						<bean:define id="requestorName" name="myRequest" property="requestor.name" type="java.lang.String"/>						
 						<span title="<%= requestorName %>"><bean:write name="myRequest" property="requestor.username"/></span>						
+					</td>
+					<td>	
+						<% Integer numOfNewComments = myRequest.getNumberOfNewComments(person);	%>
+						<%= numOfNewComments.toString() %>
 					</td>										
 					<td>					
 						<logic:notEmpty name="myRequest" property="genericEvents">
@@ -65,71 +73,18 @@
 						<logic:empty name="myRequest" property="genericEvents">
 							-
 						</logic:empty>
-					</td>						
+					</td>					
+					<td>
+						<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=closeRequest&amp;reserveRequestID=<bean:write name="myRequest" property="idInternal"/></bean:define>
+						<html:link page="<%= seeReserveURL %>">
+							<bean:message key="label.resolve.rooms.reserve.request" bundle="SOP_RESOURCES"/>
+						</html:link>											
+					</td>					
 				</tr>
 			</logic:iterate>		
 		</table>
 	</logic:notEmpty>
 	
-	<b><bean:message key="label.opened.rooms.reserve.requests" bundle="SOP_RESOURCES"/>:</b>
-	<logic:empty name="openedRequests">
-		<p><em><bean:message key="label.empty.rooms.reserves.requests" bundle="SOP_RESOURCES"/></em></p>
-	</logic:empty>
-	<logic:notEmpty name="openedRequests">
-		<table class="tstyle1">			
-			<tr>
-				<th><bean:message key="label.rooms.reserve.identification" bundle="SOP_RESOURCES"/></th>		
-				<th><bean:message key="label.rooms.reserve.instant" bundle="SOP_RESOURCES"/></th>
-				<th><bean:message key="label.rooms.reserve.order" bundle="SOP_RESOURCES"/></th>
-				<th><bean:message key="label.rooms.reserve.requestor" bundle="SOP_RESOURCES"/></th>
-				<th><bean:message key="label.rooms.reserve.employee" bundle="SOP_RESOURCES"/></th>
-				<th><bean:message key="label.rooms.reserve.periods" bundle="SOP_RESOURCES"/></th>	
-			</tr>
-			<logic:iterate id="openedRequest" name="openedRequests">					
-				<tr>
-					<td>
-						<bean:write name="openedRequest" property="identification"/>						
-					</td>				
-					<td>
-						<bean:write name="openedRequest" property="presentationInstant"/>						
-					</td>
-					<td>
-						<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserveRequest&amp;reserveRequestID=<bean:write name="openedRequest" property="idInternal"/></bean:define>
-						<html:link page="<%= seeReserveURL %>">
-							<bean:write name="openedRequest" property="subject"/>
-						</html:link>										
-					</td>	
-					<td>
-						<bean:define id="requestorName" name="openedRequest" property="requestor.name" type="java.lang.String"/>						
-						<span title="<%= requestorName %>"><bean:write name="openedRequest" property="requestor.username"/></span>						
-					</td>					
-					<td>
-						<logic:notEmpty name="openedRequest" property="owner">
-							<bean:define id="ownerName" name="openedRequest" property="owner.name" type="java.lang.String"/>						
-							<span title="<%= ownerName %>"><bean:write name="openedRequest" property="owner.username"/></span>	
-						</logic:notEmpty>
-						<logic:empty name="openedRequest" property="owner">
-						-
-						</logic:empty>	
-					</td>					
-					<td>					
-						<logic:notEmpty name="openedRequest" property="genericEvents">
-							<logic:iterate id="genericEvent" name="openedRequest" property="genericEvents">
-								<bean:write name="genericEvent" property="eventPeriodForGanttDiagram"/>
-								-								
-								<bean:write name="genericEvent" property="eventObservationsForGanttDiagram"/>								
-								<br/>
-							</logic:iterate>
-						</logic:notEmpty>
-						<logic:empty name="openedRequest" property="genericEvents">
-							-
-						</logic:empty>
-					</td>						
-				</tr>
-			</logic:iterate>		
-		</table>
-	</logic:notEmpty>
-
 	<b><bean:message key="label.new.rooms.reserve.requests" bundle="SOP_RESOURCES"/>:</b>
 	<logic:empty name="newRequests">
 		<p><em><bean:message key="label.empty.rooms.reserves.requests" bundle="SOP_RESOURCES"/></em></p>
@@ -171,7 +126,73 @@
 			</logic:iterate>		
 		</table>
 	</logic:notEmpty>
-				
+	
+	<b><bean:message key="label.opened.rooms.reserve.requests" bundle="SOP_RESOURCES"/>:</b>
+	<logic:empty name="openedRequests">
+		<p><em><bean:message key="label.empty.rooms.reserves.requests" bundle="SOP_RESOURCES"/></em></p>
+	</logic:empty>
+	<logic:notEmpty name="openedRequests">
+		<table class="tstyle1">			
+			<tr>
+				<th><bean:message key="label.rooms.reserve.identification" bundle="SOP_RESOURCES"/></th>		
+				<th><bean:message key="label.rooms.reserve.instant" bundle="SOP_RESOURCES"/></th>
+				<th><bean:message key="label.rooms.reserve.order" bundle="SOP_RESOURCES"/></th>
+				<th><bean:message key="label.rooms.reserve.requestor" bundle="SOP_RESOURCES"/></th>
+				<th><bean:message key="label.rooms.reserve.employee" bundle="SOP_RESOURCES"/></th>
+				<th><bean:message key="label.rooms.reserve.periods" bundle="SOP_RESOURCES"/></th>
+				<th><bean:message key="label.rooms.reserve.action" bundle="SOP_RESOURCES"/></th>	
+			</tr>
+			<logic:iterate id="openedRequest" name="openedRequests">					
+				<tr>
+					<td>
+						<bean:write name="openedRequest" property="identification"/>						
+					</td>				
+					<td>
+						<bean:write name="openedRequest" property="presentationInstant"/>						
+					</td>
+					<td>
+						<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserveRequest&amp;reserveRequestID=<bean:write name="openedRequest" property="idInternal"/></bean:define>
+						<html:link page="<%= seeReserveURL %>">
+							<bean:write name="openedRequest" property="subject"/>
+						</html:link>										
+					</td>	
+					<td>
+						<bean:define id="requestorName" name="openedRequest" property="requestor.name" type="java.lang.String"/>						
+						<span title="<%= requestorName %>"><bean:write name="openedRequest" property="requestor.username"/></span>						
+					</td>					
+					<td>
+						<logic:notEmpty name="openedRequest" property="owner">
+							<bean:define id="ownerName" name="openedRequest" property="owner.name" type="java.lang.String"/>						
+							<span title="<%= ownerName %>"><bean:write name="openedRequest" property="owner.username"/></span>	
+						</logic:notEmpty>
+						<logic:empty name="openedRequest" property="owner">
+						-
+						</logic:empty>	
+					</td>					
+					<td>					
+						<logic:notEmpty name="openedRequest" property="genericEvents">
+							<logic:iterate id="genericEvent" name="openedRequest" property="genericEvents">
+								<bean:write name="genericEvent" property="eventPeriodForGanttDiagram"/>
+								-								
+								<bean:write name="genericEvent" property="eventObservationsForGanttDiagram"/>								
+								<br/>
+							</logic:iterate>
+						</logic:notEmpty>
+						<logic:empty name="openedRequest" property="genericEvents">
+							-
+						</logic:empty>
+					</td>	
+					<td>
+						<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=closeRequest&amp;reserveRequestID=<bean:write name="openedRequest" property="idInternal"/></bean:define>
+						<html:link page="<%= seeReserveURL %>">
+							<bean:message key="label.resolve.rooms.reserve.request" bundle="SOP_RESOURCES"/>
+						</html:link>											
+					</td>						
+				</tr>
+			</logic:iterate>		
+		</table>
+	</logic:notEmpty>
+					
 	<b><bean:message key="label.resolved.rooms.reserve.requests" bundle="SOP_RESOURCES"/>:</b>	
 	<logic:empty name="resolvedRequests">
 		<p><em><bean:message key="label.empty.rooms.reserves.requests" bundle="SOP_RESOURCES"/></em></p>
@@ -190,10 +211,11 @@
 				<th><bean:message key="label.rooms.reserve.order" bundle="SOP_RESOURCES"/></th>
 				<th><bean:message key="label.rooms.reserve.requestor" bundle="SOP_RESOURCES"/></th>
 				<th><bean:message key="label.rooms.reserve.employee" bundle="SOP_RESOURCES"/></th>
-				<th><bean:message key="label.rooms.reserve.periods" bundle="SOP_RESOURCES"/></th>	
+				<th><bean:message key="label.rooms.reserve.number.of.new.comments" bundle="SOP_RESOURCES"/></th>	
+				<th><bean:message key="label.rooms.reserve.periods" bundle="SOP_RESOURCES"/></th>				
 				<th><bean:message key="label.rooms.reserve.action" bundle="SOP_RESOURCES"/></th>	
 			</tr>
-			<logic:iterate id="resolvedRequest" name="resolvedRequests">					
+			<logic:iterate id="resolvedRequest" name="resolvedRequests" type="net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest">					
 				<tr>
 					<td>
 						<bean:write name="resolvedRequest" property="identification"/>						
@@ -220,6 +242,10 @@
 						-
 						</logic:empty>			
 					</td>
+					<td>
+						<% Integer numOfNewComments = resolvedRequest.getNumberOfNewComments(person);	%>
+						<%= numOfNewComments.toString() %>
+					</td>
 					<td>					
 						<logic:notEmpty name="resolvedRequest" property="genericEvents">
 							<logic:iterate id="genericEvent" name="resolvedRequest" property="genericEvents">
@@ -232,9 +258,9 @@
 						<logic:empty name="resolvedRequest" property="genericEvents">
 							-
 						</logic:empty>
-					</td>	
+					</td>						
 					<td>
-						<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=reOpenRequest&amp;reserveRequestID=<bean:write name="resolvedRequest" property="idInternal"/></bean:define>
+						<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=openRequest&amp;reserveRequestID=<bean:write name="resolvedRequest" property="idInternal"/></bean:define>
 						<html:link page="<%= seeReserveURL %>">
 							<bean:message key="label.reopen.rooms.reserve.request" bundle="SOP_RESOURCES"/>
 						</html:link>											
