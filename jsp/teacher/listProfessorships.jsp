@@ -73,7 +73,7 @@
 			<td class="listClasses nowrap" style="text-align:left">
 				<bean:write name="executionCourse" property="executionPeriod.qualifiedName"/>
 			</td>
-            <td class="listClasses">
+            <td class="listClasses aleft">
 	            <bean:define id="executionCourseURL"><%= hostURL2 + ExecutionCourseProcessor.getExecutionCourseAbsolutePath(executionCourse) %></bean:define>	            
 	            <span class="smalltxt">
                 <html:link href="<%= executionCourseURL %>" >
