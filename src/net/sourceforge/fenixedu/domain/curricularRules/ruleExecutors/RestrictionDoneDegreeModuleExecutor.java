@@ -34,7 +34,7 @@ public class RestrictionDoneDegreeModuleExecutor extends CurricularRuleExecutor 
 	    return RuleResult.createTrue();    
 	}
 	
-	if (isEnrolling(enrolmentContext, curricularCourse)) {
+	if (isEnrolling(enrolmentContext, curricularCourse) || isEnroled(enrolmentContext, curricularCourse)) {
 	    return createFalseRuleResult(rule);    
 	}
 	
