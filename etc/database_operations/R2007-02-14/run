@@ -27,3 +27,7 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Create Table External Registration Data" createTableExternalRegistrationData.sql
+execute "Create Punctual Rooms Occupation Request Tables" createPunctualRoomsOccupationRequestTables.sql
+execute "Create department site functionalities" CreateDepartmentSiteFunctionalities.sql
+execute "Create department site" CreateDepartmentSite.sql
