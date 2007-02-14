@@ -22,7 +22,7 @@
 	<logic:notEmpty name="roomsReserveBean">
 	
 		<bean:define id="punctualRequest" name="roomsReserveBean" property="reserveRequest" />	
-		<ul class="mvert15">
+		<ul>
 			<li>
 				<html:link page="/roomsReserveManagement.do?method=viewReserves">		
 					<bean:message bundle="APPLICATION_RESOURCES" key="label.return"/>
@@ -30,17 +30,17 @@
 			</li>
 		</ul>
 			
-		<table class="tstyle1">			
+		<table class="tstyle1 thlight thright">			
 			<tr>
-				<th><bean:message key="label.rooms.reserve.order" bundle="APPLICATION_RESOURCES"/></th>
+				<th><bean:message key="label.rooms.reserve.order" bundle="APPLICATION_RESOURCES"/>:</th>
 				<td><bean:write name="punctualRequest" property="subject"/></td>				
 			</tr>	
 			<tr>
-				<th><bean:message key="label.rooms.reserve.state" bundle="APPLICATION_RESOURCES"/></th>
+				<th><bean:message key="label.rooms.reserve.state" bundle="APPLICATION_RESOURCES"/>:</th>
 				<td><bean:message name="punctualRequest" property="currentState.name" bundle="APPLICATION_RESOURCES"/></td>
 			</tr>
 			<tr>
-				<th><bean:message key="label.rooms.reserve.periods" bundle="APPLICATION_RESOURCES"/></th>	
+				<th><bean:message key="label.rooms.reserve.periods" bundle="APPLICATION_RESOURCES"/>:</th>	
 				<td>					
 					<logic:notEmpty name="punctualRequest" property="genericEvents">
 						<logic:iterate id="genericEvent" name="punctualRequest" property="genericEvents">
@@ -56,14 +56,16 @@
 				</td>						
 			</tr>	
 			<tr>
-				<th><bean:message key="label.rooms.reserve.description" bundle="APPLICATION_RESOURCES"/></th>
+				<th><bean:message key="label.rooms.reserve.description" bundle="APPLICATION_RESOURCES"/>:</th>
 				<td><bean:write name="punctualRequest" property="description"/></td>
 			</tr>													
 		</table>
 		
 		<bean:define id="comments" name="punctualRequest" property="commentsWithoutFirstCommentOrderByDate" />
 		<logic:empty name="comments">
-			<em><bean:message key="label.rooms.reserve.empty.comments" bundle="APPLICATION_RESOURCES"/></em>		
+			<p class="mtop1 mbottom15">
+				<em><bean:message key="label.rooms.reserve.empty.comments" bundle="APPLICATION_RESOURCES"/></em>		
+			</p>
 		</logic:empty>
 		<logic:notEmpty name="comments">
 			<logic:iterate id="comment" name="comments">
@@ -77,11 +79,11 @@
 				</logic:notEmpty>		
 			</logic:iterate>
 		</logic:notEmpty>
-	
-		<br/>
-		<p><bean:message key="label.rooms.reserve.new.comment" bundle="APPLICATION_RESOURCES"/>:</p>
+		
+		<p class="mtop25"><bean:message key="label.rooms.reserve.new.comment" bundle="APPLICATION_RESOURCES"/>:</p>
 		<fr:form action="/roomsReserveManagement.do">
 			<html:hidden property="method" value="createNewComment"/>
+			<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserve&amp;punctualReserveID=<bean:write name="punctualRequest" property="idInternal"/></bean:define>
 			
 			<fr:hasMessages for="roomsReserveNewComment">
 				<p>
@@ -94,7 +96,6 @@
 			<fr:edit id="roomsReserveNewComment" name="roomsReserveBean" slot="description" 
 				validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator"
 				type="net.sourceforge.fenixedu.dataTransferObject.teacher.RoomsReserveBean">
-
 				<fr:edit name="roomsReserveBean" id="roomsReserveBeanWithNewComment" nested="true" visible="false"/>
 				<fr:layout name="area">
 					<fr:property name="rows" value="8" />

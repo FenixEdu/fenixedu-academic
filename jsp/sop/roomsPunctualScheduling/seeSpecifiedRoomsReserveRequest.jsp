@@ -20,6 +20,8 @@
 			</span>
 		<p>
 	</logic:messagesPresent>	
+
+
 	
 	<logic:notEmpty name="roomsReserveBean">
 	
@@ -64,40 +66,43 @@
 			</logic:equal>										
 		</ul>
 			
-		<table class="tstyle1">			
+		<table class="tstyle1 thlight thright">	
 			<tr>
-				<th><bean:message key="label.rooms.reserve.identification" bundle="SOP_RESOURCES"/></th>
+				<th><bean:message key="label.rooms.reserve.identification" bundle="SOP_RESOURCES"/>:</th>
 				<td><bean:write name="punctualRequest" property="identification"/></td>				
 			</tr>
 			<tr>
-				<th><bean:message key="label.rooms.reserve.order" bundle="SOP_RESOURCES"/></th>
+				<th><bean:message key="label.rooms.reserve.order" bundle="SOP_RESOURCES"/>:</th>
 				<td><bean:write name="punctualRequest" property="subject"/></td>				
 			</tr>
 			<tr>
-				<th><bean:message key="label.rooms.reserve.requestor" bundle="SOP_RESOURCES"/></th>
+				<th><bean:message key="label.rooms.reserve.requestor" bundle="SOP_RESOURCES"/>:</th>
 				<td>
 					<bean:write name="punctualRequest" property="requestor.name"/>&nbsp;
 					(<bean:write name="punctualRequest" property="requestor.username"/>)
 				</td>
 			</tr>
 			<tr>
-				<th><bean:message key="label.rooms.reserve.instant" bundle="SOP_RESOURCES"/></th>
+				<th><bean:message key="label.rooms.reserve.instant" bundle="SOP_RESOURCES"/>:</th>
 				<td><bean:write name="punctualRequest" property="presentationInstant"/></td>
 			</tr>	
 			<tr>
-				<th><bean:message key="label.rooms.reserve.state" bundle="SOP_RESOURCES"/></th>
+				<th><bean:message key="label.rooms.reserve.state" bundle="SOP_RESOURCES"/>:</th>
 				<td><bean:message name="punctualRequest" property="currentState.name" bundle="ENUMERATION_RESOURCES"/></td>
 			</tr>			
 			<tr>
-				<th><bean:message key="label.rooms.reserve.periods" bundle="SOP_RESOURCES"/></th>	
-				<td>					
+				<th><bean:message key="label.rooms.reserve.periods" bundle="SOP_RESOURCES"/>:</th>	
+				<td>
 					<logic:notEmpty name="punctualRequest" property="genericEvents">
+						<ul style="padding-left: 1.5em;">
 						<logic:iterate id="genericEvent" name="punctualRequest" property="genericEvents">
+							<li>
 							<bean:write name="genericEvent" property="eventPeriodForGanttDiagram"/>
 							-
 							<bean:write name="genericEvent" property="eventObservationsForGanttDiagram"/>
-							<br/>
+							</li>
 						</logic:iterate>
+						</ul>
 					</logic:notEmpty>
 					<logic:empty name="punctualRequest" property="genericEvents">
 						-
@@ -127,8 +132,7 @@
 			</logic:iterate>
 		</logic:notEmpty>	
 		
-		<br/>
-		<p><bean:message key="label.rooms.reserve.new.comment" bundle="SOP_RESOURCES"/>:</p>
+		<p class="mtop15"><bean:message key="label.rooms.reserve.new.comment" bundle="SOP_RESOURCES"/>:</p>
 		<fr:form action="/roomsReserveManagement.do">
 			<html:hidden property="method" value="createNewRoomsReserveComment"/>
 			
@@ -152,12 +156,14 @@
 				<fr:destination name="input" path="<%= seeReserveURL %>"/>
 			</fr:edit>		
 			
-			<html:submit><bean:message key="label.submit" bundle="SOP_RESOURCES"/></html:submit>
-			<logic:equal name="punctualRequest" property="currentState.name" value="OPEN">
-				<html:submit onclick="this.form.method.value='createNewRoomsReserveCommentAndMakeRequestResolved';this.form.sumit();">
-					<bean:message key="label.submit.and.make.request.resolved" bundle="SOP_RESOURCES"/>
-				</html:submit>
-			</logic:equal>			
+			<p>
+				<html:submit><bean:message key="label.send" bundle="SOP_RESOURCES"/></html:submit>
+				<logic:equal name="punctualRequest" property="currentState.name" value="OPEN">
+					<html:submit onclick="this.form.method.value='createNewRoomsReserveCommentAndMakeRequestResolved';this.form.sumit();">
+						<bean:message key="label.submit.and.make.request.resolved" bundle="SOP_RESOURCES"/>
+					</html:submit>
+				</logic:equal>
+			</p>
 		</fr:form>
 		
 	</logic:notEmpty>

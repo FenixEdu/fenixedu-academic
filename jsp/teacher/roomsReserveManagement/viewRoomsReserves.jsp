@@ -39,7 +39,7 @@
 				<cp:collectionPages url="/teacher/roomsReserveManagement.do?method=viewReserves" numberOfVisualizedPages="11" pageNumberAttributeName="pageNumber" numberOfPagesAttributeName="numberOfPages"/>
 			</p>
 		</logic:notEqual>
-		<table class="tstyle1">			
+		<table class="tstyle1 thlight">			
 			<tr>
 				<th><bean:message key="label.rooms.reserve.instant" bundle="APPLICATION_RESOURCES"/></th>
 				<th><bean:message key="label.rooms.reserve.order" bundle="APPLICATION_RESOURCES"/></th>
@@ -49,7 +49,7 @@
 			</tr>
 			<logic:iterate id="punctualRequest" name="requests" type="net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest">					
 				<tr>
-					<td>
+					<td class="nowrap smalltxt">
 						<bean:write name="punctualRequest" property="presentationInstant"/>						
 					</td>
 					<td>
@@ -58,8 +58,8 @@
 							<bean:write name="punctualRequest" property="subject"/>
 						</html:link>										
 					</td>	
-					<td><bean:message name="punctualRequest" property="currentState.name" bundle="APPLICATION_RESOURCES"/></td>					
-					<td>					
+					<td class="nowrap smalltxt"><bean:message name="punctualRequest" property="currentState.name" bundle="APPLICATION_RESOURCES"/></td>					
+					<td class="aleft smalltxt">					
 						<logic:equal name="punctualRequest" property="currentState.name" value="RESOLVED">
 							<logic:notEmpty name="punctualRequest" property="genericEvents">
 								<logic:iterate id="genericEvent" name="punctualRequest" property="genericEvents">
@@ -77,7 +77,7 @@
 							-
 						</logic:notEqual>						
 					</td>	
-					<td>
+					<td class="acenter">
 						<% Integer numOfNewComments = punctualRequest.getNumberOfNewComments(person);	%>
 						<%= numOfNewComments.toString() %>
 					</td>					
