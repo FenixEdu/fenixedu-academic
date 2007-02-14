@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.log.EnrolmentLog;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.util.EnrolmentAction;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
@@ -854,7 +855,12 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 		|| (getCurricularCourse().isAnual() && getExecutionPeriod().getExecutionYear() == executionPeriod
 			.getExecutionYear());
     }
-
+    
+    @Override
+    public boolean hasEnrolmentWithEnroledState(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
+        return isEnroledInExecutionPeriod(curricularCourse, executionPeriod) && isEnroled();
+    }
+    
     public List<ExecutionCourse> getExecutionCourses() {
 	return this.getCurricularCourse().getAssociatedExecutionCourses();
     }
@@ -937,6 +943,11 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     @Override
     public Double getEnroledEctsCredits(final ExecutionPeriod executionPeriod) {
 	return isValid(executionPeriod) && isEnroled() ? getEctsCredits() : Double.valueOf(0d);
+    }
+    
+    @Override
+    public CurriculumLine findCurriculumLineFor(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod) {
+        return isEnroledInExecutionPeriod(curricularCourse, executionPeriod) ? this : null;
     }
 
 }
