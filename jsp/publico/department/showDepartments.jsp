@@ -31,12 +31,10 @@
 		</h:column>
 
 		<h:column>
-			<h:panelGroup rendered="#{!empty departmentUnit.webAddress}">
-				<h:outputLink value="#{departmentUnit.webAddress}" target="_blank">
-					<h:outputText value="#{publicDepartmentBundle['website']}"/>
-				</h:outputLink>
-				<h:outputText value=" , " escape="false"/>
-			</h:panelGroup>
+            <h:outputLink value="departmentSite.do?method=presentation&selectedDepartmentUnitID=#{CompetenceCourseManagement.selectedDepartmentUnit.idInternal}">
+                <h:outputText value="#{publicDepartmentBundle['website']}"/>
+            </h:outputLink>
+            <h:outputText value=" , " escape="false"/>
 			<h:outputLink value="showDepartmentTeachers.faces">
 				<h:outputText value="#{publicDepartmentBundle['department.faculty']}"/>
 				<f:param name="selectedDepartmentUnitID" value="#{departmentUnit.idInternal}"/>

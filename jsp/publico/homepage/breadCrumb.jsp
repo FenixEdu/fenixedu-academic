@@ -15,9 +15,6 @@
             <bean:define id="institutionUrlStructure" type="java.lang.String">
                 <bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/><bean:message key="link.institution.structure" bundle="GLOBAL_RESOURCES"/>
             </bean:define>
-            <bean:define id="departmentUrl" type="java.lang.String">
-                <bean:write name="homepage" property="person.employee.currentDepartmentWorkingPlace.departmentUnit.webAddress"/>
-            </bean:define>
             <bean:define id="departmentUnitID" type="java.lang.String">
                 <bean:write name="homepage" property="person.employee.currentDepartmentWorkingPlace.departmentUnit.idInternal"/>
             </bean:define>
@@ -35,10 +32,11 @@
                     <bean:message bundle="PUBLIC_DEPARTMENT_RESOURCES" key="academic.units"/>
                 </html:link>
                 &nbsp;&gt;&nbsp;            
-                <html:link href="<%=departmentUrl%>">
+                <bean:define id="unitId" name="homepage" property="person.employee.currentDepartmentWorkingPlace.departmentUnit.idInternal"/>
+                <html:link page="<%= "/department/departmentSite.do?method=presentation&amp;selectedDepartmentUnitID=" + unitId %>" module="/publico">
                     <bean:write name="homepage" property="person.employee.currentDepartmentWorkingPlace.realName"/>
                 </html:link>
-                &nbsp;&gt;&nbsp;            
+                &nbsp;&gt;&nbsp;
                 <html:link page="<%= "/publico/department/showDepartmentTeachers.faces?selectedDepartmentUnitID=" + departmentUnitID %>" module="">
                     <bean:message bundle="PUBLIC_DEPARTMENT_RESOURCES" key="department.faculty"/>
                 </html:link>

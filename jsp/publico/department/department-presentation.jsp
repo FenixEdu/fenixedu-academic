@@ -19,7 +19,8 @@
         <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES"/> 
     </html:link>
     &nbsp;&gt;&nbsp;
-    <html:link href="<%= institutionUrl + structureUrl %>">
+    <bean:define id="unitId" name="unit" property="idInternal"/>
+    <html:link page="<%= "/department/departmentSite.do?method=presentation&amp;selectedDepartmentUnitID=" + unitId %>">
         <bean:message key="structure" bundle="PUBLIC_DEPARTMENT_RESOURCES"/> 
     </html:link>
     &nbsp;&gt;&nbsp;

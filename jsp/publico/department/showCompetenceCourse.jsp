@@ -13,6 +13,7 @@
 	<f:loadBundle basename="resources/PublicDepartmentResources" var="publicDepartmentBundle"/>
 	<f:loadBundle basename="resources/GlobalResources" var="globalBundle"/>
 
+    <h:outputText value="<div class='breadcumbs mvert0'>" escape="false"/>
 	<h:outputLink value="#{globalBundle['institution.url']}" >
 		<h:outputText value="#{globalBundle['institution.name.abbreviation']}"/>
 	</h:outputLink>
@@ -25,9 +26,8 @@
 		<h:outputText value="#{publicDepartmentBundle['academic.units']}"/>
 	</h:outputLink>
 	&nbsp;&gt;&nbsp;
-	<h:outputText rendered="#{empty CompetenceCourseManagement.competenceCourse.departmentUnit.webAddress}" value="#{CompetenceCourseManagement.competenceCourse.departmentUnit.department.realName}"/>
-	<h:outputLink rendered="#{!empty CompetenceCourseManagement.competenceCourse.departmentUnit.webAddress}" value="#{CompetenceCourseManagement.competenceCourse.departmentUnit.webAddress}" target="_blank">
-		<h:outputText value="#{CompetenceCourseManagement.competenceCourse.departmentUnit.department.realName}"/>
+	<h:outputLink value="departmentSite.do?method=presentation&selectedDepartmentUnitID=#{CompetenceCourseManagement.selectedDepartmentUnit.idInternal}">
+		<h:outputText value="#{CompetenceCourseManagement.selectedDepartmentUnit.department.realName}"/>
 	</h:outputLink>
 	&nbsp;&gt;&nbsp;
 	<h:outputLink value="../department/showDepartmentCompetenceCourses.faces">
@@ -37,6 +37,7 @@
 	&nbsp;&gt;&nbsp;
 	<h:outputText rendered="#{!CompetenceCourseManagement.renderInEnglish}" value="#{CompetenceCourseManagement.competenceCourse.name}"/>
 	<h:outputText rendered="#{CompetenceCourseManagement.renderInEnglish}" value="#{CompetenceCourseManagement.competenceCourse.nameEn}"/>
+    <h:outputText value="</div>" escape="false"/>
 	
 	<h:outputText value="<h1>" escape="false"/>
 	<h:outputText rendered="#{!CompetenceCourseManagement.renderInEnglish}" value="#{CompetenceCourseManagement.competenceCourse.name}"/>
