@@ -6,7 +6,6 @@ import java.util.Comparator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
@@ -89,6 +88,7 @@ public class StudentCurriculumGroupBean extends StudentCurriculumModuleBean {
 
 	for (final Context context : courseGroupContextsToEnrol) {
 	    result.add(new DegreeModuleToEnrol(group, context));
+
 	}
 
 	return result;
@@ -101,7 +101,11 @@ public class StudentCurriculumGroupBean extends StudentCurriculumModuleBean {
 		.getCurricularCourseContextsToEnrol(executionPeriod);
 
 	for (final Context context : curricularCoursesToEnrol) {
-	    result.add(new DegreeModuleToEnrol(group, context));
+	    final CurricularCourse curricularCourse = (CurricularCourse) context.getChildDegreeModule();
+	    if (context.containsSemesterAndCurricularYear(executionPeriod.getSemester(), 1,
+		    curricularCourse.getRegime())) {
+		result.add(new DegreeModuleToEnrol(group, context));
+	    }
 
 	}
 
