@@ -20,7 +20,7 @@
 			</span>
 		<p>
 	</logic:messagesPresent>	
-
+	
 	<logic:notEmpty name="roomsReserveBean">
 	
 		<bean:define id="punctualRequest" name="roomsReserveBean" property="reserveRequest" />	
@@ -132,7 +132,14 @@
 		<fr:form action="/roomsReserveManagement.do">
 			<html:hidden property="method" value="createNewRoomsReserveComment"/>
 			
-			<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserveRequest&amp;punctualReserveID=<bean:write name="punctualRequest" property="idInternal"/></bean:define>
+			<fr:hasMessages for="roomsReserveNewComment">
+				<p>
+					<span class="error0">			
+						<fr:message for="roomsReserveNewComment" show="message"/>
+					</span>
+				</p>
+			</fr:hasMessages>
+			<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserveRequest&punctualReserveID=<bean:write name="punctualRequest" property="idInternal"/></bean:define>
 			<fr:edit id="roomsReserveNewComment" name="roomsReserveBean" slot="description" 
 				validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator"
 				type="net.sourceforge.fenixedu.dataTransferObject.teacher.RoomsReserveBean">
