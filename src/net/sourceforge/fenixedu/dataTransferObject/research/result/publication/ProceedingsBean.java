@@ -40,8 +40,8 @@ public class ProceedingsBean extends ConferenceArticlesBean implements Serializa
 
     @Override
     protected void fillBibTeXFields(BibtexEntry bibtexEntry) {
-	setUnitFromBibtexEntry("publisher", bibtexEntry);
-	setUnitFromBibtexEntry("organization", bibtexEntry);
+	//setUnitFromBibtexEntry("publisher", bibtexEntry);
+	//setUnitFromBibtexEntry("organization", bibtexEntry);
 	setYearFromBibtexEntry(bibtexEntry);
 	setMonthFromBibtexEntry(bibtexEntry);
 

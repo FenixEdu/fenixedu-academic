@@ -63,7 +63,7 @@ public class ThesisBean extends ResultPublicationBean implements Serializable {
 
 	setYearFromBibtexEntry(bibtexEntry);
 	setMonthFromBibtexEntry(bibtexEntry);
-	setUnitFromBibtexEntry("organization", bibtexEntry);// school
+	//setUnitFromBibtexEntry("organization", bibtexEntry);// school
 
 	setTitle(getStringValueFromBibtexEntry("title", bibtexEntry));
 	setAddress(getStringValueFromBibtexEntry("address", bibtexEntry));

@@ -23,16 +23,21 @@
 		
 	<logic:equal name="importBibtexBean" property="currentProcessedParticipators" value="false">
 
+			<logic:notEmpty name="importBibtexBean" property="parsingErrors">
+					<bean:size id="numberOfErrors" name="importBibtexBean" property="parsingErrors"/>
+					<span class="error0"><bean:message key="error.importBibtex.expandingReferences" arg0="<%= numberOfErrors.toString() %>"/></span><br/>
+					<logic:iterate id="error" name="importBibtexBean" property="parsingErrors">
+						<fr:view name="error" property="message">
+							<fr:layout>
+								<fr:property name="classes" value="error0"/>
+							</fr:layout>
+						</fr:view>
+					</logic:iterate>
+			</logic:notEmpty>
+			
 	<logic:notPresent name="importBibtexBean" property="nextAuthor">
 	<logic:notPresent name="importBibtexBean" property="nextEditor">
 		<logic:notEqual name="importBibtexBean" property="currentProcessedParticipators" value="true">
-			<logic:messagesPresent message="true">
-					<p>
-						<html:messages id="messages" message="true" bundle="RESEARCHER_RESOURCES">
-							<span class="error0"><!-- Error messages go here --><bean:write name="messages" /></span>
-						</html:messages>
-					</p>
-			</logic:messagesPresent>	
 			
 				<p class="mbottom05"><bean:message key="researcher.result.publication.importBibtex.authors" bundle="RESEARCHER_RESOURCES"/></p>
 				<logic:iterate id="participationBean" name="importBibtexBean" property="processedBeans" indexId="i">
@@ -73,18 +78,29 @@
 
 		<fr:form action="/bibtexManagement/nextParticipation.do?participationType=author">
 			<fr:edit id="importBibtexBean" visible="false" name="importBibtexBean" type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.bibtex.ImportBibtexBean"/>
-				<h3 class="mtop15 mbottom05"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.importBibtex.author"/> (<bean:write name="importBibtexBean" property="currentAuthorPosition"/>/<bean:write name="importBibtexBean" property="numberOfAuthors"/>) </h3>
+			
+			<logic:messagesPresent message="true">
+				<p class="mtop15">
+					<html:messages id="messages" message="true" bundle="RESEARCHER_RESOURCES">
+							<span class="error0"><!-- Error messages go here --><bean:write name="messages" /></span>
+					</html:messages>
+				</p>
+			</logic:messagesPresent>
 
-	<p class="mvert1 breadcumbs">
-		<span class="actual">
-		<strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.importBibtex.step"/> 1 : </strong>
-		<bean:message key="researcher.result.publication.importBibtex.insertAuthorsAndEditors" bundle="RESEARCHER_RESOURCES"/></span>
-		 > 
-		<span>
-		<strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.importBibtex.step"/> 2 : </strong>
-		<bean:message key="researcher.result.publication.importBibtex.publicationData" bundle="RESEARCHER_RESOURCES"/></span>
-		</span>
- 	</p>
+
+			<h3 class="mtop15 mbottom05"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.importBibtex.author"/> (<bean:write name="importBibtexBean" property="currentAuthorPosition"/>/<bean:write name="importBibtexBean" property="numberOfAuthors"/>) </h3>
+
+
+			<p class="mvert1 breadcumbs">
+				<span class="actual">
+				<strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.importBibtex.step"/> 1 : </strong>
+				<bean:message key="researcher.result.publication.importBibtex.insertAuthorsAndEditors" bundle="RESEARCHER_RESOURCES"/></span>
+				 > 
+				<span>
+				<strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.importBibtex.step"/> 2 : </strong>
+				<bean:message key="researcher.result.publication.importBibtex.publicationData" bundle="RESEARCHER_RESOURCES"/></span>
+				</span>
+		 	</p>
 
 				<logic:notEmpty name="importBibtexBean" property="processedBeans"> 
 				<p class="mbottom05"><bean:message key="researcher.result.publication.importBibtex.authors" bundle="RESEARCHER_RESOURCES"/></p>
@@ -99,14 +115,6 @@
 				</ul>
 				</logic:iterate>
 				
-				<logic:messagesPresent message="true">
-					<p class="mtop15">
-						<html:messages id="messages" message="true" bundle="RESEARCHER_RESOURCES">
-							<span class="error0"><!-- Error messages go here --><bean:write name="messages" /></span>
-						</html:messages>
-					</p>
-				</logic:messagesPresent>
-
 					<p class="mtop1 mbottom025"><bean:message key="label.insertAuthor" bundle="RESEARCHER_RESOURCES"/></p>
 					<bean:define id="participatorBean" name="importBibtexBean" property="nextAuthor" type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.bibtex.BibtexParticipatorBean"/>
 					<fr:edit id="author" name="importBibtexBean" property="nextAuthor" schema="<%=participatorBean.getActiveSchema()%>">
@@ -191,8 +199,9 @@
 			   		</fr:edit>
 			   		<logic:equal name="participatorBean" property="externalPerson" value="true">
 
+					    <logic:equal name="needsUnit" value="true">
 						<logic:equal name="participatorBean" property="externalUnit" value="true">
-							<bean:define id="unitSchema" value="bibtex.participatorExternal.externalUnit" toScope="request"/>
+							<bean:define id="unitSchema" value="bibtex.participatorExternal.externalUnit.readOnly" toScope="request"/>
 						</logic:equal>
 						<logic:equal name="participatorBean" property="externalUnit" value="false">
 							<bean:define id="unitSchema" value="bibtex.participatorExternal.internalUnit" toScope="request"/>
@@ -200,13 +209,14 @@
 
 						<bean:define id="unitSchema" name="unitSchema" type="java.lang.String"/>
 						<p class="mtop05 mbottom025"><bean:message key="label.unit" bundle="RESEARCHER_RESOURCES"/>:</p>
-			   			<fr:edit id="externalPerson" name="importBibtexBean" property="nextAuthor" schema="<%= unitSchema %>">
+			   			<fr:edit id="externalPerson" name="importBibtexBean" property="nextEditor" schema="<%= unitSchema %>">
 						<fr:layout name="tabular">
-		    			    <fr:property name="classes" value="tstyle1 thright thlight thtop mtop05"/>
+		    			    <fr:property name="classes" value="tstyle5 thright thlight thtop mtop05"/>
 			        		<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 					    </fr:layout>			   			
 				   		<fr:destination name="postBack" path="/bibtexManagement/changeUnitType.do"/>
 			   			</fr:edit>
+			   			</logic:equal>
 			   		</logic:equal>
 			   		
 			<html:submit><bean:message bundle="RESEARCHER_RESOURCES" key="button.continue"/></html:submit>
@@ -289,7 +299,7 @@
 			 	
 				<fr:edit nested="true" id="publicationData" name="importBibtexBean" property="currentPublicationBean" schema="<%=publicationData.getActiveSchema()%>">
 			    <fr:layout name="tabular">
-		    	    <fr:property name="classes" value="tstyle1 thright thlight thtop mtop05"/>
+		    	    <fr:property name="classes" value="tstyle5 thright thlight thtop mtop05"/>
 		        	<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 			    </fr:layout>
 					<fr:destination name="invalid" path="/bibtexManagement/invalidSubmit.do"/>
@@ -301,7 +311,7 @@
 				<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.createConference"/>
 				<fr:edit id="createEvent" name="importBibtexBean" property="currentPublicationBean" schema="result.publication.create.Event" nested="true">
 				    <fr:layout name="tabular">
-			    	    <fr:property name="classes" value="tstyle1 thright thlight thtop"/>
+			    	    <fr:property name="classes" value="tstyle5 thright thlight thtop"/>
 			        	<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 				    </fr:layout>
 			   		<fr:destination name="invalid" path="/bibtexManagement/invalidSubmit.do"/>
@@ -312,7 +322,7 @@
 				<h3><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.importBibtex.publicationData"/></h3>
 				<fr:view name="importBibtexBean" property="currentPublicationBean" schema="<%=publicationData.getActiveSchema()%>">
 					<fr:layout name="tabular">
-			    	    <fr:property name="classes" value="tstyle1 thlight thright thtop width600px"/>
+			    	    <fr:property name="classes" value="tstyle5 thlight thright thtop width600px"/>
         				<fr:property name="columnClasses" value="width12em,,"/>
 					</fr:layout>
 	   			</fr:view>

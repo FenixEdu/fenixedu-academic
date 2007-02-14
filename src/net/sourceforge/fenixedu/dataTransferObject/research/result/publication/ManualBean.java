@@ -42,7 +42,7 @@ public class ManualBean extends ResultPublicationBean implements Serializable {
 
     @Override
     protected void fillBibTeXFields(BibtexEntry bibtexEntry) {
-	setUnitFromBibtexEntry("organization", bibtexEntry);
+	//setUnitFromBibtexEntry("organization", bibtexEntry);
 	setYearFromBibtexEntry(bibtexEntry);
 	setMonthFromBibtexEntry(bibtexEntry);
 

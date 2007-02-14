@@ -986,11 +986,11 @@
 	<slot name="title" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="60"/>
 	</slot>
-	<slot name="note" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator" layout="area">	
+	<slot name="note" layout="area">	
 	    <property name="rows" value="5"/>
 		<property name="columns" value="60"/>
 	</slot>
-	<slot name="keywords" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator" layout="input-with-comment">
+	<slot name="keywords" layout="input-with-comment">
 		<property name="rows" value="2"/>
 		<property name="columns" value="60"/>
 		<property name="comment" value="label.keyword.explanation"/>

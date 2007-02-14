@@ -51,7 +51,7 @@ public class TechnicalReportBean extends ResultPublicationBean implements Serial
 
     @Override
     protected void fillBibTeXFields(BibtexEntry bibtexEntry) {
-	setUnitFromBibtexEntry("organization", bibtexEntry);
+	//setUnitFromBibtexEntry("organization", bibtexEntry);
 	setYearFromBibtexEntry(bibtexEntry);
 	setMonthFromBibtexEntry(bibtexEntry);
 

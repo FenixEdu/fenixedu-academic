@@ -50,8 +50,8 @@ public class InproceedingsBean extends ConferenceArticlesBean implements Seriali
 
     @Override
     protected void fillBibTeXFields(BibtexEntry bibtexEntry) {
-	setUnitFromBibtexEntry("publisher", bibtexEntry);
-	setUnitFromBibtexEntry("organization", bibtexEntry);
+	//setUnitFromBibtexEntry("publisher", bibtexEntry);
+	//setUnitFromBibtexEntry("organization", bibtexEntry);
 	setYearFromBibtexEntry(bibtexEntry);
 	setMonthFromBibtexEntry(bibtexEntry);
 

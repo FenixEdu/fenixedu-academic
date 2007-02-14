@@ -52,7 +52,7 @@ public class OtherPublicationBean extends ResultPublicationBean implements Seria
     @Override
     protected void fillBibTeXFields(BibtexEntry bibtexEntry) {
 	// TODO: rearrange importation
-	setUnitFromBibtexEntry("publisher", bibtexEntry);
+	//setUnitFromBibtexEntry("publisher", bibtexEntry);
 	setYearFromBibtexEntry(bibtexEntry);
 	setMonthFromBibtexEntry(bibtexEntry);
 

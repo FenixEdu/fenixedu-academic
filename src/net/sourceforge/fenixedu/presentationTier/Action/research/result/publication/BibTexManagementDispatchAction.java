@@ -112,7 +112,8 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
 		BibtexFile bibtexFile = new BibtexFile();
 		BibtexParser parser = new BibtexParser(true);
 		List<BibtexEntry> entryList = new ArrayList<BibtexEntry>();
-
+		ImportBibtexBean importBibtexBean = new ImportBibtexBean();
+		
 		try {
 			InputStream inputStream = openFileBean.getInputStream();
 			if (inputStream.available() == 0)
@@ -123,24 +124,30 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
 			// macroReference must run before others expanders
 			MacroReferenceExpander macroReferenceExpander = new MacroReferenceExpander(true, true, true);
 			macroReferenceExpander.expand(bibtexFile);
-			PersonListExpander personListExpander = new PersonListExpander(true, true, true);
+			PersonListExpander personListExpander = new PersonListExpander(true, true, false);
 			personListExpander.expand(bibtexFile);
+			ExpansionException[] possibleErrors = personListExpander.getExceptions();
+			for(ExpansionException exception : possibleErrors) {
+				String fields[] = exception.getMessage().split("@");
+				importBibtexBean.addParsingError(fields[1], fields[0]);
+			}
 		} catch (IOException e) {
 			addActionMessage(request, "error.importBibtex.notPossibleToReadFile");
 			return prepareOpenBibtexFile(mapping, form, request, response);
 		} catch (ParseException e) {
-			addActionMessage(request, "error.importBibtex.parsingBibtex");
+			addActionMessage(request, "error.importBibtex.parsingBibtex",e.getMessage() );
 			return prepareOpenBibtexFile(mapping, form, request, response);
 		} catch (ExpansionException e) {
-			addActionMessage(request, "error.importBibtex.expandingReferences");
+			addActionMessage(request, "error.importBibtex.expandingReferences",e.getMessage());
 			return prepareOpenBibtexFile(mapping, form, request, response);
 		}
 
+		
+		
 		for (Object entry : bibtexFile.getEntries()) {
 			if (entry instanceof BibtexEntry)
 				entryList.add((BibtexEntry) entry);
 		}
-		ImportBibtexBean importBibtexBean = new ImportBibtexBean();
 		for (BibtexEntry entry : entryList) {
 			try {
 				// create publication bean

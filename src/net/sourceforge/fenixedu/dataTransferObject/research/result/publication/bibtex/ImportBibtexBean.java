@@ -4,11 +4,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultParticipationCreationBean.ParticipationType;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
+import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 public class ImportBibtexBean implements Serializable {
 
@@ -22,6 +22,16 @@ public class ImportBibtexBean implements Serializable {
 
 	private int currentEditorPosition = 0;
 
+	private List<ParsingErrorIdentifier> parsingErrors = new ArrayList<ParsingErrorIdentifier>();
+	
+	public List<ParsingErrorIdentifier> getParsingErrors() {
+		return parsingErrors;
+	}
+	
+	public void addParsingError(String publicationId, String message) {
+		parsingErrors.add(new ParsingErrorIdentifier(publicationId,message));
+	}
+	
 	public List<BibtexPublicationBean> getBibtexPublications() {
 		return bibtexPublications;
 	}
@@ -97,7 +107,7 @@ public class ImportBibtexBean implements Serializable {
 
 	public boolean moveToNextPublicaton() {
 		currentPublicationPosition++;
-		currentAuthorPosition = 0;
+		resetBeanCounters();
 		return (hasMorePublications()) ? true : false;
 	}
 
@@ -212,6 +222,21 @@ public class ImportBibtexBean implements Serializable {
 		}
 		else {
 			currentEditorPosition = index;
+		}
+	}
+	
+	public class ParsingErrorIdentifier implements Serializable{
+		String publicationId;
+		String message;
+		
+		public ParsingErrorIdentifier(String publicationId, String message) {
+			super();
+			this.publicationId = publicationId;
+			this.message = message;
+		}
+		
+		public String getMessage() {
+			return RenderUtils.getResourceString("RESEARCHER_RESOURCES", "error.importBibtex.expandingReferencesForEntry", new Object[] {message,publicationId});
 		}
 	}
 	

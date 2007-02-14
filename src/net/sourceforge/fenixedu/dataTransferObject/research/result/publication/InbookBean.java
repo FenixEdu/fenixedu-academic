@@ -56,7 +56,7 @@ public class InbookBean extends ResultPublicationBean implements Serializable {
 
     @Override
     protected void fillBibTeXFields(BibtexEntry bibtexEntry) {
-	setUnitFromBibtexEntry("publisher", bibtexEntry);
+	//setUnitFromBibtexEntry("publisher", bibtexEntry);
 	setYearFromBibtexEntry(bibtexEntry);
 	setMonthFromBibtexEntry(bibtexEntry);
 
