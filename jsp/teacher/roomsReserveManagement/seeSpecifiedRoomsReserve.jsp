@@ -80,7 +80,7 @@
 			</logic:iterate>
 		</logic:notEmpty>
 		
-		<p class="mtop25"><bean:message key="label.rooms.reserve.new.comment" bundle="APPLICATION_RESOURCES"/>:</p>
+		<p class="mtop25 mbottom05"><bean:message key="label.rooms.reserve.new.comment" bundle="APPLICATION_RESOURCES"/>:</p>
 		<fr:form action="/roomsReserveManagement.do">
 			<html:hidden property="method" value="createNewComment"/>
 			<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserve&amp;punctualReserveID=<bean:write name="punctualRequest" property="idInternal"/></bean:define>
@@ -104,12 +104,14 @@
 				<fr:destination name="input" path="<%= seeReserveURL %>"/>
 			</fr:edit>		
 			
+			<p>
 			<html:submit><bean:message key="label.submit" bundle="APPLICATION_RESOURCES"/></html:submit>
 			<logic:equal name="punctualRequest" property="currentState.name" value="RESOLVED">
 				<html:submit onclick="this.form.method.value='createNewCommentAndReOpenRequest';this.form.sumit();">
 					<bean:message key="label.submit.and.reopen" bundle="APPLICATION_RESOURCES"/>
 				</html:submit>
 			</logic:equal>			
+			</p>
 		</fr:form>
 		
 	</logic:notEmpty>
