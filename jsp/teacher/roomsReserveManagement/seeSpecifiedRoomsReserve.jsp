@@ -28,12 +28,20 @@
 					<bean:message bundle="APPLICATION_RESOURCES" key="label.return"/>
 				</html:link>
 			</li>
+			<logic:equal name="punctualRequest" property="currentState.name" value="NEW">
+				<li>
+					<bean:define id="prepareEditURL">/roomsReserveManagement.do?method=prepareEdit&punctualReserveID=<bean:write name="punctualRequest" property="idInternal"/></bean:define>
+					<html:link page="<%= prepareEditURL %>">		
+						<bean:message bundle="APPLICATION_RESOURCES" key="label.edit.rooms.reserve.request"/>
+					</html:link>
+				</li>
+			</logic:equal>
 		</ul>
 			
 		<table class="tstyle1 thlight thright">			
 			<tr>
 				<th><bean:message key="label.rooms.reserve.order" bundle="APPLICATION_RESOURCES"/>:</th>
-				<td><bean:write name="punctualRequest" property="subject"/></td>				
+				<td><fr:view name="punctualRequest" property="subject" /></td>				
 			</tr>	
 			<tr>
 				<th><bean:message key="label.rooms.reserve.state" bundle="APPLICATION_RESOURCES"/>:</th>
@@ -43,12 +51,15 @@
 				<th><bean:message key="label.rooms.reserve.periods" bundle="APPLICATION_RESOURCES"/>:</th>	
 				<td>					
 					<logic:notEmpty name="punctualRequest" property="genericEvents">
-						<logic:iterate id="genericEvent" name="punctualRequest" property="genericEvents">
-							<bean:write name="genericEvent" property="eventPeriodForGanttDiagram"/>
-							-
-							<bean:write name="genericEvent" property="eventObservationsForGanttDiagram"/>
-							<br/>
-						</logic:iterate>
+						<ul style="padding-left: 1.5em;">
+							<logic:iterate id="genericEvent" name="punctualRequest" property="genericEvents">
+								<li>
+									<bean:write name="genericEvent" property="eventPeriodForGanttDiagram"/>
+									-
+									<bean:write name="genericEvent" property="eventObservationsForGanttDiagram"/>
+								</li>
+							</logic:iterate>
+						</ul>
 					</logic:notEmpty>
 					<logic:empty name="punctualRequest" property="genericEvents">
 						-
@@ -57,7 +68,7 @@
 			</tr>	
 			<tr>
 				<th><bean:message key="label.rooms.reserve.description" bundle="APPLICATION_RESOURCES"/>:</th>
-				<td><bean:write name="punctualRequest" property="description"/></td>
+				<td><fr:view name="punctualRequest" property="description"/></td>
 			</tr>													
 		</table>
 		
@@ -113,6 +124,8 @@
 			</logic:equal>			
 			</p>
 		</fr:form>
+		
+		<jsp:include page="../../sop/roomsPunctualScheduling/legend.jsp" />
 		
 	</logic:notEmpty>
 

@@ -263,8 +263,6 @@
 			</logic:iterate>		
 		</table>
 	</logic:notEmpty>
-	
-	<jsp:include page="legend.jsp" />
-	
+			
 </logic:present>
 

@@ -9,3 +9,14 @@
 	</slot>	
 </schema>
 
+<schema name="EditRoomsPunctualOccupationRequestFirstComment" type="net.sourceforge.fenixedu.domain.PunctualRoomsOccupationComment" bundle="APPLICATION_RESOURCES">	
+	<slot name="subject"  key="label.subject" layout="area" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator" >
+		<property name="rows" value="1" />
+		<property name="columns" value="60"/>
+	</slot>
+	<slot name="description" key="label.description" layout="area" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
+		<property name="rows" value="10" />
+		<property name="columns" value="60"/>
+	</slot>	
+</schema>
+

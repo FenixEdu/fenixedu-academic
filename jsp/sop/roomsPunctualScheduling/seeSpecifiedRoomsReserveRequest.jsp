@@ -20,8 +20,6 @@
 			</span>
 		<p>
 	</logic:messagesPresent>	
-
-
 	
 	<logic:notEmpty name="roomsReserveBean">
 	
@@ -72,8 +70,8 @@
 				<td><bean:write name="punctualRequest" property="identification"/></td>				
 			</tr>
 			<tr>
-				<th><bean:message key="label.rooms.reserve.order" bundle="SOP_RESOURCES"/>:</th>
-				<td><bean:write name="punctualRequest" property="subject"/></td>				
+				<th><bean:message key="label.rooms.reserve.order" bundle="SOP_RESOURCES"/>:</th>				
+				<td><fr:view name="punctualRequest" property="subject"/></td>
 			</tr>
 			<tr>
 				<th><bean:message key="label.rooms.reserve.requestor" bundle="SOP_RESOURCES"/>:</th>
@@ -95,13 +93,23 @@
 				<td>
 					<logic:notEmpty name="punctualRequest" property="genericEvents">
 						<ul style="padding-left: 1.5em;">
-						<logic:iterate id="genericEvent" name="punctualRequest" property="genericEvents">
-							<li>
-							<bean:write name="genericEvent" property="eventPeriodForGanttDiagram"/>
-							-
-							<bean:write name="genericEvent" property="eventObservationsForGanttDiagram"/>
-							</li>
-						</logic:iterate>
+							<logic:iterate id="genericEvent" name="punctualRequest" property="genericEvents">
+								<li>									
+									<logic:equal name="punctualRequest" property="currentState.name" value="OPEN">
+										<bean:define id="viewGenericEventURL">/roomsReserveManagement.do?method=prepareView&amp;genericEventID=<bean:write name="genericEvent" property="idInternal"/>&amp;reserveRequestID=<bean:write name="punctualRequest" property="idInternal"/></bean:define>
+										<html:link page="<%= viewGenericEventURL %>">
+											<bean:write name="genericEvent" property="eventPeriodForGanttDiagram"/>
+											-
+											<bean:write name="genericEvent" property="eventObservationsForGanttDiagram"/>
+										</html:link>
+									</logic:equal>
+									<logic:notEqual name="punctualRequest" property="currentState.name" value="OPEN">
+										<bean:write name="genericEvent" property="eventPeriodForGanttDiagram"/>
+										-
+										<bean:write name="genericEvent" property="eventObservationsForGanttDiagram"/>
+									</logic:notEqual>
+								</li>
+							</logic:iterate>
 						</ul>
 					</logic:notEmpty>
 					<logic:empty name="punctualRequest" property="genericEvents">
@@ -111,7 +119,7 @@
 			</tr>	
 			<tr>
 				<th><bean:message key="label.rooms.reserve.description" bundle="SOP_RESOURCES"/></th>
-				<td><bean:write name="punctualRequest" property="description"/></td>
+				<td><fr:view name="punctualRequest" property="description"/></td>
 			</tr>													
 		</table>
 		
@@ -165,6 +173,8 @@
 				</logic:equal>
 			</p>
 		</fr:form>
+		
+		<jsp:include page="legend.jsp" />
 		
 	</logic:notEmpty>
 

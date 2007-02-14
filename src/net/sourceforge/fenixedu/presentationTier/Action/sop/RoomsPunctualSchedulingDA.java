@@ -191,8 +191,7 @@ public class RoomsPunctualSchedulingDA extends FenixDispatchAction {
             request.setAttribute("roomsPunctualSchedulingBean", bean);	
             return mapping.findForward("prepareFinalizeCreation");        
 	} 
-	
-	request.setAttribute("roomsPunctualSchedulingBean", bean);	
+		
 	return prepare(mapping, form, request, response);
     }    
     
@@ -210,7 +209,7 @@ public class RoomsPunctualSchedulingDA extends FenixDispatchAction {
             request.setAttribute("roomsPunctualSchedulingBean", bean);	
             return mapping.findForward("prepareFinalizeCreation");        
 	} 
-	
+		
 	return prepare(mapping, form, request, response);
     }
           
@@ -251,7 +250,7 @@ public class RoomsPunctualSchedulingDA extends FenixDispatchAction {
 	saveMessages(request, actionMessages);
     }
     
-    private GenericEvent getGenericEventFromParameter(final HttpServletRequest request) {
+    protected GenericEvent getGenericEventFromParameter(final HttpServletRequest request) {
 	final String genericEventIDString = request.getParameter("genericEventID");
 	final Integer genericEventID = Integer.valueOf(genericEventIDString);
 	return rootDomainObject.readGenericEventByOID(genericEventID);

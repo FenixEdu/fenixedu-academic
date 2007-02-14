@@ -84,9 +84,7 @@
 		<logic:notEqual name="numberOfPages" value="1">
 			<bean:message key="label.pages" bundle="APPLICATION_RESOURCES"/>:
 			<cp:collectionPages url="/teacher/roomsReserveManagement.do?method=viewReserves" numberOfVisualizedPages="11" pageNumberAttributeName="pageNumber" numberOfPagesAttributeName="numberOfPages"/>	
-		</logic:notEqual>	
-			
-		<jsp:include page="../../sop/roomsPunctualScheduling/legend.jsp" />
+		</logic:notEqual>						
 			
 	</logic:notEmpty>
 		

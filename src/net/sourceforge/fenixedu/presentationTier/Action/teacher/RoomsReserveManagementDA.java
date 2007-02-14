@@ -84,7 +84,8 @@ public class RoomsReserveManagementDA extends FenixDispatchAction {
 	if(!punctualRoomsReserve.getRequestor().equals(loggedPerson)) {
 	    saveMessages(request, "label.not.authorized.action");
 	    return viewReserves(mapping, form, request, response);
-	}	
+	}
+	
 	executeService("MarkPunctualRoomsOccupationCommentsAsRead", new Object[] {punctualRoomsReserve, true});	
 	request.setAttribute("roomsReserveBean", new RoomsReserveBean(loggedPerson, punctualRoomsReserve));
 	return mapping.findForward("seeSpecifiedRoomsReserve");
@@ -100,7 +101,15 @@ public class RoomsReserveManagementDA extends FenixDispatchAction {
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 		
 	return createNewRoomsReserveComment(mapping, request, true, false);
-    }                
+    }      
+    
+    public ActionForward prepareEdit(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+		
+	PunctualRoomsOccupationRequest punctualRoomsReserve = getPunctualRoomsReserve(request);
+	request.setAttribute("roomsReserveRequest", punctualRoomsReserve);
+	return mapping.findForward("createNewRoomsReserve");
+    }    
     
     // Private Methods
     
@@ -115,7 +124,7 @@ public class RoomsReserveManagementDA extends FenixDispatchAction {
 	} catch (DomainException e) {
 	    saveMessages(request, e);	    
 	}
-	
+		
 	bean.setDescription(null);	
 	request.setAttribute("roomsReserveBean", bean);	
 	return mapping.findForward("seeSpecifiedRoomsReserve");

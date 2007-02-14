@@ -22,6 +22,8 @@ public class RoomsPunctualSchedulingBean implements Serializable {
 
     private DomainReference<PunctualRoomsOccupationRequest> roomsReserveRequestReference;
     
+    private Integer roomsReserveRequestIdentification;
+    
     private MultiLanguageString smallDescription;
     
     private MultiLanguageString completeDescription;
@@ -53,7 +55,9 @@ public class RoomsPunctualSchedulingBean implements Serializable {
     }       
            
     public RoomsPunctualSchedulingBean(GenericEvent genericEvent) {
-	setRoomsReserveRequest(genericEvent.getPunctualRoomsOccupationRequest());
+	if(genericEvent.getPunctualRoomsOccupationRequest() != null) {
+	    setRoomsReserveRequestIdentification(genericEvent.getPunctualRoomsOccupationRequest().getIdentification());
+	}
 	setRooms(genericEvent.getAssociatedRooms());
 	setBegin(genericEvent.getBeginDate());
 	setEnd(genericEvent.getEndDate());
@@ -249,5 +253,13 @@ public class RoomsPunctualSchedulingBean implements Serializable {
 
     public void setGanttDiagramAvailable(Boolean ganttDiagramAvailable) {
         this.ganttDiagramAvailable = ganttDiagramAvailable;
+    }
+
+    public Integer getRoomsReserveRequestIdentification() {
+        return roomsReserveRequestIdentification;
+    }
+
+    public void setRoomsReserveRequestIdentification(Integer roomsReserveIdentification) {
+        this.roomsReserveRequestIdentification = roomsReserveIdentification;
     }    
 }

@@ -131,7 +131,7 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
     public String getEventObservationsForGanttDiagram() {
 	StringBuilder builder = new StringBuilder();
 	for (RoomOccupation roomOccupation : getRoomOccupations()) {
-	    builder.append("[").append(roomOccupation.getRoom().getName()).append("] ");
+	    builder.append(" ").append(roomOccupation.getRoom().getName());
 	}
 	return builder.toString();
     }
@@ -148,9 +148,9 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
 	if(!getRoomOccupations().isEmpty()) {
 	    String prettyPrint = getRoomOccupations().get(0).getPrettyPrint();
 	    if(getFrequency() != null) {
-		return prettyPrint + " [" + getFrequency().getAbbreviation() + "]";
+		return "[" + getFrequency().getAbbreviation() + "] " + prettyPrint;
 	    }
-	    return prettyPrint + " [C]";
+	    return "[C] " + prettyPrint;
 	}	
 	return " - ";
     }

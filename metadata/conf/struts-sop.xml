@@ -1472,6 +1472,7 @@
 	    		<forward name="seeSpecifiedRoomsReserveRequest" path="see-specified-rooms-reserve-request"/>    			    			
 	    		<forward name="prepareCreateNewRoomPunctualScheduling" path="prepare-create-room-punctual-scheduling"/>    		    		    			    		    			    		
 	    		<forward name="prepareFinalizeCreation" path="prepare-finalize-creation-of-rooms-punctual-scheduling"/>	
+	    		<forward name="prepareViewRoomsPunctualScheduling" path="prepare-view-rooms-punctual-scheduling"/>		    		
 	   	</action> 	
 		
     </action-mappings>     

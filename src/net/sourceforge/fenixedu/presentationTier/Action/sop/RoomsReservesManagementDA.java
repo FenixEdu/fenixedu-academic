@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.sop.RoomsPunctualSchedulingBean;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.RoomsReserveBean;
 import net.sourceforge.fenixedu.domain.DomainObjectActionLog;
+import net.sourceforge.fenixedu.domain.GenericEvent;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest;
 import net.sourceforge.fenixedu.domain.RequestState;
@@ -67,37 +68,93 @@ public class RoomsReservesManagementDA extends RoomsPunctualSchedulingDA {
     }
              
     public ActionForward createNewRoomsReserveComment(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {	
 	return createNewRoomsReserveComment(mapping, request, false, false);
     }
        
     public ActionForward createNewRoomsReserveCommentAndMakeRequestResolved(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {		
 	return createNewRoomsReserveComment(mapping, request, false, true);
     }   
-  
+        
+    @Override
+    public ActionForward deleteRoomsPunctualScheduling(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws InvalidArgumentException, FenixFilterException, FenixServiceException {
+	GenericEvent genericEventFromParameter = getGenericEventFromParameter(request);
+	PunctualRoomsOccupationRequest roomsReserveRequest = getRoomsReserveRequest(request);
+	executeService("DeleteGenericEvent", new Object[] { genericEventFromParameter });
+	request.setAttribute("roomsReserveBean", new RoomsReserveBean(getLoggedPerson(request), roomsReserveRequest));		
+	return mapping.findForward("seeSpecifiedRoomsReserveRequest");
+    }
+
+    @Override
+    public ActionForward prepareView(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws InvalidArgumentException {
+	ActionForward forward = super.prepareView(mapping, form, request, response);
+	RoomsPunctualSchedulingBean bean = (RoomsPunctualSchedulingBean) request.getAttribute("roomsPunctualSchedulingBean");
+	PunctualRoomsOccupationRequest roomsReserveRequest = getRoomsReserveRequest(request);
+	
+	if(roomsReserveRequest == null) {
+	    throw new InvalidArgumentException();
+	}
+	
+	bean.setRoomsReserveRequest(roomsReserveRequest);
+	return forward;
+    }
+    
+    @Override
+    public ActionForward editRoomsPunctualScheduling(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixServiceException, FenixFilterException, InvalidArgumentException {
+	IViewState viewState = RenderUtils.getViewState("roomsPunctualSchedulingWithDescriptions");
+	RoomsPunctualSchedulingBean bean = (RoomsPunctualSchedulingBean) viewState.getMetaObject().getObject();	
+	
+	try {
+            executeService("EditRoomsPunctualScheduling", new Object[] {bean});	    
+       
+	} catch(DomainException domainException) {
+            saveMessages(request, domainException);
+            request.setAttribute("roomsPunctualSchedulingBean", bean);	
+            return mapping.findForward("prepareFinalizeCreation");        
+	} 	
+	
+	PunctualRoomsOccupationRequest roomsReserveRequest = bean.getRoomsReserveRequest();
+	if(roomsReserveRequest == null) {
+	    throw new InvalidArgumentException();
+	}	
+	
+	request.setAttribute("roomsReserveBean", new RoomsReserveBean(getLoggedPerson(request), roomsReserveRequest));		
+	return mapping.findForward("seeSpecifiedRoomsReserveRequest");
+    }
+
     @Override
     public ActionForward prepareCreate(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException, InvalidArgumentException {
 	ActionForward forward = super.prepareCreate(mapping, form, request, response);
 	RoomsPunctualSchedulingBean bean = (RoomsPunctualSchedulingBean) request.getAttribute("roomsPunctualSchedulingBean");
 	PunctualRoomsOccupationRequest roomsReserveRequest = getRoomsReserveRequest(request);
+	
 	if(roomsReserveRequest == null) {
 	    throw new InvalidArgumentException();
 	}
+	
 	bean.setRoomsReserveRequest(roomsReserveRequest);
 	return forward;
     }
 
     @Override
     public ActionForward createRoomsPunctualScheduling(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixServiceException, FenixFilterException, InvalidArgumentException {
-	super.createRoomsPunctualScheduling(mapping, form, request, response);	
-	RoomsPunctualSchedulingBean bean = (RoomsPunctualSchedulingBean) request.getAttribute("roomsPunctualSchedulingBean");	
+	IViewState viewState = RenderUtils.getViewState("roomsPunctualSchedulingWithDescriptions");
+	RoomsPunctualSchedulingBean bean = (RoomsPunctualSchedulingBean) viewState.getMetaObject().getObject();
+	
+	try {
+            executeService("CreateRoomsPunctualScheduling", new Object[] {bean});	           
+	} catch(DomainException domainException) {
+            saveMessages(request, domainException);
+            request.setAttribute("roomsPunctualSchedulingBean", bean);	
+            return mapping.findForward("prepareFinalizeCreation");        
+	} 
+		
 	PunctualRoomsOccupationRequest roomsReserveRequest = bean.getRoomsReserveRequest();
 	if(roomsReserveRequest == null) {
 	    throw new InvalidArgumentException();
 	}	
+	
 	request.setAttribute("roomsReserveBean", new RoomsReserveBean(getLoggedPerson(request), roomsReserveRequest));	
 	return mapping.findForward("seeSpecifiedRoomsReserveRequest");
     }

@@ -19,7 +19,7 @@
 		<p>
 	</logic:messagesPresent>		
 
-	<logic:notEmpty name="roomsReserveBean">
+	<logic:notEmpty name="roomsReserveBean">		
 		<fr:edit id="roomsReserveWithDescriptions" name="roomsReserveBean" schema="CreateRoomsPunctualOccupationRequest"
 			action="/roomsReserveManagement.do?method=createRoomsReserve" >
 			<fr:layout name="tabular">
@@ -29,6 +29,19 @@
 			<fr:destination name="cancel" path="/roomsReserveManagement.do?method=viewReserves"/>						
 		</fr:edit>
 	</logic:notEmpty>
+		
+		
+	<logic:notEmpty name="roomsReserveRequest">		
+		<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserve&amp;punctualReserveID=<bean:write name="roomsReserveRequest" property="idInternal"/></bean:define>
+		<fr:edit id="roomsReserveEdit" name="roomsReserveRequest" property="firstComment" schema="EditRoomsPunctualOccupationRequestFirstComment"
+			action="<%= seeReserveURL %>" >
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle5 vamiddle thlight" />
+				<fr:property name="columnClasses" value=",,tdclear tderror1" />
+			</fr:layout>		
+			<fr:destination name="cancel" path="<%= seeReserveURL %>"/>						
+		</fr:edit>			
+	</logic:notEmpty>	
 	
 </logic:present>
 

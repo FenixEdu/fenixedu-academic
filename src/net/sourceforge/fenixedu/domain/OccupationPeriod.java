@@ -40,7 +40,7 @@ public class OccupationPeriod extends OccupationPeriod_Base {
     
     @Override
     public void setNextPeriod(OccupationPeriod nextPeriod) {
-	if(!nextPeriod.getStartYearMonthDay().isAfter(getEndYearMonthDay())) {
+	if(nextPeriod == null || !nextPeriod.getStartYearMonthDay().isAfter(getEndYearMonthDay())) {
 	    throw new DomainException("error.occupationPeriod.invalid.nextPeriod");
 	}
 	super.setNextPeriod(nextPeriod);
@@ -144,8 +144,8 @@ public class OccupationPeriod extends OccupationPeriod_Base {
         final OccupationPeriod next = getNextPeriod();
         if (previous != null && next != null) { 
             previous.setNextPeriod(next);
-        } else {
-            removeNextPeriod();
+        } else {            
+            super.setNextPeriod(null);
             removePreviousPeriod();
         }
         removeRootDomainObject();
