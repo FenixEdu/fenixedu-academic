@@ -34,6 +34,10 @@ public class RestrictionDoneDegreeModuleExecutor extends CurricularRuleExecutor 
 	    return RuleResult.createTrue();    
 	}
 	
+	if (isEnrolling(enrolmentContext, curricularCourse)) {
+	    return createFalseRuleResult(rule);    
+	}
+	
 	final ExecutionPeriod previousExecutionPeriod = enrolmentContext.getExecutionPeriod().getPreviousExecutionPeriod();
 	if (hasEnrolmentWithEnroledState(enrolmentContext, curricularCourse, previousExecutionPeriod)) {
 	    return RuleResult.createTrue(EnrolmentResultType.TEMPORARY);
