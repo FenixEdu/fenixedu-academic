@@ -112,8 +112,7 @@ public class Registration extends Registration_Base {
 
     public Registration(Person person, DegreeCurricularPlan degreeCurricularPlan,
 	    StudentCandidacy studentCandidacy) {
-	this(person, null, RegistrationAgreement.NORMAL, studentCandidacy,
-		degreeCurricularPlan);
+	this(person, null, RegistrationAgreement.NORMAL, studentCandidacy, degreeCurricularPlan);
 
 	// create scp
 	StudentCurricularPlan.createBolonhaStudentCurricularPlan(this, degreeCurricularPlan,
@@ -1436,9 +1435,19 @@ public class Registration extends Registration_Base {
 	return getActiveStudentCurricularPlan().getDegreeCurricularPlan();
     }
 
-    public boolean hasAnyNotPayedGratuityEvents() {
+    private boolean hasAnyNotPayedGratuityEvents() {
 	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
 	    if (studentCurricularPlan.hasAnyNotPayedGratuityEvents()) {
+		return true;
+	    }
+	}
+
+	return false;
+    }
+
+    private boolean hasAnyNotPayedGratuityEventsForPreviousYears() {
+	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
+	    if (studentCurricularPlan.hasAnyNotPayedGratuityEventsForPreviousYears()) {
 		return true;
 	    }
 	}
@@ -1678,7 +1687,11 @@ public class Registration extends Registration_Base {
 
     @Override
     public Boolean getPayedTuition() {
-	return super.getPayedTuition() && !hasAnyNotPayedGratuityEvents();
+	return super.getPayedTuition() != null && super.getPayedTuition() && !hasAnyNotPayedGratuityEventsForPreviousYears();
+    }
+
+    public boolean hasGratuityDebtsCurrently() {
+	return !super.getPayedTuition() || hasAnyNotPayedGratuityEvents();
     }
 
     public Attends readAttendByExecutionCourse(ExecutionCourse executionCourse) {

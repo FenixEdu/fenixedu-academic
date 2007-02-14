@@ -40,8 +40,6 @@ public class BolonhaStudentOptionalEnrollmentInputRenderer extends InputRenderer
 
     private String curricularCoursesToEnrol = "smalltxt, smalltxt aright, smalltxt aright, aright";
 
-    private String linkFormat;
-
     public Integer getInitialWidth() {
 	return initialWidth;
     }
@@ -96,14 +94,6 @@ public class BolonhaStudentOptionalEnrollmentInputRenderer extends InputRenderer
 
     private String getCurricularCourseLinkClasses() {
 	return getCurricularCourseClasses()[3];
-    }
-
-    public String getLinkFormat() {
-	return linkFormat;
-    }
-
-    public void setLinkFormat(String linkFormat) {
-	this.linkFormat = linkFormat;
     }
 
     public BolonhaStudentOptionalEnrollmentInputRenderer() {

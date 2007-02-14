@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
@@ -100,6 +102,7 @@ public class StudentCurriculumGroupBean extends StudentCurriculumModuleBean {
 
 	for (final Context context : curricularCoursesToEnrol) {
 	    result.add(new DegreeModuleToEnrol(group, context));
+
 	}
 
 	return result;

@@ -309,12 +309,17 @@
 	<definition name="enrolment.bolonha.chooseOptionalCurricularCourseEnrol" extends="definition.student.masterPage">
 		<put name="body" value="/student/enrollment/bolonha/chooseOptionalCurricularCourseToEnrol.jsp"/>
 	</definition>
-	<definition name="enrolment.bolonha.showOutOfEnrollmentPeriodMessage" extends="definition.student.masterPage">
-		<put name="body" value="/student/enrollment/bolonha/showOutOfEnrollmentPeriodMessage.jsp"/>
+	<definition name="enrolment.bolonha.enrollmentCannotProceed" extends="definition.student.masterPage">
+		<put name="body" value="/student/enrollment/bolonha/enrollmentCannotProceed.jsp"/>
 	</definition>
 	<definition name="enrolment.bolonha.showEnrollmentInstructions" extends="definition.student.masterPage">
 		<put name="body" value="/student/enrollment/bolonha/showEnrollmentInstructions.jsp"/>
 	</definition>
+	<definition name="enrolment.bolonha.choosePersonalDataAuthorizationChoice" extends="definition.student.masterPage">
+		<put name="body" value="/student/enrollment/choosePersonalDataAuthorizationChoice.jsp"/>
+	</definition>
+	
+	
 	
 	<!-- End: Bolonha Student Enrolment -->
 	

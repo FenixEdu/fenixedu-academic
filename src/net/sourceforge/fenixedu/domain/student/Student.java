@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -24,9 +23,7 @@ import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.MasterDegreeInsurancePaymentCode;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
-import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
@@ -174,6 +171,10 @@ public class Student extends Student_Base {
 	    return null;
 	}
 	return getActualExecutionYearStudentData().getPersonalDataAuthorization();
+    }
+
+    public boolean hasPersonDataAuthorizationChoiseForCurrentExecutionYear() {
+	return getPersonalDataAuthorizationForCurrentExecutionYear() != null;
     }
 
     public void setPersonalDataAuthorizationForCurrentExecutionYear(
@@ -530,13 +531,13 @@ public class Student extends Student_Base {
 	return result;
     }
 
-    public List<Registration> getActiveRegistrationsToEnrolByStudent() {
+    public List<Registration> getRegistrationsToEnrolByStudent() {
 	final List<DegreeType> degreeTypesToEnrolByStudent = Arrays.asList(new DegreeType[] {
 		DegreeType.DEGREE, DegreeType.BOLONHA_DEGREE,
 		DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE });
 	final List<Registration> result = new ArrayList<Registration>();
 	for (final Registration registration : getRegistrations()) {
-	    if (registration.isActive()
+	    if (registration.isInRegisteredState()
 		    && degreeTypesToEnrolByStudent.contains(registration.getDegreeType())) {
 		result.add(registration);
 	    }

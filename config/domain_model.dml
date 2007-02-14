@@ -181,6 +181,7 @@ valueType net.sourceforge.fenixedu.domain.parking.NewParkingDocumentType								
 valueType net.sourceforge.fenixedu.domain.FrequencyType															as FrequencyType;
 valueType net.sourceforge.fenixedu.domain.RequestState															as RequestState;
 
+
 /*
 *
 * Class definitions
@@ -1324,14 +1325,6 @@ class net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad exten
 	Double ectsCredits;
 	Integer loadOrder;
 	CurricularPeriodType curricularPeriodType;
-}
-
-
-class net.sourceforge.fenixedu.domain.DislocatedStudent extends net.sourceforge.fenixedu.domain.DomainObject {
-    Integer keyCountry;
-    Integer keyStudent;
-    Integer keyDislocatedCountry;
-    Integer keyDistrict;
 }
 
 class net.sourceforge.fenixedu.domain.onlineTests.DistributedTest extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -5490,31 +5483,9 @@ relation DepartmentDegree {
 	}
 }
 
-relation DislocatedStudentCountry {
-	net.sourceforge.fenixedu.domain.DislocatedStudent playsRole concluedStudents {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.Country playsRole country;
-}
 
-relation DislocatedStudentDislocatedCountry {
-	net.sourceforge.fenixedu.domain.DislocatedStudent playsRole dislocatedStudents {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.Country playsRole dislocatedCountry;
-}
 
-relation DislocatedStudentDistrict {
-	net.sourceforge.fenixedu.domain.DislocatedStudent playsRole dislocatedStudents {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.District playsRole district;
-}
 
-relation DislocatedStudentStudent {
-	net.sourceforge.fenixedu.domain.DislocatedStudent playsRole dislocatedStudent;
-	net.sourceforge.fenixedu.domain.student.Registration playsRole student;
-}
 
 relation DistributedTestAdvisories {
     net.sourceforge.fenixedu.domain.onlineTests.DistributedTestAdvisory playsRole distributedTestAdvisories {
@@ -9518,13 +9489,6 @@ relation RootDomainObjectStudentTestLog {
 relation RootDomainObjectAdvisory {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.Advisory playsRole advisorys {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectDislocatedStudent {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.DislocatedStudent playsRole dislocatedStudents {
 		multiplicity *;
 	}
 }

@@ -9,9 +9,13 @@
 <logic:present role="STUDENT">
     <h2><bean:message key="label.enrollment.courses" bundle="STUDENT_RESOURCES"/></h2>
     
-    <span class="error0">
-     <bean:message bundle="STUDENT_RESOURCES"  key="label.enrollment.courses.outOfEnrollmentPeriod"/>.<br/>
-    </span>
+	<logic:messagesPresent message="true">
+		<ul class="mtop15 mbottom1 nobullet list2">
+			<html:messages id="messages" message="true" bundle="STUDENT_RESOURCES">
+				<li><span class="error0"><bean:write name="messages" /></span></li>
+			</html:messages>
+		</ul>
+	</logic:messagesPresent>
     
    
 </logic:present>

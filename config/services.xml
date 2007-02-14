@@ -8099,18 +8099,6 @@
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.student.WriteStudentPersonalDataAuthorizationAnswer</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>       
-    </service>   
-    <service>
-    	<name>ReadDislocatedStudentByStudentID</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.student.ReadDislocatedStudentByStudentID</implementationClass>
-        <description></description>
-        <isTransactional>true</isTransactional>       
-    </service>   
-    <service>
-    	<name>WriteDislocatedStudentAnswer</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.student.WriteDislocatedStudentAnswer</implementationClass>
-        <description></description>
-        <isTransactional>true</isTransactional>       
     </service>
     <service>
     	<name>ReadAllDistricts</name>

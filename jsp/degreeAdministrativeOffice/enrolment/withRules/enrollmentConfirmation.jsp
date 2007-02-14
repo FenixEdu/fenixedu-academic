@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+<%@ page import="net.sourceforge.fenixedu.domain.Enrolment" %>
 <html:xhtml/>
 
 <h2><bean:message key="title.student.enrollment.resume" bundle="STUDENT_RESOURCES"/></h2>
@@ -135,7 +136,7 @@
 				<td class="listClasses" style="text-align:left">
 					<bean:write name="curriculumElem" property="curricularCourse.name"/>
 					
-					<% if (curriculumElem.isExtraCurricular()) { %>
+					<% if (curriculumElem instanceof Enrolment &&  ((Enrolment)curriculumElem).isExtraCurricular()) { %>
 						(<bean:message bundle="APPLICATION_RESOURCES" key="option.curricularCourse.extra"/>)
 					
 					<% } else if (curriculumElem instanceof net.sourceforge.fenixedu.domain.EnrolmentInOptionalCurricularCourse) { %>

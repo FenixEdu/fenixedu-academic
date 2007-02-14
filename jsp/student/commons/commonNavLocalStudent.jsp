@@ -23,8 +23,7 @@
 --%>
 	
 	<li class="navheader"><bean:message key="enroll"/></li>
-	<li><html:link page="/warningFirst.do" titleKey="link.title.student.enrollment"><bean:message key="link.student.enrollment"/></html:link></li>
-<%--	<li><html:link page="/bolonhaStudentEnrollment.do?method=prepare" titleKey="label.enrolments.bolonhaEnrolment"><bean:message key="label.enrolments.bolonhaEnrolment"/></html:link></li> --%>
+	<li><html:link page="/studentEnrollmentManagement.do?method=prepare" titleKey="link.title.student.enrollment"><bean:message key="link.student.enrollment"/></html:link></li>
 	<li><html:link page="/studentShiftEnrollmentManager.do?method=prepareStartViewWarning" titleKey="link.title.shift.enrolment"><bean:message key="link.shift.enrolment"/></html:link></li>
 	<li><html:link page="/viewEnroledExecutionCourses.do" titleKey="link.title.groupEnrolment"><bean:message key="link.groupEnrolment" /></html:link></li>	
 	<li><html:link page="/enrollment/evaluations/showEvaluations.faces" titleKey="link.title.evaluations.enrolment" ><bean:message key="link.evaluations.enrolment"/></html:link></li>

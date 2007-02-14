@@ -707,7 +707,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		.getCurricularYearByBranchAndSemester(this.getBranch(), currentExecutionPeriod
 			.getSemester()));
     }
-    
+
     protected CurricularCourse2Enroll transformToCurricularCourse2Enroll(
 	    CurricularCourse curricularCourse, ExecutionPeriod currentExecutionPeriod, 
 	    CurricularCourseEnrollmentType curricularCourseEnrollmentType) {
@@ -957,10 +957,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		    getCurricularCourseEnrollmentType(curricularCourse, executionPeriod);
 		if (curricularCourseEnrollmentType != 
 		    CurricularCourseEnrollmentType.NOT_ALLOWED) {
-		    
+
 		    result.add(transformToCurricularCourse2Enroll(curricularCourse, 
 			    executionPeriod, curricularCourseEnrollmentType));
-		}
+	}
 	    }
 	}
 
@@ -1007,11 +1007,11 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    }
 
 	}
-	
+
 	Iterator iter = result.iterator();
 	while(iter.hasNext()) {
 	    CurricularCourse2Enroll curricularCourse2Enroll = (CurricularCourse2Enroll) iter.next();
-	    
+
 	    if (curricularCoursesToRemove.contains(curricularCourse2Enroll.getCurricularCourse())
 		    && !curricularCoursesToKeep.contains(curricularCourse2Enroll.getCurricularCourse())) {
 		iter.remove();
@@ -1317,6 +1317,18 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public boolean hasAnyNotPayedGratuityEvents() {
 	for (final GratuityEvent gratuityEvent : getGratuityEvents()) {
 	    if (gratuityEvent.isInDebt()) {
+		return true;
+	    }
+	}
+
+	return false;
+    }
+
+    public boolean hasAnyNotPayedGratuityEventsForPreviousYears() {
+	final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+
+	for (final GratuityEvent gratuityEvent : getGratuityEvents()) {
+	    if (gratuityEvent.getExecutionYear() != currentExecutionYear && gratuityEvent.isInDebt()) {
 		return true;
 	    }
 	}
@@ -1832,7 +1844,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     public void enrol(final Person person, final ExecutionPeriod executionPeriod,
 	    final Set<DegreeModuleToEnrol> degreeModulesToEnrol, final List<CurriculumModule> curriculumModulesToRemove) {
-	
+
 	new StudentCurricularPlanEnrolment().enrol(person, new EnrolmentContext(this, executionPeriod,
 		degreeModulesToEnrol, curriculumModulesToRemove));
     }
@@ -2070,4 +2082,5 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public Integer getDegreeDuration() {
 	return getDegreeCurricularPlan().getDegreeDuration();
     }
+
 }

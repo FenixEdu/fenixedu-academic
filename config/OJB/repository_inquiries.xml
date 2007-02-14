@@ -134,30 +134,3 @@
 	
 
 </class-descriptor>
-
-
-<!-- ******************************************************************************************************************************* -->
-<!-- Definitions for net.sourceforge.fenixedu.domain.student.StudentPersonalDataAuthorization -->
-<!-- ******************************************************************************************************************************* -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.DislocatedStudent"
-                  table="DISLOCATED_STUDENT">
-	
-
-	
-	
-   
-   
-    	
-	
-    		
-   
-    	
-	   
-   	
-   
-   
-   
-     
-   
-       
-</class-descriptor>   

@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
-import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.enrolment.DegreeModuleToEnrol;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.presentationTier.renderers.controllers.CopyCheckBoxValuesController;
@@ -53,6 +52,8 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
     private String groupRowClasses = "bgcolor2";
 
     private String enrolmentClasses = "smalltxt, smalltxt aright, smalltxt aright, smalltxt aright, aright";
+
+    private String temporaryEnrolmentClasses = "smalltxt, smalltxt aright, smalltxt aright, smalltxt aright, aright";
 
     private String curricularCoursesToEnrolClasses = "smalltxt, smalltxt aright, smalltxt aright, aright";
 
@@ -138,6 +139,34 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 
     private String getCurricularCourseToEnrolCheckBoxClasses() {
 	return getCurricularCourseToEnrolClasses()[3];
+    }
+
+    private String[] getTemporaryEnrolmentClasses() {
+	return temporaryEnrolmentClasses.split(",");
+    }
+
+    public void setTemporaryEnrolmentClasses(String enrolmentClasses) {
+	this.temporaryEnrolmentClasses = enrolmentClasses;
+    }
+
+    private String getTemporaryEnrolmentNameClasses() {
+	return getTemporaryEnrolmentClasses()[0];
+    }
+
+    private String getTemporaryEnrolmentYearClasses() {
+	return getTemporaryEnrolmentClasses()[1];
+    }
+
+    private String getTemporaryEnrolmentSemesterClasses() {
+	return getTemporaryEnrolmentClasses()[2];
+    }
+
+    private String getTemporaryEnrolmentEctsClasses() {
+	return getTemporaryEnrolmentClasses()[3];
+    }
+
+    private String getTemporaryEnrolmentCheckBoxClasses() {
+	return getTemporaryEnrolmentClasses()[4];
     }
 
     public BolonhaStudentEnrollmentInputRenderer() {
@@ -362,19 +391,32 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 		final HtmlTable groupTable) {
 	    for (final StudentCurriculumEnrolmentBean studentEnrolmentBean : studentCurriculumGroupBean
 		    .getEnrolledCurriculumCourses()) {
-		generateEnrolment(groupTable, studentEnrolmentBean.getCurriculumModule());
+		if (studentEnrolmentBean.getCurriculumModule().isTemporary()) {
+		    generateEnrolment(groupTable, studentEnrolmentBean.getCurriculumModule(),
+			    getTemporaryEnrolmentNameClasses(), getTemporaryEnrolmentYearClasses(),
+			    getTemporaryEnrolmentSemesterClasses(), getTemporaryEnrolmentEctsClasses(),
+			    getTemporaryEnrolmentCheckBoxClasses());
+		} else {
+		    generateEnrolment(groupTable, studentEnrolmentBean.getCurriculumModule(),
+			    getEnrolmentNameClasses(), getEnrolmentYearClasses(),
+			    getEnrolmentSemesterClasses(), getEnrolmentEctsClasses(),
+			    getEnrolmentCheckBoxClasses());
+		}
 	    }
 	}
 
-	private void generateEnrolment(final HtmlTable groupTable, Enrolment enrolment) {
+	private void generateEnrolment(final HtmlTable groupTable, Enrolment enrolment,
+		final String enrolmentNameClasses, final String enrolmentYearClasses,
+		final String enrolmentSemesterClasses, final String enrolmentEctsClasses,
+		final String enrolmentCheckBoxClasses) {
 	    HtmlTableRow htmlTableRow = groupTable.createRow();
 	    HtmlTableCell cellName = htmlTableRow.createCell();
-	    cellName.setClasses(getEnrolmentNameClasses());
+	    cellName.setClasses(enrolmentNameClasses);
 	    cellName.setBody(new HtmlText(enrolment.getName().getContent(LanguageUtils.getLanguage())));
 
 	    // Year
 	    final HtmlTableCell yearCell = htmlTableRow.createCell();
-	    yearCell.setClasses(getEnrolmentYearClasses());
+	    yearCell.setClasses(enrolmentYearClasses);
 
 	    final StringBuilder year = new StringBuilder();
 	    year.append(enrolment.getExecutionPeriod().getExecutionYear().getYear());
@@ -382,7 +424,7 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 
 	    // Semester
 	    final HtmlTableCell semesterCell = htmlTableRow.createCell();
-	    semesterCell.setClasses(getEnrolmentSemesterClasses());
+	    semesterCell.setClasses(enrolmentSemesterClasses);
 
 	    final StringBuilder semester = new StringBuilder();
 	    semester.append(enrolment.getExecutionPeriod().getSemester().toString());
@@ -392,7 +434,7 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 
 	    // Ects
 	    final HtmlTableCell ectsCell = htmlTableRow.createCell();
-	    ectsCell.setClasses(getEnrolmentEctsClasses());
+	    ectsCell.setClasses(enrolmentEctsClasses);
 
 	    final StringBuilder ects = new StringBuilder();
 	    ects.append(enrolment.getCurricularCourse().getEctsCredits()).append(" ").append(
@@ -408,7 +450,7 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	    enrollmentsController.addCheckBox(checkBox);
 
 	    HtmlTableCell cellCheckBox = htmlTableRow.createCell();
-	    cellCheckBox.setClasses(getEnrolmentCheckBoxClasses());
+	    cellCheckBox.setClasses(enrolmentCheckBoxClasses);
 	    cellCheckBox.setBody(checkBox);
 	}
 

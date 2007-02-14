@@ -23,7 +23,7 @@
 	<br />
 	
 	<logic:messagesPresent message="true">
-		<ul class="nobullet">
+		<ul class="mtop15 mbottom1 nobullet list2">
 			<html:messages id="messages" message="true" bundle="APPLICATION_RESOURCES">
 				<li><span class="error0"><bean:write name="messages" /></span></li>
 			</html:messages>
@@ -37,8 +37,7 @@
 	<logic:present name="optionalEnrolmentBean" property="degreeCurricularPlan">
 		<fr:edit id="degreeCurricularPlan" name="optionalEnrolmentBean">
 			<fr:layout name="bolonha-student-optional-enrolments">
-				<fr:property name="linkFormat"
-					value="/studentOptionalEnrolments.do?method=enrol&scpID=${studentCurricularPlan.idInternal}&executionPeriodID=${executionPeriod.idInternal}&curriculumGroupID=${curriculumGroup.idInternal}&contextID=${contex.idInternal}&degreeType=${degreeType}&degreeID=${degree.idInternal}&dcpID=${degreeCurricularPlan.idInternal}" />
+				<fr:property name="groupRowClasses" value="bgcolor6" />
 			</fr:layout>
 		</fr:edit>
 		<br />

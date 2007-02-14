@@ -139,3 +139,7 @@
 		<property name="destination" value="updateComboBoxes"/>
 	</slot>
 </schema>
+
+<schema name="Student.editPersonalDataAuthorizationChoiceForCurrentExecutionYear" type="net.sourceforge.fenixedu.domain.student.Student" bundle="APPLICATION_RESOURCES">
+	<slot name="personalDataAuthorizationForCurrentExecutionYear" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+</schema>

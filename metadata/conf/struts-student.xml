@@ -262,6 +262,12 @@
 			<form-property name="method" type="java.lang.String" />
 			<form-property name="registrationId" type="java.lang.Integer" />
 	    </form-bean>
+	    
+   		<!-- studentEnrollmentManagementForm -->
+		<form-bean name="studentEnrollmentManagmentForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="method" type="java.lang.String" />
+			<form-property name="registrationId" type="java.lang.Integer" />
+	    </form-bean>
 
     </form-beans>
     
@@ -804,16 +810,6 @@
   			<forward name="proceedToEnrollment" path="/curricularCoursesEnrollment.do?method=start"/>
   		</action>
   		
-  		<action path="/dislocatedStudent"
-  			type="net.sourceforge.fenixedu.presentationTier.Action.student.ManagePreEnrollmentInquiriesDispatchAction"
-  			name="studentInquiryDataForm"
-  			scope="request"
-  			input="/dislocatedStudent.do?method=prepareDislocatedStudentInquiry"
-  			parameter="method"
-  			>
-  			<forward name="showDislocatedStudentInquiry" path="show-dislocated-student-inquiry"/>
-  			<forward name="proceedToPersonalDataInquiry" path="/studentPersonalDataAuthorization.do?method=preparePersonalDataInquiry"/>
-  		</action>
 
   		<action path="/weeklyWorkLoad"
   			type="net.sourceforge.fenixedu.presentationTier.Action.student.WeeklyWorkLoadDA"
@@ -906,6 +902,22 @@
 		
 		<!-- End : Payments -->
 		
+		<!-- Begin : Student Enrollment Management -->
+		<action path="/studentEnrollmentManagement"
+				type="net.sourceforge.fenixedu.presentationTier.Action.student.enrollment.StudentEnrollmentManagementDA" 
+				parameter="method"
+				name="studentEnrollmentManagmentForm"
+				scope="request">
+		
+			<forward name="chooseRegistration" path="enrolment.bolonha.chooseRegistration" />
+			<forward name="choosePersonalDataAuthorizationChoice" path="enrolment.bolonha.choosePersonalDataAuthorizationChoice"/>
+			<forward name="proceedToBolonhaEnrollment" path="/bolonhaStudentEnrollment.do?method=prepare"/>
+			<forward name="proceedToPreBolonhaEnrollment" path="/warningFirst.do"/>
+			
+		</action>
+		
+		<!-- End : Student Enrollment Management-->
+		
 		
 		<!-- Begin : Bolonha Student Enrollment -->
 		<action path="/bolonhaStudentEnrollment"
@@ -917,9 +929,11 @@
 			<forward name="chooseRegistration" path="enrolment.bolonha.chooseRegistration" />
 			<forward name="showDegreeModulesToEnrol" path="enrolment.bolonha.showDegreeModulesToEnrol" />
 			<forward name="chooseOptionalCurricularCourseToEnrol" path="enrolment.bolonha.chooseOptionalCurricularCourseEnrol" />
-			<forward name="showOutOfEnrollmentPeriodMessage" path="enrolment.bolonha.showOutOfEnrollmentPeriodMessage" />
 			<forward name="showEnrollmentInstructions" path="enrolment.bolonha.showEnrollmentInstructions"/>
+			<forward name="showEnrollmentConfirmation" path="enrolment.bolonha.showEnrollmentConfirmation"/>
+			<forward name="choosePersonalDataAuthorizationChoice" path="enrolment.bolonha.choosePersonalDataAuthorizationChoice"/>
 			<forward name="notAuthorized" path="df.page.notAuthorized"/>
+			<forward name="enrollmentCannotProceed" path="enrolment.bolonha.enrollmentCannotProceed" />
 			
 		</action>
 		

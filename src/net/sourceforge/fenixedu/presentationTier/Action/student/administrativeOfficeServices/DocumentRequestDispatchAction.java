@@ -37,7 +37,7 @@ public class DocumentRequestDispatchAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) {
         final Registration registration = getRegistration(request, actionForm);
 
-        if (!registration.getPayedTuition()) {
+        if (registration.hasGratuityDebtsCurrently()) {
             addActionMessage(request, "error.message.tuitionNotPayed");
         } else {
             if (!registration.hasAnyStudentCurricularPlans()) {

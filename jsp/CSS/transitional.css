@@ -33,8 +33,8 @@ padding: 0.5em;
 
 .showinfo1 th { border-top: 1px solid #ddd; border-bottom: 1px solid #ddd; }
 .showinfo1 td { border-top: 1px solid #ddd; border-bottom: 1px solid #ddd; }
-.showinfo3 th { border-bottom: 1px solid #ccc; }
-.showinfo3 td { border-bottom: 1px solid #eee; }
+.showinfo3 th { border-bottom: 1px solid #aaa; }
+.showinfo3 td { border-bottom: 1px solid #ddd; }
 
 .thleft th { text-align: left;}
 .thright th { text-align: right;}
@@ -1434,3 +1434,14 @@ img.percentImage {
   background-position: 1px 0;
  }
  
+ 
+ 
+ 
+.bgcolor6 {
+background-color: #f9f9e2;
+color: #775;
+}
+
+.bgcolor5 { background-color: #fdfdfa; }
+.enrolled { color: #056600; background-color: #effaee; }
+.temporarilyEnrolled { color: #665300; background-color: #faf7ee; }
