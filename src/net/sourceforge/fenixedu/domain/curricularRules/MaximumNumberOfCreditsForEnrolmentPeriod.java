@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
+import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -11,6 +12,8 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 public class MaximumNumberOfCreditsForEnrolmentPeriod extends MaximumNumberOfCreditsForEnrolmentPeriod_Base {
     
     static final public double MAXIMUM_NUMBER_OF_CREDITS = 40.0;
+    
+    static final public double ACCUMULATED_FACTOR = 0.75;
     
     private MaximumNumberOfCreditsForEnrolmentPeriod() {
         super();
@@ -47,6 +50,10 @@ public class MaximumNumberOfCreditsForEnrolmentPeriod extends MaximumNumberOfCre
 	result.add(new GenericPair<Object, Boolean>(MAXIMUM_NUMBER_OF_CREDITS, false));
     
 	return result;
+    }
+
+    public static Double getAccumulatedEctsCredits(final Enrolment enrolment) {
+	return enrolment.getEctsCredits() * ACCUMULATED_FACTOR;
     }
     
 }
