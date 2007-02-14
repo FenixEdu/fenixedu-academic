@@ -38,6 +38,9 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
+import org.joda.time.DateTimeFieldType;
+import org.joda.time.Months;
+import org.joda.time.Partial;
 import org.joda.time.YearMonthDay;
 
 public class AssiduousnessDispatchAction extends FenixDispatchAction {
@@ -96,17 +99,12 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
             yearMonth = new YearMonth();
             yearMonth.setYear(new YearMonthDay().getYear());
             yearMonth.setMonth(Month.values()[new YearMonthDay().getMonthOfYear() - 1]);
-        } else if (yearMonth.getYear() > new YearMonthDay().getYear()
-                || (yearMonth.getYear() == new YearMonthDay().getYear() && yearMonth.getMonth()
-                        .compareTo(Month.values()[new YearMonthDay().getMonthOfYear() - 1]) > 0)) {
-            saveErrors(request, yearMonth, "error.invalidFutureDate");
-            request.setAttribute("employee", employee);
-            return mapping.findForward("show-clockings");
-        } else if (yearMonth.getYear() < 2006
-                || (yearMonth.getYear() == 2006 && yearMonth.getMonth().compareTo(Month.SEPTEMBER) < 0)) {
-            saveErrors(request, yearMonth, "error.invalidPastDate");
-            request.setAttribute("employee", employee);
-            return mapping.findForward("show-clockings");
+        } else {
+            ActionForward actionForward = verifyYearMonth("showClockings", request, mapping, yearMonth);
+            if (actionForward != null) {
+                request.setAttribute("employee", employee);
+                return actionForward;
+            }
         }
 
         YearMonthDay beginDate = new YearMonthDay(yearMonth.getYear(),
@@ -160,17 +158,13 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
             yearMonth = new YearMonth();
             yearMonth.setYear(new YearMonthDay().getYear());
             yearMonth.setMonth(Month.values()[new YearMonthDay().getMonthOfYear() - 1]);
-        } else if (yearMonth.getYear() > new YearMonthDay().getYear()
-                || (yearMonth.getYear() == new YearMonthDay().getYear() && yearMonth.getMonth()
-                        .compareTo(Month.values()[new YearMonthDay().getMonthOfYear() - 1]) > 0)) {
-            saveErrors(request, yearMonth, "error.invalidFutureDate");
-            request.setAttribute("employee", employee);
-            return mapping.findForward("show-justifications");
-        } else if (yearMonth.getYear() < 2006
-                || (yearMonth.getYear() == 2006 && yearMonth.getMonth().compareTo(Month.SEPTEMBER) < 0)) {
-            saveErrors(request, yearMonth, "error.invalidPastDate");
-            request.setAttribute("employee", employee);
-            return mapping.findForward("show-justifications");
+        } else {
+            ActionForward actionForward = verifyYearMonth("show-justifications", request, mapping,
+                    yearMonth);
+            if (actionForward != null) {
+                request.setAttribute("employee", employee);
+                return actionForward;
+            }
         }
 
         if (employee.getAssiduousness() != null) {
@@ -210,21 +204,14 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
             yearMonth = new YearMonth();
             yearMonth.setYear(new YearMonthDay().getYear());
             yearMonth.setMonth(Month.values()[new YearMonthDay().getMonthOfYear() - 1]);
-        } else if (yearMonth.getYear() > new YearMonthDay().getYear()
-                || (yearMonth.getYear() == new YearMonthDay().getYear() && yearMonth.getMonth()
-                        .compareTo(Month.values()[new YearMonthDay().getMonthOfYear() - 1]) > 0)) {
-            saveErrors(request, yearMonth, "error.invalidFutureDate");
-            EmployeeWorkSheet employeeWorkSheet = new EmployeeWorkSheet();
-            employeeWorkSheet.setEmployee(employee);
-            request.setAttribute("employeeWorkSheet", employeeWorkSheet);
-            return mapping.findForward("show-work-sheet");
-        } else if (yearMonth.getYear() < 2006
-                || (yearMonth.getYear() == 2006 && yearMonth.getMonth().compareTo(Month.SEPTEMBER) < 0)) {
-            saveErrors(request, yearMonth, "error.invalidPastDate");
-            EmployeeWorkSheet employeeWorkSheet = new EmployeeWorkSheet();
-            employeeWorkSheet.setEmployee(employee);
-            request.setAttribute("employeeWorkSheet", employeeWorkSheet);
-            return mapping.findForward("show-work-sheet");
+        } else {
+            ActionForward actionForward = verifyYearMonth("showClockings", request, mapping, yearMonth);
+            if (actionForward != null) {
+                EmployeeWorkSheet employeeWorkSheet = new EmployeeWorkSheet();
+                employeeWorkSheet.setEmployee(employee);
+                request.setAttribute("employeeWorkSheet", employeeWorkSheet);
+                return actionForward;
+            }
         }
 
         YearMonthDay beginDate = new YearMonthDay(yearMonth.getYear(),
@@ -246,6 +233,29 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
 
         request.setAttribute("yearMonth", yearMonth);
         return mapping.findForward("show-work-sheet");
+    }
+
+    private ActionForward verifyYearMonth(String returnPath, HttpServletRequest request,
+            ActionMapping mapping, YearMonth yearMonth) {
+        if (yearMonth.getYear() > new YearMonthDay().getYear()
+                || (yearMonth.getYear() == new YearMonthDay().getYear() && yearMonth.getMonth()
+                        .compareTo(Month.values()[new YearMonthDay().getMonthOfYear() - 1]) > 0)) {
+            saveErrors(request, yearMonth, "error.invalidFutureDate");
+            return mapping.findForward(returnPath);
+        } else {
+            DateTimeFieldType[] typeFields = { DateTimeFieldType.year(), DateTimeFieldType.monthOfYear() };
+            int[] args = { yearMonth.getYear(), yearMonth.getNumberOfMonth() };
+            Partial choosedPartial = new Partial(typeFields, args);
+            YearMonthDay today = new YearMonthDay();
+            args[0] = today.getYear();
+            args[1] = today.getMonthOfYear();
+            Partial thisMonthPartial = new Partial(typeFields, args);
+            if (Months.monthsBetween(choosedPartial, thisMonthPartial).getMonths() > 1) {
+                saveErrors(request, yearMonth, "error.invalidPastDate");
+                return mapping.findForward(returnPath);
+            }
+        }
+        return null;
     }
 
     private void saveErrors(HttpServletRequest request, YearMonth yearMonth, String message) {
