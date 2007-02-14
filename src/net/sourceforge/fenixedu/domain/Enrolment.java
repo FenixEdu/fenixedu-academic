@@ -82,6 +82,10 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return true;
     }
 
+    public boolean isBolonha() {
+	return !(getDegreeModule() instanceof CurricularCourse) || getCurricularCourse().isBolonha();
+    }
+    
     @Deprecated
     public EnrollmentCondition getCondition() {
 	return getEnrolmentCondition();
