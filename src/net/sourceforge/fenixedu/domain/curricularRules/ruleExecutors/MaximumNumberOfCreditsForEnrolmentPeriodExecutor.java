@@ -15,16 +15,16 @@ public class MaximumNumberOfCreditsForEnrolmentPeriodExecutor extends Curricular
 	final StudentCurricularPlan studentCurricularPlan = enrolmentContext.getStudentCurricularPlan();
 	final ExecutionPeriod executionPeriod = enrolmentContext.getExecutionPeriod();
 
-	final double maxECTS = MaximumNumberOfCreditsForEnrolmentPeriod.MAXIMUM_NUMBER_OF_CREDITS;
-	final double ects = studentCurricularPlan.getEctsCredits(executionPeriod);
-	double availableEctsCredits = ((maxECTS - ects) > 0) ? maxECTS - ects : 0.0;
+	final double maximum = MaximumNumberOfCreditsForEnrolmentPeriod.MAXIMUM_NUMBER_OF_CREDITS;
+	final double accumulated = studentCurricularPlan.getAccumulatedEctsCredits(executionPeriod);
+	double available = ((maximum - accumulated) > 0) ? maximum - accumulated : 0.0;
 	        
 	for (final DegreeModuleToEnrol degreeModuleToEnrol : enrolmentContext.getDegreeModuleToEnrol()) {
 	    final double degreeModuleEctsCredits = degreeModuleToEnrol.getEctsCredits(executionPeriod);
-	    if (degreeModuleEctsCredits > availableEctsCredits) {
-		return RuleResult.createFalse("curricularRules.ruleExecutors.MaximumNumberOfCreditsForEnrolmentPeriodExecutor", String.valueOf(maxECTS));
+	    if (degreeModuleEctsCredits > available) {
+		return RuleResult.createFalse("curricularRules.ruleExecutors.MaximumNumberOfCreditsForEnrolmentPeriodExecutor", String.valueOf(maximum));
 	    } else {
-		availableEctsCredits -= degreeModuleEctsCredits;
+		available -= degreeModuleEctsCredits;
 	    }
 	}
 	        
