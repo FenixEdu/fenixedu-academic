@@ -67,7 +67,7 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
 	    }
 	}
 
-	if (registration == null || (loggedStudent != null && !loggedStudent.hasRegistrations(registration))) {
+	if (registration == null) {
 	    return mapping.findForward("NotAuthorized");
 	} else {
 	    return getStudentCP(registration, mapping, request);
