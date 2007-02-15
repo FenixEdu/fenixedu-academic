@@ -127,11 +127,6 @@ public class StudentCurricularPlanEnrolment {
 
 	final ExecutionPeriod executionPeriod = enrolmentContext.getExecutionPeriod();
 
-	/*
-	 * Recolher todos os XPTOs para criar IXPTO, depois só coleccionar as regras daqueles ñ têm ChildCurriculumModules
-	 * mas adicionar sp ao mapa
-	 */
-	
 	for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext.getStudentCurricularPlan().getDegreeModulesToEvaluate(executionPeriod)) {
 	    
 	    if (degreeModuleToEvaluate.canCollectRules()) {
