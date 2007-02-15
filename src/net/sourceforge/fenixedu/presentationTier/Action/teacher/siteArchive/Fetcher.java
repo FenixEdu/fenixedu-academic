@@ -147,7 +147,7 @@ public class Fetcher {
 
 	private void getFile(OutputStream stream, String url) throws IOException {
 		IFileManager fileManager = FileManagerFactory.getFactoryInstance().getFileManager();
-		InputStream fileStream = fileManager.retrieveFileAsStream(getDspaceFileId(url));
+		InputStream fileStream = fileManager.retrieveFile(getDspaceFileId(url));
 
 		byte[] buffer = new byte[2048];
 		int length;
