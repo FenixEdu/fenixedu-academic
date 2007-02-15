@@ -5,6 +5,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <html:xhtml/>
 
+<em><bean:message key="label.teacherPortal" bundle="APPLICATION_RESOURCES"/></em>
 <h2><bean:message key="see.specified.rooms.reserve.title" bundle="APPLICATION_RESOURCES"/></h2>
 
 <logic:present role="TEACHER">
@@ -51,7 +52,7 @@
 				<th><bean:message key="label.rooms.reserve.periods" bundle="APPLICATION_RESOURCES"/>:</th>	
 				<td>					
 					<logic:notEmpty name="punctualRequest" property="genericEvents">
-						<ul style="padding-left: 1.5em;">
+						<ul class="list6 nobullet">
 							<logic:iterate id="genericEvent" name="punctualRequest" property="genericEvents">
 								<li>
 									<bean:write name="genericEvent" property="eventPeriodForGanttDiagram"/>
@@ -91,11 +92,15 @@
 			</logic:iterate>
 		</logic:notEmpty>
 		
-		<p class="mtop25 mbottom05"><bean:message key="label.rooms.reserve.new.comment" bundle="APPLICATION_RESOURCES"/>:</p>
+<div class="infoop2 mtop15">
+	<p><bean:message key="label.rooms.reserve.teacher.reopen.instructions" bundle="APPLICATION_RESOURCES"/></p>
+</div>
+
+		<p class="mtop15 mbottom05"><bean:message key="label.rooms.reserve.new.comment" bundle="APPLICATION_RESOURCES"/>:</p>
 		<fr:form action="/roomsReserveManagement.do">
 			<html:hidden property="method" value="createNewComment"/>
 			<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserve&amp;punctualReserveID=<bean:write name="punctualRequest" property="idInternal"/></bean:define>
-			
+
 			<fr:hasMessages for="roomsReserveNewComment">
 				<p>
 					<span class="error0">			

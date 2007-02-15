@@ -6,6 +6,8 @@
 <%@ taglib uri="/WEB-INF/collectionPager.tld" prefix="cp"%>
 <html:xhtml/>
 
+
+<em><bean:message key="label.teacherPortal" bundle="APPLICATION_RESOURCES"/></em>
 <h2><bean:message key="rooms.reserve.title" bundle="APPLICATION_RESOURCES"/></h2>
 
 
@@ -20,6 +22,10 @@
 			</span>
 		<p>
 	</logic:messagesPresent>	
+
+<div class="infoop2 mtop15">
+	<p><bean:message key="label.rooms.reserve.teacher.instructions" bundle="APPLICATION_RESOURCES"/></p>
+</div>
 	
 	<bean:define id="person" name="UserView" property="person" type="net.sourceforge.fenixedu.domain.Person"/>
 

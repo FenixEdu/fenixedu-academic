@@ -92,7 +92,7 @@
 				<th><bean:message key="label.rooms.reserve.periods" bundle="SOP_RESOURCES"/>:</th>	
 				<td>
 					<logic:notEmpty name="punctualRequest" property="genericEvents">
-						<ul style="padding-left: 1.5em;">
+						<ul class="list6 nobullet">
 							<logic:iterate id="genericEvent" name="punctualRequest" property="genericEvents">
 								<li>									
 									<logic:equal name="punctualRequest" property="currentState.name" value="OPEN">
@@ -152,6 +152,7 @@
 				</p>
 			</fr:hasMessages>
 			<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserveRequest&punctualReserveID=<bean:write name="punctualRequest" property="idInternal"/></bean:define>
+
 			<fr:edit id="roomsReserveNewComment" name="roomsReserveBean" slot="description" 
 				validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator"
 				type="net.sourceforge.fenixedu.dataTransferObject.teacher.RoomsReserveBean">

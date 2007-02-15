@@ -48,7 +48,7 @@
 					<td class="nowrap smalltxt">
 						<bean:write name="myRequest" property="presentationInstant"/>						
 					</td>
-					<td>
+					<td style="width: 250px;">
 						<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserveRequest&amp;reserveRequestID=<bean:write name="myRequest" property="idInternal"/></bean:define>
 						<html:link page="<%= seeReserveURL %>">
 							<bean:write name="myRequest" property="subject"/>
@@ -108,7 +108,7 @@
 					<td class="nowrap smalltxt">
 						<bean:write name="newRequest" property="presentationInstant"/>						
 					</td>
-					<td>
+					<td style="width: 250px;">
 						<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserveRequest&amp;reserveRequestID=<bean:write name="newRequest" property="idInternal"/></bean:define>
 						<html:link page="<%= seeReserveURL %>">
 							<bean:write name="newRequest" property="subject"/>
@@ -153,7 +153,7 @@
 					<td class="nowrap smalltxt">
 						<bean:write name="openedRequest" property="presentationInstant"/>						
 					</td>
-					<td>
+					<td style="width: 250px;">
 						<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserveRequest&amp;reserveRequestID=<bean:write name="openedRequest" property="idInternal"/></bean:define>
 						<html:link page="<%= seeReserveURL %>">
 							<bean:write name="openedRequest" property="subject"/>
@@ -222,7 +222,7 @@
 					<td class="nowrap smalltxt">
 						<bean:write name="resolvedRequest" property="presentationInstant"/>						
 					</td>
-					<td>
+					<td style="width: 250px;">
 						<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserveRequest&amp;reserveRequestID=<bean:write name="resolvedRequest" property="idInternal"/></bean:define>
 						<html:link page="<%= seeReserveURL %>">
 							<bean:write name="resolvedRequest" property="subject"/>
