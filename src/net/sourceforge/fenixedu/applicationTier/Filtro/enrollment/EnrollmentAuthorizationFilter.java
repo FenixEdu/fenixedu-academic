@@ -61,14 +61,14 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
 	if (studentCurricularPlan == null) {
 	    return "noAuthorization";
 	}
-	if (insideEnrollmentPeriod(studentCurricularPlan)) {
+	/*if (insideEnrollmentPeriod(studentCurricularPlan)) {
 	    final Tutor tutor = studentCurricularPlan.getAssociatedTutor();
 	    if (tutor != null) {
-		return new String("error.enrollment.student.withTutor+"
+		return "error.enrollment.student.withTutor+"
 			+ tutor.getTeacher().getTeacherNumber().toString() + "+"
-			+ tutor.getTeacher().getPerson().getNome());
+			+ tutor.getTeacher().getPerson().getNome();
 	    }
-	}
+	}*/
 	return null;
     }
 
@@ -85,7 +85,7 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
 	}
 
 	if (registration.getAssociatedTutor() == null) {
-	    return new String("error.enrollment.notStudentTutor+" + registration.getNumber().toString());
+	    return "error.enrollment.notStudentTutor+" + registration.getNumber().toString();
 	}
 
 	return null;
@@ -105,39 +105,23 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
 	if (registration == null) {
 	    return "noAuthorization";
 	}
-	if (registration.getPayedTuition() == null
-		|| registration.getPayedTuition().equals(Boolean.FALSE)) {
+	
+	if(!registration.isInRegisteredState()) {
+	    return "error.message.not.in.registered.state";
+	}
+	
+	if (!registration.getPayedTuition()) {
 	    if (!registration.getInterruptedStudies()) {
 		return "error.message.tuitionNotPayed";
 	    }
 	}
-	if (registration.getFlunked()) {
-	    return "error.message.flunked";
-	}
+	
 	if (registration.getRequestedChangeDegree() == null
-		|| registration.getRequestedChangeDegree().equals(Boolean.TRUE)) {
+		|| registration.getRequestedChangeDegree()) {
 	    return "error.message.requested.change.degree";
 	}
-
-	/*
-         * if (registration.hasAssociatedTutor()) { return new
-         * String("error.enrollment.student.withTutor+" +
-         * registration.getAssociatedTutor().getTeacher().getTeacherNumber().toString() +
-         * "+" +
-         * registration.getAssociatedTutor().getTeacher().getPerson().getNome()); }
-         */
-
-	// check if the student is in the list of secretary enrolments
-	// students
-	final SecretaryEnrolmentStudent secretaryEnrolmentStudent = registration
-		.getSecretaryEnrolmentStudents().isEmpty() ? null : registration
-		.getSecretaryEnrolmentStudents().iterator().next();
-	if (secretaryEnrolmentStudent != null) {
-	    return "error.message.secretaryEnrolmentStudent";
-	}
-
-	if (registration.isInRegisteredState()
-		&& registration.getActiveStudentCurricularPlan().getDegreeCurricularPlan()
+	
+	if (registration.getActiveStudentCurricularPlan().getDegreeCurricularPlan()
 			.getIdInternal() == LEIC_OLD_DCP) {
 
 	    return "error.message.oldLeicStudent";
