@@ -304,6 +304,11 @@ Documentation:
     <!--@ Money output -->
     <renderer type="net.sourceforge.fenixedu.util.Money" class="net.sourceforge.fenixedu.presentationTier.renderers.MoneyRenderer"/>
 
+	<!--@ Linkable Unit Renderer -->
+	<renderer type="net.sourceforge.fenixedu.domain.organizationalStructure.Unit" class="net.sourceforge.fenixedu.presentationTier.renderers.UnitSiteRenderer" layout="unit-link">
+		<property name="moduleRelative" value="false"/>
+		<property name="contextRelative" value="true"/>
+	</renderer>
     <!-- input -->
 
     <!--@ The default layout for editing objects.  -->  

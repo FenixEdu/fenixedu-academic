@@ -102,4 +102,7 @@ public class DegreeProcessor extends PathProcessor {
         
     }
 
+    public static String getDegreePath(Degree degree) {
+    	return "/" + degree.getSigla().toLowerCase();
+    }
 }
