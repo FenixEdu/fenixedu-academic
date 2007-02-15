@@ -37,7 +37,7 @@
 	<logic:present name="optionalEnrolmentBean" property="degreeCurricularPlan">
 		<fr:edit id="degreeCurricularPlan" name="optionalEnrolmentBean">
 			<fr:layout name="bolonha-student-optional-enrolments">
-				<fr:property name="groupRowClasses" value="bgcolor6" />
+				<fr:property name="groupRowClasses" value="se_groups" />
 			</fr:layout>
 		</fr:edit>
 		<br />
