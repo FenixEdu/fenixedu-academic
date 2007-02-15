@@ -22,10 +22,10 @@
 			</span>
 		<p>
 	</logic:messagesPresent>	
-
-<div class="infoop2 mtop15">
-	<p><bean:message key="label.rooms.reserve.teacher.instructions" bundle="APPLICATION_RESOURCES"/></p>
-</div>
+	
+	<div class="infoop2 mtop15">
+		<p><bean:message key="label.rooms.reserve.teacher.instructions" bundle="APPLICATION_RESOURCES"/></p>
+	</div>
 	
 	<bean:define id="person" name="UserView" property="person" type="net.sourceforge.fenixedu.domain.Person"/>
 

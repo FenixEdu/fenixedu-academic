@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.OccupationPeriod;
 public class CreateOccupationPeriod extends Service {
 
     public OccupationPeriod run(YearMonthDay begin, YearMonthDay end) {
-	OccupationPeriod period = OccupationPeriod.readFor(begin, end);
+	OccupationPeriod period = OccupationPeriod.readOccupationPeriod(begin, end);
 	if (period == null) {
 	    return new OccupationPeriod(begin, end);
 	}

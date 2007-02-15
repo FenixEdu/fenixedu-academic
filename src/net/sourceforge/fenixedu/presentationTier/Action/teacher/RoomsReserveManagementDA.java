@@ -124,7 +124,9 @@ public class RoomsReserveManagementDA extends FenixDispatchAction {
 	} catch (DomainException e) {
 	    saveMessages(request, e);	    
 	}
-		
+	
+	RenderUtils.invalidateViewState("roomsReserveNewComment");
+	
 	bean.setDescription(null);	
 	request.setAttribute("roomsReserveBean", bean);	
 	return mapping.findForward("seeSpecifiedRoomsReserve");

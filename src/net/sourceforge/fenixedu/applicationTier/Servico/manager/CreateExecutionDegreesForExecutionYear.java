@@ -75,7 +75,7 @@ public class CreateExecutionDegreesForExecutionYear extends Service {
     }
 
     private OccupationPeriod getOccupationPeriod(final Calendar startDate, final Calendar endDate) {
-        OccupationPeriod occupationPeriod = OccupationPeriod.readFor(YearMonthDay.fromCalendarFields(startDate), YearMonthDay.fromCalendarFields(endDate));
+        OccupationPeriod occupationPeriod = OccupationPeriod.readOccupationPeriod(YearMonthDay.fromCalendarFields(startDate), YearMonthDay.fromCalendarFields(endDate));
         if (occupationPeriod == null) {
             occupationPeriod = new OccupationPeriod(startDate.getTime(), endDate.getTime());
             occupationPeriod.setNextPeriod(null);

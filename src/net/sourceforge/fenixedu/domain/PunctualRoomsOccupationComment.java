@@ -28,7 +28,15 @@ public class PunctualRoomsOccupationComment extends PunctualRoomsOccupationComme
         setDescription(description);
         setInstant(instant);               
     }  
-       
+    
+    public void edit(MultiLanguageString subject, MultiLanguageString description) {
+	if(!getRequest().getCurrentState().equals(RequestState.NEW)) {
+	    throw new DomainException("error.PunctualRoomsOccupationRequest.impossible.edit");
+	}	
+	setSubject(subject);
+	setDescription(description);
+    }
+    
     public String getPresentationInstant() {
 	return getInstant().toString("dd/MM/yyyy HH:mm");
     }

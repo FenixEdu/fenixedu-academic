@@ -85,7 +85,12 @@ public class RoomsPunctualSchedulingDA extends FenixDispatchAction {
 	    FenixFilterException, FenixServiceException {
 	
 	GenericEvent genericEventFromParameter = getGenericEventFromParameter(request);
-	executeService("DeleteGenericEvent", new Object[] { genericEventFromParameter });	
+	try {
+	    executeService("DeleteGenericEvent", new Object[] { genericEventFromParameter });   
+	} catch (DomainException e) {
+	    saveMessages(request, e);
+	}	
+	
 	return prepare(mapping, form, request, response);
     }  
            

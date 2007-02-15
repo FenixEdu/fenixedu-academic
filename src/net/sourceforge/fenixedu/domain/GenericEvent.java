@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -10,7 +9,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 import net.sourceforge.fenixedu.util.renderer.GanttDiagramEvent;
@@ -22,37 +20,57 @@ import org.joda.time.YearMonthDay;
 public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent {
     
     public GenericEvent(MultiLanguageString title, MultiLanguageString description, List<OldRoom> rooms, 
-	    Calendar startTime, Calendar endTime, DiaSemana dayOfWeek, FrequencyType frequencyType, 
-	    OccupationPeriod occupationPeriod, PunctualRoomsOccupationRequest request) {
+	    YearMonthDay beginDate, YearMonthDay endDate, HourMinuteSecond beginTime, 
+	    HourMinuteSecond endTime, FrequencyType frequencyType, PunctualRoomsOccupationRequest request) {
 	
 	super();        		
+	
 	if(rooms.isEmpty()) {
 	    throw new DomainException("error.empty.room.to.create.room.occupation");
-	}	
+	}		
 	
-	setRootDomainObject(RootDomainObject.getInstance());
+        if(request != null) {  
+            if(request.getCurrentState().equals(RequestState.RESOLVED)) {
+                throw new DomainException("error.GenericEvent.request.was.resolved");
+            }
+            request.associateNewGenericEvent(AccessControl.getPerson(), this, new DateTime());
+        }
+        
+        setRootDomainObject(RootDomainObject.getInstance());
         setTitle(title);
         setDescription(description);        
 	setFrequency(frequencyType);
-        
-        if(request != null) {
-           request.associateNewGenericEvent(AccessControl.getPerson(), this, new DateTime());
-        }
-        
+        	
 	for (OldRoom room : rooms) {	
-	    createNewRoomOccupation(room, startTime, endTime, dayOfWeek, occupationPeriod);
+	    new RoomOccupation(room, beginDate, endDate, beginTime, endTime, frequencyType, this);
 	}
     }  
-
-    public void createNewRoomOccupation(OldRoom room, Calendar startTime, Calendar endTime, DiaSemana dayOfWeek, 
-	    OccupationPeriod occupationPeriod) {
+    
+    public void edit(MultiLanguageString title, MultiLanguageString description, List<OldRoom> newRooms,
+	    List<RoomOccupation> roomOccupationsToRemove) {	
 	
-	Integer frequency = (getFrequency() != null) ? getFrequency().ordinal() + 1 : null;
-	if(!room.isFree(occupationPeriod, startTime, endTime, dayOfWeek, frequency, 1)) {
-            throw new DomainException("error.GenericEvent.roomOccupation.room.is.not.free");
-        }            
-        new RoomOccupation(room, startTime, endTime, dayOfWeek, getFrequency(), this, occupationPeriod);	
-    }
+	if(getPunctualRoomsOccupationRequest() != null && 
+		getPunctualRoomsOccupationRequest().getCurrentState().equals(RequestState.RESOLVED)) {
+            throw new DomainException("error.GenericEvent.request.was.resolved");
+        }		
+	
+	setTitle(title);
+	setDescription(description);	
+	
+	YearMonthDay beginDate = getBeginDate();
+	YearMonthDay endDate = getEndDate();
+	HourMinuteSecond beginTime = getBeginTime();
+	HourMinuteSecond endTime = getEndTime();
+	FrequencyType frequency = getFrequency();
+	
+	while(!roomOccupationsToRemove.isEmpty()) {
+            roomOccupationsToRemove.remove(0).delete();
+        }
+	
+	for (OldRoom room : newRooms) {	
+	    new RoomOccupation(room, beginDate, endDate, beginTime, endTime, frequency, this);
+        }					       
+    }       
     
     @Override
     public void setTitle(MultiLanguageString title) {
@@ -62,10 +80,19 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
 	super.setTitle(title);
     }
     
-    public void delete() {
+    public void delete() {	
+	
+	if(getLastInstant().isBeforeNow()) {
+	    throw new DomainException("error.GenericEvent.impossible.delete.because.was.old.event");
+	}	
+	if(getPunctualRoomsOccupationRequest() != null && getPunctualRoomsOccupationRequest().getCurrentState().equals(RequestState.RESOLVED)) {
+            throw new DomainException("error.GenericEvent.request.was.resolved");
+        }
+	
 	while(hasAnyRoomOccupations()) {
 	    getRoomOccupations().get(0).delete();
 	}
+	
 	removePunctualRoomsOccupationRequest();
 	removeRootDomainObject();
 	deleteDomainObject();
@@ -86,6 +113,14 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
 	    result.add(occupation.getRoom());	
 	}
 	return result;
+    }
+    
+    public DateTime getLastInstant() {
+	return (!getRoomOccupations().isEmpty()) ? getRoomOccupations().get(0).getLastInstant() : null;
+    }
+    
+    public OccupationPeriod getOccupationPeriod() {
+	return (!getRoomOccupations().isEmpty()) ? getRoomOccupations().get(0).getPeriod() : null;
     }
     
     public YearMonthDay getBeginDate() {
@@ -153,5 +188,5 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
 	    return "[C] " + prettyPrint;
 	}	
 	return " - ";
-    }
+    }      
 }

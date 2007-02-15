@@ -18,5 +18,6 @@
 		<property name="rows" value="10" />
 		<property name="columns" value="60"/>
 	</slot>	
+	<setter signature="edit(subject, description)" />
 </schema>
 

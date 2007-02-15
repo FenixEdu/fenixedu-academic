@@ -242,8 +242,12 @@
 						</logic:empty>			
 					</td>
 					<td class="acenter">
-						<% Integer numOfNewComments = resolvedRequest.getNumberOfNewComments(person);	%>
-						<%= numOfNewComments.toString() %>
+						<% 	String numOfNewComments = "-";
+							if(resolvedRequest.getOwner() != null && resolvedRequest.getOwner().equals(person)){
+							    numOfNewComments = resolvedRequest.getNumberOfNewComments(person).toString();
+							}														
+						%>
+						<%= numOfNewComments %>						
 					</td>
 					<td class="acenter smalltxt">
 						<logic:notEmpty name="resolvedRequest" property="genericEvents">

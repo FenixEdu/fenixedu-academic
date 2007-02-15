@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.GenericEvent;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.CalendarUtil;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
@@ -76,7 +77,35 @@ public class RoomOccupation extends RoomOccupation_Base {
         setPeriod(occupationPeriod);
         setFrequency(frequency);
     }   
-           
+    
+    public RoomOccupation(OldRoom room, YearMonthDay beginDate, YearMonthDay endDate, HourMinuteSecond beginTime, HourMinuteSecond endTime,
+	    FrequencyType frequencyType, GenericEvent genericEvent) {	
+	
+        this();          
+        
+        DiaSemana diaSemana = new DiaSemana(getDiaSemana(beginDate));
+        Integer frequency = (frequencyType != null) ? frequencyType.ordinal() + 1 : null;        
+        Calendar beginTimeCalendar = beginDate.toDateTime(new TimeOfDay(beginTime.getHour(), beginTime.getMinuteOfHour(), 0, 0)).toCalendar(LanguageUtils.getLocale());
+        Calendar endTimeCalendar = endDate.toDateTime(new TimeOfDay(endTime.getHour(), endTime.getMinuteOfHour(), 0, 0)).toCalendar(LanguageUtils.getLocale());
+        
+        OccupationPeriod occupationPeriod = OccupationPeriod.readOccupationPeriod(beginDate, endDate);
+        if(occupationPeriod == null) {
+            occupationPeriod = new OccupationPeriod(beginDate, endDate);
+        }
+        
+        if(!room.isFree(occupationPeriod, beginTimeCalendar, endTimeCalendar, diaSemana, frequency, 1)) {
+            throw new DomainException("error.roomOccupation.room.is.not.free");
+        }
+        
+        setRoom(room);
+        setGenericEvent(genericEvent);
+        setStartTime(beginTimeCalendar);
+        setEndTime(endTimeCalendar);
+        setDayOfWeek(diaSemana);                       
+        setPeriod(occupationPeriod);
+        setFrequency(frequencyType);               
+    }   
+               
     public boolean roomOccupationForDateAndTime(RoomOccupation roomOccupation) {
         return roomOccupationForDateAndTime(roomOccupation.getPeriod(), roomOccupation.getStartTime(),
                 roomOccupation.getEndTime(), roomOccupation.getDayOfWeek(), roomOccupation
@@ -110,7 +139,7 @@ public class RoomOccupation extends RoomOccupation_Base {
 	endTime.set(Calendar.SECOND, 0);
 	endTime.set(Calendar.MILLISECOND, 0);
 	
-	if (this.getPeriod().intersectPeriods(startDate, endDate)) {                       	   	    	    			   
+	if (getPeriod().intersectPeriods(startDate, endDate)) {                       	   	    	    			   
 	    
 	    List<Interval> thisOccupationIntervals = getRoomOccupationIntervals();
 	    List<Interval> passedOccupationIntervals = getRoomOccupationIntervals(new YearMonthDay(startDate), new YearMonthDay(endDate),  
@@ -171,7 +200,7 @@ public class RoomOccupation extends RoomOccupation_Base {
         removePeriod();
 
         if (period != null) {
-            period.deleteIfEmpty();
+            period.delete();
         }
 
         removeRootDomainObject();
@@ -190,23 +219,23 @@ public class RoomOccupation extends RoomOccupation_Base {
 		roomOccupationIntervals.get(roomOccupationIntervals.size() - 1).getEnd() : null;	
     }                    
     
-    public List<Interval> getRoomOccupationIntervals(){	
+    public List<Interval> getRoomOccupationIntervals(){		
 	List<Interval> result = new ArrayList<Interval>();
-	OccupationPeriod period = getPeriod();	
-	if(period.getNextPeriod() != null) {                                       
-	    while(period != null) {
-                result.addAll(getRoomOccupationIntervals(period.getStartYearMonthDay(), period.getEndYearMonthDay(), 
-            	    getStartTimeDateHourMinuteSecond(), getEndTimeDateHourMinuteSecond(), getFrequency(), getWeekOfQuinzenalStart(), 
-            	    getDayOfWeek()));
-                
-                period = period.getNextPeriod();             
-            }            
-            return result;            
-	} else {	
-            return getRoomOccupationIntervals(getPeriod().getStartYearMonthDay(), getPeriod().getEndYearMonthDay(), 
-            	   getStartTimeDateHourMinuteSecond(), getEndTimeDateHourMinuteSecond(), getFrequency(), getWeekOfQuinzenalStart(),
-            	   getDayOfWeek());
-	}
+	OccupationPeriod occupationPeriod = getPeriod();        
+	
+	result.addAll(getRoomOccupationIntervals(occupationPeriod.getStartYearMonthDay(), occupationPeriod.getEndYearMonthDay(), 
+    	    getStartTimeDateHourMinuteSecond(), getEndTimeDateHourMinuteSecond(), getFrequency(), getWeekOfQuinzenalStart(), 
+    	    getDayOfWeek()));
+	                             		           
+        while(occupationPeriod.getNextPeriod() != null) {
+            result.addAll(getRoomOccupationIntervals(occupationPeriod.getNextPeriod().getStartYearMonthDay(), 
+        	    occupationPeriod.getNextPeriod().getEndYearMonthDay(), getStartTimeDateHourMinuteSecond(),
+        	    getEndTimeDateHourMinuteSecond(), getFrequency(), getWeekOfQuinzenalStart(), getDayOfWeek()));
+            
+            occupationPeriod = occupationPeriod.getNextPeriod();             
+        }
+        
+	return result;            		
     }	
           
     private List<Interval> getRoomOccupationIntervals(YearMonthDay begin, YearMonthDay end,
@@ -242,8 +271,7 @@ public class RoomOccupation extends RoomOccupation_Base {
 	return new Interval(
 		begin.toDateTime(new TimeOfDay(beginTime.getHour(), beginTime.getMinuteOfHour(), 0, 0)),			
 		end.toDateTime(new TimeOfDay(endTime.getHour(), endTime.getMinuteOfHour(), 0, 0)));
-    }
-        
+    }        
     
     public static Set<RoomOccupation> getActivePunctualRoomOccupations(){	
 	Set<RoomOccupation> result = new TreeSet<RoomOccupation>(COMPARATOR_BY_BEGIN_DATE);
@@ -407,5 +435,13 @@ public class RoomOccupation extends RoomOccupation_Base {
 
         }
         return list;
+    }
+    
+    private int getDiaSemana(YearMonthDay begin) {
+	int dayOfWeek = begin.toDateTimeAtMidnight().getDayOfWeek();
+	if(dayOfWeek == 7) {
+	    return 1;
+	}
+	return dayOfWeek + 1;
     }
 }

@@ -115,7 +115,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable 
 	OccupationPeriod occupationPeriodReference = getPeriodGradeSubmissionSpecialSeason();
 	if (occupationPeriodReference != null) {
 	    removePeriodGradeSubmissionSpecialSeason();
-	    occupationPeriodReference.deleteIfEmpty();
+	    occupationPeriodReference.delete();
 	}
     }
 
@@ -123,7 +123,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable 
 	OccupationPeriod occupationPeriodReference = getPeriodGradeSubmissionNormalSeasonSecondSemester();
 	if (occupationPeriodReference != null) {
 	    removePeriodGradeSubmissionNormalSeasonSecondSemester();
-	    occupationPeriodReference.deleteIfEmpty();
+	    occupationPeriodReference.delete();
 	}
     }
 
@@ -131,7 +131,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable 
 	OccupationPeriod occupationPeriodReference = getPeriodGradeSubmissionNormalSeasonFirstSemester();
 	if (occupationPeriodReference != null) {
 	    removePeriodGradeSubmissionNormalSeasonFirstSemester();
-	    occupationPeriodReference.deleteIfEmpty();
+	    occupationPeriodReference.delete();
 	}
     }
 
@@ -139,7 +139,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable 
 	OccupationPeriod occupationPeriodReference = getPeriodExamsSpecialSeason();
 	if (occupationPeriodReference != null) {
 	    removePeriodExamsSpecialSeason();
-	    occupationPeriodReference.deleteIfEmpty();
+	    occupationPeriodReference.delete();
 	}
     }
 
@@ -147,7 +147,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable 
 	OccupationPeriod occupationPeriodReference = getPeriodExamsSecondSemester();
 	if (occupationPeriodReference != null) {
 	    removePeriodExamsSecondSemester();
-	    occupationPeriodReference.deleteIfEmpty();
+	    occupationPeriodReference.delete();
 	}
     }
 
@@ -155,7 +155,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable 
 	OccupationPeriod occupationPeriodReference = getPeriodExamsFirstSemester();
 	if (occupationPeriodReference != null) {
 	    removePeriodExamsFirstSemester();
-	    occupationPeriodReference.deleteIfEmpty();
+	    occupationPeriodReference.delete();
 	}
     }
 
@@ -163,7 +163,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable 
 	OccupationPeriod occupationPeriodReference = getPeriodLessonsSecondSemester();
 	if (occupationPeriodReference != null) {
 	    removePeriodLessonsSecondSemester();
-	    occupationPeriodReference.deleteIfEmpty();
+	    occupationPeriodReference.delete();
 	}
     }
 
@@ -171,7 +171,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable 
 	OccupationPeriod occupationPeriodReference = getPeriodLessonsFirstSemester();
 	if (occupationPeriodReference != null) {
 	    removePeriodLessonsFirstSemester();
-	    occupationPeriodReference.deleteIfEmpty();
+	    occupationPeriodReference.delete();
 	}
     }
 

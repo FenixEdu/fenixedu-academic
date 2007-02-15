@@ -23,13 +23,14 @@
 	<logic:notEmpty name="roomsReserveBean">
 	
 		<bean:define id="punctualRequest" name="roomsReserveBean" property="reserveRequest" />	
+		<bean:define id="currentStateName" name="punctualRequest" property="currentState.name" />
 		<ul>
 			<li>
 				<html:link page="/roomsReserveManagement.do?method=viewReserves">		
 					<bean:message bundle="APPLICATION_RESOURCES" key="label.return"/>
 				</html:link>
 			</li>
-			<logic:equal name="punctualRequest" property="currentState.name" value="NEW">
+			<logic:equal name="currentStateName" value="NEW">
 				<li>
 					<bean:define id="prepareEditURL">/roomsReserveManagement.do?method=prepareEdit&punctualReserveID=<bean:write name="punctualRequest" property="idInternal"/></bean:define>
 					<html:link page="<%= prepareEditURL %>">		
@@ -46,7 +47,7 @@
 			</tr>	
 			<tr>
 				<th><bean:message key="label.rooms.reserve.state" bundle="APPLICATION_RESOURCES"/>:</th>
-				<td><bean:message name="punctualRequest" property="currentState.name" bundle="APPLICATION_RESOURCES"/></td>
+				<td><bean:message name="currentStateName" bundle="APPLICATION_RESOURCES"/></td>
 			</tr>
 			<tr>
 				<th><bean:message key="label.rooms.reserve.periods" bundle="APPLICATION_RESOURCES"/>:</th>	
@@ -92,9 +93,11 @@
 			</logic:iterate>
 		</logic:notEmpty>
 		
-<div class="infoop2 mtop15">
-	<p><bean:message key="label.rooms.reserve.teacher.reopen.instructions" bundle="APPLICATION_RESOURCES"/></p>
-</div>
+		<logic:equal name="currentStateName" value="RESOLVED">
+			<div class="infoop2 mtop15">
+				<p><bean:message key="label.rooms.reserve.teacher.reopen.instructions" bundle="APPLICATION_RESOURCES"/></p>
+			</div>
+		</logic:equal>
 
 		<p class="mtop15 mbottom05"><bean:message key="label.rooms.reserve.new.comment" bundle="APPLICATION_RESOURCES"/>:</p>
 		<fr:form action="/roomsReserveManagement.do">
@@ -122,7 +125,7 @@
 			
 			<p>
 			<html:submit><bean:message key="label.submit" bundle="APPLICATION_RESOURCES"/></html:submit>
-			<logic:equal name="punctualRequest" property="currentState.name" value="RESOLVED">
+			<logic:equal name="currentStateName" value="RESOLVED">
 				<html:submit onclick="this.form.method.value='createNewCommentAndReOpenRequest';this.form.sumit();">
 					<bean:message key="label.submit.and.reopen" bundle="APPLICATION_RESOURCES"/>
 				</html:submit>

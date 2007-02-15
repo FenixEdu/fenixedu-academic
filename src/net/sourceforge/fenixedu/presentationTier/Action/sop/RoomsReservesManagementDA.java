@@ -81,7 +81,13 @@ public class RoomsReservesManagementDA extends RoomsPunctualSchedulingDA {
     public ActionForward deleteRoomsPunctualScheduling(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws InvalidArgumentException, FenixFilterException, FenixServiceException {
 	GenericEvent genericEventFromParameter = getGenericEventFromParameter(request);
 	PunctualRoomsOccupationRequest roomsReserveRequest = getRoomsReserveRequest(request);
-	executeService("DeleteGenericEvent", new Object[] { genericEventFromParameter });
+	
+	try {
+	    executeService("DeleteGenericEvent", new Object[] { genericEventFromParameter });   
+	} catch (DomainException e) {
+	    saveMessages(request, e);
+	}
+	
 	request.setAttribute("roomsReserveBean", new RoomsReserveBean(getLoggedPerson(request), roomsReserveRequest));		
 	return mapping.findForward("seeSpecifiedRoomsReserveRequest");
     }
@@ -205,6 +211,8 @@ public class RoomsReservesManagementDA extends RoomsPunctualSchedulingDA {
 	} catch (DomainException e) {
 	    saveMessages(request, e);	    
 	}
+	
+	RenderUtils.invalidateViewState("roomsReserveNewComment");
 	
 	bean.setDescription(null);	
 	request.setAttribute("roomsReserveBean", bean);	

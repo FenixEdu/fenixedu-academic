@@ -38,14 +38,14 @@ public class PunctualRoomsOccupationRequest extends PunctualRoomsOccupationReque
         setEmployeeReadComments(0);
         setIdentification(getNextRequestIdentification());
     }
-    
+          
     public Integer getNumberOfNewComments(Person person) {		
 	if(person.equals(getOwner())) {
 	    return getCommentsCount() - getEmployeeReadComments();	    
 	} else if(person.equals(getRequestor())) {
 	    return getCommentsCount() - getTeacherReadComments();
 	}	
-	return 0;
+	return Integer.valueOf(0);
     }
               
     public DateTime getMoreRecentCommentInstant() {

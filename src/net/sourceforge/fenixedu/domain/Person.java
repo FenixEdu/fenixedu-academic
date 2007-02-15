@@ -101,8 +101,7 @@ public class Person extends Person_Base {
 
     public final static Comparator<Person> COMPARATOR_BY_NAME = new ComparatorChain();
     static {
-	((ComparatorChain) COMPARATOR_BY_NAME).addComparator(new BeanComparator("name", Collator
-		.getInstance()));
+	((ComparatorChain) COMPARATOR_BY_NAME).addComparator(new BeanComparator("name", Collator.getInstance()));
 	((ComparatorChain) COMPARATOR_BY_NAME).addComparator(new BeanComparator("idInternal"));
     }
 

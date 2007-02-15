@@ -56,7 +56,7 @@ public class EditExecutionDegree extends Service {
     
     private OccupationPeriod getOccupationPeriod(final Date startDate, final Date endDate) {
         
-        OccupationPeriod occupationPeriod = OccupationPeriod.readFor(YearMonthDay.fromDateFields(startDate), YearMonthDay.fromDateFields(endDate));
+        OccupationPeriod occupationPeriod = OccupationPeriod.readOccupationPeriod(YearMonthDay.fromDateFields(startDate), YearMonthDay.fromDateFields(endDate));
         if (occupationPeriod == null) {
             occupationPeriod = new OccupationPeriod(startDate, endDate);
             occupationPeriod.setNextPeriod(null);
