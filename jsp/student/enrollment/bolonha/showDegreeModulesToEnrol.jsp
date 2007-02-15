@@ -68,6 +68,7 @@
 			<fr:layout name="bolonha-student-enrolment">
 				<fr:property name="enrolmentClasses" value="enrolled smalltxt,enrolled smalltxt aright,enrolled smalltxt aright,enrolled smalltxt aright,enrolled aright" />
 				<fr:property name="temporaryEnrolmentClasses" value="temporarilyEnrolled smalltxt,temporarilyEnrolled smalltxt aright,temporarilyEnrolled smalltxt aright,temporarilyEnrolled smalltxt aright,temporarilyEnrolled aright" />
+				<fr:property name="impossibleEnrolmentClasses" value="impossibleEnrollment smalltxt,impossibleEnrollment smalltxt aright,impossibleEnrollment smalltxt aright,impossibleEnrollment smalltxt aright,impossibleEnrollment aright" />
 				<fr:property name="curricularCourseToEnrolClasses" value="smalltxt, smalltxt aright, smalltxt aright, aright" />				
 				<fr:property name="groupRowClasses" value="bgcolor6" />
 				

@@ -112,6 +112,10 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     public boolean isTemporary() {
 	return getEnrolmentCondition() == EnrollmentCondition.TEMPORARY;
     }
+    
+    public boolean isImpossible() {
+	return getEnrolmentCondition() == EnrollmentCondition.IMPOSSIBLE;
+    }
 
     public boolean isSpecialSeason() {
 	boolean result = false;

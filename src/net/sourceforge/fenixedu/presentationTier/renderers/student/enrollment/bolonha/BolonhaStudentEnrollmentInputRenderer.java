@@ -55,6 +55,8 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 
     private String temporaryEnrolmentClasses = "smalltxt, smalltxt aright, smalltxt aright, smalltxt aright, aright";
 
+    private String impossibleEnrolmentClasses = "smalltxt, smalltxt aright, smalltxt aright, smalltxt aright, aright";
+
     private String curricularCoursesToEnrolClasses = "smalltxt, smalltxt aright, smalltxt aright, aright";
 
     public Integer getInitialWidth() {
@@ -167,6 +169,34 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 
     private String getTemporaryEnrolmentCheckBoxClasses() {
 	return getTemporaryEnrolmentClasses()[4];
+    }
+
+    private String[] getImpossibleEnrolmentClasses() {
+	return impossibleEnrolmentClasses.split(",");
+    }
+
+    public void setImpossibleEnrolmentClasses(String enrolmentClasses) {
+	this.impossibleEnrolmentClasses = enrolmentClasses;
+    }
+
+    private String getImpossibleEnrolmentNameClasses() {
+	return getImpossibleEnrolmentClasses()[0];
+    }
+
+    private String getImpossibleEnrolmentYearClasses() {
+	return getImpossibleEnrolmentClasses()[1];
+    }
+
+    private String getImpossibleEnrolmentSemesterClasses() {
+	return getImpossibleEnrolmentClasses()[2];
+    }
+
+    private String getImpossibleEnrolmentEctsClasses() {
+	return getImpossibleEnrolmentClasses()[3];
+    }
+
+    private String getImpossibleEnrolmentCheckBoxClasses() {
+	return getImpossibleEnrolmentClasses()[4];
     }
 
     public BolonhaStudentEnrollmentInputRenderer() {
@@ -396,6 +426,11 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 			    getTemporaryEnrolmentNameClasses(), getTemporaryEnrolmentYearClasses(),
 			    getTemporaryEnrolmentSemesterClasses(), getTemporaryEnrolmentEctsClasses(),
 			    getTemporaryEnrolmentCheckBoxClasses());
+		} else if (studentEnrolmentBean.getCurriculumModule().isImpossible()) {
+		    generateEnrolment(groupTable, studentEnrolmentBean.getCurriculumModule(),
+			    getImpossibleEnrolmentNameClasses(), getImpossibleEnrolmentYearClasses(),
+			    getImpossibleEnrolmentSemesterClasses(),
+			    getImpossibleEnrolmentEctsClasses(), getImpossibleEnrolmentCheckBoxClasses());
 		} else {
 		    generateEnrolment(groupTable, studentEnrolmentBean.getCurriculumModule(),
 			    getEnrolmentNameClasses(), getEnrolmentYearClasses(),
