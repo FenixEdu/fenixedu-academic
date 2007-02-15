@@ -46,11 +46,11 @@
 	<logic:messagesPresent message="true" property="enrol">
 		<br/>
 		<em><bean:message bundle="STUDENT_RESOURCES" key="label.enrollment.errors.in.enrolment" />:</em>
-		<p class="mtop15 mbottom1 nobullet list2">
+		<ul class="mtop15 mbottom1 nobullet list2">
 			<html:messages id="messages" message="true" bundle="APPLICATION_RESOURCES">
-				<span class="error0"><bean:write name="messages" /></span>
+				<li><span class="error0"><bean:write name="messages" /></span></li>
 			</html:messages>
-		</p>
+		</ul>
 	</logic:messagesPresent>
 	
 	<fr:form action="/bolonhaStudentEnrollment.do">
