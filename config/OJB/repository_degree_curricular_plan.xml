@@ -355,3 +355,7 @@
 <!-- *************************************************************************************************************** -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEAM" table="DEGREE_CURRICULAR_PLAN"/>
 
+<!-- *************************************************************************************************************** -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.DegreeCurricularPlanLQ --> 
+<!-- *************************************************************************************************************** -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLQ" table="DEGREE_CURRICULAR_PLAN"/>

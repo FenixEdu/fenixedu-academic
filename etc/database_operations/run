@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add DCP LQ" addDegreeCurricularPlanLQ.sql
