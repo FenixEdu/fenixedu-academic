@@ -2,12 +2,14 @@ package net.sourceforge.fenixedu.domain.studentCurriculum;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public abstract class CurriculumLine extends CurriculumLine_Base {
@@ -72,5 +74,10 @@ public abstract class CurriculumLine extends CurriculumLine_Base {
     @Override
     public CurriculumLine findCurriculumLineFor(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
         return null;
+    }
+    
+    @Override
+    public Set<IDegreeModuleToEvaluate> getDegreeModulesToEvaluate(ExecutionPeriod executionPeriod) {
+        return Collections.EMPTY_SET;
     }
 }

@@ -35,6 +35,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.enrolment.DegreeModuleToEnrol;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
+import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.FenixDomainException;
 import net.sourceforge.fenixedu.domain.gratuity.GratuitySituationType;
@@ -1841,8 +1842,11 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public void enrol(final Person person, final ExecutionPeriod executionPeriod,
 	    final Set<DegreeModuleToEnrol> degreeModulesToEnrol, final List<CurriculumModule> curriculumModulesToRemove) {
 	
-	new StudentCurricularPlanEnrolment().enrol(person, new EnrolmentContext(this, executionPeriod,
-		degreeModulesToEnrol, curriculumModulesToRemove));
+	final EnrolmentContext enrolmentContext = new EnrolmentContext(this, executionPeriod, curriculumModulesToRemove);
+	for (final DegreeModuleToEnrol moduleToEnrol : degreeModulesToEnrol) {
+	    enrolmentContext.addDegreeModuleToEvaluate(moduleToEnrol);
+	}
+	new StudentCurricularPlanEnrolment().enrol(person, enrolmentContext);
     }
 
     public String getName() {
@@ -2077,5 +2081,9 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     public Integer getDegreeDuration() {
 	return getDegreeCurricularPlan().getDegreeDuration();
+    }
+    
+    public Set<IDegreeModuleToEvaluate> getDegreeModulesToEvaluate(final ExecutionPeriod executionPeriod) {
+	return isBolonha() ? getRoot().getDegreeModulesToEvaluate(executionPeriod) : Collections.EMPTY_SET;
     }
 }

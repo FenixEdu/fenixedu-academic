@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
@@ -13,6 +14,7 @@ import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
+import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
@@ -117,6 +119,11 @@ public abstract class NoCourseGroupCurriculumGroup extends NoCourseGroupCurricul
 	final List<CurriculumModule> result = new ArrayList<CurriculumModule>(getCurriculumModulesSet());
 	Collections.sort(result, CurriculumModule.COMPARATOR_BY_NAME);
         return result.indexOf(child);
+    }
+    
+    @Override
+    public Set<IDegreeModuleToEvaluate> getDegreeModulesToEvaluate(ExecutionPeriod executionPeriod) {
+        return Collections.EMPTY_SET;
     }
     
     public abstract NoCourseGroupCurriculumGroupType getNoCourseGroupCurriculumGroupType();

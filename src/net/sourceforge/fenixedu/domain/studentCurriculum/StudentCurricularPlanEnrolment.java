@@ -21,12 +21,12 @@ import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
-import net.sourceforge.fenixedu.domain.enrolment.DegreeModuleToEnrol;
+import net.sourceforge.fenixedu.domain.enrolment.CurriculumModuleEnroledWrapper;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
+import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.enrolment.OptionalDegreeModuleToEnrol;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.EnrollmentDomainException;
-import net.sourceforge.fenixedu.domain.exceptions.UnEnrollmentDomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
@@ -40,16 +40,13 @@ public class StudentCurricularPlanEnrolment {
     public void enrol(final Person person, final EnrolmentContext enrolmentContext) {
 	checkRulesToEnrol(person, enrolmentContext);
 	unEnrolFromCurriculumModules(enrolmentContext);
-	performEnrolmentInCurriculumModules(person, enrolmentContext,
-		prepareCurriculumModulesEnrolmentInformation(enrolmentContext));
+	performEnrolmentInCurriculumModules(person, enrolmentContext, prepareCurriculumModulesEnrolmentInformation(enrolmentContext));
     }
 
-    private Map<EnrolmentResultType, List<DegreeModuleToEnrol>> prepareCurriculumModulesEnrolmentInformation(
-	    final EnrolmentContext enrolmentContext) {
+    private Map<EnrolmentResultType, List<IDegreeModuleToEvaluate>> prepareCurriculumModulesEnrolmentInformation(final EnrolmentContext enrolmentContext) {
 
-	final Map<EnrolmentResultType, List<DegreeModuleToEnrol>> degreeModulesEnrolMap = buildDegreeModulesToEnrolMap();
-	final List<RuleResult> falseResults = evaluateDegreeModulesToEnrol(enrolmentContext,
-		degreeModulesEnrolMap);
+	final Map<EnrolmentResultType, List<IDegreeModuleToEvaluate>> degreeModulesEnrolMap = buildDegreeModulesToEnrolMap();
+	final List<RuleResult> falseResults = evaluateDegreeModulesToEnrol(enrolmentContext, degreeModulesEnrolMap);
 	if (!falseResults.isEmpty()) {
 	    throw new EnrollmentDomainException(falseResults);
 	}
@@ -58,12 +55,11 @@ public class StudentCurricularPlanEnrolment {
 
     private void checkRulesToEnrol(final Person person, final EnrolmentContext enrolmentContext) {
 
-	for (final DegreeModuleToEnrol degreeModuleToEnrol : enrolmentContext.getDegreeModuleToEnrol()) {
-	    if (enrolmentContext.getCurriculumModulesToRemove().contains(
-		    degreeModuleToEnrol.getCurriculumGroup())) {
+	for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext.getDegreeModuleToEvaluate()) {
+	    if (enrolmentContext.getCurriculumModulesToRemove().contains(degreeModuleToEvaluate.getCurriculumGroup())) {
 		throw new DomainException(
 			"error.StudentCurricularPlan.cannot.remove.enrollment.on.curriculum.group.because.other.enrollments.depend.on.it",
-			degreeModuleToEnrol.getCurriculumGroup().getName().getContent());
+			degreeModuleToEvaluate.getCurriculumGroup().getName().getContent());
 	    }
 	}
 
@@ -72,7 +68,7 @@ public class StudentCurricularPlanEnrolment {
 	    throw new DomainException(
 		    "error.StudentCurricularPlan.cannot.enrol.with.registration.inactive");
 	}
-
+	
 	if (!registration.getPayedTuition()) {
 	    throw new DomainException(
 		    "error.StudentCurricularPlan.cannot.enrol.with.gratuity.debts.for.previous.execution.years");
@@ -89,57 +85,21 @@ public class StudentCurricularPlanEnrolment {
     }
 
     private void unEnrolFromCurriculumModules(final EnrolmentContext enrolmentContext) {
-
-	final Map<DegreeModule, Set<ICurricularRule>> collectedCurricularRules = new HashMap<DegreeModule, Set<ICurricularRule>>();
-
-	// First remove Enrolments and evaluate rules
+	// First remove Enrolments
 	for (final CurriculumModule curriculumModule : enrolmentContext.getCurriculumModulesToRemove()) {
 	    if (curriculumModule.isLeaf()) {
-		collectedCurricularRules.put(curriculumModule.getDegreeModule(),
-			getCurricularRulesFromCurriculumModule(enrolmentContext, curriculumModule));
 		curriculumModule.delete();
 	    }
 	}
-
 	// After, remove CurriculumGroups and evaluate rules
 	for (final CurriculumModule curriculumModule : enrolmentContext.getCurriculumModulesToRemove()) {
 	    if (!curriculumModule.isLeaf()) {
-		collectedCurricularRules.put(curriculumModule.getDegreeModule(),
-			getCurricularRulesFromCurriculumModule(enrolmentContext, curriculumModule));
 		curriculumModule.delete();
-
 	    }
 	}
-
-	final List<RuleResult> falseRuleResults = evaluateDegreeModulesToUnenrol(enrolmentContext,
-		collectedCurricularRules);
-	if (!falseRuleResults.isEmpty()) {
-	    throw new UnEnrollmentDomainException(falseRuleResults);
-	}
     }
 
-    private List<RuleResult> evaluateDegreeModulesToUnenrol(final EnrolmentContext enrolmentContext,
-	    final Map<DegreeModule, Set<ICurricularRule>> collectedCurricularRules) {
-	final List<RuleResult> falseRuleResults = new ArrayList<RuleResult>();
-	for (final Entry<DegreeModule, Set<ICurricularRule>> entry : collectedCurricularRules.entrySet()) {
-	    final RuleResult ruleResult = evaluateRules(enrolmentContext, entry.getValue());
-	    if (ruleResult.isFalse()) {
-		falseRuleResults.add(ruleResult);
-	    }
-	}
-	return falseRuleResults;
-    }
-
-    private Set<ICurricularRule> getCurricularRulesFromCurriculumModule(
-	    final EnrolmentContext enrolmentContext, CurriculumModule curriculumModule) {
-	final Set<ICurricularRule> curricularRules = curriculumModule.getCurriculumGroup()
-		.getCurricularRules(enrolmentContext.getExecutionPeriod());
-	curricularRules.addAll(curriculumModule.getDegreeModule().getParticipatingCurricularRules());
-	return curricularRules;
-    }
-
-    private RuleResult evaluateRules(final EnrolmentContext enrolmentContext,
-	    final Set<ICurricularRule> curricularRules) {
+    private RuleResult evaluateRules(final EnrolmentContext enrolmentContext, final Set<ICurricularRule> curricularRules) {
 	RuleResult ruleResult = RuleResult.createTrue();
 
 	for (final ICurricularRule rule : curricularRules) {
@@ -156,44 +116,71 @@ public class StudentCurricularPlanEnrolment {
 	return ruleResult;
     }
 
-    private Map<DegreeModuleToEnrol, Set<ICurricularRule>> getRulesToEvaluate(
-	    final EnrolmentContext enrolmentContext) {
-
-	final Map<DegreeModuleToEnrol, Set<ICurricularRule>> curricularRulesByDegreeModule = new HashMap<DegreeModuleToEnrol, Set<ICurricularRule>>();
-
-	for (final DegreeModuleToEnrol degreeModuleToEnrol : enrolmentContext.getDegreeModuleToEnrol()) {
-	    final HashSet<ICurricularRule> curricularRules = new HashSet<ICurricularRule>();
-
-	    final DegreeModule degreeModule = degreeModuleToEnrol.getContext().getChildDegreeModule();
-	    final ExecutionPeriod executionPeriod = enrolmentContext.getExecutionPeriod();
-
-	    curricularRules.addAll(degreeModule.getCurricularRules(executionPeriod));
-	    if (degreeModule instanceof CurricularCourse) {
-		curricularRules.add(new AssertUniqueApprovalInCurricularCourseContexts(
-			(CurricularCourse) degreeModule));
-	    }
-	    curricularRules.addAll(degreeModuleToEnrol.getCurriculumGroup().getCurricularRules(
-		    executionPeriod));
-	    curricularRulesByDegreeModule.put(degreeModuleToEnrol, curricularRules);
-	}
-
+    private Map<IDegreeModuleToEvaluate, Set<ICurricularRule>> getRulesToEvaluate(final EnrolmentContext enrolmentContext) {
+	final Map<IDegreeModuleToEvaluate, Set<ICurricularRule>> curricularRulesByDegreeModule = new HashMap<IDegreeModuleToEvaluate, Set<ICurricularRule>>();
+	addCurricularRulesFromDegreeModuleToEnrol(enrolmentContext, curricularRulesByDegreeModule);
+	addCurricularRulesFromExistingEnrolmentsInStudentCurricularPlan(enrolmentContext, curricularRulesByDegreeModule);
 	return curricularRulesByDegreeModule;
     }
 
-    private List<RuleResult> evaluateDegreeModulesToEnrol(final EnrolmentContext enrolmentContext,
-	    final Map<EnrolmentResultType, List<DegreeModuleToEnrol>> degreeModulesEnrolMap) {
+    private void addCurricularRulesFromExistingEnrolmentsInStudentCurricularPlan(final EnrolmentContext enrolmentContext, final Map<IDegreeModuleToEvaluate, Set<ICurricularRule>> curricularRulesByDegreeModule) {
+
+	final ExecutionPeriod executionPeriod = enrolmentContext.getExecutionPeriod();
+
+	/*
+	 * Recolher todos os XPTOs para criar IXPTO, depois só coleccionar as regras daqueles ñ têm ChildCurriculumModules
+	 * mas adicionar sp ao mapa
+	 */
+	
+	for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext.getStudentCurricularPlan().getDegreeModulesToEvaluate(executionPeriod)) {
+	    
+	    if (degreeModuleToEvaluate.canCollectRules()) {
+		final Set<ICurricularRule> curricularRules = new HashSet<ICurricularRule>();
+		curricularRules.addAll(degreeModuleToEvaluate.getDegreeModule().getCurricularRules(executionPeriod));
+		curricularRules.addAll(degreeModuleToEvaluate.getCurriculumGroup().getCurricularRules(executionPeriod));
+		curricularRulesByDegreeModule.put(degreeModuleToEvaluate, curricularRules);
+		
+		if (degreeModuleToEvaluate.isLeaf()) {
+		    curricularRules.add(new AssertUniqueApprovalInCurricularCourseContexts((CurricularCourse) degreeModuleToEvaluate.getDegreeModule()));
+		}
+	    }
+
+	    enrolmentContext.addDegreeModuleToEvaluate(degreeModuleToEvaluate);
+	}
+    }
+
+    private void addCurricularRulesFromDegreeModuleToEnrol(final EnrolmentContext enrolmentContext,
+	    final Map<IDegreeModuleToEvaluate, Set<ICurricularRule>> curricularRulesByDegreeModule) {
+	
+	for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext.getDegreeModuleToEvaluate()) {
+
+	    final Set<ICurricularRule> curricularRules = new HashSet<ICurricularRule>();
+
+	    final ExecutionPeriod executionPeriod = enrolmentContext.getExecutionPeriod();
+	    final DegreeModule degreeModule = degreeModuleToEvaluate.getDegreeModule();
+
+	    curricularRules.addAll(degreeModule.getCurricularRules(executionPeriod));
+	    curricularRules.addAll(degreeModuleToEvaluate.getCurriculumGroup().getCurricularRules(executionPeriod));
+
+	    if (degreeModule instanceof CurricularCourse) {
+		curricularRules.add(new AssertUniqueApprovalInCurricularCourseContexts((CurricularCourse) degreeModule));
+	    }
+	    curricularRulesByDegreeModule.put(degreeModuleToEvaluate, curricularRules);
+	}
+    }
+
+    private List<RuleResult> evaluateDegreeModulesToEnrol(final EnrolmentContext enrolmentContext, final Map<EnrolmentResultType, List<IDegreeModuleToEvaluate>> degreeModulesEnrolMap) {
 
 	final List<RuleResult> falseRuleResults = new ArrayList<RuleResult>();
-	for (final Entry<DegreeModuleToEnrol, Set<ICurricularRule>> entry : getRulesToEvaluate(
-		enrolmentContext).entrySet()) {
+
+	for (final Entry<IDegreeModuleToEvaluate, Set<ICurricularRule>> entry : getRulesToEvaluate(enrolmentContext).entrySet()) {
 
 	    final RuleResult ruleResult = evaluateRules(enrolmentContext, entry.getValue());
 	    if (ruleResult.isFalse()) {
 		falseRuleResults.add(ruleResult);
 
 	    } else if (falseRuleResults.isEmpty() && ruleResult.isTrue()) {
-		addDegreeModelToEnrolMap(degreeModulesEnrolMap, ruleResult.getEnrolmentResultType(),
-			entry.getKey());
+		addDegreeModelToEnrolMap(degreeModulesEnrolMap, ruleResult.getEnrolmentResultType(), entry.getKey());
 	    }
 	}
 	return falseRuleResults;
@@ -201,61 +188,69 @@ public class StudentCurricularPlanEnrolment {
 
     private void performEnrolmentInCurriculumModules(final Person person,
 	    final EnrolmentContext enrolmentContext,
-	    final Map<EnrolmentResultType, List<DegreeModuleToEnrol>> degreeModulesEnrolMap) {
+	    final Map<EnrolmentResultType, List<IDegreeModuleToEvaluate>> degreeModulesEnrolMap) {
 
 	final String createdBy = person.getIstUsername();
-	for (final Entry<EnrolmentResultType, List<DegreeModuleToEnrol>> entry : degreeModulesEnrolMap
-		.entrySet()) {
+	for (final Entry<EnrolmentResultType, List<IDegreeModuleToEvaluate>> entry : degreeModulesEnrolMap.entrySet()) {
 
 	    final EnrollmentCondition enrollmentCondition = entry.getKey().getEnrollmentCondition();
-	    for (final DegreeModuleToEnrol degreeModuleToEnrol : entry.getValue()) {
+	    for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : entry.getValue()) {
 
-		final DegreeModule degreeModule = degreeModuleToEnrol.getContext()
-			.getChildDegreeModule();
-		final CurriculumGroup curriculumGroup = degreeModuleToEnrol.getCurriculumGroup();
+		if (degreeModuleToEvaluate.isEnroled()) {
 
-		if (degreeModule.isLeaf()) {
-		    if (degreeModuleToEnrol.isOptional()) {
-			createOptionalEnrolmentFor(enrolmentContext, enrollmentCondition,
-				degreeModuleToEnrol, curriculumGroup);
+		    final CurriculumModuleEnroledWrapper moduleEnroledWrapper = (CurriculumModuleEnroledWrapper) degreeModuleToEvaluate;
 
-		    } else {
-			new Enrolment(enrolmentContext.getStudentCurricularPlan(), curriculumGroup,
-				(CurricularCourse) degreeModule, enrolmentContext.getExecutionPeriod(),
-				enrollmentCondition, createdBy);
+		    if (moduleEnroledWrapper.getCurriculumModule() instanceof Enrolment) {
+			final Enrolment enrolment = (Enrolment) moduleEnroledWrapper.getCurriculumModule();
+			enrolment.setEnrolmentCondition(enrollmentCondition);
 		    }
 		} else {
-		    new CurriculumGroup(degreeModuleToEnrol.getCurriculumGroup(),
-			    (CourseGroup) degreeModuleToEnrol.getContext().getChildDegreeModule(),
-			    enrolmentContext.getExecutionPeriod());
+
+		    final DegreeModule degreeModule = degreeModuleToEvaluate.getContext().getChildDegreeModule();
+		    final CurriculumGroup curriculumGroup = degreeModuleToEvaluate.getCurriculumGroup();
+
+		    if (degreeModule.isLeaf()) {
+			if (degreeModuleToEvaluate.isOptional()) {
+			    createOptionalEnrolmentFor(enrolmentContext, enrollmentCondition, degreeModuleToEvaluate,
+				    curriculumGroup);
+
+			} else {
+			    new Enrolment(enrolmentContext.getStudentCurricularPlan(), curriculumGroup,
+				    (CurricularCourse) degreeModule, enrolmentContext
+					    .getExecutionPeriod(), enrollmentCondition, createdBy);
+			}
+		    } else {
+			new CurriculumGroup(degreeModuleToEvaluate.getCurriculumGroup(), (CourseGroup) degreeModuleToEvaluate.getContext()
+				.getChildDegreeModule(), enrolmentContext.getExecutionPeriod());
+		    }
+
 		}
+
 	    }
 
 	}
     }
 
-    private Map<EnrolmentResultType, List<DegreeModuleToEnrol>> buildDegreeModulesToEnrolMap() {
-	final Map<EnrolmentResultType, List<DegreeModuleToEnrol>> result = new HashMap<EnrolmentResultType, List<DegreeModuleToEnrol>>(
+    private Map<EnrolmentResultType, List<IDegreeModuleToEvaluate>> buildDegreeModulesToEnrolMap() {
+	final Map<EnrolmentResultType, List<IDegreeModuleToEvaluate>> result = new HashMap<EnrolmentResultType, List<IDegreeModuleToEvaluate>>(
 		2);
-	result.put(EnrolmentResultType.FINAL, new ArrayList<DegreeModuleToEnrol>());
-	result.put(EnrolmentResultType.TEMPORARY, new ArrayList<DegreeModuleToEnrol>());
-
+	result.put(EnrolmentResultType.FINAL, new ArrayList<IDegreeModuleToEvaluate>());
+	result.put(EnrolmentResultType.TEMPORARY, new ArrayList<IDegreeModuleToEvaluate>());
 	return result;
     }
 
-    private void addDegreeModelToEnrolMap(
-	    final Map<EnrolmentResultType, List<DegreeModuleToEnrol>> result,
-	    final EnrolmentResultType enrolmentResultType, final DegreeModuleToEnrol degreeModuleToEnrol) {
+    private void addDegreeModelToEnrolMap(final Map<EnrolmentResultType, List<IDegreeModuleToEvaluate>> result,
+	    final EnrolmentResultType enrolmentResultType, final IDegreeModuleToEvaluate degreeModuleToEnrol) {
 	result.get(enrolmentResultType).add(degreeModuleToEnrol);
     }
 
     private void createOptionalEnrolmentFor(final EnrolmentContext enrolmentContext,
-	    final EnrollmentCondition enrollmentCondition,
-	    final DegreeModuleToEnrol degreeModuleToEnrol, final CurriculumGroup curriculumGroup) {
+	    final EnrollmentCondition enrollmentCondition, final IDegreeModuleToEvaluate ixpto,
+	    final CurriculumGroup curriculumGroup) {
 
-	final OptionalDegreeModuleToEnrol optionalDegreeModuleToEnrol = (OptionalDegreeModuleToEnrol) degreeModuleToEnrol;
+	final OptionalDegreeModuleToEnrol optionalDegreeModuleToEnrol = (OptionalDegreeModuleToEnrol) ixpto;
 	final OptionalCurricularCourse optionalCurricularCourse = (OptionalCurricularCourse) optionalDegreeModuleToEnrol
-		.getContext().getChildDegreeModule();
+		.getDegreeModule();
 	final CurricularCourse curricularCourse = optionalDegreeModuleToEnrol.getCurricularCourse();
 
 	enrolmentContext.getStudentCurricularPlan().createOptionalEnrolment(curriculumGroup,
