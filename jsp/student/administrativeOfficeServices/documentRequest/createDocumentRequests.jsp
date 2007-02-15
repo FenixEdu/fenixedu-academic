@@ -9,13 +9,11 @@
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2><bean:message key="documentRequests" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
-
-<html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES">
+<html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES" >
 	<p>
 		<span class="error0"><!-- Error messages go here --><bean:write name="message" /></span>
 	</p>
 </html:messages>
-
 
 <div style="float: right;">
 	<bean:define id="personID" name="documentRequestCreateBean" property="registration.student.person.idInternal"/>
@@ -53,50 +51,55 @@
 </fr:view>
 </logic:notPresent>
 
-
-
-<fr:form action="/documentRequest.do?method=viewDocumentRequestToCreate" >
-	
-<p class="mbottom025"><strong><bean:message key="message.document.to.request" bundle="ACADEMIC_OFFICE_RESOURCES"/>:</strong></p>
-
-	<fr:edit name="documentRequestCreateBean" schema="DocumentRequestCreateBean.chooseDocumentRequestType-for-given-registration" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean">
-		<fr:destination name="documentRequestTypeChoosedPostBack" path="/documentRequest.do?method=documentRequestTypeChoosedPostBack"/>	
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4 thright thlight mtop025 mbottom0"/>
-			<fr:property name="columnClasses" value="width14em,width20em,tdclear tderror1"/>
-		</fr:layout>	
-	</fr:edit>
-	
-	<logic:present name="additionalInformationSchemaName">
-		<bean:define id="additionalInformationSchemaName" name="additionalInformationSchemaName" type="java.lang.String"/>
-		<fr:edit name="documentRequestCreateBean" schema="<%= additionalInformationSchemaName %>" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean">
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle4 thright thlight mvert0"/>
-				<fr:property name="columnClasses" value="width14em,width20em,tdclear tderror1"/>
-			</fr:layout>	
-		</fr:edit>			
-	</logic:present>
-	
-	<logic:notEmpty name="documentRequestCreateBean" property="chosenDocumentRequestType">
-	
-		<fr:edit name="documentRequestCreateBean" schema="DocumentRequestCreateBean.purposes" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean">
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle4 thright thlight mvert0"/>
-				<fr:property name="columnClasses" value="width14em,width20em,tdclear tderror1"/>
-			</fr:layout>	
-		</fr:edit>
-	
-		<fr:edit name="documentRequestCreateBean" schema="DocumentRequestCreateBean.notes" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean">
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle4 thright thlight mvert0"/>
-				<fr:property name="columnClasses" value="width14em,width20em,tdclear tderror1"/>
-			</fr:layout>	
-		</fr:edit>
-	
-	</logic:notEmpty>
-	
-	<p class="mtop15">
-		<html:submit><bean:message key="button.continue"/></html:submit>
+<logic:equal name="documentRequestCreateBean" property="registration.hasGratuityDebtsCurrently" value="true">
+	<p>
+		<span class="error0"><bean:message key="DocumentRequest.registration.has.not.payed.gratuities" bundle="ACADEMIC_OFFICE_RESOURCES"/></span>
 	</p>
+</logic:equal>
+<logic:equal name="documentRequestCreateBean" property="registration.hasGratuityDebtsCurrently" value="false">
+	<fr:form action="/documentRequest.do?method=viewDocumentRequestToCreate" >
+		
+	<p class="mbottom025"><strong><bean:message key="message.document.to.request" bundle="ACADEMIC_OFFICE_RESOURCES"/>:</strong></p>
 	
-</fr:form>
+		<fr:edit name="documentRequestCreateBean" schema="DocumentRequestCreateBean.chooseDocumentRequestType-for-given-registration" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean">
+			<fr:destination name="documentRequestTypeChoosedPostBack" path="/documentRequest.do?method=documentRequestTypeChoosedPostBack"/>	
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle4 thright thlight mtop025 mbottom0"/>
+				<fr:property name="columnClasses" value="width14em,width20em,tdclear tderror1"/>
+			</fr:layout>	
+		</fr:edit>
+		
+		<logic:present name="additionalInformationSchemaName">
+			<bean:define id="additionalInformationSchemaName" name="additionalInformationSchemaName" type="java.lang.String"/>
+			<fr:edit name="documentRequestCreateBean" schema="<%= additionalInformationSchemaName %>" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean">
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle4 thright thlight mvert0"/>
+					<fr:property name="columnClasses" value="width14em,width20em,tdclear tderror1"/>
+				</fr:layout>	
+			</fr:edit>			
+		</logic:present>
+		
+		<logic:notEmpty name="documentRequestCreateBean" property="chosenDocumentRequestType">
+		
+			<fr:edit name="documentRequestCreateBean" schema="DocumentRequestCreateBean.purposes" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean">
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle4 thright thlight mvert0"/>
+					<fr:property name="columnClasses" value="width14em,width20em,tdclear tderror1"/>
+				</fr:layout>	
+			</fr:edit>
+		
+			<fr:edit name="documentRequestCreateBean" schema="DocumentRequestCreateBean.notes" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean">
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle4 thright thlight mvert0"/>
+					<fr:property name="columnClasses" value="width14em,width20em,tdclear tderror1"/>
+				</fr:layout>	
+			</fr:edit>
+		
+		</logic:notEmpty>
+		
+		<p class="mtop15">
+			<html:submit><bean:message key="button.continue"/></html:submit>
+		</p>
+		
+	</fr:form>
+</logic:equal>
