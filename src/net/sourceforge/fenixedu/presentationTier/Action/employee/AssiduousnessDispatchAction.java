@@ -251,7 +251,7 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
             args[1] = today.getMonthOfYear();
             Partial thisMonthPartial = new Partial(typeFields, args);
             if (Months.monthsBetween(choosedPartial, thisMonthPartial).getMonths() > 1) {
-                saveErrors(request, yearMonth, "error.invalidPastDate");
+                saveErrors(request, yearMonth, "error.currentMonthAndPrevious");
                 return mapping.findForward(returnPath);
             }
         }
