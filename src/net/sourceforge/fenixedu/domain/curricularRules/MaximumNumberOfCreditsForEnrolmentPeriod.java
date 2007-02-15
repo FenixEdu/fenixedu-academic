@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class MaximumNumberOfCreditsForEnrolmentPeriod extends MaximumNumberOfCreditsForEnrolmentPeriod_Base {
     
-    static final public double MAXIMUM_NUMBER_OF_CREDITS = 40.0;
+    static final public double MAXIMUM_NUMBER_OF_CREDITS = 36.0;
     
     static final public double ACCUMULATED_FACTOR = 0.75;
     
