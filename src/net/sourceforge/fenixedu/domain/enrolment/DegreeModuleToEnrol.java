@@ -61,7 +61,7 @@ public class DegreeModuleToEnrol implements Serializable, IDegreeModuleToEvaluat
     }
     
     public Double getEctsCredits(final ExecutionPeriod executionPeriod) {
-	return getDegreeModule().getEctsCredits(executionPeriod);
+	return isLeaf() ? getDegreeModule().getEctsCredits(executionPeriod) : Double.valueOf(0d);
     }
     
     @Override

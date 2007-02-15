@@ -92,7 +92,7 @@ public class CurriculumModuleEnroledWrapper implements Serializable, IDegreeModu
     }
     
     public Double getEctsCredits(final ExecutionPeriod executionPeriod) {
-	return getDegreeModule().getEctsCredits(executionPeriod);
+	return getCurriculumModule().getEctsCredits();
     }
     
     @Override
