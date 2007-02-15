@@ -53,17 +53,6 @@
 		</p>
 	</logic:messagesPresent>
 	
-	
-	<logic:messagesPresent message="true" property="unenrol">
-		<br/>
-		<em><bean:message bundle="STUDENT_RESOURCES"  key="label.enrollment.errors.in.unEnrolment" />:</em>
-		<p class="mtop15">
-			<html:messages id="messages" message="true" bundle="APPLICATION_RESOURCES">
-				<span class="error0"><bean:write name="messages" /></span>
-			</html:messages>
-		</p>
-	</logic:messagesPresent>
-	
 	<fr:form action="/bolonhaStudentEnrollment.do">
 		<input type="hidden" name="method" />
 		
