@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.enrolment;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -11,33 +12,31 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 public class EnrolmentContext {
     
     private StudentCurricularPlan studentCurricularPlan;
-    
     private ExecutionPeriod executionPeriod;
     
-    private Set<DegreeModuleToEnrol> degreeModulesToEnrol;
-    
+    private Set<IDegreeModuleToEvaluate> degreeModulesToEvaluate;
     private List<CurriculumModule> curriculumModulesToRemove;
     
-    public EnrolmentContext(StudentCurricularPlan studentCurricularPlan, ExecutionPeriod executionPeriod, Set<DegreeModuleToEnrol> degreeModulesToEnrol, List<CurriculumModule> curriculumModulesToRemove) {
+    public EnrolmentContext(final StudentCurricularPlan studentCurricularPlan, final ExecutionPeriod executionPeriod, final List<CurriculumModule> curriculumModulesToRemove) {
 	this.studentCurricularPlan = studentCurricularPlan;
-	this.degreeModulesToEnrol = degreeModulesToEnrol;
+	this.degreeModulesToEvaluate = new HashSet<IDegreeModuleToEvaluate>();
 	this.executionPeriod = executionPeriod;
 	this.curriculumModulesToRemove = curriculumModulesToRemove;
     }
     
-    public EnrolmentContext(StudentCurricularPlan studentCurricularPlan, ExecutionPeriod executionPeriod, Set<DegreeModuleToEnrol> degreeModulesToEnrol) {
+    public EnrolmentContext(final StudentCurricularPlan studentCurricularPlan, final ExecutionPeriod executionPeriod) {
 	this.studentCurricularPlan = studentCurricularPlan;
-	this.degreeModulesToEnrol = degreeModulesToEnrol;
+	this.degreeModulesToEvaluate = new HashSet<IDegreeModuleToEvaluate>();
 	this.executionPeriod = executionPeriod;
 	this.curriculumModulesToRemove = Collections.EMPTY_LIST;
     }
 
-    public Set<DegreeModuleToEnrol> getDegreeModuleToEnrol() {
-        return degreeModulesToEnrol;
+    public Set<IDegreeModuleToEvaluate> getDegreeModuleToEvaluate() {
+        return degreeModulesToEvaluate;
     }
 
-    public void setDegreeModuleToEnrol(Set<DegreeModuleToEnrol> degreeModulesToEnrol) {
-        this.degreeModulesToEnrol = degreeModulesToEnrol;
+    public void addDegreeModuleToEvaluate(final IDegreeModuleToEvaluate degreeModuleToEvaluate) {
+	getDegreeModuleToEvaluate().add(degreeModuleToEvaluate);
     }
 
     public ExecutionPeriod getExecutionPeriod() {
