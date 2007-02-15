@@ -35,33 +35,31 @@
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionDegreeId" property="executionDegreeId" value="<%=pageContext.findAttribute("executionDegreeId").toString()%>"/>
 	</logic:present>
 	
-	<table width="100%" border="0" cellpadding="0" cellspacing="0">
-		<tr>
-			<td align="center" class="infoselected">
-				<b><bean:message key="label.student.enrollment.number"/></b>
-				<bean:write name="studentCurricularPlan" property="student.number" />&nbsp;-&nbsp;
-				<bean:write name="studentCurricularPlan" property="student.person.name" />
-				<br/>
-				<b><bean:message key="label.student.enrollment.executionPeriod"/></b>
-				<bean:write name="executionPeriod" />&nbsp;				
-				<bean:write name="executionYear" />
-			</td>
-		</tr>
-	</table>
-	<br />
-	<table>
-		<tr>
-			<td colspan='2' class="infoop">
-				<bean:message key="message.student.enrollment.help" />
-			</td>
-		</tr>
+
+<div class="infoop2">
+	<p>
+		<b><bean:message key="label.student.enrollment.number"/>:</b>
+		<bean:write name="studentCurricularPlan" property="student.number" />&nbsp;-&nbsp;
+		<bean:write name="studentCurricularPlan" property="student.person.name" />
+	</p>
+	<p>
+		<b><bean:message key="label.student.enrollment.executionPeriod"/>:</b>
+		<bean:write name="executionPeriod" />&nbsp;				
+		<bean:write name="executionYear" />
+	</p>
+</div>
+
+
+<div class="infoop mvert15">
+	<bean:message key="message.student.enrollment.help" />
+</div>
+
+	<table class="mtop15">
 		<tr>
 			<td>
-				<br />
 				<bean:message key="label.student.enrollment.specializationArea" /> /<bean:message key="label.student.enrollment.branch"  bundle="STUDENT_RESOURCES"/>
 			</td>
 			<td>
-				<br />
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.specializationArea" property="specializationArea">
 					<html:option value="" key="label.student.enrollment.no.area">
 						<bean:message key="label.student.enrollment.no.area"/>
@@ -84,9 +82,11 @@
 			</td>
 		</tr>
 	</table>
-	<br/>
-	<br />
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
-		<bean:message key="button.student.modify"/>
-	</html:submit>
+	
+
+	<p class="mtop2">
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
+			<bean:message key="button.student.modify"/>
+		</html:submit>
+	</p>
 </html:form>
