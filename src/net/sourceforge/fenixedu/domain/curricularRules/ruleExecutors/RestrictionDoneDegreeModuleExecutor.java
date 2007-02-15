@@ -16,13 +16,23 @@ public class RestrictionDoneDegreeModuleExecutor extends CurricularRuleExecutor 
 	if (!canApplyRule(enrolmentContext, rule)) {
 	    return RuleResult.createNA();
 	}
-	return isApproved(enrolmentContext, rule.getPrecedenceDegreeModule()) ? RuleResult.createTrue() : createFalseRuleResult(rule);
+	
+	if (isApproved(enrolmentContext, rule.getPrecedenceDegreeModule())) {
+	    return RuleResult.createTrue();
+	}
+	
+	if (isEnroled(enrolmentContext, rule.getDegreeModuleToApplyRule())) {
+	    return RuleResult.createTrue(EnrolmentResultType.IMPOSSIBLE);
+	}
+	
+	return createFalseRuleResult(rule);
     }
 
     @Override
     protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(final ICurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
 	
 	final RestrictionDoneDegreeModule rule = (RestrictionDoneDegreeModule) curricularRule;
+	final ExecutionPeriod executionPeriod = enrolmentContext.getExecutionPeriod();
 	
 	if (!canApplyRule(enrolmentContext, rule)) {
 	    return RuleResult.createNA();
@@ -30,21 +40,28 @@ public class RestrictionDoneDegreeModuleExecutor extends CurricularRuleExecutor 
 
 	final CurricularCourse curricularCourse = rule.getPrecedenceDegreeModule();
 	
-	if (isApproved(enrolmentContext, curricularCourse)) {
-	    return RuleResult.createTrue();    
-	}
-	
-	if (isEnrolling(enrolmentContext, curricularCourse) || isEnroled(enrolmentContext, curricularCourse)) {
+	if (isEnrolling(enrolmentContext, curricularCourse) || isEnroled(enrolmentContext, curricularCourse, executionPeriod)) {
 	    return RuleResult.createFalse(
 		    "curricularRules.ruleExecutors.RestrictionDoneDegreeModuleExecutor.cannot.enrol.simultaneously.to.degreeModule.and.precedenceDegreeModule",
 		    rule.getDegreeModuleToApplyRule().getName(), rule.getPrecedenceDegreeModule().getName());    
 	}
 	
-	final ExecutionPeriod previousExecutionPeriod = enrolmentContext.getExecutionPeriod().getPreviousExecutionPeriod();
-	if (hasEnrolmentWithEnroledState(enrolmentContext, curricularCourse, previousExecutionPeriod)) {
+	if (isApproved(enrolmentContext, curricularCourse)) {
+	    return RuleResult.createTrue();    
+	}
+	
+	if (hasEnrolmentWithEnroledState(enrolmentContext, curricularCourse, executionPeriod.getPreviousExecutionPeriod())) {
 	    return RuleResult.createTrue(EnrolmentResultType.TEMPORARY);
 	}
-
+	
+	/*
+	 * CurricularCourse is not approved and is not enroled in previous semester
+	 * If DegreeModule is Enroled in current semester then Enrolment must be impossible
+	 */ 
+	if (isEnroled(enrolmentContext, rule.getDegreeModuleToApplyRule(), executionPeriod)) {
+	    return RuleResult.createTrue(EnrolmentResultType.IMPOSSIBLE);
+	}
+	
 	return createFalseRuleResult(rule);
     }
 
