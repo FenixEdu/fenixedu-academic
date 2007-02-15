@@ -41,7 +41,7 @@ public class RoomsReserveManagementDA extends FenixDispatchAction {
 	
 	request.setAttribute("pageNumber", pageNumber);	
 	request.setAttribute("numberOfPages", Integer.valueOf(collectionPager.getNumberOfPages()));	
-	request.setAttribute("requests", requests);
+	request.setAttribute("requests", collectionPager.getPage(pageNumber));
 	return mapping.findForward("viewRoomsReserves");
     }
 

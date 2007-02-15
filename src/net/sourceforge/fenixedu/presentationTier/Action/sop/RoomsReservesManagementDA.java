@@ -52,7 +52,7 @@ public class RoomsReservesManagementDA extends RoomsPunctualSchedulingDA {
 	request.setAttribute("personRequests", personRequests);
 	request.setAttribute("openedRequests", openedRequests);
 	request.setAttribute("newRequests", newRequests);
-	request.setAttribute("resolvedRequests", resolvedRequests);
+	request.setAttribute("resolvedRequests", collectionPager.getPage(pageNumber));
 	
 	return mapping.findForward("seeRoomsReserveRequests");	
     }
