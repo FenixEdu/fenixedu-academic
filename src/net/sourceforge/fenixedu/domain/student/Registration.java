@@ -1145,7 +1145,7 @@ public class Registration extends Registration_Base {
     }
 
     public Ingression getIngressionEnum() {
-	return Ingression.valueOf(getIngression());
+	return getIngression() != null ? Ingression.valueOf(getIngression()) : null;
     }
 
     public void setIngression(String ingression) {
@@ -1687,7 +1687,8 @@ public class Registration extends Registration_Base {
 
     @Override
     public Boolean getPayedTuition() {
-	return super.getPayedTuition() != null && super.getPayedTuition() && !hasAnyNotPayedGratuityEventsForPreviousYears();
+	return super.getPayedTuition() != null && super.getPayedTuition()
+		&& !hasAnyNotPayedGratuityEventsForPreviousYears();
     }
 
     public boolean getHasGratuityDebtsCurrently() {

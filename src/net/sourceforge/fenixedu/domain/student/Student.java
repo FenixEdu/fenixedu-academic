@@ -539,6 +539,12 @@ public class Student extends Student_Base {
 	for (final Registration registration : getRegistrations()) {
 	    if (registration.isInRegisteredState()
 		    && degreeTypesToEnrolByStudent.contains(registration.getDegreeType())) {
+
+		if (registration.hasStudentCandidacy()
+			&& registration.getIngressionEnum() == Ingression.CIA2C) {
+		    continue;
+		}
+
 		result.add(registration);
 	    }
 	}
