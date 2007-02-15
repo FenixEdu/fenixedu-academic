@@ -121,6 +121,6 @@ public class DepartmentProcessor extends PathProcessor {
     }
     
     public static String getDepartmentPath(Department department) {
-        return "/" + DepartmentsProcessor.PREFIX1 + "/" + department.getAcronym(); 
+        return "/" + DepartmentsProcessor.PREFIX2 + "/" + department.getAcronym(); 
     }
 }
