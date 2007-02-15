@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.domain.enrolment.DegreeModuleToEnrol;
 import net.sourceforge.fenixedu.domain.enrolment.OptionalDegreeModuleToEnrol;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.EnrollmentDomainException;
-import net.sourceforge.fenixedu.domain.exceptions.UnEnrollmentDomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
@@ -95,12 +94,6 @@ public class BolonhaStudentEnrollmentDispatchAction extends FenixDispatchAction 
 
 	    return mapping.findForward("showDegreeModulesToEnrol");
 
-	} catch (UnEnrollmentDomainException ex) {
-	    addRuleResultMessagesToActionMessages(request, "unenrol", ex.getFalseRuleResults());
-	    request.setAttribute("bolonhaStudentEnrollmentBean", bolonhaStudentEnrollmentBean);
-
-	    return mapping.findForward("showDegreeModulesToEnrol");
-
 	} catch (DomainException ex) {
 	    addActionMessage(request, ex.getKey(), ex.getArgs());
 	    request.setAttribute("bolonhaStudentEnrollmentBean", bolonhaStudentEnrollmentBean);
@@ -157,12 +150,6 @@ public class BolonhaStudentEnrollmentDispatchAction extends FenixDispatchAction 
 		    Collections.EMPTY_LIST);
 	} catch (EnrollmentDomainException ex) {
 	    addRuleResultMessagesToActionMessages(request, "enrol", ex.getFalseRuleResults());
-	    request.setAttribute("optionalEnrolmentBean", optionalStudentEnrollmentBean);
-
-	    return mapping.findForward("chooseOptionalCurricularCourseToEnrol");
-
-	} catch (UnEnrollmentDomainException ex) {
-	    addRuleResultMessagesToActionMessages(request, "unenrol", ex.getFalseRuleResults());
 	    request.setAttribute("optionalEnrolmentBean", optionalStudentEnrollmentBean);
 
 	    return mapping.findForward("chooseOptionalCurricularCourseToEnrol");
