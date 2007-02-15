@@ -31,7 +31,7 @@
 		</h:column>
 
 		<h:column>
-            <h:outputLink value="departmentSite.do?method=presentation&selectedDepartmentUnitID=#{CompetenceCourseManagement.selectedDepartmentUnit.idInternal}">
+            <h:outputLink value="departmentSite.do?method=presentation&selectedDepartmentUnitID=#{departmentUnit.idInternal}">
                 <h:outputText value="#{publicDepartmentBundle['website']}"/>
             </h:outputLink>
             <h:outputText value=" , " escape="false"/>

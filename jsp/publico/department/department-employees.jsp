@@ -23,7 +23,7 @@
         <bean:message key="structure" bundle="PUBLIC_DEPARTMENT_RESOURCES"/> 
     </html:link>
     &nbsp;&gt;&nbsp;
-    <html:link page="/department/showDepartment.faces">
+    <html:link page="/department/showDepartments.faces">
         <bean:message key="academic.units" bundle="PUBLIC_DEPARTMENT_RESOURCES"/> 
     </html:link>
     &nbsp;&gt;&nbsp;
