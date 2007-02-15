@@ -15,6 +15,10 @@ import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 
 public class PreviousYearsEnrolmentExecutor extends CurricularRuleExecutor {
+    
+    /**
+     * Temporary version
+     */
 
     @Override
     protected RuleResult executeEnrolmentWithRules(final ICurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
