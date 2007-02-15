@@ -86,12 +86,26 @@ public class PreviousYearsEnrolmentExecutor extends CurricularRuleExecutor {
     }
     
     private boolean isTemporaryEnrolment(final Map<Integer, GenericTrio<Integer, Integer, Integer>> enrolmentInformation, final EnrolmentContext enrolmentContext) {
-	
 	int numberOfYears = enrolmentContext.getStudentCurricularPlan().getDegreeDuration().intValue();
-	for (int year = numberOfYears ; year >= 1; year--) {
+	for (int year = numberOfYears ; year > 1; year--) {
 	    final GenericTrio<Integer, Integer, Integer> values = enrolmentInformation.get(year);
-	    final int numberOfEnroledCurricularCoursesInPreviousSemester = values.getThird().intValue();
 	    
+	    final int numberOfMissingCurricularCoursesToEnrol = values.getFirst().intValue();
+	    final int totalCurricularCourses = values.getSecond().intValue();
+	    
+	    if (numberOfMissingCurricularCoursesToEnrol != totalCurricularCourses) {
+		if (previousYearsHaveTemporaryEnrolment(year - 1, enrolmentInformation)) {
+		    return true;
+		}
+	    }
+	}
+	return false;
+    }
+
+    private boolean previousYearsHaveTemporaryEnrolment(int year, final Map<Integer, GenericTrio<Integer, Integer, Integer>> enrolmentInformation) {
+	while (year > 0) {
+	    final GenericTrio<Integer, Integer, Integer> values = enrolmentInformation.get(year);
+	    int numberOfEnroledCurricularCoursesInPreviousSemester = values.getThird().intValue();
 	    if (numberOfEnroledCurricularCoursesInPreviousSemester > 0) {
 		return true;
 	    }
@@ -117,7 +131,8 @@ public class PreviousYearsEnrolmentExecutor extends CurricularRuleExecutor {
     
     private GenericPair<Boolean, Integer> isValidEnrolment(final Map<Integer, GenericTrio<Integer, Integer, Integer>> enrolmentInformation, final EnrolmentContext enrolmentContext) {
 	int numberOfYears = enrolmentContext.getStudentCurricularPlan().getDegreeDuration();
-	for (int year = numberOfYears ; year >= 1; year--) {
+	
+	for (int year = numberOfYears ; year > 1; year--) {
 	    final GenericTrio<Integer, Integer, Integer> values = enrolmentInformation.get(year);
 	    
 	    final int numberOfMissingCurricularCoursesToEnrol = values.getFirst().intValue();
