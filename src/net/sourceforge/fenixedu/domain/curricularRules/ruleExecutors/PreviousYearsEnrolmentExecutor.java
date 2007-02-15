@@ -109,6 +109,7 @@ public class PreviousYearsEnrolmentExecutor extends CurricularRuleExecutor {
 	    if (numberOfEnroledCurricularCoursesInPreviousSemester > 0) {
 		return true;
 	    }
+	    year--;
 	}
 	return false;
     }
