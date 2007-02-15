@@ -26,8 +26,10 @@ public class AssertUniqueApprovalInCurricularCourseContextsExecutor extends Curr
 	
 	if (isApproved(enrolmentContext, curricularCourse)) {
 	    return RuleResult.createFalseWithLiteralMessage(CurricularRuleLabelFormatter.getLabel(curricularRule));
-	} else if (isEnroled(enrolmentContext, curricularCourse, previousExecutionPeriod)) {
-	    return RuleResult.createTrue(EnrolmentResultType.TEMPORARY);	    
+	    
+	} else if (hasEnrolmentWithEnroledState(enrolmentContext, curricularCourse, previousExecutionPeriod)) {
+	    return RuleResult.createTrue(EnrolmentResultType.TEMPORARY);
+	    
 	} else {
 	    return RuleResult.createTrue();
 	}
