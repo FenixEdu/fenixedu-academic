@@ -1,7 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PipedInputStream;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -132,11 +134,7 @@ public class Fetcher {
         
         String url = prepareUrl(resource);
         if (isDspaceFile(url)) {
-            IFileManager fileManager = FileManagerFactory.getFactoryInstance().getFileManager();
-            byte[] content = fileManager.retrieveFile(getDspaceFileId(url));
-            
-            stream.write(content);
-            stream.close();
+            getFile(stream, url);
         }
         else {
             RequestDispatcher dispatcher = this.request.getRequestDispatcher(url);
@@ -146,6 +144,21 @@ public class Fetcher {
             dispatcher.forward(request, response);
         }
     }
+
+	private void getFile(OutputStream stream, String url) throws IOException {
+		IFileManager fileManager = FileManagerFactory.getFactoryInstance().getFileManager();
+		InputStream fileStream = fileManager.retrieveFileAsStream(getDspaceFileId(url));
+
+		byte[] buffer = new byte[2048];
+		int length;
+		
+		while ((length = fileStream.read(buffer)) != -1) {
+			stream.write(buffer, 0, length);
+		}
+		
+		fileStream.close();
+		stream.close();
+	}
 
     private String getDspaceFileId(String url) {
         return url.replaceAll(".*?/bitstream/([0-9]+/[0-9]+/[0-9]+)/.*", "$1");
