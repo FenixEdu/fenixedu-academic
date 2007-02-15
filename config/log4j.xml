@@ -44,6 +44,10 @@
 		<level value="error"/>
 		<appender-ref ref="ConsoleAppender"/>
 	</logger>
+	<logger name="org.apache.commons.validator.ValidatorResources">
+		<level value="error"/>
+		<appender-ref ref="ConsoleAppender"/>
+	</logger>
 	<logger name="org.apache.ojb.broker.accesslayer.StatementsForClass">
 		<level value="error"/>
 		<appender-ref ref="ConsoleAppender"/>

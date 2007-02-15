@@ -6,6 +6,8 @@ import net.sourceforge.fenixedu.persistenceTier.cache.FenixCache;
 import org.apache.ojb.broker.PersistenceBroker;
 
 public abstract class Transaction extends jvstm.Transaction {
+    private static final long MONITORING_SLEEP_INTERVAL = 15 * 1000;
+    private static final long REPORT_LONG_TRANSACTION_THRESHOLD = 180 * 1000;
 
     public final static TransactionStatistics STATISTICS = new TransactionStatistics();
 
@@ -34,9 +36,18 @@ public abstract class Transaction extends jvstm.Transaction {
  	super(0);
     }
 
+    /** 
+     * @deprecated This method is not useful anylonger, because the default behavior 
+     *       of the JVSTM is not to report anything for long running transactions.
+     *       So, any call to this method may be safely removed.
+     */
+    @Deprecated
     public static void setScriptMode() {
         // empty now...
-        // but it should be changed later to disable the reporting in the JVSTM
+    }
+
+    public static void startMonitoringTransactions() {
+        ACTIVE_TXS.startMonitoringQueue(MONITORING_SLEEP_INTERVAL, REPORT_LONG_TRANSACTION_THRESHOLD);
     }
 
     static synchronized void initializeIfNeeded() {

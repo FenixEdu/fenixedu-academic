@@ -31,13 +31,13 @@ using the MetadataManager.
      >
 
         <connection-pool
-            maxActive="21"
+            maxActive="61"
             maxIdle="5"
             validationQuery="select 1"
             whenExhaustedAction="2"/>
 
         <sequence-manager className="org.apache.ojb.broker.util.sequence.SequenceManagerHighLowImpl">
-            <attribute attribute-name="grabSize" attribute-value="20"/>
+            <attribute attribute-name="grabSize" attribute-value="200"/>
         </sequence-manager>
    </jdbc-connection-descriptor>
 
@@ -58,7 +58,7 @@ using the MetadataManager.
      >
 
         <connection-pool
-            maxActive="21"
+            maxActive="61"
             validationQuery="@db.assiduousness.validationQuery@"
             whenExhaustedAction="2"/>
 
@@ -85,7 +85,7 @@ using the MetadataManager.
      >
 
         <connection-pool
-            maxActive="21"
+            maxActive="61"
             validationQuery="@db.personFilter.validationQuery@"
             whenExhaustedAction="2"/>
 
