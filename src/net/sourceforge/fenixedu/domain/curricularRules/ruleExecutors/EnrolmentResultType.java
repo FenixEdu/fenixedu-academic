@@ -6,24 +6,30 @@ public enum EnrolmentResultType {
     TEMPORARY(0, EnrollmentCondition.TEMPORARY),
 
     FINAL(1, EnrollmentCondition.FINAL),
+    
+    IMPOSSIBLE(2, EnrollmentCondition.IMPOSSIBLE),
 
-    NULL(2, EnrollmentCondition.IMPOSSIBLE);
+    NULL(3, EnrollmentCondition.INVISIBLE);
 
     static private final EnrolmentResultType[][] AND_TABLE = new EnrolmentResultType[][] {
-	    { TEMPORARY, TEMPORARY, TEMPORARY },
+	    { TEMPORARY, TEMPORARY, IMPOSSIBLE, TEMPORARY },
 
-	    { TEMPORARY, FINAL, FINAL },
+	    { TEMPORARY, FINAL, IMPOSSIBLE, FINAL },
 
-	    { TEMPORARY, FINAL, NULL }
+	    { IMPOSSIBLE, IMPOSSIBLE, IMPOSSIBLE, IMPOSSIBLE }, 
+	    
+	    { TEMPORARY, FINAL, IMPOSSIBLE, NULL }
 
     };
 
     static private final EnrolmentResultType[][] OR_TABLE = new EnrolmentResultType[][] {
-	    { TEMPORARY, FINAL, TEMPORARY },
+	    { TEMPORARY, FINAL, TEMPORARY, TEMPORARY },
 
-	    { FINAL, FINAL, FINAL },
+	    { FINAL, FINAL, FINAL, FINAL },
+	    
+	    { TEMPORARY, FINAL, IMPOSSIBLE, IMPOSSIBLE, },
 
-	    { TEMPORARY, FINAL, NULL }
+	    { TEMPORARY, FINAL, IMPOSSIBLE, NULL }
 
     };
 
