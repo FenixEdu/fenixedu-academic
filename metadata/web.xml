@@ -117,6 +117,14 @@
             <param-name>degreeSiteURI</param-name>
             <param-value>/publico/showDegreeSiteContent.do?method=%s&amp;degreeID=%s</param-value>
         </init-param>
+        <init-param>
+            <param-name>departmentSiteURI</param-name>
+            <param-value>/publico/department/departmentSite.do?method=%s&amp;selectedDepartmentUnitID=%s</param-value>
+        </init-param>
+        <init-param>
+            <param-name>departmentsURI</param-name>
+            <param-value>/publico/department/showDepartments.faces</param-value>
+        </init-param>
     </filter>
 	<filter>
 		<filter-name>CASFilter</filter-name>

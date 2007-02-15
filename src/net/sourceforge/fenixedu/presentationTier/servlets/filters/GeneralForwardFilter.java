@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.DegreeCurricularPlanProcessor;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.DegreeProcessor;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.DepartmentProcessor;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.DepartmentsProcessor;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.ExamProcessor;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.ExecutionCourseProcessor;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.ExecutionCoursesProcessor;
@@ -46,7 +48,9 @@ public class GeneralForwardFilter implements Filter {
         String examListURI = config.getInitParameter("examListURI");
         String degreeURI = config.getInitParameter("degreeURI");
         String degreeSiteURI = config.getInitParameter("degreeSiteURI");
-
+        String departmentSiteURI = config.getInitParameter("departmentSiteURI");
+        String departmentsURI = config.getInitParameter("departmentsURI");
+        
         DegreeProcessor degreeProcessor = new DegreeProcessor(degreeURI, degreeSiteURI);
         ExecutionCoursesProcessor executionCourses = new ExecutionCoursesProcessor(siteListURI);
         DegreeCurricularPlanProcessor degreeCurricularPlan = new DegreeCurricularPlanProcessor();
@@ -59,6 +63,8 @@ public class GeneralForwardFilter implements Filter {
         SectionProcessor section = new SectionProcessor();
         ItemProcessor item = new ItemProcessor();
         HomepageProcessor homepage = new HomepageProcessor(homepageSiteURI);
+        DepartmentsProcessor departments = new DepartmentsProcessor(departmentsURI);
+        DepartmentProcessor department = new DepartmentProcessor(departmentSiteURI);
         
         SectionProcessor sectionAndItem = section.add(item);
         
@@ -85,6 +91,7 @@ public class GeneralForwardFilter implements Filter {
         );
         
         processors.add(homepage.add(sectionAndItem));
+        processors.add(departments.add(department.add(sectionAndItem)));
     }
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)

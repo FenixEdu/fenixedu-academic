@@ -27,23 +27,9 @@
 	
 	<h:dataTable value="#{DepartmentManagement.departmentUnits}" var="departmentUnit" style="padding-left: 3em; width: 70em;" columnClasses=",aright">
 		<h:column>
-			<h:outputText value="#{departmentUnit.department.realName}"/>
-		</h:column>
-
-		<h:column>
-            <h:outputLink value="departmentSite.do?method=presentation&selectedDepartmentUnitID=#{departmentUnit.idInternal}">
-                <h:outputText value="#{publicDepartmentBundle['website']}"/>
+            <h:outputLink value="#{DepartmentManagement.contextPath}/publico/department/departmentSite.do?method=presentation&selectedDepartmentUnitID=#{departmentUnit.idInternal}">
+        			<h:outputText value="#{departmentUnit.department.realName}"/>
             </h:outputLink>
-            <h:outputText value=" , " escape="false"/>
-			<h:outputLink value="showDepartmentTeachers.faces">
-				<h:outputText value="#{publicDepartmentBundle['department.faculty']}"/>
-				<f:param name="selectedDepartmentUnitID" value="#{departmentUnit.idInternal}"/>
-			</h:outputLink>
-			<h:outputText value=" , " escape="false"/>
-			<h:outputLink value="showDepartmentCompetenceCourses.faces">
-				<h:outputText value="#{publicDepartmentBundle['department.courses']}"/>
-				<f:param name="selectedDepartmentUnitID" value="#{departmentUnit.idInternal}"/>
-			</h:outputLink>
 		</h:column>
 	</h:dataTable>
 	

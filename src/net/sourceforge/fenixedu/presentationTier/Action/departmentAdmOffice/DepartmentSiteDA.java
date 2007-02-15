@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice;
 
+import java.net.MalformedURLException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -10,12 +12,14 @@ import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.SiteManagementDA;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.DepartmentProcessor;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.util.RequestUtils;
 
 public class DepartmentSiteDA extends SiteManagementDA {
 
@@ -26,6 +30,16 @@ public class DepartmentSiteDA extends SiteManagementDA {
     @Override
     protected String getAuthorNameForFile(HttpServletRequest request, Item item) {
         return getDepartment(request).getName();
+    }
+
+    @Override
+    protected String getDirectLinkContext(HttpServletRequest request) {
+        Department department = getDepartment(request);
+        try {
+            return RequestUtils.absoluteURL(request, DepartmentProcessor.getDepartmentPath(department)).toString();
+        } catch (MalformedURLException e) {
+            return null;
+        }
     }
 
     @Override

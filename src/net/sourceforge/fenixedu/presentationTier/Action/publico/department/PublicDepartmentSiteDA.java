@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.publico.department;
 
+import java.net.MalformedURLException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.DepartmentSite;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -14,10 +16,12 @@ import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.SiteVisualizationDA;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.DepartmentProcessor;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.util.RequestUtils;
 
 public class PublicDepartmentSiteDA extends SiteVisualizationDA {
 
@@ -60,6 +64,16 @@ public class PublicDepartmentSiteDA extends SiteVisualizationDA {
     }
 
     @Override
+    protected String getDirectLinkContext(HttpServletRequest request) {
+        Department department = getDepartment(request);
+        try {
+            return RequestUtils.absoluteURL(request, DepartmentProcessor.getDepartmentPath(department)).toString();
+        } catch (MalformedURLException e) {
+            return null;
+        }
+    }
+    
+    @Override
     protected ActionForward getSiteDefaultView(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
         return presentation(mapping, form, request, response);
     }
@@ -68,6 +82,16 @@ public class PublicDepartmentSiteDA extends SiteVisualizationDA {
         return mapping.findForward("department-presentation");
     }
     
+    private Department getDepartment(HttpServletRequest request) {
+        Unit unit = getUnit(request);
+        if (unit == null) {
+            return null;
+        }
+        else {
+            return unit.getDepartment();
+        }
+    }
+
     private Unit getUnit(HttpServletRequest request) {
         return (Unit) request.getAttribute("unit");
     }
