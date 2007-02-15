@@ -4,8 +4,8 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.MaximumNumberOfCreditsForEnrolmentPeriod;
-import net.sourceforge.fenixedu.domain.enrolment.DegreeModuleToEnrol;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
+import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 
 public class MaximumNumberOfCreditsForEnrolmentPeriodExecutor extends CurricularRuleExecutor {
 
@@ -19,12 +19,14 @@ public class MaximumNumberOfCreditsForEnrolmentPeriodExecutor extends Curricular
 	final double accumulated = studentCurricularPlan.getAccumulatedEctsCredits(executionPeriod);
 	double available = ((maximum - accumulated) > 0) ? maximum - accumulated : 0.0;
 	        
-	for (final DegreeModuleToEnrol degreeModuleToEnrol : enrolmentContext.getDegreeModuleToEnrol()) {
-	    final double degreeModuleEctsCredits = degreeModuleToEnrol.getEctsCredits(executionPeriod);
-	    if (degreeModuleEctsCredits > available) {
-		return RuleResult.createFalse("curricularRules.ruleExecutors.MaximumNumberOfCreditsForEnrolmentPeriodExecutor", String.valueOf(maximum));
-	    } else {
-		available -= degreeModuleEctsCredits;
+	for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext.getDegreeModuleToEvaluate()) {
+	    if (!degreeModuleToEvaluate.isEnroled()) {
+		final double degreeModuleEctsCredits = degreeModuleToEvaluate.getEctsCredits(executionPeriod);
+		if (degreeModuleEctsCredits > available) {
+		    return RuleResult.createFalse("curricularRules.ruleExecutors.MaximumNumberOfCreditsForEnrolmentPeriodExecutor", String.valueOf(maximum));
+		} else {
+		    available -= degreeModuleEctsCredits;
+		}
 	    }
 	}
 	        

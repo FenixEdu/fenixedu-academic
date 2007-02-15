@@ -64,7 +64,7 @@ public class PreviousYearsEnrolmentExecutor extends CurricularRuleExecutor {
 		    numberOfMissingCurricularCoursesToEnrol--;
 		    
 		} else if (countTemporary && executionPeriod.hasPreviousExecutionPeriod()
-			    && isEnroled(enrolmentContext, curricularCourse, executionPeriod.getPreviousExecutionPeriod())) {
+			    && hasEnrolmentWithEnroledState(enrolmentContext, curricularCourse, executionPeriod.getPreviousExecutionPeriod())) {
 		    numberOfMissingCurricularCoursesToEnrol--;
 		    numberOfEnroledCurricularCoursesInPreviousSemester++;
 		}

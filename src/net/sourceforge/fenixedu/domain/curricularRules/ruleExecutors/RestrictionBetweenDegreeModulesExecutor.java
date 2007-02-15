@@ -4,6 +4,7 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.RestrictionBetweenDegreeModules;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
+import net.sourceforge.fenixedu.domain.enrolment.CurriculumModuleEnroledWrapper;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 
@@ -16,15 +17,19 @@ public class RestrictionBetweenDegreeModulesExecutor extends CurricularRuleExecu
 	if (!canApplyRule(enrolmentContext, rule)) {
 	    return RuleResult.createNA();
 	}
-
+	
 	final CourseGroup courseGroup = rule.getPrecedenceDegreeModule();
-	if (isEnrolling(enrolmentContext, courseGroup) || isEnroled(enrolmentContext, courseGroup)) {
+	
+	if (isEnrolling(enrolmentContext, courseGroup)) {
+	    return createFalseRuleResultWithInvalidEcts(rule);
 	    
-	    final CurriculumModule curriculumModule = searchCurriculumModule(enrolmentContext, courseGroup);
+	} else if (isEnroled(enrolmentContext, courseGroup)) {
+	    
+	    final CurriculumModuleEnroledWrapper moduleEnroledWrapper = (CurriculumModuleEnroledWrapper) searchDegreeModuleToEvaluate(enrolmentContext, rule);
+	    final CurriculumModule curriculumModule = moduleEnroledWrapper.getCurriculumModule();
 	    
 	    if (!rule.hasMinimumCredits() || rule.allowCredits(curriculumModule.getAprovedEctsCredits())) {
 		return RuleResult.createTrue();
-
 	    } else {
 		return createFalseRuleResultWithInvalidEcts(rule);
 	    }
@@ -44,15 +49,20 @@ public class RestrictionBetweenDegreeModulesExecutor extends CurricularRuleExecu
 	}
 
 	final CourseGroup courseGroup = rule.getPrecedenceDegreeModule();
-	if (isEnrolling(enrolmentContext, courseGroup) || isEnroled(enrolmentContext, courseGroup)) {
+	
+	if (isEnrolling(enrolmentContext, courseGroup)) {
+	    return createFalseRuleResultWithInvalidEcts(rule);
+	    
+	} else if (isEnroled(enrolmentContext, courseGroup)) {
 	    
 	    if (!rule.hasMinimumCredits()) {
 		return RuleResult.createTrue();
 	    }
 	    
-	    final CurriculumModule curriculumModule = searchCurriculumModule(enrolmentContext, courseGroup);
+	    final CurriculumModuleEnroledWrapper moduleEnroledWrapper = (CurriculumModuleEnroledWrapper) searchDegreeModuleToEvaluate(enrolmentContext, rule);
+	    final CurriculumModule curriculumModule = moduleEnroledWrapper.getCurriculumModule();
 	    Double ectsCredits = curriculumModule.getAprovedEctsCredits();
-	    
+
 	    if (rule.allowCredits(ectsCredits)) {
 		return RuleResult.createTrue();
 	    }

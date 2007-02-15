@@ -5,7 +5,9 @@ import net.sourceforge.fenixedu.domain.curricularRules.DegreeModulesSelectionLim
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
+import net.sourceforge.fenixedu.domain.enrolment.CurriculumModuleEnroledWrapper;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
+import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 
 public class DegreeModulesSelectionLimitExecutor extends CurricularRuleExecutor {
@@ -16,21 +18,23 @@ public class DegreeModulesSelectionLimitExecutor extends CurricularRuleExecutor 
 
 	final DegreeModulesSelectionLimit rule = (DegreeModulesSelectionLimit) curricularRule;
 
-	if (ruleWasSelectedFromAnyModuleToEnrol(enrolmentContext, curricularRule)) {
+	if (!canApplyRule(enrolmentContext, rule)) {
 	    return RuleResult.createNA();
 	}
-
-	final CourseGroup courseGroup = rule.getDegreeModuleToApplyRule();
-	final CurriculumGroup curriculumGroup = (CurriculumGroup) searchCurriculumModule(enrolmentContext, rule);
-	final CourseGroup parentCourseGroup = curriculumGroup.getCurriculumGroup().getDegreeModule();
 	
-	if (rule.appliesToCourseGroup(parentCourseGroup)) {
-	    int total = countTotalDegreeModules(enrolmentContext, courseGroup, curriculumGroup);
-	    return rule.numberOfDegreeModulesExceedMaximum(total) ? createFalseRuleResult(rule) : RuleResult.createTrue();
-	}
-
-	return RuleResult.createNA();
-
+	 final IDegreeModuleToEvaluate degreeModuleToEvaluate = searchDegreeModuleToEvaluate(enrolmentContext, rule);
+	 
+	 if (degreeModuleToEvaluate.isEnroled()) {
+	     
+	     final CurriculumModuleEnroledWrapper moduleEnroledWrapper = (CurriculumModuleEnroledWrapper) degreeModuleToEvaluate;
+	     final CourseGroup courseGroup = rule.getDegreeModuleToApplyRule();
+	     final CurriculumGroup curriculumGroup = (CurriculumGroup) moduleEnroledWrapper.getCurriculumModule();
+	     
+	     int total = countTotalDegreeModules(enrolmentContext, courseGroup, curriculumGroup);
+	     return rule.numberOfDegreeModulesExceedMaximum(total) ? createFalseRuleResult(rule) : RuleResult.createTrue();
+	     
+	 } 
+	 return RuleResult.createNA();
     }
     
     private int countTotalDegreeModules(final EnrolmentContext enrolmentContext, final CourseGroup courseGroup, final CurriculumGroup curriculumGroup) {
@@ -70,14 +74,17 @@ public class DegreeModulesSelectionLimitExecutor extends CurricularRuleExecutor 
 	
 	final DegreeModulesSelectionLimit rule = (DegreeModulesSelectionLimit) curricularRule;
 	
-	if (ruleWasSelectedFromAnyModuleToEnrol(enrolmentContext, curricularRule)) {
+	if (!canApplyRule(enrolmentContext, rule)) {
 	    return RuleResult.createNA();
 	}
 	
-	if (appliesToCourseGroup(enrolmentContext,rule)) {
+	final IDegreeModuleToEvaluate degreeModuleToEvaluate = searchDegreeModuleToEvaluate(enrolmentContext, rule);
+	
+	if (degreeModuleToEvaluate.isEnroled()) {
 	    
 	    final CourseGroup courseGroup = rule.getDegreeModuleToApplyRule();
-	    final CurriculumGroup curriculumGroup = (CurriculumGroup) searchCurriculumModule(enrolmentContext, rule);
+	    final CurriculumModuleEnroledWrapper moduleEnroledWrapper = (CurriculumModuleEnroledWrapper) degreeModuleToEvaluate;
+	    final CurriculumGroup curriculumGroup = (CurriculumGroup) moduleEnroledWrapper.getCurriculumModule();
 
 	    int total = countTotalDegreeModules(enrolmentContext, courseGroup, curriculumGroup);
 
@@ -87,9 +94,9 @@ public class DegreeModulesSelectionLimitExecutor extends CurricularRuleExecutor 
 	    
 	    final ExecutionPeriod executionPeriod = enrolmentContext.getExecutionPeriod();
 	    total += curriculumGroup.getNumberOfEnrolments(executionPeriod.getPreviousExecutionPeriod());
+	    
 	    return rule.numberOfDegreeModulesExceedMaximum(total) ? RuleResult.createTrue(EnrolmentResultType.TEMPORARY) : RuleResult.createTrue();
 	}
-	
 	return RuleResult.createNA();
     }
 
