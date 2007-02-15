@@ -1290,10 +1290,10 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public RegimeType getRegime() {
-	if (this.getCompetenceCourse() != null) {
+	if (hasCompetenceCourse()) {
 	    return this.getCompetenceCourse().getRegime();
 	}
-	return null;
+	return isOptionalCurricularCourse() ? RegimeType.SEMESTRIAL : null;
     }
 
     @Override
