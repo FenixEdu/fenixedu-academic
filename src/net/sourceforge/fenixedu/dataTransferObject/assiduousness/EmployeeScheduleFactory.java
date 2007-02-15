@@ -38,7 +38,8 @@ public class EmployeeScheduleFactory implements Serializable, FactoryExecutor {
     public EmployeeScheduleFactory(Employee employee, Employee modifiedBy) {
         setEmployee(employee);
         setModifiedBy(modifiedBy);
-        Schedule currentSchedule = employee.getAssiduousness().getCurrentSchedule();
+        Schedule currentSchedule = employee.getAssiduousness() != null ? employee.getAssiduousness()
+                .getCurrentSchedule() : null;
         if (currentSchedule != null) {
             setEmployeeWorkWeekScheduleList(currentSchedule, this);
             setBeginDate(currentSchedule.getBeginDate());
@@ -200,11 +201,11 @@ public class EmployeeScheduleFactory implements Serializable, FactoryExecutor {
 
     public void selectAllCheckBoxes(Integer workWeek) {
         for (EmployeeWorkWeekScheduleBean workWeekScheduleBean : getEmployeeWorkWeekScheduleList()) {
-            if(workWeekScheduleBean.getWorkWeekNumber().equals(workWeek)){
+            if (workWeekScheduleBean.getWorkWeekNumber().equals(workWeek)) {
                 workWeekScheduleBean.checkAllWeek();
                 break;
             }
-        }        
+        }
     }
 
     public boolean isToDeleteDays() {
