@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean;
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
@@ -35,61 +34,15 @@ public class DocumentRequestDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) {
-        final Registration registration = getRegistration(request, actionForm);
 
-        if (registration.hasGratuityDebtsCurrently()) {
-            addActionMessage(request, "error.message.tuitionNotPayed");
-        } else {
-            if (!registration.hasAnyStudentCurricularPlans()) {
-                addActionMessage(request, "error.student.curricularPlan.nonExistent");
-            } else {
-                request.setAttribute("registration", registration);
-
-                if (registration.getStudentCurricularPlansCount() > 1) {
-                    request.setAttribute("studentCurricularPlans", registration
-                            .getStudentCurricularPlans());
-                }
-
-                request.setAttribute("executionYears", registration.getSortedEnrolmentsExecutionYears());
-            }
-        }
-        request.setAttribute("documentRequestCreateBean", new DocumentRequestCreator(registration));
-        return mapping.findForward("createDocumentRequests");
+	request.setAttribute("documentRequestCreateBean", new DocumentRequestCreator(getRegistration(request, actionForm)));
+        
+	return mapping.findForward("createDocumentRequests");
     }
 
     private Registration getRegistration(final HttpServletRequest request, final ActionForm actionForm) {
         return rootDomainObject.readRegistrationByOID(getIntegerFromRequestOrForm(request,
                 (DynaActionForm) actionForm, "registrationId"));
-    }
-
-    public ActionForward onSCPChange(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) {
-        request.setAttribute("registration", getRegistration(request, actionForm));
-        getAndSetExecutionYears(request, getAndSetStudentCurricularPlans(request,
-                (DynaActionForm) actionForm));
-
-        return mapping.findForward("createDocumentRequests");
-    }
-
-    private void getAndSetExecutionYears(HttpServletRequest request,
-            StudentCurricularPlan studentCurricularPlan) {
-        if (studentCurricularPlan.getEnrolmentsExecutionYears().isEmpty()) {
-            addActionMessage(request, "message.no.enrolments");
-        } else {
-            request.setAttribute("executionYears", studentCurricularPlan.getEnrolmentsExecutionYears());
-        }
-    }
-
-    private StudentCurricularPlan getAndSetStudentCurricularPlans(HttpServletRequest request,
-            final DynaActionForm actionForm) {
-        final Registration registration = getRegistration(request, actionForm);
-        if (registration.getStudentCurricularPlansCount() > 1) {
-            request.setAttribute("studentCurricularPlans", registration.getStudentCurricularPlans());
-
-            return rootDomainObject.readStudentCurricularPlanByOID((Integer) actionForm.get("scpId"));
-        }
-        return registration.getActiveStudentCurricularPlan();
-
     }
 
     public ActionForward viewDocumentRequests(ActionMapping mapping, ActionForm actionForm,
