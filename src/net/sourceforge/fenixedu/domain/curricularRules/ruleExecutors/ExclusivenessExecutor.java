@@ -24,7 +24,11 @@ public class ExclusivenessExecutor extends CurricularRuleExecutor {
 	    final CurricularCourse curricularCourse = (CurricularCourse) degreeModule;
 	    final ExecutionPeriod previousExecutionPeriod = enrolmentContext.getExecutionPeriod().getPreviousExecutionPeriod();
 	
-	    if (isApproved(enrolmentContext, curricularCourse) || isEnroled(enrolmentContext, curricularCourse, previousExecutionPeriod)) {
+	    if (isApproved(enrolmentContext, curricularCourse) || hasEnrolmentWithEnroledState(enrolmentContext, curricularCourse, previousExecutionPeriod)) {
+		
+		if (isEnroled(enrolmentContext, (CurricularCourse) rule.getDegreeModuleToApplyRule(), enrolmentContext.getExecutionPeriod())) {
+		    return RuleResult.createTrue(EnrolmentResultType.IMPOSSIBLE);
+		}
 		return createFalseRuleResult(rule);
 	    }
 	}
@@ -57,11 +61,14 @@ public class ExclusivenessExecutor extends CurricularRuleExecutor {
 	    final CurricularCourse curricularCourse = (CurricularCourse) degreeModule;
 
 	    if (isApproved(enrolmentContext, curricularCourse)) {
+		if (isEnroled(enrolmentContext, (CurricularCourse) rule.getDegreeModuleToApplyRule(), enrolmentContext.getExecutionPeriod())) {
+		    return RuleResult.createTrue(EnrolmentResultType.IMPOSSIBLE);
+		}
 		return createFalseRuleResult(rule);
 	    }
 	    
 	    final ExecutionPeriod previousExecutionPeriod = enrolmentContext.getExecutionPeriod().getPreviousExecutionPeriod();
-	    if  (isEnroled(enrolmentContext, curricularCourse, previousExecutionPeriod)) {
+	    if  (hasEnrolmentWithEnroledState(enrolmentContext, curricularCourse, previousExecutionPeriod)) {
 		return RuleResult.createTrue(EnrolmentResultType.TEMPORARY);	
 	    }
 	}
