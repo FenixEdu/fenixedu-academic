@@ -17,6 +17,8 @@ import org.apache.commons.beanutils.BeanComparator;
 
 public class StudentCurriculumGroupBean extends StudentCurriculumModuleBean {
 
+    private static final int[] CURRICULAR_YEARS_FOR_CURRICULAR_COURSES = { 1 };
+
     private static class ComparatorByCurriculumGroupOrder implements
 	    Comparator<StudentCurriculumGroupBean> {
 
@@ -101,12 +103,15 @@ public class StudentCurriculumGroupBean extends StudentCurriculumModuleBean {
 		.getCurricularCourseContextsToEnrol(executionPeriod);
 
 	for (final Context context : curricularCoursesToEnrol) {
+	    // NOTE: Temporary solution until first degree completes
 	    final CurricularCourse curricularCourse = (CurricularCourse) context.getChildDegreeModule();
-	    if (context.containsSemesterAndCurricularYear(executionPeriod.getSemester(), 1,
-		    curricularCourse.getRegime())) {
-		result.add(new DegreeModuleToEnrol(group, context));
+	    for (final int curricularYear : CURRICULAR_YEARS_FOR_CURRICULAR_COURSES) {
+		if (context.containsSemesterAndCurricularYear(executionPeriod.getSemester(),
+			curricularYear, curricularCourse.getRegime())) {
+		    result.add(new DegreeModuleToEnrol(group, context));
+		    break;
+		}
 	    }
-
 	}
 
 	return result;
