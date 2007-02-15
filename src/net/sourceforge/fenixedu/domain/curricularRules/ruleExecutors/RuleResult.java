@@ -84,6 +84,11 @@ public class RuleResult {
     public boolean isTemporaryEnrolment() {
 	return this.enrolmentResultType == EnrolmentResultType.TEMPORARY;
     }
+    
+    public boolean isImpossibleEnrolment() {
+	return this.enrolmentResultType == EnrolmentResultType.IMPOSSIBLE;
+    }
+
 
     public EnrolmentResultType getEnrolmentResultType() {
 	return enrolmentResultType;
@@ -107,27 +112,28 @@ public class RuleResult {
     static public RuleResult createTrue(final EnrolmentResultType enrolmentResultType) {
 	return new RuleResult(RuleResultType.TRUE, enrolmentResultType);
     }
-
+    
+    static public RuleResult createFalse() {
+	return createFalse(EnrolmentResultType.FINAL);
+    }
+    
     static public RuleResult createFalse(final EnrolmentResultType enrolmentResultType) {
 	return new RuleResult(RuleResultType.FALSE, enrolmentResultType);
     }
 
-    static public RuleResult createFalse() {
-	return new RuleResult(RuleResultType.FALSE, EnrolmentResultType.FINAL);
-    }
-
     static public RuleResult createFalse(final String message, final String... args) {
-	return new RuleResult(RuleResultType.FALSE, EnrolmentResultType.FINAL, Collections
-		.singletonList(new RuleResultMessage(message, args)));
+	return createFalse(EnrolmentResultType.FINAL, message, args);
+    }
+    
+    static public RuleResult createFalse(final EnrolmentResultType enrolmentResultType, final String message, final String... args) {
+	return new RuleResult(RuleResultType.FALSE, enrolmentResultType, Collections.singletonList(new RuleResultMessage(message, args)));
     }
     
     static public RuleResult createFalseWithLiteralMessage(final String message) {
-	return new RuleResult(RuleResultType.FALSE, EnrolmentResultType.FINAL, Collections
-		.singletonList(new RuleResultMessage(message, false)));
+	return new RuleResult(RuleResultType.FALSE, EnrolmentResultType.FINAL, Collections.singletonList(new RuleResultMessage(message, false)));
     }
 
     static public RuleResult createNA() {
 	return new RuleResult(RuleResultType.NA, EnrolmentResultType.NULL);
     }
-
 }
