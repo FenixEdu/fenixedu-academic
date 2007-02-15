@@ -11,9 +11,17 @@ public class AssertUniqueApprovalInCurricularCourseContextsExecutor extends Curr
     @Override
     protected RuleResult executeEnrolmentWithRules(final ICurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
 	final CurricularCourse curricularCourse = (CurricularCourse) curricularRule.getDegreeModuleToApplyRule();
+	
+	if (!curricularCourse.hasAnyActiveDegreModuleScope(enrolmentContext.getExecutionPeriod())) {
+	    return RuleResult.createNA();
+	}
 
 	if (isApproved(enrolmentContext, curricularCourse)) {
-	    return RuleResult.createFalseWithLiteralMessage(CurricularRuleLabelFormatter.getLabel(curricularRule));
+	    if (isEnroled(enrolmentContext, curricularCourse, enrolmentContext.getExecutionPeriod())) {
+		return RuleResult.createTrue(EnrolmentResultType.IMPOSSIBLE);
+	    } else { // is enrolling
+		return RuleResult.createFalseWithLiteralMessage(CurricularRuleLabelFormatter.getLabel(curricularRule));
+	    }
 	} else {
 	    return RuleResult.createTrue();
 	}
@@ -22,12 +30,21 @@ public class AssertUniqueApprovalInCurricularCourseContextsExecutor extends Curr
     @Override
     protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(final ICurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
 	final CurricularCourse curricularCourse = (CurricularCourse) curricularRule.getDegreeModuleToApplyRule();
-	final ExecutionPeriod previousExecutionPeriod = enrolmentContext.getExecutionPeriod().getPreviousExecutionPeriod();
+	final ExecutionPeriod executionPeriod = enrolmentContext.getExecutionPeriod();
+	
+	if (!curricularCourse.hasAnyActiveDegreModuleScope(enrolmentContext.getExecutionPeriod())) {
+	    return RuleResult.createNA();
+	}
 	
 	if (isApproved(enrolmentContext, curricularCourse)) {
-	    return RuleResult.createFalseWithLiteralMessage(CurricularRuleLabelFormatter.getLabel(curricularRule));
 	    
-	} else if (hasEnrolmentWithEnroledState(enrolmentContext, curricularCourse, previousExecutionPeriod)) {
+	    if (isEnroled(enrolmentContext, curricularCourse, executionPeriod)) {
+		return RuleResult.createTrue(EnrolmentResultType.IMPOSSIBLE);
+	    } else { // is enrolling
+		return RuleResult.createFalseWithLiteralMessage(CurricularRuleLabelFormatter.getLabel(curricularRule));
+	    }
+	    
+	} else if (hasEnrolmentWithEnroledState(enrolmentContext, curricularCourse, executionPeriod.getPreviousExecutionPeriod())) {
 	    return RuleResult.createTrue(EnrolmentResultType.TEMPORARY);
 	    
 	} else {
