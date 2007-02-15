@@ -624,4 +624,5 @@
     <slot name="shifts" key="label.archive.options.shifts"/>
     <slot name="groupings" key="label.archive.options.groupings"/>
     <slot name="evaluations" key="label.archive.options.evaluations"/>
+    <slot name="files" key="label.archive.options.files"/>
 </schema>

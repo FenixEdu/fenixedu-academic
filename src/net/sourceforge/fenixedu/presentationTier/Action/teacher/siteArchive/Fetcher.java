@@ -13,6 +13,9 @@ import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import pt.utl.ist.fenix.tools.file.FileManagerFactory;
+import pt.utl.ist.fenix.tools.file.IFileManager;
+
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.streams.FetcherRequestWrapper;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.streams.FetcherServletResponseWrapper;
 
@@ -128,12 +131,28 @@ public class Fetcher {
         markAsFetched(resource);
         
         String url = prepareUrl(resource);
-        
-        RequestDispatcher dispatcher = this.request.getRequestDispatcher(url);
-        ServletRequest request = createForwardRequest();
-        FetcherServletResponseWrapper response = createForwardResponse(resource, stream);
-        
-        dispatcher.forward(request, response);
+        if (isDspaceFile(url)) {
+            IFileManager fileManager = FileManagerFactory.getFactoryInstance().getFileManager();
+            byte[] content = fileManager.retrieveFile(getDspaceFileId(url));
+            
+            stream.write(content);
+            stream.close();
+        }
+        else {
+            RequestDispatcher dispatcher = this.request.getRequestDispatcher(url);
+            ServletRequest request = createForwardRequest();
+            FetcherServletResponseWrapper response = createForwardResponse(resource, stream);
+            
+            dispatcher.forward(request, response);
+        }
+    }
+
+    private String getDspaceFileId(String url) {
+        return url.replaceAll(".*?/bitstream/([0-9]+/[0-9]+/[0-9]+)/.*", "$1");
+    }
+
+    private boolean isDspaceFile(String url) {
+        return url.matches(".*?/bitstream/[0-9]+/[0-9]+/[0-9]+/.*");
     }
 
     private String prepareUrl(Resource resource) {

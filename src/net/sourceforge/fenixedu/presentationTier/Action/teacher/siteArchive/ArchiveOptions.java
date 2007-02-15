@@ -15,6 +15,7 @@ public class ArchiveOptions implements Serializable {
     private boolean shifts = true;
     private boolean groupings = true;
     private boolean evaluations = true;
+    private boolean files = false;
 
     public boolean isAnnouncements() {
         return this.announcements;
@@ -62,6 +63,14 @@ public class ArchiveOptions implements Serializable {
 
     public void setShifts(boolean shifts) {
         this.shifts = shifts;
+    }
+
+    public boolean isFiles() {
+        return this.files;
+    }
+
+    public void setFiles(boolean files) {
+        this.files = files;
     }
 
 }

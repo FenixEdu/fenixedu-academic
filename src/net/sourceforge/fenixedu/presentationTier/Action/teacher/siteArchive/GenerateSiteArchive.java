@@ -189,6 +189,12 @@ public class GenerateSiteArchive extends FenixDispatchAction {
             String url = String.format("/publico/executionCourse.do?method=section&executionCourseID=%s&sectionID=%s", executionCourse.getIdInternal(), section.getIdInternal());
             resource = new Resource(name, url);
             resource.addAllRules(globalRules);
+            
+            if (options.isFiles()) {
+                ResourceRule fileRule = new ResourceRule(".*?/bitstream/([0-9]+/[0-9]+/[0-9]+)/(.*)", "files/$2");
+                resource.addRule(fileRule);
+            }
+            
             fetcher.queue(resource);
         }
     }

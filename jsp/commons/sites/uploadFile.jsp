@@ -36,7 +36,7 @@
 <span>
 	<span class="pleft1">
 		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
-			<bean:message key="title.section.item.file.upload" bundle="SITE_RESOURCES"/>
+			<bean:message key="title.item.file.upload" bundle="SITE_RESOURCES"/>
 	</span>
 	<span class="pleft1">
 		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 

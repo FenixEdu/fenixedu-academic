@@ -90,5 +90,5 @@ public class Resource {
     public int hashCode() {
         return getName().hashCode();
     }
-    
+
 }
