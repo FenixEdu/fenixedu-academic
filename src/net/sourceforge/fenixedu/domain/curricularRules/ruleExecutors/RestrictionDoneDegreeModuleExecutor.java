@@ -35,7 +35,9 @@ public class RestrictionDoneDegreeModuleExecutor extends CurricularRuleExecutor 
 	}
 	
 	if (isEnrolling(enrolmentContext, curricularCourse) || isEnroled(enrolmentContext, curricularCourse)) {
-	    return createFalseRuleResult(rule);    
+	    return RuleResult.createFalse(
+		    "curricularRules.ruleExecutors.RestrictionDoneDegreeModuleExecutor.cannot.enrol.simultaneously.to.degreeModule.and.precedenceDegreeModule",
+		    rule.getDegreeModuleToApplyRule().getName(), rule.getPrecedenceDegreeModule().getName());    
 	}
 	
 	final ExecutionPeriod previousExecutionPeriod = enrolmentContext.getExecutionPeriod().getPreviousExecutionPeriod();
