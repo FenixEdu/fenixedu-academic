@@ -45,8 +45,8 @@ public class StudentCurricularPlanEnrolment {
 
     private Map<EnrolmentResultType, List<IDegreeModuleToEvaluate>> prepareCurriculumModulesEnrolmentInformation(final EnrolmentContext enrolmentContext) {
 
-	final Map<EnrolmentResultType, List<IDegreeModuleToEvaluate>> degreeModulesEnrolMap = buildDegreeModulesToEnrolMap();
-	final List<RuleResult> falseResults = evaluateDegreeModulesToEnrol(enrolmentContext, degreeModulesEnrolMap);
+	final Map<EnrolmentResultType, List<IDegreeModuleToEvaluate>> degreeModulesEnrolMap = new HashMap<EnrolmentResultType, List<IDegreeModuleToEvaluate>>();
+	final List<RuleResult> falseResults = evaluateDegreeModules(enrolmentContext, degreeModulesEnrolMap);
 	if (!falseResults.isEmpty()) {
 	    throw new EnrollmentDomainException(falseResults);
 	}
@@ -124,7 +124,6 @@ public class StudentCurricularPlanEnrolment {
     }
 
     private void addCurricularRulesFromExistingEnrolmentsInStudentCurricularPlan(final EnrolmentContext enrolmentContext, final Map<IDegreeModuleToEvaluate, Set<ICurricularRule>> curricularRulesByDegreeModule) {
-
 	final ExecutionPeriod executionPeriod = enrolmentContext.getExecutionPeriod();
 
 	for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext.getStudentCurricularPlan().getDegreeModulesToEvaluate(executionPeriod)) {
@@ -164,7 +163,7 @@ public class StudentCurricularPlanEnrolment {
 	}
     }
 
-    private List<RuleResult> evaluateDegreeModulesToEnrol(final EnrolmentContext enrolmentContext, final Map<EnrolmentResultType, List<IDegreeModuleToEvaluate>> degreeModulesEnrolMap) {
+    private List<RuleResult> evaluateDegreeModules(final EnrolmentContext enrolmentContext, final Map<EnrolmentResultType, List<IDegreeModuleToEvaluate>> degreeModulesEnrolMap) {
 
 	final List<RuleResult> falseRuleResults = new ArrayList<RuleResult>();
 
@@ -175,7 +174,7 @@ public class StudentCurricularPlanEnrolment {
 		falseRuleResults.add(ruleResult);
 
 	    } else if (falseRuleResults.isEmpty() && ruleResult.isTrue()) {
-		addDegreeModelToEnrolMap(degreeModulesEnrolMap, ruleResult.getEnrolmentResultType(), entry.getKey());
+		addDegreeModuleToEvaluateToMap(degreeModulesEnrolMap, ruleResult.getEnrolmentResultType(), entry.getKey());
 	    }
 	}
 	return falseRuleResults;
@@ -226,17 +225,14 @@ public class StudentCurricularPlanEnrolment {
 	}
     }
 
-    private Map<EnrolmentResultType, List<IDegreeModuleToEvaluate>> buildDegreeModulesToEnrolMap() {
-	final Map<EnrolmentResultType, List<IDegreeModuleToEvaluate>> result = new HashMap<EnrolmentResultType, List<IDegreeModuleToEvaluate>>(
-		2);
-	result.put(EnrolmentResultType.FINAL, new ArrayList<IDegreeModuleToEvaluate>());
-	result.put(EnrolmentResultType.TEMPORARY, new ArrayList<IDegreeModuleToEvaluate>());
-	return result;
-    }
-
-    private void addDegreeModelToEnrolMap(final Map<EnrolmentResultType, List<IDegreeModuleToEvaluate>> result,
+    private void addDegreeModuleToEvaluateToMap(final Map<EnrolmentResultType, List<IDegreeModuleToEvaluate>> result,
 	    final EnrolmentResultType enrolmentResultType, final IDegreeModuleToEvaluate degreeModuleToEnrol) {
-	result.get(enrolmentResultType).add(degreeModuleToEnrol);
+	
+	List<IDegreeModuleToEvaluate> information = result.get(enrolmentResultType);
+	if (information == null) {
+	    result.put(enrolmentResultType, information = new ArrayList<IDegreeModuleToEvaluate>());
+	}
+	information.add(degreeModuleToEnrol);
     }
 
     private void createOptionalEnrolmentFor(final EnrolmentContext enrolmentContext,
