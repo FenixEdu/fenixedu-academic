@@ -93,5 +93,8 @@
 		</p>
 	
 	</fr:form>
-	
+
+
+<p class="mtop15"><em><bean:message bundle="STUDENT_RESOURCES"  key="message.enrollment.terminated"/> <html:link action="/viewCurriculum.do?method=prepare"><bean:message bundle="STUDENT_RESOURCES"  key="message.student.curriculum"/></html:link>.</em></p>
+
 </logic:present>
