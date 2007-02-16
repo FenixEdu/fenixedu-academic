@@ -42,17 +42,16 @@
 		
 		<tr>
 			<th>
-				<bean:message key="label.unitHeadSchedule" bundle="ASSIDUOUSNESS_RESOURCES"/>:
+				<bean:message key="label.scheduleClockingType" bundle="ASSIDUOUSNESS_RESOURCES"/>:
 				
 			</th>
 			<td>
-				<fr:edit name="workScheduleTypeFactory" id="unitHeadSchedule" slot="unitHeadSchedule"
+				<fr:edit name="workScheduleTypeFactory" id="scheduleClockingType" slot="scheduleClockingType"
 					type="net.sourceforge.fenixedu.domain.assiduousness.util.WorkScheduleTypeFactory">
 					<fr:layout>
 						<fr:property name="classes" value="thlight thcenter"/>
 					</fr:layout>
 				</fr:edit>
-				<span class="smalltxt"><bean:message key="label.unitHeadScheduleNote" bundle="ASSIDUOUSNESS_RESOURCES"/></span>
 			</td>
 		</tr>
 		

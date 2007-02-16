@@ -159,7 +159,7 @@
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle1 printborder tpadding1" />
 				<fr:property name="columnClasses"
-					value="bgcolor3 acenter,,acenter,aright,aright,aleft,aleft,acenter" />
+					value="bgcolor3 acenter,,acenter,aright,aright,aleft,aleft,acenter invisible" />
 				<fr:property name="headerClasses" value="acenter" />
 				<%if (net.sourceforge.fenixedu.domain.assiduousness.StaffManagementSection.isMember(user
                     .getPerson())) {

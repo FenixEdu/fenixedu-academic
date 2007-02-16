@@ -180,6 +180,7 @@ valueType net.sourceforge.fenixedu.domain.parking.DocumentDeliveryType										
 valueType net.sourceforge.fenixedu.domain.parking.NewParkingDocumentType										as NewParkingDocumentType;
 valueType net.sourceforge.fenixedu.domain.FrequencyType															as FrequencyType;
 valueType net.sourceforge.fenixedu.domain.RequestState															as RequestState;
+valueType net.sourceforge.fenixedu.domain.assiduousness.util.ScheduleClockingType								as ScheduleClockingType;
 
 
 /*
@@ -3767,7 +3768,7 @@ class net.sourceforge.fenixedu.domain.assiduousness.WorkScheduleType extends net
 	String ojbConcreteClass;
 	YearMonthDay beginValidDate;
 	YearMonthDay endValidDate;
-	Boolean mandatoryClocking;
+	ScheduleClockingType scheduleClockingType;
 }
 
 class net.sourceforge.fenixedu.domain.assiduousness.FlexibleSchedule extends net.sourceforge.fenixedu.domain.assiduousness.WorkScheduleType {
@@ -3824,11 +3825,9 @@ class net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive extends 
         JustificationType justificationType;
         DayType dayType;
         JustificationGroup justificationGroup;
+		Boolean actualWorkTime;
         DateTime lastModifiedDate;
 		Integer keyModifiedBy;       
-}
-
-class net.sourceforge.fenixedu.domain.assiduousness.MonthlyBalance extends net.sourceforge.fenixedu.domain.DomainObject {
 }
 
 class net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRegime extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -10753,13 +10752,6 @@ relation RootDomainObjectWorkScheduleType {
 relation RootDomainObjectPeriodicity {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.assiduousness.Periodicity playsRole periodicities {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectMonthlyBalance {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.assiduousness.MonthlyBalance playsRole monthlyBalances {
 		multiplicity *;
 	}
 }
