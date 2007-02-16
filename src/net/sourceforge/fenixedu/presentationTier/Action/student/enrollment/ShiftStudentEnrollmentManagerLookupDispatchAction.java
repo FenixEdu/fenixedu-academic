@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.SchoolClass;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
@@ -35,12 +34,20 @@ import org.apache.struts.action.DynaActionForm;
 
 public class ShiftStudentEnrollmentManagerLookupDispatchAction extends TransactionalLookupDispatchAction {
 
+    private Registration getAndSetRegistration(final HttpServletRequest request) {
+	final Registration registration = rootDomainObject.readRegistrationByOID(getIntegerFromRequest(request, "registrationOID"));
+	request.setAttribute("registration", registration);
+	request.setAttribute("registrationOID", registration.getIdInternal().toString());
+	return registration;
+    }
+
     public ActionForward addCourses(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixTransactionException,
 	    FenixFilterException {
 
 	super.validateToken(request, actionForm, mapping, "error.transaction.enrollment");
-
+	getAndSetRegistration(request);
+	
 	checkParameter(request);
 
 	final IUserView userView = getUserView(request);
@@ -49,7 +56,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
 
 	try {
 	    ServiceManagerServiceFactory.executeService(userView, "WriteStudentAttendingCourse",
-		    new Object[] { getStudent(userView), executionCourseId });
+		    new Object[] { getAndSetRegistration(request), executionCourseId });
 
 	} catch (NotAuthorizedException exception) {
 	    addActionMessage(request, "error.attend.curricularCourse.impossibleToEnroll");
@@ -72,6 +79,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
 	    FenixFilterException {
 
 	super.validateToken(request, actionForm, mapping, "error.transaction.enrollment");
+	final Registration registration = getAndSetRegistration(request);
 
 	checkParameter(request);
 
@@ -81,11 +89,8 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
 	    return mapping.findForward("prepareShiftEnrollment");
 	}
 
-	final IUserView userView = getUserView(request);
-	final Registration registration = getStudent(userView);
-
 	try {
-	    ServiceManagerServiceFactory.executeService(userView, "DeleteStudentAttendingCourse",
+	    ServiceManagerServiceFactory.executeService(getUserView(request), "DeleteStudentAttendingCourse",
 		    new Object[] { registration, executionCourseId });
 
 	} catch (DomainException e) {
@@ -108,8 +113,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
 	final Integer classIdSelected = readClassSelected(request);
 
 	final IUserView userView = getUserView(request);
-	final Registration registration = getStudent(userView);
-	request.setAttribute("studentId", registration.getIdInternal());
+	final Registration registration = getAndSetRegistration(request);
 
 	final ExecutionCourse executionCourse = getExecutionCourse(request);
 	final List<SchoolClass> schoolClassesToEnrol = readStudentSchoolClassesToEnrolUsingExecutionCourse(
@@ -223,6 +227,9 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
 
     public ActionForward prepareStartViewWarning(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	
+	getAndSetRegistration(request);
+	
 	return mapping.findForward("prepareEnrollmentViewWarning");
     }
 
@@ -238,11 +245,4 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
 	return map;
     }
 
-    private Registration getStudent(final IUserView userView) {
-	Registration registration = userView.getPerson().getStudentByUsername();
-	if (registration == null) {
-	    registration = userView.getPerson().getStudentByType(DegreeType.DEGREE);
-	}
-	return registration;
-    }
 }

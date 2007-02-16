@@ -3,11 +3,11 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <html:xhtml/>
 
-<logic:notPresent name="student" >
+<logic:notPresent name="registration" >
 	<span class="error"><!-- Error messages go here --><bean:message key="error.notAuthorized.ShiftEnrollment" /></span>
 </logic:notPresent>
 
-<logic:present name="student" >
+<logic:present name="registration" >
 
 <div class="center" >
 	<h2><bean:message key="title.student.shift.enrollment" /></h2>
@@ -33,7 +33,7 @@
 	</ul>
 
 <div class="infoselected left">
-<p><bean:message key="message.warning.student.enrolmentClasses" /> <html:link page="<%= "/warningFirst.do" %>"><bean:message key="message.warning.student.enrolmentClasses.Fenix" /></html:link></p>
+<p><bean:message key="message.warning.student.enrolmentClasses" /> <html:link page="<%= "/studentEnrollmentManagement.do?method=prepare" %>"><bean:message key="message.warning.student.enrolmentClasses.Fenix" /></html:link></p>
 </div>
 
 	<ul class="left">
@@ -41,7 +41,7 @@
 	</ul>
 
 
-<bean:define id="studentIdToEnrollment" name="student" property="idInternal" />
+<bean:define id="registrationToEnrol" name="registration" property="idInternal" />
 
 <logic:present name="selectedExecutionDegree">
 
@@ -55,7 +55,7 @@
 			<html:form action="/studentShiftEnrollmentManager" >
 
 				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="start" />
-				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentId" property="studentId" value="<%= studentIdToEnrollment.toString() %>" />
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.registrationOID" property="registrationOID" value="<%= registrationToEnrol.toString() %>" />
 				
 				<logic:present name="selectCourses">
 					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectCourses" property="selectCourses" value="<%= pageContext.findAttribute("selectCourses").toString() %>" />
@@ -73,7 +73,7 @@
 			
 			<html:form action="/studentShiftEnrollmentManagerLoockup">
 			
-				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentId" property="studentId" value="<%= studentIdToEnrollment.toString() %>" />
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.registrationOID" property="registrationOID" value="<%= registrationToEnrol.toString() %>" />
 				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degree" property="degree" value="<%= degreeSelected.toString() %>" />
 				
 				<logic:present name="selectCourses">

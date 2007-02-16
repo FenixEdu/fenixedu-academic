@@ -33,9 +33,24 @@ import org.apache.struts.action.DynaActionForm;
 
 public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDispatchAction {
 
+    public ActionForward prepare(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	request.setAttribute("student", getUserView(request).getPerson().getStudent());
+	return mapping.findForward("chooseRegistration");
+    }
+
+    private Registration getAndSetRegistration(final HttpServletRequest request) {
+	final Registration registration = rootDomainObject.readRegistrationByOID(getIntegerFromRequest(request, "registrationOID"));
+	request.setAttribute("registration", registration);
+	request.setAttribute("registrationOID", registration.getIdInternal().toString());
+	return registration;
+    }
+
     public ActionForward prepareStartViewWarning(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
 
+	getAndSetRegistration(request);
 	return mapping.findForward("prepareEnrollmentViewWarning");
     }
 
@@ -43,6 +58,7 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
 	    HttpServletResponse response) throws Exception {
 
 	super.createToken(request);
+	getAndSetRegistration(request);
 	return prepareShiftEnrollment(mapping, form, request, response);
     }
 
@@ -56,15 +72,13 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
 	    return mapping.findForward("showEnrollmentPage");
 	}
 
-	final IUserView userView = getUserView(request);
-	final Registration registration = getStudent(userView);
+	final Registration registration = getAndSetRegistration(request);
 	final ExecutionPeriod executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
-	request.setAttribute("student", registration);
 
+	
 	if (readAndSetSelectCoursesParameter(request) == null) {
-	    return prepareShiftEnrolmentInformation(mapping, request, userView, registration,
+	    return prepareShiftEnrolmentInformation(mapping, request, registration,
 		    executionPeriod);
-
 	} else {
 	    return prepareSelectCoursesInformation(mapping, actionForm, request, registration,
 		    executionPeriod);
@@ -117,13 +131,13 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
     }
 
     private ActionForward prepareShiftEnrolmentInformation(ActionMapping mapping,
-	    HttpServletRequest request, final IUserView userView, final Registration registration,
+	    HttpServletRequest request, final Registration registration,
 	    final ExecutionPeriod executionPeriod) throws FenixFilterException {
 
 	try {
 
 	    final List<ShiftToEnrol> shiftsToEnrol = (List<ShiftToEnrol>) ServiceManagerServiceFactory
-		    .executeService(userView, "ReadShiftsToEnroll", new Object[] { registration });
+		    .executeService(getUserView(request), "ReadShiftsToEnroll", new Object[] { registration });
 
 	    request.setAttribute("numberOfExecutionCoursesHavingNotEnroledShifts", registration
 		    .getNumberOfExecutionCoursesHavingNotEnroledShiftsFor(executionPeriod));
@@ -202,14 +216,6 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
 	return null;
     }
 
-    private Registration getStudent(final IUserView userView) {
-	Registration registration = userView.getPerson().getStudentByUsername();
-	if (registration == null) {
-	    registration = userView.getPerson().getStudentByType(DegreeType.DEGREE);
-	}
-	return registration;
-    }
-
     private String readAndSetSelectCoursesParameter(final HttpServletRequest request) {
 	final String selectCourses = request.getParameter("selectCourses");
 	if (selectCourses != null) {
@@ -230,7 +236,7 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
 
 	try {
 	    ServiceManagerServiceFactory.executeService(userView, "UnEnrollStudentFromShift",
-		    new Object[] { getStudent(userView), shiftId });
+		    new Object[] { getAndSetRegistration(request), shiftId });
 
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
