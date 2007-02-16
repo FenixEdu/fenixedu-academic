@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.DynaActionForm;
 
 public class StudentEnrollmentManagementDA extends FenixDispatchAction {
 
@@ -60,7 +59,7 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
     public ActionForward chooseRegistration(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
 
-	final Registration registration = getRegistration((DynaActionForm) form);
+	final Registration registration = getRegistration(request);
 	if (!getLoggedStudent(request).getRegistrationsToEnrolByStudent().contains(registration)) {
 	    return mapping.findForward("notAuthorized");
 	}
@@ -69,8 +68,9 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
 
     }
 
-    private Registration getRegistration(DynaActionForm form) {
-	return rootDomainObject.readRegistrationByOID((Integer) form.get("registrationId"));
+    private Registration getRegistration(final HttpServletRequest request) {
+	return rootDomainObject.readRegistrationByOID(getRequestParameterAsInteger(request,
+		"registrationId"));
     }
 
     public ActionForward choosePersonalDataAuthorizationChoice(ActionMapping mapping, ActionForm form,
