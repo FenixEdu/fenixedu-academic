@@ -40,7 +40,7 @@
 	}
 	td.padded { }
 	.tdbar {
-	background-color: #fed;
+	background-color: #a3d1d9;
 	}
 	tr.active td {
 	background-color: #fefeea;

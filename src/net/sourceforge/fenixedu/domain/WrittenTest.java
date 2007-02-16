@@ -67,11 +67,24 @@ public class WrittenTest extends WrittenTest_Base {
     @Checked("WrittenTestPredicates.changeDatePredicate")
     public void setDayDate(Date date) {
         final IUserView requestor = AccessControl.getUserView();
-        if (requestor == null || hasTimeTableManagerPrivledges(requestor) || hasCoordinatorPrivledges(requestor) || allowedPeriod(date)) {
+        if (hasTimeTableManagerPrivledges(requestor) || hasCoordinatorPrivledges(requestor) || (isTeacher(requestor) && allowedPeriod(date))) {
             super.setDayDate(date);
         } else {
             throw new DomainException("not.authorized.to.set.this.date");
         }
+    }
+
+    private boolean isTeacher(IUserView requestor) {
+	Person person = requestor.getPerson();	
+	Teacher teacher = person.getTeacher();
+	if(teacher != null) {
+	    for (ExecutionCourse executionCourse : getAssociatedExecutionCourses()) {
+		if(teacher.hasProfessorshipForExecutionCourse(executionCourse)) {
+		   return true; 
+		}
+	    }	    	
+	}
+	return false;
     }
 
     private boolean allowedPeriod(final Date date) {

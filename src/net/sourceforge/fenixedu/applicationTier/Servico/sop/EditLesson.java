@@ -95,7 +95,8 @@ public class EditLesson extends Service {
                     roomOccupation.roomOccupationForDateAndTime(
                     oldroomOccupation.getPeriod().getStartDate(),
                     oldroomOccupation.getPeriod().getEndDate(),
-                    startTime, endTime, dayOfWeek, frequency, week)) {
+                    startTime, endTime, dayOfWeek, frequency, week, 
+                    Boolean.TRUE, Boolean.TRUE)) {
                 throw new InterceptingServiceException();
             }
         }

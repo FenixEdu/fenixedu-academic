@@ -20,6 +20,10 @@ import pt.ist.utl.fenix.utils.Pair;
 
 public class RoomsPunctualSchedulingBean implements Serializable {
 
+    private Boolean markSaturday;
+    
+    private Boolean markSunday;
+    
     private DomainReference<PunctualRoomsOccupationRequest> roomsReserveRequestReference;
     
     private Integer roomsReserveRequestIdentification;
@@ -68,6 +72,8 @@ public class RoomsPunctualSchedulingBean implements Serializable {
 	setCompleteDescription(genericEvent.getDescription());
 	setGenericEvent(genericEvent);
 	setGanttDiagramAvailable(Boolean.TRUE);
+	setMarkSaturday(genericEvent.getDailyFrequencyMarkSaturday());
+	setMarkSunday(genericEvent.getDailyFrequencyMarkSunday());
     }
   
     public void editDailyType(YearMonthDay begin, Partial beginTime, Partial endTime) {
@@ -261,5 +267,21 @@ public class RoomsPunctualSchedulingBean implements Serializable {
 
     public void setRoomsReserveRequestIdentification(Integer roomsReserveIdentification) {
         this.roomsReserveRequestIdentification = roomsReserveIdentification;
+    }
+
+    public Boolean getMarkSaturday() {
+        return markSaturday;
+    }
+
+    public void setMarkSaturday(Boolean markSaturday) {
+        this.markSaturday = markSaturday;
+    }
+
+    public Boolean getMarkSunday() {
+        return markSunday;
+    }
+
+    public void setMarkSunday(Boolean markSunday) {
+        this.markSunday = markSunday;
     }    
 }

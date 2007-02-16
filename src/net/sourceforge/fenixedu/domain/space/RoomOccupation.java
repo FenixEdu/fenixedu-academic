@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.GenericEvent;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.CalendarUtil;
 import net.sourceforge.fenixedu.util.DiaSemana;
@@ -45,41 +46,35 @@ public class RoomOccupation extends RoomOccupation_Base {
 
     public static final int SEMANAL = 2;
 
-    public static final int QUINZENAL = 3;
+    public static final int QUINZENAL = 3;      
+    
+    private static int SATURDAY_IN_JODA_TIME = 6;
    
-    private transient Locale locale = LanguageUtils.getLocale();
+    private static int SUNDAY_IN_JODA_TIME = 7;
+    
+    private static transient Locale locale = LanguageUtils.getLocale();
     
     
     public RoomOccupation() {
     	super();    	
         setRootDomainObject(RootDomainObject.getInstance());       
     }
-
-    public RoomOccupation(OldRoom room, Calendar startTime, Calendar endTime, DiaSemana dayOfWeek, Integer frequency) {	
+            
+    public RoomOccupation(OldRoom room, Calendar startTime, Calendar endTime, DiaSemana dayOfWeek, 
+	    OccupationPeriod period, WrittenEvaluation writtenEvaluation) {	
         
 	this();
         setRoom(room);
         setStartTime(startTime);
         setEndTime(endTime);
         setDayOfWeek(dayOfWeek);
-        setFrequency(frequency);
-    }   
+        setWrittenEvaluation(writtenEvaluation);
+        setPeriod(period);
+    }    
     
-    public RoomOccupation(OldRoom room, Calendar startTime, Calendar endTime, 
-	    DiaSemana dayOfWeek, FrequencyType frequency, GenericEvent genericEvent, OccupationPeriod occupationPeriod) {	
-	
-        this();
-        setRoom(room);
-        setGenericEvent(genericEvent);
-        setStartTime(startTime);
-        setEndTime(endTime);
-        setDayOfWeek(dayOfWeek);                       
-        setPeriod(occupationPeriod);
-        setFrequency(frequency);
-    }   
-    
-    public RoomOccupation(OldRoom room, YearMonthDay beginDate, YearMonthDay endDate, HourMinuteSecond beginTime, HourMinuteSecond endTime,
-	    FrequencyType frequencyType, GenericEvent genericEvent) {	
+    public RoomOccupation(OldRoom room, YearMonthDay beginDate, YearMonthDay endDate,
+	    HourMinuteSecond beginTime, HourMinuteSecond endTime, FrequencyType frequencyType, GenericEvent genericEvent,
+	    Boolean markSaturday, Boolean markSunday) {	
 	
         this();          
         
@@ -93,10 +88,12 @@ public class RoomOccupation extends RoomOccupation_Base {
             occupationPeriod = new OccupationPeriod(beginDate, endDate);
         }
         
-        if(!room.isFree(occupationPeriod, beginTimeCalendar, endTimeCalendar, diaSemana, frequency, 1)) {
+        if(!room.isFree(occupationPeriod, beginTimeCalendar, endTimeCalendar, diaSemana, frequency, 1, markSaturday, markSunday)) {
             throw new DomainException("error.roomOccupation.room.is.not.free");
         }
         
+        setDailyFrequencyMarkSaturday(markSaturday);
+        setDailyFrequencyMarkSunday(markSunday);
         setRoom(room);
         setGenericEvent(genericEvent);
         setStartTime(beginTimeCalendar);
@@ -105,34 +102,22 @@ public class RoomOccupation extends RoomOccupation_Base {
         setPeriod(occupationPeriod);
         setFrequency(frequencyType);               
     }   
-               
-    public boolean roomOccupationForDateAndTime(RoomOccupation roomOccupation) {
-        return roomOccupationForDateAndTime(roomOccupation.getPeriod(), roomOccupation.getStartTime(),
-                roomOccupation.getEndTime(), roomOccupation.getDayOfWeek(), roomOccupation
-                        .getFrequency(), roomOccupation.getWeekOfQuinzenalStart(), roomOccupation
-                        .getRoom());
-    }
-    
-    public boolean roomOccupationForDateAndTime(OccupationPeriod period, Calendar startTime, Calendar endTime,
-            DiaSemana dayOfWeek, Integer frequency, Integer week) {
-     
-	return roomOccupationForDateAndTime(period.getStartDate(), period.getEndDate(), startTime,
-                endTime, dayOfWeek, frequency, week);
-    }
 
     public boolean roomOccupationForDateAndTime(OccupationPeriod period, Calendar startTime,
-	    Calendar endTime, DiaSemana dayOfWeek, Integer frequency, Integer week, OldRoom room) {
+	    Calendar endTime, DiaSemana dayOfWeek, Integer frequency, Integer week, OldRoom room,
+	    Boolean dailyFrequencyMarkSaturday, Boolean dailyFrequencyMarkSunday) {
 
 	if (!room.equals(this.getRoom())) {
 	    return false;
 	}
 
 	return roomOccupationForDateAndTime(period.getStartDate(), period.getEndDate(), startTime,
-		endTime, dayOfWeek, frequency, week);
+		endTime, dayOfWeek, frequency, week, dailyFrequencyMarkSaturday, dailyFrequencyMarkSunday);
     }
 
     public boolean roomOccupationForDateAndTime(Calendar startDate, Calendar endDate, Calendar startTime, Calendar endTime, 
-	    DiaSemana dayOfWeek, Integer frequency, Integer week) {
+	    DiaSemana dayOfWeek, Integer frequency, Integer week, Boolean dailyFrequencyMarkSaturday,
+	    Boolean dailyFrequencyMarkSunday) {
       
 	startTime.set(Calendar.SECOND, 0);
 	startTime.set(Calendar.MILLISECOND, 0);
@@ -143,7 +128,8 @@ public class RoomOccupation extends RoomOccupation_Base {
 	    
 	    List<Interval> thisOccupationIntervals = getRoomOccupationIntervals();
 	    List<Interval> passedOccupationIntervals = getRoomOccupationIntervals(new YearMonthDay(startDate), new YearMonthDay(endDate),  
-		    new HourMinuteSecond(startTime.getTime()), new HourMinuteSecond(endTime.getTime()), frequency, week, dayOfWeek);		
+		    new HourMinuteSecond(startTime.getTime()), new HourMinuteSecond(endTime.getTime()), frequency, week, dayOfWeek,
+		    dailyFrequencyMarkSaturday, dailyFrequencyMarkSunday);		
 	    			    	  
 	    for (Interval interval : thisOccupationIntervals) {		    
                 for (Interval passedInterval : passedOccupationIntervals) {
@@ -219,18 +205,19 @@ public class RoomOccupation extends RoomOccupation_Base {
 		roomOccupationIntervals.get(roomOccupationIntervals.size() - 1).getEnd() : null;	
     }                    
     
-    public List<Interval> getRoomOccupationIntervals(){		
+    public List<Interval> getRoomOccupationIntervals() {		
 	List<Interval> result = new ArrayList<Interval>();
 	OccupationPeriod occupationPeriod = getPeriod();        
 	
 	result.addAll(getRoomOccupationIntervals(occupationPeriod.getStartYearMonthDay(), occupationPeriod.getEndYearMonthDay(), 
     	    getStartTimeDateHourMinuteSecond(), getEndTimeDateHourMinuteSecond(), getFrequency(), getWeekOfQuinzenalStart(), 
-    	    getDayOfWeek()));
+    	    getDayOfWeek(), getDailyFrequencyMarkSaturday(), getDailyFrequencyMarkSunday()));
 	                             		           
         while(occupationPeriod.getNextPeriod() != null) {
             result.addAll(getRoomOccupationIntervals(occupationPeriod.getNextPeriod().getStartYearMonthDay(), 
         	    occupationPeriod.getNextPeriod().getEndYearMonthDay(), getStartTimeDateHourMinuteSecond(),
-        	    getEndTimeDateHourMinuteSecond(), getFrequency(), getWeekOfQuinzenalStart(), getDayOfWeek()));
+        	    getEndTimeDateHourMinuteSecond(), getFrequency(), getWeekOfQuinzenalStart(), getDayOfWeek(),
+        	    getDailyFrequencyMarkSaturday(), getDailyFrequencyMarkSunday()));
             
             occupationPeriod = occupationPeriod.getNextPeriod();             
         }
@@ -239,7 +226,8 @@ public class RoomOccupation extends RoomOccupation_Base {
     }	
           
     private List<Interval> getRoomOccupationIntervals(YearMonthDay begin, YearMonthDay end,
-	    HourMinuteSecond beginTime, HourMinuteSecond endTime, Integer frequency, Integer startWeek, DiaSemana diaSemana) {
+	    HourMinuteSecond beginTime, HourMinuteSecond endTime, Integer frequency, Integer startWeek, DiaSemana diaSemana, 
+	    Boolean dailyFrequencyMarkSaturday, Boolean dailyFrequencyMarkSunday) {
 
 	List<Interval> result = new ArrayList<Interval>();		
 	if (startWeek != null && startWeek.intValue() > 0) {
@@ -255,12 +243,20 @@ public class RoomOccupation extends RoomOccupation_Base {
                 return result;
             }            
 	} else {
-            int numberOfDaysToSum = (frequency.intValue() == 1) ? 1 : (frequency.intValue() - 1) * 7;
+            int numberOfDaysToSum = (frequency.intValue() == 1) ? 1 : (frequency.intValue() - 1) * 7;            
             while (true) {
                 if (begin.isAfter(end)) {
                     break;
                 }
-                result.add(createNewInterval(begin, begin, beginTime, endTime));
+                Interval interval = createNewInterval(begin, begin, beginTime, endTime);                              
+                if(frequency.intValue() != DIARIA || 
+                	((dailyFrequencyMarkSaturday == null || dailyFrequencyMarkSaturday ||
+                		interval.getStart().getDayOfWeek() != SATURDAY_IN_JODA_TIME) &&
+                	(dailyFrequencyMarkSunday == null || dailyFrequencyMarkSunday || 
+                		interval.getStart().getDayOfWeek() != SUNDAY_IN_JODA_TIME))) {
+                 
+                    result.add(interval);   
+                }                
                 begin = begin.plusDays(numberOfDaysToSum);
             }
 	}

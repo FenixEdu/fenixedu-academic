@@ -55,8 +55,9 @@
 			
 			<bean:define id="finalizeCreationUrl">/roomsPunctualScheduling.do?method=prepareFinalizeCreation</bean:define>
 			
-			<logic:equal name="roomsPunctualSchedulingBean" property="periodType.name" value="DAILY_TYPE">				
-				<fr:edit id="roomsPunctualSchedulingWithInfo" name="roomsPunctualSchedulingBean" schema="CreateDailyRoomsPunctualScheduling" action="<%= finalizeCreationUrl %>">
+			<logic:equal name="roomsPunctualSchedulingBean" property="periodType.name" value="DAILY_TYPE">
+														
+				<fr:edit id="roomsPunctualSchedulingWithInfo" name="roomsPunctualSchedulingBean" schema="CreateDailyRoomsPunctualScheduling" action="<%= finalizeCreationUrl %>">						 
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle5 vamiddle thlight thright mtop0" />
 						<fr:property name="columnClasses" value="width9em,width40em,tdclear tderror1" />
@@ -73,7 +74,22 @@
 			
 			
 			<logic:equal name="roomsPunctualSchedulingBean" property="periodType.name" value="WITH_FREQUENCY">				
-				<fr:edit id="roomsPunctualSchedulingWithInfo" name="roomsPunctualSchedulingBean" schema="CreateFrequencyRoomsPunctualScheduling" action="<%= finalizeCreationUrl %>">
+
+				<bean:define id="FrequencySchema" value="" />
+				<logic:empty name="roomsPunctualSchedulingBean" property="frequency">
+					<bean:define id="FrequencySchema" value="CreateFrequencyRoomsPunctualScheduling"/>
+				</logic:empty>
+				<logic:notEmpty name="roomsPunctualSchedulingBean" property="frequency">
+				 	<logic:equal name="roomsPunctualSchedulingBean" property="frequency.name" value="DAILY">
+					 	<bean:define id="FrequencySchema" value="CreateFrequencyWithDailyFrequencyRoomsPunctualScheduling"/>
+				 	</logic:equal>
+				 	<logic:notEqual name="roomsPunctualSchedulingBean" property="frequency.name" value="DAILY">
+						<bean:define id="FrequencySchema" value="CreateFrequencyRoomsPunctualScheduling"/>
+				 	</logic:notEqual>				 	
+				</logic:notEmpty>
+				
+				<fr:edit id="roomsPunctualSchedulingWithInfo" name="roomsPunctualSchedulingBean" schema="<%= FrequencySchema %>" action="<%= finalizeCreationUrl %>">
+					<fr:destination name="postBack" path="/roomsPunctualScheduling.do?method=prepareCreate"/>
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle5 vamiddle thlight thright mtop0" />
 						<fr:property name="columnClasses" value="width9em,width40em,tdclear tderror1" />

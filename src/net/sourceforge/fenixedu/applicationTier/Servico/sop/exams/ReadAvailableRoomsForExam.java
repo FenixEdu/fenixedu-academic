@@ -46,7 +46,7 @@ public class ReadAvailableRoomsForExam extends Service {
 			final Room room = roomOccupation.getRoom();
 			if (rooms.contains(room)
 				&& roomOccupation.roomOccupationForDateAndTime(periodStart, periodEnd,
-					startTime, endTime, dayOfWeek, frequency, weekOfStart)) {
+					startTime, endTime, dayOfWeek, frequency, weekOfStart, Boolean.TRUE, Boolean.TRUE)) {
 			    rooms.remove(roomOccupation.getRoom());
 			}
 		    }

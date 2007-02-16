@@ -2888,6 +2888,8 @@ class net.sourceforge.fenixedu.domain.space.SpaceOccupation extends net.sourcefo
 	    DiaSemana dayOfWeek;
 		HourMinuteSecond startTimeDateHourMinuteSecond;
 		HourMinuteSecond endTimeDateHourMinuteSecond;	    
+		Boolean dailyFrequencyMarkSunday;
+		Boolean dailyFrequencyMarkSaturday;
 	}
 		
 	class net.sourceforge.fenixedu.domain.space.UnitSpaceOccupation extends net.sourceforge.fenixedu.domain.space.SpaceOccupation {

@@ -107,6 +107,8 @@ public class RoomsPunctualSchedulingDA extends FenixDispatchAction {
 	} else {
 	    bean = (RoomsPunctualSchedulingBean) viewState.getMetaObject().getObject();	    	   	    
 	}
+	
+	RenderUtils.invalidateViewState("roomsPunctualSchedulingWithInfo");
 	   		
 	request.setAttribute("roomsPunctualSchedulingBean", bean);
 	return mapping.findForward("prepareCreateNewRoomPunctualScheduling");

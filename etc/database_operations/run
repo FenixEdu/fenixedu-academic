@@ -29,3 +29,5 @@ function executeWithTempFile() {
 
 execute "alter table JustificationMotive" alterTableJustificationMotive.sql
 execute "alter table WorkScheduleType" alterTableWorkScheduleType.sql
+
+execute "Alter RoomOccupation Table" alterTableRoomOccupation.sql

@@ -102,7 +102,8 @@ public class CreateLesson extends Service {
                     infoRoomOccupation.getEndTime(),
                     infoRoomOccupation.getDayOfWeek(),
                     infoRoomOccupation.getFrequency(),
-                    infoRoomOccupation.getWeekOfQuinzenalStart())) {
+                    infoRoomOccupation.getWeekOfQuinzenalStart(), 
+                    Boolean.TRUE, Boolean.TRUE)) {
                 return false;
             }
         }

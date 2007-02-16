@@ -50,15 +50,15 @@ public class GanttDiagramTagLib extends TagSupport {
    
     private ViewType viewTypeEnum;
     
-    private BigDecimal PX_TO_EM_CONVERSION_DIVISOR = BigDecimal.TEN;
+    private static BigDecimal PX_TO_EM_CONVERSION_DIVISOR = BigDecimal.TEN;
         
-    private BigDecimal EMPTY_UNIT = BigDecimal.ZERO;
+    private static BigDecimal EMPTY_UNIT = BigDecimal.ZERO;
         
-    private int numberOf5MinUnits = 288;  
+    private static int numberOf5MinUnits = 288;  
     
-    private int numberOfDayHalfHours = 48;
+    private static int numberOfDayHalfHours = 48;
     
-    private int numberOfHours = 24;
+    private static int numberOfHours = 24;
     
     
     public int doStartTag() throws JspException {

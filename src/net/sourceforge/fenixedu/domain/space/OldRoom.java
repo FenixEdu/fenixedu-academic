@@ -33,21 +33,18 @@ public class OldRoom extends OldRoom_Base {
 
     /** @deprecated */
     public void createRoomOccupationForWrittenEvaluations(OccupationPeriod period, Calendar startTime, Calendar endTime,
-	    DiaSemana dayOfWeek, Integer frequency, Integer week, WrittenEvaluation writtenEvaluation) {
+	    DiaSemana dayOfWeek, WrittenEvaluation writtenEvaluation) {
 	
-	boolean isFree = isFree(period, startTime, endTime, dayOfWeek, null, null);
+	boolean isFree = isFree(period, startTime, endTime, dayOfWeek, null, null, Boolean.TRUE, Boolean.TRUE);
 	if (!isFree) {
 	    throw new DomainException("error.roomOccupied");
 	}
-
-	RoomOccupation roomOccupation = new RoomOccupation(this, startTime, endTime, dayOfWeek, frequency);
-	roomOccupation.setPeriod(period);
-	roomOccupation.setWrittenEvaluation(writtenEvaluation);
+	new RoomOccupation(this, startTime, endTime, dayOfWeek, period, writtenEvaluation);	
     }
 
     /** @deprecated */
     public void delete() {
-	if (canBeDeleted()) {
+	if (canBeDeleted()) {	    
 	    removeBuilding();
             removeRootDomainObject();
 	    deleteDomainObject();
@@ -59,10 +56,12 @@ public class OldRoom extends OldRoom_Base {
 
     /** @deprecated */
     public boolean isFree(OccupationPeriod period, Calendar startTime, Calendar endTime,
-	    DiaSemana dayOfWeek, Integer frequency, Integer week) {
+	    DiaSemana dayOfWeek, Integer frequency, Integer week, Boolean dailyFrequencyMarkSaturday,
+	    Boolean dailyFrequencyMarkSunday) {
 	
 	for (final RoomOccupation roomOccupation : getRoomOccupations()) {
-	    if (roomOccupation.roomOccupationForDateAndTime(period, startTime, endTime, dayOfWeek, frequency, week, this)) {
+	    if (roomOccupation.roomOccupationForDateAndTime(period, startTime, endTime, dayOfWeek, frequency, week, this,
+		    dailyFrequencyMarkSaturday, dailyFrequencyMarkSunday)) {
 		return false;
 	    }
 	}
@@ -72,11 +71,13 @@ public class OldRoom extends OldRoom_Base {
 
     /** @deprecated */
     public Set<RoomOccupation> findOccupationSet(OccupationPeriod period, Calendar startTime,
-	    Calendar endTime, DiaSemana dayOfWeek, Integer frequency, Integer week) {
+	    Calendar endTime, DiaSemana dayOfWeek, Integer frequency, Integer week, Boolean dailyFrequencyMarkSaturday,
+	    Boolean dailyFrequencyMarkSunday) {
 	
 	final Set<RoomOccupation> roomOccupations = new HashSet<RoomOccupation>();
 	for (final RoomOccupation roomOccupation : getRoomOccupations()) {
-	    if (roomOccupation.roomOccupationForDateAndTime(period, startTime, endTime, dayOfWeek, frequency, week, this)) {
+	    if (roomOccupation.roomOccupationForDateAndTime(period, startTime, endTime, dayOfWeek, frequency, week, this, 
+		    dailyFrequencyMarkSaturday, dailyFrequencyMarkSunday)) {
 		roomOccupations.add(roomOccupation);
 	    }
 	}

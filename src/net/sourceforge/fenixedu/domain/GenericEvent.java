@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.util.HourMinuteSecond;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 import net.sourceforge.fenixedu.util.renderer.GanttDiagramEvent;
 
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
@@ -21,7 +22,8 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
     
     public GenericEvent(MultiLanguageString title, MultiLanguageString description, List<OldRoom> rooms, 
 	    YearMonthDay beginDate, YearMonthDay endDate, HourMinuteSecond beginTime, 
-	    HourMinuteSecond endTime, FrequencyType frequencyType, PunctualRoomsOccupationRequest request) {
+	    HourMinuteSecond endTime, FrequencyType frequencyType, PunctualRoomsOccupationRequest request,
+	    Boolean markSaturday, Boolean markSunday) {
 	
 	super();        		
 	
@@ -42,7 +44,7 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
 	setFrequency(frequencyType);
         	
 	for (OldRoom room : rooms) {	
-	    new RoomOccupation(room, beginDate, endDate, beginTime, endTime, frequencyType, this);
+	    new RoomOccupation(room, beginDate, endDate, beginTime, endTime, frequencyType, this, markSaturday, markSunday);
 	}
     }  
     
@@ -62,13 +64,15 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
 	HourMinuteSecond beginTime = getBeginTime();
 	HourMinuteSecond endTime = getEndTime();
 	FrequencyType frequency = getFrequency();
+	Boolean markSaturday = getDailyFrequencyMarkSaturday();
+	Boolean markSunday = getDailyFrequencyMarkSunday();
 	
 	while(!roomOccupationsToRemove.isEmpty()) {
             roomOccupationsToRemove.remove(0).delete();
         }
 	
 	for (OldRoom room : newRooms) {	
-	    new RoomOccupation(room, beginDate, endDate, beginTime, endTime, frequency, this);
+	    new RoomOccupation(room, beginDate, endDate, beginTime, endTime, frequency, this, markSaturday, markSunday);
         }					       
     }       
     
@@ -113,6 +117,14 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
 	    result.add(occupation.getRoom());	
 	}
 	return result;
+    }
+    
+    public Boolean getDailyFrequencyMarkSaturday() {
+	return (!getRoomOccupations().isEmpty()) ? getRoomOccupations().get(0).getDailyFrequencyMarkSaturday() : null;
+    }
+    
+    public Boolean getDailyFrequencyMarkSunday() {
+	return (!getRoomOccupations().isEmpty()) ? getRoomOccupations().get(0).getDailyFrequencyMarkSunday() : null;
     }
     
     public DateTime getLastInstant() {
@@ -182,8 +194,14 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
     public String getEventPeriodForGanttDiagram() {
 	if(!getRoomOccupations().isEmpty()) {
 	    String prettyPrint = getRoomOccupations().get(0).getPrettyPrint();
-	    if(getFrequency() != null) {
-		return "[" + getFrequency().getAbbreviation() + "] " + prettyPrint;
+	    if(getFrequency() != null) {		
+		String saturday = getDailyFrequencyMarkSaturday() ? "S" : ""; 
+		String sunday = getDailyFrequencyMarkSunday() ? "D" : "";
+		String marker = "";
+		if(!StringUtils.isEmpty(saturday) || !StringUtils.isEmpty(sunday)) {
+		    marker = "-";
+		}			
+		return "[" + getFrequency().getAbbreviation() + marker + saturday + sunday + "] " + prettyPrint;
 	    }
 	    return "[C] " + prettyPrint;
 	}	

@@ -32,6 +32,8 @@ public class FreeRoomsToPunctualSchedulingProvider implements DataProvider {
 	YearMonthDay end = bean.getEnd();	
 	Partial beginTime = bean.getBeginTime();
 	Partial endTime = bean.getEndTime();	
+	Boolean markSaturday = bean.getMarkSaturday();
+	Boolean markSunday = bean.getMarkSunday();
 	OccupationPeriod period = OccupationPeriod.readOccupationPeriod(begin, end);	
 	DiaSemana diaSemana = new DiaSemana(getDayOfWeek(begin));
 	
@@ -43,7 +45,7 @@ public class FreeRoomsToPunctualSchedulingProvider implements DataProvider {
 	
 	for (OldRoom room : OldRoom.getOldRooms()) {	    
 	    if (!selectedRooms.contains(room)) {				
-		if(room.isFree(period, beginTimeCalendar, endTimeCalendar, diaSemana, frequency, null)) {
+		if(room.isFree(period, beginTimeCalendar, endTimeCalendar, diaSemana, frequency, null, markSaturday, markSunday)) {
 		    result.add(room);
 		} 
 	    } 

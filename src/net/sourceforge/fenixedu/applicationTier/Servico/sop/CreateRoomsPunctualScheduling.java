@@ -21,7 +21,8 @@ public class CreateRoomsPunctualScheduling extends Service {
 	    HourMinuteSecond endTime = new HourMinuteSecond(bean.getEndTime().get(DateTimeFieldType.hourOfDay()), bean.getEndTime().get(DateTimeFieldType.minuteOfHour()), 0);	    
 	    
 	    new GenericEvent(bean.getSmallDescription(), bean.getCompleteDescription(), selectedRooms, bean.getBegin(),
-		    bean.getEnd(), beginTime, endTime, bean.getFrequency(), bean.getRoomsReserveRequest());	    	             	  			    	  
+		    bean.getEnd(), beginTime, endTime, bean.getFrequency(), bean.getRoomsReserveRequest(), bean.getMarkSaturday(),
+		    bean.getMarkSunday());	    	             	  			    	  
 	}
     }    
 }
