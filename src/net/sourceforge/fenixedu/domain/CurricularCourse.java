@@ -255,6 +255,15 @@ public class CurricularCourse extends CurricularCourse_Base {
 
 	return false;
     }
+    
+    public boolean hasAnyActiveContext(final ExecutionPeriod executionPeriod) {
+	for (final Context context : getParentContexts()) {
+	    if (context.isValid(executionPeriod)) {
+		return true;
+	    }
+	}
+	return false;
+    }
 
     public List<CurricularCourseScope> getActiveScopesInExecutionPeriod(
 	    final ExecutionPeriod executionPeriod) {
