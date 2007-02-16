@@ -346,7 +346,7 @@ public class CreateTestData {
         System.out.println("Deleting execution years.");
         for (final Set<ExecutionYear> executionYears = rootDomainObject.getExecutionYearsSet(); !executionYears.isEmpty(); executionYears.iterator().next().delete());
         System.out.println("Deleting occupation periods.");
-        for (final Set<OccupationPeriod> occupationPeriods = rootDomainObject.getOccupationPeriodsSet(); !occupationPeriods.isEmpty(); occupationPeriods.iterator().next().deleteIfEmpty());
+        for (final Set<OccupationPeriod> occupationPeriods = rootDomainObject.getOccupationPeriodsSet(); !occupationPeriods.isEmpty(); occupationPeriods.iterator().next().delete());
 
         System.out.println("Deleting spaces.");
         for (final Set<Space> spaces = rootDomainObject.getSpacesSet(); !spaces.isEmpty(); spaces.iterator().next().delete());
@@ -740,11 +740,11 @@ public class CreateTestData {
         final ExecutionPeriod executionPeriod1 = executionYear.getFirstExecutionPeriod();
         final ExecutionPeriod executionPeriod2 = executionYear.getLastExecutionPeriod();
 
-        final OccupationPeriod occupationPeriod1 = OccupationPeriod.readFor(executionPeriod1.getBeginDateYearMonthDay(), executionPeriod1.getEndDateYearMonthDay().minusDays(32));
-        final OccupationPeriod occupationPeriod2 = OccupationPeriod.readFor(executionPeriod1.getEndDateYearMonthDay().minusDays(31), executionPeriod1.getEndDateYearMonthDay());
-        final OccupationPeriod occupationPeriod3 = OccupationPeriod.readFor(executionPeriod2.getBeginDateYearMonthDay(), executionPeriod2.getEndDateYearMonthDay().minusDays(32));
-        final OccupationPeriod occupationPeriod4 = OccupationPeriod.readFor(executionPeriod2.getEndDateYearMonthDay().minusDays(31), executionPeriod2.getEndDateYearMonthDay());
-        final OccupationPeriod occupationPeriod5 = OccupationPeriod.readFor(executionPeriod2.getEndDateYearMonthDay().plusDays(31), executionPeriod2.getEndDateYearMonthDay().plusDays(46));
+        final OccupationPeriod occupationPeriod1 = OccupationPeriod.readOccupationPeriod(executionPeriod1.getBeginDateYearMonthDay(), executionPeriod1.getEndDateYearMonthDay().minusDays(32));
+        final OccupationPeriod occupationPeriod2 = OccupationPeriod.readOccupationPeriod(executionPeriod1.getEndDateYearMonthDay().minusDays(31), executionPeriod1.getEndDateYearMonthDay());
+        final OccupationPeriod occupationPeriod3 = OccupationPeriod.readOccupationPeriod(executionPeriod2.getBeginDateYearMonthDay(), executionPeriod2.getEndDateYearMonthDay().minusDays(32));
+        final OccupationPeriod occupationPeriod4 = OccupationPeriod.readOccupationPeriod(executionPeriod2.getEndDateYearMonthDay().minusDays(31), executionPeriod2.getEndDateYearMonthDay());
+        final OccupationPeriod occupationPeriod5 = OccupationPeriod.readOccupationPeriod(executionPeriod2.getEndDateYearMonthDay().plusDays(31), executionPeriod2.getEndDateYearMonthDay().plusDays(46));
 
         executionDegree.setPeriodLessonsFirstSemester(occupationPeriod1);
         executionDegree.setPeriodExamsFirstSemester(occupationPeriod2);
@@ -854,7 +854,7 @@ public class CreateTestData {
 	final OldRoom oldRoom = lessonRoomManager.getNextOldRoom();
 	final RoomOccupation roomOccupation = new RoomOccupation(oldRoom, cStart, cEnd, diaSemana, 1);
         final ExecutionPeriod executionPeriod = shift.getDisciplinaExecucao().getExecutionPeriod();
-        final OccupationPeriod occupationPeriod = OccupationPeriod.readFor(executionPeriod.getBeginDateYearMonthDay(), executionPeriod.getEndDateYearMonthDay().minusDays(32));
+        final OccupationPeriod occupationPeriod = OccupationPeriod.readOccupationPeriod(executionPeriod.getBeginDateYearMonthDay(), executionPeriod.getEndDateYearMonthDay().minusDays(32));
         roomOccupation.setPeriod(occupationPeriod);
 	final Lesson lesson = new Lesson(diaSemana, cStart, cEnd, shift.getTipo(), oldRoom, roomOccupation, shift, Integer.valueOf(0), Integer.valueOf(1));
         lesson.setExecutionPeriod(executionPeriod);
