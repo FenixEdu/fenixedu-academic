@@ -49,9 +49,8 @@ public class SearchPerson extends Service {
 		    : null;
 	    this.username = (username != null && !username.equals("")) ? StringNormalizer
 		    .normalize(username.trim()) : null;
-	    this.documentIdNumber = (documentIdNumber != null && !documentIdNumber.equals("")) ? StringNormalizer
-		    .normalize(documentIdNumber.trim())
-		    : null;
+	    this.documentIdNumber = (documentIdNumber != null && !documentIdNumber.equals("")) ?
+		    documentIdNumber.trim().toLowerCase() : null;
 
 	    if (roleType != null && roleType.length() > 0) {
 		role = (Role) Role.getRoleByRoleType(RoleType.valueOf(roleType));
@@ -177,13 +176,11 @@ public class SearchPerson extends Service {
 	public boolean evaluate(Object arg0) {
 	    Person person = (Person) arg0;
 
-	    return verifyParameter(person.getEmail(), searchParameters.getEmail())
-		    && verifyUsernameEquality(searchParameters.getUsername(), person)
-		    && verifyParameter(person.getDocumentIdNumber(), searchParameters
-			    .getDocumentIdNumber())
-		    && verifyNameEquality(searchParameters.getNameWords(), person)
-		    && verifyDegreeType(searchParameters.getDegree(), searchParameters.getDegreeType(),
-			    person);
+	    return verifySimpleParameter(person.getDocumentIdNumber(), searchParameters.getDocumentIdNumber())
+	    	    && verifyUsernameEquality(searchParameters.getUsername(), person)
+	    	    && verifyNameEquality(searchParameters.getNameWords(), person)
+	    	    && verifyParameter(person.getEmail(), searchParameters.getEmail())
+		    && verifyDegreeType(searchParameters.getDegree(), searchParameters.getDegreeType(),person);
 	}
 
 	private boolean verifyUsernameEquality(String usernameToSearch, Person person) {
@@ -217,9 +214,20 @@ public class SearchPerson extends Service {
 		    .getDegreeCurricularPlan().getDegree());
 	}
 
+	private boolean verifySimpleParameter(String parameter, String searchParameter) {
+	    return (searchParameter == null)
+		    || (parameter != null && simpleNnormalizeAndCompare(parameter, searchParameter));
+	}
+
 	private boolean verifyParameter(String parameter, String searchParameter) {
 	    return (searchParameter == null)
 		    || (parameter != null && normalizeAndCompare(parameter, searchParameter));
+	}
+
+	private boolean simpleNnormalizeAndCompare(String parameter, String searchParameter) {
+	    //String personParameter = parameter.trim().toLowerCase();
+	    String personParameter = parameter;
+	    return (personParameter.indexOf(searchParameter) == -1) ? false : true;
 	}
 
 	private boolean normalizeAndCompare(String parameter, String searchParameter) {

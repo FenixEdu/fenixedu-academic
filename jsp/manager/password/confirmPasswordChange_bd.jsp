@@ -51,11 +51,8 @@
 	
 	<bean:define id="personID" name="infoPerson" property="idInternal" />
 	<bean:define id="username" name="infoPerson" property="username" />
-	<html:link module="/manager" page="<%= "/generateNewPassword.do?method=generatePassword&page=0&personID="
-					+ pageContext.findAttribute("personID")
-					+ "&username="
-					+ pageContext.findAttribute("username")
-			%>"  target="_blank">
+	<bean:define id="link">/generateNewPassword.do?method=generatePassword&page=0&personID=<%= pageContext.findAttribute("personID") %>&amp;username=<%= pageContext.findAttribute("username") %></bean:define>
+	<html:link module="/manager" page="<%= link %>" target="_blank">
 			<bean:message bundle="MANAGER_RESOURCES" key="link.operator.changePassword" />
 		</html:link>
 	</h2>
