@@ -99,49 +99,138 @@ public class EmployeeWorkWeekScheduleBean implements Serializable {
     public List<WorkSchedule> getWorkSchedules(Periodicity periodicity) {
         List<WorkSchedule> workSchedules = new ArrayList<WorkSchedule>();
         List<WorkScheduleType> differentWorkScheduleTypes = new ArrayList<WorkScheduleType>();
+        if (getMondaySchedule() != null || getChooseMonday()) {
+            WorkScheduleType workScheduleType = getChooseMonday() ? getEmployeeScheduleFactory()
+                    .getChoosenWorkSchedule() : getMondaySchedule();
+            differentWorkScheduleTypes.add(workScheduleType);
+            WorkWeek workWeek = getWorkWeek(workScheduleType);
+            workSchedules.add(new WorkSchedule(workScheduleType, workWeek, periodicity));
+        }
+        if ((getTuesdaySchedule() != null || getChooseTuesday())
+                && !differentWorkScheduleTypes
+                        .contains(getChooseTuesday() ? getEmployeeScheduleFactory()
+                                .getChoosenWorkSchedule() : getTuesdaySchedule())) {
+            WorkScheduleType workScheduleType = getChooseTuesday() ? getEmployeeScheduleFactory()
+                    .getChoosenWorkSchedule() : getTuesdaySchedule();
+            differentWorkScheduleTypes.add(workScheduleType);
+            WorkWeek workWeek = getWorkWeek(workScheduleType);
+            workSchedules.add(new WorkSchedule(workScheduleType, workWeek, periodicity));
+        }
+        if ((getWednesdaySchedule() != null || getChooseWednesday())
+                && !differentWorkScheduleTypes
+                        .contains(getChooseWednesday() ? getEmployeeScheduleFactory()
+                                .getChoosenWorkSchedule() : getWednesdaySchedule())) {
+            WorkScheduleType workScheduleType = getChooseWednesday() ? getEmployeeScheduleFactory()
+                    .getChoosenWorkSchedule() : getWednesdaySchedule();
+            differentWorkScheduleTypes.add(workScheduleType);
+            WorkWeek workWeek = getWorkWeek(workScheduleType);
+            workSchedules.add(new WorkSchedule(workScheduleType, workWeek, periodicity));
+        }
+        if ((getThursdaySchedule() != null || getChooseThursday())
+                && !differentWorkScheduleTypes
+                        .contains(getChooseThursday() ? getEmployeeScheduleFactory()
+                                .getChoosenWorkSchedule() : getThursdaySchedule())) {
+            WorkScheduleType workScheduleType = getChooseThursday() ? getEmployeeScheduleFactory()
+                    .getChoosenWorkSchedule() : getThursdaySchedule();
+            differentWorkScheduleTypes.add(workScheduleType);
+            WorkWeek workWeek = getWorkWeek(workScheduleType);
+            workSchedules.add(new WorkSchedule(workScheduleType, workWeek, periodicity));
+        }
+        if ((getFridaySchedule() != null || getChooseFriday())
+                && !differentWorkScheduleTypes.contains(getChooseFriday() ? getEmployeeScheduleFactory()
+                        .getChoosenWorkSchedule() : getFridaySchedule())) {
+            WorkScheduleType workScheduleType = getChooseFriday() ? getEmployeeScheduleFactory()
+                    .getChoosenWorkSchedule() : getFridaySchedule();
+            differentWorkScheduleTypes.add(workScheduleType);
+            WorkWeek workWeek = getWorkWeek(workScheduleType);
+            workSchedules.add(new WorkSchedule(workScheduleType, workWeek, periodicity));
+        }
+        return workSchedules;
+    }
+
+    private WorkWeek getWorkWeek(WorkScheduleType workScheduleType) {
+        List<WeekDay> weekDays = new ArrayList<WeekDay>();
+        if ((!getChooseMonday() && getMondaySchedule() != null && getMondaySchedule() == workScheduleType)
+                || (getChooseMonday() && getEmployeeScheduleFactory().getChoosenWorkSchedule() == workScheduleType)) {
+            weekDays.add(WeekDay.MONDAY);
+        }
+        if ((!getChooseTuesday() && getTuesdaySchedule() != null && getTuesdaySchedule() == workScheduleType)
+                || (getChooseTuesday() && getEmployeeScheduleFactory().getChoosenWorkSchedule() == workScheduleType)) {
+            weekDays.add(WeekDay.TUESDAY);
+        }
+        if ((!getChooseWednesday() && getWednesdaySchedule() != null && getWednesdaySchedule() == workScheduleType)
+                || (getChooseWednesday() && getEmployeeScheduleFactory().getChoosenWorkSchedule() == workScheduleType)) {
+            weekDays.add(WeekDay.WEDNESDAY);
+        }
+        if ((!getChooseThursday() && getThursdaySchedule() != null && getThursdaySchedule() == workScheduleType)
+                || (getChooseThursday() && getEmployeeScheduleFactory().getChoosenWorkSchedule() == workScheduleType)) {
+            weekDays.add(WeekDay.THURSDAY);
+        }
+        if ((!getChooseFriday() && getFridaySchedule() != null && getFridaySchedule() == workScheduleType)
+                || (getChooseFriday() && getEmployeeScheduleFactory().getChoosenWorkSchedule() == workScheduleType)) {
+            weekDays.add(WeekDay.FRIDAY);
+        }
+        if (weekDays.size() != 0) {
+            WeekDay array[] = {};
+            return new WorkWeek(weekDays.toArray(array));
+        } else {
+            return null;
+        }
+    }
+
+    public List<WorkSchedule> getWorkSchedulesForNonDeletedDays(Periodicity periodicity) {
+        List<WorkSchedule> workSchedules = new ArrayList<WorkSchedule>();
+        List<WorkScheduleType> differentWorkScheduleTypes = new ArrayList<WorkScheduleType>();
         if (getMondaySchedule() != null && !getChooseMonday()) {
             differentWorkScheduleTypes.add(getMondaySchedule());
-            WorkWeek workWeek = getWorkWeekByWorkScheduleType(getMondaySchedule());
+            WorkWeek workWeek = getWorkWeekForNonDeletedDay(getMondaySchedule());
             workSchedules.add(new WorkSchedule(getMondaySchedule(), workWeek, periodicity));
-        } else if (getTuesdaySchedule() != null && !getChooseTuesday()
+        }
+        if (getTuesdaySchedule() != null && !getChooseTuesday()
                 && !differentWorkScheduleTypes.contains(getTuesdaySchedule())) {
             differentWorkScheduleTypes.add(getTuesdaySchedule());
-            WorkWeek workWeek = getWorkWeekByWorkScheduleType(getTuesdaySchedule());
+            WorkWeek workWeek = getWorkWeekForNonDeletedDay(getTuesdaySchedule());
             workSchedules.add(new WorkSchedule(getTuesdaySchedule(), workWeek, periodicity));
-        } else if (getWednesdaySchedule() != null && !getChooseWednesday()
+        }
+        if (getWednesdaySchedule() != null && !getChooseWednesday()
                 && !differentWorkScheduleTypes.contains(getWednesdaySchedule())) {
             differentWorkScheduleTypes.add(getWednesdaySchedule());
-            WorkWeek workWeek = getWorkWeekByWorkScheduleType(getWednesdaySchedule());
+            WorkWeek workWeek = getWorkWeekForNonDeletedDay(getWednesdaySchedule());
             workSchedules.add(new WorkSchedule(getWednesdaySchedule(), workWeek, periodicity));
-        } else if (getThursdaySchedule() != null && !getChooseThursday()
+        }
+        if (getThursdaySchedule() != null && !getChooseThursday()
                 && !differentWorkScheduleTypes.contains(getThursdaySchedule())) {
             differentWorkScheduleTypes.add(getThursdaySchedule());
-            WorkWeek workWeek = getWorkWeekByWorkScheduleType(getThursdaySchedule());
+            WorkWeek workWeek = getWorkWeekForNonDeletedDay(getThursdaySchedule());
             workSchedules.add(new WorkSchedule(getThursdaySchedule(), workWeek, periodicity));
-        } else if (getFridaySchedule() != null && !getChooseFriday()
+        }
+        if (getFridaySchedule() != null && !getChooseFriday()
                 && !differentWorkScheduleTypes.contains(getFridaySchedule())) {
             differentWorkScheduleTypes.add(getFridaySchedule());
-            WorkWeek workWeek = getWorkWeekByWorkScheduleType(getFridaySchedule());
+            WorkWeek workWeek = getWorkWeekForNonDeletedDay(getFridaySchedule());
             workSchedules.add(new WorkSchedule(getFridaySchedule(), workWeek, periodicity));
         }
         return workSchedules;
     }
 
-    private WorkWeek getWorkWeekByWorkScheduleType(WorkScheduleType workScheduleType) {
+    private WorkWeek getWorkWeekForNonDeletedDay(WorkScheduleType workScheduleType) {
         List<WeekDay> weekDays = new ArrayList<WeekDay>();
-        if (getMondaySchedule() != null && getMondaySchedule() == workScheduleType) {
+        if (getMondaySchedule() != null && getMondaySchedule() == workScheduleType && !getChooseMonday()) {
             weekDays.add(WeekDay.MONDAY);
         }
-        if (getTuesdaySchedule() != null && getTuesdaySchedule() == workScheduleType) {
+        if (getTuesdaySchedule() != null && getTuesdaySchedule() == workScheduleType
+                && !getChooseTuesday()) {
             weekDays.add(WeekDay.TUESDAY);
         }
-        if (getWednesdaySchedule() != null && getWednesdaySchedule() == workScheduleType) {
+        if (getWednesdaySchedule() != null && getWednesdaySchedule() == workScheduleType
+                && !getChooseWednesday()) {
             weekDays.add(WeekDay.WEDNESDAY);
         }
-        if (getThursdaySchedule() != null && getThursdaySchedule() == workScheduleType) {
+        if (getThursdaySchedule() != null && getThursdaySchedule() == workScheduleType
+                && !getChooseThursday()) {
             weekDays.add(WeekDay.THURSDAY);
         }
-        if (getFridaySchedule() != null && getFridaySchedule() == workScheduleType) {
+        if (getFridaySchedule() != null && getFridaySchedule() == workScheduleType && !getChooseFriday()) {
             weekDays.add(WeekDay.FRIDAY);
         }
         if (weekDays.size() != 0) {
@@ -180,6 +269,11 @@ public class EmployeeWorkWeekScheduleBean implements Serializable {
         setChooseWednesday(true);
         setChooseThursday(true);
         setChooseFriday(true);
+    }
+
+    public boolean isAnyDayChecked() {
+        return getChooseMonday() || getChooseTuesday() || getChooseWednesday() || getChooseThursday()
+                || getChooseFriday();
     }
 
     public boolean isValidWeekChecked() {

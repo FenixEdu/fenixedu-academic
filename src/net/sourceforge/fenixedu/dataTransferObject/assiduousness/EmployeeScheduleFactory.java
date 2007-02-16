@@ -57,6 +57,7 @@ public class EmployeeScheduleFactory implements Serializable, FactoryExecutor {
 
     public Object execute() {
         Schedule currentSchedule = getEmployee().getAssiduousness().getCurrentSchedule();
+        removeAllEmptyWorkWeekSchedules();
         if (isToDeleteDays()) {
             currentSchedule.deleteDays(this);
         } else {
@@ -65,7 +66,6 @@ public class EmployeeScheduleFactory implements Serializable, FactoryExecutor {
             } else {
                 currentSchedule.edit(this);
             }
-            currentSchedule = getEmployee().getAssiduousness().getCurrentSchedule();
         }
         return null;
     }
@@ -197,6 +197,19 @@ public class EmployeeScheduleFactory implements Serializable, FactoryExecutor {
             workWeekScheduleBean.setWorkWeekNumber(workWeekScheduleBean.getWorkWeekNumber() - subtract);
         }
         getEmployeeWorkWeekScheduleList().remove(workWeekScheduleBeanToRemove);
+    }
+    
+    public void removeAllEmptyWorkWeekSchedules() {
+        int subtract = 0;
+        List<EmployeeWorkWeekScheduleBean> workWeekScheduleBeansToRemove = new ArrayList<EmployeeWorkWeekScheduleBean>();
+        for (EmployeeWorkWeekScheduleBean workWeekScheduleBean : getEmployeeWorkWeekScheduleList()) {
+            if (!workWeekScheduleBean.isAnyDayChecked() && workWeekScheduleBean.getIsEmptyWeek()) {
+                workWeekScheduleBeansToRemove.add(workWeekScheduleBean);
+                subtract++;
+            }
+            workWeekScheduleBean.setWorkWeekNumber(workWeekScheduleBean.getWorkWeekNumber() - subtract);
+        }
+        getEmployeeWorkWeekScheduleList().removeAll(workWeekScheduleBeansToRemove);
     }
 
     public void selectAllCheckBoxes(Integer workWeek) {

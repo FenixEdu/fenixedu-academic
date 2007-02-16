@@ -48,12 +48,7 @@ function removeExistingWorkWeek(iter){
 	<html:hidden bundle="HTMLALT_RESOURCES" name="employeeForm" property="addWorkWeek" value="no"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" name="employeeForm" property="workWeek" value=""/>	
 	<html:hidden bundle="HTMLALT_RESOURCES" name="employeeForm" property="employeeID" value="<%= employeeID.toString() %>"/>	
-	<fr:edit id="employeeScheduleBean" name="employeeScheduleBean" visible="false" />
-	<ul>
-		<li>		
-		<html:link href="javascript:addWorkWeek()"><bean:message key="link.addNewWorkWeek" /></html:link>
-		</li>
-	</ul>	
+	<fr:edit id="employeeScheduleBean" name="employeeScheduleBean" visible="false" />	
 	
 	<span class="error0">
 		<html:errors/>
@@ -70,6 +65,12 @@ function removeExistingWorkWeek(iter){
 		</fr:layout>
 	</fr:edit>
 
+	<ul>
+		<li>		
+		<html:link href="javascript:addWorkWeek()"><bean:message key="link.addNewWorkWeek" /></html:link>
+		</li>
+	</ul>
+	
 	<logic:iterate indexId="index" id="employeeWorkScheduleBean" name="employeeScheduleBean" property="employeeWorkWeekScheduleList">
 		<% int iter = new Integer(index) + 1 ;%>
 		<table class="tstyle1 thtop thlight printborder width600px">

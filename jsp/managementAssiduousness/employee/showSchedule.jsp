@@ -55,10 +55,10 @@
 <logic:notEmpty name="employeeScheduleBean" property="employeeWorkWeekScheduleList">
 	<bean:size id="listSize" name="employeeScheduleBean" property="employeeWorkWeekScheduleList"/>
 	<logic:iterate id="employeeWorkScheduleBean" name="employeeScheduleBean" property="employeeWorkWeekScheduleList">
-		<table class="tstyle1 thtop thlight printborder">
+		<table class="tstyle1 thtop thlight printborder width600px">
 			<logic:notEqual name="listSize" value="1">
 				<tr>
-					<th class="cornerleft"></th>
+					<th class="cornerleft2 width8em"></th>
 					<th colspan="5">
 						<bean:message key="label.week"/> <bean:write name="employeeWorkScheduleBean" property="workWeekNumber"/>
 					</th>

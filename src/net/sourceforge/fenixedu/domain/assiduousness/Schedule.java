@@ -48,7 +48,7 @@ public class Schedule extends Schedule_Base {
         setModifiedBy(modifiedBy);
     }
 
-    public Schedule(EmployeeScheduleFactory employeeScheduleFactory, boolean workWeekByCheckedBox) {
+    public Schedule(EmployeeScheduleFactory employeeScheduleFactory, boolean deletedDays) {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
         setAssiduousness(employeeScheduleFactory.getEmployee().getAssiduousness());
@@ -59,15 +59,11 @@ public class Schedule extends Schedule_Base {
         setException(false);
         for (EmployeeWorkWeekScheduleBean workWeekScheduleBean : employeeScheduleFactory
                 .getEmployeeWorkWeekScheduleList()) {
-            WorkWeek workWeek = null;
             Periodicity periodicity = getPeriodicity(workWeekScheduleBean.getWorkWeekNumber());
-            if (workWeekByCheckedBox) {
-                workWeek = workWeekScheduleBean.getWorkWeekByCheckedBox();
-                WorkSchedule workSchedule = new WorkSchedule(employeeScheduleFactory
-                        .getChoosenWorkSchedule(), workWeek, periodicity);
-                getWorkSchedules().add(workSchedule);
-            } else {
+            if (!deletedDays) {
                 getWorkSchedules().addAll(workWeekScheduleBean.getWorkSchedules(periodicity));
+            } else {
+                getWorkSchedules().addAll(workWeekScheduleBean.getWorkSchedulesForNonDeletedDays(periodicity));
             }
         }
     }
@@ -106,7 +102,7 @@ public class Schedule extends Schedule_Base {
     public void deleteDays(EmployeeScheduleFactory employeeScheduleFactory) {
         ClosedMonth closedMonth = ClosedMonth.getLastMonthClosed();
         if (isCloseMonthInsideScheduleInterval(closedMonth) && closedMonth.getClosedForBalance()) {
-            closeScheduleAndMakeNew(employeeScheduleFactory, closedMonth, false);
+            closeScheduleAndMakeNew(employeeScheduleFactory, closedMonth, true);
         } else {
             if (isCloseMonthInsideInterval(closedMonth, employeeScheduleFactory.getBeginDate(),
                     employeeScheduleFactory.getEndDate())
@@ -163,7 +159,7 @@ public class Schedule extends Schedule_Base {
     public void edit(EmployeeScheduleFactory employeeScheduleFactory) {
         ClosedMonth closedMonth = ClosedMonth.getLastMonthClosed();
         if (isCloseMonthInsideScheduleInterval(closedMonth) && closedMonth.getClosedForBalance()) {
-            closeScheduleAndMakeNew(employeeScheduleFactory, closedMonth, true);
+            closeScheduleAndMakeNew(employeeScheduleFactory, closedMonth, false);
         } else {
             if (isCloseMonthInsideInterval(closedMonth, employeeScheduleFactory.getBeginDate(),
                     employeeScheduleFactory.getEndDate())
@@ -188,7 +184,7 @@ public class Schedule extends Schedule_Base {
     }
 
     private void closeScheduleAndMakeNew(EmployeeScheduleFactory employeeScheduleFactory,
-            ClosedMonth closedMonth, boolean workWeekByCheckedBox) {
+            ClosedMonth closedMonth, boolean deletedDays) {
         YearMonthDay endDate = new YearMonthDay(closedMonth.getClosedYearMonth().get(
                 DateTimeFieldType.year()), closedMonth.getClosedYearMonth().get(
                 DateTimeFieldType.monthOfYear()), 1);
@@ -201,23 +197,20 @@ public class Schedule extends Schedule_Base {
             employeeScheduleFactory.setBeginDate(endDate.plusDays(1));
             setEndDate(endDate);
         }
-        new Schedule(employeeScheduleFactory, workWeekByCheckedBox);
+        new Schedule(employeeScheduleFactory, deletedDays);
     }
 
     private void updateEverything(EmployeeScheduleFactory employeeScheduleFactory) {
-        int subtract = 0;
         for (EmployeeWorkWeekScheduleBean workWeekScheduleBean : employeeScheduleFactory
                 .getEmployeeWorkWeekScheduleList()) {
             WorkWeek workWeek = workWeekScheduleBean.getWorkWeekByCheckedBox();
             if (workWeek != null) {
-                int workWeekNumber = workWeekScheduleBean.getWorkWeekNumber() - subtract;
+                int workWeekNumber = workWeekScheduleBean.getWorkWeekNumber();
                 adjustExistingWorkSchedules(workWeek, workWeekNumber);
                 Periodicity periodicity = getPeriodicity(workWeekNumber);
                 WorkSchedule workSchedule = getWorkSchedule(employeeScheduleFactory
                         .getChoosenWorkSchedule(), workWeek, periodicity);
                 getWorkSchedules().add(workSchedule);
-            } else if (workWeekScheduleBean.getIsEmptyWeek()) {
-                subtract = 1;
             }
         }
         setBeginDate(employeeScheduleFactory.getBeginDate());
