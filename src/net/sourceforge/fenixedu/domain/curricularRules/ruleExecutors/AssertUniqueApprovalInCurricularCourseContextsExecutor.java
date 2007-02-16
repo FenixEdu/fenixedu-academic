@@ -12,7 +12,7 @@ public class AssertUniqueApprovalInCurricularCourseContextsExecutor extends Curr
     protected RuleResult executeEnrolmentWithRules(final ICurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
 	final CurricularCourse curricularCourse = (CurricularCourse) curricularRule.getDegreeModuleToApplyRule();
 	
-	if (!curricularCourse.hasAnyActiveDegreModuleScope(enrolmentContext.getExecutionPeriod())) {
+	if (!curricularCourse.hasAnyActiveContext(enrolmentContext.getExecutionPeriod())) {
 	    return RuleResult.createNA();
 	}
 
@@ -32,7 +32,7 @@ public class AssertUniqueApprovalInCurricularCourseContextsExecutor extends Curr
 	final CurricularCourse curricularCourse = (CurricularCourse) curricularRule.getDegreeModuleToApplyRule();
 	final ExecutionPeriod executionPeriod = enrolmentContext.getExecutionPeriod();
 	
-	if (!curricularCourse.hasAnyActiveDegreModuleScope(enrolmentContext.getExecutionPeriod())) {
+	if (!curricularCourse.hasAnyActiveContext(enrolmentContext.getExecutionPeriod())) {
 	    return RuleResult.createNA();
 	}
 	
