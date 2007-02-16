@@ -27,6 +27,5 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Update second semester periods" updateSecondSemesterPeriods.sql
 execute "alter table JustificationMotive" alterTableJustificationMotive.sql
 execute "alter table WorkScheduleType" alterTableWorkScheduleType.sql
