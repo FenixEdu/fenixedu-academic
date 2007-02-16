@@ -1444,7 +1444,7 @@ img.percentImage {
 
 .externallink  { /* also works for 'new window' links*/
 padding-right: 1.5em;
-background: url(../images/external_icon3.gif) right center no-repeat;
+background: url(../images/external_icon.gif) right center no-repeat;
 }
 
 .bgcolor5 { background-color: #fdfdfa; }
