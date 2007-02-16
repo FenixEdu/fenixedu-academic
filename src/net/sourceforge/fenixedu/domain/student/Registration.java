@@ -187,8 +187,7 @@ public class Registration extends Registration_Base {
 	if (getStudentCurricularPlans().size() == 0) {
 	    return null;
 	}
-	return (StudentCurricularPlan) Collections.max(getStudentCurricularPlans(), new BeanComparator(
-		"startDateYearMonthDay"));
+	return (StudentCurricularPlan) Collections.max(getStudentCurricularPlans(), StudentCurricularPlan.STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_START_DATE);
     }
 
     public StudentCurricularPlan getLastStudentCurricularPlanExceptPast() {
