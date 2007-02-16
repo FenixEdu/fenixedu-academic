@@ -1436,10 +1436,11 @@ img.percentImage {
  
   
 
-.se_groups { background-color: #f5f5f5; color: #000; font-size: 1.0em; }
-.se_enrolled { background-color: #effaee; color: #056600; }
-.se_temporary { background-color: #fcfce5; color: #8d8d6b; }
+.se_groups { background-color: #f3f3f3; color: #000; font-size: 1.0em; }
+.se_enrolled { background-color: #e5f7e3; color: #056300; }
+.se_temporary { background-color: #fbfbd9; color: #91915f; }
 .se_impossible { background-color: #ffe9e2; color: #be5a39; }
+
 
 
 .externallink  { /* also works for 'new window' links*/
