@@ -4,7 +4,6 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.RestrictionBetweenDegreeModules;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
-import net.sourceforge.fenixedu.domain.enrolment.CurriculumModuleEnroledWrapper;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 
@@ -21,12 +20,15 @@ public class RestrictionBetweenDegreeModulesExecutor extends CurricularRuleExecu
 	final CourseGroup courseGroup = rule.getPrecedenceDegreeModule();
 	
 	if (isEnrolling(enrolmentContext, courseGroup)) {
-	    return createFalseRuleResultWithInvalidEcts(rule);
+	    if (rule.hasMinimumCredits()) {
+		return createFalseRuleResultWithInvalidEcts(rule);
+	    } else {
+		return RuleResult.createTrue(); 
+	    }
 	    
 	} else if (isEnroled(enrolmentContext, courseGroup)) {
 	    
-	    final CurriculumModuleEnroledWrapper moduleEnroledWrapper = (CurriculumModuleEnroledWrapper) searchDegreeModuleToEvaluate(enrolmentContext, rule);
-	    final CurriculumModule curriculumModule = moduleEnroledWrapper.getCurriculumModule();
+	    final CurriculumModule curriculumModule = searchCurriculumModule(enrolmentContext, courseGroup);
 	    
 	    if (!rule.hasMinimumCredits() || rule.allowCredits(curriculumModule.getAprovedEctsCredits())) {
 		return RuleResult.createTrue();
@@ -51,7 +53,11 @@ public class RestrictionBetweenDegreeModulesExecutor extends CurricularRuleExecu
 	final CourseGroup courseGroup = rule.getPrecedenceDegreeModule();
 	
 	if (isEnrolling(enrolmentContext, courseGroup)) {
-	    return createFalseRuleResultWithInvalidEcts(rule);
+	    if (rule.hasMinimumCredits()) {
+		return createFalseRuleResultWithInvalidEcts(rule);
+	    } else {
+		return RuleResult.createTrue(); 
+	    }
 	    
 	} else if (isEnroled(enrolmentContext, courseGroup)) {
 	    
@@ -59,8 +65,7 @@ public class RestrictionBetweenDegreeModulesExecutor extends CurricularRuleExecu
 		return RuleResult.createTrue();
 	    }
 	    
-	    final CurriculumModuleEnroledWrapper moduleEnroledWrapper = (CurriculumModuleEnroledWrapper) searchDegreeModuleToEvaluate(enrolmentContext, rule);
-	    final CurriculumModule curriculumModule = moduleEnroledWrapper.getCurriculumModule();
+	    final CurriculumModule curriculumModule = searchCurriculumModule(enrolmentContext, courseGroup);
 	    Double ectsCredits = curriculumModule.getAprovedEctsCredits();
 
 	    if (rule.allowCredits(ectsCredits)) {
@@ -70,7 +75,7 @@ public class RestrictionBetweenDegreeModulesExecutor extends CurricularRuleExecu
 	    final ExecutionPeriod executionPeriod = enrolmentContext.getExecutionPeriod();
 	    ectsCredits = Double.valueOf(ectsCredits.doubleValue() + curriculumModule.getEnroledEctsCredits(executionPeriod.getPreviousExecutionPeriod()).doubleValue());
 	    
-	    return rule.allowCredits(ectsCredits) ? RuleResult.createTrue() : createFalseRuleResultWithInvalidEcts(rule);
+	    return rule.allowCredits(ectsCredits) ? RuleResult.createTrue(EnrolmentResultType.TEMPORARY) : createFalseRuleResultWithInvalidEcts(rule);
 	}
 	
 	return RuleResult.createFalse(
