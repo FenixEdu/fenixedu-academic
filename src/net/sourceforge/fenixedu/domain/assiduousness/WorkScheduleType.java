@@ -67,7 +67,7 @@ public class WorkScheduleType extends WorkScheduleType_Base {
 	public Duration checkMealDurationAccordingToRules(TimeInterval lunchBreak, boolean justification,
 			Timeline timeline, TimePoint firstClocking, TimePoint lastWorkTimePoint) {
 
-		if (definedMeal()) {
+		if (definedMeal() && getScheduleClockingType() != ScheduleClockingType.RIGID_CLOCKING) {
 
 			if (lunchBreak.overlap(getMeal().getMealBreak()) == null) {
 				return null;

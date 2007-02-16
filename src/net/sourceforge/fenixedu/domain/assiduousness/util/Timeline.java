@@ -17,7 +17,7 @@ import org.joda.time.YearMonthDay;
 
 public class Timeline {
 
-	private List<TimePoint> timePoints;
+    private List<TimePoint> timePoints;
 
     public Timeline(WorkScheduleType workScheduleType) {
         timePoints = new ArrayList<TimePoint>();
@@ -96,10 +96,10 @@ public class Timeline {
                 return;
             } else if (newPoint.isBefore(currentPoint)) {
                 addPoint(i, newPoint);
-		// adds the point in this position and shifts the current point
-		// to the next position
-		// (i+1) se attrib ponto do novo ponto estao em intervalos
-		// abertos => intervalo vai-se fechar
+                // adds the point in this position and shifts the current point
+                // to the next position
+                // (i+1) se attrib ponto do novo ponto estao em intervalos
+                // abertos => intervalo vai-se fechar
                 for (AttributeType attributeType : newPoint.getPointAttributes().getAttributes()) {
                     if (insideIntervals.contains(attributeType)) {
                         pointClosesInterval(insideIntervals, attributeType, i);
@@ -109,13 +109,13 @@ public class Timeline {
                 }
                 return; // get off the for loop
             } else {
-		// is after caso em q o intervalo ja esta' aberto faz o update
-		// do atributo no ponto
+                // is after caso em q o intervalo ja esta' aberto faz o update
+                // do atributo no ponto
                 for (AttributeType attribute : currentPoint.getPointAttributes().getAttributes()) {
                     if (insideIntervals.contains(attribute)) {
                         newPoint.getIntervalAttributes().removeAttribute(attribute);
-			// removes the current point attribute to new point
-			// interval attributes
+                        // removes the current point attribute to new point
+                        // interval attributes
                         insideIntervals.removeAttribute(attribute);
                     } else {
                         if (!newPoint.getIntervalAttributes().contains(AttributeType.JUSTIFICATION)
@@ -162,8 +162,8 @@ public class Timeline {
                             }
                         } else {
                             newPoint.getIntervalAttributes().addAttribute(attribute);
-			    // adds the current point attribute to new point
-			    // interval attributes
+                            // adds the current point attribute to new point
+                            // interval attributes
                             insideIntervals.addAttribute(attribute);
                         }
                     }
@@ -175,10 +175,10 @@ public class Timeline {
         newPoint.setTime(lastTimelinePoint.getTime());
         newPoint.setNextDay(lastTimelinePoint.isNextDay());
         addPoint(timeLineSize - 1, newPoint);
-	// adds the point in this position and shifts the current point to the
-	// next position
-	// (i+1) se attrib ponto do novo ponto estao em intervalos abertos =>
-	// intervalo vai-se fechar
+        // adds the point in this position and shifts the current point to the
+        // next position
+        // (i+1) se attrib ponto do novo ponto estao em intervalos abertos =>
+        // intervalo vai-se fechar
         if (insideIntervals.contains(newPoint.getPointAttributes())) {
             // inserted point only has 1 attribute
             pointClosesInterval(insideIntervals, newPoint, timeLineSize - 1);
@@ -209,11 +209,11 @@ public class Timeline {
 
     // Adds an attribute to all timeline points' interval starting from
     // startPosition. the timeline's last point is excluded 'cause it's the
-        // end
+    // end
     // of all 1 point intervals part of plotPoint
     private void addIntervalAttributeToNextPoints(int startPosition, Attributes attributes) {
-	int timeLineSize = getNumberOfTimePoints() - 1; // exclude the last
-	// timeline point
+        int timeLineSize = getNumberOfTimePoints() - 1; // exclude the last
+        // timeline point
         for (int i = startPosition; i < timeLineSize; i++) {
             TimePoint currentPoint = getTimeLinePosition(i);
             currentPoint.getIntervalAttributes().addAttributes(attributes.getAttributes());
@@ -224,52 +224,52 @@ public class Timeline {
     // attribute from the open intervals set and from all subsequent point's
     // attribute sets part of plotPoint
     private void pointClosesInterval(Attributes insideIntervals, TimePoint point, int position) {
-	insideIntervals.removeAttributes(point.getPointAttributes().getAttributes()); // remove
-	// the attribute from the openIntervals set
-	removeIntervalAttributeFromNextPoints(position, point.getPointAttributes()); // remove
-	// the attribute from this and the next points
+        insideIntervals.removeAttributes(point.getPointAttributes().getAttributes()); // remove
+        // the attribute from the openIntervals set
+        removeIntervalAttributeFromNextPoints(position, point.getPointAttributes()); // remove
+        // the attribute from this and the next points
     }
 
     private void pointClosesInterval(Attributes insideIntervals, AttributeType attributeType,
             int position) {
-	insideIntervals.removeAttributes(new Attributes(attributeType).getAttributes()); // remove
-	// the attribute from the openIntervals set
-	removeIntervalAttributeFromNextPoints(position, new Attributes(attributeType)); // remove
-	// the attribute from this and the next points
+        insideIntervals.removeAttributes(new Attributes(attributeType).getAttributes()); // remove
+        // the attribute from the openIntervals set
+        removeIntervalAttributeFromNextPoints(position, new Attributes(attributeType)); // remove
+        // the attribute from this and the next points
     }
 
     // As the point opens the interval, this method adds the point's
-        // attribute
+    // attribute
     // to the open intervals set and to all subsequent point's attribute
-        // sets
+    // sets
     // part of plotPoint
     private void pointOpensInterval(Attributes insideIntervals, TimePoint point, int position) {
-	insideIntervals.addAttributes(point.getPointAttributes().getAttributes()); // adds
-	// the point's attribute to the openInterval set
-	addIntervalAttributeToNextPoints(position, point.getPointAttributes()); // adds
-	// the point's attribute to this and the rest of the following points
+        insideIntervals.addAttributes(point.getPointAttributes().getAttributes()); // adds
+        // the point's attribute to the openInterval set
+        addIntervalAttributeToNextPoints(position, point.getPointAttributes()); // adds
+        // the point's attribute to this and the rest of the following points
     }
 
     private void pointOpensInterval(Attributes insideIntervals, AttributeType attributeType, int position) {
-	insideIntervals.addAttributes(new Attributes(attributeType).getAttributes()); // adds
-	// the point's attribute to the openInterval set
-	addIntervalAttributeToNextPoints(position, new Attributes(attributeType)); // adds
-	// the point's attribute to this and the rest of the following points
+        insideIntervals.addAttributes(new Attributes(attributeType).getAttributes()); // adds
+        // the point's attribute to the openInterval set
+        addIntervalAttributeToNextPoints(position, new Attributes(attributeType)); // adds
+        // the point's attribute to this and the rest of the following points
     }
 
     // Finds the start point of a worked interval before a given TimePoint.
-        // The
+    // The
     // start point must have worked as point attributes and worked must be
-        // in
+    // in
     // its interval attributes
     private TimePoint findWorkedStartPointBetweenPoints(TimePoint startPoint, TimePoint endPoint) {
         int startPosition = getTimePoints().indexOf(startPoint);
         int timelineSize = getNumberOfTimePoints();
         for (int i = startPosition; i < timelineSize; i++) {
             TimePoint point = getTimeLinePosition(i);
-	    // worked is never overlapped to another worked, so if it's a
-                // worked
-	    // point it's unique
+            // worked is never overlapped to another worked, so if it's a
+            // worked
+            // point it's unique
             AttributeType pointWorkedAttribute = point.getPointAttributes().intersects(
                     DomainConstants.WORKED_ATTRIBUTES);
             if (pointWorkedAttribute != null) {
@@ -295,7 +295,7 @@ public class Timeline {
     }
 
     // Finds the end point of the interval. The end point must have
-        // attribute as
+    // attribute as
     // point attributes and attribute must not be in its interval attributes
     private TimePoint findIntervalEndPointByAttribute(AttributeType attribute) {
         for (TimePoint point : getTimePoints()) {
@@ -332,7 +332,7 @@ public class Timeline {
 
     // Finds the end point of the interval before a given TimePoint. The end
     // point must have attribute as point attributes and attribute must not
-        // be
+    // be
     // in its interval attributes
     private TimePoint findIntervalEndPointBetweenPointsByAttribute(TimePoint startPoint,
             TimePoint endPoint, AttributeType attribute) {
@@ -351,10 +351,10 @@ public class Timeline {
     // Returns an TimeInterval of the specified attribute BEWARE that the
     // TimeInterval doesn't have information about the attribute used in
     // calculateAttributesDuration since we need to build and interval to
-        // get
+    // get
     // its duration
     private TimePoint[] findWorkedIntervalByAttribute(AttributeType attribute) {
-	List<TimePoint> listTimePoint = findFirstTimePointsByAttribute(attribute);
+        List<TimePoint> listTimePoint = findFirstTimePointsByAttribute(attribute);
         if (listTimePoint.size() == 2) {
             return new TimePoint[] { listTimePoint.get(0), listTimePoint.get(1) };
         }
@@ -410,9 +410,9 @@ public class Timeline {
             Attributes attributesToCheck) {
         Attributes overlappedAttributes = new Attributes();
         for (TimePoint point : getTimePoints()) {
-	    // ou o ponto tem o atributo ou o intervalo tem o atributo (caso
-                // em
-	    // que o ponto pertence ao intervalo do attribute)
+            // ou o ponto tem o atributo ou o intervalo tem o atributo (caso
+            // em
+            // que o ponto pertence ao intervalo do attribute)
             if (point.getPointAttributes().contains(attribute)
                     || point.getIntervalAttributes().contains(attribute)) {
                 for (AttributeType attributeCheck : attributesToCheck.getAttributes()) {
@@ -499,14 +499,15 @@ public class Timeline {
     }
 
     public Duration calculateWorkPeriodDuration(TimePoint firstTimePoint, TimePoint lastTimePoint,
-            TimePoint minimumClockTimePoint, TimePoint maximumClockTimePoint, Duration maximumDuration) {
+            TimePoint minimumClockTimePoint, TimePoint maximumClockTimePoint, Duration maximumDuration,
+            WorkScheduleType workScheduleType) {
         Duration totalDuration = Duration.ZERO;
-        Duration temp = null;
+        Duration temp = Duration.ZERO;
         List<Interval> timePointIntervals = new ArrayList<Interval>();
         List<Interval> justificationsIntervals = new ArrayList<Interval>();
 
         for (AttributeType attributeType : DomainConstants.WORKED_ATTRIBUTES.getAttributes()) {
-	    TimePoint[] timePoints = findWorkedIntervalByAttribute(attributeType);
+            TimePoint[] timePoints = findWorkedIntervalByAttribute(attributeType);
             if (timePoints != null) {
                 if ((firstTimePoint != null && (timePoints[1].isBefore(firstTimePoint) || firstTimePoint
                         .isAtSameTime(timePoints[1])))
@@ -526,8 +527,23 @@ public class Timeline {
                         timePointIntervals.add(timePointInterval);
                     }
 
-                    temp = getDurationBetweenPoints(timePoints[0], timePoints[1], minimumClockTimePoint,
-                            maximumClockTimePoint);
+                    if (workScheduleType.getScheduleClockingType() == ScheduleClockingType.RIGID_CLOCKING) {
+                        Interval overlap = timePointInterval.overlap(workScheduleType
+                                .getNormalWorkPeriod().getFirstPeriodInterval().toInterval(begin));
+                        if (overlap != null) {
+                            temp = overlap.toDuration();
+                        }
+                        if (workScheduleType.getNormalWorkPeriod().isSecondWorkPeriodDefined()) {
+                            overlap = timePointInterval.overlap(workScheduleType.getNormalWorkPeriod()
+                                    .getSecondPeriodInterval().toInterval(begin));
+                            if (overlap != null) {
+                                temp = temp.plus(overlap.toDuration());
+                            }
+                        }
+                    } else {
+                        temp = getDurationBetweenPoints(timePoints[0], timePoints[1],
+                                minimumClockTimePoint, maximumClockTimePoint);
+                    }
                     if (!(timePoints[0].getPointAttributes().contains(AttributeType.JUSTIFICATION) && timePoints[1]
                             .getPointAttributes().contains(AttributeType.JUSTIFICATION))
                             && (maximumDuration != null && (temp.isLongerThan(maximumDuration)))) {
@@ -580,7 +596,7 @@ public class Timeline {
         Duration totalDuration = Duration.ZERO;
         Interval interval = new Interval(beginDate, endDate);
         for (AttributeType attributeType : DomainConstants.WORKED_ATTRIBUTES.getAttributes()) {
-	    TimePoint[] timePoints = findWorkedIntervalByAttribute(attributeType);
+            TimePoint[] timePoints = findWorkedIntervalByAttribute(attributeType);
             if (timePoints != null) {
                 DateTime end = timePoints[1].getTime().toDateTime(beginDate);
                 if (timePoints[1].isNextDay()) {
@@ -651,7 +667,7 @@ public class Timeline {
     }
 
     // Calcula a duracao do periodo em q o funcionario saiu para almoco
-        // durante
+    // durante
     // o periodo de almoco.
     // 3 casos, um em que sai depois do periodo de almoco comecar, e outro q
     // entra ja almocado.
@@ -666,9 +682,9 @@ public class Timeline {
             // TODO pode haver varios worked dentro de meal...
             AttributeType workedAttribute = mealStart.getIntervalAttributes().intersects(
                     DomainConstants.WORKED_ATTRIBUTES);
-	    // saber qual o atributo de worked encontrar o ponto dentro de
-                // meal
-	    // q termina o periodo de trabalho
+            // saber qual o atributo de worked encontrar o ponto dentro de
+            // meal
+            // q termina o periodo de trabalho
             TimePoint workedEndPoint = findIntervalEndPointBetweenPointsByAttribute(mealStart, mealEnd,
                     workedAttribute);
             TimePoint workedStartPoint = findWorkedStartPointBetweenPoints(mealStart, mealEnd);
@@ -680,22 +696,22 @@ public class Timeline {
                 return (new TimeInterval(workedEndPoint.getTime(), mealEnd.getTime(), mealEnd
                         .isNextDay()));
             }
-	} else { // mealStart nao esta' dentro dum worked procurar inicio
-                        // de
-	    // periodo de trabalho
+        } else { // mealStart nao esta' dentro dum worked procurar inicio
+            // de
+            // periodo de trabalho
             TimePoint workedStartPoint = findWorkedStartPointBetweenPoints(mealStart, mealEnd);
             TimePoint workedEndPoint = null;
             // caso em q trabalhou dentro da meal e nao almocou
             if (workedStartPoint != null) {
                 // encontrar ponto a partir de workStartPoint
                 AttributeType workedAttribute = workedStartPoint.getPointAttributes().intersects(
-			DomainConstants.WORKED_ATTRIBUTES); // saber qual o
-		// atributo de worked
+                        DomainConstants.WORKED_ATTRIBUTES); // saber qual o
+                // atributo de worked
                 workedEndPoint = findIntervalEndPointBetweenPointsByAttribute(workedStartPoint, mealEnd,
                         workedAttribute);
                 if (workedEndPoint != null) {
-		    // saiu antes do final do periodo de almoco entao foi
-		    // almocar...
+                    // saiu antes do final do periodo de almoco entao foi
+                    // almocar...
                     return (new TimeInterval(workedEndPoint.getTime(), mealEnd.getTime(), mealEnd
                             .isNextDay()));
                 } else {
@@ -717,7 +733,7 @@ public class Timeline {
     // Encontra 1o ponto do intervalo de refeicao feito pelo funcionario.
     public TimePoint findStartLunchBreak(TimeInterval scheduleMealBreakInterval) {
         List<TimePoint> workedPointsList = getAllAttributePoints(DomainConstants.WORKED_ATTRIBUTES);
-	TimePoint[] mealInterval = findWorkedIntervalByAttribute(AttributeType.MEAL);
+        TimePoint[] mealInterval = findWorkedIntervalByAttribute(AttributeType.MEAL);
         TimePoint startMealBreakPoint = null;
         TimePoint firstPoint = workedPointsList.get(0);
         for (TimePoint point : workedPointsList) {
@@ -743,7 +759,7 @@ public class Timeline {
             TimePoint startMealBreakPoint) {
         if (startMealBreakPoint != null) {
             List<TimePoint> workedPointsList = getAllAttributePoints(DomainConstants.WORKED_ATTRIBUTES);
-	    TimePoint[] mealInterval = findWorkedIntervalByAttribute(AttributeType.MEAL);
+            TimePoint[] mealInterval = findWorkedIntervalByAttribute(AttributeType.MEAL);
             for (TimePoint point : workedPointsList) {
                 // ponto abre worked e e' depois do inicio da refeicao
                 if (point.getIntervalAttributes().contains(DomainConstants.WORKED_ATTRIBUTES)
@@ -759,7 +775,7 @@ public class Timeline {
 
     // Returns the time the employee worked during Normal Work Period 1 or 2
     // time interval. The clockings should be done during the Normal Work
-        // Period
+    // Period
     // 1 or 2.
     // TODO verify this!
     public Duration calculateNormalWorkPeriod(AttributeType normalWorkPeriodAttribute) {
@@ -767,10 +783,10 @@ public class Timeline {
         // get the workedAttributes during the normal work period
         Attributes overlappedAttributes = findAttributesIntervalThatOverlapFromAttributes(
                 normalWorkPeriodAttribute, DomainConstants.WORKED_ATTRIBUTES);
-	// since the worked times are not overlapped lets calculate each
-	// duration
+        // since the worked times are not overlapped lets calculate each
+        // duration
         for (AttributeType attribute : overlappedAttributes.getAttributes()) {
-	    TimePoint[] attributeInterval = findWorkedIntervalByAttribute(attribute);
+            TimePoint[] attributeInterval = findWorkedIntervalByAttribute(attribute);
             DateTime startDate = attributeInterval[0].getTime().toDateTimeToday();
             DateTime endDate = attributeInterval[1].getTime().toDateTimeToday();
             if (attributeInterval[0].isNextDay() != attributeInterval[1].isNextDay()) {
@@ -802,7 +818,7 @@ public class Timeline {
 
     // Plots the pairs of clockings in the timeline
     // Converts pairs of clockings of the clockingList to clockingInterval
-        // and
+    // and
     // adds it to the pointList.
     public void plotListInTimeline(List<AssiduousnessRecord> clockingList, List<Leave> leaveList,
             Iterator<AttributeType> attributesIt, YearMonthDay day) {
@@ -869,41 +885,41 @@ public class Timeline {
     }
 
     private TimePoint findWorkedPointBefore(TimePoint pointAfter) {
-	TimePoint result = null;
-	for (TimePoint point : getTimePoints()) {
-	    if (point.isBefore(pointAfter)) {
-		if (point.getPointAttributes().contains(DomainConstants.WORKED_ATTRIBUTES)) {
-		    result = point;
-}
-	    } else {
-		return result;
-	    }
-	}
-	return result;
+        TimePoint result = null;
+        for (TimePoint point : getTimePoints()) {
+            if (point.isBefore(pointAfter)) {
+                if (point.getPointAttributes().contains(DomainConstants.WORKED_ATTRIBUTES)) {
+                    result = point;
+                }
+            } else {
+                return result;
+            }
+        }
+        return result;
     }
-    
+
     public TimePoint[] findIntervalByAttribute(AttributeType attribute, TimeOfDay time) {
-	TimePoint[] result = null;
-	for (TimePoint point : getTimePoints()) {
-	    if (isPointStartingAttributeInterval(point, attribute) && point.getTime().isEqual(time)) {
-		result = new TimePoint[2];
-		result[0] = point;
-	    } else if (result != null && isPointClosingAttributeInterval(point, attribute)) {
-		result[1] = point;
-	    }
-	}
-	return result;
+        TimePoint[] result = null;
+        for (TimePoint point : getTimePoints()) {
+            if (isPointStartingAttributeInterval(point, attribute) && point.getTime().isEqual(time)) {
+                result = new TimePoint[2];
+                result[0] = point;
+            } else if (result != null && isPointClosingAttributeInterval(point, attribute)) {
+                result[1] = point;
+            }
+        }
+        return result;
     }
 
     public boolean hasWorkingPointBeforeLeave(Leave leave) {
-	TimePoint[] result = findIntervalByAttribute(AttributeType.JUSTIFICATION, leave.getDate()
-		.toTimeOfDay());
-	return (result != null && getPreviousWorkedPoint(result[0]) != null);
+        TimePoint[] result = findIntervalByAttribute(AttributeType.JUSTIFICATION, leave.getDate()
+                .toTimeOfDay());
+        return (result != null && getPreviousWorkedPoint(result[0]) != null);
     }
 
     public boolean hasWorkingPointAfterLeave(Leave leave) {
-	TimePoint[] result = findIntervalByAttribute(AttributeType.JUSTIFICATION, leave.getDate()
-		.toTimeOfDay());
-	return (result != null && getNextWorkedPoint(result[1]) != null);
+        TimePoint[] result = findIntervalByAttribute(AttributeType.JUSTIFICATION, leave.getDate()
+                .toTimeOfDay());
+        return (result != null && getNextWorkedPoint(result[1]) != null);
     }
 }

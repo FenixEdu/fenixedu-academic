@@ -59,7 +59,7 @@ public class WorkSchedule extends WorkSchedule_Base {
                             new TimePoint(getWorkScheduleType().getClockingTime(), AttributeType.NULL),
                             new TimePoint(getWorkScheduleType().getClockingEndTime(),
                                     getWorkScheduleType().isClokingTimeNextDay(), AttributeType.NULL),
-                            wsType.getMaximumContinuousWorkPeriod());
+                            wsType.getMaximumContinuousWorkPeriod(),wsType);
 
                     if (((WorkPeriod) wsType.getNormalWorkPeriod()).isSecondWorkPeriodDefined()) {
                         lastWorkPeriod = workDaySheet.getTimeline()
@@ -71,7 +71,7 @@ public class WorkSchedule extends WorkSchedule_Base {
                                         new TimePoint(getWorkScheduleType().getClockingEndTime(),
                                                 getWorkScheduleType().isClokingTimeNextDay(),
                                                 AttributeType.NULL),
-                                        wsType.getMaximumContinuousWorkPeriod());
+                                        wsType.getMaximumContinuousWorkPeriod(),wsType);
                     }
                     workDaySheet.setUnjustifiedTime(wsType.calculateFixedPeriodDuration(workDaySheet
                             .getTimeline()));
@@ -95,7 +95,7 @@ public class WorkSchedule extends WorkSchedule_Base {
                         new TimePoint(getWorkScheduleType().getClockingTime(), AttributeType.NULL),
                         new TimePoint(getWorkScheduleType().getClockingEndTime(), getWorkScheduleType()
                                 .isClokingTimeNextDay(), AttributeType.NULL),
-                        wsType.getMaximumContinuousWorkPeriod());
+                        wsType.getMaximumContinuousWorkPeriod(),wsType);
 
                 if (workPeriod.equals(Duration.ZERO)) {
                     workDaySheet.setUnjustifiedTime(wsType.calculateFixedPeriodDuration(workDaySheet
@@ -257,7 +257,7 @@ public class WorkSchedule extends WorkSchedule_Base {
                     new TimePoint(getWorkScheduleType().getClockingTime(), AttributeType.NULL),
                     new TimePoint(getWorkScheduleType().getClockingEndTime(), getWorkScheduleType()
                             .isClokingTimeNextDay(), AttributeType.NULL),
-                    wsType.getMaximumContinuousWorkPeriod());
+                    wsType.getMaximumContinuousWorkPeriod(),wsType);
             workDaySheet.setBalanceTime(subtractDurationsWithoutSeconds(worked,
                     getWorkScheduleType().getNormalWorkPeriod().getWorkPeriodDuration()).toPeriod());
             workDaySheet.setUnjustifiedTime(wsType.calculateFixedPeriodDuration(workDaySheet
