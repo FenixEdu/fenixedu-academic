@@ -17,6 +17,7 @@
     <extent-class class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEMAT"/>    
     <extent-class class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEGI"/>    
     <extent-class class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEAM"/>    
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLQ"/>    
     
 	
 	
