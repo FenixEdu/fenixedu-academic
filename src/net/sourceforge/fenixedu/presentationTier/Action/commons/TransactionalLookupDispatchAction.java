@@ -117,4 +117,10 @@ public abstract class TransactionalLookupDispatchAction extends LookupDispatchAc
 
     abstract protected Map getKeyMethodMap();
 
+    protected Integer getIntegerFromRequest(HttpServletRequest request, String name) {
+	final String requestParameter = request.getParameter(name);
+	return (requestParameter != null ? Integer.valueOf(requestParameter) : (Integer) request
+		.getAttribute(name));
+    }
+
 }
