@@ -30,9 +30,7 @@ public class LQBolonhaEnrolmentRule extends BolonhaEnrolmentRule {
 
 	if(isEnrolledInPreviousExecutionPeriodOrAproved(ESTAGIOA_CODE)) {
 	    removeCurricularCourse(curricularCoursesToBeEnrolledIn, ESTAGIOB_CODE);
-	}
-	
-	if(isEnrolledInPreviousExecutionPeriodOrAproved(DISSERTACAO_CODE)) {
+	} else {
 	    removeCurricularCourse(curricularCoursesToBeEnrolledIn, DISSERTACAO_CODE);
 	}
 
