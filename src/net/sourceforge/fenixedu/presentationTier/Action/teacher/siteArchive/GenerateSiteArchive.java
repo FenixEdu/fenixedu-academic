@@ -62,7 +62,11 @@ public class GenerateSiteArchive extends FenixDispatchAction {
         }
 
         String name = getArchiveName(executionCourse);
-        ZipArchive archive = new ZipArchive(response, name);
+        // NOTE: Using a DiskZipArchive instead of a ZipArchive because a ZipArchive
+        //       writes directly to the response during the entire process and prevents
+        //       the server from showing an error page when something goes wrong. This
+        //       leaves the user with a corrupt Zip file and no other information.
+        Archive archive = new DiskZipArchive(response, name);
         Fetcher fetcher = new Fetcher(archive, request, response);
         
         queueResources(request, executionCourse, options, fetcher);
