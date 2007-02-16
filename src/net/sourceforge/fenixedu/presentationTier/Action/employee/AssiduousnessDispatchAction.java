@@ -100,7 +100,7 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
             yearMonth.setYear(new YearMonthDay().getYear());
             yearMonth.setMonth(Month.values()[new YearMonthDay().getMonthOfYear() - 1]);
         } else {
-            ActionForward actionForward = verifyYearMonth("showClockings", request, mapping, yearMonth);
+            ActionForward actionForward = verifyYearMonth("show-clockings", request, mapping, yearMonth);
             if (actionForward != null) {
                 request.setAttribute("employee", employee);
                 return actionForward;
@@ -205,7 +205,7 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
             yearMonth.setYear(new YearMonthDay().getYear());
             yearMonth.setMonth(Month.values()[new YearMonthDay().getMonthOfYear() - 1]);
         } else {
-            ActionForward actionForward = verifyYearMonth("showClockings", request, mapping, yearMonth);
+            ActionForward actionForward = verifyYearMonth("show-work-sheet", request, mapping, yearMonth);
             if (actionForward != null) {
                 EmployeeWorkSheet employeeWorkSheet = new EmployeeWorkSheet();
                 employeeWorkSheet.setEmployee(employee);
