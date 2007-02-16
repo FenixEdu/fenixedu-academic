@@ -1,10 +1,8 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
@@ -16,10 +14,7 @@ public class SearchResearchUnits extends AbstractSearchObjects {
 		 List<Unit> units = UnitUtils.readAllUnitsByType(PartyTypeEnum.SCIENCE_INFRASTRUCTURE);
 		 units.addAll(UnitUtils.readAllUnitsByType(PartyTypeEnum.RESEARCH_UNIT));
 		 units.addAll(UnitUtils.readAllUnitsByType(PartyTypeEnum.ASSOCIATED_LABORATORY));
-		 		
-		 List<DomainObject> list = new ArrayList<DomainObject> ();
-		 list.addAll(units);
-		 
-		 return super.process(list, value, limit, arguments);
+		 	
+		 return super.process(units, value, limit, arguments);
 	}
 }

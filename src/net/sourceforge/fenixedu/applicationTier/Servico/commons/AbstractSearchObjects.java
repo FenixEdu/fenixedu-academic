@@ -18,18 +18,19 @@ import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public abstract class AbstractSearchObjects extends Service implements AutoCompleteSearchService {
 
-    protected List<DomainObject> process(Collection<DomainObject> objects, String value, int limit,
+    protected List<DomainObject> process(Collection objects, String value, int limit,
             Map<String, String> arguments) {
-        List<DomainObject> result = new ArrayList<DomainObject>();
+        List result;
 
         String slotName = arguments.get("slot");
 
         if (value == null) {
-            result.addAll(objects);
+            result = (List) objects;
         } else {
+        	result = new ArrayList<DomainObject>();
             String[] values = StringNormalizer.normalize(value).toLowerCase().split("\\p{Space}+");
 
-            outter: for (DomainObject object : objects) {
+            outter: for (Object object : objects) {
                 try {
                     String objectValue = (String) PropertyUtils.getProperty(object, slotName);
 
