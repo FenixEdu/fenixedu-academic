@@ -1802,14 +1802,18 @@ public class Person extends Person_Base {
     }
 
     public SortedSet<StudentCurricularPlan> getCompletedStudentCurricularPlansSortedByDegreeTypeAndDegreeName() {
-	final SortedSet<StudentCurricularPlan> studentCurricularPlans = new TreeSet<StudentCurricularPlan>(
-		StudentCurricularPlan.STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_DEGREE_NAME);
-	for (final Registration registration : getStudentsSet()) {
-	    if (registration.isConcluded()) {
-		studentCurricularPlans.add(registration.getLastStudentCurricularPlanExceptPast());
-	    }
-	}
-	return studentCurricularPlans;
+        final SortedSet<StudentCurricularPlan> studentCurricularPlans = new TreeSet<StudentCurricularPlan>(
+                StudentCurricularPlan.STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_DEGREE_NAME);
+        
+        for (final Registration registration : getStudentsSet()) {
+            if (registration.isConcluded()) {
+                StudentCurricularPlan lastStudent = registration.getLastStudentCurricularPlanExceptPast();
+                if (lastStudent != null) {
+                    studentCurricularPlans.add(lastStudent);
+                }
+            }
+        }
+        return studentCurricularPlans;
     }
 
     public List<ProjectAccess> readProjectAccessesByCoordinator(Integer coordinatorCode) {
