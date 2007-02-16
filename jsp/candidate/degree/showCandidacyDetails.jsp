@@ -6,20 +6,22 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 
+<em><bean:message key="portal.candidate" /></em>
 <h2><bean:message  key="label.candidacy.candidacyDetails"/></h2>
 
 <logic:equal name="candidacy" property="activeCandidacySituation.candidacySituationType.name" value="REGISTERED">
 	<fr:view name="candidacy" schema="DegreeCandidacy.view-with-person-details">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4 thright" />
+			<fr:property name="classes" value="tstyle4 thright thlight" />
 		</fr:layout>
 	</fr:view>
 </logic:equal>
 
+
 <logic:notEqual name="candidacy" property="activeCandidacySituation.candidacySituationType.name" value="REGISTERED">
 	<fr:view name="candidacy" schema="DegreeCandidacy.view">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4 thright" />
+			<fr:property name="classes" value="tstyle4 thright thlight" />
 		</fr:layout>
 	</fr:view>
 </logic:notEqual>
@@ -30,6 +32,7 @@
 
 <logic:notEmpty name="operations">
 	<bean:define id="emptyOperations" value="true" />
+	<ul>
 	<logic:iterate id="operation" name="operations">
 		<logic:equal name="operation" property="visible" value="true">
 		
@@ -48,33 +51,38 @@
 			</logic:equal>
 			
 			<logic:present name="requiresNewWindow">
-				<html:link action="<%= "/degreeCandidacyManagement.do?method=doOperation&amp;operationType=" + operationType + "&amp;candidacyID=" + candidacyID%>" target="_blank">
-					<bean:message name="operation" property="type.qualifiedName" bundle="ENUMERATION_RESOURCES"/>
-				</html:link>
+				<li>
+					<html:link action="<%= "/degreeCandidacyManagement.do?method=doOperation&amp;operationType=" + operationType + "&amp;candidacyID=" + candidacyID%>" target="_blank">
+						<bean:message name="operation" property="type.qualifiedName" bundle="ENUMERATION_RESOURCES"/>
+					</html:link>
+				</li>
 			</logic:present>
 			<logic:notPresent name="requiresNewWindow">
-				<html:link action="<%= "/degreeCandidacyManagement.do?method=doOperation&amp;operationType=" + operationType + "&amp;candidacyID=" + candidacyID%>">
-					<bean:message name="operation" property="type.qualifiedName" bundle="ENUMERATION_RESOURCES"/>
-				</html:link>
+				<li>
+					<html:link action="<%= "/degreeCandidacyManagement.do?method=doOperation&amp;operationType=" + operationType + "&amp;candidacyID=" + candidacyID%>">
+						<bean:message name="operation" property="type.qualifiedName" bundle="ENUMERATION_RESOURCES"/>
+					</html:link>
+				</li>
 			</logic:notPresent>
-			<br/>
+			
 		</logic:equal>
 	</logic:iterate>
+	</ul>
 </logic:notEmpty>
 
 
 <logic:equal name="emptyOperations" value="true">
-	<span class="error0"><bean:message  key="label.candidacy.candidacyDetails.noOperationsToBeDone"/> </span>
+	<p>
+		<span class="error0"><bean:message  key="label.candidacy.candidacyDetails.noOperationsToBeDone"/> </span>
+	</p>
 </logic:equal>
 
 
-<br/><br/>
-
 <logic:equal name="candidacy" property="activeCandidacySituation.candidacySituationType" value="REGISTERED">
 	<bean:define id="istUsername" name="person" property="istUsername" />
-	<div class="warning0">
-		<p class="mvert025"><strong><bean:message  key="label.attention"/></strong>:</p>
-		<p class="mvert025"><span><bean:message  key="label.candidacy.institutional.email.creation.warning" arg0="<%=istUsername.toString()%>"/></span></p>
+	<div class="warning0 mtop2">
+		<p class="mvert025"><strong><bean:message key="label.attention"/></strong>:</p>
+		<p class="mvert025"><span><bean:message key="label.candidacy.institutional.email.creation.warning" arg0="<%=istUsername.toString()%>"/></span></p>
 	</div>
 </logic:equal>
 
