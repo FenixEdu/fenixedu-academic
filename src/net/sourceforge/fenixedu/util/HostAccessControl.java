@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Properties;
 
 import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.PathAccessControlFilter;
@@ -88,7 +89,7 @@ public class HostAccessControl {
     }
     
     public static boolean isAllowed(String name, ServletRequest request) {
-        return getInstance().isAllowed(name, request.getRemoteAddr());
+        return getInstance().isAllowed(name, getRemoteAddress(request));
     }
     
     public static boolean isAllowed(Class type, ServletRequest request) {
@@ -124,4 +125,16 @@ public class HostAccessControl {
         
         return false;
     }
+
+    private static String getRemoteAddress(ServletRequest request) {
+	if (request instanceof HttpServletRequest) {
+	    final HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+	    final String xForwardFor = httpServletRequest.getHeader("x-forwarded-for");
+	    if (xForwardFor != null && xForwardFor.length() > 0) {
+		return xForwardFor;
+	    }
+	}
+	return request.getRemoteAddr();
+    }
+
 }
