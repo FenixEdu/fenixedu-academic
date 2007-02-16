@@ -90,10 +90,10 @@ public class ShiftEnrollmentTimeTableLessonContentRenderer implements LessonSlot
     private StringBuilder getURL(InfoLesson lesson) {
         StringBuilder strBuffer = new StringBuilder();
         if (getAction().equalsIgnoreCase("add")) {
-            strBuffer.append("<a href=\"enrollStudentInShifts.do?studentId=");
+            strBuffer.append("<a href=\"enrollStudentInShifts.do?registrationOID=");
         } else if (getAction().equalsIgnoreCase("remove")) {
             strBuffer
-                    .append("<a href=\"studentShiftEnrollmentManager.do?method=unEnroleStudentFromShift&studentId=");
+                    .append("<a href=\"studentShiftEnrollmentManager.do?method=unEnroleStudentFromShift&registrationOID=");
         }
         strBuffer.append(getStudentID()).append("&shiftId=").append(
                 lesson.getInfoShift().getIdInternal());
