@@ -22,6 +22,9 @@
 	<logic:present name="executionDegreeId">
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionDegreeId" property="executionDegreeId" value="<%=pageContext.findAttribute("executionDegreeId").toString()%>"/>
 	</logic:present>
+	<logic:present name="curricularCoursesEnrollmentForm" property="registrationId">
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.registrationId" property="registrationId" />
+	</logic:present>
 	<table class="infoop">
 		<tr>
 			<td><bean:message key="label.choose.student" />&nbsp;</td>

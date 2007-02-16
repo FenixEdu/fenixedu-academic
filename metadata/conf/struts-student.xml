@@ -108,6 +108,7 @@
 		<form-property name="isOptional" type="java.lang.String"/>
 		<form-property name="degreeCurricularPlanID" type="java.lang.Integer"/>
 		<form-property name="curricularCourse" type="java.lang.String"/>
+		<form-property name="registrationId" type="java.lang.Integer"/>
 	</form-bean>
 
 		<form-bean name="finalDegreeWorkCandidacyForm"
@@ -669,15 +670,9 @@
 			<forward name="prepareChooseAreas" path="/curricularCoursesEnrollment.do?method=prepareEnrollmentPrepareChooseAreas&amp;page=0"/>
 			<forward name="prepareEnrollmentChooseCurricularCourses" path="df.page.prepareEnrollmentChooseCurricularCourses"/>
 			<forward name="enrollmentConfirmation" path="df.page.enrollmentConfirmation"/>
+			<forward name="showWarning" path="df.page.warning" />
 		</action>
         
-        
-    
-    	<action	path="/warningFirst"
-				type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction">
-        	<forward name="Success" path="df.page.warning"/>
-		</action>
-
 		<action	path="/finalDegreeWorkCandidacy"
 				type="net.sourceforge.fenixedu.presentationTier.Action.student.finalDegreeWork.FinalDegreeWorkCandidacyDA"
 				name="finalDegreeWorkCandidacyForm"
@@ -798,18 +793,6 @@
 			<forward name="inquirySubmitionResult" path="inquiry-submition-result"/>
 			<forward name="unavailableInquiry" path="unavailable-inquiry"/>
 		</action>
-  
-  		<!-- ============== Pre-enrollment inquiries ========= -->
-  		<action path="/studentPersonalDataAuthorization"
-  			type="net.sourceforge.fenixedu.presentationTier.Action.student.ManagePreEnrollmentInquiriesDispatchAction"
-  			name="studentInquiryDataForm"
-  			scope="request"
-  			input="/studentPersonalDataAuthorization.do?method=preparePersonalDataInquiry"
-  			parameter="method">
-  			
-  			<forward name="showAuthorizationInquiry" path="show-personal-data-use-inquiry"/>
-  			<forward name="proceedToEnrollment" path="/curricularCoursesEnrollment.do?method=start"/>
-  		</action>
   		
 
   		<action path="/weeklyWorkLoad"
@@ -910,10 +893,10 @@
 				name="studentEnrollmentManagmentForm"
 				scope="request">
 		
-			<forward name="chooseRegistration" path="enrolment.bolonha.chooseRegistration" />
-			<forward name="choosePersonalDataAuthorizationChoice" path="enrolment.bolonha.choosePersonalDataAuthorizationChoice"/>
+			<forward name="chooseRegistration" path="enrolment.chooseRegistration" />
+			<forward name="choosePersonalDataAuthorizationChoice" path="enrolment.choosePersonalDataAuthorizationChoice"/>
 			<forward name="proceedToBolonhaEnrollment" path="/bolonhaStudentEnrollment.do?method=prepare"/>
-			<forward name="proceedToPreBolonhaEnrollment" path="/warningFirst.do"/>
+			<forward name="proceedToPreBolonhaEnrollment" path="/curricularCoursesEnrollment.do?method=prepare"/>
 			
 		</action>
 		

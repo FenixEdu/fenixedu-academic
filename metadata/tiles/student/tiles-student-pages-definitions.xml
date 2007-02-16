@@ -301,11 +301,15 @@
 	<!-- End: Prices -->
 	
 	
-	<!-- Begin: Bolonha Student Enrolment -->
-	
-	<definition name="enrolment.bolonha.chooseRegistration" extends="definition.student.masterPage">
-		<put name="body" value="/student/enrollment/bolonha/chooseRegistration.jsp"/>
+	<definition name="enrolment.chooseRegistration" extends="definition.student.masterPage">
+		<put name="body" value="/student/enrollment/chooseRegistration.jsp"/>
 	</definition>
+	<definition name="enrolment.choosePersonalDataAuthorizationChoice" extends="definition.student.masterPage">
+		<put name="body" value="/student/enrollment/choosePersonalDataAuthorizationChoice.jsp"/>
+	</definition>
+	
+	
+	<!-- Begin: Bolonha Student Enrolment -->
 	<definition name="enrolment.bolonha.showDegreeModulesToEnrol" extends="definition.student.masterPage">
 		<put name="body" value="/student/enrollment/bolonha/showDegreeModulesToEnrol.jsp"/>
 	</definition>
@@ -318,12 +322,6 @@
 	<definition name="enrolment.bolonha.showEnrollmentInstructions" extends="definition.student.masterPage">
 		<put name="body" value="/student/enrollment/bolonha/showEnrollmentInstructions.jsp"/>
 	</definition>
-	<definition name="enrolment.bolonha.choosePersonalDataAuthorizationChoice" extends="definition.student.masterPage">
-		<put name="body" value="/student/enrollment/choosePersonalDataAuthorizationChoice.jsp"/>
-	</definition>
-	
-	
-	
 	<!-- End: Bolonha Student Enrolment -->
 	
 </tiles-definitions>

@@ -15,16 +15,21 @@ public class DegreesByDegreeType implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
 
-	BolonhaStudentOptionalEnrollmentBean optionalEnrollmentBean = (BolonhaStudentOptionalEnrollmentBean) source;
-
+	final BolonhaStudentOptionalEnrollmentBean optionalEnrollmentBean = (BolonhaStudentOptionalEnrollmentBean) source;
+	List<Degree> result = null;
 	if (optionalEnrollmentBean.hasDegreeType()) {
-	    List<Degree> result = Degree.readAllByDegreeType(optionalEnrollmentBean.getDegreeType());
+	    result = Degree.readAllByDegreeType(optionalEnrollmentBean.getDegreeType());
 	    Collections.sort(result, new BeanComparator("name"));
-	    return result;
+	} else {
+	    result = Collections.EMPTY_LIST;
 	}
 
-	return Collections.EMPTY_LIST;
+	final Degree currentSelectedDegree = (Degree) currentValue;
+	if (!result.contains(currentSelectedDegree)) {
+	    optionalEnrollmentBean.setDegree(null);
+	}
 
+	return result;
     }
 
     public Converter getConverter() {

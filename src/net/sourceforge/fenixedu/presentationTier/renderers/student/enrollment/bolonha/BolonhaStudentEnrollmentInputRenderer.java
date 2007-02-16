@@ -308,9 +308,9 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 		    + studentCurriculumGroupBean.getCurriculumModule().getIdInternal());
 	    checkBox.setUserValue(enrolmentMetaObject.getKey().toString());
 	    checkBoxCell.setBody(checkBox);
-	    // checkBox.setOnClick("this.form.method.value='unEnrolInCurriculumGroup';this.form.submit();");
 
-	    if (studentCurriculumGroupBean.isEnrolledInAnyCurriculumGroups()
+	    if (studentCurriculumGroupBean.isRoot()
+		    || studentCurriculumGroupBean.isEnrolledInAnyCurriculumGroups()
 		    || studentCurriculumGroupBean.isEnrolledInAnyCurriculumCourses()) {
 		checkBox.setDisabled(true);
 	    } else {

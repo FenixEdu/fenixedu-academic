@@ -29,6 +29,12 @@ public class DegreeCurricularPlansForDegree implements DataProvider {
 	}
 
 	Collections.sort(result, new BeanComparator("name"));
+
+	final DegreeCurricularPlan currentSelectedDegreeCurricularPlan = (DegreeCurricularPlan) currentValue;
+	if (!result.contains(currentSelectedDegreeCurricularPlan)) {
+	    optionalEnrollmentBean.setDegreeCurricularPlan(null);
+	}
+
 	return result;
     }
 

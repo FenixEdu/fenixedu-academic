@@ -203,4 +203,8 @@ public class StudentCurriculumGroupBean extends StudentCurriculumModuleBean {
 	this.enrolledCurriculumCourses = enrolledCurriculumCourses;
     }
 
+    public boolean isRoot() {
+	return getCurriculumModule().isRoot();
+    }
+
 }

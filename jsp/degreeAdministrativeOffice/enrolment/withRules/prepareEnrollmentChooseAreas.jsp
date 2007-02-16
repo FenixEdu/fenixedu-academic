@@ -20,6 +20,13 @@
 
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareEnrollmentChooseAreas" />
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="2" />
+	<logic:present name="curricularCoursesEnrollmentForm" property="registrationId">
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.registrationId" property="registrationId" />
+	</logic:present>
+	
+	<logic:present name="curricularCoursesEnrollmentForm" property="registrationId">
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.registrationId" property="registrationId" />
+	</logic:present>
 	
 	<bean:define id="executionPeriod" name="executionPeriod" />
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionPeriod" property="executionPeriod" value="<%= executionPeriod.toString() %>"/>

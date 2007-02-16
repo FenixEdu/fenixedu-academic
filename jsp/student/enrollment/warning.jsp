@@ -13,4 +13,4 @@
 	<br />
 </logic:messagesPresent>
 
-<div><br/><br/>	<html:form action="/curricularCoursesEnrollment?method=start">		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepare"/>		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">			<bean:message key="button.continue.enrolment"/>		</html:submit>	</html:form></div>
+<div><br/><br/>	<html:form action="/curricularCoursesEnrollment.do">		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="start"/>		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.registrationId" property="registrationId"/>		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">			<bean:message key="button.continue.enrolment"/>		</html:submit>	</html:form></div>

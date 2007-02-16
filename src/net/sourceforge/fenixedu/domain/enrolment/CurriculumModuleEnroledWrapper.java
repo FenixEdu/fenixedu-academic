@@ -1,9 +1,14 @@
 package net.sourceforge.fenixedu.domain.enrolment;
 
 import java.io.Serializable;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
+import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
@@ -11,13 +16,15 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 
 public class CurriculumModuleEnroledWrapper implements Serializable, IDegreeModuleToEvaluate {
-    
+
     private DomainReference<CurriculumModule> curriculumModule;
-    
+
     private DomainReference<Context> context;
+
     private DomainReference<ExecutionPeriod> executionPeriod;
-    
-    public CurriculumModuleEnroledWrapper(final CurriculumModule curriculumModule, final ExecutionPeriod executionPeriod) {
+
+    public CurriculumModuleEnroledWrapper(final CurriculumModule curriculumModule,
+	    final ExecutionPeriod executionPeriod) {
 	setCurriculumModule(curriculumModule);
 	setExecutionPeriod(executionPeriod);
     }
@@ -27,14 +34,16 @@ public class CurriculumModuleEnroledWrapper implements Serializable, IDegreeModu
     }
 
     public void setCurriculumModule(CurriculumModule curriculumModule) {
-	this.curriculumModule = (curriculumModule != null) ? new DomainReference<CurriculumModule>(curriculumModule) : null;
+	this.curriculumModule = (curriculumModule != null) ? new DomainReference<CurriculumModule>(
+		curriculumModule) : null;
     }
-    
+
     public Context getContext() {
 	if (context == null) {
 	    if (!getCurriculumModule().isRoot()) {
 		final CurriculumGroup parentCurriculumGroup = getCurriculumModule().getCurriculumGroup();
-		for (final Context context : parentCurriculumGroup.getDegreeModule().getChildContexts(getExecutionPeriod())) {
+		for (final Context context : parentCurriculumGroup.getDegreeModule().getChildContexts(
+			getExecutionPeriod())) {
 		    if (context.getChildDegreeModule() == getDegreeModule()) {
 			setContext(context);
 			break;
@@ -45,17 +54,18 @@ public class CurriculumModuleEnroledWrapper implements Serializable, IDegreeModu
 	}
 	return (context != null) ? context.getObject() : null;
     }
-    
+
     public void setContext(Context context) {
 	this.context = (context != null) ? new DomainReference<Context>(context) : null;
     }
-    
+
     public ExecutionPeriod getExecutionPeriod() {
 	return (this.executionPeriod != null) ? this.executionPeriod.getObject() : null;
     }
 
     public void setExecutionPeriod(ExecutionPeriod executionPeriod) {
-	this.executionPeriod = (executionPeriod != null) ? new DomainReference<ExecutionPeriod>(executionPeriod) : null;
+	this.executionPeriod = (executionPeriod != null) ? new DomainReference<ExecutionPeriod>(
+		executionPeriod) : null;
     }
 
     public CurriculumGroup getCurriculumGroup() {
@@ -63,25 +73,25 @@ public class CurriculumModuleEnroledWrapper implements Serializable, IDegreeModu
     }
 
     public DegreeModule getDegreeModule() {
-	return getCurriculumModule().getDegreeModule(); 
+	return getCurriculumModule().getDegreeModule();
     }
-    
+
     public boolean isLeaf() {
 	if (!getCurriculumModule().isLeaf()) {
 	    return false;
 	}
 	final CurriculumLine curriculumLine = (CurriculumLine) getCurriculumModule();
-        return curriculumLine.isEnrolment();
+	return curriculumLine.isEnrolment();
     }
-    
+
     public boolean isEnroled() {
 	return true;
     }
 
     public boolean isOptional() {
-        return false;
+	return false;
     }
-    
+
     public boolean canCollectRules() {
 	if (getCurriculumModule().isLeaf()) {
 	    return true;
@@ -90,24 +100,33 @@ public class CurriculumModuleEnroledWrapper implements Serializable, IDegreeModu
 	    return !curriculumGroup.hasAnyCurriculumModules();
 	}
     }
-    
+
     public Double getEctsCredits(final ExecutionPeriod executionPeriod) {
 	return getCurriculumModule().getEctsCredits();
     }
-    
+
     @Override
     public boolean equals(Object obj) {
-        if(obj instanceof CurriculumModuleEnroledWrapper) {
-            final CurriculumModuleEnroledWrapper moduleEnroledWrapper = (CurriculumModuleEnroledWrapper) obj;
-            return getCurriculumModule() == moduleEnroledWrapper.getCurriculumModule();
-        }
-        return false;
+	if (obj instanceof CurriculumModuleEnroledWrapper) {
+	    final CurriculumModuleEnroledWrapper moduleEnroledWrapper = (CurriculumModuleEnroledWrapper) obj;
+	    return getCurriculumModule() == moduleEnroledWrapper.getCurriculumModule();
+	}
+	return false;
     }
-    
+
     @Override
     public int hashCode() {
 	final StringBuilder builder = new StringBuilder();
 	builder.append("|").append(getCurriculumModule().hashCode()).append("|");
         return builder.hashCode();
+    }
+
+    public List<CurricularRule> getCurricularRulesFromDegreeModule(ExecutionPeriod executionPeriod) {
+	return getDegreeModule().getCurricularRules(executionPeriod);
+    }
+
+    public Set<ICurricularRule> getCurricularRulesFromCurriculumGroup(ExecutionPeriod executionPeriod) {
+	return getCurriculumModule().isRoot() ? Collections.EMPTY_SET : getCurriculumGroup()
+		.getCurricularRules(executionPeriod);
     }
 }

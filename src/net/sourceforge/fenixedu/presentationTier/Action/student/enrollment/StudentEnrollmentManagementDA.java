@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.DynaActionForm;
 
 public class StudentEnrollmentManagementDA extends FenixDispatchAction {
 
@@ -56,27 +57,21 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
 	return mapping.findForward("chooseRegistration");
     }
 
-    // public ActionForward chooseRegistration(ActionMapping mapping,
-    // ActionForm form,
-    // HttpServletRequest request, HttpServletResponse response) {
-    //
-    // final Registration registration = getRegistration((DynaActionForm)
-    // form);
-    // if
-    // (!getLoggedStudent(request).getRegistrationsToEnrolByStudent().contains(registration))
-    // {
-    // return mapping.findForward("notAuthorized");
-    // }
-    //
-    // return getActionForwardForRegistration(mapping, request,
-    // registration);
-    //
-    // }
+    public ActionForward chooseRegistration(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
 
-    // private Registration getRegistration(DynaActionForm form) {
-    // return rootDomainObject.readRegistrationByOID((Integer)
-    // form.get("registrationId"));
-    // }
+	final Registration registration = getRegistration((DynaActionForm) form);
+	if (!getLoggedStudent(request).getRegistrationsToEnrolByStudent().contains(registration)) {
+	    return mapping.findForward("notAuthorized");
+	}
+
+	return getActionForwardForRegistration(mapping, request, registration);
+
+    }
+
+    private Registration getRegistration(DynaActionForm form) {
+	return rootDomainObject.readRegistrationByOID((Integer) form.get("registrationId"));
+    }
 
     public ActionForward choosePersonalDataAuthorizationChoice(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {

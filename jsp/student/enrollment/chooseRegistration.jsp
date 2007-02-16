@@ -1,20 +1,31 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
-<html:xhtml />
 
-<h2><bean:message key="title.student.shift.enrollment" bundle="STUDENT_RESOURCES" /></h2>
-
-<h3 class="mtop15 mbottom025"><bean:message key="label.studentRegistrations" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
-<fr:view name="student" property="registrationsToEnrolByStudent" schema="student.registrationsWithStartData" >
-	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle4 thlight mtop025 asdasd"/>
-		<fr:property name="columnClasses" value=",tdhl1,,"/>
-		<fr:property name="linkFormat(enrol)" value="/studentShiftEnrollmentManager.do?method=prepareStartViewWarning&registrationOID=${idInternal}" />
-		<fr:property name="key(enrol)" value="enrol.in.shift"/>
-		<fr:property name="bundle(enrol)" value="STUDENT_RESOURCES"/>
-		<fr:property name="contextRelative(enrol)" value="true"/>
-	</fr:layout>
-</fr:view>
+<logic:present role="STUDENT">
+    <h2><bean:message key="label.enrollment.courses" bundle="STUDENT_RESOURCES"/></h2>
+    
+    <bean:size id="registrationsSize" name="registrationsToEnrol"/>
+    <logic:equal name="registrationsSize" value="0">
+    	<span class="error0">
+	    	<bean:message bundle="STUDENT_RESOURCES"  key="label.enrollment.courses.chooseRegistration.noRegistrationsToEnrol"/>
+    	</span>
+    </logic:equal>
+    <logic:notEmpty name="registrationsToEnrol">
+	    <html:form action="/studentEnrollmentManagement.do" >
+	        	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="chooseRegistration"/>
+	        	<p class="mtop2">
+	        		<strong><bean:message  key="label.registration"/>:</strong>
+	                	<html:select property="registrationId">
+	        			<html:options collection="registrationsToEnrol" property="idInternal" labelProperty="lastStudentCurricularPlan.degreeCurricularPlan.presentationName"/>
+	        		</html:select>
+	        	</p>
+	        
+	        	<p class="mtop2"><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="APPLICATION_RESOURCES" key="label.continue" /></html:submit></p>
+	    </html:form>
+    </logic:notEmpty>
+    
+</logic:present>
 
