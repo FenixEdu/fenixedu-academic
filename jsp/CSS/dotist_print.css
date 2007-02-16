@@ -435,15 +435,32 @@ table.tpadding1 th, table.tpadding1 td { padding: 0.15em 0.5em;}
 .prtwidth100pc { width: 100%; }
 
 /* student curriculum display */
-.col1 { width: 5%; }
-.col2 { width: 10%; }
-.col3 { width: 5%; }
-.col4 { width: auto; }
-.col5 { width: auto; }
-.col6 { width: 10%; }
-.col7 { width: 10%; }
-.col8 { width: 10%; }
-.col9 { width: 10%; }
-.col10 { width: 5%; }
-.col11 { width: 5%; }
-.col12 { width: 5%; }
+.col01 { width: auto; }
+.col02 { width: 6%; }
+.col03 { width: 6%; }
+.col04 { width: 3%; }
+.col05 { width: 9%; }
+.col06 { width: 3%; }
+.col07 { width: 3%; }
+.col08 { width: 3%; }
+.col09 { width: 3%; }
+.col10 { width: 6%; }
+.col11 { width: 6%; }
+.col12 { width: 7%; }
+.col13 { width: 5%; }
+
+/*
+			<!-- Código e Disciplina --> 		col01 bgcolor04 aleft,
+			<!-- Curso  --> 					col02 bgcolor05 width5em acenter,
+			<!-- Opcional  -->					col03 bgcolor08 width5em acenter,
+			<!-- Caixa  -->						col04 bgcolor13 width2em acenter printhidden,
+			<!-- Reprovado Não Avaliado  -->	col05 bgcolor09 width8em acenter,
+			<!-- Nota  -->						col06 bgcolor10 width2em acenter,
+			<!-- Peso  -->						col07 bgcolor11 color888 width2em acenter,
+			<!-- ECTS  -->						col08 bgcolor12 color888 width2em acenter,
+			<!-- Época Normal -->				col09 bgcolor03 width1p5em acenter,
+			<!-- Ano -->						col10 bgcolor06 width5em acenter,
+			<!-- Semestre -->					col11 bgcolor07 width5em acenter,
+			<!-- Data do Exame -->				col12 bgcolor02 width6em acenter,
+			<!-- Pessoa Responsável Nota -->	col13 bgcolor01 width3em acenter
+*/
