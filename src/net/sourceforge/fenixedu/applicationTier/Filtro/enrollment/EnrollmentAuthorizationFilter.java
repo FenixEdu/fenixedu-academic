@@ -84,7 +84,7 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
 	    return "noAuthorization";
 	}
 
-	if (registration.getAssociatedTutor() == null) {
+	if (registration.getAssociatedTutor() == null || !registration.getAssociatedTutor().getTeacher().equals(teacher)) {
 	    return "error.enrollment.notStudentTutor+" + registration.getNumber().toString();
 	}
 
