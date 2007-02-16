@@ -1214,7 +1214,6 @@ public class Person extends Person_Base {
 	    case SEMINARIES_COORDINATOR:
 	    case DEPARTMENT_MEMBER:
 	    case RESEARCHER:
-		return person.hasRole(RoleType.TEACHER);
 	    case COORDINATOR:
 	    case DEGREE_ADMINISTRATIVE_OFFICE:
 	    case DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER:
@@ -2549,5 +2548,9 @@ public class Person extends Person_Base {
 	    Collections.sort(result, PunctualRoomsOccupationRequest.COMPARATOR_BY_INSTANT);
 	}
 	return result;
+    }
+    public String getFirstAndLastName() {
+    	String[] name = getName().split(" ");
+    	return name[0] + " " + name[name.length-1];
     }
 }
