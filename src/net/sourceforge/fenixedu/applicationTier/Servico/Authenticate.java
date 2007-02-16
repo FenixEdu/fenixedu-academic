@@ -156,7 +156,7 @@ public class Authenticate extends Service implements Serializable {
 	    throw new ExcepcaoAutenticacao("error.Exception");
 	}
 
-	setLoginHostNameAndDateTime(remoteHost, person);
+//	setLoginHostNameAndDateTime(remoteHost, person);
 	return getUserView(person, requestURL);
     }
 
