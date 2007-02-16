@@ -33,7 +33,8 @@ public class LEICBolonhaEnrolmentRule extends BolonhaEnrolmentRule {
 
 	if(studentCurricularPlan.getBranch() != null && studentCurricularPlan.getSecundaryBranch() != null) {
 	    
-	    if(isEnrolledInExecutionPeriod(DISSERTACAO) || isEnrolledInPreviousExecutionPeriod(DISSERTACAO) || isEnrolledInPreviousExecutionPeriodOrAproved(INVESTIGACAO)) {
+	    if(isEnrolledInExecutionPeriod(DISSERTACAO) || isEnrolledInPreviousExecutionPeriod(DISSERTACAO) 
+		    || isEnrolledInPreviousExecutionPeriodOrAproved(INVESTIGACAO) || isEnrolledInExecutionPeriod(INVESTIGACAO)) {
 		removeCurricularCourse(curricularCoursesToBeEnrolledIn, TFCII);
 		if(isEnrolledInPreviousExecutionPeriod(DISSERTACAO)) {
 		    removeCurricularCourse(curricularCoursesToBeEnrolledIn, DISSERTACAO);
