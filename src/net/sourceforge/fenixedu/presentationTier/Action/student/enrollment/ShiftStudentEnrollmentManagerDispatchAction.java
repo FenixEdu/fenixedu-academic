@@ -58,16 +58,16 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
 	    HttpServletResponse response) throws Exception {
 
 	super.createToken(request);
-	getAndSetRegistration(request);
 	return prepareShiftEnrollment(mapping, form, request, response);
     }
 
     public ActionForward prepareShiftEnrollment(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
+	getAndSetRegistration(request);
+	
 	final String classID = request.getParameter("classId");
 	if (classID != null) {
-	    request.setAttribute("studentId", Integer.valueOf(request.getParameter("studentId")));
 	    request.setAttribute("classId", Integer.valueOf(classID));
 	    return mapping.findForward("showEnrollmentPage");
 	}
