@@ -7,7 +7,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ShiftToEnrol;
@@ -18,6 +17,7 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.TransactionalDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -36,12 +36,23 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
     public ActionForward prepare(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
 
-	request.setAttribute("student", getUserView(request).getPerson().getStudent());
-	return mapping.findForward("chooseRegistration");
+	final Student student = getUserView(request).getPerson().getStudent();
+	final List<Registration> toEnrol = student.getRegistrationsToEnrolByStudent();
+	if (toEnrol.size() == 1) {
+	    request.setAttribute("registrationOID", toEnrol.get(0).getIdInternal());
+	    return prepareStartViewWarning(mapping, form, request, response);
+	} else {
+	    request.setAttribute("toEnrol", toEnrol);
+	    return mapping.findForward("chooseRegistration");
+	}
     }
 
     private Registration getAndSetRegistration(final HttpServletRequest request) {
 	final Registration registration = rootDomainObject.readRegistrationByOID(getIntegerFromRequest(request, "registrationOID"));
+	if (!getUserView(request).getPerson().getStudent().getRegistrationsToEnrolByStudent().contains(registration)) {
+	    return null;
+	}
+	
 	request.setAttribute("registration", registration);
 	request.setAttribute("registrationOID", registration.getIdInternal().toString());
 	return registration;
@@ -50,8 +61,12 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
     public ActionForward prepareStartViewWarning(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
 
-	getAndSetRegistration(request);
-	return mapping.findForward("prepareEnrollmentViewWarning");
+	if (getAndSetRegistration(request) == null) {
+	    addActionMessage(request, "errors.impossible.operation");
+	    return mapping.getInputForward();
+	} else {
+	    return mapping.findForward("prepareEnrollmentViewWarning");
+	}
     }
 
     public ActionForward start(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -64,7 +79,11 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
     public ActionForward prepareShiftEnrollment(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	getAndSetRegistration(request);
+	final Registration registration = getAndSetRegistration(request);
+	if (registration == null) {
+	    addActionMessage(request, "errors.impossible.operation");
+	    return mapping.getInputForward();
+	}
 	
 	final String classID = request.getParameter("classId");
 	if (classID != null) {
@@ -72,10 +91,7 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
 	    return mapping.findForward("showEnrollmentPage");
 	}
 
-	final Registration registration = getAndSetRegistration(request);
 	final ExecutionPeriod executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
-
-	
 	if (readAndSetSelectCoursesParameter(request) == null) {
 	    return prepareShiftEnrolmentInformation(mapping, request, registration,
 		    executionPeriod);
@@ -227,7 +243,12 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
     public ActionForward unEnroleStudentFromShift(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	final IUserView userView = getUserView(request);
+	final Registration registration = getAndSetRegistration(request);
+	if (registration == null) {
+	    addActionMessage(request, "errors.impossible.operation");
+	    return mapping.getInputForward();
+	}
+	
 	final Integer shiftId = Integer.valueOf(request.getParameter("shiftId"));
 	final String executionCourseID = request.getParameter("executionCourseID");
 	if (!StringUtils.isEmpty(executionCourseID)) {
@@ -235,8 +256,8 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
 	}
 
 	try {
-	    ServiceManagerServiceFactory.executeService(userView, "UnEnrollStudentFromShift",
-		    new Object[] { getAndSetRegistration(request), shiftId });
+	    ServiceManagerServiceFactory.executeService(getUserView(request), "UnEnrollStudentFromShift",
+		    new Object[] { registration, shiftId });
 
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);

@@ -340,7 +340,7 @@
 	  <action path="/studentShiftEnrollmentManager"
 	  	name="studentShiftEnrollmentForm"
         type="net.sourceforge.fenixedu.presentationTier.Action.student.enrollment.ShiftStudentEnrollmentManagerDispatchAction"
-		input="prepare-enrollment-view-warning"
+		input="/studentShiftEnrollmentManager.do?method=prepare" 
         parameter="method"
         scope="request"
         validate="false">
@@ -362,7 +362,7 @@
    	  <action path="/studentShiftEnrollmentManagerLoockup"
 	  	name="studentShiftEnrollmentForm"
         type="net.sourceforge.fenixedu.presentationTier.Action.student.enrollment.ShiftStudentEnrollmentManagerLookupDispatchAction"
-		input="/studentShiftEnrollmentManager.do?method=prepareStartViewWarning" 
+		input="/studentShiftEnrollmentManager.do?method=prepare" 
 		parameter="method"
         scope="request"
         validate="false">

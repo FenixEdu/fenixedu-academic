@@ -36,6 +36,10 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
 
     private Registration getAndSetRegistration(final HttpServletRequest request) {
 	final Registration registration = rootDomainObject.readRegistrationByOID(getIntegerFromRequest(request, "registrationOID"));
+	if (!getUserView(request).getPerson().getStudent().getRegistrationsToEnrolByStudent().contains(registration)) {
+	    return null;
+	}
+	
 	request.setAttribute("registration", registration);
 	request.setAttribute("registrationOID", registration.getIdInternal().toString());
 	return registration;
@@ -46,7 +50,12 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
 	    FenixFilterException {
 
 	super.validateToken(request, actionForm, mapping, "error.transaction.enrollment");
-	getAndSetRegistration(request);
+
+	final Registration registration = getAndSetRegistration(request);
+	if (registration == null) {
+	    addActionMessage(request, "errors.impossible.operation");
+	    return mapping.getInputForward();
+	}
 	
 	checkParameter(request);
 
@@ -56,7 +65,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
 
 	try {
 	    ServiceManagerServiceFactory.executeService(userView, "WriteStudentAttendingCourse",
-		    new Object[] { getAndSetRegistration(request), executionCourseId });
+		    new Object[] { registration, executionCourseId });
 
 	} catch (NotAuthorizedException exception) {
 	    addActionMessage(request, "error.attend.curricularCourse.impossibleToEnroll");
@@ -79,8 +88,13 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
 	    FenixFilterException {
 
 	super.validateToken(request, actionForm, mapping, "error.transaction.enrollment");
-	final Registration registration = getAndSetRegistration(request);
 
+	final Registration registration = getAndSetRegistration(request);
+	if (registration == null) {
+	    addActionMessage(request, "errors.impossible.operation");
+	    return mapping.getInputForward();
+	}
+	
 	checkParameter(request);
 
 	final DynaActionForm form = (DynaActionForm) actionForm;
@@ -112,9 +126,12 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
 	checkParameter(request);
 	final Integer classIdSelected = readClassSelected(request);
 
-	final IUserView userView = getUserView(request);
 	final Registration registration = getAndSetRegistration(request);
-
+	if (registration == null) {
+	    addActionMessage(request, "errors.impossible.operation");
+	    return mapping.getInputForward();
+	}
+	
 	final ExecutionCourse executionCourse = getExecutionCourse(request);
 	final List<SchoolClass> schoolClassesToEnrol = readStudentSchoolClassesToEnrolUsingExecutionCourse(
 		request, registration, executionCourse);
@@ -127,6 +144,8 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
 	final SchoolClass schoolClass = setSelectedSchoolClass(request, classIdSelected,
 		schoolClassesToEnrol);
 
+	final IUserView userView = getUserView(request);
+	
 	final List infoClasslessons = (List) ServiceManagerServiceFactory.executeService(userView,
 		"ReadClassTimeTableByStudent",
 		new Object[] { registration, schoolClass, executionCourse });
@@ -228,9 +247,12 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
     public ActionForward prepareStartViewWarning(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 	
-	getAndSetRegistration(request);
-	
-	return mapping.findForward("prepareEnrollmentViewWarning");
+	if (getAndSetRegistration(request) == null) {
+	    addActionMessage(request, "errors.impossible.operation");
+	    return mapping.getInputForward();
+	} else {
+	    return mapping.findForward("prepareEnrollmentViewWarning");
+	}
     }
 
     protected Map getKeyMethodMap() {
