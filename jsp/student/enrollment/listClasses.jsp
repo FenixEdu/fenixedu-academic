@@ -79,5 +79,5 @@
 		</li>
 	</logic:iterate> 
 	<br />
-	<li><html:link page="/studentShiftEnrollmentManager.do?method=start&registrationOID=<%=registration.getIdInternal().toString()%>"><bean:message key="button.back" /></html:link></li>
+	<li><html:link page="<%="/studentShiftEnrollmentManager.do?method=start&registrationOID=" + registration.getIdInternal().toString()%>"><bean:message key="button.back" /></html:link></li>
 </ul>
