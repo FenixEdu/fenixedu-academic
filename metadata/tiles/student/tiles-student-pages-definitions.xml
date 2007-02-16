@@ -38,6 +38,9 @@
 	<!-- END STUDENT TESTS DEFINITIONS -->
 	
 	<!-- SHIFT ENROLMENT DEFINITIONS -->
+	<definition name="df.page.shift.enrolment.chooseRegistration" extends="definition.student.masterPage">
+	          <put name="body" value="/student/enrollment/chooseRegistration.jsp" />
+	</definition>
 	<definition name="prepare-enrollment-view-warning" extends="definition.student.one-column">
 	          <put name="body" value="/student/enrollment/prepareEnrollmentViewWarning.jsp" />
 	</definition>

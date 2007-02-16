@@ -351,6 +351,7 @@
 					key="error.message.CurrentClassesEnrolmentPeriodUndefinedForDegreeCurricularPlan"
 					handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
 			/>
+        <forward name="chooseRegistration" path="df.page.shift.enrolment.chooseRegistration" />
         <forward name="prepareEnrollmentViewWarning" path="prepare-enrollment-view-warning"/>
 		<forward name="selectCourses" path="show-courses-by-degree"/>
 		<forward name="showShiftsEnrollment" path="show-shifts-enrollment"/>
