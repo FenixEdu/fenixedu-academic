@@ -20,7 +20,7 @@
 
 <h3 class="mtop15 separator2">Introdução</h3>
 
-<p>Na tabela encontra representados os grupos de disciplinas (linhas cinzentas), disciplinas em que não está inscrito (nas linhas a branco), disciplinas com inscrição confirmada (linhas verdes), disciplinas com inscrição provisória (linhhas amarelas) e disciplinas com inscrição impossível (linhas vermelhas).  As disciplinas que já concluíu não aparecem, só aparecem as disciplinas e grupos a que se pode inscrever. Os grupos de disciplinas estão hierarquizados de acordo com a estrutura do curso.</p>
+<p>Na tabela encontra representados os grupos de disciplinas (linhas cinzentas), disciplinas em que não está inscrito (nas linhas a branco), disciplinas com inscrição confirmada (linhas verdes), disciplinas com inscrição provisória (linhas amarelas) e disciplinas com inscrição impossível (linhas vermelhas).  As disciplinas que já concluíu não aparecem, só aparecem as disciplinas e grupos a que se pode inscrever. Os grupos de disciplinas estão hierarquizados de acordo com a estrutura do curso.</p>
 
 
 <h3 class="mtop15 separator2">Como Proceder</h3>
@@ -44,7 +44,7 @@
 			<li>Tem uma inscrição provisória na disciplina C que tem exclusividade com a disciplina D. Ainda não recebeu nota na disciplina D logo a inscrição fica "provisória" até se oficializar o resultado na disciplina A.</li>
 		</ul>
 	</li>
-	<li><strong>Inscrições impossíveis:</strong> <span class="se_impossible">(linhas vermelhas)</span><br/> Inscrições nas quais não foram preenchidos os requesitos para confirmar a inscrição. Deverá refazer a inscrição noutra disciplina antes de terminar o prazo.</li>
+	<li><strong>Inscrições impossíveis:</strong> <span class="se_impossible">(linhas vermelhas)</span><br/> Não foram preenchidos os requesitos para confirmar a inscrição. Deverá refazer a inscrição noutra(s) disciplina(s) antes de terminar o prazo.</li>
 </ul>
 
 

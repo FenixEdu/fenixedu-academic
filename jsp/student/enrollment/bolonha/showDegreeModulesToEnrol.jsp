@@ -45,7 +45,6 @@
 	</ul>
 
 
-
 	<logic:messagesPresent message="true" property="<%= ActionMessages.GLOBAL_MESSAGE %>">
 		<ul class="mtop15 mbottom1 nobullet list2">
 			<html:messages id="messages" message="true" bundle="APPLICATION_RESOURCES">
@@ -95,6 +94,26 @@
 	</fr:form>
 
 
+
 <p class="mtop15"><em><bean:message bundle="STUDENT_RESOURCES"  key="message.enrollment.terminated"/> <html:link action="/viewCurriculum.do?method=prepare"><bean:message bundle="STUDENT_RESOURCES"  key="message.student.curriculum"/></html:link>.</em></p>
+
+
+<p class="mtop2 mbottom0"><em>Legenda:</em></p>
+<table class="mtop0">
+<tr>
+	<td><div style="width: 10px; height: 10px; border: 1px solid #84b181; background: #eff9ee; float:left;"></div></td>
+	<td>Inscrições Confirmadas <span class="color888">(linhas verdes)</span></td>
+</tr>
+<tr>
+	<td><div style="width: 10px; height: 10px; border: 1px solid #b9b983; background: #fafce6; float:left;"></div></td>
+	<td>Inscrições Provisórias <span class="color888">(linhas amarelas)</span></td>
+</tr>
+<tr>
+	<td><div style="width: 10px; height: 10px; border: 1px solid #be5a39; background: #ffe9e2; float:left;"></div></td>
+	<td>Inscrições Impossíveis <span class="color888">(linhas vermelhas)</span></td>
+</tr>
+</table>
+
+
 
 </logic:present>
