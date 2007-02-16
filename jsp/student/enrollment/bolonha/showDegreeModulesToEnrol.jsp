@@ -44,16 +44,15 @@
 		</li>
 	</ul>
 
-
-	<logic:messagesPresent message="true" property="<%= ActionMessages.GLOBAL_MESSAGE %>">
-		<ul class="mtop15 mbottom1 nobullet list2">
-			<html:messages id="messages" message="true" bundle="APPLICATION_RESOURCES">
-				<li><span class="error0"><bean:write name="messages" /></span></li>
-			</html:messages>
-		</ul>
+	<logic:messagesPresent message="true" property="success">
+		<div class="success0" style="padding: 0.5em;">
+		<html:messages id="messages" message="true" bundle="APPLICATION_RESOURCES">
+			<span><bean:write name="messages" /></span>
+		</html:messages>
+		</div>
 	</logic:messagesPresent>
 
-	<logic:messagesPresent message="true" property="enrol">
+	<logic:messagesPresent message="true" property="<%= ActionMessages.GLOBAL_MESSAGE %>" >
 		<div class="error0" style="padding: 0.5em;">
 		<p class="mvert0"><strong><bean:message bundle="STUDENT_RESOURCES" key="label.enrollment.errors.in.enrolment" />:</strong></p>
 		<ul class="mvert05">

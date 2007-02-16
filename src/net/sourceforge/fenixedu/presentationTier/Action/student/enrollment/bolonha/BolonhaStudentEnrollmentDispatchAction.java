@@ -89,7 +89,7 @@ public class BolonhaStudentEnrollmentDispatchAction extends FenixDispatchAction 
 	    }
 
 	} catch (EnrollmentDomainException ex) {
-	    addRuleResultMessagesToActionMessages(request, "enrol", ex.getFalseRuleResults());
+	    addRuleResultMessagesToActionMessages(request, ex.getFalseRuleResults());
 	    request.setAttribute("bolonhaStudentEnrollmentBean", bolonhaStudentEnrollmentBean);
 
 	    return mapping.findForward("showDegreeModulesToEnrol");
@@ -107,15 +107,14 @@ public class BolonhaStudentEnrollmentDispatchAction extends FenixDispatchAction 
 		bolonhaStudentEnrollmentBean.getStudentCurricularPlan());
     }
 
-    private void addRuleResultMessagesToActionMessages(final HttpServletRequest request,
-	    final String propertyName, final List<RuleResult> ruleResults) {
+    private void addRuleResultMessagesToActionMessages(final HttpServletRequest request, final List<RuleResult> ruleResults) {
 
 	for (final RuleResult ruleResult : ruleResults) {
 	    for (final RuleResultMessage message : ruleResult.getMessages()) {
 		if (message.isToTranslate()) {
-		    addActionMessage(propertyName, request, message.getMessage(), message.getArgs());
+		    addActionMessage(request, message.getMessage(), message.getArgs());
 		} else {
-		    addActionMessageLiteral(propertyName, request, message.getMessage());
+		    addActionMessageLiteral(request, message.getMessage());
 		}
 	    }
 	}
@@ -149,7 +148,7 @@ public class BolonhaStudentEnrollmentDispatchAction extends FenixDispatchAction 
 		    buildOptionalDegreeModuleToEnrolList(optionalStudentEnrollmentBean),
 		    Collections.EMPTY_LIST);
 	} catch (EnrollmentDomainException ex) {
-	    addRuleResultMessagesToActionMessages(request, "enrol", ex.getFalseRuleResults());
+	    addRuleResultMessagesToActionMessages(request, ex.getFalseRuleResults());
 	    request.setAttribute("optionalEnrolmentBean", optionalStudentEnrollmentBean);
 
 	    return mapping.findForward("chooseOptionalCurricularCourseToEnrol");
