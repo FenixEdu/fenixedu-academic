@@ -42,9 +42,7 @@ public class RuleResult {
 	if (copyMessages && (andResult == RuleResultType.FALSE) && ruleResult.isFalse()) {
 	    messages.addAll(ruleResult.getMessages());
 	}
-
-	return new RuleResult(andResult, getEnrolmentResultType().and(
-		ruleResult.getEnrolmentResultType()), messages);
+	return new RuleResult(andResult, getEnrolmentResultType().and(ruleResult.getEnrolmentResultType()), messages);
     }
     
     public RuleResult or(final RuleResult ruleResult) {
@@ -60,9 +58,7 @@ public class RuleResult {
 		messages.addAll(ruleResult.getMessages());
 	    }
 	}
-
-	return new RuleResult(orResult, getEnrolmentResultType()
-		.and(ruleResult.getEnrolmentResultType()), messages);
+	return new RuleResult(orResult, getEnrolmentResultType().and(ruleResult.getEnrolmentResultType()), messages);
     }
 
     public boolean isTrue() {
@@ -88,7 +84,6 @@ public class RuleResult {
     public boolean isImpossibleEnrolment() {
 	return this.enrolmentResultType == EnrolmentResultType.IMPOSSIBLE;
     }
-
 
     public EnrolmentResultType getEnrolmentResultType() {
 	return enrolmentResultType;

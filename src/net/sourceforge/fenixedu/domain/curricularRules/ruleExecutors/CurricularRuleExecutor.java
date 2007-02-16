@@ -61,8 +61,7 @@ abstract public class CurricularRuleExecutor {
 	if (curricularRule.getDegreeModuleToApplyRule().isRoot()) {
 	    return true;
 	}
-	final IDegreeModuleToEvaluate degreeModuleToEvaluate = searchDegreeModuleToEvaluate(enrolmentContext, curricularRule.getDegreeModuleToApplyRule());
-	return curricularRule.appliesToContext(degreeModuleToEvaluate.getContext());
+	return curricularRule.appliesToContext(searchDegreeModuleToEvaluate(enrolmentContext, curricularRule).getContext());
     }
     
     protected CurriculumModule searchCurriculumModule(final EnrolmentContext enrolmentContext, final DegreeModule degreeModule) {
