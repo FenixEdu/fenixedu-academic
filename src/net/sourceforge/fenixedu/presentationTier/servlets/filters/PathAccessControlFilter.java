@@ -106,15 +106,20 @@ public class PathAccessControlFilter implements Filter {
     }
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        HttpServletRequest servletRequest = (HttpServletRequest) request;
-        HttpServletResponse servletResponse = (HttpServletResponse) response;
+	try {
+	    HttpServletRequest servletRequest = (HttpServletRequest) request;
+	    HttpServletResponse servletResponse = (HttpServletResponse) response;
         
-        if (isAllowed(servletRequest.getRemoteAddr(), servletRequest.getServletPath(), servletRequest.getRequestURI() + servletRequest.getQueryString())) {
-            chain.doFilter(servletRequest, response);
-        }
-        else {
-            reportError(servletRequest, servletResponse);
-        }
+	    if (isAllowed(servletRequest.getRemoteAddr(), servletRequest.getServletPath(), servletRequest.getRequestURI() + servletRequest.getQueryString())) {
+		chain.doFilter(servletRequest, response);
+	    }
+	    else {
+		reportError(servletRequest, servletResponse);
+	    }
+	} catch (StackOverflowError ex) {
+	    System.err.println(ex.getMessage() + " processing request: " + servletRequest.getRequestURI() + servletRequest.getQueryString());
+	    throw ex;
+	}
     }
 
     private boolean isAllowed(String address, String servletPath, String requestURI) {
