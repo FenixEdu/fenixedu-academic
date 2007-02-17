@@ -852,10 +852,9 @@ public class CreateTestData {
 	final Calendar cEnd = toCalendar(end);
 	final DiaSemana diaSemana = new DiaSemana(lessonRoomManager.getNextWeekDay());
 	final OldRoom oldRoom = lessonRoomManager.getNextOldRoom();
-	final RoomOccupation roomOccupation = new RoomOccupation(oldRoom, cStart, cEnd, diaSemana, 1);
-        final ExecutionPeriod executionPeriod = shift.getDisciplinaExecucao().getExecutionPeriod();
-        final OccupationPeriod occupationPeriod = OccupationPeriod.readOccupationPeriod(executionPeriod.getBeginDateYearMonthDay(), executionPeriod.getEndDateYearMonthDay().minusDays(32));
-        roomOccupation.setPeriod(occupationPeriod);
+	final ExecutionPeriod executionPeriod = shift.getDisciplinaExecucao().getExecutionPeriod();
+	final OccupationPeriod occupationPeriod = OccupationPeriod.readOccupationPeriod(executionPeriod.getBeginDateYearMonthDay(), executionPeriod.getEndDateYearMonthDay().minusDays(32));
+	final RoomOccupation roomOccupation = new RoomOccupation(oldRoom, cStart, cEnd, diaSemana, 1, occupationPeriod);              
 	final Lesson lesson = new Lesson(diaSemana, cStart, cEnd, shift.getTipo(), oldRoom, roomOccupation, shift, Integer.valueOf(0), Integer.valueOf(1));
         lesson.setExecutionPeriod(executionPeriod);
     }

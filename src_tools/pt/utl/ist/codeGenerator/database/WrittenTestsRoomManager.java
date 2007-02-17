@@ -31,7 +31,8 @@ public class WrittenTestsRoomManager extends HashSet<OldRoom> {
             dateTime = evaluationRoomManager.getNextDateTime();
             oldRoom = evaluationRoomManager.getNextOldRoom();
             occupationPeriod = new OccupationPeriod(dateTime.toYearMonthDay(), dateTime.plusMinutes(120).toYearMonthDay());
-        } while (!oldRoom.isFree(occupationPeriod, dateTime.toCalendar(null), dateTime.plusMinutes(120).toCalendar(null), new DiaSemana(dateTime.getDayOfWeek() + 1), Integer.valueOf(1), Integer.valueOf(1)));
+        } while (!oldRoom.isFree(occupationPeriod, dateTime.toCalendar(null), dateTime.plusMinutes(120).toCalendar(null), 
+        	new DiaSemana(dateTime.getDayOfWeek() + 1), Integer.valueOf(1), Integer.valueOf(1), Boolean.TRUE, Boolean.TRUE));
 
         return dateTime;
     }

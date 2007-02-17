@@ -245,7 +245,8 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
             List<ExecutionCourse> executionCoursesToAssociate,
             List<DegreeModuleScope> curricularCourseScopesToAssociate, List<OldRoom> rooms,
             OccupationPeriod period) {
-        if (rooms == null) {
+       
+	if (rooms == null) {
             rooms = new ArrayList<OldRoom>(0);
         }
 

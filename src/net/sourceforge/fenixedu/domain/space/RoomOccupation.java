@@ -72,6 +72,17 @@ public class RoomOccupation extends RoomOccupation_Base {
         setPeriod(period);
     }    
     
+    public RoomOccupation(OldRoom room, Calendar startTime, Calendar endTime, DiaSemana dayOfWeek, Integer frequency, OccupationPeriod occupationPeriod) {	
+        
+	this();
+        setRoom(room);
+        setStartTime(startTime);
+        setEndTime(endTime);
+        setDayOfWeek(dayOfWeek);
+        setFrequency(frequency);
+        setPeriod(occupationPeriod);
+    }   
+    
     public RoomOccupation(OldRoom room, YearMonthDay beginDate, YearMonthDay endDate,
 	    HourMinuteSecond beginTime, HourMinuteSecond endTime, FrequencyType frequencyType, GenericEvent genericEvent,
 	    Boolean markSaturday, Boolean markSunday) {	
@@ -250,10 +261,8 @@ public class RoomOccupation extends RoomOccupation_Base {
                 }
                 Interval interval = createNewInterval(begin, begin, beginTime, endTime);                              
                 if(frequency.intValue() != DIARIA || 
-                	((dailyFrequencyMarkSaturday == null || dailyFrequencyMarkSaturday ||
-                		interval.getStart().getDayOfWeek() != SATURDAY_IN_JODA_TIME) &&
-                	(dailyFrequencyMarkSunday == null || dailyFrequencyMarkSunday || 
-                		interval.getStart().getDayOfWeek() != SUNDAY_IN_JODA_TIME))) {
+                	((dailyFrequencyMarkSaturday || interval.getStart().getDayOfWeek() != SATURDAY_IN_JODA_TIME) &&
+                	(dailyFrequencyMarkSunday || interval.getStart().getDayOfWeek() != SUNDAY_IN_JODA_TIME))) {
                  
                     result.add(interval);   
                 }                
