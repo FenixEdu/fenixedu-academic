@@ -549,6 +549,23 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		return CurricularCourseEnrollmentType.TEMPORARY;
 	    }
 	}
+	
+        CurricularCourseEnrollmentType courseEnrollmentType = CurricularCourseEnrollmentType.DEFINITIVE;
+        for (CurricularCourseEquivalence curricularCourseEquivalence : curricularCourse.getCurricularCourseEquivalencesSet()) {
+	    for (CurricularCourse eqCurricularCourse : curricularCourseEquivalence.getOldCurricularCoursesSet()) {
+		if(this.isCurricularCourseApproved(eqCurricularCourse)) {
+		    courseEnrollmentType = courseEnrollmentType.and(CurricularCourseEnrollmentType.DEFINITIVE);
+		} else if(hasEnrolledStateInPreviousExecutionPerdiod(eqCurricularCourse, enrollmentsWithEnrolledStateInPreviousExecutionPeriod)) {
+		    courseEnrollmentType = courseEnrollmentType.and(CurricularCourseEnrollmentType.TEMPORARY);
+		} else {
+		    courseEnrollmentType = courseEnrollmentType.and(CurricularCourseEnrollmentType.NOT_ALLOWED);
+		}
+	    }
+	    if(courseEnrollmentType.equals(CurricularCourseEnrollmentType.TEMPORARY)) {
+		return CurricularCourseEnrollmentType.TEMPORARY;
+	    }
+	}
+
 
 	if (isMathematicalCourse(curricularCourse)) {
 	    if (hasCurricularCourseEquivalenceIn(curricularCourse,
@@ -557,6 +574,15 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	}
 
 	return CurricularCourseEnrollmentType.DEFINITIVE;
+    }
+
+    public boolean hasEnrolledStateInPreviousExecutionPerdiod(CurricularCourse curricularCourse, List<Enrolment> enrollmentsWithEnrolledStateInPreviousExecutionPeriod) {
+	for (Enrolment enrolment : enrollmentsWithEnrolledStateInPreviousExecutionPeriod) {
+	    if(enrolment.getCurricularCourse().equals(curricularCourse)) {
+		return true;
+	    }
+	}
+	return false;
     }
 
     protected boolean hasActiveScopeInGivenSemester(CurricularCourse curricularCourse,

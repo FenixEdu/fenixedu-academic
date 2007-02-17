@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.precedences;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourseEquivalence;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 
@@ -52,6 +53,23 @@ public class RestrictionDoneCurricularCourse extends RestrictionDoneCurricularCo
             return CurricularCourseEnrollmentType.TEMPORARY;
         }
 
+        CurricularCourseEnrollmentType courseEnrollmentType = CurricularCourseEnrollmentType.DEFINITIVE;
+        for (CurricularCourseEquivalence curricularCourseEquivalence : this.getPrecedentCurricularCourse().getCurricularCourseEquivalencesSet()) {
+	    for (CurricularCourse curricularCourse : curricularCourseEquivalence.getOldCurricularCoursesSet()) {
+		if(precedenceContext.getStudentCurricularPlan().isCurricularCourseApproved(curricularCourse)) {
+		    courseEnrollmentType = courseEnrollmentType.and(CurricularCourseEnrollmentType.DEFINITIVE);
+		} else if(result.contains(curricularCourse)) {
+		    courseEnrollmentType = courseEnrollmentType.and(CurricularCourseEnrollmentType.TEMPORARY);
+		} else {
+		    courseEnrollmentType = courseEnrollmentType.and(CurricularCourseEnrollmentType.NOT_ALLOWED);
+		}
+	    }
+	    
+	    if(courseEnrollmentType.equals(CurricularCourseEnrollmentType.TEMPORARY)) {
+		return CurricularCourseEnrollmentType.TEMPORARY;
+	    }
+	}
+        
         return CurricularCourseEnrollmentType.NOT_ALLOWED;
     }
 }
