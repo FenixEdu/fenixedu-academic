@@ -158,4 +158,8 @@ public abstract class DomainObject extends DomainObject_Base implements dml.runt
 		return StringAppender.append(getClass().getName(), "(", getIdInternal().toString(), ")");
 	}
 
+    public final void readFromResultSet(java.sql.ResultSet rs) throws java.sql.SQLException {
+        int txNumber = Transaction.current().getNumber();
+        readSlotsFromResultSet(rs, txNumber);
+    }
 }

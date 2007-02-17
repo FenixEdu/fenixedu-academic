@@ -30,6 +30,8 @@
 
 	<property name="dml.definition.file" value="${config}/domain_model.dml"/>
 	<property name="dml.definition.file.completed" value="${build.home.webinf.classes}/domain_model.dml"/>
+	<property name="dml.fenix.sqltypes" value="${config}/dataTypesJDBCTypes.properties"/>
+	<property name="dml.fenix.typeconverters" value="${config}/dataTypeConversors.properties"/>
 
 	  <path id="classpath.analysis">
 	    <pathelement path="${build.home.temp.classes}"/>
@@ -44,12 +46,16 @@
 		<delete dir="${src_gen}"/>
 		<mkdir dir="${src_gen}"/>
 		<java classname="dml.DmlCompiler" fork="true">
+                        <jvmarg value="-Ddml.fenix.sqltypes=${dml.fenix.sqltypes}"/>
+                        <jvmarg value="-Ddml.fenix.typeconverters=${dml.fenix.typeconverters}"/>
 			<arg value="-f"/>
 			<arg value="-d"/>
 			<arg value="${src}"/>
 			<arg value="-db"/>
 			<arg value="${src_gen}"/>
 <!--			<arg value="-gf"/>-->
+			<arg value="-generator"/>
+			<arg value="dml.FenixCodeGeneratorReadFromRs"/>
 			<arg value="${dml.definition.file.completed}"/>
 			<classpath>
 				<fileset dir="${lib}">

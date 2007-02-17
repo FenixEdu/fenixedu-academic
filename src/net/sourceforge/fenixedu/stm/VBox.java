@@ -43,13 +43,16 @@ public class VBox<E> extends jvstm.VBox<E> implements VersionedSubject,dml.runti
 	this.put((E)NOT_LOADED_VALUE);
     }
 
-    protected synchronized void persistentLoad(E value) {
+    protected void persistentLoad(E value) {
 	int txNumber = Transaction.current().getNumber();
+        persistentLoad(value, txNumber);
+    }
 
+    public synchronized void persistentLoad(Object value, int txNumber) {
 	// find appropriate body
 	VBoxBody<E> body = this.body.getBody(txNumber);
 	if (body.value == NOT_LOADED_VALUE) {
-	    body.value = value;
+	    body.value = (E)value;
 	}
     }
 

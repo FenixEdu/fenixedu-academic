@@ -31,6 +31,11 @@ public class FenixRowReader extends RowReaderDefaultImpl {
 
 	    // if it is a domain object
 	    if (targetClassDescriptor.getFactoryClass() == DomainAllocator.class) {
+                // the following may be used for debugging
+                //Throwable t = new Throwable("Using FenixRowReader");
+                //t.setStackTrace(Thread.currentThread().getStackTrace());
+                //t.printStackTrace();
+
                 // read idInternal
                 fmd = targetClassDescriptor.getFieldDescriptorByName("idInternal");
                 fmd.getPersistentField().set(result, row.get(fmd.getColumnName()));
