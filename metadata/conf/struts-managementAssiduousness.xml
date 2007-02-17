@@ -57,6 +57,7 @@
 			<forward name="show-all-schedules" path="show-all-schedules"/>
 			<forward name="show-justification-motives" path="show-justification-motives"/>
 			<forward name="show-regularization-motives" path="show-regularization-motives"/>
+			<forward name="show-balances" path="show-balances"/>
 		</action>
 		<action path="/exportAssiduousness"
 	    		type="net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness.ExportAssiduousnessDispatchAction" 

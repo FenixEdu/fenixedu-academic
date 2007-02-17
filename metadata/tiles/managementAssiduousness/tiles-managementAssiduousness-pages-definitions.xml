@@ -31,6 +31,9 @@
 	<definition name="show-regularization-motives" extends="definition.managementAssiduousness.masterPage">
 		<put name="body" value="/managementAssiduousness/showRegularizationMotives.jsp"/>
 	</definition>
+	<definition name="show-balances" extends="definition.managementAssiduousness.masterPage">
+		<put name="body" value="/managementAssiduousness/showBalances.jsp"/>
+	</definition>
 	<!-- Export -->
 	<definition name="choose-year-month" extends="definition.managementAssiduousness.masterPage">
 		<put name="body" value="/managementAssiduousness/chooseYearMonth.jsp"/>

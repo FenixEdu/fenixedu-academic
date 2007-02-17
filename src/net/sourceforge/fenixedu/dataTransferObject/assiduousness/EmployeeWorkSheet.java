@@ -30,108 +30,167 @@ public class EmployeeWorkSheet implements Serializable {
 
     Duration complementaryWeeklyRest;
 
+    Duration holidayRest;
+
+    Duration nightWork;
+
+    Duration firstHourExtraWork;
+
+    Duration nextHoursExtraWork;
+
+    public EmployeeWorkSheet() {
+    }
+
+    public EmployeeWorkSheet(Employee employee, List<WorkDaySheet> workDaySheetList,
+	    Duration totalBalance, Duration totalComplementaryWeeklyRestBalance,
+	    Duration totalWeeklyRestBalance, Duration holidayRest, Duration nightWork,
+	    Duration firstHourExtraWork, Duration nextHoursExtraWork, Duration unjustified) {
+	setEmployee(employee);
+	setWorkDaySheetList(workDaySheetList);
+	setTotalBalance(totalBalance);
+	setUnjustifiedBalance(unjustified);
+	setWeeklyRest(totalWeeklyRestBalance);
+	setComplementaryWeeklyRest(totalComplementaryWeeklyRestBalance);
+	setHolidayRest(holidayRest);
+	setNightWork(nightWork);
+	setFirstHourExtraWork(firstHourExtraWork);
+	setNextHoursExtraWork(nextHoursExtraWork);
+    }
+
     public String getTotalBalanceString() {
-        PeriodFormatter fmt = new PeriodFormatterBuilder().printZeroAlways().appendHours()
-                .appendSeparator(":").minimumPrintedDigits(2).appendMinutes().toFormatter();
-        MutablePeriod finalTotalBalance = new MutablePeriod(getTotalBalance().getMillis(), PeriodType
-                .time());
-        if (getTotalBalance().toPeriod().getMinutes() < 0) {
-            finalTotalBalance.setMinutes(-getTotalBalance().toPeriod().getMinutes());
-            if (getTotalBalance().toPeriod().getHours() == 0) {
-                fmt = new PeriodFormatterBuilder().printZeroAlways().appendLiteral("-").appendHours()
-                        .appendSeparator(":").minimumPrintedDigits(2).appendMinutes().toFormatter();
-            }
-        }
-        return fmt.print(finalTotalBalance);
+	PeriodFormatter fmt = new PeriodFormatterBuilder().printZeroAlways().appendHours()
+		.appendSeparator(":").minimumPrintedDigits(2).appendMinutes().toFormatter();
+	MutablePeriod finalTotalBalance = new MutablePeriod(getTotalBalance().getMillis(), PeriodType
+		.time());
+	if (getTotalBalance().toPeriod().getMinutes() < 0) {
+	    finalTotalBalance.setMinutes(-getTotalBalance().toPeriod().getMinutes());
+	    if (getTotalBalance().toPeriod().getHours() == 0) {
+		fmt = new PeriodFormatterBuilder().printZeroAlways().appendLiteral("-").appendHours()
+			.appendSeparator(":").minimumPrintedDigits(2).appendMinutes().toFormatter();
+	    }
+	}
+	return fmt.print(finalTotalBalance);
     }
 
     public String getUnjustifiedBalanceString() {
-        PeriodFormatter fmt = new PeriodFormatterBuilder().printZeroAlways().appendHours()
-                .appendSeparator(":").minimumPrintedDigits(2).appendMinutes().toFormatter();
-        MutablePeriod finalUnjustifiedBalance = new MutablePeriod(getUnjustifiedBalance().getMillis(),
-                PeriodType.time());
-        return fmt.print(finalUnjustifiedBalance);
+	PeriodFormatter fmt = new PeriodFormatterBuilder().printZeroAlways().appendHours()
+		.appendSeparator(":").minimumPrintedDigits(2).appendMinutes().toFormatter();
+	MutablePeriod finalUnjustifiedBalance = new MutablePeriod(getUnjustifiedBalance().getMillis(),
+		PeriodType.time());
+	return fmt.print(finalUnjustifiedBalance);
     }
 
     public Employee getEmployee() {
-        return employee;
+	return employee;
     }
 
     public void setEmployee(Employee employee) {
-        this.employee = employee;
+	this.employee = employee;
     }
 
     public String getUnitCode() {
-        return unitCode;
+	return unitCode;
     }
 
     public void setUnitCode(String unitCode) {
-        this.unitCode = unitCode;
+	this.unitCode = unitCode;
     }
 
     public Unit getUnit() {
-        return unit;
+	return unit;
     }
 
     public void setUnit(Unit unit) {
-        this.unit = unit;
+	this.unit = unit;
     }
 
     public Duration getTotalBalance() {
 
-        return totalBalance;
+	return totalBalance;
     }
 
     public void setTotalBalance(Duration totalBalance) {
-        this.totalBalance = totalBalance;
+	this.totalBalance = totalBalance;
     }
 
     public Duration getUnjustifiedBalance() {
-        return unjustifiedBalance;
+	return unjustifiedBalance;
     }
 
     public void setUnjustifiedBalance(Duration unjustifiedBalance) {
-        this.unjustifiedBalance = unjustifiedBalance;
+	this.unjustifiedBalance = unjustifiedBalance;
     }
 
     public List<WorkDaySheet> getWorkDaySheetList() {
-        return workDaySheetList;
+	return workDaySheetList;
     }
 
     public void setWorkDaySheetList(List<WorkDaySheet> workDaySheetList) {
-        this.workDaySheetList = workDaySheetList;
+	this.workDaySheetList = workDaySheetList;
     }
 
     public Duration getComplementaryWeeklyRest() {
-        return complementaryWeeklyRest;
+	return complementaryWeeklyRest;
     }
 
     public void setComplementaryWeeklyRest(Duration complementaryWeeklyRest) {
-        this.complementaryWeeklyRest = complementaryWeeklyRest;
+	this.complementaryWeeklyRest = complementaryWeeklyRest;
     }
 
     public Duration getWeeklyRest() {
-        return weeklyRest;
+	return weeklyRest;
     }
 
     public void setWeeklyRest(Duration weeklyRest) {
-        this.weeklyRest = weeklyRest;
+	this.weeklyRest = weeklyRest;
+    }
+
+    public Duration getNightWork() {
+	return nightWork;
+    }
+
+    public void setNightWork(Duration nightWork) {
+	this.nightWork = nightWork;
     }
 
     public String getComplementaryWeeklyRestString() {
-        PeriodFormatter fmt = new PeriodFormatterBuilder().printZeroAlways().appendHours()
-                .appendSeparator(":").minimumPrintedDigits(2).appendMinutes().toFormatter();
-        MutablePeriod finalComplementaryWeeklyRestWork = new MutablePeriod(getComplementaryWeeklyRest()
-                .getMillis(), PeriodType.time());
-        return fmt.print(finalComplementaryWeeklyRestWork);
+	PeriodFormatter fmt = new PeriodFormatterBuilder().printZeroAlways().appendHours()
+		.appendSeparator(":").minimumPrintedDigits(2).appendMinutes().toFormatter();
+	MutablePeriod finalComplementaryWeeklyRestWork = new MutablePeriod(getComplementaryWeeklyRest()
+		.getMillis(), PeriodType.time());
+	return fmt.print(finalComplementaryWeeklyRestWork);
     }
 
     public String getWeeklyRestString() {
-        PeriodFormatter fmt = new PeriodFormatterBuilder().printZeroAlways().appendHours()
-                .appendSeparator(":").minimumPrintedDigits(2).appendMinutes().toFormatter();
-        MutablePeriod finalWeeklyRestExtraWork = new MutablePeriod(getWeeklyRest().getMillis(),
-                PeriodType.time());
-        return fmt.print(finalWeeklyRestExtraWork);
+	PeriodFormatter fmt = new PeriodFormatterBuilder().printZeroAlways().appendHours()
+		.appendSeparator(":").minimumPrintedDigits(2).appendMinutes().toFormatter();
+	MutablePeriod finalWeeklyRestExtraWork = new MutablePeriod(getWeeklyRest().getMillis(),
+		PeriodType.time());
+	return fmt.print(finalWeeklyRestExtraWork);
+    }
+
+    public Duration getFirstHourExtraWork() {
+	return firstHourExtraWork;
+    }
+
+    public void setFirstHourExtraWork(Duration firstHourExtraWork) {
+	this.firstHourExtraWork = firstHourExtraWork;
+    }
+
+    public Duration getHolidayRest() {
+	return holidayRest;
+    }
+
+    public void setHolidayRest(Duration holidayWork) {
+	this.holidayRest = holidayWork;
+    }
+
+    public Duration getNextHoursExtraWork() {
+	return nextHoursExtraWork;
+    }
+
+    public void setNextHoursExtraWork(Duration nextHoursExtraWork) {
+	this.nextHoursExtraWork = nextHoursExtraWork;
     }
 
 }

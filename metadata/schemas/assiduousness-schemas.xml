@@ -622,3 +622,10 @@
 	<slot name="employeeNumber"/>
 	<slot name="person.name"/>
 </schema>
+
+<schema name="show.employeeWorkSheetMonthBalance" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeWorkSheet">
+	<slot name="employee.employeeNumber" key="label.employeeNumber"/>
+	<slot name="totalBalanceString" key="label.totalBalance"/>
+ 	<slot name="unjustifiedBalanceString" key="label.totalUnjustified"/>
+</schema>
+
