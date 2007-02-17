@@ -9,10 +9,8 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByManyRolesF
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.SecretaryEnrolmentStudent;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.Tutor;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -34,6 +32,14 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
 
     protected String hasPrevilege(IUserView userView, Object[] arguments) {
 	if (userView.hasRoleType(RoleType.STUDENT)) {
+
+	    for (int i = 0; i < arguments.length; i++) {
+		Object object = arguments[i];
+		if (object instanceof Registration) {
+		    return checkStudentInformation(userView, (Registration) object);
+		}
+	    }
+
 	    return checkStudentInformation(userView);
 
 	} else {
@@ -61,14 +67,13 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
 	if (studentCurricularPlan == null) {
 	    return "noAuthorization";
 	}
-	/*if (insideEnrollmentPeriod(studentCurricularPlan)) {
-	    final Tutor tutor = studentCurricularPlan.getAssociatedTutor();
-	    if (tutor != null) {
-		return "error.enrollment.student.withTutor+"
-			+ tutor.getTeacher().getTeacherNumber().toString() + "+"
-			+ tutor.getTeacher().getPerson().getNome();
-	    }
-	}*/
+	/*
+         * if (insideEnrollmentPeriod(studentCurricularPlan)) { final Tutor
+         * tutor = studentCurricularPlan.getAssociatedTutor(); if (tutor !=
+         * null) { return "error.enrollment.student.withTutor+" +
+         * tutor.getTeacher().getTeacherNumber().toString() + "+" +
+         * tutor.getTeacher().getPerson().getNome(); } }
+         */
 	return null;
     }
 
@@ -84,7 +89,8 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
 	    return "noAuthorization";
 	}
 
-	if (registration.getAssociatedTutor() == null || !registration.getAssociatedTutor().getTeacher().equals(teacher)) {
+	if (registration.getAssociatedTutor() == null
+		|| !registration.getAssociatedTutor().getTeacher().equals(teacher)) {
 	    return "error.enrollment.notStudentTutor+" + registration.getNumber().toString();
 	}
 
@@ -100,29 +106,31 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
     }
 
     private String checkStudentInformation(IUserView userView) {
+	Registration registration = readStudent(userView);
+	return checkStudentInformation(userView, registration);
+    }
 
-	final Registration registration = readStudent(userView);
-	if (registration == null) {
+    private String checkStudentInformation(IUserView userView, Registration registration) {
+
+	if (readStudent(userView) == null) {
 	    return "noAuthorization";
 	}
-	
-	if(!registration.isInRegisteredState()) {
+
+	if (!registration.isInRegisteredState()) {
 	    return "error.message.not.in.registered.state";
 	}
-	
+
 	if (!registration.getPayedTuition()) {
 	    if (!registration.getInterruptedStudies()) {
 		return "error.message.tuitionNotPayed";
 	    }
 	}
-	
-	if (registration.getRequestedChangeDegree() == null
-		|| registration.getRequestedChangeDegree()) {
+
+	if (registration.getRequestedChangeDegree() == null || registration.getRequestedChangeDegree()) {
 	    return "error.message.requested.change.degree";
 	}
-	
-	if (registration.getActiveStudentCurricularPlan().getDegreeCurricularPlan()
-			.getIdInternal() == LEIC_OLD_DCP) {
+
+	if (registration.getActiveStudentCurricularPlan().getDegreeCurricularPlan().getIdInternal() == LEIC_OLD_DCP) {
 
 	    return "error.message.oldLeicStudent";
 	}
