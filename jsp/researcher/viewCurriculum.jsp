@@ -71,7 +71,7 @@
     <p id='personalInformationTitle' class="separator2" style="float: left; display: inline;"> 	<span class="fleft"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.viewCurriculum.personalInformationTitle"/></span> <span class="fright"><a href="#header"><bean:message key="label.top" /></a></span> </p>
 	<div class="cboth"></div>
 	<ul>			
-	<li><bean:message key="researcher.viewCurriculum.name" bundle="RESEARCHER_RESOURCES"/>: <strong><fr:view name="person" property="nickname"/></strong> (<fr:view name="person" property="teacher.teacherNumber"/>)</li>
+	<li><bean:message key="researcher.viewCurriculum.name" bundle="RESEARCHER_RESOURCES"/>: <strong><fr:view name="person" property="nickname"/></strong> <logic:present name="person" property="teacher"> (<fr:view name="person" property="teacher.teacherNumber"/>)</li> </logic:present>
 	<logic:present name="person" property="teacher">
 		<li><bean:message key="label.teacher.category" bundle="APPLICATION_RESOURCES"/>: <fr:view name="person" property="teacher.category.name"/></li>
 	</logic:present>
