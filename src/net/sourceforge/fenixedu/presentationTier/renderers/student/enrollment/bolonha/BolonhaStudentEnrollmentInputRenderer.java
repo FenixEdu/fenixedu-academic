@@ -338,7 +338,7 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	    degreeCurricularPlanLink.setParameter("degreeCurricularPlanID", studentCurricularPlan
 		    .getDegreeCurricularPlan().getIdInternal());
 	    degreeCurricularPlanLink.setParameter("executionPeriodOID", bolonhaStudentEnrollmentBean
-		    .getExecutionPeriod());
+		    .getExecutionPeriod().getIdInternal());
 	    return degreeCurricularPlanLink;
 	}
 
