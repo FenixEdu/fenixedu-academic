@@ -18,8 +18,6 @@ public class SearchInternalUnits extends AbstractSearchObjects {
 		 units.addAll(UnitUtils.readAllUnitsByType(PartyTypeEnum.SCIENTIFIC_AREA));
 		 units.addAll(UnitUtils.readAllUnitsByType(PartyTypeEnum.ASSOCIATED_LABORATORY));
 		 		
-		 
-		 
 		 return super.process(units, value, limit, arguments);
 	}
 

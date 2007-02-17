@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -15,25 +14,26 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.beanutils.PropertyUtils;
+import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public class SearchExternalUnits extends Service implements AutoCompleteSearchService {
 
     public List<Unit> run(Class type, String value, int limit, Map<String, String> arguments){
-        List<Unit> result = new ArrayList<Unit>();
+        List<Unit> result;
         
         String slotName  = arguments.get("slot");
-        Collection<Unit> allExternalUnits = UnitUtils.readAllExternalInstitutionUnits();
         
         if (value == null) {
-            result.addAll(allExternalUnits);
+            result = UnitUtils.readAllExternalInstitutionUnits();
         }
         else {
-            String[] values = StringNormalizer.normalize(value).toLowerCase().split("\\p{Space}+");
+            result = new ArrayList<Unit>();
+        	String[] values = StringNormalizer.normalize(value).toLowerCase().split("\\p{Space}+");
             
             outter: 
-            for (Unit unit : allExternalUnits) {
+            for (Unit unit : UnitUtils.readExternalInstitutionUnit().getActiveSubUnits(new YearMonthDay())) {
                 try {
                     String objectValue = (String) PropertyUtils.getProperty(unit, slotName);
                     
