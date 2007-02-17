@@ -51,7 +51,7 @@
 	<property name="xfire.stubsTempDir.classes" value="${basedir}/stubsTempDir/classes"/>
 	
 	<!-- Compilation options -->
-	<property name="compile.debug"       value="on"/>
+	<property name="compile.debug"       value="off"/>
 	<property name="compile.deprecation" value="off"/>
 	<property name="compile.optimize"    value="on"/>
 	
@@ -673,11 +673,12 @@
           depends="generate, generate-groups-language">
 		<javac destdir="${build.home.webinf.classes}"
            extdirs="${lib}"
-           debug="${compile.debug}"
+           debug="on"
            optimize="${compile.optimize}"
            deprecation="${compile.deprecation}"
            encoding="${encoding}"
            nowarn="true"
+			debuglevel="vars"
   		   >
 			<src path="${src_gen}"/>
 			<src path="${src}"/>

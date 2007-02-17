@@ -138,7 +138,7 @@ public class Authenticate extends Service implements Serializable {
 	    throw new ExcepcaoAutenticacao("bad.authentication");
 	}
 
-	setLoginHostNameAndDateTime(remoteHost, person);
+//	setLoginHostNameAndDateTime(remoteHost, person);
 	return getUserView(person, requestURL);
     }
 
