@@ -138,7 +138,7 @@ public class ReadAssiduousnessWorkSheet extends Service {
                     }
                     workDaySheet.setNotes(notes.toString());
 
-                    if (!thisDay.equals(today)) {
+                    if (thisDay.isBefore(today)) {
                         workDaySheet = assiduousness.calculateDailyBalance(workDaySheet, isDayHoliday);
                         totalBalance = totalBalance.plus(workDaySheet.getBalanceTime().toDurationFrom(
                                 new DateMidnight()));
