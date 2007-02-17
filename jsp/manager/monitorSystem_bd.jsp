@@ -1,5 +1,9 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><%@page import="java.util.Enumeration"%>
-<html:xhtml/><%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %><%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %><%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %><%@ page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.SessionCounterFilter" %><h2><bean:message bundle="MANAGER_RESOURCES" key="manager.monitor.system.title"/></h2><br /><html:link module="/manager" page="/monitorSystem.do?method=monitor">	<bean:message bundle="MANAGER_RESOURCES" key="manager.monitor.system.refresh"/></html:link><br /><br /><br /><logic:present name="systemInfoApplicationServer">	<bean:message bundle="MANAGER_RESOURCES" key="manager.monitor.system.applicationServer"/>	<br /><br />
+<%@page import="java.util.Calendar"%>
+<html:xhtml/><%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %><%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %><%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %><%@ page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.SessionCounterFilter" %><h2><bean:message bundle="MANAGER_RESOURCES" key="manager.monitor.system.title"/></h2><br /><html:link module="/manager" page="/monitorSystem.do?method=monitor">	<bean:message bundle="MANAGER_RESOURCES" key="manager.monitor.system.refresh"/></html:link><br /><br /><br />
+<%= Calendar.getInstance().toString() %>
+<br /><br />
+<logic:present name="systemInfoApplicationServer">	<bean:message bundle="MANAGER_RESOURCES" key="manager.monitor.system.applicationServer"/>	<br /><br />
 	<bean:message bundle="MANAGER_RESOURCES" key="label.server.name"/><%= request.getServerName() %>
 	<br/>
 	<bean:message bundle="MANAGER_RESOURCES" key="label.real.server.name"/><%= System.getenv("HOSTNAME") %>
