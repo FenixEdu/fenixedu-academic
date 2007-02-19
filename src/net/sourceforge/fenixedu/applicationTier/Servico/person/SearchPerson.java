@@ -129,7 +129,7 @@ public class SearchPerson extends Service {
 	List<Person> allValidPersons = new ArrayList<Person>();
 	List<Teacher> teachers = new ArrayList<Teacher>();
 
-	if (searchParameters.getUsername().length() > 0) {
+	if (searchParameters.getUsername() != null && searchParameters.getUsername().length() > 0) {
 	    final Person person = Person.readPersonByUsername(searchParameters.getUsername());
 	    persons = new ArrayList<Person>();
 	    persons.add(person);
