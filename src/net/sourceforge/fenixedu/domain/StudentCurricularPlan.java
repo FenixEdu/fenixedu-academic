@@ -550,7 +550,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    }
 	}
 	
-        /*CurricularCourseEnrollmentType courseEnrollmentType = CurricularCourseEnrollmentType.DEFINITIVE;
+        CurricularCourseEnrollmentType courseEnrollmentType = CurricularCourseEnrollmentType.DEFINITIVE;
         for (CurricularCourseEquivalence curricularCourseEquivalence : curricularCourse.getCurricularCourseEquivalencesSet()) {
 	    for (CurricularCourse eqCurricularCourse : curricularCourseEquivalence.getOldCurricularCoursesSet()) {
 		if(this.isCurricularCourseApproved(eqCurricularCourse)) {
@@ -564,7 +564,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    if(courseEnrollmentType.equals(CurricularCourseEnrollmentType.TEMPORARY)) {
 		return CurricularCourseEnrollmentType.TEMPORARY;
 	    }
-	}*/
+	}
 
 
 	if (isMathematicalCourse(curricularCourse)) {

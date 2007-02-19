@@ -53,7 +53,7 @@ public class RestrictionDoneCurricularCourse extends RestrictionDoneCurricularCo
             return CurricularCourseEnrollmentType.TEMPORARY;
         }
 
-        /*CurricularCourseEnrollmentType courseEnrollmentType = CurricularCourseEnrollmentType.DEFINITIVE;
+        CurricularCourseEnrollmentType courseEnrollmentType = CurricularCourseEnrollmentType.DEFINITIVE;
         for (CurricularCourseEquivalence curricularCourseEquivalence : this.getPrecedentCurricularCourse().getCurricularCourseEquivalencesSet()) {
 	    for (CurricularCourse curricularCourse : curricularCourseEquivalence.getOldCurricularCoursesSet()) {
 		if(precedenceContext.getStudentCurricularPlan().isCurricularCourseApproved(curricularCourse)) {
@@ -68,7 +68,7 @@ public class RestrictionDoneCurricularCourse extends RestrictionDoneCurricularCo
 	    if(courseEnrollmentType.equals(CurricularCourseEnrollmentType.TEMPORARY)) {
 		return CurricularCourseEnrollmentType.TEMPORARY;
 	    }
-	}*/
+	}
         
         return CurricularCourseEnrollmentType.NOT_ALLOWED;
     }
