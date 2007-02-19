@@ -65,11 +65,7 @@ public class GratuitySituation extends GratuitySituation_Base {
     }
 
     private double calculateTotalAmountWithPenalty() {
-	if (hasPenalty()) {
-	    return calculateOriginalTotalValue() + calculatePenalty(calculateOriginalTotalValue());
-	} else {
-	    return calculateOriginalTotalValue();
-	}
+	return calculateOriginalTotalValue() + calculatePenalty(calculateOriginalTotalValue());
     }
 
     private double calculateOriginalTotalValue() {
@@ -184,19 +180,30 @@ public class GratuitySituation extends GratuitySituation_Base {
     }
 
     private double calculatePenalty(final double remainingValue) {
-	if (getGratuityValues().isPenaltyApplicable()) {
+	if (hasPenalty() && getGratuityValues().isPenaltyApplicable()) {
+	    
+	    final YearMonthDay now = new YearMonthDay();
 	    final YearMonthDay endPaymentDate = getEndPaymentDate();
-	    final int extraMonths = endPaymentDate.plusDays(1).getMonthOfYear() == endPaymentDate
-		    .getMonthOfYear() ? 1 : 0;
-	    final Period period = new Period(endPaymentDate.plusDays(1), new YearMonthDay());
-	    final int monthsToChargePenalty = period.getMonths() + extraMonths + 1;
+	    
+	    int monthsToChargePenalty = 0;
+	    if (endPaymentDate.getMonthOfYear() == now.getMonthOfYear()) {
+		monthsToChargePenalty += 1;
+		
+	    } else {
+		final YearMonthDay endOfMonth = endPaymentDate.plusMonths(1).withDayOfMonth(1).minusDays(1);
+		final int numberOfDaysLeftInMonth = new Period(endPaymentDate, endOfMonth).getDays();
+		if (numberOfDaysLeftInMonth > 0) {
+		    monthsToChargePenalty += 1;
+		}
+		final Period period = new Period(endPaymentDate.plusMonths(1).withDayOfMonth(1), now);
+		monthsToChargePenalty += period.getMonths() + 1;
+	    }
+	    
 	    return new Money(remainingValue).multiply(PENALTY_PERCENTAGE).multiply(
 		    new BigDecimal(monthsToChargePenalty)).getAmount().doubleValue();
-
 	}
 
 	return 0;
-
     }
 
     private boolean hasPenalty() {
