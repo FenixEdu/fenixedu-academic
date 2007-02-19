@@ -16,9 +16,11 @@ create table ROOT_DOMAIN_OBJECT (
 	KEY_ROOT_DOMAIN_OBJECT int(11) default null,
 	KEY_EXTERNAL_INSTITUTION_UNIT int(11) default NULL,
 	KEY_INSTITUTION_UNIT int(11) default NULL,
+	KEY_EARTH_UNIT int(11) default NULL,
 	primary key (ID_INTERNAL),
 	index (KEY_EXTERNAL_INSTITUTION_UNIT),
-	index (KEY_INSTITUTION_UNIT)
+	index (KEY_INSTITUTION_UNIT),
+	index (KEY_EARTH_UNIT)
 ) TYPE=InnoDB;
 
-insert into ROOT_DOMAIN_OBJECT values (1,null, null, null);
+insert into ROOT_DOMAIN_OBJECT values (1, null, null, null, null);

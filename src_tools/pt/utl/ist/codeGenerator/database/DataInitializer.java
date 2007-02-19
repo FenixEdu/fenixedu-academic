@@ -10,10 +10,8 @@ import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.stm.Transaction;
 
 public class DataInitializer {
 
@@ -22,23 +20,21 @@ public class DataInitializer {
 	MetadataManager.init("build/WEB-INF/classes/domain_model.dml");
 	SuportePersistenteOJB.fixDescriptors();
 	RootDomainObject.init();
+        Transaction.startMonitoringTransactions();
 
-	ISuportePersistente persistentSupport = null;
 	try {
-	    persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-	    persistentSupport.iniciarTransaccao();
-	    initialize();
-	    persistentSupport.confirmarTransaccao();
+	    Transaction.withTransaction(false, new jvstm.TransactionalCommand() {
+		public void doIt() {
+		    try {
+			initialize();
+		    } catch (Exception e) {
+			e.printStackTrace();
+			throw new Error("Found exception while processing script: " + e, e);
+		    }
+		}
+	    });
 	} catch (Exception ex) {
 	    ex.printStackTrace();
-
-	    try {
-		if (persistentSupport != null) {
-		    persistentSupport.cancelarTransaccao();
-		}
-	    } catch (ExcepcaoPersistencia e) {
-		throw new Error(e);
-	    }
 	}
 
 	System.out.println("Initialization complete.");
