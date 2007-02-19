@@ -129,6 +129,12 @@ public class SearchPerson extends Service {
 	List<Person> allValidPersons = new ArrayList<Person>();
 	List<Teacher> teachers = new ArrayList<Teacher>();
 
+	if (searchParameters.getUsername().length() > 0) {
+	    final Person person = Person.readPersonByUsername(searchParameters.getUsername());
+	    persons = new ArrayList<Person>();
+	    persons.add(person);
+	} else {
+	
 	Role roleBd = searchParameters.getRole();
 	if (roleBd == null) {
 	    roleBd = Role.getRoleByRoleType(RoleType.PERSON);
@@ -149,6 +155,7 @@ public class SearchPerson extends Service {
 	    }
 	} else {
 	    persons = roleBd.getAssociatedPersons();
+	}
 	}
 
 	allValidPersons = (List<Person>) CollectionUtils.select(persons, predicate);
