@@ -102,7 +102,7 @@ public class GroupCheckService extends Service {
 
     /**
          * Checks if person belongs to curricular course. The unit path format
-         * should be: IST.<DegreeAcronym>.<CurricularCourseAcronym>
+         * should be: IST{.<SubUnitAcronym>}.<DegreeAcronym>.<CurricularCourseAcronym>
          * 
          * Accepted roles: STUDENT and TEACHER
          * 
@@ -117,8 +117,7 @@ public class GroupCheckService extends Service {
 	    throws NonExistingServiceException, ExcepcaoPersistencia {
 	String[] unitAcronyms = groupCheckQuery.unitFullPath.split("\\.");
 
-	if (unitAcronyms.length != 4
-		|| (groupCheckQuery.roleType != RoleType.TEACHER && groupCheckQuery.roleType != RoleType.STUDENT)) {
+	if (groupCheckQuery.roleType != RoleType.TEACHER && groupCheckQuery.roleType != RoleType.STUDENT) {
 	    throw new NonExistingServiceException();
 	}
 
@@ -129,7 +128,7 @@ public class GroupCheckService extends Service {
 		    groupCheckQuery.semester);
 
 	    CurricularCourse curricularCourse = degreeCurricularPlan
-		    .getCurricularCourseByAcronym(unitAcronyms[3]);
+		    .getCurricularCourseByAcronym(unitAcronyms[4]);
 
 	    if (curricularCourse != null) {
 		List<ExecutionCourse> executionCourses = curricularCourse
@@ -157,7 +156,7 @@ public class GroupCheckService extends Service {
 
     /**
          * Checks if person belongs to curricular course. The unit path format
-         * should be: IST.<DegreeAcronym>.<CurricularCourseAcronym>
+         * should be: IST{.<SubUnitAcronym>}.<DegreeAcronym>.<CurricularCourseAcronym>
          * 
          * Accepted roles: STUDENT
          * 
@@ -171,7 +170,7 @@ public class GroupCheckService extends Service {
 	    throws NonExistingServiceException, ExcepcaoPersistencia {
 	final String[] unitAcronyms = groupCheckQuery.unitFullPath.split("\\.");
 
-	if (unitAcronyms.length != 4 || groupCheckQuery.roleType != RoleType.STUDENT) {
+	if (groupCheckQuery.roleType != RoleType.STUDENT) {
 	    throw new NonExistingServiceException();
 	}
 
@@ -179,7 +178,7 @@ public class GroupCheckService extends Service {
 		.getActiveDegreeCurricularPlans()) {
 
 	    final CurricularCourse curricularCourse = degreeCurricularPlan
-		    .getCurricularCourseByAcronym(unitAcronyms[3]);
+		    .getCurricularCourseByAcronym(unitAcronyms[4]);
 
 	    if (curricularCourse != null) {
 		final Group group = new CurricularCourseStudentsByExecutionPeriodGroup(curricularCourse,
@@ -211,8 +210,7 @@ public class GroupCheckService extends Service {
 	    throws ExcepcaoPersistencia, NonExistingServiceException {
 	String[] unitAcronyms = groupCheckQuery.unitFullPath.split("\\.");
 
-	if (unitAcronyms.length != 4
-		|| (groupCheckQuery.roleType != RoleType.TEACHER && groupCheckQuery.roleType != RoleType.STUDENT)) {
+	if (groupCheckQuery.roleType != RoleType.TEACHER && groupCheckQuery.roleType != RoleType.STUDENT) {
 	    throw new NonExistingServiceException();
 	}
 
@@ -285,9 +283,8 @@ public class GroupCheckService extends Service {
 	    throws ExcepcaoPersistencia, NonExistingServiceException {
 
 	final String[] unitAcronyms = groupCheckQuery.unitFullPath.split("\\.");
-	if ((unitAcronyms.length != 3)
-		|| (groupCheckQuery.roleType != RoleType.TEACHER
-			&& groupCheckQuery.roleType != RoleType.STUDENT && groupCheckQuery.roleType != RoleType.EMPLOYEE)) {
+	if (groupCheckQuery.roleType != RoleType.TEACHER && groupCheckQuery.roleType != RoleType.STUDENT
+		&& groupCheckQuery.roleType != RoleType.EMPLOYEE) {
 	    throw new NonExistingServiceException();
 	}
 
