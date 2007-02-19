@@ -21,6 +21,7 @@ import org.joda.time.Interval;
 import org.joda.time.Partial;
 import org.joda.time.TimeOfDay;
 import org.joda.time.YearMonthDay;
+import org.joda.time.chrono.GregorianChronology;
 
 public class Leave extends Leave_Base {
 
@@ -74,21 +75,23 @@ public class Leave extends Leave_Base {
     }
 
     public DateTime getEndDate() {
-        return getDate().plus(getDuration());
+        return getDate().plus(getDuration()).toDateTime(GregorianChronology.getInstanceUTC());
     }
 
     public TimeOfDay getEndTimeOfDay() {
         if (getJustificationMotive().getJustificationType().equals(JustificationType.OCCURRENCE)) {
             return null;
         }
-        return getDate().plus(getDuration()).toTimeOfDay();
+        return getDate().plus(getDuration()).toDateTime(GregorianChronology.getInstanceUTC())
+                .toTimeOfDay();
     }
 
     public YearMonthDay getEndYearMonthDay() {
         if (getJustificationMotive().getJustificationType().equals(JustificationType.BALANCE)) {
             return null;
         }
-        return getDate().plus(getDuration()).toYearMonthDay();
+        return getDate().plus(getDuration()).toDateTime(GregorianChronology.getInstanceUTC())
+                .toYearMonthDay();
     }
 
     public Partial getPartialEndDate() {
@@ -109,7 +112,8 @@ public class Leave extends Leave_Base {
     }
 
     public Interval getTotalInterval() {
-        return new Interval(getDate(), getDuration());
+        return new Interval(getDate().getMillis(), getDuration().getMillis(), GregorianChronology
+                .getInstanceUTC());
     }
 
     // Check if the Leave occured in a particular date
@@ -147,7 +151,7 @@ public class Leave extends Leave_Base {
         if (getDate().equals(getEndDate()) && dayAtMidnight.equals(getDate())) {
             return true;
         }
-        Interval justificationInterval = new Interval(getDate(), getEndDate());
+        Interval justificationInterval = getTotalInterval();
         if (justificationInterval.contains(dayAtMidnight)) {
             return true;
         }
