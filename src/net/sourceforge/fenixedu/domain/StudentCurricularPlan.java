@@ -408,6 +408,22 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
 	return isApproved(curricularCourse, result);
     }
+    
+    public boolean isEquivalentAproved(CurricularCourse curricularCourse) {
+	List studentApprovedEnrollments = getStudentEnrollmentsWithApprovedState();
+
+	List<CurricularCourse> result = (List) CollectionUtils.collect(studentApprovedEnrollments,
+		new Transformer() {
+		    public Object transform(Object obj) {
+			Enrolment enrollment = (Enrolment) obj;
+
+			return enrollment.getCurricularCourse();
+
+		    }
+		});
+
+	return isThisCurricularCoursesInTheList(curricularCourse, result) || hasEquivalenceInNotNeedToEnroll(curricularCourse);
+    }
 
     public boolean isCurricularCourseEnrolled(CurricularCourse curricularCourse) {
 	List result = (List) CollectionUtils.collect(getStudentEnrollmentsWithEnrolledState(), new Transformer() {
@@ -553,7 +569,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         CurricularCourseEnrollmentType courseEnrollmentType = CurricularCourseEnrollmentType.DEFINITIVE;
         for (CurricularCourseEquivalence curricularCourseEquivalence : curricularCourse.getCurricularCourseEquivalencesSet()) {
 	    for (CurricularCourse eqCurricularCourse : curricularCourseEquivalence.getOldCurricularCoursesSet()) {
-		if(this.isCurricularCourseApproved(eqCurricularCourse)) {
+		if(this.isEquivalentAproved(eqCurricularCourse)) {
 		    courseEnrollmentType = courseEnrollmentType.and(CurricularCourseEnrollmentType.DEFINITIVE);
 		} else if(hasEnrolledStateInPreviousExecutionPerdiod(eqCurricularCourse, enrollmentsWithEnrolledStateInPreviousExecutionPeriod)) {
 		    courseEnrollmentType = courseEnrollmentType.and(CurricularCourseEnrollmentType.TEMPORARY);

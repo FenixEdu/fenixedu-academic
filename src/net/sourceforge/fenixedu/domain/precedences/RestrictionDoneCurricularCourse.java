@@ -56,7 +56,7 @@ public class RestrictionDoneCurricularCourse extends RestrictionDoneCurricularCo
         CurricularCourseEnrollmentType courseEnrollmentType = CurricularCourseEnrollmentType.DEFINITIVE;
         for (CurricularCourseEquivalence curricularCourseEquivalence : this.getPrecedentCurricularCourse().getCurricularCourseEquivalencesSet()) {
 	    for (CurricularCourse curricularCourse : curricularCourseEquivalence.getOldCurricularCoursesSet()) {
-		if(precedenceContext.getStudentCurricularPlan().isCurricularCourseApproved(curricularCourse)) {
+		if(precedenceContext.getStudentCurricularPlan().isEquivalentAproved(curricularCourse)) {
 		    courseEnrollmentType = courseEnrollmentType.and(CurricularCourseEnrollmentType.DEFINITIVE);
 		} else if(result.contains(curricularCourse)) {
 		    courseEnrollmentType = courseEnrollmentType.and(CurricularCourseEnrollmentType.TEMPORARY);
