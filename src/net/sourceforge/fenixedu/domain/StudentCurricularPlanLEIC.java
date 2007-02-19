@@ -68,7 +68,7 @@ public class StudentCurricularPlanLEIC extends StudentCurricularPlanLEIC_Base {
 
         List studentsAprovedEnrollments = getStudentEnrollmentsWithApprovedState();
         
-        studentsAprovedEnrollments.addAll(getStudentEnrollmentsWithEnrolledState());
+        studentsAprovedEnrollments.addAll(getAllStudentEnrolledEnrollmentsInExecutionPeriod(ExecutionPeriod.readActualExecutionPeriod()));
         
         int specCredits = 0;
         int secCredits = 0;
