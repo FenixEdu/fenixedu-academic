@@ -5,7 +5,6 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import org.joda.time.Partial;
 import org.joda.time.TimeOfDay;
 import org.joda.time.YearMonthDay;
-import org.joda.time.chrono.GregorianChronology;
 
 public class Justification extends Justification_Base {
 
@@ -22,8 +21,8 @@ public class Justification extends Justification_Base {
                 p = p.with(y.getFieldType(i), y.getValue(i));
             }
         }
-        TimeOfDay t = getDate().toDateTime(GregorianChronology.getInstanceUTC()).toTimeOfDay();
-        if (t != null && !t.isEqual(new TimeOfDay(0, 0, 0, GregorianChronology.getInstanceUTC()))) {
+        TimeOfDay t = getDate().toTimeOfDay();
+        if (t != null && !t.isEqual(new TimeOfDay(0, 0, 0))) {
             for (int i = 0; i < t.getFields().length; i++) {
                 p = p.with(t.getFieldType(i), t.getValue(i));
             }
