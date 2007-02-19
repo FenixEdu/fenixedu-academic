@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 public enum EnrolmentResultType {
     TEMPORARY(0, EnrollmentCondition.TEMPORARY),
 
-    FINAL(1, EnrollmentCondition.FINAL),
+    VALIDATED(1, EnrollmentCondition.VALIDATED),
     
     IMPOSSIBLE(2, EnrollmentCondition.IMPOSSIBLE),
 
@@ -14,22 +14,22 @@ public enum EnrolmentResultType {
     static private final EnrolmentResultType[][] AND_TABLE = new EnrolmentResultType[][] {
 	    { TEMPORARY, TEMPORARY, IMPOSSIBLE, TEMPORARY },
 
-	    { TEMPORARY, FINAL, IMPOSSIBLE, FINAL },
+	    { TEMPORARY, VALIDATED, IMPOSSIBLE, VALIDATED },
 
 	    { IMPOSSIBLE, IMPOSSIBLE, IMPOSSIBLE, IMPOSSIBLE }, 
 	    
-	    { TEMPORARY, FINAL, IMPOSSIBLE, NULL }
+	    { TEMPORARY, VALIDATED, IMPOSSIBLE, NULL }
 
     };
 
     static private final EnrolmentResultType[][] OR_TABLE = new EnrolmentResultType[][] {
-	    { TEMPORARY, FINAL, TEMPORARY, TEMPORARY },
+	    { TEMPORARY, VALIDATED, TEMPORARY, TEMPORARY },
 
-	    { FINAL, FINAL, FINAL, FINAL },
+	    { VALIDATED, VALIDATED, VALIDATED, VALIDATED },
 	    
-	    { TEMPORARY, FINAL, IMPOSSIBLE, IMPOSSIBLE, },
+	    { TEMPORARY, VALIDATED, IMPOSSIBLE, IMPOSSIBLE, },
 
-	    { TEMPORARY, FINAL, IMPOSSIBLE, NULL }
+	    { TEMPORARY, VALIDATED, IMPOSSIBLE, NULL }
 
     };
 
