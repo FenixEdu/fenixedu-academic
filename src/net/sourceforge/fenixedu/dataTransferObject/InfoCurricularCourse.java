@@ -85,6 +85,22 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
 	return getCurricularCourse().getTheoreticalHours();
     }
 
+    public Double getFieldWorkHours() {
+	return getCurricularCourse().getFieldWorkHours();
+    }
+    public Double getProblemsHours() {
+	return getCurricularCourse().getProblemsHours();
+    }
+    public Double getSeminaryHours() {
+	return getCurricularCourse().getSeminaryHours();
+    }
+    public Double getTrainingPeriodHours() {
+	return getCurricularCourse().getTrainingPeriodHours();
+    }
+    public Double getTutorialOrientationHours() {
+	return getCurricularCourse().getTutorialOrientationHours();
+    }
+
     public InfoDegreeCurricularPlan getInfoDegreeCurricularPlan() {
 	return InfoDegreeCurricularPlan.newInfoFromDomain(getCurricularCourse().getDegreeCurricularPlan());
     }

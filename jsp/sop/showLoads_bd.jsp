@@ -10,6 +10,11 @@
 	<bean:define id="theoreticalHours" name="infoExecutionCourse" property="theoreticalHours"/>
 	<bean:define id="theoPratHours" name="infoExecutionCourse" property="theoPratHours" type="java.lang.Double" />
 	<bean:define id="praticalHours" name="infoExecutionCourse" property="praticalHours" type="java.lang.Double" />
+	<bean:define id="fieldWork" name="infoExecutionCourse" property="fieldWorkHours" type="java.lang.Double" />
+	<bean:define id="problems" name="infoExecutionCourse" property="problemsHours" type="java.lang.Double" />
+	<bean:define id="seminary" name="infoExecutionCourse" property="seminaryHours" type="java.lang.Double" />
+	<bean:define id="trainingPeriod" name="infoExecutionCourse" property="trainingPeriodHours" type="java.lang.Double" />
+	<bean:define id="tutorialOrientation" name="infoExecutionCourse" property="tutorialOrientationHours" type="java.lang.Double" />
 
 	<h2><bean:message key="label.executionCourse" /></h2>
 	<table width="100%" cellpadding="1" cellspacing="1">
@@ -20,7 +25,7 @@
 			<th class="listClasses-header" width="10%" rowspan="2"> 
 				<bean:message key="label.code"/>
 			</th>
-			<th class="listClasses-header" colspan="4" width="60%">
+			<th class="listClasses-header" colspan="9" width="60%">
 				Carga
 			</th>
 		</tr>
@@ -37,8 +42,22 @@
 			<th class="listClasses-header">
 				<bean:message key="label.hours.load.laboratorial"/>
 			</th>			
+			<th class="listClasses-header">
+				<bean:message key="label.hours.load.fieldWork"/>
+			</th>			
+			<th class="listClasses-header">
+				<bean:message key="label.hours.load.problems"/>
+			</th>			
+			<th class="listClasses-header">
+				<bean:message key="label.hours.load.seminary"/>
+			</th>			
+			<th class="listClasses-header">
+				<bean:message key="label.hours.load.trainingPeriod"/>
+			</th>			
+			<th class="listClasses-header">
+				<bean:message key="label.hours.load.tutorialOrientation"/>
+			</th>			
 		</tr>	
-
 		<tr>
 			<td class="listClasses">
 				<bean:write name="infoExecutionCourse" property="nome"/>
@@ -57,6 +76,21 @@
 			</td>
 			<td class="listClasses">
 				<bean:write name="infoExecutionCourse" property="labHours"/>
+			</td>
+			<td class="listClasses">
+				<bean:write name="infoExecutionCourse" property="fieldWorkHours"/>
+			</td>
+			<td class="listClasses">
+				<bean:write name="infoExecutionCourse" property="problemsHours"/>
+			</td>
+			<td class="listClasses">
+				<bean:write name="infoExecutionCourse" property="seminaryHours"/>
+			</td>
+			<td class="listClasses">
+				<bean:write name="infoExecutionCourse" property="trainingPeriodHours"/>
+			</td>
+			<td class="listClasses">
+				<bean:write name="infoExecutionCourse" property="tutorialOrientationHours"/>
 			</td>
 		</tr>
 
@@ -83,6 +117,16 @@
 						<th class="listClasses-header"><bean:message key="message.manager.praticalHours" />
 						</th>
 						<th class="listClasses-header"><bean:message key="message.manager.labHours" />
+						</th>
+						<th class="listClasses-header"><bean:message key="message.manager.fieldWorkHours" />
+						</th>
+						<th class="listClasses-header"><bean:message key="message.manager.problemsHours" />
+						</th>
+						<th class="listClasses-header"><bean:message key="message.manager.seminaryHours" />
+						</th>
+						<th class="listClasses-header"><bean:message key="message.manager.trainingPeriodHours" />
+						</th>
+						<th class="listClasses-header"><bean:message key="message.manager.tutorialOrientationHours" />
 						</th>
 					</tr>
 					<tr>
@@ -118,6 +162,48 @@
 								<font color="red"><bean:write name="curricularCourse" property="labHours"/></font>
 							</logic:notEqual>								
 						</td>
+						<td class="listClasses">
+							<logic:equal name="curricularCourse" property="fieldWorkHours" value="<%= fieldWork.toString() %>" >
+								<font color="#008000"><bean:write name="curricularCourse" property="fieldWorkHours"/></font>
+							</logic:equal>
+							<logic:notEqual name="curricularCourse" property="fieldWorkHours" value="<%= fieldWork.toString() %>">
+								<font color="red"><bean:write name="curricularCourse" property="fieldWorkHours"/></font>
+							</logic:notEqual>								
+						</td>
+
+						<td class="listClasses">
+							<logic:equal name="curricularCourse" property="problemsHours" value="<%= problems.toString() %>" >
+								<font color="#008000"><bean:write name="curricularCourse" property="problemsHours"/></font>
+							</logic:equal>
+							<logic:notEqual name="curricularCourse" property="problemsHours" value="<%= problems.toString() %>">
+								<font color="red"><bean:write name="curricularCourse" property="problemsHours"/></font>
+							</logic:notEqual>								
+						</td>
+						<td class="listClasses">
+							<logic:equal name="curricularCourse" property="seminaryHours" value="<%= seminary.toString() %>" >
+								<font color="#008000"><bean:write name="curricularCourse" property="seminaryHours"/></font>
+							</logic:equal>
+							<logic:notEqual name="curricularCourse" property="seminaryHours" value="<%= seminary.toString() %>">
+								<font color="red"><bean:write name="curricularCourse" property="seminaryHours"/></font>
+							</logic:notEqual>								
+						</td>
+						<td class="listClasses">
+							<logic:equal name="curricularCourse" property="trainingPeriodHours" value="<%= trainingPeriod.toString() %>" >
+								<font color="#008000"><bean:write name="curricularCourse" property="trainingPeriodHours"/></font>
+							</logic:equal>
+							<logic:notEqual name="curricularCourse" property="trainingPeriodHours" value="<%= trainingPeriod.toString() %>">
+								<font color="red"><bean:write name="curricularCourse" property="trainingPeriodHours"/></font>
+							</logic:notEqual>								
+						</td>
+						<td class="listClasses">
+							<logic:equal name="curricularCourse" property="tutorialOrientationHours" value="<%= tutorialOrientation.toString() %>" >
+								<font color="#008000"><bean:write name="curricularCourse" property="tutorialOrientationHours"/></font>
+							</logic:equal>
+							<logic:notEqual name="curricularCourse" property="tutorialOrientationHours" value="<%= tutorialOrientation.toString() %>">
+								<font color="red"><bean:write name="curricularCourse" property="tutorialOrientationHours"/></font>
+							</logic:notEqual>								
+						</td>
+
 					</tr>
 				</table>
 				<br />

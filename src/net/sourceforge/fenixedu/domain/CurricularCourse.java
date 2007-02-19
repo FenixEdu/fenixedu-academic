@@ -890,6 +890,35 @@ public class CurricularCourse extends CurricularCourse_Base {
 	return result;
     }
 
+    @Override
+    public Double getLabHours() {
+	Double result = 0.0;
+	if (super.getLabHours() != null) {
+	    result = super.getLabHours();
+	} else if (this.getCompetenceCourse() != null) {
+	    result = this.getCompetenceCourse().getLaboratorialHours();
+	}
+	return result;
+    }
+
+    @Override
+    public Double getPraticalHours() {
+	Double result = 0.0;
+	if (super.getPraticalHours() != null) {
+	    result = super.getPraticalHours();
+	}
+	return result;
+    }
+
+    @Override
+    public Double getTheoPratHours() {
+	Double result = 0.0;
+	if (super.getTheoPratHours() != null) {
+	    result = super.getTheoPratHours();
+	}
+	return result;
+    }
+
     public Double getTheoreticalHours(CurricularPeriod curricularPeriod) {
 	double result = 0.0;
 	if (this.getCompetenceCourse() != null) {
