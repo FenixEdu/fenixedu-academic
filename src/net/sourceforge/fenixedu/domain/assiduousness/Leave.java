@@ -75,24 +75,23 @@ public class Leave extends Leave_Base {
     }
 
     public DateTime getEndDate() {
-        return getDate().toDateTime(GregorianChronology.getInstanceUTC()).plus(getDuration())
-                .toDateTime(GregorianChronology.getInstanceUTC());
+        return getDate().plus(getDuration()).toDateTime(GregorianChronology.getInstanceUTC());
     }
 
     public TimeOfDay getEndTimeOfDay() {
         if (getJustificationMotive().getJustificationType().equals(JustificationType.OCCURRENCE)) {
             return null;
         }
-        return getDate().toDateTime(GregorianChronology.getInstanceUTC()).plus(getDuration())
-                .toDateTime(GregorianChronology.getInstanceUTC()).toTimeOfDay();
+        return getDate().plus(getDuration()).toDateTime(GregorianChronology.getInstanceUTC())
+                .toTimeOfDay();
     }
 
     public YearMonthDay getEndYearMonthDay() {
         if (getJustificationMotive().getJustificationType().equals(JustificationType.BALANCE)) {
             return null;
         }
-        return getDate().toDateTime(GregorianChronology.getInstanceUTC()).plus(getDuration())
-                .toDateTime(GregorianChronology.getInstanceUTC()).toYearMonthDay();
+        return getDate().plus(getDuration()).toDateTime(GregorianChronology.getInstanceUTC())
+                .toYearMonthDay();
     }
 
     public Partial getPartialEndDate() {
