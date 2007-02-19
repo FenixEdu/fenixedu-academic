@@ -1690,6 +1690,10 @@ public class Registration extends Registration_Base {
 		&& !hasAnyNotPayedGratuityEventsForPreviousYears();
     }
 
+    public Boolean getPayedOldTuition() {
+	return super.getPayedTuition() != null && super.getPayedTuition();
+    }
+
     public boolean getHasGratuityDebtsCurrently() {
 	return hasGratuityDebtsCurrently();
     }
