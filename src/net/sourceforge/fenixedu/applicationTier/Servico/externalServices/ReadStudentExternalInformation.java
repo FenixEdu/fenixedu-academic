@@ -33,6 +33,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 import pt.utl.ist.fenix.tools.util.StringAppender;
@@ -51,7 +52,8 @@ public class ReadStudentExternalInformation extends Service {
 	for (Iterator iter = students.iterator(); iter.hasNext();) {
 	    InfoStudentExternalInformation info = new InfoStudentExternalInformation();
 	    Registration registration = (Registration) iter.next();
-	    if (registration.getActiveStudentCurricularPlan() != null) {
+	    if (registration.getActiveState().getStateType() != RegistrationStateType.CANCELED
+		    && registration.getActiveStudentCurricularPlan() != null) {
 
 		info.setPerson(this.buildExternalPersonInfo(person));
 		info.setDegree(this.buildExternalDegreeCurricularPlanInfo(registration));
