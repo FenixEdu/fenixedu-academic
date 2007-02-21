@@ -80,6 +80,21 @@ public class ReadShiftsToEnroll extends Service {
 	} else if (shift.getTipo() == ShiftType.TEORICO_PRATICA) {
 	    result.setTheoricoPraticType(ShiftType.TEORICO_PRATICA);
 
+	} else if (shift.getTipo() == ShiftType.FIELD_WORK) {
+	    result.setFieldWorkType(ShiftType.FIELD_WORK);
+
+	} else if (shift.getTipo() == ShiftType.PROBLEMS) {
+	    result.setProblemsType(ShiftType.PROBLEMS);
+
+	} else if (shift.getTipo() == ShiftType.SEMINARY) {
+	    result.setSeminaryType(ShiftType.SEMINARY);
+
+	} else if (shift.getTipo() == ShiftType.TRAINING_PERIOD) {
+	    result.setTrainingType(ShiftType.TRAINING_PERIOD);
+
+	} else if (shift.getTipo() == ShiftType.TUTORIAL_ORIENTATION) {
+	    result.setTutorialOrientationType(ShiftType.TUTORIAL_ORIENTATION);
+
 	}
     }
 
@@ -99,6 +114,26 @@ public class ReadShiftsToEnroll extends Service {
 	} else if (shift.getDisciplinaExecucao() == attend.getDisciplinaExecucao()
 		&& shift.getTipo() == ShiftType.TEORICO_PRATICA) {
 	    result.setTheoricoPraticShift(shift);
+
+	} else if (shift.getDisciplinaExecucao() == attend.getDisciplinaExecucao()
+		&& shift.getTipo() == ShiftType.FIELD_WORK) {
+	    result.setFieldWorkShift(shift);
+
+	} else if (shift.getDisciplinaExecucao() == attend.getDisciplinaExecucao()
+		&& shift.getTipo() == ShiftType.PROBLEMS) {
+	    result.setProblemsShift(shift);
+
+	} else if (shift.getDisciplinaExecucao() == attend.getDisciplinaExecucao()
+		&& shift.getTipo() == ShiftType.SEMINARY) {
+	    result.setSeminaryShift(shift);
+
+	} else if (shift.getDisciplinaExecucao() == attend.getDisciplinaExecucao()
+		&& shift.getTipo() == ShiftType.TRAINING_PERIOD) {
+	    result.setTrainingShift(shift);
+
+	} else if (shift.getDisciplinaExecucao() == attend.getDisciplinaExecucao()
+		&& shift.getTipo() == ShiftType.TUTORIAL_ORIENTATION) {
+	    result.setTutorialOrientationShift(shift);
 	}
     }
 

@@ -82,6 +82,12 @@
 				<th title="Prática"><bean:message key="label.shiftType.pratic"/></th>
 				<th title="Laboratório"><bean:message key="label.shiftType.laboratory"/></th>
 				<th title="Teórico-prática"><bean:message key="label.shiftType.theoricoPratic"/></th>
+				<th title="<bean:message key="label.shiftType.description.fieldWork"/>"><bean:message key="label.shiftType.fieldWork"/></th>
+				<th title="<bean:message key="label.shiftType.description.problems"/>"><bean:message key="label.shiftType.problems"/></th>
+				<th title="<bean:message key="label.shiftType.description.seminary"/>"><bean:message key="label.shiftType.seminary"/></th>
+				<th title="<bean:message key="label.shiftType.description.trainingPeriod"/>"><bean:message key="label.shiftType.trainingPeriod"/></th>
+				<th title="<bean:message key="label.shiftType.description.tutorialOrientation"/>"><bean:message key="label.shiftType.tutorialOrientation"/></th>
+
 			</tr>			
 			<logic:iterate id="shiftToEnrol" name="shiftsToEnrolFromEnroledExecutionCourses" type="net.sourceforge.fenixedu.dataTransferObject.ShiftToEnrol">
 				<bean:define id="executionCourseID" name="shiftToEnrol" property="executionCourse.idInternal"/>
@@ -145,7 +151,77 @@
 					<logic:empty name="shiftToEnrol" property="theoricoPraticType">
 						<td></td>
 					</logic:empty>																				
-				</tr>														
+
+					<logic:notEmpty name="shiftToEnrol" property="fieldWorkType">
+						<logic:notEmpty name="shiftToEnrol" property="fieldWorkShift">
+							<td class="reservado"><bean:message key="label.shift.enrolled"/></td>
+						</logic:notEmpty>
+						<logic:empty name="shiftToEnrol" property="fieldWorkShift">
+							<td class="reservar"><html:link page="<%="/studentShiftEnrollmentManagerLoockup.do?method=" + link + "&amp;registrationOID=" 
+							+ registrationOID.toString() + "&amp;executionCourseID=" + executionCourseID %>">
+							<bean:message key="label.shift.toEnroll"/></html:link></td>
+						</logic:empty>
+					</logic:notEmpty>
+					<logic:empty name="shiftToEnrol" property="fieldWorkType">
+						<td></td>
+					</logic:empty>																				
+
+					<logic:notEmpty name="shiftToEnrol" property="problemsType">
+						<logic:notEmpty name="shiftToEnrol" property="problemsShift">
+							<td class="reservado"><bean:message key="label.shift.enrolled"/></td>
+						</logic:notEmpty>
+						<logic:empty name="shiftToEnrol" property="problemsShift">
+							<td class="reservar"><html:link page="<%="/studentShiftEnrollmentManagerLoockup.do?method=" + link + "&amp;registrationOID=" 
+							+ registrationOID.toString() + "&amp;executionCourseID=" + executionCourseID %>">
+							<bean:message key="label.shift.toEnroll"/></html:link></td>
+						</logic:empty>
+					</logic:notEmpty>
+					<logic:empty name="shiftToEnrol" property="problemsType">
+						<td></td>
+					</logic:empty>																				
+
+					<logic:notEmpty name="shiftToEnrol" property="seminaryType">
+						<logic:notEmpty name="shiftToEnrol" property="seminaryShift">
+							<td class="reservado"><bean:message key="label.shift.enrolled"/></td>
+						</logic:notEmpty>
+						<logic:empty name="shiftToEnrol" property="seminaryShift">
+							<td class="reservar"><html:link page="<%="/studentShiftEnrollmentManagerLoockup.do?method=" + link + "&amp;registrationOID=" 
+							+ registrationOID.toString() + "&amp;executionCourseID=" + executionCourseID %>">
+							<bean:message key="label.shift.toEnroll"/></html:link></td>
+						</logic:empty>
+					</logic:notEmpty>
+					<logic:empty name="shiftToEnrol" property="seminaryType">
+						<td></td>
+					</logic:empty>																				
+
+					<logic:notEmpty name="shiftToEnrol" property="trainingType">
+						<logic:notEmpty name="shiftToEnrol" property="trainingShift">
+							<td class="reservado"><bean:message key="label.shift.enrolled"/></td>
+						</logic:notEmpty>
+						<logic:empty name="shiftToEnrol" property="trainingShift">
+							<td class="reservar"><html:link page="<%="/studentShiftEnrollmentManagerLoockup.do?method=" + link + "&amp;registrationOID=" 
+							+ registrationOID.toString() + "&amp;executionCourseID=" + executionCourseID %>">
+							<bean:message key="label.shift.toEnroll"/></html:link></td>
+						</logic:empty>
+					</logic:notEmpty>
+					<logic:empty name="shiftToEnrol" property="trainingType">
+						<td></td>
+					</logic:empty>																				
+
+					<logic:notEmpty name="shiftToEnrol" property="tutorialOrientationType">
+						<logic:notEmpty name="shiftToEnrol" property="tutorialOrientationShift">
+							<td class="reservado"><bean:message key="label.shift.enrolled"/></td>
+						</logic:notEmpty>
+						<logic:empty name="shiftToEnrol" property="tutorialOrientationShift">
+							<td class="reservar"><html:link page="<%="/studentShiftEnrollmentManagerLoockup.do?method=" + link + "&amp;registrationOID=" 
+							+ registrationOID.toString() + "&amp;executionCourseID=" + executionCourseID %>">
+							<bean:message key="label.shift.toEnroll"/></html:link></td>
+						</logic:empty>
+					</logic:notEmpty>
+					<logic:empty name="shiftToEnrol" property="tutorialOrientationType">
+						<td></td>
+					</logic:empty>																				
+				</tr>
 			</logic:iterate>
 			</table>
 		</logic:notEmpty>

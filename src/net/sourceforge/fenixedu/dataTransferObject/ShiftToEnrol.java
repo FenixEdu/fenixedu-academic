@@ -17,6 +17,12 @@ public class ShiftToEnrol extends DataTranferObject {
 
     private ShiftType theoricoPraticType;
 
+    private ShiftType fieldWorkType;
+    private ShiftType problemsType;
+    private ShiftType seminaryType;
+    private ShiftType trainingType;
+    private ShiftType tutorialOrientationType;
+
     private DomainReference<Shift> theoricShift;
 
     private DomainReference<Shift> praticShift;
@@ -24,6 +30,12 @@ public class ShiftToEnrol extends DataTranferObject {
     private DomainReference<Shift> laboratoryShift;
 
     private DomainReference<Shift> theoricoPraticShift;
+
+    private DomainReference<Shift> fieldWorkShift;
+    private DomainReference<Shift> problemsShift;
+    private DomainReference<Shift> seminaryShift;
+    private DomainReference<Shift> trainingShift;
+    private DomainReference<Shift> tutorialOrientationShift;
 
     private boolean enrolled;
 
@@ -110,6 +122,86 @@ public class ShiftToEnrol extends DataTranferObject {
 
     public void setTheoricType(ShiftType theoricType) {
         this.theoricType = theoricType;
+    }
+
+    public ShiftType getFieldWorkType() {
+        return fieldWorkType;
+    }
+
+    public void setFieldWorkType(ShiftType fieldWorkType) {
+        this.fieldWorkType = fieldWorkType;
+    }
+
+    public ShiftType getProblemsType() {
+        return problemsType;
+    }
+
+    public void setProblemsType(ShiftType problemsType) {
+        this.problemsType = problemsType;
+    }
+
+    public ShiftType getSeminaryType() {
+        return seminaryType;
+    }
+
+    public void setSeminaryType(ShiftType seminaryType) {
+        this.seminaryType = seminaryType;
+    }
+
+    public ShiftType getTrainingType() {
+        return trainingType;
+    }
+
+    public void setTrainingType(ShiftType trainingType) {
+        this.trainingType = trainingType;
+    }
+
+    public ShiftType getTutorialOrientationType() {
+        return tutorialOrientationType;
+    }
+
+    public void setTutorialOrientationType(ShiftType tutorialOrientationType) {
+        this.tutorialOrientationType = tutorialOrientationType;
+    }
+
+    public Shift getFieldWorkShift() {
+        return fieldWorkShift == null ? null : fieldWorkShift.getObject();
+    }
+
+    public void setFieldWorkShift(Shift fieldWorkShift) {
+        this.fieldWorkShift = fieldWorkShift == null ? null : new DomainReference<Shift>(fieldWorkShift);
+    }
+
+    public Shift getProblemsShift() {
+        return problemsShift == null ? null : problemsShift.getObject();
+    }
+
+    public void setProblemsShift(Shift problemsShift) {
+        this.problemsShift = problemsShift == null ? null : new DomainReference<Shift>(problemsShift);
+    }
+
+    public Shift getSeminaryShift() {
+        return seminaryShift == null ? null : seminaryShift.getObject();
+    }
+
+    public void setSeminaryShift(Shift seminaryShift) {
+        this.seminaryShift = seminaryShift == null ? null : new DomainReference<Shift>(seminaryShift);
+    }
+
+    public Shift getTrainingShift() {
+        return trainingShift == null ? null : trainingShift.getObject();
+    }
+
+    public void setTrainingShift(Shift trainingShift) {
+        this.trainingShift = trainingShift == null ? null : new DomainReference<Shift>(trainingShift);
+    }
+
+    public Shift getTutorialOrientationShift() {
+        return tutorialOrientationShift == null ? null : tutorialOrientationShift.getObject();
+    }
+
+    public void setTutorialOrientationShift(Shift tutorialOrientationShift) {
+        this.tutorialOrientationShift = tutorialOrientationShift == null ? null : new DomainReference<Shift>(tutorialOrientationShift);
     }
 
 }
