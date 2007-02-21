@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
@@ -63,12 +64,12 @@ public class ShowClassesDispatchAction extends FenixContextDispatchAction {
     private Table organizeClassViews(final Degree degree, final ExecutionPeriod executionPeriod) {
         final Table classViewsTable = new Table(degree.buildFullCurricularYearList().size());
 
+        final DegreeCurricularPlan degreeCurricularPlan = findMostRecentDegreeCurricularPlan(degree, executionPeriod);
+
         final SortedSet<SchoolClass> schoolClasses = new TreeSet<SchoolClass>(new BeanComparator("nome"));
         for (final SchoolClass schoolClass : executionPeriod.getSchoolClasses()) {
         	final ExecutionDegree executionDegree = schoolClass.getExecutionDegree();
-        	final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
-
-        	if (degreeCurricularPlan.getDegree() == degree) {
+        	if (executionDegree.getDegreeCurricularPlan() == degreeCurricularPlan) {
         		schoolClasses.add(schoolClass);
         	}
         }
@@ -78,6 +79,28 @@ public class ShowClassesDispatchAction extends FenixContextDispatchAction {
         }
 
         return classViewsTable;
+    }
+
+    private DegreeCurricularPlan findMostRecentDegreeCurricularPlan(final Degree degree, final ExecutionPeriod executionPeriod) {
+	DegreeCurricularPlan result = null;
+	for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlansSet()) {
+	    if (hasExecutionDegreeForExecutionPeriod(degreeCurricularPlan, executionPeriod)) {
+		if (result == null || degreeCurricularPlan.getInitialDateYearMonthDay().compareTo(result.getInitialDateYearMonthDay()) > 0) {
+		    result = degreeCurricularPlan;
+		}
+	    }
+	}
+	return result;
+    }
+
+    private boolean hasExecutionDegreeForExecutionPeriod(final DegreeCurricularPlan degreeCurricularPlan, final ExecutionPeriod executionPeriod) {
+	final ExecutionYear executionYear = executionPeriod.getExecutionYear();
+	for (final ExecutionDegree executionDegree : executionYear.getExecutionDegreesSet()) {
+	    if (degreeCurricularPlan == executionDegree.getDegreeCurricularPlan()) {
+		return true;
+	    }
+	}
+	return false;
     }
 
     private ClassView newClassView(final SchoolClass schoolClass) {
