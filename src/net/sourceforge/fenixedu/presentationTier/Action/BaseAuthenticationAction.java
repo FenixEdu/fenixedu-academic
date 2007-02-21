@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.I18NFilter;
+import net.sourceforge.fenixedu.util.HostAccessControl;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -152,10 +153,11 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 
     public static String getRemoteHostName(HttpServletRequest request) {
 	String remoteHostName;
+	final String remoteAddress = HostAccessControl.getRemoteAddress(request);
 	try {
-	    remoteHostName = InetAddress.getByName(request.getRemoteAddr()).getHostName();
+	    remoteHostName = InetAddress.getByName(remoteAddress).getHostName();
 	} catch (UnknownHostException e) {
-	    remoteHostName = request.getRemoteHost();
+	    remoteHostName = remoteAddress;
 	}
 	return remoteHostName;
     }

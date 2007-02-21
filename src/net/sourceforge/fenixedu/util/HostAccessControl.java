@@ -126,7 +126,7 @@ public class HostAccessControl {
         return false;
     }
 
-    private static String getRemoteAddress(ServletRequest request) {
+    public static String getRemoteAddress(ServletRequest request) {
 	if (request instanceof HttpServletRequest) {
 	    final HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 	    final String xForwardFor = httpServletRequest.getHeader("x-forwarded-for");
