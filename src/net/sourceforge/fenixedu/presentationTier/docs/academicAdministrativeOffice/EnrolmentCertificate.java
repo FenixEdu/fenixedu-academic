@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice;
 
+import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -37,11 +38,9 @@ public class EnrolmentCertificate extends AdministrativeOfficeDocument {
 	
 	StringBuilder enrolmentsInfo = new StringBuilder();
 	if (enrolmentCertificateRequest.getDetailed()) {
-	    enrolmentsInfo.append("\t\t").append(curricularYear).append(".ANO\n");
-
 	    final ComparatorChain comparatorChain = new ComparatorChain();
 	    comparatorChain.addComparator(new BeanComparator("executionPeriod.executionYear"));
-	    comparatorChain.addComparator(new BeanComparator("name"));
+	    comparatorChain.addComparator(new BeanComparator("name.content", Collator.getInstance()));
 	    Collections.sort(enrolments, comparatorChain);
 	    
 	    for (final Enrolment enrolment : enrolments) {
