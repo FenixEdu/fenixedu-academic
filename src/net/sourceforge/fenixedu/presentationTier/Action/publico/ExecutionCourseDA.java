@@ -172,6 +172,7 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
             }
         }
         request.setAttribute("attendsMap", attendsMap);
+        request.setAttribute("dont-cache-pages-in-search-engines", Boolean.TRUE);
         return mapping.findForward("execution-course-marks");
     }
 

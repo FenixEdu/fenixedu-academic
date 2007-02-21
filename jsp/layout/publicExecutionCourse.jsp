@@ -9,6 +9,11 @@
 
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+		<logic:present name="dont-cache-pages-in-search-engines">
+			<logic:equal name="dont-cache-pages-in-search-engines" value="true">
+				<meta name="ROBOTS" content="NOINDEX, NOFOLLOW"/>
+			</logic:equal>
+		</logic:present>
 
 		<link rel="stylesheet" type="text/css" media="screen" href="<%= request.getContextPath() %>/CSS/iststyle.css" />
 		<link rel="stylesheet" type="text/css" media="screen" href="<%= request.getContextPath() %>/CSS/execution_course.css" />
