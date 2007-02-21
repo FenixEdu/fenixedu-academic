@@ -33,6 +33,10 @@ public class DocumentRequestTypeProvider implements DataProvider {
 		.getAdministrativeOfficeType())) {
 	    result.add(DocumentRequestType.ENROLMENT_CERTIFICATE);
 	}
+	if (administrativeOfficeType.equals(DocumentRequestType.APPROVEMENT_CERTIFICATE
+		.getAdministrativeOfficeType())) {
+	    result.add(DocumentRequestType.APPROVEMENT_CERTIFICATE);
+	}
 	
 // Once all DocumentRequestTypes are allowed, this provider should look like this:
 //
