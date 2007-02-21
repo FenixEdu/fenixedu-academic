@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary;
 import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Delegate;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.MarkType;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
@@ -228,7 +229,7 @@ public class Degree extends Degree_Base {
 	    Integer minimalYearForOptionalCourses, Double neededCredits, MarkType markType,
 	    Integer numerusClausus, String anotation, GradeScale gradeScale) {
 	if (!this.isBolonhaDegree()) {
-	    for (DegreeCurricularPlan dcp : this.getDegreeCurricularPlans()) {
+	    for (DegreeCurricularPlan dcp : this.getDegreeCurricularPlansSet()) {
 		if (dcp.getName().equalsIgnoreCase(name)) {
 		    throw new DomainException("DEGREE.degreeCurricularPlan.existing.name.and.degree");
 		}
@@ -248,7 +249,7 @@ public class Degree extends Degree_Base {
 	    if (name == null) {
 		throw new DomainException("DEGREE.degree.curricular.plan.name.cannot.be.null");
 	    }
-	    for (DegreeCurricularPlan dcp : this.getDegreeCurricularPlans()) {
+	    for (DegreeCurricularPlan dcp : this.getDegreeCurricularPlansSet()) {
 		if (dcp.getName().equalsIgnoreCase(name)) {
 		    throw new DomainException("DEGREE.degreeCurricularPlan.existing.name.and.degree");
 		}
@@ -287,7 +288,7 @@ public class Degree extends Degree_Base {
     public List<DegreeCurricularPlan> findDegreeCurricularPlansByState(DegreeCurricularPlanState state) {
 	List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
 	if (!isBolonhaDegree()) {
-	    for (DegreeCurricularPlan degreeCurricularPlan : this.getDegreeCurricularPlans()) {
+	    for (DegreeCurricularPlan degreeCurricularPlan : this.getDegreeCurricularPlansSet()) {
 		if (degreeCurricularPlan.getState().equals(state)) {
 		    result.add(degreeCurricularPlan);
 		}
@@ -296,9 +297,41 @@ public class Degree extends Degree_Base {
 	return result;
     }
 
+    public List<DegreeCurricularPlan> getActiveDegreeCurricularPlans() {
+	List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
+
+	for (DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlansSet()) {
+	    if (degreeCurricularPlan.getState() == DegreeCurricularPlanState.ACTIVE) {
+		result.add(degreeCurricularPlan);
+	    }
+	}
+
+	return result;
+    }
+
+    public List<DegreeCurricularPlan> getDegreeCurricularPlansForYear(ExecutionYear year) {
+	List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
+	for (final DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlansSet()) {
+	    if (degreeCurricularPlan.hasExecutionDegreeFor(year)) {
+		result.add(degreeCurricularPlan);
+	    }
+	}
+	return result;
+    }
+
+    public List<ExecutionYear> getDegreeCurricularPlansExecutionYears() {
+	Set<ExecutionYear> result = new TreeSet<ExecutionYear>();
+	for (final DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlansSet()) {
+	    for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
+		result.add(executionDegree.getExecutionYear());
+	    }
+	}
+	return new ArrayList<ExecutionYear>(result);
+    }
+
     public List<CurricularCourse> getExecutedCurricularCoursesByExecutionYear(ExecutionYear executionYear) {
 	List<CurricularCourse> result = new ArrayList<CurricularCourse>();
-	for (DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlans()) {
+	for (DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlansSet()) {
 	    if (degreeCurricularPlan.getState().equals(DegreeCurricularPlanState.ACTIVE)) {
 		for (CurricularCourse course : degreeCurricularPlan.getCurricularCourses()) {
 		    if (!course.isBolonha()) {
@@ -319,7 +352,7 @@ public class Degree extends Degree_Base {
     public List<CurricularCourse> getExecutedCurricularCoursesByExecutionYearAndYear(
 	    ExecutionYear executionYear, Integer curricularYear) {
 	List<CurricularCourse> result = new ArrayList<CurricularCourse>();
-	for (DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlans()) {
+	for (DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlansSet()) {
 	    if (degreeCurricularPlan.getState().equals(DegreeCurricularPlanState.ACTIVE)) {
 		for (CurricularCourse course : degreeCurricularPlan.getCurricularCourses()) {
 		    if (!course.isBolonha()) {
@@ -438,18 +471,16 @@ public class Degree extends Degree_Base {
 	return mostRecentDegreeCurricularPlan;
     }
 
-    public List<DegreeCurricularPlan> getActiveDegreeCurricularPlans() {
-	List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
-
-	for (DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlans()) {
-	    if (degreeCurricularPlan.getState() == DegreeCurricularPlanState.ACTIVE) {
-		result.add(degreeCurricularPlan);
-	    }
+    public Collection<Registration> getActiveRegistrations() {
+	final Collection<Registration> result = new HashSet<Registration>();
+	
+	for (final DegreeCurricularPlan degreeCurricularPlan : getActiveDegreeCurricularPlans()) {
+	    result.addAll(degreeCurricularPlan.getActiveRegistrations());
 	}
-
+	
 	return result;
     }
-
+    
     // -------------------------------------------------------------
     // read static methods
     // -------------------------------------------------------------
@@ -644,7 +675,7 @@ public class Degree extends Degree_Base {
     
     public Collection<Teacher> getResponsibleCoordinatorsTeachers(ExecutionYear executionYear) {
 	Set<Teacher> result = new TreeSet<Teacher>(Teacher.TEACHER_COMPARATOR_BY_CATEGORY_AND_NUMBER);
-	for (final DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlans()) {
+	for (final DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlansSet()) {
 	    final ExecutionDegree executionDegree = degreeCurricularPlan
 		    .getExecutionDegreeByYear(executionYear);
 	    if (executionDegree != null) {
@@ -681,7 +712,7 @@ public class Degree extends Degree_Base {
 
     public Collection<Campus> getCampus(ExecutionYear executionYear) {
 	Set<Campus> result = new HashSet<Campus>();
-	for (final DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlans()) {
+	for (final DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlansSet()) {
 	    final ExecutionDegree executionDegree = degreeCurricularPlan
 		    .getExecutionDegreeByYear(executionYear);
 	    if (executionDegree != null && executionDegree.hasCampus()) {
@@ -715,16 +746,6 @@ public class Degree extends Degree_Base {
 		: "";
     }
 
-    public List<ExecutionYear> getDegreeCurricularPlansExecutionYears() {
-	Set<ExecutionYear> result = new TreeSet<ExecutionYear>();
-	for (final DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlansSet()) {
-	    for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
-		result.add(executionDegree.getExecutionYear());
-	    }
-	}
-	return new ArrayList<ExecutionYear>(result);
-    }
-
     public DegreeType getBolonhaDegreeType() {
 	return this.getTipoCurso();
     }
@@ -738,16 +759,6 @@ public class Degree extends Degree_Base {
 	    multiLanguageString.setContent(Language.en, getNameEn());
 	}
 	return multiLanguageString;
-    }
-
-    public List<DegreeCurricularPlan> getDegreeCurricularPlansForYear(ExecutionYear year) {
-	List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
-	for (final DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlansSet()) {
-	    if (degreeCurricularPlan.hasExecutionDegreeFor(year)) {
-		result.add(degreeCurricularPlan);
-	    }
-	}
-	return result;
     }
 
 }
