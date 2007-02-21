@@ -46,22 +46,28 @@ public class UnitUtils {
 	return allUnitsWithoutParent;
     }
 
-    public static List<Unit> readAllUnitsByType(PartyTypeEnum type) {
+    public static List<Unit> readAllActiveUnitsByType(PartyTypeEnum type) {
 	final List<Unit> result = new ArrayList<Unit>();
 	final YearMonthDay now = new YearMonthDay();
-	for (Party party : RootDomainObject.getInstance().getPartys()) {
-	    if (party instanceof Unit) {
-		Unit unit = (Unit) party;
-		if (unit.isActive(now) && unit.getType() == type) {
-		    result.add(unit);
+	
+	PartyType partyType = PartyType.readPartyTypeByType(type);
+	if(partyType != null) {
+	    List<Party> parties = partyType.getParties();
+	    for (Party party : parties) {
+		if (party instanceof Unit) {
+		    Unit unit = (Unit) party;
+                    if (unit.isActive(now)) {
+                        result.add(unit);
+                    }
 		}
 	    }
 	}
+	
 	return result;
     }
 
     public static List<Unit> readAllDepartmentUnits() {
-	return readAllUnitsByType(PartyTypeEnum.DEPARTMENT);
+	return readAllActiveUnitsByType(PartyTypeEnum.DEPARTMENT);
     }
 
     public static Unit readUnitWithoutParentstByAcronym(String acronym) {

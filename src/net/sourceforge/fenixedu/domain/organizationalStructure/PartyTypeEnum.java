@@ -36,18 +36,14 @@ public enum PartyTypeEnum {
     DIVERSE_CONSTRUCTION_BUILDING,
     OUT,
     SERVICES,
-    AGGREGATE_UNIT,
-    
+    AGGREGATE_UNIT,    
     PLANET,
     COUNTRY,
     UNIVERSITY,
     SCHOOL,
     
-
     // PERSON ENUMERATIONS
-    
-    
-    
+            
     // GERAL    
     UNKNOWN;
             

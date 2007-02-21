@@ -11,9 +11,9 @@ public class SearchResearchUnits extends AbstractSearchObjects {
 
 	public List run(Class type, String value, int limit, Map<String, String> arguments) {
 	
-		 List<Unit> units = UnitUtils.readAllUnitsByType(PartyTypeEnum.SCIENCE_INFRASTRUCTURE);
-		 units.addAll(UnitUtils.readAllUnitsByType(PartyTypeEnum.RESEARCH_UNIT));
-		 units.addAll(UnitUtils.readAllUnitsByType(PartyTypeEnum.ASSOCIATED_LABORATORY));
+		 List<Unit> units = UnitUtils.readAllActiveUnitsByType(PartyTypeEnum.SCIENCE_INFRASTRUCTURE);
+		 units.addAll(UnitUtils.readAllActiveUnitsByType(PartyTypeEnum.RESEARCH_UNIT));
+		 units.addAll(UnitUtils.readAllActiveUnitsByType(PartyTypeEnum.ASSOCIATED_LABORATORY));
 		 	
 		 return super.process(units, value, limit, arguments);
 	}

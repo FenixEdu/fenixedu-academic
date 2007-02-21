@@ -3282,9 +3282,7 @@ class net.sourceforge.fenixedu.domain.Seminaries.Theme extends net.sourceforge.f
 }
 
 class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.sourceforge.fenixedu.domain.DomainObject {
-	//Integer keyPartyType;
-	
-	PartyType type;
+	Integer keyPartyType;	
 	Integer keyParkingParty;
 	Integer keyQuestionBank;
 	
@@ -3362,7 +3360,6 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 	 
 class net.sourceforge.fenixedu.domain.organizationalStructure.PartyType extends net.sourceforge.fenixedu.domain.DomainObject {	
 	PartyType type;
-	String name;
 }	 
 	 
 class net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType extends net.sourceforge.fenixedu.domain.DomainObject {	
@@ -8272,14 +8269,12 @@ relation PartyAnnouncementBoard {
 	net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole party;
 }
 
-/*
 relation PartyPartyType {
 	net.sourceforge.fenixedu.domain.organizationalStructure.PartyType playsRole partyType;	 
 	net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole parties {
 	   multiplicity *;
 	}
 }
-*/
 
 relation PartyTypeParentConnectionRule {
 	net.sourceforge.fenixedu.domain.organizationalStructure.PartyType playsRole allowedParentPartyType;

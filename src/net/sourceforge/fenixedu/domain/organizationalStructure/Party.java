@@ -145,6 +145,22 @@ public abstract class Party extends Party_Base {
 	return result;
     }
     
+    public PartyTypeEnum getType() {
+	return getPartyType() != null ? getPartyType().getType() : null;
+    }
+    
+    public void setType(PartyTypeEnum partyTypeEnum) {
+        if(partyTypeEnum != null) {
+            PartyType partyType = PartyType.readPartyTypeByType(partyTypeEnum);
+            if(partyType == null) {
+                throw new DomainException("error.Party.unknown.partyType");
+            }
+            setPartyType(partyType);
+        } else {
+            setPartyType(null);
+        }
+    }
+
     public Collection<? extends Accountability> getParentAccountabilities(
 	    AccountabilityTypeEnum accountabilityTypeEnum) {
 	final Set<Accountability> result = new HashSet<Accountability>();

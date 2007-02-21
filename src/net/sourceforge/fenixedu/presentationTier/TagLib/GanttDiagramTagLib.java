@@ -54,11 +54,11 @@ public class GanttDiagramTagLib extends TagSupport {
         
     private static BigDecimal EMPTY_UNIT = BigDecimal.ZERO;
         
-    private static int numberOf5MinUnits = 288;  
+    private static int NUMBER_OF_5_MINUTES = 288;  
     
-    private static int numberOfDayHalfHours = 48;
+    private static int NUMBER_OF_DAY_HALF_HOURS = 48;
     
-    private static int numberOfHours = 24;
+    private static int NUMBER_OF_HOURS = 24;
     
     
     public int doStartTag() throws JspException {
@@ -92,23 +92,23 @@ public class GanttDiagramTagLib extends TagSupport {
 	    return generateGanttDiagramInTotalMode().toString();
 	    
 	case MONTHLY:
-	    return generateGanttDiagramInTimeMode().toString();
+	    return generateGanttDiagramInTimeMode(BigDecimal.valueOf(getGanttDiagramObject().getDays().size()).multiply(convertToEm(NUMBER_OF_HOURS))).toString();
 	    
 	case WEEKLY:	    	    
-	    return generateGanttDiagramInTimeMode().toString();
+	    return generateGanttDiagramInTimeMode(BigDecimal.valueOf(7).multiply(convertToEm(NUMBER_OF_DAY_HALF_HOURS))).toString();
 	
 	case DAILY:
-	    return generateGanttDiagramInTimeMode().toString();
+	    return generateGanttDiagramInTimeMode(convertToEm(NUMBER_OF_5_MINUTES)).toString();
 	    
 	default:
 	    return "";
 	}
     }     
            
-    private StringBuilder generateGanttDiagramInTimeMode() throws JspException {
+    private StringBuilder generateGanttDiagramInTimeMode(BigDecimal tableWidth) throws JspException {
 	StringBuilder builder = new StringBuilder();	
 	if(!getEvents().isEmpty()) {
-            builder.append("<table class=\"tcalendar thlight\">");
+            builder.append("<table style=\"width:").append(tableWidth.add(BigDecimal.valueOf(50))).append("em;\" class=\"tcalendar thlight\">");
             
             generateHeaders(builder);
             
@@ -626,13 +626,13 @@ public class GanttDiagramTagLib extends TagSupport {
 	switch (getViewTypeEnum()) {
 	    
 	case WEEKLY:
-	    return getNumberOfDayHalfHours();
+	    return NUMBER_OF_DAY_HALF_HOURS;
 
 	case DAILY:
-	    return getNumberOf5MinUnits();
+	    return NUMBER_OF_5_MINUTES;
 
 	case MONTHLY:
-	    return getNumberOfHours();
+	    return NUMBER_OF_HOURS;
 
 	default:
 	    break;	   
@@ -731,23 +731,7 @@ public class GanttDiagramTagLib extends TagSupport {
 
     public void setFirstDayParameter(String firstDayParameter) {
         this.firstDayParameter = firstDayParameter;
-    }
-
-    public int getNumberOf5MinUnits() {
-        return numberOf5MinUnits;
-    }
-
-    public void setNumberOf5MinUnits(int numberOf5MinUnits) {
-        this.numberOf5MinUnits = numberOf5MinUnits;
-    }
-
-    public int getNumberOfDayHalfHours() {
-        return numberOfDayHalfHours;
-    }
-
-    public void setNumberOfDayHalfHours(int numberOfDayHalfHours) {
-        this.numberOfDayHalfHours = numberOfDayHalfHours;
-    }
+    } 
 
     public String getDailyViewUrl() {
         return dailyViewUrl;
@@ -771,13 +755,5 @@ public class GanttDiagramTagLib extends TagSupport {
 
     public void setWeeklyViewUrl(String weeklyViewUrl) {
         this.weeklyViewUrl = weeklyViewUrl;
-    }
-
-    public int getNumberOfHours() {
-        return numberOfHours;
-    }
-
-    public void setNumberOfHours(int numberOfHalfDays) {
-        this.numberOfHours = numberOfHalfDays;
-    }
+    } 
 }

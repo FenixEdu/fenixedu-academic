@@ -231,7 +231,9 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
 		if(getFrequency().equals(FrequencyType.DAILY)) {
 		    saturday = getDailyFrequencyMarkSaturday() ? "S" : "";
 		    sunday = getDailyFrequencyMarkSunday() ? "D" : "";
-		    marker = "-";
+		    if(getDailyFrequencyMarkSaturday() || getDailyFrequencyMarkSunday()) {
+			marker = "-";
+		    }
 		}			
 		return "[" + getFrequency().getAbbreviation() + marker + saturday + sunday + "] " + prettyPrint;
 	    }
