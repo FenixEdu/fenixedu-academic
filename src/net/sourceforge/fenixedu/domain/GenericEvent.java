@@ -195,10 +195,11 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
 	if(!getRoomOccupations().isEmpty()) {
 	    String prettyPrint = getRoomOccupations().get(0).getPrettyPrint();
 	    if(getFrequency() != null) {		
-		String saturday = getDailyFrequencyMarkSaturday() ? "S" : ""; 
-		String sunday = getDailyFrequencyMarkSunday() ? "D" : "";
+		String saturday = getDailyFrequencyMarkSaturday() != null && getDailyFrequencyMarkSaturday() ? "S" : ""; 
+		String sunday = getDailyFrequencyMarkSunday() != null && getDailyFrequencyMarkSunday() ? "D" : "";
 		String marker = "";
-		if(!StringUtils.isEmpty(saturday) || !StringUtils.isEmpty(sunday)) {
+		if(getFrequency().equals(FrequencyType.DAILY) && 
+			!StringUtils.isEmpty(saturday) || !StringUtils.isEmpty(sunday)) {
 		    marker = "-";
 		}			
 		return "[" + getFrequency().getAbbreviation() + marker + saturday + sunday + "] " + prettyPrint;
