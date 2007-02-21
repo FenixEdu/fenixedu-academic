@@ -1365,16 +1365,42 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	return false;
     }
 
-    public Set<Registration> getRegistrations() {
-	Set<Registration> registrations = new HashSet<Registration>();
+    public Collection<StudentCurricularPlan> getActiveStudentCurricularPlans() {
+	final Collection<StudentCurricularPlan> result = new HashSet<StudentCurricularPlan>();
+	
 	for (StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
 	    if (studentCurricularPlan.isActive()) {
-		registrations.add(studentCurricularPlan.getRegistration());
+		result.add(studentCurricularPlan);
 	    }
 	}
+	
+	return result;
+    }
+    
+    public Set<Registration> getRegistrations() {
+	final Set<Registration> registrations = new HashSet<Registration>();
+	
+	for (StudentCurricularPlan studentCurricularPlan : getActiveStudentCurricularPlans()) {
+	    registrations.add(studentCurricularPlan.getRegistration());
+	}
+
 	return registrations;
     }
 
+    public Collection<Registration> getActiveRegistrations() {
+	final Collection<Registration> result = new HashSet<Registration>();
+	
+	for (StudentCurricularPlan studentCurricularPlan : getActiveStudentCurricularPlans()) {
+	    final Registration registration = studentCurricularPlan.getRegistration();
+			
+	    if (registration.isActive()) {
+		result.add(registration);
+	    }
+	}
+	
+	return result;
+    }
+    
     public boolean isPast() {
 	return getState().equals(DegreeCurricularPlanState.PAST);
     }
