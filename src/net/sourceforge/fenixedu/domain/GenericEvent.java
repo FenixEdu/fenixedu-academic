@@ -2,9 +2,10 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashSet;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
@@ -15,12 +16,20 @@ import net.sourceforge.fenixedu.util.HourMinuteSecond;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 import net.sourceforge.fenixedu.util.renderer.GanttDiagramEvent;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
 public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent {
+    
+    public static final Comparator<GenericEvent> COMPARATOR_BY_BEGIN_DATE = new ComparatorChain();
+    static {
+	((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(new BeanComparator("beginDate"), true);
+	((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(new BeanComparator("beginTime"), true);
+	((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(new BeanComparator("idInternal"));
+    }
     
     public GenericEvent(MultiLanguageString title, MultiLanguageString description, List<OldRoom> rooms, 
 	    YearMonthDay beginDate, YearMonthDay endDate, HourMinuteSecond beginTime, 
@@ -30,7 +39,7 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
 	super();        		
 	
 	if(rooms.isEmpty()) {
-	    throw new DomainException("error.empty.room.to.create.room.occupation");
+	    throw new DomainException("error.GenericEvent.empty.rooms");
 	}		
 	
         if(request != null) {  
@@ -50,9 +59,8 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
 	}
     }  
     
-    public void edit(MultiLanguageString title, MultiLanguageString description, List<OldRoom> newRooms,
-	    List<RoomOccupation> roomOccupationsToRemove) {	
-	
+    public void edit(MultiLanguageString title, MultiLanguageString description, List<OldRoom> newRooms, List<RoomOccupation> roomOccupationsToRemove) {	
+		
 	if(getPunctualRoomsOccupationRequest() != null && 
 		getPunctualRoomsOccupationRequest().getCurrentState().equals(RequestState.RESOLVED)) {
             throw new DomainException("error.GenericEvent.request.was.resolved");
@@ -75,7 +83,11 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
 	
 	for (OldRoom room : newRooms) {	
 	    new RoomOccupation(room, beginDate, endDate, beginTime, endTime, frequency, this, markSaturday, markSunday);
-        }					       
+        }	
+	
+	if(getRoomOccupations().isEmpty()) {
+	    throw new DomainException("error.GenericEvent.empty.rooms");
+	}
     }       
     
     @Override
@@ -104,15 +116,21 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
 	deleteDomainObject();
     }
               
-    public static Set<GenericEvent> getActiveGenericEventsForRoomOccupations(){
-	Set<RoomOccupation> punctualRoomOccupations = RoomOccupation.getActivePunctualRoomOccupations();
-	Set<GenericEvent> result = new HashSet<GenericEvent>();
-	for (RoomOccupation occupation : punctualRoomOccupations) {
-	    result.add(occupation.getGenericEvent());
+    public static Set<GenericEvent> getActiveGenericEventsForRoomOccupations(){	
+	Set<GenericEvent> result = new TreeSet<GenericEvent>(COMPARATOR_BY_BEGIN_DATE);
+	for (GenericEvent genericEvent : RootDomainObject.getInstance().getGenericEvents()) {
+	    if(genericEvent.isActive()) {
+		result.add(genericEvent);
+	    }
 	}
 	return result;
     }
     
+    public boolean isActive() {
+	DateTime lastInstant = getLastInstant();
+	return (lastInstant == null) || (lastInstant != null && !lastInstant.isBeforeNow()) ? true : false;
+    }
+
     public List<OldRoom> getAssociatedRooms(){
 	List<OldRoom> result = new ArrayList<OldRoom>();
 	for (RoomOccupation occupation : getRoomOccupationsSet()) {
@@ -207,13 +225,12 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
 
     public String getEventPeriodForGanttDiagram() {
 	if(!getRoomOccupations().isEmpty()) {
-	    String prettyPrint = getRoomOccupations().get(0).getPrettyPrint();
+	    String prettyPrint = getRoomOccupations().get(0).getPrettyPrint();	    
 	    if(getFrequency() != null) {		
-		String saturday = getDailyFrequencyMarkSaturday() != null && getDailyFrequencyMarkSaturday() ? "S" : ""; 
-		String sunday = getDailyFrequencyMarkSunday() != null && getDailyFrequencyMarkSunday() ? "D" : "";
-		String marker = "";
-		if(getFrequency().equals(FrequencyType.DAILY) && 
-			!StringUtils.isEmpty(saturday) || !StringUtils.isEmpty(sunday)) {
+		String saturday = "", sunday = "", marker = "";		
+		if(getFrequency().equals(FrequencyType.DAILY)) {
+		    saturday = getDailyFrequencyMarkSaturday() ? "S" : "";
+		    sunday = getDailyFrequencyMarkSunday() ? "D" : "";
 		    marker = "-";
 		}			
 		return "[" + getFrequency().getAbbreviation() + marker + saturday + sunday + "] " + prettyPrint;

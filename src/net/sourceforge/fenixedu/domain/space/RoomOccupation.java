@@ -9,8 +9,6 @@ import java.util.Calendar;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
-import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.GenericEvent;
@@ -97,6 +95,11 @@ public class RoomOccupation extends RoomOccupation_Base {
         OccupationPeriod occupationPeriod = OccupationPeriod.readOccupationPeriod(beginDate, endDate);
         if(occupationPeriod == null) {
             occupationPeriod = new OccupationPeriod(beginDate, endDate);
+        }
+                       
+        if(frequencyType != null &&
+        	frequencyType.equals(FrequencyType.DAILY) && (markSaturday == null || markSunday == null)) {
+            throw new DomainException("error.roomOccupation.invalid.dailyFrequency");
         }
         
         if(!room.isFree(occupationPeriod, beginTimeCalendar, endTimeCalendar, diaSemana, frequency, 1, markSaturday, markSunday)) {
@@ -232,7 +235,7 @@ public class RoomOccupation extends RoomOccupation_Base {
             
             occupationPeriod = occupationPeriod.getNextPeriod();             
         }
-        
+                
 	return result;            		
     }	
           
@@ -276,17 +279,7 @@ public class RoomOccupation extends RoomOccupation_Base {
 	return new Interval(
 		begin.toDateTime(new TimeOfDay(beginTime.getHour(), beginTime.getMinuteOfHour(), 0, 0)),			
 		end.toDateTime(new TimeOfDay(endTime.getHour(), endTime.getMinuteOfHour(), 0, 0)));
-    }        
-    
-    public static Set<RoomOccupation> getActivePunctualRoomOccupations(){	
-	Set<RoomOccupation> result = new TreeSet<RoomOccupation>(COMPARATOR_BY_BEGIN_DATE);
-	for (RoomOccupation occupation : RootDomainObject.getInstance().getRoomOccupationsSet()) {
-	    if(occupation.getGenericEvent() != null && !occupation.getLastInstant().isBeforeNow()) {
-		result.add(occupation);
-	    }	
-	}	
-	return result;	
-    }
+    }            
     
     public Calendar getStartTime() {
         if (this.getStartTimeDate() != null) {

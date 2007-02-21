@@ -77,9 +77,13 @@ public class SopRoomTimeTableLessonContentRenderer implements LessonSlotContentR
         } else if (showOccupation instanceof InfoGenericEvent) {
             InfoGenericEvent infoGenericEvent = (InfoGenericEvent) showOccupation;            
             strBuffer.append("<span title=\"").append(infoGenericEvent.getDescription()).append("\">");
-            strBuffer.append("<a href=\"roomsPunctualScheduling.do?method=prepareView&genericEventID=").append(infoGenericEvent.getIdInternal()).append("\">");
-            strBuffer.append(infoGenericEvent.getTitle());
-            strBuffer.append("</a>");            
+            if(infoGenericEvent.getGenericEvent().isActive()) {
+        	strBuffer.append("<a href=\"roomsPunctualScheduling.do?method=prepareView&genericEventID=").append(infoGenericEvent.getIdInternal()).append("\">");
+        	strBuffer.append(infoGenericEvent.getTitle());
+        	strBuffer.append("</a>");            
+            } else {
+        	strBuffer.append(infoGenericEvent.getTitle());
+            }            
             strBuffer.append("</span>");            
         }
    
