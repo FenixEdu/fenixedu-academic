@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -9,6 +10,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 import net.sourceforge.fenixedu.util.renderer.GanttDiagramEvent;
@@ -119,6 +121,10 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
 	return result;
     }
     
+    public DiaSemana getWeekDay() {
+	return (!getRoomOccupations().isEmpty()) ? getRoomOccupations().get(0).getDayOfWeek() : null;
+    }
+    
     public Boolean getDailyFrequencyMarkSaturday() {
 	return (!getRoomOccupations().isEmpty()) ? getRoomOccupations().get(0).getDailyFrequencyMarkSaturday() : null;
     }
@@ -141,6 +147,14 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
     
     public YearMonthDay getEndDate() {
 	return (!getRoomOccupations().isEmpty()) ? getRoomOccupations().get(0).getPeriod().getEndYearMonthDay() : null;
+    }
+    
+    public Calendar getBeginTimeCalendar() {
+	return (!getRoomOccupations().isEmpty()) ? getRoomOccupations().get(0).getStartTime() : null;
+    }
+    
+    public Calendar getEndTimeCalendar() {
+	return (!getRoomOccupations().isEmpty()) ? getRoomOccupations().get(0).getEndTime() : null;
     }
     
     public HourMinuteSecond getBeginTime() {

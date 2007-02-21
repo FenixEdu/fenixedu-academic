@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.renderers;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
+import net.sourceforge.fenixedu.dataTransferObject.InfoGenericEvent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenTest;
@@ -45,6 +46,7 @@ public class SopRoomTimeTableLessonContentRenderer implements LessonSlotContentR
             if (lesson.getFrequency().intValue() == RoomOccupation.QUINZENAL) {
                 strBuffer.append("&nbsp;&nbsp;[Q]");
             }
+            
         } else if (showOccupation instanceof InfoExam) {
             InfoExam infoExam = (InfoExam) showOccupation;
             for (int iterEC = 0; iterEC < infoExam.getAssociatedExecutionCourse().size(); iterEC++) {
@@ -59,6 +61,7 @@ public class SopRoomTimeTableLessonContentRenderer implements LessonSlotContentR
             strBuffer.append(" - ");
             strBuffer.append(infoExam.getSeason().getSeason());
             strBuffer.append("ª época");
+            
         } else if (showOccupation instanceof InfoWrittenTest) {
             InfoWrittenTest infoWrittenTest = (InfoWrittenTest) showOccupation;
             for (int iterEC = 0; iterEC < infoWrittenTest.getAssociatedExecutionCourse().size(); iterEC++) {
@@ -70,8 +73,16 @@ public class SopRoomTimeTableLessonContentRenderer implements LessonSlotContentR
             }
             strBuffer.append(" - ");
             strBuffer.append(infoWrittenTest.getDescription());
-        }
 
+        } else if (showOccupation instanceof InfoGenericEvent) {
+            InfoGenericEvent infoGenericEvent = (InfoGenericEvent) showOccupation;            
+            strBuffer.append("<span title=\"").append(infoGenericEvent.getDescription()).append("\">");
+            strBuffer.append("<a href=\"roomsPunctualScheduling.do?method=prepareView&genericEventID=").append(infoGenericEvent.getIdInternal()).append("\">");
+            strBuffer.append(infoGenericEvent.getTitle());
+            strBuffer.append("</a>");            
+            strBuffer.append("</span>");            
+        }
+   
         return strBuffer;
     }
 }

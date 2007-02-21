@@ -6627,8 +6627,8 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>ReadLessonsAndExamsInWeekAndRoom</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.ReadLessonsAndExamsInWeekAndRoom</implementationClass>
+		<name>ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains />

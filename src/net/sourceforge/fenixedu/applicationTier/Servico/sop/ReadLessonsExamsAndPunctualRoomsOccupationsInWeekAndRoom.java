@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
+import net.sourceforge.fenixedu.dataTransferObject.InfoGenericEvent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPeriod;
@@ -27,6 +28,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenTest;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.GenericEvent;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.domain.Shift;
@@ -37,7 +39,7 @@ import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.CalendarUtil;
 
-public class ReadLessonsAndExamsInWeekAndRoom extends Service {
+public class ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom extends Service {
 
     // FIXME duplicated code: this method is (almost?) identical to RoomSiteComponentBuilder.getInfoSiteRoomTimeTable
     public List run(InfoRoom infoRoom, Calendar day, InfoExecutionPeriod infoExecutionPeriod) throws ExcepcaoPersistencia, FenixServiceException {
@@ -56,6 +58,7 @@ public class ReadLessonsAndExamsInWeekAndRoom extends Service {
         //OccupationPeriod weekPeriod = new OccupationPeriod(day, endDay);
 
         InfoPeriod lessonsInfoPeriod = calculateLessonsSeason(executionPeriod);
+        
         if (this.intersectPeriods(day, endDay,lessonsInfoPeriod)) {
             //adicionar as aulas
         	
@@ -81,9 +84,7 @@ public class ReadLessonsAndExamsInWeekAndRoom extends Service {
                     if (roomOccupation.getFrequency().intValue() == RoomOccupation.SEMANAL) {
                         Calendar dayOfLesson = Calendar.getInstance();
                         dayOfLesson.setTimeInMillis(day.getTimeInMillis());
-                        dayOfLesson.add(Calendar.DATE, roomOccupation.getDayOfWeek().getDiaSemana()
-                                .intValue()
-                                - Calendar.MONDAY);
+                        dayOfLesson.add(Calendar.DATE, roomOccupation.getDayOfWeek().getDiaSemana().intValue() - Calendar.MONDAY);
                         if (!this.intersectPeriods(dayOfLesson, dayOfLesson, infoPeriod)) {
                             add = false;
                         }
@@ -103,6 +104,7 @@ public class ReadLessonsAndExamsInWeekAndRoom extends Service {
         final Date endDate = endDay.getTime();
         for (final RoomOccupation roomOccupation : room.getRoomOccupations()) {
             final WrittenEvaluation writtenEvaluation = roomOccupation.getWrittenEvaluation();
+            final GenericEvent genericEvent = roomOccupation.getGenericEvent();
             if (writtenEvaluation != null) {
                 final Date evaluationDate = writtenEvaluation.getDayDate();
                 if (!evaluationDate.before(startDate) && !evaluationDate.after(endDate)) {
@@ -115,6 +117,13 @@ public class ReadLessonsAndExamsInWeekAndRoom extends Service {
                     }
                 }
             }
+            
+            //Punctual Room Occupations
+            if(genericEvent != null) {
+        	if(genericEvent.getOccupationPeriod().intersectPeriods(startDay, endDay)) {
+        	    infoShowOccupations.add(new InfoGenericEvent(genericEvent));
+        	}
+            }            
         }
 
         return infoShowOccupations;

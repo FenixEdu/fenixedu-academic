@@ -131,7 +131,7 @@ public class ViewRoomFormAction extends FenixSelectedRoomsAndSelectedRoomIndexCo
         Object argsReadLessonsAndExams[] = { infoRoom, today, executionPeriod };
 
         List showOccupations = (List) ServiceUtils.executeService(userView,
-                "ReadLessonsAndExamsInWeekAndRoom", argsReadLessonsAndExams);
+                "ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom", argsReadLessonsAndExams);
 
         if (showOccupations != null)
         {
