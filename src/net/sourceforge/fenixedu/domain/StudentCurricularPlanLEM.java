@@ -39,8 +39,9 @@ public class StudentCurricularPlanLEM extends StudentCurricularPlanLEM_Base {
      * @param optionalCurricularCourseGroup
      */
     //  FIXME: MÉTODO PARA O 2º SEMSTERE
-    protected void selectOptionalCoursesToBeRemoved(List curricularCoursesToRemove,
-            List curricularCoursesToKeep, CurricularCourseGroup optionalCurricularCourseGroup, ExecutionPeriod executionPeriod) {
+    @Override
+    protected void selectOptionalCoursesToBeRemoved(List<CurricularCourse> curricularCoursesToRemove,
+            List<CurricularCourse> curricularCoursesToKeep, CurricularCourseGroup optionalCurricularCourseGroup, ExecutionPeriod executionPeriod) {
         int count = 0;
 
         CurricularCourseGroup ccgProd5Year1Sem = getCurricularCourseGroup(FITH_YEAR_2SEM_OPTIONAL_GROUP);
@@ -57,7 +58,7 @@ public class StudentCurricularPlanLEM extends StudentCurricularPlanLEM_Base {
                             || curricularCourse.getCode().equals(MAQUINAS_FERRAMENTAS_CODE)) {
                         if (optionalCurricularCourseGroup.getName().equalsIgnoreCase(
                                 FITH_YEAR_2SEM_OPTIONAL_GROUP)) {
-                            List<CurricularCourse> curricularCoursesToIgnore = new ArrayList();
+                            List<CurricularCourse> curricularCoursesToIgnore = new ArrayList<CurricularCourse>();
                             curricularCoursesToIgnore.add(curricularCourse);
                             int done4year1sem = countDoneOrEnrolledCurricularCoursesExcept(ccgProd4Year1Sem,
                                     curricularCoursesToIgnore, executionPeriod);
@@ -67,7 +68,7 @@ public class StudentCurricularPlanLEM extends StudentCurricularPlanLEM_Base {
                         } else 
                             if (optionalCurricularCourseGroup.getName().equalsIgnoreCase(
                                 FOURTH_YEAR_2SEM_OPTIONAL_GROUP)) {
-                            List<CurricularCourse> curricularCoursesToIgnore = new ArrayList();
+                            List<CurricularCourse> curricularCoursesToIgnore = new ArrayList<CurricularCourse>();
                             curricularCoursesToIgnore.add(curricularCourse);
                             int number = countDoneOrEnrolledCurricularCoursesExcept(ccgProd5Year1Sem,
                                     curricularCoursesToIgnore, executionPeriod);

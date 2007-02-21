@@ -29,26 +29,32 @@ public class StudentCurricularPlanLEEC extends StudentCurricularPlanLEEC_Base {
         setOjbConcreteClass(getClass().getName());
     }
 
+    @Override
     public Integer getCreditsInSecundaryArea() {
         return this.creditsInSecundaryArea;
     }
 
+    @Override
     public void setCreditsInSecundaryArea(Integer creditsInSecundaryArea) {
         this.creditsInSecundaryArea = creditsInSecundaryArea;
     }
 
+    @Override
     public Integer getCreditsInSpecializationArea() {
         return this.creditsInSpecializationArea;
     }
 
+    @Override
     public void setCreditsInSpecializationArea(Integer creditsInSpecializationArea) {
         this.creditsInSpecializationArea = creditsInSpecializationArea;
     }
     
+    @Override
     public List getAllEnrollments() {
         return super.getEnrolments();
     }
     
+    @Override
     public int getNumberOfApprovedCurricularCourses() {
     	int counter = 0;
         List<Enrolment> aprovedEnrolments = getAprovedEnrolments();
@@ -64,6 +70,7 @@ public class StudentCurricularPlanLEEC extends StudentCurricularPlanLEEC_Base {
         return counter;
     }
 
+    @Override
     public boolean areNewAreasCompatible(Branch specializationArea, Branch secundaryArea)
             throws BothAreasAreTheSameServiceException,
             InvalidArgumentsServiceException {
@@ -76,7 +83,7 @@ public class StudentCurricularPlanLEEC extends StudentCurricularPlanLEEC_Base {
         if (specializationArea.equals(secundaryArea)) {
             throw new BothAreasAreTheSameServiceException();
         }
-        List curricularCoursesFromGivenAreas = getCurricularCoursesFromGivenAreas(specializationArea,
+        List<CurricularCourse> curricularCoursesFromGivenAreas = getCurricularCoursesFromGivenAreas(specializationArea,
                 secundaryArea);
 
         List curricularCoursesBelongingToAnySpecializationAndSecundaryArea = getCurricularCoursesBelongingToAnySpecializationAndSecundaryArea();
@@ -100,8 +107,8 @@ public class StudentCurricularPlanLEEC extends StudentCurricularPlanLEEC_Base {
      * @param studentCurricularPlan
      * @return CurricularCoursesBelongingToAnySpecializationAndSecundaryArea
      */
-    protected List getCurricularCoursesBelongingToAnySpecializationAndSecundaryArea() {
-        List curricularCourses = new ArrayList();
+    private List getCurricularCoursesBelongingToAnySpecializationAndSecundaryArea() {
+        List<CurricularCourse> curricularCourses = new ArrayList<CurricularCourse>();
         List specializationAreas = getDegreeCurricularPlan().getSpecializationAreas();
 
         List secundaryAreas = getDegreeCurricularPlan().getSecundaryAreas();
@@ -118,7 +125,7 @@ public class StudentCurricularPlanLEEC extends StudentCurricularPlanLEEC_Base {
      * @param curricularCourses
      * @param specializationAreas
      */
-    protected void addAreasCurricularCoursesWithoutRepetitions(List curricularCourses, List areas,
+    private void addAreasCurricularCoursesWithoutRepetitions(List<CurricularCourse> curricularCourses, List areas,
             AreaType areaType) {
         Iterator iterator = areas.iterator();
         while (iterator.hasNext()) {
@@ -144,9 +151,9 @@ public class StudentCurricularPlanLEEC extends StudentCurricularPlanLEEC_Base {
      * @param secundaryArea
      * @return CurricularCoursesFromGivenAreas
      */
-    protected List getCurricularCoursesFromGivenAreas(Branch specializationArea, Branch secundaryArea) {
-        List curricularCoursesFromNewSpecializationArea = new ArrayList();
-        List curricularCoursesFromNewSecundaryArea = new ArrayList();
+    private List<CurricularCourse> getCurricularCoursesFromGivenAreas(Branch specializationArea, Branch secundaryArea) {
+        List<CurricularCourse> curricularCoursesFromNewSpecializationArea = new ArrayList<CurricularCourse>();
+        List<CurricularCourse> curricularCoursesFromNewSecundaryArea = new ArrayList<CurricularCourse>();
 
         List groups = specializationArea.getAreaCurricularCourseGroups(AreaType.SPECIALIZATION);
 
@@ -164,13 +171,14 @@ public class StudentCurricularPlanLEEC extends StudentCurricularPlanLEEC_Base {
             curricularCoursesFromNewSecundaryArea.addAll(curricularCourseGroup.getCurricularCourses());
         }
 
-        List newCurricularCourses = new ArrayList();
+        List<CurricularCourse> newCurricularCourses = new ArrayList<CurricularCourse>();
         newCurricularCourses.addAll(curricularCoursesFromNewSpecializationArea);
         newCurricularCourses.addAll(curricularCoursesFromNewSecundaryArea);
 
         return newCurricularCourses;
     }
 
+    @Override
     public CurricularCourseEnrollmentType getCurricularCourseEnrollmentType(
             CurricularCourse curricularCourse, ExecutionPeriod currentExecutionPeriod) {
 
@@ -192,7 +200,7 @@ public class StudentCurricularPlanLEEC extends StudentCurricularPlanLEEC_Base {
             }
         }
 
-        List enrollmentsWithEnrolledStateInPreviousExecutionPeriod = getAllStudentEnrolledEnrollmentsInExecutionPeriod(currentExecutionPeriod
+        List<Enrolment> enrollmentsWithEnrolledStateInPreviousExecutionPeriod = getAllStudentEnrolledEnrollmentsInExecutionPeriod(currentExecutionPeriod
                 .getPreviousExecutionPeriod());
       
         for (int i = 0; i < enrollmentsWithEnrolledStateInPreviousExecutionPeriod.size(); i++) {
@@ -229,17 +237,14 @@ public class StudentCurricularPlanLEEC extends StudentCurricularPlanLEEC_Base {
         return CurricularCourseEnrollmentType.DEFINITIVE;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see Dominio.IStudentCurricularPlan#getCanChangeSpecializationArea()
-     */
+    @Override
     public boolean getCanChangeSpecializationArea() {
         return true;
     }
 
-    public List getStudentEnrollmentsWithApprovedState() {
-        return (List) CollectionUtils.select(getAllEnrollments(), new Predicate() {
+    @Override
+    public List<Enrolment> getStudentEnrollmentsWithApprovedState() {
+        return (List<Enrolment>) CollectionUtils.select(getAllEnrollments(), new Predicate() {
             public boolean evaluate(Object obj) {
                 Enrolment enrollment = (Enrolment) obj;
                 return enrollment.getEnrollmentState().equals(EnrollmentState.APROVED)

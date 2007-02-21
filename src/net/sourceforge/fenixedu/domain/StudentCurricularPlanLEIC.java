@@ -28,26 +28,32 @@ public class StudentCurricularPlanLEIC extends StudentCurricularPlanLEIC_Base {
         setOjbConcreteClass(getClass().getName());
     }
 
+    @Override
     public Integer getCreditsInSecundaryArea() {
         return this.creditsInSecundaryArea;
     }
 
+    @Override
     public void setCreditsInSecundaryArea(Integer creditsInSecundaryArea) {
         this.creditsInSecundaryArea = creditsInSecundaryArea;
     }
 
+    @Override
     public Integer getCreditsInSpecializationArea() {
         return this.creditsInSpecializationArea;
     }
 
+    @Override
     public void setCreditsInSpecializationArea(Integer creditsInSpecializationArea) {
         this.creditsInSpecializationArea = creditsInSpecializationArea;
     }
 
+    @Override
     public boolean getCanChangeSpecializationArea() {
         return true;
     }
 
+    @Override
     public boolean areNewAreasCompatible(Branch specializationArea, Branch secundaryArea)
             throws BothAreasAreTheSameServiceException,
             InvalidArgumentsServiceException {
@@ -66,7 +72,7 @@ public class StudentCurricularPlanLEIC extends StudentCurricularPlanLEIC_Base {
 
         List curricularCoursesBelongingToAnySpecializationAndSecundaryArea = getCurricularCoursesBelongingToAnySpecializationAndSecundaryArea();
 
-        List studentsAprovedEnrollments = getStudentEnrollmentsWithApprovedState();
+        List<Enrolment> studentsAprovedEnrollments = getStudentEnrollmentsWithApprovedState();
         
         studentsAprovedEnrollments.addAll(getAllStudentEnrolledEnrollmentsInExecutionPeriod(ExecutionPeriod.readActualExecutionPeriod()));
         
@@ -94,6 +100,7 @@ public class StudentCurricularPlanLEIC extends StudentCurricularPlanLEIC_Base {
     }
     
  
+    @Override
     public CurricularCourseEnrollmentType getCurricularCourseEnrollmentType(
             CurricularCourse curricularCourse, ExecutionPeriod currentExecutionPeriod) {
 
@@ -115,7 +122,7 @@ public class StudentCurricularPlanLEIC extends StudentCurricularPlanLEIC_Base {
             }
         }
 
-        List enrollmentsWithEnrolledStateInPreviousExecutionPeriod = getAllStudentEnrolledEnrollmentsInExecutionPeriod(currentExecutionPeriod
+        List<Enrolment> enrollmentsWithEnrolledStateInPreviousExecutionPeriod = getAllStudentEnrolledEnrollmentsInExecutionPeriod(currentExecutionPeriod
                 .getPreviousExecutionPeriod());
 
         for (int i = 0; i < enrollmentsWithEnrolledStateInPreviousExecutionPeriod.size(); i++) {
@@ -159,7 +166,7 @@ public class StudentCurricularPlanLEIC extends StudentCurricularPlanLEIC_Base {
     }
 
     protected List getCurricularCoursesFromArea(Branch specializationArea, AreaType areaType) {
-        List curricularCourses = new ArrayList();
+        List<CurricularCourse> curricularCourses = new ArrayList<CurricularCourse>();
 
         List groups = specializationArea.getAreaCurricularCourseGroups(areaType);
 
@@ -178,7 +185,7 @@ public class StudentCurricularPlanLEIC extends StudentCurricularPlanLEIC_Base {
      * @return CurricularCoursesBelongingToAnySpecializationAndSecundaryArea
      */
     protected List getCurricularCoursesBelongingToAnySpecializationAndSecundaryArea() {
-        List curricularCourses = new ArrayList();
+        List<CurricularCourse> curricularCourses = new ArrayList<CurricularCourse>();
         List specializationAreas = getDegreeCurricularPlan().getSpecializationAreas();
 
         List secundaryAreas = getDegreeCurricularPlan().getSecundaryAreas();
@@ -195,7 +202,7 @@ public class StudentCurricularPlanLEIC extends StudentCurricularPlanLEIC_Base {
      * @param curricularCourses
      * @param specializationAreas
      */
-    protected void addAreasCurricularCoursesWithoutRepetitions(List curricularCourses, List areas,
+    protected void addAreasCurricularCoursesWithoutRepetitions(List<CurricularCourse> curricularCourses, List areas,
             AreaType areaType) {
         Iterator iterator = areas.iterator();
         while (iterator.hasNext()) {
@@ -215,8 +222,8 @@ public class StudentCurricularPlanLEIC extends StudentCurricularPlanLEIC_Base {
         }
     }
     
-    
-    protected List getCommonBranchAndStudentBranchesCourses(ExecutionPeriod executionPeriod) {
+    @Override
+    protected List<CurricularCourse2Enroll> getCommonBranchAndStudentBranchesCourses(ExecutionPeriod executionPeriod) {
 
         Set<CurricularCourse> curricularCourses = new HashSet<CurricularCourse>();
         DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();

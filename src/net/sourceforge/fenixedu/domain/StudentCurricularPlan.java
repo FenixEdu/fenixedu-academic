@@ -97,9 +97,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     protected Integer creditsInSecundaryArea; // For enrollment purposes only
 
-    protected Integer creditsInSpecializationArea; // For enrollment
-
-    // purposes only
+    protected Integer creditsInSpecializationArea; // For enrollment purposes only
 
     public StudentCurricularPlan() {
 	super();
@@ -396,7 +394,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public boolean isCurricularCourseApproved(CurricularCourse curricularCourse) {
 	List studentApprovedEnrollments = getStudentEnrollmentsWithApprovedState();
 
-	List<CurricularCourse> result = (List) CollectionUtils.collect(studentApprovedEnrollments,
+	List<CurricularCourse> result = (List<CurricularCourse>) CollectionUtils.collect(studentApprovedEnrollments,
 		new Transformer() {
 		    public Object transform(Object obj) {
 			Enrolment enrollment = (Enrolment) obj;
@@ -896,7 +894,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return (comp1 != null) && (comp1 == comp2);
     }
 
-    public List getStudentEnrollmentsWithApprovedState() {
+    public List<Enrolment> getStudentEnrollmentsWithApprovedState() {
 
 	return (List) CollectionUtils.select(getAllEnrollments(), new Predicate() {
 	    public boolean evaluate(Object obj) {
@@ -964,7 +962,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		});
     }
 
-    private List<CurricularCourse2Enroll> getCommonBranchAndStudentBranchesCourses(
+    protected List<CurricularCourse2Enroll> getCommonBranchAndStudentBranchesCourses(
 	    ExecutionPeriod executionPeriod) {
 	Set<CurricularCourse> curricularCourses = new HashSet<CurricularCourse>();
 	DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
@@ -1062,7 +1060,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	}
     }
 
-    private void selectOptionalCoursesToBeRemoved(List<CurricularCourse> curricularCoursesToRemove,
+    protected void selectOptionalCoursesToBeRemoved(List<CurricularCourse> curricularCoursesToRemove,
 	    List<CurricularCourse> curricularCoursesToKeep,
 	    CurricularCourseGroup optionalCurricularCourseGroup, ExecutionPeriod executionPeriod) {
 	int count = 0;
@@ -2128,4 +2126,5 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public Set<IDegreeModuleToEvaluate> getDegreeModulesToEvaluate(final ExecutionPeriod executionPeriod) {
 	return isBolonha() ? getRoot().getDegreeModulesToEvaluate(executionPeriod) : Collections.EMPTY_SET;
     }
+
 }
