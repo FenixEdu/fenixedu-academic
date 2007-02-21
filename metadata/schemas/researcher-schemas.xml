@@ -417,20 +417,6 @@
 	</slot>	
 </schema>
 
-<!--<schema name="cooperationParticipation.collaborationFormCreation" type="net.sourceforge.fenixedu.dataTransferObject.research.activity.ResearchCooperationCreationBean" bundle="RESEARCHER_RESOURCES">-->
-<!--	<slot name="type" key="researcher.activity.createCooperation.type.label" read-only="true" />		-->
-<!--	<slot name="cooperationName" key="label.cooperation.cooperationName" read-only="true"/>-->
-<!--	<slot name="startDate" key="label.event.startDate" read-only="true" />-->
-<!--	<slot name="endDate" key="label.event.endDate" read-only="true" />	-->
-<!--	<slot name="role" key="researcher.activity.createCooperation.role.label" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">-->
-<!--		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.researcher.activity.ResearchActivityRolesDataProvider"/>-->
-<!--		<property name="eachLayout" value=""/>-->
-<!--	</slot>-->
-<!--	<slot name="cooperationUnitType" key="label.cooperation.cooperationUnitType" layout="radio">-->
-<!--		<property name="classes" value="nobullet liinline"/>-->
-<!--	</slot>	-->
-<!--</schema>-->
-
 <schema name="cooperationParticipation.internalUnit" type="net.sourceforge.fenixedu.dataTransferObject.research.activity.ResearchCooperationCreationBean" bundle="RESEARCHER_RESOURCES">	
 	<slot name="unit" key="label.organization" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="50"/>
@@ -495,7 +481,7 @@
 		</validator>
 		<property name="size" value="10"/>
 	</slot>
-	<slot name="endDate" key="label.event.startDate" layout="year-month-day">
+	<slot name="endDate" key="label.event.endDate" layout="year-month-day">
 		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
 			<property name="required" value="false"/>
 			<property name="dateFormat" value="dd/MM/yyyy"/>
