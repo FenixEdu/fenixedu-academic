@@ -81,6 +81,13 @@
 		<mkdir dir="${build.home.webinf.libs}"/>
 		<mkdir dir="${build.home}/images/logs"/>
 
+
+		<tstamp>
+		   <format property="build.version" pattern="yyyy/MM/dd HH:mm:ss"/>
+		</tstamp>
+
+		<echo file="${build.home.webinf.classes}/.build.version">${build.version}</echo>
+
 		<sequential>
 			<copy encoding="${encoding}" todir="${build.home}">
 				<fileset dir="${web-content}" >

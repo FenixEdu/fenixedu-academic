@@ -1,7 +1,16 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><%@page import="java.util.Enumeration"%>
 <%@page import="java.util.Calendar"%>
+<%@page import="pt.utl.ist.fenix.tools.util.FileUtils"%>
+<%@page import="java.io.InputStream"%>
 <html:xhtml/><%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %><%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %><%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %><%@ page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.SessionCounterFilter" %><h2><bean:message bundle="MANAGER_RESOURCES" key="manager.monitor.system.title"/></h2><br /><html:link module="/manager" page="/monitorSystem.do?method=monitor">	<bean:message bundle="MANAGER_RESOURCES" key="manager.monitor.system.refresh"/></html:link><br /><br /><br />
-<%= Calendar.getInstance().toString() %>
+<dt:format pattern="yyyy/MM/dd HH:mm:ss"><%= Calendar.getInstance().getTimeInMillis() %></dt:format>
+<br /><br />
+
+<%
+	final InputStream inputStream = this.getClass().getResourceAsStream("/.build.version");
+%>
+
+BuildVersion: <%= FileUtils.readFile(inputStream).toString() %>
 <br /><br />
 <logic:present name="systemInfoApplicationServer">	<bean:message bundle="MANAGER_RESOURCES" key="manager.monitor.system.applicationServer"/>	<br /><br />
 	<bean:message bundle="MANAGER_RESOURCES" key="label.server.name"/><%= request.getServerName() %>
