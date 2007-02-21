@@ -334,6 +334,10 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
 	return this instanceof DocumentRequest;
     }
     
+    public boolean isDocumentRequestPrintedInFenix() {
+	return isDocumentRequest() && !((DocumentRequest) this).isToBePrintedInAplica();
+    }
+    
     public boolean createdByStudent(){
         return getCreationSituation().getEmployee() == null;
     }

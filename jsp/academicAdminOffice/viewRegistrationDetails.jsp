@@ -231,7 +231,7 @@
 				<%--<fr:property name="visibleIf(deliver)" value="availableForEmployeeToActUpon"/>--%>
 				<fr:property name="linkFormat(print)" value="/documentRequestsManagement.do?method=printDocument&amp;documentRequestId=${idInternal}&amp;"/>
 				<fr:property name="key(print)" value="print"/>
-				<fr:property name="visibleIf(print)" value="documentRequest"/>
+				<fr:property name="visibleIf(print)" value="documentRequestPrintedInFenix"/>
 				<fr:property name="linkFormat(view)" value="/academicServiceRequestsManagement.do?method=viewAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}&amp;backAction=student&amp;backMethod=visualizeRegistration"/>
 				<fr:property name="key(view)" value="view"/>
 				<fr:property name="order(view)" value="1"/>
