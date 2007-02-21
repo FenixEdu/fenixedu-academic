@@ -261,7 +261,7 @@ public class SpecificLEICEnrollmentRule extends SpecificEnrolmentRule implements
 	List<CurricularCourse> secundaryCourses = getSecundaryAreaCurricularCourses(studentCurricularPlan);
 	List<CurricularCourse> specializationCourses = getSpecializationAreaCurricularCourses(studentCurricularPlan);
 	for (CurricularCourse2Enroll enroll : result) {
-	    if ((!secundaryCourses.contains(enroll.getCurricularCourse()) || !specializationCourses.contains(enroll.getCurricularCourse())) && !notOptional5Courses.contains(enroll.getCurricularCourse().getCode()) && !enroll.getEnrollmentType().equals(CurricularCourseEnrollmentType.TEMPORARY)) {
+	    if ((!secundaryCourses.contains(enroll.getCurricularCourse()) || specializationCourses.contains(enroll.getCurricularCourse())) && !notOptional5Courses.contains(enroll.getCurricularCourse().getCode()) && !enroll.getEnrollmentType().equals(CurricularCourseEnrollmentType.TEMPORARY)) {
 		return false;
 	    }
 	}
