@@ -1112,6 +1112,10 @@ public class Registration extends Registration_Base {
 	return getStudent().getPerson();
     }
 
+    public String getEmail() {
+	return getPerson().getEmail();
+    }
+
     public EntryPhase getEntryPhase() {
 	if (hasStudentCandidacy()) {
 	    return getStudentCandidacy().getEntryPhase();
