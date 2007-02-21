@@ -377,7 +377,15 @@
 	<slot name="stateType" key="label.state" />
 	<slot name="remarks" />
 	<slot name="executionYear.year" key="label.since" />
-	<slot name="responsiblePerson.name" key="label.responsible"/>
+	<slot name="responsiblePerson" layout="null-as-label" key="label.responsible">
+		<property name="label" value=" - "/>
+		<property name="subLayout" value="values"/>
+		<property name="subSchema" value="responsiblePerson.name"/>
+	</slot>	
+</schema>
+
+<schema name="responsiblePerson.name" type="net.sourceforge.fenixedu.domain.Person">
+	<slot name="name"/>
 </schema>
 
 <schema name="studentOptionalEnrolment.base" bundle="ACADEMIC_OFFICE_RESOURCES"
