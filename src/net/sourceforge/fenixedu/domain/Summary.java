@@ -32,10 +32,8 @@ public class Summary extends Summary_Base {
 
     public static final Comparator<Summary> COMPARATOR_BY_DATE_AND_HOUR = new ComparatorChain();
     static {
-	((ComparatorChain) COMPARATOR_BY_DATE_AND_HOUR).addComparator(new BeanComparator(
-		"summaryDateYearMonthDay"), true);
-	((ComparatorChain) COMPARATOR_BY_DATE_AND_HOUR).addComparator(new BeanComparator(
-		"summaryHourHourMinuteSecond"), true);
+	((ComparatorChain) COMPARATOR_BY_DATE_AND_HOUR).addComparator(new BeanComparator("summaryDateYearMonthDay"), true);
+	((ComparatorChain) COMPARATOR_BY_DATE_AND_HOUR).addComparator(new BeanComparator("summaryHourHourMinuteSecond"), true);
 	((ComparatorChain) COMPARATOR_BY_DATE_AND_HOUR).addComparator(new BeanComparator("idInternal"));
     }
 

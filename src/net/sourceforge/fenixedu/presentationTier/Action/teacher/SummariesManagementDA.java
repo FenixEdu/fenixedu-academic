@@ -589,8 +589,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	} else if (dynaActionForm.getString("teacher").equals("0") && !StringUtils.isEmpty(dynaActionForm.getString("teacherNumber"))) {
 	    Teacher teacher = null;
 	    try {
-		teacher = Teacher.readByNumber(Integer
-			.valueOf(dynaActionForm.getString("teacherNumber")));
+		teacher = Teacher.readByNumber(Integer.valueOf(dynaActionForm.getString("teacherNumber")));
 	    } catch (NumberFormatException e) {
 		addActionMessage(request, "error.summary.teacherNumber.invalid");
 	    }

@@ -62,7 +62,9 @@ public class RoomsReservesManagementDA extends RoomsPunctualSchedulingDA {
 			
 	Person loggedPerson = getLoggedPerson(request);
 	PunctualRoomsOccupationRequest roomsReserveRequest = getRoomsReserveRequest(request);	
-	executeService("MarkPunctualRoomsOccupationCommentsAsRead", new Object[] {roomsReserveRequest, false});	
+	if(roomsReserveRequest.getOwner() != null && roomsReserveRequest.getOwner().equals(loggedPerson)) {
+	    executeService("MarkPunctualRoomsOccupationCommentsAsRead", new Object[] {roomsReserveRequest, false});	
+	}
 	request.setAttribute("roomsReserveBean", new RoomsReserveBean(loggedPerson, roomsReserveRequest));	
 	return mapping.findForward("seeSpecifiedRoomsReserveRequest");
     }
