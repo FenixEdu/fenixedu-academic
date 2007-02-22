@@ -3,134 +3,106 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject.commons.curriculumHistoric;
 
-import java.util.List;
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+
+import org.apache.commons.beanutils.BeanComparator;
 
 /**
  * @author nmgo
  * @author lmre
  */
-public class InfoCurriculumHistoricReport extends DataTranferObject {
+public class InfoCurriculumHistoricReport implements Serializable {
 
-    Integer enrolled;
+    int evaluated = 0;
 
-    Integer evaluated;
+    int approved = 0;
 
-    Integer aproved;
+    Collection<Enrolment> enrolments;
+    
+    DomainReference<CurricularCourse> curricularCourse;
 
-    Integer semester;
+    DomainReference<ExecutionPeriod> executionPeriod;
 
-    InfoCurricularCourse infoCurricularCourse;
-
-    InfoExecutionYear infoExecutionYear;
-
-    List enrollments;
-
-    /**
-     * @return Returns the aproved.
-     */
-    public Integer getAproved() {
-        return aproved;
+    public Integer getApproved() {
+        return approved;
     }
 
-    /**
-     * @param aproved
-     *            The aproved to set.
-     */
-    public void setAproved(Integer aproved) {
-        this.aproved = aproved;
-    }
-
-    /**
-     * @return Returns the enrolled.
-     */
-    public Integer getEnrolled() {
-        return enrolled;
-    }
-
-    /**
-     * @param enrolled
-     *            The enrolled to set.
-     */
-    public void setEnrolled(Integer enrolled) {
-        this.enrolled = enrolled;
-    }
-
-    /**
-     * @return Returns the evaluated.
-     */
     public Integer getEvaluated() {
         return evaluated;
     }
-
-    /**
-     * @param evaluated
-     *            The evaluated to set.
-     */
-    public void setEvaluated(Integer evaluated) {
-        this.evaluated = evaluated;
+    
+    public Collection<Enrolment> getEnrolments() {
+        return enrolments;
     }
 
-    /**
-     * @return Returns the enrollments.
-     */
-    public List getEnrollments() {
-        return enrollments;
+    public Integer getEnroled() {
+        return getEnrolments().size();
     }
 
-    /**
-     * @param enrollments
-     *            The enrollments to set.
-     */
-    public void setEnrollments(List enrollments) {
-        this.enrollments = enrollments;
+    public Integer getRatioApprovedEnroled() {
+	return Math.round(((float) getApproved() / (float) getEnroled()) * 100);
     }
 
-    /**
-     * @return Returns the infoCurricularCourse.
-     */
-    public InfoCurricularCourse getInfoCurricularCourse() {
-        return infoCurricularCourse;
+    public Integer getRatioApprovedEvaluated() {
+	return Math.round(((float) getApproved() / (float) getEvaluated()) * 100);
     }
 
-    /**
-     * @param infoCurricularCourse
-     *            The infoCurricularCourse to set.
-     */
-    public void setInfoCurricularCourse(InfoCurricularCourse infoCurricularCourse) {
-        this.infoCurricularCourse = infoCurricularCourse;
+    public CurricularCourse getCurricularCourse() {
+	return this.curricularCourse == null ?  null : this.curricularCourse.getObject();
     }
 
-    /**
-     * @return Returns the infoExecutionYear.
-     */
-    public InfoExecutionYear getInfoExecutionYear() {
-        return infoExecutionYear;
+    private void setCurricularCourse(final CurricularCourse curricularCourse) {
+	this.curricularCourse = (curricularCourse == null) ? null : new DomainReference<CurricularCourse>(curricularCourse);
+
     }
 
-    /**
-     * @param infoExecutionYear
-     *            The infoExecutionYear to set.
-     */
-    public void setInfoExecutionYear(InfoExecutionYear infoExecutionYear) {
-        this.infoExecutionYear = infoExecutionYear;
+    public ExecutionPeriod getExecutionPeriod() {
+	return this.executionPeriod == null ?  null : this.executionPeriod.getObject();
     }
 
-    /**
-     * @return Returns the semester.
-     */
+    private void setExecutionPeriod(final ExecutionPeriod executionPeriod) {
+	this.executionPeriod = (executionPeriod == null) ? null : new DomainReference<ExecutionPeriod>(executionPeriod);
+
+    }
+
     public Integer getSemester() {
-        return semester;
+        return getExecutionPeriod().getSemester();
     }
 
-    /**
-     * @param semester
-     *            The semester to set.
-     */
-    public void setSemester(Integer semester) {
-        this.semester = semester;
+    public ExecutionYear getExecutionYear() {
+	return getExecutionPeriod().getExecutionYear();
     }
+    
+    public InfoCurriculumHistoricReport(final ExecutionPeriod executionPeriod, final CurricularCourse curricularCourse) {
+	setExecutionPeriod(executionPeriod);
+	setCurricularCourse(curricularCourse);
+	
+	init();
+    }
+
+    private void init() {
+	this.enrolments = new TreeSet<Enrolment>(new BeanComparator("studentCurricularPlan.registration.number"));
+	for (final Enrolment enrolment : getCurricularCourse().getEnrolmentsByExecutionPeriod(getExecutionPeriod())) {
+	    if (!enrolment.isAnnulled()) {
+		this.enrolments.add(enrolment);
+		
+		if (enrolment.isEnrolmentStateApproved() || enrolment.isEnrolmentStateNotApproved()) {
+		    this.evaluated++;
+		    
+		    if (enrolment.isEnrolmentStateApproved()) {
+			this.approved++;
+		    }
+		}
+	    }
+	}
+    }
+
 }

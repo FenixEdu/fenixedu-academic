@@ -1,58 +1,57 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="net.sourceforge.fenixedu.domain.curriculum.EnrollmentState" %>
 <%@ page import="net.sourceforge.fenixedu.util.EnrolmentEvaluationState" %>
+
+<html:xhtml/>
+
 <span class="error"><!-- Error messages go here --><html:errors bundle="CURRICULUM_HISTORIC_RESOURCES"/></span>
 
 <logic:present name="infoCurriculumHistoricReport">
-	<bean:define id="executionYear" name="infoCurriculumHistoricReport" property="infoExecutionYear"/>
-	<bean:define id="semester" name="infoCurriculumHistoricReport" property="semester"/>
-	<bean:define id="evaluated" name="infoCurriculumHistoricReport" property="evaluated" type="java.lang.Integer"/>
-	<bean:define id="enrolled" name="infoCurriculumHistoricReport" property="enrolled" type="java.lang.Integer"/>
-	<bean:define id="approved" name="infoCurriculumHistoricReport" property="aproved" type="java.lang.Integer"/>
+	<bean:define id="executionYear" name="infoCurriculumHistoricReport" property="executionYear"/>
+	<bean:define id="semester" name="infoCurriculumHistoricReport" property="semester" type="java.lang.Integer"/>
 	
-	<h3 class="bluetxt"><bean:message key="message.teachingReport.executionYear" bundle="CURRICULUM_HISTORIC_RESOURCES"/>
-	&nbsp;<bean:write name="executionYear" property="year" />*&nbsp;-&nbsp;
-	<bean:message key="label.period" arg0="<%= String.valueOf(semester) %>" bundle="CURRICULUM_HISTORIC_RESOURCES"/></h3>
+	<h3 class="bluetxt">
+		<bean:message key="message.teachingReport.executionYear" bundle="CURRICULUM_HISTORIC_RESOURCES"/>
+		&nbsp;<bean:write name="executionYear" property="year" />*&nbsp;-&nbsp;
+		<bean:message key="label.period" arg0="<%=semester.toString()%>" bundle="CURRICULUM_HISTORIC_RESOURCES"/>
+	</h3>
 	
-	<table width="90%" border="0" cellspacing="1">
+	<table width="90%" border="0" cellspacing="1" style="mbottom1">
 		<tr>
-			<td width="35%"><strong><bean:message key="message.teachingReport.curricularName" bundle="CURRICULUM_HISTORIC_RESOURCES"/></strong></td>
-			<td><bean:write name="infoCurriculumHistoricReport" 
-							property="infoCurricularCourse.name"/>
-							&nbsp;- &nbsp;
-				<bean:write name="infoCurriculumHistoricReport" 
-							property="infoCurricularCourse.infoDegreeCurricularPlan.name"/>
+			<td width="35%">
+				<strong><bean:message key="message.teachingReport.curricularName" bundle="CURRICULUM_HISTORIC_RESOURCES"/></strong>
+			</td>
+			<td>
+				<bean:write name="infoCurriculumHistoricReport" property="curricularCourse.name"/>
+					&nbsp;- &nbsp;
+				<bean:write name="infoCurriculumHistoricReport" property="curricularCourse.degreeCurricularPlan.name"/>
 			</td>
 		</tr>
 		<tr>
 			<td><strong><bean:message key="message.teachingReport.IN" bundle="CURRICULUM_HISTORIC_RESOURCES"/></strong></td>
-			<td><bean:write name="enrolled" /></td>
+			<td><bean:write name="infoCurriculumHistoricReport" property="enroled"/></td>
 		</tr>
 		<tr>
 			<td><strong><bean:message key="message.teachingReport.AV" bundle="CURRICULUM_HISTORIC_RESOURCES"/></strong></td>
-			<td><bean:write name="evaluated"/></td>
+			<td><bean:write name="infoCurriculumHistoricReport" property="evaluated"/></td>
 		</tr>
 		<tr>
 			<td><strong><bean:message key="message.teachingReport.AP" bundle="CURRICULUM_HISTORIC_RESOURCES"/></strong></td>
-			<td><bean:write name="approved"/></td>
+			<td><bean:write name="infoCurriculumHistoricReport" property="approved"/></td>
 		</tr>
-		<% int ap_en = Math.round(((float) approved.intValue() / (float) enrolled.intValue()) * 100); %>
 		<tr>
 			<td><strong><bean:message key="message.teachingReport.AP/IN" bundle="CURRICULUM_HISTORIC_RESOURCES"/></strong></td>
-			<td><%= ap_en %>%</td>
+			<td><bean:write name="infoCurriculumHistoricReport" property="ratioApprovedEnroled"/>%</td>
 		</tr>
-		<% int ap_ev = Math.round(((float) approved.intValue() / (float) evaluated.intValue()) * 100); %>
 		<tr>
 			<td><strong><bean:message key="message.teachingReport.AP/AV" bundle="CURRICULUM_HISTORIC_RESOURCES"/></strong></td>
-			<td><%= ap_ev %>%</td>
+			<td><bean:write name="infoCurriculumHistoricReport" property="ratioApprovedEvaluated"/>%</td>
 		</tr>
 	</table>
-	<br/>
-	<logic:notEmpty name="infoCurriculumHistoricReport" property="enrollments">
+
+	<logic:notEmpty name="infoCurriculumHistoricReport" property="enrolments">
 		<h3 class="bluetxt"><bean:message key="label.students.enrolled.exam" bundle="CURRICULUM_HISTORIC_RESOURCES"/></h3>
 		<table cellspacing="1" cellpadding="1">
 			<tr>
@@ -81,172 +80,186 @@
 					<bean:message key="label.mark" bundle="CURRICULUM_HISTORIC_RESOURCES"/>
 			   	</th>
 			</tr>
-			<logic:iterate id="enrollment" name="infoCurriculumHistoricReport" property="enrollments">
+			<logic:iterate id="enrolment" name="infoCurriculumHistoricReport" property="enrolments">
 				<tr>
 					<td class="listClasses">
-					 	<bean:write name="enrollment" property="infoStudentCurricularPlan.infoStudent.number"/>
+					 	<bean:write name="enrolment" property="studentCurricularPlan.registration.number"/>
 					 </td>
 					 <td class="listClasses">
-					 	<bean:write name="enrollment" property="infoStudentCurricularPlan.infoStudent.infoPerson.nome"/>
+					 	<bean:write name="enrolment" property="studentCurricularPlan.registration.person.nome"/>
 					 </td>
 					 <td class="listClasses">
-					 	<bean:write name="enrollment" property="infoStudentCurricularPlan.infoDegreeCurricularPlan.infoDegree.sigla"/>
+					 	<bean:write name="enrolment" property="studentCurricularPlan.degreeCurricularPlan.degree.sigla"/>
 					 </td>
+
 					 <td class="listClasses">
-					 	<logic:present name="enrollment" property="infoNormalEnrolmentEvaluation">
-					 		<logic:notPresent name="enrollment" property="infoNormalEnrolmentEvaluation.grade">								
+						<logic:notPresent name="enrolment" property="latestNormalEnrolmentEvaluation">
+							--
+						</logic:notPresent>
+
+					 	<logic:present name="enrolment" property="latestNormalEnrolmentEvaluation">
+					 		<logic:notPresent name="enrolment" property="latestNormalEnrolmentEvaluation.grade">								
 								<bean:message key="msg.enrolled" bundle="ENUMERATION_RESOURCES" />
 							</logic:notPresent>
-						 	<logic:present name="enrollment" property="infoNormalEnrolmentEvaluation.grade">
-							 	<logic:equal name="enrollment" property="infoNormalEnrolmentEvaluation.grade" value="NA">
-									<logic:notEqual name="enrollment" property="infoNormalEnrolmentEvaluation.state" 
+						 	<logic:present name="enrolment" property="latestNormalEnrolmentEvaluation.grade">
+							 	<logic:equal name="enrolment" property="latestNormalEnrolmentEvaluation.grade" value="NA">
+									<logic:notEqual name="enrolment" property="latestNormalEnrolmentEvaluation.enrolmentEvaluationState" 
 										value="<%= EnrolmentEvaluationState.FINAL_OBJ.toString() %>">
 										<bean:message key="msg.enrolled" bundle="ENUMERATION_RESOURCES" />
 									</logic:notEqual>
-									<logic:equal name="enrollment" property="infoNormalEnrolmentEvaluation.state" 
+									<logic:equal name="enrolment" property="latestNormalEnrolmentEvaluation.enrolmentEvaluationState" 
 										value="<%= EnrolmentEvaluationState.FINAL_OBJ.toString() %>">
 										<bean:message key="msg.notEvaluated" bundle="ENUMERATION_RESOURCES" />
 									</logic:equal>
 								</logic:equal>
-								<logic:equal name="enrollment" property="infoNormalEnrolmentEvaluation.grade" value="RE">
-									<logic:notEqual name="enrollment" property="infoNormalEnrolmentEvaluation.state" 
+								<logic:equal name="enrolment" property="latestNormalEnrolmentEvaluation.grade" value="RE">
+									<logic:notEqual name="enrolment" property="latestNormalEnrolmentEvaluation.enrolmentEvaluationState" 
 										value="<%= EnrolmentEvaluationState.FINAL_OBJ.toString() %>">
 										<bean:message key="msg.enrolled" bundle="ENUMERATION_RESOURCES" />
 									</logic:notEqual>
-									<logic:equal name="enrollment" property="infoNormalEnrolmentEvaluation.state" 
+									<logic:equal name="enrolment" property="latestNormalEnrolmentEvaluation.enrolmentEvaluationState" 
 										value="<%= EnrolmentEvaluationState.FINAL_OBJ.toString() %>">
 										<bean:message key="msg.notApproved" bundle="ENUMERATION_RESOURCES" />
 									</logic:equal>									
 								</logic:equal>
-								<logic:equal name="enrollment" property="infoNormalEnrolmentEvaluation.grade" value="AP">
-									<logic:notEqual name="enrollment" property="infoNormalEnrolmentEvaluation.state" 
+								<logic:equal name="enrolment" property="latestNormalEnrolmentEvaluation.grade" value="AP">
+									<logic:notEqual name="enrolment" property="latestNormalEnrolmentEvaluation.enrolmentEvaluationState" 
 										value="<%= EnrolmentEvaluationState.FINAL_OBJ.toString() %>">
 										<bean:message key="msg.enrolled" bundle="ENUMERATION_RESOURCES" />
 									</logic:notEqual>
-									<logic:equal name="enrollment" property="infoNormalEnrolmentEvaluation.state" 
+									<logic:equal name="enrolment" property="latestNormalEnrolmentEvaluation.enrolmentEvaluationState" 
+									
 										value="<%= EnrolmentEvaluationState.FINAL_OBJ.toString() %>">
 										<bean:message key="msg.approved" bundle="ENUMERATION_RESOURCES" />
 									</logic:equal>																		
 								</logic:equal>
-								<logic:greaterThan name="enrollment" property="infoNormalEnrolmentEvaluation.grade" value="0">
-									 <logic:lessThan name="enrollment" property="infoNormalEnrolmentEvaluation.grade" value="101">
-										<logic:notEqual name="enrollment" property="infoNormalEnrolmentEvaluation.state" 
+								<logic:greaterThan name="enrolment" property="latestNormalEnrolmentEvaluation.grade" value="0">
+									 <logic:lessThan name="enrolment" property="latestNormalEnrolmentEvaluation.grade" value="101">
+										<logic:notEqual name="enrolment" property="latestNormalEnrolmentEvaluation.enrolmentEvaluationState" 
 											value="<%= EnrolmentEvaluationState.FINAL_OBJ.toString() %>">
 											<bean:message key="msg.enrolled" bundle="ENUMERATION_RESOURCES" />
 										</logic:notEqual>
-										<logic:equal name="enrollment" property="infoNormalEnrolmentEvaluation.state" 
+										<logic:equal name="enrolment" property="latestNormalEnrolmentEvaluation.enrolmentEvaluationState" 
 											value="<%= EnrolmentEvaluationState.FINAL_OBJ.toString() %>">
-											<bean:write name="enrollment" property="infoNormalEnrolmentEvaluation.grade"/>
+											<bean:write name="enrolment" property="latestNormalEnrolmentEvaluation.grade"/>
 										</logic:equal>	
 									</logic:lessThan>
 								</logic:greaterThan>								
 							</logic:present>
 						</logic:present>
-						<logic:notPresent name="enrollment" property="infoNormalEnrolmentEvaluation">
+					 </td>
+
+					 <td class="listClasses">
+						<logic:notPresent name="enrolment" property="latestSpecialSeasonEnrolmentEvaluation">
 							--
 						</logic:notPresent>
-					 </td>
-					 <td class="listClasses">
-					 	<logic:present name="enrollment" property="infoSpecialSeasonEnrolmentEvaluation">
-					 		<logic:empty name="enrollment" property="infoSpecialSeasonEnrolmentEvaluation.grade">
+
+					 	<logic:present name="enrolment" property="latestSpecialSeasonEnrolmentEvaluation">
+					 		<logic:empty name="enrolment" property="latestSpecialSeasonEnrolmentEvaluation.grade">
 								<bean:message key="msg.enrolled" bundle="ENUMERATION_RESOURCES" />
 							</logic:empty>
-						 	<logic:notEmpty name="enrollment" property="infoSpecialSeasonEnrolmentEvaluation.grade">
-							 	<logic:equal name="enrollment" property="infoSpecialSeasonEnrolmentEvaluation.grade" value="NA">
+						 	<logic:notEmpty name="enrolment" property="latestSpecialSeasonEnrolmentEvaluation.grade">
+							 	<logic:equal name="enrolment" property="latestSpecialSeasonEnrolmentEvaluation.grade" value="NA">
 									<bean:message key="msg.notEvaluated" bundle="ENUMERATION_RESOURCES" />
 								</logic:equal>
-								<logic:equal name="enrollment" property="infoSpecialSeasonEnrolmentEvaluation.grade" value="RE">
+								<logic:equal name="enrolment" property="latestSpecialSeasonEnrolmentEvaluation.grade" value="RE">
 									<bean:message key="msg.notApproved" bundle="ENUMERATION_RESOURCES" />
 								</logic:equal>
-								<logic:equal name="enrollment" property="infoSpecialSeasonEnrolmentEvaluation.grade" value="AP">
+								<logic:equal name="enrolment" property="latestSpecialSeasonEnrolmentEvaluation.grade" value="AP">
 									<bean:message key="msg.approved" bundle="ENUMERATION_RESOURCES" />
 								</logic:equal>
-								<logic:greaterThan name="enrollment" property="infoSpecialSeasonEnrolmentEvaluation.grade" value="0">
-									<logic:lessThan name="enrollment" property="infoSpecialSeasonEnrolmentEvaluation.grade" value="101">
-										<bean:write name="enrollment" property="infoSpecialSeasonEnrolmentEvaluation.grade"/>
+								<logic:greaterThan name="enrolment" property="latestSpecialSeasonEnrolmentEvaluation.grade" value="0">
+									<logic:lessThan name="enrolment" property="latestSpecialSeasonEnrolmentEvaluation.grade" value="101">
+										<bean:write name="enrolment" property="latestSpecialSeasonEnrolmentEvaluation.grade"/>
 									</logic:lessThan>
 								</logic:greaterThan>
 							</logic:notEmpty>
 						</logic:present>
-						<logic:notPresent name="enrollment" property="infoSpecialSeasonEnrolmentEvaluation">
+					 </td>
+
+					 <td class="listClasses">
+						<logic:notPresent name="enrolment" property="latestImprovementEnrolmentEvaluation">
 							--
 						</logic:notPresent>
-					 </td>
-					 <td class="listClasses">
-					 	<logic:present name="enrollment" property="infoImprovmentEnrolmentEvaluation">
-					 		<logic:empty name="enrollment" property="infoImprovmentEnrolmentEvaluation.grade">
+
+					 	<logic:present name="enrolment" property="latestImprovementEnrolmentEvaluation">
+					 		<logic:empty name="enrolment" property="latestImprovementEnrolmentEvaluation.grade">
 								<bean:message key="msg.enrolled" bundle="ENUMERATION_RESOURCES" />
 							</logic:empty>
-						 	<logic:notEmpty name="enrollment" property="infoImprovmentEnrolmentEvaluation.grade">
-							 	<logic:equal name="enrollment" property="infoImprovmentEnrolmentEvaluation.grade" value="NA">
+						 	<logic:notEmpty name="enrolment" property="latestImprovementEnrolmentEvaluation.grade">
+							 	<logic:equal name="enrolment" property="latestImprovementEnrolmentEvaluation.grade" value="NA">
 									<bean:message key="msg.notEvaluated" bundle="ENUMERATION_RESOURCES" />
 								</logic:equal>
-								<logic:equal name="enrollment" property="infoImprovmentEnrolmentEvaluation.grade" value="RE">
+								<logic:equal name="enrolment" property="latestImprovementEnrolmentEvaluation.grade" value="RE">
 									<bean:message key="msg.notApproved" bundle="ENUMERATION_RESOURCES" />
 								</logic:equal>
-								<logic:equal name="enrollment" property="infoImprovmentEnrolmentEvaluation.grade" value="AP">
+								<logic:equal name="enrolment" property="latestImprovementEnrolmentEvaluation.grade" value="AP">
 									<bean:message key="msg.approved" bundle="ENUMERATION_RESOURCES" />
 								</logic:equal>
-								<logic:greaterThan name="enrollment" property="infoImprovmentEnrolmentEvaluation.grade" value="0">
-									<logic:lessThan name="enrollment" property="infoImprovmentEnrolmentEvaluation.grade" value="101">
-										<bean:write name="enrollment" property="infoImprovmentEnrolmentEvaluation.grade"/>
+								<logic:greaterThan name="enrolment" property="latestImprovementEnrolmentEvaluation.grade" value="0">
+									<logic:lessThan name="enrolment" property="latestImprovementEnrolmentEvaluation.grade" value="101">
+										<bean:write name="enrolment" property="latestImprovementEnrolmentEvaluation.grade"/>
 									</logic:lessThan>
 								</logic:greaterThan>
 							</logic:notEmpty>
 						</logic:present>
-						<logic:notPresent name="enrollment" property="infoImprovmentEnrolmentEvaluation">
+					 </td>
+
+					 <td class="listClasses">
+						<logic:notPresent name="enrolment" property="latestEquivalenceEnrolmentEvaluation">
 							--
 						</logic:notPresent>
-					 </td>
-					 <td class="listClasses">
-					 	<logic:present name="enrollment" property="infoEquivalenceEnrolmentEvaluation">
-					 		<logic:empty name="enrollment" property="infoEquivalenceEnrolmentEvaluation.grade">
+
+					 	<logic:present name="enrolment" property="latestEquivalenceEnrolmentEvaluation">
+					 		<logic:empty name="enrolment" property="latestEquivalenceEnrolmentEvaluation.grade">
 								<bean:message key="msg.enrolled" bundle="ENUMERATION_RESOURCES" />
 							</logic:empty>
-						 	<logic:notEmpty name="enrollment" property="infoEquivalenceEnrolmentEvaluation.grade">
-							 	<logic:equal name="enrollment" property="infoEquivalenceEnrolmentEvaluation.grade" value="NA">
+						 	<logic:notEmpty name="enrolment" property="latestEquivalenceEnrolmentEvaluation.grade">
+							 	<logic:equal name="enrolment" property="latestEquivalenceEnrolmentEvaluation.grade" value="NA">
 									<bean:message key="msg.notEvaluated" bundle="ENUMERATION_RESOURCES" />
 								</logic:equal>
-								<logic:equal name="enrollment" property="infoEquivalenceEnrolmentEvaluation.grade" value="RE">
+								<logic:equal name="enrolment" property="latestEquivalenceEnrolmentEvaluation.grade" value="RE">
 									<bean:message key="msg.notApproved" bundle="ENUMERATION_RESOURCES" />
 								</logic:equal>
-								<logic:equal name="enrollment" property="infoEquivalenceEnrolmentEvaluation.grade" value="AP">
+								<logic:equal name="enrolment" property="latestEquivalenceEnrolmentEvaluation.grade" value="AP">
 									<bean:message key="msg.approved" bundle="ENUMERATION_RESOURCES" />
 								</logic:equal>
-								<logic:greaterThan name="enrollment" property="infoEquivalenceEnrolmentEvaluation.grade" value="0">
-									<logic:lessThan name="enrollment" property="infoEquivalenceEnrolmentEvaluation.grade" value="101">
-										<bean:write name="enrollment" property="infoEquivalenceEnrolmentEvaluation.grade"/>
+								<logic:greaterThan name="enrolment" property="latestEquivalenceEnrolmentEvaluation.grade" value="0">
+									<logic:lessThan name="enrolment" property="latestEquivalenceEnrolmentEvaluation.grade" value="101">
+										<bean:write name="enrolment" property="latestEquivalenceEnrolmentEvaluation.grade"/>
 									</logic:lessThan>
 								</logic:greaterThan>
 							</logic:notEmpty>
 						</logic:present>
-						<logic:notPresent name="enrollment" property="infoEquivalenceEnrolmentEvaluation">
-							--
-						</logic:notPresent>
 					 </td>
+
 					 <td class="listClasses">
-					 	<logic:notEqual name="enrollment" property="enrollmentState" value="<%= EnrollmentState.APROVED.toString() %>">
-							<bean:message name="enrollment" property="enrollmentState.name" bundle="ENUMERATION_RESOURCES" />
-						</logic:notEqual>
+					 	<logic:equal name="enrolment" property="enrolmentStateApproved" value="false">
+							<bean:message name="enrolment" property="enrollmentState.name" bundle="ENUMERATION_RESOURCES" />
+						</logic:equal>
 				
-						<logic:equal name="enrollment" property="enrollmentState" value="<%= EnrollmentState.APROVED.toString() %>">
-							<logic:equal name="enrollment" property="infoEnrolmentEvaluation.grade" value="AP">
+					 	<logic:equal name="enrolment" property="enrolmentStateApproved" value="true">
+							<logic:equal name="enrolment" property="latestEnrolmentEvaluation.grade" value="AP">
 								<bean:message key="msg.approved" bundle="ENUMERATION_RESOURCES" />
 							</logic:equal>
-							<logic:notEqual name="enrollment" property="infoEnrolmentEvaluation.grade" value="AP">
-								<bean:write name="enrollment" property="infoEnrolmentEvaluation.grade"/>
+							<logic:notEqual name="enrolment" property="latestEnrolmentEvaluation.grade" value="AP">
+								<bean:write name="enrolment" property="latestEnrolmentEvaluation.grade"/>
 							</logic:notEqual>
 						</logic:equal>
 					 </td>
+
 				</tr>
 			</logic:iterate>
 		</table>
-		</logic:notEmpty>
+
+	</logic:notEmpty>
+
+	<br />
+
+	<p>
+		<bean:message key="message.teachingReport.note1" bundle="CURRICULUM_HISTORIC_RESOURCES"/>
 		<br />
-		<p>
-			<bean:message key="message.teachingReport.note1" bundle="CURRICULUM_HISTORIC_RESOURCES"/>
-			<br />
-			<bean:message key="message.teachingReport.note2" bundle="CURRICULUM_HISTORIC_RESOURCES"/>
-		</p>
+		<bean:message key="message.teachingReport.note2" bundle="CURRICULUM_HISTORIC_RESOURCES"/>
+	</p>
+
 </logic:present>
-			 
