@@ -2135,4 +2135,19 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return isBolonha() ? getRoot().getDegreeModulesToEvaluate(executionPeriod) : Collections.EMPTY_SET;
     }
 
+    public MasterDegreeCandidate getMasterDegreeCandidate() {
+	if (getDegreeType().equals(DegreeType.MASTER_DEGREE)) {
+	    ExecutionDegree firstExecutionDegree = this.getDegreeCurricularPlan()
+		    .getExecutionDegreeByYear(this.getFirstExecutionPeriod().getExecutionYear());
+	    for (final MasterDegreeCandidate candidate : this.getRegistration().getPerson()
+		    .getMasterDegreeCandidates()) {
+		if (candidate.getExecutionDegree() == firstExecutionDegree) {
+		    return candidate;
+		}
+	    }
+	}
+	return null;
+    }
+    
+    
 }
