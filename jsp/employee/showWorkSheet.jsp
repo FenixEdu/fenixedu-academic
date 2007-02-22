@@ -8,9 +8,6 @@
 <em class="invisible"><bean:message key="title.assiduousness" /></em>
 <h2><bean:message key="link.workSheet" /></h2>
 
-<div class="warning0">
-<bean:message key="message.employee.testPhase"/>
-</div>
 <div class="toprint">
 
 <logic:present name="employeeWorkSheet">

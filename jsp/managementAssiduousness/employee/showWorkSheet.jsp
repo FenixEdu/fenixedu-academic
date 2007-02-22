@@ -8,8 +8,6 @@
 <em class="invisible"><bean:message key="title.assiduousness" /></em>
 <h2><bean:message key="link.workSheet" /></h2>
 
-<div class="warning0"><bean:message key="message.employee.testPhase" />
-</div>
 
 <logic:present name="employeeWorkSheet">
 	<logic:present name="yearMonth">
@@ -155,7 +153,7 @@
 	</logic:empty>
 	<logic:notEmpty name="employeeWorkSheet" property="workDaySheetList">
 		<fr:view name="employeeWorkSheet" property="workDaySheetList"
-			schema="show.workDaySheet">
+			schema="show.workDaySheet.management">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle1 printborder tpadding1" />
 				<fr:property name="columnClasses"

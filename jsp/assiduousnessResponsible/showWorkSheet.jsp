@@ -8,10 +8,6 @@
 <em class="invisible"><bean:message key="title.assiduousnessResponsible" bundle="ASSIDUOUSNESS_RESOURCES"/></em>
 <h2><bean:message key="link.showEmployeeWorkSheet" bundle="ASSIDUOUSNESS_RESOURCES"/></h2>
 
-<div class="warning0">
-<bean:message key="message.employee.testPhase" bundle="ASSIDUOUSNESS_RESOURCES"/>
-</div>
-
 <logic:messagesPresent message="true">
 	<html:messages id="message" message="true" bundle="ASSIDUOUSNESS_RESOURCES">
 		<p><span class="error0"><bean:write name="message"/></span></p>

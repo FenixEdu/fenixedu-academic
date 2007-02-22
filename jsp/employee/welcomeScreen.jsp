@@ -8,6 +8,3 @@
 <p><span class="error"><!-- Error messages go here --><html:errors /></span></p>
 
 <p class="mvert05"><bean:message key="message.employee.welcomeScreen" /></p>
-<div class="warning0">
-<p class="mvert025"><bean:message key="message.employee.testPhase" /></p>
-</div>
