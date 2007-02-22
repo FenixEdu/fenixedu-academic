@@ -101,7 +101,7 @@
 </schema>
 
 <schema name="create.justificationMotives" type="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive"
-	constructor="acronym, description, justificationType, dayType, justificationGroup, modifiedBy">
+	constructor="acronym, description, actualWorkTime, justificationType, dayType, justificationGroup, modifiedBy">
 	<slot name="acronym" key="label.acronym" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="description" key="label.description" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="50"/>
@@ -118,6 +118,7 @@
 		<property name="choiceType"	value="net.sourceforge.fenixedu.domain.assiduousness.JustificationGroup" />
 		<property name="eachLayout" value="this-does-not-exist" />
 	</slot>	
+	<slot name="actualWorkTime" key="label.actualWorkTime" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="modifiedBy" hidden="true"/>
 </schema>
 
@@ -138,8 +139,9 @@
 		<property name="choiceType"	value="net.sourceforge.fenixedu.domain.assiduousness.JustificationGroup" />
 		<property name="eachLayout" value="this-does-not-exist" />
 	</slot>	
+	<slot name="actualWorkTime" key="label.actualWorkTime" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="modifiedBy" hidden="true"/>
-	<setter signature="editJustificationMotive(acronym,description,justificationType,dayType,justificationGroup,modifiedBy)"/>
+	<setter signature="editJustificationMotive(acronym,description,actualWorkTime,justificationType,dayType,justificationGroup,modifiedBy)"/>
 </schema>
 
 <schema name="show.regularizationMotives" type="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive" 
