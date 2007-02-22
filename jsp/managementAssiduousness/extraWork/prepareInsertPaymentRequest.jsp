@@ -40,7 +40,7 @@
 			<bean:define id="month" name="extraWorkRequestFactory" property="month"/>
 			<bean:define id="unitCode" name="extraWorkRequestFactory" property="unitCode"/>
 			<fr:view name="extraWorkRequestFactory" property="employeeList"
-				schema="show.employeePersonalInformation2">
+				schema="show.employeePersonalInformation.toList">
 
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="tstyle1 printborder" />
