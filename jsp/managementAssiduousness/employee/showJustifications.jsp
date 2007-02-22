@@ -151,12 +151,13 @@
 		</html:messages>
 	</logic:messagesPresent>
 
-	<div class="mvert1 invisible"><fr:form
-		action="/viewEmployeeAssiduousness.do?method=showJustifications">
+	<bean:define id="employeeNumber" name="employee" property="employeeNumber"/>
+	<div class="mvert1 invisible">
+	<fr:form action="/viewEmployeeAssiduousness.do?method=showJustifications">
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method"
 			name="employeeForm" property="method" value="showJustifications" />
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.employeeNumber"
-			name="employeeForm" property="employeeNumber" />
+			name="employeeForm" property="employeeNumber" value="<%= employeeNumber.toString() %>" />
 		<fr:edit id="yearMonth" name="yearMonth" schema="choose.date">
 			<fr:layout>
 				<fr:property name="classes" value="thlight thright" />
@@ -185,7 +186,7 @@
 		</p>
 	</logic:empty>
 	<logic:notEmpty name="justifications">
-		<fr:view name="justifications" schema="show.justifications">
+		<fr:view name="justifications" schema="show.justifications.management">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle1 printborder" />
 				<fr:property name="columnClasses" value="acenter" />

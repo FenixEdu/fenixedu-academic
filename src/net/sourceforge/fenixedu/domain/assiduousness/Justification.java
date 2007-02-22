@@ -36,4 +36,11 @@ public class Justification extends Justification_Base {
         }
         return null;
     }
+    
+    public Integer getModifiedByNumber(){
+        if(getModifiedBy() != null){
+            return getModifiedBy().getEmployeeNumber();
+        }
+        return null;
+    }
 }

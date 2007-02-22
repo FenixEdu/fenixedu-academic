@@ -26,6 +26,14 @@ function associate(workScheduleID){
 	</fr:layout>
 </fr:view>
 	
+<!-- mostrar aqui as semanas e os dias em cada 1 para o qual o horário vai ser atribuido -->	
+<logic:iterate id="workSchedule" name="workScheduleList" type="net.sourceforge.fenixedu.domain.assiduousness.WorkScheduleType">
+Semana: <bean:write name="workSchedule" property="periodicity"/>
+Dia(s): <logic:iterate id="day" name="workSchedule" property="workWeek.days">
+			<bean:write name="day" property="name" bundle="ENUMERATION_RESOURCES"/>
+		</logic:iterate>
+</logic:iterate>
+
 <bean:define id="employeeID" name="employeeScheduleBean" property="employee.idInternal"/>
 
 <fr:form action="/employeeAssiduousness.do?method=associateEmployeeWorkSchedule">

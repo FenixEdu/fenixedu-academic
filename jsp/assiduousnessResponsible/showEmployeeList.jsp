@@ -55,7 +55,7 @@
 				</fr:view>
 			</div>
 
-			<fr:view name="unitEmployees" property="employeeList" schema="show.employeePersonalInformation2">
+			<fr:view name="unitEmployees" property="employeeList" schema="show.employeePersonalInformation.toList">
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="tstyle1 printborder" />
 					<fr:property name="columnClasses" value="acenter,,"/>

@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord;
 import net.sourceforge.fenixedu.domain.assiduousness.Leave;
+import net.sourceforge.fenixedu.domain.assiduousness.MissingClocking;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule;
 import net.sourceforge.fenixedu.domain.assiduousness.util.Timeline;
 import net.sourceforge.fenixedu.util.LanguageUtils;
@@ -46,6 +47,8 @@ public class WorkDaySheet implements Serializable {
     List<AssiduousnessRecord> assiduousnessRecords;
 
     String clockings;
+
+    String clockingsToManagement;
 
     List<Leave> leaves;
 
@@ -169,6 +172,10 @@ public class WorkDaySheet implements Serializable {
         return clockings;
     }
 
+    public String getClockingsFormattedToManagement() {
+        return clockingsToManagement;
+    }
+
     public String getWeekDay() {
         if (getDate() == null) {
             return "";
@@ -183,16 +190,44 @@ public class WorkDaySheet implements Serializable {
     public void setAssiduousnessRecords(final List<AssiduousnessRecord> assiduousnessRecords) {
         this.assiduousnessRecords = assiduousnessRecords;
         final StringBuilder result = new StringBuilder();
+        final StringBuilder resultToManagement = new StringBuilder();
+        boolean isPreviousMissingClocking = false;
         if (assiduousnessRecords != null) {
             for (final AssiduousnessRecord assiduousnessRecord : assiduousnessRecords) {
                 final TimeOfDay timeOfDay = assiduousnessRecord.getDate().toTimeOfDay();
-                if (result.length() != 0) {
-                    result.append(", ");
+                if (assiduousnessRecord instanceof MissingClocking) {
+                    if (result.length() != 0) {
+                        result.append(", ");
+                        if (isPreviousMissingClocking) {
+                            resultToManagement.append("</span>, <span class='color890'>");
+                        } else {
+                            resultToManagement.append(",<span class='color890'> ");
+                        }
+                    } else {
+                        resultToManagement.append("<span class='color890'>");
+                    }
+                    resultToManagement.append(fmt.print(timeOfDay));
+                    isPreviousMissingClocking = true;
+                } else {
+                    if (result.length() != 0) {
+                        result.append(", ");
+                        if (isPreviousMissingClocking) {
+                            resultToManagement.append("</span>, ");
+                        } else {
+                            resultToManagement.append(", ");
+                        }
+                    }
+                    resultToManagement.append(fmt.print(timeOfDay));
+                    isPreviousMissingClocking = false;
                 }
                 result.append(fmt.print(timeOfDay));
             }
         }
+        if(isPreviousMissingClocking){
+            resultToManagement.append("</span>");
+        }
         clockings = " " + result.toString();
+        clockingsToManagement = " " + resultToManagement.toString();
     }
 
     public List<AssiduousnessRecord> getAssiduousnessRecords() {
