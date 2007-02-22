@@ -35,6 +35,7 @@ public class LERCIBolonhaEnrolmentRule extends BolonhaEnrolmentRule {
 
 	if(isEnrolledInPreviousExecutionPeriodOrAproved(DISSERTACAO_CODE) || isEnrolledInExecutionPeriod(DISSERTACAO_CODE)) {
 	    removeCurricularCourse(curricularCoursesToBeEnrolledIn, TFCII_CODE);
+	    removeCurricularCourse(curricularCoursesToBeEnrolledIn, DISSERTACAO_CODE);
 	}
 
 	return curricularCoursesToBeEnrolledIn;
