@@ -349,6 +349,18 @@
 	<slot name="masterDegreeThesis.studentCurricularPlan.student.number" key="label.studentNumber" />
 	<slot name="masterDegreeThesis.studentCurricularPlan.student.student.person.name" key="label.name" />
 	<slot name="proofDateYearMonthDay" key="label.proofDate" />
+	<slot name="masterDegreeThesis.activeMasterDegreeThesisDataVersion.dissertationTitle" key="label.masterDegreeThesis.dissertationTitle" />
+	<slot name="masterDegreeThesis.studentCurricularPlan.masterDegreeCandidate" layout="null-as-label" 
+		key="label.masterDegreeCandidate.precendentDegree" >
+		<property name="label" value=" - "/>
+		<property name="subLayout" value="values"/>
+		<property name="subSchema" value="masterDegreeCandidate.precendentDegree" />
+	</slot>
+</schema>
+
+<schema name="masterDegreeCandidate.precendentDegree" 
+	type="net.sourceforge.fenixedu.domain.MasterDegreeCandidate" bundle="ADMIN_OFFICE_RESOURCES">
+	<slot name="precedentDegreeDescription" key="label.masterDegreeCandidate.precendentDegree" read-only="true" />
 </schema>
 
 <schema name="student.manageEnrolmentModel" 
