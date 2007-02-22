@@ -41,7 +41,6 @@ import net.sourceforge.fenixedu.domain.exceptions.FenixDomainException;
 import net.sourceforge.fenixedu.domain.gratuity.GratuitySituationType;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Credits;
@@ -1892,6 +1891,16 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public String getName() {
 	return getDegreeCurricularPlan().getName();
     }
+    
+    public int countEnrolments(final ExecutionPeriod executionPeriod) {
+	int numberEnrolments = 0;
+	for (final Enrolment enrolment : getEnrolmentsSet()) {
+	    if (enrolment.getExecutionPeriod() == executionPeriod) {
+		numberEnrolments++;
+	    }
+	}
+	return numberEnrolments;
+    }
 
     public int countEnrolments(final ExecutionYear executionYear) {
 	int numberEnrolments = 0;
@@ -2042,7 +2051,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     public boolean isEnrolable() {
 	return this.isBolonha()
-		&& getRegistration().getActiveStateType().equals(RegistrationStateType.REGISTERED)
+		&& getRegistration().isInRegisteredState()
 		&& getRegistration().getLastStudentCurricularPlanExceptPast().equals(this);
     }
 
