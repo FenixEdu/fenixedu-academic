@@ -6,6 +6,9 @@
 
 package net.sourceforge.fenixedu.util;
 
+import org.joda.time.DateTime;
+import org.joda.time.YearMonthDay;
+
 /**
  * 
  * @author tfc130
@@ -86,6 +89,15 @@ public class DiaSemana extends FenixUtil {
     }
     
     public int getDiaSemanaInDayOfWeekJodaFormat() {
-	return (getDiaSemana().intValue() == 1) ? 7 : (getDiaSemana().intValue() - 1);
+	return (getDiaSemana().intValue() == 1) ? 7 : getDiaSemana().intValue() - 1;
+    }
+    
+    public static int getDiaSemana(DateTime dateTime) {
+	return dateTime.getDayOfWeek() == 7 ? 1 : dateTime.getDayOfWeek() + 1;
+    }
+    
+    public static int getDiaSemana(YearMonthDay date) {
+	DateTime dateTime = date.toDateTimeAtMidnight();
+	return dateTime.getDayOfWeek() == 7 ? 1 : dateTime.getDayOfWeek() + 1;
     }
 }

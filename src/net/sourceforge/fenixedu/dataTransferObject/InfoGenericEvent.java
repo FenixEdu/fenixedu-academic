@@ -10,10 +10,26 @@ import net.sourceforge.fenixedu.util.LanguageUtils;
 
 public class InfoGenericEvent extends InfoShowOccupation  {
 
+    private Calendar beginTime;
+    
+    private Calendar endTime;
+    
+    private int diaSemana;
+    
     private DomainReference<GenericEvent> genericEventReference;
     
-    public InfoGenericEvent(GenericEvent genericEvent) {
+    public InfoGenericEvent(GenericEvent genericEvent, int diaSemana_) {
 	genericEventReference = new DomainReference<GenericEvent>(genericEvent);
+	diaSemana = diaSemana_;
+	beginTime = genericEvent.getBeginTimeCalendar();
+	endTime = genericEvent.getEndTimeCalendar();
+    }
+    
+    public InfoGenericEvent(GenericEvent genericEvent, int diaSemana_, Calendar beginTime_, Calendar endTime_) {
+	genericEventReference = new DomainReference<GenericEvent>(genericEvent);
+	diaSemana = diaSemana_;
+	beginTime = beginTime_;
+	endTime = endTime_;
     }
  
     public GenericEvent getGenericEvent() {
@@ -34,19 +50,19 @@ public class InfoGenericEvent extends InfoShowOccupation  {
     
     @Override
     public DiaSemana getDiaSemana() {
-	return getGenericEvent().getWeekDay();
+	return new DiaSemana(diaSemana);
     }
 
     @Override
     public Calendar getFim() {	
-	return getGenericEvent().getEndTimeCalendar(); 
+	return endTime;
     }
 
     @Override
     public Calendar getInicio() {
-	return getGenericEvent().getBeginTimeCalendar();
+	return beginTime;
     }
-
+       
     @Override
     public InfoRoomOccupation getInfoRoomOccupation() {
 	return (getGenericEvent().getRoomOccupations().isEmpty()) ? null : 

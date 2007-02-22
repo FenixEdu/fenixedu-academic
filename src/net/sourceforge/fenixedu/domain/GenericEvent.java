@@ -139,6 +139,14 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
 	return result;
     }
     
+    public List<Interval> getGenericEventIntervals(YearMonthDay begin, YearMonthDay end){
+	if(!getRoomOccupations().isEmpty()) {
+	    RoomOccupation occupation = getRoomOccupations().get(0);
+	    return occupation.getRoomOccupationIntervals(begin, end);	    
+	}
+	return new ArrayList<Interval>();
+    }
+           
     public DiaSemana getWeekDay() {
 	return (!getRoomOccupations().isEmpty()) ? getRoomOccupations().get(0).getDayOfWeek() : null;
     }

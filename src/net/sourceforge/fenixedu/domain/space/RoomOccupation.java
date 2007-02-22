@@ -87,7 +87,7 @@ public class RoomOccupation extends RoomOccupation_Base {
 	
         this();          
         
-        DiaSemana diaSemana = new DiaSemana(getDiaSemana(beginDate));
+        DiaSemana diaSemana = new DiaSemana(DiaSemana.getDiaSemana(beginDate));
         Integer frequency = (frequencyType != null) ? frequencyType.ordinal() + 1 : null;        
         Calendar beginTimeCalendar = beginDate.toDateTime(new TimeOfDay(beginTime.getHour(), beginTime.getMinuteOfHour(), 0, 0)).toCalendar(LanguageUtils.getLocale());
         Calendar endTimeCalendar = endDate.toDateTime(new TimeOfDay(endTime.getHour(), endTime.getMinuteOfHour(), 0, 0)).toCalendar(LanguageUtils.getLocale());
@@ -219,6 +219,19 @@ public class RoomOccupation extends RoomOccupation_Base {
 		roomOccupationIntervals.get(roomOccupationIntervals.size() - 1).getEnd() : null;	
     }                    
     
+    public List<Interval> getRoomOccupationIntervals(YearMonthDay begin, YearMonthDay end){
+	List<Interval> result = new ArrayList<Interval>();
+	for (Interval interval : getRoomOccupationIntervals()) {
+	    if(interval.getStart().toYearMonthDay().isAfter(end)) {
+		break;	    
+	    } else if(!interval.getStart().toYearMonthDay().isAfter(end) && 
+		    !interval.getEnd().toYearMonthDay().isBefore(begin)) {
+		result.add(interval);
+	    }
+	}
+	return result;
+    }
+    
     public List<Interval> getRoomOccupationIntervals() {		
 	List<Interval> result = new ArrayList<Interval>();
 	OccupationPeriod occupationPeriod = getPeriod();        
@@ -281,40 +294,6 @@ public class RoomOccupation extends RoomOccupation_Base {
 		end.toDateTime(new TimeOfDay(endTime.getHour(), endTime.getMinuteOfHour(), 0, 0)));
     }            
     
-    public Calendar getStartTime() {
-        if (this.getStartTimeDate() != null) {
-            Calendar result = Calendar.getInstance();
-            result.setTime(this.getStartTimeDate());
-            return result;
-        }
-        return null;
-    }
-
-    public void setStartTime(Calendar calendar) {
-        if (calendar != null) {
-            this.setStartTimeDate(calendar.getTime());
-        } else {
-            this.setStartTimeDate(null);
-        }
-    }
-
-    public Calendar getEndTime() {
-        if (this.getEndTimeDate() != null) {
-            Calendar result = Calendar.getInstance();
-            result.setTime(this.getEndTimeDate());
-            return result;
-        }
-        return null;
-    }
-
-    public void setEndTime(Calendar calendar) {
-        if (calendar != null) {
-            this.setEndTimeDate(calendar.getTime());
-        } else {
-            this.setEndTimeDate(null);
-        }
-    }
-
     @Override
     public void setStartTimeDateHourMinuteSecond(HourMinuteSecond startTimeDateHourMinuteSecond) {
         final HourMinuteSecond hourMinuteSecond = eliminateSeconds(startTimeDateHourMinuteSecond);
@@ -433,13 +412,40 @@ public class RoomOccupation extends RoomOccupation_Base {
 
         }
         return list;
-    }
+    }    
     
-    private int getDiaSemana(YearMonthDay begin) {
-	int dayOfWeek = begin.toDateTimeAtMidnight().getDayOfWeek();
-	if(dayOfWeek == 7) {
-	    return 1;
-	}
-	return dayOfWeek + 1;
+    public Calendar getStartTime() {
+        if (this.getStartTimeDate() != null) {
+            Calendar result = Calendar.getInstance();
+            result.setTime(this.getStartTimeDate());
+            return result;
+        }
+        return null;
     }
+
+    public void setStartTime(Calendar calendar) {
+        if (calendar != null) {
+            this.setStartTimeDate(calendar.getTime());
+        } else {
+            this.setStartTimeDate(null);
+        }
+    }
+
+    public Calendar getEndTime() {
+        if (this.getEndTimeDate() != null) {
+            Calendar result = Calendar.getInstance();
+            result.setTime(this.getEndTimeDate());
+            return result;
+        }
+        return null;
+    }
+
+    public void setEndTime(Calendar calendar) {
+        if (calendar != null) {
+            this.setEndTimeDate(calendar.getTime());
+        } else {
+            this.setEndTimeDate(null);
+        }
+    }
+
 }

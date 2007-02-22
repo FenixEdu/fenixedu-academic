@@ -38,6 +38,13 @@ import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.CalendarUtil;
+import net.sourceforge.fenixedu.util.DiaSemana;
+import net.sourceforge.fenixedu.util.LanguageUtils;
+
+import org.joda.time.DateTime;
+import org.joda.time.Interval;
+import org.joda.time.TimeOfDay;
+import org.joda.time.YearMonthDay;
 
 public class ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom extends Service {
 
@@ -102,31 +109,97 @@ public class ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom extends Se
 
         final Date startDate = startDay.getTime();
         final Date endDate = endDay.getTime();
+        
+        final YearMonthDay weekStartYearMonthDay = YearMonthDay.fromDateFields(startDate);
+        final YearMonthDay weekEndYearMonthDay = YearMonthDay.fromDateFields(endDate).minusDays(1);
+        
         for (final RoomOccupation roomOccupation : room.getRoomOccupations()) {
+            
             final WrittenEvaluation writtenEvaluation = roomOccupation.getWrittenEvaluation();
             final GenericEvent genericEvent = roomOccupation.getGenericEvent();
-            if (writtenEvaluation != null) {
-                final Date evaluationDate = writtenEvaluation.getDayDate();
-                if (!evaluationDate.before(startDate) && !evaluationDate.after(endDate)) {
-                    if (writtenEvaluation instanceof Exam) {
-                        final Exam exam = (Exam) writtenEvaluation;
-                        infoShowOccupations.add(InfoExam.newInfoFromDomain(exam));
-                    } else if (writtenEvaluation instanceof WrittenTest) {
-                        final WrittenTest writtenTest = (WrittenTest) writtenEvaluation;
-                        infoShowOccupations.add(InfoWrittenTest.newInfoFromDomain(writtenTest));
-                    }
-                }
-            }
             
-            //Punctual Room Occupations
-            if(genericEvent != null) {
-        	if(genericEvent.getOccupationPeriod().intersectPeriods(startDay, endDay)) {
-        	    infoShowOccupations.add(new InfoGenericEvent(genericEvent));
-        	}
-            }            
+            // Written Evaluation Room Occupations
+            getWrittenEvaluationRoomOccupations(infoShowOccupations, startDate, endDate, writtenEvaluation);
+            
+            // Generic Event Room Occupations
+            getGenericEventRoomOccupations(infoShowOccupations, startDay, endDay, weekStartYearMonthDay, weekEndYearMonthDay, genericEvent);            
         }
 
         return infoShowOccupations;
+    }
+
+    private void getWrittenEvaluationRoomOccupations(List<InfoObject> infoShowOccupations, final Date startDate, final Date endDate, final WrittenEvaluation writtenEvaluation) {
+	if (writtenEvaluation != null) {
+	    final Date evaluationDate = writtenEvaluation.getDayDate();
+	    if (!evaluationDate.before(startDate) && !evaluationDate.after(endDate)) {
+	        if (writtenEvaluation instanceof Exam) {
+	            final Exam exam = (Exam) writtenEvaluation;
+	            infoShowOccupations.add(InfoExam.newInfoFromDomain(exam));
+	        } else if (writtenEvaluation instanceof WrittenTest) {
+	            final WrittenTest writtenTest = (WrittenTest) writtenEvaluation;
+	            infoShowOccupations.add(InfoWrittenTest.newInfoFromDomain(writtenTest));
+	        }
+	    }                
+	}
+    }
+
+    private void getGenericEventRoomOccupations(List<InfoObject> infoShowOccupations, Calendar startDay,
+	    Calendar endDay, final YearMonthDay weekStartYearMonthDay,
+	    final YearMonthDay weekEndYearMonthDay, final GenericEvent genericEvent) {
+	
+	if (genericEvent != null) {
+	    if (genericEvent.getOccupationPeriod().intersectPeriods(startDay, endDay)) {
+
+		List<Interval> genericEventIntervals = genericEvent.getGenericEventIntervals(weekStartYearMonthDay, weekEndYearMonthDay);
+		TimeOfDay eightAM = new TimeOfDay(8, 0, 0, 0);
+
+		for (Interval interval : genericEventIntervals) {
+
+		    DateTime pointer = interval.getStart();
+		    YearMonthDay intervalStartDay = interval.getStart().toYearMonthDay();
+		    YearMonthDay intervalEndDay = interval.getEnd().toYearMonthDay();
+
+		    if (interval.getStart().getHourOfDay() < 8) {
+			pointer = intervalStartDay.toDateTime(eightAM);
+		    }
+
+		    if (!intervalStartDay.isEqual(intervalEndDay)) {
+
+			if (intervalStartDay.isBefore(weekStartYearMonthDay)) {
+			    pointer = weekStartYearMonthDay.toDateTime(eightAM);
+			    intervalStartDay = pointer.toYearMonthDay();
+			}
+
+			while (!intervalStartDay.isAfter(weekEndYearMonthDay) && !intervalStartDay.isAfter(intervalEndDay)) {
+
+			    Calendar endOfInterval = null;
+			    if (intervalStartDay.isEqual(intervalEndDay)) {
+				endOfInterval = interval.getEnd().toCalendar(LanguageUtils.getLocale());
+			    } else {
+				endOfInterval = pointer.toCalendar(LanguageUtils.getLocale());
+				endOfInterval.set(Calendar.HOUR_OF_DAY, 23);
+				endOfInterval.set(Calendar.MINUTE, 29);
+				endOfInterval.set(Calendar.SECOND, 0);
+				endOfInterval.set(Calendar.MILLISECOND, 0);
+			    }
+
+			    infoShowOccupations.add(new InfoGenericEvent(genericEvent, DiaSemana.getDiaSemana(pointer), pointer
+				    .toCalendar(LanguageUtils.getLocale()), endOfInterval));
+
+			    pointer = pointer.plusDays(1);
+			    intervalStartDay = pointer.toYearMonthDay();
+			    pointer.withHourOfDay(8);
+			    pointer.withMinuteOfHour(0);
+			    pointer.withSecondOfMinute(0);
+			    pointer.withMillisOfSecond(0);
+			}
+
+		    } else {
+			infoShowOccupations.add(new InfoGenericEvent(genericEvent, DiaSemana.getDiaSemana(interval.getStart())));
+		    }
+		}
+	    }
+	}
     }
 
     private boolean intersectPeriods(Calendar startDate, Calendar endDate, InfoPeriod secondPeriod) {
