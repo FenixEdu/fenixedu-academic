@@ -94,5 +94,21 @@ public class MasterDegreeCandidate extends MasterDegreeCandidate_Base {
         }
         return result;
     }
+    
+    public String getPrecedentDegreeDescription(){
+	StringBuilder description = new StringBuilder();
+	if(getMajorDegree() != null){
+	    description.append(getMajorDegree());
+	}	
+	description.append(" - ");
+	if(getMajorDegreeYear() != null){
+	    description.append(getMajorDegreeYear());
+	}	
+	description.append(" - ");
+	if(getMajorDegreeSchool() != null){
+	    description.append(getMajorDegreeSchool());
+	}	
+	return description.toString();
+    }
 
 }
