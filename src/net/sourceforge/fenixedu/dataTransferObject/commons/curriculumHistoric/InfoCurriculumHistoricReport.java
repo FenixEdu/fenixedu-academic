@@ -25,7 +25,7 @@ public class InfoCurriculumHistoricReport implements Serializable {
 
     int approved = 0;
 
-    Collection<Enrolment> enrolments;
+    Collection<InfoEnrolmentHistoricReport> enrolments;
     
     DomainReference<CurricularCourse> curricularCourse;
 
@@ -39,7 +39,7 @@ public class InfoCurriculumHistoricReport implements Serializable {
         return evaluated;
     }
     
-    public Collection<Enrolment> getEnrolments() {
+    public Collection<InfoEnrolmentHistoricReport> getEnrolments() {
         return enrolments;
     }
 
@@ -89,10 +89,10 @@ public class InfoCurriculumHistoricReport implements Serializable {
     }
 
     private void init() {
-	this.enrolments = new TreeSet<Enrolment>(new BeanComparator("studentCurricularPlan.registration.number"));
+	this.enrolments = new TreeSet<InfoEnrolmentHistoricReport>(new BeanComparator("enrolment.studentCurricularPlan.registration.number"));
 	for (final Enrolment enrolment : getCurricularCourse().getEnrolmentsByExecutionPeriod(getExecutionPeriod())) {
 	    if (!enrolment.isAnnulled()) {
-		this.enrolments.add(enrolment);
+		this.enrolments.add(new InfoEnrolmentHistoricReport(enrolment));
 		
 		if (enrolment.isEnrolmentStateApproved() || enrolment.isEnrolmentStateNotApproved()) {
 		    this.evaluated++;
