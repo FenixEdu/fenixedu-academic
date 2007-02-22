@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add DegreeCurricularPlanLERCI" addDegreeCurricularPlanLERCI.sql
