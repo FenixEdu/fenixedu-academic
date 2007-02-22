@@ -650,6 +650,10 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return this.getEnrollmentState() == EnrollmentState.APROVED;
     }
 
+    public boolean isEnrolmentStateNotApproved() {
+	return this.getEnrollmentState() == EnrollmentState.NOT_APROVED;
+    }
+
     public boolean isAnnulled() {
 	return this.getEnrollmentState() == EnrollmentState.ANNULED;
     }
@@ -800,6 +804,22 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     public EnrolmentEvaluation getLatestEnrolmentEvaluationBy(EnrolmentEvaluationType evaluationType) {
 	return getLatestEnrolmentEvalution(getEnrolmentEvaluationsByEnrolmentEvaluationType(evaluationType));
+    }
+
+    public EnrolmentEvaluation getLatestNormalEnrolmentEvaluation() {
+	return getLatestEnrolmentEvaluationBy(EnrolmentEvaluationType.NORMAL);
+    }
+
+    public EnrolmentEvaluation getLatestSpecialSeasonEnrolmentEvaluation() {
+	return getLatestEnrolmentEvaluationBy(EnrolmentEvaluationType.SPECIAL_SEASON);
+    }
+
+    public EnrolmentEvaluation getLatestImprovementEnrolmentEvaluation() {
+	return getLatestEnrolmentEvaluationBy(EnrolmentEvaluationType.IMPROVEMENT);
+    }
+
+    public EnrolmentEvaluation getLatestEquivalenceEnrolmentEvaluation() {
+	return getLatestEnrolmentEvaluationBy(EnrolmentEvaluationType.EQUIVALENCE);
     }
 
     public String getGrade() {
