@@ -537,7 +537,7 @@ public class Student extends Student_Base {
 		DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE });
 	final List<Registration> result = new ArrayList<Registration>();
 	for (final Registration registration : getRegistrations()) {
-	    if (registration.isInRegisteredState()
+	    if (registration.isActive()
 		    && degreeTypesToEnrolByStudent.contains(registration.getDegreeType())) {
 
 		if (registration.hasStudentCandidacy()

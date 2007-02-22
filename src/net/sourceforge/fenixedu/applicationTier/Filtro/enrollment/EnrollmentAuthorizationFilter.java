@@ -116,7 +116,7 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
 	    return "noAuthorization";
 	}
 
-	if (!registration.isInRegisteredState()) {
+	if (!registration.isActive()) {
 	    return "error.message.not.in.registered.state";
 	}
 

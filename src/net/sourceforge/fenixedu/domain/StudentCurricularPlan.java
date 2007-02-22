@@ -1891,7 +1891,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public String getName() {
 	return getDegreeCurricularPlan().getName();
     }
-    
+
     public int countEnrolments(final ExecutionPeriod executionPeriod) {
 	int numberEnrolments = 0;
 	for (final Enrolment enrolment : getEnrolmentsSet()) {
@@ -2050,8 +2050,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     public boolean isEnrolable() {
-	return this.isBolonha()
-		&& getRegistration().isInRegisteredState()
+	return this.isBolonha() && getRegistration().isActive()
 		&& getRegistration().getLastStudentCurricularPlanExceptPast().equals(this);
     }
 
