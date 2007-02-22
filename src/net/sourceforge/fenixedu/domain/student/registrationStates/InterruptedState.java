@@ -37,7 +37,6 @@ public class InterruptedState extends InterruptedState_Base {
 
     public Set<String> getValidNextStates() {
 	Set<String> states = new HashSet<String>();
-	//states.add(RegistrationStateType.INTERRUPTED.name());
 	states.add(RegistrationStateType.CANCELED.name());
 	states.add(RegistrationStateType.REGISTERED.name());
 	states.add(RegistrationStateType.INTERNAL_ABANDON.name());

@@ -22,23 +22,19 @@ public class InternalAbandonState extends InternalAbandonState_Base {
     }
 
     public void checkConditionsToForward() {
-	throw new DomainException("error.impossible.to.forward.from.abandoned");
     }
 
     public void checkConditionsToForward(String nextState) {
-	throw new DomainException("error.impossible.to.forward.from.abandoned");
     }
 
     public Set<String> getValidNextStates() {
-	return new HashSet<String>();
+	Set<String> states = new HashSet<String>();
+	states.add(RegistrationStateType.REGISTERED.name());
+	return states;
     }
 
     public void nextState() {
-	throw new DomainException("error.impossible.to.forward.from.abandoned");
-    }
-
-    public void nextState(String nextState) {
-	throw new DomainException("error.impossible.to.forward.from.abandoned");
+	throw new DomainException("error.no.default.nextState.defined");
     }
 
     @Override

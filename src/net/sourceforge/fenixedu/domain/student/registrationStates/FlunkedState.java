@@ -32,7 +32,6 @@ public class FlunkedState extends FlunkedState_Base {
 
     public Set<String> getValidNextStates() {
 	Set<String> states = new HashSet<String>();
-	//states.add(RegistrationStateType.FLUNKED.name());
 	states.add(RegistrationStateType.CANCELED.name());
 	states.add(RegistrationStateType.REGISTERED.name());
 	states.add(RegistrationStateType.INTERNAL_ABANDON.name());
