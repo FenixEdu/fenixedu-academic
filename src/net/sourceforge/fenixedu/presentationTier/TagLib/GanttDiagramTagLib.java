@@ -129,9 +129,10 @@ public class GanttDiagramTagLib extends TagSupport {
                     builder.append("<tr>");
                 }
                 	    
-                builder.append("<td class=\"padded\">").append("<span style=\"").append(paddingStyle).append("\">");
+                builder.append("<td class=\"padded\">").append("<div style=\"overflow:hidden;\" class=\"nowrap\">");
+                builder.append("<span style=\"").append(paddingStyle).append("\" title=\"").append(eventName).append("\">");
                 builder.append("<a href=\"").append(eventUrl).append("\">").append("*").append(eventName);
-                builder.append("</a></span></td>");
+                builder.append("</a></span></div></td>");
                 
                 for (DateTime day : getGanttDiagramObject().getDays()) {
             	
@@ -276,9 +277,10 @@ public class GanttDiagramTagLib extends TagSupport {
                     builder.append("<tr>");
                 }
                 	    
-                builder.append("<td class=\"padded\">").append("<span style=\"").append(paddingStyle).append("\">");
+                builder.append("<td class=\"padded\">").append("<div style=\"overflow:hidden;\" class=\"nowrap\">");
+                builder.append("<span style=\"").append(paddingStyle).append("\" title=\"").append(eventName).append("\">");
                 builder.append("<a href=\"").append(eventUrl).append("\">").append("*").append(eventName);
-                builder.append("</a></span></td>");
+                builder.append("</a></span></div></td>");
                 
                 for (DateTime month : getGanttDiagramObject().getMonths()) {
             					
@@ -392,11 +394,11 @@ public class GanttDiagramTagLib extends TagSupport {
 	case WEEKLY:	    	    	  
 	    
 	    builder.append("<tr>");
-            builder.append("<th rowspan=\"4\">").append(getMessage("label.ganttDiagram.event")).append("</th>");	
+            builder.append("<th style=\"width: 15em;\" rowspan=\"4\">").append(getMessage("label.ganttDiagram.event")).append("</th>");	
             for (Integer year : getGanttDiagramObject().getYearsView().keySet()) {
                 builder.append("<th colspan=\"").append(getGanttDiagramObject().getYearsView().get(year)).append("\">").append(year).append("</th>");	
             }	
-            builder.append("<th rowspan=\"4\">").append(getMessage("label.ganttDiagram.period")).append("</th>");
+            builder.append("<th style=\"width: 20em;\" rowspan=\"4\">").append(getMessage("label.ganttDiagram.period")).append("</th>");
             builder.append("<th rowspan=\"4\">").append(getMessage("label.ganttDiagram.observations")).append("</th>");
             builder.append("</tr>");
             
@@ -439,12 +441,12 @@ public class GanttDiagramTagLib extends TagSupport {
 	case MONTHLY:	    	    	  
 		    
 	    builder.append("<tr>");
-            builder.append("<th rowspan=\"2\">").append(getMessage("label.ganttDiagram.event")).append("</th>");	                     
+            builder.append("<th style=\"width: 15em;\" rowspan=\"2\">").append(getMessage("label.ganttDiagram.event")).append("</th>");	                     
             for (YearMonthDay month : getGanttDiagramObject().getMonthsView().keySet()) {        	        	        
                 builder.append("<th colspan=\"").append(getGanttDiagramObject().getMonthsView().get(month)).append("\">")
                 .append(month.toString("MMM yyyy", getGanttDiagramObject().getLocale())).append("</th>");	    
             }		             
-            builder.append("<th rowspan=\"2\">").append(getMessage("label.ganttDiagram.period")).append("</th>");
+            builder.append("<th style=\"width: 20em;\" rowspan=\"2\">").append(getMessage("label.ganttDiagram.period")).append("</th>");
             builder.append("<th rowspan=\"2\">").append(getMessage("label.ganttDiagram.observations")).append("</th>");
             builder.append("</tr>");                              
             
@@ -466,7 +468,7 @@ public class GanttDiagramTagLib extends TagSupport {
 	case DAILY:
 	    
 	    builder.append("<tr>");
-            builder.append("<th>").append(getMessage("label.ganttDiagram.event")).append("</th>");	
+            builder.append("<th style=\"width: 15em;\">").append(getMessage("label.ganttDiagram.event")).append("</th>");	
             builder.append("<th>").append(getGanttDiagramObject().getFirstInstant().toString("E", getGanttDiagramObject().getLocale())).append(", ").append(getGanttDiagramObject().getFirstInstant().getDayOfMonth()).append(" ");
             
             if(!StringUtils.isEmpty(getMonthlyViewUrl())) {
@@ -485,7 +487,7 @@ public class GanttDiagramTagLib extends TagSupport {
             }
                         
             builder.append("</th>");
-            builder.append("<th>").append(getMessage("label.ganttDiagram.period")).append("</th>");
+            builder.append("<th style=\"width: 20em;\">").append(getMessage("label.ganttDiagram.period")).append("</th>");
             builder.append("<th>").append(getMessage("label.ganttDiagram.observations")).append("</th>");
             builder.append("</tr>");                
 	    break;
@@ -493,11 +495,11 @@ public class GanttDiagramTagLib extends TagSupport {
 	case TOTAL:
 	    
 	    builder.append("<tr>");
-            builder.append("<th rowspan=\"2\">").append(getMessage("label.ganttDiagram.event")).append("</th>");	
+            builder.append("<th style=\"width: 15em;\" rowspan=\"2\">").append(getMessage("label.ganttDiagram.event")).append("</th>");	
             for (Integer year : getGanttDiagramObject().getYearsView().keySet()) {
                 builder.append("<th colspan=\"").append(getGanttDiagramObject().getYearsView().get(year)).append("\">").append(year).append("</th>");	
             }	
-            builder.append("<th rowspan=\"2\">").append(getMessage("label.ganttDiagram.period")).append("</th>");
+            builder.append("<th style=\"width: 20em;\" rowspan=\"2\">").append(getMessage("label.ganttDiagram.period")).append("</th>");
             builder.append("<th rowspan=\"2\">").append(getMessage("label.ganttDiagram.observations")).append("</th>");
             builder.append("</tr>");
             
@@ -511,9 +513,9 @@ public class GanttDiagramTagLib extends TagSupport {
 	case MONTHLY_TOTAL:
 	    
 	    builder.append("<tr>");
-            builder.append("<th>").append(getMessage("label.ganttDiagram.event")).append("</th>");	                           
+            builder.append("<th style=\"width: 15em;\">").append(getMessage("label.ganttDiagram.event")).append("</th>");	                           
             builder.append("<th>").append(getGanttDiagramObject().getFirstInstant().toString("MMM", getGanttDiagramObject().getLocale())).append(" ").append(getGanttDiagramObject().getFirstInstant().getYear()).append("</th>");	           
-            builder.append("<th>").append(getMessage("label.ganttDiagram.period")).append("</th>");
+            builder.append("<th style=\"width: 20em;\">").append(getMessage("label.ganttDiagram.period")).append("</th>");
             builder.append("<th>").append(getMessage("label.ganttDiagram.observations")).append("</th>");
             builder.append("</tr>");                          
 	    break;
