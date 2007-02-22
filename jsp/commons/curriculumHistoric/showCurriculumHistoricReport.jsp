@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <html:xhtml/>
 
 <span class="error"><!-- Error messages go here --><html:errors bundle="CURRICULUM_HISTORIC_RESOURCES"/></span>
@@ -51,62 +52,12 @@
 
 	<logic:notEmpty name="infoCurriculumHistoricReport" property="enrolments">
 		<h3 class="bluetxt"><bean:message key="label.students.enrolled.exam" bundle="CURRICULUM_HISTORIC_RESOURCES"/></h3>
-		<table cellspacing="1" cellpadding="1">
-			<tr>
-				<th class="listClasses-header">
-					<bean:message key="label.number" bundle="CURRICULUM_HISTORIC_RESOURCES" /> 
-		   		</th>
-				<th class="listClasses-header">
-					<bean:message key="label.name" bundle="CURRICULUM_HISTORIC_RESOURCES"/>
-			   	</th>		
-			   	<th class="listClasses-header">
-					<bean:message key="label.Degree" bundle="CURRICULUM_HISTORIC_RESOURCES"/>
-			   	</th>
-			   	<th class="listClasses-header">
-					<bean:message key="label.normal.mark" bundle="CURRICULUM_HISTORIC_RESOURCES"/>
-			   	</th>
-			   	<th class="listClasses-header">
-					<bean:message key="label.special.season.mark" bundle="CURRICULUM_HISTORIC_RESOURCES"/>
-			   	</th>
-			   	<th class="listClasses-header">
-					<bean:message key="label.improvment.mark" bundle="CURRICULUM_HISTORIC_RESOURCES"/>
-			   	</th>
-			   	<th class="listClasses-header">
-					<bean:message key="label.equivalence.mark" bundle="CURRICULUM_HISTORIC_RESOURCES"/>
-			   	</th>
-				<th class="listClasses-header">
-					<bean:message key="label.mark" bundle="CURRICULUM_HISTORIC_RESOURCES"/>
-			   	</th>
-			</tr>
-			<logic:iterate id="enrolment" name="infoCurriculumHistoricReport" property="enrolments" type="net.sourceforge.fenixedu.dataTransferObject.commons.curriculumHistoric.InfoEnrolmentHistoricReport">
-				<tr>
-					<td class="listClasses">
-					 	<bean:write name="enrolment" property="studentCurricularPlan.registration.number"/>
-					 </td>
-					 <td class="listClasses">
-					 	<bean:write name="enrolment" property="studentCurricularPlan.registration.person.nome"/>
-					 </td>
-					 <td class="listClasses">
-					 	<bean:write name="enrolment" property="studentCurricularPlan.degreeCurricularPlan.degree.sigla"/>
-					 </td>
-					 <td class="listClasses">
-					 	<bean:write name="enrolment" property="latestNormalEnrolmentEvaluationInformation"/>
-					 </td>
-					 <td class="listClasses">
-					 	<bean:write name="enrolment" property="latestSpecialSeasonEnrolmentEvaluationInformation"/>
-					 </td>
-					 <td class="listClasses">
-					 	<bean:write name="enrolment" property="latestImprovementEnrolmentEvaluationInformation"/>
-					 </td>
-					 <td class="listClasses">
-					 	<bean:write name="enrolment" property="latestEquivalenceEnrolmentEvaluationInformation"/>
-					 </td>
-					 <td class="listClasses">
-					 	<bean:write name="enrolment" property="latestEnrolmentEvaluationInformation"/>
-					 </td>
-				</tr>
-			</logic:iterate>
-		</table>
+
+		<fr:view name="infoCurriculumHistoricReport" property="enrolments" schema="info.enrolment.historic.report">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle4 thbold tacenter" />
+			</fr:layout>
+		</fr:view>
 
 	</logic:notEmpty>
 

@@ -376,3 +376,14 @@
 	<slot name="examDate" key="label.evaluationDate"/>			
 </schema>
 
+<schema name="info.enrolment.historic.report" bundle="CURRICULUM_HISTORIC_RESOURCES"
+	type="net.sourceforge.fenixedu.dataTransferObject.commons.curriculumHistoric.InfoEnrolmentHistoricReport">
+	<slot name="studentCurricularPlan.registration.number" key="label.number"/>
+	<slot name="studentCurricularPlan.registration.person.name" key="label.name"/>
+	<slot name="studentCurricularPlan.degreeCurricularPlan.degree.sigla" key="label.Degree"/>
+	<slot name="latestNormalEnrolmentEvaluationInformation" key="label.normal.mark"/>
+	<slot name="latestSpecialSeasonEnrolmentEvaluationInformation" key="label.special.season.mark"/>
+	<slot name="latestImprovementEnrolmentEvaluationInformation" key="label.improvment.mark"/>
+	<slot name="latestEquivalenceEnrolmentEvaluationInformation" key="label.equivalence.mark"/>
+	<slot name="latestEnrolmentEvaluationInformation" key="label.mark"/>
+</schema>
