@@ -33,6 +33,8 @@ public interface ICurricularRule {
     public boolean isValid(ExecutionPeriod executionPeriod);
     public boolean isValid(ExecutionYear executionYear);
     
+    public boolean isVisible();
+    
     public RuleResult evaluate(final EnrolmentContext enrolmentContext);
     public RuleResult evaluate(final EnrolmentContext enrolmentContext, final CurricularRuleLevel level);
 

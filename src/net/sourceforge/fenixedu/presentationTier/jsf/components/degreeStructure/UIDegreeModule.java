@@ -140,7 +140,7 @@ public class UIDegreeModule extends UIInput {
     protected void encodeCurricularRules() throws IOException {
         List<CurricularRule> curricularRulesToEncode = new ArrayList<CurricularRule>();
 
-        for (CurricularRule curricularRule : this.degreeModule.getCurricularRules(this.executionYear)) {
+        for (CurricularRule curricularRule : this.degreeModule.getVisibleCurricularRules(this.executionYear)) {
             if (curricularRule.appliesToContext(this.previousContext)) {
                 curricularRulesToEncode.add(curricularRule);
             } 

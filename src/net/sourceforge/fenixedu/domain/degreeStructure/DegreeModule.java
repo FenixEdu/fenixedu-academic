@@ -115,7 +115,7 @@ public abstract class DegreeModule extends DegreeModule_Base {
         return result;
     }
 
-    public List<CurricularRule> getCurricularRules(ExecutionYear executionYear) {
+    public List<CurricularRule> getCurricularRules(final ExecutionYear executionYear) {
         final List<CurricularRule> result = new ArrayList<CurricularRule>();
         for (final CurricularRule curricularRule : this.getCurricularRules()) {
             if (executionYear == null || curricularRule.isValid(executionYear)) {
@@ -126,10 +126,31 @@ public abstract class DegreeModule extends DegreeModule_Base {
         return result;
     }
     
-    public List<CurricularRule> getCurricularRules(ExecutionPeriod executionPeriod) {
+    public List<CurricularRule> getCurricularRules(final ExecutionPeriod executionPeriod) {
         final List<CurricularRule> result = new ArrayList<CurricularRule>();
         for (final CurricularRule curricularRule : this.getCurricularRules()) {
             if (executionPeriod == null || curricularRule.isValid(executionPeriod)) {
+                result.add(curricularRule);
+            }
+        }
+        
+        return result;
+    }
+    
+    public List<CurricularRule> getVisibleCurricularRules(final ExecutionYear executionYear) {
+        final List<CurricularRule> result = new ArrayList<CurricularRule>();
+        for (final CurricularRule curricularRule : this.getCurricularRules()) {
+            if (curricularRule.isVisible() && (executionYear == null || curricularRule.isValid(executionYear))) {
+                result.add(curricularRule);
+            }
+        }
+        return result;
+    }
+    
+    public List<CurricularRule> getVisibleCurricularRules(final ExecutionPeriod executionPeriod) {
+        final List<CurricularRule> result = new ArrayList<CurricularRule>();
+        for (final CurricularRule curricularRule : this.getCurricularRules()) {
+            if (curricularRule.isVisible() && (executionPeriod == null || curricularRule.isValid(executionPeriod))) {
                 result.add(curricularRule);
             }
         }

@@ -133,6 +133,10 @@ public abstract class CurricularRule extends CurricularRule_Base implements ICur
             throw new DomainException("curricular.rule.begin.is.after.end.execution.period");
         }
     }
+    
+    public boolean isVisible() {
+        return true;
+    }
 
     public RuleResult evaluate(final EnrolmentContext enrolmentContext) {
 	return evaluate(enrolmentContext, CurricularRuleLevel.defaultLevel());

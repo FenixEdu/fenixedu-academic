@@ -36,6 +36,11 @@ public class MaximumNumberOfCreditsForEnrolmentPeriod extends MaximumNumberOfCre
     public MaximumNumberOfCreditsForEnrolmentPeriod(final DegreeModule degreeModuleToApplyRule, final ExecutionPeriod begin) {
 	this(degreeModuleToApplyRule, begin, null);
     }
+    
+    @Override
+    public boolean isVisible() {
+        return false;
+    }
 
     @Override
     protected void removeOwnParameters() {

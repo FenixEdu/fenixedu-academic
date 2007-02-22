@@ -61,6 +61,10 @@ abstract public class CurricularRuleNotPersistent implements ICurricularRule {
         }
         return false;
     }
+    
+    public boolean isVisible() {
+        return false;
+    }
 
     public RuleResult evaluate(EnrolmentContext enrolmentContext) {
 	return evaluate(enrolmentContext, CurricularRuleLevel.defaultLevel());
