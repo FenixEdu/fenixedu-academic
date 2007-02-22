@@ -337,11 +337,15 @@
 	<slot name="beginDate" key="label.date" bundle="ASSIDUOUSNESS_RESOURCES" >
 		<property name="format" value="dd/MM/yyyy"/>
 	</slot>
-	<slot name="beginTime" key="label.beginHour" bundle="ASSIDUOUSNESS_RESOURCES">
+	<slot name="beginTime" key="label.beginHour" bundle="ASSIDUOUSNESS_RESOURCES" layout="multiple-format-hour-minute">
 		<property name="format" value="HH:mm" />
+		<property name="inputFormat" value="H:m" />
+		<property name="formatText" value="hh:mm" />
 	</slot>
-	<slot name="endTime" key="label.endHour" bundle="ASSIDUOUSNESS_RESOURCES">
+	<slot name="endTime" key="label.endHour" bundle="ASSIDUOUSNESS_RESOURCES" layout="multiple-format-hour-minute">
 		<property name="format" value="HH:mm" />
+		<property name="inputFormat" value="H:m" />
+		<property name="formatText" value="hh:mm" />
 	</slot>
 </schema>
 
@@ -368,8 +372,10 @@
 	<slot name="beginDate" >
 		<property name="format" value="dd/MM/yyyy"/>
 	</slot>
-	<slot name="beginTime" key="label.hoursNumber" bundle="ASSIDUOUSNESS_RESOURCES" >
+	<slot name="beginTime" key="label.hoursNumber" bundle="ASSIDUOUSNESS_RESOURCES" layout="multiple-format-hour-minute">
 		<property name="format" value="HH:mm" />
+		<property name="inputFormat" value="H:m" />
+		<property name="formatText" value="hh:mm" />
 	</slot>
 </schema>
 
@@ -382,8 +388,10 @@
 	<slot name="beginDate" key="label.date" bundle="ASSIDUOUSNESS_RESOURCES" >
 		<property name="format" value="dd/MM/yyyy"/>
 	</slot>
-	<slot name="beginTime" key="label.hour" bundle="ASSIDUOUSNESS_RESOURCES" >
+	<slot name="beginTime" key="label.hour" bundle="ASSIDUOUSNESS_RESOURCES" layout="multiple-format-hour-minute">
 		<property name="format" value="HH:mm" />
+		<property name="inputFormat" value="H:m" />
+		<property name="formatText" value="hh:mm" />
 	</slot>
 </schema>
 <!-- EXTRA WORK -->

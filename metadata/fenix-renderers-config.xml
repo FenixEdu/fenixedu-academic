@@ -436,6 +436,11 @@ Documentation:
 		<property name="second" value="true"/>
 	</renderer>
 	
+	<renderer mode="input" type="org.joda.time.TimeOfDay" layout="multiple-format-hour-minute" class="net.sourceforge.fenixedu.presentationTier.renderers.MultipleFormatTimeInputRenderer">
+		<property name="hour" value="true"/>
+		<property name="minute" value="true"/>
+	</renderer>
+	
 	<!--@ The default layout for a TimeOfDay automatically includes the hour, minute, and second in the partial -->
 	<renderer mode="input" type="org.joda.time.Partial" layout="hour-minute" class="net.sourceforge.fenixedu.presentationTier.renderers.PartialInputRenderer">
 		<property name="hour" value="true"/>
