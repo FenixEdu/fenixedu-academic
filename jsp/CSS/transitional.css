@@ -558,8 +558,10 @@ ul.indent0 { margin-left: 0; padding-left: 0; }
 .color2 { color: #806d5b; }
 .color3 { color: #336699; }
 .lowlight1 { color: #999; }
-.color888 { color: #888;}
+.color888 { color: #888; }
+a.color888 { color: #888; }
 .color555 { color: #555; }
+.color007b4d, a.color007b4d { color: #007b4d; }
 
 /* background-colors */
 .highlight1 { background-color: #fff7bb; } /* amarelo */
@@ -1452,3 +1454,4 @@ background: url(../images/external_icon.gif) right center no-repeat;
 .enrolled { color: #056600; background-color: #effaee; }
 .temporarilyEnrolled { color: #665300; background-color: #faf7ee; }
 .impossibleEnrollment { color: #c00; background-color: #ffeadd; }
+
