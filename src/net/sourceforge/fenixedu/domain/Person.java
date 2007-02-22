@@ -1065,6 +1065,13 @@ public class Person extends Person_Base {
 	    getParkingParty().delete();
 	}
 
+	if (getAssociatedPersonAccount() != null) {
+	    getAssociatedPersonAccount().delete();
+	}
+	
+	for (; !getAccounts().isEmpty(); getAccounts().get(0).delete())
+	    ;
+	
 	getPersonRoles().clear();
 	getManageableDepartmentCredits().clear();
 	getAdvisories().clear();
@@ -1127,9 +1134,6 @@ public class Person extends Person_Base {
 	    throw new DomainException("error.person.cannot.be.deleted");
 	}
 	if (getTeacher() != null) {
-	    throw new DomainException("error.person.cannot.be.deleted");
-	}
-	if (getAssociatedPersonAccount() != null) {
 	    throw new DomainException("error.person.cannot.be.deleted");
 	}
 	if (getGrantOwner() != null) {
