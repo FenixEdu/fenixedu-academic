@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.student;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -77,6 +78,7 @@ import net.sourceforge.fenixedu.util.PeriodState;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
@@ -187,7 +189,8 @@ public class Registration extends Registration_Base {
 	if (getStudentCurricularPlans().size() == 0) {
 	    return null;
 	}
-	return (StudentCurricularPlan) Collections.max(getStudentCurricularPlans(), StudentCurricularPlan.STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_START_DATE);
+	return (StudentCurricularPlan) Collections.max(getStudentCurricularPlans(),
+		StudentCurricularPlan.STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_START_DATE);
     }
 
     public StudentCurricularPlan getLastStudentCurricularPlanExceptPast() {
@@ -612,6 +615,18 @@ public class Registration extends Registration_Base {
 	return null;
     }
 
+    public static Registration readRegistrationByNumberAndDegreeTypes(Integer number,
+	    DegreeType... degreeTypes) {
+	final List<DegreeType> degreeTypesList = Arrays.asList(degreeTypes);
+	for (Registration registration : RootDomainObject.getInstance().getRegistrations()) {
+	    if (registration.getNumber().equals(number)
+		    && degreeTypesList.contains(registration.getDegreeType())) {
+		return registration;
+	    }
+	}
+	return null;
+    }
+
     public static Registration readByNumber(Integer number) {
 	for (Registration registration : RootDomainObject.getInstance().getRegistrationsSet()) {
 	    if (registration.getNumber().equals(number)) {
@@ -624,24 +639,32 @@ public class Registration extends Registration_Base {
     public static List<Registration> readMasterDegreeStudentsByNameDocIDNumberIDTypeAndStudentNumber(
 	    String studentName, String docIdNumber, IDDocumentType idType, Integer studentNumber) {
 
-	final List<Registration> students = new ArrayList<Registration>();
-	final String studentNameToMatch = (studentName == null) ? null : studentName.replaceAll("%",
-		".*").toLowerCase();
+	final List<Registration> registrations = new ArrayList<Registration>();
 
-	for (Registration registration : RootDomainObject.getInstance().getRegistrations()) {
-	    Person person = registration.getPerson();
-	    if ((registration.getDegreeType().equals(DegreeType.MASTER_DEGREE) || registration
-		    .getDegreeType().equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA))
-		    && ((studentNameToMatch != null && person.getName().toLowerCase().matches(
-			    studentNameToMatch)) || studentNameToMatch == null)
-		    && ((docIdNumber != null && person.getDocumentIdNumber().equals(docIdNumber)) || docIdNumber == null)
-		    && ((idType != null && person.getIdDocumentType().equals(idType)) || idType == null)
-		    && ((studentNumber != null && registration.getNumber().equals(studentNumber)) || studentNumber == null)) {
+	if (studentNumber != null && studentNumber > 0) {
+	    registrations.add(Registration.readRegistrationByNumberAndDegreeTypes(studentNumber,
+		    DegreeType.MASTER_DEGREE, DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA));
+	}
 
-		students.add(registration);
+	if (!StringUtils.isEmpty(studentName)) {
+	    for (Person person : Person.readPersonsByName(studentName)) {
+		if (person.hasStudent()) {
+		    registrations.addAll(person.getStudent().getRegistrationsByDegreeTypes(
+			    DegreeType.MASTER_DEGREE, DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA));
+		}
 	    }
 	}
-	return students;
+
+	if (!StringUtils.isEmpty(docIdNumber)) {
+	    for (Person person : Person.readByDocumentIdNumber(docIdNumber)) {
+		if (person.hasStudent()) {
+		    registrations.addAll(person.getStudent().getRegistrationsByDegreeTypes(
+			    DegreeType.MASTER_DEGREE, DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA));
+		}
+	    }
+	}
+
+	return registrations;
     }
 
     public static List<Registration> readAllStudentsBetweenNumbers(Integer fromNumber, Integer toNumber) {
@@ -1506,7 +1529,9 @@ public class Registration extends Registration_Base {
     public boolean isInRegisteredState(ExecutionYear executionYear) {
 	final Set<RegistrationStateType> registrationStatesTypes = getRegistrationStatesTypes(executionYear);
 
-	return (registrationStatesTypes.contains(RegistrationStateType.REGISTERED) || hasAnyEnrolmentsIn(executionYear))
+	return (registrationStatesTypes.contains(RegistrationStateType.REGISTERED)
+		|| hasAnyEnrolmentsIn(executionYear) || registrationStatesTypes
+		.contains(RegistrationStateType.MOBILITY))
 		&& (!registrationStatesTypes.contains(RegistrationStateType.CANCELED)
 			&& !registrationStatesTypes.contains(RegistrationStateType.INTERRUPTED)
 			&& !registrationStatesTypes.contains(RegistrationStateType.INTERNAL_ABANDON) && !registrationStatesTypes
@@ -1701,7 +1726,7 @@ public class Registration extends Registration_Base {
     public boolean getHasGratuityDebtsCurrently() {
 	return hasGratuityDebtsCurrently();
     }
-    
+
     public boolean hasGratuityDebtsCurrently() {
 	return !super.getPayedTuition() || hasAnyNotPayedGratuityEvents();
     }

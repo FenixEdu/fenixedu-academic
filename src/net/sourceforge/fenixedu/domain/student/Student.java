@@ -82,6 +82,17 @@ public class Student extends Student_Base {
 	}
 	return result;
     }
+    
+    public Collection<Registration> getRegistrationsByDegreeTypes(DegreeType... degreeTypes) {
+	List<DegreeType> degreeTypesList = Arrays.asList(degreeTypes);
+	List<Registration> result = new ArrayList<Registration>();
+	for (Registration registration : getRegistrations()) {
+	    if (degreeTypesList.contains(registration.getDegreeType())) {
+		result.add(registration);
+	    }
+	}
+	return result;
+    }
 
     public Registration getActiveRegistrationByDegreeType(DegreeType degreeType) {
 	for (Registration registration : getRegistrations()) {
