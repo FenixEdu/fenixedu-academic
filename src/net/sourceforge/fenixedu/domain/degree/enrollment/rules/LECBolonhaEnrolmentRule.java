@@ -43,7 +43,9 @@ public class LECBolonhaEnrolmentRule extends BolonhaEnrolmentRule {
     
     private static final String[] H_DEGREE_GROUP = {"AHA"};
     
-    private static final String[] PLANEAMENTO_GROUP = {"AHA", "0S", "0T", "A2", "AJF", "VZ", "AFK", "81", "AFL" };
+    private static final String[] MASTER_DEGREE_PLANEAMENTO_GROUP = {"AHA", "0S", "0T", "A2", "AJF", "VZ", "AFK", "81", "AFL" };
+    
+    private static final String[] PLANEAMENTO_GROUP = {"0S", "0T", "A2", "AJF", "VZ", "AFK", "81", "AFL" };
     
     
 
@@ -75,8 +77,8 @@ public class LECBolonhaEnrolmentRule extends BolonhaEnrolmentRule {
     private List<CurricularCourse2Enroll> applyPlaneamento(List<CurricularCourse2Enroll> curricularCoursesToBeEnrolledIn) {
 	if(isEnrolledInPreviousExecutionPeriodOrAproved(DISSERTACAO_P_CODE) || isEnrolledInExecutionPeriod(DISSERTACAO_P_CODE)) {
 	    removeCurricularCourse(curricularCoursesToBeEnrolledIn, DISSERTACAO_P_CODE);
-	    if(countEnroledOrAprovedEnrolments(PLANEAMENTO_GROUP) >= 2) {
-		removeCurricularCourses(curricularCoursesToBeEnrolledIn, Arrays.asList(PLANEAMENTO_GROUP));
+	    if(countEnroledOrAprovedEnrolments(MASTER_DEGREE_PLANEAMENTO_GROUP) >= 2) {
+		removeCurricularCourses(curricularCoursesToBeEnrolledIn, Arrays.asList(MASTER_DEGREE_PLANEAMENTO_GROUP));
 	    }
 	} else {
 	    int planeamentoGroup = countEnroledOrAprovedEnrolments(PLANEAMENTO_GROUP);
@@ -102,7 +104,7 @@ public class LECBolonhaEnrolmentRule extends BolonhaEnrolmentRule {
 	    }
 	} else {
 	    int optionalGroup = countEnroledOrAprovedEnrolments(H_OPTIONAL_GROUP);
-	    if(optionalGroup > 2 || countEnroledOrAprovedEnrolments(H_DEGREE_GROUP) > 0){
+	    if(optionalGroup > 2){
 		removeCurricularCourse(curricularCoursesToBeEnrolledIn, DISSERTACAO_H_CODE);
 		if(optionalGroup >= 3) {
 		    removeCurricularCourses(curricularCoursesToBeEnrolledIn, Arrays.asList(H_OPTIONAL_GROUP));
