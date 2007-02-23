@@ -8,6 +8,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoCourseReport;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoSiteEvaluationStatistics;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoNonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.BibliographicReference;
@@ -127,8 +128,24 @@ public class InfoExecutionCourse extends InfoObject {
 	return getExecutionCourse().getEqualLoad();
     }
 
+    public Boolean getAvailableForInquiries() {
+	return getExecutionCourse().getAvailableForInquiries();
+    }
+    
+    public Boolean getAvailableGradeSubmission() {
+	return getExecutionCourse().getAvailableGradeSubmission();
+    }
+
     public InfoExecutionPeriod getInfoExecutionPeriod() {
 	return InfoExecutionPeriod.newInfoFromDomain(getExecutionCourse().getExecutionPeriod());
+    }
+    
+    public InfoCourseReport getInfoCourseReport() {
+	return InfoCourseReport.newInfoFromDomain(getExecutionCourse().getCourseReport());
+    }
+
+    public InfoEvaluationMethod getInfoEvaluationMethod() {
+        return InfoEvaluationMethod.newInfoFromDomain(getExecutionCourse().getEvaluationMethod());
     }
 
     public List<InfoShift> getAssociatedInfoShifts() {
@@ -301,14 +318,6 @@ public class InfoExecutionCourse extends InfoObject {
 
     public void setFilteredInfoGroupings(List<InfoGrouping> filteredInfoGroupings) {
 	this.filteredInfoGroupings = filteredInfoGroupings;
-    }
-
-    public Boolean getAvailableForInquiries() {
-	return getExecutionCourse().getAvailableForInquiries();
-    }
-    
-    public Boolean getAvailableGradeSubmission() {
-	return getExecutionCourse().getAvailableGradeSubmission();
     }
 
 }
