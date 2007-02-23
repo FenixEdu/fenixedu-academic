@@ -244,7 +244,7 @@ public class GanttDiagramTagLib extends TagSupport {
                     builder.append("</div></td>");
                     
                 }	    
-                builder.append("<td class=\"padded smalltxt\">").append(event.getEventPeriodForGanttDiagram()).append("</td>");
+                builder.append("<td class=\"padded smalltxt\" title=\"").append(event.getEventPeriodForGanttDiagram()).append("\"><div style=\"overflow:hidden;\" class=\"nowrap\">").append(event.getEventPeriodForGanttDiagram()).append("</div></td>");
                 builder.append("<td class=\"padded smalltxt\">").append(event.getEventObservationsForGanttDiagram()).append("</td>");		
             }            	
             insertNextAndBeforeLinks(builder);            
@@ -377,7 +377,7 @@ public class GanttDiagramTagLib extends TagSupport {
                     }
                     builder.append("</div></td>");		
                 }
-                builder.append("<td class=\"padded smalltxt\">").append(event.getEventPeriodForGanttDiagram()).append("</td>");
+                builder.append("<td class=\"padded smalltxt\" title=\"").append(event.getEventPeriodForGanttDiagram()).append("\"><div style=\"overflow:hidden;\" class=\"nowrap\">").append(event.getEventPeriodForGanttDiagram()).append("</div></td>");
                 builder.append("<td class=\"padded smalltxt\">").append(event.getEventObservationsForGanttDiagram()).append("</td>");		
             }
             
