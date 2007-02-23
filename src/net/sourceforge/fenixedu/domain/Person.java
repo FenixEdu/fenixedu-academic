@@ -447,7 +447,9 @@ public class Person extends Person_Base {
 
     public void removeAlias(Role removedRole) {
 	Login loginIdentification = getLoginIdentification();
-	loginIdentification.removeAlias(removedRole.getRoleType());
+	if (loginIdentification != null) {
+	    loginIdentification.removeAlias(removedRole.getRoleType());
+	}
     }
 
     public void updateIstUsername() {
