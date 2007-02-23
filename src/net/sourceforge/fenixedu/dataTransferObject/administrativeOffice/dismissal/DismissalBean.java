@@ -199,8 +199,8 @@ public class DismissalBean implements Serializable {
     }
 
     public static enum DismissalType {
-	CURRICULUM_GROUP_CREDITS,
-	CURRICULAR_COURSE_CREDITS;
+	CURRICULAR_COURSE_CREDITS,
+	CURRICULUM_GROUP_CREDITS;
 	
 	public String getName() {
 	    return name();
