@@ -85,9 +85,9 @@ public class LECBolonhaEnrolmentRule extends BolonhaEnrolmentRule {
 	    if(planeamentoGroup >= 2) {
 		LECOptionalPairGroupsEnrollmentRule rule = new LECOptionalPairGroupsEnrollmentRule(studentCurricularPlan);
 		curricularCoursesToBeEnrolledIn = rule.apply(curricularCoursesToBeEnrolledIn);
-		if(planeamentoGroup > 2) {
+		/*if(planeamentoGroup > 2) {
 		    removeCurricularCourse(curricularCoursesToBeEnrolledIn, DISSERTACAO_P_CODE);
-		}
+		}*/
 	    }
 	} 
 	
