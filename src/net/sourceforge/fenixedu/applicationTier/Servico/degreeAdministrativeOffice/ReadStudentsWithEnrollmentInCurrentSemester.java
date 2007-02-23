@@ -60,9 +60,9 @@ public class ReadStudentsWithEnrollmentInCurrentSemester extends Service {
 
         for (int iter = 0; iter < enrollments.size(); iter++) {
             Enrolment enrollment = (Enrolment) enrollments.get(iter);
-            if (enrollment.getEnrollmentState().equals(EnrollmentState.APROVED)
-                    || enrollment.getEnrollmentState().equals(EnrollmentState.TEMPORARILY_ENROLLED)
-                    || enrollment.getEnrollmentState().equals(EnrollmentState.ENROLLED))
+            if (enrollment.isEnrolmentStateApproved()
+                    || enrollment.isTemporarilyEnroled()
+                    || enrollment.isEnroled())
                 return true;
         }
         return false;

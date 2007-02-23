@@ -442,7 +442,7 @@ public class SpecificLEICEnrollmentRule extends SpecificEnrolmentRule implements
     protected boolean isApproved(CurricularCourse curricularCourse) {
 	for (Enrolment enrolment : studentCurricularPlan.getEnrolments()) {
 	    if (enrolment.getCurricularCourse().equals(curricularCourse)
-		    && enrolment.getEnrollmentState().equals(EnrollmentState.APROVED)) {
+		    && enrolment.isEnrolmentStateApproved()) {
 		return true;
 	    }
 	}

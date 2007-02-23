@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.RestrictionDoneDegreeModule;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
-import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
@@ -1132,7 +1131,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 	for (final CurriculumModule curriculumModule : getCurriculumModules()) {
 	    Enrolment enrollment = (Enrolment) curriculumModule;
 	    boolean filters = true;
-	    filters &= !enrollment.getEnrollmentState().equals(EnrollmentState.ANNULED);
+	    filters &= !enrollment.isAnnulled();
 	    filters &= executionPeriod == null
 		    || enrollment.getExecutionPeriod().equals(executionPeriod);
 	    filters &= registration == null
@@ -1209,7 +1208,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 	List<Enrolment> enrollments = new ArrayList<Enrolment>();
 
 	for (Enrolment enrollment : getEnrolmentsByExecutionPeriod(executionPeriod)) {
-	    if (!enrollment.getEnrollmentState().equals(EnrollmentState.ANNULED)) {
+	    if (!enrollment.isAnnulled()) {
 		enrollments.add(enrollment);
 	    }
 	}

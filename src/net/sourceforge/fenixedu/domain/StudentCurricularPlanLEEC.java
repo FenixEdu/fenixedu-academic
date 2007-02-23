@@ -247,7 +247,7 @@ public class StudentCurricularPlanLEEC extends StudentCurricularPlanLEEC_Base {
         return (List<Enrolment>) CollectionUtils.select(getAllEnrollments(), new Predicate() {
             public boolean evaluate(Object obj) {
                 Enrolment enrollment = (Enrolment) obj;
-                return enrollment.getEnrollmentState().equals(EnrollmentState.APROVED)
+                return enrollment.isEnrolmentStateApproved()
                 && !enrollment.getStudentCurricularPlan().getDegreeCurricularPlan().getName().startsWith("PAST");
             }
         });

@@ -13,9 +13,9 @@ public class EnrollmentPredicates {
 	    public boolean evaluate(Object object) {
 		if (object instanceof Enrolment) {
 		    Enrolment en = (Enrolment) object;
-		    if (en.getEnrollmentState().equals(EnrollmentState.APROVED)
-			    || en.getEnrollmentState().equals(EnrollmentState.ENROLLED)
-			    || en.getEnrollmentState().equals(EnrollmentState.TEMPORARILY_ENROLLED))
+		    if (en.isEnrolmentStateApproved()
+			    || en.isEnroled()
+			    || en.isTemporarilyEnroled())
 			return true;
 		}
 
@@ -30,8 +30,8 @@ public class EnrollmentPredicates {
 	    public boolean evaluate(Object object) {
 		if (object instanceof Enrolment) {
 		    Enrolment en = (Enrolment) object;
-		    if (en.getEnrollmentState().equals(EnrollmentState.ENROLLED)
-			    || en.getEnrollmentState().equals(EnrollmentState.TEMPORARILY_ENROLLED))
+		    if (en.isEnroled()
+			    || en.isTemporarilyEnroled())
 			return true;
 		}
 

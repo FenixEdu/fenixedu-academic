@@ -120,7 +120,7 @@ public class ReadDomainStudentsByExecutionCourseAndDegreeTypeAndShiftAttendAndEn
 				result = true;
 			}
 			else if (enrollment != null &&  this.enrollmentTypes.contains(AttendacyStateSelectionType.ENROLLED)
-					&& (!enrollment.isImprovementForExecutionCourse(executionCourse) && enrollment.getEnrollmentState().equals(EnrollmentState.ENROLLED))
+					&& (!enrollment.isImprovementForExecutionCourse(executionCourse) && enrollment.isEnroled())
 					&& enrollment.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.NORMAL)) {
 				result = true;
 			}

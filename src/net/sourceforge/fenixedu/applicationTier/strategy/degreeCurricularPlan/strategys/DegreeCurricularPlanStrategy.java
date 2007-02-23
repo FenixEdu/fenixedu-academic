@@ -74,7 +74,7 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 
 	for (Enrolment enrolment : studentCurricularPlan.getEnrolments()) {
 
-	    if ((enrolment.getEnrollmentState().equals(EnrollmentState.APROVED))
+	    if ((enrolment.isEnrolmentStateApproved())
 		    && (!enrolment.getCurricularCourse().getType().equals(
 			    CurricularCourseType.P_TYPE_COURSE))) {
 		if (!enrolment.isExtraCurricular()) {
@@ -110,7 +110,7 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 
 	for (Enrolment enrolment : studentCurricularPlan.getEnrolments()) {
 
-	    if ((enrolment.getEnrollmentState().equals(EnrollmentState.APROVED))
+	    if ((enrolment.isEnrolmentStateApproved())
 		    && (!enrolment.getCurricularCourse().getType().equals(
 			    CurricularCourseType.P_TYPE_COURSE))) {
 		if (!(enrolment.isExtraCurricular())) {

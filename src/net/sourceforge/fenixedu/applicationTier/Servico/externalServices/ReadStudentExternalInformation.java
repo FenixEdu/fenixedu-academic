@@ -118,7 +118,7 @@ public class ReadStudentExternalInformation extends Service {
 	    for (Iterator iterEnrolments = curricularPlan.getEnrolments().iterator(); iterEnrolments
 		    .hasNext();) {
 		Enrolment enrollment = (Enrolment) iterEnrolments.next();
-		if (enrollment.getEnrollmentState().equals(EnrollmentState.APROVED)) {
+		if (enrollment.isEnrolmentStateApproved()) {
 		    CurricularCourse curricularCourse = enrollment.getCurricularCourse();
 		    if (curricularCourse.getEctsCredits().doubleValue() == 0) {
 			Collection<DegreeCurricularPlan> degrees = curricularCourse
