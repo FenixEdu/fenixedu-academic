@@ -123,6 +123,11 @@ public class Context extends Context_Base implements Comparable<Context> {
             throw new DomainException("curricular.rule.begin.is.after.end.execution.period");
         }
     }
+    
+    public boolean isOpen(final ExecutionPeriod executionPeriod) {
+	return getBeginExecutionPeriod().isBeforeOrEquals(executionPeriod)
+		&& (getEndExecutionPeriod() == null || getEndExecutionPeriod().isAfterOrEquals(executionPeriod));
+    }
 
     @Deprecated
     public Integer getOrder() {
