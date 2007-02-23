@@ -8,11 +8,11 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.velocity.runtime.parser.node.GetExecutor;
-
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoSiteEvaluationStatistics;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoNonAffiliatedTeacher;
+import net.sourceforge.fenixedu.domain.BibliographicReference;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.Exam;
@@ -132,7 +132,7 @@ public class InfoExecutionCourse extends InfoObject {
     }
 
     public List<InfoShift> getAssociatedInfoShifts() {
-	List<InfoShift> result = new ArrayList<InfoShift>();
+	final List<InfoShift> result = new ArrayList<InfoShift>();
 
 	for (final Shift shift : getExecutionCourse().getAssociatedShifts()) {
 	    result.add(InfoShift.newInfoFromDomain(shift));
@@ -142,7 +142,7 @@ public class InfoExecutionCourse extends InfoObject {
     }
 
     public List<InfoNonAffiliatedTeacher> getNonAffiliatedTeachers() {
-	List<InfoNonAffiliatedTeacher> result = new ArrayList<InfoNonAffiliatedTeacher>();
+	final List<InfoNonAffiliatedTeacher> result = new ArrayList<InfoNonAffiliatedTeacher>();
 
 	for (final NonAffiliatedTeacher nonAffiliatedTeacher : getExecutionCourse()
 		.getNonAffiliatedTeachers()) {
@@ -153,7 +153,7 @@ public class InfoExecutionCourse extends InfoObject {
     }
 
     public List<InfoEvaluation> getAssociatedInfoEvaluations() {
-	List<InfoEvaluation> result = new ArrayList<InfoEvaluation>();
+	final List<InfoEvaluation> result = new ArrayList<InfoEvaluation>();
 
 	for (final Evaluation nonAffiliatedTeacher : getExecutionCourse().getAssociatedEvaluations()) {
 	    result.add(InfoEvaluation.newInfoFromDomain(nonAffiliatedTeacher));
@@ -162,19 +162,41 @@ public class InfoExecutionCourse extends InfoObject {
 	return result;
     }
 
+    public List<InfoBibliographicReference> getAssociatedInfoBibliographicReferences() {
+	final List<InfoBibliographicReference> result = new ArrayList<InfoBibliographicReference>();
+	
+        for (final BibliographicReference bibliographicReference : getExecutionCourse().getAssociatedBibliographicReferencesSet()) {
+            result.add(InfoBibliographicReference.newInfoFromDomain(bibliographicReference));
+        }
+        
+        return result;
+    }
+
     public List<InfoCurricularCourse> getAssociatedInfoCurricularCourses() {
 	if (filteredAssociatedInfoCurricularCourses == null) {
 	    List<InfoCurricularCourse> result = new ArrayList<InfoCurricularCourse>();
 
-	    for (final CurricularCourse curricularCourse : getExecutionCourse()
-		    .getAssociatedCurricularCourses()) {
-		result.add(InfoCurricularCourse.newInfoFromDomain(curricularCourse));
+	    for (final CurricularCourse curricularCourse : getExecutionCourse().getAssociatedCurricularCourses()) {
+		final InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
+		infoCurricularCourse.setInfoScopes(getInfoScopes(curricularCourse));
+		
+		result.add(infoCurricularCourse);
 	    }
 
 	    return result;
 	} else {
 	    return getFilteredAssociatedInfoCurricularCourses();
 	}
+    }
+
+    private List<InfoCurricularCourseScope> getInfoScopes(final CurricularCourse curricularCourse) {
+        final List<InfoCurricularCourseScope> result = new ArrayList<InfoCurricularCourseScope>();
+        
+        for (final CurricularCourseScope curricularCourseScope : curricularCourse.getScopesSet()) {
+            result.add(InfoCurricularCourseScope.newInfoFromDomain(curricularCourseScope));
+        }
+        
+        return result;
     }
 
     public List getAssociatedInfoExams() {
