@@ -11,23 +11,14 @@
 	<bean:define id="executionYear" name="infoCurriculumHistoricReport" property="executionYear"/>
 	<bean:define id="semester" name="infoCurriculumHistoricReport" property="semester" type="java.lang.Integer"/>
 	
-	<h3 class="bluetxt">
-		<bean:message key="message.teachingReport.executionYear" bundle="CURRICULUM_HISTORIC_RESOURCES"/>
-		&nbsp;<bean:write name="executionYear" property="year" />*&nbsp;-&nbsp;
-		<bean:message key="label.period" arg0="<%=semester.toString()%>" bundle="CURRICULUM_HISTORIC_RESOURCES"/>
-	</h3>
+	<em><bean:write name="executionYear" property="year" />* - <bean:message key="label.period" arg0="<%=semester.toString()%>" bundle="CURRICULUM_HISTORIC_RESOURCES"/></em>
+	<h2>
+		<bean:write name="infoCurriculumHistoricReport" property="curricularCourse.name"/>
+			&nbsp;- &nbsp;
+		<bean:write name="infoCurriculumHistoricReport" property="curricularCourse.degreeCurricularPlan.name"/>
+	</h2>
 	
-	<table width="90%" border="0" cellspacing="1" style="mbottom1">
-		<tr>
-			<td width="35%">
-				<strong><bean:message key="message.teachingReport.curricularName" bundle="CURRICULUM_HISTORIC_RESOURCES"/></strong>
-			</td>
-			<td>
-				<bean:write name="infoCurriculumHistoricReport" property="curricularCourse.name"/>
-					&nbsp;- &nbsp;
-				<bean:write name="infoCurriculumHistoricReport" property="curricularCourse.degreeCurricularPlan.name"/>
-			</td>
-		</tr>
+	<table width="30%" border="0" cellspacing="1" class="mbottom2">
 		<tr>
 			<td><strong><bean:message key="message.teachingReport.IN" bundle="CURRICULUM_HISTORIC_RESOURCES"/></strong></td>
 			<td><bean:write name="infoCurriculumHistoricReport" property="enroled"/></td>
@@ -51,7 +42,7 @@
 	</table>
 
 	<logic:notEmpty name="infoCurriculumHistoricReport" property="enrolments">
-		<h3 class="bluetxt"><bean:message key="label.students.enrolled.exam" bundle="CURRICULUM_HISTORIC_RESOURCES"/></h3>
+		<h3><bean:message key="label.students.enrolled.exam" bundle="CURRICULUM_HISTORIC_RESOURCES"/></h3>
 
 		<fr:view name="infoCurriculumHistoricReport" property="enrolments" schema="info.enrolment.historic.report">
 			<fr:layout name="tabular">
@@ -61,11 +52,9 @@
 
 	</logic:notEmpty>
 
-	<br />
-
-	<p>
+	<p class="mtop15">
 		<bean:message key="message.teachingReport.note1" bundle="CURRICULUM_HISTORIC_RESOURCES"/>
-		<br />
+		<br/>
 		<bean:message key="message.teachingReport.note2" bundle="CURRICULUM_HISTORIC_RESOURCES"/>
 	</p>
 
