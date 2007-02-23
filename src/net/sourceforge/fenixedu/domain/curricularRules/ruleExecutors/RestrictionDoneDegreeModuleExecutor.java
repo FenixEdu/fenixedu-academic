@@ -12,15 +12,27 @@ public class RestrictionDoneDegreeModuleExecutor extends CurricularRuleExecutor 
     protected RuleResult executeEnrolmentWithRules(final ICurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
 
 	final RestrictionDoneDegreeModule rule = (RestrictionDoneDegreeModule) curricularRule;
+	final ExecutionPeriod executionPeriod = enrolmentContext.getExecutionPeriod();
 	
 	if (!canApplyRule(enrolmentContext, rule)) {
 	    return RuleResult.createNA();
 	}
 	
-	if (isApproved(enrolmentContext, rule.getPrecedenceDegreeModule())) {
+	final CurricularCourse curricularCourse = rule.getPrecedenceDegreeModule();
+	if (isEnrolling(enrolmentContext, curricularCourse) || isEnroled(enrolmentContext, curricularCourse, executionPeriod)) {
+	    return RuleResult.createFalse(
+		    "curricularRules.ruleExecutors.RestrictionDoneDegreeModuleExecutor.cannot.enrol.simultaneously.to.degreeModule.and.precedenceDegreeModule",
+		    rule.getDegreeModuleToApplyRule().getName(), rule.getPrecedenceDegreeModule().getName());    
+	}
+	
+	if (isApproved(enrolmentContext, curricularCourse)) {
 	    return RuleResult.createTrue();
 	}
 	
+	/*
+	 * CurricularCourse is not approved
+	 * If DegreeModule is Enroled in current semester then Enrolment must be impossible
+	 */ 
 	if (isEnroled(enrolmentContext, rule.getDegreeModuleToApplyRule())) {
 	    return RuleResult.createTrue(EnrolmentResultType.IMPOSSIBLE);
 	}
