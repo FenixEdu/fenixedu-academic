@@ -86,7 +86,7 @@ public class StudentDismissalsDA extends FenixDispatchAction {
     public ActionForward chooseEquivalents(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	DismissalBean dismissalBean = (DismissalBean) getRenderedObject("dismissalBean");
-	dismissalBean.setDismissalType(DismissalType.CURRICULUM_GROUP_CREDITS);
+	dismissalBean.setDismissalType(DismissalType.CURRICULAR_COURSE_CREDITS);
 	request.setAttribute("dismissalBean", dismissalBean);
 	return mapping.findForward("chooseEquivalents");
     }
