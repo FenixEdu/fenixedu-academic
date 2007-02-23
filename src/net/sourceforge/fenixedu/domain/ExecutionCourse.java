@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain;
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -32,7 +33,6 @@ import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad;
-import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.tests.NewTestGroup;
 import net.sourceforge.fenixedu.domain.tests.TestGroupStatus;
@@ -1564,4 +1564,18 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         
         return false;
     }
+    
+    public Collection<Curriculum> getCurriculums() {
+        final Collection<Curriculum> result = new HashSet<Curriculum>();
+        
+        for (final CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
+            final Curriculum curriculum = curricularCourse.findLatestCurriculum();
+            if (curriculum != null) {
+        	result.add(curriculum);
+            }
+        }
+
+        return result;
+    }
+
 }
