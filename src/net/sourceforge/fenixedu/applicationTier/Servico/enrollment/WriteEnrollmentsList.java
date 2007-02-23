@@ -80,7 +80,7 @@ public class WriteEnrollmentsList extends Service {
 	    if (enrollment.getEnrolmentCondition() == EnrollmentCondition.INVISIBLE) {
 		enrollment.setEnrolmentCondition(getEnrollmentCondition(enrollmentType));
 	    }
-	    if (enrollment.getEnrollmentState() == EnrollmentState.ANNULED) {
+	    if (enrollment.isAnnulled()) {
 		enrollment.setEnrollmentState(EnrollmentState.ENROLLED);
 	    }
 	}

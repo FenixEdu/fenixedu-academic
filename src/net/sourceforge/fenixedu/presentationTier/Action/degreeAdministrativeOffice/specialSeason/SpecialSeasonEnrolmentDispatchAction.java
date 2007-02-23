@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.EnrolmentException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.enrolment.SpecialSeasonEnrolmentBean;
@@ -16,7 +15,6 @@ import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.en
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
-import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -52,7 +50,7 @@ public class SpecialSeasonEnrolmentDispatchAction extends FenixDispatchAction {
 			specialSeasonEnrolmentBean.getExecutionYear())) {
 	    SpecialSeasonToEnrolBean enrolmentBean = new SpecialSeasonToEnrolBean();
 	    enrolmentBean.setEnrolment(enrolment);
-	    if (enrolment.getEnrollmentState() == EnrollmentState.ENROLLED) {
+	    if (enrolment.isEnroled()) {
 		enrolmentBean.setEnrolmentCondition(EnrollmentCondition.TEMPORARY);
 	    } else {
 		enrolmentBean.setEnrolmentCondition(EnrollmentCondition.FINAL);

@@ -64,8 +64,8 @@ public class EditPosGradStudentCurricularPlanStateAndCredits extends Service {
 	if (newState.equals(StudentCurricularPlanState.INACTIVE)) {
 	    while (iterator.hasNext()) {
 		Enrolment enrolment = (Enrolment) iterator.next();
-		if (enrolment.getEnrollmentState() == EnrollmentState.ENROLLED
-			|| enrolment.getEnrollmentState() == EnrollmentState.TEMPORARILY_ENROLLED) {
+		if (enrolment.isEnroled()
+			|| enrolment.isTemporarilyEnroled()) {
 		    enrolment.setEnrollmentState(EnrollmentState.ANNULED);
 		}
 	    }
@@ -149,7 +149,7 @@ public class EditPosGradStudentCurricularPlanStateAndCredits extends Service {
     private void changeAnnulled2ActiveIfActivePlan(StudentCurricularPlanState newState,
 	    Enrolment enrolment) throws ExcepcaoPersistencia {
 	if (newState.equals(StudentCurricularPlanState.ACTIVE)) {
-	    if (enrolment.getEnrollmentState() == EnrollmentState.ANNULED) {
+	    if (enrolment.isAnnulled()) {
 		enrolment.setEnrollmentState(EnrollmentState.ENROLLED);
 	    }
 	}

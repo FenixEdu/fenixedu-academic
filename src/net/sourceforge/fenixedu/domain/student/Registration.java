@@ -413,7 +413,7 @@ public class Registration extends Registration_Base {
 		if (enrolmentExecutionYear != currentExecutionYear) {
 
 		    enrollmentsNumber++;
-		    if (enrolment.getEnrollmentState() == EnrollmentState.APROVED) {
+		    if (enrolment.isEnrolmentStateApproved()) {
 			actualApprovedEnrollmentsNumber++;
 
 			Integer finalGrade = enrolment.getFinalGrade();
