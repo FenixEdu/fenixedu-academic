@@ -1139,9 +1139,6 @@ public class Person extends Person_Base {
 	if (getGrantOwner() != null) {
 	    throw new DomainException("error.person.cannot.be.deleted");
 	}
-	if (getAccountsCount() > 0) {
-	    throw new DomainException("error.person.cannot.be.deleted");
-	}
 	if (hasAnyPayedGuides()) {
 	    throw new DomainException("error.person.cannot.be.deleted");
 	}
