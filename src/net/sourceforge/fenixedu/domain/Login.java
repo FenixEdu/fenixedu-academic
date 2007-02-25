@@ -194,7 +194,7 @@ public class Login extends Login_Base {
 	// Temporary solution until DML provides indexed relations.
 	final String lowerCaseUsername = username.toLowerCase();
 	final SoftReference<LoginAlias> loginReference = loginMap.get(lowerCaseUsername);
-	if (loginReference != null) {
+	if (loginReference != null && loginReference.get() != null) {
 	    final Login login = loginReference.get().getLogin();
 	    if (login != null && login.getRootDomainObject() == RootDomainObject.getInstance()
 		    && login.hasUsername(lowerCaseUsername)) {
