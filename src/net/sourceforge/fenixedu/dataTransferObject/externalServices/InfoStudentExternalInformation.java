@@ -20,6 +20,9 @@ public class InfoStudentExternalInformation
     private InfoExternalDegreeCurricularPlanInfo degree;
     private Collection courses;
     private Collection availableRemainingCourses; // courses that the student must choose from
+    private int curricularYear;
+    private double average;
+
     /**
      * @return Returns the courses.
      */
@@ -72,10 +75,27 @@ public class InfoStudentExternalInformation
     {
         this.number = number;
     }
-	public Collection getAvailableRemainingCourses() {
-		return availableRemainingCourses;
-	}
-	public void setAvailableRemainingCourses(Collection availableRemainingCourses) {
-		this.availableRemainingCourses = availableRemainingCourses;
-	}
+    public Collection getAvailableRemainingCourses() {
+	return availableRemainingCourses;
+    }
+    public void setAvailableRemainingCourses(Collection availableRemainingCourses) {
+	this.availableRemainingCourses = availableRemainingCourses;
+    }
+
+    public double getAverage() {
+	return average;
+    }
+
+    public void setAverage(double average) {
+	this.average = average;
+    }
+
+    public int getCurricularYear() {
+	return curricularYear;
+    }
+
+    public void setCurricularYear(int curricularYear) {
+	this.curricularYear = curricularYear;
+    }
+
 }

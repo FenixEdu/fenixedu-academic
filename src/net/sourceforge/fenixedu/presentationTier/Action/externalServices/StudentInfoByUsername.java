@@ -101,6 +101,7 @@ public class StudentInfoByUsername extends FenixAction {
             trans.transform(source, transformationResult);
             resultString = sw.toString();
         } catch (Exception e) {
+            e.printStackTrace();
             // let us proceed with default layout
             resultString = result;
         }

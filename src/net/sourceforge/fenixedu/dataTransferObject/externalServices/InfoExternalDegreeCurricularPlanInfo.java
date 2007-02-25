@@ -22,6 +22,7 @@ public class InfoExternalDegreeCurricularPlanInfo
     private String code;
     private InfoExternalDegreeBranchInfo branch;
     private Collection courses;
+
     /**
      * @return Returns the branch.
      */

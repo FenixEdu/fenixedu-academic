@@ -31,11 +31,14 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.StudentCurriculum;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
+
+import org.apache.commons.lang.StringUtils;
+
 import pt.utl.ist.fenix.tools.util.StringAppender;
 
 /**
@@ -60,6 +63,12 @@ public class ReadStudentExternalInformation extends Service {
 		info.setCourses(this.buildExternalEnrollmentsInfo(registration));
 		info.setAvailableRemainingCourses(this.buildAvailableRemainingCourses(registration));
 		info.setNumber(registration.getNumber().toString());
+
+		final StudentCurriculum studentCurriculum = new StudentCurriculum(registration);
+		final int curricularYear = studentCurriculum.calculateCurricularYear(null);
+		info.setCurricularYear(curricularYear);
+		final double average = Math.round((studentCurriculum.calculateAverage(null) * 100)) / 100.0;
+		info.setAverage(average);
 
 		result.add(info);
 	    }
@@ -186,7 +195,9 @@ public class ReadStudentExternalInformation extends Service {
 	DegreeCurricularPlan degreeCurricularPlan = registration.getActiveStudentCurricularPlan()
 		.getDegreeCurricularPlan();
 
-	info.setName(degreeCurricularPlan.getName());
+	final String degreeCode = degreeCurricularPlan.getDegree().getSigla();
+	final String name = degreeCode.indexOf('-') > 0 ? StringUtils.substringBefore(degreeCode, "-") : degreeCode;
+	info.setName(name);
 	info.setCode(degreeCurricularPlan.getDegree().getIdInternal().toString());
 	info.setBranch(this.buildExternalDegreeBranchInfo(registration));
 
@@ -243,7 +254,7 @@ public class ReadStudentExternalInformation extends Service {
 	info.setFiscalNumber(person.getSocialSecurityNumber());
 	info.setIdentification(this.buildExternalIdentificationInfo(person));
 	info.setName(person.getNome());
-	info.setNationality(person.getNacionalidade());
+	info.setNationality(person.getNationality().getCode());
 	info.setPhone(person.getPhone());
 	info.setSex(person.getGender().toString());
 

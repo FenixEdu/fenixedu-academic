@@ -13,7 +13,13 @@
 <xsl:template match="net.sourceforge.fenixedu.dataTransferObject.externalServices.InfoStudentExternalInformation">
 		<numero>
 			<xsl:value-of select="./number"/>
-		</numero>					
+		</numero>
+		<ano-academico>
+			<xsl:value-of select="./curricularYear"/>
+		</ano-academico>
+		<media-curso>
+			<xsl:value-of select="./average"/>
+		</media-curso>
 		<xsl:apply-templates select="degree"/>
 		<xsl:apply-templates select="person"/>
 		<disciplinas>		
