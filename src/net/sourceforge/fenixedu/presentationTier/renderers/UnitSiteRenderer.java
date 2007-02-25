@@ -1,9 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
 import java.util.Collection;
-import java.util.Collections;
-
-import org.apache.commons.collections.Predicate;
 
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
@@ -18,6 +15,8 @@ import net.sourceforge.fenixedu.renderers.components.HtmlText;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.renderers.schemas.Schema;
 import net.sourceforge.fenixedu.renderers.utils.RenderKit;
+
+import org.apache.commons.collections.Predicate;
 
 /**
  * 
@@ -159,20 +158,20 @@ public class UnitSiteRenderer extends OutputRenderer {
 		}
 
 		private boolean unitHasSite(Unit unit) {
-			if(unit.getType().equals(PartyTypeEnum.DEGREE_UNIT)) {
+			if(unit.getType() == PartyTypeEnum.DEGREE_UNIT) {
 				return unit.getDegree().hasSite();
 			}
-			if(unit.getType().equals(PartyTypeEnum.DEPARTMENT)) {
+			if(unit.getType() == PartyTypeEnum.DEPARTMENT) {
 				return unit.getDepartmentUnit().hasSite();
 			}
 			return false;
 		}
 		
 		private String resolveUnitURL(Unit unit) {
-			if(unit.getType().equals(PartyTypeEnum.DEGREE_UNIT)) {
+			if(unit.getType() == PartyTypeEnum.DEGREE_UNIT) {
 				return DegreeProcessor.getDegreePath(unit.getDegree());
 			}
-			if(unit.getType().equals(PartyTypeEnum.DEPARTMENT)) {
+			if(unit.getType() == PartyTypeEnum.DEPARTMENT) {
 				return DepartmentProcessor.getDepartmentPath(unit.getDepartment());
 			}
 			return null;
