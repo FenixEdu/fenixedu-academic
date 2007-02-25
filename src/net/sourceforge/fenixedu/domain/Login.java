@@ -187,15 +187,15 @@ public class Login extends Login_Base {
          * relations.
          * 
          */
-    private static final Map<String, SoftReference<Login>> loginMap = new Hashtable<String, SoftReference<Login>>();
+    private static final Map<String, SoftReference<LoginAlias>> loginMap = new Hashtable<String, SoftReference<LoginAlias>>();
 
     public static Login readLoginByUsername(String username) {
 
 	// Temporary solution until DML provides indexed relations.
 	final String lowerCaseUsername = username.toLowerCase();
-	final SoftReference<Login> loginReference = loginMap.get(lowerCaseUsername);
+	final SoftReference<LoginAlias> loginReference = loginMap.get(lowerCaseUsername);
 	if (loginReference != null) {
-	    final Login login = loginReference.get();
+	    final Login login = loginReference.get().getLogin();
 	    if (login != null && login.getRootDomainObject() == RootDomainObject.getInstance()
 		    && login.hasUsername(lowerCaseUsername)) {
 		return login;
@@ -210,7 +210,7 @@ public class Login extends Login_Base {
 	    // Temporary solution until DML provides indexed relations.
 	    final String lowerCaseLoginUsername = loginAlias.getAlias().toLowerCase();
 	    if (!loginMap.containsKey(lowerCaseLoginUsername)) {
-		loginMap.put(lowerCaseLoginUsername, new SoftReference<Login>(loginAlias.getLogin()));
+		loginMap.put(lowerCaseLoginUsername, new SoftReference<LoginAlias>(loginAlias));
 	    }
 	    // *** end of hack
 
