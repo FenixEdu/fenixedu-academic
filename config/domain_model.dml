@@ -3358,8 +3358,18 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 		Boolean availablePhoto;
 
 		String nickname;
+		Integer keyPersonName;
 	}
-	 
+
+class net.sourceforge.fenixedu.domain.person.PersonName extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyPerson;
+	String name;
+}
+
+class net.sourceforge.fenixedu.domain.person.PersonNamePart extends net.sourceforge.fenixedu.domain.DomainObject {
+	String namePart;
+}
+
 class net.sourceforge.fenixedu.domain.organizationalStructure.PartyType extends net.sourceforge.fenixedu.domain.DomainObject {	
 	PartyType type;
 }	 
@@ -6922,6 +6932,20 @@ relation PersonDepartment {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Department playsRole manageableDepartmentCredits {
+		multiplicity *;
+	}
+}
+
+relation PersonPersonName {
+	net.sourceforge.fenixedu.domain.Person playsRole person;
+	net.sourceforge.fenixedu.domain.person.PersonName playsRole personName;
+}
+
+relation PersonNamePersonNamePart {
+	net.sourceforge.fenixedu.domain.person.PersonName playsRole personName {
+		multiplicity *;
+	}	
+	net.sourceforge.fenixedu.domain.person.PersonNamePart playsRole personNamePart {
 		multiplicity *;
 	}
 }
@@ -11959,6 +11983,20 @@ relation PunctualRoomsOccupationCommentPerson {
 relation RootDomainObjectExternalRegistrationData {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.student.ExternalRegistrationData playsRole externalRegistrationDatas {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectPersonName {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.person.PersonName playsRole personName {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectPersonNamePart {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.person.PersonNamePart playsRole personNamePart {
 		multiplicity *;
 	}
 }

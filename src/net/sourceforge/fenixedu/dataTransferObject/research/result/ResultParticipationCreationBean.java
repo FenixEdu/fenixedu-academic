@@ -3,9 +3,9 @@ package net.sourceforge.fenixedu.dataTransferObject.research.result;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.person.PersonName;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
 
@@ -14,7 +14,7 @@ public class ResultParticipationCreationBean implements Serializable {
 
 	private DomainReference<Unit> organization;
 
-	private DomainReference<Person> participator;
+	private DomainReference<PersonName> participator;
 
 	private ResultParticipationRole role;
 
@@ -61,12 +61,12 @@ public class ResultParticipationCreationBean implements Serializable {
 		this.organizationName = organizationName;
 	}
 
-	public Person getParticipator() {
+	public PersonName getParticipator() {
 		return participator.getObject();
 	}
 
-	public void setParticipator(Person participator) {
-		this.participator = new DomainReference<Person>(participator);
+	public void setParticipator(PersonName participator) {
+		this.participator = new DomainReference<PersonName>(participator);
 	}
 
 	public String getParticipatorName() {
@@ -94,14 +94,14 @@ public class ResultParticipationCreationBean implements Serializable {
 	}
 
 	public ExternalContract getExternalPerson() {
-		return (this.participator == null) ? null : this.participator.getObject().getExternalPerson();
+		return (this.participator == null) ? null : this.participator.getObject().getPerson().getExternalPerson();
 	}
 
 	public void setExternalPerson(ExternalContract externalPerson) {
 		if (externalPerson == null) {
 			this.participator = null;
 		} else {
-			setParticipator(externalPerson.getPerson());
+			setParticipator(externalPerson.getPerson().getPersonName());
 		}
 	}
 

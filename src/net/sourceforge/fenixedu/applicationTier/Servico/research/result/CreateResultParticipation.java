@@ -17,7 +17,7 @@ public class CreateResultParticipation extends Service {
 		final ResearchResult result = bean.getResult();
 		final ResultParticipationRole role = bean.getRole();
 		final Unit organization = bean.getOrganization();
-		Person participator = bean.getParticipator();
+		Person participator = bean.getParticipator().getPerson();
 
 		if (participator == null) {
 			if (bean.isBeanExternal()) {

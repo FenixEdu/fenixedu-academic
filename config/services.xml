@@ -9511,33 +9511,14 @@
         <isTransactional>true</isTransactional>
         <filterChains>
         </filterChains>
-    </service>        
-	<service>
-        <name>SearchPersonForParticipationWithWrapping</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.SearchPersonForParticipationWithWrapping</implementationClass>
-        <description>
-        </description>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-        </filterChains>
-    </service>            
-
+    </service>
 	<service>
 		<name>SearchExternalPersonForParticipations</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.SearchExternalPersonForParticipations</implementationClass>
 		<description/>
         <isTransactional>true</isTransactional>
         <filterChains/>
-	</service>
-	
-	<service>
-		<name>SearchExternalPersonForParticipationWithWrapping</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.SearchExternalPersonForParticipationWithWrapping</implementationClass>
-		<description/>
-        <isTransactional>true</isTransactional>
-        <filterChains/>
-	</service>
-	
+	</service>	
 	<service>
 		<name>ChangeResultParticipationsOrder</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.result.ChangeResultParticipationsOrder</implementationClass>

@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.Map;
 
 public interface AutoCompleteSearchService {
@@ -23,6 +23,5 @@ public interface AutoCompleteSearchService {
 	 *            service like, for example, choose the fields we are using for
 	 *            the search.
 	 */
-	public List run(Class type, String value, int limit,
-			Map<String, String> arguments);
+	public Collection run(Class type, String value, int limit, Map<String, String> arguments);
 }

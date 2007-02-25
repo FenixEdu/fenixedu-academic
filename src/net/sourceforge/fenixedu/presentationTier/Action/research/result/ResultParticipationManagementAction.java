@@ -83,7 +83,7 @@ public class ResultParticipationManagementAction extends ResultsManagementAction
 			} else {
 				if (bean.getParticipator()!=null) {
 					if(!bean.hasOrganization()) {
-						bean.setOrganization(bean.getParticipator().getExternalPerson().getInstitutionUnit());
+						bean.setOrganization(bean.getParticipator().getPerson().getExternalPerson().getInstitutionUnit());
 					}
 					createParticipation(request, bean);
 				} else {
@@ -267,7 +267,7 @@ public class ResultParticipationManagementAction extends ResultsManagementAction
 					}
 				}
 				else {
-					bean.setOrganization(bean.getParticipator().getExternalPerson().getInstitutionUnit());
+					bean.setOrganization(bean.getParticipator().getPerson().getExternalPerson().getInstitutionUnit());
 					createResultParticipationSchema = "resultParticipation.creationWithRole";
 				}
 			}

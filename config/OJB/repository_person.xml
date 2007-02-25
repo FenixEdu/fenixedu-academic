@@ -47,3 +47,12 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.LoginPeriod" table="LOGIN_PERIOD">
 	 	
 </class-descriptor> 
+
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.person.PersonName" table="PERSON_NAME">
+    	
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.person.PersonNamePart" table="PERSON_NAME_PART">
+    	
+</class-descriptor>

@@ -56,6 +56,7 @@ import net.sourceforge.fenixedu.domain.parking.ParkingPartyClassification;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
+import net.sourceforge.fenixedu.domain.person.PersonName;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
@@ -151,11 +152,21 @@ public class Person extends Person_Base {
     }
 
     public String getNome() {
-	return super.getName();
+	return getName();
     }
 
     public void setNome(String name) {
+	setName(name);
+    }
+
+    @Override
+    public void setName(final String name) {
 	super.setName(name);
+	PersonName personName = getPersonName();
+	if (personName == null) {
+	    personName = new PersonName();
+	}
+	personName.setName(name);
     }
 
     public Person() {
@@ -2560,4 +2571,5 @@ public class Person extends Person_Base {
     	String[] name = getName().split(" ");
     	return name[0] + " " + name[name.length-1];
     }
+
 }

@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Create and index person name parts." personPartName.sql
