@@ -118,7 +118,7 @@ public class UnitSiteRenderer extends OutputRenderer {
 				
 				Collection<Unit> parentUnits = CollectionUtils.select(unit.getParentUnits(), new Predicate() {
 						public boolean evaluate(Object arg0) {
-						return !((Unit)arg0).getType().equals(PartyTypeEnum.AGGREGATE_UNIT);
+						return ((Unit)arg0).getType() != PartyTypeEnum.AGGREGATE_UNIT;
 					}
 					
 				});

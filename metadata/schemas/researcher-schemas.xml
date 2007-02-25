@@ -703,8 +703,8 @@
 		<property name="format" value="${text}"/>
 		<property name="indicatorShown" value="true"/>
 		<property name="serviceName" value="SearchExternalPersonForParticipations"/>
-		<property name="serviceArgs" value="slot=name"/>
-		<property name="className" value="net.sourceforge.fenixedu.domain.Person"/>				
+		<property name="serviceArgs" value="slot=name,size=20"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.person.PersonName"/>
 		<property name="minChars" value="3"/>
 	</slot>
 </schema>
@@ -1849,8 +1849,8 @@
 		<property name="format" value="${text}"/>
 		<property name="indicatorShown" value="true"/>
 		<property name="serviceName" value="SearchExternalPersonForParticipations"/>
-		<property name="serviceArgs" value="slot=name"/>
-		<property name="className" value="net.sourceforge.fenixedu.domain.Person"/>				
+		<property name="serviceArgs" value="slot=name,size=20"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.person.PersonName"/>				
 		<property name="minChars" value="4"/>
 	</slot>
 </schema>

@@ -14,13 +14,13 @@ public class PersonName extends PersonName_Base implements Comparable<PersonName
 
 	private final int maxElements;
 
-	public PersonNameLimitedOrderedSet(int maxElements) {
+	public PersonNameLimitedOrderedSet(final int maxElements) {
 	    super();
 	    this.maxElements = maxElements;
 	}
 
 	@Override
-	public boolean add(PersonName personName) {
+	public boolean add(final PersonName personName) {
 	    if (size() < maxElements) {
 		return super.add(personName);
 	    }
@@ -32,6 +32,20 @@ public class PersonName extends PersonName_Base implements Comparable<PersonName
 	    return false;
 	}
     }
+
+    public static class ExternalPersonNameLimitedOrderedSet extends PersonNameLimitedOrderedSet {
+
+	public ExternalPersonNameLimitedOrderedSet(final int maxElements) {
+	    super(maxElements);
+	}
+
+	@Override
+	public boolean add(final PersonName personName) {
+	    final Person person = personName.getPerson();
+	    return person.hasExternalPerson() ? super.add(personName) : false;
+	}
+    }
+
 
     public  PersonName() {
         super();
@@ -56,9 +70,7 @@ public class PersonName extends PersonName_Base implements Comparable<PersonName
 	return true;
     }
 
-    public static Collection<PersonName> find(final String name, final int size) {
-	final PersonNameLimitedOrderedSet personNameLimitedOrderedSet = new PersonNameLimitedOrderedSet(size);
-
+    public static void find(final PersonNameLimitedOrderedSet personNameLimitedOrderedSet, final String name, final int size) {
 	final String[] nameParts = PersonNamePart.getNameParts(name);
 	if (nameParts.length > 0) {
 	    final PersonNamePart personNamePart = PersonNamePart.find(nameParts[0]);
@@ -74,8 +86,18 @@ public class PersonName extends PersonName_Base implements Comparable<PersonName
 		    }
 		}
 	    }
-	}
+	}	
+    }
 
+    public static Collection<PersonName> findExternalPerson(final String name, final int size) {
+	final ExternalPersonNameLimitedOrderedSet personNameLimitedOrderedSet = new ExternalPersonNameLimitedOrderedSet(size);
+	find(personNameLimitedOrderedSet, name, size);
+	return personNameLimitedOrderedSet;
+    }
+
+    public static Collection<PersonName> find(final String name, final int size) {
+	final PersonNameLimitedOrderedSet personNameLimitedOrderedSet = new PersonNameLimitedOrderedSet(size);
+	find(personNameLimitedOrderedSet, name, size);
 	return personNameLimitedOrderedSet;
     }
 
