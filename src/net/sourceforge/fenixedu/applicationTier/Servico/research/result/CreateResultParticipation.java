@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultPartici
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.person.PersonName;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
 import net.sourceforge.fenixedu.util.researcher.ResearchResultMetaDataManager;
@@ -17,29 +18,33 @@ public class CreateResultParticipation extends Service {
 		final ResearchResult result = bean.getResult();
 		final ResultParticipationRole role = bean.getRole();
 		final Unit organization = bean.getOrganization();
-		Person participator = bean.getParticipator().getPerson();
-
+		PersonName participator = bean.getParticipator();
+		Person enroledParticipator = null;
+		
 		if (participator == null) {
 			if (bean.isBeanExternal()) {
 				final InsertExternalPerson newPerson = new InsertExternalPerson();
 				final String participatorName = bean.getParticipatorName();
 
 				if (organization != null) {
-					participator = (newPerson.run(participatorName, organization)).getPerson();
+				    enroledParticipator = (newPerson.run(participatorName, organization)).getPerson();
 				} else {
 					if(bean.isUnitExternal()) {
 						final String orgName = bean.getOrganizationName();
-						participator = (newPerson.run(participatorName, orgName)).getPerson();
+						enroledParticipator = (newPerson.run(participatorName, orgName)).getPerson();
 					}
 					else {
 						throw new DomainException("error.label.invalidNameForInternalUnit");
 					}
 				}
 			} else {
-				throw new DomainException("error.label.invalidNameForInternalPerson");
+				throw new DomainException("error.label.invalidNameForPersonInSelection");
 			}
 		}
-		result.addParticipation(participator, role);
+		else {
+		    enroledParticipator = participator.getPerson();
+		}
+		result.addParticipation(enroledParticipator, role);
 		ResearchResultMetaDataManager.updateMetaDataInStorageFor(result);
 	}
 }

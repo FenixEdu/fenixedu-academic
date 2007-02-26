@@ -8,13 +8,19 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.externalUnits.CreateExternalUnitBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultParticipationCreationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultParticipationCreationBean.ParticipationType;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
+import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.OrderChange;
+import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
@@ -30,9 +36,10 @@ public class ResultParticipationManagementAction extends ResultsManagementAction
 			return backToResultList(mapping, form, request, response);
 		}
 
-		ResultParticipationCreationBean bean = getRenderedObject("bean"); 
-			
-		setResParticipationRequestAttributes(request, result,(bean==null) ? getBeanFromRequest(request, result) : bean);
+		ResultParticipationCreationBean bean = getRenderedObject("bean");
+
+		setResParticipationRequestAttributes(request, result, (bean == null) ? getBeanFromRequest(request,
+				result) : bean);
 		return mapping.findForward("editParticipation");
 	}
 
@@ -49,9 +56,8 @@ public class ResultParticipationManagementAction extends ResultsManagementAction
 		return mapping.findForward("editParticipation");
 	}
 
-	public ActionForward changeUnitType(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-			FenixServiceException {
+	public ActionForward changeUnitType(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 		final ResultParticipationCreationBean bean = getRenderedObject("bean");
 		ResearchResult result = bean.getResult();
 		request.setAttribute("bean", bean);
@@ -72,55 +78,42 @@ public class ResultParticipationManagementAction extends ResultsManagementAction
 		}
 	}
 
-
 	public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 		final ResultParticipationCreationBean bean = getRenderedObject("bean");
 		request.setAttribute("bean", bean);
 		try {
-			if (!bean.isBeanExternal()) {
-				createParticipation(request, bean);
-			} else {
-				if (bean.getParticipator()!=null) {
-					if(!bean.hasOrganization()) {
-						bean.setOrganization(bean.getParticipator().getPerson().getExternalPerson().getInstitutionUnit());
-					}
-					createParticipation(request, bean);
-				} else {
-					if(!bean.hasOrganization()) { 
-						schemasStateAutomaton(request, bean.getResult(), bean, true);
-						checkRolesInCreation(request);
-						request.setAttribute("bean", bean);
-						request.setAttribute("result", bean.getResult());
-						RenderUtils.invalidateViewState();
-						return mapping.findForward("editParticipation");
-					}
-					else {
-						createParticipation(request, bean);
-					}
-					
+			if (bean.getParticipator() == null) {
+				if(bean.isBeanExternal()) {
+					request.setAttribute("name",bean.getParticipatorName());
+					request.setAttribute("needToCreatePerson", true);
+					schemasStateAutomaton(request, bean.getResult(), bean, false);
 				}
+				else {
+				    throw new DomainException("error.label.invalidNameForPersonInSelection");
+				}
+			} else {
+				createParticipation(bean);
+				schemasStateAutomaton(request, bean.getResult(), bean, false);
 			}
 		} catch (Exception e) {
 			final ActionForward defaultForward = backToResultList(mapping, form, request, response);
 			bean.reset();
 			return processException(request, mapping, defaultForward, e);
 		}
-	
+
 		bean.reset();
-		schemasStateAutomaton(request, bean.getResult(), bean, false);
 		checkRolesInCreation(request);
 		request.setAttribute("bean", bean);
 		request.setAttribute("result", bean.getResult());
-		
 		RenderUtils.invalidateViewState();
 		return mapping.findForward("editParticipation");
 	}
 
-	private void createParticipation(HttpServletRequest request, ResultParticipationCreationBean bean)
+	private void createParticipation(ResultParticipationCreationBean bean)
 			throws FenixFilterException, FenixServiceException {
 		final Object[] args = { bean };
-		executeService(request, "CreateResultParticipation", args);
+		executeService("CreateResultParticipation", args);
 	}
 
 	public ActionForward remove(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -203,6 +196,68 @@ public class ResultParticipationManagementAction extends ResultsManagementAction
 		return prepareEdit(mapping, form, request, response);
 	}
 
+	public ActionForward selectUnit(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
+		
+		getResultFromRequest(request);
+		request.setAttribute("externalRootUnit",UnitUtils.readExternalInstitutionUnit());
+		
+		return mapping.findForward("selectUnit");
+	}
+	
+	public ActionForward prepareCreateParticipator(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	
+		ResearchResult result = getResultFromRequest(request);
+		ResultParticipationCreationBean bean = new ResultParticipationCreationBean(result);
+		bean.setPersonParticipationType(ParticipationType.EXTERNAL);
+		bean.setUnitParticipationType(ParticipationType.EXTERNAL);
+		bean.setParticipatorName(request.getParameter("name"));
+		bean.setRole(ResultParticipationRole.valueOf(request.getParameter("role")));
+		setResParticipationRequestAttributes(request,result,bean);
+		
+		request.setAttribute("bean", bean);
+		request.setAttribute("duringCreation",true);
+		return mapping.findForward("editParticipation");
+	}
+	
+	public ActionForward createParticipator(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	
+		ResearchResult result = getResultFromRequest(request);
+		ResultParticipationCreationBean bean = (ResultParticipationCreationBean) RenderUtils.getViewState("beanForExternalPerson").getMetaObject().getObject();
+		
+		if(bean.getOrganization() !=null) { 
+			Object[] args = { bean.getParticipatorName(), bean.getOrganization() };
+			ExternalContract contract = (ExternalContract) executeService("InsertExternalPerson", args);
+			bean.setParticipator(contract.getPerson().getPersonName());
+			createParticipation(bean);
+		}
+		else {
+			request.setAttribute("createUnit", true);
+			request.setAttribute("duringCreation",true);
+			request.setAttribute("bean",bean);
+			setResParticipationRequestAttributes(request,result,bean);
+			
+			return mapping.findForward("editParticipation");
+		}
+		return prepareEdit(mapping, form, request, response);
+	}
+	
+	public ActionForward createUnit(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	
+		getResultFromRequest(request);
+		
+		ResultParticipationCreationBean bean = (ResultParticipationCreationBean) RenderUtils.getViewState("externalUnitBean").getMetaObject().getObject();
+		Object args[] = { bean.getOrganizationName() };
+		Unit unit = (Unit) executeService("CreateExternalUnitByName", args);
+		bean.setOrganization(unit);
+		createParticipation(bean);
+		
+		return prepareEdit(mapping, form, request, response);
+	}
+	
 	private ActionForward move(OrderChange orderChange, ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
 			FenixServiceException {
@@ -223,32 +278,36 @@ public class ResultParticipationManagementAction extends ResultsManagementAction
 	}
 
 	private void schemasStateAutomaton(HttpServletRequest request, ResearchResult result,
-	ResultParticipationCreationBean bean, boolean automatonIsInUnitSelection) {
-	
-		String resultParticipationsSchema = result.getIsPossibleSelectPersonRole() ?  "resultParticipation.full" : "resultParticipation.withoutRole";
+			ResultParticipationCreationBean bean, boolean automatonIsInUnitSelection) {
+
+		String resultParticipationsSchema = result.getIsPossibleSelectPersonRole() ? "resultParticipation.full"
+				: "resultParticipation.withoutRole";
 		request.setAttribute("listSchema", resultParticipationsSchema);
-		
-		if(!automatonIsInUnitSelection) {
+
+		if (!automatonIsInUnitSelection) {
 			String createResultParticipationSchema = "resultParticipation.creation";
-			if(result.getIsPossibleSelectPersonRole()) createResultParticipationSchema += "WithRole";
+			if (result.getIsPossibleSelectPersonRole())
+				createResultParticipationSchema += "WithRole";
 			createResultParticipationSchema += (bean.isBeanExternal()) ? ".external" : ".internal";
 			request.setAttribute("createSchema", createResultParticipationSchema);
-		}
-		else {
+		} else {
 			bean.setUnitParticipationType(ParticipationType.EXTERNAL);
 			String createResultParticipationSchema = "resultParticipation.fullCreation";
-			if(result.getIsPossibleSelectPersonRole()) createResultParticipationSchema += "WithRole";
+			if (result.getIsPossibleSelectPersonRole())
+				createResultParticipationSchema += "WithRole";
 			createResultParticipationSchema += ".external.readOnly";
 			request.setAttribute("createSchema", createResultParticipationSchema);
 		}
 	}
-	
+
 	private void checkNeededSchemas(HttpServletRequest request, ResearchResult result,
 			ResultParticipationCreationBean bean) {
 		String resultParticipationsSchema = "resultParticipation.withoutRole";
 		String createResultParticipationSchema = "resultParticipation.creation";
 
-		if ( (bean.getParticipator()!=null || (bean.getParticipatorName()!=null && bean.getParticipatorName().length()>0)) && (bean.isBeanExternal() || bean.isUnitExternal())) {
+		if ((bean.getParticipator() != null || (bean.getParticipatorName() != null && bean
+				.getParticipatorName().length() > 0))
+				&& (bean.isBeanExternal() || bean.isUnitExternal())) {
 			createResultParticipationSchema = "resultParticipation.fullCreation";
 		}
 
@@ -258,15 +317,13 @@ public class ResultParticipationManagementAction extends ResultsManagementAction
 			if (!bean.isBeanExternal()) {
 				createResultParticipationSchema = "resultParticipation.creationWithRole";
 			} else {
-				if(bean.getParticipator()==null) {
-					if(bean.getParticipatorName().length()==0) {
+				if (bean.getParticipator() == null) {
+					if (bean.getParticipatorName().length() == 0) {
 						createResultParticipationSchema = "resultParticipation.creationWithRole";
+					} else {
+						createResultParticipationSchema = "resultParticipation.fullCreationWithRole";
 					}
-					else {
-						createResultParticipationSchema = "resultParticipation.fullCreationWithRole";		
-					}
-				}
-				else {
+				} else {
 					bean.setOrganization(bean.getParticipator().getPerson().getExternalPerson().getInstitutionUnit());
 					createResultParticipationSchema = "resultParticipation.creationWithRole";
 				}
@@ -274,7 +331,7 @@ public class ResultParticipationManagementAction extends ResultsManagementAction
 		}
 
 		createResultParticipationSchema += (bean.isBeanExternal()) ? ".external" : ".internal";
-		
+
 		request.setAttribute("listSchema", resultParticipationsSchema);
 		request.setAttribute("createSchema", createResultParticipationSchema);
 	}
@@ -326,10 +383,12 @@ public class ResultParticipationManagementAction extends ResultsManagementAction
 		return participation;
 	}
 
-	private void setResParticipationRequestAttributes(HttpServletRequest request, ResearchResult result,ResultParticipationCreationBean bean)
-			throws FenixFilterException, FenixServiceException {
-		
-		schemasStateAutomaton(request, result, bean, false); // Define schemas to use
+	private void setResParticipationRequestAttributes(HttpServletRequest request, ResearchResult result,
+			ResultParticipationCreationBean bean) throws FenixFilterException, FenixServiceException {
+
+		schemasStateAutomaton(request, result, bean, false); // Define
+		// schemas to
+		// use
 		checkNeededWarnings(request, result); // Action Warning Messages
 		checkRolesInCreation(request);
 
@@ -354,4 +413,5 @@ public class ResultParticipationManagementAction extends ResultsManagementAction
 	public ResultParticipationCreationBean getRenderedObject(String id) {
 		return (ResultParticipationCreationBean) super.getRenderedObject(id);
 	}
+	
 }

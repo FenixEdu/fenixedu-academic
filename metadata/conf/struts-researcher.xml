@@ -182,10 +182,13 @@
 				parameter="method"
 				type="net.sourceforge.fenixedu.presentationTier.Action.research.result.ResultParticipationManagementAction">
 			<forward name="editParticipation" path="result.participation"/>
+			<forward name="selectUnit" path="select.unit"/>
+			<forward name="createParticipator" path="create.participator"/>
 			<forward name="editPatent" path="/resultPatents/showPatent.do"/>
 			<forward name="viewEditPublication" path="/resultPublications/showPublication.do"/>
 			<forward name="listPatents" path="/resultPatents/management.do"/>
 			<forward name="ListPublications" path="/resultPublications/listPublications.do"/>
+			<forward name="createExternalUnit" path="create.unit"/>
 		</action>
 
 		<!-- Result Document Files Management Action Mapping -->

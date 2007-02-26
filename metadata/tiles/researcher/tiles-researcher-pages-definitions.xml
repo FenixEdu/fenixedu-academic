@@ -81,6 +81,15 @@
         <put name="head" value="/commons/renderers/treeRendererHeader.jsp"/>
         <put name="body" value="/researcher/result/participations/editResultParticipations.jsp"></put>
     </definition>
+    <definition name="create.participator" extends="researcher.masterPage">
+        <put name="body" value="/researcher/result/participations/createParticipator.jsp"></put>
+    </definition>         
+    <definition name="select.unit" extends="researcher.masterPage">
+        <put name="body" value="/researcher/result/participations/selectUnit.jsp"></put>
+    </definition>
+    <definition name="create.unit" extends="researcher.masterPage">
+        <put name="body" value="/researcher/result/participations/createExternalUnit.jsp"></put>
+    </definition>        
     <definition name="result.unitAssociations" extends="researcher.masterPage">
         <put name="body" value="/researcher/result/editResultUnitAssociations.jsp"></put>
     </definition>
@@ -137,4 +146,5 @@
     <definition name="publications.search" extends="researcher.masterPage">
         <put name="body" value="/researcher/result/publications/searchPublication.jsp"></put>
     </definition>     
+    
 </tiles-definitions>

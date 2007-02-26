@@ -1456,3 +1456,4 @@ background: url(../images/external_icon.gif) right center no-repeat;
 .temporarilyEnrolled { color: #665300; background-color: #faf7ee; }
 .impossibleEnrollment { color: #c00; background-color: #ffeadd; }
 
+tr.vigilancyHeaderColumns th { background: #fcfcfc; }

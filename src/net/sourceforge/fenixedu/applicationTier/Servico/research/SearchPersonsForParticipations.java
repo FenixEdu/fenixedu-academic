@@ -15,7 +15,7 @@ public class SearchPersonsForParticipations extends Service implements AutoCompl
 	}
 
 	final int size = Integer.parseInt(arguments.get("size"));
-	return PersonName.find(value, size);
+	return PersonName.findInternalPerson(value, size);
     }
 
 }

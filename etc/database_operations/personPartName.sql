@@ -29,3 +29,5 @@ create table PERSON_NAME_PERSON_NAME_PART (
   index (KEY_PERSON_NAME),
   index (KEY_PERSON_NAME_PART)
 ) Type=InnoDB;
+
+alter table PERSON_NAME add column IS_EXTERNAL_PERSON tinyint(1);

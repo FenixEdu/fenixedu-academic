@@ -28,7 +28,7 @@ public class PersonNamePart extends PersonNamePart_Base {
     }
 
     public static String normalize(final String string) {
-	return StringNormalizer.normalize(string).toLowerCase();
+	return StringNormalizer.normalize(string.trim()).toLowerCase();
     }
     
     public static String[] getNameParts(final String name) {

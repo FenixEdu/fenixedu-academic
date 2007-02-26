@@ -10,7 +10,7 @@
 	<bean:define id="result" name="result"/>
 	<bean:define id="resultId" name="result" property="idInternal"/>
 	<bean:define id="listSchema" name="listSchema" type="java.lang.String"/>
-	<bean:define id="parameters" value="<%="resultId=" + resultId + "&resultType=" + result.getClass().getSimpleName()%>"/>
+	<bean:define id="parameters" value="<%="resultId=" + resultId + "&amp;resultType=" + result.getClass().getSimpleName()%>"/>
 	<bean:define id="prepareEdit" value="<%="/resultParticipations/prepareEdit.do?" + parameters%>"/>
 	<bean:define id="prepareEditRoles" value="<%="/resultParticipations/prepareEditRoles.do?" + parameters%>"/>
 	<bean:define id="prepareAlterOrder" value="<%="/resultParticipations/prepareAlterOrder.do?" + parameters%>"/>
@@ -66,7 +66,7 @@
 		<logic:present name="deleteConfirmation">
 			<bean:define id="deleteConfirmationId" name="deleteConfirmation"/>
 
-			<fr:form action="<%= remove + "&participationId=" + deleteConfirmationId %>">
+			<fr:form action="<%= remove + "&amp;participationId=" + deleteConfirmationId %>">
 				<p><b><bean:message bundle="RESEARCHER_RESOURCES" key="label.participation.remove"/></b></p>
 				<p><span class="warning0"><bean:message bundle="RESEARCHER_RESOURCES" key="label.participation.removeWarning"/></span></p>
 				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.confirm" property="confirm">

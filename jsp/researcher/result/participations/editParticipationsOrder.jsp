@@ -11,7 +11,7 @@
 	<bean:define id="participations" name="result" property="orderedResultParticipations"/>
 	<bean:define id="resultId" name="result" property="idInternal"/>
 	<bean:define id="listSchema" name="listSchema" type="java.lang.String"/>
-	<bean:define id="parameters" value="<%="resultId=" + resultId + "&resultType=" + result.getClass().getSimpleName()%>"/>
+	<bean:define id="parameters" value="<%="resultId=" + resultId + "&amp;resultType=" + result.getClass().getSimpleName()%>"/>
 	<bean:define id="prepareEdit" value="<%="/resultParticipations/prepareEdit.do?" + parameters%>"/>
 	<bean:define id="saveOrder" value="<%="/resultParticipations/saveOrder.do?" + parameters%>"/>	
 	<bean:define id="moveUp" value="<%="/resultParticipations/moveUp.do?" + parameters%>"/>
@@ -39,16 +39,16 @@
 	        <fr:property name="includeImage" value="false"/>
 	        
 	        <fr:property name="hiddenLinks">
-	            <html:link page="<%= moveUp + "&participationId=${idInternal}"%>">
+	            <html:link page="<%= moveUp + "&amp;participationId=${idInternal}"%>">
 	                <bean:message key="link.moveUp" bundle="RESEARCHER_RESOURCES"/>
 	            </html:link>,
-	            <html:link page="<%= moveDown + "&participationId=${idInternal}"%>">
+	            <html:link page="<%= moveDown + "&amp;participationId=${idInternal}"%>">
 	                <bean:message key="link.moveDown" bundle="RESEARCHER_RESOURCES"/>
 	            </html:link>,
-	            <html:link page="<%= moveTop + "&participationId=${idInternal}"%>">
+	            <html:link page="<%= moveTop + "&amp;participationId=${idInternal}"%>">
 	                <bean:message key="link.moveTop" bundle="RESEARCHER_RESOURCES"/>
 	            </html:link>,
-	            <html:link page="<%= moveBottom + "&participationId=${idInternal}"%>">
+	            <html:link page="<%= moveBottom + "&amp;participationId=${idInternal}"%>">
 	                <bean:message key="link.moveBottom" bundle="RESEARCHER_RESOURCES"/>
 	            </html:link>
             </fr:property>

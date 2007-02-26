@@ -292,7 +292,7 @@
 <schema name="researchActivity.participations" type="net.sourceforge.fenixedu.dataTransferObject.research.activity.ResearchActivityEditionBean$PartyParticipationsBean">
 	<slot name="party" key="researcher.viewCurriculum.name" layout="conditional-link">
 		<property name="visibleIf" value="homePageAvailable"/>
-		<property name="contextRelative" value="no"/>
+		<property name="contextRelative" value="true"/>
 		<property name="linkFormat" value="/homepage/${istUsername}"/>	
 		<property name="subLayout" value="values"/>
 		<property name="subSchema" value="showName"/>
@@ -951,11 +951,13 @@
 
 <schema name="resultUnitAssociation.details" bundle="RESEARCHER_RESOURCES"
 		type="net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation">
-	<slot name="unit" layout="null-as-label" read-only="true">
-		<property name="label" value=""/>
-		<property name="subLayout" value="values"/>
-		<property name="subSchema" value="unit.name"/>
+	<slot name="unit" layout="unit-link">
+		<property name="unitLayout" value="values"/>
+		<property name="unitSchema" value="unit.name"/>
+		<property name="targetBlank" value="true"/>
+		<property name="parenteShown" value="true"/>
 	</slot>
+
 </schema>
 
 <!-- PUBLICATION SCHEMAS -->
@@ -972,11 +974,11 @@
 	<slot name="title" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="60"/>
 	</slot>
-	<slot name="note" layout="area">	
+	<slot name="note" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator" layout="area">	
 	    <property name="rows" value="5"/>
 		<property name="columns" value="60"/>
 	</slot>
-	<slot name="keywords" layout="input-with-comment">
+	<slot name="keywords" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator" layout="input-with-comment">
 		<property name="rows" value="2"/>
 		<property name="columns" value="60"/>
 		<property name="comment" value="label.keyword.explanation"/>
@@ -1965,7 +1967,7 @@
 	type="net.sourceforge.fenixedu.domain.research.result.ResultParticipation">
 	<slot name="person" key="researcher.viewCurriculum.name" layout="conditional-link">
 	<property name="visibleIf" value="homePageAvailable"/>
-	<property name="contextRelative" value="no"/>
+	<property name="contextRelative" value="true"/>
 	<property name="linkFormat" value="/homepage/${istUsername}"/>	
 	<property name="subLayout" value="values"/>
 	<property name="subSchema" value="showName"/>
@@ -2303,4 +2305,18 @@
 <schema name="result.publication.presentation.Unstructured" extends="publication.TitleAndAuthors" bundle="RESEARCHER_RESOURCES"
 		type="net.sourceforge.fenixedu.domain.research.result.publication.Unstructured">
 		<slot name="title"/>
+</schema>
+
+<schema name="createExternalPerson" bundle="RESEARCHER_RESOURCES"
+		type="net.sourceforge.fenixedu.dataTransferObject.person.ExternalPersonBean">
+		<slot name="name" key="label.personName">
+			<property name="size" value="50"/>
+		</slot>
+</schema>
+
+<schema name="createExternalUnit" bundle="RESEARCHER_RESOURCES"
+	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.externalUnits.CreateExternalUnitBean">
+	<slot name="unitName" key="label.unit.name">
+			<property name="size" value="50"/>
+	</slot>
 </schema>

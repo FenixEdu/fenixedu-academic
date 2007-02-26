@@ -9,7 +9,7 @@
 	<bean:define id="result" name="result"/>
 	<bean:define id="resultId" name="result" property="idInternal"/>
 	<bean:define id="resultType" name="result" property="class.simpleName"/>
-	<bean:define id="parameters" value="<%="resultId=" + resultId + "&resultType=" + resultType%>"/>
+	<bean:define id="parameters" value="<%="resultId=" + resultId + "&amp;resultType=" + resultType%>"/>
 
 	<!-- Action paths definitions -->
 	<bean:define id="backLink" value="<%="/resultParticipations/backToResult.do?" + parameters%>"/>

@@ -277,7 +277,7 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
 				participator.setActiveSchema("bibtex.participatorExternal");
 				participator.setCreateExternalPerson(true);
 			} else {
-				throw new FenixActionException("error.label.invalidNameForInternalPerson");
+				throw new FenixActionException("error.label.invalidNameForPersonInSelection");
 			}
 		} else {
 			if (participator.getOrganizationType().equals(ParticipationType.INTERNAL)

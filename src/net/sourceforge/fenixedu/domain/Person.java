@@ -164,7 +164,7 @@ public class Person extends Person_Base {
 	super.setName(name);
 	PersonName personName = getPersonName();
 	if (personName == null) {
-	    personName = new PersonName();
+	    personName = new PersonName(this);
 	}
 	personName.setName(name);
     }

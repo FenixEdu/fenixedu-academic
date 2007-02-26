@@ -33,6 +33,18 @@ public class PersonName extends PersonName_Base implements Comparable<PersonName
 	}
     }
 
+    public static class InternalPersonNameLimitedOrderedSet extends PersonNameLimitedOrderedSet {
+
+	public InternalPersonNameLimitedOrderedSet(final int maxElements) {
+	    super(maxElements);
+	}
+
+	@Override
+	public boolean add(final PersonName personName) {
+	    return personName.getIsExternalPerson() ? false : super.add(personName);
+	}
+    }
+
     public static class ExternalPersonNameLimitedOrderedSet extends PersonNameLimitedOrderedSet {
 
 	public ExternalPersonNameLimitedOrderedSet(final int maxElements) {
@@ -41,14 +53,14 @@ public class PersonName extends PersonName_Base implements Comparable<PersonName
 
 	@Override
 	public boolean add(final PersonName personName) {
-	    final Person person = personName.getPerson();
-	    return person.hasExternalPerson() ? super.add(personName) : false;
+	    return personName.getIsExternalPerson() ? super.add(personName) : false;
 	}
     }
 
-
-    public  PersonName() {
-        super();
+    public PersonName(Person person) {
+	super();
+	this.setRootDomainObject(RootDomainObject.getInstance());
+	setPerson(person);
     }
 
     public int compareTo(PersonName personName) {
@@ -70,15 +82,16 @@ public class PersonName extends PersonName_Base implements Comparable<PersonName
 	return true;
     }
 
-    public static void find(final PersonNameLimitedOrderedSet personNameLimitedOrderedSet, final String name, final int size) {
+    public static void find(final PersonNameLimitedOrderedSet personNameLimitedOrderedSet, final String name,
+	    final int size) {
 	final String[] nameParts = PersonNamePart.getNameParts(name);
 	if (nameParts.length > 0) {
 	    final PersonNamePart personNamePart = PersonNamePart.find(nameParts[0]);
 	    if (personNamePart != null && nameParts.length == 1) {
 		personNameLimitedOrderedSet.addAll(personNamePart.getPersonNameSet());
 	    } else {
-		final Set<PersonName> personNames = personNamePart == null ?
-			RootDomainObject.getInstance().getPersonNameSet() : personNamePart.getPersonNameSet();
+		final Set<PersonName> personNames = personNamePart == null ? RootDomainObject.getInstance()
+			.getPersonNameSet() : personNamePart.getPersonNameSet();
 		for (final PersonName personName : personNames) {
 		    final String normalizedPersonName = personName.getName();
 		    if (conatinsAll(normalizedPersonName, nameParts)) {
@@ -86,11 +99,19 @@ public class PersonName extends PersonName_Base implements Comparable<PersonName
 		    }
 		}
 	    }
-	}	
+	}
     }
 
+    public static Collection<PersonName> findInternalPerson(final String name, final int size) {
+	final InternalPersonNameLimitedOrderedSet personNameLimitedOrderedSet = new InternalPersonNameLimitedOrderedSet(
+		size);
+	find(personNameLimitedOrderedSet, name, size);
+	return personNameLimitedOrderedSet;
+    }
+    
     public static Collection<PersonName> findExternalPerson(final String name, final int size) {
-	final ExternalPersonNameLimitedOrderedSet personNameLimitedOrderedSet = new ExternalPersonNameLimitedOrderedSet(size);
+	final ExternalPersonNameLimitedOrderedSet personNameLimitedOrderedSet = new ExternalPersonNameLimitedOrderedSet(
+		size);
 	find(personNameLimitedOrderedSet, name, size);
 	return personNameLimitedOrderedSet;
     }

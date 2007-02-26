@@ -11424,6 +11424,12 @@
         </filterChains>     
     </service>
     <service>
+    	<name>CreateExternalUnitByName</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.externalUnits.CreateExternalUnitByName</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+    </service>    
+    <service>
     	<name>CreateExternalCurricularCourse</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.externalUnits.CreateExternalCurricularCourse</implementationClass>
         <description></description>
