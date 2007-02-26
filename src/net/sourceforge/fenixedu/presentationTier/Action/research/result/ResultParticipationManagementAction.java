@@ -196,15 +196,6 @@ public class ResultParticipationManagementAction extends ResultsManagementAction
 		return prepareEdit(mapping, form, request, response);
 	}
 
-	public ActionForward selectUnit(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) {
-		
-		getResultFromRequest(request);
-		request.setAttribute("externalRootUnit",UnitUtils.readExternalInstitutionUnit());
-		
-		return mapping.findForward("selectUnit");
-	}
-	
 	public ActionForward prepareCreateParticipator(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	
