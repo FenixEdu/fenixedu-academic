@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.person;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -148,6 +149,16 @@ public class PersonName extends PersonName_Base implements Comparable<PersonName
 	stringBuilder.append(" (");
 	stringBuilder.append(string);
 	stringBuilder.append(")");
+    }
+
+    public void delete() {
+	final Set<PersonNamePart> personNameParts = new HashSet<PersonNamePart>(getPersonNamePartSet());
+	getPersonNamePartSet().clear();
+	removeRootDomainObject();
+	deleteDomainObject();
+	for (final PersonNamePart personNamePart : personNameParts) {
+	    personNamePart.deleteIfEmpty();
+	}
     }
 
 }

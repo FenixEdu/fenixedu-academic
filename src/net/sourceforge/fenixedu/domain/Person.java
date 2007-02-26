@@ -1094,6 +1094,7 @@ public class Person extends Person_Base {
 	if (hasUser()) {
 	    getUser().delete();
 	}
+	getPersonName().delete();
 	super.delete();
     }
 

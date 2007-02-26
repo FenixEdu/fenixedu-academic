@@ -82,4 +82,11 @@ public class PersonNamePart extends PersonNamePart_Base {
 	index(personName);
     }
 
+    public void deleteIfEmpty() {
+	if (getPersonNameSet().isEmpty()) {
+	    removeRootDomainObject();
+	    deleteDomainObject();
+	}
+    }
+
 }
