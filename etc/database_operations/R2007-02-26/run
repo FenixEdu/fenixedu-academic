@@ -27,3 +27,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Create and index person name parts." personPartName.sql
+execute "update Justification Motive" updateJustificationMotive.sql
