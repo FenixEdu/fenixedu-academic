@@ -439,6 +439,15 @@
 		<property name="formatText" value="hh:mm" />
 	</slot>
 </schema>
+
+<schema name="edit.employeeMonthRegularization" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.RegularizationMonthFactory">
+	<slot name="justificationMotive" key="label.regularization" bundle="ASSIDUOUSNESS_RESOURCES" layout="menu-select"
+		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.assiduousness.JustificationMotiveAsProvider" />
+		<property name="choiceType" value="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive" />
+		<property name="format" value="${acronym} - ${description}"/>
+	</slot>
+</schema>
 <!-- EXTRA WORK -->
 <schema name="choose.unitYearMonth"
 	type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.ExtraWorkRequestFactory">
@@ -684,3 +693,41 @@
  	<slot name="unjustifiedBalanceString" key="label.totalUnjustified"/>
 </schema>
 
+<schema name="create.missingClocking.first" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.RegularizationDayBean">
+	<slot name="firstTimeClockToFill" layout="multiple-format-hour-minute">
+		<property name="format" value="HH:mm" />
+		<property name="inputFormat" value="H:m" />
+		<property name="formatText" value="hh:mm" />
+	</slot>
+</schema>
+
+<schema name="create.missingClocking.second" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.RegularizationDayBean">
+	<slot name="secondTimeClockToFill" layout="multiple-format-hour-minute">
+		<property name="format" value="HH:mm" />
+		<property name="inputFormat" value="H:m" />
+		<property name="formatText" value="hh:mm" />
+	</slot>
+</schema>
+
+<schema name="create.missingClocking.third" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.RegularizationDayBean">
+	<slot name="thirdTimeClockToFill" layout="multiple-format-hour-minute">
+		<property name="format" value="HH:mm" />
+		<property name="inputFormat" value="H:m" />
+		<property name="formatText" value="hh:mm" />
+	</slot>
+</schema>
+
+<schema name="create.missingClocking.fourth" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.RegularizationDayBean">
+	<slot name="fourthTimeClockToFill" layout="multiple-format-hour-minute">
+		<property name="format" value="HH:mm" />
+		<property name="inputFormat" value="H:m" />
+		<property name="formatText" value="hh:mm" />
+	</slot>
+</schema>
+
+<schema name="view.missingClocking.first" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.RegularizationDayBean">
+	<slot name="fourthTimeClock" layout="hour-minute">
+		<property name="format" value="HH:mm" />
+		<property name="formatText" value="hh:mm" />
+	</slot>
+</schema>

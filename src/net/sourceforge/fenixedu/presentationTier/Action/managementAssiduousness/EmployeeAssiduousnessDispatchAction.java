@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeScheduleFactory;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeWorkWeekScheduleBean;
+import net.sourceforge.fenixedu.dataTransferObject.assiduousness.RegularizationMonthFactory;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory.EmployeeAnulateJustificationFactory;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory.EmployeeJustificationFactoryCreator;
@@ -41,6 +42,51 @@ import org.joda.time.YearMonthDay;
 import pt.utl.ist.fenix.tools.file.FileManagerException;
 
 public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
+
+    public ActionForward prepareCreateMissingClockingMonth(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
+            FenixFilterException {
+        
+        YearMonth yearMonth = null;
+        String dateString = request.getParameter("date");
+        RegularizationMonthFactory regularizationMonthFactory = (RegularizationMonthFactory) getFactoryObject();
+        if (regularizationMonthFactory != null) {
+            //RenderUtils.invalidateViewState();
+            yearMonth = regularizationMonthFactory.getYearMonth();
+        } else {
+            Employee employee = Employee.readByNumber(new Integer(getFromRequest(request, "employeeNumber")
+                    .toString()));            
+            YearMonthDay date = null;
+            if (!StringUtils.isEmpty(dateString)) {
+                date = new YearMonthDay(dateString);
+            }
+            yearMonth = getYearMonth(request, date);
+            regularizationMonthFactory = new RegularizationMonthFactory(yearMonth, employee
+                    .getAssiduousness(), SessionUtils.getUserView(request).getPerson().getEmployee());
+        }
+        request.setAttribute("regularizationMonthFactory", regularizationMonthFactory);
+        request.setAttribute("yearMonth", yearMonth);
+        if (StringUtils.isEmpty(dateString)) {
+            new ViewEmployeeAssiduousnessDispatchAction().showJustifications(mapping, form, request,
+                    response);
+            return mapping.findForward("create-missing-clocking-month");
+        }
+        return new ViewEmployeeAssiduousnessDispatchAction().showWorkSheet(mapping, form, request,
+                response);
+    }
+
+    public ActionForward createMissingClockingMonth(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
+            FenixFilterException {
+
+        RegularizationMonthFactory regularizationMonthFactory = (RegularizationMonthFactory) getFactoryObject();
+        executeService(request, "ExecuteFactoryMethod", new Object[] { regularizationMonthFactory });
+        request.setAttribute("employeeNumber", regularizationMonthFactory.getAssiduousness()
+                .getEmployee().getEmployeeNumber());
+        request.setAttribute("yearMonth", regularizationMonthFactory.getYearMonth());
+        return new ViewEmployeeAssiduousnessDispatchAction().showJustifications(mapping, form, request,
+                response);
+    }
 
     public ActionForward prepareCreateEmployeeJustification(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,

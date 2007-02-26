@@ -117,7 +117,7 @@ public class MultipleFormatTimeInputRenderer extends DateInputRenderer {
 	    try {
 		return convertCalendarToPartial(type, calendar);
 	    } catch (Exception e) {
-		throw new ConversionException("fenix.renderers.converter.partial", e, true, value);
+		throw new ConversionException("fenix.renderers.converter.timeOfDay", e, true, value);
 	    }
 	}
 

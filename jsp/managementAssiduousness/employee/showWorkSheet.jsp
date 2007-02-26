@@ -38,6 +38,10 @@
 					schema="edit.employeeCorrectionType">
 					<fr:destination name="justificationMotivePostBack" path="/employeeAssiduousness.do?method=chooseJustificationMotivePostBack" />
 					<fr:hidden slot="modifiedBy" name="UserView" property="person.employee" />
+					<fr:layout>
+						<fr:property name="classes" value="tstyle5 thlight mvert0 thright thmiddle"/>
+						<fr:property name="columnClasses" value="width8em,width40em,tdclear"/>
+					</fr:layout>
 				</fr:edit>
 				<logic:notEmpty name="employeeJustificationFactory" property="correctionType">
 					<logic:equal name="employeeJustificationFactory" property="correctionType" value="<%= net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory.CorrectionType.JUSTIFICATION.toString()%>">
@@ -45,24 +49,40 @@
 							type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory"
 							schema="edit.employeeJustificationType">
 							<fr:destination name="justificationMotivePostBack" path="/employeeAssiduousness.do?method=chooseJustificationMotivePostBack" />
+							<fr:layout>
+								<fr:property name="classes" value="tstyle5 thlight mvert0 thright thmiddle"/>
+								<fr:property name="columnClasses" value="width8em,width40em,tdclear"/>
+							</fr:layout>
 						</fr:edit>
 						<logic:notEmpty name="employeeJustificationFactory" property="justificationType">
 							<logic:equal name="employeeJustificationFactory" property="justificationType" value="<%= net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType.TIME.toString()%>">
 								<fr:edit id="editEmployeeJustificationMotive" name="employeeJustificationFactory"
 									type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory"
 									schema="edit.employeeTimeJustificationMotive">
+									<fr:layout>
+										<fr:property name="classes" value="tstyle5 thlight mvert0 thright thmiddle"/>
+										<fr:property name="columnClasses" value="width8em,width40em,tdclear"/>
+									</fr:layout>
 								</fr:edit>
 							</logic:equal>
 							<logic:equal name="employeeJustificationFactory" property="justificationType" value="<%= net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType.OCCURRENCE.toString()%>">
 								<fr:edit id="editEmployeeJustificationMotive" name="employeeJustificationFactory"
 									type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory"
 									schema="edit.employeeOccurrenceJustificationMotive">
+									<fr:layout>
+										<fr:property name="classes" value="tstyle5 thlight mvert0 thright thmiddle"/>
+										<fr:property name="columnClasses" value="width8em,width40em,tdclear"/>
+									</fr:layout>									
 								</fr:edit>
 							</logic:equal>
 							<logic:equal name="employeeJustificationFactory" property="justificationType" value="<%= net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType.BALANCE.toString()%>">
 								<fr:edit id="editEmployeeJustificationMotive" name="employeeJustificationFactory"
 									type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory"
 									schema="edit.employeeBalanceJustificationMotive">
+									<fr:layout>
+										<fr:property name="classes" value="tstyle5 thlight mvert0 thright thmiddle"/>
+										<fr:property name="columnClasses" value="width8em,width40em,tdclear"/>
+									</fr:layout>									
 								</fr:edit>
 							</logic:equal>
 							<p><html:submit>
@@ -74,6 +94,10 @@
 						<fr:edit id="editEmployeeJustificationMotive" name="employeeJustificationFactory"
 							type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory"
 							schema="edit.employeeRegularization">
+							<fr:layout>
+								<fr:property name="classes" value="tstyle5 thlight mvert0 thright thmiddle"/>
+								<fr:property name="columnClasses" value="width8em,width40em,tdclear"/>
+							</fr:layout>							
 						</fr:edit>
 						<p><html:submit>
 							<bean:message key="button.submit" />

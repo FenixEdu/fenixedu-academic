@@ -9,7 +9,6 @@ import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Employee;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.assiduousness.Anulation;
 import net.sourceforge.fenixedu.domain.assiduousness.Assiduousness;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord;
@@ -25,7 +24,6 @@ import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionMessage;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
@@ -180,22 +178,21 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			    return new ActionMessage("errors.required", bundle.getString("label.hour"));
 			}
 
-			if (isOverlapingAnyTimeJustification()) {
-			    return new ActionMessage("errors.regularizationInsideTimeJustification");
-			}
-			new MissingClocking(getEmployee().getAssiduousness(), getBeginDate().toDateTime(
-				getBeginTime()), getJustificationMotive(), new DateTime(),
-				getModifiedBy());
-		    } else {
-			// erro - just
-			return new ActionMessage("errors.error");
-		    }
-		} else {
-		    return new ActionMessage("errors.required", bundle.getString("label.regularization"));
-		}
-	    }
-	    return null;
-	}
+                        if (isOverlapingAnyTimeJustification()) {
+                            return new ActionMessage("errors.regularizationInsideTimeJustification");
+                        }
+                        new MissingClocking(getEmployee().getAssiduousness(), getBeginDate().toDateTime(
+                                getBeginTime()), getJustificationMotive(), getModifiedBy());
+                    } else {
+                        // erro - just
+                        return new ActionMessage("errors.error");
+                    }
+                } else {
+                    return new ActionMessage("errors.required", bundle.getString("label.regularization"));
+                }
+            }
+            return null;
+        }
     }
 
     public static class EmployeeJustificationFactoryEditor extends EmployeeJustificationFactory {
@@ -540,28 +537,6 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 	    return null;
 	}
 	return new Duration(time.toDateTimeToday().getMillis());
-    }
-
-    public List<JustificationMotive> getJustificationMotivesList() {
-	List<JustificationMotive> justificationMotives = new ArrayList<JustificationMotive>();
-	if (correctionType.equals(CorrectionType.JUSTIFICATION) && getJustificationType() != null) {
-	    for (JustificationMotive justificationMotive : RootDomainObject.getInstance()
-		    .getJustificationMotives()) {
-		if (justificationMotive.getJustificationType() != null
-			&& justificationMotive.getJustificationType().equals(getJustificationType())) {
-		    justificationMotives.add(justificationMotive);
-		}
-	    }
-	} else if (correctionType.equals(CorrectionType.REGULARIZATION)) {
-	    for (JustificationMotive justificationMotive : RootDomainObject.getInstance()
-		    .getJustificationMotives()) {
-		if (justificationMotive.getJustificationType() == null) {
-		    justificationMotives.add(justificationMotive);
-		}
-	    }
-	}
-	Collections.sort(justificationMotives, new BeanComparator("acronym"));
-	return justificationMotives;
     }
 
     public boolean isComplete() {

@@ -42,7 +42,7 @@ public class MultipleFormatDateConverter extends Converter {
 		format = new SimpleDateFormat("H");
 		return format.parse(text);
 	    } catch (ParseException e2) {
-		throw new ConversionException("renderers.converter.date", e, true, value);
+		throw new ConversionException("renderers.converter.time", e, true, value);
 	    }
 	}
     }

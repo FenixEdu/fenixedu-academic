@@ -24,15 +24,28 @@ public class MissingClocking extends MissingClocking_Base {
     }
 
     public MissingClocking(Assiduousness assiduousness, DateTime date,
-            JustificationMotive justificationMotive, DateTime lastModifiedDate, Employee modifiedBy) {
+            JustificationMotive justificationMotive, Employee modifiedBy) {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
         setAssiduousness(assiduousness);
         setDate(date);
         setJustificationMotive(justificationMotive);
-        setLastModifiedDate(lastModifiedDate);
+        setLastModifiedDate(new DateTime());
         setModifiedBy(modifiedBy);
         setOracleSequence(0);
+        setOjbConcreteClass(MissingClocking.class.getName());
+    }
+
+    public MissingClocking(Assiduousness assiduousness, JustificationMotive justificationMotive,
+            DateTime dateTime, Employee modifiedBy) {
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+        setAssiduousness(assiduousness);
+        setDate(dateTime);
+        setJustificationMotive(justificationMotive);
+        setLastModifiedDate(new DateTime());
+        setModifiedBy(modifiedBy);
+        setOracleSequence(0);//TODO é mesmo preciso por a zero ??
         setOjbConcreteClass(MissingClocking.class.getName());
     }
 

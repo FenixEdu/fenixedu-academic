@@ -21,6 +21,9 @@
 	<definition name="show-justifications" extends="definition.managementAssiduousness.masterPage">
 		<put name="body" value="/managementAssiduousness/employee/showJustifications.jsp"/>
 	</definition>
+	<definition name="create-missing-clocking-month" extends="definition.managementAssiduousness.masterPage">
+		<put name="body" value="/managementAssiduousness/employee/createMonthMissingClocking.jsp"/>
+	</definition>	
 	<!-- Consults -->
 	<definition name="show-all-schedules" extends="definition.managementAssiduousness.masterPage">
 		<put name="body" value="/managementAssiduousness/showSchedules.jsp"/>

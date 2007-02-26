@@ -28,11 +28,7 @@
 		</p>
 		
 			<bean:define id="method" value="editEmployeeJustification" />
-			<%--
-			<logic:notEmpty name="" property="">
-					<bean:define id="method" value="editEmployeeJustification"/>
-			</logic:notEmpty>		
-			--%>
+
 			<div class="mbottom15">
 			<fr:form action="<%="/employeeAssiduousness.do?method="+method.toString()%>" encoding="multipart/form-data">
 				<fr:edit id="editEmployeeCorrectionType" name="employeeJustificationFactory"
@@ -42,7 +38,7 @@
 					<fr:hidden slot="modifiedBy" name="UserView" property="person.employee" />
 					<fr:layout>
 						<fr:property name="classes" value="tstyle5 thlight mvert0 thright thmiddle"/>
-						<fr:property name="columnClasses" value="width8em,width46em,tdclear"/>
+						<fr:property name="columnClasses" value="width8em,width40em,tdclear"/>
 					</fr:layout>
 				</fr:edit>
 				<logic:notEmpty name="employeeJustificationFactory" property="correctionType">
@@ -53,7 +49,7 @@
 							<fr:destination name="justificationMotivePostBack" path="/employeeAssiduousness.do?method=chooseJustificationMotivePostBack" />
 							<fr:layout>
 								<fr:property name="classes" value="tstyle5 thlight mvert0 thright thmiddle"/>
-								<fr:property name="columnClasses" value="width8em,width46em,tdclear"/>
+								<fr:property name="columnClasses" value="width8em,width40em,tdclear"/>
 							</fr:layout>
 						</fr:edit>
 						<logic:notEmpty name="employeeJustificationFactory" property="justificationType">
@@ -63,7 +59,7 @@
 									schema="edit.employeeTimeJustificationMotive">
 									<fr:layout>
 										<fr:property name="classes" value="tstyle5 thlight mvert0 thright thmiddle"/>
-										<fr:property name="columnClasses" value="width8em,width46em,tdclear"/>
+										<fr:property name="columnClasses" value="width8em,width40em,tdclear"/>
 									</fr:layout>
 								</fr:edit>
 							</logic:equal>
@@ -73,7 +69,7 @@
 									schema="edit.employeeOccurrenceJustificationMotive">
 									<fr:layout>
 										<fr:property name="classes" value="tstyle5 thlight mvert0 thright thmiddle"/>
-										<fr:property name="columnClasses" value="width8em,width46em,tdclear"/>
+										<fr:property name="columnClasses" value="width8em,width40em,tdclear"/>
 									</fr:layout>
 								</fr:edit>
 							</logic:equal>
@@ -83,7 +79,7 @@
 									schema="edit.employeeBalanceJustificationMotive">
 									<fr:layout>
 										<fr:property name="classes" value="tstyle5 thlight mvert0 thright thmiddle"/>
-										<fr:property name="columnClasses" value="width8em,width46em,tdclear"/>
+										<fr:property name="columnClasses" value="width8em,width40em,tdclear"/>
 									</fr:layout>
 								</fr:edit>
 							</logic:equal>
@@ -98,12 +94,12 @@
 							schema="edit.employeeRegularization">
 							<fr:layout>
 								<fr:property name="classes" value="tstyle5 thlight mvert0 thright thmiddle"/>
-								<fr:property name="columnClasses" value="width8em,width46em,tdclear"/>
+								<fr:property name="columnClasses" value="width8em,width40em,tdclear"/>
 							</fr:layout>
 						</fr:edit>
 						<p>
 						<html:submit>
-							<bean:message key="button.submit" />
+							<bean:message key="button.confirm" />
 						</html:submit>
 						</p>
 					</logic:equal>
@@ -116,7 +112,8 @@
 		<logic:notPresent name="employeeJustificationFactory">
 			<p><bean:message key="link.insert" />: 
 			<html:link page="<%="/employeeAssiduousness.do?method=prepareCreateEmployeeJustification&correction=JUSTIFICATION&employeeNumber="+employeeNumber.toString()+"&month="+month.toString()+"&year="+year.toString()%>"><bean:message key="label.justification" /></html:link>,
-			<html:link page="<%="/employeeAssiduousness.do?method=prepareCreateEmployeeJustification&correction=REGULARIZATION&employeeNumber="+employeeNumber.toString()+"&month="+month.toString()+"&year="+year.toString()%>"><bean:message key="label.regularization" /></html:link>
+			<bean:message key="label.regularization" /> (<html:link page="<%="/employeeAssiduousness.do?method=prepareCreateEmployeeJustification&correction=REGULARIZATION&employeeNumber="+employeeNumber.toString()+"&month="+month.toString()+"&year="+year.toString()%>"><bean:message key="link.dayRegularization" /></html:link>, 
+											 			 <html:link page="<%="/employeeAssiduousness.do?method=prepareCreateMissingClockingMonth&correction=REGULARIZATION&employeeNumber="+employeeNumber.toString()+"&month="+month.toString()+"&year="+year.toString()%>"><bean:message key="link.monthRegularization" /></html:link>)
 			</p>
 		</logic:notPresent>
 
