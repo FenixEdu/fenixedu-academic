@@ -18,7 +18,7 @@ import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public abstract class AbstractSearchObjects extends Service implements AutoCompleteSearchService {
 
-    protected List<DomainObject> process(Collection objects, String value, int limit,
+    protected Collection process(Collection objects, String value, int limit,
             Map<String, String> arguments) {
         List result;
 

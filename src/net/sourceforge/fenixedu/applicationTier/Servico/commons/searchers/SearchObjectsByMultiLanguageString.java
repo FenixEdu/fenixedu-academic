@@ -22,7 +22,7 @@ import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public class SearchObjectsByMultiLanguageString extends Service implements AutoCompleteSearchService {
 
-    public List<DomainObject> run(Class type, String value, int limit, Map<String, String> arguments) {
+    public Collection run(Class type, String value, int limit, Map<String, String> arguments) {
     	List<DomainObject> result = new ArrayList<DomainObject>();
         
         String slotName  = arguments.get("slot");

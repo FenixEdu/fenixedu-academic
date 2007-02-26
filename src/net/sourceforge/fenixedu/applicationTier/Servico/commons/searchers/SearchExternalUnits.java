@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +21,7 @@ import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public class SearchExternalUnits extends Service implements AutoCompleteSearchService {
 
-    public List<Unit> run(Class type, String value, int limit, Map<String, String> arguments){
+    public Collection run(Class type, String value, int limit, Map<String, String> arguments){
         List<Unit> result;
         
         String slotName  = arguments.get("slot");

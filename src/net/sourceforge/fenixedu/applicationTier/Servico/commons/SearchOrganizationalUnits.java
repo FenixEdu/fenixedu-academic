@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -10,7 +11,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 
 public class SearchOrganizationalUnits extends AbstractSearchObjects {
 
-	public List run(Class type, String value, int limit, Map<String, String> arguments) {
+	public Collection run(Class type, String value, int limit, Map<String, String> arguments) {
 		
 		 List<Unit> units = new ArrayList<Unit> ();
 		 units.addAll(UnitUtils.readAllActiveUnitsByType(PartyTypeEnum.DEPARTMENT));

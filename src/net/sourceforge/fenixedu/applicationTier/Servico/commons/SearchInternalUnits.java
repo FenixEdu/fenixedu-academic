@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -9,7 +10,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 
 public class SearchInternalUnits extends AbstractSearchObjects {
 
-	public List run(Class type, String value, int limit, Map<String, String> arguments) {
+	public Collection run(Class type, String value, int limit, Map<String, String> arguments) {
 		 List<Unit> units = UnitUtils.readAllActiveUnitsByType(PartyTypeEnum.DEPARTMENT);
 		 units.addAll(UnitUtils.readAllActiveUnitsByType(PartyTypeEnum.DEGREE_UNIT));
 		 units.addAll(UnitUtils.readAllActiveUnitsByType(PartyTypeEnum.SCIENCE_INFRASTRUCTURE));
