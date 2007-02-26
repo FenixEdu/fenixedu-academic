@@ -94,7 +94,8 @@ public class ExecutionCourseProcessor extends PathProcessor {
             }
             
             for (CurricularCourse curricularCourse : getDegreeCurricularPlan().getCurricularCourses()) {
-                if (curricularCourse.getAcronym().equalsIgnoreCase(getAcronym())) {
+                if (curricularCourse.getAcronym() != null
+                	&& curricularCourse.getAcronym().equalsIgnoreCase(getAcronym())) {
                     return this.curricularCourse = curricularCourse;
                 }
             }
