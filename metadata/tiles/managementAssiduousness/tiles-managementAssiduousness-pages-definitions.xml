@@ -56,16 +56,16 @@
 		<put name="body" value="/managementAssiduousness/extraWork/insertPaymentRequest.jsp"/>
 	</definition>
 	<definition name="create-extra-work-authorization" extends="definition.managementAssiduousness.masterPage">
-		<put name="body" value="/managementAssiduousness/createExtraWorkAuthorization.jsp"/>
+		<put name="body" value="/managementAssiduousness/extraWork/createExtraWorkAuthorization.jsp"/>
 	</definition>	
 	<definition name="show-extra-work-authorizations" extends="definition.managementAssiduousness.masterPage">
-		<put name="body" value="/managementAssiduousness/showExtraWorkAuthorizations.jsp"/>
+		<put name="body" value="/managementAssiduousness/extraWork/showExtraWorkAuthorizations.jsp"/>
 	</definition>
 	<definition name="view-extra-work-authorization" extends="definition.managementAssiduousness.masterPage">
-		<put name="body" value="/managementAssiduousness/viewExtraWorkAuthorization.jsp"/>
+		<put name="body" value="/managementAssiduousness/extraWork/viewExtraWorkAuthorization.jsp"/>
 	</definition>
 	<definition name="edit-extra-work-authorization" extends="definition.managementAssiduousness.masterPage">
-		<put name="body" value="/managementAssiduousness/editExtraWorkAuthorization.jsp"/>
+		<put name="body" value="/managementAssiduousness/extraWork/editExtraWorkAuthorization.jsp"/>
 	</definition>
 	<definition name="prepare-associate-schedule" extends="definition.managementAssiduousness.masterPage">
 		<put name="body" value="/managementAssiduousness/employee/prepareAssociateSchedule.jsp"/>

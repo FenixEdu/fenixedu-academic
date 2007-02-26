@@ -20,7 +20,7 @@
 	
 <fr:view name="extraWorkAuthorization" property="employeeExtraWorkAuthorizations" layout="tabular" schema="view.employeeExtraWorkAuthorization">
 	<fr:layout>
-		<fr:property name="classes" value="tstyle8 thleft thlight emphasis2"/>
+		<fr:property name="classes" value="tstyle8 thlet thlight emphasis2"/>
 	</fr:layout>
 </fr:view>
 
