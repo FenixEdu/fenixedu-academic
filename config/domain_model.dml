@@ -3363,6 +3363,7 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 
 class net.sourceforge.fenixedu.domain.person.PersonName extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyPerson;
+	Boolean isExternalPerson;
 	String name;
 }
 
