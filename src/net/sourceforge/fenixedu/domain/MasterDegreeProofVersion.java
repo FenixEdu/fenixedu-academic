@@ -63,7 +63,7 @@ public class MasterDegreeProofVersion extends MasterDegreeProofVersion_Base {
 		    final MasterDegreeProofVersion masterDegreeProofVersion = thesis
 			    .getActiveMasterDegreeProofVersion();
 		    if (masterDegreeProofVersion != null && masterDegreeProofVersion.isConcluded()
-			    && masterDegreeProofVersion.getProofDateYearMonthDay().getYear() >= year) {
+			    && masterDegreeProofVersion.getProofDateYearMonthDay().getYear() == year) {
 			result.add(masterDegreeProofVersion);
 		    }
 		}
