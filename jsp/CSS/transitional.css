@@ -36,11 +36,6 @@ padding: 0.5em;
 .showinfo3 th { border-bottom: 1px solid #aaa; }
 .showinfo3 td { border-bottom: 1px solid #ddd; }
 
-.thleft th { text-align: left;}
-.thright th { text-align: right;}
-.emphasis1 th { background: #ffc; }
-.emphasis2 th { font-weight: bold; }
-
 .showinfo2 {
 background-color: #f5f5f5;
 border-collapse: collapse;
@@ -50,24 +45,6 @@ margin: 0.5em 0;
 border: 1px solid #fff;
 padding: 0.3em;
 }
-
-.sfloat {
-padding: 0.5em;
-background-color: #eee;
-}
-
-.sfloat label {
-float: left;
-text-align: right;
-width: 10em;
-display: block;
-padding-right: 0.5em;
-}
-.sfloat span{
-margin-left: 11em;
-display: block;
-}
-
 
 /* ----------------------
  ---- Info Blocks ------
@@ -167,7 +144,6 @@ table.thcenter th { text-align: center; }
 .tdright td { text-align: right; } /* take table from all, to work with tr ? */
 .tdcenter td { text-align: center; }
 
-
 /* delete? */
 table .aleft  { text-align: left; }
 table .aright  { text-align: right; }
@@ -194,7 +170,6 @@ table.smalltxt tr td { font-size: 0.85em;}
 
 .emphasis1 th { background: #ffc; }
 .emphasis2 th { font-weight: bold; }
-
 
 /* -------------------- */
 /* General cell classes */
@@ -347,27 +322,12 @@ ul.padding1 li { padding: 0.25em 0; }
  ---- Feedback  --------
 ----------------------- */
 
-.feedback {
-margin: 1em 0;
-padding: 0em 0em 0.2em 0em;
-}
-.feedback h4 {
-margin: 0;
-padding: 0.2em 0.5em 0.2em 26px;
-}
-.feedback p {
-margin: 0;
-padding: 0.2em 0.5em 0.2em 0em;
-}
-
 .error0 { /*margin: 1em 0; padding: 0.1em 0.3em 0.1em 0.3em;*/ background-color: #ffeadd; color: #c00; /*padding: 0.1em 0.2em;*/ }
-.error1, .error2, .error3 { background-color: #ffeadd; color: #c00; }
+.error1, .error2 { background-color: #ffeadd; color: #c00; }
 .error1 { border: 2px solid #c00; }
 .error1 h4 { border-bottom: 1px dotted #d00; background: #fff url(../../pics/error01.gif) 6px 50% no-repeat; color: #c00; }
 .error1 p { padding: 0.5em 0.5em;}
-.error2 h4 { border-bottom: 1px dotted #d00; background: #fff url(../../pics/error01.gif) 6px 50% no-repeat; color: #c00; }
-.error2 p { padding: 0.5em 0.5em;}
-.error3 { padding: 0.2em 0.5em 0.2em 28px; background: #ffeadd url(../../pics/error01.gif) 6px 50% no-repeat; }
+.error2 { padding: 0.2em 0.5em 0.2em 28px; background: #ffeadd url(../../pics/error01.gif) 6px 50% no-repeat; }
 
 .success0 { margin: 1em 0; padding: 0.2em 0.5em 0.2em 0.5em; background-color: #e2f5e2; color: #146e14; }
 .success1, .success2, .success3 { background-color: #efe; color: #070; }
@@ -1426,8 +1386,8 @@ height: 30px;
 
 
 .ulmvert0 ul {
-	margin-top: 0;
-	margin-bottom: 0;
+margin-top: 0;
+margin-bottom: 0;
 }
 
 img.percentImage {
@@ -1456,4 +1416,21 @@ background: url(../images/external_icon.gif) right center no-repeat;
 .temporarilyEnrolled { color: #665300; background-color: #faf7ee; }
 .impossibleEnrollment { color: #c00; background-color: #ffeadd; }
 
+
 tr.vigilancyHeaderColumns th { background: #fcfcfc; }
+
+
+table .tab_lay {
+width: 100%;
+margin-bottom: 1em;
+}
+table .tab_lay th {
+font-size: 130%;
+}
+table .tab_lay th center {
+vertical-align: middle;
+padding: 0;
+margin: 0;
+font-size: 80%;
+text-decoration: underline;
+}
