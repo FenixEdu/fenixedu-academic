@@ -26,7 +26,9 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.ConversationThread;
+import net.sourceforge.fenixedu.domain.messaging.ExecutionCourseAnnouncementBoard;
 import net.sourceforge.fenixedu.domain.messaging.ExecutionCourseForum;
 import net.sourceforge.fenixedu.domain.messaging.ForumSubscription;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
@@ -90,11 +92,31 @@ public class MergeExecutionCourses extends Service {
         copySite(executionCourseFrom, executionCourseTo);
         removeEvaluations(executionCourseFrom, executionCourseTo);
         copyForuns(executionCourseFrom, executionCourseTo);
+        copyBoard(executionCourseFrom, executionCourseTo);
 
         executionCourseTo.getAssociatedCurricularCourses().addAll(
                 executionCourseFrom.getAssociatedCurricularCourses());
 
         executionCourseFrom.delete();
+    }
+
+    private void copyBoard(ExecutionCourse executionCourseFrom, ExecutionCourse executionCourseTo) {
+	final ExecutionCourseAnnouncementBoard executionCourseAnnouncementBoardFrom = executionCourseFrom.getBoard();
+	final ExecutionCourseAnnouncementBoard executionCourseAnnouncementBoardTo = executionCourseTo.getBoard();
+
+	for (final Iterator<Person> iterator = executionCourseAnnouncementBoardFrom.getBookmarkOwnerSet().iterator();
+		iterator.hasNext(); iterator.remove()) {
+	    final Person bookmarkOwner = iterator.next();
+	    executionCourseAnnouncementBoardTo.addBookmarkOwner(bookmarkOwner);
+	}
+
+	for (final Iterator<Announcement> iterator = executionCourseAnnouncementBoardFrom.getAnnouncementsSet().iterator();
+		iterator.hasNext(); iterator.remove()) {
+	    final Announcement announcement = iterator.next();
+	    executionCourseAnnouncementBoardTo.addAnnouncements(announcement);
+	}
+
+	executionCourseAnnouncementBoardFrom.delete();
     }
 
     private boolean haveShiftsWithSameName(final ExecutionCourse executionCourseFrom,
