@@ -58,7 +58,7 @@
 				<strong><bean:message bundle="RESEARCHER_RESOURCES" key="<%="researcher.activity.editResearchActivityParticipants.editRoles." + activityType%>"/></strong>
 			</p>
 			<logic:notEmpty name="unableToEdit">
-				<div class="error3">
+				<div class="error2">
 					<bean:message bundle="RESEARCHER_RESOURCES" key="<%="researcher.activity.editResearchActivityParticipants.unableToEdit." + activityType%>"/>
 					<fr:view name="unableToEdit">
 						<fr:layout>
