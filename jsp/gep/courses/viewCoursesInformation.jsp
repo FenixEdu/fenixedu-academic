@@ -134,14 +134,14 @@
 		<th class="listClasses-header">
 			<bean:message key="label.gep.executionPeriod" bundle="GEP_RESOURCES"/>
 		</th>
+		<th class="listClasses-header">
+			<bean:message key="label.gep.courseInformation.basic" bundle="GEP_RESOURCES"/>
+		</th>
 		<logic:notPresent name="infoExecutionDegree">
 			<th class="listClasses-header">
 				<bean:message key="label.gep.degree" bundle="GEP_RESOURCES"/>
 			</th>
 		</logic:notPresent>
-		<th class="listClasses-header">
-			<bean:message key="label.gep.courseInformation.basic" bundle="GEP_RESOURCES"/>
-		</th>
 		<th class="listClasses-header">
 			<bean:message key="label.gep.courseInformation.professorships" bundle="GEP_RESOURCES"/>
 		</th>
