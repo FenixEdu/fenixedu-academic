@@ -71,7 +71,7 @@ public class InfoGroupStudent extends InfoObject {
      * @return Returns the student.
      */
     public InfoStudent getStudent() {
-	return InfoStudent.newInfoFromDomain(getGroupStudent().getStudent());
+	return InfoStudent.newInfoFromDomain(getGroupStudent().getRegistration());
     }
 
 }

@@ -1284,7 +1284,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 			if (proposal.getGroupAttributed() != null) {
 				int i = 0;
 				for (final GroupStudent groupStudent : proposal.getGroupAttributed().getGroupStudentsSet()) {
-					final Registration registration = groupStudent.getStudent();
+					final Registration registration = groupStudent.getRegistration();
 					row.setCell(registration.getNumber().toString());
 					row.setCell(registration.getPerson().getName());
 					maxNumberStudentsPerGroup = Math.max(maxNumberStudentsPerGroup, ++i);
@@ -1292,7 +1292,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 			} else if (proposal.getGroupAttributedByTeacher() != null) {
 				int i = 0;
 				for (final GroupStudent groupStudent : proposal.getGroupAttributedByTeacher().getGroupStudentsSet()) {
-					final Registration registration = groupStudent.getStudent();
+					final Registration registration = groupStudent.getRegistration();
 					row.setCell(registration.getNumber().toString());
 					row.setCell(registration.getPerson().getName());
 					maxNumberStudentsPerGroup = Math.max(maxNumberStudentsPerGroup, ++i);
@@ -1316,7 +1316,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 			row.setCell(Integer.toString(++numberGroups));
 			final SortedSet<GroupStudent> groupStudents = CollectionUtils.constructSortedSet(group.getGroupStudentsSet(), GroupStudent.COMPARATOR_BY_STUDENT_NUMBER);
 			for (final GroupStudent groupStudent : groupStudents) {
-				row.setCell(groupStudent.getStudent().getNumber().toString());
+				row.setCell(groupStudent.getRegistration().getNumber().toString());
 			}
 			maxNumStudentsPerGroup = Math.max(maxNumStudentsPerGroup, groupStudents.size());
 		}
@@ -1364,7 +1364,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 			for (final Group group : otherExecutionDegree.getAssociatedFinalDegreeWorkGroupsSet()) {
 				if (!group.getGroupProposalsSet().isEmpty()) {
 					for (final GroupStudent groupStudent : group.getGroupStudentsSet()) {
-						final Registration registration = groupStudent.getStudent();
+						final Registration registration = groupStudent.getRegistration();
 						final StudentCurricularPlan studentCurricularPlan = registration.getActiveOrConcludedStudentCurricularPlan();
 						if (studentCurricularPlan.getDegreeCurricularPlan() == degreeCurricularPlan) {
 							final Row row = spreadsheet.addRow();

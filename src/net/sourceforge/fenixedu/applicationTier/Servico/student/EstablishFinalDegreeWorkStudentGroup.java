@@ -30,7 +30,7 @@ public class EstablishFinalDegreeWorkStudentGroup extends Service {
         if (group == null) {
             group = new Group();
                 GroupStudent groupStudent = new GroupStudent();
-                groupStudent.setStudent(registration);
+                groupStudent.setRegistration(registration);
                 groupStudent.setFinalDegreeDegreeWorkGroup(group);
         } else {
             if (!group.getGroupProposals().isEmpty()) {

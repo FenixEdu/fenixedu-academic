@@ -51,8 +51,8 @@ public class RemoveStudentFromFinalDegreeWorkStudentGroup extends Service {
 
         public boolean evaluate(Object arg0) {
             GroupStudent groupStudent = (GroupStudent) arg0;
-            if (groupStudent != null && groupStudent.getStudent() != null && studentID != null
-                    && !studentID.equals(groupStudent.getStudent().getIdInternal())) {
+            if (groupStudent != null && groupStudent.getRegistration() != null && studentID != null
+                    && !studentID.equals(groupStudent.getRegistration().getIdInternal())) {
                 return true;
             }
             return false;

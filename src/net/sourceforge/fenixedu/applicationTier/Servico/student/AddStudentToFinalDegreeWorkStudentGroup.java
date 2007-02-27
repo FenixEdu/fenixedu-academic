@@ -109,7 +109,7 @@ public class AddStudentToFinalDegreeWorkStudentGroup extends Service {
         }
 
         GroupStudent groupStudent = new GroupStudent();
-        groupStudent.setStudent(registration);
+        groupStudent.setRegistration(registration);
         groupStudent.setFinalDegreeDegreeWorkGroup(group);
         return true;
     }
@@ -197,7 +197,7 @@ public class AddStudentToFinalDegreeWorkStudentGroup extends Service {
 
         public boolean evaluate(Object arg0) {
             GroupStudent groupStudent = (GroupStudent) arg0;
-            return registration.getIdInternal().equals(groupStudent.getStudent().getIdInternal());
+            return registration.getIdInternal().equals(groupStudent.getRegistration().getIdInternal());
         }
 
         public PREDICATE_FIND_GROUP_STUDENT_BY_STUDENT(Registration registration) {
