@@ -10,87 +10,96 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 public class RestrictionBetweenDegreeModulesExecutor extends CurricularRuleExecutor {
 
     @Override
-    protected RuleResult executeEnrolmentWithRules(final ICurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
-	
+    protected RuleResult executeEnrolmentWithRules(final ICurricularRule curricularRule,
+	    final EnrolmentContext enrolmentContext) {
+
 	final RestrictionBetweenDegreeModules rule = (RestrictionBetweenDegreeModules) curricularRule;
 	if (!canApplyRule(enrolmentContext, rule)) {
 	    return RuleResult.createNA();
 	}
-	
+
 	final CourseGroup courseGroup = rule.getPrecedenceDegreeModule();
-	
+
 	if (isEnrolling(enrolmentContext, courseGroup)) {
 	    if (rule.hasMinimumCredits()) {
 		return createFalseRuleResultWithInvalidEcts(rule);
 	    } else {
-		return RuleResult.createTrue(); 
+		return RuleResult.createTrue();
 	    }
-	    
+
 	} else if (isEnroled(enrolmentContext, courseGroup)) {
-	    
-	    final CurriculumModule curriculumModule = searchCurriculumModule(enrolmentContext, courseGroup);
-	    
+
+	    final CurriculumModule curriculumModule = searchCurriculumModule(enrolmentContext,
+		    courseGroup);
+
 	    if (!rule.hasMinimumCredits() || rule.allowCredits(curriculumModule.getAprovedEctsCredits())) {
 		return RuleResult.createTrue();
 	    } else {
 		return createFalseRuleResultWithInvalidEcts(rule);
 	    }
 	}
-	
-	return RuleResult.createFalse(
-		"curricularRules.ruleExecutors.RestrictionBetweenDegreeModulesExecutor.student.has.not.precedence.degreeModule", rule
-			.getDegreeModuleToApplyRule().getName(), rule.getPrecedenceDegreeModule().getName());
+
+	return RuleResult
+		.createFalse(
+			"curricularRules.ruleExecutors.RestrictionBetweenDegreeModulesExecutor.student.has.not.precedence.degreeModule",
+			rule.getDegreeModuleToApplyRule().getName(), rule.getPrecedenceDegreeModule()
+				.getName());
     }
-    
+
     @Override
-    protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(final ICurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
-	
+    protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(
+	    final ICurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
+
 	final RestrictionBetweenDegreeModules rule = (RestrictionBetweenDegreeModules) curricularRule;
 	if (!canApplyRule(enrolmentContext, rule)) {
 	    return RuleResult.createNA();
 	}
 
 	final CourseGroup courseGroup = rule.getPrecedenceDegreeModule();
-	
+
 	if (isEnrolling(enrolmentContext, courseGroup)) {
 	    if (rule.hasMinimumCredits()) {
 		return createFalseRuleResultWithInvalidEcts(rule);
 	    } else {
-		return RuleResult.createTrue(); 
+		return RuleResult.createTrue();
 	    }
-	    
+
 	} else if (isEnroled(enrolmentContext, courseGroup)) {
-	    
+
 	    if (!rule.hasMinimumCredits()) {
 		return RuleResult.createTrue();
 	    }
-	    
-	    final CurriculumModule curriculumModule = searchCurriculumModule(enrolmentContext, courseGroup);
+
+	    final CurriculumModule curriculumModule = searchCurriculumModule(enrolmentContext,
+		    courseGroup);
 	    Double ectsCredits = curriculumModule.getAprovedEctsCredits();
 
 	    if (rule.allowCredits(ectsCredits)) {
 		return RuleResult.createTrue();
 	    }
-	    
+
 	    final ExecutionPeriod executionPeriod = enrolmentContext.getExecutionPeriod();
-	    ectsCredits = Double.valueOf(ectsCredits.doubleValue() + curriculumModule.getEnroledEctsCredits(executionPeriod.getPreviousExecutionPeriod()).doubleValue());
-	    
-	    return rule.allowCredits(ectsCredits) ? RuleResult.createTrue(EnrolmentResultType.TEMPORARY) : createFalseRuleResultWithInvalidEcts(rule);
+	    ectsCredits = Double.valueOf(ectsCredits.doubleValue()
+		    + curriculumModule.getEnroledEctsCredits(
+			    executionPeriod.getPreviousExecutionPeriod()).doubleValue());
+
+	    return rule.allowCredits(ectsCredits) ? RuleResult.createTrue(EnrolmentResultType.TEMPORARY)
+		    : createFalseRuleResultWithInvalidEcts(rule);
 	}
-	
-	return RuleResult.createFalse(
-		"curricularRules.ruleExecutors.RestrictionBetweenDegreeModulesExecutor.student.has.not.precedence.degreeModule", rule
-			.getDegreeModuleToApplyRule().getName(), rule.getPrecedenceDegreeModule().getName());
+
+	return RuleResult
+		.createFalse(
+			"curricularRules.ruleExecutors.RestrictionBetweenDegreeModulesExecutor.student.has.not.precedence.degreeModule",
+			rule.getDegreeModuleToApplyRule().getName(), rule.getPrecedenceDegreeModule()
+				.getName());
     }
 
     private RuleResult createFalseRuleResultWithInvalidEcts(final RestrictionBetweenDegreeModules rule) {
 	return RuleResult
-	.createFalse("curricularRules.ruleExecutors.RestrictionBetweenDegreeModulesExecutor.invalid.ects.credits.in.precedence.degreeModule",
-		rule.getDegreeModuleToApplyRule().getName(), rule.getPrecedenceDegreeModule().getName(), rule.getMinimumCredits().toString());
+		.createFalse(
+			"curricularRules.ruleExecutors.RestrictionBetweenDegreeModulesExecutor.invalid.ects.credits.in.precedence.degreeModule",
+			rule.getDegreeModuleToApplyRule().getName(), rule.getPrecedenceDegreeModule()
+				.getName(), rule.getMinimumCredits().toString());
     }
 
-    @Override
-    protected RuleResult executeEnrolmentWithNoRules(ICurricularRule curricularRule, EnrolmentContext enrolmentContext) {
-	return RuleResult.createTrue();
-    }
 }

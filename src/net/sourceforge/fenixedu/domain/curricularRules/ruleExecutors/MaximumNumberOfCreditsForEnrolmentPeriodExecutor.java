@@ -10,37 +10,39 @@ import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 public class MaximumNumberOfCreditsForEnrolmentPeriodExecutor extends CurricularRuleExecutor {
 
     @Override
-    protected RuleResult executeEnrolmentWithRules(final ICurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
-	
+    protected RuleResult executeEnrolmentWithRules(final ICurricularRule curricularRule,
+	    final EnrolmentContext enrolmentContext) {
+
 	final StudentCurricularPlan studentCurricularPlan = enrolmentContext.getStudentCurricularPlan();
 	final ExecutionPeriod executionPeriod = enrolmentContext.getExecutionPeriod();
 
 	final double maximum = MaximumNumberOfCreditsForEnrolmentPeriod.MAXIMUM_NUMBER_OF_CREDITS;
 	final double accumulated = studentCurricularPlan.getAccumulatedEctsCredits(executionPeriod);
 	double available = ((maximum - accumulated) > 0) ? maximum - accumulated : 0.0;
-	        
-	for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext.getDegreeModuleToEvaluate()) {
+
+	for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext
+		.getDegreeModuleToEvaluate()) {
 	    if (!degreeModuleToEvaluate.isEnroled()) {
-		final double degreeModuleEctsCredits = degreeModuleToEvaluate.getEctsCredits(executionPeriod);
+		final double degreeModuleEctsCredits = degreeModuleToEvaluate
+			.getEctsCredits(executionPeriod);
 		if (degreeModuleEctsCredits > available) {
-		    return RuleResult.createFalse("curricularRules.ruleExecutors.MaximumNumberOfCreditsForEnrolmentPeriodExecutor", String.valueOf(maximum));
+		    return RuleResult
+			    .createFalse(
+				    "curricularRules.ruleExecutors.MaximumNumberOfCreditsForEnrolmentPeriodExecutor",
+				    String.valueOf(maximum));
 		} else {
 		    available -= degreeModuleEctsCredits;
 		}
 	    }
 	}
-	        
+
 	return RuleResult.createTrue();
-    }
-    
-    @Override
-    protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(final ICurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
-	return executeEnrolmentWithRules(curricularRule, enrolmentContext);
     }
 
     @Override
-    protected RuleResult executeEnrolmentWithNoRules(final ICurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
-	return RuleResult.createTrue();
+    protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(
+	    final ICurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
+	return executeEnrolmentWithRules(curricularRule, enrolmentContext);
     }
 
 }

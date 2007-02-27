@@ -17,50 +17,58 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 public class CreditsLimitExecutor extends CurricularRuleExecutor {
 
     @Override
-    protected RuleResult executeEnrolmentWithRules(final ICurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
-	
+    protected RuleResult executeEnrolmentWithRules(final ICurricularRule curricularRule,
+	    final EnrolmentContext enrolmentContext) {
+
 	final CreditsLimit rule = (CreditsLimit) curricularRule;
-	
+
 	if (!canApplyRule(enrolmentContext, rule)) {
 	    return RuleResult.createNA();
 	}
-	
+
 	final DegreeModule degreeModule = rule.getDegreeModuleToApplyRule();
 	if (degreeModule.isOptional()) {
 	    return evaluateIfCanEnrolToOptionalDegreeModule(enrolmentContext, rule);
-	    
+
 	} else {
-	
-	    final IDegreeModuleToEvaluate degreeModuleToEvaluate = searchDegreeModuleToEvaluate(enrolmentContext, rule);
+
+	    final IDegreeModuleToEvaluate degreeModuleToEvaluate = searchDegreeModuleToEvaluate(
+		    enrolmentContext, rule);
 	    if (degreeModuleToEvaluate.isEnroled()) {
-		
+
 		final CurriculumModuleEnroledWrapper moduleEnroledWrapper = (CurriculumModuleEnroledWrapper) degreeModuleToEvaluate;
 		final CurriculumModule curriculumModule = moduleEnroledWrapper.getCurriculumModule();
-		
+
 		final Double ectsCredits = curriculumModule.getAprovedEctsCredits()
-		    + curriculumModule.getEnroledEctsCredits(enrolmentContext.getExecutionPeriod())
-		    + calculateEctsCreditsFromToEnrolCurricularCourses(enrolmentContext, rule);
-	    
-		return rule.creditsExceedMaximum(ectsCredits) ? createFalseRuleResult(rule) : RuleResult.createTrue();
-		
+			+ curriculumModule.getEnroledEctsCredits(enrolmentContext.getExecutionPeriod())
+			+ calculateEctsCreditsFromToEnrolCurricularCourses(enrolmentContext, rule);
+
+		return rule.creditsExceedMaximum(ectsCredits) ? createFalseRuleResult(rule) : RuleResult
+			.createTrue();
+
 	    } else {
 		return RuleResult.createNA();
 	    }
 	}
     }
 
-    private RuleResult evaluateIfCanEnrolToOptionalDegreeModule(final EnrolmentContext enrolmentContext, final CreditsLimit rule) {
-	final OptionalDegreeModuleToEnrol optionalToEnrol = (OptionalDegreeModuleToEnrol) searchDegreeModuleToEvaluate(enrolmentContext, rule);
+    private RuleResult evaluateIfCanEnrolToOptionalDegreeModule(final EnrolmentContext enrolmentContext,
+	    final CreditsLimit rule) {
+	final OptionalDegreeModuleToEnrol optionalToEnrol = (OptionalDegreeModuleToEnrol) searchDegreeModuleToEvaluate(
+		enrolmentContext, rule);
 	final CurricularCourse curricularCourse = optionalToEnrol.getCurricularCourse();
 	final ExecutionPeriod executionPeriod = enrolmentContext.getExecutionPeriod();
-	return rule.allowCredits(curricularCourse.getEctsCredits(executionPeriod)) ? RuleResult.createTrue() : createFalseRuleResult(rule);
+	return rule.allowCredits(curricularCourse.getEctsCredits(executionPeriod)) ? RuleResult
+		.createTrue() : createFalseRuleResult(rule);
     }
-    
-    private Double calculateEctsCreditsFromToEnrolCurricularCourses(final EnrolmentContext enrolmentContext, final CreditsLimit rule) {
+
+    private Double calculateEctsCreditsFromToEnrolCurricularCourses(
+	    final EnrolmentContext enrolmentContext, final CreditsLimit rule) {
 	BigDecimal result = BigDecimal.ZERO;
 	final CourseGroup courseGroup = (CourseGroup) rule.getDegreeModuleToApplyRule();
 	final ExecutionPeriod executionPeriod = enrolmentContext.getExecutionPeriod();
-	for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : collectDegreeModuleToEnrolFromCourseGroup(enrolmentContext, courseGroup)) {
+	for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : collectDegreeModuleToEnrolFromCourseGroup(
+		enrolmentContext, courseGroup)) {
 	    result = result.add(new BigDecimal(degreeModuleToEvaluate.getEctsCredits(executionPeriod)));
 	}
 	return Double.valueOf(result.doubleValue());
@@ -68,18 +76,22 @@ public class CreditsLimitExecutor extends CurricularRuleExecutor {
 
     private RuleResult createFalseRuleResult(final CreditsLimit rule) {
 	if (rule.getMinimumCredits().equals(rule.getMaximumCredits())) {
-	    return RuleResult.createFalse(
-		    "curricularRules.ruleExecutors.CreditsLimitExecutor.limit.not.fulfilled", 
-		    rule.getDegreeModuleToApplyRule().getName(), rule.getMinimumCredits().toString());
+	    return RuleResult
+		    .createFalse(
+			    "curricularRules.ruleExecutors.CreditsLimitExecutor.limit.not.fulfilled",
+			    rule.getDegreeModuleToApplyRule().getName(), rule.getMinimumCredits()
+				    .toString());
 	} else {
 	    return RuleResult.createFalse(
-		    "curricularRules.ruleExecutors.CreditsLimitExecutor.limits.not.fulfilled", 
-		    rule.getDegreeModuleToApplyRule().getName(), rule.getMinimumCredits().toString(), rule.getMaximumCredits().toString());
+		    "curricularRules.ruleExecutors.CreditsLimitExecutor.limits.not.fulfilled", rule
+			    .getDegreeModuleToApplyRule().getName(),
+		    rule.getMinimumCredits().toString(), rule.getMaximumCredits().toString());
 	}
     }
 
     @Override
-    protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(final ICurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
+    protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(
+	    final ICurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
 
 	final CreditsLimit rule = (CreditsLimit) curricularRule;
 
@@ -93,9 +105,10 @@ public class CreditsLimitExecutor extends CurricularRuleExecutor {
 
 	} else {
 
-	    final IDegreeModuleToEvaluate degreeModuleToEvaluate = searchDegreeModuleToEvaluate(enrolmentContext, rule);
+	    final IDegreeModuleToEvaluate degreeModuleToEvaluate = searchDegreeModuleToEvaluate(
+		    enrolmentContext, rule);
 	    if (degreeModuleToEvaluate.isEnroled()) {
-		
+
 		final CurriculumModuleEnroledWrapper moduleEnroledWrapper = (CurriculumModuleEnroledWrapper) degreeModuleToEvaluate;
 		final CurriculumModule curriculumModule = moduleEnroledWrapper.getCurriculumModule();
 		final ExecutionPeriod executionPeriod = enrolmentContext.getExecutionPeriod();
@@ -109,9 +122,11 @@ public class CreditsLimitExecutor extends CurricularRuleExecutor {
 		}
 
 		ectsCredits = Double.valueOf(ectsCredits.doubleValue()
-			+ curriculumModule.getEnroledEctsCredits(executionPeriod.getPreviousExecutionPeriod()).doubleValue());
+			+ curriculumModule.getEnroledEctsCredits(
+				executionPeriod.getPreviousExecutionPeriod()).doubleValue());
 
-		return rule.creditsExceedMaximum(ectsCredits) ? RuleResult.createTrue(EnrolmentResultType.TEMPORARY) : RuleResult.createTrue();
+		return rule.creditsExceedMaximum(ectsCredits) ? RuleResult
+			.createTrue(EnrolmentResultType.TEMPORARY) : RuleResult.createTrue();
 
 	    } else {
 		return RuleResult.createNA();
@@ -119,8 +134,4 @@ public class CreditsLimitExecutor extends CurricularRuleExecutor {
 	}
     }
 
-    @Override
-    protected RuleResult executeEnrolmentWithNoRules(final ICurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
-	return RuleResult.createTrue();
-    }
 }
