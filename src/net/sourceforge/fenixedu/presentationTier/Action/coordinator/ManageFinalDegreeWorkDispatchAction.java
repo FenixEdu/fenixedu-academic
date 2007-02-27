@@ -42,6 +42,7 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -1374,7 +1375,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 									if (grade != null) {
 										row.setCell(grade);
 									} else {
-										row.setCell("AP");
+										row.setCell(GradeScale.AP);
 									}
 								} else {
 									row.setCell("");

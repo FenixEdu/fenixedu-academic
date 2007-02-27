@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoSeminaryWithEq
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.SelectCandidaciesDTO;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
+import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Seminaries.Seminary;
 import net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy;
@@ -75,14 +76,14 @@ public class SelectCandidaciesService extends Service {
 			if (enrollmentEvaluation != null) {
 				stringGrade = enrollmentEvaluation.getGrade();
 			} else {
-				stringGrade = "NA";
+				stringGrade = GradeScale.NA;
 			}
 
 			if (stringGrade != null 
                     && !stringGrade.equals("") 
-                    && !stringGrade.equals("RE")
-					&& !stringGrade.equals("NA") 
-                    && !stringGrade.equals("AP")) {
+                    && !stringGrade.equals(GradeScale.RE)
+					&& !stringGrade.equals(GradeScale.NA) 
+                    && !stringGrade.equals(GradeScale.AP)) {
 				Float gradeObject = new Float(stringGrade);
 				grade = gradeObject.floatValue();
 				acc += grade;

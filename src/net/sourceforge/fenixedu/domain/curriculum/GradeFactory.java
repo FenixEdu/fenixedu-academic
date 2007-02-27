@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.curriculum;
 
+import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.commons.lang.StringUtils;
@@ -14,17 +15,17 @@ class Grade implements IGrade {
     }
 
     public Grade(String grade) {
-        if (grade == null || grade.equals("") || grade.equals("NA")) {
-            this.grade = "NA";
+        if (grade == null || grade.equals("") || grade.equals(GradeScale.NA)) {
+            this.grade = GradeScale.NA;
             this.gradeType = GradeType.GRADENA;
         } else if (StringUtils.isNumeric(grade)) {
             Integer numericGrade = Integer.parseInt((String) grade);
             initNumeric(numericGrade);
-        } else if (grade.equals("AP")) {
+        } else if (grade.equals(GradeScale.AP)) {
             this.grade = grade;
             this.gradeType = GradeType.GRADEAP;
         } else {
-            this.grade = "RE";
+            this.grade = GradeScale.RE;
             this.gradeType = GradeType.GRADERE;
         }
     }
@@ -79,9 +80,9 @@ public class GradeFactory {
     private GradeFactory() {
         flyWeight = new IGrade[24];
 
-        flyWeight[21] = new Grade("RE");
-        flyWeight[22] = new Grade("NA");
-        flyWeight[23] = new Grade("AP");
+        flyWeight[21] = new Grade(GradeScale.RE);
+        flyWeight[22] = new Grade(GradeScale.NA);
+        flyWeight[23] = new Grade(GradeScale.AP);
 
         for (int i = 0; i < 21; i++) {
             flyWeight[i] = new Grade(i);
@@ -97,15 +98,15 @@ public class GradeFactory {
     }
 
     private int getGradePosition(String key) {
-        if (key == null || key.equals("") || key.equals("NA")) {
+        if (key == null || key.equals("") || key.equals(GradeScale.NA)) {
             return 22;
         }
 
-        if (key.equals("RE")) {
+        if (key.equals(GradeScale.RE)) {
             return 21;
         }
 
-        if (key.equals("AP")) {
+        if (key.equals(GradeScale.AP)) {
             return 23;
         }
 

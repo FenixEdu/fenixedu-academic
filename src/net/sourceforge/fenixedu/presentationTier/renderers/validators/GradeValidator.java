@@ -3,6 +3,7 @@
  */
 package net.sourceforge.fenixedu.presentationTier.renderers.validators;
 
+import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.renderers.components.Validatable;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.renderers.validators.HtmlValidator;
@@ -26,7 +27,7 @@ public class GradeValidator extends HtmlValidator {
         	setKey(true);
             setMessage("renderers.validator.required");
         } else {
-	        if (grade == null || grade.length() == 0 || grade.equalsIgnoreCase("NA") || grade.equalsIgnoreCase("RE") || grade.equalsIgnoreCase("AP")) {
+	        if (grade == null || grade.length() == 0 || grade.equalsIgnoreCase(GradeScale.NA) || grade.equalsIgnoreCase(GradeScale.RE) || grade.equalsIgnoreCase(GradeScale.AP)) {
 	            setValid(true);
 	        } else {
 	            try {

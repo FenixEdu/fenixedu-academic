@@ -3,6 +3,8 @@ package net.sourceforge.fenixedu.domain.curriculum;
 import java.math.BigDecimal;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.GradeScale;
+
 public enum GradeType {
     GRADETWENTY {
         public IGrade average(List<IGrade> grades) {
@@ -26,19 +28,19 @@ public enum GradeType {
 
     GRADEAP {
         public IGrade average(List<IGrade> grades) {
-            return GradeFactory.getInstance().getGrade("AP");
+            return GradeFactory.getInstance().getGrade(GradeScale.AP);
         }
     },
 
     GRADERE {
         public IGrade average(List<IGrade> grades) {
-            return GradeFactory.getInstance().getGrade("RE");
+            return GradeFactory.getInstance().getGrade(GradeScale.RE);
         }
     },
 
     GRADENA {
         public IGrade average(List<IGrade> grades) {
-            return GradeFactory.getInstance().getGrade("NA");
+            return GradeFactory.getInstance().getGrade(GradeScale.NA);
         }
     };
 

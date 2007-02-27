@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.FinalMark;
+import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.MarkSheet;
 import net.sourceforge.fenixedu.domain.MarkSheetType;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -153,7 +154,7 @@ public class CreateMarkSheetByTeacher extends Service {
     }
 
     private String getGrade(Attends attends, MarkSheetTeacherMarkBean markBean, Date evaluationDate, Date nowDate) {
-        String grade = "NA";
+        String grade = GradeScale.NA;
 
         FinalMark finalMark = attends.getFinalMark();
         if (finalMark != null) {

@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.applicationTier.utils.MockUserView;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoClassification;
+import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -78,9 +79,9 @@ public class ViewCandidateCurriculum extends FenixAction {
 
                 stringGrade = ie.getInfoEnrolmentEvaluation().getGrade();
             } else {
-                stringGrade = "NA";
+                stringGrade = GradeScale.NA;
             }
-            if (stringGrade != null && !stringGrade.equals("") && !stringGrade.equals("RE") && !stringGrade.equals("NA") && !stringGrade.equals("AP")) {
+            if (stringGrade != null && !stringGrade.equals("") && !stringGrade.equals(GradeScale.RE) && !stringGrade.equals(GradeScale.NA) && !stringGrade.equals(GradeScale.AP)) {
                 Float gradeObject = new Float(stringGrade);
                 grade = gradeObject.floatValue();
                 acc += grade;

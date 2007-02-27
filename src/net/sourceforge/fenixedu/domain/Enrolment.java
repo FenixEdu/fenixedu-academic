@@ -414,7 +414,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	// teacher responsible for execution course
 	String grade = null;
 	if ((publishedMark == null) || (publishedMark.getMark().length() == 0))
-	    grade = "NA";
+	    grade = GradeScale.NA;
 	else
 	    grade = publishedMark.getMark().toUpperCase();
 

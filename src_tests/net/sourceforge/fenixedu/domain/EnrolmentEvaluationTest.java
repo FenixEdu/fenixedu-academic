@@ -66,13 +66,13 @@ public class EnrolmentEvaluationTest extends DomainTestBase {
         enrolmentEvaluationB.setGrade("");
         
         enrolmentEvaluationC = new EnrolmentEvaluation();
-        enrolmentEvaluationC.setGrade("RE");
+        enrolmentEvaluationC.setGrade(GradeScale.RE);
         
         enrolmentEvaluationD = new EnrolmentEvaluation();
-        enrolmentEvaluationD.setGrade("NA");
+        enrolmentEvaluationD.setGrade(GradeScale.NA);
         
         enrolmentEvaluationE = new EnrolmentEvaluation();
-        enrolmentEvaluationE.setGrade("AP");
+        enrolmentEvaluationE.setGrade(GradeScale.AP);
         
         enrolmentEvaluationF = new EnrolmentEvaluation();
         enrolmentEvaluationF.setGrade("15");
@@ -86,13 +86,13 @@ public class EnrolmentEvaluationTest extends DomainTestBase {
         enrolmentEvaluationB.setGrade("");
         
         enrolmentEvaluationC = new EnrolmentEvaluation();
-        enrolmentEvaluationC.setGrade("RE");
+        enrolmentEvaluationC.setGrade(GradeScale.RE);
         
         enrolmentEvaluationD = new EnrolmentEvaluation();
-        enrolmentEvaluationD.setGrade("NA");
+        enrolmentEvaluationD.setGrade(GradeScale.NA);
         
         enrolmentEvaluationE = new EnrolmentEvaluation();
-        enrolmentEvaluationE.setGrade("AP");
+        enrolmentEvaluationE.setGrade(GradeScale.AP);
         
         enrolmentEvaluationF = new EnrolmentEvaluation();
         enrolmentEvaluationF.setGrade("15");
@@ -113,8 +113,8 @@ public class EnrolmentEvaluationTest extends DomainTestBase {
 		notEvaluatedEnrolment.addEvaluations(notEvaluatedEvaluation);
 		
 		aprovedEvaluation.setGrade("20");
-		notAprovedEvaluation.setGrade("RE");
-		notEvaluatedEvaluation.setGrade("NA");
+		notAprovedEvaluation.setGrade(GradeScale.RE);
+		notEvaluatedEvaluation.setGrade(GradeScale.NA);
 		
 //		employee = new Employee();
 		aprovedEvaluation.setEmployee(employee);
@@ -276,9 +276,9 @@ public class EnrolmentEvaluationTest extends DomainTestBase {
 //			
 //		}
 //		
-//		mdEvaluationToInsert.insertStudentFinalEvaluationForMasterDegree("RE", newResponsibleFor, newExamDate);
+//		mdEvaluationToInsert.insertStudentFinalEvaluationForMasterDegree(GradeScale.RE, newResponsibleFor, newExamDate);
 //		
-//		assertTrue(mdEvaluationToInsert.getGrade().equals("RE"));
+//		assertTrue(mdEvaluationToInsert.getGrade().equals(GradeScale.RE));
 //		assertTrue(mdEvaluationToInsert.getPersonResponsibleForGrade().equals(newResponsibleFor));
 //		assertTrue(mdEvaluationToInsert.getExamDate().equals(newExamDate));	
 //	}
@@ -293,9 +293,9 @@ public class EnrolmentEvaluationTest extends DomainTestBase {
     
     public void testGetEnrollmentStateByGrade() {
         setUpForGetEnrollmentStateByGradeCase();
-        /*IGrade reprovedGrade = GradeFactory.getInstance().getGrade("RE");
-        IGrade notEvaluatedGrade = GradeFactory.getInstance().getGrade("NA");
-        IGrade approvedGrade = GradeFactory.getInstance().getGrade("AP");
+        /*IGrade reprovedGrade = GradeFactory.getInstance().getGrade(GradeScale.RE);
+        IGrade notEvaluatedGrade = GradeFactory.getInstance().getGrade(GradeScale.NA);
+        IGrade approvedGrade = GradeFactory.getInstance().getGrade(GradeScale.AP);
         IGrade numericGrade = GradeFactory.getInstance().getGrade("15");*/
         
         assertEquals("Grade reproved mismatch", EnrollmentState.NOT_EVALUATED, enrolmentEvaluationA.getEnrollmentStateByGrade());
@@ -309,9 +309,9 @@ public class EnrolmentEvaluationTest extends DomainTestBase {
     public void testGetGradeWrapper() {
         setUpForGetGradeWrapperCase();
         
-        IGrade reprovedGrade = GradeFactory.getInstance().getGrade("RE");
-        IGrade notEvaluatedGrade = GradeFactory.getInstance().getGrade("NA");
-        IGrade approvedGrade = GradeFactory.getInstance().getGrade("AP");
+        IGrade reprovedGrade = GradeFactory.getInstance().getGrade(GradeScale.RE);
+        IGrade notEvaluatedGrade = GradeFactory.getInstance().getGrade(GradeScale.NA);
+        IGrade approvedGrade = GradeFactory.getInstance().getGrade(GradeScale.AP);
         IGrade numericGrade = GradeFactory.getInstance().getGrade("15");
         
         assertEquals("Grade reproved mismatch", notEvaluatedGrade, enrolmentEvaluationA.getGradeWrapper());

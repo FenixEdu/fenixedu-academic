@@ -614,14 +614,14 @@ public class EnrolmentTest extends DomainTestBase {
 				notExistingEnrolmentEvaluationType,null,employeeSubmittingGrade,
 				personResponsibleForGrade,examDate,observation);
 		
-		assertTrue("Assigned grade does not match expected", anotherEnrolmentEvaluation.getGrade().equals("NA"));
+		assertTrue("Assigned grade does not match expected", anotherEnrolmentEvaluation.getGrade().equals(GradeScale.NA));
 
 		// "" mark
 		anotherEnrolmentEvaluation = enrolmentToSubmitWithoutTemporaryEvaluation.submitEnrolmentEvaluation(
 				notExistingEnrolmentEvaluationType,emptyMark,employeeSubmittingGrade,
 				personResponsibleForGrade,examDate,observation);
 		
-		assertTrue("Assigned grade does not match expected", anotherEnrolmentEvaluation.getGrade().equals("NA"));
+		assertTrue("Assigned grade does not match expected", anotherEnrolmentEvaluation.getGrade().equals(GradeScale.NA));
 		
 		// null examDate
 		before = new Date();

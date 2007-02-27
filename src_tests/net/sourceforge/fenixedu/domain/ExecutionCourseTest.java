@@ -110,17 +110,17 @@ public class ExecutionCourseTest extends DomainTestBase {
         numericSecondEnrolmentEvaluation.setEnrolment(numericApprovedEnrollment);
         
         EnrolmentEvaluation apFirstEnrolmentEvaluation = new EnrolmentEvaluation();
-        apFirstEnrolmentEvaluation.setGrade("AP");
+        apFirstEnrolmentEvaluation.setGrade(GradeScale.AP);
         
         apFirstEnrolmentEvaluation.setEnrolment(apApprovedEnrollment);
         
         EnrolmentEvaluation reprovedEnrollmentEvaluation = new EnrolmentEvaluation();
-        reprovedEnrollmentEvaluation.setGrade("RE");
+        reprovedEnrollmentEvaluation.setGrade(GradeScale.RE);
         
         reprovedEnrollmentEvaluation.setEnrolment(reprovedEnrollment);
         
         EnrolmentEvaluation notEvaluatedEnrollmentEvaluation = new EnrolmentEvaluation();
-        notEvaluatedEnrollmentEvaluation.setGrade("NA");
+        notEvaluatedEnrollmentEvaluation.setGrade(GradeScale.NA);
         
         notEvaluatedEnrollmentEvaluation.setEnrolment(notEvaluatedEnrollment);
         

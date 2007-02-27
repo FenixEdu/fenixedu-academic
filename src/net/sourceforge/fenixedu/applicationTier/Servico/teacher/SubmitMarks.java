@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.FinalEvaluation;
 import net.sourceforge.fenixedu.domain.FinalMark;
+import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -37,7 +38,7 @@ import org.apache.commons.lang.StringUtils;
 
 public class SubmitMarks extends Service {
 	
-	private static final String NA = "NA";
+	private static final String NA = GradeScale.NA;
 	
 	private static final String IMPROVMENT = "4";
 	private static final String NORMAL = "0";

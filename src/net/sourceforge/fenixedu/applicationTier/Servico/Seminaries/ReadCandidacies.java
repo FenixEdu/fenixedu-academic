@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
+import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Seminaries.CaseStudy;
 import net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice;
@@ -190,11 +191,11 @@ public class ReadCandidacies extends Service {
 
 		stringGrade = enrollmentEvaluation.getGrade();
 	    } else {
-		stringGrade = "NA";
+		stringGrade = GradeScale.NA;
 	    }
 
-	    if (stringGrade != null && !stringGrade.equals("") && !stringGrade.equals("RE")
-		    && !stringGrade.equals("NA") && !stringGrade.equals("AP")) {
+	    if (stringGrade != null && !stringGrade.equals("") && !stringGrade.equals(GradeScale.RE)
+		    && !stringGrade.equals(GradeScale.NA) && !stringGrade.equals(GradeScale.AP)) {
 		Float gradeObject = new Float(stringGrade);
 		grade = gradeObject.floatValue();
 		acc += grade;

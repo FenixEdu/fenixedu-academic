@@ -132,10 +132,10 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
 	if(grade.equals(otherGrade)) {
 	    return 0;
 	}
-	if(grade.equals("AP")) {
+	if(grade.equals(GradeScale.AP)) {
 	    return 1;
 	}
-	if(otherGrade.equals("AP")) {
+	if(otherGrade.equals(GradeScale.AP)) {
 	    return -1;
 	}
 	
@@ -245,13 +245,13 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         if (grade.equals("0")) {
             return EnrollmentState.NOT_EVALUATED;
         }
-        if (grade.equals("NA")) {
+        if (grade.equals(GradeScale.NA)) {
             return EnrollmentState.NOT_EVALUATED;
         }
-        if (grade.equals("RE")) {
+        if (grade.equals(GradeScale.RE)) {
             return EnrollmentState.NOT_APROVED;
         }
-        if (grade.equals("AP")) {
+        if (grade.equals(GradeScale.AP)) {
             return EnrollmentState.APROVED;
         }
         return EnrollmentState.APROVED;

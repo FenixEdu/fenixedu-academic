@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
-import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 
 public class CompetenceCourseTest extends DomainTestBase {
 
@@ -79,17 +78,17 @@ public class CompetenceCourseTest extends DomainTestBase {
         numericSecondEnrolmentEvaluation.setEnrolment(numericApprovedEnrollment);
         
         EnrolmentEvaluation apFirstEnrolmentEvaluation = new EnrolmentEvaluation();
-        apFirstEnrolmentEvaluation.setGrade("AP");
+        apFirstEnrolmentEvaluation.setGrade(GradeScale.AP);
         
         apFirstEnrolmentEvaluation.setEnrolment(apApprovedEnrollment);
         
         EnrolmentEvaluation reprovedEnrollmentEvaluation = new EnrolmentEvaluation();
-        reprovedEnrollmentEvaluation.setGrade("RE");
+        reprovedEnrollmentEvaluation.setGrade(GradeScale.RE);
         
         reprovedEnrollmentEvaluation.setEnrolment(reprovedEnrollment);
         
         EnrolmentEvaluation notEvaluatedEnrollmentEvaluation = new EnrolmentEvaluation();
-        notEvaluatedEnrollmentEvaluation.setGrade("NA");
+        notEvaluatedEnrollmentEvaluation.setGrade(GradeScale.NA);
         
         notEvaluatedEnrollmentEvaluation.setEnrolment(notEvaluatedEnrollment);
         
