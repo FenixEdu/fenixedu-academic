@@ -52,6 +52,16 @@ public class Unit extends Unit_Base {
 	super();
     }
 
+    @Override
+    public void setName(String name) {
+	super.setName(name);
+	UnitName unitName = getUnitName();
+	if (unitName == null) {
+	    unitName = new UnitName(this);
+	}
+	unitName.setName(name);
+    }
+
     public void edit(String unitName, Integer unitCostCenter, String acronym, YearMonthDay beginDate,
 	    YearMonthDay endDate, PartyTypeEnum type, String webAddress) {
 
@@ -113,6 +123,7 @@ public class Unit extends Unit_Base {
 	    ;
 	removeDepartment();
 	removeDegree();
+	getUnitName().delete();
 	super.delete();
     }
 

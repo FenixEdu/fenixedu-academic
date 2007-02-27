@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.organizationalStructure.UnitNamePart;
 import net.sourceforge.fenixedu.domain.person.PersonNamePart;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
@@ -77,6 +78,7 @@ public class StartupServlet extends HttpServlet {
 
             loadLogins();
             loadPersonNames();
+            loadUnitNames();
         } finally {
             Transaction.forceFinish();
         }
@@ -91,9 +93,16 @@ public class StartupServlet extends HttpServlet {
 
     private void loadPersonNames() {
         long start = System.currentTimeMillis();
-        PersonNamePart.find("...PlaceANonExistingLoginHere...");
+        PersonNamePart.find("...PlaceANonExistingPersonNameHere...");
         long end = System.currentTimeMillis();
         System.out.println("Load of all person names took: " + (end - start) + "ms.");
+    }
+
+    private void loadUnitNames() {
+        long start = System.currentTimeMillis();
+        UnitNamePart.find("...PlaceANonExistingUnitNameHere...");
+        long end = System.currentTimeMillis();
+        System.out.println("Load of all unit names took: " + (end - start) + "ms.");
     }
 
     private void setScheduleForGratuitySituationCreation() {

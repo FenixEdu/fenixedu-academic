@@ -62,6 +62,7 @@ public class PersonName extends PersonName_Base implements Comparable<PersonName
 	super();
 	this.setRootDomainObject(RootDomainObject.getInstance());
 	setPerson(person);
+	setIsExternalPerson(Boolean.valueOf(person.hasExternalPerson()));
     }
 
     public int compareTo(PersonName personName) {

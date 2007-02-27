@@ -56,3 +56,12 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.Function" table="ACCOUNTABILITY_TYPE">
 
 </class-descriptor>
+
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName" table="UNIT_NAME">
+    	
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.UnitNamePart" table="UNIT_NAME_PART">
+    	
+</class-descriptor>

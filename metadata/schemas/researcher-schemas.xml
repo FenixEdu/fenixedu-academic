@@ -114,11 +114,11 @@
 	<slot name="organization" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="40"/>
 		<property name="rawSlotName" value="organizationName"/>
-		<property name="labelField" value="name"/>
+		<property name="labelField" value="unit.name"/>
 		<property name="indicatorShown" value="true"/>		
 		<property name="serviceName" value="SearchExternalUnits"/>
-		<property name="serviceArgs" value="slot=name"/>
-		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"/>				
+		<property name="serviceArgs" value="slot=name,size=20"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
 		<property name="minChars" value="4"/>
 	</slot>
 	<slot name="role" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
@@ -434,11 +434,11 @@
 	<slot name="unit" key="label.organization" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="50"/>
 		<property name="rawSlotName" value="unitName"/>
-		<property name="labelField" value="name"/>
+		<property name="labelField" value="unit.name"/>
 		<property name="indicatorShown" value="true"/>		
 		<property name="serviceName" value="SearchExternalUnits"/>
-		<property name="serviceArgs" value="slot=name"/>
-		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"/>				
+		<property name="serviceArgs" value="slot=name,size=20"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
 		<property name="minChars" value="3"/>
 	</slot>
 </schema>
@@ -732,11 +732,11 @@
 	<slot name="organization" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="40"/>
 		<property name="rawSlotName" value="organizationName"/>
-		<property name="labelField" value="name"/>
+		<property name="labelField" value="unit.name"/>
 		<property name="indicatorShown" value="true"/>		
 		<property name="serviceName" value="SearchExternalUnits"/>
-		<property name="serviceArgs" value="slot=name"/>
-		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"/>				
+		<property name="serviceArgs" value="slot=name,size=20"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
 		<property name="minChars" value="3"/>
 	</slot>
 </schema>
@@ -753,11 +753,11 @@
 	<slot name="organization" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="40"/>
 		<property name="rawSlotName" value="organizationName"/>
-		<property name="labelField" value="name"/>
+		<property name="labelField" value="unit.name"/>
 		<property name="indicatorShown" value="true"/>		
 		<property name="serviceName" value="SearchExternalUnits"/>
-		<property name="serviceArgs" value="slot=name"/>
-		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"/>				
+		<property name="serviceArgs" value="slot=name,size=20"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
 		<property name="minChars" value="3"/>
 	</slot>
 </schema>
@@ -874,12 +874,13 @@
 	<slot name="unit" layout="autoComplete" key="label.party.name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="50"/>
 		<property name="rawSlotName" value="unitName"/>
-		<property name="labelField" value="name"/>
+		<property name="labelField" value="unit.name"/>
 		<property name="indicatorShown" value="true"/>		
 		<property name="serviceName" value="SearchExternalUnits"/>
-		<property name="serviceArgs" value="slot=name"/>
+		<property name="serviceArgs" value="slot=name,size=20"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
 		<property name="minChars" value="3"/>
-		<property name="format" value="${name} (${parentUnitsPresentationName})"/>
+		<property name="format" value="${unit.name} (${unit.parentUnitsPresentationName})"/>
 	</slot>
 	<slot name="role" read-only="true"/>
 </schema>
@@ -1875,11 +1876,11 @@
 	<slot name="organization" layout="autoComplete">
 		<property name="size" value="40"/>
 		<property name="rawSlotName" value="organizationName"/>
-		<property name="labelField" value="name"/>
+		<property name="labelField" value="unit.name"/>
 		<property name="indicatorShown" value="true"/>		
 		<property name="serviceName" value="SearchExternalUnits"/>
-		<property name="serviceArgs" value="slot=name"/>
-		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"/>				
+		<property name="serviceArgs" value="slot=name,size=20"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
 		<property name="minChars" value="4"/>
 	</slot>
 </schema>
@@ -1891,11 +1892,11 @@
 	<slot name="organization" layout="autoComplete">
 		<property name="size" value="40"/>
 		<property name="rawSlotName" value="organizationName"/>
-		<property name="labelField" value="name"/>
+		<property name="labelField" value="unit.name"/>
 		<property name="indicatorShown" value="true"/>		
 		<property name="serviceName" value="SearchExternalUnits"/>
-		<property name="serviceArgs" value="slot=name"/>
-		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"/>				
+		<property name="serviceArgs" value="slot=name,size=20"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
 		<property name="minChars" value="4"/>
 	</slot>
 </schema>

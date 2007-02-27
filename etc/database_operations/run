@@ -27,6 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Alter TeacherPersonalExpectation Table" alterTableTeacherPersonalExpectation.sql
-execute "Alter Person Department Table" alterTablePersonDepartment.sql
-execute "alter Table Justifications" alterTableJustifications.sql
+execute "Unit Part Names" unitPartName.sql

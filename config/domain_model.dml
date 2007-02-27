@@ -3316,6 +3316,7 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 		Integer keyUnitServiceAgreementTemplate;
 		Integer keyRootDomainObjectForEarthUnit;
 		Integer keySite;
+		Integer keyUnitName;
 	}
 
 	class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.domain.organizationalStructure.Party {
@@ -3369,6 +3370,16 @@ class net.sourceforge.fenixedu.domain.person.PersonName extends net.sourceforge.
 }
 
 class net.sourceforge.fenixedu.domain.person.PersonNamePart extends net.sourceforge.fenixedu.domain.DomainObject {
+	String namePart;
+}
+
+class net.sourceforge.fenixedu.domain.organizationalStructure.UnitName extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyUnit;
+	Boolean isExternalUnit;
+	String name;
+}
+
+class net.sourceforge.fenixedu.domain.organizationalStructure.UnitNamePart extends net.sourceforge.fenixedu.domain.DomainObject {
 	String namePart;
 }
 
@@ -6955,6 +6966,20 @@ relation PersonNamePersonNamePart {
 		multiplicity *;
 	}	
 	net.sourceforge.fenixedu.domain.person.PersonNamePart playsRole personNamePart {
+		multiplicity *;
+	}
+}
+
+relation UnitUnitName {
+	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole unit;
+	net.sourceforge.fenixedu.domain.organizationalStructure.UnitName playsRole unitName;
+}
+
+relation UnitNameUnitNamePart {
+	net.sourceforge.fenixedu.domain.organizationalStructure.UnitName playsRole unitName {
+		multiplicity *;
+	}	
+	net.sourceforge.fenixedu.domain.organizationalStructure.UnitNamePart playsRole unitNamePart {
 		multiplicity *;
 	}
 }
@@ -12027,6 +12052,20 @@ relation RootDomainObjectPersonName {
 relation RootDomainObjectPersonNamePart {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.person.PersonNamePart playsRole personNamePart {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectUnitName {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.organizationalStructure.UnitName playsRole unitName {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectUnitNamePart {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.organizationalStructure.UnitNamePart playsRole unitNamePart {
 		multiplicity *;
 	}
 }
