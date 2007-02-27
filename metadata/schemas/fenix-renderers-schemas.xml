@@ -27,10 +27,11 @@
 	<!ENTITY tests SYSTEM "tests-schemas.xml">
     <!ENTITY site SYSTEM "site-schemas.xml">
     <!ENTITY student SYSTEM "student-schemas.xml">
-    <!ENTITY department SYSTEM "department-schemas.xml">
+    <!ENTITY departmentMember SYSTEM "departmentMember-schemas.xml">
     <!ENTITY manager SYSTEM "manager-schemas.xml">
     <!ENTITY sop SYSTEM "sop-schemas.xml">
     <!ENTITY teacher SYSTEM "teacher-schemas.xml">
+    <!ENTITY departmentAdmOffice SYSTEM "departmentAdmOffice-schemas.xml">
 ]>
 
 <schemas>
@@ -647,9 +648,10 @@
 	&tests;
     &site;
     &student;
-    &department;
+    &departmentMember;
     &manager;
     &sop;
     &teacher;
+    &departmentAdmOffice;
     
 </schemas>
