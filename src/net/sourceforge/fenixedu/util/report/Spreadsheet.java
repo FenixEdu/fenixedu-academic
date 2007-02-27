@@ -15,6 +15,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.util.projectsManagement.ExcelStyle;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -172,7 +173,12 @@ public class Spreadsheet {
 	    if (i > 0) {
 		outputStream.write(columnSeperatorAsBytes);
 	    }
-	    outputStream.write(cellValue.toString().getBytes());
+	    
+	    if(cellValue == null) {
+		outputStream.write(StringUtils.EMPTY.getBytes());
+	    } else {
+		outputStream.write(cellValue.toString().getBytes());
+	    }
 	}
 	outputStream.write(lineSepeator.getBytes());
     }

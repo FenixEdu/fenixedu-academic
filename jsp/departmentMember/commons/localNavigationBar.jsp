@@ -101,7 +101,7 @@
 		
 		</ul>
 		
-		<%-- TeacherServiceDistribution entry point --%>				
+		<%-- TeacherServiceDistribution entry point				
 		<ul style="margin-top: 1em">
 	  		<li>
 			  	<html:link page="/teacherServiceDistribution.do?method=prepareTeacherServiceDistribution">
@@ -109,5 +109,6 @@
 			  	</html:link>  
 			</li> 							
 		</ul>
-			
+		--%>
+		
 </logic:present>

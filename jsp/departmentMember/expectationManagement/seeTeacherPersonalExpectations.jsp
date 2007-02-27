@@ -26,5 +26,14 @@
 	</fr:view>
 			
 	<jsp:include page="seeTeacherPersonalExpectationsByYear.jsp"/>
+	
+	<logic:notEmpty name="teacherPersonalExpectation">
+		<logic:notEmpty name="teacherPersonalExpectation" property="autoEvaluation">
+			<p style='background-color: #eee; padding: 0.5em; font-size: 1.3em;'>
+				<strong><bean:message key="label.teacher.auto.evaluation" bundle="DEPARTMENT_MEMBER_RESOURCES"/></strong>
+			</p>
+			<fr:view name="teacherPersonalExpectation" property="autoEvaluation" layout="html"/>									
+		</logic:notEmpty>	
+	</logic:notEmpty>
 			
 </logic:present>
