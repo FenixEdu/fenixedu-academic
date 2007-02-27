@@ -183,29 +183,35 @@ public class Department extends Department_Base {
     }
     
     public TeacherAutoEvaluationDefinitionPeriod getTeacherAutoEvaluationDefinitionPeriodForExecutionYear(ExecutionYear executionYear) {
-	for (TeacherAutoEvaluationDefinitionPeriod period : getTeacherAutoEvaluationDefinitionPeriods()) {
-	    if (period.getExecutionYear().equals(executionYear)) {
-		return period;
-	    }
+	if(executionYear != null) {
+            for (TeacherAutoEvaluationDefinitionPeriod period : getTeacherAutoEvaluationDefinitionPeriods()) {
+                if (period.getExecutionYear().equals(executionYear)) {
+                    return period;
+                }
+            }
 	}
 	return null;
     }
     
     public TeacherExpectationDefinitionPeriod getTeacherExpectationDefinitionPeriodForExecutionYear(ExecutionYear executionYear) {
-	for (TeacherExpectationDefinitionPeriod period : getTeacherExpectationDefinitionPeriods()) {
-	    if (period.getExecutionYear().equals(executionYear)) {
-		return period;
-	    }
+	if(executionYear != null) {
+            for (TeacherExpectationDefinitionPeriod period : getTeacherExpectationDefinitionPeriods()) {
+                if (period.getExecutionYear().equals(executionYear)) {
+                    return period;
+                }
+            }
 	}
 	return null;
     }
     
 
     public TeacherPersonalExpectationsVisualizationPeriod getTeacherPersonalExpectationsVisualizationPeriodByExecutionYear(ExecutionYear executionYear) {	
-	for (TeacherPersonalExpectationsVisualizationPeriod period : getTeacherPersonalExpectationsVisualizationPeriods()) {
-	    if (period.getExecutionYear().equals(executionYear)) {
-		return period;		
-	    }
+	if(executionYear != null) {
+            for (TeacherPersonalExpectationsVisualizationPeriod period : getTeacherPersonalExpectationsVisualizationPeriods()) {
+                if (period.getExecutionYear().equals(executionYear)) {
+                    return period;		
+                }
+            }
 	}
 	return null;
     }

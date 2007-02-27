@@ -38,6 +38,12 @@
 				
 				<%-- Graduations --%>
 			
+			<fr:hasMessages for="teacherPersonalExpectationWithGraduations" type="conversion">
+				<p><span class="error0">			
+					<fr:message for="teacherPersonalExpectationWithGraduations" show="message"/>
+				</span></p>
+			</fr:hasMessages>
+			
 			<div style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;">
 				<bean:message key="label.personalExpectationsManagement.graduations" bundle="DEPARTMENT_MEMBER_RESOURCES"/>
 			</div>			
@@ -49,6 +55,12 @@
 			
 				<%-- Cientific Pos-Graduations --%>
 			
+			<fr:hasMessages for="teacherPersonalExpectationWithCientificPosGraduations" type="conversion">
+				<p><span class="error0">			
+					<fr:message for="teacherPersonalExpectationWithCientificPosGraduations" show="message"/>
+				</span></p>
+			</fr:hasMessages>
+			
 			<div style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;">
 				<bean:message key="label.personalExpectationsManagement.cientificPosGraduations" bundle="DEPARTMENT_MEMBER_RESOURCES"/>
 			</div>
@@ -58,6 +70,12 @@
 				</fr:layout>		
 			</fr:edit>			
 				<%-- Professional Pos-Graduations --%>
+			
+			<fr:hasMessages for="teacherPersonalExpectationWithProfessionalPosGraduations" type="conversion">
+				<p><span class="error0">			
+					<fr:message for="teacherPersonalExpectationWithProfessionalPosGraduations" show="message"/>
+				</span></p>
+			</fr:hasMessages>
 			
 			<div style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;">
 				<bean:message key="label.personalExpectationsManagement.professionalPosGraduations" bundle="DEPARTMENT_MEMBER_RESOURCES"/>
@@ -69,6 +87,12 @@
 			</fr:edit>			
 			
 				<%-- Seminaries --%>
+			
+			<fr:hasMessages for="teacherPersonalExpectationWithSeminaries" type="conversion">
+				<p><span class="error0">			
+					<fr:message for="teacherPersonalExpectationWithSeminaries" show="message"/>
+				</span></p>
+			</fr:hasMessages>
 			
 			<div style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;">
 				<bean:message key="label.personalExpectationsManagement.seminaries" bundle="DEPARTMENT_MEMBER_RESOURCES"/>
@@ -104,8 +128,14 @@
 			<fr:form action="/personalExpectationManagement.do"> 
 				<html:hidden property="method" value="editEducationExpectations"/>
 					
-					<%-- Graduations --%>
+					<%-- Graduations --%>								
 				
+				<fr:hasMessages for="teacherPersonalExpectationWithGraduations" type="conversion">
+					<p><span class="error0">			
+						<fr:message for="teacherPersonalExpectationWithGraduations" show="message"/>
+					</span></p>
+				</fr:hasMessages>
+			
 				<div style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;">
 					<bean:message key="label.personalExpectationsManagement.graduations" bundle="DEPARTMENT_MEMBER_RESOURCES"/>
 				</div>			
@@ -117,6 +147,12 @@
 				
 					<%-- Cientific Pos-Graduations --%>
 				
+				<fr:hasMessages for="teacherPersonalExpectationWithCientificPosGraduations" type="conversion">
+					<p><span class="error0">			
+						<fr:message for="teacherPersonalExpectationWithCientificPosGraduations" show="message"/>
+					</span></p>
+				</fr:hasMessages>
+				
 				<div style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;">
 					<bean:message key="label.personalExpectationsManagement.cientificPosGraduations" bundle="DEPARTMENT_MEMBER_RESOURCES"/>
 				</div>
@@ -126,6 +162,12 @@
 					</fr:layout>		
 				</fr:edit>			
 					<%-- Professional Pos-Graduations --%>
+				
+				<fr:hasMessages for="teacherPersonalExpectationWithProfessionalPosGraduations" type="conversion">
+					<p><span class="error0">			
+						<fr:message for="teacherPersonalExpectationWithProfessionalPosGraduations" show="message"/>
+					</span></p>
+				</fr:hasMessages>
 				
 				<div style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;">
 					<bean:message key="label.personalExpectationsManagement.professionalPosGraduations" bundle="DEPARTMENT_MEMBER_RESOURCES"/>
@@ -137,6 +179,12 @@
 				</fr:edit>			
 				
 					<%-- Seminaries --%>
+				
+				<fr:hasMessages for="teacherPersonalExpectationWithSeminaries" type="conversion">
+					<p><span class="error0">			
+						<fr:message for="teacherPersonalExpectationWithSeminaries" show="message"/>
+					</span></p>
+				</fr:hasMessages>
 				
 				<div style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;">
 					<bean:message key="label.personalExpectationsManagement.seminaries" bundle="DEPARTMENT_MEMBER_RESOURCES"/>

@@ -11500,4 +11500,14 @@
 			<chain name="TeacherTimeTableManagerOrTeacherAuthorization" />
 		</filterChains>
 	</service> 
+	<service>
+    	<name>InsertTeacherPersonalExpectation</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.department.InsertTeacherPersonalExpectation</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="DepartmentMemberOrTeacherAuthorization"></chain>
+        </filterChains>     
+    </service>
+	
 </serviceDefinitions>

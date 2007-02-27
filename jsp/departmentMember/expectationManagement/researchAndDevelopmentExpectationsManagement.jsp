@@ -38,6 +38,12 @@
 		
 				<%-- Publications And Projects  --%>
 			
+			<fr:hasMessages for="teacherPersonalExpectationWithPublications" type="conversion">
+				<p><span class="error0">			
+					<fr:message for="teacherPersonalExpectationWithPublications" show="message"/>
+				</span></p>
+			</fr:hasMessages> 
+			
 			<div style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;">
 				<bean:message key="label.personalExpectationsManagement.publicationsAndProjects" bundle="DEPARTMENT_MEMBER_RESOURCES"/>
 			</div>
@@ -55,6 +61,12 @@
 			</fr:edit>			
 				
 				<%-- Orientation --%>
+			
+			<fr:hasMessages for="teacherPersonalExpectationWithOrientations" type="conversion">
+				<p><span class="error0">			
+					<fr:message for="teacherPersonalExpectationWithOrientations" show="message"/>
+				</span></p>
+			</fr:hasMessages> 
 			
 			<div style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;">
 				<bean:message key="label.personalExpectationsManagement.orientation" bundle="DEPARTMENT_MEMBER_RESOURCES"/>
@@ -91,6 +103,12 @@
 				<html:hidden property="method" value="editResearchAndDevelopmentExpectations"/>
 			
 					<%-- Publications And Projects  --%>
+					
+				<fr:hasMessages for="teacherPersonalExpectationWithPublications" type="conversion">
+					<p><span class="error0">			
+						<fr:message for="teacherPersonalExpectationWithPublications" show="message"/>
+					</span></p>
+				</fr:hasMessages>
 				
 				<div style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;">
 					<bean:message key="label.personalExpectationsManagement.publicationsAndProjects" bundle="DEPARTMENT_MEMBER_RESOURCES"/>
@@ -109,6 +127,12 @@
 				</fr:edit>			
 					
 					<%-- Orientation --%>
+					
+				<fr:hasMessages for="teacherPersonalExpectationWithOrientations" type="conversion">
+					<p><span class="error0">			
+						<fr:message for="teacherPersonalExpectationWithOrientations" show="message"/>
+					</span></p>
+				</fr:hasMessages>
 				
 				<div style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;">
 					<bean:message key="label.personalExpectationsManagement.orientation" bundle="DEPARTMENT_MEMBER_RESOURCES"/>
