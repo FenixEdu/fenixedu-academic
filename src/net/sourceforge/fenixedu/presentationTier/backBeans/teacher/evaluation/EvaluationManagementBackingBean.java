@@ -699,11 +699,11 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         for (String lineReader = reader.readLine(); lineReader != null; lineReader = reader.readLine(), n++) {
             if ((lineReader != null) && (lineReader.length() != 0)) {
                 try {
-                    final StringTokenizer stringTokenizer = new StringTokenizer(lineReader);
+                    final StringTokenizer stringTokenizer = new StringTokenizer(lineReader.trim());
                     final String studentNumber = stringTokenizer.nextToken().trim();
                     final String mark = stringTokenizer.nextToken().trim();
                     marks.put(Integer.valueOf(studentNumber), mark);
-                } catch (NoSuchElementException e) {
+                } catch (Exception e) {
                     throw new IOException("error.file.badFormat");
                 }
             }
