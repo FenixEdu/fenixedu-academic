@@ -143,6 +143,11 @@
 <schema name="DfaRegistrationPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.dfa.DfaRegistrationPR" extends="FixedAmountWithPenaltyPR.view-student" bundle="APPLICATION_RESOURCES">
 </schema>
 
+<schema name="AdministrativeOfficeFeePR.view-student"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.AdministrativeOfficeFeePR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountWithPenaltyFromDatePR.view-student">
+</schema>
+
 <schema name="BaseAmountPlusAmountPerUnitPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR" extends="PostingRule.view-student" bundle="APPLICATION_RESOURCES">
 	<slot name="baseAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR.baseAmount"  />
 	<slot name="amountPerUnit" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR.amountPerUnit" />
