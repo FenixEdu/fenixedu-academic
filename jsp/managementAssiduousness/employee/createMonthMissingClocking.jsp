@@ -37,7 +37,7 @@
 				</fr:layout>
 			</fr:edit>
 			
-			<table class="tstyle1 thlight width40em mtop1">
+			<table class="tstyle1 thlight width48em mtop1">
 				<tr>
 					<th><bean:message key="label.day"/></th>
 					<th><bean:message key="label.weekDay"/></th>					

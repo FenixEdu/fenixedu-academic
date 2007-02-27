@@ -293,6 +293,20 @@ public class WorkDaySheet implements Serializable {
         }
     }
 
+    public void discountBalanceOcurrenceLeaveInFixedPeriod(List<Leave> balanceOcurrenceLeaveList) {        
+        setUnjustifiedTimeWithoutBalanceDiscount(getUnjustifiedTime());
+        Duration balance = Duration.ZERO;
+        if(!balanceOcurrenceLeaveList.isEmpty()){
+            balance = balance.plus(getWorkSchedule().getWorkScheduleType().getWorkTimeDuration());
+        }
+        Duration newFixedPeriodAbsence = getUnjustifiedTime().minus(balance);
+        if (newFixedPeriodAbsence.isShorterThan(Duration.ZERO)) {
+            setUnjustifiedTime(Duration.ZERO);
+        } else {
+            setUnjustifiedTime(newFixedPeriodAbsence);
+        }
+    }
+    
     public Duration getHolidayRest() {
         return holidayRest;
     }

@@ -419,7 +419,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 	    for (Leave leave : leaves) {
 		if (leave.getJustificationMotive().getJustificationType().equals(
 			JustificationType.OCCURRENCE)
-			|| getJustificationMotive().getJustificationType().equals(
+			|| leave.getJustificationMotive().getJustificationType().equals(
 				JustificationType.MULTIPLE_MONTH_BALANCE)) {
 		    return true;
 		} else if (leave.getJustificationMotive().getJustificationType().equals(
