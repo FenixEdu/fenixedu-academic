@@ -113,6 +113,12 @@ public class SearchExecutionCourses extends Service {
                 Integer doubtsCapacity = Integer.valueOf(0);
                 Integer reserveCapacity = Integer.valueOf(0);
 
+                Integer semCapacity = Integer.valueOf(0);
+                Integer probCapacity = Integer.valueOf(0);
+                Integer fieldCapacity = Integer.valueOf(0);
+                Integer trainCapacity = Integer.valueOf(0);
+                Integer tutCapacity = Integer.valueOf(0);
+
                 List shifts = executionCourse.getAssociatedShifts();
                 Iterator iterator = shifts.iterator();
                 while (iterator.hasNext()) {
@@ -135,8 +141,22 @@ public class SearchExecutionCourses extends Service {
                     } else if (shift.getTipo().equals(ShiftType.RESERVA)) {
                         reserveCapacity = Integer.valueOf(reserveCapacity.intValue()
                                 + shift.getLotacao().intValue());
+                    } else if (shift.getTipo().equals(ShiftType.SEMINARY)) {
+                        semCapacity = Integer.valueOf(semCapacity.intValue()
+                                + shift.getLotacao().intValue());
+                    } else if (shift.getTipo().equals(ShiftType.PROBLEMS)) {
+                        probCapacity = Integer.valueOf(probCapacity.intValue()
+                                + shift.getLotacao().intValue());
+                    } else if (shift.getTipo().equals(ShiftType.FIELD_WORK)) {
+                        fieldCapacity = Integer.valueOf(fieldCapacity.intValue()
+                                + shift.getLotacao().intValue());
+                    } else if (shift.getTipo().equals(ShiftType.TRAINING_PERIOD)) {
+                        trainCapacity = Integer.valueOf(trainCapacity.intValue()
+                                + shift.getLotacao().intValue());
+                    } else if (shift.getTipo().equals(ShiftType.TUTORIAL_ORIENTATION)) {
+                        tutCapacity = Integer.valueOf(tutCapacity.intValue()
+                                + shift.getLotacao().intValue());
                     }
-
                 }
 
                 infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);
@@ -159,6 +179,22 @@ public class SearchExecutionCourses extends Service {
                 }
                 if (reserveCapacity.intValue() != 0) {
                     capacities.add(reserveCapacity);
+                }
+
+                if (semCapacity.intValue() != 0) {
+                    capacities.add(semCapacity);
+                }
+                if (probCapacity.intValue() != 0) {
+                    capacities.add(probCapacity);
+                }
+                if (fieldCapacity.intValue() != 0) {
+                    capacities.add(fieldCapacity);
+                }
+                if (trainCapacity.intValue() != 0) {
+                    capacities.add(trainCapacity);
+                }
+                if (tutCapacity.intValue() != 0) {
+                    capacities.add(tutCapacity);
                 }
 
                 int total = 0;
