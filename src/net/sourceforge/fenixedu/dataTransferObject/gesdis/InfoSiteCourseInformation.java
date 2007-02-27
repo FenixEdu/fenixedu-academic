@@ -4,20 +4,46 @@
 package net.sourceforge.fenixedu.dataTransferObject.gesdis;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBibliographicReference;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDepartment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluationMethod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
+import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourseScope;
+import net.sourceforge.fenixedu.domain.Curriculum;
+import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Language;
+import net.sourceforge.fenixedu.domain.Lesson;
+import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.ShiftType;
+import net.sourceforge.fenixedu.domain.Teacher;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Transformer;
+import org.apache.commons.collections.Predicate;
+import org.apache.commons.collections.comparators.ReverseComparator;
+import org.joda.time.DateTime;
 
 /**
  * @author Leonor Almeida
@@ -25,348 +51,149 @@ import org.apache.commons.collections.Transformer;
  */
 public class InfoSiteCourseInformation extends DataTranferObject implements ISiteComponent {
 
-    private final static int MIN_LENGTH = 10;
-
-    private InfoExecutionCourse infoExecutionCourse;
-
-    private InfoEvaluationMethod infoEvaluationMethod;
-
-    private List infoSiteEvaluationInformations;
-
-    private List infoCurricularCourses;
-
-    private List infoResponsibleTeachers;
-
-    private List infoCurriculums;
-
-    private List infoLecturingTeachers;
-
-    private List infoLessons;
-
-    private List infoBibliographicReferences;
-
-    private List infoDepartments;
-
-    private InfoCourseReport infoCourseReport;
-
-    private Integer numberOfTheoLessons;
-
-    private Integer numberOfPratLessons;
-
-    private Integer numberOfTheoPratLessons;
-
-    private Integer numberOfLabLessons;
-
-    public InfoSiteCourseInformation() {
+    private DomainReference<ExecutionCourse> executionCourseDomainReference;
+    
+    private DomainReference<ExecutionYear> executionYearDomainReference;
+    
+    public InfoSiteCourseInformation(final ExecutionCourse executionCourse) {
+	executionCourseDomainReference = new DomainReference<ExecutionCourse>(executionCourse);
     }
 
-    /**
-     * @return Returns the infoCourseReport.
-     */
-    public InfoCourseReport getInfoCourseReport() {
-        return infoCourseReport;
+    public InfoSiteCourseInformation(final ExecutionCourse executionCourse, final ExecutionYear executionYear) {
+	this(executionCourse);
+	executionYearDomainReference = new DomainReference<ExecutionYear>(executionYear);
     }
 
-    /**
-     * @param infoCourseReport
-     *            The infoCourseReport to set.
-     */
-    public void setInfoCourseReport(InfoCourseReport infoCourseReport) {
-        this.infoCourseReport = infoCourseReport;
+    private ExecutionCourse getExecutionCourse() {
+	return this.executionCourseDomainReference == null ?  null : this.executionCourseDomainReference.getObject();
     }
 
-    /**
-     * @return Returns the infoExecutionCourse.
-     */
+    private ExecutionYear getExecutionYear() {
+	return this.executionYearDomainReference == null ?  null : this.executionYearDomainReference.getObject();
+    }
+
+
+    //=================== FIELDS RETRIEVED BY DOMAIN LOGIC =======================
+    
     public InfoExecutionCourse getInfoExecutionCourse() {
-        return infoExecutionCourse;
+        return InfoExecutionCourse.newInfoFromDomain(getExecutionCourse());
     }
 
-    /**
-     * @param infoExecutionCourse
-     *            The infoExecutionCourse to set.
-     */
-    public void setInfoExecutionCourse(InfoExecutionCourse infoExecutionCourse) {
-        this.infoExecutionCourse = infoExecutionCourse;
+    public InfoCourseReport getInfoCourseReport() {
+        return getInfoExecutionCourse().getInfoCourseReport();
     }
 
-    /**
-     * @return Returns the infoBibliographicReferences.
-     */
-    public List getInfoBibliographicReferences() {
-        return infoBibliographicReferences;
-    }
-
-    /**
-     * @param infoBibliographicReferences
-     *            The infoBibliographicReferences to set.
-     */
-    public void setInfoBibliographicReferences(List infoBibliographicReferences) {
-        this.infoBibliographicReferences = infoBibliographicReferences;
-    }
-
-    /**
-     * @return Returns the infoCurricularCourses.
-     */
-    public List getInfoCurricularCourses() {
-        return infoCurricularCourses;
-    }
-
-    /**
-     * @param infoCurricularCourses
-     *            The infoCurricularCourses to set.
-     */
-    public void setInfoCurricularCourses(List infoCurricularCourses) {
-        this.infoCurricularCourses = infoCurricularCourses;
-    }
-
-    /**
-     * @return Returns the infoCurriculums.
-     */
-    public List getInfoCurriculums() {
-        return infoCurriculums;
-    }
-
-    /**
-     * @param infoCurriculums
-     *            The infoCurriculums to set.
-     */
-    public void setInfoCurriculums(List infoCurriculums) {
-        this.infoCurriculums = infoCurriculums;
-    }
-
-    /**
-     * @return Returns the infoLecturingTeacher.
-     */
-    public List getInfoLecturingTeachers() {
-        return infoLecturingTeachers;
-    }
-
-    /**
-     * @param infoLecturingTeacher
-     *            The infoLecturingTeacher to set.
-     */
-    public void setInfoLecturingTeachers(List infoLecturingTeachers) {
-        this.infoLecturingTeachers = infoLecturingTeachers;
-    }
-
-    /**
-     * @return Returns the infoResponsibleTeachers.
-     */
-    public List getInfoResponsibleTeachers() {
-        return infoResponsibleTeachers;
-    }
-
-    /**
-     * @param infoResponsibleTeachers
-     *            The infoResponsibleTeachers to set.
-     */
-    public void setInfoResponsibleTeachers(List infoResponsibleTeachers) {
-        this.infoResponsibleTeachers = infoResponsibleTeachers;
-    }
-
-    /**
-     * @return Returns the infoLessons.
-     */
-    public List getInfoLessons() {
-        return infoLessons;
-    }
-
-    /**
-     * @param infoLessons
-     *            The infoLessons to set.
-     */
-    public void setInfoLessons(List infoLessons) {
-        this.infoLessons = infoLessons;
-    }
-
-    /**
-     * @return Returns the infoEvaluationMethod.
-     */
     public InfoEvaluationMethod getInfoEvaluationMethod() {
-        return infoEvaluationMethod;
+        return getInfoExecutionCourse().getInfoEvaluationMethod();
     }
 
-    /**
-     * @param infoEvaluationMethod
-     *            The infoEvaluationMethod to set.
-     */
-    public void setInfoEvaluationMethod(InfoEvaluationMethod infoEvaluationMethod) {
-        this.infoEvaluationMethod = infoEvaluationMethod;
+    public List<InfoBibliographicReference> getInfoBibliographicReferences() {
+        return getInfoExecutionCourse().getAssociatedInfoBibliographicReferences();
     }
 
-    public Date getLastModificationDate() {
-        List dates = new ArrayList();
-        dates.add(infoCourseReport.getLastModificationDate());
-        dates.addAll(CollectionUtils.collect(infoCurriculums, new Transformer() {
-
-            public Object transform(Object arg0) {
-                InfoCurriculum infoCurriculum = (InfoCurriculum) arg0;
-                return infoCurriculum.getLastModificationDate();
-            }
-        }));
-        return getMostRecentDate(dates);
+    public List<InfoCurricularCourse> getInfoCurricularCourses() {
+	return getExecutionYear() == null ? getInfoExecutionCourse().getAssociatedInfoCurricularCourses() : getInfoExecutionCourse().getAssociatedInfoCurricularCourses(getExecutionYear());
     }
 
-    /**
-     * @param dates
-     * @return
-     */
-    private Date getMostRecentDate(List dates) {
-        Date minDate = new Date(Long.MIN_VALUE);
-        Date maxDate = minDate;
-        Iterator iter = dates.iterator();
-        while (iter.hasNext()) {
-            Date date = (Date) iter.next();
-            if (date == null)
-                continue;
-            if (date.getTime() > maxDate.getTime())
-                maxDate = date;
+    public List<InfoTeacher> getInfoLecturingTeachers() {
+	final List<InfoTeacher> result = new ArrayList<InfoTeacher>();
+	
+        for (final Professorship professorship : getExecutionCourse().getProfessorships()) {
+            result.add(InfoTeacher.newInfoFromDomain(professorship.getTeacher()));
         }
-        // if the minDate is equal to maxDate then the information wasn't filled
-        if (minDate == maxDate)
-            maxDate = null;
-        return maxDate;
+        
+        return result;
     }
 
-    /**
-     * @return Returns the numberOfLabLessons.
-     */
-    public Integer getNumberOfLabLessons() {
-        return numberOfLabLessons;
+    public List<InfoTeacher> getInfoResponsibleTeachers() {
+	final List<InfoTeacher> result = new ArrayList<InfoTeacher>();
+        
+	for (final Professorship responsibleFor : getExecutionCourse().responsibleFors()) {
+            result.add(InfoTeacher.newInfoFromDomain(responsibleFor.getTeacher()));
+        }
+
+        return result;
     }
 
-    /**
-     * @param numberOfLabLessons
-     *            The numberOfLabLessons to set.
-     */
-    public void setNumberOfLabLessons(Integer numberOfLabLessons) {
-        this.numberOfLabLessons = numberOfLabLessons;
-    }
-
-    /**
-     * @return Returns the numberOfPratLessons.
-     */
-    public Integer getNumberOfPratLessons() {
-        return numberOfPratLessons;
-    }
-
-    /**
-     * @param numberOfPratLessons
-     *            The numberOfPratLessons to set.
-     */
-    public void setNumberOfPratLessons(Integer numberOfPratLessons) {
-        this.numberOfPratLessons = numberOfPratLessons;
-    }
-
-    /**
-     * @return Returns the numberOfTheoLessons.
-     */
+    
+    //=================== FIELDS NOT RETRIEVED BY DOMAIN LOGIC =======================
+    
     public Integer getNumberOfTheoLessons() {
-        return numberOfTheoLessons;
+        return getNumberOfLessons(getExecutionCourse().getShiftsByTypeOrderedByShiftName(ShiftType.TEORICA));
     }
 
-    /**
-     * @param numberOfTheoLessons
-     *            The numberOfTheoLessons to set.
-     */
-    public void setNumberOfTheoLessons(Integer numberOfTheoLessons) {
-        this.numberOfTheoLessons = numberOfTheoLessons;
+    public Integer getNumberOfPratLessons() {
+        return getNumberOfLessons(getExecutionCourse().getShiftsByTypeOrderedByShiftName(ShiftType.PRATICA));
     }
 
-    /**
-     * @return Returns the numberOfTheoPratLessons.
-     */
     public Integer getNumberOfTheoPratLessons() {
-        return numberOfTheoPratLessons;
+	return getNumberOfLessons(getExecutionCourse().getShiftsByTypeOrderedByShiftName(ShiftType.TEORICO_PRATICA));
     }
 
-    /**
-     * @param numberOfTheoPratLessons
-     *            The numberOfTheoPratLessons to set.
-     */
-    public void setNumberOfTheoPratLessons(Integer numberOfTheoPratLessons) {
-        this.numberOfTheoPratLessons = numberOfTheoPratLessons;
+    public Integer getNumberOfLabLessons() {
+        return getNumberOfLessons(getExecutionCourse().getShiftsByTypeOrderedByShiftName(ShiftType.LABORATORIAL));
     }
 
-    /**
-     * @return Returns the infoDepartments.
-     */
-    public List getInfoDepartments() {
-        return infoDepartments;
+    private Integer getNumberOfLessons(final Collection<Shift> shifts) {
+        int result = 0;
+	
+        for (final Shift shift : shifts) {
+            result += shift.getAssociatedLessonsCount();
+        }
+        
+        return result;
     }
 
-    /**
-     * @param infoDepartments
-     *            The infoDepartments to set.
-     */
-    public void setInfoDepartments(List infoDepartments) {
-        this.infoDepartments = infoDepartments;
-    }
-
-    /**
-     * @return Returns the infoSiteEvaluationInformations.
-     */
-    public List getInfoSiteEvaluationInformations() {
-        return infoSiteEvaluationInformations;
-    }
-
-    /**
-     * @param infoSiteEvaluationInformations
-     *            The infoSiteEvaluationInformations to set.
-     */
-    public void setInfoSiteEvaluationInformations(List infoSiteEvaluationInformations) {
-        this.infoSiteEvaluationInformations = infoSiteEvaluationInformations;
-    }
-
+    static final private int MIN_LENGTH = 10;
+    
     public Integer getNumberOfFieldsFilled() {
-        int numberOfFieldsFilled = 0;
+        int result = 0;
 
-        if (!this.infoLecturingTeachers.isEmpty())
-            numberOfFieldsFilled++;
-        Iterator iter = this.infoBibliographicReferences.iterator();
+        if (!getInfoLecturingTeachers().isEmpty())
+            result++;
+        Iterator iter = getInfoBibliographicReferences().iterator();
         while (iter.hasNext()) {
             InfoBibliographicReference infoBibliographicReference = (InfoBibliographicReference) iter
                     .next();
             if (infoBibliographicReference.getTitle() != null
                     && infoBibliographicReference.getTitle().length() > MIN_LENGTH) {
-                numberOfFieldsFilled++;
+                result++;
                 break;
             }
         }
-        if (this.infoEvaluationMethod != null && this.infoEvaluationMethod.getEvaluationElements() != null
-                && this.infoEvaluationMethod.getEvaluationElements().getContent(Language.pt) != null
-                && this.infoEvaluationMethod.getEvaluationElements().getContent(Language.pt).length() > MIN_LENGTH)
-            numberOfFieldsFilled++;
+        if (getInfoEvaluationMethod() != null && getInfoEvaluationMethod().getEvaluationElements() != null
+                && getInfoEvaluationMethod().getEvaluationElements().getContent(Language.pt) != null
+                && getInfoEvaluationMethod().getEvaluationElements().getContent(Language.pt).length() > MIN_LENGTH)
+            result++;
 
-        iter = this.infoCurriculums.iterator();
+        iter = getInfoCurriculums().iterator();
         while (iter.hasNext()) {
             InfoCurriculum infoCurriculum = (InfoCurriculum) iter.next();
             if (infoCurriculum.getGeneralObjectives() != null
                     && infoCurriculum.getGeneralObjectives().length() > MIN_LENGTH) {
-                numberOfFieldsFilled++;
+                result++;
                 break;
             }
         }
 
-        iter = this.infoCurriculums.iterator();
+        iter = getInfoCurriculums().iterator();
         while (iter.hasNext()) {
             InfoCurriculum infoCurriculum = (InfoCurriculum) iter.next();
             if (infoCurriculum.getProgram() != null && infoCurriculum.getProgram().length() > MIN_LENGTH) {
-                numberOfFieldsFilled++;
+                result++;
                 break;
             }
         }
 
-        return new Integer(numberOfFieldsFilled);
+        return new Integer(result);
     }
 
     public Integer getNumberOfFieldsFilledEn() {
         int numberOfFieldsFilled = 0;
 
-        if (!this.infoLecturingTeachers.isEmpty())
+        if (!getInfoLecturingTeachers().isEmpty())
             numberOfFieldsFilled++;
-        Iterator iter = this.infoBibliographicReferences.iterator();
+        Iterator iter = getInfoBibliographicReferences().iterator();
         while (iter.hasNext()) {
             InfoBibliographicReference infoBibliographicReference = (InfoBibliographicReference) iter
                     .next();
@@ -375,13 +202,13 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
                 break;
             }
         }
-        if (this.infoEvaluationMethod != null
-                && this.infoEvaluationMethod.getEvaluationElements() != null
-                && this.infoEvaluationMethod.getEvaluationElements().getContent(Language.en) != null
-                && this.infoEvaluationMethod.getEvaluationElements().getContent(Language.en).length() > MIN_LENGTH)
+        if (getInfoEvaluationMethod() != null
+                && getInfoEvaluationMethod().getEvaluationElements() != null
+                && getInfoEvaluationMethod().getEvaluationElements().getContent(Language.en) != null
+                && getInfoEvaluationMethod().getEvaluationElements().getContent(Language.en).length() > MIN_LENGTH)
             numberOfFieldsFilled++;
 
-        iter = this.infoCurriculums.iterator();
+        iter = getInfoCurriculums().iterator();
         while (iter.hasNext()) {
             InfoCurriculum infoCurriculum = (InfoCurriculum) iter.next();
             if (infoCurriculum.getGeneralObjectivesEn() != null
@@ -391,7 +218,7 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
             }
         }
 
-        iter = this.infoCurriculums.iterator();
+        iter = getInfoCurriculums().iterator();
         while (iter.hasNext()) {
             InfoCurriculum infoCurriculum = (InfoCurriculum) iter.next();
             if (infoCurriculum.getOperacionalObjectivesEn() != null
@@ -401,7 +228,7 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
             }
         }
 
-        iter = this.infoCurriculums.iterator();
+        iter = getInfoCurriculums().iterator();
         while (iter.hasNext()) {
             InfoCurriculum infoCurriculum = (InfoCurriculum) iter.next();
             if (infoCurriculum.getProgramEn() != null
@@ -413,4 +240,189 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
 
         return new Integer(numberOfFieldsFilled);
     }
+
+    public Date getLastModificationDate() {
+	final Set<DateTime> dates = new HashSet<DateTime>();
+        
+	if (getExecutionCourse().hasCourseReport()) {
+	    dates.add(getExecutionCourse().getCourseReport().getLastModificationDateDateTime());    
+	}
+	
+        for (final Curriculum curriculum : getExecutionCourse().getCurriculums(getExecutionYear())) {
+            dates.add(curriculum.getLastModificationDateDateTime());
+        }
+	
+        return dates.isEmpty() ? null : Collections.max(dates).toDate();
+    }
+
+    public List<InfoDepartment> getInfoDepartments() {
+	final Set<Teacher> responsibleForTeachers = new HashSet<Teacher>();
+	for (final Professorship responsibleFor : getExecutionCourse().responsibleFors()) {
+	    responsibleForTeachers.add(responsibleFor.getTeacher());
+	}
+
+	final List<InfoDepartment> result = new ArrayList<InfoDepartment>();
+	
+	for (final Teacher teacher : responsibleForTeachers) {
+	    result.add(InfoDepartment.newInfoFromDomain(teacher.getCurrentWorkingDepartment()));
+        }
+
+        return result;
+    }
+
+    public List<InfoCurriculum> getInfoCurriculums() {
+        final List<InfoCurriculum> result = new ArrayList<InfoCurriculum>();
+        
+        for (final Curriculum curriculum : getExecutionCourse().getCurriculums(getExecutionYear())) {
+            final InfoCurriculum infoCurriculum = InfoCurriculum.newInfoFromDomain(curriculum);
+            
+            final InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curriculum.getCurricularCourse());
+            infoCurricularCourse.setInfoScopes(getInfoScopes(curriculum.getCurricularCourse()));
+            infoCurriculum.setInfoCurricularCourse(infoCurricularCourse);
+            
+            result.add(infoCurriculum);
+        }
+
+        return result;
+    }
+
+    private List<InfoCurricularCourseScope> getInfoScopes(final CurricularCourse curricularCourse) {
+        final List<InfoCurricularCourseScope> result = new ArrayList<InfoCurricularCourseScope>();
+        
+        for (final CurricularCourseScope curricularCourseScope : curricularCourse.getScopesSet()) {
+            result.add(InfoCurricularCourseScope.newInfoFromDomain(curricularCourseScope));
+        }
+        
+        return result;
+    }
+    
+    public List<InfoLesson> getInfoLessons() {
+    	final List<InfoLesson> result = new ArrayList<InfoLesson>();
+
+    	for (final Lesson lesson : getExecutionCourse().getLessons()) {
+    	    result.add(InfoLesson.newInfoFromDomain(lesson));
+    	}
+    	
+    	return getFilteredInfoLessons(result);
+    }
+
+    private List<InfoLesson> getFilteredInfoLessons(final List<InfoLesson> infoLessons) {
+        final List<InfoLesson> result = new ArrayList<InfoLesson>();
+        
+        InfoLesson infoLesson = getFilteredInfoLessonByType(infoLessons, ShiftType.TEORICA);
+        if (infoLesson != null)
+            result.add(infoLesson);
+
+        infoLesson = getFilteredInfoLessonByType(infoLessons, ShiftType.PRATICA);
+        if (infoLesson != null)
+            result.add(infoLesson);
+
+        infoLesson = getFilteredInfoLessonByType(infoLessons, ShiftType.LABORATORIAL);
+        if (infoLesson != null)
+            result.add(infoLesson);
+
+        infoLesson = getFilteredInfoLessonByType(infoLessons, ShiftType.TEORICO_PRATICA);
+        if (infoLesson != null)
+            result.add(infoLesson);
+        
+        return result;
+    }
+
+    private InfoLesson getFilteredInfoLessonByType(List infoLessons, ShiftType type) {
+        final ShiftType lessonType = type;
+        InfoLesson infoLesson = (InfoLesson) CollectionUtils.find(infoLessons, new Predicate() {
+            public boolean evaluate(Object o) {
+                InfoLesson infoLesson = (InfoLesson) o;
+                return infoLesson.getTipo().equals(lessonType);
+            }
+        });
+        return infoLesson;
+    }
+    
+    public List<InfoSiteEvaluationInformation> getInfoSiteEvaluationInformations() {
+        final List<InfoSiteEvaluationInformation> result = new ArrayList<InfoSiteEvaluationInformation>();
+        
+        final ExecutionPeriod executionPeriod = getExecutionCourse().getExecutionPeriod();
+        for (final CurricularCourse curricularCourse : getExecutionCourse().getAssociatedCurricularCoursesSet()) {
+            final InfoSiteEvaluationInformation infoSiteEvaluationInformation = new InfoSiteEvaluationInformation();
+            
+            final InfoSiteEvaluationStatistics infoSiteEvaluationStatistics = new InfoSiteEvaluationStatistics();
+            final List<Enrolment> enrolled = curricularCourse.getEnrolmentsByExecutionPeriod(executionPeriod);
+            infoSiteEvaluationStatistics.setEnrolled(enrolled.size());
+            infoSiteEvaluationStatistics.setEvaluated(getEvaluated(enrolled));
+            infoSiteEvaluationStatistics.setApproved(getApproved(enrolled));
+            infoSiteEvaluationStatistics.setInfoExecutionPeriod(InfoExecutionPeriod.newInfoFromDomain(executionPeriod));
+
+            infoSiteEvaluationInformation.setInfoSiteEvaluationStatistics(infoSiteEvaluationStatistics);
+            infoSiteEvaluationInformation.setInfoCurricularCourse(InfoCurricularCourse.newInfoFromDomain(curricularCourse));
+            infoSiteEvaluationInformation.setInfoSiteEvaluationHistory(getInfoSiteEvaluationsHistory(executionPeriod, curricularCourse));
+            
+            result.add(infoSiteEvaluationInformation);
+        }
+
+        return result;
+    }
+
+    private int getEvaluated(List enrolments) {
+        int result = 0;
+        
+        Iterator iter = enrolments.iterator();
+        while (iter.hasNext()) {
+            Enrolment enrolment = (Enrolment) iter.next();
+            if (enrolment.isEnrolmentStateApproved()
+                    || enrolment.isEnrolmentStateNotApproved()) {
+                result++;
+            }
+        }
+        
+        return result;
+    }
+
+    private int getApproved(List enrolments) {
+        int result = 0;
+        
+        Iterator iter = enrolments.iterator();
+        while (iter.hasNext()) {
+            Enrolment enrolment = (Enrolment) iter.next();
+            if (enrolment.isEnrolmentStateApproved()) {
+                result++;
+            }
+        }
+        
+        return result;
+    }
+
+    private List<InfoSiteEvaluationStatistics> getInfoSiteEvaluationsHistory(final ExecutionPeriod executionPeriodToTest, final CurricularCourse curricularCourse) {
+        final List<InfoSiteEvaluationStatistics> result = new ArrayList<InfoSiteEvaluationStatistics>();
+
+        final Set<ExecutionPeriod> executionPeriods = new HashSet<ExecutionPeriod>();
+        for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCoursesSet()) {
+            final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
+
+            // filter the executionPeriods by semester;
+            // also, information regarding execution years after the course's
+            // execution year must not be shown
+            if (executionPeriod.getSemester().equals(executionPeriodToTest.getSemester())
+        	    && executionPeriod.getExecutionYear().isBefore(executionPeriodToTest.getExecutionYear())) {
+        	executionPeriods.add(executionPeriod);
+            }
+        }
+
+        for (final ExecutionPeriod executionPeriod : executionPeriods) {
+            final InfoSiteEvaluationStatistics infoSiteEvaluationStatistics = new InfoSiteEvaluationStatistics();
+            infoSiteEvaluationStatistics.setInfoExecutionPeriod(InfoExecutionPeriod.newInfoFromDomain(executionPeriod));
+            
+            List<Enrolment> enrolled = curricularCourse.getEnrolmentsByExecutionPeriod(executionPeriod);
+            infoSiteEvaluationStatistics.setEnrolled(enrolled.size());
+            infoSiteEvaluationStatistics.setEvaluated(getEvaluated(enrolled));
+            infoSiteEvaluationStatistics.setApproved(getApproved(enrolled));
+            
+            result.add(infoSiteEvaluationStatistics);
+        }
+
+        Collections.sort(result, new ReverseComparator(new BeanComparator("infoExecutionPeriod.infoExecutionYear.year")));
+        
+        return result;
+    }
+
 }
