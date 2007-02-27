@@ -1,0 +1,31 @@
+#!/bin/sh
+# -----------------------------------------------------------------------------
+#
+#   Runs sql scripts to update database from previous release.
+#
+# -----------------------------------------------------------------------------
+#
+
+DB=$1
+USER=$2
+
+echo Using database: $DB
+echo Enter password for $USER:
+read -s password
+
+function execute() {
+	echo ---------------------------------------- $1
+	mysql -u$USER -f -p$password --default-character-set=latin1 $DB < $2
+	echo
+}
+
+function executeWithTempFile() {
+	echo ---------------------------------------- $1
+	mysql -u$USER -f -p$password --default-character-set=latin1 $DB < $2 > tmp.sql
+	mysql -u$USER -f -p$password --default-character-set=latin1 $DB < tmp.sql	
+	rm tmp.sql
+	echo
+}
+
+execute "Alter TeacherPersonalExpectation Table" alterTableTeacherPersonalExpectation.sql
+execute "alter Table Justifications" alterTableJustifications.sql
