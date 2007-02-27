@@ -614,6 +614,17 @@ public class Registration extends Registration_Base {
 	}
 	return null;
     }
+    
+    public static Registration readRegisteredRegistrationByNumberAndDegreeType(Integer number, DegreeType degreeType) {
+	for (Registration registration : RootDomainObject.getInstance().getRegistrations()) {
+	    if (registration.getNumber().equals(number)
+		    && registration.getDegreeType().equals(degreeType) && registration.isInRegisteredState()) {
+		return registration;
+	    }
+	}
+	return null;
+    }
+
 
     public static Registration readRegistrationByNumberAndDegreeTypes(Integer number,
 	    DegreeType... degreeTypes) {
