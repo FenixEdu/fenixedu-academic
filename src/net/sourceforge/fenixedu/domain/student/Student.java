@@ -543,9 +543,7 @@ public class Student extends Student_Base {
     }
 
     public List<Registration> getRegistrationsToEnrolByStudent() {
-	final List<DegreeType> degreeTypesToEnrolByStudent = Arrays.asList(new DegreeType[] {
-		DegreeType.DEGREE, DegreeType.BOLONHA_DEGREE,
-		DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE });
+	final List<DegreeType> degreeTypesToEnrolByStudent = getDegreeTypesToEnrolByStudent();
 	final List<Registration> result = new ArrayList<Registration>();
 	for (final Registration registration : getRegistrations()) {
 	    if (registration.isActive()
@@ -561,6 +559,11 @@ public class Student extends Student_Base {
 	}
 
 	return result;
+    }
+
+    private List<DegreeType> getDegreeTypesToEnrolByStudent() {
+	return Arrays.asList(new DegreeType[] { DegreeType.DEGREE, DegreeType.BOLONHA_DEGREE,
+		DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE });
     }
 
 }
