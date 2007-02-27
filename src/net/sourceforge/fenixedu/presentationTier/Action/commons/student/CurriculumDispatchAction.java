@@ -51,13 +51,10 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
 	Registration registration = null;
 	
 	final Integer registrationOID = getRegistrationOID(request);
-	final Integer studentNumber = getStudentNumber(request);
 	final Student loggedStudent = getUserView(request).getPerson().getStudent();
 	
 	if (registrationOID != null) {
 	    registration = rootDomainObject.readRegistrationByOID(registrationOID);
-	} else if (studentNumber != null) {
-	    registration = Registration.readByNumber(studentNumber);
 	} else if (loggedStudent != null) {
 	    if (loggedStudent.getRegistrations().size() == 1) {
 		registration = loggedStudent.getRegistrations().get(0);
@@ -81,16 +78,6 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
 	}
 	
 	return (registrationOID == null || registrationOID.equals("") || !StringUtils.isNumeric(registrationOID)) ? null : Integer.valueOf(registrationOID);
-    }
-
-    private Integer getStudentNumber(HttpServletRequest request) {
-	String studentNumber = request.getParameter("studentNumber");
-	if (studentNumber == null || !StringUtils.isNumeric(studentNumber)) {
-	    studentNumber = (String) request.getAttribute("studentNumber");
-	}
-
-	request.setAttribute("studentNumber", studentNumber);
-	return (studentNumber == null || studentNumber.equals("")  || !StringUtils.isNumeric(studentNumber)) ? null : Integer.valueOf(studentNumber);
     }
 
     private ActionForward getStudentCP(final Registration registration, final ActionMapping mapping, final HttpServletRequest request) {

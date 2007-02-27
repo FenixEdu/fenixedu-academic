@@ -203,20 +203,20 @@
 										<logic:iterate id="groupStudent" name="groupProposal" property="infoGroup.groupStudents" length="1">
 											<bean:define id="student" name="groupStudent" property="student"/>
 											<td bgcolor="<%= bgColor %>" align="center">
-												<bean:define id="studentNumber" name="student" property="number"/>
+												<bean:define id="registrationOID" name="student" property="idInternal"/>
 												<bean:define id="executionDegreeId" name="finalDegreeWorkProposalHeader" property="executionDegreeOID"/>
 												<bean:define id="curriculumLink">
-													/viewCurriculum.do?method=prepare&amp;studentNumber=<%= studentNumber.toString() %>&amp;executionDegreeId=<%= executionDegreeId.toString() %>
+													/viewCurriculum.do?method=prepare&amp;registrationOID=<%= registrationOID.toString() %>&amp;executionDegreeId=<%= executionDegreeId.toString() %>
 												</bean:define>
 												<html:link page='<%= curriculumLink.toString() %>'>
 													<bean:write name="student" property="infoPerson.username"/>
 												</html:link>
 											</td>
 											<td bgcolor="<%= bgColor %>" align="center">
-												<bean:define id="studentNumber" name="student" property="number"/>
+												<bean:define id="registrationOID" name="student" property="idInternal"/>
 												<bean:define id="executionDegreeId" name="finalDegreeWorkProposalHeader" property="executionDegreeOID"/>
 												<bean:define id="curriculumLink">
-													/viewCurriculum.do?method=prepare&amp;studentNumber=<%= studentNumber.toString() %>&amp;executionDegreeId=<%= executionDegreeId.toString() %>
+													/viewCurriculum.do?method=prepare&amp;registrationOID=<%= registrationOID.toString() %>&amp;executionDegreeId=<%= executionDegreeId.toString() %>
 												</bean:define>
 												<html:link page='<%= curriculumLink.toString() %>'>
 													<bean:write name="student" property="infoPerson.nome"/>
@@ -235,20 +235,20 @@
 										<bean:define id="student" name="groupStudent" property="student"/>
 										<tr>
 											<td bgcolor="<%= bgColor %>" align="center">
-												<bean:define id="studentNumber" name="student" property="number"/>
+												<bean:define id="registrationOID" name="student" property="idInternal"/>
 												<bean:define id="executionDegreeId" name="finalDegreeWorkProposalHeader" property="executionDegreeOID"/>
 												<bean:define id="curriculumLink">
-													/viewCurriculum.do?method=prepare&amp;studentNumber=<%= studentNumber.toString() %>&amp;executionDegreeId=<%= executionDegreeId.toString() %>
+													/viewCurriculum.do?method=prepare&amp;registrationOID=<%= registrationOID.toString() %>&amp;executionDegreeId=<%= executionDegreeId.toString() %>
 												</bean:define>
 												<html:link page='<%= curriculumLink.toString() %>'>
 													<bean:write name="student" property="infoPerson.username"/> 
 												</html:link>
 											</td>
 											<td bgcolor="<%= bgColor %>" align="center">
-												<bean:define id="studentNumber" name="student" property="number"/>
+												<bean:define id="registrationOID" name="student" property="idInternal"/>
 												<bean:define id="executionDegreeId" name="finalDegreeWorkProposalHeader" property="executionDegreeOID"/>
 												<bean:define id="curriculumLink">
-													/viewCurriculum.do?method=prepare&amp;studentNumber=<%= studentNumber.toString() %>&amp;executionDegreeId=<%= executionDegreeId.toString() %>
+													/viewCurriculum.do?method=prepare&amp;registrationOID=<%= registrationOID.toString() %>&amp;executionDegreeId=<%= executionDegreeId.toString() %>
 												</bean:define>
 												<html:link page='<%= curriculumLink.toString() %>'>
 													<bean:write name="student" property="infoPerson.nome"/>

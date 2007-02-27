@@ -43,11 +43,11 @@
 			</tr>			
 			<logic:iterate id="infoTutor" name="studentsOfTutor">
 				<bean:define id="tutorId" name="infoTutor" property="idInternal" />
-				<bean:define id="studentNumber" name="infoTutor" property="infoStudent.number" />
+				<bean:define id="registrationOID" name="infoTutor" property="infoStudent.number"/>
 				<tr class="listClasses">					
-					<td><bean:write name="studentNumber"/></td>					
+					<td><bean:write name="infoTutor" property="infoStudent.number"/></td>
 					<td>
-						<html:link page="<%= "/viewCurriculum.do?method=prepare&amp;studentNumber=" + studentNumber.toString() %>">
+						<html:link page="<%= "/viewCurriculum.do?method=prepare&amp;registrationOID=" + registrationOID.toString() %>">
 							<bean:write name="infoTutor" property="infoStudent.infoPerson.nome"/>
 						</html:link>
 					</td>
