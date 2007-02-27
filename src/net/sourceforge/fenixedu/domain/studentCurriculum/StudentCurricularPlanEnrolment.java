@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.AssertUniqueApprovalInCurricularCourseContexts;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.EnrolmentResultType;
@@ -38,23 +39,23 @@ public class StudentCurricularPlanEnrolment {
     }
 
     public List<RuleResult> enrol(final Person person, final EnrolmentContext enrolmentContext) {
+	
 	checkRulesToEnrol(person, enrolmentContext);
+	
 	unEnrolFromCurriculumModules(enrolmentContext);
+	addEnroledDegreeModulesToEvaluate(enrolmentContext);
+	
 	final Map<EnrolmentResultType, List<IDegreeModuleToEvaluate>> degreeModulesToEnrolMap = new HashMap<EnrolmentResultType, List<IDegreeModuleToEvaluate>>();
-	final List<RuleResult> ruleResults = evaluateDegreeModules(enrolmentContext,
-		degreeModulesToEnrolMap);
+	final List<RuleResult> ruleResults = evaluateDegreeModules(enrolmentContext, degreeModulesToEnrolMap);
 	performEnrolmentInCurriculumModules(person, enrolmentContext, degreeModulesToEnrolMap);
 
 	return ruleResults;
-
     }
 
     private void checkRulesToEnrol(final Person person, final EnrolmentContext enrolmentContext) {
 
-	for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext
-		.getDegreeModuleToEvaluate()) {
-	    if (enrolmentContext.getCurriculumModulesToRemove().contains(
-		    degreeModuleToEvaluate.getCurriculumGroup())) {
+	for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext.getDegreeModuleToEvaluate()) {
+	    if (enrolmentContext.getCurriculumModulesToRemove().contains(degreeModuleToEvaluate.getCurriculumGroup())) {
 		throw new DomainException(
 			"error.StudentCurricularPlan.cannot.remove.enrollment.on.curriculum.group.because.other.enrollments.depend.on.it",
 			degreeModuleToEvaluate.getCurriculumGroup().getName().getContent());
@@ -96,11 +97,18 @@ public class StudentCurricularPlanEnrolment {
 	    }
 	}
     }
+    
+    private void addEnroledDegreeModulesToEvaluate(final EnrolmentContext enrolmentContext) {
+	final ExecutionPeriod executionPeriod = enrolmentContext.getExecutionPeriod();
+	final StudentCurricularPlan studentCurricularPlan = enrolmentContext.getStudentCurricularPlan();
+	for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : studentCurricularPlan.getDegreeModulesToEvaluate(executionPeriod)) {
+	    enrolmentContext.addDegreeModuleToEvaluate(degreeModuleToEvaluate);
+	}
+    }
 
-    private RuleResult evaluateRules(final EnrolmentContext enrolmentContext,
-	    final Set<ICurricularRule> curricularRules) {
+    private RuleResult evaluateRules(final EnrolmentContext enrolmentContext, final Set<ICurricularRule> curricularRules) {
 	RuleResult ruleResult = RuleResult.createTrue();
-
+	
 	for (final ICurricularRule rule : curricularRules) {
 	    RuleResult cachedResult;
 	    boolean copyMessages = true;
@@ -115,65 +123,27 @@ public class StudentCurricularPlanEnrolment {
 	return ruleResult;
     }
 
-    private Map<IDegreeModuleToEvaluate, Set<ICurricularRule>> getRulesToEvaluate(
-	    final EnrolmentContext enrolmentContext) {
-	final Map<IDegreeModuleToEvaluate, Set<ICurricularRule>> curricularRulesByDegreeModule = new HashMap<IDegreeModuleToEvaluate, Set<ICurricularRule>>();
-	addCurricularRulesFromDegreeModuleToEnrol(enrolmentContext, curricularRulesByDegreeModule);
-	addCurricularRulesFromExistingEnrolmentsInStudentCurricularPlan(enrolmentContext,
-		curricularRulesByDegreeModule);
-	return curricularRulesByDegreeModule;
-    }
-
-    private void addCurricularRulesFromExistingEnrolmentsInStudentCurricularPlan(
-	    final EnrolmentContext enrolmentContext,
-	    final Map<IDegreeModuleToEvaluate, Set<ICurricularRule>> curricularRulesByDegreeModule) {
+    private Map<IDegreeModuleToEvaluate, Set<ICurricularRule>> getRulesToEvaluate(final EnrolmentContext enrolmentContext) {
+	
 	final ExecutionPeriod executionPeriod = enrolmentContext.getExecutionPeriod();
-
-	for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext
-		.getStudentCurricularPlan().getDegreeModulesToEvaluate(executionPeriod)) {
-
+	final Map<IDegreeModuleToEvaluate, Set<ICurricularRule>> result = new HashMap<IDegreeModuleToEvaluate, Set<ICurricularRule>>();
+	
+	for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext.getDegreeModuleToEvaluate()) {
+	    
 	    if (degreeModuleToEvaluate.canCollectRules()) {
+		
 		final Set<ICurricularRule> curricularRules = new HashSet<ICurricularRule>();
-		curricularRules.addAll(degreeModuleToEvaluate
-			.getCurricularRulesFromDegreeModule(executionPeriod));
-		curricularRules.addAll(degreeModuleToEvaluate
-			.getCurricularRulesFromCurriculumGroup(executionPeriod));
-		curricularRulesByDegreeModule.put(degreeModuleToEvaluate, curricularRules);
-
+		curricularRules.addAll(degreeModuleToEvaluate.getCurricularRulesFromDegreeModule(executionPeriod));
+		curricularRules.addAll(degreeModuleToEvaluate.getCurricularRulesFromCurriculumGroup(executionPeriod));
+		
 		if (degreeModuleToEvaluate.isLeaf()) {
-		    curricularRules.add(new AssertUniqueApprovalInCurricularCourseContexts(
-			    (CurricularCourse) degreeModuleToEvaluate.getDegreeModule()));
+		    final CurricularCourse curricularCourse = (CurricularCourse) degreeModuleToEvaluate.getDegreeModule();
+		    curricularRules.add(new AssertUniqueApprovalInCurricularCourseContexts(curricularCourse));
 		}
-	    }
-
-	    enrolmentContext.addDegreeModuleToEvaluate(degreeModuleToEvaluate);
-	}
-    }
-
-    private void addCurricularRulesFromDegreeModuleToEnrol(final EnrolmentContext enrolmentContext,
-	    final Map<IDegreeModuleToEvaluate, Set<ICurricularRule>> curricularRulesByDegreeModule) {
-	final ExecutionPeriod executionPeriod = enrolmentContext.getExecutionPeriod();
-
-	for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext
-		.getDegreeModuleToEvaluate()) {
-
-	    if (!degreeModuleToEvaluate.isEnroled()) {
-
-		final Set<ICurricularRule> curricularRules = new HashSet<ICurricularRule>();
-		final DegreeModule degreeModule = degreeModuleToEvaluate.getDegreeModule();
-
-		curricularRules.addAll(degreeModuleToEvaluate
-			.getCurricularRulesFromDegreeModule(executionPeriod));
-		curricularRules.addAll(degreeModuleToEvaluate
-			.getCurricularRulesFromCurriculumGroup(executionPeriod));
-
-		if (degreeModule instanceof CurricularCourse) {
-		    curricularRules.add(new AssertUniqueApprovalInCurricularCourseContexts(
-			    (CurricularCourse) degreeModule));
-		}
-		curricularRulesByDegreeModule.put(degreeModuleToEvaluate, curricularRules);
+		result.put(degreeModuleToEvaluate, curricularRules);
 	    }
 	}
+	return result;
     }
 
     private List<RuleResult> evaluateDegreeModules(final EnrolmentContext enrolmentContext,
@@ -182,16 +152,13 @@ public class StudentCurricularPlanEnrolment {
 	final List<RuleResult> falseRuleResults = new ArrayList<RuleResult>();
 	final List<RuleResult> ruleResults = new ArrayList<RuleResult>();
 
-	for (final Entry<IDegreeModuleToEvaluate, Set<ICurricularRule>> entry : getRulesToEvaluate(
-		enrolmentContext).entrySet()) {
-
+	for (final Entry<IDegreeModuleToEvaluate, Set<ICurricularRule>> entry : getRulesToEvaluate(enrolmentContext).entrySet()) {
 	    final RuleResult ruleResult = evaluateRules(enrolmentContext, entry.getValue());
 
 	    if (ruleResult.isFalse()) {
 		falseRuleResults.add(ruleResult);
 	    } else if (falseRuleResults.isEmpty()) {
-		addDegreeModuleToEvaluateToMap(degreeModulesEnrolMap, ruleResult
-			.getEnrolmentResultType(), entry.getKey());
+		addDegreeModuleToEvaluateToMap(degreeModulesEnrolMap, ruleResult.getEnrolmentResultType(), entry.getKey());
 		ruleResults.add(ruleResult);
 	    }
 	}
@@ -208,8 +175,7 @@ public class StudentCurricularPlanEnrolment {
 	    final Map<EnrolmentResultType, List<IDegreeModuleToEvaluate>> degreeModulesEnrolMap) {
 
 	final String createdBy = person.getIstUsername();
-	for (final Entry<EnrolmentResultType, List<IDegreeModuleToEvaluate>> entry : degreeModulesEnrolMap
-		.entrySet()) {
+	for (final Entry<EnrolmentResultType, List<IDegreeModuleToEvaluate>> entry : degreeModulesEnrolMap.entrySet()) {
 
 	    final EnrollmentCondition enrollmentCondition = entry.getKey().getEnrollmentCondition();
 	    for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : entry.getValue()) {
@@ -219,8 +185,7 @@ public class StudentCurricularPlanEnrolment {
 		    final CurriculumModuleEnroledWrapper moduleEnroledWrapper = (CurriculumModuleEnroledWrapper) degreeModuleToEvaluate;
 
 		    if (moduleEnroledWrapper.getCurriculumModule() instanceof Enrolment) {
-			final Enrolment enrolment = (Enrolment) moduleEnroledWrapper
-				.getCurriculumModule();
+			final Enrolment enrolment = (Enrolment) moduleEnroledWrapper.getCurriculumModule();
 			enrolment.setEnrolmentCondition(enrollmentCondition);
 		    }
 		} else {
@@ -245,9 +210,7 @@ public class StudentCurricularPlanEnrolment {
 		    }
 
 		}
-
 	    }
-
 	}
     }
 
