@@ -1235,18 +1235,30 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	return mapping.findForward("viewStudentGroupInformation");
     }
 
-    public ActionForward prepareCreateGroupProperties(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
-	    FenixFilterException {
-	readSiteView(request, null, null, null, null);
+    public List getShiftTypeLabelValues() {
 	List shiftTypeValues = new ArrayList();
 
 	shiftTypeValues.add(new LabelValueBean("TEORICA", ShiftType.TEORICA.name()));
 	shiftTypeValues.add(new LabelValueBean("PRATICA", ShiftType.PRATICA.name()));
 	shiftTypeValues.add(new LabelValueBean("TEORICO_PRATICA", ShiftType.TEORICO_PRATICA.name()));
 	shiftTypeValues.add(new LabelValueBean("LABORATORIAL", ShiftType.LABORATORIAL.name()));
+
+	shiftTypeValues.add(new LabelValueBean("PROBLEMS", ShiftType.PROBLEMS.name()));
+	shiftTypeValues.add(new LabelValueBean("FIELD_WORK", ShiftType.FIELD_WORK.name()));
+	shiftTypeValues.add(new LabelValueBean("SEMINARY", ShiftType.SEMINARY.name()));
+	shiftTypeValues.add(new LabelValueBean("TRAINING_PERIOD", ShiftType.TRAINING_PERIOD.name()));
+	shiftTypeValues.add(new LabelValueBean("TUTORIAL_ORIENTATION", ShiftType.TUTORIAL_ORIENTATION.name()));
+
 	shiftTypeValues.add(new LabelValueBean("SEM TURNO", "SEM TURNO"));
 
+	return shiftTypeValues;
+    }
+
+    public ActionForward prepareCreateGroupProperties(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
+	    FenixFilterException {
+	readSiteView(request, null, null, null, null);
+	List shiftTypeValues = getShiftTypeLabelValues();
 	request.setAttribute("shiftTypeValues", shiftTypeValues);
 	return mapping.findForward("insertGroupProperties");
     }
@@ -1409,12 +1421,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	    saveErrors(request, actionErrors);
 	    return prepareViewExecutionCourseProjects(mapping, form, request, response);
 	}
-	List shiftTypeValues = new ArrayList();
-	shiftTypeValues.add(new LabelValueBean("TEORICA", ShiftType.TEORICA.name()));
-	shiftTypeValues.add(new LabelValueBean("PRATICA", ShiftType.PRATICA.name()));
-	shiftTypeValues.add(new LabelValueBean("TEORICO_PRATICA", ShiftType.TEORICO_PRATICA.name()));
-	shiftTypeValues.add(new LabelValueBean("LABORATORIAL", ShiftType.LABORATORIAL.name()));
-	shiftTypeValues.add(new LabelValueBean("SEM TURNO", "SEM TURNO"));
+	List shiftTypeValues = getShiftTypeLabelValues();
 	request.setAttribute("shiftTypeValues", shiftTypeValues);
 
 	List enrolmentPolicyValues = new ArrayList();
