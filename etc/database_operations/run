@@ -27,4 +27,3 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Unit Part Names" unitPartName.sql
