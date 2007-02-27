@@ -666,6 +666,10 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return this.getEnrollmentState() == EnrollmentState.TEMPORARILY_ENROLLED;
     }
 
+    public boolean isEvaluated() {
+	return isEnrolmentStateApproved() || isEnrolmentStateNotApproved();
+    }
+
     public Boolean isFirstTime() {
 	List<Enrolment> enrollments = getStudentCurricularPlan().getActiveEnrolments(
 		getCurricularCourse());
@@ -939,6 +943,30 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	    return null;
 	}
 
+    }
+
+    public static int countEvaluated(final List<Enrolment> enrolments) {
+        int result = 0;
+        
+        for (final Enrolment enrolment : enrolments) {
+            if (enrolment.isEvaluated()) {
+                result++;
+            }
+        }
+        
+        return result;
+    }
+
+    public static int countApproved(final List<Enrolment> enrolments) {
+        int result = 0;
+        
+        for (final Enrolment enrolment : enrolments) {
+            if (enrolment.isEnrolmentStateApproved()) {
+                result++;
+            }
+        }
+        
+        return result;
     }
 
     @Override
