@@ -46,12 +46,6 @@
     <definition name="student.enrolment.prepareChooseExecutionPeriod" extends="academicAdminOffice.masterPage">
         <put name="body" value="/academicAdminOffice/chooseStudentEnrolmentExecutionPeriod.jsp"></put>
     </definition> 
-    <definition name="student.enrolment.showDegreeModulesToEnrol" extends="academicAdminOffice.masterPage">
-        <put name="body" value="/academicAdminOffice/showDegreeModulesToEnrol.jsp"></put>
-    </definition>     
-    <definition name="student.enrolment.chooseOptionalEnrolments" extends="academicAdminOffice.masterPage">
-        <put name="body" value="/academicAdminOffice/chooseOptionalEnrolment.jsp"></put>
-    </definition>
     <definition name="student.enrolment.showExtraEnrolments" extends="academicAdminOffice.masterPage">
         <put name="body" value="/academicAdminOffice/showExtraEnrolments.jsp"></put>
     </definition>
@@ -376,4 +370,14 @@
 	<definition name="externalUnits.prepareCreateExternalEnrolment" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/externalUnits/createExternalEnrolment.jsp"/>
 	</definition>
+	
+	<!-- Bolonha Student Enrollment -->
+	<definition name="student.enrollment.bolonha.showDegreeModulesToEnrol" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/student/enrollment/bolonha/showDegreeModulesToEnrol.jsp"/>
+	</definition>
+	<definition name="student.enrollment.bolonha.chooseOptionalCurricularCourseEnrol" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/student/enrollment/bolonha/chooseOptionalCurricularCourseToEnrol.jsp"/>
+	</definition>	
+	
+	
 </tiles-definitions>
