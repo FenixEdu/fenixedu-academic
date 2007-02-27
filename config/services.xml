@@ -8130,33 +8130,6 @@
         	<chain name="DepartmentMemberOrTeacherAuthorization"></chain>
         </filterChains>     
     </service>     
-    <service>
-    	<name>InsertTeacherPersonalExpectation</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.InsertTeacherPersonalExpectation</implementationClass>
-        <description></description>
-        <isTransactional>true</isTransactional>  
-        <filterChains>
-        	<chain name="DepartmentMemberOrTeacherAuthorization"></chain>
-        </filterChains>     
-    </service>
-    <service>
-    	<name>ReadTeacherPersonalExpectationByTeacherIDAndExecutionYearID</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadTeacherPersonalExpectationByTeacherIDAndExecutionYearID</implementationClass>
-        <description></description>
-        <isTransactional>true</isTransactional>  
-        <filterChains>
-        	<chain name="DepartmentMemberOrTeacherAuthorization"></chain>
-        </filterChains>     
-    </service>
-    <service>
-    	<name>EditTeacherPersonalExpectation</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.EditTeacherPersonalExpectation</implementationClass>
-        <description></description>
-        <isTransactional>true</isTransactional>  
-        <filterChains>
-        	<chain name="DepartmentMemberOrTeacherAuthorization"></chain>
-        </filterChains>     
-    </service>
 	<service>
     	<name>ReadExportGroupingsByGrouping</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.student.ReadExportGroupingsByGrouping</implementationClass>
@@ -8267,17 +8240,8 @@
         <filterChains>
         	<chain name="DepartmentAdministrativeOfficeAuthorization"></chain>
         </filterChains>     
-    </service>   
+    </service>      
    <service>
-    	<name>CreateTeacherExpectationDefinitionPeriod</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.department.CreateTeacherExpectationDefinitionPeriod</implementationClass>
-        <description></description>
-        <isTransactional>true</isTransactional>  
-        <filterChains>
-        	<chain name="DepartmentAdministrativeOfficeAuthorization"></chain>
-        </filterChains>     
-    </service>   
-	<service>
     	<name>ReadOpenExecutionYears</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadOpenExecutionYears</implementationClass>
         <description></description>
@@ -8289,24 +8253,6 @@
         <description></description>
         <isTransactional>true</isTransactional>       
     </service>
-    <service>
-    	<name>EditTeacherExpectationDefinitionPeriod</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.department.EditTeacherExpectationDefinitionPeriod</implementationClass>
-        <description></description>
-        <isTransactional>true</isTransactional>  
-        <filterChains>
-        	<chain name="DepartmentAdministrativeOfficeAuthorization"></chain>
-        </filterChains>
-    </service>
-    <service>
-    	<name>ReadTeacherExpectationDefinitionPeriodByDepartmentIDAndExecutionYearID</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.department.ReadTeacherExpectationDefinitionPeriodByDepartmentIDAndExecutionYearID</implementationClass>
-        <description></description>
-        <isTransactional>true</isTransactional>  
-        <filterChains>
-        	<chain name="DepartmentAdministrativeOfficeOrTeacherAuthorization"></chain>
-        </filterChains>
-    </service>  
 	<service>
     	<name>ReadRoleByRoleType</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadRoleByRoleType</implementationClass>

@@ -3220,6 +3220,7 @@ class net.sourceforge.fenixedu.domain.Teacher extends net.sourceforge.fenixedu.d
 	Integer keyPublicationsNumber;
 	Integer keyWeeklyOcupation;
 }
+
 class net.sourceforge.fenixedu.domain.teacher.TeacherLegalRegimen extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyCategory;
 	Integer keyTeacher;
@@ -3589,8 +3590,8 @@ class net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation extends
     Integer finalDegreeWorkOrientations;
     String universityServiceMainFocus;
     String departmentOrgans;
-    String istOrgans;
-    String utlOrgans;
+    String institutionOrgans;
+    String universityOrgans;
     String professionalActivityMainFocus;
     String cientificComunityService;
     String societyService;
@@ -3612,6 +3613,13 @@ class net.sourceforge.fenixedu.domain.TeacherExpectationDefinitionPeriod extends
 }
 
 class net.sourceforge.fenixedu.domain.TeacherAutoEvaluationDefinitionPeriod extends net.sourceforge.fenixedu.domain.DomainObject {         
+	YearMonthDay startDateYearMonthDay;
+	YearMonthDay endDateYearMonthDay;
+    Integer keyDepartment;
+    Integer keyExecutionYear;
+}
+
+class net.sourceforge.fenixedu.domain.TeacherPersonalExpectationsVisualizationPeriod extends net.sourceforge.fenixedu.domain.DomainObject {         
 	YearMonthDay startDateYearMonthDay;
 	YearMonthDay endDateYearMonthDay;
     Integer keyDepartment;
@@ -8065,6 +8073,20 @@ relation TeacherAutoEvaluationDefinitionPeriodDepartment {
     net.sourceforge.fenixedu.domain.Department playsRole department;
 }
 
+relation TeacherPersonalExpectationsVisualizationPeriodExecutionYear {
+	net.sourceforge.fenixedu.domain.TeacherPersonalExpectationsVisualizationPeriod playsRole teacherPersonalExpectationsVisualizationPeriods  {
+    	multiplicity *;
+    }
+	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
+}
+
+relation TeacherPersonalExpectationsVisualizationPeriodDepartment {
+	net.sourceforge.fenixedu.domain.TeacherPersonalExpectationsVisualizationPeriod playsRole teacherPersonalExpectationsVisualizationPeriods  {
+    	multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.Department playsRole department;
+}
+
 relation TeacherServiceTeacher {
 	net.sourceforge.fenixedu.domain.teacher.TeacherService playsRole teacherServices {
 		multiplicity *;
@@ -9502,6 +9524,13 @@ relation RootDomainObjectCreditsInScientificArea {
 relation RootDomainObjectTeacherAutoEvaluationDefinitionPeriod {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.TeacherAutoEvaluationDefinitionPeriod playsRole teacherAutoEvaluationDefinitionPeriods {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectTeacherPersonalExpectationsVisualizationPeriod {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.TeacherPersonalExpectationsVisualizationPeriod playsRole teacherPersonalExpectationsVisualizationPeriods {
 		multiplicity *;
 	}
 }

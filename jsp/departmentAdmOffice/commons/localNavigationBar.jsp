@@ -29,7 +29,7 @@
 	</ul>
 	
 	<ul>
-	<logic:present role="DEPARTMENT_CREDITS_MANAGER">
+		<logic:present role="DEPARTMENT_CREDITS_MANAGER">
 
 			<li class="navheader">
 				<strong><bean:message key="link.group.teacher.title"/></strong>
@@ -49,17 +49,23 @@
 				<html:link page="/teacherSearchForSummariesManagement.do?method=searchForm&amp;page=0">
 					<bean:message key="link.summaries"/>
 				</html:link>
+			</li>						
+			<li>
+				<html:link page="/searchTeachers.do?method=download">
+					<bean:message key="link.teachers.search"/>
+				</html:link>
 			</li>
-			
-			<bean:define id="userView" name="<%= SessionConstants.U_VIEW %>" scope="session"/>
-		
+											
+			<bean:define id="userView" name="<%= SessionConstants.U_VIEW %>" scope="session"/>		
 			<!-- Temporary solution (until we make expectations available for all departments) DEI Code = 28 -->
 			<% String deiCode = "28"; %>
-
 			<logic:notEmpty name="userView" property="person.employee.currentDepartmentWorkingPlace">
-				<logic:equal name="userView" property="person.employee.currentDepartmentWorkingPlace.code" value="<%= deiCode %>">
+				<logic:equal name="userView" property="person.employee.currentDepartmentWorkingPlace.code" value="<%= deiCode %>">										
+					<li class="navheader">
+						<strong><bean:message key="link.group.teacherPersonalExpectations.title"/></strong>
+					</li>		
 					<li>
-						<html:link page="/teacher/teacherExpectationDefinitionPeriod/viewTeacherExpectationDefinitionPeriod.faces">
+						<html:link page="/teacherPersonalExpectationsDefinitionPeriod.do?method=showPeriod">
 							<bean:message key="link.teacherExpectationDefinitionPeriodManagement"/>
 						</html:link>
 					</li>
@@ -68,13 +74,19 @@
 							<bean:message key="label.defineAutoAvaliationPeriod"/>
 						</html:link>
 					</li>
+					<li>
+						<html:link page="/teacherPersonalExpectationsVisualizationPeriod.do?method=showPeriod">
+							<bean:message key="label.defineTeacherPersonalExpectationsVisualizationPeriod"/>
+						</html:link>
+					</li>
+					<li>
+						<html:link page="/listTeachersPersonalExpectations.do?method=listTeachersPersonalExpectations">
+							<bean:message key="label.see.teachers.personal.expectations"/>
+						</html:link>
+					</li>					
 				</logic:equal>
 			</logic:notEmpty>
-		<li>
-			<html:link page="/searchTeachers.do?method=download">
-				<bean:message key="link.teachers.search"/>
-			</html:link>
-		</li>
+			
 	</logic:present>
 
 	<li class="navheader">

@@ -1,0 +1,426 @@
+<schema name="net.sourceforge.fenixedu.domain.Department.DepartmentDegreeBean"
+	type="net.sourceforge.fenixedu.domain.Department$DepartmentDegreeBean" bundle="MANAGER_RESOURCES">
+	<slot name="department" key="label.department"
+		layout="menu-select-postback"
+		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="choiceType"
+			value="net.sourceforge.fenixedu.domain.Department" />
+		<property name="format" value="${name}" />
+		<property name="destination" value="prepare"/>
+		<property name="sortBy" value="name"/>
+	</slot>
+	<slot name="degree" key="label.degree.to.associate"
+		layout="menu-select"
+		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="choiceType"
+			value="net.sourceforge.fenixedu.domain.Degree"/>
+		<property name="format" value="${presentationName}"/>
+		<property name="sortBy" value="presentationName"/>
+	</slot>
+</schema>
+<schema name="net.sourceforge.fenixedu.domain.Degree.List.For.Department.Association"
+		type="net.sourceforge.fenixedu.domain.Degree" bundle="MANAGER_RESOURCES">
+	<slot name="tipoCurso"/>
+	<slot name="name"/>
+</schema>
+
+<schema name="ChooseExecutionYearToViewTeacherPersonalExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">	
+	<slot name="executionYear" key="label.common.executionYear" layout="menu-select-postback">	
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsToViewTeacherPersonalExpectationsProvider"/>		
+		<property name="format"	value="${year}" />	
+		<property name="destination" value="postBack"/>	
+	</slot>	
+</schema>
+
+<schema name="ViewGraduationExpectations" type="net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation" bundle="DEPARTMENT_MEMBER_RESOURCES">
+	<slot name="graduations" key="label.personalExpectationsManagement.numberOfGraduations" />
+	<slot name="graduationsDescription" key="label.personalExpectationsManagement.description" layout="html"/>	
+</schema>	
+
+<schema name="ViewCientificPosGraduationsExpectations" type="net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation" bundle="DEPARTMENT_MEMBER_RESOURCES">
+	<slot name="cientificPosGraduations" key="label.personalExpectationsManagement.numberOfCientificPosGraduations"/>
+	<slot name="cientificPosGraduationsDescription" key="label.personalExpectationsManagement.description" layout="html"/>	
+</schema>
+
+<schema name="ViewProfessionalPosGraduationsExpectations" type="net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation" bundle="DEPARTMENT_MEMBER_RESOURCES">
+	<slot name="professionalPosGraduations" key="label.personalExpectationsManagement.numberOfProfessionalPosGraduations"/>
+	<slot name="professionalPosGraduationsDescription" key="label.personalExpectationsManagement.description" layout="html"/>	
+</schema>	
+
+<schema name="ViewSeminariesExpectations" type="net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation" bundle="DEPARTMENT_MEMBER_RESOURCES">
+	<slot name="seminaries" key="label.personalExpectationsManagement.numberOfSeminaries"/>
+	<slot name="seminariesDescription" key="label.personalExpectationsManagement.description" layout="html"/>	
+</schema>	
+
+<schema name="ViewEducationMainFocusExpectations" type="net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation" bundle="DEPARTMENT_MEMBER_RESOURCES">
+	<slot name="educationMainFocus" key="label.personalExpectationsManagement.mainFocus" layout="html"/>	
+</schema>
+
+<schema name="ViewPublicationsAndProjectsExpectations" type="net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation" bundle="DEPARTMENT_MEMBER_RESOURCES">
+	<slot name="researchAndDevProjects" key="label.personalExpectationsManagement.numberOfresearchAndDevProjects"/>	
+	<slot name="jornalArticlePublications" key="label.personalExpectationsManagement.jornalArticlePublications"/>	
+	<slot name="bookPublications" key="label.personalExpectationsManagement.bookPublications"/>
+	<slot name="conferencePublications" key="label.personalExpectationsManagement.conferencePublications"/>	
+	<slot name="technicalReportPublications" key="label.personalExpectationsManagement.technicalReportPublications"/>
+	<slot name="patentPublications" key="label.personalExpectationsManagement.patentPublications"/>
+	<slot name="otherPublications" key="label.personalExpectationsManagement.otherPublications"/>
+	<slot name="otherPublicationsDescription" key="label.personalExpectationsManagement.otherPublicationsDescription" layout="html"/>				
+</schema>
+
+<schema name="ViewPublicationsAndProjectsMainFocusExpectations" type="net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation" bundle="DEPARTMENT_MEMBER_RESOURCES">
+	<slot name="researchAndDevMainFocus" key="label.personalExpectationsManagement.mainFocus" layout="html"/>	
+</schema>
+
+<schema name="ViewOrientationsExpectations" type="net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation" bundle="DEPARTMENT_MEMBER_RESOURCES">
+	<slot name="phdOrientations" key="label.personalExpectationsManagement.phdOrientations"/>
+	<slot name="masterDegreeOrientations" key="label.personalExpectationsManagement.masterDegreeOrientations"/>
+	<slot name="finalDegreeWorkOrientations" key="label.personalExpectationsManagement.finalDegreeWorkOrientations"/>		
+</schema>
+
+<schema name="ViewOrientationMainFocusExpectations" type="net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation" bundle="DEPARTMENT_MEMBER_RESOURCES">
+	<slot name="orientationsMainFocus" key="label.personalExpectationsManagement.mainFocus" layout="html"/>	
+</schema>
+
+<schema name="ViewUniversityServiceExpectations" type="net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation" bundle="DEPARTMENT_MEMBER_RESOURCES">
+	<slot name="departmentOrgans" key="label.personalExpectationsManagement.departmentOrgans" layout="html"/>
+	<slot name="istOrgans" key="label.personalExpectationsManagement.istOrgans" layout="html"/>
+	<slot name="utlOrgans" key="label.personalExpectationsManagement.utlOrgans" layout="html"/>		
+</schema>
+
+<schema name="ViewUniversityServiceMainFocusExpectations" type="net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation" bundle="DEPARTMENT_MEMBER_RESOURCES">
+	<slot name="universityServiceMainFocus" key="label.personalExpectationsManagement.mainFocus" layout="html"/>	
+</schema>
+
+<schema name="ViewProfessionalActivitiesExpectations" type="net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation" bundle="DEPARTMENT_MEMBER_RESOURCES">
+	<slot name="cientificComunityService" key="label.personalExpectationsManagement.cientificComunityService" layout="html"/>
+	<slot name="societyService" key="label.personalExpectationsManagement.societyService" layout="html"/>
+	<slot name="consulting" key="label.personalExpectationsManagement.consulting" layout="html"/>		
+	<slot name="companySocialOrgans" key="label.personalExpectationsManagement.companySocialOrgans" layout="html"/>			
+	<slot name="companyPositions" key="label.personalExpectationsManagement.companyPositions" layout="html"/>				
+</schema>
+
+<schema name="ViewProfessionalActivitiesMainFocusExpectations" type="net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation" bundle="DEPARTMENT_MEMBER_RESOURCES">
+	<slot name="professionalActivityMainFocus" key="label.personalExpectationsManagement.mainFocus" layout="html"/>	
+</schema>
+
+<schema name="FillGraduationExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
+	<slot name="graduations" key="label.personalExpectationsManagement.numberOfGraduations" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="graduationsDescription" key="label.personalExpectationsManagement.description" layout="rich-text">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="50"/>
+   		<property name="rows" value="10"/>
+   		<property name="config" value="intermediate" />
+   	</slot>	
+</schema>	
+
+<schema name="FillCientificPosGraduationsExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
+	<slot name="cientificPosGraduations" key="label.personalExpectationsManagement.numberOfCientificPosGraduations" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="cientificPosGraduationsDescription" key="label.personalExpectationsManagement.description" layout="rich-text">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="50"/>
+   		<property name="rows" value="10"/>
+   		<property name="config" value="intermediate" />
+   	</slot>		
+</schema>
+
+<schema name="FillProfessionalPosGraduationsExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
+	<slot name="professionalPosGraduations" key="label.personalExpectationsManagement.numberOfProfessionalPosGraduations" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="professionalPosGraduationsDescription" key="label.personalExpectationsManagement.description" layout="rich-text">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="50"/>
+   		<property name="rows" value="10"/>
+   		<property name="config" value="intermediate" />
+   	</slot>		
+</schema>	
+
+<schema name="FillSeminariesExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
+	<slot name="seminaries" key="label.personalExpectationsManagement.numberOfSeminaries" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="seminariesDescription" key="label.personalExpectationsManagement.description" layout="rich-text">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="50"/>
+   		<property name="rows" value="10"/>
+   		<property name="config" value="intermediate" />
+   	</slot>		
+</schema>	
+
+<schema name="FillEducationMainFocusExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
+	<slot name="educationMainFocus" key="label.personalExpectationsManagement.mainFocus" layout="rich-text">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="50"/>
+   		<property name="rows" value="10"/>
+   		<property name="config" value="intermediate" />
+   	</slot>		
+</schema>
+
+<schema name="FillPublicationsAndProjectsExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
+	<slot name="researchAndDevProjects" key="label.personalExpectationsManagement.numberOfresearchAndDevProjects" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>	
+	<slot name="jornalArticlePublications" key="label.personalExpectationsManagement.jornalArticlePublications" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>	
+	<slot name="bookPublications" key="label.personalExpectationsManagement.bookPublications" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="conferencePublications" key="label.personalExpectationsManagement.conferencePublications" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>	
+	<slot name="technicalReportPublications" key="label.personalExpectationsManagement.technicalReportPublications" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="patentPublications" key="label.personalExpectationsManagement.patentPublications" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="otherPublications" key="label.personalExpectationsManagement.otherPublications" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="otherPublicationsDescription" key="label.personalExpectationsManagement.otherPublicationsDescription" layout="rich-text">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="50"/>
+   		<property name="rows" value="10"/>
+   		<property name="config" value="intermediate" />
+   	</slot>						
+</schema>
+
+<schema name="FillPublicationsAndProjectsMainFocusExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
+	<slot name="researchAndDevMainFocus" key="label.personalExpectationsManagement.mainFocus" layout="rich-text">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="50"/>
+   		<property name="rows" value="10"/>
+   		<property name="config" value="intermediate" />
+   	</slot>		
+</schema>
+
+<schema name="FillOrientationsExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
+	<slot name="phdOrientations" key="label.personalExpectationsManagement.phdOrientations" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="masterDegreeOrientations" key="label.personalExpectationsManagement.masterDegreeOrientations" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="finalDegreeWorkOrientations" key="label.personalExpectationsManagement.finalDegreeWorkOrientations" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>		
+</schema>
+
+<schema name="FillOrientationMainFocusExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
+	<slot name="orientationsMainFocus" key="label.personalExpectationsManagement.mainFocus" layout="rich-text">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="50"/>
+   		<property name="rows" value="10"/>
+   		<property name="config" value="intermediate" />
+   	</slot>		
+</schema>
+
+<schema name="FillUniversityServiceExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
+	<slot name="departmentOrgans" key="label.personalExpectationsManagement.departmentOrgans" layout="rich-text">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="50"/>
+   		<property name="rows" value="10"/>
+   		<property name="config" value="intermediate" />
+   	</slot>		
+	<slot name="institutionOrgans" key="label.personalExpectationsManagement.istOrgans" layout="rich-text">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="50"/>
+   		<property name="rows" value="10"/>
+   		<property name="config" value="intermediate" />
+   	</slot>		
+	<slot name="universityOrgans" key="label.personalExpectationsManagement.utlOrgans" layout="rich-text">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="50"/>
+   		<property name="rows" value="10"/>
+   		<property name="config" value="intermediate" />
+   	</slot>		
+</schema>
+
+<schema name="FillUniversityServiceMainFocusExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
+	<slot name="universityServiceMainFocus" key="label.personalExpectationsManagement.mainFocus" layout="rich-text">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="50"/>
+   		<property name="rows" value="10"/>
+   		<property name="config" value="intermediate" />
+   	</slot>		
+</schema>
+
+<schema name="FillProfessionalActivitiesExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
+	<slot name="cientificComunityService" key="label.personalExpectationsManagement.cientificComunityService" layout="rich-text">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="50"/>
+   		<property name="rows" value="10"/>
+   		<property name="config" value="intermediate" />
+   	</slot>		
+	<slot name="societyService" key="label.personalExpectationsManagement.societyService" layout="rich-text">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="50"/>
+   		<property name="rows" value="10"/>
+   		<property name="config" value="intermediate" />
+   	</slot>		
+	<slot name="consulting" key="label.personalExpectationsManagement.consulting" layout="rich-text">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="50"/>
+   		<property name="rows" value="10"/>
+   		<property name="config" value="intermediate" />
+   	</slot>		
+	<slot name="companySocialOrgans" key="label.personalExpectationsManagement.companySocialOrgans" layout="rich-text">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="50"/>
+   		<property name="rows" value="10"/>
+   		<property name="config" value="intermediate" />
+   	</slot>		
+	<slot name="companyPositions" key="label.personalExpectationsManagement.companyPositions" layout="rich-text">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="50"/>
+   		<property name="rows" value="10"/>
+   		<property name="config" value="intermediate" />
+   	</slot>		
+</schema>
+
+<schema name="FillProfessionalActivitiesMainFocusExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
+	<slot name="professionalActivityMainFocus" key="label.personalExpectationsManagement.mainFocus" layout="rich-text">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="50"/>
+   		<property name="rows" value="10"/>
+   		<property name="config" value="intermediate" />
+   	</slot>		
+</schema>
+
+<schema name="EditGraduationExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
+	<slot name="graduations" key="label.personalExpectationsManagement.numberOfGraduations" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="graduationsDescription" key="label.personalExpectationsManagement.description" layout="rich-text">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="50"/>
+   		<property name="rows" value="10"/>
+   		<property name="config" value="intermediate" />
+   	</slot>	
+</schema>	
+
+<schema name="EditCientificPosGraduationsExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
+	<slot name="cientificPosGraduations" key="label.personalExpectationsManagement.numberOfCientificPosGraduations" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="cientificPosGraduationsDescription" key="label.personalExpectationsManagement.description" layout="rich-text">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="50"/>
+   		<property name="rows" value="10"/>
+   		<property name="config" value="intermediate" />
+   	</slot>		
+</schema>
+
+<schema name="EditProfessionalPosGraduationsExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
+	<slot name="professionalPosGraduations" key="label.personalExpectationsManagement.numberOfProfessionalPosGraduations" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="professionalPosGraduationsDescription" key="label.personalExpectationsManagement.description" layout="rich-text">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="50"/>
+   		<property name="rows" value="10"/>
+   		<property name="config" value="intermediate" />
+   	</slot>		
+</schema>	
+
+<schema name="EditSeminariesExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
+	<slot name="seminaries" key="label.personalExpectationsManagement.numberOfSeminaries" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="seminariesDescription" key="label.personalExpectationsManagement.description" layout="rich-text">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="50"/>
+   		<property name="rows" value="10"/>
+   		<property name="config" value="intermediate" />
+   	</slot>		
+</schema>	
+
+<schema name="EditEducationMainFocusExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
+	<slot name="educationMainFocus" key="label.personalExpectationsManagement.mainFocus" layout="rich-text">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="50"/>
+   		<property name="rows" value="10"/>
+   		<property name="config" value="intermediate" />
+   	</slot>		
+</schema>
+
+<schema name="EditPublicationsAndProjectsExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
+	<slot name="researchAndDevProjects" key="label.personalExpectationsManagement.numberOfresearchAndDevProjects" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>	
+	<slot name="jornalArticlePublications" key="label.personalExpectationsManagement.jornalArticlePublications" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>	
+	<slot name="bookPublications" key="label.personalExpectationsManagement.bookPublications" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="conferencePublications" key="label.personalExpectationsManagement.conferencePublications" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>	
+	<slot name="technicalReportPublications" key="label.personalExpectationsManagement.technicalReportPublications" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="patentPublications" key="label.personalExpectationsManagement.patentPublications" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="otherPublications" key="label.personalExpectationsManagement.otherPublications" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="otherPublicationsDescription" key="label.personalExpectationsManagement.otherPublicationsDescription" layout="rich-text">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="50"/>
+   		<property name="rows" value="10"/>
+   		<property name="config" value="intermediate" />
+   	</slot>						
+</schema>
+
+<schema name="EditPublicationsAndProjectsMainFocusExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
+	<slot name="researchAndDevMainFocus" key="label.personalExpectationsManagement.mainFocus" layout="rich-text">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="50"/>
+   		<property name="rows" value="10"/>
+   		<property name="config" value="intermediate" />
+   	</slot>		
+</schema>
+
+<schema name="EditOrientationsExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
+	<slot name="phdOrientations" key="label.personalExpectationsManagement.phdOrientations" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="masterDegreeOrientations" key="label.personalExpectationsManagement.masterDegreeOrientations" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="finalDegreeWorkOrientations" key="label.personalExpectationsManagement.finalDegreeWorkOrientations" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>		
+</schema>
+
+<schema name="EditOrientationMainFocusExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
+	<slot name="orientationsMainFocus" key="label.personalExpectationsManagement.mainFocus" layout="rich-text">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="50"/>
+   		<property name="rows" value="10"/>
+   		<property name="config" value="intermediate" />
+   	</slot>		
+</schema>
+
+<schema name="EditUniversityServiceExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
+	<slot name="departmentOrgans" key="label.personalExpectationsManagement.departmentOrgans" layout="rich-text">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="50"/>
+   		<property name="rows" value="10"/>
+   		<property name="config" value="intermediate" />
+   	</slot>		
+	<slot name="institutionOrgans" key="label.personalExpectationsManagement.istOrgans" layout="rich-text">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="50"/>
+   		<property name="rows" value="10"/>
+   		<property name="config" value="intermediate" />
+   	</slot>		
+	<slot name="universityOrgans" key="label.personalExpectationsManagement.utlOrgans" layout="rich-text">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="50"/>
+   		<property name="rows" value="10"/>
+   		<property name="config" value="intermediate" />
+   	</slot>		
+</schema>
+
+<schema name="EditUniversityServiceMainFocusExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
+	<slot name="universityServiceMainFocus" key="label.personalExpectationsManagement.mainFocus" layout="rich-text">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="50"/>
+   		<property name="rows" value="10"/>
+   		<property name="config" value="intermediate" />
+   	</slot>		
+</schema>
+
+<schema name="EditProfessionalActivitiesExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
+	<slot name="cientificComunityService" key="label.personalExpectationsManagement.cientificComunityService" layout="rich-text">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="50"/>
+   		<property name="rows" value="10"/>
+   		<property name="config" value="intermediate" />
+   	</slot>		
+	<slot name="societyService" key="label.personalExpectationsManagement.societyService" layout="rich-text">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="50"/>
+   		<property name="rows" value="10"/>
+   		<property name="config" value="intermediate" />
+   	</slot>		
+	<slot name="consulting" key="label.personalExpectationsManagement.consulting" layout="rich-text">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="50"/>
+   		<property name="rows" value="10"/>
+   		<property name="config" value="intermediate" />
+   	</slot>		
+	<slot name="companySocialOrgans" key="label.personalExpectationsManagement.companySocialOrgans" layout="rich-text">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="50"/>
+   		<property name="rows" value="10"/>
+   		<property name="config" value="intermediate" />
+   	</slot>		
+	<slot name="companyPositions" key="label.personalExpectationsManagement.companyPositions" layout="rich-text">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="50"/>
+   		<property name="rows" value="10"/>
+   		<property name="config" value="intermediate" />
+   	</slot>		
+</schema>
+
+<schema name="EditProfessionalActivitiesMainFocusExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
+	<slot name="professionalActivityMainFocus" key="label.personalExpectationsManagement.mainFocus" layout="rich-text">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="50"/>
+   		<property name="rows" value="10"/>
+   		<property name="config" value="intermediate" />
+   	</slot>		
+</schema>

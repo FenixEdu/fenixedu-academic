@@ -348,19 +348,7 @@
 	<definition name="search-students" extends="departmentAdmOffice.masterPage">
 		<put name="body" value="/departmentAdmOffice/searchStudents.jsp"/>
 	</definition>
-	
-	<definition name="show-definition-autoEvaluation-period" extends="departmentAdmOffice.masterPage">
-		<put name="body" value="/departmentAdmOffice/showAutoEvaluationPeriodDefinition.jsp"/>
-	</definition>
-	
-	<definition name="edit-definition-autoEvaluation-period" extends="departmentAdmOffice.masterPage">
-		<put name="body" value="/departmentAdmOffice/editAutoEvaluationPeriodDefinition.jsp"/>
-	</definition>
-
-	<definition name="create-definition-autoEvaluation-period" extends="departmentAdmOffice.masterPage">
-		<put name="body" value="/departmentAdmOffice/createAutoEvaluationPeriodDefinition.jsp"/>
-	</definition>
-	
+		
 	<!-- ==== Summaries Control === -->
 	<definition name="teacherSummariesControlList" extends="departmentAdmOffice.masterPage">
 		<put name="body" value="/directiveCouncil/summariesControl/listTeacherSummariesControl.jsp"/>
@@ -442,4 +430,37 @@
     <definition name="department-announcements-edit-announcement" extends="departmentAdmOffice.masterPage">
         <put name="body" value="/messaging/announcements/editAnnouncement.jsp" />
     </definition>    
+    
+    <!-- Teacher Auto Evaluation Period -->    
+   	<definition name="show-definition-autoEvaluation-period" extends="departmentAdmOffice.masterPage">
+		<put name="body" value="/departmentAdmOffice/teacher/teacherPersonalExpectationsManagement/showAutoEvaluationPeriodDefinition.jsp"/>
+	</definition>	
+	<definition name="edit-definition-autoEvaluation-period" extends="departmentAdmOffice.masterPage">
+		<put name="body" value="/departmentAdmOffice/teacher/teacherPersonalExpectationsManagement/editAutoEvaluationPeriodDefinition.jsp"/>
+	</definition>
+	
+	<!-- Teacher Personal Expectations Definition Period -->
+	<definition name="show-teacher-personal-expectations-definition-period" extends="departmentAdmOffice.masterPage">
+		<put name="body" value="/departmentAdmOffice/teacher/teacherPersonalExpectationsManagement/showTeacherPersonalExpectationsDefinitionPeriod.jsp"/>
+	</definition>
+	<definition name="edit-teacher-personal-expectations-definition-period" extends="departmentAdmOffice.masterPage">
+		<put name="body" value="/departmentAdmOffice/teacher/teacherPersonalExpectationsManagement/editTeacherPersonalExpectationsDefinitionPeriod.jsp"/>
+	</definition>
+			
+	<!-- Teacher Personal Expectations Visualization Period -->
+	<definition name="show-teacher-personal-expectations-visualization-period" extends="departmentAdmOffice.masterPage">
+		<put name="body" value="/departmentAdmOffice/teacher/teacherPersonalExpectationsManagement/showTeacherPersonalExpectationsVisualizationPeriod.jsp"/>
+	</definition>
+	<definition name="edit-teacher-personal-expectations-visualization-period" extends="departmentAdmOffice.masterPage">
+		<put name="body" value="/departmentAdmOffice/teacher/teacherPersonalExpectationsManagement/editTeacherPersonalExpectationsVisualizationPeriod.jsp"/>
+	</definition>
+    
+   	<!-- See Teacher Personal Expectations List -->
+	<definition name="list-teacher-personal-expectations" extends="departmentAdmOffice.masterPage">
+		<put name="body" value="/departmentAdmOffice/teacher/teacherPersonalExpectationsManagement/listTeacherPersonalExpectations.jsp"/>
+	</definition>
+	<definition name="see-teacher-personal-expectations-by-year" extends="departmentAdmOffice.masterPage">
+		<put name="body" value="/departmentAdmOffice/teacher/teacherPersonalExpectationsManagement/seeTeacherPersonalExpectations.jsp"/>
+	</definition>
+        
 </tiles-definitions>

@@ -7,20 +7,21 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 
 public class ExecutionYearBean implements Serializable {
 
-	DomainReference<ExecutionYear> executionYear;
+    private DomainReference<ExecutionYear> executionYear;
 
-	public ExecutionYearBean() {
-		setExecutionYear(null);
-	}
+    public ExecutionYearBean() {
+	setExecutionYear(null);
+    }
 
-	public ExecutionYearBean(ExecutionYear executionYear) {
-		setExecutionYear(executionYear);
-	}
-	public void setExecutionYear(ExecutionYear executionYear) {
-		this.executionYear = new DomainReference<ExecutionYear>(executionYear);
-	}
+    public ExecutionYearBean(ExecutionYear executionYear) {
+	setExecutionYear(executionYear);
+    }
 
-	public ExecutionYear getExecutionYear() {
-		return this.executionYear.getObject();
-	}
+    public void setExecutionYear(ExecutionYear executionYear) {
+	this.executionYear = new DomainReference<ExecutionYear>(executionYear);
+    }
+
+    public ExecutionYear getExecutionYear() {
+	return this.executionYear.getObject();
+    }
 }

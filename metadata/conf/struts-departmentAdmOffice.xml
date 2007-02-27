@@ -971,14 +971,6 @@
 			<forward name="showGlobalTeacherServiceDistributionsValuationByTeachersAndCourses" path="df.page.teacherServiceDistribution.showGlobalTeacherServiceDistributionsValuationByTeachersAndCourses"/>
 		</action>
 
-	<action path="/autoEvaluationTeacherExpectationManagementAction" 
-	type="net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.AutoEvaluationTeacherExpectationManagementAction"
-	parameter="method"
-	scope="request">
-	<forward name="showDefinitionPeriod" path="show-definition-autoEvaluation-period"/>
-	<forward name="editDefinitionPeriod" path="edit-definition-autoEvaluation-period"/>
-	<forward name="createDefinitionPeriod" path="create-definition-autoEvaluation-period"/>
-	</action>
 	<!--  VIGILANCY -->
 	<action path="/vigilancy/examCoordinatorManagement" 
 			type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.ExamCoordinatorManagement"
@@ -1046,6 +1038,42 @@
         <forward name="viewAnnouncement" path="department-announcements-view-announcement"/>
         <forward name="edit" path="department-announcements-edit-announcement"/>
     </action>
+        
+	<!-- Teacher Auto Evaluation Period -->
+	<action path="/autoEvaluationTeacherExpectationManagementAction" 
+			type="net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.AutoEvaluationTeacherExpectationManagementAction"
+			parameter="method"
+			scope="request">
+		<forward name="showDefinitionPeriod" path="show-definition-autoEvaluation-period"/>
+		<forward name="editDefinitionPeriod" path="edit-definition-autoEvaluation-period"/>
+	</action>
+	
+	<!-- Teacher Personal Expectations Definition Period -->
+	<action path="/teacherPersonalExpectationsDefinitionPeriod" 
+			type="net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.TeacherPersonalExpectationsDefinitionPeriodDA"
+			parameter="method"
+			scope="request">
+		<forward name="showDefinitionPeriod" path="show-teacher-personal-expectations-definition-period"/>
+		<forward name="editDefinitionPeriod" path="edit-teacher-personal-expectations-definition-period"/>
+	</action>
+	
+	<!-- Teacher Personal Expectations Visualization Period -->
+	<action path="/teacherPersonalExpectationsVisualizationPeriod" 
+			type="net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.TeacherPersonalExpectationsVisualizationPeriodDA"
+			parameter="method"
+			scope="request">
+		<forward name="showDefinitionPeriod" path="show-teacher-personal-expectations-visualization-period"/>
+		<forward name="editDefinitionPeriod" path="edit-teacher-personal-expectations-visualization-period"/>
+	</action>
+
+	<!-- List Teachers Personal Expectations -->
+	<action path="/listTeachersPersonalExpectations" 
+			type="net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.ListTeachersPersonalExpectationsDA"
+			parameter="method"
+			scope="request">
+		<forward name="listTeacherPersonalExpectations" path="list-teacher-personal-expectations"/>		
+		<forward name="seeTeacherPersonalExpectationsByYear" path="see-teacher-personal-expectations-by-year"/>	
+	</action>
 
     </action-mappings>
 
@@ -1053,6 +1081,8 @@
     <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>
     <!-- ========== Message Resources Definitions ============================ -->
     <message-resources parameter="resources.DepartmentAdmOfficeResources" null="false"/>
+    <message-resources parameter="resources.DepartmentAdmOfficeResources" key="DEPARTMENT_ADM_OFFICE_RESOURCES" null="false"/>
+    <message-resources parameter="resources.DepartmentMemberResources" key="DEPARTMENT_MEMBER_RESOURCES" null="false"/>
     <message-resources parameter="resources.SiteResources" key="SITE_RESOURCES" null="false"/>    
     <message-resources parameter="resources.EnumerationResources" key="ENUMERATION_RESOURCES" null="false"/>    
 	<message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>

@@ -18,43 +18,42 @@ import org.apache.struts.action.ActionMapping;
 
 public class AutoEvaluationTeacherExpectationAction extends FenixDispatchAction {
 
-	 public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			    HttpServletResponse response) throws Exception {
-		 
-		 String executionYearID = request.getParameter("executionYearId");
-		 if(executionYearID!=null) {
-			 ExecutionYear executionYear = (ExecutionYear) RootDomainObject.readDomainObjectByOID(ExecutionYear.class, Integer.valueOf(executionYearID));
-			 request.setAttribute("expectation",getTeacherExpectationForGivenYearInRequest(request,executionYear));
-		 }
-		 return mapping.findForward("editAutoEvaluation");
-	 }
-	 
-	 public ActionForward show(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			    HttpServletResponse response) throws Exception {
-		 
-		 IViewState viewState = RenderUtils.getViewState("executionYear");
-		 ExecutionYear year = getYear(request);   
-		 request.setAttribute("expectation",getTeacherExpectationForGivenYearInRequest(request,year));
-		 
-		 request.setAttribute("bean", new ExecutionYearBean(year));
-		 return mapping.findForward("showAutoEvaluation");
-	 }
+    public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
-	private TeacherPersonalExpectation getTeacherExpectationForGivenYearInRequest(HttpServletRequest request,ExecutionYear year) {
-		 Person person = getLoggedPerson(request);
-		 return  person.getTeacher().getTeacherPersonalExpectationByExecutionYear(year);
+	String executionYearID = request.getParameter("executionYearId");
+	if (executionYearID != null) {
+	    ExecutionYear executionYear = (ExecutionYear) RootDomainObject.readDomainObjectByOID(ExecutionYear.class, Integer.valueOf(executionYearID));
+	    request.setAttribute("expectation", getTeacherExpectationForGivenYearInRequest(request, executionYear));
 	}
+	return mapping.findForward("editAutoEvaluation");
+    }
+
+    public ActionForward show(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	
-	private ExecutionYear getYear(HttpServletRequest request) {
-		 IViewState viewState = RenderUtils.getViewState("executionYear");
-		 ExecutionYear year;
-		 if(viewState!=null) {
-			 year = (ExecutionYear) viewState.getMetaObject().getObject();
-		 }
-		 else {
-			 String id = request.getParameter("executionYearId");
-			 year = id!=null ? (ExecutionYear) RootDomainObject.readDomainObjectByOID(ExecutionYear.class,Integer.valueOf(id)) : ExecutionYear.readCurrentExecutionYear();
-		 }
-		 return year;
+	ExecutionYear year = getYear(request);
+	request.setAttribute("expectation", getTeacherExpectationForGivenYearInRequest(request, year));
+	request.setAttribute("bean", new ExecutionYearBean(year));	
+	return mapping.findForward("showAutoEvaluation");
+    }
+
+    private TeacherPersonalExpectation getTeacherExpectationForGivenYearInRequest(HttpServletRequest request, ExecutionYear year) {	
+	Person person = getLoggedPerson(request);
+	return person.getTeacher().getTeacherPersonalExpectationByExecutionYear(year);
+    }
+    
+    private ExecutionYear getYear(HttpServletRequest request) {
+	
+	IViewState viewState = RenderUtils.getViewState("executionYear");
+	ExecutionYear year;
+	if (viewState != null) {
+	    year = (ExecutionYear) viewState.getMetaObject().getObject();
+	} else {
+	    String id = request.getParameter("executionYearId");
+	    year = id != null ? (ExecutionYear) RootDomainObject.readDomainObjectByOID(
+		    ExecutionYear.class, Integer.valueOf(id)) : ExecutionYear.readCurrentExecutionYear();
 	}
+	return year;
+    }
 }

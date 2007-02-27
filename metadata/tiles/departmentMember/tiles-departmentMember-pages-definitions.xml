@@ -15,17 +15,8 @@
 	</definition>   
 	
 	<definition name="df.page.viewDepartmentTeacherExpectations.viewDepartmentTeacherExpectations" extends="departmentMember.masterPage"> 
-		<put name="body" value="/departmentMember/viewDepartmentTeachersExpectations/editTeachersExpectationAutoEvaluation.jsp" />
-	</definition>
-	
-	<definition name="show-autoEvaluation" extends="departmentMember.masterPage"> 
-		<put name="body" value="/departmentMember/viewDepartmentTeachersExpectations/showTeachersExpectationAutoEvaluation.jsp" />
+		<put name="body" value="/departmentMember/viewDepartmentTeachersExpectations/viewDepartmentTeachersExpectations.jsp" />
 	</definition>	
-
-	<definition name="edit-autoEvaluation" extends="departmentMember.masterPage"> 
-		<put name="body" value="/departmentMember/viewDepartmentTeachersExpectations/editTeachersExpectationAutoEvaluation.jsp" />
-	</definition>	
-
 
 	<definition name="df.page.viewDepartmentTeacherExpectations.print" extends="df.layout.print"> 
 		<put name="body" value="/departmentMember/viewDepartmentTeachersExpectations/printDepartmentTeachersExpectations.jsp" />
@@ -222,6 +213,37 @@
 		<put name="body" value="/departmentMember/vigilancy/createUnavailable.jsp" />
     </definition>	
 
+	<!-- Teacher Personal Expectation -->	
+	<definition name="view-teacher-personal-expectations" extends="departmentMember.masterPage" >
+		<put name="body" value="/departmentMember/expectationManagement/viewTeacherPersonalExpectation.jsp" />
+    </definition>	
+   	<definition name="manage-education-expectations" extends="departmentMember.masterPage" >
+		<put name="body" value="/departmentMember/expectationManagement/educationExpectationsManagement.jsp" />
+    </definition>		
+   	<definition name="manage-research-and-development-expectations" extends="departmentMember.masterPage" >
+		<put name="body" value="/departmentMember/expectationManagement/researchAndDevelopmentExpectationsManagement.jsp" />
+    </definition>		
+   	<definition name="manage-university-services-expectations" extends="departmentMember.masterPage" >
+		<put name="body" value="/departmentMember/expectationManagement/universityServicesExpectationsManagement.jsp" />
+    </definition>		
+   	<definition name="manage-professional-activities-expectations" extends="departmentMember.masterPage" >
+		<put name="body" value="/departmentMember/expectationManagement/professionalActivitiesExpectationsManagement.jsp" />
+    </definition>		
 
+	<!-- Teacher Auto Evaluation Expectation -->
+	<definition name="show-autoEvaluation" extends="departmentMember.masterPage"> 
+		<put name="body" value="/departmentMember/expectationManagement/showTeachersExpectationAutoEvaluation.jsp" />
+	</definition>	
+	<definition name="edit-autoEvaluation" extends="departmentMember.masterPage"> 
+		<put name="body" value="/departmentMember/expectationManagement/editTeachersExpectationAutoEvaluation.jsp" />
+	</definition>	
+	
+	<!-- See Teacher Personal Expectations List -->
+	<definition name="list-teacher-personal-expectations" extends="departmentMember.masterPage">
+		<put name="body" value="/departmentMember/expectationManagement/listTeacherPersonalExpectations.jsp"/>
+	</definition>
+	<definition name="see-teacher-personal-expectations-by-year" extends="departmentMember.masterPage">
+		<put name="body" value="/departmentMember/expectationManagement/seeTeacherPersonalExpectations.jsp"/>
+	</definition>
 
 </tiles-definitions>

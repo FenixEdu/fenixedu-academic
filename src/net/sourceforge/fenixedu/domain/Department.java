@@ -12,11 +12,9 @@ package net.sourceforge.fenixedu.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.commons.CollectionUtils;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
@@ -75,45 +73,7 @@ public class Department extends Department_Base {
 	    }
 	}
 	return null;
-    }   
-
-    public void createTeacherExpectationDefinitionPeriod(ExecutionYear executionYear, Date startDate,
-	    Date endDate) {
-
-	TeacherExpectationDefinitionPeriod teacherExpectationDefinitionPeriod = new TeacherExpectationDefinitionPeriod(
-		executionYear, startDate, endDate);
-
-	checkIfCanCreateExpectationDefinitionPeriod(executionYear);
-	this.getTeacherExpectationDefinitionPeriods().add(teacherExpectationDefinitionPeriod);
-
-    }
-
-    private void checkIfCanCreateExpectationDefinitionPeriod(ExecutionYear executionYear) {
-
-	for (TeacherExpectationDefinitionPeriod expectationDefinitionPeriod : this
-		.getTeacherExpectationDefinitionPeriods()) {
-	    if (expectationDefinitionPeriod.getExecutionYear().equals(executionYear)) {
-		throw new DomainException("error.exception.expectationPeriodForYearAlreadyExists");
-	    }
-	}
-
-    }
-
-    public TeacherExpectationDefinitionPeriod readTeacherExpectationDefinitionPeriodByExecutionYear(
-	    ExecutionYear executionYear) {
-	TeacherExpectationDefinitionPeriod result = null;
-
-	for (TeacherExpectationDefinitionPeriod teacherExpectationDefinitionPeriod : this
-		.getTeacherExpectationDefinitionPeriods()) {
-	    if (teacherExpectationDefinitionPeriod.getExecutionYear().equals(executionYear)) {
-		result = teacherExpectationDefinitionPeriod;
-		break;
-	    }
-	}
-
-	return result;
-
-    }
+    }       
 
     public List<CompetenceCourse> getCompetenceCoursesByExecutionYear(ExecutionYear executionYear) {
 	List<CompetenceCourse> competenceCourses = this.getCompetenceCourses();
@@ -223,12 +183,31 @@ public class Department extends Department_Base {
     }
     
     public TeacherAutoEvaluationDefinitionPeriod getTeacherAutoEvaluationDefinitionPeriodForExecutionYear(ExecutionYear executionYear) {
-    	for(TeacherAutoEvaluationDefinitionPeriod period : this.getTeacherAutoEvaluationDefinitionPeriods()) {
-    		if(period.getExecutionYear().equals(executionYear)) {
-    			return period;
-    		}
-    	}
-    	return null;
+	for (TeacherAutoEvaluationDefinitionPeriod period : getTeacherAutoEvaluationDefinitionPeriods()) {
+	    if (period.getExecutionYear().equals(executionYear)) {
+		return period;
+	    }
+	}
+	return null;
+    }
+    
+    public TeacherExpectationDefinitionPeriod getTeacherExpectationDefinitionPeriodForExecutionYear(ExecutionYear executionYear) {
+	for (TeacherExpectationDefinitionPeriod period : getTeacherExpectationDefinitionPeriods()) {
+	    if (period.getExecutionYear().equals(executionYear)) {
+		return period;
+	    }
+	}
+	return null;
+    }
+    
+
+    public TeacherPersonalExpectationsVisualizationPeriod getTeacherPersonalExpectationsVisualizationPeriodByExecutionYear(ExecutionYear executionYear) {	
+	for (TeacherPersonalExpectationsVisualizationPeriod period : getTeacherPersonalExpectationsVisualizationPeriods()) {
+	    if (period.getExecutionYear().equals(executionYear)) {
+		return period;		
+	    }
+	}
+	return null;
     }
 
     // -------------------------------------------------------------

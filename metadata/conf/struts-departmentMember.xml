@@ -309,15 +309,7 @@
             <forward name="showTeacherExpectations" path="df.page.viewDepartmentTeacherExpectations.viewDepartmentTeacherExpectations"/>
             <forward name="print" path="df.page.viewDepartmentTeacherExpectations.print"/>
         </action>
-        
-        <action path="/teacherExpectationAutoAvaliation" 	    
-   	        parameter="method"
-   	        scope="request"
-            type="net.sourceforge.fenixedu.presentationTier.Action.departmentMember.AutoEvaluationTeacherExpectationAction">            
-          <forward name="editAutoEvaluation" path="edit-autoEvaluation"/>
-          <forward name="showAutoEvaluation" path="show-autoEvaluation"/>
-        </action>
-        
+                        
         <!-- ============================================================ -->
     	<action path="/degreeTeachingServiceManagement" 
         	input="/degreeTeachingServiceManagement.do?method=showTeachingServiceDetails" 
@@ -543,7 +535,6 @@
 			<forward name="showGlobalTeacherServiceDistributionsValuationByTeachersAndCourses" path="df.page.teacherServiceDistribution.showGlobalTeacherServiceDistributionsValuationByTeachersAndCourses"/>
 		</action>
 
-
 		<!--  VIGILANCY -->
 		<action path="/vigilancy/vigilantManagement"
 			type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantManagement"
@@ -562,10 +553,43 @@
 			<forward name="addUnavailablePeriod" path="create-unavailablePeriod"/>
 			<forward name="addedUnavailablePeriod" path="display-convoke-map"/>
 		</action>
+		
+		<!-- Teacher Auto Evaluation Expectation -->		
+		<action path="/teacherExpectationAutoAvaliation" 	    
+   	        	parameter="method"
+   	       		scope="request"
+           		type="net.sourceforge.fenixedu.presentationTier.Action.departmentMember.AutoEvaluationTeacherExpectationAction">            
+          <forward name="editAutoEvaluation" path="edit-autoEvaluation"/>
+          <forward name="showAutoEvaluation" path="show-autoEvaluation"/>
+        </action>
+		
+		<!-- Teacher Personal Expectation -->		
+		<action path="/personalExpectationManagement" 
+				type="net.sourceforge.fenixedu.presentationTier.Action.departmentMember.PersonalExpectationManagement"
+				parameter="method"
+				scope="request">
+			<forward name="viewTeacherPersonalExpectations" path="view-teacher-personal-expectations"/>	
+			<forward name="manageEducationExpectations" path="manage-education-expectations"/>	
+			<forward name="manageResearchAndDevelopmentExpectations" path="manage-research-and-development-expectations"/>
+			<forward name="manageUniversityServicesExpectations" path="manage-university-services-expectations"/>	
+			<forward name="manageProfessionalActivitiesExpectations" path="manage-professional-activities-expectations"/>										
+		</action>				
+		
+		<!-- List Teachers Personal Expectations -->
+		<action path="/listTeachersPersonalExpectations" 
+				type="net.sourceforge.fenixedu.presentationTier.Action.departmentMember.ListOtherTeachersPersonalExpectationsDA"
+				parameter="method"
+				scope="request">
+			<forward name="listTeacherPersonalExpectations" path="list-teacher-personal-expectations"/>		
+			<forward name="seeTeacherPersonalExpectationsByYear" path="see-teacher-personal-expectations-by-year"/>	
+		</action>
+		
     </action-mappings>
     <!-- ========== Controller Configuration ================================ -->
     <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>
     <!-- ========== Message Resources Definitions ============================ -->
+    <message-resources parameter="resources.DepartmentMemberResources" key="DEPARTMENT_MEMBER_RESOURCES" null="false"/>
+    <message-resources parameter="resources.DepartmentAdmOfficeResources" key="DEPARTMENT_ADM_OFFICE_RESOURCES" null="false"/>
     <message-resources parameter="resources.DepartmentMemberResources" null="false"/>
 	<message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
 	<message-resources parameter="resources.AssiduousnessResources" key="ASSIDUOUSNESS_RESOURCES" null="false" />

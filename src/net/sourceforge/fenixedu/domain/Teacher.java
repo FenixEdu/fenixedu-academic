@@ -311,20 +311,15 @@ public class Teacher extends Teacher_Base {
 	return (lastLegalRegimen != null) ? lastLegalRegimen.getCategory() : null;
     }
 
-    public TeacherPersonalExpectation getTeacherPersonalExpectationByExecutionYear(
-	    ExecutionYear executionYear) {
+    public TeacherPersonalExpectation getTeacherPersonalExpectationByExecutionYear(ExecutionYear executionYear) {	
 	TeacherPersonalExpectation result = null;
-
-	List<TeacherPersonalExpectation> teacherPersonalExpectations = this
-		.getTeacherPersonalExpectations();
-
+	List<TeacherPersonalExpectation> teacherPersonalExpectations = this.getTeacherPersonalExpectations();
 	for (TeacherPersonalExpectation teacherPersonalExpectation : teacherPersonalExpectations) {
 	    if (teacherPersonalExpectation.getExecutionYear().equals(executionYear)) {
 		result = teacherPersonalExpectation;
 		break;
 	    }
 	}
-
 	return result;
     }
 
@@ -510,39 +505,7 @@ public class Teacher extends Teacher_Base {
 
 	return guidedThesis;
     }
-
-    public void createTeacherPersonalExpectation(
-	    net.sourceforge.fenixedu.dataTransferObject.InfoTeacherPersonalExpectation infoTeacherPersonalExpectation,
-	    ExecutionYear executionYear) {
-
-	checkIfCanCreatePersonalExpectation(executionYear);
-
-	TeacherPersonalExpectation teacherPersonalExpectation = new TeacherPersonalExpectation(
-		infoTeacherPersonalExpectation, executionYear);
-
-	addTeacherPersonalExpectations(teacherPersonalExpectation);
-
-    }
-
-    private void checkIfCanCreatePersonalExpectation(ExecutionYear executionYear) {
-	TeacherPersonalExpectation storedTeacherPersonalExpectation = getTeacherPersonalExpectationByExecutionYear(executionYear);
-
-	if (storedTeacherPersonalExpectation != null) {
-	    throw new DomainException(
-		    "error.exception.personalExpectation.expectationAlreadyExistsForExecutionYear");
-	}
-
-	TeacherExpectationDefinitionPeriod teacherExpectationDefinitionPeriod = this
-		.getCurrentWorkingDepartment().readTeacherExpectationDefinitionPeriodByExecutionYear(
-			executionYear);
-
-	if (teacherExpectationDefinitionPeriod.isPeriodOpen() == false) {
-	    throw new DomainException(
-		    "error.exception.personalExpectation.definitionPeriodForExecutionYearAlreadyExpired");
-	}
-
-    }
-
+   
     public List<TeacherServiceExemption> getServiceExemptionsWithoutMedicalSituations(
 	    YearMonthDay beginDate, YearMonthDay endDate) {
 

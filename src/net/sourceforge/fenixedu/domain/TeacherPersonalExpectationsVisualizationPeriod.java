@@ -4,22 +4,24 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.YearMonthDay;
 
-public class TeacherAutoEvaluationDefinitionPeriod extends TeacherAutoEvaluationDefinitionPeriod_Base {
-   
-    private TeacherAutoEvaluationDefinitionPeriod() {
-	super();
+public class TeacherPersonalExpectationsVisualizationPeriod extends TeacherPersonalExpectationsVisualizationPeriod_Base {
+    
+    private TeacherPersonalExpectationsVisualizationPeriod() {
+        super();
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public TeacherAutoEvaluationDefinitionPeriod(Department department, ExecutionYear executionYear, YearMonthDay startDate, YearMonthDay endDate) {
+    public TeacherPersonalExpectationsVisualizationPeriod(Department department, ExecutionYear executionYear, 
+	    YearMonthDay start, YearMonthDay end) {
+	
 	this();	
 	if(department != null && executionYear != null &&
-		department.getTeacherAutoEvaluationDefinitionPeriodForExecutionYear(executionYear) != null) {
-	    throw new DomainException("error.TeacherAutoEvaluationDefinitionPeriod.already.exists");
+		department.getTeacherPersonalExpectationsVisualizationPeriodByExecutionYear(executionYear) != null) {
+	    throw new DomainException("error.TeacherPersonalExpectationsVisualizationPeriod.already.exists");
 	}	
-	setDepartment(department);
+	setDepartment(department);	
 	setExecutionYear(executionYear);
-	setTimeInterval(startDate, endDate);
+	setTimeInterval(start, end);
     }
 
     public void edit(YearMonthDay startDate, YearMonthDay endDate) {
@@ -28,10 +30,10 @@ public class TeacherAutoEvaluationDefinitionPeriod extends TeacherAutoEvaluation
     
     public void setTimeInterval(YearMonthDay start, YearMonthDay end) {	 
 	if (start == null) {
-	    throw new DomainException("error.TeacherAutoEvaluationDefinitionPeriod.empty.startDateYearMonthDay");
+	    throw new DomainException("error.TeacherExpectationDefinitionPeriod.empty.startDateYearMonthDay");
 	}
 	if (end == null) {
-	    throw new DomainException("error.TeacherAutoEvaluationDefinitionPeriod.empty.endDateYearMonthDay");
+	    throw new DomainException("error.TeacherExpectationDefinitionPeriod.empty.endDateYearMonthDay");
 	}
 	if (!end.isAfter(start)) {
 	    throw new DomainException("error.begin.after.end");
@@ -44,11 +46,11 @@ public class TeacherAutoEvaluationDefinitionPeriod extends TeacherAutoEvaluation
 	YearMonthDay now = new YearMonthDay();
         return !getStartDateYearMonthDay().isAfter(now) && !getEndDateYearMonthDay().isBefore(now) ? Boolean.TRUE : Boolean.FALSE;    
     }
-    
+
     @Override
     public void setStartDateYearMonthDay(YearMonthDay startDateYearMonthDay) {
 	if(startDateYearMonthDay == null) {
-	    throw new DomainException("error.TeacherAutoEvaluationDefinitionPeriod.empty.startDateYearMonthDay");
+	    throw new DomainException("error.TeacherPersonalExpectationsVisualizationPeriod.empty.startDateYearMonthDay");
 	}
 	setTimeInterval(startDateYearMonthDay, getEndDateYearMonthDay());
     }   
@@ -56,7 +58,7 @@ public class TeacherAutoEvaluationDefinitionPeriod extends TeacherAutoEvaluation
     @Override
     public void setEndDateYearMonthDay(YearMonthDay endDateYearMonthDay) {
 	if(endDateYearMonthDay == null) {
-	    throw new DomainException("error.TeacherAutoEvaluationDefinitionPeriod.empty.endDate");
+	    throw new DomainException("error.TeacherPersonalExpectationsVisualizationPeriod.empty.endDate");
 	}
 	setTimeInterval(getStartDateYearMonthDay(), endDateYearMonthDay);
     }
@@ -64,7 +66,7 @@ public class TeacherAutoEvaluationDefinitionPeriod extends TeacherAutoEvaluation
     @Override
     public void setExecutionYear(ExecutionYear executionYear) {
 	if(executionYear == null) {
-	    throw new DomainException("error.TeacherAutoEvaluationDefinitionPeriod.empty.executionYear");
+	    throw new DomainException("error.TeacherPersonalExpectationsVisualizationPeriod.empty.executionYear");
 	}
 	super.setExecutionYear(executionYear);
     }
@@ -72,8 +74,8 @@ public class TeacherAutoEvaluationDefinitionPeriod extends TeacherAutoEvaluation
     @Override
     public void setDepartment(Department department) {
 	if(department == null) {
-	    throw new DomainException("error.TeacherAutoEvaluationDefinitionPeriod.empty.department");
+	    throw new DomainException("error.TeacherPersonalExpectationsVisualizationPeriod.empty.department");
 	}
 	super.setDepartment(department);
-    }     
+    }   
 }

@@ -8,7 +8,9 @@ import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public class CreateLessonPlanning extends Service {
 
-    public void run(Integer executionCourseId, MultiLanguageString title, MultiLanguageString planning, ShiftType lessonType, ExecutionCourse executionCourse) {
+    public void run(Integer executionCourseId, MultiLanguageString title, MultiLanguageString planning, 
+	    ShiftType lessonType, ExecutionCourse executionCourse) {
+	
         new LessonPlanning(title, planning, lessonType, executionCourse);
     }
 }
