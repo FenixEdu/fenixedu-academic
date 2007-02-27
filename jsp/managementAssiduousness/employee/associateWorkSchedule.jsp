@@ -25,20 +25,22 @@ function associate(workScheduleID){
 		<fr:property name="classes" value="showinfo1 thbold" />
 	</fr:layout>
 </fr:view>
-	
+
+<div class="infoop2 mbottom15">
 <logic:iterate id="workWeekScheduleBean" name="employeeScheduleBean" property="employeeWorkWeekScheduleList">
-	<strong><bean:message key="label.week"/></strong>: <bean:write name="workWeekScheduleBean" property="workWeekNumber"/>
-	<br/>
+	<p>
+	<span style="padding-right: 1em;">
+	<bean:message key="label.week"/>: <bean:write name="workWeekScheduleBean" property="workWeekNumber"/>
+	</span>
 	<bean:size id="realSize" name="workWeekScheduleBean" property="workWeekByCheckedBox.days"/>
 	<bean:define id="size" value="<%= new Integer(realSize -1).toString() %>"/>
-	<strong><bean:message key="label.days"/></strong>:
+	<bean:message key="label.days"/>:
 		<logic:iterate indexId="index" id="day" name="workWeekScheduleBean" property="workWeekByCheckedBox.days">
-			<bean:message name="day" property="name" bundle="ENUMERATION_RESOURCES"/>
-			<logic:notEqual name="index" value="<%= size %>">,	</logic:notEqual>
+			<bean:message name="day" property="name" bundle="ENUMERATION_RESOURCES"/><logic:notEqual name="index" value="<%= size %>">,	</logic:notEqual>
 		</logic:iterate>
-	<br/>
-	<br/>
+	</p>
 </logic:iterate>
+</div>
 
 <bean:define id="employeeID" name="employeeScheduleBean" property="employee.idInternal"/>
 

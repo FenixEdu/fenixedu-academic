@@ -26,16 +26,18 @@
 			</span>
 		</p>	
 
-		<div class="mbottom15">
+		<div class="mbottom2">
 		<fr:form action="/employeeAssiduousness.do?method=createMissingClockingMonth">			
+		
 			<fr:edit name="regularizationMonthFactory" visible="false"/>
 			<fr:edit id="justificationMotive" name="regularizationMonthFactory"	schema="edit.employeeMonthRegularization">
 				<fr:layout>
-					<fr:property name="classes" value="tstyle5 thlight mvert0 thright thmiddle"/>
+					<fr:property name="classes" value="tstyle5 thlight mvert0 thright thmiddle width40em"/>
 					<fr:property name="columnClasses" value="width8em,,tdclear"/>				
 				</fr:layout>
 			</fr:edit>
-			<table border="1">
+			
+			<table class="tstyle1 thlight width40em mtop1">
 				<tr>
 					<th><bean:message key="label.day"/></th>
 					<th><bean:message key="label.weekDay"/></th>					
@@ -146,12 +148,14 @@
 						</td>
 					</tr>
 				</logic:iterate>
+				<tr>
+					<td colspan="6">
+						<html:submit>
+							<bean:message key="button.confirm" />
+						</html:submit>
+					</td>
+				</tr>
 			</table>
-			<p>
-			<html:submit>
-				<bean:message key="button.confirm" />
-			</html:submit>
-			</p>			
 		</fr:form>
 		</div>
 
