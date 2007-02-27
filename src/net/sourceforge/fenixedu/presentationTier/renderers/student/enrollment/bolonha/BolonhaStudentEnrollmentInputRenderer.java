@@ -541,7 +541,6 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	    checkBox.setUserValue(degreeModuleToEnrol.getKey());
 	    degreeModulesToEnrolController.addCheckBox(checkBox);
 	    checkBoxCell.setBody(checkBox);
-	    // checkBox.setOnClick("this.form.method.value='enrolInCourseGroup';this.form.submit();");
 	}
 
     }
