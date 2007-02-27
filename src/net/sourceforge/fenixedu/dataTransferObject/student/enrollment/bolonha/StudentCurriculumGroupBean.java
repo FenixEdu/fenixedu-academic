@@ -17,8 +17,6 @@ import org.apache.commons.beanutils.BeanComparator;
 
 public class StudentCurriculumGroupBean extends StudentCurriculumModuleBean {
 
-    private static final int[] CURRICULAR_YEARS_FOR_CURRICULAR_COURSES = { 1 };
-
     private static class ComparatorByCurriculumGroupOrder implements
 	    Comparator<StudentCurriculumGroupBean> {
 
@@ -55,16 +53,22 @@ public class StudentCurriculumGroupBean extends StudentCurriculumModuleBean {
     }
 
     public static StudentCurriculumGroupBean create(final CurriculumGroup group,
-	    final ExecutionPeriod executionPeriod) {
+	    final ExecutionPeriod executionPeriod, int[] curricularYears) {
 	final StudentCurriculumGroupBean studentCurriculumGroupBean = new StudentCurriculumGroupBean(
 		group);
 
 	studentCurriculumGroupBean.setCourseGroupsToEnrol(buildCourseGroupsToEnrol(group,
 		executionPeriod));
-	studentCurriculumGroupBean.setCurricularCoursesToEnrol(buildCurricularCoursesToEnrol(group,
-		executionPeriod));
+	if (curricularYears != null) {
+	    studentCurriculumGroupBean.setCurricularCoursesToEnrol(buildCurricularCoursesToEnrol(group,
+		    executionPeriod, curricularYears));
+	} else {
+	    studentCurriculumGroupBean.setCurricularCoursesToEnrol(buildCurricularCoursesToEnrol(group,
+		    executionPeriod));
+	}
+
 	studentCurriculumGroupBean.setEnrolledCurriculumGroups(buildCurriculumGroupsEnroled(group,
-		executionPeriod));
+		executionPeriod, curricularYears));
 	studentCurriculumGroupBean.setEnrolledCurriculumCourses(buildCurricularCoursesEnroled(group,
 		executionPeriod));
 
@@ -73,10 +77,11 @@ public class StudentCurriculumGroupBean extends StudentCurriculumModuleBean {
     }
 
     private static List<StudentCurriculumGroupBean> buildCurriculumGroupsEnroled(
-	    CurriculumGroup parentGroup, ExecutionPeriod executionPeriod) {
+	    CurriculumGroup parentGroup, ExecutionPeriod executionPeriod, int[] curricularYears) {
 	final List<StudentCurriculumGroupBean> result = new ArrayList<StudentCurriculumGroupBean>();
 	for (final CurriculumGroup curriculumGroup : parentGroup.getCurriculumGroups()) {
-	    result.add(StudentCurriculumGroupBean.create(curriculumGroup, executionPeriod));
+	    result.add(StudentCurriculumGroupBean.create(curriculumGroup, executionPeriod,
+		    curricularYears));
 	}
 
 	return result;
@@ -97,7 +102,7 @@ public class StudentCurriculumGroupBean extends StudentCurriculumModuleBean {
     }
 
     private static List<DegreeModuleToEnrol> buildCurricularCoursesToEnrol(CurriculumGroup group,
-	    ExecutionPeriod executionPeriod) {
+	    ExecutionPeriod executionPeriod, int[] curricularYears) {
 	final List<DegreeModuleToEnrol> result = new ArrayList<DegreeModuleToEnrol>();
 	final List<Context> curricularCoursesToEnrol = group
 		.getCurricularCourseContextsToEnrol(executionPeriod);
@@ -105,7 +110,7 @@ public class StudentCurriculumGroupBean extends StudentCurriculumModuleBean {
 	for (final Context context : curricularCoursesToEnrol) {
 	    // NOTE: Temporary solution until first degree completes
 	    final CurricularCourse curricularCourse = (CurricularCourse) context.getChildDegreeModule();
-	    for (final int curricularYear : CURRICULAR_YEARS_FOR_CURRICULAR_COURSES) {
+	    for (final int curricularYear : curricularYears) {
 		if (context.containsSemesterAndCurricularYear(executionPeriod.getSemester(),
 			curricularYear, curricularCourse.getRegime())) {
 		    result.add(new DegreeModuleToEnrol(group, context));
@@ -115,6 +120,18 @@ public class StudentCurriculumGroupBean extends StudentCurriculumModuleBean {
 	}
 
 	return result;
+    }
+
+    private static List<DegreeModuleToEnrol> buildCurricularCoursesToEnrol(CurriculumGroup group,
+	    ExecutionPeriod executionPeriod) {
+
+	final List<DegreeModuleToEnrol> result = new ArrayList<DegreeModuleToEnrol>();
+	for (final Context context : group.getCurricularCourseContextsToEnrol(executionPeriod)) {
+	    result.add(new DegreeModuleToEnrol(group, context));
+	}
+
+	return result;
+
     }
 
     private static List<StudentCurriculumEnrolmentBean> buildCurricularCoursesEnroled(
