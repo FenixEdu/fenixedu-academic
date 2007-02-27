@@ -17,7 +17,6 @@
 <link rel="stylesheet" type="text/css" media="print" href="<%= request.getContextPath() %>/CSS/print.css" />
 <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/CSS/dotist_timetables.css" />
 <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/CSS/dotist_calendars.css" />
-<link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/CSS/table-adjustment.css" />
 <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/CSS/transitional.css" />
 
 <script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/expmenu.js"></script>
