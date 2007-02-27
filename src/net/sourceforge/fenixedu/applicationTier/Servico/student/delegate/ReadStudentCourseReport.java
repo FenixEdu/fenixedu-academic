@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.gesdis.StudentCourseReport;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -88,9 +87,9 @@ public class ReadStudentCourseReport extends Service {
 
 		InfoSiteEvaluationStatistics infoSiteEvaluationStatistics = new InfoSiteEvaluationStatistics();
 		List<Enrolment> enrolled = curricularCourse.getEnrolmentsByExecutionPeriod(executionPeriod);
-		infoSiteEvaluationStatistics.setEnrolled(new Integer(enrolled.size()));
-		infoSiteEvaluationStatistics.setEvaluated(getEvaluated(enrolled));
-		infoSiteEvaluationStatistics.setApproved(getApproved(enrolled));
+		infoSiteEvaluationStatistics.setEnrolled(enrolled.size());
+		infoSiteEvaluationStatistics.setEvaluated(Enrolment.countEvaluated(enrolled));
+		infoSiteEvaluationStatistics.setApproved(Enrolment.countApproved(enrolled));
 		InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriod.newInfoFromDomain(executionPeriod);
 		infoSiteEvaluationStatistics.setInfoExecutionPeriod(infoExecutionPeriod);
 
