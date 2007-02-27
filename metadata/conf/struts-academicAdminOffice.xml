@@ -117,6 +117,13 @@
 		<form-property name="method" type="java.lang.String" />
 		<form-property name="markSheetIDs" type="java.lang.Integer[]" />
 	</form-bean>
+	
+	
+ 	<!-- bolonhaStudentEnrollmentForm -->
+	<form-bean name="bolonhaStudentEnrollmentForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+		<form-property name="method" type="java.lang.String" />
+		<form-property name="withRules" type="java.lang.Boolean" />
+    </form-bean>
 		
     </form-beans>
 
@@ -245,18 +252,9 @@
 		        parameter="method"
 			    type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.studentEnrolment.StudentEnrolmentsDA">
 			<forward name="prepareChooseExecutionPeriod" path="student.enrolment.prepareChooseExecutionPeriod"/>
-			<forward name="showDegreeModulesToEnrol" path="student.enrolment.showDegreeModulesToEnrol"/>
 			<forward name="viewCurriculum" path="/viewCurriculum.do?method=prepare"/>
 		</action>        
-		
-		<action path="/studentOptionalEnrolments"
-				scope="request"		
-		        parameter="method"
-			    type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.studentEnrolment.StudentOptionalEnrolmentsDA">
-			<forward name="chooseOptionalEnrolments" path="student.enrolment.chooseOptionalEnrolments"/>
-			<forward name="showDegreeModulesToEnrol" path="/studentEnrolments.do?method=showDegreeModulesToEnrolOptional"/>
-		</action>        
-		
+				
 		<action path="/studentExtraEnrolments"
 				scope="request"		
 		        parameter="method"
@@ -553,6 +551,21 @@
       		<forward name="prepareCreateExternalCurricularCourse" path="externalUnits.prepareCreateExternalCurricularCourse"/>
       		<forward name="prepareCreateExternalEnrolment" path="externalUnits.prepareCreateExternalEnrolment"/>
       </action>
+      
+   		<!-- Begin : Bolonha Student Enrollment -->
+		<action path="/bolonhaStudentEnrollment"
+				type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.studentEnrolment.bolonha.AcademicAdminOfficeBolonhaStudentEnrollmentDA" 
+				parameter="method"
+				name="bolonhaStudentEnrollmentForm"
+				scope="request">
+		
+			<forward name="showDegreeModulesToEnrol" path="student.enrollment.bolonha.showDegreeModulesToEnrol" />
+			<forward name="chooseOptionalCurricularCourseToEnrol" path="student.enrollment.bolonha.chooseOptionalCurricularCourseEnrol" />
+			<forward name="showStudentEnrollmentMenu" path="/studentEnrolments.do?method=prepareFromStudentEnrollmentWithRules" />
+						
+		</action>
+		
+		<!-- End : Bolonha Student Enrollment -->
 	
     </action-mappings>
 
