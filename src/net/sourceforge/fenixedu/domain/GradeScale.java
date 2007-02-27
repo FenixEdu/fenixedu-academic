@@ -89,9 +89,9 @@ public enum GradeScale {
 	};
 	
 
-	private static final String NA = "NA";
-	private static final String RE = "RE";
-	private static final String AP = "AP";
+	public static final String NA = "NA";
+	public static final String RE = "RE";
+	public static final String AP = "AP";
 	
 	public String getName() {
         return name();
