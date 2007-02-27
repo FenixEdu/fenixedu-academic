@@ -22,12 +22,12 @@
 	
 	<%-- ****** Researcher And Development Expectations ****** --%>			
 	
-	<b><bean:message key="label.personalExpectationsManagement.message.generalInformationTitle" bundle="DEPARTMENT_MEMBER_RESOURCES"/></b>
-	<bean:message key="label.personalExpectationsManagement.message.generalInformationDescription" bundle="DEPARTMENT_MEMBER_RESOURCES"/>
+	<div class="infoop2">
+		<p><bean:message key="label.personalExpectationsManagement.message.generalInformationTitle" bundle="DEPARTMENT_MEMBER_RESOURCES"/>:</p>
+		<p><bean:message key="label.personalExpectationsManagement.message.generalInformationDescription" bundle="DEPARTMENT_MEMBER_RESOURCES"/></p>
+	</div>
 			
-	<p style='background-color: #eee; padding: 0.5em; font-size: 1.3em;'>
-		<strong><bean:message key="label.personalExpectationsManagement.investigation" bundle="DEPARTMENT_MEMBER_RESOURCES"/></strong>
-	</p>
+	<h3 class="separator2 mtop2"><bean:message key="label.personalExpectationsManagement.investigation" bundle="DEPARTMENT_MEMBER_RESOURCES"/></h3>
 
 	<logic:notEmpty name="teacherPersonalExpectationBean">		
 
@@ -44,44 +44,45 @@
 				</span></p>
 			</fr:hasMessages> 
 			
-			<div style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;">
-				<bean:message key="label.personalExpectationsManagement.publicationsAndProjects" bundle="DEPARTMENT_MEMBER_RESOURCES"/>
-			</div>
+			<p class="mbottom05"><strong><bean:message key="label.personalExpectationsManagement.publicationsAndProjects" bundle="DEPARTMENT_MEMBER_RESOURCES"/></strong></p>
 			<fr:edit id="teacherPersonalExpectationWithPublications" name="teacherPersonalExpectationBean" schema="FillPublicationsAndProjectsExpectations">	
 				<fr:layout name="tabular">
-					<fr:property name="classes" value="tstyle5 thlight"/>
+					<fr:property name="classes" value="tstyle5 thlight thright mtop05 thright mtop05"/>
+					<fr:property name="columnClasses" value="width14em,,tdclear tderror1"/>
 				</fr:layout>		
 			</fr:edit>			
 	
-				<%-- Publications And Projects Main Focus --%>
+			
+			<%-- Publications And Projects Main Focus --%>
 			<fr:edit id="teacherPersonalExpectationWithMainFocusPublications" name="teacherPersonalExpectationBean" schema="FillPublicationsAndProjectsMainFocusExpectations">	
 				<fr:layout name="tabular">
-					<fr:property name="classes" value="tstyle5 thlight"/>
+					<fr:property name="classes" value="tstyle5 thlight thright mtop05"/>
+					<fr:property name="columnClasses" value="width14em,,tdclear tderror1"/>
 				</fr:layout>		
 			</fr:edit>			
 				
-				<%-- Orientation --%>
 			
+			<%-- Orientation --%>
 			<fr:hasMessages for="teacherPersonalExpectationWithOrientations" type="conversion">
 				<p><span class="error0">			
 					<fr:message for="teacherPersonalExpectationWithOrientations" show="message"/>
 				</span></p>
 			</fr:hasMessages> 
 			
-			<div style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;">
-				<bean:message key="label.personalExpectationsManagement.orientation" bundle="DEPARTMENT_MEMBER_RESOURCES"/>
-			</div>
+			<p class="mbottom05"><strong><bean:message key="label.personalExpectationsManagement.orientation" bundle="DEPARTMENT_MEMBER_RESOURCES"/></strong></p>
 			<fr:edit id="teacherPersonalExpectationWithOrientations" name="teacherPersonalExpectationBean" schema="FillOrientationsExpectations">	
 				<fr:layout name="tabular">
-					<fr:property name="classes" value="tstyle5 thlight"/>
+					<fr:property name="classes" value="tstyle5 thlight thright mtop05"/>
+					<fr:property name="columnClasses" value="width14em,,tdclear tderror1"/>
 				</fr:layout>		
 			</fr:edit>			
 	
-				<%-- Orientation Main Focus --%>
-				
+
+			<%-- Orientation Main Focus --%>
 			<fr:edit id="teacherPersonalExpectationWithOrientationMainFocus" name="teacherPersonalExpectationBean" schema="FillOrientationMainFocusExpectations">	
 				<fr:layout name="tabular">
-					<fr:property name="classes" value="tstyle5 thlight"/>
+					<fr:property name="classes" value="tstyle5 thlight thright mtop05"/>
+					<fr:property name="columnClasses" value="width14em,,tdclear tderror1"/>
 				</fr:layout>		
 			</fr:edit>			
 		
@@ -102,53 +103,52 @@
 			<fr:form action="/personalExpectationManagement.do">
 				<html:hidden property="method" value="editResearchAndDevelopmentExpectations"/>
 			
-					<%-- Publications And Projects  --%>
-					
+				<%-- Publications And Projects  --%>
 				<fr:hasMessages for="teacherPersonalExpectationWithPublications" type="conversion">
 					<p><span class="error0">			
 						<fr:message for="teacherPersonalExpectationWithPublications" show="message"/>
 					</span></p>
 				</fr:hasMessages>
 				
-				<div style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;">
-					<bean:message key="label.personalExpectationsManagement.publicationsAndProjects" bundle="DEPARTMENT_MEMBER_RESOURCES"/>
-				</div>
+				<p class="mbottom05"><strong><bean:message key="label.personalExpectationsManagement.publicationsAndProjects" bundle="DEPARTMENT_MEMBER_RESOURCES"/></strong></p>
 				<fr:edit id="teacherPersonalExpectationWithPublications" name="teacherPersonalExpectation" schema="EditPublicationsAndProjectsExpectations">	
 					<fr:layout name="tabular">
-						<fr:property name="classes" value="tstyle5 thlight"/>
+						<fr:property name="classes" value="tstyle5 thlight thright mtop05"/>
+						<fr:property name="columnClasses" value="width14em,,tdclear tderror1"/>
 					</fr:layout>		
 				</fr:edit>			
 		
-					<%-- Publications And Projects Main Focus --%>
+
+				<%-- Publications And Projects Main Focus --%>
 				<fr:edit id="teacherPersonalExpectationWithMainFocusPublications" name="teacherPersonalExpectation" schema="EditPublicationsAndProjectsMainFocusExpectations">	
 					<fr:layout name="tabular">
-						<fr:property name="classes" value="tstyle5 thlight"/>
+						<fr:property name="classes" value="tstyle5 thlight thright mtop05"/>
+						<fr:property name="columnClasses" value="width14em,,tdclear tderror1"/>
 					</fr:layout>		
 				</fr:edit>			
 					
-					<%-- Orientation --%>
-					
+
+				<%-- Orientation --%>
 				<fr:hasMessages for="teacherPersonalExpectationWithOrientations" type="conversion">
 					<p><span class="error0">			
 						<fr:message for="teacherPersonalExpectationWithOrientations" show="message"/>
 					</span></p>
 				</fr:hasMessages>
 				
-				<div style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;">
-					<bean:message key="label.personalExpectationsManagement.orientation" bundle="DEPARTMENT_MEMBER_RESOURCES"/>
-				</div>
+				<p class="mbottom05"><strong><bean:message key="label.personalExpectationsManagement.orientation" bundle="DEPARTMENT_MEMBER_RESOURCES"/></strong></p>
 				<fr:edit id="teacherPersonalExpectationWithOrientations" name="teacherPersonalExpectation" schema="EditOrientationsExpectations">	
 					<fr:layout name="tabular">
-						<fr:property name="classes" value="tstyle5 thlight"/>
+						<fr:property name="classes" value="tstyle5 thlight thright mtop05"/>
+						<fr:property name="columnClasses" value="width14em,,tdclear tderror1"/>
 					</fr:layout>		
 				</fr:edit>			
 		
-					<%-- Orientation Main Focus --%>
-					
+				<%-- Orientation Main Focus --%>
 				<fr:edit id="teacherPersonalExpectationWithOrientationMainFocus" name="teacherPersonalExpectation" schema="EditOrientationMainFocusExpectations">	
 					<fr:layout name="tabular">
-						<fr:property name="classes" value="tstyle5 thlight"/>
-					</fr:layout>		
+						<fr:property name="classes" value="tstyle5 thlight thright mtop05"/>
+						<fr:property name="columnClasses" value="width14em,,tdclear tderror1"/>
+					</fr:layout>
 				</fr:edit>			
 			
 				<html:submit><bean:message key="link.continue" bundle="DEPARTMENT_MEMBER_RESOURCES"/></html:submit>

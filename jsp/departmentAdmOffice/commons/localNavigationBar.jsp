@@ -64,24 +64,33 @@
 					<li class="navheader">
 						<strong><bean:message key="link.group.teacherPersonalExpectations.title"/></strong>
 					</li>		
-					<li>
-						<html:link page="/teacherPersonalExpectationsDefinitionPeriod.do?method=showPeriod">
-							<bean:message key="link.teacherExpectationDefinitionPeriodManagement"/>
-						</html:link>
+					
+					<li><acronym><bean:message key="label.periodDefinition"/></acronym></li>
+
+					<li class="sub">
+						<ul>
+							<li>
+								<html:link page="/teacherPersonalExpectationsDefinitionPeriod.do?method=showPeriod">
+									<bean:message key="link.teacherExpectationDefinitionPeriodManagement"/>
+								</html:link>
+							</li>
+							<li>
+								<html:link page="/autoEvaluationTeacherExpectationManagementAction.do?method=showPeriod">
+									<bean:message key="link.defineAutoAvaliationPeriod"/>
+								</html:link>
+							</li>
+							<li>
+								<html:link page="/teacherPersonalExpectationsVisualizationPeriod.do?method=showPeriod">
+									<bean:message key="link.defineTeacherPersonalExpectationsVisualizationPeriod"/>
+								</html:link>
+							</li>
+						</ul>
 					</li>
-					<li>
-						<html:link page="/autoEvaluationTeacherExpectationManagementAction.do?method=showPeriod">
-							<bean:message key="label.defineAutoAvaliationPeriod"/>
-						</html:link>
-					</li>
-					<li>
-						<html:link page="/teacherPersonalExpectationsVisualizationPeriod.do?method=showPeriod">
-							<bean:message key="label.defineTeacherPersonalExpectationsVisualizationPeriod"/>
-						</html:link>
-					</li>
+					
+
 					<li>
 						<html:link page="/listTeachersPersonalExpectations.do?method=listTeachersPersonalExpectations">
-							<bean:message key="label.see.teachers.personal.expectations"/>
+							<bean:message key="link.see.teachers.personal.expectations"/>
 						</html:link>
 					</li>					
 				</logic:equal>

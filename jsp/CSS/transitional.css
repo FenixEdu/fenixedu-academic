@@ -100,6 +100,16 @@ ul.list5 { padding-left: 2.5em; margin-left: 0; }
 ul.list6 { margin: 0; padding: 0; } /* list without margins */
 ul.list6 li { margin: 0; padding: 0; }
 
+/* lists */
+ul.liinline {
+margin: 0;
+padding: 0;
+}
+ul.liinline li {
+display: inline;
+margin: 0;
+padding: 0 0.25em;
+}
 
 /* ----------------------
  ---- Tables -----------
@@ -143,6 +153,9 @@ table.thcenter th { text-align: center; }
 .tdleft td { text-align: left; }
 .tdright td { text-align: right; } /* take table from all, to work with tr ? */
 .tdcenter td { text-align: center; }
+
+/* background-color */
+table.thbgnone th { background: none; }
 
 /* delete? */
 table .aleft  { text-align: left; }
@@ -633,62 +646,8 @@ margin-left: 1em;
 }
 
 
-/**********************************************
-	 unused ? delete ?
-***********************************************/
-
-/* lists */
-ul.liinline {
-margin: 0;
-padding: 0;
-}
-ul.liinline li {
-display: inline;
-margin: 0;
-padding: 0 0.25em;
-}
-
-/* showinfo */
-.sfloat {
-padding: 0.5em;
-background-color: #eee;
-}
-
-.sfloat label {
-float: left;
-text-align: right;
-width: 10em;
-display: block;
-padding-right: 0.5em;
-}
-.sfloat span{
-margin-left: 11em;
-display: block;
-}
-
-
-/* Fichas */ /* to remove later? */
-tr.bordernone td { border: none; }
-tr.rowbg1 td { background-color: #fafaf6; }
-tr.rowbg2 td { background-color: #f5f5ea; }
-tr.rowbg3 td, tr.rowbg3 th { background-color: #fff; }
-.thleft th { text-align: left;}
-.thright th { text-align: right;}
-.emphasis1 th { background: #ffc; }
-.emphasis2 th { font-weight: bold; }
-tr.blackheader1 th {
-background: none;
-background-color: #000;
-color: #fff;
-border: none;
-padding: 0.5em 1em;
-font-weight: normal;
-}
-
-
-
 /* ----------------------
- ---- To organize ------
+ ------ Specific -------
 ----------------------- */
 
 /* message.invalid.password */
@@ -702,7 +661,6 @@ margin-bottom: 1em;
 div.pass_warning strong {
 background-color: #ffa;
 }
-
 
 
 /* search person */
@@ -757,7 +715,9 @@ background-color: #ffffea;
 }
 
 
-
+/* ----------------------
+ ---- To organize ------
+----------------------- */
 
 .greyBorderClass {
 background-color: #EBECED;

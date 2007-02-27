@@ -10,117 +10,174 @@
 	<logic:notEmpty name="teacherPersonalExpectation">
 			
 	<%-- ****** Education Expectations ****** --%>
+	
+	<h3 class="separator2 mtop2"><bean:message key="label.personalExpectationsManagement.education" bundle="DEPARTMENT_MEMBER_RESOURCES"/></h3>
 		
-		<p style='background-color: #eee; padding: 0.5em; font-size: 1.3em;'>
-			<strong><bean:message key="label.personalExpectationsManagement.education" bundle="DEPARTMENT_MEMBER_RESOURCES"/></strong>
-		</p>		
+		<%-- Graduations --%>
+		<p class="mbottom05"><strong><bean:message key="label.personalExpectationsManagement.graduations" bundle="DEPARTMENT_MEMBER_RESOURCES"/></strong></p>
+		<fr:view name="teacherPersonalExpectation" schema="ViewGraduationExpectations">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle1 thlight thright mtop05"/>
+				<fr:property name="columnClasses" value="width14em,"/>
+			</fr:layout>
+		</fr:view>
 		
-			<%-- Graduations --%>
+		<%-- Cientific Pos-Graduations --%>
+		<p class="mbottom05"><strong><bean:message key="label.personalExpectationsManagement.cientificPosGraduations" bundle="DEPARTMENT_MEMBER_RESOURCES"/></strong></p>
+		<fr:view name="teacherPersonalExpectation" schema="ViewCientificPosGraduationsExpectations" layout="tabular">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle1 thlight thright mtop05"/>
+				<fr:property name="columnClasses" value="width14em,"/>
+			</fr:layout>
+		</fr:view>
 		
-		<div style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;">
-			<bean:message key="label.personalExpectationsManagement.graduations" bundle="DEPARTMENT_MEMBER_RESOURCES"/>
-		</div>			
-		<fr:view name="teacherPersonalExpectation" schema="ViewGraduationExpectations" layout="tabular"/>			
+		<%-- Professional Pos-Graduations --%>
+		<p class="mbottom05"><strong><bean:message key="label.personalExpectationsManagement.professionalPosGraduations" bundle="DEPARTMENT_MEMBER_RESOURCES"/></strong></p>
+		<fr:view name="teacherPersonalExpectation" schema="ViewProfessionalPosGraduationsExpectations" layout="tabular">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle1 thlight thright mtop05"/>
+				<fr:property name="columnClasses" value="width14em,"/>
+			</fr:layout>
+		</fr:view>
 		
-			<%-- Cientific Pos-Graduations --%>
+		<%-- Seminaries --%>
+		<p class="mbottom05"><strong><bean:message key="label.personalExpectationsManagement.seminaries" bundle="DEPARTMENT_MEMBER_RESOURCES"/></strong></p>
+		<fr:view name="teacherPersonalExpectation" schema="ViewSeminariesExpectations" layout="tabular">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle1 thlight thright mtop05"/>
+				<fr:property name="columnClasses" value="width14em,"/>
+			</fr:layout>
+		</fr:view>
 		
-		<div style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;">
-			<bean:message key="label.personalExpectationsManagement.cientificPosGraduations" bundle="DEPARTMENT_MEMBER_RESOURCES"/>
-		</div>
-		<fr:view name="teacherPersonalExpectation" schema="ViewCientificPosGraduationsExpectations" layout="tabular"/>	
-		
-			<%-- Professional Pos-Graduations --%>
-		
-		<div style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;">
-			<bean:message key="label.personalExpectationsManagement.professionalPosGraduations" bundle="DEPARTMENT_MEMBER_RESOURCES"/>
-		</div>
-		<fr:view name="teacherPersonalExpectation" schema="ViewProfessionalPosGraduationsExpectations" layout="tabular"/>	
-		
-			<%-- Seminaries --%>
-		
-		<div style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;">
-			<bean:message key="label.personalExpectationsManagement.seminaries" bundle="DEPARTMENT_MEMBER_RESOURCES"/>
-		</div>
-		<fr:view name="teacherPersonalExpectation" schema="ViewSeminariesExpectations" layout="tabular"/>	
-		
-			<%-- Main Focus --%>			
-		<fr:view name="teacherPersonalExpectation" schema="ViewEducationMainFocusExpectations" layout="tabular"/>	
+		<%-- Main Focus --%>			
+		<fr:view name="teacherPersonalExpectation" schema="ViewEducationMainFocusExpectations" layout="tabular">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle1 thlight thright mtop05"/>
+				<fr:property name="columnClasses" value="width14em,"/>
+			</fr:layout>
+		</fr:view>
 		
 		<logic:empty name="noEdit">
 			<logic:equal name="teacherPersonalExpectation" property="allowedToEditExpectation" value="true">
-				<p><html:link page="/personalExpectationManagement.do?method=prepareEditEducationExpectations" paramId="teacherPersonalExpectationID" paramName="teacherPersonalExpectation" paramProperty="idInternal">
-					<bean:message key="link.edit" bundle="DEPARTMENT_MEMBER_RESOURCES"/>										
-				</html:link></p>		
+				<ul class="list5">
+					<li>
+						<html:link page="/personalExpectationManagement.do?method=prepareEditEducationExpectations" paramId="teacherPersonalExpectationID" paramName="teacherPersonalExpectation" paramProperty="idInternal">
+							<bean:message key="link.edit" bundle="DEPARTMENT_MEMBER_RESOURCES"/>										
+						</html:link>
+					</li>
+				</ul>
 			</logic:equal>
 		</logic:empty>	
 													
-	<%-- ****** Researche And Development Expectations ****** --%>			
-		
-		<p style='background-color: #eee; padding: 0.5em; font-size: 1.3em;'>
-			<strong><bean:message key="label.personalExpectationsManagement.investigation" bundle="DEPARTMENT_MEMBER_RESOURCES"/></strong>
-		</p>	
 	
-			<%-- Publications And Projects  --%>
+		<%-- ****** Researche And Development Expectations ****** --%>			
 		
-		<div style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;">
-			<bean:message key="label.personalExpectationsManagement.publicationsAndProjects" bundle="DEPARTMENT_MEMBER_RESOURCES"/>
-		</div>
-		<fr:view name="teacherPersonalExpectation" schema="ViewPublicationsAndProjectsExpectations" layout="tabular"/>	
+	<h3 class="separator2 mtop2"><bean:message key="label.personalExpectationsManagement.investigation" bundle="DEPARTMENT_MEMBER_RESOURCES"/></h3>	
 	
-			<%-- Publications And Projects Main Focus --%>
-		<fr:view name="teacherPersonalExpectation" schema="ViewPublicationsAndProjectsMainFocusExpectations" layout="tabular"/>	
+		<%-- Publications And Projects  --%>
+		<p class="mbottom05"><strong><bean:message key="label.personalExpectationsManagement.publicationsAndProjects" bundle="DEPARTMENT_MEMBER_RESOURCES"/></strong></p>
+		<fr:view name="teacherPersonalExpectation" schema="ViewPublicationsAndProjectsExpectations" layout="tabular">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle1 thlight thright mtop05"/>
+				<fr:property name="columnClasses" value="width14em,"/>
+			</fr:layout>
+		</fr:view>
+	
+		<%-- Publications And Projects Main Focus --%>
+		<fr:view name="teacherPersonalExpectation" schema="ViewPublicationsAndProjectsMainFocusExpectations" layout="tabular">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle1 thlight thright mtop05"/>
+				<fr:property name="columnClasses" value="width14em,"/>
+			</fr:layout>
+		</fr:view>
 	
 			
-			<%-- Orientation --%>
-		
-		<div style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;">
-			<bean:message key="label.personalExpectationsManagement.orientation" bundle="DEPARTMENT_MEMBER_RESOURCES"/>
-		</div>
-		<fr:view name="teacherPersonalExpectation" schema="ViewOrientationsExpectations" layout="tabular"/>	
+		<%-- Orientation --%>
+		<p class="mbottom05"><strong><bean:message key="label.personalExpectationsManagement.orientation" bundle="DEPARTMENT_MEMBER_RESOURCES"/></strong></p>
+		<fr:view name="teacherPersonalExpectation" schema="ViewOrientationsExpectations" layout="tabular">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle1 thlight thright mtop05"/>
+				<fr:property name="columnClasses" value="width14em,"/>
+			</fr:layout>
+		</fr:view>
 	
 	
-			<%-- Orientation Main Focus --%>
-		<fr:view name="teacherPersonalExpectation" schema="ViewOrientationMainFocusExpectations" layout="tabular"/>	
+		<%-- Orientation Main Focus --%>
+		<fr:view name="teacherPersonalExpectation" schema="ViewOrientationMainFocusExpectations" layout="tabular">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle1 thlight thright mtop05"/>
+				<fr:property name="columnClasses" value="width14em,"/>
+			</fr:layout>
+		</fr:view>
 	
 		<logic:empty name="noEdit">
 			<logic:equal name="teacherPersonalExpectation" property="allowedToEditExpectation" value="true">
-				<p><html:link page="/personalExpectationManagement.do?method=prepareEditResearchAndDevelopmentExpectations" paramId="teacherPersonalExpectationID" paramName="teacherPersonalExpectation" paramProperty="idInternal">
-					<bean:message key="link.edit" bundle="DEPARTMENT_MEMBER_RESOURCES"/>										
-				</html:link></p>		
+				<ul class="list5">
+					<li>
+						<html:link page="/personalExpectationManagement.do?method=prepareEditResearchAndDevelopmentExpectations" paramId="teacherPersonalExpectationID" paramName="teacherPersonalExpectation" paramProperty="idInternal">
+							<bean:message key="link.edit" bundle="DEPARTMENT_MEMBER_RESOURCES"/>										
+						</html:link>
+					</li>
+				</ul>
 			</logic:equal>
 		</logic:empty>
 		
+
 	<%-- ****** University Service Expectations ****** --%>	
 						
-		<p style='background-color: #eee; padding: 0.5em; font-size: 1.3em;'>
-			<strong><bean:message key="label.personalExpectationsManagement.universityService" bundle="DEPARTMENT_MEMBER_RESOURCES"/></strong>			
-		</p>	
+	<h3 class="separator2 mtop2"><bean:message key="label.personalExpectationsManagement.universityService" bundle="DEPARTMENT_MEMBER_RESOURCES"/></h3>	
 		
-		<fr:view name="teacherPersonalExpectation" schema="ViewUniversityServiceExpectations" layout="tabular"/>							
-		<fr:view name="teacherPersonalExpectation" schema="ViewUniversityServiceMainFocusExpectations" layout="tabular"/>	
+		<fr:view name="teacherPersonalExpectation" schema="ViewUniversityServiceExpectations" layout="tabular">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle1 thlight thright mtop05"/>
+				<fr:property name="columnClasses" value="width14em,"/>
+			</fr:layout>
+		</fr:view>							
+		<fr:view name="teacherPersonalExpectation" schema="ViewUniversityServiceMainFocusExpectations" layout="tabular">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle1 thlight thright mtop05"/>
+				<fr:property name="columnClasses" value="width14em,"/>
+			</fr:layout>
+		</fr:view>
 	
 		<logic:empty name="noEdit">	
 			<logic:equal name="teacherPersonalExpectation" property="allowedToEditExpectation" value="true">
-				<p><html:link page="/personalExpectationManagement.do?method=prepareEditUniversityServicesExpectations" paramId="teacherPersonalExpectationID" paramName="teacherPersonalExpectation" paramProperty="idInternal">
-					<bean:message key="link.edit" bundle="DEPARTMENT_MEMBER_RESOURCES"/>										
-				</html:link></p>		
+				<ul class="list5">
+					<li>
+						<html:link page="/personalExpectationManagement.do?method=prepareEditUniversityServicesExpectations" paramId="teacherPersonalExpectationID" paramName="teacherPersonalExpectation" paramProperty="idInternal">
+							<bean:message key="link.edit" bundle="DEPARTMENT_MEMBER_RESOURCES"/>										
+						</html:link>
+					</li>
+				</ul>
 			</logic:equal>
 		</logic:empty>
 							
 	<%-- ****** Professional Activity Expectations ****** --%>		
 		
-		<p style='background-color: #eee; padding: 0.5em; font-size: 1.3em;'>
-			<strong><bean:message key="label.personalExpectationsManagement.professionalActivity" bundle="DEPARTMENT_MEMBER_RESOURCES"/></strong>
-		</p>			
+	<h3 class="separator2 mtop2"><bean:message key="label.personalExpectationsManagement.professionalActivity" bundle="DEPARTMENT_MEMBER_RESOURCES"/></h3>			
 		
-		<fr:view name="teacherPersonalExpectation" schema="ViewProfessionalActivitiesExpectations" layout="tabular"/>							
-		<fr:view name="teacherPersonalExpectation" schema="ViewProfessionalActivitiesMainFocusExpectations" layout="tabular"/>	
+		<fr:view name="teacherPersonalExpectation" schema="ViewProfessionalActivitiesExpectations" layout="tabular">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle1 thlight thright mtop05"/>
+				<fr:property name="columnClasses" value="width14em,"/>
+			</fr:layout>
+		</fr:view>
+		<fr:view name="teacherPersonalExpectation" schema="ViewProfessionalActivitiesMainFocusExpectations" layout="tabular">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle1 thlight thright mtop05"/>
+				<fr:property name="columnClasses" value="width14em,"/>
+			</fr:layout>
+		</fr:view>
 	
 		<logic:empty name="noEdit">
 			<logic:equal name="teacherPersonalExpectation" property="allowedToEditExpectation" value="true">
-				<p><html:link page="/personalExpectationManagement.do?method=prepareEditProfessionalActivitiesExpectations" paramId="teacherPersonalExpectationID" paramName="teacherPersonalExpectation" paramProperty="idInternal">
-					<bean:message key="link.edit" bundle="DEPARTMENT_MEMBER_RESOURCES"/>										
-				</html:link></p>		
+				<ul class="list5">
+					<li>
+						<html:link page="/personalExpectationManagement.do?method=prepareEditProfessionalActivitiesExpectations" paramId="teacherPersonalExpectationID" paramName="teacherPersonalExpectation" paramProperty="idInternal">
+							<bean:message key="link.edit" bundle="DEPARTMENT_MEMBER_RESOURCES"/>										
+						</html:link>
+					</li>
+				</ul>
 			</logic:equal>
 		</logic:empty>	
 										

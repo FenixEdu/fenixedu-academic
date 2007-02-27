@@ -11,18 +11,20 @@
 <logic:present role="DEPARTMENT_MEMBER">
 
 	<fr:form action="/teacherExpectationAutoAvaliation.do?method=show">
-		<b><bean:message key="label.common.executionYear"/>:</b> 
+		<div class="mtop2 mbottom1">
+		<bean:message key="label.common.executionYear"/>:
 		<fr:edit id="executionYear" name="bean" slot="executionYear"> 
 			<fr:layout name="menu-select-postback">
 				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsToViewTeacherPersonalExpectationsProvider"/>
 				<fr:property name="format" value="${year}"/>
 				<fr:destination name="postback" path="/teacherExpectationAutoAvaliation.do?method=show"/>
 			</fr:layout>
-		</fr:edit>	
+		</fr:edit>
+		</div>
 	</fr:form>
 
 	<logic:notEmpty name="expectation">						
-		<p>				   	
+
 			<logic:notEmpty name="expectation" property="autoEvaluation">				
 				<p><fr:view name="expectation" property="autoEvaluation" layout="html"/></p>
 			</logic:notEmpty> 
@@ -30,27 +32,35 @@
 		   	<bean:define id="executionYearId" name="bean" property="executionYear.idInternal"/>
 		   				
 			<logic:empty name="expectation" property="autoEvaluation">
-			   	<bean:message key="label.noAutoEvaluationsForYear" />			   	
-				<p><logic:equal name="expectation" property="allowedToEditAutoEvaluation" value="true">
-					<bean:define id="executionYearId" name="bean" property="executionYear.idInternal"/>
-					<html:link page="<%= "/teacherExpectationAutoAvaliation.do?method=prepareEdit&amp;executionYearId=" + executionYearId%>">
-						<bean:message key="button.add" />
-					</html:link>
-				</logic:equal></p>			   	
+				<p class="mbottom05"><em><bean:message key="label.noAutoEvaluationsForYear" /></em></p>
+				<ul class="list5 mtop05">
+					<li>
+						<logic:equal name="expectation" property="allowedToEditAutoEvaluation" value="true">
+							<bean:define id="executionYearId" name="bean" property="executionYear.idInternal"/>
+							<html:link page="<%= "/teacherExpectationAutoAvaliation.do?method=prepareEdit&amp;executionYearId=" + executionYearId%>">
+								<bean:message key="button.add" />
+							</html:link>
+						</logic:equal>
+					</li>
+				</ul>			   	
 			</logic:empty>
 			
 			<logic:notEmpty name="expectation" property="autoEvaluation">
-				<p><logic:equal name="expectation" property="allowedToEditAutoEvaluation" value="true">
-					<html:link page="<%= "/teacherExpectationAutoAvaliation.do?method=prepareEdit&amp;executionYearId=" + executionYearId%>">
-						<bean:message key="label.edit" />
-					</html:link>
-				</logic:equal></p>
+				<logic:equal name="expectation" property="allowedToEditAutoEvaluation" value="true">
+				<ul class="list5">
+					<li>
+						<html:link page="<%= "/teacherExpectationAutoAvaliation.do?method=prepareEdit&amp;executionYearId=" + executionYearId%>">
+							<bean:message key="label.edit" />
+						</html:link>
+					</li>
+				</ul>
+				</logic:equal>
 			</logic:notEmpty>			
-		</p>		
+
 	</logic:notEmpty>
 	
 	<logic:empty name="expectation">
-		<bean:message key="label.personalExpectationsManagement.noExpectationsDefined" />		   	
+		<p class="mtop15"><em><bean:message key="label.personalExpectationsManagement.noExpectationsDefined" /></em></p>
 	</logic:empty>
 	
 </logic:present>

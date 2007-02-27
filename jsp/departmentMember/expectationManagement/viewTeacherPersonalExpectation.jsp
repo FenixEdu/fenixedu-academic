@@ -8,6 +8,7 @@
 <em><bean:message key="label.departmentMember" bundle="DEPARTMENT_MEMBER_RESOURCES"/></em>
 <h2><bean:message key="link.personalExpectationsManagement" bundle="DEPARTMENT_MEMBER_RESOURCES"/></h2>
 
+
 <logic:present role="DEPARTMENT_MEMBER">
 	
 	<logic:messagesPresent message="true">
@@ -20,28 +21,34 @@
 		<p>
 	</logic:messagesPresent>
 
-	<logic:notEmpty name="teacherPersonalExpectationBean">
 
+	<logic:notEmpty name="teacherPersonalExpectationBean">
 		<fr:form>
+			<div class="mtop2 mbottom1">
 			<fr:edit id="teacherPersonalExpectationInSelectedExecutionYear" name="teacherPersonalExpectationBean" schema="ChooseExecutionYearToViewTeacherPersonalExpectations">
 				<fr:destination name="postBack" path="/personalExpectationManagement.do?method=viewTeacherPersonalExpectationInSelectedExecutionYear"/>
 				<fr:layout name="tabular">
-					<fr:property name="classes" value="" />
+					<fr:property name="classes" value="thlight" />
 					<fr:property name="columnClasses" value="" />
 				</fr:layout>				
-			</fr:edit>	
+			</fr:edit>
+			</div>
 		</fr:form>
 
 		<logic:empty name="teacherPersonalExpectation">		
-			<p><bean:message key="label.personalExpectationsManagement.noExpectationsDefined" bundle="DEPARTMENT_MEMBER_RESOURCES"/></p>				
+			<p><em><bean:message key="label.personalExpectationsManagement.noExpectationsDefined" bundle="DEPARTMENT_MEMBER_RESOURCES"/></em></p>
 		</logic:empty>		
 
 		<logic:empty name="teacherPersonalExpectation">
 			<logic:notEmpty name="periodOpen">
 				<logic:equal name="periodOpen" value="true">
-					<p><html:link page="/personalExpectationManagement.do?method=prepareDefineTeacherPersonalExpection" paramId="executionYearID" paramName="teacherPersonalExpectationBean" paramProperty="executionYear.idInternal">
-						<bean:message key="link.personalExpectationsManagement.definePersonalExpectation" bundle="DEPARTMENT_MEMBER_RESOURCES"/>										
-					</html:link></p>		
+					<ul class="list5">
+						<li>
+							<html:link page="/personalExpectationManagement.do?method=prepareDefineTeacherPersonalExpection" paramId="executionYearID" paramName="teacherPersonalExpectationBean" paramProperty="executionYear.idInternal">
+								<bean:message key="link.personalExpectationsManagement.definePersonalExpectation" bundle="DEPARTMENT_MEMBER_RESOURCES"/>										
+							</html:link>
+						</li>
+					</ul>		
 				</logic:equal>
 			</logic:notEmpty>
 		</logic:empty>		

@@ -22,12 +22,13 @@
 
 	<%-- ****** Professional Activity Expectations ****** --%>					
 		
-	<b><bean:message key="label.personalExpectationsManagement.message.generalInformationTitle" bundle="DEPARTMENT_MEMBER_RESOURCES"/></b>
-	<bean:message key="label.personalExpectationsManagement.message.generalInformationDescription" bundle="DEPARTMENT_MEMBER_RESOURCES"/>
-		
-	<p style='background-color: #eee; padding: 0.5em; font-size: 1.3em;'>
-		<strong><bean:message key="label.personalExpectationsManagement.professionalActivity" bundle="DEPARTMENT_MEMBER_RESOURCES"/></strong>
-	</p>
+	<div class="infoop2">
+		<p><bean:message key="label.personalExpectationsManagement.message.generalInformationTitle" bundle="DEPARTMENT_MEMBER_RESOURCES"/>:</p>
+		<p><bean:message key="label.personalExpectationsManagement.message.generalInformationDescription" bundle="DEPARTMENT_MEMBER_RESOURCES"/></p>
+	</div>
+	
+	
+	<h3 class="separator2 mtop2"><bean:message key="label.personalExpectationsManagement.professionalActivity" bundle="DEPARTMENT_MEMBER_RESOURCES"/></h3>
 	
 	<logic:notEmpty name="teacherPersonalExpectationBean">				
 	
@@ -38,13 +39,15 @@
 				
 			<fr:edit id="teacherPersonalExpectationWithProfessionalActivities" name="teacherPersonalExpectationBean" schema="FillProfessionalActivitiesExpectations">	
 				<fr:layout name="tabular">
-					<fr:property name="classes" value="tstyle5 thlight"/>
+					<fr:property name="classes" value="tstyle5 thlight thright mtop05"/>
+					<fr:property name="columnClasses" value="width14em,,tdclear tderror1"/>
 				</fr:layout>		
 			</fr:edit>	
 										
 			<fr:edit id="teacherPersonalExpectationWithMainFocusProfessionalActivities" name="teacherPersonalExpectationBean" schema="FillProfessionalActivitiesMainFocusExpectations">	
 				<fr:layout name="tabular">
-					<fr:property name="classes" value="tstyle5 thlight"/>
+					<fr:property name="classes" value="tstyle5 thlight thright mtop05"/>
+					<fr:property name="columnClasses" value="width14em,,tdclear tderror1"/>
 				</fr:layout>		
 			</fr:edit>	
 	
@@ -67,13 +70,15 @@
 					
 				<fr:edit id="teacherPersonalExpectationWithProfessionalActivities" name="teacherPersonalExpectation" schema="EditProfessionalActivitiesExpectations">	
 					<fr:layout name="tabular">
-						<fr:property name="classes" value="tstyle5 thlight"/>
+						<fr:property name="classes" value="tstyle5 thlight thright mtop05"/>
+						<fr:property name="columnClasses" value="width14em,,tdclear tderror1"/>
 					</fr:layout>		
 				</fr:edit>	
 											
 				<fr:edit id="teacherPersonalExpectationWithMainFocusProfessionalActivities" name="teacherPersonalExpectation" schema="EditProfessionalActivitiesMainFocusExpectations">	
 					<fr:layout name="tabular">
-						<fr:property name="classes" value="tstyle5 thlight"/>
+						<fr:property name="classes" value="tstyle5 thlight thright mtop05"/>
+						<fr:property name="columnClasses" value="width14em,,tdclear tderror1"/>
 					</fr:layout>		
 				</fr:edit>	
 		

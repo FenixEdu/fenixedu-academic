@@ -11,28 +11,29 @@
 <logic:present role="DEPARTMENT_MEMBER">
 
 	<logic:notEmpty name="executionYearBean">
-		<p>
-			<fr:form>
-				<b><bean:message key="label.common.executionYear"/>:</b> 
-				<fr:edit id="executionYear" name="executionYearBean" slot="executionYear"> 
-					<fr:layout name="menu-select-postback">
-						<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsToViewTeacherPersonalExpectationsProvider"/>
-						<fr:property name="format" value="${year}"/>
-						<fr:destination name="postback" path="/listTeachersPersonalExpectations.do?method=listTeachersPersonalExpectationsForSelectedExecutionYear"/>
-					</fr:layout>
-				</fr:edit>	
-			</fr:form>
-		</p>
+		<fr:form>
+			<div class="mtop2 mbottom1">
+			<bean:message key="label.common.executionYear"/>:
+			<fr:edit id="executionYear" name="executionYearBean" slot="executionYear"> 
+				<fr:layout name="menu-select-postback">
+					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsToViewTeacherPersonalExpectationsProvider"/>
+					<fr:property name="format" value="${year}"/>
+					<fr:destination name="postback" path="/listTeachersPersonalExpectations.do?method=listTeachersPersonalExpectationsForSelectedExecutionYear"/>
+				</fr:layout>
+			</fr:edit>
+			</div>
+		</fr:form>
+
 	
 		<logic:empty name="teachersPersonalExpectations">
-			<p><bean:message key="label.undefined.visualization.period" bundle="DEPARTMENT_MEMBER_RESOURCES"/></p>
+			<p class="mtop15 mbottom1"><em><bean:message key="label.undefined.visualization.period" bundle="DEPARTMENT_MEMBER_RESOURCES"/></em></p>
 		</logic:empty>
 	
 		<logic:notEmpty name="teachersPersonalExpectations">
 		
 			<bean:define id="executionYear" name="executionYearBean" property="executionYear" type="net.sourceforge.fenixedu.domain.ExecutionYear"/>
 		
-			<table class="tstyle2 thleft">			
+			<table class="tstyle2 thleft thlight mtop15">
 				<tr>
 					<th><bean:message key="label.teacher.name" bundle="DEPARTMENT_MEMBER_RESOURCES"/></th>
 					<th><bean:message key="label.teacher.number" bundle="DEPARTMENT_MEMBER_RESOURCES"/></th>	
@@ -53,8 +54,8 @@
 								<bean:write name="teacher" property="person.name"/>
 							</logic:empty>							
 						</td>							
-						<td><bean:write name="teacher" property="teacherNumber"/></td>
-						<td>
+						<td class="acenter"><bean:write name="teacher" property="teacherNumber"/></td>
+						<td class="acenter">
 							<logic:notEmpty name="teacher" property="category">
 								<bean:write name="teacher" property="category.code"/>
 							</logic:notEmpty>
@@ -62,7 +63,7 @@
 								--
 							</logic:empty>
 						</td>
-						<td>
+						<td class="acenter">
 							<logic:empty name="mapEntry" property="value">
 								<bean:message key="label.no" bundle="DEPARTMENT_MEMBER_RESOURCES"/>
 							</logic:empty>

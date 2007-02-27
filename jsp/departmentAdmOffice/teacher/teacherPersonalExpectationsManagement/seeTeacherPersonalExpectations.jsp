@@ -11,7 +11,8 @@
 <logic:present role="DEPARTMENT_ADMINISTRATIVE_OFFICE">
 	
 	<bean:define id="teacher" name="teacherPersonalExpectation" property="teacher" />	
-	<p><em><bean:message key="label.common.executionYear" bundle="DEPARTMENT_ADM_OFFICE_RESOURCES"/>: <bean:write name="teacherPersonalExpectation" property="executionYear.year"/></em></p>
+
+	<p class="mtop15"><bean:message key="label.common.executionYear" bundle="DEPARTMENT_ADM_OFFICE_RESOURCES"/>: <bean:write name="teacherPersonalExpectation" property="executionYear.year"/></p>
 	
 	<ul class="mvert15">
 		<li>
@@ -22,7 +23,10 @@
 	</ul>	
 		
 	<fr:view name="teacher" schema="seeTeacherInformationForTeacherPersonalExpectation">
-		<fr:layout name="tabular" />
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle2 thlight thright thbgnone"/>
+			<fr:property name="columnClasses" value=",bold"/>
+		</fr:layout>
 	</fr:view>
 			
 	<jsp:include page="../../../departmentMember/expectationManagement/seeTeacherPersonalExpectationsByYear.jsp"/>

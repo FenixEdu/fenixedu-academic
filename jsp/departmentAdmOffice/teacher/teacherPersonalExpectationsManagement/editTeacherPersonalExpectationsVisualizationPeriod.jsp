@@ -24,13 +24,14 @@
 			</span>
 		<p>
 	</logic:messagesPresent>
-	
+
 	<logic:notEmpty name="period">		
-		<p><em><bean:message key="label.common.executionYear"/>: <bean:write name="period" property="executionYear.year"/></em></p>							
+		<p class="mtop15 mbottom05"><bean:message key="label.common.executionYear"/>: <bean:write name="period" property="executionYear.year"/></p>							
 		<bean:define id="executionYearId" name="period" property="executionYear.idInternal"/>
 		<fr:edit id="editInterval" name="period" schema="editTeacherPersonalExpectationsVisualizationPeriod" layout="tabular">
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle5"/>		
+				<fr:property name="classes" value="tstyle5 thlight thright mtop05"/>
+				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 			</fr:layout>
 			<fr:destination name="success" path="<%= "/teacherPersonalExpectationsVisualizationPeriod.do?method=showPeriodInExecutionYear&executionYearId=" + executionYearId %>"/>
 			<fr:destination name="cancel" path="/teacherPersonalExpectationsVisualizationPeriod.do?method=showPeriod"/>
@@ -38,11 +39,12 @@
 	</logic:notEmpty>	
 		
 	<logic:empty name="period">		
-		<p><em><bean:message key="label.common.executionYear"/>: <bean:write name="executionYear" property="year"/></em></p>		
+		<p class="mtop15 mbottom05"><bean:message key="label.common.executionYear"/>: <bean:write name="executionYear" property="year"/></p>
 		<bean:define id="executionYearId" name="executionYear" property="idInternal"/>
 		<fr:create id="createInterval" type="net.sourceforge.fenixedu.domain.TeacherPersonalExpectationsVisualizationPeriod" schema="createTeacherPersonalExpectationsVisualizationPeriod">
 		   	<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle5"/>		
+				<fr:property name="classes" value="tstyle5 thlight thright mtop05"/>
+				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 			</fr:layout>
 		   	<fr:hidden slot="executionYear" name="executionYear"/>
 		   	<fr:hidden slot="department" name="department"/>
