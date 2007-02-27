@@ -9820,6 +9820,24 @@
 		</filterChains>		
 	</service>
 	<service>
+		<name>DeleteClocking</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.DeleteClocking</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagementAssiduousnessAuthorization" />
+		</filterChains>		
+	</service>
+	<service>
+		<name>RestoreClocking</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.RestoreClocking</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagementAssiduousnessAuthorization" />
+		</filterChains>		
+	</service>
+	<service>
 		<name>CloseAssiduousnessMonth</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.CloseAssiduousnessMonth</implementationClass>
 		<description />

@@ -300,6 +300,24 @@ public class Assiduousness extends Assiduousness_Base {
 	return clockingsList;
     }
 
+    public List<Clocking> getClockingsAndAnulatedClockings(YearMonthDay beginDate, YearMonthDay endDate) {
+	DateInterval interval = new DateInterval(beginDate, endDate);
+	List<Clocking> clockingsList = new ArrayList<Clocking>();
+	for (AssiduousnessRecord assiduousnessRecord : getAssiduousnessRecords()) {
+	    if (assiduousnessRecord instanceof Clocking
+		    && interval.containsDate(assiduousnessRecord.getDate())) {
+		if (assiduousnessRecord.getAnulation() == null
+			|| assiduousnessRecord.getAnulation().getState() == AnulationState.INVALID) {
+		    clockingsList.add((Clocking) assiduousnessRecord);
+		} else {
+		    clockingsList.add((Clocking) assiduousnessRecord.getAnulation()
+			    .getAnulatedAssiduousnessRecord());
+		}
+	    }
+	}
+	return clockingsList;
+    }
+
     public List<Leave> getLeaves(YearMonthDay beginDate, YearMonthDay endDate) {
 	Interval interval = new Interval(beginDate.toDateTimeAtMidnight(), defaultEndWorkDay
 		.toDateTime(endDate.toDateMidnight()));

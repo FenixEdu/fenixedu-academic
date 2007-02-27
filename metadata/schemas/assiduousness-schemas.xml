@@ -70,6 +70,54 @@
 	</slot>
 </schema>
 
+<schema name="show.clockingsDaySheet.assiduosunessManager"
+	type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.ClockingsDaySheet">
+	<slot name="date.dayOfMonth" key="label.day" />
+	<slot name="weekDay" key="label.weekDay" bundle="ASSIDUOUSNESS_RESOURCES"/>	
+	<slot name="clockings" layout="flowLayout"
+		key="label.clockings/Units" bundle="ASSIDUOUSNESS_RESOURCES">
+		<property name="eachLayout" value="values" />
+		<property name="htmlSeparator" value="," />
+		<property name="eachSchema" value="show.clocking.assiduosunessManager" />
+	</slot>
+	<slot name="anulatedClockings" layout="flowLayout"
+		key="label.anulatedClockings/Units" bundle="ASSIDUOUSNESS_RESOURCES">
+		<property name="eachLayout" value="values" />
+		<property name="htmlSeparator" value="," />
+		<property name="eachSchema" value="show.anulatedClocking.assiduosunessManager" />
+	</slot>
+</schema>
+
+<schema name="show.clocking.assiduosunessManager"
+	type="net.sourceforge.fenixedu.domain.assiduousness.Clocking">
+	<slot name="timeOfDay">
+		<property name="format" value="HH:mm" />
+	</slot>
+	<slot name="clockUnit" schema="show.clockUnit" layout="values" >
+		<property name="classes" value="lowlight1" />
+	</slot>
+	<slot name="deleteSlot" layout="link" >
+		<property name="linkFormat" value="/managementAssiduousness/employeeAssiduousness.do?method=deleteClocking&amp;idInternal=${idInternal}" />
+		<property name="useParent" value="true" />
+		<property name="contextRelative" value="true"/>
+	</slot>
+</schema>
+
+<schema name="show.anulatedClocking.assiduosunessManager"
+	type="net.sourceforge.fenixedu.domain.assiduousness.Clocking">
+	<slot name="timeOfDay">
+		<property name="format" value="HH:mm" />
+	</slot>
+	<slot name="clockUnit" schema="show.clockUnit" layout="values" >
+		<property name="classes" value="lowlight1" />
+	</slot>
+	<slot name="restoreSlot" layout="link" >
+		<property name="linkFormat" value="/managementAssiduousness/employeeAssiduousness.do?method=restoreClocking&amp;idInternal=${idInternal}" />
+		<property name="useParent" value="true" />
+		<property name="contextRelative" value="true"/>
+	</slot>
+</schema>
+
 <schema name="show.clockUnit"
 	type="net.sourceforge.fenixedu.domain.assiduousness.ClockUnit">
 	<slot name="acronym" key="label.clockUnit" bundle="ASSIDUOUSNESS_RESOURCES"/>

@@ -91,6 +91,7 @@
 			<forward name="show-justifications" path="show-justifications"/>
 			<forward name="prepare-associate-schedule" path="prepare-associate-schedule"/>
 			<forward name="associate-schedule" path="associate-schedule"/>
+			<forward name="show-clockings" path="show-clockings"/>
 			<forward name="create-missing-clocking-month" path="create-missing-clocking-month"/>
 		</action>	
 		

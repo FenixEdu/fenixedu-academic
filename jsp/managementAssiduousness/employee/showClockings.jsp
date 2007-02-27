@@ -10,12 +10,9 @@
 
 <logic:present name="yearMonth">
 	<logic:present name="employee">
-
 		<bean:define id="month" name="yearMonth" property="month" />
 		<bean:define id="year" name="yearMonth" property="year" />
-		<bean:define id="employeeNumber" name="employee"
-			property="employeeNumber" />
-
+		<bean:define id="employeeNumber" name="employee" property="employeeNumber" />
 		<p><bean:message key="label.show"/>: <html:link
 			page="<%="/viewEmployeeAssiduousness.do?method=showWorkSheet&month="+month.toString()+"&year="+year.toString()+"&employeeNumber="+employeeNumber.toString()%>">
 			<bean:message key="link.workSheet" />
@@ -29,8 +26,6 @@
 			page="<%="/viewEmployeeAssiduousness.do?method=showJustifications&month="+month.toString()+"&year="+year.toString()+"&employeeNumber="+employeeNumber.toString()%>">
 			<bean:message key="link.justifications" />
 		</html:link></p>
-
-
 		<span class="toprint"><br />
 		</span>
 		<fr:view name="employee" schema="show.employeeInformation">
@@ -38,7 +33,7 @@
 				<fr:property name="classes" value="showinfo1 thbold" />
 			</fr:layout>
 		</fr:view>
-	</logic:present>
+	
 
 	<logic:messagesPresent message="true">
 		<html:messages id="message" message="true">
@@ -55,8 +50,8 @@
 				name="employeeForm" property="method" value="showClockings" />
 			<html:hidden bundle="HTMLALT_RESOURCES"
 				altKey="hidden.employeeNumber" name="employeeForm"
-				property="employeeNumber" />
-		<fr:edit name="yearMonth" schema="choose.date">
+				property="employeeNumber" value="<%=employeeNumber.toString()%>"/>
+		<fr:edit id="yearMonth" name="yearMonth" schema="choose.date">
 			<fr:layout>
 				<fr:property name="classes" value="thlight thright" />
 			</fr:layout>
@@ -66,7 +61,6 @@
 			<bean:message key="button.submit" />
 		</html:submit></p>
 	</fr:form></div>
-
 	<div class="toprint">
 	<p class="bold mbottom0"><bean:define id="month" name="yearMonth"
 		property="month" /> <bean:message key="<%=month.toString()%>"
@@ -74,6 +68,7 @@
 		property="year" /></p>
 	<br />
 	</div>
+	</logic:present>
 </logic:present>
 
 
@@ -84,11 +79,11 @@
 		</p>
 	</logic:empty>
 	<logic:notEmpty name="clockings">
-		<fr:view name="clockings" schema="show.clockingsDaySheet">
+		<fr:view name="clockings" schema="show.clockingsDaySheet.assiduosunessManager">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle1 printborder" />
 				<fr:property name="columnClasses"
-					value="bgcolor3 acenter,acenter,aleft" />
+					value="bgcolor3 acenter,acenter,aleft,aleft" />
 				<fr:property name="headerClasses" value="acenter" />
 			</fr:layout>
 		</fr:view>

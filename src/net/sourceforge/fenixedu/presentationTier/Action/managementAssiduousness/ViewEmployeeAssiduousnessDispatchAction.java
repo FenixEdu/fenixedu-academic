@@ -118,7 +118,8 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
 	YearMonthDay endDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1,
 		beginDate.dayOfMonth().getMaximumValue());
 	if (employee.getAssiduousness() != null) {
-	    List<Clocking> clockings = employee.getAssiduousness().getClockings(beginDate, endDate);
+	    List<Clocking> clockings = employee.getAssiduousness().getClockingsAndAnulatedClockings(
+		    beginDate, endDate);
 	    Collections.sort(clockings, AssiduousnessRecord.COMPARATORY_BY_DATE);
 	    HashMap<YearMonthDay, ClockingsDaySheet> clockingsDaySheetList = new HashMap<YearMonthDay, ClockingsDaySheet>();
 	    for (Clocking clocking : clockings) {
@@ -189,7 +190,7 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
     }
 
     private YearMonth getYearMonth(HttpServletRequest request, Employee employee) {
-	YearMonth yearMonth = (YearMonth) getRendererObject("yearMonth");
+	YearMonth yearMonth = (YearMonth) getRenderedObject("yearMonth");
 	if (yearMonth == null) {
 	    yearMonth = (YearMonth) request.getAttribute("yearMonth");
 	}
