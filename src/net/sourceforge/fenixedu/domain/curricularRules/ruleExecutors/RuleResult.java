@@ -24,7 +24,7 @@ public class RuleResult {
 	this.messages.addAll(messages);
     }
 
-    private RuleResultType getResult() {
+    public RuleResultType getResult() {
 	return this.result;
     }
 
@@ -39,7 +39,7 @@ public class RuleResult {
     public RuleResult and(final RuleResult ruleResult, final boolean copyMessages) {
 	final RuleResultType andResult = this.getResult().and(ruleResult.getResult());
 	final List<RuleResultMessage> messages = new ArrayList<RuleResultMessage>(getMessages());
-	if (copyMessages && (andResult == RuleResultType.FALSE) && ruleResult.isFalse()) {
+	if (copyMessages && andResult.isToCopyMessages()) {
 	    messages.addAll(ruleResult.getMessages());
 	}
 	return new RuleResult(andResult, getEnrolmentResultType().and(
@@ -53,7 +53,7 @@ public class RuleResult {
     public RuleResult or(final RuleResult ruleResult, final boolean copyMessages) {
 	final RuleResultType orResult = this.getResult().or(ruleResult.getResult());
 	final List<RuleResultMessage> messages = new ArrayList<RuleResultMessage>();
-	if (orResult == RuleResultType.FALSE) {
+	if (orResult.isToCopyMessages()) {
 	    messages.addAll(getMessages());
 	    if (copyMessages) {
 		messages.addAll(ruleResult.getMessages());
@@ -73,6 +73,10 @@ public class RuleResult {
 
     public boolean isNA() {
 	return getResult() == RuleResultType.NA;
+    }
+
+    public boolean isWarning() {
+	return getResult() == RuleResultType.WARNING;
     }
 
     public EnrolmentResultType getEnrolmentResultType() {
@@ -123,5 +127,9 @@ public class RuleResult {
 
     static public RuleResult createNA() {
 	return new RuleResult(RuleResultType.NA, EnrolmentResultType.NULL);
+    }
+
+    static public RuleResult createWarning(final List<RuleResultMessage> ruleResultMessages) {
+	return new RuleResult(RuleResultType.WARNING, EnrolmentResultType.VALIDATED, ruleResultMessages);
     }
 }
