@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.enrolment;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 
@@ -34,6 +35,15 @@ public class OptionalDegreeModuleToEnrol extends DegreeModuleToEnrol {
 
 	return false;
     }
+    
+    @Override
+    public int hashCode() {
+	int result = 17;
+	result = 37*result + getContext().hashCode();
+	result = 37*result + getCurriculumGroup().hashCode();
+	result = 37*result + getCurricularCourse().hashCode();
+	return result;
+    }
 
     public String getKey() {
 	return super.getKey() + getCurricularCourse().getClass().getName() + ":"
@@ -43,6 +53,11 @@ public class OptionalDegreeModuleToEnrol extends DegreeModuleToEnrol {
     @Override
     public boolean isOptional() {
 	return true;
+    }
+    
+    @Override
+    public Double getEctsCredits(final ExecutionPeriod executionPeriod) {
+        return getCurricularCourse().getEctsCredits(executionPeriod);
     }
     
 }
