@@ -137,6 +137,7 @@
 	<slot name="partialDate" key="label.beginDate" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="partialEndDate" key="label.endDateOrDuration" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="justificationMotive.description" key="label.justification" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="notes" key="label.notes" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="modifiedByNumber" key="label.employee" bundle="ASSIDUOUSNESS_RESOURCES"/>
 </schema>
 
@@ -440,6 +441,10 @@
 		<property name="inputFormat" value="H:m" />
 		<property name="formatText" value="hh:mm" />
 	</slot>
+	<slot name="notes" key="label.notes" bundle="ASSIDUOUSNESS_RESOURCES" layout="longText">
+		<property name="columns" value="60" />
+		<property name="rows" value="3" />
+	</slot>
 </schema>
 
 <schema name="edit.employeeOccurrenceJustificationMotive" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory">
@@ -453,6 +458,10 @@
 	</slot>
 	<slot name="endDate" >
 		<property name="format" value="dd/MM/yyyy"/>
+	</slot>
+	<slot name="notes" key="label.notes" bundle="ASSIDUOUSNESS_RESOURCES" layout="longText">
+		<property name="columns" value="60" />
+		<property name="rows" value="3" />
 	</slot>
 </schema>
 
@@ -469,6 +478,10 @@
 		<property name="format" value="HH:mm" />
 		<property name="inputFormat" value="H:m" />
 		<property name="formatText" value="hh:mm" />
+	</slot>
+	<slot name="notes" key="label.notes" bundle="ASSIDUOUSNESS_RESOURCES" layout="longText">
+		<property name="columns" value="60" />
+		<property name="rows" value="3" />
 	</slot>
 </schema>
 

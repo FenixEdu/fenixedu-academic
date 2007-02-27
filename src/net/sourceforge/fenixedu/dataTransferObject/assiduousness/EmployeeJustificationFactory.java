@@ -63,6 +63,8 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
     private TimeOfDay beginTime;
 
     private TimeOfDay endTime;
+    
+    private String notes;
 
     private DomainReference<Employee> modifiedBy;
 
@@ -107,7 +109,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			}
 			new Leave(getEmployee().getAssiduousness(), getBeginDate().toDateTime(
 				getBeginTime()), getDuration(getBeginTime(), getEndTime()),
-				getJustificationMotive(), null, null, new DateTime(), getModifiedBy());
+				getJustificationMotive(), null, getNotes(), new DateTime(), getModifiedBy());
 		    } else if (getJustificationMotive().getJustificationType().equals(
 			    JustificationType.OCCURRENCE)) {
 			if (getBeginDate() == null) {
@@ -134,7 +136,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			}
 			new Leave(getEmployee().getAssiduousness(), getBeginDate().toDateTime(
 				new TimeOfDay(0, 0, 0, gregorianChronology)), duration,
-				getJustificationMotive(), null, null, new DateTime(), getModifiedBy());
+				getJustificationMotive(), null, getNotes(), new DateTime(), getModifiedBy());
 		    } else if (getJustificationMotive().getJustificationType().equals(
 			    JustificationType.BALANCE)) {
 			if (getBeginDate() == null) {
@@ -156,7 +158,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			}
 			new Leave(getEmployee().getAssiduousness(), getBeginDate().toDateTime(
 				new TimeOfDay(0, 0, 0, gregorianChronology)), numberOfHours,
-				getJustificationMotive(), null, null, new DateTime(), getModifiedBy());
+				getJustificationMotive(), null, getNotes(), new DateTime(), getModifiedBy());
 		    } else {
 			// error - regul
 			return new ActionMessage("errors.error");
@@ -272,7 +274,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			}
 			((Leave) getJustification()).modify(getBeginDate().toDateTime(
 				new TimeOfDay(0, 0, 0, gregorianChronology)), duration,
-				getJustificationMotive(), null, null, getModifiedBy());
+				getJustificationMotive(), null, getNotes(), getModifiedBy());
 		    } else if (getJustificationMotive().getJustificationType().equals(
 			    JustificationType.BALANCE)) {
 			if (getBeginDate() == null) {
@@ -294,7 +296,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			}
 			((Leave) getJustification()).modify(getBeginDate().toDateTime(
 				new TimeOfDay(0, 0, 0, gregorianChronology)), numberOfHours,
-				getJustificationMotive(), null, null, getModifiedBy());
+				getJustificationMotive(), null, getNotes(), getModifiedBy());
 		    } else {
 			// error - regul
 			return new ActionMessage("errors.error");
@@ -638,6 +640,14 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 
     public void setAplicableWeekDays(WorkWeek aplicableWeekDays) {
 	this.aplicableWeekDays = aplicableWeekDays;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 
 }
