@@ -109,7 +109,7 @@ abstract public class CurricularRuleExecutor {
 
     
     protected RuleResult executeEnrolmentWithNoRules(final ICurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
-	final RuleResult ruleResult = executeEnrolmentWithRules(curricularRule, enrolmentContext);
+	final RuleResult ruleResult = executeEnrolmentWithRulesAndTemporaryEnrolment(curricularRule, enrolmentContext);
 	return ruleResult.isFalse() ? RuleResult.createWarning(ruleResult.getMessages()) : ruleResult;
     }
 
