@@ -21,6 +21,8 @@ import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.curricularRules.MaximumNumberOfCreditsForEnrolmentPeriod;
+import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.CurricularRuleLevel;
+import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.RuleResult;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
@@ -727,6 +729,9 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     private double getAccumulatedEctsCredits(final Enrolment enrolment) {
 	if (enrolment.isBolonha()) {
+	    if (enrolment.parentCurriculumGroupIsNoCourseGroupCurriculumGroup()) {
+		return 0d;
+	    }
 	    return isAccumulated(enrolment) ? MaximumNumberOfCreditsForEnrolmentPeriod
 		    .getAccumulatedEctsCredits(enrolment) : enrolment.getEctsCredits();
 	} else {
@@ -1886,16 +1891,18 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	}
     }
 
-    public void enrol(final Person person, final ExecutionPeriod executionPeriod,
+    public List<RuleResult> enrol(final Person person, final ExecutionPeriod executionPeriod,
 	    final Set<DegreeModuleToEnrol> degreeModulesToEnrol,
-	    final List<CurriculumModule> curriculumModulesToRemove) {
+	    final List<CurriculumModule> curriculumModulesToRemove,
+	    final CurricularRuleLevel curricularRuleLevel) {
 
 	final EnrolmentContext enrolmentContext = new EnrolmentContext(this, executionPeriod,
-		curriculumModulesToRemove);
+		curriculumModulesToRemove, curricularRuleLevel);
 	for (final DegreeModuleToEnrol moduleToEnrol : degreeModulesToEnrol) {
 	    enrolmentContext.addDegreeModuleToEvaluate(moduleToEnrol);
 	}
-	new StudentCurricularPlanEnrolment().enrol(person, enrolmentContext);
+
+	return new StudentCurricularPlanEnrolment().enrol(person, enrolmentContext);
     }
 
     public String getName() {
