@@ -1565,11 +1565,11 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return false;
     }
     
-    public Collection<Curriculum> getCurriculums() {
+    public Collection<Curriculum> getCurriculums(final ExecutionYear executionYear) {
         final Collection<Curriculum> result = new HashSet<Curriculum>();
         
         for (final CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
-            final Curriculum curriculum = curricularCourse.findLatestCurriculum();
+            final Curriculum curriculum = executionYear == null ? curricularCourse.findLatestCurriculum() : curricularCourse.findLatestCurriculumModifiedBefore(executionYear.getEndDate());
             if (curriculum != null) {
         	result.add(curriculum);
             }
