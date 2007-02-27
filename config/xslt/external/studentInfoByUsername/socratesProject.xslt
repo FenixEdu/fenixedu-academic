@@ -109,6 +109,9 @@
 
 <xsl:template match="person">
 				<dados-pessoais>
+					<username>
+						<xsl:value-of select="./username"/>
+					</username>
 					<nome>
 						<xsl:value-of select="./name"/>
 					</nome>

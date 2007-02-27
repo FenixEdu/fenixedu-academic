@@ -24,7 +24,8 @@ public class InfoExternalPersonInfo
     private String email;
     private InfoExternalIdentificationInfo identification;
     private String fiscalNumber;
-    private String accountIdentificationNumber;    
+    private String accountIdentificationNumber;
+    private String username;
     /**
      * @return Returns the accountIdentificationNumber.
      */
@@ -192,5 +193,11 @@ public class InfoExternalPersonInfo
     public void setCelularPhone(String celularPhone)
     {
         this.celularPhone = celularPhone;
+    }
+    public String getUsername() {
+        return username;
+    }
+    public void setUsername(String username) {
+        this.username = username;
     }
 }
