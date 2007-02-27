@@ -94,7 +94,7 @@ public class InfoCurriculumHistoricReport implements Serializable {
 	    if (!enrolment.isAnnulled()) {
 		this.enrolments.add(new InfoEnrolmentHistoricReport(enrolment));
 		
-		if (enrolment.isEnrolmentStateApproved() || enrolment.isEnrolmentStateNotApproved()) {
+		if (enrolment.isEvaluated()) {
 		    this.evaluated++;
 		    
 		    if (enrolment.isEnrolmentStateApproved()) {
