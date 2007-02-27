@@ -63,7 +63,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
     private TimeOfDay beginTime;
 
     private TimeOfDay endTime;
-    
+
     private String notes;
 
     private DomainReference<Employee> modifiedBy;
@@ -109,9 +109,12 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			}
 			new Leave(getEmployee().getAssiduousness(), getBeginDate().toDateTime(
 				getBeginTime()), getDuration(getBeginTime(), getEndTime()),
-				getJustificationMotive(), null, getNotes(), new DateTime(), getModifiedBy());
+				getJustificationMotive(), null, getNotes(), new DateTime(),
+				getModifiedBy());
 		    } else if (getJustificationMotive().getJustificationType().equals(
-			    JustificationType.OCCURRENCE)) {
+			    JustificationType.OCCURRENCE)
+			    || getJustificationMotive().getJustificationType().equals(
+				    JustificationType.MULTIPLE_MONTH_BALANCE)) {
 			if (getBeginDate() == null) {
 			    return new ActionMessage("errors.required", bundle
 				    .getString("label.beginDate"));
@@ -136,7 +139,8 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			}
 			new Leave(getEmployee().getAssiduousness(), getBeginDate().toDateTime(
 				new TimeOfDay(0, 0, 0, gregorianChronology)), duration,
-				getJustificationMotive(), null, getNotes(), new DateTime(), getModifiedBy());
+				getJustificationMotive(), null, getNotes(), new DateTime(),
+				getModifiedBy());
 		    } else if (getJustificationMotive().getJustificationType().equals(
 			    JustificationType.BALANCE)) {
 			if (getBeginDate() == null) {
@@ -158,7 +162,8 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			}
 			new Leave(getEmployee().getAssiduousness(), getBeginDate().toDateTime(
 				new TimeOfDay(0, 0, 0, gregorianChronology)), numberOfHours,
-				getJustificationMotive(), null, getNotes(), new DateTime(), getModifiedBy());
+				getJustificationMotive(), null, getNotes(), new DateTime(),
+				getModifiedBy());
 		    } else {
 			// error - regul
 			return new ActionMessage("errors.error");
@@ -180,21 +185,21 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			    return new ActionMessage("errors.required", bundle.getString("label.hour"));
 			}
 
-                        if (isOverlapingAnyTimeJustification()) {
-                            return new ActionMessage("errors.regularizationInsideTimeJustification");
-                        }
-                        new MissingClocking(getEmployee().getAssiduousness(), getBeginDate().toDateTime(
-                                getBeginTime()), getJustificationMotive(), getModifiedBy());
-                    } else {
-                        // erro - just
-                        return new ActionMessage("errors.error");
-                    }
-                } else {
-                    return new ActionMessage("errors.required", bundle.getString("label.regularization"));
-                }
-            }
-            return null;
-        }
+			if (isOverlapingAnyTimeJustification()) {
+			    return new ActionMessage("errors.regularizationInsideTimeJustification");
+			}
+			new MissingClocking(getEmployee().getAssiduousness(), getBeginDate().toDateTime(
+				getBeginTime()), getJustificationMotive(), getModifiedBy());
+		    } else {
+			// erro - just
+			return new ActionMessage("errors.error");
+		    }
+		} else {
+		    return new ActionMessage("errors.required", bundle.getString("label.regularization"));
+		}
+	    }
+	    return null;
+	}
     }
 
     public static class EmployeeJustificationFactoryEditor extends EmployeeJustificationFactory {
@@ -251,7 +256,9 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 				getDuration(getBeginTime(), getEndTime()), getJustificationMotive(),
 				null, null, getModifiedBy());
 		    } else if (getJustificationMotive().getJustificationType().equals(
-			    JustificationType.OCCURRENCE)) {
+			    JustificationType.OCCURRENCE)
+			    || getJustificationMotive().getJustificationType().equals(
+				    JustificationType.MULTIPLE_MONTH_BALANCE)) {
 			if (getBeginDate() == null) {
 			    return new ActionMessage("errors.required", bundle
 				    .getString("label.beginDate"));
@@ -357,7 +364,9 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 	public Object execute() {
 	    if (getJustification().getJustificationMotive().getJustificationType() != null
 		    && getJustification().getJustificationMotive().getJustificationType().equals(
-			    JustificationType.OCCURRENCE)) {
+			    JustificationType.OCCURRENCE)
+		    || getJustificationMotive().getJustificationType().equals(
+			    JustificationType.MULTIPLE_MONTH_BALANCE)) {
 		if (isDateIntervalInClosedMonth(getJustification().getDate().toYearMonthDay(),
 			((Leave) getJustification()).getDuration())) {
 		    return new ActionMessage("errors.cantDelete.datesInClosedMonth");
@@ -409,7 +418,9 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 	if (!leaves.isEmpty()) {
 	    for (Leave leave : leaves) {
 		if (leave.getJustificationMotive().getJustificationType().equals(
-			JustificationType.OCCURRENCE)) {
+			JustificationType.OCCURRENCE)
+			|| getJustificationMotive().getJustificationType().equals(
+				JustificationType.MULTIPLE_MONTH_BALANCE)) {
 		    return true;
 		} else if (leave.getJustificationMotive().getJustificationType().equals(
 			JustificationType.TIME)
@@ -643,11 +654,11 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
     }
 
     public String getNotes() {
-        return notes;
+	return notes;
     }
 
     public void setNotes(String notes) {
-        this.notes = notes;
+	this.notes = notes;
     }
 
 }
