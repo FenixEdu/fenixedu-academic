@@ -82,6 +82,10 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
 	return this.equals(curriculumModule);
     }
     
+    public boolean parentCurriculumGroupIsNoCourseGroupCurriculumGroup() {
+	return hasCurriculumGroup() && getCurriculumGroup().isNoCourseGroupCurriculumGroup();
+    }
+    
     public Set<ICurricularRule> getCurricularRules(ExecutionPeriod executionPeriod){
 	Set<ICurricularRule> result = null;
 	if(this.getCurriculumGroup() != null) {
