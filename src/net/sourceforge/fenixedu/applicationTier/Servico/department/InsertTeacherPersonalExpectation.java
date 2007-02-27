@@ -6,9 +6,10 @@ import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;
 
 public class InsertTeacherPersonalExpectation extends Service {
 
-    public void run(TeacherPersonalExpectationBean bean) {
+    public TeacherPersonalExpectation run(TeacherPersonalExpectationBean bean) {
 	if(bean != null) {
-	    new TeacherPersonalExpectation(bean);
+	    return new TeacherPersonalExpectation(bean);
 	}
+	return null;
     }
 }
