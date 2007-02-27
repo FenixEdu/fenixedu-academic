@@ -6,6 +6,7 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoCourseReport;
@@ -18,6 +19,7 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.Shift;
@@ -195,7 +197,7 @@ public class InfoExecutionCourse extends InfoObject {
 
 	    for (final CurricularCourse curricularCourse : getExecutionCourse().getAssociatedCurricularCourses()) {
 		final InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
-		infoCurricularCourse.setInfoScopes(getInfoScopes(curricularCourse));
+		infoCurricularCourse.setInfoScopes(getInfoScopes(curricularCourse.getScopesSet()));
 		
 		result.add(infoCurricularCourse);
 	    }
@@ -206,16 +208,29 @@ public class InfoExecutionCourse extends InfoObject {
 	}
     }
 
-    private List<InfoCurricularCourseScope> getInfoScopes(final CurricularCourse curricularCourse) {
+    private List<InfoCurricularCourseScope> getInfoScopes(final Collection<CurricularCourseScope> curricularCourseScopes) {
         final List<InfoCurricularCourseScope> result = new ArrayList<InfoCurricularCourseScope>();
         
-        for (final CurricularCourseScope curricularCourseScope : curricularCourse.getScopesSet()) {
+        for (final CurricularCourseScope curricularCourseScope : curricularCourseScopes) {
             result.add(InfoCurricularCourseScope.newInfoFromDomain(curricularCourseScope));
         }
         
         return result;
     }
 
+    public List<InfoCurricularCourse> getAssociatedInfoCurricularCourses(final ExecutionYear executionYear) {
+	List<InfoCurricularCourse> result = new ArrayList<InfoCurricularCourse>();
+
+	for (final CurricularCourse curricularCourse : getExecutionCourse().getAssociatedCurricularCourses()) {
+	    final InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
+	    infoCurricularCourse.setInfoScopes(getInfoScopes(curricularCourse.findCurricularCourseScopesIntersectingPeriod(executionYear.getBeginDate(), executionYear.getEndDate())));
+		
+	    result.add(infoCurricularCourse);
+	}
+
+	return result;
+    }
+    
     public List getAssociatedInfoExams() {
 	if (filteredAssociatedInfoExams == null) {
 	    List<InfoExam> result = new ArrayList<InfoExam>();
