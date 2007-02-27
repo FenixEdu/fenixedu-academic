@@ -5,8 +5,8 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <h2><bean:message key="title.teachingReport"/></h2>
 <logic:present name="siteView">
-<bean:define id="siteCourseInformation" name="siteView" property="component"/>
-<bean:define id="executionCourse" name="siteCourseInformation" property="infoExecutionCourse"/>
+<bean:define id="infoSiteCourseInformation" name="siteView" property="component"/>
+<bean:define id="executionCourse" name="infoSiteCourseInformation" property="infoExecutionCourse"/>
 <bean:define id="executionPeriod" name="executionCourse" property="infoExecutionPeriod"/>
 <bean:define id="executionYear" name="executionPeriod" property="infoExecutionYear"/>
 <table width="90%" border="0" cellspacing="1" style="border: 1px solid #666;">
@@ -23,7 +23,7 @@
 	<tr>
 		<td><strong><bean:message key="message.teachingReport.responsibleTeacher"/></strong></td>
 		<td>
-			<logic:iterate id="infoTeacher" name="siteCourseInformation" property="infoResponsibleTeachers">
+			<logic:iterate id="infoTeacher" name="infoSiteCourseInformation" property="infoResponsibleTeachers">
 				<bean:write name="infoTeacher" property="infoPerson.nome" />
 				<br />
 			</logic:iterate>	
@@ -32,7 +32,7 @@
 	<tr>
 		<td><strong><bean:message key="message.teachingReport.courseDepartment"/></strong></td>
 		<td>
-			<logic:iterate id="infoDepartment" name="siteCourseInformation" property="infoDepartments">
+			<logic:iterate id="infoDepartment" name="infoSiteCourseInformation" property="infoDepartments">
 				<logic:present name="infoDepartment" property="name" >
 					<bean:write name="infoDepartment" property="name" />				
 				</logic:present>
@@ -47,7 +47,7 @@
 	<tr>
 		<td><strong><bean:message key="message.teachingReport.courseURL"/></strong></td>
 		<td>
-				<bean:define id="objectCode" name="siteCourseInformation" property="infoExecutionCourse.idInternal"/>
+				<bean:define id="objectCode" name="infoSiteCourseInformation" property="infoExecutionCourse.idInternal"/>
 				<bean:message key="fenix.url" bundle="GLOBAL_RESOURCES"/>publico/executionCourse.do?method=firstPage&amp;executionCourseID=<%= objectCode %>
 		</td>
 	</tr>
@@ -56,7 +56,7 @@
 <h3 class="bluetxt"><bean:message key="message.teachingReport.executionYear" />
 &nbsp;<bean:write name="executionYear" property="year" />*</h3>
 
-<logic:iterate id="siteEvaluationInformation" name="siteCourseInformation" property="infoSiteEvaluationInformations">
+<logic:iterate id="siteEvaluationInformation" name="infoSiteCourseInformation" property="infoSiteEvaluationInformations">
 	<bean:define id="evaluated" name="siteEvaluationInformation" property="infoSiteEvaluationStatistics.evaluated" type="java.lang.Integer"/>
 	<bean:define id="enrolled" name="siteEvaluationInformation" property="infoSiteEvaluationStatistics.enrolled" type="java.lang.Integer"/>
 	<bean:define id="approved" name="siteEvaluationInformation" property="infoSiteEvaluationStatistics.approved" type="java.lang.Integer"/>
@@ -150,7 +150,18 @@
 	<bean:message key="message.teachingReport.note2"/>
 </p>
 <h3 class="bluetxt"><bean:message key="message.teachingReport.report"/></h3>
-<p><bean:write name="siteCourseInformation" property="infoCourseReport.report" filter="false"/></p>
+
+<p>
+	<logic:present name="infoSiteCourseInformation" property="infoCourseReport">
+		<logic:notEmpty name="infoSiteCourseInformation" property="infoCourseReport.report">
+			<bean:write name="infoSiteCourseInformation" property="infoCourseReport.report" filter="false"/>
+		</logic:notEmpty>
+	</logic:present>
+	<logic:empty name="infoSiteCourseInformation" property="infoCourseReport">
+		<bean:message key="message.courseInformation.notYetAvailable"/>
+	</logic:empty>
+</p>
+
 <strong><bean:message key="message.teachingReport.text1"/>
 <br />
 <ul>

@@ -280,12 +280,12 @@
 	<table width="100%" cellpadding="0" cellspacing="0" style="margin-top:10px">
 		<tr>
 			<td>
-				<logic:present name="siteCourseInformation" property="infoCourseReport.report">
+				<logic:present name="siteCourseInformation" property="infoCourseReport">
 					<logic:notEmpty name="siteCourseInformation" property="infoCourseReport.report">
 						<bean:write name="siteCourseInformation" property="infoCourseReport.report"/>
 					</logic:notEmpty>
 				</logic:present>
-				<logic:empty name="siteCourseInformation" property="infoCourseReport.report">
+				<logic:empty name="siteCourseInformation" property="infoCourseReport">
 						<bean:message key="message.courseInformation.notYetAvailable"/>
 				</logic:empty>
 			</td> 

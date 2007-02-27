@@ -365,12 +365,12 @@
 	<table width="100%" cellpadding="0" cellspacing="0" style="margin-top:10px">
 		<tr>
 			<td>
-				<logic:present name="infoSiteCourseInformation" property="infoCourseReport.report">
+				<logic:present name="infoSiteCourseInformation" property="infoCourseReport">
 					<logic:notEmpty name="infoSiteCourseInformation" property="infoCourseReport.report">
 						<bean:write name="infoSiteCourseInformation" property="infoCourseReport.report"/>
 					</logic:notEmpty>
 				</logic:present>
-				<logic:empty name="infoSiteCourseInformation" property="infoCourseReport.report">
+				<logic:empty name="infoSiteCourseInformation" property="infoCourseReport">
 						<bean:message key="message.courseInformation.notYetAvailable"/>
 				</logic:empty>
 			</td> 
