@@ -349,8 +349,8 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
             final InfoSiteEvaluationStatistics infoSiteEvaluationStatistics = new InfoSiteEvaluationStatistics();
             final List<Enrolment> enrolled = curricularCourse.getEnrolmentsByExecutionPeriod(executionPeriod);
             infoSiteEvaluationStatistics.setEnrolled(enrolled.size());
-            infoSiteEvaluationStatistics.setEvaluated(getEvaluated(enrolled));
-            infoSiteEvaluationStatistics.setApproved(getApproved(enrolled));
+            infoSiteEvaluationStatistics.setEvaluated(Enrolment.countEvaluated(enrolled));
+            infoSiteEvaluationStatistics.setApproved(Enrolment.countApproved(enrolled));
             infoSiteEvaluationStatistics.setInfoExecutionPeriod(InfoExecutionPeriod.newInfoFromDomain(executionPeriod));
 
             infoSiteEvaluationInformation.setInfoSiteEvaluationStatistics(infoSiteEvaluationStatistics);
@@ -360,35 +360,6 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
             result.add(infoSiteEvaluationInformation);
         }
 
-        return result;
-    }
-
-    private int getEvaluated(List enrolments) {
-        int result = 0;
-        
-        Iterator iter = enrolments.iterator();
-        while (iter.hasNext()) {
-            Enrolment enrolment = (Enrolment) iter.next();
-            if (enrolment.isEnrolmentStateApproved()
-                    || enrolment.isEnrolmentStateNotApproved()) {
-                result++;
-            }
-        }
-        
-        return result;
-    }
-
-    private int getApproved(List enrolments) {
-        int result = 0;
-        
-        Iterator iter = enrolments.iterator();
-        while (iter.hasNext()) {
-            Enrolment enrolment = (Enrolment) iter.next();
-            if (enrolment.isEnrolmentStateApproved()) {
-                result++;
-            }
-        }
-        
         return result;
     }
 
@@ -412,10 +383,10 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
             final InfoSiteEvaluationStatistics infoSiteEvaluationStatistics = new InfoSiteEvaluationStatistics();
             infoSiteEvaluationStatistics.setInfoExecutionPeriod(InfoExecutionPeriod.newInfoFromDomain(executionPeriod));
             
-            List<Enrolment> enrolled = curricularCourse.getEnrolmentsByExecutionPeriod(executionPeriod);
+            final List<Enrolment> enrolled = curricularCourse.getEnrolmentsByExecutionPeriod(executionPeriod);
             infoSiteEvaluationStatistics.setEnrolled(enrolled.size());
-            infoSiteEvaluationStatistics.setEvaluated(getEvaluated(enrolled));
-            infoSiteEvaluationStatistics.setApproved(getApproved(enrolled));
+            infoSiteEvaluationStatistics.setEvaluated(Enrolment.countEvaluated(enrolled));
+            infoSiteEvaluationStatistics.setApproved(Enrolment.countApproved(enrolled));
             
             result.add(infoSiteEvaluationStatistics);
         }

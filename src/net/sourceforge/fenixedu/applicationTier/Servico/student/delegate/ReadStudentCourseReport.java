@@ -42,7 +42,7 @@ public class ReadStudentCourseReport extends Service {
 		final CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(objectId);
 		StudentCourseReport studentCourseReport = curricularCourse.getStudentCourseReport();
 
-		List infoScopes = (List) CollectionUtils.collect(curricularCourse.getScopes(),
+		List<InfoCurricularCourseScope> infoScopes = (List) CollectionUtils.collect(curricularCourse.getScopes(),
 				new Transformer() {
 
 					public Object transform(Object arg0) {
@@ -99,7 +99,7 @@ public class ReadStudentCourseReport extends Service {
 
 	private List getInfoSiteEvaluationsHistory(ExecutionPeriod executionPeriodToTest,
 			CurricularCourse curricularCourse) {
-		List infoSiteEvaluationsHistory = new ArrayList();
+		List<InfoSiteEvaluationStatistics> infoSiteEvaluationsHistory = new ArrayList<InfoSiteEvaluationStatistics>();
 		List executionPeriods = (List) CollectionUtils.collect(curricularCourse
 				.getAssociatedExecutionCourses(), new Transformer() {
 			public Object transform(Object arg0) {
@@ -136,39 +136,13 @@ public class ReadStudentCourseReport extends Service {
 			infoSiteEvaluationStatistics.setInfoExecutionPeriod(InfoExecutionPeriod
 					.newInfoFromDomain(executionPeriod));
 			List<Enrolment> enrolled = curricularCourse.getEnrolmentsByExecutionPeriod(executionPeriod);
-			infoSiteEvaluationStatistics.setEnrolled(new Integer(enrolled.size()));
-			infoSiteEvaluationStatistics.setEvaluated(getEvaluated(enrolled));
-			infoSiteEvaluationStatistics.setApproved(getApproved(enrolled));
+			infoSiteEvaluationStatistics.setEnrolled(enrolled.size());
+			infoSiteEvaluationStatistics.setEvaluated(Enrolment.countEvaluated(enrolled));
+			infoSiteEvaluationStatistics.setApproved(Enrolment.countApproved(enrolled));
 			infoSiteEvaluationsHistory.add(infoSiteEvaluationStatistics);
 		}
 
 		return infoSiteEvaluationsHistory;
 	}
 
-	private Integer getApproved(List enrolments) {
-		int approved = 0;
-		Iterator iter = enrolments.iterator();
-		while (iter.hasNext()) {
-			Enrolment enrolment = (Enrolment) iter.next();
-			EnrollmentState enrollmentState = enrolment.getEnrollmentState();
-			if (enrollmentState.equals(EnrollmentState.APROVED)) {
-				approved++;
-			}
-		}
-		return Integer.valueOf(approved);
-	}
-
-	private Integer getEvaluated(List enrolments) {
-		int evaluated = 0;
-		Iterator iter = enrolments.iterator();
-		while (iter.hasNext()) {
-			Enrolment enrolment = (Enrolment) iter.next();
-			EnrollmentState enrollmentState = enrolment.getEnrollmentState();
-			if (enrollmentState.equals(EnrollmentState.APROVED)
-					|| enrollmentState.equals(EnrollmentState.NOT_APROVED)) {
-				evaluated++;
-			}
-		}
-		return Integer.valueOf(evaluated);
-	}
 }
