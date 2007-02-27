@@ -11452,7 +11452,7 @@
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
-        	<chain name="StudentAuthorization"></chain>
+        	<chain name="StudentOrAcademicAdministrativeOfficeAuthorization"></chain>
         </filterChains>
     </service>
 	<service>
