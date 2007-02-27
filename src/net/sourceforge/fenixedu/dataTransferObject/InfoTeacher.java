@@ -85,7 +85,7 @@ public class InfoTeacher extends InfoObject implements ISmsDTO {
         this.teacher = new DomainReference<Teacher>(RootDomainObject.getInstance().readTeacherByOID(integer));
     }
 
-    private Teacher getTeacher() {
+    public Teacher getTeacher() {
         return teacher == null ? null : teacher.getObject();
     }
 
