@@ -52,11 +52,11 @@
 		</div>
 	</logic:messagesPresent>
 
-	<logic:messagesPresent message="true" property="<%= ActionMessages.GLOBAL_MESSAGE %>" >
+	<logic:messagesPresent message="true" property="error" >
 		<div class="error0" style="padding: 0.5em;">
 		<p class="mvert0"><strong><bean:message bundle="STUDENT_RESOURCES" key="label.enrollment.errors.in.enrolment" />:</strong></p>
 		<ul class="mvert05">
-			<html:messages id="messages" message="true" bundle="APPLICATION_RESOURCES">
+			<html:messages id="messages" message="true" bundle="APPLICATION_RESOURCES" property="error">
 				<li><span><bean:write name="messages" /></span></li>
 			</html:messages>
 		</ul>
@@ -97,19 +97,19 @@
 <p class="mtop15"><em><bean:message bundle="STUDENT_RESOURCES"  key="message.enrollment.terminated"/> <html:link action="/viewCurriculum.do?method=prepare"><bean:message bundle="STUDENT_RESOURCES"  key="message.student.curriculum"/></html:link>.</em></p>
 
 
-<p class="mtop2 mbottom0"><em>Legenda:</em></p>
+<p class="mtop2 mbottom0"><em><bean:message bundle="APPLICATION_RESOURCES"  key="label.legend"/>:</em></p>
 <table class="mtop0">
 <tr>
 	<td><div style="width: 10px; height: 10px; border: 1px solid #84b181; background: #eff9ee; float:left;"></div></td>
-	<td>Inscrições Confirmadas <span class="color888">(linhas verdes)</span></td>
+	<td><bean:message bundle="APPLICATION_RESOURCES"  key="label.confirmedEnrollments"/><span class="color888"> (<bean:message bundle="APPLICATION_RESOURCES"  key="label.greenLines"/>)</span></td>
 </tr>
 <tr>
 	<td><div style="width: 10px; height: 10px; border: 1px solid #b9b983; background: #fafce6; float:left;"></div></td>
-	<td>Inscrições Provisórias <span class="color888">(linhas amarelas)</span></td>
+	<td><bean:message bundle="APPLICATION_RESOURCES"  key="label.temporaryEnrollments"/><span class="color888"> (<bean:message bundle="APPLICATION_RESOURCES"  key="label.yellowLines"/>)</span></td>
 </tr>
 <tr>
 	<td><div style="width: 10px; height: 10px; border: 1px solid #be5a39; background: #ffe9e2; float:left;"></div></td>
-	<td>Inscrições Impossíveis <span class="color888">(linhas vermelhas)</span></td>
+	<td><bean:message bundle="APPLICATION_RESOURCES"  key="label.impossibleEnrollments"/><span class="color888"> (<bean:message bundle="APPLICATION_RESOURCES"  key="label.redLines"/>)</span></td>
 </tr>
 </table>
 

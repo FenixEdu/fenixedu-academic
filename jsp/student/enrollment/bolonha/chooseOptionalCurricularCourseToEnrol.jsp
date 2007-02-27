@@ -12,7 +12,7 @@
 	<input type="hidden" name="method" value="" />
 
 	<fr:edit id="optionalEnrolment" name="optionalEnrolmentBean"
-		schema="BolonhaStudentOptionalEnrollmentBean">
+		schema="BolonhaStudentOptionalEnrollmentBean.chooseCriteria">
 		<fr:destination name="updateComboBoxes"
 			path="/bolonhaStudentEnrollment.do?method=updateParametersToSearchOptionalCurricularCourses" />
 		<fr:layout name="tabular">
@@ -22,11 +22,11 @@
 	</fr:edit>
 
 
-	<logic:messagesPresent message="true">
+	<logic:messagesPresent message="true" property="error">
 		<div class="mtop1 mbottom15 error0" style="padding: 0.5em;">
 		<p class="mvert0"><strong><bean:message bundle="STUDENT_RESOURCES" key="label.enrollment.errors.in.enrolment" />:</strong></p>
 		<ul class="mvert05">
-			<html:messages id="messages" message="true" bundle="APPLICATION_RESOURCES">
+			<html:messages id="messages" message="true" bundle="APPLICATION_RESOURCES" property="error">
 				<li><span class="error0"><bean:write name="messages" /></span></li>
 			</html:messages>
 		</ul>
@@ -45,9 +45,9 @@
 
 </fr:form>
 
-<bean:define id="studentCurricularPlanId" name="optionalEnrolmentBean" property="studentCurricularPlan.idInternal" />
 
-<fr:form action="<%="/bolonhaStudentEnrollment.do?method=cancelChooseOptionalCurricularCourseToEnrol&amp;studentCurricularPlanId=" + studentCurricularPlanId %>">
+<fr:form action="/bolonhaStudentEnrollment.do?method=cancelChooseOptionalCurricularCourseToEnrol">
+<fr:edit id="optionalEnrolment" name="optionalEnrolmentBean" visible="false"/>
 <p class="mtop15">
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
 		<bean:message bundle="APPLICATION_RESOURCES" key="label.cancel"/>
