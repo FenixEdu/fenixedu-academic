@@ -499,6 +499,6 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
     protected Registration getRegistration(IUserView userView, DynaActionForm form)
 	    throws NotAuthorizedException {
 	final Integer studentNumber = Integer.valueOf(form.getString("studentNumber"));
-	return Registration.readStudentByNumberAndDegreeType(studentNumber, DegreeType.DEGREE);
+	return Registration.readRegisteredRegistrationByNumberAndDegreeType(studentNumber, DegreeType.DEGREE);
     }
 }
