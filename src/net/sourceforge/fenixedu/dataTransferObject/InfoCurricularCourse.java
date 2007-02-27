@@ -105,7 +105,7 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
 	return InfoDegreeCurricularPlan.newInfoFromDomain(getCurricularCourse().getDegreeCurricularPlan());
     }
 
-    public List getInfoScopes() {
+    public List<InfoCurricularCourseScope> getInfoScopes() {
 	return infoScopes;
     }
 
