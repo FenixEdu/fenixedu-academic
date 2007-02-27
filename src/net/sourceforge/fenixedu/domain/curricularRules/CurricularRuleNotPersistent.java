@@ -3,14 +3,13 @@ package net.sourceforge.fenixedu.domain.curricularRules;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.CurricularRuleExecutorFactory;
-import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.CurricularRuleLevel;
 import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.RuleResult;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 
 abstract public class CurricularRuleNotPersistent implements ICurricularRule {
-    
+
     @Override
     public boolean equals(Object obj) {
 	CurricularRuleNotPersistent curricularRuleNotPersistent = null;
@@ -19,9 +18,10 @@ abstract public class CurricularRuleNotPersistent implements ICurricularRule {
 	} else {
 	    return false;
 	}
-	
-	return this.getDegreeModuleToApplyRule() == curricularRuleNotPersistent.getDegreeModuleToApplyRule()
-		&& this.getCurricularRuleType() == curricularRuleNotPersistent.getCurricularRuleType(); 
+
+	return this.getDegreeModuleToApplyRule() == curricularRuleNotPersistent
+		.getDegreeModuleToApplyRule()
+		&& this.getCurricularRuleType() == curricularRuleNotPersistent.getCurricularRuleType();
     }
 
     @Override
@@ -38,7 +38,7 @@ abstract public class CurricularRuleNotPersistent implements ICurricularRule {
     }
 
     public boolean appliesToCourseGroup(CourseGroup courseGroup) {
-        return (this.getContextCourseGroup() == null || this.getContextCourseGroup() == courseGroup);
+	return (this.getContextCourseGroup() == null || this.getContextCourseGroup() == courseGroup);
     }
 
     public boolean hasContextCourseGroup() {
@@ -46,20 +46,21 @@ abstract public class CurricularRuleNotPersistent implements ICurricularRule {
     }
 
     public boolean isCompositeRule() {
-        return getCurricularRuleType() == null;
+	return getCurricularRuleType() == null;
     }
-    
+
     public boolean isValid(ExecutionPeriod executionPeriod) {
-    	return (getBegin().isBeforeOrEquals(executionPeriod) && (getEnd() == null || getEnd().isAfterOrEquals(executionPeriod)));
+	return (getBegin().isBeforeOrEquals(executionPeriod) && (getEnd() == null || getEnd()
+		.isAfterOrEquals(executionPeriod)));
     }
 
     public boolean isValid(ExecutionYear executionYear) {
-        for (ExecutionPeriod executionPeriod : executionYear.getExecutionPeriods()) {
-            if(isValid(executionPeriod)) {
-                return true;
-            }
-        }
-        return false;
+	for (ExecutionPeriod executionPeriod : executionYear.getExecutionPeriods()) {
+	    if (isValid(executionPeriod)) {
+		return true;
+	    }
+	}
+	return false;
     }
     
     public boolean isVisible() {
@@ -67,11 +68,7 @@ abstract public class CurricularRuleNotPersistent implements ICurricularRule {
     }
 
     public RuleResult evaluate(EnrolmentContext enrolmentContext) {
-	return evaluate(enrolmentContext, CurricularRuleLevel.defaultLevel());
+	return CurricularRuleExecutorFactory.findExecutor(this).execute(this, enrolmentContext);
     }
 
-    public RuleResult evaluate(EnrolmentContext enrolmentContext, CurricularRuleLevel level) {
-	return CurricularRuleExecutorFactory.findExecutor(this).execute(this, level, enrolmentContext);
-    }
-    
 }
