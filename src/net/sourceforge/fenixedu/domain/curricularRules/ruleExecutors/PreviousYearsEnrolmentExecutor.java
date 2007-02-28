@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
+import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 
 public class PreviousYearsEnrolmentExecutor extends CurricularRuleExecutor {
 
@@ -22,7 +23,7 @@ public class PreviousYearsEnrolmentExecutor extends CurricularRuleExecutor {
 
     @Override
     protected RuleResult executeEnrolmentWithRules(final ICurricularRule curricularRule,
-	    final EnrolmentContext enrolmentContext) {
+	    IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
 	final Map<Integer, GenericTrio<Integer, Integer, Integer>> enrolmentInformation = groupEnrolmentInformationByYear(
 		enrolmentContext, false);
 	final GenericPair<Boolean, Integer> result = isValidEnrolment(enrolmentInformation,
@@ -34,7 +35,7 @@ public class PreviousYearsEnrolmentExecutor extends CurricularRuleExecutor {
 
     @Override
     protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(
-	    final ICurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
+	    final ICurricularRule curricularRule, IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
 	final Map<Integer, GenericTrio<Integer, Integer, Integer>> enrolmentInformation = groupEnrolmentInformationByYear(
 		enrolmentContext, true);
 	final GenericPair<Boolean, Integer> result = isValidEnrolment(enrolmentInformation,

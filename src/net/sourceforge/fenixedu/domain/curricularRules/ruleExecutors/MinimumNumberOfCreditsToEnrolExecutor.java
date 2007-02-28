@@ -4,13 +4,14 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.MinimumNumberOfCreditsToEnrol;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
+import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 
 public class MinimumNumberOfCreditsToEnrolExecutor extends CurricularRuleExecutor {
 
     @Override
     protected RuleResult executeEnrolmentWithRules(final ICurricularRule curricularRule,
-	    final EnrolmentContext enrolmentContext) {
+	    final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
 
 	final MinimumNumberOfCreditsToEnrol rule = (MinimumNumberOfCreditsToEnrol) curricularRule;
 	if (!canApplyRule(enrolmentContext, curricularRule)) {
@@ -38,7 +39,7 @@ public class MinimumNumberOfCreditsToEnrolExecutor extends CurricularRuleExecuto
 
     @Override
     protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(
-	    final ICurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
+	    final ICurricularRule curricularRule, final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
 
 	final MinimumNumberOfCreditsToEnrol rule = (MinimumNumberOfCreditsToEnrol) curricularRule;
 	if (!canApplyRule(enrolmentContext, curricularRule)) {

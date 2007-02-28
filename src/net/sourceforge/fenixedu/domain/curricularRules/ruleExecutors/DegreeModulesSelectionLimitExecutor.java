@@ -14,7 +14,7 @@ public class DegreeModulesSelectionLimitExecutor extends CurricularRuleExecutor 
 
     @Override
     protected RuleResult executeEnrolmentWithRules(final ICurricularRule curricularRule,
-	    final EnrolmentContext enrolmentContext) {
+	    final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
 
 	final DegreeModulesSelectionLimit rule = (DegreeModulesSelectionLimit) curricularRule;
 
@@ -81,7 +81,7 @@ public class DegreeModulesSelectionLimitExecutor extends CurricularRuleExecutor 
 
     @Override
     protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(
-	    final ICurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
+	    final ICurricularRule curricularRule, final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
 
 	final DegreeModulesSelectionLimit rule = (DegreeModulesSelectionLimit) curricularRule;
 

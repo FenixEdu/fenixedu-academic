@@ -106,7 +106,7 @@ public class StudentCurricularPlanEnrolment {
 	}
     }
 
-    private RuleResult evaluateRules(final EnrolmentContext enrolmentContext, final Set<ICurricularRule> curricularRules) {
+    private RuleResult evaluateRules(final EnrolmentContext enrolmentContext, final IDegreeModuleToEvaluate degreeModuleToEvaluate, final Set<ICurricularRule> curricularRules) {
 	RuleResult ruleResult = RuleResult.createTrue();
 	
 	for (final ICurricularRule rule : curricularRules) {
@@ -116,7 +116,7 @@ public class StudentCurricularPlanEnrolment {
 		cachedResult = getCachedRuleResults().get(rule);
 		copyMessages = false;
 	    } else {
-		getCachedRuleResults().put(rule, cachedResult = rule.evaluate(enrolmentContext));
+		getCachedRuleResults().put(rule, cachedResult = rule.evaluate(degreeModuleToEvaluate, enrolmentContext));
 	    }
 	    ruleResult = ruleResult.and(cachedResult, copyMessages);
 	}
@@ -153,7 +153,7 @@ public class StudentCurricularPlanEnrolment {
 	final List<RuleResult> ruleResults = new ArrayList<RuleResult>();
 
 	for (final Entry<IDegreeModuleToEvaluate, Set<ICurricularRule>> entry : getRulesToEvaluate(enrolmentContext).entrySet()) {
-	    final RuleResult ruleResult = evaluateRules(enrolmentContext, entry.getValue());
+	    final RuleResult ruleResult = evaluateRules(enrolmentContext, entry.getKey(), entry.getValue());
 
 	    if (ruleResult.isFalse()) {
 		falseRuleResults.add(ruleResult);

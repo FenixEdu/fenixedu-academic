@@ -6,6 +6,7 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.curricularRules.AnyCurricularCourse;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
+import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.enrolment.OptionalDegreeModuleToEnrol;
 import net.sourceforge.fenixedu.util.CurricularRuleLabelFormatter;
 
@@ -22,7 +23,7 @@ public class AnyCurricularCourseExecutor extends CurricularRuleExecutor {
      */
     @Override
     protected RuleResult executeEnrolmentWithRules(final ICurricularRule curricularRule,
-	    final EnrolmentContext enrolmentContext) {
+	    IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
 
 	final AnyCurricularCourse rule = (AnyCurricularCourse) curricularRule;
 	final OptionalDegreeModuleToEnrol moduleToEnrol = (OptionalDegreeModuleToEnrol) searchDegreeModuleToEvaluate(
@@ -64,9 +65,8 @@ public class AnyCurricularCourseExecutor extends CurricularRuleExecutor {
     }
 
     @Override
-    protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(
-	    final ICurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
-	return executeEnrolmentWithRules(curricularRule, enrolmentContext);
+    protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(final ICurricularRule curricularRule, final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
+	return executeEnrolmentWithRules(curricularRule, sourceDegreeModuleToEvaluate, enrolmentContext);
     }
 
 }

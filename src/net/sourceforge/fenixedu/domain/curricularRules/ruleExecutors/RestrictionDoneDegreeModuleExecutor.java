@@ -5,12 +5,13 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.RestrictionDoneDegreeModule;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
+import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 
 public class RestrictionDoneDegreeModuleExecutor extends CurricularRuleExecutor {
 
     @Override
     protected RuleResult executeEnrolmentWithRules(final ICurricularRule curricularRule,
-	    final EnrolmentContext enrolmentContext) {
+	    final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
 
 	final RestrictionDoneDegreeModule rule = (RestrictionDoneDegreeModule) curricularRule;
 	final ExecutionPeriod executionPeriod = enrolmentContext.getExecutionPeriod();
@@ -42,8 +43,8 @@ public class RestrictionDoneDegreeModuleExecutor extends CurricularRuleExecutor 
     }
 
     @Override
-    protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(
-	    final ICurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
+    protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(final ICurricularRule curricularRule,
+	    final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
 
 	final RestrictionDoneDegreeModule rule = (RestrictionDoneDegreeModule) curricularRule;
 	final ExecutionPeriod executionPeriod = enrolmentContext.getExecutionPeriod();
@@ -86,10 +87,8 @@ public class RestrictionDoneDegreeModuleExecutor extends CurricularRuleExecutor 
 
     private RuleResult createFalseRuleResult(final RestrictionDoneDegreeModule rule) {
 	return RuleResult
-		.createFalse(
-			"curricularRules.ruleExecutors.RestrictionDoneDegreeModuleExecutor.student.is.not.approved.to.precendenceDegreeModule",
-			rule.getDegreeModuleToApplyRule().getName(), rule.getPrecedenceDegreeModule()
-				.getName());
+		.createFalse("curricularRules.ruleExecutors.RestrictionDoneDegreeModuleExecutor.student.is.not.approved.to.precendenceDegreeModule",
+			rule.getDegreeModuleToApplyRule().getName(), rule.getPrecedenceDegreeModule().getName());
     }
 
 }

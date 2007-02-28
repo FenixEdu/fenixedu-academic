@@ -6,12 +6,13 @@ import net.sourceforge.fenixedu.domain.curricularRules.Exclusiveness;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
+import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 
 public class ExclusivenessExecutor extends CurricularRuleExecutor {
 
     @Override
     protected RuleResult executeEnrolmentWithRules(final ICurricularRule curricularRule,
-	    final EnrolmentContext enrolmentContext) {
+	    final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
 
 	final Exclusiveness rule = (Exclusiveness) curricularRule;
 
@@ -23,12 +24,10 @@ public class ExclusivenessExecutor extends CurricularRuleExecutor {
 
 	if (degreeModule.isLeaf()) {
 	    final CurricularCourse curricularCourse = (CurricularCourse) degreeModule;
-	    final ExecutionPeriod previousExecutionPeriod = enrolmentContext.getExecutionPeriod()
-		    .getPreviousExecutionPeriod();
+	    final ExecutionPeriod previousExecutionPeriod = enrolmentContext.getExecutionPeriod().getPreviousExecutionPeriod();
 
 	    if (isApproved(enrolmentContext, curricularCourse)
-		    || hasEnrolmentWithEnroledState(enrolmentContext, curricularCourse,
-			    previousExecutionPeriod)) {
+		    || hasEnrolmentWithEnroledState(enrolmentContext, curricularCourse, previousExecutionPeriod)) {
 
 		if (isEnroled(enrolmentContext, (CurricularCourse) rule.getDegreeModuleToApplyRule(),
 			enrolmentContext.getExecutionPeriod())) {
@@ -53,8 +52,7 @@ public class ExclusivenessExecutor extends CurricularRuleExecutor {
     }
 
     @Override
-    protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(
-	    final ICurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
+    protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(final ICurricularRule curricularRule, final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
 
 	final Exclusiveness rule = (Exclusiveness) curricularRule;
 
@@ -74,8 +72,7 @@ public class ExclusivenessExecutor extends CurricularRuleExecutor {
 		return createFalseRuleResult(rule);
 	    }
 
-	    final ExecutionPeriod previousExecutionPeriod = enrolmentContext.getExecutionPeriod()
-		    .getPreviousExecutionPeriod();
+	    final ExecutionPeriod previousExecutionPeriod = enrolmentContext.getExecutionPeriod().getPreviousExecutionPeriod();
 	    if (hasEnrolmentWithEnroledState(enrolmentContext, curricularCourse, previousExecutionPeriod)) {
 		return RuleResult.createTrue(EnrolmentResultType.TEMPORARY);
 	    }

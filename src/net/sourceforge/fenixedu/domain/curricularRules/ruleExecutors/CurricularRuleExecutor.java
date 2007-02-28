@@ -18,16 +18,16 @@ abstract public class CurricularRuleExecutor {
     protected CurricularRuleExecutor() {
     }
 
-    public RuleResult execute(final ICurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
+    public RuleResult execute(final ICurricularRule curricularRule, final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
 	switch (enrolmentContext.getCurricularRuleLevel()) {
 	case ENROLMENT_WITH_RULES:
-	    return executeEnrolmentWithRules(curricularRule, enrolmentContext);
+	    return executeEnrolmentWithRules(curricularRule, sourceDegreeModuleToEvaluate, enrolmentContext);
 
 	case ENROLMENT_WITH_RULES_AND_TEMPORARY_ENROLMENT:
-	    return executeEnrolmentWithRulesAndTemporaryEnrolment(curricularRule, enrolmentContext);
+	    return executeEnrolmentWithRulesAndTemporaryEnrolment(curricularRule, sourceDegreeModuleToEvaluate, enrolmentContext);
 
 	case ENROLMENT_NO_RULES:
-	    return executeEnrolmentWithNoRules(curricularRule, enrolmentContext);
+	    return executeEnrolmentWithNoRules(curricularRule, sourceDegreeModuleToEvaluate, enrolmentContext);
 
 	default:
 	    throw new DomainException("error.curricularRules.RuleExecutor.unimplemented.rule.level");
@@ -108,11 +108,11 @@ abstract public class CurricularRuleExecutor {
     }
 
     
-    protected RuleResult executeEnrolmentWithNoRules(final ICurricularRule curricularRule, final EnrolmentContext enrolmentContext) {
-	final RuleResult ruleResult = executeEnrolmentWithRulesAndTemporaryEnrolment(curricularRule, enrolmentContext);
+    protected RuleResult executeEnrolmentWithNoRules(final ICurricularRule curricularRule, final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
+	final RuleResult ruleResult = executeEnrolmentWithRulesAndTemporaryEnrolment(curricularRule, sourceDegreeModuleToEvaluate, enrolmentContext);
 	return ruleResult.isFalse() ? RuleResult.createWarning(ruleResult.getMessages()) : ruleResult;
     }
 
-    abstract protected RuleResult executeEnrolmentWithRules(final ICurricularRule curricularRule, final EnrolmentContext enrolmentContext);
-    abstract protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(final ICurricularRule curricularRule, final EnrolmentContext enrolmentContext);
+    abstract protected RuleResult executeEnrolmentWithRules(final ICurricularRule curricularRule, final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext);
+    abstract protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(final ICurricularRule curricularRule, IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext);
 }
