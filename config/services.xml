@@ -5913,14 +5913,6 @@
 		</filterChains>
 	</service>	
 	<service>
-		<name>ReadStudentByNumberAndAllDegreeTypes</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentByNumberAndAllDegreeTypes</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains />
-	</service>
-	<service>
 		<name>ReadCurricularCoursesByDegreeCurricularPlanId</name>
 		<implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadCurricularCoursesByDegreeCurricularPlan</implementationClass>
@@ -8130,7 +8122,7 @@
         	<chain name="DepartmentMemberOrTeacherAuthorization"></chain>
         </filterChains>     
     </service>     
-	<service>
+    <service>
     	<name>ReadExportGroupingsByGrouping</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.student.ReadExportGroupingsByGrouping</implementationClass>
         <description></description>
@@ -8240,7 +8232,7 @@
         <filterChains>
         	<chain name="DepartmentAdministrativeOfficeAuthorization"></chain>
         </filterChains>     
-    </service>      
+    </service>   
    <service>
     	<name>ReadOpenExecutionYears</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadOpenExecutionYears</implementationClass>
@@ -8253,7 +8245,7 @@
         <description></description>
         <isTransactional>true</isTransactional>       
     </service>
-	<service>
+    <service>
     	<name>ReadRoleByRoleType</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadRoleByRoleType</implementationClass>
         <description></description>
