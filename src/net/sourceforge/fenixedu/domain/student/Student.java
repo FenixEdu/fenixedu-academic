@@ -44,7 +44,7 @@ public class Student extends Student_Base {
     public Student(Person person, Integer number) {
 	super();
 	setPerson(person);
-	if (number == null) {
+	if (number == null || readStudentByNumber(number) != null) {
 	    number = Student.generateStudentNumber();
 	}
 	setNumber(number);
@@ -52,16 +52,7 @@ public class Student extends Student_Base {
     }
 
     public Student(Person person) {
-	this(person, Student.generateStudentNumber());
-    }
-
-    @Override
-    public void setNumber(Integer number) {
-	Student student = readStudentByNumber(number);
-	if (student != null && student != this) {
-	    throw new DomainException("error.already.exists.a.student.with.the.specified.number");
-	}
-	super.setNumber(number);
+	this(person, null);
     }
 
     public static Student readStudentByNumber(Integer studentNumber) {
@@ -82,7 +73,7 @@ public class Student extends Student_Base {
 	}
 	return result;
     }
-    
+
     public Collection<Registration> getRegistrationsByDegreeTypes(DegreeType... degreeTypes) {
 	List<DegreeType> degreeTypesList = Arrays.asList(degreeTypes);
 	List<Registration> result = new ArrayList<Registration>();
@@ -540,6 +531,17 @@ public class Student extends Student_Base {
 		ExternalEnrolment.COMPARATOR_BY_NAME);
 	result.addAll(getExternalEnrolmentsSet());
 	return result;
+    }
+
+    public ExternalEnrolment findExternalEnrolment(Unit university, ExecutionPeriod period, String code) {
+	for (final ExternalEnrolment externalEnrolment : this.getExternalEnrolments()) {
+	    if (externalEnrolment.getExecutionPeriod() == period
+		    && externalEnrolment.getExternalCurricularCourse().getCode().equals(code)
+		    && externalEnrolment.getExternalCurricularCourse().getUnit() == university) {
+		return externalEnrolment;
+	    }
+	}
+	return null;
     }
 
     public List<Registration> getRegistrationsToEnrolByStudent() {
