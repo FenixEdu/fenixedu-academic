@@ -29,6 +29,7 @@ import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
@@ -170,7 +171,7 @@ public class RegisterCandidate extends Service {
 	    throws ExcepcaoPersistencia, ExistingServiceException {
 	if (studentNumber != null) {
 
-	    Registration existingStudent = Registration.readByNumber(studentNumber);
+	    Registration existingStudent = Registration.readStudentByNumberAndDegreeType(studentNumber, DegreeType.MASTER_DEGREE);
 
 	    if (existingStudent != null && !existingStudent.getPerson().equals(person)) {
 		throw new ExistingServiceException();
