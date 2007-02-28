@@ -53,9 +53,3 @@
 	</slot>
 	<slot name="enrolment.enrolmentCondition" key="label.enrollment.state" read-only="true"/>	
 </schema>
-
-<schema name="editAutoAvaliationPeriod"
-	type="net.sourceforge.fenixedu.domain.TeacherAutoEvaluationDefinitionPeriod">
-	<slot name="startDate"/>
-	<slot name="endDate"/>
-</schema>

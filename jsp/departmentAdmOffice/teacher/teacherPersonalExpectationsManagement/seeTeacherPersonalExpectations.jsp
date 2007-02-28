@@ -33,9 +33,7 @@
 	
 	<logic:notEmpty name="teacherPersonalExpectation">
 		<logic:notEmpty name="teacherPersonalExpectation" property="autoEvaluation">
-			<p style='background-color: #eee; padding: 0.5em; font-size: 1.3em;'>
-				<strong><bean:message key="label.teacher.auto.evaluation" bundle="DEPARTMENT_ADM_OFFICE_RESOURCES"/></strong>
-			</p>
+			<h3 class="separator2 mtop2"><bean:message key="label.teacher.auto.evaluation" bundle="DEPARTMENT_ADM_OFFICE_RESOURCES"/></h3>
 			<fr:view name="teacherPersonalExpectation" property="autoEvaluation" layout="html"/>									
 		</logic:notEmpty>
 	</logic:notEmpty>		

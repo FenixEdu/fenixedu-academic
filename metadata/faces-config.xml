@@ -87,13 +87,7 @@
 		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.departmentMember.ViewDepartmentTeachers</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
-	
-	<managed-bean>
-		<managed-bean-name>teacherExpectationManagement</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.departmentMember.TeacherExpectationManagement</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>
-	
+		
 	<managed-bean>
 		<managed-bean-name>viewTeacherService</managed-bean-name>
 		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.departmentMember.teacherService.ViewTeacherService</managed-bean-class>
@@ -156,13 +150,6 @@
 	
 	<!-- BEGIN: Backbeans from department administrative office subapplication -->
 	
-	<managed-bean>
-		<description>TeacherExpectationDefinitionPeriodManagement</description>
-		<managed-bean-name>teacherExpectationDefinitionPeriodManagement</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.departmentAdmOffice.TeacherExpectationDefinitionPeriodManagement</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>
-
 	<managed-bean>
 		<description>ManagementGroupsBackingBean</description>
 		<managed-bean-name>ManagementGroupsBackingBean</managed-bean-name>
@@ -1420,45 +1407,7 @@
 	<!-- END: ORGANIZATION_ STRUCTURE Navigation Rules -->
 	
 	<!-- END: TEACHER Navigation Rules -->
-	
-	<!-- START: Navigation rules from department administrative subapplication -->
-	
-	<navigation-rule>
-		<from-view-id>/departmentAdmOffice/teacher/teacherExpectationDefinitionPeriod/viewTeacherExpectationDefinitionPeriod.jsp</from-view-id>
- 		<navigation-case>
-			<from-outcome>create</from-outcome>
-			<to-view-id>/departmentAdmOffice/teacher/teacherExpectationDefinitionPeriod/createTeacherExpectationDefinitionPeriod.jsp</to-view-id>
-		</navigation-case>
- 		<navigation-case>
-			<from-outcome>edit</from-outcome>
-			<to-view-id>/departmentAdmOffice/teacher/teacherExpectationDefinitionPeriod/editTeacherExpectationDefinitionPeriod.jsp</to-view-id>
-		</navigation-case>
-	</navigation-rule>
-	<navigation-rule>
-		<from-view-id>/departmentAdmOffice/teacher/teacherExpectationDefinitionPeriod/createTeacherExpectationDefinitionPeriod.jsp</from-view-id>
- 		<navigation-case>
-			<from-outcome>success</from-outcome>
-			<to-view-id>/departmentAdmOffice/teacher/teacherExpectationDefinitionPeriod/viewTeacherExpectationDefinitionPeriod.jsp</to-view-id>
-		</navigation-case>
-		<navigation-case>
-			<from-outcome>cancel</from-outcome>
-			<to-view-id>/departmentAdmOffice/teacher/teacherExpectationDefinitionPeriod/viewTeacherExpectationDefinitionPeriod.jsp</to-view-id>
-		</navigation-case>
-	</navigation-rule>
-	<navigation-rule>
-		<from-view-id>/departmentAdmOffice/teacher/teacherExpectationDefinitionPeriod/editTeacherExpectationDefinitionPeriod.jsp</from-view-id>
- 		<navigation-case>
-			<from-outcome>success</from-outcome>
-			<to-view-id>/departmentAdmOffice/teacher/teacherExpectationDefinitionPeriod/viewTeacherExpectationDefinitionPeriod.jsp</to-view-id>
-		</navigation-case>
-		<navigation-case>
-			<from-outcome>cancel</from-outcome>
-			<to-view-id>/departmentAdmOffice/teacher/teacherExpectationDefinitionPeriod/viewTeacherExpectationDefinitionPeriod.jsp</to-view-id>
-		</navigation-case>
-	</navigation-rule>
-	
-	<!-- END: Navigation rules from department administrative subapplication -->
-	
+		
 	<!-- BEGIN: COORDINATOR Navigation Rules -->
 	<navigation-rule>
 		<from-view-id>/coordinator/evaluation/showWrittenTestsForExecutionCourses.jsp</from-view-id>

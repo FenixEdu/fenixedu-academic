@@ -8,7 +8,6 @@
 <em><bean:message key="label.departmentMember"/></em>
 <h2><bean:message key="label.see.teachers.personal.expectations"/></h2>
 
-
 <logic:present role="DEPARTMENT_MEMBER">
 	
 	<bean:define id="teacher" name="teacherPersonalExpectation" property="teacher" />	
@@ -33,9 +32,7 @@
 	
 	<logic:notEmpty name="teacherPersonalExpectation">
 		<logic:notEmpty name="teacherPersonalExpectation" property="autoEvaluation">
-			<p style='background-color: #eee; padding: 0.5em; font-size: 1.3em;'>
-				<strong><bean:message key="label.teacher.auto.evaluation" bundle="DEPARTMENT_MEMBER_RESOURCES"/></strong>
-			</p>
+			<h3 class="separator2 mtop2"><bean:message key="label.teacher.auto.evaluation" bundle="DEPARTMENT_MEMBER_RESOURCES"/></h3>
 			<fr:view name="teacherPersonalExpectation" property="autoEvaluation" layout="html"/>									
 		</logic:notEmpty>	
 	</logic:notEmpty>
