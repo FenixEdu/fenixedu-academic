@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -161,11 +162,11 @@ public class GuideListingDispatchAction extends FenixDispatchAction {
             if (identificationDocumentNumber == null || identificationDocumentNumber.length() == 0) {
                 InfoStudent infoStudent = null;
                 if (studentNumber != null && studentNumber.length() > 0) {
-                    Object args[] = { Integer.valueOf(studentNumber) };
+                    Object args[] = { Integer.valueOf(studentNumber), DegreeType.MASTER_DEGREE };
 
                     try {
                         infoStudent = (InfoStudent) ServiceManagerServiceFactory.executeService(
-                                userView, "ReadStudentByNumberAndAllDegreeTypes", args);
+                                userView, "ReadStudentByNumberAndDegreeType", args);
                     } catch (FenixServiceException e) {
                         throw new FenixActionException(e);
                     }

@@ -736,9 +736,9 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 	    }
 	} else {
 	    try {
-		Object args[] = { Integer.valueOf(studentNumber) };
+		Object args[] = { Integer.valueOf(studentNumber), DegreeType.DEGREE };
 		InfoStudent infoStudent = (InfoStudent) ServiceManagerServiceFactory.executeService(
-			userView, "ReadStudentByNumberAndAllDegreeTypes", args);
+			userView, "ReadStudentByNumberAndDegreeType", args);
 		infoStudents = new ArrayList();
 		infoStudents.add(infoStudent);
 	    } catch (FenixServiceException e) {
