@@ -72,6 +72,11 @@ public class StudentsSearchBean implements Serializable {
 	    if (registration != null) {
 		students.add(registration.getStudent());
 	    }
+	    Student student = Student.readStudentByNumber(getNumber());
+	    if (student != null) {
+		students.add(student);
+	    }
+
 	} else if (!StringUtils.isEmpty(getIdentificationNumber()) && getDocumentType() != null) {
 	    Person person = Person.readByDocumentIdNumberAndIdDocumentType(getIdentificationNumber(),
 		    getDocumentType());
