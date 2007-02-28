@@ -57,9 +57,9 @@ public class InfoEnrolmentHistoricReport implements Serializable {
 	}
 	
 	final String grade = latestEnrolmentEvaluation.getGrade();
-	if (grade == null || !latestEnrolmentEvaluation.isFinal()) {
+	if (!latestEnrolmentEvaluation.isFinal()) {
 	    return bundle.getString("msg.enrolled");
-	} else if (grade.equals(GradeScale.NA)) {
+	} else if ((grade == null && latestEnrolmentEvaluation.isFinal()) ||grade.equals(GradeScale.NA)) {
 	    return bundle.getString("msg.notEvaluated");
 	} else if (grade.equals(GradeScale.RE)) {
 	    return bundle.getString("msg.notApproved");
