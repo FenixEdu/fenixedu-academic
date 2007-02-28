@@ -253,6 +253,7 @@
 			    type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.studentEnrolment.StudentEnrolmentsDA">
 			<forward name="prepareChooseExecutionPeriod" path="student.enrolment.prepareChooseExecutionPeriod"/>
 			<forward name="viewCurriculum" path="/viewCurriculum.do?method=prepare"/>
+			<forward name="visualizeRegistration" path="/student.do?method=visualizeRegistration"/>
 		</action>        
 				
 		<action path="/studentExtraEnrolments"

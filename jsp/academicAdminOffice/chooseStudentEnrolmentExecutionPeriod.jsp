@@ -65,3 +65,8 @@
 		</p>
 	</logic:empty>
 </logic:present>
+
+<fr:form action="/studentEnrolments.do?method=backViewRegistration">
+	<fr:edit id="studentEnrolment-back" name="studentEnrolmentBean" visible="false" />
+	<html:cancel><bean:message key="button.back" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:cancel>
+</fr:form>
