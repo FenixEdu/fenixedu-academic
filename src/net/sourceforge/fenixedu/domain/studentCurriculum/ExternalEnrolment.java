@@ -26,7 +26,9 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 	setCreationDateDateTime(new DateTime());
-	setCreatedBy(AccessControl.getPerson().getUsername());
+	if(AccessControl.getPerson() != null){
+	    setCreatedBy(AccessControl.getPerson().getUsername());
+	}
     }
     
     public  ExternalEnrolment(Student student, ExternalCurricularCourse externalCurricularCourse, String grade, ExecutionPeriod executionPeriod) {

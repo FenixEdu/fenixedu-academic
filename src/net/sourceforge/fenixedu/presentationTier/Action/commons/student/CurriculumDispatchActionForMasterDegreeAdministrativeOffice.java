@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
@@ -103,9 +104,9 @@ public class CurriculumDispatchActionForMasterDegreeAdministrativeOffice extends
             }
         } else {
             try {
-                Object args[] = { Integer.valueOf(studentNumber) };
+                Object args[] = { Integer.valueOf(studentNumber), DegreeType.MASTER_DEGREE };
                 InfoStudent infoStudent = (InfoStudent) ServiceManagerServiceFactory.executeService(
-                        userView, "ReadStudentByNumberAndAllDegreeTypes", args);
+                        userView, "ReadStudentByNumberAndDegreeType", args);
                 infoStudents = new ArrayList();
                 infoStudents.add(infoStudent);
                 infoPerson = infoStudent.getInfoPerson();
