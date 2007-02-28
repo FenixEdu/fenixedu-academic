@@ -120,13 +120,14 @@ public class MultiLanguageStringRenderer extends StringRenderer {
         }
         
         HtmlComponent component = super.renderComponent(layout, value, type);
-        component.setLanguage(mlString.getContentLanguage().toString());
 
-        if (mlString.isRequestedLanguage()) {
+        if (mlString.getAllLanguages().isEmpty()) {
             return component;
         }
 
-        if (mlString.getAllLanguages().isEmpty()) {
+        component.setLanguage(mlString.getContentLanguage().toString());
+
+        if (mlString.isRequestedLanguage()) {
             return component;
         }
 
