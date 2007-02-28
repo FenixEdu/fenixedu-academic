@@ -1896,8 +1896,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    final List<CurriculumModule> curriculumModulesToRemove,
 	    final CurricularRuleLevel curricularRuleLevel) {
 
-	final EnrolmentContext enrolmentContext = new EnrolmentContext(this, executionPeriod,
-		curriculumModulesToRemove, curricularRuleLevel);
+	final EnrolmentContext enrolmentContext = new EnrolmentContext(this, executionPeriod, curriculumModulesToRemove, curricularRuleLevel);
 	for (final DegreeModuleToEnrol moduleToEnrol : degreeModulesToEnrol) {
 	    enrolmentContext.addDegreeModuleToEvaluate(moduleToEnrol);
 	}
