@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.RuleResult;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
+import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import dml.runtime.RelationAdapter;
 
@@ -110,20 +111,20 @@ public abstract class CompositeRule extends CompositeRule_Base {
     }
 
     @Override
-    public RuleResult evaluate(final EnrolmentContext enrolmentContext) {
+    public RuleResult evaluate(final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
         switch (getCompositeRuleType()) {
 
         case AND:
             RuleResult result = RuleResult.createTrue();
             for (final CurricularRule curricularRule : getCurricularRules()) {
-                result = result.and(curricularRule.evaluate(enrolmentContext));
+                result = result.and(curricularRule.evaluate(sourceDegreeModuleToEvaluate, enrolmentContext));
             }
             return result;
         
         case OR:
             RuleResult resultOR = RuleResult.createFalse(null);
             for (final CurricularRule curricularRule : getCurricularRules()) {
-                resultOR = resultOR.or(curricularRule.evaluate(enrolmentContext));
+                resultOR = resultOR.or(curricularRule.evaluate(sourceDegreeModuleToEvaluate, enrolmentContext));
                 if (resultOR.isTrue()) {
                     return resultOR;
                 }

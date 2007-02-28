@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
+import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.util.LogicOperators;
 
@@ -140,8 +141,8 @@ public abstract class CurricularRule extends CurricularRule_Base implements ICur
         return true;
     }
 
-    public RuleResult evaluate(final EnrolmentContext enrolmentContext) {
-	return CurricularRuleExecutorFactory.findExecutor(this).execute(this, enrolmentContext);
+    public RuleResult evaluate(final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
+	return CurricularRuleExecutorFactory.findExecutor(this).execute(this, sourceDegreeModuleToEvaluate, enrolmentContext);
     }
 
     abstract protected void removeOwnParameters();

@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.RuleResult;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
+import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 
 abstract public class CurricularRuleNotPersistent implements ICurricularRule {
 
@@ -67,8 +68,8 @@ abstract public class CurricularRuleNotPersistent implements ICurricularRule {
         return false;
     }
 
-    public RuleResult evaluate(EnrolmentContext enrolmentContext) {
-	return CurricularRuleExecutorFactory.findExecutor(this).execute(this, enrolmentContext);
+    public RuleResult evaluate(final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, EnrolmentContext enrolmentContext) {
+	return CurricularRuleExecutorFactory.findExecutor(this).execute(this, sourceDegreeModuleToEvaluate, enrolmentContext);
     }
 
 }
