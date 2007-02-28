@@ -449,9 +449,8 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     @Override
     public Double getEnroledEctsCredits(final ExecutionPeriod executionPeriod) {
 	BigDecimal bigDecimal = BigDecimal.ZERO;
-	for (CurriculumModule curriculumModule : getCurriculumModulesSet()) {
-	    bigDecimal = bigDecimal.add(new BigDecimal(curriculumModule
-		    .getEnroledEctsCredits(executionPeriod)));
+	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
+	    bigDecimal = bigDecimal.add(new BigDecimal(curriculumModule.getEnroledEctsCredits(executionPeriod)));
 	}
 	return Double.valueOf(bigDecimal.doubleValue());
     }
