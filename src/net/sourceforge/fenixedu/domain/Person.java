@@ -2604,4 +2604,12 @@ public class Person extends Person_Base {
         return getImportantRoles(new ArrayList<String>());
     }
 
+    public static Collection<Person> findInternalPerson(final String name) {
+	final Collection<Person> people = new ArrayList<Person>();
+	for (final PersonName personName : PersonName.findInternalPerson(name, Integer.MAX_VALUE)) {
+	    people.add(personName.getPerson());
+	}
+	return people;
+    }
+
 }

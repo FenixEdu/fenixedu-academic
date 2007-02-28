@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.person;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -30,6 +31,8 @@ public class SearchPerson extends Service {
 
 	private String email, username, documentIdNumber;
 
+	private String name;
+
 	private String[] nameWords;
 
 	private Role role;
@@ -43,13 +46,15 @@ public class SearchPerson extends Service {
 	public SearchParameters(String name, String email, String username, String documentIdNumber,
 		String roleType, String degreeTypeString, Integer degreeId, Integer departmentId) {
 
+	    this.name = (name != null && !name.equals("")) ? name : null;
 	    this.nameWords = (name != null && !name.equals("")) ? getNameWords(name) : null;
 	    this.email = (email != null && !email.equals("")) ? StringNormalizer.normalize(email.trim())
 		    : null;
 	    this.username = (username != null && !username.equals("")) ? StringNormalizer
 		    .normalize(username.trim()) : null;
-	    this.documentIdNumber = (documentIdNumber != null && !documentIdNumber.equals("")) ?
-		    documentIdNumber.trim().toLowerCase() : null;
+	    this.documentIdNumber = (documentIdNumber != null && !documentIdNumber.equals("")) ? documentIdNumber
+		    .trim().toLowerCase()
+		    : null;
 
 	    if (roleType != null && roleType.length() > 0) {
 		role = (Role) Role.getRoleByRoleType(RoleType.valueOf(roleType));
@@ -108,6 +113,10 @@ public class SearchPerson extends Service {
 	    return nameWords;
 	}
 
+	public String getName() {
+	    return name;
+	}
+
 	public Role getRole() {
 	    return role;
 	}
@@ -124,7 +133,7 @@ public class SearchPerson extends Service {
 	    return new CollectionPager<Person>(new ArrayList<Person>(), 25);
 	}
 
-	final List<Person> persons;
+	final Collection<Person> persons;
 	List<Person> allValidPersons = new ArrayList<Person>();
 	List<Teacher> teachers = new ArrayList<Teacher>();
 
@@ -133,28 +142,28 @@ public class SearchPerson extends Service {
 	    persons = new ArrayList<Person>();
 	    persons.add(person);
 	} else {
-	
-	Role roleBd = searchParameters.getRole();
-	if (roleBd == null) {
-	    roleBd = Role.getRoleByRoleType(RoleType.PERSON);
-	}
+	    Role roleBd = searchParameters.getRole();
+	    if (roleBd == null) {
+		persons = Person.findInternalPerson(searchParameters.getName());
+	    } else {
 
-	if ((roleBd.getRoleType() == RoleType.TEACHER) && (searchParameters.getDepartment() != null)) {
-	    persons = new ArrayList<Person>();
-	    teachers = searchParameters.getDepartment().getAllCurrentTeachers();
-	    for (Teacher teacher : teachers) {
-		persons.add(teacher.getPerson());
-	    }
-	} else if (roleBd.getRoleType() == RoleType.EMPLOYEE) {
-	    persons = new ArrayList<Person>();
-	    for (Person person : roleBd.getAssociatedPersons()) {
-		if (person.getTeacher() == null) {
-		    persons.add(person);
+	    if ((roleBd.getRoleType() == RoleType.TEACHER) && (searchParameters.getDepartment() != null)) {
+		persons = new ArrayList<Person>();
+		teachers = searchParameters.getDepartment().getAllCurrentTeachers();
+		for (Teacher teacher : teachers) {
+		    persons.add(teacher.getPerson());
 		}
+	    } else if (roleBd.getRoleType() == RoleType.EMPLOYEE) {
+		persons = new ArrayList<Person>();
+		for (Person person : roleBd.getAssociatedPersons()) {
+		    if (person.getTeacher() == null) {
+			persons.add(person);
+		    }
+		}
+	    } else {
+		persons = roleBd.getAssociatedPersons();
 	    }
-	} else {
-	    persons = roleBd.getAssociatedPersons();
-	}
+	    }
 	}
 
 	allValidPersons = (List<Person>) CollectionUtils.select(persons, predicate);
@@ -173,11 +182,13 @@ public class SearchPerson extends Service {
 	public boolean evaluate(Object arg0) {
 	    Person person = (Person) arg0;
 
-	    return verifySimpleParameter(person.getDocumentIdNumber(), searchParameters.getDocumentIdNumber())
-	    	    && verifyUsernameEquality(searchParameters.getUsername(), person)
-	    	    && verifyNameEquality(searchParameters.getNameWords(), person)
-	    	    && verifyParameter(person.getEmail(), searchParameters.getEmail())
-		    && verifyDegreeType(searchParameters.getDegree(), searchParameters.getDegreeType(),person);
+	    return verifySimpleParameter(person.getDocumentIdNumber(), searchParameters
+		    .getDocumentIdNumber())
+		    && verifyUsernameEquality(searchParameters.getUsername(), person)
+		    && verifyNameEquality(searchParameters.getNameWords(), person)
+		    && verifyParameter(person.getEmail(), searchParameters.getEmail())
+		    && verifyDegreeType(searchParameters.getDegree(), searchParameters.getDegreeType(),
+			    person);
 	}
 
 	private boolean verifyUsernameEquality(String usernameToSearch, Person person) {
@@ -222,7 +233,7 @@ public class SearchPerson extends Service {
 	}
 
 	private boolean simpleNnormalizeAndCompare(String parameter, String searchParameter) {
-	    //String personParameter = parameter.trim().toLowerCase();
+	    // String personParameter = parameter.trim().toLowerCase();
 	    String personParameter = parameter;
 	    return (personParameter.indexOf(searchParameter) == -1) ? false : true;
 	}
