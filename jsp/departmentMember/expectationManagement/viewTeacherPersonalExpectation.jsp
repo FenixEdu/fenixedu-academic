@@ -50,7 +50,10 @@
 						</li>
 					</ul>		
 				</logic:equal>
-			</logic:notEmpty>
+				<logic:equal name="periodOpen" value="false">
+					<p class="mtop15"><em><bean:message key="label.undefined.expectations.definition.period" /></em></p>		
+				</logic:equal>
+			</logic:notEmpty>			
 		</logic:empty>		
 		
 		<jsp:include page="seeTeacherPersonalExpectationsByYear.jsp"/>

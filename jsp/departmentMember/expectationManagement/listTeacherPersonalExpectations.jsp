@@ -71,7 +71,7 @@
 								<bean:message key="label.yes" bundle="DEPARTMENT_MEMBER_RESOURCES"/>
 							</logic:notEmpty>
 						</td>
-						<td>
+						<td class="acenter">
 							<logic:empty name="mapEntry" property="value">
 								<bean:message key="label.no" bundle="DEPARTMENT_ADM_OFFICE_RESOURCES"/>
 							</logic:empty>

@@ -20,24 +20,26 @@
 		<p>
 	</logic:messagesPresent>
 
-	<fr:form>
-		<div class="mtop2 mbottom1">
-		<bean:message key="label.common.executionYear"/>:
-		<fr:edit id="executionYear" name="bean" slot="executionYear"> 
-			<fr:layout name="menu-select-postback">
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsToViewTeacherPersonalExpectationsProvider"/>
-				<fr:property name="format" value="${year}"/>
-				<fr:destination name="postback" path="/teacherPersonalExpectationsVisualizationPeriod.do?method=showPeriodWithSelectedYear"/>
-			</fr:layout>
-		</fr:edit>
-		<html:submit styleClass="switchNone">
-			<bean:message key="label.next"/>
-		</html:submit>
-		</div>
-	</fr:form>
-
-	<bean:define id="executionYearId" name="bean" property="executionYear.idInternal"/>
-	<p>
+	<logic:notEmpty name="bean">
+		
+		<fr:form>
+			<div class="mtop2 mbottom1">
+			<bean:message key="label.common.executionYear"/>:
+			<fr:edit id="executionYear" name="bean" slot="executionYear"> 
+				<fr:layout name="menu-select-postback">
+					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsToViewTeacherPersonalExpectationsProvider"/>
+					<fr:property name="format" value="${year}"/>
+					<fr:destination name="postback" path="/teacherPersonalExpectationsVisualizationPeriod.do?method=showPeriodWithSelectedYear"/>
+				</fr:layout>
+			</fr:edit>
+			<html:submit styleClass="switchNone">
+				<bean:message key="label.next"/>
+			</html:submit>
+			</div>
+		</fr:form>
+	
+		<bean:define id="executionYearId" name="bean" property="executionYear.idInternal"/>
+		
 		<logic:notEmpty name="period">
 			<fr:view name="period" schema="editTeacherPersonalExpectationsVisualizationPeriod">
 				<fr:layout name="tabular">
@@ -46,9 +48,9 @@
 			</fr:view>
 			<ul class="list5">
 				<li>
-				<html:link page="<%= "/teacherPersonalExpectationsVisualizationPeriod.do?method=editPeriod&executionYearId=" + executionYearId %>">
-				  <bean:message key="link.edit"/>
-				</html:link>
+					<html:link page="<%= "/teacherPersonalExpectationsVisualizationPeriod.do?method=editPeriod&executionYearId=" + executionYearId %>">
+					  <bean:message key="link.edit"/>
+					</html:link>
 				</li>
 			</ul>
 		</logic:notEmpty>
@@ -57,16 +59,17 @@
 			<p class="mtop15 mbottom1"><em><bean:message key="label.teacherPersonalExpectationsVisualizationPeriodNotAvailable"/></em></p>
 			<ul class="list5">
 				<li>
-				<html:link page="<%= "/teacherPersonalExpectationsVisualizationPeriod.do?method=createPeriod&executionYearId=" + executionYearId %>">
-					<bean:message key="label.teacher-institution-working-time.create"/>
-				</html:link>
+					<html:link page="<%= "/teacherPersonalExpectationsVisualizationPeriod.do?method=createPeriod&executionYearId=" + executionYearId %>">
+						<bean:message key="label.teacher-institution-working-time.create"/>
+					</html:link>
 				</li>
 			</ul>
 		</logic:empty>
-	</p>
-
-	<script type="text/javascript" language="javascript">
-		switchGlobal();
-	</script>
-
+	
+		<script type="text/javascript" language="javascript">
+			switchGlobal();
+		</script>
+		
+	</logic:notEmpty>
+	
 </logic:present>

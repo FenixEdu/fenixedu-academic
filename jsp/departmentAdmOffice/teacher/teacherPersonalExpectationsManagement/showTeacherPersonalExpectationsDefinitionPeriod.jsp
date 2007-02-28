@@ -20,24 +20,26 @@
 		<p>
 	</logic:messagesPresent>
 
-	<fr:form>
-		<div class="mtop2 mbottom1">
-		<bean:message key="label.common.executionYear"/>:
-		<fr:edit id="executionYear" name="bean" slot="executionYear"> 
-			<fr:layout name="menu-select-postback">
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsToViewTeacherPersonalExpectationsProvider"/>
-				<fr:property name="format" value="${year}"/>
-				<fr:destination name="postback" path="/teacherPersonalExpectationsDefinitionPeriod.do?method=showPeriodWithSelectedYear"/>
-			</fr:layout>
-		</fr:edit>
-		<html:submit styleClass="switchNone">
-			<bean:message key="label.next"/>
-		</html:submit>
-		</div>
-	</fr:form>
-
-	<bean:define id="executionYearId" name="bean" property="executionYear.idInternal"/>
-
+	<logic:notEmpty name="bean">
+		
+		<fr:form>
+			<div class="mtop2 mbottom1">
+			<bean:message key="label.common.executionYear"/>:
+			<fr:edit id="executionYear" name="bean" slot="executionYear"> 
+				<fr:layout name="menu-select-postback">
+					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsToViewTeacherPersonalExpectationsProvider"/>
+					<fr:property name="format" value="${year}"/>
+					<fr:destination name="postback" path="/teacherPersonalExpectationsDefinitionPeriod.do?method=showPeriodWithSelectedYear"/>
+				</fr:layout>
+			</fr:edit>
+			<html:submit styleClass="switchNone">
+				<bean:message key="label.next"/>
+			</html:submit>
+			</div>
+		</fr:form>
+	
+		<bean:define id="executionYearId" name="bean" property="executionYear.idInternal"/>
+	
 		<logic:notEmpty name="period">
 			<fr:view name="period" schema="editTeacherPersonalExpectationsDefinitionPeriod">
 				<fr:layout name="tabular">
@@ -53,8 +55,6 @@
 			</ul>
 		</logic:notEmpty>
 
-
-
 		<logic:empty name="period">
 			<p class="mtop15 mbottom1"><em><bean:message key="label.noTeacherPersonalExpectationsDefinitionPeriodNotAvailable"/></em></p>
 			<ul class="list5">
@@ -66,9 +66,10 @@
 			</ul>
 		</logic:empty>
 
+		<script type="text/javascript" language="javascript">
+			switchGlobal();
+		</script>
 
-	<script type="text/javascript" language="javascript">
-		switchGlobal();
-	</script>
-
+	</logic:notEmpty>
+	
 </logic:present>

@@ -10,10 +10,6 @@
 			<form-property name="executionPeriodId" type="java.lang.Integer"/>
 			<form-property name="teacherId" type="java.lang.Integer" />
 		</form-bean>
-		<form-bean name="viewDepartmentTeachersPersonalExpectationsForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-			<form-property name="executionYearID" type="java.lang.Integer" />
-			<form-property name="teacherID" type="java.lang.Integer" />
-		</form-bean>
 		<form-bean name="teacherExecutionCourseShiftProfessorshipForm" 
             type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
             <form-property name="teacherNumber" type="java.lang.String"/>
@@ -299,15 +295,6 @@
             <forward name="show-note" path="show-note"/>  
             <forward name="edit-note" path="/showFullTeacherCreditsSheet.do?method=showTeacherCredits&amp;page=0"/> 
             <forward name="teacher-not-found" path="/showAllTeacherCreditsResume.do?method=showTeacherCreditsResume&amp;page=0"/>             
-        </action>
-        
-        <action path="/viewDepartmentTeachersExpectations" 	    
-        	name="viewDepartmentTeachersPersonalExpectationsForm"
-   	        parameter="method"
-   	        scope="request"
-            type="net.sourceforge.fenixedu.presentationTier.Action.departmentMember.ViewDepartmentTeachersExpectationsAction">            
-            <forward name="showTeacherExpectations" path="df.page.viewDepartmentTeacherExpectations.viewDepartmentTeacherExpectations"/>
-            <forward name="print" path="df.page.viewDepartmentTeacherExpectations.print"/>
         </action>
                         
         <!-- ============================================================ -->

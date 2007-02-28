@@ -11,10 +11,9 @@
 <logic:present role="DEPARTMENT_ADMINISTRATIVE_OFFICE">
 	
 	<bean:define id="teacher" name="teacherPersonalExpectation" property="teacher" />	
-
-	<p class="mtop15"><bean:message key="label.common.executionYear" bundle="DEPARTMENT_ADM_OFFICE_RESOURCES"/>: <bean:write name="teacherPersonalExpectation" property="executionYear.year"/></p>
+	<p><bean:message key="label.common.executionYear" bundle="DEPARTMENT_ADM_OFFICE_RESOURCES"/>: <bean:write name="teacherPersonalExpectation" property="executionYear.year"/></p>
 	
-	<ul class="mvert15">
+	<ul class="list5 mvert15">
 		<li>
 			<html:link page="/listTeachersPersonalExpectations.do?method=listTeachersPersonalExpectationsByExecutionYear" paramId="executionYearId" paramName="teacherPersonalExpectation" paramProperty="executionYear.idInternal">		
 				<bean:message bundle="DEPARTMENT_ADM_OFFICE_RESOURCES" key="link.return"/>

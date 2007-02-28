@@ -32,28 +32,33 @@
 		   	<bean:define id="executionYearId" name="bean" property="executionYear.idInternal"/>
 		   				
 			<logic:empty name="expectation" property="autoEvaluation">
-				<p class="mbottom05"><em><bean:message key="label.noAutoEvaluationsForYear" /></em></p>
-				<ul class="list5 mtop05">
-					<li>
-						<logic:equal name="expectation" property="allowedToEditAutoEvaluation" value="true">
+				<p class="mbottom05"><em><bean:message key="label.noAutoEvaluationsForYear" /></em></p>				
+				<logic:equal name="expectation" property="allowedToEditAutoEvaluation" value="true">
+					<ul class="list5 mtop05">
+						<li>						
 							<bean:define id="executionYearId" name="bean" property="executionYear.idInternal"/>
 							<html:link page="<%= "/teacherExpectationAutoAvaliation.do?method=prepareEdit&amp;executionYearId=" + executionYearId%>">
 								<bean:message key="button.add" />
-							</html:link>
-						</logic:equal>
-					</li>
-				</ul>			   	
+							</html:link>		
+						</li>
+					</ul>			   		
+				</logic:equal>	
+				<logic:notEqual name="expectation" property="allowedToEditAutoEvaluation" value="true">
+					<p class="mtop15"><em><bean:message key="label.undefined.auto.evaluation.period" /></em></p>				
+				</logic:notEqual>		
 			</logic:empty>
 			
 			<logic:notEmpty name="expectation" property="autoEvaluation">
 				<logic:equal name="expectation" property="allowedToEditAutoEvaluation" value="true">
-				<ul class="list5">
-					<li>
-						<html:link page="<%= "/teacherExpectationAutoAvaliation.do?method=prepareEdit&amp;executionYearId=" + executionYearId%>">
-							<bean:message key="label.edit" />
-						</html:link>
-					</li>
-				</ul>
+					<p>
+						<ul class="list5">
+							<li>
+								<html:link page="<%= "/teacherExpectationAutoAvaliation.do?method=prepareEdit&amp;executionYearId=" + executionYearId%>">
+									<bean:message key="label.edit" />
+								</html:link>
+							</li>
+						</ul>
+					</p>
 				</logic:equal>
 			</logic:notEmpty>			
 

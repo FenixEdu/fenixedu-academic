@@ -26,13 +26,12 @@
 		<p><bean:message key="label.personalExpectationsManagement.message.generalInformationTitle" bundle="DEPARTMENT_MEMBER_RESOURCES"/>:</p>
 		<p><bean:message key="label.personalExpectationsManagement.message.generalInformationDescription" bundle="DEPARTMENT_MEMBER_RESOURCES"/></p>
 	</div>
-
 	
 	<h3 class="separator2 mtop2"><bean:message key="label.personalExpectationsManagement.education" bundle="DEPARTMENT_MEMBER_RESOURCES"/></h3>	
-	
-	<p><em><bean:message key="label.common.executionYear" bundle="DEPARTMENT_MEMBER_RESOURCES"/>: <bean:write name="teacherPersonalExpectationBean" property="executionYear.year"/></em></p>
-	
+		
 	<logic:notEmpty name="teacherPersonalExpectationBean">
+	
+		<p><em><bean:message key="label.common.executionYear" bundle="DEPARTMENT_MEMBER_RESOURCES"/>: <bean:write name="teacherPersonalExpectationBean" property="executionYear.year"/></em></p>
 			
 		<fr:form action="/personalExpectationManagement.do"> 
 			<html:hidden property="method" value="prepareManageResearchAndDevelopment"/>

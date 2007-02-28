@@ -66,18 +66,7 @@
 						<html:link page="/listTeachersPersonalExpectations.do?method=listTeachersPersonalExpectations">
 							<bean:message key="label.see.teachers.personal.expectations"/>
 						</html:link>
-					</li>		
-					
-					<!-- Temporary solution until department defines criteria for access to personal expectations -->		
-					<bean:define id="username" name="userView" property="person.username" type="java.lang.String" />
-					<% if (username.equalsIgnoreCase("ist12023") || username.equalsIgnoreCase("ist11416")) { %>
-			  		<li>
-					  	<html:link page="/viewDepartmentTeachersExpectations.do?method=prepare">
-					  		<bean:message key="link.departmentTeachersExpectations"/>
-					  	</html:link>  
-					</li> 				
-					<% } %>
-					
+					</li>																
 				</logic:equal>
 			</logic:notEmpty>	
 				

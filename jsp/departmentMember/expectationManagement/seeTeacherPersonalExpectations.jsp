@@ -12,8 +12,7 @@
 	
 	<bean:define id="teacher" name="teacherPersonalExpectation" property="teacher" />	
 	<p><bean:message key="label.common.executionYear" bundle="DEPARTMENT_MEMBER_RESOURCES"/>: <bean:write name="teacherPersonalExpectation" property="executionYear.year"/></p>
-	
-	
+		
 	<ul class="list5 mvert15">
 		<li>
 			<html:link page="/listTeachersPersonalExpectations.do?method=listTeachersPersonalExpectationsByExecutionYear" paramId="executionYearId" paramName="teacherPersonalExpectation" paramProperty="executionYear.idInternal">		
@@ -21,10 +20,11 @@
 			</html:link>
 		</li>
 	</ul>	
-
+	
 	<fr:view name="teacher" schema="seeTeacherInformationForTeacherPersonalExpectation">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle1 thlight"/>
+			<fr:property name="classes" value="tstyle2 thlight thright thbgnone"/>
+			<fr:property name="columnClasses" value=",bold"/>
 		</fr:layout>
 	</fr:view>
 		
