@@ -4,6 +4,7 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.publico.teachersBody;
 
+import java.text.Collator;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -154,9 +155,8 @@ public class ShowTeachersBodyDispatchAction extends FenixDispatchAction {
                         DetailedProfessorship dt1 = (DetailedProfessorship) list1.get(0);
                         DetailedProfessorship dt2 = (DetailedProfessorship) list2.get(0);
 
-                        return dt1.getInfoProfessorship().getInfoExecutionCourse().getNome()
-                                .compareToIgnoreCase(
-                                        dt2.getInfoProfessorship().getInfoExecutionCourse().getNome());
+                        return Collator.getInstance().compare(dt1.getInfoProfessorship().getInfoExecutionCourse().getNome(),
+                        	dt2.getInfoProfessorship().getInfoExecutionCourse().getNome());
                     }
 
                 });
@@ -213,9 +213,8 @@ public class ShowTeachersBodyDispatchAction extends FenixDispatchAction {
 	                    DetailedProfessorship dt1 = (DetailedProfessorship) list1.get(0);
 	                    DetailedProfessorship dt2 = (DetailedProfessorship) list2.get(0);
 	
-	                    return dt1.getInfoProfessorship().getInfoExecutionCourse().getNome()
-	                            .compareToIgnoreCase(
-	                                    dt2.getInfoProfessorship().getInfoExecutionCourse().getNome());
+	                    return Collator.getInstance().compare(dt1.getInfoProfessorship().getInfoExecutionCourse().getNome(),
+	                	    dt2.getInfoProfessorship().getInfoExecutionCourse().getNome());
 	                }
 	
 	            });
