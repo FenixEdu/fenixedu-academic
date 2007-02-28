@@ -12,6 +12,12 @@
 		layout="values-dash" key="label.unit" bundle="ASSIDUOUSNESS_RESOURCES"/>
 </schema>
 
+<schema name="show.employeeStatus" type="net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatusHistory">
+	<slot name="assiduousnessStatus.description" key="label.status" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="beginDate"/>
+	<slot name="endDate"/>
+</schema>
+
 <schema name="show.employeePersonalInformation"
 	type="net.sourceforge.fenixedu.domain.Person">
 	<slot name="employee.employeeNumber" key="label.employeeNumber" bundle="ASSIDUOUSNESS_RESOURCES"/>

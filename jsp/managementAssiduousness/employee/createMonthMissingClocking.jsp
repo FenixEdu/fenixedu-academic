@@ -209,7 +209,7 @@
 			<bean:message key="button.submit" />
 		</html:submit></p>
 	</fr:form></div>
-
+		
 	<div class="toprint">
 	<p class="bold mbottom0"><bean:define id="month" name="yearMonth"
 		property="month" /> <bean:message key="<%=month.toString()%>"
@@ -218,7 +218,11 @@
 	<br />
 	</div>
 
-
+	<fr:view name="employeeStatusList" schema="show.employeeStatus">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="showinfo1 thbold" />
+		</fr:layout>
+	</fr:view>
 
 <logic:present name="justifications">
 	<logic:empty name="justifications">

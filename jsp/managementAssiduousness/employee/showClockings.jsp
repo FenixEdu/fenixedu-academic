@@ -33,7 +33,6 @@
 				<fr:property name="classes" value="showinfo1 thbold" />
 			</fr:layout>
 		</fr:view>
-	
 
 	<logic:messagesPresent message="true">
 		<html:messages id="message" message="true">
@@ -41,11 +40,8 @@
 		</html:messages>
 	</logic:messagesPresent>
 
-
-
-
-	<div class="mvert1 invisible"><fr:form
-		action="/viewEmployeeAssiduousness.do?method=showClockings">
+	<div class="mvert1 invisible">
+	<fr:form action="/viewEmployeeAssiduousness.do?method=showClockings">
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method"
 				name="employeeForm" property="method" value="showClockings" />
 			<html:hidden bundle="HTMLALT_RESOURCES"
@@ -61,6 +57,7 @@
 			<bean:message key="button.submit" />
 		</html:submit></p>
 	</fr:form></div>
+
 	<div class="toprint">
 	<p class="bold mbottom0"><bean:define id="month" name="yearMonth"
 		property="month" /> <bean:message key="<%=month.toString()%>"
@@ -68,6 +65,12 @@
 		property="year" /></p>
 	<br />
 	</div>
+	
+	<fr:view name="employeeStatusList" schema="show.employeeStatus">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="showinfo1 thbold" />
+		</fr:layout>
+	</fr:view>
 	</logic:present>
 </logic:present>
 

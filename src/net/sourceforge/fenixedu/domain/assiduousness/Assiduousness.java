@@ -59,12 +59,9 @@ public class Assiduousness extends Assiduousness_Base {
                         return schedule;
                     }
                 } else {
-                    DateTime scheduleEndDate = schedule.getBeginDate().isEqual(schedule.getEndDate()) ? schedule
-                            .getEndDate().toDateTimeAtMidnight().plus(3600)
-                            : schedule.getEndDate().toDateTimeAtMidnight();
-                    Interval scheduleInterval = new Interval(schedule.getBeginDate()
-                            .toDateTimeAtMidnight(), scheduleEndDate);
-                    if (scheduleInterval.contains(now.toDateTimeAtMidnight())) {
+                    DateInterval dateInterval = new DateInterval(schedule.getBeginDate(), schedule
+                            .getEndDate());
+                    if (dateInterval.containsDate(now)) {
                         return schedule;
                     }
                 }
@@ -84,9 +81,7 @@ public class Assiduousness extends Assiduousness_Base {
             return scheduleList.iterator().next();
         } else {
             // if there are more than one, it's beacause there was an
-            // exception
-            // schedule in that
-            // specified date
+            // exception schedule in that specified date
             for (Schedule schedule : scheduleList) {
                 if (schedule.getException()) {
                     return schedule;
@@ -398,6 +393,27 @@ public class Assiduousness extends Assiduousness_Base {
             lastActiveStatus = endDate;
         }
         return lastActiveStatus;
+    }
+
+    public List<AssiduousnessStatusHistory> getStatusBetween(YearMonthDay beginDate, YearMonthDay endDate) {
+        List<AssiduousnessStatusHistory> assiduousnessStatusList = new ArrayList<AssiduousnessStatusHistory>();
+        for (AssiduousnessStatusHistory assiduousnessStatusHistory : getAssiduousnessStatusHistories()) {
+            if (assiduousnessStatusHistory.getEndDate() != null) {
+                DateInterval statusInterval = new DateInterval(
+                        assiduousnessStatusHistory.getBeginDate(), assiduousnessStatusHistory
+                                .getEndDate());
+                DateInterval interval = new DateInterval(beginDate,endDate);
+                if (interval.containsInterval(statusInterval) || statusInterval.containsInterval(interval)) {
+                    assiduousnessStatusList.add(assiduousnessStatusHistory);
+                }
+            } else {
+                if (assiduousnessStatusHistory.getBeginDate().isBefore(endDate) || assiduousnessStatusHistory
+                        .getBeginDate().isEqual(endDate)) {
+                    assiduousnessStatusList.add(assiduousnessStatusHistory);
+                }
+            }
+        }
+        return assiduousnessStatusList;
     }
 
     public boolean isStatusActive(YearMonthDay beginDate, YearMonthDay endDate) {

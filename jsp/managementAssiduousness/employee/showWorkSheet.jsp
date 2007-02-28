@@ -137,8 +137,7 @@
 
 		<span class="toprint"><br />
 		</span>
-		<fr:view name="employeeWorkSheet" property="employee"
-			schema="show.employeeInformation">
+		<fr:view name="employeeWorkSheet" property="employee" schema="show.employeeInformation">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="showinfo1 thbold" />
 			</fr:layout>
@@ -149,10 +148,9 @@
 				<p><span class="error0"><bean:write name="message" /></span></p>
 			</html:messages>
 		</logic:messagesPresent>
-
-
-		<div class="mvert1 invisible"><fr:form
-			action="/viewEmployeeAssiduousness.do">
+		
+		<div class="mvert1 invisible">
+		<fr:form action="/viewEmployeeAssiduousness.do">
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method"
 				name="employeeForm" property="method" value="showWorkSheet" />
 			<html:hidden bundle="HTMLALT_RESOURCES"
@@ -170,7 +168,7 @@
 				<bean:message key="button.submit" />
 			</html:submit></p>
 		</fr:form></div>
-
+		
 		<div class="toprint">
 		<p class="bold mbottom0"><bean:define id="month" name="yearMonth"
 			property="month" /> <bean:message key="<%=month.toString()%>"
@@ -179,7 +177,12 @@
 		<br />
 		</div>
 	
-
+		<fr:view name="employeeStatusList" schema="show.employeeStatus">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="showinfo1 thbold" />
+			</fr:layout>
+		</fr:view>
+		
 	<logic:empty name="employeeWorkSheet" property="workDaySheetList">
 		<p>
 			<em><bean:message key="message.employee.noWorkSheet" /></em>
