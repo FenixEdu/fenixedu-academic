@@ -39,20 +39,30 @@ public class ExternalCurricularCourse extends ExternalCurricularCourse_Base {
 	if (StringUtils.isEmpty(name)) {
 	    throw new DomainException("error.externalCurricularCourse.name.cannot.be.empty");
 	}
-	
-	checkForExternalCurricularCourseWithSameName(unit, name);
-	
+
+	checkForExternalCurricularCourseWithSameNameAndCode(unit, name, code);
+
 	setRootDomainObject(RootDomainObject.getInstance());
 	setUnit(unit);
 	setName(name);
 	setCode(code);
     }
 
-    private void checkForExternalCurricularCourseWithSameName(final Unit unit, final String name) {
+    private void checkForExternalCurricularCourseWithSameNameAndCode(final Unit unit, final String name,
+	    String code) {
 	final String nameToSearch = name.toLowerCase();
-	for (final ExternalCurricularCourse externalCurricularCourse : unit.getExternalCurricularCourses()) {
+	for (final ExternalCurricularCourse externalCurricularCourse : unit
+		.getExternalCurricularCourses()) {
 	    if (externalCurricularCourse.getName().toLowerCase().equals(nameToSearch)) {
-		throw new DomainException("error.externalCurricularCourse.parent.unit.already.has.externalCurricularCourse.with.same.type");
+
+		if ((externalCurricularCourse.getCode() != null && externalCurricularCourse.getCode()
+			.equals(code))
+			|| externalCurricularCourse.getCode() == null && code == null) {
+
+		    throw new DomainException(
+			    "error.externalCurricularCourse.parent.unit.already.has.externalCurricularCourse.with.same.type");
+		}
+
 	    }
 	}
     }
@@ -70,31 +80,51 @@ public class ExternalCurricularCourse extends ExternalCurricularCourse_Base {
     private boolean canBeDeleted() {
 	return !hasAnyExternalEnrolments();
     }
-    
+
     public String getFullPathName() {
-	final List<AccountabilityTypeEnum> validAccountabilityTypes = Arrays.asList(new AccountabilityTypeEnum[] { 
-		    AccountabilityTypeEnum.GEOGRAPHIC, AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE});
-	return UnitUtils.getUnitFullPathName(getUnit(), validAccountabilityTypes).toString() + " > " + getName();
+	final List<AccountabilityTypeEnum> validAccountabilityTypes = Arrays
+		.asList(new AccountabilityTypeEnum[] { AccountabilityTypeEnum.GEOGRAPHIC,
+			AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE });
+	return UnitUtils.getUnitFullPathName(getUnit(), validAccountabilityTypes).toString() + " > "
+		+ getName();
     }
 
-    
-    static public ExternalCurricularCourse readExternalCurricularCourse(String code) {
-	for (final ExternalCurricularCourse externalCurricularCourse : RootDomainObject.getInstance()
+    static public ExternalCurricularCourse readExternalCurricularCourse(Unit unit, String name,
+	    String code) {
+	for (final ExternalCurricularCourse externalCurricularCourse : unit
 		.getExternalCurricularCourses()) {
-	    if (externalCurricularCourse.getCode().equals(code)) {
+	    if (externalCurricularCourse.getCode().equals(code)
+		    && externalCurricularCourse.getName().equals(name)) {
 		return externalCurricularCourse;
 	    }
 	}
 	return null;
     }
 
+    static public ExternalCurricularCourse readExternalCurricularCourse(Unit unit, String code) {
+	List<ExternalCurricularCourse> result = new ArrayList<ExternalCurricularCourse>();
+	for (final ExternalCurricularCourse externalCurricularCourse : unit
+		.getExternalCurricularCourses()) {
+	    if (StringUtils.isEmpty(externalCurricularCourse.getCode()) && StringUtils.isEmpty(code) || externalCurricularCourse.getCode().equals(code)) {
+		result.add(externalCurricularCourse);
+	    }
+	}
+	if (result.size() == 1) {
+	    return result.iterator().next();
+	} else if (result.size() == 0) {
+	    return null;
+	}
+	throw new DomainException("error.externalCurricularCourse.manyFoundWithSameCode");
+    }
+    
     static public List<ExternalCurricularCourse> readByName(final String regex) {
 	if (regex == null) {
 	    return Collections.emptyList();
 	}
 	final String nameToMatch = regex.replaceAll("%", ".*").toLowerCase();
 	final List<ExternalCurricularCourse> result = new ArrayList<ExternalCurricularCourse>();
-	for (final ExternalCurricularCourse externalCurricularCourse : RootDomainObject.getInstance().getExternalCurricularCoursesSet()) {
+	for (final ExternalCurricularCourse externalCurricularCourse : RootDomainObject.getInstance()
+		.getExternalCurricularCoursesSet()) {
 	    if (externalCurricularCourse.getName().toLowerCase().matches(nameToMatch)) {
 		result.add(externalCurricularCourse);
 	    }
