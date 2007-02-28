@@ -68,10 +68,10 @@ public class StudentsSearchBean implements Serializable {
 	final Set<Student> students = new HashSet<Student>();
 
 	if (getNumber() != null) {
-	    final Registration registration = Registration.readByNumber(getNumber());
-	    if (registration != null) {
+	    for (final Registration registration : Registration.readByNumber(getNumber())) {
 		students.add(registration.getStudent());
 	    }
+
 	    Student student = Student.readStudentByNumber(getNumber());
 	    if (student != null) {
 		students.add(student);
@@ -82,7 +82,6 @@ public class StudentsSearchBean implements Serializable {
 		    getDocumentType());
 	    if (person != null && person.hasStudent()) {
 		students.add(person.getStudent());
-
 	    }
 	} else if (!StringUtils.isEmpty(getName())) {
 	    for (Person person : Person.searchPersons(getName().split(" "))) {

@@ -139,13 +139,13 @@ public class Registration extends Registration_Base {
 	}
     }
 
-    private Registration(Person person, Integer studentNumber, RegistrationAgreement agreement,
+    private Registration(Person person, Integer registrationNumber, RegistrationAgreement agreement,
 	    StudentCandidacy studentCandidacy) {
 	this();
 	if (person.hasStudent()) {
 	    setStudent(person.getStudent());
 	} else {
-	    setStudent(new Student(person, studentNumber));
+	    setStudent(new Student(person, registrationNumber));
 	}
 	setPayedTuition(true);
 	setRegistrationAgreement(agreement);
@@ -614,7 +614,7 @@ public class Registration extends Registration_Base {
 	}
 	return null;
     }
-    
+
     public static Registration readRegisteredRegistrationByNumberAndDegreeType(Integer number, DegreeType degreeType) {
 	for (Registration registration : RootDomainObject.getInstance().getRegistrations()) {
 	    if (registration.getNumber().equals(number)
@@ -638,13 +638,14 @@ public class Registration extends Registration_Base {
 	return null;
     }
 
-    public static Registration readByNumber(Integer number) {
+    public static List<Registration> readByNumber(Integer number) {
+	final List<Registration> registrations = new ArrayList<Registration>();
 	for (Registration registration : RootDomainObject.getInstance().getRegistrationsSet()) {
 	    if (registration.getNumber().equals(number)) {
-		return registration;
+		registrations.add(registration);
 	    }
 	}
-	return null;
+	return registrations;
     }
 
     public static List<Registration> readMasterDegreeStudentsByNameDocIDNumberIDTypeAndStudentNumber(
