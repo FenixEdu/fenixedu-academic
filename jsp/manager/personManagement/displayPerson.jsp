@@ -60,7 +60,7 @@
           <tr>
             <td width="30%"><bean:message bundle="MANAGER_RESOURCES" key="label.person.identificationDocumentType" /></td>
             <td class="greytxt">
-            	<bean:define id="idType" name="personalInfo" property="tipoDocumentoIdentificacao"/>
+            	<bean:define id="idType" name="personalInfo" property="idDocumentType"/>
             	<bean:message bundle="MANAGER_RESOURCES" key='<%=idType.toString()%>' bundle="ENUMERATION_RESOURCES"/>
             </td>
           </tr>

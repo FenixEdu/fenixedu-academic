@@ -200,33 +200,6 @@ public class InfoPerson extends InfoObject {
     public Homepage getHomepage() {
 	return getPerson().getHomepage();
     }
-    
-    private List<String> getImportantRoles(Person person, List<String> mainRoles) {
-
-        if (person.getPersonRolesCount() != 0) {
-            boolean teacher = false, employee = false;
-
-            for (final Role personRole : person.getPersonRolesSet()) {
-
-                if (personRole.getRoleType() == RoleType.TEACHER) {
-                    mainRoles.add("Docente");
-                    teacher = true;
-
-                } else if (personRole.getRoleType() == RoleType.STUDENT) {
-                    mainRoles.add("Aluno");
-
-                } else if (personRole.getRoleType() == RoleType.GRANT_OWNER) {
-                    mainRoles.add("Bolseiro");
-                } else if (!teacher && personRole.getRoleType() == RoleType.EMPLOYEE) {
-                    employee = true;
-                }
-            }
-            if (employee && !teacher) {
-                mainRoles.add("Funcionário");
-            }
-        }
-        return mainRoles;
-    }
 
     public static InfoPerson newInfoFromDomain(Person person) {
         return (person != null) ? new InfoPerson(person) : null;
@@ -252,7 +225,7 @@ public class InfoPerson extends InfoObject {
     }
 
     public List<String> getMainRoles() {
-        return getImportantRoles(getPerson(), new ArrayList<String>());
+	return getPerson().getMainRoles();
     }
 
     public String getIstUsername() {

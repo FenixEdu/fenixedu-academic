@@ -7,7 +7,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
-import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.LoginAlias;
@@ -160,17 +159,8 @@ public class SearchPerson extends Service {
 
 	allValidPersons = (List<Person>) CollectionUtils.select(persons, predicate);
 	Collections.sort(allValidPersons, Person.COMPARATOR_BY_NAME);
-	List<InfoPerson> infoPersons = new ArrayList<InfoPerson>();
-
-	for (Person person : (List<Person>) allValidPersons) {
-	    infoPersons.add(InfoPerson.newInfoFromDomain(person));
-	}
-
-	return new CollectionPager<InfoPerson>(infoPersons, 25);
+	return new CollectionPager<Person>(allValidPersons, 25);
     }
-
-    // --------------- Search Person Predicate
-    // -------------------------------------------
 
     public static class SearchPersonPredicate implements Predicate {
 

@@ -69,7 +69,7 @@
 				<bean:message key="label.identificationDocumentType" />
 			</td>
 			<td class="greytxt">
-				<bean:define id="idType" name="personalInfo" property="tipoDocumentoIdentificacao"/>
+				<bean:define id="idType" name="personalInfo" property="idDocumentType"/>
 				<bean:message key='<%=idType.toString()%>'/>
 			</td>
 		  </tr>		  

@@ -2573,4 +2573,35 @@ public class Person extends Person_Base {
     	return name[0] + " " + name[name.length-1];
     }
 
+    private List<String> getImportantRoles(List<String> mainRoles) {
+
+        if (getPersonRolesCount() != 0) {
+            boolean teacher = false, employee = false;
+
+            for (final Role personRole : getPersonRolesSet()) {
+
+                if (personRole.getRoleType() == RoleType.TEACHER) {
+                    mainRoles.add("Docente");
+                    teacher = true;
+
+                } else if (personRole.getRoleType() == RoleType.STUDENT) {
+                    mainRoles.add("Aluno");
+
+                } else if (personRole.getRoleType() == RoleType.GRANT_OWNER) {
+                    mainRoles.add("Bolseiro");
+                } else if (!teacher && personRole.getRoleType() == RoleType.EMPLOYEE) {
+                    employee = true;
+                }
+            }
+            if (employee && !teacher) {
+                mainRoles.add("Funcionário");
+            }
+        }
+        return mainRoles;
+    }
+
+    public List<String> getMainRoles() {
+        return getImportantRoles(new ArrayList<String>());
+    }
+
 }
