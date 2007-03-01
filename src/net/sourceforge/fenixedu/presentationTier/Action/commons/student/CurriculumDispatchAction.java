@@ -33,6 +33,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
 /**
@@ -70,6 +71,21 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
 	    return getStudentCP(registration, mapping, request);
 	}
     }
+    
+    public ActionForward prepareReadByStudentNumber(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+        RenderUtils.invalidateViewState();
+	
+	DynaActionForm actionForm = (DynaActionForm) form;
+	String studentNumber = (String) actionForm.get("studentNumber");
+	List<Registration> registrations = Registration.readByNumber(Integer.valueOf(studentNumber));
+	
+	if (registrations.isEmpty()) {
+	    return mapping.findForward("NotAuthorized");
+	} else {
+	    return getStudentCP(registrations.get(0), mapping, request);
+	}
+    }
+
 
     private Integer getRegistrationOID(HttpServletRequest request) {
 	String registrationOID = request.getParameter("registrationOID");
