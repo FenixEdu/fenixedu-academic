@@ -5,7 +5,6 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -23,7 +22,6 @@ import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.util.EMail;
 
 import org.apache.struts.util.MessageResources;
 
@@ -82,10 +80,10 @@ public class GroupStudentEnrolment extends Service {
     }
 
     private void informStudents(final StudentGroup studentGroup, final Registration registration, final Grouping grouping) {
-        final List<String> emails = new ArrayList<String>();
-        for (final Attends attends : studentGroup.getAttends()) {
-            emails.add(attends.getAluno().getPerson().getEmail());
-        }
+//        final List<String> emails = new ArrayList<String>();
+//        for (final Attends attends : studentGroup.getAttends()) {
+//            emails.add(attends.getAluno().getPerson().getEmail());
+//        }
 
         final StringBuilder executionCourseNames = new StringBuilder();
         for (final ExecutionCourse executionCourse : grouping.getExecutionCourses()) {
@@ -94,10 +92,10 @@ public class GroupStudentEnrolment extends Service {
             }
             executionCourseNames.append(executionCourse.getNome());
         }
-        EMail.send(mailServer(), "Fenix System", messages.getMessage("suporte.mail"),
-                messages.getMessage("message.subject.grouping.change"), emails, new ArrayList(), new ArrayList(),
-                messages.getMessage("message.body.grouping.change.enrolment", registration.getNumber().toString(),
-                        studentGroup.getGroupNumber().toString()));
+//        EMail.send(mailServer(), "Fenix System", messages.getMessage("suporte.mail"),
+//                messages.getMessage("message.subject.grouping.change"), emails, new ArrayList(), new ArrayList(),
+//                messages.getMessage("message.body.grouping.change.enrolment", registration.getNumber().toString(),
+//                        studentGroup.getGroupNumber().toString()));
     }
 
     private void checkIfStudentIsNotEnrolledInOtherGroups(final List<StudentGroup> studentGroups,
