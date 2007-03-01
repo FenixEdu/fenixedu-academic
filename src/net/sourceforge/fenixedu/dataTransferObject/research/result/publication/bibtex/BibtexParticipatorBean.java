@@ -8,6 +8,8 @@ import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultPartici
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
+import net.sourceforge.fenixedu.domain.person.PersonName;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
 import bibtex.dom.BibtexPerson;
 
@@ -15,12 +17,16 @@ public class BibtexParticipatorBean implements Serializable {
 
     private String bibtexPerson;
 
+    private DomainReference<PersonName> personNameObject;
+    
     private DomainReference<Person> person;
 
     private String personName;
 
     private ResultParticipationRole personRole;
 
+    private DomainReference<UnitName> organizatioNameObject;
+    
     private DomainReference<Unit> organization;
 
     private String organizationName;
@@ -47,12 +53,21 @@ public class BibtexParticipatorBean implements Serializable {
     }
     /**/
 
-	public Unit getOrganization() {
-	return (this.organization == null) ? null : this.organization.getObject();
+    public UnitName getOrganizationNameObject() {
+	return organizatioNameObject.getObject();
+    }
+    
+    public void setOrganizationNameObject(UnitName unitName) {
+	organizatioNameObject = new DomainReference<UnitName>(unitName);
+    }
+    
+    public Unit getOrganization() {
+	UnitName unitName = getOrganizationNameObject();
+	return (unitName == null) ? null : unitName.getUnit();
     }
 
     public void setOrganization(Unit organization) {
-	this.organization = (organization != null) ? new DomainReference<Unit>(organization) : null;
+	setOrganizationNameObject((organization!=null) ? organization.getUnitName() : null);
     }
 
     public String getOrganizationName() {
@@ -64,13 +79,22 @@ public class BibtexParticipatorBean implements Serializable {
     }
 
     public Person getPerson() {
-    	return person.getObject();
+    	PersonName personName = personNameObject.getObject();
+    	return (personName == null) ? null : personName.getPerson();
     }
 
     public void setPerson(Person person) {
-    	this.person = new DomainReference<Person>(person);
+    	setPersonNameObject((person==null) ? null : person.getPersonName());
     }
 
+    public PersonName getPersonNameObject() {
+    	return personNameObject.getObject();
+    }
+
+    public void setPersonNameObject(PersonName personName) {
+    	this.personNameObject = new DomainReference<PersonName>(personName);
+    }
+    
     public String getPersonName() {
 	return personName;
     }

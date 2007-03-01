@@ -14,8 +14,8 @@ public class SearchExternalPersonForParticipations extends Service implements Au
 	    return null;
 	}
 
-	final int size = Integer.parseInt(arguments.get("size"));
-	return PersonName.findExternalPerson(value, size);
+	String size = arguments.get("size");
+	return PersonName.findExternalPerson(value, (size==null) ? 20 : Integer.parseInt(size));
     }
 
 }
