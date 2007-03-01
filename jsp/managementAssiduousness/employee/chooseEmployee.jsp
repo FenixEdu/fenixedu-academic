@@ -18,6 +18,12 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1" />	
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="<%=nextAction%>" />
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.action" property="action" value="<%=nextAction%>" />
+	<logic:present name="yearMonth">
+		<bean:define id="month" name="yearMonth" property="month" />
+		<bean:define id="year" name="yearMonth" property="year"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.month" property="month" value="<%=month.toString()%>" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.year" property="year" value="<%=year.toString()%>" />
+	</logic:present>	
 	<p>
 		<bean:message key="label.employeeNumber" />: 
 		<html:text bundle="HTMLALT_RESOURCES" altKey="text.employeeNumber" property="employeeNumber" size="4" maxlength="4" />

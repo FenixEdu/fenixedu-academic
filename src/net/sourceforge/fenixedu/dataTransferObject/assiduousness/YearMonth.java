@@ -15,69 +15,74 @@ public class YearMonth implements Serializable {
     Month month;
 
     public YearMonth() {
-        super();
+	super();
     }
 
     public YearMonth(int year, int month) {
-        super();
-        setYear(year);
-        setMonth(Month.values()[month - 1]);
+	super();
+	setYear(year);
+	setMonth(Month.values()[month - 1]);
     }
 
     public YearMonth(YearMonthDay date) {
-        super();
-        setYear(date.getYear());
-        setMonth(Month.values()[date.getMonthOfYear() - 1]);
+	super();
+	setYear(date.getYear());
+	setMonth(Month.values()[date.getMonthOfYear() - 1]);
+    }
+
+    public YearMonth(Integer year, Month month) {
+	setYear(year);
+	setMonth(month);
     }
 
     public Month getMonth() {
-        return month;
+	return month;
     }
 
     public int getNumberOfMonth() {
-        return getMonth().getNumberOfMonth();
+	return getMonth().getNumberOfMonth();
     }
 
     public void setMonth(Month month) {
-        this.month = month;
+	this.month = month;
     }
 
     public Integer getYear() {
-        return year;
+	return year;
     }
 
     public void setYear(Integer year) {
-        this.year = year;
+	this.year = year;
     }
 
     public boolean getIsThisYearMonthClosed() {
-        Partial yearMonth = new Partial()
-                .with(DateTimeFieldType.monthOfYear(), getMonth().ordinal() + 1).with(
-                        DateTimeFieldType.year(), getYear());
-        return ClosedMonth.isMonthClosed(yearMonth);
+	Partial yearMonth = new Partial()
+		.with(DateTimeFieldType.monthOfYear(), getMonth().ordinal() + 1).with(
+			DateTimeFieldType.year(), getYear());
+	return ClosedMonth.isMonthClosed(yearMonth);
     }
 
     public boolean getIsThisYearMonthClosedForExtraWork() {
-        Partial yearMonth = new Partial()
-                .with(DateTimeFieldType.monthOfYear(), getMonth().ordinal() + 1).with(
-                        DateTimeFieldType.year(), getYear());
-        return ClosedMonth.isMonthClosedForExtraWork(yearMonth);
+	Partial yearMonth = new Partial()
+		.with(DateTimeFieldType.monthOfYear(), getMonth().ordinal() + 1).with(
+			DateTimeFieldType.year(), getYear());
+	return ClosedMonth.isMonthClosedForExtraWork(yearMonth);
     }
 
     public boolean getCanCloseMonth() {
-        Partial yearMonth = new Partial()
-                .with(DateTimeFieldType.monthOfYear(), getMonth().ordinal() + 1).with(
-                        DateTimeFieldType.year(), getYear());
-        return ClosedMonth.getCanCloseMonth(yearMonth);
+	Partial yearMonth = new Partial()
+		.with(DateTimeFieldType.monthOfYear(), getMonth().ordinal() + 1).with(
+			DateTimeFieldType.year(), getYear());
+	return ClosedMonth.getCanCloseMonth(yearMonth);
     }
 
     public void addMonth() {
-        if (getNumberOfMonth() == 12) {
-            setMonth(Month.values()[0]);
-            setYear(getYear() + 1);
-        } else {
-            setMonth(Month.values()[getNumberOfMonth()]);
-        }
+	if (getNumberOfMonth() == 12) {
+	    setMonth(Month.values()[0]);
+	    setYear(getYear() + 1);
+	} else {
+	    setMonth(Month.values()[getNumberOfMonth()]);
+	}
     }
 
 }

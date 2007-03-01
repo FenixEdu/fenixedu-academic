@@ -47,48 +47,48 @@ import pt.utl.ist.fenix.tools.file.FileManagerException;
 public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareCreateMissingClockingMonth(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
-            FenixFilterException {
-        
-        YearMonth yearMonth = null;
-        String dateString = request.getParameter("date");
-        RegularizationMonthFactory regularizationMonthFactory = (RegularizationMonthFactory) getFactoryObject();
-        if (regularizationMonthFactory != null) {
-            //RenderUtils.invalidateViewState();
-            yearMonth = regularizationMonthFactory.getYearMonth();
-        } else {
-            Employee employee = Employee.readByNumber(new Integer(getFromRequest(request, "employeeNumber")
-                    .toString()));            
-            YearMonthDay date = null;
-            if (!StringUtils.isEmpty(dateString)) {
-                date = new YearMonthDay(dateString);
-            }
-            yearMonth = getYearMonth(request, date);
-            regularizationMonthFactory = new RegularizationMonthFactory(yearMonth, employee
-                    .getAssiduousness(), SessionUtils.getUserView(request).getPerson().getEmployee());
-        }
-        request.setAttribute("regularizationMonthFactory", regularizationMonthFactory);
-        request.setAttribute("yearMonth", yearMonth);
-        if (StringUtils.isEmpty(dateString)) {
-            new ViewEmployeeAssiduousnessDispatchAction().showJustifications(mapping, form, request,
-                    response);
-            return mapping.findForward("create-missing-clocking-month");
-        }
-        return new ViewEmployeeAssiduousnessDispatchAction().showWorkSheet(mapping, form, request,
-                response);
+	    HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
+	    FenixFilterException {
+
+	YearMonth yearMonth = null;
+	String dateString = request.getParameter("date");
+	RegularizationMonthFactory regularizationMonthFactory = (RegularizationMonthFactory) getFactoryObject();
+	if (regularizationMonthFactory != null) {
+	    // RenderUtils.invalidateViewState();
+	    yearMonth = regularizationMonthFactory.getYearMonth();
+	} else {
+	    Employee employee = Employee.readByNumber(new Integer(getFromRequest(request,
+		    "employeeNumber").toString()));
+	    YearMonthDay date = null;
+	    if (!StringUtils.isEmpty(dateString)) {
+		date = new YearMonthDay(dateString);
+	    }
+	    yearMonth = getYearMonth(request, date);
+	    regularizationMonthFactory = new RegularizationMonthFactory(yearMonth, employee
+		    .getAssiduousness(), SessionUtils.getUserView(request).getPerson().getEmployee());
+	}
+	request.setAttribute("regularizationMonthFactory", regularizationMonthFactory);
+	request.setAttribute("yearMonth", yearMonth);
+	if (StringUtils.isEmpty(dateString)) {
+	    new ViewEmployeeAssiduousnessDispatchAction().showJustifications(mapping, form, request,
+		    response);
+	    return mapping.findForward("create-missing-clocking-month");
+	}
+	return new ViewEmployeeAssiduousnessDispatchAction().showWorkSheet(mapping, form, request,
+		response);
     }
 
     public ActionForward createMissingClockingMonth(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
-            FenixFilterException {
+	    HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
+	    FenixFilterException {
 
-        RegularizationMonthFactory regularizationMonthFactory = (RegularizationMonthFactory) getFactoryObject();
-        executeService(request, "ExecuteFactoryMethod", new Object[] { regularizationMonthFactory });
-        request.setAttribute("employeeNumber", regularizationMonthFactory.getAssiduousness()
-                .getEmployee().getEmployeeNumber());
-        request.setAttribute("yearMonth", regularizationMonthFactory.getYearMonth());
-        return new ViewEmployeeAssiduousnessDispatchAction().showJustifications(mapping, form, request,
-                response);
+	RegularizationMonthFactory regularizationMonthFactory = (RegularizationMonthFactory) getFactoryObject();
+	executeService(request, "ExecuteFactoryMethod", new Object[] { regularizationMonthFactory });
+	request.setAttribute("employeeNumber", regularizationMonthFactory.getAssiduousness()
+		.getEmployee().getEmployeeNumber());
+	request.setAttribute("yearMonth", regularizationMonthFactory.getYearMonth());
+	return new ViewEmployeeAssiduousnessDispatchAction().showJustifications(mapping, form, request,
+		response);
     }
 
     public ActionForward prepareCreateEmployeeJustification(ActionMapping mapping, ActionForm form,
@@ -124,7 +124,7 @@ public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
 	EmployeeJustificationFactoryEditor employeeJustificationFactory = new EmployeeJustificationFactoryEditor(
 		justification);
 	request.setAttribute("employeeJustificationFactory", employeeJustificationFactory);
-	request.setAttribute("yearMonth", getYearMonth(request, null));
+	request.setAttribute("yearMonth", employeeJustificationFactory.getYearMonth());
 	request.setAttribute("employeeNumber", employeeJustificationFactory.getEmployee()
 		.getEmployeeNumber());
 	return new ViewEmployeeAssiduousnessDispatchAction().showJustifications(mapping, form, request,
@@ -136,7 +136,7 @@ public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
 	    FenixFilterException {
 	EmployeeJustificationFactory employeeJustificationFactory = (EmployeeJustificationFactory) getFactoryObject();
 	RenderUtils.invalidateViewState();
-	request.setAttribute("yearMonth", getYearMonth(request, employeeJustificationFactory.getDate()));
+	request.setAttribute("yearMonth", employeeJustificationFactory.getYearMonth());
 	request.setAttribute("employeeNumber", employeeJustificationFactory.getEmployee()
 		.getEmployeeNumber());
 	request.setAttribute("employeeJustificationFactory", employeeJustificationFactory);
@@ -169,8 +169,7 @@ public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
 	}
 	request.setAttribute("employeeNumber", employeeJustificationFactory.getEmployee()
 		.getEmployeeNumber());
-	YearMonth yearMonth = getYearMonth(request, employeeJustificationFactory.getDate());
-	request.setAttribute("yearMonth", yearMonth);
+	request.setAttribute("yearMonth", employeeJustificationFactory.getYearMonth());
 	if (employeeJustificationFactory.getDate() == null) {
 	    return new ViewEmployeeAssiduousnessDispatchAction().showJustifications(mapping, form,
 		    request, response);
@@ -192,7 +191,7 @@ public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
 
 	request.setAttribute("employeeNumber", justification.getAssiduousness().getEmployee()
 		.getEmployeeNumber());
-	request.setAttribute("yearMonth", getYearMonth(request, null));
+	request.setAttribute("yearMonth", employeeAnulateJustificationFactory.getYearMonth());
 	try {
 	    Object result = executeService(request, "ExecuteFactoryMethod",
 		    new Object[] { employeeAnulateJustificationFactory });
@@ -326,13 +325,16 @@ public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
 	request.setAttribute("yearMonth", yearMonth);
 	request.setAttribute("employeeNumber", clocking.getAssiduousness().getEmployee()
 		.getEmployeeNumber());
-	final IUserView userView = SessionUtils.getUserView(request);
-	Employee employee = userView.getPerson().getEmployee();
-	ServiceUtils.executeService(userView, "DeleteClocking", new Object[] { clocking, employee });
+
+	if (!yearMonth.getIsThisYearMonthClosed()) {
+	    final IUserView userView = SessionUtils.getUserView(request);
+	    Employee employee = userView.getPerson().getEmployee();
+	    ServiceUtils.executeService(userView, "DeleteClocking", new Object[] { clocking, employee });
+	}
 	return new ViewEmployeeAssiduousnessDispatchAction().showClockings(mapping, form, request,
 		response);
     }
-    
+
     public ActionForward restoreClocking(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
 	    FenixFilterException {
@@ -342,13 +344,15 @@ public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
 	request.setAttribute("yearMonth", yearMonth);
 	request.setAttribute("employeeNumber", clocking.getAssiduousness().getEmployee()
 		.getEmployeeNumber());
-	final IUserView userView = SessionUtils.getUserView(request);
-	Employee employee = userView.getPerson().getEmployee();
-	ServiceUtils.executeService(userView, "RestoreClocking", new Object[] { clocking, employee });
+	if (!yearMonth.getIsThisYearMonthClosed()) {
+	    final IUserView userView = SessionUtils.getUserView(request);
+	    Employee employee = userView.getPerson().getEmployee();
+	    ServiceUtils
+		    .executeService(userView, "RestoreClocking", new Object[] { clocking, employee });
+	}
 	return new ViewEmployeeAssiduousnessDispatchAction().showClockings(mapping, form, request,
 		response);
     }
-
 
     private boolean areEmptyDays(EmployeeScheduleFactory employeeScheduleFactory) {
 	for (EmployeeWorkWeekScheduleBean workWeekScheduleBean : employeeScheduleFactory
@@ -410,7 +414,7 @@ public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
     }
 
     private YearMonth getYearMonth(HttpServletRequest request, YearMonthDay date) {
-	YearMonth yearMonth = (YearMonth) getRendererObject("yearMonth");
+	YearMonth yearMonth = (YearMonth) getRenderedObject("yearMonth");
 	if (date == null) {
 	    if (yearMonth == null) {
 		yearMonth = new YearMonth();

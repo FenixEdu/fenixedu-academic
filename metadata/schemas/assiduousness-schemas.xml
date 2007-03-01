@@ -417,6 +417,8 @@
 		<property name="destination" value="justificationMotivePostBack"/>
 	</slot>
 	<slot name="modifiedBy" hidden="true"/>
+	<slot name="month" hidden="true"/>
+	<slot name="year" hidden="true"/>
 </schema>
 
 <schema name="edit.employeeJustificationType" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory">

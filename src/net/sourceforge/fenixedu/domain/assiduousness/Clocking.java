@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.assiduousness;
 
 import java.util.ResourceBundle;
 
+import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 
@@ -26,6 +27,10 @@ public class Clocking extends Clocking_Base {
     }
 
     public String getDeleteSlot() {
+	YearMonth yearMonth = new YearMonth(getDate().toYearMonthDay());
+	if (yearMonth.getIsThisYearMonthClosed()) {
+	    return "";
+	}
 	return "("
 		+ ResourceBundle
 			.getBundle("resources.AssiduousnessResources", LanguageUtils.getLocale())
@@ -33,6 +38,10 @@ public class Clocking extends Clocking_Base {
     }
 
     public String getRestoreSlot() {
+	YearMonth yearMonth = new YearMonth(getDate().toYearMonthDay());
+	if (yearMonth.getIsThisYearMonthClosed()) {
+	    return "";
+	}
 	return "("
 		+ ResourceBundle
 			.getBundle("resources.AssiduousnessResources", LanguageUtils.getLocale())

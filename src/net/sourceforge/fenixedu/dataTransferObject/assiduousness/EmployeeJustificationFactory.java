@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.domain.assiduousness.WorkWeek;
 import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.util.LanguageUtils;
+import net.sourceforge.fenixedu.util.Month;
 
 import org.apache.struts.action.ActionMessage;
 import org.joda.time.DateTime;
@@ -67,6 +68,12 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
     private String notes;
 
     private DomainReference<Employee> modifiedBy;
+
+    private String year;
+
+    private String month;
+
+    private YearMonth yearMonth;
 
     public static class EmployeeJustificationFactoryCreator extends EmployeeJustificationFactory {
 
@@ -659,6 +666,33 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 
     public void setNotes(String notes) {
 	this.notes = notes;
+    }
+
+    public String getMonth() {
+	return month;
+    }
+
+    public void setMonth(String month) {
+	this.month = month;
+    }
+
+    public String getYear() {
+	return year;
+    }
+
+    public void setYear(String year) {
+	this.year = year;
+    }
+
+    public YearMonth getYearMonth() {
+	if (yearMonth == null) {
+	    setYearMonth(new YearMonth(new Integer(getYear()), Month.valueOf(getMonth())));
+	}
+	return yearMonth;
+    }
+
+    public void setYearMonth(YearMonth yearMonth) {
+	this.yearMonth = yearMonth;
     }
 
 }

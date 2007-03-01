@@ -17,6 +17,8 @@
 	    	<form-property name="workScheduleID" type="java.lang.String"/>
 	    	<form-property name="addWorkWeek" type="java.lang.String" />	    	
 	    	<form-property name="workWeek" type="java.lang.String" />
+	    	<form-property name="year" type="java.lang.String" />
+	    	<form-property name="month" type="java.lang.String" />
 	    </form-bean>
 	    <form-bean name="extraWorkAuthorizationForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 	    	<form-property name="method" type="java.lang.String" />

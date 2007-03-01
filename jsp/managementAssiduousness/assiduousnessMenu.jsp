@@ -1,11 +1,11 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><html:xhtml/>
-<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
-<ul>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%><%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%><bean:define id="yearMonthUrl" value="" /><logic:present name="yearMonth"> <%net.sourceforge.fenixedu.applicationTier.IUserView user = (net.sourceforge.fenixedu.applicationTier.IUserView) session                    .getAttribute(net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants.U_VIEW);            if (net.sourceforge.fenixedu.domain.assiduousness.StaffManagementSection.isMember(user                    .getPerson())) {    %>	<bean:define id="month" name="yearMonth" property="month" />	<bean:define id="year" name="yearMonth" property="year"/>	<bean:define id="yearMonthUrl" value="<%="&month="+month.toString()+"&year="+year.toString()%>" />	<%}%></logic:present>	
+<ul>
 	<li class="navheader"><bean:message key="link.employeeConsult" /></li>
-	<li><html:link page="/viewEmployeeAssiduousness.do?method=chooseEmployee&amp;action=showWorkSheet"><bean:message key="link.workSheet" /></html:link></li>
-	<li><html:link page="/viewEmployeeAssiduousness.do?method=chooseEmployee&amp;action=showSchedule"><bean:message key="label.schedule" /></html:link></li>
-	<li><html:link page="/viewEmployeeAssiduousness.do?method=chooseEmployee&amp;action=showClockings"><bean:message key="link.clockings" /></html:link></li>
-	<li><html:link page="/viewEmployeeAssiduousness.do?method=chooseEmployee&amp;action=showJustifications"><bean:message key="link.justifications" /></html:link></li>
+	<li><html:link page="<%="/viewEmployeeAssiduousness.do?method=chooseEmployee&amp;action=showWorkSheet"+yearMonthUrl%>"><bean:message key="link.workSheet" /></html:link></li>
+	<li><html:link page="<%="/viewEmployeeAssiduousness.do?method=chooseEmployee&amp;action=showSchedule"+yearMonthUrl%>"><bean:message key="label.schedule" /></html:link></li>
+	<li><html:link page="<%="/viewEmployeeAssiduousness.do?method=chooseEmployee&amp;action=showClockings"+yearMonthUrl%>"><bean:message key="link.clockings" /></html:link></li>
+	<li><html:link page="<%="/viewEmployeeAssiduousness.do?method=chooseEmployee&amp;action=showJustifications"+yearMonthUrl%>"><bean:message key="link.justifications" /></html:link></li>
 	<li class="navheader"><bean:message key="link.consult" /></li>
 	<li><html:link page="/viewAssiduousness.do?method=showSchedules"><bean:message key="link.schedules" /></html:link></li>
 	<li><html:link page="/viewAssiduousness.do?method=showJustificationMotives"><bean:message key="link.justifications" /></html:link></li>

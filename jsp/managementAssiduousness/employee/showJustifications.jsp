@@ -11,7 +11,7 @@
 <%net.sourceforge.fenixedu.applicationTier.IUserView user = (net.sourceforge.fenixedu.applicationTier.IUserView) session.getAttribute(net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants.U_VIEW); %>
 <logic:present name="yearMonth">
 	<bean:define id="month" name="yearMonth" property="month" />
-	<bean:define id="year" name="yearMonth" property="year" />
+	<bean:define id="year" name="yearMonth" property="year"/>
 
 	<logic:present name="employee">
 		<bean:define id="employeeNumber" name="employee" property="employeeNumber" />
@@ -28,7 +28,6 @@
 		</p>
 		
 			<bean:define id="method" value="editEmployeeJustification" />
-
 			<div class="mbottom15">
 			<fr:form action="<%="/employeeAssiduousness.do?method="+method.toString()%>" encoding="multipart/form-data">
 				<fr:edit id="editEmployeeCorrectionType" name="employeeJustificationFactory"
@@ -36,6 +35,8 @@
 					schema="edit.employeeCorrectionType">
 					<fr:destination name="justificationMotivePostBack" path="/employeeAssiduousness.do?method=chooseJustificationMotivePostBack" />
 					<fr:hidden slot="modifiedBy" name="UserView" property="person.employee" />
+					<fr:hidden slot="year" name="year" />
+					<fr:hidden slot="month" value="<%=month.toString()%>" />
 					<fr:layout>
 						<fr:property name="classes" value="tstyle5 thlight mvert0 thright thmiddle"/>
 						<fr:property name="columnClasses" value="width8em,width40em,tdclear"/>
