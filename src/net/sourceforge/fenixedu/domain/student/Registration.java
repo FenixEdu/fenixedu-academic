@@ -47,11 +47,11 @@ import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
-import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
+import net.sourceforge.fenixedu.domain.gratuity.ExemptionGratuityType;
 import net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
@@ -158,6 +158,8 @@ public class Registration extends Registration_Base {
     @Deprecated
     public void delete() {
 
+	checkRulesToDelete();
+
 	for (; !getStudentCurricularPlans().isEmpty(); getStudentCurricularPlans().get(0).delete())
 	    ;
 
@@ -165,6 +167,13 @@ public class Registration extends Registration_Base {
 	removeRootDomainObject();
 	getShiftsSet().clear();
 	super.deleteDomainObject();
+    }
+
+    private void checkRulesToDelete() {
+	if (hasDfaRegistrationEvent()) {
+	    throw new DomainException(
+		    "error.student.Registration.cannot.delete.because.is.associated.to.dfa.registration.event");
+	}
     }
 
     public StudentCurricularPlan getActiveStudentCurricularPlan() {
@@ -772,12 +781,24 @@ public class Registration extends Registration_Base {
     }
 
     // TODO: to remove as soon as possible
-    public boolean hasToPayMasterDegreeInsurance(final ExecutionYear executionYear) {
-	final boolean isSpecialization = (getActiveStudentCurricularPlan().getSpecialization() == Specialization.STUDENT_CURRICULAR_PLAN_SPECIALIZATION);
-	final ExecutionDegree executionDegreeByYear = getActiveDegreeCurricularPlan()
-		.getExecutionDegreeByYear(executionYear);
-	if (isSpecialization && (executionDegreeByYear == null || !executionDegreeByYear.isFirstYear())) {
+    boolean hasToPayMasterDegreeInsurance(final ExecutionYear executionYear) {
+	final StudentCurricularPlan activeStudentCurricularPlan = getActiveStudentCurricularPlan();
+	final boolean isSpecialization = (activeStudentCurricularPlan.getSpecialization() == Specialization.STUDENT_CURRICULAR_PLAN_SPECIALIZATION);
+
+	if (isSpecialization) {
+
+	    if (!getEnrolments(executionYear).isEmpty()) {
+		return true;
+	    }
+
+	    final ExecutionDegree executionDegreeByYear = getActiveDegreeCurricularPlan()
+		    .getExecutionDegreeByYear(executionYear);
+	    if (executionDegreeByYear != null && executionDegreeByYear.isFirstYear()) {
+		return true;
+	    }
+
 	    return false;
+
 	}
 
 	return readAllNonReimbursedInsuranceTransactionsByExecutionYear(executionYear).isEmpty();

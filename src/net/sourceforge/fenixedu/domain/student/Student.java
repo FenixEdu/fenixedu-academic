@@ -368,7 +368,8 @@ public class Student extends Student_Base {
 	final YearMonthDay now = new YearMonthDay();
 
 	if (now.isAfter(insuranceEndDate)) {
-	    return now.plusMonths(1);
+	    final YearMonthDay nextMonth = now.plusMonths(1);
+	    return new YearMonthDay(nextMonth.getYear(), nextMonth.getMonthOfYear(), 1).minusDays(1);
 	} else {
 	    return insuranceEndDate;
 	}
@@ -395,7 +396,7 @@ public class Student extends Student_Base {
     // TODO: this method should be refactored as soon as possible
     public boolean hasToPayMasterDegreeInsuranceFor(final ExecutionYear executionYear) {
 	for (final Registration registration : getRegistrationsByDegreeType(DegreeType.MASTER_DEGREE)) {
-	    if (!registration.isActive()) {
+	    if (!registration.isActive() || registration.getActiveStudentCurricularPlan() == null) {
 		continue;
 	    }
 

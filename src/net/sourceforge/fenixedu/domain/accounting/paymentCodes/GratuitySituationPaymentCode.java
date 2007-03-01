@@ -67,5 +67,12 @@ public class GratuitySituationPaymentCode extends GratuitySituationPaymentCode_B
 	getGratuitySituation()
 		.processAmount(responsiblePerson, amount, whenRegistered, PaymentType.SIBS);
     }
+    
+    @Override
+    public void delete() {
+	super.setGratuitySituation(null);
+	
+        super.delete();
+    }
 
 }

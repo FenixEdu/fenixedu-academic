@@ -80,4 +80,11 @@ public class MasterDegreeInsurancePaymentCode extends MasterDegreeInsurancePayme
 	return getStudent().getActiveRegistrationByDegreeType(DegreeType.MASTER_DEGREE);
     }
 
+    @Override
+    public void delete() {
+	super.setStudent(null);
+	super.setExecutionYear(null);
+	super.delete();
+    }
+
 }

@@ -98,4 +98,12 @@ public class AccountingEventPaymentCode extends AccountingEventPaymentCode_Base 
 		new SibsTransactionDetailDTO(whenRegistered, sibsTransactionId, getCode()));
     }
 
+    @Override
+    public void delete() {
+
+	super.setAccountingEvent(null);
+
+	super.delete();
+    }
+
 }

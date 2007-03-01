@@ -558,8 +558,29 @@ public abstract class Event extends Event_Base {
     protected abstract PostingRule getPostingRule();
 
     public void delete() {
+	checkRulesToDelete();
+
+	while (!super.getPaymentCodes().isEmpty()) {
+	    super.getPaymentCodes().get(0).delete();
+	}
+
+	while (!getExemptions().isEmpty()) {
+	    getExemptions().get(0).delete();
+	}
+
+	super.setPerson(null);
+	super.setAdministrativeOffice(null);
+	super.setEmployeeResponsibleForCancel(null);
 	removeRootDomainObject();
 	deleteDomainObject();
+    }
+
+    private void checkRulesToDelete() {
+	if (isClosed() || !getNonAdjustingTransactions().isEmpty()) {
+	    throw new DomainException(
+		    "error.accounting.Event.cannot.delete.because.event.is.already.closed.or.has.transactions.associated");
+
+	}
     }
 
     public static List<Event> readBy(final EventType eventType) {

@@ -2,13 +2,17 @@ package net.sourceforge.fenixedu.domain.accounting.events.insurance;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
+import net.sourceforge.fenixedu.dataTransferObject.accounting.SibsTransactionDetailDTO;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.accounting.Account;
 import net.sourceforge.fenixedu.domain.accounting.AccountType;
+import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
@@ -17,6 +21,7 @@ import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPa
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.UnitServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
 import org.joda.time.DateTime;
@@ -73,6 +78,13 @@ public class InsuranceEvent extends InsuranceEvent_Base {
     }
 
     @Override
+    public LabelFormatter getDescription() {
+	final LabelFormatter labelFormatter = super.getDescription();
+	labelFormatter.appendLabel(" - ").appendLabel(getExecutionYear().getYear());
+	return labelFormatter;
+    }
+
+    @Override
     protected UnitServiceAgreementTemplate getServiceAgreementTemplate() {
 	return getInstitutionUnit().getUnitServiceAgreementTemplate();
     }
@@ -112,6 +124,13 @@ public class InsuranceEvent extends InsuranceEvent_Base {
 
     private YearMonthDay calculatePaymentCodeEndDate() {
 	return calculateNextEndDate(new YearMonthDay());
+    }
+
+    @Override
+    protected Set<Entry> internalProcess(User responsibleUser, AccountingEventPaymentCode paymentCode,
+	    Money amountToPay, SibsTransactionDetailDTO transactionDetail) {
+	return internalProcess(responsibleUser, Collections.singletonList(new EntryDTO(
+		EntryType.INSURANCE_FEE, this, amountToPay)), transactionDetail);
     }
 
 }

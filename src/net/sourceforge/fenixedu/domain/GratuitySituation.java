@@ -181,16 +181,17 @@ public class GratuitySituation extends GratuitySituation_Base {
 
     private double calculatePenalty(final double remainingValue) {
 	if (hasPenalty() && getGratuityValues().isPenaltyApplicable()) {
-	    
+
 	    final YearMonthDay now = new YearMonthDay();
 	    final YearMonthDay endPaymentDate = getEndPaymentDate();
-	    
+
 	    int monthsToChargePenalty = 0;
 	    if (endPaymentDate.getMonthOfYear() == now.getMonthOfYear()) {
 		monthsToChargePenalty += 1;
-		
+
 	    } else {
-		final YearMonthDay endOfMonth = endPaymentDate.plusMonths(1).withDayOfMonth(1).minusDays(1);
+		final YearMonthDay endOfMonth = endPaymentDate.plusMonths(1).withDayOfMonth(1)
+			.minusDays(1);
 		final int numberOfDaysLeftInMonth = new Period(endPaymentDate, endOfMonth).getDays();
 		if (numberOfDaysLeftInMonth > 0) {
 		    monthsToChargePenalty += 1;
@@ -198,7 +199,7 @@ public class GratuitySituation extends GratuitySituation_Base {
 		final Period period = new Period(endPaymentDate.plusMonths(1).withDayOfMonth(1), now);
 		monthsToChargePenalty += period.getMonths() + 1;
 	    }
-	    
+
 	    return new Money(remainingValue).multiply(PENALTY_PERCENTAGE).multiply(
 		    new BigDecimal(monthsToChargePenalty)).getAmount().doubleValue();
 	}
@@ -219,7 +220,12 @@ public class GratuitySituation extends GratuitySituation_Base {
     private YearMonthDay calculatePaymentCodeEndDate() {
 	final YearMonthDay now = new YearMonthDay();
 	final YearMonthDay endPaymentDate = getEndPaymentDate();
-	return now.isAfter(endPaymentDate) ? now.plusMonths(1) : endPaymentDate;
+	return now.isAfter(endPaymentDate) ? calculateNextEndDate(now) : endPaymentDate;
+    }
+
+    protected YearMonthDay calculateNextEndDate(final YearMonthDay yearMonthDay) {
+	final YearMonthDay nextMonth = yearMonthDay.plusMonths(1);
+	return new YearMonthDay(nextMonth.getYear(), nextMonth.getMonthOfYear(), 1).minusDays(1);
     }
 
     private boolean isPayedUsingPhases() {
@@ -251,7 +257,7 @@ public class GratuitySituation extends GratuitySituation_Base {
     }
 
     public boolean isPayed() {
-	return getRemainingValue().compareTo(Double.valueOf(0)) == 0;
+	return getRemainingValue().compareTo(Double.valueOf(0)) <= 0;
     }
 
     public GratuityTransaction processAmount(final Person responsiblePerson, final Money amount,

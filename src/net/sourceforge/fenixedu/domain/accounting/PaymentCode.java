@@ -205,6 +205,15 @@ public abstract class PaymentCode extends PaymentCode_Base {
 	setState(PaymentCodeState.PROCESSED);
     }
 
+    public void delete() {
+	if (isProcessed()) {
+	    throw new DomainException("error.accounting.PaymentCode.cannot.delete.processed.codes");
+	}
+
+	removeRootDomainObject();
+	deleteDomainObject();
+    }
+
     abstract protected void internalProcess(final Person person, final Money amount,
 	    final DateTime whenRegistered, final String sibsTransactionId);
 

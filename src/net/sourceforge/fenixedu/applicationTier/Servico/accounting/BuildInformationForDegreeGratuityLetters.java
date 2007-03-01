@@ -6,7 +6,7 @@ import java.util.Map.Entry;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.administrativeOffice.DebtDTO;
-import net.sourceforge.fenixedu.dataTransferObject.accounting.administrativeOffice.GratuityLetterDTO;
+import net.sourceforge.fenixedu.dataTransferObject.accounting.administrativeOffice.DegreeGratuityLetterDTO;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.Event;
@@ -31,8 +31,8 @@ public class BuildInformationForDegreeGratuityLetters extends
 	super();
     }
 
-    public List<GratuityLetterDTO> run(final ExecutionYear executionYear) throws FenixServiceException {
-	final List<GratuityLetterDTO> result = new ArrayList<GratuityLetterDTO>();
+    public List<DegreeGratuityLetterDTO> run(final ExecutionYear executionYear) throws FenixServiceException {
+	final List<DegreeGratuityLetterDTO> result = new ArrayList<DegreeGratuityLetterDTO>();
 	for (final Entry<Person, List<Event>> entry : getNotPayedEventsGroupedByPerson(executionYear)
 		.entrySet()) {
 	    result.add(buildDTO(entry.getKey(), entry.getValue(), executionYear));
@@ -42,9 +42,9 @@ public class BuildInformationForDegreeGratuityLetters extends
 
     }
 
-    protected GratuityLetterDTO buildDTO(final Person person, final List<Event> eventsForPerson,
+    protected DegreeGratuityLetterDTO buildDTO(final Person person, final List<Event> eventsForPerson,
 	    final ExecutionYear executionYear) throws FenixServiceException {
-	final GratuityLetterDTO gratuityLetterDTO = new GratuityLetterDTO(person, executionYear,
+	final DegreeGratuityLetterDTO gratuityLetterDTO = new DegreeGratuityLetterDTO(person, executionYear,
 		ENTITY_CODE);
 	final AdministrativeOffice administrativeOffice = AdministrativeOffice
 		.readByAdministrativeOfficeType(AdministrativeOfficeType.DEGREE);
@@ -64,7 +64,7 @@ public class BuildInformationForDegreeGratuityLetters extends
 	return gratuityLetterDTO;
     }
 
-    private void fillGratuityDebtInformation(GratuityLetterDTO gratuityLetterDTO,
+    private void fillGratuityDebtInformation(DegreeGratuityLetterDTO gratuityLetterDTO,
 	    GratuityEventWithPaymentPlan event) {
 	Money totalAmount = Money.ZERO;
 	for (final Installment installment : event.getGratuityPaymentPlan()
@@ -91,7 +91,7 @@ public class BuildInformationForDegreeGratuityLetters extends
 
     }
 
-    private void fillInsuranceAndAdminOfficeFeeDebtInformation(GratuityLetterDTO gratuityLetterDTO,
+    private void fillInsuranceAndAdminOfficeFeeDebtInformation(DegreeGratuityLetterDTO gratuityLetterDTO,
 	    AdministrativeOfficeFeeAndInsuranceEvent event) {
 	final Money totalAmount = event.getInsuranceAmount().add(
 		event.getAdministrativeOfficeFeeAmount());
@@ -102,7 +102,7 @@ public class BuildInformationForDegreeGratuityLetters extends
     }
 
     private void fillInsuranceAndAdminOfficeFeePriceInformation(
-	    AdministrativeOffice administrativeOffice, GratuityLetterDTO debtDTO,
+	    AdministrativeOffice administrativeOffice, DegreeGratuityLetterDTO debtDTO,
 	    final ExecutionYear executionYear) {
 	final AdministrativeOfficeServiceAgreementTemplate serviceAgreementTemplate = administrativeOffice
 		.getServiceAgreementTemplate();

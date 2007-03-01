@@ -78,4 +78,10 @@ public class InstallmentPaymentCode extends InstallmentPaymentCode_Base {
 		"error.accounting.paymentCodes.InstallmentPaymentCode.cannot.modify.installment");
     }
 
+    @Override
+    public void delete() {
+	super.setInstallment(null);
+	super.delete();
+    }
+
 }

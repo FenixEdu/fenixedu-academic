@@ -124,7 +124,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	removeBranch();
 	removeEmployee();
 	removeMasterDegreeThesis();
-	getGratuitySituations().clear();
 
 	for (Iterator iter = getEnrolmentsIterator(); iter.hasNext();) {
 	    Enrolment enrolment = (Enrolment) iter.next();
@@ -163,6 +162,11 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	if (hasAnyGratuityEvents()) {
 	    throw new DomainException(
 		    "error.StudentCurricularPlan.cannot.delete.because.already.has.gratuity.events");
+	}
+
+	if (hasAnyGratuitySituations()) {
+	    throw new DomainException(
+		    "error.StudentCurricularPlan.cannot.delete.because.already.has.gratuity.situations");
 	}
 
     }
@@ -2156,17 +2160,17 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public MasterDegreeCandidate getMasterDegreeCandidate() {
 	if (getDegreeType().equals(DegreeType.MASTER_DEGREE)) {
 	    if (this.getEnrolments().size() > 0) {
-		ExecutionDegree firstExecutionDegree = this.getDegreeCurricularPlan()
-			.getExecutionDegreeByYear(this.getFirstExecutionPeriod().getExecutionYear());
-		for (final MasterDegreeCandidate candidate : this.getRegistration().getPerson()
-			.getMasterDegreeCandidates()) {
-		    if (candidate.getExecutionDegree() == firstExecutionDegree) {
-			return candidate;
-		    }
+	    ExecutionDegree firstExecutionDegree = this.getDegreeCurricularPlan()
+		    .getExecutionDegreeByYear(this.getFirstExecutionPeriod().getExecutionYear());
+	    for (final MasterDegreeCandidate candidate : this.getRegistration().getPerson()
+		    .getMasterDegreeCandidates()) {
+		if (candidate.getExecutionDegree() == firstExecutionDegree) {
+		    return candidate;
 		}
+	    }
 	    } else if (this.getRegistration().getPerson().getMasterDegreeCandidatesCount() == 1) {
 		return this.getRegistration().getPerson().getMasterDegreeCandidates().iterator().next();
-	    }
+	}
 	}
 	return null;
     }

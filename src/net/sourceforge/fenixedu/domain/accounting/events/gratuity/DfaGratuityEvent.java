@@ -2,17 +2,23 @@ package net.sourceforge.fenixedu.domain.accounting.events.gratuity;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
+import net.sourceforge.fenixedu.dataTransferObject.accounting.SibsTransactionDetailDTO;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.User;
+import net.sourceforge.fenixedu.domain.accounting.Entry;
+import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
@@ -70,10 +76,17 @@ public class DfaGratuityEvent extends DfaGratuityEvent_Base {
     private YearMonthDay calculatePaymentCodeEndDate() {
 	return calculateNextEndDate(new YearMonthDay());
     }
-    
+
     @Override
     public boolean isExemptionAppliable() {
 	return true;
     }
-    
+
+    @Override
+    protected Set<Entry> internalProcess(User responsibleUser, AccountingEventPaymentCode paymentCode,
+	    Money amountToPay, SibsTransactionDetailDTO transactionDetail) {
+	return internalProcess(responsibleUser, Collections.singletonList(new EntryDTO(
+		EntryType.GRATUITY_FEE, this, amountToPay)), transactionDetail);
+    }
+
 }
