@@ -10,41 +10,58 @@ import org.joda.time.Duration;
 public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
 
     public AssiduousnessClosedMonth(Assiduousness assiduousness, ClosedMonth closedMonth,
-            Duration balance, Duration totalComplementaryWeeklyRestBalance,
-            Duration totalWeeklyRestBalance, Duration holidayRest, double vacations, double tolerance,
-            double article17, double article66) {
-        setRootDomainObject(RootDomainObject.getInstance());
-        setAssiduousness(assiduousness);
-        setClosedMonth(closedMonth);
-        setBalance(balance);
-        setSaturdayBalance(totalComplementaryWeeklyRestBalance);
-        setSundayBalance(totalWeeklyRestBalance);
-        setHolidayBalance(holidayRest);
-        setVacations(vacations);
-        setTolerance(tolerance);
-        setArticle17(article17);
-        setArticle66(article66);
+	    Duration balance, Duration totalComplementaryWeeklyRestBalance,
+	    Duration totalWeeklyRestBalance, Duration holidayRest, Duration balanceToDiscount,
+	    double vacations, double tolerance, double article17, double article66) {
+	setRootDomainObject(RootDomainObject.getInstance());
+
+	if (balanceToDiscount.isLongerThan(Duration.ZERO) && balance.isLongerThan(Duration.ZERO)) {
+	    if (balance.isShorterThan(balanceToDiscount)) {
+		setBalance(Duration.ZERO);
+		setBalanceToDiscount(balanceToDiscount.minus(balance));
+	    } else {
+		setBalance(balance.minus(balanceToDiscount));
+		setBalanceToDiscount(Duration.ZERO);
+	    }
+
+	} else {
+	    setBalance(balance);
+	    setBalanceToDiscount(balanceToDiscount);
+	}
+	setAssiduousness(assiduousness);
+	setClosedMonth(closedMonth);
+	setSaturdayBalance(totalComplementaryWeeklyRestBalance);
+	setSundayBalance(totalWeeklyRestBalance);
+	setHolidayBalance(holidayRest);
+	setVacations(vacations);
+	setTolerance(tolerance);
+	setArticle17(article17);
+	setArticle66(article66);
+    }
+
+    public Duration getBalanceWithoutBalanceDiscount() {
+	return getBalance().plus(getBalanceToDiscount());
     }
 
     public HashMap<JustificationMotive, Duration> getPastJustificationsDurations() {
-        HashMap<JustificationMotive, Duration> pastJustificationsDurations = new HashMap<JustificationMotive, Duration>();
-        for (AssiduousnessClosedMonth assiduousnessClosedMonth : getAssiduousness()
-                .getAssiduousnessClosedMonths()) {
-            if (assiduousnessClosedMonth.getClosedMonth().getClosedYearMonth().get(
-                    DateTimeFieldType.year()) == getClosedMonth().getClosedYearMonth().get(
-                    DateTimeFieldType.year())) {
-                for (ClosedMonthJustification closedMonthJustification : assiduousnessClosedMonth
-                        .getClosedMonthJustifications()) {
-                    Duration duration = pastJustificationsDurations.get(closedMonthJustification);
-                    if (duration == null) {
-                        duration = Duration.ZERO;
-                    }
-                    duration = duration.plus(closedMonthJustification.getJustificationDuration());
-                    pastJustificationsDurations.put(closedMonthJustification.getJustificationMotive(),
-                            duration);
-                }
-            }
-        }
-        return pastJustificationsDurations;
+	HashMap<JustificationMotive, Duration> pastJustificationsDurations = new HashMap<JustificationMotive, Duration>();
+	for (AssiduousnessClosedMonth assiduousnessClosedMonth : getAssiduousness()
+		.getAssiduousnessClosedMonths()) {
+	    if (assiduousnessClosedMonth.getClosedMonth().getClosedYearMonth().get(
+		    DateTimeFieldType.year()) == getClosedMonth().getClosedYearMonth().get(
+		    DateTimeFieldType.year())) {
+		for (ClosedMonthJustification closedMonthJustification : assiduousnessClosedMonth
+			.getClosedMonthJustifications()) {
+		    Duration duration = pastJustificationsDurations.get(closedMonthJustification);
+		    if (duration == null) {
+			duration = Duration.ZERO;
+		    }
+		    duration = duration.plus(closedMonthJustification.getJustificationDuration());
+		    pastJustificationsDurations.put(closedMonthJustification.getJustificationMotive(),
+			    duration);
+		}
+	    }
+	}
+	return pastJustificationsDurations;
     }
 }

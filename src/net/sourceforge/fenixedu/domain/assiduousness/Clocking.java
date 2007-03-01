@@ -48,4 +48,9 @@ public class Clocking extends Clocking_Base {
 			.getString("label.restore") + ")";
     }
 
+    @Override
+    public boolean isClocking() {
+	return true;
+    }
+
 }

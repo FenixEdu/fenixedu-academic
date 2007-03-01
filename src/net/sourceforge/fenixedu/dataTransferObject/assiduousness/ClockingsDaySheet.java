@@ -50,8 +50,7 @@ public class ClockingsDaySheet implements Serializable {
     }
 
     public void addClocking(Clocking clocking) {
-	if (clocking.getAnulation() == null
-		|| clocking.getAnulation().getState() == AnulationState.INVALID) {
+	if (!clocking.isAnulated()) {
 	    getClockings().add(clocking);
 	} else {
 	    getAnulatedClockings().add(clocking);

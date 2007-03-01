@@ -106,7 +106,7 @@ public class ReadMonthBalances extends Service {
 	HashMap<YearMonthDay, List<Leave>> leavesMap = new HashMap<YearMonthDay, List<Leave>>();
 	if (assiduousnessRecords != null) {
 	    for (AssiduousnessRecord record : assiduousnessRecords) {
-		if (record instanceof Leave) {
+		if (record.isLeave() && !record.isAnulated()) {
 		    YearMonthDay endLeaveDay = record.getDate().toYearMonthDay().plusDays(1);
 		    if (((Leave) record).getEndYearMonthDay() != null) {
 			endLeaveDay = ((Leave) record).getEndYearMonthDay().plusDays(1);
@@ -139,7 +139,7 @@ public class ReadMonthBalances extends Service {
 		    assiduousnessRecords);
 	    Collections.sort(clockings, AssiduousnessRecord.COMPARATORY_BY_DATE);
 	    for (AssiduousnessRecord record : clockings) {
-		if (record instanceof Clocking || record instanceof MissingClocking) {
+		if (record.isClocking() || record.isMissingClocking()) {
 		    YearMonthDay clockDay = record.getDate().toYearMonthDay();
 		    if (WorkSchedule.overlapsSchedule(record.getDate(), workScheduleMap)) {
 			if (clockingsMap.get(clockDay.minusDays(1)) != null
@@ -253,9 +253,7 @@ public class ReadMonthBalances extends Service {
 	Interval interval = new Interval(beginDate.toDateTimeAtMidnight(),
 		Assiduousness.defaultEndWorkDay.toDateTime(endDate.toDateMidnight()));
 	for (AssiduousnessRecord assiduousnessRecord : rootDomainObject.getAssiduousnessRecords()) {
-	    if (assiduousnessRecord instanceof Leave
-		    && (assiduousnessRecord.getAnulation() == null || assiduousnessRecord.getAnulation()
-			    .getState() == AnulationState.INVALID)) {
+	    if (assiduousnessRecord.isLeave() && !assiduousnessRecord.isAnulated()) {
 		Interval leaveInterval = new Interval(assiduousnessRecord.getDate(),
 			((Leave) assiduousnessRecord).getEndDate().plusSeconds(1));
 		if (leaveInterval.overlaps(interval)) {
@@ -267,9 +265,8 @@ public class ReadMonthBalances extends Service {
 		    leavesList.add(assiduousnessRecord);
 		    assiduousnessLeaves.put(assiduousnessRecord.getAssiduousness(), leavesList);
 		}
-	    } else if ((assiduousnessRecord instanceof Clocking || assiduousnessRecord instanceof MissingClocking)
-		    && (assiduousnessRecord.getAnulation() == null || assiduousnessRecord.getAnulation()
-			    .getState() == AnulationState.INVALID)) {
+	    } else if ((assiduousnessRecord.isClocking() || assiduousnessRecord.isMissingClocking())
+		    && (!assiduousnessRecord.isAnulated())) {
 		if (interval.contains(assiduousnessRecord.getDate().getMillis())) {
 		    List<AssiduousnessRecord> list = assiduousnessLeaves.get(assiduousnessRecord
 			    .getAssiduousness());

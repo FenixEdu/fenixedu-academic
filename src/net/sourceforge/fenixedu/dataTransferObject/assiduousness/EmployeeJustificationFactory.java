@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.assiduousness.MissingClocking;
 import net.sourceforge.fenixedu.domain.assiduousness.Schedule;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkWeek;
+import net.sourceforge.fenixedu.domain.assiduousness.util.AnulationState;
 import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.util.LanguageUtils;
@@ -217,7 +218,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 	    setEmployee(justification.getAssiduousness().getEmployee());
 	    setBeginDate(justification.getDate().toYearMonthDay());
 	    setJustificationMotive(justification.getJustificationMotive());
-	    if (justification instanceof Leave) {
+	    if (justification.isLeave()) {
 		setCorrectionType(CorrectionType.JUSTIFICATION);
 		setJustificationType(justification.getJustificationMotive().getJustificationType());
 		setBeginTime(((Leave) justification).getDate().toTimeOfDay());
@@ -383,7 +384,11 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 		    return new ActionMessage("errors.cantDelete.datesInClosedMonth");
 		}
 	    }
-	    new Anulation(getJustification(), getModifiedBy());
+	    if (getJustification().getAnulation() != null) {
+		getJustification().getAnulation().setState(AnulationState.VALID);
+	    } else {
+		new Anulation(getJustification(), getModifiedBy());
+	    }
 	    return null;
 	}
 
