@@ -44,6 +44,15 @@ public class ExpectationsEvaluationGroupsDA extends FenixDispatchAction {
 	readAndSetAppraiserTeachers(request, department, executionYear);		
 	return mapping.findForward("listGroups");	
     }
+    
+    public ActionForward listGroupsInExecutionYear(ActionMapping mapping, ActionForm form, HttpServletRequest request, 
+	    HttpServletResponse response) {
+	
+	Department department = getDepartment(request);	
+	ExecutionYear executionYear = getExecutionYearFromParameter(request);	
+	readAndSetAppraiserTeachers(request, department, executionYear);		
+	return mapping.findForward("listGroups");	
+    }
 
     public ActionForward manageGroups(ActionMapping mapping, ActionForm form, HttpServletRequest request, 
 	    HttpServletResponse response) {

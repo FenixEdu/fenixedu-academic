@@ -23,6 +23,14 @@
 		</logic:messagesPresent>
 			
 		<p><bean:message key="label.common.executionYear" bundle="DEPARTMENT_ADM_OFFICE_RESOURCES"/>: <bean:write name="expectationEvaluationGroupBean" property="executionYear.year"/></p>
+		
+		<ul class="list5 mvert15">
+			<li>
+				<html:link page="/defineExpectationEvaluationGroups.do?method=listGroupsInExecutionYear" paramId="executionYearID" paramName="expectationEvaluationGroupBean" paramProperty="executionYear.idInternal">		
+					<bean:message bundle="DEPARTMENT_ADM_OFFICE_RESOURCES" key="link.return"/>
+				</html:link>
+			</li>
+		</ul>		
 			
 		<fr:view name="expectationEvaluationGroupBean" property="appraiser" schema="seeTeacherInformationForTeacherPersonalExpectation">
 			<fr:layout name="tabular">

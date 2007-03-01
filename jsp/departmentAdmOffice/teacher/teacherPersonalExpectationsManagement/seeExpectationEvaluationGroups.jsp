@@ -66,7 +66,7 @@
 								<ul class="list6 nobullet">
 									<logic:iterate id="group" name="evaluatedGroup">
 										<li>
-											<bean:write name="group" property="evaluated.person.name"/>
+											<bean:write name="group" property="evaluated.person.name"/> (<bean:write name="group" property="evaluated.teacherNumber"/>)
 										</li>																																	
 									</logic:iterate>
 								</ul>	
