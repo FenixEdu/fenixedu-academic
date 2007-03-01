@@ -36,4 +36,6 @@ insert into PARTY_TYPE (TYPE, KEY_ROOT_DOMAIN_OBJECT) values ('UNIVERSITY', 1);
 insert into PARTY_TYPE (TYPE, KEY_ROOT_DOMAIN_OBJECT) values ('SCHOOL', 1);
 insert into PARTY_TYPE (TYPE, KEY_ROOT_DOMAIN_OBJECT) values ('UNKNOWN', 1);
 
+alter table PARTY add column KEY_PARTY_TYPE int(11) default null;
+alter table PARTY add index (KEY_PARTY_TYPE);
 update PARTY set PARTY.KEY_PARTY_TYPE = (select PARTY_TYPE.ID_INTERNAL from PARTY_TYPE where PARTY_TYPE.TYPE like PARTY.TYPE);
