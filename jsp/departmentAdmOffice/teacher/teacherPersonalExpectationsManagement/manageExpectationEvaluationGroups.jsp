@@ -41,8 +41,8 @@
 	
 		<logic:notEmpty name="evaluatedTeacherGroups">	
 			
-			<p><b><bean:message key="label.evaluated.groups" bundle="DEPARTMENT_ADM_OFFICE_RESOURCES"/></b></p>
-			<table class="tstyle2 thleft thlight">
+			<p class="mbottom05"><b><bean:message key="label.evaluated.groups" bundle="DEPARTMENT_ADM_OFFICE_RESOURCES"/></b></p>
+			<table class="tstyle2 thleft thlight mtop05">
 				<tr>
 					<th><bean:message key="label.teacher.name" bundle="DEPARTMENT_ADM_OFFICE_RESOURCES"/></th>
 					<th><bean:message key="label.teacher.number" bundle="DEPARTMENT_ADM_OFFICE_RESOURCES"/></th>	
@@ -76,10 +76,12 @@
 			
 		</logic:notEmpty>
 	
-		<p><b><bean:message key="label.create.group" bundle="DEPARTMENT_ADM_OFFICE_RESOURCES"/></b></p>
+		<p class="mbottom05"><b><bean:message key="label.create.group" bundle="DEPARTMENT_ADM_OFFICE_RESOURCES"/></b></p>
 		<fr:form action="/defineExpectationEvaluationGroups.do?method=createGroup">
 			<fr:edit id="expectationEvaluationGroupBeanWithEvaluatedTeacher" name="expectationEvaluationGroupBean" schema="createExpectationEvaluationGroup">			
-				<fr:layout name="tabular" />
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle5 thlight thmiddle mtop05"/>
+				</fr:layout>
 			</fr:edit>
 			<html:submit><bean:message key="button.submit" bundle="DEPARTMENT_ADM_OFFICE_RESOURCES"/></html:submit>
 		</fr:form>			

@@ -33,7 +33,9 @@
 
 		<bean:define id="submitURL">/evaluateExpectations.do?method=chooseTeacherInExecutionYear&executionYearID=<bean:write name="teacherPersonalExpectation" property="executionYear.idInternal"/></bean:define>					
 		<fr:edit id="teacherPersonalExpectationWithEvaluation" name="teacherPersonalExpectation" schema="editExpectationEvaluation" action="<%= submitURL %>">			
-			<fr:layout name="tabular" />			
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle5 thlight"/>
+			</fr:layout>
 			<fr:destination name="cancel" path="/evaluateExpectations.do?method=chooseTeacher"/>
 		</fr:edit>
 		

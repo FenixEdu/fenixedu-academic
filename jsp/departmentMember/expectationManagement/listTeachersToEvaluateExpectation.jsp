@@ -42,7 +42,7 @@
 		
 		<logic:notEmpty name="evaluatedTeachers">
 				
-			<table class="tstyle2 thleft thlight mtop15">
+			<table class="tstyle2 thlight thcenter mtop15">
 				<tr>
 					<th><bean:message key="label.teacher.name" bundle="DEPARTMENT_MEMBER_RESOURCES"/></th>
 					<th><bean:message key="label.teacher.number" bundle="DEPARTMENT_MEMBER_RESOURCES"/></th>	
