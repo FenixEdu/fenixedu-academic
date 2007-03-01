@@ -9,8 +9,9 @@ public class AutoEvaluationTeacherExpectationManagementAction extends TeacherPer
     
     @Override
     protected void readAndSetPeriod(HttpServletRequest request, ExecutionYear year) {
-	TeacherAutoEvaluationDefinitionPeriod teacherExpectationDefinitionPeriod = 
-	    getDepartment(request).getTeacherAutoEvaluationDefinitionPeriodForExecutionYear(year);
-	request.setAttribute("period", teacherExpectationDefinitionPeriod);
+	if(year != null) {
+            TeacherAutoEvaluationDefinitionPeriod teacherExpectationDefinitionPeriod = getDepartment(request).getTeacherAutoEvaluationDefinitionPeriodForExecutionYear(year);
+            request.setAttribute("period", teacherExpectationDefinitionPeriod);
+	}
     }      
 }

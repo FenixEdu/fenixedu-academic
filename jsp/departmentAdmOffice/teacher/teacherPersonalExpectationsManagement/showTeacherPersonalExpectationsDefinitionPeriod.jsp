@@ -38,9 +38,8 @@
 			</div>
 		</fr:form>
 	
-		<bean:define id="executionYearId" name="bean" property="executionYear.idInternal"/>
-	
 		<logic:notEmpty name="period">
+			<bean:define id="executionYearId" name="bean" property="executionYear.idInternal"/>
 			<fr:view name="period" schema="editTeacherPersonalExpectationsDefinitionPeriod">
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="tstyle1 thlight thright"/>
@@ -48,24 +47,27 @@
 			</fr:view>
 			<ul class="list5">
 				<li>
-					<html:link page="<%= "/teacherPersonalExpectationsDefinitionPeriod.do?method=editPeriod&executionYearId=" + executionYearId %>">
+					<html:link page="<%= "/teacherPersonalExpectationsDefinitionPeriod.do?method=editPeriod&executionYearId=" + executionYearId.toString() %>">
 					  <bean:message key="link.edit"/>
 					</html:link>
 				</li>
 			</ul>
 		</logic:notEmpty>
 
-		<logic:empty name="period">
-			<p class="mtop15 mbottom1"><em><bean:message key="label.noTeacherPersonalExpectationsDefinitionPeriodNotAvailable"/></em></p>
-			<ul class="list5">
-				<li>
-					<html:link page="<%= "/teacherPersonalExpectationsDefinitionPeriod.do?method=createPeriod&executionYearId=" + executionYearId %>">
-						<bean:message key="label.teacher-institution-working-time.create"/>
-					</html:link>
-				</li>
-			</ul>
-		</logic:empty>
-
+		<logic:notEmpty name="bean" property="executionYear">
+			<bean:define id="executionYearId" name="bean" property="executionYear.idInternal"/>
+			<logic:empty name="period">
+				<p class="mtop15 mbottom1"><em><bean:message key="label.noTeacherPersonalExpectationsDefinitionPeriodNotAvailable"/></em></p>
+				<ul class="list5">
+					<li>
+						<html:link page="<%= "/teacherPersonalExpectationsDefinitionPeriod.do?method=createPeriod&executionYearId=" + executionYearId.toString() %>">
+							<bean:message key="label.teacher-institution-working-time.create"/>
+						</html:link>
+					</li>
+				</ul>
+			</logic:empty>
+		</logic:notEmpty>
+	
 		<script type="text/javascript" language="javascript">
 			switchGlobal();
 		</script>

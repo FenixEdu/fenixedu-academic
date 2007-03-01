@@ -9,8 +9,9 @@ public class TeacherPersonalExpectationsVisualizationPeriodDA extends TeacherPer
 
     @Override
     protected void readAndSetPeriod(HttpServletRequest request, ExecutionYear year) {
-	TeacherPersonalExpectationsVisualizationPeriod teacherExpectationDefinitionPeriod = 
-	    getDepartment(request).getTeacherPersonalExpectationsVisualizationPeriodByExecutionYear(year);	
-	request.setAttribute("period", teacherExpectationDefinitionPeriod);
+	if(year != null) {
+            TeacherPersonalExpectationsVisualizationPeriod teacherExpectationDefinitionPeriod = getDepartment(request).getTeacherPersonalExpectationsVisualizationPeriodByExecutionYear(year);	
+            request.setAttribute("period", teacherExpectationDefinitionPeriod);
+	}
     }       
 }

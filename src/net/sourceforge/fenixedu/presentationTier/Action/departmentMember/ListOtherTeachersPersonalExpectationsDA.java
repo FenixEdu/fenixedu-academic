@@ -70,9 +70,7 @@ public class ListOtherTeachersPersonalExpectationsDA extends ListTeachersPersona
     
     protected ActionForward readAndSetList(ActionMapping mapping, HttpServletRequest request, ExecutionYear executionYear) {
 	Department department = getDepartment(request);	
-	TeacherPersonalExpectationsVisualizationPeriod visualizationPeriod = 
-	    department.getTeacherPersonalExpectationsVisualizationPeriodByExecutionYear(executionYear);
-	
+	TeacherPersonalExpectationsVisualizationPeriod visualizationPeriod = department.getTeacherPersonalExpectationsVisualizationPeriodByExecutionYear(executionYear);	
 	if(visualizationPeriod == null || !visualizationPeriod.isPeriodOpen()) {
             request.setAttribute("executionYearBean", new ExecutionYearBean(executionYear));            
             return mapping.findForward("listTeacherPersonalExpectations");            

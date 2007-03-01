@@ -12,8 +12,6 @@
 
 	<logic:notEmpty name="executionYearBean">
 		
-		<bean:define id="executionYear" name="executionYearBean" property="executionYear"/>	
-			
 		<fr:form>
 			<div class="mtop2 mbottom1">
 			<bean:message key="label.common.executionYear" bundle="DEPARTMENT_ADM_OFFICE_RESOURCES"/>:
@@ -31,7 +29,9 @@
 		</fr:form>
 		
 		<logic:notEmpty name="teachers">
-			
+	
+			<bean:define id="executionYear" name="executionYearBean" property="executionYear"/>	
+				
 			<table class="tstyle2 thleft thlight mtop15">
 				<tr>
 					<th><bean:message key="label.appraiser.teacher.name" bundle="DEPARTMENT_ADM_OFFICE_RESOURCES"/></th>

@@ -31,7 +31,7 @@ public class ExpectationsEvaluationGroupsDA extends FenixDispatchAction {
 	
 	Department department = getDepartment(request);
 	ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
-	readAndSetAppraiserTeachers(request, department, executionYear);	
+	readAndSetAppraiserTeachers(request, department, executionYear);			
 	return mapping.findForward("listGroups");	
     }
    
@@ -39,9 +39,9 @@ public class ExpectationsEvaluationGroupsDA extends FenixDispatchAction {
 	    HttpServletResponse response) {
 	
 	Department department = getDepartment(request);
-	IViewState viewState = RenderUtils.getViewState("executionYear");
+	IViewState viewState = RenderUtils.getViewState("executionYear");	
 	ExecutionYear executionYear = (ExecutionYear) viewState.getMetaObject().getObject();	
-	readAndSetAppraiserTeachers(request, department, executionYear);		
+	readAndSetAppraiserTeachers(request, department, executionYear);			
 	return mapping.findForward("listGroups");	
     }
     
@@ -49,8 +49,8 @@ public class ExpectationsEvaluationGroupsDA extends FenixDispatchAction {
 	    HttpServletResponse response) {
 	
 	Department department = getDepartment(request);	
-	ExecutionYear executionYear = getExecutionYearFromParameter(request);	
-	readAndSetAppraiserTeachers(request, department, executionYear);		
+	ExecutionYear executionYear = getExecutionYearFromParameter(request);		
+	readAndSetAppraiserTeachers(request, department, executionYear);				
 	return mapping.findForward("listGroups");	
     }
 
@@ -60,14 +60,14 @@ public class ExpectationsEvaluationGroupsDA extends FenixDispatchAction {
 	Teacher teacher = getTeacherFromParameter(request);
 	ExecutionYear executionYear = getExecutionYearFromParameter(request);
 		
-	Department employeeDepartment = getDepartment(request);
-	Department teacherWorkingDepartment = teacher.getLastWorkingDepartment(executionYear.getBeginDateYearMonthDay(), executionYear.getEndDateYearMonthDay());
-	
-	if(teacherWorkingDepartment != null && teacherWorkingDepartment.equals(employeeDepartment)) {
-	    request.setAttribute("expectationEvaluationGroupBean", new ExpectationEvaluationGroupBean(teacher, executionYear));	 
-	    request.setAttribute("evaluatedTeacherGroups",teacher.getEvaluatedExpectationEvaluationGroups(executionYear));
-	}
-	
+        Department employeeDepartment = getDepartment(request);
+        Department teacherWorkingDepartment = teacher.getLastWorkingDepartment(executionYear.getBeginDateYearMonthDay(), executionYear.getEndDateYearMonthDay());
+        
+        if(teacherWorkingDepartment != null && teacherWorkingDepartment.equals(employeeDepartment)) {
+            request.setAttribute("expectationEvaluationGroupBean", new ExpectationEvaluationGroupBean(teacher, executionYear));	 
+            request.setAttribute("evaluatedTeacherGroups",teacher.getEvaluatedExpectationEvaluationGroups(executionYear));
+        }
+
 	return mapping.findForward("manageGroups");	
     }   
     
@@ -119,10 +119,12 @@ public class ExpectationsEvaluationGroupsDA extends FenixDispatchAction {
     
     private void readAndSetAppraiserTeachers(HttpServletRequest request, Department department, ExecutionYear executionYear) {
 	Map<Teacher, List<ExpectationEvaluationGroup>> result = new TreeMap<Teacher, List<ExpectationEvaluationGroup>>(Teacher.TEACHER_COMPARATOR_BY_CATEGORY_AND_NUMBER);
-	List<Teacher> currentTeachers = department.getAllTeachers(executionYear.getBeginDateYearMonthDay(), executionYear.getEndDateYearMonthDay());		
-	for (Teacher teacher : currentTeachers) {
-	    result.put(teacher, teacher.getEvaluatedExpectationEvaluationGroups(executionYear));	    
-	}	
+	if(executionYear != null) {
+            List<Teacher> currentTeachers = department.getAllTeachers(executionYear.getBeginDateYearMonthDay(), executionYear.getEndDateYearMonthDay());		
+            for (Teacher teacher : currentTeachers) {
+                result.put(teacher, teacher.getEvaluatedExpectationEvaluationGroups(executionYear));	    
+            }	
+	}
 	request.setAttribute("executionYearBean", new ExecutionYearBean(executionYear));
 	request.setAttribute("teachers", result);
     }   
