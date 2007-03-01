@@ -181,6 +181,7 @@ valueType net.sourceforge.fenixedu.domain.parking.NewParkingDocumentType								
 valueType net.sourceforge.fenixedu.domain.FrequencyType															as FrequencyType;
 valueType net.sourceforge.fenixedu.domain.RequestState															as RequestState;
 valueType net.sourceforge.fenixedu.domain.assiduousness.util.ScheduleClockingType								as ScheduleClockingType;
+valueType net.sourceforge.fenixedu.domain.util.EmailAddressList								                    as EmailAddressList;
 
 
 /*
@@ -1434,6 +1435,19 @@ class net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule extends
 	// Isto � da estrutura antiga, faz sentido ainda?
     class net.sourceforge.fenixedu.domain.EnrolmentInOptionalCurricularCourse extends net.sourceforge.fenixedu.domain.Enrolment {
     }
+
+
+class net.sourceforge.fenixedu.domain.util.Email extends net.sourceforge.fenixedu.domain.DomainObject {
+	String fromName;
+	String fromAddress;
+	EmailAddressList replyTos;
+	EmailAddressList toAddresses;
+	EmailAddressList ccAddresses;
+	EmailAddressList bccAddresses;
+	String subject;
+	String body;
+}
+
 
 class net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment extends net.sourceforge.fenixedu.domain.DomainObject {
 	String grade;
@@ -12070,6 +12084,13 @@ relation ExpectationEvaluationGroupAppraiserTeacher {
 relation ExpectationEvaluationGroupEvaluatedTeacher {
 	net.sourceforge.fenixedu.domain.Teacher playsRole evaluated;
 	net.sourceforge.fenixedu.domain.ExpectationEvaluationGroup playsRole appraiserExpectationEvaluationGroups {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectEmail {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.util.Email playsRole emails {
 		multiplicity *;
 	}
 }

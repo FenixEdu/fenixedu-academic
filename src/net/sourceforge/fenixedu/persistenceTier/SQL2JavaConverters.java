@@ -153,4 +153,5 @@ public class SQL2JavaConverters {
     public static FieldConversion FrequencyType2SQLFrequencyTypeFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.FrequencyType2SQLFrequencyTypeFieldConversion();
     public static FieldConversion ResearchActivityLocationType2SqlResearchActivityLocationTypeConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.ResearchActivityLocationType2SqlResearchActivityLocationTypeConversion();
     public static FieldConversion ResearchCooperationType2SqlResearchCooperationTypeConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.ResearchCooperationType2SqlResearchCooperationTypeConversion();
+    public static FieldConversion EmailAddressList2SqlEmailAddressListConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.EmailAddressList2SqlEmailAddressListConversion();
 }
