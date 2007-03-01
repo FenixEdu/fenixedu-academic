@@ -60,8 +60,7 @@ public class Summary extends Summary_Base {
 	    String teacherName, Teacher teacher, Shift shift, Lesson lesson, YearMonthDay date,
 	    OldRoom room, Partial hour) {
 
-	checkParameters(title, summaryText, isExtraLesson, professorship, teacherName, teacher, shift,
-		lesson, date, room, hour);
+	checkParameters(title, summaryText, isExtraLesson, professorship, teacherName, teacher, shift, lesson, date, room, hour);
 	checkTeacher(teacher, shift.getDisciplinaExecucao());
 	checkDate(date, shift.getDisciplinaExecucao().getExecutionPeriod(), lesson);
 	setExecutionCourse(shift.getDisciplinaExecucao());
@@ -77,8 +76,7 @@ public class Summary extends Summary_Base {
 	setLastModifiedDateDateTime(new DateTime());
 	setSummaryType(shift.getTipo());
 	if (isExtraLesson) {
-	    HourMinuteSecond hourMinuteSecond = new HourMinuteSecond(hour.get(DateTimeFieldType
-		    .hourOfDay()), hour.get(DateTimeFieldType.minuteOfHour()), 0);
+	    HourMinuteSecond hourMinuteSecond = new HourMinuteSecond(hour.get(DateTimeFieldType.hourOfDay()), hour.get(DateTimeFieldType.minuteOfHour()), 0);
 	    setSummaryHourHourMinuteSecond(hourMinuteSecond);
 	    setRoom(room);
 	    removeLesson();
@@ -164,8 +162,7 @@ public class Summary extends Summary_Base {
 	    if (!allLessonDates.isEmpty()) {
 		int index = allLessonDates.indexOf(getSummaryDateYearMonthDay());
 		if (index != -1) {
-		    return stringBuilder.append("(").append(index + 1).append("/").append(
-			    allLessonDates.size()).append(")").toString();
+		    return stringBuilder.append("(").append(index + 1).append("/").append(allLessonDates.size()).append(")").toString();
 		}
 	    }
 	}
@@ -186,5 +183,12 @@ public class Summary extends Summary_Base {
 	    return getLesson().getBeginHourMinuteSecond();
 	}
 	return super.getSummaryHourHourMinuteSecond();
+    }
+
+    public void moveFromTeacherToProfessorship(Professorship professorship) {
+	if(getTeacher() != null && professorship != null && professorship.getExecutionCourse().equals(getExecutionCourse())) {	   
+	    setTeacher(null);
+	    setProfessorship(professorship);
+	}
     }
 }

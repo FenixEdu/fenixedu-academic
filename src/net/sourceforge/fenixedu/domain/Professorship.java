@@ -50,13 +50,14 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
         professorShip.setHours((hours == null) ? new Double(0.0) : hours);
 
         if (responsibleFor.booleanValue()) {
-            ResponsibleForValidator.getInstance().validateResponsibleForList(teacher, executionCourse,
-                    professorShip);
+            ResponsibleForValidator.getInstance().validateResponsibleForList(teacher, executionCourse, professorShip);
         }
         professorShip.setResponsibleFor(responsibleFor);
         professorShip.setExecutionCourse(executionCourse);
         professorShip.setTeacher(teacher);
-
+        
+        executionCourse.moveSummariesFromTeacherToProfessorship(teacher, professorShip);
+       
         return professorShip;
     }
 

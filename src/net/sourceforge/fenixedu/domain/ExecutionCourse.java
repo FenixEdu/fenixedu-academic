@@ -56,28 +56,23 @@ import pt.utl.ist.fenix.tools.util.StringAppender;
 public class ExecutionCourse extends ExecutionCourse_Base {
 
     public static final Comparator<ExecutionCourse> EXECUTION_COURSE_NAME_COMPARATOR = new ComparatorChain();
-
     public static final Comparator<ExecutionCourse> EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME = new ComparatorChain();
-
+    public static OrderedRelationAdapter<ExecutionCourse, BibliographicReference> BIBLIOGRAPHIC_REFERENCE_ORDER_ADAPTER;
+    
     static {
 	CurricularCourseExecutionCourse.addListener(new CurricularCourseExecutionCourseListener());
-	((ComparatorChain) EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME)
-		.addComparator(new BeanComparator("executionPeriod"));
-	((ComparatorChain) EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME)
-		.addComparator(new BeanComparator("nome", Collator.getInstance()));
-        ((ComparatorChain) EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME)
-                .addComparator(new BeanComparator("idInternal"));
+	
+	((ComparatorChain) EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME).addComparator(new BeanComparator("executionPeriod"));
+	((ComparatorChain) EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME).addComparator(new BeanComparator("nome", Collator.getInstance()));
+        ((ComparatorChain) EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME).addComparator(new BeanComparator("idInternal"));
 
         ((ComparatorChain) EXECUTION_COURSE_NAME_COMPARATOR).addComparator(new BeanComparator("nome", Collator.getInstance()));
         ((ComparatorChain) EXECUTION_COURSE_NAME_COMPARATOR).addComparator(new BeanComparator("idInternal"));
-    }
-
-    public static OrderedRelationAdapter<ExecutionCourse, BibliographicReference> BIBLIOGRAPHIC_REFERENCE_ORDER_ADAPTER;
-    static {
+        
         BIBLIOGRAPHIC_REFERENCE_ORDER_ADAPTER = new OrderedRelationAdapter<ExecutionCourse, BibliographicReference>("associatedBibliographicReferences", "referenceOrder");
         ExecutionCourseBibliographicReference.addListener(BIBLIOGRAPHIC_REFERENCE_ORDER_ADAPTER);
     }
-    
+      
     public ExecutionCourse(final String nome, final String sigla, final ExecutionPeriod executionPeriod) {
 	super();
 	init();
@@ -1371,6 +1366,25 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	    }
 	}
 	return summaries;
+    }
+    
+    public List<Summary> getSummariesWithoutProfessorshipButWithTeacher(Teacher teacher){
+	List<Summary> summaries = new ArrayList<Summary>();
+	if(teacher != null) {
+            for (Summary summary : getAssociatedSummariesSet()) {
+                if (summary.getTeacher() != null && summary.getTeacher().equals(teacher)) {
+            	summaries.add(summary);
+                }
+            }
+	}
+	return summaries;
+    }
+    
+    public void moveSummariesFromTeacherToProfessorship(Teacher teacher, Professorship professorship) {
+	List<Summary> summaries = getSummariesWithoutProfessorshipButWithTeacher(teacher);
+	for (Summary summary : summaries) {
+	    summary.moveFromTeacherToProfessorship(professorship);
+	}
     }
 
     @Override
