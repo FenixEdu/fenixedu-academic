@@ -350,6 +350,7 @@
 	<slot name="masterDegreeThesis.studentCurricularPlan.student.student.person.name" key="label.name" />
 	<slot name="proofDateYearMonthDay" key="label.proofDate" />
 	<slot name="masterDegreeThesis.activeMasterDegreeThesisDataVersion.dissertationTitle" key="label.masterDegreeThesis.dissertationTitle" />
+	<slot name="masterDegreeThesis.activeMasterDegreeThesisDataVersion.guidersNames" key="label.masterDegreeThesis.guiders" />	
 	<slot name="masterDegreeThesis.studentCurricularPlan.masterDegreeCandidate" layout="null-as-label" 
 		key="label.masterDegreeCandidate.precendentDegree" >
 		<property name="label" value=" - "/>
