@@ -1826,15 +1826,15 @@
  			<property name="classes" value="nobullet liinline"/>
  			<property name="destination" value="change.person.type"/>
 	</slot>
- 	<slot name="person" key="label.name" layout="autoComplete">
+ 	<slot name="personNameObject" key="label.name" layout="autoComplete">
 		<property name="size" value="70"/>
 		<property name="rawSlotName" value="personName"/>
 		<property name="labelField" value="text"/>
 		<property name="format" value="${text}"/>
 		<property name="indicatorShown" value="true"/>
-		<property name="serviceName" value="SearchPersonForParticipationWithWrapping"/>
-		<property name="serviceArgs" value="slot=name"/>
-		<property name="className" value="net.sourceforge.fenixedu.domain.Person"/>				
+		<property name="serviceName" value="SearchPersonsForParticipations"/>
+		<property name="serviceArgs" value="slot=name,size=20"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.person.PersonName"/>				
 		<property name="minChars" value="4"/>
 	</slot>
 </schema>
@@ -1845,7 +1845,7 @@
  			<property name="classes" value="nobullet liinline"/>
  			<property name="destination" value="change.person.type"/>
  	</slot>
- 	<slot name="person" key="label.name" layout="autoComplete">
+ 	<slot name="personNameObject" key="label.name" layout="autoComplete">
 		<property name="size" value="70"/>
 		<property name="rawSlotName" value="personName"/>
 		<property name="labelField" value="text"/>
@@ -1873,7 +1873,7 @@
 	<slot name="organizationType" key="label.unit" layout="radio-postback">
 	 			<property name="classes" value="nobullet liinline"/>
 	</slot>
-	<slot name="organization" layout="autoComplete">
+	<slot name="organizationNameObject" layout="autoComplete">
 		<property name="size" value="40"/>
 		<property name="rawSlotName" value="organizationName"/>
 		<property name="labelField" value="unit.name"/>
@@ -1889,7 +1889,7 @@
 	<slot name="organizationType" key="label.unit" layout="radio" read-only="true">
 	 			<property name="classes" value="nobullet liinline"/>
 	</slot>
-	<slot name="organization" layout="autoComplete">
+	<slot name="organizationNameObject" layout="autoComplete">
 		<property name="size" value="40"/>
 		<property name="rawSlotName" value="organizationName"/>
 		<property name="labelField" value="unit.name"/>
@@ -1905,14 +1905,14 @@
 	<slot name="organizationType" key="label.unit" layout="radio-postback">
 	 			<property name="classes" value="nobullet liinline"/>
 	</slot>
-	<slot name="organization" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="organizationNameObject" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="40"/>
 		<property name="rawSlotName" value="organizationName"/>
 		<property name="labelField" value="name"/>
 		<property name="indicatorShown" value="true"/>		
 		<property name="serviceName" value="SearchInternalUnits"/>
 		<property name="serviceArgs" value="slot=name"/>
-		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"/>				
+		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>				
 		<property name="minChars" value="4"/>
 	</slot>
 </schema>
