@@ -182,38 +182,35 @@ public class Department extends Department_Base {
 	return courses;
     }
     
-    public TeacherAutoEvaluationDefinitionPeriod getTeacherAutoEvaluationDefinitionPeriodForExecutionYear(ExecutionYear executionYear) {
+    public TeacherPersonalExpectationPeriod getTeacherPersonalExpectationPeriodForExecutionYear(ExecutionYear executionYear, Class clazz) {
 	if(executionYear != null) {
-            for (TeacherAutoEvaluationDefinitionPeriod period : getTeacherAutoEvaluationDefinitionPeriods()) {
-                if (period.getExecutionYear().equals(executionYear)) {
+            for (TeacherPersonalExpectationPeriod period : getTeacherPersonalExpectationPeriods()) {
+                if (period.getExecutionYear().equals(executionYear) && period.getClass().equals(clazz)) {
                     return period;
                 }
             }
 	}
 	return null;
+    }
+    
+    public TeacherAutoEvaluationDefinitionPeriod getTeacherAutoEvaluationDefinitionPeriodForExecutionYear(ExecutionYear executionYear) {
+	TeacherPersonalExpectationPeriod period = getTeacherPersonalExpectationPeriodForExecutionYear(executionYear, TeacherAutoEvaluationDefinitionPeriod.class);
+	return period != null ? (TeacherAutoEvaluationDefinitionPeriod)period : null;
     }
     
     public TeacherExpectationDefinitionPeriod getTeacherExpectationDefinitionPeriodForExecutionYear(ExecutionYear executionYear) {
-	if(executionYear != null) {
-            for (TeacherExpectationDefinitionPeriod period : getTeacherExpectationDefinitionPeriods()) {
-                if (period.getExecutionYear().equals(executionYear)) {
-                    return period;
-                }
-            }
-	}
-	return null;
+	TeacherPersonalExpectationPeriod period = getTeacherPersonalExpectationPeriodForExecutionYear(executionYear, TeacherExpectationDefinitionPeriod.class);
+	return period != null ? (TeacherExpectationDefinitionPeriod)period : null;
     }
     
-
     public TeacherPersonalExpectationsVisualizationPeriod getTeacherPersonalExpectationsVisualizationPeriodByExecutionYear(ExecutionYear executionYear) {	
-	if(executionYear != null) {
-            for (TeacherPersonalExpectationsVisualizationPeriod period : getTeacherPersonalExpectationsVisualizationPeriods()) {
-                if (period.getExecutionYear().equals(executionYear)) {
-                    return period;		
-                }
-            }
-	}
-	return null;
+	TeacherPersonalExpectationPeriod period = getTeacherPersonalExpectationPeriodForExecutionYear(executionYear, TeacherPersonalExpectationsVisualizationPeriod.class);
+	return period != null ? (TeacherPersonalExpectationsVisualizationPeriod)period : null;
+    }
+    
+    public TeacherPersonalExpectationsEvaluationPeriod getTeacherPersonalExpectationsEvaluationPeriodByExecutionYear(ExecutionYear executionYear) {	
+	TeacherPersonalExpectationPeriod period = getTeacherPersonalExpectationPeriodForExecutionYear(executionYear, TeacherPersonalExpectationsEvaluationPeriod.class);
+	return period != null ? (TeacherPersonalExpectationsEvaluationPeriod)period : null;
     }
 
     // -------------------------------------------------------------

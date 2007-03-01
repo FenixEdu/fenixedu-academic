@@ -1117,4 +1117,32 @@ public class Teacher extends Teacher_Base {
 	deleteDomainObject();
     }
 
+    public List<ExpectationEvaluationGroup> getEvaluatedExpectationEvaluationGroups(ExecutionYear executionYear) {
+	List<ExpectationEvaluationGroup> result = new ArrayList<ExpectationEvaluationGroup>();
+	for (ExpectationEvaluationGroup expectationEvaluationGroup : getEvaluatedExpectationEvaluationGroups()) {
+	    if(expectationEvaluationGroup.getExecutionYear().equals(executionYear)) {
+		result.add(expectationEvaluationGroup);
+	    }
+	}
+	return result;
+    }
+    
+    public List<ExpectationEvaluationGroup> getAppraiserExpectationEvaluationGroups(ExecutionYear executionYear) {
+	List<ExpectationEvaluationGroup> result = new ArrayList<ExpectationEvaluationGroup>();
+	for (ExpectationEvaluationGroup expectationEvaluationGroup : getAppraiserExpectationEvaluationGroups()) {
+	    if(expectationEvaluationGroup.getExecutionYear().equals(executionYear)) {
+		result.add(expectationEvaluationGroup);
+	    }
+	}
+	return result;
+    }
+    
+    public boolean hasExpectationEvaluatedTeacher(Teacher teacher, ExecutionYear executionYear) {	
+        for (ExpectationEvaluationGroup group : getEvaluatedExpectationEvaluationGroups()) {
+            if(group.getExecutionYear().equals(executionYear) && group.getEvaluated().equals(teacher)) {
+        	return true;
+            }
+        }   
+        return false;
+    }
 }

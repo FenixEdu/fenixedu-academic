@@ -57,8 +57,17 @@ public class ListTeachersPersonalExpectationsDA extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 
 	TeacherPersonalExpectation teacherPersonalExpectation = getTeacherPersonalExpectationFromParameter(request);
-	request.setAttribute("noEdit", true);
-	request.setAttribute("teacherPersonalExpectation", teacherPersonalExpectation);
+	Teacher teacher = teacherPersonalExpectation.getTeacher();
+	ExecutionYear executionYear = teacherPersonalExpectation.getExecutionYear();
+	
+	Department teacherWorkingDepartment = teacher.getLastWorkingDepartment(executionYear.getBeginDateYearMonthDay(), executionYear.getEndDateYearMonthDay());
+	Department employeeDepartment = getDepartment(request);
+	
+	if(teacherWorkingDepartment != null && teacherWorkingDepartment.equals(employeeDepartment)) {	   
+            request.setAttribute("noEdit", true);
+            request.setAttribute("teacherPersonalExpectation", teacherPersonalExpectation);
+	}
+	
 	return mapping.findForward("seeTeacherPersonalExpectationsByYear");
     }   
     
@@ -108,6 +117,9 @@ public class ListTeachersPersonalExpectationsDA extends FenixDispatchAction {
          return null;
     }   
     
+    
+    //private methods
+    
     protected ActionForward readAndSetList(ActionMapping mapping, HttpServletRequest request, ExecutionYear executionYear) {
 	Map<Teacher, TeacherPersonalExpectation> result = getExpectationsMap(request, executionYear);	
 	request.setAttribute("executionYearBean", new ExecutionYearBean(executionYear));
@@ -117,9 +129,8 @@ public class ListTeachersPersonalExpectationsDA extends FenixDispatchAction {
 
     private Map<Teacher, TeacherPersonalExpectation> getExpectationsMap(HttpServletRequest request, ExecutionYear executionYear) {
 	Department department = getDepartment(request);
-	List<Teacher> allCurrentTeachers = department.getAllCurrentTeachers();		
-	Map<Teacher, TeacherPersonalExpectation> result = new TreeMap<Teacher, TeacherPersonalExpectation>(Teacher.TEACHER_COMPARATOR_BY_CATEGORY_AND_NUMBER);
-	
+	List<Teacher> allCurrentTeachers = department.getAllTeachers(executionYear.getBeginDateYearMonthDay(), executionYear.getEndDateYearMonthDay());		
+	Map<Teacher, TeacherPersonalExpectation> result = new TreeMap<Teacher, TeacherPersonalExpectation>(Teacher.TEACHER_COMPARATOR_BY_CATEGORY_AND_NUMBER);	
 	for (Teacher teacher: allCurrentTeachers) {
 	    TeacherPersonalExpectation teacherPersonalExpectation = teacher.getTeacherPersonalExpectationByExecutionYear(executionYear);
 	    result.put(teacher, teacherPersonalExpectation);

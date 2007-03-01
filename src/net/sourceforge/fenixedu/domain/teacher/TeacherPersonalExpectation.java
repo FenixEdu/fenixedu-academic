@@ -6,34 +6,46 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.TeacherAutoEvaluationDefinitionPeriod;
 import net.sourceforge.fenixedu.domain.TeacherExpectationDefinitionPeriod;
+import net.sourceforge.fenixedu.domain.TeacherPersonalExpectationsEvaluationPeriod;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class TeacherPersonalExpectation extends TeacherPersonalExpectation_Base {
-
+      
     private TeacherPersonalExpectation() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public TeacherPersonalExpectation(TeacherPersonalExpectationBean infoTeacherPersonalExpectation) {
-	
+    public TeacherPersonalExpectation(TeacherPersonalExpectationBean infoTeacherPersonalExpectation) {	
 	this();	
 	ExecutionYear executionYear = infoTeacherPersonalExpectation.getExecutionYear();
-	Teacher teacher = infoTeacherPersonalExpectation.getTeacher();
+	Teacher teacher = infoTeacherPersonalExpectation.getTeacher();	
+	
+	if(executionYear != null && teacher != null) {
+	    if(teacher.getTeacherPersonalExpectationByExecutionYear(executionYear) != null){
+                throw new DomainException("error.exception.personalExpectation.already.exists");
+            }		    
+	}
 	
 	setExecutionYear(executionYear);	
-	setTeacher(teacher);
-	
-	TeacherExpectationDefinitionPeriod expectationDefinitionPeriod = 
-	    teacher.getCurrentWorkingDepartment().getTeacherExpectationDefinitionPeriodForExecutionYear(executionYear);
-	
-	if (expectationDefinitionPeriod == null || !expectationDefinitionPeriod.isPeriodOpen()) {
-	    throw new DomainException("error.exception.personalExpectation.definitionPeriodForExecutionYearAlreadyExpired");
-	}	
+	setTeacher(teacher);				
+		        
+        if (isAllowedToEditExpectation()) {
+            throw new DomainException("error.exception.personalExpectation.definitionPeriodForExecutionYearAlreadyExpired");
+        }
 	
 	setProperties(infoTeacherPersonalExpectation);	
     }
-        
+                
+    @Override
+    public void setTutorComment(String tutorComment) {
+	if(isAllowedToEditEvaluation()) {
+	    super.setTutorComment(tutorComment);
+	} else {
+	    throw new DomainException("error.exception.personalExpectation.evaluationPeriodForExecutionYearAlreadyExpired");
+	}	
+    }
+
     @Override
     public void setTeacher(Teacher teacher) {
 	if(teacher == null) {
@@ -57,8 +69,39 @@ public class TeacherPersonalExpectation extends TeacherPersonalExpectation_Base 
 	} else {
 	    throw new DomainException("error.label.notAbleToEditAutoEvaluation");
 	}
-    }      
+    }         
 
+    public String getUtlOrgans() {
+	return getUniversityOrgans();
+    }
+    
+    public void setUtlOrgans(String utlOrgans) {
+	setUniversityOrgans(utlOrgans);
+    }
+
+    public String getIstOrgans() {
+	return getInstitutionOrgans();
+    }
+    
+    public void setIstOrgans(String istOrgans) {
+	setInstitutionOrgans(istOrgans);
+    }
+
+    public boolean isAllowedToEditExpectation() {
+	TeacherExpectationDefinitionPeriod period = getTeacher().getCurrentWorkingDepartment().getTeacherExpectationDefinitionPeriodForExecutionYear(getExecutionYear());
+	return (period == null) ? false : period.isPeriodOpen();
+    }   
+    
+    public boolean isAllowedToEditAutoEvaluation() {
+	TeacherAutoEvaluationDefinitionPeriod period = getTeacher().getCurrentWorkingDepartment().getTeacherAutoEvaluationDefinitionPeriodForExecutionYear(getExecutionYear());
+	return (period == null) ? false : period.isPeriodOpen();
+    } 
+    
+    public boolean isAllowedToEditEvaluation() {
+	TeacherPersonalExpectationsEvaluationPeriod period = getTeacher().getCurrentWorkingDepartment().getTeacherPersonalExpectationsEvaluationPeriodByExecutionYear(getExecutionYear());
+	return (period == null) ? false : period.isPeriodOpen();
+    } 
+    
     private void setProperties(TeacherPersonalExpectationBean infoTeacherPersonalExpectation) {
 	setEducationMainFocus(infoTeacherPersonalExpectation.getEducationMainFocus());
 	setGraduations(infoTeacherPersonalExpectation.getGraduations());
@@ -92,31 +135,5 @@ public class TeacherPersonalExpectation extends TeacherPersonalExpectation_Base 
 	setConsulting(infoTeacherPersonalExpectation.getConsulting());
 	setCompanySocialOrgans(infoTeacherPersonalExpectation.getCompanySocialOrgans());
 	setCompanyPositions(infoTeacherPersonalExpectation.getCompanyPositions());
-    }   
-
-    public String getUtlOrgans() {
-	return getUniversityOrgans();
-    }
-    
-    public void setUtlOrgans(String utlOrgans) {
-	setUniversityOrgans(utlOrgans);
-    }
-
-    public String getIstOrgans() {
-	return getInstitutionOrgans();
-    }
-    
-    public void setIstOrgans(String istOrgans) {
-	setInstitutionOrgans(istOrgans);
-    }
-
-    public boolean isAllowedToEditExpectation() {
-	TeacherExpectationDefinitionPeriod period = getTeacher().getCurrentWorkingDepartment().getTeacherExpectationDefinitionPeriodForExecutionYear(getExecutionYear());
-	return (period == null) ? false : period.isPeriodOpen();
-    }   
-    
-    public boolean isAllowedToEditAutoEvaluation() {
-	TeacherAutoEvaluationDefinitionPeriod period = getTeacher().getCurrentWorkingDepartment().getTeacherAutoEvaluationDefinitionPeriodForExecutionYear(getExecutionYear());
-	return (period == null) ? false : period.isPeriodOpen();
-    }   
+    }  
 }

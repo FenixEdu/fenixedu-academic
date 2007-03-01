@@ -35,6 +35,10 @@
 			<h3 class="separator2 mtop2"><bean:message key="label.teacher.auto.evaluation" bundle="DEPARTMENT_MEMBER_RESOURCES"/></h3>
 			<fr:view name="teacherPersonalExpectation" property="autoEvaluation" layout="html"/>									
 		</logic:notEmpty>	
+		<logic:notEmpty name="teacherPersonalExpectation" property="tutorComment">
+			<h3 class="separator2 mtop2"><bean:message key="label.expectation.evaluation" bundle="DEPARTMENT_MEMBER_RESOURCES"/></h3>
+			<fr:view name="teacherPersonalExpectation" property="tutorComment" layout="html"/>									
+		</logic:notEmpty>
 	</logic:notEmpty>
 			
 </logic:present>

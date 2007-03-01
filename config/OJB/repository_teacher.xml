@@ -122,49 +122,12 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation" table="TEACHER_PERSONAL_EXPECTATION">
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-    
-     
-    
-	
-    
-		
-	
 </class-descriptor>  
+				
+<!-- Definitions for net.sourceforge.fenixedu.domain.ExpectationEvaluationGroup -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.ExpectationEvaluationGroup" table="EXPECTATION_EVALUATION_GROUP">
+	
+</class-descriptor>  				
 				 
 <!-- Definitions for net.sourceforge.fenixedu.domain.teacher.Advise -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.teacher.Advise" table="ADVISE">

@@ -1065,6 +1065,15 @@
 		<forward name="showDefinitionPeriod" path="show-teacher-personal-expectations-visualization-period"/>
 		<forward name="editDefinitionPeriod" path="edit-teacher-personal-expectations-visualization-period"/>
 	</action>
+	
+	<!-- Teacher Personal Expectations Evaluation Period -->
+	<action path="/teacherPersonalExpectationsEvaluationPeriod" 
+			type="net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.TeacherPersonalExpectationsEvaluationPeriodDA"
+			parameter="method"
+			scope="request">
+		<forward name="showDefinitionPeriod" path="show-teacher-personal-expectations-evaluation-period"/>
+		<forward name="editDefinitionPeriod" path="edit-teacher-personal-expectations-evaluation-period"/>
+	</action>
 
 	<!-- List Teachers Personal Expectations -->
 	<action path="/listTeachersPersonalExpectations" 
@@ -1073,6 +1082,15 @@
 			scope="request">
 		<forward name="listTeacherPersonalExpectations" path="list-teacher-personal-expectations"/>		
 		<forward name="seeTeacherPersonalExpectationsByYear" path="see-teacher-personal-expectations-by-year"/>	
+	</action>
+
+	<!-- List Expectations Evaluation Groups -->
+	<action path="/defineExpectationEvaluationGroups" 
+			type="net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.ExpectationsEvaluationGroupsDA"
+			parameter="method"
+			scope="request">			
+		<forward name="listGroups" path="list-expectations-evaluation-groups"/>
+		<forward name="manageGroups" path="manage-expectation-evaluation-groups"/>
 	</action>
 
     </action-mappings>

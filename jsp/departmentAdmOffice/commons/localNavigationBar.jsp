@@ -80,14 +80,22 @@
 								</html:link>
 							</li>
 							<li>
+								<html:link page="/teacherPersonalExpectationsEvaluationPeriod.do?method=showPeriod">
+									<bean:message key="link.defineTeacherPersonalExpectationsEvaluationPeriod"/>
+								</html:link>
+							</li>
+							<li>
 								<html:link page="/teacherPersonalExpectationsVisualizationPeriod.do?method=showPeriod">
 									<bean:message key="link.defineTeacherPersonalExpectationsVisualizationPeriod"/>
 								</html:link>
-							</li>
+							</li>							
 						</ul>
 					</li>
-					
-
+					<li>
+						<html:link page="/defineExpectationEvaluationGroups.do?method=listGroups">
+							<bean:message key="link.define.expectations.evaluation.groups"/>
+						</html:link>
+					</li>
 					<li>
 						<html:link page="/listTeachersPersonalExpectations.do?method=listTeachersPersonalExpectations">
 							<bean:message key="link.see.teachers.personal.expectations"/>

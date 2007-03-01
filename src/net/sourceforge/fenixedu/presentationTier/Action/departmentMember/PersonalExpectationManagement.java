@@ -45,7 +45,7 @@ public class PersonalExpectationManagement extends FenixDispatchAction {
         TeacherPersonalExpectationBean bean = (TeacherPersonalExpectationBean) viewState.getMetaObject().getObject();
         if(bean != null) {
             ExecutionYear executionYear = bean.getExecutionYear();
-            Teacher teacher = bean.getTeacher();            	   
+            Teacher teacher = getLoggedTeacher(request);            	   
             readAndSetTeacherPersonalExpectationByExecutionYear(request, teacher, executionYear);
             request.setAttribute("teacherPersonalExpectationBean", bean);
         }	
@@ -115,7 +115,7 @@ public class PersonalExpectationManagement extends FenixDispatchAction {
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException, FenixActionException {
 	
 	TeacherPersonalExpectation teacherPersonalExpectation = getTeacherPersonalExpectationFromParameter(request);
-	checkPeriodToEdit(request, teacherPersonalExpectation);
+	checkTeacherAndPeriodToEdit(request, teacherPersonalExpectation);
 	request.setAttribute("teacherPersonalExpectation", teacherPersonalExpectation);	
 	return mapping.findForward("manageEducationExpectations");
     }
@@ -130,7 +130,7 @@ public class PersonalExpectationManagement extends FenixDispatchAction {
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException, FenixActionException {
 	
 	TeacherPersonalExpectation teacherPersonalExpectation = getTeacherPersonalExpectationFromParameter(request);	
-	checkPeriodToEdit(request, teacherPersonalExpectation);	
+	checkTeacherAndPeriodToEdit(request, teacherPersonalExpectation);	
 	request.setAttribute("teacherPersonalExpectation", teacherPersonalExpectation);	
 	return mapping.findForward("manageResearchAndDevelopmentExpectations");
     }
@@ -145,7 +145,7 @@ public class PersonalExpectationManagement extends FenixDispatchAction {
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException, FenixActionException {
 	
 	TeacherPersonalExpectation teacherPersonalExpectation = getTeacherPersonalExpectationFromParameter(request);
-	checkPeriodToEdit(request, teacherPersonalExpectation);
+	checkTeacherAndPeriodToEdit(request, teacherPersonalExpectation);
 	request.setAttribute("teacherPersonalExpectation", teacherPersonalExpectation);	
 	return mapping.findForward("manageUniversityServicesExpectations");
     }
@@ -160,7 +160,7 @@ public class PersonalExpectationManagement extends FenixDispatchAction {
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException, FenixActionException {
 	
 	TeacherPersonalExpectation teacherPersonalExpectation = getTeacherPersonalExpectationFromParameter(request);
-	checkPeriodToEdit(request, teacherPersonalExpectation);
+	checkTeacherAndPeriodToEdit(request, teacherPersonalExpectation);
 	request.setAttribute("teacherPersonalExpectation", teacherPersonalExpectation);	
 	return mapping.findForward("manageProfessionalActivitiesExpectations");
     }
@@ -178,10 +178,8 @@ public class PersonalExpectationManagement extends FenixDispatchAction {
         TeacherPersonalExpectation teacherPersonalExpectation = (TeacherPersonalExpectation) viewState.getMetaObject().getObject();        
         Teacher teacher = teacherPersonalExpectation.getTeacher();
         ExecutionYear executionYear = teacherPersonalExpectation.getExecutionYear();       
-        
 	request.setAttribute("teacherPersonalExpectation", teacherPersonalExpectation);
 	request.setAttribute("teacherPersonalExpectationBean", new TeacherPersonalExpectationBean(executionYear, teacher));
-	
 	return mapping.findForward("viewTeacherPersonalExpectations");	
     }
          
@@ -191,7 +189,16 @@ public class PersonalExpectationManagement extends FenixDispatchAction {
 	TeacherExpectationDefinitionPeriod period = department.getTeacherExpectationDefinitionPeriodForExecutionYear(executionYear);
 	request.setAttribute("periodOpen", period != null ? period.isPeriodOpen().booleanValue() : false);
 	request.setAttribute("teacherPersonalExpectation", teacherPersonalExpectation);
-    }  
+    }
+    
+    private void checkTeacherAndPeriodToEdit(HttpServletRequest request, TeacherPersonalExpectation teacherPersonalExpectation) throws FenixActionException {
+	ExecutionYear executionYear = teacherPersonalExpectation.getExecutionYear();
+	Department department = getDepartment(request);	
+	TeacherExpectationDefinitionPeriod period = department.getTeacherExpectationDefinitionPeriodForExecutionYear(executionYear);
+	if(period == null || !period.isPeriodOpen() || !getLoggedTeacher(request).equals(teacherPersonalExpectation.getTeacher())) {
+	   throw new FenixActionException();
+	}
+    }
     
     private Teacher getLoggedTeacher(HttpServletRequest request) {
 	Person loggedPerson = getLoggedPerson(request);	
@@ -218,14 +225,5 @@ public class PersonalExpectationManagement extends FenixDispatchAction {
     
     private Department getDepartment(HttpServletRequest request) {
 	return getLoggedPerson(request).getTeacher().getCurrentWorkingDepartment();
-    }
-    
-    private void checkPeriodToEdit(HttpServletRequest request, TeacherPersonalExpectation teacherPersonalExpectation) throws FenixActionException {
-	ExecutionYear executionYear = teacherPersonalExpectation.getExecutionYear();
-	Department department = getDepartment(request);	
-	TeacherExpectationDefinitionPeriod period = department.getTeacherExpectationDefinitionPeriodForExecutionYear(executionYear);
-	if(period == null || !period.isPeriodOpen()) {
-	   throw new FenixActionException();
-	}
     }
 }

@@ -178,8 +178,8 @@ public class ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom extends Se
 			    } else {
 				endOfInterval = pointer.toCalendar(LanguageUtils.getLocale());
 				endOfInterval.set(Calendar.HOUR_OF_DAY, 23);
-				endOfInterval.set(Calendar.MINUTE, 29);
-				endOfInterval.set(Calendar.SECOND, 0);
+				endOfInterval.set(Calendar.MINUTE, 59);
+				endOfInterval.set(Calendar.SECOND, 59);
 				endOfInterval.set(Calendar.MILLISECOND, 0);
 			    }
 

@@ -6,10 +6,10 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ExecutionYearBean;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.TeacherPersonalExpectationsVisualizationPeriod;
 import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;
 import net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.ListTeachersPersonalExpectationsDA;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
@@ -43,20 +43,25 @@ public class ListOtherTeachersPersonalExpectationsDA extends ListTeachersPersona
     
     public ActionForward seeTeacherPersonalExpectation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-
 	
 	TeacherPersonalExpectation teacherPersonalExpectation = getTeacherPersonalExpectationFromParameter(request);
 	ExecutionYear executionYear = teacherPersonalExpectation.getExecutionYear();
-	Department department = getDepartment(request);	
-	TeacherPersonalExpectationsVisualizationPeriod visualizationPeriod = 
-	    department.getTeacherPersonalExpectationsVisualizationPeriodByExecutionYear(executionYear);
+	Teacher teacher = teacherPersonalExpectation.getTeacher();
+
+	Department loggedTeacherDepartment = getDepartment(request);		
+	Department teacherWorkingDepartment = teacher.getLastWorkingDepartment(executionYear.getBeginDateYearMonthDay(), executionYear.getEndDateYearMonthDay());
 	
-	request.setAttribute("noEdit", true);
-	if(visualizationPeriod == null || !visualizationPeriod.isPeriodOpen()) {
-	    throw new FenixActionException();
-	} else {
-	    return super.seeTeacherPersonalExpectation(mapping, form, request, response);
+	TeacherPersonalExpectationsVisualizationPeriod visualizationPeriod = 
+	    loggedTeacherDepartment.getTeacherPersonalExpectationsVisualizationPeriodByExecutionYear(executionYear);
+		
+	if(visualizationPeriod != null && visualizationPeriod.isPeriodOpen() 
+		&& teacherWorkingDepartment != null && teacherWorkingDepartment.equals(loggedTeacherDepartment)) {
+	    
+	    request.setAttribute("noEdit", true);
+	    request.setAttribute("teacherPersonalExpectation", teacherPersonalExpectation);	    
 	}	
+	
+	return mapping.findForward("seeTeacherPersonalExpectationsByYear");
     }    
     
     private Department getDepartment(HttpServletRequest request) {

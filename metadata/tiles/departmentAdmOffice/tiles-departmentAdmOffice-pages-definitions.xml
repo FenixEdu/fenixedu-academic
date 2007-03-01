@@ -454,7 +454,15 @@
 	<definition name="edit-teacher-personal-expectations-visualization-period" extends="departmentAdmOffice.masterPage">
 		<put name="body" value="/departmentAdmOffice/teacher/teacherPersonalExpectationsManagement/editTeacherPersonalExpectationsVisualizationPeriod.jsp"/>
 	</definition>
-    
+	
+	<!-- Teacher Personal Expectations Evaluation Period -->
+	<definition name="show-teacher-personal-expectations-evaluation-period" extends="departmentAdmOffice.masterPage">
+		<put name="body" value="/departmentAdmOffice/teacher/teacherPersonalExpectationsManagement/showTeacherPersonalExpectationsEvaluationPeriod.jsp"/>
+	</definition>
+	<definition name="edit-teacher-personal-expectations-evaluation-period" extends="departmentAdmOffice.masterPage">
+		<put name="body" value="/departmentAdmOffice/teacher/teacherPersonalExpectationsManagement/editTeacherPersonalExpectationsEvaluationPeriod.jsp"/>
+	</definition>
+	    
    	<!-- See Teacher Personal Expectations List -->
 	<definition name="list-teacher-personal-expectations" extends="departmentAdmOffice.masterPage">
 		<put name="body" value="/departmentAdmOffice/teacher/teacherPersonalExpectationsManagement/listTeacherPersonalExpectations.jsp"/>
@@ -462,5 +470,13 @@
 	<definition name="see-teacher-personal-expectations-by-year" extends="departmentAdmOffice.masterPage">
 		<put name="body" value="/departmentAdmOffice/teacher/teacherPersonalExpectationsManagement/seeTeacherPersonalExpectations.jsp"/>
 	</definition>
+
+   	<!-- List Expectations Evaluation Groups -->
+	<definition name="list-expectations-evaluation-groups" extends="departmentAdmOffice.masterPage">
+		<put name="body" value="/departmentAdmOffice/teacher/teacherPersonalExpectationsManagement/seeExpectationEvaluationGroups.jsp"/>
+	</definition>
+	<definition name="manage-expectation-evaluation-groups" extends="departmentAdmOffice.masterPage">
+		<put name="body" value="/departmentAdmOffice/teacher/teacherPersonalExpectationsManagement/manageExpectationEvaluationGroups.jsp"/>
+	</definition>        
         
 </tiles-definitions>

@@ -33,7 +33,8 @@
 					<th><bean:message key="label.teacher.number" bundle="DEPARTMENT_ADM_OFFICE_RESOURCES"/></th>	
 					<th><bean:message key="label.teacher.category" bundle="DEPARTMENT_ADM_OFFICE_RESOURCES"/></th>				
 					<th><bean:message key="label.teacher.expectation" bundle="DEPARTMENT_ADM_OFFICE_RESOURCES"/></th>				
-					<th><bean:message key="label.teacher.auto.evaluation" bundle="DEPARTMENT_ADM_OFFICE_RESOURCES"/></th>				
+					<th><bean:message key="label.teacher.auto.evaluation" bundle="DEPARTMENT_ADM_OFFICE_RESOURCES"/></th>
+					<th><bean:message key="label.teacher.evaluation" bundle="DEPARTMENT_ADM_OFFICE_RESOURCES"/></th>				
 				</tr>
 				<logic:iterate id="mapEntry" name="teachersPersonalExpectations">		
 					<bean:define id="teacher" name="mapEntry" property="key" type="net.sourceforge.fenixedu.domain.Teacher"/>				
@@ -77,6 +78,19 @@
 									<bean:message key="label.no" bundle="DEPARTMENT_ADM_OFFICE_RESOURCES"/>
 								</logic:empty>	
 							</logic:notEmpty>
+						</td>
+						<td class="acenter">
+							<logic:empty name="mapEntry" property="value">
+								<bean:message key="label.no" bundle="DEPARTMENT_ADM_OFFICE_RESOURCES"/>
+							</logic:empty>
+							<logic:notEmpty name="mapEntry" property="value">
+								<logic:notEmpty name="mapEntry" property="value.tutorComment">
+									<bean:message key="label.yes" bundle="DEPARTMENT_ADM_OFFICE_RESOURCES"/>
+								</logic:notEmpty>
+								<logic:empty name="mapEntry" property="value.tutorComment">
+									<bean:message key="label.no" bundle="DEPARTMENT_ADM_OFFICE_RESOURCES"/>
+								</logic:empty>	
+							</logic:notEmpty>						
 						</td>
 					</tr>																							
 				</logic:iterate>			

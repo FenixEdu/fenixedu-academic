@@ -3616,25 +3616,30 @@ class net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation extends
     Integer keyExecutionYear;
 }
 
-class net.sourceforge.fenixedu.domain.TeacherExpectationDefinitionPeriod extends net.sourceforge.fenixedu.domain.DomainObject {         
+class net.sourceforge.fenixedu.domain.TeacherPersonalExpectationPeriod extends net.sourceforge.fenixedu.domain.DomainObject {         
 	YearMonthDay startDateYearMonthDay;
 	YearMonthDay endDateYearMonthDay;
     Integer keyDepartment;
     Integer keyExecutionYear;
+	String ojbConcreteClass;
 }
 
-class net.sourceforge.fenixedu.domain.TeacherAutoEvaluationDefinitionPeriod extends net.sourceforge.fenixedu.domain.DomainObject {         
-	YearMonthDay startDateYearMonthDay;
-	YearMonthDay endDateYearMonthDay;
-    Integer keyDepartment;
-    Integer keyExecutionYear;
-}
+	class net.sourceforge.fenixedu.domain.TeacherExpectationDefinitionPeriod extends net.sourceforge.fenixedu.domain.TeacherPersonalExpectationPeriod {         
+	}
+	
+	class net.sourceforge.fenixedu.domain.TeacherAutoEvaluationDefinitionPeriod extends net.sourceforge.fenixedu.domain.TeacherPersonalExpectationPeriod {         
+	}
+	
+	class net.sourceforge.fenixedu.domain.TeacherPersonalExpectationsVisualizationPeriod extends net.sourceforge.fenixedu.domain.TeacherPersonalExpectationPeriod {         
+	}
+	
+	class net.sourceforge.fenixedu.domain.TeacherPersonalExpectationsEvaluationPeriod extends net.sourceforge.fenixedu.domain.TeacherPersonalExpectationPeriod {         
+	}
 
-class net.sourceforge.fenixedu.domain.TeacherPersonalExpectationsVisualizationPeriod extends net.sourceforge.fenixedu.domain.DomainObject {         
-	YearMonthDay startDateYearMonthDay;
-	YearMonthDay endDateYearMonthDay;
-    Integer keyDepartment;
-    Integer keyExecutionYear;
+class net.sourceforge.fenixedu.domain.ExpectationEvaluationGroup extends net.sourceforge.fenixedu.domain.DomainObject {         
+	Integer keyAppraiser;
+	Integer keyEvaluated;
+	Integer keyExecutionYear;	
 }
 
 class net.sourceforge.fenixedu.domain.assiduousness.Assiduousness extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -8070,43 +8075,15 @@ relation FunctionParentInherentFunction {
 	net.sourceforge.fenixedu.domain.organizationalStructure.Function playsRole parentInherentFunction;
 }
 
-relation TeacherExpectationDefinitionPeriodExecutionYear {
-	net.sourceforge.fenixedu.domain.TeacherExpectationDefinitionPeriod playsRole teacherExpectationDefinitionPeriods  {
+relation TeacherPersonalExpectationPeriodExecutionYear {
+	net.sourceforge.fenixedu.domain.TeacherPersonalExpectationPeriod playsRole teacherPersonalExpectationPeriods  {
     	multiplicity *;
     }
 	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
 }
 
-relation TeacherAutoEvaluationDefinitionPeriodExecutionYear {
-	net.sourceforge.fenixedu.domain.TeacherAutoEvaluationDefinitionPeriod playsRole teacherAutoEvaluationDefinitionPeriods  {
-    	multiplicity *;
-    }
-	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
-}
-
-relation TeacherExpectationDefinitionPeriodDepartment {
-	net.sourceforge.fenixedu.domain.TeacherExpectationDefinitionPeriod playsRole teacherExpectationDefinitionPeriods  {
-    	multiplicity *;
-    }
-    net.sourceforge.fenixedu.domain.Department playsRole department;
-}
-
-relation TeacherAutoEvaluationDefinitionPeriodDepartment {
-	net.sourceforge.fenixedu.domain.TeacherAutoEvaluationDefinitionPeriod playsRole teacherAutoEvaluationDefinitionPeriods  {
-    	multiplicity *;
-    }
-    net.sourceforge.fenixedu.domain.Department playsRole department;
-}
-
-relation TeacherPersonalExpectationsVisualizationPeriodExecutionYear {
-	net.sourceforge.fenixedu.domain.TeacherPersonalExpectationsVisualizationPeriod playsRole teacherPersonalExpectationsVisualizationPeriods  {
-    	multiplicity *;
-    }
-	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
-}
-
-relation TeacherPersonalExpectationsVisualizationPeriodDepartment {
-	net.sourceforge.fenixedu.domain.TeacherPersonalExpectationsVisualizationPeriod playsRole teacherPersonalExpectationsVisualizationPeriods  {
+relation TeacherPersonalExpectationPeriodDepartment {
+	net.sourceforge.fenixedu.domain.TeacherPersonalExpectationPeriod playsRole teacherPersonalExpectationPeriods  {
     	multiplicity *;
     }
     net.sourceforge.fenixedu.domain.Department playsRole department;
@@ -9546,23 +9523,9 @@ relation RootDomainObjectCreditsInScientificArea {
 	}
 }
 
-relation RootDomainObjectTeacherAutoEvaluationDefinitionPeriod {
+relation RootDomainObjectTeacherPersonalExpectationPeriod {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.TeacherAutoEvaluationDefinitionPeriod playsRole teacherAutoEvaluationDefinitionPeriods {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectTeacherPersonalExpectationsVisualizationPeriod {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.TeacherPersonalExpectationsVisualizationPeriod playsRole teacherPersonalExpectationsVisualizationPeriods {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectTeacherExpectationDefinitionPeriod {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.TeacherExpectationDefinitionPeriod playsRole teacherExpectationDefinitionPeriods {
+	net.sourceforge.fenixedu.domain.TeacherPersonalExpectationPeriod playsRole teacherPersonalExpectationPeriods {
 		multiplicity *;
 	}
 }
@@ -12080,4 +12043,32 @@ relation ExternalRegistrationDataInstitution {
 relation ExternalRegistrationDataRegistration {
 	net.sourceforge.fenixedu.domain.student.ExternalRegistrationData playsRole externalRegistrationData;
 	net.sourceforge.fenixedu.domain.student.Registration playsRole registration;
+}
+
+relation RootDomainObjectExpectationEvaluationGroup {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.ExpectationEvaluationGroup playsRole expectationEvaluationGroups {
+		multiplicity *;
+	}
+}
+
+relation ExpectationEvaluationGroupExecutionYear {
+	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
+	net.sourceforge.fenixedu.domain.ExpectationEvaluationGroup playsRole expectationEvaluationGroups {
+		multiplicity *;
+	}
+}
+
+relation ExpectationEvaluationGroupAppraiserTeacher {
+	net.sourceforge.fenixedu.domain.Teacher playsRole appraiser;
+	net.sourceforge.fenixedu.domain.ExpectationEvaluationGroup playsRole evaluatedExpectationEvaluationGroups {
+		multiplicity *;
+	}
+}
+
+relation ExpectationEvaluationGroupEvaluatedTeacher {
+	net.sourceforge.fenixedu.domain.Teacher playsRole evaluated;
+	net.sourceforge.fenixedu.domain.ExpectationEvaluationGroup playsRole appraiserExpectationEvaluationGroups {
+		multiplicity *;
+	}
 }

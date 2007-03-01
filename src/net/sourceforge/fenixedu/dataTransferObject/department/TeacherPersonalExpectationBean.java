@@ -91,8 +91,7 @@ public class TeacherPersonalExpectationBean implements Serializable {
     }
 
     public void setExecutionYear(ExecutionYear executionYear) {
-	this.executionYearReference = (executionYear != null) ? new DomainReference<ExecutionYear>(
-		executionYear) : null;
+	this.executionYearReference = (executionYear != null) ? new DomainReference<ExecutionYear>(executionYear) : null;
     }
     
     public Teacher getTeacher() {

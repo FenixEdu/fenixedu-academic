@@ -417,10 +417,19 @@
 </schema>
 
 <schema name="EditProfessionalActivitiesMainFocusExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
-	<slot name="professionalActivityMainFocus" key="label.personalExpectationsManagement.mainFocus" layout="rich-text">
+	<slot name="professionalActivityMainFocus" key="label.personalExpectationsManagement.mainFocus" layout="rich-text">		
    		<property name="safe" value="true" />
    		<property name="columns" value="50"/>
    		<property name="rows" value="10"/>
    		<property name="config" value="intermediate-fun" />
    	</slot>		
+</schema>
+
+<schema name="editExpectationEvaluation" type="net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation" bundle="DEPARTMENT_MEMBER_RESOURCES">
+	<slot name="tutorComment" layout="rich-text" key="label.expectation.evaluation " validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="safe" value="true" />
+   		<property name="columns" value="50"/>
+   		<property name="rows" value="10"/>
+   		<property name="config" value="intermediate-fun" />
+   	</slot>
 </schema>

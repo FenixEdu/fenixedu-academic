@@ -11501,5 +11501,23 @@
         	<chain name="DepartmentMemberOrTeacherAuthorization"></chain>
         </filterChains>     
     </service>
+	<service>
+    	<name>CreateExpectationEvaluationGroup</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice.CreateExpectationEvaluationGroup</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="DepartmentAdministrativeOfficeAuthorization"></chain>
+        </filterChains>     
+    </service>	
+	<service>
+    	<name>DeleteExpectationEvaluationGroup</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice.DeleteExpectationEvaluationGroup</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="DepartmentAdministrativeOfficeAuthorization"></chain>
+        </filterChains>     
+    </service>
 	
 </serviceDefinitions>

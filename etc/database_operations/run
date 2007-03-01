@@ -27,3 +27,6 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Create ExpectationEvaluationGroup Table" createTableExpectationEvaluationGroup.sql
+executeWithTempFile "Move TeacherPersonalExpectations Old Periods To Unique Table" moveExpectationsPeriodsToNewTable.sql
+execute "Drop TeacherPersonalExpectations Old Periods tables" removeOldPeriodsTables.sql

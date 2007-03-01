@@ -63,6 +63,11 @@
 						</html:link>
 					</li>
 					<li>
+						<html:link page="/evaluateExpectations.do?method=chooseTeacher">
+							<bean:message key="label.evaluate.expectations"/>
+						</html:link>
+					</li>
+					<li>
 						<html:link page="/listTeachersPersonalExpectations.do?method=listTeachersPersonalExpectations">
 							<bean:message key="label.see.teachers.personal.expectations"/>
 						</html:link>

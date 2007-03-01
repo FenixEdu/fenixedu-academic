@@ -26,30 +26,35 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.CompetenceCourse -->
 <!-- *************************************************************************************************************** -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.CompetenceCourse" table="COMPETENCE_COURSE">
-	
-	
-	
-	
-    
-   	
-	
-	
-	
-	
-   	
+  	
 </class-descriptor>
 
+
 <!-- Definitions for net.sourceforge.fenixedu.domain.TeacherExpectationDefinitionPeriod -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.TeacherExpectationDefinitionPeriod" table="TEACHER_EXPECTATION_DEFINITION_PERIOD">
+<class-descriptor class="net.sourceforge.fenixedu.domain.TeacherPersonalExpectationPeriod" table="TEACHER_PERSONAL_EXPECTATION_PERIOD">
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.TeacherExpectationDefinitionPeriod"/>	
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.TeacherAutoEvaluationDefinitionPeriod"/>	
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.TeacherPersonalExpectationsVisualizationPeriod"/>	
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.TeacherPersonalExpectationsEvaluationPeriod"/>	
+</class-descriptor>
+
+
+<!-- Definitions for net.sourceforge.fenixedu.domain.TeacherExpectationDefinitionPeriod -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.TeacherExpectationDefinitionPeriod" table="TEACHER_PERSONAL_EXPECTATION_PERIOD">
 		
 </class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.TeacherAutoEvaluationDefinitionPeriod -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.TeacherAutoEvaluationDefinitionPeriod" table="TEACHER_AUTO_EVALUATION_DEFINITION_PERIOD">
+<class-descriptor class="net.sourceforge.fenixedu.domain.TeacherAutoEvaluationDefinitionPeriod" table="TEACHER_PERSONAL_EXPECTATION_PERIOD">
 
 </class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.TeacherPersonalExpectationsVisualizationPeriod -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.TeacherPersonalExpectationsVisualizationPeriod" table="TEACHER_EXPECTATIONS_VISUALIZATION_PERIOD">
+<class-descriptor class="net.sourceforge.fenixedu.domain.TeacherPersonalExpectationsVisualizationPeriod" table="TEACHER_PERSONAL_EXPECTATION_PERIOD">
+
+</class-descriptor>
+
+<!-- Definitions for net.sourceforge.fenixedu.domain.TeacherPersonalExpectationsVisualizationPeriod -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.TeacherPersonalExpectationsEvaluationPeriod" table="TEACHER_PERSONAL_EXPECTATION_PERIOD">
 
 </class-descriptor>

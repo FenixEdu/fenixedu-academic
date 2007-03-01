@@ -537,6 +537,9 @@ Documentation:
     <!--@ The layout username-as-person allows you to insert a person given a username -->
     <renderer mode="input" type="net.sourceforge.fenixedu.domain.Person" layout="username-as-person" class="net.sourceforge.fenixedu.presentationTier.renderers.PersonUsernameStringInputRenderer"/>
 
+    <!--@ The layout username-as-person allows you to insert a person given a username -->
+    <renderer mode="input" type="net.sourceforge.fenixedu.domain.Teacher" layout="teacherNumber-as-teacher" class="net.sourceforge.fenixedu.presentationTier.renderers.TeacherNumberStringInputRenderer"/>
+
 	<!--@ The layout extensionNumber-as-extension allows you to insert a Extension given a Extension Number -->
     <renderer mode="input" type="net.sourceforge.fenixedu.domain.material.Material" layout="extensionNumber-as-extension" class="net.sourceforge.fenixedu.presentationTier.renderers.ExtensionNumberStringInputRenderer"/>
 

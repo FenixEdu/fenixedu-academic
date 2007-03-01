@@ -237,5 +237,13 @@
 	<definition name="see-teacher-personal-expectations-by-year" extends="departmentMember.masterPage">
 		<put name="body" value="/departmentMember/expectationManagement/seeTeacherPersonalExpectations.jsp"/>
 	</definition>
+	
+	<!-- Expectations Evaluation -->
+	<definition name="choose-teacher-to-evaluate-expectation" extends="departmentMember.masterPage">
+		<put name="body" value="/departmentMember/expectationManagement/listTeachersToEvaluateExpectation.jsp"/>
+	</definition>
+	<definition name="prepare-edit-evaluation-of-expectation" extends="departmentMember.masterPage">
+		<put name="body" value="/departmentMember/expectationManagement/editExpectationEvaluation.jsp"/>
+	</definition>
 
 </tiles-definitions>
