@@ -3690,6 +3690,7 @@ class net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedMonth ext
 	Duration saturdayBalance;
 	Duration sundayBalance;
 	Duration holidayBalance;
+	Duration balanceToDiscount;
 	Double vacations;
 	Double tolerance;
 	Double article17;

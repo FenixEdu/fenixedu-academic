@@ -30,3 +30,4 @@ function executeWithTempFile() {
 execute "Create ExpectationEvaluationGroup Table" createTableExpectationEvaluationGroup.sql
 executeWithTempFile "Move TeacherPersonalExpectations Old Periods To Unique Table" moveExpectationsPeriodsToNewTable.sql
 execute "Drop TeacherPersonalExpectations Old Periods tables" removeOldPeriodsTables.sql
+execute "alter table AssiduousnessClosedMonth" alterTableAssiduousnessClosedMonth.sql
