@@ -32,3 +32,6 @@ executeWithTempFile "Move TeacherPersonalExpectations Old Periods To Unique Tabl
 execute "Drop TeacherPersonalExpectations Old Periods tables" removeOldPeriodsTables.sql
 execute "alter table AssiduousnessClosedMonth" alterTableAssiduousnessClosedMonth.sql
 execute "Fixing DFA candidacy Posting Rules" FixDFACandidacyPostingRules.sql
+
+execute "Create email table" createEmailTable.sql
+execute "Alter Table WorkScheduleType" alterTableWorkScheduleType.sql

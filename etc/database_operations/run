@@ -27,5 +27,3 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Create email table" createEmailTable.sql
-execute "Alter Table WorkScheduleType" alterTableWorkScheduleType.sql
