@@ -22,6 +22,7 @@
 	
 	<%-- ****** Education Expectations ****** --%>
 	
+
 	<div class="infoop2">
 		<p><bean:message key="label.personalExpectationsManagement.message.generalInformationTitle" bundle="DEPARTMENT_MEMBER_RESOURCES"/>:</p>
 		<p><bean:message key="label.personalExpectationsManagement.message.generalInformationDescription" bundle="DEPARTMENT_MEMBER_RESOURCES"/></p>
@@ -42,7 +43,7 @@
 					<fr:message for="teacherPersonalExpectationWithGraduations" show="message"/>
 				</span></p>
 			</fr:hasMessages>
-			
+
 			<p class="mbottom05"><strong><bean:message key="label.personalExpectationsManagement.graduations" bundle="DEPARTMENT_MEMBER_RESOURCES"/></strong></p>
 			<fr:edit id="teacherPersonalExpectationWithGraduations" name="teacherPersonalExpectationBean" schema="FillGraduationExpectations">
 				<fr:layout name="tabular">
@@ -50,7 +51,6 @@
 					<fr:property name="columnClasses" value="width14em,,tdclear tderror1"/>					
 				</fr:layout>		
 			</fr:edit>			
-			
 			
 			<%-- Cientific Pos-Graduations --%>
 			<fr:hasMessages for="teacherPersonalExpectationWithCientificPosGraduations" type="conversion">
@@ -125,7 +125,7 @@
 				
 			<fr:form action="/personalExpectationManagement.do"> 
 				<html:hidden property="method" value="editEducationExpectations"/>
-					
+								
 				<%-- Graduations --%>								
 				<fr:hasMessages for="teacherPersonalExpectationWithGraduations" type="conversion">
 					<p><span class="error0">			
@@ -138,6 +138,7 @@
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle5 thlight thright mtop05"/>
 						<fr:property name="columnClasses" value="width14em,,tdclear tderror1"/>
+						<fr:property name="" value=""/>
 					</fr:layout>		
 				</fr:edit>			
 				
@@ -198,10 +199,14 @@
 					</fr:layout>		
 				</fr:edit>			
 				
-				<html:submit><bean:message key="button.submit" bundle="DEPARTMENT_MEMBER_RESOURCES"/></html:submit>
-				<html:submit onclick="this.form.method.value='viewTeacherPersonalExpectations';this.form.submit();">
-					<bean:message key="button.cancel" bundle="DEPARTMENT_MEMBER_RESOURCES"/>
-				</html:submit>	
+				<p class="smalltxt"><em><bean:message key="message.requiredField" bundle="DEPARTMENT_MEMBER_RESOURCES" /></em></p>
+				
+				<p>
+					<html:submit><bean:message key="button.submit" bundle="DEPARTMENT_MEMBER_RESOURCES"/></html:submit>
+					<html:submit onclick="this.form.method.value='viewTeacherPersonalExpectations';this.form.submit();">
+						<bean:message key="button.cancel" bundle="DEPARTMENT_MEMBER_RESOURCES"/>
+					</html:submit>	
+				<p>
 				
 			</fr:form>				
 		

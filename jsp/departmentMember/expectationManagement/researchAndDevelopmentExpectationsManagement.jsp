@@ -149,12 +149,16 @@
 						<fr:property name="classes" value="tstyle5 thlight thright mtop05"/>
 						<fr:property name="columnClasses" value="width14em,,tdclear tderror1"/>
 					</fr:layout>
-				</fr:edit>			
-			
-				<html:submit><bean:message key="button.submit" bundle="DEPARTMENT_MEMBER_RESOURCES"/></html:submit>
-				<html:submit onclick="this.form.method.value='viewTeacherPersonalExpectations';this.form.submit();">
-					<bean:message key="button.cancel" bundle="DEPARTMENT_MEMBER_RESOURCES"/>
-				</html:submit>	
+				</fr:edit>
+				
+				<p class="smalltxt"><em><bean:message key="message.requiredField" bundle="DEPARTMENT_MEMBER_RESOURCES" /></em></p>
+				
+				<p>
+					<html:submit><bean:message key="button.submit" bundle="DEPARTMENT_MEMBER_RESOURCES"/></html:submit>
+					<html:submit onclick="this.form.method.value='viewTeacherPersonalExpectations';this.form.submit();">
+						<bean:message key="button.cancel" bundle="DEPARTMENT_MEMBER_RESOURCES"/>
+					</html:submit>	
+				</p>
 				
 			</fr:form>	
 	
