@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.assiduousness.util.DateInterval;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.Month;
+import net.sourceforge.fenixedu.util.WeekDay;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.DateTime;
@@ -129,7 +130,7 @@ public class Schedule extends Schedule_Base {
                 .getEmployeeWorkWeekScheduleList()) {
             WorkWeek workWeek = workWeekScheduleBean.getWorkWeekByCheckedBox();
             if (workWeek != null) {
-                adjustExistingWorkSchedules(workWeek, workWeekScheduleBean.getWorkWeekNumber());
+                updateWorkSchedules(workWeek, workWeekScheduleBean.getWorkWeekNumber());
             }
         }
         setBeginDate(employeeScheduleFactory.getBeginDate());
@@ -184,8 +185,8 @@ public class Schedule extends Schedule_Base {
             if (getBeginDate().isBefore(employeeScheduleFactory.getBeginDate())
                     && getAssiduousness().hasAnyRecordsBetweenDates(getBeginDate(),
                             employeeScheduleFactory.getBeginDate())) {
-                return closeScheduleAndMakeNew(employeeScheduleFactory, employeeScheduleFactory.getBeginDate()
-                        .minusDays(1), false);
+                return closeScheduleAndMakeNew(employeeScheduleFactory, employeeScheduleFactory
+                        .getBeginDate().minusDays(1), false);
             } else {
                 if (employeeScheduleFactory.isDifferencesInDates()
                         && !employeeScheduleFactory.isDifferencesInWorkSchedules()) {
@@ -220,7 +221,7 @@ public class Schedule extends Schedule_Base {
             WorkWeek workWeek = workWeekScheduleBean.getWorkWeekByCheckedBox();
             if (workWeek != null) {
                 int workWeekNumber = workWeekScheduleBean.getWorkWeekNumber();
-                adjustExistingWorkSchedules(workWeek, workWeekNumber);
+                updateWorkSchedules(workWeek, workWeekNumber);
                 Periodicity periodicity = getPeriodicity(workWeekNumber);
                 WorkSchedule workSchedule = getWorkSchedule(employeeScheduleFactory
                         .getChoosenWorkSchedule(), workWeek, periodicity);
@@ -245,20 +246,30 @@ public class Schedule extends Schedule_Base {
         return new WorkSchedule(choosenWorkSchedule, workWeek, periodicity);
     }
 
-    private void adjustExistingWorkSchedules(WorkWeek workWeek, Integer weekNumber) {
+    private void updateWorkSchedules(WorkWeek workWeek, Integer weekNumber) {
         List<WorkSchedule> workScheduleToRemove = new ArrayList<WorkSchedule>();
         for (WorkSchedule workSchedule : getWorkSchedules()) {
             if (workSchedule.getPeriodicity().getWorkWeekNumber().equals(weekNumber)) {
-                workSchedule.getWorkWeek().removeOverLayedDays(workWeek);
-                if (workSchedule.getWorkWeek().getDays().size() == 0) {
+                WorkWeek newWorkWeek = getWorkWeekByRemovingOverLayedDays(workSchedule.getWorkWeek(),
+                        workWeek);
+                if (!workSchedule.getWorkWeek().equals(newWorkWeek)) {
                     workScheduleToRemove.add(workSchedule);
+                    WorkSchedule workScheduleToAdd = getWorkSchedule(workSchedule.getWorkScheduleType(),
+                            newWorkWeek, workSchedule.getPeriodicity());
+                    getWorkSchedules().add(workScheduleToAdd);
                 }
             }
         }
         getWorkSchedules().removeAll(workScheduleToRemove);
-        for (WorkSchedule workSchedule : workScheduleToRemove) {
-            workSchedule.delete();
+        for (; workScheduleToRemove.size() != 0;workScheduleToRemove.get(0).delete());
+    }
+
+    private WorkWeek getWorkWeekByRemovingOverLayedDays(WorkWeek workScheduleWorkWeek, WorkWeek workWeek) {
+        WorkWeek newWorkWeek = new WorkWeek(workScheduleWorkWeek.getDays());
+        for (WeekDay weekDay : workWeek.getDays()) {
+            newWorkWeek.getDays().remove(weekDay);
         }
+        return newWorkWeek;
     }
 
     private boolean isCloseMonthInsideScheduleInterval(ClosedMonth closedMonth) {
@@ -366,7 +377,7 @@ public class Schedule extends Schedule_Base {
     }
 
     public boolean getIsEditable() {
-        ClosedMonth closedMonth = ClosedMonth.getLastMonthClosed();      
+        ClosedMonth closedMonth = ClosedMonth.getLastMonthClosed();
         YearMonthDay beginClosedMonth = new YearMonthDay(closedMonth.getClosedYearMonth().get(
                 DateTimeFieldType.year()), closedMonth.getClosedYearMonth().get(
                 DateTimeFieldType.monthOfYear()), 1);
