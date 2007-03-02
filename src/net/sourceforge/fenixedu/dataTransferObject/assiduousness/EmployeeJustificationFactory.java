@@ -213,7 +213,8 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
     public static class EmployeeJustificationFactoryEditor extends EmployeeJustificationFactory {
 	private DomainReference<Justification> justification;
 
-	public EmployeeJustificationFactoryEditor(Justification justification) {
+	public EmployeeJustificationFactoryEditor(Justification justification, YearMonth yearMonth) {
+	    setYearMonth(yearMonth);
 	    setJustification(justification);
 	    setEmployee(justification.getAssiduousness().getEmployee());
 	    setBeginDate(justification.getDate().toYearMonthDay());
@@ -364,16 +365,18 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
     public static class EmployeeAnulateJustificationFactory extends EmployeeJustificationFactory {
 	private DomainReference<Justification> justification;
 
-	public EmployeeAnulateJustificationFactory(Justification justification, Employee employee) {
+	public EmployeeAnulateJustificationFactory(Justification justification, YearMonth yearMonth,
+		Employee employee) {
 	    setJustification(justification);
 	    setModifiedBy(employee);
+	    setYearMonth(yearMonth);
 	}
 
 	public Object execute() {
 	    if (getJustification().getJustificationMotive().getJustificationType() != null
 		    && getJustification().getJustificationMotive().getJustificationType().equals(
 			    JustificationType.OCCURRENCE)
-		    || getJustificationMotive().getJustificationType().equals(
+		    || getJustification().getJustificationMotive().getJustificationType().equals(
 			    JustificationType.MULTIPLE_MONTH_BALANCE)) {
 		if (isDateIntervalInClosedMonth(getJustification().getDate().toYearMonthDay(),
 			((Leave) getJustification()).getDuration())) {
@@ -697,6 +700,8 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
     }
 
     public void setYearMonth(YearMonth yearMonth) {
+	setYear(yearMonth.getYear().toString());
+	setMonth(yearMonth.getMonth().getName());
 	this.yearMonth = yearMonth;
     }
 
