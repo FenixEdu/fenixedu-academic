@@ -26,6 +26,17 @@
 	
 		<logic:notEmpty name="teachersPersonalExpectations">
 		
+			<p>
+				<html:link page="/listTeachersPersonalExpectations.do?method=exportToExcel" paramId="executionYearId" paramName="executionYearBean" paramProperty="executionYear.idInternal">
+					<html:img border="0" src="<%= request.getContextPath() + "/images/excel.gif"%>" altKey="excel" bundle="IMAGE_RESOURCES" />
+					<bean:message key="link.export.to.excel"/>						
+				</html:link>&nbsp;&nbsp;&nbsp;			
+				<html:link page="/listTeachersPersonalExpectations.do?method=exportToCSV" paramId="executionYearId" paramName="executionYearBean" paramProperty="executionYear.idInternal">
+					<html:img border="0" src="<%= request.getContextPath() + "/images/icon_csv.gif"%>" altKey="excel" bundle="IMAGE_RESOURCES" />
+					<bean:message key="link.export.to.csv"/>						
+				</html:link>
+			</p>
+		
 			<bean:define id="executionYear" name="executionYearBean" property="executionYear" type="net.sourceforge.fenixedu.domain.ExecutionYear"/>
 			<table class="tstyle2 thleft thlight mtop15">			
 				<tr>

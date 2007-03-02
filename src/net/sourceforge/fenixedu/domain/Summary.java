@@ -22,10 +22,7 @@ import org.joda.time.Partial;
 import org.joda.time.YearMonthDay;
 
 /**
- * @author Jo�o Mota
- * @author Susana Fernandes
- * 
- * 21/Jul/2003 fenix-head Dominio
+ * @author Manuel Pinto
  * 
  */
 public class Summary extends Summary_Base {
