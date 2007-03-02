@@ -577,11 +577,6 @@
 	<slot name="isExtraCurricular"/>
 </schema>
 
-<schema name="DismissalBean.CourseGroup" bundle="ACADEMIC_OFFICE_RESOURCES"
-		type="net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup">
-	<slot name="name" key="label.name" />
-</schema>
-
 <schema name="DismissalBean.SelectedCurricularCourse" bundle="ACADEMIC_OFFICE_RESOURCES"
 		type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean$SelectedCurricularCourse">
 	<slot name="curricularCourse.name" key="label.name" />
