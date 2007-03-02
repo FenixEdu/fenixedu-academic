@@ -1415,17 +1415,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return results;
     }
 
-    public List<Enrolment> getActiveEnrolments(final CurricularCourse curricularCourse) {
-	return (List<Enrolment>) CollectionUtils.select(getEnrolments(curricularCourse),
-		new Predicate() {
-		    public boolean evaluate(Object arg0) {
-			Enrolment enrollment = (Enrolment) arg0;
-
-			return !enrollment.isAnnulled() && !enrollment.isTemporarilyEnroled();
-		    }
-		});
-    }
-
     public int countEnrolmentsByCurricularCourse(final CurricularCourse curricularCourse) {
 	int count = 0;
 	for (Enrolment enrolment : this.getEnrolments()) {

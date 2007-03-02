@@ -123,8 +123,7 @@ public class CourseStatistics extends FenixBackingBean {
     }
 
     private void loadCompetenceCourses() throws FenixFilterException, FenixServiceException {
-        Integer departmentID = getUserView().getPerson().getTeacher().getLastWorkingDepartment()
-                .getIdInternal();
+        Integer departmentID = getUserView().getPerson().getTeacher().getLastWorkingDepartment().getIdInternal();
         Object args[] = { departmentID, this.getExecutionPeriodId() };
         competenceCourses = (List<CompetenceCourseStatisticsDTO>) ServiceUtils.executeService(
                 getUserView(), "ComputeCompetenceCourseStatistics", args);

@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.domain.log.EnrolmentLog;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.util.EnrolmentAction;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
@@ -671,14 +672,20 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     public Boolean isFirstTime() {
-	List<Enrolment> enrollments = getStudentCurricularPlan().getActiveEnrolments(
-		getCurricularCourse());
-	for (Enrolment enrollment : enrollments) {
-	    if (enrollment.getExecutionPeriod().isBefore(this.getExecutionPeriod())) {
-		return Boolean.FALSE;
+	final CurricularCourse curricularCourse = getCurricularCourse();
+	final ExecutionPeriod executionPeriod = getExecutionPeriod();
+	for (final Enrolment enrolment : getStudentCurricularPlan().getEnrolmentsSet()) {
+	    if (curricularCourse == enrolment.getCurricularCourse() && enrolment.isActive()) {
+		if (enrolment.getExecutionPeriod().isBefore(executionPeriod)) {
+		    return Boolean.FALSE;
+		}
 	    }
 	}
 	return Boolean.TRUE;
+    }
+
+    private boolean isActive() {
+	return !isAnnulled() && !isTemporarilyEnroled();
     }
 
     public int getNumberOfTotalEnrolmentsInThisCourse() {

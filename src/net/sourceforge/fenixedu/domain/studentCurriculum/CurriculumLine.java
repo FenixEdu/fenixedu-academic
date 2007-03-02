@@ -44,10 +44,6 @@ public abstract class CurriculumLine extends CurriculumLine_Base {
         return hasCurriculumGroup() ? getCurriculumGroup().getStudentCurricularPlan() : null; 
     }
 
-    public boolean isEnrolment() {
-	return false;
-    }
-    
     @Override
     public boolean isAproved(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod) {
         return false;

@@ -52,6 +52,10 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
     
     public abstract boolean isRoot();
 
+    public boolean isEnrolment() {
+	return false;
+    }
+
     public abstract StringBuilder print(String tabs);
     
     public abstract List<Enrolment> getEnrolments();
