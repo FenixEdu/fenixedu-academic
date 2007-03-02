@@ -13,6 +13,8 @@ import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
+import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
+import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 
@@ -203,13 +205,35 @@ public abstract class DegreeModule extends DegreeModule_Base {
 	return true;
     }
     
-    public abstract Double getEctsCredits(final ExecutionPeriod executionPeriod);
-    public abstract void print(StringBuilder stringBuffer, String tabs, Context previousContext);
-    public abstract boolean isLeaf();
-    public abstract boolean isRoot();
-    public abstract DegreeCurricularPlan getParentDegreeCurricularPlan();
+    public List<ICurricularRule> getCurricularRule(final CurricularRuleType ruleType, final ExecutionPeriod executionPeriod) {
+	final List<ICurricularRule> result = new ArrayList<ICurricularRule>();
+	for (final ICurricularRule curricularRule : getCurricularRules(executionPeriod)) {
+	    if (curricularRule.getCurricularRuleType() == ruleType) {
+		result.add(curricularRule);
+	    }
+	}
+	return result;
+    }
+
+    public Double getMaxEctsCredits() {
+	return getMaxEctsCredits(ExecutionPeriod.readActualExecutionPeriod());
+    }
     
-    protected abstract void checkContextsFor(final CourseGroup parentCourseGroup, final CurricularPeriod curricularPeriod, final Context context);
-    protected abstract void addOwnPartipatingCurricularRules(final List<CurricularRule> result);
-    protected abstract void checkOwnRestrictions(final CourseGroup parentCourseGroup, final CurricularPeriod curricularPeriod);
+    public Double getMinEctsCredits() {
+	return getMinEctsCredits(ExecutionPeriod.readActualExecutionPeriod());
+    }
+    
+    abstract public DegreeCurricularPlan getParentDegreeCurricularPlan();
+    abstract public void print(StringBuilder stringBuffer, String tabs, Context previousContext);
+    abstract public boolean isLeaf();
+    abstract public boolean isRoot();
+
+    abstract public Double getMaxEctsCredits(final ExecutionPeriod executionPeriod);
+    abstract public Double getMinEctsCredits(final ExecutionPeriod executionPeriod);
+    abstract protected Double countAllMaxEctsCredits(final ExecutionPeriod executionPeriod);
+    abstract protected Double countAllMinEctsCredits(final ExecutionPeriod executionPeriod);
+    
+    abstract protected void checkContextsFor(final CourseGroup parentCourseGroup, final CurricularPeriod curricularPeriod, final Context context);
+    abstract protected void addOwnPartipatingCurricularRules(final List<CurricularRule> result);
+    abstract protected void checkOwnRestrictions(final CourseGroup parentCourseGroup, final CurricularPeriod curricularPeriod);
 }

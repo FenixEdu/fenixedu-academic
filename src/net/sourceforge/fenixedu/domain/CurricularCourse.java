@@ -1101,6 +1101,26 @@ public class CurricularCourse extends CurricularCourse_Base {
 	}
 	return result;
     }
+    
+    @Override
+    public Double getMaxEctsCredits(final ExecutionPeriod executionPeriod) {
+        return getEctsCredits(executionPeriod);
+    }
+    
+    @Override
+    public Double getMinEctsCredits(final ExecutionPeriod executionPeriod) {
+        return getEctsCredits(executionPeriod);
+    }
+    
+    @Override
+    protected Double countAllMinEctsCredits(final ExecutionPeriod executionPeriod) {
+        return getEctsCredits(executionPeriod);
+    }
+    
+    @Override
+    protected Double countAllMaxEctsCredits(final ExecutionPeriod executionPeriod) {
+        return getEctsCredits(executionPeriod);
+    }
 
     @Override
     public Double getWeigth() {

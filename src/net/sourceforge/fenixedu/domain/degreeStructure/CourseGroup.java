@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -13,12 +14,16 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
+import net.sourceforge.fenixedu.domain.curricularRules.CreditsLimit;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
 import net.sourceforge.fenixedu.domain.curricularRules.DegreeModulesSelectionLimit;
+import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.StringFormatter;
+
+import org.apache.commons.collections.comparators.ReverseComparator;
 
 public class CourseGroup extends CourseGroup_Base {
 
@@ -174,17 +179,6 @@ public class CourseGroup extends CourseGroup_Base {
 	    ExecutionYear executionYear) {
 	List<Context> result = this.getChildContexts(CourseGroup.class, executionYear);
 	Collections.sort(result);
-	return result;
-    }
-
-    @Override
-    public Double getEctsCredits(final ExecutionPeriod executionPeriod) {
-	double result = 0.0;
-
-	for (Context context : this.getChildContexts()) {
-	    result += context.getChildDegreeModule().getEctsCredits(executionPeriod);
-	}
-
 	return result;
     }
 
@@ -412,5 +406,110 @@ public class CourseGroup extends CourseGroup_Base {
 	}
 	return result;
     }
+    
+    public Set<DegreeModule> getOpenChildDegreeModulesByExecutionPeriod(final ExecutionPeriod executionPeriod) {
+	final Set<DegreeModule> result = new HashSet<DegreeModule>();
+	for (final Context context : getChildContexts()) {
+	    if (context.isOpen(executionPeriod)) {
+		result.add(context.getChildDegreeModule());
+	    }
+	}
+	return result;
+    }
+    
+    @Override
+    public Double getMaxEctsCredits(final ExecutionPeriod executionPeriod) {
+	final CreditsLimit creditsLimit = getCreditsLimitRule(executionPeriod);
+	if (creditsLimit != null) {
+	    return creditsLimit.getMaximumCredits();
+	}
+	final DegreeModulesSelectionLimit modulesSelectionLimit = getDegreeModulesSelectionLimitRule(executionPeriod);
+	if (modulesSelectionLimit != null) {
+	    final Collection<DegreeModule> modulesByExecutionPeriod = getOpenChildDegreeModulesByExecutionPeriod(executionPeriod);
+	    if (modulesSelectionLimit.getMaximumLimit().intValue() != modulesByExecutionPeriod.size()) {
+		return countMaxEctsCredits(modulesByExecutionPeriod, executionPeriod, modulesSelectionLimit.getMaximumLimit());
+	    }
+	}
+        return countAllMaxEctsCredits(executionPeriod);
+    }
 
+    private Double countMaxEctsCredits(final Collection<DegreeModule> modulesByExecutionPeriod,
+	    final ExecutionPeriod executionPeriod, final Integer maximumLimit) {
+	
+	final List<Double> ectsCredits = new ArrayList<Double>(modulesByExecutionPeriod.size());
+	for (final DegreeModule degreeModule : modulesByExecutionPeriod) {
+	    ectsCredits.add(degreeModule.getMaxEctsCredits(executionPeriod));
+	}
+	Collections.sort(ectsCredits, new ReverseComparator());
+	
+	double result = 0d;
+	int limit = maximumLimit.intValue();
+	final Iterator<Double> ectsCreditsIter = ectsCredits.iterator();
+	for (; ectsCreditsIter.hasNext() && limit > 0; limit--) {
+	    result += ectsCreditsIter.next().doubleValue();
+	}
+	return Double.valueOf(result);
+    }
+
+    @Override
+    protected Double countAllMaxEctsCredits(final ExecutionPeriod executionPeriod) {
+	double result = 0d;
+	for (final DegreeModule degreeModule : getOpenChildDegreeModulesByExecutionPeriod(executionPeriod)) {
+	    result += degreeModule.countAllMaxEctsCredits(executionPeriod);
+	}
+	return result;
+    }
+    
+    @Override
+    protected Double countAllMinEctsCredits(final ExecutionPeriod executionPeriod) {
+	double result = 0d;
+	for (final DegreeModule degreeModule : getOpenChildDegreeModulesByExecutionPeriod(executionPeriod)) {
+	    result += degreeModule.countAllMinEctsCredits(executionPeriod);
+	}
+	return result;
+    }
+    
+    @Override
+    public Double getMinEctsCredits(final ExecutionPeriod executionPeriod) {
+	final CreditsLimit creditsLimit = getCreditsLimitRule(executionPeriod);
+	if (creditsLimit != null) {
+	    return creditsLimit.getMinimumCredits();
+	}
+	final DegreeModulesSelectionLimit modulesSelectionLimit = getDegreeModulesSelectionLimitRule(executionPeriod);
+	if (modulesSelectionLimit != null) {
+	    final Collection<DegreeModule> modulesByExecutionPeriod = getOpenChildDegreeModulesByExecutionPeriod(executionPeriod);
+	    if (modulesSelectionLimit.getMinimumLimit().intValue() != modulesByExecutionPeriod.size()) {
+		return countMinEctsCredits(modulesByExecutionPeriod, executionPeriod, modulesSelectionLimit.getMinimumLimit());
+	    }
+	}
+        return countAllMinEctsCredits(executionPeriod);
+    }
+    
+    private Double countMinEctsCredits(final Collection<DegreeModule> modulesByExecutionPeriod,
+	    final ExecutionPeriod executionPeriod, final Integer minimumLimit) {
+	
+	final List<Double> ectsCredits = new ArrayList<Double>(modulesByExecutionPeriod.size());
+	for (final DegreeModule degreeModule : modulesByExecutionPeriod) {
+	    ectsCredits.add(degreeModule.getMinEctsCredits(executionPeriod));
+	}
+	Collections.sort(ectsCredits);
+	
+	double result = 0d;
+	int limit = minimumLimit.intValue();
+	final Iterator<Double> ectsCreditsIter = ectsCredits.iterator();
+	for (; ectsCreditsIter.hasNext() && limit > 0; limit--) {
+	    result += ectsCreditsIter.next().doubleValue();
+	}
+	return Double.valueOf(result);
+    }
+    
+    private CreditsLimit getCreditsLimitRule(final ExecutionPeriod executionPeriod) {
+	final List<ICurricularRule> result = getCurricularRule(CurricularRuleType.CREDITS_LIMIT, executionPeriod);
+	return result.isEmpty() ? null : (CreditsLimit) result.get(0); 
+    }
+
+    private DegreeModulesSelectionLimit getDegreeModulesSelectionLimitRule(final ExecutionPeriod executionPeriod) {
+	final List<ICurricularRule> result = getCurricularRule(CurricularRuleType.DEGREE_MODULES_SELECTION_LIMIT, executionPeriod);
+	return result.isEmpty() ? null : (DegreeModulesSelectionLimit) result.get(0); 
+    }
 }
