@@ -32,7 +32,7 @@ public class Email extends Email_Base {
     }
 
     public String[] replyTos() {
-	return getToAddresses().toArray();
+	return getReplyTos().toArray();
     }
 
     public Collection<String> toAddresses() {
@@ -40,11 +40,11 @@ public class Email extends Email_Base {
     }
 
     public Collection<String> ccAddresses() {
-	return getToAddresses().toCollection();
+	return getCcAddresses().toCollection();
     }
 
     public Collection<String> bccAddresses() {
-	return getToAddresses().toCollection();
+	return getBccAddresses().toCollection();
     }
 
 }
