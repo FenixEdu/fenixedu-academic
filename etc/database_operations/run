@@ -28,3 +28,4 @@ function executeWithTempFile() {
 }
 
 execute "Create email table" createEmailTable.sql
+execute "Alter Table WorkScheduleType" alterTableWorkScheduleType.sql
