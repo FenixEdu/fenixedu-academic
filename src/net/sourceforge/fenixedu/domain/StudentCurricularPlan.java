@@ -2174,5 +2174,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	}
 	return null;
     }
+    
+    public Double getEctsCreditsForCourseGroup(final CourseGroup courseGroup) {
+	final CurriculumGroup curriculumGroup = findCurriculumGroupFor(courseGroup);
+	return (curriculumGroup == null) ? Double.valueOf(0d) : curriculumGroup.getAprovedEctsCredits();
+    }
 
 }
