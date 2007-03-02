@@ -6,9 +6,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean.SelectedCurricularCourse;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -35,11 +37,37 @@ public class Credits extends Credits_Base {
 	    throw new DomainException("error.credits.wrong.arguments");
 	}
 
+	checkGivenCredits(studentCurricularPlan, courseGroup, credits);
+	
 	setStudentCurricularPlan(studentCurricularPlan);
 	setGivenCredits(credits);
 	addEnrolments(enrolments);
 	
 	Dismissal.createNewDismissal(this, studentCurricularPlan, courseGroup);
+    }
+
+    private void checkGivenCredits(final StudentCurricularPlan studentCurricularPlan, final CourseGroup courseGroup, final Double credits) {
+	if (!allowsEctsCredits(studentCurricularPlan, courseGroup, ExecutionPeriod.readActualExecutionPeriod(), credits.doubleValue())) {
+	    throw new DomainException("error.credits.invalid.credits", credits.toString());
+	}
+    }
+    
+    private boolean allowsEctsCredits(final StudentCurricularPlan studentCurricularPlan, final CourseGroup courseGroup, final ExecutionPeriod executionPeriod, final double ectsCredits) {
+	final double ectsCreditsForCourseGroup = studentCurricularPlan.getEctsCreditsForCourseGroup(courseGroup).doubleValue();
+	if (ectsCredits + ectsCreditsForCourseGroup > courseGroup.getMaxEctsCredits(executionPeriod).doubleValue()) {
+	    return false;
+	}
+	if (courseGroup.isRoot()) {
+	    return true;
+	}
+	for (final Context context : courseGroup.getParentContexts()) {
+	    if (context.isOpen(executionPeriod)) {
+		if (allowsEctsCredits(studentCurricularPlan, context.getParentCourseGroup(), executionPeriod, ectsCredits)) {
+		    return true;
+		}
+	    }
+	}
+	return false;
     }
 
     protected void init(StudentCurricularPlan studentCurricularPlan, Collection<SelectedCurricularCourse> dismissals, Collection<IEnrolment> enrolments) {
