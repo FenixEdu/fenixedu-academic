@@ -25,11 +25,10 @@ import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.util.Email;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.struts.util.MessageResources;
-
-import pt.utl.ist.fenix.tools.smtp.EmailSender;
 
 /**
  * @author asnr and scpo
@@ -114,7 +113,7 @@ public class EditGroupShift extends Service {
             }
             executionCourseNames.append(executionCourse.getNome());
         }
-        EmailSender.send("Fenix System", messages.getMessage("suporte.mail"), emails, null, null,
+        new Email("Fenix System", messages.getMessage("suporte.mail"), null, emails, null, null,
                 messages.getMessage("message.subject.grouping.change"), messages.getMessage(
                         "message.body.grouping.change.shift", registration.getNumber().toString(),
                         studentGroup.getGroupNumber().toString()));

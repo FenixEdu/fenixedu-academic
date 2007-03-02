@@ -16,8 +16,8 @@ import net.sourceforge.fenixedu.domain.messaging.ConversationThread;
 import net.sourceforge.fenixedu.domain.messaging.ExecutionCourseForum;
 import net.sourceforge.fenixedu.domain.messaging.ForumSubscription;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.util.Email;
 import net.sourceforge.fenixedu.util.HtmlToTextConverterUtil;
-import pt.utl.ist.fenix.tools.smtp.EmailSender;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt"> Goncalo Luiz</a><br/> Created
@@ -58,7 +58,7 @@ public abstract class ForumService extends Service {
 	}
 
 	public void run() {
-	    EmailSender.send(this.emailFrom, this.emailFromAddress, this.toAddresses, this.ccAddresses,
+	    new Email(this.emailFrom, this.emailFromAddress, null, this.toAddresses, this.ccAddresses,
 		    this.bccAddresses, this.emailSubject, this.emailBody);
 	}
     }

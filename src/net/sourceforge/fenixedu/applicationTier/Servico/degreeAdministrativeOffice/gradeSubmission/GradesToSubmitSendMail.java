@@ -8,6 +8,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.util.Email;
 import pt.utl.ist.fenix.tools.smtp.EmailSender;
 
 public class GradesToSubmitSendMail extends Service {
@@ -28,7 +29,7 @@ public class GradesToSubmitSendMail extends Service {
 		String[] tokens = cc.split(",");
 		List<String> ccs =  Arrays.asList(tokens);
 		
-		EmailSender.send(null, from, mails, ccs, null, subject, message);
+		new Email(null, from, null, mails, ccs, null, subject, message);
 	}
 
 }

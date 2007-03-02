@@ -10,8 +10,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.util.Email;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import pt.utl.ist.fenix.tools.smtp.EmailSender;
 
 public class ChangeStudentsShift extends Service {
 
@@ -48,7 +48,7 @@ public class ChangeStudentsShift extends Service {
                 : " foi transferida para o turno " + newShift.getNome();
         final String message = messagePrefix + messagePosfix;
         final Person person = Person.readPersonByUsername(userView.getUtilizador());
-        EmailSender.send("GOP", "gop@ist.utl.pt", emptyList, emptyList, toMails, subject, message);
+        new Email("GOP", "gop@ist.utl.pt", null, emptyList, emptyList, toMails, subject, message);
     }
 
     public class UnableToTransferStudentsException extends FenixServiceException {

@@ -20,9 +20,9 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 import net.sourceforge.fenixedu.util.PeriodState;
-import pt.utl.ist.fenix.tools.smtp.EmailSender;
 
 public class SendMailBackingBean extends FenixBackingBean {
 
@@ -42,7 +42,8 @@ public class SendMailBackingBean extends FenixBackingBean {
     private Boolean degreeCoordinators = null;
 
     public void send() throws FenixFilterException, FenixServiceException {
-        EmailSender.send(getFrom(), getFrom(), getToList(), getCCList(), getBCCList(), getSubject(), getMessage());
+	final Object[] args = { getToList(), getCCList(), getBCCList(), getFrom(), getFrom(), getSubject(), getMessage() };
+	ServiceUtils.executeService(null, "commons.SendMail", args);
     }
 
     private List<String> getEmailList(final String emailStrings) {

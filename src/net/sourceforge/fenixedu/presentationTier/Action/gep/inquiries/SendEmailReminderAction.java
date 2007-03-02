@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
@@ -119,7 +121,7 @@ public class SendEmailReminderAction extends FenixDispatchAction {
     private boolean sendEmailReminder(HttpServletRequest request,
 	    InfoStudentWithAttendsAndInquiriesRegistries student,
 	    InfoExecutionPeriod currentExecutionPeriod, InfoInquiriesEmailReminderReport report,
-	    DynaActionForm form, String fromName, String fromAddress) {
+	    DynaActionForm form, String fromName, String fromAddress) throws FenixFilterException, FenixServiceException {
 
 	String emailAddress = student.getInfoPerson().getEmail();
 
@@ -167,10 +169,8 @@ public class SendEmailReminderAction extends FenixDispatchAction {
 	final Collection<String> bccs = new ArrayList<String>(1);
 	bccs.add(emailAddress);
 
-	if (EmailSender.send(fromName, fromAddress, null, null, bccs, subject, body).isEmpty()) {
-	    report.addSentEmails(1);
-	    return true;
-	}
+	final Object[] args = { null, null, bccs, fromName, fromAddress, subject, body };
+	executeService(request, "commons.SendMail", args);
 
 	return false;
     }

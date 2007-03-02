@@ -6,6 +6,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
+import net.sourceforge.fenixedu.domain.util.Email;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
@@ -14,8 +15,6 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.joda.time.DateTime;
-
-import pt.utl.ist.fenix.tools.smtp.EmailSender;
 
 public class CreateConvokes extends Service {
 
@@ -49,7 +48,7 @@ public class CreateConvokes extends Service {
         	
         	String subject = RenderUtils.getResourceString("VIGILANCY_RESOURCES", "email.convoke.subject",new Object[] {writtenEvaluation.getName(), group.getName(), beginDateString});
         	  
-        	EmailSender.send(person.getName(), (groupEmail == null) ? person.getEmail() : groupEmail, replyTo, tos, null, null, subject,
+        	new Email(person.getName(), (groupEmail == null) ? person.getEmail() : groupEmail, replyTo, tos, null, null, subject,
                     emailMessage);
         }
     }

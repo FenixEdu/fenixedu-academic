@@ -4675,9 +4675,8 @@
 		<name>commons.SendMail</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.SendMail</implementationClass>
 		<description />
-		<isTransactional>false</isTransactional>
+		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="TeacherAuthorization" />
 		</filterChains>
 	</service>
 	<service>

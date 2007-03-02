@@ -7,7 +7,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.MarkSheet;
-import pt.utl.ist.fenix.tools.smtp.EmailSender;
+import net.sourceforge.fenixedu.domain.util.Email;
 
 public class MarkSheetsToConfirmSendMail extends Service {
 	
@@ -22,7 +22,7 @@ public class MarkSheetsToConfirmSendMail extends Service {
 		String[] tokens = cc.split(",");
 		List<String> ccs =  Arrays.asList(tokens);
 		
-		EmailSender.send(null, from, mails, ccs, null, subject, message);
+		new Email(null, from, null, mails, ccs, null, subject, message);
 	}
 
 }

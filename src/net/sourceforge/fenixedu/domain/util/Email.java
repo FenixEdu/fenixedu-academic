@@ -1,19 +1,20 @@
 package net.sourceforge.fenixedu.domain.util;
 
+import java.util.Arrays;
 import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 public class Email extends Email_Base {
 
-    public Email(final String fromName, final String fromAddress, final Collection<String> replyTos,
+    public Email(final String fromName, final String fromAddress, final String[] replyTos,
 	    final Collection<String> toAddresses, final Collection<String> ccAddresses,
 	    final Collection<String> bccAddresses, final String subject, final String body) {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 	setFromName(fromName);
 	setFromAddress(fromAddress);
-	setReplyTos(new EmailAddressList(replyTos));
+	setReplyTos(new EmailAddressList(replyTos == null ? null : Arrays.asList(replyTos)));
 	setToAddresses(new EmailAddressList(toAddresses));
 	setCcAddresses(new EmailAddressList(ccAddresses));
 	setBccAddresses(new EmailAddressList(bccAddresses));

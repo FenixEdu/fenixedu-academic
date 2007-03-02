@@ -6,6 +6,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
+import net.sourceforge.fenixedu.domain.util.Email;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilancyWithCredits;
@@ -53,7 +54,7 @@ public class ChangeConvokeActive extends Service {
 
 		String subject = RenderUtils.getResourceString("VIGILANCY_RESOURCES", "email.convoke.subject",
 				new Object[] { writtenEvaluation.getName(), group.getName(), beginDateString });
-		EmailSender.send(person.getName(), (groupEmail != null) ? groupEmail : person.getEmail(), replyTo,
+		new Email(person.getName(), (groupEmail != null) ? groupEmail : person.getEmail(), replyTo,
 				tos, null, null, subject, emailMessage);
 	}
 

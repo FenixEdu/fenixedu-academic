@@ -93,7 +93,7 @@
 <!ENTITY academicCalendar SYSTEM "repository_academic_calendar.xml">
 <!ENTITY site SYSTEM "repository_site.xml">
 <!ENTITY genericEvent SYSTEM "repository_generic_event.xml">
-
+<!ENTITY email SYSTEM "repository_email.xml">
 ]>
 <descriptor-repository version="1.0" isolation-level="repeatable-read">
 
@@ -191,5 +191,6 @@
     &domainObjectActionLogs;
     &academicCalendar;
     &genericEvent;
+    &email;
     
 </descriptor-repository>

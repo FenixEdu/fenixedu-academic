@@ -15,9 +15,9 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.cms.messaging.email.Recipient.RecipientType;
 import net.sourceforge.fenixedu.domain.cms.messaging.email.Recipient.SendStatus;
+import net.sourceforge.fenixedu.domain.util.Email;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
-import pt.utl.ist.fenix.tools.smtp.EmailSender;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a> <br/> <br/>
@@ -179,7 +179,9 @@ public class EMailSender {
 			bccEmails.add(address.getAddress());
 		}
 
-		Collection<String> notSent = EmailSender.send(from.getPersonalName(), from.getAddress(), null, null, bccEmails, message.getSubject(), message.getText());
+		new Email(from.getPersonalName(), from.getAddress(), null, null, null, bccEmails, message.getSubject(), message.getText());
+
+		Collection<String> notSent = new ArrayList();
 		
 		for (EMailAddress address : bccListAddress) {
 			if (!notSent.contains(address.getAddress())) {

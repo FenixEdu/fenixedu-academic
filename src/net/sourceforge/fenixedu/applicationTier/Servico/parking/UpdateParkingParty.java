@@ -10,11 +10,10 @@ import net.sourceforge.fenixedu.domain.parking.ParkingGroup;
 import net.sourceforge.fenixedu.domain.parking.ParkingParty;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequest;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequestState;
+import net.sourceforge.fenixedu.domain.util.Email;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 
 import org.joda.time.DateTime;
-
-import pt.utl.ist.fenix.tools.smtp.EmailSender;
 
 public class UpdateParkingParty extends Service {
 
@@ -44,10 +43,9 @@ public class UpdateParkingParty extends Service {
                     .getLocale());
             List<String> to = new ArrayList<String>();
             to.add(email);
-            if (EmailSender.send(bundle.getString("label.fromName"),
-                    bundle.getString("label.fromAddress"), to, null, null,
-                    bundle.getString("label.subject"), note).isEmpty()) {
-            }
+            new Email(bundle.getString("label.fromName"),
+                    bundle.getString("label.fromAddress"), null, to, null, null,
+                    bundle.getString("label.subject"), note);
         }
     }
 }
