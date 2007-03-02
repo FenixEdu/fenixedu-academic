@@ -11,6 +11,8 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
+import org.joda.time.DateTime;
+
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -55,6 +57,10 @@ public class CloseTransactionFilter implements Filter {
 
 		public boolean isPublicRequester() {
 			return true;
+		}
+
+		public DateTime getExpirationDate() {
+		    throw makeException();
 		}
 	}
 

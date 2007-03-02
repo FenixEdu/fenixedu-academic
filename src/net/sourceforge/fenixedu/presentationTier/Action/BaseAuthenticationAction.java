@@ -2,7 +2,9 @@ package net.sourceforge.fenixedu.presentationTier.Action;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -21,11 +23,16 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.I18NFilter;
+import net.sourceforge.fenixedu.util.DateFormatUtil;
+import net.sourceforge.fenixedu.util.FenixDateFormat;
 import net.sourceforge.fenixedu.util.HostAccessControl;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.joda.time.DateTime;
+import org.joda.time.Days;
+import org.joda.time.DurationFieldType;
 
 public abstract class BaseAuthenticationAction extends FenixAction {
 
@@ -69,15 +76,33 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 	    HttpServletRequest request, IUserView userView, final HttpSession session) {
 	createNewSession(request, session, userView);
 
+	ActionForward actionForward = null;
 	int numberOfSubApplications = getNumberOfSubApplications(userView.getRoleTypes());
 	if (numberOfSubApplications == 1 || !userView.hasRoleType(RoleType.MESSAGING)) {
 	    final Role firstInfoRole = userView.getRoleTypes().isEmpty() ? null : Role
 		    .getRoleByRoleType(userView.getRoleTypes().iterator().next());
-	    return buildRoleForward(firstInfoRole);
+	    actionForward = buildRoleForward(firstInfoRole);
 	} else {
-	    return mapping.findForward("sucess");
+	    actionForward = mapping.findForward("sucess");
 	}
+	
+	return checkExpirationDate(mapping, request, userView, actionForward);
+    }
 
+    private ActionForward checkExpirationDate(ActionMapping mapping, HttpServletRequest request, IUserView userView, ActionForward actionForward) {
+	if(userView.getExpirationDate() == null) {
+	    return actionForward;
+	}
+	
+	Days days = Days.daysBetween(new DateTime(), userView.getExpirationDate());
+	if(days.getDays() <= 30) {
+	    request.setAttribute("path", actionForward.getPath());
+	    request.setAttribute("days", days.getDays());
+	    request.setAttribute("dayString", userView.getExpirationDate().toString("dd/MM/yyyy"));
+	    return mapping.findForward("expirationWarning");
+	} else { 
+	    return actionForward;
+	}
     }
 
     private ActionForward handleSessionRestoreAndGetForward(HttpServletRequest request,

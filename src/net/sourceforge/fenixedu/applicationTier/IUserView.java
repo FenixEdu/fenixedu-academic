@@ -6,6 +6,8 @@ import java.util.Collection;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
+import org.joda.time.DateTime;
+
 /**
  * @author jorge
  */
@@ -18,6 +20,8 @@ public interface IUserView extends Serializable {
     public String getFullName();
 
     public Collection<RoleType> getRoleTypes();
+    
+    public DateTime getExpirationDate();
 
     boolean hasRoleType(final RoleType roleType);
     

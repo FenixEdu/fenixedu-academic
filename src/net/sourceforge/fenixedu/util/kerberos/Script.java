@@ -9,6 +9,9 @@ import java.io.OutputStreamWriter;
 import net.sourceforge.fenixedu._development.Custodian;
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+
+import org.joda.time.DateTime;
+
 import pt.utl.ist.fenix.tools.util.StringAppender;
 
 public class Script {
@@ -31,6 +34,22 @@ public class Script {
 		throw new KerberosException(scriptResult.getExitCode(), scriptResult.getReturnCode());
 	    }
 	}
+    }
+    
+    public static DateTime returnExpirationDate(String user) throws ExcepcaoPersistencia, KerberosException {
+	final String command = createCommand("passExpirationScript", user);
+	final ScriptResult scriptResult = runCmd(command, "");
+
+	if (scriptResult.getExitCode() == -1) {
+	    throw new ExcepcaoPersistencia(scriptResult.getReturnCode());
+	} else {
+	    if (scriptResult.getExitCode() == 1) {
+		throw new KerberosException(scriptResult.getExitCode(), scriptResult.getReturnCode());
+	    }
+	}
+	
+	String dateString = scriptResult.getReturnCode();
+	return new DateTime(Long.valueOf(dateString) * (long)1000);
     }
 
     public static void changeKerberosPass(String user, String pass) throws ExcepcaoPersistencia,

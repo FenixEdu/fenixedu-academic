@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import org.joda.time.DateTime;
+
 import net.sourceforge.fenixedu.applicationTier.ICandidateView;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.Person;
@@ -72,6 +74,10 @@ public class MockUserView implements IUserView {
             this.roles = Collections.unmodifiableSortedSet(roles);
         }
         return roles;
+    }
+
+    public DateTime getExpirationDate() {
+	return null;
     }
 
 }

@@ -28,6 +28,8 @@ import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.cas.CASServiceUrlProvider;
+import net.sourceforge.fenixedu.util.kerberos.KerberosException;
+import net.sourceforge.fenixedu.util.kerberos.Script;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -81,6 +83,8 @@ public class Authenticate extends Service implements Serializable {
 	final private DomainReference<Person> personRef;
 
 	final private Collection<RoleType> roleTypes;
+	
+	private DateTime expirationDate;
 
 	private transient Collection<Role> roles;
 
@@ -98,6 +102,11 @@ public class Authenticate extends Service implements Serializable {
 	    } else {
 		this.roleTypes = null;
 	    }
+	}
+	
+	private UserView(final Person person, final Set allowedRoles, final DateTime expirationDate) {
+	    this(person, allowedRoles);
+	    setExpirationDate(expirationDate);
 	}
 
 	public boolean hasRoleType(final RoleType roleType) {
@@ -119,7 +128,15 @@ public class Authenticate extends Service implements Serializable {
 	public String getFullName() {
 	    return getPerson().getNome();
 	}
-
+	
+	private void setExpirationDate(DateTime expirationDate) {
+	    this.expirationDate = expirationDate;
+	}
+	
+	public DateTime getExpirationDate() {
+	    return expirationDate;
+	}
+	
 	public boolean isPublicRequester() {
 	    return false;
 	}
@@ -139,12 +156,17 @@ public class Authenticate extends Service implements Serializable {
 	}
 
 	setLoginHostNameAndDateTime(remoteHost, person);
+	
 	return getUserView(person, requestURL);
     }
 
     protected IUserView getUserView(final Person person, final String requestURL) {
+	return getUserView(person, requestURL, null);
+    }
+    
+    protected IUserView getUserView(final Person person, final String requestURL, final DateTime expirationDate) {
 	final Set allowedRoles = getAllowedRolesByHostname(requestURL);
-	return new UserView(person, allowedRoles);
+	return new UserView(person, allowedRoles, expirationDate);
     }
 
     public IUserView run(final CASReceipt receipt, final String requestURL, final String remoteHost)
@@ -157,7 +179,13 @@ public class Authenticate extends Service implements Serializable {
 	}
 
 	setLoginHostNameAndDateTime(remoteHost, person);
-	return getUserView(person, requestURL);
+	
+	try {
+	    final DateTime expirationDate = Script.returnExpirationDate(person.getIstUsername());
+	    return getUserView(person, requestURL, expirationDate);
+	} catch (KerberosException e) {
+	    return getUserView(person, requestURL);
+	}
     }
 
     private void setLoginHostNameAndDateTime(final String remoteHost, Person person) {

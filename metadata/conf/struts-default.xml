@@ -107,12 +107,14 @@
                 path="/loginExpired.do?method=start" />                
             <forward name="sucess" path="/home.do"/>
             <forward name="changePass" path="/person/changePasswordForward.do"/>
+            <forward name="expirationWarning" path="/expirationWarning.jsp"/>            
         </action>
         <action path="/loginCAS"
 				type="net.sourceforge.fenixedu.presentationTier.Action.CASAuthenticationAction"
 				scope="request">
             <forward name="sucess" path="/home.do" redirect="true"/>
             <forward name="error" path="/loginPage.jsp" redirect="true"/>
+            <forward name="expirationWarning" path="/expirationWarning.jsp"/>            
         </action>
         <action path="/redirect"
 				type="net.sourceforge.fenixedu.presentationTier.Action.commons.LoginRedirectAction">
