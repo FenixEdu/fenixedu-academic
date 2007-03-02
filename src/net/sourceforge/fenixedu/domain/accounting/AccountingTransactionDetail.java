@@ -60,7 +60,7 @@ public class AccountingTransactionDetail extends AccountingTransactionDetail_Bas
     }
     
     @Checked("RolePredicates.MANAGER_PREDICATE")
-    public void delete() {
+    void delete() {
 	super.setTransaction(null);
 	removeRootDomainObject();
 	super.deleteDomainObject();

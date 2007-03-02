@@ -202,7 +202,7 @@ public class Entry extends Entry_Base {
     }
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
-    public void delete() {
+    void delete() {
 	if (!canBeDeleted()) {
 	    throw new DomainException("error.accounting.Entry.belongs.to.receipt");
 	}

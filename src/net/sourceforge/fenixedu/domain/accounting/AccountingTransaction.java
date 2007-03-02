@@ -261,7 +261,7 @@ public class AccountingTransaction extends AccountingTransaction_Base {
     }
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
-    public void delete() {
+    protected void delete() {
 	
 	super.setAdjustedTransaction(null);
 	for (;!getAdjustmentTransactions().isEmpty();getAdjustmentTransactions().get(0).delete());
