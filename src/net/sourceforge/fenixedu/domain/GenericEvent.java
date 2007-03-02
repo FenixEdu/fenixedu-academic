@@ -24,11 +24,13 @@ import org.joda.time.YearMonthDay;
 
 public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent {
     
-    public static final Comparator<GenericEvent> COMPARATOR_BY_BEGIN_DATE = new ComparatorChain();
+    public static final Comparator<GenericEvent> COMPARATOR_BY_DATE_AND_TIME = new ComparatorChain();
     static {
-	((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(new BeanComparator("beginDate"), true);
-	((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(new BeanComparator("beginTime"), true);
-	((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(new BeanComparator("idInternal"));
+	((ComparatorChain) COMPARATOR_BY_DATE_AND_TIME).addComparator(new BeanComparator("endDate"));
+	((ComparatorChain) COMPARATOR_BY_DATE_AND_TIME).addComparator(new BeanComparator("endTime"));
+	((ComparatorChain) COMPARATOR_BY_DATE_AND_TIME).addComparator(new BeanComparator("beginDate"));
+	((ComparatorChain) COMPARATOR_BY_DATE_AND_TIME).addComparator(new BeanComparator("beginTime"));	
+	((ComparatorChain) COMPARATOR_BY_DATE_AND_TIME).addComparator(new BeanComparator("idInternal"));
     }
     
     public GenericEvent(MultiLanguageString title, MultiLanguageString description, List<OldRoom> rooms, 
@@ -117,7 +119,7 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
     }
               
     public static Set<GenericEvent> getActiveGenericEventsForRoomOccupations(){	
-	Set<GenericEvent> result = new TreeSet<GenericEvent>(COMPARATOR_BY_BEGIN_DATE);
+	Set<GenericEvent> result = new TreeSet<GenericEvent>(COMPARATOR_BY_DATE_AND_TIME);
 	for (GenericEvent genericEvent : RootDomainObject.getInstance().getGenericEvents()) {
 	    if(genericEvent.isActive()) {
 		result.add(genericEvent);

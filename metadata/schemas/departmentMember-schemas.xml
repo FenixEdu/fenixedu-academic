@@ -264,7 +264,7 @@
    	</slot>		
 </schema>
 
-<schema name="EditGraduationExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
+<schema name="EditGraduationExpectations" type="net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation" bundle="DEPARTMENT_MEMBER_RESOURCES">
 	<slot name="graduations" key="label.personalExpectationsManagement.numberOfGraduations.required" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="graduationsDescription" key="label.personalExpectationsManagement.description" layout="rich-text">
    		<property name="safe" value="true" />
@@ -274,7 +274,7 @@
    	</slot>	
 </schema>	
 
-<schema name="EditCientificPosGraduationsExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
+<schema name="EditCientificPosGraduationsExpectations" type="net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation" bundle="DEPARTMENT_MEMBER_RESOURCES">
 	<slot name="cientificPosGraduations" key="label.personalExpectationsManagement.numberOfCientificPosGraduations.required" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="cientificPosGraduationsDescription" key="label.personalExpectationsManagement.description" layout="rich-text">
    		<property name="safe" value="true" />
@@ -284,7 +284,7 @@
    	</slot>		
 </schema>
 
-<schema name="EditProfessionalPosGraduationsExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
+<schema name="EditProfessionalPosGraduationsExpectations" type="net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation" bundle="DEPARTMENT_MEMBER_RESOURCES">
 	<slot name="professionalPosGraduations" key="label.personalExpectationsManagement.numberOfProfessionalPosGraduations.required" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="professionalPosGraduationsDescription" key="label.personalExpectationsManagement.description" layout="rich-text">
    		<property name="safe" value="true" />
@@ -294,7 +294,7 @@
    	</slot>		
 </schema>	
 
-<schema name="EditSeminariesExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
+<schema name="EditSeminariesExpectations" type="net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation" bundle="DEPARTMENT_MEMBER_RESOURCES">
 	<slot name="seminaries" key="label.personalExpectationsManagement.numberOfSeminaries.required" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="seminariesDescription" key="label.personalExpectationsManagement.description" layout="rich-text">
    		<property name="safe" value="true" />
@@ -304,7 +304,7 @@
    	</slot>		
 </schema>	
 
-<schema name="EditEducationMainFocusExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
+<schema name="EditEducationMainFocusExpectations" type="net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation" bundle="DEPARTMENT_MEMBER_RESOURCES">
 	<slot name="educationMainFocus" key="label.personalExpectationsManagement.mainFocus" layout="rich-text">
    		<property name="safe" value="true" />
    		<property name="columns" value="50"/>
@@ -313,7 +313,7 @@
    	</slot>		
 </schema>
 
-<schema name="EditPublicationsAndProjectsExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
+<schema name="EditPublicationsAndProjectsExpectations" type="net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation" bundle="DEPARTMENT_MEMBER_RESOURCES">
 	<slot name="researchAndDevProjects" key="label.personalExpectationsManagement.numberOfresearchAndDevProjects.required" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>	
 	<slot name="jornalArticlePublications" key="label.personalExpectationsManagement.jornalArticlePublications.required" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>	
 	<slot name="bookPublications" key="label.personalExpectationsManagement.bookPublications.required" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
@@ -329,7 +329,7 @@
    	</slot>						
 </schema>
 
-<schema name="EditPublicationsAndProjectsMainFocusExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
+<schema name="EditPublicationsAndProjectsMainFocusExpectations" type="net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation" bundle="DEPARTMENT_MEMBER_RESOURCES">
 	<slot name="researchAndDevMainFocus" key="label.personalExpectationsManagement.mainFocus" layout="rich-text">
    		<property name="safe" value="true" />
    		<property name="columns" value="50"/>
@@ -338,13 +338,13 @@
    	</slot>		
 </schema>
 
-<schema name="EditOrientationsExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
+<schema name="EditOrientationsExpectations" type="net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation" bundle="DEPARTMENT_MEMBER_RESOURCES">
 	<slot name="phdOrientations" key="label.personalExpectationsManagement.phdOrientations.required" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="masterDegreeOrientations" key="label.personalExpectationsManagement.masterDegreeOrientations.required" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="finalDegreeWorkOrientations" key="label.personalExpectationsManagement.finalDegreeWorkOrientations.required" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>		
 </schema>
 
-<schema name="EditOrientationMainFocusExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
+<schema name="EditOrientationMainFocusExpectations" type="net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation" bundle="DEPARTMENT_MEMBER_RESOURCES">
 	<slot name="orientationsMainFocus" key="label.personalExpectationsManagement.mainFocus" layout="rich-text">
    		<property name="safe" value="true" />
    		<property name="columns" value="50"/>
@@ -353,7 +353,7 @@
    	</slot>		
 </schema>
 
-<schema name="EditUniversityServiceExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
+<schema name="EditUniversityServiceExpectations" type="net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation" bundle="DEPARTMENT_MEMBER_RESOURCES">
 	<slot name="departmentOrgans" key="label.personalExpectationsManagement.departmentOrgans" layout="rich-text">
    		<property name="safe" value="true" />
    		<property name="columns" value="50"/>
@@ -374,7 +374,7 @@
    	</slot>		
 </schema>
 
-<schema name="EditUniversityServiceMainFocusExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
+<schema name="EditUniversityServiceMainFocusExpectations" type="net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation" bundle="DEPARTMENT_MEMBER_RESOURCES">
 	<slot name="universityServiceMainFocus" key="label.personalExpectationsManagement.mainFocus" layout="rich-text">
    		<property name="safe" value="true" />
    		<property name="columns" value="50"/>
@@ -383,7 +383,7 @@
    	</slot>		
 </schema>
 
-<schema name="EditProfessionalActivitiesExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
+<schema name="EditProfessionalActivitiesExpectations" type="net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation" bundle="DEPARTMENT_MEMBER_RESOURCES">
 	<slot name="cientificComunityService" key="label.personalExpectationsManagement.cientificComunityService" layout="rich-text">
    		<property name="safe" value="true" />
    		<property name="columns" value="50"/>
@@ -416,7 +416,7 @@
    	</slot>		
 </schema>
 
-<schema name="EditProfessionalActivitiesMainFocusExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
+<schema name="EditProfessionalActivitiesMainFocusExpectations" type="net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation" bundle="DEPARTMENT_MEMBER_RESOURCES">
 	<slot name="professionalActivityMainFocus" key="label.personalExpectationsManagement.mainFocus" layout="rich-text">		
    		<property name="safe" value="true" />
    		<property name="columns" value="50"/>

@@ -110,9 +110,9 @@
 			</fr:edit>			
 			
 			<html:submit><bean:message key="link.continue" bundle="DEPARTMENT_MEMBER_RESOURCES"/></html:submit>
-			<html:submit onclick="this.form.method.value='viewTeacherPersonalExpectations';this.form.submit();">
+			<html:cancel onclick="this.form.method.value='viewTeacherPersonalExpectations';this.form.submit();">
 				<bean:message key="button.cancel" bundle="DEPARTMENT_MEMBER_RESOURCES"/>
-			</html:submit>	
+			</html:cancel>	
 			
 		</fr:form>	
 		
@@ -198,8 +198,13 @@
 						<fr:property name="columnClasses" value="width14em,,tdclear tderror1"/>
 					</fr:layout>		
 				</fr:edit>			
-				
-				<p class="smalltxt"><em><bean:message key="message.requiredField" bundle="DEPARTMENT_MEMBER_RESOURCES" /></em></p>
+
+				<p class="smalltxt"><em><bean:message key="message.requiredField" bundle="DEPARTMENT_MEMBER_RESOURCES" /></em></p>				
+
+				<html:submit><bean:message key="button.submit" bundle="DEPARTMENT_MEMBER_RESOURCES"/></html:submit>
+				<html:cancel onclick="this.form.method.value='viewTeacherPersonalExpectations';this.form.submit();">
+					<bean:message key="button.cancel" bundle="DEPARTMENT_MEMBER_RESOURCES"/>
+				</html:cancel>	
 				
 				<p>
 					<html:submit><bean:message key="button.submit" bundle="DEPARTMENT_MEMBER_RESOURCES"/></html:submit>
