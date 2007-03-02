@@ -70,7 +70,7 @@ public class OptionalCurricularCourse extends OptionalCurricularCourse_Base {
     
     private AnyCurricularCourse getAnyCurricularCourseRule(final ExecutionPeriod executionPeriod) {
 	final List<ICurricularRule> result = getCurricularRule(CurricularRuleType.ANY_CURRICULAR_COURSE, executionPeriod);
-	return result.isEmpty() ? null : (AnyCurricularCourse) result.get(0); 
+	return result.isEmpty() ? null : (AnyCurricularCourse) result.get(0); // must have only one
     }
 
     @Override
