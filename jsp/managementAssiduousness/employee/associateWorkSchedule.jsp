@@ -32,18 +32,25 @@ function associate(workScheduleID){
 	<span style="padding-right: 1em;">
 	<bean:message key="label.week"/>: <bean:write name="workWeekScheduleBean" property="workWeekNumber"/>
 	</span>
-	<bean:size id="realSize" name="workWeekScheduleBean" property="workWeekByCheckedBox.days"/>
-	<bean:define id="size" value="<%= new Integer(realSize -1).toString() %>"/>
-	<bean:message key="label.days"/>:
-		<logic:iterate indexId="index" id="day" name="workWeekScheduleBean" property="workWeekByCheckedBox.days">
-			<bean:message name="day" property="name" bundle="ENUMERATION_RESOURCES"/><logic:notEqual name="index" value="<%= size %>">,	</logic:notEqual>
-		</logic:iterate>
-	</p>
+	<logic:notEmpty name="workWeekScheduleBean" property="workWeekByCheckedBox">
+		<bean:size id="realSize" name="workWeekScheduleBean" property="workWeekByCheckedBox.days"/>
+		<bean:define id="size" value="<%= new Integer(realSize -1).toString() %>"/>
+		<bean:message key="label.days"/>:
+			<logic:iterate indexId="index" id="day" name="workWeekScheduleBean" property="workWeekByCheckedBox.days">
+				<bean:message name="day" property="name" bundle="ENUMERATION_RESOURCES"/><logic:notEqual name="index" value="<%= size %>">,	</logic:notEqual>
+			</logic:iterate>
+		</p>
+	</logic:notEmpty>
 </logic:iterate>
 </div>
 
-<bean:define id="employeeID" name="employeeScheduleBean" property="employee.idInternal"/>
+<%-- 
+<html:link page="<%="/employeeAssiduousness.do?method=prepareAssociateEmployeeWorkSchedule&ampscheduleID=" + employeeScheduleBean.getSchedule().getIdInternal().toString() + "&amp;employeeID="+employeeID.toString() + "&amp;month="+month.toString()+"&amp;year="+year.toString()%>">
+	<bean:message key="label.back" bundle="ASSIDUOUSNESS_RESOURCES"/>
+</html:link>
+--%>
 
+<bean:define id="employeeID" name="employeeScheduleBean" property="employee.idInternal"/>
 <fr:form action="/employeeAssiduousness.do?method=associateEmployeeWorkSchedule">
 	<html:hidden bundle="HTMLALT_RESOURCES" name="employeeForm" property="workScheduleID" value="0"/>
 	<fr:edit id="employeeScheduleBean" name="employeeScheduleBean" visible="false" />

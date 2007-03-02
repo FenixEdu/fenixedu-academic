@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatusHistory;
 import net.sourceforge.fenixedu.domain.assiduousness.Clocking;
 import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth;
 import net.sourceforge.fenixedu.domain.assiduousness.Justification;
+import net.sourceforge.fenixedu.domain.assiduousness.Schedule;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
@@ -48,39 +49,39 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
     }
 
     public ActionForward showWorkSheet(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
-	    FenixFilterException {
-	final IUserView userView = SessionUtils.getUserView(request);
-	final Employee employee = getEmployee(request, (DynaActionForm) form);
-	if (employee == null) {
-	    ActionMessages actionMessages = new ActionMessages();
-	    actionMessages.add("message", new ActionMessage("error.invalidEmployee"));
-	    saveMessages(request, actionMessages);
-	    return mapping.getInputForward();
-	}
-	YearMonth yearMonth = getYearMonth(request, employee);
-	if (yearMonth == null) {
-	    return mapping.findForward("show-employee-work-sheet");
-	}
-	YearMonthDay beginDate = new YearMonthDay(yearMonth.getYear(),
-		yearMonth.getMonth().ordinal() + 1, 01);
-	int endDay = beginDate.dayOfMonth().getMaximumValue();
-	if (yearMonth.getYear() == new YearMonthDay().getYear()
-		&& yearMonth.getMonth().ordinal() + 1 == new YearMonthDay().getMonthOfYear()) {
-	    // endDay = new YearMonthDay().getDayOfMonth();
-	    request.setAttribute("displayCurrentDayNote", "true");
-	}
-	YearMonthDay endDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1,
-		endDay);
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
+            FenixFilterException {
+        final IUserView userView = SessionUtils.getUserView(request);
+        final Employee employee = getEmployee(request, (DynaActionForm) form);
+        if (employee == null) {
+            ActionMessages actionMessages = new ActionMessages();
+            actionMessages.add("message", new ActionMessage("error.invalidEmployee"));
+            saveMessages(request, actionMessages);
+            return mapping.getInputForward();
+        }
+        YearMonth yearMonth = getYearMonth(request, employee);
+        if (yearMonth == null) {
+            return mapping.findForward("show-employee-work-sheet");
+        }
+        YearMonthDay beginDate = new YearMonthDay(yearMonth.getYear(),
+                yearMonth.getMonth().ordinal() + 1, 01);
+        int endDay = beginDate.dayOfMonth().getMaximumValue();
+        if (yearMonth.getYear() == new YearMonthDay().getYear()
+                && yearMonth.getMonth().ordinal() + 1 == new YearMonthDay().getMonthOfYear()) {
+            // endDay = new YearMonthDay().getDayOfMonth();
+            request.setAttribute("displayCurrentDayNote", "true");
+        }
+        YearMonthDay endDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1,
+                endDay);
 
-	Object[] args = { employee.getAssiduousness(), beginDate, endDate };
-	EmployeeWorkSheet employeeWorkSheet = (EmployeeWorkSheet) ServiceUtils.executeService(userView,
-		"ReadEmployeeWorkSheet", args);
+        Object[] args = { employee.getAssiduousness(), beginDate, endDate };
+        EmployeeWorkSheet employeeWorkSheet = (EmployeeWorkSheet) ServiceUtils.executeService(userView,
+                "ReadEmployeeWorkSheet", args);
 
-	request.setAttribute("employeeWorkSheet", employeeWorkSheet);
-	setEmployeeStatus(request, employee, beginDate, endDate);
-	request.setAttribute("yearMonth", yearMonth);
-	return mapping.findForward("show-employee-work-sheet");
+        request.setAttribute("employeeWorkSheet", employeeWorkSheet);
+        setEmployeeStatus(request, employee, beginDate, endDate);
+        request.setAttribute("yearMonth", yearMonth);
+        return mapping.findForward("show-employee-work-sheet");
     }
 
     public ActionForward showSchedule(ActionMapping mapping, ActionForm form,
@@ -96,10 +97,30 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
 	YearMonth yearMonth = getYearMonth(request, employee);
 	request.setAttribute("yearMonth", yearMonth);
 
-	EmployeeScheduleFactory employeeScheduleFactory = new EmployeeScheduleFactory(employee, null);
-	request.setAttribute("employeeScheduleBean", employeeScheduleFactory);
+        List<Schedule> schedules = new ArrayList<Schedule>(employee.getAssiduousness().getSchedules());
+        if (!schedules.isEmpty()) {
+            Collections.sort(schedules, new BeanComparator("beginDate"));
+        }
 
-	return mapping.findForward("show-schedule");
+        Schedule choosenSchedule = null;
+        Integer scheduleID = getIntegerFromRequest(request, "scheduleID");
+        if (scheduleID != null) {
+            for (Schedule schedule : schedules) {
+                if (schedule.getIdInternal().equals(scheduleID)) {
+                    choosenSchedule = schedule;
+                    break;
+                }
+            }
+        }
+        if (choosenSchedule == null) {
+            choosenSchedule = employee.getAssiduousness() != null ? employee.getAssiduousness()
+                    .getCurrentSchedule() : null;
+        }
+        request.setAttribute("scheduleList", schedules);
+        EmployeeScheduleFactory employeeScheduleFactory = new EmployeeScheduleFactory(employee, null,
+                choosenSchedule);
+        request.setAttribute("employeeScheduleBean", employeeScheduleFactory);
+        return mapping.findForward("show-schedule");
     }
 
     public ActionForward showClockings(ActionMapping mapping, ActionForm form,
@@ -239,10 +260,10 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
     }
 
     private void setEmployeeStatus(HttpServletRequest request, final Employee employee,
-	    YearMonthDay beginDate, YearMonthDay endDate) {
-	List<AssiduousnessStatusHistory> employeeStatusList = employee.getAssiduousness()
-		.getStatusBetween(beginDate, endDate);
-	Collections.sort(employeeStatusList, new BeanComparator("beginDate"));
-	request.setAttribute("employeeStatusList", employeeStatusList);
+            YearMonthDay beginDate, YearMonthDay endDate) {
+        List<AssiduousnessStatusHistory> employeeStatusList = employee.getAssiduousness()
+                .getStatusBetween(beginDate, endDate);
+        Collections.sort(employeeStatusList, new BeanComparator("beginDate"));
+        request.setAttribute("employeeStatusList", employeeStatusList);
     }
 }

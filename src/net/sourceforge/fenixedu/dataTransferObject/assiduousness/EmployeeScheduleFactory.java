@@ -23,6 +23,8 @@ public class EmployeeScheduleFactory implements Serializable, FactoryExecutor {
 
     DomainReference<Employee> modifiedBy;
 
+    DomainReference<Schedule> schedule;
+
     YearMonthDay beginDate;
 
     YearMonthDay endDate;
@@ -35,39 +37,39 @@ public class EmployeeScheduleFactory implements Serializable, FactoryExecutor {
 
     List<EmployeeWorkWeekScheduleBean> employeeWorkWeekScheduleList = new ArrayList<EmployeeWorkWeekScheduleBean>();
 
-    public EmployeeScheduleFactory(Employee employee, Employee modifiedBy) {
-        setEmployee(employee);
+    public EmployeeScheduleFactory(Schedule schedule, Employee modifiedBy) {
         setModifiedBy(modifiedBy);
-        Schedule currentSchedule = employee.getAssiduousness() != null ? employee.getAssiduousness()
-                .getCurrentSchedule() : null;
-        if (currentSchedule != null) {
-            setEmployeeWorkWeekScheduleList(currentSchedule, this);
-            setBeginDate(currentSchedule.getBeginDate());
-            setEndDate(currentSchedule.getEndDate());
-        }
+        setEmployee(schedule.getAssiduousness().getEmployee());
+        setSchedule(schedule);
+        setEmployeeWorkWeekScheduleList(schedule, this);
+        setBeginDate(schedule.getBeginDate());
+        setEndDate(schedule.getEndDate());
     }
 
-    public EmployeeScheduleFactory(Schedule currentSchedule) {
-        setEmployee(currentSchedule.getAssiduousness().getEmployee());
-        setModifiedBy(currentSchedule.getModifiedBy());
-        setEmployeeWorkWeekScheduleList(currentSchedule, this);
-        setBeginDate(currentSchedule.getBeginDate());
-        setEndDate(currentSchedule.getEndDate());
+    public EmployeeScheduleFactory(Employee employee, Employee modifiedBy, Schedule schedule) {
+        setModifiedBy(modifiedBy);
+        setEmployee(employee);
+        if (schedule != null) {
+            setSchedule(schedule);
+            setEmployeeWorkWeekScheduleList(schedule, this);
+            setBeginDate(schedule.getBeginDate());
+            setEndDate(schedule.getEndDate());
+        }
     }
 
     public Object execute() {
-        Schedule currentSchedule = getEmployee().getAssiduousness().getCurrentSchedule();
+        Schedule schedule = getSchedule();
         removeAllEmptyWorkWeekSchedules();
         if (isToDeleteDays()) {
-            currentSchedule.deleteDays(this);
+            schedule = schedule.deleteDays(this);
         } else {
-            if (currentSchedule == null) {
-                currentSchedule = new Schedule(this);
+            if (schedule == null) {
+                schedule = new Schedule(this);
             } else {
-                currentSchedule.edit(this);
+                schedule = schedule.edit(this);
             }
         }
-        return null;
+        return schedule;
     }
 
     public void setEmployee(Employee employee) {
@@ -198,7 +200,7 @@ public class EmployeeScheduleFactory implements Serializable, FactoryExecutor {
         }
         getEmployeeWorkWeekScheduleList().remove(workWeekScheduleBeanToRemove);
     }
-    
+
     public void removeAllEmptyWorkWeekSchedules() {
         int subtract = 0;
         List<EmployeeWorkWeekScheduleBean> workWeekScheduleBeansToRemove = new ArrayList<EmployeeWorkWeekScheduleBean>();
@@ -227,5 +229,15 @@ public class EmployeeScheduleFactory implements Serializable, FactoryExecutor {
 
     public void setToDeleteDays(boolean toDeleteDays) {
         this.toDeleteDays = toDeleteDays;
+    }
+
+    public Schedule getSchedule() {
+        return schedule == null ? null : schedule.getObject();
+    }
+
+    public void setSchedule(Schedule schedule) {
+        if (schedule != null) {
+            this.schedule = new DomainReference<Schedule>(schedule);
+        }
     }
 }

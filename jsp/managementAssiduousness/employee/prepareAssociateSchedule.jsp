@@ -33,6 +33,24 @@ function removeExistingWorkWeek(iter){
 <em class="invisible"><bean:message key="title.assiduousness" /></em>
 <h2><bean:message key="title.associateSchedule" /></h2>
 
+<bean:define id="month" name="yearMonth" property="month" />
+<bean:define id="year" name="yearMonth" property="year" />
+<bean:define id="employeeNumber" name="employeeScheduleBean" property="employee.employeeNumber" />
+
+<p><bean:message key="label.show" />: <html:link
+	page="<%="/viewEmployeeAssiduousness.do?method=showWorkSheet&month="+month.toString()+"&year="+year.toString()+"&employeeNumber="+employeeNumber.toString()%>">
+	<bean:message key="link.workSheet" />
+</html:link>, <html:link
+	page="<%="/viewEmployeeAssiduousness.do?method=showSchedule&month="+month.toString()+"&year="+year.toString()+"&employeeNumber="+employeeNumber.toString()%>">
+	<bean:message key="label.schedule" />
+</html:link>, <html:link
+	page="<%="/viewEmployeeAssiduousness.do?method=showClockings&month="+month.toString()+"&year="+year.toString()+"&employeeNumber="+employeeNumber.toString()%>">
+	<bean:message key="link.clockings" />
+</html:link>, <html:link
+	page="<%="/viewEmployeeAssiduousness.do?method=showJustifications&month="+month.toString()+"&year="+year.toString()+"&employeeNumber="+employeeNumber.toString()%>">
+	<bean:message key="link.justifications" />
+</html:link></p>
+
 <span class="toprint"><br />
 </span>
 <fr:view name="employeeScheduleBean" property="employee" schema="show.employeeInformation">
@@ -49,7 +67,8 @@ function removeExistingWorkWeek(iter){
 	<html:hidden bundle="HTMLALT_RESOURCES" name="employeeForm" property="workWeek" value=""/>	
 	<html:hidden bundle="HTMLALT_RESOURCES" name="employeeForm" property="employeeID" value="<%= employeeID.toString() %>"/>	
 	<fr:edit id="employeeScheduleBean" name="employeeScheduleBean" visible="false" />	
-	
+	<fr:edit id="yearMonth" name="yearMonth" visible="false" />
+		
 	<span class="error0">
 		<html:errors/>
 		<html:messages id="message" message="true">

@@ -77,12 +77,9 @@ public class Leave extends Leave_Base {
 
     public DateTime getEndDate() {
         Period durationPeriod = getDuration().toPeriod(PeriodType.dayTime());
-        //        Days days = Days.standardDaysIn(durationPeriod);
-        //        Minutes minutes = Minutes.standardMinutesIn(durationPeriod);
-        //        Seconds seconds = Seconds.standardSecondsIn(durationPeriod);
         DateTime dateTime = getDate().plusDays(durationPeriod.getDays()).plusHours(
                 durationPeriod.getHours()).plusMinutes(durationPeriod.getMinutes());
-        return dateTime;//getDate().plus(getDuration());//dateTime;
+        return dateTime;
     }
 
     public TimeOfDay getEndTimeOfDay() {

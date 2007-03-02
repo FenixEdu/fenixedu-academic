@@ -15,16 +15,16 @@
 <bean:define id="employeeID" name="employeeScheduleBean" property="employee.idInternal" />
 
 <p><bean:message key="label.show" />: <html:link
-	page="<%="/viewEmployeeAssiduousness.do?method=showWorkSheet&month="+month.toString()+"&year="+year.toString()+"&employeeNumber="+employeeNumber.toString()%>">
+	page="<%="/viewEmployeeAssiduousness.do?method=showWorkSheet&amp;month="+month.toString()+"&amp;year="+year.toString()+"&amp;employeeNumber="+employeeNumber.toString()%>">
 	<bean:message key="link.workSheet" />
 </html:link>, <html:link
-	page="<%="/viewEmployeeAssiduousness.do?method=showSchedule&month="+month.toString()+"&year="+year.toString()+"&employeeNumber="+employeeNumber.toString()%>">
+	page="<%="/viewEmployeeAssiduousness.do?method=showSchedule&amp;month="+month.toString()+"&amp;year="+year.toString()+"&amp;employeeNumber="+employeeNumber.toString()%>">
 	<bean:message key="label.schedule" />
 </html:link>, <html:link
-	page="<%="/viewEmployeeAssiduousness.do?method=showClockings&month="+month.toString()+"&year="+year.toString()+"&employeeNumber="+employeeNumber.toString()%>">
+	page="<%="/viewEmployeeAssiduousness.do?method=showClockings&amp;month="+month.toString()+"&amp;year="+year.toString()+"&amp;employeeNumber="+employeeNumber.toString()%>">
 	<bean:message key="link.clockings" />
 </html:link>, <html:link
-	page="<%="/viewEmployeeAssiduousness.do?method=showJustifications&month="+month.toString()+"&year="+year.toString()+"&employeeNumber="+employeeNumber.toString()%>">
+	page="<%="/viewEmployeeAssiduousness.do?method=showJustifications&amp;month="+month.toString()+"&amp;year="+year.toString()+"&amp;employeeNumber="+employeeNumber.toString()%>">
 	<bean:message key="link.justifications" />
 </html:link></p>
 
@@ -38,22 +38,66 @@
 		</fr:layout>
 	</fr:view>
 
+		<span class="mbottom0"><h3><bean:message key="link.schedules" bundle="ASSIDUOUSNESS_RESOURCES"/>:</h3></span>
+		<table class="showinfo1 thbold mtop0">
+			<tr>
+				<th><bean:message key="label.beginDate"/></th>
+				<th><bean:message key="label.endDate"/></th>
+				<th></th>
+			</tr>				
+			<logic:iterate id="schedule" name="scheduleList" type="net.sourceforge.fenixedu.domain.assiduousness.Schedule">
+			<tr>
+				<td><bean:write name="schedule" property="beginDate"/></td>
+				<td><bean:write name="schedule" property="endDate"/></td>
+				<td>
+					<logic:equal name="schedule" property="isEditable" value="true">
+						<html:link page="<%="/viewEmployeeAssiduousness.do?method=showSchedule&amp;scheduleID=" + schedule.getIdInternal().toString() + "&amp;month="+month.toString()+"&amp;year="+year.toString()+"&amp;employeeNumber="+employeeNumber.toString()%>">
+							<bean:message key="label.view" bundle="ASSIDUOUSNESS_RESOURCES"/>
+						</html:link>
+						<%net.sourceforge.fenixedu.applicationTier.IUserView user = (net.sourceforge.fenixedu.applicationTier.IUserView) session
+        		            .getAttribute(net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants.U_VIEW);
+						if (net.sourceforge.fenixedu.domain.assiduousness.StaffManagementSection.isMember(user.getPerson())) {%>
+						,<html:link page="<%="/employeeAssiduousness.do?method=prepareAssociateEmployeeWorkSchedule&amp;scheduleID=" + schedule.getIdInternal().toString() + "&amp;employeeID="+employeeID.toString() + "&amp;month="+month.toString()+"&amp;year="+year.toString()%>">
+							<bean:message key="label.edit" bundle="ASSIDUOUSNESS_RESOURCES"/>
+						</html:link>
+						<% } %>
+					</logic:equal>
+					<logic:equal name="schedule" property="isEditable" value="false">
+						<html:link page="<%="/viewEmployeeAssiduousness.do?method=showSchedule&amp;scheduleID=" + schedule.getIdInternal().toString() + "&amp;month="+month.toString()+"&amp;year="+year.toString()+"&amp;employeeNumber="+employeeNumber.toString()%>">
+							<bean:message key="label.view" bundle="ASSIDUOUSNESS_RESOURCES"/>
+						</html:link>
+					</logic:equal>
+				</td>
+			</tr>
+			</logic:iterate>	
+		</table>
+			
 		<%net.sourceforge.fenixedu.applicationTier.IUserView user = (net.sourceforge.fenixedu.applicationTier.IUserView) session
-                    .getAttribute(net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants.U_VIEW);
+	            .getAttribute(net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants.U_VIEW);
 		if (net.sourceforge.fenixedu.domain.assiduousness.StaffManagementSection.isMember(user.getPerson())) {%>
-			<logic:notEmpty name="employeeScheduleBean" property="employee.assiduousness">
-				<ul>
-					<li>
-					<html:link page="<%="/employeeAssiduousness.do?method=prepareAssociateEmployeeWorkSchedule&amp;employeeID="+employeeID.toString()%>">
-						<bean:message key="link.associateWorkSchedule" />
-					</html:link>
-					</li>
-				</ul>	
-			</logic:notEmpty>
+		<logic:empty name="employeeScheduleBean" property="schedule">
+			<ul>
+				<li>
+				<html:link page="<%="/employeeAssiduousness.do?method=prepareAssociateEmployeeWorkSchedule&amp;employeeID="+employeeID.toString()%>">
+					<bean:message key="link.associateWorkSchedule" />
+				</html:link>
+				</li>
+			</ul>	
+		</logic:empty>
 		<% } %>
 
 <logic:notEmpty name="employeeScheduleBean" property="employeeWorkWeekScheduleList">
 	<bean:size id="listSize" name="employeeScheduleBean" property="employeeWorkWeekScheduleList"/>
+	<table class="width600px">
+		<tr>
+			<td align="center">
+				<strong><bean:message key="label.beginDate" bundle="ASSIDUOUSNESS_RESOURCES"/></strong>:
+				<bean:write name="employeeScheduleBean" property="schedule.beginDate"/> 
+				<strong><bean:message key="label.endDate" bundle="ASSIDUOUSNESS_RESOURCES"/></strong>:
+				<bean:write name="employeeScheduleBean" property="schedule.endDate"/>
+			</td>
+		</tr>
+	</table>
 	<logic:iterate id="employeeWorkScheduleBean" name="employeeScheduleBean" property="employeeWorkWeekScheduleList">
 		<table class="tstyle1 thtop thlight printborder width600px">
 			<logic:notEqual name="listSize" value="1">

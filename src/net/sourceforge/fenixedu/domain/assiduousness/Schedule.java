@@ -100,14 +100,14 @@ public class Schedule extends Schedule_Base {
         }
     }
 
-    public void deleteDays(EmployeeScheduleFactory employeeScheduleFactory) {
+    public Schedule deleteDays(EmployeeScheduleFactory employeeScheduleFactory) {
         ClosedMonth closedMonth = ClosedMonth.getLastMonthClosed();
         if (isCloseMonthInsideScheduleInterval(closedMonth) && closedMonth.getClosedForBalance()) {
             YearMonthDay endDate = new YearMonthDay(closedMonth.getClosedYearMonth().get(
                     DateTimeFieldType.year()), closedMonth.getClosedYearMonth().get(
                     DateTimeFieldType.monthOfYear()), 1);
             endDate = endDate.plusDays(endDate.dayOfMonth().getMaximumValue()).minusDays(1);
-            closeScheduleAndMakeNew(employeeScheduleFactory, endDate, true);
+            return closeScheduleAndMakeNew(employeeScheduleFactory, endDate, true);
         } else {
             if (isCloseMonthInsideInterval(closedMonth, employeeScheduleFactory.getBeginDate(),
                     employeeScheduleFactory.getEndDate())
@@ -121,6 +121,7 @@ public class Schedule extends Schedule_Base {
             }
             eliminateDays(employeeScheduleFactory);
         }
+        return this;
     }
 
     private void eliminateDays(EmployeeScheduleFactory employeeScheduleFactory) {
@@ -161,14 +162,14 @@ public class Schedule extends Schedule_Base {
         }
     }
 
-    public void edit(EmployeeScheduleFactory employeeScheduleFactory) {
+    public Schedule edit(EmployeeScheduleFactory employeeScheduleFactory) {
         ClosedMonth closedMonth = ClosedMonth.getLastMonthClosed();
         if (isCloseMonthInsideScheduleInterval(closedMonth) && closedMonth.getClosedForBalance()) {
             YearMonthDay endDate = new YearMonthDay(closedMonth.getClosedYearMonth().get(
                     DateTimeFieldType.year()), closedMonth.getClosedYearMonth().get(
                     DateTimeFieldType.monthOfYear()), 1);
             endDate = endDate.plusDays(endDate.dayOfMonth().getMaximumValue()).minusDays(1);
-            closeScheduleAndMakeNew(employeeScheduleFactory, endDate, false);
+            return closeScheduleAndMakeNew(employeeScheduleFactory, endDate, false);
         } else {
             if (isCloseMonthInsideInterval(closedMonth, employeeScheduleFactory.getBeginDate(),
                     employeeScheduleFactory.getEndDate())
@@ -183,7 +184,7 @@ public class Schedule extends Schedule_Base {
             if (getBeginDate().isBefore(employeeScheduleFactory.getBeginDate())
                     && getAssiduousness().hasAnyRecordsBetweenDates(getBeginDate(),
                             employeeScheduleFactory.getBeginDate())) {
-                closeScheduleAndMakeNew(employeeScheduleFactory, employeeScheduleFactory.getBeginDate()
+                return closeScheduleAndMakeNew(employeeScheduleFactory, employeeScheduleFactory.getBeginDate()
                         .minusDays(1), false);
             } else {
                 if (employeeScheduleFactory.isDifferencesInDates()
@@ -197,9 +198,10 @@ public class Schedule extends Schedule_Base {
                 }
             }
         }
+        return this;
     }
 
-    private void closeScheduleAndMakeNew(EmployeeScheduleFactory employeeScheduleFactory,
+    private Schedule closeScheduleAndMakeNew(EmployeeScheduleFactory employeeScheduleFactory,
             YearMonthDay endDate, boolean deletedDays) {
         setModifiedBy(employeeScheduleFactory.getModifiedBy());
         setLastModifiedDate(new DateTime());
@@ -209,7 +211,7 @@ public class Schedule extends Schedule_Base {
             employeeScheduleFactory.setBeginDate(endDate.plusDays(1));
             setEndDate(endDate);
         }
-        new Schedule(employeeScheduleFactory, deletedDays);
+        return new Schedule(employeeScheduleFactory, deletedDays);
     }
 
     private void updateEverything(EmployeeScheduleFactory employeeScheduleFactory) {
@@ -361,6 +363,20 @@ public class Schedule extends Schedule_Base {
             }
         }
         return workPeriodDuration;
+    }
+
+    public boolean getIsEditable() {
+        ClosedMonth closedMonth = ClosedMonth.getLastMonthClosed();      
+        YearMonthDay beginClosedMonth = new YearMonthDay(closedMonth.getClosedYearMonth().get(
+                DateTimeFieldType.year()), closedMonth.getClosedYearMonth().get(
+                DateTimeFieldType.monthOfYear()), 1);
+        YearMonthDay endClosedMonth = new YearMonthDay(beginClosedMonth.getYear(), beginClosedMonth
+                .getMonthOfYear(), beginClosedMonth.dayOfMonth().getMaximumValue());
+        if (getBeginDate().isBefore(endClosedMonth.plusDays(1))
+                && (getEndDate() != null && getEndDate().isBefore(endClosedMonth.plusDays(1)))) {
+            return false;
+        }
+        return true;
     }
 
     public void delete() {
