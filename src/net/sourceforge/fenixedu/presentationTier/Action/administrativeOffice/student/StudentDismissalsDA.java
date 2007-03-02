@@ -186,7 +186,7 @@ public class StudentDismissalsDA extends FenixDispatchAction {
 			dismissalBean.getGrade() });
 	    }
 	} catch (DomainException e) {
-	    addActionMessage(request, e.getMessage());
+	    addActionMessage(request, e.getMessage(), e.getArgs());
 	    return confirmCreateDismissals(mapping, form, request, response);
 	}
 
