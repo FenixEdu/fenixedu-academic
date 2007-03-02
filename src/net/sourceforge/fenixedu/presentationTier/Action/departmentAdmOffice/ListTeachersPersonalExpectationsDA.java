@@ -130,7 +130,7 @@ public class ListTeachersPersonalExpectationsDA extends FenixDispatchAction {
     private Map<Teacher, TeacherPersonalExpectation> getExpectationsMap(HttpServletRequest request, ExecutionYear executionYear) {
 	Department department = getDepartment(request);
 	Map<Teacher, TeacherPersonalExpectation> result = new TreeMap<Teacher, TeacherPersonalExpectation>(Teacher.TEACHER_COMPARATOR_BY_CATEGORY_AND_NUMBER);
-	if(executionYear != null) {
+	if(executionYear != null && department != null) {
             List<Teacher> allCurrentTeachers = department.getAllTeachers(executionYear.getBeginDateYearMonthDay(), executionYear.getEndDateYearMonthDay());			
             for (Teacher teacher: allCurrentTeachers) {
                 TeacherPersonalExpectation teacherPersonalExpectation = teacher.getTeacherPersonalExpectationByExecutionYear(executionYear);

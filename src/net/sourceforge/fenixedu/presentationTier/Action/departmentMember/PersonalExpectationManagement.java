@@ -69,6 +69,9 @@ public class PersonalExpectationManagement extends FenixDispatchAction {
 	    HttpServletRequest request, HttpServletResponse response) {
 	
         IViewState viewState = RenderUtils.getViewState("teacherPersonalExpectationWithEducationMainFocus");
+        if(viewState == null) {
+            viewState = RenderUtils.getViewState();
+        }        
         TeacherPersonalExpectationBean bean = (TeacherPersonalExpectationBean) viewState.getMetaObject().getObject();	    
         request.setAttribute("teacherPersonalExpectationBean", bean);  	   	
 	return mapping.findForward("manageResearchAndDevelopmentExpectations");
@@ -186,17 +189,23 @@ public class PersonalExpectationManagement extends FenixDispatchAction {
     private void readAndSetTeacherPersonalExpectationByExecutionYear(HttpServletRequest request, Teacher teacher, ExecutionYear executionYear) {	
 	TeacherPersonalExpectation teacherPersonalExpectation = teacher.getTeacherPersonalExpectationByExecutionYear(executionYear);	    	
 	Department department = teacher.getCurrentWorkingDepartment();
-	TeacherExpectationDefinitionPeriod period = department.getTeacherExpectationDefinitionPeriodForExecutionYear(executionYear);
-	request.setAttribute("periodOpen", period != null ? period.isPeriodOpen().booleanValue() : false);
-	request.setAttribute("teacherPersonalExpectation", teacherPersonalExpectation);
+	if(department != null) {
+            TeacherExpectationDefinitionPeriod period = department.getTeacherExpectationDefinitionPeriodForExecutionYear(executionYear);
+            request.setAttribute("periodOpen", period != null ? period.isPeriodOpen().booleanValue() : false);
+            request.setAttribute("teacherPersonalExpectation", teacherPersonalExpectation);
+	}
     }
     
     private void checkTeacherAndPeriodToEdit(HttpServletRequest request, TeacherPersonalExpectation teacherPersonalExpectation) throws FenixActionException {
 	ExecutionYear executionYear = teacherPersonalExpectation.getExecutionYear();
-	Department department = getDepartment(request);	
-	TeacherExpectationDefinitionPeriod period = department.getTeacherExpectationDefinitionPeriodForExecutionYear(executionYear);
-	if(period == null || !period.isPeriodOpen() || !getLoggedTeacher(request).equals(teacherPersonalExpectation.getTeacher())) {
-	   throw new FenixActionException();
+	Department department = teacherPersonalExpectation.getTeacher().getCurrentWorkingDepartment();
+	if(department != null) {
+	    TeacherExpectationDefinitionPeriod period = department.getTeacherExpectationDefinitionPeriodForExecutionYear(executionYear);
+	    if(period == null || !period.isPeriodOpen() || !getLoggedTeacher(request).equals(teacherPersonalExpectation.getTeacher())) {
+		throw new FenixActionException();
+	    }
+	} else {
+	    throw new FenixActionException();
 	}
     }
     
@@ -221,9 +230,5 @@ public class PersonalExpectationManagement extends FenixDispatchAction {
 	ActionMessages actionMessages = new ActionMessages();
 	actionMessages.add("", new ActionMessage(e.getMessage(), e.getArgs()));
 	saveMessages(request, actionMessages);
-    }
-    
-    private Department getDepartment(HttpServletRequest request) {
-	return getLoggedPerson(request).getTeacher().getCurrentWorkingDepartment();
-    }
+    }  
 }

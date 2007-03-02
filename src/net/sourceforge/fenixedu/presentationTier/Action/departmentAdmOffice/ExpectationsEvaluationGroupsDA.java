@@ -63,7 +63,7 @@ public class ExpectationsEvaluationGroupsDA extends FenixDispatchAction {
         Department employeeDepartment = getDepartment(request);
         Department teacherWorkingDepartment = teacher.getLastWorkingDepartment(executionYear.getBeginDateYearMonthDay(), executionYear.getEndDateYearMonthDay());
         
-        if(teacherWorkingDepartment != null && teacherWorkingDepartment.equals(employeeDepartment)) {
+        if(teacherWorkingDepartment != null && employeeDepartment != null && teacherWorkingDepartment.equals(employeeDepartment)) {
             request.setAttribute("expectationEvaluationGroupBean", new ExpectationEvaluationGroupBean(teacher, executionYear));	 
             request.setAttribute("evaluatedTeacherGroups",teacher.getEvaluatedExpectationEvaluationGroups(executionYear));
         }
@@ -101,7 +101,7 @@ public class ExpectationsEvaluationGroupsDA extends FenixDispatchAction {
 	Department employeeDepartment = getDepartment(request);
 	Department appraiserDepartment = appraiser.getLastWorkingDepartment(executionYear.getBeginDateYearMonthDay(), executionYear.getEndDateYearMonthDay());
 		
-	if(appraiserDepartment != null && appraiserDepartment.equals(employeeDepartment)) {
+	if(appraiserDepartment != null && employeeDepartment != null && appraiserDepartment.equals(employeeDepartment)) {
 	    try {
                 executeService("DeleteExpectationEvaluationGroup", new Object[] {group});
                 request.setAttribute("evaluatedTeacherGroups", appraiser.getEvaluatedExpectationEvaluationGroups(executionYear));
@@ -119,7 +119,7 @@ public class ExpectationsEvaluationGroupsDA extends FenixDispatchAction {
     
     private void readAndSetAppraiserTeachers(HttpServletRequest request, Department department, ExecutionYear executionYear) {
 	Map<Teacher, List<ExpectationEvaluationGroup>> result = new TreeMap<Teacher, List<ExpectationEvaluationGroup>>(Teacher.TEACHER_COMPARATOR_BY_CATEGORY_AND_NUMBER);
-	if(executionYear != null) {
+	if(executionYear != null && department != null) {
             List<Teacher> currentTeachers = department.getAllTeachers(executionYear.getBeginDateYearMonthDay(), executionYear.getEndDateYearMonthDay());		
             for (Teacher teacher : currentTeachers) {
                 result.put(teacher, teacher.getEvaluatedExpectationEvaluationGroups(executionYear));	    
