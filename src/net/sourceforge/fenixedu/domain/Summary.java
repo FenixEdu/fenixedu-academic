@@ -183,7 +183,10 @@ public class Summary extends Summary_Base {
     }
 
     public void moveFromTeacherToProfessorship(Professorship professorship) {
-	if(getTeacher() != null && professorship != null && professorship.getExecutionCourse().equals(getExecutionCourse())) {	   
+	if(getTeacher() != null && professorship != null 
+		&& professorship.getExecutionCourse().equals(getExecutionCourse())
+		&& professorship.getTeacher().equals(getTeacher())) {
+	    	    
 	    setTeacher(null);
 	    setProfessorship(professorship);
 	}
