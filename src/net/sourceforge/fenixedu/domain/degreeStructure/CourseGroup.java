@@ -505,11 +505,11 @@ public class CourseGroup extends CourseGroup_Base {
     
     private CreditsLimit getCreditsLimitRule(final ExecutionPeriod executionPeriod) {
 	final List<ICurricularRule> result = getCurricularRule(CurricularRuleType.CREDITS_LIMIT, executionPeriod);
-	return result.isEmpty() ? null : (CreditsLimit) result.get(0); 
+	return result.isEmpty() ? null : (CreditsLimit) result.get(0); // must have only one 
     }
 
     private DegreeModulesSelectionLimit getDegreeModulesSelectionLimitRule(final ExecutionPeriod executionPeriod) {
 	final List<ICurricularRule> result = getCurricularRule(CurricularRuleType.DEGREE_MODULES_SELECTION_LIMIT, executionPeriod);
-	return result.isEmpty() ? null : (DegreeModulesSelectionLimit) result.get(0); 
+	return result.isEmpty() ? null : (DegreeModulesSelectionLimit) result.get(0); // must have only one 
     }
 }

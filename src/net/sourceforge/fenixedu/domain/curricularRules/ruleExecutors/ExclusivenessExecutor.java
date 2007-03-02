@@ -65,8 +65,7 @@ public class ExclusivenessExecutor extends CurricularRuleExecutor {
 	    final CurricularCourse curricularCourse = (CurricularCourse) degreeModule;
 
 	    if (isApproved(enrolmentContext, curricularCourse)) {
-		if (isEnroled(enrolmentContext, (CurricularCourse) rule.getDegreeModuleToApplyRule(),
-			enrolmentContext.getExecutionPeriod())) {
+		if (isEnroled(enrolmentContext, (CurricularCourse) rule.getDegreeModuleToApplyRule(), enrolmentContext.getExecutionPeriod())) {
 		    return RuleResult.createTrue(EnrolmentResultType.IMPOSSIBLE);
 		}
 		return createFalseRuleResult(rule);
