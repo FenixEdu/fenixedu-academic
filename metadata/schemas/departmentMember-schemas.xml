@@ -33,7 +33,7 @@
 </schema>
 
 <schema name="ViewGraduationExpectations" type="net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation" bundle="DEPARTMENT_MEMBER_RESOURCES">
-	<slot name="graduations" key="label.personalExpectationsManagement.numberOfGraduations" />
+	<slot name="graduations" key="label.personalExpectationsManagement.numberOfGraduations"/>
 	<slot name="graduationsDescription" key="label.personalExpectationsManagement.description" layout="html"/>	
 </schema>	
 
@@ -104,7 +104,7 @@
 </schema>
 
 <schema name="FillGraduationExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
-	<slot name="graduations" key="label.personalExpectationsManagement.numberOfGraduations" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="graduations" key="label.personalExpectationsManagement.numberOfGraduations.required" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="graduationsDescription" key="label.personalExpectationsManagement.description" layout="rich-text">
    		<property name="safe" value="true" />
    		<property name="columns" value="50"/>
@@ -114,7 +114,7 @@
 </schema>	
 
 <schema name="FillCientificPosGraduationsExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
-	<slot name="cientificPosGraduations" key="label.personalExpectationsManagement.numberOfCientificPosGraduations" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="cientificPosGraduations" key="label.personalExpectationsManagement.numberOfCientificPosGraduations.required" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="cientificPosGraduationsDescription" key="label.personalExpectationsManagement.description" layout="rich-text">
    		<property name="safe" value="true" />
    		<property name="columns" value="50"/>
@@ -124,7 +124,7 @@
 </schema>
 
 <schema name="FillProfessionalPosGraduationsExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
-	<slot name="professionalPosGraduations" key="label.personalExpectationsManagement.numberOfProfessionalPosGraduations" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="professionalPosGraduations" key="label.personalExpectationsManagement.numberOfProfessionalPosGraduations.required" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="professionalPosGraduationsDescription" key="label.personalExpectationsManagement.description" layout="rich-text">
    		<property name="safe" value="true" />
    		<property name="columns" value="50"/>
@@ -134,7 +134,7 @@
 </schema>	
 
 <schema name="FillSeminariesExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
-	<slot name="seminaries" key="label.personalExpectationsManagement.numberOfSeminaries" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="seminaries" key="label.personalExpectationsManagement.numberOfSeminaries.required" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="seminariesDescription" key="label.personalExpectationsManagement.description" layout="rich-text">
    		<property name="safe" value="true" />
    		<property name="columns" value="50"/>
@@ -153,13 +153,13 @@
 </schema>
 
 <schema name="FillPublicationsAndProjectsExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
-	<slot name="researchAndDevProjects" key="label.personalExpectationsManagement.numberOfresearchAndDevProjects" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>	
-	<slot name="jornalArticlePublications" key="label.personalExpectationsManagement.jornalArticlePublications" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>	
-	<slot name="bookPublications" key="label.personalExpectationsManagement.bookPublications" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-	<slot name="conferencePublications" key="label.personalExpectationsManagement.conferencePublications" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>	
-	<slot name="technicalReportPublications" key="label.personalExpectationsManagement.technicalReportPublications" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-	<slot name="patentPublications" key="label.personalExpectationsManagement.patentPublications" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-	<slot name="otherPublications" key="label.personalExpectationsManagement.otherPublications" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="researchAndDevProjects" key="label.personalExpectationsManagement.numberOfresearchAndDevProjects.required" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>	
+	<slot name="jornalArticlePublications" key="label.personalExpectationsManagement.jornalArticlePublications.required" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>	
+	<slot name="bookPublications" key="label.personalExpectationsManagement.bookPublications.required" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="conferencePublications" key="label.personalExpectationsManagement.conferencePublications.required" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>	
+	<slot name="technicalReportPublications" key="label.personalExpectationsManagement.technicalReportPublications.required" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="patentPublications" key="label.personalExpectationsManagement.patentPublications.required" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="otherPublications" key="label.personalExpectationsManagement.otherPublications.required" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="otherPublicationsDescription" key="label.personalExpectationsManagement.otherPublicationsDescription" layout="rich-text">
    		<property name="safe" value="true" />
    		<property name="columns" value="50"/>
@@ -265,7 +265,7 @@
 </schema>
 
 <schema name="EditGraduationExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
-	<slot name="graduations" key="label.personalExpectationsManagement.numberOfGraduations" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="graduations" key="label.personalExpectationsManagement.numberOfGraduations.required" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="graduationsDescription" key="label.personalExpectationsManagement.description" layout="rich-text">
    		<property name="safe" value="true" />
    		<property name="columns" value="50"/>
@@ -275,7 +275,7 @@
 </schema>	
 
 <schema name="EditCientificPosGraduationsExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
-	<slot name="cientificPosGraduations" key="label.personalExpectationsManagement.numberOfCientificPosGraduations" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="cientificPosGraduations" key="label.personalExpectationsManagement.numberOfCientificPosGraduations.required" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="cientificPosGraduationsDescription" key="label.personalExpectationsManagement.description" layout="rich-text">
    		<property name="safe" value="true" />
    		<property name="columns" value="50"/>
@@ -285,7 +285,7 @@
 </schema>
 
 <schema name="EditProfessionalPosGraduationsExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
-	<slot name="professionalPosGraduations" key="label.personalExpectationsManagement.numberOfProfessionalPosGraduations" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="professionalPosGraduations" key="label.personalExpectationsManagement.numberOfProfessionalPosGraduations.required" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="professionalPosGraduationsDescription" key="label.personalExpectationsManagement.description" layout="rich-text">
    		<property name="safe" value="true" />
    		<property name="columns" value="50"/>
@@ -295,7 +295,7 @@
 </schema>	
 
 <schema name="EditSeminariesExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
-	<slot name="seminaries" key="label.personalExpectationsManagement.numberOfSeminaries" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="seminaries" key="label.personalExpectationsManagement.numberOfSeminaries.required" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="seminariesDescription" key="label.personalExpectationsManagement.description" layout="rich-text">
    		<property name="safe" value="true" />
    		<property name="columns" value="50"/>
@@ -314,13 +314,13 @@
 </schema>
 
 <schema name="EditPublicationsAndProjectsExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
-	<slot name="researchAndDevProjects" key="label.personalExpectationsManagement.numberOfresearchAndDevProjects" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>	
-	<slot name="jornalArticlePublications" key="label.personalExpectationsManagement.jornalArticlePublications" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>	
-	<slot name="bookPublications" key="label.personalExpectationsManagement.bookPublications" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-	<slot name="conferencePublications" key="label.personalExpectationsManagement.conferencePublications" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>	
-	<slot name="technicalReportPublications" key="label.personalExpectationsManagement.technicalReportPublications" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-	<slot name="patentPublications" key="label.personalExpectationsManagement.patentPublications" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-	<slot name="otherPublications" key="label.personalExpectationsManagement.otherPublications" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="researchAndDevProjects" key="label.personalExpectationsManagement.numberOfresearchAndDevProjects.required" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>	
+	<slot name="jornalArticlePublications" key="label.personalExpectationsManagement.jornalArticlePublications.required" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>	
+	<slot name="bookPublications" key="label.personalExpectationsManagement.bookPublications.required" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="conferencePublications" key="label.personalExpectationsManagement.conferencePublications.required" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>	
+	<slot name="technicalReportPublications" key="label.personalExpectationsManagement.technicalReportPublications.required" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="patentPublications" key="label.personalExpectationsManagement.patentPublications.required" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="otherPublications" key="label.personalExpectationsManagement.otherPublications.required" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="otherPublicationsDescription" key="label.personalExpectationsManagement.otherPublicationsDescription" layout="rich-text">
    		<property name="safe" value="true" />
    		<property name="columns" value="50"/>
@@ -339,9 +339,9 @@
 </schema>
 
 <schema name="EditOrientationsExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
-	<slot name="phdOrientations" key="label.personalExpectationsManagement.phdOrientations" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-	<slot name="masterDegreeOrientations" key="label.personalExpectationsManagement.masterDegreeOrientations" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-	<slot name="finalDegreeWorkOrientations" key="label.personalExpectationsManagement.finalDegreeWorkOrientations" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>		
+	<slot name="phdOrientations" key="label.personalExpectationsManagement.phdOrientations.required" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="masterDegreeOrientations" key="label.personalExpectationsManagement.masterDegreeOrientations.required" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="finalDegreeWorkOrientations" key="label.personalExpectationsManagement.finalDegreeWorkOrientations.required" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>		
 </schema>
 
 <schema name="EditOrientationMainFocusExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
@@ -428,8 +428,8 @@
 <schema name="editExpectationEvaluation" type="net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation" bundle="DEPARTMENT_MEMBER_RESOURCES">
 	<slot name="tutorComment" layout="rich-text" key="label.expectation.evaluation " validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="safe" value="true" />
-   		<property name="columns" value="50"/>
-   		<property name="rows" value="10"/>
+   		<property name="columns" value="65"/>
+   		<property name="rows" value="14"/>
    		<property name="config" value="intermediateWithBreakLineInsteadOfParagraph" />
    	</slot>
 </schema>
