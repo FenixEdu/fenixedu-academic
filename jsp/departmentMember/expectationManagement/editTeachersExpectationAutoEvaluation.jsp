@@ -17,7 +17,7 @@
 		<bean:define id="executionYearId" name="expectation" property="executionYear.idInternal"/>
 		<fr:edit name="expectation" slot="autoEvaluation" layout="rich-text">
 			<fr:layout name="rich-text">
-				<fr:property name="config" value="intermediate-fun"/>
+				<fr:property name="config" value="intermediateWithBreakLineInsteadOfParagraph"/>
 				<fr:property name="columns" value="75"/>
 				<fr:property name="rows" value="16"/>
 			</fr:layout>
