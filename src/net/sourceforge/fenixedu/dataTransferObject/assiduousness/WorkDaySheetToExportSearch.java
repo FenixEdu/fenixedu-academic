@@ -8,11 +8,14 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.assiduousness.Assiduousness;
+import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord;
+import net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive;
+import net.sourceforge.fenixedu.domain.assiduousness.Leave;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkScheduleType;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
+import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
 public class WorkDaySheetToExportSearch implements Serializable {
@@ -26,6 +29,10 @@ public class WorkDaySheetToExportSearch implements Serializable {
     private String scheduleAcronym;
 
     private DomainReference<WorkScheduleType> workScheduleType;
+
+    private String justificationMotiveAcronym;
+
+    private DomainReference<JustificationMotive> justificationMotive;
 
     public WorkDaySheetToExportSearch() {
 	this.endDate = new YearMonthDay();
@@ -43,10 +50,11 @@ public class WorkDaySheetToExportSearch implements Serializable {
     }
 
     public List<Assiduousness> getAssiduousnesses() {
+	HashMap<Assiduousness, List<Leave>> levesMap = setLeavesMap();
 	List<Assiduousness> result = new ArrayList<Assiduousness>();
 	for (Assiduousness assiduousness : RootDomainObject.getInstance().getAssiduousnesss()) {
 	    if (assiduousness.isStatusActive(beginDate, endDate) && satisfiedCostCenter(assiduousness)
-		    && satisfiedScheduleAcronym(assiduousness)) {
+		    && satisfiedScheduleAcronym(assiduousness) && levesMap.get(assiduousness) != null) {
 		result.add(assiduousness);
 	    }
 	}
@@ -78,6 +86,33 @@ public class WorkDaySheetToExportSearch implements Serializable {
 	    return false;
 	}
 	return true;
+    }
+
+    public HashMap<Assiduousness, List<Leave>> setLeavesMap() {
+	HashMap<Assiduousness, List<Leave>> levesMap = new HashMap<Assiduousness, List<Leave>>();
+	if (getJustificationMotiveAcronym() != null && getJustificationMotiveAcronym().length() != 0) {
+	    Interval interval = new Interval(beginDate.toDateTimeAtMidnight(),
+		    Assiduousness.defaultEndWorkDay.toDateTime(endDate.toDateMidnight()));
+	    for (AssiduousnessRecord assiduousnessRecord : RootDomainObject.getInstance()
+		    .getAssiduousnessRecords()) {
+		if (assiduousnessRecord.isLeave()
+			&& !assiduousnessRecord.isAnulated()
+			&& ((Leave) assiduousnessRecord).getJustificationMotive().getAcronym().equals(
+				getJustificationMotiveAcronym())) {
+		    Interval leaveInterval = new Interval(assiduousnessRecord.getDate(),
+			    ((Leave) assiduousnessRecord).getEndDate().plusSeconds(1));
+		    if (leaveInterval.overlaps(interval)) {
+			List<Leave> leavesList = levesMap.get(assiduousnessRecord.getAssiduousness());
+			if (leavesList == null) {
+			    leavesList = new ArrayList<Leave>();
+			}
+			leavesList.add((Leave) assiduousnessRecord);
+			levesMap.put(assiduousnessRecord.getAssiduousness(), leavesList);
+		    }
+		}
+	    }
+	}
+	return levesMap;
     }
 
     public YearMonthDay getBeginDate() {
@@ -122,6 +157,26 @@ public class WorkDaySheetToExportSearch implements Serializable {
 	} else {
 	    this.workScheduleType = null;
 	}
+    }
+
+    public JustificationMotive getJustificationMotive() {
+	return justificationMotive == null ? null : justificationMotive.getObject();
+    }
+
+    public void setJustificationMotive(JustificationMotive justificationMotive) {
+	if (justificationMotive != null) {
+	    this.justificationMotive = new DomainReference<JustificationMotive>(justificationMotive);
+	} else {
+	    this.justificationMotive = null;
+	}
+    }
+
+    public String getJustificationMotiveAcronym() {
+	return justificationMotiveAcronym;
+    }
+
+    public void setJustificationMotiveAcronym(String justificationMotiveAcronym) {
+	this.justificationMotiveAcronym = justificationMotiveAcronym;
     }
 
 }

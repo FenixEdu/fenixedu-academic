@@ -175,13 +175,23 @@
 		<property name="maxLength" value="4" />
 		<property name="size" value="4" />
 	</slot>
-	<slot name="workScheduleType" key="label.acronym" bundle="ASSIDUOUSNESS_RESOURCES" layout="autoComplete">
+	<slot name="workScheduleType" key="label.schedule" bundle="ASSIDUOUSNESS_RESOURCES" layout="autoComplete">
 		<property name="labelField" value="acronym"/>
 		<property name="format" value="${acronym}"/>
 		<property name="serviceName" value="SearchObjects"/>
 		<property name="serviceArgs" value="slot=acronym"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.assiduousness.WorkScheduleType"/>
 		<property name="rawSlotName" value="scheduleAcronym"/>
+		<property name="minChars" value="1"/>
+		<property name="errorStyleClass" value="error0"/>
+	</slot>
+	<slot name="justificationMotive" key="label.justification" bundle="ASSIDUOUSNESS_RESOURCES" layout="autoComplete">
+		<property name="labelField" value="acronym"/>
+		<property name="format" value="${acronym}"/>
+		<property name="serviceName" value="SearchObjects"/>
+		<property name="serviceArgs" value="slot=acronym"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive"/>
+		<property name="rawSlotName" value="justificationMotiveAcronym"/>
 		<property name="minChars" value="1"/>
 		<property name="errorStyleClass" value="error0"/>
 	</slot>	
