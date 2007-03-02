@@ -327,95 +327,111 @@
 </schema>
 
 <schema name="workScheduleTypeFactory.dayTime" type="net.sourceforge.fenixedu.domain.assiduousness.util.WorkScheduleTypeFactory">
-	<slot name="beginDayTime" key="label.beginHourFormat" bundle="ASSIDUOUSNESS_RESOURCES">
+	<slot name="beginDayTime" key="label.beginHourFormat" bundle="ASSIDUOUSNESS_RESOURCES" layout="multiple-format-hour-minute">
+		<property name="format" value="HH:mm" />
+		<property name="inputFormat" value="H:m" />
 		<property name="formatText" value=""/>
-		<property name="format" value="HH:mm"/>
 	</slot>
-	<slot name="endDayTime" key="label.endHourFormat" bundle="ASSIDUOUSNESS_RESOURCES">
+	<slot name="endDayTime" key="label.endHourFormat" bundle="ASSIDUOUSNESS_RESOURCES" layout="multiple-format-hour-minute">
+		<property name="format" value="HH:mm" />
+		<property name="inputFormat" value="H:m" />
 		<property name="formatText" value=""/>
-		<property name="format" value="HH:mm"/>
 	</slot>
 	<slot name="endDayNextDay" key="label.endNextDay" bundle="ASSIDUOUSNESS_RESOURCES"/>
 </schema>
 
 <schema name="workScheduleTypeFactory.clockingTime" type="net.sourceforge.fenixedu.domain.assiduousness.util.WorkScheduleTypeFactory">
-	<slot name="beginClockingTime" key="label.beginHourFormat" bundle="ASSIDUOUSNESS_RESOURCES">
+	<slot name="beginClockingTime" key="label.beginHourFormat" bundle="ASSIDUOUSNESS_RESOURCES" layout="multiple-format-hour-minute">
+		<property name="format" value="HH:mm" />
+		<property name="inputFormat" value="H:m" />
 		<property name="formatText" value=""/>
-		<property name="format" value="HH:mm"/>
 	</slot>
-	<slot name="endClockingTime" key="label.endHourFormat" bundle="ASSIDUOUSNESS_RESOURCES">
+	<slot name="endClockingTime" key="label.endHourFormat" bundle="ASSIDUOUSNESS_RESOURCES" layout="multiple-format-hour-minute">
+		<property name="format" value="HH:mm" />
+		<property name="inputFormat" value="H:m" />
 		<property name="formatText" value=""/>
-		<property name="format" value="HH:mm"/>
 	</slot>
 	<slot name="endClockingNextDay" key="label.endNextDay" bundle="ASSIDUOUSNESS_RESOURCES"/>
 </schema>
 
 <schema name="workScheduleTypeFactory.normalWorkFirstPeriod" type="net.sourceforge.fenixedu.domain.assiduousness.util.WorkScheduleTypeFactory">
-	<slot name="beginNormalWorkFirstPeriod" key="label.beginHourFormat" bundle="ASSIDUOUSNESS_RESOURCES">
+	<slot name="beginNormalWorkFirstPeriod" key="label.beginHourFormat" bundle="ASSIDUOUSNESS_RESOURCES" layout="multiple-format-hour-minute">
+		<property name="format" value="HH:mm" />
+		<property name="inputFormat" value="H:m" />
 		<property name="formatText" value=""/>
-		<property name="format" value="HH:mm"/>
 	</slot>
-	<slot name="endNormalWorkFirstPeriod" key="label.endHourFormat" bundle="ASSIDUOUSNESS_RESOURCES">
+	<slot name="endNormalWorkFirstPeriod" key="label.endHourFormat" bundle="ASSIDUOUSNESS_RESOURCES" layout="multiple-format-hour-minute">
+		<property name="format" value="HH:mm" />
+		<property name="inputFormat" value="H:m" />
 		<property name="formatText" value=""/>
-		<property name="format" value="HH:mm"/>
 	</slot>
 	<slot name="endNormalWorkFirstPeriodNextDay" key="label.endNextDay" bundle="ASSIDUOUSNESS_RESOURCES"/>
 </schema>
 
 <schema name="workScheduleTypeFactory.normalWorkSecondPeriod" type="net.sourceforge.fenixedu.domain.assiduousness.util.WorkScheduleTypeFactory">
-	<slot name="beginNormalWorkSecondPeriod" key="label.beginHourFormat" bundle="ASSIDUOUSNESS_RESOURCES">
+	<slot name="beginNormalWorkSecondPeriod" key="label.beginHourFormat" bundle="ASSIDUOUSNESS_RESOURCES" layout="multiple-format-hour-minute">
+		<property name="format" value="HH:mm" />
+		<property name="inputFormat" value="H:m" />
 		<property name="formatText" value=""/>
-		<property name="format" value="HH:mm"/>
 	</slot>
-	<slot name="endNormalWorkSecondPeriod" key="label.endHourFormat" bundle="ASSIDUOUSNESS_RESOURCES">
+	<slot name="endNormalWorkSecondPeriod" key="label.endHourFormat" bundle="ASSIDUOUSNESS_RESOURCES" layout="multiple-format-hour-minute">
+		<property name="format" value="HH:mm" />
+		<property name="inputFormat" value="H:m" />
 		<property name="formatText" value=""/>
-		<property name="format" value="HH:mm"/>
 	</slot>
 	<slot name="endNormalWorkSecondPeriodNextDay" key="label.endNextDay" bundle="ASSIDUOUSNESS_RESOURCES"/>
 </schema>
 
 <schema name="workScheduleTypeFactory.fixedWorkFirstPeriod" type="net.sourceforge.fenixedu.domain.assiduousness.util.WorkScheduleTypeFactory">
-	<slot name="beginFixedWorkFirstPeriod" key="label.beginHourFormat" bundle="ASSIDUOUSNESS_RESOURCES">
+	<slot name="beginFixedWorkFirstPeriod" key="label.beginHourFormat" bundle="ASSIDUOUSNESS_RESOURCES" layout="multiple-format-hour-minute">
+		<property name="format" value="HH:mm" />
+		<property name="inputFormat" value="H:m" />
 		<property name="formatText" value=""/>
-		<property name="format" value="HH:mm"/>
 	</slot>
-	<slot name="endFixedWorkFirstPeriod" key="label.endHourFormat" bundle="ASSIDUOUSNESS_RESOURCES">
+	<slot name="endFixedWorkFirstPeriod" key="label.endHourFormat" bundle="ASSIDUOUSNESS_RESOURCES" layout="multiple-format-hour-minute">
+		<property name="format" value="HH:mm" />
+		<property name="inputFormat" value="H:m" />
 		<property name="formatText" value=""/>
-		<property name="format" value="HH:mm"/>
 	</slot>
 	<slot name="endFixedWorkFirstPeriodNextDay" key="label.endNextDay" bundle="ASSIDUOUSNESS_RESOURCES"/>
 </schema>
 
 <schema name="workScheduleTypeFactory.fixedWorkSecondPeriod" type="net.sourceforge.fenixedu.domain.assiduousness.util.WorkScheduleTypeFactory">
-	<slot name="beginFixedWorkSecondPeriod" key="label.beginHourFormat" bundle="ASSIDUOUSNESS_RESOURCES">
+	<slot name="beginFixedWorkSecondPeriod" key="label.beginHourFormat" bundle="ASSIDUOUSNESS_RESOURCES" layout="multiple-format-hour-minute">
+		<property name="format" value="HH:mm" />
+		<property name="inputFormat" value="H:m" />
 		<property name="formatText" value=""/>
-		<property name="format" value="HH:mm"/>
 	</slot>
-	<slot name="endFixedWorkSecondPeriod" key="label.endHourFormat" bundle="ASSIDUOUSNESS_RESOURCES">
+	<slot name="endFixedWorkSecondPeriod" key="label.endHourFormat" bundle="ASSIDUOUSNESS_RESOURCES" layout="multiple-format-hour-minute">
+		<property name="format" value="HH:mm" />
+		<property name="inputFormat" value="H:m" />
 		<property name="formatText" value=""/>
-		<property name="format" value="HH:mm"/>
 	</slot>
 	<slot name="endFixedWorkSecondPeriodNextDay" key="label.endNextDay" bundle="ASSIDUOUSNESS_RESOURCES"/>
 </schema>
 
 <schema name="workScheduleTypeFactory.mealInterval" type="net.sourceforge.fenixedu.domain.assiduousness.util.WorkScheduleTypeFactory">
-	<slot name="mealBeginTime" key="label.beginHourFormat" bundle="ASSIDUOUSNESS_RESOURCES">
+	<slot name="mealBeginTime" key="label.beginHourFormat" bundle="ASSIDUOUSNESS_RESOURCES" layout="multiple-format-hour-minute">
+		<property name="format" value="HH:mm" />
+		<property name="inputFormat" value="H:m" />
 		<property name="formatText" value=""/>
-		<property name="format" value="HH:mm"/>
 	</slot>
-	<slot name="mealEndTime" key="label.endHourFormat" bundle="ASSIDUOUSNESS_RESOURCES">
+	<slot name="mealEndTime" key="label.endHourFormat" bundle="ASSIDUOUSNESS_RESOURCES" layout="multiple-format-hour-minute">
+		<property name="format" value="HH:mm" />
+		<property name="inputFormat" value="H:m" />
 		<property name="formatText" value=""/>
-		<property name="format" value="HH:mm"/>
 	</slot>
 </schema>
 <schema name="workScheduleTypeFactory.mealDiscount" type="net.sourceforge.fenixedu.domain.assiduousness.util.WorkScheduleTypeFactory">
-	<slot name="minimumMealBreakInterval" key="label.minimumInterval" bundle="ASSIDUOUSNESS_RESOURCES">
+	<slot name="minimumMealBreakInterval" key="label.minimumInterval" bundle="ASSIDUOUSNESS_RESOURCES" layout="multiple-format-hour-minute">
+		<property name="format" value="HH:mm" />
+		<property name="inputFormat" value="H:m" />
 		<property name="formatText" value=""/>
-		<property name="format" value="HH:mm"/>
 	</slot>
-	<slot name="mandatoryMealDiscount" key="label.mandatoryDiscount" bundle="ASSIDUOUSNESS_RESOURCES">
+	<slot name="mandatoryMealDiscount" key="label.mandatoryDiscount" bundle="ASSIDUOUSNESS_RESOURCES" layout="multiple-format-hour-minute">
+		<property name="format" value="HH:mm" />
+		<property name="inputFormat" value="H:m" />
 		<property name="formatText" value=""/>
-		<property name="format" value="HH:mm"/>
 	</slot>
 </schema>
 

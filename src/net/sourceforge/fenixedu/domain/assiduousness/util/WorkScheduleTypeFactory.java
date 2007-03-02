@@ -423,8 +423,8 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
         }
         Duration minimumMealBreakInterval = getDuration(minimumInterval);
         Duration mandatoryMealDiscount = getDuration(mandatoryDiscount);
-        return getOrCreateMeal(getMealBeginTime(), getMealEndTime(), mandatoryMealDiscount,
-                minimumMealBreakInterval);
+        return getOrCreateMeal(getMealBeginTime(), getMealEndTime(), minimumMealBreakInterval,
+                mandatoryMealDiscount);
     }
 
     protected Meal getOrCreateMeal(TimeOfDay beginTime, TimeOfDay endTime,
@@ -595,9 +595,11 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
                     setMealBeginTime(getWorkScheduleType().getMeal().getBeginMealBreak());
                     setMealEndTime(getWorkScheduleType().getMeal().getEndMealBreak());
                     setMandatoryMealDiscount(new TimeOfDay(getWorkScheduleType().getMeal()
-                            .getMandatoryMealDiscount().getMillis()).minusHours(1));
+                            .getMandatoryMealDiscount().getMillis(), GregorianChronology
+                            .getInstanceUTC()));
                     setMinimumMealBreakInterval(new TimeOfDay(getWorkScheduleType().getMeal()
-                            .getMinimumMealBreakInterval().getMillis()).minusHours(1));
+                            .getMinimumMealBreakInterval().getMillis(), GregorianChronology
+                            .getInstanceUTC()));
                 }
 
             }
@@ -875,9 +877,8 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
                 }
             }
             if (meal != null && meal.getWorkScheduleTypesCount() == 1) {
-                Meal equivalentMeal = getEquivalentMeal(meal.getBeginMealBreak(),
-                        meal.getEndMealBreak(), meal.getMinimumMealBreakInterval(), meal
-                                .getMandatoryMealDiscount());
+                Meal equivalentMeal = getEquivalentMeal(beginMeal, endMeal, minimumMealBreakInterval,
+                        mandatoryMealDiscount);
                 if (equivalentMeal == null) {
                     meal.setBeginMealBreak(beginMeal);
                     meal.setEndMealBreak(endMeal);
@@ -889,7 +890,7 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
                     return equivalentMeal;
                 }
             }
-            return getOrCreateMeal(beginMeal, endMeal, mandatoryMealDiscount, minimumMealBreakInterval);
+            return getOrCreateMeal(beginMeal, endMeal, minimumMealBreakInterval, mandatoryMealDiscount);
         }
     }
 

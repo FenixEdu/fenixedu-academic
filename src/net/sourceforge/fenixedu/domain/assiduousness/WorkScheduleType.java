@@ -275,8 +275,8 @@ public class WorkScheduleType extends WorkScheduleType_Base {
             TimeOfDay firstNormalPeriod, Duration firstNormalPeriodDuration,
             TimeOfDay secondNormalPeriod, Duration secondNormalPeriodDuration,
             TimeOfDay firstFixedPeriod, Duration firstFixedPeriodDuration, TimeOfDay secondFixedPeriod,
-            Duration secondFixedPeriodDuration, TimeOfDay beginMeal, TimeOfDay endMeal, Duration minium,
-            Duration maxium) {
+            Duration secondFixedPeriodDuration, TimeOfDay beginMeal, TimeOfDay endMeal, Duration minimum,
+            Duration maximum) {
         if ((getWorkTime().equals(workTime) && getWorkTimeDuration().equals(workTimeDuration)
                 && getClockingTime().equals(clockingTime) && getClockingTimeDuration().equals(
                 clockingTimeDuration))
@@ -288,7 +288,7 @@ public class WorkScheduleType extends WorkScheduleType_Base {
                         .equivalent(firstFixedPeriod, firstFixedPeriodDuration, secondFixedPeriod,
                                 secondFixedPeriodDuration)))
                 && ((!hasMeal() && beginMeal == null) || (hasMeal() && getMeal().equivalent(beginMeal,
-                        endMeal, minium, maxium)))) {
+                        endMeal, minimum, maximum)))) {
             return true;
         }
         return false;
