@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissa
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean.DismissalType;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean.SelectedCurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
@@ -205,12 +206,33 @@ public class StudentDismissalRenderer extends InputRenderer {
 	    nameCell.setBody(new HtmlText(courseGroup.getName()));
 	    nameCell.setClasses(getGroupNameClasses());
 	    
+	    final HtmlTableCell currentCreditsCell = htmlTableRow.createCell();
+	    final double ectsCreditsForCourseGroup = studentCurricularPlan.getEctsCreditsForCourseGroup(courseGroup).doubleValue();
+	    if (ectsCreditsForCourseGroup == 0d) {
+		currentCreditsCell.setBody(new HtmlText("ECTS:  -"));
+	    } else {
+		currentCreditsCell.setBody(new HtmlText("ECTS: " + ectsCreditsForCourseGroup));
+	    }
+	    currentCreditsCell.setClasses("smalltxt");
+	    currentCreditsCell.setStyle("width: 6em;");
+	    
+	    final HtmlTableCell creditsMinCell = htmlTableRow.createCell();
+	    creditsMinCell.setBody(new HtmlText("Min: " + courseGroup.getMinEctsCredits(ExecutionPeriod.readActualExecutionPeriod())));
+	    creditsMinCell.setClasses("smalltxt");
+	    creditsMinCell.setStyle("width: 6em;");
+	    
+	    final HtmlTableCell creditsMaxCell = htmlTableRow.createCell();
+	    creditsMaxCell.setBody(new HtmlText("Max: " + courseGroup.getMaxEctsCredits(ExecutionPeriod.readActualExecutionPeriod())));
+	    creditsMaxCell.setClasses("smalltxt");
+	    creditsMaxCell.setStyle("width: 6em;");
+	    
 	    final HtmlTableCell radioButtonCell = htmlTableRow.createCell();
 	    final HtmlRadioButton radioButton = radioButtonGroup.createRadioButton();
 	    radioButton.setUserValue(MetaObjectFactory.createObject(courseGroup, new Schema(CourseGroup.class)).getKey().toString());
 	    radioButton.setChecked(courseGroup == dismissalBean.getCourseGroup());
 	    radioButtonCell.setBody(radioButton);
 	    radioButtonCell.setClasses(getGroupRadioClasses());
+	    radioButtonCell.setStyle("width: 2em;");
 	    
 	    for (final Context context : courseGroup.getSortedChildContextsWithCourseGroups()) {
 		generateCourseGroups(blockContainer, studentCurricularPlan, (CourseGroup) context.getChildDegreeModule(), depth + getWidthDecreasePerLevel());
