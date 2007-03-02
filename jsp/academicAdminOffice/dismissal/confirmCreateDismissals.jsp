@@ -7,12 +7,6 @@
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2><bean:message key="link.student.create.dismissal" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
-<html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<p>
-		<span class="error0"><!-- Error messages go here --><bean:write name="message" /></span>
-	</p>
-</html:messages>
-
 <p class="mtop2">
 <span style="background-color: #ecf3e1; border-bottom: 1px solid #ccdeb2; padding: 0.4em 0.6em;">
 	<bean:message key="label.student" bundle="ACADEMIC_OFFICE_RESOURCES"/>: 
@@ -30,20 +24,14 @@
 	<span class="actual"><bean:message key="label.studentDismissal.step.three" bundle="ACADEMIC_OFFICE_RESOURCES"/></span>
 </p>
 
+<html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<p><span class="error0"><!-- Error messages go here --><bean:write name="message" /></span></p>
+</html:messages>
+
 <fr:form action="/studentDismissals.do">
 	<html:hidden property="method" value="createDismissals"/>
 	
 	<fr:edit id="dismissalBean" name="dismissalBean" visible="false"/>
-
-	<bean:define id="dismissalType" name="dismissalBean" property="dismissalType.name"/>
-
-	<fr:edit id="dismissalBean-information" name="dismissalBean" schema="<%= "DismissalBean.DismissalType." + dismissalType %>">
-		<fr:layout>
-			<fr:property name="classes" value="tstyle4 thlight"/>
-			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
-		</fr:layout>
-		<fr:destination name="invalid" path="/studentDismissals.do?method=stepThree"/>
-	</fr:edit>
 
 	<p class="mtop15 mbottom05"><strong><bean:message key="label.studentDismissal.equivalences" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
 	<logic:notEmpty name="dismissalBean" property="selectedEnrolments">
@@ -62,13 +50,9 @@
 
 	
 	<p class="mtop15 mbottom05"><strong><bean:message key="label.studentDismissal.equivalents" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
-	
 	<logic:notEmpty name="dismissalBean" property="courseGroup">
-		<fr:view name="dismissalBean" property="courseGroup" schema="DismissalBean.CourseGroup">
-			<fr:layout name="values">
-				<fr:property name="classes" value="tstyle4 thlight mtop05" />
-			</fr:layout>
-		</fr:view>
+		<bean:define id="courseGroup" name="dismissalBean" property="courseGroup" />
+		<bean:write name="courseGroup" property="name"/> (Max: <bean:write name="courseGroup" property="maxEctsCredits"/>)
 	</logic:notEmpty>
 	
 	<logic:notEmpty name="dismissalBean" property="dismissals">
@@ -80,6 +64,17 @@
 			</fr:layout>
 		</fr:view>
 	</logic:notEmpty>
+	
+	<br/>
+	<br/>
+	<bean:define id="dismissalType" name="dismissalBean" property="dismissalType.name"/>
+	<fr:edit id="dismissalBean-information" name="dismissalBean" schema="<%= "DismissalBean.DismissalType." + dismissalType %>">
+		<fr:layout>
+			<fr:property name="classes" value="tstyle4 thlight"/>
+			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+		</fr:layout>
+		<fr:destination name="invalid" path="/studentDismissals.do?method=stepThree"/>
+	</fr:edit>
 
 	<p class="mtop15">
 		<html:submit><bean:message key="button.submit" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit>
