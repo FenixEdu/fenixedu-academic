@@ -96,8 +96,7 @@ public class WorkScheduleType extends WorkScheduleType_Base {
                 Duration finalDiscount = mealDiscount.minus(discount);
                 if (!justification
                         && getMeal().getMandatoryMealDiscount() != Duration.ZERO
-                        && lunchBreakDuration.isShorterThan(
-                                getMeal().getMinimumMealBreakInterval())
+                        && lunchBreakDuration.isShorterThan(getMeal().getMinimumMealBreakInterval())
                         && getMeal().getMandatoryMealDiscount().minus(finalDiscount).isShorterThan(
                                 getMeal().getMinimumMealBreakInterval())) {
                     return null;
@@ -233,6 +232,9 @@ public class WorkScheduleType extends WorkScheduleType_Base {
     }
 
     public boolean isValidWorkScheduleType() {
+        if (getEndValidDate() == null) {
+            return !new YearMonthDay().isBefore(getBeginValidDate());
+        }
         return new Interval(getBeginValidDate().toDateMidnight(), getEndValidDate().toDateMidnight())
                 .contains(new YearMonthDay().toDateMidnight());
     }
@@ -256,7 +258,8 @@ public class WorkScheduleType extends WorkScheduleType_Base {
             Duration maxium) {
 
         if (getBeginValidDate().equals(beginValid)
-                && getEndValidDate().equals(endValid)
+                && ((getEndValidDate() == null && endValid == null) || (getEndValidDate() != null
+                        && endValid != null && getEndValidDate().equals(endValid)))
                 && equivalent(workTime, workTimeDuration, clockingTime, clockingTimeDuration,
                         scheduleClockingType, firstNormalPeriod, firstNormalPeriodDuration,
                         secondNormalPeriod, secondNormalPeriodDuration, firstFixedPeriod,

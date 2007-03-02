@@ -192,9 +192,8 @@ public class AssiduousnessParametrizationDispatchAction extends FenixDispatchAct
         ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources",
                 LanguageUtils.getLocale());
         if (workScheduleTypeFactory.getBeginValidDate() == null
-                || workScheduleTypeFactory.getEndValidDate() == null
-                || (!workScheduleTypeFactory.getBeginValidDate().isBefore(
-                        workScheduleTypeFactory.getEndValidDate()))) {
+                || (workScheduleTypeFactory.getEndValidDate() != null && !workScheduleTypeFactory
+                        .getBeginValidDate().isBefore(workScheduleTypeFactory.getEndValidDate()))) {
             setError(request, "validation", "error.invalidDates", bundle.getString("label.validity"));
             return false;
         }
