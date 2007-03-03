@@ -570,7 +570,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     public List<Enrolment> getActiveEnrollments(ExecutionPeriod executionPeriod) {
 	List<Enrolment> results = new ArrayList<Enrolment>();
 	for (CurricularCourse curricularCourse : getAssociatedCurricularCourses()) {
-	    results.addAll(curricularCourse.getActiveEnrollments(executionPeriod));
+	    curricularCourse.addActiveEnrollments(results, executionPeriod);
 	}
 	return results;
     }
@@ -789,6 +789,15 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	executionCourseList.addAll(executionCourseSet);
 
 	return executionCourseList;
+    }
+
+    public boolean hasEnrolmentForPeriod(ExecutionPeriod executionPeriod) {
+	for (CurricularCourse curricularCourse : getAssociatedCurricularCourses()) {
+	    if (curricularCourse.hasEnrolmentForPeriod(executionPeriod)) {
+		return true;
+	    }
+	}
+	return false;
     }
     
 }

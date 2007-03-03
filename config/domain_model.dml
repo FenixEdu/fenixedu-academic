@@ -1419,6 +1419,7 @@ class net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule extends
             EnrolmentEvaluationType enrolmentEvaluationType;
        		Double weigth;
        		Boolean isExtraCurricular;
+       		Boolean isFirstTime;
         }
 
             class net.sourceforge.fenixedu.domain.OptionalEnrolment extends net.sourceforge.fenixedu.domain.Enrolment {

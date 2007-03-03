@@ -11,6 +11,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.BothAreasAreTheSameServiceException;
@@ -2167,6 +2168,24 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public Double getEctsCreditsForCourseGroup(final CourseGroup courseGroup) {
 	final CurriculumGroup curriculumGroup = findCurriculumGroupFor(courseGroup);
 	return (curriculumGroup == null) ? Double.valueOf(0d) : curriculumGroup.getAprovedEctsCredits();
+    }
+
+    public void resetIsFirstTimeEnrolmentForCurricularCourse(final CurricularCourse curricularCourse) {
+	final SortedSet<Enrolment> enrolments = new TreeSet<Enrolment>(Enrolment.COMPARATOR_BY_EXECUTION_PERIOD_AND_ID);
+	for (final Enrolment enrolment : getEnrolmentsSet()) {
+	    if (curricularCourse == enrolment.getCurricularCourse()) {
+		enrolments.add(enrolment);
+	    }
+	}
+	Boolean b = Boolean.TRUE;
+	for (final Enrolment enrolment : enrolments) {
+	    if (!enrolment.isAnnulled()) {
+		enrolment.setIsFirstTime(b);
+		b = Boolean.FALSE;
+	    } else {
+		enrolment.setIsFirstTime(Boolean.FALSE);
+	    }
+	}
     }
 
 }

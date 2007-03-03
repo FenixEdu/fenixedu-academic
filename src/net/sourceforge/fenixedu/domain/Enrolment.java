@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
+import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.enrolment.CurriculumModuleEnroledWrapper;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -22,7 +23,6 @@ import net.sourceforge.fenixedu.domain.log.EnrolmentLog;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
-import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.util.EnrolmentAction;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
@@ -44,6 +44,14 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     public static final Comparator<Enrolment> COMPARATOR_BY_EXECUTION_PERIOD = new BeanComparator(
 	    "executionPeriod");
+
+    public static final Comparator<Enrolment> COMPARATOR_BY_EXECUTION_PERIOD_AND_ID = new ComparatorChain();
+    static {
+	((ComparatorChain) COMPARATOR_BY_EXECUTION_PERIOD_AND_ID).addComparator(new BeanComparator(
+		"executionPeriod"));
+	((ComparatorChain) COMPARATOR_BY_EXECUTION_PERIOD_AND_ID).addComparator(new BeanComparator(
+		"idInternal"));
+    }
 
     public static final Comparator<Enrolment> REVERSE_COMPARATOR_BY_EXECUTION_PERIOD = new ComparatorChain();
     static {
@@ -672,19 +680,46 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     public Boolean isFirstTime() {
-	final CurricularCourse curricularCourse = getCurricularCourse();
-	final ExecutionPeriod executionPeriod = getExecutionPeriod();
-	for (final Enrolment enrolment : getStudentCurricularPlan().getEnrolmentsSet()) {
-	    if (curricularCourse == enrolment.getCurricularCourse() && enrolment.isActive()) {
-		if (enrolment.getExecutionPeriod().isBefore(executionPeriod)) {
-		    return Boolean.FALSE;
-		}
-	    }
+	if (getIsFirstTime() == null) {
+	    resetIsFirstTimeEnrolment();
 	}
-	return Boolean.TRUE;
+	return getIsFirstTime();
     }
 
-    private boolean isActive() {
+    public void resetIsFirstTimeEnrolment() {
+	if (getStudentCurricularPlan() != null && getCurricularCourse() != null
+		&& getExecutionPeriod() != null && getEnrollmentState() != null) {
+	    getStudentCurricularPlan().resetIsFirstTimeEnrolmentForCurricularCourse(getCurricularCourse());
+	} else {
+	    setIsFirstTime(Boolean.FALSE);
+	}
+    }
+
+    @Override
+    public void setDegreeModule(DegreeModule degreeModule) {
+	super.setDegreeModule(degreeModule);
+	resetIsFirstTimeEnrolment();
+    }
+
+    @Override
+    public void setEnrollmentState(EnrollmentState enrollmentState) {
+	super.setEnrollmentState(enrollmentState);
+	resetIsFirstTimeEnrolment();
+    }
+
+    @Override
+    public void setExecutionPeriod(ExecutionPeriod executionPeriod) {
+	super.setExecutionPeriod(executionPeriod);
+	resetIsFirstTimeEnrolment();
+    }
+
+    @Override
+    public void setStudentCurricularPlan(StudentCurricularPlan studentCurricularPlan) {
+	super.setStudentCurricularPlan(studentCurricularPlan);
+	resetIsFirstTimeEnrolment();
+    }
+
+    public boolean isActive() {
 	return !isAnnulled() && !isTemporarilyEnroled();
     }
 

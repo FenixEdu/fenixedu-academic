@@ -1164,14 +1164,27 @@ public class CurricularCourse extends CurricularCourse_Base {
 	return results;
     }
 
-    public List<Enrolment> getEnrolmentsByExecutionPeriod(final ExecutionPeriod executionPeriod) {
-	List<Enrolment> result = new ArrayList<Enrolment>();
+    public void addNotAnulledEnrolmentsForExecutionPeriod(final Collection<Enrolment> enrolments, final ExecutionPeriod executionPeriod) {
 	for (final CurriculumModule curriculumModule : getCurriculumModules()) {
 	    final Enrolment enrolment = (Enrolment) curriculumModule;
-	    if (enrolment.getExecutionPeriod().equals(executionPeriod)) {
-		result.add(enrolment);
+	    if (enrolment.isActive() && enrolment.getExecutionPeriod() == executionPeriod) {
+		enrolments.add(enrolment);
 	    }
-	}
+	}	
+    }
+
+    public void addActiveEnrollments(final Collection<Enrolment> enrolments, final ExecutionPeriod executionPeriod) {
+	for (final CurriculumModule curriculumModule : getCurriculumModules()) {
+	    final Enrolment enrolment = (Enrolment) curriculumModule;
+	    if (!enrolment.isAnnulled() && enrolment.getExecutionPeriod() == executionPeriod) {
+		enrolments.add(enrolment);
+	    }
+	}	
+    }
+
+    public List<Enrolment> getEnrolmentsByExecutionPeriod(final ExecutionPeriod executionPeriod) {
+	List<Enrolment> result = new ArrayList<Enrolment>();
+	addActiveEnrollments(result, executionPeriod);
 	return result;
     }
 
@@ -1225,15 +1238,9 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public List<Enrolment> getActiveEnrollments(ExecutionPeriod executionPeriod) {
-	List<Enrolment> enrollments = new ArrayList<Enrolment>();
-
-	for (Enrolment enrollment : getEnrolmentsByExecutionPeriod(executionPeriod)) {
-	    if (!enrollment.isAnnulled()) {
-		enrollments.add(enrollment);
-	    }
-	}
-
-	return enrollments;
+	List<Enrolment> enrolments = new ArrayList<Enrolment>();
+	addActiveEnrollments(enrolments, executionPeriod);
+	return enrolments;
     }
 
     public List<Enrolment> getActiveEnrollments(ExecutionYear executionYear) {
@@ -1685,6 +1692,16 @@ public class CurricularCourse extends CurricularCourse_Base {
 	for (final ExecutionPeriod executionPeriod : executionYearToCheck.getExecutionPeriodsSet()) {
 	    if (getActiveScopesInExecutionPeriod(executionPeriod).size() > 0
 		    || getActiveDegreeModuleScopesInExecutionPeriod(executionPeriod).size() > 0) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
+    public boolean hasEnrolmentForPeriod(final ExecutionPeriod executionPeriod) {
+	for (final CurriculumModule curriculumModule : getCurriculumModules()) {
+	    final Enrolment enrolment = (Enrolment) curriculumModule;
+	    if (!enrolment.isAnnulled() && enrolment.getExecutionPeriod() == executionPeriod) {
 		return true;
 	    }
 	}

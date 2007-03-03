@@ -1,0 +1,1 @@
+alter table CURRICULUM_MODULE add column IS_FIRST_TIME tinyint(1) default null;
