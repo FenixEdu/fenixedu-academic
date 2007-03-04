@@ -2023,7 +2023,7 @@
 		<action path="/viewCurriculum"
 		  	type="net.sourceforge.fenixedu.presentationTier.Action.commons.student.CurriculumDispatchAction"
 			name="studentCurricularPlanAndEnrollmentsSelectionForm"
-	        parameter="method" scope="request" input="/viewStudentsByTutor.do?method=execute&amp;page=0" validate="true">
+	        parameter="method" scope="request" input="/viewStudentsByTutor.do?method=execute&amp;page=0" validate="false">
 			<forward name="ShowStudentCurricularPlans" path="df.page.showStudentCurricularPlans"/>
 	        <forward name="ShowStudentCurriculum" path="df.page.showStudentCurriculum"/>
 	        <forward name="NotAuthorized" path="df.page.notAuthorized"/>	

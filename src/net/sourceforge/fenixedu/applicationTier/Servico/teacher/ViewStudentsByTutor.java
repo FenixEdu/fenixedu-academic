@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoTutor;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutor;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author joaosa and rmalo
@@ -20,25 +19,17 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ViewStudentsByTutor extends Service {
 
-    /*
-     * This service returns a list of students that tutor tutorizes
-     */
-    public List run(String userName) throws FenixServiceException, ExcepcaoPersistencia {
+    public List run(String userName) throws FenixServiceException {
         if (userName == null) {
             throw new FenixServiceException("error.tutor.impossibleOperation");
         }
 
-        List<InfoTutor> infoTutorStudents = new ArrayList<InfoTutor>();        
-        Teacher teacher = Teacher.readTeacherByUsername(userName);
-
-        List<Tutor> tutorStudents = teacher.getAssociatedTutors();
-
-        if (tutorStudents == null || tutorStudents.isEmpty()) {
-            return infoTutorStudents;
-        }
-
-        for (Tutor tutor : tutorStudents) {
-            infoTutorStudents.add(InfoTutor.newInfoFromDomain(tutor));
+        final List<InfoTutor> infoTutorStudents = new ArrayList<InfoTutor>();        
+        final Teacher teacher = Teacher.readTeacherByUsername(userName);
+        for (final Tutor tutor : teacher.getAssociatedTutors()) {
+            if (tutor.getStudentCurricularPlan() != null) {
+        	infoTutorStudents.add(InfoTutor.newInfoFromDomain(tutor));
+            }
         }
 
         return infoTutorStudents;
