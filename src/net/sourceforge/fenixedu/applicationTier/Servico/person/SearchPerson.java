@@ -144,25 +144,29 @@ public class SearchPerson extends Service {
 	} else {
 	    Role roleBd = searchParameters.getRole();
 	    if (roleBd == null) {
-		persons = Person.findInternalPerson(searchParameters.getName());
-	    } else {
-
-	    if ((roleBd.getRoleType() == RoleType.TEACHER) && (searchParameters.getDepartment() != null)) {
-		persons = new ArrayList<Person>();
-		teachers = searchParameters.getDepartment().getAllCurrentTeachers();
-		for (Teacher teacher : teachers) {
-		    persons.add(teacher.getPerson());
+		if (searchParameters.getName() != null) {
+		    persons = Person.findInternalPerson(searchParameters.getName());
+		} else {
+		    persons = Role.getRoleByRoleType(RoleType.PERSON).getAssociatedPersons();
 		}
-	    } else if (roleBd.getRoleType() == RoleType.EMPLOYEE) {
-		persons = new ArrayList<Person>();
-		for (Person person : roleBd.getAssociatedPersons()) {
-		    if (person.getTeacher() == null) {
-			persons.add(person);
+	    } else {
+		if ((roleBd.getRoleType() == RoleType.TEACHER)
+			&& (searchParameters.getDepartment() != null)) {
+		    persons = new ArrayList<Person>();
+		    teachers = searchParameters.getDepartment().getAllCurrentTeachers();
+		    for (Teacher teacher : teachers) {
+			persons.add(teacher.getPerson());
 		    }
+		} else if (roleBd.getRoleType() == RoleType.EMPLOYEE) {
+		    persons = new ArrayList<Person>();
+		    for (Person person : roleBd.getAssociatedPersons()) {
+			if (person.getTeacher() == null) {
+			    persons.add(person);
+			}
+		    }
+		} else {
+		    persons = roleBd.getAssociatedPersons();
 		}
-	    } else {
-		persons = roleBd.getAssociatedPersons();
-	    }
 	    }
 	}
 
