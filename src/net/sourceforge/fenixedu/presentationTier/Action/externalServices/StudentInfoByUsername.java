@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.servlet.ServletOutputStream;
@@ -21,9 +22,13 @@ import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.utils.MockUserView;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.BaseAuthenticationAction;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
@@ -48,6 +53,8 @@ public class StudentInfoByUsername extends FenixAction {
         String studentPassword;
 
         String xslt;
+
+        String externalAppPassword;
     }
 
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -60,7 +67,7 @@ public class StudentInfoByUsername extends FenixAction {
         try {
             final String requestURL = request.getRequestURL().toString();
             final String remoteHostName = BaseAuthenticationAction.getRemoteHostName(request);
-            authenticate(state.studentUsername, state.studentPassword, requestURL, remoteHostName);
+            authenticate(state.studentUsername, state.studentPassword, requestURL, remoteHostName, state.externalAppPassword);
             Collection students = this.readInformation(state.studentUsername);
             result = this.buildInfo(students);
             result = this.transformResult(result, state);
@@ -137,12 +144,16 @@ public class StudentInfoByUsername extends FenixAction {
         state.studentUsername = request.getParameter("username");
         state.studentPassword = request.getParameter("password");
         state.xslt = request.getParameter("style");
+        state.externalAppPassword = request.getParameter("externalAppPassword");
     }
 
     private IUserView authenticate(String username, String password, String requestURL,
-            String remoteHostName) throws FenixServiceException, FenixFilterException {
-        Object argsAutenticacao[] = { username, password, requestURL, remoteHostName };
-        IUserView userView = (IUserView) ServiceManagerServiceFactory.executeService(null,
+            String remoteHostName, String externalAppPassword) throws FenixServiceException, FenixFilterException {
+	if (externalAppPassword != null && externalAppPassword.equals(PropertiesManager.getProperty("externalServices.StudentInfoByUsername.externalAppPassword"))) {
+	    return new MockUserView(username, new ArrayList<Role>(), Person.readPersonByUsername(username));
+	}
+        final Object argsAutenticacao[] = { username, password, requestURL, remoteHostName };
+        final IUserView userView = (IUserView) ServiceManagerServiceFactory.executeService(null,
                 "Autenticacao", argsAutenticacao);
         return userView;
     }

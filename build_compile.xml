@@ -374,6 +374,8 @@
 						   property="sibs.destinationInstitutionId"/>
 				<replacefilter token="@webServices.external.urls@"
 						   property="webServices.external.urls"/>
+				<replacefilter token="@externalServices.StudentInfoByUsername.externalAppPassword@"
+						   property="externalServices.StudentInfoByUsername.externalAppPassword"/>
 			</replace>
 
 			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"

@@ -432,7 +432,7 @@ cas.serviceUrl.salad21=https://salad21.ist.utl.pt:8443/ciapl/loginCAS.do
 #
 email.admin.allowed.hosts=
 email.admin.password=xPtO!)&#.
-
+externalServices.StudentInfoByUsername.externalAppPassword=xpto
 
 
 #------------------------------------------------------------------------------
