@@ -21,7 +21,6 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -123,11 +122,14 @@ public class CheckCandidacyConditionsForFinalDegreeWork extends Service {
 
     private Registration findStudent(final Person person) {
     	if (person != null) {
-    		final Registration registration = person.getStudentByType(DegreeType.DEGREE);
-    		return registration == null ? person.getStudentByType(DegreeType.MASTER_DEGREE) : registration;
+    	    for (final Registration registration : person.getStudent().getRegistrationsSet()) {
+    		if (registration.getActiveStudentCurricularPlan() != null) {
+    		    return registration;
+    		}
+    	    }
     	}
-    	return null;
-	}
+	return null;
+    }
 
 	public class CandidacyPeriodNotDefinedException extends FenixServiceException {
 
