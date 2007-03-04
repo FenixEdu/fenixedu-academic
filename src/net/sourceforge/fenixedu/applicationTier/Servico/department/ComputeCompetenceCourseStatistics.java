@@ -23,7 +23,6 @@ import org.apache.commons.beanutils.BeanComparator;
 /**
  * @author pcma
  */
-
 public class ComputeCompetenceCourseStatistics extends ComputeCourseStatistics {
 
     public List<CompetenceCourseStatisticsDTO> run(Integer departementID, Integer executionPeriodID)
@@ -34,8 +33,9 @@ public class ComputeCompetenceCourseStatistics extends ComputeCourseStatistics {
 
 	final ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodID);
 
-	final Set<CompetenceCourse> competenceCourses = new HashSet(department.getCompetenceCoursesByExecutionPeriod(executionPeriod));
-	competenceCourses.addAll(department.getBolonhaCompetenceCourses(executionPeriod));
+	final Set<CompetenceCourse> competenceCourses = new HashSet<CompetenceCourse>();
+	department.addAllCompetenceCoursesByExecutionPeriod(competenceCourses, executionPeriod);
+	department.addAllBolonhaCompetenceCourses(competenceCourses, executionPeriod);
 
 	for (CompetenceCourse competenceCourse : competenceCourses) {
 	    final List<Enrolment> enrollments = competenceCourse.getActiveEnrollments(executionPeriod);

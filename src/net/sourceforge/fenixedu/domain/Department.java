@@ -12,6 +12,7 @@ package net.sourceforge.fenixedu.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.commons.CollectionUtils;
@@ -87,16 +88,12 @@ public class Department extends Department_Base {
 	return competenceCoursesByExecutionYear;
     }
 
-    public List<CompetenceCourse> getCompetenceCoursesByExecutionPeriod(ExecutionPeriod executionPeriod) {
-	List<CompetenceCourse> competenceCourses = this.getCompetenceCourses();
-	List<CompetenceCourse> competenceCoursesByExecutionPeriod = new ArrayList<CompetenceCourse>();
-	for (CompetenceCourse competenceCourse : competenceCourses) {
+    public void addAllCompetenceCoursesByExecutionPeriod(final Collection<CompetenceCourse> competenceCourses, final ExecutionPeriod executionPeriod) {
+	for (CompetenceCourse competenceCourse : getCompetenceCourses()) {
 	    if (competenceCourse.hasActiveScopesInExecutionPeriod(executionPeriod)) {
-		competenceCoursesByExecutionPeriod.add(competenceCourse);
+		competenceCourses.add(competenceCourse);
 	    }
-
 	}
-	return competenceCoursesByExecutionPeriod;
     }
 
     public List<TeacherPersonalExpectation> getTeachersPersonalExpectationsByExecutionYear(
@@ -172,14 +169,12 @@ public class Department extends Department_Base {
 	return courses;
     }
 
-    public List<CompetenceCourse> getBolonhaCompetenceCourses(ExecutionPeriod period) {
-	List<CompetenceCourse> courses = new ArrayList<CompetenceCourse>();
-	for (CompetenceCourse course : this.getBolonhaCompetenceCourses()) {
+    public void addAllBolonhaCompetenceCourses(final Collection<CompetenceCourse> competenceCourses, final ExecutionPeriod period) {
+	for (CompetenceCourse course : getBolonhaCompetenceCourses()) {
 	    if (!course.getCurricularCoursesWithActiveScopesInExecutionPeriod(period).isEmpty()) {
-		courses.add(course);
+		competenceCourses.add(course);
 	    }
 	}
-	return courses;
     }
     
     public TeacherPersonalExpectationPeriod getTeacherPersonalExpectationPeriodForExecutionYear(ExecutionYear executionYear, Class clazz) {

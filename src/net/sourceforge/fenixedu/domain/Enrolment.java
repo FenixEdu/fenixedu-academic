@@ -128,9 +128,8 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     public boolean isSpecialSeason() {
 	boolean result = false;
-	for (EnrolmentEvaluation enrolmentEvaluation : this.getEvaluations()) {
-	    result |= enrolmentEvaluation.getEnrolmentEvaluationType().equals(
-		    EnrolmentEvaluationType.SPECIAL_SEASON);
+	for (EnrolmentEvaluation enrolmentEvaluation : getEvaluations()) {
+	    result |= enrolmentEvaluation.getEnrolmentEvaluationType() == EnrolmentEvaluationType.SPECIAL_SEASON;
 	}
 
 	return result;
