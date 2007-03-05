@@ -28,7 +28,10 @@ public interface IDegreeModuleToEvaluate {
 
     public Double getEctsCredits(final ExecutionPeriod executionPeriod);
 
+    public double getAccumulatedEctsCredits(final ExecutionPeriod executionPeriod);
+    
     public List<CurricularRule> getCurricularRulesFromDegreeModule(final ExecutionPeriod executionPeriod);
 
     public Set<ICurricularRule> getCurricularRulesFromCurriculumGroup(final ExecutionPeriod executionPeriod);
+    
 }

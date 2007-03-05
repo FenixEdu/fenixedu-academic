@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
@@ -128,5 +129,13 @@ public class CurriculumModuleEnroledWrapper implements Serializable, IDegreeModu
     public Set<ICurricularRule> getCurricularRulesFromCurriculumGroup(ExecutionPeriod executionPeriod) {
 	return getCurriculumModule().isRoot() ? Collections.EMPTY_SET : getCurriculumGroup()
 		.getCurricularRules(executionPeriod);
+    }
+
+    public double getAccumulatedEctsCredits(final ExecutionPeriod executionPeriod) {
+	if(getCurriculumModule().isEnrolment()) {
+	    return ((Enrolment)getCurriculumModule()).getAccumulatedEctsCredits(executionPeriod);
+	} else {
+	    return 0d;
+	}
     }
 }

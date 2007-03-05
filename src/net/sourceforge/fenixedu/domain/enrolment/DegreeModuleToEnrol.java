@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.GetStudentTest;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
@@ -96,5 +97,13 @@ public class DegreeModuleToEnrol implements Serializable, IDegreeModuleToEvaluat
     public Set<ICurricularRule> getCurricularRulesFromCurriculumGroup(
 	    final ExecutionPeriod executionPeriod) {
 	return getCurriculumGroup().getCurricularRules(executionPeriod);
+    }
+
+    public double getAccumulatedEctsCredits(final ExecutionPeriod executionPeriod) {
+	if(isLeaf()) {
+	    return getCurriculumGroup().getStudentCurricularPlan().getAccumulatedEctsCredits(executionPeriod, (CurricularCourse) getDegreeModule());
+	} else {
+	    return 0d;
+	}
     }
 }

@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.log.EnrolmentLog;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
-import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.util.EnrolmentAction;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
@@ -1047,7 +1046,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
     
     @Override
-    public CurriculumLine findCurriculumLineFor(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod) {
+    public Enrolment findEnrolmentFor(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod) {
         return isEnroledInExecutionPeriod(curricularCourse, executionPeriod) ? this : null;
     }
 
@@ -1059,5 +1058,17 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	final Set<IDegreeModuleToEvaluate> result = new HashSet<IDegreeModuleToEvaluate>(1);
 	result.add(new CurriculumModuleEnroledWrapper(this, executionPeriod));
 	return result;
+    }
+    
+    public double getAccumulatedEctsCredits(final ExecutionPeriod executionPeriod) {
+	if(!isBolonha()) {
+	    return accumulatedEctsCredits;
+	}
+	
+	if(isExtraCurricular() || parentCurriculumGroupIsNoCourseGroupCurriculumGroup()) {
+	    return 0d;
+	}
+	
+	return getStudentCurricularPlan().getAccumulatedEctsCredits(executionPeriod, getCurricularCourse());
     }
 }
