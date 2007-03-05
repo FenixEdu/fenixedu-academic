@@ -245,5 +245,8 @@
 	<definition name="prepare-edit-evaluation-of-expectation" extends="departmentMember.masterPage">
 		<put name="body" value="/departmentMember/expectationManagement/editExpectationEvaluation.jsp"/>
 	</definition>
-
+	<definition name="see-teacher-personal-expectations-for-evaluate" extends="departmentMember.masterPage">
+		<put name="body" value="/departmentMember/expectationManagement/seeTeacherPersonalExpectationsToEvaluate.jsp"/>
+	</definition>	
+	
 </tiles-definitions>

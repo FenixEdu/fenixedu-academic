@@ -71,6 +71,18 @@ public class ExpectationsEvaluationDA extends FenixDispatchAction {
 	return mapping.findForward("prepareEditEvaluation");
     }
     
+    public ActionForward seeTeacherPersonalExpectation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+
+	TeacherPersonalExpectation teacherPersonalExpectation = getTeacherPersonalExpectationFromParameter(request);
+	Teacher loggedTeacher = getLoggedTeacher(request);
+	if(teacherPersonalExpectation != null && loggedTeacher.hasExpectationEvaluatedTeacher(teacherPersonalExpectation.getTeacher(), teacherPersonalExpectation.getExecutionYear())) {
+	    request.setAttribute("noEdit", true);
+            request.setAttribute("teacherPersonalExpectation", teacherPersonalExpectation);
+	}		
+	return mapping.findForward("seeTeacherPersonalExpectations");
+    }
+    
     private TeacherPersonalExpectation getTeacherPersonalExpectationFromParameter(final HttpServletRequest request) {
 	final String teacherPersonalExpectationIDString = request.getParameter("teacherPersonalExpectationID");
 	final Integer teacherPersonalExpectationID = Integer.valueOf(teacherPersonalExpectationIDString);

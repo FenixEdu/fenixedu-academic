@@ -578,6 +578,7 @@
 				scope="request">
 			<forward name="chooseTeacher" path="choose-teacher-to-evaluate-expectation"/>			
 			<forward name="prepareEditEvaluation" path="prepare-edit-evaluation-of-expectation"/>		
+			<forward name="seeTeacherPersonalExpectations" path="see-teacher-personal-expectations-for-evaluate"/>	
 		</action>
 		
     </action-mappings>

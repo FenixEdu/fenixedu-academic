@@ -30,6 +30,14 @@
 				<fr:property name="columnClasses" value=",bold"/>
 			</fr:layout>
 		</fr:view>
+		
+		<ul class="list5 mtop05">
+			<li>						
+				<html:link page="/evaluateExpectations.do?method=seeTeacherPersonalExpectation" paramId="teacherPersonalExpectationID" paramName="teacherPersonalExpectation" paramProperty="idInternal">
+					<bean:message key="label.see.teacher.personal.expectations" bundle="DEPARTMENT_MEMBER_RESOURCES"/>
+				</html:link>		
+			</li>
+		</ul>	
 
 		<bean:define id="submitURL">/evaluateExpectations.do?method=chooseTeacherInExecutionYear&executionYearID=<bean:write name="teacherPersonalExpectation" property="executionYear.idInternal"/></bean:define>					
 		<fr:edit id="teacherPersonalExpectationWithEvaluation" name="teacherPersonalExpectation" schema="editExpectationEvaluation" action="<%= submitURL %>">			
