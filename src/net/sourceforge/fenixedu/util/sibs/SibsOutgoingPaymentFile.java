@@ -6,8 +6,11 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.util.Money;
 
@@ -116,11 +119,27 @@ public class SibsOutgoingPaymentFile {
 
 	public Line(String code, Money minAmount, Money maxAmount, YearMonthDay startDate,
 		YearMonthDay endDate) {
+
+	    checkAmounts(code, minAmount, maxAmount);
+
 	    this.code = code;
 	    this.minAmount = minAmount;
 	    this.maxAmount = maxAmount;
 	    this.startDate = startDate;
 	    this.endDate = endDate;
+	}
+
+	private void checkAmounts(String code, Money minAmount, Money maxAmount) {
+	    if (minAmount.lessOrEqualThan(Money.ZERO)) {
+		throw new RuntimeException(MessageFormat.format(
+			"Min amount for code {0} must be greater than zero", code));
+	    }
+
+	    if (maxAmount.lessOrEqualThan(Money.ZERO)) {
+		throw new RuntimeException(MessageFormat.format(
+			"Max amount for code {0} must be greater than zero", code));
+	    }
+
 	}
 
 	public String render() {
@@ -152,15 +171,24 @@ public class SibsOutgoingPaymentFile {
 
     private Footer footer;
 
+    private Set<String> existingCodes;
+
     public SibsOutgoingPaymentFile(String sourceInstitutionId, String destinationInstitutionId,
 	    String entity) {
 	this.header = new Header(sourceInstitutionId, destinationInstitutionId, entity);
 	this.lines = new ArrayList<Line>();
 	this.footer = new Footer();
+	this.existingCodes = new HashSet<String>();
     }
 
     public void addLine(String code, Money minAmount, Money maxAmount, YearMonthDay startDate,
 	    YearMonthDay endDate) {
+	if (existingCodes.contains(code)) {
+	    throw new RuntimeException(MessageFormat.format("Code {0} is duplicated", code));
+	}
+
+	existingCodes.add(code);
+
 	this.lines.add(new Line(code, minAmount, maxAmount, startDate, endDate));
     }
 
