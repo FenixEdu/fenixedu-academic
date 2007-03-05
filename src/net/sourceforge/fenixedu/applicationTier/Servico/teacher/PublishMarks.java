@@ -65,7 +65,7 @@ public class PublishMarks extends Service {
                                 SmsUtil.getInstance().sendSmsWithoutDeliveryReports(
                                         Integer.valueOf(StringDestinationNumber),
                                         evaluation.getPublishmentMessage() + " "
-                                                + mark.getAttend().getDisciplinaExecucao().getSigla()
+                                                + mark.getAttend().getExecutionCourse().getSigla()
                                                 + " - " + mark.getMark());
                             } catch (FenixUtilException e1) {
                                 throw new SmsNotSentServiceException("error.person.sendSms");

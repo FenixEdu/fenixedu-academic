@@ -48,7 +48,7 @@ public class ReadShiftsToEnroll extends Service {
 	findShiftTypesFromExecutionCourse(attends, result);
 	findShiftsForExecutionCourseShiftTypesFromStudentEnroledShifts(attends, result);
 
-	result.setExecutionCourse(attends.getDisciplinaExecucao());
+	result.setExecutionCourse(attends.getExecutionCourse());
 	result.setEnrolled(attends.hasEnrolment());
 
 	return result;
@@ -62,7 +62,7 @@ public class ReadShiftsToEnroll extends Service {
     }
 
     private void findShiftTypesFromExecutionCourse(Attends attend, ShiftToEnrol result) {
-	for (final Shift shift : attend.getDisciplinaExecucao().getAssociatedShiftsSet()) {
+	for (final Shift shift : attend.getExecutionCourse().getAssociatedShiftsSet()) {
 	    setShiftTypeInformation(result, shift);
 	}
     }
@@ -99,39 +99,39 @@ public class ReadShiftsToEnroll extends Service {
     }
 
     private void setShiftInformation(Attends attend, ShiftToEnrol result, final Shift shift) {
-	if (shift.getDisciplinaExecucao() == attend.getDisciplinaExecucao()
+	if (shift.getDisciplinaExecucao() == attend.getExecutionCourse()
 		&& shift.getTipo() == ShiftType.TEORICA) {
 	    result.setTheoricShift(shift);
 
-	} else if (shift.getDisciplinaExecucao() == attend.getDisciplinaExecucao()
+	} else if (shift.getDisciplinaExecucao() == attend.getExecutionCourse()
 		&& shift.getTipo() == ShiftType.PRATICA) {
 	    result.setPraticShift(shift);
 
-	} else if (shift.getDisciplinaExecucao() == attend.getDisciplinaExecucao()
+	} else if (shift.getDisciplinaExecucao() == attend.getExecutionCourse()
 		&& shift.getTipo() == ShiftType.LABORATORIAL) {
 	    result.setLaboratoryShift(shift);
 
-	} else if (shift.getDisciplinaExecucao() == attend.getDisciplinaExecucao()
+	} else if (shift.getDisciplinaExecucao() == attend.getExecutionCourse()
 		&& shift.getTipo() == ShiftType.TEORICO_PRATICA) {
 	    result.setTheoricoPraticShift(shift);
 
-	} else if (shift.getDisciplinaExecucao() == attend.getDisciplinaExecucao()
+	} else if (shift.getDisciplinaExecucao() == attend.getExecutionCourse()
 		&& shift.getTipo() == ShiftType.FIELD_WORK) {
 	    result.setFieldWorkShift(shift);
 
-	} else if (shift.getDisciplinaExecucao() == attend.getDisciplinaExecucao()
+	} else if (shift.getDisciplinaExecucao() == attend.getExecutionCourse()
 		&& shift.getTipo() == ShiftType.PROBLEMS) {
 	    result.setProblemsShift(shift);
 
-	} else if (shift.getDisciplinaExecucao() == attend.getDisciplinaExecucao()
+	} else if (shift.getDisciplinaExecucao() == attend.getExecutionCourse()
 		&& shift.getTipo() == ShiftType.SEMINARY) {
 	    result.setSeminaryShift(shift);
 
-	} else if (shift.getDisciplinaExecucao() == attend.getDisciplinaExecucao()
+	} else if (shift.getDisciplinaExecucao() == attend.getExecutionCourse()
 		&& shift.getTipo() == ShiftType.TRAINING_PERIOD) {
 	    result.setTrainingShift(shift);
 
-	} else if (shift.getDisciplinaExecucao() == attend.getDisciplinaExecucao()
+	} else if (shift.getDisciplinaExecucao() == attend.getExecutionCourse()
 		&& shift.getTipo() == ShiftType.TUTORIAL_ORIENTATION) {
 	    result.setTutorialOrientationShift(shift);
 	}

@@ -31,13 +31,13 @@ public class ReadAttendsByStudentIdAndExecutionPeriodId extends Service {
         final Registration someRegistration = rootDomainObject.readRegistrationByOID(studentId);
         for (final Registration registration : someRegistration.getStudent().getRegistrationsSet()) {
             for (final Attends attends : registration.getAssociatedAttendsSet()) {
-                final ExecutionCourse executionCourse = attends.getDisciplinaExecucao();
+                final ExecutionCourse executionCourse = attends.getExecutionCourse();
                 if (executionCourse.getExecutionPeriod() == executionPeriod
                         && (!(onlyEnrolledCourses.booleanValue() && (attends.getEnrolment() == null)))) {
                     if(!onlyAttendsWithTeachers) {
                         infoAttendsList.add(InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers.newInfoFromDomain(attends));
-                    } else if((!attends.getDisciplinaExecucao().getProfessorships().isEmpty()) || 
-                            (!attends.getDisciplinaExecucao().getNonAffiliatedTeachers().isEmpty())) {
+                    } else if((!attends.getExecutionCourse().getProfessorships().isEmpty()) || 
+                            (!attends.getExecutionCourse().getNonAffiliatedTeachers().isEmpty())) {
                         infoAttendsList.add(InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers.newInfoFromDomain(attends));
                     }
                 }

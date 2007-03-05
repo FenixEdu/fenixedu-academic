@@ -74,7 +74,7 @@ public class FinalEvaluation extends FinalEvaluation_Base {
 		List<FinalMark> result = new ArrayList<FinalMark>();
 		for (Mark mark : getMarks()) {
 			FinalMark finalMark = (FinalMark) mark;
-			if(finalMark.getAttend().getDisciplinaExecucao().equals(executionCourse) 
+			if(finalMark.getAttend().getExecutionCourse().equals(executionCourse) 
 					&& finalMark.getGradeListVersion() != 0 && finalMark.getSubmitedMark() != null) {
 				result.add(finalMark);
 			}

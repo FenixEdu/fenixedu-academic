@@ -26,7 +26,7 @@ public class ReadExecutionCoursesByStudentTests extends Service {
 	final Student student = someRegistration.getStudent();
 	for (final Registration registration : student.getRegistrationsSet()) {
 	    for (Attends attend : registration.getAssociatedAttendsSet()) {
-		final ExecutionCourse executionCourse = attend.getDisciplinaExecucao();
+		final ExecutionCourse executionCourse = attend.getExecutionCourse();
 		if (student.countDistributedTestsByExecutionCourse(executionCourse) != 0) {
 		    infoExecutionCourses.add(InfoExecutionCourse.newInfoFromDomain(executionCourse));
 		}

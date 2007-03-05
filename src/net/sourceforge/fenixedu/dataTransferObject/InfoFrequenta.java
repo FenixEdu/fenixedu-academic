@@ -85,7 +85,7 @@ public class InfoFrequenta extends InfoObject {
     public void copyFromDomain(Attends frequenta) {
         super.copyFromDomain(frequenta);
 		this.setAluno(InfoStudent.newInfoFromDomain(frequenta.getAluno()));
-		this.setDisciplinaExecucao(InfoExecutionCourse.newInfoFromDomain(frequenta.getDisciplinaExecucao()));
+		this.setDisciplinaExecucao(InfoExecutionCourse.newInfoFromDomain(frequenta.getExecutionCourse()));
 		this.setInfoEnrolment(InfoEnrolment.newInfoFromDomain(frequenta.getEnrolment()));
     }
 

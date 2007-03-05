@@ -39,8 +39,8 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
 
     private static final Comparator<Attends> ATTENDS_COMPARATOR = new Comparator<Attends>(){
 		public int compare(final Attends attends1, final Attends attends2) {
-			final ExecutionCourse executionCourse1 = attends1.getDisciplinaExecucao();
-			final ExecutionCourse executionCourse2 = attends2.getDisciplinaExecucao();
+			final ExecutionCourse executionCourse1 = attends1.getExecutionCourse();
+			final ExecutionCourse executionCourse2 = attends2.getExecutionCourse();
 			return executionCourse1.getNome().compareTo(executionCourse2.getNome());
 		}};
 
@@ -116,7 +116,7 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
             for (final Registration registration : getUserView(request).getPerson().getStudents()) {
                 for (final Attends attend : registration.getOrderedAttends()) {
                     if (attend.getEnrolment() != null) {
-                        final ExecutionCourse executionCourse = attend.getDisciplinaExecucao();
+                        final ExecutionCourse executionCourse = attend.getExecutionCourse();
                         if (executionCourse.getExecutionPeriod() == selectedExecutionPeriod) {
                             weeklyWorkLoadView.add(attend);
                             attends.add(attend);
@@ -138,7 +138,7 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
     private Attends findFirstAttends(final HttpServletRequest request, final ExecutionPeriod selectedExecutionPeriod) throws FenixFilterException, FenixServiceException {
         for (final Registration registration : getUserView(request).getPerson().getStudents()) {
             for (final Attends attend : registration.getOrderedAttends()) {
-                final ExecutionCourse executionCourse = attend.getDisciplinaExecucao();
+                final ExecutionCourse executionCourse = attend.getExecutionCourse();
                 if (executionCourse.getExecutionPeriod() == selectedExecutionPeriod
                         && attend.getEnrolment() != null) {
                     return attend;

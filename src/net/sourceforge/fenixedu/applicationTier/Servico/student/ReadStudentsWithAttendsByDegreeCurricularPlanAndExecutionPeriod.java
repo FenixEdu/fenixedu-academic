@@ -52,8 +52,8 @@ public class ReadStudentsWithAttendsByDegreeCurricularPlanAndExecutionPeriod ext
         for (Attends attends : attendsList) {
 
             if ((!onlyAttendsWithTeachers)
-                    || ((!attends.getDisciplinaExecucao().getProfessorships().isEmpty()) || (!attends
-                            .getDisciplinaExecucao().getNonAffiliatedTeachers().isEmpty()))) {
+                    || ((!attends.getExecutionCourse().getProfessorships().isEmpty()) || (!attends
+                            .getExecutionCourse().getNonAffiliatedTeachers().isEmpty()))) {
 
                 InfoFrequenta infoAttends = InfoFrequenta.newInfoFromDomain(attends);
                 if (!infoAttends.getAluno().equals(currentStudent)) {

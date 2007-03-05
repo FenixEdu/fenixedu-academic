@@ -56,7 +56,7 @@ public class CreateProjectSubmission extends Service {
 
     private Group createPermittedGroup(CreateProjectSubmissionBean createProjectSubmissionBean) {
         final ExecutionCourse executionCourse = createProjectSubmissionBean.getAttends()
-                .getDisciplinaExecucao();
+                .getExecutionCourse();
         final StudentGroup studentGroup = createProjectSubmissionBean.getStudentGroup();
         return new GroupUnion(new ExecutionCourseTeachersGroup(executionCourse),
                 new StudentGroupStudentsGroup(studentGroup));
@@ -72,7 +72,7 @@ public class CreateProjectSubmission extends Service {
         final Project project = createProjectSubmissionBean.getProject();
         final StudentGroup studentGroup = createProjectSubmissionBean.getStudentGroup();
         final String fileToDeleteExternalId = getFileToDeleteExternalId(project, studentGroup);
-        final VirtualPath filePath = getVirtualPath(attends.getDisciplinaExecucao(), project, studentGroup);
+        final VirtualPath filePath = getVirtualPath(attends.getExecutionCourse(), project, studentGroup);
       
         Collection<FileSetMetaData> metaData = new ArrayList<FileSetMetaData>();
         metaData.add(FileSetMetaData.createAuthorMeta(attends.getAluno().getPerson().getNome()));

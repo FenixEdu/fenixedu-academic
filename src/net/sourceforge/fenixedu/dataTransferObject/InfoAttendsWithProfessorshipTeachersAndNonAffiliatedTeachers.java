@@ -56,13 +56,13 @@ public class InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers
         super.copyFromDomain(attends);
 		
 		this.teachers = new ArrayList<InfoTeacher>();
-		List<Professorship> professorships = attends.getDisciplinaExecucao().getProfessorships();
+		List<Professorship> professorships = attends.getExecutionCourse().getProfessorships();
 		for(Professorship professorship : professorships) {
 			this.teachers.add(InfoTeacher.newInfoFromDomain(professorship.getTeacher()));
 		}
 		
 		this.nonAffiliatedTeachers = new ArrayList<InfoNonAffiliatedTeacher>();
-		List<NonAffiliatedTeacher> nonAffiliatedTeachers = attends.getDisciplinaExecucao().getNonAffiliatedTeachers();
+		List<NonAffiliatedTeacher> nonAffiliatedTeachers = attends.getExecutionCourse().getNonAffiliatedTeachers();
 		for(NonAffiliatedTeacher naTeacher : nonAffiliatedTeachers) {
 			this.nonAffiliatedTeachers.add(InfoNonAffiliatedTeacher.newInfoFromDomain(naTeacher));
 		}

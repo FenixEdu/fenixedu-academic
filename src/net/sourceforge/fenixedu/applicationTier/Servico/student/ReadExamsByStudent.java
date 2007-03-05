@@ -78,7 +78,7 @@ public class ReadExamsByStudent extends Service {
 
             Iterator examsToEnrollIterator = attends.iterator();
             while (examsToEnrollIterator.hasNext()) {
-                examsToEnroll.addAll(((Attends) examsToEnrollIterator.next()).getDisciplinaExecucao()
+                examsToEnroll.addAll(((Attends) examsToEnrollIterator.next()).getExecutionCourse()
                         .getAssociatedEvaluations());
             }
 

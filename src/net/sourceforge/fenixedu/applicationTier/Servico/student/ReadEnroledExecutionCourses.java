@@ -60,7 +60,7 @@ public class ReadEnroledExecutionCourses extends Service {
         Iterator iter = allAttend.iterator();
 
         while (iter.hasNext()) {
-            ExecutionCourse executionCourse = ((Attends) iter.next()).getDisciplinaExecucao();
+            ExecutionCourse executionCourse = ((Attends) iter.next()).getExecutionCourse();
             if (executionCourse.getExecutionPeriod().getState().equals(PeriodState.CURRENT)) {
                 List<Grouping> allGroupProperties = executionCourse.getGroupings();
                 boolean result = checkPeriodEnrollment(allGroupProperties);

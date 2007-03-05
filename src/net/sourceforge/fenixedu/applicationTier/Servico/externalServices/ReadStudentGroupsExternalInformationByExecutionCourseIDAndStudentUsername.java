@@ -100,13 +100,13 @@ public class ReadStudentGroupsExternalInformationByExecutionCourseIDAndStudentUs
     private InfoExternalStudentInfo getStudentInformation(Attends attend) throws ExcepcaoPersistencia {
 	InfoExternalStudentInfo student = new InfoExternalStudentInfo();
 	student.setCourse(InfoExternalExecutionCourseInfo.newFromExecutionCourse(attend
-		.getDisciplinaExecucao()));
+		.getExecutionCourse()));
 	student.setDegree(InfoExternalDegreeCurricularPlanInfo.newFromDegreeCurricularPlan(attend
 		.getAluno().getActiveStudentCurricularPlan().getDegreeCurricularPlan()));
 	student.setName(new String(attend.getAluno().getPerson().getNome()));
 	student.setNumber(new Integer(attend.getAluno().getNumber().intValue()));
 
-	Collection shifts = this.findShifts(attend.getAluno(), attend.getDisciplinaExecucao());
+	Collection shifts = this.findShifts(attend.getAluno(), attend.getExecutionCourse());
 	student.setShifts(this.buildShiftsInfo(shifts));
 
 	return student;

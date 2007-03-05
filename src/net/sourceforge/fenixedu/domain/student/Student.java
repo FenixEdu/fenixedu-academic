@@ -519,7 +519,7 @@ public class Student extends Student_Base {
     public Attends readAttendByExecutionCourse(ExecutionCourse executionCourse) {
 	for (final Registration registration : getRegistrationsSet()) {
 	    for (Attends attend : registration.getAssociatedAttends()) {
-		if (attend.getDisciplinaExecucao().equals(executionCourse)) {
+		if (attend.getExecutionCourse().equals(executionCourse)) {
 		    return attend;
 		}
 	    }

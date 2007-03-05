@@ -74,7 +74,7 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
 
 	    executionPeriods = new TreeSet<ExecutionPeriod>(executionPeriodComparator);
 	    for (final Attends attends : registration.getAssociatedAttends()) {
-		executionPeriods.add(attends.getDisciplinaExecucao().getExecutionPeriod());
+		executionPeriods.add(attends.getExecutionCourse().getExecutionPeriod());
 	    }
 	}
 	return executionPeriods;
@@ -91,7 +91,7 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
 
 	    executionCourses = new TreeSet<ExecutionCourse>(executionCourseComparator);
 	    for (final Attends attends : registration.getAssociatedAttends()) {
-		final ExecutionCourse executionCourse = attends.getDisciplinaExecucao();
+		final ExecutionCourse executionCourse = attends.getExecutionCourse();
 		if (executionCourse.getExecutionPeriod() == executionPeriod) {
 		    executionCourses.add(executionCourse);
 		}
@@ -252,7 +252,7 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
 	final Registration registration = getStudent();
 
 	for (final Attends attends : registration.getAssociatedAttends()) {
-	    final ExecutionCourse executionCourse = attends.getDisciplinaExecucao();
+	    final ExecutionCourse executionCourse = attends.getExecutionCourse();
 	    if (executionCourse.getExecutionPeriod() == executionPeriod
 		    && (getExecutionCourseID() == null || getExecutionCourseID().equals(
 			    executionCourse.getIdInternal()))) {

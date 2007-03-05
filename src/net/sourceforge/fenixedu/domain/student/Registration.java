@@ -253,7 +253,7 @@ public class Registration extends Registration_Base {
 
     public boolean attends(final ExecutionCourse executionCourse) {
 	for (final Attends attends : getAssociatedAttends()) {
-	    if (attends.getDisciplinaExecucao() == executionCourse) {
+	    if (attends.getExecutionCourse() == executionCourse) {
 		return true;
 	    }
 	}
@@ -263,8 +263,8 @@ public class Registration extends Registration_Base {
     public List<WrittenEvaluation> getWrittenEvaluations(final ExecutionPeriod executionPeriod) {
 	final List<WrittenEvaluation> result = new ArrayList<WrittenEvaluation>();
 	for (final Attends attend : this.getAssociatedAttends()) {
-	    if (attend.getDisciplinaExecucao().getExecutionPeriod() == executionPeriod) {
-		for (final Evaluation evaluation : attend.getDisciplinaExecucao()
+	    if (attend.getExecutionCourse().getExecutionPeriod() == executionPeriod) {
+		for (final Evaluation evaluation : attend.getExecutionCourse()
 			.getAssociatedEvaluations()) {
 		    if (evaluation instanceof WrittenEvaluation && !result.contains(evaluation)) {
 			result.add((WrittenEvaluation) evaluation);
@@ -290,8 +290,8 @@ public class Registration extends Registration_Base {
     public List<Exam> getUnenroledExams(final ExecutionPeriod executionPeriod) {
 	final List<Exam> result = new ArrayList<Exam>();
 	for (final Attends attend : this.getAssociatedAttends()) {
-	    if (attend.getDisciplinaExecucao().getExecutionPeriod() == executionPeriod) {
-		for (final Evaluation evaluation : attend.getDisciplinaExecucao()
+	    if (attend.getExecutionCourse().getExecutionPeriod() == executionPeriod) {
+		for (final Evaluation evaluation : attend.getExecutionCourse()
 			.getAssociatedEvaluations()) {
 		    if (evaluation instanceof Exam && !this.isEnroledIn(evaluation)) {
 			result.add((Exam) evaluation);
@@ -317,8 +317,8 @@ public class Registration extends Registration_Base {
     public List<WrittenTest> getUnenroledWrittenTests(final ExecutionPeriod executionPeriod) {
 	final List<WrittenTest> result = new ArrayList<WrittenTest>();
 	for (final Attends attend : this.getAssociatedAttends()) {
-	    if (attend.getDisciplinaExecucao().getExecutionPeriod() == executionPeriod) {
-		for (final Evaluation evaluation : attend.getDisciplinaExecucao()
+	    if (attend.getExecutionCourse().getExecutionPeriod() == executionPeriod) {
+		for (final Evaluation evaluation : attend.getExecutionCourse()
 			.getAssociatedEvaluations()) {
 		    if (evaluation instanceof WrittenTest && !this.isEnroledIn(evaluation)) {
 			result.add((WrittenTest) evaluation);
@@ -332,8 +332,8 @@ public class Registration extends Registration_Base {
     public List<Project> getProjects(final ExecutionPeriod executionPeriod) {
 	final List<Project> result = new ArrayList<Project>();
 	for (final Attends attend : this.getAssociatedAttends()) {
-	    if (attend.getDisciplinaExecucao().getExecutionPeriod() == executionPeriod) {
-		for (final Evaluation evaluation : attend.getDisciplinaExecucao()
+	    if (attend.getExecutionCourse().getExecutionPeriod() == executionPeriod) {
+		for (final Evaluation evaluation : attend.getExecutionCourse()
 			.getAssociatedEvaluations()) {
 		    if (evaluation instanceof Project) {
 			result.add((Project) evaluation);
@@ -585,7 +585,7 @@ public class Registration extends Registration_Base {
     public List<Attends> readAttendsInCurrentExecutionPeriod() {
 	final List<Attends> attends = new ArrayList<Attends>();
 	for (final Attends attend : this.getAssociatedAttendsSet()) {
-	    if (attend.getDisciplinaExecucao().getExecutionPeriod().getState().equals(
+	    if (attend.getExecutionCourse().getExecutionPeriod().getState().equals(
 		    PeriodState.CURRENT)) {
 		attends.add(attend);
 	    }
@@ -596,7 +596,7 @@ public class Registration extends Registration_Base {
     public List<Attends> readAttendsByExecutionPeriod(ExecutionPeriod executionPeriod) {
 	List<Attends> attends = new ArrayList<Attends>();
 	for (Attends attend : this.getAssociatedAttends()) {
-	    if (attend.getDisciplinaExecucao().getExecutionPeriod().equals(executionPeriod)) {
+	    if (attend.getExecutionCourse().getExecutionPeriod().equals(executionPeriod)) {
 		attends.add(attend);
 	    }
 	}
@@ -921,9 +921,9 @@ public class Registration extends Registration_Base {
     public List<ExecutionCourse> getAttendingExecutionCoursesForCurrentExecutionPeriod() {
 	final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
 	for (final Attends attends : getAssociatedAttendsSet()) {
-	    if (attends.getDisciplinaExecucao().getExecutionPeriod().getState().equals(
+	    if (attends.getExecutionCourse().getExecutionPeriod().getState().equals(
 		    PeriodState.CURRENT)) {
-		result.add(attends.getDisciplinaExecucao());
+		result.add(attends.getExecutionCourse());
 	    }
 	}
 	return result;
@@ -932,8 +932,8 @@ public class Registration extends Registration_Base {
     public List<ExecutionCourse> getAttendingExecutionCoursesFor(final ExecutionPeriod executionPeriod) {
 	final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
 	for (final Attends attends : getAssociatedAttendsSet()) {
-	    if (attends.getDisciplinaExecucao().getExecutionPeriod() == executionPeriod) {
-		result.add(attends.getDisciplinaExecucao());
+	    if (attends.getExecutionCourse().getExecutionPeriod() == executionPeriod) {
+		result.add(attends.getExecutionCourse());
 	    }
 	}
 	return result;
@@ -953,7 +953,7 @@ public class Registration extends Registration_Base {
     public List<Attends> getAttendsForExecutionPeriod(final ExecutionPeriod executionPeriod) {
 	final List<Attends> result = new ArrayList<Attends>();
 	for (final Attends attends : getAssociatedAttendsSet()) {
-	    if (attends.getDisciplinaExecucao().getExecutionPeriod() == executionPeriod) {
+	    if (attends.getExecutionCourse().getExecutionPeriod() == executionPeriod) {
 		result.add(attends);
 	    }
 	}
@@ -1038,7 +1038,7 @@ public class Registration extends Registration_Base {
     public Set<SchoolClass> getSchoolClassesToEnrol() {
 	final Set<SchoolClass> result = new HashSet<SchoolClass>();
 	for (final Attends attends : getAssociatedAttendsSet()) {
-	    final ExecutionCourse executionCourse = attends.getDisciplinaExecucao();
+	    final ExecutionCourse executionCourse = attends.getExecutionCourse();
 
 	    if (executionCourse.getExecutionPeriod().getState().equals(PeriodState.CURRENT)) {
 		result.addAll(getSchoolClassesToEnrolBy(executionCourse));

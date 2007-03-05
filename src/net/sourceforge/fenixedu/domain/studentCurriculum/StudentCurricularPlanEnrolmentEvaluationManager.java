@@ -30,6 +30,7 @@ public class StudentCurricularPlanEnrolmentEvaluationManager extends StudentCurr
     protected void unEnrol() {
 	for (final CurriculumModule curriculumModule : enrolmentContext.getToRemove()) {
 	    if (curriculumModule.isLeaf()) {
+		
 		// find enrolment evaluation that is an improvement / special season and delete it
 	    } else {
 		// throw exception, error in render

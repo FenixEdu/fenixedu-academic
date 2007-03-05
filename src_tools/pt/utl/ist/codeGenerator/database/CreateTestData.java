@@ -1064,7 +1064,7 @@ public class CreateTestData {
     }
 
     private static void createStudentShifts(final Attends attends) {
-	final ExecutionCourse executionCourse = attends.getDisciplinaExecucao();
+	final ExecutionCourse executionCourse = attends.getExecutionCourse();
 	for (final Shift shift : executionCourse.getAssociatedShiftsSet()) {
 	    if (!isEnroledInShift(attends, shift.getTipo())) {
 		shift.reserveForStudent(attends.getAluno());
@@ -1073,7 +1073,7 @@ public class CreateTestData {
     }
 
     private static boolean isEnroledInShift(final Attends attends, final ShiftType shiftType) {
-	final ExecutionCourse executionCourse = attends.getDisciplinaExecucao();
+	final ExecutionCourse executionCourse = attends.getExecutionCourse();
 	for (final Shift shift : attends.getAluno().getShiftsSet()) {
 	    if (shift.getTipo() == shiftType && shift.getDisciplinaExecucao() == executionCourse) {
 		return true;

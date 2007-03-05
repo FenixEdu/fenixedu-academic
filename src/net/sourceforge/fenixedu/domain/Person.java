@@ -1849,7 +1849,7 @@ public class Person extends Person_Base {
 	final Set<Attends> attends = new HashSet<Attends>();
 	for (final Registration registration : getStudentsSet()) {
 	    for (final Attends attend : registration.getAssociatedAttendsSet()) {
-		final ExecutionCourse executionCourse = attend.getDisciplinaExecucao();
+		final ExecutionCourse executionCourse = attend.getExecutionCourse();
 		final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
 		if (executionPeriod.getState().equals(PeriodState.CURRENT)) {
 		    attends.add(attend);
@@ -2077,9 +2077,9 @@ public class Person extends Person_Base {
 	final Collection<AnnouncementBoard> result = new HashSet<AnnouncementBoard>();
 	for (final Registration registration : getStudent().getRegistrationsSet()) {
 	    for (final Attends attends : registration.getAssociatedAttendsSet()) {
-		if (attends.getDisciplinaExecucao().isLecturedIn(
+		if (attends.getExecutionCourse().isLecturedIn(
 			ExecutionPeriod.readActualExecutionPeriod())) {
-		    final AnnouncementBoard board = attends.getDisciplinaExecucao().getBoard();
+		    final AnnouncementBoard board = attends.getExecutionCourse().getBoard();
 		    if (board != null && board.hasReaderOrWriter(this)) {
 			result.add(board);
 		    }

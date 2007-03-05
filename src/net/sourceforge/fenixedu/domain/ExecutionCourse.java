@@ -609,7 +609,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
 	private static boolean alreadyHasAttend(Enrolment enrolment, ExecutionPeriod executionPeriod) {
 	    for (Attends attends : enrolment.getAttends()) {
-		if (attends.getDisciplinaExecucao().getExecutionPeriod().equals(executionPeriod)) {
+		if (attends.getExecutionCourse().getExecutionPeriod().equals(executionPeriod)) {
 		    return true;
 		}
 	    }

@@ -30,7 +30,7 @@ public class AdvisoryBean {
         created = new Date();
         expires = created;
         sender = messages.getMessage(locale, "weekly.work.load.advisory.from");
-        final ExecutionCourse executionCourse = attends.getDisciplinaExecucao();
+        final ExecutionCourse executionCourse = attends.getExecutionCourse();
         subject = messages.getMessage(locale, "weekly.work.load.advisory.subject", executionCourse.getNome());
         final String intervalString = fmt.print(responseWeek.getStart()) + " - " + fmt.print(responseWeek.getEnd());
         message = messages.getMessage(locale, "weekly.work.load.advisory.message", executionCourse.getNome(), intervalString);
