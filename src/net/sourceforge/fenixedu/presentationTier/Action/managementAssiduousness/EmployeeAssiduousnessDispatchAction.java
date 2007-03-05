@@ -103,11 +103,12 @@ public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
 	if (!StringUtils.isEmpty(dateString)) {
 	    date = new YearMonthDay(dateString);
 	}
+	YearMonth yearMonth = getYearMonth(request, date);
 	EmployeeJustificationFactoryCreator employeeJustificationFactory = new EmployeeJustificationFactoryCreator(
 		employee, date, EmployeeJustificationFactory.CorrectionType.valueOf(request
-			.getParameter("correction")));
+			.getParameter("correction")), yearMonth);
 	request.setAttribute("employeeJustificationFactory", employeeJustificationFactory);
-	request.setAttribute("yearMonth", getYearMonth(request, date));
+	request.setAttribute("yearMonth",yearMonth);
 	if (StringUtils.isEmpty(dateString)) {
 	    return new ViewEmployeeAssiduousnessDispatchAction().showJustifications(mapping, form,
 		    request, response);
@@ -216,34 +217,34 @@ public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
     public ActionForward prepareAssociateEmployeeWorkSchedule(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
 
-        Integer scheduleID = getIntegerFromRequest(request, "scheduleID");
-        EmployeeScheduleFactory employeeScheduleFactory = null;
-        if (scheduleID != null) {
-            Schedule schedule = (Schedule) RootDomainObject.readDomainObjectByOID(Schedule.class,
-                    scheduleID);
-            employeeScheduleFactory = new EmployeeScheduleFactory(schedule, SessionUtils.getUserView(
-                    request).getPerson().getEmployee());
-        } else {
-            employeeScheduleFactory = (EmployeeScheduleFactory) getFactoryObject();
-	if (employeeScheduleFactory != null) {
-	    DynaActionForm actionForm = (DynaActionForm) form;
-	    String addWorkWeek = actionForm.getString("addWorkWeek");
-	    if (addWorkWeek.equalsIgnoreCase("yes")) {
-		employeeScheduleFactory.addEmployeeWorkWeekSchedule();
-		RenderUtils.invalidateViewState();
-	    } else if (addWorkWeek.equalsIgnoreCase("remove")) {
-		employeeScheduleFactory.removeEmployeeWorkWeekSchedule();
-	    }
+	Integer scheduleID = getIntegerFromRequest(request, "scheduleID");
+	EmployeeScheduleFactory employeeScheduleFactory = null;
+	if (scheduleID != null) {
+	    Schedule schedule = (Schedule) RootDomainObject.readDomainObjectByOID(Schedule.class,
+		    scheduleID);
+	    employeeScheduleFactory = new EmployeeScheduleFactory(schedule, SessionUtils.getUserView(
+		    request).getPerson().getEmployee());
 	} else {
-	    Integer employeeID = getIntegerFromRequest(request, "employeeID");
-	    Employee employee = rootDomainObject.readEmployeeByOID(employeeID);
-                Schedule currentSchedule = employee.getAssiduousness() != null ? employee
-                        .getAssiduousness().getCurrentSchedule() : null;
-                employeeScheduleFactory = new EmployeeScheduleFactory(employee, SessionUtils
-                        .getUserView(request).getPerson().getEmployee(), currentSchedule);
+	    employeeScheduleFactory = (EmployeeScheduleFactory) getFactoryObject();
+	    if (employeeScheduleFactory != null) {
+		DynaActionForm actionForm = (DynaActionForm) form;
+		String addWorkWeek = actionForm.getString("addWorkWeek");
+		if (addWorkWeek.equalsIgnoreCase("yes")) {
+		    employeeScheduleFactory.addEmployeeWorkWeekSchedule();
+		    RenderUtils.invalidateViewState();
+		} else if (addWorkWeek.equalsIgnoreCase("remove")) {
+		    employeeScheduleFactory.removeEmployeeWorkWeekSchedule();
+		}
+	    } else {
+		Integer employeeID = getIntegerFromRequest(request, "employeeID");
+		Employee employee = rootDomainObject.readEmployeeByOID(employeeID);
+		Schedule currentSchedule = employee.getAssiduousness() != null ? employee
+			.getAssiduousness().getCurrentSchedule() : null;
+		employeeScheduleFactory = new EmployeeScheduleFactory(employee, SessionUtils
+			.getUserView(request).getPerson().getEmployee(), currentSchedule);
+	    }
 	}
-        }
-        request.setAttribute("yearMonth", getYearMonth(request, null));
+	request.setAttribute("yearMonth", getYearMonth(request, null));
 	request.setAttribute("employeeScheduleBean", employeeScheduleFactory);
 	return mapping.findForward("prepare-associate-schedule");
     }
@@ -252,10 +253,9 @@ public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
 	    HttpServletRequest request, HttpServletResponse response) {
 
 	EmployeeScheduleFactory employeeScheduleFactory = (EmployeeScheduleFactory) getFactoryObject();
-        Schedule schedule = employeeScheduleFactory.getSchedule();
-	if (employeeScheduleFactory.getEmployee().getAssiduousness().overlapsOtherSchedules(
-                schedule, employeeScheduleFactory.getBeginDate(),
-		employeeScheduleFactory.getEndDate())) {
+	Schedule schedule = employeeScheduleFactory.getSchedule();
+	if (employeeScheduleFactory.getEmployee().getAssiduousness().overlapsOtherSchedules(schedule,
+		employeeScheduleFactory.getBeginDate(), employeeScheduleFactory.getEndDate())) {
 	    setError(request, "errorMessage", (ActionMessage) new ActionMessage(
 		    "error.schedule.overlapsWithOther"));
 	    return mapping.getInputForward();
@@ -285,11 +285,12 @@ public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
 		.readWorkScheduleTypeByOID(workScheduleTypeID);
 	employeeScheduleFactory.setChoosenWorkSchedule(workScheduleType);
 
-        Schedule schedule = employeeScheduleFactory.getSchedule();
+	Schedule schedule = employeeScheduleFactory.getSchedule();
 	if (hasAnythingChanged(employeeScheduleFactory)) {
-           schedule = (Schedule) executeService(request, "ExecuteFactoryMethod", new Object[] { employeeScheduleFactory });           
+	    schedule = (Schedule) executeService(request, "ExecuteFactoryMethod",
+		    new Object[] { employeeScheduleFactory });
 	}
-        request.setAttribute("scheduleID",schedule.getIdInternal());
+	request.setAttribute("scheduleID", schedule.getIdInternal());
 	RenderUtils.invalidateViewState();
 	request.setAttribute("employeeID", employeeScheduleFactory.getEmployee().getIdInternal());
 	return prepareAssociateEmployeeWorkSchedule(mapping, form, request, response);
@@ -300,10 +301,9 @@ public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
 	    FenixServiceException {
 
 	EmployeeScheduleFactory employeeScheduleFactory = (EmployeeScheduleFactory) getFactoryObject();
-        Schedule schedule = employeeScheduleFactory.getSchedule();
-	if (employeeScheduleFactory.getEmployee().getAssiduousness().overlapsOtherSchedules(
-                schedule, employeeScheduleFactory.getBeginDate(),
-		employeeScheduleFactory.getEndDate())) {
+	Schedule schedule = employeeScheduleFactory.getSchedule();
+	if (employeeScheduleFactory.getEmployee().getAssiduousness().overlapsOtherSchedules(schedule,
+		employeeScheduleFactory.getBeginDate(), employeeScheduleFactory.getEndDate())) {
 	    setError(request, "errorMessage", (ActionMessage) new ActionMessage(
 		    "error.schedule.overlapsWithOther"));
 	    return mapping.getInputForward();
@@ -317,14 +317,15 @@ public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
 	employeeScheduleFactory.setToDeleteDays(true);
 	if (canDeleteDays(employeeScheduleFactory)) {
 	    if (!areEmptyDays(employeeScheduleFactory)) {
-                schedule = (Schedule) executeService(request, "ExecuteFactoryMethod", new Object[] { employeeScheduleFactory });                                
+		schedule = (Schedule) executeService(request, "ExecuteFactoryMethod",
+			new Object[] { employeeScheduleFactory });
 	    }
 	} else {
 	    setError(request, "errorMessage", (ActionMessage) new ActionMessage(
 		    "error.schedule.canNotDeleteAllDays"));
 	    return mapping.getInputForward();
 	}
-        request.setAttribute("scheduleID",schedule.getIdInternal());
+	request.setAttribute("scheduleID", schedule.getIdInternal());
 	RenderUtils.invalidateViewState();
 	request.setAttribute("employeeID", employeeScheduleFactory.getEmployee().getIdInternal());
 	return prepareAssociateEmployeeWorkSchedule(mapping, form, request, response);
@@ -389,20 +390,20 @@ public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
     }
 
     private boolean hasAnythingChanged(EmployeeScheduleFactory employeeScheduleFactory) {
-        Schedule schedule = employeeScheduleFactory.getSchedule();
+	Schedule schedule = employeeScheduleFactory.getSchedule();
 	boolean differencesInWorkSchedules = true;
 	boolean differencesInDates = true;
-        if (schedule.getBeginDate().isEqual(employeeScheduleFactory.getBeginDate())
-                && ((schedule.getEndDate() == null && employeeScheduleFactory.getEndDate() == null) || (schedule
+	if (schedule.getBeginDate().isEqual(employeeScheduleFactory.getBeginDate())
+		&& ((schedule.getEndDate() == null && employeeScheduleFactory.getEndDate() == null) || (schedule
 			.getEndDate() != null
-                        && employeeScheduleFactory.getEndDate() != null && schedule.getEndDate()
+			&& employeeScheduleFactory.getEndDate() != null && schedule.getEndDate()
 			.isEqual(employeeScheduleFactory.getEndDate())))) {
 	    differencesInDates = false;
 	}
 	for (EmployeeWorkWeekScheduleBean workWeekScheduleBean : employeeScheduleFactory
 		.getEmployeeWorkWeekScheduleList()) {
 	    WorkWeek workWeek = workWeekScheduleBean.getWorkWeekByCheckedBox();
-            for (WorkSchedule workSchedule : schedule.getWorkSchedules()) {
+	    for (WorkSchedule workSchedule : schedule.getWorkSchedules()) {
 		if (workSchedule.getPeriodicity().getWorkWeekNumber().equals(
 			workWeekScheduleBean.getWorkWeekNumber())) {
 		    if (workSchedule.getWorkScheduleType() == employeeScheduleFactory

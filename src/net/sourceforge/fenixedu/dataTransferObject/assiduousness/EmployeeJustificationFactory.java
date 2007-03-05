@@ -79,11 +79,12 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
     public static class EmployeeJustificationFactoryCreator extends EmployeeJustificationFactory {
 
 	public EmployeeJustificationFactoryCreator(Employee employee, YearMonthDay date,
-		CorrectionType correctionType) {
+		CorrectionType correctionType, YearMonth yearMonth) {
 	    setEmployee(employee);
 	    setDate(date);
 	    setBeginDate(date);
 	    setCorrectionType(correctionType);
+	    setYearMonth(yearMonth);
 	}
 
 	public Object execute() {
