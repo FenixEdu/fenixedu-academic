@@ -32,19 +32,19 @@ public class Email extends Email_Base {
     }
 
     public String[] replyTos() {
-	return getReplyTos().toArray();
+	return getReplyTos() == null ? null : getReplyTos().toArray();
     }
 
     public Collection<String> toAddresses() {
-	return getToAddresses().toCollection();
+	return getToAddresses() == null ? null : getToAddresses().toCollection();
     }
 
     public Collection<String> ccAddresses() {
-	return getCcAddresses().toCollection();
+	return getCcAddresses() == null ? null : getCcAddresses().toCollection();
     }
 
     public Collection<String> bccAddresses() {
-	return getBccAddresses().toCollection();
+	return getBccAddresses() == null ? null : getBccAddresses().toCollection();
     }
 
 }
