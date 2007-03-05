@@ -33,7 +33,7 @@
 		
 		<ul class="list5 mtop05">
 			<li>						
-				<html:link target="_blank" page="/evaluateExpectations.do?method=seeTeacherPersonalExpectation" paramId="teacherPersonalExpectationID" paramName="teacherPersonalExpectation" paramProperty="idInternal">
+				<html:link page="/evaluateExpectations.do?method=seeTeacherPersonalExpectation" paramId="teacherPersonalExpectationID" paramName="teacherPersonalExpectation" paramProperty="idInternal">
 					<bean:message key="label.see.teacher.personal.expectations" bundle="DEPARTMENT_MEMBER_RESOURCES"/>
 				</html:link>		
 			</li>
