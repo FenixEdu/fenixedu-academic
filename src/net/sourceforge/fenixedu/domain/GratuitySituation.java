@@ -257,7 +257,7 @@ public class GratuitySituation extends GratuitySituation_Base {
     }
 
     public boolean isPayed() {
-	return getRemainingValue().compareTo(Double.valueOf(0)) <= 0;
+	return new Money(getRemainingValue()).lessOrEqualThan(Money.ZERO);
     }
 
     public GratuityTransaction processAmount(final Person responsiblePerson, final Money amount,
