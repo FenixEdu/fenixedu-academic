@@ -38,7 +38,7 @@ public class OptionalEnrolment extends OptionalEnrolment_Base {
 	super.checkInitConstraints(studentCurricularPlan, curricularCourse, executionPeriod);
 
 	final OptionalEnrolment optionalEnrolment = (OptionalEnrolment) studentCurricularPlan
-		.findCurriculumLineFor(optionalCurricularCourse, executionPeriod);
+		.findEnrolmentFor(optionalCurricularCourse, executionPeriod);
 	if (optionalEnrolment != null && optionalEnrolment.isValid(executionPeriod)) {
 	    throw new DomainException(
 		    "error.OptionalEnrolment.duplicate.enrolment",

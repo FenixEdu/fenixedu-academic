@@ -117,6 +117,6 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
     abstract public boolean isEnroledInExecutionPeriod(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod);
     abstract public boolean hasEnrolmentWithEnroledState(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod);
     
-    abstract public CurriculumLine findCurriculumLineFor(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod);
+    abstract public Enrolment findEnrolmentFor(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod);
     abstract public Set<IDegreeModuleToEvaluate> getDegreeModulesToEvaluate(final ExecutionPeriod executionPeriod);
 }

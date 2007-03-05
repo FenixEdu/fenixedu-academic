@@ -304,9 +304,9 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     }
     
     @Override
-    public CurriculumLine findCurriculumLineFor(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
+    public Enrolment findEnrolmentFor(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
 	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
-	    final CurriculumLine search = curriculumModule.findCurriculumLineFor(curricularCourse, executionPeriod);
+	    final Enrolment search = curriculumModule.findEnrolmentFor(curricularCourse, executionPeriod);
 	    if (search != null) {
 		return search;
 	    }

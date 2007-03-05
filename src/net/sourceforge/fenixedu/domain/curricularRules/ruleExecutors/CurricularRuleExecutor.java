@@ -66,7 +66,7 @@ abstract public class CurricularRuleExecutor {
 
     protected CurriculumModule searchCurriculumModule(final EnrolmentContext enrolmentContext, final DegreeModule degreeModule) {
 	if (degreeModule.isLeaf()) {
-	    return enrolmentContext.getStudentCurricularPlan().findCurriculumLineFor((CurricularCourse) degreeModule, enrolmentContext.getExecutionPeriod());
+	    return enrolmentContext.getStudentCurricularPlan().findEnrolmentFor((CurricularCourse) degreeModule, enrolmentContext.getExecutionPeriod());
 	} else {
 	    return enrolmentContext.getStudentCurricularPlan().findCurriculumGroupFor((CourseGroup) degreeModule);
 	}
