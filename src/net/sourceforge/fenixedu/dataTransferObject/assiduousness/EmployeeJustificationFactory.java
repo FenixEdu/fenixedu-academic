@@ -32,6 +32,8 @@ import org.joda.time.DateTimeFieldType;
 import org.joda.time.Duration;
 import org.joda.time.DurationFieldType;
 import org.joda.time.Partial;
+import org.joda.time.Period;
+import org.joda.time.PeriodType;
 import org.joda.time.TimeOfDay;
 import org.joda.time.YearMonthDay;
 import org.joda.time.chrono.GregorianChronology;
@@ -532,11 +534,14 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
     }
 
     protected boolean hasScheduleAndActive(YearMonthDay day, Duration duration) {
-	if (!getEmployee().getAssiduousness().isStatusActive(day, day.plus(duration.toPeriod()))) {
+	Period durationPeriod = duration.toPeriod(PeriodType.dayTime());
+	YearMonthDay endDay = day.toDateTimeAtMidnight().plusDays(durationPeriod.getDays()).plusHours(
+		durationPeriod.getHours()).plusMinutes(durationPeriod.getMinutes()).toYearMonthDay();
+
+	if (!getEmployee().getAssiduousness().isStatusActive(day, endDay)) {
 	    return false;
 	}
-	for (YearMonthDay thisday = day; !thisday.isAfter(day.plus(duration.toPeriod())); thisday = thisday
-		.plusDays(1)) {
+	for (YearMonthDay thisday = day; !thisday.isAfter(endDay); thisday = thisday.plusDays(1)) {
 	    Schedule schedule = getEmployee().getAssiduousness().getSchedule(thisday);
 	    if (schedule != null) {
 		if (schedule.workScheduleWithDate(thisday) != null) {
