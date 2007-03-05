@@ -143,8 +143,7 @@ public class InsertExercise extends Service {
             if (xmlZipFile.getContentType().equals("application/x-zip-compressed")
                     || xmlZipFile.getContentType().equals("application/zip")) {
 
-                File tmpFile = new File("tmp.txt");
-                File.createTempFile("tmpZipFile", "zip");
+                File tmpFile = File.createTempFile("tmpZipFile", "zip");
                 FileOutputStream fout = new FileOutputStream(tmpFile);
                 IOUtil.copyStream(xmlZipFile.getInputStream(), fout);
                 ZipFile zip = new ZipFile(tmpFile, "utf8");
