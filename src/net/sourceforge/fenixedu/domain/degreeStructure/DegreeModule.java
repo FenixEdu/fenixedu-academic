@@ -205,7 +205,7 @@ public abstract class DegreeModule extends DegreeModule_Base {
 	return true;
     }
     
-    public List<ICurricularRule> getCurricularRule(final CurricularRuleType ruleType, final ExecutionPeriod executionPeriod) {
+    public List<ICurricularRule> getCurricularRules(final CurricularRuleType ruleType, final ExecutionPeriod executionPeriod) {
 	final List<ICurricularRule> result = new ArrayList<ICurricularRule>();
 	for (final ICurricularRule curricularRule : getCurricularRules(executionPeriod)) {
 	    if (curricularRule.getCurricularRuleType() == ruleType) {
@@ -221,6 +221,10 @@ public abstract class DegreeModule extends DegreeModule_Base {
     
     public Double getMinEctsCredits() {
 	return getMinEctsCredits(ExecutionPeriod.readActualExecutionPeriod());
+    }
+    
+    public boolean hasDegreeModule(final DegreeModule degreeModule) {
+	return this.equals(degreeModule);
     }
     
     abstract public DegreeCurricularPlan getParentDegreeCurricularPlan();

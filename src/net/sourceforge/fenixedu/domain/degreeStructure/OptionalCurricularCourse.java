@@ -64,12 +64,12 @@ public class OptionalCurricularCourse extends OptionalCurricularCourse_Base {
     }
     
     private CreditsLimit getCreditsLimitRule(final ExecutionPeriod executionPeriod) {
-	final List<ICurricularRule> result = getCurricularRule(CurricularRuleType.CREDITS_LIMIT, executionPeriod);
+	final List<ICurricularRule> result = getCurricularRules(CurricularRuleType.CREDITS_LIMIT, executionPeriod);
 	return result.isEmpty() ? null : (CreditsLimit) result.get(0); 
     }
     
     private AnyCurricularCourse getAnyCurricularCourseRule(final ExecutionPeriod executionPeriod) {
-	final List<ICurricularRule> result = getCurricularRule(CurricularRuleType.ANY_CURRICULAR_COURSE, executionPeriod);
+	final List<ICurricularRule> result = getCurricularRules(CurricularRuleType.ANY_CURRICULAR_COURSE, executionPeriod);
 	return result.isEmpty() ? null : (AnyCurricularCourse) result.get(0); // must have only one
     }
 
