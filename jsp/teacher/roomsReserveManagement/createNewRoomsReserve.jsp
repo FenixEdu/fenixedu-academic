@@ -5,6 +5,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <html:xhtml/>
 
+<em><bean:message key="label.teacherPortal" bundle="APPLICATION_RESOURCES"/></em>
 <h2><bean:message key="create.rooms.reserve.title" bundle="APPLICATION_RESOURCES"/></h2>
 
 <logic:present role="TEACHER">

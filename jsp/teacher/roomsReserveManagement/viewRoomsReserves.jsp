@@ -4,14 +4,64 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <%@ taglib uri="/WEB-INF/collectionPager.tld" prefix="cp"%>
+<%@ taglib uri="/WEB-INF/ganttDiagrams.tld" prefix="gd" %>
 <html:xhtml/>
-
 
 <em><bean:message key="label.teacherPortal" bundle="APPLICATION_RESOURCES"/></em>
 <h2><bean:message key="rooms.reserve.title" bundle="APPLICATION_RESOURCES"/></h2>
 
-
 <logic:present role="TEACHER">
+
+
+	<style type="text/css">
+		.tcalendar {
+		border-collapse: collapse;
+		/*border: 1px solid #ccc;*/
+		}
+		.tcalendar th {
+		border: 1px solid #ccc;
+		overflow: hidden;
+		}
+		.tcalendar td {
+		border: 1px solid #ccc;
+		}
+		
+		.tcalendar th {
+		text-align: center;
+		background-color: #f5f5f5;
+		background-color: #f5f5f5;
+		padding: 3px 4px;
+		}
+		.tcalendar td {
+		background-color: #fff;
+		padding: 0;
+		}
+		.tcalendar td.padded {
+		padding: 2px 6px;
+		border: 1px solid #ccc;
+		}
+		td.padded { }
+		.tdbar {
+		background-color: #a3d1d9;
+		}
+		tr.active td {
+		background-color: #fefeea;
+		}
+		.color555 {
+		color: #555;
+		}
+		tr.selected td {
+		background-color: #fdfdde;
+		}
+		td.tcalendarlinks {
+		padding: 0.5em 0;
+		border-bottom: none;
+		border-left: none;
+		border-right: none;
+		}
+		td.tcalendarlinks span { color: #888; }
+		td.tcalendarlinks span a { color: #888; }
+	</style>
 
 	<logic:messagesPresent message="true">
 		<p>
@@ -66,18 +116,13 @@
 						</html:link>										
 					</td>	
 					<td class="acenter smalltxt"><bean:message name="punctualRequest" property="currentState.name" bundle="APPLICATION_RESOURCES"/></td>					
-					<td class="acenter smalltxt">					
-						<logic:equal name="punctualRequest" property="currentState.name" value="RESOLVED">
-							<logic:notEmpty name="punctualRequest" property="genericEvents">
-								<bean:message key="label.yes.capitalized" bundle="SOP_RESOURCES"/>
-							</logic:notEmpty>
-							<logic:empty name="punctualRequest" property="genericEvents">
-								-
-							</logic:empty>
-						</logic:equal>
-						<logic:notEqual name="punctualRequest" property="currentState.name" value="RESOLVED">						
+					<td class="acenter smalltxt">											
+						<logic:notEmpty name="punctualRequest" property="genericEvents">
+							<bean:message key="label.yes.capitalized" bundle="SOP_RESOURCES"/>
+						</logic:notEmpty>
+						<logic:empty name="punctualRequest" property="genericEvents">
 							-
-						</logic:notEqual>						
+						</logic:empty>					
 					</td>	
 					<td class="acenter">
 						<% Integer numOfNewComments = punctualRequest.getNumberOfNewComments(person);	%>
@@ -92,6 +137,25 @@
 			<cp:collectionPages url="/teacher/roomsReserveManagement.do?method=viewReserves" numberOfVisualizedPages="11" pageNumberAttributeName="pageNumber" numberOfPagesAttributeName="numberOfPages"/>	
 		</logic:notEqual>						
 			
+		<logic:notEmpty name="ganttDiagram">
+			<logic:notEmpty name="ganttDiagram" property="events">			
+				<p class="mbottom05"><b><bean:message key="label.rooms.reserve.gantt.diagram" bundle="APPLICATION_RESOURCES"/>:</b></p>
+				<p>					
+					<gd:ganttDiagram 
+						 ganttDiagram="ganttDiagram" 						 
+						 eventParameter="punctualReserveID"			
+						 eventUrl="/teacher/roomsReserveManagement.do?method=seeSpecifiedRoomsReserve" 					 						 
+						 firstDayParameter="firstDay" 					 						 
+						 weeklyViewUrl="/teacher/roomsReserveManagement.do?method=viewReserves" 
+						 dailyViewUrl="/teacher/roomsReserveManagement.do?method=viewReservesDailyView" 
+						 monthlyViewUrl="/teacher/roomsReserveManagement.do?method=viewReservesMonthlyView"						 
+						 bundle="APPLICATION_RESOURCES" 
+					/>		
+				</p>
+				<jsp:include page="../../sop/roomsPunctualScheduling/legend.jsp" />
+			</logic:notEmpty>
+		</logic:notEmpty>
+							
 	</logic:notEmpty>
 		
 </logic:present>

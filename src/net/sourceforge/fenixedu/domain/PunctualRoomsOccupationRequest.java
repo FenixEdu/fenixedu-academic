@@ -1,11 +1,13 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.dataTransferObject.InfoGenericEvent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
@@ -36,7 +38,7 @@ public class PunctualRoomsOccupationRequest extends PunctualRoomsOccupationReque
         addComments(new PunctualRoomsOccupationComment(this, subject, description, requestor, now));
         setTeacherReadComments(1);
         setEmployeeReadComments(0);
-        setIdentification(getNextRequestIdentification());
+        setIdentification(getNextRequestIdentification());        
     }
           
     public Integer getNumberOfNewComments(Person person) {		
@@ -231,5 +233,15 @@ public class PunctualRoomsOccupationRequest extends PunctualRoomsOccupationReque
 	    }
 	}	
 	return result.isEmpty() ? 1 : result.last().getIdentification() + 1;
+    }
+    
+    public Set<InfoGenericEvent> getActiveGenericEvents(){
+	Set<InfoGenericEvent> result = new HashSet<InfoGenericEvent>();
+	for (GenericEvent genericEvent : getGenericEvents()) {
+	    if(genericEvent.isActive()) {
+		result.add(new InfoGenericEvent(genericEvent));
+	    }
+	}
+	return result;
     }
 }

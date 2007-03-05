@@ -1,15 +1,20 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.Calendar;
+import java.util.List;
+
+import org.joda.time.Interval;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.GenericEvent;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.LanguageUtils;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
+import net.sourceforge.fenixedu.util.renderer.GanttDiagramEvent;
 
-public class InfoGenericEvent extends InfoShowOccupation  {
-
+public class InfoGenericEvent extends InfoShowOccupation implements GanttDiagramEvent {
+       
     private Calendar beginTime;
     
     private Calendar endTime;
@@ -17,6 +22,10 @@ public class InfoGenericEvent extends InfoShowOccupation  {
     private int diaSemana;
     
     private DomainReference<GenericEvent> genericEventReference;
+
+    public InfoGenericEvent(GenericEvent genericEvent) {
+	genericEventReference = new DomainReference<GenericEvent>(genericEvent);
+    }
     
     public InfoGenericEvent(GenericEvent genericEvent, int diaSemana_) {
 	genericEventReference = new DomainReference<GenericEvent>(genericEvent);
@@ -77,5 +86,29 @@ public class InfoGenericEvent extends InfoShowOccupation  {
     @Override
     public ShiftType getTipo() {
 	return null;
+    }
+
+    public String getEventIdentifierForGanttDiagram() {
+	return getGenericEvent().getPunctualRoomsOccupationRequest().getIdInternal().toString();
+    }
+
+    public MultiLanguageString getEventNameForGanttDiagram() {
+	return getGenericEvent().getPunctualRoomsOccupationRequest().getFirstComment().getSubject();
+    }
+
+    public String getEventObservationsForGanttDiagram() {
+	return getGenericEvent().getEventObservationsForGanttDiagram();
+    }
+
+    public int getEventOffsetForGanttDiagram() {
+	return 0;
+    }
+
+    public String getEventPeriodForGanttDiagram() {
+	return getGenericEvent().getEventPeriodForGanttDiagram();
+    }
+
+    public List<Interval> getEventSortedIntervalsForGanttDiagram() {
+	return getGenericEvent().getEventSortedIntervalsForGanttDiagram();
     }   
 }
