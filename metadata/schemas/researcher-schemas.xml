@@ -1317,7 +1317,7 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Cr
 		<slot name="journalAsString" read-only="true" key="label.journal"/>
 		<slot name="year"/>
 		<slot name="month"/>
-		<slot name="volume"/>
+		<slot name="volume" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 		<slot name="number"/>
 		<slot name="publisher"/>
 		<slot name="url"/>
@@ -1325,13 +1325,13 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Cr
 
 <schema name="result.publication.create.full.Issue" bundle="RESEARCHER_RESOURCES"		
  type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.CreateIssueBean">
-		<slot name="scientificJournalName" key="label.journal"/>
-		<slot name="location" key="label.scope"/>
+		<slot name="scientificJournalName" key="label.journal" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<slot name="location" key="label.scope" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 		<slot name="issn"/>
 		<slot name="magazineUrl"/>
 		<slot name="year"/>
 		<slot name="month"/>
-		<slot name="volume"/>
+		<slot name="volume" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 		<slot name="number"/>
 		<slot name="publisher"/>
 		<slot name="url"/>
