@@ -204,7 +204,9 @@ public class ResultParticipationManagementAction extends ResultsManagementAction
 		bean.setPersonParticipationType(ParticipationType.EXTERNAL);
 		bean.setUnitParticipationType(ParticipationType.EXTERNAL);
 		bean.setParticipatorName(request.getParameter("name"));
-		bean.setRole(ResultParticipationRole.valueOf(request.getParameter("role")));
+		if(result.getIsPossibleSelectPersonRole()) {
+		    bean.setRole(ResultParticipationRole.valueOf(request.getParameter("role")));
+		}
 		setResParticipationRequestAttributes(request,result,bean);
 		
 		request.setAttribute("bean", bean);

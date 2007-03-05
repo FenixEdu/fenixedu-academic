@@ -19,3 +19,6 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.research.activity.ScientificJournal" table="RESEARCH_ACTIVITY"/>
 <class-descriptor class="net.sourceforge.fenixedu.domain.research.activity.Event" table="RESEARCH_ACTIVITY"/>
 <class-descriptor class="net.sourceforge.fenixedu.domain.research.activity.Cooperation" table="RESEARCH_ACTIVITY"/>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.research.activity.JournalIssue" table="JOURNAL_ISSUE"/>
+<class-descriptor class="net.sourceforge.fenixedu.domain.research.activity.ArticleAssociation" table="ARTICLE_ASSOCIATION"/>

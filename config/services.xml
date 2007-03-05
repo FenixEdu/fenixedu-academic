@@ -9139,6 +9139,15 @@
 			<chain name="ResearcherAuthorization" />
 		</filterChains>
 	</service> 
+
+	<service>
+		<name>CreateJournalIssue</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.activity.CreateJournalIssue</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains/>
+	</service> 
+
 	<service>
 		<name>CreateScientificJournal</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.activity.CreateScientificJournal</implementationClass>

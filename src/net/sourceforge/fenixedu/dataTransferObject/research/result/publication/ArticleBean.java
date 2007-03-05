@@ -2,6 +2,9 @@ package net.sourceforge.fenixedu.dataTransferObject.research.result.publication;
 
 import java.io.Serializable;
 
+import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.research.activity.JournalIssue;
+import net.sourceforge.fenixedu.domain.research.activity.ScientificJournal;
 import net.sourceforge.fenixedu.domain.research.result.publication.Article;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication.ScopeType;
@@ -24,10 +27,34 @@ public class ArticleBean extends ResultPublicationBean implements Serializable {
 
     private Integer issn;
 
+    private DomainReference<JournalIssue> journalIssue;
+    
+    private DomainReference<ScientificJournal> scientificJournal;
+    
+    private String scientificJournalName;
+    
+    public ScientificJournal getScientificJournal() {
+        return scientificJournal.getObject();
+    }
+
+    public void setScientificJournal(ScientificJournal scientificJournal) {
+        this.scientificJournal = new DomainReference<ScientificJournal>(scientificJournal);
+    }
+
+    public String getScientificJournalName() {
+        return scientificJournalName;
+    }
+
+    public void setScientificJournalName(String scientificJournalName) {
+        this.scientificJournalName = scientificJournalName;
+    }
+
     public ArticleBean() {
 	this.setPublicationType(ResultPublicationType.Article);
 	this.setActiveSchema("result.publication.create.Article");
 	this.setParticipationSchema("resultParticipation.simple");
+	journalIssue = new DomainReference<JournalIssue>(null);
+	scientificJournal = new DomainReference<ScientificJournal>(null);
     }
 
     public ArticleBean(Article article) {
@@ -143,5 +170,13 @@ public class ArticleBean extends ResultPublicationBean implements Serializable {
 
     public void setNumber(String number) {
 	this.number = number;
+    }
+
+    public JournalIssue getJournalIssue() {
+        return journalIssue.getObject();
+    }
+
+    public void setJournalIssue(JournalIssue journalIssue) {
+        this.journalIssue = new DomainReference<JournalIssue>(journalIssue);
     }
 }

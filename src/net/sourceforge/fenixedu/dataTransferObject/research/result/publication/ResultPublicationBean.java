@@ -109,9 +109,11 @@ public abstract class ResultPublicationBean implements Serializable {
 
     private Integer idInternal;
 
-    private Boolean createEvent = false;
+    private Boolean createEvent = Boolean.FALSE;
 
     private MultiLanguageString keywords;
+
+    private Boolean createJournal = Boolean.FALSE;
     
     public abstract ResultPublicationBean convertTo(ResultPublicationType type);
 
@@ -491,6 +493,13 @@ public abstract class ResultPublicationBean implements Serializable {
 	this.createEvent = createEvent;
     }
 
+    public Boolean getCreateJournal() {
+	return this.createJournal;
+    }
+    
+    public void setCreateJournal(Boolean createJournal) {
+	this.createJournal = createJournal;
+    }
     public String getPublicationTypeString() {
 	if (publicationType != null)
 	    return publicationType.toString();

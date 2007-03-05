@@ -3944,7 +3944,10 @@ class net.sourceforge.fenixedu.domain.research.result.ResearchResult extends net
 			Integer issn;
 			String language;
 			ScopeType scope;
+			
+			Integer keyArticleAssociation;
 		}
+		
 		class net.sourceforge.fenixedu.domain.research.result.publication.ConferenceArticles extends net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication {
 			ScopeType scope;
 			String conference;
@@ -4045,8 +4048,33 @@ class net.sourceforge.fenixedu.domain.research.activity.Event extends net.source
 	YearMonthDay endDate;
 }
 
+class net.sourceforge.fenixedu.domain.research.activity.Meeting extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyEvent;
+}
+
 class net.sourceforge.fenixedu.domain.research.activity.ScientificJournal extends net.sourceforge.fenixedu.domain.research.activity.ResearchActivity{
+	Integer issn;
+    String url;
 	ResearchActivityLocationType locationType;
+}
+
+class net.sourceforge.fenixedu.domain.research.activity.JournalIssue extends net.sourceforge.fenixedu.domain.DomainObject {
+
+  String volume;
+  Integer year;
+  String number;
+  Month month;
+  String publisher;
+  String url;
+  
+  Integer keyScientificJournal;
+
+}
+
+class net.sourceforge.fenixedu.domain.research.activity.ArticleAssociation extends net.sourceforge.fenixedu.domain.DomainObject {
+  Integer keyArticle;
+  Integer keyJournalIssue;
+  Integer keyCreator;
 }
 
 class net.sourceforge.fenixedu.domain.research.activity.Cooperation extends net.sourceforge.fenixedu.domain.research.activity.ResearchActivity{
@@ -7963,6 +7991,38 @@ relation ResultEventAssociationEvent {
 	net.sourceforge.fenixedu.domain.research.activity.Event playsRole event;
 }
 
+relation EventMeeting {
+	net.sourceforge.fenixedu.domain.research.activity.Event playsRole event;
+	net.sourceforge.fenixedu.domain.research.activity.Meeting playsRole meetins {
+		multiplicity *;
+	}
+}
+
+relation JournalIssueScientificJournal {
+	net.sourceforge.fenixedu.domain.research.activity.ScientificJournal playsRole scientificJournal;
+	net.sourceforge.fenixedu.domain.research.activity.JournalIssue playsRole journalIssues {
+		multiplicity *;
+	}
+}
+
+relation JournalIssueArticleAssociation {
+	net.sourceforge.fenixedu.domain.research.activity.JournalIssue playsRole journalIssue;
+	net.sourceforge.fenixedu.domain.research.activity.ArticleAssociation playsRole articleAssociations {
+      multiplicity *;
+    }
+}
+
+relation ArticleAssociationArticle {
+	net.sourceforge.fenixedu.domain.research.activity.ArticleAssociation playsRole articleAssociation;
+	net.sourceforge.fenixedu.domain.research.result.publication.Article playsRole article;
+}
+
+relation PersonArticleAssociation {
+   net.sourceforge.fenixedu.domain.Person playsRole creator;
+   net.sourceforge.fenixedu.domain.research.activity.ArticleAssociation playsRole articleAssociations {
+ 	  multiplicity *;
+  }
+}
 relation ResearchResultCountry {
 	net.sourceforge.fenixedu.domain.Country playsRole country;
 	net.sourceforge.fenixedu.domain.research.result.ResearchResult playsRole results{
@@ -10323,6 +10383,26 @@ relation RootDomainObjectResearchActivity {
 	}
 }
 
+relation RootDomainObjectMeeting {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.research.activity.Meeting playsRole meetings {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectArticleAssociation {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.research.activity.ArticleAssociation playsRole articleAssociations {
+     multiplicity *;
+	}
+}
+
+relation RootDomainObjectJournalIssues {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.research.activity.JournalIssue playsRole journalIssues {
+		multiplicity *;
+	}
+}
 relation RootDomainObjectExportGrouping {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.ExportGrouping playsRole exportGroupings {
@@ -11532,6 +11612,7 @@ relation ConvokeForWrittenEvaluation {
 	}
 	net.sourceforge.fenixedu.domain.WrittenEvaluation playsRole writtenEvaluation;
 }
+
 
 relation VigilantGroupInExecutionYear {
 	net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup playsRole vigilantGroups {

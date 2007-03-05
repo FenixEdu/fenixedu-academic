@@ -1261,22 +1261,97 @@
 	</slot>
 </schema>
 
+
+<schema name="result.publication.create.Article.createMagazine" bundle="RESEARCHER_RESOURCES"		
+type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ArticleBean">
+	<slot name="scientificJournal" layout="autoComplete">
+		<property name="size" value="60"/>
+		<property name="rawSlotName" value="scientificJournalName"/>
+		<property name="labelField" value="nameAsString"/>
+		<property name="indicatorShown" value="true"/>
+		<property name="serviceName" value="SearchObjectsByMultiLanguageString"/>
+		<property name="serviceArgs" value="slot=name"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.research.activity.ScientificJournal"/>				
+		<property name="minChars" value="3"/>
+	</slot>
+</schema>
+
+
+<schema name="result.publication.create.Article.createIssue" bundle="RESEARCHER_RESOURCES"		
+type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ArticleBean">
+	<slot name="scientificJournal.nameAsString" read-only="true" key="label.journal"/>
+	<slot name="journalIssue" layout="menu-select">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.researcher.publication.JournalIssuesForScienficalJournalProvider"/>
+		<property name="format" value="${fullName}"/>
+	</slot>
+</schema>
+
+<schema name="result.publication.create.Article.readOnly" bundle="RESEARCHER_RESOURCES"		
+  type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ArticleBean">
+	<slot name="publicationType" read-only="true"/>
+	<slot name="title" read-only="true"/>
+	<slot name="note" read-only="true"/>
+	<slot name="keywords" read-only="true"/>
+	<slot name="firstPage" read-only="true"/>
+	<slot name="lastPage" read-only="true"/>
+	<slot name="language" read-only="true"/>
+	<slot name="url" read-only="true"/>
+</schema>
+
+<schema name="result.publication.select.Magazine" bundle="RESEARCHER_RESOURCES" 
+type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.CreateIssueBean">
+	<slot name="journal" layout="autoComplete">
+		<property name="size" value="60"/>
+		<property name="rawSlotName" value="journalName"/>
+		<property name="labelField" value="name"/>
+		<property name="indicatorShown" value="true"/>
+		<property name="serviceName" value="SearchObjects"/>
+		<property name="serviceArgs" value="slot=name"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.research.activity.ScientificJournal"/>				
+		<property name="minChars" value="3"/>
+	</slot>
+</schema>
+
+<schema name="result.publication.create.Issue" bundle="RESEARCHER_RESOURCES"		
+ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.CreateIssueBean">
+		<slot name="journalAsString" read-only="true" key="label.journal"/>
+		<slot name="year"/>
+		<slot name="month"/>
+		<slot name="volume"/>
+		<slot name="number"/>
+		<slot name="publisher"/>
+		<slot name="url"/>
+</schema>
+
+<schema name="result.publication.create.full.Issue" bundle="RESEARCHER_RESOURCES"		
+ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.CreateIssueBean">
+		<slot name="scientificJournalName" key="label.journal"/>
+		<slot name="location" key="label.scope"/>
+		<slot name="issn"/>
+		<slot name="magazineUrl"/>
+		<slot name="year"/>
+		<slot name="month"/>
+		<slot name="volume"/>
+		<slot name="number"/>
+		<slot name="publisher"/>
+		<slot name="url"/>
+</schema>
+
+
 <!-- Create/edit Article -->
 <schema name="result.publication.create.Article" bundle="RESEARCHER_RESOURCES"
 		extends="resultPublication.editType"
 		type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ArticleBean">
-	<slot name="journal" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="size" value="40"/>
+	<slot name="journalIssue" layout="autoComplete">
+		<property name="size" value="60"/>
+		<property name="rawSlotName" value="journal"/>
+		<property name="labelField" value="fullName"/>
+		<property name="indicatorShown" value="true"/>
+		<property name="serviceName" value="SearchObjects"/>
+		<property name="serviceArgs" value="slot=fullName"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.research.activity.JournalIssue"/>				
+		<property name="minChars" value="3"/>
 	</slot>
- 	<slot name="year">
- 		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
-			<property name="dateFormat" value="yyyy"/>
-		</validator>
-		<property name="size" value="5"/>
-	</slot>	
-	<slot name="month"/>
-	<slot name="volume"><property name="size" value="40"/></slot>
-	<slot name="number"><property name="size" value="5"/></slot>
 	<slot name="firstPage">
 		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
 			<property name="required" value="false"/>
@@ -1289,35 +1364,7 @@
 		</validator>
 		<property name="size" value="5"/>
 	</slot>
-	<slot name="issn">
-		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
-			<property name="required" value="false"/>
-		</validator>
-		<property name="size" value="15"/>
-	</slot>
-	<slot name="publisher" layout="autoComplete">
-		<property name="size" value="40"/>
-		<property name="rawSlotName" value="publisherName"/>
-		<property name="labelField" value="name"/>
-		<property name="indicatorShown" value="true"/>		
-		<property name="serviceName" value="SearchObjects"/>
-		<property name="serviceArgs" value="slot=name"/>
-		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"/>
-		<property name="minChars" value="3"/>
-	</slot>
 	<slot name="language"><property name="size" value="15"/></slot>
-	<slot name="country" layout="autoComplete">
-		<property name="size" value="40"/>
-		<property name="rawSlotName" value="countryName"/>
-		<property name="labelField" value="name"/>
-		<property name="indicatorShown" value="true"/>		
-		<property name="serviceName" value="SearchObjects"/>
-		<property name="serviceArgs" value="slot=name"/>
-		<property name="className" value="net.sourceforge.fenixedu.domain.Country"/>
-		<property name="format" value="${name}  (${nationality})"/>
-		<property name="minChars" value="3"/>
-	</slot>
-	<slot name="scope" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="url"><property name="size" value="40"/></slot>
 </schema>
 
@@ -1332,7 +1379,7 @@
 		<property name="rows" value="2"/>
 		<property name="columns" value="60"/>
 	</slot>
-		<slot name="journal"/>
+	<slot name="journal"/>
  	<slot name="year"/>	
 	<slot name="month"/>
 	<slot name="volume"/>
@@ -1341,6 +1388,7 @@
 	<slot name="lastPage"/>
 	<slot name="issn"/>
 	<slot name="publisher" layout="null-as-label">
+	
 		<property name="label" value=""/>
 		<property name="subLayout" value="values"/>
 		<property name="subSchema" value="unit.name"/>
@@ -1506,7 +1554,6 @@
 	</slot>
 	<slot name="url"><property name="size" value="40"/></slot>
 </schema>
-
 
 <schema name="result.publication.details.Proceedings" bundle="RESEARCHER_RESOURCES"
 		type="net.sourceforge.fenixedu.domain.research.result.publication.Proceedings">
@@ -1912,7 +1959,7 @@
 		<property name="indicatorShown" value="true"/>		
 		<property name="serviceName" value="SearchInternalUnits"/>
 		<property name="serviceArgs" value="slot=name"/>
-		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>				
+		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"/>				
 		<property name="minChars" value="4"/>
 	</slot>
 </schema>
@@ -2118,16 +2165,24 @@
 
 <schema name="result.publication.presentation.Article.mainInfo" extends="publication.mainInfo" bundle="RESEARCHER_RESOURCES"
 		type="net.sourceforge.fenixedu.domain.research.result.publication.Article">
-	<slot name="journal"/>
- 	<slot name="year"/>	
-	<slot name="publisher" layout="null-as-label">
-		<property name="label" value=""/>
-		<property name="subLayout" value="values"/>
-		<property name="subSchema" value="unit.name"/>
+
+	<slot name="journalIssue" key="label.journal" layout="values" schema="presentJournalIssue">
+		<property name="classes" value="nobullet"/>
 	</slot>
 	<slot name="url">
 		<property name="classes" value="greytxt1"/>
 		<property name="link" value="true"/>
+	</slot>
+</schema>
+
+<schema name="presentJournalIssue" bundle="RESEARCHER_RESOURCES"
+type="net.sourceforge.fenixedu.domain.research.activity.JournalIssue">
+	<slot name="fullName" layout="link">
+		<property name="blankTarget" value="true"/>
+		<property name="contextRelative" value="true"/>
+		<property name="moduleRelative" value="false"/>
+		<property name="useParent" value="true"/>
+		<property name="linkFormat" value="/publico/showJournals.do?method=showJournalIssue&amp;issueId=${idInternal}"/>
 	</slot>
 </schema>
 
@@ -2319,5 +2374,51 @@
 	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.externalUnits.CreateExternalUnitBean">
 	<slot name="unitName" key="label.unit.name">
 			<property name="size" value="50"/>
+	</slot>
+</schema>
+
+<schema name="presentIssue" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.research.activity.JournalIssue">
+	<slot name="scientificJournal" key="label.journal" layout="link">
+		<property name="blankTarget" value="true"/>
+		<property name="contextRelative" value="true"/>
+		<property name="moduleRelative" value="false"/>
+		<property name="linkFormat" value="/publico/showJournals.do?method=showScientificJournal&amp;journalId=${idInternal}"/>
+		<property name="subLayout" value="values"/>
+		<property name="subSchema" value="presentJournalName"/>
+	</slot>
+	<slot name="volume"/>
+	<slot name="number"/>
+	<slot name="publisher"/>
+	<slot name="url"/>
+	<slot name="articles">
+		<property name="classes" value="nobullet"/>
+		<property name="eachLayout" value="values"/>
+		<property name="eachSchema" value="presentArticleName"/>
+	</slot>
+</schema>
+
+<schema name="presentArticleName" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.research.result.publication.Article">
+	<slot name="title" layout="link">
+		<property name="blankTarget" value="true"/>
+		<property name="contextRelative" value="true"/>
+		<property name="moduleRelative" value="false"/>
+		<property name="useParent" value="true"/>
+		<property name="linkFormat" value="/publico/showResearchResult.do?method=showPublication&amp;result=${idInternal}"/>
+	</slot>
+</schema>
+
+<schema name="presentJournalName" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.research.activity.ScientificJournal">
+	<slot name="name"/>
+</schema>
+
+<schema name="presentJournal" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.research.activity.ScientificJournal">
+	<slot name="name"/>
+	<slot name="issn"/>
+	<slot name="url"/>
+	<slot name="locationType" key="label.scope"/>
+	<slot name="journalIssues">
+		<property name="classes" value="nobullet"/>
+		<property name="eachLayout" value="values"/>
+		<property name="eachSchema" value="presentJournalIssue"/>
 	</slot>
 </schema>

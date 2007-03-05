@@ -1,17 +1,20 @@
 package net.sourceforge.fenixedu.domain.research.result.publication;
 
-import bibtex.dom.BibtexEntry;
-import bibtex.dom.BibtexFile;
-import bibtex.dom.BibtexPersonList;
-import bibtex.dom.BibtexString;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.research.activity.ArticleAssociation;
+import net.sourceforge.fenixedu.domain.research.activity.JournalIssue;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.Month;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
+import bibtex.dom.BibtexEntry;
+import bibtex.dom.BibtexFile;
+import bibtex.dom.BibtexPersonList;
+import bibtex.dom.BibtexString;
 
 /**
  * An article from a journal or magazine. Required fields: author, title,
@@ -21,61 +24,46 @@ import net.sourceforge.fenixedu.util.MultiLanguageString;
  */
 public class Article extends Article_Base {
 
-	private static final String usedSchema = "result.publication.presentation.Article";
-	
+    private static final String usedSchema = "result.publication.presentation.Article";
+
     public Article() {
 	super();
     }
 
-    public Article(Person participator, String title, MultiLanguageString keywords, String journal, Integer year, Unit publisher,
-	    String volume, String number, Integer firstPage, Integer lastPage, MultiLanguageString note,
-	    Integer issn, String language, Country country, ScopeType scope, Month month, String url) {
+    public Article(Person participator, String title, MultiLanguageString keywords, JournalIssue issue,
+	    Integer firstPage, Integer lastPage, MultiLanguageString note, String language, String url) {
 	this();
 	super.checkRequiredParameters(keywords, note);
-	checkRequiredParameters(title, journal, year);
+	checkRequiredParameters(title, issue);
 	super.setCreatorParticipation(participator, ResultParticipationRole.Author);
-	fillAllAttributes(title, keywords, journal, year, publisher, volume, number, firstPage, lastPage, note,
-		issn, language, country, scope, month, url);
+	fillAllAttributes(title, keywords, issue, firstPage, lastPage, note, language, url);
     }
 
     @Checked("ResultPredicates.writePredicate")
-    public void setEditAll(String title, MultiLanguageString keywords, String journal, Integer year, Unit publisher, String volume,
-	    String number, Integer firstPage, Integer lastPage, MultiLanguageString note, Integer issn,
-	    String language, Country country, ScopeType scope, Month month, String url) {
-	checkRequiredParameters(title, journal, year);
-	fillAllAttributes(title, keywords, journal, year, publisher, volume, number, firstPage, lastPage, note,
-		issn, language, country, scope, month, url);
+    public void setEditAll(String title, MultiLanguageString keywords, JournalIssue issue,  Integer firstPage, Integer lastPage,
+	    MultiLanguageString note, String language, String url) {
+	checkRequiredParameters(title, issue);
+	fillAllAttributes(title, keywords, issue, firstPage, lastPage, note, language, url);
 	super.setModifiedByAndDate();
     }
 
-    private void fillAllAttributes(String title, MultiLanguageString keywords, String journal, Integer year, Unit publisher,
-	    String volume, String number, Integer firstPage, Integer lastPage, MultiLanguageString note,
-	    Integer issn, String language, Country country, ScopeType scope, Month month, String url) {
+    private void fillAllAttributes(String title, MultiLanguageString keywords, JournalIssue issue,  Integer firstPage, Integer lastPage,
+	    MultiLanguageString note, String language, String url) {
 	super.setTitle(title);
-	super.setJournal(journal);
-	super.setYear(year);
-	super.setPublisher(publisher);
-	super.setVolume(volume);
-	super.setNumber(number);
+	setJournalIssue(issue);
 	super.setFirstPage(firstPage);
 	super.setLastPage(lastPage);
 	super.setNote(note);
-	super.setIssn(issn);
-	super.setLanguage(language);
-	super.setCountry(country);
-	super.setScope(scope);
-	super.setMonth(month);
 	super.setUrl(url);
+	super.setLanguage(language);
 	super.setKeywords(keywords);
     }
 
-    private void checkRequiredParameters(String title, String journal, Integer year) {
+    private void checkRequiredParameters(String title, JournalIssue issue) {
 	if (title == null || title.length() == 0)
 	    throw new DomainException("error.researcher.Article.title.null");
-	if (journal == null || journal.length() == 0)
+	if (issue == null)
 	    throw new DomainException("error.researcher.Article.journal.null");
-	if (year == null)
-	    throw new DomainException("error.researcher.Article.year.null");
     }
 
     @Override
@@ -92,9 +80,7 @@ public class Article extends Article_Base {
 	    resume = resume + "Pag. " + getFirstPage() + " - " + getLastPage() + ", ";
 	if ((getYear() != null) && (getYear() > 0))
 	    resume = resume + getYear() + ", ";
-	if (getPublisher() != null)
-	    resume = resume + getPublisher().getName() + ", ";
-
+	
 	resume = finishResume(resume);
 	return resume;
     }
@@ -206,8 +192,27 @@ public class Article extends Article_Base {
     public void setOrganization(Unit organization) {
 	throw new DomainException("error.researcher.Article.call", "setOrganization");
     }
-    
+
     public String getSchema() {
-    	return usedSchema;
+	return usedSchema;
     }
+
+    public JournalIssue getJournalIssue() {
+	return getArticleAssociation().getJournalIssue();
+    }
+
+    @Checked("ResultPredicates.writePredicate")
+    public void setJournalIssue(JournalIssue journalIssue) {
+	ArticleAssociation association = getArticleAssociation();
+	if (association==null) {
+	    Person creator = AccessControl.getPerson();
+	    if(creator==null) {
+		creator = getCreator();
+	    }
+	    association = new ArticleAssociation(journalIssue, this, creator);
+	} else {
+	    association.setJournalIssue(journalIssue);
+	}
+    }
+
 }

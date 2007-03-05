@@ -101,10 +101,8 @@ public class EditResultPublication extends ResultPublicationService {
 		final ResearchResultPublication finalPublication;
 		
 		if (publication instanceof Article) {
-			((Article) publication).setEditAll(bean.getTitle(), bean.getKeywords(), bean.getJournal(), bean
-					.getYear(), getPublisher(bean), bean.getVolume(), bean.getNumber(), bean.getFirstPage(),
-					bean.getLastPage(), bean.getNote(), bean.getIssn(), bean.getLanguage(),
-					bean.getCountry(), bean.getScope(), bean.getMonth(), bean.getUrl());
+			((Article) publication).setEditAll(bean.getTitle(), bean.getKeywords(), bean.getJournalIssue(), bean.getFirstPage(),
+					bean.getLastPage(), bean.getNote(), bean.getLanguage(), bean.getUrl());
 			finalPublication = publication;
 		} else {
 			final Article article = getCreateService().createArticleFromBean(bean);

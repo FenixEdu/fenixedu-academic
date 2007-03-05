@@ -12,7 +12,9 @@ import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.P
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.TechnicalReportBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ThesisBean;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.research.activity.JournalIssue;
 import net.sourceforge.fenixedu.domain.research.result.publication.Article;
 import net.sourceforge.fenixedu.domain.research.result.publication.Book;
 import net.sourceforge.fenixedu.domain.research.result.publication.BookPart;
@@ -23,6 +25,7 @@ import net.sourceforge.fenixedu.domain.research.result.publication.Proceedings;
 import net.sourceforge.fenixedu.domain.research.result.publication.TechnicalReport;
 import net.sourceforge.fenixedu.domain.research.result.publication.Thesis;
 import net.sourceforge.fenixedu.domain.research.result.publication.BookPart.BookPartType;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public abstract class ResultPublicationService extends Service {
 
@@ -60,10 +63,8 @@ public abstract class ResultPublicationService extends Service {
 	}
 
 	protected Article createArticleFromBean(ArticleBean bean) {
-		return new Article(bean.getPerson(), bean.getTitle(), bean.getKeywords(), bean.getJournal(), bean
-				.getYear(), getOrganization(bean), bean.getVolume(), bean.getNumber(), bean.getFirstPage(),
-				bean.getLastPage(), bean.getNote(), bean.getIssn(), bean.getLanguage(), bean.getCountry(),
-				bean.getScope(), bean.getMonth(), bean.getUrl());
+	    return new Article(bean.getPerson(), bean.getTitle(), bean.getKeywords(), bean.getJournalIssue(), bean.getFirstPage(),
+				bean.getLastPage(), bean.getNote(), bean.getLanguage(), bean.getUrl());
 	}
 
 	protected Inproceedings createInproceedingsFromBean(InproceedingsBean bean) {

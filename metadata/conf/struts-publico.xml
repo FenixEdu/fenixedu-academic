@@ -858,6 +858,14 @@
 	        	 type="net.sourceforge.fenixedu.presentationTier.Action.research.result.publication.BibTexManagementDispatchAction">
 		    <forward name="PublicationExportedToBibtex" path="/homepage/research/showPublicationBibtex.jsp"/>
 	</action>
+
+   	<action path="/showJournals"
+	        	 parameter="method"
+	        	 type="net.sourceforge.fenixedu.presentationTier.Action.publico.ScientificJournalsManagement">
+		    <forward name="showJournal" path="show.journal"/>
+   		    <forward name="showIssue" path="show.issue"/>
+	</action>
+
 	<!-- =========== RSS ======================== -->
 		<action path="/announcementsRSS"
     			type="net.sourceforge.fenixedu.presentationTier.Action.publico.rss.GenerateAnnoucementsRSS"
