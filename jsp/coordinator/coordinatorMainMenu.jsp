@@ -64,6 +64,13 @@
 		        	<bean:message key="link.coordinator.managefinalDegreeWorks" />
 	          </html:link>
 	        </li>
+            <%-- 
+	       	<li>
+	        	  <html:link page="<%= "/manageThesis.do?method=searchStudent&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString()%>">
+		        	<bean:message key="link.coordinator.thesis.manage" />
+	          </html:link>
+	        </li>
+            --%>
 	
 			<li class="navheader">
 				<bean:message key="label.coordinator.manageEvaluations"/>		

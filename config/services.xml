@@ -8251,7 +8251,7 @@
         <isTransactional>true</isTransactional>    
     </service>   
     <service>
-    	<name>SearchInternalUnits</name>
+    	<name>SearchInternalUnitsByType</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.SearchInternalUnits</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
@@ -11527,5 +11527,40 @@
         	<chain name="DepartmentAdministrativeOfficeAuthorization"></chain>
         </filterChains>     
     </service>
+    <service>
+        <name>SearchInternalPersons</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchInternalPersons</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains/>
+    </service>   
+    <service>
+        <name>SearchExternalPersons</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchExternalPersons</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains/>
+    </service>   
+    <service>
+        <name>SearchInternalUnits</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchInternalUnits</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains/>
+    </service>   
+    <service>
+        <name>SearchActiveInternalUnits</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchActiveInternalUnits</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains/>
+    </service>   
+    <service>
+        <name>SearchInternalUnits</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchInternalUnits</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains/>
+    </service>   
 	
 </serviceDefinitions>

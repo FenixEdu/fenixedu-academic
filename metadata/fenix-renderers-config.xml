@@ -387,6 +387,7 @@ Documentation:
     <!--@ This layout allows you to input a boolean value though a menu. The menu is filled with two options. 
           The labels are fetched from the resources with the keys <tt>TRUE</tt> and <tt>FALSE</tt>. -->
     <renderer mode="input" type="java.lang.Boolean" layout="radio" class="net.sourceforge.fenixedu.renderers.BooleanRadioInputRenderer"/>
+    <renderer mode="input" type="boolean" layout="radio-postback" class="net.sourceforge.fenixedu.renderers.BooleanRadioInputRendererWithPostBack"/>
     <renderer mode="input" type="java.lang.Boolean" layout="radio-postback" class="net.sourceforge.fenixedu.renderers.BooleanRadioInputRendererWithPostBack"/>    
     
     <!--@ This layout allows you to input a boolean value though a menu. The menu is filled with two options. 
@@ -553,7 +554,6 @@ Documentation:
 	<!--@ Layout that allows you to render a boolean or Boolean with checkbox with postback -->
 	<renderer mode="input" type="boolean" layout="option-select-postback" class="net.sourceforge.fenixedu.renderers.BooleanInputRenderWithPostBack"/>
 	<renderer mode="input" type="java.lang.Boolean" layout="option-select-postback" class="net.sourceforge.fenixedu.renderers.BooleanInputRenderWithPostBack"/>
-	
     
     <renderer type="net.sourceforge.fenixedu.domain.tests.Grade"
               class="net.sourceforge.fenixedu.presentationTier.renderers.GradeInputRenderer"
@@ -735,6 +735,8 @@ Documentation:
 	<renderer type="net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal" layout="dismissal-label" class="net.sourceforge.fenixedu.renderers.FormatRenderer">
         <property name="format" value="${name}  (${curriculumGroup.name})"/>
     </renderer>
+    
+	<renderer mode="input" type="net.sourceforge.fenixedu.domain.student.Student" layout="by-number" class="net.sourceforge.fenixedu.presentationTier.renderers.StudentByNumberInputRenderer"/>
     
      <!--@ Each LinkObject in the collection is presented like a HtmlLink. LinkObject has the necessary information for each link. -->
     <renderer type="java.util.List" layout="list-link" class="net.sourceforge.fenixedu.presentationTier.renderers.ListLinkRenderer" />

@@ -268,4 +268,18 @@
     <definition name="manage-degree-editFile" extends="definition.coordinator.siteManagement" >
         <put name="body" value="/commons/sites/editFile.jsp"/>
     </definition>   
+    
+    <!-- ============ Thesis =========== -->
+    <definition name="thesis-search-student" extends="definition.coordinator.two-column">
+        <put name="body" value="/coordinator/thesis/searchStudent.jsp"/>
+    </definition>
+    <definition name="thesis-create" extends="definition.coordinator.two-column">
+        <put name="body" value="/coordinator/thesis/createThesis.jsp"/>
+    </definition>
+    <definition name="thesis-select-person" extends="definition.coordinator.two-column">
+        <put name="body" value="/coordinator/thesis/selectPerson.jsp"/>
+    </definition>
+    <definition name="thesis-select-unit" extends="definition.coordinator.two-column">
+        <put name="body" value="/coordinator/thesis/selectUnit.jsp"/>
+    </definition>
 </tiles-definitions>

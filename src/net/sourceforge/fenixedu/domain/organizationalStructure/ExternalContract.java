@@ -9,6 +9,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.person.PersonName;
 
 import org.joda.time.YearMonthDay;
 
@@ -33,6 +34,11 @@ public class ExternalContract extends ExternalContract_Base {
 	setChildParty(person);
 	setParentParty(institution);
 	setOccupationInterval(beginDate, endDate);
+    
+    PersonName personName = person.getPersonName();
+    if (personName != null) {
+        personName.setIsExternalPerson(true);
+    }
     }  
 
     private void setOccupationInterval(YearMonthDay beginDate, YearMonthDay endDate) {

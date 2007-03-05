@@ -32,6 +32,7 @@
     <!ENTITY sop SYSTEM "sop-schemas.xml">
     <!ENTITY teacher SYSTEM "teacher-schemas.xml">
     <!ENTITY departmentAdmOffice SYSTEM "departmentAdmOffice-schemas.xml">
+    <!ENTITY coordinator SYSTEM "coordinator-schemas.xml">
 ]>
 
 <schemas>
@@ -653,5 +654,6 @@
     &sop;
     &teacher;
     &departmentAdmOffice;
+    &coordinator;
     
 </schemas>

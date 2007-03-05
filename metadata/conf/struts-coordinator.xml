@@ -901,6 +901,15 @@
   			<forward name="showWeeklyWorkLoad" path="show-weekly-work-load"/>
   		</action>
 
+  		<action path="/manageThesis"
+  			type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ManageThesisDA"
+  			parameter="method">
+  			<forward name="search-student" path="thesis-search-student"/>
+  			<forward name="create-thesis" path="thesis-create"/>
+  			<forward name="select-person" path="thesis-select-person"/>
+  			<forward name="select-unit" path="thesis-select-unit"/>
+  		</action>
+
     </action-mappings>
     
     <!-- ========== Controller Configuration ================================ -->

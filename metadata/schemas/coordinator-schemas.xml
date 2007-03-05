@@ -1,0 +1,71 @@
+<schema name="thesis.bean.student" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisBean">
+    <slot name="student" layout="by-number" 
+          validator="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
+</schema>
+
+<schema name="thesis.jury.proposal.student" type="net.sourceforge.fenixedu.domain.student.Student">
+    <slot name="number"/>
+    <slot name="person.name"/>
+</schema>
+
+<schema name="thesis.jury.proposal.person" type="net.sourceforge.fenixedu.domain.Person">
+    <slot name="name"/>
+    <slot name="teacher.category.name"/>
+    <slot name="teacher.currentWorkingDeparment.realName"/>
+</schema>
+
+<schema name="thesis.jury.proposal.person.external" type="net.sourceforge.fenixedu.domain.Person">
+    <slot name="name"/>
+    <slot name="externalPerson.externalPerson.institutionUnit"/>
+</schema>
+
+<schema name="thesis.bean.selectPerson.internal" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisBean">
+    <slot name="internal" key="label.coordinator.createThesis.internal" layout="radio-postback">
+        <property name="trueLabel" value="label.coordinator.createThesis.internalPerson"/>
+        <property name="falseLabel" value="label.coordinator.createThesis.externalPerson"/>
+        <property name="destination" value="changePersonType"/>
+        <property name="classes" value="nobullet liinline"/>
+    </slot>
+    <slot name="personName" key="label.coordinator.createThesis.personName" layout="autoComplete"  validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+        <property name="size" value="70"/>
+        <property name="rawSlotName" value="rawPersonName"/>
+        <property name="labelField" value="text"/>
+        <property name="format" value="${text}"/>
+        <property name="indicatorShown" value="true"/>
+        <property name="serviceName" value="SearchPersonsForParticipations"/>
+        <property name="serviceArgs" value="slot=name"/>
+        <property name="minChars" value="3"/>
+    </slot>
+</schema>
+
+<schema name="thesis.bean.selectPerson.external" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisBean">
+    <slot name="internal" key="label.coordinator.createThesis.internal" layout="radio-postback">
+        <property name="trueLabel" value="label.coordinator.createThesis.internalPerson"/>
+        <property name="falseLabel" value="label.coordinator.createThesis.externalPerson"/>
+        <property name="destination" value="changePersonType"/>
+        <property name="classes" value="nobullet liinline"/>
+    </slot>
+    <slot name="personName" key="label.coordinator.createThesis.personName" layout="autoComplete"  validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+        <property name="size" value="70"/>
+        <property name="rawSlotName" value="rawPersonName"/>
+        <property name="labelField" value="text"/>
+        <property name="format" value="${text}"/>
+        <property name="indicatorShown" value="true"/>
+        <property name="serviceName" value="SearchExternalPersons"/>
+        <property name="serviceArgs" value="slot=name"/>
+        <property name="minChars" value="3"/>
+    </slot>
+</schema>
+
+<schema name="thesis.bean.selectUnit.external" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisBean">
+    <slot name="rawPersonName" key="label.coordinator.createThesis.personName.forUnit" read-only="true"/>
+    <slot name="unitName" key="label.coordinator.createThesis.unitName" layout="autoComplete"  validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+        <property name="size" value="70"/>
+        <property name="rawSlotName" value="rawUnitName"/>
+        <property name="labelField" value="unit.nameWithAcronym"/>
+        <property name="indicatorShown" value="true"/>
+        <property name="serviceName" value="SearchExternalUnits"/>
+        <property name="serviceArgs" value="slot=name"/>
+        <property name="minChars" value="3"/>
+    </slot>
+</schema>
