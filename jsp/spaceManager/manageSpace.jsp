@@ -174,7 +174,7 @@
 	 					<bean:define id="p4" name="blueprintTextRectangle" property="p4" />							
 						<bean:define id="coords"><bean:write name="p1" property="x"/>,<bean:write name="p1" property="y"/>,<bean:write name="p2" property="x"/>,<bean:write name="p2" property="y"/>,<bean:write name="p3" property="x"/>,<bean:write name="p3" property="y"/>,<bean:write name="p4" property="x"/>,<bean:write name="p4" property="y"/></bean:define>				 				
 						<bean:define id="urlToCoords">manageSpaces.do?method=manageSpace&page=0&spaceInformationID=<bean:write name="blueprintSpace" property="spaceInformation.idInternal"/>&viewBlueprintNumbers=<bean:write name="viewBlueprintNumbers"/>&viewDoorNumbers=<bean:write name="viewDoorNumbers"/>&viewSpaceIdentifications=<bean:write name="viewSpaceIdentifications"/>&viewOriginalSpaceBlueprint=<bean:write name="viewOriginalSpaceBlueprint"/></bean:define>
-						<area shape="poly" coords="<%= coords %>" href ="<%= urlToCoords %>"/>									
+						<area shape="poly" coords="<%= coords %>" href="<%= urlToCoords %>"/>									
 					</logic:iterate>										
 				</logic:iterate>					
 			</map>								

@@ -78,15 +78,15 @@ public class SpaceBlueprintsDWGProcessor extends DWGProcessor {
     }
     
     @Override
-    protected void drawText(ReferenceConverter referenceConverter, Graphics2D graphics2D, DwgMText dwgText) {
+    protected void drawText(ReferenceConverter referenceConverter, Graphics2D graphics2D, DwgMText dwgMText) {
 	
-        String text = getText(dwgText);        
+        String text = getText(dwgMText);        
 	if (isToViewOriginalSpaceBlueprint() != null && isToViewOriginalSpaceBlueprint()) {
-	    super.drawText(referenceConverter, graphics2D, dwgText);
+	    super.drawText(referenceConverter, graphics2D, dwgMText);
 
 	} else {	    
-	    int x = convXCoord(dwgText.getInsertionPoint()[0], referenceConverter);
-	    int y = convYCoord(dwgText.getInsertionPoint()[1], referenceConverter);
+	    int x = convXCoord(dwgMText.getInsertionPoint()[0], referenceConverter);
+	    int y = convYCoord(dwgMText.getInsertionPoint()[1], referenceConverter);
 
 	    Space discoveredSpace = getParentSpace().readSubSpaceByBlueprintNumber(text.trim());
 	    String textToInsert = getTextToInsert(text, discoveredSpace, isToViewBlueprintNumbers(), isToViewSpaceIdentifications(), isToViewDoorNumbers());
@@ -122,12 +122,12 @@ public class SpaceBlueprintsDWGProcessor extends DWGProcessor {
 
 	File file = FileUtils.copyToTemporaryFile(inputStream);
 	final SpaceBlueprintsDWGProcessor processor = new SpaceBlueprintsDWGProcessor();
-	final DwgFile dwgFile = processor.readDwgFile(file.getAbsolutePath());
-	final Vector<DwgObject> dwgObjects = dwgFile.getDwgObjects();
-	final ReferenceConverter referenceConverter = new ReferenceConverter(dwgObjects,
-		processor.scaleRatio);
+	final DwgFile dwgFile = processor.readDwgFile(file.getAbsolutePath());	
+	final Vector<DwgObject> dwgObjects = dwgFile.getDwgObjects();		
+	final ReferenceConverter referenceConverter = new ReferenceConverter(dwgObjects, processor.scaleRatio);
 
 	for (final DwgObject dwgObject : dwgObjects) {
+	    
 	    if (dwgObject instanceof DwgText) {
 		DwgText dwgText = ((DwgText) dwgObject);
 		final Point2D point2D = dwgText.getInsertionPoint();		
@@ -147,8 +147,7 @@ public class SpaceBlueprintsDWGProcessor extends DWGProcessor {
 	return map;
     }
 
-    private static void putLinksCoordinatesToMap(BlueprintTextRectangles map,
-	    final SpaceBlueprintsDWGProcessor processor, final ReferenceConverter referenceConverter,
+    private static void putLinksCoordinatesToMap(BlueprintTextRectangles map, final SpaceBlueprintsDWGProcessor processor, final ReferenceConverter referenceConverter,
 	    double x, double y, String textToInsert, Space space) {
 
 	if (textToInsert != null) {
@@ -158,8 +157,7 @@ public class SpaceBlueprintsDWGProcessor extends DWGProcessor {
 		blueprintTextRectangules = new ArrayList<BlueprintTextRectangle>();
 	    }
 
-	    blueprintTextRectangules.add(new BlueprintTextRectangle(textToInsert, processor.convXCoord(x, referenceConverter), 
-		    processor.convYCoord(y, referenceConverter), processor.fontSize));
+	    blueprintTextRectangules.add(new BlueprintTextRectangle(textToInsert, processor.convXCoord(x, referenceConverter), processor.convYCoord(y, referenceConverter), processor.fontSize));
 	    map.put(space, blueprintTextRectangules);
 	}
     }
@@ -182,9 +180,7 @@ public class SpaceBlueprintsDWGProcessor extends DWGProcessor {
 	graphics2D.setColor(Color.BLACK);
     }
 
-    private void drawTextAndArc(Graphics2D graphics2D, int x, int y, Space discoveredSpace,
-	    String textToInsert) {
-
+    private void drawTextAndArc(Graphics2D graphics2D, int x, int y, Space discoveredSpace, String textToInsert) {
 	if (textToInsert != null) {
 	    if (isSuroundingSpaceBlueprint() != null && isSuroundingSpaceBlueprint()
 		    && getThisSpace() != null && discoveredSpace.equals(getThisSpace())) {
