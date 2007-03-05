@@ -194,6 +194,16 @@
 		<property name="rawSlotName" value="justificationMotiveAcronym"/>
 		<property name="minChars" value="1"/>
 		<property name="errorStyleClass" value="error0"/>
+	</slot>
+	<slot name="assiduousnessStatus" key="label.status" bundle="ASSIDUOUSNESS_RESOURCES" layout="autoComplete">
+		<property name="labelField" value="description"/>
+		<property name="format" value="${description}"/>
+		<property name="serviceName" value="SearchObjects"/>
+		<property name="serviceArgs" value="slot=description"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatus"/>
+		<property name="rawSlotName" value="assiduousnessStatusDescription"/>
+		<property name="minChars" value="1"/>
+		<property name="errorStyleClass" value="error0"/>
 	</slot>	
 </schema>
 
