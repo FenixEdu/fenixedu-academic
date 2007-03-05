@@ -46,7 +46,7 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
         String executionYear = (String) request.getAttribute("executionYear");
         String degree = (String) request.getAttribute("degree");
 
-        Integer executionDegree = Integer.valueOf (getFromRequest("executionDegreeID",request));
+        Integer executionDegree = Integer.valueOf(getFromRequest("executionDegreeID",request));
         if (executionDegree == null) {       
            executionDegree = Integer.valueOf((String) request.getAttribute(SessionConstants.EXECUTION_DEGREE));           
         }
@@ -635,7 +635,9 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
     private String getFromRequest(String parameter, HttpServletRequest request) {
         String parameterString = request.getParameter(parameter);
         if (parameterString == null) {
-            parameterString = (String) request.getAttribute(parameter);
+            final Object attribute = request.getAttribute(parameter);
+            parameterString = attribute instanceof Integer ?
+        	((Integer) attribute).toString() : (String) attribute;
         }
         return parameterString;
     }
