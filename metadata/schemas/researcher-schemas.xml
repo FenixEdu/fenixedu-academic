@@ -2188,13 +2188,8 @@ type="net.sourceforge.fenixedu.domain.research.activity.JournalIssue">
 
 <schema name="result.publication.presentation.Article" extends="publication.TitleAndAuthors" bundle="RESEARCHER_RESOURCES"
 		type="net.sourceforge.fenixedu.domain.research.result.publication.Article">
-	<slot name="journal"/>
- 	<slot name="year"/>	
-	<slot name="publisher" layout="null-as-label">
-		<property name="label" value=""/>
-		<property name="subLayout" value="values"/>
-		<property name="subSchema" value="unit.name"/>
-	</slot>
+	<slot name="journalIssue" layout="values" schema="presentJournalIssue"/>
+	<slot name="journalIssue.publisher"/>
 	<slot name="url">
 		<property name="classes" value="greytxt1"/>
 		<property name="link" value="true"/>
