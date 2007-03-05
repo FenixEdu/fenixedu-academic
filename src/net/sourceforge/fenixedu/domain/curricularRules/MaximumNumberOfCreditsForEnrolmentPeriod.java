@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
@@ -57,8 +58,8 @@ public class MaximumNumberOfCreditsForEnrolmentPeriod extends MaximumNumberOfCre
 	return result;
     }
 
-    public static Double getAccumulatedEctsCredits(final Enrolment enrolment) {
-	return enrolment.getEctsCredits() * ACCUMULATED_FACTOR;
+    public static Double getAccumulatedEctsCredits(final CurricularCourse curricularCourse) {
+	return curricularCourse.getEctsCredits() * ACCUMULATED_FACTOR;
     }
     
 }
