@@ -18,13 +18,14 @@ public class EmailAddressList implements Serializable {
 	final StringBuilder emailAddresses = new StringBuilder();
 	if (emailAddressCollection != null) {
 	    for (final String emailAddress : emailAddressCollection) {
-		if (emailAddresses.length() > 0) {
+		final String emailAddressTrimmed = emailAddress.trim();
+		if (emailAddressTrimmed.length() > 0) {
 		    emailAddresses.append(", ");
 		}
-		emailAddresses.append(emailAddress);
+		emailAddresses.append(emailAddressTrimmed);
 	    }
 	}
-	this.emailAddresses = emailAddresses.toString();
+	this.emailAddresses = emailAddresses.length() == 0 ? null : emailAddresses.toString();
     }
 
     @Override
@@ -33,10 +34,13 @@ public class EmailAddressList implements Serializable {
     }
 
     public String[] toArray() {
-	return emailAddresses.split(", ");
+	return emailAddresses == null ? null : emailAddresses.split(", ");
     }
 
     public Collection<String> toCollection() {
+	if (emailAddresses == null) {
+	    return null;
+	}
 	final Collection<String> collection = new ArrayList<String>();
 	for (final String emailAddress : toArray()) {
 	    collection.add(emailAddress);
