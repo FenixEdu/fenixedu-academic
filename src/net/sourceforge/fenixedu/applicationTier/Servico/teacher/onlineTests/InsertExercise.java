@@ -189,6 +189,7 @@ public class InsertExercise extends Service {
                 xmlListMap.put("", xmlList);
             }
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
 
