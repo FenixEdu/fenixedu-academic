@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -40,8 +39,8 @@ public class Attends extends Attends_Base {
 
     public static final Comparator<Attends> ATTENDS_COMPARATOR = new Comparator<Attends>() {
 	public int compare(final Attends attends1, final Attends attends2) {
-	    final ExecutionCourse executionCourse1 = attends1.getDisciplinaExecucao();
-	    final ExecutionCourse executionCourse2 = attends2.getDisciplinaExecucao();
+	    final ExecutionCourse executionCourse1 = attends1.getExecutionCourse();
+	    final ExecutionCourse executionCourse2 = attends2.getExecutionCourse();
 	    if (executionCourse1 == executionCourse2) {
 		final Registration registration1 = attends1.getAluno();
 		final Registration registration2 = attends2.getAluno();
@@ -92,7 +91,7 @@ public class Attends extends Attends_Base {
     }
 
     private boolean hasAnyShiftEnrolments() {
-	for (Shift shift : this.getDisciplinaExecucao().getAssociatedShifts()) {
+	for (Shift shift : this.getExecutionCourse().getAssociatedShifts()) {
 	    if (shift.getStudents().contains(this.getAluno())) {
 		return true;
 	    }
@@ -119,7 +118,7 @@ public class Attends extends Attends_Base {
     }
 
     public List<Mark> getAssociatedMarksOrderedByEvaluationDate() {
-	final List<Evaluation> orderedEvaluations = getDisciplinaExecucao()
+	final List<Evaluation> orderedEvaluations = getExecutionCourse()
 		.getOrderedAssociatedEvaluations();
 	final List<Mark> orderedMarks = new ArrayList<Mark>(orderedEvaluations.size());
 	for (int i = 0; i < orderedEvaluations.size(); i++) {
@@ -265,7 +264,7 @@ public class Attends extends Attends_Base {
     }
 
     public Date getBegginingOfLessonPeriod() {
-	final ExecutionPeriod executionPeriod = getDisciplinaExecucao().getExecutionPeriod();
+	final ExecutionPeriod executionPeriod = getExecutionCourse().getExecutionPeriod();
 	final StudentCurricularPlan studentCurricularPlan = getEnrolment().getStudentCurricularPlan();
 	final ExecutionDegree executionDegree = studentCurricularPlan.getDegreeCurricularPlan()
 		.getExecutionDegreeByYear(executionPeriod.getExecutionYear());
@@ -279,7 +278,7 @@ public class Attends extends Attends_Base {
     }
 
     public Date getEndOfExamsPeriod() {
-	final ExecutionPeriod executionPeriod = getDisciplinaExecucao().getExecutionPeriod();
+	final ExecutionPeriod executionPeriod = getExecutionCourse().getExecutionPeriod();
 	final StudentCurricularPlan studentCurricularPlan = getEnrolment().getStudentCurricularPlan();
 	final ExecutionDegree executionDegree = studentCurricularPlan.getDegreeCurricularPlan()
 		.getExecutionDegreeByYear(executionPeriod.getExecutionYear());
@@ -294,7 +293,7 @@ public class Attends extends Attends_Base {
 
 
     public EnrolmentEvaluationType getEnrolmentEvaluationType() {
-	if (getEnrolment().getExecutionPeriod() != getDisciplinaExecucao().getExecutionPeriod()) {
+	if (getEnrolment().getExecutionPeriod() != getExecutionCourse().getExecutionPeriod()) {
 	    return EnrolmentEvaluationType.IMPROVEMENT;
 	} else if (getEnrolment().hasSpecialSeason()) {
 	    return EnrolmentEvaluationType.SPECIAL_SEASON;
@@ -304,21 +303,31 @@ public class Attends extends Attends_Base {
     }
 
     public boolean isFor(final ExecutionPeriod executionPeriod) {
-	return getDisciplinaExecucao().getExecutionPeriod() == executionPeriod;
+	return getExecutionCourse().getExecutionPeriod() == executionPeriod;
     }
 
     public boolean isFor(final ExecutionCourse executionCourse) {
-	return getDisciplinaExecucao() == executionCourse;
+	return getExecutionCourse() == executionCourse;
     }
 
     public boolean isFor(final ExecutionYear executionYear) {
 	return getExecutionCourse().getExecutionYear() == executionYear;
     }
 
-    public ExecutionCourse getExecutionCourse() {
-	return getDisciplinaExecucao();
+    @Override
+    @Deprecated
+    public ExecutionCourse getDisciplinaExecucao() {
+	return getExecutionCourse();
     }
     
+    public ExecutionCourse getExecutionCourse() {
+	return super.getDisciplinaExecucao();
+    }
+    
+    public ExecutionPeriod getExecutionPeriod() {
+	return getExecutionCourse().getExecutionPeriod();
+    }
+
     public boolean isEnrolledOrWithActiveSCP() {
 	if(this.getEnrolment() == null) {
 	    RegistrationState lastRegistrationState = this.getAluno().getLastRegistrationState(this.getExecutionCourse().getExecutionYear());
@@ -328,4 +337,5 @@ public class Attends extends Attends_Base {
 	}
 	return true;
     }
+
 }
