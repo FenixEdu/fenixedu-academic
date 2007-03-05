@@ -42,6 +42,7 @@ import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.FenixDomainException;
 import net.sourceforge.fenixedu.domain.gratuity.GratuitySituationType;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
@@ -53,7 +54,8 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Equivalence;
 import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroupType;
-import net.sourceforge.fenixedu.domain.studentCurriculum.StudentCurricularPlanEnrolment;
+import net.sourceforge.fenixedu.domain.studentCurriculum.StudentCurricularPlanEnrolmentEvaluationManager;
+import net.sourceforge.fenixedu.domain.studentCurriculum.StudentCurricularPlanEnrolmentManager;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.tools.enrollment.AreaType;
 import net.sourceforge.fenixedu.util.PeriodState;
@@ -1885,17 +1887,41 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	}
     }
 
-    public List<RuleResult> enrol(final Person person, final ExecutionPeriod executionPeriod,
+    public List<RuleResult> enrol(final Person responsiblePerson, final ExecutionPeriod executionPeriod,
 	    final Set<DegreeModuleToEnrol> degreeModulesToEnrol,
 	    final List<CurriculumModule> curriculumModulesToRemove,
 	    final CurricularRuleLevel curricularRuleLevel) {
 
-	final EnrolmentContext enrolmentContext = new EnrolmentContext(this, executionPeriod, curriculumModulesToRemove, curricularRuleLevel);
-	for (final DegreeModuleToEnrol moduleToEnrol : degreeModulesToEnrol) {
-	    enrolmentContext.addDegreeModuleToEvaluate(moduleToEnrol);
+	assertEnrolmentPreConditions(responsiblePerson, executionPeriod);
+
+	final EnrolmentContext enrolmentContext = new EnrolmentContext(this, executionPeriod, degreeModulesToEnrol, curriculumModulesToRemove, curricularRuleLevel);
+	if (curricularRuleLevel.managesEnrolments()) {
+	    return new StudentCurricularPlanEnrolmentManager(this, enrolmentContext, responsiblePerson).manage();
+	} else {
+	    return new StudentCurricularPlanEnrolmentEvaluationManager(this, enrolmentContext, responsiblePerson).manage();
 	}
 
-	return new StudentCurricularPlanEnrolment().enrol(person, enrolmentContext);
+	
+    }
+
+    private void assertEnrolmentPreConditions(final Person responsiblePerson, final ExecutionPeriod executionPeriod) {
+	final Registration registration = this.getRegistration();
+	if (!registration.isActive()) {
+	    throw new DomainException(
+		    "error.StudentCurricularPlan.cannot.enrol.with.registration.inactive");
+	}
+	
+	final DegreeCurricularPlan degreeCurricularPlan = this.getDegreeCurricularPlan();
+	if (responsiblePerson.hasRole(RoleType.STUDENT)) {
+	    if (!degreeCurricularPlan.hasOpenEnrolmentPeriodInCurricularCoursesFor(executionPeriod)) {
+		throw new DomainException(
+			"error.StudentCurricularPlan.students.can.only.perform.curricular.course.enrollment.inside.established.periods");
+	    }
+	    if (!registration.getPayedTuition()) {
+		throw new DomainException(
+			"error.StudentCurricularPlan.cannot.enrol.with.gratuity.debts.for.previous.execution.years");
+	    }
+	}
     }
 
     public String getName() {

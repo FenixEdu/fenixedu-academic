@@ -7,6 +7,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.CurricularRuleLevel;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 
 public class EnrolmentContext {
@@ -23,10 +24,23 @@ public class EnrolmentContext {
 
     public EnrolmentContext(final StudentCurricularPlan studentCurricularPlan,
 	    final ExecutionPeriod executionPeriod,
+	    final Set<DegreeModuleToEnrol> degreeModulesToEnrol, 
 	    final List<CurriculumModule> curriculumModulesToRemove,
 	    final CurricularRuleLevel curricularRuleLevel) {
+	
 	this.studentCurricularPlan = studentCurricularPlan;
+	
 	this.degreeModulesToEvaluate = new HashSet<IDegreeModuleToEvaluate>();
+	for (final DegreeModuleToEnrol moduleToEnrol : degreeModulesToEnrol) {
+	    if (curriculumModulesToRemove.contains(moduleToEnrol.getCurriculumGroup())) {
+		throw new DomainException(
+			"error.StudentCurricularPlan.cannot.remove.enrollment.on.curriculum.group.because.other.enrollments.depend.on.it",
+			moduleToEnrol.getCurriculumGroup().getName().getContent());
+	    }
+
+	    this.addDegreeModuleToEvaluate(moduleToEnrol);
+	}
+	
 	this.executionPeriod = executionPeriod;
 	this.curriculumModulesToRemove = curriculumModulesToRemove;
 	this.curricularRuleLevel = curricularRuleLevel;
@@ -56,7 +70,7 @@ public class EnrolmentContext {
 	this.studentCurricularPlan = studentCurricularPlan;
     }
 
-    public List<CurriculumModule> getCurriculumModulesToRemove() {
+    public List<CurriculumModule> getToRemove() {
 	return curriculumModulesToRemove;
     }
 
