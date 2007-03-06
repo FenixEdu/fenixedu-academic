@@ -18,8 +18,8 @@
 	</span>
 	</p>
 
-	<bean:size id="justifications" name="justificationMotive" property="justifications"/>
-	<logic:equal name="justifications" value="0">
+	<bean:define id="isUsed" name="justificationMotive" property="isUsed"/>
+	<logic:equal name="isUsed" value="false">
 		<fr:edit id="editJustificationMotive" name="justificationMotive"
 			type="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive"
 			schema="edit.justificationMotives"
@@ -31,7 +31,7 @@
 			</fr:layout>
 		</fr:edit>
 	</logic:equal>
-	<logic:notEqual name="justifications" value="0">
+	<logic:notEqual name="isUsed" value="false">
 		<fr:edit id="editJustificationMotive" name="justificationMotive"
 			type="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive"
 			schema="edit.regularizationMotives"

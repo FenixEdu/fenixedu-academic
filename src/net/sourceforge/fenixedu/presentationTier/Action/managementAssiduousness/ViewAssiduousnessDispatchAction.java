@@ -11,9 +11,9 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeWorkSheet;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
-import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord;
 import net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkScheduleType;
+import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
@@ -51,7 +51,9 @@ public class ViewAssiduousnessDispatchAction extends FenixDispatchAction {
 	    FenixFilterException {
 	List<JustificationMotive> justificationMotives = new ArrayList<JustificationMotive>();
 	for (JustificationMotive justificationMotive : rootDomainObject.getJustificationMotives()) {
-	    if (justificationMotive.getJustificationType() != null) {
+	    if (justificationMotive.getJustificationType() != null
+		    && JustificationType.getJustificationTypesForJustificationMotives().contains(
+			    justificationMotive.getJustificationType())) {
 		justificationMotives.add(justificationMotive);
 	    }
 	}

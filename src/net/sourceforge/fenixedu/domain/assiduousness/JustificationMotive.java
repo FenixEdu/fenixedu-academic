@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.DateTime;
+import org.joda.time.YearMonthDay;
 
 public class JustificationMotive extends JustificationMotive_Base {
 
@@ -106,5 +107,15 @@ public class JustificationMotive extends JustificationMotive_Base {
 	setActualWorkTime(actualWorkTime);
 	setLastModifiedDate(new DateTime());
 	setModifiedBy(modifiedBy);
+    }
+
+    public boolean getIsUsed() {
+	YearMonthDay lastDay = ClosedMonth.getLastClosedYearMonthDay();
+	for (Justification justification : getJustifications()) {
+	    if (!justification.getDate().toYearMonthDay().isAfter(lastDay)) {
+		return true;
+	    }
+	}
+	return false;
     }
 }
