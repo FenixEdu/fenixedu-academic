@@ -588,7 +588,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	result.add(new PreviousYearsCurricularCourseEnrollmentRule(studentCurricularPlan,
 		executionPeriod));
 	result.add(new MaximumNumberEctsCreditsEnrolmentRule(studentCurricularPlan, executionPeriod));
-	
+
 	return result;
     }
 
@@ -898,7 +898,8 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	    ExecutionPeriod beginExecutionPeriod, ExecutionPeriod endExecutionPeriod) {
 
 	if (competenceCourse.getCurricularCourse(this) != null) {
-	    throw new DomainException("competenceCourse.already.has.a.curricular.course.in.degree.curricular.plan");
+	    throw new DomainException(
+		    "competenceCourse.already.has.a.curricular.course.in.degree.curricular.plan");
 	}
 	checkIfAnualBeginsInFirstPeriod(competenceCourse, curricularPeriod);
 
@@ -1129,6 +1130,19 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	for (DegreeCurricularPlan degreeCurricularPlan : RootDomainObject.getInstance()
 		.getDegreeCurricularPlans()) {
 	    if (degreeCurricularPlan.getDegree().getTipoCurso() == degreeType
+		    && degreeCurricularPlan.getState() == state) {
+		result.add(degreeCurricularPlan);
+	    }
+	}
+	return result;
+    }
+
+    public static List<DegreeCurricularPlan> readByDegreeTypesAndState(Set<DegreeType> degreeTypes,
+	    DegreeCurricularPlanState state) {
+	List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
+	for (DegreeCurricularPlan degreeCurricularPlan : RootDomainObject.getInstance()
+		.getDegreeCurricularPlans()) {
+	    if (degreeTypes.contains(degreeCurricularPlan.getDegree().getTipoCurso())
 		    && degreeCurricularPlan.getState() == state) {
 		result.add(degreeCurricularPlan);
 	    }
@@ -1367,19 +1381,19 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     public Collection<StudentCurricularPlan> getActiveStudentCurricularPlans() {
 	final Collection<StudentCurricularPlan> result = new HashSet<StudentCurricularPlan>();
-	
+
 	for (StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
 	    if (studentCurricularPlan.isActive()) {
 		result.add(studentCurricularPlan);
 	    }
 	}
-	
+
 	return result;
     }
-    
+
     public Set<Registration> getRegistrations() {
 	final Set<Registration> registrations = new HashSet<Registration>();
-	
+
 	for (StudentCurricularPlan studentCurricularPlan : getActiveStudentCurricularPlans()) {
 	    registrations.add(studentCurricularPlan.getRegistration());
 	}
@@ -1389,18 +1403,18 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     public Collection<Registration> getActiveRegistrations() {
 	final Collection<Registration> result = new HashSet<Registration>();
-	
+
 	for (StudentCurricularPlan studentCurricularPlan : getActiveStudentCurricularPlans()) {
 	    final Registration registration = studentCurricularPlan.getRegistration();
-			
+
 	    if (registration.isActive()) {
 		result.add(registration);
 	    }
 	}
-	
+
 	return result;
     }
-    
+
     public boolean isPast() {
 	return getState().equals(DegreeCurricularPlanState.PAST);
     }
