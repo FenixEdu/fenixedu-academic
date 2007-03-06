@@ -65,12 +65,6 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     private Double accumulatedEctsCredits;
 
-    /*
-         * static {
-         * EnrolmentEvaluation.EnrolmentEnrolmentEvaluation.addListener(new
-         * EnrolmentEnrolmentEvaluationListener()); }
-         */
-
     public Enrolment() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
@@ -127,12 +121,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     public boolean isSpecialSeason() {
-	boolean result = false;
-	for (EnrolmentEvaluation enrolmentEvaluation : getEvaluations()) {
-	    result |= enrolmentEvaluation.getEnrolmentEvaluationType() == EnrolmentEvaluationType.SPECIAL_SEASON;
-	}
-
-	return result;
+	return hasSpecialSeason();
     }
 
     // new student structure methods
@@ -228,7 +217,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     public void unEnroll() throws DomainException {
 
-	for (EnrolmentEvaluation eval : getEvaluations()) {
+	for (EnrolmentEvaluation eval : getEvaluationsSet()) {
 
 	    if (eval.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.NORMAL)
 		    && eval.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.TEMPORARY_OBJ)
@@ -344,7 +333,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     public EnrolmentEvaluation getEnrolmentEvaluationByEnrolmentEvaluationTypeAndGrade(
 	    final EnrolmentEvaluationType evaluationType, final String grade) {
 
-	return (EnrolmentEvaluation) CollectionUtils.find(getEvaluations(), new Predicate() {
+	return (EnrolmentEvaluation) CollectionUtils.find(getEvaluationsSet(), new Predicate() {
 
 	    public boolean evaluate(Object o) {
 		EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) o;
@@ -360,7 +349,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     public EnrolmentEvaluation getEnrolmentEvaluationByEnrolmentEvaluationStateAndType(
 	    final EnrolmentEvaluationState state, final EnrolmentEvaluationType type) {
-	return (EnrolmentEvaluation) CollectionUtils.find(getEvaluations(), new Predicate() {
+	return (EnrolmentEvaluation) CollectionUtils.find(getEvaluationsSet(), new Predicate() {
 
 	    public boolean evaluate(Object o) {
 		EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) o;
@@ -580,7 +569,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     private boolean hasEnrolmentEvaluationByType(EnrolmentEvaluationType enrolmentEvaluationType) {
-	for (EnrolmentEvaluation enrolmentEvaluation : getEvaluations()) {
+	for (EnrolmentEvaluation enrolmentEvaluation : getEvaluationsSet()) {
 	    if (enrolmentEvaluation.getEnrolmentEvaluationType().equals(enrolmentEvaluationType)) {
 		return true;
 	    }
@@ -597,18 +586,18 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     public boolean isNotEvaluated() {
-	final EnrolmentEvaluation finalEnrolmentEvaluation = getLatestEnrolmentEvaluation();
-	return finalEnrolmentEvaluation == null || finalEnrolmentEvaluation.isNotEvaluated();
+	final EnrolmentEvaluation latestEnrolmentEvaluation = getLatestEnrolmentEvaluation();
+	return latestEnrolmentEvaluation == null || latestEnrolmentEvaluation.isNotEvaluated();
     }
 
     public boolean isFlunked() {
-	final EnrolmentEvaluation finalEnrolmentEvaluation = getLatestEnrolmentEvaluation();
-	return finalEnrolmentEvaluation != null && finalEnrolmentEvaluation.isFlunked();
+	final EnrolmentEvaluation latestEnrolmentEvaluation = getLatestEnrolmentEvaluation();
+	return latestEnrolmentEvaluation != null && latestEnrolmentEvaluation.isFlunked();
     }
 
     public boolean isApproved() {
-	final EnrolmentEvaluation finalEnrolmentEvaluation = getLatestEnrolmentEvaluation();
-	return finalEnrolmentEvaluation != null && finalEnrolmentEvaluation.isApproved();
+	final EnrolmentEvaluation latestEnrolmentEvaluation = getLatestEnrolmentEvaluation();
+	return latestEnrolmentEvaluation != null && latestEnrolmentEvaluation.isApproved();
     }
 
     public boolean isEnroled() {
@@ -816,11 +805,11 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     public EnrolmentEvaluation getLatestEnrolmentEvaluation() {
 	return (getStudentCurricularPlan().getDegreeType().getAdministrativeOfficeType() == AdministrativeOfficeType.DEGREE) ? getLatestEnrolmentEvalution(this
 		.getAllFinalEnrolmentEvaluations())
-		: getLatestEnrolmentEvalution(this.getEvaluations());
+		: getLatestEnrolmentEvalution(this.getEvaluationsSet());
     }
 
     private EnrolmentEvaluation getLatestEnrolmentEvalution(
-	    List<EnrolmentEvaluation> enrolmentEvaluations) {
+	    Collection<EnrolmentEvaluation> enrolmentEvaluations) {
 	return (enrolmentEvaluations == null || enrolmentEvaluations.isEmpty()) ? null : Collections
 		.max(enrolmentEvaluations);
     }
