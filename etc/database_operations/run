@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Update Table JustificationMotive" updateTableJustificationMotive.sql
