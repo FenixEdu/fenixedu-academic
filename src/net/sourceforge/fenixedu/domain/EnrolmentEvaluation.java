@@ -86,14 +86,15 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
 	setWhenDateTime(when);
     }
 
-    public EnrolmentEvaluation(Enrolment enrolment, EnrolmentEvaluationType enrolmentEvaluationType, EnrolmentEvaluationState evaluationState) {
-		this(enrolment, enrolmentEvaluationType);
-		if(evaluationState == null) {
-			throw new DomainException("error.enrolmentEvaluation.invalid.parameters");
-		}
-		setEnrolmentEvaluationState(evaluationState);
+    public EnrolmentEvaluation(Enrolment enrolment, EnrolmentEvaluationType enrolmentEvaluationType, EnrolmentEvaluationState evaluationState, Employee employee) {
+	this(enrolment, enrolmentEvaluationType);
+	if (evaluationState == null || employee == null) {
+	    throw new DomainException("error.enrolmentEvaluation.invalid.parameters");
 	}
-
+	setEnrolmentEvaluationState(evaluationState);
+	setEmployee(employee);
+	setWhenDateTime(new DateTime());
+    }
     
     public int compareTo(Object o) {
 	EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) o;
@@ -453,29 +454,13 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         setCheckSum(FenixDigestUtils.createDigest(stringBuilder.toString()));
     }
     
-    /*    @Override
-    public void setEnrolmentEvaluationState(EnrolmentEvaluationState enrolmentEvaluationState) {
-        checkNewEnrolmentEvaluationState(enrolmentEvaluationState);
-        super.setEnrolmentEvaluationState(enrolmentEvaluationState);
-        this.getEnrolment().calculateNewEnrolmentState(enrolmentEvaluationState);
-    }
-
-    private void checkNewEnrolmentEvaluationState(EnrolmentEvaluationState enrolmentEvaluationState) {
-        if (this.getEnrolmentEvaluationState() != null) {
-            if(this.getEnrolmentEvaluationState().getWeight() > enrolmentEvaluationState.getWeight()){
-                throw new DomainException("invalid enrolmentEvaluationState");
-            }
-        }
-    }
-    */
-
     @Override
     public void setGrade(String grade) {
         super.setGrade((grade != null) ? grade.toUpperCase() : null);
     }
     
     public Registration getStudent() {
-        return this.getEnrolment().getStudentCurricularPlan().getRegistration();
+        return this.getEnrolment().getRegistration();
     }
     
     public MarkSheet getRectificationMarkSheet() {
