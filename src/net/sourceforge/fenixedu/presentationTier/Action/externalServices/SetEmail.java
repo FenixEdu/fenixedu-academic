@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.externalServices.SetEmai
 import net.sourceforge.fenixedu.applicationTier.Servico.externalServices.SetEmail.UserAlreadyHasEmailException;
 import net.sourceforge.fenixedu.applicationTier.Servico.externalServices.SetEmail.UserDoesNotExistException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.util.HostAccessControl;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -16,7 +17,7 @@ import org.apache.struts.action.ActionMapping;
 public class SetEmail extends FenixDispatchAction {
 
     public ActionForward setEmail(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-	final String host = request.getRemoteHost();
+	final String host = HostAccessControl.getRemoteAddress(request);
 	final String ip = request.getRemoteAddr();
 	final String password = request.getParameter("password");
 	final String userUId = request.getParameter("userUId");
