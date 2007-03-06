@@ -29,11 +29,17 @@ public class StudentCurricularPlanEnrolmentEvaluationManager extends StudentCurr
     @Override
     protected void unEnrol() {
 	for (final CurriculumModule curriculumModule : enrolmentContext.getToRemove()) {
-	    if (curriculumModule.isLeaf()) {
+	    if (curriculumModule instanceof Enrolment) {
+		final Enrolment enrolment = (Enrolment) curriculumModule;
 		
-		// find enrolment evaluation that is an improvement / special season and delete it
+		if (curricularRuleLevel == CurricularRuleLevel.IMPROVEMENT_ENROLMENT) {
+		    enrolment.unEnrollImprovement(enrolmentContext.getExecutionPeriod());
+		} else if (curricularRuleLevel == CurricularRuleLevel.SPECIAL_SEASON_ENROLMENT) {
+		    enrolment.deleteSpecialSeasonEvaluation();
+		}
+		
 	    } else {
-		// throw exception, error in render
+		throw new DomainException("StudentCurricularPlanEnrolmentEvaluationManager.can.only.unenrol.enrolments");
 	    }
 	}
     }
