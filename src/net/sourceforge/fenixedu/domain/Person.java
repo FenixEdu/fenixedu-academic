@@ -59,6 +59,7 @@ import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 import net.sourceforge.fenixedu.domain.person.PersonName;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess;
+import net.sourceforge.fenixedu.domain.research.activity.ResearchActivityLocationType;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
 import net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent;
@@ -102,7 +103,8 @@ public class Person extends Person_Base {
 
     public final static Comparator<Person> COMPARATOR_BY_NAME = new ComparatorChain();
     static {
-	((ComparatorChain) COMPARATOR_BY_NAME).addComparator(new BeanComparator("name", Collator.getInstance()));
+	((ComparatorChain) COMPARATOR_BY_NAME).addComparator(new BeanComparator("name", Collator
+		.getInstance()));
 	((ComparatorChain) COMPARATOR_BY_NAME).addComparator(new BeanComparator("idInternal"));
     }
 
@@ -110,9 +112,9 @@ public class Person extends Person_Base {
 	Role.PersonRole.addListener(new PersonRoleListener());
     }
 
-    /***************************************************************************
-	 * BUSINESS SERVICES *
-	 **************************************************************************/
+    /***********************************************************************
+         * BUSINESS SERVICES *
+         **********************************************************************/
 
     @Override
     public void setDocumentIdNumber(String documentIdNumber) {
@@ -248,19 +250,18 @@ public class Person extends Person_Base {
 	setMaritalStatus(MaritalStatus.UNKNOWN);
     }
 
-    public static Person createExternalPerson(String name, Gender gender, String address,
-	    String areaCode, String areaOfAreaCode, String area, String parishOfResidence,
-	    String districtSubdivisionOfResidence, String districtOfResidence, String phone,
-	    String mobile, String homepage, String email, String documentIdNumber,
-	    IDDocumentType documentType) {
+    public static Person createExternalPerson(String name, Gender gender, String address, String areaCode,
+	    String areaOfAreaCode, String area, String parishOfResidence,
+	    String districtSubdivisionOfResidence, String districtOfResidence, String phone, String mobile,
+	    String homepage, String email, String documentIdNumber, IDDocumentType documentType) {
 
 	return new Person(name, gender, address, areaCode, areaOfAreaCode, area, parishOfResidence,
 		districtSubdivisionOfResidence, districtOfResidence, phone, mobile, homepage, email,
 		documentIdNumber, documentType);
     }
 
-    public Person(String name, Gender gender, String address, String phone, String mobile,
-	    String homepage, String email, String documentIDNumber, IDDocumentType documentType) {
+    public Person(String name, Gender gender, String address, String phone, String mobile, String homepage,
+	    String email, String documentIDNumber, IDDocumentType documentType) {
 
 	super();
 
@@ -322,8 +323,7 @@ public class Person extends Person_Base {
 	}
     }
 
-    public void edit(String name, String address, String phone, String mobile, String homepage,
-	    String email) {
+    public void edit(String name, String address, String phone, String mobile, String homepage, String email) {
 	setNome(name);
 	setAddress(address);
 	setPhone(phone);
@@ -332,8 +332,8 @@ public class Person extends Person_Base {
 	setEmail(email);
     }
 
-    public void editPersonalData(String documentIdNumber, IDDocumentType documentType,
-	    String personName, String socialSecurityNumber) {
+    public void editPersonalData(String documentIdNumber, IDDocumentType documentType, String personName,
+	    String socialSecurityNumber) {
 
 	setIdentification(documentIdNumber, documentType);
 	setName(personName);
@@ -535,136 +535,178 @@ public class Person extends Person_Base {
 	return resultPublications;
     }
 
-	public List<ResearchResultPublication> getBooks() {
-		return ResearchResultPublication.sort(this.getResearchResultPublicationsByType(Book.class));
-	}
-    
-	public List<ResearchResultPublication> getBooks(ExecutionYear executionYear) {
-		return ResearchResultPublication.sort(this.getResearchResultPublicationsByType(Book.class,executionYear));
-	}
-	
-	public List<ResearchResultPublication> getArticles() {
-		return ResearchResultPublication.sort(this.getResearchResultPublicationsByType(Article.class));	
-	}
-	
-	public List<ResearchResultPublication> getArticles(ExecutionYear executionYear) {
-		return ResearchResultPublication.sort(this.getResearchResultPublicationsByType(Article.class,executionYear));
-	}
-	
-	public List<ResearchResultPublication> getInproceedings() {
-		return ResearchResultPublication.sort(this.getResearchResultPublicationsByType(Inproceedings.class));
-	}
-	
-	public List<ResearchResultPublication> getInproceedings(ExecutionYear executionYear) {
-		return ResearchResultPublication.sort(this.getResearchResultPublicationsByType(Inproceedings.class,executionYear));
-	}
-
-	public List<ResearchResultPublication> getProceedings() {
-		return ResearchResultPublication.sort(this.getResearchResultPublicationsByType(Proceedings.class));
-	}
-	
-	public List<ResearchResultPublication> getProceedings(ExecutionYear executionYear) {
-		return ResearchResultPublication.sort(this.getResearchResultPublicationsByType(Proceedings.class,executionYear));
-	}
-	
-	public List<ResearchResultPublication> getTheses() {
-		return ResearchResultPublication.sort(this.getResearchResultPublicationsByType(Thesis.class));
-	}
-
-	public List<ResearchResultPublication> getTheses(ExecutionYear executionYear) {
-		return ResearchResultPublication.sort(this.getResearchResultPublicationsByType(Thesis.class,executionYear));
-	}
-	
-	public List<ResearchResultPublication> getManuals() {
-		return ResearchResultPublication.sort(this.getResearchResultPublicationsByType(Manual.class));
-	}
-
-	public List<ResearchResultPublication> getManuals(ExecutionYear executionYear) {
-		return ResearchResultPublication.sort(this.getResearchResultPublicationsByType(Manual.class,executionYear));
-	}
-	
-	public List<ResearchResultPublication> getTechnicalReports() {
-		return ResearchResultPublication.sort(this.getResearchResultPublicationsByType(TechnicalReport.class));
-	}
-
-	public List<ResearchResultPublication> getTechnicalReports(ExecutionYear executionYear) {
-		return ResearchResultPublication.sort(this.getResearchResultPublicationsByType(TechnicalReport.class,executionYear));
-	}
-
-	public List<ResearchResultPublication> getOtherPublications() {
-		return ResearchResultPublication.sort(this.getResearchResultPublicationsByType(OtherPublication.class));
-	}
-
-	public List<ResearchResultPublication> getOtherPublications(ExecutionYear executionYear) {
-		return ResearchResultPublication.sort(this.getResearchResultPublicationsByType(OtherPublication.class,executionYear));
-	}
-
-	public List<ResearchResultPublication> getUnstructureds() {
-		return ResearchResultPublication.sort(this.getResearchResultPublicationsByType(Unstructured.class));
-	}
-
-	public List<ResearchResultPublication> getUnstructureds(ExecutionYear executionYear) {
-		return ResearchResultPublication.sort(this.getResearchResultPublicationsByType(Unstructured.class,executionYear));
-	}
-	
-	public List<ResearchResultPublication> getInbooks() {
-		return ResearchResultPublication.sort(this.getFilteredBookParts(BookPartType.Inbook));
-	}
-
-	public List<ResearchResultPublication> getInbooks(ExecutionYear executionYear) {
-		return ResearchResultPublication.sort(this.getFilteredBookParts(BookPartType.Inbook,executionYear));
-	}
-	
-	public List<ResearchResultPublication> getIncollections() {
-		return ResearchResultPublication.sort(this.getFilteredBookParts(BookPartType.Incollection));
-	}
-
-	public List<ResearchResultPublication> getIncollections(ExecutionYear executionYear) {
-		return ResearchResultPublication.sort(this.getFilteredBookParts(BookPartType.Incollection,executionYear));
-	}
-
-	private List<ResearchResultPublication> getFilteredBookParts(BookPartType type) {
-		return getFilteredBookParts(type,null);
-	}
-	
-	private List<ResearchResultPublication> getFilteredBookParts(BookPartType type, ExecutionYear executionYear) {
-		List<ResearchResultPublication> bookParts = this.getResearchResultPublicationsByType(BookPart.class);
-		List<ResearchResultPublication> filteredBookParts = new ArrayList<ResearchResultPublication>();
-		for (ResearchResultPublication publication : bookParts) {
-			if (executionYear==null || (executionYear!=null && executionYear.belongsToCivilYear(publication.getYear())))  {
-			BookPart bookPart = (BookPart) publication;
-			if (bookPart.getBookPartType().equals(type))
-				filteredBookParts.add(bookPart);
-			}
-		}
-		return filteredBookParts;
-	}
-	
-	private List<ResearchResultPublication> filterResultPublicationsByType(final Class <? extends ResearchResultPublication> clazz, List<ResearchResultPublication> publications) {
-    	return (List) CollectionUtils.select(publications, new Predicate() {
-    		public boolean evaluate(Object arg0) {
-    			return clazz.equals(arg0.getClass());
-    		}
-    	});
+    public List<ResearchResultPublication> getBooks() {
+	return ResearchResultPublication.sort(this.getResearchResultPublicationsByType(Book.class));
     }
-    
-    private List<ResearchResultPublication> getResearchResultPublicationsByType(final Class <? extends ResearchResultPublication> clazz) {
-    	return filterResultPublicationsByType(clazz, getResearchResultPublications());
+
+    public List<ResearchResultPublication> getBooks(ExecutionYear executionYear) {
+	return ResearchResultPublication.sort(this.getResearchResultPublicationsByType(Book.class,
+		executionYear));
     }
-    
-    private List<ResearchResultPublication> getResearchResultPublicationsByType(final Class <? extends ResearchResultPublication> clazz, ExecutionYear executionYear) {
-    	return filterResultPublicationsByType(clazz, getResearchResultPublicationsByExecutionYear(executionYear));
+
+    private List<ResearchResultPublication> filterArticlesWithType(
+	    List<ResearchResultPublication> publications, ResearchActivityLocationType locationType) {
+	List<ResearchResultPublication> publicationsOfType = new ArrayList<ResearchResultPublication>();
+	for (ResearchResultPublication publication : publications) {
+	    Article article = (Article) publication;
+	    if (article.getScientificJournal().getLocationType().equals(locationType)) {
+		publicationsOfType.add(publication);
+	    }
+	}
+	return publicationsOfType;
     }
-        
-    public List<ResearchResultPublication> getResearchResultPublicationsByExecutionYear(ExecutionYear executionYear) {
-    	
-    	List<ResearchResultPublication> publicationsForExecutionYear = new ArrayList<ResearchResultPublication>();
-    	for(ResearchResultPublication publication : getResearchResultPublications()) {
-    		if(executionYear.belongsToCivilYear(publication.getYear())) {
-    			publicationsForExecutionYear.add(publication);
-    		}
-    	}
-    	return publicationsForExecutionYear;
+
+    public List<ResearchResultPublication> getArticles(ResearchActivityLocationType locationType) {
+	return filterArticlesWithType(this.getResearchResultPublicationsByType(Article.class), locationType);
+    }
+
+    public List<ResearchResultPublication> getArticles(ResearchActivityLocationType locationType,
+	    ExecutionYear executionYear) {
+	return filterArticlesWithType(this.getResearchResultPublicationsByType(Article.class, executionYear),
+		locationType);
+    }
+
+    public List<ResearchResultPublication> getArticles() {
+	return ResearchResultPublication.sort(this.getResearchResultPublicationsByType(Article.class));
+    }
+
+    public List<ResearchResultPublication> getArticles(ExecutionYear executionYear) {
+	return ResearchResultPublication.sort(this.getResearchResultPublicationsByType(Article.class,
+		executionYear));
+    }
+
+    public List<ResearchResultPublication> getInproceedings() {
+	return ResearchResultPublication.sort(this.getResearchResultPublicationsByType(Inproceedings.class));
+    }
+
+    public List<ResearchResultPublication> getInproceedings(ExecutionYear executionYear) {
+	return ResearchResultPublication.sort(this.getResearchResultPublicationsByType(Inproceedings.class,
+		executionYear));
+    }
+
+    public List<ResearchResultPublication> getProceedings() {
+	return ResearchResultPublication.sort(this.getResearchResultPublicationsByType(Proceedings.class));
+    }
+
+    public List<ResearchResultPublication> getProceedings(ExecutionYear executionYear) {
+	return ResearchResultPublication.sort(this.getResearchResultPublicationsByType(Proceedings.class,
+		executionYear));
+    }
+
+    public List<ResearchResultPublication> getTheses() {
+	return ResearchResultPublication.sort(this.getResearchResultPublicationsByType(Thesis.class));
+    }
+
+    public List<ResearchResultPublication> getTheses(ExecutionYear executionYear) {
+	return ResearchResultPublication.sort(this.getResearchResultPublicationsByType(Thesis.class,
+		executionYear));
+    }
+
+    public List<ResearchResultPublication> getManuals() {
+	return ResearchResultPublication.sort(this.getResearchResultPublicationsByType(Manual.class));
+    }
+
+    public List<ResearchResultPublication> getManuals(ExecutionYear executionYear) {
+	return ResearchResultPublication.sort(this.getResearchResultPublicationsByType(Manual.class,
+		executionYear));
+    }
+
+    public List<ResearchResultPublication> getTechnicalReports() {
+	return ResearchResultPublication
+		.sort(this.getResearchResultPublicationsByType(TechnicalReport.class));
+    }
+
+    public List<ResearchResultPublication> getTechnicalReports(ExecutionYear executionYear) {
+	return ResearchResultPublication.sort(this.getResearchResultPublicationsByType(TechnicalReport.class,
+		executionYear));
+    }
+
+    public List<ResearchResultPublication> getOtherPublications() {
+	return ResearchResultPublication.sort(this
+		.getResearchResultPublicationsByType(OtherPublication.class));
+    }
+
+    public List<ResearchResultPublication> getOtherPublications(ExecutionYear executionYear) {
+	return ResearchResultPublication.sort(this.getResearchResultPublicationsByType(
+		OtherPublication.class, executionYear));
+    }
+
+    public List<ResearchResultPublication> getUnstructureds() {
+	return ResearchResultPublication.sort(this.getResearchResultPublicationsByType(Unstructured.class));
+    }
+
+    public List<ResearchResultPublication> getUnstructureds(ExecutionYear executionYear) {
+	return ResearchResultPublication.sort(this.getResearchResultPublicationsByType(Unstructured.class,
+		executionYear));
+    }
+
+    public List<ResearchResultPublication> getInbooks() {
+	return ResearchResultPublication.sort(this.getFilteredBookParts(BookPartType.Inbook));
+    }
+
+    public List<ResearchResultPublication> getInbooks(ExecutionYear executionYear) {
+	return ResearchResultPublication.sort(this.getFilteredBookParts(BookPartType.Inbook, executionYear));
+    }
+
+    public List<ResearchResultPublication> getIncollections() {
+	return ResearchResultPublication.sort(this.getFilteredBookParts(BookPartType.Incollection));
+    }
+
+    public List<ResearchResultPublication> getIncollections(ExecutionYear executionYear) {
+	return ResearchResultPublication.sort(this.getFilteredBookParts(BookPartType.Incollection,
+		executionYear));
+    }
+
+    private List<ResearchResultPublication> getFilteredBookParts(BookPartType type) {
+	return getFilteredBookParts(type, null);
+    }
+
+    private List<ResearchResultPublication> getFilteredBookParts(BookPartType type,
+	    ExecutionYear executionYear) {
+	List<ResearchResultPublication> bookParts = this.getResearchResultPublicationsByType(BookPart.class);
+	List<ResearchResultPublication> filteredBookParts = new ArrayList<ResearchResultPublication>();
+	for (ResearchResultPublication publication : bookParts) {
+	    if (executionYear == null
+		    || (executionYear != null && executionYear.belongsToCivilYear(publication.getYear()))) {
+		BookPart bookPart = (BookPart) publication;
+		if (bookPart.getBookPartType().equals(type))
+		    filteredBookParts.add(bookPart);
+	    }
+	}
+	return filteredBookParts;
+    }
+
+    private List<ResearchResultPublication> filterResultPublicationsByType(
+	    final Class<? extends ResearchResultPublication> clazz,
+	    List<ResearchResultPublication> publications) {
+	return (List) CollectionUtils.select(publications, new Predicate() {
+	    public boolean evaluate(Object arg0) {
+		return clazz.equals(arg0.getClass());
+	    }
+	});
+    }
+
+    private List<ResearchResultPublication> getResearchResultPublicationsByType(
+	    final Class<? extends ResearchResultPublication> clazz) {
+	return filterResultPublicationsByType(clazz, getResearchResultPublications());
+    }
+
+    private List<ResearchResultPublication> getResearchResultPublicationsByType(
+	    final Class<? extends ResearchResultPublication> clazz, ExecutionYear executionYear) {
+	return filterResultPublicationsByType(clazz,
+		getResearchResultPublicationsByExecutionYear(executionYear));
+    }
+
+    public List<ResearchResultPublication> getResearchResultPublicationsByExecutionYear(
+	    ExecutionYear executionYear) {
+
+	List<ResearchResultPublication> publicationsForExecutionYear = new ArrayList<ResearchResultPublication>();
+	for (ResearchResultPublication publication : getResearchResultPublications()) {
+	    if (executionYear.belongsToCivilYear(publication.getYear())) {
+		publicationsForExecutionYear.add(publication);
+	    }
+	}
+	return publicationsForExecutionYear;
     }
 
     public List<ResearchResultPatent> getResearchResultPatents() {
@@ -762,9 +804,9 @@ public class Person extends Person_Base {
 	return points;
     }
 
-    /***************************************************************************
-	 * PRIVATE METHODS *
-	 **************************************************************************/
+    /***********************************************************************
+         * PRIVATE METHODS *
+         **********************************************************************/
 
     private void setProperties(InfoPersonEditor infoPerson) {
 
@@ -801,8 +843,8 @@ public class Person extends Person_Base {
 
 	// Generate person's Password
 	if (getPassword() == null)
-	    setPassword(PasswordEncryptor.encryptPassword(GeneratePassword.getInstance()
-		    .generatePassword(this)));
+	    setPassword(PasswordEncryptor.encryptPassword(GeneratePassword.getInstance().generatePassword(
+		    this)));
 
 	setAvailableEmail(infoPerson.getAvailableEmail() != null ? infoPerson.getAvailableEmail()
 		: Boolean.TRUE);
@@ -863,8 +905,8 @@ public class Person extends Person_Base {
 	setAreaCode(valueToUpdateIfNewNotNull(getAreaCode(), infoPerson.getCodigoPostal()));
 	setDistrictSubdivisionOfResidence(valueToUpdateIfNewNotNull(getDistrictSubdivisionOfResidence(),
 		infoPerson.getConcelhoMorada()));
-	setDistrictSubdivisionOfBirth(valueToUpdateIfNewNotNull(getDistrictSubdivisionOfBirth(),
-		infoPerson.getConcelhoNaturalidade()));
+	setDistrictSubdivisionOfBirth(valueToUpdateIfNewNotNull(getDistrictSubdivisionOfBirth(), infoPerson
+		.getConcelhoNaturalidade()));
 	setEmissionDateOfDocumentId((Date) valueToUpdateIfNewNotNull(getEmissionDateOfDocumentId(),
 		infoPerson.getDataEmissaoDocumentoIdentificacao()));
 	setExpirationDateOfDocumentId((Date) valueToUpdateIfNewNotNull(getExpirationDateOfDocumentId(),
@@ -880,8 +922,7 @@ public class Person extends Person_Base {
 	setMaritalStatus((maritalStatus == null) ? MaritalStatus.UNKNOWN : maritalStatus);
 	setParishOfResidence(valueToUpdateIfNewNotNull(getParishOfResidence(), infoPerson
 		.getFreguesiaMorada()));
-	setParishOfBirth(valueToUpdateIfNewNotNull(getParishOfBirth(), infoPerson
-		.getFreguesiaNaturalidade()));
+	setParishOfBirth(valueToUpdateIfNewNotNull(getParishOfBirth(), infoPerson.getFreguesiaNaturalidade()));
 	setEmissionLocationOfDocumentId(valueToUpdateIfNewNotNull(getEmissionLocationOfDocumentId(),
 		infoPerson.getLocalEmissaoDocumentoIdentificacao()));
 	setArea(valueToUpdateIfNewNotNull(getArea(), infoPerson.getLocalidade()));
@@ -932,9 +973,9 @@ public class Person extends Person_Base {
 
     }
 
-    /***************************************************************************
-	 * OTHER METHODS *
-	 **************************************************************************/
+    /***********************************************************************
+         * OTHER METHODS *
+         **********************************************************************/
 
     public String getSlideName() {
 	return "/photos/person/P" + getIdInternal();
@@ -1052,19 +1093,20 @@ public class Person extends Person_Base {
     }
 
     /**
-	 * @return a group that only contains this person
-	 */
+         * @return a group that only contains this person
+         */
     public PersonGroup getPersonGroup() {
 	return new PersonGroup(this);
     }
 
     /**
-	 * 
-	 * IMPORTANT: This method is evil and should NOT be used! You are NOT God!
-	 * 
-	 * 
-	 * @return true if the person have been deleted, false otherwise
-	 */
+         * 
+         * IMPORTANT: This method is evil and should NOT be used! You are NOT
+         * God!
+         * 
+         * 
+         * @return true if the person have been deleted, false otherwise
+         */
     public void delete() {
 	if (!canBeDeleted()) {
 	    throw new DomainException("error.person.cannot.be.deleted");
@@ -1081,10 +1123,10 @@ public class Person extends Person_Base {
 	if (getAssociatedPersonAccount() != null) {
 	    getAssociatedPersonAccount().delete();
 	}
-	
+
 	for (; !getAccounts().isEmpty(); getAccounts().get(0).delete())
 	    ;
-	
+
 	getPersonRoles().clear();
 	getManageableDepartmentCredits().clear();
 	getAdvisories().clear();
@@ -1193,8 +1235,7 @@ public class Person extends Person_Base {
 	public void beforeAdd(Role newRole, Person person) {
 	    if (person != null && newRole != null && !person.hasRole(newRole.getRoleType())
 		    && !verifiesDependencies(person, newRole)) {
-		throw new DomainException("error.person.addingInvalidRole", newRole.getRoleType()
-			.toString());
+		throw new DomainException("error.person.addingInvalidRole", newRole.getRoleType().toString());
 	    }
 	}
 
@@ -1209,8 +1250,7 @@ public class Person extends Person_Base {
 
 	@Override
 	public void beforeRemove(Role roleToBeRemoved, Person person) {
-	    if (person != null && roleToBeRemoved != null
-		    && person.hasRole(roleToBeRemoved.getRoleType())) {
+	    if (person != null && roleToBeRemoved != null && person.hasRole(roleToBeRemoved.getRoleType())) {
 		removeDependencies(person, roleToBeRemoved);
 	    }
 	}
@@ -1332,8 +1372,8 @@ public class Person extends Person_Base {
 	int count = 0;
 	for (final SentSms sentSms : this.getSentSmsSet()) {
 	    if (sentSms.getDeliveryType() != SmsDeliveryType.NOT_SENT_TYPE
-		    && (sentSms.getSendDate().after(startDate) || sentSms.getSendDate()
-			    .equals(startDate)) && sentSms.getSendDate().before(endDate)) {
+		    && (sentSms.getSendDate().after(startDate) || sentSms.getSendDate().equals(startDate))
+		    && sentSms.getSendDate().before(endDate)) {
 
 		count++;
 	    }
@@ -1676,9 +1716,8 @@ public class Person extends Person_Base {
 	if (!StringUtils.isEmpty(socialSecurityNumber)) {
 	    final Party existingContributor = Party.readByContributorNumber(socialSecurityNumber);
 	    if (existingContributor != null && existingContributor != this) {
-		System.out.println("existingContributorIDInternal: "
-			+ existingContributor.getIdInternal() + " socialSecurityNumber: "
-			+ socialSecurityNumber);
+		System.out.println("existingContributorIDInternal: " + existingContributor.getIdInternal()
+			+ " socialSecurityNumber: " + socialSecurityNumber);
 		throw new DomainException("PERSON.createContributor.existing.contributor.number");
 	    }
 	    super.setSocialSecurityNumber(socialSecurityNumber);
@@ -1807,8 +1846,7 @@ public class Person extends Person_Base {
 	final SortedSet<StudentCurricularPlan> studentCurricularPlans = new TreeSet<StudentCurricularPlan>(
 		StudentCurricularPlan.STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_DEGREE_NAME);
 	for (final Registration registration : getStudentsSet()) {
-	    final StudentCurricularPlan studentCurricularPlan = registration
-		    .getActiveStudentCurricularPlan();
+	    final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
 	    if (studentCurricularPlan != null) {
 		studentCurricularPlans.add(studentCurricularPlan);
 	    }
@@ -1817,18 +1855,18 @@ public class Person extends Person_Base {
     }
 
     public SortedSet<StudentCurricularPlan> getCompletedStudentCurricularPlansSortedByDegreeTypeAndDegreeName() {
-        final SortedSet<StudentCurricularPlan> studentCurricularPlans = new TreeSet<StudentCurricularPlan>(
-                StudentCurricularPlan.STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_DEGREE_NAME);
-        
-        for (final Registration registration : getStudentsSet()) {
-            if (registration.isConcluded()) {
-                StudentCurricularPlan lastStudent = registration.getLastStudentCurricularPlanExceptPast();
-                if (lastStudent != null) {
-                    studentCurricularPlans.add(lastStudent);
-                }
-            }
-        }
-        return studentCurricularPlans;
+	final SortedSet<StudentCurricularPlan> studentCurricularPlans = new TreeSet<StudentCurricularPlan>(
+		StudentCurricularPlan.STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_DEGREE_NAME);
+
+	for (final Registration registration : getStudentsSet()) {
+	    if (registration.isConcluded()) {
+		StudentCurricularPlan lastStudent = registration.getLastStudentCurricularPlanExceptPast();
+		if (lastStudent != null) {
+		    studentCurricularPlans.add(lastStudent);
+		}
+	    }
+	}
+	return studentCurricularPlans;
     }
 
     public List<ProjectAccess> readProjectAccessesByCoordinator(Integer coordinatorCode) {
@@ -2024,13 +2062,13 @@ public class Person extends Person_Base {
 	    throw new DomainException("EXTERNAL_PERSON.createContributor.existing.contributor.number");
 	}
 
-	Person externalPerson = Person.createExternalPerson(contributorName, Gender.MALE,
-		contributorAddress, areaCode, areaOfAreaCode, area, parishOfResidence,
-		districtSubdivisionOfResidence, districtOfResidence, null, null, null, null, String
-			.valueOf(System.currentTimeMillis()), IDDocumentType.EXTERNAL);
+	Person externalPerson = Person.createExternalPerson(contributorName, Gender.MALE, contributorAddress,
+		areaCode, areaOfAreaCode, area, parishOfResidence, districtSubdivisionOfResidence,
+		districtOfResidence, null, null, null, null, String.valueOf(System.currentTimeMillis()),
+		IDDocumentType.EXTERNAL);
 	externalPerson.setSocialSecurityNumber(contributorNumber);
-	new ExternalContract(externalPerson,
-		RootDomainObject.getInstance().getExternalInstitutionUnit(), new YearMonthDay(), null);
+	new ExternalContract(externalPerson, RootDomainObject.getInstance().getExternalInstitutionUnit(),
+		new YearMonthDay(), null);
 
 	return externalPerson;
     }
@@ -2042,8 +2080,8 @@ public class Person extends Person_Base {
     @Override
     public String getEmail() {
 	final String institutionalEmail = getInstitutionalEmail();
-	return institutionalEmail != null && institutionalEmail.length() > 0 ? institutionalEmail
-		: super.getEmail();
+	return institutionalEmail != null && institutionalEmail.length() > 0 ? institutionalEmail : super
+		.getEmail();
     }
 
     public Collection<AnnouncementBoard> getCurrentExecutionCoursesAnnouncementBoards() {
@@ -2202,8 +2240,8 @@ public class Person extends Person_Base {
 	    this.name = name;
 	}
 
-	private boolean matchesAnyCriteria(final String[] nameValues,
-		final String[] documentIdNumberValues, final Person person) {
+	private boolean matchesAnyCriteria(final String[] nameValues, final String[] documentIdNumberValues,
+		final Person person) {
 	    return matchesAnyCriteriaField(nameValues, name, person.getName())
 		    || matchesAnyCriteriaField(documentIdNumberValues, documentIdNumber, person
 			    .getDocumentIdNumber());
@@ -2215,8 +2253,8 @@ public class Person extends Person_Base {
 	}
 
 	public SortedSet<Person> search() {
-	    final String[] nameValues = name == null ? null : StringNormalizer.normalize(name)
-		    .toLowerCase().split("\\p{Space}+");
+	    final String[] nameValues = name == null ? null : StringNormalizer.normalize(name).toLowerCase()
+		    .split("\\p{Space}+");
 	    final String[] documentIdNumberValues = documentIdNumber == null ? null : StringNormalizer
 		    .normalize(documentIdNumber).toLowerCase().split("\\p{Space}+");
 
@@ -2320,8 +2358,7 @@ public class Person extends Person_Base {
 
     private boolean validNickname(final String name) {
 	if (name != null && name.length() > 0) {
-	    final String normalizedName = StringNormalizer.normalize(name.replace('-', ' '))
-		    .toLowerCase();
+	    final String normalizedName = StringNormalizer.normalize(name.replace('-', ' ')).toLowerCase();
 	    final String normalizedPersonName = StringNormalizer.normalize(getName().replace('-', ' '))
 		    .toLowerCase();
 
@@ -2370,8 +2407,7 @@ public class Person extends Person_Base {
 
     public boolean hasInsuranceEventOrAdministrativeOfficeFeeInsuranceEventFor(
 	    final ExecutionYear executionYear) {
-	return hasInsuranceEventFor(executionYear)
-		|| hasAdministrativeOfficeFeeInsuranceEvent(executionYear);
+	return hasInsuranceEventFor(executionYear) || hasAdministrativeOfficeFeeInsuranceEvent(executionYear);
     }
 
     public boolean hasAdministrativeOfficeFeeInsuranceEvent(final ExecutionYear executionYear) {
@@ -2423,8 +2459,7 @@ public class Person extends Person_Base {
 	return result;
     }
 
-    public boolean isCoordinatorFor(DegreeCurricularPlan degreeCurricularPlan,
-	    ExecutionYear executionYear) {
+    public boolean isCoordinatorFor(DegreeCurricularPlan degreeCurricularPlan, ExecutionYear executionYear) {
 	for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
 	    if (executionDegree.getExecutionYear() == executionYear) {
 		return executionDegree.getCoordinatorByTeacher(this) != null;
@@ -2442,8 +2477,8 @@ public class Person extends Person_Base {
     }
 
     public boolean isMasterDegreeOrBolonhaMasterDegreeCoordinatorFor(ExecutionYear executionYear) {
-	return isCoordinatorFor(executionYear, Arrays.asList(new DegreeType[] {
-		DegreeType.MASTER_DEGREE, DegreeType.BOLONHA_MASTER_DEGREE }));
+	return isCoordinatorFor(executionYear, Arrays.asList(new DegreeType[] { DegreeType.MASTER_DEGREE,
+		DegreeType.BOLONHA_MASTER_DEGREE }));
 
     }
 
@@ -2458,8 +2493,7 @@ public class Person extends Person_Base {
 	for (final Coordinator coordinator : getCoordinatorsSet()) {
 	    if (coordinator.hasExecutionDegree()
 		    && coordinator.getExecutionDegree().getExecutionYear() == executionYear
-		    && degreeTypes
-			    .contains(coordinator.getExecutionDegree().getDegree().getDegreeType())) {
+		    && degreeTypes.contains(coordinator.getExecutionDegree().getDegree().getDegreeType())) {
 		return true;
 	    }
 	}
@@ -2468,8 +2502,7 @@ public class Person extends Person_Base {
 
     }
 
-    public ServiceAgreement getServiceAgreementFor(
-	    final ServiceAgreementTemplate serviceAgreementTemplate) {
+    public ServiceAgreement getServiceAgreementFor(final ServiceAgreementTemplate serviceAgreementTemplate) {
 	for (final ServiceAgreement serviceAgreement : getServiceAgreementsSet()) {
 	    if (serviceAgreement.getServiceAgreementTemplate() == serviceAgreementTemplate) {
 		return serviceAgreement;
@@ -2528,7 +2561,7 @@ public class Person extends Person_Base {
     }
 
     public boolean isHomePageAvailable() {
-    	return hasHomepage() && getHomepage().getActivated();
+	return hasHomepage() && getHomepage().getActivated();
     }
 
     public static Collection<Person> searchPersons(String[] personName) {
@@ -2545,63 +2578,65 @@ public class Person extends Person_Base {
     public boolean isAdministrativeOfficeEmployee() {
 	return getEmployee() != null && getEmployee().getAdministrativeOffice() != null;
     }
-    
+
     public List<PunctualRoomsOccupationRequest> getPunctualRoomsOccupationRequestsOrderByMoreRecentComment() {
-	List<PunctualRoomsOccupationRequest> result = new ArrayList<PunctualRoomsOccupationRequest>();	
+	List<PunctualRoomsOccupationRequest> result = new ArrayList<PunctualRoomsOccupationRequest>();
 	result.addAll(getPunctualRoomsOccupationRequests());
-	if(!result.isEmpty()) {
-	    Collections.sort(result, PunctualRoomsOccupationRequest.COMPARATOR_BY_MORE_RECENT_COMMENT_INSTANT);
+	if (!result.isEmpty()) {
+	    Collections
+		    .sort(result, PunctualRoomsOccupationRequest.COMPARATOR_BY_MORE_RECENT_COMMENT_INSTANT);
 	}
 	return result;
     }
-    
+
     public List<PunctualRoomsOccupationRequest> getPunctualRoomsOccupationRequestsToProcessOrderByDate() {
-	List<PunctualRoomsOccupationRequest> result = new ArrayList<PunctualRoomsOccupationRequest>();	
+	List<PunctualRoomsOccupationRequest> result = new ArrayList<PunctualRoomsOccupationRequest>();
 	for (PunctualRoomsOccupationRequest request : getPunctualRoomsOccupationRequestsToProcess()) {
-	    if(!request.getCurrentState().equals(RequestState.RESOLVED)) {
+	    if (!request.getCurrentState().equals(RequestState.RESOLVED)) {
 		result.add(request);
 	    }
 	}
-	
-	if(!result.isEmpty()) {
+
+	if (!result.isEmpty()) {
 	    Collections.sort(result, PunctualRoomsOccupationRequest.COMPARATOR_BY_INSTANT);
 	}
 	return result;
     }
+
     public String getFirstAndLastName() {
-    	String[] name = getName().split(" ");
-    	return name[0] + " " + name[name.length-1];
+	String[] name = getName().split(" ");
+	return name[0] + " " + name[name.length - 1];
     }
 
     private List<String> getImportantRoles(List<String> mainRoles) {
 
-        if (getPersonRolesCount() != 0) {
-            boolean teacher = false, employee = false;
+	if (getPersonRolesCount() != 0) {
+	    boolean teacher = false, employee = false;
 
-            for (final Role personRole : getPersonRolesSet()) {
+	    for (final Role personRole : getPersonRolesSet()) {
 
-                if (personRole.getRoleType() == RoleType.TEACHER) {
-                    mainRoles.add("Docente");
-                    teacher = true;
+		if (personRole.getRoleType() == RoleType.TEACHER) {
+		    mainRoles.add("Docente");
+		    teacher = true;
 
-                } else if (personRole.getRoleType() == RoleType.STUDENT) {
-                    mainRoles.add("Aluno");
+		} else if (personRole.getRoleType() == RoleType.STUDENT) {
+		    mainRoles.add("Aluno");
 
-                } else if (personRole.getRoleType() == RoleType.GRANT_OWNER) {
-                    mainRoles.add("Bolseiro");
-                } else if (!teacher && personRole.getRoleType() == RoleType.EMPLOYEE) {
-                    employee = true;
-                }
-            }
-            if (employee && !teacher) {
-                mainRoles.add("Funcionário");
-            }
-        }
-        return mainRoles;
+		} else if (personRole.getRoleType() == RoleType.GRANT_OWNER) {
+		    mainRoles.add("Bolseiro");
+		} else if (!teacher && personRole.getRoleType() == RoleType.EMPLOYEE) {
+		    employee = true;
+		}
+	    }
+	    if (employee && !teacher) {
+		mainRoles.add("Funcionário");
+	    }
+	}
+	return mainRoles;
     }
 
     public List<String> getMainRoles() {
-        return getImportantRoles(new ArrayList<String>());
+	return getImportantRoles(new ArrayList<String>());
     }
 
     public static Collection<Person> findInternalPerson(final String name) {
