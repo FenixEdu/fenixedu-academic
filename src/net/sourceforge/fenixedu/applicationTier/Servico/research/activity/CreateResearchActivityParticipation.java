@@ -63,7 +63,7 @@ public class CreateResearchActivityParticipation extends Service {
 
 		Unit unit = getUnit(cooperationBean.getUnit(), cooperationBean.getUnitName(), cooperationBean.isExternalParticipation());
 		
-		Cooperation cooperation = new Cooperation(cooperationBean.getRole(), person, new MultiLanguageString(cooperationBean.getCooperationName()), 
+		Cooperation cooperation = new Cooperation(cooperationBean.getRole(), person, cooperationBean.getCooperationName(), 
 				cooperationBean.getType(), unit, cooperationBean.getStartDate(), cooperationBean.getEndDate());
 		
 		new Participation(person, cooperationBean.getRole(), cooperation);	
