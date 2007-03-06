@@ -40,4 +40,9 @@ public class PreviousYearsEnrolmentCurricularRule extends PreviousYearsEnrolment
     protected void removeOwnParameters() {
 	// No additional parameters
     }
+    
+    @Override
+    public boolean isVisible() {
+        return false;
+    }
 }
