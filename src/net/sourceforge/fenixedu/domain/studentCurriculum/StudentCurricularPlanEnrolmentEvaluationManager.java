@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.CurricularRuleLevel;
 import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.EnrolmentResultType;
-import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.enrolment.CurriculumModuleEnroledWrapper;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
@@ -39,7 +38,7 @@ public class StudentCurricularPlanEnrolmentEvaluationManager extends StudentCurr
 		}
 		
 	    } else {
-		throw new DomainException("StudentCurricularPlanEnrolmentEvaluationManager.can.only.unenrol.enrolments");
+		throw new DomainException("StudentCurricularPlanEnrolmentEvaluationManager.can.only.manage.enrolment.evaluations.of.enrolments");
 	    }
 	}
     }
@@ -74,20 +73,27 @@ public class StudentCurricularPlanEnrolmentEvaluationManager extends StudentCurr
 
     @Override
     protected void performEnrolments(final Map<EnrolmentResultType, List<IDegreeModuleToEvaluate>> degreeModulesEnrolMap) {
-	final String createdBy = responsiblePerson.getIstUsername();
 	for (final Entry<EnrolmentResultType, List<IDegreeModuleToEvaluate>> entry : degreeModulesEnrolMap.entrySet()) {
 
-	    final EnrollmentCondition enrollmentCondition = entry.getKey().getEnrollmentCondition();
 	    for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : entry.getValue()) {
 
 		if (degreeModuleToEvaluate.isEnroled()) {
 		    final CurriculumModuleEnroledWrapper moduleEnroledWrapper = (CurriculumModuleEnroledWrapper) degreeModuleToEvaluate;
 
 		    if (moduleEnroledWrapper.getCurriculumModule() instanceof Enrolment) {
-			// create enrolment evaluation
+			final Enrolment enrolment = (Enrolment) moduleEnroledWrapper.getCurriculumModule();
+
+			if (curricularRuleLevel == CurricularRuleLevel.IMPROVEMENT_ENROLMENT) {
+			    enrolment.createEnrolmentEvaluationForImprovement(responsiblePerson.getEmployee(), enrolmentContext.getExecutionPeriod());
+			} else if (curricularRuleLevel == CurricularRuleLevel.SPECIAL_SEASON_ENROLMENT) {
+			    enrolment.createSpecialSeasonEvaluation(responsiblePerson.getEmployee());
+			}
+			
+		    } else {
+			throw new DomainException("StudentCurricularPlanEnrolmentEvaluationManager.can.only.manage.enrolment.evaluations.of.enrolments");
 		    }
 		} else {
-		    throw new DomainException("shit, hell break loose");
+		    throw new DomainException("StudentCurricularPlanEnrolmentEvaluationManager.received.unenroled.IDegreeModuleToEvaluate");
 		}
 	    }
 	}
