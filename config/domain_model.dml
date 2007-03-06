@@ -4038,7 +4038,7 @@ class net.sourceforge.fenixedu.domain.research.project.ProjectParticipation exte
 
 class net.sourceforge.fenixedu.domain.research.activity.ResearchActivity extends net.sourceforge.fenixedu.domain.DomainObject {
     String ojbConcreteClass;
-	MultiLanguageString name;
+	String name;
 }
 
 class net.sourceforge.fenixedu.domain.research.activity.Participation extends net.sourceforge.fenixedu.domain.DomainObject {
