@@ -174,6 +174,11 @@ public class Employee extends Employee_Base {
 	return (contract != null) ? contract.getWorkingUnit() : null;
     }
 
+    public Unit getCurrentMailingPlace() {
+	Contract contract = getCurrentContractByContractType(ContractType.MAILING);
+	return (contract != null) ? contract.getMailingUnit() : null;
+    }
+    
     public Unit getLastWorkingPlace(YearMonthDay beginDate, YearMonthDay endDate) {
 	Contract lastContract = getLastContractByContractType(ContractType.WORKING, beginDate, endDate);
 	return lastContract != null ? lastContract.getWorkingUnit() : null;

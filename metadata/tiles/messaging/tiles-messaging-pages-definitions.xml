@@ -59,10 +59,7 @@
 	<!-- ========== BEGIN: FIND PERSON MANAGEMENT ========== -->
 	<definition name="find-person" extends="definition.messaging.masterPage" >
 		<put name="body" value="/person/findPerson/findPerson.jsp" />
-	</definition>
-	<definition name="display-person" extends="definition.messaging.masterPage" >
-		<put name="body" value="/person/findPerson/displayPerson.jsp" />
-	</definition>
+	</definition>	
 	<!-- ========== END: FIND PERSON MANAGEMENT ========== -->
 	
 </tiles-definitions>

@@ -139,7 +139,8 @@ public class Unit extends Unit_Base {
 		&& !hasAnyPayedGuides()
 		&& !hasAnyPayedReceipts()
 		&& !hasAdministrativeOffice()
-		&& !hasUnitServiceAgreementTemplate() && !hasAnyExternalCurricularCourses();
+		&& !hasUnitServiceAgreementTemplate() 
+		&& !hasAnyExternalCurricularCourses();
     }
 
     public boolean isInternal() {
@@ -670,8 +671,8 @@ public class Unit extends Unit_Base {
 			|| partyTypeEnum.equals(PartyTypeEnum.PLANET)
 			|| partyTypeEnum.equals(PartyTypeEnum.COUNTRY)
 			|| partyTypeEnum.equals(PartyTypeEnum.DEPARTMENT)
-			|| partyTypeEnum.equals(PartyTypeEnum.UNIVERSITY) || partyTypeEnum
-			.equals(PartyTypeEnum.SCHOOL))) {
+			|| partyTypeEnum.equals(PartyTypeEnum.UNIVERSITY) 
+			|| partyTypeEnum.equals(PartyTypeEnum.SCHOOL))) {
 
 	    for (Unit unit : readAllUnits()) {
 		if (unit.getAcronym() != null && unit.getAcronym().equals(acronym)

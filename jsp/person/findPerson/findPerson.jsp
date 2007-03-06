@@ -220,6 +220,7 @@ function check(e,v){
 					<td class="ppright2">
 						<logic:notEqual name="personalInfo" property="workPhone" value=""><bean:write name="personalInfo" property="workPhone"/></logic:notEqual>  
 					</td>
+					
 					<logic:equal name="show" value="true">
 						<logic:present name="personalInfo" property="email">
 							<logic:notEqual name="personalInfo" property="email" value=""> 
@@ -231,6 +232,7 @@ function check(e,v){
 							</logic:notEqual>  
 						</logic:present>  
 	        		</logic:equal>
+					
 					<logic:equal name="show" value="false">
 						<logic:equal name="personalInfo" property="availableEmail" value="true">
 							<logic:present name="personalInfo" property="email">
@@ -246,75 +248,74 @@ function check(e,v){
 			</table>
 						<div id="<%= pageContext.findAttribute("aa").toString() %>" class="switchNone">
 				<table class="ppdetails" >
-					<logic:present  name="personalInfo" property="infoEmployee" >
-						<logic:present name="personalInfo" property="infoEmployee.workingUnit" >
-							<bean:define id="infoUnit" name="personalInfo" property="infoEmployee.workingUnit"/>	    			
+					
+					<logic:present name="personalInfo" property="employee">						
+						<logic:present name="personalInfo" property="employee.currentWorkingPlace" >
+							<bean:define id="infoUnit" name="personalInfo" property="employee.currentWorkingPlace"/>	    			
 							<tr>
 								<td valign="top" class="ppleft2"><bean:message key="label.person.workPlace" /></td>
 								<td class="ppright">
-									<bean:write name="infoUnit" property="superiorUnitsNames" filter="false"/><br/>
-									<bean:write name="infoUnit" property="costCenterCode"/> - <bean:write name="infoUnit" property="name"/>
+									<bean:write name="infoUnit" property="presentationNameWithParentsAndBreakLine" filter="false"/>									
 								</td>
 							</tr>
 						</logic:present>
-						<logic:present  name="personalInfo" property="infoEmployee.mailingUnit" >
+						
+						<logic:present  name="personalInfo" property="employee.currentMailingPlace" >
 							<tr>
 								<td class="ppleft2"><bean:message key="label.person.mailingPlace" /></td>	     
-								<bean:define id="costCenterNumber" name="personalInfo" property="infoEmployee.mailingUnit.costCenterCode"/>
-								<bean:define id="unitName" name="personalInfo" property="infoEmployee.mailingUnit.name"/>
+								<bean:define id="costCenterNumber" name="personalInfo" property="employee.currentMailingPlace.costCenterCode"/>
+								<bean:define id="unitName" name="personalInfo" property="employee.currentMailingPlace.name"/>
 								<td class="ppright"><bean:write name="costCenterNumber"/> - <bean:write name="unitName"/></td>
 							</tr>
-						</logic:present>
+						</logic:present>					
 					</logic:present>
-					<logic:present  name="personalInfo" property="infoTeacher" >
-						<logic:present  name="personalInfo" property="infoTeacher.infoCategory" >
+					
+					<logic:present  name="personalInfo" property="teacher" >
+						<logic:present  name="personalInfo" property="teacher.category" >
 							<tr>
 								<td class="ppleft2"><bean:message key="label.teacher.category" />:</td>
-								<bean:define id="categoryCode" name="personalInfo" property="infoTeacher.infoCategory.code"/>
-								<bean:define id="categoryName" name="personalInfo" property="infoTeacher.infoCategory.longName"/>
+								<bean:define id="categoryCode" name="personalInfo" property="teacher.category.code"/>
+								<bean:define id="categoryName" name="personalInfo" property="teacher.category.longName"/>
 								<td class="ppright"><bean:write name="categoryCode"/> - <bean:write name="categoryName"/></td>
 							</tr>
 						</logic:present>
 					</logic:present>
+					
 					<logic:equal name="personalInfo" property="availableWebSite" value="true">        
-						<logic:present name="personalInfo" property="availableWebSite">
+						<logic:notEmpty name="personalInfo" property="availableWebSite">
 							<tr>
 								<td class="ppleft2"><bean:message key="label.person.webSite" /></td>		            
 								<td class="ppright">	            	
-									<logic:present name="personalInfo" property="enderecoWeb">
-										<bean:define id="homepage" name="personalInfo" property="enderecoWeb" />
+									<logic:present name="personalInfo" property="webAddress">
+										<bean:define id="homepage" name="personalInfo" property="webAddress" />
 										<html:link target="_blank" href="<%= pageContext.findAttribute("homepage").toString() %>"><bean:write name="personalInfo" property="enderecoWeb"/></html:link>
 									</logic:present>
 								</td>
 							</tr>
-						</logic:present>
+						</logic:notEmpty>
 					</logic:equal>
 					
-					<logic:notEmpty name="personalInfo" property="homepage">
-						<logic:equal name="personalInfo" property="homepage.activated" value="true">
-							<% final String appContext = net.sourceforge.fenixedu._development.PropertiesManager.getProperty("app.context"); %>
-							<% final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : ""; %>				
-							<bean:define id="homepageURL" type="java.lang.String"><%= request.getScheme() %>://<%= request.getServerName() %>:<%= request.getServerPort() %><%= context %>/homepage/<bean:write name="personalInfo" property="istUsername"/></bean:define>						
-							<tr>
-								<td class="ppleft2"><bean:message key="label.homepage"/></td>		            
-								<td class="ppright">	            	
-									<html:link href="<%= homepageURL %>" target="_blank"><bean:write name="homepageURL"/></html:link>
-								</td>
-							</tr>
-						</logic:equal>					
-					</logic:notEmpty>
+					<logic:equal name="personalInfo" property="homePageAvailable" value="true">
+						<% final String appContext = net.sourceforge.fenixedu._development.PropertiesManager.getProperty("app.context"); %>
+						<% final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : ""; %>				
+						<bean:define id="homepageURL" type="java.lang.String"><%= request.getScheme() %>://<%= request.getServerName() %>:<%= request.getServerPort() %><%= context %>/homepage/<bean:write name="personalInfo" property="istUsername"/></bean:define>						
+						<tr>
+							<td class="ppleft2"><bean:message key="label.homepage"/></td>		            
+							<td class="ppright">	            	
+								<html:link href="<%= homepageURL %>" target="_blank"><bean:write name="homepageURL"/></html:link>
+							</td>
+						</tr>
+					</logic:equal>					
 					
-					<logic:present name="personalInfo" property="infoStudentCurricularPlanList" >
-						<logic:notEmpty name="personalInfo" property="infoStudentCurricularPlanList" >
-							<tr>   
-								<td class="ppleft2" style="vertical-align: top;"><bean:message key="label.degree.name" />:</td>  
-								<td class="ppright">
-									<logic:iterate id="infoStudent" name="personalInfo" property="infoStudentCurricularPlanList">		
-										<bean:define id="degreeName" name="infoStudent" property="infoDegreeCurricularPlan.infoDegree.nome"/>									
-										<bean:message name="infoStudent" property="infoDegreeCurricularPlan.infoDegree.tipoCurso.name" bundle="ENUMERATION_RESOURCES" /> <bean:message key="label.in"/> <bean:write name="degreeName" /><br/>																		
-									</logic:iterate>
-								</td>
-							</tr>
+					<logic:present name="personalInfo" property="student" >
+						<logic:notEmpty name="personalInfo" property="student.registrations" >
+	
+							<logic:iterate id="registration" name="personalInfo" property="student.registrations">
+								<tr>   
+									<td class="ppleft2" style="vertical-align: top;"><bean:message key="label.degree.name" />:</td>  
+									<td class="ppright"><bean:write name="registration" property="degree.presentationName"/></td>
+								</tr>							
+							</logic:iterate>											
 						</logic:notEmpty>
 					</logic:present>
 				</table>			</div>

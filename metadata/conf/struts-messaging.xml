@@ -104,7 +104,6 @@
 				
 		<forward name="prepareFindPerson" path="/findPerson.do?method=prepareFindPerson&amp;page=0"/>
 		<forward name="findPerson" path="find-person"/>
-		<forward name="displayPerson" path="display-person"/>
 	</action>
 	
 	<action path="/preparePerson"

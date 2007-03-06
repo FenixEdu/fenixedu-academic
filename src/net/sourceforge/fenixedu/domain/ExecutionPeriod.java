@@ -290,15 +290,13 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable 
             if (validCreditsPerid == null) {
                 throw new DomainException("message.invalid.credits.period2");
             } else if (!validCreditsPerid.containsNow()) {
-                throw new DomainException("message.invalid.credits.period", validCreditsPerid.getStart()
-                        .toString("dd-MM-yyy HH:mm"), validCreditsPerid.getEnd().toString(
-                        "dd-MM-yyy HH:mm"));
+                throw new DomainException("message.invalid.credits.period", validCreditsPerid.getStart().toString("dd-MM-yyy HH:mm"), validCreditsPerid.getEnd().toString("dd-MM-yyy HH:mm"));
             }
         }
     }
 
     public Interval getValidCreditsPeriod(RoleType roleType) {
-        switch (roleType) {
+        switch (roleType) {        
         case DEPARTMENT_MEMBER:
             if (getTeacherCreditsPeriodBegin() != null && getTeacherCreditsPeriodEnd() != null) {
                 return new Interval(getTeacherCreditsPeriodBegin(), getTeacherCreditsPeriodEnd());
@@ -306,10 +304,8 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable 
                 return null;
             }
         case DEPARTMENT_ADMINISTRATIVE_OFFICE:
-            if (getDepartmentAdmOfficeCreditsPeriodBegin() != null
-                    && getDepartmentAdmOfficeCreditsPeriodEnd() != null) {
-                return new Interval(getDepartmentAdmOfficeCreditsPeriodBegin(),
-                        getDepartmentAdmOfficeCreditsPeriodEnd());
+            if (getDepartmentAdmOfficeCreditsPeriodBegin() != null && getDepartmentAdmOfficeCreditsPeriodEnd() != null) {
+                return new Interval(getDepartmentAdmOfficeCreditsPeriodBegin(), getDepartmentAdmOfficeCreditsPeriodEnd());
             } else {
                 return null;
             }
