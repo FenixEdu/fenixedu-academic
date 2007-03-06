@@ -27,11 +27,6 @@
 			<br />
 		</html:messages></span>
 			<bean:define id="method" value="editEmployeeJustification" />
-			<%--
-			<logic:notEmpty name="" property="">
-					<bean:define id="method" value="editEmployeeJustification"/>
-			</logic:notEmpty>		
-			--%>
 			<fr:form action="<%="/employeeAssiduousness.do?method="+method.toString()%>" encoding="multipart/form-data">
 				<fr:edit id="editEmployeeJustificationType" name="employeeJustificationFactory"
 					type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory"
@@ -155,7 +150,7 @@
 				name="employeeForm" property="method" value="showWorkSheet" />
 			<html:hidden bundle="HTMLALT_RESOURCES"
 				altKey="hidden.employeeNumber" name="employeeForm"
-				property="employeeNumber" />
+				property="employeeNumber" value="<%= employeeNumber.toString() %>" />
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page"
 				name="employeeForm" property="page" value="0" />
 			<fr:edit id="yearMonth" name="yearMonth" schema="choose.date">
