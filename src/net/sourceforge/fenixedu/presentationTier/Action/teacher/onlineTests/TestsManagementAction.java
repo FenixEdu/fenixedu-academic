@@ -629,7 +629,7 @@ public class TestsManagementAction extends FenixDispatchAction {
         final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(objectCode);
         final List<Registration> studentList = new ArrayList<Registration>();
         for (final Attends attends : executionCourse.getAttends()) {
-            studentList.add(attends.getAluno());
+            studentList.add(attends.getRegistration());
         }
         Collections.sort(studentList, new BeanComparator("number"));
         request.setAttribute("studentList", studentList);
@@ -819,8 +819,8 @@ public class TestsManagementAction extends FenixDispatchAction {
                 .readDistributedTestByOID(distributedTestCode);
         final Set<Registration> students = distributedTest.findStudents();
         for (Attends attend : attendList) {
-            if (!students.contains(attend.getAluno())) {
-                studentList.add(attend.getAluno());
+            if (!students.contains(attend.getRegistration())) {
+                studentList.add(attend.getRegistration());
             }
         }
 

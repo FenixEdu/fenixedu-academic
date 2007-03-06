@@ -61,7 +61,7 @@ public class ReadStudentGroupsExternalInformationByExecutionCourseIDAndStudentUs
 	    List attends = studentGroup.getAttends();
 	    for (Iterator iterator = attends.iterator(); iterator.hasNext();) {
 		Attends attend = (Attends) iterator.next();
-		if (attend.getAluno().getPerson().hasUsername(username)) {
+		if (attend.getRegistration().getPerson().hasUsername(username)) {
 		    InfoExternalStudentGroup info = new InfoExternalStudentGroup();
 		    info.setInfoGroup(this.buildInfoExternalGroupInfo(studentGroup));
 		    info.setStudents(this.buildStudentInfos(attends.iterator()));
@@ -102,11 +102,11 @@ public class ReadStudentGroupsExternalInformationByExecutionCourseIDAndStudentUs
 	student.setCourse(InfoExternalExecutionCourseInfo.newFromExecutionCourse(attend
 		.getExecutionCourse()));
 	student.setDegree(InfoExternalDegreeCurricularPlanInfo.newFromDegreeCurricularPlan(attend
-		.getAluno().getActiveStudentCurricularPlan().getDegreeCurricularPlan()));
-	student.setName(new String(attend.getAluno().getPerson().getNome()));
-	student.setNumber(new Integer(attend.getAluno().getNumber().intValue()));
+		.getRegistration().getActiveStudentCurricularPlan().getDegreeCurricularPlan()));
+	student.setName(new String(attend.getRegistration().getPerson().getNome()));
+	student.setNumber(new Integer(attend.getRegistration().getNumber().intValue()));
 
-	Collection shifts = this.findShifts(attend.getAluno(), attend.getExecutionCourse());
+	Collection shifts = this.findShifts(attend.getRegistration(), attend.getExecutionCourse());
 	student.setShifts(this.buildShiftsInfo(shifts));
 
 	return student;

@@ -52,9 +52,9 @@ public class PublishMarks extends Service {
                 // update published mark
                 mark.setPublishedMark(mark.getMark());
                 if (sendSMS != null && sendSMS) {
-                    if (mark.getAttend().getAluno().getPerson().getMobile() != null
-                            || mark.getAttend().getAluno().getPerson().getMobile().length() == MOBILE_NUMBER_LENGHT) {
-                        String StringDestinationNumber = mark.getAttend().getAluno().getPerson()
+                    if (mark.getAttend().getRegistration().getPerson().getMobile() != null
+                            || mark.getAttend().getRegistration().getPerson().getMobile().length() == MOBILE_NUMBER_LENGHT) {
+                        String StringDestinationNumber = mark.getAttend().getRegistration().getPerson()
                                 .getMobile();
 
                         if (StringDestinationNumber.startsWith(TMN_NETWORK_PREFIX)

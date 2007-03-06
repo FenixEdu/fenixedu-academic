@@ -30,8 +30,8 @@ public class ReadStudentsWithoutDistributedTest extends Service {
         final DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
         final Set<Registration> students = distributedTest.findStudents();
         for (Attends attend : attendList) {
-            if (!students.contains(attend.getAluno()))
-                infoStudentList.add(InfoStudent.newInfoFromDomain(attend.getAluno()));
+            if (!students.contains(attend.getRegistration()))
+                infoStudentList.add(InfoStudent.newInfoFromDomain(attend.getRegistration()));
         }
         return infoStudentList;
     }

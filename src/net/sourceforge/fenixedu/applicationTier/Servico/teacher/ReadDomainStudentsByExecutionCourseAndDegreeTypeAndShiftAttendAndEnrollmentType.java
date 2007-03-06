@@ -48,7 +48,7 @@ public class ReadDomainStudentsByExecutionCourseAndDegreeTypeAndShiftAttendAndEn
 
 		public boolean evaluate(Object arg0) {
 			Attends attends = (Attends) arg0;
-			StudentCurricularPlan activeSCP = attends.getAluno().getActiveStudentCurricularPlan();
+			StudentCurricularPlan activeSCP = attends.getRegistration().getActiveStudentCurricularPlan();
 			return activeSCP!=null && (this.curricularPlanIds == null
 					|| this.curricularPlanIds.contains(activeSCP.getDegreeCurricularPlan().getIdInternal()));
 		}
@@ -66,7 +66,7 @@ public class ReadDomainStudentsByExecutionCourseAndDegreeTypeAndShiftAttendAndEn
 			Attends attends = (Attends) arg0;
 			if (shiftIds == null) return true;
 			else {
-				Registration registration = attends.getAluno();
+				Registration registration = attends.getRegistration();
 				for (Integer shiftId : shiftIds) {
 					for (Shift shift : registration.getShifts()) {
 						if (shift.getIdInternal().equals(shiftId)) {
@@ -84,7 +84,7 @@ public class ReadDomainStudentsByExecutionCourseAndDegreeTypeAndShiftAttendAndEn
 	{
 
 		public Object transform(Object arg0) {
-			return ((Attends)arg0).getAluno();
+			return ((Attends)arg0).getRegistration();
 		}
 		
 	}

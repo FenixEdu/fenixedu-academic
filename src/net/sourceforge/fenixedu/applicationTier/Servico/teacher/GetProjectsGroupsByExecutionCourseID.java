@@ -42,7 +42,7 @@ public class GetProjectsGroupsByExecutionCourseID extends Service {
                 List<Attends> attends = studentGroup.getAttends();
                 List infoStudents = new ArrayList();
                 for (final Attends attend : attends) {
-                    infoStudents.add(InfoStudent.newInfoFromDomain(attend.getAluno()));
+                    infoStudents.add(InfoStudent.newInfoFromDomain(attend.getRegistration()));
                 }
                 InfoStudentGroup infoStudentGroup = InfoStudentGroup.newInfoFromDomain(studentGroup);
                 InfoGroupProjectStudents infoGroupProjectStudents = new InfoGroupProjectStudents();

@@ -57,9 +57,9 @@ public class ReadStudentsWithAttendsByDegreeCurricularPlanAndExecutionPeriod ext
 
                 InfoFrequenta infoAttends = InfoFrequenta.newInfoFromDomain(attends);
                 if (!infoAttends.getAluno().equals(currentStudent)) {
-                    currentStudent = new InfoStudentWithAttendsAndInquiriesRegistries(attends.getAluno());
+                    currentStudent = new InfoStudentWithAttendsAndInquiriesRegistries(attends.getRegistration());
                     currentStudent.setAttends(new ArrayList<InfoFrequenta>());
-                    copyStudentInquiriesRegistries(currentStudent, attends.getAluno());
+                    copyStudentInquiriesRegistries(currentStudent, attends.getRegistration());
                     res.add(currentStudent);
                 }
                 currentStudent.getAttends().add(infoAttends);

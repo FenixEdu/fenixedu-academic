@@ -104,7 +104,7 @@ public class ReadDistributedTestMarksToString extends Service {
                 .getAttends(), new Transformer() {
 
             public Object transform(Object input) {
-                return ((Attends) input).getAluno();
+                return ((Attends) input).getRegistration();
             }
         });
 

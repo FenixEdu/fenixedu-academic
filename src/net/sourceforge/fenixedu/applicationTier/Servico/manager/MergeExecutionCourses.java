@@ -214,7 +214,7 @@ public class MergeExecutionCourses extends Service {
             final ExecutionCourse executionCourseTo) throws ExcepcaoPersistencia, FenixServiceException {
         while (!executionCourseFrom.getAttends().isEmpty()) {
             final Attends attends = executionCourseFrom.getAttends().get(0);
-            final Attends otherAttends = executionCourseTo.getAttendsByStudent(attends.getAluno());
+            final Attends otherAttends = executionCourseTo.getAttendsByStudent(attends.getRegistration());
             if (otherAttends == null) {
                 attends.setDisciplinaExecucao(executionCourseTo);
             } else {
@@ -222,7 +222,7 @@ public class MergeExecutionCourses extends Service {
                     otherAttends.setEnrolment(attends.getEnrolment());
                 } else if (otherAttends.hasEnrolment() && attends.hasAluno()) {
                     throw new FenixServiceException("Unable to merge execution courses. Registration "
-                            + attends.getAluno().getNumber() + " has an enrolment in both.");
+                            + attends.getRegistration().getNumber() + " has an enrolment in both.");
                 }
                 for (; !attends.getAssociatedMarks().isEmpty(); otherAttends.addAssociatedMarks(attends
                         .getAssociatedMarks().get(0)))
@@ -238,12 +238,12 @@ public class MergeExecutionCourses extends Service {
         final Map<String, Attends> alreadyAttendingDestination = new HashMap<String, Attends>();
         while (associatedAttendsFromDestination.hasNext()) {
             Attends attend = (Attends) associatedAttendsFromDestination.next();
-            alreadyAttendingDestination.put(attend.getAluno().getNumber().toString(), attend);
+            alreadyAttendingDestination.put(attend.getRegistration().getNumber().toString(), attend);
         }
         final List<Attends> associatedAttendsFromSource = new ArrayList<Attends>();
         associatedAttendsFromSource.addAll(executionCourseFrom.getAttends());
         for (final Attends attend : associatedAttendsFromSource) {
-            if (!alreadyAttendingDestination.containsKey(attend.getAluno().getNumber().toString())) {
+            if (!alreadyAttendingDestination.containsKey(attend.getRegistration().getNumber().toString())) {
                 attend.setDisciplinaExecucao(executionCourseTo);
             }
         }

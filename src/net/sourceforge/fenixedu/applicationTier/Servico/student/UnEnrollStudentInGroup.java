@@ -43,7 +43,7 @@ public class UnEnrollStudentInGroup extends Service {
 
         final List<String> emails = new ArrayList<String>();
         for (final Attends attends : studentGroup.getAttends()) {
-            emails.add(attends.getAluno().getPerson().getEmail());
+            emails.add(attends.getRegistration().getPerson().getEmail());
         }
 
         if (studentGroup == null) {

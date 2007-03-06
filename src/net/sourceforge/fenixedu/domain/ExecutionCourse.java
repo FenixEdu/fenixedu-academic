@@ -275,7 +275,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     public Attends getAttendsByStudent(final Registration registration) {
 	for (final Attends attends : getAttendsSet()) {
-	    if (attends.getAluno() == registration) {
+	    if (attends.getRegistration() == registration) {
 		return attends;
 	    }
 	}
@@ -677,7 +677,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
 	private boolean consistentAnswers(final Attends attends, final int weekIndex) {
 	    int weeklyTotal = 0;
-	    for (final Attends someAttends : attends.getAluno().getAssociatedAttends()) {
+	    for (final Attends someAttends : attends.getRegistration().getAssociatedAttends()) {
 		for (final WeeklyWorkLoad weeklyWorkLoad : someAttends.getWeeklyWorkLoads()) {
 		    if (weeklyWorkLoad.getWeekOffset().intValue() == weekIndex) {
 			weeklyTotal += weeklyWorkLoad.getTotal();

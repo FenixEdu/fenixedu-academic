@@ -945,9 +945,9 @@ public class TeacherAdministrationSiteComponentBuilder {
 
 		final List<InfoSiteStudentInformation> infoSiteStudentInformations = new ArrayList<InfoSiteStudentInformation>();
 		for (final Attends attend : studentGroup.getAttends()) {
-			infoSiteStudentInformations.add(new InfoSiteStudentInformation(attend.getAluno().getPerson()
-					.getNome(), attend.getAluno().getPerson().getEmail(), attend.getAluno().getPerson()
-					.getUsername(), attend.getAluno().getNumber()));
+			infoSiteStudentInformations.add(new InfoSiteStudentInformation(attend.getRegistration().getPerson()
+					.getNome(), attend.getRegistration().getPerson().getEmail(), attend.getRegistration().getPerson()
+					.getUsername(), attend.getRegistration().getNumber()));
 		}
 		Collections.sort(infoSiteStudentInformations, new BeanComparator("number"));
 		component.setInfoSiteStudentInformationList(infoSiteStudentInformations);
@@ -1075,7 +1075,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 
 				attend = (Attends) iterAttendsList.next();
 
-				infoSiteStudentInformation.setNumber(attend.getAluno().getNumber());
+				infoSiteStudentInformation.setNumber(attend.getRegistration().getNumber());
 
 				studentGroupAttendInformationList.add(infoSiteStudentInformation);
 

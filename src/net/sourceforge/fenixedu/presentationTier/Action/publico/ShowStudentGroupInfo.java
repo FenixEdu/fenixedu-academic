@@ -60,7 +60,7 @@ public class ShowStudentGroupInfo extends Action {
 
 		    for (StudentGroup studentGroup : grouping.getStudentGroups()) {
 			for (Attends searchingAttendsSet : studentGroup.getAttends()) {
-			    if (searchingAttendsSet.getAluno().getPerson().hasUsername(username)) {
+			    if (searchingAttendsSet.getRegistration().getPerson().hasUsername(username)) {
 				result = executionCourse.getNome() + "(";
 				Collection<CurricularCourse> curricularCourses = executionCourse
 					.getAssociatedCurricularCourses();
@@ -74,9 +74,9 @@ public class ShowStudentGroupInfo extends Action {
 				result += grouping.getName() + "\n";
 				int remainingStudents = grouping.getMaximumCapacity().intValue();
 				for (Attends attends : studentGroup.getAttends()) {
-				    result += attends.getAluno().getNumber();
+				    result += attends.getRegistration().getNumber();
 				    result += "-";
-				    result += attends.getAluno().getActiveStudentCurricularPlan()
+				    result += attends.getRegistration().getActiveStudentCurricularPlan()
 					    .getDegreeCurricularPlan().getName()
 					    + "\n";
 				    remainingStudents--;

@@ -84,7 +84,7 @@ public class UnEnrollGroupShift extends Service {
         Iterator iterStudentGroupAttends = studentGroupAttends.iterator();
         while (iterStudentGroupAttends.hasNext() && !found) {
             attend = ((Attends) iterStudentGroupAttends.next());
-            if (attend.getAluno().equals(registration)) {
+            if (attend.getRegistration().equals(registration)) {
                 found = true;
             }
         }

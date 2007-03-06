@@ -557,7 +557,7 @@ public class EnrolmentTest extends DomainTestBase {
 		
 		assertTrue("Initialized Enrolment should only have 1 Attends", enrolmentToInitialize.getAttendsCount() == 1);
 		Attends attends = enrolmentToInitialize.getAttends().get(0);
-		assertEquals("Newly created Attends has wrong Registration", attends.getAluno(),studentCurricularPlan.getRegistration());
+		assertEquals("Newly created Attends has wrong Registration", attends.getRegistration(),studentCurricularPlan.getRegistration());
 		assertEquals("Newly created Attends has wrong ExecutionCourse", attends.getExecutionCourse(),executionCourseToEnroll);
 		assertEquals("Newly created Attends has wrong Enrolment", attends.getEnrolment(),enrolmentToInitialize);
 		
@@ -567,7 +567,7 @@ public class EnrolmentTest extends DomainTestBase {
 		assertTrue("Initialized Enrolment should only have 1 Attends", enrolmentToInitializeForAnotherExecutionPeriod.getAttendsCount() == 1);
 		Attends att = enrolmentToInitializeForAnotherExecutionPeriod.getAttends().get(0);
 		assertEquals("Attends does not match expected", att,attendsToEnroll);
-		assertEquals("Attends has wrong Registration", att.getAluno(),thisStudent);
+		assertEquals("Attends has wrong Registration", att.getRegistration(),thisStudent);
 		assertEquals("Attends has wrong ExecutionCourse", att.getExecutionCourse(),executionCourseToEnrollWithAttendsForThisStudent);
 		assertEquals("Attends has wrong Enrolment", att.getEnrolment(),enrolmentToInitializeForAnotherExecutionPeriod);
 		

@@ -64,11 +64,11 @@ public class ReadStudentsAndGroupsWithoutShift extends Service {
                 infoSiteStudentAndGroup.setInfoStudentGroup(InfoStudentGroup
                         .newInfoFromDomain(studentGroup));
 
-                infoSiteStudentInformation.setNumber(attend.getAluno().getNumber());
+                infoSiteStudentInformation.setNumber(attend.getRegistration().getNumber());
 
-                infoSiteStudentInformation.setName(attend.getAluno().getPerson().getNome());
+                infoSiteStudentInformation.setName(attend.getRegistration().getPerson().getNome());
 
-                infoSiteStudentInformation.setEmail(attend.getAluno().getPerson().getEmail());
+                infoSiteStudentInformation.setEmail(attend.getRegistration().getPerson().getEmail());
 
                 infoSiteStudentAndGroup.setInfoSiteStudentInformation(infoSiteStudentInformation);
 

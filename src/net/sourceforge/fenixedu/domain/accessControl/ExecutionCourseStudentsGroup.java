@@ -21,7 +21,7 @@ public class ExecutionCourseStudentsGroup extends ExecutionCourseGroup {
     private class AttendPersonTransformer implements Transformer {
         public Object transform(Object object) {
             Attends attend = (Attends) object;
-            return attend.getAluno().getPerson();
+            return attend.getRegistration().getPerson();
         }
     }
 
@@ -44,7 +44,7 @@ public class ExecutionCourseStudentsGroup extends ExecutionCourseGroup {
     public boolean isMember(Person person) {
         if (person != null && person.hasStudent() && hasExecutionCourse()) {
             for (final Attends attends : getExecutionCourse().getAttendsSet()) {
-                if (attends.getAluno().getStudent() == person.getStudent()) {
+                if (attends.getRegistration().getStudent() == person.getStudent()) {
                     return true;
                 }
             }

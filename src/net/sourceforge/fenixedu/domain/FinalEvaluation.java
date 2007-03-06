@@ -86,7 +86,7 @@ public class FinalEvaluation extends FinalEvaluation_Base {
 		List<Attends> result = new ArrayList<Attends>();
 		
 		for (Attends attends : executionCourse.getAttends()) {
-			if(attends.getEnrolment() != null && attends.getAluno().getDegreeType().equals(DegreeType.DEGREE)) {
+			if(attends.getEnrolment() != null && attends.getRegistration().getDegreeType().equals(DegreeType.DEGREE)) {
 				FinalMark mark = getFinalMark(attends);
 				if(mark == null || (mark.getGradeListVersion() == 0 && mark.getSubmitedMark() == null)) {
 					result.add(attends);

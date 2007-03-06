@@ -134,7 +134,7 @@ public class SubmitMarks extends Service {
 		Map<GenericTrio<String, Degree, CurricularCourse>, List<Attends>> map = new HashMap<GenericTrio<String, Degree, CurricularCourse>, List<Attends>>();
 		for (String attendsID : attendsIDs) {
 			Attends attends = getAttendsByID(executionCourse, attendsID);
-			if(attends != null && attends.getEnrolment() != null && !attends.getAluno().getDegreeType().equals(DegreeType.MASTER_DEGREE)) {
+			if(attends != null && attends.getEnrolment() != null && !attends.getRegistration().getDegreeType().equals(DegreeType.MASTER_DEGREE)) {
 				if(attends.getEnrolment().isImprovementForExecutionCourse(executionCourse)) {
 					addToMap(map, IMPROVMENT, attends.getEnrolment().getStudentCurricularPlan().getDegreeCurricularPlan().getDegree(), attends.getEnrolment().getCurricularCourse(), attends);
 				} else {
@@ -283,7 +283,7 @@ public class SubmitMarks extends Service {
 
 		public void addLines(Map<Attends, FinalMark> attendsMap, String season) {
 			for (Entry<Attends, FinalMark> entry : attendsMap.entrySet()) {
-				addLine(entry.getKey().getAluno(), season, entry.getValue(), entry.getKey().getEnrolment().getExecutionPeriod().getExecutionYear());
+				addLine(entry.getKey().getRegistration(), season, entry.getValue(), entry.getKey().getEnrolment().getExecutionPeriod().getExecutionYear());
 			}
 		}
 		

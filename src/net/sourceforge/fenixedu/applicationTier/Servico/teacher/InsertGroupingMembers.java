@@ -49,7 +49,7 @@ public class InsertGroupingMembers extends Service {
 
         while (iterAttends.hasNext()) {
             Attends existingAttend = (Attends) iterAttends.next();
-            Registration existingAttendStudent = existingAttend.getAluno();
+            Registration existingAttendStudent = existingAttend.getRegistration();
 
             Iterator iteratorStudents = students.iterator();
 

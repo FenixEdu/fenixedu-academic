@@ -23,7 +23,7 @@ public class Mark extends Mark_Base {
     	if(validateMark(mark)) {
     		super.setMark(mark);
     	} else {
-    		throw new InvalidMarkDomainException("errors.invalidMark", mark, getAttend().getAluno().getNumber().toString());
+    		throw new InvalidMarkDomainException("errors.invalidMark", mark, getAttend().getRegistration().getNumber().toString());
     	}
     }
 
@@ -37,7 +37,7 @@ public class Mark extends Mark_Base {
     private boolean validateMark(String mark) {
     	GradeScale gradeScale;
     	if(getAttend().getEnrolment() == null) {
-    		gradeScale = getAttend().getAluno().getActiveStudentCurricularPlan().getDegreeCurricularPlan().getGradeScaleChain();
+    		gradeScale = getAttend().getRegistration().getActiveStudentCurricularPlan().getDegreeCurricularPlan().getGradeScaleChain();
     	} else {
     		gradeScale = getAttend().getEnrolment().getCurricularCourse().getGradeScaleChain();
     	}

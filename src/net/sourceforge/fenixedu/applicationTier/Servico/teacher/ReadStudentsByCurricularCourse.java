@@ -77,7 +77,7 @@ public class ReadStudentsByCurricularCourse extends Service {
         final List<Attends> attendList = site.getExecutionCourse().getAttends();
         final List<InfoStudent> infoStudentList = new ArrayList<InfoStudent>();
         for (final Attends attends : attendList) {
-            final Registration registration = attends.getAluno();
+            final Registration registration = attends.getRegistration();
             infoStudentList.add(InfoStudent.newInfoFromDomain(registration));
         }
         return infoStudentList;

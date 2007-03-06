@@ -65,14 +65,14 @@ public class AcceptNewProjectProposal extends Service {
 		Iterator iterAttendsInAttendsSet = attends.iterator();
 		while (iterAttendsInAttendsSet.hasNext()) {
 			Attends attend = (Attends) iterAttendsInAttendsSet.next();
-			attendsStudentNumbers.add(attend.getAluno().getNumber());
+			attendsStudentNumbers.add(attend.getRegistration().getNumber());
 		}
 
 		List attendsAux = executionCourse.getAttends();
 		Iterator iterAttends = attendsAux.iterator();
 		while (iterAttends.hasNext()) {
 			Attends attend = (Attends) iterAttends.next();
-			if (!attendsStudentNumbers.contains(attend.getAluno().getNumber()))
+			if (!attendsStudentNumbers.contains(attend.getRegistration().getNumber()))
 				grouping.addAttends(attend);
 		}
 

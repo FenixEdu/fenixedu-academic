@@ -59,7 +59,7 @@ public class InsertStudentsInGrouping extends Service {
 
         while (iterAttends.hasNext()) {
             Attends existingAttend = (Attends) iterAttends.next();
-            Registration existingAttendStudent = existingAttend.getAluno();
+            Registration existingAttendStudent = existingAttend.getRegistration();
 
             List studentsList = new ArrayList();
             studentsList.addAll(students);

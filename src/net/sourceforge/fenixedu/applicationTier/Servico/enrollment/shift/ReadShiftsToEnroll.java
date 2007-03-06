@@ -56,7 +56,7 @@ public class ReadShiftsToEnroll extends Service {
 
     private void findShiftsForExecutionCourseShiftTypesFromStudentEnroledShifts(Attends attend,
 	    ShiftToEnrol result) {
-	for (final Shift shift : attend.getAluno().getShiftsSet()) {
+	for (final Shift shift : attend.getRegistration().getShiftsSet()) {
 	    setShiftInformation(attend, result, shift);
 	}
     }

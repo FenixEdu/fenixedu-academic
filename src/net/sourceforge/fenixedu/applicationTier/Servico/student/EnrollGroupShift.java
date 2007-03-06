@@ -74,7 +74,7 @@ public class EnrollGroupShift extends Service {
             throws FenixServiceException {
 
         for (final Attends attend : studentGroup.getAttends()) {
-            if (attend.getAluno() == registration) {
+            if (attend.getRegistration() == registration) {
                 return true;
             }
         }

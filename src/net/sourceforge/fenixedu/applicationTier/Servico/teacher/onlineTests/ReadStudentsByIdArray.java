@@ -82,7 +82,7 @@ public class ReadStudentsByIdArray extends Service {
             if (students[i].equals(bundle.getString("label.allStudents"))) {
                 List<Attends> attendList = executionCourse.getAttends();
                 for (Attends attend : attendList) {
-                    studentsList.add(InfoStudent.newInfoFromDomain(attend.getAluno()));
+                    studentsList.add(InfoStudent.newInfoFromDomain(attend.getRegistration()));
                 }
                 break;
             }

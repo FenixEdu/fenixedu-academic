@@ -57,7 +57,7 @@ public class TransferCurricularCourse extends Service {
             throws ExcepcaoPersistencia {
         for (Attends attend : sourceExecutionCourse.getAttends()) {
             Enrolment enrollment = attend.getEnrolment();
-            final Registration registration = attend.getAluno();
+            final Registration registration = attend.getRegistration();
             if (enrollment != null) {
                 CurricularCourse associatedCurricularCourse = attend.getEnrolment()
                         .getCurricularCourse();
@@ -66,7 +66,7 @@ public class TransferCurricularCourse extends Service {
                             .getAttends(), new Predicate() {
                         public boolean evaluate(Object arg0) {
                             Attends attendFromDestination = (Attends) arg0;
-                            return (attendFromDestination.getAluno() == registration);
+                            return (attendFromDestination.getRegistration() == registration);
                         }
                     });
                     if (existingAttend != null) {

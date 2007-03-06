@@ -1076,14 +1076,14 @@ public class CreateTestData {
 	final ExecutionCourse executionCourse = attends.getExecutionCourse();
 	for (final Shift shift : executionCourse.getAssociatedShiftsSet()) {
 	    if (!isEnroledInShift(attends, shift.getTipo())) {
-		shift.reserveForStudent(attends.getAluno());
+		shift.reserveForStudent(attends.getRegistration());
 	    }
 	}
     }
 
     private static boolean isEnroledInShift(final Attends attends, final ShiftType shiftType) {
 	final ExecutionCourse executionCourse = attends.getExecutionCourse();
-	for (final Shift shift : attends.getAluno().getShiftsSet()) {
+	for (final Shift shift : attends.getRegistration().getShiftsSet()) {
 	    if (shift.getTipo() == shiftType && shift.getDisciplinaExecucao() == executionCourse) {
 		return true;
 	    }
@@ -1143,8 +1143,7 @@ public class CreateTestData {
 
 	public DateTime getExpirationDate() {
 	    return null;
-	}
-
+}
 	public String getFullName() {
 	    return null;
 	}

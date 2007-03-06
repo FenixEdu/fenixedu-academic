@@ -55,7 +55,7 @@ public class ReadStudentsWithoutGroup extends Service {
 	Registration userStudent = null;
 	for (final Iterator iterator = attends.iterator(); iterator.hasNext();) {
 	    final Attends attend = (Attends) iterator.next();
-	    final Registration registration = attend.getAluno();
+	    final Registration registration = attend.getRegistration();
 	    final Person person = registration.getPerson();
 	    if (person.hasUsername(username)) {
 		userStudent = registration;
@@ -85,7 +85,7 @@ public class ReadStudentsWithoutGroup extends Service {
 		.size());
 	for (final Iterator iterator = attendsWithOutGroupsSet.iterator(); iterator.hasNext();) {
 	    final Attends attend = (Attends) iterator.next();
-	    final Registration registration = attend.getAluno();
+	    final Registration registration = attend.getRegistration();
 
 	    if (!registration.equals(userStudent)) {
 		final InfoStudent infoStudent2 = getInfoStudentFromStudent(registration);

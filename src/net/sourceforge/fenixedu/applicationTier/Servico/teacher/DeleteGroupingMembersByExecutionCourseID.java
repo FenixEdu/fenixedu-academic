@@ -43,7 +43,7 @@ public class DeleteGroupingMembersByExecutionCourseID extends Service {
         List executionCourseStudentNumbers = new ArrayList();
         final List<Attends> attends = executionCourse.getAttends();
         for (final Attends attend : attends) {
-            final Registration registration = attend.getAluno();
+            final Registration registration = attend.getRegistration();
             executionCourseStudentNumbers.add(registration.getNumber());
         }
 
@@ -52,7 +52,7 @@ public class DeleteGroupingMembersByExecutionCourseID extends Service {
         Iterator iterator = attendsElements.iterator();
         while (iterator.hasNext()) {            
             Attends attend = (Attends) iterator.next();            
-            if (executionCourseStudentNumbers.contains(attend.getAluno().getNumber())) {
+            if (executionCourseStudentNumbers.contains(attend.getRegistration().getNumber())) {
                 boolean found = false;
                 Iterator iterStudentsGroups = grouping.getStudentGroups().iterator();
                 while (iterStudentsGroups.hasNext() && !found) {

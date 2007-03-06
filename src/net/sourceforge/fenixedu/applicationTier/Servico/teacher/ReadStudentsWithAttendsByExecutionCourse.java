@@ -101,7 +101,7 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
 		public boolean evaluate(Object o) {
 		    Attends attendance = (Attends) o;
 
-		    List scps = attendance.getAluno().getStudentCurricularPlans();
+		    List scps = attendance.getRegistration().getStudentCurricularPlans();
 
 		    if (scps != null && !scps.isEmpty()) {
 			StudentCurricularPlan lastSCP = getStudentCurricularPlanFromAttends(attendance);
@@ -179,7 +179,7 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
 		    Attends attendance = (Attends) attendsIterator.next();
 
 		    // if an attendance is related to a Shift
-		    Registration registration = attendance.getAluno();
+		    Registration registration = attendance.getRegistration();
 
 		    if (turno.getStudents().contains(registration)) {
 			collectedAttends.add(attendance);
@@ -201,7 +201,7 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
 
 	while (it.hasNext()) {
 	    Attends iFrequenta = (Attends) it.next();
-	    Registration registrationToAdd = iFrequenta.getAluno();
+	    Registration registrationToAdd = iFrequenta.getRegistration();
 	    if (!alreadyAddedStudents.contains(registrationToAdd)) {
 		alreadyAddedStudents.add(registrationToAdd);
 		InfoCompositionOfAttendAndDegreeCurricularPlanAndShiftsAndStudentGroups infoComposition = new InfoCompositionOfAttendAndDegreeCurricularPlanAndShiftsAndStudentGroups();
@@ -332,7 +332,7 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
 
     StudentCurricularPlan getStudentCurricularPlanFromAttends(Attends attendance) {
 	if (attendance.getEnrolment() == null)
-	    return GetActiveCurricularPlan(attendance.getAluno().getStudentCurricularPlans());
+	    return GetActiveCurricularPlan(attendance.getRegistration().getStudentCurricularPlans());
 	return attendance.getEnrolment().getStudentCurricularPlan();
     }
 
@@ -362,7 +362,7 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
 	    boolean studentInShift = false;
 	    List<Registration> students = shift.getStudents();
 	    for (Registration registration : students) {
-		if (registration == attend.getAluno()) {
+		if (registration == attend.getRegistration()) {
 		    studentInShift = true;
 		    break;
 		}

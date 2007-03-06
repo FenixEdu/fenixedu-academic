@@ -635,8 +635,8 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
             for (final Attends attends : executionCourse.getAttends()) {
                 for (final Mark mark : attends.getAssociatedMarks()) {
                     if (mark.getEvaluation() == evaluation
-                            && !marks.containsKey(attends.getAluno().getNumber())) {
-                        marks.put(attends.getAluno().getNumber(), mark.getMark());
+                            && !marks.containsKey(attends.getRegistration().getNumber())) {
+                        marks.put(attends.getRegistration().getNumber(), mark.getMark());
                     }
                 }
             }

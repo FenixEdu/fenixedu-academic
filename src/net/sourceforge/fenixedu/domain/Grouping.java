@@ -124,7 +124,7 @@ public class Grouping extends Grouping_Base {
 
     public Attends getStudentAttend(Registration registration) {
         for (final Attends attend : this.getAttends()) {
-            if (attend.getAluno() == registration) {
+            if (attend.getRegistration() == registration) {
                 return attend;
             }
         }
@@ -133,7 +133,7 @@ public class Grouping extends Grouping_Base {
 
     public Attends getStudentAttend(String studentUsername) {
         for (final Attends attend : this.getAttends()) {
-            if (attend.getAluno().getPerson().hasUsername(studentUsername)) {
+            if (attend.getRegistration().getPerson().hasUsername(studentUsername)) {
                 return attend;
             }
         }

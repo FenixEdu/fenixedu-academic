@@ -92,7 +92,7 @@ public class EditGroupShift extends Service {
         Iterator iterStudentGroupAttends = studentGroupAttends.iterator();
         while (iterStudentGroupAttends.hasNext() && !found) {
             attend = ((Attends) iterStudentGroupAttends.next());
-            if (attend.getAluno().equals(registration)) {
+            if (attend.getRegistration().equals(registration)) {
                 found = true;
             }
         }
@@ -103,7 +103,7 @@ public class EditGroupShift extends Service {
             final Grouping grouping) {
         final List<String> emails = new ArrayList<String>();
         for (final Attends attends : studentGroup.getAttends()) {
-            emails.add(attends.getAluno().getPerson().getEmail());
+            emails.add(attends.getRegistration().getPerson().getEmail());
         }
 
         final StringBuilder executionCourseNames = new StringBuilder();

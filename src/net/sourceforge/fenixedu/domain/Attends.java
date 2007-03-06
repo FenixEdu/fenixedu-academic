@@ -42,8 +42,8 @@ public class Attends extends Attends_Base {
 	    final ExecutionCourse executionCourse1 = attends1.getExecutionCourse();
 	    final ExecutionCourse executionCourse2 = attends2.getExecutionCourse();
 	    if (executionCourse1 == executionCourse2) {
-		final Registration registration1 = attends1.getAluno();
-		final Registration registration2 = attends2.getAluno();
+		final Registration registration1 = attends1.getRegistration();
+		final Registration registration2 = attends2.getRegistration();
 		return registration1.getNumber().compareTo(registration2.getNumber());
 	    } else {
 		final ExecutionPeriod executionPeriod1 = executionCourse1.getExecutionPeriod();
@@ -92,7 +92,7 @@ public class Attends extends Attends_Base {
 
     private boolean hasAnyShiftEnrolments() {
 	for (Shift shift : this.getExecutionCourse().getAssociatedShifts()) {
-	    if (shift.getStudents().contains(this.getAluno())) {
+	    if (shift.getStudents().contains(this.getRegistration())) {
 		return true;
 	    }
 	}
@@ -316,6 +316,16 @@ public class Attends extends Attends_Base {
 
     @Override
     @Deprecated
+    public Registration getAluno() {
+        return getRegistration();
+    }
+    
+    public Registration getRegistration() {
+        return super.getRegistration();
+    }
+    
+    @Override
+    @Deprecated
     public ExecutionCourse getDisciplinaExecucao() {
 	return getExecutionCourse();
     }
@@ -330,7 +340,7 @@ public class Attends extends Attends_Base {
 
     public boolean isEnrolledOrWithActiveSCP() {
 	if(this.getEnrolment() == null) {
-	    RegistrationState lastRegistrationState = this.getAluno().getLastRegistrationState(this.getExecutionCourse().getExecutionYear());
+	    RegistrationState lastRegistrationState = this.getRegistration().getLastRegistrationState(this.getExecutionCourse().getExecutionYear());
 	    if(lastRegistrationState != null && !lastRegistrationState.isActive()) {
 		return false;
 	    }

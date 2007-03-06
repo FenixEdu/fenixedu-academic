@@ -48,7 +48,7 @@ public class PrepareCreateStudentGroup extends Service {
 
         final List<InfoSiteStudentInformation> infoStudentInformationList = new ArrayList<InfoSiteStudentInformation>(attendsGrouping.size());
         for (Attends attend : attendsGrouping) {
-            final Registration registration = attend.getAluno();
+            final Registration registration = attend.getRegistration();
             final Person person = registration.getPerson();
             InfoSiteStudentInformation infoSiteStudentInformation = new InfoSiteStudentInformation();
             infoSiteStudentInformation.setEmail(person.getEmail());

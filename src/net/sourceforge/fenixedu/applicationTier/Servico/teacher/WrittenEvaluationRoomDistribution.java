@@ -83,8 +83,8 @@ public class WrittenEvaluationRoomDistribution extends Service {
         final List<Registration> result = new ArrayList<Registration>();
         for (final ExecutionCourse executionCourse : writtenEvaluation.getAssociatedExecutionCourses()) {
             for (final Attends attend : executionCourse.getAttends()) {
-                if (!result.contains(attend.getAluno())) {
-                    result.add(attend.getAluno());
+                if (!result.contains(attend.getRegistration())) {
+                    result.add(attend.getRegistration());
                 }
             }
         }

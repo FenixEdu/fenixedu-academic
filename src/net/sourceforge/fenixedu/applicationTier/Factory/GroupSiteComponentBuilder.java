@@ -186,11 +186,11 @@ public class GroupSiteComponentBuilder {
 				infoSiteStudentAndGroup.setInfoStudentGroup(InfoStudentGroup
 						.newInfoFromDomain(studentGroup));
 
-				infoSiteStudentInformation.setNumber(attend.getAluno().getNumber());
+				infoSiteStudentInformation.setNumber(attend.getRegistration().getNumber());
 
-				infoSiteStudentInformation.setName(attend.getAluno().getPerson().getNome());
+				infoSiteStudentInformation.setName(attend.getRegistration().getPerson().getNome());
 
-				infoSiteStudentInformation.setEmail(attend.getAluno().getPerson().getEmail());
+				infoSiteStudentInformation.setEmail(attend.getRegistration().getPerson().getEmail());
 
 				infoSiteStudentAndGroup.setInfoSiteStudentInformation(infoSiteStudentInformation);
 
@@ -236,11 +236,11 @@ public class GroupSiteComponentBuilder {
 				infoSiteStudentAndGroup.setInfoStudentGroup(InfoStudentGroup
 						.newInfoFromDomain(studentGroup));
 
-				infoSiteStudentInformation.setNumber(attend.getAluno().getNumber());
+				infoSiteStudentInformation.setNumber(attend.getRegistration().getNumber());
 
-				infoSiteStudentInformation.setName(attend.getAluno().getPerson().getNome());
+				infoSiteStudentInformation.setName(attend.getRegistration().getPerson().getNome());
 
-				infoSiteStudentInformation.setEmail(attend.getAluno().getPerson().getEmail());
+				infoSiteStudentInformation.setEmail(attend.getRegistration().getPerson().getEmail());
 
 				infoSiteStudentAndGroup.setInfoSiteStudentInformation(infoSiteStudentInformation);
 
@@ -287,11 +287,11 @@ public class GroupSiteComponentBuilder {
 				infoSiteStudentAndGroup.setInfoStudentGroup(InfoStudentGroup
 						.newInfoFromDomain(studentGroup));
 
-				infoSiteStudentInformation.setNumber(attend.getAluno().getNumber());
+				infoSiteStudentInformation.setNumber(attend.getRegistration().getNumber());
 
-				infoSiteStudentInformation.setName(attend.getAluno().getPerson().getNome());
+				infoSiteStudentInformation.setName(attend.getRegistration().getPerson().getNome());
 
-				infoSiteStudentInformation.setEmail(attend.getAluno().getPerson().getEmail());
+				infoSiteStudentInformation.setEmail(attend.getRegistration().getPerson().getEmail());
 
 				infoSiteStudentAndGroup.setInfoSiteStudentInformation(infoSiteStudentInformation);
 
@@ -405,13 +405,13 @@ public class GroupSiteComponentBuilder {
 
 			attend = (Attends) iter.next();
 
-			infoSiteStudentInformation.setNumber(attend.getAluno().getNumber());
+			infoSiteStudentInformation.setNumber(attend.getRegistration().getNumber());
 
-			infoSiteStudentInformation.setName(attend.getAluno().getPerson().getNome());
+			infoSiteStudentInformation.setName(attend.getRegistration().getPerson().getNome());
 
-			infoSiteStudentInformation.setEmail(attend.getAluno().getPerson().getEmail());
+			infoSiteStudentInformation.setEmail(attend.getRegistration().getPerson().getEmail());
 
-			infoSiteStudentInformation.setUsername(attend.getAluno().getPerson().getUsername());
+			infoSiteStudentInformation.setUsername(attend.getRegistration().getPerson().getUsername());
 
 			studentGroupAttendInformationList.add(infoSiteStudentInformation);
 

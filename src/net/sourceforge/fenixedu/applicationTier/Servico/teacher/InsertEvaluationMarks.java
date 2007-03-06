@@ -62,11 +62,11 @@ public class InsertEvaluationMarks extends Service {
         while (iterAttends.hasNext()) {
             Attends attend = (Attends) iterAttends.next();
 
-            String mark = (String) hashMarks.get(attend.getAluno().getNumber().toString());
-            hashMarks.remove(attend.getAluno().getNumber().toString());
+            String mark = (String) hashMarks.get(attend.getRegistration().getNumber().toString());
+            hashMarks.remove(attend.getRegistration().getNumber().toString());
 
             if (mark != null && mark.length() > 0) {
-                if (!isValidMark(evaluation, mark, attend.getAluno())) {
+                if (!isValidMark(evaluation, mark, attend.getRegistration())) {
                     InfoMarkEditor infoMark = new InfoMarkEditor();
                     infoMark.setMark(mark);
 
@@ -74,7 +74,7 @@ public class InsertEvaluationMarks extends Service {
                             .newInfoFromDomain(attend));
                     marksErrorsInvalidMark.add(infoMark);
                 } else {
-                    newHashMarks.put(attend.getAluno().getNumber().toString(), mark);
+                    newHashMarks.put(attend.getRegistration().getNumber().toString(), mark);
                     Mark domainMark = evaluation.getMarkByAttend(attend);
                     //verify if the student has already a mark
                     if (domainMark == null) {

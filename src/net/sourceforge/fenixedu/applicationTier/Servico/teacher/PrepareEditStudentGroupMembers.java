@@ -40,7 +40,7 @@ public class PrepareEditStudentGroupMembers extends Service {
         }
         final List<InfoStudent> infoStudents = new ArrayList<InfoStudent>();
         for (final Attends attend : groupingAttends) {
-            infoStudents.add(InfoStudent.newInfoFromDomain(attend.getAluno()));
+            infoStudents.add(InfoStudent.newInfoFromDomain(attend.getRegistration()));
         }
         return infoStudents;
     }

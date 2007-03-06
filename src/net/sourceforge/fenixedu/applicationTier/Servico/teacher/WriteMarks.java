@@ -65,7 +65,7 @@ public class WriteMarks extends Service {
 
     private Attends findStudentAttends(final ExecutionCourse executionCourse, final Integer studentNumber) {
 	for (final Attends attends : executionCourse.getAttends()) {
-	    if (attends.getAluno().getNumber().equals(studentNumber)) {
+	    if (attends.getRegistration().getNumber().equals(studentNumber)) {
 		return attends;
 	    }
 	}

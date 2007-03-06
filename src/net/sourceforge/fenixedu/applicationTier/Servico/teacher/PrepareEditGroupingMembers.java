@@ -39,7 +39,7 @@ public class PrepareEditGroupingMembers extends Service {
                 for (final Attends attend : exportGrouping.getExecutionCourse().getAttends()) {
                     if (!attends.contains(attend) && !grouping.getAttends().contains(attend)) {
                         attends.add(attend);
-                        infoStudents.add(InfoStudent.newInfoFromDomain(attend.getAluno()));
+                        infoStudents.add(InfoStudent.newInfoFromDomain(attend.getRegistration()));
                     }
                 }
             }

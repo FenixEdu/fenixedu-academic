@@ -145,13 +145,13 @@ public class NewProjectProposal extends Service {
                         
             while (iterAttends.hasNext()) {
                 Attends attend = (Attends) iterAttends.next();
-                groupingStudentNumbers.add(attend.getAluno().getNumber());
+                groupingStudentNumbers.add(attend.getRegistration().getNumber());
             }
             
             Iterator iterAttends2 = goalExecutionCourse.getAttendsIterator();
             while (iterAttends2.hasNext()) {
                 Attends attend = (Attends) iterAttends2.next();
-                if (!groupingStudentNumbers.contains(attend.getAluno().getNumber())) {
+                if (!groupingStudentNumbers.contains(attend.getRegistration().getNumber())) {
                     groupPropertiesExecutionCourse.getGrouping().addAttends(attend);                    
                 }
             }
