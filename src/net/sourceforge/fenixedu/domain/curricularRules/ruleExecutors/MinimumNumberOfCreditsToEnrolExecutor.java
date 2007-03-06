@@ -25,7 +25,11 @@ public class MinimumNumberOfCreditsToEnrolExecutor extends CurricularRuleExecuto
 	    return RuleResult.createTrue();
 	}
 
-	return createFalseRuleResult(rule, totalEctsCredits);
+	if (sourceDegreeModuleToEvaluate.isEnroled() && sourceDegreeModuleToEvaluate.isLeaf()) {
+	    return RuleResult.createTrue(EnrolmentResultType.IMPOSSIBLE);
+	} else {
+	    return createFalseRuleResult(rule, totalEctsCredits);
+	}
     }
 
     private RuleResult createFalseRuleResult(final MinimumNumberOfCreditsToEnrol rule,
@@ -53,16 +57,18 @@ public class MinimumNumberOfCreditsToEnrolExecutor extends CurricularRuleExecuto
 	    return RuleResult.createTrue();
 	}
 
-	final ExecutionPeriod previousExecutionPeriod = enrolmentContext.getExecutionPeriod()
-		.getPreviousExecutionPeriod();
-	totalEctsCredits = Double.valueOf(totalEctsCredits.doubleValue()
-		+ curriculumGroup.getEnroledEctsCredits(previousExecutionPeriod).doubleValue());
+	final ExecutionPeriod previousExecutionPeriod = enrolmentContext.getExecutionPeriod().getPreviousExecutionPeriod();
+	totalEctsCredits = Double.valueOf(totalEctsCredits.doubleValue() + curriculumGroup.getEnroledEctsCredits(previousExecutionPeriod).doubleValue());
 
 	if (rule.allowCredits(totalEctsCredits)) {
 	    return RuleResult.createTrue(EnrolmentResultType.TEMPORARY);
 	}
-
-	return createFalseRuleResult(rule, totalEctsCredits);
+	
+	if (sourceDegreeModuleToEvaluate.isEnroled() && sourceDegreeModuleToEvaluate.isLeaf()) {
+	    return RuleResult.createTrue(EnrolmentResultType.IMPOSSIBLE);
+	} else {
+	    return createFalseRuleResult(rule, totalEctsCredits);
+	}
     }
 
 }
