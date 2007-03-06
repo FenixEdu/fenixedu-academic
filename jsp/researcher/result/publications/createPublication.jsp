@@ -13,6 +13,7 @@
 	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.publications"/></em>
 	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.create"/></h2>
 	
+	
 	<logic:messagesPresent message="true">
 		<p>
 		<html:messages id="messages" message="true" bundle="RESEARCHER_RESOURCES">
@@ -23,7 +24,10 @@
 
 
 		<logic:equal name="publicationBean" property="createJournal" value="false">
-
+	
+		<logic:equal name="publicationBean" property="class.simpleName" value="ArticleBean">
+			<p class="breadcumbs"><span class="actual">Passo 1: Inserir Dados do Artigo</span> > <span>Passo 2: Associar a uma Revista</span></p>
+		</logic:equal>
 
 		<fr:form action="/resultPublications/create.do">
 		
@@ -104,12 +108,23 @@
 
 		</logic:equal>
 
-	<logic:equal name="publicationBean" property="createJournal" value="true">
 
+
+
+
+	<logic:equal name="publicationBean" property="createJournal" value="true">
+	
+			<logic:equal name="publicationBean" property="class.simpleName" value="ArticleBean">
+			<p class="breadcumbs"><span>Passo 1: Inserir Dados do Artigo</span> > <span class="actual">Passo 2: Associar a uma Revista</span></p>
+			</logic:equal>
+			
+			<p class="mtop1 mbottom0"><b><bean:message bundle="RESEARCHER_RESOURCES"key="<%="researcher.ResultPublication.type." + publicationBean.getPublicationTypeString() %>"/></b></p>
+			
 			<fr:view name="publicationBean" schema="result.publication.create.Article.readOnly" >
 		 	    <fr:layout name="tabular-nonNullValues">
-		    	    <fr:property name="classes" value="tstyle5 thright thlight thtop"/>
-		        	<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+		    	    <fr:property name="classes" value="tstyle1 thright thlight thtop"/>
+		        	<fr:property name="columnClasses" value="width10em,,"/>
+		        	<fr:property name="rowClasses" value=",bold,,,,,,,"/>
 			    </fr:layout>
 			</fr:view>
 
@@ -118,20 +133,27 @@
 			
 				<logic:present name="publicationBean" property="scientificJournalName">
 					<div class="warning0">
-						<bean:message key="label.attention" bundle="RESEARCHER_RESOURCES"/>: 
-						<bean:message key="label.informationForCreateMagazine" bundle="RESEARCHER_RESOURCES"/>
+						<p style="margin:0; padding: 0.5em 0.75em;">
+							<b><bean:message key="label.attention" bundle="RESEARCHER_RESOURCES"/>:</b><br/>
+							<bean:message key="label.informationForCreateMagazine" bundle="RESEARCHER_RESOURCES"/>
+						</p>
 					</div>
 				</logic:present>
+				
+				
+				<p><strong>Definir Revista do Artigo</strong></p>
 				<div class="dinline forminline">						
 				<fr:form action="/resultPublications/create.do">
 				<fr:edit id="publicationData" name="publicationBean" schema="result.publication.create.Article.selectMagazine">
 					<fr:layout name="tabular">
-						<fr:property name="classes" value="tstyle5 thright thlight thtop"/>
+						<fr:property name="classes" value="tstyle5 thright thlight thtop thmiddle"/>
 			        	<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 					</fr:layout>
 				</fr:edit>
-					<br/>
-					<html:submit property="confirm"><bean:message key="label.chooseMagazineFromList" bundle="RESEARCHER_RESOURCES"/></html:submit>
+				
+				<br/><br/>
+				<html:submit property="confirm"><bean:message key="label.chooseMagazineFromList" bundle="RESEARCHER_RESOURCES"/></html:submit>
+					
 				</fr:form>
 
 				<logic:present name="publicationBean" property="scientificJournalName">

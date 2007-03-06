@@ -9,8 +9,8 @@
 <%@page import="org.apache.struts.util.RequestUtils"%>
 
 <logic:present role="RESEARCHER">		
-
-		<h2 id='pageTitle'> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.viewCurriculum.title"/> </h2>
+		<em><bean:message key="label.researchPortal" bundle="RESEARCHER_RESOURCES"/></em>
+		<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.viewCurriculum.title"/></h2>
 	
 		<bean:define id="personId" name="person" property="idInternal"/>
 		

@@ -7,7 +7,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <logic:present role="RESEARCHER">	
-	<em><bean:message key="researcher.interests.title" bundle="RESEARCHER_RESOURCES"/></em> <!-- tobundle -->
+	<em><bean:message key="label.researchPortal" bundle="RESEARCHER_RESOURCES"/></em>
   	<h2 id='pageTitle'/><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.interestsManagement.title"/></h2>
 
 	<logic:notPresent name="alterOrder">
@@ -63,33 +63,37 @@
 		<html:link page="/interests/interestsManagement.do?method=alterOrder"> <bean:message key="link.alterOrder" bundle="RESEARCHER_RESOURCES"/></html:link>
 		</logic:greaterEqual>
 	</logic:notPresent> 
-		
+
+
 	<logic:present name="alterOrder">
 
 		<fr:form action="/interests/interestsManagement.do?method=changeOrderUsingAjaxTree">
    		<input alt="input.tree" id="tree-structure" type="hidden" name="tree" value=""/>
 		</fr:form>
-	
-		<fr:view name="researchInterests" layout="tree">
-		<fr:layout>
-			<fr:property name="treeId" value="tree"/>
-	        <fr:property name="fieldId" value="tree-structure"/> <!-- reference to the hidden field above -->
-	        <fr:property name="eachLayout" value="values-dash"/>
-	        <fr:property name="eachSchema" value="researchInterest.summary"/>
-	        <fr:property name="includeImage" value="false"/>
-	        <fr:property name="classes" value="mtop0 mbottom1"/>
-		     <fr:property name="hiddenLinks">
-	            <html:link page="/interests/interestsManagement.do?method=up&oid=${idInternal}">
-	                <bean:message key="link.moveUp" bundle="RESEARCHER_RESOURCES"/>
-	            </html:link>
-	            <html:link page="/interests/interestsManagement.do?method=down&oid=${idInternal}">
-	                <bean:message key="link.moveDown" bundle="RESEARCHER_RESOURCES"/>
-	            </html:link>
-            </fr:property>
-		</fr:layout>
- 	</fr:view>
 
-	
+		<div class="mvert1">
+			<fr:view name="researchInterests" layout="tree">
+			<fr:layout>
+				<fr:property name="treeId" value="tree"/>
+		        <fr:property name="fieldId" value="tree-structure"/> <!-- reference to the hidden field above -->
+		        <fr:property name="eachLayout" value="values-dash"/>
+		        <fr:property name="eachSchema" value="researchInterest.summary"/>
+		        <fr:property name="includeImage" value="false"/>
+		        <fr:property name="classes" value="mtop0 mbottom1"/>
+			     <fr:property name="hiddenLinks">
+		            <html:link page="/interests/interestsManagement.do?method=up&oid=${idInternal}">
+		                <bean:message key="link.moveUp" bundle="RESEARCHER_RESOURCES"/>
+		            </html:link>
+		            <html:link page="/interests/interestsManagement.do?method=down&oid=${idInternal}">
+		                <bean:message key="link.moveDown" bundle="RESEARCHER_RESOURCES"/>
+		            </html:link>
+	            </fr:property>
+			</fr:layout>
+		 	</fr:view>
+	 	</div>
+
+	<p class="color888 mtop2"><em><bean:message key="label.interests.alterOrder.note" bundle="RESEARCHER_RESOURCES"/></em></p>
+		
 	<div id="tree-controls" style="display: none;" class="mtop1">
 	 	<fr:form action="/interests/interestsManagement.do?method=prepare">
 	        <!-- submits the form on top of the page, search for: tree-structure -->

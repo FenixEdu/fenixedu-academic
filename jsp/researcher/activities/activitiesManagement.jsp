@@ -6,10 +6,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <logic:present role="RESEARCHER">		
-	<%--
-	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.eventsManagement.superUseCaseTitle"/></em>
-	--%>
-  	<h2 id='pageTitle'/><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.mainTitle"/></h2>
+  	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.mainTitle"/></h2>
 		
 	<ul class="mtop15 mbottom1 list5">
 		<li>

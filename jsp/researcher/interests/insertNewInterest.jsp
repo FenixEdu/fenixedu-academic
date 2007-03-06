@@ -6,8 +6,8 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <logic:present role="RESEARCHER">	
-	<em>Interesses</em> <!-- tobundle -->
-	<h2 id='pageTitle'/><bean:message bundle="RESEARCHER_RESOURCES" key="title.insert.new.interest"/></h2><br/>
+	<em><bean:message key="label.researchPortal" bundle="RESEARCHER_RESOURCES"/></em>
+	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="title.insert.new.interest"/></h2><br/>
 	
 	<fr:create type="net.sourceforge.fenixedu.domain.research.ResearchInterest" schema="researchInterest.simpleCreate"
 	           action="/interests/interestsManagement.do?method=prepare">
@@ -15,7 +15,7 @@
 		<fr:hidden slot="party" name="party" />
 		<fr:destination name="cancel" path="/interests/interestsManagement.do?method=prepare"/>
 		<fr:layout>
-			<fr:property name="classes" value="thlight thtop mbottom1"/>
+			<fr:property name="classes" value="tstyle5 thlight thtop mtop0"/>
 		</fr:layout>
 	</fr:create>
 

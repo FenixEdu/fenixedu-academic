@@ -12,7 +12,7 @@
 			<logic:notPresent name="publicationBean" property="scientificJournal">
 				<logic:present name="publicationBean" property="scientificJournalName">
 					<div class="warning0">
-						<bean:message key="label.attention" bundle="RESEARCHER_RESOURCES"/>: 
+						<b><bean:message key="label.attention" bundle="RESEARCHER_RESOURCES"/>:</b><br/>
 						<bean:message key="label.informationForCreateMagazine" bundle="RESEARCHER_RESOURCES"/>
 					</div>
 				</logic:present>

@@ -7,7 +7,7 @@
 
 <logic:present role="RESEARCHER">	
 
-  	<h2 id='pageTitle'/><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.projectsManagement.title"/></h2>
+  	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.projectsManagement.title"/></h2>
 
 	<ul class="list5 mvert2">
 		<li>

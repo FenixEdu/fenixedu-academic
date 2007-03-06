@@ -6,6 +6,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <%@ taglib uri="/WEB-INF/collectionPager.tld" prefix="cp" %>
 
+<em><bean:message key="label.researchPortal" bundle="RESEARCHER_RESOURCES"/></em>
 <h2><bean:message bundle="RESEARCHER_RESOURCES" key="label.search"/></h2>
 <bean:define id="bean" name="bean" type="net.sourceforge.fenixedu.dataTransferObject.SearchDSpacePublicationBean"/>
 
@@ -27,16 +28,13 @@
 
 		<table class="tstyle5 thlight thright">
 		<tr>
-		<th><bean:message key="label.searchIn" bundle="RESEARCHER_RESOURCES"/>:</th>
-		<td>
-		<fr:edit id="searchPublication" name="bean" slot="searchPublications"/>
-		
-		<label for="searchPublication"><bean:message key="link.Publications" bundle="RESEARCHER_RESOURCES"/></label>
-		<fr:edit id="searchPatent" name="bean" slot="searchPatents"/>
-		<label for="searchPatent"><bean:message key="researcher.viewCurriculum.patentsTitle" bundle="RESEARCHER_RESOURCES"/></label>
-		
-		</td>
-		
+			<th><bean:message key="label.type" bundle="RESEARCHER_RESOURCES"/>:</th>
+			<td>
+				<fr:edit id="searchPublication" name="bean" slot="searchPublications"/>
+				<label for="searchPublication"><bean:message key="link.Publications" bundle="RESEARCHER_RESOURCES"/></label>
+				<fr:edit id="searchPatent" name="bean" slot="searchPatents"/>
+				<label for="searchPatent"><bean:message key="researcher.viewCurriculum.patentsTitle" bundle="RESEARCHER_RESOURCES"/></label>
+			</td>
 		</tr>
 		<logic:iterate id="searchElement" indexId="index" name="bean" property="searchElements">
 		<tr>
