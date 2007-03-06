@@ -3,6 +3,7 @@ package pt.utl.ist.codeGenerator.database;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -10,7 +11,9 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu._development.MetadataManager;
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
+import net.sourceforge.fenixedu.applicationTier.utils.MockUserView;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.SupportLessonDTO;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.BibliographicReference;
@@ -124,6 +127,7 @@ import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilancyWithCredits;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -158,6 +162,7 @@ public class CreateTestData {
             try {
                 persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
                 persistentSupport.iniciarTransaccao();
+        	setPrivledges();
                 clearData();
                 createManagerUser();
                 createTestData();
@@ -179,6 +184,10 @@ public class CreateTestData {
         }
 	System.out.println("Creation of test data complete.");
 	System.exit(0);
+    }
+
+    private static void setPrivledges() {
+	AccessControl.setUserView(new MockUserView());
     }
 
     private static void createManagerUser() {
@@ -1128,6 +1137,37 @@ public class CreateTestData {
         degreeInfo.getQualificationLevel().setContent(Language.en, "Qualification level of the degree. Blur blur blur and more blur.");
         degreeInfo.setRecognitions(new MultiLanguageString("Reconhecimentos. Bla bla bla bla bla."));
         degreeInfo.getRecognitions().setContent(Language.en, "Recognitions of the degree. Blur blur blur and more blur.");
+    }
+
+    private static class MockUserView implements IUserView {
+
+	public DateTime getExpirationDate() {
+	    return null;
+	}
+
+	public String getFullName() {
+	    return null;
+	}
+
+	public Person getPerson() {
+	    return null;
+	}
+
+	public Collection<RoleType> getRoleTypes() {
+	    return null;
+	}
+
+	public String getUtilizador() {
+	    return null;
+	}
+
+	public boolean hasRoleType(RoleType roleType) {
+	    return true;
+	}
+
+	public boolean isPublicRequester() {
+	    return false;
+	}	
     }
 
 }

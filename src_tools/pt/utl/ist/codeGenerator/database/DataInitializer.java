@@ -9,6 +9,8 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.User;
+import net.sourceforge.fenixedu.domain.organizationalStructure.PartyType;
+import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 import net.sourceforge.fenixedu.stm.Transaction;
@@ -46,6 +48,7 @@ public class DataInitializer {
 	createCurricularYearsAndSemesters();
 	createCountries();
 	createManagerUser();
+	createPartyTypeEnums();
     }
 
     private static void createRoles() {
@@ -200,6 +203,12 @@ public class DataInitializer {
 	login.setActive(Boolean.TRUE);
 	LoginAlias.createNewCustomLoginAlias(login, "admin");
 	login.openLoginIfNecessary(RoleType.MANAGER);
+    }
+
+    private static void createPartyTypeEnums() {
+	for (final PartyTypeEnum partyTypeEnum : PartyTypeEnum.values()) {
+	    new PartyType(partyTypeEnum);
+	}
     }
 
 }
