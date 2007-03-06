@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.domain.research.activity;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.research.activity.Participation.ResearchActivityParticipationRole;
-import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 
 public class ScientificJournal extends ScientificJournal_Base {
@@ -13,7 +12,7 @@ public class ScientificJournal extends ScientificJournal_Base {
         setOjbConcreteClass(getClass().getName());
     }
     
-    public ScientificJournal(MultiLanguageString name, ResearchActivityLocationType type) {
+    public ScientificJournal(String name, ResearchActivityLocationType type) {
 	this();
 	this.setName(name);
 	this.setLocationType(type);
@@ -39,10 +38,5 @@ public class ScientificJournal extends ScientificJournal_Base {
 	    delete();
 	}
     }
-    
-    public String getNameAsString() {
-	return getName().getContent();
-    }
-    
     
 }

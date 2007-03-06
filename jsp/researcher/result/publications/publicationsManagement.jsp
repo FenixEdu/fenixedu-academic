@@ -75,23 +75,24 @@
 		<p id='books' class="mtop2 mbottom0"/><span><strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.Articles"/></span></strong></p>
 		<bean:define id="currentSchema" value="result.publication.presentation.Article" toScope="request"/>
 
-		<logic:notEmpty name="local-articles">
-		<p class="indent1p5 mtop15"><em><bean:message key="label.localScope" bundle="RESEARCHER_RESOURCES"/>:</em></p>
-		<bean:define id="results" name="local-articles" toScope="request"/>
+		<logic:notEmpty name="international-articles">
+		<p class="indent1p5 mtop15"><em><bean:message key="label.internationalScope" bundle="RESEARCHER_RESOURCES"/>:</em></p>
+		<bean:define id="results" name="international-articles" toScope="request"/>
 		<jsp:include page="publicationsResume.jsp"/>
 		</logic:notEmpty>
-		
+				
 		<logic:notEmpty name="national-articles">
 		<p class="indent1p5 mtop15"><em><bean:message key="label.nationalScope" bundle="RESEARCHER_RESOURCES"/>:</em></p>
 		<bean:define id="results" name="national-articles" toScope="request"/>
 		<jsp:include page="publicationsResume.jsp"/>
 		</logic:notEmpty>
 		
-		<logic:notEmpty name="international-articles">
-		<p class="indent1p5 mtop15"><em><bean:message key="label.internationalScope" bundle="RESEARCHER_RESOURCES"/>:</em></p>
-		<bean:define id="results" name="international-articles" toScope="request"/>
+		<logic:notEmpty name="local-articles">
+		<p class="indent1p5 mtop15"><em><bean:message key="label.localScope" bundle="RESEARCHER_RESOURCES"/>:</em></p>
+		<bean:define id="results" name="local-articles" toScope="request"/>
 		<jsp:include page="publicationsResume.jsp"/>
 		</logic:notEmpty>
+		
 	</logic:equal>
 	
 	<logic:notEmpty name="inproceedings">

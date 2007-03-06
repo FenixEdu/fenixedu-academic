@@ -1,0 +1,1 @@
+update RESEARCH_ACTIVITY set NAME=substring(RESEARCH_ACTIVITY.NAME, position(':' in RESEARCH_ACTIVITY.NAME) + 1);

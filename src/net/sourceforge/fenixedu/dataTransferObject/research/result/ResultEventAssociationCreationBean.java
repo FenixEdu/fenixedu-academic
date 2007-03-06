@@ -7,13 +7,12 @@ import net.sourceforge.fenixedu.domain.research.activity.Event;
 import net.sourceforge.fenixedu.domain.research.activity.EventType;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.ResultEventAssociation.ResultEventAssociationRole;
-import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public class ResultEventAssociationCreationBean implements Serializable {
     private DomainReference<ResearchResult> result;
     private DomainReference<Event> event;
     private ResultEventAssociationRole role;
-    private MultiLanguageString eventNameMLS;
+    private String eventNameMLS;
     private String eventNameStr;
     private EventType eventType;
 
@@ -34,11 +33,11 @@ public class ResultEventAssociationCreationBean implements Serializable {
         this.role = associationRole;
     }
     
-    public MultiLanguageString getEventNameMLS() {
+    public String getEventNameMLS() {
         return eventNameMLS;
     }
 
-    public void setEventNameMLS(MultiLanguageString name) {
+    public void setEventNameMLS(String name) {
         this.eventNameMLS = name;
     }
 

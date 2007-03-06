@@ -20,4 +20,7 @@
 			</html:submit>
 		</html:form>
 	</div>
+	<script type="text/javascript">
+	hideButtons();
+	</script>
 </logic:present>

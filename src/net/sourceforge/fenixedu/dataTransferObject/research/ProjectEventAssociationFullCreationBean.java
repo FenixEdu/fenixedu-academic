@@ -4,12 +4,11 @@ import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.research.activity.EventType;
 import net.sourceforge.fenixedu.domain.research.project.ProjectEventAssociation.ProjectEventAssociationRole;
-import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public class ProjectEventAssociationFullCreationBean implements Serializable {
   
     private String role;
-    private MultiLanguageString eventName;
+    private String eventName;
     private String eventType;
 
     public ProjectEventAssociationFullCreationBean() {
@@ -24,11 +23,11 @@ public class ProjectEventAssociationFullCreationBean implements Serializable {
         this.role = associationRole.toString();
     }
 
-    public MultiLanguageString getEventName() {
+    public String getEventName() {
         return eventName;
     }
 
-    public void setEventName(MultiLanguageString name) {
+    public void setEventName(String name) {
         this.eventName = name;
     }
 

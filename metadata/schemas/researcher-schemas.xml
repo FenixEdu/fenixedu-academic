@@ -1267,9 +1267,9 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Ar
 	<slot name="scientificJournal" layout="autoComplete">
 		<property name="size" value="60"/>
 		<property name="rawSlotName" value="scientificJournalName"/>
-		<property name="labelField" value="nameAsString"/>
+		<property name="labelField" value="name"/>
 		<property name="indicatorShown" value="true"/>
-		<property name="serviceName" value="SearchObjectsByMultiLanguageString"/>
+		<property name="serviceName" value="SearchObjects"/>
 		<property name="serviceArgs" value="slot=name"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.research.activity.ScientificJournal"/>				
 		<property name="minChars" value="3"/>
@@ -1278,7 +1278,7 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Ar
 
 <schema name="result.publication.create.Article.createMagazine" bundle="RESEARCHER_RESOURCES"
 type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.CreateIssueBean">
-	<slot name="scientificJournalName" key="label.journal" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
+	<slot name="scientificJournalName" key="label.journal" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="70"/>
 	</slot>
 	<slot name="issn"/>
@@ -1291,7 +1291,7 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Cr
 
 <schema name="result.publication.create.Article.selectIssue" bundle="RESEARCHER_RESOURCES"		
 type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ArticleBean">
-	<slot name="scientificJournal.nameAsString" read-only="true" key="label.journal"/>
+	<slot name="scientificJournal.name" read-only="true" key="label.journal"/>
 	<slot name="journalIssue" layout="menu-select">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.researcher.publication.JournalIssuesForScienficalJournalProvider"/>
 		<property name="format" value="${fullName}"/>

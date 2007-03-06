@@ -49,7 +49,7 @@
 			
 			<!-- Present publication fields -->
 			<p class="mtop1 mbottom0"><b><bean:message bundle="RESEARCHER_RESOURCES"key="<%="researcher.ResultPublication.type." + publicationBean.getPublicationTypeString() %>"/></b></p>
-			<fr:edit id="publicationData" name="publicationBean" schema="<%= publicationBean.getActiveSchema() %>" nested="true">
+			<fr:edit id="publicationBean" name="publicationBean" schema="<%= publicationBean.getActiveSchema() %>" nested="true">
 		 	    <fr:layout name="tabular">
 		    	    <fr:property name="classes" value="tstyle5 thright thlight thtop"/>
 		        	<fr:property name="columnClasses" value=",,tdclear tderror1"/>
@@ -108,10 +108,6 @@
 
 		</logic:equal>
 
-
-
-
-
 	<logic:equal name="publicationBean" property="createJournal" value="true">
 	
 			<logic:equal name="publicationBean" property="class.simpleName" value="ArticleBean">
@@ -143,26 +139,20 @@
 				
 				<p><strong>Definir Revista do Artigo</strong></p>
 				<div class="dinline forminline">						
-				<fr:form action="/resultPublications/create.do">
-				<fr:edit id="publicationData" name="publicationBean" schema="result.publication.create.Article.selectMagazine">
+				<fr:form action="/resultPublications/createWrapper.do">
+				<fr:edit id="publicationBean" name="publicationBean" schema="result.publication.create.Article.selectMagazine">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle5 thright thlight thtop thmiddle"/>
 			        	<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 					</fr:layout>
 				</fr:edit>
-				
-				<br/><br/>
-				<html:submit property="confirm"><bean:message key="label.chooseMagazineFromList" bundle="RESEARCHER_RESOURCES"/></html:submit>
-					
+					<br/>
+					<html:submit property="confirm"><bean:message key="label.chooseMagazineFromList" bundle="RESEARCHER_RESOURCES"/></html:submit>
+					<logic:present name="publicationBean" property="scientificJournalName">
+						<html:submit property="new"><bean:message key="label.createMagazine" bundle="RESEARCHER_RESOURCES"/></html:submit>	
+					</logic:present>
 				</fr:form>
-
-				<logic:present name="publicationBean" property="scientificJournalName">
-				<fr:form action="/resultPublications/createJournal.do">
-				<fr:edit id="publicationBean" name="publicationBean" visible="false"/>
-					<html:submit><bean:message key="label.createMagazine" bundle="RESEARCHER_RESOURCES"/></html:submit>	
-				</fr:form>
-				
-				</logic:present>
+		
 				</div>
 			</logic:notPresent>
 					
@@ -170,7 +160,7 @@
 				<div class="dinline forminline">	
 	
 				<fr:form action="/resultPublications/create.do">
-					<fr:edit id="publicationData" name="publicationBean" schema="result.publication.create.Article.selectIssue">
+					<fr:edit id="publicationBean" name="publicationBean" schema="result.publication.create.Article.selectIssue">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle5 thright thlight thtop"/>
 			        	<fr:property name="columnClasses" value=",,tdclear tderror1"/>
@@ -180,7 +170,6 @@
 					<html:submit property="confirm"><bean:message key="label.choose" bundle="RESEARCHER_RESOURCES"/></html:submit>
 				</fr:form>
 				<fr:form action="/resultPublications/createJournal.do">
-					
 					<fr:edit id="publicationBean" name="publicationBean" visible="false"/>
 					<html:submit><bean:message key="label.createNewIssue" bundle="RESEARCHER_RESOURCES"/></html:submit>	
 					</fr:form>
@@ -195,7 +184,7 @@
 					
 					<strong><bean:message key="label.journal" bundle="RESEARCHER_RESOURCES"/></strong>:
 					<logic:equal name="issueBean" property="journalAlreadyChosen" value="false">
-					<fr:edit id="magazineInfo" name="issueBean" schema="result.publication.create.Article.createMagazine">
+					<fr:edit id="journalInfo" name="issueBean" schema="result.publication.create.Article.createMagazine">
 						<fr:layout name="tabular">
 						 <fr:property name="classes" value="tstyle5 thright thlight thtop"/>
 		        		<fr:property name="columnClasses" value=",,tdclear tderror1"/>
@@ -203,11 +192,11 @@
 					</fr:edit>
 					</logic:equal>
 					<logic:equal name="issueBean" property="journalAlreadyChosen" value="true">
-						<span><fr:view name="issueBean" property="journal.nameAsString"/></span>
+						<span><fr:view name="issueBean" property="journal.name"/></span>
 					</logic:equal>
 					<br/>
 					<strong><bean:message key="label.journalIssue" bundle="RESEARCHER_RESOURCES"/></strong>:
-					<fr:edit id="magazineInfo" name="issueBean" schema="result.publication.create.Article.createIssue">
+					<fr:edit id="journalInfo" name="issueBean" schema="result.publication.create.Article.createIssue">
 						<fr:layout name="tabular">
 						 <fr:property name="classes" value="tstyle5 thright thlight thtop"/>
 		        		<fr:property name="columnClasses" value=",,tdclear tderror1"/>

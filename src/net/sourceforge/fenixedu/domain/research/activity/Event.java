@@ -15,7 +15,7 @@ public class Event extends Event_Base {
         setOjbConcreteClass(getClass().getName());
 	}
     
-    public Event(MultiLanguageString name, EventType type) {
+    public Event(String name, EventType type) {
     	super();
         setOjbConcreteClass(getClass().getName());
         setName(name);
@@ -23,7 +23,7 @@ public class Event extends Event_Base {
     }    
 
 	public Event(YearMonthDay endDate, YearMonthDay startDate, String eventLocation,
-			EventType type, MultiLanguageString name) {
+			EventType type, String name) {
 		super();
         setOjbConcreteClass(getClass().getName());
         

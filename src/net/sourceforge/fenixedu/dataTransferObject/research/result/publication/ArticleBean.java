@@ -84,7 +84,7 @@ public class ArticleBean extends ResultPublicationBean implements Serializable {
 	final Article article = (Article) publication;
 
 	this.setScientificJournal(article.getScientificJournal());
-	this.setScientificJournalName(article.getScientificJournal().getNameAsString());
+	this.setScientificJournalName(article.getScientificJournal().getName());
 	this.setJournal(article.getJournal());
 	this.setVolume(article.getVolume());
 	this.setNumber(article.getNumber());

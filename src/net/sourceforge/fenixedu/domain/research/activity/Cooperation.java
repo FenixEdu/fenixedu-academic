@@ -1,15 +1,13 @@
 package net.sourceforge.fenixedu.domain.research.activity;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import org.joda.time.YearMonthDay;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.activity.Participation.ResearchActivityParticipationRole;
-import net.sourceforge.fenixedu.util.MultiLanguageString;
+
+import org.joda.time.YearMonthDay;
 
 public class Cooperation extends Cooperation_Base {
     
@@ -18,7 +16,7 @@ public class Cooperation extends Cooperation_Base {
         setOjbConcreteClass(getClass().getName());
     }
     
-    public Cooperation(ResearchActivityParticipationRole role, Person person, MultiLanguageString name, CooperationType type, Unit unit,
+    public Cooperation(ResearchActivityParticipationRole role, Person person, String name, CooperationType type, Unit unit,
     		YearMonthDay startDate, YearMonthDay endDate) {
     	this();
     	if(alreadyHasThatCooperation(role, person, name, type, unit)) {
@@ -31,7 +29,7 @@ public class Cooperation extends Cooperation_Base {
 		setEndDate(endDate);
     }
     
-	private boolean alreadyHasThatCooperation(ResearchActivityParticipationRole role, Person person, MultiLanguageString name, CooperationType type, Unit unit) {
+	private boolean alreadyHasThatCooperation(ResearchActivityParticipationRole role, Person person, String name, CooperationType type, Unit unit) {
 		for(Participation participation : person.getParticipations()) {
 			if(participation.getResearchActivity() instanceof Cooperation) {
 				Cooperation cooperation = (Cooperation)participation.getResearchActivity();

@@ -123,7 +123,7 @@ public class ResultAssociationsManagementAction extends ResultsManagementAction 
 		return processException(request, mapping, defaultForward, e);
 	    }
 	} else {
-	    bean.setEventNameMLS(new MultiLanguageString(bean.getEventNameStr()));
+	    bean.setEventNameMLS(bean.getEventNameStr());
 	    request.setAttribute("bean", bean);
 	}
 	

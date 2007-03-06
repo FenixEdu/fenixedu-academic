@@ -209,7 +209,7 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
             else {
                 //Permitir a cria��o de um novo evento on-the-fly
                 ProjectEventAssociationFullCreationBean fullBean = new ProjectEventAssociationFullCreationBean();
-                fullBean.setEventName(new MultiLanguageString(simpleBean.getEventName()));
+                fullBean.setEventName(simpleBean.getEventName());
                 fullBean.setRole(simpleBean.getRole());
                 request.setAttribute("fullBean", fullBean);
                 return prepareEditEventAssociationsSimple(mapping, form, request, response);

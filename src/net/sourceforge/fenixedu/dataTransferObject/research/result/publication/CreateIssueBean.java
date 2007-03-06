@@ -12,7 +12,7 @@ public class CreateIssueBean implements Serializable{
 
     private DomainReference<ScientificJournal> journal;
     private String journalName = null;
-    private MultiLanguageString scientificJournalName;
+    private String scientificJournalName;
     private ResearchActivityLocationType location;
     private Integer year;
     private String issn;
@@ -55,7 +55,7 @@ public class CreateIssueBean implements Serializable{
     }
     
     public Boolean getJournalAlreadyChosen() {
-	return journal.getObject() != null || scientificJournalName != null;
+	return journal.getObject() != null ;
     }
     
     public Boolean getIssueAlreadyChosen() {
@@ -118,16 +118,16 @@ public class CreateIssueBean implements Serializable{
         this.location = location;
     }
 
-    public MultiLanguageString getScientificJournalName() {
+    public String getScientificJournalName() {
         return scientificJournalName;
     }
 
-    public void setScientificJournalName(MultiLanguageString scientificJournalName) {
+    public void setScientificJournalName(String scientificJournalName) {
         this.scientificJournalName = scientificJournalName;
     }
      
     public String getJournalAsString() {
-	return (getJournal()!=null) ? getJournal().getName().getContent() : getJournalName();
+	return (getJournal()!=null) ? getJournal().getName() : getJournalName();
     }
 
     public String getIssn() {

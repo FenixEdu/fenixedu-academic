@@ -68,7 +68,7 @@ public class JournalIssue extends JournalIssue_Base {
     }
     
     public String getFullName() {
-	return getScientificJournal().getName().getContent() + "- " + getVolume() + "(" + getNumber() + ") " + getYear();
+	return getScientificJournal().getName() + "- " + getVolume() + "(" + getNumber() + ") " + getYear();
     }
  
 }

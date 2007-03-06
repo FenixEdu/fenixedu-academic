@@ -17,13 +17,11 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.research.activity.JournalIssue;
 import net.sourceforge.fenixedu.domain.research.activity.ResearchActivityLocationType;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
-import net.sourceforge.fenixedu.domain.research.result.publication.Article;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import net.sourceforge.fenixedu.domain.research.result.publication.Unstructured;
 import net.sourceforge.fenixedu.presentationTier.Action.research.result.ResultsManagementAction;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
-import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -47,77 +45,53 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
 
     public ActionForward prepareEditJournal(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
-	
+
 	final ResearchResultPublication publication = (ResearchResultPublication) getResultFromRequest(request);
 	ResultPublicationBean publicationBean = ResultPublicationBean.getBeanToEdit(publication);
-	
-	request.setAttribute("publicationBean",publicationBean);
+
+	request.setAttribute("publicationBean", publicationBean);
 	return mapping.findForward("editJournal");
     }
-    
-     
+
     public ActionForward createJournalToAssociate(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	final ArticleBean bean = (ArticleBean) getRenderedObject("publicationBean");
-	CreateIssueBean issueBean = (CreateIssueBean) getRenderedObject("createMagazine");
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+	    FenixServiceException {
+	return createJournalWorkFlow(mapping, form, request, response, "editJournal", "ViewEditPublication",
+		"editJournal", "EditResultPublication");
+    }
 
-	if (issueBean != null && issueBean.getJournalAlreadyChosen()) {
-	    if (issueBean.getJournal() == null && issueBean.getJournalName() != null) {
-		issueBean.setScientificJournalName(new MultiLanguageString(issueBean.getJournalName()));
-		request.setAttribute("createJournal", true);
-		RenderUtils.invalidateViewState();
+    public ActionForward selectJournal(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+
+	if(getFromRequest(request, "new") != null) {
+	    ArticleBean bean = (ArticleBean) getRenderedObject("publicationBean");
+	    if(bean.getScientificJournal()!=null) {
+		addActionMessage(request, "label.doNotCreateJournalIsSelected");
+		request.setAttribute("publicationBean", bean);
+		return mapping.findForward("editJournal");
 	    }
-	    if (issueBean.getIssueAlreadyChosen()) {
-		ResearchResultPublication publication;
-		try {
-		    Object[] args = { issueBean };
-		    JournalIssue issue = (JournalIssue) executeService("CreateJournalIssue", args);
-		    ArticleBean articleBean = (ArticleBean) bean;
-		    articleBean.setJournalIssue(issue);
-		    articleBean.setCreateJournal(false);
-		    final Object[] args2 = { bean };
-		    publication = (ResearchResultPublication) executeService(request,
-			    "EditResultPublication", args2);
-		} catch (DomainException e) {
-		    addActionMessage(request, e.getKey());
-		    request.setAttribute("publicationBean", bean);
-		    return mapping.findForward("PreparedToCreate");
-		}
-		request.setAttribute("resultId", publication.getIdInternal());
-		setRequestAttributes(request, publication);
-		return mapping.findForward("ViewEditPublication");
-	    }
-	} else {
-	    issueBean = new CreateIssueBean();
-	    issueBean.setJournal(bean.getScientificJournal());
+	    return createJournalToAssociate(mapping, form, request, response);
 	}
-
-	request.setAttribute("issueBean", issueBean);
-	request.setAttribute("publicationBean", bean);
+	else {
+	ResultPublicationBean publicationBean = (ResultPublicationBean) getRenderedObject("publicationBean");
+	request.setAttribute("publicationBean", publicationBean);
 	return mapping.findForward("editJournal");
+	}
+    }
 
-    }
-    
-    public ActionForward selectJournal(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
-	ResultPublicationBean publicationBean = (ResultPublicationBean) getRenderedObject("selectJournal");
-	request.setAttribute("publicationBean",publicationBean);
-	return mapping.findForward("editJournal");
-    }
-    
     public ActionForward prepareSelectJournal(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
 	ResultPublicationBean publicationBean = (ResultPublicationBean) getRenderedObject("publicationData");
-	
+
 	ArticleBean bean = (ArticleBean) publicationBean;
 	bean.setScientificJournal(null);
 	bean.setJournalIssue(null);
 	bean.setScientificJournalName(null);
-	
-	request.setAttribute("publicationBean",publicationBean);
+
+	request.setAttribute("publicationBean", publicationBean);
 	return mapping.findForward("editJournal");
     }
-    
+
     public ActionForward showResultForOthers(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
 
@@ -144,9 +118,19 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
 	return mapping.findForward("PreparedToCreate");
     }
 
+    public ActionForward createWrapper(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	if (getFromRequest(request, "new") != null) {
+	    return createJournal(mapping, form, request, response);
+	}
+	else {
+	    return create(mapping, form, request, response);
+	}
+    }
+    
     public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	final ResultPublicationBean bean = (ResultPublicationBean) getRenderedObject(null);
+	final ResultPublicationBean bean = (ResultPublicationBean) getRenderedObject("publicationBean");
 	ResearchResultPublication publication = null;
 
 	if (getFromRequest(request, "confirm") != null) {
@@ -181,16 +165,17 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
 
     }
 
-    public ActionForward createJournal(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+    private ActionForward createJournalWorkFlow(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response, String forwardOnNextStep,
+	    String forwardOnFinish, String forwardOnError, String service) throws FenixFilterException, FenixServiceException {
+
 	final ArticleBean bean = (ArticleBean) getRenderedObject("publicationBean");
 	CreateIssueBean issueBean = (CreateIssueBean) getRenderedObject("createMagazine");
 
-	if (issueBean != null && issueBean.getJournalAlreadyChosen()) {
+	if (issueBean != null) {
 	    if (issueBean.getJournal() == null && issueBean.getJournalName() != null) {
-		issueBean.setScientificJournalName(new MultiLanguageString(issueBean.getJournalName()));
+		issueBean.setScientificJournalName(issueBean.getJournalName());
 		request.setAttribute("createJournal", true);
-		RenderUtils.invalidateViewState();
 	    }
 	    if (issueBean.getIssueAlreadyChosen()) {
 		ResearchResultPublication publication;
@@ -202,24 +187,32 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
 		    articleBean.setCreateJournal(false);
 		    final Object[] args2 = { bean };
 		    publication = (ResearchResultPublication) executeService(request,
-			    "CreateResultPublication", args2);
+			    service, args2);
 		} catch (DomainException e) {
 		    addActionMessage(request, e.getKey());
 		    request.setAttribute("publicationBean", bean);
-		    return mapping.findForward("PreparedToCreate");
+		    return mapping.findForward(forwardOnError);
 		}
 		request.setAttribute("resultId", publication.getIdInternal());
 		setRequestAttributes(request, publication);
-		return mapping.findForward("ViewEditPublication");
+		return mapping.findForward(forwardOnFinish);
 	    }
 	} else {
 	    issueBean = new CreateIssueBean();
 	    issueBean.setJournal(bean.getScientificJournal());
+	    issueBean.setScientificJournalName(bean.getScientificJournalName());
 	}
 
 	request.setAttribute("issueBean", issueBean);
 	request.setAttribute("publicationBean", bean);
-	return mapping.findForward("PreparedToCreate");
+	return mapping.findForward(forwardOnNextStep);
+
+    }
+
+    public ActionForward createJournal(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	return createJournalWorkFlow(mapping, form, request, response, "PreparedToCreate",
+		"ViewEditPublication", "PreparedToCreate","CreateResultPublication");
     }
 
     public ActionForward showAssociations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -396,10 +389,11 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
     private void setRequestAttributesToList(HttpServletRequest request, Person person) {
 
 	request.setAttribute("books", person.getBooks());
-	request.setAttribute("local-articles",person.getArticles(ResearchActivityLocationType.LOCAL));
-	request.setAttribute("national-articles",person.getArticles(ResearchActivityLocationType.NATIONAL));
-	request.setAttribute("international-articles",person.getArticles(ResearchActivityLocationType.INTERNATIONAL));
-	//request.setAttribute("articles", person.getArticles());
+	request.setAttribute("local-articles", person.getArticles(ResearchActivityLocationType.LOCAL));
+	request.setAttribute("national-articles", person.getArticles(ResearchActivityLocationType.NATIONAL));
+	request.setAttribute("international-articles", person
+		.getArticles(ResearchActivityLocationType.INTERNATIONAL));
+	// request.setAttribute("articles", person.getArticles());
 	request.setAttribute("inproceedings", person.getInproceedings());
 	request.setAttribute("proceedings", person.getProceedings());
 	request.setAttribute("theses", person.getTheses());

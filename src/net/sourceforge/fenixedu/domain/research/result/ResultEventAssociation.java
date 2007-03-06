@@ -38,7 +38,7 @@ public class ResultEventAssociation extends ResultEventAssociation_Base {
 		this.getResult().setModifiedByAndDate();
 	    } else {
 		throw new DomainException("error.researcher.ResultEventAssociation.association.exists",
-			this.getEvent().getName().getContent(), this.getRole().toString());
+			this.getEvent().getName(), this.getRole().toString());
 	    }
 	}
     }
