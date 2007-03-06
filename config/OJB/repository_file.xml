@@ -8,6 +8,7 @@
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFile"/>
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.parking.ParkingFile"/>
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.tests.PictureMaterialFile"/>
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.thesis.ThesisFile"/>
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.FileItem" table="FILE">

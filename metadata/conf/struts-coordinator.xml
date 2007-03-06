@@ -908,6 +908,8 @@
   			<forward name="create-thesis" path="thesis-create"/>
   			<forward name="select-person" path="thesis-select-person"/>
   			<forward name="select-unit" path="thesis-select-unit"/>
+  			<forward name="list-proposals" path="thesis-list-proposals"/>
+  			<forward name="change-information" path="thesis-change-information"/>
   		</action>
 
     </action-mappings>

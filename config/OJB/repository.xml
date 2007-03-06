@@ -94,6 +94,7 @@
 <!ENTITY site SYSTEM "repository_site.xml">
 <!ENTITY genericEvent SYSTEM "repository_generic_event.xml">
 <!ENTITY email SYSTEM "repository_email.xml">
+<!ENTITY thesis SYSTEM "repository_thesis.xml">
 ]>
 <descriptor-repository version="1.0" isolation-level="repeatable-read">
 
@@ -192,5 +193,6 @@
     &academicCalendar;
     &genericEvent;
     &email;
+    &thesis;
     
 </descriptor-repository>

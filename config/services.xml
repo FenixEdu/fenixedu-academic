@@ -11562,5 +11562,14 @@
         <isTransactional>true</isTransactional>  
         <filterChains/>
     </service>   
+    <service>
+        <name>CreateThesis</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.thesis.CreateThesis</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+            <chain name="CoordinatorDegreeCurricularPlanAuthorization"/>
+        </filterChains>
+    </service>   
 	
 </serviceDefinitions>

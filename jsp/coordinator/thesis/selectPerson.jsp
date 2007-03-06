@@ -8,10 +8,12 @@
 
 <bean:define id="target" name="bean" property="targetType"/>
 
-<h2>
+<h2><bean:message key="title.coordinator.createThesis"/></h2>
+
+<h3>
     <bean:message key="title.coordinator.selectPerson.select"/> 
     <bean:message key="<%= "title.coordinator.selectPerson.select." + target %>"/>
-</h2>
+</h3>
 
 <logic:messagesPresent message="true" property="info">
     <html:messages id="message" message="true" property="info">

@@ -282,4 +282,10 @@
     <definition name="thesis-select-unit" extends="definition.coordinator.two-column">
         <put name="body" value="/coordinator/thesis/selectUnit.jsp"/>
     </definition>
+    <definition name="thesis-list-proposals" extends="definition.coordinator.two-column">
+        <put name="body" value="/coordinator/thesis/listProposals.jsp"/>
+    </definition>
+    <definition name="thesis-change-information" extends="definition.coordinator.two-column">
+        <put name="body" value="/coordinator/thesis/changeInformation.jsp"/>
+    </definition>
 </tiles-definitions>

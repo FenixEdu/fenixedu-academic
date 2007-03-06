@@ -182,6 +182,7 @@ valueType net.sourceforge.fenixedu.domain.FrequencyType															as Frequen
 valueType net.sourceforge.fenixedu.domain.RequestState															as RequestState;
 valueType net.sourceforge.fenixedu.domain.assiduousness.util.ScheduleClockingType								as ScheduleClockingType;
 valueType net.sourceforge.fenixedu.domain.util.EmailAddressList								                    as EmailAddressList;
+valueType net.sourceforge.fenixedu.domain.thesis.ThesisState								                    as ThesisState;
 
 
 /*
@@ -1411,7 +1412,7 @@ class net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule extends
 		
 		class net.sourceforge.fenixedu.domain.Enrolment extends net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine {
             String createdBy;
-        	DateTime creationDateDateTime;
+	        	DateTime creationDateDateTime;
             Integer keyExecutionPeriod;
             Integer keyStudentCurricularPlan;
             EnrollmentState enrollmentState;
@@ -1420,6 +1421,7 @@ class net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule extends
        		Double weigth;
        		Boolean isExtraCurricular;
        		Boolean isFirstTime;
+       		Integer keyThesis;
         }
 
             class net.sourceforge.fenixedu.domain.OptionalEnrolment extends net.sourceforge.fenixedu.domain.Enrolment {
@@ -2119,6 +2121,11 @@ class net.sourceforge.fenixedu.domain.File extends net.sourceforge.fenixedu.doma
 	class net.sourceforge.fenixedu.domain.parking.ParkingFile extends net.sourceforge.fenixedu.domain.File {
 		Integer keyParkingDocument;
 		Integer keyNewParkingDocument;
+	}
+
+	class net.sourceforge.fenixedu.domain.thesis.ThesisFile extends net.sourceforge.fenixedu.domain.File {
+		Integer keyDissertationThesis;
+		Integer keyAbstractThesis;
 	}
 
 class net.sourceforge.fenixedu.domain.FileEntry extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -4895,6 +4902,31 @@ class net.sourceforge.fenixedu.domain.tests.NewCorrector extends net.sourceforge
 	Predicate predicate;
 	Integer percentage;
 	Integer position;
+}
+
+class net.sourceforge.fenixedu.domain.thesis.Thesis extends net.sourceforge.fenixedu.domain.DomainObject {
+	MultiLanguageString title;
+	MultiLanguageString thesisAbstract;
+	MultiLanguageString keywords;
+	String comment;
+
+	ThesisState state;
+
+	DateTime creation;
+	DateTime submission;
+	DateTime approval;
+	DateTime confirmation;
+	DateTime evaluation;
+	
+	Integer keyOrientator;
+	Integer keyCoorientator;
+	Integer keyPresident;
+	
+	Integer keyDissertation;
+	Integer keyExtendedAbstract;
+	
+	Integer keyEnrolment;
+	Integer keyDegree;
 }
 
 /*
@@ -12173,6 +12205,66 @@ relation ExpectationEvaluationGroupEvaluatedTeacher {
 relation RootDomainObjectEmail {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.util.Email playsRole emails {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectThesis {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.thesis.Thesis playsRole theses {
+		multiplicity *;
+	}
+}
+
+relation ThesisHasDissertationFile {
+	net.sourceforge.fenixedu.domain.thesis.ThesisFile playsRole dissertation;
+	net.sourceforge.fenixedu.domain.thesis.Thesis playsRole dissertationThesis;
+}
+
+relation ThesisHasExtendedAbstractFile {
+	net.sourceforge.fenixedu.domain.thesis.ThesisFile playsRole extendedAbstract;
+	net.sourceforge.fenixedu.domain.thesis.Thesis playsRole abstractThesis;
+}
+
+relation ThesisHasOrientator {
+	net.sourceforge.fenixedu.domain.Person playsRole orientator;
+	net.sourceforge.fenixedu.domain.thesis.Thesis playsRole orientatedTheses {
+		multiplicity *;
+	}
+}
+
+relation ThesisHasCoorientator {
+	net.sourceforge.fenixedu.domain.Person playsRole coorientator;
+	net.sourceforge.fenixedu.domain.thesis.Thesis playsRole coorientatedTheses {
+		multiplicity *;
+	}
+}
+
+relation ThesisHasJuryPresident {
+	net.sourceforge.fenixedu.domain.Person playsRole president;
+	net.sourceforge.fenixedu.domain.thesis.Thesis playsRole presidentTheses {
+		multiplicity *;
+	}
+}
+
+relation ThesisJuryVowels {
+	net.sourceforge.fenixedu.domain.Person playsRole vowels {
+		multiplicity *;
+	}
+	
+	net.sourceforge.fenixedu.domain.thesis.Thesis playsRole vowelTheses {
+		multiplicity *;
+	}
+}
+
+relation ThesisEnrolment {
+	net.sourceforge.fenixedu.domain.Enrolment playsRole enrolment;
+	net.sourceforge.fenixedu.domain.thesis.Thesis playsRole thesis;
+}
+
+relation ThesisDegree {
+	net.sourceforge.fenixedu.domain.Degree playsRole degree;
+	net.sourceforge.fenixedu.domain.thesis.Thesis playsRole thesis {
 		multiplicity *;
 	}
 }

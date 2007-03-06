@@ -1,13 +1,17 @@
 package net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis;
 
+import java.util.Collection;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisBean.PersonTarget;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
@@ -20,9 +24,35 @@ public class ManageThesisDA extends FenixDispatchAction {
 
     public ActionForward searchStudent(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
         ThesisBean bean = new ThesisBean();
-        request.setAttribute("bean", bean);
+
+        DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
+        bean.setDegreeCurricularPlan(degreeCurricularPlan);
         
+        request.setAttribute("bean", bean);
         return mapping.findForward("search-student");
+    }
+    
+    private DegreeCurricularPlan getDegreeCurricularPlan(HttpServletRequest request) {
+        Integer id = getId(request.getParameter("degreeCurricularPlanID"));
+        if (id == null) {
+            return null;
+        }
+        else {
+            return RootDomainObject.getInstance().readDegreeCurricularPlanByOID(id);
+        }
+    }
+
+    private Integer getId(String id) {
+        if (id == null) {
+            return null;
+        }
+
+        try {
+            return new Integer(id);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
     
     public ActionForward selectStudent(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -52,6 +82,29 @@ public class ManageThesisDA extends FenixDispatchAction {
         }
     }
     
+    public ActionForward changeInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        ThesisBean bean = (ThesisBean) getRenderedObject("bean");
+        RenderUtils.invalidateViewState("bean");
+        
+        if (bean == null) {
+            return searchStudent(mapping, actionForm, request, response);
+        }
+        
+        request.setAttribute("bean", bean);
+        return mapping.findForward("change-information");
+    }
+    
+    public ActionForward changeInformationAgain(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        ThesisBean bean = (ThesisBean) getRenderedObject("bean");
+        
+        if (bean == null) {
+            return searchStudent(mapping, actionForm, request, response);
+        }
+        
+        request.setAttribute("bean", bean);
+        return mapping.findForward("change-information");
+    }
+    
     public ActionForward changePerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
         String target = request.getParameter("target");
         boolean remove = request.getParameter("remove") != null;
@@ -78,14 +131,14 @@ public class ManageThesisDA extends FenixDispatchAction {
             if (targetVowel != null) {
                 bean.setTarget(targetVowel);
             }
+            else {
+                bean.setTarget(null);
+            }
         }
 
         if (remove) {
             bean.changePerson(null);
             return mapping.findForward("create-thesis");
-        }
-        else {
-            bean.setTarget(null);
         }
         
         return mapping.findForward("select-person");
@@ -290,5 +343,23 @@ public class ManageThesisDA extends FenixDispatchAction {
         bean.changePerson(contract.getPerson());
         
         return backToCreation(mapping, actionForm, request, response);
+    }
+    
+    public ActionForward createProposal(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        ThesisBean bean = (ThesisBean) getRenderedObject("bean");
+        
+        if (bean == null) {
+            return searchStudent(mapping, actionForm, request, response);
+        }
+
+        request.setAttribute("bean", bean);
+        
+        executeService("CreateThesis", bean.getDegreeCurricularPlan().getIdInternal(), bean);
+        return list(mapping, actionForm, request, response);
+    }
+    
+    public ActionForward list(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        request.setAttribute("theses", Thesis.getDraftThesis());
+        return mapping.findForward("list-proposals");
     }
 }

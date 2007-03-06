@@ -3,6 +3,8 @@ package net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis;
 import java.io.Serializable;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DomainListReference;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
@@ -26,6 +28,8 @@ public class ThesisBean implements Serializable {
      */
     private static final long serialVersionUID = 1L;
     
+    private DomainReference<DegreeCurricularPlan> degreeCurricularPlan;
+    
     private DomainReference<Student> student;
     private DomainReference<Person> orientator;
     private DomainReference<Person> coorientator;
@@ -42,10 +46,12 @@ public class ThesisBean implements Serializable {
     private String rawUnitName;
     
     private MultiLanguageString title;
+    private String comment;
     
     public ThesisBean() {
         super();
         
+        this.degreeCurricularPlan = new DomainReference<DegreeCurricularPlan>(null);
         this.student      = new DomainReference<Student>(null);
         this.orientator   = new DomainReference<Person>(null);
         this.coorientator = new DomainReference<Person>(null);
@@ -220,4 +226,30 @@ public class ThesisBean implements Serializable {
         this.title = title;
     }
 
+    public String getComment() {
+        return this.comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public DegreeCurricularPlan getDegreeCurricularPlan() {
+        return this.degreeCurricularPlan.getObject();
+    }
+
+    public void setDegreeCurricularPlan(DegreeCurricularPlan degreeCurricularPlan) {
+        this.degreeCurricularPlan = new DomainReference<DegreeCurricularPlan>(degreeCurricularPlan);
+    }
+
+    public Degree getDegree() {
+        DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
+        if (degreeCurricularPlan == null) {
+            return null;
+        }
+        else {
+            return degreeCurricularPlan.getDegree();
+        }
+    }
+    
 }

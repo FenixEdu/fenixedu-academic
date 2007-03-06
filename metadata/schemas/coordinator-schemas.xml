@@ -1,22 +1,22 @@
 <schema name="thesis.bean.student" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisBean">
-    <slot name="student" layout="by-number" 
+    <slot name="student" layout="by-number" key="label.student"
           validator="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
 </schema>
 
 <schema name="thesis.jury.proposal.student" type="net.sourceforge.fenixedu.domain.student.Student">
-    <slot name="number"/>
-    <slot name="person.name"/>
+    <slot name="number" key="label.number"/>
+    <slot name="person.name" key="label.person.name"/>
 </schema>
 
 <schema name="thesis.jury.proposal.person" type="net.sourceforge.fenixedu.domain.Person">
-    <slot name="name"/>
-    <slot name="teacher.category.name"/>
-    <slot name="teacher.currentWorkingDeparment.realName"/>
+    <slot name="name" key="label.person.name"/>
+    <slot name="teacher.category.name" key="label.teacher.category"/>
+    <slot name="teacher.currentWorkingDepartment.realName" key="label.coordinator.createThesis.teacher.currentWorkingDepartment"/>
 </schema>
 
 <schema name="thesis.jury.proposal.person.external" type="net.sourceforge.fenixedu.domain.Person">
-    <slot name="name"/>
-    <slot name="externalPerson.externalPerson.institutionUnit"/>
+    <slot name="name" key="label.person.name"/>
+    <slot name="externalPerson.institutionUnit.nameWithAcronym" key="label.coordinator.createThesis.teacher.currentWorkingDepartment"/>
 </schema>
 
 <schema name="thesis.bean.selectPerson.internal" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisBean">
@@ -68,4 +68,24 @@
         <property name="serviceArgs" value="slot=name"/>
         <property name="minChars" value="3"/>
     </slot>
+</schema>
+
+<schema name="thesis.jury.proposal.information" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisBean">
+    <slot name="title"/>
+    <slot name="comment"/>
+</schema>
+
+<schema name="thesis.jury.proposal.information.edit" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisBean">
+    <slot name="title" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+        <property name="size" value="60"/>
+    </slot>
+    <slot name="comment" layout="longText">
+        <property name="columns" value="60"/>
+        <property name="rows" value="20"/>
+    </slot>
+</schema>
+
+<schema name="thesis.proposal.table" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
+    <slot name="title"/>
+    <slot name="creation"/>
 </schema>
