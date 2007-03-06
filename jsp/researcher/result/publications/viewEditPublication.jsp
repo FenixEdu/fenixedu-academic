@@ -69,7 +69,12 @@
 	<bean:message key="link.edit" bundle="RESEARCHER_RESOURCES"/>: 
 	<html:link page="<%="/resultPublications/prepareEditData.do?" + parameters %>">
 			<bean:message bundle="RESEARCHER_RESOURCES" key="label.publicationData" />
-	</html:link>, 
+	</html:link>,
+	<logic:equal name="result" property="class.simpleName" value="Article">
+		<html:link page="<%= "/resultPublications/prepareEditJournal.do?" + parameters %>">
+			<bean:message key="label.editJournal" bundle="RESEARCHER_RESOURCES"/>
+		</html:link>, 
+	</logic:equal> 
 	<html:link page="<%="/resultParticipations/prepareEdit.do?" + parameters %>">
 			<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.importBibtex.authors" />
 	</html:link>, 
@@ -85,6 +90,7 @@
 		<fr:property name="columnClasses" value="width10em, width50em"/>
 		<fr:property name="rowClasses" value="tdbold,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,"/>
 	</fr:layout>
+		<fr:destination name="issueURL" path="/showJournals.do?method=showScientificJournal&amp;journalId=${idInternal}"/>
 	</fr:view>
 
 	

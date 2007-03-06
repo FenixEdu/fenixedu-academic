@@ -392,17 +392,11 @@
         <put name="body" value="/publico/department/viewAnnouncement.jsp" />
     </definition>
     
-    <definition name="show.journal" page="/layout/istLayout.jsp">
-	    <put name="title" value="Instituto Superior Técnico" /> 
-		<put name="symbols_row" value="/publico/homepage/symbolsRow.jsp" />
-		<put name="profile_navigation" value="/publico/homepage/profileNavigation.jsp" />
+    <definition name="show.journal" extends="definition.public.homepage">
        <put name="body" value="/publico/researcher/showJournal.jsp"/>  
     </definition>
     
-    <definition name="show.issue" page="/layout/istLayout.jsp">
-	    <put name="title" value="Instituto Superior Técnico" /> 
-		<put name="symbols_row" value="/publico/homepage/symbolsRow.jsp" />
-		<put name="profile_navigation" value="/publico/homepage/profileNavigation.jsp" />
+    <definition name="show.issue" extends="definition.public.homepage">
        <put name="body" value="/publico/researcher/showIssue.jsp"/>  
     </definition>
     

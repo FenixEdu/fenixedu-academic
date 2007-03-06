@@ -140,5 +140,17 @@
     <definition name="publications.search" extends="researcher.masterPage">
         <put name="body" value="/researcher/result/publications/searchPublication.jsp"></put>
     </definition>     
+     
+    <definition name="show.journal" extends="researcher.masterPage">
+       <put name="body" value="/researcher/showJournal.jsp"/>  
+    </definition>
     
+    <definition name="show.issue" extends="researcher.masterPage">
+       <put name="body" value="/researcher/showIssue.jsp"/>  
+    </definition>
+
+    <definition name="edit-journal" extends="researcher.masterPage">
+       <put name="body" value="/researcher/result/publications/editJournal.jsp"/>  
+    </definition>    
+
 </tiles-definitions>

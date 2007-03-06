@@ -134,6 +134,13 @@
 		<action path="/resultDocumentFiles/*" forward="/result/resultDocumentFilesManagement.do?method={1}"/>
 		<action path="/resultAssociations/*" forward="/result/resultAssociationsManagement.do?method={1}"/>
 
+
+     	<action path="/showResearchResult"
+            parameter="method"
+            type="net.sourceforge.fenixedu.presentationTier.Action.research.result.publication.ResultPublicationsManagementDispatchAction">
+            <forward name="ViewEditPublication" path="publications.viewEditPublication"/>
+	     </action>
+     
 		<!-- Result Publications Management Action Mapping -->
 		<action path="/publications/management"
 	        	 parameter="method"
@@ -146,6 +153,7 @@
 		    <forward name="PublicationDeleted" path="/resultPublications/listPublications.do"/>
 			<forward name="SearchPublication"  path="publications.search"/>
 			<forward name="ShowResult" path="show-result-loggedin"/>
+			<forward name="editJournal" path="edit-journal"/>
 		</action>
 		
 		<!-- Bibtex Publications Management Action Mapping -->
@@ -217,6 +225,13 @@
 	    		validate="false"
 	    		type="net.sourceforge.fenixedu.presentationTier.Action.research.ChangeLocale">
 	    </action>
+	
+	   	<action path="/showJournals"
+	        	 parameter="method"
+	        	 type="net.sourceforge.fenixedu.presentationTier.Action.research.ScientificJournalsManagement">
+		    <forward name="showJournal" path="show.journal"/>
+   		    <forward name="showIssue" path="show.issue"/>
+	</action>
 	
 	</action-mappings>
     

@@ -24,6 +24,16 @@ public class CreateIssueBean implements Serializable{
     private String publisher;
     private String url;
 
+    private Boolean createNewJournal;
+    
+    public Boolean getCreateNewJournal() {
+        return createNewJournal;
+    }
+
+    public void setCreateNewJournal(Boolean createNewIssue) {
+        this.createNewJournal = createNewIssue;
+    }
+
     public CreateIssueBean() {
 	journal = new DomainReference<ScientificJournal> (null);
     }
@@ -45,7 +55,7 @@ public class CreateIssueBean implements Serializable{
     }
     
     public Boolean getJournalAlreadyChosen() {
-	return journal.getObject() != null || journalName != null;
+	return journal.getObject() != null || scientificJournalName != null;
     }
     
     public Boolean getIssueAlreadyChosen() {

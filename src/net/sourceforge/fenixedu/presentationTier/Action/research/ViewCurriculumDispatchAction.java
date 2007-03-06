@@ -14,18 +14,8 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.research.ResearchInterest;
-import net.sourceforge.fenixedu.domain.research.result.publication.Article;
-import net.sourceforge.fenixedu.domain.research.result.publication.Book;
-import net.sourceforge.fenixedu.domain.research.result.publication.BookPart;
-import net.sourceforge.fenixedu.domain.research.result.publication.Inproceedings;
-import net.sourceforge.fenixedu.domain.research.result.publication.Manual;
-import net.sourceforge.fenixedu.domain.research.result.publication.OtherPublication;
-import net.sourceforge.fenixedu.domain.research.result.publication.Proceedings;
+import net.sourceforge.fenixedu.domain.research.activity.ResearchActivityLocationType;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
-import net.sourceforge.fenixedu.domain.research.result.publication.TechnicalReport;
-import net.sourceforge.fenixedu.domain.research.result.publication.Thesis;
-import net.sourceforge.fenixedu.domain.research.result.publication.Unstructured;
-import net.sourceforge.fenixedu.domain.research.result.publication.BookPart.BookPartType;
 import net.sourceforge.fenixedu.domain.teacher.Advise;
 import net.sourceforge.fenixedu.domain.teacher.AdviseType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
@@ -112,7 +102,10 @@ public class ViewCurriculumDispatchAction extends FenixAction {
          request.setAttribute("resultPublications", resultPublications);
     
         request.setAttribute("books", person.getBooks(executionYear));
- 		request.setAttribute("articles", person.getArticles(executionYear));
+        request.setAttribute("local-articles",person.getArticles(ResearchActivityLocationType.LOCAL,executionYear));
+	request.setAttribute("national-articles",person.getArticles(ResearchActivityLocationType.NATIONAL,executionYear));
+	request.setAttribute("international-articles",person.getArticles(ResearchActivityLocationType.INTERNATIONAL,executionYear));	
+        //request.setAttribute("articles", person.getArticles(executionYear));
  		request.setAttribute("inproceedings", person.getInproceedings(executionYear));
  		request.setAttribute("proceedings", person.getProceedings(executionYear));
  		request.setAttribute("theses", person.getTheses(executionYear));
@@ -148,7 +141,10 @@ public class ViewCurriculumDispatchAction extends FenixAction {
         request.setAttribute("resultPublications", resultPublications);
         
 		request.setAttribute("books", person.getBooks());
-		request.setAttribute("articles", person.getArticles());
+		request.setAttribute("local-articles",person.getArticles(ResearchActivityLocationType.LOCAL));
+		request.setAttribute("national-articles",person.getArticles(ResearchActivityLocationType.NATIONAL));
+		request.setAttribute("international-articles",person.getArticles(ResearchActivityLocationType.INTERNATIONAL));
+		//request.setAttribute("articles", person.getArticles());
 		request.setAttribute("inproceedings", person.getInproceedings());
 		request.setAttribute("proceedings", person.getProceedings());
 		request.setAttribute("theses", person.getTheses());

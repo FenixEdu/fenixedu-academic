@@ -1262,7 +1262,7 @@
 </schema>
 
 
-<schema name="result.publication.create.Article.createMagazine" bundle="RESEARCHER_RESOURCES"		
+<schema name="result.publication.create.Article.selectMagazine" bundle="RESEARCHER_RESOURCES"		
 type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ArticleBean">
 	<slot name="scientificJournal" layout="autoComplete">
 		<property name="size" value="60"/>
@@ -1276,14 +1276,42 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Ar
 	</slot>
 </schema>
 
+<schema name="result.publication.create.Article.createMagazine" bundle="RESEARCHER_RESOURCES"
+type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.CreateIssueBean">
+	<slot name="scientificJournalName" key="label.journal" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
+		<property name="size" value="70"/>
+	</slot>
+	<slot name="issn"/>
+	<slot name="location" key="label.scope" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="url">
+		<property name="size" value="70"/>
+	</slot>
+</schema>
 
-<schema name="result.publication.create.Article.createIssue" bundle="RESEARCHER_RESOURCES"		
+
+<schema name="result.publication.create.Article.selectIssue" bundle="RESEARCHER_RESOURCES"		
 type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ArticleBean">
 	<slot name="scientificJournal.nameAsString" read-only="true" key="label.journal"/>
 	<slot name="journalIssue" layout="menu-select">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.researcher.publication.JournalIssuesForScienficalJournalProvider"/>
 		<property name="format" value="${fullName}"/>
 	</slot>
+</schema>
+
+<schema name="result.publication.create.Article.createIssue" bundle="RESEARCHER_RESOURCES"		
+type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.CreateIssueBean">
+		<slot name="volume" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+			<property name="size" value="70"/>
+		</slot>
+		<slot name="year"/>
+		<slot name="month"/>
+		<slot name="number"/>
+		<slot name="publisher">
+			<property name="size" value="70"/>
+		</slot>
+		<slot name="url" >
+			<property name="size" value="70"/>
+		</slot>	
 </schema>
 
 <schema name="result.publication.create.Article.readOnly" bundle="RESEARCHER_RESOURCES"		
@@ -1312,17 +1340,6 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Cr
 	</slot>
 </schema>
 
-<schema name="result.publication.create.Issue" bundle="RESEARCHER_RESOURCES"		
- type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.CreateIssueBean">
-		<slot name="journalAsString" read-only="true" key="label.journal"/>
-		<slot name="year"/>
-		<slot name="month"/>
-		<slot name="volume" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-		<slot name="number"/>
-		<slot name="publisher"/>
-		<slot name="url"/>
-</schema>
-
 <schema name="result.publication.create.full.Issue" bundle="RESEARCHER_RESOURCES"		
  type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.CreateIssueBean">
 		<slot name="scientificJournalName" key="label.journal" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
@@ -1342,7 +1359,7 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Cr
 <schema name="result.publication.create.Article" bundle="RESEARCHER_RESOURCES"
 		extends="resultPublication.editType"
 		type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ArticleBean">
-	<slot name="journalIssue" layout="autoComplete">
+<!--  	<slot name="journalIssue" layout="autoComplete">
 		<property name="size" value="60"/>
 		<property name="rawSlotName" value="journal"/>
 		<property name="labelField" value="fullName"/>
@@ -1351,7 +1368,7 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Cr
 		<property name="serviceArgs" value="slot=fullName"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.research.activity.JournalIssue"/>				
 		<property name="minChars" value="3"/>
-	</slot>
+	</slot> -->
 	<slot name="firstPage">
 		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
 			<property name="required" value="false"/>
@@ -2166,6 +2183,8 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Cr
 <schema name="result.publication.presentation.Article.mainInfo" extends="publication.mainInfo" bundle="RESEARCHER_RESOURCES"
 		type="net.sourceforge.fenixedu.domain.research.result.publication.Article">
 
+	<slot name="firstPage"/>
+	<slot name="lastPage"/>
 	<slot name="journalIssue" key="label.journal" layout="values" schema="presentJournalIssue">
 		<property name="classes" value="nobullet"/>
 	</slot>
@@ -2178,11 +2197,10 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Cr
 <schema name="presentJournalIssue" bundle="RESEARCHER_RESOURCES"
 type="net.sourceforge.fenixedu.domain.research.activity.JournalIssue">
 	<slot name="fullName" layout="link">
-		<property name="blankTarget" value="true"/>
 		<property name="contextRelative" value="true"/>
-		<property name="moduleRelative" value="false"/>
+		<property name="moduleRelative" value="true"/>
 		<property name="useParent" value="true"/>
-		<property name="linkFormat" value="/publico/showJournals.do?method=showJournalIssue&amp;issueId=${idInternal}"/>
+ 	    <property name="linkFormat" value="/showJournals.do?method=showJournalIssue&amp;issueId=${idInternal}"/>
 	</slot>
 </schema>
 
@@ -2374,10 +2392,9 @@ type="net.sourceforge.fenixedu.domain.research.activity.JournalIssue">
 
 <schema name="presentIssue" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.research.activity.JournalIssue">
 	<slot name="scientificJournal" key="label.journal" layout="link">
-		<property name="blankTarget" value="true"/>
 		<property name="contextRelative" value="true"/>
-		<property name="moduleRelative" value="false"/>
-		<property name="linkFormat" value="/publico/showJournals.do?method=showScientificJournal&amp;journalId=${idInternal}"/>
+		<property name="moduleRelative" value="true"/>
+		<property name="linkFormat" value="/showJournals.do?method=showScientificJournal&amp;journalId=${idInternal}"/>
 		<property name="subLayout" value="values"/>
 		<property name="subSchema" value="presentJournalName"/>
 	</slot>
@@ -2394,11 +2411,10 @@ type="net.sourceforge.fenixedu.domain.research.activity.JournalIssue">
 
 <schema name="presentArticleName" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.research.result.publication.Article">
 	<slot name="title" layout="link">
-		<property name="blankTarget" value="true"/>
 		<property name="contextRelative" value="true"/>
-		<property name="moduleRelative" value="false"/>
+		<property name="moduleRelative" value="true"/>
 		<property name="useParent" value="true"/>
-		<property name="linkFormat" value="/publico/showResearchResult.do?method=showPublication&amp;result=${idInternal}"/>
+		<property name="linkFormat" value="/showResearchResult.do?method=showPublication&amp;resultId=${idInternal}"/>
 	</slot>
 </schema>
 

@@ -83,6 +83,8 @@ public class ArticleBean extends ResultPublicationBean implements Serializable {
     protected void fillSpecificFields(ResearchResultPublication publication) {
 	final Article article = (Article) publication;
 
+	this.setScientificJournal(article.getScientificJournal());
+	this.setScientificJournalName(article.getScientificJournal().getNameAsString());
 	this.setJournal(article.getJournal());
 	this.setVolume(article.getVolume());
 	this.setNumber(article.getNumber());
@@ -91,6 +93,8 @@ public class ArticleBean extends ResultPublicationBean implements Serializable {
 	this.setIssn(article.getIssn());
 	this.setLanguage(article.getLanguage());
 	this.setScope(article.getScope());
+	this.setScientificJournal(article.getScientificJournal());
+	this.setJournalIssue(article.getJournalIssue());
     }
 
     protected void fillBibTeXFields(BibtexEntry entry) {

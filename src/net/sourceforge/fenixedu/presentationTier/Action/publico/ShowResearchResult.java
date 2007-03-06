@@ -18,7 +18,7 @@ public class ShowResearchResult extends FenixDispatchAction {
 	public ActionForward showPatent(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) {
 		
-		String resultOID = request.getParameter("result");
+		String resultOID = request.getParameter("resultId");
 		ResearchResult result = (ResearchResult) RootDomainObject.readDomainObjectByOID(ResearchResult.class, Integer.valueOf(resultOID));
 		request.setAttribute("result",result);
 		putHomePageOnRequest(request);
@@ -28,7 +28,7 @@ public class ShowResearchResult extends FenixDispatchAction {
 	public ActionForward showPublication(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) {
 		
-		String resultOID = request.getParameter("result");
+		String resultOID = request.getParameter("resultId");
 		ResearchResultPublication result = (ResearchResultPublication) RootDomainObject.readDomainObjectByOID(ResearchResult.class, Integer.valueOf(resultOID));
 		request.setAttribute("result",result);
 		request.setAttribute("resultPublicationType", result.getClass().getSimpleName());

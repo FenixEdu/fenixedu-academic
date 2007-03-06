@@ -861,7 +861,7 @@
 
    	<action path="/showJournals"
 	        	 parameter="method"
-	        	 type="net.sourceforge.fenixedu.presentationTier.Action.publico.ScientificJournalsManagement">
+	        	 type="net.sourceforge.fenixedu.presentationTier.Action.research.ScientificJournalsManagement">
 		    <forward name="showJournal" path="show.journal"/>
    		    <forward name="showIssue" path="show.issue"/>
 	</action>

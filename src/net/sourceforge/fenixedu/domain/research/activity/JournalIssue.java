@@ -54,8 +54,9 @@ public class JournalIssue extends JournalIssue_Base {
     }
 
     public void delete() {
-	for (; !this.getArticleAssociations().isEmpty(); this.getArticleAssociations().get(0).delete())
-	    removeScientificJournal();
+	for (; !this.getArticleAssociations().isEmpty(); this.getArticleAssociations().get(0).delete());
+	
+	removeScientificJournal();
 	removeRootDomainObject();
 	super.deleteDomainObject();
     }
@@ -67,16 +68,7 @@ public class JournalIssue extends JournalIssue_Base {
     }
     
     public String getFullName() {
-	return getScientificJournal().getName().getContent() + "- Volume: " + getVolume() + "(nº " + getNumber() + ") " + getYear();
+	return getScientificJournal().getName().getContent() + "- " + getVolume() + "(" + getNumber() + ") " + getYear();
     }
-
-    @Override
-    public void removeArticleAssociations(ArticleAssociation articleAssociations) {
-	super.removeArticleAssociations(articleAssociations);
-	if(getArticleAssociations().isEmpty()) {
-	    delete();
-	}
-    }
-    
-    
+ 
 }

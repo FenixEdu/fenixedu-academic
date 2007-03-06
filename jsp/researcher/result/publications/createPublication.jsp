@@ -88,113 +88,121 @@
 		</logic:equal>
 
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.confirm" property="confirm">
+			<logic:notEqual name="publicationBean" property="class.simpleName" value="ArticleBean">
 			<bean:message bundle="RESEARCHER_RESOURCES" key="button.create"/>
+			</logic:notEqual>
+			<logic:equal name="publicationBean" property="class.simpleName" value="ArticleBean">
+			<bean:message bundle="RESEARCHER_RESOURCES" key="button.next"/>
+			</logic:equal>
+			
 		</html:submit>
 		<html:cancel>
 			<bean:message bundle="RESEARCHER_RESOURCES" key="button.cancel"/>
 		</html:cancel>
-		
+
 		</fr:form>
+
 		</logic:equal>
 
-		<logic:equal name="publicationBean" property="createJournal" value="true">
-			<logic:notPresent name="issueBean">
-			<fr:view name="publicationBean" schema="result.publication.create.Article.readOnly">
-			 	    <fr:layout name="tabular-nonNullValues">
+	<logic:equal name="publicationBean" property="createJournal" value="true">
+
+			<fr:view name="publicationBean" schema="result.publication.create.Article.readOnly" >
+		 	    <fr:layout name="tabular-nonNullValues">
 		    	    <fr:property name="classes" value="tstyle5 thright thlight thtop"/>
 		        	<fr:property name="columnClasses" value=",,tdclear tderror1"/>
-				    </fr:layout>
+			    </fr:layout>
 			</fr:view>
 
-			<div class="dinline forminline">
-			<fr:form action="/resultPublications/create.do">
-
-			<bean:define id="schema" value="result.publication.create.Article.createMagazine" type="java.lang.String"/>
-
-			<logic:present name="publicationBean" property="scientificJournal">
-			 <bean:define id="schema" value="result.publication.create.Article.createIssue" type="java.lang.String"/>
-		    </logic:present>
-		   
-		   <logic:notPresent name="publicationBean" property="scientificJournal">
-			<div class="warning0">
-			    <bean:message key="label.attention" bundle="RESEARCHER_RESOURCES"/>:
-				<bean:message key="label.noMagazineSelect" bundle="RESEARCHER_RESOURCES"/>
-			</div>
-		    </logic:notPresent>
-		   
-			<fr:edit id="publicationData" name="publicationBean" schema="<%= schema %>" nested="true">
-		 	    <fr:layout name="tabular">
-		    	    <fr:property name="classes" value="tstyle5 thright thlight thtop"/>
-		        	<fr:property name="columnClasses" value=",,tdclear tderror1"/>
-			    </fr:layout>
-		    	<fr:destination name="invalid" path="/resultPublications/prepareCreate.do"/>
-		   </fr:edit>
-
-			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.confirm" property="confirm">
-			
-				<logic:present name="publicationBean" property="scientificJournal">
-					<bean:message bundle="RESEARCHER_RESOURCES" key="button.create"/>
-			    </logic:present>
-			    <logic:notPresent name="publicationBean" property="scientificJournal">
-					<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.createJournal.searchJournal"/>
-			    </logic:notPresent>
-				
-			</html:submit>
-			<html:cancel>
-				<bean:message bundle="RESEARCHER_RESOURCES" key="button.cancel"/>
-			</html:cancel>
-			</fr:form>
-
-
-			<fr:form  action="/resultPublications/createMagazine.do">	
-			<fr:edit id="publicationBean" name="publicationBean" visible="false"/>
-			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.confirm">
+		<logic:notPresent name="issueBean">
 			<logic:notPresent name="publicationBean" property="scientificJournal">
-				<bean:message key="label.createMagazine" bundle="RESEARCHER_RESOURCES"/>
+			
+				<logic:present name="publicationBean" property="scientificJournalName">
+					<div class="warning0">
+						<bean:message key="label.attention" bundle="RESEARCHER_RESOURCES"/>: 
+						<bean:message key="label.informationForCreateMagazine" bundle="RESEARCHER_RESOURCES"/>
+					</div>
+				</logic:present>
+				<div class="dinline forminline">						
+				<fr:form action="/resultPublications/create.do">
+				<fr:edit id="publicationData" name="publicationBean" schema="result.publication.create.Article.selectMagazine">
+					<fr:layout name="tabular">
+						<fr:property name="classes" value="tstyle5 thright thlight thtop"/>
+			        	<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+					</fr:layout>
+				</fr:edit>
+					<br/>
+					<html:submit property="confirm"><bean:message key="label.chooseMagazineFromList" bundle="RESEARCHER_RESOURCES"/></html:submit>
+				</fr:form>
+
+				<logic:present name="publicationBean" property="scientificJournalName">
+				<fr:form action="/resultPublications/createJournal.do">
+				<fr:edit id="publicationBean" name="publicationBean" visible="false"/>
+					<html:submit><bean:message key="label.createMagazine" bundle="RESEARCHER_RESOURCES"/></html:submit>	
+				</fr:form>
+				
+				</logic:present>
+				</div>
 			</logic:notPresent>
+					
 			<logic:present name="publicationBean" property="scientificJournal">
-				<bean:message key="label.createIssue" bundle="RESEARCHER_RESOURCES"/>
-			</logic:present>
-			</html:submit>
-			</fr:form>
-			</div>
-			</logic:notPresent>
-			
-			<logic:present name="issueBean">
- 			<fr:view name="publicationBean" schema="result.publication.create.Article.readOnly">
-		 	    <fr:layout name="tabular">
-		    	    <fr:property name="classes" value="tstyle5 thright thlight thtop"/>
-		        	<fr:property name="columnClasses" value=",,tdclear tderror1"/>
-			    </fr:layout>
-		     </fr:view>
-			<fr:form action="/resultPublications/createMagazine.do">
-			
-			<bean:define id="issueSchema" value="result.publication.create.full.Issue" type="java.lang.String"/>
-			<logic:equal name="issueBean" property="journalAlreadyChosen" value="false">
-				<bean:define id="issueSchema" value="result.publication.create.full.Issue" type="java.lang.String"/>
-			</logic:equal>
-			<logic:equal name="issueBean" property="journalAlreadyChosen" value="true">
-				<bean:define id="issueSchema" value="result.publication.create.Issue" type="java.lang.String"/>
-			</logic:equal>
-			
-			<fr:edit id="publicationBean" name="publicationBean" visible="false"/>
-			 
-			<fr:edit id="createMagazine" name="issueBean" schema="<%= issueSchema %>">
-				<fr:layout name="tabular">
-					<fr:property name="classes" value="tstyle5"/>
-				</fr:layout>
-		   		<fr:destination name="cancel" path="/resultPublications/prepareCreate.do"/>			
-			</fr:edit>
+				<div class="dinline forminline">	
 	
-			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.confirm" property="confirm">
-				<bean:message bundle="RESEARCHER_RESOURCES" key="button.create"/>
-			</html:submit>
-			<html:cancel>
-				<bean:message bundle="RESEARCHER_RESOURCES" key="button.cancel"/>
-			</html:cancel>
-			</fr:form>
-			</logic:present>			
+				<fr:form action="/resultPublications/create.do">
+					<fr:edit id="publicationData" name="publicationBean" schema="result.publication.create.Article.selectIssue">
+					<fr:layout name="tabular">
+						<fr:property name="classes" value="tstyle5 thright thlight thtop"/>
+			        	<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+					</fr:layout>
+				</fr:edit>
+					<br/>
+					<html:submit property="confirm"><bean:message key="label.choose" bundle="RESEARCHER_RESOURCES"/></html:submit>
+				</fr:form>
+				<fr:form action="/resultPublications/createJournal.do">
+					
+					<fr:edit id="publicationBean" name="publicationBean" visible="false"/>
+					<html:submit><bean:message key="label.createNewIssue" bundle="RESEARCHER_RESOURCES"/></html:submit>	
+					</fr:form>
+				</div>
+			</logic:present>					
+		</logic:notPresent>					
+					
+		<logic:present name="issueBean">					
+				<fr:form action="/resultPublications/createJournal.do">
+					<fr:edit id="publicationBean" name="publicationBean" visible="false"/>
+					<fr:edit id="createMagazine" name="issueBean" visible="false"/>
+					
+					<strong><bean:message key="label.journal" bundle="RESEARCHER_RESOURCES"/></strong>:
+					<logic:equal name="issueBean" property="journalAlreadyChosen" value="false">
+					<fr:edit id="magazineInfo" name="issueBean" schema="result.publication.create.Article.createMagazine">
+						<fr:layout name="tabular">
+						 <fr:property name="classes" value="tstyle5 thright thlight thtop"/>
+		        		<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+						</fr:layout>
+					</fr:edit>
+					</logic:equal>
+					<logic:equal name="issueBean" property="journalAlreadyChosen" value="true">
+						<span><fr:view name="issueBean" property="journal.nameAsString"/></span>
+					</logic:equal>
+					<br/>
+					<strong><bean:message key="label.journalIssue" bundle="RESEARCHER_RESOURCES"/></strong>:
+					<fr:edit id="magazineInfo" name="issueBean" schema="result.publication.create.Article.createIssue">
+						<fr:layout name="tabular">
+						 <fr:property name="classes" value="tstyle5 thright thlight thtop"/>
+		        		<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+						</fr:layout>
+					</fr:edit>
+					
+					<html:submit>
+					<logic:equal name="issueBean" property="journalAlreadyChosen" value="false">
+					<bean:message key="label.createJournalAndIssue" bundle="RESEARCHER_RESOURCES"/>
+					</logic:equal>
+					<logic:equal name="issueBean" property="journalAlreadyChosen" value="true">					
+					<bean:message key="label.createNewIssue" bundle="RESEARCHER_RESOURCES"/>
+					</logic:equal>
+					</html:submit>
+				</fr:form>
+	</logic:present>
 	
-		</logic:equal>
+	</logic:equal>
 
 </logic:present>

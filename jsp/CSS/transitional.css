@@ -363,6 +363,7 @@ form { margin: 0; padding: 0; }
 form p { clear: both; margin: 0.5em; margin-left: 0; }
 span.required { color: #d30; }
 .forminline form { display: inline; }
+.forminline form table { display: inline; }
 
 fieldset {
 margin: 0.4em 0; padding: 0.4em 0;
@@ -465,6 +466,7 @@ padding-right: 0.5em;
 .indent0 { margin-left: 0; }
 .indent05 { margin-left: 0.5em; }
 .indent1 { margin-left: 1em; }
+.indent1p5 { margin-left: 1.5em; }
 .indent2 { margin-left: 2em; }
 .indent3 { margin-left: 3em; }
 .indent4 { margin-left: 4em; }
