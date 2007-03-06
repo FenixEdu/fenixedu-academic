@@ -321,7 +321,7 @@ public class Attends extends Attends_Base {
     }
     
     public Registration getRegistration() {
-        return super.getRegistration();
+        return super.getAluno();
     }
     
     @Override
