@@ -673,7 +673,7 @@ public class EnrolmentTest extends DomainTestBase {
 		assertNull("Enrolment should not have an improvement EnrolmentEvaluation", enrolmentToImprove.getImprovementEvaluation());
 		assertFalse("ExecutionCourse for improvement should not have any Attends", executionCourseToEnrollImprovement.hasAnyAttends());
 		
-		enrolmentToImprove.createEnrolmentEvaluationForImprovement(someEmployee,executionPeriodForImprovement,studentToImprove);
+		enrolmentToImprove.createEnrolmentEvaluationForImprovement(someEmployee,executionPeriodForImprovement);
 		
 		EnrolmentEvaluation improvementEvaluation = enrolmentToImprove.getImprovementEvaluation(); 
 		assertNotNull("Enrolment should have returned an EnrolmentEvaluation", improvementEvaluation);

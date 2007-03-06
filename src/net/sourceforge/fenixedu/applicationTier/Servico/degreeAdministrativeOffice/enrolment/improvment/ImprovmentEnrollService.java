@@ -20,7 +20,7 @@ public class ImprovmentEnrollService extends Service {
     public void run(Registration registration, ExecutionPeriod executionPeriod, String employeeUserName, List<Integer> enrolmentsIds)
             throws FenixServiceException, ExcepcaoPersistencia {
 
-        if (registration == null || executionPeriod == null) {
+        if (executionPeriod == null) {
             throw new InvalidArgumentsServiceException();
         }
 
@@ -41,7 +41,7 @@ public class ImprovmentEnrollService extends Service {
                 throw new InvalidArgumentsServiceException();
             }
 
-            enrollment.createEnrolmentEvaluationForImprovement(employee, executionPeriod, registration);
+            enrollment.createEnrolmentEvaluationForImprovement(employee, executionPeriod);
         }
     }
 

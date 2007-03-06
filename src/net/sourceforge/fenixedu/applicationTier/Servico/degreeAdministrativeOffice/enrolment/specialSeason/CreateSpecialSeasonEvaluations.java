@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.SpecialSeasonCode;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public class CreateSpecialSeasonEvaluations extends Service {
 
@@ -22,7 +23,7 @@ public class CreateSpecialSeasonEvaluations extends Service {
 	}
 
 	for (Enrolment enrolment : enrolments) {
-	    enrolment.createSpecialSeasonEvaluation();
+	    enrolment.createSpecialSeasonEvaluation(AccessControl.getPerson().getEmployee());
 	}
     }
 

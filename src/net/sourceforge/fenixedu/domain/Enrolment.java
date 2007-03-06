@@ -484,30 +484,22 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	this.addAttends(attends);
     }
 
-    public void createEnrolmentEvaluationForImprovement(Employee employee,
-	    ExecutionPeriod currentExecutionPeriod, Registration registration) {
-
-	EnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation();
-
-	enrolmentEvaluation.setEmployee(employee);
-	enrolmentEvaluation.setWhenDateTime(new DateTime());
-	enrolmentEvaluation.setEnrolment(this);
-	enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
-	enrolmentEvaluation.setEnrolmentEvaluationType(EnrolmentEvaluationType.IMPROVEMENT);
-
-	createAttendForImprovment(currentExecutionPeriod, registration);
+    public void createEnrolmentEvaluationForImprovement(final Employee employee, final ExecutionPeriod executionPeriod) {
+	new EnrolmentEvaluation(this, EnrolmentEvaluationType.IMPROVEMENT, EnrolmentEvaluationState.TEMPORARY_OBJ, employee);
+	createAttendForImprovement(executionPeriod);
     }
 
-    private void createAttendForImprovment(final ExecutionPeriod currentExecutionPeriod,
-	    final Registration registration) {
-
-	List executionCourses = getCurricularCourse().getAssociatedExecutionCourses();
+    
+    private void createAttendForImprovement(final ExecutionPeriod executionPeriod) {
+	final Registration registration = getRegistration();
+	
+	// FIXME this is completly wrong, there may be more than one execution course for this curricular course
 	ExecutionCourse currentExecutionCourse = (ExecutionCourse) CollectionUtils.find(
-		executionCourses, new Predicate() {
+		getCurricularCourse().getAssociatedExecutionCourses(), new Predicate() {
 
 		    public boolean evaluate(Object arg0) {
 			ExecutionCourse executionCourse = (ExecutionCourse) arg0;
-			if (executionCourse.getExecutionPeriod().equals(currentExecutionPeriod))
+			if (executionCourse.getExecutionPeriod().equals(executionPeriod))
 			    return true;
 			return false;
 		    }
@@ -519,8 +511,8 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	    Attends attend = (Attends) CollectionUtils.find(attends, new Predicate() {
 
 		public boolean evaluate(Object arg0) {
-		    Attends frequenta = (Attends) arg0;
-		    if (frequenta.getRegistration().equals(registration))
+		    Attends attend = (Attends) arg0;
+		    if (attend.getRegistration().equals(registration))
 			return true;
 		    return false;
 		}
@@ -536,10 +528,6 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	}
     }
 
-    public boolean isImprovementForExecutionCourse(ExecutionCourse executionCourse) {
-	return !getExecutionPeriod().equals(executionCourse.getExecutionPeriod());
-    }
-
     public void unEnrollImprovement(final ExecutionPeriod executionPeriod) throws DomainException {
 	final EnrolmentEvaluation temporaryImprovement = getImprovementEvaluation();
 	if (temporaryImprovement == null) {
@@ -547,15 +535,51 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	}
 
 	temporaryImprovement.delete();
-	
-	final Registration registration = getRegistration();
-	for (final Attends attend : getAttends(executionPeriod)) {
-	    if (attend.getRegistration() == registration) {
-		attend.delete();
-	    }
-	}
+	getAttendsFor(executionPeriod).delete();
     }
     
+    public boolean isImprovementForExecutionCourse(ExecutionCourse executionCourse) {
+	return getCurricularCourse().hasAssociatedExecutionCourses(executionCourse)
+		&& getExecutionPeriod() != executionCourse.getExecutionPeriod();
+    }
+
+    public void createSpecialSeasonEvaluation(final Employee employee) {
+	if (getEnrolmentEvaluationType() != EnrolmentEvaluationType.SPECIAL_SEASON && !isApproved()) {
+	    setEnrolmentEvaluationType(EnrolmentEvaluationType.SPECIAL_SEASON);
+	    if (isEnrolmentStateApproved()) {
+		setEnrolmentCondition(EnrollmentCondition.TEMPORARY);
+	    } else {
+		setEnrollmentState(EnrollmentState.ENROLLED);
+		setEnrolmentCondition(EnrollmentCondition.FINAL);
+	    }
+
+	    new EnrolmentEvaluation(this, EnrolmentEvaluationType.SPECIAL_SEASON,
+		    EnrolmentEvaluationState.TEMPORARY_OBJ, employee);
+	} else {
+	    throw new DomainException("error.invalid.enrolment.state");
+	}
+    }
+
+    public void deleteSpecialSeasonEvaluation() {
+	if (getEnrolmentEvaluationType() == EnrolmentEvaluationType.SPECIAL_SEASON && hasSpecialSeason()) {
+	    setEnrolmentCondition(EnrollmentCondition.FINAL);
+	    setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL);
+	    EnrolmentEvaluation enrolmentEvaluation = getEnrolmentEvaluationByEnrolmentEvaluationStateAndType(
+		    EnrolmentEvaluationState.TEMPORARY_OBJ, EnrolmentEvaluationType.SPECIAL_SEASON);
+	    if (enrolmentEvaluation != null) {
+		enrolmentEvaluation.delete();
+	    }
+
+	    EnrolmentEvaluation normalEnrolmentEvaluation = getEnrolmentEvaluationByEnrolmentEvaluationStateAndType(
+		    EnrolmentEvaluationState.FINAL_OBJ, EnrolmentEvaluationType.NORMAL);
+	    if (normalEnrolmentEvaluation != null) {
+		setEnrollmentState(normalEnrolmentEvaluation.getEnrollmentStateByGrade());
+	    }
+	} else {
+	    throw new DomainException("error.invalid.enrolment.state");
+	}
+    }
+
     public List<EnrolmentEvaluation> getAllFinalEnrolmentEvaluations() {
 	final List<EnrolmentEvaluation> result = new ArrayList<EnrolmentEvaluation>();
 
@@ -747,54 +771,30 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return false;
     }
 
-    public Collection<Attends> getAttends(final ExecutionPeriod executionPeriod) {
-	final Collection<Attends> result = new HashSet<Attends>();
+    public Attends getAttendsFor(final ExecutionPeriod executionPeriod) {
+	Attends result = null;
 	
-	for (final Attends attend : this.getAttendsSet()) {
-	    if (attend.getExecutionPeriod() == executionPeriod
-		    && getCurricularCourse().hasAssociatedExecutionCourses(attend.getExecutionCourse())) {
-		result.add(attend);
+	for (final Attends attends : getAttendsSet()) {
+	    if (attends.isFor(executionPeriod)) {
+		if (attends == null) {
+		    result = attends;
+		} else {
+		    throw new DomainException("Enrolment.found.two.attends.for.same.execution.period");
+		}
 	    }
 	}
-	
+
 	return result;
     }
 
-    public void createSpecialSeasonEvaluation() {
-	if (getEnrolmentEvaluationType() != EnrolmentEvaluationType.SPECIAL_SEASON && !isApproved()) {
-	    setEnrolmentEvaluationType(EnrolmentEvaluationType.SPECIAL_SEASON);
-	    if (isEnrolmentStateApproved()) {
-		setEnrolmentCondition(EnrollmentCondition.TEMPORARY);
-	    } else {
-		setEnrollmentState(EnrollmentState.ENROLLED);
-		setEnrolmentCondition(EnrollmentCondition.FINAL);
+    public ExecutionCourse getExecutionCourseFor(final ExecutionPeriod executionPeriod) {
+	for (final Attends attend : getAttends()) {
+	    if (attend.getExecutionCourse().getExecutionPeriod() == executionPeriod) {
+		return attend.getExecutionCourse();
 	    }
-	    EnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation(this,
-		    EnrolmentEvaluationType.SPECIAL_SEASON, EnrolmentEvaluationState.TEMPORARY_OBJ);
-	    enrolmentEvaluation.setWhenDateTime(new DateTime());
-	} else {
-	    throw new DomainException("error.invalid.enrolment.state");
 	}
-    }
 
-    public void deleteSpecialSeasonEvaluation() {
-	if (getEnrolmentEvaluationType() == EnrolmentEvaluationType.SPECIAL_SEASON && hasSpecialSeason()) {
-	    setEnrolmentCondition(EnrollmentCondition.FINAL);
-	    setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL);
-	    EnrolmentEvaluation enrolmentEvaluation = getEnrolmentEvaluationByEnrolmentEvaluationStateAndType(
-		    EnrolmentEvaluationState.TEMPORARY_OBJ, EnrolmentEvaluationType.SPECIAL_SEASON);
-	    if (enrolmentEvaluation != null) {
-		enrolmentEvaluation.delete();
-	    }
-
-	    EnrolmentEvaluation normalEnrolmentEvaluation = getEnrolmentEvaluationByEnrolmentEvaluationStateAndType(
-		    EnrolmentEvaluationState.FINAL_OBJ, EnrolmentEvaluationType.NORMAL);
-	    if (normalEnrolmentEvaluation != null) {
-		setEnrollmentState(normalEnrolmentEvaluation.getEnrollmentStateByGrade());
-	    }
-	} else {
-	    throw new DomainException("error.invalid.enrolment.state");
-	}
+	return null;
     }
 
     @Deprecated
@@ -863,16 +863,6 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	this.accumulatedEctsCredits = ectsCredits;
     }
 
-    public ExecutionCourse getExecutionCourseFor(final ExecutionPeriod executionPeriod) {
-	for (final Attends attend : getAttends()) {
-	    if (attend.getExecutionCourse().getExecutionPeriod() == executionPeriod) {
-		return attend.getExecutionCourse();
-	    }
-	}
-
-	return null;
-    }
-
     @Override
     public List<Enrolment> getEnrolments() {
 	return Collections.singletonList(this);
@@ -932,15 +922,6 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	} else {
 	    return getCurricularCourse().getType().name();
 	}
-    }
-
-    public Attends getAttendsFor(final ExecutionPeriod executionPeriod) {
-	for (final Attends attends : getAttendsSet()) {
-	    if (attends.isFor(executionPeriod)) {
-		return attends;
-	    }
-	}
-	return null;
     }
 
     public boolean isOptional() {
