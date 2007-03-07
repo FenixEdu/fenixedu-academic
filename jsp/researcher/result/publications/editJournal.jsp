@@ -26,7 +26,8 @@
 				</logic:present>
 				<div class="dinline forminline">						
 				<fr:form action="/resultPublications/selectJournal.do">
-				<fr:edit id="publicationBean" name="publicationBean" schema="result.publication.create.Article.selectMagazine">
+				<fr:edit id="publicationBean" name="publicationBean" visible="false"/>
+				<fr:edit id="selectPublication" name="publicationBean" schema="result.publication.create.Article.selectMagazine">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle5 thright thlight thtop"/>
 			        	<fr:property name="columnClasses" value=",,tdclear tderror1"/>
@@ -40,7 +41,7 @@
 				</fr:form>
 
 				<fr:form action="/resultPublications/prepareSelectJournal.do">
-				<fr:edit id="publicationData" name="publicationBean" visible="false"/>
+				<fr:edit id="publicationBean" name="publicationBean" visible="false"/>
 					<html:submit><bean:message key="button.cancel" bundle="RESEARCHER_RESOURCES"/></html:submit>	
 				</fr:form>
 				
@@ -51,7 +52,8 @@
 				<div class="dinline forminline">	
 	
 				<fr:form action="/resultPublications/editData.do">
-					<fr:edit id="publicationData" name="publicationBean" schema="result.publication.create.Article.selectIssue">
+					<fr:edit id="publicationBean" name="publicationBean" visible="false"/>
+					<fr:edit id="selectPublication" name="publicationBean" schema="result.publication.create.Article.selectIssue">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle5 thright thlight thtop"/>
 			        	<fr:property name="columnClasses" value=",,tdclear tderror1"/>
@@ -65,7 +67,7 @@
 					<html:submit><bean:message key="label.createNewIssue" bundle="RESEARCHER_RESOURCES"/></html:submit>	
 				</fr:form>
 				<fr:form action="/resultPublications/prepareSelectJournal.do">					
-					<fr:edit id="publicationData" name="publicationBean" visible="false"/>
+					<fr:edit id="publicationBean" name="publicationBean" visible="false"/>
 					<html:submit><bean:message key="label.chooseNewJournal" bundle="RESEARCHER_RESOURCES"/></html:submit>	
 				</fr:form>
 				</div>

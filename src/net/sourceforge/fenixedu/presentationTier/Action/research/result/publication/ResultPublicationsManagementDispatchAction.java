@@ -75,6 +75,7 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
 	else {
 	ResultPublicationBean publicationBean = (ResultPublicationBean) getRenderedObject("publicationBean");
 	request.setAttribute("publicationBean", publicationBean);
+	RenderUtils.invalidateViewState();
 	return mapping.findForward("editJournal");
 	}
     }
