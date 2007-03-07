@@ -27,4 +27,3 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Change event name from multistring to string" eventNameToString.sql
