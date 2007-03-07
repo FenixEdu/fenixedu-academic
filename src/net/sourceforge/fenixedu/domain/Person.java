@@ -56,6 +56,7 @@ import net.sourceforge.fenixedu.domain.parking.ParkingPartyClassification;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.IdDocument;
+import net.sourceforge.fenixedu.domain.person.IdDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 import net.sourceforge.fenixedu.domain.person.PersonName;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -117,10 +118,21 @@ public class Person extends Person_Base {
          * BUSINESS SERVICES *
          **********************************************************************/
 
+    private IdDocument getIdDocument() {
+	final Iterator<IdDocument> documentIterator = getIdDocumentsSet().iterator();
+	return documentIterator.hasNext() ? documentIterator.next() : null;
+    }
+
     @Override
     public void setDocumentIdNumber(String documentIdNumber) {
 	if (documentIdNumber == null || StringUtils.isEmpty(documentIdNumber.trim())) {
 	    throw new DomainException("error.person.empty.documentIdNumber");
+	}
+	IdDocument idDocument = getIdDocument();
+	if (idDocument == null) {
+	    idDocument = new IdDocument(this, documentIdNumber, (IdDocumentType) null);
+	} else {
+	    idDocument.setValue(documentIdNumber);
 	}
 	super.setDocumentIdNumber(documentIdNumber);
     }
@@ -129,6 +141,12 @@ public class Person extends Person_Base {
     public void setIdDocumentType(IDDocumentType idDocumentType) {
 	if (idDocumentType == null) {
 	    throw new DomainException("error.person.empty.idDocumentType");
+	}
+	IdDocument idDocument = getIdDocument();
+	if (idDocument == null) {
+	    idDocument = new IdDocument(this, null, idDocumentType);
+	} else {
+	    idDocument.setIdDocumentType(idDocumentType);
 	}
 	super.setIdDocumentType(idDocumentType);
     }
