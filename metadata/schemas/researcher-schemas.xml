@@ -1301,13 +1301,17 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Ar
 <schema name="result.publication.create.Article.createIssue" bundle="RESEARCHER_RESOURCES"		
 type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.CreateIssueBean">
 		<slot name="volume" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-			<property name="size" value="70"/>
+			<property name="size" value="30"/>
 		</slot>
-		<slot name="year"/>
+		<slot name="year">
+			<property name="size" value="10"/>
+		</slot>		
 		<slot name="month"/>
-		<slot name="number"/>
+		<slot name="number">
+			<property name="size" value="10"/>
+		</slot>
 		<slot name="publisher">
-			<property name="size" value="70"/>
+			<property name="size" value="50"/>
 		</slot>
 		<slot name="url" >
 			<property name="size" value="70"/>

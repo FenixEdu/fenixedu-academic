@@ -9,11 +9,12 @@
 	<bean:define id="publications" name="UserView" property="person.researchResultPublications"/>
 	<bean:define id="personId" name="person" property="idInternal"/>
 	
+	<em><bean:message bundle="RESEARCHER_RESOURCES" key="label.researchPortal"/></em>
 	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.management.title"/></h2>
 
 	<logic:messagesPresent name="messages" message="true">
 		<html:messages id="messages" message="true" bundle="RESEARCHER_RESOURCES">
-			<p><span class="error1"><!-- Error messages go here --><bean:write name="messages"/></span></p>
+			<p><span class="error0"><!-- Error messages go here --><bean:write name="messages"/></span></p>
 		</html:messages>
 	</logic:messagesPresent>
 

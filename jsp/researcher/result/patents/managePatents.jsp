@@ -6,8 +6,8 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <logic:present role="RESEARCHER">
-	<em><bean:message key="researcher.viewCurriculum.patentsTitle" bundle="RESEARCHER_RESOURCES"/></em> <!-- tobundle -->
-	<h2/><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResearchResultPatent.management.title"/></h2>
+	<em><bean:message bundle="RESEARCHER_RESOURCES" key="label.researchPortal"/></em>
+	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResearchResultPatent.management.title"/></h2>
 	
 	<ul>
 		<li>
@@ -24,18 +24,14 @@
 		</html:messages>
 	</logic:messagesPresent>
 	
-	<%-- Result Patents Listing --%>
-	<%--
-	<h3 class='cd_heading'><span><bean:message key="researcher.ResearchResultPatent.list.label" bundle="RESEARCHER_RESOURCES"/></span></h3>
-	--%>
 	
 	<logic:empty name="resultPatents">
-		<p><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResearchResultPatent.emptyList"/></p>
+		<p><em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResearchResultPatent.emptyList"/></em></p>
 	</logic:empty>
 
 	<logic:notEmpty name="resultPatents">
-		<p class="mtop2 mbottom0"><strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResearchResultPatent.management.title"/></strong></p>
-		<ul class="nobullet" style="width: 600px;">
+		<p class="mtop2 mbottom0"><strong><bean:message bundle="RESEARCHER_RESOURCES" key="label.patentList"/></strong></p>
+		<ul style="width: 600px;">
 		<logic:iterate id="patent" name="resultPatents">
 			<bean:define id="patentId" name="patent" property="idInternal"/>
 			<li class="mtop1">

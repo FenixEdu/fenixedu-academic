@@ -8,11 +8,11 @@
 <logic:present role="RESEARCHER">
 	<!-- Titles -->
 	<em><bean:message key="link.patentsManagement" bundle="RESEARCHER_RESOURCES"/></em> <!-- tobundle -->
-	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResearchResultPatent.create.link"/></h2>
+	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResearchResultPatent.create.title"/></h2>
 	
 	<!-- Author name -->
 	<p>
-		<strong><bean:message bundle="RESEARCHER_RESOURCES" key="label.author"/></strong>: <fr:view name="UserView" property="person.name"/>
+		<bean:message bundle="RESEARCHER_RESOURCES" key="label.author"/>: <fr:view name="UserView" property="person.name"/>
 	</p>
 	
 	<%-- Warning/Error messages --%>
@@ -22,7 +22,7 @@
 		</html:messages>
 	</logic:messagesPresent>
 	
-	<p class="mbottom05"><strong><bean:message bundle="RESEARCHER_RESOURCES" key="label.data"/></strong></p>
+	<p class="mbottom05"><strong><bean:message bundle="RESEARCHER_RESOURCES" key="label.patentData"/></strong></p>
 	<fr:create id="createPatent" type="net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent" 
 				schema="patent.create"
 				action="/resultPatents/createPatent.do">

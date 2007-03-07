@@ -11,7 +11,7 @@
 	
 	<%-- Title messages --%>
 	<em><bean:message key="link.patentsManagement" bundle="RESEARCHER_RESOURCES"/></em>
-	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.Result.edit.data"/></h2>
+	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.Result.edit.patentData"/></h2>
 	
 	<%-- Warning/Error messages --%>
 	<logic:messagesPresent name="messages" message="true">
@@ -21,11 +21,11 @@
 	</logic:messagesPresent>
 	
 	<%-- Form edit Patent Data --%>
-	<p class="mtop2 mbottom0"><strong><bean:message key="researcher.ResearchResultPatent.details.useCase.title" bundle="RESEARCHER_RESOURCES"/>:</strong></p>
+	<p class="mtop2 mbottom0"><strong><bean:message key="researcher.ResearchResultPatent.details.useCase.title" bundle="RESEARCHER_RESOURCES"/></strong></p>
 	<fr:edit id="editPatent" name="result" schema="patent.edit" 
 				action="<%= "/resultPatents/updateMetaInformation.do?" + parameter %>">
 	    <fr:layout name="tabular">
-	        <fr:property name="classes" value="tstyle1 thlight thright thtop"/>
+	        <fr:property name="classes" value="tstyle5 thlight thright thtop mtop05"/>
 	        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
 	    </fr:layout>
 	    <fr:destination name="exception" path="<%= "/resultPatents/prepareEditData.do?" + parameter %>"/>

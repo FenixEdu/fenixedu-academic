@@ -24,9 +24,11 @@
 	<logic:equal name="resultType" value="ResultPatent">
 		<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResearchResultPatent.management.title"/></em>
 	</logic:equal>
+	
 	<logic:notEqual name="resultType" value="ResultPatent">
 		<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.publications"/></em>
 	</logic:notEqual>
+
 	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultUnitAssociation.useCase.title"/>: <fr:view name="result" property="title"/></h2>
 
 	<%-- Go to previous page --%>
