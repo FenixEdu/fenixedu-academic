@@ -108,7 +108,7 @@ public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
 		employee, date, EmployeeJustificationFactory.CorrectionType.valueOf(request
 			.getParameter("correction")), yearMonth);
 	request.setAttribute("employeeJustificationFactory", employeeJustificationFactory);
-	request.setAttribute("yearMonth",yearMonth);
+	request.setAttribute("yearMonth", yearMonth);
 	if (StringUtils.isEmpty(dateString)) {
 	    return new ViewEmployeeAssiduousnessDispatchAction().showJustifications(mapping, form,
 		    request, response);
@@ -391,6 +391,9 @@ public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
 
     private boolean hasAnythingChanged(EmployeeScheduleFactory employeeScheduleFactory) {
 	Schedule schedule = employeeScheduleFactory.getSchedule();
+	if (schedule == null) {
+	    return true;
+	}
 	boolean differencesInWorkSchedules = true;
 	boolean differencesInDates = true;
 	if (schedule.getBeginDate().isEqual(employeeScheduleFactory.getBeginDate())
