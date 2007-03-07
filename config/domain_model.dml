@@ -2139,6 +2139,16 @@ class net.sourceforge.fenixedu.domain.Holiday extends net.sourceforge.fenixedu.d
 	Integer keyLocality;
 }
 
+class net.sourceforge.fenixedu.domain.person.IdDocumentType extends net.sourceforge.fenixedu.domain.DomainObject {
+    IDDocumentType value; 
+}
+
+class net.sourceforge.fenixedu.domain.person.IdDocument extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer keyIdDocumentType;
+    Integer keyPerson;
+    String value;
+}
+
 class net.sourceforge.fenixedu.domain.Identification extends net.sourceforge.fenixedu.domain.DomainObject {
     String ojbConcreteClass;
 	DateTime beginDateDateTime;
@@ -8456,6 +8466,21 @@ relation ConnectionRuleAccountabilityType {
 	}	 
 }
 
+
+relation IdDocumentTypeIdDocument {
+    net.sourceforge.fenixedu.domain.person.IdDocumentType playsRole idDocumentType;
+    net.sourceforge.fenixedu.domain.person.IdDocument playsRole idDocuments {
+        multiplicity *;
+    }
+}
+
+relation IdDocumentPerson {
+    net.sourceforge.fenixedu.domain.Person playsRole person;
+    net.sourceforge.fenixedu.domain.person.IdDocument playsRole idDocuments {
+        multiplicity *;
+    }
+}
+
 relation PersonHomepage {
     net.sourceforge.fenixedu.domain.Person playsRole person;
 	net.sourceforge.fenixedu.domain.homepage.Homepage playsRole homepage;
@@ -12265,6 +12290,20 @@ relation ThesisEnrolment {
 relation ThesisDegree {
 	net.sourceforge.fenixedu.domain.Degree playsRole degree;
 	net.sourceforge.fenixedu.domain.thesis.Thesis playsRole thesis {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectIdDocument {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.person.IdDocument playsRole idDocuments {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectIdDocumentType {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.person.IdDocumentType playsRole idDocumentTypes {
 		multiplicity *;
 	}
 }

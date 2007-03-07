@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.person;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
@@ -141,33 +142,33 @@ public class SearchPerson extends Service {
 	    final Person person = Person.readPersonByUsername(searchParameters.getUsername());
 	    persons = new ArrayList<Person>();
 	    persons.add(person);
-	} else {
-	    Role roleBd = searchParameters.getRole();
-	    if (roleBd == null) {
-		if (searchParameters.getName() != null) {
-		    persons = Person.findInternalPerson(searchParameters.getName());
-		} else {
-		    persons = Role.getRoleByRoleType(RoleType.PERSON).getAssociatedPersons();
-		}
-	    } else {
-		if ((roleBd.getRoleType() == RoleType.TEACHER)
-			&& (searchParameters.getDepartment() != null)) {
-		    persons = new ArrayList<Person>();
-		    teachers = searchParameters.getDepartment().getAllCurrentTeachers();
-		    for (Teacher teacher : teachers) {
-			persons.add(teacher.getPerson());
+	} else if (searchParameters.getDocumentIdNumber() != null && searchParameters.getDocumentIdNumber().length() > 0) {
+	    persons = Person.findPersonByDocumentID(searchParameters.getDocumentIdNumber());
+//	} else if (searchParameters.getEmail() != null && searchParameters.getEmail().length() > 0) {
+	    // TODO
+	} else if (searchParameters.getName() != null) {
+	    persons = Person.findInternalPerson(searchParameters.getName());
+	    final Role roleBd = searchParameters.getRole();
+	    if (roleBd != null) {
+		for (final Iterator<Person> peopleIterator = persons.iterator(); peopleIterator.hasNext(); ) {
+		    final Person person = peopleIterator.next();
+		    if (!person.hasPersonRoles(roleBd)) {
+			peopleIterator.remove();
 		    }
-		} else if (roleBd.getRoleType() == RoleType.EMPLOYEE) {
-		    persons = new ArrayList<Person>();
-		    for (Person person : roleBd.getAssociatedPersons()) {
-			if (person.getTeacher() == null) {
-			    persons.add(person);
-			}
-		    }
-		} else {
-		    persons = roleBd.getAssociatedPersons();
 		}
 	    }
+	    final Department department = searchParameters.getDepartment();
+	    if (department != null) {
+		for (final Iterator<Person> peopleIterator = persons.iterator(); peopleIterator.hasNext(); ) {
+		    final Person person = peopleIterator.next();
+		    final Teacher teacher = person.getTeacher();
+		    if (teacher == null || teacher.getCurrentWorkingDepartment() != department) {
+			peopleIterator.remove();
+		    }
+		}		
+	    }
+	} else {
+	    persons = new ArrayList<Person>(0);
 	}
 
 	allValidPersons = (List<Person>) CollectionUtils.select(persons, predicate);

@@ -55,6 +55,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.parking.ParkingPartyClassification;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
+import net.sourceforge.fenixedu.domain.person.IdDocument;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 import net.sourceforge.fenixedu.domain.person.PersonName;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -2643,6 +2644,14 @@ public class Person extends Person_Base {
 	final Collection<Person> people = new ArrayList<Person>();
 	for (final PersonName personName : PersonName.findInternalPerson(name, Integer.MAX_VALUE)) {
 	    people.add(personName.getPerson());
+	}
+	return people;
+    }
+
+    public static Collection<Person> findPersonByDocumentID(final String documentIDValue) {
+	final Collection<Person> people = new ArrayList<Person>();
+	for (final IdDocument idDocument : IdDocument.find(documentIDValue)) {
+	    people.add(idDocument.getPerson());
 	}
 	return people;
     }

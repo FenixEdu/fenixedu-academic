@@ -56,3 +56,12 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.person.PersonNamePart" table="PERSON_NAME_PART">
     	
 </class-descriptor>
+
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.person.IdDocumentType" table="ID_DOCUMENT_TYPE">
+    	
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.person.IdDocument" table="ID_DOCUMENT">
+    	
+</class-descriptor>
