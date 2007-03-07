@@ -1451,6 +1451,12 @@ class net.sourceforge.fenixedu.domain.util.Email extends net.sourceforge.fenixed
 	String body;
 }
 
+class net.sourceforge.fenixedu.domain.EmailAddress extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyPerson;
+	String value;
+	Boolean isInstitutionalEmail;
+}
+
 
 class net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment extends net.sourceforge.fenixedu.domain.DomainObject {
 	String grade;
@@ -12304,6 +12310,20 @@ relation RootDomainObjectIdDocument {
 relation RootDomainObjectIdDocumentTypeObject {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.person.IdDocumentTypeObject playsRole idDocumentTypes {
+		multiplicity *;
+	}
+}
+
+relation PersonEmailAddress {
+	net.sourceforge.fenixedu.domain.Person playsRole person;
+	net.sourceforge.fenixedu.domain.EmailAddress playsRole emailAddresses {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectEmailAddress {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.EmailAddress playsRole emailAddresses {
 		multiplicity *;
 	}
 }

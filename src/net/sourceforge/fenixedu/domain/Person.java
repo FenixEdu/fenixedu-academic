@@ -160,6 +160,37 @@ public class Person extends Person_Base {
 	setIdDocumentType(idDocumentType);
     }
 
+    @Override
+    public void setEmail(final String emailString) {
+	super.setEmail(emailString);
+	final EmailAddress emailAddress = getEmailAddress(false);
+	if (emailAddress == null) {
+	    new EmailAddress(this, emailString, false);
+	} else {
+	    emailAddress.setValue(emailString);
+	}
+    }
+
+    @Override
+    public void setInstitutionalEmail(final String institutionalEmailString) {
+	super.setInstitutionalEmail(institutionalEmailString);
+	final EmailAddress emailAddress = getEmailAddress(true);
+	if (emailAddress == null) {
+	    new EmailAddress(this, institutionalEmailString, true);
+	} else {
+	    emailAddress.setValue(institutionalEmailString);
+	}
+    }
+
+    private EmailAddress getEmailAddress(final boolean isInstitutionalEmail) {
+	for (final EmailAddress emailAddress : getEmailAddressesSet()) {
+	    if (emailAddress.getIsInstitutionalEmail().booleanValue() == isInstitutionalEmail) {
+		return emailAddress;
+	    }
+	}
+	return null;
+    }
+
     private boolean checkIfDocumentNumberIdAndDocumentIdTypeExists(final String documentIDNumber,
 	    final IDDocumentType documentType) {
 
@@ -1161,6 +1192,7 @@ public class Person extends Person_Base {
 	}
 	getPersonName().delete();
 	for ( ; !getIdDocumentsSet().isEmpty(); getIdDocumentsSet().iterator().next().delete());
+	for ( ; !getEmailAddressesSet().isEmpty(); getEmailAddressesSet().iterator().next().delete());
 	super.delete();
     }
 
@@ -2681,6 +2713,11 @@ public class Person extends Person_Base {
 	    people.add(idDocument.getPerson());
 	}
 	return people;
+    }
+
+    public static Person readPersonByEmailAddress(final String email) {
+	final EmailAddress emailAddress = EmailAddress.find(email);
+	return emailAddress == null ? null : emailAddress.getPerson();
     }
 
 }

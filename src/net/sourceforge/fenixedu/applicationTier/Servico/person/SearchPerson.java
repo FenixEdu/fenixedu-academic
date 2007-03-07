@@ -141,11 +141,17 @@ public class SearchPerson extends Service {
 	if (searchParameters.getUsername() != null && searchParameters.getUsername().length() > 0) {
 	    final Person person = Person.readPersonByUsername(searchParameters.getUsername());
 	    persons = new ArrayList<Person>();
-	    persons.add(person);
+	    if (person != null) {
+		persons.add(person);
+	    }
 	} else if (searchParameters.getDocumentIdNumber() != null && searchParameters.getDocumentIdNumber().length() > 0) {
 	    persons = Person.findPersonByDocumentID(searchParameters.getDocumentIdNumber());
-//	} else if (searchParameters.getEmail() != null && searchParameters.getEmail().length() > 0) {
-	    // TODO
+	} else if (searchParameters.getEmail() != null && searchParameters.getEmail().length() > 0) {
+	    final Person person = Person.readPersonByEmailAddress(searchParameters.getEmail());
+	    persons = new ArrayList<Person>();
+	    if (person != null) {
+		persons.add(person);
+	    }
 	} else if (searchParameters.getName() != null) {
 	    persons = Person.findInternalPerson(searchParameters.getName());
 	    final Role roleBd = searchParameters.getRole();
