@@ -16,7 +16,7 @@ public class DepartmentSite extends DepartmentSite_Base {
         
         Unit unit = department.getDepartmentUnit();
         if (unit.hasSite()) {
-            throw new DomainException("site.department.unit.alreadr.has.site");
+            throw new DomainException("site.department.unit.already.has.site");
         }
         
         setUnit(department.getDepartmentUnit());

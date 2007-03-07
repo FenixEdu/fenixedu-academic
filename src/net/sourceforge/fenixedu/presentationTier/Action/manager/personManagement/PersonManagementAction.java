@@ -139,9 +139,7 @@ public class PersonManagementAction extends FenixDispatchAction {
 	    throws Exception {
 
 	final IViewState viewState = RenderUtils.getViewState("anyPersonSearchBeanId");
-	AnyPersonSearchBean anyPersonSearchBean = (AnyPersonSearchBean) viewState.getMetaObject()
-		.getObject();
-
+	AnyPersonSearchBean anyPersonSearchBean = (AnyPersonSearchBean) viewState.getMetaObject().getObject();
 	request.setAttribute("resultPersons", anyPersonSearchBean.search());
 	request.setAttribute("anyPersonSearchBean", anyPersonSearchBean);
 	return mapping.findForward("showExistentPersonsBeforeCreateInvitedPerson");
@@ -158,8 +156,7 @@ public class PersonManagementAction extends FenixDispatchAction {
     public ActionForward associateResponsibilityParty(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	final IViewState viewState = RenderUtils
-		.getViewState("invitedPersonBeanWithResponsibilityParty");
+	final IViewState viewState = RenderUtils.getViewState("invitedPersonBeanWithResponsibilityParty");
 	InvitedPersonBean invitedPersonBean = (InvitedPersonBean) viewState.getMetaObject().getObject();
 	request.setAttribute("invitedPersonBean", invitedPersonBean);
 	return mapping.findForward("prepareCreateInvitedPerson");
@@ -269,8 +266,7 @@ public class PersonManagementAction extends FenixDispatchAction {
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 	InvitedPersonBean bean = null;
-	final IViewState viewState = RenderUtils
-		.getViewState("invitedPersonBeanWithResponsibilityParty");
+	final IViewState viewState = RenderUtils.getViewState("invitedPersonBeanWithResponsibilityParty");
 	if (viewState != null) {
 	    bean = (InvitedPersonBean) viewState.getMetaObject().getObject();
 	} else {
@@ -326,9 +322,7 @@ public class PersonManagementAction extends FenixDispatchAction {
 	return mapping.findForward("prepareCreateNewPersonInvitation");
     }
     
-    private ActionForward goToChangeInvitationDetailsPage(String infoToEdit, ActionMapping mapping,
-	    HttpServletRequest request) {
-	
+    private ActionForward goToChangeInvitationDetailsPage(String infoToEdit, ActionMapping mapping, HttpServletRequest request) {	
 	Invitation invitation = getInvitationFromParameter(request);
 	request.setAttribute("initialUnit", UnitUtils.readInstitutionUnit());
 	request.setAttribute("invitation", invitation);

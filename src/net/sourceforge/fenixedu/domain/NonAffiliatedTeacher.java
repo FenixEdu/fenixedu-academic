@@ -22,12 +22,9 @@ public class NonAffiliatedTeacher extends NonAffiliatedTeacher_Base {
     }
 
     public static Set<NonAffiliatedTeacher> findNonAffiliatedTeacherByName(final String name) {
-
         Pattern pattern = Pattern.compile(name.toLowerCase());
-
         final Set<NonAffiliatedTeacher> nonAffiliatedTeachers = new HashSet<NonAffiliatedTeacher>();
-        for (final NonAffiliatedTeacher nonAffiliatedTeacher : RootDomainObject.getInstance()
-                .getNonAffiliatedTeachersSet()) {
+        for (final NonAffiliatedTeacher nonAffiliatedTeacher : RootDomainObject.getInstance().getNonAffiliatedTeachersSet()) {
             Matcher matcher = pattern.matcher(nonAffiliatedTeacher.getName().toLowerCase());
             if (matcher.find()) {
                 nonAffiliatedTeachers.add(nonAffiliatedTeacher);

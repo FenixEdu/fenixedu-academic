@@ -8378,15 +8378,7 @@
         	<chain name="ManagerAuthorization"></chain>
         </filterChains>
     </service>        
-    <service>
-    	<name>DeleteConnectionRule</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.DeleteConnectionRule</implementationClass>
-        <description></description>
-        <isTransactional>true</isTransactional>  
-        <filterChains>
-        	<chain name="ManagerAuthorization"></chain>
-        </filterChains>
-    </service>  
+    
  <!-- =========by gedl 15-11-2005============  -->
     <service>
 		<name>DefineInquiryResponsePeriod</name>
@@ -11570,6 +11562,14 @@
         <filterChains>
             <chain name="CoordinatorDegreeCurricularPlanAuthorization"/>
         </filterChains>
-    </service>   
-	
+    </service>  	
+    <service>
+        <name>MergeUnits</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.MergeUnits</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+		<filterChains>
+			<chain name="ManagerAuthorization" />
+		</filterChains>
+    </service> 
 </serviceDefinitions>

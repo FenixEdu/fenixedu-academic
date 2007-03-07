@@ -29,6 +29,8 @@ import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.parking.ParkingPartyClassification;
+import net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation;
+import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import net.sourceforge.fenixedu.domain.teacher.TeacherLegalRegimen;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
@@ -43,8 +45,7 @@ public class Unit extends Unit_Base {
 
     public final static Comparator<Unit> UNIT_COMPARATOR_BY_NAME = new ComparatorChain();
     static {
-	((ComparatorChain) UNIT_COMPARATOR_BY_NAME).addComparator(new BeanComparator("name", Collator
-		.getInstance()));
+	((ComparatorChain) UNIT_COMPARATOR_BY_NAME).addComparator(new BeanComparator("name", Collator.getInstance()));
 	((ComparatorChain) UNIT_COMPARATOR_BY_NAME).addComparator(new BeanComparator("idInternal"));
     }
 
@@ -113,27 +114,28 @@ public class Unit extends Unit_Base {
 	if (!canBeDeleted()) {
 	    throw new DomainException("error.unit.cannot.be.deleted");
 	}
-
+	
 	if (hasAnyParentUnits()) {
-	    this.getParents().get(0).delete();
+	    getParents().get(0).delete();
 	}
+	
+	if (hasSite()) {
+	    getSite().delete();
+    	}
 
-    if (hasSite()) {
-        getSite().delete();
-    }
-    
 	for (; !getParticipatingAnyCurricularCourseCurricularRules().isEmpty(); getParticipatingAnyCurricularCourseCurricularRules()
 		.get(0).delete())
 	    ;
+	
+	getUnitName().delete();		
 	removeDepartment();
-	removeDegree();
-	getUnitName().delete();
+	removeDegree();			
 	super.delete();
     }
 
     private boolean canBeDeleted() {
-	return (!hasAnyParents() || (this.getParentUnits().size() == 1 && this.getParents().size() == 1))
-		&& !hasAnyFunctions()
+	return (!hasAnyParents() || (getParentUnits().size() == 1 && getParents().size() == 1))
+		&& !hasAnyFunctions()		
 		&& !hasAnyChilds()
 		&& !hasAnySpaceResponsibility()
 		&& !hasAnyMaterials()
@@ -141,28 +143,44 @@ public class Unit extends Unit_Base {
 		&& !hasAnyCompetenceCourses()
 		&& !hasAnyAssociatedNonAffiliatedTeachers()
 		&& !hasAnyPayedGuides()
-                && !hasAnyExtraPayingUnitAuthorizations()
-                && !hasAnyExtraWorkingUnitAuthorizations()
 		&& !hasAnyPayedReceipts()
-		&& !hasAdministrativeOffice()
-		&& !hasUnitServiceAgreementTemplate() 
+		&& !hasAnyExtraPayingUnitAuthorizations()
+                && !hasAnyExtraWorkingUnitAuthorizations()		
 		&& !hasAnyExternalCurricularCourses()
-        && (!hasSite() || getSite().canBeDeleted());
+		&& !hasAnyPublisherResultPublications()
+		&& !hasAnyOrganizationResultPublications()
+		&& !hasAnyResultUnitAssociations()
+		&& !hasAdministrativeOffice()
+		&& !hasUnitServiceAgreementTemplate()		
+		&& (!hasSite() || getSite().canBeDeleted());
     }
 
     public boolean isInternal() {
 	if(this.equals(UnitUtils.readInstitutionUnit())){
 	    return true;
 	}
-	
-	for (final Unit subUnit : getParentUnits()) {
-	    if(subUnit.isInternal()) {
+		
+	for (final Unit parentUnit : getParentUnits()) {
+	    if(parentUnit.isInternal()) {
+		return true;
+	    }
+	}
+		
+	return false;
+    }
+    
+    public boolean isNoOfficialExternal() {
+	if(this.equals(UnitUtils.readExternalInstitutionUnit())){
+	    return true;
+	}	
+	for (final Unit parentUnit : getParentUnits()) {
+	    if(parentUnit.isNoOfficialExternal()) {
 		return true;
 	    }
 	}	
 	return false;
     }
-
+    
     public boolean isActive(YearMonthDay currentDate) {
 	return (!this.getBeginDateYearMonthDay().isAfter(currentDate) && (this.getEndDateYearMonthDay() == null || !this
 		.getEndDateYearMonthDay().isBefore(currentDate)));
@@ -869,7 +887,7 @@ public class Unit extends Unit_Base {
 	}
 
 	Unit contributor = Unit.createNewExternalInstitution(contributorName);
-
+	
 	contributor.setSocialSecurityNumber(contributorNumber);
 	contributor.setAddress(contributorAddress);
 	contributor.setAreaCode(areaCode);
@@ -1065,17 +1083,16 @@ public class Unit extends Unit_Base {
     
     @Override
     public AdministrativeOffice getAdministrativeOffice() {
-
 	if (super.getAdministrativeOffice() != null) {
 	    return super.getAdministrativeOffice();
 	}
-
+	
 	for (Unit parentUnit : getParentUnits(AccountabilityTypeEnum.ADMINISTRATIVE_STRUCTURE)) {
 	    if (parentUnit.hasAdministrativeOffice()) {
 		return parentUnit.getAdministrativeOffice();
 	    }
 	}
-
+	
 	return null;
     }
     
@@ -1087,8 +1104,7 @@ public class Unit extends Unit_Base {
      * @return SortedSet<Object>
      */
     public SortedSet<Object> getSortedExternalChilds() {
-	final SortedSet<Object> result = new TreeSet<Object>(new BeanComparator("name"));
-	
+	final SortedSet<Object> result = new TreeSet<Object>(new BeanComparator("name"));	
 	for (final Unit unit : getSubUnits()) {
 	    if (!unit.isInternal()) {
 		result.add(unit);
@@ -1118,5 +1134,31 @@ public class Unit extends Unit_Base {
 	    }
 	}
 	return false;
+    }
+
+    public static void mergeExternalUnits(Unit fromUnit, Unit destinationUnit) {	
+	if(fromUnit != null && destinationUnit != null && !fromUnit.equals(destinationUnit)
+		&& fromUnit.isNoOfficialExternal() && !destinationUnit.isInternal()) {	    
+           	    
+	    Collection<? extends Accountability> externalContracts = fromUnit.getChildAccountabilitiesByAccountabilityClass(ExternalContract.class);
+            List<NonAffiliatedTeacher> nonAffiliatedTeachers = fromUnit.getAssociatedNonAffiliatedTeachers();        	        	
+            List<ResultUnitAssociation> resultUnitAssociations = fromUnit.getResultUnitAssociations();            
+            List<ResearchResultPublication> organizationResultPublications = fromUnit.getOrganizationResultPublications();
+            List<ResearchResultPublication> publisherResultPublications = fromUnit.getPublisherResultPublications();
+            
+            fromUnit.getPublisherResultPublications().clear();
+            fromUnit.getOrganizationResultPublications().clear();
+            fromUnit.getResultUnitAssociations().clear();
+            fromUnit.getAssociatedNonAffiliatedTeachers().clear();        	
+            fromUnit.getChilds().removeAll(externalContracts);
+                       
+            destinationUnit.getPublisherResultPublications().addAll(publisherResultPublications);
+            destinationUnit.getOrganizationResultPublications().addAll(organizationResultPublications);
+            destinationUnit.getResultUnitAssociations().addAll(resultUnitAssociations);
+            destinationUnit.getAssociatedNonAffiliatedTeachers().addAll(nonAffiliatedTeachers);
+            destinationUnit.getChilds().addAll(externalContracts);
+                                   
+            fromUnit.delete();        	
+	}
     }
 }

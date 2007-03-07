@@ -9,6 +9,11 @@
 		<!-- ========== Form Bean Definitions ================================== -->
 		<form-beans type="org.apache.struts.action.ActionFormBean">  
 		
+		
+		<form-bean name="unitsMergeForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="fromUnitID" type="java.lang.Integer" />       
+			<form-property name="destinationUnitID" type="java.lang.Integer"/>
+		</form-bean>
 		<form-bean name="chooseDegreesForExecutionCourseMerge"
 			type="org.apache.struts.validator.DynaValidatorForm"
                 dynamic="true">
@@ -2049,16 +2054,6 @@
 		<forward name="propertyFormatter" path="chooseClassAndSlotToFormat"/>
 	</action>
 	
-	<!-- ConnectionRules Management -->     
-	<action path="/rulesManagement"
-			parameter="method"
-			name="rulesManagementForm"
-			type="net.sourceforge.fenixedu.presentationTier.Action.manager.organizationalStructure.RulesManagementAction"
-			scope="request">
-		<forward name="listRules" path="listRules"/>	
-		<forward name="insertNewRule" path="insertNewRule"/>
-	</action>
-
     <action path="/reloadStruts" type="net.sourceforge.fenixedu.presentationTier.Action.manager.ReloadStrutsAction"/>
     
     <action path="/reloadJasperReports" type="net.sourceforge.fenixedu.presentationTier.Action.manager.ReloadJasperReportsConfigurationAction"/>
@@ -2252,6 +2247,18 @@
 	    	    type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction">
       		  	<forward name="Success" path="create-academic-calendar"/>      	      
       	</action>
+      	
+      	
+		<!-- =================== Units Merge =================== -->
+		<action path="/unitsMerge"
+				parameter="method"
+				name="unitsMergeForm"
+				type="net.sourceforge.fenixedu.presentationTier.Action.manager.organizationalStructure.UnitsMergeDA"
+				scope="request">
+			<forward name="chooseUnit" path="choose-unit-to-merge"/>				
+			<forward name="seeChoosedUnit" path="see-choosed-unit-to-merge"/>				
+			<forward name="goToConfirmation" path="confirmation-to-merge"/>							
+		</action>
       
 	</action-mappings>
 

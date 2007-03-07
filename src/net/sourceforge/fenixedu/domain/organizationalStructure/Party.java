@@ -65,86 +65,6 @@ public abstract class Party extends Party_Base {
 	return null;
     }
 
-    public Collection<? extends Party> getParentParties(AccountabilityTypeEnum accountabilityTypeEnum,
-	    Class parentPartyClass) {
-	final Set<Party> result = new HashSet<Party>();
-	for (final Accountability accountability : getParentsSet()) {
-	    if (accountability.getAccountabilityType().getType() == accountabilityTypeEnum
-		    && accountability.getParentParty().getClass().equals(parentPartyClass)) {
-		result.add(accountability.getParentParty());
-	    }
-	}
-	return result;
-    }
-
-    public Collection<? extends Party> getParentParties(Class parentPartyClass) {
-	final Set<Party> result = new HashSet<Party>();
-	for (final Accountability accountability : getParentsSet()) {
-	    if (accountability.getParentParty().getClass().equals(parentPartyClass)) {
-		result.add(accountability.getParentParty());
-	    }
-	}
-	return result;
-    }
-
-    public Collection<? extends Party> getParentParties(
-	    List<AccountabilityTypeEnum> accountabilityTypeEnums, Class parentPartyClass) {
-	final Set<Party> result = new HashSet<Party>();
-	for (final Accountability accountability : getParentsSet()) {
-	    if (accountabilityTypeEnums.contains(accountability.getAccountabilityType().getType())
-		    && accountability.getParentParty().getClass().equals(parentPartyClass)) {
-		result.add(accountability.getParentParty());
-	    }
-	}
-	return result;
-    }
-
-
-    public Collection<? extends Party> getChildParties(Class childPartyClass) {
-	final Set<Party> result = new HashSet<Party>();
-	for (final Accountability accountability : getChildsSet()) {
-	    if (accountability.getChildParty().getClass().equals(childPartyClass)) {
-		result.add(accountability.getChildParty());
-	    }
-	}
-	return result;
-    }
-
-    public Collection<? extends Party> getChildParties(AccountabilityTypeEnum accountabilityTypeEnum,
-	    Class childPartyClass) {
-	final Set<Party> result = new HashSet<Party>();
-	for (final Accountability accountability : getChildsSet()) {
-	    if (accountability.getAccountabilityType().getType() == accountabilityTypeEnum
-		    && accountability.getChildParty().getClass().equals(childPartyClass)) {
-		result.add(accountability.getChildParty());
-	    }
-	}
-	return result;
-    }
-
-    public Collection<? extends Party> getChildParties(
-	    List<AccountabilityTypeEnum> accountabilityTypeEnums, Class childPartyClass) {
-	final Set<Party> result = new HashSet<Party>();
-	for (final Accountability accountability : getChildsSet()) {
-	    if (accountabilityTypeEnums.contains(accountability.getAccountabilityType().getType())
-		    && accountability.getChildParty().getClass().equals(childPartyClass)) {
-		result.add(accountability.getChildParty());
-	    }
-	}
-	return result;
-    }
-
-    protected Collection<? extends Party> getChildParties(final PartyTypeEnum type, final Class<? extends Party> clazz) {
-	final Set<Party> result = new HashSet<Party>();
-	for (final Accountability accountability : getChildsSet()) {
-	    if (accountability.getChildParty().getType() == type 
-		    && accountability.getChildParty().getClass().equals(clazz)) {
-		result.add(accountability.getChildParty());
-	    }
-	}
-	return result;
-    }
-    
     public PartyTypeEnum getType() {
 	return getPartyType() != null ? getPartyType().getType() : null;
     }
@@ -160,9 +80,84 @@ public abstract class Party extends Party_Base {
             setPartyType(null);
         }
     }
+    
+    public Collection<? extends Party> getParentParties(AccountabilityTypeEnum accountabilityTypeEnum, Class<? extends Party> parentPartyClass) {
+	final Set<Party> result = new HashSet<Party>();
+	for (final Accountability accountability : getParentsSet()) {
+	    if (accountability.getAccountabilityType().getType() == accountabilityTypeEnum
+		    && accountability.getParentParty().getClass().equals(parentPartyClass)) {
+		result.add(accountability.getParentParty());
+	    }
+	}
+	return result;
+    }
 
-    public Collection<? extends Accountability> getParentAccountabilities(
-	    AccountabilityTypeEnum accountabilityTypeEnum) {
+    public Collection<? extends Party> getParentParties(Class<? extends Party> parentPartyClass) {
+	final Set<Party> result = new HashSet<Party>();
+	for (final Accountability accountability : getParentsSet()) {
+	    if (accountability.getParentParty().getClass().equals(parentPartyClass)) {
+		result.add(accountability.getParentParty());
+	    }
+	}
+	return result;
+    }
+
+    public Collection<? extends Party> getParentParties(List<AccountabilityTypeEnum> accountabilityTypeEnums, Class<? extends Party> parentPartyClass) {
+	final Set<Party> result = new HashSet<Party>();
+	for (final Accountability accountability : getParentsSet()) {
+	    if (accountabilityTypeEnums.contains(accountability.getAccountabilityType().getType())
+		    && accountability.getParentParty().getClass().equals(parentPartyClass)) {
+		result.add(accountability.getParentParty());
+	    }
+	}
+	return result;
+    }
+
+
+    public Collection<? extends Party> getChildParties(Class<? extends Party> childPartyClass) {
+	final Set<Party> result = new HashSet<Party>();
+	for (final Accountability accountability : getChildsSet()) {
+	    if (accountability.getChildParty().getClass().equals(childPartyClass)) {
+		result.add(accountability.getChildParty());
+	    }
+	}
+	return result;
+    }
+
+    public Collection<? extends Party> getChildParties(AccountabilityTypeEnum accountabilityTypeEnum, Class<? extends Party> childPartyClass) {
+	final Set<Party> result = new HashSet<Party>();
+	for (final Accountability accountability : getChildsSet()) {
+	    if (accountability.getAccountabilityType().getType() == accountabilityTypeEnum
+		    && accountability.getChildParty().getClass().equals(childPartyClass)) {
+		result.add(accountability.getChildParty());
+	    }
+	}
+	return result;
+    }
+
+    public Collection<? extends Party> getChildParties(List<AccountabilityTypeEnum> accountabilityTypeEnums, Class<? extends Party> childPartyClass) {
+	final Set<Party> result = new HashSet<Party>();
+	for (final Accountability accountability : getChildsSet()) {
+	    if (accountabilityTypeEnums.contains(accountability.getAccountabilityType().getType())
+		    && accountability.getChildParty().getClass().equals(childPartyClass)) {
+		result.add(accountability.getChildParty());
+	    }
+	}
+	return result;
+    }
+
+    protected Collection<? extends Party> getChildParties(PartyTypeEnum type, Class<? extends Party> clazz) {
+	final Set<Party> result = new HashSet<Party>();
+	for (final Accountability accountability : getChildsSet()) {
+	    if (accountability.getChildParty().getType() == type 
+		    && accountability.getChildParty().getClass().equals(clazz)) {
+		result.add(accountability.getChildParty());
+	    }
+	}
+	return result;
+    }
+        
+    public Collection<? extends Accountability> getParentAccountabilities(AccountabilityTypeEnum accountabilityTypeEnum) {
 	final Set<Accountability> result = new HashSet<Accountability>();
 	for (final Accountability accountability : getParentsSet()) {
 	    if (accountability.getAccountabilityType().getType() == accountabilityTypeEnum) {
@@ -172,8 +167,7 @@ public abstract class Party extends Party_Base {
 	return result;
     }
 
-    public Collection<? extends Accountability> getChildAccountabilities(
-	    AccountabilityTypeEnum accountabilityTypeEnum) {
+    public Collection<? extends Accountability> getChildAccountabilities(AccountabilityTypeEnum accountabilityTypeEnum) {
 	final Set<Accountability> result = new HashSet<Accountability>();
 	for (final Accountability accountability : getChildsSet()) {
 	    if (accountability.getAccountabilityType().getType() == accountabilityTypeEnum) {
@@ -183,8 +177,7 @@ public abstract class Party extends Party_Base {
 	return result;
     }
 
-    public Collection<? extends Accountability> getParentAccountabilities(
-	    AccountabilityTypeEnum accountabilityTypeEnum, Class accountabilityClass) {
+    public Collection<? extends Accountability> getParentAccountabilities(AccountabilityTypeEnum accountabilityTypeEnum, Class<? extends Accountability> accountabilityClass) {
 	final Set<Accountability> result = new HashSet<Accountability>();
 	for (final Accountability accountability : getParentsSet()) {
 	    if (accountability.getAccountabilityType().getType() == accountabilityTypeEnum
@@ -195,8 +188,7 @@ public abstract class Party extends Party_Base {
 	return result;
     }
 
-    public Collection<? extends Accountability> getChildAccountabilities(
-	    AccountabilityTypeEnum accountabilityTypeEnum, Class accountabilityClass) {
+    public Collection<? extends Accountability> getChildAccountabilities(AccountabilityTypeEnum accountabilityTypeEnum, Class<? extends Accountability> accountabilityClass) {
 	final Set<Accountability> result = new HashSet<Accountability>();
 	for (final Accountability accountability : getChildsSet()) {
 	    if (accountability.getAccountabilityType().getType() == accountabilityTypeEnum
@@ -207,7 +199,7 @@ public abstract class Party extends Party_Base {
 	return result;
     }
 
-    public Collection<? extends Accountability> getParentAccountabilities(Class parentClass) {
+    public Collection<? extends Accountability> getParentAccountabilitiesByParentClass(Class<? extends Party> parentClass) {
 	final Set<Accountability> result = new HashSet<Accountability>();
 	for (final Accountability accountability : getParentsSet()) {
 	    if (accountability.getParentParty().getClass().equals(parentClass)) {
@@ -217,10 +209,20 @@ public abstract class Party extends Party_Base {
 	return result;
     }
 
-    public Collection<? extends Accountability> getChildAccountabilities(Class childClass) {
+    public Collection<? extends Accountability> getChildAccountabilitiesByChildClass(Class<? extends Party> childClass) {
 	final Set<Accountability> result = new HashSet<Accountability>();
 	for (final Accountability accountability : getChildsSet()) {
 	    if (accountability.getChildParty().getClass().equals(childClass)) {
+		result.add(accountability);
+	    }
+	}
+	return result;
+    }
+    
+    public Collection<? extends Accountability> getChildAccountabilitiesByAccountabilityClass(Class<? extends Accountability> accountabilityClass) {
+	final Set<Accountability> result = new HashSet<Accountability>();
+	for (final Accountability accountability : getChildsSet()) {
+	    if (accountability.getClass().equals(accountabilityClass)) {
 		result.add(accountability);
 	    }
 	}
@@ -235,6 +237,7 @@ public abstract class Party extends Party_Base {
 	for (; !getAccounts().isEmpty(); getAccounts().get(0).delete())
 	    ;
 	
+	removePartyType();	
 	removeRootDomainObject();
 	super.deleteDomainObject();
     }
@@ -253,6 +256,7 @@ public abstract class Party extends Party_Base {
 			.toLowerCase());
 	    }
 	};
+	
 	chain.addComparator(caseInsensitiveName);
 	chain.addComparator(new BeanComparator("socialSecurityNumber"));
 
@@ -310,11 +314,9 @@ public abstract class Party extends Party_Base {
     public abstract ParkingPartyClassification getPartyClassification();
 
     public boolean verifyNameEquality(String[] nameWords) {
-
 	if (nameWords == null) {
 	    return true;
 	}
-
 	if (getName() != null) {
 	    String[] personNameWords = getName().trim().split(" ");
 	    StringNormalizer.normalize(personNameWords);
@@ -337,10 +339,11 @@ public abstract class Party extends Party_Base {
 	}
 	return false;
     }
+    
     public List<ResearchActivity> getResearchActivities() {
     	List<ResearchActivity> activities = new ArrayList<ResearchActivity> ();
     	for(Participation participation : this.getParticipations()) {
-    		activities.add(participation.getResearchActivity());
+    	    activities.add(participation.getResearchActivity());
     	}
     	return activities;
     }
@@ -348,9 +351,9 @@ public abstract class Party extends Party_Base {
     public List<Participation> getAllEventParticipations(){
     	List<Participation> eventParticipations = new ArrayList<Participation> ();
     	for(Participation participation : this.getParticipations()) {
-    		if(participation.isEventParticipation()) {
-    			eventParticipations.add(participation);
-    		}
+            if(participation.isEventParticipation()) {
+            	eventParticipations.add(participation);
+            }
     	}
     	return eventParticipations;
     }
@@ -358,9 +361,9 @@ public abstract class Party extends Party_Base {
     public List<Participation> getAllScientificJournalsParticipations(){
     	List<Participation> scientifJournalParticipations = new ArrayList<Participation> ();
     	for(Participation participation : this.getParticipations()) {
-    		if(participation.isScientificJournaltParticipation()) {
-    			scientifJournalParticipations.add(participation);
-    		}
+            if(participation.isScientificJournaltParticipation()) {
+            	scientifJournalParticipations.add(participation);
+            }
     	}
     	return scientifJournalParticipations;
     }
@@ -375,9 +378,9 @@ public abstract class Party extends Party_Base {
     
     public void removeResearchActivities(ResearchActivity researchActivity) {
     	for(Participation participation : this.getParticipations()) {
-    		if(participation.getResearchActivity().equals(researchActivity)) {
-    			participation.delete();
-    		}
+            if(participation.getResearchActivity().equals(researchActivity)) {
+            	participation.delete();
+            }
     	}
     }
 }

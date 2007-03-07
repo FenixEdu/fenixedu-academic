@@ -866,13 +866,13 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     public List<Accountability> getParentAccountabilities() throws FenixFilterException,
 	    FenixServiceException {
 	return new ArrayList<Accountability>((Collection<Accountability>) getUnit()
-		.getParentAccountabilities(Unit.class));
+		.getParentAccountabilitiesByParentClass(Unit.class));
     }
 
     public List<Accountability> getChildAccountabilities() throws FenixFilterException,
 	    FenixServiceException {
 	return new ArrayList<Accountability>((Collection<Accountability>) getUnit()
-		.getChildAccountabilities(Unit.class));
+		.getChildAccountabilitiesByChildClass(Unit.class));
     }
 
     private void getParentUnitsRelationTypes() throws FenixFilterException, FenixServiceException {	

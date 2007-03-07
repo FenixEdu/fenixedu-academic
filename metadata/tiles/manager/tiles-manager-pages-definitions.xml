@@ -512,14 +512,6 @@
     <definition name="renderers.schemas" extends="definition.manager.masterPage" >
         <put name="body" value="/manager/renderers/schemas.jsp" />
     </definition>
-
-    <!-- ========== ConnectionRules Management ============ -->
-    <definition name="listRules" extends="definition.manager.masterPage" >
-    	<put name="body" value="/manager/organizationalStructureManagament/listRules.jsp" />
-    </definition>
-    <definition name="insertNewRule" extends="definition.manager.masterPage" >
-    	<put name="body" value="/manager/organizationalStructureManagament/insertNewRule.jsp" />
-    </definition>
     
     <!-- ========== Domain Objects Management Examples ============ -->
     <definition name="chooseClassAndSlotToFormat" extends="definition.manager.masterPage" >
@@ -843,5 +835,15 @@
 		<put name="body" value="/manager/academicCalendarsManagement/createAcademicCalendar.jsp" />
 	</definition>	
 	
-				
+	<!--  ###################  Units Merge ####################### -->
+	<definition name="choose-unit-to-merge" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/organizationalStructureManagament/mergeUnits/chooseUnitToStart.jsp" />
+	</definition>
+	<definition name="see-choosed-unit-to-merge" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/organizationalStructureManagament/mergeUnits/choosedUnit.jsp" />
+	</definition>	
+	<definition name="confirmation-to-merge" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/organizationalStructureManagament/mergeUnits/confirmation.jsp" />
+	</definition>	
+					
 </tiles-definitions>
