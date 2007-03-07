@@ -123,13 +123,31 @@ public class Degree extends Degree_Base {
     }
 
     public Boolean getCanBeDeleted() {
-	return !hasAnyDegreeCurricularPlans();
+        if (hasAnyDegreeCurricularPlans()) {
+            return false;   
+        }
+        
+        if (hasSite() && getSite().canBeDeleted()) {
+            return false;
+        }
+        
+        return true;
     }
 
+    private void checkDeletion() {
+        if (hasAnyDegreeCurricularPlans()) {
+            throw new DomainException("error.degree.has.degree.curricular.plans");  
+        }
+        
+        if (hasSite() && getSite().canBeDeleted()) {
+            throw new DomainException("error.degree.has.site.undeletable");  
+        }
+    }
+    
     public void delete() throws DomainException {
 
-	if (getCanBeDeleted()) {
-
+        checkDeletion();
+        
 	    Iterator oicrIterator = getAssociatedOldInquiriesCoursesResIterator();
 	    while (oicrIterator.hasNext()) {
 		OldInquiriesCoursesRes oicr = (OldInquiriesCoursesRes) oicrIterator.next();
@@ -176,9 +194,6 @@ public class Degree extends Degree_Base {
 
 	    removeRootDomainObject();
 	    deleteDomainObject();
-	} else {
-	    throw new DomainException("error.degree.has.degree.curricular.plans");
-	}
     }
 
     public DegreeType getDegreeType() {

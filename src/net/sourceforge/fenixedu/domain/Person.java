@@ -1125,6 +1125,10 @@ public class Person extends Person_Base {
 	    getAssociatedPersonAccount().delete();
 	}
 
+    if (hasHomepage()) { // check if can delete made in #canBeDeleted()
+        getHomepage().delete();
+    }
+    
 	for (; !getAccounts().isEmpty(); getAccounts().get(0).delete())
 	    ;
 
@@ -1208,6 +1212,10 @@ public class Person extends Person_Base {
 	if (hasParking()) {
 	    throw new DomainException("error.person.cannot.be.deleted");
 	}
+    if (hasHomepage() && !getHomepage().canBeDeleted()) {
+        return false;
+    }
+    
 	return true;
     }
 

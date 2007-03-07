@@ -118,6 +118,10 @@ public class Unit extends Unit_Base {
 	    this.getParents().get(0).delete();
 	}
 
+    if (hasSite()) {
+        getSite().delete();
+    }
+    
 	for (; !getParticipatingAnyCurricularCourseCurricularRules().isEmpty(); getParticipatingAnyCurricularCourseCurricularRules()
 		.get(0).delete())
 	    ;
@@ -140,7 +144,8 @@ public class Unit extends Unit_Base {
 		&& !hasAnyPayedReceipts()
 		&& !hasAdministrativeOffice()
 		&& !hasUnitServiceAgreementTemplate() 
-		&& !hasAnyExternalCurricularCourses();
+		&& !hasAnyExternalCurricularCourses()
+        && (!hasSite() || getSite().canBeDeleted());
     }
 
     public boolean isInternal() {
