@@ -26,5 +26,12 @@ public class DegreeSite extends DegreeSite_Base {
         
         return groups;
     }
-    
+
+    @Override
+    protected void deleteRelations() {
+        super.deleteRelations();
+        
+        removeDegree();
+    }
+ 
 }

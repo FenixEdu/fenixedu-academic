@@ -44,20 +44,37 @@ public abstract class Site extends Site_Base {
     public abstract IGroup getOwner();
 
     public boolean canBeDeleted() {
-        return !hasAnyAssociatedSections();
+        if (!hasAnyAssociatedSections()) {
+            return true;
+        }
+        else {
+            for (Section section : getTopLevelSections()) {
+                if (! section.isDeletable()) {
+                    return false;
+                }
+            }
+        }
+        
+        return true;
     }
 
     public void delete() {
         if (canBeDeleted()) {
             deleteRelations();
 
-            super.deleteDomainObject();
+            deleteDomainObject();
         } else {
             throw new DomainException("site.cannot.be.deleted");
         }
     }
 
     protected void deleteRelations() {
+        for (Section section : getTopLevelSections()) {
+            section.delete();
+        }
+        
+        removeRootDomainObject();
+        removeTemplate();
     }
     
     public List<Section> getTopLevelSections() {

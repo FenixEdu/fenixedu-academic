@@ -99,5 +99,12 @@ public class Homepage extends Homepage_Base {
             return REGULAR_QUOTA;
         }
     }
+
+    @Override
+    protected void deleteRelations() {
+        super.deleteRelations();
+        
+        removePerson()
+    }
     
 }

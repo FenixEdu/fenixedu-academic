@@ -41,7 +41,6 @@ public class ExecutionCourseSite extends ExecutionCourseSite_Base {
     protected void deleteRelations() {
         super.deleteRelations();
         
-        removeRootDomainObject();
         removeExecutionCourse();
     }
 

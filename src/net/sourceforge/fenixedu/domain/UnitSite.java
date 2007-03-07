@@ -17,4 +17,11 @@ public abstract class UnitSite extends UnitSite_Base {
         }
     }
 
+    @Override
+    protected void deleteRelations() {
+        super.deleteRelations();
+        
+        removeUnit();
+    }
+
 }

@@ -62,5 +62,12 @@ public class SiteTemplate extends SiteTemplate_Base {
     public IGroup getOwner() {
         return new RoleGroup(Role.getRoleByRoleType(RoleType.MANAGER));
     }
+
+    @Override
+    protected void deleteRelations() {
+        super.deleteRelations();
+
+        getTemplatedSites().clear();
+    }
     
 }
