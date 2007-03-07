@@ -195,9 +195,8 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			if (getBeginTime() == null) {
 			    return new ActionMessage("errors.required", bundle.getString("label.hour"));
 			}
-
-			if (isOverlapingAnyTimeJustification()) {
-			    return new ActionMessage("errors.regularizationInsideTimeJustification");
+			if (isOverlapingAnotherAssiduousnessRecord()) {
+			    return new ActionMessage("errors.regularizationOverlapingAnotherAssiduousnessRecord");
 			}
 			new MissingClocking(getEmployee().getAssiduousness(), getBeginDate().toDateTime(
 				getBeginTime()), getJustificationMotive(), getModifiedBy());
@@ -337,8 +336,9 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			    return new ActionMessage("errors.required", bundle.getString("label.hour"));
 			}
 
-			if (isOverlapingAnyTimeJustification()) {
-			    return new ActionMessage("errors.regularizationInsideTimeJustification");
+			if (isOverlapingAnotherAssiduousnessRecord()) {
+			    return new ActionMessage(
+				    "errors.regularizationOverlapingAnotherAssiduousnessRecord");
 			}
 			((MissingClocking) getJustification()).modify(getBeginDate().toDateTime(
 				getBeginTime()), getJustificationMotive(), getModifiedBy());
@@ -377,10 +377,9 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 
 	public Object execute() {
 	    if (getJustification().getJustificationMotive().getJustificationType() != null
-		    && getJustification().getJustificationMotive().getJustificationType().equals(
-			    JustificationType.OCCURRENCE)
-		    || getJustification().getJustificationMotive().getJustificationType().equals(
-			    JustificationType.MULTIPLE_MONTH_BALANCE)) {
+		    && (getJustification().getJustificationMotive().getJustificationType().equals(
+			    JustificationType.OCCURRENCE) || getJustification().getJustificationMotive()
+			    .getJustificationType().equals(JustificationType.MULTIPLE_MONTH_BALANCE))) {
 		if (isDateIntervalInClosedMonth(getJustification().getDate().toYearMonthDay(),
 			((Leave) getJustification()).getDuration())) {
 		    return new ActionMessage("errors.cantDelete.datesInClosedMonth");
@@ -430,9 +429,12 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 	return false;
     }
 
-    protected boolean isOverlapingAnyTimeJustification() {
+    protected boolean isOverlapingAnotherAssiduousnessRecord() {
 	final List<Leave> leaves = getEmployee().getAssiduousness().getLeaves(getBeginDate(),
 		getBeginDate());
+	DateTime date = getBeginDate().toDateTime(getBeginTime());
+	final List<AssiduousnessRecord> clockings = getEmployee().getAssiduousness()
+		.getClockingsAndMissingClockings(date, date.plusMinutes(1));
 	if (!leaves.isEmpty()) {
 	    for (Leave leave : leaves) {
 		if (leave.getJustificationMotive().getJustificationType().equals(
@@ -446,6 +448,10 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 		    return true;
 		}
 	    }
+	}
+
+	if (!clockings.isEmpty()) {
+	    return true;
 	}
 	return false;
     }
