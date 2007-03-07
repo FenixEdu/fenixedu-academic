@@ -443,7 +443,6 @@
 
 <schema name="ViewUnitInfoToMergeUnits" type="net.sourceforge.fenixedu.domain.organizationalStructure.Unit" bundle="MANAGER_RESOURCES">
 	<slot name="presentationNameWithParents"/>
-	<slot name="costCenterCode"/>
 </schema>
 
 <schema name="ChangeNoOfficialName" type="net.sourceforge.fenixedu.domain.organizationalStructure.Unit" bundle="MANAGER_RESOURCES">

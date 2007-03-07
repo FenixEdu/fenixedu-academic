@@ -29,7 +29,7 @@
 			}
 		</script>
 	
-		<p class="mtop15 mbottom05"><strong><bean:message key="label.choose.unit" bundle="MANAGER_RESOURCES"/></strong></p>	
+		<p class="mtop3 mbottom2"><strong><bean:message key="label.choose.unit" bundle="MANAGER_RESOURCES"/></strong></p>	
 		<un:tree initialUnit="externalInstitutionUnit" unitParamName="unitID" path="/manager/unitsMerge.do?method=seeChoosedUnit" state="true"/>
 		
 	</logic:notEmpty>

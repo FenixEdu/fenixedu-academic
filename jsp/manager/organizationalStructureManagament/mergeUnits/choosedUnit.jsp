@@ -29,13 +29,15 @@
 
 	<logic:notEmpty name="externalUnit"> 		
 		
-		<p class="mtop15 mbottom05"><strong><bean:message key="label.choosed.no.official.unit.to.merge" bundle="MANAGER_RESOURCES"/></strong></p>	
+		<p class="mtop3 mbottom05"><strong><bean:message key="label.choosed.no.official.unit.to.merge" bundle="MANAGER_RESOURCES"/></strong></p>	
 		<fr:view name="externalUnit" schema="ViewUnitInfoToMergeUnits">
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle2 thlight thright thbgnone"/>
+				<fr:property name="classes" value="tstyle2 thlight thright"/>
 				<fr:property name="columnClasses" value=",bold"/>
 			</fr:layout>
 		</fr:view>
+		
+		<p style="font-size: 1.5em; margin-left: 5em;" class="mbottom15"><b>+</b></p>
 		
 		<logic:notEmpty name="earthUnit">		
 					
