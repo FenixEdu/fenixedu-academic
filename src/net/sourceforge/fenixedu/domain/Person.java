@@ -56,7 +56,7 @@ import net.sourceforge.fenixedu.domain.parking.ParkingPartyClassification;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.IdDocument;
-import net.sourceforge.fenixedu.domain.person.IdDocumentType;
+import net.sourceforge.fenixedu.domain.person.IdDocumentTypeObject;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 import net.sourceforge.fenixedu.domain.person.PersonName;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -130,7 +130,7 @@ public class Person extends Person_Base {
 	}
 	IdDocument idDocument = getIdDocument();
 	if (idDocument == null) {
-	    idDocument = new IdDocument(this, documentIdNumber, (IdDocumentType) null);
+	    idDocument = new IdDocument(this, documentIdNumber, (IdDocumentTypeObject) null);
 	} else {
 	    idDocument.setValue(documentIdNumber);
 	}

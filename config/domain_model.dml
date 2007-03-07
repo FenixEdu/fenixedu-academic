@@ -2139,7 +2139,7 @@ class net.sourceforge.fenixedu.domain.Holiday extends net.sourceforge.fenixedu.d
 	Integer keyLocality;
 }
 
-class net.sourceforge.fenixedu.domain.person.IdDocumentType extends net.sourceforge.fenixedu.domain.DomainObject {
+class net.sourceforge.fenixedu.domain.person.IdDocumentTypeObject extends net.sourceforge.fenixedu.domain.DomainObject {
     IDDocumentType value; 
 }
 
@@ -8467,8 +8467,8 @@ relation ConnectionRuleAccountabilityType {
 }
 
 
-relation IdDocumentTypeIdDocument {
-    net.sourceforge.fenixedu.domain.person.IdDocumentType playsRole idDocumentType;
+relation IdDocumentTypeObjectIdDocument {
+    net.sourceforge.fenixedu.domain.person.IdDocumentTypeObject playsRole idDocumentType;
     net.sourceforge.fenixedu.domain.person.IdDocument playsRole idDocuments {
         multiplicity *;
     }
@@ -12301,9 +12301,9 @@ relation RootDomainObjectIdDocument {
 	}
 }
 
-relation RootDomainObjectIdDocumentType {
+relation RootDomainObjectIdDocumentTypeObject {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.person.IdDocumentType playsRole idDocumentTypes {
+	net.sourceforge.fenixedu.domain.person.IdDocumentTypeObject playsRole idDocumentTypes {
 		multiplicity *;
 	}
 }

@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 public class IdDocument extends IdDocument_Base {
     
-    public IdDocument(final Person person, final String value, final IdDocumentType idDocumentType) {
+    public IdDocument(final Person person, final String value, final IdDocumentTypeObject idDocumentType) {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
         setPerson(person);
@@ -17,7 +17,7 @@ public class IdDocument extends IdDocument_Base {
     }
 
     public IdDocument(final Person person, final String value, final IDDocumentType documentType) {
-	this(person, value, IdDocumentType.readByIDDocumentType(documentType));
+	this(person, value, IdDocumentTypeObject.readByIDDocumentType(documentType));
     }
 
     public static Collection<IdDocument> find(final String idDocumentValue) {
@@ -31,7 +31,7 @@ public class IdDocument extends IdDocument_Base {
     }
 
     public void setIdDocumentType(IDDocumentType documentType) {
-	super.setIdDocumentType(IdDocumentType.readByIDDocumentType(documentType));
+	super.setIdDocumentType(IdDocumentTypeObject.readByIDDocumentType(documentType));
     }
 
 }

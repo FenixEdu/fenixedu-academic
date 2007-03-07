@@ -58,7 +58,7 @@
 </class-descriptor>
 
 
-<class-descriptor class="net.sourceforge.fenixedu.domain.person.IdDocumentType" table="ID_DOCUMENT_TYPE">
+<class-descriptor class="net.sourceforge.fenixedu.domain.person.IdDocumentTypeObject" table="ID_DOCUMENT_TYPE">
     	
 </class-descriptor>
 
