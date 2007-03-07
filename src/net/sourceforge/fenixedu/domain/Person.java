@@ -1160,6 +1160,7 @@ public class Person extends Person_Base {
 	    getUser().delete();
 	}
 	getPersonName().delete();
+	for ( ; !getIdDocumentsSet().isEmpty(); getIdDocumentsSet().iterator().next().delete());
 	super.delete();
     }
 

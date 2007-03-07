@@ -34,4 +34,10 @@ public class IdDocument extends IdDocument_Base {
 	super.setIdDocumentType(IdDocumentTypeObject.readByIDDocumentType(documentType));
     }
 
+    public void delete() {
+	removeIdDocumentType();
+	removeRootDomainObject();
+	deleteDomainObject();
+    }
+
 }
