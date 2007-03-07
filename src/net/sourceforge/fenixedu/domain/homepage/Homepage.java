@@ -104,7 +104,7 @@ public class Homepage extends Homepage_Base {
     protected void deleteRelations() {
         super.deleteRelations();
         
-        removePerson()
+        removePerson();
     }
     
 }
