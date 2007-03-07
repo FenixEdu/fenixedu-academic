@@ -262,6 +262,9 @@ td.tdwarning span {
 background-color: #fff8bb; color: #664400;
 }
 
+table.ulnomargin tr td ul { margin: 0; padding: 0; }
+table.ulnomargin tr td ul li { margin: 0; padding: 0; }
+
 
 table.mtop05 { margin-top: 0.5em; }
 table.smallmargin td { padding: 0.25em; }
@@ -352,7 +355,7 @@ ul.padding1 li { padding: 0.25em 0; }
 .success3 { padding: 0.2em 0.5em 0.2em 28px; background: #efe url(../../pics/success01.gif) 6px 50% no-repeat; }
 .success4 { margin: 1em 0; padding: 0.2em 0.5em 0.2em 28px; background: #dfd url(../../pics/success01.gif) 6px 50% no-repeat; color: #070; }
 
-.warning0 { margin: 1em 0; padding: 0.1em 0.3em 0.15em 0.3em; background-color: #fff8bb; color: #996600; }
+.warning0 { margin: 1em 0; padding: 0.1em 0.3em 0.15em 0.3em; background-color: #fbf8cc; color: #805500; }
 
 
 /* ----------------------

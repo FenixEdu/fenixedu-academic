@@ -4,21 +4,20 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
+
+<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.createMarkSheet"/></h2>
 
-<br/>
-
-<h3><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.createMarkSheet.step.one"/> &gt; <u><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.createMarkSheet.step.two"/></u></h3>
+<p class="breadcumbs"><span><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.createMarkSheet.step.one"/></span> &gt; <span class="actual"><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.createMarkSheet.step.two"/></span></p>
 
 <fr:view name="edit" 
 		schema="markSheet.view.step2">
 		<fr:layout name="tabular" >
-			<fr:property name="classes" value="tstyle4"/>
-	        <fr:property name="columnClasses" value="listClasses,,"/>
+			<fr:property name="classes" value="tstyle4 thright thlight"/>
+	        <fr:property name="columnClasses" value=",,"/>
 		</fr:layout>
 </fr:view>
 
-<br/><br/>
 
 <logic:messagesPresent message="true">
 	<ul>
@@ -52,7 +51,8 @@
 
 	<fr:edit id="edit-invisible" name="edit" visible="false"/>
 
-	<bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.markSheet.students.capitalized"/>:
+	<p class="mtop15 mbottom05"><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.markSheet.students.capitalized"/>:</p>
+	
 	<fr:edit id="edit-enrolments" name="edit" property="enrolmentEvaluationBeans" 
 			 schema="markSheet.create.step.two" layout="tabular-editable">
 		<fr:layout>

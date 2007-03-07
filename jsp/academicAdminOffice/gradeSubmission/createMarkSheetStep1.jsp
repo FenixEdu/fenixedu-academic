@@ -4,17 +4,17 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
+<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.createMarkSheet"/></h2>
-<br/>
-<h3><u><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.createMarkSheet.step.one"/></u> &gt; <bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.createMarkSheet.step.two"/></h3>
+
+<p class="breadcumbs"><span class="actual"><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.createMarkSheet.step.one"/></span> &gt; <span><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.createMarkSheet.step.two"/></span></p>
 
 <logic:messagesPresent message="true">
 	<ul>
-	<html:messages bundle="DEGREE_OFFICE_RESOURCES" id="messages" message="true">
-		<li><span class="error0"><bean:write name="messages" /></span></li>
-	</html:messages>
+		<html:messages bundle="DEGREE_OFFICE_RESOURCES" id="messages" message="true">
+			<li><span class="error0"><bean:write name="messages" /></span></li>
+		</html:messages>
 	</ul>
-	<br/>
 </logic:messagesPresent>
 
 <bean:define id="urlPath" name="edit" property="url" />
@@ -28,8 +28,8 @@
 	<fr:destination name="invalid" path="/createMarkSheet.do?method=prepareSearchMarkSheetInvalid"/>
 	<fr:destination name="cancel" path='<%= "/createMarkSheet.do?method=backSearchMarkSheet" + urlPath %>'/>
 	<fr:layout name="tabular" >
-			<fr:property name="classes" value="tstyle4"/>
-	        <fr:property name="columnClasses" value="listClasses,,"/>
+			<fr:property name="classes" value="tstyle5 thright thlight ulnomargin"/>
+	        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
 	</fr:layout>
 </fr:edit>
 

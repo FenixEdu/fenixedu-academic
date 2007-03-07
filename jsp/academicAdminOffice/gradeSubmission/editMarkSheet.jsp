@@ -17,47 +17,44 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.mss" name="markSheetManagementForm" property="mss" />
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.mst" name="markSheetManagementForm" property="mst" />
 	
+	<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 	<h2><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.markSheet.edit"/> <bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.markSheet"/></h2>
-	<br/>
 	
 	<logic:messagesPresent message="true">
-		<ul>
+		<ul class="mvert15">
 			<html:messages bundle="DEGREE_OFFICE_RESOURCES" id="messages" message="true">
 				<li><span class="error0"><bean:write name="messages" /></span></li>
 			</html:messages>
 		</ul>
-		<br/>
 	</logic:messagesPresent>
 	
 	<fr:view name="edit" schema="markSheet.view.edit">
 		<fr:layout name="tabular" >
-			<fr:property name="classes" value="tstyle4"/>
-	        <fr:property name="columnClasses" value="listClasses,,"/>
+			<fr:property name="classes" value="tstyle4 thlight thright"/>
+	        <fr:property name="columnClasses" value=",,"/>
 		</fr:layout>
 	</fr:view>
 	
 	<logic:equal name="edit" property="markSheet.markSheetState.name" value="NOT_CONFIRMED">
-		<br/>
-		<br/>
-		<bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.markSheet.edit"/>:
+		<p class="mbottom05"><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.markSheet.edit"/>:</p>
 		<fr:edit id="edit-markSheet" name="edit" schema="markSheet.edit">
 			<fr:layout name="tabular" >
-				<fr:property name="classes" value="tstyle4"/>
-		        <fr:property name="columnClasses" value="listClasses,,"/>
+				<fr:property name="classes" value="tstyle4 thlight thright mvert05"/>
+		        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
 			</fr:layout>
 		</fr:edit>
-		
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick="this.form.method.value='updateMarkSheet';"><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.markSheet.update" /></html:submit>
-		<br/>
+	
+		<p class="mtop05">
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick="this.form.method.value='updateMarkSheet';"><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.markSheet.update" /></html:submit>
+		</p>
 	</logic:equal>
 	
 	<logic:notEqual name="edit" property="markSheet.markSheetState.name" value="NOT_CONFIRMED">
 		<fr:edit id="edit-markSheet" name="edit" visible="false"/>
 	</logic:notEqual>
-	
 	<logic:notEmpty name="edit" property="enrolmentEvaluationBeansToEdit">
-		<br/><br/>
-		<bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.markSheet.students.with.grade" />:
+	
+		<p class="mtop2 mbottom05"><strong><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.markSheet.students.with.grade" />:</strong></p>
 		
 		<fr:hasMessages for="edit-marksheet-enrolments">
 			<ul>
@@ -67,22 +64,22 @@
 			</ul>
 		</fr:hasMessages>
 		
-		<br/>
+
 
 		<fr:edit id="edit-marksheet-enrolments" name="edit" property="enrolmentEvaluationBeansToEdit" 
 				 schema="markSheet.edit.enrolmentEvaluations" layout="tabular-editable"
 	             nested="true">
 			<fr:layout>
 				<fr:property name="sortBy" value="enrolment.studentCurricularPlan.student.number"/>
-				<fr:property name="classes" value="tstyle4"/>
-		        <fr:property name="columnClasses" value="listClasses,,"/>
+				<fr:property name="classes" value="tstyle4 thlight thright mtop05"/>
+		        <fr:property name="columnClasses" value=",,"/>
 			</fr:layout>
 		</fr:edit>
 	</logic:notEmpty>
 	
 	<logic:notEmpty name="edit" property="enrolmentEvaluationBeansToAppend">
-		<br/><br/>
-		<bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.markSheet.students.without.grade" />:
+
+		<p class="mtop15 mbottom05"><strong><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.markSheet.students.without.grade" />:</strong></p>
 		
 		<fr:hasMessages for="append-enrolments">
 			<ul>
@@ -92,19 +89,19 @@
 			</ul>
 		</fr:hasMessages>
 		
-		<br/>
 		<fr:edit id="append-enrolments" name="edit" property="enrolmentEvaluationBeansToAppend" 
 				 schema="markSheet.edit.enrolmentEvaluations" layout="tabular-editable"
 	             nested="true">
 			<fr:layout>
 				<fr:property name="sortBy" value="enrolment.studentCurricularPlan.student.number"/>
-				<fr:property name="classes" value="tstyle4"/>
+				<fr:property name="classes" value="tstyle4 thlight thright mtop05"/>
 		        <fr:property name="columnClasses" value="listClasses,,"/>
 			</fr:layout>
 		</fr:edit>
 	</logic:notEmpty>
-	<br/>
 	
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.markSheet.change" /></html:submit>
-	<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton" onclick="this.form.method.value='backSearchMarkSheet';"><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.back"/></html:cancel>
+	<p>	
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.markSheet.change" /></html:submit>
+		<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton" onclick="this.form.method.value='backSearchMarkSheet';"><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.back"/></html:cancel>
+	</p>
 </fr:form>

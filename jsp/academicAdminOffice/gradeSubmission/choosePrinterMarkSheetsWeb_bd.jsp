@@ -6,15 +6,19 @@
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
 
 <bean:define id="markSheets" name="totalMarkSheetsCount"/>
-<h2><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.markSheet.leftToPrint" arg0="<%= markSheets.toString() %>"/></h2>
-<br/>
-<h3><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.choosePrinter"/></h3>
+
+<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
+<h2><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.print.web.markSheets"/></h2>
+
+<p class="mvert2"><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.markSheet.leftToPrint" arg0="<%= markSheets.toString() %>"/>.</p>
+
+<p class="mtop2"><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.choosePrinter"/>:</p>
 <logic:messagesPresent message="true">
 	<html:messages bundle="DEGREE_OFFICE_RESOURCES" id="messages" message="true">
 		<p><span class="error0"><bean:write name="messages" /></span></p>
 	</html:messages>
 </logic:messagesPresent>
-<br/>
+
 <html:form action="/printMarkSheetWeb.do">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="printMarkSheets"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.markSheet" property="markSheet" value="all"/>
@@ -44,7 +48,7 @@
 
 <logic:notEmpty name="curricularCourseMap">
 
-	<br/><br/><hr/>
+	<br/><hr/>
 	<h3><bean:write name="executionPeriod" property="executionYear.year"/> - <bean:write name="executionPeriod" property="semester"/>� Sem</h3>
 	<br/>
 	<strong><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.markSheet.printMarkSheetsWeb.markSheets.lefToPrint"/></strong>:
