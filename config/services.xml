@@ -11555,15 +11555,33 @@
         <filterChains/>
     </service>   
     <service>
-        <name>CreateThesis</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.thesis.CreateThesis</implementationClass>
+        <name>UpdateThesis</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.thesis.UpdateThesis</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
             <chain name="CoordinatorDegreeCurricularPlanAuthorization"/>
         </filterChains>
-    </service>  	
+    </service>   
     <service>
+        <name>DeleteThesis</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.thesis.DeleteThesis</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+            <chain name="CoordinatorDegreeCurricularPlanAuthorization"/>
+        </filterChains>
+    </service>   
+    <service>
+        <name>SubmitThesis</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.thesis.SubmitThesis</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+            <chain name="CoordinatorDegreeCurricularPlanAuthorization"/>
+        </filterChains>
+    </service>   
+	<service>
         <name>MergeUnits</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.MergeUnits</implementationClass>
         <description></description>

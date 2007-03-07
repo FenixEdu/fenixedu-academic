@@ -64,13 +64,30 @@
 		        	<bean:message key="link.coordinator.managefinalDegreeWorks" />
 	          </html:link>
 	        </li>
-            <%-- 
+
+            <li class="navheader">
+                <bean:message key="label.coordinator.thesis"/>
+            </li>
 	       	<li>
 	        	  <html:link page="<%= "/manageThesis.do?method=searchStudent&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString()%>">
 		        	<bean:message key="link.coordinator.thesis.manage" />
 	          </html:link>
 	        </li>
-            --%>
+	       	<li>
+	        	  <html:link page="<%= "/manageThesis.do?method=listDraft&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString()%>">
+		        	<bean:message key="link.coordinator.thesis.listDraft" />
+	          </html:link>
+	        </li>
+	       	<li>
+	        	  <html:link page="<%= "/manageThesis.do?method=listSubmitted&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString()%>">
+		        	<bean:message key="link.coordinator.thesis.listSubmitted" />
+	          </html:link>
+	        </li>
+	       	<li>
+	        	  <html:link page="<%= "/manageThesis.do?method=listApproved&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString()%>">
+		        	<bean:message key="link.coordinator.thesis.listApproved" />
+	          </html:link>
+	        </li>
 	
 			<li class="navheader">
 				<bean:message key="label.coordinator.manageEvaluations"/>		

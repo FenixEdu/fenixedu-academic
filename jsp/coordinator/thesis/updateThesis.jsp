@@ -4,9 +4,16 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
+<bean:define id="dcpId" name="degreeCurricularPlan" property="idInternal"/>
+
 <html:xhtml/>
 
-<h2><bean:message key="title.coordinator.createThesis"/></h2>
+<logic:empty name="bean" property="thesis">
+    <h2><bean:message key="title.coordinator.createThesis"/></h2>
+</logic:empty>
+<logic:notEmpty name="bean" property="thesis">
+    <h2><bean:message key="title.coordinator.updateThesis"/></h2>
+</logic:notEmpty>
 
 <%-- Student information--%>
 <h3><bean:message key="title.coordinator.createThesis.section.student"/></h3>
@@ -44,7 +51,7 @@
     </logic:notEmpty>
 </logic:notEmpty>
     
-<fr:form action="/manageThesis.do?method=changePerson&amp;target=orientator">
+<fr:form action="<%= "/manageThesis.do?method=changePerson&amp;target=orientator&amp;degreeCurricularPlanID=" + dcpId %>">
     <fr:edit id="bean" name="bean" visible="false"/>
 
     <html:submit>
@@ -83,7 +90,7 @@
     </logic:notEmpty>
 </logic:notEmpty>
 
-<fr:form action="/manageThesis.do?method=changePerson&amp;target=coorientator">
+<fr:form action="<%= "/manageThesis.do?method=changePerson&amp;target=coorientator&amp;degreeCurricularPlanID=" + dcpId %>">
     <fr:edit id="bean" name="bean" visible="false"/>
     
     <html:submit>
@@ -113,7 +120,7 @@
     </fr:view>
 </logic:notEmpty>
 
-<fr:form action="/manageThesis.do?method=changeInformation">
+<fr:form action="<%= "/manageThesis.do?method=changeInformation&amp;degreeCurricularPlanID=" + dcpId %>">
     <fr:edit id="bean" name="bean" visible="false"/>
     
     <html:submit>
@@ -150,7 +157,7 @@
     </logic:notEmpty>
 </logic:notEmpty>
     
-<fr:form action="/manageThesis.do?method=changePerson&amp;target=president">
+<fr:form action="<%= "/manageThesis.do?method=changePerson&amp;target=president&amp;degreeCurricularPlanID=" + dcpId %>">
     <fr:edit id="bean" name="bean" visible="false"/>
     
     <html:submit>
@@ -190,7 +197,7 @@
         </logic:notEmpty>
         
         <bean:define id="vowelId" name="vowel" property="idInternal"/>
-        <fr:form action="<%= "/manageThesis.do?method=changePerson&amp;target=vowel&amp;vowelID=" + vowelId %>">
+        <fr:form action="<%= String.format("/manageThesis.do?method=changePerson&amp;target=vowel&amp;vowelID=%s&amp;degreeCurricularPlanID=%s", vowelId, dcpId) %>">
             <fr:edit id="bean" name="bean" visible="false"/>
             
             <html:submit>
@@ -205,7 +212,7 @@
 
 <bean:size id="vowelsSize" name="bean" property="vowels"/>
 <logic:lessThan name="vowelsSize" value="3">
-    <fr:form action="/manageThesis.do?method=changePerson&amp;target=vowel">
+    <fr:form action="<%= "/manageThesis.do?method=changePerson&amp;target=vowel&amp;degreeCurricularPlanID=" + dcpId %>">
         <fr:edit id="bean" name="bean" visible="false"/>
         <html:submit>
             <bean:message key="button.coordinator.createThesis.addVowel"/>
@@ -214,10 +221,15 @@
 </logic:lessThan>
 
 <%-- Submit --%>
-<fr:form action="/manageThesis.do?method=createProposal">
+<fr:form action="<%= "/manageThesis.do?method=updateProposal&amp;degreeCurricularPlanID=" + dcpId %>">
     <fr:edit id="bean" name="bean" visible="false"/>
     
     <html:submit styleClass="mtop15">
-        <bean:message key="button.coordinator.createThesis.create"/>
+        <logic:empty name="bean" property="thesis">
+            <bean:message key="button.coordinator.createThesis.create"/>
+        </logic:empty>
+        <logic:notEmpty name="bean" property="thesis">
+            <bean:message key="button.coordinator.updateThesis.update"/>
+        </logic:notEmpty>
     </html:submit>
 </fr:form>

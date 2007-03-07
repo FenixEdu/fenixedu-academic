@@ -273,8 +273,8 @@
     <definition name="thesis-search-student" extends="definition.coordinator.two-column">
         <put name="body" value="/coordinator/thesis/searchStudent.jsp"/>
     </definition>
-    <definition name="thesis-create" extends="definition.coordinator.two-column">
-        <put name="body" value="/coordinator/thesis/createThesis.jsp"/>
+    <definition name="thesis-manage" extends="definition.coordinator.two-column">
+        <put name="body" value="/coordinator/thesis/updateThesis.jsp"/>
     </definition>
     <definition name="thesis-select-person" extends="definition.coordinator.two-column">
         <put name="body" value="/coordinator/thesis/selectPerson.jsp"/>
@@ -282,10 +282,25 @@
     <definition name="thesis-select-unit" extends="definition.coordinator.two-column">
         <put name="body" value="/coordinator/thesis/selectUnit.jsp"/>
     </definition>
-    <definition name="thesis-list-proposals" extends="definition.coordinator.two-column">
-        <put name="body" value="/coordinator/thesis/listProposals.jsp"/>
+    <definition name="thesis-list-draft" extends="definition.coordinator.two-column">
+        <put name="body" value="/coordinator/thesis/listDraft.jsp"/>
+    </definition>
+    <definition name="thesis-list-submitted" extends="definition.coordinator.two-column">
+        <put name="body" value="/coordinator/thesis/listSubmitted.jsp"/>
+    </definition>
+    <definition name="thesis-list-approved" extends="definition.coordinator.two-column">
+        <put name="body" value="/coordinator/thesis/listApproved.jsp"/>
     </definition>
     <definition name="thesis-change-information" extends="definition.coordinator.two-column">
         <put name="body" value="/coordinator/thesis/changeInformation.jsp"/>
+    </definition>
+    <definition name="thesis-delete-confirm" extends="definition.coordinator.two-column">
+        <put name="body" value="/coordinator/thesis/confirmDelete.jsp"/>
+    </definition>
+    <definition name="thesis-confirm-submission" extends="definition.coordinator.two-column">
+        <put name="body" value="/coordinator/thesis/confirmSubmission.jsp"/>
+    </definition>
+    <definition name="thesis-view" extends="definition.coordinator.two-column">
+        <put name="body" value="/coordinator/thesis/viewThesis.jsp"/>
     </definition>
 </tiles-definitions>

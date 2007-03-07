@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis;
+package net.sourceforge.fenixedu.applicationTier.Servico.thesis;
 
 import java.io.Serializable;
 import java.util.List;
@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
 import net.sourceforge.fenixedu.domain.person.PersonName;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public class ThesisBean implements Serializable {
@@ -29,6 +30,7 @@ public class ThesisBean implements Serializable {
     private static final long serialVersionUID = 1L;
     
     private DomainReference<DegreeCurricularPlan> degreeCurricularPlan;
+    private DomainReference<Thesis> thesis;
     
     private DomainReference<Student> student;
     private DomainReference<Person> orientator;
@@ -48,10 +50,12 @@ public class ThesisBean implements Serializable {
     private MultiLanguageString title;
     private String comment;
     
-    public ThesisBean() {
+    public ThesisBean(DegreeCurricularPlan degreeCurricularPlan) {
         super();
         
-        this.degreeCurricularPlan = new DomainReference<DegreeCurricularPlan>(null);
+        this.degreeCurricularPlan = new DomainReference<DegreeCurricularPlan>(degreeCurricularPlan);
+        this.thesis               = new DomainReference<Thesis>(null);
+        
         this.student      = new DomainReference<Student>(null);
         this.orientator   = new DomainReference<Person>(null);
         this.coorientator = new DomainReference<Person>(null);
@@ -61,6 +65,22 @@ public class ThesisBean implements Serializable {
         this.unitName     = new DomainReference<UnitName>(null);
         
         this.internal = true;
+    }
+
+    public ThesisBean(DegreeCurricularPlan degreeCurricularPlan, Thesis thesis) {
+        this(degreeCurricularPlan);
+        
+        setThesis(thesis);
+        
+        setStudent(thesis.getStudent());
+        setTitle(thesis.getTitle());
+        setComment(thesis.getComment());
+
+        setDegreeCurricularPlan(degreeCurricularPlan);
+        setOrientator(thesis.getOrientator());
+        setCoorientator(thesis.getCoorientator());
+        setPresident(thesis.getPresident());
+        setVowels(thesis.getVowels());
     }
 
     public Student getStudent() {
@@ -251,5 +271,16 @@ public class ThesisBean implements Serializable {
             return degreeCurricularPlan.getDegree();
         }
     }
+
+    public Thesis getThesis() {
+        return this.thesis.getObject();
+    }
     
+    public void setThesis(Thesis thesis) {
+        this.thesis = new DomainReference<Thesis>(thesis);
+    }
+
+    public boolean isNewThesis() {
+        return getThesis() == null;
+    }
 }

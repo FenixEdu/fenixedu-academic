@@ -4,6 +4,8 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
+<bean:define id="dcpId" name="degreeCurricularPlan" property="idInternal"/>
+
 <html:xhtml/>
 
 <bean:define id="target" name="bean" property="targetType"/>
@@ -30,7 +32,7 @@
 
 <logic:equal name="bean" property="internal" value="true">
     <div class="dinline forminline">
-        <fr:form action="/manageThesis.do?method=selectPerson">
+        <fr:form action="<%= "/manageThesis.do?method=selectPerson&amp;degreeCurricularPlanID=" + dcpId %>">
             <fr:edit id="bean" name="bean" schema="thesis.bean.selectPerson.internal">
                 <fr:layout name="tabular">
                     <fr:property name="classes" value="tstyle5 thlight mtop05"/>
@@ -46,7 +48,7 @@
             </html:submit>
         </fr:form>
         
-        <fr:form action="/manageThesis.do?method=backToCreation">
+        <fr:form action="<%= "/manageThesis.do?method=backToCreation&amp;degreeCurricularPlanID=" + dcpId %>">
             <fr:edit id="bean-invisible" name="bean" visible="false"/>
             
             <html:submit>
@@ -57,7 +59,7 @@
 
 <logic:equal name="bean" property="internal" value="false">
     <div class="dinline forminline">
-        <fr:form action="/manageThesis.do?method=selectExternalPerson">
+        <fr:form action="<%= "/manageThesis.do?method=selectExternalPerson&amp;degreeCurricularPlanID=" + dcpId %>">
             <fr:edit id="bean" name="bean" layout="tabular" schema="thesis.bean.selectPerson.external">
                 <fr:layout name="tabular">
                     <fr:property name="classes" value="tstyle5 thlight mtop05"/>
@@ -73,7 +75,7 @@
             </html:submit>
         </fr:form>
     
-        <fr:form action="/manageThesis.do?method=backToCreation">
+        <fr:form action="<%= "/manageThesis.do?method=backToCreation&amp;degreeCurricularPlanID=" + dcpId %>">
             <fr:edit id="bean-invisible" name="bean" visible="false"/>
             
             <html:submit>
@@ -82,7 +84,7 @@
         </fr:form>
         
         <logic:present name="proposeCreation">
-            <fr:form action="/manageThesis.do?method=createExternalPerson">
+            <fr:form action="<%= "/manageThesis.do?method=createExternalPerson&amp;degreeCurricularPlanID=" + dcpId %>">
                 <fr:edit id="bean-invisible" name="bean" visible="false"/>
                 
                 <html:submit styleClass="mtop05">

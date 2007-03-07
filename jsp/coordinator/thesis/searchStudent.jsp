@@ -14,7 +14,9 @@
     </html:messages>
 </logic:messagesPresent>
 
-<fr:form action="/manageThesis.do?method=selectStudent">
+<bean:define id="dcpId" name="degreeCurricularPlan" property="idInternal"/>
+
+<fr:form action="<%= "/manageThesis.do?method=selectStudent&amp;degreeCurricularPlanID=" + dcpId %>">
     <fr:edit id="student" name="bean" schema="thesis.bean.student">
         <fr:layout name="tabular">
             <fr:property name="classes" value="tstyle5 tdtop thlight thright"/>

@@ -905,11 +905,16 @@
   			type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ManageThesisDA"
   			parameter="method">
   			<forward name="search-student" path="thesis-search-student"/>
-  			<forward name="create-thesis" path="thesis-create"/>
+  			<forward name="manage-thesis" path="thesis-manage"/>
   			<forward name="select-person" path="thesis-select-person"/>
   			<forward name="select-unit" path="thesis-select-unit"/>
-  			<forward name="list-proposals" path="thesis-list-proposals"/>
+  			<forward name="list-draft" path="thesis-list-draft"/>
+            <forward name="list-submitted" path="thesis-list-submitted"/>
+            <forward name="list-approved" path="thesis-list-approved"/>
   			<forward name="change-information" path="thesis-change-information"/>
+  			<forward name="delete-confirm" path="thesis-delete-confirm"/>
+  			<forward name="confirm-submission" path="thesis-confirm-submission"/>
+  			<forward name="view-thesis" path="thesis-view"/>
   		</action>
 
     </action-mappings>

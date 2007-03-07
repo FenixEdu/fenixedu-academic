@@ -1,27 +1,38 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.thesis;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
-import net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisBean;
 
-public class CreateThesis extends Service {
+public class UpdateThesis extends Service {
 
     public Thesis run(Integer degreeCurricularPlanId, ThesisBean bean) {
-        Thesis thesis = new Thesis();
+        Thesis thesis;
+        
+        if (bean.isNewThesis()) {
+        //TODO: find thesis enrolment for student
+        //Thesis thesis = new Thesis(bean.getStudent().getThesisEnrolment());
+            thesis = new Thesis(bean.getDegree(), (Enrolment) null);
+        }
+        else {
+            thesis = bean.getThesis();
+        }
         
         thesis.setTitle(bean.getTitle());
         thesis.setComment(bean.getComment());
-        
-        //TODO: thesis.setEnrolment(student.getThesisEnrolment());
         
         thesis.setOrientator(bean.getOrientator());
         thesis.setCoorientator(bean.getCoorientator());
         thesis.setPresident(bean.getPresident());
         
         for (Person vowel : bean.getVowels()) {
-            thesis.addVowels(vowel);
+            if (! thesis.hasVowels(vowel)) {
+                thesis.addVowels(vowel);
+            }
         }
+        
+        thesis.getVowels().retainAll(bean.getVowels());
         
         return thesis;
     }

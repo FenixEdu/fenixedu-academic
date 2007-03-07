@@ -7,6 +7,7 @@
 <html:xhtml/>
 
 <bean:define id="target" name="bean" property="targetType"/>
+<bean:define id="dcpId" name="degreeCurricularPlan" property="idInternal"/>
 
 <h2><bean:message key="title.coordinator.createThesis"/></h2>
 
@@ -29,7 +30,7 @@
 </logic:present>
 
 <div class="dinline forminline">
-    <fr:form action="/manageThesis.do?method=selectExternalUnit">
+    <fr:form action="<%= "/manageThesis.do?method=selectExternalUnit&amp;degreeCurricularPlanID=" + dcpId %>">
         <fr:edit id="bean" name="bean" layout="tabular" schema="thesis.bean.selectUnit.external">
             <fr:layout name="tabular">
                 <fr:property name="classes" value="tstyle5 thlight mtop05"/>
@@ -45,7 +46,7 @@
         </html:submit>
     </fr:form>
 
-    <fr:form action="/manageThesis.do?method=backToSelectPerson">
+    <fr:form action="<%= "/manageThesis.do?method=backToSelectPerson&amp;degreeCurricularPlanID=" + dcpId %>">
         <fr:edit id="bean-invisible" name="bean" visible="false"/>
     
         <html:submit>
@@ -54,7 +55,7 @@
     </fr:form>
 
     <logic:present name="proposeCreation">
-        <fr:form action="/manageThesis.do?method=createExternalUnit">        
+        <fr:form action="<%= "/manageThesis.do?method=createExternalUnit&amp;degreeCurricularPlanID=" + dcpId %>">        
             <fr:edit id="bean-invisible" name="bean" visible="false"/>
             
             <html:submit>
