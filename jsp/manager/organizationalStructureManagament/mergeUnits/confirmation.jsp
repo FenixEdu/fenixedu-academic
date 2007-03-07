@@ -45,7 +45,7 @@
 				<bean:define id="destinationUnitID" name="destinationUnit" property="idInternal" />
 				<html:form action="/unitsMerge.do?method=mergeUnits">
 					<html:hidden property="fromUnitID" value="<%= fromUnitID.toString() %>"/>
-					<html:hidden property="fromUnitID" value="<%= destinationUnitID.toString() %>"/>	
+					<html:hidden property="destinationUnitID" value="<%= destinationUnitID.toString() %>"/>	
 					<html:submit><bean:message key="label.proceed" bundle="MANAGER_RESOURCES"/></html:submit>
 				</html:form>
 												
