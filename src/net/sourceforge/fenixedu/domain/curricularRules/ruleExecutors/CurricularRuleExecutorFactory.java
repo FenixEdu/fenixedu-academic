@@ -7,9 +7,11 @@ import net.sourceforge.fenixedu.domain.curricularRules.AnyCurricularCourse;
 import net.sourceforge.fenixedu.domain.curricularRules.AssertUniqueApprovalInCurricularCourseContexts;
 import net.sourceforge.fenixedu.domain.curricularRules.CreditsLimit;
 import net.sourceforge.fenixedu.domain.curricularRules.DegreeModulesSelectionLimit;
+import net.sourceforge.fenixedu.domain.curricularRules.EnrolmentInSpecialSeasonEvaluation;
 import net.sourceforge.fenixedu.domain.curricularRules.EnrolmentToBeApprovedByCoordinator;
 import net.sourceforge.fenixedu.domain.curricularRules.Exclusiveness;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
+import net.sourceforge.fenixedu.domain.curricularRules.ImprovementOfApprovedEnrolment;
 import net.sourceforge.fenixedu.domain.curricularRules.MaximumNumberOfCreditsForEnrolmentPeriod;
 import net.sourceforge.fenixedu.domain.curricularRules.MinimumNumberOfCreditsToEnrol;
 import net.sourceforge.fenixedu.domain.curricularRules.PreviousYearsEnrolmentCurricularRule;
@@ -35,6 +37,8 @@ public class CurricularRuleExecutorFactory {
 	executors.put(MaximumNumberOfCreditsForEnrolmentPeriod.class,		new MaximumNumberOfCreditsForEnrolmentPeriodExecutor());
 	executors.put(PreviousYearsEnrolmentCurricularRule.class,		new PreviousYearsEnrolmentExecutor());
 	executors.put(AssertUniqueApprovalInCurricularCourseContexts.class,	new AssertUniqueApprovalInCurricularCourseContextsExecutor());
+	executors.put(ImprovementOfApprovedEnrolment.class,			new ImprovementOfApprovedEnrolmentExecutor());
+	executors.put(EnrolmentInSpecialSeasonEvaluation.class,			new EnrolmentInSpecialSeasonEvaluationExecutor());
     }
 
     public static CurricularRuleExecutor findExecutor(final ICurricularRule curricularRule) {
@@ -47,4 +51,5 @@ public class CurricularRuleExecutorFactory {
 	}
 	return executors.get(clazz);
     }
+    
 }

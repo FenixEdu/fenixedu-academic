@@ -178,4 +178,9 @@ public class PreviousYearsEnrolmentExecutor extends CurricularRuleExecutor {
 	return new GenericPair<Boolean, Integer>(Boolean.TRUE, null);
     }
 
+    @Override
+    protected RuleResult executeEnrolmentInEnrolmentEvaluation(final ICurricularRule curricularRule, final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
+	return RuleResult.createNA();
+    }
+
 }

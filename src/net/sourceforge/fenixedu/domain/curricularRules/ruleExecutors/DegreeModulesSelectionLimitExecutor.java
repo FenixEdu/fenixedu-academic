@@ -117,4 +117,9 @@ public class DegreeModulesSelectionLimitExecutor extends CurricularRuleExecutor 
 	return RuleResult.createNA();
     }
 
+    @Override
+    protected RuleResult executeEnrolmentInEnrolmentEvaluation(final ICurricularRule curricularRule, final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
+	return RuleResult.createNA();
+    }
+
 }

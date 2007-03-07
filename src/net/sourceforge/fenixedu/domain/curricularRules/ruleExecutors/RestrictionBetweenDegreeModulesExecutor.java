@@ -97,4 +97,9 @@ public class RestrictionBetweenDegreeModulesExecutor extends CurricularRuleExecu
 			rule.getDegreeModuleToApplyRule().getName(), rule.getPrecedenceDegreeModule().getName(), rule.getMinimumCredits().toString());
     }
 
+    @Override
+    protected RuleResult executeEnrolmentInEnrolmentEvaluation(final ICurricularRule curricularRule, final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
+	return RuleResult.createNA();
+    }
+
 }

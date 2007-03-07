@@ -91,4 +91,9 @@ public class RestrictionDoneDegreeModuleExecutor extends CurricularRuleExecutor 
 			rule.getDegreeModuleToApplyRule().getName(), rule.getPrecedenceDegreeModule().getName());
     }
 
+    @Override
+    protected RuleResult executeEnrolmentInEnrolmentEvaluation(final ICurricularRule curricularRule, final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
+	return RuleResult.createNA();
+    }
+
 }

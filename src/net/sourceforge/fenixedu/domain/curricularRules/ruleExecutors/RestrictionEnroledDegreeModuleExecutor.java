@@ -36,4 +36,9 @@ public class RestrictionEnroledDegreeModuleExecutor extends CurricularRuleExecut
 	return executeEnrolmentWithRules(curricularRule, sourceDegreeModuleToEvaluate, enrolmentContext);
     }
 
+    @Override
+    protected RuleResult executeEnrolmentInEnrolmentEvaluation(final ICurricularRule curricularRule, final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
+	return RuleResult.createNA();
+    }
+
 }

@@ -84,4 +84,9 @@ public class ExclusivenessExecutor extends CurricularRuleExecutor {
 	return RuleResult.createTrue();
     }
 
+    @Override
+    protected RuleResult executeEnrolmentInEnrolmentEvaluation(final ICurricularRule curricularRule, final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
+	return RuleResult.createNA();
+    }
+
 }

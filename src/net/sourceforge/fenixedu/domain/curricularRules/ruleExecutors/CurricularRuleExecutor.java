@@ -29,6 +29,10 @@ abstract public class CurricularRuleExecutor {
 	case ENROLMENT_NO_RULES:
 	    return executeEnrolmentWithNoRules(curricularRule, sourceDegreeModuleToEvaluate, enrolmentContext);
 
+	case IMPROVEMENT_ENROLMENT:
+	case SPECIAL_SEASON_ENROLMENT:
+	    return executeEnrolmentInEnrolmentEvaluation(curricularRule, sourceDegreeModuleToEvaluate, enrolmentContext);
+
 	default:
 	    throw new DomainException("error.curricularRules.RuleExecutor.unimplemented.rule.level");
 	}
@@ -115,4 +119,6 @@ abstract public class CurricularRuleExecutor {
 
     abstract protected RuleResult executeEnrolmentWithRules(final ICurricularRule curricularRule, final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext);
     abstract protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(final ICurricularRule curricularRule, IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext);
+    abstract protected RuleResult executeEnrolmentInEnrolmentEvaluation(final ICurricularRule curricularRule, IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext);
+    
 }
