@@ -81,7 +81,7 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
 
     public ActionForward prepareSelectJournal(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
-	ResultPublicationBean publicationBean = (ResultPublicationBean) getRenderedObject("publicationData");
+	ResultPublicationBean publicationBean = (ResultPublicationBean) getRenderedObject("publicationBean");
 
 	ArticleBean bean = (ArticleBean) publicationBean;
 	bean.setScientificJournal(null);
@@ -336,7 +336,7 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
 
     public ActionForward changeType(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	ResultPublicationBean bean = (ResultPublicationBean) getRenderedObject("publicationData");
+	ResultPublicationBean bean = (ResultPublicationBean) getRenderedObject("publicationBean");
 
 	if (bean != null) {
 	    ResultPublicationType type = bean.getPublicationType();
