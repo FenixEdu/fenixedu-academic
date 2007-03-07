@@ -674,5 +674,10 @@ public abstract class Event extends Event_Base {
 	return result;
 
     }
+    
+    public DateTime getLastPaymentDate() {
+	final AccountingTransaction transaction = getLastNonAdjustingAccountingTransaction();
+	return (transaction != null) ? transaction.getWhenRegistered() : null;
+    }
 
 }

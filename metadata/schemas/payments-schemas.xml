@@ -127,6 +127,7 @@
 
 <schema name="AccountingEvent.view-with-extra-payed-amount" type="net.sourceforge.fenixedu.domain.accounting.Event" bundle="APPLICATION_RESOURCES">
 	<slot name="description" key="label.net.sourceforge.fenixedu.domain.accounting.Event.description" />
+	<slot name="lastPaymentDate" key="label.net.sourceforge.fenixedu.domain.accounting.Event.lastPaymentDate" layout="no-time" />
 	<slot name="payedAmount" key="label.net.sourceforge.fenixedu.domain.accounting.Event.payedAmount" />	
 	<slot name="extraPayedAmount" key="label.net.sourceforge.fenixedu.domain.accounting.Event.extraPayedAmount" />
 </schema>
