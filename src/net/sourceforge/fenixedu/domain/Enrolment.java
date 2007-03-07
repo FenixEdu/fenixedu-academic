@@ -75,7 +75,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	this();
 	initializeAsNew(studentCurricularPlan, curricularCourse, executionPeriod, enrolmentCondition,
 		createdBy);
-	createEnrolmentLog(getRegistration(), EnrolmentAction.ENROL);
+	createEnrolmentLog(studentCurricularPlan.getRegistration(), EnrolmentAction.ENROL);
     }
 
     public Enrolment(StudentCurricularPlan studentCurricularPlan, CurricularCourse curricularCourse,
@@ -203,7 +203,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	setCreatedBy(createdBy);
 	setCreationDateDateTime(new DateTime());
 	setEnrolmentCondition(enrolmentCondition);
-	createAttend(getRegistration(), curricularCourse, executionPeriod);
+	createAttend(studentCurricularPlan.getRegistration(), curricularCourse, executionPeriod);
 	setIsExtraCurricular(Boolean.FALSE);
     }
 
@@ -833,7 +833,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     public EnrolmentEvaluation getImprovementEvaluation() {
 	final EnrolmentEvaluation latestImprovementEnrolmentEvaluation = getLatestImprovementEnrolmentEvaluation();
 	
-	if (latestImprovementEnrolmentEvaluation.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.TEMPORARY_OBJ)) {
+	if (latestImprovementEnrolmentEvaluation != null && latestImprovementEnrolmentEvaluation.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.TEMPORARY_OBJ)) {
 	    return latestImprovementEnrolmentEvaluation;
 	}
 
