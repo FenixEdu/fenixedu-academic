@@ -141,6 +141,8 @@ public class Unit extends Unit_Base {
 		&& !hasAnyCompetenceCourses()
 		&& !hasAnyAssociatedNonAffiliatedTeachers()
 		&& !hasAnyPayedGuides()
+                && !hasAnyExtraPayingUnitAuthorizations()
+                && !hasAnyExtraWorkingUnitAuthorizations()
 		&& !hasAnyPayedReceipts()
 		&& !hasAdministrativeOffice()
 		&& !hasUnitServiceAgreementTemplate() 
