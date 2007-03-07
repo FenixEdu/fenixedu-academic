@@ -1136,29 +1136,34 @@ public class Unit extends Unit_Base {
 	return false;
     }
 
-    public static void mergeExternalUnits(Unit fromUnit, Unit destinationUnit) {	
-	if(fromUnit != null && destinationUnit != null && !fromUnit.equals(destinationUnit)
-		&& fromUnit.isNoOfficialExternal() && !destinationUnit.isInternal()) {	    
-           	    
-	    Collection<? extends Accountability> externalContracts = fromUnit.getChildAccountabilitiesByAccountabilityClass(ExternalContract.class);
-            List<NonAffiliatedTeacher> nonAffiliatedTeachers = fromUnit.getAssociatedNonAffiliatedTeachers();        	        	
-            List<ResultUnitAssociation> resultUnitAssociations = fromUnit.getResultUnitAssociations();            
-            List<ResearchResultPublication> organizationResultPublications = fromUnit.getOrganizationResultPublications();
-            List<ResearchResultPublication> publisherResultPublications = fromUnit.getPublisherResultPublications();
-            
-            fromUnit.getPublisherResultPublications().clear();
-            fromUnit.getOrganizationResultPublications().clear();
-            fromUnit.getResultUnitAssociations().clear();
-            fromUnit.getAssociatedNonAffiliatedTeachers().clear();        	
-            fromUnit.getChilds().removeAll(externalContracts);
-                       
-            destinationUnit.getPublisherResultPublications().addAll(publisherResultPublications);
-            destinationUnit.getOrganizationResultPublications().addAll(organizationResultPublications);
-            destinationUnit.getResultUnitAssociations().addAll(resultUnitAssociations);
-            destinationUnit.getAssociatedNonAffiliatedTeachers().addAll(nonAffiliatedTeachers);
-            destinationUnit.getChilds().addAll(externalContracts);
-                                   
-            fromUnit.delete();        	
+    public static void mergeExternalUnits(Unit fromUnit, Unit destinationUnit) {
+	
+	if(fromUnit == null || destinationUnit == null || fromUnit.equals(destinationUnit)) {
+	    throw new DomainException("error.merge.external.units.equals.units");
 	}
+	
+	if(!fromUnit.isNoOfficialExternal() || destinationUnit.isInternal()) {
+	    throw new DomainException("error.merge.external.units.invalid.units");
+	}
+           	    
+	Collection<? extends Accountability> externalContracts = fromUnit.getChildAccountabilitiesByAccountabilityClass(ExternalContract.class);
+        List<NonAffiliatedTeacher> nonAffiliatedTeachers = fromUnit.getAssociatedNonAffiliatedTeachers();        	        	
+        List<ResultUnitAssociation> resultUnitAssociations = fromUnit.getResultUnitAssociations();            
+        List<ResearchResultPublication> organizationResultPublications = fromUnit.getOrganizationResultPublications();
+        List<ResearchResultPublication> publisherResultPublications = fromUnit.getPublisherResultPublications();
+        
+        fromUnit.getPublisherResultPublications().clear();
+        fromUnit.getOrganizationResultPublications().clear();
+        fromUnit.getResultUnitAssociations().clear();
+        fromUnit.getAssociatedNonAffiliatedTeachers().clear();        	
+        fromUnit.getChilds().removeAll(externalContracts);
+                   
+        destinationUnit.getPublisherResultPublications().addAll(publisherResultPublications);
+        destinationUnit.getOrganizationResultPublications().addAll(organizationResultPublications);
+        destinationUnit.getResultUnitAssociations().addAll(resultUnitAssociations);
+        destinationUnit.getAssociatedNonAffiliatedTeachers().addAll(nonAffiliatedTeachers);
+        destinationUnit.getChilds().addAll(externalContracts);
+                               
+        fromUnit.delete();        		
     }
 }
