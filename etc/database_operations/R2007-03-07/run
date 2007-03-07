@@ -30,3 +30,6 @@ function executeWithTempFile() {
 execute "Change event name from multistring to string" eventNameToString.sql
 execute "Create Thesis Table" CreateThesis.sql
 execute "Create Doc ID Tables" createDocumentIDTables.sql
+execute "Changes in Functionalities" changes-20070307165400.sql
+execute "createEmailAddressTable" createEmailAddressTable.sql
+
