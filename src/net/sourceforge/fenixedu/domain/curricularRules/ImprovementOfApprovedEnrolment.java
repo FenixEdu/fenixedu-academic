@@ -26,8 +26,12 @@ public class ImprovementOfApprovedEnrolment extends CurricularRuleNotPersistent 
         return Collections.singletonList(new GenericPair<Object, Boolean>("label.improvementOfApprovedEnrolment", true));
     }
 
+    public Enrolment getEnrolment() {
+	return toApply;
+    }
+
     public DegreeModule getDegreeModuleToApplyRule() {
-	return toApply.getDegreeModule();
+	return getEnrolment().getDegreeModule();
     }
 
     public CourseGroup getContextCourseGroup() {
