@@ -159,7 +159,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
             if (degreeType.isBolonhaType()) {
                 result.add(new SelectItem(degreeType.name(), enumerationBundle.getString(degreeType
                         .getName())
-                        + " (" + degreeType.getYears() + " anos)"));
+                        + " (" + degreeType.getYears() + " ano(s))"));
             }
         }
 

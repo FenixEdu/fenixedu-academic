@@ -1022,7 +1022,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     public double getAccumulatedEctsCredits(final ExecutionPeriod executionPeriod) {
 	if(!isBolonha()) {
 	    return accumulatedEctsCredits;
-}	
+	}	
 	if(isExtraCurricular() || parentCurriculumGroupIsNoCourseGroupCurriculumGroup()) {
 	    return 0d;
 	}
