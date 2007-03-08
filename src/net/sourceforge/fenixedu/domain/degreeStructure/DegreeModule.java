@@ -162,7 +162,7 @@ public abstract class DegreeModule extends DegreeModule_Base {
     
     public List<Context> getParentContextsByExecutionYear(ExecutionYear executionYear) {
 	final List<Context> result = new ArrayList<Context>();
-	for (final Context context : this.getParentContexts()) {
+	for (final Context context : getParentContextsSet()) {
 	    if (executionYear == null || context.isValid(executionYear)) {
 		result.add(context);
 	    }
@@ -172,12 +172,22 @@ public abstract class DegreeModule extends DegreeModule_Base {
 
     public List<Context> getParentContextsByExecutionPeriod(final ExecutionPeriod executionPeriod) {
 	final List<Context> result = new ArrayList<Context>();
-	for (final Context context : this.getParentContexts()) {
+	for (final Context context : getParentContextsSet()) {
 	    if (executionPeriod == null || context.isValid(executionPeriod)) {
 		result.add(context);
 	    }
 	}
 	return result;
+    }
+    
+    public boolean hasAnyParentContexts(final ExecutionPeriod executionPeriod) {
+	for (final Context context : getParentContextsSet()) {
+	    if (executionPeriod == null || context.isValid(executionPeriod)) {
+		return true;
+	    }
+	}
+	
+	return false;
     }
     
     public boolean isOptional() {
