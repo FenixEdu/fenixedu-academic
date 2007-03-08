@@ -28,6 +28,7 @@
 			<h:message for="name" styleClass="error0"/>
 		</h:panelGroup>
 		<h:outputText value="</p>" escape="false"/>
+		
 		<h:outputText value="<p><label>#{bolonhaBundle['name']} (en):</label>" escape="false"/>
 		<h:panelGroup>
 			<h:inputText alt="#{htmlAltBundle['inputText.nameEn']}" id="nameEn" required="true" size="60" maxlength="100" value="#{CourseGroupManagement.nameEn}"/>
@@ -35,6 +36,14 @@
 			<h:message for="nameEn" styleClass="error0"/>
 		</h:panelGroup>
 		<h:outputText value="</p>" escape="false"/>
+		
+		<h:panelGroup rendered="#{!empty CourseGroupManagement.courseGroupTypeValues}">
+			<h:outputText value="<p><label>#{bolonhaBundle['type']}:</label>" escape="false"/>
+			<fc:selectOneMenu value="#{CourseGroupManagement.courseGroupTypeValue}">
+				<f:selectItems value="#{CourseGroupManagement.courseGroupTypeValues}"/>
+			</fc:selectOneMenu>
+			<h:outputText value="</p>" escape="false"/>
+		</h:panelGroup>
 		<h:outputText value="</fieldset></div>" escape="false"/>
 
 		<br/>
