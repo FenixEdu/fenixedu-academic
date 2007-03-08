@@ -15,7 +15,7 @@ public class EnrolmentInSpecialSeasonEvaluation extends CurricularRuleNotPersist
     private Enrolment toApply;
     
     public EnrolmentInSpecialSeasonEvaluation(final Enrolment enrolment) {
-	if (toApply == null) {
+	if (enrolment == null) {
 	    throw new DomainException("curricular.rule.invalid.parameters");
 	} else {
 	    this.toApply = enrolment;
@@ -26,8 +26,12 @@ public class EnrolmentInSpecialSeasonEvaluation extends CurricularRuleNotPersist
         return Collections.singletonList(new GenericPair<Object, Boolean>("label.enrolmentInSpecialSeasonEvaluation", true));
     }
 
+    public Enrolment getEnrolment() {
+	return toApply;
+    }
+
     public DegreeModule getDegreeModuleToApplyRule() {
-	return toApply.getDegreeModule();
+	return getEnrolment().getDegreeModule();
     }
 
     public CourseGroup getContextCourseGroup() {
