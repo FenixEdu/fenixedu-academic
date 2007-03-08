@@ -4,8 +4,10 @@ import java.util.Collections;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.util.Email;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public class MergeUnits extends Service {
 
@@ -14,8 +16,10 @@ public class MergeUnits extends Service {
 	    
 	    Unit.mergeExternalUnits(fromUnit, destinationUnit);
 	    
-	    Employee employee = Employee.readByNumber(4578);	    
-	    String body = "Foi efectuado um merge de unidades externas: Unidade Origem -> " + fromUnit.getName() + "[" + fromUnit.getIdInternal() + "]  Unidade Destino -> " + destinationUnit.getName() + "[" + destinationUnit.getIdInternal() + "]";
+	    Employee employee = Employee.readByNumber(4578);
+	    Person person = AccessControl.getPerson();
+	    
+	    String body = "Foi efectuado um merge de unidades externas por " + person.getName() + "[" + person.getUsername() + "]" + " : Unidade Origem -> " + fromUnit.getName() + "[" + fromUnit.getIdInternal() + "]  Unidade Destino -> " + destinationUnit.getName() + "[" + destinationUnit.getIdInternal() + "]";
 	    new Email("Fénix", "suporte@ist.utl.pt", null, Collections.singletonList(employee.getPerson().getEmail()), null, null, "MergeUnits", body);
 	}
     }
