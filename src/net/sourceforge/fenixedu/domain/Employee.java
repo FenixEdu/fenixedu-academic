@@ -39,7 +39,7 @@ public class Employee extends Employee_Base {
 	setAntiquity(new Date(System.currentTimeMillis()));
 	setWorkingHours(0);
 	setAssiduousness(null);
-	setRootDomainObject(RootDomainObject.getInstance());
+	setRootDomainObject(RootDomainObject.getInstance());	
     }
 
     @Override
@@ -301,4 +301,7 @@ public class Employee extends Employee_Base {
 	}
     }
     
+    public boolean isActive() {
+	return getPerson().hasRole(RoleType.EMPLOYEE) && getCurrentWorkingContract() != null;
+    }
 }

@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.publication.Publication;
 import net.sourceforge.fenixedu.domain.publication.PublicationTeacher;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
@@ -1144,5 +1145,9 @@ public class Teacher extends Teacher_Base {
             }
         }   
         return false;
+    }
+    
+    public boolean isActive() {
+	return getPerson().hasRole(RoleType.TEACHER) && getCurrentLegalRegimenWithoutEndSitutions() != null;
     }
 }
