@@ -13,16 +13,11 @@ public abstract class ResultPublicationBeanConversions {
 	    ((BookBean) newBean).setScope(oldBean.getScope());
 	    ((BookBean) newBean).setLanguage(oldBean.getLanguage());
 	    return newBean;
-	case Inbook:
-	    newBean = new InbookBean(oldBean);
-	    ((InbookBean) newBean).setFirstPage(oldBean.getFirstPage());
-	    ((InbookBean) newBean).setLastPage(oldBean.getLastPage());
-	    ((InbookBean) newBean).setVolume(oldBean.getVolume());
-	    return newBean;
-	case Incollection:
-	    newBean = new IncollectionBean(oldBean);
-	    ((IncollectionBean) newBean).setFirstPage(oldBean.getFirstPage());
-	    ((IncollectionBean) newBean).setLastPage(oldBean.getLastPage());
+	case BookPart:
+	    newBean = new BookPartBean(oldBean);
+	    ((BookPartBean) newBean).setFirstPage(oldBean.getFirstPage());
+	    ((BookPartBean) newBean).setLastPage(oldBean.getLastPage());
+	    ((BookPartBean) newBean).setVolume(oldBean.getVolume());
 	    return newBean;
 	case Inproceedings:
 	    newBean = new InproceedingsBean(oldBean);
@@ -61,16 +56,12 @@ public abstract class ResultPublicationBeanConversions {
 	    ((ArticleBean) newBean).setScope(oldBean.getScope());
 	    ((ArticleBean) newBean).setLanguage(oldBean.getLanguage());
 	    return newBean;
-	case Inbook:
-	    newBean = new InbookBean(oldBean);
-	    ((InbookBean) newBean).setAddress(oldBean.getAddress());
-	    ((InbookBean) newBean).setVolume(oldBean.getVolume());
-	    ((InbookBean) newBean).setSeries(oldBean.getSeries());
-	    ((InbookBean) newBean).setEdition(oldBean.getEdition());
-	    return newBean;
-	case Incollection:
-	    newBean = new IncollectionBean(oldBean);
-	    ((IncollectionBean) newBean).setAddress(oldBean.getAddress());
+	case BookPart:
+	    newBean = new BookPartBean(oldBean);
+	    ((BookPartBean) newBean).setAddress(oldBean.getAddress());
+	    ((BookPartBean) newBean).setVolume(oldBean.getVolume());
+	    ((BookPartBean) newBean).setSeries(oldBean.getSeries());
+	    ((BookPartBean) newBean).setEdition(oldBean.getEdition());
 	    return newBean;
 	case Inproceedings:
 	    newBean = new InproceedingsBean(oldBean);
@@ -109,61 +100,7 @@ public abstract class ResultPublicationBeanConversions {
 	}
     }
 
-    public static ResultPublicationBean inbookTo(InbookBean oldBean, ResultPublicationType type) {
-	ResultPublicationBean newBean = null;
-	switch (type) {
-	case Article:
-	    newBean = new ArticleBean(oldBean);
-	    ((ArticleBean) newBean).setFirstPage(oldBean.getFirstPage());
-	    ((ArticleBean) newBean).setLastPage(oldBean.getLastPage());
-	    ((ArticleBean) newBean).setVolume(oldBean.getVolume());
-	    return newBean;
-	case Book:
-	    newBean = new BookBean(oldBean);
-	    ((BookBean) newBean).setAddress(oldBean.getAddress());
-	    ((BookBean) newBean).setVolume(oldBean.getVolume());
-	    ((BookBean) newBean).setSeries(oldBean.getSeries());
-	    ((BookBean) newBean).setEdition(oldBean.getEdition());
-	    return newBean;
-	case Incollection:
-	    newBean = new IncollectionBean(oldBean);
-	    ((IncollectionBean) newBean).setAddress(oldBean.getAddress());
-	    ((IncollectionBean) newBean).setFirstPage(oldBean.getFirstPage());
-	    ((IncollectionBean) newBean).setLastPage(oldBean.getLastPage());
-	    return newBean;
-	case Inproceedings:
-	    newBean = new InproceedingsBean(oldBean);
-	    ((InproceedingsBean) newBean).setAddress(oldBean.getAddress());
-	    ((InproceedingsBean) newBean).setFirstPage(oldBean.getFirstPage());
-	    ((InproceedingsBean) newBean).setLastPage(oldBean.getLastPage());
-	    return newBean;
-	case Manual:
-	    newBean = new ManualBean(oldBean);
-	    ((ManualBean) newBean).setAddress(oldBean.getAddress());
-	    ((ManualBean) newBean).setEdition(oldBean.getEdition());
-	    return newBean;
-	case OtherPublication:
-	    newBean = new OtherPublicationBean(oldBean);
-	    ((OtherPublicationBean) newBean).setAddress(oldBean.getAddress());
-	    return newBean;
-	case Proceedings:
-	    newBean = new ProceedingsBean(oldBean);
-	    ((ProceedingsBean) newBean).setAddress(oldBean.getAddress());
-	    return newBean;
-	case TechnicalReport:
-	    newBean = new TechnicalReportBean(oldBean);
-	    ((TechnicalReportBean) newBean).setAddress(oldBean.getAddress());
-	    return newBean;
-	case Thesis:
-	    newBean = new ThesisBean(oldBean);
-	    ((ThesisBean) newBean).setAddress(oldBean.getAddress());
-	    return newBean;
-	default:
-	    return oldBean;
-	}
-    }
-
-    public static ResultPublicationBean incollectionTo(IncollectionBean oldBean,
+    public static ResultPublicationBean BookPartTo(BookPartBean oldBean,
 	    ResultPublicationType type) {
 	ResultPublicationBean newBean = null;
 	switch (type) {
@@ -175,12 +112,6 @@ public abstract class ResultPublicationBeanConversions {
 	case Book:
 	    newBean = new BookBean(oldBean);
 	    ((BookBean) newBean).setAddress(oldBean.getAddress());
-	    return newBean;
-	case Inbook:
-	    newBean = new InbookBean(oldBean);
-	    ((InbookBean) newBean).setAddress(oldBean.getAddress());
-	    ((InbookBean) newBean).setFirstPage(oldBean.getFirstPage());
-	    ((InbookBean) newBean).setLastPage(oldBean.getLastPage());
 	    return newBean;
 	case Inproceedings:
 	    newBean = new InproceedingsBean(oldBean);
@@ -228,17 +159,11 @@ public abstract class ResultPublicationBeanConversions {
 	    ((BookBean) newBean).setAddress(oldBean.getAddress());
 	    ((BookBean) newBean).setLanguage(oldBean.getLanguage());
 	    return newBean;
-	case Inbook:
-	    newBean = new InbookBean(oldBean);
-	    ((InbookBean) newBean).setAddress(oldBean.getAddress());
-	    ((InbookBean) newBean).setFirstPage(oldBean.getFirstPage());
-	    ((InbookBean) newBean).setLastPage(oldBean.getLastPage());
-	    return newBean;
-	case Incollection:
-	    newBean = new IncollectionBean(oldBean);
-	    ((IncollectionBean) newBean).setAddress(oldBean.getAddress());
-	    ((IncollectionBean) newBean).setFirstPage(oldBean.getFirstPage());
-	    ((IncollectionBean) newBean).setLastPage(oldBean.getLastPage());
+	case BookPart:
+	    newBean = new BookPartBean(oldBean);
+	    ((BookPartBean) newBean).setAddress(oldBean.getAddress());
+	    ((BookPartBean) newBean).setFirstPage(oldBean.getFirstPage());
+	    ((BookPartBean) newBean).setLastPage(oldBean.getLastPage());
 	    return newBean;
 	case Manual:
 	    newBean = new ManualBean(oldBean);
@@ -278,14 +203,10 @@ public abstract class ResultPublicationBeanConversions {
 	    ((BookBean) newBean).setAddress(oldBean.getAddress());
 	    ((BookBean) newBean).setEdition(oldBean.getEdition());
 	    return newBean;
-	case Inbook:
-	    newBean = new InbookBean(oldBean);
-	    ((InbookBean) newBean).setAddress(oldBean.getAddress());
-	    ((InbookBean) newBean).setEdition(oldBean.getEdition());
-	    return newBean;
-	case Incollection:
-	    newBean = new IncollectionBean(oldBean);
-	    ((IncollectionBean) newBean).setAddress(oldBean.getAddress());
+	case BookPart:
+	    newBean = new BookPartBean(oldBean);
+	    ((BookPartBean) newBean).setAddress(oldBean.getAddress());
+	    ((BookPartBean) newBean).setEdition(oldBean.getEdition());
 	    return newBean;
 	case Inproceedings:
 	    newBean = new InproceedingsBean(oldBean);
@@ -326,13 +247,9 @@ public abstract class ResultPublicationBeanConversions {
 	    ((BookBean) newBean).setNumberPages(oldBean.getNumberPages());
 	    ((BookBean) newBean).setLanguage(oldBean.getLanguage());
 	    return newBean;
-	case Inbook:
-	    newBean = new InbookBean(oldBean);
-	    ((InbookBean) newBean).setAddress(oldBean.getAddress());
-	    return newBean;
-	case Incollection:
-	    newBean = new IncollectionBean(oldBean);
-	    ((IncollectionBean) newBean).setAddress(oldBean.getAddress());
+	case BookPart:
+	    newBean = new BookPartBean(oldBean);
+	    ((BookPartBean) newBean).setAddress(oldBean.getAddress());
 	    return newBean;
 	case Inproceedings:
 	    newBean = new InproceedingsBean(oldBean);
@@ -373,13 +290,9 @@ public abstract class ResultPublicationBeanConversions {
 	    newBean = new BookBean(oldBean);
 	    ((BookBean) newBean).setAddress(oldBean.getAddress());
 	    return newBean;
-	case Inbook:
-	    newBean = new InbookBean(oldBean);
-	    ((InbookBean) newBean).setAddress(oldBean.getAddress());
-	    return newBean;
-	case Incollection:
-	    newBean = new IncollectionBean(oldBean);
-	    ((IncollectionBean) newBean).setAddress(oldBean.getAddress());
+	case BookPart:
+	    newBean = new BookPartBean(oldBean);
+	    ((BookPartBean) newBean).setAddress(oldBean.getAddress());
 	    return newBean;
 	case Inproceedings:
 	    newBean = new InproceedingsBean(oldBean);
@@ -421,13 +334,9 @@ public abstract class ResultPublicationBeanConversions {
 	    ((BookBean) newBean).setNumberPages(oldBean.getNumberPages());
 	    ((BookBean) newBean).setLanguage(oldBean.getLanguage());
 	    return newBean;
-	case Inbook:
-	    newBean = new InbookBean(oldBean);
-	    ((InbookBean) newBean).setAddress(oldBean.getAddress());
-	    return newBean;
-	case Incollection:
-	    newBean = new IncollectionBean(oldBean);
-	    ((IncollectionBean) newBean).setAddress(oldBean.getAddress());
+	case BookPart:
+	    newBean = new BookPartBean(oldBean);
+	    ((BookPartBean) newBean).setAddress(oldBean.getAddress());
 	    return newBean;
 	case Inproceedings:
 	    newBean = new InproceedingsBean(oldBean);
@@ -471,13 +380,9 @@ public abstract class ResultPublicationBeanConversions {
 	    ((BookBean) newBean).setNumberPages(oldBean.getNumberPages());
 	    ((BookBean) newBean).setLanguage(oldBean.getLanguage());
 	    return newBean;
-	case Inbook:
-	    newBean = new InbookBean(oldBean);
-	    ((InbookBean) newBean).setAddress(oldBean.getAddress());
-	    return newBean;
-	case Incollection:
-	    newBean = new IncollectionBean(oldBean);
-	    ((IncollectionBean) newBean).setAddress(oldBean.getAddress());
+	case BookPart:
+	    newBean = new BookPartBean(oldBean);
+	    ((BookPartBean) newBean).setAddress(oldBean.getAddress());
 	    return newBean;
 	case Inproceedings:
 	    newBean = new InproceedingsBean(oldBean);
@@ -522,10 +427,8 @@ public abstract class ResultPublicationBeanConversions {
 	    return new ArticleBean(oldBean);
 	case Book:
 	    return new BookBean(oldBean);
-	case Inbook:
-	    return new InbookBean(oldBean);
-	case Incollection:
-	    return new IncollectionBean(oldBean);
+	case BookPart:
+	    return new BookPartBean(oldBean);
 	case Inproceedings:
 	    return new InproceedingsBean(oldBean);
 	case Manual:

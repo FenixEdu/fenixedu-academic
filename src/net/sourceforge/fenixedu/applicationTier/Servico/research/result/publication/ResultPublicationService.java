@@ -3,8 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.research.result.publica
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ArticleBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.BookBean;
-import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.InbookBean;
-import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.IncollectionBean;
+import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.BookPartBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.InproceedingsBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ManualBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.OtherPublicationBean;
@@ -12,9 +11,7 @@ import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.P
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.TechnicalReportBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ThesisBean;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.research.activity.JournalIssue;
 import net.sourceforge.fenixedu.domain.research.result.publication.Article;
 import net.sourceforge.fenixedu.domain.research.result.publication.Book;
 import net.sourceforge.fenixedu.domain.research.result.publication.BookPart;
@@ -24,8 +21,6 @@ import net.sourceforge.fenixedu.domain.research.result.publication.OtherPublicat
 import net.sourceforge.fenixedu.domain.research.result.publication.Proceedings;
 import net.sourceforge.fenixedu.domain.research.result.publication.TechnicalReport;
 import net.sourceforge.fenixedu.domain.research.result.publication.Thesis;
-import net.sourceforge.fenixedu.domain.research.result.publication.BookPart.BookPartType;
-import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public abstract class ResultPublicationService extends Service {
 
@@ -48,20 +43,13 @@ public abstract class ResultPublicationService extends Service {
 						.getCountry(), bean.getScope(), bean.getNote(), bean.getMonth(), bean.getUrl());
 	}
 
-	protected BookPart createInbookFromBean(InbookBean bean) {
-		return new BookPart(bean.getPerson(), bean.getRole(), BookPartType.Inbook, bean.getTitle(), bean
-				.getKeywords(), bean.getChapter(), bean.getFirstPage(), bean.getLastPage(),
-				getPublisher(bean), bean.getYear(), bean.getVolume(), bean.getSeries(), bean.getEdition(),
-				bean.getCountry(), bean.getAddress(), bean.getNote(), bean.getMonth(), bean.getUrl());
+	protected BookPart createBookPartFromBean(BookPartBean bean) {
+	    return new BookPart(bean.getPerson(), bean.getRole(), bean.getTitle(), bean
+			.getKeywords(), bean.getBookTitle(), bean.getChapter(), bean.getVolume(), bean.getPublisher(), bean.getYear(), bean.getFirstPage(), bean.getLastPage(),
+			bean.getSeries(), bean.getEdition(), bean.getOrganization(),
+			bean.getCountry(), bean.getAddress(), bean.getNote(), bean.getMonth(), bean.getUrl());
 	}
-
-	protected BookPart createIncollectionFromBean(IncollectionBean bean) {
-		return new BookPart(bean.getPerson(), bean.getRole(), BookPartType.Incollection, bean.getTitle(),
-				bean.getKeywords(), bean.getBookTitle(), getPublisher(bean), bean.getYear(), bean
-						.getFirstPage(), bean.getLastPage(), getOrganization(bean), bean.getCountry(), bean
-						.getAddress(), bean.getNote(), bean.getMonth(), bean.getUrl());
-	}
-
+	
 	protected Article createArticleFromBean(ArticleBean bean) {
 	    return new Article(bean.getPerson(), bean.getTitle(), bean.getKeywords(), bean.getJournalIssue(), bean.getFirstPage(),
 				bean.getLastPage(), bean.getNote(), bean.getLanguage(), bean.getUrl());

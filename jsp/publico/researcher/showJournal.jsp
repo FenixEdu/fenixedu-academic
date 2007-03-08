@@ -5,14 +5,20 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-<h1><bean:message key="label.scientificJournal" bundle="RESEARCHER_RESOURCES"/></h1>
-<h2><fr:view name="journal" property="name"/></h2>
-
+<em><bean:message bundle="RESEARCHER_RESOURCES" key="label.research"/></em>
+<h2><bean:message bundle="RESEARCHER_RESOURCES" key="label.journal"/></h2>
+	
 <fr:view name="journal" layout="tabular-nonNullValues" schema="presentJournal">
 	<fr:layout name="tabular-nonNullValues">
-		<fr:property name="classes" value="tstyle2 thleft thlight thtop"/>
-		<fr:property name="rowClasses" value="tdbold,,,,,,,,,,,,"/>
-		<fr:property name="columnClasses" value="width10em, width50em"/>
-		<fr:property name="rowClasses" value="tdbold,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,"/>
+		<fr:property name="classes" value="tstyle2 thright thlight thtop"/>
+		<fr:property name="rowClasses" value="tdbold,,,,"/>
+	</fr:layout>
+</fr:view>
+
+<p class="mbottom05"><bean:message key="label.articleList" bundle="RESEARCHER_RESOURCES"/>:</p>
+<fr:view name="journal" property="articles" schema="presentArticlesInJournal">
+	<fr:layout name="tabular">
+		<fr:property name="classes" value="tstyle1 thlight thtop mtop05"/>
+		<fr:property name="rowClasses" value=",bgcolorfafafa"/>
 	</fr:layout>
 </fr:view>

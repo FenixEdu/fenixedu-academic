@@ -23,79 +23,56 @@ import net.sourceforge.fenixedu.util.MultiLanguageString;
  */
 public class BookPart extends BookPart_Base {
 
-	private static final String usedSchema = "result.publication.presentation.";
-	
-    public enum BookPartType {
-	Inbook, Incollection;
-    }
+    private static final String usedSchema = "result.publication.presentation.BookPart";
 
     public BookPart() {
 	super();
     }
 
-    /**
-     * BookPart - Inbook constructor
-     */
-    public BookPart(Person participator, ResultParticipationRole participatorRole,
-	    BookPartType bookPartType, String title, MultiLanguageString keywords, String chapter, Integer firstPage,
-	    Integer lastPage, Unit publisher, Integer year, String volume, String series,
+    public BookPart(Person participator, ResultParticipationRole participatorRole, String title,
+	    MultiLanguageString keywords, String bookTitle, String chapter, String volume, Unit publisher, Integer year, Integer firstPage,
+	    Integer lastPage, String series, String edition, Unit organization, Country country, String address, MultiLanguageString note,
+	    Month month, String url) {
+
+	super.checkRequiredParameters(keywords, note);
+	checkRequiredParameters(title, bookTitle, firstPage, lastPage, publisher, year);
+	super.setCreatorParticipation(participator, participatorRole);
+	fillAllAttributes(title, keywords, bookTitle, chapter, firstPage, lastPage, publisher, year, volume,
+		series, edition, country, address, note, month, url);
+
+    }
+
+    @Checked("ResultPredicates.writePredicate")
+    public void setEditAll(String title, MultiLanguageString keywords, String bookTitle, String chapter,
+	    Integer firstPage, Integer lastPage, Unit publisher, Integer year, String volume, String series,
 	    String edition, Country country, String address, MultiLanguageString note, Month month, String url) {
-	this();
-	
-	super.checkRequiredParameters(keywords, note);
-	checkInbookRequiredParameters(bookPartType, title, chapter, firstPage, lastPage, publisher, year);
-	super.setCreatorParticipation(participator, participatorRole);
-	fillAllInbookAttributes(bookPartType, title, keywords, chapter, firstPage, lastPage, publisher, year,
-		volume, series, edition, country, address, note, month, url);
-    }
 
-    /**
-     * BookPart - Incollection constructor
-     */
-    public BookPart(Person participator, ResultParticipationRole participatorRole,
-	    BookPartType bookPartType, String title, MultiLanguageString keywords, String bookTitle, Unit publisher, Integer year,
-	    Integer firstPage, Integer lastPage, Unit organization, Country country, String address,
-	    MultiLanguageString note, Month month, String url) {
-	this();
 	super.checkRequiredParameters(keywords, note);
-	checkIncollectionRequiredParameters(bookPartType, title, bookTitle, publisher, year);
-	super.setCreatorParticipation(participator, participatorRole);
-	fillAllIncollectionAttributes(bookPartType, title, keywords, bookTitle, publisher, year, firstPage,
-		lastPage, organization, country, address, note, month, url);
-    }
-
-    @Checked("ResultPredicates.writePredicate")
-    public void setEditAllInbook(BookPartType bookPartType, String title, MultiLanguageString keywords, String chapter,
-	    Integer firstPage, Integer lastPage, Unit publisher, Integer year, String volume,
-	    String series, String edition, Country country, String address, MultiLanguageString note, Month month,
-	    String url) {
-    super.checkRequiredParameters(keywords, note);
-    checkInbookRequiredParameters(bookPartType, title, chapter, firstPage, lastPage, publisher, year);
-	checkBookPartTypeChange(bookPartType);
-	fillAllInbookAttributes(bookPartType, title, keywords, chapter, firstPage, lastPage, publisher, year,
-		volume, series, edition, country, address, note, month, url);
+	checkRequiredParameters(title, bookTitle, firstPage, lastPage, publisher, year);
+	fillAllAttributes(title, keywords, bookTitle, chapter, firstPage, lastPage, publisher, year, volume,
+		series, edition, country, address, note, month, url);
 	super.setModifiedByAndDate();
     }
 
-    @Checked("ResultPredicates.writePredicate")
-    public void setEditAllIncollection(BookPartType bookPartType, String title, MultiLanguageString keywords, String bookTitle,
-	    Unit publisher, Integer year, Integer firstPage, Integer lastPage, Unit organization,
-	    Country country, String address, MultiLanguageString note, Month month, String url) {
-    super.checkRequiredParameters(keywords, note);
-    checkIncollectionRequiredParameters(bookPartType, title, bookTitle, publisher, year);
-	checkBookPartTypeChange(bookPartType);
-	fillAllIncollectionAttributes(bookPartType, title, keywords, bookTitle, publisher, year, firstPage,
-		lastPage, organization, country, address, note, month, url);
-	super.setModifiedByAndDate();
+    private void checkRequiredParameters(String title, String bookTitle, Integer firstPage, Integer lastPage,
+	    Unit publisher, Integer year) {
+	if (title == null || title.length() == 0)
+	    throw new DomainException("error.researcher.BookPart.title.null");
+	if (publisher == null)
+	    throw new DomainException("error.researcher.BookPart.publisher.null");
+	if (year == null)
+	    throw new DomainException("error.researcher.BookPart.year.null");
+	if (bookTitle == null || bookTitle.length() == 0)
+	    throw new DomainException("error.researcher.BookPart.bookTitle.null");
     }
 
-    private void fillAllInbookAttributes(BookPartType bookPartType, String title,MultiLanguageString keywords, String chapter,
-	    Integer firstPage, Integer lastPage, Unit publisher, Integer year, String volume,
-	    String series, String edition, Country country, String address, MultiLanguageString note, Month month,
-	    String url) {
-	super.setBookPartType(bookPartType);
+    private void fillAllAttributes(String title, MultiLanguageString keywords, String bookTitle,
+	    String chapter, Integer firstPage, Integer lastPage, Unit publisher, Integer year, String volume,
+	    String series, String edition, Country country, String address, MultiLanguageString note,
+	    Month month, String url) {
 	super.setTitle(title);
 	super.setPublisher(publisher);
+	super.setBookTitle(bookTitle);
 	super.setYear(year);
 	super.setChapter(chapter);
 	super.setFirstPage(firstPage);
@@ -109,80 +86,7 @@ public class BookPart extends BookPart_Base {
 	super.setMonth(month);
 	super.setUrl(url);
 	super.setKeywords(keywords);
-    }
 
-    private void checkInbookRequiredParameters(BookPartType bookPartType, String title, String chapter,
-	    Integer firstPage, Integer lastPage, Unit publisher, Integer year) {
-	if (!bookPartType.equals(BookPartType.Inbook))
-	    throw new DomainException("error.researcher.BookPart.wrongType");
-	checkCommonRequired(bookPartType, title, publisher, year);
-	if ((chapter == null) || (chapter.length() == 0)) {
-	    if ((firstPage == null) || (firstPage <= 0) || (lastPage == null) || (lastPage <= 0))
-		throw new DomainException("error.researcher.BookPart.needChapterOrPages");
-	}
-    }
-
-    private void fillAllIncollectionAttributes(BookPartType bookPartType, String title,MultiLanguageString keywords,
-	    String bookTitle, Unit publisher, Integer year, Integer firstPage, Integer lastPage,
-	    Unit organization, Country country, String address, MultiLanguageString note, Month month, String url) {
-	super.setBookPartType(bookPartType);
-	super.setTitle(title);
-	super.setBookTitle(bookTitle);
-	super.setPublisher(publisher);
-	super.setYear(year);
-	super.setFirstPage(firstPage);
-	super.setLastPage(lastPage);
-	super.setOrganization(organization);
-	super.setCountry(country);
-	super.setAddress(address);
-	super.setNote(note);
-	super.setMonth(month);
-	super.setUrl(url);	
-	super.setKeywords(keywords);
-    }
-
-    private void checkIncollectionRequiredParameters(BookPartType bookPartType, String title,
-	    String bookTitle, Unit publisher, Integer year) {
-	if (!bookPartType.equals(BookPartType.Incollection))
-	    throw new DomainException("error.researcher.BookPart.wrongType");
-	checkCommonRequired(bookPartType, title, publisher, year);
-	if (bookTitle == null || bookTitle.length() == 0)
-	    throw new DomainException("error.researcher.BookPart.bookTitle.null");
-    }
-
-    private void checkCommonRequired(BookPartType bookPartType, String title, Unit publisher,
-	    Integer year) {
-	if (bookPartType == null)
-	    throw new DomainException("error.researcher.BookPart.bookPartType.null");
-	if (title == null || title.length() == 0)
-	    throw new DomainException("error.researcher.BookPart.title.null");
-	if (publisher == null)
-	    throw new DomainException("error.researcher.BookPart.publisher.null");
-	if (year == null)
-	    throw new DomainException("error.researcher.BookPart.year.null");
-    }
-
-    private void checkBookPartTypeChange(BookPartType bookPartType) {
-	// if changing type of BookPart remove fields that don't belong to the
-	// new type
-	if (!this.getBookPartType().equals(bookPartType)) {
-	    switch (bookPartType) {
-	    case Inbook:
-		super.setBookTitle(null);
-		super.setOrganization(null);
-		break;
-
-	    case Incollection:
-		super.setChapter(null);
-		super.setVolume(null);
-		super.setSeries(null);
-		super.setEdition(null);
-		break;
-
-	    default:
-		break;
-	    }
-	}
     }
 
     @Override
@@ -218,10 +122,7 @@ public class BookPart extends BookPart_Base {
 	BibtexFile bibtexFile = new BibtexFile();
 
 	BibtexEntry bibEntry;
-	if (getBookPartType().equals(BookPartType.Inbook))
-	    bibEntry = bibtexFile.makeEntry("inbook", generateBibtexKey());
-	else
-	    bibEntry = bibtexFile.makeEntry("incollection", generateBibtexKey());
+	bibEntry = bibtexFile.makeEntry("inbook", generateBibtexKey());
 
 	bibEntry.setField("title", bibtexFile.makeString(getTitle()));
 	bibEntry.setField("year", bibtexFile.makeString(getYear().toString()));
@@ -261,11 +162,6 @@ public class BookPart extends BookPart_Base {
 	}
 
 	return bibEntry;
-    }
-
-    @Override
-    public void setBookPartType(BookPartType bookPartType) {
-	throw new DomainException("error.researcher.BookPart.call", "setBookPartType");
     }
 
     @Override
@@ -348,8 +244,9 @@ public class BookPart extends BookPart_Base {
 	throw new DomainException("error.researcher.BookPart.call", "setOrganization");
     }
 
-	@Override
-	public String getSchema() {
-		return usedSchema + getBookPartType();
-	}
+    @Override
+    public String getSchema() {
+	return usedSchema;
+    }
+
 }

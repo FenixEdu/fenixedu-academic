@@ -116,7 +116,6 @@ public class SQL2JavaConverters {
     public static FieldConversion ResultParticipationRole2SqlResultParticipationRoleConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.ResultParticipationRole2SqlResultParticipationRoleConversion();
     public static FieldConversion ThesisType2SqlThesisTypeConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.ThesisType2SqlThesisTypeConversion();
     public static FieldConversion ScopeType2SqlScopeTypeConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.ScopeType2SqlScopeTypeConversion();
-    public static FieldConversion BookPartType2SqlBookPartTypeConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.BookPartType2SqlBookPartTypeConversion();
     public static FieldConversion Month2SqlMonthConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.Month2SqlMonthConversion();
     public static FieldConversion AdministrativeOfficeType2SqlVarcharFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.AdministrativeOfficeType2SqlVarcharFieldConversion();
     public static FieldConversion AcademicServiceRequestSituationType2SqlVarcharFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.AcademicServiceRequestSituationType2SqlVarcharFieldConversion();

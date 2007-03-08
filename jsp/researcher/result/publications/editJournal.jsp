@@ -8,6 +8,9 @@
 <em><bean:message bundle="RESEARCHER_RESOURCES" key="label.research"/></em>
 <h2><bean:message key="label.editJournal" bundle="RESEARCHER_RESOURCES"/></h2>
 
+<bean:define id="publicationBean" name="publicationBean" type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean"/>
+<bean:define id="parameters" value="<%= "resultId=" + publicationBean.getIdInternal().toString() %>"/>
+
 	<logic:messagesPresent message="true">
 		<p>
 		<html:messages id="messages" message="true" bundle="RESEARCHER_RESOURCES">
@@ -39,12 +42,9 @@
 					<html:submit property="new"><bean:message key="label.createMagazine" bundle="RESEARCHER_RESOURCES"/></html:submit>	
 					</logic:present>
 				</fr:form>
-
-				<fr:form action="/resultPublications/prepareSelectJournal.do">
-				<fr:edit id="publicationBean" name="publicationBean" visible="false"/>
-					<html:submit><bean:message key="button.cancel" bundle="RESEARCHER_RESOURCES"/></html:submit>	
-				</fr:form>
-				
+			    <fr:form action="<%= "/resultPublications/showPublication.do?" + parameters%>">
+				<html:submit><bean:message key="button.cancel"/></html:submit>
+		   	   </fr:form>
 				</div>
 			</logic:notPresent>
 					
@@ -58,9 +58,9 @@
 						<fr:property name="classes" value="tstyle5 thright thlight thtop"/>
 			        	<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 					</fr:layout>
-				</fr:edit>
+					</fr:edit>
 					<br/>
-					<html:submit property="confirm"><bean:message key="label.choose" bundle="RESEARCHER_RESOURCES"/></html:submit>
+					<html:submit property="confirm"><bean:message key="label.chooseIssue" bundle="RESEARCHER_RESOURCES"/></html:submit>
 				</fr:form>
 				<fr:form action="/resultPublications/createJournalToAssociate.do">
 					<fr:edit id="publicationBean" name="publicationBean" visible="false"/>
@@ -70,16 +70,21 @@
 					<fr:edit id="publicationBean" name="publicationBean" visible="false"/>
 					<html:submit><bean:message key="label.chooseNewJournal" bundle="RESEARCHER_RESOURCES"/></html:submit>	
 				</fr:form>
+			    <fr:form action="<%= "/resultPublications/showPublication.do?" + parameters%>">
+				<html:submit><bean:message key="button.cancel"/></html:submit>
+		   	   </fr:form>
 				</div>
 			</logic:present>					
 		</logic:notPresent>					
 					
 		<logic:present name="issueBean">				
+					<div class="dinline forminline">	
 					<fr:form action="/resultPublications/createJournalToAssociate.do">
 					<fr:edit id="publicationBean" name="publicationBean" visible="false"/>
 					<fr:edit id="createMagazine" name="issueBean" visible="false"/>									
 
 					<strong><bean:message key="label.journal" bundle="RESEARCHER_RESOURCES"/></strong>:
+					<br/>
 					<logic:equal name="issueBean" property="journalAlreadyChosen" value="false">
 					<fr:edit id="journalInfo" name="issueBean" schema="result.publication.create.Article.createMagazine">
 						<fr:layout name="tabular">
@@ -92,9 +97,10 @@
 					<logic:equal name="issueBean" property="journalAlreadyChosen" value="true">
 						<span><fr:view name="issueBean" property="journal.name"/></span>
 					</logic:equal>
-					<br/>
 
+					<br/>
 					<strong><bean:message key="label.journalIssue" bundle="RESEARCHER_RESOURCES"/></strong>:
+					<br/>
 					<fr:edit id="issueInfo" name="issueBean" schema="result.publication.create.Article.createIssue">
 						<fr:layout name="tabular">
 							 <fr:property name="classes" value="tstyle5 thright thlight thtop"/>
@@ -103,7 +109,7 @@
 						<fr:destination name="invalid" path="/resultPublications/createJournalToAssociate.do"/>
 					</fr:edit>
 					
-
+					<br/><br/>
 					<html:submit>
 						<logic:equal name="issueBean" property="journalAlreadyChosen" value="false">
 							<bean:message key="label.createJournalAndIssue" bundle="RESEARCHER_RESOURCES"/>
@@ -113,4 +119,9 @@
 						</logic:equal>
 					</html:submit>
 				</fr:form>
+				 <fr:form action="<%= "/resultPublications/showPublication.do?" + parameters%>">
+	
+					<html:submit><bean:message key="button.cancel"/></html:submit>
+			   	   </fr:form>
+		   	   </div>
 	</logic:present>

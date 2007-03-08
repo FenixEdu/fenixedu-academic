@@ -6,8 +6,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.commons.externalPerson.I
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ArticleBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.BookBean;
-import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.InbookBean;
-import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.IncollectionBean;
+import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.BookPartBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.InproceedingsBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ManualBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.OtherPublicationBean;
@@ -35,7 +34,7 @@ public class ImportBibtexPublication extends ResultPublicationService {
         return (ResearchResultPublication) ResearchResultMetaDataManager.addDefaultDocument(publication);
     }
     
-    public ResearchResultPublication run(Person personImporting, InbookBean bean, BibtexPublicationBean bibtexPublicationBean) throws FenixServiceException {
+    public ResearchResultPublication run(Person personImporting, BookPartBean bean, BibtexPublicationBean bibtexPublicationBean) throws FenixServiceException {
         if (bean == null)
             throw new NullPointerException();
         
@@ -43,20 +42,7 @@ public class ImportBibtexPublication extends ResultPublicationService {
         bean.setPerson(participator.getPerson());
         bean.setRole(participator.getPersonRole());
         
-        ResearchResultPublication publication = createInbookFromBean(bean);
-        createRestOfParticipations(personImporting, bibtexPublicationBean.getParticipators(), publication);
-        return (ResearchResultPublication) ResearchResultMetaDataManager.addDefaultDocument(publication);
-    }
-    
-    public ResearchResultPublication run(Person personImporting, IncollectionBean bean, BibtexPublicationBean bibtexPublicationBean) throws FenixServiceException {
-        if (bean == null)
-            throw new NullPointerException();
-        
-        BibtexParticipatorBean participator = verifyPersonImporting(personImporting, bibtexPublicationBean.getParticipators());
-        bean.setPerson(participator.getPerson());
-        bean.setRole(participator.getPersonRole());
-        
-        ResearchResultPublication publication = createIncollectionFromBean(bean);
+        ResearchResultPublication publication = createBookPartFromBean(bean);
         createRestOfParticipations(personImporting, bibtexPublicationBean.getParticipators(), publication);
         return (ResearchResultPublication) ResearchResultMetaDataManager.addDefaultDocument(publication);
     }

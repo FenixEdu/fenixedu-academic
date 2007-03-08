@@ -1,8 +1,10 @@
 package net.sourceforge.fenixedu.domain.research.activity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.research.activity.Participation.ResearchActivityParticipationRole;
+import net.sourceforge.fenixedu.domain.research.result.publication.Article;
 
 
 public class ScientificJournal extends ScientificJournal_Base {
@@ -37,6 +39,14 @@ public class ScientificJournal extends ScientificJournal_Base {
 	if(getJournalIssues().isEmpty() && getParticipations().isEmpty()) {
 	    delete();
 	}
+    }
+    
+    public List<Article> getArticles() {
+	List<Article> articles = new ArrayList<Article>();
+	for(JournalIssue issue : getJournalIssues()) {
+	    articles.addAll(issue.getArticles());
+	}
+	return articles;
     }
     
 }

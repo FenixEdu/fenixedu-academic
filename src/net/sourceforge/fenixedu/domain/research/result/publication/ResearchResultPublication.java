@@ -80,7 +80,7 @@ public abstract class ResearchResultPublication extends ResearchResultPublicatio
 
     public List<Person> getAuthors() {
 	ArrayList<Person> authors = new ArrayList<Person>();
-	for (ResultParticipation participation : this.getResultParticipations()) {
+	for (ResultParticipation participation : this.getOrderedResultParticipations()) {
 	    if (participation.getRole().equals(ResultParticipationRole.Author))
 		authors.add(participation.getPerson());
 	}
@@ -89,7 +89,7 @@ public abstract class ResearchResultPublication extends ResearchResultPublicatio
 
     public List<Person> getEditors() {
 	ArrayList<Person> editors = new ArrayList<Person>();
-	for (ResultParticipation participation : this.getResultParticipations()) {
+	for (ResultParticipation participation : this.getOrderedResultParticipations()) {
 	    if (participation.getRole().equals(ResultParticipationRole.Editor))
 		editors.add(participation.getPerson());
 	}

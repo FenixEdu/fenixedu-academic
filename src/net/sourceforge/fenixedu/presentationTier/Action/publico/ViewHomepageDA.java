@@ -38,7 +38,6 @@ import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResul
 import net.sourceforge.fenixedu.domain.research.result.publication.TechnicalReport;
 import net.sourceforge.fenixedu.domain.research.result.publication.Thesis;
 import net.sourceforge.fenixedu.domain.research.result.publication.Unstructured;
-import net.sourceforge.fenixedu.domain.research.result.publication.BookPart.BookPartType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.SiteVisualizationDA;
@@ -399,8 +398,7 @@ public class ViewHomepageDA extends SiteVisualizationDA {
 		request.setAttribute("otherPublications", person.getOtherPublications());
 		request.setAttribute("unstructureds", person.getUnstructureds());
 		request.setAttribute("inbooks", person.getInbooks());
-		request.setAttribute("incollections", person.getIncollections());
-
+		
 		request.setAttribute("person", getLoggedPerson(request));
 	}
 

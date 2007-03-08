@@ -143,7 +143,6 @@ valueType net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest
 valueType net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType  				as DocumentRequestType;
 valueType net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentPurposeType  				as DocumentPurposeType;
 valueType net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent.ResultPatentType  				as ResultPatentType;
-valueType net.sourceforge.fenixedu.domain.research.result.publication.BookPart.BookPartType						as BookPartType;
 valueType net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent.ResultPatentStatus 				as ResultPatentStatus;
 valueType net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication.ScopeType 				as ScopeType;
 valueType net.sourceforge.fenixedu.domain.research.project.ProjectParticipation.ProjectParticipationType 		as ProjectParticipationType;
@@ -3948,7 +3947,6 @@ class net.sourceforge.fenixedu.domain.research.result.ResearchResult extends net
 			ScopeType scope;
 	}
 		class net.sourceforge.fenixedu.domain.research.result.publication.BookPart extends net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication {
-			BookPartType bookPartType;
 			String chapter;
 			String bookTitle;
 			Integer firstPage;
@@ -4089,7 +4087,7 @@ class net.sourceforge.fenixedu.domain.research.activity.JournalIssue extends net
   Month month;
   String publisher;
   String url;
-  
+
   Integer keyScientificJournal;
 
 }

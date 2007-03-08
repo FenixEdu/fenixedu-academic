@@ -76,7 +76,6 @@ import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResul
 import net.sourceforge.fenixedu.domain.research.result.publication.TechnicalReport;
 import net.sourceforge.fenixedu.domain.research.result.publication.Thesis;
 import net.sourceforge.fenixedu.domain.research.result.publication.Unstructured;
-import net.sourceforge.fenixedu.domain.research.result.publication.BookPart.BookPartType;
 import net.sourceforge.fenixedu.domain.sms.SentSms;
 import net.sourceforge.fenixedu.domain.sms.SmsDeliveryType;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -691,39 +690,11 @@ public class Person extends Person_Base {
     }
 
     public List<ResearchResultPublication> getInbooks() {
-	return ResearchResultPublication.sort(this.getFilteredBookParts(BookPartType.Inbook));
+	return ResearchResultPublication.sort(this.getResearchResultPublicationsByType(BookPart.class)); 
     }
 
     public List<ResearchResultPublication> getInbooks(ExecutionYear executionYear) {
-	return ResearchResultPublication.sort(this.getFilteredBookParts(BookPartType.Inbook, executionYear));
-    }
-
-    public List<ResearchResultPublication> getIncollections() {
-	return ResearchResultPublication.sort(this.getFilteredBookParts(BookPartType.Incollection));
-    }
-
-    public List<ResearchResultPublication> getIncollections(ExecutionYear executionYear) {
-	return ResearchResultPublication.sort(this.getFilteredBookParts(BookPartType.Incollection,
-		executionYear));
-    }
-
-    private List<ResearchResultPublication> getFilteredBookParts(BookPartType type) {
-	return getFilteredBookParts(type, null);
-    }
-
-    private List<ResearchResultPublication> getFilteredBookParts(BookPartType type,
-	    ExecutionYear executionYear) {
-	List<ResearchResultPublication> bookParts = this.getResearchResultPublicationsByType(BookPart.class);
-	List<ResearchResultPublication> filteredBookParts = new ArrayList<ResearchResultPublication>();
-	for (ResearchResultPublication publication : bookParts) {
-	    if (executionYear == null
-		    || (executionYear != null && executionYear.belongsToCivilYear(publication.getYear()))) {
-		BookPart bookPart = (BookPart) publication;
-		if (bookPart.getBookPartType().equals(type))
-		    filteredBookParts.add(bookPart);
-	    }
-	}
-	return filteredBookParts;
+	return ResearchResultPublication.sort(this.getResearchResultPublicationsByType(BookPart.class,executionYear));
     }
 
     private List<ResearchResultPublication> filterResultPublicationsByType(

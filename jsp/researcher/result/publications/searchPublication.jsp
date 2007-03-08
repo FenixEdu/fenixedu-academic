@@ -115,7 +115,7 @@
 <bean:message key="label.page" bundle="SITE_RESOURCES"/>: 
 <cp:collectionPages url="<%= 
 	"/researcher/publications/search.do?method=moveIndex&amp" + bean.getSearchElementsAsParameters() %>" 
-	pageNumberAttributeName="page" numberOfPagesAttributeName="numberOfPages"/>
+	pageNumberAttributeName="page" numberOfPagesAttributeName="numberOfPages" numberOfVisualizedPages="11"/>
 </p>
 </logic:notEqual>
 
@@ -191,7 +191,7 @@
 <bean:message key="label.page" bundle="SITE_RESOURCES"/>: 
 <cp:collectionPages url="<%= 
     "/researcher/publications/search.do?method=moveIndex" + bean.getSearchElementsAsParameters() %>" 
-	pageNumberAttributeName="page" numberOfPagesAttributeName="numberOfPages"/>
+	pageNumberAttributeName="page" numberOfPagesAttributeName="numberOfPages" numberOfVisualizedPages="11"/>
 </p>
 </logic:notEqual>
 

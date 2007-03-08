@@ -2,8 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.research.result.publica
 
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ArticleBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.BookBean;
-import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.InbookBean;
-import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.IncollectionBean;
+import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.BookPartBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.InproceedingsBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ManualBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.OtherPublicationBean;
@@ -29,16 +28,10 @@ public class CreateResultPublication extends ResultPublicationService {
 		return (Book) ResearchResultMetaDataManager.addDefaultDocument(createBookFromBean(bean));
 	}
 
-	public BookPart run(InbookBean bean) {
+	public BookPart run(BookPartBean bean) {
 		if (bean == null)
 			throw new NullPointerException();
-		return (BookPart) ResearchResultMetaDataManager.addDefaultDocument(createInbookFromBean(bean));
-	}
-
-	public BookPart run(IncollectionBean bean) {
-		if (bean == null)
-			throw new NullPointerException();
-		return (BookPart) ResearchResultMetaDataManager.addDefaultDocument(createIncollectionFromBean(bean));
+		return (BookPart) ResearchResultMetaDataManager.addDefaultDocument(createBookPartFromBean(bean));
 	}
 
 	public Article run(ArticleBean bean) {

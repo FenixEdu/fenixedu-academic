@@ -403,7 +403,6 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
 	request.setAttribute("otherPublications", person.getOtherPublications());
 	request.setAttribute("unstructureds", person.getUnstructureds());
 	request.setAttribute("inbooks", person.getInbooks());
-	request.setAttribute("incollections", person.getIncollections());
 	request.setAttribute("person", getLoggedPerson(request));
     }
 

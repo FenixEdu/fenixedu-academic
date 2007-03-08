@@ -41,15 +41,15 @@ public class Article extends Article_Base {
     }
 
     @Checked("ResultPredicates.writePredicate")
-    public void setEditAll(String title, MultiLanguageString keywords, JournalIssue issue,  Integer firstPage, Integer lastPage,
-	    MultiLanguageString note, String language, String url) {
+    public void setEditAll(String title, MultiLanguageString keywords, JournalIssue issue, Integer firstPage,
+	    Integer lastPage, MultiLanguageString note, String language, String url) {
 	checkRequiredParameters(title, issue);
 	fillAllAttributes(title, keywords, issue, firstPage, lastPage, note, language, url);
 	super.setModifiedByAndDate();
     }
 
-    private void fillAllAttributes(String title, MultiLanguageString keywords, JournalIssue issue,  Integer firstPage, Integer lastPage,
-	    MultiLanguageString note, String language, String url) {
+    private void fillAllAttributes(String title, MultiLanguageString keywords, JournalIssue issue,
+	    Integer firstPage, Integer lastPage, MultiLanguageString note, String language, String url) {
 	super.setTitle(title);
 	setJournalIssue(issue);
 	super.setFirstPage(firstPage);
@@ -81,7 +81,7 @@ public class Article extends Article_Base {
 	    resume = resume + "Pag. " + getFirstPage() + " - " + getLastPage() + ", ";
 	if ((getYear() != null) && (getYear() > 0))
 	    resume = resume + getYear() + ", ";
-	
+
 	resume = finishResume(resume);
 	return resume;
     }
@@ -205,9 +205,9 @@ public class Article extends Article_Base {
     @Checked("ResultPredicates.writePredicate")
     public void setJournalIssue(JournalIssue journalIssue) {
 	ArticleAssociation association = getArticleAssociation();
-	if (association==null) {
+	if (association == null) {
 	    Person creator = AccessControl.getPerson();
-	    if(creator==null) {
+	    if (creator == null) {
 		creator = getCreator();
 	    }
 	    association = new ArticleAssociation(journalIssue, this, creator);
@@ -216,7 +216,18 @@ public class Article extends Article_Base {
 	}
     }
 
-   public ScientificJournal getScientificJournal() {
-       return getJournalIssue().getScientificJournal();
-   }
+    public ScientificJournal getScientificJournal() {
+	return getJournalIssue().getScientificJournal();
+    }
+
+    @Override
+    public Month getMonth() {
+	return getJournalIssue().getMonth();
+    }
+
+    @Override
+    public Integer getYear() {
+	return getJournalIssue().getYear();
+    }
+
 }

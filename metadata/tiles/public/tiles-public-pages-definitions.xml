@@ -396,8 +396,4 @@
        <put name="body" value="/publico/researcher/showJournal.jsp"/>  
     </definition>
     
-    <definition name="show.issue" extends="definition.public.homepage">
-       <put name="body" value="/publico/researcher/showIssue.jsp"/>  
-    </definition>
-    
 </tiles-definitions>

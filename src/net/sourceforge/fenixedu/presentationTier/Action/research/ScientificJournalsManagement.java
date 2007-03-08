@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.research;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.research.activity.JournalIssue;
 import net.sourceforge.fenixedu.domain.research.activity.ScientificJournal;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -24,17 +23,4 @@ public class ScientificJournalsManagement extends FenixDispatchAction {
 	
 	return mapping.findForward("showJournal");
     }
-    
-    public ActionForward showJournalIssue(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) {
-	
-	String issueId  = request.getParameter("issueId");
-	if(issueId!=null) {
-	    JournalIssue issue = (JournalIssue) rootDomainObject.readJournalIssueByOID(Integer.valueOf(issueId));
-	    request.setAttribute("issue",issue);
-	}
-	
-	return mapping.findForward("showIssue");
-    }
-    
 }

@@ -340,6 +340,8 @@ Documentation:
 	<renderer mode="input" type="java.lang.Object" layout="menu-select-postback" class="net.sourceforge.fenixedu.presentationTier.renderers.InputMenuOptionListRendererWithPostback"/>
 
     <renderer mode="input" type="java.lang.String" class="net.sourceforge.fenixedu.renderers.StringInputRenderer"/>
+
+	<render mode="input" type="java.lang.String" layout="input-with-comment" class="net.sourceforge.fenixedu.renderers.StringInputRendererWithComment"/>
     <!--@ This layout allows an html text string to be edited with the fenix javascript html editor. 
           If the current browser is not supported by the html editor then it falls back to a simple text area. -->
     <renderer mode="input" type="java.lang.String" layout="htmlEditor" class="net.sourceforge.fenixedu.presentationTier.renderers.htmlEditor.HtmlEditorRenderer"/>

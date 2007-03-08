@@ -26,7 +26,7 @@
 		<logic:equal name="publicationBean" property="createEvent" value="false">
 			<!-- Present publication fields -->
 			<p class="mtop2 mbottom05"><b><bean:message bundle="RESEARCHER_RESOURCES" key="label.data"/> (<bean:message bundle="RESEARCHER_RESOURCES" key="<%="researcher.ResultPublication.type."+publicationBean.getPublicationTypeString()%>"/>)</b></p>
-			<fr:edit id="publicationData" name="publicationBean" schema="<%= publicationBean.getActiveSchema() %>" nested="true">
+			<fr:edit id="publicationBean" name="publicationBean" schema="<%= publicationBean.getActiveSchema() %>" nested="true">
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="tstyle5 thright thlight"/>
 					<fr:property name="columnClasses" value=",,tdclear tderror1"/>

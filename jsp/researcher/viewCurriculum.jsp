@@ -204,19 +204,12 @@
 	</logic:notEmpty>
 
 	<logic:notEmpty name="inbooks">
-		<p id='inbooks' class="mtop2 mbottom0"><strong><span><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.Inbooks"/></span></strong></p>
-		<bean:define id="currentSchema" value="result.publication.presentation.Inbook" toScope="request"/>
+		<p id='inbooks' class="mtop2 mbottom0"><strong><span><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.BookParts"/></span></strong></p>
+		<bean:define id="currentSchema" value="result.publication.presentation.BookPart" toScope="request"/>
 		<bean:define id="results" name="inbooks" toScope="request"/>
 		<jsp:include page="result/publications/publicationsResume.jsp"/>
 	</logic:notEmpty>
 	
-	<logic:notEmpty name="incollections">
-		<p id='incollections' class="mtop2 mbottom0"/><span><strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.Incollections"/></span></strong></p>
-		<bean:define id="currentSchema" value="result.publication.presentation.Incollection" toScope="request"/>
-		<bean:define id="results" name="incollections" toScope="request"/>
-		<jsp:include page="result/publications/publicationsResume.jsp"/>
-	</logic:notEmpty>
-
 	<bean:define id="hasArticles" value="false" toScope="request"/>
 	<logic:notEmpty name="local-articles"> 
 		<bean:define id="hasArticles" value="true" toScope="request"/>

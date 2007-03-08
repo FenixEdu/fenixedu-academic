@@ -19,8 +19,7 @@ import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultUnitAss
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultParticipationCreationBean.ParticipationType;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ArticleBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.BookBean;
-import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.InbookBean;
-import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.IncollectionBean;
+import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.BookPartBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.InproceedingsBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ManualBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.OtherPublicationBean;
@@ -218,9 +217,9 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
 		if (type.equalsIgnoreCase("book"))
 			publicationBean = new BookBean(entry);
 		if (type.equalsIgnoreCase("inbook"))
-			publicationBean = new InbookBean(entry);
+			publicationBean = new BookPartBean(entry);
 		if (type.equalsIgnoreCase("incollection"))
-			publicationBean = new IncollectionBean(entry);
+			publicationBean = new BookPartBean(entry);
 		else if (type.equalsIgnoreCase("article"))
 			publicationBean = new ArticleBean(entry);
 		else if (type.equalsIgnoreCase("inproceedings"))

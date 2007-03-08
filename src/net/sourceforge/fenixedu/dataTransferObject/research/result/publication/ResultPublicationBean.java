@@ -29,7 +29,7 @@ import bibtex.dom.BibtexString;
 public abstract class ResultPublicationBean implements Serializable {
     public enum ResultPublicationType {
 	/* Types based on BibTex */
-	Article, Book, Inbook, Incollection, Inproceedings, Proceedings, Thesis, Manual, TechnicalReport, OtherPublication;
+	Article, Book, BookPart, Inproceedings, Proceedings, Thesis, Manual, TechnicalReport, OtherPublication;
 
 	public static ResultPublicationType getDefaultType() {
 	    return Article;
@@ -40,9 +40,6 @@ public abstract class ResultPublicationBean implements Serializable {
 	    if (typeStr.equals("Unstructured"))
 		return null;
 	    // add bookPart type
-	    if (typeStr.equals("BookPart")) {
-		typeStr = ((BookPart) publication).getBookPartType().toString();
-	    }
 	    return ResultPublicationType.valueOf(typeStr);
 	}
 
@@ -52,9 +49,9 @@ public abstract class ResultPublicationBean implements Serializable {
 	    if (type.equalsIgnoreCase("book"))
 		return Book;
 	    if (type.equalsIgnoreCase("inbook"))
-		return Inbook;
+		return BookPart;
 	    if (type.equalsIgnoreCase("incollection"))
-		return Incollection;
+		return BookPart;
 	    else if (type.equalsIgnoreCase("article"))
 		return Article;
 	    else if (type.equalsIgnoreCase("inproceedings") || type.equalsIgnoreCase("conference"))
@@ -125,12 +122,8 @@ public abstract class ResultPublicationBean implements Serializable {
 	switch (type) {
 	case Article:
 	    return new ArticleBean();
-	case Book:
-	    return new BookBean();
-	case Inbook:
-	    return new InbookBean();
-	case Incollection:
-	    return new IncollectionBean();
+	case BookPart:
+	    return new BookPartBean();
 	case Inproceedings:
 	    return new InproceedingsBean();
 	case Manual:
@@ -157,10 +150,8 @@ public abstract class ResultPublicationBean implements Serializable {
 	    return new ArticleBean((Article) publication);
 	case Book:
 	    return new BookBean((Book) publication);
-	case Inbook:
-	    return new InbookBean((BookPart) publication);
-	case Incollection:
-	    return new IncollectionBean((BookPart) publication);
+	case BookPart:
+	    return new BookPartBean((BookPart) publication);
 	case Inproceedings:
 	    return new InproceedingsBean((Inproceedings) publication);
 	case Manual:
@@ -184,10 +175,8 @@ public abstract class ResultPublicationBean implements Serializable {
 	    return new ArticleBean(bibtexEntry);
 	case Book:
 	    return new BookBean(bibtexEntry);
-	case Inbook:
-	    return new InbookBean(bibtexEntry);
-	case Incollection:
-	    return new IncollectionBean(bibtexEntry);
+	case BookPart:
+	    return new BookPartBean(bibtexEntry);
 	case Inproceedings:
 	    return new InproceedingsBean(bibtexEntry);
 	case Manual:

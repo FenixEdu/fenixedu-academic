@@ -114,9 +114,7 @@ public class ViewCurriculumDispatchAction extends FenixAction {
  		request.setAttribute("otherPublications", person.getOtherPublications(executionYear));
  		request.setAttribute("unstructureds", person.getUnstructureds(executionYear));
  		request.setAttribute("inbooks", person.getInbooks(executionYear));
- 		request.setAttribute("incollections", person.getIncollections(executionYear));
-
-
+ 		
 		request.setAttribute("resultPatents", person.getResearchResultPatentsByExecutionYear(executionYear));
 
 	}
@@ -153,8 +151,7 @@ public class ViewCurriculumDispatchAction extends FenixAction {
 		request.setAttribute("otherPublications", person.getOtherPublications());
 		request.setAttribute("unstructureds", person.getUnstructureds());
 		request.setAttribute("inbooks", person.getInbooks());
-		request.setAttribute("incollections", person.getIncollections());
-
+	
 		request.setAttribute("resultPatents", person.getResearchResultPatents());
 	}
 

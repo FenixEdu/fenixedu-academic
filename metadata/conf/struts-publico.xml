@@ -863,7 +863,6 @@
 	        	 parameter="method"
 	        	 type="net.sourceforge.fenixedu.presentationTier.Action.research.ScientificJournalsManagement">
 		    <forward name="showJournal" path="show.journal"/>
-   		    <forward name="showIssue" path="show.issue"/>
 	</action>
 
 	<!-- =========== RSS ======================== -->
