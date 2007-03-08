@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.publication.Publication;
 import net.sourceforge.fenixedu.domain.publication.PublicationTeacher;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
@@ -237,8 +236,7 @@ public class Teacher extends Teacher_Base {
 
     public List<Unit> getWorkingPlacesByPeriod(YearMonthDay beginDate, YearMonthDay endDate) {
 	Employee employee = this.getPerson().getEmployee();
-	return (employee != null) ? employee.getWorkingPlaces(beginDate, endDate)
-		: new ArrayList<Unit>();
+	return (employee != null) ? employee.getWorkingPlaces(beginDate, endDate) : new ArrayList<Unit>();
     }
 
     public Category getCategory() {
@@ -248,8 +246,7 @@ public class Teacher extends Teacher_Base {
 
     public TeacherLegalRegimen getCurrentLegalRegimenWithoutEndSitutions() {
 	TeacherLegalRegimen lastLegalRegimen = getLastLegalRegimenWithoutEndSituations();
-	return (lastLegalRegimen != null && lastLegalRegimen.isActive(new YearMonthDay())) ? lastLegalRegimen
-		: null;
+	return (lastLegalRegimen != null && lastLegalRegimen.isActive(new YearMonthDay())) ? lastLegalRegimen : null;
     }
 
     public TeacherLegalRegimen getLastLegalRegimenWithoutEndSituations() {
@@ -268,8 +265,7 @@ public class Teacher extends Teacher_Base {
 	return regimenToReturn;
     }
 
-    public TeacherLegalRegimen getLastLegalRegimenWithoutEndSituations(YearMonthDay begin,
-	    YearMonthDay end) {
+    public TeacherLegalRegimen getLastLegalRegimenWithoutEndSituations(YearMonthDay begin, YearMonthDay end) {
 	YearMonthDay date = null, current = new YearMonthDay();
 	TeacherLegalRegimen regimenToReturn = null;
 	for (TeacherLegalRegimen regimen : getAllLegalRegimensWithoutEndSituations(begin, end)) {
@@ -285,12 +281,10 @@ public class Teacher extends Teacher_Base {
 	return regimenToReturn;
     }
 
-    public List<TeacherLegalRegimen> getAllLegalRegimensWithoutEndSituations(YearMonthDay beginDate,
-	    YearMonthDay endDate) {
+    public List<TeacherLegalRegimen> getAllLegalRegimensWithoutEndSituations(YearMonthDay beginDate, YearMonthDay endDate) {
 	Set<TeacherLegalRegimen> legalRegimens = new HashSet<TeacherLegalRegimen>();
 	for (TeacherLegalRegimen legalRegimen : this.getLegalRegimens()) {
-	    if (!legalRegimen.isEndSituation() && !legalRegimen.isFunctionAccumulation()
-		    && legalRegimen.belongsToPeriod(beginDate, endDate)) {
+	    if (!legalRegimen.isEndSituation() && !legalRegimen.isFunctionAccumulation() && legalRegimen.belongsToPeriod(beginDate, endDate)) {
 		legalRegimens.add(legalRegimen);
 	    }
 	}
@@ -372,8 +366,7 @@ public class Teacher extends Teacher_Base {
 	return executionCourses;
     }
 
-    public List<ExecutionCourse> getLecturedExecutionCoursesByExecutionPeriod(
-	    final ExecutionPeriod executionPeriod) {
+    public List<ExecutionCourse> getLecturedExecutionCoursesByExecutionPeriod(final ExecutionPeriod executionPeriod) {
 	List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
 	for (Iterator iter = getProfessorships().iterator(); iter.hasNext();) {
 	    Professorship professorship = (Professorship) iter.next();
@@ -388,11 +381,9 @@ public class Teacher extends Teacher_Base {
 
     public List<ExecutionCourse> getAllLecturedExecutionCourses() {
 	List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
-
 	for (Professorship professorship : this.getProfessorships()) {
 	    executionCourses.add(professorship.getExecutionCourse());
 	}
-
 	return executionCourses;
     }
 
@@ -657,22 +648,15 @@ public class Teacher extends Teacher_Base {
 	YearMonthDay notYetOverlapedIntervalStart = notYetOverlapedInterval.getStart().toYearMonthDay();
 	YearMonthDay notYetOverlapedIntervalEnd = notYetOverlapedInterval.getEnd().toYearMonthDay();
 
-	if (overlapIntervalStart.equals(notYetOverlapedIntervalStart)
-		&& !overlapIntervalEnd.equals(notYetOverlapedIntervalEnd)) {
-	    intervals.add(new Interval(overlapInterval.getEnd().plusDays(1), notYetOverlapedInterval
-		    .getEnd()));
+	if (overlapIntervalStart.equals(notYetOverlapedIntervalStart) && !overlapIntervalEnd.equals(notYetOverlapedIntervalEnd)) {
+	    intervals.add(new Interval(overlapInterval.getEnd().plusDays(1), notYetOverlapedInterval.getEnd()));
 
-	} else if (!overlapIntervalStart.equals(notYetOverlapedIntervalStart)
-		&& overlapIntervalEnd.equals(notYetOverlapedIntervalEnd)) {
-	    intervals.add(new Interval(notYetOverlapedInterval.getStart(), overlapInterval.getStart()
-		    .minusDays(1)));
+	} else if (!overlapIntervalStart.equals(notYetOverlapedIntervalStart) && overlapIntervalEnd.equals(notYetOverlapedIntervalEnd)) {
+	    intervals.add(new Interval(notYetOverlapedInterval.getStart(), overlapInterval.getStart().minusDays(1)));
 
-	} else if (!overlapIntervalStart.equals(notYetOverlapedIntervalStart)
-		&& !overlapIntervalEnd.equals(notYetOverlapedIntervalEnd)) {
-	    intervals.add(new Interval(notYetOverlapedInterval.getStart(), overlapInterval.getStart()
-		    .minusDays(1)));
-	    intervals.add(new Interval(overlapInterval.getEnd().plusDays(1), notYetOverlapedInterval
-		    .getEnd()));
+	} else if (!overlapIntervalStart.equals(notYetOverlapedIntervalStart) && !overlapIntervalEnd.equals(notYetOverlapedIntervalEnd)) {
+	    intervals.add(new Interval(notYetOverlapedInterval.getStart(), overlapInterval.getStart().minusDays(1)));
+	    intervals.add(new Interval(overlapInterval.getEnd().plusDays(1), notYetOverlapedInterval.getEnd()));
 	}
 
 	return intervals;
@@ -800,10 +784,8 @@ public class Teacher extends Teacher_Base {
     public boolean isInactive(ExecutionPeriod executionPeriod) {
 	if (executionPeriod != null) {
 	    OccupationPeriod occupationPeriod = executionPeriod.getLessonsPeriod();
-	    if (occupationPeriod != null) {
-		List<TeacherLegalRegimen> allLegalRegimens = getAllLegalRegimensWithoutEndSituations(
-			occupationPeriod.getStartYearMonthDay(), occupationPeriod.getEndYearMonthDay());
-		if (allLegalRegimens.isEmpty()) {
+	    if (occupationPeriod != null) {		
+		if (getAllLegalRegimensWithoutEndSituations(occupationPeriod.getStartYearMonthDay(), occupationPeriod.getEndYearMonthDay()).isEmpty()) {
 		    return true;
 		}
 	    }

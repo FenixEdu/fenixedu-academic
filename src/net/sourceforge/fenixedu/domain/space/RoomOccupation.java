@@ -147,8 +147,7 @@ public class RoomOccupation extends RoomOccupation_Base {
 	    			    	  
 	    for (Interval interval : thisOccupationIntervals) {		    
                 for (Interval passedInterval : passedOccupationIntervals) {
-                    if(interval.getStart().isBefore(passedInterval.getEnd()) && 
-                	    interval.getEnd().isAfter(passedInterval.getStart())) {
+                    if(interval.getStart().isBefore(passedInterval.getEnd()) && interval.getEnd().isAfter(passedInterval.getStart())) {
                         return true;
                     }
                 }		    												    

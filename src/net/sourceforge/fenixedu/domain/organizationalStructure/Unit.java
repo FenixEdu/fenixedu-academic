@@ -31,7 +31,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.parking.ParkingPartyClassification;
 import net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
-import net.sourceforge.fenixedu.domain.teacher.TeacherLegalRegimen;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.util.ContractType;
@@ -391,17 +390,19 @@ public class Unit extends Unit_Base {
 	return allParentUnits;
     }
 
-    public Collection<Contract> getContracts() {
-	return (Collection<Contract>) getChildAccountabilities(AccountabilityTypeEnum.EMPLOYEE_CONTRACT,
-		Contract.class);
+
+    public Collection<ExternalContract> getExternalPersons() {
+	return (Collection<ExternalContract>) getChildAccountabilities(AccountabilityTypeEnum.EMPLOYEE_CONTRACT, ExternalContract.class);
+    }
+    
+    public Collection<Contract> getEmployeeContracts() {
+	return (Collection<Contract>) getChildAccountabilities(AccountabilityTypeEnum.EMPLOYEE_CONTRACT, Contract.class);
     }
 
     public List<Contract> getWorkingContracts(YearMonthDay begin, YearMonthDay end) {
 	List<Contract> contracts = new ArrayList<Contract>();
-	for (Contract contract : (Collection<Contract>) getChildAccountabilities(
-		AccountabilityTypeEnum.EMPLOYEE_CONTRACT, Contract.class)) {
-	    if (contract.getContractType().equals(ContractType.WORKING)
-		    && contract.belongsToPeriod(begin, end)) {
+	for (Contract contract : getEmployeeContracts()) {
+	    if (contract.getContractType().equals(ContractType.WORKING) && contract.belongsToPeriod(begin, end)) {
 		contracts.add(contract);
 	    }
 	}
@@ -410,8 +411,7 @@ public class Unit extends Unit_Base {
 
     public List<Contract> getContractsByContractType(ContractType contractType) {
 	List<Contract> contracts = new ArrayList<Contract>();
-	for (Contract contract : (Collection<Contract>) getChildAccountabilities(
-		AccountabilityTypeEnum.EMPLOYEE_CONTRACT, Contract.class)) {
+	for (Contract contract : getEmployeeContracts()) {
 	    if (contract.getContractType().equals(contractType)) {
 		contracts.add(contract);
 	    }
@@ -501,8 +501,7 @@ public class Unit extends Unit_Base {
 	List<Employee> employees = getAllWorkingEmployees(begin, end);
 	for (Employee employee : employees) {
 	    Teacher teacher = employee.getPerson().getTeacher();
-	    if (teacher != null
-		    && !teacher.getAllLegalRegimensWithoutEndSituations(begin, end).isEmpty()) {
+	    if (teacher != null && !teacher.getAllLegalRegimensWithoutEndSituations(begin, end).isEmpty()) {
 		teachers.add(teacher);
 	    }
 	}
@@ -514,11 +513,8 @@ public class Unit extends Unit_Base {
 	List<Employee> employees = getAllCurrentActiveWorkingEmployees();
 	for (Employee employee : employees) {
 	    Teacher teacher = employee.getPerson().getTeacher();
-	    if (teacher != null) {
-		TeacherLegalRegimen legalRegimen = teacher.getCurrentLegalRegimenWithoutEndSitutions();
-		if (legalRegimen != null) {
-		    teachers.add(teacher);
-		}
+	    if (teacher != null && teacher.getCurrentLegalRegimenWithoutEndSitutions() != null) {		
+		teachers.add(teacher);		
 	    }
 	}
 	return teachers;
@@ -527,14 +523,12 @@ public class Unit extends Unit_Base {
     public List<Employee> getAllCurrentNonTeacherEmployees() {
         List<Employee> employees = getAllCurrentActiveWorkingEmployees();
         for (Iterator iter = employees.iterator(); iter.hasNext();) {
-            Employee employee = (Employee) iter.next();
-            
+            Employee employee = (Employee) iter.next();            
             Teacher teacher = employee.getPerson().getTeacher();
             if (teacher != null && teacher.getCurrentLegalRegimenWithoutEndSitutions() != null) {
                 iter.remove();
             }
-        }
-        
+        }        
         return employees;
     }
     
@@ -629,12 +623,13 @@ public class Unit extends Unit_Base {
 	if (getParentUnits(accountabilityType.getType()).contains(parentUnit)) {
 	    throw new DomainException("error.unit.parentUnit.is.already.parentUnit");
 	}
+	
 	YearMonthDay currentDate = new YearMonthDay();
-	List<Unit> subUnits = (parentUnit.isActive(currentDate)) ? getAllActiveSubUnits(currentDate)
-		: getAllInactiveSubUnits(currentDate);
+	List<Unit> subUnits = (parentUnit.isActive(currentDate)) ? getAllActiveSubUnits(currentDate) : getAllInactiveSubUnits(currentDate);
 	if (subUnits.contains(parentUnit)) {
 	    throw new DomainException("error.unit.parentUnit.is.already.subUnit");
 	}
+	
 	return new Accountability(parentUnit, this, accountabilityType);
     }
 
@@ -645,12 +640,13 @@ public class Unit extends Unit_Base {
 	if (this.getSubUnits(accountabilityType.getType()).contains(childUnit)) {
 	    throw new DomainException("error.unit.subUnit.is.already.subUnit");
 	}
+	
 	YearMonthDay currentDate = new YearMonthDay();
-	List<Unit> parentUnits = (childUnit.isActive(currentDate)) ? getAllActiveParentUnits(currentDate)
-		: getAllInactiveParentUnits(currentDate);
+	List<Unit> parentUnits = (childUnit.isActive(currentDate)) ? getAllActiveParentUnits(currentDate) : getAllInactiveParentUnits(currentDate);
 	if (parentUnits.contains(childUnit)) {
 	    throw new DomainException("error.unit.childUnit.is.already.parentUnit");
 	}
+	
 	return new Accountability(this, childUnit, accountabilityType);
     }
 
@@ -953,11 +949,6 @@ public class Unit extends Unit_Base {
     @Override
     public ParkingPartyClassification getPartyClassification() {
 	return ParkingPartyClassification.UNIT;
-    }
-
-    public Collection<ExternalContract> getExternalPersons() {
-	return (Collection<ExternalContract>) getChildAccountabilities(
-		AccountabilityTypeEnum.EMPLOYEE_CONTRACT, ExternalContract.class);
     }
 
     public static Unit findFirstExternalUnitByName(final String unitName) {

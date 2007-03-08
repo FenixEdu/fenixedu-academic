@@ -1461,7 +1461,9 @@
 	    		<forward name="prepareRoomsPunctualScheduling" path="prepare-rooms-punctual-scheduling"/>    		
 	    		<forward name="prepareCreateNewRoomPunctualScheduling" path="prepare-create-room-punctual-scheduling"/>    		    		
 	    		<forward name="prepareFinalizeCreation" path="prepare-finalize-creation-of-rooms-punctual-scheduling"/>    		
-	    		<forward name="prepareViewRoomsPunctualScheduling" path="prepare-view-rooms-punctual-scheduling"/>    			    		    			    		
+	    		<forward name="prepareViewRoomsPunctualScheduling" path="prepare-view-rooms-punctual-scheduling"/>    
+	    		<forward name="seeHistory" path="see-rooms-punctual-scheduling-history"/>    
+	    					    		    			    		
 	   	</action> 		
 		
 		<action path="/roomsReserveManagement"	

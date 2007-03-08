@@ -24,14 +24,11 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchParameters;
-import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchPersonPredicate;
-import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
@@ -293,23 +290,12 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
     private List<Person> getAllValidPersonsByName() throws FenixServiceException, FenixFilterException {
 
-	List<Person> allPersons = getAllPersonsToSearch(RoleType.PERSON);
-
 	SearchParameters searchParameters = new SearchPerson.SearchParameters(personName, null, null,
-		null, null, null, null, null);
-	SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
-	allPersons = (List<Person>) CollectionUtils.select(allPersons, predicate);
+		null, null, null, null, null, Boolean.TRUE);
+		
+	List<Person> allPersons = (List<Person>) ServiceUtils.executeService(null, "SearchPerson", new Object[] {searchParameters});
 
 	Collections.sort(allPersons, Person.COMPARATOR_BY_NAME);
-	return allPersons;
-    }
-
-    private List<Person> getAllPersonsToSearch(RoleType roleType) throws FenixServiceException,
-	    FenixFilterException {
-	final Object[] argsToRead = { roleType };
-	Role role = (Role) ServiceUtils.executeService(null, "ReadRoleByRoleType", argsToRead);
-	List<Person> allPersons = new ArrayList<Person>();
-	allPersons.addAll((List<Person>) role.getAssociatedPersons());
 	return allPersons;
     }
 

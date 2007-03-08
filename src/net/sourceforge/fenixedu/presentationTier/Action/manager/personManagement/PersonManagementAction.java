@@ -86,7 +86,7 @@ public class PersonManagementAction extends FenixDispatchAction {
 	}
 
 	SearchParameters searchParameters = new SearchPerson.SearchParameters(name, email, username,
-		documentIdNumber, null, null, null, null);
+		documentIdNumber, null, null, null, null, null);
 
 	SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
 
@@ -365,15 +365,15 @@ public class PersonManagementAction extends FenixDispatchAction {
 	request.setAttribute("invitedPersonBean", invitedPersonBean);
     }
 
-    private void readAndSetValidPersons(HttpServletRequest request) {
+    private void readAndSetValidPersons(HttpServletRequest request) throws FenixFilterException, FenixServiceException {
 	final IViewState viewState = RenderUtils.getViewState("personBeanID");
 	PersonBean personBean = (PersonBean) viewState.getMetaObject().getObject();
 
 	SearchPerson.SearchParameters parameters = new SearchParameters(personBean.getName(), null,
-		personBean.getUsername(), personBean.getDocumentIdNumber(), null, null, null, null);
-	SearchPerson.SearchPersonPredicate predicate = new SearchPersonPredicate(parameters);
-	List<Person> persons = SearchPerson.searchPersonInAllPersons(predicate);
-
+		personBean.getUsername(), personBean.getDocumentIdNumber(), null, null, null, null, null);
+			
+	List<Person> persons = (List<Person>) executeService("SearchPerson", new Object[] {parameters});
+	
 	request.setAttribute("resultPersons", persons);
 	request.setAttribute("personBean", personBean);
     }

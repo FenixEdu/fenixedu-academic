@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.sop;
 
 import java.util.ArrayList;
 import java.util.Set;
+import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.sop.RoomsPunctualSchedulingBean;
+import net.sourceforge.fenixedu.dataTransferObject.sop.RoomsPunctualSchedulingHistoryBean;
 import net.sourceforge.fenixedu.domain.GenericEvent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
@@ -25,6 +27,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeFieldType;
 import org.joda.time.YearMonthDay;
 
 public class RoomsPunctualSchedulingDA extends FenixDispatchAction {
@@ -219,7 +223,35 @@ public class RoomsPunctualSchedulingDA extends FenixDispatchAction {
 		
 	return prepare(mapping, form, request, response);
     }
-          
+    
+
+    public ActionForward seeRoomsPunctualSchedulingHistory(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) 
+	throws FenixServiceException, FenixFilterException, InvalidArgumentException {	
+	
+	RoomsPunctualSchedulingHistoryBean bean = null;
+	IViewState viewState = RenderUtils.getViewState("roomsPunctualSchedulingHistoryWithYearAndMonth");
+	if(viewState != null) {
+	    bean = (RoomsPunctualSchedulingHistoryBean) viewState.getMetaObject().getObject();
+	} else {
+	    bean = new RoomsPunctualSchedulingHistoryBean();	    
+	}	
+	
+	if(bean.getYear() != null && bean.getMonth() != null) {
+	    DateTime firstDayOfMonth = new DateTime(bean.getYear().get(DateTimeFieldType.year()), bean.getMonth().get(DateTimeFieldType.monthOfYear()), 1, 0, 0, 0, 0);
+	    DateTime lastDayOfMonth = firstDayOfMonth.plusMonths(1).minusDays(1);
+	    Set<GenericEvent> events = new TreeSet<GenericEvent>(GenericEvent.COMPARATOR_BY_DATE_AND_TIME);
+	    for (GenericEvent genericEvent : rootDomainObject.getGenericEvents()) {
+		if(genericEvent.intersectPeriod(firstDayOfMonth, lastDayOfMonth)) {
+		    events.add(genericEvent);
+		}
+	    }	    	   
+	    request.setAttribute("events", events);
+	}
+	
+	request.setAttribute("roomsPunctualSchedulingHistoryBean", bean);
+	return mapping.findForward("seeHistory");
+    }
+    
     // Private Methods     
     
     private YearMonthDay getFirstDay(HttpServletRequest request) {

@@ -75,3 +75,14 @@
 		<property name="columns" value="40"/>
 	</slot>	
 </schema>
+
+<schema name="RoomsPunctualSchedulingHistory" type="net.sourceforge.fenixedu.dataTransferObject.sop.RoomsPunctualSchedulingHistoryBean" bundle="SOP_RESOURCES">	
+	<slot name="year" key="label.room.punctual.scheduling.year" layout="menu-select-postback" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">				
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.YearsPartialProvider"/>		
+		<property name="destination" value="postBack"/>				
+    </slot>        
+	<slot name="month" key="label.room.punctual.scheduling.month" layout="menu-select-postback" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">				
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.MonthsPartialProvider" />		
+		<property name="destination" value="postBack"/>		
+    </slot>        
+</schema>

@@ -122,5 +122,8 @@
 	<definition name="see-specified-rooms-reserve-request" extends="definition.sop.roomsManagement" >
 		<put name="body" value="/sop/roomsPunctualScheduling/seeSpecifiedRoomsReserveRequest.jsp" />
 	</definition>
-	
+	<definition name="see-rooms-punctual-scheduling-history" extends="definition.sop.roomsManagement" >
+		<put name="body" value="/sop/roomsPunctualScheduling/seeRoomsPunctualSchedulingHistory.jsp" />
+	</definition>
+		
 </tiles-definitions>

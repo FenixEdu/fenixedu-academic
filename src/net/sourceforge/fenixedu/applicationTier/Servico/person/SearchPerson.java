@@ -43,10 +43,13 @@ public class SearchPerson extends Service {
 	private Department department;
 
 	private DegreeType degreeType;
+	
+	private Boolean activePersons;
 
 	public SearchParameters(String name, String email, String username, String documentIdNumber,
-		String roleType, String degreeTypeString, Integer degreeId, Integer departmentId) {
+		String roleType, String degreeTypeString, Integer degreeId, Integer departmentId, Boolean activePersons) {
 
+	    this.activePersons = activePersons;
 	    this.name = (name != null && !name.equals("")) ? name : null;
 	    this.nameWords = (name != null && !name.equals("")) ? getNameWords(name) : null;
 	    this.email = (email != null && !email.equals("")) ? StringNormalizer.normalize(email.trim())
@@ -125,6 +128,10 @@ public class SearchPerson extends Service {
 	public String getUsername() {
 	    return username;
 	}
+
+	public Boolean getActivePersons() {
+	    return activePersons;
+	}
     }
 
     public CollectionPager run(SearchParameters searchParameters, Predicate predicate)
@@ -136,7 +143,6 @@ public class SearchPerson extends Service {
 
 	final Collection<Person> persons;
 	List<Person> allValidPersons = new ArrayList<Person>();
-	List<Teacher> teachers = new ArrayList<Teacher>();
 
 	if (searchParameters.getUsername() != null && searchParameters.getUsername().length() > 0) {
 	    final Person person = Person.readPersonByUsername(searchParameters.getUsername());
@@ -193,13 +199,17 @@ public class SearchPerson extends Service {
 	public boolean evaluate(Object arg0) {
 	    Person person = (Person) arg0;
 
-	    return verifySimpleParameter(person.getDocumentIdNumber(), searchParameters
-		    .getDocumentIdNumber())
+	    return verifyActiveState(searchParameters.getActivePersons(), person)
+		    && verifySimpleParameter(person.getDocumentIdNumber(), searchParameters.getDocumentIdNumber())
 		    && verifyUsernameEquality(searchParameters.getUsername(), person)
 		    && verifyNameEquality(searchParameters.getNameWords(), person)
 		    && verifyParameter(person.getEmail(), searchParameters.getEmail())
 		    && verifyDegreeType(searchParameters.getDegree(), searchParameters.getDegreeType(),
 			    person);
+	}
+
+	private boolean verifyActiveState(Boolean activePersons, Person person) {
+	    return (activePersons == null || person.hasRole(RoleType.PERSON).equals(activePersons));
 	}
 
 	private boolean verifyUsernameEquality(String usernameToSearch, Person person) {
@@ -261,14 +271,5 @@ public class SearchPerson extends Service {
 	public SearchParameters getSearchParameters() {
 	    return searchParameters;
 	}
-    }
-
-    public static List<Person> searchPersonInAllPersons(SearchPersonPredicate predicate) {
-	if (predicate.getSearchParameters() != null && predicate.getSearchParameters().emptyParameters()) {
-	    return new ArrayList<Person>();
-	}
-	List<Person> persons = (List<Person>) CollectionUtils.select(Person.readAllPersons(), predicate);
-	Collections.sort(persons, Person.COMPARATOR_BY_NAME);
-	return persons;
-    }
+    }    
 }

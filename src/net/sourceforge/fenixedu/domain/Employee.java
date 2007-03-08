@@ -64,15 +64,13 @@ public class Employee extends Employee_Base {
 	}
     }
 
-    public Collection<Contract> getContracts() {
-	return (Collection<Contract>) getPerson().getParentAccountabilities(
-		AccountabilityTypeEnum.EMPLOYEE_CONTRACT, Contract.class);
+    public Collection<Contract> getEmployeeContracts() {
+	return (Collection<Contract>) getPerson().getParentAccountabilities(AccountabilityTypeEnum.EMPLOYEE_CONTRACT, Contract.class);
     }
 
     public List<Contract> getContractsByContractType(ContractType contractType) {
 	final List<Contract> contracts = new ArrayList();
-	for (final Contract accountability : (Collection<Contract>) getPerson()
-		.getParentAccountabilities(AccountabilityTypeEnum.EMPLOYEE_CONTRACT, Contract.class)) {
+	for (final Contract accountability : getEmployeeContracts()) {
 	    if (accountability.getContractType().equals(contractType)) {
 		contracts.add(accountability);
 	    }
@@ -80,14 +78,10 @@ public class Employee extends Employee_Base {
 	return contracts;
     }
 
-    public List<Contract> getContractsByContractType(ContractType contractType, YearMonthDay begin,
-	    YearMonthDay end) {
-
+    public List<Contract> getContractsByContractType(ContractType contractType, YearMonthDay begin, YearMonthDay end) {
 	final List<Contract> contracts = new ArrayList();
-	for (final Contract accountability : (Collection<Contract>) getPerson()
-		.getParentAccountabilities(AccountabilityTypeEnum.EMPLOYEE_CONTRACT, Contract.class)) {
-	    if (accountability.getContractType().equals(contractType)
-		    && accountability.belongsToPeriod(begin, end)) {
+	for (final Contract accountability : getEmployeeContracts()) {
+	    if (accountability.getContractType().equals(contractType) && accountability.belongsToPeriod(begin, end)) {
 		contracts.add(accountability);
 	    }
 	}
@@ -96,8 +90,7 @@ public class Employee extends Employee_Base {
 
     public Contract getCurrentContractByContractType(ContractType contractType) {
 	YearMonthDay current = new YearMonthDay();
-	for (final Contract accountability : (Collection<Contract>) getPerson()
-		.getParentAccountabilities(AccountabilityTypeEnum.EMPLOYEE_CONTRACT, Contract.class)) {
+	for (final Contract accountability : getEmployeeContracts()) {
 	    if (accountability.getContractType().equals(contractType)
 		    && accountability.isActive(current)) {
 		return accountability;
@@ -123,8 +116,7 @@ public class Employee extends Employee_Base {
 
     }
 
-    public Contract getLastContractByContractType(ContractType contractType, YearMonthDay begin,
-	    YearMonthDay end) {
+    public Contract getLastContractByContractType(ContractType contractType, YearMonthDay begin, YearMonthDay end) {
 	YearMonthDay date = null, current = new YearMonthDay();
 	Contract contractToReturn = null;
 	for (Contract contract : getContractsByContractType(contractType, begin, end)) {
@@ -146,10 +138,8 @@ public class Employee extends Employee_Base {
 
     public List<Contract> getWorkingContracts(YearMonthDay begin, YearMonthDay end) {
 	final List<Contract> contracts = new ArrayList();
-	for (final Contract accountability : (Collection<Contract>) getPerson()
-		.getParentAccountabilities(AccountabilityTypeEnum.EMPLOYEE_CONTRACT, Contract.class)) {
-	    if (accountability.getContractType().equals(ContractType.WORKING)
-		    && accountability.belongsToPeriod(begin, end)) {
+	for (final Contract accountability : getEmployeeContracts()) {
+	    if (accountability.getContractType().equals(ContractType.WORKING) && accountability.belongsToPeriod(begin, end)) {
 		contracts.add(accountability);
 	    }
 	}
@@ -186,10 +176,8 @@ public class Employee extends Employee_Base {
 
     public List<Unit> getWorkingPlaces(YearMonthDay beginDate, YearMonthDay endDate) {
 	List<Unit> units = new ArrayList<Unit>();
-	for (final Contract accountability : (Collection<Contract>) getPerson()
-		.getParentAccountabilities(AccountabilityTypeEnum.EMPLOYEE_CONTRACT, Contract.class)) {
-	    if (accountability.getContractType().equals(ContractType.WORKING)
-		    && accountability.belongsToPeriod(beginDate, endDate)) {
+	for (final Contract accountability : getEmployeeContracts()) {
+	    if (accountability.getContractType().equals(ContractType.WORKING) && accountability.belongsToPeriod(beginDate, endDate)) {
 		units.add(accountability.getWorkingUnit());
 	    }
 	}
@@ -198,14 +186,12 @@ public class Employee extends Employee_Base {
 
     public Department getCurrentDepartmentWorkingPlace() {
 	Contract contract = getCurrentWorkingContract();
-	return (contract != null && contract.getWorkingUnit() != null) ? getEmployeeDepartmentUnit(
-		contract.getWorkingUnit(), true) : null;
+	return (contract != null && contract.getWorkingUnit() != null) ? getEmployeeDepartmentUnit(contract.getWorkingUnit(), true) : null;
     }
 
     public Department getLastDepartmentWorkingPlace() {
 	Contract contract = getLastContractByContractType(ContractType.WORKING);
-	return (contract != null && contract.getWorkingUnit() != null) ? getEmployeeDepartmentUnit(
-		contract.getWorkingUnit(), false) : null;
+	return (contract != null && contract.getWorkingUnit() != null) ? getEmployeeDepartmentUnit(contract.getWorkingUnit(), false) : null;
     }
 
     public Department getLastDepartmentWorkingPlace(YearMonthDay begin, YearMonthDay end) {
@@ -250,7 +236,6 @@ public class Employee extends Employee_Base {
 
     public Campus getCurrentCampus() {
 	final YearMonthDay now = new YearMonthDay();
-
 	final List<Campus> campus = getAssiduousness().getCampusForInterval(now, now);
 	if (campus.size() > 1) {
 	    throw new DomainException("Employee.with.more.than.one.campus.for.same.day");
@@ -269,7 +254,6 @@ public class Employee extends Employee_Base {
 
     public AdministrativeOffice getAdministrativeOffice() {
 	AdministrativeOffice administrativeOffice = getCurrentWorkingPlace() == null ? null : getCurrentWorkingPlace().getAdministrativeOffice();
-
 	if (administrativeOffice == null) {
 	    for (PersonFunction personFunction : getPerson().getActivePersonFunctions()) {
 		if (personFunction.getFunction().getFunctionType().equals(
@@ -279,7 +263,6 @@ public class Employee extends Employee_Base {
 		}
 	    }
 	}
-
 	return administrativeOffice;
     }
 

@@ -77,6 +77,11 @@
 				<bean:message bundle="SOP_RESOURCES" key="label.create.room.punctual.scheduling"/>
 			</html:link>
 		</li>
+		<li>
+			<html:link page="/roomsPunctualScheduling.do?method=seeRoomsPunctualSchedulingHistory">		
+				<bean:message bundle="SOP_RESOURCES" key="link.room.punctual.scheduling.history"/>
+			</html:link>
+		</li>
 	</ul>
 		
 	<logic:notEmpty name="ganttDiagram">		

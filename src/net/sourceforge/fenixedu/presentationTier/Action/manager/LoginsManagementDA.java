@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchParameters;
-import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchPersonPredicate;
 import net.sourceforge.fenixedu.dataTransferObject.manager.loginsManagement.LoginAliasBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Login;
@@ -41,9 +40,9 @@ public class LoginsManagementDA extends FenixDispatchAction {
 	PersonBean personBean = (PersonBean) viewState.getMetaObject().getObject();
 
 	SearchPerson.SearchParameters parameters = new SearchParameters(personBean.getName(), null,
-		personBean.getUsername(), personBean.getDocumentIdNumber(), null, null, null, null);
-	SearchPerson.SearchPersonPredicate predicate = new SearchPersonPredicate(parameters);
-	List<Person> persons = SearchPerson.searchPersonInAllPersons(predicate);
+		personBean.getUsername(), personBean.getDocumentIdNumber(), null, null, null, null, null);	
+	
+	List<Person> persons = (List<Person>) executeService("SearchPerson", new Object[] {parameters});
 
 	request.setAttribute("resultPersons", persons);
 	request.setAttribute("personBean", personBean);

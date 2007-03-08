@@ -250,5 +250,17 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
 	    return "[C] " + prettyPrint;
 	}	
 	return " - ";
+    }
+
+    public boolean intersectPeriod(DateTime firstDayOfMonth, DateTime lastDayOfMonth) {		
+        for (Interval interval : getEventSortedIntervalsForGanttDiagram()) {
+            if(interval.getStart().isAfter(lastDayOfMonth)) {
+                return false;
+            }
+            if(interval.getStart().isBefore(lastDayOfMonth) && interval.getEnd().isAfter(firstDayOfMonth)) {
+                return true;
+            }
+        }
+	return false;
     }      
 }
