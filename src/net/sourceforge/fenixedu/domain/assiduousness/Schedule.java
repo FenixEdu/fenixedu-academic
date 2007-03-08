@@ -236,6 +236,9 @@ public class Schedule extends Schedule_Base {
 
     private WorkSchedule getWorkSchedule(WorkScheduleType choosenWorkSchedule, WorkWeek workWeek,
             Periodicity periodicity) {
+        if (workWeek.getDays().isEmpty()) {
+            return null;
+        }
         for (WorkSchedule workSchedule : RootDomainObject.getInstance().getWorkSchedules()) {
             if (workSchedule.getWorkScheduleType().getAcronym().equals(choosenWorkSchedule.getAcronym())
                     && workSchedule.getWorkWeek().equals(workWeek)
@@ -248,6 +251,7 @@ public class Schedule extends Schedule_Base {
 
     private void updateWorkSchedules(WorkWeek workWeek, Integer weekNumber) {
         List<WorkSchedule> workScheduleToRemove = new ArrayList<WorkSchedule>();
+        List<WorkSchedule> workScheduleListToAdd = new ArrayList<WorkSchedule>();
         for (WorkSchedule workSchedule : getWorkSchedules()) {
             if (workSchedule.getPeriodicity().getWorkWeekNumber().equals(weekNumber)) {
                 WorkWeek newWorkWeek = getWorkWeekByRemovingOverLayedDays(workSchedule.getWorkWeek(),
@@ -256,12 +260,19 @@ public class Schedule extends Schedule_Base {
                     workScheduleToRemove.add(workSchedule);
                     WorkSchedule workScheduleToAdd = getWorkSchedule(workSchedule.getWorkScheduleType(),
                             newWorkWeek, workSchedule.getPeriodicity());
-                    getWorkSchedules().add(workScheduleToAdd);
+                    if (workScheduleToAdd != null) {
+                        workScheduleListToAdd.add(workScheduleToAdd);
+                    }
                 }
             }
         }
         getWorkSchedules().removeAll(workScheduleToRemove);
-        for (; workScheduleToRemove.size() != 0;workScheduleToRemove.get(0).delete());
+        for (WorkSchedule workSchedule : workScheduleToRemove) {
+            workSchedule.delete();
+        }
+        if (!workScheduleListToAdd.isEmpty()) {
+            getWorkSchedules().addAll(workScheduleListToAdd);
+        }
     }
 
     private WorkWeek getWorkWeekByRemovingOverLayedDays(WorkWeek workScheduleWorkWeek, WorkWeek workWeek) {

@@ -208,8 +208,10 @@ public class EmployeeScheduleFactory implements Serializable, FactoryExecutor {
             if (!workWeekScheduleBean.isAnyDayChecked() && workWeekScheduleBean.getIsEmptyWeek()) {
                 workWeekScheduleBeansToRemove.add(workWeekScheduleBean);
                 subtract++;
+            } else {
+                workWeekScheduleBean.setWorkWeekNumber(workWeekScheduleBean.getWorkWeekNumber()
+                        - subtract);
             }
-            workWeekScheduleBean.setWorkWeekNumber(workWeekScheduleBean.getWorkWeekNumber() - subtract);
         }
         getEmployeeWorkWeekScheduleList().removeAll(workWeekScheduleBeansToRemove);
     }

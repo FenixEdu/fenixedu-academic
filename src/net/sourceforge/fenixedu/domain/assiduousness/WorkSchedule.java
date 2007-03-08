@@ -301,11 +301,9 @@ public class WorkSchedule extends WorkSchedule_Base {
     public void delete() {
         if (canBeDeleted()) {
             removeRootDomainObject();
-            Periodicity periodicity = getPeriodicity();
-            periodicity.delete();
+            getPeriodicity().delete();            
             removePeriodicity();
-            WorkScheduleType workScheduleType = getWorkScheduleType();
-            workScheduleType.delete();
+            getWorkScheduleType().delete();
             removeWorkScheduleType();
             deleteDomainObject();
         }
