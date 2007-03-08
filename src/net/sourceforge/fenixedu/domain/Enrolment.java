@@ -800,7 +800,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	
 	for (final Attends attends : getAttendsSet()) {
 	    if (attends.isFor(executionPeriod)) {
-		if (attends == null) {
+		if (result == null) {
 		    result = attends;
 		} else {
 		    throw new DomainException("Enrolment.found.two.attends.for.same.execution.period");
