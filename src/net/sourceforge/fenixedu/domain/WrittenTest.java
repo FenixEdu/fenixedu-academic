@@ -35,6 +35,7 @@ public class WrittenTest extends WrittenTest_Base {
 
         this.setOjbConcreteClass(WrittenTest.class.getName());
         this.setDescription(description);
+        checkIntervalBetweenEvaluations();
     }
 
     private void checkEvaluationDate(final Date writtenEvaluationDate,
@@ -61,6 +62,7 @@ public class WrittenTest extends WrittenTest_Base {
         setAttributesAndAssociateRooms(testDate, testStartTime, testEndTime,
                 executionCoursesToAssociate, curricularCourseScopesToAssociate, rooms, period);
         this.setDescription(description);
+        checkIntervalBetweenEvaluations();
     }
 
     @Override

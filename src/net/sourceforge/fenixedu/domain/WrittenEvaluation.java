@@ -10,9 +10,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-import org.joda.time.DateTime;
-import org.joda.time.YearMonthDay;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope.DegreeModuleScopeCurricularCourseScope;
+import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context.DegreeModuleScopeContext;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
@@ -28,6 +27,8 @@ import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.joda.time.DateTime;
+import org.joda.time.YearMonthDay;
 
 public class WrittenEvaluation extends WrittenEvaluation_Base {
 
@@ -154,6 +155,67 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
         } else {
             this.setDayDate(null);
         }
+    }
+
+    protected void checkIntervalBetweenEvaluations() {
+	if (getDayDateYearMonthDay() != null && getBeginningDateHourMinuteSecond() != null) {
+	    for (final ExecutionCourse executionCourse : getAssociatedExecutionCoursesSet()) {
+		for (final Evaluation evaluation : executionCourse.getAssociatedEvaluationsSet()) {
+		    if (evaluation != this && evaluation instanceof WrittenEvaluation) {
+			final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) evaluation;
+			if (isIntervalBetweenEvaluationsIsLessThan48Hours(this, writtenEvaluation) && hasMatchingCurricularCourseScopeOrContext(writtenEvaluation)) {
+			    throw new DomainException("two.evaluations.cannot.occur.withing.48.hours");
+			}
+		    }
+		}
+	    }
+	}
+    }
+
+    private boolean hasMatchingCurricularCourseScopeOrContext(WrittenEvaluation writtenEvaluation) {
+	for (final CurricularCourseScope curricularCourseScope : getAssociatedCurricularCourseScopeSet()) {
+	    if (writtenEvaluation.getAssociatedCurricularCourseScopeSet().contains(curricularCourseScope)) {
+		return true;
+	    }
+	}
+	for (final Context context : getAssociatedContextsSet()) {
+	    if (writtenEvaluation.getAssociatedContextsSet().contains(context)) {
+		return true;
+	    }
+	}
+    	return false;
+    }
+
+    private void checkIntervalBetweenEvaluations(Set<WrittenEvaluation> associatedWrittenEvaluationsSet) {
+	System.out.println("Running check for: " + getIdInternal());
+	for (final WrittenEvaluation writtenEvaluation : associatedWrittenEvaluationsSet) {
+	    if (writtenEvaluation != this) {
+		System.out.println("Testing against: " + writtenEvaluation.getIdInternal());
+		System.out.println("   t1: " + containsCommonExecutionCourse(getAssociatedExecutionCoursesSet(), writtenEvaluation.getAssociatedExecutionCoursesSet()));
+		System.out.println("   t2: " + isIntervalBetweenEvaluationsIsLessThan48Hours(this, writtenEvaluation));
+		if (containsCommonExecutionCourse(getAssociatedExecutionCoursesSet(), writtenEvaluation.getAssociatedExecutionCoursesSet())
+			&& isIntervalBetweenEvaluationsIsLessThan48Hours(this, writtenEvaluation)) {
+		    throw new DomainException("two.evaluations.cannot.occur.withing.48.hours");
+		}
+	    }
+	}
+    }
+
+    private boolean containsCommonExecutionCourse(Set<ExecutionCourse> associatedExecutionCoursesSet1, Set<ExecutionCourse> associatedExecutionCoursesSet2) {
+	for (final ExecutionCourse executionCourse : associatedExecutionCoursesSet2) {
+	    if (associatedExecutionCoursesSet1.contains(executionCourse)) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
+    private boolean isIntervalBetweenEvaluationsIsLessThan48Hours(final WrittenEvaluation writtenEvaluation1, final WrittenEvaluation writtenEvaluation2) {
+	if (writtenEvaluation1.getBeginningDateTime().isBefore(writtenEvaluation2.getBeginningDateTime())) {
+	    return !writtenEvaluation1.getBeginningDateTime().plusHours(48).isBefore(writtenEvaluation2.getBeginningDateTime());
+	} else {
+	    return !writtenEvaluation2.getBeginningDateTime().plusHours(48).isBefore(writtenEvaluation1.getBeginningDateTime());
+	}
     }
 
     public Calendar getEnd() {
@@ -338,6 +400,7 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
             OccupationPeriod period) {
         setAttributesAndAssociateRooms(day, beginning, end, executionCoursesToAssociate,
                 curricularCourseScopesToAssociate, rooms, period);
+        checkIntervalBetweenEvaluations();
     }
 
     public void delete() {

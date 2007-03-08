@@ -38,6 +38,7 @@ public class Exam extends Exam_Base {
 
         this.setOjbConcreteClass(Exam.class.getName());
         this.setSeason(season);
+        checkIntervalBetweenEvaluations();
     }
 
     private boolean checkScopeAndSeasonConstrains(List<ExecutionCourse> executionCoursesToAssociate,
@@ -79,6 +80,7 @@ public class Exam extends Exam_Base {
         super.edit(examDay, examStartTime, examEndTime, executionCoursesToAssociate,
                 curricularCourseScopesToAssociate, rooms, period);        
         this.setSeason(season);
+        checkIntervalBetweenEvaluations();
     }
 
     public boolean isExamsMapPublished() {
