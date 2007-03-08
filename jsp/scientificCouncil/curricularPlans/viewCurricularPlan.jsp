@@ -29,19 +29,20 @@
 	<h:outputText value="<br/>" escape="false"/>
 	
 <h:outputText value="<div class='invisible'>" escape="false"/>
-	<h:outputText value="<ul><li>" escape="false"/>
-	<h:outputLink value="viewCurricularPlanStructure.faces" rendered="#{!empty DegreeCurricularPlanManagement.dcp.root.childContexts}">
-		<h:outputFormat value="#{scouncilBundle['view.param']}" escape="false">
-			<f:param value="#{scouncilBundle['curricularPlan.structure']}"/>
-		</h:outputFormat>
-		<f:param name="dcpId" value="#{DegreeCurricularPlanManagement.dcpId}"/>
-		<f:param name="organizeBy" value="#{CurricularCourseManagement.organizeBy}"/>
-		<f:param name="showRules" value="#{CurricularCourseManagement.showRules}"/>
-		<f:param name="hideCourses" value="#{CurricularCourseManagement.hideCourses}"/>		
-		<f:param name="action" value="#{CurricularCourseManagement.action}"/>
-	</h:outputLink>
-	<h:outputText value="</li></ul>" escape="false"/>
-
+	<h:panelGroup rendered="#{!empty DegreeCurricularPlanManagement.dcp.root.childContexts}">
+		<h:outputText value="<ul><li>" escape="false"/>
+		<h:outputLink value="viewCurricularPlanStructure.faces" rendered="#{!empty DegreeCurricularPlanManagement.dcp.root.childContexts}">
+			<h:outputFormat value="#{scouncilBundle['view.param']}" escape="false">
+				<f:param value="#{scouncilBundle['curricularPlan.structure']}"/>
+			</h:outputFormat>
+			<f:param name="dcpId" value="#{DegreeCurricularPlanManagement.dcpId}"/>
+			<f:param name="organizeBy" value="#{CurricularCourseManagement.organizeBy}"/>
+			<f:param name="showRules" value="#{CurricularCourseManagement.showRules}"/>
+			<f:param name="hideCourses" value="#{CurricularCourseManagement.hideCourses}"/>		
+			<f:param name="action" value="#{CurricularCourseManagement.action}"/>
+		</h:outputLink>
+		<h:outputText value="</li></ul>" escape="false"/>
+	</h:panelGroup>
 
 	<h:outputText value="<p class='mtop2 mbottom0'>" escape="false"/>
 	<h:panelGroup rendered="#{!empty DegreeCurricularPlanManagement.dcp.degreeStructure.childs}">
