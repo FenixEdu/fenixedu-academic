@@ -553,6 +553,7 @@ a.color888 { color: #888; }
 .bgcolor2 { background-color: #fbfbdd; }
 .bgcolor3 { background-color: #fafaf6; }
 .bgcolor4 { background-color: #f8f8f8; }
+.bgcolorfafafa { background-color: #fbfbfb; }
 
 /* Multi Language */
 .multi-language-line { margin-bottom: 2em; }
