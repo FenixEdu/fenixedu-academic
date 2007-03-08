@@ -13,7 +13,6 @@ import java.util.Set;
 import net.sourceforge.fenixedu._development.MetadataManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
-import net.sourceforge.fenixedu.applicationTier.utils.MockUserView;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.SupportLessonDTO;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.BibliographicReference;
@@ -54,7 +53,6 @@ import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.LoginAlias;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.PersonalGroup;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -71,7 +69,6 @@ import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.domain.WrittenTest;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accounting.Account;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.Event;
@@ -1067,12 +1064,21 @@ public class CreateTestData {
 		if (degreeModuleScope.getCurricularYear().intValue() == 1 && degreeModuleScope.getCurricularSemester() == executionPeriod.getSemester().intValue()) {
 		    if (degreeModuleScope.isActiveForExecutionPeriod(executionPeriod)) {
 			final Enrolment enrolment = new Enrolment(studentCurricularPlan, degreeModuleScope.getCurricularCourse(), executionPeriod, EnrollmentCondition.FINAL, null);
-			final Attends attends = enrolment.getAttendsFor(executionPeriod);
+			final Attends attends = getAttendsFor(enrolment, executionPeriod);
 			createStudentShifts(attends);
 		    }
 		}
 	    }
 	}
+    }
+
+    private static Attends getAttendsFor(final Enrolment enrolment, final ExecutionPeriod executionPeriod) {
+	for (final Attends attends : enrolment.getAttendsSet()) {
+	    if (attends.getExecutionCourse().getExecutionPeriod() == executionPeriod) {
+		return attends;
+	    }
+	}
+	return null;
     }
 
     private static void createStudentShifts(final Attends attends) {
