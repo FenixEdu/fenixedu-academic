@@ -32,7 +32,7 @@
 		</fr:form>
 		
 		<p>
-			<logic:notEmpty name="resultPersons">		
+			<logic:notEmpty name="resultPersons">
 				<fr:view name="resultPersons" schema="ShowExistentPersonsDetailsBeforeCreateInvitedPersons" >
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle4"/>
@@ -40,11 +40,13 @@
 					</fr:layout>			
 				</fr:view>	
 				
+			</logic:notEmpty>
+			<logic:present name="resultPersons">
 				<bean:define id="url" type="java.lang.String">/createInvitedPerson.do?method=prepareCreateInvitedPerson&name=<bean:write name="anyPersonSearchBean" property="name"/>&idDocumentType=<bean:write name="anyPersonSearchBean" property="idDocumentType"/>&documentIdNumber=<bean:write name="anyPersonSearchBean" property="documentIdNumber"/></bean:define>
 				<html:link action="<%= url %>">
 					<bean:message key="link.create.invited.person.because.does.not.exist" bundle="MANAGER_RESOURCES"/>
-				</html:link>			
-			</logic:notEmpty>				
+				</html:link>
+			</logic:present>
 		</p>
 	</logic:empty>	
 					
