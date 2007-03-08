@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
 import net.sourceforge.fenixedu.domain.curricularRules.DegreeModulesSelectionLimit;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.StringFormatter;
@@ -28,32 +29,54 @@ import org.apache.commons.collections.comparators.ReverseComparator;
 
 public class CourseGroup extends CourseGroup_Base {
 
-    public static List<CourseGroup> readCourseGroups() {
-	List<CourseGroup> result = new ArrayList<CourseGroup>();
-
-	for (DegreeModule degreeModule : RootDomainObject.getInstance().getDegreeModules()) {
+    static public List<CourseGroup> readCourseGroups() {
+	final List<CourseGroup> result = new ArrayList<CourseGroup>();
+	for (final DegreeModule degreeModule : RootDomainObject.getInstance().getDegreeModules()) {
 	    if (degreeModule instanceof CourseGroup) {
 		result.add((CourseGroup) degreeModule);
 	    }
 	}
-
 	return result;
+    }
+    
+    static public CourseGroup createRoot(final DegreeCurricularPlan degreeCurricularPlan, final String name, final String nameEn, final DegreeType courseGroupType) {
+	return new CourseGroup(degreeCurricularPlan, name, nameEn, courseGroupType);
     }
 
     protected CourseGroup() {
 	super();
     }
 
-    public CourseGroup(String name, String nameEn) {
+    protected CourseGroup(final String name, final String nameEn, final DegreeType courseGroupType) {
 	this();
-	init(name, nameEn);
+	init(name, nameEn, courseGroupType);
     }
     
-    protected void init(String name, String nameEn) {
+    protected void init(final String name, final String nameEn, final DegreeType courseGroupType) {
 	super.setName(StringFormatter.prettyPrint(name));
 	super.setNameEn(StringFormatter.prettyPrint(nameEn));
+	super.setCourseGroupType(courseGroupType);
     }
     
+    public CourseGroup(final DegreeCurricularPlan degreeCurricularPlan, final String name, final String nameEn, final DegreeType courseGroupType) {
+	this(name, nameEn, courseGroupType);
+	if (degreeCurricularPlan == null) {
+	    throw new DomainException("error.degreeStructure.CourseGroup.degreeCurricularPlan.cannot.be.null");
+	}
+	setParentDegreeCurricularPlan(degreeCurricularPlan);
+    }
+    
+    public CourseGroup(final CourseGroup parentCourseGroup, final String name, final String nameEn,
+	    final DegreeType courseGroupType, final ExecutionPeriod begin, final ExecutionPeriod end) {
+	
+	init(name, nameEn, courseGroupType);
+	if (parentCourseGroup == null) {
+	    throw new DomainException("error.degreeStructure.CourseGroup.parentCourseGroup.cannot.be.null");
+	}
+	parentCourseGroup.checkDuplicateChildNames(name, nameEn);
+	new Context(parentCourseGroup, this, null, begin, end);
+    }
+
     public boolean isLeaf() {
 	return false;
     }
@@ -206,6 +229,18 @@ public class CourseGroup extends CourseGroup_Base {
     @Checked("CourseGroupPredicates.curricularPlanMemberWritePredicate")
     public void setName(String name) {
 	super.setName(name);
+    }
+    
+    @Override
+    @Checked("CourseGroupPredicates.curricularPlanMemberWritePredicate")
+    public void setNameEn(String nameEn) {
+	super.setNameEn(nameEn);
+    }
+    
+    @Override
+    @Checked("CourseGroupPredicates.curricularPlanMemberWritePredicate")
+    public void setCourseGroupType(DegreeType courseGroupType) {
+        super.setCourseGroupType(courseGroupType);
     }
 
     public void checkDuplicateChildNames(final String name, final String nameEn) throws DomainException {
@@ -518,5 +553,39 @@ public class CourseGroup extends CourseGroup_Base {
             }
         }
         return false;
+    }
+    
+    private boolean hasCourseGroupType(final DegreeType courseGroupType) {
+	return getCourseGroupType() == courseGroupType;
+    }
+    
+    public boolean isFirstCycle() {
+	return hasCourseGroupType(DegreeType.BOLONHA_DEGREE);
+    }
+    
+    public boolean isSecondCycle() {
+	return hasCourseGroupType(DegreeType.BOLONHA_MASTER_DEGREE);
+    }
+    
+    public CourseGroup getFirstCycleCourseGroup() {
+	return getCourseGroup(DegreeType.BOLONHA_DEGREE);
+    }
+    
+    public CourseGroup getSecondCycleCourseGroup() {
+	return getCourseGroup(DegreeType.BOLONHA_MASTER_DEGREE);
+    }
+    
+    private CourseGroup getCourseGroup(final DegreeType courseGroupType) {
+	if (hasCourseGroupType(courseGroupType)) {
+	    return this;
+	}
+	for (final Context context : getChildContexts(CourseGroup.class)) {
+	    final CourseGroup courseGroup = (CourseGroup) context.getChildDegreeModule();
+	    final CourseGroup search = courseGroup.getCourseGroup(courseGroupType);
+	    if (search != null) {
+		return search;
+	    }
+	}
+	return null;
     }
 }

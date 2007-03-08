@@ -13,6 +13,7 @@ import javax.faces.model.SelectItem;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -21,10 +22,13 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.util.CurricularRuleLabelFormatter;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.lang.StringUtils;
 
 public class CourseGroupManagementBackingBean extends CurricularCourseManagementBackingBean {
+    
     private String name = null;
     private String nameEn = null;
+    private String courseGroupTypeValue = null;
     private Integer courseGroupID;
     private List<SelectItem> courseGroups = null;
 
@@ -48,6 +52,25 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
         return (nameEn == null && getCourseGroupID() != null) ? getCourseGroup(getCourseGroupID()).getNameEn() : nameEn;    
     }
     
+    public String getCourseGroupTypeValue() {
+        return (courseGroupTypeValue == null && getCourseGroupID() != null) ? getCourseGroup(getCourseGroupID()).getCourseGroupType().name() : courseGroupTypeValue;    
+    }
+    
+    private DegreeType getCourseGroupType() {
+	return StringUtils.isEmpty(getCourseGroupTypeValue()) ? null : DegreeType.valueOf(getCourseGroupTypeValue());
+    }
+    
+    public List<SelectItem> getCourseGroupTypeValues() {
+	final List<SelectItem> result = new ArrayList<SelectItem>();
+	final DegreeType degreeType = getDegreeCurricularPlan().getDegree().getDegreeType();
+	if (degreeType == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) {
+	    result.add(new SelectItem("", " -"));
+	    result.add(new SelectItem(DegreeType.BOLONHA_DEGREE.name(), bolonhaBundle.getString("CourseGroupType." + DegreeType.BOLONHA_DEGREE.name())));
+	    result.add(new SelectItem(DegreeType.BOLONHA_MASTER_DEGREE.name(), bolonhaBundle.getString("CourseGroupType." + DegreeType.BOLONHA_MASTER_DEGREE.name())));
+	}
+	return result;
+    }
+    
     public String getParentName() {
         return (getParentCourseGroupID() != null) ? getCourseGroup(getParentCourseGroupID()).getName() : null;
     }
@@ -58,6 +81,10 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
     
     public void setNameEn(String nameEn) {
         this.nameEn = nameEn;
+    }
+    
+    public void setCourseGroupTypeValue(String courseGroupTypeValue) {
+        this.courseGroupTypeValue = courseGroupTypeValue;
     }
 
     public CourseGroup getCourseGroup(Integer courseGroupID) {
@@ -79,7 +106,7 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
     public String createCourseGroup() {
         try {
             final Object args[] = { getDegreeCurricularPlanID(), getParentCourseGroupID(), getName(),
-                    getNameEn(), getBeginExecutionPeriodID(), getFinalEndExecutionPeriodID() };
+                    getNameEn(), getCourseGroupType(), getBeginExecutionPeriodID(), getFinalEndExecutionPeriodID() };
             ServiceUtils.executeService(getUserView(), "CreateCourseGroup", args);
             addInfoMessage(bolonhaBundle.getString("courseGroupCreated"));
             return "editCurricularPlanStructure";

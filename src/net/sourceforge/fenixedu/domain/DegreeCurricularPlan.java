@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.MaximumNumberOfCreditsForEnrolmentPeriod;
-import net.sourceforge.fenixedu.domain.curricularRules.PreviousYearsEnrolmentCurricularRule;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
@@ -107,24 +106,20 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     public DegreeCurricularPlan() {
 	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-
+	super.setRootDomainObject(RootDomainObject.getInstance());
 	super.setOjbConcreteClass(getClass().getName());
     }
 
     private DegreeCurricularPlan(Degree degree, String name, GradeScale gradeScale) {
 	this();
-
 	if (degree == null) {
 	    throw new DomainException("degreeCurricularPlan.degree.not.null");
 	}
-	super.setDegree(degree);
-
 	if (name == null) {
 	    throw new DomainException("degreeCurricularPlan.name.not.null");
 	}
+	super.setDegree(degree);
 	super.setName(name);
-
 	super.setGradeScale(gradeScale);
     }
 
@@ -135,13 +130,10 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
 	this(degree, name, gradeScale);
 	super.setCurricularStage(CurricularStage.OLD);
-	this
-		.setConcreteClassForStudentCurricularPlans(degree
-			.getConcreteClassForDegreeCurricularPlans());
+	this.setConcreteClassForStudentCurricularPlans(degree.getConcreteClassForDegreeCurricularPlans());
 	super.setState(state);
 
-	oldStructureFieldsChange(inicialDate, endDate, degreeDuration, minimalYearForOptionalCourses,
-		neededCredits, markType, numerusClausus, annotation);
+	oldStructureFieldsChange(inicialDate, endDate, degreeDuration, minimalYearForOptionalCourses, neededCredits, markType, numerusClausus, annotation);
     }
 
     private void oldStructureFieldsChange(Date inicialDate, Date endDate, Integer degreeDuration,
@@ -166,30 +158,44 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	this.setAnotation(annotation);
     }
 
-    protected DegreeCurricularPlan(Degree degree, String name, GradeScale gradeScale, Person creator,
-	    CurricularPeriod curricularPeriod) {
+    protected DegreeCurricularPlan(Degree degree, String name, GradeScale gradeScale, Person creator, CurricularPeriod curricularPeriod) {
 	this(degree, name, gradeScale);
 
 	if (creator == null) {
 	    throw new DomainException("degreeCurricularPlan.creator.not.null");
 	}
-	this.setCurricularPlanMembersGroup(new FixedSetGroup(creator));
 
 	if (curricularPeriod == null) {
 	    throw new DomainException("degreeCurricularPlan.curricularPeriod.not.null");
 	}
-	this.setDegreeStructure(curricularPeriod);
-
-	setRoot(new CourseGroup(name, name));
+	setCurricularPlanMembersGroup(new FixedSetGroup(creator));
+	setDegreeStructure(curricularPeriod);
 	setState(DegreeCurricularPlanState.ACTIVE);
+	
 	newStructureFieldsChange(CurricularStage.DRAFT, null);
+	
+	createDefaultCourseGroups();
 	createDefaultCurricularRules();
     }
 
+    private void createDefaultCourseGroups() {
+	CourseGroup.createRoot(this, getName(), getName(), getCourseGroupType());
+    }
+
+    private DegreeType getCourseGroupType() {
+	switch (getDegree().getDegreeType()) {
+	case BOLONHA_DEGREE:
+	case BOLONHA_MASTER_DEGREE:
+	case BOLONHA_INTEGRATED_MASTER_DEGREE:
+	    return getDegree().getDegreeType();
+	default:
+	    return null;
+	}
+    }
+
     private void createDefaultCurricularRules() {
-	new MaximumNumberOfCreditsForEnrolmentPeriod(getRoot(), ExecutionPeriod
-		.readActualExecutionPeriod());
-	new PreviousYearsEnrolmentCurricularRule(getRoot(), ExecutionPeriod.readActualExecutionPeriod());
+	new MaximumNumberOfCreditsForEnrolmentPeriod(getRoot(), ExecutionPeriod.readActualExecutionPeriod());
+	//new PreviousYearsEnrolmentCurricularRule(getRoot(), ExecutionPeriod.readActualExecutionPeriod());
     }
 
     private void newStructureFieldsChange(CurricularStage curricularStage,
@@ -882,14 +888,9 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	}
     }
 
-    public CourseGroup createCourseGroup(CourseGroup parentCourseGroup, String name, String nameEn,
-	    CurricularPeriod curricularPeriod, ExecutionPeriod beginExecutionPeriod,
-	    ExecutionPeriod endExecutionPeriod) {
-	parentCourseGroup.checkDuplicateChildNames(name, nameEn);
-	final CourseGroup courseGroup = new CourseGroup(name, nameEn);
-	new Context(parentCourseGroup, courseGroup, curricularPeriod, beginExecutionPeriod,
-		endExecutionPeriod);
-	return courseGroup;
+    public CourseGroup createCourseGroup(final CourseGroup parentCourseGroup, final String name, final String nameEn,
+	    final DegreeType courseGroupType, final ExecutionPeriod begin, final ExecutionPeriod end) {
+	return new CourseGroup(parentCourseGroup, name, nameEn, courseGroupType, begin, end);
     }
 
     public CurricularCourse createCurricularCourse(Double weight, String prerequisites,
@@ -1451,8 +1452,16 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     @Override
     public Integer getDegreeDuration() {
 	final Integer degreeDuration = super.getDegreeDuration();
-	return degreeDuration == null ? Integer.valueOf(getDegree().getTipoCurso().getYears())
-		: degreeDuration;
+	return degreeDuration == null ? Integer.valueOf(getDegree().getDegreeType().getYears()) : degreeDuration;
+    }
+    
+    
+    public CourseGroup getFirstCycleCourseGroup() {
+	return isBolonha() ? getRoot().getFirstCycleCourseGroup() : null;
+    }
+    
+    public CourseGroup getSecondCycleCourseGroup() {
+	return isBolonha() ? getRoot().getSecondCycleCourseGroup() : null;
     }
 
 }

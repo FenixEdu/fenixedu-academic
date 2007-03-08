@@ -5,13 +5,14 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class CreateCourseGroup extends Service {
 
     public void run(final Integer degreeCurricularPlanID, final Integer parentCourseGroupID,
-            final String name, final String nameEn, final Integer beginExecutionPeriodID,
+            final String name, final String nameEn, final DegreeType courseGroupType, final Integer beginExecutionPeriodID,
             final Integer endExecutionPeriodID) throws ExcepcaoPersistencia, FenixServiceException {
 
         final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
@@ -36,9 +37,8 @@ public class CreateCourseGroup extends Service {
             beginExecutionPeriod = rootDomainObject.readExecutionPeriodByOID(beginExecutionPeriodID);
         }
 
-        final ExecutionPeriod endExecutionPeriod = (endExecutionPeriodID == null) ? null
-                : rootDomainObject.readExecutionPeriodByOID(endExecutionPeriodID);
+        final ExecutionPeriod endExecutionPeriod = (endExecutionPeriodID == null) ? null : rootDomainObject.readExecutionPeriodByOID(endExecutionPeriodID);
 
-        degreeCurricularPlan.createCourseGroup(parentCourseGroup, name, nameEn, null, beginExecutionPeriod, endExecutionPeriod);
+        degreeCurricularPlan.createCourseGroup(parentCourseGroup, name, nameEn, courseGroupType, beginExecutionPeriod, endExecutionPeriod);
     }
 }
