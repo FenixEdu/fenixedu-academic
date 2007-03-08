@@ -103,7 +103,7 @@ public class WrittenTest extends WrittenTest_Base {
                 } else {
                     throw new DomainException("unsupported.execution.period.semester");
                 }
-                if (!new YearMonthDay(startExamsPeriod.getTime()).minusDays(2).isAfter(yearMonthDay)) {
+                if (!new YearMonthDay(startExamsPeriod.getTime()).isAfter(yearMonthDay)) {
                     return false;
                 }
             }
