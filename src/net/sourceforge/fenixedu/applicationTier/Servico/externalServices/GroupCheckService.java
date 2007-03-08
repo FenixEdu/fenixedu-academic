@@ -2,8 +2,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.externalServices;
 
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
-
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -15,6 +13,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.accessControl.CurricularCourseStudentsByExecutionPeriodGroup;
 import net.sourceforge.fenixedu.domain.accessControl.DegreeStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.DegreeTeachersGroup;
@@ -24,11 +23,14 @@ import net.sourceforge.fenixedu.domain.accessControl.DepartmentTeachersByExecuti
 import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseTeachersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+
+import org.apache.commons.lang.StringUtils;
 
 /**
  * 
@@ -42,7 +44,7 @@ public class GroupCheckService extends Service {
     private static final String NAME_VALUE_SEPARATOR = "=";
 
     private enum QueryType {
-	DEPARTMENT, DEGREE, CURRICULAR_COURSE, EXECUTION_COURSE
+	DEPARTMENT, DEGREE, CURRICULAR_COURSE, EXECUTION_COURSE, ROLE
     }
 
     private class GroupCheckQuery {
@@ -94,6 +96,28 @@ public class GroupCheckService extends Service {
 	    return checkCurricularCourseGroup(person, groupCheckQuery);
 	} else if (groupCheckQuery.queryType == QueryType.EXECUTION_COURSE) {
 	    return checkExecutionCourseGroup(person, groupCheckQuery);
+	} else if (groupCheckQuery.queryType == QueryType.ROLE) {
+	    return checkRoleGroup(person, groupCheckQuery);
+	} else {
+	    throw new NonExistingServiceException();
+	}
+
+    }
+
+    /**
+         * Checks if person has role.
+         * 
+         * Accepted roles: TEACHER and EMPLOYEE
+         * 
+         * @throws NonExistingServiceException
+         * 
+         * 
+         */
+    private Boolean checkRoleGroup(Person person, GroupCheckQuery groupCheckQuery)
+	    throws NonExistingServiceException {
+	if (groupCheckQuery.roleType == RoleType.TEACHER
+		|| groupCheckQuery.roleType == RoleType.EMPLOYEE) {
+	    return new RoleGroup(Role.getRoleByRoleType(groupCheckQuery.roleType)).isMember(person);
 	} else {
 	    throw new NonExistingServiceException();
 	}
