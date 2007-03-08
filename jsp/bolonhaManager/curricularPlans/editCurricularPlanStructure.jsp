@@ -12,9 +12,9 @@
 	<h:outputText value=" (#{enumerationBundle[CurricularCourseManagement.degreeCurricularPlan.curricularStage.name]})</em>" escape="false"/>
 	<h:outputFormat value="<h2>#{bolonhaBundle['edit.curricularPlan.structure']}</h2>" escape="false"/>
 	
-	<h:outputText value="<ul>" escape="false"/>
-	<h:outputText value="<li>" escape="false"/>
 	<h:panelGroup rendered="#{!empty CurricularCourseManagement.degreeCurricularPlan.root.childContexts}">
+		<h:outputText value="<ul>" escape="false"/>
+		<h:outputText value="<li>" escape="false"/>
 		<h:outputText value="<span class='highlight3'>#{bolonhaBundle['manage.groups']}</span>" rendered="#{CurricularCourseManagement.toOrder == 'false'}" escape="false"/>
 		<h:outputLink value="editCurricularPlanStructure.faces" rendered="#{CurricularCourseManagement.toOrder == 'true'}">
 			<h:outputText value="#{bolonhaBundle['manage.groups']}" />
@@ -36,9 +36,9 @@
 			<f:param name="hideCourses" value="#{CurricularCourseManagement.hideCourses}"/>
 			<f:param name="action" value="build"/>
 		</h:outputLink>
+		<h:outputText value="</li>" escape="false"/>
+		<h:outputText value="</ul>" escape="false"/>
 	</h:panelGroup>
-	<h:outputText value="</li>" escape="false"/>
-	<h:outputText value="</ul>" escape="false"/>
  
 	<h:outputText value="<p>" escape="false"/>
 	<h:messages infoClass="success0" errorClass="error0" layout="table" globalOnly="true"/>

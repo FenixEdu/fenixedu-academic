@@ -24,9 +24,9 @@
 		<h:outputText value="</p>" escape="false"/>
 		<h:outputText value="</fieldset></div>" escape="false"/>
 		
-		<h:outputText value="<ul>" escape="false"/>
-		<h:outputText value="<li>" escape="false"/>
 		<h:panelGroup rendered="#{!empty CurricularCourseManagement.degreeCurricularPlan.root.childContexts}">
+			<h:outputText value="<ul>" escape="false"/>
+			<h:outputText value="<li>" escape="false"/>
 			<h:outputText value="<span class='highlight3'>#{bolonhaBundle['manage.groups']}</span>" rendered="#{CurricularCourseManagement.toOrder == 'false'}" escape="false"/>
 			<h:outputLink value="editCurricularPlanStructure.faces" rendered="#{CurricularCourseManagement.toOrder == 'true'}">
 				<h:outputText value="#{bolonhaBundle['manage.groups']}" />
@@ -50,9 +50,9 @@
 				<f:param name="action" value="#{CurricularCourseManagement.action}"/>
 				<f:param name="toOrder" value="true"/>
 			</h:outputLink>
+			<h:outputText value="</li>" escape="false"/>
+			<h:outputText value="</ul>" escape="false"/>
 		</h:panelGroup>
-		<h:outputText value="</li>" escape="false"/>
-		<h:outputText value="</ul>" escape="false"/>
 	 
 		<h:outputText value="<p>" escape="false"/>
 		<h:messages infoClass="success0" errorClass="error0" layout="table" globalOnly="true"/>
