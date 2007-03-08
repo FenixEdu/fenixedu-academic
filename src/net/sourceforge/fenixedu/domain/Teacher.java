@@ -1145,9 +1145,5 @@ public class Teacher extends Teacher_Base {
             }
         }   
         return false;
-    }
-    
-    public boolean isActive() {
-	return getPerson().hasRole(RoleType.TEACHER) && getCurrentLegalRegimenWithoutEndSitutions() != null;
-    }
+    } 
 }

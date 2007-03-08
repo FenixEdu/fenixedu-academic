@@ -300,8 +300,4 @@ public class Employee extends Employee_Base {
 	    return roleLoginAlias.get(0).getAlias(); 
 	}
     }
-    
-    public boolean isActive() {
-	return getPerson().hasRole(RoleType.EMPLOYEE) && getCurrentWorkingContract() != null;
-    }
 }
