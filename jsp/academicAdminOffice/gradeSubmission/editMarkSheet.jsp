@@ -71,8 +71,8 @@
 	             nested="true">
 			<fr:layout>
 				<fr:property name="sortBy" value="enrolment.studentCurricularPlan.student.number"/>
-				<fr:property name="classes" value="tstyle4 thlight thright mtop05"/>
-		        <fr:property name="columnClasses" value=",,"/>
+				<fr:property name="classes" value="tstyle4 thlight mtop05"/>
+		        <fr:property name="columnClasses" value=",,,"/>
 			</fr:layout>
 		</fr:edit>
 	</logic:notEmpty>
@@ -94,8 +94,8 @@
 	             nested="true">
 			<fr:layout>
 				<fr:property name="sortBy" value="enrolment.studentCurricularPlan.student.number"/>
-				<fr:property name="classes" value="tstyle4 thlight thright mtop05"/>
-		        <fr:property name="columnClasses" value="listClasses,,"/>
+				<fr:property name="classes" value="tstyle4 thlight mtop05"/>
+		        <fr:property name="columnClasses" value=",,,"/>
 			</fr:layout>
 		</fr:edit>
 	</logic:notEmpty>

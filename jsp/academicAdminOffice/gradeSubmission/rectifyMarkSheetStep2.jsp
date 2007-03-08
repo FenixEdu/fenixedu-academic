@@ -4,26 +4,26 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
+
+<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.rectifyMarkSheet"/></h2>
 
-<br/>
-
-<h3><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.rectifyMarkSheet.step.one"/> &gt; <u><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.rectifyMarkSheet.step.two"/></u></h3>
+<p class="breadcumbs"><span><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.rectifyMarkSheet.step.one"/></span> &gt; <span class="actual"><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.rectifyMarkSheet.step.two"/></span></p>
 
 <fr:view name="rectifyBean" property="markSheet" schema="degreeAdministrativeOffice.markSheet.view">
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle4"/>
-	    <fr:property name="columnClasses" value="listClasses,,"/>
+			<fr:property name="classes" value="tstyle4 thlight thright mtop05"/>
 	</fr:layout>
 </fr:view>
 
 <h3><bean:write name="rectifyBean" property="enrolmentEvaluation.enrolment.studentCurricularPlan.student.person.name"/> (<bean:write name="rectifyBean" property="enrolmentEvaluation.enrolment.studentCurricularPlan.student.number"/>)</h3>
+
 <html:errors/>
+
 <logic:messagesPresent message="true">
 	<html:messages bundle="DEGREE_OFFICE_RESOURCES" id="messages" message="true">
 		<span class="error0"><bean:write name="messages" /></span>
 	</html:messages>
-	<br/><br/>
 </logic:messagesPresent>
 
 <fr:form action="/rectifyMarkSheet.do">
@@ -44,14 +44,17 @@
 
 	<fr:edit id="step2" nested="true" name="rectifyBean" schema="markSheet.rectify.two">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4"/>
-		    <fr:property name="columnClasses" value="listClasses,,"/>
+			<fr:property name="classes" value="tstyle5 thlight thright"/>
+		    <fr:property name="columnClasses" value=",,tdclear tderror1"/>
 		</fr:layout>
 	</fr:edit>
 
-	<br/>
-	<span class="warning0"><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="message.markSheet.rectify"/></span>
-	<br/><br/>
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.rectify"/></html:submit>
-	<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton" onclick="this.form.method.value='prepareSearchMarkSheetFilled';this.form.submit();"><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.cancel"/></html:cancel>
+	<p>
+		<bean:message bundle="DEGREE_OFFICE_RESOURCES" key="message.markSheet.rectify"/>
+	</p>
+	
+	<p>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.rectify"/></html:submit>
+		<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton" onclick="this.form.method.value='prepareSearchMarkSheetFilled';this.form.submit();"><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.cancel"/></html:cancel>
+	</p>
 </fr:form>
