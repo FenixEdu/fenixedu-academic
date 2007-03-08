@@ -543,6 +543,30 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 		&& getExecutionPeriod() != executionCourse.getExecutionPeriod();
     }
 
+    public boolean isImprovingInExecutionPeriodFollowingApproval(final ExecutionPeriod improvementExecutionPeriod) {
+	final DegreeModule degreeModule = getDegreeModule();
+	if (hasImprovement() || !isApproved() || !degreeModule.hasAnyParentContexts(improvementExecutionPeriod)) {
+	    throw new DomainException("Enrolment.is.not.in.improvement.conditions");
+	}
+	
+	final ExecutionPeriod enrolmentExecutionPeriod = getExecutionPeriod();
+	if (improvementExecutionPeriod.isBeforeOrEquals(enrolmentExecutionPeriod)) {
+	    throw new DomainException("Enrolment.cannot.improve.enrolment.prior.to.its.execution.period");
+	}
+	
+	if (improvementExecutionPeriod == enrolmentExecutionPeriod.getNextExecutionPeriod()) {
+	    return true;
+	}
+	
+	for (ExecutionPeriod executionPeriod = enrolmentExecutionPeriod.getNextExecutionPeriod(); executionPeriod != improvementExecutionPeriod && executionPeriod != null; executionPeriod = executionPeriod.getNextExecutionPeriod()) {
+	    if (degreeModule.hasAnyParentContexts(executionPeriod)) {
+		return false;
+	    }
+	}
+	
+	return true;
+    }
+    
     public void createSpecialSeasonEvaluation(final Employee employee) {
 	if (getEnrolmentEvaluationType() != EnrolmentEvaluationType.SPECIAL_SEASON && !isApproved()) {
 	    setEnrolmentEvaluationType(EnrolmentEvaluationType.SPECIAL_SEASON);
@@ -1023,10 +1047,12 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	if(!isBolonha()) {
 	    return accumulatedEctsCredits;
 	}	
+	
 	if(isExtraCurricular() || parentCurriculumGroupIsNoCourseGroupCurriculumGroup()) {
 	    return 0d;
 	}
 	
 	return getStudentCurricularPlan().getAccumulatedEctsCredits(executionPeriod, getCurricularCourse());
     }
+
 }
