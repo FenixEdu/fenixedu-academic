@@ -34,26 +34,22 @@ public class Department extends Department_Base {
 
     public List<Employee> getAllCurrentActiveWorkingEmployees() {
 	Unit departmentUnit = this.getDepartmentUnit();
-	return (departmentUnit != null) ? departmentUnit.getAllCurrentActiveWorkingEmployees()
-		: new ArrayList<Employee>();
+	return (departmentUnit != null) ? departmentUnit.getAllCurrentActiveWorkingEmployees() : new ArrayList<Employee>();
     }
 
     public List<Employee> getAllWorkingEmployees(YearMonthDay begin, YearMonthDay end) {
 	Unit departmentUnit = this.getDepartmentUnit();
-	return (departmentUnit != null) ? departmentUnit.getAllWorkingEmployees(begin, end)
-		: new ArrayList<Employee>();
+	return (departmentUnit != null) ? departmentUnit.getAllWorkingEmployees(begin, end) : new ArrayList<Employee>();
     }
 
     public List<Employee> getAllWorkingEmployees() {
 	Unit departmentUnit = this.getDepartmentUnit();
-	return (departmentUnit != null) ? departmentUnit.getAllWorkingEmployees()
-		: new ArrayList<Employee>();
+	return (departmentUnit != null) ? departmentUnit.getAllWorkingEmployees() : new ArrayList<Employee>();
     }
 
     public List<Teacher> getAllCurrentTeachers() {
 	Unit departmentUnit = this.getDepartmentUnit();
-	return (departmentUnit != null) ? departmentUnit.getAllCurrentTeachers()
-		: new ArrayList<Teacher>();
+	return (departmentUnit != null) ? departmentUnit.getAllCurrentTeachers() : new ArrayList<Teacher>();
     }
 
     public List<Teacher> getAllTeachers() {
@@ -63,8 +59,7 @@ public class Department extends Department_Base {
 
     public List<Teacher> getAllTeachers(YearMonthDay begin, YearMonthDay end) {
 	Unit departmentUnit = this.getDepartmentUnit();
-	return (departmentUnit != null) ? departmentUnit.getAllTeachers(begin, end)
-		: new ArrayList<Teacher>();
+	return (departmentUnit != null) ? departmentUnit.getAllTeachers(begin, end) : new ArrayList<Teacher>();
     }
 
     public Teacher getTeacherByPeriod(Integer teacherNumber, YearMonthDay begin, YearMonthDay end) {
@@ -96,22 +91,15 @@ public class Department extends Department_Base {
 	}
     }
 
-    public List<TeacherPersonalExpectation> getTeachersPersonalExpectationsByExecutionYear(
-	    ExecutionYear executionYear) {
-	List<Teacher> teachersFromDepartment = getAllTeachers(executionYear.getBeginDateYearMonthDay(),
-		executionYear.getEndDateYearMonthDay());
+    public List<TeacherPersonalExpectation> getTeachersPersonalExpectationsByExecutionYear(ExecutionYear executionYear) {
+	List<Teacher> teachersFromDepartment = getAllTeachers(executionYear.getBeginDateYearMonthDay(),	executionYear.getEndDateYearMonthDay());
 	List<TeacherPersonalExpectation> personalExpectations = new ArrayList<TeacherPersonalExpectation>();
-
 	for (Teacher teacher : teachersFromDepartment) {
-	    TeacherPersonalExpectation teacherPersonalExpectation = teacher
-		    .getTeacherPersonalExpectationByExecutionYear(executionYear);
-
+	    TeacherPersonalExpectation teacherPersonalExpectation = teacher.getTeacherPersonalExpectationByExecutionYear(executionYear);
 	    if (teacherPersonalExpectation != null) {
 		personalExpectations.add(teacherPersonalExpectation);
 	    }
-
 	}
-
 	return personalExpectations;
     }
 
@@ -135,20 +123,17 @@ public class Department extends Department_Base {
 		});
     }
 
-    public List<TeacherServiceDistribution> getTeacherServiceDistributionsByExecutionPeriod(
-	    final ExecutionPeriod executionPeriod) {
+    public List<TeacherServiceDistribution> getTeacherServiceDistributionsByExecutionPeriod(final ExecutionPeriod executionPeriod) {
 	List<ExecutionPeriod> executionPeriodList = new ArrayList<ExecutionPeriod>();
 	executionPeriodList.add(executionPeriod);
 	return getTeacherServiceDistributionsByExecutionPeriods(executionPeriodList);
     }
 
-    public List<TeacherServiceDistribution> getTeacherServiceDistributionsByExecutionYear(
-	    final ExecutionYear executionYear) {
+    public List<TeacherServiceDistribution> getTeacherServiceDistributionsByExecutionYear(final ExecutionYear executionYear) {
 	return getTeacherServiceDistributionsByExecutionPeriods(executionYear.getExecutionPeriods());
     }
 
     public List<VigilantGroup> getVigilantGroupsForGivenExecutionYear(ExecutionYear executionYear) {
-
 	Unit departmentUnit = this.getDepartmentUnit();
 	List<VigilantGroup> groups = new ArrayList<VigilantGroup>();
 	for (Unit unit : departmentUnit.getSubUnits()) {

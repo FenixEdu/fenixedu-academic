@@ -409,6 +409,10 @@ public class Unit extends Unit_Base {
 	return contracts;
     }
 
+    public List<Contract> getWorkingContracts() {
+	return getContractsByContractType(ContractType.WORKING);
+    }
+    
     public List<Contract> getContractsByContractType(ContractType contractType) {
 	List<Contract> contracts = new ArrayList<Contract>();
 	for (Contract contract : getEmployeeContracts()) {
@@ -417,10 +421,6 @@ public class Unit extends Unit_Base {
 	    }
 	}
 	return contracts;
-    }
-
-    public List<Contract> getWorkingContracts() {
-	return getContractsByContractType(ContractType.WORKING);
     }
 
     // begin SCIENTIFIC AREA UNITS, COMPETENCE COURSE GROUP UNITS AND

@@ -176,8 +176,8 @@ public class Employee extends Employee_Base {
 
     public List<Unit> getWorkingPlaces(YearMonthDay beginDate, YearMonthDay endDate) {
 	List<Unit> units = new ArrayList<Unit>();
-	for (final Contract accountability : getEmployeeContracts()) {
-	    if (accountability.getContractType().equals(ContractType.WORKING) && accountability.belongsToPeriod(beginDate, endDate)) {
+	for (final Contract accountability : getWorkingContracts()) {
+	    if (accountability.belongsToPeriod(beginDate, endDate)) {
 		units.add(accountability.getWorkingUnit());
 	    }
 	}
