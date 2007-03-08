@@ -28,3 +28,4 @@ function executeWithTempFile() {
 }
 
 execute "Changing Result Table" alterResult.sql
+execute "Add CourseGroupType column to CourseGroup" addDegreeTypeToCourseGroup.sql

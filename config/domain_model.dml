@@ -1200,6 +1200,7 @@ class net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule extends net.s
 		
 	class net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup extends net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule {
 		Integer keyParentDegreeCurricularPlan;
+		DegreeType courseGroupType;
 	}
 
 class net.sourceforge.fenixedu.domain.curricularRules.CurricularRule extends net.sourceforge.fenixedu.domain.DomainObject {
