@@ -92,7 +92,7 @@
 						- D<bean:write name="markSheet" property="responsibleTeacher.teacherNumber"/> -
 						<em><bean:message bundle="DEGREE_OFFICE_RESOURCES" name="markSheet" property="markSheetState.name" bundle="ENUMERATION_RESOURCES"/></em>
 							<logic:equal name="markSheet" property="submittedByTeacher" value="true">
-								<td>(<bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.markSheet.submittedByTeacher"/>)</td>
+								(<bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.markSheet.submittedByTeacher"/>)
 							</logic:equal>
 							
 							 - 
