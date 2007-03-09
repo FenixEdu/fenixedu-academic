@@ -73,7 +73,7 @@ public class UnitsMergeDA extends FenixDispatchAction{
 	}
 	
 	try {
-	    executeService("MergeUnits", new Object[] {fromUnit, destinationUnit});
+	    executeService("MergeUnits", new Object[] {fromUnit, destinationUnit, Boolean.TRUE});
 	} catch (DomainException e) {
 	    saveMessages(request, e);	    
 	    return returnToConfirmationPage(mapping, request, fromUnit, destinationUnit);

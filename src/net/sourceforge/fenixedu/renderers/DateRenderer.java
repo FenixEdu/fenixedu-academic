@@ -57,7 +57,7 @@ public class DateRenderer extends OutputRenderer {
                     return new HtmlText();
                 }
                 
-                HttpServletRequest request = getOutputContext().getViewState().getRequest();
+                HttpServletRequest request = getContext().getViewState().getRequest();
                 Locale locale = RequestUtils.getUserLocale(request, null);
                 DateFormat dateFormat = new SimpleDateFormat(getFormat(), locale);
                 
