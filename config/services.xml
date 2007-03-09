@@ -11581,6 +11581,51 @@
             <chain name="CoordinatorDegreeCurricularPlanAuthorization"/>
         </filterChains>
     </service>   
+    <service>
+        <name>CreateThesisProposal</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.thesis.CreateThesisProposal</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="CoordinatorDegreeCurricularPlanAuthorization"/>
+        </filterChains>
+    </service>   
+    <service>
+        <name>ChangeThesisPerson</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.thesis.ChangeThesisPerson</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="CoordinatorDegreeCurricularPlanAuthorization"/>
+        </filterChains>
+    </service>   
+    <service>
+        <name>ApproveThesis</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.thesis.ApproveThesis</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="CoordinatorDegreeCurricularPlanAuthorization"/>
+        </filterChains>
+    </service>   
+    <service>
+        <name>EvaluateThesis</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.thesis.EvaluateThesis</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="CoordinatorDegreeCurricularPlanAuthorization"/>
+        </filterChains>
+    </service>   
+    <service>
+        <name>ReviseThesis</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.thesis.ReviseThesis</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="CoordinatorDegreeCurricularPlanAuthorization"/>
+        </filterChains>
+    </service>   
 	<service>
         <name>MergeUnits</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.MergeUnits</implementationClass>

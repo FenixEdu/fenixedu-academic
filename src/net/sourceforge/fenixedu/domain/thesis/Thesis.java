@@ -9,10 +9,12 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.util.EvaluationType;
 
 import org.joda.time.DateTime;
 
@@ -91,7 +93,20 @@ public class Thesis extends Thesis_Base {
     }
 
     public static Collection<Thesis> getApprovedThesis(Degree degree) {
-        return getThesisInState(degree, ThesisState.APPROVED);
+        List<Thesis> result = new ArrayList<Thesis>();
+        
+        result.addAll(getThesisInState(degree, ThesisState.APPROVED));
+        result.addAll(getThesisInState(degree, ThesisState.REVISION));
+        
+        return result;
+    }
+
+    public static Collection<Thesis> getConfirmedThesis(Degree degree) {
+        return getThesisInState(degree, ThesisState.CONFIRMED);
+    }
+    
+    public static Collection<Thesis> getEvaluatedThesis(Degree degree) {
+        return getThesisInState(degree, ThesisState.EVALUATED);
     }
 
     @Override
@@ -118,13 +133,93 @@ public class Thesis extends Thesis_Base {
             throw new DomainException("thesis.submit.notDraft");
         }
         
+        if (! getConditions().isEmpty()) {
+            throw new DomainException("thesis.submit.hasConditions");
+        }
+        
         setSubmission(new DateTime());
         setState(ThesisState.SUMITTED);
+    }
+
+    public void reject() {
+        if (getState() != ThesisState.SUMITTED) {
+            throw new DomainException("thesis.approve.notSubmitted");
+        }
+        
+        setState(ThesisState.DRAFT);
+    }
+
+    public void approve() {
+        if (getState() != ThesisState.SUMITTED) {
+            throw new DomainException("thesis.approve.notSubmitted");
+        }
+        
+        setApproval(new DateTime());
+        setState(ThesisState.APPROVED);
+    }
+    
+    public void confirm(String mark, DateTime discussed) {
+        if (getState() != ThesisState.APPROVED && getState() != ThesisState.REVISION) {
+            throw new DomainException("thesis.confirm.notApprovedOrInRevision");
+        }
+        
+        setDiscussed(discussed);
+        setMark(mark);
+
+        setConfirmation(new DateTime());
+        setState(ThesisState.CONFIRMED);
+    }
+    
+    public void allowRevision() {
+        if (getState() != ThesisState.CONFIRMED) {
+            throw new DomainException("thesis.confirm.notConfirmed");
+        }
+        
+        setState(ThesisState.REVISION);
+    }
+    
+    public void approveEvaluation() {
+        if (getState() != ThesisState.CONFIRMED) {
+            throw new DomainException("thesis.confirm.notConfirmed");
+        }
+        
+        setEvaluation(new DateTime());
+        setState(ThesisState.EVALUATED);
+    }
+    
+    public void rejectEvaluation() {
+        if (getState() != ThesisState.EVALUATED) {
+            throw new DomainException("thesis.confirm.notEvaluated");
+        }
+        
+        setState(ThesisState.CONFIRMED);
+    }
+    
+    @Override
+    public void setMark(String mark) {
+        if (! isMarkValid(mark)) {
+            throw new DomainException("thesis.mark.invalid");
+        }
+        
+        super.setMark(mark);
+    }
+
+    public boolean isMarkValid(String mark) {
+        //TODO: enrolment 
+        //GradeScale scale = getEnrolment().getCurricularCourse().getGradeScaleChain();
+        GradeScale scale = null;
+        
+        if (scale == null) {
+            scale = GradeScale.TYPE20;
+        }
+        
+        return scale.isValid(mark, EvaluationType.FINAL_TYPE);
     }
 
     public List<ThesisCondition> getConditions() {
         List<ThesisCondition> conditions = new ArrayList<ThesisCondition>();
         
+        conditions.addAll(getGeneralConditions());
         conditions.addAll(getOrientationConditions());
         conditions.addAll(getPresidentConditions());
         conditions.addAll(getVowelsConditions());
@@ -132,6 +227,20 @@ public class Thesis extends Thesis_Base {
         return conditions;
     }
     
+    public Collection<ThesisCondition> getGeneralConditions() {
+        Person orientator = getOrientator();
+        Person coorientator = getCoorientator();
+        Person president = getPresident();
+        
+        if (orientator != null && coorientator == null && president != null) {
+            if (getVowels().isEmpty()) {
+                return Arrays.asList(new ThesisCondition("thesis.condition.people.number.exceeded"));
+            }
+        }
+        
+        return Arrays.asList();
+    }
+
     public List<ThesisCondition> getOrientationConditions() {
         List<ThesisCondition> conditions = new ArrayList<ThesisCondition>();
         
@@ -141,7 +250,7 @@ public class Thesis extends Thesis_Base {
         Person coorientator = getCoorientator();
         
         if (orientator == null) {
-            // orientator is required
+            conditions.add(new ThesisCondition("thesis.condition.orientator.required"));
         }
         else {
             if (! orientator.hasExternalPerson()) {
@@ -153,8 +262,8 @@ public class Thesis extends Thesis_Base {
             hasInternal = true;
         }
         
-        if (! hasInternal) {
-            // one of them must be internal
+        if (! hasInternal && (orientator != null || coorientator != null)) {
+            conditions.add(new ThesisCondition("thesis.condition.orientation.notInternal"));
         }
         
         return conditions;
@@ -166,11 +275,11 @@ public class Thesis extends Thesis_Base {
         Person president = getPresident();
         
         if (president == null) {
-            // president is required
+            conditions.add(new ThesisCondition("thesis.condition.president.required"));
         }
         else {
             if (president.hasExternalPerson()) {
-                // president must be internal
+                conditions.add(new ThesisCondition("thesis.condition.president.notInternal"));
             }
             else {
                 boolean isCoordinator = false;
@@ -184,7 +293,7 @@ public class Thesis extends Thesis_Base {
                 }
                 
                 if (! isCoordinator) {
-                    // must be coordinator
+                    conditions.add(new ThesisCondition("thesis.condition.president.notCoordinator"));
                 }
             }
         }
@@ -210,10 +319,11 @@ public class Thesis extends Thesis_Base {
         count += getVowels().size();
         
         if (count > 5) {
-            return Arrays.asList(new ThesisCondition(""));
+            return Arrays.asList(new ThesisCondition("thesis.condition.people.number.exceeded"));
         }
         else {
             return Collections.emptyList();
         }
     }
+
 }

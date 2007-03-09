@@ -5,12 +5,13 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 <bean:define id="dcpId" name="degreeCurricularPlan" property="idInternal"/>
+<bean:define id="thesisId" name="thesis" property="idInternal"/>
 
 <html:xhtml/>
 
 <bean:define id="target" name="bean" property="targetType"/>
 
-<h2><bean:message key="title.coordinator.createThesis"/></h2>
+<h2><bean:message key="title.coordinator.thesis.create"/></h2>
 
 <h3>
     <bean:message key="title.coordinator.selectPerson.select"/> 
@@ -26,13 +27,13 @@
 <logic:present name="proposeCreation">
     <div class="warning0">
         <strong><bean:message key="label.attention"/></strong>:<br/>
-        <bean:message key="label.coordinator.createThesis.externalPerson.create"/><br/>
+        <bean:message key="label.coordinator.thesis.edit.externalPerson.create"/><br/>
     </div>
 </logic:present>
 
 <logic:equal name="bean" property="internal" value="true">
     <div class="dinline forminline">
-        <fr:form action="<%= "/manageThesis.do?method=selectPerson&amp;degreeCurricularPlanID=" + dcpId %>">
+        <fr:form action="<%= String.format("/manageThesis.do?method=selectPerson&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
             <fr:edit id="bean" name="bean" schema="thesis.bean.selectPerson.internal">
                 <fr:layout name="tabular">
                     <fr:property name="classes" value="tstyle5 thlight mtop05"/>
@@ -48,9 +49,7 @@
             </html:submit>
         </fr:form>
         
-        <fr:form action="<%= "/manageThesis.do?method=backToCreation&amp;degreeCurricularPlanID=" + dcpId %>">
-            <fr:edit id="bean-invisible" name="bean" visible="false"/>
-            
+        <fr:form action="<%= String.format("/manageThesis.do?method=editProposal&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
             <html:submit>
                 <bean:message key="label.cancel"/>
             </html:submit>
@@ -59,7 +58,7 @@
 
 <logic:equal name="bean" property="internal" value="false">
     <div class="dinline forminline">
-        <fr:form action="<%= "/manageThesis.do?method=selectExternalPerson&amp;degreeCurricularPlanID=" + dcpId %>">
+        <fr:form action="<%= String.format("/manageThesis.do?method=selectExternalPerson&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
             <fr:edit id="bean" name="bean" layout="tabular" schema="thesis.bean.selectPerson.external">
                 <fr:layout name="tabular">
                     <fr:property name="classes" value="tstyle5 thlight mtop05"/>
@@ -75,20 +74,18 @@
             </html:submit>
         </fr:form>
     
-        <fr:form action="<%= "/manageThesis.do?method=backToCreation&amp;degreeCurricularPlanID=" + dcpId %>">
-            <fr:edit id="bean-invisible" name="bean" visible="false"/>
-            
+        <fr:form action="<%= String.format("/manageThesis.do?method=editProposal&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
             <html:submit>
                 <bean:message key="label.cancel"/>
             </html:submit>
         </fr:form>
         
         <logic:present name="proposeCreation">
-            <fr:form action="<%= "/manageThesis.do?method=createExternalPerson&amp;degreeCurricularPlanID=" + dcpId %>">
+            <fr:form action="<%= String.format("/manageThesis.do?method=createExternalPerson&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
                 <fr:edit id="bean-invisible" name="bean" visible="false"/>
                 
                 <html:submit styleClass="mtop05">
-                    <bean:message key="button.coordinator.createThesis.externalPerson.create"/>
+                    <bean:message key="button.coordinator.thesis.edit.externalPerson.create"/>
                 </html:submit>
             </fr:form>
         </logic:present>

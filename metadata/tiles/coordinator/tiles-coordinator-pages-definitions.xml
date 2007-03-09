@@ -273,8 +273,8 @@
     <definition name="thesis-search-student" extends="definition.coordinator.two-column">
         <put name="body" value="/coordinator/thesis/searchStudent.jsp"/>
     </definition>
-    <definition name="thesis-manage" extends="definition.coordinator.two-column">
-        <put name="body" value="/coordinator/thesis/updateThesis.jsp"/>
+    <definition name="thesis-edit" extends="definition.coordinator.two-column">
+        <put name="body" value="/coordinator/thesis/editThesis.jsp"/>
     </definition>
     <definition name="thesis-select-person" extends="definition.coordinator.two-column">
         <put name="body" value="/coordinator/thesis/selectPerson.jsp"/>
@@ -302,5 +302,20 @@
     </definition>
     <definition name="thesis-view" extends="definition.coordinator.two-column">
         <put name="body" value="/coordinator/thesis/viewThesis.jsp"/>
+    </definition>
+    <definition name="thesis-collect-basic-information" extends="definition.coordinator.two-column">
+        <put name="body" value="/coordinator/thesis/collectBasicInformation.jsp"/>
+    </definition>
+    <definition name="thesis-confirm" extends="definition.coordinator.two-column">
+        <put name="body" value="/coordinator/thesis/confirmThesis.jsp"/>
+    </definition>
+    <definition name="thesis-list-confirmed" extends="definition.coordinator.two-column">
+        <put name="body" value="/coordinator/thesis/listConfirmed.jsp"/>
+    </definition>
+    <definition name="thesis-view-confirmed" extends="definition.coordinator.two-column">
+        <put name="body" value="/coordinator/thesis/viewConfirmed.jsp"/>
+    </definition>
+    <definition name="thesis-confirm-revision" extends="definition.coordinator.two-column">
+        <put name="body" value="/coordinator/thesis/confirmRevision.jsp"/>
     </definition>
 </tiles-definitions>

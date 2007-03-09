@@ -32,6 +32,10 @@
             <fr:property name="key(delete)" value="label.coordinator.list.submitted.thesis.print"/>
             <fr:property name="param(delete)" value="idInternal/thesisID"/>
             <fr:property name="order(delete)" value="1"/>
+
+            <fr:property name="link(:::approve:::)" value="<%= "/manageThesis.do?method=approve&amp;degreeCurricularPlanID=" + dcpId %>"/>
+            <fr:property name="param(:::approve:::)" value="idInternal/thesisID"/>
+            <fr:property name="order(:::approve:::)" value="2"/>
         </fr:layout>
     </fr:view>
 </logic:notEmpty>

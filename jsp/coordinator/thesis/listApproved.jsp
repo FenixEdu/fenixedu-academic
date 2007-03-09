@@ -21,8 +21,12 @@
 </logic:empty>
 
 <logic:notEmpty name="theses">
-    <fr:view name="theses">
+    <fr:view name="theses" schema="thesis.approved.table">
         <fr:layout name="tabular">
+            <fr:property name="link(edit)" value="<%= "/manageThesis.do?method=confirmThesis&amp;degreeCurricularPlanID=" + dcpId %>"/>
+            <fr:property name="key(edit)" value="label.coordinator.list.approved.thesis.confirm"/>
+            <fr:property name="param(edit)" value="idInternal/thesisID"/>
+            <fr:property name="order(edit)" value="0"/>
         </fr:layout>
     </fr:view>
 </logic:notEmpty>

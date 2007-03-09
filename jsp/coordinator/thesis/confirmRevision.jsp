@@ -8,13 +8,13 @@
 
 <bean:define id="dcpId" name="degreeCurricularPlan" property="idInternal"/>
 
-<h2><bean:message key="title.coordinator.thesis.confirm.submission"/></h2>
+<h2><bean:message key="title.coordinator.thesis.confirm.revision"/></h2>
 
 <p>
-    <bean:message key="label.coordinator.thesis.confirm.submission.message"/>
+    <bean:message key="label.coordinator.thesis.confirm.revision.message"/>
 </p>
 
-<fr:view name="thesis" schema="thesis.proposal.confirm.details">
+<fr:view name="thesis" schema="thesis.confirm.revision.details">
     <fr:layout name="tabular">
         <fr:property name="classes" value="tstyle5 tdtop thlight thright"/>
         <fr:property name="columnClasses" value=",,tdclear tderror1"/>
@@ -25,13 +25,13 @@
 <bean:define id="thesisId" name="thesis" property="idInternal"/>
 
 <div class="dinline forminline">
-    <fr:form action="<%= String.format("/manageThesis.do?method=submitProposal&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
+    <fr:form action="<%= String.format("/manageThesis.do?method=enterRevision&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
         <html:submit>
-            <bean:message key="button.coordinator.thesis.submit"/>
+            <bean:message key="button.coordinator.thesis.revision"/>
         </html:submit>  
     </fr:form>
 
-    <fr:form action="<%= String.format("/manageThesis.do?method=listDraft&amp;degreeCurricularPlanID=%s", dcpId) %>">
+    <fr:form action="<%= String.format("/manageThesis.do?method=listConfirmed&amp;degreeCurricularPlanID=%s", dcpId) %>">
         <html:submit>
             <bean:message key="button.cancel"/>
         </html:submit>  

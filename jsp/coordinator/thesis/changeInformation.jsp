@@ -5,37 +5,23 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 <bean:define id="dcpId" name="degreeCurricularPlan" property="idInternal"/>
+<bean:define id="thesisId" name="thesis" property="idInternal"/>
 
 <html:xhtml/>
 
-<h2><bean:message key="title.coordinator.createThesis"/></h2>
+<h2><bean:message key="title.coordinator.thesis.edit"/></h2>
 
 <h3>
-    <bean:message key="title.coordinator.changeInformation"/> 
+    <bean:message key="title.coordinator.thesis.changeInformation"/> 
 </h3>
 
-<div class="dinline forminline">
-    <fr:form action="<%= "/manageThesis.do?method=backToCreation&amp;degreeCurricularPlanID=" + dcpId %>">
-        <fr:edit id="bean" name="bean" schema="thesis.jury.proposal.information.edit">
-            <fr:layout name="tabular">
-                <fr:property name="classes" value="tstyle5 tdtop thlight thright"/>
-                <fr:property name="columnClasses" value=",,tdclear tderror1"/>
-            </fr:layout>
-            
-            <fr:destination name="invalid" path="/manageThesis.do?method=changeInformation"/>
-            <fr:destination name="input" path="/manageThesis.do?method=changeInformationAgain"/>
-        </fr:edit>
-        
-        <html:submit>
-            <bean:message key="label.submit"/>
-        </html:submit>
-    </fr:form>
+<fr:edit name="thesis"
+         action="<%= String.format("/manageThesis.do?method=editProposal&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>"
+         schema="thesis.jury.proposal.information.edit">
+     <fr:layout name="tabular">
+        <fr:property name="classes" value="tstyle5 tdtop thlight thright"/>
+        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
+    </fr:layout>
     
-    <fr:form action="<%= "/manageThesis.do?method=backToCreation&amp;degreeCurricularPlanID=" + dcpId %>">
-        <fr:edit id="bean-invisible" name="bean" visible="false"/>
-        
-        <html:submit>
-            <bean:message key="label.cancel"/>
-        </html:submit>
-    </fr:form>
-</div>
+    <fr:destination name="cancel" path="<%= String.format("/manageThesis.do?method=editProposal&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>"/>
+ </fr:edit>

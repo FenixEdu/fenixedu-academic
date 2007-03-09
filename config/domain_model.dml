@@ -4928,6 +4928,9 @@ class net.sourceforge.fenixedu.domain.thesis.Thesis extends net.sourceforge.feni
 
 	ThesisState state;
 
+	String mark;
+	DateTime discussed;
+
 	DateTime creation;
 	DateTime submission;
 	DateTime approval;

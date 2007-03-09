@@ -16,6 +16,18 @@
 
 <bean:define id="dcpId" name="degreeCurricularPlan" property="idInternal"/>
 
+<logic:present name="proposeStartProcess">
+    <bean:message key="label.coordinator.thesis.propose.shortcut"/>
+    
+    <fr:form action="<%= "/manageThesis.do?method=collectBasicInformation&amp;degreeCurricularPlanID=" + dcpId %>">
+        <fr:edit id="bean-invisible" name="bean" visible="false"/>
+        
+        <html:submit>
+            <bean:message key="button.coordinator.thesis.proposal.create"/>
+        </html:submit>
+    </fr:form>
+</logic:present>
+
 <fr:form action="<%= "/manageThesis.do?method=selectStudent&amp;degreeCurricularPlanID=" + dcpId %>">
     <fr:edit id="student" name="bean" schema="thesis.bean.student">
         <fr:layout name="tabular">

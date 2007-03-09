@@ -12,6 +12,7 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.dataTransferObject.student.StudentStatuteBean;
 import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
@@ -567,6 +568,27 @@ public class Student extends Student_Base {
     private List<DegreeType> getDegreeTypesToEnrolByStudent() {
 	return Arrays.asList(new DegreeType[] { DegreeType.DEGREE, DegreeType.BOLONHA_DEGREE,
 		DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE });
+    }
+
+    public boolean isCurrentlyEnroled(DegreeCurricularPlan degreeCurricularPlan) {
+        for (Registration registration : getRegistrations()) {
+            if (! registration.isActive()) {
+                continue;
+            }
+            
+            StudentCurricularPlan lastStudentCurricularPlan = registration.getLastStudentCurricularPlan();
+            if (lastStudentCurricularPlan == null) {
+                continue;
+            }
+            
+            if (lastStudentCurricularPlan.getDegreeCurricularPlan() != degreeCurricularPlan) {
+                continue;
+            }
+         
+            return true;
+        }
+        
+        return false;
     }
 
 }

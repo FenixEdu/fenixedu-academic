@@ -9,20 +9,7 @@
 
 <html:xhtml/>
 
-<h2><bean:message key="title.coordinator.thesis.view"/></h2>
-
-<ul>
-    <li>
-        <html:link page="<%= String.format("/manageThesis.do?method=listSubmitted&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
-            <bean:message key="label.back"/>
-        </html:link>
-    </li>
-    <li>
-        <html:link page="<%= String.format("/manageThesis.do?method=generateSheet&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
-            <bean:message key="label.coordinator.list.submitted.thesis.print"/>
-        </html:link>
-    </li>
-</ul>
+<h2><bean:message key="title.coordinator.thesis.edit"/></h2>
 
 <%--  general problems about the proposal --%>
 <logic:notEmpty name="generalConditions">
@@ -83,6 +70,15 @@
     </logic:notEmpty>
 </logic:notEmpty>
   
+<html:link page="<%= String.format("/manageThesis.do?method=changePerson&amp;target=orientator&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
+    <bean:message key="link.coordinator.thesis.edit.changePerson"/>
+</html:link>
+<logic:notEmpty name="thesis" property="orientator">
+    , <html:link page="<%= String.format("/manageThesis.do?method=changePerson&amp;target=orientator&amp;remove=true&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
+        <bean:message key="link.coordinator.thesis.edit.removePerson"/>
+    </html:link>
+</logic:notEmpty>
+
 <%-- Coorientator --%>
 <h4><bean:message key="title.coordinator.thesis.edit.section.orientation.coorientator"/></h4>
 
@@ -109,6 +105,15 @@
     </logic:notEmpty>
 </logic:notEmpty>
 
+<html:link page="<%= String.format("/manageThesis.do?method=changePerson&amp;target=coorientator&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
+    <bean:message key="link.coordinator.thesis.edit.changePerson"/>
+</html:link>
+<logic:notEmpty name="thesis" property="coorientator">
+    , <html:link page="<%= String.format("/manageThesis.do?method=changePerson&amp;target=coorientator&amp;remove=true&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
+        <bean:message key="link.coordinator.thesis.edit.removePerson"/>
+    </html:link>
+</logic:notEmpty>
+
 <%-- Dissertation --%>
 <h3><bean:message key="title.coordinator.thesis.edit.section.dissertation"/></h3>
 
@@ -125,6 +130,10 @@
         </fr:layout>
     </fr:view>
 </logic:notEmpty>
+
+<html:link page="<%= String.format("/manageThesis.do?method=changeInformation&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
+    <bean:message key="link.coordinator.thesis.edit.changeInformation"/>
+</html:link>
 
 <%-- Jury --%>
 <h3><bean:message key="title.coordinator.thesis.edit.section.jury"/></h3>
@@ -165,6 +174,15 @@
     </logic:notEmpty>
 </logic:notEmpty>
 
+<html:link page="<%= String.format("/manageThesis.do?method=changePerson&amp;target=president&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
+    <bean:message key="link.coordinator.thesis.edit.changePerson"/>
+</html:link>
+<logic:notEmpty name="thesis" property="president">
+    , <html:link page="<%= String.format("/manageThesis.do?method=changePerson&amp;target=president&amp;remove=true&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
+        <bean:message key="link.coordinator.thesis.edit.removePerson"/>
+    </html:link>
+</logic:notEmpty>
+
 <%-- Jury/"Vowels" --%>
 <h4><bean:message key="title.coordinator.thesis.edit.section.vowels"/></h4>
 
@@ -177,6 +195,7 @@
         </p>
     </logic:iterate>
 </logic:notEmpty>
+
 
 <logic:empty name="thesis" property="vowels">
     <p>
@@ -200,5 +219,21 @@
                 </fr:layout>
             </fr:view>
         </logic:notEmpty>
+    
+        <bean:define id="vowelId" name="vowel" property="idInternal"/>
+        
+        <html:link page="<%= String.format("/manageThesis.do?method=changePerson&amp;target=vowel&amp;vowelID=%s&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", vowelId, dcpId, thesisId) %>">
+            <bean:message key="link.coordinator.thesis.edit.changePerson"/>
+        </html:link>
+        , <html:link page="<%= String.format("/manageThesis.do?method=changePerson&amp;target=vowel&amp;vowelID=%s&amp;remove=true&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", vowelId, dcpId, thesisId) %>">
+            <bean:message key="link.coordinator.thesis.edit.removePerson"/>
+        </html:link>
     </logic:iterate>
 </logic:notEmpty>
+
+<bean:size id="vowelsSize" name="thesis" property="vowels"/>
+<logic:lessThan name="vowelsSize" value="3">
+    <html:link page="<%= String.format("/manageThesis.do?method=changePerson&amp;target=vowel&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
+        <bean:message key="link.coordinator.thesis.edit.addVowel"/>
+    </html:link>
+</logic:lessThan>
