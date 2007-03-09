@@ -127,7 +127,7 @@ public class SearchDSpaceBean implements Serializable {
 		}
 
 		public SearchField getSearchField() {
-			return this.field;
+			return (this.field != null) ? this.field : SearchField.ANY;
 		}
 		
 		public void setSearchField(SearchField field) {
