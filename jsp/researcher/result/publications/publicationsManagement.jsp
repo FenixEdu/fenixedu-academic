@@ -18,7 +18,7 @@
 		</html:messages>
 	</logic:messagesPresent>
 
-	<ul class="list5">
+	<ul class="list5 mbottom15">
 		<li>
 			<html:link page="/resultPublications/prepareCreate.do">
 				<bean:message bundle="RESEARCHER_RESOURCES"	key="researcher.ResultPublication.insert.link"/>
@@ -41,14 +41,14 @@
 	</logic:empty>
 
 	<logic:notEmpty name="books">
-		<p id='books' class="mtop2 mbottom0"><strong><span><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.Books"/></span></strong></p>
+		<p id='books' class="mtop3 mbottom0"><strong><span><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.Books"/></span></strong></p>
 		<bean:define id="currentSchema" value="result.publication.presentation.Book" toScope="request"/>
 		<bean:define id="results" name="books" toScope="request"/>
 		<jsp:include page="publicationsResume.jsp"/>
 	</logic:notEmpty>
 
 	<logic:notEmpty name="inbooks">
-		<p id='inbooks' class="mtop2 mbottom0"><strong><span><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.BookParts"/></span></strong></p>
+		<p id='inbooks' class="mtop3 mbottom0"><strong><span><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.BookParts"/></span></strong></p>
 		<bean:define id="currentSchema" value="result.publication.presentation.BookPart" toScope="request"/>
 		<bean:define id="results" name="inbooks" toScope="request"/>
 		<jsp:include page="publicationsResume.jsp"/>
@@ -66,7 +66,7 @@
 	</logic:notEmpty>	
 
 	<logic:equal name="hasArticles" value="true">
-		<p id='books' class="mtop2 mbottom0"/><span><strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.Articles"/></span></strong></p>
+		<p id='books' class="mtop3 mbottom0"/><span><strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.Articles"/></span></strong></p>
 		<bean:define id="currentSchema" value="result.publication.presentation.Article" toScope="request"/>
 
 		<logic:notEmpty name="international-articles">
@@ -90,35 +90,35 @@
 	</logic:equal>
 	
 	<logic:notEmpty name="inproceedings">
-		<p id='inproceedings' class="mtop2 mbottom0"/><span><strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.Inproceedings"/></span></strong></p>
+		<p id='inproceedings' class="mtop3 mbottom0"/><span><strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.Inproceedings"/></span></strong></p>
 		<bean:define id="currentSchema" value="result.publication.presentation.Inproceedings" toScope="request"/>
 		<bean:define id="results" name="inproceedings" toScope="request"/>
 		<jsp:include page="publicationsResume.jsp"/>
 	</logic:notEmpty>
 	
 	<logic:notEmpty name="proceedings">
-		<p id='proceedings' class="mtop2 mbottom0"/><span><strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.Proceedings"/></span></strong></p>
+		<p id='proceedings' class="mtop3 mbottom0"/><span><strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.Proceedings"/></span></strong></p>
 		<bean:define id="currentSchema" value="result.publication.presentation.Proceedings" toScope="request"/>
 		<bean:define id="results" name="proceedings" toScope="request"/>
 		<jsp:include page="publicationsResume.jsp"/>
 	</logic:notEmpty>
 	
 	<logic:notEmpty name="theses">
-		<p id='theses' class="mtop2 mbottom0"/><span><strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.Theses"/></span></strong></p>
+		<p id='theses' class="mtop3 mbottom0"/><span><strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.Theses"/></span></strong></p>
 		<bean:define id="currentSchema" value="result.publication.presentation.Thesis" toScope="request"/>
 		<bean:define id="results" name="theses" toScope="request"/>
 		<jsp:include page="publicationsResume.jsp"/>
 	</logic:notEmpty>
 	
 	<logic:notEmpty name="manuals">
-		<p id='manuals' class="mtop2 mbottom0"/><span><strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.Manuals"/></span></strong></p>
+		<p id='manuals' class="mtop3 mbottom0"/><span><strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.Manuals"/></span></strong></p>
 		<bean:define id="currentSchema" value="result.publication.presentation.Manual" toScope="request"/>
 		<bean:define id="results" name="manuals" toScope="request"/>
 		<jsp:include page="publicationsResume.jsp"/>
 	</logic:notEmpty>
 	
 	<logic:notEmpty name="technicalReports">
-		<p id='technicalReports' class="mtop2 mbottom0"/><span><strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.TechnicalReports"/></span></strong></p>
+		<p id='technicalReports' class="mtop3 mbottom0"/><span><strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.TechnicalReports"/></span></strong></p>
 		<bean:define id="currentSchema" value="result.publication.presentation.TechnicalReport" toScope="request"/>
 		<bean:define id="results" name="technicalReports" toScope="request"/>
 		<jsp:include page="publicationsResume.jsp"/>
@@ -132,7 +132,7 @@
 	</logic:notEmpty>
 	
 	<logic:notEmpty name="unstructureds">
-		<p id='unstructureds' class="mtop2 mbottom0"/><span><strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.Unstructureds"/></span></strong></p>
+		<p id='unstructureds' class="mtop3 mbottom0"/><span><strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.Unstructureds"/></span></strong></p>
 		<bean:define id="results" name="unstructureds" toScope="request"/>
 		<ul>
 			<logic:iterate id="result" name="results" scope="request">

@@ -39,7 +39,7 @@
 		</fr:form>
 
 
-		<p id="index" class="mbottom025"><strong><bean:message key="label.index" /></strong>:</p>
+		<p id="index" class="mbottom025"><bean:message key="label.index" />:</p>
 		<ol class="mtop025">
 			<li><a href="#personalInformationTitle"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.viewCurriculum.personalInformationTitle"/></a></li>
 		    <logic:notEmpty name="lectures">
@@ -100,7 +100,7 @@
 	</logic:notEmpty>
 	<logic:empty  name="final_works">	
 	    <logic:notEmpty  name="guidances">	
-		    <p id='guidancesTitle' class="separator2" style="float: left; display: inline;"> <span class="fleft"><bean:message bundle="DEPARTMENT_MEMBER_RESOURCES" key="label.teacher.details.orientationInformation"/></span> <span class="fright"><a href="#header"><bean:message key="label.top" /></a></span> </p>
+		    <p id='guidancesTitle' class="separator2" style="float: left; display: inline;"><span class="fleft"><bean:message bundle="DEPARTMENT_MEMBER_RESOURCES" key="label.teacher.details.orientationInformation"/></span> <span class="fright"><a href="#header"><bean:message key="label.top" /></a></span> </p>
 			<div class="cboth"></div>
 		</logic:notEmpty>
 	</logic:empty>
@@ -109,19 +109,21 @@
 		<p class="indent1"><em><bean:message key="label.common.finalDegreeWorks" bundle="DEPARTMENT_MEMBER_RESOURCES"/></em></p>
 	
 		<logic:iterate id="final_work" name="final_works">
-			<ul style="float: left; width: 350px; margin: 0;">
-			<li>
+			<div style="float: left; width: 300px; margin: 0; padding: 0;">
+			<ul style="margin-top: 0; margin-bottom: 0;">
+			<li class="smalltxt" style="margin: 0; padding: 0;">
 				<span class="color888"><fr:view name="final_work" property="startExecutionPeriod.executionYear.year"/></span> - 
-				<fr:view name="final_work" property="student.person.name"/>(<fr:view name="final_work" property="student.number"/>)
+				<span title="<fr:view name="final_work" property="student.person.name"/>"><fr:view name="final_work" property="student.person.firstAndLastName"/> (<fr:view name="final_work" property="student.number"/>)</span>
 			</li>
 			</ul>
+			</div>
 		</logic:iterate>
     </logic:notEmpty>
 	
 	<div class="cboth"></div>
 
 	<logic:notEmpty name="guidances">
-	<p class="indent1"><em><bean:message key="label.common.masterDegree" bundle="DEPARTMENT_MEMBER_RESOURCES"/></em></p>
+	<p class="indent1 mtop15"><em><bean:message key="label.common.masterDegree" bundle="DEPARTMENT_MEMBER_RESOURCES"/></em></p>
 	<ul>
 	<logic:iterate id="guidance" name="guidances">
 		<li><fr:view name="guidance" property="dissertationTitle"/>, <fr:view name="guidance" property="masterDegreeThesis.studentCurricularPlan.student.person.nome"/> (<bean:message key="label.teacher.details.orientationInformation.masterDegreeProofDate" bundle="DEPARTMENT_MEMBER_RESOURCES"/>: 
@@ -191,7 +193,7 @@
 		</fr:view>
 		--%>
 		
-		<!-- Publications -->
+	<!-- Publications -->
 	
 	<logic:notEmpty name="resultPublications">
 	    <p id='publicationsTitle' class="separator2" style="float: left; display: inline;"> <span class="fleft"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.viewCurriculum.publicationsTitle"/></span> <span class="fright"><a href="#header"><bean:message key="label.top" /></a></span> </p>

@@ -6,6 +6,7 @@
 
 h2 { margin: 0.5em 0 0.75em 0; }
 
+#bodycontent p { margin: 1.0em 0; }
 
 /* ----------------------
  ---- Anchors ---------
@@ -366,7 +367,9 @@ form { margin: 0; padding: 0; }
 form p { clear: both; margin: 0.5em; margin-left: 0; }
 span.required { color: #d30; }
 .forminline form { display: inline; }
+/*
 .forminline form table { display: inline; }
+*/
 
 fieldset {
 margin: 0.4em 0; padding: 0.4em 0;
@@ -1400,3 +1403,7 @@ margin: 0;
 font-size: 80%;
 text-decoration: underline;
 }
+
+
+
+#bodycontent div.dinline { margin: 0; padding: 0; }

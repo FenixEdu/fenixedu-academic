@@ -33,15 +33,17 @@
 	-->
 	
 	<logic:equal name="confirm" value="yes">
-	<p class="mvert15"><span class="warning0"><bean:message key="researcher.ResultPublication.delete.useCase.title"/></span></p>
-	<fr:form action="<%= "/resultPublications/delete.do?resultId=" + resultId %>">
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.confirm" property="confirm">
-			<bean:message bundle="RESEARCHER_RESOURCES" key="button.delete"/>
-		</html:submit>
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.cancel" property="cancel">
-			<bean:message bundle="RESEARCHER_RESOURCES" key="button.cancel"/>
-		</html:submit>
-	</fr:form>
+		<div  class="mtop1 mbottom15">
+		<p><span class="warning0"><bean:message key="researcher.ResultPublication.delete.useCase.title"/></span></p>
+		<fr:form action="<%= "/resultPublications/delete.do?resultId=" + resultId %>">
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.confirm" property="confirm">
+				<bean:message bundle="RESEARCHER_RESOURCES" key="button.delete"/>
+			</html:submit>
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.cancel" property="cancel">
+				<bean:message bundle="RESEARCHER_RESOURCES" key="button.cancel"/>
+			</html:submit>
+		</fr:form>
+		</div>
 	</logic:equal>
 		
 	<%-- Last Modification Date --%>

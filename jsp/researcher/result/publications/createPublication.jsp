@@ -114,7 +114,7 @@
 			<p class="breadcumbs"><span><bean:message key="label.1stStepInsertPublicationData" bundle="RESEARCHER_RESOURCES"/></span> > <span class="actual"><bean:message key="label.2ndStepAssociateJournal" bundle="RESEARCHER_RESOURCES"/></span></p>
 			</logic:equal>
 			
-			<p class="mtop1 mbottom0"><b><bean:message bundle="RESEARCHER_RESOURCES"key="<%="researcher.ResultPublication.type." + publicationBean.getPublicationTypeString() %>"/></b></p>
+			<p class="mtop1 mbottom0"><b><bean:message key="label.articleData" bundle="RESEARCHER_RESOURCES"/></b></p>
 			
 			<fr:view name="publicationBean" schema="result.publication.create.Article.readOnly" >
 		 	    <fr:layout name="tabular-nonNullValues">
@@ -126,7 +126,7 @@
 
 		<logic:notPresent name="issueBean">
 			<logic:notPresent name="publicationBean" property="scientificJournal">
-			
+			111
 				<logic:present name="publicationBean" property="scientificJournalName">
 					<div class="warning0">
 						<p style="margin:0; padding: 0.5em 0.75em;">
@@ -137,13 +137,13 @@
 				</logic:present>
 				
 				
-				<p><strong><bean:message key="label.articleJournal" bundle="RESEARCHER_RESOURCES"/></strong>:</p>
-				<p class="color888"><bean:message key="label.chooseJournal.instructions" bundle="RESEARCHER_RESOURCES"/></p>
+				<p class="mbottom05"><strong><bean:message key="label.articleJournal" bundle="RESEARCHER_RESOURCES"/>:</strong></p>
+				<p class="color888 mvert05"><bean:message key="label.chooseJournal.instructions" bundle="RESEARCHER_RESOURCES"/></p>
 				<div class="dinline forminline">						
 				<fr:form action="/resultPublications/createWrapper.do">
 				<fr:edit id="publicationBean" name="publicationBean" schema="result.publication.create.Article.selectMagazine">
 					<fr:layout name="tabular">
-						<fr:property name="classes" value="tstyle5 thright thlight thtop thmiddle"/>
+						<fr:property name="classes" value="tstyle5 thright thlight thtop thmiddle mtop05"/>
 			        	<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 					</fr:layout>
 				</fr:edit>
@@ -161,7 +161,7 @@
 					
 			<logic:present name="publicationBean" property="scientificJournal">
 			
-				<p><strong><bean:message key="label.articleIssue" bundle="RESEARCHER_RESOURCES"/></strong>:</p>
+				<p><strong><bean:message key="label.articleIssue" bundle="RESEARCHER_RESOURCES"/>:</strong></p>
 				<p class="color888"><bean:message key="label.chooseIssue.instructions" bundle="RESEARCHER_RESOURCES"/></p>
 				
 				<div class="dinline forminline">	
@@ -192,7 +192,7 @@
 					<fr:edit id="publicationBean" name="publicationBean" visible="false"/>
 					<fr:edit id="createMagazine" name="issueBean" visible="false"/>
 					
-					<p class="mtop1 mbottom05"><strong><bean:message key="label.journal" bundle="RESEARCHER_RESOURCES"/></strong>:</p>
+					<p class="mtop1 mbottom05"><strong><bean:message key="label.journal" bundle="RESEARCHER_RESOURCES"/>:</strong></p>
 					<logic:equal name="issueBean" property="journalAlreadyChosen" value="false">
 					<fr:edit id="journalInfo" name="issueBean" schema="result.publication.create.Article.createMagazine">
 						<fr:layout name="tabular">
@@ -205,7 +205,7 @@
 						<span><fr:view name="issueBean" property="journal.name"/></span>
 					</logic:equal>
 					
-					<p class="mtop1 mbottom05"><strong><bean:message key="label.journalIssue" bundle="RESEARCHER_RESOURCES"/></strong>:</p>
+					<p class="mtop1 mbottom05"><strong><bean:message key="label.journalIssue" bundle="RESEARCHER_RESOURCES"/>:</strong></p>
 					<fr:edit id="journalInfo" name="issueBean" schema="result.publication.create.Article.createIssue">
 						<fr:layout name="tabular">
 						 <fr:property name="classes" value="tstyle5 thright thlight thtop mtop05"/>

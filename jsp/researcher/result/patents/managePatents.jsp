@@ -31,7 +31,8 @@
 
 	<logic:notEmpty name="resultPatents">
 		<p class="mtop2 mbottom0"><strong><bean:message bundle="RESEARCHER_RESOURCES" key="label.patentList"/></strong></p>
-		<ul style="width: 600px;">
+		<div style="width: 600px;">
+		<ul>
 		<logic:iterate id="patent" name="resultPatents">
 			<bean:define id="patentId" name="patent" property="idInternal"/>
 			<li class="mtop1">
@@ -61,6 +62,7 @@
  			</li>
 		</logic:iterate>		
 		</ul>
+		</div>
 			
 	</logic:notEmpty>
 	
