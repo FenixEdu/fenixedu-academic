@@ -296,19 +296,6 @@
    <class-descriptor class="net.sourceforge.fenixedu.domain.WrittenEvaluation"
    	  table="EVALUATION"
    >
-      
-      
-      
-      
-      
-      
-      
-       
-      
-      
-       
-	
-	
-     
-	
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.Exam" />
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.WrittenTest" />
 </class-descriptor>
