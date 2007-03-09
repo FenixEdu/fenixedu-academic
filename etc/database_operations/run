@@ -27,5 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Create Username Counter Table" createUsernameCounterTable.sql
 execute "Changing Result Table" alterResultTable.sql
