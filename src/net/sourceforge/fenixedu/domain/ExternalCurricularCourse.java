@@ -5,13 +5,14 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
-
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
+
+import org.apache.commons.lang.StringUtils;
+
 import dml.runtime.RelationAdapter;
 
 public class ExternalCurricularCourse extends ExternalCurricularCourse_Base {
@@ -105,7 +106,8 @@ public class ExternalCurricularCourse extends ExternalCurricularCourse_Base {
 	List<ExternalCurricularCourse> result = new ArrayList<ExternalCurricularCourse>();
 	for (final ExternalCurricularCourse externalCurricularCourse : unit
 		.getExternalCurricularCourses()) {
-	    if (StringUtils.isEmpty(externalCurricularCourse.getCode()) && StringUtils.isEmpty(code) || externalCurricularCourse.getCode().equals(code)) {
+	    if (StringUtils.isEmpty(externalCurricularCourse.getCode()) && StringUtils.isEmpty(code)
+		    || externalCurricularCourse.getCode().equals(code)) {
 		result.add(externalCurricularCourse);
 	    }
 	}
@@ -116,7 +118,19 @@ public class ExternalCurricularCourse extends ExternalCurricularCourse_Base {
 	}
 	throw new DomainException("error.externalCurricularCourse.manyFoundWithSameCode");
     }
-    
+
+    static public List<ExternalCurricularCourse> readExternalCurricularCoursesByCode(String code) {
+	List<ExternalCurricularCourse> result = new ArrayList<ExternalCurricularCourse>();
+	for (final ExternalCurricularCourse externalCurricularCourse : RootDomainObject.getInstance()
+		.getExternalCurricularCourses()) {
+	    if (StringUtils.isEmpty(externalCurricularCourse.getCode()) && StringUtils.isEmpty(code)
+		    || externalCurricularCourse.getCode().equals(code)) {
+		result.add(externalCurricularCourse);
+	    }
+	}
+	return result;
+    }
+
     static public List<ExternalCurricularCourse> readByName(final String regex) {
 	if (regex == null) {
 	    return Collections.emptyList();
