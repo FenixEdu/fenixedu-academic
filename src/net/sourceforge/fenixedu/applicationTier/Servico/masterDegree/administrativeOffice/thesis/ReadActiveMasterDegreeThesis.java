@@ -5,16 +5,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
-import net.sourceforge.fenixedu.dataTransferObject.GenericTrio;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.MasterDegreeProofVersion;
 import net.sourceforge.fenixedu.domain.MasterDegreeThesis;
-import net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeClassification;
+import net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeThesisState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-
-import org.apache.commons.collections.Predicate;
-import org.joda.time.YearMonthDay;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -22,68 +19,44 @@ import org.joda.time.YearMonthDay;
  */
 public class ReadActiveMasterDegreeThesis extends Service {
 
-    private static Predicate classificationPredicate = new Predicate() {
-        public boolean evaluate(Object object) {
-            if (object instanceof GenericTrio) {
-                GenericTrio<MasterDegreeThesis, MasterDegreeClassification, Integer> trio = (GenericTrio<MasterDegreeThesis, MasterDegreeClassification, Integer>) object;
-                MasterDegreeThesis masterDegreeThesis = trio.getFirst();
-                MasterDegreeClassification masterDegreeClassification = trio.getSecond();
-                if (masterDegreeThesis.getActiveMasterDegreeProofVersion() != null) {
-                    return (masterDegreeThesis.getActiveMasterDegreeProofVersion().getFinalResult()
-                            .equals(masterDegreeClassification));
-                }
-            }
-            return false;
-        }
-    };
+    public Collection<MasterDegreeThesis> run(MasterDegreeThesisState thesisState, Integer year,
+	    Degree degree) throws ExcepcaoPersistencia {
 
-    private static Predicate yearPredicate = new Predicate() {
-        public boolean evaluate(Object object) {
-            if (object instanceof GenericTrio) {
-                GenericTrio<MasterDegreeThesis, MasterDegreeClassification, Integer> trio = (GenericTrio<MasterDegreeThesis, MasterDegreeClassification, Integer>) object;
-                MasterDegreeThesis masterDegreeThesis = trio.getFirst();
-                Integer year = trio.getThird();
-                if (masterDegreeThesis.getActiveMasterDegreeProofVersion() != null
-                        && masterDegreeThesis.getActiveMasterDegreeProofVersion().getProofDate() != null) {
-                    return (new YearMonthDay(masterDegreeThesis.getActiveMasterDegreeProofVersion()
-                            .getProofDate().getTime()).getYear() == year);
-                }
-            }
-            return false;
-        }
-    };
+	Collection<MasterDegreeThesis> result = new ArrayList<MasterDegreeThesis>();
+	for (MasterDegreeThesis masterDegreeThesis : rootDomainObject.getMasterDegreeThesiss()) {
 
-    public Collection<MasterDegreeThesis> run(MasterDegreeClassification classification, Integer year)
-            throws ExcepcaoPersistencia {
+	    if (masterDegreeThesis.getStudentCurricularPlan().getDegree() != degree) {
+		continue;
+	    }
 
-        Collection<Predicate> predicates = new ArrayList<Predicate>();
+	    if (year != null && thesisState != MasterDegreeThesisState.NOT_DELIVERED) {
+		final MasterDegreeProofVersion proofVersion = masterDegreeThesis
+			.getActiveMasterDegreeProofVersion();
 
-        if (classification != null) {
-            predicates.add(classificationPredicate);
-        }
+		if (proofVersion == null) {
+		    continue;
+		}
 
-        if (year != null) {
-            predicates.add(yearPredicate);
-        }
+		if (thesisState == MasterDegreeThesisState.CONCLUDED
+			&& (proofVersion.getProofDateYearMonthDay() == null || proofVersion
+				.getProofDateYearMonthDay().getYear() != year)) {
+		    continue;
+		}
 
-        List<MasterDegreeThesis> masterDegreeThesis = rootDomainObject.getMasterDegreeThesiss();
+		if (thesisState == MasterDegreeThesisState.DELIVERED
+			&& (proofVersion.getThesisDeliveryDateYearMonthDay() == null || proofVersion
+				.getThesisDeliveryDateYearMonthDay().getYear() != year)) {
+		    continue;
+		}
 
-        Collection<MasterDegreeThesis> result = new ArrayList<MasterDegreeThesis>();
-        for (MasterDegreeThesis thesis : masterDegreeThesis) {
+	    }
 
-            boolean isToAdd = true;
-            for (Predicate predicate : predicates) {
-                isToAdd &= predicate
-                        .evaluate(new GenericTrio<MasterDegreeThesis, MasterDegreeClassification, Integer>(
-                                thesis, classification, year));
-            }
+	    if (masterDegreeThesis.getState() == thesisState) {
+		result.add(masterDegreeThesis);
+	    }
+	}
 
-            if (isToAdd) {
-                result.add(thesis);
-            }
-        }
-
-        return result;
+	return result;
     }
 
 }

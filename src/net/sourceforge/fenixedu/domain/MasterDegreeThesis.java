@@ -5,6 +5,7 @@
  */
 package net.sourceforge.fenixedu.domain;
 
+import net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeThesisState;
 import net.sourceforge.fenixedu.util.State;
 
 /**
@@ -52,4 +53,22 @@ public class MasterDegreeThesis extends MasterDegreeThesis_Base {
 	return isConcluded()
 		&& getActiveMasterDegreeProofVersion().getProofDateYearMonthDay().getYear() == year;
     }
+
+    public MasterDegreeThesisState getState() {
+	MasterDegreeProofVersion activeMasterDegreeProofVersion = getActiveMasterDegreeProofVersion();
+
+	if (activeMasterDegreeProofVersion != null) {
+	    if (activeMasterDegreeProofVersion.isConcluded()) {
+		return MasterDegreeThesisState.CONCLUDED;
+	    }
+	    if (activeMasterDegreeProofVersion.getThesisDeliveryDateYearMonthDay() != null) {
+		return MasterDegreeThesisState.DELIVERED;
+	    } else {
+		return MasterDegreeThesisState.NOT_DELIVERED;
+	    }
+	}
+
+	return MasterDegreeThesisState.NOT_DELIVERED;
+    }
+
 }

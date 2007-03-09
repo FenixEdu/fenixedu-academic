@@ -8,7 +8,7 @@
 
 <fr:edit id="degree" name="chooseDegreeAndYearBean"
 		 type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.thesis.ListMasterDegreeProofsBean"
-		 schema="thesis.list.choose.degree">
+		 schema="proofs.list.choose.degree">
 	<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4"/>
 	        <fr:property name="columnClasses" value="listClasses,,"/>

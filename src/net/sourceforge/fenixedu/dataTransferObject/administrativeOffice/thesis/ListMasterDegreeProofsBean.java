@@ -9,6 +9,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.MasterDegreeProofVersion;
+import net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeThesisState;
 
 import org.joda.time.YearMonthDay;
 
@@ -21,6 +22,10 @@ public class ListMasterDegreeProofsBean implements Serializable {
     private DomainReference<Degree> degree;
 
     private Integer year;
+
+    private MasterDegreeThesisState thesisState;
+
+    private Boolean generateFile;
 
     public ListMasterDegreeProofsBean() {
 	year = new YearMonthDay().getYear();
@@ -47,6 +52,22 @@ public class ListMasterDegreeProofsBean implements Serializable {
 
     public void setYear(Integer year) {
 	this.year = year;
+    }
+
+    public Boolean getGenerateFile() {
+	return generateFile != null && generateFile;
+    }
+
+    public void setGenerateFile(Boolean generateFile) {
+	this.generateFile = generateFile;
+    }
+
+    public MasterDegreeThesisState getThesisState() {
+	return thesisState;
+    }
+
+    public void setThesisState(MasterDegreeThesisState thesisState) {
+	this.thesisState = thesisState;
     }
 
 }
