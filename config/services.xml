@@ -11555,15 +11555,6 @@
         <filterChains/>
     </service>   
     <service>
-        <name>UpdateThesis</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.thesis.UpdateThesis</implementationClass>
-        <description></description>
-        <isTransactional>true</isTransactional>  
-        <filterChains>
-            <chain name="CoordinatorDegreeCurricularPlanAuthorization"/>
-        </filterChains>
-    </service>   
-    <service>
         <name>DeleteThesis</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.thesis.DeleteThesis</implementationClass>
         <description></description>
