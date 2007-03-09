@@ -31,10 +31,12 @@
 		<bean:define id="url1">/studentDismissals.do?method=prepare&amp;scpID=<bean:write name="dismissalBean" property="studentCurricularPlan.idInternal" /></bean:define>
 		<html:link action='<%= url1 %>'><bean:message key="label.studentDismissal.create" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
 	</li>
+	<%-- 
 	<li>
 		<bean:define id="url1">/studentDismissals.do?method=chooseExternalCurricularCourse&amp;scpID=<bean:write name="dismissalBean" property="studentCurricularPlan.idInternal" /></bean:define>
 		<html:link action='<%= url1 %>'><bean:message key="label.student.create.external.enrolment" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
 	</li>
+	--%>
 </ul>
 
 <fr:form action="/studentDismissals.do">
