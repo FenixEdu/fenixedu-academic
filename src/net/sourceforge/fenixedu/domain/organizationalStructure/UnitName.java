@@ -64,7 +64,8 @@ public class UnitName extends UnitName_Base implements Comparable<UnitName> {
     }
 
     public int compareTo(UnitName unitName) {
-	return getName().compareTo(unitName.getName());
+	final int stringCompare = getName().compareTo(unitName.getName());
+	return stringCompare == 0 ? getIdInternal().compareTo(unitName.getIdInternal()) : stringCompare;
     }
 
     @Override
