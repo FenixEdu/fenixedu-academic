@@ -80,10 +80,12 @@
 	<slot name="year" key="label.room.punctual.scheduling.year" layout="menu-select-postback" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">				
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.YearsPartialProvider"/>		
 		<property name="destination" value="postBack"/>				
+		<property name="saveOptions" value="true"/>
     </slot>        
 	<slot name="month" key="label.room.punctual.scheduling.month" layout="menu-select-postback" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">				
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.MonthsPartialProvider" />		
 		<property name="destination" value="postBack"/>		
 		<property name="eachLayout" value="month" />
+		<property name="saveOptions" value="true"/>
     </slot>        
 </schema>

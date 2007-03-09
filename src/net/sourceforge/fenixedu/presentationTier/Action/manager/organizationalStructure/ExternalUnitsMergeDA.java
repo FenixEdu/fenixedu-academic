@@ -19,7 +19,7 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 
-public class UnitsMergeDA extends FenixDispatchAction{
+public class ExternalUnitsMergeDA extends FenixDispatchAction{
 
     public ActionForward chooseUnitToStart(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
@@ -73,7 +73,7 @@ public class UnitsMergeDA extends FenixDispatchAction{
 	}
 	
 	try {
-	    executeService("MergeUnits", new Object[] {fromUnit, destinationUnit, Boolean.TRUE});
+	    executeService("MergeExternalUnits", new Object[] {fromUnit, destinationUnit, Boolean.TRUE});
 	} catch (DomainException e) {
 	    saveMessages(request, e);	    
 	    return returnToConfirmationPage(mapping, request, fromUnit, destinationUnit);

@@ -2253,7 +2253,7 @@
 		<action path="/unitsMerge"
 				parameter="method"
 				name="unitsMergeForm"
-				type="net.sourceforge.fenixedu.presentationTier.Action.manager.organizationalStructure.UnitsMergeDA"
+				type="net.sourceforge.fenixedu.presentationTier.Action.manager.organizationalStructure.ExternalUnitsMergeDA"
 				scope="request">
 			<forward name="chooseUnit" path="choose-unit-to-merge"/>				
 			<forward name="seeChoosedUnit" path="see-choosed-unit-to-merge"/>				

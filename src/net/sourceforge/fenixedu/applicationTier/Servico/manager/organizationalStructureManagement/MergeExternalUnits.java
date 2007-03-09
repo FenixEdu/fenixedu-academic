@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.util.Email;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
-public class MergeUnits extends Service {
+public class MergeExternalUnits extends Service {
 
     public void run(Unit fromUnit, Unit destinationUnit, Boolean sendMail) {
 	if(fromUnit != null && destinationUnit != null) {

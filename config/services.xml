@@ -11618,8 +11618,8 @@
         </filterChains>
     </service>   
 	<service>
-        <name>MergeUnits</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.MergeUnits</implementationClass>
+        <name>MergeExternalUnits</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.MergeExternalUnits</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
 		<filterChains>
