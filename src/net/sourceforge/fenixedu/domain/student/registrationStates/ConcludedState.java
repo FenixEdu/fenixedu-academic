@@ -7,6 +7,7 @@ import org.joda.time.DateTime;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 /**
@@ -19,6 +20,11 @@ public class ConcludedState extends ConcludedState_Base {
     public ConcludedState(Registration registration, Person person, DateTime dateTime) {
 	super();
 	init(registration, person, dateTime);
+	registration.getPerson().addPersonRoleByRoleType(RoleType.ALUMNI);
+
+	if (registration.getStudent().getRegistrationsCount() == 1) {
+	    registration.getPerson().removeRoleByType(RoleType.STUDENT);
+	}
     }
 
     public void checkConditionsToForward() {
