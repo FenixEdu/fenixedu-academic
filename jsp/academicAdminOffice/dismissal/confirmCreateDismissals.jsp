@@ -35,24 +35,21 @@
 
 	<p class="mtop15 mbottom05"><strong><bean:message key="label.studentDismissal.equivalences" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
 	<logic:notEmpty name="dismissalBean" property="selectedEnrolments">
-	<fr:view name="dismissalBean" property="selectedEnrolments">
-		<fr:layout name="list">
-			<fr:property name="classes" value="tstyle4 thlight" />
-			<fr:property name="eachLayout" value="values" />
-			<fr:property name="eachSchema" value="equivalence.view" />
-		</fr:layout>
-	</fr:view>
+		<ul>
+		<logic:iterate id="ienrolment" name="dismissalBean" property="selectedEnrolments">
+			<li><bean:write name="ienrolment" property="name" /> (<bean:message key="label.grade" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <bean:write name="ienrolment" property="grade"/>)</li>
+		</logic:iterate>
+		</ul>
 	</logic:notEmpty>
 	
 	<logic:empty name="dismissalBean" property="selectedEnrolments">
 		<em><bean:message key="label.studentDismissal.no.selected.equivalences" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 	</logic:empty>
-
 	
 	<p class="mtop15 mbottom05"><strong><bean:message key="label.studentDismissal.equivalents" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
 	<logic:notEmpty name="dismissalBean" property="courseGroup">
 		<bean:define id="courseGroup" name="dismissalBean" property="courseGroup" />
-		<bean:write name="courseGroup" property="name"/> (Max: <bean:write name="courseGroup" property="maxEctsCredits"/>)
+		<ul><li><bean:write name="courseGroup" property="name"/> (Max: <bean:write name="courseGroup" property="maxEctsCredits"/> <bean:message key="label.ects" bundle="ACADEMIC_OFFICE_RESOURCES"/>)</li></ul>
 	</logic:notEmpty>
 	
 	<logic:notEmpty name="dismissalBean" property="dismissals">
