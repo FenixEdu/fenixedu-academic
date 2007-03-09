@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchParameters;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchPersonPredicate;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
@@ -50,9 +51,11 @@ import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
 
+import pt.utl.ist.fenix.tools.util.CollectionPager;
+
 public class FunctionsManagementBackingBean extends FenixBackingBean {
 
-    public List<Person> personsList, allPersonsList;
+    public Collection<Person> personsList, allPersonsList;
 
     public List<Function> inherentFunctions;
 
@@ -279,24 +282,29 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
     }
 
     private void setIntervalPersons() throws FenixFilterException, FenixServiceException {
-	int begin = (this.getPage() - 1) * SessionConstants.LIMIT_FINDED_PERSONS;
-	int end = begin + SessionConstants.LIMIT_FINDED_PERSONS;
-	if (end >= allPersonsList.size()) {
-	    getPersonsList().addAll(allPersonsList.subList(begin, allPersonsList.size()));
-	} else {
-	    getPersonsList().addAll(allPersonsList.subList(begin, end));
+	final Collection<Person> result = getPersonsList();
+	final int begin = (this.getPage() - 1) * SessionConstants.LIMIT_FINDED_PERSONS;
+	final int end = begin + SessionConstants.LIMIT_FINDED_PERSONS;
+	int i = 0;
+	for (final Person person : allPersonsList) {
+	    if (i >= begin && i < end) {
+		result.add(person);
+	    } else if (i >= end) {
+		break;
+	    }
+	    i++;
 	}
     }
 
-    private List<Person> getAllValidPersonsByName() throws FenixServiceException, FenixFilterException {
+    private Collection<Person> getAllValidPersonsByName() throws FenixServiceException, FenixFilterException {
 
 	SearchParameters searchParameters = new SearchPerson.SearchParameters(personName, null, null,
 		null, null, null, null, null, Boolean.TRUE);
+	SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
 		
-	List<Person> allPersons = (List<Person>) ServiceUtils.executeService(null, "SearchPerson", new Object[] {searchParameters});
+	CollectionPager<Person> allPersons = (CollectionPager<Person>) ServiceUtils.executeService(null, "SearchPerson", new Object[] {searchParameters, predicate});
 
-	Collections.sort(allPersons, Person.COMPARATOR_BY_NAME);
-	return allPersons;
+	return allPersons.getCollection();
     }
 
     private List<Person> getAllPersonsToSearchByClass() throws FenixServiceException,
@@ -356,7 +364,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 	return "";
     }
 
-    public List<Person> getPersonsList() throws FenixFilterException, FenixServiceException {
+    public Collection<Person> getPersonsList() throws FenixFilterException, FenixServiceException {
 	if (this.personsList == null) {
 	    this.personsList = new ArrayList<Person>();
 	}
@@ -534,7 +542,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 	return getAllPersonsList().size();
     }
 
-    public List<Person> getAllPersonsList() throws FenixFilterException, FenixServiceException {
+    public Collection<Person> getAllPersonsList() throws FenixFilterException, FenixServiceException {
 	if (allPersonsList == null) {
 	    if (this.page != null) {
 		if (this.personName != null) {

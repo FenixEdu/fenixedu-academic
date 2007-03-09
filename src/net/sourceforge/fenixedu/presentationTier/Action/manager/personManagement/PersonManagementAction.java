@@ -371,8 +371,9 @@ public class PersonManagementAction extends FenixDispatchAction {
 
 	SearchPerson.SearchParameters parameters = new SearchParameters(personBean.getName(), null,
 		personBean.getUsername(), personBean.getDocumentIdNumber(), null, null, null, null, null);
-			
-	List<Person> persons = (List<Person>) executeService("SearchPerson", new Object[] {parameters});
+	SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(parameters);
+
+	List<Person> persons = (List<Person>) executeService("SearchPerson", new Object[] {parameters, predicate});
 	
 	request.setAttribute("resultPersons", persons);
 	request.setAttribute("personBean", personBean);

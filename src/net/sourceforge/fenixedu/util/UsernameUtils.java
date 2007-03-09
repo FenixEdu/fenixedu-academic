@@ -10,6 +10,8 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Invitation;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
@@ -29,7 +31,8 @@ public class UsernameUtils extends FenixUtil {
 	Login loginIdentification = person.getLoginIdentification();
 	if (loginIdentification != null) {
 	    return person.hasRole(RoleType.TEACHER) || person.hasRole(RoleType.EMPLOYEE)
-		    || person.hasRole(RoleType.STUDENT) || person.hasRole(RoleType.GRANT_OWNER);
+		    || person.hasRole(RoleType.STUDENT) || person.hasRole(RoleType.GRANT_OWNER)
+		    || person.hasAnyInvitation();
 	}
 	return false;
     }
@@ -91,6 +94,8 @@ public class UsernameUtils extends FenixUtil {
 		} else if (person.hasStudent() && person.getStudent().getNumber() < 10000) {
 		    istUsername = ist + sumNumber(person.getStudent().getNumber(), 60000);
 		}
+	    } else if (person.hasAnyInvitation()) {
+		istUsername = ist + Invitation.nextUserIDForInvitedPerson();
 	    }
 
 	    if (StringUtils.isEmpty(istUsername)) {

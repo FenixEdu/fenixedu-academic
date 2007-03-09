@@ -69,3 +69,7 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.EmailAddress" table="EMAIL_ADDRESS">
     	
 </class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.util.UsernameCounter" table="USERNAME_COUNTER">
+    	
+</class-descriptor>

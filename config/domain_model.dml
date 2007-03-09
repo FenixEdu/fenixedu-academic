@@ -198,6 +198,7 @@ class net.sourceforge.fenixedu.domain.RootDomainObject extends net.sourceforge.f
 	Integer keyExternalInstitutionUnit;
 	Integer keyInstitutionUnit;
 	Integer keyEarthUnit;
+    Integer keyUsernameCounter;
 }
 
 class net.sourceforge.fenixedu.domain.space.Blueprint extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -4943,6 +4944,11 @@ class net.sourceforge.fenixedu.domain.thesis.Thesis extends net.sourceforge.feni
 	Integer keyEnrolment;
 	Integer keyDegree;
 }
+
+class net.sourceforge.fenixedu.domain.util.UsernameCounter extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer invitationCounter;
+}
+
 
 /*
  * Relations definitions
@@ -12325,4 +12331,9 @@ relation RootDomainObjectEmailAddress {
 	net.sourceforge.fenixedu.domain.EmailAddress playsRole emailAddresses {
 		multiplicity *;
 	}
+}
+
+relation RootDomainObjectUsernameCounter {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.util.UsernameCounter playsRole usernameCounter;
 }

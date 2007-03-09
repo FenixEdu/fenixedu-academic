@@ -1772,6 +1772,10 @@ public class Person extends Person_Base {
 	return false;
     }
 
+    public boolean hasAnyInvitation() {
+	return !getParentAccountabilities(AccountabilityTypeEnum.INVITATION, Invitation.class).isEmpty();
+    }
+    
     // -------------------------------------------------------------
     // static methods
     // -------------------------------------------------------------

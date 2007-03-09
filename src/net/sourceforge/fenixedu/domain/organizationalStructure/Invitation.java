@@ -6,7 +6,9 @@ import java.util.Comparator;
 import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.LoginPeriod;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.util.UsernameCounter;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -17,15 +19,27 @@ public class Invitation extends Invitation_Base {
 
     public static final Comparator<Invitation> COMPARATOR_BY_BEGIN_DATE = new ComparatorChain();
     static {
-	((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(new ReverseComparator(
-		new BeanComparator("beginDate")));
+	((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(new ReverseComparator(new BeanComparator("beginDate")));
 	((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(new BeanComparator("idInternal"));
+    }
+
+    public static AccountabilityType getInvitationAccountabilityType() {
+	return AccountabilityType.readAccountabilityTypeByType(AccountabilityTypeEnum.INVITATION);
+    }
+
+    public static int nextUserIDForInvitedPerson() {
+	final UsernameCounter usernameCounter = RootDomainObject.getInstance().getUsernameCounter();
+	final int nextUserID = usernameCounter.getInvitationCounter().intValue();
+	usernameCounter.setInvitationCounter(Integer.valueOf(nextUserID + 1));
+	if (nextUserID > 9999) {
+	    throw new DomainException("error.invitation.uid.pool.exhausted");
+	}
+	return nextUserID;
     }
 
     public Invitation(Person person, Unit unit, Party responsible, YearMonthDay begin, YearMonthDay end) {
 	super();
-	AccountabilityType accountabilityType = AccountabilityType
-		.readAccountabilityTypeByType(AccountabilityTypeEnum.INVITATION);
+	AccountabilityType accountabilityType = getInvitationAccountabilityType();
 
 	setAccountabilityType(accountabilityType);
 	setChildParty(person);

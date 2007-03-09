@@ -1,12 +1,11 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchParameters;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchPersonPredicate;
 import net.sourceforge.fenixedu.dataTransferObject.manager.loginsManagement.LoginAliasBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Login;
@@ -23,6 +22,8 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 public class LoginsManagementDA extends FenixDispatchAction {
 
@@ -41,10 +42,11 @@ public class LoginsManagementDA extends FenixDispatchAction {
 
 	SearchPerson.SearchParameters parameters = new SearchParameters(personBean.getName(), null,
 		personBean.getUsername(), personBean.getDocumentIdNumber(), null, null, null, null, null);	
-	
-	List<Person> persons = (List<Person>) executeService("SearchPerson", new Object[] {parameters});
+	SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(parameters);
 
-	request.setAttribute("resultPersons", persons);
+	CollectionPager<Person> persons = (CollectionPager<Person>) executeService("SearchPerson", new Object[] {parameters, predicate});
+
+	request.setAttribute("resultPersons", persons.getCollection());
 	request.setAttribute("personBean", personBean);
 	return mapping.findForward("prepareSearchPerson");
     }   
