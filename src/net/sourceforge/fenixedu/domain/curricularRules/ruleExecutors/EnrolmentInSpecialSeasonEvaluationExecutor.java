@@ -1,6 +1,9 @@
 package net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors;
 
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.curricularRules.EnrolmentInSpecialSeasonEvaluation;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
+import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 
@@ -18,7 +21,19 @@ public class EnrolmentInSpecialSeasonEvaluationExecutor extends CurricularRuleEx
 
     @Override
     protected RuleResult executeEnrolmentInEnrolmentEvaluation(final ICurricularRule curricularRule, final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
-	return RuleResult.createFalse();
+	final EnrolmentInSpecialSeasonEvaluation enrolmentInSpecialSeasonEvaluation = (EnrolmentInSpecialSeasonEvaluation) curricularRule;
+	final Enrolment enrolment = enrolmentInSpecialSeasonEvaluation.getEnrolment();
+	final DegreeModule degreeModule = enrolment.getDegreeModule();
+	
+	if (enrolment.hasSpecialSeason()) {
+	    return RuleResult.createFalse("curricularRules.rulesExecutor.EnrolmentInSpecialSeasonEvaluationExecutor.already.enroled.in.special.season", degreeModule.getName());
+	}
+	
+	if (enrolment.isApproved()) {
+	    return RuleResult.createFalse("curricularRules.rulesExecutor.EnrolmentInSpecialSeasonEvaluationExecutor.degree.module.has.been.approved", degreeModule.getName());
+	}
+
+	return RuleResult.createTrue();
     }
 
 }
