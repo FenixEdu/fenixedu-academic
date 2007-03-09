@@ -567,6 +567,16 @@ public class Registration extends Registration_Base {
 	}
 	return result;
     }
+    
+    public List<StudentCurricularPlan> getStudentCurricularPlansByDegree(Degree degree) {
+	List<StudentCurricularPlan> result = new ArrayList<StudentCurricularPlan>();
+	for (StudentCurricularPlan studentCurricularPlan : this.getStudentCurricularPlans()) {
+	    if (studentCurricularPlan.getDegree() == degree) {
+		result.add(studentCurricularPlan);
+	    }
+	}
+	return result;
+    }    
 
     public List<StudentCurricularPlan> getStudentCurricularPlansBySpecializationAndState(
 	    Specialization specialization, StudentCurricularPlanState state) {
@@ -790,14 +800,13 @@ public class Registration extends Registration_Base {
 		return true;
 	    }
 
-	    final ExecutionDegree executionDegreeByYear = getActiveDegreeCurricularPlan()
-		    .getExecutionDegreeByYear(executionYear);
+	final ExecutionDegree executionDegreeByYear = getActiveDegreeCurricularPlan()
+		.getExecutionDegreeByYear(executionYear);
 	    if (executionDegreeByYear != null && executionDegreeByYear.isFirstYear()) {
 		return true;
 	    }
 
 	    return false;
-
 	}
 
 	return readAllNonReimbursedInsuranceTransactionsByExecutionYear(executionYear).isEmpty();
