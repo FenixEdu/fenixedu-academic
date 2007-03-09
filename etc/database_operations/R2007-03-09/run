@@ -30,3 +30,5 @@ function executeWithTempFile() {
 execute "Changing Result Table" alterResult.sql
 execute "Add CourseGroupType column to CourseGroup" addDegreeTypeToCourseGroup.sql
 execute "Create Username Counter Table" createUsernameCounterTable.sql
+execute "Changing Result Table" alterResultTable.sql
+execute "Alter Thesis Table" AlterThesisTable.sql

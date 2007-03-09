@@ -27,4 +27,3 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Changing Result Table" alterResultTable.sql
