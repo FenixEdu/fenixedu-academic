@@ -3933,8 +3933,8 @@ class net.sourceforge.fenixedu.domain.research.result.ResearchResult extends net
 	class net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication extends net.sourceforge.fenixedu.domain.research.result.ResearchResult {
 		Integer year;
 		Month month;
-		Integer keyPublisher;
-		Integer keyOrganization;
+		String publisher;
+		String organization;
 		MultiLanguageString keywords;
 	}
 
@@ -4089,7 +4089,6 @@ class net.sourceforge.fenixedu.domain.research.activity.JournalIssue extends net
   Month month;
   String publisher;
   String url;
-
   Integer keyScientificJournal;
 
 }
@@ -8533,19 +8532,6 @@ relation ResultParticipationResearchResult {
 	net.sourceforge.fenixedu.domain.research.result.ResearchResult playsRole result;
 }
 
-relation PublisherResultPublication {
-	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole publisher;
-	net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication playsRole publisherResultPublications {
-		multiplicity *;
-	}
-}
-
-relation OrganizationResultPublication {
-	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole organization;
-	net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication playsRole organizationResultPublications {
-		multiplicity *;
-	}
-}
 relation ResultDocumentFileResearchResult {
 	net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFile playsRole resultDocumentFiles {
 		multiplicity *;
@@ -11683,7 +11669,6 @@ relation ConvokeForWrittenEvaluation {
 	}
 	net.sourceforge.fenixedu.domain.WrittenEvaluation playsRole writtenEvaluation;
 }
-
 
 relation VigilantGroupInExecutionYear {
 	net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup playsRole vigilantGroups {

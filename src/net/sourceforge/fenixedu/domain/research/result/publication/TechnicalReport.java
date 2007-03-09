@@ -28,7 +28,7 @@ public class TechnicalReport extends TechnicalReport_Base {
 	super();
     }
 
-    public TechnicalReport(Person participator, String title, MultiLanguageString keywords, Unit institution, Integer year,
+    public TechnicalReport(Person participator, String title, MultiLanguageString keywords, String institution, Integer year,
 	    String technicalReportType, String number, String address, MultiLanguageString note, Integer numberPages,
 	    String language, Month month, String url) {
 	this();
@@ -40,7 +40,7 @@ public class TechnicalReport extends TechnicalReport_Base {
     }
 
     @Checked("ResultPredicates.writePredicate")
-    public void setEditAll(String title, MultiLanguageString keywords, Unit institution, Integer year, String technicalReportType,
+    public void setEditAll(String title, MultiLanguageString keywords, String institution, Integer year, String technicalReportType,
 	    String number, String address, MultiLanguageString note, Integer numberPages, String language,
 	    Month month, String url) {
 	super.checkRequiredParameters(keywords, note);
@@ -50,7 +50,7 @@ public class TechnicalReport extends TechnicalReport_Base {
 	super.setModifiedByAndDate();
     }
 
-    private void fillAllAttributes(String title, MultiLanguageString keywords, Unit institution, Integer year,
+    private void fillAllAttributes(String title, MultiLanguageString keywords, String institution, Integer year,
 	    String technicalReportType, String number, String address, MultiLanguageString note, Integer numberPages,
 	    String language, Month month, String url) {
 	super.setTitle(title);
@@ -67,7 +67,7 @@ public class TechnicalReport extends TechnicalReport_Base {
 	super.setKeywords(keywords);
     }
 
-    private void checkRequiredParameters(String title, Unit institution, Integer year) {
+    private void checkRequiredParameters(String title, String institution, Integer year) {
 	if ((title == null) || (title.length() == 0))
 	    throw new DomainException("error.researcher.TechnicalReport.title.null");
 	if (institution == null)
@@ -80,7 +80,7 @@ public class TechnicalReport extends TechnicalReport_Base {
     public String getResume() {
 	String resume = getParticipationsAndTitleString();
 	if (getOrganization() != null)
-	    resume = resume + getOrganization().getName() + ", ";
+	    resume = resume + getOrganization() + ", ";
 	if ((getYear() != null) && (getYear() > 0))
 	    resume = resume + getYear() + ", ";
 	if ((getNumber() != null) && (getNumber().length() > 0))
@@ -97,7 +97,7 @@ public class TechnicalReport extends TechnicalReport_Base {
 	BibtexEntry bibEntry = bibtexFile.makeEntry("techreport", generateBibtexKey());
 	bibEntry.setField("title", bibtexFile.makeString(getTitle()));
 	if (getOrganization() != null)
-	    bibEntry.setField("organization", bibtexFile.makeString(getOrganization().getName()));
+	    bibEntry.setField("organization", bibtexFile.makeString(getOrganization()));
 	bibEntry.setField("year", bibtexFile.makeString(getYear().toString()));
 	if ((getTechnicalReportType() != null) && (getTechnicalReportType().length() > 0))
 	    bibEntry.setField("type", bibtexFile.makeString(getTechnicalReportType()));
@@ -175,12 +175,12 @@ public class TechnicalReport extends TechnicalReport_Base {
     }
 
     @Override
-    public void setOrganization(Unit organization) {
+    public void setOrganization(String organization) {
 	throw new DomainException("error.researcher.TechnicalReport.call", "setOrganization");
     }
 
     @Override
-    public void setPublisher(Unit publisher) {
+    public void setPublisher(String publisher) {
 	throw new DomainException("error.researcher.TechnicalReport.call", "setPublisher");
     }
 

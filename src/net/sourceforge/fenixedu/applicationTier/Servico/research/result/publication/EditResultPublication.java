@@ -31,7 +31,7 @@ public class EditResultPublication extends ResultPublicationService {
 	final ResearchResultPublication finalPublication;
 
 	if (publication instanceof Book) {
-	    ((Book) publication).setEditAll(bean.getTitle(), bean.getKeywords(), getPublisher(bean), bean
+	    ((Book) publication).setEditAll(bean.getTitle(), bean.getKeywords(), bean.getPublisher(), bean
 		    .getYear(), bean.getVolume(), bean.getSeries(), bean.getAddress(), bean.getEdition(),
 		    bean.getIsbn(), bean.getNumberPages(), bean.getLanguage(), bean.getCountry(), bean
 			    .getScope(), bean.getNote(), bean.getMonth(), bean.getUrl());
@@ -52,7 +52,7 @@ public class EditResultPublication extends ResultPublicationService {
 
 	if (publication instanceof BookPart) {
 	    ((BookPart) publication).setEditAll(bean.getTitle(), bean.getKeywords(), bean.getBookTitle(), bean.getChapter(),
-		    bean.getFirstPage(), bean.getLastPage(), getPublisher(bean), bean.getYear(), bean
+		    bean.getFirstPage(), bean.getLastPage(),bean. getPublisher(), bean.getYear(), bean
 			    .getVolume(), bean.getSeries(), bean.getEdition(), bean.getCountry(), bean
 			    .getAddress(), bean.getNote(), bean.getMonth(), bean.getUrl());
 	    finalPublication = publication;
@@ -93,7 +93,7 @@ public class EditResultPublication extends ResultPublicationService {
 	if (publication instanceof Inproceedings) {
 
 	    ((Inproceedings) publication).setEditAll(bean.getTitle(), bean.getKeywords(), bean.getYear(),
-		    bean.getConference(), bean.getScope(), getPublisher(bean), getOrganization(bean), bean
+		    bean.getConference(), bean.getScope(), bean.getPublisher(), bean.getOrganization(), bean
 			    .getAddress(), bean.getFirstPage(), bean.getLastPage(), bean.getNote(), bean
 			    .getLanguage(), bean.getMonth(), bean.getUrl());
 
@@ -115,7 +115,7 @@ public class EditResultPublication extends ResultPublicationService {
 	if (publication instanceof Proceedings) {
 
 	    ((Proceedings) publication).setEditAll(bean.getTitle(), bean.getKeywords(), bean.getYear(), bean
-		    .getConference(), bean.getScope(), getPublisher(bean), getOrganization(bean), bean
+		    .getConference(), bean.getScope(), bean.getPublisher(), bean.getOrganization(), bean
 		    .getAddress(), bean.getNote(), bean.getMonth(), bean.getUrl());
 	    finalPublication = publication;
 
@@ -135,7 +135,7 @@ public class EditResultPublication extends ResultPublicationService {
 
 	if (publication instanceof Thesis) {
 	    ((Thesis) publication).setEditAll(bean.getThesisType(), bean.getTitle(), bean.getKeywords(),
-		    getOrganization(bean), bean.getYear(), bean.getAddress(), bean.getNote(), bean
+		    bean.getOrganization(), bean.getYear(), bean.getAddress(), bean.getNote(), bean
 			    .getNumberPages(), bean.getLanguage(), bean.getMonth(), bean.getYearBegin(), bean
 			    .getMonthBegin(), bean.getUrl());
 
@@ -155,7 +155,7 @@ public class EditResultPublication extends ResultPublicationService {
 	final ResearchResultPublication finalPublication;
 
 	if (publication instanceof Manual) {
-	    ((Manual) publication).setEditAll(bean.getTitle(), bean.getKeywords(), getOrganization(bean),
+	    ((Manual) publication).setEditAll(bean.getTitle(), bean.getKeywords(), bean.getOrganization(),
 		    bean.getYear(), bean.getAddress(), bean.getNote(), bean.getEdition(), bean.getMonth(),
 		    bean.getUrl());
 	    finalPublication = publication;
@@ -176,7 +176,7 @@ public class EditResultPublication extends ResultPublicationService {
 
 	if (publication instanceof TechnicalReport) {
 	    ((TechnicalReport) publication).setEditAll(bean.getTitle(), bean.getKeywords(),
-		    getOrganization(bean), bean.getYear(), bean.getTechnicalReportType(), bean.getNumber(),
+		    bean.getOrganization(), bean.getYear(), bean.getTechnicalReportType(), bean.getNumber(),
 		    bean.getAddress(), bean.getNote(), bean.getNumberPages(), bean.getLanguage(), bean
 			    .getMonth(), bean.getUrl());
 	    finalPublication = publication;
@@ -195,7 +195,7 @@ public class EditResultPublication extends ResultPublicationService {
 	final ResearchResultPublication finalPublication;
 	if (publication instanceof OtherPublication) {
 	    ((OtherPublication) publication).setEditAll(bean.getTitle(), bean.getKeywords(),
-		    getPublisher(bean), bean.getYear(), bean.getHowPublished(), bean.getNote(), bean
+		    bean.getPublisher(), bean.getYear(), bean.getHowPublished(), bean.getNote(), bean
 			    .getAddress(), bean.getOtherPublicationType(), bean.getNumberPages(), bean
 			    .getLanguage(), bean.getCountry(), bean.getMonth(), bean.getUrl());
 	    finalPublication = publication;

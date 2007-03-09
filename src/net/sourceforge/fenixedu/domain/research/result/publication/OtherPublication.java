@@ -27,7 +27,7 @@ public class OtherPublication extends OtherPublication_Base {
 	super();
     }
 
-    public OtherPublication(Person participator, String title, MultiLanguageString keywords, Unit publisher, Integer year,
+    public OtherPublication(Person participator, String title, MultiLanguageString keywords, String publisher, Integer year,
 	    String howPublished, MultiLanguageString note, String address, String otherPublicationType,
 	    Integer numberPages, String language, Country country, Month month, String url) {
 	this();
@@ -39,7 +39,7 @@ public class OtherPublication extends OtherPublication_Base {
     }
 
     @Checked("ResultPredicates.writePredicate")
-    public void setEditAll(String title, MultiLanguageString keywords, Unit publisher, Integer year, String howPublished, MultiLanguageString note,
+    public void setEditAll(String title, MultiLanguageString keywords, String publisher, Integer year, String howPublished, MultiLanguageString note,
 	    String address, String otherPublicationType, Integer numberPages, String language,
 	    Country country, Month month, String url) {
 	super.checkRequiredParameters(keywords, note);
@@ -49,7 +49,7 @@ public class OtherPublication extends OtherPublication_Base {
 	super.setModifiedByAndDate();
     }
 
-    private void fillAllAttributes(String title, MultiLanguageString keywords, Unit publisher, Integer year, String howPublished,
+    private void fillAllAttributes(String title, MultiLanguageString keywords, String publisher, Integer year, String howPublished,
     		MultiLanguageString note, String address, String otherPublicationType, Integer numberPages,
 	    String language, Country country, Month month, String url) {
 	super.setTitle(title);
@@ -75,7 +75,7 @@ public class OtherPublication extends OtherPublication_Base {
 	if ((getYear() != null) && (getYear() > 0))
 	    resume = resume + getYear() + ", ";
 	if (getPublisher() != null)
-	    resume = resume + getPublisher().getName() + ", ";
+	    resume = resume + getPublisher() + ", ";
 
 	resume = finishResume(resume);
 	return resume;
@@ -96,7 +96,7 @@ public class OtherPublication extends OtherPublication_Base {
 	if ((getHowPublished() != null) && (getHowPublished().length() > 0))
 	    bibEntry.setField("howpublished", bibtexFile.makeString(getHowPublished()));
 	if (getPublisher() != null)
-	    bibEntry.setField("publisher", bibtexFile.makeString(getPublisher().getName()));
+	    bibEntry.setField("publisher", bibtexFile.makeString(getPublisher()));
 	if ((getAddress() != null) && (getAddress().length() > 0))
 	    bibEntry.setField("address", bibtexFile.makeString(getAddress()));
 	if ((getNote() != null) && (getNote().hasContent()))
@@ -167,12 +167,12 @@ public class OtherPublication extends OtherPublication_Base {
     }
 
     @Override
-    public void setOrganization(Unit organization) {
+    public void setOrganization(String organization) {
 	throw new DomainException("error.researcher.OtherPublication.call", "setOrganization");
     }
 
     @Override
-    public void setPublisher(Unit publisher) {
+    public void setPublisher(String publisher) {
 	throw new DomainException("error.researcher.OtherPublication.call", "setPublisher");
     }
 

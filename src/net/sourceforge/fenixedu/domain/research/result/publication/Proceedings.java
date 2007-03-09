@@ -30,7 +30,7 @@ public class Proceedings extends Proceedings_Base {
     }
 
     public Proceedings(Person participator, String title, MultiLanguageString keywords, Integer year, String conference, ScopeType scope,
-	    Unit publisher, Unit organization, String address, MultiLanguageString note, Month month, String url) {
+	    String publisher, String organization, String address, MultiLanguageString note, Month month, String url) {
 	this();
 	super.checkRequiredParameters(keywords, note);
 	checkRequiredParameters(title, year, conference);
@@ -39,8 +39,8 @@ public class Proceedings extends Proceedings_Base {
     }
 
     @Checked("ResultPredicates.writePredicate")
-    public void setEditAll(String title, MultiLanguageString keywords, Integer year, String conference, ScopeType scope, Unit publisher,
-	    Unit organization, String address, MultiLanguageString note, Month month, String url) {
+    public void setEditAll(String title, MultiLanguageString keywords, Integer year, String conference, ScopeType scope, String publisher,
+	    String organization, String address, MultiLanguageString note, Month month, String url) {
     super.checkRequiredParameters(keywords, note);
     checkRequiredParameters(title, year, conference);
 	fillAllAttributes(title, keywords, year, conference, scope, publisher, organization, address, note, month, url);
@@ -48,7 +48,7 @@ public class Proceedings extends Proceedings_Base {
     }
 
     private void fillAllAttributes(String title, MultiLanguageString keywords, Integer year, String conference, ScopeType scope,
-	    Unit publisher, Unit organization, String address, MultiLanguageString note, Month month, String url) {
+	    String publisher, String organization, String address, MultiLanguageString note, Month month, String url) {
 	super.setTitle(title);
 	super.setYear(year);
 	super.setConference(conference);
@@ -75,7 +75,7 @@ public class Proceedings extends Proceedings_Base {
     public String getResume() {
 	String resume = getParticipationsAndTitleString();
 	if (getPublisher() != null)
-	    resume = resume + getPublisher().getName() + ", ";
+	    resume = resume + getPublisher() + ", ";
 	if ((getYear() != null) && (getYear() > 0))
 	    resume = resume + getYear() + ", ";
 	if (getConference() != null)
@@ -93,9 +93,9 @@ public class Proceedings extends Proceedings_Base {
 	bibEntry.setField("title", bibtexFile.makeString(getTitle()));
 	bibEntry.setField("year", bibtexFile.makeString(getYear().toString()));
 	if (getPublisher() != null)
-	    bibEntry.setField("publisher", bibtexFile.makeString(getPublisher().getName()));
+	    bibEntry.setField("publisher", bibtexFile.makeString(getPublisher()));
 	if (getOrganization() != null)
-	    bibEntry.setField("organization", bibtexFile.makeString(getOrganization().getName()));
+	    bibEntry.setField("organization", bibtexFile.makeString(getOrganization()));
 	if ((getAddress() != null) && (getAddress().length() > 0))
 	    bibEntry.setField("address", bibtexFile.makeString(getAddress()));
 	if (getMonth() != null)
@@ -128,12 +128,12 @@ public class Proceedings extends Proceedings_Base {
     }
 
     @Override
-    public void setPublisher(Unit publisher) {
+    public void setPublisher(String publisher) {
 	throw new DomainException("error.researcher.Proceedings.call", "setPublisher");
     }
 
     @Override
-    public void setOrganization(Unit organization) {
+    public void setOrganization(String organization) {
 	throw new DomainException("error.researcher.Proceedings.call", "setOrganization");
     }
 

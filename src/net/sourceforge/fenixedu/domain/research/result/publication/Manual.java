@@ -25,7 +25,7 @@ public class Manual extends Manual_Base {
 	super();
     }
 
-    public Manual(Person participator, String title, MultiLanguageString keywords, Unit organization, Integer year, String address,
+    public Manual(Person participator, String title, MultiLanguageString keywords, String organization, Integer year, String address,
     		MultiLanguageString note, String edition, Month month, String url) {
 	this();
 	super.checkRequiredParameters(keywords, note);
@@ -35,7 +35,7 @@ public class Manual extends Manual_Base {
     }
 
     @Checked("ResultPredicates.writePredicate")
-    public void setEditAll(String title, MultiLanguageString keywords, Unit organization, Integer year, String address, MultiLanguageString note,
+    public void setEditAll(String title, MultiLanguageString keywords, String organization, Integer year, String address, MultiLanguageString note,
 	    String edition, Month month, String url) {
 	super.checkRequiredParameters(keywords, note);
     checkRequiredParameters(title);
@@ -43,7 +43,7 @@ public class Manual extends Manual_Base {
 	super.setModifiedByAndDate();
     }
 
-    private void fillAllAttributes(String title, MultiLanguageString keywords, Unit organization, Integer year, String address,
+    private void fillAllAttributes(String title, MultiLanguageString keywords, String organization, Integer year, String address,
     		MultiLanguageString note, String edition, Month month, String url) {
 	super.setTitle(title);
 	super.setOrganization(organization);
@@ -65,7 +65,7 @@ public class Manual extends Manual_Base {
     public String getResume() {
 	String resume = getParticipationsAndTitleString();
 	if (getOrganization() != null)
-	    resume = resume + getOrganization().getName() + ", ";
+	    resume = resume + getOrganization() + ", ";
 	if ((getYear() != null) && (getYear() > 0))
 	    resume = resume + getYear() + ", ";
 
@@ -82,9 +82,9 @@ public class Manual extends Manual_Base {
 	if ((getYear() != null) && (getYear() > 0))
 	    bibEntry.setField("year", bibtexFile.makeString(getYear().toString()));
 	if (getPublisher() != null)
-	    bibEntry.setField("publisher", bibtexFile.makeString(getPublisher().getName()));
+	    bibEntry.setField("publisher", bibtexFile.makeString(getPublisher()));
 	if (getOrganization() != null)
-	    bibEntry.setField("organization", bibtexFile.makeString(getOrganization().getName()));
+	    bibEntry.setField("organization", bibtexFile.makeString(getOrganization()));
 	if ((getAddress() != null) && (getAddress().length() > 0))
 	    bibEntry.setField("address", bibtexFile.makeString(getAddress()));
 	if (getMonth() != null)
@@ -112,12 +112,12 @@ public class Manual extends Manual_Base {
     }
 
     @Override
-    public void setPublisher(Unit publisher) {
+    public void setPublisher(String publisher) {
 	throw new DomainException("error.researcher.Manual.call", "setPublisher");
     }
 
     @Override
-    public void setOrganization(Unit organization) {
+    public void setOrganization(String organization) {
 	throw new DomainException("error.researcher.Manual.call", "setOrganization");
     }
 

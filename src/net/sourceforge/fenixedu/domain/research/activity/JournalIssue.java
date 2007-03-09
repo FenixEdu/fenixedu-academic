@@ -67,8 +67,4 @@ public class JournalIssue extends JournalIssue_Base {
 	return people.size()==1 && people.contains(currentUser); 
     }
     
-    public String getFullName() {
-	return getScientificJournal().getName() + "- " + getVolume() + "(" + getNumber() + ") " + getYear();
-    }
- 
 }

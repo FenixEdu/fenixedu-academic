@@ -29,7 +29,7 @@ public class Inproceedings extends Inproceedings_Base {
     }
 
     public Inproceedings(Person participator, ResultParticipationRole participatorRole, String title,
-    	MultiLanguageString keywords, Integer year, String conference, ScopeType scope, Unit publisher, Unit organization,
+    	MultiLanguageString keywords, Integer year, String conference, ScopeType scope, String publisher, String organization,
 	    String address, Integer firstPage, Integer lastPage, MultiLanguageString note, String language,
 	    Month month, String url) {
 	this();
@@ -41,8 +41,8 @@ public class Inproceedings extends Inproceedings_Base {
     }
 
     @Checked("ResultPredicates.writePredicate")
-    public void setEditAll(String title, MultiLanguageString keywords, Integer year, String conference, ScopeType scope, Unit publisher,
-	    Unit organization, String address, Integer firstPage, Integer lastPage, MultiLanguageString note,
+    public void setEditAll(String title, MultiLanguageString keywords, Integer year, String conference, ScopeType scope, String publisher,
+	    String organization, String address, Integer firstPage, Integer lastPage, MultiLanguageString note,
 	    String language, Month month, String url) {
 	super.checkRequiredParameters(keywords, note);
     checkRequiredParameters(title, year, conference);
@@ -52,7 +52,7 @@ public class Inproceedings extends Inproceedings_Base {
     }
 
     private void fillAllAttributes(String title,MultiLanguageString keywords, Integer year, String conference, ScopeType scope,
-	    Unit publisher, Unit organization, String address, Integer firstPage, Integer lastPage,
+	    String publisher, String organization, String address, Integer firstPage, Integer lastPage,
 	    MultiLanguageString note, String language, Month month, String url) {
 	super.setTitle(title);
 	super.setYear(year);
@@ -83,7 +83,7 @@ public class Inproceedings extends Inproceedings_Base {
     public String getResume() {
 	String resume = getParticipationsAndTitleString();
 	if (getPublisher() != null)
-	    resume = resume + getPublisher().getName() + ", ";
+	    resume = resume + getPublisher() + ", ";
 	if ((getYear() != null) && (getYear() > 0))
 	    resume = resume + getYear() + ", ";
 	if ((getFirstPage() != null) && (getFirstPage() > 0) && (getLastPage() != null)
@@ -92,7 +92,7 @@ public class Inproceedings extends Inproceedings_Base {
 	if (getConference() != null)
 	    resume = resume + getConference() + ", ";
 	if (getOrganization() != null)
-	    resume = resume + getOrganization().getName() + ", ";
+	    resume = resume + getOrganization() + ", ";
 
 	resume = finishResume(resume);
 	return resume;
@@ -108,11 +108,11 @@ public class Inproceedings extends Inproceedings_Base {
 	if (getConference() != null && getConference() != null)
 	    bibEntry.setField("booktitle", bibtexFile.makeString(getConference()));
 	if (getPublisher() != null)
-	    bibEntry.setField("publisher", bibtexFile.makeString(getPublisher().getName()));
+	    bibEntry.setField("publisher", bibtexFile.makeString(getPublisher()));
 	if ((getFirstPage() != null) && (getLastPage() != null) && (getFirstPage() < getLastPage()))
 	    bibEntry.setField("pages", bibtexFile.makeString(getFirstPage() + "-" + getLastPage()));
 	if (getOrganization() != null)
-	    bibEntry.setField("organization", bibtexFile.makeString(getOrganization().getName()));
+	    bibEntry.setField("organization", bibtexFile.makeString(getOrganization()));
 	if ((getAddress() != null) && (getAddress().length() > 0))
 	    bibEntry.setField("address", bibtexFile.makeString(getAddress()));
 	if (getMonth() != null)
@@ -151,12 +151,12 @@ public class Inproceedings extends Inproceedings_Base {
     }
 
     @Override
-    public void setPublisher(Unit publisher) {
+    public void setPublisher(String publisher) {
 	throw new DomainException("error.researcher.Inproceedings.call", "setPublisher");
     }
 
     @Override
-    public void setOrganization(Unit organization) {
+    public void setOrganization(String organization) {
 	throw new DomainException("error.researcher.Inproceedings.call", "setOrganization");
     }
 

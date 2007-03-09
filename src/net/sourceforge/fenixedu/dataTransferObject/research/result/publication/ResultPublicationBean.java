@@ -5,8 +5,6 @@ import java.io.Serializable;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
 import net.sourceforge.fenixedu.domain.research.result.publication.Article;
 import net.sourceforge.fenixedu.domain.research.result.publication.Book;
@@ -74,23 +72,19 @@ public abstract class ResultPublicationBean implements Serializable {
 
     private DomainReference<Person> person;
 
-    private DomainReference<Unit> publisher;
-
-    private DomainReference<Unit> organization;
-
     private DomainReference<Country> country;
 
     private ResultPublicationType publicationType;
+
+    private String publisher;
+
+    private String organization;
 
     private String activeSchema;
 
     private String participationSchema;
 
     private ResultParticipationRole role = ResultParticipationRole.Author;
-
-    private String publisherName;
-
-    private String organizationName;
 
     private String countryName;
 
@@ -111,7 +105,7 @@ public abstract class ResultPublicationBean implements Serializable {
     private MultiLanguageString keywords;
 
     private Boolean createJournal = Boolean.FALSE;
-    
+
     public abstract ResultPublicationBean convertTo(ResultPublicationType type);
 
     protected abstract void fillSpecificFields(ResearchResultPublication publication);
@@ -220,7 +214,6 @@ public abstract class ResultPublicationBean implements Serializable {
 	this.setPerson(bean.getPerson());
 	this.setKeywords(bean.getKeywords());
     }
-
     protected String getStringValueFromBibtexEntry(String field, BibtexEntry entry) {
 	BibtexAbstractValue value = (BibtexAbstractValue) entry.getFieldValue(field);
 	if (value == null)
@@ -269,21 +262,12 @@ public abstract class ResultPublicationBean implements Serializable {
 	if (unitString == null)
 	    return;
 
-	Unit unit = UnitUtils.readExternalInstitutionUnitByName(unitString);
-	if (unit != null) {
-	    if (unitType.compareToIgnoreCase("publisher") == 0)
-		setPublisher(unit);
-	    else if (unitType.compareToIgnoreCase("organization") == 0
-		    || unitType.compareToIgnoreCase("school") == 0)
-		setOrganization(unit);
-	} else {
-	    // new organization
-	    if (unitType.compareToIgnoreCase("publisher") == 0)
-		setPublisherName(unitString);
-	    if (unitType.compareToIgnoreCase("organization") == 0
-		    || unitType.compareToIgnoreCase("school") == 0)
-		setOrganizationName(unitString);
-	}
+	if (unitType.compareToIgnoreCase("publisher") == 0)
+	    setPublisher(unitString);
+	else if (unitType.compareToIgnoreCase("organization") == 0
+		|| unitType.compareToIgnoreCase("school") == 0)
+	    setOrganization(unitString);
+
     }
 
     protected void setYearFromBibtexEntry(BibtexEntry entry) {
@@ -342,36 +326,20 @@ public abstract class ResultPublicationBean implements Serializable {
 	this.person = (person != null) ? new DomainReference<Person>(person) : null;
     }
 
-    public Unit getPublisher() {
-	return (this.publisher == null) ? null : this.publisher.getObject();
+    public String getPublisher() {
+	return publisher;
     }
 
-    public void setPublisher(Unit publisher) {
-	this.publisher = (publisher != null) ? new DomainReference<Unit>(publisher) : null;
+    public void setPublisher(String publisher) {
+	this.publisher = publisher;
     }
 
-    public String getPublisherName() {
-	return publisherName;
+    public String getOrganization() {
+	return this.organization;
     }
 
-    public void setPublisherName(String publisherName) {
-	this.publisherName = publisherName;
-    }
-
-    public Unit getOrganization() {
-	return (this.organization == null) ? null : this.organization.getObject();
-    }
-
-    public void setOrganization(Unit organization) {
-	this.organization = (organization != null) ? new DomainReference<Unit>(organization) : null;
-    }
-
-    public String getOrganizationName() {
-	return organizationName;
-    }
-
-    public void setOrganizationName(String organizationName) {
-	this.organizationName = organizationName;
+    public void setOrganization(String organization) {
+	this.organization = organization;
     }
 
     public Country getCountry() {
@@ -403,9 +371,9 @@ public abstract class ResultPublicationBean implements Serializable {
     }
 
     public void setNote(String note) {
-    	this.note = new MultiLanguageString(note);
+	this.note = new MultiLanguageString(note);
     }
-    
+
     public void setNote(MultiLanguageString note) {
 	this.note = note;
     }
@@ -485,10 +453,11 @@ public abstract class ResultPublicationBean implements Serializable {
     public Boolean getCreateJournal() {
 	return this.createJournal;
     }
-    
+
     public void setCreateJournal(Boolean createJournal) {
 	this.createJournal = createJournal;
     }
+
     public String getPublicationTypeString() {
 	if (publicationType != null)
 	    return publicationType.toString();
@@ -496,11 +465,11 @@ public abstract class ResultPublicationBean implements Serializable {
 	    return this.getClass().getSimpleName().replace("Bean", "");
     }
 
-	public MultiLanguageString getKeywords() {
-		return keywords;
-	}
+    public MultiLanguageString getKeywords() {
+	return keywords;
+    }
 
-	public void setKeywords(MultiLanguageString keywords) {
-		this.keywords = keywords;
-	}
+    public void setKeywords(MultiLanguageString keywords) {
+	this.keywords = keywords;
+    }
 }

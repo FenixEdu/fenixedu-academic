@@ -28,7 +28,7 @@ public class Book extends Book_Base {
     }
 
     public Book(Person participator, ResultParticipationRole participatorRole, String title,
-    	MultiLanguageString keywords, Unit publisher, Integer year, String volume, String series, String address, String edition,
+    	MultiLanguageString keywords, String publisher, Integer year, String volume, String series, String address, String edition,
 	    Integer isbn, Integer numberPages, String language, Country country, ScopeType scope,
 	    MultiLanguageString note, Month month, String url) {
 	this();
@@ -40,7 +40,7 @@ public class Book extends Book_Base {
     }
 
     @Checked("ResultPredicates.writePredicate")
-    public void setEditAll(String title, MultiLanguageString keywords, Unit publisher, Integer year, String volume, String series,
+    public void setEditAll(String title, MultiLanguageString keywords, String publisher, Integer year, String volume, String series,
 	    String address, String edition, Integer isbn, Integer numberPages, String language,
 	    Country country, ScopeType scope, MultiLanguageString note, Month month, String url) {
     super.checkRequiredParameters(keywords, note);
@@ -50,7 +50,7 @@ public class Book extends Book_Base {
 	super.setModifiedByAndDate();
     }
 
-    private void fillAllAttributes(String title, MultiLanguageString keywords, Unit publisher, Integer year, String volume,
+    private void fillAllAttributes(String title, MultiLanguageString keywords, String publisher, Integer year, String volume,
 	    String series, String address, String edition, Integer isbn, Integer numberPages,
 	    String language, Country country, ScopeType scope, MultiLanguageString note, Month month, String url) {
 	super.setTitle(title);
@@ -71,7 +71,7 @@ public class Book extends Book_Base {
 	super.setKeywords(keywords);
     }
 
-    private void checkRequiredParameters(String title, MultiLanguageString note, MultiLanguageString keywords, Unit publisher, Integer year) {
+    private void checkRequiredParameters(String title, MultiLanguageString note, MultiLanguageString keywords, String publisher, Integer year) {
 	if (title == null || title.length() == 0)
 	    throw new DomainException("error.researcher.Book.title.null");
 	if (publisher == null)
@@ -93,7 +93,7 @@ public class Book extends Book_Base {
 	if ((getYear() != null) && (getYear() > 0))
 	    resume = resume + getYear() + ", ";
 	if (getPublisher() != null)
-	    resume = resume + getPublisher().getName() + ", ";
+	    resume = resume + getPublisher() + ", ";
 	if ((getAddress() != null) && (getAddress().length() > 0))
 	    resume = resume + getAddress() + ", ";
 
@@ -108,7 +108,7 @@ public class Book extends Book_Base {
 	BibtexEntry bibEntry = bibtexFile.makeEntry("book", generateBibtexKey());
 	bibEntry.setField("title", bibtexFile.makeString(getTitle()));
 	if (getPublisher() != null)
-	    bibEntry.setField("publisher", bibtexFile.makeString(getPublisher().getName()));
+	    bibEntry.setField("publisher", bibtexFile.makeString(getPublisher()));
 	bibEntry.setField("year", bibtexFile.makeString(getYear().toString()));
 	if ((getVolume() != null) && (getVolume().length() > 0))
 	    bibEntry.setField("volume", bibtexFile.makeString(getVolume()));
@@ -144,7 +144,7 @@ public class Book extends Book_Base {
     }
 
     @Override
-    public void setPublisher(Unit publisher) {
+    public void setPublisher(String publisher) {
 	throw new DomainException("error.researcher.Book.call", "setPublisher");
     }
 
@@ -214,7 +214,7 @@ public class Book extends Book_Base {
     }
 
     @Override
-    public void setOrganization(Unit organization) {
+    public void setOrganization(String organization) {
 	throw new DomainException("error.researcher.Book.call", "setOrganization");
     }
 

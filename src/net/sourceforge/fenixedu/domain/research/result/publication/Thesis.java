@@ -35,7 +35,7 @@ public class Thesis extends Thesis_Base {
 	super();
     }
 
-    public Thesis(Person participator, ThesisType thesisType, String title, MultiLanguageString keywords, Unit school, Integer year,
+    public Thesis(Person participator, ThesisType thesisType, String title, MultiLanguageString keywords, String school, Integer year,
 	    String address, MultiLanguageString note, Integer numberPages, String language, Month month,
 	    Integer yearBegin, Month monthBegin, String url) {
 	this();
@@ -47,7 +47,7 @@ public class Thesis extends Thesis_Base {
     }
 
     @Checked("ResultPredicates.writePredicate")
-    public void setEditAll(ThesisType thesisType, String title, MultiLanguageString keywords, Unit school, Integer year,
+    public void setEditAll(ThesisType thesisType, String title, MultiLanguageString keywords, String school, Integer year,
 	    String address, MultiLanguageString note, Integer numberPages, String language, Month month,
 	    Integer yearBegin, Month monthBegin, String url) {
     super.checkRequiredParameters(keywords,note);
@@ -57,7 +57,7 @@ public class Thesis extends Thesis_Base {
 	super.setModifiedByAndDate();
     }
 
-    private void fillAllAttributes(ThesisType thesisType, String title, MultiLanguageString keywords, Unit school, Integer year,
+    private void fillAllAttributes(ThesisType thesisType, String title, MultiLanguageString keywords, String school, Integer year,
 	    String address, MultiLanguageString note, Integer numberPages, String language, Month month,
 	    Integer yearBegin, Month monthBegin, String url) {
 	if(yearBegin!=null && (year<yearBegin || (year.compareTo(yearBegin)==0 && month.ordinal()<monthBegin.ordinal()))) {
@@ -78,7 +78,7 @@ public class Thesis extends Thesis_Base {
 	super.setKeywords(keywords);
     }
 
-    private void checkRequiredParameters(ThesisType thesisType, String title, Unit school, Integer year) {
+    private void checkRequiredParameters(ThesisType thesisType, String title, String school, Integer year) {
 	if ((title == null) || (title.length() == 0))
 	    throw new DomainException("error.researcher.Thesis.title.null");
 	if (thesisType == null)
@@ -95,7 +95,7 @@ public class Thesis extends Thesis_Base {
 	if (getThesisType() != null)
 	    resume = resume + getThesisType() + ", ";
 	if (getOrganization() != null)
-	    resume = resume + getOrganization().getName() + ", ";
+	    resume = resume + getOrganization() + ", ";
 	if ((getYear() != null) && (getYear() > 0))
 	    resume = resume + getYear() + ", ";
 
@@ -116,7 +116,7 @@ public class Thesis extends Thesis_Base {
 	bibEntry.setField("title", bibtexFile.makeString(getTitle()));
 	bibEntry.setField("year", bibtexFile.makeString(getYear().toString()));
 	if (getOrganization() != null)// school
-	    bibEntry.setField("organization", bibtexFile.makeString(getOrganization().getName()));
+	    bibEntry.setField("organization", bibtexFile.makeString(getOrganization()));
 	if ((getAddress() != null) && (getAddress().length() > 0))
 	    bibEntry.setField("address", bibtexFile.makeString(getAddress()));
 	if (getMonth() != null)
@@ -190,12 +190,12 @@ public class Thesis extends Thesis_Base {
     }
 
     @Override
-    public void setPublisher(Unit publisher) {
+    public void setPublisher(String publisher) {
 	throw new DomainException("error.researcher.Thesis.call", "setPublisher");
     }
 
     @Override
-    public void setOrganization(Unit organization) {
+    public void setOrganization(String organization) {
 	throw new DomainException("error.researcher.Thesis.call", "setOrganization");
     }
 

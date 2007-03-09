@@ -21,7 +21,14 @@
 		</html:messages>
 	</logic:messagesPresent>
 
-	<fr:form action="/resultPublications/editData.do">
+	<bean:define id="action" value="/resultPublications/editData.do" type="java.lang.String"/>
+	<logic:equal name="typeChanged" value="true">
+		<logic:equal name="publicationBean" property="class.simpleName" value="ArticleBean">
+			<bean:define id="action" value="/resultPublications/prepareEditJournal.do" type="java.lang.String"/>
+		</logic:equal>
+	</logic:equal>
+
+	<fr:form action="<%= action %>">
 	
 		<logic:equal name="publicationBean" property="createEvent" value="false">
 			<!-- Present publication fields -->
@@ -60,7 +67,14 @@
 		</logic:equal>
 		
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.confirm" property="confirm">
-			<bean:message bundle="RESEARCHER_RESOURCES" key="button.submit"/>
+		<bean:define id="submitLabel" value="button.submit"/>
+		<logic:equal name="typeChanged" value="true">
+		<logic:equal name="publicationBean" property="class.simpleName" value="ArticleBean">
+				<bean:define id="submitLabel" value="button.next"/>
+		</logic:equal>
+		</logic:equal>
+
+			<bean:message bundle="RESEARCHER_RESOURCES" key="<%= submitLabel %>"/>
 		</html:submit>
 		<html:cancel>
 			<bean:message bundle="RESEARCHER_RESOURCES" key="button.cancel"/>

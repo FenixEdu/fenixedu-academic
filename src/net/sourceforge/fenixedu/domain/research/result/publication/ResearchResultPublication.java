@@ -68,16 +68,6 @@ public abstract class ResearchResultPublication extends ResearchResultPublicatio
 	super.delete();
     }
 
-    @Override
-    public void removePublisher() {
-	throw new DomainException("error.researcher.ResultPublication.call", "removePublisher");
-    }
-
-    @Override
-    public void removeOrganization() {
-	throw new DomainException("error.researcher.ResultPublication.call", "removeOrganization");
-    }
-
     public List<Person> getAuthors() {
 	ArrayList<Person> authors = new ArrayList<Person>();
 	for (ResultParticipation participation : this.getOrderedResultParticipations()) {

@@ -146,8 +146,6 @@ public class Unit extends Unit_Base {
 		&& !hasAnyExtraPayingUnitAuthorizations()
                 && !hasAnyExtraWorkingUnitAuthorizations()		
 		&& !hasAnyExternalCurricularCourses()
-		&& !hasAnyPublisherResultPublications()
-		&& !hasAnyOrganizationResultPublications()
 		&& !hasAnyResultUnitAssociations()
 		&& !hasAdministrativeOffice()
 		&& !hasUnitServiceAgreementTemplate()		
@@ -1140,11 +1138,7 @@ public class Unit extends Unit_Base {
 	Collection<? extends Accountability> externalContracts = fromUnit.getChildAccountabilitiesByAccountabilityClass(ExternalContract.class);
         List<NonAffiliatedTeacher> nonAffiliatedTeachers = fromUnit.getAssociatedNonAffiliatedTeachers();        	        	
         List<ResultUnitAssociation> resultUnitAssociations = fromUnit.getResultUnitAssociations();            
-        List<ResearchResultPublication> organizationResultPublications = fromUnit.getOrganizationResultPublications();
-        List<ResearchResultPublication> publisherResultPublications = fromUnit.getPublisherResultPublications();
                                      
-        destinationUnit.getPublisherResultPublications().addAll(publisherResultPublications);
-        destinationUnit.getOrganizationResultPublications().addAll(organizationResultPublications);
         destinationUnit.getResultUnitAssociations().addAll(resultUnitAssociations);
         destinationUnit.getAssociatedNonAffiliatedTeachers().addAll(nonAffiliatedTeachers);
         destinationUnit.getChilds().addAll(externalContracts);

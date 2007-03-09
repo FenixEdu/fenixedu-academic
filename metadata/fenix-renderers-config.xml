@@ -112,6 +112,10 @@ Documentation:
   
     <renderer type="java.lang.String" class="net.sourceforge.fenixedu.renderers.StringRenderer"/>
     
+    <renderer type="java.lang.String" layout="text-link" class="net.sourceforge.fenixedu.renderers.StringRenderer">
+    	<property name="link" value="true"/>
+    </renderer>
+    
     <!--@ Considers that the string is html and as such does not escape it's content nor does it replace newlines. -->
     <renderer type="java.lang.String" layout="html" class="net.sourceforge.fenixedu.renderers.StringRenderer">
         <property name="newlineAware" value="false"/>
@@ -214,7 +218,7 @@ Documentation:
     </renderer>
     
     
-    
+	<renderer type="net.sourceforge.fenixedu.domain.research.activity.JournalIssue" class="net.sourceforge.fenixedu.renderers.JournalIssueRenderer"/> 
  
     <!--@ The default layout for a collection. -->
     <renderer type="java.util.Collection" class="net.sourceforge.fenixedu.renderers.CollectionRenderer"/>

@@ -30,8 +30,8 @@ public class BookPart extends BookPart_Base {
     }
 
     public BookPart(Person participator, ResultParticipationRole participatorRole, String title,
-	    MultiLanguageString keywords, String bookTitle, String chapter, String volume, Unit publisher, Integer year, Integer firstPage,
-	    Integer lastPage, String series, String edition, Unit organization, Country country, String address, MultiLanguageString note,
+	    MultiLanguageString keywords, String bookTitle, String chapter, String volume, String publisher, Integer year, Integer firstPage,
+	    Integer lastPage, String series, String edition, String organization, Country country, String address, MultiLanguageString note,
 	    Month month, String url) {
 
 	super.checkRequiredParameters(keywords, note);
@@ -44,7 +44,7 @@ public class BookPart extends BookPart_Base {
 
     @Checked("ResultPredicates.writePredicate")
     public void setEditAll(String title, MultiLanguageString keywords, String bookTitle, String chapter,
-	    Integer firstPage, Integer lastPage, Unit publisher, Integer year, String volume, String series,
+	    Integer firstPage, Integer lastPage, String publisher, Integer year, String volume, String series,
 	    String edition, Country country, String address, MultiLanguageString note, Month month, String url) {
 
 	super.checkRequiredParameters(keywords, note);
@@ -55,7 +55,7 @@ public class BookPart extends BookPart_Base {
     }
 
     private void checkRequiredParameters(String title, String bookTitle, Integer firstPage, Integer lastPage,
-	    Unit publisher, Integer year) {
+	    String publisher, Integer year) {
 	if (title == null || title.length() == 0)
 	    throw new DomainException("error.researcher.BookPart.title.null");
 	if (publisher == null)
@@ -67,7 +67,7 @@ public class BookPart extends BookPart_Base {
     }
 
     private void fillAllAttributes(String title, MultiLanguageString keywords, String bookTitle,
-	    String chapter, Integer firstPage, Integer lastPage, Unit publisher, Integer year, String volume,
+	    String chapter, Integer firstPage, Integer lastPage, String publisher, Integer year, String volume,
 	    String series, String edition, Country country, String address, MultiLanguageString note,
 	    Month month, String url) {
 	super.setTitle(title);
@@ -109,7 +109,7 @@ public class BookPart extends BookPart_Base {
 	if ((getYear() != null) && (getYear() > 0))
 	    resume = resume + getYear() + ", ";
 	if (getPublisher() != null)
-	    resume = resume + getPublisher().getName() + ", ";
+	    resume = resume + getPublisher() + ", ";
 	if ((getAddress() != null) && (getAddress().length() > 0))
 	    resume = resume + getAddress() + ", ";
 
@@ -137,9 +137,9 @@ public class BookPart extends BookPart_Base {
 	if ((getEdition() != null) && (getEdition().length() > 0))
 	    bibEntry.setField("edition", bibtexFile.makeString(getEdition()));
 	if (getPublisher() != null)
-	    bibEntry.setField("publisher", bibtexFile.makeString(getPublisher().getName()));
+	    bibEntry.setField("publisher", bibtexFile.makeString(getPublisher()));
 	if (getOrganization() != null)
-	    bibEntry.setField("organization", bibtexFile.makeString(getOrganization().getName()));
+	    bibEntry.setField("organization", bibtexFile.makeString(getOrganization()));
 	if ((getFirstPage() != null) && (getLastPage() != null) && (getFirstPage() < getLastPage()))
 	    bibEntry.setField("pages", bibtexFile.makeString(getFirstPage() + "-" + getLastPage()));
 	if ((getAddress() != null) && (getAddress().length() > 0))
@@ -170,7 +170,7 @@ public class BookPart extends BookPart_Base {
     }
 
     @Override
-    public void setPublisher(Unit publisher) {
+    public void setPublisher(String publisher) {
 	throw new DomainException("error.researcher.BookPart.call", "setPublisher");
     }
 
@@ -240,7 +240,7 @@ public class BookPart extends BookPart_Base {
     }
 
     @Override
-    public void setOrganization(Unit organization) {
+    public void setOrganization(String organization) {
 	throw new DomainException("error.researcher.BookPart.call", "setOrganization");
     }
 

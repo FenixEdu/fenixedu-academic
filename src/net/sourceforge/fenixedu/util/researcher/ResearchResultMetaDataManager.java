@@ -75,10 +75,10 @@ public class ResearchResultMetaDataManager {
 
 		if (researchResult instanceof ResearchResultPublication) {
 			ResearchResultPublication publication = (ResearchResultPublication) researchResult;
-			Unit publisher = publication.getPublisher();
+			String publisher = publication.getPublisher();
 			if (publisher != null) {
 				metadata.add(new FileSetMetaData("publisher", null, null, StringNormalizer
-						.normalize(publisher.getName())));
+						.normalize(publisher)));
 			}
 			Integer year = publication.getYear();
 			if (year != null) {
