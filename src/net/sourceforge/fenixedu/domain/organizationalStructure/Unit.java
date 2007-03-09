@@ -1142,13 +1142,7 @@ public class Unit extends Unit_Base {
         List<ResultUnitAssociation> resultUnitAssociations = fromUnit.getResultUnitAssociations();            
         List<ResearchResultPublication> organizationResultPublications = fromUnit.getOrganizationResultPublications();
         List<ResearchResultPublication> publisherResultPublications = fromUnit.getPublisherResultPublications();
-        
-        fromUnit.getPublisherResultPublications().clear();
-        fromUnit.getOrganizationResultPublications().clear();
-        fromUnit.getResultUnitAssociations().clear();
-        fromUnit.getAssociatedNonAffiliatedTeachers().clear();        	
-        fromUnit.getChilds().removeAll(externalContracts);
-                   
+                                     
         destinationUnit.getPublisherResultPublications().addAll(publisherResultPublications);
         destinationUnit.getOrganizationResultPublications().addAll(organizationResultPublications);
         destinationUnit.getResultUnitAssociations().addAll(resultUnitAssociations);
