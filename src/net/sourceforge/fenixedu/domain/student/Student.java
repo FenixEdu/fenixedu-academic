@@ -30,6 +30,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.Money;
@@ -100,6 +101,15 @@ public class Student extends Student_Base {
 	for (final Registration registration : getRegistrations()) {
 	    if (registration.hasAnyEnrolmentsIn(executionYear)
 		    && registration.getDegreeType() == degreeType) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
+    public boolean hasAnyRegistrationInState(final RegistrationStateType stateType) {
+	for (final Registration registration : getRegistrations()) {
+	    if (registration.getActiveStateType() == stateType) {
 		return true;
 	    }
 	}
