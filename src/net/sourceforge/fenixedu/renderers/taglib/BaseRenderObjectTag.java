@@ -219,7 +219,7 @@ public abstract class BaseRenderObjectTag extends TagSupport {
         try {
             drawComponent(context, component);
         } catch (IOException e) {
-            e.printStackTrace();x
+            e.printStackTrace();
             throw new JspException("failed to render component", e);
         }
         
