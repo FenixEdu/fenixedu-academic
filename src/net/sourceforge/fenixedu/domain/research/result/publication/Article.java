@@ -230,4 +230,12 @@ public class Article extends Article_Base {
 	return getJournalIssue().getYear();
     }
 
+    @Override
+    public void delete() {
+	if(hasArticleAssociation()) {
+	    getArticleAssociation().delete();
+	}
+	super.delete();
+    }
 }
+ 

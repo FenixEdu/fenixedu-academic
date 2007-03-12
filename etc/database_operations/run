@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Fix problems in article associations' foreign keys" fixProblemWithKeysInArticleAssociation.sql
