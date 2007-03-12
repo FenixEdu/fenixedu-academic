@@ -56,7 +56,7 @@
 
     <!-- ========== Global Forward Definitions =============================== -->
     <global-forwards type="org.apache.struts.action.ActionForward">
-        <forward name="index" path="/index.do" redirect="true"/>
+        <forward name="index" path="/index.do" contextRelative="true" redirect="true"/>
         <forward name="logoff" path="/logoff.do" contextRelative="true"/>
         <forward name="redirect" path="/redirect.do" contextRelative="true"/>
         <forward name="home" path="/mainPortalPage.jsp" redirect="true" contextRelative="true"/>
@@ -112,8 +112,8 @@
         <action path="/loginCAS"
 				type="net.sourceforge.fenixedu.presentationTier.Action.CASAuthenticationAction"
 				scope="request">
-            <forward name="sucess" path="/home.do" redirect="true"/>
-            <forward name="error" path="/loginPage.jsp" redirect="true"/>
+            <forward name="sucess" path="/home.do" contextRelative="true" redirect="true"/>
+            <forward name="error" path="/loginPage.jsp" contextRelative="true" redirect="true"/>
             <forward name="expirationWarning" path="/expirationWarning.jsp"/>            
         </action>
         <action path="/redirect"
