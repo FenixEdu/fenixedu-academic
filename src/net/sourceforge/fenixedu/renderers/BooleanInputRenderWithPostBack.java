@@ -71,19 +71,18 @@ public class BooleanInputRenderWithPostBack extends BooleanInputRenderer {
 
          @Override
          public void execute(IViewState viewState) {
-             if (hidden.getValue() != null && hidden.getValue().length() != 0) {
+             if (hidden.getValue() != null && hidden.getValue().equalsIgnoreCase("true")) {
                  String destinationName = this.destination == null ? "postBack" : this.destination;
                  ViewDestination destination = viewState.getDestination(destinationName);
-
+                 
                  if (destination != null) {
                      viewState.setCurrentDestination(destination);
                  } else {
                      viewState.setCurrentDestination("postBack");
                  }
-
+                 hidden.setValue("false");
                  viewState.setSkipValidation(true);
              }
-
          }
 
     }
