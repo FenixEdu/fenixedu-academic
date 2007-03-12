@@ -4089,6 +4089,9 @@ class net.sourceforge.fenixedu.domain.research.activity.JournalIssue extends net
   Month month;
   String publisher;
   String url;
+  Boolean specialIssue;
+  String specialIssueComment;
+  
   Integer keyScientificJournal;
 
 }

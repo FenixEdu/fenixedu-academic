@@ -6,7 +6,6 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.research.activity.ResearchActivityLocationType;
 import net.sourceforge.fenixedu.domain.research.activity.ScientificJournal;
 import net.sourceforge.fenixedu.util.Month;
-import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public class CreateIssueBean implements Serializable{
 
@@ -23,7 +22,8 @@ public class CreateIssueBean implements Serializable{
     private String number;
     private String publisher;
     private String url;
-
+    private Boolean specialIssue;
+    private String specialIssueComment;
     private Boolean createNewJournal;
     
     public Boolean getCreateNewJournal() {
@@ -144,5 +144,25 @@ public class CreateIssueBean implements Serializable{
 
     public void setMagazineUrl(String magazineUrl) {
         this.magazineUrl = magazineUrl;
+    }
+
+    public Boolean getSpecialIssue() {
+        return specialIssue;
+    }
+
+    public void setSpecialIssue(Boolean specialIssue) {
+        this.specialIssue = specialIssue;
+    }
+
+    public String getSpecialIssueComment() {
+        return specialIssueComment;
+    }
+
+    public void setSpecialIssueComment(String specialIssueComment) {
+        this.specialIssueComment = specialIssueComment;
+    }
+    
+    public boolean isJournalFormValid() {
+	return getJournal()!=null || (getScientificJournalName()!=null && getLocation()!=null);
     }
 }

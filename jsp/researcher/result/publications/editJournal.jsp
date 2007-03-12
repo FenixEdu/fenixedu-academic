@@ -125,12 +125,18 @@
 						<strong><bean:message key="label.journalIssue" bundle="RESEARCHER_RESOURCES"/>:</strong>
 					</p>
 
-					<fr:edit id="issueInfo" name="issueBean" schema="result.publication.create.Article.createIssue">
+					<bean:define id="issueSchema" value="result.publication.create.Article.createIssue" type="java.lang.String"/>
+					<logic:equal name="issueBean" property="specialIssue" value="true">
+						<bean:define id="issueSchema" value="result.publication.create.Article.createSpecialIssue" type="java.lang.String"/>
+					</logic:equal>
+
+					<fr:edit id="issueInfo" name="issueBean" schema="<%= issueSchema %>">
 						<fr:layout name="tabular">
 							 <fr:property name="classes" value="tstyle5 thright thlight thtop mtop05 dinline"/>
 			        		<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 						</fr:layout>
 						<fr:destination name="invalid" path="/resultPublications/createJournalToAssociate.do"/>
+						<fr:destination name="postBack" path="/resultPublications/changeSpecialIssueInEditon.do"/>
 					</fr:edit>
 					<br/><br/>
 					<html:submit>

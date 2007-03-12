@@ -183,6 +183,12 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
 		issueBean.setScientificJournalName(issueBean.getJournalName());
 		request.setAttribute("createJournal", true);
 	    }
+	    if(!issueBean.isJournalFormValid()) {
+		addActionMessage(request, "label.journalNeedsNameAndLocation");
+		request.setAttribute("issueBean", issueBean);
+		request.setAttribute("publicationBean", bean);
+		return mapping.findForward(forwardOnNextStep);
+	    }
 	    if (issueBean.getIssueAlreadyChosen()) {
 		ResearchResultPublication publication;
 		try {
@@ -214,6 +220,28 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
 
     }
 
+    private ActionForward changeSpecialIssue(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response, String forwardTo) throws FenixFilterException, FenixServiceException {
+
+	final ArticleBean bean = (ArticleBean) getRenderedObject("publicationBean");
+	CreateIssueBean issueBean = (CreateIssueBean) getRenderedObject("createMagazine");
+
+	request.setAttribute("issueBean", issueBean);
+	request.setAttribute("publicationBean", bean);
+	RenderUtils.invalidateViewState();
+	return mapping.findForward(forwardTo);
+    }
+    
+    public ActionForward changeSpecialIssueInEditon(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	return changeSpecialIssue(mapping, form, request, response,"editJournal");
+    }
+    
+    public ActionForward changeSpecialIssueInCreation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	return changeSpecialIssue(mapping, form, request, response,"PreparedToCreate");
+    }
+    
     public ActionForward createJournal(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	return createJournalWorkFlow(mapping, form, request, response, "PreparedToCreate",

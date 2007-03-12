@@ -1165,11 +1165,11 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Ar
 
 <schema name="result.publication.create.Article.createMagazine" bundle="RESEARCHER_RESOURCES"
 type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.CreateIssueBean">
-	<slot name="scientificJournalName" key="label.journal" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="scientificJournalName" key="label.journal">
 		<property name="size" value="70"/>
 	</slot>
 	<slot name="issn"/>
-	<slot name="location" key="label.scope" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="location" key="label.scope"/>
 	<slot name="url" layout="input-with-comment">
 		<property name="size" value="60"/>
 		<property name="bundle" value="RESEARCHER_RESOURCES"/>
@@ -1193,11 +1193,39 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Cr
 		<slot name="volume" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 			<property name="size" value="30"/>
 		</slot>
+		<slot name="specialIssue" layout="option-select-postback"/>
 		<slot name="year" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 			<property name="size" value="10"/>
 		</slot>		
 		<slot name="month"/>
-		<slot name="number">
+		<slot name="number" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+			<property name="size" value="10"/>
+		</slot>
+		<slot name="publisher">
+			<property name="size" value="50"/>
+		</slot>
+	<slot name="url" layout="input-with-comment">
+		<property name="size" value="60"/>
+		<property name="bundle" value="RESEARCHER_RESOURCES"/>
+		<property name="comment" value="label.url.explanation"/>
+		<property name="commentClasses" value="smalltxt color555"/>
+	</slot>
+</schema>
+
+<schema name="result.publication.create.Article.createSpecialIssue" bundle="RESEARCHER_RESOURCES"		
+type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.CreateIssueBean">
+		<slot name="volume" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+			<property name="size" value="30"/>
+		</slot>
+		<slot name="specialIssue" layout="option-select-postback"/>
+		<slot name="specialIssueComment">
+			<property name="size" value="60"/>
+		</slot>
+		<slot name="year" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+			<property name="size" value="10"/>
+		</slot>		
+		<slot name="month"/>
+		<slot name="number" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 			<property name="size" value="10"/>
 		</slot>
 		<slot name="publisher">

@@ -13,16 +13,6 @@
 	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.publications"/></em>
 	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.create"/></h2>
 	
-	
-	<logic:messagesPresent message="true">
-		<p>
-		<html:messages id="messages" message="true" bundle="RESEARCHER_RESOURCES">
-			<span class="error0"><!-- Error messages go here --><bean:write name="messages" /></span>
-		</html:messages>
-		</p>
-	</logic:messagesPresent>
-
-
 		<logic:equal name="publicationBean" property="createJournal" value="false">
 	
 		<logic:equal name="publicationBean" property="class.simpleName" value="ArticleBean">
@@ -138,6 +128,8 @@
 				
 				<p class="mbottom05"><strong><bean:message key="label.articleJournal" bundle="RESEARCHER_RESOURCES"/>:</strong></p>
 				<p class="color888 mvert05"><bean:message key="label.chooseJournal.instructions" bundle="RESEARCHER_RESOURCES"/></p>
+		
+				
 				<div class="dinline forminline">						
 					<fr:form action="/resultPublications/createWrapper.do">
 						<fr:edit id="publicationBean" name="publicationBean" schema="result.publication.create.Article.selectMagazine">
@@ -187,6 +179,13 @@
 		</logic:notPresent>					
 					
 		<logic:present name="issueBean">					
+				<logic:messagesPresent message="true">
+					<p>
+					<html:messages id="messages" message="true" bundle="RESEARCHER_RESOURCES">
+						<span class="error0"><!-- Error messages go here --><bean:write name="messages" /></span>
+					</html:messages>
+					</p>
+		   	    </logic:messagesPresent>
 			<div class="dinline forminline">	
 				<fr:form action="/resultPublications/createJournal.do">
 					<fr:edit id="publicationBean" name="publicationBean" visible="false"/>
@@ -207,12 +206,19 @@
 					</logic:equal>
 					
 					<p class="mtop1 mbottom05"><strong><bean:message key="label.journalIssue" bundle="RESEARCHER_RESOURCES"/>:</strong></p>
+
+					<bean:define id="issueSchema" value="result.publication.create.Article.createIssue" type="java.lang.String"/>
+					<logic:equal name="issueBean" property="specialIssue" value="true">
+						<bean:define id="issueSchema" value="result.publication.create.Article.createSpecialIssue" type="java.lang.String"/>
+					</logic:equal>
 					
-					<fr:edit id="issueInfo" name="issueBean" schema="result.publication.create.Article.createIssue">
+					<fr:edit id="issueInfo" name="issueBean" schema="<%= issueSchema %>">
 						<fr:layout name="tabular">
 						 <fr:property name="classes" value="tstyle5 thright thlight thtop mtop05"/>
 		        		<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 						</fr:layout>
+						<fr:destination name="postBack" path="/resultPublications/changeSpecialIssueInCreation.do"/>
+						<fr:destination name="invalid"  path="/resultPublications/createJournal.do"/>
 					</fr:edit>
 					<br/>		
 					<html:submit>
