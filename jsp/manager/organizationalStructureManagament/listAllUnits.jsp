@@ -36,9 +36,10 @@
 		<h:outputText value="#{bundle['title.organizationalStructureManagement.information']}" escape="false"/>
 		<h:outputText value="</div>" escape="false"/>
 
+		<%-- 
 		<h:outputText value="<br/><br/>" escape="false"/>									
-									
 		<h:commandLink value="#{bundle['link.new.unit']}" action="prepareCreateNewUnit" />						
+		--%>							
 			
 		<h:outputText value="<br/><br/><h3>#{bundle['title.all.units']}</h3><br/>" escape="false"/>
 		

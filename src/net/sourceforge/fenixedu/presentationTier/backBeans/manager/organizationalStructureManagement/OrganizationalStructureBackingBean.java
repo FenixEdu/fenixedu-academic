@@ -137,14 +137,11 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
 	StringBuilder buffer = new StringBuilder();
 	YearMonthDay currentDate = new YearMonthDay();
-	if (this.getUnit().getType() != null
-		&& this.getUnit().getType().equals(PartyTypeEnum.EXTERNAL_INSTITUTION)) {
+	if (this.getUnit().getType() != null && this.getUnit().getType().equals(PartyTypeEnum.EXTERNAL_INSTITUTION)) {
 	    buffer.append("<ul class='padding1 nobullet'>");
-	    getSubUnitsListToChooseParentUnit(UnitUtils.readExternalInstitutionUnit(), null, buffer,
-		    currentDate);
+	    getSubUnitsListToChooseParentUnit(UnitUtils.readExternalInstitutionUnit(), null, buffer, currentDate);
 	    closeULTag(buffer);
-	} else {
-	    
+	} else {	  
 	    for (Unit unit : UnitUtils.readAllUnitsWithoutParents()) {
 		buffer.append("<ul class='padding1 nobullet'>"); 
 		if(!this.getUnit().equals(unit)) {
@@ -200,8 +197,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     }
 
     private List<Unit> getAllSubUnits(boolean active, Unit unit, YearMonthDay currentDate) {
-	return (active) ? unit.getAllActiveSubUnits(currentDate) : unit
-		.getAllInactiveSubUnits(currentDate);
+	return (active) ? unit.getAllActiveSubUnits(currentDate) : unit.getAllInactiveSubUnits(currentDate);
     }
 
     public String prepareListAllUnits() {
@@ -214,30 +210,28 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     }
 
     public String getUnits() throws FenixFilterException, FenixServiceException, ExcepcaoPersistencia {
-	StringBuilder buffer = new StringBuilder();
-	List<Unit> allUnitsWithoutParent = UnitUtils.readAllUnitsWithoutParents();
 	YearMonthDay currentDate = new YearMonthDay();
-
+	StringBuilder buffer = new StringBuilder();
+	List<Unit> allUnitsWithoutParent = new ArrayList<Unit>();
+	allUnitsWithoutParent.add(UnitUtils.readEarthUnit());
+	
 	if (getViewExternalUnits()) {
+	    allUnitsWithoutParent.add(UnitUtils.readExternalInstitutionUnit());
 	    Collections.sort(allUnitsWithoutParent, Unit.UNIT_COMPARATOR_BY_NAME);
-	} else {
-	    allUnitsWithoutParent.remove(UnitUtils.readExternalInstitutionUnit());
-	}
-
+	} 
+	
 	for (Unit unit : allUnitsWithoutParent) {
 	    boolean active = this.getListingTypeValueToUnitsHidden().getValue().toString().equals("0");
 	    if (active) {
-		if (unit.isActive(currentDate) || !getAllSubUnits(active, unit, currentDate).isEmpty()) {
+		if (!getAllSubUnits(active, unit, currentDate).isEmpty()) {
 		    buffer.append("<ul class='padding1 nobullet'>");
-		    getSubUnitsList(unit, null, getSubUnits(active, unit, currentDate), buffer,
-			    currentDate, active);
+		    getSubUnitsList(unit, null, getSubUnits(active, unit, currentDate), buffer, currentDate, active);
 		    buffer.append("</ul>");
 		}
 	    } else {
-		if (!unit.isActive(currentDate) || !getAllSubUnits(active, unit, currentDate).isEmpty()) {
+		if (!getAllSubUnits(active, unit, currentDate).isEmpty()) {
 		    buffer.append("<ul class='padding1 nobullet'>");
-		    getSubUnitsList(unit, null, getSubUnits(active, unit, currentDate), buffer,
-			    currentDate, active);
+		    getSubUnitsList(unit, null, getSubUnits(active, unit, currentDate), buffer, currentDate, active);
 		    buffer.append("</ul>");
 		}
 	    }
@@ -265,8 +259,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	}
 
 	for (Unit subUnit : subUnits) {
-	    getSubUnitsList(subUnit, parentUnit, getSubUnits(active, subUnit, currentDate), buffer,
-		    currentDate, active);
+	    getSubUnitsList(subUnit, parentUnit, getSubUnits(active, subUnit, currentDate), buffer, currentDate, active);
 	}
 
 	if (!subUnits.isEmpty()) {
@@ -280,8 +273,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	YearMonthDay currentDate = new YearMonthDay();
 	StringBuilder buffer = new StringBuilder();
 	buffer.append("<ul class='padding1 nobullet'>");
-	getSubUnitsListToChoosePrincipalFunction(UnitUtils.readInstitutionUnit(), null, buffer,
-		currentDate);
+	getSubUnitsListToChoosePrincipalFunction(UnitUtils.readInstitutionUnit(), null, buffer,	currentDate);
 	buffer.append("</ul>");
 	return buffer.toString();
     }

@@ -30,7 +30,6 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.parking.ParkingPartyClassification;
 import net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation;
-import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.util.ContractType;
@@ -264,18 +263,15 @@ public class Unit extends Unit_Base {
 	return allParentUnits;
     }
 
-    public List<Unit> getInactiveSubUnits(YearMonthDay currentDate,
-	    AccountabilityTypeEnum accountabilityTypeEnum) {
+    public List<Unit> getInactiveSubUnits(YearMonthDay currentDate, AccountabilityTypeEnum accountabilityTypeEnum) {
 	return getSubUnitsByState(currentDate, accountabilityTypeEnum, false);
     }
 
-    public List<Unit> getActiveSubUnits(YearMonthDay currentDate,
-	    AccountabilityTypeEnum accountabilityTypeEnum) {
+    public List<Unit> getActiveSubUnits(YearMonthDay currentDate, AccountabilityTypeEnum accountabilityTypeEnum) {
 	return getSubUnitsByState(currentDate, accountabilityTypeEnum, true);
     }
 
-    private List<Unit> getSubUnitsByState(YearMonthDay currentDate,
-	    AccountabilityTypeEnum accountabilityTypeEnum, boolean state) {
+    private List<Unit> getSubUnitsByState(YearMonthDay currentDate, AccountabilityTypeEnum accountabilityTypeEnum, boolean state) {
 	List<Unit> allSubUnits = new ArrayList<Unit>();
 	for (Unit subUnit : getSubUnits(accountabilityTypeEnum)) {
 	    if (subUnit.isActive(currentDate) == state) {
@@ -285,18 +281,15 @@ public class Unit extends Unit_Base {
 	return allSubUnits;
     }
 
-    public List<Unit> getActiveSubUnits(YearMonthDay currentDate,
-	    List<AccountabilityTypeEnum> accountabilityTypeEnums) {
+    public List<Unit> getActiveSubUnits(YearMonthDay currentDate, List<AccountabilityTypeEnum> accountabilityTypeEnums) {
 	return getSubUnitsByState(currentDate, accountabilityTypeEnums, true);
     }
 
-    public List<Unit> getInactiveSubUnits(YearMonthDay currentDate,
-	    List<AccountabilityTypeEnum> accountabilityTypeEnums) {
+    public List<Unit> getInactiveSubUnits(YearMonthDay currentDate, List<AccountabilityTypeEnum> accountabilityTypeEnums) {
 	return getSubUnitsByState(currentDate, accountabilityTypeEnums, false);
     }
 
-    private List<Unit> getSubUnitsByState(YearMonthDay currentDate,
-	    List<AccountabilityTypeEnum> accountabilityTypeEnums, boolean state) {
+    private List<Unit> getSubUnitsByState(YearMonthDay currentDate, List<AccountabilityTypeEnum> accountabilityTypeEnums, boolean state) {
 	List<Unit> allSubUnits = new ArrayList<Unit>();
 	for (Unit subUnit : this.getSubUnits(accountabilityTypeEnums)) {
 	    if (subUnit.isActive(currentDate) == state) {
@@ -307,10 +300,9 @@ public class Unit extends Unit_Base {
     }
 
     public List<Unit> getAllInactiveParentUnits(YearMonthDay currentDate) {
-	Set<Unit> allInactiveParentUnits = new HashSet<Unit>();
-	List<Unit> inactiveParentUnits = getInactiveParentUnits(currentDate);
-	allInactiveParentUnits.addAll(inactiveParentUnits);
-	for (Unit subUnit : inactiveParentUnits) {
+	Set<Unit> allInactiveParentUnits = new HashSet<Unit>();	
+	allInactiveParentUnits.addAll(getInactiveParentUnits(currentDate));
+	for (Unit subUnit : getParentUnits()) {
 	    allInactiveParentUnits.addAll(subUnit.getAllInactiveParentUnits(currentDate));
 	}
 	return new ArrayList<Unit>(allInactiveParentUnits);
@@ -318,9 +310,8 @@ public class Unit extends Unit_Base {
 
     public List<Unit> getAllActiveParentUnits(YearMonthDay currentDate) {
 	Set<Unit> allActiveParentUnits = new HashSet<Unit>();
-	List<Unit> activeParentUnits = getActiveParentUnits(currentDate);
-	allActiveParentUnits.addAll(activeParentUnits);
-	for (Unit subUnit : activeParentUnits) {
+	allActiveParentUnits.addAll(getActiveParentUnits(currentDate));
+	for (Unit subUnit : getParentUnits()) {
 	    allActiveParentUnits.addAll(subUnit.getAllActiveParentUnits(currentDate));
 	}
 	return new ArrayList<Unit>(allActiveParentUnits);
@@ -328,41 +319,35 @@ public class Unit extends Unit_Base {
 
     public List<Unit> getAllInactiveSubUnits(YearMonthDay currentDate) {
 	Set<Unit> allInactiveSubUnits = new HashSet<Unit>();
-	List<Unit> inactiveSubUnits = getInactiveSubUnits(currentDate);
-	allInactiveSubUnits.addAll(inactiveSubUnits);
-	for (Unit subUnit : inactiveSubUnits) {
+	allInactiveSubUnits.addAll(getInactiveSubUnits(currentDate));
+	for (Unit subUnit : getSubUnits()) {
 	    allInactiveSubUnits.addAll(subUnit.getAllInactiveSubUnits(currentDate));
 	}
 	return new ArrayList<Unit>(allInactiveSubUnits);
     }
 
     public List<Unit> getAllActiveSubUnits(YearMonthDay currentDate) {
-	Set<Unit> allActiveSubUnits = new HashSet<Unit>();
-	List<Unit> activeSubUnits = getActiveSubUnits(currentDate);
-	allActiveSubUnits.addAll(activeSubUnits);
-	for (Unit subUnit : activeSubUnits) {
+	Set<Unit> allActiveSubUnits = new HashSet<Unit>();	
+	allActiveSubUnits.addAll(getActiveSubUnits(currentDate));
+	for (Unit subUnit : getSubUnits()) {
 	    allActiveSubUnits.addAll(subUnit.getAllActiveSubUnits(currentDate));
 	}
 	return new ArrayList<Unit>(allActiveSubUnits);
     }
 
-    public List<Unit> getAllActiveSubUnits(YearMonthDay currentDate,
-	    AccountabilityTypeEnum accountabilityTypeEnum) {
-	Set<Unit> allActiveSubUnits = new HashSet<Unit>();
-	List<Unit> activeSubUnits = getActiveSubUnits(currentDate, accountabilityTypeEnum);
-	allActiveSubUnits.addAll(activeSubUnits);
-	for (Unit subUnit : activeSubUnits) {
+    public List<Unit> getAllActiveSubUnits(YearMonthDay currentDate, AccountabilityTypeEnum accountabilityTypeEnum) {
+	Set<Unit> allActiveSubUnits = new HashSet<Unit>();	
+	allActiveSubUnits.addAll(getActiveSubUnits(currentDate, accountabilityTypeEnum));
+	for (Unit subUnit : getSubUnits(accountabilityTypeEnum)) {
 	    allActiveSubUnits.addAll(subUnit.getAllActiveSubUnits(currentDate));
 	}
 	return new ArrayList<Unit>(allActiveSubUnits);
     }
 
-    public List<Unit> getAllInactiveSubUnits(YearMonthDay currentDate,
-	    AccountabilityTypeEnum accountabilityTypeEnum) {
-	Set<Unit> allInactiveSubUnits = new HashSet<Unit>();
-	List<Unit> inactiveSubUnits = getInactiveSubUnits(currentDate, accountabilityTypeEnum);
-	allInactiveSubUnits.addAll(inactiveSubUnits);
-	for (Unit subUnit : inactiveSubUnits) {
+    public List<Unit> getAllInactiveSubUnits(YearMonthDay currentDate, AccountabilityTypeEnum accountabilityTypeEnum) {
+	Set<Unit> allInactiveSubUnits = new HashSet<Unit>();	
+	allInactiveSubUnits.addAll(getInactiveSubUnits(currentDate, accountabilityTypeEnum));
+	for (Unit subUnit : getSubUnits(accountabilityTypeEnum)) {
 	    allInactiveSubUnits.addAll(subUnit.getAllInactiveSubUnits(currentDate));
 	}
 	return new ArrayList<Unit>(allInactiveSubUnits);
