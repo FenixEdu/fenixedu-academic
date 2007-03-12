@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.enrolment.DegreeModuleToEnrol;
+import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.presentationTier.renderers.controllers.CopyCheckBoxValuesController;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DegreeModuleToEnrolKeyConverter;
@@ -213,7 +214,7 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	private final CopyCheckBoxValuesController enrollmentsController = new CopyCheckBoxValuesController(
 		false);
 
-	private final CopyCheckBoxValuesController degreeModulesToEnrolController = new CopyCheckBoxValuesController();
+	private final CopyCheckBoxValuesController degreeModulesToEvaluateController = new CopyCheckBoxValuesController();
 
 	private BolonhaStudentEnrollmentBean bolonhaStudentEnrollmentBean = null;
 
@@ -232,13 +233,13 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	    hiddenEnrollments.setConverter(new DomainObjectKeyArrayConverter());
 	    hiddenEnrollments.setController(enrollmentsController);
 
-	    HtmlMultipleHiddenField hiddenDegreeModulesToEnrol = new HtmlMultipleHiddenField();
-	    hiddenDegreeModulesToEnrol.bind(getInputContext().getMetaObject(), "degreeModulesToEnrol");
-	    hiddenDegreeModulesToEnrol.setConverter(new DegreeModuleToEnrolKeyConverter());
-	    hiddenDegreeModulesToEnrol.setController(degreeModulesToEnrolController);
+	    HtmlMultipleHiddenField hiddenDegreeModulesToEvaluate = new HtmlMultipleHiddenField();
+	    hiddenDegreeModulesToEvaluate.bind(getInputContext().getMetaObject(), "degreeModulesToEvaluate");
+	    hiddenDegreeModulesToEvaluate.setConverter(bolonhaStudentEnrollmentBean.getDegreeModulesToEvaluateConverter());
+	    hiddenDegreeModulesToEvaluate.setController(degreeModulesToEvaluateController);
 
 	    container.addChild(hiddenEnrollments);
-	    container.addChild(hiddenDegreeModulesToEnrol);
+	    container.addChild(hiddenDegreeModulesToEvaluate);
 
 	    generateGroup(container, bolonhaStudentEnrollmentBean.getStudentCurricularPlan(),
 		    bolonhaStudentEnrollmentBean.getRootStudentCurriculumGroupBean(),
@@ -297,7 +298,6 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 			super.setChecked(true);
 		    } else {
 			super.setChecked(checked);
-
 		    }
 		}
 	    };
@@ -309,9 +309,7 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	    checkBox.setUserValue(enrolmentMetaObject.getKey().toString());
 	    checkBoxCell.setBody(checkBox);
 
-	    if (studentCurriculumGroupBean.isRoot()
-		    || studentCurriculumGroupBean.isEnrolledInAnyCurriculumGroups()
-		    || studentCurriculumGroupBean.isEnrolledInAnyCurriculumCourses()) {
+	    if (studentCurriculumGroupBean.isToBeDisabled()) {
 		checkBox.setDisabled(true);
 	    } else {
 		enrollmentsController.addCheckBox(checkBox);
@@ -353,34 +351,28 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 
 	private void generateCurricularCoursesToEnrol(HtmlTable groupTable,
 		StudentCurriculumGroupBean studentCurriculumGroupBean) {
-	    final List<DegreeModuleToEnrol> coursesToEnrol = studentCurriculumGroupBean
-		    .getCurricularCoursesToEnrolSortedByContext();
+	    final List<IDegreeModuleToEvaluate> coursesToEvaluate = studentCurriculumGroupBean
+		    .getSortedDegreeModulesToEvaluate();
 
-	    for (final DegreeModuleToEnrol degreeModuleToEnrol : coursesToEnrol) {
-		final CurricularCourse curricularCourse = (CurricularCourse) degreeModuleToEnrol
-			.getContext().getChildDegreeModule();
-
+	    for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : coursesToEvaluate) {
 		HtmlTableRow htmlTableRow = groupTable.createRow();
 		HtmlTableCell cellName = htmlTableRow.createCell();
 		cellName.setClasses(getCurricularCourseToEnrolNameClasses());
-		cellName.setBody(new HtmlText(curricularCourse.getName()));
+		cellName.setBody(new HtmlText(degreeModuleToEvaluate.getName()));
 
 		// Year
 		final HtmlTableCell yearCell = htmlTableRow.createCell();
 		yearCell.setClasses(getCurricularCourseToEnrolYearClasses());
 		yearCell.setColspan(2);
+		yearCell.setBody(new HtmlText(degreeModuleToEvaluate.getYearFullLabel()));
 
-		final StringBuilder year = new StringBuilder();
-		year.append(degreeModuleToEnrol.getContext().getCurricularPeriod().getFullLabel());
-		yearCell.setBody(new HtmlText(year.toString()));
-
-		if (!curricularCourse.isOptionalCurricularCourse()) {
+		if (!degreeModuleToEvaluate.isOptionalCurricularCourse()) {
 		    // Ects
 		    final HtmlTableCell ectsCell = htmlTableRow.createCell();
 		    ectsCell.setClasses(getCurricularCourseToEnrolEctsClasses());
 
 		    final StringBuilder ects = new StringBuilder();
-		    ects.append(curricularCourse.getEctsCredits()).append(" ").append(
+		    ects.append(degreeModuleToEvaluate.getEctsCredits()).append(" ").append(
 			    studentResources.getString("label.credits.abbreviation"));
 		    ectsCell.setBody(new HtmlText(ects.toString()));
 
@@ -389,10 +381,9 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 
 		    HtmlCheckBox checkBox = new HtmlCheckBox(false);
 		    checkBox.setName("degreeModuleToEnrolCheckBox"
-			    + degreeModuleToEnrol.getContext().getIdInternal() + ":"
-			    + degreeModuleToEnrol.getCurriculumGroup().getIdInternal());
-		    checkBox.setUserValue(degreeModuleToEnrol.getKey());
-		    degreeModulesToEnrolController.addCheckBox(checkBox);
+			    + degreeModuleToEvaluate.getKey());
+		    checkBox.setUserValue(degreeModuleToEvaluate.getKey());
+		    degreeModulesToEvaluateController.addCheckBox(checkBox);
 		    checkBoxCell.setBody(checkBox);
 		} else {
 		    final HtmlTableCell cell = htmlTableRow.createCell();
@@ -406,12 +397,12 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 		    actionLink.setText(studentResources
 			    .getString("label.chooseOptionalCurricularCourse"));
 		    actionLink.setController(new OptionalCurricularCourseLinkController(
-			    degreeModuleToEnrol));
+			    degreeModuleToEvaluate));
 		    actionLink
 			    .setOnClick("document.forms[0].method.value='prepareChooseOptionalCurricularCourseToEnrol';");
 		    actionLink.setName("optionalCurricularCourseLink"
-			    + degreeModuleToEnrol.getCurriculumGroup().getIdInternal() + "_"
-			    + degreeModuleToEnrol.getContext().getIdInternal());
+			    + degreeModuleToEvaluate.getCurriculumGroup().getIdInternal() + "_"
+			    + degreeModuleToEvaluate.getContext().getIdInternal());
 		    linkTableCell.setBody(actionLink);
 		}
 	    }
@@ -492,7 +483,7 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	private void generateGroups(HtmlBlockContainer blockContainer,
 		StudentCurriculumGroupBean studentCurriculumGroupBean,
 		StudentCurricularPlan studentCurricularPlan, ExecutionPeriod executionPeriod, int depth) {
-	    final List<DegreeModuleToEnrol> courseGroupsToEnrol = studentCurriculumGroupBean
+	    final List<IDegreeModuleToEvaluate> courseGroupsToEnrol = studentCurriculumGroupBean
 		    .getCourseGroupsToEnrolSortedByContext();
 	    final List<StudentCurriculumGroupBean> curriculumGroups = studentCurriculumGroupBean
 		    .getEnrolledCurriculumGroupsSortedByOrder(executionPeriod);
@@ -525,7 +516,7 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	}
 
 	private void generateCourseGroupToEnroll(HtmlBlockContainer blockContainer,
-		DegreeModuleToEnrol degreeModuleToEnrol, int depth) {
+		IDegreeModuleToEvaluate degreeModuleToEnrol, int depth) {
 	    final HtmlTable groupTable = createGroupTable(blockContainer, depth);
 	    HtmlTableRow htmlTableRow = groupTable.createRow();
 	    htmlTableRow.setClasses(getGroupRowClasses());
@@ -539,7 +530,7 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 		    + degreeModuleToEnrol.getContext().getIdInternal() + ":"
 		    + degreeModuleToEnrol.getCurriculumGroup().getIdInternal());
 	    checkBox.setUserValue(degreeModuleToEnrol.getKey());
-	    degreeModulesToEnrolController.addCheckBox(checkBox);
+	    degreeModulesToEvaluateController.addCheckBox(checkBox);
 	    checkBoxCell.setBody(checkBox);
 	}
 
@@ -547,9 +538,9 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 
     private static class OptionalCurricularCourseLinkController extends HtmlActionLinkController {
 
-	private DegreeModuleToEnrol degreeModuleToEnrol;
+	private IDegreeModuleToEvaluate degreeModuleToEnrol;
 
-	public OptionalCurricularCourseLinkController(final DegreeModuleToEnrol degreeModuleToEnrol) {
+	public OptionalCurricularCourseLinkController(final IDegreeModuleToEvaluate degreeModuleToEnrol) {
 	    this.degreeModuleToEnrol = degreeModuleToEnrol;
 	}
 

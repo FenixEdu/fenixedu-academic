@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.enrolment.DegreeModuleToEnrol;
 import net.sourceforge.fenixedu.domain.enrolment.OptionalDegreeModuleToEnrol;
@@ -35,9 +36,10 @@ public class OptionalDegreeModuleToEnrolKeyConverter extends Converter {
 
 	    final Context context = (Context) converter.convert(type, parts[0]);
 	    final CurriculumGroup curriculumGroup = (CurriculumGroup) converter.convert(type, parts[1]);
+	    final ExecutionPeriod executionPeriod = (ExecutionPeriod) converter.convert(type, parts[2]);
 	    final CurricularCourse curricularCourse = (CurricularCourse) converter.convert(type,
-		    parts[2]);
-	    result.add(new OptionalDegreeModuleToEnrol(curriculumGroup, context, curricularCourse));
+		    parts[3]);
+	    result.add(new OptionalDegreeModuleToEnrol(curriculumGroup, context, executionPeriod, curricularCourse));
 	}
 
 	return result;

@@ -10,9 +10,9 @@ public class OptionalDegreeModuleToEnrol extends DegreeModuleToEnrol {
 
     private DomainReference<CurricularCourse> curricularCourse;
 
-    public OptionalDegreeModuleToEnrol(CurriculumGroup curriculumGroup, Context context,
+    public OptionalDegreeModuleToEnrol(CurriculumGroup curriculumGroup, Context context, ExecutionPeriod executionPeriod,
 	    CurricularCourse curricularCourse) {
-	super(curriculumGroup, context);
+	super(curriculumGroup, context, executionPeriod);
 	setCurricularCourse(curricularCourse);
 
     }

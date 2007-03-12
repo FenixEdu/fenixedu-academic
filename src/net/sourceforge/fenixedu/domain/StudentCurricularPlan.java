@@ -1700,7 +1700,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public List<Enrolment> getEnroledImprovements() {
 	List<Enrolment> enroledImprovements = new ArrayList<Enrolment>();
 	for (Enrolment enrolment : getEnrolments()) {
-	    if (enrolment.isEnrolmentStateApproved() && (enrolment.getImprovementEvaluation() != null)) {
+	    if (enrolment.isImprovementEnroled()) {
 		enroledImprovements.add(enrolment);
 	    }
 	}
@@ -1756,9 +1756,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    ExecutionPeriod executionPeriod) {
 	List<Enrolment> result = new ArrayList<Enrolment>();
 	for (Enrolment enrolment : getEnrolments()) {
-	    if (enrolment.isEnrolmentStateApproved()
-		    && enrolment.getExecutionPeriod().equals(executionPeriod)
-		    && !enrolment.hasImprovement()) {
+	    if (enrolment.canBeImproved()
+		    && enrolment.getExecutionPeriod().equals(executionPeriod)) {
 		result.add(enrolment);
 	    }
 	}
@@ -1883,7 +1882,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     public List<RuleResult> enrol(final Person responsiblePerson, final ExecutionPeriod executionPeriod,
-	    final Set<DegreeModuleToEnrol> degreeModulesToEnrol,
+	    final Set<IDegreeModuleToEvaluate> degreeModulesToEnrol,
 	    final List<CurriculumModule> curriculumModulesToRemove,
 	    final CurricularRuleLevel curricularRuleLevel) {
 
@@ -1894,9 +1893,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    return new StudentCurricularPlanEnrolmentManager(this, enrolmentContext, responsiblePerson).manage();
 	} else {
 	    return new StudentCurricularPlanEnrolmentEvaluationManager(this, enrolmentContext, responsiblePerson).manage();
-	}
-
-	
+	}	
     }
 
     private void assertEnrolmentPreConditions(final Person responsiblePerson, final ExecutionPeriod executionPeriod) {

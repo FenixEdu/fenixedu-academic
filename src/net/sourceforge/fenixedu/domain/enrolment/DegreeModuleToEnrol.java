@@ -19,10 +19,13 @@ public class DegreeModuleToEnrol implements Serializable, IDegreeModuleToEvaluat
     private DomainReference<CurriculumGroup> curriculumGroup;
 
     private DomainReference<Context> context;
+    
+    private DomainReference<ExecutionPeriod> executionPeriod;
 
-    public DegreeModuleToEnrol(CurriculumGroup curriculumGroup, Context context) {
+    public DegreeModuleToEnrol(CurriculumGroup curriculumGroup, Context context, ExecutionPeriod executionPeriod) {
 	this.curriculumGroup = new DomainReference<CurriculumGroup>(curriculumGroup);
 	this.context = new DomainReference<Context>(context);
+	this.executionPeriod = new DomainReference<ExecutionPeriod>(executionPeriod);
     }
 
     public CurriculumGroup getCurriculumGroup() {
@@ -41,11 +44,21 @@ public class DegreeModuleToEnrol implements Serializable, IDegreeModuleToEvaluat
     public void setContext(Context context) {
 	this.context = (context != null) ? new DomainReference<Context>(context) : null;
     }
+    
+    public ExecutionPeriod getExecutionPeriod() {
+	return (this.executionPeriod != null) ? this.executionPeriod.getObject() : null;
+    }
+
+    public void setExecutionPeriod(ExecutionPeriod executionPeriod) {
+	this.executionPeriod = (executionPeriod != null) ? new DomainReference<ExecutionPeriod>(executionPeriod) : null;
+    }
 
     public String getKey() {
-	return this.getContext().getClass().getName() + ":" + this.getContext().getIdInternal() + ","
-		+ this.getCurriculumGroup().getClass().getName() + ":"
-		+ this.getCurriculumGroup().getIdInternal();
+	StringBuilder stringBuilder = new StringBuilder();
+	stringBuilder.append(this.getContext().getClass().getName()).append(":").append(this.getContext().getIdInternal())
+		.append(",").append(this.getCurriculumGroup().getClass().getName()).append(":").append(this.getCurriculumGroup().getIdInternal())
+		.append(",").append(this.getExecutionPeriod().getClass().getName()).append(":").append(this.getExecutionPeriod().getIdInternal());
+	return stringBuilder.toString();
     }
 
     public boolean isLeaf() {
@@ -98,7 +111,7 @@ public class DegreeModuleToEnrol implements Serializable, IDegreeModuleToEvaluat
 	    final ExecutionPeriod executionPeriod) {
 	return getCurriculumGroup().getCurricularRules(executionPeriod);
     }
-
+    
     public double getAccumulatedEctsCredits(final ExecutionPeriod executionPeriod) {
 	if(isLeaf()) {
 	    return getCurriculumGroup().getStudentCurricularPlan().getAccumulatedEctsCredits(executionPeriod, (CurricularCourse) getDegreeModule());
@@ -106,4 +119,25 @@ public class DegreeModuleToEnrol implements Serializable, IDegreeModuleToEvaluat
 	    return 0d;
 	}
     }
+
+    public String getName() {
+	return getDegreeModule().getName();
+    }
+
+    public String getYearFullLabel() {
+	return getContext().getCurricularPeriod().getFullLabel();
+    }
+
+    public boolean isOptionalCurricularCourse() {
+	if(getDegreeModule().isLeaf()) {
+	    CurricularCourse curricularCourse = (CurricularCourse) getDegreeModule();
+	    return curricularCourse.isOptionalCurricularCourse();
+	} 
+	return false;
+    }
+
+    public Double getEctsCredits() {
+	return getEctsCredits(null);
+    }
+    
 }

@@ -24,14 +24,14 @@ public class EnrolmentContext {
 
     public EnrolmentContext(final StudentCurricularPlan studentCurricularPlan,
 	    final ExecutionPeriod executionPeriod,
-	    final Set<DegreeModuleToEnrol> degreeModulesToEnrol, 
+	    final Set<IDegreeModuleToEvaluate> degreeModulesToEnrol, 
 	    final List<CurriculumModule> curriculumModulesToRemove,
 	    final CurricularRuleLevel curricularRuleLevel) {
 	
 	this.studentCurricularPlan = studentCurricularPlan;
 	
 	this.degreeModulesToEvaluate = new HashSet<IDegreeModuleToEvaluate>();
-	for (final DegreeModuleToEnrol moduleToEnrol : degreeModulesToEnrol) {
+	for (final IDegreeModuleToEvaluate moduleToEnrol : degreeModulesToEnrol) {
 	    if (curriculumModulesToRemove.contains(moduleToEnrol.getCurriculumGroup())) {
 		throw new DomainException(
 			"error.StudentCurricularPlan.cannot.remove.enrollment.on.curriculum.group.because.other.enrollments.depend.on.it",

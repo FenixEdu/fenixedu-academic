@@ -8,7 +8,10 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.enrolment.DegreeModuleToEnrol;
+import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
+import net.sourceforge.fenixedu.presentationTier.renderers.converters.DegreeModuleToEnrolKeyConverter;
+import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 
 public class BolonhaStudentEnrollmentBean implements Serializable {
 
@@ -18,37 +21,29 @@ public class BolonhaStudentEnrollmentBean implements Serializable {
 
     private StudentCurriculumGroupBean rootStudentCurriculumGroupBean;
 
-    private List<DegreeModuleToEnrol> degreeModulesToEnrol;
+    private List<IDegreeModuleToEvaluate> degreeModulesToEvaluate;
 
     private List<DomainReference<CurriculumModule>> curriculumModulesToRemove;
 
-    private DegreeModuleToEnrol optionalDegreeModuleToEnrol;
+    private IDegreeModuleToEvaluate optionalDegreeModuleToEnrol;
 
-    private BolonhaStudentEnrollmentBean(final StudentCurricularPlan studentCurricularPlan,
+    public BolonhaStudentEnrollmentBean(final StudentCurricularPlan studentCurricularPlan,
+	    final ExecutionPeriod executionPeriod,
+	    final int[] curricularYears) {
+	this(studentCurricularPlan, executionPeriod, 
+		new StudentCurriculumGroupBean(studentCurricularPlan.getRoot(), executionPeriod, curricularYears));
+    }
+    
+    protected BolonhaStudentEnrollmentBean(final StudentCurricularPlan studentCurricularPlan,
 	    final ExecutionPeriod executionPeriod,
 	    final StudentCurriculumGroupBean rootStudentCurriculumGroupBean) {
 	super();
-
 	setStudentCurricularPlan(studentCurricularPlan);
 	setExecutionPeriod(executionPeriod);
 	setRootStudentCurriculumGroupBean(rootStudentCurriculumGroupBean);
 
-	setDegreeModulesToEnrol(new ArrayList<DegreeModuleToEnrol>());
+	setDegreeModulesToEvaluate(new ArrayList<IDegreeModuleToEvaluate>());
 	setCurriculumModulesToRemove(new ArrayList<CurriculumModule>());
-
-    }
-
-    public static BolonhaStudentEnrollmentBean create(final StudentCurricularPlan studentCurricularPlan,
-	    final ExecutionPeriod executionPeriod, final int[] curricularYears) {
-
-	return new BolonhaStudentEnrollmentBean(studentCurricularPlan, executionPeriod,
-		StudentCurriculumGroupBean.create(studentCurricularPlan.getRoot(), executionPeriod,
-			curricularYears));
-    }
-
-    public static BolonhaStudentEnrollmentBean create(final StudentCurricularPlan studentCurricularPlan,
-	    final ExecutionPeriod executionPeriod) {
-	return create(studentCurricularPlan, executionPeriod, null);
     }
 
     public StudentCurricularPlan getStudentCurricularPlan() {
@@ -78,19 +73,19 @@ public class BolonhaStudentEnrollmentBean implements Serializable {
 	this.rootStudentCurriculumGroupBean = studentCurriculumGroupBean;
     }
 
-    public List<DegreeModuleToEnrol> getDegreeModulesToEnrol() {
-	return degreeModulesToEnrol;
+    public List<IDegreeModuleToEvaluate> getDegreeModulesToEvaluate() {
+	return degreeModulesToEvaluate;
     }
 
-    public void setDegreeModulesToEnrol(List<DegreeModuleToEnrol> degreeModulesToEnrol) {
-	this.degreeModulesToEnrol = degreeModulesToEnrol;
+    public void setDegreeModulesToEvaluate(List<IDegreeModuleToEvaluate> degreeModulesToEnrol) {
+	this.degreeModulesToEvaluate = degreeModulesToEnrol;
     }
 
-    public DegreeModuleToEnrol getOptionalDegreeModuleToEnrol() {
+    public IDegreeModuleToEvaluate getOptionalDegreeModuleToEnrol() {
 	return optionalDegreeModuleToEnrol;
     }
 
-    public void setOptionalDegreeModuleToEnrol(DegreeModuleToEnrol optionalDegreeModuleToEnrol) {
+    public void setOptionalDegreeModuleToEnrol(IDegreeModuleToEvaluate optionalDegreeModuleToEnrol) {
 	this.optionalDegreeModuleToEnrol = optionalDegreeModuleToEnrol;
     }
 
@@ -110,6 +105,10 @@ public class BolonhaStudentEnrollmentBean implements Serializable {
 	for (final CurriculumModule curriculumModule : curriculumModules) {
 	    this.curriculumModulesToRemove.add(new DomainReference<CurriculumModule>(curriculumModule));
 	}
+    }
+    
+    public Converter getDegreeModulesToEvaluateConverter() {
+	return new DegreeModuleToEnrolKeyConverter();
     }
 
 }

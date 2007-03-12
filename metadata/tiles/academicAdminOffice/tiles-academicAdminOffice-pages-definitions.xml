@@ -387,7 +387,8 @@
 	</definition>
 	<definition name="student.enrollment.bolonha.chooseOptionalCurricularCourseEnrol" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/student/enrollment/bolonha/chooseOptionalCurricularCourseToEnrol.jsp"/>
-	</definition>	
-	
-	
+	</definition>
+	<definition name="student.enrollment.bolonha.changeSpecialSeasonCode" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/student/enrollment/bolonha/chooseSpecialSeasonCode.jsp"/>
+	</definition>		
 </tiles-definitions>

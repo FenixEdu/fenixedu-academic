@@ -19,18 +19,23 @@ public class AcademicAdminOfficeBolonhaStudentEnrollmentDA extends AbstractBolon
     @Override
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-
 	return prepareShowDegreeModulesToEnrol(mapping, form, request, response,
 		getStudentCurricularPlan(request), getExecutionPeriod(request));
-
+    }
+    
+    @Override
+    protected ActionForward prepareShowDegreeModulesToEnrol(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response, StudentCurricularPlan studentCurricularPlan, ExecutionPeriod executionPeriod) {
+	request.setAttribute("action", getAction());
+        return super.prepareShowDegreeModulesToEnrol(mapping, form, request, response, studentCurricularPlan,
+        	executionPeriod);
     }
 
-    private StudentCurricularPlan getStudentCurricularPlan(final HttpServletRequest request) {
+    protected StudentCurricularPlan getStudentCurricularPlan(final HttpServletRequest request) {
 	return rootDomainObject.readStudentCurricularPlanByOID(getRequestParameterAsInteger(request,
 		"scpID"));
     }
 
-    private ExecutionPeriod getExecutionPeriod(final HttpServletRequest request) {
+    protected ExecutionPeriod getExecutionPeriod(final HttpServletRequest request) {
 	return rootDomainObject.readExecutionPeriodByOID(getRequestParameterAsInteger(request,
 		"executionPeriodID"));
     }
@@ -60,6 +65,11 @@ public class AcademicAdminOfficeBolonhaStudentEnrollmentDA extends AbstractBolon
     protected CurricularRuleLevel getCurricularRuleLevel(final ActionForm form) {
 	return getWithRules(form) ? CurricularRuleLevel.ENROLMENT_WITH_RULES_AND_TEMPORARY_ENROLMENT
 		: CurricularRuleLevel.ENROLMENT_NO_RULES;
+    }
+    
+    @Override
+    protected String getAction() {
+        return "/bolonhaStudentEnrollment.do";
     }
 
 }

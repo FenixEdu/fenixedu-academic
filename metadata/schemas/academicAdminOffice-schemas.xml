@@ -772,3 +772,19 @@
 		<property name="format" value="${semester}º semestre - ${executionYear.year}" />
 	</slot>
 </schema>
+
+<schema name="specialSeason.choose.special.season.code"
+	type="net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.SpecialSeasonCodeBean">
+	<slot name="studentCurricularPlan.registration.student.number" key="label.number" read-only="true"/>
+	<slot name="studentCurricularPlan.registration.student.person.name" key="label.person.name" read-only="true"/>
+	<slot name="executionPeriod.executionYear" layout="format" key="label.executionYear" read-only="true">
+		<property name="format" value="${year}" />
+	</slot>
+	<slot name="specialSeasonCode" key="label.specialSeasonCode" layout="menu-select-postback">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.SpecialSeasonCodesProvider" />
+		<property name="format" value="${code} - ${situation}" />
+		<property name="destination" value="postBack"/>
+	</slot>	
+</schema>
+

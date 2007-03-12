@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.enrolment.DegreeModuleToEnrol;
+import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 
 public class BolonhaStudentOptionalEnrollmentBean implements Serializable {
 
@@ -25,10 +26,10 @@ public class BolonhaStudentOptionalEnrollmentBean implements Serializable {
 
     private DomainReference<StudentCurricularPlan> studentCurricularPlan;
 
-    private DegreeModuleToEnrol selectedDegreeModuleToEnrol;
+    private IDegreeModuleToEvaluate selectedDegreeModuleToEnrol;
 
     public BolonhaStudentOptionalEnrollmentBean(final StudentCurricularPlan studentCurricularPlan,
-	    final ExecutionPeriod executionPeriod, final DegreeModuleToEnrol degreeModuleToEnrol) {
+	    final ExecutionPeriod executionPeriod, final IDegreeModuleToEvaluate degreeModuleToEnrol) {
 	super();
 
 	setExecutionPeriod(executionPeriod);
@@ -91,11 +92,11 @@ public class BolonhaStudentOptionalEnrollmentBean implements Serializable {
 		: null;
     }
 
-    public DegreeModuleToEnrol getSelectedDegreeModuleToEnrol() {
+    public IDegreeModuleToEvaluate getSelectedDegreeModuleToEnrol() {
 	return selectedDegreeModuleToEnrol;
     }
 
-    public void setSelectedDegreeModuleToEnrol(DegreeModuleToEnrol selectedDegreeModuleToEnrol) {
+    public void setSelectedDegreeModuleToEnrol(IDegreeModuleToEvaluate selectedDegreeModuleToEnrol) {
 	this.selectedDegreeModuleToEnrol = selectedDegreeModuleToEnrol;
     }
 

@@ -15,7 +15,7 @@ public class ImprovementOfApprovedEnrolment extends CurricularRuleNotPersistent 
     private Enrolment toApply;
     
     public ImprovementOfApprovedEnrolment(final Enrolment enrolment) {
-	if (toApply == null) {
+	if (enrolment == null) {
 	    throw new DomainException("curricular.rule.invalid.parameters");
 	} else {
 	    this.toApply = enrolment;

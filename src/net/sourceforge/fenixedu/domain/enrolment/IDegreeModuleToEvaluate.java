@@ -17,6 +17,8 @@ public interface IDegreeModuleToEvaluate {
     public Context getContext();
 
     public DegreeModule getDegreeModule();
+    
+    public ExecutionPeriod getExecutionPeriod();
 
     public boolean isLeaf();
 
@@ -25,6 +27,16 @@ public interface IDegreeModuleToEvaluate {
     public boolean isEnroled();
 
     public boolean canCollectRules();
+    
+    public String getName();
+    
+    public String getYearFullLabel();
+    
+    public boolean isOptionalCurricularCourse();
+    
+    public String getKey();
+    
+    public Double getEctsCredits();
 
     public Double getEctsCredits(final ExecutionPeriod executionPeriod);
 

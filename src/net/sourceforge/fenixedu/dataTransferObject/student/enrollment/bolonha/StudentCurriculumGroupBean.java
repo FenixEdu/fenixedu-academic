@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.enrolment.DegreeModuleToEnrol;
+import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 
@@ -40,70 +41,60 @@ public class StudentCurriculumGroupBean extends StudentCurriculumModuleBean {
     private List<StudentCurriculumGroupBean> enrolledCurriculumGroups;
 
     // Curriculum Structure
-    private List<DegreeModuleToEnrol> courseGroupsToEnrol;
+    private List<IDegreeModuleToEvaluate> courseGroupsToEnrol;
 
-    private List<DegreeModuleToEnrol> curricularCoursesToEnrol;
+    private List<IDegreeModuleToEvaluate> curricularCoursesToEnrol;
 
-    private StudentCurriculumGroupBean(final CurriculumGroup curriculumGroup) {
+    public StudentCurriculumGroupBean(final CurriculumGroup curriculumGroup, final ExecutionPeriod executionPeriod, int[] curricularYears) {
 	super(curriculumGroup);
-	this.enrolledCurriculumCourses = new ArrayList<StudentCurriculumEnrolmentBean>();
-	this.enrolledCurriculumGroups = new ArrayList<StudentCurriculumGroupBean>();
-	this.courseGroupsToEnrol = new ArrayList<DegreeModuleToEnrol>();
-	this.curricularCoursesToEnrol = new ArrayList<DegreeModuleToEnrol>();
-    }
-
-    public static StudentCurriculumGroupBean create(final CurriculumGroup group,
-	    final ExecutionPeriod executionPeriod, int[] curricularYears) {
-	final StudentCurriculumGroupBean studentCurriculumGroupBean = new StudentCurriculumGroupBean(
-		group);
-
-	studentCurriculumGroupBean.setCourseGroupsToEnrol(buildCourseGroupsToEnrol(group,
+	
+	setCourseGroupsToEnrol(buildCourseGroupsToEnrol(curriculumGroup,
 		executionPeriod));
+	
 	if (curricularYears != null) {
-	    studentCurriculumGroupBean.setCurricularCoursesToEnrol(buildCurricularCoursesToEnrol(group,
+	    setCurricularCoursesToEnrol(buildCurricularCoursesToEnrol(curriculumGroup,
 		    executionPeriod, curricularYears));
 	} else {
-	    studentCurriculumGroupBean.setCurricularCoursesToEnrol(buildCurricularCoursesToEnrol(group,
+	    setCurricularCoursesToEnrol(buildCurricularCoursesToEnrol(curriculumGroup,
 		    executionPeriod));
 	}
-
-	studentCurriculumGroupBean.setEnrolledCurriculumGroups(buildCurriculumGroupsEnroled(group,
+	
+	setEnrolledCurriculumGroups(buildCurriculumGroupsEnroled(curriculumGroup,
 		executionPeriod, curricularYears));
-	studentCurriculumGroupBean.setEnrolledCurriculumCourses(buildCurricularCoursesEnroled(group,
+	setEnrolledCurriculumCourses(buildCurricularCoursesEnroled(curriculumGroup,
 		executionPeriod));
-
-	return studentCurriculumGroupBean;
-
+	
     }
 
-    private static List<StudentCurriculumGroupBean> buildCurriculumGroupsEnroled(
+
+    protected List<StudentCurriculumGroupBean> buildCurriculumGroupsEnroled(
 	    CurriculumGroup parentGroup, ExecutionPeriod executionPeriod, int[] curricularYears) {
 	final List<StudentCurriculumGroupBean> result = new ArrayList<StudentCurriculumGroupBean>();
 	for (final CurriculumGroup curriculumGroup : parentGroup.getCurriculumGroups()) {
-	    result.add(StudentCurriculumGroupBean.create(curriculumGroup, executionPeriod,
+	    result.add(new StudentCurriculumGroupBean(curriculumGroup, executionPeriod,
 		    curricularYears));
 	}
 
 	return result;
     }
 
-    private static List<DegreeModuleToEnrol> buildCourseGroupsToEnrol(CurriculumGroup group,
+    protected List<IDegreeModuleToEvaluate> buildCourseGroupsToEnrol(CurriculumGroup group,
 	    ExecutionPeriod executionPeriod) {
-	final List<DegreeModuleToEnrol> result = new ArrayList<DegreeModuleToEnrol>();
+	final List<IDegreeModuleToEvaluate> result = new ArrayList<IDegreeModuleToEvaluate>();
 	final List<Context> courseGroupContextsToEnrol = group
 		.getCourseGroupContextsToEnrol(executionPeriod);
 
 	for (final Context context : courseGroupContextsToEnrol) {
-	    result.add(new DegreeModuleToEnrol(group, context));
+	    result.add(new DegreeModuleToEnrol(group, context, executionPeriod));
 
 	}
 
 	return result;
     }
 
-    private static List<DegreeModuleToEnrol> buildCurricularCoursesToEnrol(CurriculumGroup group,
+    protected List<IDegreeModuleToEvaluate> buildCurricularCoursesToEnrol(CurriculumGroup group,
 	    ExecutionPeriod executionPeriod, int[] curricularYears) {
-	final List<DegreeModuleToEnrol> result = new ArrayList<DegreeModuleToEnrol>();
+	final List<IDegreeModuleToEvaluate> result = new ArrayList<IDegreeModuleToEvaluate>();
 	final List<Context> curricularCoursesToEnrol = group
 		.getCurricularCourseContextsToEnrol(executionPeriod);
 
@@ -113,7 +104,7 @@ public class StudentCurriculumGroupBean extends StudentCurriculumModuleBean {
 	    for (final int curricularYear : curricularYears) {
 		if (context.containsSemesterAndCurricularYear(executionPeriod.getSemester(),
 			curricularYear, curricularCourse.getRegime())) {
-		    result.add(new DegreeModuleToEnrol(group, context));
+		    result.add(new DegreeModuleToEnrol(group, context, executionPeriod));
 		    break;
 		}
 	    }
@@ -122,19 +113,19 @@ public class StudentCurriculumGroupBean extends StudentCurriculumModuleBean {
 	return result;
     }
 
-    private static List<DegreeModuleToEnrol> buildCurricularCoursesToEnrol(CurriculumGroup group,
+    protected List<IDegreeModuleToEvaluate> buildCurricularCoursesToEnrol(CurriculumGroup group,
 	    ExecutionPeriod executionPeriod) {
 
-	final List<DegreeModuleToEnrol> result = new ArrayList<DegreeModuleToEnrol>();
+	final List<IDegreeModuleToEvaluate> result = new ArrayList<IDegreeModuleToEvaluate>();
 	for (final Context context : group.getCurricularCourseContextsToEnrol(executionPeriod)) {
-	    result.add(new DegreeModuleToEnrol(group, context));
+	    result.add(new DegreeModuleToEnrol(group, context, executionPeriod));
 	}
 
 	return result;
 
     }
 
-    private static List<StudentCurriculumEnrolmentBean> buildCurricularCoursesEnroled(
+    protected List<StudentCurriculumEnrolmentBean> buildCurricularCoursesEnroled(
 	    CurriculumGroup group, ExecutionPeriod executionPeriod) {
 	final List<StudentCurriculumEnrolmentBean> result = new ArrayList<StudentCurriculumEnrolmentBean>();
 
@@ -155,34 +146,34 @@ public class StudentCurriculumGroupBean extends StudentCurriculumModuleBean {
 	return (CurriculumGroup) super.getCurriculumModule();
     }
 
-    public List<DegreeModuleToEnrol> getCourseGroupsToEnrol() {
+    public List<IDegreeModuleToEvaluate> getCourseGroupsToEnrol() {
 	return courseGroupsToEnrol;
     }
 
-    public List<DegreeModuleToEnrol> getCourseGroupsToEnrolSortedByContext() {
-	final List<DegreeModuleToEnrol> result = new ArrayList<DegreeModuleToEnrol>(courseGroupsToEnrol);
+    public List<IDegreeModuleToEvaluate> getCourseGroupsToEnrolSortedByContext() {
+	final List<IDegreeModuleToEvaluate> result = new ArrayList<IDegreeModuleToEvaluate>(courseGroupsToEnrol);
 	Collections.sort(result, new BeanComparator("context"));
 
 	return result;
     }
 
-    public void setCourseGroupsToEnrol(List<DegreeModuleToEnrol> courseGroupsToEnrol) {
+    public void setCourseGroupsToEnrol(List<IDegreeModuleToEvaluate> courseGroupsToEnrol) {
 	this.courseGroupsToEnrol = courseGroupsToEnrol;
     }
 
-    public List<DegreeModuleToEnrol> getCurricularCoursesToEnrolSortedByContext() {
-	final List<DegreeModuleToEnrol> result = new ArrayList<DegreeModuleToEnrol>(
+    public List<IDegreeModuleToEvaluate> getSortedDegreeModulesToEvaluate() {
+	final List<IDegreeModuleToEvaluate> result = new ArrayList<IDegreeModuleToEvaluate>(
 		curricularCoursesToEnrol);
 	Collections.sort(result, new BeanComparator("context"));
 
 	return result;
     }
 
-    public List<DegreeModuleToEnrol> getCurricularCoursesToEnrol() {
+    public List<IDegreeModuleToEvaluate> getCurricularCoursesToEnrol() {
 	return curricularCoursesToEnrol;
     }
 
-    public void setCurricularCoursesToEnrol(List<DegreeModuleToEnrol> curricularCoursesToEnrol) {
+    public void setCurricularCoursesToEnrol(List<IDegreeModuleToEvaluate> curricularCoursesToEnrol) {
 	this.curricularCoursesToEnrol = curricularCoursesToEnrol;
     }
 
@@ -222,6 +213,10 @@ public class StudentCurriculumGroupBean extends StudentCurriculumModuleBean {
 
     public boolean isRoot() {
 	return getCurriculumModule().isRoot();
+    }
+    
+    public boolean isToBeDisabled() {
+	return isRoot() || isEnrolledInAnyCurriculumCourses() || isEnrolledInAnyCurriculumGroups();
     }
 
 }

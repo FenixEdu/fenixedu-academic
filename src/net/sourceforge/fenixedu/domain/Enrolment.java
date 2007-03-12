@@ -570,7 +570,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     public void createSpecialSeasonEvaluation(final Employee employee) {
 	if (getEnrolmentEvaluationType() != EnrolmentEvaluationType.SPECIAL_SEASON && !isApproved()) {
 	    setEnrolmentEvaluationType(EnrolmentEvaluationType.SPECIAL_SEASON);
-	    if (isEnrolmentStateApproved()) {
+	    if (isEnroled()) {
 		setEnrolmentCondition(EnrollmentCondition.TEMPORARY);
 	    } else {
 		setEnrollmentState(EnrollmentState.ENROLLED);
@@ -1047,12 +1047,40 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	if(!isBolonha()) {
 	    return accumulatedEctsCredits;
 	}	
-	
 	if(isExtraCurricular() || parentCurriculumGroupIsNoCourseGroupCurriculumGroup()) {
 	    return 0d;
 	}
 	
 	return getStudentCurricularPlan().getAccumulatedEctsCredits(executionPeriod, getCurricularCourse());
+    }
+    
+    public boolean isImprovementEnroled() {
+	return isEnrolmentStateApproved() && getImprovementEvaluation() != null;
+    }
+    
+    public boolean canBeImproved() {
+	return isEnrolmentStateApproved() && !hasImprovement();
+    }
+
+    public boolean isSpecialSeasonEnroled(final ExecutionYear executionYear) {
+	return getEnrolmentEvaluationType() == EnrolmentEvaluationType.SPECIAL_SEASON && 
+		getExecutionPeriod().getExecutionYear() == executionYear && getTempSpecialSeasonEvaluation() != null;
+    }
+    
+    private EnrolmentEvaluation getTempSpecialSeasonEvaluation() {
+	final EnrolmentEvaluation latestSpecialSeasonEnrolmentEvaluation = getLatestSpecialSeasonEnrolmentEvaluation();
+	
+	if (latestSpecialSeasonEnrolmentEvaluation != null && latestSpecialSeasonEnrolmentEvaluation.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.TEMPORARY_OBJ)) {
+	    return latestSpecialSeasonEnrolmentEvaluation;
+	}
+
+	return null;
+    }
+
+    public boolean canBeSpecialSeasonEnroled(ExecutionYear executionYear) {
+	return getEnrolmentEvaluationType() != EnrolmentEvaluationType.SPECIAL_SEASON
+	    && getExecutionPeriod().getExecutionYear() == executionYear
+	    && !isApproved();
     }
 
 }

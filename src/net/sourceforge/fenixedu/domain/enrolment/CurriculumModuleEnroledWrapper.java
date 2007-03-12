@@ -15,6 +15,9 @@ import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
+import net.sourceforge.fenixedu.renderers.model.MetaObject;
+import net.sourceforge.fenixedu.renderers.model.MetaObjectFactory;
+import net.sourceforge.fenixedu.renderers.schemas.Schema;
 
 public class CurriculumModuleEnroledWrapper implements Serializable, IDegreeModuleToEvaluate {
 
@@ -130,6 +133,7 @@ public class CurriculumModuleEnroledWrapper implements Serializable, IDegreeModu
 	return getCurriculumModule().isRoot() ? Collections.EMPTY_SET : getCurriculumGroup()
 		.getCurricularRules(executionPeriod);
     }
+    
 
     public double getAccumulatedEctsCredits(final ExecutionPeriod executionPeriod) {
 	if(getCurriculumModule().isEnrolment()) {
@@ -137,5 +141,31 @@ public class CurriculumModuleEnroledWrapper implements Serializable, IDegreeModu
 	} else {
 	    return 0d;
 	}
+    }
+
+    public String getName() {
+	return getCurriculumModule().getName().getContent();
+    }
+
+    public String getYearFullLabel() {
+	if(getExecutionPeriod() != null) {
+	    return getExecutionPeriod().getQualifiedName();
+	}
+	return "";
+    }
+
+    public boolean isOptionalCurricularCourse() {
+	return false;
+    }
+
+    public Double getEctsCredits() {
+	return getCurriculumModule().getEctsCredits();
+    }
+
+    public String getKey() {
+	StringBuilder stringBuilder = new StringBuilder();
+	stringBuilder.append(this.getCurriculumModule().getClass().getName()).append(":").append(this.getCurriculumModule().getIdInternal())
+		.append(",").append(this.getExecutionPeriod().getClass().getName()).append(":").append(this.getExecutionPeriod().getIdInternal());
+	return stringBuilder.toString();
     }
 }

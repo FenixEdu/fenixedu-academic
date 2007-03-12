@@ -589,6 +589,31 @@
 			<forward name="showStudentEnrollmentMenu" path="/studentEnrolments.do?method=prepareFromStudentEnrollmentWithRules" />
 		</action>
 		
+		<action path="/improvementBolonhaStudentEnrollment"
+				type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.studentEnrolment.bolonha.AcademicAdminOfficeImprovementBolonhaStudentEnrolmentDA" 
+				parameter="method"
+				name="bolonhaStudentEnrollmentForm"
+				scope="request">
+		
+			<forward name="showDegreeModulesToEnrol" path="student.enrollment.bolonha.showDegreeModulesToEnrol" />
+			<forward name="chooseOptionalCurricularCourseToEnrol" path="student.enrollment.bolonha.chooseOptionalCurricularCourseEnrol" />
+			<forward name="showStudentEnrollmentMenu" path="/studentEnrolments.do?method=prepareFromStudentEnrollmentWithRules" />
+						
+		</action>
+		
+		<action path="/specialSeasonBolonhaStudentEnrollment"
+				type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.studentEnrolment.bolonha.AcademicAdminOfficeSpecialSeasonBolonhaStudentEnrolmentDA" 
+				parameter="method"
+				name="bolonhaStudentEnrollmentForm"
+				scope="request">
+		
+			<forward name="showDegreeModulesToEnrol" path="student.enrollment.bolonha.showDegreeModulesToEnrol" />
+			<forward name="chooseOptionalCurricularCourseToEnrol" path="student.enrollment.bolonha.chooseOptionalCurricularCourseEnrol" />
+			<forward name="showStudentEnrollmentMenu" path="/studentEnrolments.do?method=prepareFromStudentEnrollmentWithRules" />
+			<forward name="changeSpecialSeasonCode" path="student.enrollment.bolonha.changeSpecialSeasonCode" />
+		</action>
+		
+		
 		<!-- End : Bolonha Student Enrollment -->
 
     </action-mappings>

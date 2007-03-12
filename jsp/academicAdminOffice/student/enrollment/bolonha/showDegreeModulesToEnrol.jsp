@@ -10,13 +10,15 @@
 	<em><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.academicAdminOffice" /></em>
 	<h2>
 		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.student.enrollment.courses" />
-		<bean:define id="withRules" name="bolonhaStudentEnrollmentForm" property="withRules" />
-		<logic:equal name="withRules" value="true">
-			(<bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.student.enrollment.withRules"/>)
-		</logic:equal>
-		<logic:equal name="withRules" value="false">
-			(<bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.student.enrollment.withoutRules"/>)
-		</logic:equal>
+		<logic:present name="bolonhaStudentEnrollmentForm" property="withRules">
+			<bean:define id="withRules" name="bolonhaStudentEnrollmentForm" property="withRules" />
+			<logic:equal name="withRules" value="true">
+				(<bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.student.enrollment.withRules"/>)
+			</logic:equal>
+			<logic:equal name="withRules" value="false">
+				(<bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.student.enrollment.withoutRules"/>)
+			</logic:equal>
+		</logic:present>
 	</h2>
 
 
@@ -63,7 +65,8 @@
 		</div>
 	</logic:messagesPresent>
 	
-	<html:form action="/bolonhaStudentEnrollment.do">
+	<bean:define id="action" name="action"/>
+	<html:form action="<%= action.toString() %>">
 		<html:hidden property="method" value=""/>
 		<html:hidden property="withRules"/>
 

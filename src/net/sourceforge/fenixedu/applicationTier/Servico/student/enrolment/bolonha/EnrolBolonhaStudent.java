@@ -10,15 +10,16 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.CurricularRuleLevel;
 import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.RuleResult;
 import net.sourceforge.fenixedu.domain.enrolment.DegreeModuleToEnrol;
+import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 
 public class EnrolBolonhaStudent extends Service {
 
     public List<RuleResult> run(final Person person, final StudentCurricularPlan studentCurricularPlan,
-	    final ExecutionPeriod executionPeriod, final List<DegreeModuleToEnrol> degreeModulesToEnrol,
+	    final ExecutionPeriod executionPeriod, final List<IDegreeModuleToEvaluate> degreeModulesToEnrol,
 	    final List<CurriculumModule> curriculumModulesToRemove,
 	    final CurricularRuleLevel curricularRuleLevel) {
-	return studentCurricularPlan.enrol(person, executionPeriod, new HashSet<DegreeModuleToEnrol>(
+	return studentCurricularPlan.enrol(person, executionPeriod, new HashSet<IDegreeModuleToEvaluate>(
 		degreeModulesToEnrol), curriculumModulesToRemove, curricularRuleLevel);
     }
 }

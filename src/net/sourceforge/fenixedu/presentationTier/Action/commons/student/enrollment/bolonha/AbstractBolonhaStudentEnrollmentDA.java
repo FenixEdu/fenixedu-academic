@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.CurricularR
 import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.RuleResult;
 import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.RuleResultMessage;
 import net.sourceforge.fenixedu.domain.enrolment.DegreeModuleToEnrol;
+import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.enrolment.OptionalDegreeModuleToEnrol;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.EnrollmentDomainException;
@@ -34,12 +35,23 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
 	    HttpServletRequest request, HttpServletResponse response,
 	    final StudentCurricularPlan studentCurricularPlan, final ExecutionPeriod executionPeriod) {
 
-	request.setAttribute("bolonhaStudentEnrollmentBean", BolonhaStudentEnrollmentBean.create(
+	request.setAttribute("bolonhaStudentEnrollmentBean", new BolonhaStudentEnrollmentBean(
 		studentCurricularPlan, executionPeriod, getCurricularYearForCurricularCourses()));
 
 	return mapping.findForward("showDegreeModulesToEnrol");
 
     }
+    
+    protected ActionForward prepareShowDegreeModulesToEnrol(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response,
+	    final BolonhaStudentEnrollmentBean bolonhaStudentEnrollmentBean) {
+
+	request.setAttribute("bolonhaStudentEnrollmentBean", bolonhaStudentEnrollmentBean);
+	request.setAttribute("action", getAction());
+
+	return mapping.findForward("showDegreeModulesToEnrol");
+    }
+
 
     public ActionForward enrolInDegreeModules(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
@@ -51,11 +63,11 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
 		    "EnrolBolonhaStudent", getLoggedPerson(request), bolonhaStudentEnrollmentBean
 			    .getStudentCurricularPlan(), bolonhaStudentEnrollmentBean
 			    .getExecutionPeriod(), bolonhaStudentEnrollmentBean
-			    .getDegreeModulesToEnrol(), bolonhaStudentEnrollmentBean
+			    .getDegreeModulesToEvaluate(), bolonhaStudentEnrollmentBean
 			    .getCurriculumModulesToRemove(),
 		    getCurricularRuleLevel((DynaActionForm) form));
 
-	    if (!bolonhaStudentEnrollmentBean.getDegreeModulesToEnrol().isEmpty()
+	    if (!bolonhaStudentEnrollmentBean.getDegreeModulesToEvaluate().isEmpty()
 		    || !bolonhaStudentEnrollmentBean.getCurriculumModulesToRemove().isEmpty()) {
 		addActionMessage("success", request, "label.save.success");
 	    }
@@ -64,15 +76,13 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
 
 	} catch (EnrollmentDomainException ex) {
 	    addRuleResultMessagesToActionMessages("error", request, ex.getFalseRuleResults());
-	    request.setAttribute("bolonhaStudentEnrollmentBean", bolonhaStudentEnrollmentBean);
-
-	    return mapping.findForward("showDegreeModulesToEnrol");
+	    
+	    return prepareShowDegreeModulesToEnrol(mapping, form, request, response, bolonhaStudentEnrollmentBean);
 
 	} catch (DomainException ex) {
 	    addActionMessage("error", request, ex.getKey(), ex.getArgs());
-	    request.setAttribute("bolonhaStudentEnrollmentBean", bolonhaStudentEnrollmentBean);
-
-	    return mapping.findForward("showDegreeModulesToEnrol");
+	    
+	    return prepareShowDegreeModulesToEnrol(mapping, form, request, response, bolonhaStudentEnrollmentBean);
 	}
 
 	RenderUtils.invalidateViewState();
@@ -147,11 +157,11 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
 
     private List<DegreeModuleToEnrol> buildOptionalDegreeModuleToEnrolList(
 	    final BolonhaStudentOptionalEnrollmentBean optionalStudentEnrollmentBean) {
-	final DegreeModuleToEnrol selectedDegreeModuleToEnrol = optionalStudentEnrollmentBean
+	final IDegreeModuleToEvaluate selectedDegreeModuleToEnrol = optionalStudentEnrollmentBean
 		.getSelectedDegreeModuleToEnrol();
 	final OptionalDegreeModuleToEnrol optionalDegreeModuleToEnrol = new OptionalDegreeModuleToEnrol(
 		selectedDegreeModuleToEnrol.getCurriculumGroup(), selectedDegreeModuleToEnrol
-			.getContext(), optionalStudentEnrollmentBean
+			.getContext(), optionalStudentEnrollmentBean.getExecutionPeriod(), optionalStudentEnrollmentBean
 			.getSelectedOptionalCurricularCourse());
 
 	final List<DegreeModuleToEnrol> result = new ArrayList<DegreeModuleToEnrol>();
@@ -190,5 +200,7 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
     abstract protected int[] getCurricularYearForCurricularCourses();
 
     abstract protected CurricularRuleLevel getCurricularRuleLevel(final ActionForm form);
+    
+    abstract protected String getAction();
 
 }
