@@ -126,7 +126,7 @@
 
 		<logic:notPresent name="issueBean">
 			<logic:notPresent name="publicationBean" property="scientificJournal">
-			111
+
 				<logic:present name="publicationBean" property="scientificJournalName">
 					<div class="warning0">
 						<p style="margin:0; padding: 0.5em 0.75em;">
@@ -200,17 +200,25 @@
 		        		<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 						</fr:layout>
 					</fr:edit>
+	
 					</logic:equal>
 					<logic:equal name="issueBean" property="journalAlreadyChosen" value="true">
 						<span><fr:view name="issueBean" property="journal.name"/></span>
 					</logic:equal>
 					
 					<p class="mtop1 mbottom05"><strong><bean:message key="label.journalIssue" bundle="RESEARCHER_RESOURCES"/>:</strong></p>
-					<fr:edit id="journalInfo" name="issueBean" schema="result.publication.create.Article.createIssue">
+					<bean:define id="issueSchema" value="result.publication.create.Article.createIssue" type="java.lang.String"/>
+					<logic:equal name="issueBean" property="specialIssue" value="true">
+						<bean:define id="issueSchema" value="result.publication.create.Article.createSpecialIssue" type="java.lang.String"/>
+					</logic:equal>
+					
+					<fr:edit id="issueInfo" name="issueBean" schema="<%= issueSchema %>">
 						<fr:layout name="tabular">
 						 <fr:property name="classes" value="tstyle5 thright thlight thtop mtop05"/>
 		        		<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 						</fr:layout>
+						<fr:destination name="postBack" path="/resultPublications/changeSpecialIssue.do"/>
+	
 					</fr:edit>
 					<br/><br/>			
 					<html:submit>
