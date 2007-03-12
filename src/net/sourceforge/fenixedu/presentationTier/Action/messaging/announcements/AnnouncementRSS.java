@@ -24,8 +24,6 @@ import org.apache.struts.util.ModuleUtils;
 
 import com.sun.syndication.feed.synd.SyndContent;
 import com.sun.syndication.feed.synd.SyndContentImpl;
-import com.sun.syndication.feed.synd.SyndEntry;
-import com.sun.syndication.feed.synd.SyndEntryImpl;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a><br>
@@ -34,6 +32,8 @@ import com.sun.syndication.feed.synd.SyndEntryImpl;
  * 
  */
 public class AnnouncementRSS extends RSSAction {
+
+    
 
     private String getFeedTitle(HttpServletRequest request, AnnouncementBoard board) {
         MessageResources resources = this.getResources(request, "MESSAGING_RESOURCES");
@@ -50,9 +50,9 @@ public class AnnouncementRSS extends RSSAction {
     }
 
     @Override
-    protected List<SyndEntry> getFeedEntries(HttpServletRequest request) throws Exception {
+    protected List<SyndEntryFenixImpl> getFeedEntries(HttpServletRequest request) throws Exception {
 
-        final List<SyndEntry> entries = new ArrayList<SyndEntry>();
+        final List<SyndEntryFenixImpl> entries = new ArrayList<SyndEntryFenixImpl>();
 
         final AnnouncementBoard board = this.getSelectedBoard(request);
         if (board.getReaders() != null) {
@@ -61,25 +61,35 @@ public class AnnouncementRSS extends RSSAction {
         
         final List<Announcement> activeAnnouncements = board.getActiveAnnouncements();
         Collections.sort(activeAnnouncements, Announcement.NEWEST_FIRST);
-        
+
 	for (final Announcement announcement : activeAnnouncements) {
 	    
             SyndContent description = new SyndContentImpl();
             description.setType("text/plain");
             description.setValue(announcement.getBody().getContent());
 
-            SyndEntry entry = new SyndEntryImpl();
+            SyndEntryFenixImpl entry = new SyndEntryFenixImpl(announcement);
             entry.setAuthor(this.getAuthor(announcement));
             entry.setTitle(announcement.getSubject().getContent());
             entry.setPublishedDate(announcement.getCreationDate().toDate());
             entry.setUpdatedDate(announcement.getLastModification().toDate());
             entry.setLink(this.getEntryLink(request, announcement));
             entry.setDescription(description);
+            entry.setUri(constructURI(request, announcement));
             entries.add(entry);
         }
 
         return entries;
 
+    }
+
+    private String constructURI(final HttpServletRequest request, final Announcement announcement) {
+	final StringBuilder stringBuilder = new StringBuilder();
+	stringBuilder.append("_");
+	stringBuilder.append(request.getServerName());
+	stringBuilder.append("_announcement_");
+	stringBuilder.append(announcement.getIdInternal());
+	return stringBuilder.toString();
     }
 
     private String getAnnouncementBoardFeedServicePrefix(HttpServletRequest request)

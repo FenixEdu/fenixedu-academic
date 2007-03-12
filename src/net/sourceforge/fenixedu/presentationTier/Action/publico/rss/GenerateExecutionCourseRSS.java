@@ -38,6 +38,7 @@ public abstract class GenerateExecutionCourseRSS extends InformaRSSAction {
         for (final DomainObject domainObject : ((Collection<DomainObject>) getObjects(executionCourse))) {
             final ItemIF item = new Item();
             fillItem(item, domainObject);
+            item.setGuid(getItemGuidIF(item, domainObject));
             final String localUrl = commonLocalUrl + getIdPrefix()
                     + domainObject.getIdInternal().toString();
             item.setLink(new URL(request.getScheme(), request.getServerName(), request.getServerPort(),
