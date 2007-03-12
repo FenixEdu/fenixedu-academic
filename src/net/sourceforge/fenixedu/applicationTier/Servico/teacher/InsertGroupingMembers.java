@@ -4,14 +4,11 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
@@ -25,59 +22,34 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class InsertGroupingMembers extends Service {
 
-    public Boolean run(Integer executionCourseCode, Integer groupPropertiesCode, List studentCodes)
+    public Boolean run(final Integer executionCourseCode, final Integer groupPropertiesCode, final List studentCodes)
             throws FenixServiceException, ExcepcaoPersistencia {
 
-        List students = new ArrayList();
-
-        Grouping groupProperties = rootDomainObject.readGroupingByOID(
-                groupPropertiesCode);
-
+        final Grouping groupProperties = rootDomainObject.readGroupingByOID(groupPropertiesCode);
         if (groupProperties == null) {
             throw new ExistingServiceException();
         }
 
-        Iterator iterator = studentCodes.iterator();
+        final List<ExecutionCourse> executionCourses = groupProperties.getExecutionCourses();
 
-        while (iterator.hasNext()) {
-            Registration registration = rootDomainObject.readRegistrationByOID((Integer) iterator
-                    .next());
-            students.add(registration);
-        }
-
-        Iterator iterAttends = groupProperties.getAttends().iterator();
-
-        while (iterAttends.hasNext()) {
-            Attends existingAttend = (Attends) iterAttends.next();
-            Registration existingAttendStudent = existingAttend.getRegistration();
-
-            Iterator iteratorStudents = students.iterator();
-
-            while (iteratorStudents.hasNext()) {
-
-                Registration registration = (Registration) iteratorStudents.next();
-                if (registration.equals(existingAttendStudent)) {
-                    throw new InvalidSituationServiceException();
-                }
+        for (final Integer studentCode : (List<Integer>) studentCodes) {
+            final Registration registration = rootDomainObject.readRegistrationByOID(studentCode);
+            if (!studentHasSomeAttendsInGrouping(registration, groupProperties)) {
+        	final Attends attends = findAttends(registration, executionCourses);
+        	if (attends != null) {
+        	    groupProperties.addAttends(attends);
+        	}
             }
-        }
-
-        Iterator iterStudents1 = students.iterator();
-
-        while (iterStudents1.hasNext()) {
-            Attends attend = null;
-            Registration registration = (Registration) iterStudents1.next();
-
-            List listaExecutionCourses = new ArrayList();
-            listaExecutionCourses.addAll(groupProperties.getExecutionCourses());
-            Iterator iterExecutionCourse = listaExecutionCourses.iterator();
-            while (iterExecutionCourse.hasNext() && attend == null) {
-                ExecutionCourse executionCourse = (ExecutionCourse) iterExecutionCourse.next();
-                attend = registration.readAttendByExecutionCourse(executionCourse);
-            }
-            groupProperties.addAttends(attend);
         }
 
         return Boolean.TRUE;
+    }
+
+    public static boolean studentHasSomeAttendsInGrouping(final Registration registration, final Grouping groupProperties) {
+	return InsertStudentsInGrouping.studentHasSomeAttendsInGrouping(registration, groupProperties);
+    }
+
+    private static Attends findAttends(final Registration registration, final List<ExecutionCourse> executionCourses) {
+	return InsertStudentsInGrouping.findAttends(registration, executionCourses);
     }
 }
