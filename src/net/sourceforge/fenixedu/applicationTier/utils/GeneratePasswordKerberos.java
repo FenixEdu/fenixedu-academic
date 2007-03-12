@@ -13,8 +13,8 @@ public class GeneratePasswordKerberos extends GeneratePasswordBase {
                 if (person.getIsPassInKerberos()) {
                     Script.changeKerberosPass(person.getIstUsername(), password);
                 } else {
-                    Script.createUser(person.getIstUsername(), password);
                     person.setIsPassInKerberos(true);
+                    Script.createUser(person.getIstUsername(), password);
                 }
             }
             return password;
