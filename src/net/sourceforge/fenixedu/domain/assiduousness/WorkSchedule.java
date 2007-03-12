@@ -266,12 +266,18 @@ public class WorkSchedule extends WorkSchedule_Base {
 
         }
 
+	Duration balance = workDaySheet.getBalanceTime().toDurationFrom(new DateMidnight());
 	if (workDaySheet.getWorkSchedule().getWorkScheduleType().getScheduleClockingType().equals(
-		ScheduleClockingType.RIGID_UNJUSTIFIED_CLOCKING)) {
+		ScheduleClockingType.RIGID_CLOCKING)) {
 	    if (workDaySheet.getUnjustifiedTime() != null
-		    && !workDaySheet.getUnjustifiedTime().equals(Duration.ZERO)) {
-		workDaySheet.setBalanceTime((Duration.ZERO.minus(workDaySheet.getUnjustifiedTime()))
-			.toPeriod());
+		    && !workDaySheet.getUnjustifiedTime().equals(Duration.ZERO)
+		    && balance.isShorterThan(Duration.ZERO)) {
+		balance = balance.plus(workDaySheet.getUnjustifiedTime());
+		if (balance.isLongerThan(Duration.ZERO)) {
+		    workDaySheet.setBalanceTime(Period.ZERO);
+		} else {
+		    workDaySheet.setBalanceTime(balance.toPeriod());
+		}
 	    }
 	}
         return workDaySheet;

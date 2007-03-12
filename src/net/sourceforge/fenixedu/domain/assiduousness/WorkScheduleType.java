@@ -68,7 +68,7 @@ public class WorkScheduleType extends WorkScheduleType_Base {
 	    Timeline timeline, TimePoint firstClocking, TimePoint lastWorkTimePoint) {
 
 	Duration lunchBreakDuration = lunchBreak.getDuration();
-	if (definedMeal() && !getScheduleClockingType().equals(ScheduleClockingType.RIGID_CLOCKING)) {
+	if (definedMeal() && !getScheduleClockingType().equals(ScheduleClockingType.OLD_RIGID_CLOCKING)) {
 	    if (lunchBreak.overlap(getMeal().getMealBreak()) == null) {
 		if (getMeal().getMinimumMealBreakInterval().equals(Duration.ZERO)) {
 		    lunchBreakDuration = Duration.ZERO;
@@ -321,5 +321,14 @@ public class WorkScheduleType extends WorkScheduleType_Base {
 			.getSecondPeriod(), workScheduleType.getNormalWorkPeriod()
 			.getSecondPeriodDuration(), firstFixedPeriod, firstFixedPeriodDuration,
 		secondFixedPeriod, secondFixedPeriodDuration, beginMeal, endMeal, minium, maxium);
+    }
+
+    public boolean getIsEditable() {
+	YearMonthDay now = new YearMonthDay();
+	if ((getBeginValidDate() != null && getBeginValidDate().isBefore(now))
+		&& (getEndValidDate() != null && getEndValidDate().isBefore(now))) {
+	    return false;
+	}
+	return true;
     }
 }

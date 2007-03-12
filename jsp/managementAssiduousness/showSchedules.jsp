@@ -32,6 +32,7 @@
 				value="/assiduousnessParametrization.do?method=prepareEditSchedule" />
 			<fr:property name="key(view)" value="label.edit" />
 			<fr:property name="param(view)" value="idInternal" />
+			<fr:property name="visibleIf(view)" value="isEditable" />
 			<fr:property name="bundle(view)" value="ASSIDUOUSNESS_RESOURCES" />
 			<% } %>
 		</fr:layout>

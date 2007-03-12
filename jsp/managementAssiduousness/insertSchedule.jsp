@@ -48,8 +48,10 @@
 			<td>
 				<fr:edit name="workScheduleTypeFactory" id="scheduleClockingType" slot="scheduleClockingType"
 					type="net.sourceforge.fenixedu.domain.assiduousness.util.WorkScheduleTypeFactory">
-					<fr:layout>
+					<fr:layout name="menu-select">
 						<fr:property name="classes" value="thlight thcenter"/>
+						<fr:property name="eachLayout" value="this-does-not-exist" />
+						<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.assiduousness.ScheduleClockingTypeAsProvider" />
 					</fr:layout>
 				</fr:edit>
 			</td>

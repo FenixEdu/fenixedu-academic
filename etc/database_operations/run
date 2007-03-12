@@ -29,3 +29,4 @@ function executeWithTempFile() {
 
 execute "Fix problems in article associations' foreign keys" fixProblemWithKeysInArticleAssociation.sql
 execute "Add special Issue" addSpecialIssueSupport.sql
+execute "correct Schedules Clocking Type" correctSchedulesClockingType.sql

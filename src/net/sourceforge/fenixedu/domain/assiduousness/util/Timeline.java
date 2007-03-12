@@ -528,7 +528,7 @@ public class Timeline {
 		    }
 		    if (workScheduleType != null
 			    && workScheduleType.getScheduleClockingType().equals(
-				    ScheduleClockingType.RIGID_CLOCKING)) {
+				    ScheduleClockingType.OLD_RIGID_CLOCKING)) {
 			Interval overlap = timePointInterval.overlap(workScheduleType
 				.getNormalWorkPeriod().getFirstPeriodInterval().toInterval(begin));
 			if (overlap != null) {

@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.Month;
 
 import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -38,10 +37,7 @@ public class ViewAssiduousnessDispatchAction extends FenixDispatchAction {
 	for (WorkScheduleType workScheduleType : rootDomainObject.getWorkScheduleTypes()) {
 	    workScheduleList.add(workScheduleType);
 	}
-	ComparatorChain comparatorChain = new ComparatorChain();
-	comparatorChain.addComparator(new BeanComparator("ojbConcreteClass"));
-	comparatorChain.addComparator(new BeanComparator("acronym"));
-	Collections.sort(workScheduleList, comparatorChain);
+	Collections.sort(workScheduleList, new BeanComparator("acronym"));
 	request.setAttribute("workScheduleList", workScheduleList);
 	return mapping.findForward("show-all-schedules");
     }
