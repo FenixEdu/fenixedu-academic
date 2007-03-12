@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.assiduousness.Schedule;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkScheduleType;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Contract;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -54,6 +55,12 @@ public class EmployeeScheduleFactory implements Serializable, FactoryExecutor {
             setEmployeeWorkWeekScheduleList(schedule, this);
             setBeginDate(schedule.getBeginDate());
             setEndDate(schedule.getEndDate());
+        } else {
+            addEmployeeWorkWeekSchedule();
+            Contract currentContract = employee.getCurrentWorkingContract();
+            if (currentContract != null) {
+                setBeginDate(currentContract.getBeginDate());
+            }
         }
     }
 

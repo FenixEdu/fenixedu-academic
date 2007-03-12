@@ -86,7 +86,7 @@
 		</logic:empty>
 		<% } %>
 
-<logic:notEmpty name="employeeScheduleBean" property="employeeWorkWeekScheduleList">
+<logic:notEmpty name="employeeScheduleBean" property="schedule">
 	<bean:size id="listSize" name="employeeScheduleBean" property="employeeWorkWeekScheduleList"/>
 	<table class="width600px">
 		<tr>
