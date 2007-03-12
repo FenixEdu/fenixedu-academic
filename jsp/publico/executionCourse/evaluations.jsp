@@ -146,12 +146,6 @@
 						<bean:write name="room" property="nome"/>
 					</logic:iterate>
 				</td>
-				<td>
-					<html:link page="/executionCourse.do?method=marks"
-							paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
-						<bean:message key="label.publishedMarks"/>
-					</html:link>
-				</td>
 			</tr>
 		</logic:equal>
 	</logic:iterate>
