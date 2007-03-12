@@ -789,7 +789,7 @@
 	</filterChain>
 	<filterChain>
 		<name>ReadCurriculumHistoricAuthorization</name>
-		<expression>ManagerAuthorization || TeacherAuthorization || DegreeAdministrativeOfficeAuthorization || TimeTableManagerAuthorization || GEPAuthorization || (DepartmentCreditsManagerAuthorization &amp;&amp; DepartmentAdministrativeOfficeAuthorization &amp;&amp; EmployeeAuthorization)</expression>
+		<expression>ManagerAuthorization || TeacherAuthorization || AcademicAdministrativeOfficeAuthorization || TimeTableManagerAuthorization || GEPAuthorization || (DepartmentCreditsManagerAuthorization &amp;&amp; DepartmentAdministrativeOfficeAuthorization &amp;&amp; EmployeeAuthorization)</expression>
 		<description />
 		<invocationTiming>1</invocationTiming>
 		<filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>

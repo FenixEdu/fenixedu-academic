@@ -7,6 +7,14 @@
 <h2><bean:message key="title.welcome"/></h2>
 
 <p class="mtop3">
+	<span class="warning0">09.03.2007 - Migração de Funcionalidades para o novo portal da Secretaria Académica<br/></span>
+	<p>
+		<b>Pautas</b>
+		<br/>- 'Consulta' está agora disponível no menu lateral da nova Secretaria
+	</p>
+</p>
+
+<p class="mtop3">
 	<span class="warning0">17.01.2007 - Migração de Funcionalidades para o novo portal da Secretaria Académica<br/></span>
 	<p>
 		<b>Pautas</b>

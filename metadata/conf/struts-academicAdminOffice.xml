@@ -117,6 +117,11 @@
 		<form-property name="method" type="java.lang.String" />
 		<form-property name="markSheetIDs" type="java.lang.Integer[]" />
 	</form-bean>
+	<form-bean name="executionYearDegreeCurricularPlanForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+		<form-property name="executionYearID" type="java.lang.String"/>
+		<form-property name="degreeCurricularPlanID" type="java.lang.String"/>
+		<form-property name="page" type="java.lang.Integer" initial="0"/>
+	</form-bean>
 	
 	
  	<!-- bolonhaStudentEnrollmentForm -->
@@ -518,6 +523,25 @@
 	     		
 	</action>      
 
+	<action path="/chooseExecutionYearAndDegreeCurricularPlan"
+       		name="executionYearDegreeCurricularPlanForm"
+       		type="net.sourceforge.fenixedu.presentationTier.Action.commons.curriculumHistoric.DegreeCurricularPlanExecutionYearDispacthAction"
+       		validate="true"
+			input="/chooseExecutionYearAndDegreeCurricularPlan.do?method=prepare&amp;page=0"
+       		scope="request"
+       		parameter="method">
+		<forward name="chooseExecutionYear" path="view-degree-curricular-plan-execution-year"/>
+		<forward name="showActiveCurricularCourses" path="show-active-curricular-scopes"/>
+	</action>
+
+	<action path="/showCurriculumHistoric"
+      		type="net.sourceforge.fenixedu.presentationTier.Action.commons.curriculumHistoric.ShowCurriculumHistoricAction"
+       		scope="request"
+			input="/chooseExecutionYearAndDegreeCurricularPlan.do?method=prepare&amp;page=0"
+       		parameter="method">
+		<forward name="show-report" path="view-curriculum-historic"/>
+	</action>
+
   	 <action path="/studentDismissals"
 				scope="request"		
 		        parameter="method"
@@ -563,11 +587,10 @@
 			<forward name="showDegreeModulesToEnrol" path="student.enrollment.bolonha.showDegreeModulesToEnrol" />
 			<forward name="chooseOptionalCurricularCourseToEnrol" path="student.enrollment.bolonha.chooseOptionalCurricularCourseEnrol" />
 			<forward name="showStudentEnrollmentMenu" path="/studentEnrolments.do?method=prepareFromStudentEnrollmentWithRules" />
-						
 		</action>
 		
 		<!-- End : Bolonha Student Enrollment -->
-	
+
     </action-mappings>
 
     <!-- ========== Controller Configuration ================================ -->

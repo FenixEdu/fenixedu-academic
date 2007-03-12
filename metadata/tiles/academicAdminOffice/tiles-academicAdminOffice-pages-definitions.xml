@@ -341,6 +341,16 @@
 	<definition name="show.markSheetSendMail.prepareGradesToSubmitSendMail" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/gradeSubmission/prepareGradesToSubmitSendMail.jsp"></put>
 	</definition>	
+	<definition name="view-degree-curricular-plan-execution-year" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/commons/curriculumHistoric/chooseDegreeCPlanExecutionYear.jsp"></put>
+	</definition>
+	<definition name="show-active-curricular-scopes" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/commons/curriculumHistoric/showActiveCurricularCourseScopes.jsp"></put>
+	</definition>
+	<definition name="view-curriculum-historic" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/commons/curriculumHistoric/showCurriculumHistoricReport.jsp"></put>
+	</definition>
+
 	
 	<!-- ************* External Units ************* -->
 	<definition name="externalUnits.searchExternalUnits" extends="academicAdminOffice.masterPage">
