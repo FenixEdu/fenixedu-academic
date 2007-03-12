@@ -70,11 +70,11 @@
 	<logic:equal name="result" property="editableByCurrentUser" value="true">
 	<bean:message key="link.edit" bundle="RESEARCHER_RESOURCES"/>: 
 	<html:link page="<%="/resultPublications/prepareEditData.do?" + parameters %>">
-			<bean:message bundle="RESEARCHER_RESOURCES" key="label.publicationData" />
+		<bean:message bundle="RESEARCHER_RESOURCES" key="label.publicationData" />
 	</html:link>,
 	<logic:equal name="result" property="class.simpleName" value="Article">
 		<html:link page="<%= "/resultPublications/prepareEditJournal.do?" + parameters %>">
-			<bean:message key="label.editJournal" bundle="RESEARCHER_RESOURCES"/>
+			<bean:message key="label.journal" bundle="RESEARCHER_RESOURCES"/>
 		</html:link>, 
 	</logic:equal> 
 	<html:link page="<%="/resultParticipations/prepareEdit.do?" + parameters %>">

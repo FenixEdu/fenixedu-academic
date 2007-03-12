@@ -63,28 +63,28 @@
 				</div>
 			
 				<div class="dinline forminline">	
-				<fr:form action="/resultPublications/editData.do">
-					<fr:edit id="publicationBean" name="publicationBean" visible="false"/>
-					<fr:edit id="selectPublication" name="publicationBean" schema="result.publication.create.Article.selectIssue">
-					<fr:layout name="tabular">
-						<fr:property name="classes" value="tstyle5 thright thlight thtop mtop1"/>
-			        	<fr:property name="columnClasses" value=",,tdclear tderror1"/>
-					</fr:layout>
-					</fr:edit>
-					
-					<html:submit property="confirm"><bean:message key="label.chooseIssue" bundle="RESEARCHER_RESOURCES"/></html:submit>
-				</fr:form>
-				<fr:form action="/resultPublications/createJournalToAssociate.do">
-					<fr:edit id="publicationBean" name="publicationBean" visible="false"/>
-					<html:submit><bean:message key="label.createNewIssue" bundle="RESEARCHER_RESOURCES"/></html:submit>	
-				</fr:form>
-				<fr:form action="/resultPublications/prepareSelectJournal.do">					
-					<fr:edit id="publicationBean" name="publicationBean" visible="false"/>
-					<html:submit><bean:message key="label.chooseNewJournal" bundle="RESEARCHER_RESOURCES"/></html:submit>	
-				</fr:form>
-			    <fr:form action="<%= "/resultPublications/showPublication.do?" + parameters%>">
-				<html:submit><bean:message key="button.cancel"/></html:submit>
-				</fr:form>
+					<fr:form action="/resultPublications/editData.do">
+						<fr:edit id="publicationBean" name="publicationBean" visible="false"/>
+						<fr:edit id="selectPublication" name="publicationBean" schema="result.publication.create.Article.selectIssue">
+						<fr:layout name="tabular">
+							<fr:property name="classes" value="tstyle5 thright thlight thtop mtop1"/>
+				        	<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+						</fr:layout>
+						</fr:edit>
+						
+						<html:submit property="confirm"><bean:message key="label.chooseIssue" bundle="RESEARCHER_RESOURCES"/></html:submit>
+					</fr:form>
+					<fr:form action="/resultPublications/createJournalToAssociate.do">
+						<fr:edit id="publicationBean" name="publicationBean" visible="false"/>
+						<html:submit><bean:message key="label.createNewIssue" bundle="RESEARCHER_RESOURCES"/></html:submit>	
+					</fr:form>
+					<fr:form action="/resultPublications/prepareSelectJournal.do">					
+						<fr:edit id="publicationBean" name="publicationBean" visible="false"/>
+						<html:submit><bean:message key="label.chooseNewJournal" bundle="RESEARCHER_RESOURCES"/></html:submit>	
+					</fr:form>
+				    <fr:form action="<%= "/resultPublications/showPublication.do?" + parameters%>">
+					<html:submit><bean:message key="button.cancel"/></html:submit>
+					</fr:form>
 				</div>
 			</logic:present>					
 		</logic:notPresent>					
@@ -113,19 +113,21 @@
 					</logic:equal>
 					
 					<logic:equal name="issueBean" property="journalAlreadyChosen" value="true">
-						<p class="mbottom0">
-							<strong><bean:message key="label.journal" bundle="RESEARCHER_RESOURCES"/>:</strong>
-						</p>
-						<fr:view name="issueBean" property="journal.name"/>
+						<div class="mbottom15">
+							<p class="mbottom05">
+								<strong><bean:message key="label.journal" bundle="RESEARCHER_RESOURCES"/>:</strong>
+							</p>
+							<fr:view name="issueBean" property="journal.name"/>
+						</div>
 					</logic:equal>
 
-					<p class="mbottom0">
+					<p class="mbottom05">
 						<strong><bean:message key="label.journalIssue" bundle="RESEARCHER_RESOURCES"/>:</strong>
 					</p>
 
 					<fr:edit id="issueInfo" name="issueBean" schema="result.publication.create.Article.createIssue">
 						<fr:layout name="tabular">
-							 <fr:property name="classes" value="tstyle5 thright thlight thtop mtop0 dinline"/>
+							 <fr:property name="classes" value="tstyle5 thright thlight thtop mtop05 dinline"/>
 			        		<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 						</fr:layout>
 						<fr:destination name="invalid" path="/resultPublications/createJournalToAssociate.do"/>
