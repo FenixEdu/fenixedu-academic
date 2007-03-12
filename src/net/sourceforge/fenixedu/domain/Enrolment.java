@@ -330,6 +330,15 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     }
 
+    public Collection<Enrolment> getBrothers() {
+	final Collection<Enrolment> result = new HashSet<Enrolment>();
+	
+	result.addAll(getStudentCurricularPlan().getEnrolments(getCurricularCourse()));
+	result.remove(this);
+	
+	return result;
+    }
+
     public EnrolmentEvaluation getEnrolmentEvaluationByEnrolmentEvaluationTypeAndGrade(
 	    final EnrolmentEvaluationType evaluationType, final String grade) {
 
@@ -633,6 +642,16 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return hasEnrolmentEvaluationByType(EnrolmentEvaluationType.SPECIAL_SEASON);
     }
 
+    public boolean hasSpecialSeasonInExecutionYear() {
+	for (final Enrolment enrolment : getBrothers()) {
+	    if (enrolment.getExecutionYear() == getExecutionYear() && enrolment.hasSpecialSeason()) {
+		return true;
+	    }
+	}
+	
+	return hasSpecialSeason();
+    }
+
     public boolean isNotEvaluated() {
 	final EnrolmentEvaluation latestEnrolmentEvaluation = getLatestEnrolmentEvaluation();
 	return latestEnrolmentEvaluation == null || latestEnrolmentEvaluation.isNotEvaluated();
@@ -900,6 +919,10 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     public Registration getRegistration() {
 	return getStudentCurricularPlan().getRegistration();
+    }
+    
+    public ExecutionYear getExecutionYear() {
+	return getExecutionPeriod().getExecutionYear();
     }
     
     @Override
