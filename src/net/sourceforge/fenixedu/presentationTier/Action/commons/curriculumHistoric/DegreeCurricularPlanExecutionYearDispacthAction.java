@@ -3,9 +3,10 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.commons.curriculumHistoric;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,16 +14,15 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -53,50 +53,33 @@ public class DegreeCurricularPlanExecutionYearDispacthAction extends FenixDispat
         return mapping.findForward("chooseExecutionYear");
     }
 
-    public ActionForward chooseDegreeCurricularPlan(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
-        DynaActionForm actionForm = (DynaActionForm) form;
-        String executionYearID = (String) actionForm.get("executionYearID");
-        IUserView userView = SessionUtils.getUserView(request);
-        List executionYears = null;
-        List degreeCurricularPlans = null;
+    public ActionForward chooseDegreeCurricularPlan(final ActionMapping mapping, final ActionForm form,
+	    final HttpServletRequest request, final HttpServletResponse response)
+	    throws FenixFilterException, FenixServiceException {
 
-        try {
-            executionYears = (List) ServiceUtils.executeService(userView, "ReadNotClosedExecutionYears",
-                    new Object[] {});
-            if (executionYearID != null && executionYearID.length() > 0) {
-                Object[] args = new Object[] { new Integer(executionYearID) };
-                degreeCurricularPlans = (List) ServiceUtils.executeService(userView,
-                        "ReadActiveDegreeCurricularPlansByExecutionYear", args);
-            }
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
+	final String executionYearOID = (String) ((DynaActionForm) form).get("executionYearID");
+        final ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(Integer.valueOf(executionYearOID));
+        final IUserView userView = SessionUtils.getUserView(request);
         
-        List labelValueDegreeCurricularPlans = null; 
+        final ComparatorChain comparatorChain = new ComparatorChain();
+        comparatorChain.addComparator(new BeanComparator("degree.degreeType"));
+        comparatorChain.addComparator(new BeanComparator("degree.name"));
+        comparatorChain.addComparator(new BeanComparator("name"));
         
-        if (degreeCurricularPlans != null) {
-            ComparatorChain comparatorChain = new ComparatorChain();
-            comparatorChain.addComparator(new BeanComparator("infoDegree.tipoCurso"));
-            comparatorChain.addComparator(new BeanComparator("infoDegree.nome"));
-            comparatorChain.addComparator(new BeanComparator("name"));
-            Collections.sort(degreeCurricularPlans, comparatorChain);
+        final SortedSet<DegreeCurricularPlan> degreeCurricularPlans = new TreeSet<DegreeCurricularPlan>(comparatorChain);
+        degreeCurricularPlans.addAll(executionYear.getDegreeCurricularPlans());
 
-            labelValueDegreeCurricularPlans = (List) CollectionUtils.collect(degreeCurricularPlans,
-                    new Transformer() {
-                        public Object transform(Object obj) {
-                            InfoDegreeCurricularPlan infoDegreeCurricularPlan = (InfoDegreeCurricularPlan) obj;
-                            LabelValueBean valueBean = new LabelValueBean(infoDegreeCurricularPlan
-                                    .getInfoDegree().getNome()
-                                    + " - " + infoDegreeCurricularPlan.getName(),
-                                    infoDegreeCurricularPlan.getIdInternal().toString());
-                            return valueBean;
-                        }
-                    });
-        }
-                
+        final List<LabelValueBean> labelValueDegreeCurricularPlans = new ArrayList<LabelValueBean>(degreeCurricularPlans.size()); 
+        for (final DegreeCurricularPlan degreeCurricularPlan : degreeCurricularPlans) {
+            labelValueDegreeCurricularPlans.add(
+        	    new LabelValueBean(
+        		    degreeCurricularPlan.getDegree().getName() + " - " + degreeCurricularPlan.getName(),
+        		    degreeCurricularPlan.getIdInternal().toString()));
+	}
+        
         request.setAttribute("degreeCurricularPlans", labelValueDegreeCurricularPlans);
-        request.setAttribute("executionYears", executionYears);
+        request.setAttribute("executionYears", ServiceUtils.executeService(userView, "ReadNotClosedExecutionYears", new Object[] {}));
+
         return mapping.findForward("chooseExecutionYear");
     }
 
@@ -107,10 +90,10 @@ public class DegreeCurricularPlanExecutionYearDispacthAction extends FenixDispat
         String executionYearID = (String) actionForm.get("executionYearID");
         request.setAttribute("executionYearID", executionYearID);
         String degreeCurricularPlanID = (String) actionForm.get("degreeCurricularPlanID");
-        Object[] args2 = { new Integer(degreeCurricularPlanID), new Integer(executionYearID) };
+        Object[] args = { Integer.valueOf(degreeCurricularPlanID), Integer.valueOf(executionYearID) };
 
         final SortedSet<DegreeModuleScope> degreeModuleScopes = (SortedSet<DegreeModuleScope>)
-                executeService(request, "ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear", args2);
+                executeService(request, "ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear", args);
         final ActionErrors errors = new ActionErrors();
         if (degreeModuleScopes.isEmpty()) {
             errors.add("noDegreeCurricularPlan", new ActionError("error.nonExisting.AssociatedCurricularCourses"));
