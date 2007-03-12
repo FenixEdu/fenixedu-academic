@@ -28,25 +28,26 @@ public class EnrolmentInSpecialSeasonEvaluationExecutor extends CurricularRuleEx
 	final Enrolment enrolment = enrolmentInSpecialSeasonEvaluation.getEnrolment();
 	final DegreeModule degreeModule = enrolment.getDegreeModule();
 	
-	if (enrolment.hasSpecialSeason()) {
-	    return RuleResult.createFalse("curricularRules.rulesExecutor.EnrolmentInSpecialSeasonEvaluationExecutor.already.enroled.in.special.season", degreeModule.getName());
+	if (enrolment.hasSpecialSeasonInExecutionYear()) {
+	    return RuleResult.createFalse("curricularRules.ruleExecutors.EnrolmentInSpecialSeasonEvaluationExecutor.already.enroled.in.special.season", degreeModule.getName(), enrolment.getExecutionYear().getYear());
 	}
 	
 	if (enrolment.isApproved()) {
-	    return RuleResult.createFalse("curricularRules.rulesExecutor.EnrolmentInSpecialSeasonEvaluationExecutor.degree.module.has.been.approved", degreeModule.getName());
+	    return RuleResult.createFalse("curricularRules.ruleExecutors.EnrolmentInSpecialSeasonEvaluationExecutor.degree.module.has.been.approved", degreeModule.getName());
 	}
 	
 	final Registration registration = enrolment.getRegistration();
 	final ExecutionYear executionYear = enrolment.getExecutionPeriod().getExecutionYear();
 	final SpecialSeasonCode specialSeasonCode = registration.getSpecialSeasonCodeByExecutionYear(executionYear);
 	if (specialSeasonCode == null) {
-	    return RuleResult.createFalse("curricularRules.rulesExecutor.EnrolmentInSpecialSeasonEvaluationExecutor.no.specialSeason.code");
+	    return RuleResult.createFalse("curricularRules.ruleExecutors.EnrolmentInSpecialSeasonEvaluationExecutor.no.specialSeason.code");
 	}
 
 	final Integer maxEnrolments = specialSeasonCode.getMaxEnrolments();
-	if (maxEnrolments < 
-		registration.getActiveStudentCurricularPlan().getSpecialSeasonEnrolments(executionYear).size()) {
-	    return RuleResult.createFalse("curricularRules.rulesExecutor.EnrolmentInSpecialSeasonEvaluationExecutor.too.many.specialSeason.enrolments", maxEnrolments.toString());
+	final int sum = registration.getActiveStudentCurricularPlan().getSpecialSeasonEnrolments(executionYear).size() + enrolmentContext.getDegreeModuleToEvaluate().size();
+	
+	if (maxEnrolments < sum) {
+	    return RuleResult.createFalse("curricularRules.ruleExecutors.EnrolmentInSpecialSeasonEvaluationExecutor.too.many.specialSeason.enrolments", specialSeasonCode.getSituation(), maxEnrolments.toString());
 	}
 	
 	return RuleResult.createTrue();

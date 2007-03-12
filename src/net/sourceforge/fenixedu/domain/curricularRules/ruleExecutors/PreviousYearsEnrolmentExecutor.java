@@ -29,7 +29,7 @@ public class PreviousYearsEnrolmentExecutor extends CurricularRuleExecutor {
 	final GenericPair<Boolean, Integer> result = isValidEnrolment(enrolmentInformation,
 		enrolmentContext);
 	return result.getLeft() ? RuleResult.createTrue() : RuleResult.createFalse(
-		"curricularRules.rulesExecutor.PreviousYearsEnrolmentExecutor", String.valueOf(result
+		"curricularRules.ruleExecutors.PreviousYearsEnrolmentExecutor", String.valueOf(result
 			.getRight()));
     }
 
@@ -42,7 +42,7 @@ public class PreviousYearsEnrolmentExecutor extends CurricularRuleExecutor {
 		enrolmentContext);
 	if (!result.getLeft()) {
 	    return RuleResult.createFalse(
-		    "curricularRules.rulesExecutor.PreviousYearsEnrolmentExecutor", String
+		    "curricularRules.ruleExecutors.PreviousYearsEnrolmentExecutor", String
 			    .valueOf(result.getRight()));
 	}
 	return isTemporaryEnrolment(enrolmentInformation, enrolmentContext) ? RuleResult
