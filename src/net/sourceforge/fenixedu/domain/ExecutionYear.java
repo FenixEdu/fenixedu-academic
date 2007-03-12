@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -256,6 +257,16 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable {
 
 	return result;
 
+    }
+
+    public Collection<DegreeCurricularPlan> getDegreeCurricularPlans() {
+	final Collection<DegreeCurricularPlan> result = new HashSet<DegreeCurricularPlan>();
+	
+	for (final ExecutionDegree executionDegree : getExecutionDegreesSet()) {
+	    result.add(executionDegree.getDegreeCurricularPlan());
+	}
+	
+	return result;
     }
 
 }
