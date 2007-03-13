@@ -66,11 +66,15 @@ public class CreditsLimitExecutor extends CurricularRuleExecutor {
     }
 
     private Double calculateEctsCreditsFromToEnrolCurricularCourses(final EnrolmentContext enrolmentContext, final CreditsLimit rule) {
-	BigDecimal result = BigDecimal.ZERO;
 	final CourseGroup courseGroup = (CourseGroup) rule.getDegreeModuleToApplyRule();
 	final ExecutionPeriod executionPeriod = enrolmentContext.getExecutionPeriod();
-	for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : collectDegreeModuleToEnrolFromCourseGroup(enrolmentContext, courseGroup)) {
-	    result = result.add(new BigDecimal(degreeModuleToEvaluate.getEctsCredits(executionPeriod)));
+	
+	BigDecimal result = BigDecimal.ZERO;
+	for (final DegreeModule degreeModule : courseGroup.collectAllChildDegreeModules(CurricularCourse.class, executionPeriod)) {
+	    final IDegreeModuleToEvaluate degreeModuleToEvaluate = searchDegreeModuleToEvaluate(enrolmentContext, degreeModule);
+	    if (degreeModuleToEvaluate != null && !degreeModuleToEvaluate.isEnroled()) {
+		result = result.add(new BigDecimal(degreeModuleToEvaluate.getEctsCredits(executionPeriod)));
+	    }
 	}
 	return Double.valueOf(result.doubleValue());
     }
@@ -125,7 +129,15 @@ public class CreditsLimitExecutor extends CurricularRuleExecutor {
 		ectsCredits = Double.valueOf(ectsCredits.doubleValue()
 			+ curriculumModule.getEnroledEctsCredits(executionPeriod.getPreviousExecutionPeriod()).doubleValue());
 
-		return rule.creditsExceedMaximum(ectsCredits) ? RuleResult.createTrue(EnrolmentResultType.TEMPORARY) : RuleResult.createTrue();
+		if (rule.creditsExceedMaximum(ectsCredits)) { 
+		    return RuleResult.createTrue(EnrolmentResultType.TEMPORARY, 
+			    "curricularRules.ruleExecutors.CreditsLimitExecutor.exceeded.maximum.credits.limit",
+			    ectsCredits.toString(),
+			    rule.getMaximumCredits().toString(),
+			    curriculumModule.getName().getContent());
+		} else {
+		    return RuleResult.createTrue();
+		}
 
 	    } else { // is enrolling now
 		return RuleResult.createNA();
