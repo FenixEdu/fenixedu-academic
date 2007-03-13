@@ -15,10 +15,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 
 import org.apache.struts.action.ActionError;
@@ -184,4 +185,23 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
 
         return viewTeam(mapping, form, request, response);
     }
+    
+    public ActionForward selectThesisCoordinationTeam(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
+            FenixServiceException, FenixFilterException {
+        Integer degreeCurricularPlanID = null;
+        if (request.getParameter("degreeCurricularPlanID") != null) {
+            degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+            request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+        }
+
+        Integer executionDegreeID = new Integer(request.getParameter("infoExecutionDegreeId"));
+        request.setAttribute("executionDegreeId", executionDegreeID);
+        
+        ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeID);
+        request.setAttribute("coordinators", executionDegree.getCoordinatorsList());
+        
+        return mapping.findForward("editThesisCoordinationTeam");
+    }
+    
 }

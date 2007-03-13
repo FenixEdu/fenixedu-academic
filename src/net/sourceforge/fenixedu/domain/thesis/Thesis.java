@@ -4,17 +4,21 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.GradeScale;
+import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.EvaluationType;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.joda.time.DateTime;
 
@@ -228,17 +232,31 @@ public class Thesis extends Thesis_Base {
     }
     
     public Collection<ThesisCondition> getGeneralConditions() {
+        List<ThesisCondition> result = new ArrayList<ThesisCondition>();
+        
         Person orientator = getOrientator();
         Person coorientator = getCoorientator();
         Person president = getPresident();
+
+        // check for duplicated persons
+        List<Person> persons = Arrays.asList(orientator, coorientator, president);
+        persons.addAll(getVowels());
         
-        if (orientator != null && coorientator == null && president != null) {
-            if (getVowels().isEmpty()) {
-                return Arrays.asList(new ThesisCondition("thesis.condition.people.number.exceeded"));
+        Set<Person> personSet = new HashSet<Person>();
+        for (Person person : persons) {
+            if (person != null && !personSet.add(person)) {
+                result.add(new ThesisCondition("thesis.condition.people.repeated"));
+                break;
             }
         }
         
-        return Arrays.asList();
+        if (orientator != null && coorientator == null && president != null) {
+            if (getVowels().isEmpty()) {
+                result.add(new ThesisCondition("thesis.condition.people.number.few"));
+            }
+        }
+        
+        return result;
     }
 
     public List<ThesisCondition> getOrientationConditions() {
@@ -326,4 +344,73 @@ public class Thesis extends Thesis_Base {
         }
     }
 
+    public boolean isWaitingConfirmation() {
+        ThesisState state = getState();
+        
+        return state == ThesisState.APPROVED || state == ThesisState.REVISION;
+    }
+
+    public String getThesisAbstract(String language) {
+        MultiLanguageString thesisAbstract = getThesisAbstract();
+        
+        if (thesisAbstract == null) {
+            return null;
+        }
+        else {
+            Language realLanguage = Language.valueOf(language);
+            String value = thesisAbstract.getContent(realLanguage);
+            
+            if (value == null && value.length() == 0) {
+                return null;
+            }
+            else {
+                return value;
+            }
+        }
+    }
+    
+    public void setThesisAbstract(String language, String text) {
+        MultiLanguageString thesisAbstract = getThesisAbstract();
+        Language realLanguage = Language.valueOf(language);
+        
+        if (thesisAbstract == null) {
+            setThesisAbstract(new MultiLanguageString(realLanguage, text));
+        }
+        else {
+            thesisAbstract.setContent(realLanguage, text);
+            setThesisAbstract(thesisAbstract);
+        }
+    }
+    
+    public String getKeywords(String language) {
+        MultiLanguageString thesisAbstract = getKeywords();
+        
+        if (thesisAbstract == null) {
+            return null;
+        }
+        else {
+            Language realLanguage = Language.valueOf(language);
+            String value = thesisAbstract.getContent(realLanguage);
+            
+            if (value == null && value.length() == 0) {
+                return null;
+            }
+            else {
+                return value;
+            }
+        }
+    }
+    
+    public void setKeywords(String language, String text) {
+        MultiLanguageString keywords = getKeywords();
+        Language realLanguage = Language.valueOf(language);
+        
+        if (keywords == null) {
+            setKeywords(new MultiLanguageString(realLanguage, text));
+        }
+        else {
+            keywords.setContent(realLanguage, text);
+            setKeywords(keywords);
+        }
+    }
 }

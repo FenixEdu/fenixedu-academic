@@ -17,7 +17,7 @@
 </logic:messagesPresent>
 
 <logic:empty name="theses">
-    <bean:message key="label.coordinator.list.draft.empty"/>
+    <bean:message key="label.coordinator.list.confirmed.empty"/>
 </logic:empty>
 
 <logic:notEmpty name="theses">

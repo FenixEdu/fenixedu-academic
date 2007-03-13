@@ -55,11 +55,20 @@
 
 <logic:notEmpty name="thesis" property="orientator">
     <logic:empty name="thesis" property="orientator.externalPerson">
-        <fr:view name="thesis" property="orientator" layout="tabular" schema="thesis.jury.proposal.person">
-            <fr:layout name="tabular">
-                <fr:property name="classes" value="tstyle5 thlight mtop05"/>
-            </fr:layout>
-        </fr:view>
+        <logic:empty name="thesis" property="orientator.teacher">
+            <fr:view name="thesis" property="orientator" layout="tabular" schema="thesis.jury.proposal.person">
+                <fr:layout name="tabular">
+                    <fr:property name="classes" value="tstyle5 thlight mtop05"/>
+                </fr:layout>
+            </fr:view>
+        </logic:empty>
+        <logic:notEmpty name="thesis" property="orientator.teacher">
+            <fr:view name="thesis" property="orientator" layout="tabular" schema="thesis.jury.proposal.person.teacher">
+                <fr:layout name="tabular">
+                    <fr:property name="classes" value="tstyle5 thlight mtop05"/>
+                </fr:layout>
+            </fr:view>
+        </logic:notEmpty>
     </logic:empty>
     <logic:notEmpty name="thesis" property="orientator.externalPerson">
         <fr:view name="thesis" property="orientator" layout="tabular" schema="thesis.jury.proposal.person.external">
@@ -90,11 +99,20 @@
 
 <logic:notEmpty name="thesis" property="coorientator">
     <logic:empty name="thesis" property="coorientator.externalPerson">
-        <fr:view name="thesis" property="coorientator" layout="tabular" schema="thesis.jury.proposal.person">
-            <fr:layout name="tabular">
-                <fr:property name="classes" value="tstyle5 thlight mtop05"/>
-            </fr:layout>
-        </fr:view>
+        <logic:empty name="thesis" property="coorientator.teacher">
+            <fr:view name="thesis" property="coorientator" layout="tabular" schema="thesis.jury.proposal.person">
+                <fr:layout name="tabular">
+                    <fr:property name="classes" value="tstyle5 thlight mtop05"/>
+                </fr:layout>
+            </fr:view>
+        </logic:empty>
+        <logic:notEmpty name="thesis" property="coorientator.teacher">
+            <fr:view name="thesis" property="coorientator" layout="tabular" schema="thesis.jury.proposal.person.teacher">
+                <fr:layout name="tabular">
+                    <fr:property name="classes" value="tstyle5 thlight mtop05"/>
+                </fr:layout>
+            </fr:view>
+        </logic:notEmpty>
     </logic:empty>
     <logic:notEmpty name="thesis" property="coorientator.externalPerson">
         <fr:view name="thesis" property="coorientator" layout="tabular" schema="thesis.jury.proposal.person.external">
@@ -159,11 +177,20 @@
 
 <logic:notEmpty name="thesis" property="president">
     <logic:empty name="thesis" property="president.externalPerson">
-        <fr:view name="thesis" property="president" layout="tabular" schema="thesis.jury.proposal.person">
-            <fr:layout name="tabular">
-                <fr:property name="classes" value="tstyle5 thlight mtop05"/>
-            </fr:layout>
-        </fr:view>
+        <logic:empty name="thesis" property="president.teacher">
+            <fr:view name="thesis" property="president" layout="tabular" schema="thesis.jury.proposal.person">
+                <fr:layout name="tabular">
+                    <fr:property name="classes" value="tstyle5 thlight mtop05"/>
+                </fr:layout>
+            </fr:view>
+        </logic:empty>
+        <logic:notEmpty name="thesis" property="president.teacher">
+            <fr:view name="thesis" property="president" layout="tabular" schema="thesis.jury.proposal.person.teacher">
+                <fr:layout name="tabular">
+                    <fr:property name="classes" value="tstyle5 thlight mtop05"/>
+                </fr:layout>
+            </fr:view>
+        </logic:notEmpty>
     </logic:empty>
     <logic:notEmpty name="thesis" property="president.externalPerson">
         <fr:view name="thesis" property="president" layout="tabular" schema="thesis.jury.proposal.person.external">
@@ -206,19 +233,21 @@
 <logic:notEmpty name="thesis" property="vowels">
     <logic:iterate id="vowel" name="thesis" property="vowels">
         <logic:empty name="vowel" property="externalPerson">
-            <fr:view name="vowel" layout="tabular" schema="thesis.jury.proposal.person">
-                <fr:layout name="tabular">
-                    <fr:property name="classes" value="tstyle5 thlight mtop05"/>
-                </fr:layout>
-            </fr:view>
+            <logic:empty name="vowel" property="teacher">
+                <fr:view name="vowel" layout="tabular" schema="thesis.jury.proposal.person">
+                    <fr:layout name="tabular">
+                        <fr:property name="classes" value="tstyle5 thlight mtop05"/>
+                    </fr:layout>
+                </fr:view>
+            </logic:empty>
+            <logic:notEmpty name="vowel" property="teacher">
+                <fr:view name="vowel" layout="tabular" schema="thesis.jury.proposal.person.teacher">
+                    <fr:layout name="tabular">
+                        <fr:property name="classes" value="tstyle5 thlight mtop05"/>
+                    </fr:layout>
+                </fr:view>
+            </logic:notEmpty>
         </logic:empty>
-        <logic:notEmpty name="vowel" property="externalPerson">
-            <fr:view name="vowel" layout="tabular" schema="thesis.jury.proposal.person.external">
-                <fr:layout name="tabular">
-                    <fr:property name="classes" value="tstyle5 thlight mtop05"/>
-                </fr:layout>
-            </fr:view>
-        </logic:notEmpty>
     
         <bean:define id="vowelId" name="vowel" property="idInternal"/>
         

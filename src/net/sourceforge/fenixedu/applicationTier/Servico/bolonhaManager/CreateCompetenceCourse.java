@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingCompetenceCourseInformationException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
+import net.sourceforge.fenixedu.domain.CompetenceCourseType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLevel;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
@@ -16,7 +17,7 @@ import net.sourceforge.fenixedu.util.StringFormatter;
 public class CreateCompetenceCourse extends Service {
 
     public CompetenceCourse run(String name, String nameEn, String acronym, Boolean basic,
-            RegimeType regimeType, CompetenceCourseLevel competenceCourseLevel, Integer unitID)
+            RegimeType regimeType, CompetenceCourseLevel competenceCourseLevel, CompetenceCourseType type, Integer unitID)
             throws FenixServiceException {
 
         final Unit unit = (Unit) rootDomainObject.readPartyByOID(unitID);
@@ -24,7 +25,7 @@ public class CreateCompetenceCourse extends Service {
             throw new FenixServiceException("error.invalidUnit");
         }
         checkIfCanCreateCompetenceCourse(name.trim(), nameEn.trim());
-        return new CompetenceCourse(name, nameEn, basic, regimeType, competenceCourseLevel, CurricularStage.DRAFT, unit);
+        return new CompetenceCourse(name, nameEn, basic, regimeType, competenceCourseLevel, type, CurricularStage.DRAFT, unit);
     }
 
     private void checkIfCanCreateCompetenceCourse(final String name, final String nameEn)

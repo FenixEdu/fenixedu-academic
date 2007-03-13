@@ -9,6 +9,11 @@
 </schema>
 
 <schema name="thesis.jury.proposal.person" type="net.sourceforge.fenixedu.domain.Person">
+    <slot name="istUsername" key="label.person.istUsername"/>
+    <slot name="name" key="label.person.name"/>
+</schema>
+
+<schema name="thesis.jury.proposal.person.teacher" type="net.sourceforge.fenixedu.domain.Person">
     <slot name="name" key="label.person.name"/>
     <slot name="teacher.category.name" key="label.teacher.category"/>
     <slot name="teacher.currentWorkingDepartment.realName" key="label.coordinator.thesis.edit.teacher.currentWorkingDepartment"/>
@@ -201,4 +206,9 @@
         </validator>
     </slot>
     <setter signature="confirm(mark, discussed)"/>
+</schema>
+
+<schema name="coordinator.coordination.team.thesis" type="net.sourceforge.fenixedu.domain.Coordinator">
+    <slot name="person.nickname" read-only="true" key="label.coordinator.name"/>
+    <slot name="thesisCoordinator" key="label.coordinator.coordination.team.member"/>
 </schema>

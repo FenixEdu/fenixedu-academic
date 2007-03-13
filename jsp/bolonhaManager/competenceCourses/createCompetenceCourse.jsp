@@ -59,7 +59,7 @@
 --%>		
 		<h:outputText value="<p><label>#{bolonhaBundle['competenceCourseLevel']}: </label>" escape="false"/>
 		<fc:selectOneMenu value="#{CompetenceCourseManagement.competenceCourseLevel}">
-			<f:selectItem itemValue="" itemLabel="#{enumerationBundle['dropDown.Default']}"/>
+			<f:selectItem itemValue="" itemLabel="#{enumerationBundle['dropDown.level.Default']}"/>
 			<f:selectItem itemValue="FIRST_CYCLE" itemLabel="#{enumerationBundle['FIRST_CYCLE']}"/>
 			<f:selectItem itemValue="SECOND_CYCLE" itemLabel="#{enumerationBundle['SECOND_CYCLE']}"/>
 			<f:selectItem itemValue="FORMATION" itemLabel="#{enumerationBundle['FORMATION']}"/>
@@ -68,6 +68,14 @@
 		</fc:selectOneMenu>
 		<h:outputText value="</p>" escape="false"/>
 		
+        <h:outputText value="<p><label>#{bolonhaBundle['competenceCourseType']}: </label>" escape="false"/>
+        <fc:selectOneMenu value="#{CompetenceCourseManagement.competenceCourseType}">
+            <f:selectItem itemValue="" itemLabel="#{enumerationBundle['dropDown.Default']}"/>
+            <f:selectItem itemValue="REGULAR" itemLabel="#{enumerationBundle['REGULAR']}"/>
+            <f:selectItem itemValue="DISSERTATION" itemLabel="#{enumerationBundle['DISSERTATION']}"/>
+        </fc:selectOneMenu>
+        <h:outputText value="</p>" escape="false"/>
+        
 		<h:outputText value="<p><label>#{bolonhaBundle['basic']}: </label>" escape="false"/>
 		<h:selectBooleanCheckbox value="#{CompetenceCourseManagement.basic}"></h:selectBooleanCheckbox>
 		<h:outputText value="</p>" escape="false"/>	

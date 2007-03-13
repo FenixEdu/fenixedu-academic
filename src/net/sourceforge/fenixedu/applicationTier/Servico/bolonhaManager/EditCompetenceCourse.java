@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingCompetenceCourseInformationException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
+import net.sourceforge.fenixedu.domain.CompetenceCourseType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLevel;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
@@ -20,10 +21,10 @@ public class EditCompetenceCourse extends Service {
         competenceCourse.edit(objectives, program, evaluationMethod, objectivesEn, programEn, evaluationMethodEn);        
     }
 
-    public void run(Integer competenceCourseID, String name, String nameEn, Boolean basic, CompetenceCourseLevel competenceCourseLevel, CurricularStage curricularStage) throws FenixServiceException {
+    public void run(Integer competenceCourseID, String name, String nameEn, Boolean basic, CompetenceCourseLevel competenceCourseLevel, CompetenceCourseType type, CurricularStage curricularStage) throws FenixServiceException {
         final CompetenceCourse competenceCourse = readCompetenceCourse(competenceCourseID);
         checkIfCanEditCompetenceCourse(competenceCourse, name.trim(), nameEn.trim());
-        competenceCourse.edit(name, nameEn, basic, competenceCourseLevel, curricularStage);
+        competenceCourse.edit(name, nameEn, basic, competenceCourseLevel, type, curricularStage);
     }
     
     public void run(Integer competenceCourseID, String acronym) throws FenixServiceException {

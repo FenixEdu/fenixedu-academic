@@ -10,10 +10,8 @@ import net.sourceforge.fenixedu.util.MultiLanguageString;
 public class CreateThesisProposal extends Service {
 
     public Thesis run(Integer degreeCurricularPlanId, Student student, MultiLanguageString title, String comment) {
-        // TODO: find thesis enrolment for student
-        // bean.getStudent().getThesisEnrolment();
         DegreeCurricularPlan dcp = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanId);
-        Thesis thesis = new Thesis(dcp.getDegree(), null);
+        Thesis thesis = new Thesis(dcp.getDegree(), student.getDissertationEnrolment(dcp));
         
         thesis.setTitle(title);
         thesis.setComment(comment);

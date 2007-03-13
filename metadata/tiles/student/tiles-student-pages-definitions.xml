@@ -324,4 +324,14 @@
 	</definition>
 	<!-- End: Bolonha Student Enrolment -->
 	
+    <definition name="thesis-notFound" extends="definition.student.masterPage">
+        <put name="body" value="/student/thesis/notFound.jsp"/>
+    </definition>
+    <definition name="thesis-showState" extends="definition.student.masterPage">
+        <put name="body" value="/student/thesis/showState.jsp"/>
+    </definition>
+    <definition name="thesis-submit" extends="definition.student.masterPage">
+        <put name="body" value="/student/thesis/submit.jsp"/>
+    </definition>
+    
 </tiles-definitions>

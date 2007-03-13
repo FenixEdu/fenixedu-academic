@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Servico.thesis.ChangeThesisPerson.PersonChange;
 import net.sourceforge.fenixedu.applicationTier.Servico.thesis.ChangeThesisPerson.PersonTarget;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -95,12 +96,12 @@ public class ManageThesisDA extends FenixDispatchAction {
             DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
             
             if (student.isCurrentlyEnroled(degreeCurricularPlan)) {
-//                Enrolment enrolment = student.getDissertationEnrolment();
-//
-//                if (enrolment != null) {
-//                    Thesis thesis = enrolment.getThesis();
-//                    
-//                    if (thesis == null) {
+                Enrolment enrolment = student.getDissertationEnrolment(degreeCurricularPlan);
+
+                if (enrolment != null) {
+                    Thesis thesis = enrolment.getThesis();
+                    
+                    if (thesis == null) {
 //                        ProposalAssignment assignment = enrolment.getThesisProposalAssignment();
 //                        
 //                        if (assignment != null) {
@@ -111,17 +112,17 @@ public class ManageThesisDA extends FenixDispatchAction {
                             request.setAttribute("proposeStartProcess", true);
                             return mapping.findForward("search-student");
 //                        }
-//                    }
-//                    else {
-//                        request.setAttribute("hasThesis", true);
-//                        request.setAttribute("thesis", thesis);
-//                        return mapping.findForward("search-student");
-//                    }
-//                }
-//                else {
-//                    addActionMessage(request, "thesis.selectStudent.dissertation.notEnroled");
-//                    return mapping.findForward("search-student");
-//                }
+                    }
+                    else {
+                        request.setAttribute("hasThesis", true);
+                        request.setAttribute("thesis", thesis);
+                        return mapping.findForward("search-student");
+                    }
+                }
+                else {
+                    addActionMessage(request, "thesis.selectStudent.dissertation.notEnroled");
+                    return mapping.findForward("search-student");
+                }
             }
             else {
                 addActionMessage(request, "thesis.selectStudent.degreeCurricularPlan.notEnroled", degreeCurricularPlan.getName());
@@ -567,4 +568,16 @@ public class ManageThesisDA extends FenixDispatchAction {
         
         return listConfirmed(mapping, actionForm, request, response);
     }
+
+    public ActionForward listEvaluated(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
+        
+        request.setAttribute("theses", Thesis.getEvaluatedThesis(degreeCurricularPlan.getDegree()));
+        return mapping.findForward("list-evaluated");
+    }
+    
+    public ActionForward viewEvaluated(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        return mapping.findForward("view-evaluated");
+    }
+    
 }

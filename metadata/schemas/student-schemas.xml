@@ -143,3 +143,48 @@
 <schema name="Student.editPersonalDataAuthorizationChoiceForCurrentExecutionYear" type="net.sourceforge.fenixedu.domain.student.Student" bundle="APPLICATION_RESOURCES">
 	<slot name="personalDataAuthorizationForCurrentExecutionYear" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 </schema>
+
+<schema name="student.thesis.details" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
+    <slot name="title"/>
+    <slot name="orientator" layout="null-as-label" key="label.thesis.orientator">
+        <property name="key" value="label.thesis.field.empty"/>
+        <property name="subLayout" value="values"/>
+        <property name="subSchema" value="student.thesis.person.name"/>
+    </slot>
+    <slot name="coorientator" layout="null-as-label" key="label.thesis.coorientator">
+        <property name="key" value="label.thesis.field.empty"/>
+        <property name="subLayout" value="values"/>
+        <property name="subSchema" value="student.thesis.person.name"/>
+    </slot>
+</schema>
+
+<schema name="student.thesis.details.abstract" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
+    <slot name="thesisAbstract(pt)" layout="null-as-label" key="label.thesis.abstract.pt">
+        <property name="key" value="label.thesis.field.empty"/>
+    </slot>
+    <slot name="thesisAbstract(en)" layout="null-as-label" key="label.thesis.abstract.en">
+        <property name="key" value="label.thesis.field.empty"/>
+    </slot>
+</schema>
+
+<schema name="student.thesis.details.keywords" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
+    <slot name="keywords(pt)" layout="null-as-label" key="label.thesis.keywords.pt">
+        <property name="key" value="label.thesis.field.empty"/>
+    </slot>
+    <slot name="keywords(en)" layout="null-as-label" key="label.thesis.keywords.pt">
+        <property name="key" value="label.thesis.field.empty"/>
+    </slot>
+</schema>
+
+<schema name="student.thesis.person.name" type="net.sourceforge.fenixedu.domain.Person">
+    <slot name="nickname"/>
+</schema>
+
+<schema name="student.thesis.file" type="net.sourceforge.fenixedu.domain.thesis.ThesisFile">
+    <slot name="displayName" layout="link" key="label.thesis.file.name">
+        <property name="userParent" value="true"/>
+        <property name="linkFormat" value="${donwloadUrl}"/>
+    </slot>
+    <slot name="size" layout="fileSize" key="label.thesis.file.size"/>
+    <slot name="uploadTime" key="label.thesis.file.name.uploadTime"/>
+</schema>

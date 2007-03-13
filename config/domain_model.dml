@@ -181,8 +181,8 @@ valueType net.sourceforge.fenixedu.domain.FrequencyType															as Frequen
 valueType net.sourceforge.fenixedu.domain.RequestState															as RequestState;
 valueType net.sourceforge.fenixedu.domain.assiduousness.util.ScheduleClockingType								as ScheduleClockingType;
 valueType net.sourceforge.fenixedu.domain.util.EmailAddressList								                    as EmailAddressList;
-valueType net.sourceforge.fenixedu.domain.thesis.ThesisState								                    as ThesisState;
-
+valueType net.sourceforge.fenixedu.domain.thesis.ThesisState								                        as ThesisState;
+valueType net.sourceforge.fenixedu.domain.CompetenceCourseType								                    as CompetenceCourseType;
 
 /*
 *
@@ -843,6 +843,7 @@ class net.sourceforge.fenixedu.domain.Coordinator extends net.sourceforge.fenixe
 	Integer keyExecutionDegree;
 	Integer keyPerson;
 	Boolean responsible;
+	Boolean thesisCoordinator;
 }
 
 class net.sourceforge.fenixedu.domain.Country extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -1301,6 +1302,7 @@ class net.sourceforge.fenixedu.domain.CompetenceCourse extends net.sourceforge.f
 	CurricularStage curricularStage;
 	YearMonthDay creationDateYearMonthDay;
 	Integer keyValuationCompetenceCourse;
+	CompetenceCourseType type;
 }
 
 

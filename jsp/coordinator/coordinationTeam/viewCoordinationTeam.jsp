@@ -1,7 +1,10 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
-<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
+
+<html:xhtml/>
+
 <bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" scope="request" />
 
 
@@ -11,7 +14,9 @@
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="removeCoordinators" />
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanID" property="degreeCurricularPlanID" value="<%= degreeCurricularPlanID.toString() %>"/>
 <table>
-<tr><th class="listClasses-header">Nome</th>
+<tr>
+<th class="listClasses-header"><bean:message key="label.coordinator.name"/></th>
+<th class="listClasses-header"><bean:message key="label.coordinator.thesisTeam"/></th>
 	<th class="listClasses-header">
    <logic:equal name="isResponsible" value="true">
    <bean:message key="label.remove"/>
@@ -22,6 +27,10 @@
 <tr>
 	<td class="listClasses"><bean:write name="coordinator" property="infoPerson.nome" /> 
 	
+	</td>
+    
+	<td class="listClasses">
+        <fr:view name="coordinator" property="coordinator.thesisCoordinator" /> 
 	</td>
    
 	<td class="listClasses">
@@ -50,11 +59,18 @@
 <br/>
 <br/>
 
+<p>
 <html:link 
 	page="<%= "/viewCoordinationTeam.do?method=prepareAddCoordinator&infoExecutionDegreeId="+ 
 	infoExecutionDegreeId.toString() + "&amp;degreeCurricularPlanID=" + degreeCurricularPlanID %>" >
 	<bean:message key="title.addCoordinator"/>
 	</html:link>
+</p>
+<p>
+    <html:link page="<%= String.format("/viewCoordinationTeam.do?method=selectThesisCoordinationTeam&amp;infoExecutionDegreeId=%s&amp;degreeCurricularPlanID=%s", infoExecutionDegreeId, degreeCurricularPlanID) %>">
+        <bean:message key="link.coordinator.define.thesisCoordination"/>
+    </html:link>
+</p>
 </logic:equal>	
 </html:form>
 </logic:present>

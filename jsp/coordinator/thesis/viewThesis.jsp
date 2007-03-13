@@ -24,16 +24,6 @@
     </li>
 </ul>
 
-<%--  general problems about the proposal --%>
-<logic:notEmpty name="generalConditions">
-    <logic:iterate id="condition" name="generalConditions">
-        <p>
-            <bean:define id="key" name="condition" property="key" type="java.lang.String"/>
-            <bean:message key="<%= key %>"/>
-        </p>
-    </logic:iterate>
-</logic:notEmpty>
-
 <%-- Student information--%>
 <h3><bean:message key="title.coordinator.thesis.edit.section.student"/></h3>
 
@@ -47,16 +37,6 @@
 <%-- Orientation --%>
 <h3><bean:message key="title.coordinator.thesis.edit.section.orientation"/></h3>
 
-<%--  problems about the orientation --%>
-<logic:notEmpty name="orientationConditions">
-    <logic:iterate id="condition" name="orientationConditions">
-        <p>
-            <bean:define id="key" name="condition" property="key" type="java.lang.String"/>
-            <bean:message key="<%= key %>"/>
-        </p>
-    </logic:iterate>
-</logic:notEmpty>
-
 <%-- Orientator --%>
 <h4><bean:message key="title.coordinator.thesis.edit.section.orientation.orientator"/></h4>
 
@@ -68,11 +48,20 @@
 
 <logic:notEmpty name="thesis" property="orientator">
     <logic:empty name="thesis" property="orientator.externalPerson">
-        <fr:view name="thesis" property="orientator" layout="tabular" schema="thesis.jury.proposal.person">
-            <fr:layout name="tabular">
-                <fr:property name="classes" value="tstyle5 thlight mtop05"/>
-            </fr:layout>
-        </fr:view>
+        <logic:empty name="thesis" property="orientator.teacher">
+            <fr:view name="thesis" property="orientator" layout="tabular" schema="thesis.jury.proposal.person">
+                <fr:layout name="tabular">
+                    <fr:property name="classes" value="tstyle5 thlight mtop05"/>
+                </fr:layout>
+            </fr:view>
+        </logic:empty>
+        <logic:notEmpty name="thesis" property="orientator.teacher">
+            <fr:view name="thesis" property="orientator" layout="tabular" schema="thesis.jury.proposal.person.teacher">
+                <fr:layout name="tabular">
+                    <fr:property name="classes" value="tstyle5 thlight mtop05"/>
+                </fr:layout>
+            </fr:view>
+        </logic:notEmpty>
     </logic:empty>
     <logic:notEmpty name="thesis" property="orientator.externalPerson">
         <fr:view name="thesis" property="orientator" layout="tabular" schema="thesis.jury.proposal.person.external">
@@ -94,11 +83,20 @@
 
 <logic:notEmpty name="thesis" property="coorientator">
     <logic:empty name="thesis" property="coorientator.externalPerson">
-        <fr:view name="thesis" property="coorientator" layout="tabular" schema="thesis.jury.proposal.person">
-            <fr:layout name="tabular">
-                <fr:property name="classes" value="tstyle5 thlight mtop05"/>
-            </fr:layout>
-        </fr:view>
+        <logic:empty name="thesis" property="coorientator.teacher">
+            <fr:view name="thesis" property="coorientator" layout="tabular" schema="thesis.jury.proposal.person">
+                <fr:layout name="tabular">
+                    <fr:property name="classes" value="tstyle5 thlight mtop05"/>
+                </fr:layout>
+            </fr:view>
+        </logic:empty>
+        <logic:notEmpty name="thesis" property="coorientator.teacher">
+            <fr:view name="thesis" property="coorientator" layout="tabular" schema="thesis.jury.proposal.person.teacher">
+                <fr:layout name="tabular">
+                    <fr:property name="classes" value="tstyle5 thlight mtop05"/>
+                </fr:layout>
+            </fr:view>
+        </logic:notEmpty>
     </logic:empty>
     <logic:notEmpty name="thesis" property="coorientator.externalPerson">
         <fr:view name="thesis" property="coorientator" layout="tabular" schema="thesis.jury.proposal.person.external">
@@ -132,16 +130,6 @@
 <%-- Jury/President --%>
 <h4><bean:message key="title.coordinator.thesis.edit.section.jury.president"/></h4>
 
-<%--  problems about the president --%>
-<logic:notEmpty name="presidentConditions">
-    <logic:iterate id="condition" name="presidentConditions">
-        <p>
-            <bean:define id="key" name="condition" property="key" type="java.lang.String"/>
-            <bean:message key="<%= key %>"/>
-        </p>
-    </logic:iterate>
-</logic:notEmpty>
-
 <logic:empty name="thesis" property="president">
     <p>
         <bean:message key="title.coordinator.thesis.edit.president.empty"/>
@@ -150,11 +138,20 @@
 
 <logic:notEmpty name="thesis" property="president">
     <logic:empty name="thesis" property="president.externalPerson">
-        <fr:view name="thesis" property="president" layout="tabular" schema="thesis.jury.proposal.person">
-            <fr:layout name="tabular">
-                <fr:property name="classes" value="tstyle5 thlight mtop05"/>
-            </fr:layout>
-        </fr:view>
+        <logic:empty name="thesis" property="president.teacher">
+            <fr:view name="thesis" property="president" layout="tabular" schema="thesis.jury.proposal.person">
+                <fr:layout name="tabular">
+                    <fr:property name="classes" value="tstyle5 thlight mtop05"/>
+                </fr:layout>
+            </fr:view>
+        </logic:empty>
+        <logic:notEmpty name="thesis" property="president.teacher">
+            <fr:view name="thesis" property="president" layout="tabular" schema="thesis.jury.proposal.person.teacher">
+                <fr:layout name="tabular">
+                    <fr:property name="classes" value="tstyle5 thlight mtop05"/>
+                </fr:layout>
+            </fr:view>
+        </logic:notEmpty>
     </logic:empty>
     <logic:notEmpty name="thesis" property="president.externalPerson">
         <fr:view name="thesis" property="president" layout="tabular" schema="thesis.jury.proposal.person.external">
@@ -168,16 +165,6 @@
 <%-- Jury/"Vowels" --%>
 <h4><bean:message key="title.coordinator.thesis.edit.section.vowels"/></h4>
 
-<%--  problems about the president --%>
-<logic:notEmpty name="vowelsConditions">
-    <logic:iterate id="condition" name="vowelsConditions">
-        <p>
-            <bean:define id="key" name="condition" property="key" type="java.lang.String"/>
-            <bean:message key="<%= key %>"/>
-        </p>
-    </logic:iterate>
-</logic:notEmpty>
-
 <logic:empty name="thesis" property="vowels">
     <p>
         <bean:message key="title.coordinator.thesis.edit.vowels.empty"/>
@@ -187,18 +174,21 @@
 <logic:notEmpty name="thesis" property="vowels">
     <logic:iterate id="vowel" name="thesis" property="vowels">
         <logic:empty name="vowel" property="externalPerson">
-            <fr:view name="vowel" layout="tabular" schema="thesis.jury.proposal.person">
-                <fr:layout name="tabular">
-                    <fr:property name="classes" value="tstyle5 thlight mtop05"/>
-                </fr:layout>
-            </fr:view>
+            <logic:empty name="vowel" property="teacher">
+                <fr:view name="vowel" layout="tabular" schema="thesis.jury.proposal.person">
+                    <fr:layout name="tabular">
+                        <fr:property name="classes" value="tstyle5 thlight mtop05"/>
+                    </fr:layout>
+                </fr:view>
+            </logic:empty>
+            <logic:notEmpty name="vowel" property="teacher">
+                <fr:view name="vowel" layout="tabular" schema="thesis.jury.proposal.person.teacher">
+                    <fr:layout name="tabular">
+                        <fr:property name="classes" value="tstyle5 thlight mtop05"/>
+                    </fr:layout>
+                </fr:view>
+            </logic:notEmpty>
         </logic:empty>
-        <logic:notEmpty name="vowel" property="externalPerson">
-            <fr:view name="vowel" layout="tabular" schema="thesis.jury.proposal.person.external">
-                <fr:layout name="tabular">
-                    <fr:property name="classes" value="tstyle5 thlight mtop05"/>
-                </fr:layout>
-            </fr:view>
-        </logic:notEmpty>
     </logic:iterate>
 </logic:notEmpty>
+

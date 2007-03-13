@@ -12,6 +12,8 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.dataTransferObject.student.StudentStatuteBean;
 import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.CompetenceCourse;
+import net.sourceforge.fenixedu.domain.CompetenceCourseType;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -601,4 +603,38 @@ public class Student extends Student_Base {
         return false;
     }
 
+    public Enrolment getDissertationEnrolment() {
+        return getDissertationEnrolment(null);
+    }
+    
+    public Enrolment getDissertationEnrolment(DegreeCurricularPlan degreeCurricularPlan) {
+        for (Registration registration : getRegistrations()) {
+            if (! registration.isActive()) {
+                continue;
+            }
+            
+            StudentCurricularPlan lastStudentCurricularPlan = registration.getLastStudentCurricularPlan();
+            if (lastStudentCurricularPlan == null) {
+                continue;
+            }
+            
+            if (degreeCurricularPlan != null && lastStudentCurricularPlan.getDegreeCurricularPlan() != degreeCurricularPlan) {
+                continue;
+            }
+
+            for (Enrolment enrolment : lastStudentCurricularPlan.getEnrolments()) {
+                CompetenceCourse competenceCourse = enrolment.getCurricularCourse().getCompetenceCourse();
+                
+                if (competenceCourse == null) {
+                    continue;
+                }
+                
+                if (competenceCourse.getType() == CompetenceCourseType.DISSERTATION) {
+                    return enrolment;
+                }
+            }
+        }
+        
+        return null;
+    }
 }

@@ -26,3 +26,6 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "Add type to competence course" AddTypeToCompetenceCourse.sql
+execute "Add thesis membership to coordinator" AlterCoordinatorTable.sql

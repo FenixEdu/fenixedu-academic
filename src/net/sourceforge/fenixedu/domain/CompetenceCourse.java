@@ -54,10 +54,11 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     public CompetenceCourse(String name, String nameEn, Boolean basic, RegimeType regimeType,
-	    CompetenceCourseLevel competenceCourseLevel, CurricularStage curricularStage, Unit unit) {
+	    CompetenceCourseLevel competenceCourseLevel, CompetenceCourseType type, CurricularStage curricularStage, Unit unit) {
 
 	this();
 	super.setCurricularStage(curricularStage);
+    setType(type);
 
 	if (unit.getType() != PartyTypeEnum.COMPETENCE_COURSE_GROUP) {
 	    throw new DomainException("");
@@ -163,8 +164,10 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     public void edit(String name, String nameEn, Boolean basic,
-	    CompetenceCourseLevel competenceCourseLevel, CurricularStage curricularStage) {
+	    CompetenceCourseLevel competenceCourseLevel, CompetenceCourseType type, CurricularStage curricularStage) {
 	changeCurricularStage(curricularStage);
+    setType(type);
+    
 	getRecentCompetenceCourseInformation().edit(name.trim(), nameEn.trim(), basic,
 		competenceCourseLevel);
 

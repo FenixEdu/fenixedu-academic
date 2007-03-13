@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
+import net.sourceforge.fenixedu.injectionCode.Checked;
+
 public class Coordinator extends Coordinator_Base {
 
     public Coordinator() {
@@ -40,4 +42,10 @@ public class Coordinator extends Coordinator_Base {
         return false;
     }
 
+    @Override
+    @Checked("CoordinationPredicates.responsible")
+    public void setThesisCoordinator(Boolean thesisCoordinator) {
+        super.setThesisCoordinator(thesisCoordinator);
+    }
+    
 }

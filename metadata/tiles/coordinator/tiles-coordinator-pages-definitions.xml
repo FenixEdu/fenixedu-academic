@@ -6,6 +6,9 @@
 	<definition name="coordinationTeam" extends="definition.coordinator.two-column">
 		<put name="body" value="/coordinator/coordinationTeam/viewCoordinationTeam.jsp" />
 	</definition>
+	<definition name="editThesisCoordinationTeam" extends="definition.coordinator.two-column">
+		<put name="body" value="/coordinator/coordinationTeam/editThesisCoordinationTeam.jsp" />
+	</definition>
 	<definition name="chooseExecutionYear" extends="definition.coordinator.two-column">
 		<put name="body" value="/coordinator/coordinationTeam/chooseExecutionYear.jsp" />
 	</definition>
@@ -317,5 +320,11 @@
     </definition>
     <definition name="thesis-confirm-revision" extends="definition.coordinator.two-column">
         <put name="body" value="/coordinator/thesis/confirmRevision.jsp"/>
+    </definition>
+    <definition name="thesis-list-evaluated" extends="definition.coordinator.two-column">
+        <put name="body" value="/coordinator/thesis/listEvaluated.jsp"/>
+    </definition>
+    <definition name="thesis-view-evaluated" extends="definition.coordinator.two-column">
+        <put name="body" value="/coordinator/thesis/viewEvaluated.jsp"/>
     </definition>
 </tiles-definitions>

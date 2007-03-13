@@ -920,6 +920,11 @@
 		
 		<!-- End : Bolonha Student Enrollment -->
 		
+        <action path="/thesisSubmission" type="net.sourceforge.fenixedu.presentationTier.Action.student.thesis.ThesisSubmissionDA" parameter="method">
+			<forward name="thesis-notFound" path="thesis.notFound" />
+			<forward name="thesis-showState" path="thesis.notFound" />
+			<forward name="thesis-submit" path="thesis.notFound" />
+        </action>
 		
 		
   		

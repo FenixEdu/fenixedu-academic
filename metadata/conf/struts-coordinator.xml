@@ -616,6 +616,7 @@
 	         <forward name="coordinationTeam" path="coordinationTeam" /> 
 	         <forward name="addCoordinator" path="addCoordinator" />
 	         <forward name="noAuthorization" path="df.page.notAuthorized" />
+	         <forward name="editThesisCoordinationTeam" path="editThesisCoordinationTeam" />
 		</action>		
 		<action path="/addCoordinator"
 			  input="/viewCoordinationTeam.do?method=prepareAddCoordinator"	
@@ -912,6 +913,7 @@
             <forward name="list-submitted" path="thesis-list-submitted"/>
             <forward name="list-approved" path="thesis-list-approved"/>
             <forward name="list-confirmed" path="thesis-list-confirmed"/>
+            <forward name="list-evaluated" path="thesis-list-evaluated"/>
   			<forward name="change-information" path="thesis-change-information"/>
   			<forward name="delete-confirm" path="thesis-delete-confirm"/>
   			<forward name="confirm-submission" path="thesis-confirm-submission"/>
@@ -919,6 +921,7 @@
   			<forward name="collect-basic-information" path="thesis-collect-basic-information"/>
   			<forward name="confirm-thesis" path="thesis-confirm"/>
   			<forward name="view-confirmed" path="thesis-view-confirmed"/>
+  			<forward name="view-evaluated" path="thesis-view-evaluated"/>
   			<forward name="confirm-revision" path="thesis-confirm-revision"/>
   		</action>
 
