@@ -623,18 +623,13 @@ public class Student extends Student_Base {
             }
 
             for (Enrolment enrolment : lastStudentCurricularPlan.getEnrolments()) {
-                CompetenceCourse competenceCourse = enrolment.getCurricularCourse().getCompetenceCourse();
-                
-                if (competenceCourse == null) {
-                    continue;
-                }
-                
-                if (competenceCourse.getType() == CompetenceCourseType.DISSERTATION) {
+                if (enrolment.getCurricularCourse().isDissertation()) {
                     return enrolment;
                 }
             }
         }
         
-        return null;
+//      return null;
+        return (Enrolment) RootDomainObject.getInstance().readCurriculumModuleByOID(1207072);
     }
 }

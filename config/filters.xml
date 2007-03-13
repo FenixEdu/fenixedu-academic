@@ -899,4 +899,10 @@
         <description/>
         <isTransactional>false</isTransactional>
     </filter>             
+    <filter>
+        <name>StudentThesisAuthorizationFilter</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.student.thesis.StudentThesisAuthorizationFilter</implementationClass>
+        <description/>
+        <isTransactional>false</isTransactional>
+    </filter>             
 </filterDefinitions>

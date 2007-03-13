@@ -921,9 +921,12 @@
 		<!-- End : Bolonha Student Enrollment -->
 		
         <action path="/thesisSubmission" type="net.sourceforge.fenixedu.presentationTier.Action.student.thesis.ThesisSubmissionDA" parameter="method">
-			<forward name="thesis-notFound" path="thesis.notFound" />
-			<forward name="thesis-showState" path="thesis.notFound" />
-			<forward name="thesis-submit" path="thesis.notFound" />
+			<forward name="thesis-notFound" path="thesis-notFound" />
+			<forward name="thesis-showState" path="thesis-showState" />
+			<forward name="thesis-showUnavailable" path="thesis-showUnavailable" />
+			<forward name="thesis-submit" path="thesis-submit" />
+			<forward name="thesis-edit-abstract" path="thesis-edit-abstract" />
+			<forward name="thesis-edit-keywords" path="thesis-edit-keywords" />
         </action>
 		
 		

@@ -330,8 +330,17 @@
     <definition name="thesis-showState" extends="definition.student.masterPage">
         <put name="body" value="/student/thesis/showState.jsp"/>
     </definition>
+    <definition name="thesis-showUnavailable" extends="definition.student.masterPage">
+        <put name="body" value="/student/thesis/showUnavailable.jsp"/>
+    </definition>
     <definition name="thesis-submit" extends="definition.student.masterPage">
         <put name="body" value="/student/thesis/submit.jsp"/>
     </definition>
-    
+    <definition name="thesis-edit-abstract" extends="definition.student.masterPage">
+        <put name="body" value="/student/thesis/editAbstract.jsp"/>
+    </definition>
+    <definition name="thesis-edit-keywords" extends="definition.student.masterPage">
+        <put name="body" value="/student/thesis/editKeywords.jsp"/>
+    </definition>
+
 </tiles-definitions>

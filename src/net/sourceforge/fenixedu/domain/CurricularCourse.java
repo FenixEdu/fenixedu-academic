@@ -1708,4 +1708,9 @@ public class CurricularCourse extends CurricularCourse_Base {
 	return false;
     }
 
+    public boolean isDissertation() {
+        CompetenceCourse competenceCourse = getCompetenceCourse();
+        return competenceCourse == null ? false : competenceCourse.isDissertation();
+    }
+
 }

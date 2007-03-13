@@ -11625,7 +11625,25 @@
         <filterChains>
             <chain name="CoordinatorDegreeCurricularPlanAuthorization"/>
         </filterChains>
-    </service>   
+    </service>
+    <service>
+        <name>CreateThesisDissertationFile</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.thesis.CreateThesisDissertationFile</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="StudentThesisAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>CreateThesisAbstractFile</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.thesis.CreateThesisAbstractFile</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="StudentThesisAuthorization"/>
+        </filterChains>
+    </service>
 	<service>
         <name>MergeExternalUnits</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.MergeExternalUnits</implementationClass>

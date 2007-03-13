@@ -113,7 +113,7 @@ public class NullAsLabelRenderer extends OutputRenderer {
             public HtmlComponent createComponent(Object object, Class type) {
                 if (object == null) {
                     if (isKey()) {
-                        return new HtmlText(RenderUtils.getResourceString(getBundle(), getLabel()));
+                        return new HtmlText(RenderUtils.getResourceString(getBundle(), getLabel()), false);
                     } else {
                         return new HtmlText(getLabel());
                     }

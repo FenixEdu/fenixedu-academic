@@ -1102,4 +1102,12 @@
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>
+    <filterChain>
+        <name>StudentThesisAuthorization</name>
+        <expression>StudentThesisAuthorizationFilter</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
+    </filterChain>
+    
 </filterChainsDefinitions>

@@ -95,7 +95,8 @@
         <property name="format" value="${person.name} (${number})"/>
     </slot>
     <slot name="title" layout="null-as-label" key="label.coordinator.title">
-        <property name="label" value="--"/>
+        <property name="label" value="label.thesis.field.empty"/>
+        <property name="key" value="true"/>
     </slot>
     <slot name="creation" key="label.creation.date"/>
 </schema>
@@ -115,7 +116,8 @@
         <property name="format" value="${person.name} (${number})"/>
     </slot>
     <slot name="title" layout="null-as-label" key="label.coordinator.title">
-        <property name="label" value="--"/>
+        <property name="label" value="label.thesis.field.empty"/>
+        <property name="key" value="true"/>
     </slot>
     <slot name="submission" key="label.whenSubmited"/>
 </schema>
@@ -143,26 +145,32 @@
 <schema name="thesis.thesis.confirm.details" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
     <slot name="title"/>
     <slot name="thesisAbstract" layout="null-as-label" key="label.thesis.abstract">
-        <property name="key" value="label.thesis.field.empty"/>
+        <property name="label" value="label.thesis.field.empty"/>
+        <property name="key" value="true"/>
     </slot>
     <slot name="keywords" layout="null-as-label" key="label.thesis.keywords">
-        <property name="key" value="label.thesis.field.empty"/>
+        <property name="label" value="label.thesis.field.empty"/>
+        <property name="key" value="true"/>
     </slot>
 </schema>
 
 <schema name="thesis.thesis.confirmed.details" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
     <slot name="title"/>
     <slot name="thesisAbstract" layout="null-as-label" key="label.thesis.abstract">
-        <property name="key" value="label.thesis.field.empty"/>
+        <property name="label" value="label.thesis.field.empty"/>
+        <property name="key" value="true"/>
     </slot>
     <slot name="keywords" layout="null-as-label" key="label.thesis.keywords">
-        <property name="key" value="label.thesis.field.empty"/>
+        <property name="label" value="label.thesis.field.empty"/>
+        <property name="key" value="true"/>
     </slot>
     <slot name="mark" layout="null-as-label" key="label.thesis.evaluate.mark">
-        <property name="key" value="label.thesis.field.empty"/>
+        <property name="label" value="label.thesis.field.empty"/>
+        <property name="key" value="true"/>
     </slot>
     <slot name="discussed" layout="null-as-label" key="label.thesis.evaluate.discussion.date">
-        <property name="key" value="label.thesis.field.empty"/>
+        <property name="label" value="label.thesis.field.empty"/>
+        <property name="key" value="true"/>
     </slot>
 </schema>
 
@@ -172,23 +180,27 @@
     </slot>
     <slot name="title"/>
     <slot name="thesisAbstract" layout="null-as-label" key="label.thesis.abstract">
-        <property name="key" value="label.thesis.field.empty"/>
+        <property name="label" value="label.thesis.field.empty"/>
+        <property name="key" value="true"/>
     </slot>
     <slot name="keywords" layout="null-as-label" key="label.thesis.keywords">
-        <property name="key" value="label.thesis.field.empty"/>
+        <property name="label" value="label.thesis.field.empty"/>
+        <property name="key" value="true"/>
     </slot>
     <slot name="mark" layout="null-as-label" key="label.thesis.evaluate.mark">
-        <property name="key" value="label.thesis.field.empty"/>
+        <property name="label" value="label.thesis.field.empty"/>
+        <property name="key" value="true"/>
     </slot>
     <slot name="discussed" layout="null-as-label" key="label.thesis.evaluate.discussion.date">
-        <property name="key" value="label.thesis.field.empty"/>
+        <property name="label" value="label.thesis.field.empty"/>
+        <property name="key" value="true"/>
     </slot>
 </schema>
 
 <schema name="coordinator.thesis.file" type="net.sourceforge.fenixedu.domain.thesis.ThesisFile">
     <slot name="displayName" layout="link" key="label.thesis.file.name">
-        <property name="userParent" value="true"/>
-        <property name="linkFormat" value="${donwloadUrl}"/>
+        <property name="useParent" value="true"/>
+        <property name="linkFormat" value="${downloadUrl}"/>
     </slot>
     <slot name="size" layout="fileSize" key="label.thesis.file.size"/>
     <slot name="uploadTime" key="label.thesis.file.name.uploadTime"/>

@@ -51,19 +51,26 @@
     </fr:view>
 </logic:notEmpty>
 
-<p>
-    <html:link page="/thesisSubmission.do?method=prepareUploadDissertation">
-        <bean:message key="link.student.thesis.submit.file"/>
+<logic:notEmpty name="thesis" property="dissertation">
+    <html:link page="/thesisSubmission.do?method=removeDissertation">
+        <bean:message key="link.student.thesis.file.remove"/>
     </html:link>
-    <logic:notEmpty name="thesis" property="dissertation">
-        ,
-        <html:link page="/thesisSubmission.do?method=removeDissertation">
-            <bean:message key="link.student.thesis.submit.remove"/>
-        </html:link>
-    </logic:notEmpty>
-</p>
+</logic:notEmpty>
 
-<h3><bean:message key="title.student.thesis.submit.abstract"/></h3>
+<fr:form action="/thesisSubmission.do?method=uploadDissertation" encoding="multipart/form-data">
+    <fr:edit id="dissertationFile" name="fileBean" schema="student.thesisBean.upload">
+        <fr:layout name="tabular">
+            <fr:property name="classes" value="tstyle5 tdtop thlight thright"/>
+            <fr:property name="columnClasses" value=",,tdclear tderror1"/>
+        </fr:layout>
+    </fr:edit>
+    
+    <html:submit>
+        <bean:message key="submit"/>
+    </html:submit>
+</fr:form>
+
+<h3><bean:message key="title.student.thesis.submit.extendedAbstract"/></h3>
 
 <logic:empty name="thesis" property="extendedAbstract">
     <bean:message key="label.student.thesis.submit.noExtendedAbstract"/>
@@ -77,14 +84,53 @@
     </fr:view>
 </logic:notEmpty>
 
-<p>
-    <html:link page="/thesisSubmission.do?method=prepareUploadAbstract">
-        <bean:message key="link.student.thesis.submit.file"/>
+<logic:notEmpty name="thesis" property="extendedAbstract">
+    <html:link page="/thesisSubmission.do?method=removeAbstract">
+        <bean:message key="link.student.thesis.file.remove"/>
     </html:link>
-    <logic:notEmpty name="thesis" property="extendedAbstract">
-        ,
-        <html:link page="/thesisSubmission.do?method=removeAbstract">
-            <bean:message key="link.student.thesis.submit.remove"/>
-        </html:link>
-    </logic:notEmpty>
-</p>
+</logic:notEmpty>
+
+<fr:form action="/thesisSubmission.do?method=uploadAbstract" encoding="multipart/form-data">
+    <fr:edit id="abstractFile" name="fileBean" schema="student.thesisBean.upload">
+        <fr:layout name="tabular">
+            <fr:property name="classes" value="tstyle5 tdtop thlight thright"/>
+            <fr:property name="columnClasses" value=",,tdclear tderror1"/>
+        </fr:layout>
+    </fr:edit>
+    
+    <html:submit>
+        <bean:message key="submit"/>
+    </html:submit>
+</fr:form>
+
+<%-- file submit experience
+<table class="tstyle5 tdtop thlight thright">
+    <tr>
+    <th>
+        <bean:message key="label.thesis.file"/>:
+    </th>
+    <td>
+        <fr:form action="/thesisSubmission.do?method=uploadAbstract" encoding="multipart/form-data">
+            <fr:edit id="abstractFile2" name="fileBean" slot="file">
+                <fr:validator name="net.sourceforge.fenixedu.renderers.validators.FileValidator">
+                    <fr:property name="required" value="true"/>
+                    <fr:property name="acceptedTypes" value="application/pdf"/>
+                </fr:validator>
+                
+                <fr:layout>
+                    <fr:property name="size" value="60"/>
+                    <fr:property name="fileNameSlot" value="fileName"/>
+                    <fr:property name="fileSizeSlot" value="fileSize"/>
+                </fr:layout>
+            </fr:edit>
+            <html:submit>
+                <bean:message key="submit"/>
+            </html:submit>
+        </fr:form>
+        <span class="tderror1 dblock">
+            <fr:message for="abstractFile2"/>
+        </span>
+    </td>
+</table>
+--%>
+

@@ -62,7 +62,7 @@ public class PropertyTag extends BodyTagSupport {
             }
         }
         else {
-            logger.warn("property tag was using inside an invalid containerCOULD NOT SET PROPERTY");
+            logger.warn("property tag was using inside an invalid container");
             logger.warn("could not set property: " + getName() + "=" + getValue());
         }
         

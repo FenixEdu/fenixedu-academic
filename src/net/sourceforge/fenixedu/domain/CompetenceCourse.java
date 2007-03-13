@@ -802,5 +802,9 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	}
 	return false;
     }
+
+    public boolean isDissertation() {
+        return getType() == CompetenceCourseType.DISSERTATION;
+    }
     
 }

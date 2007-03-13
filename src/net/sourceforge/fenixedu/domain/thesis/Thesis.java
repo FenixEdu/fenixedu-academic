@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Coordinator;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.GradeScale;
@@ -16,7 +17,9 @@ import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.exceptions.FieldIsRequiredException;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.EvaluationType;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
@@ -55,6 +58,18 @@ public class Thesis extends Thesis_Base {
         setEnrolment(enrolment);
     }
     
+    @Override
+    @Checked("ThesisPredicates.waitingConfirmation")
+    public void setThesisAbstract(MultiLanguageString thesisAbstract) {
+        super.setThesisAbstract(thesisAbstract);
+    }
+
+    @Override
+    @Checked("ThesisPredicates.waitingConfirmation")
+    public void setKeywords(MultiLanguageString keywords) {
+        super.setKeywords(keywords);
+    }
+
     public void delete() {
         if (getState() != ThesisState.DRAFT) {
             throw new DomainException("thesis.delete.notDraft");
@@ -115,21 +130,20 @@ public class Thesis extends Thesis_Base {
 
     @Override
     public void setEnrolment(Enrolment enrolment) {
-        // TODO: check enrolment (must be valid in degree)
-        // if (enrolment == null) {
-        //    throw new FieldIsRequiredException("enrolment", "thesis.enrolment.required");
-        // }
-        //
-        //((CurricularCourse) enrolment.getDegreeModule()).isDissertation();
+        if (enrolment == null) {
+           throw new FieldIsRequiredException("enrolment", "thesis.enrolment.required");
+        }
+        
+        CurricularCourse curricularCourse = enrolment.getCurricularCourse();
+        if (! curricularCourse.isDissertation()) {
+            throw new DomainException("thesis.enrolment.notDissertationEnrolment");
+        }
         
         super.setEnrolment(enrolment);
     }
 
     public Student getStudent() {
-        // TODO: code to get student
-        //return getEnrolment().getStudentCurricularPlan().getRegistration().getStudent();
-        
-        return RootDomainObject.getInstance().readStudentByOID(25000);
+        return getEnrolment().getStudentCurricularPlan().getRegistration().getStudent();
     }
 
     public void submit() {
@@ -199,6 +213,17 @@ public class Thesis extends Thesis_Base {
         setState(ThesisState.CONFIRMED);
     }
     
+    public boolean isConfirmed() {
+        switch (getState()) {
+        case CONFIRMED:
+        case REVISION:
+        case EVALUATED:
+            return true;
+        default:
+            return false;
+        }
+    }
+
     @Override
     public void setMark(String mark) {
         if (! isMarkValid(mark)) {
@@ -209,9 +234,7 @@ public class Thesis extends Thesis_Base {
     }
 
     public boolean isMarkValid(String mark) {
-        //TODO: enrolment 
-        //GradeScale scale = getEnrolment().getCurricularCourse().getGradeScaleChain();
-        GradeScale scale = null;
+        GradeScale scale = getEnrolment().getCurricularCourse().getGradeScaleChain();
         
         if (scale == null) {
             scale = GradeScale.TYPE20;
@@ -350,7 +373,23 @@ public class Thesis extends Thesis_Base {
         return state == ThesisState.APPROVED || state == ThesisState.REVISION;
     }
 
-    public String getThesisAbstract(String language) {
+    public String getThesisAbstractPt() {
+        return getThesisAbstractLanguage("pt");
+    }
+    
+    public void setThesisAbstractPt(String text) {
+        setThesisAbstractLanguage("pt", text);
+    }
+    
+    public String getThesisAbstractEn() {
+        return getThesisAbstractLanguage("en");
+    }
+    
+    public void setThesisAbstractEn(String text) {
+        setThesisAbstractLanguage("en", text);
+    }
+    
+    public String getThesisAbstractLanguage(String language) {
         MultiLanguageString thesisAbstract = getThesisAbstract();
         
         if (thesisAbstract == null) {
@@ -369,7 +408,7 @@ public class Thesis extends Thesis_Base {
         }
     }
     
-    public void setThesisAbstract(String language, String text) {
+    public void setThesisAbstractLanguage(String language, String text) {
         MultiLanguageString thesisAbstract = getThesisAbstract();
         Language realLanguage = Language.valueOf(language);
         
@@ -382,7 +421,46 @@ public class Thesis extends Thesis_Base {
         }
     }
     
-    public String getKeywords(String language) {
+    public String getKeywordsPt() {
+        return getKeywordsLanguage("pt");
+    }
+    
+    public void setKeywordsPt(String text) {
+        setKeywordsLanguage("pt", normalizeKeywords(text));
+    }
+    
+    public String getKeywordsEn() {
+        return getKeywordsLanguage("en");
+    }
+    
+    public void setKeywordsEn(String text) {
+        setKeywordsLanguage("en", normalizeKeywords(text));
+    }
+    
+    private String normalizeKeywords(String keywords) {
+        StringBuilder builder = new StringBuilder();
+        
+        if (keywords == null) {
+            return null;
+        }
+        else {
+            for (String part : keywords.split(",")) {
+                String trimmed = part.trim();
+                
+                if (trimmed.length() != 0) {
+                    if (trimmed.length() != 0) {
+                        builder.append(", ");
+                    }
+                    
+                    builder.append(trimmed);
+                }
+            }
+        }
+        
+        return builder.toString();
+    }
+    
+    public String getKeywordsLanguage(String language) {
         MultiLanguageString thesisAbstract = getKeywords();
         
         if (thesisAbstract == null) {
@@ -401,7 +479,7 @@ public class Thesis extends Thesis_Base {
         }
     }
     
-    public void setKeywords(String language, String text) {
+    public void setKeywordsLanguage(String language, String text) {
         MultiLanguageString keywords = getKeywords();
         Language realLanguage = Language.valueOf(language);
         
@@ -413,4 +491,5 @@ public class Thesis extends Thesis_Base {
             setKeywords(keywords);
         }
     }
+
 }
