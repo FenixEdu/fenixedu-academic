@@ -118,10 +118,7 @@ public class ManageNotNeedToEnrollDispathAction extends FenixDispatchAction {
         final Object[] args = { Integer.valueOf((String) request.getParameter("notNeedToEnrollID")) };
         ServiceManagerServiceFactory.executeService(userView, "DeleteNotNeedToEnrollInCurricularCourse", args);
         
-        final Integer studentNumber = Integer.valueOf((String) request.getParameter("studentNumber"));
-	request.setAttribute("infoStudentCurricularPlan", readStudentCurricularPlan(userView,
-		new Object[] { studentNumber, DegreeType.DEGREE }));
 
-        return mapping.findForward("showNotNeedToEnroll");
+        return prepareNotNeedToEnroll(mapping, form, request, response);
     }
 }
