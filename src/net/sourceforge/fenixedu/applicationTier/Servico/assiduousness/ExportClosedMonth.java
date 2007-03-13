@@ -214,8 +214,7 @@ public class ExportClosedMonth extends Service {
 	}
 	result.append(getLine(assiduousness.getEmployee().getEmployeeNumber(), StringUtils
 		.upperCase(bundle.getString("label.balance")), beginDate, endDate,
-		getDurationString(assiduousnessClosedMonth.getBalanceWithoutBalanceDiscount()),
-		durationZeroString, null));
+		getDurationString(assiduousnessClosedMonth.getBalance()), durationZeroString, null));
 	return result.toString();
     }
 

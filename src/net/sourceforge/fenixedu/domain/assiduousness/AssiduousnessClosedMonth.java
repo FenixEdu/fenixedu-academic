@@ -14,7 +14,6 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
 	    Duration totalWeeklyRestBalance, Duration holidayRest, Duration balanceToDiscount,
 	    double vacations, double tolerance, double article17, double article66) {
 	setRootDomainObject(RootDomainObject.getInstance());
-
 	setBalance(balance);
 	setBalanceToDiscount(balanceToDiscount);
 	setAssiduousness(assiduousness);
@@ -26,10 +25,6 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
 	setTolerance(tolerance);
 	setArticle17(article17);
 	setArticle66(article66);
-    }
-
-    public Duration getBalanceWithoutBalanceDiscount() {
-	return getBalance().plus(getBalanceToDiscount());
     }
 
     public HashMap<JustificationMotive, Duration> getPastJustificationsDurations() {
