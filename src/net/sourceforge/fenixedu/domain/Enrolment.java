@@ -579,12 +579,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     public void createSpecialSeasonEvaluation(final Employee employee) {
 	if (getEnrolmentEvaluationType() != EnrolmentEvaluationType.SPECIAL_SEASON && !isApproved()) {
 	    setEnrolmentEvaluationType(EnrolmentEvaluationType.SPECIAL_SEASON);
-	    if (isEnroled()) {
-		setEnrolmentCondition(EnrollmentCondition.TEMPORARY);
-	    } else {
-		setEnrollmentState(EnrollmentState.ENROLLED);
-		setEnrolmentCondition(EnrollmentCondition.FINAL);
-	    }
+	    setEnrollmentState(EnrollmentState.ENROLLED);
 
 	    new EnrolmentEvaluation(this, EnrolmentEvaluationType.SPECIAL_SEASON,
 		    EnrolmentEvaluationState.TEMPORARY_OBJ, employee);
