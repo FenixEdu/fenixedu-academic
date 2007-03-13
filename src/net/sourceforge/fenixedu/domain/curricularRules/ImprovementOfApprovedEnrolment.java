@@ -54,4 +54,15 @@ public class ImprovementOfApprovedEnrolment extends CurricularRuleNotPersistent 
 	return null;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+	if (obj instanceof ImprovementOfApprovedEnrolment) {
+	    ImprovementOfApprovedEnrolment improvementOfApprovedEnrolment = (ImprovementOfApprovedEnrolment) obj;
+	    
+	    return toApply == improvementOfApprovedEnrolment.getEnrolment();
+	}
+	
+	return false;
+    }
+    
 }

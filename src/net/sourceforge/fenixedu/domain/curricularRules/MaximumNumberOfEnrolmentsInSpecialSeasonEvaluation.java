@@ -4,34 +4,18 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
-import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class MaximumNumberOfEnrolmentsInSpecialSeasonEvaluation extends CurricularRuleNotPersistent {
-    
-    private Enrolment toApply;
-    
-    public MaximumNumberOfEnrolmentsInSpecialSeasonEvaluation(final Enrolment enrolment) {
-	if (enrolment == null) {
-	    throw new DomainException("curricular.rule.invalid.parameters");
-	} else {
-	    this.toApply = enrolment;
-	}
-    }
     
     public List<GenericPair<Object, Boolean>> getLabel() {
         return Collections.singletonList(new GenericPair<Object, Boolean>("label.maximumNumberOfEnrolmentsInSpecialSeasonEvaluation", true));
     }
 
-    public Enrolment getEnrolment() {
-	return toApply;
-    }
-
     public DegreeModule getDegreeModuleToApplyRule() {
-	return getEnrolment().getDegreeModule();
+	return null;
     }
 
     public CourseGroup getContextCourseGroup() {
@@ -52,6 +36,11 @@ public class MaximumNumberOfEnrolmentsInSpecialSeasonEvaluation extends Curricul
 
     public ExecutionPeriod getEnd() {
 	return null;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+	return obj instanceof MaximumNumberOfEnrolmentsInSpecialSeasonEvaluation;
     }
 
 }

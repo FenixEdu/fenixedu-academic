@@ -54,4 +54,15 @@ public class EnrolmentInSpecialSeasonEvaluation extends CurricularRuleNotPersist
 	return null;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+	if (obj instanceof EnrolmentInSpecialSeasonEvaluation) {
+	    EnrolmentInSpecialSeasonEvaluation enrolmentInSpecialSeasonEvaluation = (EnrolmentInSpecialSeasonEvaluation) obj;
+	    
+	    return toApply == enrolmentInSpecialSeasonEvaluation.getEnrolment();
+	}
+	
+	return false;
+    }
+    
 }

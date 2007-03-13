@@ -98,7 +98,7 @@ public class StudentCurricularPlanEnrolmentEvaluationManager extends StudentCurr
 			curricularRules.add(new EnrolmentInSpecialSeasonEvaluation(enrolment));
 		    }
 		    
-		    curricularRules.add(new MaximumNumberOfEnrolmentsInSpecialSeasonEvaluation(enrolment));
+		    curricularRules.add(new MaximumNumberOfEnrolmentsInSpecialSeasonEvaluation());
 
 		    result.put(degreeModuleToEvaluate, curricularRules);
 		}
