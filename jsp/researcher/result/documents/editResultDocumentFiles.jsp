@@ -29,7 +29,8 @@
 	<logic:notEqual name="resultType" value="ResultPatent">
 		<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.publications"/></em>
 	</logic:notEqual>
-	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultDocumentFiles.useCase.title"/>: <fr:view name="result" property="title"/></h2>
+	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultDocumentFiles.useCase.title"/></h2>
+	<h3><fr:view name="result" property="title"/></h3>
 	
 	<%-- Go to previous page --%>
 	<ul class="mvert2 list5">

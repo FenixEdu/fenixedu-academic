@@ -32,7 +32,8 @@
 
 	<%-- Use Case Titles --%>
 	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.Result.superUseCase.title"/></em>
-	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultDocumentFiles.useCase.title"/>: <fr:view name="result" property="title"/></h2>
+	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultDocumentFiles.useCase.title"/></h2>
+	<h3><fr:view name="result" property="title"/></h3>
 	
 	<%-- Warning/Error messages --%>
 	<logic:messagesPresent name="messages" message="true">
