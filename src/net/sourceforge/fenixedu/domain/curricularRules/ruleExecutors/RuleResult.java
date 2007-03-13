@@ -82,6 +82,10 @@ public class RuleResult {
     public EnrolmentResultType getEnrolmentResultType() {
 	return enrolmentResultType;
     }
+    
+    public boolean isTemporaryEnrolmentResultType() {
+	return enrolmentResultType == EnrolmentResultType.TEMPORARY;
+    }
 
     @Override
     public boolean equals(Object obj) {
@@ -100,6 +104,10 @@ public class RuleResult {
 
     static public RuleResult createTrue(final EnrolmentResultType enrolmentResultType) {
 	return new RuleResult(RuleResultType.TRUE, enrolmentResultType);
+    }
+    
+    static public RuleResult createTrue(final EnrolmentResultType enrolmentResultType, final String message, final String ... args) {
+	return new RuleResult(RuleResultType.TRUE, enrolmentResultType, Collections.singletonList(new RuleResultMessage(message, true, args)));
     }
 
     static public RuleResult createFalse() {
