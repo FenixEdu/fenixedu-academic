@@ -15,19 +15,8 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
 	    double vacations, double tolerance, double article17, double article66) {
 	setRootDomainObject(RootDomainObject.getInstance());
 
-	if (balanceToDiscount.isLongerThan(Duration.ZERO) && balance.isLongerThan(Duration.ZERO)) {
-	    if (balance.isShorterThan(balanceToDiscount)) {
-		setBalance(Duration.ZERO);
-		setBalanceToDiscount(balanceToDiscount.minus(balance));
-	    } else {
-		setBalance(balance.minus(balanceToDiscount));
-		setBalanceToDiscount(Duration.ZERO);
-	    }
-
-	} else {
-	    setBalance(balance);
-	    setBalanceToDiscount(balanceToDiscount);
-	}
+	setBalance(balance);
+	setBalanceToDiscount(balanceToDiscount);
 	setAssiduousness(assiduousness);
 	setClosedMonth(closedMonth);
 	setSaturdayBalance(totalComplementaryWeeklyRestBalance);

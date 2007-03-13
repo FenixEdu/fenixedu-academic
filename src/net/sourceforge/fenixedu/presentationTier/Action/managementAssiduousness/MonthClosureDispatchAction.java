@@ -84,12 +84,7 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	    final String result = (String) ServiceUtils.executeService(userView, "ExportClosedMonth",
 		    new Object[] { closedMonth, beginDate, endDate });
 	    response.setContentType("text/plain");
-	    ResourceBundle bundleEnumeration = ResourceBundle.getBundle(
-		    "resources.EnumerationResources", LanguageUtils.getLocale());
-	    String month = bundleEnumeration.getString(yearMonth.getMonth().toString());
-	    response.addHeader("Content-Disposition", new StringBuilder("attachment; filename=").append(
-		    month).append("-").append(yearMonth.getYear()).toString()
-		    + ".txt");
+	    response.addHeader("Content-Disposition", "attachment; filename=Telep.dat");
 	    byte[] data = result.getBytes();
 	    response.setContentLength(data.length);
 	    ServletOutputStream writer = response.getOutputStream();

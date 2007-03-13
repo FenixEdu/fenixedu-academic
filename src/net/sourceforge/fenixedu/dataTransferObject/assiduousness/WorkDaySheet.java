@@ -296,7 +296,8 @@ public class WorkDaySheet implements Serializable {
     public void discountBalanceOcurrenceLeaveInFixedPeriod(List<Leave> balanceOcurrenceLeaveList) {
 	Duration balance = Duration.ZERO;
 	if (!balanceOcurrenceLeaveList.isEmpty()) {
-	    balance = balance.plus(getWorkSchedule().getWorkScheduleType().getWorkTimeDuration());
+	    balance = balance.plus(getWorkSchedule().getWorkScheduleType().getNormalWorkPeriod()
+		    .getWorkPeriodDuration());
 	}
 	Duration newFixedPeriodAbsence = getUnjustifiedTime().minus(balance);
 	if (newFixedPeriodAbsence.isShorterThan(Duration.ZERO)) {

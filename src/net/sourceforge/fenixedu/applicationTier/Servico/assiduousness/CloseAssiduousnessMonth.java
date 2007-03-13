@@ -65,7 +65,6 @@ public class CloseAssiduousnessMonth extends Service {
 	HashMap<WorkScheduleType, Duration> extra150Map = new HashMap<WorkScheduleType, Duration>();
 	HashMap<WorkScheduleType, Duration> extra25Map = new HashMap<WorkScheduleType, Duration>();
 	HashMap<WorkScheduleType, Duration> unjustifiedMap = new HashMap<WorkScheduleType, Duration>();
-	HashMap<WorkScheduleType, Duration> balanceToDiscountMap = new HashMap<WorkScheduleType, Duration>();
 	HashMap<JustificationMotive, Duration> justificationsDuration = new HashMap<JustificationMotive, Duration>();
 	double vacations = 0;
 	double tolerance = 0;
@@ -137,7 +136,8 @@ public class CloseAssiduousnessMonth extends Service {
 			if (leave.getJustificationMotive().getJustificationType().equals(
 				JustificationType.MULTIPLE_MONTH_BALANCE)) {
 			    totalBalanceToDiscount = totalBalanceToDiscount.plus(workDaySheet
-				    .getWorkSchedule().getWorkScheduleType().getWorkTimeDuration());
+				    .getWorkSchedule().getWorkScheduleType().getNormalWorkPeriod()
+				    .getWorkPeriodDuration());
 			}
 		    }
 		    Duration thisDayBalance = workDaySheet.getBalanceTime().toDurationFrom(
