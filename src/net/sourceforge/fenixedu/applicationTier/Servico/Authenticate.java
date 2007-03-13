@@ -180,12 +180,12 @@ public class Authenticate extends Service implements Serializable {
 
 	setLoginHostNameAndDateTime(remoteHost, person);
 	
-//	try {
-//	    final DateTime expirationDate = Script.returnExpirationDate(person.getIstUsername());
-//	    return getUserView(person, requestURL, expirationDate);
-//	} catch (KerberosException e) {
+	try {
+	    final DateTime expirationDate = Script.returnExpirationDate(person.getIstUsername());
+	    return getUserView(person, requestURL, expirationDate);
+	} catch (KerberosException e) {
 	    return getUserView(person, requestURL);
-//	}
+	}
     }
 
     private void setLoginHostNameAndDateTime(final String remoteHost, Person person) {
