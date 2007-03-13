@@ -13,6 +13,10 @@ abstract public class CurricularRuleNotPersistent implements ICurricularRule {
 
     @Override
     public boolean equals(Object obj) {
+	if (!getClass().equals(obj.getClass())) {
+	    return false;
+	}
+	
 	CurricularRuleNotPersistent curricularRuleNotPersistent = null;
 	if (obj instanceof CurricularRuleNotPersistent) {
 	    curricularRuleNotPersistent = (CurricularRuleNotPersistent) obj;
