@@ -47,8 +47,10 @@ public class StudentCurricularPlanEnrolmentEvaluationManager extends StudentCurr
     
     @Override
     protected void addEnroled() {
-	for (final Enrolment enrolment : studentCurricularPlan.getSpecialSeasonEnrolments(executionPeriod.getExecutionYear())) {
-	    enrolmentContext.addDegreeModuleToEvaluate(new CurriculumModuleEnroledWrapper(enrolment, executionPeriod));
+	if(curricularRuleLevel == CurricularRuleLevel.SPECIAL_SEASON_ENROLMENT) {
+	    for (final Enrolment enrolment : studentCurricularPlan.getSpecialSeasonEnrolments(executionPeriod.getExecutionYear())) {
+		enrolmentContext.addDegreeModuleToEvaluate(new CurriculumModuleEnroledWrapper(enrolment, executionPeriod));
+	    }
 	}
     }
 
