@@ -106,7 +106,7 @@ public class GratuityWithPaymentPlanPR extends GratuityWithPaymentPlanPR_Base {
     }
 
     private boolean needsTotalAmountEntry(final PaymentPlan paymentPlan, List<EntryDTO> result) {
-	return paymentPlan.getInstallmentsCount() == result.size();
+	return paymentPlan.getInstallmentsCount() != 1 && paymentPlan.getInstallmentsCount() == result.size();
     }
 
     @Override
