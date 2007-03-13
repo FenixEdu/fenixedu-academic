@@ -50,8 +50,11 @@ public class Authenticate extends Service implements Serializable {
     protected static final Logger logger = Logger.getLogger(Authenticate.class);
 
     protected static final Map allowedRolesByHostname = new HashMap();
+    
+    protected static final boolean validateExpirationDate;
 
     static {
+	validateExpirationDate = PropertiesManager.getBooleanProperty("validateExpirationDate");
 	final String propertiesFilename = "/.authenticationServiceHostnamesFiltering.properties";
 	try {
 	    final Properties properties = new Properties();
@@ -180,10 +183,14 @@ public class Authenticate extends Service implements Serializable {
 
 	setLoginHostNameAndDateTime(remoteHost, person);
 	
-	try {
-	    final DateTime expirationDate = Script.returnExpirationDate(person.getIstUsername());
-	    return getUserView(person, requestURL, expirationDate);
-	} catch (KerberosException e) {
+	if(validateExpirationDate) {
+	    try {
+		final DateTime expirationDate = Script.returnExpirationDate(person.getIstUsername());
+		return getUserView(person, requestURL, expirationDate);
+	    } catch (KerberosException e) {
+		return getUserView(person, requestURL);
+	    }
+	} else {
 	    return getUserView(person, requestURL);
 	}
     }
