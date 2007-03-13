@@ -1667,6 +1667,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     public Collection<Enrolment> getSpecialSeasonEnrolments(ExecutionYear executionYear) {
+	if (isBolonha()) {
+	    return getRoot().getSpecialSeasonEnrolments(executionYear);
+	}
+	
 	Set<Enrolment> result = new HashSet<Enrolment>();
 	for (Enrolment enrolment : getEnrolmentsSet()) {
 	    if (enrolment.getEnrolmentEvaluationType() == EnrolmentEvaluationType.SPECIAL_SEASON
