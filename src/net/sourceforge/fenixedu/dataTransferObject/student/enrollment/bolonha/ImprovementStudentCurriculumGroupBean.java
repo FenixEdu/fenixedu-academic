@@ -30,7 +30,7 @@ public class ImprovementStudentCurriculumGroupBean extends StudentCurriculumGrou
 	for (CurriculumModule curriculumModule : group.getCurriculumModules()) {
 	    if(curriculumModule.isEnrolment()) {
 		Enrolment enrolment = (Enrolment) curriculumModule;
-		if(enrolment.isImprovementEnroled()) {
+		if(enrolment.isImprovementEnroled() && enrolment.getExecutionPeriod().isBefore(executionPeriod)) {
 		    result.add(new StudentCurriculumEnrolmentBean(enrolment));
 		}
 	    }
@@ -45,7 +45,7 @@ public class ImprovementStudentCurriculumGroupBean extends StudentCurriculumGrou
 	for (CurriculumModule curriculumModule : group.getCurriculumModules()) {
 	    if(curriculumModule.isEnrolment()) {
 		Enrolment enrolment = (Enrolment) curriculumModule;
-		if(enrolment.canBeImproved()) {
+		if(enrolment.canBeImproved() && enrolment.getExecutionPeriod().isBefore(executionPeriod)) {
 		    result.add(new CurriculumModuleEnroledWrapper(enrolment, enrolment.getExecutionPeriod()));
 		}
 	    }
