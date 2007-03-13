@@ -135,8 +135,7 @@ public class Unit extends Unit_Base {
 
     private boolean canBeDeleted() {
 	return (!hasAnyParents() || (getParentUnits().size() == 1 && getParents().size() == 1))
-		&& !hasAnyFunctions()		
-		&& !hasAnyChilds()
+		&& !hasAnyFunctions()				
 		&& !hasAnySpaceResponsibility()
 		&& !hasAnyMaterials()
 		&& !hasAnyVigilantGroups()

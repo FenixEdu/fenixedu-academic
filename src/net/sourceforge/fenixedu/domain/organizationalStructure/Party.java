@@ -243,8 +243,7 @@ public abstract class Party extends Party_Base {
     }
 
     private boolean canBeDeleted() {
-	return !hasAnyResearchInterests() && !hasAnyProjectParticipations()
-		&& !hasAnyResearchActivities() && !hasAnyBoards() && !hasAnyChilds();
+	return !hasAnyResearchInterests() && !hasAnyProjectParticipations() && !hasAnyResearchActivities() && !hasAnyBoards() && !hasAnyChilds();
     }
 
     public static Set<Party> readContributors() {
