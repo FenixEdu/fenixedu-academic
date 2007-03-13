@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.EnrolmentInSpecialSeasonEvaluation;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.ImprovementOfApprovedEnrolment;
+import net.sourceforge.fenixedu.domain.curricularRules.MaximumNumberOfEnrolmentsInSpecialSeasonEvaluation;
 import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.CurricularRuleLevel;
 import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.EnrolmentResultType;
 import net.sourceforge.fenixedu.domain.enrolment.CurriculumModuleEnroledWrapper;
@@ -46,13 +47,25 @@ public class StudentCurricularPlanEnrolmentEvaluationManager extends StudentCurr
     
     @Override
     protected void addEnroled() {
-	return;
+	for (final Enrolment enrolment : studentCurricularPlan.getSpecialSeasonEnrolments(executionPeriod.getExecutionYear())) {
+	    enrolmentContext.addDegreeModuleToEvaluate(new CurriculumModuleEnroledWrapper(enrolment, executionPeriod));
+	}
     }
 
     @Override
     protected Map<IDegreeModuleToEvaluate, Set<ICurricularRule>> getRulesToEvaluate() {
 	final Map<IDegreeModuleToEvaluate, Set<ICurricularRule>> result = new HashMap<IDegreeModuleToEvaluate, Set<ICurricularRule>>();
 	
+	if (curricularRuleLevel == CurricularRuleLevel.IMPROVEMENT_ENROLMENT) {
+	    getImprovementRulesToEvaluate(result);
+	} else if (curricularRuleLevel == CurricularRuleLevel.SPECIAL_SEASON_ENROLMENT) {
+	    getSpecialSeasonRulesToEvaluate(result);
+	}
+	
+	return result;
+    }
+
+    private void getImprovementRulesToEvaluate(final Map<IDegreeModuleToEvaluate, Set<ICurricularRule>> result) {
 	for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext.getDegreeModuleToEvaluate()) {
 	    
 	    if (degreeModuleToEvaluate.isEnroled() && degreeModuleToEvaluate.canCollectRules()) {
@@ -60,20 +73,37 @@ public class StudentCurricularPlanEnrolmentEvaluationManager extends StudentCurr
 		
 		if (moduleEnroledWrapper.getCurriculumModule() instanceof Enrolment) {
 		    final Enrolment enrolment = (Enrolment) moduleEnroledWrapper.getCurriculumModule();
+
 		    final Set<ICurricularRule> curricularRules = new HashSet<ICurricularRule>();
-			
-		    if (curricularRuleLevel == CurricularRuleLevel.IMPROVEMENT_ENROLMENT) {
-			curricularRules.add(new ImprovementOfApprovedEnrolment(enrolment));
-		    } else if (curricularRuleLevel == CurricularRuleLevel.SPECIAL_SEASON_ENROLMENT) {
-			curricularRules.add(new EnrolmentInSpecialSeasonEvaluation(enrolment));
-		    }
+		    curricularRules.add(new ImprovementOfApprovedEnrolment(enrolment));
 
 		    result.put(degreeModuleToEvaluate, curricularRules);
 		}
 	    }
 	}
-	
-	return result;
+    }
+
+    private void getSpecialSeasonRulesToEvaluate(final Map<IDegreeModuleToEvaluate, Set<ICurricularRule>> result) {
+	for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext.getDegreeModuleToEvaluate()) {
+	    
+	    if (degreeModuleToEvaluate.isEnroled() && degreeModuleToEvaluate.canCollectRules()) {
+		final CurriculumModuleEnroledWrapper moduleEnroledWrapper = (CurriculumModuleEnroledWrapper) degreeModuleToEvaluate;
+		
+		if (moduleEnroledWrapper.getCurriculumModule() instanceof Enrolment) {
+		    final Enrolment enrolment = (Enrolment) moduleEnroledWrapper.getCurriculumModule();
+
+		    final Set<ICurricularRule> curricularRules = new HashSet<ICurricularRule>();
+
+		    if (!enrolment.hasSpecialSeason()) {
+			curricularRules.add(new EnrolmentInSpecialSeasonEvaluation(enrolment));
+		    }
+		    
+		    curricularRules.add(new MaximumNumberOfEnrolmentsInSpecialSeasonEvaluation(enrolment));
+
+		    result.put(degreeModuleToEvaluate, curricularRules);
+		}
+	    }
+	}
     }
 
     @Override
