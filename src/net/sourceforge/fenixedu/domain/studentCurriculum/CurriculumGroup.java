@@ -11,6 +11,7 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
@@ -504,4 +505,14 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	}
 	return result;
     }
+
+    @Override
+    public Collection<Enrolment> getSpecialSeasonEnrolments(final ExecutionYear executionYear){
+	Collection<Enrolment> result = new HashSet<Enrolment>();
+	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
+	    result.addAll(curriculumModule.getSpecialSeasonEnrolments(executionYear));
+	}
+	return result;
+    }
+
 }

@@ -1100,5 +1100,14 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	    && getExecutionPeriod().getExecutionYear() == executionYear
 	    && !isApproved();
     }
+    
+    @Override
+    public Collection<Enrolment> getSpecialSeasonEnrolments(ExecutionYear executionYear) {
+	if (getEnrolmentEvaluationType() == EnrolmentEvaluationType.SPECIAL_SEASON
+		    && getExecutionPeriod().getExecutionYear().equals(executionYear)) {
+	    return Collections.singleton(this);
+	}
+	return Collections.emptySet();
+    }
 
 }
