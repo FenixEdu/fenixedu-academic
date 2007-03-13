@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
-<h2><bean:message key="logins.management.title" bundle="MANAGER_RESOURCES"/></h2>
+<h2><bean:message key="logins.time.intervals.management.title" bundle="MANAGER_RESOURCES"/></h2>
 
 <logic:present role="MANAGER">
 
