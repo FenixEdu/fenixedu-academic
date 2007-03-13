@@ -114,7 +114,11 @@ abstract public class CurricularRuleExecutor {
     
     protected RuleResult executeEnrolmentWithNoRules(final ICurricularRule curricularRule, final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
 	final RuleResult ruleResult = executeEnrolmentWithRulesAndTemporaryEnrolment(curricularRule, sourceDegreeModuleToEvaluate, enrolmentContext);
-	return ruleResult.isFalse() ? RuleResult.createWarning(ruleResult.getMessages()) : ruleResult;
+	if (ruleResult.isFalse() || (ruleResult.isTrue() && ruleResult.isTemporaryEnrolmentResultType())) {
+	    return RuleResult.createWarning(ruleResult.getMessages());
+	} else {
+	    return ruleResult;
+	}
     }
 
     abstract protected RuleResult executeEnrolmentWithRules(final ICurricularRule curricularRule, final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext);
