@@ -715,35 +715,22 @@ background-color: #ffffea;
 
 
 /* ----------------------
- ---- To organize ------
+ ---- To replace ------
 ----------------------- */
 
 .greyBorderClass {
 background-color: #EBECED;
-border-style: solid;
-border-width: 1px;
-border-color: #909090;
+border: 1px solid #909090;
 width: 100%;
-}
-.blackBorderClass {
-background-color: #ffffff;
-border-style: solid;
-border-width: 1px;
-border-color: #909090;
 }
 
 .instructions {
 background-color: #fafadd;
 border: 1px solid #ccc;
 padding: 0.5em;
-/*float: left;*/
 }
 
-#inquiry p {
-margin-top: 0;
-margin-bottom: 0;	
-}
-
+/* show evaluations */
 div.evalcontainer {
 padding: 1em 0;
 }
@@ -783,68 +770,6 @@ text-align: left;
 background-color: #f5f5f5;
 }
 
-
-
-table.search {
-background-color: #f5f5f5;
-border-collapse: collapse;
-}
-table.search tr td {
-border: 1px solid #fff;
-padding: 0.3em;
-}
-.leftcolumn {
-text-align: right;
-}
-tr.el_highlight {
-background-color: #fcfcee;
-}
-tr.el_highlight span.green {
-color: #272;
-}
-td.el_courses {
-text-align: left;
-}
-
-
-div.evalcontainer {
-/*background-color: #fafafa;*/
-padding: 1em 0;
-/*border: 2px solid #aca;*/
-}
-table.evallist {
-margin-bottom: 1em;
-text-align: center;
-border-collapse: collapse;
-}
-table.evallist tr {
-}
-table.evallist th {
-padding: 0.25em 0.5em;
-background-color: #eaeaea;
-font-weight: normal;
-}
-table.evallist td {
-border-bottom: 1px solid #ddd;
-border-top: 1px solid #ddd;
-padding: 0.25em 0.5em;
-}
-table.evallist td.evallist_empty {
-text-align: left;
-background-color: #fff;
-border: none;
-padding: 1.0em 0 0 0;
-}
-.left {
-text-align: left;
-}
-table.evallist td.title {
-padding: 0.3em;
-text-align: left;
-background-color: #fcfcee;
-}
-
-
 table tr.eval_gray {
 background-color: #fff;
 color: #777;
@@ -867,6 +792,30 @@ margin-bottom: 0.25em;
 
 
 
+
+/* show evaluations */
+table.search {
+background-color: #f5f5f5;
+border-collapse: collapse;
+}
+table.search tr td {
+border: 1px solid #fff;
+padding: 0.3em;
+}
+.leftcolumn {
+text-align: right;
+}
+tr.el_highlight {
+background-color: #fcfcee;
+}
+tr.el_highlight span.green {
+color: #272;
+}
+td.el_courses {
+text-align: left;
+}
+
+/* teacher details */
 h3.cd_heading {
 font-family: Verdana, Arial, Helvetica, sans-serif;
 font-weight: normal;
@@ -881,12 +830,6 @@ margin-top: 2em;
 padding-bottom: 1px;
 border-bottom: 1px solid #fda;
 }
-
-div.cd_block {
-background-color: #fed;
-padding: 0.5em 0.5em 0.5em 0.5em;
-}
-
 table.cd {
 border-collapse: collapse;
 }
@@ -902,29 +845,15 @@ background-color: #fff;
 padding: 0.5em;
 text-align: center;
 }
-
 p.insert {
 padding-left: 2em;
 }
-div.cd_float {
-width: 100%;
-float: left;
-padding: 0 2.5em;
-padding-bottom: 1em;
-}
-ul.cd_block {
-width: 43%;
-list-style: none;
-float: left; 
-margin: 0;
-padding: 0;
-padding: 1em;
-}
-ul.cd_block li {
-}
-ul.cd_nostyle {
-list-style: none;
-}
+
+/* ----------------------
+ ---- To organize ------
+----------------------- */
+
+
 
 
 table.nospace label { width: auto; }
