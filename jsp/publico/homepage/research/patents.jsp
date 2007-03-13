@@ -18,7 +18,7 @@
 			<li>
 				<p class="mvert0">
 		 			<strong>
-					<a href="<%= request.getContextPath() + "/publico/showResearchResult.do?method=showPatent&amp;result=" + patentId + "&amp;homepageID=" + request.getParameter("homepageID")%>">
+					<a href="<%= request.getContextPath() + "/publico/showResearchResult.do?method=showPatent&amp;resulIdt=" + patentId + "&amp;homepageID=" + request.getParameter("homepageID")%>">
 		 			<fr:view name="patent" property="title"/>
 					</a>	 			
 		 			</strong>
