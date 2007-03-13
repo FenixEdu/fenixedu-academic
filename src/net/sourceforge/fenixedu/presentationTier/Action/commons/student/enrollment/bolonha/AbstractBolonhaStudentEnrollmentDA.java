@@ -36,7 +36,7 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
 	    final StudentCurricularPlan studentCurricularPlan, final ExecutionPeriod executionPeriod) {
 
 	request.setAttribute("bolonhaStudentEnrollmentBean", new BolonhaStudentEnrollmentBean(
-		studentCurricularPlan, executionPeriod, getCurricularYearForCurricularCourses()));
+		studentCurricularPlan, executionPeriod, getCurricularYearForCurricularCourses(), getCurricularRuleLevel((DynaActionForm) form)));
 
 	return mapping.findForward("showDegreeModulesToEnrol");
 
@@ -65,7 +65,7 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
 			    .getExecutionPeriod(), bolonhaStudentEnrollmentBean
 			    .getDegreeModulesToEvaluate(), bolonhaStudentEnrollmentBean
 			    .getCurriculumModulesToRemove(),
-		    getCurricularRuleLevel((DynaActionForm) form));
+			    bolonhaStudentEnrollmentBean.getCurricularRuleLevel());
 
 	    if (!bolonhaStudentEnrollmentBean.getDegreeModulesToEvaluate().isEmpty()
 		    || !bolonhaStudentEnrollmentBean.getCurriculumModulesToRemove().isEmpty()) {

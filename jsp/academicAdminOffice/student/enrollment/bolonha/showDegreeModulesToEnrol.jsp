@@ -9,18 +9,8 @@
 
 	<em><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.academicAdminOffice" /></em>
 	<h2>
-		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.student.enrollment.courses" />
-		<logic:present name="bolonhaStudentEnrollmentForm" property="withRules">
-			<bean:define id="withRules" name="bolonhaStudentEnrollmentForm" property="withRules" />
-			<logic:equal name="withRules" value="true">
-				(<bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.student.enrollment.withRules"/>)
-			</logic:equal>
-			<logic:equal name="withRules" value="false">
-				(<bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.student.enrollment.withoutRules"/>)
-			</logic:equal>
-		</logic:present>
+		<bean:write name="bolonhaStudentEnrollmentBean"  property="funcionalityTitle" />
 	</h2>
-
 
 	<bean:define id="periodSemester" name="bolonhaStudentEnrollmentBean" property="executionPeriod.semester" />
 	<bean:define id="executionYearName" name="bolonhaStudentEnrollmentBean" property="executionPeriod.executionYear.year" />

@@ -22,15 +22,15 @@ public class MaximumNumberOfEnrolmentsInSpecialSeasonEvaluationExecutor extends 
     @Override
     protected RuleResult executeEnrolmentInEnrolmentEvaluation(final ICurricularRule curricularRule, final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
 	final Registration registration = enrolmentContext.getRegistration();
-	final ExecutionYear executionYear = enrolmentContext.getExecutionPeriod().getExecutionYear();
 
+	final ExecutionYear executionYear = enrolmentContext.getExecutionPeriod().getExecutionYear();
 	final SpecialSeasonCode specialSeasonCode = registration.getSpecialSeasonCodeByExecutionYear(executionYear);
 	if (specialSeasonCode == null) {
 	    return RuleResult.createFalse("curricularRules.ruleExecutors.EnrolmentInSpecialSeasonEvaluationExecutor.no.specialSeason.code");
 	}
 
 	final Integer maxEnrolments = specialSeasonCode.getMaxEnrolments();
-	final int sum = registration.getActiveStudentCurricularPlan().getSpecialSeasonEnrolments(executionYear).size() + enrolmentContext.getDegreeModuleToEvaluate().size();
+	final int sum = enrolmentContext.getDegreeModuleToEvaluate().size();
 	
 	if (maxEnrolments < sum) {
 	    return RuleResult.createFalse("curricularRules.ruleExecutors.EnrolmentInSpecialSeasonEvaluationExecutor.too.many.specialSeason.enrolments", specialSeasonCode.getSituation(), maxEnrolments.toString());

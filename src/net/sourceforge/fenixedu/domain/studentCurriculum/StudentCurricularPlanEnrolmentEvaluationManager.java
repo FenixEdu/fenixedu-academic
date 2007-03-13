@@ -117,10 +117,12 @@ public class StudentCurricularPlanEnrolmentEvaluationManager extends StudentCurr
 		    if (moduleEnroledWrapper.getCurriculumModule() instanceof Enrolment) {
 			final Enrolment enrolment = (Enrolment) moduleEnroledWrapper.getCurriculumModule();
 
-			if (curricularRuleLevel == CurricularRuleLevel.IMPROVEMENT_ENROLMENT) {
-			    enrolment.createEnrolmentEvaluationForImprovement(responsiblePerson.getEmployee(), enrolmentContext.getExecutionPeriod());
-			} else if (curricularRuleLevel == CurricularRuleLevel.SPECIAL_SEASON_ENROLMENT) {
-			    enrolment.createSpecialSeasonEvaluation(responsiblePerson.getEmployee());
+			if (!enrolment.hasSpecialSeason()) {
+			    if (curricularRuleLevel == CurricularRuleLevel.IMPROVEMENT_ENROLMENT) {
+				enrolment.createEnrolmentEvaluationForImprovement(responsiblePerson.getEmployee(), enrolmentContext.getExecutionPeriod());
+			    } else if (curricularRuleLevel == CurricularRuleLevel.SPECIAL_SEASON_ENROLMENT) {
+				enrolment.createSpecialSeasonEvaluation(responsiblePerson.getEmployee());
+			    }
 			}
 			
 		    } else {
