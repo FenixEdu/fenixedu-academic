@@ -13,13 +13,21 @@
 			<fr:property name="labelExcluded" value="true" />
 		</fr:layout>
 	</fr:view></h3>
+	<bean:message key="message.exportClosedMonth" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<p>
 	<fr:form action="/monthClosure.do?method=exportClosedMonth">
-			<fr:edit id="yearMonthToExport" name="yearMonthToExport" schema="show.date" visible="false"/>
-			<bean:message key="message.exportClosedMonth" bundle="ASSIDUOUSNESS_RESOURCES"/>
-			<p><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="invisible">
-				<bean:message key="button.export" />
-			</html:submit></p>
-		</fr:form>
+		<fr:edit id="yearMonthToExport" name="yearMonthToExport" schema="show.date" visible="false"/>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="invisible">
+			<bean:message key="button.export" />
+		</html:submit>
+	</fr:form>
+	<fr:form action="/monthClosure.do?method=openMonth">
+		<fr:edit id="yearMonthToOpen" name="yearMonthToExport" schema="show.date" visible="false"/>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.open" styleClass="invisible">
+			<bean:message key="button.open" />
+		</html:submit>
+	</fr:form>
+	</p>
 </logic:present>
 
 <logic:present name="yearMonth">

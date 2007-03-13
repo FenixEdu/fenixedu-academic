@@ -9785,6 +9785,15 @@
 		</filterChains>		
 	</service>
 	<service>
+		<name>OpenClosedMonth</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.OpenClosedMonth</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagementAssiduousnessAuthorization" />
+		</filterChains>		
+	</service>
+	<service>
 		<name>ExportClosedMonth</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ExportClosedMonth</implementationClass>
 		<description />

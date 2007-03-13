@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness;
 
-import java.util.ResourceBundle;
-
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,7 +11,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
-import net.sourceforge.fenixedu.util.LanguageUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -175,4 +172,14 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
     // }
     // return null;
     // }
+
+    public ActionForward openMonth(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	YearMonth yearMonth = (YearMonth) getRenderedObject("yearMonthToOpen");
+	if (yearMonth != null && yearMonth.getIsThisYearMonthClosed()) {
+	    ServiceUtils.executeService(SessionUtils.getUserView(request), "OpenClosedMonth",
+		    new Object[] { ClosedMonth.getClosedMonth(yearMonth) });
+	}
+	return prepareToCloseMonth(mapping, actionForm, request, response);
+    }
 }

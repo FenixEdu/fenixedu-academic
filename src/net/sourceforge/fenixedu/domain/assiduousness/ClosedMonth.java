@@ -1,5 +1,8 @@
 package net.sourceforge.fenixedu.domain.assiduousness;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
@@ -104,4 +107,16 @@ public class ClosedMonth extends ClosedMonth_Base {
 	}
 	return null;
     }
+
+    public void delete() {
+	removeRootDomainObject();
+	List<AssiduousnessClosedMonth> assiduousnessClosedMonths = new ArrayList<AssiduousnessClosedMonth>(
+		getAssiduousnessClosedMonths());
+	for (AssiduousnessClosedMonth assiduousnessClosedMonth : assiduousnessClosedMonths) {
+	    getAssiduousnessClosedMonths().remove(assiduousnessClosedMonth);
+	    assiduousnessClosedMonth.delete();
+	}
+	deleteDomainObject();
+    }
+
 }

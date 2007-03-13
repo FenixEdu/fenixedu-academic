@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.domain.assiduousness;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
@@ -47,5 +49,23 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
 	    }
 	}
 	return pastJustificationsDurations;
+    }
+
+    public void delete() {
+	removeRootDomainObject();
+	removeAssiduousness();
+	List<AssiduousnessExtraWork> assiduousnessExtraWorks = new ArrayList<AssiduousnessExtraWork>(
+		getAssiduousnessExtraWorks());
+	for (AssiduousnessExtraWork assiduousnessExtraWork : assiduousnessExtraWorks) {
+	    getAssiduousnessExtraWorks().remove(assiduousnessExtraWork);
+	    assiduousnessExtraWork.delete();
+	}
+	List<ClosedMonthJustification> closedMonthJustifications = new ArrayList<ClosedMonthJustification>(
+		getClosedMonthJustifications());
+	for (ClosedMonthJustification closedMonthJustification : closedMonthJustifications) {
+	    getClosedMonthJustifications().remove(closedMonthJustification);
+	    closedMonthJustification.delete();
+	}
+	deleteDomainObject();
     }
 }
