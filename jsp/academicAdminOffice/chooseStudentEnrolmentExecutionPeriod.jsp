@@ -39,14 +39,14 @@
 			<bean:define id="url2">/bolonhaStudentEnrollment.do?method=prepare&amp;scpID=<bean:write name="studentEnrolmentBean" property="studentCurricularPlan.idInternal"/>&amp;executionPeriodID=<bean:write name="studentEnrolmentBean" property="executionPeriod.idInternal"/>&amp;withRules=true</bean:define>
 			<html:link action='<%= url2 %>'><bean:message key="label.course.enrolmentWithRules" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
 		</li>
-		<li>
+		<!-- <li>
 			<bean:define id="url5">/improvementBolonhaStudentEnrollment.do?method=prepare&amp;scpID=<bean:write name="studentEnrolmentBean" property="studentCurricularPlan.idInternal"/>&amp;executionPeriodID=<bean:write name="studentEnrolmentBean" property="executionPeriod.idInternal"/></bean:define>
-			<html:link action='<%= url5 %>'><bean:message key="label.improvement.enrolment" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
+			<html:link action='<%= url5 %>'><bean:message key="label.course.improvementEnrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
 		</li>		
 		<li>
 			<bean:define id="url6">/specialSeasonBolonhaStudentEnrollment.do?method=changeSpecialSeasonCode&amp;scpID=<bean:write name="studentEnrolmentBean" property="studentCurricularPlan.idInternal"/>&amp;executionPeriodID=<bean:write name="studentEnrolmentBean" property="executionPeriod.idInternal"/></bean:define>
-			<html:link action='<%= url6 %>'><bean:message key="label.special.season.enrolment" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
-		</li>
+			<html:link action='<%= url6 %>'><bean:message key="label.course.specialSeasonEnrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
+		</li> -->				
 		<li>
 			<bean:define id="url3">/studentExtraEnrolments.do?method=prepare&amp;scpID=<bean:write name="studentEnrolmentBean" property="studentCurricularPlan.idInternal"/>&amp;executionPeriodID=<bean:write name="studentEnrolmentBean" property="executionPeriod.idInternal"/>&amp;type=PROPAEDEUTICS</bean:define>
 			<html:link action='<%= url3 %>'><bean:message key="label.course.enrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/> <bean:message key="PROPAEDEUTICS" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
