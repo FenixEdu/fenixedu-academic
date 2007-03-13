@@ -56,9 +56,10 @@
 	                            <bean:write name="bibliographicReference" property="title" filter="false"/><br/>
 	                        </logic:empty>
 	                        <logic:notEmpty name="bibliographicReference" property="url">
-	                            <html:link name="bibliographicReference" property="url">
+                                <bean:define id="refUrl" name="bibliographicReference" property="url"/>
+	                            <html:link href="<%= "" + refUrl %>">
 	                                <bean:write name="bibliographicReference" property="title" filter="false"/><br/>
-	                            </html:link>>
+	                            </html:link>
 	                        </logic:notEmpty>
 	                        <bean:write name="bibliographicReference" property="authors" filter="false" /><br/>
 	                        <bean:write name="bibliographicReference" property="reference"  filter="false" /><br/>
@@ -128,9 +129,10 @@
 		                            <bean:write name="bibliographicReference" property="title" filter="false"/><br/>
 		                        </logic:empty>
 		                        <logic:notEmpty name="bibliographicReference" property="url">
-		                            <html:link name="bibliographicReference" property="url">
+                                <bean:define id="refUrl" name="bibliographicReference" property="url"/>
+	                            <html:link href="<%= "" + refUrl %>">
 		                                <bean:write name="bibliographicReference" property="title" filter="false"/><br/>
-		                            </html:link>>
+		                            </html:link>
 		                        </logic:notEmpty>
 		                        <bean:write name="bibliographicReference" property="authors" filter="false" /><br/>
 		                        <bean:write name="bibliographicReference" property="reference"  filter="false" /><br/>
