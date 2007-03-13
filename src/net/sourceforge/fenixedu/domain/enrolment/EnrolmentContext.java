@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.CurricularRuleLevel;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 
 public class EnrolmentContext {
@@ -65,7 +66,11 @@ public class EnrolmentContext {
     public StudentCurricularPlan getStudentCurricularPlan() {
 	return studentCurricularPlan;
     }
-
+    
+    public Registration getRegistration() {
+	return studentCurricularPlan.getRegistration();
+    }
+    
     public void setStudentCurricularPlan(StudentCurricularPlan studentCurricularPlan) {
 	this.studentCurricularPlan = studentCurricularPlan;
     }
@@ -81,7 +86,5 @@ public class EnrolmentContext {
     public void setCurricularRuleLevel(CurricularRuleLevel curricularRuleLevel) {
         this.curricularRuleLevel = curricularRuleLevel;
     }
-    
-    
 
 }
