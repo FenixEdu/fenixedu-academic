@@ -310,19 +310,36 @@ public class CourseGroup extends CourseGroup_Base {
 	}
     }
 
-    public void collectChildDegreeModules(Class<? extends DegreeModule> clazz,
-	    final Set<DegreeModule> result, ExecutionYear executionYear) {
+    public Set<DegreeModule> collectAllChildDegreeModules(final Class<? extends DegreeModule> clazz, final ExecutionYear executionYear) {
+	final Set<DegreeModule> result = new HashSet<DegreeModule>();
 	for (final Context context : this.getChildContexts(executionYear)) {
-	    if (clazz.isAssignableFrom(context.getChildDegreeModule().getClass())) {
-		result.add(context.getChildDegreeModule());
+	    final DegreeModule degreeModule = context.getChildDegreeModule();
+	    if (clazz.isAssignableFrom(degreeModule.getClass())) {
+		result.add(degreeModule);
 	    }
-	    if (!context.getChildDegreeModule().isLeaf()) {
-		((CourseGroup) context.getChildDegreeModule()).collectChildDegreeModules(clazz, result,
-			executionYear);
+	    if (!degreeModule.isLeaf()) {
+		final CourseGroup courseGroup = (CourseGroup) degreeModule;
+		result.addAll(courseGroup.collectAllChildDegreeModules(clazz, executionYear));
 	    }
 	}
+	return result;
     }
-
+    
+    public Set<DegreeModule> collectAllChildDegreeModules(final Class<? extends DegreeModule> clazz, final ExecutionPeriod executionPeriod) {
+	final Set<DegreeModule> result = new HashSet<DegreeModule>();
+	for (final Context context : getChildContexts(executionPeriod)) {
+	    final DegreeModule degreeModule = context.getChildDegreeModule();
+	    if (clazz.isAssignableFrom(degreeModule.getClass())) {
+		result.add(degreeModule);
+	    }
+	    if (!degreeModule.isLeaf()) {
+		final CourseGroup courseGroup = (CourseGroup) degreeModule;
+		result.addAll(courseGroup.collectAllChildDegreeModules(clazz, executionPeriod));
+	    }
+	}
+	return result;
+    }
+    
     public void collectChildDegreeModulesIncludingFullPath(Class<? extends DegreeModule> clazz,
 	    List<List<DegreeModule>> result, List<DegreeModule> previousDegreeModulesPath,
 	    ExecutionYear executionYear) {
