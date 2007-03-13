@@ -71,7 +71,7 @@ function cleanSelect(checkboxes) {
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="readStudents"/>
 
 
-<table class="tstyle1 mtop15 tdtop">
+<table class="tstyle4 mtop15 tdtop">
 	<tr>
 		<th>
 			<bean:message key="label.selectStudents"/>
@@ -193,7 +193,7 @@ function cleanSelect(checkboxes) {
 
 
 
-<table class="tstyle1 tdcenter">
+<table class="tstyle4 tdcenter">
 	<tr>
      	   <bean:define id="colspan" value="1"/>
      	   <bean:define id="rowspan" value="2"/>
