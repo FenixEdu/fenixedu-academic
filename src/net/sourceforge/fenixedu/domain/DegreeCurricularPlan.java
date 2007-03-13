@@ -927,13 +927,8 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	}
     }
 
-    public List<DegreeModule> getDcpDegreeModules(Class<? extends DegreeModule> clazz,
-	    ExecutionYear executionYear) {
-	final Set<DegreeModule> result = new HashSet<DegreeModule>();
-	if (this.getRoot() != null) {
-	    this.getRoot().collectChildDegreeModules(clazz, result, executionYear);
-	}
-	return new ArrayList<DegreeModule>(result);
+    public List<DegreeModule> getDcpDegreeModules(final Class<? extends DegreeModule> clazz, final ExecutionYear executionYear) {
+	return hasRoot() ? new ArrayList<DegreeModule>(getRoot().collectAllChildDegreeModules(clazz, executionYear)) : Collections.EMPTY_LIST;
     }
 
     public List<List<DegreeModule>> getDcpDegreeModulesIncludingFullPath(
