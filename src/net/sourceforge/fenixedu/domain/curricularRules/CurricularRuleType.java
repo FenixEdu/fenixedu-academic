@@ -32,7 +32,9 @@ public enum CurricularRuleType {
     
     IMPROVEMENT_OF_APPROVED_ENROLMENT,
     
-    ENROLMENT_IN_SPECIAL_SEASON_EVALUATION;
+    ENROLMENT_IN_SPECIAL_SEASON_EVALUATION, 
+    
+    MAXIMUM_NUMBER_OF_ENROLMENTS_IN_SPECIAL_SEASON_EVALUATION;
 
     public String getName() {
         return name();
