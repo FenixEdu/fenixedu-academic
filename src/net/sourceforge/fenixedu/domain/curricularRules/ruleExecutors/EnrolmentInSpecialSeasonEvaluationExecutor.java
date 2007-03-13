@@ -1,14 +1,11 @@
 package net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors;
 
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.SpecialSeasonCode;
 import net.sourceforge.fenixedu.domain.curricularRules.EnrolmentInSpecialSeasonEvaluation;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
-import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class EnrolmentInSpecialSeasonEvaluationExecutor extends CurricularRuleExecutor {
 
@@ -34,20 +31,6 @@ public class EnrolmentInSpecialSeasonEvaluationExecutor extends CurricularRuleEx
 	
 	if (enrolment.isApproved()) {
 	    return RuleResult.createFalse("curricularRules.ruleExecutors.EnrolmentInSpecialSeasonEvaluationExecutor.degree.module.has.been.approved", degreeModule.getName());
-	}
-	
-	final Registration registration = enrolment.getRegistration();
-	final ExecutionYear executionYear = enrolment.getExecutionPeriod().getExecutionYear();
-	final SpecialSeasonCode specialSeasonCode = registration.getSpecialSeasonCodeByExecutionYear(executionYear);
-	if (specialSeasonCode == null) {
-	    return RuleResult.createFalse("curricularRules.ruleExecutors.EnrolmentInSpecialSeasonEvaluationExecutor.no.specialSeason.code");
-	}
-
-	final Integer maxEnrolments = specialSeasonCode.getMaxEnrolments();
-	final int sum = registration.getActiveStudentCurricularPlan().getSpecialSeasonEnrolments(executionYear).size() + enrolmentContext.getDegreeModuleToEvaluate().size();
-	
-	if (maxEnrolments < sum) {
-	    return RuleResult.createFalse("curricularRules.ruleExecutors.EnrolmentInSpecialSeasonEvaluationExecutor.too.many.specialSeason.enrolments", specialSeasonCode.getSituation(), maxEnrolments.toString());
 	}
 	
 	return RuleResult.createTrue();
