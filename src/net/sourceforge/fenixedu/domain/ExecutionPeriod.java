@@ -342,5 +342,13 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable 
         removeNextExecutionPeriod();
         deleteDomainObject();
     }
+    
+    public boolean isOneYearAfter(final ExecutionPeriod executionPeriod) {
+	final ExecutionPeriod nextExecutionPeriod = executionPeriod.getNextExecutionPeriod();
+	if(nextExecutionPeriod == null) {
+	    return false;
+	}
+	return this == nextExecutionPeriod.getNextExecutionPeriod();
+    }
 
 }
