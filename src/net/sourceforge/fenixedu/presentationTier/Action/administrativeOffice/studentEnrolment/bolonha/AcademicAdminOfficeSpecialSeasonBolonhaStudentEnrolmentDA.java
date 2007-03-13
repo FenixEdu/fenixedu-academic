@@ -56,6 +56,8 @@ public class AcademicAdminOfficeSpecialSeasonBolonhaStudentEnrolmentDA extends
 		specialSeasonCodeBean.getSpecialSeasonCode() });
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
+	    specialSeasonCodeBean.
+		setSpecialSeasonCode(specialSeasonCodeBean.getStudentCurricularPlan().getRegistration().getSpecialSeasonCodeByExecutionYear(specialSeasonCodeBean.getExecutionPeriod().getExecutionYear()));
 	}
 
 	return prepareChangeSpecialSeasonCode(mapping, form, request, response, specialSeasonCodeBean);
@@ -66,6 +68,8 @@ public class AcademicAdminOfficeSpecialSeasonBolonhaStudentEnrolmentDA extends
 	StudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(request);
 	ExecutionPeriod executionPeriod = getExecutionPeriod(request);
 	SpecialSeasonCodeBean specialSeasonCodeBean = new SpecialSeasonCodeBean(studentCurricularPlan, executionPeriod);
+	specialSeasonCodeBean.
+	setSpecialSeasonCode(studentCurricularPlan.getRegistration().getSpecialSeasonCodeByExecutionYear(executionPeriod.getExecutionYear()));
 	return prepareChangeSpecialSeasonCode(mapping, form, request, response, specialSeasonCodeBean);
     }
     
