@@ -9,14 +9,15 @@
 
 <logic:present name="infoSiteStudentsAndGroups">
 
-
-<span class="error"><!-- Error messages go here --><html:errors /></span>
-<br/>
+<span class="error0"><!-- Error messages go here --><html:errors /></span>
 
 	<logic:empty name="infoSiteStudentsAndGroups" property="infoSiteStudentsAndGroupsList">
-		<h2><span class="infoop4"><bean:message key="message.infoSiteStudentsAndGroupsList.not.available" /></span></h2>
+		<em><bean:message key="title.student.portalTitle"/></em>
+		<h2><bean:message key="title.viewAllStudentsAndGroups"/></h2>
+		<p><span class="warning0"><bean:message key="message.infoSiteStudentsAndGroupsList.not.available" /></span></p>
 		<ul>
-			<li><html:link page="<%="/viewShiftsAndGroups.do?method=execute&amp;executionCourseCode=" + request.getParameter("executionCourseCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
+			<li>
+			<html:link page="<%="/viewShiftsAndGroups.do?method=execute&amp;executionCourseCode=" + request.getParameter("executionCourseCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
 	   		<bean:message key="link.backToShiftsAndGroups"/></html:link> - <bean:message key="link.backToShiftsAndGroups.description"/>
 	   		</li>
 		</ul>

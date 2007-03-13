@@ -7,39 +7,42 @@
 
 <logic:present name="infoGroupPropertiesList">
 
-
+<em><bean:message key="title.student.portalTitle"/></em>
 <h2><bean:message key="title.ExecutionCourseProjects.short"/></h2>
 
 	<span class="error"><!-- Error messages go here --><html:errors /></span> 	
 			
 	<logic:empty name="infoGroupPropertiesList">
-	<h2><bean:message key="message.infoGroupPropertiesList.not.available" /></h2>
+		<em><bean:message key="title.student.portalTitle"/></em>
+		<h2><bean:message key="title.ExecutionCourseProjects.short"/></h2>
+		<p class="mtop15"><span class="warning0"><bean:message key="message.infoGroupPropertiesList.not.available" /></span></p>
 	</logic:empty>
+	
 	<logic:notEmpty name="infoGroupPropertiesList">
 	<div class="infoop3">
-		<p><strong>Disciplina:</strong> <bean:write name="infoExecutionCourse" property="nome"/></p>
+		<p class="mvert05"><strong>Disciplina:</strong> <bean:write name="infoExecutionCourse" property="nome"/></p>
 	</div>
 	
-	<p><bean:message key="label.student.viewExecutionCourseProjects.description" /></p>
+	<p><b><bean:message key="label.student.viewExecutionCourseProjects.description" />:</b></p>
 
-	<table class="style1" style="text-align: left;">
+	<table class="tstyle4" style="text-align: left;">
          <tr>
-			<th class="listClasses-header" width="20%"><bean:message key="label.projectTable.project" />
-			<th class="listClasses-header" width="30%"><bean:message key="label.projectTable.description" />
-			<th class="listClasses-header" width="20%"><bean:message key="label.projectTable.properties" />
-			<th class="listClasses-header" width="20%" ><bean:message key="label.projectTable.newProjectProposal" />
+			<th width="20%"><bean:message key="label.projectTable.project" />
+			<th width="30%"><bean:message key="label.projectTable.description" />
+			<th width="20%"><bean:message key="label.projectTable.properties" />
+			<th width="20%" ><bean:message key="label.projectTable.newProjectProposal" />
 		</tr>
 		
             <logic:iterate id="infoGroupProperties" name="infoGroupPropertiesList">
                 <tr>   
                              	
-                    <td class="listClasses">                                                              
+                    <td class="acenter">                                                              
                         <html:link page="<%="/viewShiftsAndGroups.do?method=execute&amp;executionCourseCode=" + request.getParameter("executionCourseCode") %>" paramId="groupPropertiesCode" paramName="infoGroupProperties" paramProperty="idInternal">
 							<b><bean:write name="infoGroupProperties" property="name"/></b>
 						</html:link>						
                     </td>
                     
-                    <td class="listClasses">	                   
+                    <td class="acenter">	                   
 	             		<logic:notEmpty name="infoGroupProperties" property="projectDescription">
 	                     	<bean:write name="infoGroupProperties" property="projectDescription" filter="false"/>
 	                	</logic:notEmpty>
@@ -49,7 +52,7 @@
 	                	</logic:empty>
                 	</td>
                     
-                    <td class="listClasses" >
+                    <td class="acenter">
                 	 
                 	 	 <logic:notEmpty name="infoGroupProperties" property="maximumCapacity">
 	                		 <p style="margin: 6px 0; padding: 0;"> <abbr title="<bean:message key="label.projectTable.MaximumCapacity.title" />"><bean:message key="label.student.viewExecutionCourseProjects.MaximumCapacity"/></abbr>: <bean:write name="infoGroupProperties" property="maximumCapacity"/> <bean:message key="label.students.lowercase" /></p>
@@ -74,10 +77,9 @@
 		                   	 <bean:message key="label.individual"/>
 		                   	 <%}%>
 	                   	 </p>
-	                   	 
                		</td>
                 	
-                	<td class="listClasses">
+                	<td class="acenter">
                 		<bean:size id="count" name="infoGroupProperties" property="infoExportGroupings"/>
                 		<logic:greaterThan name="count" value="1">
             		    <logic:iterate id="infoGroupPropertiesExecutionCourseElement" name="infoGroupProperties" property="infoExportGroupings" >

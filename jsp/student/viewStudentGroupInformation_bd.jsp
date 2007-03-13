@@ -14,6 +14,7 @@
 	<bean:define id="infoGrouping" name="infoStudentGroup" property="infoGrouping"/>
 	<bean:define id="groupPropertiesCode" name="infoGrouping" property="idInternal"/>
 
+	<em><bean:message key="title.student.portalTitle"/></em>
 	<h2><bean:message key="title.StudentGroupInformation"/> <bean:write name="infoStudentGroup" property="groupNumber"/></h2>
 
 	<p><strong><bean:message key="label.projectTable.project"/>:</strong> <bean:write name="infoGrouping" property="name"/></p>
@@ -25,7 +26,7 @@
 		
 <logic:empty name="infoSiteStudentGroup" property="infoSiteStudentInformationList">
 
-	<div class="infoop">
+	<div class="infoop2">
 		<ul>
 			<li><bean:message key="label.student.StudentGroupInformation.description"/></li>
 		</ul>
@@ -42,7 +43,7 @@
 		<br/>
 		<h2 style="color: #a00;"><bean:message key="message.infoSiteStudentGroupList.not.available" /></h2>
 		
-	<span class="infoop3">	
+	<p>	
 		<b><bean:message key="label.groupOption"/></b>&nbsp;
 		
 		<logic:lessEqual name="ShiftType" value="2">
@@ -57,23 +58,18 @@
 	    	<bean:message key="link.enrolment"/>
 	    </html:link>
 		</logic:greaterEqual>
-	</span>
+	</p>
 </logic:empty>
 
 
 <logic:notEmpty name="infoSiteStudentGroup" property="infoSiteStudentInformationList">
 
-<%--
-	<div class="infoop">
-		<bean:message key="label.student.viewStudentGroupInformation.description" />
-	</div>
---%>
 	
 	<div class="inobullet mvert15">
 	<!-- Error messages go here --><html:errors />
 	</div>
 
-<div class="infoop">
+<div class="infoop2">
 	<ul>
 		<li><bean:message key="label.student.StudentGroupInformation.description"/></li>
 	</ul>
@@ -82,7 +78,7 @@
 	<bean:define id="nrOfElements" name="infoSiteStudentGroup" property="nrOfElements"/>
 	<p><bean:message key="label.nrOfElements"/> <bean:write name="nrOfElements"/></p>
 	
-
+<p>
 <span class="infoop3">
 	<b><bean:message key="label.groupOperations"/></b>&nbsp;
 	
@@ -134,18 +130,17 @@
     </html:link>
 	</logic:equal>
 </span>
+</p>
 
-	<br/>
-	<br/>
 
-<table class="style1" width="70%" cellpadding="0" border="0">
+<table class="tstyle4" width="70%" cellpadding="0" border="0">
 	<tbody>   
 	<tr>
-		<th class="listClasses-header" width="15%"><bean:message key="label.numberWord" />
+		<th width="15%"><bean:message key="label.numberWord" />
 		</th>
-		<th class="listClasses-header" width="60%"><bean:message key="label.nameWord" />
+		<th width="60%"><bean:message key="label.nameWord" />
 		</th>
-		<th class="listClasses-header" width="25%"><bean:message key="label.emailWord" />
+		<th width="25%"><bean:message key="label.emailWord" />
 		</th>
 	</tr>
 	
@@ -154,13 +149,13 @@
  		<bean:define id="username" name="UserView" property="utilizador" type="java.lang.String"/>
 		<logic:equal name="infoSiteStudentInformation" property="username" value="<%= username %>">
 			<tr class="highlight">
-				<td class="listClasses">
+				<td>
 					<bean:write name="infoSiteStudentInformation" property="number"/>
 				</td>
-				<td class="listClasses">
+				<td>
 					<bean:write name="infoSiteStudentInformation" property="name"/>
 				</td>		
-				<td class="listClasses">
+				<td>
 					<logic:present name="infoSiteStudentInformation" property="email">
 						<bean:define id="mail" name="infoSiteStudentInformation" property="email"/>
 						<html:link href="<%= "mailto:"+ mail %>"><bean:write name="infoSiteStudentInformation" property="email"/></html:link>
@@ -174,11 +169,11 @@
 
 		<logic:notEqual name="infoSiteStudentInformation" property="username" value="<%= username %>">
 			<tr>
-				<td class="listClasses"><bean:write name="infoSiteStudentInformation" property="number"/>
+				<td><bean:write name="infoSiteStudentInformation" property="number"/>
 				</td>
-				<td class="listClasses"><bean:write name="infoSiteStudentInformation" property="name"/>
+				<td><bean:write name="infoSiteStudentInformation" property="name"/>
 				</td>		
-				<td class="listClasses">
+				<td>
 					<logic:present name="infoSiteStudentInformation" property="email">
 						<bean:define id="mail" name="infoSiteStudentInformation" property="email"/>
 						<html:link href="<%= "mailto:"+ mail %>"><bean:write name="infoSiteStudentInformation" property="email"/></html:link>

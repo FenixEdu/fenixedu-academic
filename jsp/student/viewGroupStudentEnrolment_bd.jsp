@@ -6,51 +6,54 @@
 
 
 <logic:present name="infoSiteStudentGroup">
-	<div class="infoop3">
-		<bean:message key="label.student.viewGroupStudentEnrolment.description" />
-	</div>
 
-<br/>
 
 
 <html:form action="/groupStudentEnrolment" method="get" style="margin: 0; padding: 0;">
 	
 	<logic:empty name="infoSiteStudentGroup" property="infoSiteStudentInformationList">
-	<h2><bean:message key="message.infoSiteStudentGroupList.not.available" /></h2>
+		<em><bean:message key="title.student.portalTitle"/></em>
+		<h2><bean:message key="title.GroupStudentEnrolment"/></h2>
+		<p><span class="warning0"><bean:message key="message.infoSiteStudentGroupList.not.available" /></span></p>
 	</logic:empty> 
-	
+
 
 
 	<logic:notEmpty name="infoSiteStudentGroup" property="infoSiteStudentInformationList">
-	<table width="50%" cellpadding="0" border="0">
-		<h2><bean:message key="title.GroupStudentEnrolment"/></h2>
+
+	<em><bean:message key="title.student.portalTitle"/></em>
+	<h2><bean:message key="title.GroupStudentEnrolment"/></h2>
 	
-		
-		<h2><bean:message key="label.StudentGroup"/></h2>
+	<div class="infoop2">
+		<bean:message key="label.student.viewGroupStudentEnrolment.description" />
+	</div>
+	
+	<p class="mtop15"><strong><bean:message key="label.StudentGroup"/></strong></p>
+
+
+	<table class="tstyle4">
 	<tr>
-		<th class="listClasses-header"><bean:message key="label.numberWord" />
+		<th><bean:message key="label.numberWord" />
 		</th>
-		<th class="listClasses-header"><bean:message key="label.nameWord" />
+		<th><bean:message key="label.nameWord" />
 		</th>
-		<th class="listClasses-header"><bean:message key="label.emailWord" />
+		<th><bean:message key="label.emailWord" />
 		</th>
 	</tr>
 	
 	 <bean:define id="mailingList" value=""/>
 	<logic:iterate id="infoSiteStudentInformation" name="infoSiteStudentGroup" property="infoSiteStudentInformationList">			
 		<tr>		
-			<td class="listClasses"><bean:write name="infoSiteStudentInformation" property="number"/>
+			<td><bean:write name="infoSiteStudentInformation" property="number"/>
 			</td>	
-			<td class="listClasses"><bean:write name="infoSiteStudentInformation" property="name"/>
+			<td><bean:write name="infoSiteStudentInformation" property="name"/>
 			</td>		
-			<td class="listClasses">
-					<bean:define id="mail" name="infoSiteStudentInformation" property="email"/>
-					<html:link href="<%= "mailto:"+ mail %>"><bean:write name="infoSiteStudentInformation" property="email"/></html:link>
+			<td>
+				<bean:define id="mail" name="infoSiteStudentInformation" property="email"/>
+				<html:link href="<%= "mailto:"+ mail %>"><bean:write name="infoSiteStudentInformation" property="email"/></html:link>
 			</td>
 		</tr>
-		 
-		
-		 	
+
 		  <bean:define id="aux" name="mailingList"/>
 			<logic:lessThan name="aux" value="1">
 				<bean:define id="mailingList" value="<%= mail.toString() %>"/>	
@@ -59,19 +62,14 @@
 				<bean:define id="mailingList" value="<%= aux + ";"+ mail  %>"/>	
 			</logic:greaterThan>
 			</logic:iterate>
-	 		
-	 
-	 
-
 	</table>
 
 </logic:notEmpty>
-<br/>
-<br/>
-<bean:message key="label.confirmGroupStudentEnrolment" />
 
-<br/>
-<br/>
+<p class="mvert15">
+	<bean:message key="label.confirmGroupStudentEnrolment" />
+</p>
+
 	<table>
 		<tr>
 			  <td><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.finalize.enrolment"/>
@@ -109,7 +107,7 @@
 
 
 <logic:notPresent name="infoSiteStudentGroup">
-<h4>
-<bean:message key="message.infoSiteStudentGroupList.not.available" />
-</h4>
+<p>
+	<span class="warning0"><bean:message key="message.infoSiteStudentGroupList.not.available" /></span>
+</p>
 </logic:notPresent>
