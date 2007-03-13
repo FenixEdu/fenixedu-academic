@@ -180,6 +180,7 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	    ServiceUtils.executeService(SessionUtils.getUserView(request), "OpenClosedMonth",
 		    new Object[] { ClosedMonth.getClosedMonth(yearMonth) });
 	}
+	RenderUtils.invalidateViewState();
 	return prepareToCloseMonth(mapping, actionForm, request, response);
     }
 }
