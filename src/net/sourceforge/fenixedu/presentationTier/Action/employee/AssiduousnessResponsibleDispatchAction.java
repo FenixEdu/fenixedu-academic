@@ -13,8 +13,12 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeWorkSheet;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.UnitEmployees;
+import net.sourceforge.fenixedu.dataTransferObject.assiduousness.WorkDaySheet;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
 import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.assiduousness.Assiduousness;
+import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedMonth;
+import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -31,6 +35,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
+import org.joda.time.Duration;
 import org.joda.time.YearMonthDay;
 
 public class AssiduousnessResponsibleDispatchAction extends FenixDispatchAction {
@@ -180,11 +185,48 @@ public class AssiduousnessResponsibleDispatchAction extends FenixDispatchAction 
                 return mapping.findForward("show-employee-work-sheet");
             }
         }
+        
+        if (yearMonth.getYear() == 2007 && yearMonth.getMonth().equals(Month.FEBRUARY)) {
+            verifyFebruaryDISPCD(employee.getAssiduousness(), employeeWorkSheet, request);
+        } else if (yearMonth.getYear() == 2007 && yearMonth.getMonth().equals(Month.MARCH)) {
+            verifyMarchDISPCD(employee.getAssiduousness(), request);
+        }
+        
         request.setAttribute("employeeWorkSheet", employeeWorkSheet);
         request.setAttribute("yearMonth", yearMonth);
         return mapping.findForward("show-employee-work-sheet");
     }
 
+    private void verifyMarchDISPCD(Assiduousness assiduousness, HttpServletRequest request) {
+        if (assiduousness != null) {
+            AssiduousnessClosedMonth assiduousnessClosedMonth = assiduousness.getClosedMonth(2);
+            if (assiduousnessClosedMonth != null
+                    && assiduousnessClosedMonth.getBalance().isShorterThan(Duration.ZERO)) {
+                YearMonthDay beginDate = new YearMonthDay(2007, 2, 1);
+                int endDay = beginDate.dayOfMonth().getMaximumValue();
+                YearMonthDay endDate = new YearMonthDay(2007, 2, endDay);
+                if (!assiduousness.getLeavesByType(beginDate, endDate,
+                        JustificationType.MULTIPLE_MONTH_BALANCE).isEmpty()) {
+                    request.setAttribute("hasToCompensateThisMonth", "hasToCompensateThisMonth");
+                    return;
+                }
+            }
+        }
+
+    }
+
+    private void verifyFebruaryDISPCD(Assiduousness assiduousness, EmployeeWorkSheet employeeWorkSheet,
+            HttpServletRequest request) {
+        if (assiduousness != null && employeeWorkSheet.getTotalBalance().isShorterThan(Duration.ZERO)) {
+            for (WorkDaySheet workDaySheet : employeeWorkSheet.getWorkDaySheetList()) {
+                if (workDaySheet.hasLeaveType(JustificationType.MULTIPLE_MONTH_BALANCE)) {
+                    request.setAttribute("hasToCompensateNextMonth", "hasToCompensateNextMonth");
+                    return;
+                }
+            }
+        }
+    }
+    
     private void saveErrors(HttpServletRequest request, String message) {
         ActionMessages actionMessages = new ActionMessages();
         actionMessages.add("message", new ActionMessage(message));

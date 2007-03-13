@@ -14,14 +14,18 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.ClockingsDaySheet;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeScheduleFactory;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeWorkSheet;
+import net.sourceforge.fenixedu.dataTransferObject.assiduousness.WorkDaySheet;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
 import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.assiduousness.Assiduousness;
+import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedMonth;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatusHistory;
 import net.sourceforge.fenixedu.domain.assiduousness.Clocking;
 import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth;
 import net.sourceforge.fenixedu.domain.assiduousness.Justification;
 import net.sourceforge.fenixedu.domain.assiduousness.Schedule;
+import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
@@ -36,6 +40,7 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 import org.joda.time.DateTimeFieldType;
+import org.joda.time.Duration;
 import org.joda.time.YearMonthDay;
 
 public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
@@ -76,10 +81,46 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
         EmployeeWorkSheet employeeWorkSheet = (EmployeeWorkSheet) ServiceUtils.executeService(userView,
                 "ReadEmployeeWorkSheet", args);
 
+        if (yearMonth.getYear() == 2007 && yearMonth.getMonth().equals(Month.FEBRUARY)) {
+            verifyFebruaryDISPCD(employee.getAssiduousness(), employeeWorkSheet, request);
+        } else if (yearMonth.getYear() == 2007 && yearMonth.getMonth().equals(Month.MARCH)) {
+            verifyMarchDISPCD(employee.getAssiduousness(), request);
+        }
+
         request.setAttribute("employeeWorkSheet", employeeWorkSheet);
         setEmployeeStatus(request, employee, beginDate, endDate);
         request.setAttribute("yearMonth", yearMonth);
         return mapping.findForward("show-employee-work-sheet");
+    }
+
+    private void verifyMarchDISPCD(Assiduousness assiduousness, HttpServletRequest request) {
+        if (assiduousness != null) {
+            AssiduousnessClosedMonth assiduousnessClosedMonth = assiduousness.getClosedMonth(2);
+            if (assiduousnessClosedMonth != null
+                    && assiduousnessClosedMonth.getBalance().isShorterThan(Duration.ZERO)) {
+                YearMonthDay beginDate = new YearMonthDay(2007, 2, 1);
+                int endDay = beginDate.dayOfMonth().getMaximumValue();
+                YearMonthDay endDate = new YearMonthDay(2007, 2, endDay);
+                if (!assiduousness.getLeavesByType(beginDate, endDate,
+                        JustificationType.MULTIPLE_MONTH_BALANCE).isEmpty()) {
+                    request.setAttribute("hasToCompensateThisMonth", "hasToCompensateThisMonth");
+                    return;
+                }
+            }
+        }
+
+    }
+
+    private void verifyFebruaryDISPCD(Assiduousness assiduousness, EmployeeWorkSheet employeeWorkSheet,
+            HttpServletRequest request) {
+        if (assiduousness != null && employeeWorkSheet.getTotalBalance().isShorterThan(Duration.ZERO)) {
+            for (WorkDaySheet workDaySheet : employeeWorkSheet.getWorkDaySheetList()) {
+                if (workDaySheet.hasLeaveType(JustificationType.MULTIPLE_MONTH_BALANCE)) {
+                    request.setAttribute("hasToCompensateNextMonth", "hasToCompensateNextMonth");
+                    return;
+                }
+            }
+        }
     }
 
     public ActionForward showSchedule(ActionMapping mapping, ActionForm form,

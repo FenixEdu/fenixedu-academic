@@ -24,6 +24,14 @@
 	</fr:view>
 	<br/>
 	<!-- escrever mes ano -->
+	
+	<logic:notEmpty name="hasToCompensateThisMonth">
+		<p class="infoop2"><bean:message key="message.hasToCompensateThisMonth" bundle="ASSIDUOUSNESS_RESOURCES"/></p>
+	</logic:notEmpty>
+	<logic:notEmpty name="hasToCompensateNextMonth">
+		<p class="infoop2"><bean:message key="message.hasToCompensateNextMonth" bundle="ASSIDUOUSNESS_RESOURCES"/></p>
+	</logic:notEmpty>
+	
 	<logic:empty name="employeeWorkSheet" property="workDaySheetList">
 		<p>
 			<em><bean:message key="message.employee.noWorkSheet" bundle="ASSIDUOUSNESS_RESOURCES"/></em>
