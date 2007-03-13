@@ -2132,6 +2132,11 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Cr
 	<slot name="note"/>
 </schema>
 
+<schema name="result.publication.presentation.Unstructured.mainInfo" extends="publication.mainInfo" bundle="RESEARCHER_RESOURCES"
+		type="net.sourceforge.fenixedu.domain.research.result.publication.Unstructured">
+	<slot name="title"/>	
+</schema>
+
 <schema name="result.publication.presentation.OtherPublication" extends="publication.TitleAndAuthors" bundle="RESEARCHER_RESOURCES"
 		type="net.sourceforge.fenixedu.domain.research.result.publication.OtherPublication">
  	<slot name="year"/>

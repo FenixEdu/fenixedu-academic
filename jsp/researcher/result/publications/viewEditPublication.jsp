@@ -27,11 +27,7 @@
 			</li>
 		</logic:equal>
 	</ul>
-	
-	<!--
-	<h3><fr:view name="result" property="title"/></h3>
-	-->
-	
+		
 	<logic:equal name="confirm" value="yes">
 		<div  class="mtop1 mbottom15">
 		<p><span class="warning0"><bean:message key="researcher.ResultPublication.delete.useCase.title"/></span></p>
