@@ -231,15 +231,6 @@
 			
 			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
 					 propertyFile="build.properties">
-				<include name="printers.properties"/>
-				<replacefilter token="@markSheet.printers.graduacao@" 
-			    			   property="markSheet.printers.graduacao"/>
-				<replacefilter token="@markSheet.printers.pos.graduacao@" 
-			    			   property="markSheet.printers.pos.graduacao"/>				
-			</replace>
-			
-			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
-					 propertyFile="build.properties">
 				<include name="IstFtpServerConfig.properties"/>
 				<replacefilter 
 		                 token="@ftp.IST.server.user@" 
@@ -622,6 +613,10 @@
         </sequential>
     </macrodef>
 
+	<target name="printers-configuration-file">
+		<generateHostDependentProperties prefix="markSheet.printers" hostnames="filter.printers" destfile="printers.properties"/>
+	</target>
+
 	<target name="write-index-redirect-hostnames-configuration-file">
 		<generateHostDependentProperties prefix="index.html.link" destfile=".indexRedirectHostnames.properties"/>
 	</target>
@@ -649,9 +644,9 @@
 	</target>
 	
 	<target name="write-all-properties" 
-		depends="write-filter-hostnames-configuration-file,write-index-redirect-hostnames-configuration-file,write-login-redirect-hostnames-configuration-file,write-cas-serviceUrl-hostnames-configuration-file,write-path-access-control-configuration-file">
+		depends="write-filter-hostnames-configuration-file,write-index-redirect-hostnames-configuration-file,write-login-redirect-hostnames-configuration-file,write-cas-serviceUrl-hostnames-configuration-file,write-path-access-control-configuration-file,printers-configuration-file">
 	</target>
-	
+
 	<target name="print-dml-message" if="dml.skip-compile">
 		<echo level="info">Dml file is up to date, code generation is not necessary.</echo>
 	</target>

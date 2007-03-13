@@ -456,6 +456,7 @@ allowed-roles.newline.instruction=${line.seperator}
 #----------------------------------------------------------------
 # Printers
 #----------------------------------------------------------------
+filter.printers=graduacao,pos.graduacao
 markSheet.printers.graduacao=
 markSheet.printers.pos.graduacao=
 
