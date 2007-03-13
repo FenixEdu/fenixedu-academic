@@ -16,25 +16,32 @@
 	</fr:layout>
 </fr:view>
 
-<br/>
 <bean:define id="externalCurricularCourseId">&amp;oid=<bean:write name="externalCurricularCourseBean" property="externalCurricularCourse.idInternal" /></bean:define>
-<ul>
+
+<ul class="mtop15">
 	<li><html:link page="<%="/externalUnits.do?method=prepareCreateExternalEnrolment" + externalCurricularCourseId  %>"><bean:message key="label.externalUnits.createExternalEnrolment" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:link></li>
 </ul>
-<ul>
-	<li><bean:message key="label.externalUnits.externalEnrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/>:<bean:size id="size" name="externalEnrolments" /> <%= size %></li>
-</ul>
 
-<h3><bean:message key="label.externalUnits.externalEnrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/>:</h3>
+
+<table class="tstyle2">
+	<tr><td class="aright"><bean:message key="label.externalUnits.externalEnrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/>:</td><td><bean:size id="size" name="externalEnrolments" /> <%= size %></td></tr>
+</table>
+
+
+<h3 class="mtop15 mbottom05"><bean:message key="label.externalUnits.externalEnrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/>:</h3>
 <logic:notEmpty name="externalEnrolments">
 	<fr:view name="externalEnrolments" schema="ExternalEnrolment.view">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4"/>
+			<fr:property name="classes" value="tstyle4 thlight mvert05"/>
+			<fr:property name="columnClasses" value=",acenter,acenter,acenter"/>
 		</fr:layout>
 	</fr:view>
 </logic:notEmpty>
+
 <logic:empty name="externalEnrolments">
-	<em><bean:message key="label.externalUnits.noExternalEnrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
+	<p>
+		<em><bean:message key="label.externalUnits.noExternalEnrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
+	</p>
 </logic:empty>
 
 </logic:present>

@@ -13,8 +13,7 @@
 <bean:define id="unitId">&oid=<bean:write name="createUnitBean" property="parentUnit.idInternal" /></bean:define>
 
 <html:messages property="error" message="true" id="errMsg" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<span class="error"><!-- Error messages go here --><bean:write name="errMsg" /></span>
-	<br/>
+	<span class="error0"><!-- Error messages go here --><bean:write name="errMsg" /></span>
 </html:messages>
 
 <fr:edit id="createUnitBean" name="createUnitBean" 
@@ -22,7 +21,8 @@
 		 action="/externalUnits.do?method=createExternalUnit">
 	
 	<fr:layout name="tabular-editable">
-		<fr:property name="classes" value="tstyle4"/>
+		<fr:property name="classes" value="tstyle4 thlight thright"/>
+		<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 	</fr:layout>
 	
 	<fr:destination name="cancel" path="<%= "/externalUnits.do?method=viewUnit" + unitId %>" />

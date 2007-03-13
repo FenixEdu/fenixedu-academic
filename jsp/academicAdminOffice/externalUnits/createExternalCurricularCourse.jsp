@@ -21,8 +21,9 @@
 </logic:equal>
 
 <html:messages property="error" message="true" id="errMsg" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<span class="error"><!-- Error messages go here --><bean:write name="errMsg" /></span>
-	<br/>
+	<p>
+		<span class="error0"><!-- Error messages go here --><bean:write name="errMsg" /></span>
+	</p>
 </html:messages>
 
 <fr:edit id="createExternalCurricularCourseBean" 
@@ -31,7 +32,8 @@
 		 action="/externalUnits.do?method=createExternalCurricularCourse">
 		 
 	<fr:layout name="tabular-editable">
-		<fr:property name="classes" value="tstyle4"/>
+		<fr:property name="classes" value="tstyle4 thlight thright"/>
+		<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 	</fr:layout>
 	<fr:destination name="postback" path="/externalUnits.do?method=createExternalCurricularCoursePostback" />
 	<fr:destination name="invalid"  path="/externalUnits.do?method=createExternalCurricularCourseInvalid"/>

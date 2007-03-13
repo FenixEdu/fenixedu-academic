@@ -16,25 +16,31 @@
 	</fr:layout>
 </fr:view>
 
-<br/>
+
 <bean:define id="unitId">&amp;oid=<bean:write name="unitResultBean" property="unit.idInternal"/></bean:define>
-<ul>
+<ul class="mtop15">
 	<li><html:link page="<%="/externalUnits.do?method=prepareCreateExternalCurricularCourse" + unitId %>"><bean:message key="label.externalUnits.createExternalCurricularCourse" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:link></li>
 </ul>
-<ul>
-	<li><bean:message key="label.externalUnits.externalCurricularCourses" bundle="ACADEMIC_OFFICE_RESOURCES"/>:<bean:size id="size" name="externalCurricularCourses" /> <%= size %></li>
-</ul>
+
+
+<table class="tstyle2">
+	<tr><td class="aright"><bean:message key="label.externalUnits.externalCurricularCourses" bundle="ACADEMIC_OFFICE_RESOURCES"/>:</td><td><bean:size id="size" name="externalCurricularCourses" /> <%= size %></td></tr>
+</table>
+
 
 <h3><bean:message key="label.externalUnits.externalCurricularCourses" bundle="ACADEMIC_OFFICE_RESOURCES"/>:</h3>
 <logic:notEmpty name="externalCurricularCourses">
 	<fr:view name="externalCurricularCourses" schema="ExternalCurricularCourseResultBean.view">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4"/>
+			<fr:property name="classes" value="tstyle4 thlight mvert05"/>
+			<fr:property name="columnClasses" value=",acenter,acenter,acenter"/>
 		</fr:layout>
 	</fr:view>
 </logic:notEmpty>
 <logic:empty name="externalCurricularCourses">
-	<em><bean:message key="label.externalUnits.noExternalCurricularCourses" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
+	<p>
+		<em><bean:message key="label.externalUnits.noExternalCurricularCourses" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
+	</p>
 </logic:empty>
 
 </logic:present>
