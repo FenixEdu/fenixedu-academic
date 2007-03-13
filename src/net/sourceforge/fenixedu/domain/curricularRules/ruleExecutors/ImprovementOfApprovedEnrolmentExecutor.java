@@ -35,12 +35,15 @@ public class ImprovementOfApprovedEnrolmentExecutor extends CurricularRuleExecut
 	}
 
 	final ExecutionPeriod executionPeriod = enrolmentContext.getExecutionPeriod();
-	if (!degreeModule.hasAnyParentContexts(executionPeriod)) {
-	    return RuleResult.createFalse("curricularRules.ruleExecutors.ImprovementOfApprovedEnrolmentExecutor.degree.module.has.no.context.in.present.execution.period", degreeModule.getName(), executionPeriod.getQualifiedName());
-	}
 	
-	if (!enrolment.isImprovingInExecutionPeriodFollowingApproval(executionPeriod)) {
-	    return RuleResult.createFalse("curricularRules.ruleExecutors.ImprovementOfApprovedEnrolmentExecutor.is.not.improving.in.execution.period.following.approval", degreeModule.getName());
+	if(!executionPeriod.isOneYearAfter(enrolment.getExecutionPeriod())) {
+	    if (!degreeModule.hasAnyParentContexts(executionPeriod)) {
+		    return RuleResult.createFalse("curricularRules.ruleExecutors.ImprovementOfApprovedEnrolmentExecutor.degree.module.has.no.context.in.present.execution.period", degreeModule.getName(), executionPeriod.getQualifiedName());
+	    }
+	    
+	    if (!enrolment.isImprovingInExecutionPeriodFollowingApproval(executionPeriod)) {
+		return RuleResult.createFalse("curricularRules.ruleExecutors.ImprovementOfApprovedEnrolmentExecutor.is.not.improving.in.execution.period.following.approval", degreeModule.getName());
+	    }
 	}
 	
 	return RuleResult.createTrue();
