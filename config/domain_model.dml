@@ -4954,6 +4954,11 @@ class net.sourceforge.fenixedu.domain.util.UsernameCounter extends net.sourcefor
 	Integer invitationCounter;
 }
 
+class net.sourceforge.fenixedu.domain.util.FunctionalityPrinters extends net.sourceforge.fenixedu.domain.DomainObject {
+	String functionality;
+	String keyPrinters;
+}
+
 
 /*
  * Relations definitions
@@ -12327,4 +12332,20 @@ relation RootDomainObjectEmailAddress {
 relation RootDomainObjectUsernameCounter {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.util.UsernameCounter playsRole usernameCounter;
+}
+
+relation UnitFunctionalityPrinters {
+	net.sourceforge.fenixedu.domain.util.FunctionalityPrinters playsRole functionalityPrinters {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole units {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectFunctionalityPrinters {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.util.FunctionalityPrinters playsRole functionalityPrinters {
+		multiplicity *;
+	}
 }

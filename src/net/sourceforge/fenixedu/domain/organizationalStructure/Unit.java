@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.domain.organizationalStructure;
 
 import java.text.Collator;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -30,6 +31,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.parking.ParkingPartyClassification;
 import net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation;
+import net.sourceforge.fenixedu.domain.util.FunctionalityPrinters;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.util.ContractType;
@@ -1129,5 +1131,14 @@ public class Unit extends Unit_Base {
         destinationUnit.getChilds().addAll(externalContracts);
                                
         fromUnit.delete();        		
+    }
+    
+    public String[] getPrinterNamesByFunctionalityName(final String name) {
+	for (FunctionalityPrinters functionalityPrinters : getFunctionalityPrintersSet()) {
+	    if(functionalityPrinters.getFunctionality().equals(name)) {
+		return functionalityPrinters.getPrinterNames();
+	    }
+	}
+	return new String[0];
     }
 }

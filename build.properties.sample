@@ -456,7 +456,8 @@ allowed-roles.newline.instruction=${line.seperator}
 #----------------------------------------------------------------
 # Printers
 #----------------------------------------------------------------
-markSheet.printers=
+markSheet.printers.graduacao=
+markSheet.printers.pos.graduacao=
 
 #----------------------------------------------------------------
 # File Manager

@@ -232,8 +232,10 @@
 			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
 					 propertyFile="build.properties">
 				<include name="printers.properties"/>
-				<replacefilter token="@markSheet.printers@" 
-			    			   property="markSheet.printers"/>
+				<replacefilter token="@markSheet.printers.graduacao@" 
+			    			   property="markSheet.printers.graduacao"/>
+				<replacefilter token="@markSheet.printers.pos.graduacao@" 
+			    			   property="markSheet.printers.pos.graduacao"/>				
 			</replace>
 			
 			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"

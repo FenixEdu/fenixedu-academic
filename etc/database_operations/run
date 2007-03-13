@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Added Functionality Printers" createFunctionalityPrintersTable.sql
