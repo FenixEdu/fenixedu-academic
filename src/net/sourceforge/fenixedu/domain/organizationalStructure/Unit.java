@@ -22,9 +22,11 @@ import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.accounting.Receipt;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
@@ -1124,7 +1126,11 @@ public class Unit extends Unit_Base {
 	Collection<? extends Accountability> externalContracts = fromUnit.getChildAccountabilitiesByAccountabilityClass(ExternalContract.class);
         List<NonAffiliatedTeacher> nonAffiliatedTeachers = fromUnit.getAssociatedNonAffiliatedTeachers();        	        	
         List<ResultUnitAssociation> resultUnitAssociations = fromUnit.getResultUnitAssociations();            
-                                     
+        List<Guide> payedGuides = fromUnit.getPayedGuides();
+        List<Receipt> payedReceipts = fromUnit.getPayedReceipts();
+        
+        destinationUnit.getPayedReceipts().addAll(payedReceipts);
+        destinationUnit.getPayedGuides().addAll(payedGuides);
         destinationUnit.getResultUnitAssociations().addAll(resultUnitAssociations);
         destinationUnit.getAssociatedNonAffiliatedTeachers().addAll(nonAffiliatedTeachers);
         destinationUnit.getChilds().addAll(externalContracts);

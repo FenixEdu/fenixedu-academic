@@ -35,10 +35,10 @@ public class ExternalContract extends ExternalContract_Base {
 	setParentParty(institution);
 	setOccupationInterval(beginDate, endDate);
     
-    PersonName personName = person.getPersonName();
-    if (personName != null) {
-        personName.setIsExternalPerson(true);
-    }
+        PersonName personName = person.getPersonName();
+        if (personName != null) {
+            personName.setIsExternalPerson(true);
+        }
     }  
 
     private void setOccupationInterval(YearMonthDay beginDate, YearMonthDay endDate) {

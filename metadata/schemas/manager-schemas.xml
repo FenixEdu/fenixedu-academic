@@ -446,5 +446,7 @@
 </schema>
 
 <schema name="ChangeNoOfficialName" type="net.sourceforge.fenixedu.domain.organizationalStructure.Unit" bundle="MANAGER_RESOURCES">
-	<slot name="name"/>
+	<slot name="name">
+		<property name="size" value="50" />
+	</slot>
 </schema>
