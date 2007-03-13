@@ -14,6 +14,15 @@
 	<br/>
 	<br/>
 	
+	<logic:messagesPresent message="true">
+		<ul>
+			<html:messages id="messages" message="true" bundle="ACADEMIC_OFFICE_RESOURCES">
+				<li><span class="error0"><bean:write name="messages" /></span></li>
+			</html:messages>
+		</ul>
+		<br/>
+	</logic:messagesPresent>
+		
 	<fr:form action="/specialSeasonBolonhaStudentEnrollment.do">
 		<html:hidden property="method" value=""/>
 		<fr:edit id="chooseCode" name="specialSeasonCodeBean" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.enrolment.SpecialSeasonEnrolmentBean" 
