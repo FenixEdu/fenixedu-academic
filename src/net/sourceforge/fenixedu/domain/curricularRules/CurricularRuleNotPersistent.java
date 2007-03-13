@@ -32,8 +32,10 @@ abstract public class CurricularRuleNotPersistent implements ICurricularRule {
     @Override
     public int hashCode() {
 	final StringBuilder builder = new StringBuilder();
-	builder.append(String.valueOf(getDegreeModuleToApplyRule().hashCode()));
-	builder.append('@');
+	if (getDegreeModuleToApplyRule() != null) {
+	    builder.append(String.valueOf(getDegreeModuleToApplyRule().hashCode()));
+	    builder.append('@');
+	}
 	builder.append(String.valueOf(getCurricularRuleType().hashCode()));
 	return builder.toString().hashCode();
     }
