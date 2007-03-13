@@ -1194,7 +1194,7 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Cr
 			<property name="size" value="30"/>
 		</slot>
 		<slot name="specialIssue" layout="option-select-postback"/>
-		<slot name="year" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<slot name="year" validator="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
 			<property name="size" value="10"/>
 		</slot>		
 		<slot name="month"/>
