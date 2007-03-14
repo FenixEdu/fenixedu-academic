@@ -397,6 +397,18 @@ public class Registration extends Registration_Base {
 		.getRoundedAverage(null, false).intValue();
     }
 
+    public boolean isInFinalDegreeYear() {
+	return getCurricularYear() == getDegreeType().getYears();
+    }
+    
+    public boolean isQualifiedForSeniority() {
+	return isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegree() && (isConcluded() || (isActive() && isInFinalDegreeYear()));
+    }
+    
+    public YearMonthDay getConclusionDate() {
+	return isConcluded() ? getActiveState().getStateDate().toYearMonthDay() : getLastApprovedEnrolmentEvaluationDate().toYearMonthDay();
+    }
+
     public void calculateApprovationRatioAndArithmeticMeanIfActive(boolean onlyPreviousExecutionYear) {
 
 	int enrollmentsNumber = 0;
@@ -1138,12 +1150,6 @@ public class Registration extends Registration_Base {
 	}
     }
 
-    public boolean isActive() {
-	RegistrationStateType activeStateType = getActiveStateType();
-	return activeStateType.equals(RegistrationStateType.REGISTERED)
-		|| activeStateType.equals(RegistrationStateType.MOBILITY);
-    }
-
     public boolean hasAnyEnrolmentsIn(final ExecutionYear executionYear) {
 	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
 	    for (final Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
@@ -1303,13 +1309,56 @@ public class Registration extends Registration_Base {
 	return false;
     }
 
+    public Set<RegistrationStateType> getRegistrationStatesTypes(final ExecutionYear executionYear) {
+	final Set<RegistrationStateType> result = new HashSet<RegistrationStateType>();
+
+	for (final RegistrationState registrationState : getRegistrationStates(executionYear)) {
+	    result.add(registrationState.getStateType());
+	}
+
+	return result;
+    }
+
+    public boolean isInRegisteredState(ExecutionYear executionYear) {
+	final Set<RegistrationStateType> registrationStatesTypes = getRegistrationStatesTypes(executionYear);
+
+	return (registrationStatesTypes.contains(RegistrationStateType.REGISTERED)
+		|| hasAnyEnrolmentsIn(executionYear) || registrationStatesTypes
+		.contains(RegistrationStateType.MOBILITY))
+		&& (!registrationStatesTypes.contains(RegistrationStateType.CANCELED)
+			&& !registrationStatesTypes.contains(RegistrationStateType.INTERRUPTED)
+			&& !registrationStatesTypes.contains(RegistrationStateType.INTERNAL_ABANDON) && !registrationStatesTypes
+			.contains(RegistrationStateType.EXTERNAL_ABANDON));
+    }
+
+    public RegistrationState getActiveState() {
+	return hasAnyRegistrationStates() ? Collections.max(getRegistrationStates(), RegistrationState.DATE_COMPARATOR) : null;
+    }
+
+    public RegistrationStateType getActiveStateType() {
+	final RegistrationState activeState = getActiveState();
+	return activeState != null ? activeState.getStateType() : RegistrationStateType.REGISTERED;
+    }
+
+    public boolean isActive() {
+	final RegistrationStateType activeStateType = getActiveStateType();
+	return activeStateType == RegistrationStateType.REGISTERED || activeStateType == RegistrationStateType.MOBILITY;
+    }
+
+    public boolean isInRegisteredState() {
+	return getActiveStateType() == RegistrationStateType.REGISTERED;
+    }
+
     public boolean isConcluded() {
 	return getActiveStateType() == RegistrationStateType.CONCLUDED;
     }
 
-    public YearMonthDay getConclusionDate() {
-	return getActiveStateType() == RegistrationStateType.CONCLUDED ? getActiveState().getStateDate()
-		.toYearMonthDay() : getLastApprovedEnrolmentEvaluationDate().toYearMonthDay();
+    public boolean getInterruptedStudies() {
+	return getActiveStateType() == RegistrationStateType.INTERRUPTED;
+    }
+
+    public boolean getFlunked() {
+	return getActiveStateType() == RegistrationStateType.FLUNKED;
     }
 
     public double getEctsCredits() {
@@ -1531,20 +1580,6 @@ public class Registration extends Registration_Base {
 
     }
 
-    public boolean getInterruptedStudies() {
-	return getActiveStateType().equals(RegistrationStateType.INTERRUPTED);
-    }
-
-    public RegistrationState getActiveState() {
-	return hasAnyRegistrationStates() ? Collections.max(getRegistrationStates(),
-		RegistrationState.DATE_COMPARATOR) : null;
-    }
-
-    public RegistrationStateType getActiveStateType() {
-	final RegistrationState activeState = getActiveState();
-	return activeState != null ? activeState.getStateType() : RegistrationStateType.REGISTERED;
-    }
-
     public RegistrationState getStateInDate(DateTime dateTime) {
 
 	List<RegistrationState> sortedRegistrationStates = new ArrayList<RegistrationState>(
@@ -1561,22 +1596,6 @@ public class Registration extends Registration_Base {
 	}
 
 	return null;
-    }
-
-    public boolean isInRegisteredState() {
-	return getActiveStateType().equals(RegistrationStateType.REGISTERED);
-    }
-
-    public boolean isInRegisteredState(ExecutionYear executionYear) {
-	final Set<RegistrationStateType> registrationStatesTypes = getRegistrationStatesTypes(executionYear);
-
-	return (registrationStatesTypes.contains(RegistrationStateType.REGISTERED)
-		|| hasAnyEnrolmentsIn(executionYear) || registrationStatesTypes
-		.contains(RegistrationStateType.MOBILITY))
-		&& (!registrationStatesTypes.contains(RegistrationStateType.CANCELED)
-			&& !registrationStatesTypes.contains(RegistrationStateType.INTERRUPTED)
-			&& !registrationStatesTypes.contains(RegistrationStateType.INTERNAL_ABANDON) && !registrationStatesTypes
-			.contains(RegistrationStateType.EXTERNAL_ABANDON));
     }
 
     public Set<RegistrationState> getRegistrationStates(final ExecutionYear executionYear) {
@@ -1623,16 +1642,6 @@ public class Registration extends Registration_Base {
 	}
 
 	return null;
-    }
-
-    public Set<RegistrationStateType> getRegistrationStatesTypes(final ExecutionYear executionYear) {
-	final Set<RegistrationStateType> result = new HashSet<RegistrationStateType>();
-
-	for (final RegistrationState registrationState : getRegistrationStates(executionYear)) {
-	    result.add(registrationState.getStateType());
-	}
-
-	return result;
     }
 
     public boolean hasDegreeDiplomaRequest() {
@@ -1715,10 +1724,6 @@ public class Registration extends Registration_Base {
 	}
 
 	return result;
-    }
-
-    public boolean getFlunked() {
-	return getActiveStateType().equals(RegistrationStateType.FLUNKED);
     }
 
     public boolean isInactive() {
