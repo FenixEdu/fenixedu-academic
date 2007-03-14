@@ -20,10 +20,8 @@ public class TeacherLegalRegimen extends TeacherLegalRegimen_Base {
 
     public static final Comparator<TeacherLegalRegimen> TEACHER_LEGAL_REGIMEN_COMPARATOR_BY_BEGIN_DATE = new ComparatorChain();
     static {
-	((ComparatorChain) TEACHER_LEGAL_REGIMEN_COMPARATOR_BY_BEGIN_DATE)
-		.addComparator(new BeanComparator("beginDateYearMonthDay"));
-	((ComparatorChain) TEACHER_LEGAL_REGIMEN_COMPARATOR_BY_BEGIN_DATE)
-		.addComparator(new BeanComparator("idInternal"));
+	((ComparatorChain) TEACHER_LEGAL_REGIMEN_COMPARATOR_BY_BEGIN_DATE).addComparator(new BeanComparator("beginDateYearMonthDay"));
+	((ComparatorChain) TEACHER_LEGAL_REGIMEN_COMPARATOR_BY_BEGIN_DATE).addComparator(new BeanComparator("idInternal"));
     }
 
     public TeacherLegalRegimen(Teacher teacher, Category category, YearMonthDay beginDate,

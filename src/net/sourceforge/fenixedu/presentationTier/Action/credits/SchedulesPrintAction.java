@@ -65,7 +65,7 @@ public class SchedulesPrintAction extends ShowTeacherCreditsDispatchAction {
 
     private void setLegalRegimen(HttpServletRequest request, OccupationPeriod occupationPeriod, Teacher teacher) {        
         if(occupationPeriod != null) {
-            TeacherLegalRegimen lastLegalRegimen = teacher.getLastLegalRegimenWithoutEndSituations(occupationPeriod.getStartYearMonthDay(), occupationPeriod.getEndYearMonthDay());
+            TeacherLegalRegimen lastLegalRegimen = teacher.getLastLegalRegimenWithoutSpecialSituations(occupationPeriod.getStartYearMonthDay(), occupationPeriod.getEndYearMonthDay());
             if (lastLegalRegimen != null) {            
                 request.setAttribute("legalRegimen", lastLegalRegimen);
             }

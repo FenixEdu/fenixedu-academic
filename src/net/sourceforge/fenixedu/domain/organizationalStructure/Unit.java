@@ -476,7 +476,7 @@ public class Unit extends Unit_Base {
 	List<Employee> employees = getAllWorkingEmployees();
 	for (Employee employee : employees) {
 	    Teacher teacher = employee.getPerson().getTeacher();
-	    if (teacher != null && !teacher.getAllLegalRegimensWithoutEndSituations().isEmpty()) {
+	    if (teacher != null && !teacher.getAllLegalRegimensWithoutSpecialSituations().isEmpty()) {
 		teachers.add(teacher);
 	    }
 	}
@@ -488,7 +488,7 @@ public class Unit extends Unit_Base {
 	List<Employee> employees = getAllWorkingEmployees(begin, end);
 	for (Employee employee : employees) {
 	    Teacher teacher = employee.getPerson().getTeacher();
-	    if (teacher != null && !teacher.getAllLegalRegimensWithoutEndSituations(begin, end).isEmpty()) {
+	    if (teacher != null && !teacher.getAllLegalRegimensWithoutSpecialSituations(begin, end).isEmpty()) {
 		teachers.add(teacher);
 	    }
 	}
@@ -500,7 +500,7 @@ public class Unit extends Unit_Base {
 	List<Employee> employees = getAllCurrentActiveWorkingEmployees();
 	for (Employee employee : employees) {
 	    Teacher teacher = employee.getPerson().getTeacher();
-	    if (teacher != null && teacher.getCurrentLegalRegimenWithoutEndSitutions() != null) {		
+	    if (teacher != null && teacher.getCurrentLegalRegimenWithoutSpecialSitutions() != null) {		
 		teachers.add(teacher);		
 	    }
 	}
@@ -512,7 +512,7 @@ public class Unit extends Unit_Base {
         for (Iterator iter = employees.iterator(); iter.hasNext();) {
             Employee employee = (Employee) iter.next();            
             Teacher teacher = employee.getPerson().getTeacher();
-            if (teacher != null && teacher.getCurrentLegalRegimenWithoutEndSitutions() != null) {
+            if (teacher != null && teacher.getCurrentLegalRegimenWithoutSpecialSitutions() != null) {
                 iter.remove();
             }
         }        
@@ -523,7 +523,7 @@ public class Unit extends Unit_Base {
 	for (Employee employee : getAllWorkingEmployees(begin, end)) {
 	    Teacher teacher = employee.getPerson().getTeacher();
 	    if (teacher != null && teacher.getTeacherNumber().equals(teacherNumber)
-		    && !teacher.getAllLegalRegimensWithoutEndSituations(begin, end).isEmpty()) {
+		    && !teacher.getAllLegalRegimensWithoutSpecialSituations(begin, end).isEmpty()) {
 		return teacher;
 	    }
 	}
