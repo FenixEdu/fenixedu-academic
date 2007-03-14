@@ -223,13 +223,13 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	for (Unit unit : allUnitsWithoutParent) {
 	    boolean active = this.getListingTypeValueToUnitsHidden().getValue().toString().equals("0");
 	    if (active) {
-		if (!getAllSubUnits(active, unit, currentDate).isEmpty()) {
+		if (unit.isActive(currentDate) || !getAllSubUnits(active, unit, currentDate).isEmpty()) {
 		    buffer.append("<ul class='padding1 nobullet'>");
 		    getSubUnitsList(unit, null, getSubUnits(active, unit, currentDate), buffer, currentDate, active);
 		    buffer.append("</ul>");
 		}
 	    } else {
-		if (!getAllSubUnits(active, unit, currentDate).isEmpty()) {
+		if (!unit.isActive(currentDate) || !getAllSubUnits(active, unit, currentDate).isEmpty()) {
 		    buffer.append("<ul class='padding1 nobullet'>");
 		    getSubUnitsList(unit, null, getSubUnits(active, unit, currentDate), buffer, currentDate, active);
 		    buffer.append("</ul>");

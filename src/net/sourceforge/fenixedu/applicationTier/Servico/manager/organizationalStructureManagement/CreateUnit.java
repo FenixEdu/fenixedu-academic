@@ -21,43 +21,33 @@ public class CreateUnit extends Service {
             String acronym, Date beginDate, Date endDate, PartyTypeEnum type, Integer departmentID,
             Integer degreeID, AccountabilityType accountabilityType, String webAddress)
             throws ExcepcaoPersistencia, FenixServiceException, DomainException, FenixFilterException {
-
         
         Unit parentUnit = getParentUnit(parentUnitID);
         Integer costCenterCode = getCostCenterCode(unitCostCenter);
         
         YearMonthDay begin = (beginDate != null) ? YearMonthDay.fromDateFields(beginDate) : null;
 	YearMonthDay end = (endDate != null) ? YearMonthDay.fromDateFields(endDate) : null;
-        Unit unit = Unit.createNewUnit(unitName, costCenterCode, acronym, begin, end, type,
-                parentUnit, accountabilityType, webAddress);
+        Unit unit = Unit.createNewUnit(unitName, costCenterCode, acronym, begin, end, type, parentUnit, accountabilityType, webAddress);
        
         setDepartment(departmentID, unit);
         setDegree(degreeID, unit);
     }
     
     private void setDegree(Integer degreeID, Unit unit) throws ExcepcaoPersistencia {
-
         Degree degree = null;
-        if (degreeID != null && unit.getType() != null
-                && (unit.getType().equals(PartyTypeEnum.DEGREE_UNIT))) {
-
+        if (degreeID != null && unit.getType() != null && (unit.getType().equals(PartyTypeEnum.DEGREE_UNIT))) {
             degree = rootDomainObject.readDegreeByOID(degreeID);
             unit.setDegree(degree);
-
         } else if (unit.getDegree() != null) {
             unit.removeDegree();
         }
     }
 
     private void setDepartment(Integer departmentID, Unit unit) throws ExcepcaoPersistencia {
-
         Department department = null;
-        if (departmentID != null && unit.getType() != null
-                && unit.getType().equals(PartyTypeEnum.DEPARTMENT)) {
-
+        if (departmentID != null && unit.getType() != null && unit.getType().equals(PartyTypeEnum.DEPARTMENT)) {
             department = rootDomainObject.readDepartmentByOID(departmentID);
             unit.setDepartment(department);
-
         } else if (unit.getDepartment() != null) {
             unit.removeDepartment();
         }
