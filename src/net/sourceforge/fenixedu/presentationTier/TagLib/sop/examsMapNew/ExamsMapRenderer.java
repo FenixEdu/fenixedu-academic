@@ -10,6 +10,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 
@@ -49,6 +50,8 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 
     private Locale locale;
 
+    private PageContext pageContext;
+    
     public Locale getLocale() {
         return locale;
     }
@@ -76,6 +79,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
     }
 
     public StringBuilder render(Locale locale, PageContext pageContext) {
+        this.pageContext = pageContext;
         StringBuilder strBuffer = new StringBuilder("");
 
         int numberOfCurricularYearsToDisplay = this.examsMap.getCurricularYears().size();
@@ -273,11 +277,11 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
                         strBuffer.append("<tr valign='top'>");
                         strBuffer.append("<td class='" + rowClass + "'>");
 
-                        strBuffer.append("<a href='executionCourse.do?method=firstPage&amp;executionCourseID="
+                        strBuffer.append("<a href='" + addPublicPrefix("executionCourse.do") + "?method=firstPage&amp;executionCourseID="
                                 + infoExecutionCourse.getIdInternal()
                                 + "'>");
                     } else if (showCreateExamLink && user.equals("sop")) {
-                        strBuffer.append("<a href='showExamsManagement.do?method=createByCourse&amp;"
+                        strBuffer.append("<a href='" + addPublicPrefix("showExamsManagement.do") + "?method=createByCourse&amp;"
                                 + SessionConstants.EXECUTION_COURSE_OID + "="
                                 + infoExecutionCourse.getIdInternal() + "&amp;"
                                 + SessionConstants.EXECUTION_PERIOD_OID + "="
@@ -304,7 +308,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
                     if (hasComment) {
                         if (user.equals("sop")) {
                             strBuffer.append(" : ");
-                            strBuffer.append("<a href='defineComment.do?executionCourseCode=");
+                            strBuffer.append("<a href='" + addPublicPrefix("defineComment.do") + "?executionCourseCode=");
                             strBuffer.append(infoExecutionCourse.getSigla());
                             strBuffer.append("&amp;executionPeriodName="
                                     + infoExecutionCourse.getInfoExecutionPeriod().getName());
@@ -335,7 +339,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
                     } else {
                         if (user.equals("sop")) {
                             strBuffer.append(" : ");
-                            strBuffer.append("<a href='defineComment.do?executionCourseCode=");
+                            strBuffer.append("<a href='" + addPublicPrefix("defineComment.do") + "?executionCourseCode=");
                             strBuffer.append(infoExecutionCourse.getSigla());
                             strBuffer.append("&amp;executionPeriodName="
                                     + infoExecutionCourse.getInfoExecutionPeriod().getName());
@@ -404,7 +408,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
                                     strBuffer.append("<tr>");
                                     strBuffer.append("<td>");
 
-                                    strBuffer.append("<a href='showExamsManagement.do?method=edit&amp;"
+                                    strBuffer.append("<a href='" + addPublicPrefix("showExamsManagement.do") + "?method=edit&amp;"
                                             + SessionConstants.EXECUTION_COURSE_OID
                                             + "="
                                             + infoExecutionCourse.getIdInternal()
@@ -519,7 +523,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
                                     strBuffer.append("<td>");
 
                                     strBuffer
-                                            .append("<a href='showExamsManagement.do?method=delete&amp;"
+                                            .append("<a href='" + addPublicPrefix("showExamsManagement.do") + "?method=delete&amp;"
                                                     + SessionConstants.EXECUTION_COURSE_OID
                                                     + "="
                                                     + infoExecutionCourse.getIdInternal()
@@ -547,7 +551,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 
                                     strBuffer.append("<td>");
 
-                                    strBuffer.append("<a href='showExamsManagement.do?method=edit&amp;"
+                                    strBuffer.append("<a href='" + addPublicPrefix("showExamsManagement.do") + "?method=edit&amp;"
                                             + SessionConstants.EXECUTION_COURSE_OID
                                             + "="
                                             + infoExecutionCourse.getIdInternal()
@@ -668,7 +672,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
                                     strBuffer.append("</td>");
                                     strBuffer.append("<td>");
                                     strBuffer
-                                            .append("<a href='showExamsManagement.do?method=delete&amp;"
+                                            .append("<a href='" + addPublicPrefix("showExamsManagement.do") + "?method=delete&amp;"
                                                     + SessionConstants.EXECUTION_COURSE_OID
                                                     + "="
                                                     + infoExecutionCourse.getIdInternal()
@@ -921,5 +925,11 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 
     public void setMapType(String string) {
         mapType = string;
+    }
+    
+    public String addPublicPrefix(String url) {
+        String contextPath = ((HttpServletRequest) this.pageContext.getRequest()).getContextPath();
+        
+        return contextPath + "/publico/" + url;
     }
 }
