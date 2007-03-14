@@ -43,7 +43,7 @@
 			</tr>			
 			<logic:iterate id="infoTutor" name="studentsOfTutor">
 				<bean:define id="tutorId" name="infoTutor" property="idInternal" />
-				<bean:define id="registrationOID" name="infoTutor" property="infoStudent.number"/>
+				<bean:define id="registrationOID" name="infoTutor" property="infoStudent.idInternal"/>
 				<tr class="listClasses">					
 					<td><bean:write name="infoTutor" property="infoStudent.number"/></td>
 					<td>
