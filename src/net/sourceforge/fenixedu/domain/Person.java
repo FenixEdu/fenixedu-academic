@@ -1021,8 +1021,7 @@ public class Person extends Person_Base {
     public List<PersonFunction> getActivePersonFunctions() {
 	YearMonthDay current = new YearMonthDay();
 	List<PersonFunction> activeFunctions = new ArrayList<PersonFunction>();
-	for (PersonFunction personFunction : (Collection<PersonFunction>) getParentAccountabilities(
-		AccountabilityTypeEnum.MANAGEMENT_FUNCTION, PersonFunction.class)) {
+	for (PersonFunction personFunction : (Collection<PersonFunction>) getParentAccountabilities(AccountabilityTypeEnum.MANAGEMENT_FUNCTION, PersonFunction.class)) {
 	    if (personFunction.isActive(current)) {
 		activeFunctions.add(personFunction);
 	    }
@@ -1033,8 +1032,7 @@ public class Person extends Person_Base {
     public List<PersonFunction> getInactivePersonFunctions() {
 	YearMonthDay current = new YearMonthDay();
 	List<PersonFunction> inactiveFunctions = new ArrayList<PersonFunction>();
-	for (PersonFunction personFunction : (Collection<PersonFunction>) getParentAccountabilities(
-		AccountabilityTypeEnum.MANAGEMENT_FUNCTION, PersonFunction.class)) {
+	for (PersonFunction personFunction : (Collection<PersonFunction>) getParentAccountabilities(AccountabilityTypeEnum.MANAGEMENT_FUNCTION, PersonFunction.class)) {
 	    if (!personFunction.isActive(current)) {
 		inactiveFunctions.add(personFunction);
 	    }
@@ -1059,15 +1057,17 @@ public class Person extends Person_Base {
 	return false;
     }
 
+    public boolean hasAnyPersonFunctions() {
+	return !getPersonFunctions().isEmpty();
+    }
+    
     public Collection<PersonFunction> getPersonFunctions() {
-	return (Collection<PersonFunction>) getParentAccountabilities(
-		AccountabilityTypeEnum.MANAGEMENT_FUNCTION, PersonFunction.class);
+	return (Collection<PersonFunction>) getParentAccountabilities(AccountabilityTypeEnum.MANAGEMENT_FUNCTION, PersonFunction.class);
     }
 
     public List<PersonFunction> getPersonFuntions(YearMonthDay begin, YearMonthDay end) {
 	List<PersonFunction> result = new ArrayList<PersonFunction>();
-	for (Accountability accountability : (Collection<PersonFunction>) getParentAccountabilities(
-		AccountabilityTypeEnum.MANAGEMENT_FUNCTION, PersonFunction.class)) {
+	for (Accountability accountability : (Collection<PersonFunction>) getParentAccountabilities(AccountabilityTypeEnum.MANAGEMENT_FUNCTION, PersonFunction.class)) {
 	    if (accountability.belongsToPeriod(begin, end)) {
 		result.add((PersonFunction) accountability);
 	    }
@@ -1077,8 +1077,7 @@ public class Person extends Person_Base {
 
     public List<PersonFunction> getPersonFunctions(Unit unit) {
 	List<PersonFunction> result = new ArrayList<PersonFunction>();
-	for (PersonFunction personFunction : (Collection<PersonFunction>) getParentAccountabilities(
-		AccountabilityTypeEnum.MANAGEMENT_FUNCTION, PersonFunction.class)) {
+	for (PersonFunction personFunction : (Collection<PersonFunction>) getParentAccountabilities(AccountabilityTypeEnum.MANAGEMENT_FUNCTION, PersonFunction.class)) {
 	    if (personFunction.getUnit().equals(unit)) {
 		result.add(personFunction);
 	    }
@@ -1088,8 +1087,7 @@ public class Person extends Person_Base {
 
     public boolean hasActivePersonFunction(FunctionType functionType, Unit unit) {
 	YearMonthDay currentDate = new YearMonthDay();
-	for (PersonFunction personFunction : (Collection<PersonFunction>) getParentAccountabilities(
-		AccountabilityTypeEnum.MANAGEMENT_FUNCTION, PersonFunction.class)) {
+	for (PersonFunction personFunction : (Collection<PersonFunction>) getParentAccountabilities(AccountabilityTypeEnum.MANAGEMENT_FUNCTION, PersonFunction.class)) {
 	    if (personFunction.getUnit().equals(unit)
 		    && personFunction.getFunction().getFunctionType() == functionType
 		    && personFunction.isActive(currentDate)) {
@@ -1108,8 +1106,7 @@ public class Person extends Person_Base {
 	return false;
     }
 
-    public PersonFunction addPersonFunction(Function function, YearMonthDay begin, YearMonthDay end,
-	    Double credits) {
+    public PersonFunction addPersonFunction(Function function, YearMonthDay begin, YearMonthDay end, Double credits) {
 	return new PersonFunction(function.getUnit(), this, function, begin, end, credits);
     }
 
@@ -1128,117 +1125,69 @@ public class Person extends Person_Base {
          * 
          * @return true if the person have been deleted, false otherwise
          */
-    public void delete() {
+    public void delete() {	
 	if (!canBeDeleted()) {
 	    throw new DomainException("error.person.cannot.be.deleted");
 	}
-
 	if (hasPersonalPhoto()) {
 	    getPersonalPhoto().delete();
 	}
-
 	if (hasParkingParty()) {
 	    getParkingParty().delete();
 	}
-
-	if (getAssociatedPersonAccount() != null) {
+	if (hasAssociatedPersonAccount()) {
 	    getAssociatedPersonAccount().delete();
+	}        
+        if (hasHomepage()) { // check if can delete made in #canBeDeleted()
+            getHomepage().delete();
+        }
+        if (hasUser()) {
+	    getUser().delete();
 	}
-
-    if (hasHomepage()) { // check if can delete made in #canBeDeleted()
-        getHomepage().delete();
-    }
-    
-	for (; !getAccounts().isEmpty(); getAccounts().get(0).delete())
-	    ;
-
+	
 	getPersonRoles().clear();
 	getManageableDepartmentCredits().clear();
 	getAdvisories().clear();
-	removeNationality();
-	removeCountryOfBirth();
-	removeCountryOfResidence();
-	if (hasUser()) {
-	    getUser().delete();
-	}
+	
 	getPersonName().delete();
 	for ( ; !getIdDocumentsSet().isEmpty(); getIdDocumentsSet().iterator().next().delete());
 	for ( ; !getEmailAddressesSet().isEmpty(); getEmailAddressesSet().iterator().next().delete());
+	
+	removeNationality();
+	removeCountryOfBirth();
+	removeCountryOfResidence();
+	
 	super.delete();
     }
 
-    private boolean canBeDeleted() {
-	if (getInvitationAccountabilitiesCount() > 0) {
-	    throw new DomainException("error.person.cannot.be.deleted");
-	}
-	if (getDomainObjectActionLogsCount() > 0) {
-	    throw new DomainException("error.person.cannot.be.deleted");
-	}
-	if (getStudentsCount() > 0) {
-	    throw new DomainException("error.person.cannot.be.deleted");
-	}
-	if (getSentSmsCount() > 0) {
-	    throw new DomainException("error.person.cannot.be.deleted");
-	}
-	if (getExportGroupingReceiversCount() > 0) {
-	    throw new DomainException("error.person.cannot.be.deleted");
-	}
-	if (getPersonFunctions().size() > 0) {
-	    throw new DomainException("error.person.cannot.be.deleted");
-	}
-	if (getAssociatedQualificationsCount() > 0) {
-	    throw new DomainException("error.person.cannot.be.deleted");
-	}
-	if (getAssociatedAlteredCurriculumsCount() > 0) {
-	    throw new DomainException("error.person.cannot.be.deleted");
-	}
-	if (getEnrolmentEvaluationsCount() > 0) {
-	    throw new DomainException("error.person.cannot.be.deleted");
-	}
-	if (getExportGroupingSendersCount() > 0) {
-	    throw new DomainException("error.person.cannot.be.deleted");
-	}
-	if (getResponsabilityTransactionsCount() > 0) {
-	    throw new DomainException("error.person.cannot.be.deleted");
-	}
-	if (getMasterDegreeCandidatesCount() > 0) {
-	    throw new DomainException("error.person.cannot.be.deleted");
-	}
-	if (getGuidesCount() > 0) {
-	    throw new DomainException("error.person.cannot.be.deleted");
-	}
-	if (getProjectAccessesCount() > 0) {
-	    throw new DomainException("error.person.cannot.be.deleted");
-	}
-	if (getPersonAuthorshipsCount() > 0) {
-	    throw new DomainException("error.person.cannot.be.deleted");
-	}
-	if (getEmployee() != null) {
-	    throw new DomainException("error.person.cannot.be.deleted");
-	}
-	if (getTeacher() != null) {
-	    throw new DomainException("error.person.cannot.be.deleted");
-	}
-	if (getGrantOwner() != null) {
-	    throw new DomainException("error.person.cannot.be.deleted");
-	}
-	if (hasAnyPayedGuides()) {
-	    throw new DomainException("error.person.cannot.be.deleted");
-	}
-	if (hasAnyPayedReceipts()) {
-	    throw new DomainException("error.person.cannot.be.deleted");
-	}
-	if (getExternalPerson() != null) {
-	    throw new DomainException("error.person.cannot.be.deleted");
-	}
-	if (hasParking()) {
-	    throw new DomainException("error.person.cannot.be.deleted");
-	}
-    if (hasHomepage() && !getHomepage().canBeDeleted()) {
-        return false;
-    }
-    
-	return true;
+    private boolean canBeDeleted() {	
+	return !hasAnyChilds()
+		&& !hasAnyParents()		
+		&& !hasAnyDomainObjectActionLogs() 		
+		&& !hasAnySentSms()
+		&& !hasAnyExportGroupingReceivers()		
+		&& !hasAnyAssociatedQualifications()
+		&& !hasAnyAssociatedAlteredCurriculums()
+		&& !hasAnyEnrolmentEvaluations()
+		&& !hasAnyExportGroupingSenders()
+		&& !hasAnyResponsabilityTransactions()
+		&& !hasAnyMasterDegreeCandidates()
+		&& !hasAnyGuides()
+		&& !hasAnyProjectAccesses()
+		&& !hasAnyPersonAuthorships()
+		&& !hasEmployee()
+		&& !hasTeacher()
+		&& !hasGrantOwner()		
+		&& !hasAnyPayedGuides()
+		&& !hasAnyPayedReceipts()
+		&& !hasParking()		
+		&& !hasAnyResearchInterests()
+		&& !hasAnyProjectParticipations()
+		&& !hasAnyResearchActivities() 
+		&& !hasAnyBoards() 		
+		&& !hasAnyPersonFunctions()
+		&& !hasAnyStudents()
+		&& (!hasHomepage() || getHomepage().canBeDeleted());                                  
     }
 
     private boolean hasParking() {
@@ -2171,6 +2120,10 @@ public class Person extends Person_Base {
 	return hasStudent() ? getStudent().getRegistrations() : Collections.EMPTY_LIST;
     }
 
+    public boolean hasAnyStudents() {
+	return getStudentsCount() > 0;
+    }
+    
     public int getStudentsCount() {
 	if (getStudent() != null) {
 	    return getStudent().getRegistrationsCount();

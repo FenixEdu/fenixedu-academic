@@ -229,21 +229,11 @@ public abstract class Party extends Party_Base {
 	return result;
     }
 
-    protected void delete() {
-	if (!canBeDeleted()) {
-	    throw new DomainException("error.party.cannot.be.deleted");
-	}
-
-	for (; !getAccounts().isEmpty(); getAccounts().get(0).delete())
-	    ;
-	
+    protected void delete() {	
+	for (; !getAccounts().isEmpty(); getAccounts().get(0).delete());
 	removePartyType();	
 	removeRootDomainObject();
-	super.deleteDomainObject();
-    }
-
-    private boolean canBeDeleted() {
-	return !hasAnyResearchInterests() && !hasAnyProjectParticipations() && !hasAnyResearchActivities() && !hasAnyBoards() && !hasAnyChilds();
+	deleteDomainObject();
     }
 
     public static Set<Party> readContributors() {

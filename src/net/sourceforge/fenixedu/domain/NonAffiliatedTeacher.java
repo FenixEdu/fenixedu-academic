@@ -32,5 +32,4 @@ public class NonAffiliatedTeacher extends NonAffiliatedTeacher_Base {
         }
         return nonAffiliatedTeachers;
     }
-
 }

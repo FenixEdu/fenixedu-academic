@@ -210,15 +210,15 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     }
 
     public String getUnits() throws FenixFilterException, FenixServiceException, ExcepcaoPersistencia {
-	YearMonthDay currentDate = new YearMonthDay();
 	StringBuilder buffer = new StringBuilder();
-	List<Unit> allUnitsWithoutParent = new ArrayList<Unit>();
-	allUnitsWithoutParent.add(UnitUtils.readEarthUnit());
-	
+	List<Unit> allUnitsWithoutParent = UnitUtils.readAllUnitsWithoutParents();
+	YearMonthDay currentDate = new YearMonthDay();
+
 	if (getViewExternalUnits()) {
-	    allUnitsWithoutParent.add(UnitUtils.readExternalInstitutionUnit());
 	    Collections.sort(allUnitsWithoutParent, Unit.UNIT_COMPARATOR_BY_NAME);
-	} 
+	} else {
+	    allUnitsWithoutParent.remove(UnitUtils.readExternalInstitutionUnit());
+	}
 	
 	for (Unit unit : allUnitsWithoutParent) {
 	    boolean active = this.getListingTypeValueToUnitsHidden().getValue().toString().equals("0");

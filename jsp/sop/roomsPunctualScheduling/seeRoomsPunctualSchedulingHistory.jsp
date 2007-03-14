@@ -80,6 +80,10 @@
 				</fr:layout>		
 			</fr:edit>
 		</fr:form>
+			
+		<logic:empty name="events">
+			<em><bean:message key="label.empty.rooms.punctual.scheduling" bundle="SOP_RESOURCES"/></em>			
+		</logic:empty>	
 				
 		<logic:notEmpty name="events">					
 			<table class="tcalendar thlight mtop2">

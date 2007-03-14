@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.domain.organizationalStructure;
 
 import java.text.Collator;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -116,27 +115,24 @@ public class Unit extends Unit_Base {
 	if (!canBeDeleted()) {
 	    throw new DomainException("error.unit.cannot.be.deleted");
 	}
-	
 	if (hasAnyParentUnits()) {
 	    getParents().get(0).delete();
 	}
-	
 	if (hasSite()) {
 	    getSite().delete();
     	}
-
-	for (; !getParticipatingAnyCurricularCourseCurricularRules().isEmpty(); getParticipatingAnyCurricularCourseCurricularRules()
-		.get(0).delete())
-	    ;
+	
+	for (; !getParticipatingAnyCurricularCourseCurricularRules().isEmpty(); getParticipatingAnyCurricularCourseCurricularRules().get(0).delete());	
 	
 	getUnitName().delete();		
 	removeDepartment();
-	removeDegree();			
+	removeDegree();	
+	
 	super.delete();
     }
 
     private boolean canBeDeleted() {
-	return (!hasAnyParents() || (getParentUnits().size() == 1 && getParents().size() == 1))
+	return (!hasAnyParents() || (getParentsCount() == 1 && getParentUnits().size() == 1))
 		&& !hasAnyChilds()
 		&& !hasAnyFunctions()				
 		&& !hasAnySpaceResponsibility()
@@ -151,7 +147,11 @@ public class Unit extends Unit_Base {
 		&& !hasAnyExternalCurricularCourses()
 		&& !hasAnyResultUnitAssociations()
 		&& !hasAdministrativeOffice()
-		&& !hasUnitServiceAgreementTemplate()		
+		&& !hasUnitServiceAgreementTemplate()	
+		&& !hasAnyResearchInterests()
+		&& !hasAnyProjectParticipations() 
+		&& !hasAnyResearchActivities() 
+		&& !hasAnyBoards()
 		&& (!hasSite() || getSite().canBeDeleted());
     }
 
