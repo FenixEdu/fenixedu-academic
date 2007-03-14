@@ -15,8 +15,7 @@ import org.apache.struts.action.ActionMapping;
 
 public class StudentEnrollmentManagementDA extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
 	final Student student = getLoggedStudent(request);
 	if (!student.hasPersonDataAuthorizationChoiseForCurrentExecutionYear()) {
@@ -29,18 +28,15 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
 	if (registrations.size() == 1) {
 	    final Registration registration = registrations.iterator().next();
 	    return getActionForwardForRegistration(mapping, request, registration);
-
 	}
 
 	return prepareChooseRegistration(mapping, form, request, response);
-
     }
 
     private ActionForward getActionForwardForRegistration(ActionMapping mapping,
 	    HttpServletRequest request, final Registration registration) {
 
 	request.setAttribute("registration", registration);
-
 	if (registration.getLastStudentCurricularPlan().isBolonha()) {
 	    return mapping.findForward("proceedToBolonhaEnrollment");
 	}
@@ -52,7 +48,6 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
 	    HttpServletRequest request, HttpServletResponse response) {
 
 	request.setAttribute("registrationsToEnrol", getRegistrationsToEnrolByStudent(request));
-
 	return mapping.findForward("chooseRegistration");
     }
 
@@ -63,23 +58,18 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
 	if (!getLoggedStudent(request).getRegistrationsToEnrolByStudent().contains(registration)) {
 	    return mapping.findForward("notAuthorized");
 	}
-
 	return getActionForwardForRegistration(mapping, request, registration);
-
     }
 
     private Registration getRegistration(final HttpServletRequest request) {
-	return rootDomainObject.readRegistrationByOID(getRequestParameterAsInteger(request,
-		"registrationId"));
+	return rootDomainObject.readRegistrationByOID(getRequestParameterAsInteger(request, "registrationId"));
     }
 
     public ActionForward choosePersonalDataAuthorizationChoice(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
-
 	return prepare(mapping, form, request, response);
-
     }
-
+    
     private List<Registration> getRegistrationsToEnrolByStudent(final HttpServletRequest request) {
 	return getLoggedStudent(request).getRegistrationsToEnrolByStudent();
     }
@@ -87,5 +77,5 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
     private Student getLoggedStudent(final HttpServletRequest request) {
 	return getLoggedPerson(request).getStudent();
     }
-
+    
 }
