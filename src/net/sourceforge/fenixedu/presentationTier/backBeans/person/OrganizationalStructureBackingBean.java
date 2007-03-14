@@ -58,8 +58,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	if (getRequestParameter("unitID") != null) {
 	    getUnitIDHidden().setValue(getRequestParameter("unitID"));
 	}	
-	this.bundle = ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils
-		.getLocale());
+	this.bundle = ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale());
     }
 
     public List getExecutionYears() throws FenixFilterException, FenixServiceException {
@@ -68,8 +67,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	List<SelectItem> result = new ArrayList<SelectItem>(executionYears.size());
 	for (ExecutionYear executionYear : executionYears) {
 	    if (executionYear.getYear().compareTo("2005/2006") >= 0) {
-		result.add(new SelectItem(executionYear.getIdInternal(), executionYear.getYear(),
-			executionYear.getState().getStateCode()));
+		result.add(new SelectItem(executionYear.getIdInternal(), executionYear.getYear(), executionYear.getState().getStateCode()));
 	    }
 	}
 
@@ -100,27 +98,22 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 		    // Title
 		    if (partyType == null || !partyType.equals(unit.getType())) {
 			partyType = unit.getType();
-			buffer.append("<h3 class='mtop2'>").append(
-				this.bundle.getString(partyType.getName())).append("</h3>\r\n");
+			buffer.append("<h3 class='mtop2'>").append(this.bundle.getString(partyType.getName())).append("</h3>\r\n");
 		    }
 
 		} else if (unit.getType() == null) {
 
 		    // End Separator Line
 		    if (writeSeparatorLine == false) {
-			buffer
-				.append("<div class='mtop2' style='color: #aaa;'>- - - - - - - -</div>\r\n");
-			buffer.append("<h3 class='mtop2'>").append(
-				this.bundle.getString(PartyTypeEnum.UNKNOWN.getName())).append(
-				"</h3>\r\n");
+			buffer.append("<div class='mtop2' style='color: #aaa;'>- - - - - - - -</div>\r\n");
+			buffer.append("<h3 class='mtop2'>").append(this.bundle.getString(PartyTypeEnum.UNKNOWN.getName())).append("</h3>\r\n");
 			writeSeparatorLine = true;
 		    }
 		}
 
 		buffer.append("<ul class='padding nobullet'>\r\n");
 
-		List<Unit> activeSubUnits = unit.getActiveSubUnits(currentDate,
-			AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE);
+		List<Unit> activeSubUnits = unit.getActiveSubUnits(currentDate, AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE);
 		Collections.sort(activeSubUnits, Unit.UNIT_COMPARATOR_BY_NAME);
 
 		if (!activeSubUnits.isEmpty()) {
@@ -157,8 +150,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	    List<Unit> activeSubUnits, YearMonthDay currentDate) {
 
 	if (!activeSubUnits.isEmpty()) {
-	    buffer.append("\t<li class='nobullet'><ul class='mvert0' id='aa").append(parentUnit.getIdInternal()).append(
-		    "' style='display:none'>\r\n");
+	    buffer.append("\t<li class='nobullet'><ul class='mvert0' id='aa").append(parentUnit.getIdInternal()).append("' style='display:none'>\r\n");
 	    for (Unit subUnit : activeSubUnits) {
 		getSubUnitsWithoutAggregatedUnitsList(buffer, currentDate, subUnit);
 	    }
@@ -173,8 +165,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 		parentUnit.getIdInternal()).append("'>").append(parentUnit.getNameWithAcronym()).append(
 		"</a></li>\r\n");
 
-	List<Unit> activeSubUnits = parentUnit.getActiveSubUnits(currentDate,
-		AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE);
+	List<Unit> activeSubUnits = parentUnit.getActiveSubUnits(currentDate, AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE);
 
 	if (!activeSubUnits.isEmpty()) {
 	    buffer.append("\t\t<li class='nobullet'><ul class='mvert0'>\r\n");
@@ -189,8 +180,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	}
     }
 
-    private void getSubUnitsWithoutAggregatedUnitsList(StringBuilder buffer, YearMonthDay currentDate,
-	    Unit subUnit) {
+    private void getSubUnitsWithoutAggregatedUnitsList(StringBuilder buffer, YearMonthDay currentDate, Unit subUnit) {
 	List<Unit> validInstitutionSubUnits = null;
 	if (subUnit.getType() != null && subUnit.getType().equals(PartyTypeEnum.AGGREGATE_UNIT)) {
 	    validInstitutionSubUnits = getValidInstitutionSubUnits(subUnit, currentDate);
@@ -223,9 +213,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	    return new HashMap<PartyTypeEnum, Set<Unit>>();
 	}
 
-	for (Unit subUnit : istUnit.getActiveSubUnits(currentDate,
-		AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE)) {
-
+	for (Unit subUnit : istUnit.getActiveSubUnits(currentDate, AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE)) {
 	    if (subUnit.getType() != null && subUnit.getType().equals(PartyTypeEnum.AGGREGATE_UNIT)) {
 		othersUnits.addAll(getValidInstitutionSubUnits(subUnit, currentDate));
 		for (Unit unit : othersUnits) {
@@ -304,21 +292,17 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	}
 
 	for (Function function : getSortFunctionList(chooseUnit)) {
-	    if (function.belongsToPeriod(iExecutionYear.getBeginDateYearMonthDay(), iExecutionYear
-		    .getEndDateYearMonthDay())) {
-		if (StringUtils.isEmpty(getListType()) || getListType().equals("#")
-			|| getListType().equals("1")) {
+	    if (function.belongsToPeriod(iExecutionYear.getBeginDateYearMonthDay(), iExecutionYear.getEndDateYearMonthDay())) {
+		if (StringUtils.isEmpty(getListType()) || getListType().equals("#") || getListType().equals("1")) {
 		    buffer.append("<ul><li class='tree_label'>").append(function.getName()).append(": ");
-		    buffer.append((function.getParentInherentFunction() != null) ? " (Cargo Inerente)"
-			    : "");
+		    buffer.append((function.getParentInherentFunction() != null) ? " (Cargo Inerente)" : "");
 		    getPersonFunctionsList(chooseUnit, function, buffer, iExecutionYear);
 		    buffer.append("</li></ul>");
 		}
 	    }
 	}
 
-	List<Unit> activeSubUnit = chooseUnit.getActiveSubUnits(currentDate,
-		AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE);
+	List<Unit> activeSubUnit = chooseUnit.getActiveSubUnits(currentDate, AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE);
 	Collections.sort(activeSubUnit, Unit.UNIT_COMPARATOR_BY_NAME);
 
 	for (Unit subUnit : activeSubUnit) {
@@ -336,8 +320,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	// buffer.append("<image
 	// src='").append(getContextPath()).append("/images/unit-icon.gif'/>")
 	// .append(" ");
-	buffer.append("<strong id='aa").append(subUnit.getIdInternal()).append("' >").append(
-		subUnit.getName()).append("</strong>");
+	buffer.append("<strong id='aa").append(subUnit.getIdInternal()).append("' >").append(subUnit.getName()).append("</strong>");
 
 	if (StringUtils.isEmpty(getListType()) || getListType().equals("#") || getListType().equals("0")) {
 	    printUnitWorkingEmployees(subUnit, iExecutionYear, buffer);
@@ -346,21 +329,17 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	for (Function function : getSortFunctionList(subUnit)) {
 	    if (function.belongsToPeriod(iExecutionYear.getBeginDateYearMonthDay(), iExecutionYear
 		    .getEndDateYearMonthDay())) {
-		if (StringUtils.isEmpty(getListType()) || getListType().equals("#")
-			|| getListType().equals("1")) {
+		if (StringUtils.isEmpty(getListType()) || getListType().equals("#") || getListType().equals("1")) {
 		    buffer.append("<ul><li class='tree_label'>").append(function.getName()).append(": ");
-		    buffer.append((function.getParentInherentFunction() != null) ? " (Cargo Inerente)"
-			    : "");
+		    buffer.append((function.getParentInherentFunction() != null) ? " (Cargo Inerente)" : "");
 		    getPersonFunctionsList(subUnit, function, buffer, iExecutionYear);
 		    buffer.append("</li></ul>");
 		}
 	    }
 	}
 
-	for (Unit subUnit2 : subUnit.getActiveSubUnits(currentDate,
-		AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE)) {
-	    getSubUnitsWithoutAggregatedUnitsToFunctionList(buffer, iExecutionYear, currentDate,
-		    subUnit2);
+	for (Unit subUnit2 : subUnit.getActiveSubUnits(currentDate, AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE)) {
+	    getSubUnitsWithoutAggregatedUnitsToFunctionList(buffer, iExecutionYear, currentDate, subUnit2);
 	}
 
 	buffer.append("</li></ul>");
@@ -368,11 +347,13 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     private String getHomePageUrl(Person person) {
 	StringBuffer buffer = new StringBuffer();
+	String appContext = PropertiesManager.getProperty("app.context");
+	
 	if (person.getHomepage() != null && person.getHomepage().getActivated()) {
 	    buffer.append(getRequest().getScheme()).append("://").append(getRequest().getServerName())
-		    .append(":").append(getRequest().getServerPort()).append("/").append(
-			    PropertiesManager.getProperty("app.context")).append("/homepage/").append(
-			    person.getIstUsername());
+		    .append(":").append(getRequest().getServerPort()).append("/")
+		    .append(!StringUtils.isEmpty(appContext) ? appContext + "/": "")
+		    .append("homepage/").append(person.getIstUsername());
 	}
 	return buffer.toString();
     }
@@ -380,8 +361,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     private void printPersonHomePage(Person person, StringBuffer buffer) {
 	String homePageUrl = getHomePageUrl(person);
 	if (!StringUtils.isEmpty(homePageUrl)) {
-	    buffer.append("<a href='").append(homePageUrl).append("' target='_blank'>").append(
-		    person.getNickname()).append("</a>");
+	    buffer.append("<a href='").append(homePageUrl).append("' target='_blank'>").append(person.getNickname()).append("</a>");
 	    // buffer.append(" <image
 	    // src='").append(getContextPath()).append("/images/external.gif'/>");
 	} else {
@@ -397,8 +377,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	Collections.sort(contractsByContractType, Contract.CONTRACT_COMPARATOR_BY_PERSON_NAME);
 
 	for (Contract contract : contractsByContractType) {
-	    if (contract.belongsToPeriod(iExecutionYear.getBeginDateYearMonthDay(), iExecutionYear
-		    .getEndDateYearMonthDay())) {
+	    if (contract.belongsToPeriod(iExecutionYear.getBeginDateYearMonthDay(), iExecutionYear.getEndDateYearMonthDay())) {
 
 		buffer.append("<li>");
 
@@ -427,8 +406,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	buffer.append("</ul>");
     }
 
-    private void getSubUnitsWithoutAggregatedUnitsToFunctionList(StringBuffer buffer,
-	    ExecutionYear iExecutionYear, YearMonthDay currentDate, Unit subUnit) {
+    private void getSubUnitsWithoutAggregatedUnitsToFunctionList(StringBuffer buffer, ExecutionYear iExecutionYear, YearMonthDay currentDate, Unit subUnit) {
 	List<Unit> validInstitutionSubUnits = null;
 	if (subUnit.getType() != null && subUnit.getType().equals(PartyTypeEnum.AGGREGATE_UNIT)) {
 	    validInstitutionSubUnits = getValidInstitutionSubUnits(subUnit, currentDate);
@@ -442,9 +420,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	}
     }
 
-    private void getPersonFunctionsList(Unit unit, Function function, StringBuffer buffer,
-	    ExecutionYear iExecutionYear) {
-
+    private void getPersonFunctionsList(Unit unit, Function function, StringBuffer buffer, ExecutionYear iExecutionYear) {
 	addPersonFunctions(function, buffer, iExecutionYear);
 	if (function.getParentInherentFunction() != null) {
 	    addPersonFunctions(function.getParentInherentFunction(), buffer, iExecutionYear);
@@ -490,19 +466,16 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	return allFunctions;
     }
 
-    public ExecutionYear getExecutionYear(Integer executionYear) throws FenixFilterException,
-	    FenixServiceException {
+    public ExecutionYear getExecutionYear(Integer executionYear) throws FenixFilterException, FenixServiceException {
 	final Object[] argsexecutionYearToRead = { executionYear };
-	ExecutionYear iExecutionYear = (ExecutionYear) ServiceUtils.executeService(null,
-		"ReadExecutionYearsService", argsexecutionYearToRead);
+	ExecutionYear iExecutionYear = (ExecutionYear) ServiceUtils.executeService(null, "ReadExecutionYearsService", argsexecutionYearToRead);
 	return iExecutionYear;
     }
 
     public List<PersonFunction> getValidPersonFunction(ExecutionYear iExecutionYear, Function function) {
 	List<PersonFunction> list = new ArrayList<PersonFunction>();
 	for (PersonFunction personFunction : function.getPersonFunctions()) {
-	    if (personFunction.belongsToPeriod(iExecutionYear.getBeginDateYearMonthDay(), iExecutionYear
-		    .getEndDateYearMonthDay())) {
+	    if (personFunction.belongsToPeriod(iExecutionYear.getBeginDateYearMonthDay(), iExecutionYear.getEndDateYearMonthDay())) {
 		list.add((PersonFunction) personFunction);
 	    }
 	}
@@ -538,8 +511,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     public Unit getUnit() throws FenixFilterException, FenixServiceException {
 	if (parentUnit == null) {
-	    this.parentUnit = (Unit) rootDomainObject.readPartyByOID(Integer.valueOf((String) getUnitIDHidden()
-		    .getValue()));
+	    this.parentUnit = (Unit) rootDomainObject.readPartyByOID(Integer.valueOf((String) getUnitIDHidden().getValue()));
 	}
 	return parentUnit;
     }
@@ -557,8 +529,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     }
 
     protected String getRequestParameter(String parameterName) {
-	return (String) FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap()
-		.get(parameterName);
+	return (String) FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get(parameterName);
     }
 
     public ResourceBundle getBundle() {
