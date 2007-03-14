@@ -156,7 +156,31 @@ public class LoginsManagementDA extends FenixDispatchAction {
 	
 	request.setAttribute("login", login);	
 	return mapping.findForward("prepareManageLoginTimeIntervals");
-    }        
+    }   
+    
+    public ActionForward prepareCreateInstitutionalAlias(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	
+	Login login = getLoginFromParameter(request);	
+	LoginAliasBean bean = new LoginAliasBean(login, LoginAliasType.INSTITUTION_ALIAS);
+				
+	try {
+	    executeService("CreateNewLoginAlias", new Object[] { bean });	    
+	
+	} catch (DomainException e) {
+	    addActionMessage(request, e.getMessage());            
+	}
+	
+	if(login.getInstitutionalLoginAlias() == null) {
+	    addActionMessage(request, "error.no.conditions.create.institutional.alias");
+	}
+	
+	request.setAttribute("login", login);
+	return mapping.findForward("prepareManageLoginAlias");
+    } 
+    
+    
+    // Private Methods
     
     private ActionForward goToInsertNewAliasPage(ActionMapping mapping, HttpServletRequest request, LoginAliasType type) {
 	Login login = getLoginFromParameter(request);

@@ -146,9 +146,14 @@ public class PersonBean implements Serializable {
 	setWebAddress(person.getWebAddress());
 
 	setPerson(person);
-
     }
 
+    public PersonBean(String name, String username, String documentIdNumber) {
+	setDocumentIdNumber(documentIdNumber);
+	setName(name);
+	setUsername(username);
+    }
+    
     public String getAddress() {
 	return address;
     }

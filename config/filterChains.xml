@@ -1109,5 +1109,11 @@
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>
-    
+	<filterChain>
+        <name>OperatorOrManagerAuthorization</name>
+        <expression>ManagerAuthorization || OperatorAuthorization</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
+    </filterChain>    
 </filterChainsDefinitions>

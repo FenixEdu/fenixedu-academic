@@ -13,6 +13,8 @@ public class CreateNewLoginAlias extends Service {
 		LoginAlias.createNewCustomLoginAlias(bean.getLogin(), bean.getAlias());
 	    } else if (bean.getLoginAliasType().equals(LoginAliasType.ROLE_TYPE_ALIAS)) {
 		LoginAlias.createNewRoleLoginAlias(bean.getLogin(), bean.getAlias(), bean.getRoleType());
+	    }  else if (bean.getLoginAliasType().equals(LoginAliasType.INSTITUTION_ALIAS)) {
+		bean.getLogin().getUser().getPerson().setIstUsername();
 	    }
 	}
     }

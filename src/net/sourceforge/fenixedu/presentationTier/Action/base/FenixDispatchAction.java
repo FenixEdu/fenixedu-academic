@@ -47,11 +47,9 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 
     protected static final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
 
-    protected static final ResourceBundle enumerationResources = ResourceBundle.getBundle(
-	    "resources.EnumerationResources", LanguageUtils.getLocale());
+    protected static final ResourceBundle enumerationResources = getResourceBundleByName("resources.EnumerationResources");
 
-    protected static final ResourceBundle domainExceptionResources = ResourceBundle.getBundle(
-	    "resources.DomainExceptionResources", LanguageUtils.getLocale());
+    protected static final ResourceBundle domainExceptionResources = getResourceBundleByName("resources.DomainExceptionResources");
 
     private static final String ACTION_MESSAGES_REQUEST_KEY = "FENIX_ACTION_MESSAGES";
 
@@ -68,6 +66,10 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 	return actionForward;
     }
 
+    protected static ResourceBundle getResourceBundleByName(String bundleName) {
+	return ResourceBundle.getBundle(bundleName, LanguageUtils.getLocale());
+    }
+    
     protected static IUserView getUserView(HttpServletRequest request) {
 	return SessionUtils.getUserView(request);
     }

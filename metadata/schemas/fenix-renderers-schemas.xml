@@ -33,6 +33,7 @@
     <!ENTITY teacher SYSTEM "teacher-schemas.xml">
     <!ENTITY departmentAdmOffice SYSTEM "departmentAdmOffice-schemas.xml">
     <!ENTITY coordinator SYSTEM "coordinator-schemas.xml">
+    <!ENTITY operator SYSTEM "operator-schemas.xml">
 ]>
 
 <schemas>
@@ -655,5 +656,6 @@
     &teacher;
     &departmentAdmOffice;
     &coordinator;
+    &operator;
     
 </schemas>

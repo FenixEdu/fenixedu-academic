@@ -42,9 +42,21 @@
 	
 		<%-- Institutional Alias --%>
 		<p>	
+
+			<p><b><bean:message key="label.institutional.alias" bundle="MANAGER_RESOURCES"/></b></p>			
+
+			<logic:empty name="login" property="institutionalLoginAlias">			
+				<ul class="mvert15 list5">
+					<li>	
+						<html:link page="/loginsManagement.do?method=prepareCreateInstitutionalAlias" paramId="loginID" paramName="login" paramProperty="idInternal">
+							<bean:message key="label.create.new.alias" bundle="MANAGER_RESOURCES"/>
+						</html:link>
+					</li>
+				</ul>			
+			</logic:empty>
+			
 			<logic:notEmpty name="login" property="institutionalLoginAlias">			
 				<bean:define id="personInstitutionalAlias" name="login" property="institutionalLoginAlias"></bean:define>
-				<p><b><bean:message key="label.institutional.alias" bundle="MANAGER_RESOURCES"/></b></p>
 				<fr:view name="personInstitutionalAlias" schema="ViewInstitutionalLoginAlias" >
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle4 thlight tdcenter mtop05"/>

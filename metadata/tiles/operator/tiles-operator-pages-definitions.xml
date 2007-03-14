@@ -16,4 +16,10 @@
 		<put name="body" value="/operator/candidacy/password/chooseCandidacies.jsp"></put>
 	</definition>
 	
+    <!-- ========== Generate User Universal Identifier =============== -->
+	<definition name="prepare.search.person.to.generate.userUID" extends="definition.operator.two-column">
+		<put name="body" value="/operator/userUID/searchPersonToGenerateUserUID.jsp"></put>
+	</definition>
+	
+	
 </tiles-definitions>	

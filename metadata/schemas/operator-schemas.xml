@@ -1,0 +1,16 @@
+<schema name="ShowExistentPersonsDetailsBeforeGenerateUserUID" type="net.sourceforge.fenixedu.domain.Person" bundle="MANAGER_RESOURCES">
+	<slot name="name"/>		
+	<slot name="documentIdNumber" />	
+	<slot name="idDocumentType"/>	
+	<slot name="istUsername" layout="null-as-label" key="label.institutional.userName">
+        <property name="label" value="-"/>
+    </slot>	
+</schema>
+
+<schema name="SearchPersonAttributesToGenerateUserUID" type="net.sourceforge.fenixedu.dataTransferObject.person.PersonBean" bundle="MANAGER_RESOURCES">	
+	<slot name="username"/>	
+	<slot name="name">
+		<property name="size" value="50"/>
+	</slot>	
+	<slot name="documentIdNumber" />
+</schema>		

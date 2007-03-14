@@ -11197,7 +11197,7 @@
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
-        	<chain name="ManagerAuthorization"></chain>
+        	<chain name="OperatorOrManagerAuthorization"></chain>
         </filterChains>     
     </service>          
     <service>
