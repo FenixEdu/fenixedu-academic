@@ -158,11 +158,14 @@
 	</definition>
 	
 	<!-- SENIOR INFO DEFINITIONS -->
+	<definition name="senior-info-choose-registration" extends="definition.student.masterPage">
+		<put name="body" value="/student/senior/chooseRegistration.jsp" />
+	</definition>
 	<definition name="senior-info-management" extends="definition.student.masterPage">
-		<put name="body" value="/student/seniorInfoManagement.jsp" />
+		<put name="body" value="/student/senior/seniorInfoManagement.jsp" />
 	</definition>
 	<definition name="senior-info" extends="definition.student.masterPage">
-		<put name="body" value="/student/seniorInfo.jsp" />
+		<put name="body" value="/student/senior/seniorInfo.jsp" />
 	</definition>
 	<!-- END SENIOR INFO DEFINITIONS -->
 	

@@ -775,6 +775,7 @@
 			scope="request"
 			input="/seniorInformation.do?method=prepareEdit&amp;page=0">
 			
+	        <forward name="chooseRegistration" path="senior-info-choose-registration" />
 			<forward name="show-form" path="senior-info-management"/>
 			<forward name="show-result" path="senior-info"/>
 		</action>
