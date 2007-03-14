@@ -30,23 +30,23 @@ function cleanSelect() {
 // -->
 </script>
 
-<br/>
 
-	<table width="100%" cellpadding="0" cellspacing="0">
-		<tr>
-			<td class="infoop">
-				<bean:message key="label.teacher.InsertStudentsInAttendsSet.description" />
-			</td>
-		</tr>
-	</table>
-	<br/>
-	
-<span class="error"><!-- Error messages go here --><html:errors /></span>
-<br/>
-<br/>
 
-<html:link page="<%="/viewShiftsAndGroups.do?method=viewShiftsAndGroups&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
-    	<bean:message key="link.backToShiftsAndGroups"/></html:link><br/>
+<div class="infoop2">
+	<bean:message key="label.teacher.InsertStudentsInAttendsSet.description" />
+</div>
+
+<p>	
+	<span class="error"><!-- Error messages go here --><html:errors /></span>
+</p>
+
+<ul>
+	<li>
+		<html:link page="<%="/viewShiftsAndGroups.do?method=viewShiftsAndGroups&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
+	    	<bean:message key="link.backToShiftsAndGroups"/>
+    	</html:link>
+    </li>
+</ul>
 
 <logic:present name="infoStudentList"> 
 		
@@ -58,52 +58,57 @@ function cleanSelect() {
 
 
 <logic:empty name="infoStudentList"> 
-<h2>
-<bean:message key="message.insertStudentsInAttendsSet.NoMembersToAdd" />
-</h2>
+	<h2><bean:message key="message.insertStudentsInAttendsSet.NoMembersToAdd" /></h2>
 </logic:empty>
 
 <logic:notEmpty name="infoStudentList"> 
-<bean:message key="message.editAttendsSetMembers.InsertMembers"/>
-<br/>
-<br/>
+<p>
+	<bean:message key="message.editAttendsSetMembers.InsertMembers"/>
+</p>
 
-<table width="50%" cellpadding="0" border="0">
 
-<tr><td></td>
-		<td><b><bean:message key="label.allStudents"/></b></td>
-		<td>
-		<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.selected" property="selected" onclick="invertSelect()">
-		    <bean:message key="label.allStudents"/>
-		</html:multibox> 
-		</td>
-	</tr>
+
+
+	<table class="tstyle5 thlight thright">
+		<tr>
+			<td>
+				<bean:message key="label.allStudents"/>:
+			</td>
+			<td>
+				<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.selected" property="selected" onclick="invertSelect()">
+				    <bean:message key="label.allStudents"/>
+				</html:multibox> 
+			</td>
+		</tr>
+	</table>
+
 	
+<table class="tstyle4">	
 	<tr>
-		<th class="listClasses-header">
+		<th>
 		</th>
-		<th class="listClasses-header"><bean:message key="label.teacher.StudentNumber" />
+		<th><bean:message key="label.teacher.StudentNumber" />
 		</th>
-		<th class="listClasses-header"><bean:message key="label.teacher.StudentName" />
+		<th><bean:message key="label.teacher.StudentName" />
 		</th>
-		<th class="listClasses-header"><bean:message key="label.teacher.StudentEmail" />
+		<th><bean:message key="label.teacher.StudentEmail" />
 		</th>
 	</tr>
 
 
 	<logic:iterate id="infoStudent" name="infoStudentList">			
 		<tr>	
-			<td class="listClasses">
+			<td>
 			<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.selected" property="selected" onclick="cleanSelect()">
 			<bean:write name="infoStudent" property="idInternal"/>
 			</html:multibox>
 			</td>
-			<td class="listClasses"><bean:write name="infoStudent" property="number"/>
+			<td><bean:write name="infoStudent" property="number"/>
 			</td>	
 			<bean:define id="infoPerson" name="infoStudent" property="infoPerson"/>		
-			<td class="listClasses"><bean:write name="infoPerson" property="nome"/>
+			<td><bean:write name="infoPerson" property="nome"/>
 			</td>
-			<td class="listClasses"><bean:write name="infoPerson" property="email"/>
+			<td><bean:write name="infoPerson" property="email"/>
 			</td>
 	 	</tr>	
 	 </logic:iterate>

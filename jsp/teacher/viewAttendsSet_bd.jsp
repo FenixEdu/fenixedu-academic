@@ -11,112 +11,107 @@
 <logic:present name="siteView" property="component">
 	<bean:define id="component" name="siteView" property="component" />
 
-<table align="left" width="100%">
-<tbody>
-<tr>
-<td>
-	
-	<br/>
 	<h2><bean:message key="title.attendsSetInformation"/></h2>
-	<br/>
 
 	<bean:define id="infoGrouping" name="component" property="infoGrouping"/>
 	<bean:define id="attends" name="infoGrouping" property="infoAttends"/>
 	<bean:define id="groupPropertiesCode" name="infoGrouping" property="idInternal"/>
 	<bean:define id="groupingOID" name="infoGrouping" property="idInternal"/>
 
-	
 	<logic:empty name="attends">
-		
-	<table width="100%" cellpadding="0" cellspacing="0">
-			<tr>
-				<td class="infoop">
-					<bean:message key="label.teacher.emptyAttendsSet.description" />
-				</td>
-			</tr>
-	</table>
-	<br />
-	
-	
+		<div class="infoop2">
+			<bean:message key="label.teacher.emptyAttendsSet.description" />
+		</div>
 	</logic:empty>	
 	
 	<logic:notEmpty name="attends">
-	
-	<table width="100%" cellpadding="0" cellspacing="0">
-			<tr>
-				<td class="infoop">
-					<bean:message key="label.teacher.viewAttendsSet.description" />
-				</td>
-			</tr>
-	</table>
-	<br />
-	
-	
+		<div class="infoop2">
+			<bean:message key="label.teacher.viewAttendsSet.description" />
+		</div>
 	</logic:notEmpty>		
 	
-<br/>
-<span class="error"><!-- Error messages go here --><html:errors /></span>
-<br/>
-<br/>
-	
-	
-</td>
-</tr>
-
-<tr>
-<td>
-	<br/>
+<p>
+	<span class="error0"><!-- Error messages go here --><html:errors /></span>
+</p>	
 
 
 
 <logic:empty name="attends">
 
-<html:link page="<%="/viewShiftsAndGroups.do?method=viewShiftsAndGroups&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()%>">
-    	<bean:message key="link.backToShiftsAndGroups"/></html:link><br/>
-	<br/>
+	<ul>
+		<li>
+			<html:link page="<%="/viewShiftsAndGroups.do?method=viewShiftsAndGroups&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()%>">
+		    <bean:message key="link.backToShiftsAndGroups"/>
+		    </html:link>
+	    </li>
+    </ul>
 		
-	<h2><bean:message key="message.infoAttendsSet.not.available" /></h2>
-	<b><bean:message key="label.attendsSetManagement"/></b>&nbsp
-	<html:link page="<%="/editAttendsSetMembers.do?method=prepareEditAttendsSetMembers&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;groupingOID=" + groupingOID.toString()%>">
-    	<bean:message key="link.editAttendsSetMembers"/>
-    </html:link>&nbsp|&nbsp
- 	
-	</logic:empty> 
+	<p>
+		<span class="warning0"><bean:message key="message.infoAttendsSet.not.available" /></span>
+	</p>
 	
-	
-	
-	<logic:notEmpty name="attends">
+	<p>
+		<b><bean:message key="label.attendsSetManagement"/></b>
+	</p>
 
-<html:link page="<%="/viewShiftsAndGroups.do?method=viewShiftsAndGroups&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()%>">
-    	<bean:message key="link.backToShiftsAndGroups"/></html:link><br/>
-	<br/>
-		
+	<p>
+		<html:link page="<%="/editAttendsSetMembers.do?method=prepareEditAttendsSetMembers&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;groupingOID=" + groupingOID.toString()%>">
+	    	<bean:message key="link.editAttendsSetMembers"/>
+	    </html:link>
+    </p>
+ 	
+</logic:empty> 
 	
-				 			 		
 	
-	<table width="75%" cellpadding="0" border="0">
-	<tbody>
+	
+<logic:notEmpty name="attends">
+	<ul>
+		<li>
+			<html:link page="<%="/viewShiftsAndGroups.do?method=viewShiftsAndGroups&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()%>">
+			<bean:message key="link.backToShiftsAndGroups"/>
+			</html:link>
+		</li>
+
 	 <% Map sendMailParameters = new TreeMap(request.getParameterMap());
-        sendMailParameters.put("method","prepare");
+        sendMailParameters.put("method","start");
+        sendMailParameters.put("studentGroupCode", groupingOID.toString());
 		request.setAttribute("sendMailParameters",sendMailParameters);%>
-	<bean:define id="sendMailLinkParameters" type="java.util.Map" name="sendMailParameters"/>
-	   <html:link page="/sendMailToAllStudents.do" name="sendMailLinkParameters">
-			<bean:message key="link.sendEmailToAllStudents"/><br/><br/>
-	   </html:link>
-	
-	<br/>
+		<bean:define id="sendMailLinkParameters" type="java.util.Map" name="sendMailParameters"/>
+		<li>
+			<html:link page="/sendMailToWorkGroupStudents.do" name="sendMailLinkParameters">
+				<bean:message key="link.sendEmailToAllStudents"/><br/><br/>
+			</html:link>	
+		</li>
+	</ul>
+
+	<p class="mbottom05">
+		<b><bean:message key="label.attendsSetManagement"/></b>
+	</p>
+	<p class="mtop05">
+		<html:link page="<%="/editAttendsSetMembers.do?method=prepareEditAttendsSetMembers&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;groupingOID=" + groupingOID.toString()%>">
+	    	<bean:message key="link.editAttendsSetMembers"/>
+	    </html:link> , 
+		<html:link page="<%="/deleteAttendsSetMembersByExecutionCourse.do?method=deleteAttendsSetMembersByExecutionCourse&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;groupingOID=" + groupingOID.toString()%>">
+	    	<bean:message key="link.deleteAttendsSetMembersByExecutionCourse"/>
+	    </html:link> , 
+	    <html:link page="<%="/deleteAllAttendsSetMembers.do?method=deleteAllAttendsSetMembers&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;groupingOID=" + groupingOID.toString()%>">
+	    	<bean:message key="link.deleteAllAttendsSetMembers"/>
+	    </html:link>
+    </p>
+
+
  	<bean:size id="count" name="attends"/>
-	<bean:message key="label.teacher.NumberOfStudents" /><%= count %>
-	<br/>	
-	<br/>
-	
+ 	<p class="mtop15 mbottom05">
+ 		<em>
+			<bean:message key="label.teacher.NumberOfStudents" /><%= count %>
+		</em>
+	</p>
+
+<table class="tstyle4">	
 	<tr>
-		<th class="listClasses-header" width="16%"><bean:message key="label.numberWord" />
-		</th>
-		<th class="listClasses-header" width="63%"><bean:message key="label.nameWord" />
-		</th>
-		<th class="listClasses-header" width="26%"><bean:message key="label.emailWord" />
-		</th>
+		<th width="16%"><bean:message key="label.numberWord" /></th>
+		<th width="63%"><bean:message key="label.nameWord" /></th>
+		<th width="26%"><bean:message key="label.emailWord" /></th>
 	</tr>
 			
 	<logic:iterate id="infoFrequentaWithAll" name="attends">
@@ -125,13 +120,9 @@
 		<bean:define id="infoPerson" name="infoStudent" property="infoPerson"/>
 		
 		<tr>		
-			<td class="listClasses"><bean:write name="infoStudent" property="number"/>
-			</td>	
-			
-			<td class="listClasses"><bean:write name="infoPerson" property="nome"/>
-			</td>		
-			
-			<td class="listClasses">
+			<td><bean:write name="infoStudent" property="number"/></td>	
+			<td><bean:write name="infoPerson" property="nome"/></td>		
+			<td>
 				<logic:present name="infoPerson" property="email">
 					<bean:define id="mail" name="infoPerson" property="email"/>
 					<html:link href="<%= "mailto:"+ mail %>"><bean:write name="infoPerson" property="email"/></html:link>
@@ -139,47 +130,20 @@
 				<logic:notPresent name="infoPerson" property="email">
 					&nbsp;
 				</logic:notPresent>
-				
 			</td>
 		</tr>				
-	 </logic:iterate>
-
-</tbody>
+	</logic:iterate>
 </table>
 
-<br/>
-<br/>
 
-<table width="70%" cellpadding="0" border="0">
-<tbody>
-	<b><bean:message key="label.attendsSetManagement"/></b>&nbsp
-	<html:link page="<%="/editAttendsSetMembers.do?method=prepareEditAttendsSetMembers&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;groupingOID=" + groupingOID.toString()%>">
-    	<bean:message key="link.editAttendsSetMembers"/>
-    </html:link>&nbsp|&nbsp
-	<html:link page="<%="/deleteAttendsSetMembersByExecutionCourse.do?method=deleteAttendsSetMembersByExecutionCourse&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;groupingOID=" + groupingOID.toString()%>">
-    	<bean:message key="link.deleteAttendsSetMembersByExecutionCourse"/>
-    </html:link>&nbsp|&nbsp
-    <html:link page="<%="/deleteAllAttendsSetMembers.do?method=deleteAllAttendsSetMembers&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;groupingOID=" + groupingOID.toString()%>">
-    	<bean:message key="link.deleteAllAttendsSetMembers"/>
-    </html:link>&nbsp|&nbsp
-    
-    
-    
-    
- </tbody>
-</table>   	
-  </logic:notEmpty>
 
-</td>
-  </tr>
- </tbody>
-	
-</table>
+</logic:notEmpty>
+
 	 
 </logic:present>
 
 <logic:notPresent name="siteView" property="component">
-<h2>
-<bean:message key="message.infoAttendsSet.not.available" />
-</h2>
+<p>
+	<span class="warning0"><bean:message key="message.infoAttendsSet.not.available" /></span>
+</p>
 </logic:notPresent>

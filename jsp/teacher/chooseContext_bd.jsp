@@ -3,23 +3,19 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="org.apache.struts.Globals" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
-<span class="error"><!-- Error messages go here -->
-	<html:errors/>
-</span>
-<br />
+
 <h2><bean:message key="title.exportGroupProperties"/></h2>
-<br />
 
-<br/>
+<p>
+	<span class="error"><!-- Error messages go here -->
+		<html:errors/>
+	</span>
+</p>
 
-	<table width="100%" cellpadding="0" cellspacing="0">
-		<tr>
-			<td class="infoop">
-				<bean:message key="label.teacher.exportGroupProperties.description" />
-			</td>
-		</tr>
-	</table>
-	<br/>
+
+<div class="infoop2">
+	<bean:message key="label.teacher.exportGroupProperties.description" />
+</div>
 
 
 <bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Globals.MAPPING_KEY %>" />
@@ -33,29 +29,48 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode"  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.groupPropertiesCode"  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
-	<p class="infoop">
+
+<%--
+	<div class="infoop">
 		<bean:message key="message.public.degree.choose"/>
-	</p>
-	<p>
-		<bean:message key="property.context.degree"/>
-		:
-		<html:select bundle="HTMLALT_RESOURCES" altKey="select.index" property="index" size="1">
-			<html:options collection="degreeList" property="value" labelProperty="label"/>
-		</html:select>
-	</p>
-	<p class="infoop">
+	</div>
+--%>
+
+
+
+<%-- 
+	<div class="infoop">
 		<bean:message key="label.chooseYear" />
-	</p>
+	</div>
+--%>
+
+
+	<table class="tstyle5 thlight thright">
+		<tr>
+			<th>
+				<bean:message key="property.context.degree"/>:
+			</th>
+			<td>
+				<html:select bundle="HTMLALT_RESOURCES" altKey="select.index" property="index" size="1">
+					<html:options collection="degreeList" property="value" labelProperty="label"/>
+				</html:select>
+			</td>
+		</tr>
+		<tr>
+			<th><bean:message key="property.context.curricular.year"/>:</th>
+			<td>
+				<html:select bundle="HTMLALT_RESOURCES" altKey="select.curYear" property="curYear" size="1">
+					<html:options collection="curricularYearList" property="value" labelProperty="label"/>
+				</html:select>
+			</td>
+		</tr>
+	</table>
+
+	
 	<p>
-	<p>
-		<bean:message key="property.context.curricular.year"/>
-		:
-		<html:select bundle="HTMLALT_RESOURCES" altKey="select.curYear" property="curYear" size="1">
-			<html:options collection="curricularYearList" property="value" labelProperty="label"/>
-		</html:select>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" value="Submeter" styleClass="inputbutton">
+			<bean:message key="label.next"/>
+		</html:submit>
 	</p>
-	<br />
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" value="Submeter" styleClass="inputbutton">
-		<bean:message key="label.next"/>
-	</html:submit>
+
 </html:form>
