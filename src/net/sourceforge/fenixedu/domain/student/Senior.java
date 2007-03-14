@@ -16,10 +16,10 @@ import org.joda.time.YearMonthDay;
  */
 public class Senior extends Senior_Base {
 
-    public Senior(Registration student) {
+    public Senior(final Registration registration) {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
-	setStudent(student);
+	setRegistration(registration);
     }
 
     public void setExpectedDegreeTerminationYearMonthDay(YearMonthDay date) {	
@@ -32,11 +32,27 @@ public class Senior extends Senior_Base {
     }
 
     @Override
-    public void setStudent(Registration student) {
-	if(student == null) {
+    @Deprecated
+    public void setStudent(final Registration registration) {
+	this.setRegistration(registration);
+    }
+    
+    public void setRegistration(final Registration registration) {
+	if (registration == null) {
 	    throw new DomainException("error.senior.empty.senior");
 	}
-	super.setStudent(student);
+	
+	super.setStudent(registration);
+    }
+    
+    @Override
+    @Deprecated
+    public Registration getStudent() {
+        return this.getRegistration();
+    }
+    
+    public Registration getRegistration() {
+        return super.getStudent();
     }
     
     @Override
@@ -86,4 +102,5 @@ public class Senior extends Senior_Base {
 	setLastModificationDateDateTime(new DateTime());
 	super.setSpecialtyField(specialtyField);
     }
+    
 }
