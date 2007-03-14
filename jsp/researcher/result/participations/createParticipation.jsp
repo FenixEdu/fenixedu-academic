@@ -43,7 +43,6 @@
 		<div class="warning0">
 			<strong><bean:message key="label.attention" bundle="RESEARCHER_RESOURCES"/></strong>:<br/>
 			<bean:message key="label.informationForCreateUser" bundle="RESEARCHER_RESOURCES"/><br/>
-			<html:link page="<%= createExternalPerson + "&amp;name=" + name + "&amp;role=" + bean.getRole().toString()%>"><bean:message key="label.createPerson" bundle="RESEARCHER_RESOURCES"/></html:link>
 		</div>
  	</logic:present>
  	
@@ -52,10 +51,11 @@
 	<bean:define id="createSchema" name="createSchema" type="java.lang.String"/>
 	
  	<%-- From to Create Participation --%>
+	<div class="dinline forminline">
 	<fr:form action="<%= create %>">
 		<fr:edit id="bean" name="bean" schema="<%= createSchema %>" >
 			<fr:layout name="tabular">
-		        <fr:property name="classes" value="tstyle5 thlight mtop05"/>
+		        <fr:property name="classes" value="tstyle5 thlight mtop05 dinline"/>
 		        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
 			</fr:layout>
 			<fr:destination name="exception" path="<%= prepareEdit %>"/>	
@@ -64,9 +64,18 @@
 			<fr:destination name="postBack" path="/resultParticipations/changeParticipationType.do"/>	
 			<fr:destination name="change.unitType" path="/resultParticipations/changeUnitType.do"/>
 		</fr:edit>
+		<br/>
 		<html:submit><bean:message key="label.submit" bundle="APPLICATION_RESOURCES"/></html:submit>
 		<html:cancel><bean:message key="button.cancel" bundle="APPLICATION_RESOURCES"/></html:cancel>
 	</fr:form>
+	<logic:present name="needToCreatePerson"> 	
+			<bean:define id="bean" name="bean" type="net.sourceforge.fenixedu.dataTransferObject.research.result.ResultParticipationCreationBean"/>
+			<bean:define id="name" name="name"/>
+			<fr:form action="<%= createExternalPerson + "&amp;name=" + name + "&amp;role=" + bean.getRole().toString()%>">
+				<html:submit><bean:message key="label.createPerson" bundle="RESEARCHER_RESOURCES"/></html:submit>
+			</fr:form>
+ 	</logic:present>
+	</div>
 	</logic:notPresent>
 	
 	<logic:present name="duringCreation">
