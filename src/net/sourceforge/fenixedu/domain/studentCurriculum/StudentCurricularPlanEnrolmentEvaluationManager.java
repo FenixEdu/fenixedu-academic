@@ -48,9 +48,9 @@ public class StudentCurricularPlanEnrolmentEvaluationManager extends StudentCurr
     @Override
     protected void addEnroled() {
 	if(curricularRuleLevel == CurricularRuleLevel.SPECIAL_SEASON_ENROLMENT) {
-	    for (final Enrolment enrolment : studentCurricularPlan.getSpecialSeasonEnrolments(executionPeriod.getExecutionYear())) {
-		enrolmentContext.addDegreeModuleToEvaluate(new CurriculumModuleEnroledWrapper(enrolment, executionPeriod));
-	    }
+		for (final Enrolment enrolment : studentCurricularPlan.getSpecialSeasonEnrolments(executionPeriod.getExecutionYear())) {
+		    enrolmentContext.addDegreeModuleToEvaluate(new CurriculumModuleEnroledWrapper(enrolment, executionPeriod));
+		}
 	}
     }
 
@@ -119,12 +119,10 @@ public class StudentCurricularPlanEnrolmentEvaluationManager extends StudentCurr
 		    if (moduleEnroledWrapper.getCurriculumModule() instanceof Enrolment) {
 			final Enrolment enrolment = (Enrolment) moduleEnroledWrapper.getCurriculumModule();
 
-			if (!enrolment.hasSpecialSeason()) {
-			    if (curricularRuleLevel == CurricularRuleLevel.IMPROVEMENT_ENROLMENT) {
-				enrolment.createEnrolmentEvaluationForImprovement(responsiblePerson.getEmployee(), enrolmentContext.getExecutionPeriod());
-			    } else if (curricularRuleLevel == CurricularRuleLevel.SPECIAL_SEASON_ENROLMENT) {
-				enrolment.createSpecialSeasonEvaluation(responsiblePerson.getEmployee());
-			    }
+			if (curricularRuleLevel == CurricularRuleLevel.IMPROVEMENT_ENROLMENT) {
+			    enrolment.createEnrolmentEvaluationForImprovement(responsiblePerson.getEmployee(), enrolmentContext.getExecutionPeriod());
+			} else if (curricularRuleLevel == CurricularRuleLevel.SPECIAL_SEASON_ENROLMENT && !enrolment.hasSpecialSeason()) {
+			    enrolment.createSpecialSeasonEvaluation(responsiblePerson.getEmployee());
 			}
 			
 		    } else {
