@@ -1,0 +1,1 @@
+alter table WORK_SCHEDULE_TYPE modify ACRONYM varchar(50) default NULL;

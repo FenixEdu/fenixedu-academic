@@ -655,8 +655,7 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
 		    getDuration(getBeginFixedWorkSecondPeriod(), getEndFixedWorkSecondPeriod(),
 			    getEndFixedWorkSecondPeriodNextDay()), getMealBeginTime(), getMealEndTime(),
 		    getDuration(getMinimumMealBreakInterval()), getDuration(getMandatoryMealDiscount()))) {
-		WorkScheduleType equivalentWorkScheduleType = getEquivalentWorkScheduleType(getWorkScheduleType()
-			.getIdInternal());
+		WorkScheduleType equivalentWorkScheduleType = null;//getEquivalentWorkScheduleType(getWorkScheduleType().getIdInternal());
 		if (equivalentWorkScheduleType == null) {
 		    if (!getWorkScheduleType().getWorkSchedules().isEmpty()
 			    || getWorkScheduleType().getBeginValidDate().isBefore(firstDay)) {
