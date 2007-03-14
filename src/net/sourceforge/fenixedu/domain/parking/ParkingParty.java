@@ -334,6 +334,9 @@ public class ParkingParty extends ParkingParty_Base {
 
     public Integer getMostSignificantNumber() {
         if (getParty().isPerson()) {
+            if(getPhdNumber() != null){
+                return getPhdNumber();
+            }
             Person person = (Person) getParty();
             if (person.getTeacher() != null && person.getTeacher().getCurrentWorkingDepartment() != null
                     && !person.getTeacher().isMonitor(ExecutionPeriod.readActualExecutionPeriod())) {
