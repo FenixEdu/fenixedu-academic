@@ -19,304 +19,44 @@
     <extent-class class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEAM"/>    
     <extent-class class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLQ"/>    
     <extent-class class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLERCI"/>        
-    
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		
-		  
-	
-	
-	
-	
-	
-		
-	
-		
-	
-	
-	
-	
-	
-	
-	
-	
-		
 	
 </class-descriptor>
 
 <!-- *************************************************************************************************************** -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEEC --> 
 <!-- *************************************************************************************************************** -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEEC" table="DEGREE_CURRICULAR_PLAN">
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		
-		  
-	
-	
-	
-	
-	
-		
-	
-			
-		
-	
-	
-	
-	
-	
-	
-	
-			
-	
-</class-descriptor>
+<class-descriptor class="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEEC" table="DEGREE_CURRICULAR_PLAN" />
 
 <!-- *************************************************************************************************************** -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEIC --> 
 <!-- *************************************************************************************************************** -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEIC" table="DEGREE_CURRICULAR_PLAN">
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		
-		  
-	
-	
-	
-	
-	
-		
-	
-				
-	
-	
-	
-	
-	
-	
-	
-	
-		
-	
-</class-descriptor>
+<class-descriptor class="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEIC" table="DEGREE_CURRICULAR_PLAN" />
+
 <!-- *************************************************************************************************************** -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEICTAGUS --> 
 <!-- *************************************************************************************************************** -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEICTAGUS" table="DEGREE_CURRICULAR_PLAN">
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		
-		  
-	
-	
-	
-	
-	
-		
-	
-			
-	
-	
-	
-	
-	
-	
-	
-	
-				
+<class-descriptor class="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEICTAGUS" table="DEGREE_CURRICULAR_PLAN" />
 
-	
-</class-descriptor>
 <!-- *************************************************************************************************************** -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEC --> 
 <!-- *************************************************************************************************************** -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEC" table="DEGREE_CURRICULAR_PLAN">
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		
-		  
-	
-	
-	
-	
-	
-		
-	
-			
-		
-	
-	
-	
-	
-	
-	
-	
-			
-	
-	
-</class-descriptor>
+<class-descriptor class="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEC" table="DEGREE_CURRICULAR_PLAN" />
+
 <!-- *************************************************************************************************************** -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEM --> 
 <!-- *************************************************************************************************************** -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEM" table="DEGREE_CURRICULAR_PLAN">
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		
-		  
-	
-	
-	
-	
-	
-		
-	
-			
-		
-	
-	
-	
-	
-	
-	
-	
-			
-	
-</class-descriptor>
+<class-descriptor class="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEM" table="DEGREE_CURRICULAR_PLAN" />
+
 <!-- *************************************************************************************************************** -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEA --> 
 <!-- *************************************************************************************************************** -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEA" table="DEGREE_CURRICULAR_PLAN">
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		
-		  
-	
-	
-		
-	
-		
-		
-	
-			
-		
-	
-	
-	
-	
-	
-	
-	
-			
-	
-</class-descriptor>
+<class-descriptor class="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEA" table="DEGREE_CURRICULAR_PLAN" />
+
 <!-- *************************************************************************************************************** -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.DegreeCurricularPlanLET --> 
 <!-- *************************************************************************************************************** -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLET" table="DEGREE_CURRICULAR_PLAN">
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		
-		  
-	
-	
-	
-	
-	
-		
-	
-			
-		
-	
-	
-	
-	
-	
-	
-	
-			
-	
-</class-descriptor>
+<class-descriptor class="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLET" table="DEGREE_CURRICULAR_PLAN" />
+
 <!-- *************************************************************************************************************** -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEAN --> 
 <!-- *************************************************************************************************************** -->
