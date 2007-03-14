@@ -91,7 +91,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     public boolean isBolonha() {
-	return !(getDegreeModule() instanceof CurricularCourse) || getCurricularCourse().isBolonha();
+	return getStudentCurricularPlan().isBolonha();
     }
     
     @Deprecated
@@ -196,7 +196,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	    CurricularCourse curricularCourse, ExecutionPeriod executionPeriod,
 	    EnrollmentCondition enrolmentCondition, String createdBy) {
 	setCurricularCourse(curricularCourse);
-	setWeigth(curricularCourse.getWeigth());
+	setWeigth(studentCurricularPlan.isBolonha() ? curricularCourse.getEctsCredits(executionPeriod) : curricularCourse.getWeigth());
 	setEnrollmentState(EnrollmentState.ENROLLED);
 	setExecutionPeriod(executionPeriod);
 	setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL);
