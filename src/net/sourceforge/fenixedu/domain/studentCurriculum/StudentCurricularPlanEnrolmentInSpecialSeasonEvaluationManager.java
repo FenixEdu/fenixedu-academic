@@ -12,18 +12,16 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.EnrolmentInSpecialSeasonEvaluation;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
-import net.sourceforge.fenixedu.domain.curricularRules.ImprovementOfApprovedEnrolment;
 import net.sourceforge.fenixedu.domain.curricularRules.MaximumNumberOfEnrolmentsInSpecialSeasonEvaluation;
-import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.CurricularRuleLevel;
 import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.EnrolmentResultType;
 import net.sourceforge.fenixedu.domain.enrolment.CurriculumModuleEnroledWrapper;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
-public class StudentCurricularPlanEnrolmentEvaluationManager extends StudentCurricularPlanEnrolment {
+public class StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager extends StudentCurricularPlanEnrolment {
 
-    public StudentCurricularPlanEnrolmentEvaluationManager(StudentCurricularPlan plan, EnrolmentContext enrolmentContext, Person responsiblePerson) {
+    public StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager(StudentCurricularPlan plan, EnrolmentContext enrolmentContext, Person responsiblePerson) {
 	super(plan, enrolmentContext, responsiblePerson);
     }
 
@@ -32,25 +30,17 @@ public class StudentCurricularPlanEnrolmentEvaluationManager extends StudentCurr
 	for (final CurriculumModule curriculumModule : enrolmentContext.getToRemove()) {
 	    if (curriculumModule instanceof Enrolment) {
 		final Enrolment enrolment = (Enrolment) curriculumModule;
-		
-		if (curricularRuleLevel == CurricularRuleLevel.IMPROVEMENT_ENROLMENT) {
-		    enrolment.unEnrollImprovement(enrolmentContext.getExecutionPeriod());
-		} else if (curricularRuleLevel == CurricularRuleLevel.SPECIAL_SEASON_ENROLMENT) {
-		    enrolment.deleteSpecialSeasonEvaluation();
-		}
-		
+		enrolment.deleteSpecialSeasonEvaluation();
 	    } else {
-		throw new DomainException("StudentCurricularPlanEnrolmentEvaluationManager.can.only.manage.enrolment.evaluations.of.enrolments");
+		throw new DomainException("StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager.can.only.manage.enrolment.evaluations.of.enrolments");
 	    }
 	}
     }
     
     @Override
     protected void addEnroled() {
-	if(curricularRuleLevel == CurricularRuleLevel.SPECIAL_SEASON_ENROLMENT) {
-		for (final Enrolment enrolment : studentCurricularPlan.getSpecialSeasonEnrolments(executionPeriod.getExecutionYear())) {
-		    enrolmentContext.addDegreeModuleToEvaluate(new CurriculumModuleEnroledWrapper(enrolment, executionPeriod));
-		}
+	for (final Enrolment enrolment : studentCurricularPlan.getSpecialSeasonEnrolments(executionPeriod.getExecutionYear())) {
+	    enrolmentContext.addDegreeModuleToEvaluate(new CurriculumModuleEnroledWrapper(enrolment, executionPeriod));
 	}
     }
 
@@ -58,16 +48,6 @@ public class StudentCurricularPlanEnrolmentEvaluationManager extends StudentCurr
     protected Map<IDegreeModuleToEvaluate, Set<ICurricularRule>> getRulesToEvaluate() {
 	final Map<IDegreeModuleToEvaluate, Set<ICurricularRule>> result = new HashMap<IDegreeModuleToEvaluate, Set<ICurricularRule>>();
 	
-	if (curricularRuleLevel == CurricularRuleLevel.IMPROVEMENT_ENROLMENT) {
-	    getImprovementRulesToEvaluate(result);
-	} else if (curricularRuleLevel == CurricularRuleLevel.SPECIAL_SEASON_ENROLMENT) {
-	    getSpecialSeasonRulesToEvaluate(result);
-	}
-	
-	return result;
-    }
-
-    private void getImprovementRulesToEvaluate(final Map<IDegreeModuleToEvaluate, Set<ICurricularRule>> result) {
 	for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext.getDegreeModuleToEvaluate()) {
 	    
 	    if (degreeModuleToEvaluate.isEnroled() && degreeModuleToEvaluate.canCollectRules()) {
@@ -77,35 +57,19 @@ public class StudentCurricularPlanEnrolmentEvaluationManager extends StudentCurr
 		    final Enrolment enrolment = (Enrolment) moduleEnroledWrapper.getCurriculumModule();
 
 		    final Set<ICurricularRule> curricularRules = new HashSet<ICurricularRule>();
-		    curricularRules.add(new ImprovementOfApprovedEnrolment(enrolment));
-
-		    result.put(degreeModuleToEvaluate, curricularRules);
-		}
-	    }
-	}
-    }
-
-    private void getSpecialSeasonRulesToEvaluate(final Map<IDegreeModuleToEvaluate, Set<ICurricularRule>> result) {
-	for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext.getDegreeModuleToEvaluate()) {
-	    
-	    if (degreeModuleToEvaluate.isEnroled() && degreeModuleToEvaluate.canCollectRules()) {
-		final CurriculumModuleEnroledWrapper moduleEnroledWrapper = (CurriculumModuleEnroledWrapper) degreeModuleToEvaluate;
-		
-		if (moduleEnroledWrapper.getCurriculumModule() instanceof Enrolment) {
-		    final Enrolment enrolment = (Enrolment) moduleEnroledWrapper.getCurriculumModule();
-
-		    final Set<ICurricularRule> curricularRules = new HashSet<ICurricularRule>();
-
 		    if (!enrolment.hasSpecialSeason()) {
 			curricularRules.add(new EnrolmentInSpecialSeasonEvaluation(enrolment));
 		    }
-		    
 		    curricularRules.add(new MaximumNumberOfEnrolmentsInSpecialSeasonEvaluation());
 
 		    result.put(degreeModuleToEvaluate, curricularRules);
+		} else {
+		    throw new DomainException("StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager.can.only.manage.enrolment.evaluations.of.enrolments");
 		}
 	    }
 	}
+	
+	return result;
     }
 
     @Override
@@ -118,15 +82,12 @@ public class StudentCurricularPlanEnrolmentEvaluationManager extends StudentCurr
 
 		    if (moduleEnroledWrapper.getCurriculumModule() instanceof Enrolment) {
 			final Enrolment enrolment = (Enrolment) moduleEnroledWrapper.getCurriculumModule();
-
-			if (curricularRuleLevel == CurricularRuleLevel.IMPROVEMENT_ENROLMENT) {
-			    enrolment.createEnrolmentEvaluationForImprovement(responsiblePerson.getEmployee(), enrolmentContext.getExecutionPeriod());
-			} else if (curricularRuleLevel == CurricularRuleLevel.SPECIAL_SEASON_ENROLMENT && !enrolment.hasSpecialSeason()) {
+			
+			if (!enrolment.hasSpecialSeason()) {
 			    enrolment.createSpecialSeasonEvaluation(responsiblePerson.getEmployee());
 			}
-			
 		    } else {
-			throw new DomainException("StudentCurricularPlanEnrolmentEvaluationManager.can.only.manage.enrolment.evaluations.of.enrolments");
+			throw new DomainException("StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager.can.only.manage.enrolment.evaluations.of.enrolments");
 		    }
 		}
 	    }

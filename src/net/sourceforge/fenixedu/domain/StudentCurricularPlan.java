@@ -53,8 +53,6 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Equivalence;
 import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroupType;
-import net.sourceforge.fenixedu.domain.studentCurriculum.StudentCurricularPlanEnrolmentEvaluationManager;
-import net.sourceforge.fenixedu.domain.studentCurriculum.StudentCurricularPlanEnrolmentManager;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.tools.enrollment.AreaType;
 import net.sourceforge.fenixedu.util.PeriodState;
@@ -1893,11 +1891,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	assertEnrolmentPreConditions(responsiblePerson, executionPeriod);
 
 	final EnrolmentContext enrolmentContext = new EnrolmentContext(this, executionPeriod, degreeModulesToEnrol, curriculumModulesToRemove, curricularRuleLevel);
-	if (curricularRuleLevel.managesEnrolments()) {
-	    return new StudentCurricularPlanEnrolmentManager(this, enrolmentContext, responsiblePerson).manage();
-	} else {
-	    return new StudentCurricularPlanEnrolmentEvaluationManager(this, enrolmentContext, responsiblePerson).manage();
-	}	
+	return net.sourceforge.fenixedu.domain.studentCurriculum.StudentCurricularPlanEnrolment.createManager(this, enrolmentContext, responsiblePerson).manage();
     }
 
     private void assertEnrolmentPreConditions(final Person responsiblePerson, final ExecutionPeriod executionPeriod) {

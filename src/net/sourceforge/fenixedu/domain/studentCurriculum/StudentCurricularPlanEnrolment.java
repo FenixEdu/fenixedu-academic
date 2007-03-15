@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.EnrolmentRe
 import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.RuleResult;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.EnrollmentDomainException;
 
 abstract public class StudentCurricularPlanEnrolment {
@@ -27,7 +28,7 @@ abstract public class StudentCurricularPlanEnrolment {
     protected Person responsiblePerson;
     private final Map<ICurricularRule, RuleResult> cachedRuleResults = new HashMap<ICurricularRule, RuleResult>();
     
-    public StudentCurricularPlanEnrolment(final StudentCurricularPlan studentCurricularPlan,
+    protected StudentCurricularPlanEnrolment(final StudentCurricularPlan studentCurricularPlan,
 	    final EnrolmentContext enrolmentContext, final Person responsiblePerson) {
 
 	this.studentCurricularPlan = studentCurricularPlan;
@@ -37,6 +38,22 @@ abstract public class StudentCurricularPlanEnrolment {
 	this.responsiblePerson = responsiblePerson;
     }
 
+    static public StudentCurricularPlanEnrolment createManager(final StudentCurricularPlan studentCurricularPlan,
+	    final EnrolmentContext enrolmentContext, final Person responsiblePerson) {
+	
+	if (enrolmentContext.getCurricularRuleLevel().managesEnrolments()) {
+	    return new StudentCurricularPlanEnrolmentManager(studentCurricularPlan, enrolmentContext, responsiblePerson);
+	
+	} else if (enrolmentContext.getCurricularRuleLevel() == CurricularRuleLevel.IMPROVEMENT_ENROLMENT) {
+	    return new StudentCurricularPlanImprovementOfApprovedEnrolmentManager(studentCurricularPlan, enrolmentContext, responsiblePerson);
+	
+	} else if (enrolmentContext.getCurricularRuleLevel() == CurricularRuleLevel.SPECIAL_SEASON_ENROLMENT) {
+	    return new StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager(studentCurricularPlan, enrolmentContext, responsiblePerson);
+	}
+	
+	throw new DomainException("StudentCurricularPlanEnrolment");
+    }
+    
     final public List<RuleResult> manage() {
 	unEnrol();
 	addEnroled();
