@@ -22,9 +22,9 @@ import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.util.WeekDay;
 
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeFieldType;
 import org.joda.time.Duration;
 import org.joda.time.Interval;
+import org.joda.time.Partial;
 import org.joda.time.TimeOfDay;
 import org.joda.time.YearMonthDay;
 
@@ -483,9 +483,9 @@ public class Assiduousness extends Assiduousness_Base {
         return false;
     }
 
-    public AssiduousnessClosedMonth getClosedMonth(int monthNumber) {
+    public AssiduousnessClosedMonth getClosedMonth(Partial closedPartial) {
         for (AssiduousnessClosedMonth closedMonth : getAssiduousnessClosedMonths()) {
-            if (closedMonth.getClosedMonth().getClosedYearMonth().get(DateTimeFieldType.monthOfYear()) == monthNumber) {
+            if (closedMonth.getClosedMonth().getClosedYearMonth().equals(closedPartial)) {
                 return closedMonth;
             }
         }
