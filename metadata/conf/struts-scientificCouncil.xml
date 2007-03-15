@@ -264,6 +264,20 @@
 			<forward name="teacher-not-found" path="/showAllTeacherCreditsResume.do?method=showTeacherCreditsResume&amp;page=0"/>
         </action> 
         
+        <!-- ============================================================ -->
+        <!-- =======  USE CASE : Manage Thesis Proposals      =========== -->
+        <action path="/scientificCouncilManageThesis"
+  			type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.thesis.ScientificCouncilManageThesisDA"
+  			parameter="method">
+            <forward name="list-submitted" path="thesis-list-submitted"/>
+            <forward name="list-approved" path="thesis-list-approved"/>
+            <forward name="review-submitted-proposal" path="thesis-review-submitted-proposal"/>
+            <forward name="review-approved-proposal" path="thesis-review-approved-proposal"/>
+            <forward name="justify-submitted-proposal-rejection" path="thesis-justify-submitted-proposal-rejection"/>
+            <forward name="justify-approved-proposal-rejection" path="thesis-justify-approved-proposal-rejection"/>
+  		</action>
+     
+        
     	<!-- ============================================================ -->
         <!-- =======  USE CASE : Edit Teacher SUPPORT LESSONS =========== -->
         <action path="/supportLessonsManagement" 

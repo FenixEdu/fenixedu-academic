@@ -4929,6 +4929,7 @@ class net.sourceforge.fenixedu.domain.thesis.Thesis extends net.sourceforge.feni
 	MultiLanguageString thesisAbstract;
 	MultiLanguageString keywords;
 	String comment;
+	String rejectionComment;
 
 	ThesisState state;
 

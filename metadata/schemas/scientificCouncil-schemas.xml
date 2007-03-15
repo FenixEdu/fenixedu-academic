@@ -1,0 +1,48 @@
+<schema name="thesis.table.submitted.proposals" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
+    <slot name="student" layout="format" key="label.scientificCouncil.student">
+        <property name="format" value="${person.name} (${number})"/>
+    </slot>
+    <slot name="title" layout="null-as-label" key="label.scientificCouncil.title">
+        <property name="label" value="--"/>
+    </slot>
+    <slot name="submission" key="label.scientificCouncil.whenSubmitted"/>
+</schema>
+
+<schema name="thesis.table.approved.proposals" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
+    <slot name="student" layout="format" key="label.scientificCouncil.student">
+        <property name="format" value="${person.name} (${number})"/>
+    </slot>
+    <slot name="title" layout="null-as-label" key="label.scientificCouncil.title">
+        <property name="label" value="--"/>
+    </slot>
+    <slot name="approval" key="label.scientificCouncil.whenApproved"/>
+</schema>
+
+<schema name="thesis.review.student" type="net.sourceforge.fenixedu.domain.student.Student">
+    <slot name="number" key="label.scientificCouncil.thesis.review.person.number"/>
+    <slot name="person.name" key="label.scientificCouncil.thesis.review.person.name"/>
+</schema>
+
+<schema name="thesis.review.person" type="net.sourceforge.fenixedu.domain.Person">
+    <slot name="name" key="label.scientificCouncil.thesis.review.person.name"/>
+    <slot name="teacher.category.name" key="label.scientificCouncil.thesis.review.teacher.category"/>
+    <slot name="teacher.currentWorkingDepartment.realName" key="label.scientificCouncil.thesis.review.teacher.currentWorkingDepartment"/>
+</schema>
+
+<schema name="thesis.review.person.external" type="net.sourceforge.fenixedu.domain.Person">
+    <slot name="name" key="label.scientificCouncil.thesis.review.person.name"/>
+    <slot name="externalPerson.institutionUnit.nameWithAcronym" key="label.scientificCouncil.thesis.review.teacher.currentWorkingDepartment"/>
+</schema>
+
+<schema name="thesis.review.information" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
+    <slot name="title"/>
+    <slot name="comment"/>
+</schema>
+
+<schema name="thesis.rejection.comment.edit" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
+    <slot name="text" layout="longText">
+        <property name="columns" value="60"/>
+        <property name="rows" value="10"/>
+    </slot>
+</schema>
+

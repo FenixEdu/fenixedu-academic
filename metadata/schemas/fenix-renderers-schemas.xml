@@ -34,6 +34,7 @@
     <!ENTITY departmentAdmOffice SYSTEM "departmentAdmOffice-schemas.xml">
     <!ENTITY coordinator SYSTEM "coordinator-schemas.xml">
     <!ENTITY operator SYSTEM "operator-schemas.xml">
+    <!ENTITY scientificCouncil SYSTEM "scientificCouncil-schemas.xml">
 ]>
 
 <schemas>
@@ -658,5 +659,5 @@
     &departmentAdmOffice;
     &coordinator;
     &operator;
-    
+    &scientificCouncil;
 </schemas>

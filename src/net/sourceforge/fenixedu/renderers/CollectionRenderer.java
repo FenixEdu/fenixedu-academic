@@ -355,7 +355,7 @@ public class CollectionRenderer extends OutputRenderer {
      * comma. The full syntax of the <code>param</code> property is:
      * 
      * <pre>
-     *   &lt;slot&amp;gt[/&lt;name&amp;gt]?[=&lt;value&amp;gt]?
+     *   &lt;slot&gt;[/&lt;name&gt;]?[=&lt;value&gt;]?
      * </pre>
      * 
      * <dl>

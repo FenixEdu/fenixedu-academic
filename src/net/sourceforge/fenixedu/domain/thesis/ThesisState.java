@@ -9,7 +9,7 @@ package net.sourceforge.fenixedu.domain.thesis;
  */
 public enum ThesisState {
     DRAFT,
-    SUMITTED,
+    SUBMITTED,
     APPROVED,
     CONFIRMED,
     REVISION, // The discussion occured but the student can submit information

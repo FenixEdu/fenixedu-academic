@@ -100,8 +100,13 @@ public class Thesis extends Thesis_Base {
         List<Thesis> theses = new ArrayList<Thesis>();
         
         for (Thesis thesis : RootDomainObject.getInstance().getTheses()) {
-            if (thesis.getState() == state && thesis.getDegree() == degree) {
-                theses.add(thesis);
+            if (thesis.getState() == state) {
+        	if (degree != null && thesis.getDegree() == degree) {
+        	    theses.add(thesis);
+        	}
+        	else {
+        	    theses.add(thesis);
+        	}
             }
         }
         
@@ -111,9 +116,17 @@ public class Thesis extends Thesis_Base {
     public static Collection<Thesis> getDraftThesis(Degree degree) {
         return getThesisInState(degree, ThesisState.DRAFT);
     }
-
+ 
+    public static Collection<Thesis> getSubmittedThesis() {
+        return getThesisInState(null, ThesisState.SUBMITTED);
+    }
+    
     public static Collection<Thesis> getSubmittedThesis(Degree degree) {
-        return getThesisInState(degree, ThesisState.SUMITTED);
+        return getThesisInState(degree, ThesisState.SUBMITTED);
+    }
+    
+    public static Collection<Thesis> getApprovedThesis() {
+	return getApprovedThesis(null);
     }
 
     public static Collection<Thesis> getApprovedThesis(Degree degree) {
@@ -161,24 +174,41 @@ public class Thesis extends Thesis_Base {
         }
         
         setSubmission(new DateTime());
-        setState(ThesisState.SUMITTED);
+        setState(ThesisState.SUBMITTED);
     }
 
     public void reject() {
-        if (getState() != ThesisState.SUMITTED) {
+        if (getState() != ThesisState.SUBMITTED) {
             throw new DomainException("thesis.approve.notSubmitted");
         }
         
         setState(ThesisState.DRAFT);
     }
 
-    public void approve() {
-        if (getState() != ThesisState.SUMITTED) {
+    public void approveProposal() {
+        if (getState() != ThesisState.SUBMITTED) {
             throw new DomainException("thesis.approve.notSubmitted");
         }
         
         setApproval(new DateTime());
         setState(ThesisState.APPROVED);
+    }
+    
+    public void rejectProposal(String rejectionComment) {
+	if (getState() != ThesisState.SUBMITTED && getState() != ThesisState.APPROVED) {
+	    throw new DomainException("thesis.reject.notSubmittedNorApproved");
+	}
+	
+	setRejectionComment(rejectionComment);
+	setState(ThesisState.DRAFT);
+    }
+    
+    public void disapproveProposal() {
+	if (getState() != ThesisState.APPROVED) {
+	    throw new DomainException("thesis.disapprove.notApproved");
+	}
+	
+	setState(ThesisState.DRAFT);
     }
     
     public void confirm(String mark, DateTime discussed) {

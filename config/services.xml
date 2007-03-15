@@ -11607,7 +11607,34 @@
         <filterChains>
             <chain name="CoordinatorDegreeCurricularPlanAuthorization"/>
         </filterChains>
-    </service>   
+    </service>
+    <service>
+        <name>ApproveThesisProposal</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.thesis.ApproveThesisProposal</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ScientificCouncilAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>RejectThesisProposal</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.thesis.RejectThesisProposal</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ScientificCouncilAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>DisapproveThesisProposal</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.thesis.DisapproveThesisProposal</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ScientificCouncilAuthorization"/>
+        </filterChains>
+    </service>
     <service>
         <name>EvaluateThesis</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.thesis.EvaluateThesis</implementationClass>

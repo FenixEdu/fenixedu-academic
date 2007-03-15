@@ -11,5 +11,6 @@
 	  <put name="body-context" value="/commons/blank.jsp"/>
       <put name="body" value="/commons/blank.jsp" />
       <put name="footer" value="/copyright.jsp" />
-	</definition>		
+	</definition>	
+		
 </tiles-definitions>

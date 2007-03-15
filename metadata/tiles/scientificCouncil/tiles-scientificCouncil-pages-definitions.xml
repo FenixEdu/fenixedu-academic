@@ -114,6 +114,25 @@
     </definition> 
     <definition name="show-schedules-resume-print" page="/layout/fenixPrint.jsp">
         <put name="body" value="/credits/schedulesPrint/schedules.jsp"/>
-    </definition>      
-          
+    </definition>     
+    
+    <!-- ============ Thesis =========== -->
+    <definition name="thesis-list-submitted" extends="scientificCouncil.masterPage">
+        <put name="body" value="/scientificCouncil/thesis/listSubmittedProposals.jsp"/>
+    </definition>
+    <definition name="thesis-list-approved" extends="scientificCouncil.masterPage">
+    	<put name="body" value="/scientificCouncil/thesis/listApprovedProposals.jsp"/>
+    </definition>
+    <definition name="thesis-review-submitted-proposal" extends="scientificCouncil.masterPage">
+    	<put name="body" value="/scientificCouncil/thesis/reviewSubmittedProposal.jsp"/>
+    </definition>
+    <definition name="thesis-review-approved-proposal" extends="scientificCouncil.masterPage">
+    	<put name="body" value="/scientificCouncil/thesis/reviewApprovedProposal.jsp"/>
+    </definition>
+    <definition name="thesis-justify-submitted-proposal-rejection" extends="scientificCouncil.masterPage">
+    	<put name="body" value="/scientificCouncil/thesis/justifySubmittedProposalRejection.jsp"/>
+    </definition>
+    <definition name="thesis-justify-approved-proposal-rejection" extends="scientificCouncil.masterPage">
+    	<put name="body" value="/scientificCouncil/thesis/justifyApprovedProposalRejection.jsp"/>
+    </definition>
 </tiles-definitions>
