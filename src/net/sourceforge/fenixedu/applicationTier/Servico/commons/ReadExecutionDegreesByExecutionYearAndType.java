@@ -5,6 +5,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
@@ -21,11 +22,13 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadExecutionDegreesByExecutionYearAndType extends Service {
 
-    public List run(Integer executionYearOID, DegreeType typeOfCourse) throws ExcepcaoPersistencia {
+    public List run(Integer executionYearOID, HashSet<DegreeType> degreeTypes) throws ExcepcaoPersistencia {
         final ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearOID);
 
-        final List executionDegrees = ExecutionDegree.getAllByExecutionYearAndDegreeType(executionYear
-                .getYear(), typeOfCourse);
+        final List<ExecutionDegree> executionDegrees = new ArrayList<ExecutionDegree>();
+        for (final DegreeType degreeType : degreeTypes) {
+            executionDegrees.addAll(ExecutionDegree.getAllByExecutionYearAndDegreeType(executionYear.getYear(), degreeType));
+        }
         return getInfoExecutionDegrees(executionDegrees);
     }
 

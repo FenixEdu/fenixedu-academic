@@ -60,8 +60,10 @@
 	<bean:define id="executionDegreeOID" name="finalDegreeWorksForm" property="executionDegreeOID"/>
 	<logic:greaterThan name="numberOfHeaders" value="0">
 
+
 	<bean:define id="selectedBranchOID" name="finalDegreeWorksForm" property="branchOID"/>
 
+<!--
 		<table>
 			<tr>
 				<td nowrap="nowrap">
@@ -89,6 +91,7 @@
 				</td>
 			</tr>
 		</table>
+-->
 
 		<table>
 			<tr>
@@ -112,9 +115,11 @@
 						<bean:message key="finalDegreeWorkProposalHeader.companyLink"/>
 					</html:link>
 				</td>
+<!--
 				<td bgcolor="#a2aebc" align="center" rowspan="2">
 					<bean:message key="label.teacher.finalWork.priority.info"/>
 				</td>
+-->
 				<td bgcolor="#a2aebc" align="center" rowspan="2">
 					<bean:message key="finalDegreeWorkProposal.attribution.byTeacher"/>
 				</td>
@@ -144,6 +149,7 @@
 					<td bgcolor="#eae7e4" align="center" rowspan="2">
 						<bean:write name="finalDegreeWorkProposalHeader" property="companyLink"/>
 					</td>
+<!--
 					<td bgcolor="#eae7e4" align="center" rowspan="2">
 						<logic:present name="finalDegreeWorkProposalHeader" property="branches">
 							<bean:size id="numberBranches" name="finalDegreeWorkProposalHeader" property="branches"/>
@@ -160,6 +166,7 @@
 							</logic:greaterThan>
 						</logic:present>
 					</td>
+-->
 					<td bgcolor="#eae7e4" align="center" rowspan="2">
 						<logic:present name="finalDegreeWorkProposalHeader" property="groupAttributedByTeacher">
 							<logic:iterate id="groupStudent" name="finalDegreeWorkProposalHeader" property="groupAttributedByTeacher.groupStudents">

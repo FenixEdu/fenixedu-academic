@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroup;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -17,7 +18,9 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadFinalDegreeWorkStudentGroupByUsername extends Service {
 
     public InfoGroup run(final Person personUser) throws ExcepcaoPersistencia {
-	final Registration registration = personUser.getStudentByType(DegreeType.DEGREE);
+	Registration registration = personUser.getStudentByType(DegreeType.DEGREE);
+	if (registration == null) registration = personUser.getStudentByType(DegreeType.BOLONHA_MASTER_DEGREE);
+	if (registration == null) registration = personUser.getStudentByType(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
 	if (registration == null) {
 	    return null;
 	}

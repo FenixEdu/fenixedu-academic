@@ -32,7 +32,7 @@
 				 onchange='this.form.method.value=\'selectExecutionDegree\';this.form.page.value=\'0\';this.form.submit();'>
 		<html:option value=""><!-- w3c complient--></html:option>
 		<html:options property="idInternal"
-					  labelProperty="infoDegreeCurricularPlan.infoDegree.nome"
+					  labelProperty="infoDegreeCurricularPlan.label"
 					  collection="infoExecutionDegrees" />
 	</html:select>
 	<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
@@ -40,7 +40,9 @@
 	</html:submit>
 	<br />
 	<br />
+
 	<logic:present name="infoGroup">
+<!--
 		<bean:message key="label.finalDegreeWork.group"/>:
 		<br />
 		<logic:present name="infoGroup" property="groupStudents">
@@ -89,6 +91,7 @@
 				</tr>
 			</table>
 		</logic:present>
+-->
 		<br />
 		<bean:message key="label.finalDegreeWork.groupProposals"/>:
 		<br />

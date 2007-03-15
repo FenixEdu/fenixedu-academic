@@ -723,12 +723,14 @@
 		<field property="coResponsibleCreditsPercentage" depends="required,integer" page="2">
 			<arg0 key="finalWorkInformationForm.CreditsPercentage" resource="true"/>
 		</field>
+<!--
 		<field property="minimumNumberOfGroupElements" depends="required,integer" page="2">
 			<arg0 key="finalWorkInformationForm.numberOfGroupElements" resource="true"/>
 		</field>
 		<field property="maximumNumberOfGroupElements" depends="required,integer" page="2">
 			<arg0 key="finalWorkInformationForm.numberOfGroupElements" resource="true"/>
 		</field>
+-->
 <!--
 		<field property="degreeType" depends="required" page="2">
 			<arg0 key="finalWorkInformationForm.degreeType" resource="true"/>

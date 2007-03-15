@@ -23,6 +23,8 @@ public class EstablishFinalDegreeWorkStudentGroup extends Service {
     public boolean run(Person person, Integer executionDegreeOID) throws ExcepcaoPersistencia,
             FenixServiceException {
     	Registration registration = person.getStudentByType(DegreeType.DEGREE);
+    	if (registration == null) registration = person.getStudentByType(DegreeType.BOLONHA_MASTER_DEGREE);
+    	if (registration == null) registration = person.getStudentByType(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
     	if (registration == null) {
             throw new FenixServiceException("Error reading student to place in final degree work group.");
     	}

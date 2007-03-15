@@ -627,9 +627,12 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         String requirements = (String) finalWorkForm.get("requirements");
         String deliverable = (String) finalWorkForm.get("deliverable");
         String url = (String) finalWorkForm.get("url");
-        String minimumNumberOfGroupElements = (String) finalWorkForm.get("minimumNumberOfGroupElements");
-        String maximumNumberOfGroupElements = (String) finalWorkForm.get("maximumNumberOfGroupElements");
-        String degreeType = (String) finalWorkForm.get("degreeType");
+//        String minimumNumberOfGroupElements = (String) finalWorkForm.get("minimumNumberOfGroupElements");
+//        String maximumNumberOfGroupElements = (String) finalWorkForm.get("maximumNumberOfGroupElements");
+        String minimumNumberOfGroupElements = "1";
+        String maximumNumberOfGroupElements = "1";
+//        String degreeType = (String) finalWorkForm.get("degreeType");
+        String degreeType = null;
         String observations = (String) finalWorkForm.get("observations");
         String location = (String) finalWorkForm.get("location");
         String companyAdress = (String) finalWorkForm.get("companyAdress");
@@ -964,10 +967,8 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         		.get("maximumCurricularYearToCountCompletedCourses");
         String minimumCompletedCurricularYearString = (String) finalDegreeWorkScheduleingForm
 				.get("minimumCompletedCurricularYear");
-        String minimumNumberOfStudentsString = (String) finalDegreeWorkScheduleingForm
-                .get("minimumNumberOfStudents");
-        String maximumNumberOfStudentsString = (String) finalDegreeWorkScheduleingForm
-                .get("maximumNumberOfStudents");
+        String minimumNumberOfStudentsString = "1";
+        String maximumNumberOfStudentsString = "1";
         String maximumNumberOfProposalCandidaciesPerGroupString = (String) finalDegreeWorkScheduleingForm
                 .get("maximumNumberOfProposalCandidaciesPerGroup");
         Boolean attributionByTeachers = (Boolean) finalDegreeWorkScheduleingForm.get("attributionByTeachers");

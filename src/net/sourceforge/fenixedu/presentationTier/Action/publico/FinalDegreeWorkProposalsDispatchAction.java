@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.publico;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -58,7 +59,11 @@ public class FinalDegreeWorkProposalsDispatchAction extends FenixContextDispatch
             }
         }
 
-        Object args[] = new Object[] { new Integer(executionYearOID), DegreeType.DEGREE };
+        final Set<DegreeType> degreeTypes = new HashSet<DegreeType>();
+        degreeTypes.add(DegreeType.DEGREE);
+        degreeTypes.add(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
+        degreeTypes.add(DegreeType.BOLONHA_MASTER_DEGREE);
+        Object args[] = new Object[] { new Integer(executionYearOID), degreeTypes };
         List infoExecutionDegrees = (List) ServiceUtils.executeService(null,
                 "ReadExecutionDegreesByExecutionYearAndType", args);
         Collections.sort(infoExecutionDegrees, new BeanComparator(

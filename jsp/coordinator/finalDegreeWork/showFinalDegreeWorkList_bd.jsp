@@ -217,6 +217,7 @@
 				<html:text bundle="HTMLALT_RESOURCES" altKey="text.minimumCompletedCurricularYear" property="minimumCompletedCurricularYear" size="2"/>
 			</td>
 		</tr>
+<!--
 		<tr>
 			<th class="listClasses-header">
 				<bean:message key="finalDegreeWorkCandidacy.requirements.minimumNumberOfStudents"/>
@@ -233,6 +234,7 @@
 				<html:text bundle="HTMLALT_RESOURCES" altKey="text.maximumNumberOfStudents" property="maximumNumberOfStudents" size="2"/>
 			</td>
 		</tr>
+-->
 		<tr>
 			<th class="listClasses-header">
 				<bean:message key="finalDegreeWorkCandidacy.requirements.maximumNumberOfProposalCandidaciesPerGroup"/>

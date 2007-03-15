@@ -83,9 +83,12 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 	String requirements = (String) finalWorkForm.get("requirements");
 	String deliverable = (String) finalWorkForm.get("deliverable");
 	String url = (String) finalWorkForm.get("url");
-	String minimumNumberOfGroupElements = (String) finalWorkForm.get("minimumNumberOfGroupElements");
-	String maximumNumberOfGroupElements = (String) finalWorkForm.get("maximumNumberOfGroupElements");
-	String degreeType = (String) finalWorkForm.get("degreeType");
+//	String minimumNumberOfGroupElements = (String) finalWorkForm.get("minimumNumberOfGroupElements");
+//	String maximumNumberOfGroupElements = (String) finalWorkForm.get("maximumNumberOfGroupElements");
+	String minimumNumberOfGroupElements = "1";
+	String maximumNumberOfGroupElements = "1";
+//	String degreeType = (String) finalWorkForm.get("degreeType");
+	String degreeType = null;
 	String observations = (String) finalWorkForm.get("observations");
 	String location = (String) finalWorkForm.get("location");
 	String companyAdress = (String) finalWorkForm.get("companyAdress");

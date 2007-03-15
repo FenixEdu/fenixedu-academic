@@ -5,7 +5,9 @@ package net.sourceforge.fenixedu.presentationTier.Action.student.finalDegreeWork
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -306,17 +308,17 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
      */
     private List placeListOfExecutionDegreesInRequest(HttpServletRequest request)
             throws FenixServiceException, FenixFilterException {
-        Object[] args = {};
-        final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear().getPreviousExecutionYear();
+        final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
         if (executionYear == null) {
             return new ArrayList(0);
         }
         final InfoExecutionYear infoExecutionYear = InfoExecutionYear.newInfoFromDomain(executionYear);
 
-//        InfoExecutionYear infoExecutionYear = (InfoExecutionYear) ServiceUtils.executeService(null,
-//                "ReadCurrentExecutionYear", args);
-
-        args = new Object[] { infoExecutionYear.getIdInternal(), DegreeType.DEGREE };
+        final Set<DegreeType> degreeTypes = new HashSet<DegreeType>();
+        degreeTypes.add(DegreeType.DEGREE);
+        degreeTypes.add(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
+        degreeTypes.add(DegreeType.BOLONHA_MASTER_DEGREE);
+        Object[] args = new Object[] { infoExecutionYear.getIdInternal(), degreeTypes };
         List infoExecutionDegrees = (List) ServiceUtils.executeService(null,
                 "ReadExecutionDegreesByExecutionYearAndType", args);
         Collections.sort(infoExecutionDegrees, new BeanComparator(

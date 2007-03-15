@@ -212,6 +212,7 @@
 				<bean:write name="finalDegreeWorkProposal" property="url"/>
 			</td>
 		</tr>
+<!--
 		<logic:present name="finalDegreeWorkProposal" property="branches">
 			<tr>
 				<td bgcolor="#a2aebc" align="center" colspan="3">
@@ -226,6 +227,8 @@
 				</tr>
 			</logic:iterate>		
 		</logic:present>
+-->
+<!--
 		<tr>
 			<td bgcolor="#a2aebc" align="center" colspan="3">
 				<bean:message key="label.teacher.finalWork.numberOfGroupElements"/>
@@ -257,6 +260,7 @@
 				<bean:write name="finalDegreeWorkProposal" property="degreeType"/>
 			</td>
 		</tr>
+-->
 		<tr>
 			<td bgcolor="#a2aebc" align="center" colspan="3">
 				<bean:message key="label.teacher.finalWork.observations"/>

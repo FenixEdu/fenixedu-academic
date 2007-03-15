@@ -754,8 +754,7 @@ public class Registration extends Registration_Base {
 	for (final GroupStudent groupStudent : getAssociatedGroupStudents()) {
 	    final Group group = groupStudent.getFinalDegreeDegreeWorkGroup();
 	    final ExecutionDegree executionDegree = group.getExecutionDegree();
-	    final ExecutionYear executionYear = executionDegree.getExecutionYear()
-		    .getNextExecutionYear();
+	    final ExecutionYear executionYear = executionDegree.getExecutionYear();
 	    if (executionYear != null && executionYear.getState().equals(PeriodState.CURRENT)) {
 		return group;
 	    }
