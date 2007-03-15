@@ -493,9 +493,11 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	this.addAttends(attends);
     }
 
-    public void createEnrolmentEvaluationForImprovement(final Employee employee, final ExecutionPeriod executionPeriod) {
-	new EnrolmentEvaluation(this, EnrolmentEvaluationType.IMPROVEMENT, EnrolmentEvaluationState.TEMPORARY_OBJ, employee);
+    public EnrolmentEvaluation createEnrolmentEvaluationForImprovement(final Employee employee, final ExecutionPeriod executionPeriod) {
+	final EnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation(this, EnrolmentEvaluationType.IMPROVEMENT, EnrolmentEvaluationState.TEMPORARY_OBJ, employee);
 	createAttendForImprovement(executionPeriod);
+	
+	return enrolmentEvaluation;
     }
 
     
