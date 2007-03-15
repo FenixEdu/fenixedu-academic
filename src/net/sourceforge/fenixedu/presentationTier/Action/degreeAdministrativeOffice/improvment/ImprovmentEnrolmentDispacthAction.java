@@ -83,7 +83,7 @@ public class ImprovmentEnrolmentDispacthAction extends FenixDispatchAction{
         Integer studentNumber = (Integer) actionForm.get("studentNumber");
         Integer executionPeriodID = Integer.valueOf(actionForm.getString("executionPeriod"));
         
-        Registration registration = Registration.readStudentByNumberAndDegreeType(studentNumber, DegreeType.DEGREE);
+        Registration registration = Registration.readRegisteredRegistrationByNumberAndDegreeType(studentNumber, DegreeType.DEGREE);
         if (registration == null) {
         	errors.add("noStudent", new ActionError("error.student.notExist", studentNumber.toString()));
             saveErrors(request, errors);

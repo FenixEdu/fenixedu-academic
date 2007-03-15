@@ -1772,13 +1772,12 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
 	    public boolean evaluate(Object arg0) {
 		Enrolment enrolment = (Enrolment) arg0;
-		List executionCourses = enrolment.getCurricularCourse().getAssociatedExecutionCourses();
-		for (Iterator iterator = executionCourses.iterator(); iterator.hasNext();) {
-		    ExecutionCourse executionCourse = (ExecutionCourse) iterator.next();
-		    if (executionCourse.getExecutionPeriod().equals(previousExecPeriod)) {
+		for (CurricularCourseScope curricularCourseScope : enrolment.getCurricularCourse().getScopes()) {
+		    if(curricularCourseScope.isActiveForExecutionPeriod(previousExecPeriod)) {
 			return false;
 		    }
 		}
+		
 		return true;
 	    }
 
