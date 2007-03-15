@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="approveJuryForm"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Portrait"
+		 pageWidth="595"
+		 pageHeight="842"
+		 columnWidth="535"
+		 columnSpacing="0"
+		 leftMargin="30"
+		 rightMargin="30"
+		 topMargin="20"
+		 bottomMargin="20"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="2" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+
+	<field name="institutionName" class="java.lang.String"/>
+	<field name="studentDegreeName" class="java.lang.String"/>
+	<field name="studentNumber" class="java.lang.String"/>
+	<field name="studentName" class="java.lang.String"/>
+	<field name="orientatorAffiliation" class="java.lang.String"/>
+	<field name="orientatorCategory" class="java.lang.String"/>
+	<field name="orientatorName" class="java.lang.String"/>
+	<field name="coorientatorAffiliation" class="java.lang.String"/>
+	<field name="coorientatorCategory" class="java.lang.String"/>
+	<field name="coorientatorName" class="java.lang.String"/>
+	<field name="thesisTitle" class="java.lang.String"/>
+	<field name="juryPresidentName" class="java.lang.String"/>
+	<field name="juryPresidentCategory" class="java.lang.String"/>
+	<field name="juryPresidentAffiliation" class="java.lang.String"/>
+	<field name="vowel1Name" class="java.lang.String"/>
+	<field name="vowel1Category" class="java.lang.String"/>
+	<field name="vowel1Affiliation" class="java.lang.String"/>
+	<field name="vowel2Name" class="java.lang.String"/>
+	<field name="vowel2Category" class="java.lang.String"/>
+	<field name="vowel2Affiliation" class="java.lang.String"/>
+	<field name="vowel3Name" class="java.lang.String"/>
+	<field name="vowel3Category" class="java.lang.String"/>
+	<field name="vowel3Affiliation" class="java.lang.String"/>
+
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</title>
+		<pageHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="777"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="1"
+						y="1"
+						width="534"
+						height="26"
+						key="textField-1"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font size="18"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{institutionName}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="1"
+						y="33"
+						width="534"
+						height="26"
+						key="textField-2"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font size="18"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{studentDegreeName}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="6"
+						y="70"
+						width="524"
+						height="520"
+						key="textField-3"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["ALUNO"
++ "\nNúmero: " + $F{studentNumber}
++ "\nNome: " + $F{studentName}
++ "\n"
++ "\nORIENTADOR"
++ "\nNome: " + $F{orientatorName}
++ "\nCategoria: " + $F{orientatorCategory}
++ "\nAfiliação: " + $F{orientatorAffiliation}
++ "\n"
++ "\nCO-ORIENTADOR"
++ "\nNome: " + $F{coorientatorName}
++ "\nCategoria: " + $F{coorientatorCategory}
++ "\nAfiliação: " + $F{coorientatorAffiliation}
++ "\n"
++ "\nDISSERTAÇÂO"
++ "\nTitulo: " + $F{thesisTitle}
++ "\n"
++ "\nJÚRI"
++ "\nPresidente"
++ "\nNome: " + $F{juryPresidentName}
++ "\nCategoria: " + $F{juryPresidentCategory}
++ "\nAfiliação: " + $F{juryPresidentAffiliation}
++ "\n"
++ "\nVogais"
++ "\nNome: " + $F{vowel1Name}
++ "\nCategoria: " + $F{vowel1Category}
++ "\nAfiliação: " + $F{vowel1Affiliation}
++ "\n"
++ "\nNome: " + $F{vowel2Name}
++ "\nCategoria: " + $F{vowel2Category}
++ "\nAfiliação: " + $F{vowel2Affiliation}
++ "\n"
++ "\nNome: " + $F{vowel3Name}
++ "\nCategoria: " + $F{vowel3Category}
++ "\nAfiliação: " + $F{vowel3Affiliation}
+]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="4"
+						y="605"
+						width="525"
+						height="169"
+						key="staticText-1"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+				<text><![CDATA[A COORDENAÇÂO DO CURSO
+
+Data: ______________________     Nome: _____________________________________
+
+Assinatura: _______________________________________________________________
+
+
+HOMOLGAÇÃO DO JÚRI PELO CONSELHO CIENTÍFICO
+
+Data: ______________________     Nome: _____________________________________
+
+Assinatura: _______________________________________________________________]]></text>
+				</staticText>
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>
