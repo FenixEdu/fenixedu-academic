@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.thesis;
 
-import java.util.List;
-
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.externalPerson.InsertExternalPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -58,7 +56,7 @@ public class ChangeThesisPerson extends Service {
         
         switch (change.type) {
         case orientator:
-            thesis.setOrientator(person);
+            thesis.setOrientcator(person);
             break;
         case coorientator:
             thesis.setCoorientator(person);
@@ -67,18 +65,14 @@ public class ChangeThesisPerson extends Service {
             thesis.setPresident(person);
             break;
         case vowel:
-            List<Person> vowels = thesis.getVowels();
-
             if (change.target != null) {
+        	thesis.removeVowel(change.target);
                 if (person != null) {
-                    int index = vowels.indexOf(change.target);
-                    vowels.set(index, person);
-                } else {
-                    vowels.remove(change.target);
+                    thesis.addVowel(person);
                 }
             } else {
                 if (person != null) {
-                    vowels.add(person);
+                    thesis.addVowel(person);
                 }
             }
 

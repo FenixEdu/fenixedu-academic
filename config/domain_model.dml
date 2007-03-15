@@ -4940,7 +4940,7 @@ class net.sourceforge.fenixedu.domain.thesis.Thesis extends net.sourceforge.feni
 	DateTime approval;
 	DateTime confirmation;
 	DateTime evaluation;
-	
+
 	Integer keyOrientator;
 	Integer keyCoorientator;
 	Integer keyPresident;
@@ -4950,6 +4950,16 @@ class net.sourceforge.fenixedu.domain.thesis.Thesis extends net.sourceforge.feni
 	
 	Integer keyEnrolment;
 	Integer keyDegree;
+}
+
+class net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer keyPerson;
+    Integer keyOrientatedThesis;
+    Integer keyCoorientatedThesis;
+    Integer keyPresidentThesis;
+    Integer keyVowelThesis;
+    String category;
+	String affiliation;
 }
 
 class net.sourceforge.fenixedu.domain.util.UsernameCounter extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -12250,6 +12260,20 @@ relation RootDomainObjectThesis {
 	}
 }
 
+relation RootDomainObjectThesisEvaluationParticipant {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant playsRole thesisEvaluationParticipants {
+		multiplicity *;
+	}
+}
+
+relation PersonThesisEvaluationParticipant {
+	net.sourceforge.fenixedu.domain.Person playsRole person;
+	net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant playsRole thesisEvaluationParticipants {
+		multiplicity *;
+	}
+}
+
 relation ThesisHasDissertationFile {
 	net.sourceforge.fenixedu.domain.thesis.ThesisFile playsRole dissertation;
 	net.sourceforge.fenixedu.domain.thesis.Thesis playsRole dissertationThesis;
@@ -12261,34 +12285,25 @@ relation ThesisHasExtendedAbstractFile {
 }
 
 relation ThesisHasOrientator {
-	net.sourceforge.fenixedu.domain.Person playsRole orientator;
-	net.sourceforge.fenixedu.domain.thesis.Thesis playsRole orientatedTheses {
-		multiplicity *;
-	}
+	net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant playsRole orientator;
+	net.sourceforge.fenixedu.domain.thesis.Thesis playsRole orientatedThesis;
 }
 
 relation ThesisHasCoorientator {
-	net.sourceforge.fenixedu.domain.Person playsRole coorientator;
-	net.sourceforge.fenixedu.domain.thesis.Thesis playsRole coorientatedTheses {
-		multiplicity *;
-	}
+	net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant playsRole coorientator;
+	net.sourceforge.fenixedu.domain.thesis.Thesis playsRole coorientatedThesis;
 }
 
 relation ThesisHasJuryPresident {
-	net.sourceforge.fenixedu.domain.Person playsRole president;
-	net.sourceforge.fenixedu.domain.thesis.Thesis playsRole presidentTheses {
-		multiplicity *;
-	}
+	net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant playsRole president;
+	net.sourceforge.fenixedu.domain.thesis.Thesis playsRole presidentThesis;
 }
 
 relation ThesisJuryVowels {
-	net.sourceforge.fenixedu.domain.Person playsRole vowels {
+	net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant playsRole vowels {
 		multiplicity *;
 	}
-	
-	net.sourceforge.fenixedu.domain.thesis.Thesis playsRole vowelTheses {
-		multiplicity *;
-	}
+	net.sourceforge.fenixedu.domain.thesis.Thesis playsRole vowelThesis;
 }
 
 relation ThesisEnrolment {

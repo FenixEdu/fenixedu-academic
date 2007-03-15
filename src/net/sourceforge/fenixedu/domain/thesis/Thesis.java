@@ -77,12 +77,17 @@ public class Thesis extends Thesis_Base {
         
         removeRootDomainObject();
 
-        removeOrientator();
-        removeCoorientator();
-        removePresident();
-        
-        getVowels().clear();
-        
+        if (hasOrientator()) {
+            getOrientator().delete();
+        }
+        if (hasCoorientator()) {
+            getCoorientator().delete();
+        }
+        if (hasPresident()) {
+            getPresident().delete();
+        }
+        for (; !getVowelsSet().isEmpty(); getVowelsSet().iterator().next().delete()); 
+
         removeDissertation();
         removeExtendedAbstract();
         
@@ -257,13 +262,15 @@ public class Thesis extends Thesis_Base {
     public Collection<ThesisCondition> getGeneralConditions() {
         List<ThesisCondition> result = new ArrayList<ThesisCondition>();
         
-        Person orientator = getOrientator();
-        Person coorientator = getCoorientator();
-        Person president = getPresident();
+        Person orientator = getOrientator().getPerson();
+        Person coorientator = getCoorientator().getPerson();
+        Person president = getPresident().getPerson();
 
         // check for duplicated persons
         List<Person> persons = Arrays.asList(orientator, coorientator, president);
-        persons.addAll(getVowels());
+        for (final ThesisEvaluationParticipant vowel : getVowelsSet()) {
+            persons.add(vowel.getPerson());
+        }
         
         Set<Person> personSet = new HashSet<Person>();
         for (Person person : persons) {
@@ -287,8 +294,8 @@ public class Thesis extends Thesis_Base {
         
         boolean hasInternal = false;
         
-        Person orientator = getOrientator();
-        Person coorientator = getCoorientator();
+        Person orientator = getOrientator().getPerson();
+        Person coorientator = getCoorientator().getPerson();
         
         if (orientator == null) {
             conditions.add(new ThesisCondition("thesis.condition.orientator.required"));
@@ -313,7 +320,7 @@ public class Thesis extends Thesis_Base {
     public List<ThesisCondition> getPresidentConditions() {
         List<ThesisCondition> conditions = new ArrayList<ThesisCondition>();
         
-        Person president = getPresident();
+        Person president = getPresident().getPerson();
         
         if (president == null) {
             conditions.add(new ThesisCondition("thesis.condition.president.required"));
@@ -490,6 +497,47 @@ public class Thesis extends Thesis_Base {
             keywords.setContent(realLanguage, text);
             setKeywords(keywords);
         }
+    }
+
+    public void setOrientcator(final Person person) {
+        if (hasOrientator()) {
+            getOrientator().delete();
+        }
+        super.setOrientator(new ThesisEvaluationParticipant(person, this, null, null, null));
+    }
+
+    public void setCoorientator(final Person person) {
+        if (hasCoorientator()) {
+            getCoorientator().delete();
+        }
+        super.setCoorientator(new ThesisEvaluationParticipant(person, null, this, null, null));
+    }
+
+    public void setPresident(final Person person) {
+        if (hasPresident()) {
+            getPresident().delete();
+        }
+        super.setPresident(new ThesisEvaluationParticipant(person, null, null, this, null));
+    }
+
+    public void addVowel(final Person person) {
+        super.addVowels(new ThesisEvaluationParticipant(person, null, null, null, this));
+    }
+
+    public void removeVowel(final Person person) {
+	final ThesisEvaluationParticipant thesisEvaluationParticipant = findVowel(person);
+	if (thesisEvaluationParticipant != null) {	    
+	    super.addVowels(new ThesisEvaluationParticipant(person, null, null, null, this));
+	}
+    }
+
+    private ThesisEvaluationParticipant findVowel(final Person person) {
+	for (final ThesisEvaluationParticipant thesisEvaluationParticipant : getVowelsSet()) {
+	    if (thesisEvaluationParticipant.getPerson() == person) {
+		return thesisEvaluationParticipant;
+	    }
+	}
+	return null;
     }
 
 }

@@ -1,2 +1,3 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.thesis.Thesis" table="THESIS"/>
 <class-descriptor class="net.sourceforge.fenixedu.domain.thesis.ThesisFile" table="FILE"/>
+<class-descriptor class="net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant" table="THESIS_EVALUATION_PARTICIPANT"/>

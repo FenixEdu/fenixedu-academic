@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
+import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 import net.sourceforge.fenixedu.presentationTier.docs.FenixReport;
 
 public class ApproveJuryDocument extends FenixReport {
@@ -32,30 +33,32 @@ public class ApproveJuryDocument extends FenixReport {
 	final Person person = student.getPerson();
 	parameters.put("studentName", person.getName());
 
-	final Person orientator = thesis.getOrientator();
-	parameters.put("orientatorName", orientator.getName());
-	parameters.put("orientatorCategory", "TODO");
-	parameters.put("orientatorAffiliation", "TODO");
+	final ThesisEvaluationParticipant orientator = thesis.getOrientator();
+	parameters.put("orientatorName", orientator.getPerson().getName());
+	parameters.put("orientatorCategory", orientator.getCategory());
+	parameters.put("orientatorAffiliation", orientator.getAffiliation());
 
-	final Person coorientator = thesis.getCoorientator();
-	parameters.put("coorientatorName", coorientator.getName());
-	parameters.put("coorientatorCategory", "TODO");
-	parameters.put("coorientatorAffiliation", "TODO");
+	final ThesisEvaluationParticipant coorientator = thesis.getCoorientator();
+	parameters.put("coorientatorName", coorientator.getPerson().getName());
+	parameters.put("coorientatorCategory", coorientator.getCategory());
+	parameters.put("coorientatorAffiliation", coorientator.getAffiliation());
 
 	parameters.put("thesisTitle", thesis.getTitle().getContent());
 
-	final Person juryPresident = thesis.getPresident();
-	parameters.put("juryPresidentName", juryPresident.getName());
-	parameters.put("juryPresidentCategory", "TODO");
-	parameters.put("juryPresidentAffiliation", "TODO");
+	final ThesisEvaluationParticipant juryPresident = thesis.getPresident();
+	parameters.put("juryPresidentName", juryPresident.getPerson().getName());
+	parameters.put("juryPresidentCategory", juryPresident.getCategory());
+	parameters.put("juryPresidentAffiliation", juryPresident.getAffiliation());
 
-	final Set<Person> vowels = new TreeSet<Person>(Person.COMPARATOR_BY_NAME);
+	final Set<ThesisEvaluationParticipant> vowels = new TreeSet<ThesisEvaluationParticipant>(
+		ThesisEvaluationParticipant.COMPARATOR_BY_PERSON_NAME);
+	vowels.addAll(thesis.getVowelsSet());
 	int i = 0;
-	for (final Person vowel : vowels) {
+	for (final ThesisEvaluationParticipant vowel : vowels) {
 	    final String vowelPrefix = "vowel" + ++i;
-	    parameters.put(vowelPrefix + "Name", vowel.getName());
-	    parameters.put(vowelPrefix + "Category", "TODO");
-	    parameters.put(vowelPrefix + "Affiliation", "TODO");
+	    parameters.put(vowelPrefix + "Name", vowel.getPerson().getName());
+	    parameters.put(vowelPrefix + "Category", vowel.getCategory());
+	    parameters.put(vowelPrefix + "Affiliation", vowel.getAffiliation());
 	}
     }
 
