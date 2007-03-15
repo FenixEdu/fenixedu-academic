@@ -576,12 +576,12 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return true;
     }
     
-    public void createSpecialSeasonEvaluation(final Employee employee) {
+    public EnrolmentEvaluation createSpecialSeasonEvaluation(final Employee employee) {
 	if (getEnrolmentEvaluationType() != EnrolmentEvaluationType.SPECIAL_SEASON && !isApproved()) {
 	    setEnrolmentEvaluationType(EnrolmentEvaluationType.SPECIAL_SEASON);
 	    setEnrollmentState(EnrollmentState.ENROLLED);
 
-	    new EnrolmentEvaluation(this, EnrolmentEvaluationType.SPECIAL_SEASON,
+	    return new EnrolmentEvaluation(this, EnrolmentEvaluationType.SPECIAL_SEASON,
 		    EnrolmentEvaluationState.TEMPORARY_OBJ, employee);
 	} else {
 	    throw new DomainException("error.invalid.enrolment.state");
