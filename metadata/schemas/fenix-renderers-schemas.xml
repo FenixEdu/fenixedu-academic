@@ -594,11 +594,13 @@
 	<schema name="projectSubmission.view-full" type="net.sourceforge.fenixedu.domain.ProjectSubmission" bundle="APPLICATION_RESOURCES">
 	    <slot name="studentGroup.groupNumber"/>
    	    <slot name="attends.aluno.number" />
-   	    <slot name="attends.aluno.person.name" />
+   	    <slot name="attends.aluno.person.firstAndLastName" key="label.name"/>
    	    <slot name="submissionDateTime" />
-   	    <slot name="projectSubmissionFile.filename" />
-   	    <slot name="projectSubmissionFile.size" />
-   	    <slot name="projectSubmissionFile.checksum"/>
+   	    <slot name="projectSubmissionFile.filename" layout="link">
+   	    	<property name="useParent" value="true"/>
+   	    	<property name="linkFormat" value="${projectSubmissionFile.downloadUrl}"/>
+   	    </slot>
+   	    <slot name="projectSubmissionFile.size" layout="fileSize"/>
 	</schema>
 	
 	<schema name="projectSubmission.create" type="net.sourceforge.fenixedu.dataTransferObject.projectSubmission.CreateProjectSubmissionBean">
@@ -610,11 +612,10 @@
 	<schema name="projectSubmissionLog.view-full" type="net.sourceforge.fenixedu.domain.ProjectSubmissionLog" bundle="APPLICATION_RESOURCES">
 	    <slot name="studentGroup.groupNumber"/>
    	    <slot name="attends.aluno.number" />
-   	    <slot name="attends.aluno.person.name" />
+   	    <slot name="attends.aluno.person.firstAndLastName" key="label.name"/>
    	    <slot name="submissionDateTime" />
    	    <slot name="filename" />
-   	    <slot name="fileSize" />
-   	    <slot name="fileChecksum"/>
+   	    <slot name="fileSize" layout="fileSize"/>
 	</schema>
 	
 	<schema name="person.view-with-name-and-idDocumentType-and-documentIdNumber" type="net.sourceforge.fenixedu.domain.Person" bundle="APPLICATION_RESOURCES">
