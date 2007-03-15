@@ -488,9 +488,11 @@ public class ConfigurationReader {
                             currentPath = "/" + currentPath.replace(File.separatorChar, '/');
                         }
                         
-                        if (currentPath != null && entityPath.startsWith(currentPath + "/")) {
-                            entityPath = entityPath.substring(currentPath.length() + 1);
+                        if (currentPath != null && entityPath.startsWith(currentPath)) {
+                            entityPath = entityPath.substring(currentPath.length());
                         }
+                        
+                        entityPath=entityPath.substring(1);
                         
                         File entityFile = new File(file.getParentFile(), entityPath);
                         FileInputStream fileInputStream = new FileInputStream(entityFile);
