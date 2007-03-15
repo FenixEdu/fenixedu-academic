@@ -43,6 +43,7 @@
 		<bean:define id="masterDegreeCreditsDTO" name="masterDegreeCreditsDTO" type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.credits.MasterDegreeCreditsManagementDispatchAction.MasterDegreeCreditsDTO"/>		
 		
 			<tr>
+			
 				<% 					
 				   	int totalRowSpan = masterDegreeCreditsDTO.getTotalRowSpan();	
 				%>

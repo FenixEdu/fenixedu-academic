@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add Person to Department Credits Management" addPersonToDepartmentCreditsManagement.sql
