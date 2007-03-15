@@ -27,3 +27,6 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add type to competence course" AddTypeToCompetenceCourse.sql
+execute "Add thesis membership to coordinator" AlterCoordinatorTable.sql
+execute "Added more space to workScheduleType acronym" alterTableWorkScheduleType.sql
