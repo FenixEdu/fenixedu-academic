@@ -35,7 +35,9 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
+import org.joda.time.DateTimeFieldType;
 import org.joda.time.Duration;
+import org.joda.time.Partial;
 import org.joda.time.YearMonthDay;
 
 public class AssiduousnessResponsibleDispatchAction extends FenixDispatchAction {
@@ -187,9 +189,19 @@ public class AssiduousnessResponsibleDispatchAction extends FenixDispatchAction 
         }
         
         if (yearMonth.getYear() == 2007 && yearMonth.getMonth().equals(Month.FEBRUARY)) {
-            verifyFebruaryMultipleMonthBalanceJustification(employee.getAssiduousness(), employeeWorkSheet, request);
+            DateTimeFieldType[] dateTimeFieldType = { DateTimeFieldType.year(),
+                    DateTimeFieldType.monthOfYear() };
+            int[] dateTimeValues = { 2007, 1 };
+            Partial closedMonthPartial = new Partial(dateTimeFieldType, dateTimeValues);
+            verifyMultipleMonthBalanceJustificationForCurrentAndPreviousMonth(employee
+                    .getAssiduousness(), employeeWorkSheet, closedMonthPartial, request);
         } else if (yearMonth.getYear() == 2007 && yearMonth.getMonth().equals(Month.MARCH)) {
-            verifyMarchMultipleMonthBalanceJustification(employee.getAssiduousness(), request);
+            DateTimeFieldType[] dateTimeFieldType = { DateTimeFieldType.year(),
+                    DateTimeFieldType.monthOfYear() };
+            int[] dateTimeValues = { 2007, 2 };
+            Partial closedMonthPartial = new Partial(dateTimeFieldType, dateTimeValues);
+            verifyMultipleMonthBalanceJustificationForTwoPreviousMonth(employee.getAssiduousness(),
+                    closedMonthPartial, request);
         }
         
         request.setAttribute("employeeWorkSheet", employeeWorkSheet);
@@ -197,14 +209,23 @@ public class AssiduousnessResponsibleDispatchAction extends FenixDispatchAction 
         return mapping.findForward("show-employee-work-sheet");
     }
 
-    private void verifyMarchMultipleMonthBalanceJustification(Assiduousness assiduousness,
-            HttpServletRequest request) {
+    private void verifyMultipleMonthBalanceJustificationForTwoPreviousMonth(Assiduousness assiduousness,
+            Partial closedMonthPartial, HttpServletRequest request) {
         if (assiduousness != null) {
-            AssiduousnessClosedMonth assiduousnessClosedMonthFeb = assiduousness.getClosedMonth(2);
-            if (!assiduousnessClosedMonthFeb.getBalanceToDiscount().isEqual(Duration.ZERO)) {
-                AssiduousnessClosedMonth assiduousnessClosedMonthJan = assiduousness.getClosedMonth(1);
-                Duration monthsBalance = assiduousnessClosedMonthFeb.getBalance();
-                monthsBalance = monthsBalance.plus(assiduousnessClosedMonthJan.getBalance());
+            AssiduousnessClosedMonth assiduousnessClosedMonth = assiduousness
+                    .getClosedMonth(closedMonthPartial);
+            if (!assiduousnessClosedMonth.getBalanceToDiscount().isEqual(Duration.ZERO)) {
+                YearMonthDay yearMonthDay = new YearMonthDay(closedMonthPartial.get(DateTimeFieldType
+                        .year()), closedMonthPartial.get(DateTimeFieldType.monthOfYear()), 1);
+                yearMonthDay = yearMonthDay.minusMonths(1);
+                DateTimeFieldType[] dateTimeFieldType = { DateTimeFieldType.year(),
+                        DateTimeFieldType.monthOfYear() };
+                int[] dateTimeValues = { yearMonthDay.getYear(), yearMonthDay.getMonthOfYear() };
+                Partial previousClosedMonthPartial = new Partial(dateTimeFieldType, dateTimeValues);
+                AssiduousnessClosedMonth assiduousnessPreviousClosedMonth = assiduousness
+                        .getClosedMonth(previousClosedMonthPartial);
+                Duration monthsBalance = assiduousnessClosedMonth.getBalance();
+                monthsBalance = monthsBalance.plus(assiduousnessPreviousClosedMonth.getBalance());
                 if (monthsBalance.isShorterThan(Duration.ZERO)) {
                     request.setAttribute("hasToCompensateThisMonth", "hasToCompensateThisMonth");
                     return;
@@ -213,10 +234,12 @@ public class AssiduousnessResponsibleDispatchAction extends FenixDispatchAction 
         }
     }
 
-    private void verifyFebruaryMultipleMonthBalanceJustification(Assiduousness assiduousness,
-            EmployeeWorkSheet employeeWorkSheet, HttpServletRequest request) {
+    private void verifyMultipleMonthBalanceJustificationForCurrentAndPreviousMonth(
+            Assiduousness assiduousness, EmployeeWorkSheet employeeWorkSheet,
+            Partial closedMonthPartial, HttpServletRequest request) {
         if (assiduousness != null) {
-            AssiduousnessClosedMonth assiduousnessClosedMonth = assiduousness.getClosedMonth(1);
+            AssiduousnessClosedMonth assiduousnessClosedMonth = assiduousness
+                    .getClosedMonth(closedMonthPartial);
             Duration monthsBalance = assiduousnessClosedMonth.getBalance();
             monthsBalance = monthsBalance.plus(employeeWorkSheet.getTotalBalance());
             if (monthsBalance.isShorterThan(Duration.ZERO)) {
