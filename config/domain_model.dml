@@ -3087,12 +3087,6 @@ class net.sourceforge.fenixedu.domain.student.Registration extends net.sourcefor
 	Integer keyDegree;
 	Integer keyExternalRegistrationData;
 	RegistrationAgreement registrationAgreement;
-	Integer keyRegistrationNumber;
-}
-
-class net.sourceforge.fenixedu.domain.student.RegistrationNumber extends net.sourceforge.fenixedu.domain.DomainObject {
-    Integer keyRegistration;
-    Integer number;
 }
 
 class net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -4948,10 +4942,6 @@ class net.sourceforge.fenixedu.domain.thesis.Thesis extends net.sourceforge.feni
 	DateTime confirmation;
 	DateTime evaluation;
 
-	Integer keyOrientator;
-	Integer keyCoorientator;
-	Integer keyPresident;
-	
 	Integer keyDissertation;
 	Integer keyExtendedAbstract;
 	
@@ -4960,12 +4950,11 @@ class net.sourceforge.fenixedu.domain.thesis.Thesis extends net.sourceforge.feni
 }
 
 class net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant extends net.sourceforge.fenixedu.domain.DomainObject {
-    Integer keyPerson;
-    Integer keyOrientatedThesis;
-    Integer keyCoorientatedThesis;
-    Integer keyPresidentThesis;
-    Integer keyVowelThesis;
-    String category;
+	Integer keyPerson;
+	Integer keyThesis;
+
+	Integer keyCategory;
+	ThesisParticipationType type;
 	String affiliation;
 }
 
@@ -12267,13 +12256,6 @@ relation RootDomainObjectThesis {
 	}
 }
 
-relation RootDomainObjectThesisEvaluationParticipant {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant playsRole thesisEvaluationParticipants {
-		multiplicity *;
-	}
-}
-
 relation PersonThesisEvaluationParticipant {
 	net.sourceforge.fenixedu.domain.Person playsRole person;
 	net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant playsRole thesisEvaluationParticipants {
@@ -12291,26 +12273,18 @@ relation ThesisHasExtendedAbstractFile {
 	net.sourceforge.fenixedu.domain.thesis.Thesis playsRole abstractThesis;
 }
 
-relation ThesisHasOrientator {
-	net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant playsRole orientator;
-	net.sourceforge.fenixedu.domain.thesis.Thesis playsRole orientatedThesis;
-}
-
-relation ThesisHasCoorientator {
-	net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant playsRole coorientator;
-	net.sourceforge.fenixedu.domain.thesis.Thesis playsRole coorientatedThesis;
-}
-
-relation ThesisHasJuryPresident {
-	net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant playsRole president;
-	net.sourceforge.fenixedu.domain.thesis.Thesis playsRole presidentThesis;
-}
-
-relation ThesisJuryVowels {
-	net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant playsRole vowels {
+relation ThesisEvaluationParticipantCategory {
+	net.sourceforge.fenixedu.domain.teacher.Category playsRole category;
+	net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant playsRole thesisParticipations {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.thesis.Thesis playsRole vowelThesis;
+}
+
+relation ThesisHasParticipations {
+	net.sourceforge.fenixedu.domain.thesis.Thesis playsRole thesis;
+	net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant playsRole participations {
+		multiplicity *;
+	}
 }
 
 relation ThesisEnrolment {
@@ -12372,16 +12346,4 @@ relation RootDomainObjectFunctionalityPrinters {
 	net.sourceforge.fenixedu.domain.util.FunctionalityPrinters playsRole functionalityPrinters {
 		multiplicity *;
 	}
-}
-
-relation RootDomainObjectRegistrationNumbers {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.student.RegistrationNumber playsRole registrationNumbers {
-		multiplicity *;
-	}
-}
-
-relation RegistrationRegistrationNumber {
-	net.sourceforge.fenixedu.domain.student.Registration playsRole registration;
-	net.sourceforge.fenixedu.domain.student.RegistrationNumber playsRole registrationNumber;
 }

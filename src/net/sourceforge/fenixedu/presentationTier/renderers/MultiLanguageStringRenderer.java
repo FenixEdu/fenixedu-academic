@@ -28,6 +28,7 @@ public class MultiLanguageStringRenderer extends StringRenderer {
     private static final Logger logger = Logger.getLogger(MultiLanguageStringRenderer.class);
     
     private String language; 
+    private boolean forceShowLanguage;
     private boolean languageShown;
     private boolean inline;
     private String languageClasses;
@@ -37,6 +38,7 @@ public class MultiLanguageStringRenderer extends StringRenderer {
         
         setLanguageShown(true);
         setInline(true);
+        setShowLanguageForced(false);
     }
 
     public String getLanguage() {
@@ -96,6 +98,20 @@ public class MultiLanguageStringRenderer extends StringRenderer {
         this.languageClasses = languageClasses;
     }
 
+    public boolean isShowLanguageForced() {
+        return this.forceShowLanguage;
+    }
+
+    /**
+     * Force the diplay of the language of the text even when showing text in
+     * the language requested by the user.
+     * 
+     * @property
+     */
+    public void setShowLanguageForced(boolean forceShowLanguage) {
+        this.forceShowLanguage = forceShowLanguage;
+    }
+
     @Override
     protected HtmlComponent renderComponent(Layout layout, Object object, Class type) {
         if (object == null) {
@@ -103,21 +119,7 @@ public class MultiLanguageStringRenderer extends StringRenderer {
         }
         
         MultiLanguageString mlString = (MultiLanguageString) object;
-        String value;
-        
-        if (getLanguage() != null) {
-            try {
-                Language language = Language.valueOf(getLanguage());
-                value = mlString.getContent(language);
-            }
-            catch (IllegalArgumentException e) {
-                logger.warn("specified language '" +  getLanguage() + "' is not defined, ignoring given language");
-                value = mlString.getContent();
-            }
-        }
-        else {
-            value = mlString.getContent();
-        }
+        String value = getRenderedText(mlString);
         
         HtmlComponent component = super.renderComponent(layout, value, type);
 
@@ -125,13 +127,13 @@ public class MultiLanguageStringRenderer extends StringRenderer {
             return component;
         }
 
-        component.setLanguage(mlString.getContentLanguage().toString());
+        component.setLanguage(getUsedLanguage(mlString).toString());
 
-        if (mlString.isRequestedLanguage()) {
+        if (mlString.isRequestedLanguage() && !isShowLanguageForced()) {
             return component;
         }
 
-        if (! isLanguageShown()) {
+        if (! isLanguageShown() && !isShowLanguageForced()) {
             return component;
         }
 
@@ -139,7 +141,7 @@ public class MultiLanguageStringRenderer extends StringRenderer {
         container.addChild(component);
         container.setIndented(false);
 
-        HtmlComponent languageComponent = renderValue(mlString.getContentLanguage(), null, null);
+        HtmlComponent languageComponent = renderValue(getUsedLanguage(mlString), null, null);
         languageComponent.setClasses(getLanguageClasses());
         
         container.addChild(new HtmlText(" (", false));
@@ -147,6 +149,20 @@ public class MultiLanguageStringRenderer extends StringRenderer {
         container.addChild(new HtmlText(")", false));
         
         return container;
+    }
+
+    private Language getUsedLanguage(MultiLanguageString mlString) {
+        if (getLanguage() != null) {
+            return Language.valueOf(getLanguage());
+        }
+        else {
+            return mlString.getContentLanguage();
+        }
+    }
+
+    protected String getRenderedText(MultiLanguageString mlString) {
+        Language language = getUsedLanguage(mlString);
+        return mlString.getContent(language);
     }
 
 }

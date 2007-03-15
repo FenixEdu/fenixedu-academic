@@ -695,6 +695,13 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 		result.add((CurricularCourse) degreeModule);
 	    }
 	}
+    else {
+        for (CurricularCourse curricularCourse : getCurricularCourses()) {
+            if (curricularCourse.hasAnyActiveDegreModuleScope(executionYear)) {
+                result.add(curricularCourse);
+            }
+        }
+    }
 	return result;
     }
 
@@ -1457,6 +1464,18 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     
     public CourseGroup getSecondCycleCourseGroup() {
 	return isBolonha() ? getRoot().getSecondCycleCourseGroup() : null;
+    }
+
+    public List<CurricularCourse> getDissertationCurricularCourses() {
+        List<CurricularCourse> result = new ArrayList<CurricularCourse>();
+        
+        for (CurricularCourse curricularCourse : getCurricularCourses(ExecutionYear.readCurrentExecutionYear())) {
+            if (curricularCourse.isDissertation()) {
+                result.add(curricularCourse);
+            }
+        }
+        
+        return result;
     }
 
 }

@@ -27,6 +27,7 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.JRPrintServiceExporter;
 import net.sf.jasperreports.engine.export.JRPrintServiceExporterParameter;
 import net.sf.jasperreports.engine.util.JRLoader;
+import net.sourceforge.fenixedu.presentationTier.docs.FenixReport;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -177,6 +178,10 @@ public class ReportsUtils extends PropertiesManager {
         return null;
     }
 
+    public static byte[] exportToPdf(FenixReport report) throws JRException {
+        return exportToPdf(report.getReportTemplateKey(), report.getParameters(), report.getResourceBundle(), report.getDataSource());
+    }
+    
     public static byte[] exportToPdf(String key, Map parameters, ResourceBundle bundle,
             Collection dataSource) throws JRException {
         try {

@@ -56,7 +56,7 @@ public class ChangeThesisPerson extends Service {
         
         switch (change.type) {
         case orientator:
-            thesis.setOrientcator(person);
+            thesis.setOrientator(person);
             break;
         case coorientator:
             thesis.setCoorientator(person);

@@ -906,23 +906,16 @@
   			type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ManageThesisDA"
   			parameter="method">
   			<forward name="search-student" path="thesis-search-student"/>
-  			<forward name="edit-thesis" path="thesis-edit"/>
+            <forward name="list-thesis" path="thesis-list"/>
   			<forward name="select-person" path="thesis-select-person"/>
   			<forward name="select-unit" path="thesis-select-unit"/>
-  			<forward name="list-draft" path="thesis-list-draft"/>
-            <forward name="list-submitted" path="thesis-list-submitted"/>
-            <forward name="list-approved" path="thesis-list-approved"/>
-            <forward name="list-confirmed" path="thesis-list-confirmed"/>
-            <forward name="list-evaluated" path="thesis-list-evaluated"/>
   			<forward name="change-information" path="thesis-change-information"/>
-  			<forward name="delete-confirm" path="thesis-delete-confirm"/>
-  			<forward name="confirm-submission" path="thesis-confirm-submission"/>
-  			<forward name="view-thesis" path="thesis-view"/>
   			<forward name="collect-basic-information" path="thesis-collect-basic-information"/>
-  			<forward name="confirm-thesis" path="thesis-confirm"/>
+  			<forward name="edit-thesis" path="thesis-edit"/>
+  			<forward name="view-submitted" path="thesis-view-submitted"/>
+  			<forward name="view-approved" path="thesis-view-approved"/>
   			<forward name="view-confirmed" path="thesis-view-confirmed"/>
   			<forward name="view-evaluated" path="thesis-view-evaluated"/>
-  			<forward name="confirm-revision" path="thesis-confirm-revision"/>
   		</action>
 
     </action-mappings>
@@ -939,6 +932,7 @@
    	<message-resources parameter="resources.BolonhaManagerResources" key="BOLONHA_MANAGER_RESOURCES" null="false"/>
 	<message-resources parameter="resources.AcademicAdminOffice" key="ACADEMIC_OFFICE_RESOURCES" null="false"/>
 	<message-resources parameter="resources.MessagingResources" key="MESSAGING_RESOURCES" null="false"/>
+	<message-resources parameter="resources.EnumerationResources" key="ENUMERATION_RESOURCES" null="false"/>
     
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">

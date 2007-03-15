@@ -1144,7 +1144,10 @@ public class CollectionRenderer extends OutputRenderer {
                 try {
                     String value = customValue != null ? customValue : String.valueOf(PropertyUtils
                             .getProperty(object, slotName));
-                    link.setParameter(realName, value);
+                    
+                    if (value != null) {
+                        link.setParameter(realName, value);
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

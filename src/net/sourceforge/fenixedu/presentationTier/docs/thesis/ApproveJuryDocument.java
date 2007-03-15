@@ -52,7 +52,7 @@ public class ApproveJuryDocument extends FenixReport {
 
 	final Set<ThesisEvaluationParticipant> vowels = new TreeSet<ThesisEvaluationParticipant>(
 		ThesisEvaluationParticipant.COMPARATOR_BY_PERSON_NAME);
-	vowels.addAll(thesis.getVowelsSet());
+	vowels.addAll(thesis.getVowels());
 	int i = 0;
 	for (final ThesisEvaluationParticipant vowel : vowels) {
 	    final String vowelPrefix = "vowel" + ++i;

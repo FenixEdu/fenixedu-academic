@@ -6,7 +6,9 @@
 
 <html:xhtml/>
 
-<h2><bean:message key="title.coordinator.selectStudent"/></h2>
+<bean:define id="dcpId" name="degreeCurricularPlan" property="idInternal"/>
+
+<h2><bean:message key="title.coordinator.viewStudent"/></h2>
 
 <logic:messagesPresent message="true">
     <html:messages id="message" message="true">
@@ -14,19 +16,7 @@
     </html:messages>
 </logic:messagesPresent>
 
-<bean:define id="dcpId" name="degreeCurricularPlan" property="idInternal"/>
-
-<logic:present name="proposeStartProcess">
-    <bean:message key="label.coordinator.thesis.propose.shortcut"/>
-    
-    <fr:form action="<%= "/manageThesis.do?method=collectBasicInformation&amp;degreeCurricularPlanID=" + dcpId %>">
-        <fr:edit id="bean-invisible" name="bean" visible="false"/>
-        
-        <html:submit>
-            <bean:message key="button.coordinator.thesis.proposal.create"/>
-        </html:submit>
-    </fr:form>
-</logic:present>
+<strong><bean:message key="title.coordinator.viewStudent.subTitle"/></strong>
 
 <fr:form action="<%= "/manageThesis.do?method=selectStudent&amp;degreeCurricularPlanID=" + dcpId %>">
     <fr:edit id="student" name="bean" schema="thesis.bean.student">
@@ -37,6 +27,26 @@
     </fr:edit>
 
     <html:submit styleClass="mtop05">
-        <bean:message key="label.coordinator.searchStudent"/>
+        <bean:message key="button.submit"/>
     </html:submit>
 </fr:form>
+
+<logic:present name="proposeStartProcess">
+    <bean:message key="label.coordinator.thesis.propose.shortcut"/>
+    
+    <bean:define id="studentId" name="bean" property="student.idInternal"/>
+    <fr:form action="<%= String.format("/manageThesis.do?method=prepareCreateProposal&amp;degreeCurricularPlanID=%s&amp;studentID=%s", dcpId, studentId) %>">
+        <html:submit>
+            <bean:message key="button.coordinator.thesis.proposal.create"/>
+        </html:submit>
+    </fr:form>
+</logic:present>
+
+<logic:present name="hasThesis">
+    <bean:message key="label.coordinator.thesis.existing"/>
+
+    <bean:define id="thesisId" name="thesis" property="idInternal"/>
+    <html:link page="<%= String.format("/manageThesis.do?method=viewThesis&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
+        <bean:message key="label.coordinator.thesis.state.view"/>
+    </html:link>
+</logic:present>

@@ -111,16 +111,17 @@ public class NullAsLabelRenderer extends OutputRenderer {
 
             @Override
             public HtmlComponent createComponent(Object object, Class type) {
-                if (object == null) {
+                if (object == null || object.equals("")) {
                     if (isKey()) {
                         return new HtmlText(RenderUtils.getResourceString(getBundle(), getLabel()), false);
                     } else {
                         return new HtmlText(getLabel());
                     }
                 }
-
-                Schema schema = RenderKit.getInstance().findSchema(getSubSchema());
-                return renderValue(object, type, schema, getSubLayout());
+                else {
+                    Schema schema = RenderKit.getInstance().findSchema(getSubSchema());
+                    return renderValue(object, type, schema, getSubLayout());
+                }
             }
 
         };

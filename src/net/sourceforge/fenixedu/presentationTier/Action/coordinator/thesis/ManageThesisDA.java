@@ -1,14 +1,20 @@
 package net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.thesis.ChangeThesisPerson.PersonChange;
 import net.sourceforge.fenixedu.applicationTier.Servico.thesis.ChangeThesisPerson.PersonTarget;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.student.Student;
@@ -26,6 +32,7 @@ public class ManageThesisDA extends FenixDispatchAction {
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
         request.setAttribute("degreeCurricularPlan", getDegreeCurricularPlan(request));
         request.setAttribute("thesis", getThesis(request));
+        request.setAttribute("student", getStudent(request));
         
         return super.execute(mapping, actionForm, request, response);
     }
@@ -53,6 +60,23 @@ public class ManageThesisDA extends FenixDispatchAction {
             }
             else {
                 return RootDomainObject.getInstance().readThesisByOID(id);
+            }
+        }
+    }
+    
+    private Student getStudent(HttpServletRequest request) {
+        Student student = (Student) request.getAttribute("student");
+        
+        if (student != null) {
+            return student;
+        }
+        else {
+            Integer id = getId(request.getParameter("studentID"));
+            if (id == null) {
+                return null;
+            }
+            else {
+                return RootDomainObject.getInstance().readStudentByOID(id);
             }
         }
     }
@@ -132,17 +156,58 @@ public class ManageThesisDA extends FenixDispatchAction {
         }
     }
     
-    public ActionForward collectBasicInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        ThesisBean bean = (ThesisBean) getRenderedObject("bean-invisible");
-        RenderUtils.invalidateViewState("bean-invisible");
-
-        if (bean == null) {
-            bean = (ThesisBean) getRenderedObject("bean");
+    public ActionForward viewThesis(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        Thesis thesis = getThesis(request);
+        
+        if (thesis.isDraft()) {
+            return editProposal(mapping, actionForm, request, response);
         }
         
-        if (bean == null) {
-            return searchStudent(mapping, actionForm, request, response);
+        if (thesis.isSubmitted()) {
+            return viewSubmitted(mapping, actionForm, request, response);
         }
+        
+        if (thesis.isWaitingConfirmation()) {
+            return viewApproved(mapping, actionForm, request, response);
+        }
+        
+        if (thesis.isConfirmed()) {
+            return viewConfirmed(mapping, actionForm, request, response);
+        }
+        
+        return searchStudent(mapping, actionForm, request, response);
+    }
+    
+    public ActionForward listThesis(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
+
+        List<StudentThesisInfo> result = new ArrayList<StudentThesisInfo>();
+        for (CurricularCourse curricularCourse : degreeCurricularPlan.getDissertationCurricularCourses()) {
+            for (Enrolment enrolment : curricularCourse.getEnrolmentsByExecutionYear(ExecutionYear.readCurrentExecutionYear())) {
+                StudentCurricularPlan studentCurricularPlan = enrolment.getStudentCurricularPlan();
+                
+                if (studentCurricularPlan.getDegreeCurricularPlan() != degreeCurricularPlan) {
+                    continue;
+                }
+                
+                Student student = studentCurricularPlan.getRegistration().getStudent();
+                result.add(new StudentThesisInfo(student, enrolment));
+            }
+        }
+        
+        request.setAttribute("theses", result);
+        return mapping.findForward("list-thesis");
+    }
+    
+    public ActionForward prepareCreateProposal(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        Student student = getStudent(request);
+        
+        if (student == null) {
+            return searchStudent(mapping, actionForm, request, response);   
+        }
+        
+        ThesisBean bean = new ThesisBean();
+        bean.setStudent(student);
         
         request.setAttribute("bean", bean);
         return mapping.findForward("collect-basic-information");
@@ -162,6 +227,19 @@ public class ManageThesisDA extends FenixDispatchAction {
         request.setAttribute("thesis", thesis);
         
         return editProposal(mapping, actionForm, request, response);
+    }
+    
+    // Draft
+    
+    public ActionForward editProposal(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        Thesis thesis = getThesis(request);
+        
+        if (thesis == null) {
+            return listThesis(mapping, actionForm, request, response);
+        }
+
+        request.setAttribute("conditions", thesis.getConditions());
+        return mapping.findForward("edit-thesis");
     }
     
     public ActionForward changeInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -393,93 +471,12 @@ public class ManageThesisDA extends FenixDispatchAction {
         return editProposal(mapping, actionForm, request, response);
     }
     
-    public ActionForward listDraft(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
-        
-        request.setAttribute("degreeCurricularPlan", degreeCurricularPlan);
-        request.setAttribute("theses", Thesis.getDraftThesis(degreeCurricularPlan.getDegree()));
-        
-        return mapping.findForward("list-draft");
-    }
-    
-    public ActionForward listSubmitted(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
-        
-        request.setAttribute("theses", Thesis.getSubmittedThesis(degreeCurricularPlan.getDegree()));
-        return mapping.findForward("list-submitted");
-    }
-
-    public ActionForward listApproved(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
-        
-        request.setAttribute("theses", Thesis.getApprovedThesis(degreeCurricularPlan.getDegree()));
-        return mapping.findForward("list-approved");
-    }
-    
-    public ActionForward confirmDeleteProposal(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
-        Thesis thesis = getThesis(request);
-        
-        if (thesis == null) {
-            return listDraft(mapping, actionForm, request, response);
-        }
-
-        request.setAttribute("degreeCurricularPlan", degreeCurricularPlan);
-        request.setAttribute("thesis", thesis);
-        
-        return mapping.findForward("delete-confirm");
-    }
-
-    public ActionForward deleteProposal(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
-        Thesis thesis = getThesis(request);
-        
-        if (thesis == null) {
-            return listDraft(mapping, actionForm, request, response);
-        }
-
-        try {
-            executeService("DeleteThesis", degreeCurricularPlan.getIdInternal(), thesis);
-        } catch (DomainException e) {
-            addActionMessage("error", request, e.getKey(), e.getArgs());
-        }
-        
-        return listDraft(mapping, actionForm, request, response);
-    }
-    
-    public ActionForward editProposal(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        Thesis thesis = getThesis(request);
-        
-        if (thesis == null) {
-            return listDraft(mapping, actionForm, request, response);
-        }
-
-        request.setAttribute("generalConditions", thesis.getGeneralConditions());
-        request.setAttribute("orientationConditions", thesis.getOrientationConditions());
-        request.setAttribute("presidentConditions", thesis.getPresidentConditions());
-        request.setAttribute("vowelsConditions", thesis.getVowelsConditions());
-        
-        return mapping.findForward("edit-thesis");
-    }
-    
-    public ActionForward confirmSubmitProposal(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        Thesis thesis = getThesis(request);
-        
-        if (thesis == null) {
-            return listDraft(mapping, actionForm, request, response);
-        }
-        
-        request.setAttribute("thesis", thesis);
-        
-        return mapping.findForward("confirm-submission");
-    }
-    
     public ActionForward submitProposal(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
         DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
         Thesis thesis = getThesis(request);
         
         if (thesis == null) {
-            return listDraft(mapping, actionForm, request, response);
+            return listThesis(mapping, actionForm, request, response);
         }
 
         try {
@@ -488,25 +485,50 @@ public class ManageThesisDA extends FenixDispatchAction {
             addActionMessage("error", request, e.getKey(), e.getArgs());
         }
         
-        return listDraft(mapping, actionForm, request, response);
+        return listThesis(mapping, actionForm, request, response);
     }
 
-    public ActionForward viewProposal(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward confirmDeleteProposal(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        request.setAttribute("confirmDelete", true);
+        return editProposal(mapping, actionForm, request, response);
+    }
+
+    public ActionForward deleteProposal(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
         Thesis thesis = getThesis(request);
         
         if (thesis == null) {
-            return listDraft(mapping, actionForm, request, response);
+            return listThesis(mapping, actionForm, request, response);
         }
 
-        return mapping.findForward("view-thesis");
+        try {
+            executeService("DeleteThesis", degreeCurricularPlan.getIdInternal(), thesis);
+        } catch (DomainException e) {
+            addActionMessage("error", request, e.getKey(), e.getArgs());
+        }
+        
+        return listThesis(mapping, actionForm, request, response);
+    }
+    
+    // Submitted
+    
+    public ActionForward viewSubmitted(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        Thesis thesis = getThesis(request);
+        
+        if (thesis == null) {
+            return listThesis(mapping, actionForm, request, response);
+        }
+
+        return mapping.findForward("view-submitted");
     }
 
+    // TODO: remove
     public ActionForward approve(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
         DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
         Thesis thesis = getThesis(request);
         
         if (thesis == null) {
-            return listSubmitted(mapping, actionForm, request, response);
+            return listThesis(mapping, actionForm, request, response);
         }
         
         try {
@@ -515,41 +537,24 @@ public class ManageThesisDA extends FenixDispatchAction {
             addActionMessage("error", request, e.getKey(), e.getArgs());
         }
         
-        return listSubmitted(mapping, actionForm, request, response);
+        return listThesis(mapping, actionForm, request, response);
     }
     
-    public ActionForward confirmThesis(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        Thesis thesis = getThesis(request);
-        
-        if (thesis == null) {
-            return listApproved(mapping, actionForm, request, response);
-        }
-        
-        return mapping.findForward("confirm-thesis");
-    }
-
-    public ActionForward evaluateThesis(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        Thesis thesis = getThesis(request);
-        if (thesis == null) {
-            return listApproved(mapping, actionForm, request, response);
-        }
-        
-        return listApproved(mapping, actionForm, request, response);
+    // Approved
+    
+    public ActionForward viewApproved(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        return mapping.findForward("view-approved");
     }
     
-    public ActionForward listConfirmed(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
-        
-        request.setAttribute("theses", Thesis.getConfirmedThesis(degreeCurricularPlan.getDegree()));
-        return mapping.findForward("list-confirmed");
-    }
-
+    // Confirmed
+    
     public ActionForward viewConfirmed(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
         return mapping.findForward("view-confirmed");
     }
     
     public ActionForward confirmRevision(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        return mapping.findForward("confirm-revision");
+        request.setAttribute("confirmRevision", true);
+        return viewConfirmed(mapping, actionForm, request, response);
     }
 
     public ActionForward enterRevision(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -557,7 +562,7 @@ public class ManageThesisDA extends FenixDispatchAction {
         Thesis thesis = getThesis(request);
         
         if (thesis == null) {
-            return listConfirmed(mapping, actionForm, request, response);
+            return listThesis(mapping, actionForm, request, response);
         }
         
         try {
@@ -566,15 +571,10 @@ public class ManageThesisDA extends FenixDispatchAction {
             addActionMessage("error", request, e.getKey(), e.getArgs());
         }
         
-        return listConfirmed(mapping, actionForm, request, response);
+        return listThesis(mapping, actionForm, request, response);
     }
 
-    public ActionForward listEvaluated(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
-        
-        request.setAttribute("theses", Thesis.getEvaluatedThesis(degreeCurricularPlan.getDegree()));
-        return mapping.findForward("list-evaluated");
-    }
+    // Evaluated
     
     public ActionForward viewEvaluated(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
         return mapping.findForward("view-evaluated");

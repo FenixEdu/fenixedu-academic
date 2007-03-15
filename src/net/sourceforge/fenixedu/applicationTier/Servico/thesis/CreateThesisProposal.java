@@ -11,9 +11,8 @@ public class CreateThesisProposal extends Service {
 
     public Thesis run(Integer degreeCurricularPlanId, Student student, MultiLanguageString title, String comment) {
         DegreeCurricularPlan dcp = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanId);
-        Thesis thesis = new Thesis(dcp.getDegree(), student.getDissertationEnrolment(dcp));
-        
-        thesis.setTitle(title);
+        Thesis thesis = new Thesis(dcp.getDegree(), student.getDissertationEnrolment(dcp), title);
+
         thesis.setComment(comment);
         
         return thesis;

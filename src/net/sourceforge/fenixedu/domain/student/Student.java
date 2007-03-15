@@ -629,7 +629,6 @@ public class Student extends Student_Base {
             }
         }
         
-//      return null;
-        return (Enrolment) RootDomainObject.getInstance().readCurriculumModuleByOID(1207072);
+        return null;
     }
 }

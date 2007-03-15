@@ -51,13 +51,31 @@ public class Thesis extends Thesis_Base {
         setState(ThesisState.DRAFT);
     }
     
-    public Thesis(Degree degree, Enrolment enrolment) {
+    public Thesis(Degree degree, Enrolment enrolment, MultiLanguageString title) {
         this();
+        
+        if (degree == null) {
+            throw new FieldIsRequiredException("enrolment", "thesis.degree.required");
+        }
+
+        if (enrolment == null) {
+            throw new FieldIsRequiredException("enrolment", "thesis.enrolment.required");
+        }
         
         setDegree(degree);
         setEnrolment(enrolment);
+        setTitle(title);
     }
     
+    @Override
+    public void setTitle(MultiLanguageString title) {
+        if (title == null || title.isEmpty()) {
+            throw new FieldIsRequiredException("title", "thesis.title.required");
+        }
+        
+        super.setTitle(title);
+    }
+
     @Override
     @Checked("ThesisPredicates.waitingConfirmation")
     public void setThesisAbstract(MultiLanguageString thesisAbstract) {
@@ -70,23 +88,52 @@ public class Thesis extends Thesis_Base {
         super.setKeywords(keywords);
     }
 
+    public ThesisEvaluationParticipant getOrientator() {
+        return getParticipant(ThesisParticipationType.ORIENTATOR);
+    }
+    
+    public ThesisEvaluationParticipant getCoorientator() {
+        return getParticipant(ThesisParticipationType.COORIENTATOR);
+    }
+    
+    public ThesisEvaluationParticipant getPresident() {
+        return getParticipant(ThesisParticipationType.PRESIDENT);
+    }
+    
+    public List<ThesisEvaluationParticipant> getVowels() {
+        return getAllParticipants(ThesisParticipationType.VOWEL);
+    }
+    
+    public ThesisEvaluationParticipant getParticipant(ThesisParticipationType type) {
+        for (ThesisEvaluationParticipant participant : getParticipations()) {
+            if (participant.getType() == type) {
+                return participant;
+            }
+        }
+        
+        return null;
+    }
+    
+    public List<ThesisEvaluationParticipant> getAllParticipants(ThesisParticipationType type) {
+        List<ThesisEvaluationParticipant> result = new ArrayList<ThesisEvaluationParticipant>();
+        
+        for (ThesisEvaluationParticipant participant : getParticipations()) {
+            if (participant.getType() == type) {
+                result.add(participant);
+            }
+        }
+        
+        return result;
+    }
+    
     public void delete() {
         if (getState() != ThesisState.DRAFT) {
             throw new DomainException("thesis.delete.notDraft");
         }
         
         removeRootDomainObject();
-
-        if (hasOrientator()) {
-            getOrientator().delete();
-        }
-        if (hasCoorientator()) {
-            getCoorientator().delete();
-        }
-        if (hasPresident()) {
-            getPresident().delete();
-        }
-        for (; !getVowelsSet().isEmpty(); getVowelsSet().iterator().next().delete()); 
+        
+        for (; !getParticipations().isEmpty(); getParticipations().iterator().next().delete()); 
 
         removeDissertation();
         removeExtendedAbstract();
@@ -148,13 +195,11 @@ public class Thesis extends Thesis_Base {
 
     @Override
     public void setEnrolment(Enrolment enrolment) {
-        if (enrolment == null) {
-           throw new FieldIsRequiredException("enrolment", "thesis.enrolment.required");
-        }
-        
-        CurricularCourse curricularCourse = enrolment.getCurricularCourse();
-        if (! curricularCourse.isDissertation()) {
-            throw new DomainException("thesis.enrolment.notDissertationEnrolment");
+        if (enrolment != null) {
+            CurricularCourse curricularCourse = enrolment.getCurricularCourse();
+            if (! curricularCourse.isDissertation()) {
+                throw new DomainException("thesis.enrolment.notDissertationEnrolment");
+            }
         }
         
         super.setEnrolment(enrolment);
@@ -169,12 +214,16 @@ public class Thesis extends Thesis_Base {
             throw new DomainException("thesis.submit.notDraft");
         }
         
-        if (! getConditions().isEmpty()) {
+        if (! isValid()) {
             throw new DomainException("thesis.submit.hasConditions");
         }
         
         setSubmission(new DateTime());
         setState(ThesisState.SUBMITTED);
+    }
+
+    public boolean isValid() {
+        return getConditions().isEmpty();
     }
 
     public void reject() {
@@ -248,15 +297,37 @@ public class Thesis extends Thesis_Base {
         setState(ThesisState.CONFIRMED);
     }
     
+    public boolean isDraft() {
+        return getState() == ThesisState.DRAFT;
+    }
+
+    public boolean isSubmitted() {
+        return getState() == ThesisState.SUBMITTED;
+    }
+
+    public boolean isWaitingConfirmation() {
+        ThesisState state = getState();
+        
+        return state == ThesisState.APPROVED || state == ThesisState.REVISION;
+    }
+
     public boolean isConfirmed() {
         switch (getState()) {
         case CONFIRMED:
-        case REVISION:
         case EVALUATED:
             return true;
         default:
             return false;
         }
+    }
+
+    public boolean isEvaluated() {
+        return getState() == ThesisState.EVALUATED;
+    }
+
+    public boolean isRejected() {
+        // TODO: include REJECTED state of flag and rejectionComment
+        return isDraft() && getSubmission() != null;
     }
 
     @Override
@@ -278,6 +349,15 @@ public class Thesis extends Thesis_Base {
         return scale.isValid(mark, EvaluationType.FINAL_TYPE);
     }
 
+    private Person getParticipationPerson(ThesisEvaluationParticipant participant) {
+        if (participant == null) {
+            return null;
+        }
+        else {
+            return participant.getPerson();
+        }
+    }
+    
     public List<ThesisCondition> getConditions() {
         List<ThesisCondition> conditions = new ArrayList<ThesisCondition>();
         
@@ -292,13 +372,14 @@ public class Thesis extends Thesis_Base {
     public Collection<ThesisCondition> getGeneralConditions() {
         List<ThesisCondition> result = new ArrayList<ThesisCondition>();
         
-        Person orientator = getOrientator().getPerson();
-        Person coorientator = getCoorientator().getPerson();
-        Person president = getPresident().getPerson();
+        Person orientator = getParticipationPerson(getOrientator());
+        Person coorientator = getParticipationPerson(getCoorientator());
+        Person president = getParticipationPerson(getPresident());
+        List<ThesisEvaluationParticipant> vowels = getVowels();
 
         // check for duplicated persons
-        List<Person> persons = Arrays.asList(orientator, coorientator, president);
-        for (final ThesisEvaluationParticipant vowel : getVowelsSet()) {
+        List<Person> persons = new ArrayList<Person>(Arrays.asList(orientator, coorientator, president));
+        for (ThesisEvaluationParticipant vowel : vowels) {
             persons.add(vowel.getPerson());
         }
         
@@ -311,7 +392,7 @@ public class Thesis extends Thesis_Base {
         }
         
         if (orientator != null && coorientator == null && president != null) {
-            if (getVowels().isEmpty()) {
+            if (vowels.isEmpty()) {
                 result.add(new ThesisCondition("thesis.condition.people.number.few"));
             }
         }
@@ -324,8 +405,8 @@ public class Thesis extends Thesis_Base {
         
         boolean hasInternal = false;
         
-        Person orientator = getOrientator().getPerson();
-        Person coorientator = getCoorientator().getPerson();
+        Person orientator = getParticipationPerson(getOrientator());
+        Person coorientator = getParticipationPerson(getCoorientator());
         
         if (orientator == null) {
             conditions.add(new ThesisCondition("thesis.condition.orientator.required"));
@@ -350,7 +431,7 @@ public class Thesis extends Thesis_Base {
     public List<ThesisCondition> getPresidentConditions() {
         List<ThesisCondition> conditions = new ArrayList<ThesisCondition>();
         
-        Person president = getPresident().getPerson();
+        Person president = getParticipationPerson(getPresident());
         
         if (president == null) {
             conditions.add(new ThesisCondition("thesis.condition.president.required"));
@@ -382,15 +463,15 @@ public class Thesis extends Thesis_Base {
     public List<ThesisCondition> getVowelsConditions() {
         int count = 0;
         
-        if (hasOrientator()) {
+        if (getOrientator() != null) {
             count++;
         }
         
-        if (hasCoorientator()) {
+        if (getCoorientator() != null) {
             count++;
         }
 
-        if (hasPresident()) {
+        if (getPresident() != null) {
             count++;
         }
         
@@ -403,17 +484,12 @@ public class Thesis extends Thesis_Base {
             return Collections.emptyList();
         }
     }
-
-    public boolean isWaitingConfirmation() {
-        ThesisState state = getState();
-        
-        return state == ThesisState.APPROVED || state == ThesisState.REVISION;
-    }
-
+    
     public String getThesisAbstractPt() {
         return getThesisAbstractLanguage("pt");
     }
-    
+
+    @Checked("ThesisPredicates.waitingConfirmation")
     public void setThesisAbstractPt(String text) {
         setThesisAbstractLanguage("pt", text);
     }
@@ -422,6 +498,7 @@ public class Thesis extends Thesis_Base {
         return getThesisAbstractLanguage("en");
     }
     
+    @Checked("ThesisPredicates.waitingConfirmation")
     public void setThesisAbstractEn(String text) {
         setThesisAbstractLanguage("en", text);
     }
@@ -461,7 +538,8 @@ public class Thesis extends Thesis_Base {
     public String getKeywordsPt() {
         return getKeywordsLanguage("pt");
     }
-    
+
+    @Checked("ThesisPredicates.waitingConfirmation")
     public void setKeywordsPt(String text) {
         setKeywordsLanguage("pt", normalizeKeywords(text));
     }
@@ -470,6 +548,7 @@ public class Thesis extends Thesis_Base {
         return getKeywordsLanguage("en");
     }
     
+    @Checked("ThesisPredicates.waitingConfirmation")
     public void setKeywordsEn(String text) {
         setKeywordsLanguage("en", normalizeKeywords(text));
     }
@@ -529,45 +608,38 @@ public class Thesis extends Thesis_Base {
         }
     }
 
-    public void setOrientcator(final Person person) {
-        if (hasOrientator()) {
-            getOrientator().delete();
-        }
-        super.setOrientator(new ThesisEvaluationParticipant(person, this, null, null, null));
+    public void setOrientator(Person person) {
+        new ThesisEvaluationParticipant(this, person, ThesisParticipationType.ORIENTATOR);
     }
 
     public void setCoorientator(final Person person) {
-        if (hasCoorientator()) {
-            getCoorientator().delete();
-        }
-        super.setCoorientator(new ThesisEvaluationParticipant(person, null, this, null, null));
+        new ThesisEvaluationParticipant(this, person, ThesisParticipationType.COORIENTATOR);
     }
 
     public void setPresident(final Person person) {
-        if (hasPresident()) {
-            getPresident().delete();
+        new ThesisEvaluationParticipant(this, person, ThesisParticipationType.PRESIDENT);
+    }
+
+    public void addVowel(Person person) {
+        new ThesisEvaluationParticipant(this, person, ThesisParticipationType.VOWEL);
+    }
+
+    public void removeVowel(Person person) {
+        ThesisEvaluationParticipant participant = findVowel(person);
+        
+        if (participant != null) {
+            participant.delete();
         }
-        super.setPresident(new ThesisEvaluationParticipant(person, null, null, this, null));
     }
 
-    public void addVowel(final Person person) {
-        super.addVowels(new ThesisEvaluationParticipant(person, null, null, null, this));
-    }
-
-    public void removeVowel(final Person person) {
-	final ThesisEvaluationParticipant thesisEvaluationParticipant = findVowel(person);
-	if (thesisEvaluationParticipant != null) {	    
-	    super.addVowels(new ThesisEvaluationParticipant(person, null, null, null, this));
-	}
-    }
-
-    private ThesisEvaluationParticipant findVowel(final Person person) {
-	for (final ThesisEvaluationParticipant thesisEvaluationParticipant : getVowelsSet()) {
-	    if (thesisEvaluationParticipant.getPerson() == person) {
-		return thesisEvaluationParticipant;
-	    }
-	}
-	return null;
+    private ThesisEvaluationParticipant findVowel(Person person) {
+        for (ThesisEvaluationParticipant thesisEvaluationParticipant : getVowels()) {
+            if (thesisEvaluationParticipant.getPerson() == person) {
+                return thesisEvaluationParticipant;
+            }
+        }
+        
+        return null;
     }
 
 }

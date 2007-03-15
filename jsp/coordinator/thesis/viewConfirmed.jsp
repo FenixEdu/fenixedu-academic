@@ -9,37 +9,79 @@
 
 <html:xhtml/>
 
-<h2><bean:message key="title.coordinator.thesis.view"/></h2>
+<h2><bean:message key="title.coordinator.thesis.confirm"/></h2>
 
 <ul>
     <li>
-        <html:link page="<%= String.format("/manageThesis.do?method=listConfirmed&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
-            <bean:message key="label.back"/>
+        <html:link page="<%= String.format("/manageThesis.do?method=listThesis&amp;degreeCurricularPlanID=%s", dcpId) %>">
+            <bean:message key="title.coordinator.thesis.back"/>
+        </html:link>
+    </li>
+    <li>
+        <html:link page="<%= String.format("/manageThesis.do?method=confirmRevision&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
+            <bean:message key="title.coordinator.thesis.enterRevision"/>
         </html:link>
     </li>
 </ul>
 
-<fr:view name="thesis" schema="thesis.thesis.confirmed.details">
+<%-- Delete proposal --%>
+<logic:present name="confirmRevision">
+    <bean:message key="label.coordinator.thesis.revision.confirm"/>
+    
+    <fr:form action="<%= String.format("/manageThesis.do?method=enterRevision&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
+        <html:submit>
+            <bean:message key="button.coordinator.thesis.enterRevision"/>
+        </html:submit>
+    </fr:form>
+</logic:present>
+
+<%-- Dissertation --%>
+<h3><bean:message key="title.coordinator.thesis.confirm.details"/></h3>
+
+<fr:view name="thesis" schema="thesis.jury.proposal.information">
     <fr:layout name="tabular">
-        <fr:property name="classes" value="tstyle5 tdtop thlight thright"/>
-        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
     </fr:layout>
 </fr:view>
 
-<h3><bean:message key="title.coordinator.thesis.confirm.dissertation"/></h3>
+<h3><bean:message key="label.thesis.abstract"/></h3>
 
-<logic:empty name="thesis" property="dissertation">
-    <bean:message key="label.coordinator.thesis.confirm.noDissertation"/>
-</logic:empty>
-
-<logic:notEmpty name="thesis" property="dissertation">
-    <fr:view name="thesis" property="dissertation" schema="coordinator.thesis.file">
-        <fr:layout name="tabular">
-            <fr:property name="classes" value="tstyle5 tdtop thlight thright"/>
-            <fr:property name="columnClasses" value=",,tdclear tderror1"/>
+<p>
+    <fr:view name="thesis" property="thesisAbstract">
+        <fr:layout>
+            <fr:property name="language" value="pt"/>
+            <fr:property name="showLanguageForced" value="true"/>
         </fr:layout>
     </fr:view>
-</logic:notEmpty>
+</p>
+
+<p>
+    <fr:view name="thesis" property="thesisAbstract">
+        <fr:layout>
+            <fr:property name="language" value="en"/>
+            <fr:property name="showLanguageForced" value="true"/>
+        </fr:layout>
+    </fr:view>
+</p>
+
+<h3><bean:message key="label.thesis.keywords"/></h3>
+
+<p>
+    <fr:view name="thesis" property="keywords">
+        <fr:layout>
+            <fr:property name="language" value="pt"/>
+            <fr:property name="showLanguageForced" value="true"/>
+        </fr:layout>
+    </fr:view>
+</p>
+
+<p>
+    <fr:view name="thesis" property="keywords">
+        <fr:layout>
+            <fr:property name="language" value="en"/>
+            <fr:property name="showLanguageForced" value="true"/>
+        </fr:layout>
+    </fr:view>
+</p>
 
 <h3><bean:message key="title.coordinator.thesis.confirm.extendedAbstract"/></h3>
 
@@ -48,11 +90,169 @@
 </logic:empty>
 
 <logic:notEmpty name="thesis" property="extendedAbstract">
-    <fr:view name="thesis" property="extendedAbstract" schema="coordinator.thesis.file">
-        <fr:layout name="tabular">
-            <fr:property name="classes" value="tstyle5 tdtop thlight thright"/>
-            <fr:property name="columnClasses" value=",,tdclear tderror1"/>
-        </fr:layout>
-    </fr:view>
+    <fr:view name="thesis" property="extendedAbstract" layout="values" schema="coordinator.thesis.file"/>
+    (<fr:view name="thesis" property="extendedAbstract.size" layout="fileSize"/>)
+</logic:notEmpty>
+
+<h3><bean:message key="title.coordinator.thesis.confirm.dissertation"/></h3>
+
+<logic:empty name="thesis" property="dissertation">
+    <bean:message key="label.coordinator.thesis.confirm.noDissertation"/>
+</logic:empty>
+
+<logic:notEmpty name="thesis" property="dissertation">
+    <fr:view name="thesis" property="dissertation" layout="values" schema="coordinator.thesis.file"/>
+    (<fr:view name="thesis" property="dissertation.size" layout="fileSize"/>)
+</logic:notEmpty>
+
+<h3><bean:message key="title.coordinator.thesis.revision.gradeAndDate"/></h3>
+
+<logic:messagesPresent message="true">
+    <html:messages id="message" message="true">
+        <p><span class="error0"><bean:write name="message"/></span></p>
+    </html:messages>
+</logic:messagesPresent>
+
+<fr:view name="thesis" schema="coordinator.thesis.revision.view">
+    <fr:layout name="tabular">
+    </fr:layout>
+</fr:view>
+
+<%-- Jury --%>
+<h3><bean:message key="title.coordinator.thesis.edit.section.jury"/></h3>
+
+<%-- Orientator --%>
+<h4><bean:message key="title.coordinator.thesis.edit.section.orientation.orientator"/></h4>
+
+<logic:empty name="thesis" property="orientator">
+    <p>
+        <bean:message key="title.coordinator.thesis.edit.orientator.empty"/>
+    </p>
+</logic:empty>
+
+<logic:notEmpty name="thesis" property="orientator">
+    <logic:empty name="thesis" property="orientator.externalPerson">
+        <logic:empty name="thesis" property="orientator.teacher">
+            <fr:view name="thesis" property="orientator" layout="tabular" schema="thesis.jury.proposal.person">
+                <fr:layout name="tabular">
+                    <fr:property name="classes" value="tstyle5 thlight mtop05"/>
+                </fr:layout>
+            </fr:view>
+        </logic:empty>
+        <logic:notEmpty name="thesis" property="orientator.teacher">
+            <fr:view name="thesis" property="orientator" layout="tabular" schema="thesis.jury.proposal.person.teacher">
+                <fr:layout name="tabular">
+                    <fr:property name="classes" value="tstyle5 thlight mtop05"/>
+                </fr:layout>
+            </fr:view>
+        </logic:notEmpty>
+    </logic:empty>
+    <logic:notEmpty name="thesis" property="orientator.externalPerson">
+        <fr:view name="thesis" property="orientator" layout="tabular" schema="thesis.jury.proposal.person.external">
+            <fr:layout name="tabular">
+                <fr:property name="classes" value="tstyle5 thlight mtop05"/>
+            </fr:layout>
+        </fr:view>
+    </logic:notEmpty>
+</logic:notEmpty>
+
+<%-- Coorientator --%>
+<h4><bean:message key="title.coordinator.thesis.edit.section.orientation.coorientator"/></h4>
+
+<logic:empty name="thesis" property="coorientator">
+    <p>
+        <bean:message key="title.coordinator.thesis.edit.coorientator.empty"/>
+    </p>
+</logic:empty>
+
+<logic:notEmpty name="thesis" property="coorientator">
+    <logic:empty name="thesis" property="coorientator.externalPerson">
+        <logic:empty name="thesis" property="coorientator.teacher">
+            <fr:view name="thesis" property="coorientator" layout="tabular" schema="thesis.jury.proposal.person">
+                <fr:layout name="tabular">
+                    <fr:property name="classes" value="tstyle5 thlight mtop05"/>
+                </fr:layout>
+            </fr:view>
+        </logic:empty>
+        <logic:notEmpty name="thesis" property="coorientator.teacher">
+            <fr:view name="thesis" property="coorientator" layout="tabular" schema="thesis.jury.proposal.person.teacher">
+                <fr:layout name="tabular">
+                    <fr:property name="classes" value="tstyle5 thlight mtop05"/>
+                </fr:layout>
+            </fr:view>
+        </logic:notEmpty>
+    </logic:empty>
+    <logic:notEmpty name="thesis" property="coorientator.externalPerson">
+        <fr:view name="thesis" property="coorientator" layout="tabular" schema="thesis.jury.proposal.person.external">
+            <fr:layout name="tabular">
+                <fr:property name="classes" value="tstyle5 thlight mtop05"/>
+            </fr:layout>
+        </fr:view>
+    </logic:notEmpty>
+</logic:notEmpty>
+
+<%-- Jury/President --%>
+<h4><bean:message key="title.coordinator.thesis.edit.section.jury.president"/></h4>
+
+<logic:empty name="thesis" property="president">
+    <p>
+        <bean:message key="title.coordinator.thesis.edit.president.empty"/>
+    </p>
+</logic:empty>
+
+<logic:notEmpty name="thesis" property="president">
+    <logic:empty name="thesis" property="president.externalPerson">
+        <logic:empty name="thesis" property="president.teacher">
+            <fr:view name="thesis" property="president" layout="tabular" schema="thesis.jury.proposal.person">
+                <fr:layout name="tabular">
+                    <fr:property name="classes" value="tstyle5 thlight mtop05"/>
+                </fr:layout>
+            </fr:view>
+        </logic:empty>
+        <logic:notEmpty name="thesis" property="president.teacher">
+            <fr:view name="thesis" property="president" layout="tabular" schema="thesis.jury.proposal.person.teacher">
+                <fr:layout name="tabular">
+                    <fr:property name="classes" value="tstyle5 thlight mtop05"/>
+                </fr:layout>
+            </fr:view>
+        </logic:notEmpty>
+    </logic:empty>
+    <logic:notEmpty name="thesis" property="president.externalPerson">
+        <fr:view name="thesis" property="president" layout="tabular" schema="thesis.jury.proposal.person.external">
+            <fr:layout name="tabular">
+                <fr:property name="classes" value="tstyle5 thlight mtop05"/>
+            </fr:layout>
+        </fr:view>
+    </logic:notEmpty>
+</logic:notEmpty>
+
+<%-- Jury/"Vowels" --%>
+<h4><bean:message key="title.coordinator.thesis.edit.section.vowels"/></h4>
+
+<logic:empty name="thesis" property="vowels">
+    <p>
+        <bean:message key="title.coordinator.thesis.edit.vowels.empty"/>
+    </p>
+</logic:empty>
+
+<logic:notEmpty name="thesis" property="vowels">
+    <logic:iterate id="vowel" name="thesis" property="vowels">
+        <logic:empty name="vowel" property="externalPerson">
+            <logic:empty name="vowel" property="teacher">
+                <fr:view name="vowel" layout="tabular" schema="thesis.jury.proposal.person">
+                    <fr:layout name="tabular">
+                        <fr:property name="classes" value="tstyle5 thlight mtop05"/>
+                    </fr:layout>
+                </fr:view>
+            </logic:empty>
+            <logic:notEmpty name="vowel" property="teacher">
+                <fr:view name="vowel" layout="tabular" schema="thesis.jury.proposal.person.teacher">
+                    <fr:layout name="tabular">
+                        <fr:property name="classes" value="tstyle5 thlight mtop05"/>
+                    </fr:layout>
+                </fr:view>
+            </logic:notEmpty>
+        </logic:empty>
+    </logic:iterate>
 </logic:notEmpty>
 

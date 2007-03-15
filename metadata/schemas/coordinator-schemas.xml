@@ -3,25 +3,20 @@
           validator="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
 </schema>
 
-<schema name="thesis.jury.proposal.student" type="net.sourceforge.fenixedu.domain.student.Student">
-    <slot name="number" key="label.number"/>
+<schema name="thesis.jury.proposal.person" type="net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant">
     <slot name="person.name" key="label.person.name"/>
+    <slot name="category" key="label.teacher.category" layout="null-as-label">
+        <property name="label" value="-"/>
+        <property name="subLayout" value="values"/>
+        <property name="subSchema" value="thesis.jury.proposal.person.category"/>
+    </slot>
+    <slot name="afiliation" key="label.coordinator.thesis.edit.teacher.currentWorkingDepartment" layout="null-as-label">
+        <property name="label" value="-"/>
+    </slot>
 </schema>
 
-<schema name="thesis.jury.proposal.person" type="net.sourceforge.fenixedu.domain.Person">
-    <slot name="istUsername" key="label.person.istUsername"/>
-    <slot name="name" key="label.person.name"/>
-</schema>
-
-<schema name="thesis.jury.proposal.person.teacher" type="net.sourceforge.fenixedu.domain.Person">
-    <slot name="name" key="label.person.name"/>
-    <slot name="teacher.category.name" key="label.teacher.category"/>
-    <slot name="teacher.currentWorkingDepartment.realName" key="label.coordinator.thesis.edit.teacher.currentWorkingDepartment"/>
-</schema>
-
-<schema name="thesis.jury.proposal.person.external" type="net.sourceforge.fenixedu.domain.Person">
-    <slot name="name" key="label.person.name"/>
-    <slot name="externalPerson.institutionUnit.nameWithAcronym" key="label.coordinator.thesis.edit.teacher.currentWorkingDepartment"/>
+<schema name="thesis.jury.proposal.person.category" type="net.sourceforge.fenixedu.domain.teacher.Category">
+    <slot name="name"/>
 </schema>
 
 <schema name="thesis.bean.selectPerson.internal" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisBean">
@@ -76,101 +71,25 @@
 </schema>
 
 <schema name="thesis.jury.proposal.information" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
-    <slot name="title"/>
-    <slot name="comment"/>
+    <slot name="student" layout="format" key="student">
+        <property name="format" value="${person.name} (${number})"/>
+    </slot>
+    <slot name="title" key="label.coordinator.title"/>
+    <slot name="comment" layout="null-as-label">
+        <property name="label" value="-"/>
+    </slot>
 </schema>
 
 <schema name="thesis.jury.proposal.information.edit" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
-    <slot name="title" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+    <slot name="student" layout="format" read-only="true">
+        <property name="format" value="${person.name} (${number})"/>
+    </slot>
+    <slot name="title" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
         <property name="size" value="60"/>
     </slot>
     <slot name="comment" layout="longText">
         <property name="columns" value="60"/>
         <property name="rows" value="10"/>
-    </slot>
-</schema>
-
-<schema name="thesis.draft.table" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
-    <slot name="student" layout="format" key="student">
-        <property name="format" value="${person.name} (${number})"/>
-    </slot>
-    <slot name="title" layout="null-as-label" key="label.coordinator.title">
-        <property name="label" value="label.thesis.field.empty"/>
-        <property name="key" value="true"/>
-    </slot>
-    <slot name="creation" key="label.creation.date"/>
-</schema>
-
-<schema name="thesis.proposal.delete.details" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
-    <slot name="title"/>
-    <slot name="creation" key="label.creation.date"/>
-</schema>
-
-<schema name="thesis.proposal.confirm.details" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
-    <slot name="title"/>
-    <slot name="creation" key="label.creation.date"/>
-</schema>
-
-<schema name="thesis.submitted.table" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
-    <slot name="student" layout="format" key="student">
-        <property name="format" value="${person.name} (${number})"/>
-    </slot>
-    <slot name="title" layout="null-as-label" key="label.coordinator.title">
-        <property name="label" value="label.thesis.field.empty"/>
-        <property name="key" value="true"/>
-    </slot>
-    <slot name="submission" key="label.whenSubmited"/>
-</schema>
-
-<schema name="thesis.approved.table" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
-    <slot name="student" layout="format" key="student">
-        <property name="format" value="${person.name} (${number})"/>
-    </slot>
-    <slot name="title" layout="null-as-label" key="label.coordinator.title">
-        <property name="label" value="--"/>
-    </slot>
-    <slot name="approval" key="label.thesis.jury.approved.date"/>
-</schema>
-
-<schema name="thesis.confirmed.table" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
-    <slot name="student" layout="format" key="student">
-        <property name="format" value="${person.name} (${number})"/>
-    </slot>
-    <slot name="title" layout="null-as-label" key="label.coordinator.title">
-        <property name="label" value="--"/>
-    </slot>
-    <slot name="confirmation" key="label.thesis.confirmation.date"/>
-</schema>
-
-<schema name="thesis.thesis.confirm.details" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
-    <slot name="title"/>
-    <slot name="thesisAbstract" layout="null-as-label" key="label.thesis.abstract">
-        <property name="label" value="label.thesis.field.empty"/>
-        <property name="key" value="true"/>
-    </slot>
-    <slot name="keywords" layout="null-as-label" key="label.thesis.keywords">
-        <property name="label" value="label.thesis.field.empty"/>
-        <property name="key" value="true"/>
-    </slot>
-</schema>
-
-<schema name="thesis.thesis.confirmed.details" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
-    <slot name="title"/>
-    <slot name="thesisAbstract" layout="null-as-label" key="label.thesis.abstract">
-        <property name="label" value="label.thesis.field.empty"/>
-        <property name="key" value="true"/>
-    </slot>
-    <slot name="keywords" layout="null-as-label" key="label.thesis.keywords">
-        <property name="label" value="label.thesis.field.empty"/>
-        <property name="key" value="true"/>
-    </slot>
-    <slot name="mark" layout="null-as-label" key="label.thesis.evaluate.mark">
-        <property name="label" value="label.thesis.field.empty"/>
-        <property name="key" value="true"/>
-    </slot>
-    <slot name="discussed" layout="null-as-label" key="label.thesis.evaluate.discussion.date">
-        <property name="label" value="label.thesis.field.empty"/>
-        <property name="key" value="true"/>
     </slot>
 </schema>
 
@@ -198,12 +117,11 @@
 </schema>
 
 <schema name="coordinator.thesis.file" type="net.sourceforge.fenixedu.domain.thesis.ThesisFile">
+    <slot name="uploadTime" key="label.thesis.file.name.uploadTime"/>
     <slot name="displayName" layout="link" key="label.thesis.file.name">
         <property name="useParent" value="true"/>
         <property name="linkFormat" value="${downloadUrl}"/>
     </slot>
-    <slot name="size" layout="fileSize" key="label.thesis.file.size"/>
-    <slot name="uploadTime" key="label.thesis.file.name.uploadTime"/>
 </schema>
 
 <schema name="coordinator.thesis.evaluate" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
@@ -220,7 +138,33 @@
     <setter signature="confirm(mark, discussed)"/>
 </schema>
 
+<schema name="coordinator.thesis.revision.view" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
+    <slot name="mark" key="label.thesis.evaluate.mark"/>
+    <slot name="discussed" key="label.thesis.evaluate.discussion.date"/>
+</schema>
+
+<schema name="coordinator.thesis.state" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
+    <slot name="state" key="label.thesis.state"/>
+    <slot name="valid" key="label.thesis.valid">
+        <property name="trueLabel" value="label.coordinator.thesis.valid.true"/>
+        <property name="falseLabel" value="label.coordinator.thesis.valid.false"/>
+    </slot>
+</schema>
+
+<schema name="coordinator.thesis.state.submitted" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
+    <slot name="state" key="label.thesis.state"/>
+</schema>
+
 <schema name="coordinator.coordination.team.thesis" type="net.sourceforge.fenixedu.domain.Coordinator">
     <slot name="person.nickname" read-only="true" key="label.coordinator.name"/>
     <slot name="thesisCoordinator" key="label.coordinator.coordination.team.member"/>
+</schema>
+
+<schema name="coordinator.thesis.table" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.StudentThesisInfo">
+    <slot name="student.number" key="label.student.number.short"/>
+    <slot name="student.person.name" key="student"/>
+    <slot name="title" key="label.coordinator.title" layout="short">
+        <property name="length" value="60"/>
+    </slot>
+    <slot name="state" key="label.thesis.state"/>
 </schema>

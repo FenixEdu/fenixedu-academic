@@ -10,13 +10,6 @@
 
 <h2><bean:message key="title.coordinator.thesis.create"/></h2>
 
-<fr:view name="bean" property="student" layout="tabular" schema="thesis.jury.proposal.student">
-    <fr:layout name="tabular">
-        <fr:property name="classes" value="tstyle5 thlight mtop05"/>
-        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
-    </fr:layout>
-</fr:view>
-
 <div class="dinline forminline">
     <fr:form action="<%= "/manageThesis.do?method=createProposal&amp;degreeCurricularPlanID=" + dcpId %>">
         <fr:edit id="bean" name="bean" schema="thesis.jury.proposal.information.edit">
