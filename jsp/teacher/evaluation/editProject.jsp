@@ -9,13 +9,14 @@
 	
 		<h:form>
 			<h:inputHidden binding="#{projectManagementBackingBean.executionCourseIdHidden}" />
-	
-			<h:outputFormat value="<h2>#{bundle['link.edit.project']}</h2/><hr/>" escape="false"/>
+
+			<h:outputText value="<em>#{bundle['message.evaluationElements']}</em>" escape="false" />
+			<h:outputFormat value="<h2>#{bundle['link.edit.project']}</h2/>" escape="false"/>
 			<%-- ERROR MESSAGE --%>
 			<h:outputText styleClass="error" rendered="#{!empty projectManagementBackingBean.errorMessage}"
 				value="#{bundle[projectManagementBackingBean.errorMessage]}<br/>" escape="false" />
 			
-			<h:panelGrid columns="2" styleClass="infoop" columnClasses="aright,,"  rowClasses=",,,valigntop">
+			<h:panelGrid columns="2" styleClass="tstyle5" columnClasses="aright,,"  rowClasses=",,,valigntop">
 				<h:panelGroup>
 					<h:outputText value="* " style="color: red"/>
 					<h:outputText value="#{bundle['label.net.sourceforge.fenixedu.domain.Project.name']}: " />
@@ -51,32 +52,31 @@
 				<h:outputText value="#{bundle['label.net.sourceforge.fenixedu.domain.Project.description']}: " />
 				<h:inputTextarea rows="4" cols="40" value="#{projectManagementBackingBean.description}" />
 				
-				<h:outputText value="#{bundle['label.net.sourceforge.fenixedu.domain.Project.onlineSubmissionsAllowed']}" />
+				<h:outputText value="#{bundle['label.net.sourceforge.fenixedu.domain.Project.onlineSubmissionsAllowed']}:" />
 				<h:panelGroup>
 					<h:selectBooleanCheckbox id="onlineSubmissionsAllowed" required="true" value="#{projectManagementBackingBean.onlineSubmissionsAllowed}" />
 					<h:message for="onlineSubmissionsAllowed" styleClass="error"/>
 				</h:panelGroup>
 
-				<h:outputText value="#{bundle['label.net.sourceforge.fenixedu.domain.Project.maxSubmissionsToKeep']}" />				
+				<h:outputText value="#{bundle['label.net.sourceforge.fenixedu.domain.Project.maxSubmissionsToKeep']}:" />				
 				<h:panelGroup>
 					<h:inputText alt="#{htmlAltBundle['inputText.maxSubmissionsToKeep']}" id="maxSubmissionsToKeep" required="false" value="#{projectManagementBackingBean.maxSubmissionsToKeep}" maxlength="2" size="2"/>
 					<h:message for="maxSubmissionsToKeep" styleClass="error"/>
 				</h:panelGroup>
 				
-				<h:outputText value="#{bundle['label.net.sourceforge.fenixedu.domain.Project.grouping.name']}" />
+				<h:outputText value="#{bundle['label.net.sourceforge.fenixedu.domain.Project.grouping.name']}:" />
 				<h:panelGroup>
 					<h:selectOneMenu id="groupingID" value="#{projectManagementBackingBean.groupingID}">
 						<f:selectItems value="#{projectManagementBackingBean.executionCourseGroupings}"/>
 					</h:selectOneMenu>
 					<h:message for="groupingID" styleClass="error"/>
 				</h:panelGroup>			
-				
-				<h:panelGroup>
-					<h:outputText value="<br/><br/>* " style="color: red" escape="false"/>
-					<h:outputText value="#{bundle['label.neededFields']}"/>
-				</h:panelGroup>
 			</h:panelGrid>			
-			<h:outputText value="<br/>" escape="false" />			
+
+			<h:outputText value="* " style="color: red" escape="false"/>
+			<h:outputText value="#{bundle['label.neededFields']}"/>
+
+			<h:outputText value="<br/><br/>" escape="false" />			
 			<h:inputHidden id="projectID" value="#{projectManagementBackingBean.projectID}" />
 			<h:commandButton alt="#{htmlAltBundle['commandButton.submit']}"  action="#{projectManagementBackingBean.editProject}"
 				styleClass="inputbutton" value="#{bundle['button.submit']}" />

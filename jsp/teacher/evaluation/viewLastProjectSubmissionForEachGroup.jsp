@@ -9,22 +9,24 @@
 <html:messages id="message" message="true">
 	<span class="error"><!-- Error messages go here --> <bean:write name="message" /> </span>
 </html:messages>
-<h2><bean:message
-	key="label.teacher.executionCourseManagement.evaluation.project.viewLastProjectSubmissionForEachGroup.title" /></h2>
+
+<em><bean:message key="message.evaluationElements" /></em>
+<h2><bean:message key="label.teacher.executionCourseManagement.evaluation.project.viewLastProjectSubmissionForEachGroup.title" /></h2>
 
 <fr:view name="project" schema="evaluation.project.view-with-name-description-and-grouping">
 	<fr:layout name="tabular">
-        <fr:property name="classes" value="tstyle5 thlight thright"/>
+        <fr:property name="classes" value="tstyle2 thlight thright"/>
     </fr:layout>
 </fr:view>
 
-<br/>
 
 <bean:define id="executionCourseID" name="executionCourseID" />
 <logic:empty name="project" property="projectSubmissions">
-	<span class="error"><!-- Error messages go here -->
-		<bean:message key="label.teacher.executionCourseManagement.evaluation.project.viewLastProjectSubmissionForEachGroup.noProjectSubmissions"/>
-	</span>
+	<p>
+		<span class="warning0"><!-- Error messages go here -->
+			<bean:message key="label.teacher.executionCourseManagement.evaluation.project.viewLastProjectSubmissionForEachGroup.noProjectSubmissions"/>
+		</span>
+	</p>
 </logic:empty>
 <logic:notEmpty name="project" property="projectSubmissions">
 		<bean:define id="projectID" value="<%= request.getParameter("projectID") %>"/>
