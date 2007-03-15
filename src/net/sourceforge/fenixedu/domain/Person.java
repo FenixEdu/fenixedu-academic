@@ -606,13 +606,13 @@ public class Person extends Person_Base {
     }
 
     public List<ResearchResultPublication> getArticles(ResearchActivityLocationType locationType) {
-	return filterArticlesWithType(this.getResearchResultPublicationsByType(Article.class), locationType);
+	return ResearchResultPublication.sort(filterArticlesWithType(this.getResearchResultPublicationsByType(Article.class), locationType));
     }
 
     public List<ResearchResultPublication> getArticles(ResearchActivityLocationType locationType,
 	    ExecutionYear executionYear) {
-	return filterArticlesWithType(this.getResearchResultPublicationsByType(Article.class, executionYear),
-		locationType);
+	return ResearchResultPublication.sort(filterArticlesWithType(this.getResearchResultPublicationsByType(Article.class, executionYear),
+		locationType));
     }
 
     public List<ResearchResultPublication> getArticles() {
