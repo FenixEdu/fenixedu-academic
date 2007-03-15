@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
+import net.sourceforge.fenixedu.domain.person.PersonName;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -72,20 +73,20 @@ public class StudentsSearchBean implements Serializable {
 		students.add(registration.getStudent());
 	    }
 
-	    Student student = Student.readStudentByNumber(getNumber());
+	    final Student student = Student.readStudentByNumber(getNumber());
 	    if (student != null) {
 		students.add(student);
 	    }
 
 	} else if (!StringUtils.isEmpty(getIdentificationNumber()) && getDocumentType() != null) {
-	    Person person = Person.readByDocumentIdNumberAndIdDocumentType(getIdentificationNumber(),
-		    getDocumentType());
+	    final Person person = Person.readByDocumentIdNumberAndIdDocumentType(
+		    getIdentificationNumber(), getDocumentType());
 	    if (person != null && person.hasStudent()) {
 		students.add(person.getStudent());
 	    }
 	} else if (!StringUtils.isEmpty(getName())) {
-	    for (Person person : Person.searchPersons(getName().split(" "))) {
-		students.add(person.getStudent());
+	    for (final PersonName personName : PersonName.find(getName(), Integer.MAX_VALUE)) {
+		students.add(personName.getPerson().getStudent());
 	    }
 	} else if (!StringUtils.isEmpty(getUsername())) {
 	    Login login = Login.readLoginByUsername(getUsername());

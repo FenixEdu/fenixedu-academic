@@ -1756,22 +1756,19 @@ public class Person extends Person_Base {
 	return result;
     }
 
-    public static Person readByDocumentIdNumberAndIdDocumentType(final String documentIdNumber,
-	    final IDDocumentType idDocumentType) {
-	for (final Person person : Person.readAllPersons()) {
-	    if (person.getDocumentIdNumber().equalsIgnoreCase(documentIdNumber)
-		    && person.getIdDocumentType() == idDocumentType) {
-		return person;
+    public static Person readByDocumentIdNumberAndIdDocumentType(final String documentIdNumber, final IDDocumentType idDocumentType) {
+	for (final IdDocument idDocument : IdDocument.find(documentIdNumber)) {
+	    if (idDocument.getIdDocumentType().getValue() == idDocumentType) {
+		return idDocument.getPerson();
 	    }
 	}
 	return null;
     }
 
-    public static Person readByDocumentIdNumberAndDateOfBirth(final String documentIdNumber,
-	    final YearMonthDay dateOfBirth) {
-	for (final Person person : Person.readAllPersons()) {
-	    if (person.getDocumentIdNumber().equalsIgnoreCase(documentIdNumber)
-		    && person.getDateOfBirthYearMonthDay().equals(dateOfBirth)) {
+    public static Person readByDocumentIdNumberAndDateOfBirth(final String documentIdNumber, final YearMonthDay dateOfBirth) {
+	for (final IdDocument idDocument : IdDocument.find(documentIdNumber)) {
+	    final Person person = idDocument.getPerson();
+	    if (person.getDateOfBirthYearMonthDay().equals(dateOfBirth)) {
 		return person;
 	    }
 	}

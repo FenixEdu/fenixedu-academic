@@ -3087,6 +3087,12 @@ class net.sourceforge.fenixedu.domain.student.Registration extends net.sourcefor
 	Integer keyDegree;
 	Integer keyExternalRegistrationData;
 	RegistrationAgreement registrationAgreement;
+	Integer keyRegistrationNumber;
+}
+
+class net.sourceforge.fenixedu.domain.student.RegistrationNumber extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer keyRegistration;
+    Integer number;
 }
 
 class net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -12366,4 +12372,16 @@ relation RootDomainObjectFunctionalityPrinters {
 	net.sourceforge.fenixedu.domain.util.FunctionalityPrinters playsRole functionalityPrinters {
 		multiplicity *;
 	}
+}
+
+relation RootDomainObjectRegistrationNumbers {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.student.RegistrationNumber playsRole registrationNumbers {
+		multiplicity *;
+	}
+}
+
+relation RegistrationRegistrationNumber {
+	net.sourceforge.fenixedu.domain.student.Registration playsRole registration;
+	net.sourceforge.fenixedu.domain.student.RegistrationNumber playsRole registrationNumber;
 }

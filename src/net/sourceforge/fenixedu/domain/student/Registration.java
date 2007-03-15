@@ -154,6 +154,20 @@ public class Registration extends Registration_Base {
 	setRequestedChangeBranch(false);
     }
 
+    @Override
+    public void setNumber(Integer number) {
+	super.setNumber(number);
+	if (number == null && hasRegistrationNumber()) {
+	    getRegistrationNumber().delete();
+	} else if (number != null) {
+	    if (hasRegistrationNumber()) {
+		getRegistrationNumber().setNumber(number);
+	    } else {
+		new RegistrationNumber(this);
+	    }
+	}
+    }
+
     @Deprecated
     public void delete() {
 
@@ -161,6 +175,10 @@ public class Registration extends Registration_Base {
 
 	for (; !getStudentCurricularPlans().isEmpty(); getStudentCurricularPlans().get(0).delete())
 	    ;
+
+	if (hasRegistrationNumber()) {
+	    getRegistrationNumber().delete();
+	}
 
 	removeStudent();
 	removeRootDomainObject();
@@ -670,9 +688,9 @@ public class Registration extends Registration_Base {
 
     public static List<Registration> readByNumber(Integer number) {
 	final List<Registration> registrations = new ArrayList<Registration>();
-	for (Registration registration : RootDomainObject.getInstance().getRegistrationsSet()) {
-	    if (registration.getNumber().equals(number)) {
-		registrations.add(registration);
+	for (RegistrationNumber registrationNumber : RootDomainObject.getInstance().getRegistrationNumbersSet()) {
+	    if (registrationNumber.getNumber().equals(number)) {
+		registrations.add(registrationNumber.getRegistration());
 	    }
 	}
 	return registrations;

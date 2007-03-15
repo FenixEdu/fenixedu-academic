@@ -41,3 +41,5 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.student.registrationStates.CanceledState" table="REGISTRATION_STATE" />
 <class-descriptor class="net.sourceforge.fenixedu.domain.student.registrationStates.InternalAbandonState" table="REGISTRATION_STATE" />
 <class-descriptor class="net.sourceforge.fenixedu.domain.student.registrationStates.ExternalAbandonState" table="REGISTRATION_STATE" />
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.student.RegistrationNumber" table="REGISTRATION_NUMBER" />
