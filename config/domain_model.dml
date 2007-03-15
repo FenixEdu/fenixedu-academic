@@ -183,7 +183,7 @@ valueType net.sourceforge.fenixedu.domain.assiduousness.util.ScheduleClockingTyp
 valueType net.sourceforge.fenixedu.domain.util.EmailAddressList								                    as EmailAddressList;
 valueType net.sourceforge.fenixedu.domain.thesis.ThesisState								                        as ThesisState;
 valueType net.sourceforge.fenixedu.domain.CompetenceCourseType								                    as CompetenceCourseType;
-
+valueType net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType							                        as ThesisParticipationType;
 /*
 *
 * Class definitions
