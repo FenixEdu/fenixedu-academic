@@ -96,6 +96,7 @@
 
             </logic:iterate>
 </table>
+
 <div id="legend" style="margin-top: 2em;">
 	<p style="margin: 0; padding: 0;"><strong><bean:message key="label.projectTable.properties"/>:</strong></p>
 	<p style="margin: 0; padding: 0;"><em><bean:message key="label.student.viewExecutionCourseProjects.MaximumCapacity"/></em> - <bean:message key="label.projectTable.MaximumCapacity.title" /></p>
@@ -108,18 +109,19 @@
 <br />
 
 <div class="infoop">
-<ul>
-<li><strong><bean:message key="label.student.viewExecutionCourseProjects.atomicPolicy" />:</strong> <bean:message key="label.student.viewExecutionCourseProjects.atomicDescription" />.</li>
-<li><strong><bean:message key="label.student.viewExecutionCourseProjects.individualPolicy" />:</strong> <bean:message key="label.student.viewExecutionCourseProjects.individualDescription" />.</li>
-</ul>
+	<ul>
+		<li><strong><bean:message key="label.teacher.viewExecutionCourseProjects.atomicPolicy" />:</strong> <bean:message key="label.teacher.viewExecutionCourseProjects.atomicDescription" />.</li>
+		<li><strong><bean:message key="label.teacher.viewExecutionCourseProjects.individualPolicy" />:</strong> <bean:message key="label.teacher.viewExecutionCourseProjects.individualDescription" />.</li>
+	</ul>
 </div>
 
 
 </logic:notEmpty>
 </logic:present>
 
+
 <logic:notPresent name="infoGroupPropertiesList">
-<h2>
-<bean:message key="message.infoGroupPropertiesList.not.available" />
-</h2>
+<p>
+	<span class="warning0"><bean:message key="message.infoGroupPropertiesList.not.available" /></span>
+</p>
 </logic:notPresent>
