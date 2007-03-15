@@ -82,9 +82,10 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
                 "ReadEmployeeWorkSheet", args);
 
         if (yearMonth.getYear() == 2007 && yearMonth.getMonth().equals(Month.FEBRUARY)) {
-            verifyFebruaryDISPCD(employee.getAssiduousness(), employeeWorkSheet, request);
+            verifyFebruaryMultipleMonthBalanceJustification(employee.getAssiduousness(),
+                    employeeWorkSheet, request);
         } else if (yearMonth.getYear() == 2007 && yearMonth.getMonth().equals(Month.MARCH)) {
-            verifyMarchDISPCD(employee.getAssiduousness(), request);
+            verifyMarchMultipleMonthBalanceJustification(employee.getAssiduousness(), request);
         }
 
         request.setAttribute("employeeWorkSheet", employeeWorkSheet);
@@ -93,31 +94,34 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
         return mapping.findForward("show-employee-work-sheet");
     }
 
-    private void verifyMarchDISPCD(Assiduousness assiduousness, HttpServletRequest request) {
+    private void verifyMarchMultipleMonthBalanceJustification(Assiduousness assiduousness,
+            HttpServletRequest request) {
         if (assiduousness != null) {
-            AssiduousnessClosedMonth assiduousnessClosedMonth = assiduousness.getClosedMonth(2);
-            if (assiduousnessClosedMonth != null
-                    && assiduousnessClosedMonth.getBalance().isShorterThan(Duration.ZERO)) {
-                YearMonthDay beginDate = new YearMonthDay(2007, 2, 1);
-                int endDay = beginDate.dayOfMonth().getMaximumValue();
-                YearMonthDay endDate = new YearMonthDay(2007, 2, endDay);
-                if (!assiduousness.getLeavesByType(beginDate, endDate,
-                        JustificationType.MULTIPLE_MONTH_BALANCE).isEmpty()) {
+            AssiduousnessClosedMonth assiduousnessClosedMonthFeb = assiduousness.getClosedMonth(2);
+            if (!assiduousnessClosedMonthFeb.getBalanceToDiscount().isEqual(Duration.ZERO)) {
+                AssiduousnessClosedMonth assiduousnessClosedMonthJan = assiduousness.getClosedMonth(1);
+                Duration monthsBalance = assiduousnessClosedMonthFeb.getBalance();
+                monthsBalance = monthsBalance.plus(assiduousnessClosedMonthJan.getBalance());
+                if (monthsBalance.isShorterThan(Duration.ZERO)) {
                     request.setAttribute("hasToCompensateThisMonth", "hasToCompensateThisMonth");
                     return;
                 }
             }
         }
-
     }
 
-    private void verifyFebruaryDISPCD(Assiduousness assiduousness, EmployeeWorkSheet employeeWorkSheet,
-            HttpServletRequest request) {
-        if (assiduousness != null && employeeWorkSheet.getTotalBalance().isShorterThan(Duration.ZERO)) {
-            for (WorkDaySheet workDaySheet : employeeWorkSheet.getWorkDaySheetList()) {
-                if (workDaySheet.hasLeaveType(JustificationType.MULTIPLE_MONTH_BALANCE)) {
-                    request.setAttribute("hasToCompensateNextMonth", "hasToCompensateNextMonth");
-                    return;
+    private void verifyFebruaryMultipleMonthBalanceJustification(Assiduousness assiduousness,
+            EmployeeWorkSheet employeeWorkSheet, HttpServletRequest request) {
+        if (assiduousness != null) {
+            AssiduousnessClosedMonth assiduousnessClosedMonth = assiduousness.getClosedMonth(1);
+            Duration monthsBalance = assiduousnessClosedMonth.getBalance();
+            monthsBalance = monthsBalance.plus(employeeWorkSheet.getTotalBalance());
+            if (monthsBalance.isShorterThan(Duration.ZERO)) {
+                for (WorkDaySheet workDaySheet : employeeWorkSheet.getWorkDaySheetList()) {
+                    if (workDaySheet.hasLeaveType(JustificationType.MULTIPLE_MONTH_BALANCE)) {
+                        request.setAttribute("hasToCompensateNextMonth", "hasToCompensateNextMonth");
+                        return;
+                    }
                 }
             }
         }
