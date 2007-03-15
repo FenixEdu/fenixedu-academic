@@ -555,7 +555,7 @@ public abstract class Event extends Event_Base {
 
     public abstract LabelFormatter getDescriptionForEntryType(EntryType entryType);
 
-    protected abstract PostingRule getPostingRule();
+    abstract public PostingRule getPostingRule();
 
     public void delete() {
 	checkRulesToDelete();

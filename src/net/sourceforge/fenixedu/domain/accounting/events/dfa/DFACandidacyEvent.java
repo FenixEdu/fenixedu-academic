@@ -93,7 +93,7 @@ public class DFACandidacyEvent extends DFACandidacyEvent_Base {
     }
 
     @Override
-    protected PostingRule getPostingRule() {
+    public PostingRule getPostingRule() {
 	return getExecutionDegree().getDegreeCurricularPlan().getServiceAgreementTemplate()
 		.findPostingRuleByEventTypeAndDate(getEventType(), getWhenOccured());
     }

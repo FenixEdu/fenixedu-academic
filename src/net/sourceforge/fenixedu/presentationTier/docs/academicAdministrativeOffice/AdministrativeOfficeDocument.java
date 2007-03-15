@@ -6,9 +6,7 @@ import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accounting.PostingRule;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR;
-import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.AdministrativeOfficeServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -111,8 +109,7 @@ public class AdministrativeOfficeDocument extends FenixReport {
         
         if (getDocumentRequest().isCertificate()) {
             final CertificateRequest certificateRequest = (CertificateRequest) getDocumentRequest();
-            
-            final CertificateRequestPR certificateRequestPR = (CertificateRequestPR) getPostingRule();
+            final CertificateRequestPR certificateRequestPR = (CertificateRequestPR) certificateRequest.getEvent().getPostingRule();
             
             final Money amountPerPage = certificateRequestPR.getAmountPerPage();
             final Money baseAmountPlusAmountForUnits = certificateRequestPR.getBaseAmount().add(certificateRequestPR.getAmountPerUnit().multiply(new BigDecimal(certificateRequest.getNumberOfUnits())));
@@ -125,11 +122,6 @@ public class AdministrativeOfficeDocument extends FenixReport {
         
 	parameters.put("employeeLocation", AccessControl.getPerson().getEmployee().getCurrentCampus().getLocation());
 	parameters.put("day", new YearMonthDay().toString("dd 'de' MMMM 'de' yyyy", LanguageUtils.getLocale()));
-    }
-    
-    protected final PostingRule getPostingRule() {
-	final AdministrativeOfficeServiceAgreementTemplate serviceAgreementTemplate = getDocumentRequest().getAdministrativeOffice().getServiceAgreementTemplate();
-	return serviceAgreementTemplate.findPostingRuleByEventType(getDocumentRequest().getEventType());
     }
     
 }

@@ -65,7 +65,7 @@ public class DfaRegistrationEvent extends DfaRegistrationEvent_Base {
     }
 
     @Override
-    protected PostingRule getPostingRule() {
+    public PostingRule getPostingRule() {
 	return getServiceAgreementTemplate().findPostingRuleByEventTypeAndDate(getEventType(),
 		getWhenOccured());
     }

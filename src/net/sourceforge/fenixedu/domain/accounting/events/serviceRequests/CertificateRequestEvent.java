@@ -49,7 +49,7 @@ public class CertificateRequestEvent extends CertificateRequestEvent_Base {
     }
 
     @Override
-    protected PostingRule getPostingRule() {
+    public PostingRule getPostingRule() {
 	return getAdministrativeOffice().getServiceAgreementTemplate()
 		.findPostingRuleByEventTypeAndDate(getEventType(), getWhenOccured());
     }

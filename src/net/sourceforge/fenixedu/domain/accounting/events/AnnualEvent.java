@@ -45,7 +45,7 @@ public abstract class AnnualEvent extends AnnualEvent_Base {
     }
 
     @Override
-    protected PostingRule getPostingRule() {
+    public PostingRule getPostingRule() {
 	return getServiceAgreementTemplate().findPostingRuleBy(getEventType(), getStartDate(),
 		getEndDate());
     }
