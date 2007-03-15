@@ -302,7 +302,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 		null, null, null, null, null, Boolean.TRUE);
 	SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
 		
-	CollectionPager<Person> allPersons = (CollectionPager<Person>) ServiceUtils.executeService(null, "SearchPerson", new Object[] {searchParameters, predicate});
+	CollectionPager<Person> allPersons = (CollectionPager<Person>) ServiceUtils.executeService(getUserView(), "SearchPerson", new Object[] {searchParameters, predicate});
 
 	return allPersons.getCollection();
     }

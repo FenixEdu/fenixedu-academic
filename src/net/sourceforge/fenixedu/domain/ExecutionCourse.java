@@ -147,14 +147,26 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     public boolean isMasterDegreeOnly() {
+	return checkDegreeType(DegreeType.MASTER_DEGREE);
+    }
+    
+    public boolean isDFAOnly() {
+	return checkDegreeType(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA);
+    }
+    
+    public boolean isDEAOnly() {
+	return checkDegreeType(DegreeType.BOLONHA_SPECIALIZATION_DEGREE);
+    }
+
+    private boolean checkDegreeType(DegreeType degreeType) {
 	for (final CurricularCourse curricularCourse : getAssociatedCurricularCourses()) {
-	    if (curricularCourse.getDegreeCurricularPlan().getDegree().getTipoCurso() != DegreeType.MASTER_DEGREE) {
+	    if (!curricularCourse.getDegreeCurricularPlan().getDegree().getTipoCurso().equals(degreeType)) {
 		return false;
 	    }
 	}
 	return true;
     }
-
+    
     public void edit(String name, String acronym, double theoreticalHours,
 	    double theoreticalPraticalHours, double praticalHours, double laboratoryHours,
 	    double seminaryHours, double problemsHours, double fieldWorkHours,

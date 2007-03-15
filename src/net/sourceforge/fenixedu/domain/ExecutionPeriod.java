@@ -351,4 +351,11 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable 
 	return this == nextExecutionPeriod.getNextExecutionPeriod();
     }
 
+    public int getNumberOfProfessorships(CurricularCourse curricularCourse) {
+	int count = 0;		
+	for (ExecutionCourse executionCourse : curricularCourse.getExecutionCoursesByExecutionPeriod(this)) {
+	    count += executionCourse.getProfessorshipsCount();	    
+	}
+	return count;
+    }
 }

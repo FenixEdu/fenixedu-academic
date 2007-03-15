@@ -37,14 +37,12 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable {
     }
 
     public Collection<ExecutionDegree> getExecutionDegreesByType(final DegreeType degreeType) {
-
 	return CollectionUtils.select(getExecutionDegrees(), new Predicate() {
 	    public boolean evaluate(Object arg0) {
 		ExecutionDegree executionDegree = (ExecutionDegree) arg0;
 		return executionDegree.getDegreeCurricularPlan().getDegree().getTipoCurso() == degreeType;
 	    }
 	});
-
     }
 
     public ExecutionYear getPreviousExecutionYear() {

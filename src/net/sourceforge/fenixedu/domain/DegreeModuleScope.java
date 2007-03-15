@@ -4,10 +4,7 @@ import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.SortedSet;
 
-import net.sourceforge.fenixedu.dataTransferObject.CurricularPeriodInfoDTO;
-import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 
 import org.apache.commons.beanutils.BeanComparator;

@@ -184,5 +184,5 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
                 SupportLesson.SUPPORT_LESSON_COMPARATOR_BY_HOURS_AND_WEEK_DAY);
         supportLessons.addAll(getSupportLessonsSet());
         return supportLessons;
-    }       
+    }              
 }

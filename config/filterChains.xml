@@ -768,7 +768,7 @@
 	</filterChain>	
     <filterChain>
         <name>SearchPersonAuthorization</name>
-        <expression>ManagerAuthorization || OperatorAuthorization || PersonAuthorization</expression>
+        <expression>ManagerAuthorization || OperatorAuthorization || PersonAuthorization || ScientificCouncilAuthorization</expression>
         <description/>
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>

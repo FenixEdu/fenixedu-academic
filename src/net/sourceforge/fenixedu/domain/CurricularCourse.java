@@ -49,27 +49,19 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     public static final Comparator<CurricularCourse> CURRICULAR_COURSE_COMPARATOR_BY_DEGREE_AND_NAME = new ComparatorChain();
     static {
-	((ComparatorChain) CURRICULAR_COURSE_COMPARATOR_BY_DEGREE_AND_NAME)
-		.addComparator(new BeanComparator("degreeCurricularPlan.degree.tipoCurso.name", Collator
-			.getInstance()));
-	((ComparatorChain) CURRICULAR_COURSE_COMPARATOR_BY_DEGREE_AND_NAME)
-		.addComparator(new BeanComparator("degreeCurricularPlan.degree.nome", Collator
-			.getInstance()));
-	((ComparatorChain) CURRICULAR_COURSE_COMPARATOR_BY_DEGREE_AND_NAME)
-		.addComparator(new BeanComparator("name", Collator.getInstance()));
-	((ComparatorChain) CURRICULAR_COURSE_COMPARATOR_BY_DEGREE_AND_NAME)
-		.addComparator(new BeanComparator("idInternal"));
+	((ComparatorChain) CURRICULAR_COURSE_COMPARATOR_BY_DEGREE_AND_NAME).addComparator(new BeanComparator("degreeCurricularPlan.degree.tipoCurso.name", Collator.getInstance()));
+	((ComparatorChain) CURRICULAR_COURSE_COMPARATOR_BY_DEGREE_AND_NAME).addComparator(new BeanComparator("degreeCurricularPlan.degree.nome", Collator.getInstance()));
+	((ComparatorChain) CURRICULAR_COURSE_COMPARATOR_BY_DEGREE_AND_NAME).addComparator(new BeanComparator("name", Collator.getInstance()));
+	((ComparatorChain) CURRICULAR_COURSE_COMPARATOR_BY_DEGREE_AND_NAME).addComparator(new BeanComparator("idInternal"));
     }
 
     public static List<CurricularCourse> readCurricularCourses() {
 	List<CurricularCourse> result = new ArrayList<CurricularCourse>();
-
 	for (DegreeModule degreeModule : RootDomainObject.getInstance().getDegreeModules()) {
 	    if (degreeModule instanceof CurricularCourse) {
 		result.add((CurricularCourse) degreeModule);
 	    }
 	}
-
 	return result;
     }
 
@@ -85,8 +77,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 	setWeigth(d);
     }
 
-    protected CurricularCourse(String name, String code, String acronym, Boolean enrolmentAllowed,
-	    CurricularStage curricularStage) {
+    protected CurricularCourse(String name, String code, String acronym, Boolean enrolmentAllowed, CurricularStage curricularStage) {
 	this();
 	setName(name);
 	setCode(code);
@@ -122,10 +113,8 @@ public class CurricularCourse extends CurricularCourse_Base {
 	String tab = tabs + "\t";
 	dcp.append(tab);
 	dcp.append("[CC ").append(this.getIdInternal()).append("][");
-	dcp.append(previousContext.getCurricularPeriod().getOrderByType(CurricularPeriodType.YEAR))
-		.append("Y,");
-	dcp.append(previousContext.getCurricularPeriod().getOrderByType(CurricularPeriodType.SEMESTER))
-		.append("S] ");
+	dcp.append(previousContext.getCurricularPeriod().getOrderByType(CurricularPeriodType.YEAR)).append("Y,");
+	dcp.append(previousContext.getCurricularPeriod().getOrderByType(CurricularPeriodType.SEMESTER)).append("S] ");
 	dcp.append(this.getName()).append("\n");
     }
 
@@ -1070,6 +1059,11 @@ public class CurricularCourse extends CurricularCourse_Base {
 	return result;
     }
 
+    @Override
+    public Double getCredits() {	
+	return isBolonha() ? getEctsCredits() :super.getCredits();
+    }
+    
     @Override
     public Double getEctsCredits() {
 	return getEctsCredits((ExecutionPeriod) null);
