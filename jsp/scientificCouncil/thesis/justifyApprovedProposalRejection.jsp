@@ -19,7 +19,7 @@
 <h2><bean:message key="title.scientificCouncil.justify.proposal.rejection"/></h2>
 
 <div class="dinline forminline">
-    <fr:form action="<%= "/scientificCouncilManageThesis.do?method=rejectApprovedProposal&amp;thesis=" + thesisId %>">
+    <fr:form action="<%= "/scientificCouncilManageThesis.do?method=rejectApprovedProposal&amp;thesisId=" + thesisId %>">
         <fr:edit id="bean" name="bean" schema="thesis.rejection.comment.edit">
             <fr:layout name="tabular">
                 <fr:property name="classes" value="tstyle5 tdtop thlight thright"/>
@@ -32,7 +32,7 @@
         </html:submit>
     </fr:form>
     
-    <fr:form action="/manageThesis.do?method=listSubmitted">
+    <fr:form action="/scientificCouncilManageThesis.do?method=listApproved">
         <html:submit>
             <bean:message key="label.scientificCouncil.reject.proposal"/>
         </html:submit>

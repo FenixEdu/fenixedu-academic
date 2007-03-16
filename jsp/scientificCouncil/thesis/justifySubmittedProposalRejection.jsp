@@ -17,3 +17,24 @@
 </ul>
 
 <h2><bean:message key="title.scientificCouncil.justify.proposal.rejection"/></h2>
+
+<div class="dinline forminline">
+    <fr:form action="<%= "/scientificCouncilManageThesis.do?method=rejectSubmittedProposal&amp;thesisId=" + thesisId %>">
+        <fr:edit id="bean" name="bean" schema="thesis.rejection.comment.edit">
+            <fr:layout name="tabular">
+                <fr:property name="classes" value="tstyle5 tdtop thlight thright"/>
+                <fr:property name="columnClasses" value=",,tdclear tderror1"/>
+            </fr:layout>
+        </fr:edit>
+        
+        <html:submit>
+            <bean:message key="label.submit"/>
+        </html:submit>
+    </fr:form>
+    
+    <fr:form action="/scientificCouncilManageThesis.do?method=listSubmitted">
+        <html:submit>
+            <bean:message key="label.scientificCouncil.reject.proposal"/>
+        </html:submit>
+    </fr:form>
+</div>

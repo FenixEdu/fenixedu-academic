@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.thesis;
 
-import static net.sourceforge.fenixedu.domain.thesis.Thesis.getSubmittedThesis;
 import static net.sourceforge.fenixedu.domain.thesis.Thesis.getApprovedThesis;
+import static net.sourceforge.fenixedu.domain.thesis.Thesis.getSubmittedThesis;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisBean;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
@@ -94,6 +93,8 @@ public class ScientificCouncilManageThesisDA extends FenixDispatchAction {
 	    return mapping.findForward("list-submitted");
 	}
 	else {
+	    TextBean bean = new TextBean();
+	    request.setAttribute("bean", bean);
 	    request.setAttribute("thesis", thesis);
 	    return mapping.findForward("justify-submitted-proposal-rejection");
 	}
@@ -115,10 +116,16 @@ public class ScientificCouncilManageThesisDA extends FenixDispatchAction {
     }
     
     public ActionForward rejectSubmittedProposal(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-	Thesis thesis = getThesis(request);
+	TextBean bean = (TextBean) getRenderedObject("bean");
+	RenderUtils.invalidateViewState("bean");
 	
+	if (bean == null) {
+	    return justifySubmittedProposalRejection(mapping, actionForm, request, response);
+	}
+	
+	Thesis thesis = getThesis(request);
 	if (thesis != null) {
-	    executeService("rejectThesisProposal", thesis);
+	    executeService("RejectThesisProposal", thesis, bean.getText());
 	}
 	request.setAttribute("theses", getSubmittedThesis());
         return mapping.findForward("list-submitted");
@@ -134,10 +141,10 @@ public class ScientificCouncilManageThesisDA extends FenixDispatchAction {
 	
 	Thesis thesis = getThesis(request);	
 	if (thesis != null) {
-	    executeService("rejectThesisProposal", thesis, bean.getText());
+	    executeService("RejectThesisProposal", thesis, bean.getText());
 	}
 	
-	request.setAttribute("theses", getSubmittedThesis());
+	request.setAttribute("theses", getApprovedThesis());
         return mapping.findForward("list-approved");
     }
     

@@ -25,7 +25,7 @@
             <fr:property name="param(approve)" value="idInternal/thesisId"/>
             <fr:property name="order(approve)" value="1"/>
             
-            <fr:property name="link(reject)" value="/scientificCouncilManageThesis.do?method=rejectProposal"/>
+            <fr:property name="link(reject)" value="/scientificCouncilManageThesis.do?method=rejectSubmittedProposal"/>
     		<fr:property name="key(reject)" value="label.scientificCouncil.reject.proposal"/>
             <fr:property name="param(reject)" value="idInternal/thesisId"/>
             <fr:property name="order(reject)" value="2"/>
