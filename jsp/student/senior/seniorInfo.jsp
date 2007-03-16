@@ -7,6 +7,8 @@
 
 <logic:present role="STUDENT">
 	<h2><bean:message key="label.title.seniorInfo"/></h2>
+
+	<bean:define id="senior" name="senior" type="net.sourceforge.fenixedu.domain.student.Senior"/>
 	
 	<logic:notEmpty name="senior">
 			 	
@@ -52,7 +54,7 @@
 		</fr:view>			
 	
 		<p class="invisible">
-			<html:link page="/seniorInformation.do?method=prepareEdit&amp;page=0">
+			<html:link page="<%="/seniorInformation.do?method=prepare&amp;page=0&registrationOID=" + senior.getRegistration().getIdInternal().toString()%>">
 				<bean:message key="label.return" bundle="APPLICATION_RESOURCES"/>
 			</html:link>
 		</p>

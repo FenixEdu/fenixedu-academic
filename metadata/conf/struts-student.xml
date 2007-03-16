@@ -773,7 +773,7 @@
 			type="net.sourceforge.fenixedu.presentationTier.Action.student.SeniorInformationAction"
 			parameter="method"
 			scope="request"
-			input="/seniorInformation.do?method=prepareEdit&amp;page=0">
+			input="/seniorInformation.do?method=prepare&amp;page=0">
 			
 	        <forward name="chooseRegistration" path="senior-info-choose-registration" />
 			<forward name="show-form" path="senior-info-management"/>
