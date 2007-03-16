@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.studentCurriculum;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -8,8 +9,10 @@ import java.util.Set;
 import java.util.Map.Entry;
 
 import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.accounting.events.ImprovementOfApprovedEnrolmentEvent;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.ImprovementOfApprovedEnrolment;
 import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.EnrolmentResultType;
@@ -67,6 +70,8 @@ public class StudentCurricularPlanImprovementOfApprovedEnrolmentManager extends 
 
     @Override
     protected void performEnrolments(final Map<EnrolmentResultType, List<IDegreeModuleToEvaluate>> degreeModulesToEvaluate) {
+	Collection<EnrolmentEvaluation> created = new HashSet<EnrolmentEvaluation>();
+	
 	for (final Entry<EnrolmentResultType, List<IDegreeModuleToEvaluate>> entry : degreeModulesToEvaluate.entrySet()) {
 
 	    for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : entry.getValue()) {
@@ -75,12 +80,19 @@ public class StudentCurricularPlanImprovementOfApprovedEnrolmentManager extends 
 
 		    if (moduleEnroledWrapper.getCurriculumModule() instanceof Enrolment) {
 			final Enrolment enrolment = (Enrolment) moduleEnroledWrapper.getCurriculumModule();
-			enrolment.createEnrolmentEvaluationForImprovement(responsiblePerson.getEmployee(), enrolmentContext.getExecutionPeriod());
+			created.add(enrolment.createEnrolmentEvaluationForImprovement(responsiblePerson.getEmployee(), enrolmentContext.getExecutionPeriod()));
 		    } else {
 			throw new DomainException("StudentCurricularPlanImprovementOfApprovedEnrolmentManager.can.only.manage.enrolment.evaluations.of.enrolments");
 		    }
 		}
 	    }
+	}
+	
+	// TODO: enable once the ImprovementOfApprovedEnrolmentPR is finished 
+	if (false && !created.isEmpty()) {
+	    new ImprovementOfApprovedEnrolmentEvent(
+		    responsiblePerson.getEmployee().getAdministrativeOffice(), 
+		    studentCurricularPlan.getRegistration().getPerson(), created);
 	}
     }
 
