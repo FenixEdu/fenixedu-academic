@@ -24,7 +24,7 @@
 		<tr>
 			<td><bean:message key="label.choose.student"/>&nbsp;</td>
 			<td>
-				<input alt="input.studentNumber" type="text" name="studentNumber" size="5" maxlength="5"/>
+				<input alt="input.studentNumber" type="text" name="studentNumber" size="6" maxlength="6"/>
 			</td>
 		</tr>
 		<tr>
