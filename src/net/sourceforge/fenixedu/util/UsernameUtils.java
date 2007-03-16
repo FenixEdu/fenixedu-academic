@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Invitation;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -32,7 +31,7 @@ public class UsernameUtils extends FenixUtil {
 	if (loginIdentification != null) {
 	    return person.hasRole(RoleType.TEACHER) || person.hasRole(RoleType.EMPLOYEE)
 		    || person.hasRole(RoleType.STUDENT) || person.hasRole(RoleType.GRANT_OWNER)
-		    || person.hasAnyInvitation();
+		    || person.hasRole(RoleType.ALUMNI) || person.hasAnyInvitation();
 	}
 	return false;
     }
@@ -58,41 +57,47 @@ public class UsernameUtils extends FenixUtil {
 		istUsername = ist + sumNumber(person.getGrantOwner().getNumber(), 30000);
 
 	    } else if (mostImportantRole.getRoleType() == RoleType.STUDENT
-		    && person.getStudentByType(DegreeType.MASTER_DEGREE) != null) {
-		final Integer number = person.getStudentByType(DegreeType.MASTER_DEGREE).getNumber();
-		if (number < 10000) {// old master degree students
-		    istUsername = ist + sumNumber(number, 40000);
-		} else {// new master degree students
-		    istUsername = ist + sumNumber(number, 100000);
-		}
-
-	    } else if (mostImportantRole.getRoleType() == RoleType.STUDENT
-		    && person.getStudentByType(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA) != null) {
-		istUsername = ist
-			+ sumNumber(person.getStudentByType(
-				DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA).getNumber(), 100000);
-
-	    } else if (mostImportantRole.getRoleType() == RoleType.STUDENT) {
-		Registration registration = person.getStudentByType(DegreeType.DEGREE);
-		if (registration == null) {
-		    registration = person.getStudentByType(DegreeType.BOLONHA_DEGREE);
-		}
-		if (registration == null) {
-		    registration = person.getStudentByType(DegreeType.BOLONHA_MASTER_DEGREE);
-		}
-		if (registration == null) {
-		    registration = person.getStudentByType(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
-		}
-		if (registration != null) {
-		    if (registration.getRegistrationAgreement().isNormal()) {
-			istUsername = ist + sumNumber(person.getStudent().getNumber(), 60000);
-		    } else {
-			istUsername = ist + sumNumber(registration.getNumber(), 50000 - 100000);
-			// we subtract 100000 from the external/foreign student
-			// number to get his original legacy system number
+		    || mostImportantRole.getRoleType() == RoleType.ALUMNI) {
+		
+		if (person.getStudentByType(DegreeType.MASTER_DEGREE) != null) {
+		    final Integer number = person.getStudentByType(DegreeType.MASTER_DEGREE).getNumber();
+		    if (number < 10000) {// old master degree students
+			istUsername = ist + sumNumber(number, 40000);
+		    } else {// new master degree students
+			istUsername = ist + sumNumber(number, 100000);
 		    }
-		} else if (person.hasStudent() && person.getStudent().getNumber() < 10000) {
-		    istUsername = ist + sumNumber(person.getStudent().getNumber(), 60000);
+		} else if (person.getStudentByType(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA) != null) {
+		    istUsername = ist
+			    + sumNumber(person.getStudentByType(
+				    DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA).getNumber(), 100000);
+
+		} else {
+		    Registration registration = person.getStudentByType(DegreeType.DEGREE);
+		    if (registration == null) {
+			registration = person.getStudentByType(DegreeType.BOLONHA_DEGREE);
+		    }
+		    if (registration == null) {
+			registration = person.getStudentByType(DegreeType.BOLONHA_MASTER_DEGREE);
+		    }
+		    if (registration == null) {
+			registration = person
+				.getStudentByType(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
+		    }
+		    if (registration != null) {
+			if (registration.getRegistrationAgreement().isNormal()
+				|| person.getStudent().getNumber() > 10000) {
+			    istUsername = ist + sumNumber(person.getStudent().getNumber(), 100000);
+			} else if (!registration.getRegistrationAgreement().isNormal()) {
+			    istUsername = ist + sumNumber(registration.getNumber(), 50000 - 100000);
+			    // we subtract 100000 from the external/foreign
+			    // student
+			    // number to get his original legacy system
+			    // number
+			}
+		    } else if (person.hasStudent() && person.getStudent().getNumber() < 10000) {
+			// phd
+			istUsername = ist + sumNumber(person.getStudent().getNumber(), 60000);
+		    }
 		}
 	    } else if (person.hasAnyInvitation()) {
 		istUsername = ist + Invitation.nextUserIDForInvitedPerson();
@@ -139,67 +144,31 @@ public class UsernameUtils extends FenixUtil {
 		    return "I" + registration.getNumber(); // International
 		    // students
 		}
-
 	    }
 
 	    registration = person.getStudentByType(DegreeType.MASTER_DEGREE);
 	    if (registration != null) {
+		return buildMasterDegreeUsername(registration);
+	    }
 
-		if (registration.getRegistrationAgreement().isNormal()) {
-		    return "M" + registration.getNumber();
-		} else if (registration.getRegistrationAgreement().isMilitaryAgreement()) {
-		    return "A" + registration.getNumber(); // Academy
-		    // students
-		} else {
-		    return "I" + registration.getNumber(); // International
-		    // students
-		}
-
+	    registration = person.getStudentByType(DegreeType.BOLONHA_MASTER_DEGREE);
+	    if (registration != null) {
+		return buildMasterDegreeUsername(registration);
 	    }
 
 	    registration = person.getStudentByType(DegreeType.DEGREE);
 	    if (registration != null) {
-
-		if (registration.getRegistrationAgreement().isNormal()) {
-		    return "L" + registration.getNumber();
-		} else if (registration.getRegistrationAgreement().isMilitaryAgreement()) {
-		    return "A" + registration.getNumber(); // Academy
-		    // students
-		} else {
-		    return "I" + registration.getNumber(); // International
-		    // students
-		}
-
+		return buildDegreeUsername(registration);
 	    }
 
 	    registration = person.getStudentByType(DegreeType.BOLONHA_DEGREE);
 	    if (registration != null) {
-
-		if (registration.getRegistrationAgreement().isNormal()) {
-		    return "L" + registration.getNumber();
-		} else if (registration.getRegistrationAgreement().isMilitaryAgreement()) {
-		    return "A" + registration.getNumber(); // Academy
-		    // students
-		} else {
-		    return "I" + registration.getNumber(); // International
-		    // students
-		}
-
+		return buildDegreeUsername(registration);
 	    }
 
 	    registration = person.getStudentByType(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
 	    if (registration != null) {
-
-		if (registration.getRegistrationAgreement().isNormal()) {
-		    return "L" + registration.getNumber();
-		} else if (registration.getRegistrationAgreement().isMilitaryAgreement()) {
-		    return "A" + registration.getNumber(); // Academy
-		    // students
-		} else {
-		    return "I" + registration.getNumber(); // International
-		    // students
-		}
-
+		return buildDegreeUsername(registration);
 	    }
 
 	    if (person.hasStudent()) {// phd...
@@ -235,6 +204,30 @@ public class UsernameUtils extends FenixUtil {
 	}
 
 	return null;
+    }
+
+    private static String buildMasterDegreeUsername(Registration registration) {
+	if (registration.getRegistrationAgreement().isNormal()) {
+	    return "M" + registration.getNumber();
+	} else if (registration.getRegistrationAgreement().isMilitaryAgreement()) {
+	    return "A" + registration.getNumber(); // Academy
+	    // students
+	} else {
+	    return "I" + registration.getNumber(); // International
+	    // students
+	}
+    }
+
+    private static String buildDegreeUsername(Registration registration) {
+	if (registration.getRegistrationAgreement().isNormal()) {
+	    return "L" + registration.getNumber();
+	} else if (registration.getRegistrationAgreement().isMilitaryAgreement()) {
+	    return "A" + registration.getNumber(); // Academy
+	    // students
+	} else {
+	    return "I" + registration.getNumber(); // International
+	    // students
+	}
     }
 
     public static Role getMostImportantRole(Collection<Role> roles) {
