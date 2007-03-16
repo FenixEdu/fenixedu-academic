@@ -4,6 +4,7 @@
  */
 package net.sourceforge.fenixedu.domain.student;
 
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -55,6 +56,10 @@ public class Senior extends Senior_Base {
         return super.getStudent();
     }
     
+    public Person getPerson() {
+	return getRegistration().getPerson();
+    }
+    
     @Override
     public void setExpectedDegreeAverageGrade(Integer expectedDegreeAverageGrade) {
 	setLastModificationDateDateTime(new DateTime());
@@ -102,5 +107,5 @@ public class Senior extends Senior_Base {
 	setLastModificationDateDateTime(new DateTime());
 	super.setSpecialtyField(specialtyField);
     }
-    
+
 }
