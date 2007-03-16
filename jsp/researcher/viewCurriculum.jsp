@@ -15,24 +15,42 @@
 		<bean:define id="personId" name="person" property="idInternal"/>
 		
         <fr:form action="<%="/viewCurriculum.do?personOID=" + personId %>">
-		<table class="tstyle5">
+		<fr:edit id="executionYearIntervalBean" name="executionYearIntervalBean" visible="false"/>
+		
+		<p class="mbottom05"><strong><bean:message key="label.choosen.interval" bundle="RESEARCHER_RESOURCES"/>:</strong></p>
+		
+		<table class="tstyle5 mtop05">
 		<tr>
 		<td>
-		<bean:message key="label.common.chooseExecutionYear" bundle="DEPARTMENT_MEMBER_RESOURCES"/>: 
+			<bean:message key="label.start" bundle="RESEARCHER_RESOURCES"/>
+		</td>				
+		<td>		  
+		<fr:edit id="firstYear" name="executionYearIntervalBean" slot="firstExecutionYear">
+			<fr:layout name="menu-select">
+			<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider"/>
+			<fr:property name="format" value="${year}"/>
+			<fr:property name="defaultText" value="label.undefined"/>
+			<fr:property name="key" value="true"/>
+			<fr:property name="bundle" value="RESEARCHER_RESOURCES"/>
+		</fr:layout>
+		</fr:edit>
+		</td>						  
+		<td>
+			<bean:message key="label.end" bundle="RESEARCHER_RESOURCES"/>
 		</td>
 		<td>
-		<fr:edit id="executionYear" name="executionYearBean" slot="executionYear"> 
-			<fr:layout name="menu-select-postback">
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider"/>
-				<fr:property name="format" value="${year}"/>
-				<fr:property name="defaultText" value="label.all"/>
-				<fr:property name="key" value="true"/>
-				<fr:property name="bundle" value="RESEARCHER_RESOURCES"/>
-			</fr:layout>
-		</fr:edit>	
+		<fr:edit id="finalYear" name="executionYearIntervalBean" slot="finalExecutionYear">
+			<fr:layout name="menu-select">
+			<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider"/>
+			<fr:property name="format" value="${year}"/>
+			<fr:property name="defaultText" value="label.undefined"/>
+			<fr:property name="key" value="true"/>
+			<fr:property name="bundle" value="RESEARCHER_RESOURCES"/>
+		</fr:layout>
+		</fr:edit>
 		</td>
-		<td class="switchNone">
-			<html:submit><bean:message key="button.submit" bundle="RESEARCHER_RESOURCES"/></html:submit>
+		<td>
+			<html:submit><bean:message key="label.filter" bundle="RESEARCHER_RESOURCES"/></html:submit>
 		</td>
 		</tr>
 		</table>

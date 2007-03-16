@@ -93,7 +93,6 @@ public class ArticleBean extends ResultPublicationBean implements Serializable {
 	this.setIssn(article.getIssn());
 	this.setLanguage(article.getLanguage());
 	this.setScope(article.getScope());
-	this.setScientificJournal(article.getScientificJournal());
 	this.setJournalIssue(article.getJournalIssue());
     }
 

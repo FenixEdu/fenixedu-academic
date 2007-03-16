@@ -88,7 +88,6 @@
 		<fr:property name="columnClasses" value="width10em, width50em"/>
 		<fr:property name="rowClasses" value="tdbold,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,"/>
 	</fr:layout>
-		<fr:destination name="issueURL" path="/showJournals.do?method=showScientificJournal&amp;journalId=${idInternal}"/>
 	</fr:view>
 
 	

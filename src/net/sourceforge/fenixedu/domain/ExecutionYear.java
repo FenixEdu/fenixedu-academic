@@ -9,8 +9,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadAllExecutionYears;
 import net.sourceforge.fenixedu.domain.candidacy.degree.ShiftDistribution;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -243,7 +245,16 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable {
     public boolean belongsToCivilYear(int civilYear) {
 	return (getBeginDateYearMonthDay().getYear() == civilYear || getEndDateYearMonthDay().getYear() == civilYear);
     }
-
+    
+    public boolean belongsToCivilYearInterval(int beginCivilYear, int endCivilYear) {
+	for(int year=beginCivilYear ; year<=endCivilYear; year++) {
+	    if(this.belongsToCivilYear(year)) {
+		return true;
+	    }
+	}
+	return false;
+    }
+    
     public static List<ExecutionYear> readExecutionYearsByCivilYear(int civilYear) {
 
 	final List<ExecutionYear> result = new ArrayList<ExecutionYear>();
@@ -267,4 +278,22 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable {
 	return result;
     }
 
+    public static ExecutionYear readFirstExecutionYear() {
+	for(ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYears()) {
+	    if(executionYear.getPreviousExecutionYear()==null) {
+		return executionYear;
+	    }
+	}
+	return null;
+    }
+    
+    public static ExecutionYear readLastExecutionYear() { 
+	for(ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYears()) {
+	    if(executionYear.getNextExecutionYear()==null) {
+		return executionYear;
+	    }
+	}
+	return null;
+    }
+       
 }

@@ -8,7 +8,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ExecutionYearBean;
+import net.sourceforge.fenixedu.dataTransferObject.research.result.ExecutionYearIntervalBean;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -30,130 +33,157 @@ import org.apache.struts.action.ActionMapping;
 
 public class ViewCurriculumDispatchAction extends FenixAction {
 
-	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
-		String personId = request.getParameter("personOID");
+	String personId = request.getParameter("personOID");
 
-		final Person person = ((personId != null && personId.length() > 0) ? (Person) RootDomainObject
-				.readDomainObjectByOID(Person.class, Integer.valueOf(personId)) : getLoggedPerson(request));
+	final Person person = ((personId != null && personId.length() > 0) ? (Person) RootDomainObject
+		.readDomainObjectByOID(Person.class, Integer.valueOf(personId)) : getLoggedPerson(request));
 
-		request.setAttribute("person", person);
+	request.setAttribute("person", person);
 
-		ExecutionYear executionYear = retrieveExecutionYearFromRequest(request);
+	ExecutionYearIntervalBean bean = retrieveExecutionYearBeanFromRequest(request);
 
-		/*
-		 * List<Project> projects = new ArrayList<Project>();
-		 * for(ProjectParticipation participation :
-		 * person.getProjectParticipations()) {
-		 * if(!projects.contains(participation.getProject())) {
-		 * projects.add(participation.getProject()); } }
-		 * request.setAttribute("projects", projects);
-		 * 
-		 * List<Event> events = new ArrayList<Event>(); for(EventParticipation
-		 * participation : person.getEventParticipations()) { if
-		 * (!events.contains(participation.getEvent())) {
-		 * events.add(participation.getEvent()); } }
-		 * request.setAttribute("events", events);
-		 */
-
-		if (executionYear != null) {
-			putInformationOnRequestForGivenExecutionYear(executionYear, person, request);
-		} else {
-			putAllInformationOnRequest(person, request);
-		}
-
-		final List<ResearchInterest> researchInterests = person.getResearchInterests();
-		request.setAttribute("researchInterests", researchInterests);
-
-		return mapping.findForward("Success");
+	if (bean.getFirstExecutionYear() != null || bean.getFinalExecutionYear() != null) {
+	    putInformationOnRequestForGivenExecutionYear(bean.getFirstExecutionYear(), bean
+		    .getFinalExecutionYear(), person, request);
+	} else {
+	    putAllInformationOnRequest(person, request);
 	}
 
-	private ExecutionYear retrieveExecutionYearFromRequest(HttpServletRequest request) {
-		IViewState viewState = RenderUtils.getViewState("executionYear");
-		ExecutionYear executionYear = (viewState != null) ? (ExecutionYear) viewState.getMetaObject()
-				.getObject() : null;
-		request.setAttribute("executionYearBean", new ExecutionYearBean(executionYear));
-		return executionYear;
+	final List<ResearchInterest> researchInterests = person.getResearchInterests();
+	request.setAttribute("researchInterests", researchInterests);
+
+	return mapping.findForward("Success");
+    }
+
+    private ExecutionYearIntervalBean retrieveExecutionYearBeanFromRequest(HttpServletRequest request) {
+	IViewState viewState = RenderUtils.getViewState("executionYearIntervalBean");
+	ExecutionYearIntervalBean bean = (viewState != null) ? (ExecutionYearIntervalBean) viewState.getMetaObject()
+		.getObject() : new ExecutionYearIntervalBean();
+	request.setAttribute("executionYearIntervalBean", bean);
+	return bean;
+    }
+
+    private void putInformationOnRequestForGivenExecutionYear(ExecutionYear firstExecutionYear,
+	    ExecutionYear finaltExecutionYear, Person person, HttpServletRequest request) {
+
+	List<Advise> final_works = new ArrayList<Advise>();
+	List<MasterDegreeThesisDataVersion> guidances = new ArrayList<MasterDegreeThesisDataVersion>();
+	List<ExecutionCourse> lectures = new ArrayList<ExecutionCourse>();
+	List<PersonFunction> functions = new ArrayList<PersonFunction>();
+	List<ResearchResultPublication> books = new ArrayList<ResearchResultPublication>();
+	List<ResearchResultPublication> localArticles = new ArrayList<ResearchResultPublication>();
+	List<ResearchResultPublication> nationalArticles = new ArrayList<ResearchResultPublication>();
+	List<ResearchResultPublication> internationalArticles = new ArrayList<ResearchResultPublication>();
+	List<ResearchResultPublication> inproceedings = new ArrayList<ResearchResultPublication>();
+	List<ResearchResultPublication> proceedings = new ArrayList<ResearchResultPublication>();
+	List<ResearchResultPublication> thesis = new ArrayList<ResearchResultPublication>();
+	List<ResearchResultPublication> manuals = new ArrayList<ResearchResultPublication>();
+	List<ResearchResultPublication> technicalReports = new ArrayList<ResearchResultPublication>();
+	List<ResearchResultPublication> otherPublication = new ArrayList<ResearchResultPublication>();
+	List<ResearchResultPublication> unstructured = new ArrayList<ResearchResultPublication>();
+	List<ResearchResultPublication> bookParts = new ArrayList<ResearchResultPublication>();
+	List<ResearchResultPublication> resultPublications = new ArrayList<ResearchResultPublication>();
+
+	if (firstExecutionYear == null) {
+	    firstExecutionYear = ExecutionYear.readFirstExecutionYear();
+	}
+	if (finaltExecutionYear == null) {
+	    finaltExecutionYear = ExecutionYear.readLastExecutionYear();
 	}
 
-	private void putInformationOnRequestForGivenExecutionYear(ExecutionYear executionYear, Person person,
-			HttpServletRequest request) {
-		if (person.hasTeacher()) {
-			Teacher teacher = person.getTeacher();
+	ExecutionYear stoppageYear = finaltExecutionYear.getNextExecutionYear();
+	ExecutionYear iteratorYear = firstExecutionYear;
+	Teacher teacher = person.getTeacher();
 
-			List<Advise> final_works = new ArrayList<Advise>(teacher.getAdvisesByAdviseTypeAndExecutionYear(
-					AdviseType.FINAL_WORK_DEGREE, executionYear));
-			Collections.sort(final_works, new BeanComparator("student.number"));
+	while (iteratorYear != stoppageYear) {
 
-			request.setAttribute("final_works", final_works);
-			request.setAttribute("guidances", teacher
-					.getGuidedMasterDegreeThesisByExecutionYear(executionYear));
-			request.setAttribute("lectures", teacher
-					.getLecturedExecutionCoursesByExecutionYear(executionYear));
-		}
+	    if (teacher != null) {
+		final_works.addAll(teacher.getAdvisesByAdviseTypeAndExecutionYear(
+			AdviseType.FINAL_WORK_DEGREE, iteratorYear));
 
-		List<PersonFunction> functions = new ArrayList<PersonFunction>(person.getPersonFuntions(executionYear
-				.getBeginDateYearMonthDay(), executionYear.getEndDateYearMonthDay()));
-		Collections.sort(functions, new ReverseComparator(new BeanComparator("beginDateInDateType")));
-		request.setAttribute("functions", functions);
-		
-		 final List<ResearchResultPublication> resultPublications = person.getResearchResultPublicationsByExecutionYear(executionYear);
-         request.setAttribute("resultPublications", resultPublications);
-    
-        request.setAttribute("books", person.getBooks(executionYear));
-        request.setAttribute("local-articles",person.getArticles(ResearchActivityLocationType.LOCAL,executionYear));
-	request.setAttribute("national-articles",person.getArticles(ResearchActivityLocationType.NATIONAL,executionYear));
-	request.setAttribute("international-articles",person.getArticles(ResearchActivityLocationType.INTERNATIONAL,executionYear));	
-        //request.setAttribute("articles", person.getArticles(executionYear));
- 		request.setAttribute("inproceedings", person.getInproceedings(executionYear));
- 		request.setAttribute("proceedings", person.getProceedings(executionYear));
- 		request.setAttribute("theses", person.getTheses(executionYear));
- 		request.setAttribute("manuals", person.getManuals(executionYear));
- 		request.setAttribute("technicalReports", person.getTechnicalReports(executionYear));
- 		request.setAttribute("otherPublications", person.getOtherPublications(executionYear));
- 		request.setAttribute("unstructureds", person.getUnstructureds(executionYear));
- 		request.setAttribute("inbooks", person.getInbooks(executionYear));
- 		
-		request.setAttribute("resultPatents", person.getResearchResultPatentsByExecutionYear(executionYear));
+		guidances.addAll(teacher.getGuidedMasterDegreeThesisByExecutionYear(iteratorYear));
+		lectures.addAll(teacher.getLecturedExecutionCoursesByExecutionYear(iteratorYear));
+	    }
 
+	    functions.addAll(person.getPersonFuntions(iteratorYear.getBeginDateYearMonthDay(), iteratorYear
+		    .getEndDateYearMonthDay()));
+	    resultPublications.addAll(person.getResearchResultPublicationsByExecutionYear(iteratorYear));
+	    books.addAll(person.getBooks(iteratorYear));
+	    localArticles.addAll(person.getArticles(ResearchActivityLocationType.LOCAL, iteratorYear));
+	    nationalArticles.addAll(person.getArticles(ResearchActivityLocationType.NATIONAL, iteratorYear));
+	    internationalArticles.addAll(person.getArticles(ResearchActivityLocationType.INTERNATIONAL,
+		    iteratorYear));
+	    inproceedings.addAll(person.getInproceedings(iteratorYear));
+	    proceedings.addAll(person.getProceedings(iteratorYear));
+	    thesis.addAll(person.getTheses(iteratorYear));
+	    manuals.addAll(person.getManuals(iteratorYear));
+	    technicalReports.addAll(person.getTechnicalReports(iteratorYear));
+	    otherPublication.addAll(person.getOtherPublications(iteratorYear));
+	    unstructured.addAll(person.getUnstructureds(iteratorYear));
+	    bookParts.addAll(person.getInbooks(iteratorYear));
+
+	    iteratorYear = iteratorYear.getNextExecutionYear();
 	}
 
-	private void putAllInformationOnRequest(Person person, HttpServletRequest request) {
-		if (person.hasTeacher()) {
-			Teacher teacher = person.getTeacher();
+	Collections.sort(functions, new ReverseComparator(new BeanComparator("beginDateInDateType")));
+	request.setAttribute("functions", functions);
+	Collections.sort(final_works, new BeanComparator("student.number"));
+	request.setAttribute("final_works", final_works);
+	request.setAttribute("guidances", guidances);
+	request.setAttribute("lectures", lectures);
+	request.setAttribute("resultPublications", resultPublications);
+	request.setAttribute("books", books);
+	request.setAttribute("local-articles", localArticles);
+	request.setAttribute("national-articles", nationalArticles);
+	request.setAttribute("international-articles", internationalArticles);
+	request.setAttribute("inproceedings", inproceedings);
+	request.setAttribute("proceedings", proceedings);
+	request.setAttribute("theses", thesis);
+	request.setAttribute("manuals", manuals);
+	request.setAttribute("technicalReports", technicalReports);
+	request.setAttribute("otherPublications", otherPublication);
+	request.setAttribute("unstructureds", unstructured);
+	request.setAttribute("inbooks", bookParts);
 
-			List<Advise> final_works = new ArrayList<Advise>(teacher
-					.getAdvisesByAdviseType(AdviseType.FINAL_WORK_DEGREE));
-			Collections.sort(final_works, new ReverseComparator(new BeanComparator("startExecutionPeriod")));
+    }
 
-			request.setAttribute("final_works", final_works);
-			request.setAttribute("guidances", teacher.getAllGuidedMasterDegreeThesis());
-			request.setAttribute("lectures", teacher.getAllLecturedExecutionCourses());
-		}
+    private void putAllInformationOnRequest(Person person, HttpServletRequest request) {
+	if (person.hasTeacher()) {
+	    Teacher teacher = person.getTeacher();
 
-		List<PersonFunction> functions = new ArrayList<PersonFunction>(person.getPersonFunctions());
-		Collections.sort(functions, new ReverseComparator(new BeanComparator("beginDateInDateType")));
-		request.setAttribute("functions", functions);
-		final List<ResearchResultPublication> resultPublications = person.getResearchResultPublications();
-        request.setAttribute("resultPublications", resultPublications);
-        
-		request.setAttribute("books", person.getBooks());
-		request.setAttribute("local-articles",person.getArticles(ResearchActivityLocationType.LOCAL));
-		request.setAttribute("national-articles",person.getArticles(ResearchActivityLocationType.NATIONAL));
-		request.setAttribute("international-articles",person.getArticles(ResearchActivityLocationType.INTERNATIONAL));
-		//request.setAttribute("articles", person.getArticles());
-		request.setAttribute("inproceedings", person.getInproceedings());
-		request.setAttribute("proceedings", person.getProceedings());
-		request.setAttribute("theses", person.getTheses());
-		request.setAttribute("manuals", person.getManuals());
-		request.setAttribute("technicalReports", person.getTechnicalReports());
-		request.setAttribute("otherPublications", person.getOtherPublications());
-		request.setAttribute("unstructureds", person.getUnstructureds());
-		request.setAttribute("inbooks", person.getInbooks());
-	
-		request.setAttribute("resultPatents", person.getResearchResultPatents());
+	    List<Advise> final_works = new ArrayList<Advise>(teacher
+		    .getAdvisesByAdviseType(AdviseType.FINAL_WORK_DEGREE));
+	    Collections.sort(final_works, new ReverseComparator(new BeanComparator("startExecutionPeriod")));
+
+	    request.setAttribute("final_works", final_works);
+	    request.setAttribute("guidances", teacher.getAllGuidedMasterDegreeThesis());
+	    request.setAttribute("lectures", teacher.getAllLecturedExecutionCourses());
 	}
 
-	
+	List<PersonFunction> functions = new ArrayList<PersonFunction>(person.getPersonFunctions());
+	Collections.sort(functions, new ReverseComparator(new BeanComparator("beginDateInDateType")));
+	request.setAttribute("functions", functions);
+	final List<ResearchResultPublication> resultPublications = person.getResearchResultPublications();
+	request.setAttribute("resultPublications", resultPublications);
+
+	request.setAttribute("books", person.getBooks());
+	request.setAttribute("local-articles", person.getArticles(ResearchActivityLocationType.LOCAL));
+	request.setAttribute("national-articles", person.getArticles(ResearchActivityLocationType.NATIONAL));
+	request.setAttribute("international-articles", person
+		.getArticles(ResearchActivityLocationType.INTERNATIONAL));
+	request.setAttribute("inproceedings", person.getInproceedings());
+	request.setAttribute("proceedings", person.getProceedings());
+	request.setAttribute("theses", person.getTheses());
+	request.setAttribute("manuals", person.getManuals());
+	request.setAttribute("technicalReports", person.getTechnicalReports());
+	request.setAttribute("otherPublications", person.getOtherPublications());
+	request.setAttribute("unstructureds", person.getUnstructureds());
+	request.setAttribute("inbooks", person.getInbooks());
+
+	request.setAttribute("resultPatents", person.getResearchResultPatents());
+    }
+
 }

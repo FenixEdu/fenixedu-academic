@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.renderers.DataProvider;
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 
@@ -16,14 +15,8 @@ public class YearsPartialProvider implements DataProvider {
     public Object provide(Object source, Object currentValue) {        
         	
 	List<Partial> result = new ArrayList<Partial>();
-	ExecutionYear firstExecutionYear = null;
-	
-	for (ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYears()) {
-	    if(executionYear.getPreviousExecutionYear() == null) {
-		firstExecutionYear = executionYear;
-	    }
-	}
-			
+	ExecutionYear firstExecutionYear = ExecutionYear.readFirstExecutionYear();
+				
 	if(firstExecutionYear != null) {
 	    ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();	    
 	    int firstYear = firstExecutionYear.getBeginDateYearMonthDay().getYear();
