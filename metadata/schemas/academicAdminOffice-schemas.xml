@@ -633,15 +633,29 @@
 	<slot name="curricularCourse.name" key="label.name" />
 </schema>
 
-<schema name="Unit.name" bundle="ACADEMIC_OFFICE_RESOURCES" type="net.sourceforge.fenixedu.domain.organizationalStructure.Unit" >
-	<slot name="name" key="label.name" />
+<schema name="Unit.name.tree.view" bundle="ACADEMIC_OFFICE_RESOURCES" type="net.sourceforge.fenixedu.domain.organizationalStructure.Unit" >
+	<slot name="name" key="label.name" layout="link">
+		<property name="useParent" value="true"/>
+        <property name="destination" value="choose.ExternalCurricularCourses"/>
+	</slot>
 </schema>
 
-<schema name="ExternalCurricularCourse.tree.view" bundle="ACADEMIC_OFFICE_RESOURCES"
-		type="net.sourceforge.fenixedu.domain.ExternalCurricularCourse" >
-	<slot name="name" layout="link">
-        <property name="useParent" value="true"/>
-        <property name="destination" value="externalCurricularCourse.choose"/>
+<schema name="ExternalCurricularCourseResultBean.view-fullName" bundle="ACADEMIC_OFFICE_RESOURCES" 
+		type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.externalUnits.ExternalCurricularCourseResultBean" >
+	<slot name="fullName" key="label.name"/>
+</schema>
+
+<schema name="ExternalCurricularCourseEnrolmentBean.edit" bundle="ACADEMIC_OFFICE_RESOURCES" 
+		type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.ExternalCurricularCourseEnrolmentBean" >
+
+	<slot name="externalCurricularCourseResultBean.fullName" key="label.name" read-only="true"/>
+	<slot name="executionPeriod" layout="menu-select" key="label.executionPeriod">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionPeriodsReverseOrderProvider" />
+		<property name="format" value="${semester} º semestre - ${executionYear.year}" />
+	</slot>
+	<slot name="grade" key="label.grade" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="8" />
+		<property name="maxLength" value="8" />
 	</slot>
 </schema>
 
@@ -797,6 +811,17 @@
 	<slot name="creationDateDateTime" key="label.enrolment.date" layout="no-time" read-only="true"/>
 	<slot name="student.number" key="label.number" read-only="true"/>
 	<slot name="student.person.name" key="label.name" read-only="true"/>
+	<slot name="grade" key="label.grade" read-only="true"/>
+	<slot name="executionPeriod" key="label.executionPeriod" layout="format" read-only="true">
+		<property name="format" value="${semester}º semestre - ${executionYear.year}" />
+	</slot>
+</schema>
+
+<schema name="ExternalEnrolment.view-externalCurricularCours" bundle="ACADEMIC_OFFICE_RESOURCES" 
+		type="net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment" >
+		
+	<slot name="creationDateDateTime" key="label.enrolment.date" layout="no-time" read-only="true"/>
+	<slot name="externalCurricularCourse.fullPathName" key="label.externalUnits.externalCurricularCourse" read-only="true"/>
 	<slot name="grade" key="label.grade" read-only="true"/>
 	<slot name="executionPeriod" key="label.executionPeriod" layout="format" read-only="true">
 		<property name="format" value="${semester}º semestre - ${executionYear.year}" />

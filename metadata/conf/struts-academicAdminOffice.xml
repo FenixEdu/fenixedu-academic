@@ -129,6 +129,15 @@
 		<form-property name="method" type="java.lang.String" />
 		<form-property name="withRules" type="java.lang.Boolean" />
     </form-bean>
+    
+     <!-- Bean for Student Dismissal -->
+      <form-bean name="studentExternalEnrolmentsForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+	     <form-property name="method" type="java.lang.String" />
+	     <form-property name="studentId" type="java.lang.String" />
+	     <form-property name="externalUnitId" type="java.lang.String" />
+         <form-property name="selectedExternalCurricularCourses" type="java.lang.String[]" />
+         <form-property name="externalEnrolmentsToDelete" type="java.lang.String[]" />
+      </form-bean>
 		
     </form-beans>
 
@@ -265,10 +274,11 @@
 				scope="request"		
 		        parameter="method"
 			    type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.studentEnrolment.StudentEnrolmentsDA">
+			    
 			<forward name="prepareChooseExecutionPeriod" path="student.enrolment.prepareChooseExecutionPeriod"/>
 			<forward name="viewCurriculum" path="/viewCurriculum.do?method=prepare"/>
 			<forward name="visualizeRegistration" path="/student.do?method=visualizeRegistration"/>
-		</action>        
+		</action>
 				
 		<action path="/studentExtraEnrolments"
 				scope="request"		
@@ -277,7 +287,20 @@
 			<forward name="showExtraEnrolments" path="student.enrolment.showExtraEnrolments"/>
 			<forward name="chooseExtraEnrolment" path="student.enrolment.chooseExtraEnrolment"/>
 			<forward name="showDegreeModulesToEnrol" path="/studentEnrolments.do?method=prepareFromExtraEnrolment"/>						
-		</action>        
+		</action>
+		
+		<action path="/studentExternalEnrolments"
+				name="studentExternalEnrolmentsForm"
+				scope="request"		
+		        parameter="method"
+			    type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.studentEnrolment.StudentExternalEnrolmentsDA">
+			    
+			<forward name="manageExternalEnrolments" path="student.externalEnrolment.manageExternalEnrolments"/>
+			<forward name="chooseExternalUnit" path="student.externalEnrolment.chooseExternalUnit"/>
+			<forward name="chooseExternalCurricularCourses" path="student.externalEnrolment.chooseExternalCurricularCourses"/>
+			<forward name="createExternalEnrolments" path="student.externalEnrolment.createExternalEnrolments"/>
+			<forward name="viewStudentDetails" path="students.viewStudentDetails"/>
+		</action>         
 		
 		<!-- Academic Service Requests Management -->
 		<action path="/academicServiceRequestsManagement"

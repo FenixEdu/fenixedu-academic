@@ -5929,10 +5929,10 @@ relation ExternalEnrolmentExecutionPeriod {
 }
 
 relation StudentExternalEnrolment {
+	net.sourceforge.fenixedu.domain.student.Student playsRole student;	
 	net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment playsRole externalEnrolments {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.student.Student playsRole student;	
 }
 
 relation StudentCurricularPlanCredits {

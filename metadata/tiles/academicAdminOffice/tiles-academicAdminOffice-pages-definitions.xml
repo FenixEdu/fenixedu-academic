@@ -51,7 +51,20 @@
     </definition>
     <definition name="student.enrolment.chooseExtraEnrolment" extends="academicAdminOffice.masterPage">
         <put name="body" value="/academicAdminOffice/chooseExtraEnrolment.jsp"></put>
-    </definition>    
+    </definition>
+    <definition name="student.externalEnrolment.manageExternalEnrolments" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/student/enrollment/bolonha/manageExternalEnrolments.jsp"/>
+    </definition>
+    <definition name="student.externalEnrolment.chooseExternalUnit" extends="academicAdminOffice.masterPage">
+		<put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
+		<put name="body" value="/academicAdminOffice/student/enrollment/bolonha/chooseExternalUnit.jsp"/>
+    </definition>
+    <definition name="student.externalEnrolment.chooseExternalCurricularCourses" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/student/enrollment/bolonha/chooseExternalCurricularCourses.jsp"/>
+    </definition>
+    <definition name="student.externalEnrolment.createExternalEnrolments" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/student/enrollment/bolonha/createExternalEnrolments.jsp"/>
+    </definition>
     <definition name="student.showManageEnrolmentModel" extends="academicAdminOffice.masterPage">
         <put name="body" value="/academicAdminOffice/manageEnrolmentModel.jsp"></put>
     </definition>      
@@ -286,10 +299,6 @@
 	</definition>
 	<definition name="studentDismissal.confirmCreateDismissals" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/dismissal/confirmCreateDismissals.jsp"/>
-	</definition>
-	<definition name="studentDismissal.chooseExternalCurricularCourse" extends="academicAdminOffice.masterPage">
-		<put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
-		<put name="body" value="/academicAdminOffice/dismissal/chooseExternalCurricularCourse.jsp"/>
 	</definition>
 	<definition name="studentDismissal.prepareCreateExternalEnrolment" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/dismissal/createExternalEnrolment.jsp"/>

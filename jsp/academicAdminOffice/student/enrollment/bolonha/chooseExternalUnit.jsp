@@ -5,7 +5,6 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
-<h2><bean:message key="label.externalUnits.createExternalEnrolment" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
 <html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<p>
@@ -16,7 +15,7 @@
 <p class="mvert2">
 <span style="background-color: #ecf3e1; border-bottom: 1px solid #ccdeb2; padding: 0.4em 0.6em;">
 	<bean:message key="label.student" bundle="ACADEMIC_OFFICE_RESOURCES"/>: 
-	<fr:view name="studentCurricularPlan" property="student" schema="student.show.personAndStudentInformation.short">
+	<fr:view name="student" schema="student.show.personAndStudentInformation.short">
 		<fr:layout name="flow">
 			<fr:property name="labelExcluded" value="true"/>
 		</fr:layout>
@@ -24,16 +23,23 @@
 </span>
 </p>
 
-<h3><bean:message key="label.studentDismissal.chooseExternalCurricularCourse" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
+<h3><bean:message key="label.student.enrollment.choose.externalUnit" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 
-<bean:define id="scpID" name="studentCurricularPlan" property="idInternal" />
+<bean:define id="studentId" name="student" property="idInternal" />
+<bean:define id="contextInformation" name="contextInformation" />
+
 <fr:view name="unit" property="sortedExternalChilds">
     <fr:layout name="tree">
         <fr:property name="eachLayout" value="values"/>
-        <fr:property name="schemaFor(Unit)" value="Unit.name"/>
+        <fr:property name="schemaFor(Unit)" value="Unit.name.tree.view"/>
         <fr:property name="childrenFor(Unit)" value="sortedExternalChilds"/>
-        <fr:property name="schemaFor(ExternalCurricularCourse)" value="ExternalCurricularCourse.tree.view"/>
         <fr:property name="expandable" value="true"/>
     </fr:layout>
-    <fr:destination name="externalCurricularCourse.choose" path="<%= "/studentDismissals.do?method=prepareCreateExternalEnrolment&amp;scpID=" + scpID + "&amp;oid=${idInternal}" %>"/>
+    <fr:destination name="choose.ExternalCurricularCourses" path="<%= contextInformation.toString() + ".do?method=chooseExternalCurricularCourses&amp;studentId=" + studentId + "&amp;externalUnitId=${idInternal}" %>"/>
 </fr:view>
+
+<fr:form action="/studentExternalEnrolments.do?method=backToMainPage">
+	<html:hidden property="studentId" value="<%= studentId.toString() %>"/>
+	<br/>
+	<html:cancel><bean:message key="button.cancel" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:cancel>
+</fr:form>
