@@ -29,3 +29,4 @@ function executeWithTempFile() {
 
 execute "Create evaluation participant table" createThesisEvaluationParticipantTable.sql
 execute "Add Event Key To Enrolment Evaluation" addEventKeyToEnrolmentEvaluation.sql
+execute "Migrate ResearchType Local to National"  migrateResearchTypeLocalToNational.sql

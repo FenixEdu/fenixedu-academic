@@ -422,7 +422,6 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
     private void setRequestAttributesToList(HttpServletRequest request, Person person) {
 
 	request.setAttribute("books", person.getBooks());
-	request.setAttribute("local-articles", person.getArticles(ResearchActivityLocationType.LOCAL));
 	request.setAttribute("national-articles", person.getArticles(ResearchActivityLocationType.NATIONAL));
 	request.setAttribute("international-articles", person
 		.getArticles(ResearchActivityLocationType.INTERNATIONAL));

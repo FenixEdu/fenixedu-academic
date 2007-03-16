@@ -2,8 +2,7 @@ package net.sourceforge.fenixedu.domain.research.activity;
 
 
 public enum ResearchActivityLocationType {
-	LOCAL,
-    	NATIONAL,
+	NATIONAL,
 	INTERNATIONAL;
 	
     public static ResearchActivityLocationType getDefaultType(){

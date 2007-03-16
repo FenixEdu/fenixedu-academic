@@ -112,7 +112,6 @@ public class ViewCurriculumDispatchAction extends FenixAction {
 		    .getEndDateYearMonthDay()));
 	    resultPublications.addAll(person.getResearchResultPublicationsByExecutionYear(iteratorYear));
 	    books.addAll(person.getBooks(iteratorYear));
-	    localArticles.addAll(person.getArticles(ResearchActivityLocationType.LOCAL, iteratorYear));
 	    nationalArticles.addAll(person.getArticles(ResearchActivityLocationType.NATIONAL, iteratorYear));
 	    internationalArticles.addAll(person.getArticles(ResearchActivityLocationType.INTERNATIONAL,
 		    iteratorYear));
@@ -170,7 +169,6 @@ public class ViewCurriculumDispatchAction extends FenixAction {
 	request.setAttribute("resultPublications", resultPublications);
 
 	request.setAttribute("books", person.getBooks());
-	request.setAttribute("local-articles", person.getArticles(ResearchActivityLocationType.LOCAL));
 	request.setAttribute("national-articles", person.getArticles(ResearchActivityLocationType.NATIONAL));
 	request.setAttribute("international-articles", person
 		.getArticles(ResearchActivityLocationType.INTERNATIONAL));

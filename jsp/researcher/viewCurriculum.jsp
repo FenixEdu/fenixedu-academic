@@ -231,9 +231,6 @@
 	</logic:notEmpty>
 	
 	<bean:define id="hasArticles" value="false" toScope="request"/>
-	<logic:notEmpty name="local-articles"> 
-		<bean:define id="hasArticles" value="true" toScope="request"/>
-	</logic:notEmpty>
 	<logic:notEmpty name="national-articles"> 
 		<bean:define id="hasArticles" value="true" toScope="request"/>
 	</logic:notEmpty>
@@ -257,12 +254,6 @@
 		<jsp:include page="result/publications/publicationsResume.jsp"/>
 		</logic:notEmpty>
 		
-		<logic:notEmpty name="local-articles">
-		<p class="indent1p5 mtop15"><em><bean:message key="label.localScope" bundle="RESEARCHER_RESOURCES"/>:</em></p>
-		<bean:define id="results" name="local-articles" toScope="request"/>
-		<jsp:include page="result/publications/publicationsResume.jsp"/>
-		</logic:notEmpty>
-
 	</logic:equal>
 	
 	<logic:notEmpty name="inproceedings">
