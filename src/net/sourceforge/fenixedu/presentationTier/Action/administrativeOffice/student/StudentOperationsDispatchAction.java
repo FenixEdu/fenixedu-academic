@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -75,6 +74,28 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
 	return mapping.findForward("chooseNewStudentExecutionDegreeAndIdentification");
     }
 
+    public ActionForward chooseAgreementPostBack(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	ExecutionDegreeBean executionDegreeBean = (ExecutionDegreeBean) RenderUtils.getViewState(
+		"executionDegree").getMetaObject().getObject();
+	IngressionInformationBean ingressionInformationBean = (IngressionInformationBean) RenderUtils
+		.getViewState("chooseIngression").getMetaObject().getObject();
+	ingressionInformationBean.clearIngressionAndEntryPhase();
+
+	RenderUtils.invalidateViewState();
+
+	request.setAttribute("executionDegreeBean", executionDegreeBean);
+	request.setAttribute("ingressionInformationBean", ingressionInformationBean);
+
+	if (ingressionInformationBean.getRegistrationAgreement() != null
+		&& !ingressionInformationBean.getRegistrationAgreement().isNormal()) {
+	    request.setAttribute("choosePersonBean", new ChoosePersonBean());
+	}
+
+	return mapping.findForward("chooseNewStudentExecutionDegreeAndIdentification");
+    }
+
     public ActionForward chooseIngressionPostBack(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 
@@ -82,13 +103,15 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
 		"executionDegree").getMetaObject().getObject();
 	IngressionInformationBean ingressionInformationBean = (IngressionInformationBean) RenderUtils
 		.getViewState("chooseIngression").getMetaObject().getObject();
+	ingressionInformationBean.clearAgreement();
 
 	RenderUtils.invalidateViewState();
 
 	request.setAttribute("executionDegreeBean", executionDegreeBean);
 	request.setAttribute("ingressionInformationBean", ingressionInformationBean);
 
-	if (!ingressionInformationBean.getIngression().hasEntryPhase()) {
+	if (ingressionInformationBean.getIngression() != null
+		&& !ingressionInformationBean.getIngression().hasEntryPhase()) {
 	    request.setAttribute("choosePersonBean", new ChoosePersonBean());
 	}
 
@@ -102,6 +125,7 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
 		"executionDegree").getMetaObject().getObject();
 	IngressionInformationBean ingressionInformationBean = (IngressionInformationBean) RenderUtils
 		.getViewState("chooseIngression").getMetaObject().getObject();
+	ingressionInformationBean.clearAgreement();
 
 	RenderUtils.invalidateViewState();
 

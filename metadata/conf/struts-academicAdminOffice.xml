@@ -241,6 +241,15 @@
 			input="/manageIngression.do?method=prepare">
 	        	<forward name="showEditIngression" path="student.showEditIngression"/>
 	    </action>		    		
+
+		<action path="/manageExternalRegistrationData"
+		  	type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.ManageExternalRegistrationDataDA"
+	        parameter="method"
+			scope="request"
+			validate="true"
+			input="/manageExternalRegistrationData.do?method=prepare">
+	        	<forward name="manageExternalRegistrationData" path="student.manageExternalRegistrationData"/>
+	    </action>		    		
 	    
 	    <action path="/addNewStudentCurricularPlan"
 		  	type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.StudentCurricularPlanDA"

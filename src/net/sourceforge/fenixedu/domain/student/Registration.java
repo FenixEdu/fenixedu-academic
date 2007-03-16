@@ -112,8 +112,8 @@ public class Registration extends Registration_Base {
     }
 
     public Registration(Person person, DegreeCurricularPlan degreeCurricularPlan,
-	    StudentCandidacy studentCandidacy) {
-	this(person, null, RegistrationAgreement.NORMAL, studentCandidacy, degreeCurricularPlan);
+	    StudentCandidacy studentCandidacy, RegistrationAgreement agreement) {
+	this(person, null, agreement, studentCandidacy, degreeCurricularPlan);
 
 	// create scp
 	StudentCurricularPlan.createBolonhaStudentCurricularPlan(this, degreeCurricularPlan,
@@ -147,11 +147,16 @@ public class Registration extends Registration_Base {
 	    setStudent(new Student(person, registrationNumber));
 	}
 	setPayedTuition(true);
-	setRegistrationAgreement(agreement);
 	setStudentCandidacy(studentCandidacy);
 	setRegistrationYear(ExecutionYear.readCurrentExecutionYear());
 	setRequestedChangeDegree(false);
 	setRequestedChangeBranch(false);
+	if (agreement == null) {
+	    setRegistrationAgreement(RegistrationAgreement.NORMAL);
+	} else if (!agreement.isNormal()) {
+	    new ExternalRegistrationData(this);
+	    setRegistrationAgreement(agreement);
+	}
     }
 
     @Override
@@ -597,7 +602,7 @@ public class Registration extends Registration_Base {
 	}
 	return result;
     }
-    
+
     public List<StudentCurricularPlan> getStudentCurricularPlansByDegree(Degree degree) {
 	List<StudentCurricularPlan> result = new ArrayList<StudentCurricularPlan>();
 	for (StudentCurricularPlan studentCurricularPlan : this.getStudentCurricularPlans()) {
@@ -606,7 +611,7 @@ public class Registration extends Registration_Base {
 	    }
 	}
 	return result;
-    }    
+    }
 
     public List<StudentCurricularPlan> getStudentCurricularPlansBySpecializationAndState(
 	    Specialization specialization, StudentCurricularPlanState state) {
@@ -625,8 +630,7 @@ public class Registration extends Registration_Base {
     public List<Attends> readAttendsInCurrentExecutionPeriod() {
 	final List<Attends> attends = new ArrayList<Attends>();
 	for (final Attends attend : this.getAssociatedAttendsSet()) {
-	    if (attend.getExecutionCourse().getExecutionPeriod().getState().equals(
-		    PeriodState.CURRENT)) {
+	    if (attend.getExecutionCourse().getExecutionPeriod().getState().equals(PeriodState.CURRENT)) {
 		attends.add(attend);
 	    }
 	}
@@ -663,16 +667,17 @@ public class Registration extends Registration_Base {
 	return null;
     }
 
-    public static Registration readRegisteredRegistrationByNumberAndDegreeType(Integer number, DegreeType degreeType) {
+    public static Registration readRegisteredRegistrationByNumberAndDegreeType(Integer number,
+	    DegreeType degreeType) {
 	for (Registration registration : RootDomainObject.getInstance().getRegistrations()) {
 	    if (registration.getNumber().equals(number)
-		    && registration.getDegreeType().equals(degreeType) && registration.isInRegisteredState()) {
+		    && registration.getDegreeType().equals(degreeType)
+		    && registration.isInRegisteredState()) {
 		return registration;
 	    }
 	}
 	return null;
     }
-
 
     public static Registration readRegistrationByNumberAndDegreeTypes(Integer number,
 	    DegreeType... degreeTypes) {
@@ -829,8 +834,8 @@ public class Registration extends Registration_Base {
 		return true;
 	    }
 
-	final ExecutionDegree executionDegreeByYear = getActiveDegreeCurricularPlan()
-		.getExecutionDegreeByYear(executionYear);
+	    final ExecutionDegree executionDegreeByYear = getActiveDegreeCurricularPlan()
+		    .getExecutionDegreeByYear(executionYear);
 	    if (executionDegreeByYear != null && executionDegreeByYear.isFirstYear()) {
 		return true;
 	    }
@@ -959,8 +964,7 @@ public class Registration extends Registration_Base {
     public List<ExecutionCourse> getAttendingExecutionCoursesForCurrentExecutionPeriod() {
 	final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
 	for (final Attends attends : getAssociatedAttendsSet()) {
-	    if (attends.getExecutionCourse().getExecutionPeriod().getState().equals(
-		    PeriodState.CURRENT)) {
+	    if (attends.getExecutionCourse().getExecutionPeriod().getState().equals(PeriodState.CURRENT)) {
 		result.add(attends.getExecutionCourse());
 	    }
 	}
@@ -1796,6 +1800,16 @@ public class Registration extends Registration_Base {
 
     public Attends readAttendByExecutionCourse(ExecutionCourse executionCourse) {
 	return getStudent().readAttendByExecutionCourse(executionCourse);
+    }
+
+    @Override
+    public void setRegistrationAgreement(RegistrationAgreement registrationAgreement) {
+	super.setRegistrationAgreement(registrationAgreement == null ? RegistrationAgreement.NORMAL
+		: registrationAgreement);
+	if (registrationAgreement != null && !registrationAgreement.isNormal()
+		&& !hasExternalRegistrationData()) {
+	    new ExternalRegistrationData(this);
+	}
     }
 
 }

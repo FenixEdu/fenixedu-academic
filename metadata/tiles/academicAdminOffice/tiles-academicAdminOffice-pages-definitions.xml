@@ -61,6 +61,9 @@
     <definition name="student.showEditIngression" extends="academicAdminOffice.masterPage">
         <put name="body" value="/academicAdminOffice/manageIngression.jsp"></put>
     </definition>      
+    <definition name="student.manageExternalRegistrationData" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/manageExternalRegistrationData.jsp"></put>
+    </definition>      
     <definition name="student.showCreateNewStudentCurricularPlan" extends="academicAdminOffice.masterPage">
         <put name="body" value="/academicAdminOffice/createStudentCurricularPlan.jsp"></put>
     </definition>      

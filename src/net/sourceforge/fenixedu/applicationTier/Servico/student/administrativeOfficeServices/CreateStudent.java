@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.candidacy.RegisteredCandidacySituation;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -35,7 +36,10 @@ public class CreateStudent extends Service {
 	new RegisteredCandidacySituation(studentCandidacy);
 
 	// set ingression information
-	studentCandidacy.setIngression(ingressionInformationBean.getIngression().getName());
+	studentCandidacy
+		.setIngression(ingressionInformationBean.getIngression() != null ? ingressionInformationBean
+			.getIngression().getName()
+			: null);
 	studentCandidacy.setEntryPhase(ingressionInformationBean.getEntryPhase());
 
 	// edit precedent degree information
@@ -43,7 +47,8 @@ public class CreateStudent extends Service {
 
 	// create registration
 	Registration registration = new Registration(person, executionDegreeBean
-		.getDegreeCurricularPlan(), studentCandidacy);
+		.getDegreeCurricularPlan(), studentCandidacy, ingressionInformationBean
+		.getRegistrationAgreement());
 
 	// create qualification
 	new Qualification(person, studentCandidacy.getPrecedentDegreeInformation());

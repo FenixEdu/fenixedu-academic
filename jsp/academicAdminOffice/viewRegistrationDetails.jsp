@@ -44,7 +44,7 @@
 <fr:view name="registration" schema="student.registrationDetail" >
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle4 thright thlight mtop0"/>
-		<fr:property name="rowClasses" value=",tdhl1,,,"/>
+		<fr:property name="rowClasses" value=",tdhl1,,,,"/>
 	</fr:layout>
 </fr:view>
 </logic:present>
@@ -72,10 +72,12 @@
 		</html:link>
 	</span>
 	<span class="pleft1">
-		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-		<html:link page="/manageIngression.do?method=prepare" paramId="registrationId" paramName="registration" paramProperty="idInternal">
-			<bean:message key="link.student.manageIngression" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-		</html:link>
+		<logic:equal name="registration" property="registrationAgreement.normal" value="true">
+			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
+			<html:link page="/manageIngression.do?method=prepare" paramId="registrationId" paramName="registration" paramProperty="idInternal">
+				<bean:message key="link.student.manageIngression" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+			</html:link>
+		</logic:equal>
 	</span>
 	<span class="pleft1">	
 		<logic:equal name="registration" property="degreeType.name" value="BOLONHA_ADVANCED_FORMATION_DIPLOMA">
@@ -85,6 +87,14 @@
 			</html:link>
 		</logic:equal>
 	</span>
+	<span class="pleft1">	
+		<logic:equal name="registration" property="registrationAgreement.normal" value="false">
+			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
+			<html:link page="/manageExternalRegistrationData.do?method=prepare" paramId="registrationId" paramName="registration" paramProperty="idInternal">
+				<bean:message key="link.student.manageExternalRegistrationData" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+			</html:link>
+		</logic:equal>
+	</span>	
 </p>
 
 

@@ -32,6 +32,7 @@
 	<logic:present name="executionDegreeBean" property="executionDegree">
 		<h3 class="mtop1 mbottom025"><bean:message key="label.ingression.short" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 		<fr:edit name="ingressionInformationBean" id="chooseIngression" schema="ingression.information" type="net.sourceforge.fenixedu.dataTransferObject.candidacy.IngressionInformationBean">				 
+			<fr:destination name="agreementPostBack" path="/createStudent.do?method=chooseAgreementPostBack"/>
 			<fr:destination name="ingressionPostBack" path="/createStudent.do?method=chooseIngressionPostBack"/>
 			<fr:destination name="entryPhasePostBack" path="/createStudent.do?method=chooseEntryPhasePostBack"/>
 			<fr:layout name="tabular" >

@@ -45,7 +45,7 @@
 </fr:view>
 </logic:present>
 
-<fr:edit name="ingressionBean" schema="ingression.information" action="/manageIngression.do?method=editIngression">
+<fr:edit name="ingressionBean" schema="ingression.information-edit" action="/manageIngression.do?method=editIngression">
 	<fr:destination name="ingressionPostBack"
 		path="/manageIngression.do?method=postBack" />
 	<fr:destination name="entryPhasePostBack"

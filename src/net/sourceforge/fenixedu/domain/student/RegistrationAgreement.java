@@ -12,4 +12,7 @@ public enum RegistrationAgreement {
 	return this.equals(RegistrationAgreement.AFA) || this.equals(RegistrationAgreement.MA);
     }
 
+    public String getName() {
+	return name();
+    }
 }
