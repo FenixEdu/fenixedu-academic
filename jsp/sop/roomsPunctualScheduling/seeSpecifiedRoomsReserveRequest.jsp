@@ -174,18 +174,19 @@
 					</span>
 				</p>
 			</fr:hasMessages>
-			<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserveRequest&punctualReserveID=<bean:write name="punctualRequest" property="idInternal"/></bean:define>
+			<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserveRequest&reserveRequestID=<bean:write name="punctualRequest" property="idInternal"/></bean:define>
 
 			<fr:edit id="roomsReserveNewComment" name="roomsReserveBean" slot="description" 
 				validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator"
 				type="net.sourceforge.fenixedu.dataTransferObject.teacher.RoomsReserveBean">
-
+				
+				<fr:destination name="input" path="<%= seeReserveURL %>"/>
+				<fr:destination name="invalid" path="<%= seeReserveURL %>"/>
 				<fr:edit name="roomsReserveBean" id="roomsReserveBeanWithNewComment" nested="true" visible="false"/>
 				<fr:layout name="area">
 					<fr:property name="rows" value="8" />
 					<fr:property name="columns" value="55"/>										
-				</fr:layout>
-				<fr:destination name="input" path="<%= seeReserveURL %>"/>
+				</fr:layout>				
 			</fr:edit>		
 			
 			<p>
