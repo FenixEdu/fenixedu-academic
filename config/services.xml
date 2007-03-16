@@ -11411,7 +11411,25 @@
         <filterChains>
         	<chain name="AcademicAdministrativeOfficeAuthorization"></chain>
         </filterChains>     
-    </service>   
+    </service>
+    <service>
+    	<name>CreateExternalEnrolments</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.enrolment.CreateExternalEnrolments</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="AcademicAdministrativeOfficeAuthorization"></chain>
+        </filterChains>     
+    </service>
+    <service>
+    	<name>DeleteExternalEnrolments</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.enrolment.DeleteExternalEnrolments</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="AcademicAdministrativeOfficeAuthorization"></chain>
+        </filterChains>     
+    </service>
     <service>
     	<name>CreateOccupationPeriod</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.CreateOccupationPeriod</implementationClass>
