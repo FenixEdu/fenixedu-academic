@@ -67,7 +67,7 @@
 <%-- Rejected information --%>
 
 <logic:equal name="thesis" property="rejected" value="true">
-    <h3><bean:message key="title.coordinator.thesis.edit.rejected"/></h3>
+    <strong><bean:message key="title.coordinator.thesis.edit.rejected"/></strong>
     
     <p>
         <fr:view name="thesis" property="rejectionComment" type="java.lang.String">

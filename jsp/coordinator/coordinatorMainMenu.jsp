@@ -64,36 +64,7 @@
 		        	<bean:message key="link.coordinator.managefinalDegreeWorks" />
 	          </html:link>
 	        </li>
-<%-- 
-            <li class="navheader">
-                <bean:message key="label.coordinator.thesis"/>
-            </li>
-	       	<li>
-	        	  <html:link page="<%= "/manageThesis.do?method=searchStudent&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString()%>">
-		        	<bean:message key="link.coordinator.thesis.manage" />
-	          </html:link>
-	        </li>
-	       	<li>
-	        	  <html:link page="<%= "/manageThesis.do?method=listDraft&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString()%>">
-		        	<bean:message key="link.coordinator.thesis.listDraft" />
-	          </html:link>
-	        </li>
-	       	<li>
-	        	  <html:link page="<%= "/manageThesis.do?method=listSubmitted&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString()%>">
-		        	<bean:message key="link.coordinator.thesis.listSubmitted" />
-	          </html:link>
-	        </li>
-	       	<li>
-	        	  <html:link page="<%= "/manageThesis.do?method=listApproved&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString()%>">
-		        	<bean:message key="link.coordinator.thesis.listApproved" />
-	          </html:link>
-	        </li>
-	       	<li>
-	        	  <html:link page="<%= "/manageThesis.do?method=listConfirmed&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString()%>">
-		        	<bean:message key="link.coordinator.thesis.listConfirmed" />
-	          </html:link>
-	        </li>
---%>
+ 
 			<li class="navheader">
 				<bean:message key="label.coordinator.manageEvaluations"/>		
 			</li>
@@ -115,7 +86,21 @@
 			</li>
 	--%>
 		</logic:equal>	
-
+<%--
+            <li class="navheader">
+                <bean:message key="label.coordinator.thesis"/>
+            </li>
+            <li>
+              <html:link page="<%= "/manageThesis.do?method=searchStudent&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString()%>">
+                    <bean:message key="link.coordinator.thesis.viewStudent" />
+              </html:link>
+            </li>
+            <li>
+              <html:link page="<%= "/manageThesis.do?method=listThesis&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString()%>">
+                    <bean:message key="link.coordinator.thesis.list" />
+              </html:link>
+            </li>
+--%>
 		<%-- Start of Master Degree Coordinator Options --%>
 		<logic:equal name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.tipoCurso" value="<%= DegreeType.MASTER_DEGREE.toString() %>">
 			<li class="navheader">
