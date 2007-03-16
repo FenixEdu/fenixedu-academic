@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -226,13 +227,15 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
 		ExecutionCourse firstExecutionCourse = executionCourses.isEmpty() ? null : executionCourses.get(0);
 		for (ExecutionCourse executionCourse : executionCourses) {
 
-		    if(isAllowToChange() || firstExecutionCourse.equals(executionCourse)) {
-                        if (executionCourse.isMasterDegreeOnly() || executionCourse.isDEAOnly() || executionCourse.isDFAOnly()) {
-                            setAllowToChange(true);
-                        } else {
-                            setAllowToChange(false);
+		    if (!curricularCourse.getType().equals(CurricularCourseType.ML_TYPE_COURSE)) {	                		   
+                        if(isAllowToChange() || firstExecutionCourse.equals(executionCourse)) {
+                            if (executionCourse.isMasterDegreeOnly() || executionCourse.isDEAOnly() || executionCourse.isDFAOnly()) {
+                                setAllowToChange(true);
+                            } else {
+                                setAllowToChange(false);
+                            }
                         }
-		    }
+	            }
 		    		   
                     for (CurricularCourse tempCurricularCourse : executionCourse.getAssociatedCurricularCourses()) {
                         dcpNames.add(tempCurricularCourse.getDegreeCurricularPlan().getName());
