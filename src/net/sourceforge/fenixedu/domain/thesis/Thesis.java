@@ -185,8 +185,16 @@ public class Thesis extends Thesis_Base {
         return result;
     }
 
+    public static Collection<Thesis> getConfirmedThesis() {
+        return getConfirmedThesis(null);
+    }
+    
     public static Collection<Thesis> getConfirmedThesis(Degree degree) {
         return getThesisInState(degree, ThesisState.CONFIRMED);
+    }
+    
+    public static Collection<Thesis> getEvaluatedThesis() {
+        return getEvaluatedThesis(null);
     }
     
     public static Collection<Thesis> getEvaluatedThesis(Degree degree) {
@@ -309,6 +317,12 @@ public class Thesis extends Thesis_Base {
         ThesisState state = getState();
         
         return state == ThesisState.APPROVED || state == ThesisState.REVISION;
+    }
+    
+    public boolean isApproved() {
+	ThesisState state = getState();
+	
+	return state == ThesisState.APPROVED;
     }
 
     public boolean isConfirmed() {

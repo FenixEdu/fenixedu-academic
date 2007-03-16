@@ -1,7 +1,12 @@
 package net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.thesis;
 
-import static net.sourceforge.fenixedu.domain.thesis.Thesis.getApprovedThesis;
 import static net.sourceforge.fenixedu.domain.thesis.Thesis.getSubmittedThesis;
+import static net.sourceforge.fenixedu.domain.thesis.Thesis.getApprovedThesis;
+import static net.sourceforge.fenixedu.domain.thesis.Thesis.getConfirmedThesis;
+import static net.sourceforge.fenixedu.domain.thesis.Thesis.getEvaluatedThesis;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -38,6 +43,42 @@ public class ScientificCouncilManageThesisDA extends FenixDispatchAction {
             return null;
         }
     }
+    
+    
+    public ActionForward listThesis(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	List<Thesis> theses = new ArrayList<Thesis>();
+	
+	theses.addAll(getSubmittedThesis());
+	theses.addAll(getApprovedThesis());
+	theses.addAll(getConfirmedThesis());
+	theses.addAll(getEvaluatedThesis());
+	
+	request.setAttribute("theses", theses);
+	return mapping.findForward("list-thesis");
+    }
+
+    public ActionForward viewThesis(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        Thesis thesis = getThesis(request);
+        
+        if (thesis != null) {
+            request.setAttribute("thesis", thesis);
+            return mapping.findForward("view-thesis");           
+        }
+        else {
+            return listThesis(mapping, actionForm, request, response);
+        }
+    }
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     public ActionForward listSubmitted(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
 	
