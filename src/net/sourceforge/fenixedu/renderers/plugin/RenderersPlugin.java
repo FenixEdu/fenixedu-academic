@@ -5,6 +5,7 @@ import javax.servlet.ServletException;
 import net.sourceforge.fenixedu.renderers.model.MetaObjectFactory;
 import net.sourceforge.fenixedu.renderers.model.SchemaFactory;
 import net.sourceforge.fenixedu.renderers.model.UserIdentityFactory;
+import net.sourceforge.fenixedu.renderers.utils.RenderKit;
 
 import org.apache.log4j.Logger;
 import org.apache.struts.action.ActionServlet;
@@ -29,7 +30,12 @@ public class RenderersPlugin implements PlugIn {
     private String userIdentityFactory;
     
     private String schemaFactory;
-    
+
+    // Keep a static variable to render kit. the plugin will be called before any renderkit reference...
+    // This will only allow unloading of the kit if the plugin is also unloaded from the jvm.
+    // If this happens, then the framework will init() the plugin before refering to the kit.
+    protected RenderKit renderKit;
+
     public String getConfig() {
         return config;
     }
@@ -89,6 +95,7 @@ public class RenderersPlugin implements PlugIn {
             
             ConfigurationReader reader = new ConfigurationReader(getConfig(), getSchemas());
             reader.readAll(servlet.getServletContext());
+            renderKit = RenderKit.getInstance();
 
             initFactories(servlet, config);
         }
