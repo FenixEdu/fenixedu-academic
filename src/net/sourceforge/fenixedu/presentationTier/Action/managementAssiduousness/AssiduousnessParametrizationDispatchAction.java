@@ -115,7 +115,7 @@ public class AssiduousnessParametrizationDispatchAction extends FenixDispatchAct
 		request.setAttribute("workScheduleList", getScheduleList());
 		return mapping.findForward("show-all-schedules");
 	    }
-	    setError(request, "message", "error.existingEquivalentSchedule", result);
+	    setError(request, "message", (ActionMessage) result);
 	}
 	request.setAttribute("workScheduleTypeFactory", workScheduleTypeFactory);
 	return mapping.findForward("insert-schedule");

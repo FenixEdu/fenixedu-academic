@@ -7,6 +7,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.assiduousness.Assiduousness;
 import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth;
 import net.sourceforge.fenixedu.domain.assiduousness.ContinuousSchedule;
 import net.sourceforge.fenixedu.domain.assiduousness.FlexibleSchedule;
@@ -31,6 +32,8 @@ import org.joda.time.Partial;
 import org.joda.time.TimeOfDay;
 import org.joda.time.YearMonthDay;
 import org.joda.time.chrono.GregorianChronology;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 public abstract class WorkScheduleTypeFactory implements Serializable, FactoryExecutor {
 
@@ -351,8 +354,6 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
 
     protected WorkScheduleType getOrCreateWorkScheduleType() {
 	WorkScheduleType workScheduleType = null;
-	Duration halfTime = new Duration(3, 5);
-	Duration totalTime = new Duration(7);
 	Chronology chronology = GregorianChronology.getInstanceUTC();
 	DateTime lastModifiedDate = new DateTime(chronology);
 	WorkPeriod normalWorkPeriod = getOrCreateWorkPeriod(getBeginNormalWorkFirstPeriod(),
@@ -375,12 +376,16 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
 		    getBeginValidDate(), getEndValidDate(), getBeginDayTime(), dayTimeDuration,
 		    getBeginClockingTime(), clockingTimeDurtion, normalWorkPeriod, meal,
 		    lastModifiedDate, getModifiedBy());
-	} else if (normalWorkPeriod.getWorkPeriodDuration().compareTo(halfTime) <= 0) {
+	} else if (normalWorkPeriod.getWorkPeriodDuration().compareTo(
+		HalfTimeSchedule.normalHalfTimeWorkDayDuration) <= 0) {
 	    workScheduleType = new HalfTimeSchedule(getAcronym(), getScheduleClockingType(),
 		    getBeginValidDate(), getEndValidDate(), getBeginDayTime(), dayTimeDuration,
 		    getBeginClockingTime(), clockingTimeDurtion, normalWorkPeriod, fixedWorkPeriod,
 		    lastModifiedDate, getModifiedBy());
-	} else if (normalWorkPeriod.getWorkPeriodDuration().compareTo(totalTime) < 0) {
+	} else if (normalWorkPeriod.getWorkPeriodDuration().compareTo(
+		Assiduousness.normalWorkDayDuration) < 0
+		&& (normalWorkPeriod.getSecondPeriod() != null && !normalWorkPeriod.getEndFirstPeriod()
+			.equals(normalWorkPeriod.getSecondPeriod()))) {
 	    workScheduleType = new HourExemptionSchedule(getAcronym(), getScheduleClockingType(),
 		    getBeginValidDate(), getEndValidDate(), getBeginDayTime(), dayTimeDuration,
 		    getBeginClockingTime(), clockingTimeDurtion, normalWorkPeriod, fixedWorkPeriod,
@@ -388,6 +393,10 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
 	} else {
 	    if (normalWorkPeriod.getSecondPeriodInterval() != null) {
 		if (normalWorkPeriod.getEndFirstPeriod().equals(normalWorkPeriod.getSecondPeriod())) {
+		    if (normalWorkPeriod.getWorkPeriodDuration().isShorterThan(
+			    ContinuousSchedule.normalContinuousWorkDayDuration)) {
+			return null;
+		    }
 		    workScheduleType = new ContinuousSchedule(getAcronym(), getScheduleClockingType(),
 			    getBeginValidDate(), getEndValidDate(), getBeginDayTime(), dayTimeDuration,
 			    getBeginClockingTime(), clockingTimeDurtion, normalWorkPeriod,
@@ -408,6 +417,10 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
 		    }
 		}
 	    } else {
+		if (normalWorkPeriod.getWorkPeriodDuration().isShorterThan(
+			ContinuousSchedule.normalContinuousWorkDayDuration)) {
+		    return null;
+		}
 		workScheduleType = new ContinuousSchedule(getAcronym(), getScheduleClockingType(),
 			getBeginValidDate(), getEndValidDate(), getBeginDayTime(), dayTimeDuration,
 			getBeginClockingTime(), clockingTimeDurtion, normalWorkPeriod, fixedWorkPeriod,
@@ -533,10 +546,17 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
 	public Object execute() {
 	    WorkScheduleType equivalentWorkScheduleType = getEquivalentWorkScheduleType(null);
 	    if (equivalentWorkScheduleType == null) {
-		getOrCreateWorkScheduleType();
+		if (getOrCreateWorkScheduleType() == null) {
+		    Chronology chronology = GregorianChronology.getInstanceUTC();
+		    DateTimeFormatter fmt = DateTimeFormat.forPattern("HH:mm");
+		    TimeOfDay time = new TimeOfDay(ContinuousSchedule.normalContinuousWorkDayDuration
+			    .getMillis(), chronology);
+		    return new ActionMessage("error.invalidContinuousDuration", fmt.print(time));
+		}
 		return null;
 	    }
-	    return equivalentWorkScheduleType.getAcronym();
+	    return new ActionMessage("error.existingEquivalentSchedule", equivalentWorkScheduleType
+		    .getAcronym());
 	}
 
     }
@@ -655,7 +675,7 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
 		    getDuration(getBeginFixedWorkSecondPeriod(), getEndFixedWorkSecondPeriod(),
 			    getEndFixedWorkSecondPeriodNextDay()), getMealBeginTime(), getMealEndTime(),
 		    getDuration(getMinimumMealBreakInterval()), getDuration(getMandatoryMealDiscount()))) {
-		WorkScheduleType equivalentWorkScheduleType = null;//getEquivalentWorkScheduleType(getWorkScheduleType().getIdInternal());
+		WorkScheduleType equivalentWorkScheduleType = null;// getEquivalentWorkScheduleType(getWorkScheduleType().getIdInternal());
 		if (equivalentWorkScheduleType == null) {
 		    if (!getWorkScheduleType().getWorkSchedules().isEmpty()
 			    || getWorkScheduleType().getBeginValidDate().isBefore(firstDay)) {
@@ -687,6 +707,15 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
 			    getWorkScheduleType().setLastModifiedDate(now);
 
 			    WorkScheduleType newWorkScheluleType = getOrCreateWorkScheduleType();
+			    if (newWorkScheluleType == null) {
+				Chronology chronology = GregorianChronology.getInstanceUTC();
+				DateTimeFormatter fmt = DateTimeFormat.forPattern("HH:mm");
+				TimeOfDay time = new TimeOfDay(
+					ContinuousSchedule.normalContinuousWorkDayDuration.getMillis(),
+					chronology);
+				return new ActionMessage("error.invalidContinuousDuration", fmt
+					.print(time));
+			    }
 			    for (WorkSchedule workSchedule : workScheduleToChangeWorkScheduleType) {
 				workSchedule.setWorkScheduleType(newWorkScheluleType);
 			    }

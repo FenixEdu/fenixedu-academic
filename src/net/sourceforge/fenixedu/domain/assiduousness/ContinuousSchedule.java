@@ -17,6 +17,8 @@ import org.joda.time.YearMonthDay;
  * 
  */
 public class ContinuousSchedule extends ContinuousSchedule_Base {
+    
+    public static final Duration normalContinuousWorkDayDuration = new Duration(21600000); // 6
 
 	public ContinuousSchedule(String acronym, ScheduleClockingType scheduleClockingType,
 			YearMonthDay beginValidDate, YearMonthDay endValidDate, TimeOfDay dayTime,

@@ -17,6 +17,7 @@ import org.joda.time.YearMonthDay;
  */
 public class HalfTimeSchedule extends HalfTimeSchedule_Base {
 
+    public static final Duration normalHalfTimeWorkDayDuration = new Duration(12600000); // 3:30
 	public HalfTimeSchedule(String acronym, ScheduleClockingType scheduleClockingType,
 			YearMonthDay beginValidDate, YearMonthDay endValidDate, TimeOfDay dayTime,
 			Duration dayTimeDuration, TimeOfDay clockingTime, Duration clockingTimeDuration,
