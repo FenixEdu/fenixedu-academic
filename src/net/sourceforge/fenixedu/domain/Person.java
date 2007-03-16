@@ -2060,9 +2060,16 @@ public class Person extends Person_Base {
 
     @Override
     public String getEmail() {
+	return hasInstitutionalEmail() ? getInstitutionalEmail() : super.getEmail();
+    }
+
+    public Boolean getHasInstitutionalEmail() {
+	return Boolean.valueOf(hasInstitutionalEmail());
+    }
+
+    public boolean hasInstitutionalEmail() {
 	final String institutionalEmail = getInstitutionalEmail();
-	return institutionalEmail != null && institutionalEmail.length() > 0 ? institutionalEmail : super
-		.getEmail();
+	return institutionalEmail != null && institutionalEmail.length() > 0;
     }
 
     public Collection<AnnouncementBoard> getCurrentExecutionCoursesAnnouncementBoards() {

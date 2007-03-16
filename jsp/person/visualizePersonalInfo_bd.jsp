@@ -25,12 +25,28 @@
 </table>
 
 <fr:form action="/visualizePersonalInfo.do">
-	<fr:edit id="contact" name="UserView" property="person" schema="net.sourceforge.fenixedu.domain.Person.contact.info">
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4 thleft thlight"/>
-			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
-		</fr:layout>
-	</fr:edit>
+	<logic:equal name="UserView" property="person.hasInstitutionalEmail" value="true">
+		<fr:edit id="contact" name="UserView" property="person" schema="net.sourceforge.fenixedu.domain.Person.contact.info.without.email">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle4 thleft thlight"/>
+				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+			</fr:layout>
+		</fr:edit>
+		<fr:view name="UserView" property="person" schema="net.sourceforge.fenixedu.domain.Person.contact.info.email">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle4 thleft thlight"/>
+				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+			</fr:layout>
+		</fr:view>
+	</logic:equal>
+	<logic:notEqual name="UserView" property="person.hasInstitutionalEmail" value="true">
+		<fr:edit id="contact" name="UserView" property="person" schema="net.sourceforge.fenixedu.domain.Person.contact.info">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle4 thleft thlight"/>
+				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+			</fr:layout>
+		</fr:edit>
+	</logic:notEqual>
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="mvert05">
 		<bean:message key="person.homepage.update" bundle="HOMEPAGE_RESOURCES"/>
 	</html:submit>
