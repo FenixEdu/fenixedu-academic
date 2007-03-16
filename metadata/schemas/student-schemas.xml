@@ -29,13 +29,13 @@
 </schema>
 
 <schema name="ViewSeniorInfo" type="net.sourceforge.fenixedu.domain.student.Senior" >
-	<slot name="student.person.name" key="label.student.name"/>
-	<slot name="student.person.address" key="address"/>
-	<slot name="student.person.areaCode" key="areaCode"/>
-	<slot name="student.person.areaOfAreaCode" key="areaOfAreaCode"/>
-	<slot name="student.person.phone" key="phone"/>
-	<slot name="student.person.mobile" key="mobile"/>	
-	<slot name="student.person.email" key="email"/>	
+	<slot name="person.name" key="label.student.name"/>
+	<slot name="person.address" key="address"/>
+	<slot name="person.areaCode" key="areaCode"/>
+	<slot name="person.areaOfAreaCode" key="areaOfAreaCode"/>
+	<slot name="person.phone" key="phone"/>
+	<slot name="person.mobile" key="mobile"/>	
+	<slot name="person.email" key="email"/>	
 </schema>
 
 <schema name="EditSeniorExpectedInfo" type="net.sourceforge.fenixedu.domain.student.Senior" >
