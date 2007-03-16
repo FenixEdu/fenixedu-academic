@@ -349,6 +349,9 @@ class net.sourceforge.fenixedu.domain.accounting.Event extends net.sourceforge.f
 		class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DeclarationRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicServiceRequestEvent {
 		}
 		
+	class net.sourceforge.fenixedu.domain.accounting.events.ImprovementOfApprovedEnrolmentEvent extends net.sourceforge.fenixedu.domain.accounting.Event {
+	}
+		
 	class net.sourceforge.fenixedu.domain.accounting.events.AnnualEvent extends net.sourceforge.fenixedu.domain.accounting.Event {
 		Integer keyExecutionYear;
 	}
@@ -368,7 +371,7 @@ class net.sourceforge.fenixedu.domain.accounting.Event extends net.sourceforge.f
 
 		class net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent extends net.sourceforge.fenixedu.domain.accounting.events.AnnualEvent {
 		}
-		
+
 
 class net.sourceforge.fenixedu.domain.accounting.Exemption extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyEvent;
@@ -506,6 +509,9 @@ class net.sourceforge.fenixedu.domain.accounting.PostingRule extends net.sourcef
 				}
 				
 				class net.sourceforge.fenixedu.domain.accounting.postingRules.dfa.DfaRegistrationPR extends net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountWithPenaltyPR {   
+				}
+		
+				class net.sourceforge.fenixedu.domain.accounting.postingRules.ImprovementOfApprovedEnrolmentPR extends net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountWithPenaltyPR {   
 				}
 		
 		class net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR extends net.sourceforge.fenixedu.domain.accounting.postingRules.GenericSingleEntryTypePR {
@@ -1524,6 +1530,7 @@ class net.sourceforge.fenixedu.domain.EnrolmentEvaluation extends net.sourceforg
     Integer keyMarkSheet;
     Integer keyRectification;
     Integer keyRectified;
+    Integer keyImprovementOfApprovedEnrolmentEvent;
 }
 
 
@@ -8819,6 +8826,13 @@ relation AnnualEventExecutionYear {
 relation AcademicServiceRequestEventAcademicServiceRequest {
 	net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest playsRole academicServiceRequest;
 	net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicServiceRequestEvent playsRole event;
+}
+
+relation EnrolmentEvaluationImprovementOfApprovedEnrolmentEvent {
+	net.sourceforge.fenixedu.domain.EnrolmentEvaluation playsRole improvementEnrolmentEvaluations {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.accounting.events.ImprovementOfApprovedEnrolmentEvent playsRole improvementOfApprovedEnrolmentEvent;
 }
 
 relation RootDomainObjectReceipt {

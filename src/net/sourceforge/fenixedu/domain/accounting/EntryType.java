@@ -26,7 +26,9 @@ public enum EntryType {
 
     INSURANCE_FEE,
 
-    ADMINISTRATIVE_OFFICE_FEE;
+    ADMINISTRATIVE_OFFICE_FEE,
+    
+    IMPROVEMENT_OF_APPROVED_ENROLMENT_FEE;
 
     public String getName() {
 	return name();

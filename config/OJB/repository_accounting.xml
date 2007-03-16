@@ -48,6 +48,7 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.accounting.Event" table="ACCOUNTING_EVENT">
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.events.dfa.DFACandidacyEvent" />
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicServiceRequestEvent" />
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.events.ImprovementOfApprovedEnrolmentEvent" />
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.events.AnnualEvent" />
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.events.dfa.DfaRegistrationEvent" />
 </class-descriptor>
@@ -82,6 +83,12 @@
 		</class-descriptor>
 		
 		
+	<!-- ************************************************************************************************************ -->
+	<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.events.ImprovementOfApprovedEnrolmentEvent -->
+	<!-- ************************************************************************************************************ -->
+	<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.events.ImprovementOfApprovedEnrolmentEvent" table="ACCOUNTING_EVENT">
+	</class-descriptor>	
+	
 	<!-- ************************************************************************************************************ -->
 	<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.events.AnnualEvent -->
 	<!-- ************************************************************************************************************ -->

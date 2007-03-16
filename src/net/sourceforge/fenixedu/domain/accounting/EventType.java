@@ -24,7 +24,9 @@ public enum EventType {
 
     ADMINISTRATIVE_OFFICE_FEE,
     
-    ADMINISTRATIVE_OFFICE_FEE_INSURANCE;
+    ADMINISTRATIVE_OFFICE_FEE_INSURANCE, 
+    
+    IMPROVEMENT_OF_APPROVED_ENROLMENT;
 
     public String getName() {
 	return name();
@@ -37,4 +39,5 @@ public enum EventType {
     public String getFullyQualifiedName() {
 	return EventType.class.getName() + "." + name();
     }
+
 }
