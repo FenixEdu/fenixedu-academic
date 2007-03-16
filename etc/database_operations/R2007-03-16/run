@@ -27,5 +27,7 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add Person to Department Credits Management" addPersonToDepartmentCreditsManagement.sql
 execute "Create evaluation participant table" createThesisEvaluationParticipantTable.sql
-execute "Add Event Key To Enrolment Evaluation" addEventKeyToEnrolmentEvaluation.sql
+execute "Added column REJECTION_COMMENT to THESIS table" addRejectionCommentThesisTable.sql
+execute "Create RegistrationNumber Table" CreateRegistrationNumberTable.sql
