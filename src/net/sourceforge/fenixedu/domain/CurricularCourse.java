@@ -6,9 +6,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetEnrolmentEvaluationBean;
@@ -29,6 +31,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.precedences.Restriction;
 import net.sourceforge.fenixedu.domain.precedences.RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
@@ -1190,6 +1193,49 @@ public class CurricularCourse extends CurricularCourse_Base {
 	return getEnrolmentsByExecutionYear(ExecutionYear.readExecutionYearByName(year));
     }
 
+    public int getNumberOfStudentsWithFirstEnrolmentIn(ExecutionPeriod executionPeriod) {
+	
+	Map<Student, List<Enrolment>> students = new HashMap<Student, List<Enrolment>>();	
+	for (Enrolment enrolment : getAllEnrolmentsUntil(executionPeriod)) {
+	    Student student = enrolment.getStudentCurricularPlan().getRegistration().getStudent();
+	    if(!students.containsKey(student)) {
+		List<Enrolment> enrolments = new ArrayList<Enrolment>();
+		enrolments.add(enrolment);
+		students.put(student, enrolments);
+	    } else {
+		students.get(student).add(enrolment);
+	    }
+	}
+	
+	int count = 0;
+	for (Student student : students.keySet()) {
+	    boolean enrolledInExecutionPeriod = false;
+	    for (Enrolment enrolment : students.get(student)) {
+		if(enrolment.getExecutionPeriod().equals(executionPeriod)) {
+		    enrolledInExecutionPeriod = true;
+		    break;
+		}
+	    }
+	    if(enrolledInExecutionPeriod && students.get(student).size() == 1) {
+		count++;
+	    }
+	}
+		
+	return count;
+    }
+  
+    private List<Enrolment> getAllEnrolmentsUntil(ExecutionPeriod executionPeriod){
+	List<Enrolment> result = new ArrayList<Enrolment>();
+	for (final CurriculumModule curriculumModule : getCurriculumModules()) {
+	    final Enrolment enrolment = (Enrolment) curriculumModule;
+	    ExecutionPeriod enrolmentExecutionPeriod = enrolment.getExecutionPeriod();
+	    if (!enrolment.isAnnulled() && enrolmentExecutionPeriod.isBeforeOrEquals(executionPeriod)) {
+		result.add(enrolment);
+	    }
+	}
+	return result;
+    }
+    
     public List<Enrolment> getEnrolmentsByExecutionYear(ExecutionYear executionYear) {
 	List<Enrolment> result = new ArrayList<Enrolment>();
 	for (final CurriculumModule curriculumModule : getCurriculumModules()) {

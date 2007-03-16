@@ -305,23 +305,20 @@ public class SummariesControlAction extends FenixDispatchAction {
         return null;
     }
 
-    private void exportToXls(final List<SummariesControlElementDTO> allListElements,
-            OutputStream outputStream) throws IOException {
+    private void exportToXls(final List<SummariesControlElementDTO> allListElements, OutputStream outputStream) throws IOException {
         final List<Object> headers = getHeaders();
         final Spreadsheet spreadsheet = new Spreadsheet("Controlo de Sumários", headers);
         fillSpreadSheet(allListElements, spreadsheet);
         spreadsheet.exportToXLSSheet(outputStream);
     }
 
-    private void exportToCSV(final List<SummariesControlElementDTO> allListElements,
-            OutputStream outputStream) throws IOException {
+    private void exportToCSV(final List<SummariesControlElementDTO> allListElements, OutputStream outputStream) throws IOException {
         final Spreadsheet spreadsheet = new Spreadsheet("Controlo de Sumários");
         fillSpreadSheet(allListElements, spreadsheet);
         spreadsheet.exportToCSV(outputStream, ";");
     }
 
-    private void fillSpreadSheet(final List<SummariesControlElementDTO> allListElements,
-            final Spreadsheet spreadsheet) {
+    private void fillSpreadSheet(final List<SummariesControlElementDTO> allListElements, final Spreadsheet spreadsheet) {
         for (final SummariesControlElementDTO summariesControlElementDTO : allListElements) {
             final Row row = spreadsheet.addRow();
             row.setCell(summariesControlElementDTO.getTeacherName());
@@ -352,8 +349,7 @@ public class SummariesControlAction extends FenixDispatchAction {
         return headers;
     }   
     
-    private List<LabelValueBean> getNotClosedExecutionPeriods(
-            List<InfoExecutionPeriod> allExecutionPeriods) {
+    private List<LabelValueBean> getNotClosedExecutionPeriods(List<InfoExecutionPeriod> allExecutionPeriods) {
         List<LabelValueBean> executionPeriods = new ArrayList<LabelValueBean>();
         for (InfoExecutionPeriod infoExecutionPeriod : allExecutionPeriods) {
             LabelValueBean labelValueBean = new LabelValueBean();
@@ -377,16 +373,15 @@ public class SummariesControlAction extends FenixDispatchAction {
         return departments;
     }
 
-    protected void readAndSaveAllDepartments(HttpServletRequest request) throws FenixFilterException,
-            FenixServiceException {
+    protected void readAndSaveAllDepartments(HttpServletRequest request) throws FenixFilterException, FenixServiceException {
         Collection<Department> allDepartments = rootDomainObject.getDepartments();
         List<LabelValueBean> departments = getAllDepartments(allDepartments);
         request.setAttribute("departments", departments);
     }
 
-    private void readAndSaveAllExecutionPeriods(HttpServletRequest request) throws FenixFilterException,
-            FenixServiceException {
-        List<InfoExecutionPeriod> allExecutionPeriods = new ArrayList<InfoExecutionPeriod>();
+    private void readAndSaveAllExecutionPeriods(HttpServletRequest request) throws FenixFilterException,FenixServiceException {
+      
+	List<InfoExecutionPeriod> allExecutionPeriods = new ArrayList<InfoExecutionPeriod>();
         Object[] args = {};
 
         allExecutionPeriods = (List<InfoExecutionPeriod>) ServiceManagerServiceFactory.executeService(

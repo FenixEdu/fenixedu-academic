@@ -206,9 +206,13 @@
   	<slot name="siglas" />
   	<slot name="lessonHours" />
    	<slot name="summaryHours" />	
-   	<slot name="shiftDifference" />	   	   	  	
+   	<slot name="shiftDifference" layout="null-as-label">
+        <property name="label" value="NA"/>
+    </slot>
    	<slot name="courseSummaryHours" />	   	
-   	<slot name="courseDifference" />	   	   	  	
+   	<slot name="courseDifference" layout="null-as-label">
+        <property name="label" value="NA"/>
+    </slot>
   </schema>
 
   <schema name="person.admin.simple" type="net.sourceforge.fenixedu.domain.Person">

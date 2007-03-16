@@ -17,6 +17,13 @@
 	<p><bean:message key="message.credits.masterDegree.executionYear"/>: <strong><bean:write name="executionDegree" property="executionYear.year"/></strong></p>
 </div>
 
+<p>
+	<html:link page="/masterDegreeCreditsManagement.do?method=exportToExcel" paramId="executionDegreeID" paramName="executionDegree" paramProperty="idInternal">
+		<html:img border="0" src="<%= request.getContextPath() + "/images/excel.gif"%>" altKey="excel" bundle="IMAGE_RESOURCES" />
+		<bean:message key="link.export.to.excel"/>						
+	</html:link>
+</p>
+
 <p><span class="required">*</span> <bean:message key="message.credits.curricularDegree"/></p>
 
 <logic:notPresent name="masterDegreeCoursesDTOs">
@@ -29,10 +36,11 @@
 			<th><bean:message key="label.credits.masterDegree.curricularCourse"/></th>
 			<th><bean:message key="label.credits.masterDegree.curricularCourse.type"/></th>
 			<th><bean:message key="label.credits.masterDegree.curricularCourse.credits"/></th>
-			<th><bean:message key="label.credits.masterDegree.studentsEnrolled"/></th>
 			<th><bean:message key="label.credits.masterDegree.semesters"/></th>
 			<th><bean:message key="label.credits.masterDegree.executions"/></th>		
-			<th><bean:message key="label.credits.executionCourse.code"/></th>		
+			<th><bean:message key="label.credits.executionCourse.code"/></th>	
+			<th><bean:message key="label.credits.masterDegree.studentsEnrolled"/></th>
+			<th><bean:message key="label.credits.masterDegree.first.studentsEnrolled"/></th>	
 			<th><bean:message key="label.teacher.number"/></th>
 			<th><bean:message key="label.credits.masterDegree.teacher"/></th>		
 			<th><bean:message key="label.credits.masterDegree.hours"/></th>	
@@ -62,12 +70,7 @@
 				<td class="aright" rowspan="<%= totalRowSpan %>">
 					<bean:write name="masterDegreeCoursesDTO" property="curricularCourse.credits"/>
 				</td>
-				
-				<%-- Number of Enrolments --%>
-				<td class="aright" rowspan="<%= totalRowSpan %>">
-					<bean:write name="masterDegreeCoursesDTO" property="numberEnrolments"/>
-				</td>
-				
+												
 				<%-- Semesters --%>
 				<td class="acenter" rowspan="<%= totalRowSpan %>">
 					<logic:equal name="masterDegreeCoursesDTO" property="semesters" value="0">
@@ -77,14 +80,8 @@
 						<bean:write name="masterDegreeCoursesDTO" property="semesters"/>
 					</logic:notEqual>
 				</td>	
-				
-				<% 
-					String isLastCellDone = "false";
-					request.setAttribute("isLastCellDone", isLastCellDone);
-				%>	
-				
-				<bean:define id="curricularCorse" name="masterDegreeCoursesDTO" property="curricularCourse" type="net.sourceforge.fenixedu.domain.CurricularCourse"/>
-				
+											
+				<bean:define id="curricularCorse" name="masterDegreeCoursesDTO" property="curricularCourse" type="net.sourceforge.fenixedu.domain.CurricularCourse"/>				
 				<logic:iterate id="mapElement" name="masterDegreeCoursesDTO" property="executionCoursesMap" indexId="executionPeriodIndex">
 					
 					<logic:greaterThan name="executionPeriodIndex" value="0">
@@ -92,7 +89,7 @@
 					</logic:greaterThan>
 					
 					<bean:define id="executionPeriod" name="mapElement" property="key" type="net.sourceforge.fenixedu.domain.ExecutionPeriod"/>								
-					<bean:define id="executionCourses" name="mapElement" property="value"/>
+					<bean:define id="executionCourses" name="mapElement" property="value"/>									
 					
 					<%
 						int numOfProfessorshipsInExecutionPeriod = executionPeriod.getNumberOfProfessorships(curricularCorse);
@@ -105,8 +102,15 @@
 						<bean:write name="executionPeriod" property="executionYear.year"/>						
 					</td>
 											
-					<logic:iterate id="executionCourse" name="executionCourses" type="net.sourceforge.fenixedu.domain.ExecutionCourse" indexId="executionCourseIndex">
+					<logic:iterate id="executionCourseTrio" name="executionCourses"  indexId="executionCourseIndex">
 	
+						<bean:define id="executionCourse" name="executionCourseTrio" property="first.key" type="net.sourceforge.fenixedu.domain.ExecutionCourse"></bean:define>
+		
+						<% 
+							String isLastCellDone = "false";
+							request.setAttribute("isLastCellDone", isLastCellDone);
+						%>
+							
 						<logic:greaterThan name="executionCourseIndex" value="0">
 							<tr>					
 						</logic:greaterThan>
@@ -115,9 +119,20 @@
 							int numOfProfessorships = executionCourse.getProfessorshipsCount() == 0 ? 1 : executionCourse.getProfessorshipsCount();
 						%>
 						
+						<%-- Execution Code --%>
 						<td class="acenter" rowspan="<%= numOfProfessorships %>">
 							<bean:write name="executionCourse" property="sigla"/>
 						</td>						
+	
+						<%-- Number of Enrolments --%>
+						<td class="aright" rowspan="<%= numOfProfessorships %>">
+							<bean:write name="executionCourseTrio" property="second"/>
+						</td>
+						
+						<%-- Number of first Enrolments --%>
+						<td class="aright" rowspan="<%= numOfProfessorships %>">
+							<bean:write name="executionCourseTrio" property="third"/>
+						</td>
 	
 						<logic:notEmpty name="executionCourse" property="professorships">	
 							
@@ -153,22 +168,16 @@
 								
 								<%-- Observations --%>
 								<logic:equal name="isLastCellDone" value="false">
-									<td rowspan="<%= totalRowSpan %>">										
-										<logic:equal name="masterDegreeCoursesDTO" property="allowToChange" value="true">
+									<td rowspan="<%= numOfProfessorships %>">										
+										<logic:equal name="executionCourseTrio" property="first.value" value="true">
 											<html:link page="<%= "/masterDegreeCreditsManagement.do?method=prepareEdit&amp;executionDegreeID=" + executionDegree.getIdInternal().toString() %>" paramId="curricularCourseID" paramName="masterDegreeCoursesDTO" paramProperty="curricularCourse.idInternal">
 												<bean:message key="link.credits.masterDegree.assign"/>
 											</html:link>
 										</logic:equal>										
-										<logic:equal name="masterDegreeCoursesDTO" property="allowToChange" value="false">
-											<bean:size id="dcpNamesSize" name="masterDegreeCoursesDTO" property="dcpNames"/>
+										<logic:equal name="executionCourseTrio" property="first.value" value="false">											
 											<span class="required">*</span>
-											<logic:iterate id="dcpName" name="masterDegreeCoursesDTO" property="dcpNames" indexId="index">
-												<bean:write name="dcpName"/>
-												<logic:notEqual name="index" value="<%= Integer.valueOf(dcpNamesSize.intValue() - 1).toString() %>">
-													,
-												</logic:notEqual>
-												<br/>
-											</logic:iterate>
+											<bean:define id="dcpName" name="masterDegreeCoursesDTO" property="dcpNames" type="java.util.Map"/>
+											<%= dcpName.get(executionCourse) %>
 										</logic:equal>											
 									</td>										
 									<% request.setAttribute("isLastCellDone","true");%>	
@@ -190,22 +199,16 @@
 														
 							<%-- Observations --%>
 							<logic:equal name="isLastCellDone" value="false">
-								<td rowspan="<%= totalRowSpan %>">										
-									<logic:equal name="masterDegreeCoursesDTO" property="allowToChange" value="true">
+								<td rowspan="1">										
+									<logic:equal name="executionCourseTrio" property="first.value" value="true">
 										<html:link page="<%= "/masterDegreeCreditsManagement.do?method=prepareEdit&amp;executionDegreeID=" + executionDegree.getIdInternal().toString() %>" paramId="curricularCourseID" paramName="masterDegreeCoursesDTO" paramProperty="curricularCourse.idInternal">
 											<bean:message key="link.credits.masterDegree.assign"/>
 										</html:link>
 									</logic:equal>										
-									<logic:equal name="masterDegreeCoursesDTO" property="allowToChange" value="false">
-										<bean:size id="dcpNamesSize" name="masterDegreeCoursesDTO" property="dcpNames"/>
+									<logic:equal name="executionCourseTrio" property="first.value" value="false">										
 										<span class="required">*</span>
-										<logic:iterate id="dcpName" name="masterDegreeCoursesDTO" property="dcpNames" indexId="index">
-											<bean:write name="dcpName"/>
-											<logic:notEqual name="index" value="<%= Integer.valueOf(dcpNamesSize.intValue() - 1).toString() %>">
-												,
-											</logic:notEqual>
-											<br/>
-										</logic:iterate>
+										<bean:define id="dcpName" name="masterDegreeCoursesDTO" property="dcpNames" type="java.util.Map"/>
+										<%= dcpName.get(executionCourse) %>										
 									</logic:equal>											
 								</td>										
 								<% request.setAttribute("isLastCellDone","true");%>		

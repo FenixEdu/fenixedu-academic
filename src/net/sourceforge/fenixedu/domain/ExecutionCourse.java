@@ -146,18 +146,22 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	return result;
     }
 
+    public boolean isMasterDegreeDFAOrDEAOnly() {
+	for (final CurricularCourse curricularCourse : getAssociatedCurricularCourses()) {
+	    DegreeType degreeType = curricularCourse.getDegreeCurricularPlan().getDegree().getTipoCurso();
+	    if (!degreeType.equals(DegreeType.MASTER_DEGREE)
+		    && !degreeType.equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA)
+		    && !degreeType.equals(DegreeType.BOLONHA_SPECIALIZATION_DEGREE)) {
+		return false;
+	    }
+	}	
+	return true;
+    }
+    
     public boolean isMasterDegreeOnly() {
 	return checkDegreeType(DegreeType.MASTER_DEGREE);
     }
-    
-    public boolean isDFAOnly() {
-	return checkDegreeType(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA);
-    }
-    
-    public boolean isDEAOnly() {
-	return checkDegreeType(DegreeType.BOLONHA_SPECIALIZATION_DEGREE);
-    }
-
+ 
     private boolean checkDegreeType(DegreeType degreeType) {
 	for (final CurricularCourse curricularCourse : getAssociatedCurricularCourses()) {
 	    if (!curricularCourse.getDegreeCurricularPlan().getDegree().getTipoCurso().equals(degreeType)) {

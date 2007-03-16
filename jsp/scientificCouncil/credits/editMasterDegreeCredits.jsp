@@ -27,10 +27,11 @@
 			<th><bean:message key="label.credits.masterDegree.curricularCourse"/></th>
 			<th><bean:message key="label.credits.masterDegree.curricularCourse.type"/></th>
 			<th><bean:message key="label.credits.masterDegree.curricularCourse.credits"/></th>
-			<th><bean:message key="label.credits.masterDegree.studentsEnrolled"/></th>
 			<th><bean:message key="label.credits.masterDegree.semesters"/></th>
 			<th><bean:message key="label.credits.masterDegree.executions"/></th>
-			<th><bean:message key="label.credits.executionCourse.code"/></th>		
+			<th><bean:message key="label.credits.executionCourse.code"/></th>	
+			<th><bean:message key="label.credits.masterDegree.studentsEnrolled"/></th>
+			<th><bean:message key="label.credits.masterDegree.first.studentsEnrolled"/></th>	
 			<th><bean:message key="label.teacher.number"/></th>
 			<th><bean:message key="label.credits.masterDegree.teacher"/></th>		
 			<th><bean:message key="label.credits.masterDegree.hours"/></th>	
@@ -64,12 +65,7 @@
 				<td class="aright" rowspan="<%= totalRowSpan %>">
 					<bean:write name="masterDegreeCreditsDTO" property="curricularCourse.credits"/>
 				</td>
-				
-				<%-- Number of Enrolments --%>
-				<td class="aright" rowspan="<%= totalRowSpan %>">
-					<bean:write name="masterDegreeCreditsDTO" property="numberEnrolments"/>
-				</td>
-				
+												
 				<%-- Semesters --%>
 				<td class="acenter" rowspan="<%= totalRowSpan %>">
 					<logic:equal name="masterDegreeCreditsDTO" property="semesters" value="0">
@@ -102,7 +98,9 @@
 						<bean:write name="executionPeriod" property="executionYear.year"/>						
 					</td>
 											
-					<logic:iterate id="executionCourse" name="executionCourses" type="net.sourceforge.fenixedu.domain.ExecutionCourse" indexId="executionCourseIndex">
+					<logic:iterate id="executionCourseTrio" name="executionCourses" indexId="executionCourseIndex">
+	
+						<bean:define id="executionCourse" name="executionCourseTrio" property="first.key" type="net.sourceforge.fenixedu.domain.ExecutionCourse"></bean:define>						
 	
 						<% 
 							String isLastCellDone = "false";
@@ -116,11 +114,22 @@
 						<%
 							int numOfProfessorships = executionCourse.getProfessorshipsCount() == 0 ? 1 : executionCourse.getProfessorshipsCount();
 						%>
-						
+					
+						<%-- Execution Code --%>
 						<td class="acenter" rowspan="<%= numOfProfessorships %>">
 							<bean:write name="executionCourse" property="sigla"/>
 						</td>						
 	
+						<%-- Number of Enrolments --%>
+						<td class="aright" rowspan="<%= numOfProfessorships %>">
+							<bean:write name="executionCourseTrio" property="second"/>
+						</td>
+						
+						<%-- Number of first Enrolments --%>
+						<td class="aright" rowspan="<%= numOfProfessorships %>">
+							<bean:write name="executionCourseTrio" property="third"/>
+						</td>
+						
 						<logic:notEmpty name="executionCourse" property="professorships">	
 							
 							<logic:iterate id="professorship" name="executionCourse" property="professorships" type="net.sourceforge.fenixedu.domain.Professorship" indexId="professorshipIndex">
@@ -156,17 +165,25 @@
 								<bean:define id="hours">hoursMap(<bean:write name="professorship" property="idInternal"/>)</bean:define>
 								<bean:define id="credits">creditsMap(<bean:write name="professorship" property="idInternal"/>)</bean:define>
 			
-								<td><html:text alt='<%= hours %>' property='<%= hours %>' size="4" /></td>
-								<td><html:text alt='<%= credits %>' property='<%= credits %>' size="4" /></td>		
+								<logic:equal name="executionCourseTrio" property="first.value" value="true">								
+									<td><html:text alt='<%= hours %>' property='<%= hours %>' size="4" /></td>
+									<td><html:text alt='<%= credits %>' property='<%= credits %>' size="4" /></td>		
+								</logic:equal>	
+								<logic:equal name="executionCourseTrio" property="first.value" value="false">
+									<td><html:text readonly="true" style="color: #777; border: none;" alt='<%= hours %>' property='<%= hours %>' size="4" /></td>
+									<td><html:text readonly="true" style="color: #777; border: none;" alt='<%= credits %>' property='<%= credits %>' size="4" /></td>		
+								</logic:equal>
 	
 								<logic:equal name="isLastCellDone" value="false">
-									<td rowspan="<%= numOfProfessorships %>">	
-										<html:link page="<%= "/readTeacherInCharge.do?degreeCurricularPlanId=" + executionDegree.getDegreeCurricularPlan().getIdInternal().toString() 
-											+ "&amp;degreeId=" + executionDegree.getDegreeCurricularPlan().getDegree().getIdInternal().toString()
-											+ "&amp;executionCourseId=" + executionCourse.getIdInternal().toString() %>"
-											paramId="curricularCourseId" paramName="masterDegreeCreditsDTO" paramProperty="curricularCourse.idInternal">
-											<bean:message key="link.credits.masterDegree.edit.professorship"/>
-										</html:link>
+									<td rowspan="<%= numOfProfessorships %>">
+										<logic:equal name="executionCourseTrio" property="first.value" value="true">																			
+											<html:link page="<%= "/readTeacherInCharge.do?degreeCurricularPlanId=" + executionDegree.getDegreeCurricularPlan().getIdInternal().toString() 
+												+ "&amp;degreeId=" + executionDegree.getDegreeCurricularPlan().getDegree().getIdInternal().toString()
+												+ "&amp;executionCourseId=" + executionCourse.getIdInternal().toString() %>"
+												paramId="curricularCourseId" paramName="masterDegreeCreditsDTO" paramProperty="curricularCourse.idInternal">
+												<bean:message key="link.credits.masterDegree.edit.professorship"/>
+											</html:link>			
+										</logic:equal>	
 									</td>
 									<% request.setAttribute("isLastCellDone","true"); %>
 									</tr>
@@ -185,12 +202,14 @@
 								<td></td>
 								<td></td>
 								<td>
-									<html:link page="<%= "/readTeacherInCharge.do?degreeCurricularPlanId=" + executionDegree.getDegreeCurricularPlan().getIdInternal().toString() 
-											+ "&amp;degreeId=" + executionDegree.getDegreeCurricularPlan().getDegree().getIdInternal().toString()
-											+ "&amp;executionCourseId=" + executionCourse.getIdInternal().toString() %>"
-											paramId="curricularCourseId" paramName="masterDegreeCreditsDTO" paramProperty="curricularCourse.idInternal">
-											<bean:message key="link.credits.masterDegree.edit.professorship"/>
-									</html:link>
+									<logic:equal name="executionCourseTrio" property="first.value" value="true">								
+										<html:link page="<%= "/readTeacherInCharge.do?degreeCurricularPlanId=" + executionDegree.getDegreeCurricularPlan().getIdInternal().toString() 
+												+ "&amp;degreeId=" + executionDegree.getDegreeCurricularPlan().getDegree().getIdInternal().toString()
+												+ "&amp;executionCourseId=" + executionCourse.getIdInternal().toString() %>"
+												paramId="curricularCourseId" paramName="masterDegreeCreditsDTO" paramProperty="curricularCourse.idInternal">
+												<bean:message key="link.credits.masterDegree.edit.professorship"/>
+										</html:link>
+									</logic:equal>
 								</td>				
 							<tr/>		
 						</logic:empty>			
@@ -198,10 +217,12 @@
 				</logic:iterate>
 	
 			</logic:iterate>
-	
+	<!-- 
 			<tr><td style="border: none"></td></tr>
+	 -->
 			<tr>
-				<td class="aright" style="border: none" colspan="11">
+				<td colspan="10" style="border: none;"></td>
+				<td class="aright" colspan="2">
 					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 						<bean:message key="button.save"/>	
 					</html:submit>

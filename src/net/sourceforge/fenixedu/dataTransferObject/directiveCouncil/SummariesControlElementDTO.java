@@ -33,9 +33,19 @@ public class SummariesControlElementDTO extends DataTranferObject {
     }
 
     public BigDecimal getShiftDifference() {
+	if(lessonHours.intValue() == 0) {
+	    return null;
+	}
         return shiftDifference;
     }
 
+    public BigDecimal getCourseDifference() {
+	if(lessonHours.intValue() == 0) {
+	    return null;
+	}
+	return courseDifference;
+    }
+    
     public String getExecutionCourseName() {
         return executionCourseName;
     }
@@ -63,11 +73,7 @@ public class SummariesControlElementDTO extends DataTranferObject {
     public String getCategoryName() {
         return categoryName;
     }
-
-    public BigDecimal getCourseDifference() {
-        return courseDifference;
-    }
-
+    
     public String getSiglas() {
         return siglas;
     }
