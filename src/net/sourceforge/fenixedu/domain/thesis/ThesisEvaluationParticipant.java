@@ -14,8 +14,9 @@ import dml.runtime.RelationAdapter;
 
 public class ThesisEvaluationParticipant extends ThesisEvaluationParticipant_Base {
 
+    private static KeepParticipationNumberAdapter KEEP_PARTICIPATION_NUMBER_ADAPTER = new KeepParticipationNumberAdapter();
     static {
-        ThesisHasParticipations.addListener(new KeepParticipationNumberAdapter());
+        ThesisHasParticipations.addListener(KEEP_PARTICIPATION_NUMBER_ADAPTER);
     }
     
     public final static Comparator<ThesisEvaluationParticipant> COMPARATOR_BY_PERSON_NAME = new ComparatorChain();
@@ -26,20 +27,27 @@ public class ThesisEvaluationParticipant extends ThesisEvaluationParticipant_Bas
     
     public ThesisEvaluationParticipant(Thesis thesis, Person person, ThesisParticipationType type) {
         super();
-        
+
+        setType(type);
         setThesis(thesis);
         setPerson(person);
-        setType(type);
     }
 
     @Override
     public void setPerson(Person person) {
         super.setPerson(person);
         
+        if (person != null) { // consider remove
+            updateParticipantInformation(person);
+        }
+    }
+
+    protected void updateParticipantInformation(Person person) {
         Teacher teacher = person.getTeacher();
+        
         if (teacher != null) {
             setCategory(teacher.getCategory());
-            setAffiliation(teacher.getCurrentWorkingDepartment().getName());
+            setAffiliation(teacher.getCurrentWorkingDepartment().getRealName());
         }
         else {
             ExternalContract contract = person.getExternalPerson();
@@ -56,6 +64,13 @@ public class ThesisEvaluationParticipant extends ThesisEvaluationParticipant_Bas
         deleteDomainObject();
     }
  
+    @Override
+    public void setType(ThesisParticipationType type) {
+        super.setType(type);
+        
+        KEEP_PARTICIPATION_NUMBER_ADAPTER.changedType(this);
+    }
+    
     public static class KeepParticipationNumberAdapter extends RelationAdapter<ThesisEvaluationParticipant, Thesis> {
 
         @Override
@@ -63,19 +78,34 @@ public class ThesisEvaluationParticipant extends ThesisEvaluationParticipant_Bas
             super.beforeAdd(o1, o2);
             
             if (o1 != null && o2 != null) {
-                if (o1.getType().isSingle()) {
-                    removeExisting(o2, o1.getType());
-                }
+                keepTypeCount(o1, o2);
             }
         }
 
-        private void removeExisting(Thesis thesis, ThesisParticipationType type) {
-            ThesisEvaluationParticipant participant = thesis.getParticipant(type);
+        public void changedType(ThesisEvaluationParticipant participant) {
+            keepTypeCount(participant, participant.getThesis());
+        }
+        
+        private void keepTypeCount(ThesisEvaluationParticipant participant, Thesis thesis) {
+            if (thesis == null) {
+                return;
+            }
             
-            if (participant != null) {
-                participant.delete();
+            ThesisParticipationType type = participant.getType();
+            
+            if (type == null) {
+                return;
+            }
+            
+            if (type.isSingle()) {
+                ThesisEvaluationParticipant existing = thesis.getParticipant(type);
+                
+                if (existing != null && existing != participant) {
+                    existing.delete();
+                }
             }
         }
         
     }
+
 }

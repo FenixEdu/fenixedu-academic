@@ -10,7 +10,7 @@
         <property name="subLayout" value="values"/>
         <property name="subSchema" value="thesis.jury.proposal.person.category"/>
     </slot>
-    <slot name="afiliation" key="label.coordinator.thesis.edit.teacher.currentWorkingDepartment" layout="null-as-label">
+    <slot name="affiliation" key="label.coordinator.thesis.edit.teacher.currentWorkingDepartment" layout="null-as-label">
         <property name="label" value="-"/>
     </slot>
 </schema>

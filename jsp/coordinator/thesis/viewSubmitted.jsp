@@ -40,3 +40,72 @@
     <fr:layout name="tabular">
     </fr:layout>
 </fr:view>
+
+<%-- Jury --%>
+<h3><bean:message key="title.coordinator.thesis.edit.section.jury"/></h3>
+
+<%-- Orientator --%>
+<h4><bean:message key="title.coordinator.thesis.edit.section.orientation.orientator"/></h4>
+
+<logic:empty name="thesis" property="orientator">
+    <p>
+        <bean:message key="title.coordinator.thesis.edit.orientator.empty"/>
+    </p>
+</logic:empty>
+
+<logic:notEmpty name="thesis" property="orientator">
+    <fr:view name="thesis" property="orientator" layout="tabular" schema="thesis.jury.proposal.person">
+        <fr:layout name="tabular">
+        </fr:layout>
+    </fr:view>
+</logic:notEmpty>
+
+<%-- Coorientator --%>
+<h4><bean:message key="title.coordinator.thesis.edit.section.orientation.coorientator"/></h4>
+
+<logic:empty name="thesis" property="coorientator">
+    <p>
+        <bean:message key="title.coordinator.thesis.edit.coorientator.empty"/>
+    </p>
+</logic:empty>
+
+<logic:notEmpty name="thesis" property="coorientator">
+    <fr:view name="thesis" property="coorientator" layout="tabular" schema="thesis.jury.proposal.person">
+        <fr:layout name="tabular">
+        </fr:layout>
+    </fr:view>
+</logic:notEmpty>
+
+<%-- Jury/President --%>
+<h4><bean:message key="title.coordinator.thesis.edit.section.jury.president"/></h4>
+
+<logic:empty name="thesis" property="president">
+    <p>
+        <bean:message key="title.coordinator.thesis.edit.president.empty"/>
+    </p>
+</logic:empty>
+
+<logic:notEmpty name="thesis" property="president">
+    <fr:view name="thesis" property="president" layout="tabular" schema="thesis.jury.proposal.person">
+        <fr:layout name="tabular">
+        </fr:layout>
+    </fr:view>
+</logic:notEmpty>
+
+<%-- Jury/"Vowels" --%>
+<h4><bean:message key="title.coordinator.thesis.edit.section.vowels"/></h4>
+
+<logic:empty name="thesis" property="vowels">
+    <p>
+        <bean:message key="title.coordinator.thesis.edit.vowels.empty"/>
+    </p>
+</logic:empty>
+
+<logic:notEmpty name="thesis" property="vowels">
+    <logic:iterate id="vowel" name="thesis" property="vowels">
+        <fr:view name="vowel" layout="tabular" schema="thesis.jury.proposal.person">
+            <fr:layout name="tabular">
+            </fr:layout>
+        </fr:view>
+    </logic:iterate>
+</logic:notEmpty>

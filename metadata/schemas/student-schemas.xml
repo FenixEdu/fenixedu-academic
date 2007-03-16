@@ -160,6 +160,10 @@
     </slot>
 </schema>
 
+<schema name="student.thesis.person.name" type="net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant">
+    <slot name="person.nickname"/>
+</schema>
+
 <schema name="student.thesis.details.abstract" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
     <slot name="thesisAbstractPt" layout="null-as-label" key="label.thesis.abstract.pt">
         <property name="label" value="label.thesis.field.empty"/>
@@ -197,13 +201,9 @@
     <slot name="keywordsPt" key="label.thesis.keywords.pt"  validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
         <property name="size" value="60"/>
     </slot>
-    <slot name="keywordsEn" key="label.thesis.keywords.pt" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+    <slot name="keywordsEn" key="label.thesis.keywords.en" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
         <property name="size" value="60"/>
     </slot>
-</schema>
-
-<schema name="student.thesis.person.name" type="net.sourceforge.fenixedu.domain.Person">
-    <slot name="nickname"/>
 </schema>
 
 <schema name="student.thesis.file" type="net.sourceforge.fenixedu.domain.thesis.ThesisFile">

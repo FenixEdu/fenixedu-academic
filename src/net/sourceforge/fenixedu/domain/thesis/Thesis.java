@@ -326,7 +326,7 @@ public class Thesis extends Thesis_Base {
     }
 
     public boolean isRejected() {
-        // TODO: include REJECTED state of flag and rejectionComment
+        // TODO: include REJECTED state or flag
         return isDraft() && getSubmission() != null;
     }
 
@@ -358,6 +358,12 @@ public class Thesis extends Thesis_Base {
         }
     }
     
+    private void removeParticipation(ThesisEvaluationParticipant participant) {
+        if (participant != null) {
+            participant.delete();
+        }
+    }
+
     public List<ThesisCondition> getConditions() {
         List<ThesisCondition> conditions = new ArrayList<ThesisCondition>();
         
@@ -485,6 +491,14 @@ public class Thesis extends Thesis_Base {
         }
     }
     
+    public boolean isThesisAbstractInBothLanguages() {
+        return getThesisAbstractPt() != null && getThesisAbstractEn() != null;
+    }
+    
+    public boolean isKeywordsInBothLanguages() {
+        return getKeywordsPt() != null && getKeywordsEn() != null;
+    }
+    
     public String getThesisAbstractPt() {
         return getThesisAbstractLanguage("pt");
     }
@@ -609,19 +623,36 @@ public class Thesis extends Thesis_Base {
     }
 
     public void setOrientator(Person person) {
-        new ThesisEvaluationParticipant(this, person, ThesisParticipationType.ORIENTATOR);
+        if (person == null) {
+            removeParticipation(getOrientator());
+        }
+        else {
+            new ThesisEvaluationParticipant(this, person, ThesisParticipationType.ORIENTATOR);
+        }
     }
 
-    public void setCoorientator(final Person person) {
-        new ThesisEvaluationParticipant(this, person, ThesisParticipationType.COORIENTATOR);
+    public void setCoorientator(Person person) {
+        if (person == null) {
+            removeParticipation(getCoorientator());
+        }
+        else {
+            new ThesisEvaluationParticipant(this, person, ThesisParticipationType.COORIENTATOR);
+        }
     }
 
-    public void setPresident(final Person person) {
-        new ThesisEvaluationParticipant(this, person, ThesisParticipationType.PRESIDENT);
+    public void setPresident(Person person) {
+        if (person == null) {
+            removeParticipation(getPresident());
+        }
+        else {
+            new ThesisEvaluationParticipant(this, person, ThesisParticipationType.PRESIDENT);
+        }
     }
 
     public void addVowel(Person person) {
-        new ThesisEvaluationParticipant(this, person, ThesisParticipationType.VOWEL);
+        if (person != null) {
+            new ThesisEvaluationParticipant(this, person, ThesisParticipationType.VOWEL);
+        }
     }
 
     public void removeVowel(Person person) {

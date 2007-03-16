@@ -7,6 +7,8 @@
 
 <h2><bean:message key="title.student.thesis.submission"/></h2>
 
+<h3><bean:message key="title.student.thesis.submit.details"/></h3>
+
 <fr:view name="thesis" schema="student.thesis.details">
     <fr:layout name="tabular">
         <fr:property name="classes" value="tstyle5 thlight mtop05"/>

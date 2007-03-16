@@ -70,7 +70,7 @@
     <h3><bean:message key="title.coordinator.thesis.edit.rejected"/></h3>
     
     <p>
-        <fr:view name="thesis" property="rejectionComment">
+        <fr:view name="thesis" property="rejectionComment" type="java.lang.String">
             <fr:layout name="null-as-label">
                 <fr:property name="label" value="label.coordinator.thesis.edit.rejected.empty"/>
                 <fr:property name="key" value="true"/>
@@ -104,7 +104,6 @@
 <logic:notEmpty name="thesis" property="orientator">
     <fr:view name="thesis" property="orientator" layout="tabular" schema="thesis.jury.proposal.person">
         <fr:layout name="tabular">
-            <fr:property name="classes" value="tstyle5 thlight mtop05"/>
         </fr:layout>
     </fr:view>
 </logic:notEmpty>
@@ -130,7 +129,6 @@
 <logic:notEmpty name="thesis" property="coorientator">
     <fr:view name="thesis" property="coorientator" layout="tabular" schema="thesis.jury.proposal.person">
         <fr:layout name="tabular">
-            <fr:property name="classes" value="tstyle5 thlight mtop05"/>
         </fr:layout>
     </fr:view>
 </logic:notEmpty>
@@ -156,7 +154,6 @@
 <logic:notEmpty name="thesis" property="president">
     <fr:view name="thesis" property="president" layout="tabular" schema="thesis.jury.proposal.person">
         <fr:layout name="tabular">
-            <fr:property name="classes" value="tstyle5 thlight mtop05"/>
         </fr:layout>
     </fr:view>
 </logic:notEmpty>
@@ -190,7 +187,6 @@
     <logic:iterate id="vowel" name="thesis" property="vowels">
         <fr:view name="vowel" layout="tabular" schema="thesis.jury.proposal.person">
             <fr:layout name="tabular">
-                <fr:property name="classes" value="tstyle5 thlight mtop05"/>
             </fr:layout>
         </fr:view>
     

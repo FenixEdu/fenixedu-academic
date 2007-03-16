@@ -29,43 +29,55 @@
 
 <h3><bean:message key="label.thesis.abstract"/></h3>
 
-<p>
-    <fr:view name="thesis" property="thesisAbstract">
-        <fr:layout>
-            <fr:property name="language" value="pt"/>
-            <fr:property name="showLanguageForced" value="true"/>
-        </fr:layout>
-    </fr:view>
-</p>
+<logic:notEqual name="thesis" property="thesisAbstractInBothLanguages" value="true">
+    <bean:message key="label.thesis.abstract.empty"/>
+</logic:notEqual>
 
-<p>
-    <fr:view name="thesis" property="thesisAbstract">
-        <fr:layout>
-            <fr:property name="language" value="en"/>
-            <fr:property name="showLanguageForced" value="true"/>
-        </fr:layout>
-    </fr:view>
-</p>
+<logic:equal name="thesis" property="thesisAbstractInBothLanguages" value="true">
+    <p>
+        <fr:view name="thesis" property="thesisAbstract">
+            <fr:layout>
+                <fr:property name="language" value="pt"/>
+                <fr:property name="showLanguageForced" value="true"/>
+            </fr:layout>
+        </fr:view>
+    </p>
+    
+    <p>
+        <fr:view name="thesis" property="thesisAbstract">
+            <fr:layout>
+                <fr:property name="language" value="en"/>
+                <fr:property name="showLanguageForced" value="true"/>
+            </fr:layout>
+        </fr:view>
+    </p>
+</logic:equal>
 
 <h3><bean:message key="label.thesis.keywords"/></h3>
 
-<p>
-    <fr:view name="thesis" property="keywords">
-        <fr:layout>
-            <fr:property name="language" value="pt"/>
-            <fr:property name="showLanguageForced" value="true"/>
-        </fr:layout>
-    </fr:view>
-</p>
+<logic:notEqual name="thesis" property="keywordsInBothLanguages" value="true">
+    <bean:message key="label.thesis.keywords.empty"/>
+</logic:notEqual>
 
-<p>
-    <fr:view name="thesis" property="keywords">
-        <fr:layout>
-            <fr:property name="language" value="en"/>
-            <fr:property name="showLanguageForced" value="true"/>
-        </fr:layout>
-    </fr:view>
-</p>
+<logic:equal name="thesis" property="keywordsInBothLanguages" value="true">
+    <p>
+        <fr:view name="thesis" property="keywords">
+            <fr:layout>
+                <fr:property name="language" value="pt"/>
+                <fr:property name="showLanguageForced" value="true"/>
+            </fr:layout>
+        </fr:view>
+    </p>
+    
+    <p>
+        <fr:view name="thesis" property="keywords">
+            <fr:layout>
+                <fr:property name="language" value="en"/>
+                <fr:property name="showLanguageForced" value="true"/>
+            </fr:layout>
+        </fr:view>
+    </p>
+</logic:equal>
 
 <h3><bean:message key="title.coordinator.thesis.confirm.extendedAbstract"/></h3>
 
@@ -122,29 +134,10 @@
 </logic:empty>
 
 <logic:notEmpty name="thesis" property="orientator">
-    <logic:empty name="thesis" property="orientator.externalPerson">
-        <logic:empty name="thesis" property="orientator.teacher">
-            <fr:view name="thesis" property="orientator" layout="tabular" schema="thesis.jury.proposal.person">
-                <fr:layout name="tabular">
-                    <fr:property name="classes" value="tstyle5 thlight mtop05"/>
-                </fr:layout>
-            </fr:view>
-        </logic:empty>
-        <logic:notEmpty name="thesis" property="orientator.teacher">
-            <fr:view name="thesis" property="orientator" layout="tabular" schema="thesis.jury.proposal.person.teacher">
-                <fr:layout name="tabular">
-                    <fr:property name="classes" value="tstyle5 thlight mtop05"/>
-                </fr:layout>
-            </fr:view>
-        </logic:notEmpty>
-    </logic:empty>
-    <logic:notEmpty name="thesis" property="orientator.externalPerson">
-        <fr:view name="thesis" property="orientator" layout="tabular" schema="thesis.jury.proposal.person.external">
-            <fr:layout name="tabular">
-                <fr:property name="classes" value="tstyle5 thlight mtop05"/>
-            </fr:layout>
-        </fr:view>
-    </logic:notEmpty>
+    <fr:view name="thesis" property="orientator" layout="tabular" schema="thesis.jury.proposal.person">
+        <fr:layout name="tabular">
+        </fr:layout>
+    </fr:view>
 </logic:notEmpty>
 
 <%-- Coorientator --%>
@@ -157,29 +150,10 @@
 </logic:empty>
 
 <logic:notEmpty name="thesis" property="coorientator">
-    <logic:empty name="thesis" property="coorientator.externalPerson">
-        <logic:empty name="thesis" property="coorientator.teacher">
-            <fr:view name="thesis" property="coorientator" layout="tabular" schema="thesis.jury.proposal.person">
-                <fr:layout name="tabular">
-                    <fr:property name="classes" value="tstyle5 thlight mtop05"/>
-                </fr:layout>
-            </fr:view>
-        </logic:empty>
-        <logic:notEmpty name="thesis" property="coorientator.teacher">
-            <fr:view name="thesis" property="coorientator" layout="tabular" schema="thesis.jury.proposal.person.teacher">
-                <fr:layout name="tabular">
-                    <fr:property name="classes" value="tstyle5 thlight mtop05"/>
-                </fr:layout>
-            </fr:view>
-        </logic:notEmpty>
-    </logic:empty>
-    <logic:notEmpty name="thesis" property="coorientator.externalPerson">
-        <fr:view name="thesis" property="coorientator" layout="tabular" schema="thesis.jury.proposal.person.external">
-            <fr:layout name="tabular">
-                <fr:property name="classes" value="tstyle5 thlight mtop05"/>
-            </fr:layout>
-        </fr:view>
-    </logic:notEmpty>
+    <fr:view name="thesis" property="coorientator" layout="tabular" schema="thesis.jury.proposal.person">
+        <fr:layout name="tabular">
+        </fr:layout>
+    </fr:view>
 </logic:notEmpty>
 
 <%-- Jury/President --%>
@@ -192,29 +166,10 @@
 </logic:empty>
 
 <logic:notEmpty name="thesis" property="president">
-    <logic:empty name="thesis" property="president.externalPerson">
-        <logic:empty name="thesis" property="president.teacher">
-            <fr:view name="thesis" property="president" layout="tabular" schema="thesis.jury.proposal.person">
-                <fr:layout name="tabular">
-                    <fr:property name="classes" value="tstyle5 thlight mtop05"/>
-                </fr:layout>
-            </fr:view>
-        </logic:empty>
-        <logic:notEmpty name="thesis" property="president.teacher">
-            <fr:view name="thesis" property="president" layout="tabular" schema="thesis.jury.proposal.person.teacher">
-                <fr:layout name="tabular">
-                    <fr:property name="classes" value="tstyle5 thlight mtop05"/>
-                </fr:layout>
-            </fr:view>
-        </logic:notEmpty>
-    </logic:empty>
-    <logic:notEmpty name="thesis" property="president.externalPerson">
-        <fr:view name="thesis" property="president" layout="tabular" schema="thesis.jury.proposal.person.external">
-            <fr:layout name="tabular">
-                <fr:property name="classes" value="tstyle5 thlight mtop05"/>
-            </fr:layout>
-        </fr:view>
-    </logic:notEmpty>
+    <fr:view name="thesis" property="president" layout="tabular" schema="thesis.jury.proposal.person">
+        <fr:layout name="tabular">
+        </fr:layout>
+    </fr:view>
 </logic:notEmpty>
 
 <%-- Jury/"Vowels" --%>
@@ -228,22 +183,9 @@
 
 <logic:notEmpty name="thesis" property="vowels">
     <logic:iterate id="vowel" name="thesis" property="vowels">
-        <logic:empty name="vowel" property="externalPerson">
-            <logic:empty name="vowel" property="teacher">
-                <fr:view name="vowel" layout="tabular" schema="thesis.jury.proposal.person">
-                    <fr:layout name="tabular">
-                        <fr:property name="classes" value="tstyle5 thlight mtop05"/>
-                    </fr:layout>
-                </fr:view>
-            </logic:empty>
-            <logic:notEmpty name="vowel" property="teacher">
-                <fr:view name="vowel" layout="tabular" schema="thesis.jury.proposal.person.teacher">
-                    <fr:layout name="tabular">
-                        <fr:property name="classes" value="tstyle5 thlight mtop05"/>
-                    </fr:layout>
-                </fr:view>
-            </logic:notEmpty>
-        </logic:empty>
+        <fr:view name="vowel" layout="tabular" schema="thesis.jury.proposal.person">
+            <fr:layout name="tabular">
+            </fr:layout>
+        </fr:view>
     </logic:iterate>
 </logic:notEmpty>
-
