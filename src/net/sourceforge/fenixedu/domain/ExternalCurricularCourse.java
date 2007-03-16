@@ -83,11 +83,11 @@ public class ExternalCurricularCourse extends ExternalCurricularCourse_Base {
     }
 
     public String getFullPathName() {
-	final List<AccountabilityTypeEnum> validAccountabilityTypes = Arrays
-		.asList(new AccountabilityTypeEnum[] { AccountabilityTypeEnum.GEOGRAPHIC,
-			AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE });
-	return UnitUtils.getUnitFullPathName(getUnit(), validAccountabilityTypes).toString() + " > "
-		+ getName();
+	final List<AccountabilityTypeEnum> validAccountabilityTypes = Arrays.asList(new AccountabilityTypeEnum[] {
+		AccountabilityTypeEnum.GEOGRAPHIC,
+		AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE,
+		AccountabilityTypeEnum.ACADEMIC_STRUCTURE });
+	return UnitUtils.getUnitFullPathName(getUnit(), validAccountabilityTypes).toString() + " > " + getName();
     }
 
     static public ExternalCurricularCourse readExternalCurricularCourse(Unit unit, String name,
