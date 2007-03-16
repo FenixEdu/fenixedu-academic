@@ -13,13 +13,14 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 
 public abstract class AbstractExternalUnitResultBean implements Serializable {
     
-    transient private static final List<AccountabilityTypeEnum> ACCOUNTABILITY_TYPES = Arrays
+    transient protected static final List<AccountabilityTypeEnum> ACCOUNTABILITY_TYPES = Arrays
 	    .asList(new AccountabilityTypeEnum[] { 
 		    AccountabilityTypeEnum.GEOGRAPHIC,
 		    AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE,
 		    AccountabilityTypeEnum.ACADEMIC_STRUCTURE });
     
     private PartyTypeEnum parentUnitType;
+    private String fullName;
 
     public AbstractExternalUnitResultBean() {
     }
@@ -70,6 +71,18 @@ public abstract class AbstractExternalUnitResultBean implements Serializable {
 
     public String getNumberOfExternalCurricularCourses() {
 	return "-";
+    }
+    
+    public String getFullName() {
+	if (this.fullName == null) {
+	    final StringBuilder unitFullPathName = UnitUtils.getUnitFullPathName(getUnit(), ACCOUNTABILITY_TYPES);
+	    setFullName(unitFullPathName.toString() + " > " + getName());
+	}
+	return this.fullName;
+    }
+    
+    protected void setFullName(final String fullName) {
+	this.fullName = fullName;
     }
  
     abstract public Unit getUnit();
