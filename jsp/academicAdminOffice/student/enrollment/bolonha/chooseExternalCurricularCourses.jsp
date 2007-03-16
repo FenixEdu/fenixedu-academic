@@ -28,7 +28,9 @@
 <br/>
 
 <bean:define id="contextInformation" name="contextInformation" />
-<fr:form action="<%= contextInformation.toString() + ".do" %>">
+<bean:define id="parameters" name="parameters" />
+
+<fr:form action="<%= contextInformation.toString() + parameters.toString() %>">
 	<html:hidden property="method" value="prepareCreateExternalEnrolments"/>
 	
 	<bean:define id="studentId" name="student" property="idInternal" />

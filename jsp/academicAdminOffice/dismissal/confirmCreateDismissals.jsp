@@ -28,7 +28,8 @@
 	<p><span class="error0"><!-- Error messages go here --><bean:write name="message" /></span></p>
 </html:messages>
 
-<fr:form action="/studentDismissals.do">
+<bean:define id="scpID" name="dismissalBean" property="studentCurricularPlan.idInternal" />
+<fr:form action="<%= "/studentDismissals.do?scpID=" + scpID.toString() %>">
 	<html:hidden property="method" value="createDismissals"/>
 	
 	<fr:edit id="dismissalBean" name="dismissalBean" visible="false"/>
@@ -76,6 +77,6 @@
 	<p class="mtop15">
 		<html:submit><bean:message key="button.submit" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit>
 		<html:cancel onclick="this.form.method.value='stepTwo'; return true;"><bean:message key="button.back" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:cancel>
-		<html:cancel onclick="this.form.method.value='back'; return true;"><bean:message key="button.cancel" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:cancel>
+		<html:cancel onclick="this.form.method.value='manage'; return true;"><bean:message key="button.cancel" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:cancel>
 	</p>
 </fr:form>

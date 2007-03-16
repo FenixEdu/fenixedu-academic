@@ -37,12 +37,8 @@ public class StudentDismissalsDA extends FenixDispatchAction {
 	return rootDomainObject.readStudentCurricularPlanByOID(scpID);
     }
     
-    public ActionForward manage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	
-	final DismissalBean dismissalBean = new DismissalBean();
-	dismissalBean.setStudentCurricularPlan(getSCP(request));
-	request.setAttribute("dismissalBean", dismissalBean);
+    public ActionForward manage(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute("studentCurricularPlan", getSCP(request));
 	return mapping.findForward("manage");
     }
 
@@ -146,14 +142,7 @@ public class StudentDismissalsDA extends FenixDispatchAction {
 	request.setAttribute("dismissalBean", getRenderedObject());
 	return mapping.findForward("confirmCreateDismissals");
     }
-    
-    public ActionForward back(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	DismissalBean dismissalBean = (DismissalBean) getRenderedObject();
-	request.setAttribute("dismissalBean", dismissalBean);
-	return mapping.findForward("manage");
-    }
-    
+
     public ActionForward createDismissals(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
 	    FenixServiceException {
@@ -185,28 +174,27 @@ public class StudentDismissalsDA extends FenixDispatchAction {
 	    return confirmCreateDismissals(mapping, form, request, response);
 	}
 
-	return back(mapping, form, request, response);
+	return manage(mapping, form, request, response);
     }
     
     public ActionForward deleteCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	
 	String[] creditsIDs = ((DynaActionForm) form).getStrings("creditsToDelete");
-	final DismissalBean dismissalBean = (DismissalBean) getRenderedObject();
+	final StudentCurricularPlan studentCurricularPlan = getSCP(request);
 	
 	try {
-	    executeService(request, "DeleteCredits", new Object[] { dismissalBean.getStudentCurricularPlan(), creditsIDs });
+	    executeService(request, "DeleteCredits", new Object[] { studentCurricularPlan, creditsIDs });
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	}
 	
-	request.setAttribute("dismissalBean", dismissalBean);
+	request.setAttribute("studentCurricularPlan", studentCurricularPlan);
 	return mapping.findForward("manage");
     }
     
-    public ActionForward backViewRegistration(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	final DismissalBean dismissalBean = (DismissalBean) getRenderedObject();
-	request.setAttribute("registrationId", dismissalBean.getStudentCurricularPlan().getRegistration().getIdInternal().toString());
+    public ActionForward backViewRegistration(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute("registrationId", getSCP(request).getRegistration().getIdInternal().toString());
 	return mapping.findForward("visualizeRegistration");
     }
 }

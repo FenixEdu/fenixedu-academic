@@ -21,18 +21,23 @@
 </p>
 
 <bean:define id="contextInformation" name="contextInformation" />
+<bean:define id="parameters" name="parameters" />
+<logic:notEmpty name="parameters">
+	<bean:define id="parameters">&amp;<bean:write name="parameters"/></bean:define>
+</logic:notEmpty>
+
 <ul>
 	<li>
-		<bean:define id="url1"><bean:write name="contextInformation"/>.do?method=chooseExternalUnit&amp;studentId=<bean:write name="student" property="idInternal" /></bean:define>
+		<bean:define id="url1"><bean:write name="contextInformation"/>method=chooseExternalUnit&amp;studentId=<bean:write name="student" property="idInternal" /><bean:write name="parameters"/></bean:define>
 		<html:link action='<%= url1 %>'><bean:message key="label.student.create.external.enrolment" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
 	</li>
 </ul>
 
-<fr:form action="<%= contextInformation.toString() + ".do" %>">
+<bean:define id="studentId" name="student" property="idInternal" />
+
+<fr:form action="<%= contextInformation.toString() + "studentId=" + studentId + parameters.toString()  %>">
+
 	<html:hidden property="method" value="deleteExternalEnrolments"/>
-	
-	<bean:define id="studentId" name="student" property="idInternal" />
-	<html:hidden property="studentId" value="<%= studentId.toString() %>"/>
 	
 	<logic:notEmpty name="student" property="externalEnrolments">
 		<fr:view name="student" property="externalEnrolments" schema="ExternalEnrolment.view-externalCurricularCours">
@@ -55,7 +60,7 @@
 		</p>
 	</logic:empty>
 	
-	<html:cancel onclick="this.form.method.value='viewStudentDetails';"><bean:message key="button.back" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:cancel>
+	<html:cancel onclick="this.form.method.value='cancelExternalEnrolment';"><bean:message key="button.back" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:cancel>
 </fr:form>
 
 </logic:present>

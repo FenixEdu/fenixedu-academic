@@ -34,15 +34,18 @@
 
 
 <bean:define id="dismissalTypeName" name="dismissalBean" property="dismissalType.name" />
-<fr:form action="/studentDismissals.do">
+<bean:define id="scpID" name="dismissalBean" property="studentCurricularPlan.idInternal" />
+
+<fr:form action="<%= "/studentDismissals.do?scpID=" + scpID.toString() %>">
 	<html:hidden property="method" value="confirmCreateDismissals"/>
+	
 	<fr:edit id="dismissalType" name="dismissalBean" schema="DismissalBean.chooseEquivalents">
-		<fr:destination name="dismissalTypePostBack" path="/studentDismissals.do?method=dismissalTypePostBack"/>
-		<fr:destination name="invalid" path="/studentDismissals.do?method=stepTwo"/>
 		<fr:layout name="tabular-editable">
 			<fr:property name="classes" value="tstyle4 thlight"/>
 			<fr:property name="columnClasses" value=",,tdclear"/>
 		</fr:layout>
+		<fr:destination name="dismissalTypePostBack" path="<%= "/studentDismissals.do?method=dismissalTypePostBack&scpID=" + scpID.toString()%>"/>
+		<fr:destination name="invalid" path="<%= "/studentDismissals.do?method=stepTwo&scpID=" + scpID.toString() %>"/>
 	</fr:edit>
 
 	
@@ -57,7 +60,7 @@
 	<p class="mtop15 mbottom15">
 		<html:submit><bean:message key="button.submit" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit>	
 		<html:cancel onclick="this.form.method.value='stepOne'; return true;"><bean:message key="button.back" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:cancel>
-		<html:cancel onclick="this.form.method.value='back'; return true;"><bean:message key="button.cancel" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:cancel>		
+		<html:cancel onclick="this.form.method.value='manage'; return true;"><bean:message key="button.cancel" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:cancel>		
 	</p>
 
 	<p class="color888 mbottom025 smalltxt"><em><bean:message key="label.studentDismissal.ects.message" bundle="ACADEMIC_OFFICE_RESOURCES"/></em></p>

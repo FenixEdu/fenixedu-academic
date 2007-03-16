@@ -590,6 +590,19 @@
 			<forward name="prepareCreateExternalEnrolment" path="studentDismissal.prepareCreateExternalEnrolment"/>
 	  </action>
 	  
+	  <action path="/studentDismissalsExternalEnrolments"
+				scope="request"		
+		        parameter="method"
+				name="studentExternalEnrolmentsForm"
+			    type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.StudentDismissalsExternalEnrolmentsDA">
+			    
+			<forward name="manageDismissals" path="studentDismissal.management"/>
+			<forward name="chooseExternalUnit" path="student.externalEnrolment.chooseExternalUnit"/>
+			<forward name="chooseExternalCurricularCourses" path="student.externalEnrolment.chooseExternalCurricularCourses"/>
+			<forward name="createExternalEnrolments" path="student.externalEnrolment.createExternalEnrolments"/>
+			<forward name="visualizeRegistration" path="student.viewRegistrationDetails"/>
+	  </action>
+	  
       <!-- ExternalUnits -->
       <action path="/externalUnits"
 			  scope="request"

@@ -30,11 +30,14 @@
 <logic:notEmpty name="externalCurricularCourseEnrolmentBeans">
 
 	<bean:define id="contextInformation" name="contextInformation" />
-	<fr:form action="<%= contextInformation.toString() + ".do" %>">
+	<bean:define id="parameters" name="parameters" />
+	<logic:notEmpty name="parameters">
+		<bean:define id="parameters">&amp;<bean:write name="parameters"/></bean:define>
+	</logic:notEmpty>
+
+	<bean:define id="studentId" name="student" property="idInternal" />
+	<fr:form action="<%= contextInformation.toString() + "studentId=" + studentId + parameters %>">
 		<html:hidden property="method" value="createExternalEnrolments"/>
-		
-		<bean:define id="studentId" name="student" property="idInternal" />
-		<html:hidden property="studentId" value="<%= studentId.toString() %>"/>
 		
 		<bean:define id="externalUnitId" name="externalUnit" property="idInternal" />
 		<html:hidden property="externalUnitId" value="<%= externalUnitId.toString() %>"/>
@@ -46,7 +49,7 @@
 			<fr:layout name="tabular-editable">
 				<fr:property name="classes" value="tstyle4 mtop15" />
 			</fr:layout>
-			<fr:destination name="invalid" path="<%= contextInformation.toString() + ".do?method=createExternalEnrolmentsInvalid&studentId=" + studentId + "&externalUnitId=" + externalUnitId %>" />
+			<fr:destination name="invalid" path="<%= contextInformation.toString() + "method=createExternalEnrolmentsInvalid&studentId=" + studentId + parameters +"&externalUnitId=" + externalUnitId %>" />
 		</fr:edit>
 		<html:submit><bean:message key="button.choose" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit>
 		<html:cancel onclick="this.form.method.value='chooseExternalCurricularCourses';" ><bean:message key="button.back" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:cancel>

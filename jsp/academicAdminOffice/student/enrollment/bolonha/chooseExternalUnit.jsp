@@ -27,6 +27,10 @@
 
 <bean:define id="studentId" name="student" property="idInternal" />
 <bean:define id="contextInformation" name="contextInformation" />
+<bean:define id="parameters" name="parameters" />
+<logic:notEmpty name="parameters">
+	<bean:define id="parameters">&amp;<bean:write name="parameters"/></bean:define>
+</logic:notEmpty>
 
 <fr:view name="unit" property="sortedExternalChilds">
     <fr:layout name="tree">
@@ -35,10 +39,10 @@
         <fr:property name="childrenFor(Unit)" value="sortedExternalChilds"/>
         <fr:property name="expandable" value="true"/>
     </fr:layout>
-    <fr:destination name="choose.ExternalCurricularCourses" path="<%= contextInformation.toString() + ".do?method=chooseExternalCurricularCourses&amp;studentId=" + studentId + "&amp;externalUnitId=${idInternal}" %>"/>
+    <fr:destination name="choose.ExternalCurricularCourses" path="<%= contextInformation.toString() + "method=chooseExternalCurricularCourses&amp;studentId=" + studentId + parameters + "&amp;externalUnitId=${idInternal}" %>"/>
 </fr:view>
 
-<fr:form action="/studentExternalEnrolments.do?method=backToMainPage">
+<fr:form action="<%= contextInformation.toString() + "method=backToMainPage" + parameters %>">
 	<html:hidden property="studentId" value="<%= studentId.toString() %>"/>
 	<br/>
 	<html:cancel><bean:message key="button.cancel" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:cancel>

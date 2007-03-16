@@ -17,7 +17,7 @@
 <p class="mvert2">
 	<span style="background-color: #ecf3e1; border-bottom: 1px solid #ccdeb2; padding: 0.4em 0.6em;">
 		<bean:message key="label.student" bundle="ACADEMIC_OFFICE_RESOURCES"/>: 
-		<fr:view name="dismissalBean" property="studentCurricularPlan.student" schema="student.show.personAndStudentInformation.short">
+		<fr:view name="studentCurricularPlan" property="student" schema="student.show.personAndStudentInformation.short">
 			<fr:layout name="flow">
 				<fr:property name="labelExcluded" value="true"/>
 			</fr:layout>
@@ -28,22 +28,23 @@
 
 <ul>
 	<li>
-		<bean:define id="url1">/studentDismissals.do?method=prepare&amp;scpID=<bean:write name="dismissalBean" property="studentCurricularPlan.idInternal" /></bean:define>
+		<bean:define id="url1">/studentDismissals.do?method=prepare&amp;scpID=<bean:write name="studentCurricularPlan" property="idInternal" /></bean:define>
 		<html:link action='<%= url1 %>'><bean:message key="label.studentDismissal.create" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
 	</li>
-	<%-- 
+
 	<li>
-		<bean:define id="url1">/studentDismissals.do?method=chooseExternalCurricularCourse&amp;scpID=<bean:write name="dismissalBean" property="studentCurricularPlan.idInternal" /></bean:define>
+		<bean:define id="url1">/studentDismissalsExternalEnrolments.do?method=chooseExternalUnit&amp;scpID=<bean:write name="studentCurricularPlan" property="idInternal" /></bean:define>
 		<html:link action='<%= url1 %>'><bean:message key="label.student.create.external.enrolment" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
 	</li>
-	--%>
-</ul>
 
-<fr:form action="/studentDismissals.do">
+</ul>
+<bean:define id="scpID" name="studentCurricularPlan" property="idInternal" />
+<fr:form action="<%= "/studentDismissals.do?scpID="+ scpID.toString() %>">
+
 	<html:hidden property="method" value="deleteCredits"/>
-	<fr:edit name="dismissalBean" visible="false"/>
-	<logic:notEmpty name="dismissalBean" property="studentCurricularPlan.credits">
-		<fr:view name="dismissalBean" property="studentCurricularPlan.credits" schema="student.Dismissal.view.dismissals">
+	
+	<logic:notEmpty name="studentCurricularPlan" property="credits">
+		<fr:view name="studentCurricularPlan" property="credits" schema="student.Dismissal.view.dismissals">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4 thlight thcenter" />
 				<fr:property name="columnClasses" value=",inobullet ulmvert0,inobullet ulmvert0,," />
@@ -55,7 +56,7 @@
 		<html:submit><bean:message key="button.delete" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit>
 	</logic:notEmpty>
 
-	<logic:empty name="dismissalBean" property="studentCurricularPlan.credits">
+	<logic:empty name="studentCurricularPlan" property="credits">
 		<p class="mvert15">
 			<em><bean:message key="label.studentDismissal.management.no.credits" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 		</p>

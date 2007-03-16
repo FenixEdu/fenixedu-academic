@@ -30,8 +30,8 @@
 	<span><bean:message key="label.studentDismissal.step.three" bundle="ACADEMIC_OFFICE_RESOURCES"/></span>
 </p>
 
-
-<fr:form action="/studentDismissals.do">
+<bean:define id="scpID" name="dismissalBean" property="studentCurricularPlan.idInternal" />
+<fr:form action="<%= "/studentDismissals.do?scpID=" + scpID %>">
 	<html:hidden property="method" value="chooseEquivalents"/>
 	
 	<fr:edit id="dismissalBean" name="dismissalBean" visible="false"/>
@@ -73,6 +73,6 @@
 	
 	<p class="mtop2">
 		<html:submit onclick="this.form.method.value='chooseEquivalents'; return true;"><bean:message key="button.submit" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit>	
-		<html:submit onclick="this.form.method.value='back'; return true;"><bean:message key="button.back" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit>
+		<html:submit onclick="this.form.method.value='manage'; return true;"><bean:message key="button.back" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit>
 	</p>
 </fr:form>
