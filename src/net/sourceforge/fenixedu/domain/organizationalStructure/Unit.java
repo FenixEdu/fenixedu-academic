@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.ExternalCurricularCourse;
 import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -1074,21 +1075,13 @@ public class Unit extends Unit_Base {
 	return null;
     }
     
-    
-    /**
-     * This method return a list of external childs in the "organizational structure",
-     * that may be <Units> or <ExternalCurricularCourses>.
-     * Its used by a tree renderer
-     * @return SortedSet<Object>
-     */
-    public SortedSet<Object> getSortedExternalChilds() {
-	final SortedSet<Object> result = new TreeSet<Object>(new BeanComparator("name"));	
+    public SortedSet<Unit> getSortedExternalChilds() {
+	final SortedSet<Unit> result = new TreeSet<Unit>(new BeanComparator("name"));	
 	for (final Unit unit : getSubUnits()) {
 	    if (!unit.isInternal()) {
 		result.add(unit);
 	    }
 	}
-	result.addAll(getExternalCurricularCoursesSet());
 	return result;
     }
     
@@ -1103,7 +1096,38 @@ public class Unit extends Unit_Base {
 	    return super.hasCompetenceCourses(competenceCourse);
 	default:
 	    return false;
-}    }
+	}
+    }
+    
+    public List<ExternalCurricularCourse> getAllExternalCurricularCourses() {
+	final List<ExternalCurricularCourse> result = new ArrayList<ExternalCurricularCourse>(getExternalCurricularCourses());
+	
+	switch (getType()) {
+	case COUNTRY:
+	    addAllExternalCurricularCourses(result, PartyTypeEnum.UNIVERSITY);
+	    addAllExternalCurricularCourses(result, PartyTypeEnum.SCHOOL);
+	    break;
+	    
+	case UNIVERSITY:
+	    addAllExternalCurricularCourses(result, PartyTypeEnum.SCHOOL);
+	    addAllExternalCurricularCourses(result, PartyTypeEnum.DEPARTMENT);
+	    break;
+	    
+	case SCHOOL:
+	    addAllExternalCurricularCourses(result, PartyTypeEnum.DEPARTMENT);
+	    break;
+	    
+	case DEPARTMENT:
+	default:
+	}
+	return result;
+    }
+
+    private void addAllExternalCurricularCourses(final List<ExternalCurricularCourse> result, final PartyTypeEnum type) {
+	for (final Unit unit : getSubUnits(type)) {
+	    result.addAll(unit.getAllExternalCurricularCourses());
+	}
+    }
 
     private boolean searchCompetenceCourseInChilds(final CompetenceCourse competenceCourse, final PartyTypeEnum type) {
 	for (final Unit unit : getSubUnits(type)) {
