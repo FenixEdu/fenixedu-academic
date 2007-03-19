@@ -2,6 +2,7 @@
 	<slot name="title"/>
 </schema>
 
+
 <schema name="researcher.person.personalInfo" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.Person">
 	<slot name="nickname" key="researcher.viewCurriculum.name"/>
 </schema>
