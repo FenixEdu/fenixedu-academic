@@ -4,7 +4,7 @@ update CONVOKE set OJB_CONCRETE_CLASS='net.sourceforge.fenixedu.domain.vigilancy
 
 update CONVOKE set OJB_CONCRETE_CLASS='net.sourceforge.fenixedu.domain.vigilancy.OtherCourseVigilancy' where OJB_CONCRETE_CLASS='net.sourceforge.fenixedu.domain.vigilancy.VigilancyWithCredits';
 
- alter table CONVOKE add column STATUS;
+ alter table CONVOKE add column STATUS varchar(255);
  update CONVOKE set STATUS='ATTENDED' where ATTENDED_TO_CONVOKE=1;
  update CONVOKE set STATUS='NOT_ATTENDED' where ATTENDED_TO_CONVOKE=0;
  alter table CONVOKE drop column ATTENDED_TO_CONVOKE;
