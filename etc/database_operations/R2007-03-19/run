@@ -26,3 +26,6 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "Alter convoke table" alterConvokesTable.sql
+execute "Alter Vigilant Groups" alterVigilantGroupTable.sql
