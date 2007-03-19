@@ -16,9 +16,6 @@
 	<bean:define id="create" value="<%="/resultParticipations/create.do?" + parameters%>"/>
 	<bean:define id="cancel" value="<%="/resultParticipations/backToResult.do?" + parameters%>"/>
 	<bean:define id="createExternalPerson" value="<%= "/resultParticipations/prepareCreateParticipator.do?" + parameters%>"/>
-	<logic:equal name="bean" property="beanExternal" value="true">
-	<bean:define id="cancel" value="<%=prepareEdit%>"/>
-	</logic:equal>
 	
 	<%--
 	<p class="mtop2 mbottom0"><b><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultParticipation.add"/></b></p>
@@ -52,7 +49,7 @@
 	
  	<%-- From to Create Participation --%>
 	<div class="dinline forminline">
-	<fr:form action="<%= create %>">
+	<fr:form action="<%="/resultParticipations/createWrapper.do?" + parameters%>">
 		<fr:edit id="bean" name="bean" schema="<%= createSchema %>" >
 			<fr:layout name="tabular">
 		        <fr:property name="classes" value="tstyle5 thlight mtop05 dinline"/>
@@ -66,15 +63,13 @@
 		</fr:edit>
 		<br/>
 		<html:submit><bean:message key="label.submit" bundle="APPLICATION_RESOURCES"/></html:submit>
-		<html:cancel><bean:message key="button.cancel" bundle="APPLICATION_RESOURCES"/></html:cancel>
+		<logic:present name="needToCreatePerson"> 	
+			<html:submit property="createNew"><bean:message key="label.createPerson" bundle="RESEARCHER_RESOURCES"/></html:submit>
+	 	</logic:present>
 	</fr:form>
-	<logic:present name="needToCreatePerson"> 	
-			<bean:define id="bean" name="bean" type="net.sourceforge.fenixedu.dataTransferObject.research.result.ResultParticipationCreationBean"/>
-			<bean:define id="name" name="name"/>
-			<fr:form action="<%= createExternalPerson + "&amp;name=" + name + "&amp;role=" + bean.getRole().toString()%>">
-				<html:submit><bean:message key="label.createPerson" bundle="RESEARCHER_RESOURCES"/></html:submit>
-			</fr:form>
- 	</logic:present>
+	<fr:form action="<%= cancel %>">
+		<html:submit><bean:message key="button.cancel" bundle="APPLICATION_RESOURCES"/></html:submit>
+	</fr:form>
 	</div>
 	</logic:notPresent>
 	
