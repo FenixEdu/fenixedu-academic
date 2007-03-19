@@ -128,6 +128,13 @@
 	<logic:equal name="bean" property="showUnavailables" value="true">
 		<p class="mbottom05"><strong><bean:message
 			key="vigilancy.myUnavailablePeriods" bundle="VIGILANCY_RESOURCES" /></strong>:</p>
+		<logic:messagesPresent message="true">
+			<p>
+			<html:messages id="messages" message="true" bundle="VIGILANCY_RESOURCES">
+				<span class="error0"><bean:write name="messages"/></span>
+			</html:messages>
+			</p>
+		</logic:messagesPresent>
 		<logic:notEmpty name="vigilant" property="unavailablePeriods">
 			<logic:equal name="vigilant"
 				property="allowedToSpecifyUnavailablePeriod" value="true">
