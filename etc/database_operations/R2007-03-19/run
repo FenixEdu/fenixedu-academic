@@ -29,3 +29,4 @@ function executeWithTempFile() {
 
 execute "Alter convoke table" alterConvokesTable.sql
 execute "Alter Vigilant Groups" alterVigilantGroupTable.sql
+execute "Changing Scope Type" updateScopeType.sql
