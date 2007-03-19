@@ -122,6 +122,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherServiceItem;
+import net.sourceforge.fenixedu.domain.vigilancy.OtherCourseVigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
@@ -1034,11 +1035,11 @@ public class CreateTestData {
 
         final YearMonthDay yearMonthDay = writtenEvaluation.getDayDateYearMonthDay();
         writtenEvaluation.setDayDateYearMonthDay(new YearMonthDay().plusDays(1));
-        final Vigilancy vigilancy = new VigilancyWithCredits(writtenEvaluation);
+        final Vigilancy vigilancy = new OtherCourseVigilancy(writtenEvaluation);
         writtenEvaluation.setDayDateYearMonthDay(yearMonthDay);
         for (final Professorship professorship : executionCourse.getProfessorshipsSet()) {
             final Vigilant vigilant = professorship.getTeacher().getPerson().getVigilantForGivenExecutionYear(executionPeriod.getExecutionYear());
-            vigilant.addVigilancys(vigilancy);
+            vigilant.addVigilancies(vigilancy);
         }
     }
 
