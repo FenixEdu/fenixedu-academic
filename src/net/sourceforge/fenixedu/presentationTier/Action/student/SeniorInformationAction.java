@@ -49,7 +49,6 @@ public class SeniorInformationAction extends FenixDispatchAction {
 	} else {
 	    final Senior senior = (Senior) executeService("ReadStudentSenior", new Object[] { registration });
 	    request.setAttribute("senior", senior);
-
 	    return mapping.findForward("show-form");
 	}
     }
@@ -57,9 +56,8 @@ public class SeniorInformationAction extends FenixDispatchAction {
     public ActionForward change(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	IViewState viewState = RenderUtils.getViewState("EditSeniorProfessionalExperienceID");	
-	Senior senior = (Senior) viewState.getMetaObject().getObject();	
-	request.setAttribute("senior", senior);
+	final IViewState viewState = RenderUtils.getViewState("editSeniorExpectedInfoID");	
+	request.setAttribute("senior", (Senior) viewState.getMetaObject().getObject());
 
 	return mapping.findForward("show-result");
     }
