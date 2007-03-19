@@ -69,7 +69,7 @@ public class ThesisSubmissionDA extends FenixDispatchAction {
             return mapping.findForward("thesis-submit");
         }
         else {
-            if (thesis.isConfirmed()) {
+            if (thesis.isAtLeastConfirmed()) {
                 return mapping.findForward("thesis-showState");
             }
             else {
@@ -122,18 +122,18 @@ public class ThesisSubmissionDA extends FenixDispatchAction {
     }
     
     public ActionForward uploadAbstract(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        executeService("CreateThesisAbstractFile", getThesis(request), null, null);
-        
-        return prepareThesisSubmission(mapping, actionForm, request, response);
-    }
-
-    public ActionForward removeAbstract(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
         ThesisFileBean bean = (ThesisFileBean) getRenderedObject();
         RenderUtils.invalidateViewState();
         
         if (bean != null && bean.getFile() != null) {
             executeService("CreateThesisAbstractFile", getThesis(request), bean.getFile(), bean.getSimpleFileName());
         }
+        
+        return prepareThesisSubmission(mapping, actionForm, request, response);
+    }
+
+    public ActionForward removeAbstract(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        executeService("CreateThesisAbstractFile", getThesis(request), null, null);
         
         return prepareThesisSubmission(mapping, actionForm, request, response);
     }

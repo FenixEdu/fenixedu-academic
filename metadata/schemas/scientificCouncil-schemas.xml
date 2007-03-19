@@ -1,3 +1,14 @@
+<schema name="scientificCouncil.thesis.table" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
+    <slot name="student.number" key="label.student.number.short"/>
+    <slot name="student.person.name" key="student"/>
+    <slot name="title" key="label.coordinator.title" layout="short">
+        <property name="length" value="60"/>
+    </slot>
+    <slot name="state" key="label.thesis.state">
+        <property bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+    </slot>
+</schema>
+
 <schema name="thesis.table.submitted.proposals" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
     <slot name="student" layout="format" key="label.scientificCouncil.student">
         <property name="format" value="${person.name} (${number})"/>
@@ -18,9 +29,14 @@
     <slot name="approval" key="label.scientificCouncil.whenApproved"/>
 </schema>
 
-<schema name="thesis.review.student" type="net.sourceforge.fenixedu.domain.student.Student">
-    <slot name="number" key="label.scientificCouncil.thesis.review.person.number"/>
-    <slot name="person.name" key="label.scientificCouncil.thesis.review.person.name"/>
+<schema name="scientificCouncil.thesis.approve.dissertation" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
+    <slot name="student" layout="format">
+        <property name="format" value="${person.name} (${number})"/>
+    </slot>
+    <slot name="title"/>
+    <slot name="comment" layout="null-as-label">
+        <property name="label" value="-"/>
+    </slot>
 </schema>
 
 <schema name="thesis.review.person" type="net.sourceforge.fenixedu.domain.Person">
@@ -39,10 +55,11 @@
     <slot name="comment"/>
 </schema>
 
-<schema name="thesis.rejection.comment.edit" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
-    <slot name="text" layout="longText">
+<schema name="thesis.rejection.comment" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
+    <slot name="rejectionComment" layout="longText" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
         <property name="columns" value="60"/>
         <property name="rows" value="10"/>
     </slot>
+    <setter signature="rejectProposal(rejectionComment)"/>
 </schema>
 

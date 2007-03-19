@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.thesis;
 
-import static net.sourceforge.fenixedu.domain.thesis.Thesis.getSubmittedThesis;
 import static net.sourceforge.fenixedu.domain.thesis.Thesis.getApprovedThesis;
 import static net.sourceforge.fenixedu.domain.thesis.Thesis.getConfirmedThesis;
 import static net.sourceforge.fenixedu.domain.thesis.Thesis.getEvaluatedThesis;
+import static net.sourceforge.fenixedu.domain.thesis.Thesis.getSubmittedThesis;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -22,13 +21,20 @@ import org.apache.struts.action.ActionMapping;
 
 public class ScientificCouncilManageThesisDA extends FenixDispatchAction {
 
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        request.setAttribute("thesis", getThesis(request));
+        
+        return super.execute(mapping, actionForm, request, response);
+    }
+
     private Thesis getThesis(HttpServletRequest request) {
-	Integer id = getId(request.getParameter("thesisId"));
-	if (id == null) {
-	    return null;
-	} else {
-	    return RootDomainObject.getInstance().readThesisByOID(id);
-	}
+        Integer id = getId(request.getParameter("thesisID"));
+        if (id == null) {
+            return null;
+        } else {
+            return RootDomainObject.getInstance().readThesisByOID(id);
+        }
     }   
     
     private Integer getId(String id) {
@@ -44,160 +50,69 @@ public class ScientificCouncilManageThesisDA extends FenixDispatchAction {
         }
     }
     
-    
     public ActionForward listThesis(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-	List<Thesis> theses = new ArrayList<Thesis>();
-	
-	theses.addAll(getSubmittedThesis());
-	theses.addAll(getApprovedThesis());
-	theses.addAll(getConfirmedThesis());
-	theses.addAll(getEvaluatedThesis());
-	
-	request.setAttribute("theses", theses);
-	return mapping.findForward("list-thesis");
+        List<Thesis> theses = new ArrayList<Thesis>();
+
+        theses.addAll(getSubmittedThesis());
+        theses.addAll(getApprovedThesis());
+        theses.addAll(getConfirmedThesis());
+        theses.addAll(getEvaluatedThesis());
+
+        request.setAttribute("theses", theses);
+        return mapping.findForward("list-thesis");
     }
 
-    public ActionForward viewThesis(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        Thesis thesis = getThesis(request);
-        
-        if (thesis != null) {
-            request.setAttribute("thesis", thesis);
-            return mapping.findForward("view-thesis");           
-        }
-        else {
-            return listThesis(mapping, actionForm, request, response);
-        }
-    }
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    public ActionForward listSubmitted(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-	
-	request.setAttribute("theses", getSubmittedThesis());
-	return mapping.findForward("list-submitted");
-    }
-    
-    public ActionForward listApproved(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-	
-	request.setAttribute("theses", getApprovedThesis());
-	return mapping.findForward("list-approved");
-    }
-    
-    public ActionForward reviewSubmittedProposal(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-	Thesis thesis = getThesis(request);
-	
-	if (thesis == null) {
-	    return listSubmitted(mapping, actionForm, request, response);
-	}
-	else {
-	    request.setAttribute("thesis", thesis);
-	    return mapping.findForward("review-submitted-proposal");
-	}
-    }
-    
-    public ActionForward reviewApprovedProposal(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-	Thesis thesis = getThesis(request);
-	
-	if (thesis == null) {
-	    return listApproved(mapping, actionForm, request, response);
-	}
-	else {
-	    request.setAttribute("thesis", thesis);
-	    return mapping.findForward("review-approved-proposal");
-	}
+    public ActionForward reviewProposal(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	    return mapping.findForward("review-proposal");
     }
     
     public ActionForward approveProposal(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-	Thesis thesis = getThesis(request);
-	
-	if (thesis != null) {
-	    executeService("ApproveThesisProposal", thesis);
-	}
-	request.setAttribute("theses", getSubmittedThesis());
-        return mapping.findForward("list-submitted");
-    }
-    
-    public ActionForward justifySubmittedProposalRejection(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-	Thesis thesis = getThesis(request);
-	
-	if (thesis == null) {
-	    request.setAttribute("theses", getSubmittedThesis());
-	    return mapping.findForward("list-submitted");
-	}
-	else {
-	    TextBean bean = new TextBean();
-	    request.setAttribute("bean", bean);
-	    request.setAttribute("thesis", thesis);
-	    return mapping.findForward("justify-submitted-proposal-rejection");
-	}
-    }
-    
-    public ActionForward justifyApprovedProposalRejection(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-	Thesis thesis = getThesis(request);
-	
-	if (thesis == null) {
-	    request.setAttribute("theses", getSubmittedThesis());
-	    return mapping.findForward("list-approved");
-	}
-	else {
-	    TextBean bean = new TextBean();
-	    request.setAttribute("bean", bean);
-	    request.setAttribute("thesis", thesis);
-	    return mapping.findForward("justify-approved-proposal-rejection");
-	}
-    }
-    
-    public ActionForward rejectSubmittedProposal(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-	TextBean bean = (TextBean) getRenderedObject("bean");
-	RenderUtils.invalidateViewState("bean");
-	
-	if (bean == null) {
-	    return justifySubmittedProposalRejection(mapping, actionForm, request, response);
-	}
-	
-	Thesis thesis = getThesis(request);
-	if (thesis != null) {
-	    executeService("RejectThesisProposal", thesis, bean.getText());
-	}
-	request.setAttribute("theses", getSubmittedThesis());
-        return mapping.findForward("list-submitted");
-    }
-    
-    public ActionForward rejectApprovedProposal(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-	TextBean bean = (TextBean) getRenderedObject("bean");
-        RenderUtils.invalidateViewState("bean");
-        
-        if (bean == null) {
-            return justifyApprovedProposalRejection(mapping, actionForm, request, response);
+        	Thesis thesis = getThesis(request);
+
+        if (thesis != null) {
+            executeService("ApproveThesisProposal", thesis);
         }
-	
-	Thesis thesis = getThesis(request);	
-	if (thesis != null) {
-	    executeService("RejectThesisProposal", thesis, bean.getText());
-	}
-	
-	request.setAttribute("theses", getApprovedThesis());
-        return mapping.findForward("list-approved");
+        
+        return listThesis(mapping, actionForm, request, response);
     }
     
-    public ActionForward disapproveProposal(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-	Thesis thesis = getThesis(request);
-	
-	if (thesis != null) {
-	    executeService("DisapproveThesisProposal", thesis);
-	}
-	request.setAttribute("theses", getApprovedThesis());
-        return mapping.findForward("list-approved");
+    public ActionForward confirmRejectProposal(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        request.setAttribute("confirmReject", true);
+        return reviewProposal(mapping, actionForm, request, response);
     }
     
+    public ActionForward reviewThesis(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        return mapping.findForward("review-thesis");
+    }
+    
+    public ActionForward confirmApprove(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        request.setAttribute("confirmApprove", true);
+        return reviewThesis(mapping, actionForm, request, response);
+    }
+    
+    public ActionForward confirmDisapprove(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        request.setAttribute("confirmDisapprove", true);
+        return reviewThesis(mapping, actionForm, request, response);
+    }
+    
+    public ActionForward approveThesis(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        Thesis thesis = getThesis(request);
+
+        if (thesis != null) {
+            executeService("ApproveThesisDiscussion", thesis);
+        }
+        
+        return listThesis(mapping, actionForm, request, response);
+    }
+    
+    public ActionForward disapproveThesis(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        Thesis thesis = getThesis(request);
+
+        if (thesis != null) {
+            executeService("DisapproveThesisDiscussion", thesis);
+        }
+        
+        return listThesis(mapping, actionForm, request, response);
+    }
     
 }

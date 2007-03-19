@@ -269,12 +269,9 @@
         <action path="/scientificCouncilManageThesis"
   			type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.thesis.ScientificCouncilManageThesisDA"
   			parameter="method">
-            <forward name="list-submitted" path="thesis-list-submitted"/>
-            <forward name="list-approved" path="thesis-list-approved"/>
-            <forward name="review-submitted-proposal" path="thesis-review-submitted-proposal"/>
-            <forward name="review-approved-proposal" path="thesis-review-approved-proposal"/>
-            <forward name="justify-submitted-proposal-rejection" path="thesis-justify-submitted-proposal-rejection"/>
-            <forward name="justify-approved-proposal-rejection" path="thesis-justify-approved-proposal-rejection"/>
+            <forward name="list-thesis" path="thesis-list"/>
+            <forward name="review-proposal" path="thesis-review-proposal"/>
+            <forward name="review-thesis" path="thesis-review-thesis"/>
   		</action>
      
         
@@ -440,6 +437,7 @@
 
 	<!-- ========== Message Resources Definitions ============================ -->
     <message-resources parameter="resources.ScientificCouncilResources" null="false"/>
+    <message-resources parameter="resources.ScientificCouncilResources" key="SCIENTIFIC_COUNCIL_RESOURCES" null="false"/>
     <message-resources parameter="resources.EnumerationResources" key="ENUMERATION_RESOURCES" null="false"/>	
 
 	<!-- ========== Plug Ins Configuration ================================= -->

@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -175,7 +174,7 @@ public class ManageThesisDA extends FenixDispatchAction {
             return viewApproved(mapping, actionForm, request, response);
         }
         
-        if (thesis.isConfirmed()) {
+        if (thesis.isAtLeastConfirmed()) {
             return viewConfirmed(mapping, actionForm, request, response);
         }
         
@@ -500,24 +499,6 @@ public class ManageThesisDA extends FenixDispatchAction {
         return mapping.findForward("view-submitted");
     }
 
-    // TODO: remove
-    public ActionForward approve(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
-        Thesis thesis = getThesis(request);
-        
-        if (thesis == null) {
-            return listThesis(mapping, actionForm, request, response);
-        }
-        
-        try {
-            executeService("ApproveThesis", degreeCurricularPlan.getIdInternal(), thesis);
-        } catch (DomainException e) {
-            addActionMessage("error", request, e.getKey(), e.getArgs());
-        }
-        
-        return listThesis(mapping, actionForm, request, response);
-    }
-    
     // Approved
     
     public ActionForward viewApproved(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {

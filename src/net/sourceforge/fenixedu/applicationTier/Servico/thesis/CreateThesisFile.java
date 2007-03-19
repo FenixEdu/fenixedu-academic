@@ -9,7 +9,10 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.accessControl.CurrentDegreeCoordinatorsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
+import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
+import net.sourceforge.fenixedu.domain.accessControl.RoleTypeGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisFile;
 import pt.utl.ist.fenix.tools.file.FileDescriptor;
@@ -44,9 +47,10 @@ public abstract class CreateThesisFile extends Service {
         file.setChecksum(descriptor.getChecksum());
         file.setChecksumAlgorithm(descriptor.getChecksumAlgorithm());
 
+        RoleTypeGroup scientificCouncil = new RoleTypeGroup(RoleType.SCIENTIFIC_COUNCIL);
         CurrentDegreeCoordinatorsGroup coordinators = new CurrentDegreeCoordinatorsGroup(thesis.getDegree());
         PersonGroup student = thesis.getStudent().getPerson().getPersonGroup();
-        file.setPermittedGroup(new GroupUnion(coordinators, student));
+        file.setPermittedGroup(new GroupUnion(scientificCouncil, new GroupUnion(coordinators, student)));
         
         updateThesis(thesis, file);
         

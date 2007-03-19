@@ -38,11 +38,18 @@
 <logic:present name="confirmDelete">
     <bean:message key="label.coordinator.thesis.delete.confirm"/>
     
-    <fr:form action="<%= String.format("/manageThesis.do?method=deleteProposal&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
-        <html:submit>
-            <bean:message key="button.coordinator.thesis.delete"/>
-        </html:submit>
-    </fr:form>
+    <div class="forminline">
+        <fr:form action="<%= String.format("/manageThesis.do?method=deleteProposal&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
+            <html:submit>
+                <bean:message key="button.coordinator.thesis.delete"/>
+            </html:submit>
+        </fr:form>
+        <fr:form action="<%= String.format("/manageThesis.do?method=editProposal&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
+            <html:submit>
+                <bean:message key="button.cancel"/>
+            </html:submit>
+        </fr:form>
+    </div>
 </logic:present>
 
 <h3><bean:message key="title.coordinator.thesis.edit.proposal"/></h3>

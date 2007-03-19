@@ -49,11 +49,6 @@
             <fr:property name="order(print)" value="3"/>
             <fr:property name="visibleIf(print)" value="submitted"/>
 
-            <fr:property name="link(approved)" value="<%= "/manageThesis.do?method=approve&amp;degreeCurricularPlanID=" + dcpId %>"/>
-            <fr:property name="param(approved)" value="thesisId/thesisID"/>
-            <fr:property name="order(approved)" value="31"/>
-            <fr:property name="visibleIf(approved)" value="submitted"/>
-
             <fr:property name="link(confirm)" value="<%= "/manageThesis.do?method=viewApproved&amp;degreeCurricularPlanID=" + dcpId %>"/>
             <fr:property name="key(confirm)" value="link.coordinator.list.confirm"/>
             <fr:property name="param(confirm)" value="thesisId/thesisID"/>

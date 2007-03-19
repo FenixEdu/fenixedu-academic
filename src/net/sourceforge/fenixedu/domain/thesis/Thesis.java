@@ -227,6 +227,7 @@ public class Thesis extends Thesis_Base {
         }
         
         setSubmission(new DateTime());
+        setRejectionComment(null);
         setState(ThesisState.SUBMITTED);
     }
 
@@ -251,26 +252,35 @@ public class Thesis extends Thesis_Base {
         setState(ThesisState.APPROVED);
     }
     
+    @Checked("ThesisPredicates.isScientificCouncil")
     public void rejectProposal(String rejectionComment) {
-	if (getState() != ThesisState.SUBMITTED && getState() != ThesisState.APPROVED) {
-	    throw new DomainException("thesis.reject.notSubmittedNorApproved");
-	}
-	
-	setRejectionComment(rejectionComment);
-	setState(ThesisState.DRAFT);
-    }
-    
-    public void disapproveProposal() {
-	if (getState() != ThesisState.APPROVED) {
-	    throw new DomainException("thesis.disapprove.notApproved");
-	}
-	
-	setState(ThesisState.DRAFT);
+        	if (getState() != ThesisState.SUBMITTED && getState() != ThesisState.APPROVED) {
+        	    throw new DomainException("thesis.reject.notSubmittedNorApproved");
+        	}
+        	
+        	setRejectionComment(rejectionComment);
+        	setState(ThesisState.DRAFT);
     }
     
     public void confirm(String mark, DateTime discussed) {
         if (getState() != ThesisState.APPROVED && getState() != ThesisState.REVISION) {
             throw new DomainException("thesis.confirm.notApprovedOrInRevision");
+        }
+        
+        if (! isThesisAbstractInBothLanguages()) {
+            throw new DomainException("thesis.confirm.noAbstract");
+        }
+        
+        if (! isKeywordsInBothLanguages()) {
+            throw new DomainException("thesis.confirm.noKeywords");
+        }
+        
+        if (! hasExtendedAbstract()) {
+            throw new DomainException("thesis.confirm.noExtendedAbstract");
+        }
+        
+        if (! hasDissertation()) {
+            throw new DomainException("thesis.confirm.noDissertation");
         }
         
         setDiscussed(discussed);
@@ -313,19 +323,23 @@ public class Thesis extends Thesis_Base {
         return getState() == ThesisState.SUBMITTED;
     }
 
+    public boolean isApproved() {
+        ThesisState state = getState();
+        
+        return state == ThesisState.APPROVED;
+    }
+
     public boolean isWaitingConfirmation() {
         ThesisState state = getState();
         
         return state == ThesisState.APPROVED || state == ThesisState.REVISION;
     }
     
-    public boolean isApproved() {
-	ThesisState state = getState();
-	
-	return state == ThesisState.APPROVED;
-    }
-
     public boolean isConfirmed() {
+        return getState() == ThesisState.CONFIRMED;
+    }
+    
+    public boolean isAtLeastConfirmed() {
         switch (getState()) {
         case CONFIRMED:
         case EVALUATED:
@@ -592,7 +606,7 @@ public class Thesis extends Thesis_Base {
                 String trimmed = part.trim();
                 
                 if (trimmed.length() != 0) {
-                    if (trimmed.length() != 0) {
+                    if (builder.length() != 0) {
                         builder.append(", ");
                     }
                     

@@ -22,6 +22,15 @@
 			</html:link>
 		</li>
 
+        <li class="navheader">
+            <bean:message key="scientificCouncil.thesis.process"/>
+        </li>
+        <li>
+            <html:link page="/scientificCouncilManageThesis.do?method=listThesis">
+                <bean:message key="navigation.list.jury.proposals"/>
+            </html:link>  
+        </li>
+
 		<br/>
 		<li class="navheader">
 			<bean:message key="label.credits.navigation.header"/>

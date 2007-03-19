@@ -11643,8 +11643,8 @@
         </filterChains>
     </service>
     <service>
-        <name>RejectThesisProposal</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.thesis.RejectThesisProposal</implementationClass>
+        <name>ApproveThesisDiscussion</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.thesis.ApproveThesisDiscussion</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>
         <filterChains>
@@ -11652,8 +11652,8 @@
         </filterChains>
     </service>
     <service>
-        <name>DisapproveThesisProposal</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.thesis.DisapproveThesisProposal</implementationClass>
+        <name>DisapproveThesisDiscussion</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.thesis.DisapproveThesisDiscussion</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>
         <filterChains>

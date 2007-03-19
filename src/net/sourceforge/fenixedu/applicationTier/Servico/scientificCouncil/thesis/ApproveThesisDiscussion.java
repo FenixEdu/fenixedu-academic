@@ -2,17 +2,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.thesi
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 
-public class DisapproveThesisProposal extends Service {
+public class ApproveThesisDiscussion extends Service {
 
     public void run(Thesis thesis) throws FenixServiceException {
-
-        if (thesis == null) {
-            throw new InvalidArgumentsServiceException();
-        }
-        
-        thesis.disapproveProposal();
+        thesis.approveEvaluation();
     }
 }
