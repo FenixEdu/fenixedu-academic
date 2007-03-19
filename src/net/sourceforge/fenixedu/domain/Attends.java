@@ -131,29 +131,29 @@ public class Attends extends Attends_Base {
 	return orderedMarks;
     }
 
-    public WeeklyWorkLoad createWeeklyWorkLoad(final Integer contact, final Integer autonomousStudy,
-	    final Integer other) {
+    public WeeklyWorkLoad createWeeklyWorkLoad(final Integer contact, final Integer autonomousStudy, final Integer other) {
+	
+	if(contact.intValue() < 0 || autonomousStudy.intValue() < 0 || other.intValue() < 0) {
+	    throw new DomainException("weekly.work.load.creation.invalid.data");
+	}
+	
 	if (getEnrolment() == null) {
 	    throw new DomainException("weekly.work.load.creation.requires.enrolment");
 	}
 
 	final int currentWeekOffset = calculateCurrentWeekOffset();
-	if (currentWeekOffset < 1
-		|| new YearMonthDay(getEndOfExamsPeriod()).plusDays(7).isBefore(new YearMonthDay())) {
+	if (currentWeekOffset < 1 || new YearMonthDay(getEndOfExamsPeriod()).plusDays(7).isBefore(new YearMonthDay())) {
 	    throw new DomainException("outside.weekly.work.load.response.period");
 	}
 
 	final int previousWeekOffset = currentWeekOffset - 1;
 
-	final WeeklyWorkLoad lastExistentWeeklyWorkLoad = getWeeklyWorkLoads().isEmpty() ? null
-		: Collections.max(getWeeklyWorkLoads());
-	if (lastExistentWeeklyWorkLoad != null
-		&& lastExistentWeeklyWorkLoad.getWeekOffset().intValue() == previousWeekOffset) {
+	final WeeklyWorkLoad lastExistentWeeklyWorkLoad = getWeeklyWorkLoads().isEmpty() ? null : Collections.max(getWeeklyWorkLoads());
+	if (lastExistentWeeklyWorkLoad != null && lastExistentWeeklyWorkLoad.getWeekOffset().intValue() == previousWeekOffset) {
 	    throw new DomainException("weekly.work.load.for.previous.week.already.exists");
 	}
 
-	return new WeeklyWorkLoad(this, Integer.valueOf(previousWeekOffset), contact, autonomousStudy,
-		other);
+	return new WeeklyWorkLoad(this, Integer.valueOf(previousWeekOffset), contact, autonomousStudy, other);
     }
 
     public Interval getWeeklyWorkLoadInterval() {

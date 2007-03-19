@@ -20,10 +20,8 @@ public class Room extends Room_Base {
 
     public final static Comparator<Room> ROOM_COMPARATOR_BY_PRESENTATION_NAME = new ComparatorChain();
     static {
-	((ComparatorChain) ROOM_COMPARATOR_BY_PRESENTATION_NAME).addComparator(new BeanComparator(
-		"spaceInformation.presentationName", Collator.getInstance()));
-	((ComparatorChain) ROOM_COMPARATOR_BY_PRESENTATION_NAME).addComparator(new BeanComparator(
-		"idInternal"));
+	((ComparatorChain) ROOM_COMPARATOR_BY_PRESENTATION_NAME).addComparator(new BeanComparator("spaceInformation.presentationName", Collator.getInstance()));
+	((ComparatorChain) ROOM_COMPARATOR_BY_PRESENTATION_NAME).addComparator(new BeanComparator("idInternal"));
     }
 
     public static abstract class RoomFactory implements Serializable, FactoryExecutor {

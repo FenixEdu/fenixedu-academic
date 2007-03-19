@@ -19,7 +19,8 @@ public class EmailAddress extends EmailAddress_Base {
 
     public static EmailAddress find(final String emailAddressString) {
 	for (final EmailAddress emailAddress : RootDomainObject.getInstance().getEmailAddressesSet()) {
-	    if (emailAddress.getValue().equalsIgnoreCase(emailAddressString)) {
+	    if (emailAddress.getValue() != null &&
+		    emailAddress.getValue().equalsIgnoreCase(emailAddressString)) {
 		return emailAddress;
 	    }
 	}
