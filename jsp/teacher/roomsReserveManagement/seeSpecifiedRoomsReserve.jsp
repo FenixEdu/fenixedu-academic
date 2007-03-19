@@ -56,9 +56,9 @@
 						<ul class="list6 nobullet">
 							<logic:iterate id="genericEvent" name="punctualRequest" property="genericEvents">
 								<li>
-									<bean:write name="genericEvent" property="eventPeriodForGanttDiagram"/>
+									<bean:write name="genericEvent" property="ganttDiagramEventPeriod"/>
 									-
-									<bean:write name="genericEvent" property="eventObservationsForGanttDiagram"/>
+									<bean:write name="genericEvent" property="ganttDiagramEventObservations"/>
 								</li>
 							</logic:iterate>
 						</ul>

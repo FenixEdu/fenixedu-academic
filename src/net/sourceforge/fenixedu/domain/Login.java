@@ -26,10 +26,8 @@ public class Login extends Login_Base {
     }
 
     public void delete() {
-	for (; !getAlias().isEmpty(); getAlias().get(0).delete())
-	    ;
-	for (; !getLoginPeriods().isEmpty(); getLoginPeriods().get(0).delete())
-	    ;
+	for (; !getAlias().isEmpty(); getAlias().get(0).delete());
+	for (; !getLoginPeriods().isEmpty(); getLoginPeriods().get(0).delete());
 	super.delete();
     }
 

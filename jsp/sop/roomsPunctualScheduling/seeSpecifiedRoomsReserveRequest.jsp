@@ -121,15 +121,15 @@
 									<logic:equal name="punctualRequest" property="currentState.name" value="OPEN">
 										<bean:define id="viewGenericEventURL">/roomsReserveManagement.do?method=prepareView&amp;genericEventID=<bean:write name="genericEvent" property="idInternal"/>&amp;reserveRequestID=<bean:write name="punctualRequest" property="idInternal"/></bean:define>
 										<html:link page="<%= viewGenericEventURL %>">
-											<bean:write name="genericEvent" property="eventPeriodForGanttDiagram"/>
+											<bean:write name="genericEvent" property="ganttDiagramEventPeriod"/>
 											-
-											<bean:write name="genericEvent" property="eventObservationsForGanttDiagram"/>
+											<bean:write name="genericEvent" property="ganttDiagramEventObservations"/>
 										</html:link>
 									</logic:equal>
 									<logic:notEqual name="currentStateName" value="OPEN">
-										<bean:write name="genericEvent" property="eventPeriodForGanttDiagram"/>
+										<bean:write name="genericEvent" property="ganttDiagramEventPeriod"/>
 										-
-										<bean:write name="genericEvent" property="eventObservationsForGanttDiagram"/>
+										<bean:write name="genericEvent" property="ganttDiagramEventObservations"/>
 									</logic:notEqual>
 								</li>
 							</logic:iterate>

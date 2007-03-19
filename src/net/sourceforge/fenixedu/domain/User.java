@@ -60,7 +60,7 @@ public class User extends User_Base {
     }
 
     public void delete() {
-	for (; !getIdentifications().isEmpty(); getIdentifications().get(0).delete()) ;
+	for (; !getIdentifications().isEmpty(); getIdentifications().get(0).delete());
 	super.setPerson(null);
 	removeRootDomainObject();
 	super.deleteDomainObject();

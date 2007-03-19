@@ -127,8 +127,8 @@
 									<fr:view name="event" property="title"/>
 								</html:link>	
 							</td>
-							<td class="padded smalltxt"><bean:write name="event" property="eventPeriodForGanttDiagram"/></td>
-							<td class="padded smalltxt"><bean:write name="event" property="eventObservationsForGanttDiagram"/></td>						
+							<td class="padded smalltxt"><bean:write name="event" property="ganttDiagramEventPeriod"/></td>
+							<td class="padded smalltxt"><bean:write name="event" property="ganttDiagramEventObservations"/></td>						
 						</tr>						
 					</logic:iterate>				
 				</table>			
