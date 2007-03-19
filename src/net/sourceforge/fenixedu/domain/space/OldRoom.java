@@ -20,12 +20,16 @@ import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.TipoSala;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
 
 public class OldRoom extends OldRoom_Base {
 
-    public static final Comparator OLD_ROOM_COMPARATOR_BY_NAME = new BeanComparator("name", Collator
-	    .getInstance());
-
+    public static final Comparator<OldRoom> OLD_ROOM_COMPARATOR_BY_NAME = new ComparatorChain();
+    static {
+	((ComparatorChain) OLD_ROOM_COMPARATOR_BY_NAME).addComparator(new BeanComparator("name", Collator.getInstance()));
+	((ComparatorChain) OLD_ROOM_COMPARATOR_BY_NAME).addComparator(new BeanComparator("idInternal"));
+    }
+    
     public OldRoom() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());

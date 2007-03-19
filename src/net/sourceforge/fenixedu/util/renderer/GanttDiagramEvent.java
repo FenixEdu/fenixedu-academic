@@ -8,16 +8,16 @@ import org.joda.time.Interval;
 
 public interface GanttDiagramEvent {
         
-    public List<Interval> getEventSortedIntervalsForGanttDiagram();
+    public List<Interval> getGanttDiagramEventSortedIntervals();
     
-    public MultiLanguageString getEventNameForGanttDiagram();    
+    public MultiLanguageString getGanttDiagramEventName();    
     
-    public int getEventOffsetForGanttDiagram();  
+    public int getGanttDiagramEventOffset();  
     
-    public String getEventPeriodForGanttDiagram();
+    public String getGanttDiagramEventPeriod();
     
-    public String getEventObservationsForGanttDiagram();
+    public String getGanttDiagramEventObservations();
     
-    public String getEventIdentifierForGanttDiagram();
+    public String getGanttDiagramEventIdentifier();
         
 }

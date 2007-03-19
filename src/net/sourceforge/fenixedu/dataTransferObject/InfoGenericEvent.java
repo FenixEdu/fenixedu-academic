@@ -88,27 +88,27 @@ public class InfoGenericEvent extends InfoShowOccupation implements GanttDiagram
 	return null;
     }
 
-    public String getEventIdentifierForGanttDiagram() {
+    public String getGanttDiagramEventIdentifier() {
 	return getGenericEvent().getPunctualRoomsOccupationRequest().getIdInternal().toString();
     }
 
-    public MultiLanguageString getEventNameForGanttDiagram() {
+    public MultiLanguageString getGanttDiagramEventName() {
 	return getGenericEvent().getPunctualRoomsOccupationRequest().getFirstComment().getSubject();
     }
 
-    public String getEventObservationsForGanttDiagram() {
-	return getGenericEvent().getEventObservationsForGanttDiagram();
+    public String getGanttDiagramEventObservations() {
+	return getGenericEvent().getGanttDiagramEventObservations();
     }
 
-    public int getEventOffsetForGanttDiagram() {
+    public int getGanttDiagramEventOffset() {
 	return 0;
     }
 
-    public String getEventPeriodForGanttDiagram() {
-	return getGenericEvent().getEventPeriodForGanttDiagram();
+    public String getGanttDiagramEventPeriod() {
+	return getGenericEvent().getGanttDiagramEventPeriod();
     }
 
-    public List<Interval> getEventSortedIntervalsForGanttDiagram() {
-	return getGenericEvent().getEventSortedIntervalsForGanttDiagram();
+    public List<Interval> getGanttDiagramEventSortedIntervals() {
+	return getGenericEvent().getGanttDiagramEventSortedIntervals();
     }   
 }

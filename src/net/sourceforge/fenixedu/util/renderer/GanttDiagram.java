@@ -158,7 +158,7 @@ public class GanttDiagram {
          
 	    SortedSet<Interval> allIntervalsSortedByBeginDate = new TreeSet<Interval>(INTERVAL_COMPARATOR_BY_BEGIN);
             for (GanttDiagramEvent event : getEvents()) {
-                allIntervalsSortedByBeginDate.addAll(event.getEventSortedIntervalsForGanttDiagram());
+                allIntervalsSortedByBeginDate.addAll(event.getGanttDiagramEventSortedIntervals());
             }
             if(!allIntervalsSortedByBeginDate.isEmpty()) {
         	setFirstInstant(allIntervalsSortedByBeginDate.first().getStart().toDateMidnight().toDateTime());	
@@ -166,7 +166,7 @@ public class GanttDiagram {
 	
             SortedSet<Interval> allIntervalsSortedByEndDate = new TreeSet<Interval>(INTERVAL_COMPARATOR_BY_END);
             for (GanttDiagramEvent event : getEvents()) {
-                allIntervalsSortedByEndDate.addAll(event.getEventSortedIntervalsForGanttDiagram());
+                allIntervalsSortedByEndDate.addAll(event.getGanttDiagramEventSortedIntervals());
             }
             if(!allIntervalsSortedByEndDate.isEmpty()) { 
         	setLastInstant(allIntervalsSortedByEndDate.last().getEnd().toDateMidnight().toDateTime());

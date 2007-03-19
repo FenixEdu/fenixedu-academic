@@ -209,15 +209,15 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
 	return (!getRoomOccupations().isEmpty()) ? getRoomOccupations().get(0).getPresentationEndDate() : " - ";
     }
   
-    public String getEventIdentifierForGanttDiagram() {
+    public String getGanttDiagramEventIdentifier() {
 	return getIdInternal().toString();	
     }
 
-    public MultiLanguageString getEventNameForGanttDiagram() {	
+    public MultiLanguageString getGanttDiagramEventName() {	
 	return getTitle();
     }
 
-    public String getEventObservationsForGanttDiagram() {
+    public String getGanttDiagramEventObservations() {
 	StringBuilder builder = new StringBuilder();
 	for (RoomOccupation roomOccupation : getRoomOccupations()) {
 	    builder.append(" ").append(roomOccupation.getRoom().getName());
@@ -225,15 +225,15 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
 	return builder.toString();
     }
 
-    public int getEventOffsetForGanttDiagram() {	
+    public int getGanttDiagramEventOffset() {	
 	return 0;
     }
 
-    public List<Interval> getEventSortedIntervalsForGanttDiagram() {		
+    public List<Interval> getGanttDiagramEventSortedIntervals() {		
 	return (!getRoomOccupations().isEmpty()) ? getRoomOccupations().get(0).getRoomOccupationIntervals() : new ArrayList<Interval>();
     }
 
-    public String getEventPeriodForGanttDiagram() {
+    public String getGanttDiagramEventPeriod() {
 	if(!getRoomOccupations().isEmpty()) {
 	    String prettyPrint = getRoomOccupations().get(0).getPrettyPrint();	    
 	    if(getFrequency() != null) {		
@@ -253,7 +253,7 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
     }
 
     public boolean intersectPeriod(DateTime firstDayOfMonth, DateTime lastDayOfMonth) {		
-        for (Interval interval : getEventSortedIntervalsForGanttDiagram()) {
+        for (Interval interval : getGanttDiagramEventSortedIntervals()) {
             if(interval.getStart().isAfter(lastDayOfMonth)) {
                 return false;
             }

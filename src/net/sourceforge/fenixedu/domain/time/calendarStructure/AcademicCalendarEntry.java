@@ -220,32 +220,32 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
 	return (!this.getBegin().isAfter(end) && !this.getEnd().isBefore(begin));
     }
     
-    public List<Interval> getEventSortedIntervalsForGanttDiagram() {
+    public List<Interval> getGanttDiagramEventSortedIntervals() {
 	List<Interval> result = new ArrayList<Interval>();
 	result.add(new Interval(getBegin(), getEnd()));
 	return result;
     }
     
-    public MultiLanguageString getEventNameForGanttDiagram() {
+    public MultiLanguageString getGanttDiagramEventName() {
 	return new MultiLanguageString(getType() + ": " + getTitle().getContent());
     }
     
-    public int getEventOffsetForGanttDiagram() {
+    public int getGanttDiagramEventOffset() {
 	if(getParentEntry() == null) {
 	    return 0;
 	}
-	return getParentEntry().getEventOffsetForGanttDiagram() + 1;
+	return getParentEntry().getGanttDiagramEventOffset() + 1;
     }
     
-    public String getEventObservationsForGanttDiagram() {
+    public String getGanttDiagramEventObservations() {
 	return "-"; 
     }
     
-    public String getEventPeriodForGanttDiagram() {
+    public String getGanttDiagramEventPeriod() {
 	return getBegin().toString("dd/MM/yyyy HH:mm") + " - " + getEnd().toString("dd/MM/yyyy HH:mm"); 
     }
     
-    public String getEventIdentifierForGanttDiagram() {
+    public String getGanttDiagramEventIdentifier() {
 	return getIdInternal().toString();
     }
 }

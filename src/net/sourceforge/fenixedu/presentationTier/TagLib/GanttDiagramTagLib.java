@@ -116,14 +116,14 @@ public class GanttDiagramTagLib extends TagSupport {
             
             for (GanttDiagramEvent event : getEvents()) {	    
                 
-                String eventUrl = getRequest().getContextPath() + getEventUrl() + "&amp;" + getEventParameter() + "=" + event.getEventIdentifierForGanttDiagram();
-                String eventName = event.getEventNameForGanttDiagram().getContent(Language.valueOf(getGanttDiagramObject().getLocale().getLanguage()));
-                String paddingStyle ="padding-left:" + event.getEventOffsetForGanttDiagram() * 15 + "px";	    	    
+                String eventUrl = getRequest().getContextPath() + getEventUrl() + "&amp;" + getEventParameter() + "=" + event.getGanttDiagramEventIdentifier();
+                String eventName = event.getGanttDiagramEventName().getContent(Language.valueOf(getGanttDiagramObject().getLocale().getLanguage()));
+                String paddingStyle ="padding-left:" + event.getGanttDiagramEventOffset() * 15 + "px";	    	    
                 String selectedEvent = getRequest().getParameter(getEventParameter());
                 Object selectedEventObject = getRequest().getAttribute(getEventParameter());	    
                 
-                if(event.getEventIdentifierForGanttDiagram().equals(selectedEvent) || 
-            	    (selectedEventObject != null && event.getEventIdentifierForGanttDiagram().equals(selectedEventObject.toString()))) {
+                if(event.getGanttDiagramEventIdentifier().equals(selectedEvent) || 
+            	    (selectedEventObject != null && event.getGanttDiagramEventIdentifier().equals(selectedEventObject.toString()))) {
                     builder.append("<tr class=\"selected\">");
                 } else {
                     builder.append("<tr>");
@@ -142,7 +142,7 @@ public class GanttDiagramTagLib extends TagSupport {
                     int year = day.getYear();		
                     		
                     builder.append("<td style=\"width: ").append(convertToEm(numberOfUnits)).append("em;\"><div style=\"position: relative;\">");		
-                    for (Interval interval : event.getEventSortedIntervalsForGanttDiagram()) {		    				    		                  
+                    for (Interval interval : event.getGanttDiagramEventSortedIntervals()) {		    				    		                  
                     			    
                         if(interval.getStart().getYear() <= year && interval.getEnd().getYear() >= year) {
                     	
@@ -244,8 +244,8 @@ public class GanttDiagramTagLib extends TagSupport {
                     builder.append("</div></td>");
                     
                 }	    
-                builder.append("<td class=\"padded smalltxt\" title=\"").append(event.getEventPeriodForGanttDiagram()).append("\"><div style=\"overflow:hidden;\" class=\"nowrap\">").append(event.getEventPeriodForGanttDiagram()).append("</div></td>");
-                builder.append("<td class=\"padded smalltxt\">").append(event.getEventObservationsForGanttDiagram()).append("</td>");		
+                builder.append("<td class=\"padded smalltxt\" title=\"").append(event.getGanttDiagramEventPeriod()).append("\"><div style=\"overflow:hidden;\" class=\"nowrap\">").append(event.getGanttDiagramEventPeriod()).append("</div></td>");
+                builder.append("<td class=\"padded smalltxt\">").append(event.getGanttDiagramEventObservations()).append("</td>");		
             }            	
             insertNextAndBeforeLinks(builder);            
             builder.append("</table>");
@@ -264,14 +264,14 @@ public class GanttDiagramTagLib extends TagSupport {
             
             for (GanttDiagramEvent event : getEvents()) {	    
                 
-                String eventUrl = getRequest().getContextPath() + getEventUrl() + "&amp;" + getEventParameter() + "=" + event.getEventIdentifierForGanttDiagram();
-                String eventName = event.getEventNameForGanttDiagram().getContent(Language.valueOf(getGanttDiagramObject().getLocale().getLanguage()));
-                String paddingStyle ="padding-left:" + event.getEventOffsetForGanttDiagram() * 15 + "px";	    	    
+                String eventUrl = getRequest().getContextPath() + getEventUrl() + "&amp;" + getEventParameter() + "=" + event.getGanttDiagramEventIdentifier();
+                String eventName = event.getGanttDiagramEventName().getContent(Language.valueOf(getGanttDiagramObject().getLocale().getLanguage()));
+                String paddingStyle ="padding-left:" + event.getGanttDiagramEventOffset() * 15 + "px";	    	    
                 String selectedEvent = getRequest().getParameter(getEventParameter());
                 Object selectedEventObject = getRequest().getAttribute(getEventParameter());	    
                 
-                if(event.getEventIdentifierForGanttDiagram().equals(selectedEvent) || 
-            	    (selectedEventObject != null && event.getEventIdentifierForGanttDiagram().equals(selectedEventObject.toString()))) {
+                if(event.getGanttDiagramEventIdentifier().equals(selectedEvent) || 
+            	    (selectedEventObject != null && event.getGanttDiagramEventIdentifier().equals(selectedEventObject.toString()))) {
                     builder.append("<tr class=\"selected\">");
                 } else {
                     builder.append("<tr>");
@@ -291,7 +291,7 @@ public class GanttDiagramTagLib extends TagSupport {
                     
                     builder.append("<td style=\"width: ").append(convertToEm(monthNumberOfDays * scale)).append("em;\"><div style=\"position: relative;\">");		
                     
-                    for (Interval interval : event.getEventSortedIntervalsForGanttDiagram()) {		    
+                    for (Interval interval : event.getGanttDiagramEventSortedIntervals()) {		    
                     	
                         DateMidnight intervalStart = interval.getStart().toDateMidnight();
                         DateMidnight intervalEnd = interval.getEnd().toDateMidnight();
@@ -377,8 +377,8 @@ public class GanttDiagramTagLib extends TagSupport {
                     }
                     builder.append("</div></td>");		
                 }
-                builder.append("<td class=\"padded smalltxt\" title=\"").append(event.getEventPeriodForGanttDiagram()).append("\"><div style=\"overflow:hidden;\" class=\"nowrap\">").append(event.getEventPeriodForGanttDiagram()).append("</div></td>");
-                builder.append("<td class=\"padded smalltxt\">").append(event.getEventObservationsForGanttDiagram()).append("</td>");		
+                builder.append("<td class=\"padded smalltxt\" title=\"").append(event.getGanttDiagramEventPeriod()).append("\"><div style=\"overflow:hidden;\" class=\"nowrap\">").append(event.getGanttDiagramEventPeriod()).append("</div></td>");
+                builder.append("<td class=\"padded smalltxt\">").append(event.getGanttDiagramEventObservations()).append("</td>");		
             }
             
             insertNextAndBeforeLinks(builder);
