@@ -2,7 +2,9 @@ package net.sourceforge.fenixedu.presentationTier.Action.research;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -69,23 +71,23 @@ public class ViewCurriculumDispatchAction extends FenixAction {
     private void putInformationOnRequestForGivenExecutionYear(ExecutionYear firstExecutionYear,
 	    ExecutionYear finaltExecutionYear, Person person, HttpServletRequest request) {
 
-	List<Advise> final_works = new ArrayList<Advise>();
-	List<MasterDegreeThesisDataVersion> guidances = new ArrayList<MasterDegreeThesisDataVersion>();
-	List<ExecutionCourse> lectures = new ArrayList<ExecutionCourse>();
-	List<PersonFunction> functions = new ArrayList<PersonFunction>();
-	List<ResearchResultPublication> books = new ArrayList<ResearchResultPublication>();
-	List<ResearchResultPublication> localArticles = new ArrayList<ResearchResultPublication>();
-	List<ResearchResultPublication> nationalArticles = new ArrayList<ResearchResultPublication>();
-	List<ResearchResultPublication> internationalArticles = new ArrayList<ResearchResultPublication>();
-	List<ResearchResultPublication> inproceedings = new ArrayList<ResearchResultPublication>();
-	List<ResearchResultPublication> proceedings = new ArrayList<ResearchResultPublication>();
-	List<ResearchResultPublication> thesis = new ArrayList<ResearchResultPublication>();
-	List<ResearchResultPublication> manuals = new ArrayList<ResearchResultPublication>();
-	List<ResearchResultPublication> technicalReports = new ArrayList<ResearchResultPublication>();
-	List<ResearchResultPublication> otherPublication = new ArrayList<ResearchResultPublication>();
-	List<ResearchResultPublication> unstructured = new ArrayList<ResearchResultPublication>();
-	List<ResearchResultPublication> bookParts = new ArrayList<ResearchResultPublication>();
-	List<ResearchResultPublication> resultPublications = new ArrayList<ResearchResultPublication>();
+	Set<Advise> final_works = new HashSet<Advise>();
+	Set<MasterDegreeThesisDataVersion> guidances = new HashSet<MasterDegreeThesisDataVersion>();
+	Set<ExecutionCourse> lectures = new HashSet<ExecutionCourse>();
+	Set<PersonFunction> functions = new HashSet<PersonFunction>();
+	Set<ResearchResultPublication> books = new HashSet<ResearchResultPublication>();
+	Set<ResearchResultPublication> localArticles = new HashSet<ResearchResultPublication>();
+	Set<ResearchResultPublication> nationalArticles = new HashSet<ResearchResultPublication>();
+	Set<ResearchResultPublication> internationalArticles = new HashSet<ResearchResultPublication>();
+	Set<ResearchResultPublication> inproceedings = new HashSet<ResearchResultPublication>();
+	Set<ResearchResultPublication> proceedings = new HashSet<ResearchResultPublication>();
+	Set<ResearchResultPublication> thesis = new HashSet<ResearchResultPublication>();
+	Set<ResearchResultPublication> manuals = new HashSet<ResearchResultPublication>();
+	Set<ResearchResultPublication> technicalReports = new HashSet<ResearchResultPublication>();
+	Set<ResearchResultPublication> otherPublication = new HashSet<ResearchResultPublication>();
+	Set<ResearchResultPublication> unstructured = new HashSet<ResearchResultPublication>();
+	Set<ResearchResultPublication> bookParts = new HashSet<ResearchResultPublication>();
+	Set<ResearchResultPublication> resultPublications = new HashSet<ResearchResultPublication>();
 
 	if (firstExecutionYear == null) {
 	    firstExecutionYear = ExecutionYear.readFirstExecutionYear();
@@ -127,10 +129,12 @@ public class ViewCurriculumDispatchAction extends FenixAction {
 	    iteratorYear = iteratorYear.getNextExecutionYear();
 	}
 
-	Collections.sort(functions, new ReverseComparator(new BeanComparator("beginDateInDateType")));
-	request.setAttribute("functions", functions);
-	Collections.sort(final_works, new BeanComparator("student.number"));
-	request.setAttribute("final_works", final_works);
+	List<PersonFunction> functionsList = new ArrayList<PersonFunction>(functions);
+	Collections.sort(functionsList, new ReverseComparator(new BeanComparator("beginDateInDateType")));
+	request.setAttribute("functions", functionsList);
+	List<Advise> final_worksList = new ArrayList<Advise>(final_works);
+	Collections.sort(final_worksList, new BeanComparator("student.number"));
+	request.setAttribute("final_works", final_worksList);
 	request.setAttribute("guidances", guidances);
 	request.setAttribute("lectures", lectures);
 	request.setAttribute("resultPublications", resultPublications);
