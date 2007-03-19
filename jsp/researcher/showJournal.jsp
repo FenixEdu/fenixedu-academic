@@ -21,5 +21,6 @@
 		<fr:property name="classes" value="tstyle1 thlight thtop mtop05"/>
 		<fr:property name="rowClasses" value=",bgcolorfafafa"/>
 		<fr:property name="columnClasses" value="acenter,acenter,,acenter,acenter,acenter,acenter"/>
+		<fr:property name="sortBy" value="volume, number"/>
 	</fr:layout>
 </fr:view>
