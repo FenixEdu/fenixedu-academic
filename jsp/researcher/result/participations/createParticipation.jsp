@@ -35,12 +35,12 @@
 	</logic:messagesPresent>
 
  	<logic:present name="needToCreatePerson"> 	
- 		<bean:define id="bean" name="bean" type="net.sourceforge.fenixedu.dataTransferObject.research.result.ResultParticipationCreationBean"/>
-		<bean:define id="name" name="name"/>
+		<logic:messagesNotPresent name="messages" message="true">
 		<div class="warning0">
 			<strong><bean:message key="label.attention" bundle="RESEARCHER_RESOURCES"/></strong>:<br/>
 			<bean:message key="label.informationForCreateUser" bundle="RESEARCHER_RESOURCES"/><br/>
 		</div>
+		</logic:messagesNotPresent>
  	</logic:present>
  	
  	<logic:notPresent name="duringCreation">
