@@ -3978,7 +3978,6 @@ class net.sourceforge.fenixedu.domain.research.result.ResearchResult extends net
 			Integer lastPage;
 			Integer issn;
 			String language;
-			ScopeType scope;
 			
 			Integer keyArticleAssociation;
 		}

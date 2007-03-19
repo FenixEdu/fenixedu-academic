@@ -26,3 +26,5 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "Changing Scope Type" updateScopeType.sql

@@ -170,11 +170,6 @@ public class Article extends Article_Base {
     }
 
     @Override
-    public void setScope(ScopeType scope) {
-	throw new DomainException("error.researcher.Article.call", "setScope");
-    }
-
-    @Override
     public void setMonth(Month month) {
 	throw new DomainException("error.researcher.Article.call", "setMonth");
     }
@@ -236,6 +231,10 @@ public class Article extends Article_Base {
 	    getArticleAssociation().delete();
 	}
 	super.delete();
+    }
+    
+    public ScopeType getScope() {
+	return ScopeType.valueOf(getJournalIssue().getScientificJournal().getLocationType().toString());
     }
 }
  

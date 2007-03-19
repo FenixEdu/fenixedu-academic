@@ -26,7 +26,7 @@ import bibtex.dom.BibtexPersonList;
 public abstract class ResearchResultPublication extends ResearchResultPublication_Base {
 
     public enum ScopeType {
-	LOCAL, NATIONAL, INTERNATIONAL;
+	NATIONAL, INTERNATIONAL;
     }
 
     /**
