@@ -2001,7 +2001,7 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Cr
 		<property name="moduleRelative" value="true"/>
  	    <property name="linkFormat" value="/showJournals.do?method=showScientificJournal&amp;journalId=${scientificJournal.idInternal}"/>
 	</slot>
-	<slot name="journalIssue.publisher"/>
+	<slot name="journalIssue.publisher" label="label.publisher"/>
 	<slot name="url">
 		<property name="classes" value="greytxt1"/>
 		<property name="link" value="true"/>
