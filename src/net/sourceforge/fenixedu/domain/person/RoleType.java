@@ -101,9 +101,9 @@ public enum RoleType {
 	rolesImportance.add(RoleType.GRANT_OWNER);
 	rolesImportance.add(RoleType.INSTITUCIONAL_PROJECTS_MANAGER);
 	rolesImportance.add(RoleType.PROJECTS_MANAGER);
+	rolesImportance.add(RoleType.ALUMNI);
 	rolesImportance.add(RoleType.MASTER_DEGREE_CANDIDATE);
 	rolesImportance.add(RoleType.CANDIDATE);
-	rolesImportance.add(RoleType.ALUMNI);
 	rolesImportance.add(RoleType.MESSAGING);
 	rolesImportance.add(RoleType.PERSON);
 	rolesImportance.add(RoleType.EXAM_COORDINATOR);
