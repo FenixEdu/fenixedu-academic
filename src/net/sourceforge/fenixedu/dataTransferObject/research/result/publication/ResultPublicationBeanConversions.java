@@ -10,7 +10,6 @@ public abstract class ResultPublicationBeanConversions {
 	case Book:
 	    newBean = new BookBean(oldBean);
 	    ((BookBean) newBean).setVolume(oldBean.getVolume());
-	    ((BookBean) newBean).setScope(oldBean.getScope());
 	    ((BookBean) newBean).setLanguage(oldBean.getLanguage());
 	    return newBean;
 	case BookPart:
@@ -53,7 +52,6 @@ public abstract class ResultPublicationBeanConversions {
 	case Article:
 	    newBean = new ArticleBean(oldBean);
 	    ((ArticleBean) newBean).setVolume(oldBean.getVolume());
-	    ((ArticleBean) newBean).setScope(oldBean.getScope());
 	    ((ArticleBean) newBean).setLanguage(oldBean.getLanguage());
 	    return newBean;
 	case BookPart:

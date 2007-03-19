@@ -7,15 +7,12 @@ import net.sourceforge.fenixedu.domain.research.activity.JournalIssue;
 import net.sourceforge.fenixedu.domain.research.activity.ScientificJournal;
 import net.sourceforge.fenixedu.domain.research.result.publication.Article;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
-import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication.ScopeType;
 import bibtex.dom.BibtexEntry;
 
 public class ArticleBean extends ResultPublicationBean implements Serializable {
     private String volume;
 
     private String language;
-
-    private ScopeType scope;
 
     private String journal;
 
@@ -92,7 +89,6 @@ public class ArticleBean extends ResultPublicationBean implements Serializable {
 	this.setLastPage(article.getLastPage());
 	this.setIssn(article.getIssn());
 	this.setLanguage(article.getLanguage());
-	this.setScope(article.getScope());
 	this.setJournalIssue(article.getJournalIssue());
     }
 
@@ -117,14 +113,6 @@ public class ArticleBean extends ResultPublicationBean implements Serializable {
 
     public void setLanguage(String language) {
 	this.language = language;
-    }
-
-    public ScopeType getScope() {
-	return scope;
-    }
-
-    public void setScope(ScopeType scope) {
-	this.scope = scope;
     }
 
     public String getVolume() {
