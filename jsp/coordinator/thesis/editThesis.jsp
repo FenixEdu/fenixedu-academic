@@ -37,7 +37,7 @@
 <%-- Delete proposal --%>
 <logic:present name="confirmDelete">
     <bean:message key="label.coordinator.thesis.delete.confirm"/>
-    
+
     <div class="forminline">
         <fr:form action="<%= String.format("/manageThesis.do?method=deleteProposal&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
             <html:submit>
@@ -52,65 +52,84 @@
     </div>
 </logic:present>
 
-<h3><bean:message key="title.coordinator.thesis.edit.proposal"/></h3>
+
+<h3 class="mtop15 mbottom05"><bean:message key="title.coordinator.thesis.edit.proposal"/></h3>
 
 <fr:view name="thesis" schema="coordinator.thesis.state">
     <fr:layout name="tabular">
+    	<fr:property name="classes" value="tstyle2 thlight thright mtop05"/>
+    	<fr:property name="columnClasses" value="width12em,,"/>
     </fr:layout>
 </fr:view>
 
+
 <%-- Dissertation --%>
-<h3><bean:message key="title.coordinator.thesis.edit.dissertation"/></h3>
+<h3 class="mtop15 mbottom05"><bean:message key="title.coordinator.thesis.edit.dissertation"/></h3>
 
 <fr:view name="thesis" schema="thesis.jury.proposal.information">
     <fr:layout name="tabular">
+    	<fr:property name="classes" value="tstyle2 thlight thright mtop05 mbottom05"/>
+    	<fr:property name="columnClasses" value="width12em,,"/>
     </fr:layout>
 </fr:view>
 
-<html:link page="<%= String.format("/manageThesis.do?method=changeInformation&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
-    <bean:message key="link.coordinator.thesis.edit.changeInformation"/>
-</html:link>
+<p class="mtop05">
+	<html:link page="<%= String.format("/manageThesis.do?method=changeInformation&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
+	    <bean:message key="link.coordinator.thesis.edit.changeInformation"/>
+	</html:link>
+</p>
+
 
 <%-- Rejected information --%>
-
 <logic:equal name="thesis" property="rejected" value="true">
-    <strong><bean:message key="title.coordinator.thesis.edit.rejected"/></strong>
-    
+    <p><span class="warning0"><bean:message key="title.coordinator.thesis.edit.rejected"/></span></p>
     <p>
-        <fr:view name="thesis" property="rejectionComment" type="java.lang.String">
-            <fr:layout name="null-as-label">
-                <fr:property name="label" value="label.coordinator.thesis.edit.rejected.empty"/>
-                <fr:property name="key" value="true"/>
-            </fr:layout>
-        </fr:view>
+    	<em>
+	        <fr:view name="thesis" property="rejectionComment" type="java.lang.String">
+	            <fr:layout name="null-as-label">
+	                <fr:property name="label" value="label.coordinator.thesis.edit.rejected.empty"/>
+	                <fr:property name="key" value="true"/>
+	            </fr:layout>
+	        </fr:view>
+        </em>
     </p>
 </logic:equal>
 
+
 <%-- Jury --%>
-<h3><bean:message key="title.coordinator.thesis.edit.section.jury"/></h3>
+<h3 class="separator2 mtop2 mbottom05"><bean:message key="title.coordinator.thesis.edit.section.jury"/></h3>
 
 <%--  problems in the jury --%>
 <logic:notEmpty name="conditions">
-    <logic:iterate id="condition" name="conditions">
-        <p>
-            <bean:define id="key" name="condition" property="key" type="java.lang.String"/>
-            <bean:message key="<%= key %>"/>
-        </p>
-    </logic:iterate>
+	<div class="warning0">
+	<ul class="mbottom05">
+	    <logic:iterate id="condition" name="conditions">
+	       	<li>
+	        	<em>
+		            <bean:define id="key" name="condition" property="key" type="java.lang.String"/>
+		            <bean:message key="<%= key %>"/>
+	            </em>
+			</li>
+	    </logic:iterate>
+    </ul>
+    </div>
 </logic:notEmpty>
 
+
 <%-- Orientator --%>
-<h4><bean:message key="title.coordinator.thesis.edit.section.orientation.orientator"/></h4>
+<h4 class="mtop25 mbottom05"><bean:message key="title.coordinator.thesis.edit.section.orientation.orientator"/></h4>
 
 <logic:empty name="thesis" property="orientator">
     <p>
-        <bean:message key="title.coordinator.thesis.edit.orientator.empty"/>
+        <em><bean:message key="title.coordinator.thesis.edit.orientator.empty"/></em>
     </p>
 </logic:empty>
 
 <logic:notEmpty name="thesis" property="orientator">
     <fr:view name="thesis" property="orientator" layout="tabular" schema="thesis.jury.proposal.person">
         <fr:layout name="tabular">
+           	<fr:property name="classes" value="tstyle2 thlight thright mtop05 mbottom05"/>
+	    	<fr:property name="columnClasses" value="width12em,,"/>
         </fr:layout>
     </fr:view>
 </logic:notEmpty>
@@ -118,24 +137,28 @@
 <html:link page="<%= String.format("/manageThesis.do?method=changePerson&amp;target=orientator&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
     <bean:message key="link.coordinator.thesis.edit.changePerson"/>
 </html:link>
+
 <logic:notEmpty name="thesis" property="orientator">
     , <html:link page="<%= String.format("/manageThesis.do?method=changePerson&amp;target=orientator&amp;remove=true&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
         <bean:message key="link.coordinator.thesis.edit.removePerson"/>
     </html:link>
 </logic:notEmpty>
 
+
 <%-- Coorientator --%>
-<h4><bean:message key="title.coordinator.thesis.edit.section.orientation.coorientator"/></h4>
+<h4 class="mtop25 mbottom05"><bean:message key="title.coordinator.thesis.edit.section.orientation.coorientator"/></h4>
 
 <logic:empty name="thesis" property="coorientator">
     <p>
-        <bean:message key="title.coordinator.thesis.edit.coorientator.empty"/>
+        <em><bean:message key="title.coordinator.thesis.edit.coorientator.empty"/></em>
     </p>
 </logic:empty>
 
 <logic:notEmpty name="thesis" property="coorientator">
     <fr:view name="thesis" property="coorientator" layout="tabular" schema="thesis.jury.proposal.person">
         <fr:layout name="tabular">
+	    	<fr:property name="classes" value="tstyle2 thlight thright mtop05 mbottom05"/>
+	    	<fr:property name="columnClasses" value="width12em,,"/>
         </fr:layout>
     </fr:view>
 </logic:notEmpty>
@@ -149,18 +172,21 @@
     </html:link>
 </logic:notEmpty>
 
+
 <%-- Jury/President --%>
-<h4><bean:message key="title.coordinator.thesis.edit.section.jury.president"/></h4>
+<h4 class="mtop25 mbottom05"><bean:message key="title.coordinator.thesis.edit.section.jury.president"/></h4>
 
 <logic:empty name="thesis" property="president">
     <p>
-        <bean:message key="title.coordinator.thesis.edit.president.empty"/>
+        <em><bean:message key="title.coordinator.thesis.edit.president.empty"/></em>
     </p>
 </logic:empty>
 
 <logic:notEmpty name="thesis" property="president">
     <fr:view name="thesis" property="president" layout="tabular" schema="thesis.jury.proposal.person">
         <fr:layout name="tabular">
+	    	<fr:property name="classes" value="tstyle2 thlight thright mtop05 mbottom05"/>
+	    	<fr:property name="columnClasses" value="width12em,,"/>
         </fr:layout>
     </fr:view>
 </logic:notEmpty>
@@ -174,8 +200,9 @@
     </html:link>
 </logic:notEmpty>
 
+
 <%-- Jury/"Vowels" --%>
-<h4><bean:message key="title.coordinator.thesis.edit.section.vowels"/></h4>
+<h4 class="mtop25 mbottom05"><bean:message key="title.coordinator.thesis.edit.section.vowels"/></h4>
 
 <bean:size id="vowelsSize" name="thesis" property="vowels"/>
 <logic:lessThan name="vowelsSize" value="3">
@@ -186,7 +213,7 @@
 
 <logic:empty name="thesis" property="vowels">
     <p>
-        <bean:message key="title.coordinator.thesis.edit.vowels.empty"/>
+        <em><bean:message key="title.coordinator.thesis.edit.vowels.empty"/></em>
     </p>
 </logic:empty>
 
@@ -194,6 +221,8 @@
     <logic:iterate id="vowel" name="thesis" property="vowels">
         <fr:view name="vowel" layout="tabular" schema="thesis.jury.proposal.person">
             <fr:layout name="tabular">
+		    	<fr:property name="classes" value="tstyle2 thlight thright mtop05 mbottom05"/>
+		    	<fr:property name="columnClasses" value="width12em,,"/>
             </fr:layout>
         </fr:view>
     

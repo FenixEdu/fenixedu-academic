@@ -23,7 +23,8 @@
 
 <fr:view name="thesis" schema="student.thesis.details.abstract">
     <fr:layout name="tabular">
-        <fr:property name="classes" value="tstyle5 thlight mtop05"/>
+		<fr:property name="classes" value="tstyle2 thlight thright mtop05 mbottom05"/>
+		<fr:property name="columnClasses" value="width12em,,"/>
     </fr:layout>
 </fr:view>
 
@@ -31,7 +32,8 @@
 
 <fr:view name="thesis" schema="student.thesis.details.keywords">
     <fr:layout name="tabular">
-        <fr:property name="classes" value="tstyle5 thlight mtop05"/>
+		<fr:property name="classes" value="tstyle2 thlight thright mtop05 mbottom05"/>
+		<fr:property name="columnClasses" value="width12em,,"/>
     </fr:layout>
 </fr:view>
 
@@ -44,7 +46,8 @@
 <logic:notEmpty name="thesis" property="dissertation">
     <fr:view name="thesis" property="dissertation" schema="student.thesis.file">
         <fr:layout name="tabular">
-            <fr:property name="classes" value="tstyle5 tdtop thlight thright"/>
+			<fr:property name="classes" value="tstyle2 thlight thright mtop05 mbottom05"/>
+			<fr:property name="columnClasses" value="width12em,,"/>
         </fr:layout>
     </fr:view>
 </logic:notEmpty>
@@ -52,13 +55,14 @@
 <h3><bean:message key="title.student.thesis.submit.extendedAbstract"/></h3>
 
 <logic:empty name="thesis" property="extendedAbstract">
-    <bean:message key="label.student.thesis.submit.noExtendedAbstract"/>
+    <p><em><bean:message key="label.student.thesis.submit.noExtendedAbstract"/></em></p>
 </logic:empty>
 
 <logic:notEmpty name="thesis" property="extendedAbstract">
     <fr:view name="thesis" property="extendedAbstract" schema="student.thesis.file">
         <fr:layout name="tabular">
-            <fr:property name="classes" value="tstyle5 tdtop thlight thright"/>
+			<fr:property name="classes" value="tstyle2 thlight thright mtop05 mbottom05"/>
+			<fr:property name="columnClasses" value="width12em,,"/>
         </fr:layout>
     </fr:view>
 </logic:notEmpty>

@@ -21,16 +21,20 @@
 </logic:empty>
 
 <logic:notEmpty name="theses">
-    <p><bean:message key="ThesisPresentationState.UNEXISTING" bundle="ENUMERATION_RESOURCES"/> - <bean:message key="ThesisPresentationState.UNEXISTING.label"/></p>
-    <p><bean:message key="ThesisPresentationState.DRAFT" bundle="ENUMERATION_RESOURCES"/> - <bean:message key="ThesisPresentationState.DRAFT.label"/></p>
-    <p><bean:message key="ThesisPresentationState.SUBMITTED" bundle="ENUMERATION_RESOURCES"/> - <bean:message key="ThesisPresentationState.SUBMITTED.label"/></p>
-    <p><bean:message key="ThesisPresentationState.REJECTED" bundle="ENUMERATION_RESOURCES"/> - <bean:message key="ThesisPresentationState.REJECTED.label"/></p>
-    <p><p><bean:message key="ThesisPresentationState.APPROVED" bundle="ENUMERATION_RESOURCES"/> - <bean:message key="ThesisPresentationState.APPROVED.label"/></p>
-    <p><bean:message key="ThesisPresentationState.CONFIRMED" bundle="ENUMERATION_RESOURCES"/> - <bean:message key="ThesisPresentationState.CONFIRMED.label"/></p>
-    <p><bean:message key="ThesisPresentationState.EVALUATED" bundle="ENUMERATION_RESOURCES"/> - <bean:message key="ThesisPresentationState.EVALUATED.label"/></p>
+	<div class="color888">
+	    <p class="mvert0"><bean:message key="ThesisPresentationState.UNEXISTING" bundle="ENUMERATION_RESOURCES"/> - <bean:message key="ThesisPresentationState.UNEXISTING.label"/></p>
+	    <p class="mvert0"><bean:message key="ThesisPresentationState.DRAFT" bundle="ENUMERATION_RESOURCES"/> - <bean:message key="ThesisPresentationState.DRAFT.label"/></p>
+	    <p class="mvert0"><bean:message key="ThesisPresentationState.SUBMITTED" bundle="ENUMERATION_RESOURCES"/> - <bean:message key="ThesisPresentationState.SUBMITTED.label"/></p>
+	    <p class="mvert0"><bean:message key="ThesisPresentationState.REJECTED" bundle="ENUMERATION_RESOURCES"/> - <bean:message key="ThesisPresentationState.REJECTED.label"/></p>
+	    <p class="mvert0"><bean:message key="ThesisPresentationState.APPROVED" bundle="ENUMERATION_RESOURCES"/> - <bean:message key="ThesisPresentationState.APPROVED.label"/></p>
+	    <p class="mvert0"><bean:message key="ThesisPresentationState.CONFIRMED" bundle="ENUMERATION_RESOURCES"/> - <bean:message key="ThesisPresentationState.CONFIRMED.label"/></p>
+	    <p class="mvert0"><bean:message key="ThesisPresentationState.EVALUATED" bundle="ENUMERATION_RESOURCES"/> - <bean:message key="ThesisPresentationState.EVALUATED.label"/></p>
+    </div>
 
     <fr:view name="theses" schema="coordinator.thesis.table">
         <fr:layout name="tabular-sortable">
+        	<fr:property name="classes" value="tstyle1"/>
+        	<fr:property name="columnClasses" value=",,acenter,acenter,"/>
             <fr:property name="link(create)" value="<%= "/manageThesis.do?method=prepareCreateProposal&amp;degreeCurricularPlanID=" + dcpId %>"/>
             <fr:property name="key(create)" value="link.coordinator.list.create"/>
             <fr:property name="param(create)" value="student.idInternal/studentID"/>

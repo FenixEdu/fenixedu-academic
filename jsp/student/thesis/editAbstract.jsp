@@ -5,14 +5,12 @@
 
 <html:xhtml/>
 
-<h2><bean:message key="title.student.thesis.submission"/></h2>
+<em><bean:message key="title.student.portalTitle"/></em>
+<h2><bean:message key="title.student.thesis.edit.abstract"/></h2>
 
-<h3><bean:message key="title.student.thesis.edit.abstract"/></h3>
-
-<fr:edit name="thesis" schema="student.thesis.abstract.edit"
-         action="/thesisSubmission.do?method=prepareThesisSubmission">
+<fr:edit name="thesis" schema="student.thesis.abstract.edit" action="/thesisSubmission.do?method=prepareThesisSubmission">
     <fr:layout name="tabular">
-        <fr:property name="classes" value="tstyle5 thlight mtop05"/>
+        <fr:property name="classes" value="tstyle5 thlight thright mtop05"/>
         <fr:property name="columnClasses" value=",,tdclear tderror1"/>
     </fr:layout>
 </fr:edit>

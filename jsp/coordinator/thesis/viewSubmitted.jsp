@@ -38,74 +38,90 @@
 
 <fr:view name="thesis" schema="coordinator.thesis.state.submitted">
     <fr:layout name="tabular">
+		<fr:property name="classes" value="tstyle2 thlight thright mtop05 mbottom05"/>
+		<fr:property name="columnClasses" value="width12em,,"/>
     </fr:layout>
 </fr:view>
 
+
 <%-- Dissertation --%>
-<h3><bean:message key="title.coordinator.thesis.edit.dissertation"/></h3>
+<h3 class="mtop15 mbottom05"><bean:message key="title.coordinator.thesis.edit.dissertation"/></h3>
 
 <fr:view name="thesis" schema="thesis.jury.proposal.information">
     <fr:layout name="tabular">
+		<fr:property name="classes" value="tstyle2 thlight thright mtop05 mbottom05"/>
+		<fr:property name="columnClasses" value="width12em,,"/>
     </fr:layout>
 </fr:view>
 
+
 <%-- Jury --%>
-<h3><bean:message key="title.coordinator.thesis.edit.section.jury"/></h3>
+<h3 class="separator2 mtop15"><bean:message key="title.coordinator.thesis.edit.section.jury"/></h3>
+
 
 <%-- Orientator --%>
-<h4><bean:message key="title.coordinator.thesis.edit.section.orientation.orientator"/></h4>
+<h4 class="mtop2 mbottom05"><bean:message key="title.coordinator.thesis.edit.section.orientation.orientator"/></h4>
 
 <logic:empty name="thesis" property="orientator">
     <p>
-        <bean:message key="title.coordinator.thesis.edit.orientator.empty"/>
+        <em><bean:message key="title.coordinator.thesis.edit.orientator.empty"/></em>
     </p>
 </logic:empty>
 
 <logic:notEmpty name="thesis" property="orientator">
     <fr:view name="thesis" property="orientator" layout="tabular" schema="thesis.jury.proposal.person">
         <fr:layout name="tabular">
+           	<fr:property name="classes" value="tstyle2 thlight thright mtop05 mbottom05"/>
+	    	<fr:property name="columnClasses" value="width12em,,"/>
         </fr:layout>
     </fr:view>
 </logic:notEmpty>
 
+
 <%-- Coorientator --%>
-<h4><bean:message key="title.coordinator.thesis.edit.section.orientation.coorientator"/></h4>
+<h4 class="mtop2 mbottom05"><bean:message key="title.coordinator.thesis.edit.section.orientation.coorientator"/></h4>
 
 <logic:empty name="thesis" property="coorientator">
     <p>
-        <bean:message key="title.coordinator.thesis.edit.coorientator.empty"/>
+        <em><bean:message key="title.coordinator.thesis.edit.coorientator.empty"/></em>
     </p>
 </logic:empty>
 
 <logic:notEmpty name="thesis" property="coorientator">
     <fr:view name="thesis" property="coorientator" layout="tabular" schema="thesis.jury.proposal.person">
         <fr:layout name="tabular">
+           	<fr:property name="classes" value="tstyle2 thlight thright mtop05 mbottom05"/>
+	    	<fr:property name="columnClasses" value="width12em,,"/>
         </fr:layout>
     </fr:view>
 </logic:notEmpty>
 
+
 <%-- Jury/President --%>
-<h4><bean:message key="title.coordinator.thesis.edit.section.jury.president"/></h4>
+<h4 class="mtop2 mbottom05"><bean:message key="title.coordinator.thesis.edit.section.jury.president"/></h4>
 
 <logic:empty name="thesis" property="president">
     <p>
-        <bean:message key="title.coordinator.thesis.edit.president.empty"/>
+        <em><bean:message key="title.coordinator.thesis.edit.president.empty"/></em>
     </p>
 </logic:empty>
 
 <logic:notEmpty name="thesis" property="president">
     <fr:view name="thesis" property="president" layout="tabular" schema="thesis.jury.proposal.person">
         <fr:layout name="tabular">
+           	<fr:property name="classes" value="tstyle2 thlight thright mtop05 mbottom05"/>
+	    	<fr:property name="columnClasses" value="width12em,,"/>
         </fr:layout>
     </fr:view>
 </logic:notEmpty>
 
+
 <%-- Jury/"Vowels" --%>
-<h4><bean:message key="title.coordinator.thesis.edit.section.vowels"/></h4>
+<h4 class="mtop2 mbottom05"><bean:message key="title.coordinator.thesis.edit.section.vowels"/></h4>
 
 <logic:empty name="thesis" property="vowels">
     <p>
-        <bean:message key="title.coordinator.thesis.edit.vowels.empty"/>
+        <em><bean:message key="title.coordinator.thesis.edit.vowels.empty"/></em>
     </p>
 </logic:empty>
 
@@ -113,6 +129,8 @@
     <logic:iterate id="vowel" name="thesis" property="vowels">
         <fr:view name="vowel" layout="tabular" schema="thesis.jury.proposal.person">
             <fr:layout name="tabular">
+	           	<fr:property name="classes" value="tstyle2 thlight thright mtop05 mbottom05"/>
+		    	<fr:property name="columnClasses" value="width12em,,"/>
             </fr:layout>
         </fr:view>
     </logic:iterate>

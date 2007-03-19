@@ -14,11 +14,11 @@
     <fr:form action="<%= "/manageThesis.do?method=createProposal&amp;degreeCurricularPlanID=" + dcpId %>">
         <fr:edit id="bean" name="bean" schema="thesis.jury.proposal.information.edit">
             <fr:layout name="tabular">
-                <fr:property name="classes" value="tstyle5 tdtop thlight thright"/>
+                <fr:property name="classes" value="tstyle5 tdtop thlight thright dinline"/>
                 <fr:property name="columnClasses" value=",,tdclear tderror1"/>
             </fr:layout>
         </fr:edit>
-        
+        <br/>
         <html:submit>
             <bean:message key="label.submit"/>
         </html:submit>

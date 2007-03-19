@@ -16,30 +16,37 @@
     </html:messages>
 </logic:messagesPresent>
 
-<strong><bean:message key="title.coordinator.viewStudent.subTitle"/></strong>
+<%--
+<p class="mtop15 mbottom025"><strong><bean:message key="title.coordinator.viewStudent.subTitle"/>:</strong></p>
+--%>
 
 <fr:form action="<%= "/manageThesis.do?method=selectStudent&amp;degreeCurricularPlanID=" + dcpId %>">
     <fr:edit id="student" name="bean" schema="thesis.bean.student">
         <fr:layout name="tabular">
-            <fr:property name="classes" value="tstyle5 tdtop thlight thright"/>
+            <fr:property name="classes" value="tstyle5 tdtop thlight thright thmiddle mtop15 mbottom05"/>
             <fr:property name="columnClasses" value=",,tdclear tderror1"/>
         </fr:layout>
     </fr:edit>
-
-    <html:submit styleClass="mtop05">
-        <bean:message key="button.submit"/>
-    </html:submit>
+	<p class="mtop05">
+	    <html:submit>
+	        <bean:message key="button.submit"/>
+	    </html:submit>
+    </p>
 </fr:form>
 
 <logic:present name="proposeStartProcess">
-    <bean:message key="label.coordinator.thesis.propose.shortcut"/>
-    
-    <bean:define id="studentId" name="bean" property="student.idInternal"/>
-    <fr:form action="<%= String.format("/manageThesis.do?method=prepareCreateProposal&amp;degreeCurricularPlanID=%s&amp;studentID=%s", dcpId, studentId) %>">
-        <html:submit>
-            <bean:message key="button.coordinator.thesis.proposal.create"/>
-        </html:submit>
-    </fr:form>
+	<div class="warning0" style="padding: 1em;">
+		<p class="mtop0 mbottom1">
+			<strong><bean:message key="label.attention"/>:</strong><br/>
+		    <bean:message key="label.coordinator.thesis.propose.shortcut"/>
+	    </p>
+	    <bean:define id="studentId" name="bean" property="student.idInternal"/>
+	    <fr:form action="<%= String.format("/manageThesis.do?method=prepareCreateProposal&amp;degreeCurricularPlanID=%s&amp;studentID=%s", dcpId, studentId) %>">
+	        <html:submit>
+	            <bean:message key="button.coordinator.thesis.proposal.create"/>
+	        </html:submit>
+	    </fr:form>
+    </div>
 </logic:present>
 
 <logic:present name="hasThesis">

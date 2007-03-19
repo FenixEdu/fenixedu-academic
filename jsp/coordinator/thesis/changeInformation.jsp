@@ -11,9 +11,9 @@
 
 <h2><bean:message key="title.coordinator.thesis.edit"/></h2>
 
-<h3>
-    <bean:message key="title.coordinator.thesis.changeInformation"/> 
-</h3>
+<p class="mtop15">
+	<trong><bean:message key="title.coordinator.thesis.changeInformation"/></strong>
+</p>
 
 <fr:edit name="thesis"
          action="<%= String.format("/manageThesis.do?method=editProposal&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>"

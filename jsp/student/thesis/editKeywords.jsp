@@ -5,11 +5,11 @@
 
 <html:xhtml/>
 
-<h2><bean:message key="title.student.thesis.submission"/></h2>
+<em><bean:message key="title.student.portalTitle"/></em>
+<h2><bean:message key="title.student.thesis.edit.keywords"/></h2>
 
-<h3><bean:message key="title.student.thesis.edit.keywords"/></h3>
 
-<div class="infoop2">
+<div class="infoop2 mvert15">
     <p>
         <bean:message key="label.student.thesis.edit.keywords.message"/>
     </p>
@@ -18,7 +18,7 @@
 <fr:edit name="thesis" schema="student.thesis.keywords.edit"
          action="/thesisSubmission.do?method=prepareThesisSubmission">
     <fr:layout name="tabular">
-        <fr:property name="classes" value="tstyle5 thlight mtop05"/>
+        <fr:property name="classes" value="tstyle5 thlight thright mtop05"/>
         <fr:property name="columnClasses" value=",,tdclear tderror1"/>
     </fr:layout>
 </fr:edit>
