@@ -21,7 +21,9 @@
 
 	<li><html:link page="/studentGaugingTestResults.do" titleKey="link.title.results.test"><bean:message key="link.results.test"/></html:link></li>
 --%>
-	
+<%--
+	<li><html:link page="/thesisSubmission.do?method=prepareThesisSubmission" titleKey="title.student.thesis.submission"><bean:message key="label.student.thesis.submission"/></html:link></li>
+--%>
 	<li class="navheader"><bean:message key="enroll"/></li>
 	<li><html:link page="/studentEnrollmentManagement.do?method=prepare" titleKey="link.title.student.enrollment"><bean:message key="link.student.enrollment"/></html:link></li>
 	<li><html:link page="/studentShiftEnrollmentManager.do?method=prepare" titleKey="link.title.shift.enrolment"><bean:message key="link.shift.enrolment"/></html:link></li>
