@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.Person;
@@ -143,44 +144,49 @@ public class Thesis extends Thesis_Base {
         deleteDomainObject();
     }
     
-    protected static Collection<Thesis> getThesisInState(Degree degree, ThesisState state) {
+    protected static Collection<Thesis> getThesisInState(Degree degree, ExecutionYear year, ThesisState state) {
         List<Thesis> theses = new ArrayList<Thesis>();
         
         for (Thesis thesis : RootDomainObject.getInstance().getTheses()) {
-            if (thesis.getState() == state) {
-        	if (degree != null && thesis.getDegree() == degree) {
-        	    theses.add(thesis);
-        	}
-        	else {
-        	    theses.add(thesis);
-        	}
+            if (thesis.getState() != state) {
+                continue;
             }
+            
+            if (degree != null && thesis.getDegree() != degree) {
+                continue;
+            }
+            
+            if (year != null && thesis.getEnrolment().getExecutionYear() != year) {
+                continue;
+            }
+            
+            theses.add(thesis);
         }
         
         return theses;
     }
     
     public static Collection<Thesis> getDraftThesis(Degree degree) {
-        return getThesisInState(degree, ThesisState.DRAFT);
+        return getThesisInState(degree, null, ThesisState.DRAFT);
     }
  
     public static Collection<Thesis> getSubmittedThesis() {
-        return getThesisInState(null, ThesisState.SUBMITTED);
+        return getThesisInState(null, null, ThesisState.SUBMITTED);
     }
     
     public static Collection<Thesis> getSubmittedThesis(Degree degree) {
-        return getThesisInState(degree, ThesisState.SUBMITTED);
+        return getThesisInState(degree, null, ThesisState.SUBMITTED);
     }
     
     public static Collection<Thesis> getApprovedThesis() {
-	return getApprovedThesis(null);
+        return getApprovedThesis(null);
     }
 
     public static Collection<Thesis> getApprovedThesis(Degree degree) {
         List<Thesis> result = new ArrayList<Thesis>();
         
-        result.addAll(getThesisInState(degree, ThesisState.APPROVED));
-        result.addAll(getThesisInState(degree, ThesisState.REVISION));
+        result.addAll(getThesisInState(degree, null, ThesisState.APPROVED));
+        result.addAll(getThesisInState(degree, null, ThesisState.REVISION));
         
         return result;
     }
@@ -190,7 +196,7 @@ public class Thesis extends Thesis_Base {
     }
     
     public static Collection<Thesis> getConfirmedThesis(Degree degree) {
-        return getThesisInState(degree, ThesisState.CONFIRMED);
+        return getThesisInState(degree, null, ThesisState.CONFIRMED);
     }
     
     public static Collection<Thesis> getEvaluatedThesis() {
@@ -198,7 +204,7 @@ public class Thesis extends Thesis_Base {
     }
     
     public static Collection<Thesis> getEvaluatedThesis(Degree degree) {
-        return getThesisInState(degree, ThesisState.EVALUATED);
+        return getThesisInState(degree, null, ThesisState.EVALUATED);
     }
 
     @Override
