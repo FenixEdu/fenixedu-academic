@@ -205,6 +205,10 @@
 		<put name="body" value="/departmentMember/vigilancy/createUnavailable.jsp" />
     </definition>	
 
+   	<definition name="show-Report" extends="departmentMember.masterPage" >
+		<put name="body" value="/departmentMember/vigilancy/showWrittenEvaluationReport.jsp" />
+    </definition>	
+
 	<!-- Teacher Personal Expectation -->	
 	<definition name="view-teacher-personal-expectations" extends="departmentMember.masterPage" >
 		<put name="body" value="/departmentMember/expectationManagement/viewTeacherPersonalExpectation.jsp" />
@@ -220,7 +224,7 @@
     </definition>		
    	<definition name="manage-professional-activities-expectations" extends="departmentMember.masterPage" >
 		<put name="body" value="/departmentMember/expectationManagement/professionalActivitiesExpectationsManagement.jsp" />
-    </definition>		
+    </definition>	
 
 	<!-- Teacher Auto Evaluation Expectation -->
 	<definition name="show-autoEvaluation" extends="departmentMember.masterPage"> 

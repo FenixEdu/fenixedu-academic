@@ -52,6 +52,9 @@
 			<forward name="editVigilantBounds" path="edit-Vigilant-Bounds"/>
 			<forward name="editVigilantStartPoints" path="edit-Vigilant-StartPoints"/>
 			<forward name="editVigilantsInGroups" path="edit-Vigilants-In-Group"/>
+			<forward name="editVigilantGroupPoints" path="edit-VigilantGroup-Points"/>
+			<forward name="showStats" path="show-stats"/>
+			
 		</action>
 		
 		<action path="/vigilancy/convokeManagement" 
@@ -64,7 +67,8 @@
 			<forward name="sugestedConvokes" path="list-sugested-Convokes"/>
 			<forward name="confirmConvokes" path="confirm-convokes"/>			
 			<forward name="displayWhyUnavailable" path="display-why-unavailable"/>
-			
+			<forward name="showReport" path="show-Report"/>
+			<forward name="export-table" path="export-table"/>
 		</action>
 		
 		<action path="/vigilancy/unavailablePeriodManagement" 
@@ -82,6 +86,12 @@
 			scope="request">
 			<forward name="editCourseGroup" path="edit-course-group"/>
 		</action>
+		
+		<action path="/vigilancy/exportReport" 
+			type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantGroupExportReport"
+			parameter="method"
+			scope="request">
+		</action>
 	</action-mappings>
     
     <!-- ========== Controller Configuration ================================ -->
@@ -89,9 +99,8 @@
     
     <!-- ========== Message Resources Definitions ============================ -->
 	<message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
-	<message-resources parameter="resources.ResearcherResources" null="false"/>
 	<message-resources parameter="resources.ResearcherResources" key="RESEARCHER_RESOURCES" null="false"/>
-
+    <message-resources parameter="resources.ApplicationResources" key="APPLICATION_RESOURCES" null="false"/>
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.tiles.TilesPlugin" >
         <set-property property="definitions-config" 

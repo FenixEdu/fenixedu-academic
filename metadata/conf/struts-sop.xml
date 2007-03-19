@@ -1489,7 +1489,8 @@
     <message-resources parameter="resources.ApplicationResourcesSOP" key="SOP_RESOURCES" null="false"/>
 	<message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
     <message-resources parameter="resources.EnumerationResources" key="ENUMERATION_RESOURCES" null="false"/>
-
+	<message-resources parameter="resources.VigilancyResources" key="VIGILANCY_RESOURCES" null="false"/>
+	
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
       <set-property property="pathnames" 

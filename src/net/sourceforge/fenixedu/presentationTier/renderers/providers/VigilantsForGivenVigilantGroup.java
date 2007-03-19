@@ -28,8 +28,8 @@ public class VigilantsForGivenVigilantGroup implements DataProvider {
             ConvokeBean convokeBean = (ConvokeBean) bean;
             vigilants.addAll(convokeBean.getVigilantsSugestion());
             WrittenEvaluation evaluation = convokeBean.getWrittenEvaluation();
-            if(evaluation!=null && evaluation.getVigilancys().size()>0) {
-            	for(Vigilancy convoke : evaluation.getVigilancys()) {
+            if(evaluation!=null && evaluation.getVigilancies().size()>0) {
+            	for(Vigilancy convoke : evaluation.getVigilancies()) {
             		vigilants.remove(convoke.getVigilant());
             	}
             }

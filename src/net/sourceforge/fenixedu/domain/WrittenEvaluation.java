@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
-import net.sourceforge.fenixedu.domain.vigilancy.VigilancyWithCredits;
+import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.EvaluationType;
@@ -32,122 +32,123 @@ import org.joda.time.YearMonthDay;
 
 public class WrittenEvaluation extends WrittenEvaluation_Base {
 
-    public static final Comparator<WrittenEvaluation> COMPARATOR_BY_BEGIN_DATE = new ComparatorChain();
-    static {
-        ((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(new BeanComparator("dayDateYearMonthDay"));
-        ((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(new BeanComparator("beginningDateHourMinuteSecond"));
-        ((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(new BeanComparator("idInternal"));
-    }
+	public static final Comparator<WrittenEvaluation> COMPARATOR_BY_BEGIN_DATE = new ComparatorChain();
+	static {
+		((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(new BeanComparator("dayDateYearMonthDay"));
+		((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(new BeanComparator(
+				"beginningDateHourMinuteSecond"));
+		((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(new BeanComparator("idInternal"));
+	}
 
-    public static List<WrittenEvaluation> readWrittenEvaluations() {
-        List<WrittenEvaluation> result = new ArrayList<WrittenEvaluation>();
-        
-        for (Evaluation evaluation : RootDomainObject.getInstance().getEvaluations()) {
-            if (evaluation instanceof Evaluation) {
-                result.add((WrittenEvaluation) evaluation);
-            }
-        }
-        
-        return result;
-    }
-    
-    public WrittenEvaluation() {
-        super();
-    }
-    
-    public WrittenEvaluation(Date evaluationDay, Date evaluationBeginningTime, Date evaluationEndTime,
-            List<ExecutionCourse> executionCoursesToAssociate,
-            List<DegreeModuleScope> curricularCourseScopesToAssociate, List<OldRoom> rooms,
-            OccupationPeriod period) {
-    	this();
-        setAttributesAndAssociateRooms(evaluationDay, evaluationBeginningTime, evaluationEndTime,
-                executionCoursesToAssociate, curricularCourseScopesToAssociate, rooms, period);
-    }
+	public static List<WrittenEvaluation> readWrittenEvaluations() {
+		List<WrittenEvaluation> result = new ArrayList<WrittenEvaluation>();
 
-    public String getName() {
-        List<ExecutionCourse> courses = this.getAssociatedExecutionCourses();
-        String name = "";
-        int i=0;
-        for(ExecutionCourse course : courses) {
-            if(i>0) name = name + ", ";
-            name = name + " " + course.getSigla(); 
-            i++;
-        }
-        return name;
-    }
-    
-    public String getFullName() {
-    	List<ExecutionCourse> courses = this.getAssociatedExecutionCourses();
-    	String fullName = "";
-    	int i=0;
-        for(ExecutionCourse course : courses) {
-            if(i>0) fullName = fullName + ", ";
-            fullName = fullName + " " + course.getNome(); 
-            i++;
-        }
-        return fullName;
-    }
-     
-    public Campus getCampus() {
-        List<OldRoom> rooms = this.getAssociatedRooms();
-        if(rooms.size()>0) {
-            return rooms.get(0).getBuilding().getCampus();
-        }
-        else return null;
-    }
-    
-    public Boolean getIsAfterCurrentDate() {
-        DateTime currentDate = new DateTime();
-        return currentDate.isBefore(this.getBeginningDateTime());
-    }
-    
-    public DateTime getBeginningDateTime() {
-        HourMinuteSecond begin = this.getBeginningDateHourMinuteSecond();
-        YearMonthDay yearMonthDay = this.getDayDateYearMonthDay();
-        return new DateTime(yearMonthDay.getYear(), yearMonthDay.getMonthOfYear(),
-                yearMonthDay.getDayOfMonth(), begin.getHour(), begin.getMinuteOfHour(), begin
-                .getSecondOfMinute(), 0);
+		for (Evaluation evaluation : RootDomainObject.getInstance().getEvaluations()) {
+			if (evaluation instanceof Evaluation) {
+				result.add((WrittenEvaluation) evaluation);
+			}
+		}
 
-    }
-    
-    public DateTime getEndDateTime() {
-        HourMinuteSecond end = this.getEndDateHourMinuteSecond();
-        YearMonthDay yearMonthDay = this.getDayDateYearMonthDay();
-        return new DateTime(yearMonthDay.getYear(), yearMonthDay.getMonthOfYear(),
-                yearMonthDay.getDayOfMonth(), end.getHour(), end.getMinuteOfHour(), end
-                .getSecondOfMinute(), 0);
+		return result;
+	}
 
-    }
-    
+	public WrittenEvaluation() {
+		super();
+	}
+
+	public WrittenEvaluation(Date evaluationDay, Date evaluationBeginningTime, Date evaluationEndTime,
+			List<ExecutionCourse> executionCoursesToAssociate,
+			List<DegreeModuleScope> curricularCourseScopesToAssociate, List<OldRoom> rooms,
+			OccupationPeriod period) {
+		this();
+		setAttributesAndAssociateRooms(evaluationDay, evaluationBeginningTime, evaluationEndTime,
+				executionCoursesToAssociate, curricularCourseScopesToAssociate, rooms, period);
+	}
+
+	public String getName() {
+		List<ExecutionCourse> courses = this.getAssociatedExecutionCourses();
+		String name = "";
+		int i = 0;
+		for (ExecutionCourse course : courses) {
+			if (i > 0)
+				name = name + ", ";
+			name = name + " " + course.getSigla();
+			i++;
+		}
+		return name;
+	}
+
+	public String getFullName() {
+		List<ExecutionCourse> courses = this.getAssociatedExecutionCourses();
+		String fullName = "";
+		int i = 0;
+		for (ExecutionCourse course : courses) {
+			if (i > 0)
+				fullName = fullName + ", ";
+			fullName = fullName + " " + course.getNome();
+			i++;
+		}
+		return fullName;
+	}
+
+	public Campus getCampus() {
+		List<OldRoom> rooms = this.getAssociatedRooms();
+		if (rooms.size() > 0) {
+			return rooms.get(0).getBuilding().getCampus();
+		} else
+			return null;
+	}
+
+	public Boolean getIsAfterCurrentDate() {
+		DateTime currentDate = new DateTime();
+		return currentDate.isBefore(this.getBeginningDateTime());
+	}
+
+	public DateTime getBeginningDateTime() {
+		HourMinuteSecond begin = this.getBeginningDateHourMinuteSecond();
+		YearMonthDay yearMonthDay = this.getDayDateYearMonthDay();
+		return new DateTime(yearMonthDay.getYear(), yearMonthDay.getMonthOfYear(), yearMonthDay
+				.getDayOfMonth(), begin.getHour(), begin.getMinuteOfHour(), begin.getSecondOfMinute(), 0);
+
+	}
+
+	public DateTime getEndDateTime() {
+		HourMinuteSecond end = this.getEndDateHourMinuteSecond();
+		YearMonthDay yearMonthDay = this.getDayDateYearMonthDay();
+		return new DateTime(yearMonthDay.getYear(), yearMonthDay.getMonthOfYear(), yearMonthDay
+				.getDayOfMonth(), end.getHour(), end.getMinuteOfHour(), end.getSecondOfMinute(), 0);
+
+	}
+
 	public EvaluationType getEvaluationType() {
 		return EvaluationType.EXAM_TYPE;
 	}
 
-    public Calendar getBeginning() {
-        if (this.getBeginningDate() != null) {
-            Calendar result = Calendar.getInstance();
-            result.setTime(this.getBeginningDate());
-            return result;
-        }
-        return null;
-    }
+	public Calendar getBeginning() {
+		if (this.getBeginningDate() != null) {
+			Calendar result = Calendar.getInstance();
+			result.setTime(this.getBeginningDate());
+			return result;
+		}
+		return null;
+	}
 
-    public void setBeginning(Calendar calendar) {
-        if (calendar != null) {
-            this.setBeginningDate(calendar.getTime());
-        } else {
-            this.setBeginningDate(null);
-        }
-    }
+	public void setBeginning(Calendar calendar) {
+		if (calendar != null) {
+			this.setBeginningDate(calendar.getTime());
+		} else {
+			this.setBeginningDate(null);
+		}
+	}
 
-    public Calendar getDay() {
-        if (this.getDayDate() != null) {
-            Calendar result = Calendar.getInstance();
-            result.setTime(this.getDayDate());
-            return result;
-        }
-        return null;
-    }
+	public Calendar getDay() {
+		if (this.getDayDate() != null) {
+			Calendar result = Calendar.getInstance();
+			result.setTime(this.getDayDate());
+			return result;
+		}
+		return null;
+	}
 
     public void setDay(Calendar calendar) {
         if (calendar != null) {
@@ -235,67 +236,67 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
         }
     }
 
-    public Calendar getEnrollmentBeginDay() {
-        if (this.getEnrollmentBeginDayDate() != null) {
-            Calendar result = Calendar.getInstance();
-            result.setTime(this.getEnrollmentBeginDayDate());
-            return result;
-        }
-        return null;
-    }
+	public Calendar getEnrollmentBeginDay() {
+		if (this.getEnrollmentBeginDayDate() != null) {
+			Calendar result = Calendar.getInstance();
+			result.setTime(this.getEnrollmentBeginDayDate());
+			return result;
+		}
+		return null;
+	}
 
-    public void setEnrollmentBeginDay(Calendar calendar) {
-        if (calendar != null) {
-            this.setEnrollmentBeginDayDate(calendar.getTime());
-        } else {
-            this.setEnrollmentBeginDayDate(null);
-        }
-    }
+	public void setEnrollmentBeginDay(Calendar calendar) {
+		if (calendar != null) {
+			this.setEnrollmentBeginDayDate(calendar.getTime());
+		} else {
+			this.setEnrollmentBeginDayDate(null);
+		}
+	}
 
-    public Calendar getEnrollmentBeginTime() {
-        if (this.getEnrollmentBeginTimeDate() != null) {
-            Calendar result = Calendar.getInstance();
-            result.setTime(this.getEnrollmentBeginTimeDate());
-            return result;
-        }
-        return null;
-    }
+	public Calendar getEnrollmentBeginTime() {
+		if (this.getEnrollmentBeginTimeDate() != null) {
+			Calendar result = Calendar.getInstance();
+			result.setTime(this.getEnrollmentBeginTimeDate());
+			return result;
+		}
+		return null;
+	}
 
-    public void setEnrollmentBeginTime(Calendar calendar) {
-        if (calendar != null) {
-            this.setEnrollmentBeginTimeDate(calendar.getTime());
-        } else {
-            this.setEnrollmentBeginTimeDate(null);
-        }
-    }
+	public void setEnrollmentBeginTime(Calendar calendar) {
+		if (calendar != null) {
+			this.setEnrollmentBeginTimeDate(calendar.getTime());
+		} else {
+			this.setEnrollmentBeginTimeDate(null);
+		}
+	}
 
-    public Calendar getEnrollmentEndDay() {
-        if (this.getEnrollmentEndDayDate() != null) {
-            Calendar result = Calendar.getInstance();
-            result.setTime(this.getEnrollmentEndDayDate());
-            return result;
-        }
-        return null;
-    }
+	public Calendar getEnrollmentEndDay() {
+		if (this.getEnrollmentEndDayDate() != null) {
+			Calendar result = Calendar.getInstance();
+			result.setTime(this.getEnrollmentEndDayDate());
+			return result;
+		}
+		return null;
+	}
 
-    public void setEnrollmentEndDay(Calendar calendar) {
-        if (calendar != null) {
-            this.setEnrollmentEndDayDate(calendar.getTime());
-        } else {
-            this.setEnrollmentEndDayDate(null);
-        }
-    }
+	public void setEnrollmentEndDay(Calendar calendar) {
+		if (calendar != null) {
+			this.setEnrollmentEndDayDate(calendar.getTime());
+		} else {
+			this.setEnrollmentEndDayDate(null);
+		}
+	}
 
-    public Calendar getEnrollmentEndTime() {
-        if (this.getEnrollmentEndTimeDate() != null) {
-            Calendar result = Calendar.getInstance();
-            result.setTime(this.getEnrollmentEndTimeDate());
-            return result;
-        }
-        return null;
-    }
+	public Calendar getEnrollmentEndTime() {
+		if (this.getEnrollmentEndTimeDate() != null) {
+			Calendar result = Calendar.getInstance();
+			result.setTime(this.getEnrollmentEndTimeDate());
+			return result;
+		}
+		return null;
+	}
 
-    public void setEnrollmentEndTime(Calendar calendar) {
+   public void setEnrollmentEndTime(Calendar calendar) {
         if (calendar != null) {
             this.setEnrollmentEndTimeDate(calendar.getTime());
         } else {
@@ -365,12 +366,13 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
         }
     }
 
-    private boolean checkValidHours(Date beginning, Date end) {
-        if (beginning.after(end)) {
-            throw new DomainException("error.data.exame.inv�lida");
-        }
-        return true;
-    }
+
+	private boolean checkValidHours(Date beginning, Date end) {
+		if (beginning.after(end)) {
+			throw new DomainException("error.data.exame.inv�lida");
+		}
+		return true;
+	}
 
     private void deleteAllRoomOccupations() {
         for (; !getAssociatedRoomOccupation().isEmpty(); getAssociatedRoomOccupation().get(0).delete());
@@ -385,14 +387,14 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
         }
     }
 
-    private boolean hasOccupationForRoom(OldRoom room) {
-        for (final RoomOccupation roomOccupation : this.getAssociatedRoomOccupation()) {
-            if (roomOccupation.getRoom() == room) {
-                return true;
-            }
-        }
-        return false;
-    }
+	private boolean hasOccupationForRoom(OldRoom room) {
+		for (final RoomOccupation roomOccupation : this.getAssociatedRoomOccupation()) {
+			if (roomOccupation.getRoom() == room) {
+				return true;
+			}
+		}
+		return false;
+	}
 
     protected void edit(Date day, Date beginning, Date end,
             List<ExecutionCourse> executionCoursesToAssociate,
@@ -403,282 +405,303 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
         checkIntervalBetweenEvaluations();
     }
 
-    public void delete() {
-        if (hasAnyWrittenEvaluationEnrolments()) {
-            throw new DomainException("error.notAuthorizedWrittenEvaluationDelete.withStudent");
-        }
-        //getAssociatedExecutionCourses().clear();
-        deleteAllVigilanciesAssociated();
-        deleteAllRoomOccupations();
-        getAssociatedCurricularCourseScope().clear();
-        super.delete();
-    }
+	public void delete() {
+		if (hasAnyWrittenEvaluationEnrolments()) {
+			throw new DomainException("error.notAuthorizedWrittenEvaluationDelete.withStudent");
+		}
+		// getAssociatedExecutionCourses().clear();
+		deleteAllVigilanciesAssociated();
+		deleteAllRoomOccupations();
+		getAssociatedCurricularCourseScope().clear();
+		super.delete();
+	}
 
-    private void deleteAllVigilanciesAssociated() {
-    	for(;!this.getVigilancys().isEmpty();this.getVigilancys().get(0).delete());
+	private void deleteAllVigilanciesAssociated() {
+		for (; !this.getVigilancies().isEmpty(); this.getVigilancies().get(0).delete())
+			;
 	}
 
 	public List<OldRoom> getAssociatedRooms() {
-        final List<OldRoom> result = new ArrayList<OldRoom>();
-        for (final RoomOccupation roomOccupation : this.getAssociatedRoomOccupation()) {
-            result.add(roomOccupation.getRoom());
-        }
-        return result;
-    }
+		final List<OldRoom> result = new ArrayList<OldRoom>();
+		for (final RoomOccupation roomOccupation : this.getAssociatedRoomOccupation()) {
+			result.add(roomOccupation.getRoom());
+		}
+		return result;
+	}
 
-    public void editEnrolmentPeriod(Date enrolmentBeginDay, Date enrolmentEndDay,
-            Date enrolmentBeginTime, Date enrolmentEndTime) throws DomainException {
+	public void editEnrolmentPeriod(Date enrolmentBeginDay, Date enrolmentEndDay, Date enrolmentBeginTime,
+			Date enrolmentEndTime) throws DomainException {
 
-        checkEnrolmentDates(enrolmentBeginDay, enrolmentEndDay, enrolmentBeginTime, enrolmentEndTime);
+		checkEnrolmentDates(enrolmentBeginDay, enrolmentEndDay, enrolmentBeginTime, enrolmentEndTime);
 
-        this.setEnrollmentBeginDayDate(enrolmentBeginDay);
-        this.setEnrollmentEndDayDate(enrolmentEndDay);
-        this.setEnrollmentBeginTimeDate(enrolmentBeginTime);
-        this.setEnrollmentEndTimeDate(enrolmentEndTime);
-    }
+		this.setEnrollmentBeginDayDate(enrolmentBeginDay);
+		this.setEnrollmentEndDayDate(enrolmentEndDay);
+		this.setEnrollmentBeginTimeDate(enrolmentBeginTime);
+		this.setEnrollmentEndTimeDate(enrolmentEndTime);
+	}
 
-    private void checkEnrolmentDates(final Date enrolmentBeginDay, final Date enrolmentEndDay,
-            final Date enrolmentBeginTime, final Date enrolmentEndTime) throws DomainException {
+	private void checkEnrolmentDates(final Date enrolmentBeginDay, final Date enrolmentEndDay,
+			final Date enrolmentBeginTime, final Date enrolmentEndTime) throws DomainException {
 
-        final Date enrolmentBeginDate = createDate(enrolmentBeginDay, enrolmentBeginTime);
-        final Date enrolmentEndDate = createDate(enrolmentEndDay, enrolmentEndTime);
+		final Date enrolmentBeginDate = createDate(enrolmentBeginDay, enrolmentBeginTime);
+		final Date enrolmentEndDate = createDate(enrolmentEndDay, enrolmentEndTime);
 
-        if (enrolmentBeginDate.before(Calendar.getInstance().getTime())) {
-            throw new DomainException("error.beginDate.sooner.today");
-        }
-        if (enrolmentEndDate.before(enrolmentBeginDate)) {
-            throw new DomainException("error.endDate.sooner.beginDate");
-        }
-        if (this.getDayDate().before(enrolmentEndDate)) {
-            throw new DomainException("error.examDate.sooner.endDate");
-        }
-    }
+		if (enrolmentBeginDate.before(Calendar.getInstance().getTime())) {
+			throw new DomainException("error.beginDate.sooner.today");
+		}
+		if (enrolmentEndDate.before(enrolmentBeginDate)) {
+			throw new DomainException("error.endDate.sooner.beginDate");
+		}
+		if (this.getDayDate().before(enrolmentEndDate)) {
+			throw new DomainException("error.examDate.sooner.endDate");
+		}
+	}
 
-    private Date createDate(Date dateDay, Date dateTime) {
-        final Calendar date = Calendar.getInstance();
+	private Date createDate(Date dateDay, Date dateTime) {
+		final Calendar date = Calendar.getInstance();
 
-        final Calendar day = Calendar.getInstance();
-        day.setTime(dateDay);
+		final Calendar day = Calendar.getInstance();
+		day.setTime(dateDay);
 
-        final Calendar time = Calendar.getInstance();
-        time.setTime(dateTime);
+		final Calendar time = Calendar.getInstance();
+		time.setTime(dateTime);
 
-        date.set(Calendar.YEAR, day.get(Calendar.YEAR));
-        date.set(Calendar.MONTH, day.get(Calendar.MONTH));
-        date.set(Calendar.DAY_OF_MONTH, day.get(Calendar.DAY_OF_MONTH));
-        date.set(Calendar.HOUR_OF_DAY, time.get(Calendar.HOUR_OF_DAY));
-        date.set(Calendar.MINUTE, time.get(Calendar.MINUTE));
-        date.set(Calendar.SECOND, 0);
+		date.set(Calendar.YEAR, day.get(Calendar.YEAR));
+		date.set(Calendar.MONTH, day.get(Calendar.MONTH));
+		date.set(Calendar.DAY_OF_MONTH, day.get(Calendar.DAY_OF_MONTH));
+		date.set(Calendar.HOUR_OF_DAY, time.get(Calendar.HOUR_OF_DAY));
+		date.set(Calendar.MINUTE, time.get(Calendar.MINUTE));
+		date.set(Calendar.SECOND, 0);
 
-        return date.getTime();
-    }
+		return date.getTime();
+	}
 
-    public void enrolStudent(Registration registration) {
-        for (WrittenEvaluationEnrolment writtenEvaluationEnrolment : registration
-                .getWrittenEvaluationEnrolments()) {
-            if (writtenEvaluationEnrolment.getWrittenEvaluation() == this) {
-                throw new DomainException("error.alreadyEnrolledError");
-            }
-        }
-        new WrittenEvaluationEnrolment(this, registration);
-    }
+	public void enrolStudent(Registration registration) {
+		for (WrittenEvaluationEnrolment writtenEvaluationEnrolment : registration
+				.getWrittenEvaluationEnrolments()) {
+			if (writtenEvaluationEnrolment.getWrittenEvaluation() == this) {
+				throw new DomainException("error.alreadyEnrolledError");
+			}
+		}
+		new WrittenEvaluationEnrolment(this, registration);
+	}
 
-    public void unEnrolStudent(Registration registration) {
-        if (!this.validUnEnrollment()) {
-            throw new DomainException("error.notAuthorizedUnEnrollment");
-        }
+	public void unEnrolStudent(Registration registration) {
+		if (!this.validUnEnrollment()) {
+			throw new DomainException("error.notAuthorizedUnEnrollment");
+		}
 
-        WrittenEvaluationEnrolment writtenEvaluationEnrolmentToDelete = this
-                .getWrittenEvaluationEnrolmentFor(registration);
-        if (writtenEvaluationEnrolmentToDelete == null) {
-            throw new DomainException("error.studentNotEnroled");
-        }
+		WrittenEvaluationEnrolment writtenEvaluationEnrolmentToDelete = this
+				.getWrittenEvaluationEnrolmentFor(registration);
+		if (writtenEvaluationEnrolmentToDelete == null) {
+			throw new DomainException("error.studentNotEnroled");
+		}
 
-        writtenEvaluationEnrolmentToDelete.delete();
-    }
+		writtenEvaluationEnrolmentToDelete.delete();
+	}
 
-    private boolean validUnEnrollment() {
-        if (this.getEnrollmentEndDay() != null && this.getEnrollmentEndTime() != null) {
-            Date enrolmentEnd = createDate(this.getEnrollmentEndDayDate(), this
-                    .getEnrollmentEndTimeDate());
-            Date now = Calendar.getInstance().getTime();
+	private boolean validUnEnrollment() {
+		if (this.getEnrollmentEndDay() != null && this.getEnrollmentEndTime() != null) {
+			Date enrolmentEnd = createDate(this.getEnrollmentEndDayDate(), this.getEnrollmentEndTimeDate());
+			Date now = Calendar.getInstance().getTime();
 
-            if (enrolmentEnd.after(now)) {
-                return true;
-            }
-        }
-        return false;
-    }
+			if (enrolmentEnd.after(now)) {
+				return true;
+			}
+		}
+		return false;
+	}
 
-    public void distributeStudentsByRooms(List<Registration> studentsToDistribute, List<OldRoom> selectedRooms) {
+	public void distributeStudentsByRooms(List<Registration> studentsToDistribute, List<OldRoom> selectedRooms) {
 
-        this.checkIfCanDistributeStudentsByRooms();
-        this.checkRoomsCapacityForStudents(selectedRooms, studentsToDistribute.size());
+		this.checkIfCanDistributeStudentsByRooms();
+		this.checkRoomsCapacityForStudents(selectedRooms, studentsToDistribute.size());
 
-        for (final OldRoom room : selectedRooms) {
-            for (int numberOfStudentsInserted = 0; numberOfStudentsInserted < room.getCapacidadeExame()
-                    && !studentsToDistribute.isEmpty(); numberOfStudentsInserted++) {
-                final Registration registration = getRandomStudentFromList(studentsToDistribute);
-                final WrittenEvaluationEnrolment writtenEvaluationEnrolment = this
-                        .getWrittenEvaluationEnrolmentFor(registration);
-                if (writtenEvaluationEnrolment == null) {
-                    new WrittenEvaluationEnrolment(this, registration, room);
-                } else {
-                    writtenEvaluationEnrolment.setRoom(room);
-                }
-            }
-            if (studentsToDistribute.isEmpty()) {
-                break;
-            }
-        }
-    }
+		for (final OldRoom room : selectedRooms) {
+			for (int numberOfStudentsInserted = 0; numberOfStudentsInserted < room.getCapacidadeExame()
+					&& !studentsToDistribute.isEmpty(); numberOfStudentsInserted++) {
+				final Registration registration = getRandomStudentFromList(studentsToDistribute);
+				final WrittenEvaluationEnrolment writtenEvaluationEnrolment = this
+						.getWrittenEvaluationEnrolmentFor(registration);
+				if (writtenEvaluationEnrolment == null) {
+					new WrittenEvaluationEnrolment(this, registration, room);
+				} else {
+					writtenEvaluationEnrolment.setRoom(room);
+				}
+			}
+			if (studentsToDistribute.isEmpty()) {
+				break;
+			}
+		}
+	}
 
-    public void checkIfCanDistributeStudentsByRooms() {
-        if (!this.hasAnyAssociatedRoomOccupation()) {
-            throw new DomainException("error.no.roms.associated");
-        }
+	public void checkIfCanDistributeStudentsByRooms() {
+		if (!this.hasAnyAssociatedRoomOccupation()) {
+			throw new DomainException("error.no.roms.associated");
+		}
 
-        final Date todayDate = Calendar.getInstance().getTime();
-        final Date evaluationDateAndTime;
-        try {
-            evaluationDateAndTime = DateFormatUtil.parse("yyyy/MM/dd HH:mm",
-                    DateFormatUtil.format("yyyy/MM/dd ", this.getDayDate()) + DateFormatUtil.format("HH:mm", this.getBeginningDate()));
-        } catch (ParseException e) {
-            // This should never happen, the string where obtained from other dates.
-            throw new Error(e);
-        }
+		final Date todayDate = Calendar.getInstance().getTime();
+		final Date evaluationDateAndTime;
+		try {
+			evaluationDateAndTime = DateFormatUtil.parse("yyyy/MM/dd HH:mm", DateFormatUtil.format(
+					"yyyy/MM/dd ", this.getDayDate())
+					+ DateFormatUtil.format("HH:mm", this.getBeginningDate()));
+		} catch (ParseException e) {
+			// This should never happen, the string where obtained from other
+			// dates.
+			throw new Error(e);
+		}
 
-        Date enrolmentEndDate = null;
-        // This can happen if the Enrolment OccupationPeriod for Evaluation wasn't defined
-        if (this.getEnrollmentEndDayDate() != null && this.getEnrollmentEndTimeDate() != null) {
-            enrolmentEndDate = createDate(this.getEnrollmentEndDayDate(), this
-                    .getEnrollmentEndTimeDate());
-        }
-        if (DateFormatUtil.isBefore("yyyy/MM/dd HH:mm", evaluationDateAndTime, todayDate)
-                || (enrolmentEndDate != null && enrolmentEndDate.after(todayDate))) {
-            throw new DomainException("error.out.of.period.enrollment.period");
-        }
-    }
+		Date enrolmentEndDate = null;
+		// This can happen if the Enrolment OccupationPeriod for Evaluation
+		// wasn't defined
+		if (this.getEnrollmentEndDayDate() != null && this.getEnrollmentEndTimeDate() != null) {
+			enrolmentEndDate = createDate(this.getEnrollmentEndDayDate(), this.getEnrollmentEndTimeDate());
+		}
+		if (DateFormatUtil.isBefore("yyyy/MM/dd HH:mm", evaluationDateAndTime, todayDate)
+				|| (enrolmentEndDate != null && enrolmentEndDate.after(todayDate))) {
+			throw new DomainException("error.out.of.period.enrollment.period");
+		}
+	}
 
-    private void checkRoomsCapacityForStudents(final List<OldRoom> selectedRooms,
-            int studentsToDistributeSize) {
-        int totalCapacity = 0;
-        for (final OldRoom room : selectedRooms) {
-            totalCapacity += room.getCapacidadeExame();
-        }
-        if (studentsToDistributeSize > totalCapacity) {
-            throw new DomainException("error.not.enough.room.space");
-        }
-    }
+	private void checkRoomsCapacityForStudents(final List<OldRoom> selectedRooms, int studentsToDistributeSize) {
+		int totalCapacity = 0;
+		for (final OldRoom room : selectedRooms) {
+			totalCapacity += room.getCapacidadeExame();
+		}
+		if (studentsToDistributeSize > totalCapacity) {
+			throw new DomainException("error.not.enough.room.space");
+		}
+	}
 
-    private Registration getRandomStudentFromList(List<Registration> studentsToDistribute) {
-        final Random randomizer = new Random();
-        int pos = randomizer.nextInt(Math.abs(randomizer.nextInt()));
-        return (Registration) studentsToDistribute.remove(pos % studentsToDistribute.size());
-    }
+	private Registration getRandomStudentFromList(List<Registration> studentsToDistribute) {
+		final Random randomizer = new Random();
+		int pos = randomizer.nextInt(Math.abs(randomizer.nextInt()));
+		return (Registration) studentsToDistribute.remove(pos % studentsToDistribute.size());
+	}
 
-    public WrittenEvaluationEnrolment getWrittenEvaluationEnrolmentFor(final Registration registration) {
-        for (final WrittenEvaluationEnrolment writtenEvaluationEnrolment : registration
-                .getWrittenEvaluationEnrolments()) {
-            if (writtenEvaluationEnrolment.getWrittenEvaluation() == this) {
-                return writtenEvaluationEnrolment;
-            }
-        }
-        return null;
-    }
+	public WrittenEvaluationEnrolment getWrittenEvaluationEnrolmentFor(final Registration registration) {
+		for (final WrittenEvaluationEnrolment writtenEvaluationEnrolment : registration
+				.getWrittenEvaluationEnrolments()) {
+			if (writtenEvaluationEnrolment.getWrittenEvaluation() == this) {
+				return writtenEvaluationEnrolment;
+			}
+		}
+		return null;
+	}
 
-    public boolean isInEnrolmentPeriod() {
-        final Date now = Calendar.getInstance().getTime();
-        if (this.getEnrollmentBeginDayDate() == null || this.getEnrollmentBeginTimeDate() == null
-                || this.getEnrollmentEndDayDate() == null || this.getEnrollmentEndTimeDate() == null) {
-            throw new DomainException("error.enrolmentPeriodNotDefined");
-        }
-        final Date enrolmentBeginDate = createDate(this.getEnrollmentBeginDayDate(), this
-                .getEnrollmentBeginTimeDate());
-        final Date enrolmentEndDate = createDate(this.getEnrollmentEndDayDate(), this
-                .getEnrollmentEndTimeDate());
-        return enrolmentBeginDate.before(now) && enrolmentEndDate.after(now);
-    }
-    
-    public boolean getIsInEnrolmentPeriod() {
-        try { // Used for sorting purpose
-            return isInEnrolmentPeriod();
-        } catch (final DomainException e) {
-            return false;
-        }
-    }
+	public boolean isInEnrolmentPeriod() {
+		final Date now = Calendar.getInstance().getTime();
+		if (this.getEnrollmentBeginDayDate() == null || this.getEnrollmentBeginTimeDate() == null
+				|| this.getEnrollmentEndDayDate() == null || this.getEnrollmentEndTimeDate() == null) {
+			throw new DomainException("error.enrolmentPeriodNotDefined");
+		}
+		final Date enrolmentBeginDate = createDate(this.getEnrollmentBeginDayDate(), this
+				.getEnrollmentBeginTimeDate());
+		final Date enrolmentEndDate = createDate(this.getEnrollmentEndDayDate(), this
+				.getEnrollmentEndTimeDate());
+		return enrolmentBeginDate.before(now) && enrolmentEndDate.after(now);
+	}
 
-    public Integer getCountStudentsEnroledAttendingExecutionCourses() {
-    	int i = 0;
-    	for (final ExecutionCourse executionCourse : getAssociatedExecutionCourses()) {
-    		for (final Attends attends : executionCourse.getAttends()) {
-    			if (attends.getEnrolment() != null) {
-    				i++;
-    			}
-    		}
-    	}
-    	return i;
-    }
+	public boolean getIsInEnrolmentPeriod() {
+		try { // Used for sorting purpose
+			return isInEnrolmentPeriod();
+		} catch (final DomainException e) {
+			return false;
+		}
+	}
 
-    public Integer getCountNumberReservedSeats() {
-    	int i = 0;
-    	for (final RoomOccupation roomOccupation : getAssociatedRoomOccupation()) {
-    		i += roomOccupation.getRoom().getCapacidadeExame().intValue();
-    	}
-    	return i;
-    }
+	public Integer getCountStudentsEnroledAttendingExecutionCourses() {
+		int i = 0;
+		for (final ExecutionCourse executionCourse : getAssociatedExecutionCourses()) {
+			for (final Attends attends : executionCourse.getAttends()) {
+				if (attends.getEnrolment() != null) {
+					i++;
+				}
+			}
+		}
+		return i;
+	}
 
-    public Integer getCountVacancies() {
-        final int writtenEvaluationEnrolmentsCount = getWrittenEvaluationEnrolmentsCount();
-        final int countNumberReservedSeats = getCountNumberReservedSeats().intValue();
-        return Integer.valueOf(countNumberReservedSeats - writtenEvaluationEnrolmentsCount);
-    }
+	public Integer getCountNumberReservedSeats() {
+		int i = 0;
+		for (final RoomOccupation roomOccupation : getAssociatedRoomOccupation()) {
+			i += roomOccupation.getRoom().getCapacidadeExame().intValue();
+		}
+		return i;
+	}
 
-    public List<DegreeModuleScope> getDegreeModuleScopes(){
-        return DegreeModuleScope.getDegreeModuleScopes(this);
-    }   
-    
-    public String getDegreesAsString() {
-    	Set<Degree> degrees = new HashSet<Degree> ();
-    	for(ExecutionCourse course : this.getAssociatedExecutionCourses()) {
-    		degrees.addAll(course.getDegreesSortedByDegreeName());
-    	}
-    	String degreesAsString = "";
-    	int i = 0;
-    	for (Degree degree : degrees) {
-    	    if (i > 0)
-    	    degreesAsString += ", ";
-    	    degreesAsString += degree.getSigla();
-    	    i++;
-    	}
-    	return degreesAsString;
-    }
-    
-    public List<VigilancyWithCredits> getVigilancysWithCredits() {
-    	List<VigilancyWithCredits> vigilancysWithCredits = new ArrayList<VigilancyWithCredits> ();
-    	for(Vigilancy vigilancy : this.getVigilancys()) {
-    		if(vigilancy instanceof VigilancyWithCredits) {
-    			vigilancysWithCredits.add( (VigilancyWithCredits) vigilancy);
-    		}
-    	}
-    	return vigilancysWithCredits;
-    }
-    
-    public List<VigilancyWithCredits> getActiveVigilancysWithCredits() {
-    	List<VigilancyWithCredits> vigilancysWithCredits = new ArrayList<VigilancyWithCredits> ();
-    	for(VigilancyWithCredits vigilancy : this.getVigilancysWithCredits()) {
-    		if(vigilancy.isActive()) {
-    			vigilancysWithCredits.add(vigilancy);
-    		}
-    	}
-    	return vigilancysWithCredits;
-    }
-    
-    public String getAssociatedRoomsAsString() {
-    	String rooms="";
-    	for(OldRoom room : this.getAssociatedRooms()) {
-    		rooms += room.getName() + "\n";
-    	}
-    	return rooms;
-    }
+	public Integer getCountVacancies() {
+		final int writtenEvaluationEnrolmentsCount = getWrittenEvaluationEnrolmentsCount();
+		final int countNumberReservedSeats = getCountNumberReservedSeats().intValue();
+		return Integer.valueOf(countNumberReservedSeats - writtenEvaluationEnrolmentsCount);
+	}
+
+	public List<DegreeModuleScope> getDegreeModuleScopes() {
+		return DegreeModuleScope.getDegreeModuleScopes(this);
+	}
+
+	public String getDegreesAsString() {
+		Set<Degree> degrees = new HashSet<Degree>();
+		for (ExecutionCourse course : this.getAssociatedExecutionCourses()) {
+			degrees.addAll(course.getDegreesSortedByDegreeName());
+		}
+		String degreesAsString = "";
+		int i = 0;
+		for (Degree degree : degrees) {
+			if (i > 0)
+				degreesAsString += ", ";
+			degreesAsString += degree.getSigla();
+			i++;
+		}
+		return degreesAsString;
+	}
+
+	public List<Vigilancy> getTeachersVigilancies() {
+		List<Vigilancy> vigilancies = new ArrayList<Vigilancy>();
+		for (Vigilancy vigilancy : this.getVigilancies()) {
+			if (vigilancy.isOwnCourseVigilancy()) {
+				vigilancies.add((Vigilancy) vigilancy);
+			}
+		}
+		return vigilancies;
+	}
+
+	public List<Vigilancy> getOthersVigilancies() {
+		List<Vigilancy> vigilancies = new ArrayList<Vigilancy>();
+		for (Vigilancy vigilancy : this.getVigilancies()) {
+			if (vigilancy.isOtherCourseVigilancy()) {
+				vigilancies.add((Vigilancy) vigilancy);
+			}
+		}
+		return vigilancies;
+	}
+	
+	public List<Vigilancy> getAllActiveVigilancies() {
+		List<Vigilancy> vigilancies = new ArrayList<Vigilancy>();
+		for (Vigilancy vigilancy : this.getVigilancies()) {
+			if(vigilancy.isActive()) {
+				vigilancies.add(vigilancy);
+			}
+		}
+		return vigilancies;
+	}
+
+	public Set<VigilantGroup> getAssociatedVigilantGroups() {
+		Set<VigilantGroup> groups = new HashSet<VigilantGroup>();
+		for (ExecutionCourse course : getAssociatedExecutionCourses()) {
+			if (course.hasVigilantGroup()) {
+				groups.add(course.getVigilantGroup());
+			}
+		}
+		return groups;
+	}
+
+	public String getAssociatedRoomsAsString() {
+		String rooms = "";
+		for (OldRoom room : this.getAssociatedRooms()) {
+			rooms += room.getName() + "\n";
+		}
+		return rooms;
+	}
 }

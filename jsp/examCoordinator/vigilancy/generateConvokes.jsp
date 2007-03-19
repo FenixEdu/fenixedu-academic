@@ -51,9 +51,9 @@
 </logic:empty>
 </p>
 
-<logic:notEmpty name="bean" property="writtenEvaluation.vigilancys"> 
+<logic:notEmpty name="bean" property="writtenEvaluation.vigilancies"> 
 <p class="mbottom05"><strong><bean:message key="label.vigilancy.alreadyConvoked" bundle="VIGILANCY_RESOURCES"/></strong>:
-<fr:view name="bean" property="writtenEvaluation.vigilancys">
+<fr:view name="bean" property="writtenEvaluation.vigilancies">
 	<fr:layout name="flowLayout">
 		<fr:property name="eachInline" value="false"/>
 		<fr:property name="eachSchema" value="showVigilantsFromConvokes"/>

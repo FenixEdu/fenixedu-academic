@@ -17,15 +17,15 @@
      Definitions for net.sourceforge.fenixedu.domain.vigilancy.Vigilancy
      *********************************** -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.vigilancy.Vigilancy" table="CONVOKE">
-	<extent-class class-ref="net.sourceforge.fenixedu.domain.vigilancy.VigilancyWithCredits"/>
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.vigilancy.OwnCourseVigilancy"/>
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.vigilancy.OtherCourseVigilancy"/>
 </class-descriptor>
 
-<!-- ***********************************
-     Definitions for net.sourceforge.fenixedu.domain.vigilancy.VigilancyWithCredits
-     *********************************** -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.vigilancy.VigilancyWithCredits" table="CONVOKE">
+<class-descriptor class="net.sourceforge.fenixedu.domain.vigilancy.OwnCourseVigilancy" table="CONVOKE">
 </class-descriptor>
 
+<class-descriptor class="net.sourceforge.fenixedu.domain.vigilancy.OtherCourseVigilancy" table="CONVOKE">
+</class-descriptor>
 <!-- ***********************************
      Definitions for net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup
      *********************************** -->

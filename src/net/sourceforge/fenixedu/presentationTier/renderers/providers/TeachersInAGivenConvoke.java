@@ -17,8 +17,8 @@ public class TeachersInAGivenConvoke implements DataProvider {
         List<Vigilant> teachersForAGivenCourse = bean.getTeachersForAGivenCourse();
         WrittenEvaluation writtenEvaluation = bean.getWrittenEvaluation();
         
-        if(writtenEvaluation!=null && writtenEvaluation.getVigilancys().size()>0) {
-			for(Vigilancy convoke : writtenEvaluation.getVigilancys()) {
+        if(writtenEvaluation!=null && writtenEvaluation.getVigilancies().size()>0) {
+			for(Vigilancy convoke : writtenEvaluation.getVigilancies()) {
 				teachersForAGivenCourse.remove(convoke.getVigilant());
 			}
 			

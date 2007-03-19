@@ -111,7 +111,7 @@ public class UnavailablePeriod extends UnavailablePeriod_Base {
             if (!vigilant.isAllowedToSpecifyUnavailablePeriod()) {
                 throw new DomainException("vigilancy.error.outOutPeriodToSpecifyUnavailablePeriods");
             }
-            List<Vigilancy> convokes = vigilant.getVigilancys();
+            List<Vigilancy> convokes = vigilant.getVigilancies();
             for (Vigilancy convoke : convokes) {
                 WrittenEvaluation writtenEvaluation = convoke.getWrittenEvaluation();
                 DateTime begin = writtenEvaluation.getBeginningDateTime();

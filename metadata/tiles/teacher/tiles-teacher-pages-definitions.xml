@@ -694,11 +694,16 @@
 	<definition name="view-project-submissions-by-group" extends="df.teacher.evaluation-management">
 		<put name="body" value="/teacher/evaluation/viewProjectSubmissionsByGroup.jsp" />
 	</definition>
-	
-	<definition name="view-project-submission-logs-by-group" extends="df.teacher.evaluation-management">
-		<put name="body" value="/teacher/evaluation/viewProjectSubmissionLogsByGroup.jsp" />
+		
+	<!--  ==== Vigilants for evaluation ==== -->
+	<definition name="list-vigilants-for-evaluation" extends="df.teacher.evaluation-management">
+		<put name="body" value="/teacher/evaluation/vigilancies/viewVigilancies.jsp" />
 	</definition>
-	
+
+	<definition name="edit-report-for-evaluation" extends="df.teacher.evaluation-management">
+		<put name="body" value="/teacher/evaluation/vigilancies/editVigilanciesReport.jsp" />
+	</definition>
+
 	<!-- ==== Summaries Management === -->
 	<definition name="prepare-insert-summary" extends="execution-course-administration">
 		<put name="body" value="/teacher/executionCourse/createSummary.jsp" />
@@ -868,8 +873,9 @@
 	<definition name="teacher-view-announcement" extends="execution-course-administration">
 		<put name="body" value="/teacher/executionCourse/announcements/viewAnnouncement.jsp" />
 	</definition>		
+	<!-- =================== end announcements ============== -->
 
-	<!-- =================== Rooms Reserve Management ============== -->
+   <!-- =================== Rooms Reserve Management ============== -->
 	<definition name="view-rooms-reserves" extends="df.page.teacher-index">
 		<put name="body" value="/teacher/roomsReserveManagement/viewRoomsReserves.jsp" />
 	</definition>			
@@ -879,5 +885,4 @@
 	<definition name="see-specified-rooms-reserve" extends="df.page.teacher-index">
 		<put name="body" value="/teacher/roomsReserveManagement/seeSpecifiedRoomsReserve.jsp" />
 	</definition>			
-				
 </tiles-definitions>

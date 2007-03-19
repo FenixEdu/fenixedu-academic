@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
-import net.sourceforge.fenixedu.domain.vigilancy.VigilancyWithCredits;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
 import net.sourceforge.fenixedu.renderers.OutputRenderer;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
@@ -40,8 +39,6 @@ public class VigilantTableRender extends OutputRenderer {
 
 	private String headerClasses;
 
-	private String convokesToShow;
-
 	private String sortBy;
 
 	private String emptyMessageKey;
@@ -49,6 +46,10 @@ public class VigilantTableRender extends OutputRenderer {
 	private String emptyMessageBundle;
 
 	private String emptyMessageClasses;
+
+	private String deletedConvokeClasses;
+	
+	private String ownCourseClasses;
 
 	private boolean showIncompatibilities = Boolean.FALSE;
 
@@ -92,14 +93,6 @@ public class VigilantTableRender extends OutputRenderer {
 
 	public void setEmptyMessageKey(String emptyMessageKey) {
 		this.emptyMessageKey = emptyMessageKey;
-	}
-
-	public String getConvokesToShow() {
-		return convokesToShow;
-	}
-
-	public void setConvokesToShow(String convokesToShow) {
-		this.convokesToShow = convokesToShow;
 	}
 
 	public String getConvokeSchema() {
@@ -251,10 +244,33 @@ public class VigilantTableRender extends OutputRenderer {
 		return schema;
 	}
 
+	public String getSortBy() {
+		return sortBy;
+	}
+
+	public void setSortBy(String sortBy) {
+		this.sortBy = sortBy;
+	}
+
+	public boolean isShowNotActiveConvokes() {
+		return showNotActiveConvokes;
+	}
+
+	public void setShowNotActiveConvokes(boolean showNotActiveConvokes) {
+		this.showNotActiveConvokes = showNotActiveConvokes;
+	}
+
+	public String getDeletedConvokeClasses() {
+		return deletedConvokeClasses;
+	}
+
+	public void setDeletedConvokeClasses(String deletedConvokeClasses) {
+		this.deletedConvokeClasses = deletedConvokeClasses;
+	}
+
 	@Override
 	protected Layout getLayout(Object object, Class type) {
 		ComparatorChain chain = new ComparatorChain();
-		chain.addComparator(Vigilant.POINTS_COMPARATOR);
 		chain.addComparator(Vigilant.CATEGORY_COMPARATOR);
 		chain.addComparator(Vigilant.USERNAME_COMPARATOR);
 
@@ -275,6 +291,14 @@ public class VigilantTableRender extends OutputRenderer {
 		private Schema convokeSchema;
 
 		private boolean empty;
+
+		private Integer numberOfColumnsCache = null;
+
+		private Integer numberOfConvokeSlotCache = null;
+
+		private MetaObject vigilantWithConvokesMetaObjectCache = null;
+
+		private MetaObject convokeMetaObjectCache = null;
 
 		public VigilantTableRenderLayout(Collection<Vigilant> vigilants) {
 			this.objects = new ArrayList<MetaObject>();
@@ -340,37 +364,23 @@ public class VigilantTableRender extends OutputRenderer {
 			return columnIndex % getNumberOfConvokeSlots();
 		}
 
-		private List<VigilancyWithCredits> getConvokes(Vigilant vigilant) {
-			List<VigilancyWithCredits> vigilancies;
-
-			if (getConvokesToShow().equals("past")) {
-				vigilancies = (showNotActiveConvokes) ? vigilant.getConvokesBeforeCurrentDate() : vigilant
-						.getActiveConvokesBeforeCurrentDate();
-			} else {
-				if (getConvokesToShow().equals("future")) {
-					vigilancies = (showNotActiveConvokes) ? vigilant.getConvokesAfterCurrentDate() : vigilant
-							.getActiveConvokesAfterCurrentDate();
-				}
-
-				else {
-					vigilancies = (showNotActiveConvokes) ? vigilant.getVigilancyWithCredits() : vigilant
-							.getActiveVigilancyWithCredits();
-				}
-			}
-			//Collections.reverse(vigilancies);
+		private List<Vigilancy> getConvokes(Vigilant vigilant) {
+			List<Vigilancy> vigilancies;
+			vigilancies = (showNotActiveConvokes) ? new ArrayList<Vigilancy>(vigilant.getVigilancies()) : vigilant.getActiveVigilancies();
+			Collections.sort(vigilancies, Vigilancy.COMPARATOR_BY_WRITTEN_EVALUATION_BEGGINING);
 			return vigilancies;
 		}
 
 		private MetaObject getConvokeMetaObjectToPutInTable(MetaObject vigilantMetaObject, int index) {
 			Vigilant vigilant = (Vigilant) vigilantMetaObject.getObject();
 
-			List<VigilancyWithCredits> convokes = getConvokes(vigilant);
+			List<Vigilancy> convokes = getConvokes(vigilant);
 			int size = convokes.size();
 			int numberOfColumns = (this.getNumberOfColumns() - this.getNumberOfVigilantsSlots())
 					/ this.getNumberOfConvokeSlots();
 
 			if (numberOfColumns - size <= index) {
-				VigilancyWithCredits oneConvoke = convokes.get(numberOfColumns - index - 1);
+				Vigilancy oneConvoke = convokes.get(numberOfColumns - index - 1);
 
 				MetaObject convokeMetaObject = MetaObjectFactory.createObject(oneConvoke, this.convokeSchema);
 
@@ -380,15 +390,15 @@ public class VigilantTableRender extends OutputRenderer {
 			}
 		}
 
-		private MetaObject getConvokeMetaObject(MetaObject vigilantMetaObject, int index) {
+		private MetaObject getConvokeMetaObject(MetaObject vigilantMetaObject) {
 
-			List<VigilancyWithCredits> convokes = Vigilancy.getAllVigilancyWithCredits();
-			VigilancyWithCredits oneConvoke = convokes.get(0);
+			if (convokeMetaObjectCache == null) {
+				List<Vigilancy> convokes = ((Vigilant) getVigilantWithConvokes().getObject()).getVigilancies();
+				Vigilancy oneConvoke = convokes.get(0);
 
-			MetaObject convokeMetaObject = MetaObjectFactory.createObject(oneConvoke, this.convokeSchema);
-
-			return convokeMetaObject;
-
+				convokeMetaObjectCache = MetaObjectFactory.createObject(oneConvoke, this.convokeSchema);
+			}
+			return convokeMetaObjectCache;
 		}
 
 		@Override
@@ -412,25 +422,29 @@ public class VigilantTableRender extends OutputRenderer {
 				return new HtmlText(one.getSlots().get(columnIndex).getLabel());
 			} else {
 				int index = getConvokeSlotIndex(one, columnIndex);
-				MetaObject convokeMetaObject = getConvokeMetaObject(one, 0);
+				MetaObject convokeMetaObject = getConvokeMetaObject(one);
 				return (convokeMetaObject == null) ? findVigilantWithConvokesToGetLabels(index)
-						: new HtmlText(getConvokeMetaObject(one, 0).getSlots().get(index).getLabel());
+						: new HtmlText(getConvokeMetaObject(one).getSlots().get(index).getLabel());
 			}
 		}
 
 		private MetaObject getVigilantWithConvokes() {
-			for (MetaObject vigilantMetaObject : this.objects) {
-				Vigilant vigilant = (Vigilant) vigilantMetaObject.getObject();
-				if (!getConvokes(vigilant).isEmpty())
-					return vigilantMetaObject;
+			if (vigilantWithConvokesMetaObjectCache != null) {
+				return vigilantWithConvokesMetaObjectCache;
+			} else {
+				for (MetaObject vigilantMetaObject : this.objects) {
+					Vigilant vigilant = (Vigilant) vigilantMetaObject.getObject();
+					if (!getConvokes(vigilant).isEmpty())
+						return vigilantWithConvokesMetaObjectCache = vigilantMetaObject;
+				}
+				return vigilantWithConvokesMetaObjectCache = getVigilantForRow(0);
 			}
-			return getVigilantForRow(0);
 		}
 
 		private HtmlText findVigilantWithConvokesToGetLabels(int index) {
 			for (int i = 1; i < this.objects.size(); i++) {
 				MetaObject object = getVigilantForRow(i);
-				MetaObject convokeMetaObject = getConvokeMetaObject(object, 0);
+				MetaObject convokeMetaObject = getConvokeMetaObject(object);
 				if (convokeMetaObject != null)
 					return new HtmlText(convokeMetaObject.getSlots().get(index).getLabel());
 			}
@@ -438,14 +452,18 @@ public class VigilantTableRender extends OutputRenderer {
 		}
 
 		private int getNumberOfConvokeSlots() {
-			Vigilant vigilant = (Vigilant) this.getVigilantWithConvokes().getObject();
-			List<VigilancyWithCredits> convokes = getConvokes(vigilant);
-			if (convokes.isEmpty()) {
-				return 0;
+			if (numberOfConvokeSlotCache != null) {
+				return numberOfConvokeSlotCache;
 			} else {
-				MetaObject convokeMetaObject = MetaObjectFactory.createObject(convokes.get(0),
-						this.convokeSchema);
-				return convokeMetaObject.getSlots().size();
+				Vigilant vigilant = (Vigilant) this.getVigilantWithConvokes().getObject();
+				List<Vigilancy> convokes = getConvokes(vigilant);
+				if (convokes.isEmpty()) {
+					return numberOfConvokeSlotCache = 0;
+				} else {
+					MetaObject convokeMetaObject = MetaObjectFactory.createObject(convokes.get(0),
+							this.convokeSchema);
+					return numberOfConvokeSlotCache = convokeMetaObject.getSlots().size();
+				}
 			}
 
 		}
@@ -457,28 +475,26 @@ public class VigilantTableRender extends OutputRenderer {
 
 		@Override
 		protected int getNumberOfColumns() {
-			int columns = -1;
-			int convokesSlots = getNumberOfConvokeSlots();
+			if (numberOfColumnsCache != null) {
+				return numberOfColumnsCache;
+			} else {
+				int columns = -1;
+				int convokesSlots = getNumberOfConvokeSlots();
 
-			for (MetaObject vigilantMetaObject : this.objects) {
-				Vigilant vigilant = (Vigilant) vigilantMetaObject.getObject();
+				for (MetaObject vigilantMetaObject : this.objects) {
+					Vigilant vigilant = (Vigilant) vigilantMetaObject.getObject();
 
-				columns = Math.max(columns, vigilantMetaObject.getSlots().size() + convokesSlots
-						* getConvokes(vigilant).size());
+					columns = Math.max(columns, vigilantMetaObject.getSlots().size() + convokesSlots
+							* getConvokes(vigilant).size());
+				}
+
+				return numberOfColumnsCache = columns;
 			}
-
-			return columns;
 		}
 
 		@Override
 		protected int getNumberOfRows() {
-			for (Vigilant vigilant : this.vigilants) {
-				if (!getConvokes(vigilant).isEmpty())
-					return this.vigilants.size();
-			}
-			return this.vigilants.size(); // no vigilants have convokes for
-			// the given period we
-			// will not display anyone.
+			return this.vigilants.size();
 		}
 
 		@Override
@@ -514,28 +530,26 @@ public class VigilantTableRender extends OutputRenderer {
 				int slotIndex = getConvokeSlotIndex(vigilant, columnIndex);
 
 				getContext().setMetaObject(convoke);
-				return renderSlot(convoke.getSlots().get(slotIndex));
+				HtmlComponent component = renderSlot(convoke.getSlots().get(slotIndex));
 
+				Vigilancy vigilancy = (Vigilancy) convoke.getObject();
+				if (!vigilancy.isActive()) {
+					component.setClasses(getDeletedConvokeClasses());
+				}
+				
+				if(vigilancy.isOwnCourseVigilancy()) {
+					component.setClasses(getOwnCourseClasses());
+				}
+				return component;
 			}
-
 		}
-
 	}
 
-	public String getSortBy() {
-		return sortBy;
+	public String getOwnCourseClasses() {
+		return ownCourseClasses;
 	}
 
-	public void setSortBy(String sortBy) {
-		this.sortBy = sortBy;
+	public void setOwnCourseClasses(String ownCourseClasses) {
+		this.ownCourseClasses = ownCourseClasses;
 	}
-
-	public boolean isShowNotActiveConvokes() {
-		return showNotActiveConvokes;
-	}
-
-	public void setShowNotActiveConvokes(boolean showNotActiveConvokes) {
-		this.showNotActiveConvokes = showNotActiveConvokes;
-	}
-
 }

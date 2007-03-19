@@ -1,0 +1,18 @@
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="date"%>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
+
+
+<em><bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.examCoordinator"/></em>
+<h2><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.vigilancyPoints"/></h2>
+
+<fr:edit id="group" name="group" schema="edit.vigilantGroup.points">
+	<fr:layout name="tabular">
+		<fr:property name="classes" value="tstyle5"/>
+	</fr:layout>
+	<fr:destination name="success" path="/vigilancy/vigilantGroupManagement.do?method=prepareVigilantGroupManagement&show=groups"/>
+	<fr:destination name="cancel" path="/vigilancy/vigilantGroupManagement.do?method=prepareVigilantGroupManagement&show=groups"/>
+</fr:edit>

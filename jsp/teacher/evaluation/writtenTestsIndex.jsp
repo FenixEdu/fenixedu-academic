@@ -1,6 +1,7 @@
 <%@ taglib uri="/WEB-INF/jsf_core.tld" prefix="f"%>
 <%@ taglib uri="/WEB-INF/jsf_tiles.tld" prefix="ft"%>
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
+<%@ taglib uri="/WEB-INF/c.tld" prefix="c"%>
 
 <ft:tilesView definition="df.teacher.evaluation-management" attributeName="body-inline">
 
@@ -11,11 +12,11 @@
 		
 		<h:outputText value="<h2>#{bundle['title.evaluation.WrittenTests']}</h2>" escape="false" />
 
-		<h:commandLink action="enterCreateWrittenTest">
-			<h:outputFormat value="<br/>#{bundle['link.create.written.test']} <br/><br/>" escape="false"/>
-		</h:commandLink>
-
-		<h:outputText value="<hr/>" escape="false"/>
+		<h:outputFormat value="<ul class='mvert15'><li>" escape="false"/>
+			<h:commandLink action="enterCreateWrittenTest">
+				<h:outputFormat value="#{bundle['link.create.written.test']}" escape="false"/>
+			</h:commandLink>
+		<h:outputFormat value="</li></ul>" escape="false"/>
 		
 		<h:outputText styleClass="error" rendered="#{!empty evaluationManagementBackingBean.errorMessage}"
 			value="#{bundle[evaluationManagementBackingBean.errorMessage]}<br/>" escape="false" />
@@ -73,6 +74,14 @@
 						<f:param name="evaluationID" value="#{writtenTest.idInternal}" />
 						<h:outputFormat value="#{bundle['link.publishMarks']}" />
 					</h:commandLink>
+					
+					<h:outputText escape="false" value="</li><li><b>#{bundle['label.vigilancies']}:</b> "/>
+					<h:outputLink value="#{evaluationManagementBackingBean.contextPath}/teacher/evaluation/vigilancy/vigilantsForEvaluation.do?method=viewVigilants&executionCourseID=#{evaluationManagementBackingBean.executionCourseID}&evaluationOID=#{writtenTest.idInternal}"><h:outputText value="#{bundle['label.showVigilants']}"/></h:outputLink>
+					<h:outputText value="<b> | </b>" escape="false"/>
+					<h:outputText rendered="#{writtenTest.isAfterCurrentDate}" value="#{bundle['label.editReport']}"/>					
+					<h:outputLink rendered="#{!writtenTest.isAfterCurrentDate}" value="#{evaluationManagementBackingBean.contextPath}/teacher/evaluation/vigilancy/vigilantsForEvaluation.do?method=editReport&executionCourseID=#{evaluationManagementBackingBean.executionCourseID}&evaluationOID=#{writtenTest.idInternal}"><h:outputText value="#{bundle['label.editReport']}"/></h:outputLink>					
+
+
 					<h:outputText value="</li></ul>" escape="false"/>
 					<h:outputText value="<br/>" escape="false"/>
 

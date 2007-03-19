@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.domain.vigilancy;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
@@ -32,25 +31,32 @@ import org.joda.time.YearMonthDay;
 public class Vigilant extends Vigilant_Base {
 
 	public static final Comparator<Vigilant> POINTS_COMPARATOR = new BeanComparator("points");
-	public static final Comparator<Vigilant> NAME_COMPARATOR = new BeanComparator("person.name"); 
-	public static final Comparator<Vigilant> USERNAME_COMPARATOR = new ReverseComparator(new BeanComparator("person.username"));	
+
+	public static final Comparator<Vigilant> NAME_COMPARATOR = new BeanComparator("person.name");
+
+	public static final Comparator<Vigilant> USERNAME_COMPARATOR = new ReverseComparator(new BeanComparator(
+			"person.username"));
+
 	public static final Comparator<Vigilant> CATEGORY_COMPARATOR = new Comparator<Vigilant>() {
 
 		public int compare(Vigilant v1, Vigilant v2) {
-			
-				Category c1 = v1.getTeacherCategory();
-				Category c2 = v2.getTeacherCategory();
-				
-				if(c1==null && c2==null) return 0;
-				if(c1==null) return -1;
-				if(c2==null) return 1;
-				
-				return -c1.compareTo(c2);
-			
-			}
-		
+
+			Category c1 = v1.getTeacherCategory();
+			Category c2 = v2.getTeacherCategory();
+
+			if (c1 == null && c2 == null)
+				return 0;
+			if (c1 == null)
+				return -1;
+			if (c2 == null)
+				return 1;
+
+			return -c1.compareTo(c2);
+
+		}
+
 	};
-	
+
 	protected Vigilant() {
 		super();
 		this.setStartPoints(0);
@@ -66,7 +72,7 @@ public class Vigilant extends Vigilant_Base {
 
 	public Vigilant(Person person, ExecutionYear executionYear) {
 		this();
-		
+
 		this.setPerson(person);
 		this.setExecutionYear(executionYear);
 	}
@@ -74,27 +80,29 @@ public class Vigilant extends Vigilant_Base {
 	public double getPoints() {
 		double points = this.getStartPoints();
 		BigDecimal weight = this.getPointsWeight();
-		
-		List<VigilancyWithCredits> vigilancies = Vigilancy.getAllVigilancyWithCredits(this); 
 
-		for(Vigilancy vigilancy : vigilancies) {
+		List<Vigilancy> vigilancies = getVigilancies();
+
+		for (Vigilancy vigilancy : vigilancies) {
 			points += weight.doubleValue() * vigilancy.getPoints();
 		}
-		
+
 		return points;
 	}
 
 	public Integer getNumber() {
 		Person person = this.getPerson();
 		Employee employee = person.getEmployee();
-		if(employee!=null) return employee.getEmployeeNumber();
-		
+		if (employee != null)
+			return employee.getEmployeeNumber();
+
 		Student student = person.getStudent();
-		if(student!=null) return student.getNumber();
-		
+		if (student != null)
+			return student.getNumber();
+
 		return 0;
 	}
-	
+
 	public String getEmail() {
 		return this.getPerson().getEmail();
 	}
@@ -119,7 +127,7 @@ public class Vigilant extends Vigilant_Base {
 	private List<VigilantGroup> getVigilantGroupsForGivenBoundValue(Boolean value) {
 		List<VigilantGroup> groups = new ArrayList<VigilantGroup>();
 		for (VigilantBound bound : this.getBounds()) {
-			if(bound.getConvokable()==value) {
+			if (bound.getConvokable() == value) {
 				groups.add(bound.getVigilantGroup());
 			}
 		}
@@ -127,13 +135,13 @@ public class Vigilant extends Vigilant_Base {
 	}
 
 	public List<VigilantGroup> getVigilantsGroupsWhereCanBeConvoked() {
-		return getVigilantGroupsForGivenBoundValue(true); 
+		return getVigilantGroupsForGivenBoundValue(true);
 	}
-	
+
 	public List<VigilantGroup> getVigilantsGroupsWhereCannotBeConvoked() {
-		return getVigilantGroupsForGivenBoundValue(false); 
+		return getVigilantGroupsForGivenBoundValue(false);
 	}
-	
+
 	public void addVigilantGroups(VigilantGroup group) {
 		VigilantBound bound = new VigilantBound(this, group);
 		this.addBounds(bound);
@@ -149,21 +157,20 @@ public class Vigilant extends Vigilant_Base {
 	}
 
 	public boolean hasVigilantGroup(VigilantGroup group) {
-		for(VigilantBound bound : this.getBounds()) {
-			if(bound.getVigilantGroup().equals(group)) {
+		for (VigilantBound bound : this.getBounds()) {
+			if (bound.getVigilantGroup().equals(group)) {
 				return true;
 			}
 		}
 		return false;
 	}
-	
+
 	public int getVigilantGroupsCount() {
 		return this.getVigilantGroups().size();
 	}
 
 	public Boolean isAvailableOnDate(DateTime begin, DateTime end) {
-		List<UnavailablePeriod> unavailablePeriods = this
-				.getUnavailablePeriods();
+		List<UnavailablePeriod> unavailablePeriods = this.getUnavailablePeriods();
 		for (UnavailablePeriod period : unavailablePeriods) {
 			if (period.containsInterval(begin, end))
 				return Boolean.FALSE;
@@ -180,7 +187,7 @@ public class Vigilant extends Vigilant_Base {
 		Teacher teacher = this.getTeacher();
 		return (teacher == null) ? null : teacher.getCategory();
 	}
-	
+
 	public String getTeacherCategoryCode() {
 		Category category = getTeacherCategory();
 		return (category == null) ? "" : category.getCode();
@@ -192,8 +199,7 @@ public class Vigilant extends Vigilant_Base {
 			Assiduousness assiduousness = employee.getAssiduousness();
 			ExecutionYear year = this.getExecutionYear();
 			if (assiduousness != null) {
-				return assiduousness.getCampusForInterval(year
-						.getBeginDateYearMonthDay(), year
+				return assiduousness.getCampusForInterval(year.getBeginDateYearMonthDay(), year
 						.getEndDateYearMonthDay());
 			} else {
 				return new ArrayList<Campus>();
@@ -214,8 +220,7 @@ public class Vigilant extends Vigilant_Base {
 		return campusNames;
 	}
 
-	public Boolean isAvailableInCampus(
-			net.sourceforge.fenixedu.domain.space.Campus campus) {
+	public Boolean isAvailableInCampus(net.sourceforge.fenixedu.domain.space.Campus campus) {
 		List<Campus> campusList = this.getCampus();
 
 		/*
@@ -226,8 +231,7 @@ public class Vigilant extends Vigilant_Base {
 		return campusList.isEmpty() ? true : campusList.contains(campus);
 	}
 
-	public Boolean isAvailableInCampus(
-			net.sourceforge.fenixedu.domain.Campus campus) {
+	public Boolean isAvailableInCampus(net.sourceforge.fenixedu.domain.Campus campus) {
 		List<Campus> campusList = this.getCampus();
 
 		/*
@@ -239,8 +243,7 @@ public class Vigilant extends Vigilant_Base {
 		}
 
 		for (Campus spaceCampus : campusList) {
-			if (spaceCampus.getSpaceInformation().getName().equals(
-					campus.getName())) {
+			if (spaceCampus.getSpaceInformation().getName().equals(campus.getName())) {
 				return true;
 			}
 		}
@@ -266,8 +269,7 @@ public class Vigilant extends Vigilant_Base {
 	public Person getIncompatiblePerson() {
 		Person person = super.getIncompatiblePerson();
 		if (person == null) {
-			List<Vigilant> vigilants = this.getPerson()
-					.getIncompatibleVigilants();
+			List<Vigilant> vigilants = this.getPerson().getIncompatibleVigilants();
 			ExecutionYear year = this.getExecutionYear();
 			for (Vigilant vigilant : vigilants) {
 				if (vigilant.getExecutionYear().equals(year)) {
@@ -281,8 +283,7 @@ public class Vigilant extends Vigilant_Base {
 	@Override
 	public void setIncompatiblePerson(Person person) {
 		if (this.getPerson().equals(person)) {
-			throw new DomainException(
-					"vigilancy.error.cannotBeIncompatibleWithYourself");
+			throw new DomainException("vigilancy.error.cannotBeIncompatibleWithYourself");
 		} else {
 			super.setIncompatiblePerson(person);
 		}
@@ -290,32 +291,35 @@ public class Vigilant extends Vigilant_Base {
 
 	public Vigilant getIncompatibleVigilant() {
 		Person person = this.getIncompatiblePerson();
-		return person != null ? person.getVigilantForGivenExecutionYear(this
-				.getExecutionYear()) : null;
+		return person != null ? person.getVigilantForGivenExecutionYear(this.getExecutionYear()) : null;
 	}
 
 	public List<Interval> getConvokePeriods() {
 		List<Interval> convokingPeriods = new ArrayList<Interval>();
-		List<Vigilancy> convokes = this.getVigilancys();
+		List<Vigilancy> convokes = this.getVigilancies();
 		for (Vigilancy convoke : convokes) {
-			convokingPeriods.add(new Interval(convoke.getBeginDate(), convoke
-					.getEndDate()));
+			convokingPeriods.add(new Interval(convoke.getBeginDate(), convoke.getEndDate()));
 		}
 		return convokingPeriods;
 	}
 
-	public Boolean canBeConvokedForWrittenEvaluation(
-			WrittenEvaluation writtenEvaluation) {
+	public Boolean canBeConvokedForWrittenEvaluation(WrittenEvaluation writtenEvaluation) {
 		DateTime beginOfExam = writtenEvaluation.getBeginningDateTime();
 		DateTime endOfExam = writtenEvaluation.getEndDateTime();
 
+		boolean isInExamPeriod = writtenEvaluation.getAssociatedExecutionCourses().get(0).isInExamPeriod();
 		return this.isAvailableOnDate(beginOfExam, endOfExam)
-				&& this.hasNoEvaluationsOnDate(beginOfExam, endOfExam);
+				&& this.hasNoEvaluationsOnDate(beginOfExam, endOfExam)
+				&& (isInExamPeriod || (!isInExamPeriod && !hasLessons(beginOfExam, endOfExam)));
 	}
 
-	public boolean hasNoEvaluationsOnDate(DateTime beginOfExam,
-			DateTime endOfExam) {
-		List<Vigilancy> convokes = this.getVigilancys();
+	private boolean hasLessons(DateTime beginOfExam, DateTime endOfExam) {
+		Teacher teacher = getTeacher();
+		return teacher==null ? false : teacher.hasLessons(beginOfExam,endOfExam);
+	}
+
+	public boolean hasNoEvaluationsOnDate(DateTime beginOfExam, DateTime endOfExam) {
+		List<Vigilancy> convokes = this.getVigilancies();
 		Interval requestedInterval = new Interval(beginOfExam, endOfExam);
 		for (Vigilancy convoke : convokes) {
 			DateTime begin = convoke.getBeginDateTime();
@@ -331,23 +335,22 @@ public class Vigilant extends Vigilant_Base {
 
 	public void delete() {
 
-		if (this.getActiveVigilancysInList(this.getVigilancyWithCredits()).size()==0) {
+		if (this.getActiveVigilanciesInList(this.getVigilancies()).size() == 0) {
 			removeIncompatiblePerson();
-			for (; !this.getUnavailablePeriods().isEmpty(); this
-					.getUnavailablePeriods().get(0).delete())
+			for (; !this.getUnavailablePeriods().isEmpty(); this.getUnavailablePeriods().get(0).delete())
 				;
-			for (; !this.getBounds().isEmpty(); this.getBounds().get(0)
-					.delete())
+			for (; !this.getBounds().isEmpty(); this.getBounds().get(0).delete())
 				;
-			for(; !this.getVigilancys().isEmpty(); this.getVigilancys().get(0).delete());
-			for(; !this.getVigilancyWithCredits().isEmpty(); this.getVigilancyWithCredits().get(0).delete());
+			for (; !this.getVigilancies().isEmpty(); this.getVigilancies().get(0).delete())
+				;
+			for (; !this.getVigilancies().isEmpty(); this.getVigilancies().get(0).delete())
+				;
 			removeExecutionYear();
 			removePerson();
 			removeRootDomainObject();
 			super.deleteDomainObject();
 		} else {
-			throw new DomainException(
-					"vigilancy.error.cannotDeleteVigilantDueToConvokes");
+			throw new DomainException("vigilancy.error.cannotDeleteVigilantDueToConvokes");
 		}
 	}
 
@@ -362,97 +365,39 @@ public class Vigilant extends Vigilant_Base {
 		return false;
 	}
 
-	public Integer getActiveVigilancyWithCreditsCount() {
-		return getActiveVigilancyWithCredits().size();
-	}
-	
-	public List<Vigilancy> getAllConvokes() {
-		List<Vigilancy> convokes = new ArrayList<Vigilancy>(super.getVigilancys());
-		Collections.sort(convokes,
-				VigilancyWithCredits.COMPARATOR_BY_WRITTEN_EVALUATION_BEGGINING);
+	public List<OtherCourseVigilancy> getOtherCourseVigilancies() {
+		List<OtherCourseVigilancy> convokes = new ArrayList<OtherCourseVigilancy>();
+		for(Vigilancy vigilancy : getVigilancies()) {
+			if(vigilancy.isOtherCourseVigilancy()) {
+				convokes.add((OtherCourseVigilancy) vigilancy);
+			}
+		}
 		return convokes;
 	}
 
-	public List<VigilancyWithCredits> getVigilancyWithCredits() {
-		List<VigilancyWithCredits> convokes = Vigilancy.getAllVigilancyWithCredits(this);
-		Collections.sort(convokes,
-				VigilancyWithCredits.COMPARATOR_BY_WRITTEN_EVALUATION_BEGGINING);
-		return convokes;		
+	public List<Vigilancy> getActiveOtherCourseVigilancies() {
+		return getActiveVigilanciesInList(getVigilancies());
 	}
-	
-	public List<VigilancyWithCredits> getActiveVigilancyWithCredits() {
-		List<VigilancyWithCredits> activeConvokes = getActiveVigilancysInList(Vigilancy.getAllVigilancyWithCredits(this));
-		Collections.sort(activeConvokes,
-				VigilancyWithCredits.COMPARATOR_BY_WRITTEN_EVALUATION_BEGGINING);
-		return activeConvokes;
-	}
-	
-	@Override
-	public List<Vigilancy> getVigilancys() {
-		List<Vigilancy> convokes = new ArrayList<Vigilancy>();
-		Collections.sort(convokes,
-				VigilancyWithCredits.COMPARATOR_BY_WRITTEN_EVALUATION_BEGGINING);
-		return convokes;
+	public List<Vigilancy> getActiveVigilancies() {
+		return getActiveVigilanciesInList(getVigilancies());
 	}
 
-	public List<VigilancyWithCredits> getActiveConvokesBeforeCurrentDate() {
-		return getActiveVigilancysInList(this.getConvokesBeforeCurrentDate());
-	}
-	
-	public List<VigilancyWithCredits> getConvokesBeforeCurrentDate() {
-		List<Vigilancy> convokes = super.getVigilancys();
-		List<VigilancyWithCredits> pastConvokes = new ArrayList<VigilancyWithCredits>();
-		YearMonthDay currentDate = new YearMonthDay();
-
-		for (Vigilancy convoke : convokes) {
-			if (currentDate.isAfter(convoke.getBeginYearMonthDay()) && (convoke instanceof VigilancyWithCredits)) {
-				pastConvokes.add((VigilancyWithCredits)convoke);
+	private List<Vigilancy> getActiveVigilanciesInList(List<Vigilancy> vigilancies) {
+		List<Vigilancy> activeVigilancies = new ArrayList<Vigilancy>();
+		for (Vigilancy vigilancy : vigilancies) {
+			if (vigilancy.isActive()) {
+				activeVigilancies.add(vigilancy);
 			}
 		}
-		Collections.sort(pastConvokes,
-				VigilancyWithCredits.COMPARATOR_BY_WRITTEN_EVALUATION_BEGGINING);
-		return pastConvokes;
-
+		return activeVigilancies;
 	}
 
-	public List<VigilancyWithCredits> getActiveConvokesAfterCurrentDate() {
-		return getActiveVigilancysInList(this.getConvokesAfterCurrentDate());
+	public List<Vigilancy> getVigilancies(VigilantGroup group) {
+		return group.getVigilancies(this);
 	}
 
-	private List<VigilancyWithCredits> getActiveVigilancysInList(List<VigilancyWithCredits> vigilancys) {
-		List<VigilancyWithCredits> activeVigilancys = new ArrayList<VigilancyWithCredits> ();
-		for(VigilancyWithCredits vigilancy : vigilancys) {
-			if(vigilancy.isActive()) {
-				activeVigilancys.add(vigilancy);
-			}
-		}
-		return activeVigilancys;
-	}
-	
-	
-	public List<VigilancyWithCredits> getConvokesAfterCurrentDate() {
-		List<Vigilancy> convokes = super.getVigilancys();
-		List<VigilancyWithCredits> futureConvokes = new ArrayList<VigilancyWithCredits>();
-		YearMonthDay currentDate = new YearMonthDay();
-
-		for (Vigilancy convoke : convokes) {
-			if ((currentDate.isBefore(convoke.getBeginYearMonthDay())
-					|| currentDate.isEqual(convoke.getBeginYearMonthDay())) && (convoke instanceof VigilancyWithCredits)) {
-				futureConvokes.add((VigilancyWithCredits)convoke);
-			}
-		}
-		Collections.sort(futureConvokes,
-				VigilancyWithCredits.COMPARATOR_BY_WRITTEN_EVALUATION_BEGGINING);
-		return futureConvokes;
-	}
-
-	public List<VigilancyWithCredits> getVigilancys(VigilantGroup group) {
-		return group.getVigilancys(this);
-	}
-
-	public boolean hasBeenConvokedForEvaluation(
-			WrittenEvaluation writtenEvaluation) {
-		List<Vigilancy> convokes = this.getVigilancys();
+	public boolean hasBeenConvokedForEvaluation(WrittenEvaluation writtenEvaluation) {
+		List<Vigilancy> convokes = this.getVigilancies();
 		for (Vigilancy convoke : convokes) {
 			if (convoke.getWrittenEvaluation().equals(writtenEvaluation))
 				return true;
@@ -473,8 +418,7 @@ public class Vigilant extends Vigilant_Base {
 	}
 
 	public String getIncompatiblePersonName() {
-		return (hasIncompatiblePerson()) ? getIncompatiblePerson().getName()
-				: null;
+		return (hasIncompatiblePerson()) ? getIncompatiblePerson().getName() : null;
 	}
 
 	public UnavailableTypes getWhyIsUnavailabeFor(WrittenEvaluation writtenEvaluation) {
@@ -492,15 +436,12 @@ public class Vigilant extends Vigilant_Base {
 		}
 
 		Teacher teacher = this.getPerson().getTeacher();
-		if (teacher != null
-				&& teacher.getServiceExemptionSituations().size() > 0) {
-			List<TeacherServiceExemption> situations = teacher
-					.getServiceExemptionSituations();
+		if (teacher != null && teacher.getServiceExemptionSituations().size() > 0) {
+			List<TeacherServiceExemption> situations = teacher.getServiceExemptionSituations();
 			for (TeacherServiceExemption situation : situations) {
 				YearMonthDay beginSituation = situation.getStartYearMonthDay();
 				YearMonthDay endSituation = situation.getEndYearMonthDay();
-				DateInterval interval = new DateInterval(beginSituation,
-						endSituation);
+				DateInterval interval = new DateInterval(beginSituation, endSituation);
 				if (interval.containsDate(begin))
 					return UnavailableTypes.SERVICE_EXEMPTION;
 			}
@@ -508,7 +449,7 @@ public class Vigilant extends Vigilant_Base {
 
 		Person person = this.getIncompatiblePerson();
 		if (person != null) {
-			List<Vigilancy> convokes = writtenEvaluation.getVigilancys();
+			List<Vigilancy> convokes = writtenEvaluation.getVigilancies();
 			for (Vigilancy convoke : convokes) {
 				if (convoke.getVigilant().getPerson().equals(person))
 					return UnavailableTypes.INCOMPATIBLE_PERSON;
@@ -521,38 +462,40 @@ public class Vigilant extends Vigilant_Base {
 
 	public boolean isCathedraticTeacher() {
 		Teacher teacher = this.getTeacher();
-		if(teacher!=null) {
-			return teacher.getCategory().getWeight()<=3;
+		if (teacher != null) {
+			return teacher.getCategory().getWeight() <= 3;
 		}
 		return false;
 	}
-	
+
 	public String getBoundsAsString() {
 		String result = "";
-		int i=0;
-		for(VigilantBound bound : this.getBounds()) {
-			if(!bound.getConvokable()) {
-				if(i > 0) result += ", ";
+		int i = 0;
+		for (VigilantBound bound : this.getBounds()) {
+			if (!bound.getConvokable()) {
+				if (i > 0)
+					result += ", ";
 				result += bound.getVigilantGroup().getName() + ": " + bound.getJustification();
 				i++;
 			}
 		}
 		return result;
 	}
-	
+
 	public List<VigilantGroup> getVisibleVigilantGroups() {
-		
-		Set<VigilantGroup> groups = new HashSet<VigilantGroup> ();
+
+		Set<VigilantGroup> groups = new HashSet<VigilantGroup>();
 		groups.addAll(this.getVigilantGroups());
-		
+
 		Employee employee = this.getPerson().getEmployee();
-		if(employee!=null) {
+		if (employee != null) {
 			ExecutionYear executionYear = this.getExecutionYear();
-			Department department = employee.getLastDepartmentWorkingPlace(executionYear.getBeginDateYearMonthDay(), executionYear.getEndDateYearMonthDay());
-			groups.addAll(department.getVigilantGroupsForGivenExecutionYear(executionYear)) ;
+			Department department = employee.getLastDepartmentWorkingPlace(executionYear
+					.getBeginDateYearMonthDay(), executionYear.getEndDateYearMonthDay());
+			groups.addAll(department.getVigilantGroupsForGivenExecutionYear(executionYear));
 
 		}
-			
+
 		return new ArrayList<VigilantGroup>(groups);
 	}
 }

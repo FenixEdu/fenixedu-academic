@@ -2161,7 +2161,6 @@
         	  
         	<forward name="viewLastProjectSubmissionForEachGroup" path="view-last-project-submission-for-each-group"/>
         	<forward name="viewProjectSubmissionsByGroup" path="view-project-submissions-by-group"/>
-        	<forward name="viewProjectSubmissionLogsByGroup" path="view-project-submission-logs-by-group"/>
         </action>
 
         <action path="/credits"
@@ -2172,6 +2171,16 @@
             <forward name="show-teacher-credits" path="show-teacher-credits-sheet"/>
             <forward name="teacher-not-found" path="/showAllTeacherCreditsResume.do?method=showTeacherCreditsResume&amp;page=0"/>
         </action>
+
+
+		<!--  ======= Vigilancies in evaluations ======== -->
+		<action path="/evaluation/vigilancy/vigilantsForEvaluation"
+		parameter="method"
+		scope="request"
+		type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ListVigilanciesForEvaluationDispatchAction">
+            <forward name="listVigilantsForEvaluation" path="list-vigilants-for-evaluation"/>
+            <forward name="editReportForEvaluation" path="edit-report-for-evaluation"/>            
+		</action>
 
 		<!-- ===== Rooms Reserve Management === -->
         <action path="/roomsReserveManagement"
@@ -2186,7 +2195,7 @@
 
 		<!-- Action mappings for tests -->
 		&tests-actions;
-		<!-- End of action mappings for tests -->	    	    
+		<!-- End of action mappings for tests -->
 	    
     </action-mappings>
     <!-- ========== Controller Configuration ================================ -->
@@ -2203,9 +2212,9 @@
     <message-resources parameter="resources.SiteResources" key="SITE_RESOURCES" null="false"/>
     <message-resources parameter="resources.AdminOffice" key="ADMIN_OFFICE_RESOURCES" null="false"/>
     <message-resources parameter="resources.DegreeAdministrativeOfficeResources" key="DEGREE_OFFICE_RESOURCES" null="false"/>
+	<message-resources parameter="resources.VigilancyResources" key="VIGILANCY_RESOURCES" null="false"/>
     <message-resources parameter="resources.ApplicationResourcesSOP" key="SOP_RESOURCES" null="false"/>
     <message-resources parameter="resources.AcademicAdminOffice" key="ACADEMIC_OFFICE_RESOURCES" null="false"/>
-
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
         <set-property property="pathnames" 

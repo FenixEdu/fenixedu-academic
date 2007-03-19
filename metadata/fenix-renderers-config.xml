@@ -271,6 +271,8 @@ Documentation:
     <renderer type="java.util.Collection" layout="vigilant-table" class="net.sourceforge.fenixedu.presentationTier.renderers.VigilantTableRender">
     	<property name="convokeTitleKey" value="vigilantTable.convoke.title"/> 
     	<property name="convokeTitleBundle" value="VIGILANCY_RESOURCES"/> 
+	   	<property name="deletedConvokeClasses" value="color888"/>
+	   	<property name="ownCourseClasses" value="color007b4d"/>
     </renderer>
 
     <renderer mode="input" type="java.util.Collection" layout="vigilantsInGroup-render" class="net.sourceforge.fenixedu.presentationTier.renderers.VigilantsInGroupRender"/>

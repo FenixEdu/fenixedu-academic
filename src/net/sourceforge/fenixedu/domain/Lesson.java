@@ -23,6 +23,8 @@ import net.sourceforge.fenixedu.util.date.TimePeriod;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.ReverseComparator;
+import org.joda.time.DateTime;
+import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
 public class Lesson extends Lesson_Base {
@@ -412,5 +414,15 @@ public class Lesson extends Lesson_Base {
 	result.append(getSala().getName());
 
 	return result.toString();
+    }
+    
+    public boolean contains(Interval interval) {
+    	YearMonthDay lessonStartDay = getLessonStartDay();
+		YearMonthDay lessonEndDay = getLessonEndDay();
+		HourMinuteSecond start = getBeginHourMinuteSecond();
+		HourMinuteSecond end = getEndHourMinuteSecond();
+				return new Interval(new DateTime(lessonStartDay.getYear(), lessonStartDay.getMonthOfYear(),
+				lessonStartDay.getDayOfMonth(),start.getHour(),start.getMinuteOfHour(),0,0), new DateTime(lessonEndDay.getYear(), lessonEndDay.getMonthOfYear(),
+						lessonEndDay.getDayOfMonth(),end.getHour(),end.getMinuteOfHour(),0,0)).contains(interval);
     }
 }

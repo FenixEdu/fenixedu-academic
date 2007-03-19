@@ -23,7 +23,7 @@ public class WrittenEvaluationForGivenVigilantGroup implements DataProvider {
         List<WrittenEvaluation> evaluationsAfterCurrentDate = new ArrayList<WrittenEvaluation>();
         if (selectedGroup != null) {
             List<WrittenEvaluation> writtenEvaluationsForExecutionCourse = selectedGroup
-                    .getAllAssocitedWrittenEvaluations();
+                    .getAllAssociatedWrittenEvaluations();
             List<WrittenEvaluation> writtenEvaluations = getOpenWrittenEvaluations(writtenEvaluationsForExecutionCourse);
             evaluationsAfterCurrentDate.addAll(writtenEvaluations);
             Collections.sort(evaluationsAfterCurrentDate, new BeanComparator("name"));

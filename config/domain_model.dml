@@ -181,9 +181,11 @@ valueType net.sourceforge.fenixedu.domain.FrequencyType															as Frequen
 valueType net.sourceforge.fenixedu.domain.RequestState															as RequestState;
 valueType net.sourceforge.fenixedu.domain.assiduousness.util.ScheduleClockingType								as ScheduleClockingType;
 valueType net.sourceforge.fenixedu.domain.util.EmailAddressList								                    as EmailAddressList;
-valueType net.sourceforge.fenixedu.domain.thesis.ThesisState								                        as ThesisState;
+valueType net.sourceforge.fenixedu.domain.thesis.ThesisState													as ThesisState;
 valueType net.sourceforge.fenixedu.domain.CompetenceCourseType								                    as CompetenceCourseType;
-valueType net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType							                        as ThesisParticipationType;
+valueType net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType							            as ThesisParticipationType;
+valueType net.sourceforge.fenixedu.domain.vigilancy.AttendingStatus												as AttendingStatus;
+
 /*
 *
 * Class definitions
@@ -4742,19 +4744,24 @@ class net.sourceforge.fenixedu.domain.vigilancy.Vigilancy extends net.sourceforg
 	Integer keyVigilant;
 	Integer keyWrittenEvaluation;
     String ojbConcreteClass;
+	Boolean active;
+	AttendingStatus status;
+	
 }
 
-	class net.sourceforge.fenixedu.domain.vigilancy.VigilancyWithCredits extends net.sourceforge.fenixedu.domain.vigilancy.Vigilancy {
-	Boolean confirmed;
-	Boolean attendedToConvoke; 
-	Boolean active;
+	class net.sourceforge.fenixedu.domain.vigilancy.OwnCourseVigilancy extends net.sourceforge.fenixedu.domain.vigilancy.Vigilancy {
+
+	}
+	
+	class net.sourceforge.fenixedu.domain.vigilancy.OtherCourseVigilancy extends net.sourceforge.fenixedu.domain.vigilancy.Vigilancy {
+		Boolean confirmed;
 	}
 	
 class net.sourceforge.fenixedu.domain.vigilancy.VigilantBound extends net.sourceforge.fenixedu.domain.DomainObject {
   Boolean convokable;
   String justification;
   
-	Integer keyVigilant;
+  Integer keyVigilant;
   Integer keyVigilantGroup;
 }
 
@@ -4768,6 +4775,11 @@ class net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup extends net.source
 	DateTime endOfFirstPeriodForUnavailablePeriods;
 	DateTime beginOfSecondPeriodForUnavailablePeriods;
 	DateTime endOfSecondPeriodForUnavailablePeriods;
+	Integer pointsForTeacher;
+	Integer pointsForConvoked;
+	Integer pointsForDismissed;
+	Integer pointsForMissing;
+	Integer pointsForDisconvoked;
 	Integer keyUnit;
 	Integer keyExecutionYear;
 }
@@ -11694,13 +11706,13 @@ relation VigilantIncompatiblePerson {
 }
 relation ConvokingVigilant {
 	net.sourceforge.fenixedu.domain.vigilancy.Vigilant playsRole vigilant;
-	net.sourceforge.fenixedu.domain.vigilancy.Vigilancy playsRole vigilancys {
+	net.sourceforge.fenixedu.domain.vigilancy.Vigilancy playsRole vigilancies {
 		multiplicity *;
 	}
 }
 
 relation ConvokeForWrittenEvaluation {
-	net.sourceforge.fenixedu.domain.vigilancy.Vigilancy playsRole vigilancys {
+	net.sourceforge.fenixedu.domain.vigilancy.Vigilancy playsRole vigilancies {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.WrittenEvaluation playsRole writtenEvaluation;
@@ -11779,7 +11791,7 @@ relation RootDomainVigilantGroup {
 
 relation RootDomainVigilancy {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.vigilancy.Vigilancy playsRole vigilancys {
+	net.sourceforge.fenixedu.domain.vigilancy.Vigilancy playsRole vigilancies {
 		multiplicity *;
 	}
 }

@@ -10635,6 +10635,13 @@
 	</service>
 		
 	<service>
+		<name>ChangeConvokeStatus</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.ChangeConvokeStatus</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+	</service>
+		
+	<service>
 		<name>ChangeConvokeActive</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.ChangeConvokeActive</implementationClass>
 		<description />
@@ -10642,8 +10649,8 @@
 	</service>
 		
 	<service>
-		<name>ConfirmConvokeByOID</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.ConfirmConvokeByOID</implementationClass>
+		<name>ConfirmConvoke</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.ConfirmConvoke</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 	</service>

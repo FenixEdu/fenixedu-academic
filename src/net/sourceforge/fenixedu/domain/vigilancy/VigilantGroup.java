@@ -40,7 +40,7 @@ public class VigilantGroup extends VigilantGroup_Base {
 		List<Vigilant> teachers = new ArrayList<Vigilant> ();
 		for(Vigilant vigilant : this.getVigilantsThatCantBeConvoked()) {
 			Teacher teacher = vigilant.getTeacher();
-			if(teacher !=null && teacher.teachesAny(executionCourses)) {
+			if(teacher !=null && teacher.teachesAny(executionCourses,this.getExecutionYear())) {
 				teachers.add(vigilant);
 			}
 		}
@@ -53,10 +53,10 @@ public class VigilantGroup extends VigilantGroup_Base {
             if (!vigilant.hasBeenConvokedForEvaluation(writtenEvaluation)) {
                 Teacher teacher = vigilant.getTeacher();
                 if(teacher!=null && teacher.teachesAny(writtenEvaluation.getAssociatedExecutionCourses())) {
-                	vigilant.addVigilancys(new Vigilancy(writtenEvaluation));
+                	vigilant.addVigilancies(new OwnCourseVigilancy(writtenEvaluation));
                 }
                 else {
-                	vigilant.addVigilancys(new VigilancyWithCredits(writtenEvaluation));
+                	vigilant.addVigilancies(new OtherCourseVigilancy(writtenEvaluation));
                 }
             }
         }
@@ -141,7 +141,7 @@ public class VigilantGroup extends VigilantGroup_Base {
         List<Vigilant> vigilants = this.getVigilants();
 
         for (Vigilant vigilant : vigilants) {
-            convokeMap.put(vigilant, vigilant.getVigilancys());
+            convokeMap.put(vigilant, vigilant.getVigilancies());
         }
 
         return convokeMap;
@@ -157,25 +157,19 @@ public class VigilantGroup extends VigilantGroup_Base {
         return persons;
     }
 
-    public List<VigilancyWithCredits> getVigilancys() {
-        List<Vigilancy> convokes = new ArrayList<Vigilancy>();
+    public List<Vigilancy> getVigilancies() {
+        List<Vigilancy> vigilancies = new ArrayList<Vigilancy>();
         for (ExecutionCourse course : this.getExecutionCourses()) {
             for (WrittenEvaluation evaluation : course.getWrittenEvaluations()) {
-                convokes.addAll(evaluation.getVigilancys());
+            	vigilancies.addAll(evaluation.getVigilancies());
             }
         }
-        List <VigilancyWithCredits> convokesWithCredits = new ArrayList<VigilancyWithCredits> ();
-        for(Vigilancy convoke : convokes) {
-        	if(convoke instanceof VigilancyWithCredits) {
-        		convokesWithCredits.add((VigilancyWithCredits) convoke);
-        	}
-        }
-        return convokesWithCredits;
+        return vigilancies;
     }
 
-    public List<VigilancyWithCredits> getConvokesAfterDate(DateTime date) {
-        List<VigilancyWithCredits> convokesToReturn = new ArrayList<VigilancyWithCredits>();
-        for (VigilancyWithCredits convoke : this.getVigilancys()) {
+    public List<Vigilancy> getConvokesAfterDate(DateTime date) {
+        List<Vigilancy> convokesToReturn = new ArrayList<Vigilancy>();
+        for (Vigilancy convoke : this.getVigilancies()) {
             if (convoke.getBeginDateTime().isAfter(date) || convoke.getBeginDateTime().isEqual(date)) {
                 convokesToReturn.add(convoke);
             }
@@ -183,9 +177,9 @@ public class VigilantGroup extends VigilantGroup_Base {
         return convokesToReturn;
     }
 
-    public List<VigilancyWithCredits> getConvokesBeforeDate(DateTime date) {
-        List<VigilancyWithCredits> convokesToReturn = new ArrayList<VigilancyWithCredits>();
-        for (VigilancyWithCredits convoke : this.getVigilancys()) {
+    public List<Vigilancy> getConvokesBeforeDate(DateTime date) {
+        List<Vigilancy> convokesToReturn = new ArrayList<Vigilancy>();
+        for (Vigilancy convoke : this.getVigilancies()) {
             if (convoke.getBeginDateTime().isBefore(date)) {
                 convokesToReturn.add(convoke);
             }
@@ -193,10 +187,9 @@ public class VigilantGroup extends VigilantGroup_Base {
         return convokesToReturn;
     }
 
-    public List<VigilancyWithCredits> getVigilancys(Vigilant vigilant) {
-        List<VigilancyWithCredits> convokes = this.getVigilancys();
-        List<VigilancyWithCredits> vigilantConvokes = new ArrayList<VigilancyWithCredits>();
-        for (VigilancyWithCredits convoke : convokes) {
+    public List<Vigilancy> getVigilancies(Vigilant vigilant) {
+        List<Vigilancy> vigilantConvokes = new ArrayList<Vigilancy>();
+        for (Vigilancy convoke : this.getVigilancies()) {
             if (convoke.getVigilant().equals(vigilant)) {
                 vigilantConvokes.add(convoke);
             }
@@ -270,7 +263,7 @@ public class VigilantGroup extends VigilantGroup_Base {
         }
     }
 
-    public List<WrittenEvaluation> getAllAssocitedWrittenEvaluations() {
+    public List<WrittenEvaluation> getAllAssociatedWrittenEvaluations() {
         List<ExecutionCourse> courses = this.getExecutionCourses();
         Set<WrittenEvaluation> evaluations = new HashSet<WrittenEvaluation>();
         for (ExecutionCourse course : courses) {
@@ -279,28 +272,22 @@ public class VigilantGroup extends VigilantGroup_Base {
         return new ArrayList<WrittenEvaluation>(evaluations);
     }
 
-    public List<WrittenEvaluation> getWrittenEvaluations() {
-        List<VigilancyWithCredits> convokes = this.getVigilancys();
-        return getEvaluationsFromConvokes(convokes);
-    }
-
     public List<WrittenEvaluation> getWrittenEvaluationsAfterDate(DateTime date) {
-        List<VigilancyWithCredits> convokes = this.getConvokesAfterDate(date);
+        List<Vigilancy> convokes = this.getConvokesAfterDate(date);
         return getEvaluationsFromConvokes(convokes);
     }
 
     public List<WrittenEvaluation> getWrittenEvaluationsBeforeDate(DateTime date) {
-        List<VigilancyWithCredits> convokes = this.getConvokesBeforeDate(date);
+        List<Vigilancy> convokes = this.getConvokesBeforeDate(date);
         return getEvaluationsFromConvokes(convokes);
     }
 
-    private List<WrittenEvaluation> getEvaluationsFromConvokes(List<VigilancyWithCredits> convokes) {
+    private List<WrittenEvaluation> getEvaluationsFromConvokes(List<Vigilancy> convokes) {
         Set<WrittenEvaluation> evaluations = new HashSet<WrittenEvaluation>();
 
-        for (VigilancyWithCredits convoke : convokes) {
+        for (Vigilancy convoke : convokes) {
             evaluations.add(convoke.getWrittenEvaluation());
         }
         return new ArrayList<WrittenEvaluation>(evaluations);
-    }
-
+    }   
 }

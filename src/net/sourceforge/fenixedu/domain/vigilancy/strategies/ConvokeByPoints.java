@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.vigilancy.UnavailableTypes;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
-import net.sourceforge.fenixedu.domain.vigilancy.VigilancyWithCredits;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
 
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -32,7 +31,7 @@ public class ConvokeByPoints extends Strategy {
 		Set<Person> incompatiblePersons = new HashSet<Person>();
 		List<UnavailableInformation> unavailableVigilants = new ArrayList<UnavailableInformation>();
 
-		if (writtenEvaluation.hasAnyVigilancys()) {
+		if (writtenEvaluation.hasAnyVigilancies()) {
 			incompatiblePersons.addAll(getIncompatiblePersons(writtenEvaluation));
 		}
 
@@ -77,7 +76,7 @@ public class ConvokeByPoints extends Strategy {
 
 	private boolean vigilantIsAlreadyConvokedForThisExam(Vigilant vigilant,
 			WrittenEvaluation writtenEvaluation) {
-		List<Vigilancy> convokes = vigilant.getVigilancys();
+		List<Vigilancy> convokes = vigilant.getVigilancies();
 		for (Vigilancy convoke : convokes) {
 			if (convoke.getWrittenEvaluation().equals(writtenEvaluation))
 				return true;
@@ -86,7 +85,7 @@ public class ConvokeByPoints extends Strategy {
 	}
 
 	private List<Person> getIncompatiblePersons(WrittenEvaluation writtenEvaluation) {
-		List<Vigilancy> convokes = writtenEvaluation.getVigilancys();
+		List<Vigilancy> convokes = writtenEvaluation.getVigilancies();
 		List<Person> people = new ArrayList<Person>();
 		for (Vigilancy convoke : convokes) {
 			Vigilant vigilant = convoke.getVigilant();
@@ -106,7 +105,7 @@ public class ConvokeByPoints extends Strategy {
 			double points = vigilant.getStartPoints();
 			BigDecimal weight = vigilant.getPointsWeight();
 			
-			for(VigilancyWithCredits vigilancy : vigilant.getActiveVigilancyWithCredits()) {
+			for(Vigilancy vigilancy : vigilant.getActiveVigilancies()) {
 				points += vigilancy.hasPointsAttributed() ? vigilancy.getPoints() * weight.doubleValue() : 1;
 			}
 			return points;
@@ -116,7 +115,7 @@ public class ConvokeByPoints extends Strategy {
 	class ConvokeComparator implements Comparator<Vigilant> {
 
 		public int compare(Vigilant v1, Vigilant v2) {
-			return v1.getActiveVigilancyWithCreditsCount().compareTo(v2.getActiveVigilancyWithCreditsCount());
+			return new Integer(v1.getActiveVigilancies().size()).compareTo(v2.getActiveVigilancies().size());
 		}
 		
 	}

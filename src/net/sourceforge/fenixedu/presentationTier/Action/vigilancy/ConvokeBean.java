@@ -30,8 +30,6 @@ public class ConvokeBean extends VigilantGroupBean implements Serializable {
 
     private List<DomainReference<Vigilant>> selectedUnavailableVigilants;
 
-    private TemporalInformationType temporalInformation;
-
     private List<UnavailableInformation> unavailableInformation;
     
     
@@ -71,7 +69,7 @@ public class ConvokeBean extends VigilantGroupBean implements Serializable {
     }
 
     public List<Vigilant> getVigilantsSugestion() {
-        List vigilants = new ArrayList<Vigilant>();
+        List<Vigilant> vigilants = new ArrayList<Vigilant>();
         for (DomainReference<Vigilant> vigilant : this.vigilantsSugestion) {
             if (vigilant != null)
                 vigilants.add(vigilant.getObject());
@@ -83,13 +81,13 @@ public class ConvokeBean extends VigilantGroupBean implements Serializable {
         this.vigilantsSugestion = new ArrayList<DomainReference<Vigilant>>();
         for (Vigilant vigilant : vigilantsList) {
             if (vigilant != null) {
-                this.vigilantsSugestion.add(new DomainReference(vigilant));
+                this.vigilantsSugestion.add(new DomainReference<Vigilant>(vigilant));
             }
         }
     }
 
     public List<Vigilant> getSelectedTeachers() {
-        List vigilants = new ArrayList<Vigilant>();
+        List<Vigilant> vigilants = new ArrayList<Vigilant>();
         for (DomainReference<Vigilant> vigilant : this.selectedTeachers) {
             if (vigilant != null)
                 vigilants.add(vigilant.getObject());
@@ -101,13 +99,13 @@ public class ConvokeBean extends VigilantGroupBean implements Serializable {
         this.selectedTeachers = new ArrayList<DomainReference<Vigilant>>();
         for (Vigilant vigilant : vigilantsList) {
             if (vigilant != null) {
-                this.selectedTeachers.add(new DomainReference(vigilant));
+                this.selectedTeachers.add(new DomainReference<Vigilant>(vigilant));
             }
         }
     }
 
     public List<Vigilant> getTeachersForAGivenCourse() {
-        List vigilants = new ArrayList<Vigilant>();
+        List<Vigilant> vigilants = new ArrayList<Vigilant>();
         for (DomainReference<Vigilant> vigilant : this.teachersForAGivenCourse) {
             if (vigilant != null)
                 vigilants.add(vigilant.getObject());
@@ -119,7 +117,7 @@ public class ConvokeBean extends VigilantGroupBean implements Serializable {
         this.teachersForAGivenCourse = new ArrayList<DomainReference<Vigilant>>();
         for (Vigilant vigilant : vigilantsList) {
             if (vigilant != null) {
-                this.teachersForAGivenCourse.add(new DomainReference(vigilant));
+                this.teachersForAGivenCourse.add(new DomainReference<Vigilant>(vigilant));
             }
         }
     }
@@ -133,7 +131,7 @@ public class ConvokeBean extends VigilantGroupBean implements Serializable {
     }
 
     public List<Vigilant> getUnavailableVigilants() {
-        List vigilants = new ArrayList<Vigilant>();
+        List<Vigilant> vigilants = new ArrayList<Vigilant>();
         for (DomainReference<Vigilant> vigilant : this.unavailableVigilants) {
             if (vigilant != null)
                 vigilants.add(vigilant.getObject());
@@ -145,13 +143,13 @@ public class ConvokeBean extends VigilantGroupBean implements Serializable {
         this.unavailableVigilants = new ArrayList<DomainReference<Vigilant>>();
         for (Vigilant vigilant : vigilantList) {
             if (vigilant != null) {
-                this.unavailableVigilants.add(new DomainReference(vigilant));
+                this.unavailableVigilants.add(new DomainReference<Vigilant>(vigilant));
             }
         }
     }
 
     public List<Vigilant> getSelectedUnavailableVigilants() {
-        List vigilants = new ArrayList<Vigilant>();
+        List<Vigilant> vigilants = new ArrayList<Vigilant>();
         for (DomainReference<Vigilant> vigilant : this.selectedUnavailableVigilants) {
             if (vigilant != null)
                 vigilants.add(vigilant.getObject());
@@ -163,19 +161,11 @@ public class ConvokeBean extends VigilantGroupBean implements Serializable {
         this.selectedUnavailableVigilants = new ArrayList<DomainReference<Vigilant>>();
         for (Vigilant vigilant : vigilantList) {
             if (vigilant != null) {
-                this.selectedUnavailableVigilants.add(new DomainReference(vigilant));
+                this.selectedUnavailableVigilants.add(new DomainReference<Vigilant>(vigilant));
             }
         }
     }
 
-    public TemporalInformationType getTemporalInformation() {
-        return temporalInformation;
-    }
-
-    public void setTemporalInformation(TemporalInformationType temporalInformation) {
-        this.temporalInformation = temporalInformation;
-    }
-    
     public String getVigilantsAsString() {
     	
     	String vigilants = "";

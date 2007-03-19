@@ -156,4 +156,5 @@ public class SQL2JavaConverters {
     public static FieldConversion ThesisState2SqlConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.ThesisState2SqlConversion();
     public static FieldConversion CompetenceCourseType2SqlConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.CompetenceCourseType2SqlConversion();
     public static FieldConversion ThesisParticipationType2SqlConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.ThesisParticipationType2SqlConversion();
+    public static FieldConversion AttendingStatus2SqlConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.AttendingStatus2SqlConversion();
 }

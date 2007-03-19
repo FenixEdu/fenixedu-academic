@@ -20,8 +20,7 @@ public class Exam extends Exam_Base {
             if (evaluation instanceof Exam) {
                 result.add((Exam) evaluation);
             }
-        }
-        
+        }        
         return result;
     }
     

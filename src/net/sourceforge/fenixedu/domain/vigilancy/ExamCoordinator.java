@@ -37,15 +37,15 @@ public class ExamCoordinator extends ExamCoordinator_Base {
         return this.getPerson().getEmail();
     }
 
-    public List<VigilancyWithCredits> getConvokesThatCanManage() {
+    public List<Vigilancy> getConvokesThatCanManage() {
         List<VigilantGroup> groups = this.getVigilantGroups();
-        Set<VigilancyWithCredits> convokes = new HashSet<VigilancyWithCredits>();
+        Set<Vigilancy> convokes = new HashSet<Vigilancy>();
 
         for (VigilantGroup group : groups) {
-            convokes.addAll(group.getVigilancys());
+            convokes.addAll(group.getVigilancies());
         }
-
-        return new ArrayList<VigilancyWithCredits>(convokes);
+        
+        return new ArrayList<Vigilancy>(convokes);
     }
 
     public List<UnavailablePeriod> getUnavailablePeriodsThatCanManage() {
@@ -86,11 +86,11 @@ public class ExamCoordinator extends ExamCoordinator_Base {
 
     public List<WrittenEvaluation> getAssociatedWrittenEvaluations() {
         List<VigilantGroup> groups = this.getVigilantGroups();
-        List<WrittenEvaluation> evaluations = new ArrayList<WrittenEvaluation>();
+        Set<WrittenEvaluation> evaluations = new HashSet<WrittenEvaluation>();
         for (VigilantGroup group : groups) {
-            evaluations.addAll(group.getWrittenEvaluations());
+            evaluations.addAll(group.getAllAssociatedWrittenEvaluations());
         }
-        return evaluations;
+        return new ArrayList<WrittenEvaluation>(evaluations);
     }
 
     public List<WrittenEvaluation> getAssociatedWrittenEvaluationsAfterDate(DateTime date) {

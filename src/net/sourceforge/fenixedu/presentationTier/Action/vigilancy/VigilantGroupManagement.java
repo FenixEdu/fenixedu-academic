@@ -1,25 +1,26 @@
 package net.sourceforge.fenixedu.presentationTier.Action.vigilancy;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.Map;
-import java.util.HashMap;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.WrittenEvaluationVigilancyView;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.User;
+import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
@@ -29,34 +30,55 @@ import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 public class VigilantGroupManagement extends FenixDispatchAction {
+						 
+	public ActionForward generateReportForGroup(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	public ActionForward prepareVigilantGroupCreation(ActionMapping mapping,
-			ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+		String vigilantGroupId = request.getParameter("oid");
+		VigilantGroup group = (VigilantGroup) RootDomainObject.readDomainObjectByOID(VigilantGroup.class,
+				Integer.valueOf(vigilantGroupId));
+
+		List<WrittenEvaluationVigilancyView> beans = getStatsViewForVigilantGroup(group);
+
+		request.setAttribute("vigilantGroup", group);
+		request.setAttribute("stats", beans);
+		return mapping.findForward("showStats");
+	}
+
+	protected List<WrittenEvaluationVigilancyView> getStatsViewForVigilantGroup(VigilantGroup group) {
+		List<WrittenEvaluation> evaluations = group.getAllAssociatedWrittenEvaluations();
+		Collections.sort(evaluations, WrittenEvaluation.COMPARATOR_BY_BEGIN_DATE);
+
+		List<WrittenEvaluationVigilancyView> beans = new ArrayList<WrittenEvaluationVigilancyView>();
+		for (WrittenEvaluation evaluation : evaluations) {
+			beans.add(new WrittenEvaluationVigilancyView(evaluation));
+		}
+		return beans;
+	}
+
+	public ActionForward prepareVigilantGroupCreation(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		prepareManagementBean(request, ExecutionYear.readCurrentExecutionYear());
 		return mapping.findForward("prepareVigilantGroup");
 
 	}
 
-	public ActionForward prepareGroupInformation(ActionMapping mapping,
-			ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+	public ActionForward prepareGroupInformation(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		Person person = getLoggedPerson(request);
 		VigilantGroupBean bean = prepareBean(person);
 
 		Unit unit = bean.getUnit();
 		ExecutionYear currentYear = bean.getExecutionYear();
-		List<VigilantGroup> groups = unit
-				.getVigilantGroupsForGivenExecutionYear(currentYear);
+		List<VigilantGroup> groups = unit.getVigilantGroupsForGivenExecutionYear(currentYear);
 		if (groups.size() == 1) {
 			bean.setSelectedVigilantGroup(groups.get(0));
 		}
@@ -65,8 +87,8 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 		return mapping.findForward("displayGroupHistory");
 	}
 
-	private void putIncompatibilitiesInRequest(HttpServletRequest request)
-			throws FenixFilterException, FenixServiceException {
+	private void putIncompatibilitiesInRequest(HttpServletRequest request) throws FenixFilterException,
+			FenixServiceException {
 		Person person = getLoggedPerson(request);
 		ExamCoordinator coordinator = person.getCurrentExamCoordinator();
 
@@ -74,38 +96,31 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 		Set<Vigilant> incompatibilities = new HashSet<Vigilant>();
 
 		for (VigilantGroup group : groups) {
-			incompatibilities
-					.addAll(group.getVigilantsWithIncompatiblePerson());
+			incompatibilities.addAll(group.getVigilantsWithIncompatiblePerson());
 		}
 
-		request.setAttribute("vigilants", new ArrayList<Vigilant>(
-				incompatibilities));
+		request.setAttribute("vigilants", new ArrayList<Vigilant>(incompatibilities));
 	}
 
-	private void putIncompatibilitiesInRequest(HttpServletRequest request,
-			VigilantGroup group) throws FenixFilterException,
-			FenixServiceException {
+	private void putIncompatibilitiesInRequest(HttpServletRequest request, VigilantGroup group)
+			throws FenixFilterException, FenixServiceException {
 
 		List<Vigilant> incompatibilities = new ArrayList<Vigilant>();
 		incompatibilities.addAll(group.getVigilantsWithIncompatiblePerson());
 
-		request.setAttribute("vigilants", new ArrayList<Vigilant>(
-				incompatibilities));
+		request.setAttribute("vigilants", new ArrayList<Vigilant>(incompatibilities));
 	}
 
-	public ActionForward prepareManageIncompatiblesOfVigilants(
-			ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+	public ActionForward prepareManageIncompatiblesOfVigilants(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		VigilantGroupBean bean = new VigilantGroupBean();
-		ExamCoordinator coordinator = getLoggedPerson(request)
-				.getCurrentExamCoordinator();
+		ExamCoordinator coordinator = getLoggedPerson(request).getCurrentExamCoordinator();
 
 		String groupId = request.getParameter("gid");
 		if (groupId != null) {
-			VigilantGroup group = (VigilantGroup) RootDomainObject
-					.readDomainObjectByOID(VigilantGroup.class, Integer
-							.valueOf(groupId));
+			VigilantGroup group = (VigilantGroup) RootDomainObject.readDomainObjectByOID(VigilantGroup.class,
+					Integer.valueOf(groupId));
 			bean.setSelectedVigilantGroup(group);
 			putIncompatibilitiesInRequest(request, group);
 		}
@@ -114,12 +129,11 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 		return mapping.findForward("incompatibilities");
 	}
 
-	public ActionForward manageIncompatiblesOfVigilants(ActionMapping mapping,
-			ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+	public ActionForward manageIncompatiblesOfVigilants(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		VigilantGroupBean bean = (VigilantGroupBean) RenderUtils.getViewState(
-				"selectVigilantGroup").getMetaObject().getObject();
+		VigilantGroupBean bean = (VigilantGroupBean) RenderUtils.getViewState("selectVigilantGroup")
+				.getMetaObject().getObject();
 		VigilantGroup group = bean.getSelectedVigilantGroup();
 
 		if (group != null) {
@@ -130,27 +144,23 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 
 	}
 
-	public ActionForward deleteIncompatibility(ActionMapping mapping,
-			ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+	public ActionForward deleteIncompatibility(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		String oid = request.getParameter("oid");
 		Integer idInternal = Integer.valueOf(oid);
 
-		Vigilant vigilant = (Vigilant) RootDomainObject.readDomainObjectByOID(
-				Vigilant.class, idInternal);
+		Vigilant vigilant = (Vigilant) RootDomainObject.readDomainObjectByOID(Vigilant.class, idInternal);
 
 		Object[] args = { vigilant };
 		executeService(request, "RemoveIncompatiblePerson", args);
 
 		String gid = request.getParameter("gid");
-		VigilantGroup group = (VigilantGroup) RootDomainObject
-				.readDomainObjectByOID(VigilantGroup.class, Integer
-						.valueOf(gid));
+		VigilantGroup group = (VigilantGroup) RootDomainObject.readDomainObjectByOID(VigilantGroup.class,
+				Integer.valueOf(gid));
 
 		VigilantGroupBean bean = new VigilantGroupBean();
-		ExamCoordinator coordinator = getLoggedPerson(request)
-				.getCurrentExamCoordinator();
+		ExamCoordinator coordinator = getLoggedPerson(request).getCurrentExamCoordinator();
 
 		bean.setSelectedVigilantGroup(group);
 		bean.setExamCoordinator(coordinator);
@@ -161,9 +171,8 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 
 	}
 
-	public ActionForward prepareVigilantGroupManagement(ActionMapping mapping,
-			ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+	public ActionForward prepareVigilantGroupManagement(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
 		prepareManagementBean(request, executionYear);
@@ -173,37 +182,31 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 		return mapping.findForward("manageVigilantGroups");
 	}
 
-	public ActionForward changeDisplaySettings(ActionMapping mapping,
-			ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+	public ActionForward changeDisplaySettings(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		VigilantGroupBean bean = (VigilantGroupBean) RenderUtils.getViewState(
-				"options").getMetaObject().getObject();
+		VigilantGroupBean bean = (VigilantGroupBean) RenderUtils.getViewState("options").getMetaObject()
+				.getObject();
 
 		request.setAttribute("bean", bean);
-		request.setAttribute("show","groups");
+		request.setAttribute("show", "groups");
 		return mapping.findForward("manageVigilantGroups");
 
 	}
 
-	public ActionForward createVigilantGroup(ActionMapping mapping,
-			ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+	public ActionForward createVigilantGroup(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		VigilantGroupBean beanWithName = (VigilantGroupBean) RenderUtils
-				.getViewState("createVigilantGroup.block1").getMetaObject()
-				.getObject();
+		VigilantGroupBean beanWithName = (VigilantGroupBean) RenderUtils.getViewState(
+				"createVigilantGroup.block1").getMetaObject().getObject();
 
-		VigilantGroupBean beanWithFirstPeriod = (VigilantGroupBean) RenderUtils
-				.getViewState("createVigilantGroup.block2").getMetaObject()
-				.getObject();
+		VigilantGroupBean beanWithFirstPeriod = (VigilantGroupBean) RenderUtils.getViewState(
+				"createVigilantGroup.block2").getMetaObject().getObject();
 
-		VigilantGroupBean beanWithSecondPeriod = (VigilantGroupBean) RenderUtils
-				.getViewState("createVigilantGroup.block3").getMetaObject()
-				.getObject();
+		VigilantGroupBean beanWithSecondPeriod = (VigilantGroupBean) RenderUtils.getViewState(
+				"createVigilantGroup.block3").getMetaObject().getObject();
 
-		Object[] args = { beanWithName.getName(), beanWithName.getUnit(),
-				beanWithName.getConvokeStrategy(),
+		Object[] args = { beanWithName.getName(), beanWithName.getUnit(), beanWithName.getConvokeStrategy(),
 				beanWithName.getContactEmail(), beanWithName.getRulesLink(),
 				beanWithFirstPeriod.getBeginFirstUnavailablePeriod(),
 				beanWithFirstPeriod.getEndFirstUnavailablePeriod(),
@@ -216,95 +219,45 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 		return mapping.findForward("manageVigilantGroups");
 	}
 
-	public ActionForward prepareEdition(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+	public ActionForward prepareEdition(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
 		String oid = request.getParameter("oid");
 		Integer idInternal = Integer.valueOf(oid);
 		String forwardTo = request.getParameter("forwardTo");
 
-		VigilantGroup group = (VigilantGroup) RootDomainObject
-				.readDomainObjectByOID(VigilantGroup.class, idInternal);
+		VigilantGroup group = (VigilantGroup) RootDomainObject.readDomainObjectByOID(VigilantGroup.class,
+				idInternal);
 		prepareBeanForVigilantGroupEdition(request, group);
 		return mapping.findForward(forwardTo);
 	}
 
-	public ActionForward selectUnit(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+	public ActionForward selectUnit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
 		String forwardTo = request.getParameter("forwardTo");
-		VigilantGroupBean bean = (VigilantGroupBean) RenderUtils.getViewState(
-				"selectUnit").getMetaObject().getObject();
+		VigilantGroupBean bean = (VigilantGroupBean) RenderUtils.getViewState("selectUnit").getMetaObject()
+				.getObject();
 		request.setAttribute("bean", bean);
 		RenderUtils.invalidateViewState("selectUnit");
 		return mapping.findForward(forwardTo);
 	}
 
-//	public ActionForward addVigilantsToGroup(ActionMapping mapping,
-//			ActionForm form, HttpServletRequest request,
-//			HttpServletResponse response) throws Exception {
-//
-//		VigilantGroupBean bean = (VigilantGroupBean) RenderUtils.getViewState()
-//				.getMetaObject().getObject();
-//		VigilantGroup vigilantGroup = bean.getSelectedVigilantGroup();
-//		List<Employee> employees = bean.getEmployees();
-//		List<Person> people = new ArrayList<Person>();
-//		for (Employee employee : employees) {
-//			people.add(employee.getPerson());
-//		}
-//
-//		Object[] args = { people, vigilantGroup };
-//		executeService(request, "AddVigilantsToGroup", args);
-//
-//		prepareBeanForVigilantGroupEdition(request, vigilantGroup);
-//		RenderUtils.invalidateViewState("addVigilants");
-//		return mapping.findForward("vigilants");
-//	}
+	public ActionForward applyChangesToVigilantGroup(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-//	public ActionForward removeVigilantsFromGroup(ActionMapping mapping,
-//			ActionForm form, HttpServletRequest request,
-//			HttpServletResponse response) throws Exception {
-//
-//		VigilantGroupBean bean = (VigilantGroupBean) RenderUtils.getViewState()
-//				.getMetaObject().getObject();
-//		VigilantGroup vigilantGroup = bean.getSelectedVigilantGroup();
-//		List<Vigilant> vigilants = bean.getVigilants();
-//
-//		Object[] args = { vigilants, vigilantGroup };
-//		try {
-//			List<Vigilant> unableToRemove = (List<Vigilant>) executeService(
-//					request, "RemoveVigilantsFromGroup", args);
-//			request.setAttribute("unableToRemove", unableToRemove);
-//		} catch (DomainException e) {
-//			addActionMessage(request, e.getMessage(), null);
-//		}
-//		prepareBeanForVigilantGroupEdition(request, vigilantGroup);
-//		RenderUtils.invalidateViewState("removeVigilants");
-//		return mapping.findForward("vigilants");
-//	}
+		VigilantGroupBean beanWithName = (VigilantGroupBean) RenderUtils.getViewState(
+				"editVigilantGroup.block1").getMetaObject().getObject();
 
-	public ActionForward applyChangesToVigilantGroup(ActionMapping mapping,
-			ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+		VigilantGroupBean beanWithFirstPeriod = (VigilantGroupBean) RenderUtils.getViewState(
+				"editVigilantGroup.block2").getMetaObject().getObject();
 
-		VigilantGroupBean beanWithName = (VigilantGroupBean) RenderUtils
-				.getViewState("editVigilantGroup.block1").getMetaObject()
-				.getObject();
-
-		VigilantGroupBean beanWithFirstPeriod = (VigilantGroupBean) RenderUtils
-				.getViewState("editVigilantGroup.block2").getMetaObject()
-				.getObject();
-
-		VigilantGroupBean beanWithSecondPeriod = (VigilantGroupBean) RenderUtils
-				.getViewState("editVigilantGroup.block3").getMetaObject()
-				.getObject();
+		VigilantGroupBean beanWithSecondPeriod = (VigilantGroupBean) RenderUtils.getViewState(
+				"editVigilantGroup.block3").getMetaObject().getObject();
 
 		VigilantGroup vigilantGroup = beanWithName.getSelectedVigilantGroup();
 
-		Object[] args = { vigilantGroup, beanWithName.getName(),
-				beanWithName.getConvokeStrategy(),
+		Object[] args = { vigilantGroup, beanWithName.getName(), beanWithName.getConvokeStrategy(),
 				beanWithName.getContactEmail(), beanWithName.getRulesLink(),
 				beanWithFirstPeriod.getBeginFirstUnavailablePeriod(),
 				beanWithFirstPeriod.getEndFirstUnavailablePeriod(),
@@ -318,9 +271,8 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 		return mapping.findForward("manageVigilantGroups");
 	}
 
-	public ActionForward deleteVigilantGroup(ActionMapping mapping,
-			ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+	public ActionForward deleteVigilantGroup(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		String oid = request.getParameter("oid");
 		Integer idInternal = Integer.valueOf(oid);
@@ -336,23 +288,20 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 
 	}
 
-	public ActionForward displayGroupHistory(ActionMapping mapping,
-			ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+	public ActionForward displayGroupHistory(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		VigilantGroupBean bean = (VigilantGroupBean) RenderUtils.getViewState(
-				"selectGroupAndYear").getMetaObject().getObject();
+		VigilantGroupBean bean = (VigilantGroupBean) RenderUtils.getViewState("selectGroupAndYear")
+				.getMetaObject().getObject();
 		Unit unit = bean.getUnit();
 		ExecutionYear executionYear = bean.getExecutionYear();
 
-		List<VigilantGroup> vigilantGroups = unit
-				.getVigilantGroupsForGivenExecutionYear(executionYear);
+		List<VigilantGroup> vigilantGroups = unit.getVigilantGroupsForGivenExecutionYear(executionYear);
 		bean.setVigilantGroups(vigilantGroups);
 
 		VigilantGroup selectedGroup = bean.getSelectedVigilantGroup();
 
-		if (selectedGroup != null
-				&& !selectedGroup.getExecutionYear().equals(executionYear)) {
+		if (selectedGroup != null && !selectedGroup.getExecutionYear().equals(executionYear)) {
 			bean.setSelectedVigilantGroup(null);
 		}
 		request.setAttribute("bean", bean);
@@ -360,36 +309,11 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 		return mapping.findForward("displayGroupHistory");
 	}
 
-//	public ActionForward addVigilantToGroupByUsername(ActionMapping mapping,
-//			ActionForm form, HttpServletRequest request,
-//			HttpServletResponse response) throws Exception {
-//
-//		VigilantGroupBean bean = (VigilantGroupBean) RenderUtils.getViewState(
-//				"addExternalPersonToGroup").getMetaObject().getObject();
-//		String username = bean.getUsername();
-//		VigilantGroup group = bean.getSelectedVigilantGroup();
-//
-//		User user = User.readUserByUserUId(username);
-//		Person person;
-//		if (user != null && (person = user.getPerson()) != null) {
-//			List<Person> people = new ArrayList<Person>();
-//			people.add(person);
-//			Object[] args = { people, group };
-//			executeService(request, "AddVigilantsToGroup", args);
-//		} else {
-//			addActionMessage(request, "label.vigilancy.inexistingUsername",
-//					null);
-//		}
-//		prepareBeanForVigilantGroupEdition(request, group);
-//		return mapping.findForward("vigilants");
-//	}
+	public ActionForward removeCoordinatorsFromGroup(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	public ActionForward removeCoordinatorsFromGroup(ActionMapping mapping,
-			ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-
-		VigilantGroupBean bean = (VigilantGroupBean) RenderUtils.getViewState(
-				"removeCoordinators").getMetaObject().getObject();
+		VigilantGroupBean bean = (VigilantGroupBean) RenderUtils.getViewState("removeCoordinators")
+				.getMetaObject().getObject();
 		List<ExamCoordinator> coordinators = bean.getExamCoordinators();
 		VigilantGroup group = bean.getSelectedVigilantGroup();
 
@@ -401,11 +325,10 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 		return mapping.findForward("editCoordinators");
 	}
 
-	public ActionForward addCoordinatorsToGroup(ActionMapping mapping,
-			ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		VigilantGroupBean bean = (VigilantGroupBean) RenderUtils.getViewState(
-				"addCoordinators").getMetaObject().getObject();
+	public ActionForward addCoordinatorsToGroup(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		VigilantGroupBean bean = (VigilantGroupBean) RenderUtils.getViewState("addCoordinators")
+				.getMetaObject().getObject();
 		List<ExamCoordinator> coordinators = bean.getExamCoordinators();
 		VigilantGroup group = bean.getSelectedVigilantGroup();
 
@@ -417,14 +340,12 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 		return mapping.findForward("editCoordinators");
 	}
 
-	public ActionForward checkExamCoordinatorPermissions(ActionMapping mapping,
-			ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+	public ActionForward checkExamCoordinatorPermissions(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
 		Person person = getLoggedPerson(request);
-		ExamCoordinator coordinator = person
-				.getExamCoordinatorForGivenExecutionYear(executionYear);
+		ExamCoordinator coordinator = person.getExamCoordinatorForGivenExecutionYear(executionYear);
 		Object[] args = { person };
 		if (coordinator == null) {
 			executeService(request, "RemoveExamCoordinatorRole", args);
@@ -432,9 +353,8 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 		return mapping.findForward("blank");
 	}
 
-	public ActionForward prepareAddIncompatiblePersonToVigilant(
-			ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+	public ActionForward prepareAddIncompatiblePersonToVigilant(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		VigilantGroupBean bean = new VigilantGroupBean();
 		Person person = getLoggedPerson(request);
@@ -442,32 +362,28 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 		bean.setExamCoordinator(coordinator);
 
 		String gid = request.getParameter("gid");
-		VigilantGroup group = (VigilantGroup) RootDomainObject
-				.readDomainObjectByOID(VigilantGroup.class, Integer
-						.valueOf(gid));
+		VigilantGroup group = (VigilantGroup) RootDomainObject.readDomainObjectByOID(VigilantGroup.class,
+				Integer.valueOf(gid));
 		bean.setSelectedVigilantGroup(group);
 
 		request.setAttribute("bean", bean);
 		return mapping.findForward("addIncompatiblePersonToVigilant");
 	}
 
-	public ActionForward vigilantSelectedInIncompatibilityScreen(
-			ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+	public ActionForward vigilantSelectedInIncompatibilityScreen(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		VigilantGroupBean bean = (VigilantGroupBean) RenderUtils.getViewState(
-				"selectVigilant").getMetaObject().getObject();
+		VigilantGroupBean bean = (VigilantGroupBean) RenderUtils.getViewState("selectVigilant")
+				.getMetaObject().getObject();
 		VigilantGroup group = bean.getSelectedVigilantGroup();
 		if (group != null) {
-			List<Vigilant> vigilants = new ArrayList<Vigilant>(group
-					.getVigilants());
+			List<Vigilant> vigilants = new ArrayList<Vigilant>(group.getVigilants());
 
 			Vigilant selectedVigilant = bean.getSelectedVigilant();
 			if (selectedVigilant != null) {
 				vigilants.remove(selectedVigilant);
 				if (selectedVigilant.hasIncompatiblePerson()) {
-					vigilants
-							.remove(selectedVigilant.getIncompatibleVigilant());
+					vigilants.remove(selectedVigilant.getIncompatibleVigilant());
 				}
 			}
 			bean.setVigilants(vigilants);
@@ -477,21 +393,19 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 		return mapping.findForward("addIncompatiblePersonToVigilant");
 	}
 
-	public ActionForward addIncompatibilityToVigilant(ActionMapping mapping,
-			ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+	public ActionForward addIncompatibilityToVigilant(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		String vigilantId = request.getParameter("oid");
 		String personId = request.getParameter("pid");
 		String groupId = request.getParameter("gid");
 
-		Vigilant vigilant = (Vigilant) RootDomainObject.readDomainObjectByOID(
-				Vigilant.class, Integer.valueOf(vigilantId));
-		Person person = (Person) RootDomainObject.readDomainObjectByOID(
-				Person.class, Integer.valueOf(personId));
-		VigilantGroup group = (VigilantGroup) RootDomainObject
-				.readDomainObjectByOID(VigilantGroup.class, Integer
-						.valueOf(groupId));
+		Vigilant vigilant = (Vigilant) RootDomainObject.readDomainObjectByOID(Vigilant.class, Integer
+				.valueOf(vigilantId));
+		Person person = (Person) RootDomainObject.readDomainObjectByOID(Person.class, Integer
+				.valueOf(personId));
+		VigilantGroup group = (VigilantGroup) RootDomainObject.readDomainObjectByOID(VigilantGroup.class,
+				Integer.valueOf(groupId));
 
 		Object[] args = { vigilant, person };
 		executeService(request, "AddIncompatiblePerson", args);
@@ -512,18 +426,15 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 		return mapping.findForward("addIncompatiblePersonToVigilant");
 	}
 
-	public ActionForward prepareBoundPropertyEdition(ActionMapping mapping,
-			ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+	public ActionForward prepareBoundPropertyEdition(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		String groupId = request.getParameter("oid");
 
-		VigilantGroup group = (VigilantGroup) RootDomainObject
-				.readDomainObjectByOID(VigilantGroup.class, Integer
-						.valueOf(groupId));
+		VigilantGroup group = (VigilantGroup) RootDomainObject.readDomainObjectByOID(VigilantGroup.class,
+				Integer.valueOf(groupId));
 
-		List<VigilantBound> bounds = new ArrayList<VigilantBound>(group
-				.getBounds());
+		List<VigilantBound> bounds = new ArrayList<VigilantBound>(group.getBounds());
 		ComparatorChain chain = new ComparatorChain();
 		chain.addComparator(VigilantBound.VIGILANT_CATEGORY_COMPARATOR);
 		chain.addComparator(VigilantBound.VIGILANT_NAME_COMPARATOR);
@@ -534,15 +445,23 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 		return mapping.findForward("editVigilantBounds");
 	}
 
-	public ActionForward prepareStartPointsPropertyEdition(
-			ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+	public ActionForward prepareGroupPointsPropertyEdition(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		String groupId = request.getParameter("oid");
+		VigilantGroup group = (VigilantGroup) RootDomainObject.readDomainObjectByOID(VigilantGroup.class,
+				Integer.valueOf(groupId));
+		request.setAttribute("group", group);
+		return mapping.findForward("editVigilantGroupPoints");
+	}
+
+	public ActionForward prepareStartPointsPropertyEdition(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		String groupId = request.getParameter("oid");
 
-		VigilantGroup group = (VigilantGroup) RootDomainObject
-				.readDomainObjectByOID(VigilantGroup.class, Integer
-						.valueOf(groupId));
+		VigilantGroup group = (VigilantGroup) RootDomainObject.readDomainObjectByOID(VigilantGroup.class,
+				Integer.valueOf(groupId));
 
 		List<Vigilant> vigilants = group.getVigilantsThatCanBeConvoked();
 		ComparatorChain chain = new ComparatorChain();
@@ -555,31 +474,30 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 		return mapping.findForward("editVigilantStartPoints");
 	}
 
-	public ActionForward prepareManageVigilantsInGroup(ActionMapping mapping,
-			ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+	public ActionForward prepareManageVigilantsInGroup(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		Person person = getLoggedPerson(request);
 		ExamCoordinator coordinator = person.getCurrentExamCoordinator();
 		Department department = coordinator.getUnit().getDepartment();
 
 		ExecutionYear currentYear = ExecutionYear.readCurrentExecutionYear();
-		List<Employee> employees = department.getAllWorkingEmployees(
-				currentYear.getBeginDateYearMonthDay(), currentYear
-						.getEndDateYearMonthDay());
+		List<Employee> employees = department.getAllWorkingEmployees(currentYear.getBeginDateYearMonthDay(),
+				currentYear.getEndDateYearMonthDay());
 
 		List<VigilantGroup> groups = coordinator.getVigilantGroups();
 
 		List<VigilantBoundBean> bounds = new ArrayList<VigilantBoundBean>();
-		
+
 		for (Employee employee : employees) {
 			Person employeePerson = employee.getPerson();
 			Vigilant vigilant = employeePerson.getCurrentVigilant();
-			
+
 			if (vigilant != null) {
 				for (VigilantGroup group : groups) {
-					bounds.add(new VigilantBoundBean(employeePerson, group, vigilant
-							.hasVigilantGroup(group)));
+					bounds
+							.add(new VigilantBoundBean(employeePerson, group, vigilant
+									.hasVigilantGroup(group)));
 				}
 			} else {
 				for (VigilantGroup group : groups) {
@@ -587,108 +505,104 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 				}
 			}
 		}
-		
+
 		List<VigilantBoundBean> externalBounds = new ArrayList<VigilantBoundBean>();
 		List<Vigilant> externalVigilants = new ArrayList<Vigilant>();
-		for(VigilantGroup group : groups) {
-			for(Vigilant vigilant : group.getVigilants()) {
-				if(!employees.contains(vigilant.getPerson().getEmployee())) {
+		for (VigilantGroup group : groups) {
+			for (Vigilant vigilant : group.getVigilants()) {
+				if (!employees.contains(vigilant.getPerson().getEmployee())) {
 					externalVigilants.add(vigilant);
 				}
 			}
 		}
-		
-		for(Vigilant vigilant : externalVigilants) {
+
+		for (Vigilant vigilant : externalVigilants) {
 			Employee employee = vigilant.getPerson().getEmployee();
-			for(VigilantGroup group : groups) {
-				externalBounds.add(new VigilantBoundBean(vigilant.getPerson(),group,vigilant.hasVigilantGroup(group)));
+			for (VigilantGroup group : groups) {
+				externalBounds.add(new VigilantBoundBean(vigilant.getPerson(), group, vigilant
+						.hasVigilantGroup(group)));
 			}
 		}
-		
-		
+
 		VigilantGroupBean bean = new VigilantGroupBean();
 		bean.setExamCoordinator(getLoggedPerson(request).getCurrentExamCoordinator());
-		
+
 		request.setAttribute("bean", bean);
-		request.setAttribute("externalBounds",externalBounds);
+		request.setAttribute("externalBounds", externalBounds);
 		request.setAttribute("bounds", bounds);
 		return mapping.findForward("editVigilantsInGroups");
 	}
 
-	public ActionForward addVigilantsToGroup(ActionMapping mapping,
-			ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+	public ActionForward addVigilantsToGroup(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		Map<VigilantGroup,List<Person>> peopleToAdd = new HashMap<VigilantGroup,List<Person>>();
-		Map<VigilantGroup,List<Vigilant>> vigilantsToRemove  = new HashMap<VigilantGroup,List<Vigilant>>();
-		
-		List<VigilantBoundBean> beans = (List<VigilantBoundBean>) RenderUtils.getViewState("bounds").getMetaObject().getObject();
-		List<VigilantBoundBean> externalBeans = (List<VigilantBoundBean>) RenderUtils.getViewState("externalBounds").getMetaObject().getObject();
-		
-		
+		Map<VigilantGroup, List<Person>> peopleToAdd = new HashMap<VigilantGroup, List<Person>>();
+		Map<VigilantGroup, List<Vigilant>> vigilantsToRemove = new HashMap<VigilantGroup, List<Vigilant>>();
+
+		List<VigilantBoundBean> beans = (List<VigilantBoundBean>) RenderUtils.getViewState("bounds")
+				.getMetaObject().getObject();
+		List<VigilantBoundBean> externalBeans = (List<VigilantBoundBean>) RenderUtils.getViewState(
+				"externalBounds").getMetaObject().getObject();
+
 		beans.addAll(externalBeans);
-		
-		for(VigilantBoundBean bean : beans) {
+
+		for (VigilantBoundBean bean : beans) {
 			Vigilant vigilant = bean.getPerson().getCurrentVigilant();
-			if(bean.isBounded()) {
-				if(vigilant==null || !vigilant.hasVigilantGroup(bean.getVigilantGroup())) {
+			if (bean.isBounded()) {
+				if (vigilant == null || !vigilant.hasVigilantGroup(bean.getVigilantGroup())) {
 					VigilantGroup group = bean.getVigilantGroup();
-					if(peopleToAdd.containsKey(group)) {
+					if (peopleToAdd.containsKey(group)) {
 						peopleToAdd.get(group).add(bean.getPerson());
-					}
-					else {
+					} else {
 						List<Person> people = new ArrayList<Person>();
 						people.add(bean.getPerson());
 						peopleToAdd.put(bean.getVigilantGroup(), people);
 					}
-					
+
 				}
-			}
-			else {
-				if(vigilant!=null && vigilant.hasVigilantGroup(bean.getVigilantGroup())) {
+			} else {
+				if (vigilant != null && vigilant.hasVigilantGroup(bean.getVigilantGroup())) {
 					VigilantGroup group = bean.getVigilantGroup();
-					if(vigilantsToRemove.containsKey(group)) {
+					if (vigilantsToRemove.containsKey(group)) {
 						vigilantsToRemove.get(group).add(vigilant);
-					}
-					else {
+					} else {
 						List<Vigilant> vigilants = new ArrayList<Vigilant>();
 						vigilants.add(vigilant);
-						vigilantsToRemove.put(group,vigilants);
+						vigilantsToRemove.put(group, vigilants);
 					}
-					
+
 				}
 			}
 		}
-		
-		
-		Object[] args = { peopleToAdd };
-		executeService(request,"AddVigilantsToGroup",args);
 
-	    Object[] args2 = { vigilantsToRemove };
-		List<Vigilant> vigilantsThatCouldNotBeRemoved = (List<Vigilant>) executeService(request,"RemoveVigilantsFromGroup",args2);
-		
-		
-		request.setAttribute("vigilants",vigilantsThatCouldNotBeRemoved);
+		Object[] args = { peopleToAdd };
+		executeService(request, "AddVigilantsToGroup", args);
+
+		Object[] args2 = { vigilantsToRemove };
+		List<Vigilant> vigilantsThatCouldNotBeRemoved = (List<Vigilant>) executeService(request,
+				"RemoveVigilantsFromGroup", args2);
+
+		request.setAttribute("vigilants", vigilantsThatCouldNotBeRemoved);
 		RenderUtils.invalidateViewState("bounds");
 		RenderUtils.invalidateViewState("externalBounds");
-		return prepareManageVigilantsInGroup(mapping,form,request,response);
+		return prepareManageVigilantsInGroup(mapping, form, request, response);
 	}
-	
-	public ActionForward addVigilantToGroupByUsername(ActionMapping mapping,
-			ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		
-		VigilantGroupBean bean = (VigilantGroupBean) RenderUtils.getViewState("addExternalPersonToGroup").getMetaObject().getObject();
+
+	public ActionForward addVigilantToGroupByUsername(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		VigilantGroupBean bean = (VigilantGroupBean) RenderUtils.getViewState("addExternalPersonToGroup")
+				.getMetaObject().getObject();
 		List<VigilantGroup> groups = bean.getVigilantGroups();
 		String username = bean.getUsername();
-		
+
 		User user = User.readUserByUserUId(username);
 		Person person;
 		if (user != null && (person = user.getPerson()) != null) {
 			List<Person> people = new ArrayList<Person>();
 			people.add(person);
-			Map<VigilantGroup,List<Person>> personToAdd= new HashMap<VigilantGroup,List<Person>> ();
-			for(VigilantGroup group : groups) {
+			Map<VigilantGroup, List<Person>> personToAdd = new HashMap<VigilantGroup, List<Person>>();
+			for (VigilantGroup group : groups) {
 				personToAdd.put(group, people);
 			}
 			Object[] args = { personToAdd };
@@ -696,18 +610,16 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 		} else {
 			addActionMessage(request, "label.vigilancy.inexistingUsername");
 		}
-		
-		return prepareManageVigilantsInGroup(mapping,form,request,response);
-		
+
+		return prepareManageVigilantsInGroup(mapping, form, request, response);
+
 	}
-	
-	
+
 	private VigilantGroupBean prepareBean(Person person) {
 		VigilantGroupBean bean = new VigilantGroupBean();
 
 		ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
-		ExamCoordinator coordinator = person
-				.getExamCoordinatorForGivenExecutionYear(executionYear);
+		ExamCoordinator coordinator = person.getExamCoordinatorForGivenExecutionYear(executionYear);
 		Unit unit = coordinator.getUnit();
 
 		bean.setExecutionYear(executionYear);
@@ -719,8 +631,7 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 
 	}
 
-	private void prepareBeanForVigilantGroupEdition(HttpServletRequest request,
-			VigilantGroup group) {
+	private void prepareBeanForVigilantGroupEdition(HttpServletRequest request, VigilantGroup group) {
 
 		VigilantGroupBean bean = new VigilantGroupBean();
 		bean.setSelectedVigilantGroup(group);
@@ -731,32 +642,25 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 		bean.setContactEmail(group.getContactEmail());
 		bean.setRulesLink(group.getRulesLink());
 		bean.setEmployees(new ArrayList<Employee>());
-		bean.setBeginFirstUnavailablePeriod(group
-				.getBeginOfFirstPeriodForUnavailablePeriods());
-		bean.setEndFirstUnavailablePeriod(group
-				.getEndOfFirstPeriodForUnavailablePeriods());
-		bean.setBeginSecondUnavailablePeriod(group
-				.getBeginOfSecondPeriodForUnavailablePeriods());
-		bean.setEndSecondUnavailablePeriod(group
-				.getEndOfSecondPeriodForUnavailablePeriods());
+		bean.setBeginFirstUnavailablePeriod(group.getBeginOfFirstPeriodForUnavailablePeriods());
+		bean.setEndFirstUnavailablePeriod(group.getEndOfFirstPeriodForUnavailablePeriods());
+		bean.setBeginSecondUnavailablePeriod(group.getBeginOfSecondPeriodForUnavailablePeriods());
+		bean.setEndSecondUnavailablePeriod(group.getEndOfSecondPeriodForUnavailablePeriods());
 
 		request.setAttribute("bean", bean);
 	}
 
-	private void prepareManagementBean(HttpServletRequest request,
-			ExecutionYear selectedYear) throws FenixFilterException,
-			FenixServiceException {
+	private void prepareManagementBean(HttpServletRequest request, ExecutionYear selectedYear)
+			throws FenixFilterException, FenixServiceException {
 
 		VigilantGroupBean bean = new VigilantGroupBean();
 		ExecutionYear currentYear = ExecutionYear.readCurrentExecutionYear();
 		bean.setExecutionYear(selectedYear);
 		Person person = getLoggedPerson(request);
-		ExamCoordinator coordinator = person
-				.getExamCoordinatorForGivenExecutionYear(currentYear);
+		ExamCoordinator coordinator = person.getExamCoordinatorForGivenExecutionYear(currentYear);
 		if (coordinator != null) {
 			Unit unit = coordinator.getUnit();
-			List<VigilantGroup> groups = unit
-					.getVigilantGroupsForGivenExecutionYear(selectedYear);
+			List<VigilantGroup> groups = unit.getVigilantGroupsForGivenExecutionYear(selectedYear);
 			bean.setUnit(unit);
 			bean.setSelectedUnit(unit);
 			bean.setSelectedDepartment(unit.getDepartment());

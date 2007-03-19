@@ -81,9 +81,22 @@
 		<put name="body" value="/examCoordinator/vigilancy/manageVigilantsStartPoints.jsp"/>
     </definition>   
 
-
     <definition name="edit-Vigilants-In-Group" extends="examCoordinator.masterPage" >
 		<put name="body" value="/examCoordinator/vigilancy/manageVigilantsInGroups.jsp"/>
     </definition>   
+
+    <definition name="edit-VigilantGroup-Points" extends="examCoordinator.masterPage" >
+		<put name="body" value="/examCoordinator/vigilancy/editVigilantGroupPoints.jsp"/>
+    </definition>   
+
+    <definition name="show-Report" extends="examCoordinator.masterPage" >
+		<put name="body" value="/examCoordinator/vigilancy/showWrittenEvaluationReport.jsp"/>
+    </definition>   
+
+    <definition name="show-stats" extends="examCoordinator.masterPage" >
+		<put name="body" value="/examCoordinator/vigilancy/showGroupStats.jsp"/>
+    </definition>       
+    
+    <definition name="export-table" page="/examCoordinator/vigilancy/export-table.jsp"/>
 
 </tiles-definitions>

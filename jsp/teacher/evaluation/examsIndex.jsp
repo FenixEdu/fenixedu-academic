@@ -63,8 +63,13 @@
 							<h:outputFormat value="#{bundle['link.publishMarks']}" />
 						</h:commandLink>
 
-						<h:outputText value="</li><ul>" escape="false"/>
-						<h:outputText value="<br/>" escape="false"/>
+
+					<h:outputText escape="false" value="</li><li><b>#{bundle['label.vigilancies']}:</b> "/>
+					<h:outputLink value="#{evaluationManagementBackingBean.contextPath}/teacher/evaluation/vigilancy/vigilantsForEvaluation.do?method=viewVigilants&executionCourseID=#{evaluationManagementBackingBean.executionCourseID}&evaluationOID=#{exam.idInternal}"><h:outputText value="#{bundle['label.showVigilants']}"/></h:outputLink>
+					<h:outputText value="<b> | </b>" escape="false"/>
+					<h:outputLink value="#{evaluationManagementBackingBean.contextPath}/teacher/evaluation/vigilancy/vigilantsForEvaluation.do?method=editReport&executionCourseID=#{evaluationManagementBackingBean.executionCourseID}&evaluationOID=#{exam.idInternal}"><h:outputText value="#{bundle['label.editReport']}"/></h:outputLink>					
+					<h:outputText value="</li></ul>" escape="false"/>
+					<h:outputText value="<br/>" escape="false"/>
 					</h:panelGroup>
 					<h:panelGroup rendered="#{!exam.isExamsMapPublished}">
 						<h:outputText value="<b>#{bundle['label.exam']}:</b> " escape="false"/>

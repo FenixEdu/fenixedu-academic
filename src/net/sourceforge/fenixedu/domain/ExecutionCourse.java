@@ -49,6 +49,7 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Interval;
 import org.joda.time.Period;
+import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.CollectionUtils;
 import pt.utl.ist.fenix.tools.util.StringAppender;
@@ -1607,5 +1608,28 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
         return result;
     }
+    
+	public boolean isInExamPeriod() {
+		final YearMonthDay yearMonthDay = new YearMonthDay();
+		final ExecutionPeriod executionPeriod = getExecutionPeriod();
+		final ExecutionYear executionYear = getExecutionPeriod().getExecutionYear();
+		for (final CurricularCourse curricularCourse : getAssociatedCurricularCourses()) {
+			final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
+			final ExecutionDegree executionDegree = degreeCurricularPlan
+					.getExecutionDegreeByYear(executionYear);
+			final YearMonthDay startExamsPeriod;
+			if (executionPeriod.getSemester().intValue() == 1) {
+				startExamsPeriod = executionDegree.getPeriodExamsFirstSemester().getStartYearMonthDay();
+			} else if (executionPeriod.getSemester().intValue() == 2) {
+				startExamsPeriod = executionDegree.getPeriodExamsSecondSemester().getStartYearMonthDay();
+			} else {
+				throw new DomainException("unsupported.execution.period.semester");
+			}
+			if (!startExamsPeriod.minusDays(2).isAfter(yearMonthDay)) {
+				return true;
+			}
+		}
 
+		return false;
+	}
 }
