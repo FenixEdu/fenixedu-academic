@@ -47,7 +47,7 @@
 		<property name="size" value="2" />
 		<property name="maxLength" value="2" />
 		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.LongRangeValidator">
-			<property name="lowerBound" value="1"/>
+			<property name="lowerBound" value="0"/>
 			<property name="upperBound" value="20"/>
 			<property name="required" value="false"/>
 		</validator>
