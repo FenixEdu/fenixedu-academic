@@ -151,12 +151,7 @@ public class Registration extends Registration_Base {
 	setRegistrationYear(ExecutionYear.readCurrentExecutionYear());
 	setRequestedChangeDegree(false);
 	setRequestedChangeBranch(false);
-	if (agreement == null) {
-	    setRegistrationAgreement(RegistrationAgreement.NORMAL);
-	} else if (!agreement.isNormal()) {
-	    new ExternalRegistrationData(this);
-	    setRegistrationAgreement(agreement);
-	}
+	setRegistrationAgreement(agreement);
     }
 
     @Override
@@ -423,13 +418,15 @@ public class Registration extends Registration_Base {
     public boolean isInFinalDegreeYear() {
 	return getCurricularYear() == getDegreeType().getYears();
     }
-    
+
     public boolean isQualifiedForSeniority() {
-	return isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegree() && (isConcluded() || (isActive() && isInFinalDegreeYear()));
+	return isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegree()
+		&& (isConcluded() || (isActive() && isInFinalDegreeYear()));
     }
-    
+
     public YearMonthDay getConclusionDate() {
-	return isConcluded() ? getActiveState().getStateDate().toYearMonthDay() : getLastApprovedEnrolmentEvaluationDate().toYearMonthDay();
+	return isConcluded() ? getActiveState().getStateDate().toYearMonthDay()
+		: getLastApprovedEnrolmentEvaluationDate().toYearMonthDay();
     }
 
     public void calculateApprovationRatioAndArithmeticMeanIfActive(boolean onlyPreviousExecutionYear) {
@@ -693,7 +690,8 @@ public class Registration extends Registration_Base {
 
     public static List<Registration> readByNumber(Integer number) {
 	final List<Registration> registrations = new ArrayList<Registration>();
-	for (RegistrationNumber registrationNumber : RootDomainObject.getInstance().getRegistrationNumbersSet()) {
+	for (RegistrationNumber registrationNumber : RootDomainObject.getInstance()
+		.getRegistrationNumbersSet()) {
 	    if (registrationNumber.getNumber().equals(number)) {
 		registrations.add(registrationNumber.getRegistration());
 	    }
@@ -1353,7 +1351,8 @@ public class Registration extends Registration_Base {
     }
 
     public RegistrationState getActiveState() {
-	return hasAnyRegistrationStates() ? Collections.max(getRegistrationStates(), RegistrationState.DATE_COMPARATOR) : null;
+	return hasAnyRegistrationStates() ? Collections.max(getRegistrationStates(),
+		RegistrationState.DATE_COMPARATOR) : null;
     }
 
     public RegistrationStateType getActiveStateType() {
@@ -1363,7 +1362,8 @@ public class Registration extends Registration_Base {
 
     public boolean isActive() {
 	final RegistrationStateType activeStateType = getActiveStateType();
-	return activeStateType == RegistrationStateType.REGISTERED || activeStateType == RegistrationStateType.MOBILITY;
+	return activeStateType == RegistrationStateType.REGISTERED
+		|| activeStateType == RegistrationStateType.MOBILITY;
     }
 
     public boolean isInRegisteredState() {
