@@ -26,6 +26,14 @@
     </li>
 </ul>
 
+<%-- errors --%>
+<logic:messagesPresent message="true" property="error">
+    <html:messages id="message" message="true" property="error">
+        <p><span class="error0"><bean:write name="message"/></span></p>
+    </html:messages>
+</logic:messagesPresent>
+
+<%-- content --%>
 <h3><bean:message key="title.coordinator.thesis.edit.proposal"/></h3>
 
 <fr:view name="thesis" schema="coordinator.thesis.state.submitted">

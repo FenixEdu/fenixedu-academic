@@ -3,9 +3,11 @@ package net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.jasperreports.engine.JRException;
 import net.sourceforge.fenixedu.applicationTier.Servico.thesis.ChangeThesisPerson.PersonChange;
 import net.sourceforge.fenixedu.applicationTier.Servico.thesis.ChangeThesisPerson.PersonTarget;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -20,7 +22,9 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.docs.thesis.ApproveJuryDocument;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
+import net.sourceforge.fenixedu.util.ReportsUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -359,6 +363,7 @@ public class ManageThesisDA extends FenixDispatchAction {
     
     public ActionForward selectExternalPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
         ThesisBean bean = (ThesisBean) getRenderedObject("bean");
+        boolean create = request.getParameter("create") != null;
         
         if (bean == null) {
             return editProposal(mapping, actionForm, request, response);
@@ -368,14 +373,20 @@ public class ManageThesisDA extends FenixDispatchAction {
         
         Person selectedPerson = bean.getPerson();
         if (selectedPerson == null) {
-            if (bean.getRawPersonName() == null || bean.getRawPersonName().trim().length() == 0) {
-                addActionMessage("info", request, "thesis.selectPerson.external.name.required");
+            if (! create) {
+                if (bean.getRawPersonName() == null || bean.getRawPersonName().trim().length() == 0) {
+                    addActionMessage("info", request, "thesis.selectPerson.external.name.required");
+                }
+                else {
+                    request.setAttribute("proposeCreation", true);
+                }
+    
+                return mapping.findForward("select-person");
             }
             else {
-                request.setAttribute("proposeCreation", true);
+                RenderUtils.invalidateViewState("bean");
+                return mapping.findForward("select-unit");
             }
-
-            return mapping.findForward("select-person");
         }
         else {
             DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
@@ -385,33 +396,6 @@ public class ManageThesisDA extends FenixDispatchAction {
             
             return editProposal(mapping, actionForm, request, response);
         }
-    }
-    
-    public ActionForward createExternalPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        ThesisBean bean = (ThesisBean) getRenderedObject("bean-invisible");
-        RenderUtils.invalidateViewState("bean-invisible");
-        
-        if (bean == null) {
-            return searchStudent(mapping, actionForm, request, response);
-        }
-        
-        request.setAttribute("bean", bean);
-        return mapping.findForward("select-unit");
-    }
-
-    public ActionForward backToSelectPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        ThesisBean bean = (ThesisBean) getRenderedObject("bean-invisible");
-        RenderUtils.invalidateViewState("bean-invisible");
-        
-        if (bean == null) {
-            return editProposal(mapping, actionForm, request, response);
-        }
-        
-        bean.setUnitName(null);
-        bean.setRawUnitName(null);
-        
-        request.setAttribute("bean", bean);
-        return mapping.findForward("select-person");
     }
     
     public ActionForward selectUnitInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -427,6 +411,7 @@ public class ManageThesisDA extends FenixDispatchAction {
     
     public ActionForward selectExternalUnit(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
         ThesisBean bean = (ThesisBean) getRenderedObject("bean");
+        boolean create = request.getParameter("create") != null;
         
         if (bean == null) {
             return editProposal(mapping, actionForm, request, response);
@@ -436,14 +421,23 @@ public class ManageThesisDA extends FenixDispatchAction {
         
         Unit selectedUnit = bean.getUnit();
         if (selectedUnit == null) {
-            if (bean.getRawUnitName() == null || bean.getRawUnitName().trim().length() == 0) {
-                addActionMessage("info", request, "thesis.selectUnit.external.name.required");
+            if (create) {
+                DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
+                Thesis thesis = getThesis(request);
+                executeService("ChangeThesisPerson", degreeCurricularPlan.getIdInternal(), thesis, new PersonChange(bean.getTargetType(), bean.getRawPersonName(), bean.getRawUnitName(), bean.getTarget()));
+                
+                return editProposal(mapping, actionForm, request, response);
             }
             else {
-                request.setAttribute("proposeCreation", true);
+                if (bean.getRawUnitName() == null || bean.getRawUnitName().trim().length() == 0) {
+                    addActionMessage("info", request, "thesis.selectUnit.external.name.required");
+                }
+                else {
+                    request.setAttribute("proposeCreation", true);
+                }
+    
+                return mapping.findForward("select-unit");
             }
-
-            return mapping.findForward("select-unit");
         }
         else {
             DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
@@ -453,22 +447,6 @@ public class ManageThesisDA extends FenixDispatchAction {
             
             return editProposal(mapping, actionForm, request, response);
         }
-    }
-    
-    public ActionForward createExternalUnit(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        ThesisBean bean = (ThesisBean) getRenderedObject("bean-invisible");
-        
-        if (bean == null) {
-            return editProposal(mapping, actionForm, request, response);
-        }
-
-        request.setAttribute("bean", bean);
-
-        DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
-        Thesis thesis = getThesis(request);
-        executeService("ChangeThesisPerson", degreeCurricularPlan.getIdInternal(), thesis, new PersonChange(bean.getTargetType(), bean.getRawPersonName(), bean.getRawUnitName(), bean.getTarget()));
-        
-        return editProposal(mapping, actionForm, request, response);
     }
     
     public ActionForward submitProposal(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -544,6 +522,26 @@ public class ManageThesisDA extends FenixDispatchAction {
     
     public ActionForward viewApproved(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
         return mapping.findForward("view-approved");
+    }
+    
+    public ActionForward printApprovalDocument(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        Thesis thesis = getThesis(request);
+        
+        try {
+            ApproveJuryDocument document = new ApproveJuryDocument(thesis);
+            byte[] data = ReportsUtils.exportToPdf(document);
+            
+            response.setContentLength(data.length);
+            response.setContentType("application/pdf");
+            response.addHeader("Content-Disposition", String.format("attachment; filename=%s.pdf", document.getReportFileName()));
+
+            response.getOutputStream().write(data);
+            
+            return null;
+        } catch (JRException e) {
+            addActionMessage("error", request, "coordinator.thesis.approved.print.failed");
+            return viewSubmitted(mapping, actionForm, request, response);
+        }
     }
     
     // Confirmed

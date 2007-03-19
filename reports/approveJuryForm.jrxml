@@ -17,36 +17,35 @@
 		 whenNoDataType="NoPages"
 		 isTitleNewPage="false"
 		 isSummaryNewPage="false">
-	<property name="ireport.scriptlethandling" value="2" />
+	<property name="ireport.scriptlethandling" value="0" />
 	<property name="ireport.encoding" value="UTF-8" />
 	<import value="java.util.*" />
 	<import value="net.sf.jasperreports.engine.*" />
 	<import value="net.sf.jasperreports.engine.data.*" />
 
-
-	<field name="institutionName" class="java.lang.String"/>
-	<field name="studentDegreeName" class="java.lang.String"/>
-	<field name="studentNumber" class="java.lang.String"/>
-	<field name="studentName" class="java.lang.String"/>
-	<field name="orientatorAffiliation" class="java.lang.String"/>
-	<field name="orientatorCategory" class="java.lang.String"/>
-	<field name="orientatorName" class="java.lang.String"/>
-	<field name="coorientatorAffiliation" class="java.lang.String"/>
-	<field name="coorientatorCategory" class="java.lang.String"/>
-	<field name="coorientatorName" class="java.lang.String"/>
-	<field name="thesisTitle" class="java.lang.String"/>
-	<field name="juryPresidentName" class="java.lang.String"/>
-	<field name="juryPresidentCategory" class="java.lang.String"/>
-	<field name="juryPresidentAffiliation" class="java.lang.String"/>
-	<field name="vowel1Name" class="java.lang.String"/>
-	<field name="vowel1Category" class="java.lang.String"/>
-	<field name="vowel1Affiliation" class="java.lang.String"/>
-	<field name="vowel2Name" class="java.lang.String"/>
-	<field name="vowel2Category" class="java.lang.String"/>
-	<field name="vowel2Affiliation" class="java.lang.String"/>
-	<field name="vowel3Name" class="java.lang.String"/>
-	<field name="vowel3Category" class="java.lang.String"/>
-	<field name="vowel3Affiliation" class="java.lang.String"/>
+	<parameter name="institutionName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="studentDegreeName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="studentNumber" isForPrompting="false" class="java.lang.Number"/>
+	<parameter name="studentName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="orientatorAffiliation" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="orientatorCategory" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="orientatorName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="coorientatorAffiliation" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="coorientatorCategory" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="coorientatorName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="thesisTitle" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="juryPresidentName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="juryPresidentCategory" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="juryPresidentAffiliation" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="vowel1Name" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="vowel1Category" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="vowel1Affiliation" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="vowel2Name" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="vowel2Category" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="vowel2Affiliation" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="vowel3Name" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="vowel3Category" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="vowel3Affiliation" isForPrompting="false" class="java.lang.String"/>
 
 		<background>
 			<band height="0"  isSplitAllowed="true" >
@@ -65,105 +64,486 @@
 			</band>
 		</columnHeader>
 		<detail>
-			<band height="777"  isSplitAllowed="true" >
+			<band height="790"  isSplitAllowed="true" >
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="1"
-						y="1"
+						y="21"
 						width="534"
 						height="26"
 						key="textField-1"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Center">
-						<font size="18"/>
+						<font pdfFontName="Helvetica" size="14" pdfEncoding ="Cp1252"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$F{institutionName}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{institutionName}]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="1"
-						y="33"
-						width="534"
-						height="26"
-						key="textField-2"/>
+						x="30"
+						y="49"
+						width="496"
+						height="23"
+						key="textField-2"
+						stretchType="RelativeToTallestObject"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
-					<textElement textAlignment="Center">
-						<font size="18"/>
+					<textElement textAlignment="Left">
+						<font pdfFontName="Helvetica" size="14" pdfEncoding ="Cp1252"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$F{studentDegreeName}]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="6"
-						y="70"
-						width="524"
-						height="520"
-						key="textField-3"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
-					<textElement>
-						<font size="12"/>
-					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["ALUNO"
-+ "\nNúmero: " + $F{studentNumber}
-+ "\nNome: " + $F{studentName}
-+ "\n"
-+ "\nORIENTADOR"
-+ "\nNome: " + $F{orientatorName}
-+ "\nCategoria: " + $F{orientatorCategory}
-+ "\nAfiliação: " + $F{orientatorAffiliation}
-+ "\n"
-+ "\nCO-ORIENTADOR"
-+ "\nNome: " + $F{coorientatorName}
-+ "\nCategoria: " + $F{coorientatorCategory}
-+ "\nAfiliação: " + $F{coorientatorAffiliation}
-+ "\n"
-+ "\nDISSERTAÇÂO"
-+ "\nTitulo: " + $F{thesisTitle}
-+ "\n"
-+ "\nJÚRI"
-+ "\nPresidente"
-+ "\nNome: " + $F{juryPresidentName}
-+ "\nCategoria: " + $F{juryPresidentCategory}
-+ "\nAfiliação: " + $F{juryPresidentAffiliation}
-+ "\n"
-+ "\nVogais"
-+ "\nNome: " + $F{vowel1Name}
-+ "\nCategoria: " + $F{vowel1Category}
-+ "\nAfiliação: " + $F{vowel1Affiliation}
-+ "\n"
-+ "\nNome: " + $F{vowel2Name}
-+ "\nCategoria: " + $F{vowel2Category}
-+ "\nAfiliação: " + $F{vowel2Affiliation}
-+ "\n"
-+ "\nNome: " + $F{vowel3Name}
-+ "\nCategoria: " + $F{vowel3Category}
-+ "\nAfiliação: " + $F{vowel3Affiliation}
-]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{studentDegreeName}]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement
-						x="4"
-						y="605"
-						width="525"
-						height="169"
-						key="staticText-1"/>
+						x="30"
+						y="726"
+						width="494"
+						height="37"
+						key="staticText-1"
+						positionType="Float"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement>
-						<font size="12"/>
+						<font pdfFontName="Helvetica" size="10" pdfEncoding ="Cp1252"/>
 					</textElement>
-				<text><![CDATA[A COORDENAÇÂO DO CURSO
+				<text><![CDATA[Data:                                                 Nome: 
 
-Data: ______________________     Nome: _____________________________________
-
-Assinatura: _______________________________________________________________
-
-
-HOMOLGAÇÃO DO JÚRI PELO CONSELHO CIENTÍFICO
-
-Data: ______________________     Nome: _____________________________________
-
-Assinatura: _______________________________________________________________]]></text>
+Assinatura: ]]></text>
 				</staticText>
+				<line direction="TopDown">
+					<reportElement
+						x="71"
+						y="116"
+						width="74"
+						height="0"
+						key="line-1"
+						positionType="Float"/>
+					<graphicElement stretchType="NoStretch" pen="Thin"/>
+				</line>
+				<staticText>
+					<reportElement
+						x="30"
+						y="636"
+						width="251"
+						height="15"
+						key="staticText-2"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font pdfFontName="Helvetica" pdfEncoding ="Cp1252"/>
+					</textElement>
+				<text><![CDATA[A COORDENAÇÃO DO CURSO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="30"
+						y="655"
+						width="494"
+						height="37"
+						key="staticText-3"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font pdfFontName="Helvetica" pdfEncoding ="Cp1252"/>
+					</textElement>
+				<text><![CDATA[Data:                                                 Nome: 
+
+Assinatura: ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="30"
+						y="707"
+						width="253"
+						height="15"
+						key="staticText-4"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font pdfFontName="Helvetica" pdfEncoding ="Cp1252"/>
+					</textElement>
+				<text><![CDATA[HOMOLGAÇÃO DO JÚRI PELO CONSELHO CIENTÍFICO]]></text>
+				</staticText>
+				<line direction="TopDown">
+					<reportElement
+						x="62"
+						y="133"
+						width="445"
+						height="0"
+						key="line-2"
+						positionType="Float"/>
+					<graphicElement stretchType="NoStretch" pen="Thin"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="62"
+						y="176"
+						width="445"
+						height="0"
+						key="line-4"
+						positionType="Float"/>
+					<graphicElement stretchType="NoStretch" pen="Thin"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="79"
+						y="192"
+						width="428"
+						height="0"
+						key="line-5"
+						positionType="Float"/>
+					<graphicElement stretchType="NoStretch" pen="Thin"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="73"
+						y="209"
+						width="434"
+						height="0"
+						key="line-6"
+						positionType="Float"/>
+					<graphicElement stretchType="NoStretch" pen="Thin"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="62"
+						y="253"
+						width="445"
+						height="0"
+						key="line-7"
+						positionType="Float"/>
+					<graphicElement stretchType="NoStretch" pen="Thin"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="79"
+						y="269"
+						width="428"
+						height="0"
+						key="line-8"
+						positionType="Float"/>
+					<graphicElement stretchType="NoStretch" pen="Thin"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="73"
+						y="286"
+						width="434"
+						height="0"
+						key="line-9"
+						positionType="Float"/>
+					<graphicElement stretchType="NoStretch" pen="Thin"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="62"
+						y="390"
+						width="445"
+						height="0"
+						key="line-10"
+						positionType="Float"/>
+					<graphicElement stretchType="NoStretch" pen="Thin"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="79"
+						y="406"
+						width="428"
+						height="0"
+						key="line-11"
+						positionType="Float"/>
+					<graphicElement stretchType="NoStretch" pen="Thin"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="73"
+						y="423"
+						width="434"
+						height="0"
+						key="line-12"
+						positionType="Float"/>
+					<graphicElement stretchType="NoStretch" pen="Thin"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="62"
+						y="468"
+						width="445"
+						height="0"
+						key="line-13"
+						positionType="Float"/>
+					<graphicElement stretchType="NoStretch" pen="Thin"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="79"
+						y="484"
+						width="428"
+						height="0"
+						key="line-14"
+						positionType="Float"/>
+					<graphicElement stretchType="NoStretch" pen="Thin"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="73"
+						y="501"
+						width="434"
+						height="0"
+						key="line-15"
+						positionType="Float"/>
+					<graphicElement stretchType="NoStretch" pen="Thin"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="62"
+						y="529"
+						width="445"
+						height="0"
+						key="line-16"
+						positionType="Float"/>
+					<graphicElement stretchType="NoStretch" pen="Thin"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="79"
+						y="545"
+						width="428"
+						height="0"
+						key="line-17"
+						positionType="Float"/>
+					<graphicElement stretchType="NoStretch" pen="Thin"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="73"
+						y="562"
+						width="434"
+						height="0"
+						key="line-18"
+						positionType="Float"/>
+					<graphicElement stretchType="NoStretch" pen="Thin"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="62"
+						y="589"
+						width="445"
+						height="0"
+						key="line-19"
+						positionType="Float"/>
+					<graphicElement stretchType="NoStretch" pen="Thin"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="79"
+						y="605"
+						width="428"
+						height="0"
+						key="line-20"
+						positionType="Float"/>
+					<graphicElement stretchType="NoStretch" pen="Thin"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="73"
+						y="622"
+						width="434"
+						height="0"
+						key="line-21"
+						positionType="Float"/>
+					<graphicElement stretchType="NoStretch" pen="Thin"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="59"
+						y="666"
+						width="117"
+						height="0"
+						key="line-22"
+						positionType="Float"/>
+					<graphicElement stretchType="NoStretch" pen="Thin"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="224"
+						y="666"
+						width="283"
+						height="0"
+						key="line-23"
+						positionType="Float"/>
+					<graphicElement stretchType="NoStretch" pen="Thin"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="83"
+						y="690"
+						width="424"
+						height="0"
+						key="line-24"
+						positionType="Float"/>
+					<graphicElement stretchType="NoStretch" pen="Thin"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="83"
+						y="761"
+						width="424"
+						height="0"
+						key="line-25"
+						positionType="Float"/>
+					<graphicElement stretchType="NoStretch" pen="Thin"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="59"
+						y="737"
+						width="117"
+						height="0"
+						key="line-26"
+						positionType="Float"/>
+					<graphicElement stretchType="NoStretch" pen="Thin"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="224"
+						y="737"
+						width="283"
+						height="0"
+						key="line-27"
+						positionType="Float"/>
+					<graphicElement stretchType="NoStretch" pen="Thin"/>
+				</line>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="30"
+						y="84"
+						width="494"
+						height="51"
+						key="textField-3"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Top" rotation="None" lineSpacing="1_1_2">
+						<font fontName="SansSerif" pdfFontName="Helvetica" size="10" isBold="false" isItalic="false" isUnderline="false" pdfEncoding ="Cp1252" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["ALUNO" + 
+"\nNúmero: " + $P{studentNumber} +
+"\nNome: " + $P{studentName}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="30"
+						y="144"
+						width="492"
+						height="68"
+						key="textField-4"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Top" rotation="None" lineSpacing="1_1_2">
+						<font fontName="SansSerif" pdfFontName="Helvetica" size="10" isBold="false" isItalic="false" isUnderline="false" pdfEncoding ="Cp1252" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["ORIENTADOR" + 
+"\nNome: " + $P{orientatorName} + 
+"\nCategoria: " + $P{orientatorCategory} + 
+"\nAfiliação: " + $P{orientatorAffiliation}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="30"
+						y="221"
+						width="491"
+						height="68"
+						key="textField-5"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Top" rotation="None" lineSpacing="1_1_2">
+						<font fontName="SansSerif" pdfFontName="Helvetica" size="10" isBold="false" isItalic="false" isUnderline="false" pdfEncoding ="Cp1252" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["CO-ORIENTADOR" + 
+"\nNome: " + $P{coorientatorName} + 
+"\nCategoria: " + $P{coorientatorCategory} + 
+"\nAfiliação: " + $P{coorientatorAffiliation}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="30"
+						y="341"
+						width="488"
+						height="85"
+						key="textField-7"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Top" rotation="None" lineSpacing="1_1_2">
+						<font fontName="SansSerif" pdfFontName="Helvetica" size="10" isBold="false" isItalic="false" isUnderline="false" pdfEncoding ="Cp1252" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["JÚRI" + 
+"\nPresidente:" + 
+"\nNome: " + $P{juryPresidentName} + 
+"\nCategoria: " + $P{juryPresidentCategory} + 
+"\nAfiliação: " + $P{juryPresidentAffiliation}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="30"
+						y="435"
+						width="489"
+						height="68"
+						key="textField-8"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Top" rotation="None" lineSpacing="1_1_2">
+						<font fontName="SansSerif" pdfFontName="Helvetica" size="10" isBold="false" isItalic="false" isUnderline="false" pdfEncoding ="Cp1252" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Vogais:" + 
+"\nNome: " + $P{vowel1Name} + 
+"\nCategoria: " + $P{vowel1Category} + 
+"\nAfiliação: " + $P{vowel1Affiliation}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="30"
+						y="512"
+						width="489"
+						height="51"
+						key="textField-9"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Top" rotation="None" lineSpacing="1_1_2">
+						<font fontName="SansSerif" pdfFontName="Helvetica" size="10" isBold="false" isItalic="false" isUnderline="false" pdfEncoding ="Cp1252" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Nome: " + $P{vowel2Name} + 
+"\nCategoria: " + $P{vowel2Category} + 
+"\nAfiliação: " + $P{vowel2Affiliation}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="30"
+						y="572"
+						width="487"
+						height="51"
+						key="textField-10"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Top" rotation="None" lineSpacing="1_1_2">
+						<font fontName="SansSerif" pdfFontName="Helvetica" size="10" isBold="false" isItalic="false" isUnderline="false" pdfEncoding ="Cp1252" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Nome: " + $P{vowel3Name} + 
+"\nCategoria: " + $P{vowel3Category} + 
+"\nAfiliação: " + $P{vowel3Affiliation}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="30"
+						y="298"
+						width="489"
+						height="34"
+						key="textField-6"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Top" rotation="None" lineSpacing="1_1_2">
+						<font fontName="SansSerif" pdfFontName="Helvetica" size="10" isBold="false" isItalic="false" isUnderline="false" pdfEncoding ="Cp1252" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["DISSERTAÇÃO" + 
+"\nTitulo: " + $P{thesisTitle}]]></textFieldExpression>
+				</textField>
 			</band>
 		</detail>
 		<columnFooter>

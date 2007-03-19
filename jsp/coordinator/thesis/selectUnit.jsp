@@ -10,7 +10,7 @@
 <bean:define id="dcpId" name="degreeCurricularPlan" property="idInternal"/>
 <bean:define id="thesisId" name="thesis" property="idInternal"/>
 
-<h2><bean:message key="title.coordinator.thesis.create"/></h2>
+<h2><bean:message key="title.coordinator.thesis.proposal"/></h2>
 
 <h3>
     <bean:message key="title.coordinator.selectPerson.select"/> 
@@ -34,35 +34,32 @@
     <fr:form action="<%= String.format("/manageThesis.do?method=selectExternalUnit&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
         <fr:edit id="bean" name="bean" layout="tabular" schema="thesis.bean.selectUnit.external">
             <fr:layout name="tabular">
-                <fr:property name="classes" value="tstyle5 thlight mtop05"/>
+                <fr:property name="classes" value="tstyle5 thlight mtop05 dinline"/>
                 <fr:property name="columnClasses" value=",,tdclear tderror1"/>
             </fr:layout>
             
             <fr:destination name="changeUnitType" path="/manageThesis.do?method=changeUnitType"/>
             <fr:destination name="invalid" path="/manageThesis.do?method=selectUnitInvalid"/>
         </fr:edit>
-
+        <br/>
+        
         <html:submit>
-                <bean:message key="button.submit"/>
+            <bean:message key="button.coordinator.thesis.edit.unit.choose"/>
         </html:submit>
+        
+        <logic:present name="proposeCreation">
+            <html:submit property="create">
+                <bean:message key="button.coordinator.thesis.edit.externalUnit.create"/>
+            </html:submit>
+        </logic:present>
     </fr:form>
 
-    <fr:form action="<%= String.format("/manageThesis.do?method=backToSelectPerson&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
+    <fr:form action="<%= String.format("/manageThesis.do?method=editProposal&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
         <fr:edit id="bean-invisible" name="bean" visible="false"/>
     
         <html:submit>
             <bean:message key="button.cancel"/>
         </html:submit>
     </fr:form>
-
-    <logic:present name="proposeCreation">
-        <fr:form action="<%= String.format("/manageThesis.do?method=createExternalUnit&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">        
-            <fr:edit id="bean-invisible" name="bean" visible="false"/>
-            
-            <html:submit>
-                <bean:message key="button.coordinator.thesis.edit.externalUnit.create"/>
-            </html:submit>
-        </fr:form>
-    </logic:present>
 <div>
 

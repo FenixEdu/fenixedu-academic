@@ -58,6 +58,10 @@
 </schema>
 
 <schema name="thesis.bean.selectUnit.external" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisBean">
+    <slot name="internal" key="label.coordinator.thesis.edit.internal" read-only="true">
+        <property name="trueLabel" value="label.coordinator.thesis.edit.internalPerson"/>
+        <property name="falseLabel" value="label.coordinator.thesis.edit.externalPerson"/>
+    </slot>
     <slot name="rawPersonName" key="label.coordinator.thesis.edit.personName.forUnit" read-only="true"/>
     <slot name="unitName" key="label.coordinator.thesis.edit.unitName" layout="autoComplete"  validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
         <property name="size" value="70"/>
