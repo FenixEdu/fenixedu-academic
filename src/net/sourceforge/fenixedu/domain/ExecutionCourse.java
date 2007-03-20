@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain;
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -16,6 +17,9 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.GroupEnrolmentStrategyFactory;
+import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
+import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
 import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseTeachersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.RoleTypeGroup;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
@@ -1609,27 +1613,44 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return result;
     }
     
-	public boolean isInExamPeriod() {
-		final YearMonthDay yearMonthDay = new YearMonthDay();
-		final ExecutionPeriod executionPeriod = getExecutionPeriod();
-		final ExecutionYear executionYear = getExecutionPeriod().getExecutionYear();
-		for (final CurricularCourse curricularCourse : getAssociatedCurricularCourses()) {
-			final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
-			final ExecutionDegree executionDegree = degreeCurricularPlan
-					.getExecutionDegreeByYear(executionYear);
-			final YearMonthDay startExamsPeriod;
-			if (executionPeriod.getSemester().intValue() == 1) {
-				startExamsPeriod = executionDegree.getPeriodExamsFirstSemester().getStartYearMonthDay();
-			} else if (executionPeriod.getSemester().intValue() == 2) {
-				startExamsPeriod = executionDegree.getPeriodExamsSecondSemester().getStartYearMonthDay();
-			} else {
-				throw new DomainException("unsupported.execution.period.semester");
-			}
-			if (!startExamsPeriod.minusDays(2).isAfter(yearMonthDay)) {
-				return true;
-			}
-		}
-
-		return false;
+    public boolean isInExamPeriod() {
+    	final YearMonthDay yearMonthDay = new YearMonthDay();
+    	final ExecutionPeriod executionPeriod = getExecutionPeriod();
+    	final ExecutionYear executionYear = getExecutionPeriod().getExecutionYear();
+    	for (final CurricularCourse curricularCourse : getAssociatedCurricularCourses()) {
+    		final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
+    		final ExecutionDegree executionDegree = degreeCurricularPlan
+    				.getExecutionDegreeByYear(executionYear);
+    		final YearMonthDay startExamsPeriod;
+    		if (executionPeriod.getSemester().intValue() == 1) {
+    			startExamsPeriod = executionDegree.getPeriodExamsFirstSemester().getStartYearMonthDay();
+    		} else if (executionPeriod.getSemester().intValue() == 2) {
+    			startExamsPeriod = executionDegree.getPeriodExamsSecondSemester().getStartYearMonthDay();
+    		} else {
+    			throw new DomainException("unsupported.execution.period.semester");
+    		}
+    		if (!startExamsPeriod.minusDays(2).isAfter(yearMonthDay)) {
+    			return true;
+    		}
+    	}
+    
+    	return false;
+    }
+    
+    public List<Grouping> getGroupingsToEnrol() {
+	final List<Grouping> result = new ArrayList<Grouping>();
+	for (final Grouping grouping : getGroupings()) {
+	    if (checkPeriodEnrollmentFor(grouping)) {
+		result.add(grouping);
+	    }
 	}
+	return result;
+    }
+    
+    private boolean checkPeriodEnrollmentFor(final Grouping grouping) {
+        final IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
+        final IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(grouping);
+        return strategy.checkEnrolmentDate(grouping, Calendar.getInstance());
+
+    }
 }
