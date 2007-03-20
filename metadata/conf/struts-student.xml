@@ -486,9 +486,10 @@
               path="/viewEnroledExecutionCourses"
               name="enroledExecutionCoursesForm"
               scope="request"
-              validate="true"
+              parameter="method"
               >
-        <forward name="sucess" path="view-Enroled-ExecutionCourses"/>
+        <forward name="showEnroledExecutionCourses" path="view-enroled-ExecutionCourses"/>
+        <forward name="showActiveRegistrations" path="view-active-registrations"/>
       </action>
       
  	<action type="net.sourceforge.fenixedu.presentationTier.Action.student.ViewExecutionCourseProjectsAction"

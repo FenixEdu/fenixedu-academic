@@ -74,8 +74,12 @@
 	</definition>	
 
 	<!-- GROUPS DEFINITIONS-->
-	<definition name="view-Enroled-ExecutionCourses" extends="definition.student.masterPage">
+	<definition name="view-enroled-ExecutionCourses" extends="definition.student.masterPage">
 		<put name="body" value="/student/viewEnroledExecutionCourses_bd.jsp" />		
+	</definition>
+	
+	<definition name="view-active-registrations" extends="definition.student.masterPage">
+		<put name="body" value="/student/viewActiveRegistrations.jsp" />		
 	</definition>
 	
 	<definition name="view-ExecutionCourse-Projects" extends="definition.student.masterPage">

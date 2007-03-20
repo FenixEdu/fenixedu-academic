@@ -5,11 +5,11 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>	
 
 
-<logic:present name="infoExecutionCourses"> 
+<logic:present name="executionCourses"> 
 <html:form action="/viewExecutionCourseProjects" method="get">
 
 
-	<logic:empty name="infoExecutionCourses">
+	<logic:empty name="executionCourses">
 		<em><bean:message key="title.student.portalTitle"/></em>
 		<h2><bean:message key="label.student.groupEnrollment.title"/></h2>
 		<p class="mtop15"><span class="warning0"><bean:message key="message.executionCourses.not.available"/></span></p>
@@ -19,7 +19,7 @@
 	</logic:empty>
 
 
-	<logic:notEmpty name="infoExecutionCourses">
+	<logic:notEmpty name="executionCourses">
 		<em><bean:message key="title.student.portalTitle"/></em>
 		<h2><bean:message key="label.student.groupEnrollment.title"/></h2>
 	
@@ -39,19 +39,19 @@
 		 	<th><bean:message key="Label.groupings"/></th>
 		</tr>
 		
-		<logic:iterate id="infoExecutionCourse" name="infoExecutionCourses">
+		<logic:iterate id="executionCourse" name="executionCourses">
 			<tr>
-				<td><bean:define id="executionCourseID" name="infoExecutionCourse" property="idInternal" type="java.lang.Integer"/>
+				<td><bean:define id="executionCourseID" name="executionCourse" property="idInternal" type="java.lang.Integer"/>
 					<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.executionCourseCode" property="executionCourseCode" value="<%= executionCourseID.toString() %>"/>
 			 	</td>
-			 	<td><bean:write name="infoExecutionCourse" property="nome"/></td>
+			 	<td><bean:write name="executionCourse" property="nome"/></td>
 			 	<td style="line-height: 200%;">
 			 		<ul style="text-align: left; margin: 0 1em; padding: 0.5em;">
-					<logic:iterate id="infoGrouping" name="infoExecutionCourse" property="infoGroupings" length="1">
-						<li><bean:write name="infoGrouping" property="name"/></li>
+					<logic:iterate id="grouping" name="executionCourse" property="groupingsToEnrol" length="1">
+						<li><bean:write name="grouping" property="name"/></li>
 					</logic:iterate>
-					<logic:iterate id="infoGrouping" name="infoExecutionCourse" property="infoGroupings" offset="1">
-						<li><bean:write name="infoGrouping" property="name"/></li>
+					<logic:iterate id="grouping" name="executionCourse" property="groupingsToEnrol" offset="1">
+						<li><bean:write name="grouping" property="name"/></li>
 					</logic:iterate>
 					</ul>
 			 	</td>
@@ -65,25 +65,14 @@
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.choose"/></html:submit>
 </p>
 
-
-
-
-
 </logic:notEmpty>
-
 </html:form>	
-
 </logic:present>
 
-<logic:notPresent name="infoExecutionCourses">
+<logic:notPresent name="executionCourses">
 		
 	<h2><bean:message key="message.executionCourses.not.available"/></h2>
 	<br/>
 	span class="error"><html:errors/></span>
 	<br/>
-	
 </logic:notPresent>
-
-
-
-   
