@@ -5,6 +5,8 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 <bean:define id="thesisId" name="thesis" property="idInternal"/>
+<bean:define id="degreeId" name="degreeId"/>
+<bean:define id="executionYearId" name="executionYearId"/>
 
 <html:xhtml/>
 
@@ -18,14 +20,14 @@
     </li>
     <logic:equal name="thesis" property="confirmed" value="true">
         <li>
-            <html:link page="<%= String.format("/scientificCouncilManageThesis.do?method=confirmApprove&amp;thesisID=%s", thesisId) %>">
+            <html:link page="<%= String.format("/scientificCouncilManageThesis.do?method=confirmApprove&amp;thesisID=%s&amp;degreeID=%s&amp;executionYearID=%s", thesisId, degreeId, executionYearId) %>">
                 <bean:message key="title.scientificCouncil.thesis.evaluation.approve"/>
             </html:link>
         </li>
     </logic:equal>
     <logic:equal name="thesis" property="evaluated" value="true">
         <li>
-            <html:link page="<%= String.format("/scientificCouncilManageThesis.do?method=confirmDisapprove&amp;thesisID=%s", thesisId) %>">
+            <html:link page="<%= String.format("/scientificCouncilManageThesis.do?method=confirmDisapprove&amp;thesisID=%s&amp;degreeID=%s&amp;executionYearID=%s", thesisId, degreeId, executionYearId) %>">
                 <bean:message key="title.scientificCouncil.thesis.evaluation.disapprove"/>
             </html:link>
         </li>
@@ -37,12 +39,12 @@
     <bean:message key="label.scientificCouncil.thesis.evaluation.approve.confirm"/>
     
     <div class="forminline">
-        <fr:form action="<%= String.format("/scientificCouncilManageThesis.do?method=approveThesis&amp;&amp;thesisID=%s", thesisId) %>">
+        <fr:form action="<%= String.format("/scientificCouncilManageThesis.do?method=approveThesis&amp;&amp;thesisID=%s&amp;degreeID=%s&amp;executionYearID=%s", thesisId, degreeId, executionYearId) %>">
             <html:submit>
                 <bean:message key="button.scientificCouncil.thesis.evaluation.approve"/>
             </html:submit>
         </fr:form>
-        <fr:form action="<%= String.format("/scientificCouncilManageThesis.do?method=reviewThesis&amp;&amp;thesisID=%s", thesisId) %>">
+        <fr:form action="<%= String.format("/scientificCouncilManageThesis.do?method=reviewThesis&amp;&amp;thesisID=%s&amp;degreeID=%s&amp;executionYearID=%s", thesisId, degreeId, executionYearId) %>">
             <html:cancel>
                 <bean:message key="button.cancel"/>
             </html:cancel>
@@ -55,12 +57,12 @@
     <bean:message key="label.scientificCouncil.thesis.evaluation.disapprove.confirm"/>
     
     <div class="forminline">
-        <fr:form action="<%= String.format("/scientificCouncilManageThesis.do?method=disapproveThesis&amp;&amp;thesisID=%s", thesisId) %>">
+        <fr:form action="<%= String.format("/scientificCouncilManageThesis.do?method=disapproveThesis&amp;&amp;thesisID=%s&amp;degreeID=%s&amp;executionYearID=%s", thesisId, degreeId, executionYearId) %>">
             <html:submit>
                 <bean:message key="button.scientificCouncil.thesis.evaluation.disapprove"/>
             </html:submit>
         </fr:form>
-        <fr:form action="<%= String.format("/scientificCouncilManageThesis.do?method=reviewThesis&amp;&amp;thesisID=%s", thesisId) %>">
+        <fr:form action="<%= String.format("/scientificCouncilManageThesis.do?method=reviewThesis&amp;&amp;thesisID=%s&amp;degreeID=%s&amp;executionYearID=%s", thesisId, degreeId, executionYearId) %>">
             <html:cancel>
                 <bean:message key="button.cancel"/>
             </html:cancel>

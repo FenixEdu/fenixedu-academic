@@ -1,7 +1,7 @@
 <schema name="scientificCouncil.thesis.table" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
     <slot name="student.number" key="label.student.number.short"/>
     <slot name="student.person.name" key="student"/>
-    <slot name="title" key="label.coordinator.title" layout="short">
+    <slot name="title" key="label.scientificCouncil.title" layout="short">
         <property name="length" value="60"/>
     </slot>
     <slot name="state" key="label.thesis.state">
@@ -63,3 +63,15 @@
     <setter signature="rejectProposal(rejectionComment)"/>
 </schema>
 
+<schema name="thesis.context.bean" type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.thesis.ThesisContextBean">
+    <slot name="degree" key="label.degree" layout="menu-select-postback">
+    	<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DegreesProvider"/>
+    	<property name="format" value="${name} (${sigla})"/>    	
+    	<property name="destination" value="listThesis"/>
+    </slot>
+    <slot name="executionYear" key="label.execution.year" layout="menu-select-postback">
+    	<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider"/>
+    	<property name="format" value="${year}"/>
+    	<property name="destination" value="listThesis"/>
+    </slot>
+</schema>

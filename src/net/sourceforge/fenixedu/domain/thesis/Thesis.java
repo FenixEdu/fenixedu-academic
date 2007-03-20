@@ -171,11 +171,15 @@ public class Thesis extends Thesis_Base {
     }
  
     public static Collection<Thesis> getSubmittedThesis() {
-        return getThesisInState(null, null, ThesisState.SUBMITTED);
+        return getSubmittedThesis(null);
     }
-    
+
     public static Collection<Thesis> getSubmittedThesis(Degree degree) {
-        return getThesisInState(degree, null, ThesisState.SUBMITTED);
+        return getSubmittedThesis(degree, null);
+    }
+
+    public static Collection<Thesis> getSubmittedThesis(Degree degree, ExecutionYear executionYear) {
+        return getThesisInState(degree, executionYear, ThesisState.SUBMITTED);
     }
     
     public static Collection<Thesis> getApprovedThesis() {
@@ -183,10 +187,14 @@ public class Thesis extends Thesis_Base {
     }
 
     public static Collection<Thesis> getApprovedThesis(Degree degree) {
-        List<Thesis> result = new ArrayList<Thesis>();
+        return getApprovedThesis(degree, null);
+    }
+
+    public static Collection<Thesis> getApprovedThesis(Degree degree, ExecutionYear executionYear) {
+	List<Thesis> result = new ArrayList<Thesis>();
         
-        result.addAll(getThesisInState(degree, null, ThesisState.APPROVED));
-        result.addAll(getThesisInState(degree, null, ThesisState.REVISION));
+        result.addAll(getThesisInState(degree, executionYear, ThesisState.APPROVED));
+        result.addAll(getThesisInState(degree, executionYear, ThesisState.REVISION));
         
         return result;
     }
@@ -196,7 +204,11 @@ public class Thesis extends Thesis_Base {
     }
     
     public static Collection<Thesis> getConfirmedThesis(Degree degree) {
-        return getThesisInState(degree, null, ThesisState.CONFIRMED);
+        return getConfirmedThesis(degree, null);
+    }
+    
+    public static Collection<Thesis> getConfirmedThesis(Degree degree, ExecutionYear executionYear) {
+        return getThesisInState(degree, executionYear, ThesisState.CONFIRMED);
     }
     
     public static Collection<Thesis> getEvaluatedThesis() {
@@ -204,7 +216,11 @@ public class Thesis extends Thesis_Base {
     }
     
     public static Collection<Thesis> getEvaluatedThesis(Degree degree) {
-        return getThesisInState(degree, null, ThesisState.EVALUATED);
+        return getEvaluatedThesis(degree, null);
+    }
+
+    public static Collection<Thesis> getEvaluatedThesis(Degree degree, ExecutionYear executionYear) {
+        return getThesisInState(degree, executionYear, ThesisState.EVALUATED);
     }
 
     @Override

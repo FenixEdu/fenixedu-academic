@@ -5,6 +5,8 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <bean:define id="thesisId" name="thesis" property="idInternal" />
+<bean:define id="degreeId" name="degreeId"/>
+<bean:define id="executionYearId" name="executionYearId"/>
 
 <html:xhtml />
 
@@ -12,25 +14,25 @@
 
 <ul>
     <li>
-        <html:link page="/scientificCouncilManageThesis.do?method=listThesis">
+        <html:link page="<%= String.format("/scientificCouncilManageThesis.do?method=listThesis&amp;thesisID=%s&amp;degreeID=%s&amp;executionYearID=%s", thesisId, degreeId, executionYearId) %>">
             <bean:message key="link.scientificCouncil.thesis.list.back" />
         </html:link>
     </li>
     <logic:equal name="thesis" property="submitted" value="true">
         <li>
-            <html:link page="<%= String.format("/scientificCouncilManageThesis.do?method=approveProposal&amp;thesisID=%s", thesisId) %>">
+            <html:link page="<%= String.format("/scientificCouncilManageThesis.do?method=approveProposal&amp;thesisID=%s&amp;degreeID=%s&amp;executionYearID=%s", thesisId, degreeId, executionYearId) %>">
                 <bean:message key="link.scientificCouncil.thesis.proposal.approve" />
             </html:link>
         </li>
         <li>
-            <html:link page="<%= String.format("/scientificCouncilManageThesis.do?method=confirmRejectProposal&amp;thesisID=%s", thesisId) %>">
+            <html:link page="<%= String.format("/scientificCouncilManageThesis.do?method=confirmRejectProposal&amp;thesisID=%s&amp;degreeID=%s&amp;executionYearID=%s", thesisId, degreeId, executionYearId) %>">
                 <bean:message key="link.scientificCouncil.thesis.proposal.reject" />
             </html:link>
         </li>
     </logic:equal>
     <logic:equal name="thesis" property="approved" value="true">
         <li>
-            <html:link page="<%= String.format("/scientificCouncilManageThesis.do?method=confirmRejectProposal&amp;thesisID=%s", thesisId) %>">
+            <html:link page="<%= String.format("/scientificCouncilManageThesis.do?method=confirmRejectProposal&amp;thesisID=%s&amp;degreeID=%s&amp;executionYearID=%s", thesisId, degreeId, executionYearId) %>">
                 <bean:message key="link.scientificCouncil.thesis.proposal.disapprove" />
             </html:link>
         </li>
@@ -40,13 +42,13 @@
 <logic:present name="confirmReject">
     <bean:message key="label.scientificCouncil.thesis.proposal.reject.confirm"/>
     
-    <fr:form action="<%= String.format("/scientificCouncilManageThesis.do?method=listThesis&amp;thesisID=%s", thesisId) %>">
+    <fr:form action="<%= String.format("/scientificCouncilManageThesis.do?method=listThesis&amp;thesisID=%s&amp;degreeID=%s&amp;executionYearID=%s", thesisId, degreeId, executionYearId) %>">
         <fr:edit id="thesisRejection" name="thesis" schema="thesis.rejection.comment">
             <fr:layout name="tabular">
             </fr:layout>
             
-            <fr:destination name="cancel" path="<%= String.format("/scientificCouncilManageThesis.do?method=reviewProposal&amp;thesisID=%s", thesisId) %>"/>
-            <fr:destination name="invalid" path="<%= String.format("/scientificCouncilManageThesis.do?method=confirmRejectProposal&amp;thesisID=%s", thesisId) %>"/>
+            <fr:destination name="cancel" path="<%= String.format("/scientificCouncilManageThesis.do?method=reviewProposal&amp;thesisID=%s&amp;degreeID=%s&amp;executionYearID=%s", thesisId, degreeId, executionYearId) %>"/>
+            <fr:destination name="invalid" path="<%= String.format("/scientificCouncilManageThesis.do?method=confirmRejectProposal&amp;thesisID=%s&amp;degreeID=%s&amp;executionYearID=%s", thesisId, degreeId, executionYearId) %>"/>
         </fr:edit>
     
         <html:submit>
