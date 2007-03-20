@@ -685,12 +685,14 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
 			for (WorkSchedule workSchedule : getWorkScheduleType().getWorkSchedules()) {
 			    for (Schedule schedule : workSchedule.getSchedules()) {
 				if (!schedule.getBeginDate().isBefore(firstDay)) {
-				    if (!workScheduleToChangeWorkScheduleType.contains(workSchedule)) {
+				    if (!workScheduleToChangeWorkScheduleType.contains(workSchedule)
+					    && !scheduleToChangeDate.contains(workSchedule)) {
 					workScheduleToChangeWorkScheduleType.add(workSchedule);
 				    }
-				} else if (schedule.getBeginDate().isBefore(firstDay)) {
-				    if (!scheduleToChangeDate.contains(workSchedule)) {
-					scheduleToChangeDate.add(schedule);
+				} else if (!scheduleToChangeDate.contains(workSchedule)) {
+				    scheduleToChangeDate.add(schedule);
+				    if (workScheduleToChangeWorkScheduleType.contains(workSchedule)) {
+					workScheduleToChangeWorkScheduleType.remove(workSchedule);
 				    }
 				}
 			    }
@@ -722,8 +724,8 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
 
 			    for (Schedule schedule : scheduleToChangeDate) {
 				Schedule newSchedule = new Schedule(schedule.getAssiduousness(),
-					schedule.getBeginDate(), schedule.getEndDate(), schedule
-						.getException(), now, getModifiedBy());
+					firstDay, schedule.getEndDate(), schedule.getException(), now,
+					getModifiedBy());
 				List<WorkSchedule> newWorkSchedules = new ArrayList<WorkSchedule>();
 				for (WorkSchedule workSchedule : schedule.getWorkSchedules()) {
 				    WorkSchedule newWorkSchedule = getWorkSchedule(newWorkScheluleType
