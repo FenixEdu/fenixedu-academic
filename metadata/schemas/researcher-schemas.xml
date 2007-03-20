@@ -1166,7 +1166,7 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Ar
 
 <schema name="result.publication.create.Article.createMagazine" bundle="RESEARCHER_RESOURCES"
 type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.CreateIssueBean">
-	<slot name="scientificJournalName" key="label.journal">
+	<slot name="scientificJournalName" key="label.journal.name">
 		<property name="size" value="70"/>
 	</slot>
 	<slot name="issn"/>
@@ -1194,14 +1194,14 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Cr
 		<slot name="volume" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 			<property name="size" value="30"/>
 		</slot>
+		<slot name="number" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+			<property name="size" value="10"/>
+		</slot>
 		<slot name="specialIssue" layout="option-select-postback"/>
 		<slot name="year" validator="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
 			<property name="size" value="10"/>
 		</slot>		
 		<slot name="month"/>
-		<slot name="number" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-			<property name="size" value="10"/>
-		</slot>
 		<slot name="publisher">
 			<property name="size" value="50"/>
 		</slot>

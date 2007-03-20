@@ -177,12 +177,12 @@
 
 <schema name="student.thesis.abstract.edit" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
     <slot name="thesisAbstractPt" layout="longText" key="label.thesis.abstract.pt" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-        <property name="columns" value="70"/>
-        <property name="rows" value="15"/>
+        <property name="columns" value="65"/>
+        <property name="rows" value="12"/>
     </slot>
     <slot name="thesisAbstractEn" layout="longText" key="label.thesis.abstract.en" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-        <property name="columns" value="70"/>
-        <property name="rows" value="15"/>
+        <property name="columns" value="65"/>
+        <property name="rows" value="12"/>
     </slot>
 </schema>
 
