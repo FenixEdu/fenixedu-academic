@@ -10,7 +10,7 @@ public class DomainObjectKeyConverter extends Converter {
     @Override
     public Object convert(Class type, Object value) {
         
-        if (value == null) {
+        if (value == null || value.equals("")) {
             return null;
         }
         

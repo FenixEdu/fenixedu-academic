@@ -20,7 +20,7 @@ public class ReadActiveStudentCurricularPlanByNumberAndType extends Service {
     public InfoStudentCurricularPlan run(
             Integer studentNumber, DegreeType degreeType) throws ExcepcaoPersistencia {
 
-    	Registration registration = Registration.readStudentByNumberAndDegreeType(studentNumber, degreeType);
+    	Registration registration = Registration.readRegisteredRegistrationByNumberAndDegreeType(studentNumber, degreeType);
         StudentCurricularPlan scp = null;
         if(registration != null) {
         	scp = registration.getActiveOrConcludedStudentCurricularPlan();

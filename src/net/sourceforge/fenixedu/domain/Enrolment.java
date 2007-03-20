@@ -546,7 +546,10 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	}
 
 	temporaryImprovement.delete();
-	getAttendsFor(executionPeriod).delete();
+	Attends attends = getAttendsFor(executionPeriod); 
+	if(attends != null) {
+	    attends.delete();
+	}
     }
     
     public boolean isImprovementForExecutionCourse(ExecutionCourse executionCourse) {
