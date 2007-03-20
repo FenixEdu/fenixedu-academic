@@ -5,26 +5,30 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
+<em><bean:message key="title.student.portalTitle" /></em>
+<h2><bean:message key="label.projectSubmissions.viewProjectSubmissions.title" /></h2>
+
 <html:messages id="message" message="true">
-	<span class="error"><!-- Error messages go here --> <bean:write name="message" /> </span>
+	<p>
+		<span class="error0"><!-- Error messages go here --> <bean:write name="message" /> </span>
+	</p>
 </html:messages>
-<h2><bean:message
-	key="label.projectSubmissions.viewProjectSubmissions.title" /></h2>
 
 <fr:view name="project"
 	schema="evaluation.project.view-with-name-description-and-grouping">
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle5 thlight thright" />
+		<fr:property name="classes" value="tstyle2 thlight thright" />
+		<fr:property name="rowClasses" value="bold,," />
 	</fr:layout>
 </fr:view>
 
-<br />
-
 <logic:notPresent name="noStudentGroupForGrouping">
 	<logic:empty name="projectSubmissions">
-		<span class="error"><!-- Error messages go here --> <bean:message
-			key="label.projectSubmissions.viewProjectSubmissions.noProjectSubmissions" />
-		</span>
+		<p class="mvert15">
+			<span class="warning0"><!-- Error messages go here --> <bean:message
+				key="label.projectSubmissions.viewProjectSubmissions.noProjectSubmissions" />
+			</span>
+		</p>
 	</logic:empty>
 
 	<logic:notEmpty name="projectSubmissions">		
@@ -36,22 +40,28 @@
 		</fr:view>
 	</logic:notEmpty>
 	
-	<br />
-	<br />
+
 	<logic:equal name="project" property="submissionPeriodOpen" value="true">
 		<bean:define id="attendsId" name="attends" property="idInternal" />
 		<bean:define id="projectId" name="project" property="idInternal" />
-		<html:link
-			action="<%="/projectSubmission.do?method=prepareProjectSubmission&amp;attendsId="  + attendsId + "&amp;projectId=" + projectId %>">
-			<bean:message
-				key="link.projectSubmissions.viewProjectSubmissions.submitProject" />
-		</html:link>
+		<ul class="list5">
+			<li>
+				<html:link action="<%="/projectSubmission.do?method=prepareProjectSubmission&amp;attendsId="  + attendsId + "&amp;projectId=" + projectId %>">
+					<bean:message key="link.projectSubmissions.viewProjectSubmissions.submitProject" />
+				</html:link>
+			</li>
+		</ul>
 	</logic:equal>
 	<logic:notEqual name="project" property="submissionPeriodOpen" value="true">
-	 	<span class="error"><!-- Error messages go here --><bean:message key="error.project.submissionPeriodAlreadyExpired" bundle="APPLICATION_RESOURCES"/></span>
+		<p>
+		 	<span class="error0"><!-- Error messages go here --><bean:message key="error.project.submissionPeriodAlreadyExpired" bundle="APPLICATION_RESOURCES"/></span>
+	 	</p>
 	</logic:notEqual>
 </logic:notPresent>
+
 <logic:present name="noStudentGroupForGrouping">
-	<span class="error"><!-- Error messages go here --><bean:message key="label.projectSubmissions.viewProjectSubmissions.noStudentGroupForGrouping"/></span>
+	<p>
+		<span class="error0"><!-- Error messages go here --><bean:message key="label.projectSubmissions.viewProjectSubmissions.noStudentGroupForGrouping"/></span>
+	</p>
 </logic:present>
 
