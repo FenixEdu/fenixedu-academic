@@ -95,12 +95,20 @@ public class Student extends Student_Base {
 	}
 	return null;
     }
+    
+    public List<Registration> getActiveRegistrations() {
+	final List<Registration> result = new ArrayList<Registration>();
+	for (final Registration registration : getRegistrationsSet()) {
+	    if (registration.isActive()) {
+		result.add(registration);
+	    }
+	}
+	return result;
+    }
 
-    public boolean hasActiveRegistrationForDegreeType(final DegreeType degreeType,
-	    final ExecutionYear executionYear) {
+    public boolean hasActiveRegistrationForDegreeType(final DegreeType degreeType, final ExecutionYear executionYear) {
 	for (final Registration registration : getRegistrations()) {
-	    if (registration.hasAnyEnrolmentsIn(executionYear)
-		    && registration.getDegreeType() == degreeType) {
+	    if (registration.hasAnyEnrolmentsIn(executionYear) && registration.getDegreeType() == degreeType) {
 		return true;
 	    }
 	}
