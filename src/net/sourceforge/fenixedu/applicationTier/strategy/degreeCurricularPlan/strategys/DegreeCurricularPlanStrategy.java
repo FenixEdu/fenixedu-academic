@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
-import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.EvaluationType;
 import net.sourceforge.fenixedu.util.MarkType;
@@ -169,6 +168,7 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 		|| (this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MB03/05"))
 		|| (this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MIOES02/04"))
 		|| (this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MT02/04"))
+		|| (this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MT05/07"))
 		|| (this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MT03/05"))) {
 	    Double simpleAverage = this.calculateStudentRegularAverage(studentCurricularPlan);
 	    Double weightedAverage = this.calculateStudentWeightedAverage(studentCurricularPlan);
@@ -202,6 +202,7 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 		|| (this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MEIC03/05"))
 		|| (this.getDegreeCurricularPlan().getName().equalsIgnoreCase("ML03/05"))
 		|| (this.getDegreeCurricularPlan().getName().equalsIgnoreCase("ML02/04"))
+		|| (this.getDegreeCurricularPlan().getName().equalsIgnoreCase("ML05/07"))
 		|| (this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MEE04/06"))
 		|| (this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MEE05/07"))) {
 
