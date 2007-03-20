@@ -39,6 +39,11 @@
 			
 			<!-- Present publication fields -->
 			<p class="mtop1 mbottom0"><b><bean:message bundle="RESEARCHER_RESOURCES"key="<%="researcher.ResultPublication.type." + publicationBean.getPublicationTypeString() %>"/></b></p>
+
+			<logic:equal name="publicationBean" property="class.simpleName" value="ArticleBean">		
+				<p class="mtop1 mbottom05 color888"><bean:message bundle="RESEARCHER_RESOURCES" key="label.create.journalArticle.instructions"/></p>
+			</logic:equal>
+			
 			<fr:edit id="publicationBean" name="publicationBean" schema="<%= publicationBean.getActiveSchema() %>" nested="true">
 		 	    <fr:layout name="tabular">
 		    	    <fr:property name="classes" value="tstyle5 thright thlight thtop"/>
