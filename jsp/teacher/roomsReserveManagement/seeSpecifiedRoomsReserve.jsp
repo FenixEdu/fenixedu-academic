@@ -39,7 +39,7 @@
 				</li>
 			</logic:equal>
 		</ul>
-			
+		
 		<table class="tstyle1 thlight thright">			
 			<tr>
 				<th><bean:message key="label.rooms.reserve.order" bundle="APPLICATION_RESOURCES"/>:</th>
@@ -47,7 +47,7 @@
 			</tr>	
 			<tr>
 				<th><bean:message key="label.rooms.reserve.state" bundle="APPLICATION_RESOURCES"/>:</th>
-				<td><bean:message name="currentStateName" bundle="APPLICATION_RESOURCES"/></td>
+				<td><span class="highlight1"><bean:message name="currentStateName" bundle="APPLICATION_RESOURCES"/></span></td>
 			</tr>
 			<tr>
 				<th><bean:message key="label.rooms.reserve.periods" bundle="APPLICATION_RESOURCES"/>:</th>	
@@ -99,6 +99,7 @@
 			</div>
 		</logic:equal>
 
+		
 		<p class="mtop15 mbottom05"><bean:message key="label.rooms.reserve.new.comment" bundle="APPLICATION_RESOURCES"/>:</p>
 		<fr:form action="/roomsReserveManagement.do">
 			<html:hidden property="method" value="createNewComment"/>
@@ -111,13 +112,14 @@
 					</span>
 				</p>
 			</fr:hasMessages>
+			
 			<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserve&punctualReserveID=<bean:write name="punctualRequest" property="idInternal"/></bean:define>
 			<fr:edit id="roomsReserveNewComment" name="roomsReserveBean" slot="description" 
 				validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator"
 				type="net.sourceforge.fenixedu.dataTransferObject.teacher.RoomsReserveBean">
 				<fr:edit name="roomsReserveBean" id="roomsReserveBeanWithNewComment" nested="true" visible="false"/>
 				<fr:layout name="area">
-					<fr:property name="rows" value="8" />
+					<fr:property name="rows" value="6" />
 					<fr:property name="columns" value="55"/>										
 				</fr:layout>
 				<fr:destination name="input" path="<%= seeReserveURL %>"/>

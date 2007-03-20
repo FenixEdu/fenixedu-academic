@@ -24,7 +24,7 @@
 		<fr:edit id="roomsReserveWithDescriptions" name="roomsReserveBean" schema="CreateRoomsPunctualOccupationRequest"
 			action="/roomsReserveManagement.do?method=createRoomsReserve" >
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle5 vamiddle thlight" />
+				<fr:property name="classes" value="tstyle5 thlight thright" />
 				<fr:property name="columnClasses" value=",,tdclear tderror1" />
 			</fr:layout>		
 			<fr:destination name="cancel" path="/roomsReserveManagement.do?method=viewReserves"/>						
@@ -37,7 +37,7 @@
 		<fr:edit id="roomsReserveEdit" name="roomsReserveRequest" property="firstComment" schema="EditRoomsPunctualOccupationRequestFirstComment"
 			action="<%= seeReserveURL %>" >
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle5 vamiddle thlight" />
+				<fr:property name="classes" value="tstyle5 thlight thright" />
 				<fr:property name="columnClasses" value=",,tdclear tderror1" />
 			</fr:layout>		
 			<fr:destination name="cancel" path="<%= seeReserveURL %>"/>						
