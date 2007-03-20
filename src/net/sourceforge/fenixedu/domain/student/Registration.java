@@ -142,10 +142,11 @@ public class Registration extends Registration_Base {
 	    StudentCandidacy studentCandidacy) {
 	this();
 	if (person.hasStudent()) {
-	    setStudent(person.getStudent());
+	    setStudent(person.getStudent());	    
 	} else {
-	    setStudent(new Student(person, registrationNumber));
-	}
+	    setStudent(new Student(person, registrationNumber));	    
+	}	
+	setNumber(registrationNumber);
 	setPayedTuition(true);
 	setStudentCandidacy(studentCandidacy);
 	setRegistrationYear(ExecutionYear.readCurrentExecutionYear());
