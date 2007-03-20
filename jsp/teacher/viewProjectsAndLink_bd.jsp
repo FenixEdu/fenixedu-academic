@@ -20,6 +20,7 @@ function check(e,v){
 }
 </script>
 
+
 <logic:present name="siteView" property="component">
 	<bean:define id="component" name="siteView" property="component" />
 
@@ -27,24 +28,29 @@ function check(e,v){
 	<logic:empty name="component" property="infoGroupPropertiesList">
 		<h2><bean:message key="title.ExecutionCourseProjects"/></h2>
 
-		<ul>
-			<li>
-				<a href="#" class="dblock" id="instructionsButton" onclick="javascript:check(document.getElementById('instructions'), document.getElementById('instructionsButton')); return false;"><bean:message key="label.instructions" /></a>
-			</li>
-		</ul>
-			
+		<table class="mtop15">
+			<tr>
+				<td><bean:message key="label.clarification"/>:</td>
+				<td>
+					<a href="#" class="dblock" id="instructionsButton" onclick="javascript:check(document.getElementById('instructions'), document.getElementById('instructionsButton')); return false;">
+						<bean:message key="label.instructions.link"/>
+					</a>
+				</td>
+			</tr>
+		</table>
+
 		<div id="instructions" class="dblock">
-			<div class="infoop2">
+			<div class="infoop2 mbottom1">
 				<bean:message key="label.teacher.viewProjects.instructions" />
 			</div>
 		</div>
-		
+
 		<script>
 			check(document.getElementById('instructions'), document.getElementById('instructionsButton'));
 			document.getElementById('instructionsButton').className="dblock";
 		</script>
-	
-		<div class="infoop2">
+
+		<div class="infoop2 mtop1">
 			<logic:present name="hasProposals">
 				<bean:message key="label.teacher.emptyProjectsAndLinkWithProposals.description" />
 			</logic:present>
@@ -71,25 +77,31 @@ function check(e,v){
  <logic:notEmpty name="component" property="infoGroupPropertiesList"> 
  
 	<h2><bean:message key="title.ExecutionCourseProjects"/></h2>
+
+	<table>
+		<tr>
+			<td><bean:message key="label.clarification"/>:</td>
+			<td>
+				<a href="#" class="dblock" id="instructionsButton" onclick="javascript:check(document.getElementById('instructions'), document.getElementById('instructionsButton')); return false;">
+					<bean:message key="label.instructions.link"/>
+				</a>
+			</td>
+		</tr>
+	</table>
+
 	
-	<ul>
-		<li>
-			<a href="#" class="dblock" id="instructionsButton" onclick="javascript:check(document.getElementById('instructions'), document.getElementById('instructionsButton')); return false;"><bean:message key="label.instructions" /></a>
-		</li>
-	</ul>
-		
 	<div id="instructions" class="dblock">
-		<div class="infoop2">
+		<div class="infoop2 mbottom1">
 			<bean:message key="label.teacher.viewProjects.instructions" />
 		</div>
 	</div>
-	
+
 	<script>
 		check(document.getElementById('instructions'), document.getElementById('instructionsButton'));
 		document.getElementById('instructionsButton').className="dblock";
 	</script>
 
-	<div class="infoop2">
+	<div class="infoop2 mtop1">
 		<p>
 		<logic:present name="hasProposals">
 			<logic:present name="waitingAnswer">
@@ -122,6 +134,7 @@ function check(e,v){
 				<html:link page="/viewNewProjectProposals.do?method=viewNewProjectProposals" paramId="objectCode" paramName="objectCode" ><bean:message key="link.executionCourseProposals.received"/></html:link>
 			</li>
 		</logic:present>
+		
 		<logic:present name="waitingAnswer">
 			<li>
 				<html:link page="/viewSentedProjectProposalsWaiting.do?method=viewSentedProjectProposalsWaiting" paramId="objectCode" paramName="objectCode" ><bean:message key="link.executionCourseProposals.sented"/></html:link>
