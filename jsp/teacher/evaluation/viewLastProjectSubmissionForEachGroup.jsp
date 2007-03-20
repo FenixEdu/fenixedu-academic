@@ -21,18 +21,21 @@
 
 
 <bean:define id="executionCourseID" name="executionCourseID" />
-<logic:empty name="project" property="projectSubmissions">
+<logic:empty name="projectSubmissions">
 	<p>
 		<span class="warning0"><!-- Error messages go here -->
 			<bean:message key="label.teacher.executionCourseManagement.evaluation.project.viewLastProjectSubmissionForEachGroup.noProjectSubmissions"/>
 		</span>
 	</p>
 </logic:empty>
-<logic:notEmpty name="project" property="projectSubmissions">
-		<bean:define id="projectID" value="<%= request.getParameter("projectID") %>"/>
-		<html:link page="<%="/projectSubmissionsManagement.do?method=downloadProjectsInZipFormat&amp;projectID=" + projectID %>">
-			<bean:message key="label.teacher.executionCourseManagement.evaluation.project.downloadProjectsInZipFormat"/> 
-		</html:link>
+<logic:notEmpty name="projectSubmissions">
+	<bean:define id="projectID" value="<%= request.getParameter("projectID") %>"/>
+	<html:link page="<%="/projectSubmissionsManagement.do?method=downloadProjectsInZipFormat&amp;projectID=" + projectID %>">
+		<bean:message key="label.teacher.executionCourseManagement.evaluation.project.downloadProjectsInZipFormat"/> 
+	</html:link>, 
+	<html:link page="<%= "/projectSubmissionsManagement.do?method=prepareSelectiveDownload&executionCourseID=" + executionCourseID + "&projectID=" + projectID %>">
+		<bean:message key="label.teacher.executionCourseManagement.evaluation.project.partsDownload"/>	
+	</html:link>
 	<fr:view name="projectSubmissions" schema="projectSubmission.view-full">
 		<fr:layout name="tabular">
 	        <fr:property name="classes" value="tstyle2"/>

@@ -694,7 +694,11 @@
 	<definition name="view-project-submissions-by-group" extends="df.teacher.evaluation-management">
 		<put name="body" value="/teacher/evaluation/viewProjectSubmissionsByGroup.jsp" />
 	</definition>
-		
+
+	<definition name="selective-download" extends="df.teacher.evaluation-management">
+		<put name="body" value="/teacher/evaluation/selectiveDownload.jsp" />
+	</definition>		
+
 	<!--  ==== Vigilants for evaluation ==== -->
 	<definition name="list-vigilants-for-evaluation" extends="df.teacher.evaluation-management">
 		<put name="body" value="/teacher/evaluation/vigilancies/viewVigilancies.jsp" />

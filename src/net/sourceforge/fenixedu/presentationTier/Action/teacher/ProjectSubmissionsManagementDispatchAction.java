@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.dataTransferObject.VariantBean;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Project;
 import net.sourceforge.fenixedu.domain.ProjectSubmission;
@@ -22,6 +23,8 @@ import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.Arch
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.DiskZipArchive;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.Fetcher;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.Resource;
+import net.sourceforge.fenixedu.renderers.components.state.IViewState;
+import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -86,6 +89,57 @@ public class ProjectSubmissionsManagementDispatchAction extends FenixDispatchAct
 	return null;
     }
 
+    public ActionForward prepareSelectiveDownload(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
+	    FenixFilterException, IOException, ServletException {
+
+	IViewState viewState = RenderUtils.getViewState("selectiveDownload");
+	Integer value = (viewState!=null) ? (Integer) viewState.getMetaObject().getObject() : null;
+	VariantBean bean = new VariantBean();
+	bean.setInteger(value);
+	final Project project = getProject(request);
+	if(bean.getInteger()!=null) {
+		final List<ProjectSubmission> projectSubmissions = new ArrayList<ProjectSubmission>(project
+			.getLastProjectSubmissionForEachStudentGroup());
+		Collections.sort(projectSubmissions, ProjectSubmission.COMPARATOR_BY_MOST_RECENT_SUBMISSION_DATE);
+		setRequestParameters(request, project, projectSubmissions, null);
+	}
+	else {
+	    setRequestParameters(request, project, null, null);
+	}
+	
+	request.setAttribute("bean",bean);	
+	return mapping.findForward("selectiveDownload");
+    }
+
+    public ActionForward selectiveDownload(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
+	    FenixFilterException, IOException, ServletException {
+	
+	final Project project = getProject(request);
+	final Integer startIndex = Integer.valueOf(request.getParameter("startIndex")); 
+	final Integer pageSize = Integer.valueOf(request.getParameter("size"));
+	final List<ProjectSubmission> projectSubmissions = new ArrayList<ProjectSubmission>(project
+		.getLastProjectSubmissionForEachStudentGroup());
+	Collections.sort(projectSubmissions, ProjectSubmission.COMPARATOR_BY_MOST_RECENT_SUBMISSION_DATE);
+	Integer actualSize = Math.min(projectSubmissions.size(), startIndex+pageSize);
+	
+	final List<ProjectSubmission> subList = projectSubmissions.subList(startIndex, actualSize);
+	
+	Archive archive = new DiskZipArchive(response, project.getName() + "-" + (startIndex + 1) + "-" + (startIndex+actualSize));
+	Fetcher fetcher = new Fetcher(archive, request, response);
+
+	for (ProjectSubmission submission : subList) {
+	    fetcher.queue(new Resource(submission.getProjectSubmissionFile().getFilename(), submission
+		    .getProjectSubmissionFile().getDownloadUrl()));
+	}
+
+	fetcher.process();
+	archive.finish();
+	
+	return null;
+    }
+    
     private void setRequestParameters(HttpServletRequest request, Project project,
 	    List<ProjectSubmission> projectSubmissions, List<ProjectSubmissionLog> projectSubmissionLogs) {
 
