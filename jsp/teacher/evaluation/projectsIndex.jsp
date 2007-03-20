@@ -21,7 +21,9 @@
 		<h:outputText value="</li></ul>" escape="false"/>
 		
 		<h:panelGroup rendered="#{empty projectManagementBackingBean.associatedProjects}" >
+			<h:outputText value="<p><em>" escape="false"/>
 			<h:outputText value="#{bundle['message.projects.not.scheduled']}" />
+			<h:outputText value="</em></p>" escape="false"/>
 		</h:panelGroup>
 		<h:panelGroup rendered="#{!empty projectManagementBackingBean.associatedProjects}">
 			<h:dataTable  value="#{projectManagementBackingBean.associatedProjects}" var="project">

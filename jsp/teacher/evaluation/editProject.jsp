@@ -22,7 +22,7 @@
 					<h:outputText value="#{bundle['label.net.sourceforge.fenixedu.domain.Project.name']}: " />
 				</h:panelGroup>	
 				<h:panelGroup>
-					<h:inputText alt="#{htmlAltBundle['inputText.name']}" id="name" required="true" maxlength="100" size="20" value="#{projectManagementBackingBean.name}" />			
+					<h:inputText alt="#{htmlAltBundle['inputText.name']}" id="name" required="true" maxlength="100" size="35" value="#{projectManagementBackingBean.name}" />			
 					<h:message for="name" styleClass="error"/>
 				</h:panelGroup>
 				<h:panelGroup>
