@@ -59,6 +59,20 @@
 			<html:link page="/creditsReport.do?method=prepare">
 		  		<bean:message key="link.credits.viewReport"/>
 		  	</html:link>
-		</li>				
-	</ul>
+		</li>		
+<%--		<br />
+		<li class="navheader">
+			Merge
+		</li>
+		<li>
+			<html:link page="/mergeScientificJournal.do?method=prepare">
+		  		ScientificJournal Merge
+		  	</html:link>
+		</li>		
+		<li>
+			<html:link page="/mergeEvents.do?method=prepare">
+		  		Event Merge
+		  	</html:link>
+		</li>		--%>
+	</ul> 
 </logic:present>

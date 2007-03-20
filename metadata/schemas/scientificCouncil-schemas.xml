@@ -75,3 +75,40 @@
     	<property name="destination" value="listThesis"/>
     </slot>
 </schema>
+
+<schema name="scientific.journal.merge.list" type="net.sourceforge.fenixedu.domain.research.activity.ScientificJournal" >
+	<slot name="name" />
+	<slot name="issn" key="label.scientific.journal.issn"/>
+</schema>
+
+<schema name="scientific.journal.merge.list.full" type="net.sourceforge.fenixedu.domain.research.activity.ScientificJournal" >
+	<slot name="name" />
+	<slot name="locationType" key="label.scientific.journal.locationType"/>
+	<slot name="issn" key="label.scientific.journal.issn"/>
+	<slot name="url" key="label.scientific.journal.url"/>
+</schema>
+
+
+<schema name="scientific.journal.new.properties" type="net.sourceforge.fenixedu.dataTransferObject.MergeResearchActivityPageContainerBean" >
+	<slot name="name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="50"/>
+	</slot>
+	<slot name="issn" key="label.scientific.journal.issn"/>
+	<slot name="url" key="label.scientific.journal.url"/>
+	<slot name="researchActivityLocationType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" key="label.scientific.journal.locationType"/>
+</schema>
+
+<schema name="page.goto" type="net.sourceforge.fenixedu.dataTransferObject.PageContainerBean" >
+	<slot name="pageJump" key="label.page.goto">
+		<property name="size" value="4"/>
+	</slot>
+</schema>
+
+<schema name="event.merge.list" type="net.sourceforge.fenixedu.domain.research.activity.Event" >
+	<slot name="name" />
+	<slot name="eventLocation" key="label.event.eventLocation"/>
+</schema>
+
+
+
+

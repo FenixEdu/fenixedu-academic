@@ -1,7 +1,9 @@
 package net.sourceforge.fenixedu.domain.research.activity;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.research.activity.Participation.ResearchActivityParticipationRole;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
@@ -59,5 +61,15 @@ public class Event extends Event_Base {
     @Override
     public List<ResearchActivityParticipationRole> getAllowedRoles(){
     	return ResearchActivityParticipationRole.getAllEventParticipationRoles();
+    }
+
+    public static List readAll() {
+	List<Event> result = new ArrayList<Event>();
+	for (ResearchActivity researchActivity : RootDomainObject.getInstance().getResearchActivitiesSet()) {
+	    if(researchActivity instanceof Event) {
+		result.add((Event) researchActivity);
+	    }
+	}
+	return result;
     }
 }

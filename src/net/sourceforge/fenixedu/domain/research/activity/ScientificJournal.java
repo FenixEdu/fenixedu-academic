@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.research.activity;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.research.activity.Participation.ResearchActivityParticipationRole;
 import net.sourceforge.fenixedu.domain.research.result.publication.Article;
 
@@ -47,6 +48,16 @@ public class ScientificJournal extends ScientificJournal_Base {
 	    articles.addAll(issue.getArticles());
 	}
 	return articles;
+    }
+    
+    public static List<ScientificJournal> readAll(){
+	List<ScientificJournal> result = new ArrayList<ScientificJournal>();
+	for (ResearchActivity researchActivity : RootDomainObject.getInstance().getResearchActivitiesSet()) {
+	    if(researchActivity instanceof ScientificJournal) {
+		result.add((ScientificJournal) researchActivity);
+	    }
+	}
+	return result;
     }
     
 }

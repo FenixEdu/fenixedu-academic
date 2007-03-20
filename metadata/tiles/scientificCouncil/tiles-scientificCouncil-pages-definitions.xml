@@ -126,4 +126,20 @@
     <definition name="thesis-review-thesis" extends="scientificCouncil.masterPage">
         	<put name="body" value="/scientificCouncil/thesis/reviewThesis.jsp"/>
     </definition>
+    
+    <!-- ============  =========== -->
+    <definition name="show-scientific-journal-merge-page" extends="scientificCouncil.masterPage">
+    	<put name="body" value="/scientificCouncil/researchActivity/showScientificJournalsToMerge.jsp"/>
+    </definition>
+        <definition name="show-scientific-journal-merge-list" extends="scientificCouncil.masterPage">
+    	<put name="body" value="/scientificCouncil/researchActivity/showScientificJournalsToMergeList.jsp"/>
+    </definition>
+    
+    <definition name="show-event-merge-page" extends="scientificCouncil.masterPage">
+    	<put name="body" value="/scientificCouncil/researchActivity/showEventsToMerge.jsp"/>
+    </definition>
+        <definition name="show-event-merge-list" extends="scientificCouncil.masterPage">
+    	<put name="body" value="/scientificCouncil/researchActivity/showEventsToMergeList.jsp"/>
+    </definition>
+    
 </tiles-definitions>

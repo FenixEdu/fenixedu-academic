@@ -754,4 +754,6 @@ Documentation:
      <!--@ Each LinkObject in the collection is presented like a HtmlLink. LinkObject has the necessary information for each link. -->
     <renderer type="java.util.List" layout="list-link" class="net.sourceforge.fenixedu.presentationTier.renderers.ListLinkRenderer" />
     
+    <renderer mode="input" layout="pages" type="net.sourceforge.fenixedu.dataTransferObject.PageContainerBean" class="net.sourceforge.fenixedu.presentationTier.renderers.PagesRenderer" />
+    
 </renderers-config>

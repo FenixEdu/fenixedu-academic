@@ -429,6 +429,24 @@
                 handler="net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler"/>  	                   
 	       <forward name="readCurricularCourse" path="/masterDegreeCreditsManagement.do?method=prepareEdit"/>      	      
 	    </action>
+	    
+		<action path="/mergeScientificJournal" 	    	
+   	        parameter="method"
+   	        scope="request"
+            type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.researchActivity.MergeScientificJournalDA">                                    
+            <forward name="show-research-activity-merge-page" path="show-scientific-journal-merge-page"/> 
+            <forward name="show-research-activity-merge-list" path="show-scientific-journal-merge-list"/> 
+        </action>             
+        
+		<action path="/mergeEvents" 	    	
+   	        parameter="method"
+   	        scope="request"
+            type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.researchActivity.MergeEventsDA">                                    
+            <forward name="show-research-activity-merge-page" path="show-event-merge-page"/> 
+            <forward name="show-research-activity-merge-list" path="show-event-merge-list"/> 
+        </action>             
+        
+  
 	    	    	    	    
 	</action-mappings>
 

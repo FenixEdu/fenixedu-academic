@@ -11705,4 +11705,13 @@
 			<chain name="ManagerAuthorization" />
 		</filterChains>
     </service> 
+	<service>
+        <name>MergeScientificJournals</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.researchActivity.MergeScientificJournals</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+		<filterChains>
+			<chain name="ScientificCouncilAuthorization" />
+		</filterChains>
+    </service> 
 </serviceDefinitions>
