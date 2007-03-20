@@ -11,7 +11,6 @@
 <bean:define id="executionCourseID" value="<%= request.getParameter("executionCourseID")%>"/>
 <bean:define id="projectID" value="<%= request.getParameter("projectID")%>"/>
 
-
 <ul>
 <li>
 <html:link page="<%= "/projectSubmissionsManagement.do?method=viewLastProjectSubmissionForEachGroup&executionCourseID=" + executionCourseID + "&projectID=" + projectID%>">
@@ -23,6 +22,15 @@
 <div class="infoop2">
 <bean:message key="label.teacher.executionCourseManagement.evaluation.project.partsDownloadExplanation"/>
 </div>
+
+<fr:hasMessages>
+<div class="error2">
+<fr:messages>
+<fr:message/>
+</fr:messages>
+</div>
+</fr:hasMessages>
+
 <table>
 <tr>
 <td>
@@ -30,7 +38,12 @@
 </td>
 <td>
 <fr:form action="<%= "/projectSubmissionsManagement.do?method=prepareSelectiveDownload&amp;executionCourseID=" + executionCourseID + "&amp;projectID=" + projectID %>">
-<fr:edit id="selectiveDownload" name="bean" slot="integer" type="java.lang.Integer" />
+<fr:edit id="selectiveDownload" name="bean" slot="integer" type="java.lang.Integer">
+	<fr:validator name="net.sourceforge.fenixedu.presentationTier.renderers.validators.NumberRangeValidator">
+		<fr:property name="lowerBound" value="1"/>
+		<fr:property name="required" value="true"/>
+	</fr:validator>
+</fr:edit>
 <html:submit><bean:message key="button.submit"/></html:submit>
 </fr:form>
 </td>

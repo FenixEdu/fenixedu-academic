@@ -79,7 +79,7 @@ public class NumberRangeValidator extends RequiredValidator {
 	@Override
 	public String getErrorMessage() {
 		if (!isNumber) {
-			return RenderUtils.getResourceString("renderers.validator.number");
+			return RenderUtils.getResourceString("renderers.validator.number.integer");
 		}
 
 		if (lowerBound != null && upperBound != null) {
