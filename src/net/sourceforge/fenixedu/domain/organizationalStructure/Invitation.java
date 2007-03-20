@@ -17,6 +17,8 @@ import org.joda.time.YearMonthDay;
 
 public class Invitation extends Invitation_Base {
 
+    private static final int MAX_USER_UID = 99999;
+    
     public static final Comparator<Invitation> COMPARATOR_BY_BEGIN_DATE = new ComparatorChain();
     static {
 	((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(new ReverseComparator(new BeanComparator("beginDate")));
@@ -31,7 +33,7 @@ public class Invitation extends Invitation_Base {
 	final UsernameCounter usernameCounter = RootDomainObject.getInstance().getUsernameCounter();
 	final int nextUserID = usernameCounter.getInvitationCounter().intValue();
 	usernameCounter.setInvitationCounter(Integer.valueOf(nextUserID + 1));
-	if (nextUserID > 9999) {
+	if (nextUserID > MAX_USER_UID) {
 	    throw new DomainException("error.invitation.uid.pool.exhausted");
 	}
 	return nextUserID;
