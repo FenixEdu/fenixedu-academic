@@ -110,8 +110,8 @@
 
 <div class="infoop">
 	<ul>
-		<li><strong><bean:message key="label.teacher.viewExecutionCourseProjects.atomicPolicy" />:</strong> <bean:message key="label.teacher.viewExecutionCourseProjects.atomicDescription" />.</li>
-		<li><strong><bean:message key="label.teacher.viewExecutionCourseProjects.individualPolicy" />:</strong> <bean:message key="label.teacher.viewExecutionCourseProjects.individualDescription" />.</li>
+		<li><strong><bean:message key="label.teacher.viewExecutionCourseProjects.atomicPolicy" bundle="APPLICATION_RESOURCES" />:</strong> <bean:message key="label.teacher.viewExecutionCourseProjects.atomicDescription" bundle="APPLICATION_RESOURCES" />.</li>
+		<li><strong><bean:message key="label.teacher.viewExecutionCourseProjects.individualPolicy" bundle="APPLICATION_RESOURCES" />:</strong> <bean:message key="label.teacher.viewExecutionCourseProjects.individualDescription" bundle="APPLICATION_RESOURCES" />.</li>
 	</ul>
 </div>
 
