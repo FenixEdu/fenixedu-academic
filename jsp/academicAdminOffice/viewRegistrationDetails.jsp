@@ -126,7 +126,7 @@
 		<fr:property name="visibleIf(dismissal)" value="enrolable"/>
 		<fr:property name="contextRelative(dismissal)" value="true"/>      	
 		<fr:property name="order(dismissal)" value="2"/>
---%>		
+--%>
 	</fr:layout>
 </fr:view>
 
@@ -178,6 +178,7 @@
 		<fr:view name="newAcademicServiceRequests" schema="AcademicServiceRequest.view">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4 thlight mtop0" />
+				<fr:property name="columnClasses" value="smalltxt nowrap,smalltxt nowrap,acenter,,acenter,nowrap,,nowrap" />
 				<fr:property name="linkFormat(reject)" value="/academicServiceRequestsManagement.do?method=prepareRejectAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}&amp;registrationID=${registration.idInternal}"/>
 				<fr:property name="key(reject)" value="reject"/>
  				<%--<fr:property name="visibleIf(reject)" value="availableForEmployeeToActUpon"/>--%>
@@ -207,6 +208,7 @@
 		<fr:view name="processingAcademicServiceRequests" schema="AcademicServiceRequest.view">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4 thlight mtop0" />
+				<fr:property name="columnClasses" value="smalltxt nowrap,smalltxt nowrap,acenter,,acenter,nowrap,,nowrap" />
 				<fr:property name="linkFormat(reject)" value="/academicServiceRequestsManagement.do?method=prepareRejectAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}&amp;registrationID=${registration.idInternal}"/>
 				<fr:property name="key(reject)" value="reject"/>
 				<%--<fr:property name="visibleIf(reject)" value="availableForEmployeeToActUpon"/>--%>				
@@ -236,6 +238,7 @@
 		<fr:view name="concludedAcademicServiceRequests" schema="AcademicServiceRequest.view">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4 thlight mtop0" />
+				<fr:property name="columnClasses" value="smalltxt nowrap,smalltxt nowrap,acenter,,acenter,tdhl1 nowrap,,nowrap" />
 				<fr:property name="linkFormat(deliver)" value="/academicServiceRequestsManagement.do?method=deliveredAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}"/>
 				<fr:property name="key(deliver)" value="deliver"/>
 				<%--<fr:property name="visibleIf(deliver)" value="availableForEmployeeToActUpon"/>--%>
