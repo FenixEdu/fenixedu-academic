@@ -122,7 +122,7 @@ public class Grouping extends Grouping_Base {
         return this.getAttends().size();
     }
 
-    public Attends getStudentAttend(Registration registration) {
+    public Attends getStudentAttend(final Registration registration) {
         for (final Attends attend : this.getAttends()) {
             if (attend.getRegistration() == registration) {
                 return attend;
