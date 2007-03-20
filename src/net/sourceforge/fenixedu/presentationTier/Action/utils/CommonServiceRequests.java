@@ -29,24 +29,25 @@ public class CommonServiceRequests {
      * @param degreeCurricularPlanOID
      * @return
      */
-    public static List getBranchesByDegreeCurricularPlan(IUserView userView,
-            Integer degreeCurricularPlanOID) throws FenixActionException, FenixFilterException {
-        Object[] argsBranches = { degreeCurricularPlanOID };
+    public static List getBranchesByDegreeCurricularPlan(IUserView userView, Integer degreeCurricularPlanOID) throws FenixActionException, FenixFilterException {        
+	
+	Object[] argsBranches = { degreeCurricularPlanOID };
         List branches = null;
         try {
-            branches = (List) ServiceUtils.executeService(userView,
-                    "ReadBranchesByDegreeCurricularPlanId", argsBranches);
+            branches = (List) ServiceUtils.executeService(userView, "ReadBranchesByDegreeCurricularPlanId", argsBranches);
         } catch (FenixServiceException fse) {
             throw new FenixActionException(fse);
         }
 
         List newBranches = new ArrayList();
-        Iterator iterator = branches.iterator();
-        while (iterator.hasNext()) {
-            InfoBranch infoBranch = (InfoBranch) iterator.next();
-            if (infoBranch != null && infoBranch.getBranchType() != null
-                    && !infoBranch.getBranchType().equals(BranchType.COMNBR))
-                newBranches.add(infoBranch);
+        if(branches != null) {
+            Iterator iterator = branches.iterator();
+            while (iterator.hasNext()) {
+                InfoBranch infoBranch = (InfoBranch) iterator.next();
+                if (infoBranch != null && infoBranch.getBranchType() != null
+                        && !infoBranch.getBranchType().equals(BranchType.COMNBR))
+                    newBranches.add(infoBranch);
+            }
         }
         return newBranches;
     }
