@@ -73,6 +73,18 @@ border: 1px solid #ddd;
 background: #fafafa;
 }
 
+/* separator */
+div.separator1 {
+padding-top: 0.5em;
+background: url(../images/ann_sep.gif) top left repeat-x;
+}
+
+.separator2 {
+background: #f4f4e4;
+border-bottom: 2px solid #eed;
+padding: 0.25em;
+}
+
 /* ----------------------
  ---- Lists ------------
 ----------------------- */
@@ -159,6 +171,12 @@ padding: 4px 1px;
 table.tdpright2 td {
 padding-right: 4em;
 }
+/*
+table.cellpadding3 tr th, table.cellpadding3 tr td {
+padding: 3px;
+}
+*/
+
 /* nostyle */
 .tstylenone th, .tstylenone td {
 border: none;
@@ -186,6 +204,10 @@ table td.cornerright { }
 /* error , warning */
 .tderror1 { color: #c00; }
 .tderror1 span { background-color: #ffeadd; }
+
+.nowrap { white-space: nowrap; }
+.breakword { word-wrap: break-word; }
+
 
 /* ------------------------- */
 /* Table classes definitions */
@@ -535,6 +557,9 @@ a.color888 { color: #888; }
 .color007b4d, a.color007b4d { color: #007b4d; }
 .color890 { color: #890; }
 
+/* anchor colors */
+.anchorcaaa a { color: #888; }
+
 /* background-colors */
 .highlight1 { background-color: #fff7bb; } /* amarelo */
 .highlight2 { background-color: #f5f5f5; } 
@@ -552,6 +577,9 @@ a.color888 { color: #888; }
 .multi-language-line { margin-bottom: 2em; }
 .multi-language-line select { margin-top: 0.5em; }
 
+
+/* renderers valid data container solution (instead of span) */
+#bodycontent div.dinline { margin: 0; padding: 0; }
 
 /* ----------------------
  ---- Navlateral -------
@@ -849,12 +877,98 @@ p.insert {
 padding-left: 2em;
 }
 
+
+/* evaluation calendar */
+table.style2u {
+margin-bottom: 1em;
+border: 2px solid #ccc;
+border-collapse: collapse;
+margin-top: 0.5em;
+}
+table.style2u th {
+padding: 0.2em 1em;
+border-bottom: 2px solid #ccc;
+background-color: #ddd;
+border-left: 1px solid #ccc;
+text-align: center;
+}
+table.style2u td.header {
+padding: 0.2em 0.5em;
+border: 1px solid #ddd;
+background-color: #eee;
+font-weight: bold;
+text-align: left;
+margin-top: 1em;
+}
+table.style2u td {
+padding: 0.2em 0.5em;
+background-color: #fafafa;
+border: none;
+border: 1px solid #ddd;
+text-align: center;
+}
+table.style2u td.courses {
+border-right: 1px solid #ddd;
+background-color: #ffe;
+padding: 0 1em;
+}
+table.style2u tr.space {
+	padding: 1em;
+}
+table.style2u tr.space td {
+padding: 0.5em;
+background: none;
+border: none;
+}
+table.executionCoursesWithoutWrittenEvaluations {
+margin-bottom: 1em;
+border: 2px solid #ccc;
+border-collapse: collapse;
+margin-top: 0.5em;
+}
+table.executionCoursesWithoutWrittenEvaluations td {
+padding: 0.2em 0.5em;
+background-color: #fafafa;
+border: none;
+border: 1px solid #ddd;
+text-align: left;
+}
+
+table.asdasd tr td a { font-weight: bold; padding: 0.25em; margin: 0.25em; }
+
+/* list teachers */
+table.ts01 {
+border-collapse: collapse;
+margin: 1em 0;
+}
+table.ts01 th {
+border: 1px solid #ccc;
+background-color: #eee;
+padding: 0.5em;
+text-align: center;
+}
+table.ts01 td {
+border: 1px solid #ccc;
+background-color: #fff;
+padding: 0.5em;
+text-align: center;
+}
+table.ts01 .highlight01 {
+background-color: #ffc;
+}
+table.ts01 .aleft {
+text-align: left;
+}
+table.ts01 .aright {
+text-align: right;
+}
+.asterisk01 {
+color: #d42;
+}
+
 /* ----------------------
  ---- To organize ------
 ----------------------- */
-
-
-
 
 table.nospace label { width: auto; }
 
@@ -937,7 +1051,6 @@ border:1px solid;
 }
 
 
-
 td.noborder {
 border: none;
 }
@@ -1014,41 +1127,10 @@ margin-bottom: 0.5em;
 
 
 
-/* separator */
-div.separator1 {
-padding-top: 0.5em;
-background: url(../images/ann_sep.gif) top left repeat-x;
-}
-
-.separator2 {
-background: #f4f4e4;
-border-bottom: 2px solid #eed;
-padding: 0.25em;
-}
-
-
-.nowrap {
-white-space: nowrap;
-}
-
-.breakword {
-word-wrap: break-word;
-width: 100px;
-}
-
-
-
 tr td.tdhl1 { background-color: #fdfbdd; } /* amarelo */
 tr.tdhl1 td { background-color: #fdfbdd; } /* amarelo */
 
-table.asdasd tr td a { font-weight: bold; padding: 0.25em; margin: 0.25em; }
 
-/* section header */
-.sheader1 {
-background: #f5f5e5;
-padding: 0.25em;
-border-bottom: 1px solid #ddc;
-}
 
 
 img.showphoto {
@@ -1064,99 +1146,12 @@ background: #fff;
 .aarchives span { font-weight: bold; padding-right: 0.5em; }
 
 
-.anchorcaaa a {
-color: #888;
-}
-
 .inobullet ul { list-style: none; padding-left: 0; }
 .inobullet ul li { list-style: none; }
 
 
-/* evaluation calendar */
-table.style2u {
-margin-bottom: 1em;
-border: 2px solid #ccc;
-border-collapse: collapse;
-margin-top: 0.5em;
-}
-table.style2u th {
-padding: 0.2em 1em;
-border-bottom: 2px solid #ccc;
-background-color: #ddd;
-border-left: 1px solid #ccc;
-text-align: center;
-}
-table.style2u td.header {
-padding: 0.2em 0.5em;
-border: 1px solid #ddd;
-background-color: #eee;
-font-weight: bold;
-text-align: left;
-margin-top: 1em;
-}
-table.style2u td {
-padding: 0.2em 0.5em;
-background-color: #fafafa;
-border: none;
-border: 1px solid #ddd;
-text-align: center;
-}
-table.style2u td.courses {
-border-right: 1px solid #ddd;
-background-color: #ffe;
-padding: 0 1em;
-}
-table.style2u tr.space {
-	padding: 1em;
-}
-table.style2u tr.space td {
-padding: 0.5em;
-background: none;
-border: none;
-}
-table.executionCoursesWithoutWrittenEvaluations {
-margin-bottom: 1em;
-border: 2px solid #ccc;
-border-collapse: collapse;
-margin-top: 0.5em;
-}
-table.executionCoursesWithoutWrittenEvaluations td {
-padding: 0.2em 0.5em;
-background-color: #fafafa;
-border: none;
-border: 1px solid #ddd;
-text-align: left;
-}
 
 
-table.ts01 {
-border-collapse: collapse;
-margin: 1em 0;
-}
-table.ts01 th {
-border: 1px solid #ccc;
-background-color: #eee;
-padding: 0.5em;
-text-align: center;
-}
-table.ts01 td {
-border: 1px solid #ccc;
-background-color: #fff;
-padding: 0.5em;
-text-align: center;
-}
-table.ts01 .highlight01 {
-background-color: #ffc;
-}
-table.ts01 .aleft {
-text-align: left;
-}
-table.ts01 .aright {
-text-align: right;
-}
-.asterisk01 {
-color: #d42;
-}
 
 /* display curricular plan */
 .boldFontClass { font-weight: bold }
@@ -1322,7 +1317,3 @@ margin: 0;
 font-size: 80%;
 text-decoration: underline;
 }
-
-
-
-#bodycontent div.dinline { margin: 0; padding: 0; }
