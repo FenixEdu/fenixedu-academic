@@ -96,6 +96,7 @@
 <!ENTITY email SYSTEM "repository_email.xml">
 <!ENTITY thesis SYSTEM "repository_thesis.xml">
 <!ENTITY printers SYSTEM "repository_printers.xml">
+<!ENTITY protocols SYSTEM "repository_protocols.xml">
 ]>
 <descriptor-repository version="1.0" isolation-level="repeatable-read">
 
@@ -196,5 +197,6 @@
     &email;
     &thesis;
     &printers;    
+    &protocols;    
     
 </descriptor-repository>

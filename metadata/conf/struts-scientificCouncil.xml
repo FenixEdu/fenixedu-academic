@@ -132,6 +132,12 @@
             type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">            
 			<form-property name="executionPeriodId" type="java.lang.Integer"/>
         </form-bean> 
+        
+        <form-bean name="protocolsForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+	      	<form-property name="method" type="java.lang.String" />
+	      	<form-property name="addElement" type="java.lang.String" />   	     	
+	      	<form-property name="filesToDelete" type="java.lang.Integer[]"/>
+	    </form-bean>
     </form-beans>
 
     <!-- ========== Global Exception Definitions ============================== -->
@@ -444,9 +450,20 @@
             type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.researchActivity.MergeEventsDA">                                    
             <forward name="show-research-activity-merge-page" path="show-event-merge-page"/> 
             <forward name="show-research-activity-merge-list" path="show-event-merge-list"/> 
-        </action>             
-        
-  
+        </action> 	    
+
+	    <action path="/protocols"
+	      	scope="request"
+	      	parameter="method"
+	      	name="protocolsForm"
+	      	type="net.sourceforge.fenixedu.presentationTier.Action.protocols.ProtocolsDispatchAction">
+			<exception type="net.sourceforge.fenixedu.domain.exceptions.DomainException" 
+                key="" 
+                handler="net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler"/>  	                   
+	       <forward name="show-protocols" path="show-protocols"/>
+   	       <forward name="create-protocol" path="create-protocol"/>
+   	       <forward name="edit-protocol" path="edit-protocol"/>   	       
+	    </action>
 	    	    	    	    
 	</action-mappings>
 

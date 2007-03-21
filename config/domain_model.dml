@@ -181,10 +181,11 @@ valueType net.sourceforge.fenixedu.domain.FrequencyType															as Frequen
 valueType net.sourceforge.fenixedu.domain.RequestState															as RequestState;
 valueType net.sourceforge.fenixedu.domain.assiduousness.util.ScheduleClockingType								as ScheduleClockingType;
 valueType net.sourceforge.fenixedu.domain.util.EmailAddressList								                    as EmailAddressList;
-valueType net.sourceforge.fenixedu.domain.thesis.ThesisState													as ThesisState;
-valueType net.sourceforge.fenixedu.domain.CompetenceCourseType								                    as CompetenceCourseType;
+valueType net.sourceforge.fenixedu.domain.thesis.ThesisState								                    as ThesisState;
+valueType net.sourceforge.fenixedu.domain.CompetenceCourseType													as CompetenceCourseType;
 valueType net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType							            as ThesisParticipationType;
-valueType net.sourceforge.fenixedu.domain.vigilancy.AttendingStatus												as AttendingStatus;
+valueType net.sourceforge.fenixedu.domain.vigilancy.AttendingStatus												as AttendingStatus;						                    
+valueType net.sourceforge.fenixedu.domain.protocols.util.ProtocolAction											as ProtocolAction;
 
 /*
 *
@@ -2140,6 +2141,10 @@ class net.sourceforge.fenixedu.domain.File extends net.sourceforge.fenixedu.doma
 		Integer keyParkingDocument;
 		Integer keyNewParkingDocument;
 	}
+	
+	class net.sourceforge.fenixedu.domain.protocols.ProtocolFile extends net.sourceforge.fenixedu.domain.File {
+		Integer keyProtocol;
+	}
 
 	class net.sourceforge.fenixedu.domain.thesis.ThesisFile extends net.sourceforge.fenixedu.domain.File {
 		Integer keyDissertationThesis;
@@ -2652,6 +2657,21 @@ class net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess extends n
     Boolean costCenter;
 }
 
+class net.sourceforge.fenixedu.domain.protocols.Protocol extends net.sourceforge.fenixedu.domain.DomainObject {
+	String protocolNumber;
+	YearMonthDay signedDate;
+	Boolean renewable;
+	Boolean active;
+	String scientificAreas;
+	String observations;
+	ProtocolAction protocolAction;
+}
+
+class net.sourceforge.fenixedu.domain.protocols.ProtocolHistory extends net.sourceforge.fenixedu.domain.DomainObject {
+	YearMonthDay beginDate;
+	YearMonthDay endDate;
+	Integer keyProtocol;
+}
 
 class net.sourceforge.fenixedu.domain.Qualification extends net.sourceforge.fenixedu.domain.DomainObject {
 	DateTime lastModificationDateDateTime;
@@ -9277,11 +9297,74 @@ relation ParkingFileNewParkingDocument {
 	net.sourceforge.fenixedu.domain.parking.NewParkingDocument playsRole newParkingDocument;
 }
 
+relation ProtocolResponsible {
+	net.sourceforge.fenixedu.domain.Person playsRole responsibles{
+		multiplicity *;
+    }
+	net.sourceforge.fenixedu.domain.protocols.Protocol playsRole protocols{
+		multiplicity *;
+    }
+}
+
+relation ProtocolResponsiblePartner {
+	net.sourceforge.fenixedu.domain.Person playsRole partnerResponsibles{
+		multiplicity *;
+    }
+	net.sourceforge.fenixedu.domain.protocols.Protocol playsRole partnerProtocols{
+		multiplicity *;
+    }
+}
+
+relation ProtocolPartner {
+	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole partners{
+		multiplicity *;
+    }
+	net.sourceforge.fenixedu.domain.protocols.Protocol playsRole partnerProtocols{
+		multiplicity *;
+    }
+}
+
+relation ProtocolUnit {
+	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole units{
+		multiplicity *;
+    }
+	net.sourceforge.fenixedu.domain.protocols.Protocol playsRole protocols{
+		multiplicity *;
+    }
+}
+
+relation ProtocolHistoryProtocol {
+	net.sourceforge.fenixedu.domain.protocols.Protocol playsRole protocol;
+	net.sourceforge.fenixedu.domain.protocols.ProtocolHistory playsRole protocolHistories{
+		multiplicity *;
+    }		
+}
+
+relation ProtocolFileProtocol {
+	net.sourceforge.fenixedu.domain.protocols.Protocol playsRole protocol;
+	net.sourceforge.fenixedu.domain.protocols.ProtocolFile playsRole protocolFiles{
+		multiplicity*;
+	}	
+}
+
 /*
  * Relations definitions of relations to RootDomainObject
  * 
  */
 
+relation RootDomainObjectProtocol {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.protocols.Protocol playsRole protocols {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectProtocolHistory {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.protocols.ProtocolHistory playsRole protocolHistories {
+		multiplicity *;
+	}
+}
 
 relation RootDomainObjectParkingGroup {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;

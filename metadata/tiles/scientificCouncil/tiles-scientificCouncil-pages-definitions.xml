@@ -114,8 +114,8 @@
     </definition> 
     <definition name="show-schedules-resume-print" page="/layout/fenixPrint.jsp">
         <put name="body" value="/credits/schedulesPrint/schedules.jsp"/>
-    </definition>     
-    
+    </definition>
+
     <!-- ============ Thesis =========== -->
     <definition name="thesis-list" extends="scientificCouncil.masterPage">
         <put name="body" value="/scientificCouncil/thesis/listThesis.jsp"/>
@@ -141,5 +141,15 @@
         <definition name="show-event-merge-list" extends="scientificCouncil.masterPage">
     	<put name="body" value="/scientificCouncil/researchActivity/showEventsToMergeList.jsp"/>
     </definition>
-    
+
+    <!-- Protocols -->          
+    <definition name="show-protocols" extends="scientificCouncil.masterPage">
+        <put name="body" value="/scientificCouncil/protocols/showProtocols.jsp"/>
+    </definition>
+    <definition name="create-protocol" extends="scientificCouncil.masterPage">
+        <put name="body" value="/scientificCouncil/protocols/createProtocol.jsp"/>
+    </definition>
+    <definition name="edit-protocol" extends="scientificCouncil.masterPage">
+        <put name="body" value="/scientificCouncil/protocols/editProtocol.jsp"/>
+    </definition>    
 </tiles-definitions>

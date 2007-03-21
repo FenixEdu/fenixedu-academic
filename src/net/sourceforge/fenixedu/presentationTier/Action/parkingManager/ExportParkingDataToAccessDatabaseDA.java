@@ -205,7 +205,18 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
             return "9";
         } else if (parkingGroup.getGroupName().equalsIgnoreCase("Limitados")) {
             return "10";
+        } else if (parkingGroup.getGroupName().equalsIgnoreCase("Limitado1")) {
+            return "11";
+        } else if (parkingGroup.getGroupName().equalsIgnoreCase("Limitado2")) {
+            return "12";
+        } else if (parkingGroup.getGroupName().equalsIgnoreCase("Limitado3")) {
+            return "13";
+        } else if (parkingGroup.getGroupName().equalsIgnoreCase("Limitado4")) {
+            return "14";
+        } else if (parkingGroup.getGroupName().equalsIgnoreCase("Limitado5")) {
+            return "15";
         }
+
         throw new FenixServiceException();
     }
 

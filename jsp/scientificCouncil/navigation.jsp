@@ -59,7 +59,7 @@
 			<html:link page="/creditsReport.do?method=prepare">
 		  		<bean:message key="link.credits.viewReport"/>
 		  	</html:link>
-		</li>		
+		</li>	
 <%--		<br />
 		<li class="navheader">
 			Merge
@@ -73,6 +73,15 @@
 			<html:link page="/mergeEvents.do?method=prepare">
 		  		Event Merge
 		  	</html:link>
+		</li>		--%>		
+<%--		<br/>
+		<li class="navheader">
+			<bean:message key="label.protocols.navigation.header"/>
+		</li>
+		<li>
+			<html:link page="/protocols.do?method=showProtocols">
+		  		<bean:message key="link.protocols.view"/>
+		  	</html:link>
 		</li>		--%>
-	</ul> 
+	</ul>
 </logic:present>

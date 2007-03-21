@@ -153,7 +153,9 @@ public class Unit extends Unit_Base {
 		&& !hasAnyProjectParticipations() 
 		&& !hasAnyResearchActivities() 
 		&& !hasAnyBoards()
-		&& (!hasSite() || getSite().canBeDeleted());
+		&& (!hasSite() || getSite().canBeDeleted())
+                && !hasAnyProtocols()
+                && !hasAnyPartnerProtocols();
     }
 
     public boolean isInternal() {

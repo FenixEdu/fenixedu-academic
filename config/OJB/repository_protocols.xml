@@ -1,0 +1,5 @@
+<class-descriptor class="net.sourceforge.fenixedu.domain.protocols.Protocol" table="PROTOCOL">
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.protocols.ProtocolHistory" table="PROTOCOL_HISTORY">
+</class-descriptor>

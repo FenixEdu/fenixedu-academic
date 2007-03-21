@@ -1,0 +1,119 @@
+<schema name="show.protocol.toList"	type="net.sourceforge.fenixedu.domain.protocols.Protocol">
+	<slot name="protocolNumber" key="label.protocol.number"/>
+	<slot name="signedDate" key="label.protocol.signedDate"/>
+	<slot name="protocolAction.text" key="label.protocol.scientificAreas"/>
+	<slot name="observations" key="label.protocol.observations"/>		
+</schema>
+
+<schema name="create.protocol" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolFactory">
+	<slot name="protocolNumber"	key="label.protocol.number"/>
+	<slot name="beginDate" key="label.protocol.beginDate">
+		<property name="size" value="10"/>
+		<property name="format" value="dd/MM/yyyy"/>
+	</slot>
+	<slot name="endDate" key="label.protocol.endDate">
+		<property name="size" value="10"/>
+		<property name="format" value="dd/MM/yyyy"/>
+	</slot>
+	<slot name="signedDate" key="label.protocol.signedDate">
+		<property name="size" value="10"/>
+		<property name="format" value="dd/MM/yyyy"/>
+	</slot>
+	<slot name="actionTypes" key="label.protocol.actionTypes" layout="option-select">
+		<property name="choiceType"	value="net.sourceforge.fenixedu.domain.protocols.util.ProtocolActionType" />
+		<property name="eachLayout" value="this-does-not-exist" />
+	</slot>
+	<slot name="otherActionTypes" key="label.protocol.otherActionTypes" layout="longText">
+		<property name="columns" value="40" />
+		<property name="rows" value="3" />
+	</slot>
+	<slot name="observations" key="label.protocol.observations" layout="longText">
+		<property name="columns" value="40" />
+		<property name="rows" value="3" />
+	</slot>	
+</schema>
+
+<schema name="edit.protocol" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolFactory">
+	<slot name="protocolNumber"	key="label.protocol.number"/>
+	<slot name="signedDate" key="label.protocol.signedDate">
+		<property name="size" value="10"/>
+		<property name="format" value="dd/MM/yyyy"/>
+	</slot>
+	<slot name="actionTypes" key="label.protocol.actionTypes" layout="option-select">
+		<property name="choiceType"	value="net.sourceforge.fenixedu.domain.protocols.util.ProtocolActionType" />
+		<property name="eachLayout" value="this-does-not-exist" />
+	</slot>
+	<slot name="otherActionTypes" key="label.protocol.otherActionTypes" layout="longText">
+		<property name="columns" value="40" />
+		<property name="rows" value="3" />
+	</slot>
+	<slot name="observations" key="label.protocol.observations" layout="longText">
+		<property name="columns" value="40" />
+		<property name="rows" value="3" />
+	</slot>	
+</schema>
+
+<schema name="show.files" type="net.sourceforge.fenixedu.domain.protocols.ProtocolFile">
+	<slot name="filename" key="label.filename"/>
+</schema>
+
+<schema name="search.istResponsible" type="net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean">
+ 	<slot name="person" layout="autoComplete">
+		<property name="size" value="80"/>
+		<property name="labelField" value="name"/>
+		<property name="format" value="${text}"/>
+		<property name="indicatorShown" value="true"/>		
+		<property name="serviceName" value="SearchInternalPersons"/>	
+		<property name="serviceArgs" value="slot=name"/>
+		<property name="minChars" value="3"/>
+		<property name="errorStyleClass" value="error0"/>
+	</slot>
+</schema>	
+
+<schema name="search.partnerResponsible" type="net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean">
+ 	<slot name="person" layout="autoComplete">
+		<property name="size" value="80"/>
+		<property name="labelField" value="name"/>
+		<property name="format" value="${text}"/>
+		<property name="indicatorShown" value="true"/>		
+		<property name="serviceName" value="SearchExternalPersons"/>
+		<property name="serviceArgs" value="slot=name"/>
+		<property name="minChars" value="3"/>
+		<property name="errorStyleClass" value="error0"/>
+	</slot>
+</schema>
+
+<schema name="search.unit" type="net.sourceforge.fenixedu.dataTransferObject.protocol.UnitSearchBean">
+ 	<slot name="unit" layout="autoComplete">
+		<property name="size" value="80"/>
+		<property name="rawSlotName" value="name"/>
+		<property name="labelField" value="name"/>
+		<property name="format" value="${unit.presentationName}"/>
+		<property name="indicatorShown" value="true"/>		
+		<property name="serviceName" value="SearchInternalUnits"/>	
+		<property name="serviceArgs" value="slot=name"/>		
+		<property name="minChars" value="3"/>
+		<property name="errorStyleClass" value="error0"/>
+	</slot>
+</schema>
+
+<schema name="search.partnerUnit" type="net.sourceforge.fenixedu.dataTransferObject.protocol.UnitSearchBean">
+ 	<slot name="unitName" layout="autoComplete">
+		<property name="size" value="80"/>
+		<property name="rawSlotName" value="name"/>		
+		<property name="labelField" value="name"/>
+		<property name="format" value="${unit.presentationNameWithParents}"/>
+		<property name="indicatorShown" value="true"/>		
+		<property name="serviceName" value="SearchExternalUnits"/>
+		<property name="serviceArgs" value="slot=name"/>	
+		<property name="minChars" value="3"/>
+		<property name="errorStyleClass" value="error0"/>
+	</slot>
+</schema>
+
+<schema name="edit.protocolFile" type="net.sourceforge.fenixedu.dataTransferObject.research.result.OpenFileBean">
+	<slot name="inputStream" key="label.file">
+		<property name="fileNameSlot" value="fileName" />
+		<property name="size" value="40"/>
+	</slot>
+</schema>

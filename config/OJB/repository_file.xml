@@ -28,3 +28,5 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.parking.ParkingFile" table="FILE"/>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.tests.PictureMaterialFile" table="FILE"/>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.protocols.ProtocolFile" table="FILE"/>

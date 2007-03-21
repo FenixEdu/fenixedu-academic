@@ -35,6 +35,7 @@
     <!ENTITY coordinator SYSTEM "coordinator-schemas.xml">
     <!ENTITY operator SYSTEM "operator-schemas.xml">
     <!ENTITY scientificCouncil SYSTEM "scientificCouncil-schemas.xml">
+    <!ENTITY protocol SYSTEM "protocol-schemas.xml">
 ]>
 
 <schemas>
@@ -664,4 +665,5 @@
     &coordinator;
     &operator;
     &scientificCouncil;
+    &protocol;        
 </schemas>
