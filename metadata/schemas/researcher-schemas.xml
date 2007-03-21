@@ -728,7 +728,7 @@
 		<property name="classes" value="nobullet liinline"/>
 		<property name="destination" value="change.unitType"/>
 	</slot>
-	<slot name="organization" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="organizationNameObject" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="40"/>
 		<property name="rawSlotName" value="organizationName"/>
 		<property name="labelField" value="unit.name"/>
@@ -749,7 +749,7 @@
 	<slot name="unitParticipationType" key="label.unit" layout="radio" read-only="true">
 		<property name="classes" value="nobullet liinline"/>
 	</slot>
-	<slot name="organization" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="organizationNameObject" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="40"/>
 		<property name="rawSlotName" value="organizationName"/>
 		<property name="labelField" value="unit.name"/>
@@ -865,25 +865,6 @@
 </schema>
 
 <!-- Schemas used for Result Unit Associations Management -->
-<schema name="resultUnitAssociation.create.external" bundle="RESEARCHER_RESOURCES"
-		type="net.sourceforge.fenixedu.dataTransferObject.research.result.ResultUnitAssociationCreationBean" >
-	<slot name="unitType" key="label.unit" layout="radio-postback">
-	<property name="classes" value="nobullet liinline"/>
-	</slot>	
-	<slot name="unit" layout="autoComplete" key="label.party.name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="size" value="50"/>
-		<property name="rawSlotName" value="unitName"/>
-		<property name="labelField" value="unit.name"/>
-		<property name="indicatorShown" value="true"/>		
-		<property name="serviceName" value="SearchExternalUnits"/>
-		<property name="serviceArgs" value="slot=name,size=20"/>
-		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
-		<property name="minChars" value="3"/>
-		<property name="format" value="${unit.name} (${unit.parentUnitsPresentationName})"/>
-	</slot>
-	<slot name="role" read-only="true"/>
-</schema>
-
 <schema name="resultUnitAssociation.create.internal" bundle="RESEARCHER_RESOURCES"
 		type="net.sourceforge.fenixedu.dataTransferObject.research.result.ResultUnitAssociationCreationBean" >
 	<slot name="unit" layout="autoComplete" key="label.party.name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">

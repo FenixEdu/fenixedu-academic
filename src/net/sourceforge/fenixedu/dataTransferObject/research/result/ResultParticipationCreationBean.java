@@ -5,6 +5,7 @@ import java.io.Serializable;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
 import net.sourceforge.fenixedu.domain.person.PersonName;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
@@ -12,8 +13,8 @@ import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.Resul
 public class ResultParticipationCreationBean implements Serializable {
 	private DomainReference<ResearchResult> result;
 
-	private DomainReference<Unit> organization;
-
+	private DomainReference<UnitName> organizationNameObject;
+	
 	private DomainReference<PersonName> participator;
 
 	private ResultParticipationRole role;
@@ -29,7 +30,7 @@ public class ResultParticipationCreationBean implements Serializable {
 	public ResultParticipationCreationBean(ResearchResult result) {
 		setResult(new DomainReference<ResearchResult>(result));
 		setRole(ResultParticipationRole.getDefaultRole());
-		setOrganization(null);
+		setOrganizationNameObject(null);
 		setOrganizationName(null);
 		setParticipator(null);
 		setParticipatorName(null);
@@ -46,11 +47,8 @@ public class ResultParticipationCreationBean implements Serializable {
 	}
 	
 	public Unit getOrganization() {
-		return (this.organization == null) ? null : this.organization.getObject();
-	}
-
-	public void setOrganization(Unit organization) {
-		this.organization = (organization != null) ? new DomainReference<Unit>(organization) : null;
+	    UnitName unitName = this.getOrganizationNameObject();
+	    return (unitName==null) ? null : unitName.getUnit();
 	}
 
 	public String getOrganizationName() {
@@ -141,7 +139,15 @@ public class ResultParticipationCreationBean implements Serializable {
 		this.setParticipator(null);
 		this.setParticipatorName(null);
 		this.setOrganizationName(null);
-		this.setOrganization(null);
+		this.setOrganizationNameObject(null);
+	}
+	
+	public UnitName getOrganizationNameObject() {
+	    return organizationNameObject.getObject();
+	}
+	
+	public void setOrganizationNameObject(UnitName name) {
+	    organizationNameObject = new DomainReference<UnitName>(name);
 	}
 
 	
