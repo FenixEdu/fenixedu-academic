@@ -108,7 +108,8 @@ public abstract class MergeResearchActivityDA extends FenixDispatchAction {
     public ActionForward back(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	MergeResearchActivityPageContainerBean researchActivityPageContainerBean = 
-	    (MergeResearchActivityPageContainerBean) getRenderedObject("scientificJournal");
+	    (MergeResearchActivityPageContainerBean) getRenderedObject("mergeListNotVisible");
+	RenderUtils.invalidateViewState();
 	return setObjects(mapping, form, request, response, researchActivityPageContainerBean);
     }
 
