@@ -47,12 +47,16 @@ public abstract class Vigilancy extends Vigilancy_Base {
 
     public VigilantGroup getAssociatedVigilantGroup() {
 	Set<VigilantGroup> groups = this.getWrittenEvaluation().getAssociatedVigilantGroups();
-	for (VigilantGroup group : groups) {
-	    if (this.getVigilant().hasVigilantGroup(group)) {
-		return group;
+	if (this.getVigilant() != null) {
+	    for (VigilantGroup group : groups) {
+		if (this.getVigilant().hasVigilantGroup(group)) {
+		    return group;
+		}
 	    }
+	    return this.getVigilant().getVigilantGroups().get(0);
+	} else {
+	    return new ArrayList<VigilantGroup>(groups).get(0);
 	}
-	return this.getVigilant().getVigilantGroups().get(0);
     }
 
     @Override
@@ -79,7 +83,7 @@ public abstract class Vigilancy extends Vigilancy_Base {
     public Boolean getAttendedToConvoke() {
 	return AttendingStatus.ATTENDED.equals(getStatus());
     }
-    
+
     public ExecutionYear getExecutionYear() {
 	return this.getVigilant().getExecutionYear();
     }
@@ -167,9 +171,9 @@ public abstract class Vigilancy extends Vigilancy_Base {
     public boolean isAttended() {
 	return AttendingStatus.ATTENDED.equals(getStatus());
     }
-    
+
     public boolean isNotAttended() {
-	return AttendingStatus.NOT_ATTENDED.equals(getStatus()); 
+	return AttendingStatus.NOT_ATTENDED.equals(getStatus());
     }
 
     public boolean isActive() {

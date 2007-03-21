@@ -28,24 +28,24 @@ public class OtherCourseVigilancy extends OtherCourseVigilancy_Base {
 	if (!isActive()) {
 	    return getAssociatedVigilantGroup().getPointsForDisconvoked();
 	}
-	if (this.getAttendedToConvoke())
-	    return getAssociatedVigilantGroup().getPointsForConvoked();
 	if (!hasPointsAttributed()) {
 	    // no vigilancy has been yet setted to attended so maybe the
 	    // coordinator did not yet filled the report. Let's just give
 	    // 0 points yet.
 	    return this.POINTS_WON_FOR_CONVOKE_YET_TO_HAPPEN;
 	}
-
+	if (this.getAttendedToConvoke())
+	    return getAssociatedVigilantGroup().getPointsForConvoked();
+	
 	return getAssociatedVigilantGroup().getPointsForMissing();
     }
 
     public OtherCourseVigilancy(WrittenEvaluation writtenEvaluation) {
 	this();
-	this.setWrittenEvaluation(writtenEvaluation);
-	this.setConfirmed(false);
-	this.setActive(true);
-	this.setAttendedToConvoke(false);
+	super.setWrittenEvaluation(writtenEvaluation);
+	super.setConfirmed(false);
+	super.setActive(true);
+	super.setAttendedToConvoke(false);
     }
 
     @Override
