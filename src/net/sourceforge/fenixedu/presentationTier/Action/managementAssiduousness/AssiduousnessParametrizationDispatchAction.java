@@ -152,7 +152,9 @@ public class AssiduousnessParametrizationDispatchAction extends FenixDispatchAct
     private List<WorkScheduleType> getScheduleList() {
 	List<WorkScheduleType> workScheduleList = new ArrayList<WorkScheduleType>();
 	for (WorkScheduleType workScheduleType : rootDomainObject.getWorkScheduleTypes()) {
-	    workScheduleList.add(workScheduleType);
+	    if (workScheduleType.isValidWorkScheduleType()) {
+		workScheduleList.add(workScheduleType);
+	    }
 	}
 	ComparatorChain comparatorChain = new ComparatorChain();
 	comparatorChain.addComparator(new BeanComparator("ojbConcreteClass"));
