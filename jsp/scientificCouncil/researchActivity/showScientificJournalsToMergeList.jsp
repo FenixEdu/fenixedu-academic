@@ -26,12 +26,14 @@
 	<html:hidden property="method" value="mergeResearchActivity"/>
 	<fr:edit schema="scientific.journal.new.properties" id="scientificJournal" name="mergeList" type="net.sourceforge.fenixedu.dataTransferObject.MergeResearchActivityPageContainerBean">
 		<fr:destination name="invalid" path="/mergeScientificJournal.do?method=invalid"/>
-		<fr:destination name="cancel" path="/mergeScientificJournal.do?method=back"/>
 		<fr:layout name="tabular">
 		</fr:layout>
 	</fr:edit>
 	<br />
 	<br />
 	<html:submit><bean:message key="submit"/></html:submit>
-	<html:cancel><bean:message key="return"/></html:cancel>
+</fr:form>
+<fr:form action="/mergeScientificJournal.do?method=back">
+	<fr:edit id="mergeListNotVisible" name="mergeList" visible="false"/>
+	<html:submit><bean:message key="return"/></html:submit>
 </fr:form>
