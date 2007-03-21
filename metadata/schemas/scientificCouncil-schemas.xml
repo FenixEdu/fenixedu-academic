@@ -93,7 +93,7 @@
 	<slot name="name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="50"/>
 	</slot>
-	<slot name="issn" key="label.scientific.journal.issn"/>
+	<slot name="issn" key="label.scientific.journal.issn" validator="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
 	<slot name="url" key="label.scientific.journal.url"/>
 	<slot name="researchActivityLocationType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" key="label.scientific.journal.locationType"/>
 </schema>
