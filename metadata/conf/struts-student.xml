@@ -497,9 +497,9 @@
               scope="request"
               name="enroledExecutionCoursesForm"
               validate="true">    
-        <forward name="insucess" path="/viewEnroledExecutionCourses.do"/>      
+        <forward name="insucess" path="/viewEnroledExecutionCourses.do?method=prepare"/>
         <forward name="sucess" path="view-ExecutionCourse-Projects"/>
-		<forward name="noprojects" path="/viewEnroledExecutionCourses.do"/>
+		<forward name="noprojects" path="/viewEnroledExecutionCourses.do?method=prepare"/>
       </action>
  	
  	
@@ -510,7 +510,7 @@
               validate="true">
         <forward name="sucess" path="view-Shifts-Groups"/>
         <forward name="viewExecutionCourseProjects" path="/viewExecutionCourseProjects.do"/>
-		<forward name="insucess" path="/viewEnroledExecutionCourses.do"/>
+		<forward name="insucess" path="/viewEnroledExecutionCourses.do?method=prepare"/>
       </action>
 
 	<action type="net.sourceforge.fenixedu.presentationTier.Action.student.ViewStudentsAndGroupsByShiftAction"
@@ -558,7 +558,7 @@
             parameter="method"
             name="enroledExecutionCoursesForm">
         <forward name="sucess" path="remove-Student-InGroup"/>
-        <forward name="insucess" path="/viewEnroledExecutionCourses.do"/>
+        <forward name="insucess" path="/viewEnroledExecutionCourses.do?method=prepare"/>
         <forward name="viewShiftsAndGroups" path="/viewShiftsAndGroups.do"/>
         <forward name="viewStudentGroupInformation" path="/viewStudentGroupInformation.do"/>
     </action>
@@ -570,7 +570,7 @@
         scope="request"
         validate="true">                  
         <forward name="sucess" path="group-student-enrolment"/>
-        <forward name="insucess" path="/viewEnroledExecutionCourses.do"/>
+        <forward name="insucess" path="/viewEnroledExecutionCourses.do?method=prepare"/>
         <forward name="viewStudentGroupInformation" path="/viewStudentGroupInformation.do"/>
         <forward name="viewShiftsAndGroups" path="/viewShiftsAndGroups.do"/>
       </action>
@@ -582,7 +582,7 @@
         scope="request"
         validate="true">
         <forward name="sucess" path="group-enrolment"/>
-        <forward name="insucess" path="/viewEnroledExecutionCourses.do"/>
+        <forward name="insucess" path="/viewEnroledExecutionCourses.do?method=prepare"/>
         <forward name="viewShiftsAndGroups" path="/viewShiftsAndGroups.do"/>
         <forward name="viewStudentGroupInformation" path="/viewStudentGroupInformation.do"/>
         <forward name="viewExecutionCourseProjects" path="/viewExecutionCourseProjects.do"/>   
@@ -595,7 +595,7 @@
             parameter="method"
             name="groupEnrolmentForm">
         <forward name="sucess" path="edit-studentGroup-shift"/>
-		<forward name="insucess" path="/viewEnroledExecutionCourses.do"/>
+		<forward name="insucess" path="/viewEnroledExecutionCourses.do?method=prepare"/>
         <forward name="viewShiftsAndGroups" path="/viewShiftsAndGroups.do"/>
         <forward name="viewStudentGroupInformation" path="/viewStudentGroupInformation.do"/>
         <forward name="viewExecutionCourseProjects" path="/viewExecutionCourseProjects.do"/>   
@@ -607,7 +607,7 @@
             parameter="method"
             name="groupEnrolmentForm">
         <forward name="sucess" path="enroll-studentGroup-shift"/>
-		<forward name="insucess" path="/viewEnroledExecutionCourses.do"/>
+		<forward name="insucess" path="/viewEnroledExecutionCourses.do?method=prepare"/>
         <forward name="viewShiftsAndGroups" path="/viewShiftsAndGroups.do"/>
         <forward name="viewStudentGroupInformation" path="/viewStudentGroupInformation.do"/>
         <forward name="viewExecutionCourseProjects" path="/viewExecutionCourseProjects.do"/>   
@@ -619,7 +619,7 @@
             parameter="method"
             name="groupEnrolmentForm">
        	<forward name="viewShiftsAndGroups" path="/viewShiftsAndGroups.do"/>
-		<forward name="insucess" path="/viewEnroledExecutionCourses.do"/>
+		<forward name="insucess" path="/viewEnroledExecutionCourses.do?method=prepare"/>
         <forward name="viewStudentGroupInformation" path="/viewStudentGroupInformation.do"/>
         <forward name="viewExecutionCourseProjects" path="/viewExecutionCourseProjects.do"/>   
     </action>
