@@ -14,10 +14,6 @@ public class MergeScientificJournalPageContainerBean extends MergeResearchActivi
     private String url;
 
     
-    public MergeScientificJournalPageContainerBean(Comparator<DomainObject> comparator) {
-	super(comparator);
-    }
-    
     public Integer getIssn() {
         return this.issn;
     }

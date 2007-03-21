@@ -16,9 +16,8 @@ public abstract class MergeResearchActivityPageContainerBean extends PageContain
     
     private PageContainerBean pageContainerBean;
     
-    public MergeResearchActivityPageContainerBean(Comparator<DomainObject> comparator) {
-	super(comparator);
-	pageContainerBean = new PageContainerBean(comparator);
+    public MergeResearchActivityPageContainerBean() {
+	pageContainerBean = new PageContainerBean();
     }
     
     public List<DomainObject> getSelectedObjects() {
@@ -46,9 +45,6 @@ public abstract class MergeResearchActivityPageContainerBean extends PageContain
     
     @Override
     public List<DomainObject> getObjects() {
-	if(getComparator() != null) {
-	    Collections.sort(getSelectedObjects(), getComparator());
-	}
         return getSelectedObjects();
     }
     

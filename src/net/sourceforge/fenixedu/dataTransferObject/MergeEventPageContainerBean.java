@@ -17,10 +17,6 @@ public class MergeEventPageContainerBean extends MergeResearchActivityPageContai
     private YearMonthDay startDate;
     private YearMonthDay endDate;
     
-    public MergeEventPageContainerBean(Comparator<DomainObject> comparator) {
-	super(comparator);
-    }
-
     public YearMonthDay getEndDate() {
         return endDate;
     }

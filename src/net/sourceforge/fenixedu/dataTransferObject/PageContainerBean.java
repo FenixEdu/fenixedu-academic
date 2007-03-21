@@ -16,22 +16,10 @@ public class PageContainerBean implements Serializable {
     private List<DomainReference<DomainObject>> pageObjects;
     private DomainReference<DomainObject> selected;
     private Integer numberOfPages;
-    private Comparator<DomainObject> comparator;
     
     private Integer page = 1;
     
-    public PageContainerBean() {
-	
-    }
-    
-    public PageContainerBean(Comparator<DomainObject> comparator) {
-	this.comparator = comparator;
-    }
-
     public List<DomainObject> getObjects() {
-	if(objects != null && comparator != null) {
-	    Collections.sort(objects, comparator);
-	}
         return objects;
     }
 
@@ -134,10 +122,6 @@ public class PageContainerBean implements Serializable {
 		return Collections.emptyList();
 	    }
 	} 
-    }
-    
-    protected Comparator<DomainObject> getComparator() {
-	return this.comparator;
     }
     
     public void setPageJump(Integer pageJump) {
