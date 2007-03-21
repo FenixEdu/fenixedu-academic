@@ -57,7 +57,7 @@
 		<logic:notEmpty name="employeeRequests">
 			<fr:view name="employeeRequests" schema="DocumentRequest.view-documentPurposeTypeInformation">
 				<fr:layout name="tabular-sortable">
-					<fr:property name="classes" value="tstyle4 tdcenter" />
+					<fr:property name="classes" value="tstyle4 tdcenter mtop05" />
 					<fr:property name="rowClasses" value="bgwhite," />
 					<fr:property name="groupLinks" value="true" />
 					<fr:property name="columnClasses" value="smalltxt,smalltxt,smalltxt  aleft nowrap,smalltxt,smalltxt,smalltxt nowrap,smalltxt nowrap," />

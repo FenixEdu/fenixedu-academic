@@ -6,6 +6,7 @@
 
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
 
+<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.pricesManagement.edit" /></h2>
 
 <logic:messagesPresent message="true">
@@ -30,7 +31,7 @@
 <fr:edit name="postingRule" 
 		 schema="<%=postingRuleClassName + ".edit"%>">
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle4 thright thlight mtop05" />
+		<fr:property name="classes" value="tstyle5 thmiddle thright thlight mtop05" />
 		<fr:property name="columnClasses" value=",,tdclear" />
 	</fr:layout>
 	<fr:destination name="cancel" path="/pricesManagement.do?method=viewPrices"/>

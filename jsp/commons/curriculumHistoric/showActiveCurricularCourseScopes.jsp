@@ -10,15 +10,16 @@
 	<bean:write name="degreeCurricularPlan" property="name"/>
 </h2>
 
-<span class="error"><!-- Error messages go here --><html:errors bundle="CURRICULUM_HISTORIC_RESOURCES"/></span>
+<p>
+	<span class="error0"><!-- Error messages go here --><html:errors bundle="CURRICULUM_HISTORIC_RESOURCES"/></span>
+</p>
 
-<br />
 
 <logic:present name="degreeModuleScopes">
 
 	<bean:define id="executionYear" name="executionYearID"/>
 
-	<table>
+	<table class="tstyle4 thleft">
 		<%
 			int semester = 0;
 		%>
@@ -29,16 +30,16 @@
 				    semester = semesterI.intValue();
 				    %>
 						<tr>
-							<th class="listClasses-header">
+							<th>
 								<bean:message key="label.curricularCourseScope.curricularYear" bundle="CURRICULUM_HISTORIC_RESOURCES"/>
 							</th>
-							<th class="listClasses-header">
+							<th>
 								<bean:message key="label.curricularCourseScope.curricularSemester" bundle="CURRICULUM_HISTORIC_RESOURCES"/>
 							</th>
-							<th class="listClasses-header">
+							<th>
 								<bean:message key="label.curricularCourse" bundle="CURRICULUM_HISTORIC_RESOURCES"/>
 							</th>
-							<th class="listClasses-header">
+							<th>
 								<bean:message key="label.curricularCourseScope.branch" bundle="CURRICULUM_HISTORIC_RESOURCES"/>
 							</th>
 						</tr>
@@ -46,20 +47,20 @@
 				}
 			%>
 			<tr>
-				<td class="listClasses">
+				<td class="acenter">
 					<bean:write name="degreeModuleScope" property="curricularYear"/>
 				</td>
-				<td class="listClasses">
+				<td class="acenter">
 					<bean:write name="degreeModuleScope" property="curricularSemester"/>
 				</td>
-				<td class="listClasses" style="text-align:left">
+				<td style="text-align:left">
 					<bean:define id="curricularCourseCode" name="degreeModuleScope" property="curricularCourse.idInternal"/>
 					<bean:define id="currentSemester" name="degreeModuleScope" property="curricularSemester"/>
 					<html:link page="<%="/showCurriculumHistoric.do?method=showCurriculumHistoric&amp;curricularCourseCode=" + curricularCourseCode +"&amp;semester=" + pageContext.findAttribute("currentSemester").toString() + "&amp;executionYearID=" + pageContext.findAttribute("executionYear").toString() %>">
 						<bean:write name="degreeModuleScope" property="curricularCourse.name"/>
 					</html:link>
 				</td>
-				<td class="listClasses">
+				<td>
 					<bean:write name="degreeModuleScope" property="branch"/>
 				</td>
 			</tr>

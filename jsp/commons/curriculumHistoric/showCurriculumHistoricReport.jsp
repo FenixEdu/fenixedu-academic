@@ -11,42 +11,43 @@
 	<bean:define id="executionYear" name="infoCurriculumHistoricReport" property="executionYear"/>
 	<bean:define id="semester" name="infoCurriculumHistoricReport" property="semester" type="java.lang.Integer"/>
 	
-	<em><bean:write name="executionYear" property="year" />* - <bean:message key="label.period" arg0="<%=semester.toString()%>" bundle="CURRICULUM_HISTORIC_RESOURCES"/></em>
 	<h2>
 		<bean:write name="infoCurriculumHistoricReport" property="curricularCourse.name"/>
 			&nbsp;- &nbsp;
 		<bean:write name="infoCurriculumHistoricReport" property="curricularCourse.degreeCurricularPlan.name"/>
 	</h2>
+
+	<p class="mtop15 mbottom1"><em class="highlight5"><bean:write name="executionYear" property="year" />* - <bean:message key="label.period" arg0="<%=semester.toString()%>" bundle="CURRICULUM_HISTORIC_RESOURCES"/></em></p>
 	
-	<table width="30%" border="0" cellspacing="1" class="mbottom2">
+	<table class="tstyle1 mtop05">
 		<tr>
-			<td><strong><bean:message key="message.teachingReport.IN" bundle="CURRICULUM_HISTORIC_RESOURCES"/></strong></td>
-			<td><bean:write name="infoCurriculumHistoricReport" property="enroled"/></td>
+			<td><bean:message key="message.teachingReport.IN" bundle="CURRICULUM_HISTORIC_RESOURCES"/></td>
+			<td class="aright"><bean:write name="infoCurriculumHistoricReport" property="enroled"/></td>
 		</tr>
 		<tr>
-			<td><strong><bean:message key="message.teachingReport.AV" bundle="CURRICULUM_HISTORIC_RESOURCES"/></strong></td>
-			<td><bean:write name="infoCurriculumHistoricReport" property="evaluated"/></td>
+			<td><bean:message key="message.teachingReport.AV" bundle="CURRICULUM_HISTORIC_RESOURCES"/></td>
+			<td  class="aright"><bean:write name="infoCurriculumHistoricReport" property="evaluated"/></td>
 		</tr>
 		<tr>
-			<td><strong><bean:message key="message.teachingReport.AP" bundle="CURRICULUM_HISTORIC_RESOURCES"/></strong></td>
-			<td><bean:write name="infoCurriculumHistoricReport" property="approved"/></td>
+			<td><bean:message key="message.teachingReport.AP" bundle="CURRICULUM_HISTORIC_RESOURCES"/></td>
+			<td  class="aright"><bean:write name="infoCurriculumHistoricReport" property="approved"/></td>
 		</tr>
 		<tr>
-			<td><strong><bean:message key="message.teachingReport.AP/IN" bundle="CURRICULUM_HISTORIC_RESOURCES"/></strong></td>
-			<td><bean:write name="infoCurriculumHistoricReport" property="ratioApprovedEnroled"/>%</td>
+			<td><bean:message key="message.teachingReport.AP/IN" bundle="CURRICULUM_HISTORIC_RESOURCES"/></td>
+			<td  class="aright"><bean:write name="infoCurriculumHistoricReport" property="ratioApprovedEnroled"/>%</td>
 		</tr>
 		<tr>
-			<td><strong><bean:message key="message.teachingReport.AP/AV" bundle="CURRICULUM_HISTORIC_RESOURCES"/></strong></td>
-			<td><bean:write name="infoCurriculumHistoricReport" property="ratioApprovedEvaluated"/>%</td>
+			<td><bean:message key="message.teachingReport.AP/AV" bundle="CURRICULUM_HISTORIC_RESOURCES"/></td>
+			<td class="aright"><bean:write name="infoCurriculumHistoricReport" property="ratioApprovedEvaluated"/>%</td>
 		</tr>
 	</table>
 
 	<logic:notEmpty name="infoCurriculumHistoricReport" property="enrolments">
-		<h3><bean:message key="label.students.enrolled.exam" bundle="CURRICULUM_HISTORIC_RESOURCES"/></h3>
+		<h3 class="mbottom05"><bean:message key="label.students.enrolled.exam" bundle="CURRICULUM_HISTORIC_RESOURCES"/></h3>
 
 		<fr:view name="infoCurriculumHistoricReport" property="enrolments" schema="info.enrolment.historic.report">
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle4 thbold tacenter" />
+				<fr:property name="classes" value="tstyle4 thbold tacenter mtop05" />
 			</fr:layout>
 		</fr:view>
 
