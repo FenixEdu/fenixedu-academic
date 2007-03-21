@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.domain.research.result.publication;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.activity.ArticleAssociation;
 import net.sourceforge.fenixedu.domain.research.activity.JournalIssue;
 import net.sourceforge.fenixedu.domain.research.activity.ResearchActivityLocationType;
@@ -131,16 +130,6 @@ public class Article extends Article_Base {
     }
 
     @Override
-    public void setVolume(String volume) {
-	throw new DomainException("error.researcher.Article.call", "setVolume");
-    }
-
-    @Override
-    public void setNumber(String number) {
-	throw new DomainException("error.researcher.Article.call", "setNumber");
-    }
-
-    @Override
     public void setFirstPage(Integer firstPage) {
 	throw new DomainException("error.researcher.Article.call", "setFirstPage");
     }
@@ -236,6 +225,14 @@ public class Article extends Article_Base {
     
     public ResearchActivityLocationType getScope() {
 	return getJournalIssue().getScientificJournal().getLocationType();
+    }
+    
+    public String getVolume() {
+	return this.getJournalIssue().getVolume();
+    }
+    
+    public String getNumber() {
+	return this.getJournalIssue().getNumber();
     }
 }
  

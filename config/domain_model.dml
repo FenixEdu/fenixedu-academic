@@ -3992,8 +3992,6 @@ class net.sourceforge.fenixedu.domain.research.result.ResearchResult extends net
 		}
 		class net.sourceforge.fenixedu.domain.research.result.publication.Article extends net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication {
 			String journal;
-			String volume;
-			String number;
 			Integer firstPage;
 			Integer lastPage;
 			Integer issn;
