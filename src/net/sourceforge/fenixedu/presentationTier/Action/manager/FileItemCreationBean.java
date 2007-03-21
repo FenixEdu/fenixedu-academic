@@ -74,7 +74,7 @@ public class FileItemCreationBean implements Serializable {
     }
 
     public void setFileName(String fileName) {
-        this.fileName = StringNormalizer.normalize(fileName);
+        this.fileName = fileName;
     }
 
     public Long getFileSize() {
