@@ -63,7 +63,7 @@ public class Event extends Event_Base {
     	return ResearchActivityParticipationRole.getAllEventParticipationRoles();
     }
 
-    public static List readAll() {
+    public static List<Event> readAll() {
 	List<Event> result = new ArrayList<Event>();
 	for (ResearchActivity researchActivity : RootDomainObject.getInstance().getResearchActivitiesSet()) {
 	    if(researchActivity instanceof Event) {
