@@ -46,6 +46,10 @@ public class ResultParticipationCreationBean implements Serializable {
 		return getUnitParticipationType().equals(ParticipationType.EXTERNAL);
 	}
 	
+	public void setOrganization(Unit unit) {
+	    setOrganizationNameObject((unit!=null) ? unit.getUnitName() : null);
+	}
+	
 	public Unit getOrganization() {
 	    UnitName unitName = this.getOrganizationNameObject();
 	    return (unitName==null) ? null : unitName.getUnit();
