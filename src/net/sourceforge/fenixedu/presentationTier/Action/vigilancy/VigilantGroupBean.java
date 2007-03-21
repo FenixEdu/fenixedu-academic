@@ -3,7 +3,9 @@ package net.sourceforge.fenixedu.presentationTier.Action.vigilancy;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.DomainReference;
@@ -294,7 +296,7 @@ public class VigilantGroupBean extends VigilantBean implements Serializable {
     
     public List<Vigilant> getVigilantsForGroupsInBean() {
     	List<VigilantGroup> groups = this.getVigilantGroups();
-    	List<Vigilant> vigilants = new ArrayList<Vigilant>();
+    	Set<Vigilant> vigilants = new HashSet<Vigilant>();
     	for(VigilantGroup group : groups) {
     		vigilants.addAll(group.getVigilants());
     	}
@@ -302,7 +304,8 @@ public class VigilantGroupBean extends VigilantBean implements Serializable {
     	chain.addComparator(Vigilant.POINTS_COMPARATOR);
     	chain.addComparator(Vigilant.CATEGORY_COMPARATOR);
     	chain.addComparator(Vigilant.USERNAME_COMPARATOR);
-    	Collections.sort(vigilants,chain);
-    	return vigilants;
+    	List<Vigilant> vigilantsList = new ArrayList<Vigilant>(vigilants);
+    	Collections.sort(vigilantsList,chain);
+    	return vigilantsList;
     }
 }
