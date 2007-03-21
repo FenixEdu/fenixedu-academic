@@ -11,8 +11,7 @@ public class OwnCourseVigilancy extends OwnCourseVigilancy_Base {
     public OwnCourseVigilancy(WrittenEvaluation writtenEvaluation) {
 	this();
 	this.setWrittenEvaluation(writtenEvaluation);
-	this.setActive(true);
-	this.setAttendedToConvoke(false);
+	super.initStatus();
     }
 
     @Override

@@ -44,8 +44,7 @@ public class OtherCourseVigilancy extends OtherCourseVigilancy_Base {
 	this();
 	super.setWrittenEvaluation(writtenEvaluation);
 	super.setConfirmed(false);
-	super.setActive(true);
-	super.setAttendedToConvoke(false);
+	super.initStatus();
     }
 
     @Override

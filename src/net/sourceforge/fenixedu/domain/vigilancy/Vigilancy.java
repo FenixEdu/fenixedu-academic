@@ -47,16 +47,12 @@ public abstract class Vigilancy extends Vigilancy_Base {
 
     public VigilantGroup getAssociatedVigilantGroup() {
 	Set<VigilantGroup> groups = this.getWrittenEvaluation().getAssociatedVigilantGroups();
-	if (this.getVigilant() != null) {
-	    for (VigilantGroup group : groups) {
-		if (this.getVigilant().hasVigilantGroup(group)) {
-		    return group;
-		}
+	for (VigilantGroup group : groups) {
+	    if (this.getVigilant().hasVigilantGroup(group)) {
+		return group;
 	    }
-	    return this.getVigilant().getVigilantGroups().get(0);
-	} else {
-	    return new ArrayList<VigilantGroup>(groups).get(0);
 	}
+	return null;
     }
 
     @Override
@@ -217,6 +213,11 @@ public abstract class Vigilancy extends Vigilancy_Base {
 
     public boolean isDismissed() {
 	return AttendingStatus.DISMISSED.equals(getStatus());
+    }
+
+    protected void initStatus() {
+	super.setActive(true);
+	super.setStatus(AttendingStatus.NOT_ATTENDED);
     }
 
     public abstract int getPoints();
