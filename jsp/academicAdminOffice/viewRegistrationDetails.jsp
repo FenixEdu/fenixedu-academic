@@ -40,11 +40,11 @@
 
 <%-- Registration Details --%>
 <logic:present name="registration" property="ingressionEnum">
-<h3 class="mbottom05"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
+<h3 class="mtop15 mbottom05"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <fr:view name="registration" schema="student.registrationDetail" >
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle4 thright thlight mtop0"/>
-		<fr:property name="rowClasses" value=",tdhl1,,,,"/>
+		<fr:property name="classes" value="tstyle2 thright thlight mtop0"/>
+		<fr:property name="rowClasses" value=",,tdhl1,,,"/>
 	</fr:layout>
 </fr:view>
 </logic:present>
@@ -52,7 +52,7 @@
 <h3 class="mbottom05"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <fr:view name="registration" schema="student.registrationsWithStartData" >
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle4 thright thlight mtop0"/>
+		<fr:property name="classes" value="tstyle2 thright thlight mtop0"/>
 		<fr:property name="rowClasses" value=",tdhl1,,,"/>
 	</fr:layout>
 </fr:view>
@@ -111,7 +111,7 @@
 
 <fr:view name="registration" property="studentCurricularPlans" schema="student.studentCurricularPlans" >
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle4 thright thlight thcenter mtop05"/>
+		<fr:property name="classes" value="tstyle2 thright thlight thcenter mtop05"/>
 		<fr:property name="groupLinks" value="false"/>
 		<fr:property name="linkFormat(enrol)" value="/studentEnrolments.do?method=prepare&amp;scpID=${idInternal}" />
 		<fr:property name="key(enrol)" value="link.student.enrolInCourses"/>
@@ -178,7 +178,7 @@
 		<fr:view name="newAcademicServiceRequests" schema="AcademicServiceRequest.view">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4 thlight mtop0" />
-				<fr:property name="columnClasses" value="smalltxt nowrap,smalltxt nowrap,acenter,,acenter,nowrap,,nowrap" />
+				<fr:property name="columnClasses" value="smalltxt nowrap,smalltxt nowrap,acenter,,acenter,nowrap,,nowrap,nowrap" />
 				<fr:property name="linkFormat(reject)" value="/academicServiceRequestsManagement.do?method=prepareRejectAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}&amp;registrationID=${registration.idInternal}"/>
 				<fr:property name="key(reject)" value="reject"/>
  				<%--<fr:property name="visibleIf(reject)" value="availableForEmployeeToActUpon"/>--%>
@@ -201,14 +201,14 @@
 </p>
 
 
-<p class="mtop2">
+<p class="mtop15">
 	<b><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="processing.requests"/></b>
 	<bean:define id="processingAcademicServiceRequests" name="registration" property="processingAcademicServiceRequests"/>
 	<logic:notEmpty name="processingAcademicServiceRequests">
 		<fr:view name="processingAcademicServiceRequests" schema="AcademicServiceRequest.view">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4 thlight mtop0" />
-				<fr:property name="columnClasses" value="smalltxt nowrap,smalltxt nowrap,acenter,,acenter,nowrap,,nowrap" />
+				<fr:property name="columnClasses" value="smalltxt nowrap,smalltxt nowrap,acenter,,acenter,nowrap,,nowrap,nowrap" />
 				<fr:property name="linkFormat(reject)" value="/academicServiceRequestsManagement.do?method=prepareRejectAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}&amp;registrationID=${registration.idInternal}"/>
 				<fr:property name="key(reject)" value="reject"/>
 				<%--<fr:property name="visibleIf(reject)" value="availableForEmployeeToActUpon"/>--%>				
@@ -231,14 +231,14 @@
 </p>
 
 
-<p class="mtop2">
+<p class="mtop15">
 	<b><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="concluded.requests"/></b>
 	<bean:define id="concludedAcademicServiceRequests" name="registration" property="concludedAcademicServiceRequests"/>
 	<logic:notEmpty name="concludedAcademicServiceRequests">
 		<fr:view name="concludedAcademicServiceRequests" schema="AcademicServiceRequest.view">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4 thlight mtop0" />
-				<fr:property name="columnClasses" value="smalltxt nowrap,smalltxt nowrap,acenter,,acenter,tdhl1 nowrap,,nowrap" />
+				<fr:property name="columnClasses" value="smalltxt nowrap,smalltxt nowrap,acenter,,acenter,tdhl1 nowrap,,nowrap,nowrap" />
 				<fr:property name="linkFormat(deliver)" value="/academicServiceRequestsManagement.do?method=deliveredAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}"/>
 				<fr:property name="key(deliver)" value="deliver"/>
 				<%--<fr:property name="visibleIf(deliver)" value="availableForEmployeeToActUpon"/>--%>

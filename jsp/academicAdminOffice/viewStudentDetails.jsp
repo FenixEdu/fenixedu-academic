@@ -21,7 +21,7 @@
 		<td>
 			<fr:view name="student" schema="student.show.personAndStudentInformation">
 				<fr:layout name="tabular">
-					<fr:property name="classes" value="tstyle4 thright thlight mtop0 mbottom0"/>
+					<fr:property name="classes" value="tstyle2 thright thlight mtop0 mbottom0"/>
 		      		<fr:property name="rowClasses" value="tdhl1,,,,"/>
 				</fr:layout>
 			</fr:view>
@@ -53,7 +53,7 @@
 <h3 class="mtop15 mbottom025"><bean:message key="label.studentRegistrations" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <fr:view name="student" property="registrations" schema="student.registrationsWithStartData" >
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle4 thlight mtop025 asdasd"/>
+		<fr:property name="classes" value="tstyle1 thlight mtop025 asdasd"/>
 		<fr:property name="columnClasses" value=",,tdhl1,,"/>
 		<fr:property name="linkFormat(view)" value="/student.do?method=visualizeRegistration&registrationID=${idInternal}" />
 		<fr:property name="key(view)" value="link.student.visualizeRegistration"/>

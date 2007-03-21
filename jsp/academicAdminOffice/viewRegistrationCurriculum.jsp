@@ -50,7 +50,8 @@
 <h3 class="mbottom025"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <fr:view name="registration" schema="student.registrationDetail" >
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle4 thright thlight mtop025"/>
+		<fr:property name="classes" value="tstyle2 thright thlight mtop025"/>
+		<fr:property name="rowClasses" value=",,tdhl1,,,"/>
 	</fr:layout>
 </fr:view>
 </logic:present>
@@ -60,7 +61,7 @@
 <h3 class="mbottom025"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <fr:view name="registration" schema="student.registrationsWithStartData" >
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle4 thright thlight mtop025"/>
+		<fr:property name="classes" value="tstyle5 thright thlight mtop025"/>
 	</fr:layout>
 </fr:view>
 </logic:notPresent>
@@ -71,11 +72,10 @@
 <p class="mtop15 mbottom025"><strong>Visualizar Currículo:</strong></p>
 <fr:edit id="bean" name="bean" schema="registration-select-execution-year" >
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle4 thright thlight mtop025"/>
+		<fr:property name="classes" value="tstyle5 thright thlight mtop025 thmiddle"/>
 		<fr:property name="columnClasses" value=",,tdclear"/>
 	</fr:layout>
 </fr:edit>
-
 
 <%
 	final StudentCurriculum studentCurriculum = new StudentCurriculum(registration);
@@ -117,8 +117,8 @@
 
 	<div class="infoop3 mtop2">
 		<logic:notEmpty name="executionYear">
-			<p class="mvert05"><bean:message key="rules.info" bundle="ACADEMIC_OFFICE_RESOURCES"/></p>
-			<p class="mvert05">Os cálculos acima baseam-se nas informações na tabela em baixo.</p>
+			<p class="mvert025"><bean:message key="rules.info" bundle="ACADEMIC_OFFICE_RESOURCES"/></p>
+			<p class="mvert025">Os cálculos acima baseam-se nas informações na tabela em baixo.</p>
 	
 			<p class="mbottom05"><strong>Cálculo da <bean:message key="degree.average" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
 			<p class="mvert05"><bean:message key="rule" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <bean:message key="average.rule" bundle="ACADEMIC_OFFICE_RESOURCES"/></p>
@@ -131,8 +131,8 @@
 		<logic:empty name="executionYear">
 			<bean:message key="following.info.refers.to" bundle="ACADEMIC_OFFICE_RESOURCES"/> <bean:message key="all.curriculum" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 			<logic:equal name="registration" property="concluded" value="false">
-				<p class="mvert05"><bean:message key="rules.info" bundle="ACADEMIC_OFFICE_RESOURCES"/></p>
-				<p class="mvert05">Os cálculos acima baseam-se nas informações na tabela em baixo.</p>
+				<p class="mvert025"><bean:message key="rules.info" bundle="ACADEMIC_OFFICE_RESOURCES"/></p>
+				<p class="mvert025">Os cálculos acima baseam-se nas informações na tabela em baixo.</p>
 		
 				<p class="mbottom05"><strong>Cálculo da <bean:message key="degree.average" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
 				<p class="mvert05"><bean:message key="rule" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <bean:message key="average.rule" bundle="ACADEMIC_OFFICE_RESOURCES"/></p>
