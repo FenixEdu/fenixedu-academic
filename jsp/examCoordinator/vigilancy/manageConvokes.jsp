@@ -98,7 +98,7 @@
 	<fr:layout>                                
 		<fr:property name="classes" value="tstyle1" />	
 		<fr:property name="rowClasses" value="vigilancyHeaderColumns" />
-		
+
 		<fr:property name="emptyMessageKey" value="label.vigilancy.noConvokes"/>
 		<fr:property name="emptyMessageBundle" value="VIGILANCY_RESOURCES"/>
 		<fr:property name="showIncompatibilities" value="<%= String.valueOf(bean.isShowIncompatibilities()) %>"/>
@@ -107,6 +107,7 @@
 		<fr:property name="showStartPoints" value="<%= String.valueOf(bean.isShowStartPoints())%>"/>
 		<fr:property name="showNotActiveConvokes" value="<%= String.valueOf(bean.isShowNotActiveConvokes()) %>"/>
 		<fr:property name="showPointsWeight" value="<%= String.valueOf(bean.isShowPointsWeight()) %>"/>
+		<fr:property name="showOwnVigilancies" value="<%= String.valueOf(bean.isShowOwnVigilancies()) %>"/>
 		
 		<logic:equal name="bean" property="showAllVigilancyInfo" value="true">
 			<fr:property name="convokeSchema" value="present.convokesForCoordinator"/>	

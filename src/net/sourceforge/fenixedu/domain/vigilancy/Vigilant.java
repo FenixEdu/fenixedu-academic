@@ -365,23 +365,38 @@ public class Vigilant extends Vigilant_Base {
 		return false;
 	}
 
-	public List<OtherCourseVigilancy> getOtherCourseVigilancies() {
-		List<OtherCourseVigilancy> convokes = new ArrayList<OtherCourseVigilancy>();
+	public List<Vigilancy> getOtherCourseVigilancies() {
+		List<Vigilancy> convokes = new ArrayList<Vigilancy>();
 		for(Vigilancy vigilancy : getVigilancies()) {
 			if(vigilancy.isOtherCourseVigilancy()) {
-				convokes.add((OtherCourseVigilancy) vigilancy);
+				convokes.add(vigilancy);
 			}
 		}
 		return convokes;
 	}
 
-	public List<Vigilancy> getActiveOtherCourseVigilancies() {
-		return getActiveVigilanciesInList(getVigilancies());
+	public List<Vigilancy> getOwnCourseVigilancies() {
+	    List<Vigilancy> convokes = new ArrayList<Vigilancy>();
+		for(Vigilancy vigilancy : getVigilancies()) {
+			if(vigilancy.isOwnCourseVigilancy()) {
+				convokes.add(vigilancy);
+			}
+		}
+		return convokes;
 	}
+	
+	public List<Vigilancy> getActiveOtherCourseVigilancies() {
+		return getActiveVigilanciesInList(getOtherCourseVigilancies());
+	}
+	
 	public List<Vigilancy> getActiveVigilancies() {
 		return getActiveVigilanciesInList(getVigilancies());
 	}
 
+	public List<Vigilancy> getActiveOwnCourseVigilancies() {
+	    return getActiveVigilanciesInList(getOwnCourseVigilancies());
+	}
+	
 	private List<Vigilancy> getActiveVigilanciesInList(List<Vigilancy> vigilancies) {
 		List<Vigilancy> activeVigilancies = new ArrayList<Vigilancy>();
 		for (Vigilancy vigilancy : vigilancies) {

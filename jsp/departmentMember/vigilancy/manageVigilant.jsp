@@ -246,6 +246,8 @@
 					value="<%= String.valueOf(bean.isShowNotActiveConvokes()) %>" />
 				<fr:property name="showPointsWeight"
 					value="<%= String.valueOf(bean.isShowPointsWeight()) %>" />
+				<fr:property name="showOwnVigilancies" 
+					value="<%= String.valueOf(bean.isShowOwnVigilancies()) %>"/>
 				<fr:property name="columnClasses"
 					value=",,width250px aleft,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,," />
 

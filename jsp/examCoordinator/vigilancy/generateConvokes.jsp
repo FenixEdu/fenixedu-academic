@@ -74,7 +74,7 @@
 </fr:view> 
 </logic:notEmpty>
 
-<fr:form id="addVigilantsForm" action="/vigilancy/convokeManagement.do?method=confirmConvokes">
+<fr:form id="addVigilantsForm" action="/vigilancy/convokeManagement.do?method=confirmConvokes#vigilantTable">
 
 <p class="mtop15">
 <html:submit><bean:message key="label.next" bundle="VIGILANCY_RESOURCES"/></html:submit>
@@ -89,6 +89,7 @@
 </fr:layout>
 </fr:edit>
 
+<a name="vigilantTable"/>
 <p class="mbottom05"><strong><bean:message key="label.vigilancy.vigilantsThatDoNotTeachCourse" bundle="VIGILANCY_RESOURCES"/></strong>:</p>
 <fr:edit id="selectVigilants" name="bean" schema="selectVigilants">
 <fr:layout>

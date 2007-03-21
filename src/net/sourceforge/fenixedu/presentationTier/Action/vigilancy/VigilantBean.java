@@ -33,6 +33,8 @@ public class VigilantBean implements Serializable {
     
     private boolean showPointsWeight = Boolean.FALSE;
     
+    private boolean showOwnVigilancies = Boolean.FALSE;
+    
     private final HashMap<String,String> schemas = new HashMap<String, String>();
     
     
@@ -252,6 +254,14 @@ public class VigilantBean implements Serializable {
 
 	public void setShowPointsWeight(boolean showPointsWeight) {
 		this.showPointsWeight = showPointsWeight;
+	}
+
+	public boolean isShowOwnVigilancies() {
+	    return showOwnVigilancies;
+	}
+
+	public void setShowOwnVigilancies(boolean showOwnVigilancies) {
+	    this.showOwnVigilancies = showOwnVigilancies;
 	}
 
 }
