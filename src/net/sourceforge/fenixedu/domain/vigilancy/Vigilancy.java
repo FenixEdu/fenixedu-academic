@@ -52,7 +52,7 @@ public abstract class Vigilancy extends Vigilancy_Base {
 		return group;
 	    }
 	}
-	return null;
+	return new ArrayList<VigilantGroup>(groups).get(0);
     }
 
     @Override

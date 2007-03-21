@@ -762,6 +762,10 @@ extends="presentSimpleConvokesWithoutLink">
 <schema name="showWhyUnavailable" type="net.sourceforge.fenixedu.domain.vigilancy.strategies.UnavailableInformation" bundle="VIGILANCY_RESOURCES">
 	<slot name="vigilant.person.name"/>
 	<slot name="reason"/>
+	<slot name="vigilant.unavailablePeriods"> 
+		<property name="eachLayout" value="values"/>
+		<property name="eachSchema" value="unavailableShow"/>
+	</slot>		
 </schema>
 
 <schema name="editConvokableStatus" type="net.sourceforge.fenixedu.domain.vigilancy.VigilantBound" bundle="VIGILANCY_RESOURCES">
