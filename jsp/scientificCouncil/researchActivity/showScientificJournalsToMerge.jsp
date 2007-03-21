@@ -6,10 +6,9 @@
 
 <em><bean:message key="title.scientificCouncil.portalTitle" /></em>
 <h2><bean:message key="title.scientificJournal.merge" /></h2>
-<br />
-<br />
 
-<strong><bean:message key="label.scientificJournal.merge.selected" /></strong>
+
+<p class="mtop15 mbottom05"><strong><bean:message key="label.scientificJournal.merge.selected" /></strong></p>
 <logic:notEmpty name="mergeBean" property="selectedObjects">
 	<fr:form action="/mergeScientificJournal.do">
 		<html:hidden property="method" value="removeFromMergeList"/>
@@ -17,44 +16,63 @@
 			type="net.sourceforge.fenixedu.dataTransferObject.PageContainerBean">
 			<fr:destination name="input" path="/mergeScientificJournal.do?method=prepare"/>
 			<fr:layout name="pages">
-				<fr:property name="classes" value="tstyle1 thcenter tdcenter mbottom05"/>
+				<fr:property name="classes" value="tstyle1 mtop05 mbottom0 width50em"/>
+				<fr:property name="columnClasses" value="width35em,width5em"/>
 				<fr:property name="subSchema" value="scientific.journal.merge.list"/>
 				<fr:property name="paged" value="false"/>
 				<fr:property name="buttonLabel" value="button.researchActivity.remove"/>
 			</fr:layout>
 		</fr:edit>
-		<br />
-		<html:submit onclick="this.form.method.value='prepareResearchActivityMerge';this.form.submit();"><bean:message key="button.merge"/></html:submit>
+		<table class="tstyle1 mtop0 width50em bgcolor3">
+			<tr>
+				<td>
+					<html:submit onclick="this.form.method.value='prepareResearchActivityMerge';this.form.submit();"><bean:message key="button.merge"/></html:submit>
+				</td>
+			</tr>
+		</table>
 	</fr:form>
 </logic:notEmpty>
+
+
 <logic:empty name="mergeBean" property="selectedObjects">
-	<br />
-	<bean:message key="label.scientificJournal.merge.no.selected"/>
+	<p class="mtop05">
+		<em><bean:message key="label.scientificJournal.merge.no.selected"/></em>
+	</p>
 </logic:empty>
 
-<br />
-<br />
+
+
+<p class="mtop15 mbottom05"><strong><bean:message key="label.merge.scientific.journal.completeList"/>:</strong></p>
+	
+	
 <fr:form action="/mergeScientificJournal.do?method=goToPage">
-	<table>
+	<table class="tstyle5 thlight thmiddle mtop05">
 		<tr>
-			<td>
+			<th>
 				<fr:edit id="qq" name="mergeBean"  property="pageContainerBean" type="net.sourceforge.fenixedu.dataTransferObject.PageContainerBean"
-				layout="tabular" schema="page.goto"/>
+				layout="tabular" schema="page.goto">
+					<fr:layout>
+						<fr:property name="classes" value="tstylenone mvert0"/>
+					</fr:layout>
+				</fr:edit>
 				<fr:edit id="page" name="mergeBean" visible="false"/>
-			</td>
+			</th>
 			<td>
 				<html:submit><bean:message key="submit"/></html:submit>
 			</td>
 		</tr>
 	</table>
 </fr:form>
-<br />
+
+
 <fr:form action="/mergeScientificJournal.do?method=addToMergeList">
 	<fr:edit id="scientificJournalList" name="mergeBean" property="pageContainerBean"
 		type="net.sourceforge.fenixedu.dataTransferObject.PageContainerBean">
 		<fr:destination name="input" path="/mergeScientificJournal.do?method=prepare2"/>
 		<fr:layout name="pages">
-			<fr:property name="classes" value="tstyle1 thcenter tdcenter mbottom05"/>
+			<fr:property name="classes" value="tstyle1 thcenter mbottom05"/>
+			<fr:property name="columnClasses" value="width35em,width5em"/>
+			<fr:property name="rowClasses" value=",bgcolorfafafa"/>
 			<fr:property name="objectsPerPage" value="20"/>
 			<fr:property name="subSchema" value="scientific.journal.merge.list"/>
 			<fr:property name="buttonLabel" value="button.researchActivity.add"/>
