@@ -122,6 +122,7 @@
 									<bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.markSheet.rectify" />
 								</html:link>
 							</logic:equal>
+							(<bean:write name="markSheet" property="prettyCheckSum"/>)
 						</p>							
 
 				</logic:iterate>
