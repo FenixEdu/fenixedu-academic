@@ -10,7 +10,7 @@ public class EmailAddressList implements Serializable {
 
     public EmailAddressList(final String emailAddresses) {
 	super();
-	this.emailAddresses = emailAddresses;
+	this.emailAddresses = emailAddresses == null || emailAddresses.length() == 0 ? null : emailAddresses;
     }
 
     public EmailAddressList(final Collection<String> emailAddressCollection) {
@@ -19,9 +19,10 @@ public class EmailAddressList implements Serializable {
 	if (emailAddressCollection != null) {
 	    for (final String emailAddress : emailAddressCollection) {
 		final String emailAddressTrimmed = emailAddress.trim();
-		if (emailAddressTrimmed.length() > 0) {
+		if (emailAddresses.length() > 0) {
 		    emailAddresses.append(", ");
 		}
+		
 		emailAddresses.append(emailAddressTrimmed);
 	    }
 	}
