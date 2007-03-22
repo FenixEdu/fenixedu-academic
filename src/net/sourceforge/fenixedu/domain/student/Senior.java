@@ -4,6 +4,7 @@
  */
 package net.sourceforge.fenixedu.domain.student;
 
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -106,6 +107,10 @@ public class Senior extends Senior_Base {
     public void setSpecialtyField(String specialtyField) {
 	setLastModificationDateDateTime(new DateTime());
 	super.setSpecialtyField(specialtyField);
+    }
+
+    public boolean isSenior(ExecutionYear executionYear) {
+	return getExpectedDegreeTerminationYearMonthDay().isAfter(executionYear.getBeginDateYearMonthDay());
     }
 
 }
