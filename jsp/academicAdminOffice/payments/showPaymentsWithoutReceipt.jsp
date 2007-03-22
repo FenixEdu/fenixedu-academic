@@ -14,18 +14,18 @@
 	<h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.paymentsWithoutReceipt" /></h2>
 	
 	<logic:messagesPresent message="true">
-		<ul class="nobullet">
+		<ul class="nobullet list2">
 			<html:messages id="messages" message="true">
 				<li><span class="error0"><bean:write name="messages" /></span></li>
 			</html:messages>
 		</ul>
 	</logic:messagesPresent>
 	
-	<strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.person" /></strong>
+	<p class="mtop15 mbottom05"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.person" /></strong></p>
 	<fr:view name="createReceiptBean" property="person"
 		schema="person.view-with-name-and-idDocumentType-and-documentIdNumber">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4 thlight thright mtop05" />
+			<fr:property name="classes" value="tstyle2 thlight thright mtop05" />
 			<fr:property name="rowClasses" value="tdhl1,," />
 		</fr:layout>
 	</fr:view>
@@ -35,8 +35,8 @@
 		<p class="mbottom025"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.contributor" /></strong></p>
 		<fr:edit id="createReceiptBean" name="createReceiptBean" schema="createReceiptBean.create">
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle4 thlight thright mtop05" />
-				<fr:property name="columnClasses" value=",,tdclear" />
+				<fr:property name="classes" value="tstyle5 thlight thright mtop05 thmiddle" />
+				<fr:property name="columnClasses" value=",,tdclear tderror1" />
 			</fr:layout>
 			<fr:destination name="invalid" path="/payments.do?method=prepareShowPaymentsWithoutReceiptInvalid"/>
 		</fr:edit>

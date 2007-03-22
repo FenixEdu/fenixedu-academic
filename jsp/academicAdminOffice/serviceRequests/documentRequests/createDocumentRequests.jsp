@@ -64,8 +64,8 @@
 	<fr:edit name="documentRequestCreateBean" schema="<%=schema%>" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean">
 		<fr:destination name="documentRequestTypeChoosedPostBack" path="/documentRequestsManagement.do?method=documentRequestTypeChoosedPostBack"/>	
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4 thright thlight mtop025 mbottom0"/>
-			<fr:property name="columnClasses" value="width14em,width20em,tdclear tderror1"/>
+			<fr:property name="classes" value="tstyle5 thright thlight mtop025 mbottom0"/>
+			<fr:property name="columnClasses" value="width14em,width40em,tdclear tderror1"/>
 		</fr:layout>	
 	</fr:edit>
 	
@@ -73,8 +73,8 @@
 		<bean:define id="additionalInformationSchemaName" name="additionalInformationSchemaName" type="java.lang.String"/>
 		<fr:edit name="documentRequestCreateBean" schema="<%= additionalInformationSchemaName %>" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean">
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle4 thright thlight mvert0"/>
-				<fr:property name="columnClasses" value="width14em,width20em,tdclear tderror1"/>
+				<fr:property name="classes" value="tstyle5 thright thlight mvert0"/>
+				<fr:property name="columnClasses" value="width14em,width40em,tdclear tderror1"/>
 			</fr:layout>	
 		</fr:edit>			
 	</logic:present>
@@ -83,23 +83,23 @@
 	
 		<fr:edit name="documentRequestCreateBean" schema="DocumentRequestCreateBean.purposes" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean">
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle4 thright thlight mvert0"/>
-				<fr:property name="columnClasses" value="width14em,width20em,tdclear tderror1"/>
+				<fr:property name="classes" value="tstyle5 thright thlight mvert0"/>
+				<fr:property name="columnClasses" value="width14em,width40em,tdclear tderror1"/>
 			</fr:layout>	
 		</fr:edit>
 	
 		<fr:edit name="documentRequestCreateBean" schema="DocumentRequestCreateBean.notes" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean">
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle4 thright thlight mvert0"/>
-				<fr:property name="columnClasses" value="width14em,width20em,tdclear tderror1"/>
+				<fr:property name="classes" value="tstyle5 thright thlight mvert0"/>
+				<fr:property name="columnClasses" value="width14em,width40em,tdclear tderror1"/>
 			</fr:layout>	
 		</fr:edit>
 		
 		<logic:equal name="documentRequestCreateBean" property="chosenDocumentRequestType.canBeFreeProcessed" value="true">
 			<fr:edit name="documentRequestCreateBean" schema="DocumentRequestCreateBean.freeProcessed" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean">
 				<fr:layout name="tabular">
-					<fr:property name="classes" value="tstyle4 thright thlight mvert0"/>
-					<fr:property name="columnClasses" value="width14em,width20em,tdclear tderror1"/>
+					<fr:property name="classes" value="tstyle5 thright thlight mvert0"/>
+					<fr:property name="columnClasses" value="width14em,width40em,tdclear tderror1"/>
 				</fr:layout>	
 			</fr:edit>
 		</logic:equal>

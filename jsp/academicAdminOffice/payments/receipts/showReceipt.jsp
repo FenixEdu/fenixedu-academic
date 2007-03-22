@@ -19,19 +19,19 @@
 		</ul>
 </logic:messagesPresent>
 
-
-<fr:view name="receipt" schema="receipt.view-with-number-and-year">
+<p class="mbottom05"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.person" /></strong></p>
+<fr:view name="receipt" property="person" schema="person.view-with-name-and-idDocumentType-and-documentIdNumber">
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle4 thlight thright mtop15" />
-		<fr:property name="columnClasses" value=",tdhl1" />
+		<fr:property name="classes" value="tstyle2 thlight thright mtop05" />
 	</fr:layout>
 </fr:view>
 
 
-<p class="mbottom05"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.person" /></strong></p>
-<fr:view name="receipt" property="person" schema="person.view-with-name-and-idDocumentType-and-documentIdNumber">
+<p class="mbottom05"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.receipt" /></strong></p>
+<fr:view name="receipt" schema="receipt.view-with-number-and-year">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle4 thlight thright mtop05" />
+		<fr:property name="columnClasses" value=",tdhl1" />
 	</fr:layout>
 </fr:view>
 
@@ -78,7 +78,7 @@
 					</html:submit>
 				</html:form>
 			</td>
-			 --%>
+			--%>
 			<td>
 				<html:form action="<%="/payments.do?method=showReceipts&amp;personId=" + personId%>">
 					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">

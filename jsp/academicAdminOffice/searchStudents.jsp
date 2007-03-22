@@ -9,10 +9,11 @@
 
 <fr:edit name="studentsSearchBean" schema="student.StudentsSearchBean" >
 	<fr:layout name="tabular" >
-		<fr:property name="classes" value="tstyle4 thright thlight"/>
+		<fr:property name="classes" value="tstyle5 thmiddle thright thlight"/>
 		<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 	</fr:layout>
 </fr:edit>
+
 
 <logic:present name="students">
 	<bean:size id="numberStudents" name="students"/>
@@ -28,7 +29,7 @@
 	<logic:greaterThan name="numberStudents" value="1">
 		<fr:view name="students" schema="student.searchResult">
 			<fr:layout name="tabular" >
-				<fr:property name="classes" value="tstyle4"/>
+				<fr:property name="classes" value="tstyle1"/>
 	        	<fr:property name="columnClasses" value="listClasses,,"/>
 				<fr:property name="linkFormat(view)" value="/student.do?method=visualizeStudent&studentID=${idInternal}" />
 				<fr:property name="key(view)" value="link.student.visualizeStudent"/>

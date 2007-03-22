@@ -11,12 +11,12 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" />
 
 	<em><bean:message key="label.payments" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
-	<h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.paymentConfirmed" /></h2>
+	<h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="title.payments.paymentConfirmed" /></h2>
 
 	<fr:edit id="entriesToSelect" name="entriesToSelect" visible="false" nested="true"/>
 	
-	<p class="mtop2 mbottom15">
-		<span class="success0"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.paymentConfirmed"/></span>
+	<p class="mtop25 mbottom2">
+		<span class="success0"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.paymentConfirmed"/>.</span>
 	</p>
 
 			

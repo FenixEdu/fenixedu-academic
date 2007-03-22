@@ -7,31 +7,33 @@
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
 
 	<bean:define id="person" name="event" property="person" />
+	<em><bean:message key="label.payments" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 	<h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.otherPartyPayment" /></h2>
-	<br />
-	<strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.person" />:</strong>
+
+	<p class="mtop15 mbottom05"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.person" /></strong></p>
 	<fr:view name="person" schema="person.view-with-name-and-idDocumentType-and-documentIdNumber">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4" />
+			<fr:property name="classes" value="tstyle2 thlight thright mtop05" />
+			<fr:property name="rowClasses" value="tdhl1,," />
 		</fr:layout>
 	</fr:view>
 
-	<br />
 	<bean:define id="entries" name="event" property="otherPartyEntries" />
 	<logic:notEmpty name="entries">
-		<strong><bean:message  key="label.payments.otherPartyPayment.details" bundle="ACADEMIC_OFFICE_RESOURCES"/>:</strong>
+		<p class="mtop15 mbottom05"><strong><bean:message  key="label.payments.otherPartyPayment.details" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
 		<fr:view name="entries" schema="entry.view-for-other-parties">
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle4" />							
+				<fr:property name="classes" value="tstyle4 mtop05" />
 			</fr:layout>
 		</fr:view>
 	</logic:notEmpty>
+	
 	<logic:empty name="entries">
-		<span class="error0">
-			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES"
-			key="label.payments.otherPartyPayment.noEntriesForEvent" />
-		</span>
-		<br/><br/>
+		<p>
+			<span class="error0">
+				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.otherPartyPayment.noEntriesForEvent" />
+			</span>
+		</p>
 	</logic:empty>
 	
 	<bean:define id="eventId" name="event" property="idInternal" />

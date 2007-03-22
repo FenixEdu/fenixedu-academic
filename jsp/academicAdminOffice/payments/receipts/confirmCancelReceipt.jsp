@@ -9,8 +9,6 @@
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
 
 <h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.receipt" /></h2>
-<hr/>
-<br/>
 
 <logic:messagesPresent message="true">
 		<ul>
@@ -18,7 +16,6 @@
 				<li><span class="error0"><bean:write name="messages" /></span></li>
 			</html:messages>
 		</ul>
-		<br />
 </logic:messagesPresent>
 
 <table>

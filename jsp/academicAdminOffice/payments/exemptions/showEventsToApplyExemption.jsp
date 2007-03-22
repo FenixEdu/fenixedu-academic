@@ -7,22 +7,21 @@
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
 	<em><bean:message key="label.payments" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 	<h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.exemptions" /></h2>
-	<br />
-	<strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.person" />:</strong>
+
+	<p class="mtop15 mbottom05"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.person" /></strong></p>
 	<fr:view name="person" schema="person.view-with-name-and-idDocumentType-and-documentIdNumber">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4" />
+			<fr:property name="classes" value="tstyle2 thlight thright mtop05" />
+			<fr:property name="rowClasses" value="tdhl1,," />
 		</fr:layout>
 	</fr:view>
 
-	<br />
-	<strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.events"/></strong>
+	<p class="mbottom05"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.events"/></strong></p>
 	<logic:notEmpty name="eventsToApplyExemption">
 		<fr:view name="eventsToApplyExemption" schema="AccountingEvent.view">
 			<fr:layout name="tabular">
 				
-				<fr:property name="classes" value="tstyle4" />
-				<fr:property name="columnClasses" value=",,,nowrap" />
+				<fr:property name="classes" value="tstyle4 mtop05" />
 				
 				<fr:property name="linkFormat(showExemptions)" value="/exemptionsManagement.do?method=showExemptions&eventId=${idInternal}" />
 				<fr:property name="key(showExemptions)" value="label.payments.exemptions" />
@@ -31,20 +30,22 @@
 			</fr:layout>
 		</fr:view>
 	</logic:notEmpty>
+	
 	<logic:empty name="eventsToApplyExemption">
 		<p>
-			<em><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"
-				key="label.payments.exemptions.noEventsToApplyExemption" />
+			<em>
+				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.exemptions.noEventsToApplyExemption" />
 			</em>
 		</p>
 	</logic:empty>
 	
-	<br/><br/>
 	<bean:define id="personId" name="person" property="idInternal" />
 	<fr:form action="<%="/payments.do?method=backToShowOperations&amp;personId=" + personId%>">
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.back" />
-		</html:submit>
+		<p>
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.back" />
+			</html:submit>
+		</p>
 	</fr:form>
 
 </logic:present>

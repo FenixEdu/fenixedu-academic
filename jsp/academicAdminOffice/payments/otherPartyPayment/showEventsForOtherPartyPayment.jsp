@@ -5,17 +5,17 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
-
+	<em><bean:message key="label.payments" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 	<h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.otherPartyPayment" /></h2>
-	<br />
-	<strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.person" />:</strong>
+
+	<p class="mtop15 mbottom05"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.person" /></strong></p>
 	<fr:view name="person" schema="person.view-with-name-and-idDocumentType-and-documentIdNumber">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4" />
+			<fr:property name="classes" value="tstyle2 thlight thright mtop05" />
+			<fr:property name="rowClasses" value="tdhl1,," />
 		</fr:layout>
 	</fr:view>
 
-	<br />
 	<bean:define id="events" name="person" property="eventsSupportingPaymentByOtherParties" />
 	<logic:notEmpty name="events">
 		<fr:view name="events" schema="AccountingEvent.view">

@@ -10,18 +10,18 @@
 <h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.receipts" /></h2>
 
 <logic:messagesPresent message="true">
-	<ul class="nobullet">
+	<ul class="nobullet list2">
 		<html:messages id="messages" message="true">
 			<li><span class="error0"><bean:write name="messages" /></span></li>
 		</html:messages>
 	</ul>
 </logic:messagesPresent>
 
-<strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.person"/></strong>
+<p class="mtop15 mbottom05"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.person"/></strong></p>
 <fr:view name="person"
 	schema="person.view-with-name-and-idDocumentType-and-documentIdNumber">
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle4 thlight thright mtop05" />
+		<fr:property name="classes" value="tstyle2 thlight thright mtop05" />
 		<fr:property name="rowClasses" value="tdhl1,," />
 	</fr:layout>
 </fr:view>
@@ -30,7 +30,8 @@
 	<bean:define id="personId" name="person" property="idInternal"/>
 	<fr:view name="receiptsForAdministrativeOffice" schema="receipt.view">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4 mtop15" />
+			<fr:property name="classes" value="tstyle4 thlight mtop15" />
+			<fr:property name="columnClasses" value="acenter,,,acenter,acenter," />
 			<fr:property name="sortBy" value="year=desc,number=desc"/>
 			<fr:property name="linkFormat(view)" value="<%="/payments.do?method=prepareShowReceipt&amp;receiptID=${idInternal}&amp;personId=" + personId %>"/>
 			<fr:property name="key(view)" value="label.payments.show"/>
@@ -44,14 +45,18 @@
 		</fr:layout>
 	</fr:view>
 </logic:notEmpty>
+
 <logic:empty name="receiptsForAdministrativeOffice">
+	<p>
 		<em><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.noReceipts"/></em>.
+	</p>
 </logic:empty>
 
 <bean:define id="personId" name="person" property="idInternal"/>
 <html:form action='<%= "/payments.do?method=backToShowOperations&amp;personId=" + personId %>'>
-	<br/>
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.payments.back"/></html:submit>
+	<p>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.payments.back"/></html:submit>
+	</p>
 </html:form>
 
 </logic:present>

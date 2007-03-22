@@ -40,10 +40,10 @@
 
 <%-- Registration Details --%>
 <logic:present name="registration" property="ingressionEnum">
-<h3 class="mtop15 mbottom05"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
+<h3 class="mtop2 mbottom05 separator2"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <fr:view name="registration" schema="student.registrationDetail" >
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle2 thright thlight mtop0"/>
+		<fr:property name="classes" value="tstyle2 thright thlight"/>
 		<fr:property name="rowClasses" value=",,tdhl1,,,"/>
 	</fr:layout>
 </fr:view>
@@ -105,13 +105,14 @@
 </html:messages>
 
 
+
 <%-- Curricular Plans --%>
 
-<h3 class="mbottom05 mtop2"><bean:message key="label.studentCurricularPlans" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
+<h3 class="mbottom05 mtop25 separator2"><bean:message key="label.studentCurricularPlans" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 
 <fr:view name="registration" property="studentCurricularPlans" schema="student.studentCurricularPlans" >
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle2 thright thlight thcenter mtop05"/>
+		<fr:property name="classes" value="tstyle2 thright thlight thcenter"/>
 		<fr:property name="groupLinks" value="false"/>
 		<fr:property name="linkFormat(enrol)" value="/studentEnrolments.do?method=prepare&amp;scpID=${idInternal}" />
 		<fr:property name="key(enrol)" value="link.student.enrolInCourses"/>
@@ -151,7 +152,7 @@
 
 <%-- Academic Services --%>
 
-<h3 class="mtop2 mbottom05 separator2"><bean:message key="academic.services" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
+<h3 class="mtop25 mbottom05 separator2"><bean:message key="academic.services" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <bean:define id="registration" name="registration" scope="request" type="net.sourceforge.fenixedu.domain.student.Registration"/>
 <p>
 	<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.documentRequestsManagement.createDocumentRequest"/>:
@@ -178,7 +179,7 @@
 		<fr:view name="newAcademicServiceRequests" schema="AcademicServiceRequest.view">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4 thlight mtop0" />
-				<fr:property name="columnClasses" value="smalltxt nowrap,smalltxt nowrap,acenter,,acenter,nowrap,,nowrap,nowrap" />
+				<fr:property name="columnClasses" value="smalltxt nowrap,smalltxt nowrap,acenter,,acenter,nowrap,,acenter nowrap,nowrap" />
 				<fr:property name="linkFormat(reject)" value="/academicServiceRequestsManagement.do?method=prepareRejectAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}&amp;registrationID=${registration.idInternal}"/>
 				<fr:property name="key(reject)" value="reject"/>
  				<%--<fr:property name="visibleIf(reject)" value="availableForEmployeeToActUpon"/>--%>
@@ -208,7 +209,7 @@
 		<fr:view name="processingAcademicServiceRequests" schema="AcademicServiceRequest.view">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4 thlight mtop0" />
-				<fr:property name="columnClasses" value="smalltxt nowrap,smalltxt nowrap,acenter,,acenter,nowrap,,nowrap,nowrap" />
+				<fr:property name="columnClasses" value="smalltxt nowrap,smalltxt nowrap,acenter,,acenter,nowrap,,acenter nowrap,nowrap" />
 				<fr:property name="linkFormat(reject)" value="/academicServiceRequestsManagement.do?method=prepareRejectAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}&amp;registrationID=${registration.idInternal}"/>
 				<fr:property name="key(reject)" value="reject"/>
 				<%--<fr:property name="visibleIf(reject)" value="availableForEmployeeToActUpon"/>--%>				
@@ -238,7 +239,7 @@
 		<fr:view name="concludedAcademicServiceRequests" schema="AcademicServiceRequest.view">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4 thlight mtop0" />
-				<fr:property name="columnClasses" value="smalltxt nowrap,smalltxt nowrap,acenter,,acenter,tdhl1 nowrap,,nowrap,nowrap" />
+				<fr:property name="columnClasses" value="smalltxt nowrap,smalltxt nowrap,acenter,,acenter,tdhl1 nowrap,,acenter nowrap,nowrap" />
 				<fr:property name="linkFormat(deliver)" value="/academicServiceRequestsManagement.do?method=deliveredAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}"/>
 				<fr:property name="key(deliver)" value="deliver"/>
 				<%--<fr:property name="visibleIf(deliver)" value="availableForEmployeeToActUpon"/>--%>

@@ -8,47 +8,40 @@
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
 	<em><bean:message key="label.payments" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 	<h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.exemptions" /></h2>
-	<br />
-	
 	
 	<logic:messagesPresent message="true">
-		<ul>
+		<ul class="nobullet list2">
 			<html:messages id="messages" message="true" bundle="APPLICATION_RESOURCES">
 				<li><span class="error0"><bean:write name="messages" /></span></li>
 			</html:messages>
 		</ul>
-		<br />
 	</logic:messagesPresent>
 	
-	
-	<strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.person" />:</strong>
+	<p class="mtop15 mbottom05"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.person" /></strong></p>
 	<fr:view name="person" schema="person.view-with-name-and-idDocumentType-and-documentIdNumber">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4" />
+			<fr:property name="classes" value="tstyle2 thlight thright mtop05" />
+			<fr:property name="rowClasses" value="tdhl1,," />
 		</fr:layout>
 	</fr:view>
 
-	<br />
-	
-	<strong><em>
+	<h3>	
 		<app:labelFormatter name="event" property="description">
 			<app:property name="enum" value="ENUMERATION_RESOURCES"/>
 			<app:property name="application" value="APPLICATION_RESOURCES"/>
 		</app:labelFormatter>
-		</em>
-	</strong>
+	</h3>
 	
-	<br /><br />
+
 	<bean:define id="personId" name="person" property="idInternal" />
 	<bean:define id="gratuityEventId" name="event" property="idInternal" />
-	<strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.gratuityExemptions"/></strong>
+	<p class="mtop2 mbottom05"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.gratuityExemptions"/></strong></p>
 	<logic:notEmpty name="event" property="gratuityExemption">
 		<bean:define id="gratuityExemption" name="event" property="gratuityExemption" />
 		<bean:define id="gratuityExemptionClassName" name="gratuityExemption" property="class.simpleName" />
 		<fr:view name="gratuityExemption" schema="<%= gratuityExemptionClassName + ".view"%>">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4" />
-				<fr:property name="columnClasses" value=",,,nowrap" />
 			</fr:layout>
 		</fr:view>
 		<bean:define id="gratuityExemptionId" name="gratuityExemption" property="idInternal" />
@@ -58,7 +51,8 @@
 	</logic:notEmpty>
 	<logic:empty name="event" property="gratuityExemption">
 		<p>
-			<em><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.gratuityExemptions.noGratuityExemption" />
+			<em>
+				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.gratuityExemptions.noGratuityExemption" />
 			</em>
 		</p>
 		<html:link action="<%="/exemptionsManagement.do?method=prepareCreateGratuityExemption&amp;personId=" + personId + "&amp;eventId=" + gratuityEventId %>">
@@ -66,15 +60,13 @@
 		</html:link>
 	</logic:empty>
 	
-	<br/><br/>
 	
 	<logic:equal name="hasPaymentPlan" value="true">
-		<strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.penaltyExemptions"/></strong>
+		<p class="mtop15"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.penaltyExemptions"/></strong></p>
 		<logic:notEmpty name="event" property="installmentPenaltyExemptions">
 			<fr:view name="event" property="installmentPenaltyExemptions" schema="InstallmentPenaltyExemption.view">
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="tstyle4" />
-					<fr:property name="columnClasses" value=",,,nowrap" />
 					<fr:property name="linkFormat(deletePenaltyExemption)" value="<%="/exemptionsManagement.do?exemptionId=${idInternal}&amp;method=deleteExemption&amp;personId=" + personId%>" />
 					<fr:property name="key(deletePenaltyExemption)" value="label.delete" />
 					<fr:property name="bundle(deletePenaltyExemption)" value="ACADEMIC_OFFICE_RESOURCES" />
@@ -84,7 +76,8 @@
 		</logic:notEmpty>
 		<logic:empty name="event" property="installmentPenaltyExemptions">
 			<p>
-				<em><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.penaltyExemptions.noPenaltyExemptions" />
+				<em>
+					<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.penaltyExemptions.noPenaltyExemptions" />
 				</em>
 			</p>
 		</logic:empty>
@@ -93,12 +86,13 @@
 		</html:link>
 	</logic:equal>
 	
-	<br/><br/>
 	<bean:define id="personId" name="person" property="idInternal" />
 	<fr:form action="<%="/exemptionsManagement.do?method=showEventsToApplyExemption&amp;personId=" + personId%>">
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.back" />
-		</html:submit>
+		<p class="mtop2">
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.back" />
+			</html:submit>
+		</p>
 	</fr:form>
 
 </logic:present>
