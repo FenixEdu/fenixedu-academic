@@ -94,7 +94,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public static final Comparator<StudentCurricularPlan> STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_START_DATE = new BeanComparator(
 	    "startDateYearMonthDay");
 
-    private Map<Integer, Integer> acumulatedEnrollments; // For
+    private Map<ExecutionPeriod, Map<String, Integer>> acumulatedEnrollments; // For
 
     // enrollment
     // purposes only
@@ -261,7 +261,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public List<CurricularCourse2Enroll> getCurricularCoursesToEnroll(ExecutionPeriod executionPeriod)
 	    throws FenixDomainException {
 
-	calculateStudentAcumulatedEnrollments();
+	calculateStudentAcumulatedEnrollments(executionPeriod);
 
 	List<CurricularCourse2Enroll> setOfCurricularCoursesToEnroll = getCommonBranchAndStudentBranchesCourses(executionPeriod);
 
@@ -460,11 +460,11 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return false;
     }
 
-    public Integer getCurricularCourseAcumulatedEnrollments(CurricularCourse curricularCourse) {
+    public Integer getCurricularCourseAcumulatedEnrollments(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod) {
 
 	String key = curricularCourse.getCurricularCourseUniqueKeyForEnrollment();
 
-	Integer curricularCourseAcumulatedEnrolments = getAcumulatedEnrollmentsMap().get(key);
+	Integer curricularCourseAcumulatedEnrolments = getAcumulatedEnrollmentsMap(executionPeriod).get(key);
 
 	if (curricularCourseAcumulatedEnrolments == null) {
 	    curricularCourseAcumulatedEnrolments = new Integer(0);
@@ -482,6 +482,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	}
 
 	return curricularCourseAcumulatedEnrolments;
+    }
+    
+    public Integer getCurricularCourseAcumulatedEnrollments(CurricularCourse curricularCourse) {
+	return getCurricularCourseAcumulatedEnrollments(curricularCourse, ExecutionPeriod.readActualExecutionPeriod());
     }
 
     public List<Enrolment> getAllStudentEnrolledEnrollmentsInExecutionPeriod(
@@ -519,7 +523,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     public List<Enrolment> getAllStudentEnrollmentsInExecutionPeriod(
 	    final ExecutionPeriod executionPeriod) {
-	calculateStudentAcumulatedEnrollments();
+	calculateStudentAcumulatedEnrollments(executionPeriod);
 	return initAcumulatedEnrollments((List) CollectionUtils.select(getEnrolments(), new Predicate() {
 	    public boolean evaluate(Object arg0) {
 
@@ -724,13 +728,13 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    return isAccumulated(executionPeriod, curricularCourse) ? MaximumNumberOfCreditsForEnrolmentPeriod
 		    .getAccumulatedEctsCredits(curricularCourse) : curricularCourse.getEctsCredits();
 	} else {
-	    return getAccumulatedEctsCreditsForOldCurricularCourses(curricularCourse);
+	    return getAccumulatedEctsCreditsForOldCurricularCourses(curricularCourse, executionPeriod);
 	}
     }
 
-    private double getAccumulatedEctsCreditsForOldCurricularCourses(final CurricularCourse curricularCourse) {
+    private double getAccumulatedEctsCreditsForOldCurricularCourses(final CurricularCourse curricularCourse, ExecutionPeriod executionPeriod) {
 	Double factor;
-	Integer curricularCourseAcumulatedEnrolments = getAcumulatedEnrollmentsMap().get(curricularCourse.getCurricularCourseUniqueKeyForEnrollment());
+	Integer curricularCourseAcumulatedEnrolments = getAcumulatedEnrollmentsMap(executionPeriod).get(curricularCourse.getCurricularCourseUniqueKeyForEnrollment());
 	if (curricularCourseAcumulatedEnrolments == null || curricularCourseAcumulatedEnrolments.intValue() == 0) {
 	    factor = 1.0;
 	} else {
@@ -743,7 +747,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	if (curricularCourse.isBolonha()) {
 	    return getPreviouslyEnroledCurricularCourses(executionPeriod).contains(curricularCourse);
 	} else {
-	    Integer curricularCourseAcumulatedEnrolments = getAcumulatedEnrollmentsMap().get(
+	    Integer curricularCourseAcumulatedEnrolments = getAcumulatedEnrollmentsMap(executionPeriod).get(
 		    curricularCourse.getCurricularCourseUniqueKeyForEnrollment());
 	    return curricularCourseAcumulatedEnrolments != null
 		    && curricularCourseAcumulatedEnrolments.intValue() != 0;
@@ -790,18 +794,23 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     // BEGIN: Only for enrollment purposes (PROTECTED)
     // -------------------------------------------------------------
 
-    private void calculateStudentAcumulatedEnrollments() {
-	if (this.acumulatedEnrollments == null && !this.isBolonha()) {
-	    List enrollments = getAllEnrollmentsExceptTheOnesWithEnrolledState();
-
-	    List curricularCourses = (List) CollectionUtils.collect(enrollments, new Transformer() {
-		public Object transform(Object obj) {
-		    CurricularCourse curricularCourse = ((Enrolment) obj).getCurricularCourse();
-		    return curricularCourse.getCurricularCourseUniqueKeyForEnrollment();
+    private void calculateStudentAcumulatedEnrollments(ExecutionPeriod executionPeriod) {
+	if(!this.isBolonha()) {
+	    if (this.acumulatedEnrollments == null) {
+		this.acumulatedEnrollments = new HashMap<ExecutionPeriod, Map<String,Integer>>();
+	    }
+	    
+	    if(this.acumulatedEnrollments.get(executionPeriod) == null) {
+		List<String> curricularCourses = new ArrayList<String>();
+		for (Enrolment enrolment : this.getEnrolments()) {
+		    if(!enrolment.isAnnulled() && enrolment.getExecutionPeriod().isBefore(executionPeriod)) {
+			curricularCourses.add(enrolment.getCurricularCourse().getCurricularCourseUniqueKeyForEnrollment());
+		    }
 		}
-	    });
-
-	    this.acumulatedEnrollments = CollectionUtils.getCardinalityMap(curricularCourses);
+		
+		Map<String, Integer> map = CollectionUtils.getCardinalityMap(curricularCourses);
+		this.acumulatedEnrollments.put(executionPeriod, map);
+	    }
 	}
     }
 
@@ -958,12 +967,18 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	});
     }
 
-    private Map<Integer, Integer> getAcumulatedEnrollmentsMap() {
-	if (acumulatedEnrollments == null && !this.isBolonha()) {
-	    calculateStudentAcumulatedEnrollments();
+    private Map<String, Integer> getAcumulatedEnrollmentsMap(ExecutionPeriod executionPeriod) {
+	if(!this.isBolonha()) {
+	    if(this.acumulatedEnrollments == null) {
+		calculateStudentAcumulatedEnrollments(executionPeriod);
+	    } else {
+		if(this.acumulatedEnrollments.get(executionPeriod) == null) {
+		    calculateStudentAcumulatedEnrollments(executionPeriod);
+		}
+	    }
+	    return this.acumulatedEnrollments.get(executionPeriod);
 	}
-
-	return acumulatedEnrollments;
+	return null;
     }
 
     private List<IEnrollmentRule> getListOfEnrollmentRules(ExecutionPeriod executionPeriod) {
