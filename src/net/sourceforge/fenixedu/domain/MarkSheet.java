@@ -640,4 +640,8 @@ public class MarkSheet extends MarkSheet_Base {
         }
     }
     
+    public String getPrettyCheckSum() {
+	return FenixDigestUtils.getPrettyCheckSum(getCheckSum());
+    }
+    
 }
