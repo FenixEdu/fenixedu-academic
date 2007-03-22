@@ -11,6 +11,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByManyRolesFilter;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -59,8 +60,19 @@ public class MasterDegreeEnrollmentWithoutRulesAuthorizationFilter extends
     }
 
     private boolean verifyStudentIsFromMasterDegree(Object[] arguments) throws ExcepcaoPersistencia {
-	Registration registration = (Registration) arguments[0];
-	return (registration.getDegreeType().equals(DegreeType.MASTER_DEGREE) || registration
-		.getDegreeType().equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA));
+	Object object = (Object) arguments[0];
+	DegreeType degreeType = null;
+	if(object instanceof Registration) {
+	    Registration registration = (Registration) object;
+	    degreeType = registration.getDegreeType();
+	}
+	if(object instanceof StudentCurricularPlan) {
+	    StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) object;
+	    degreeType = studentCurricularPlan.getDegreeType();
+	}
+	
+	
+	return (degreeType != null && (degreeType.equals(DegreeType.MASTER_DEGREE) || degreeType
+		.equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA)));
     }
 }

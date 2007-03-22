@@ -38,7 +38,7 @@
 	</logic:lessEqual >
 	
 	<logic:greaterThan name="enrollmentsSize" value="0">
-		<html:form action="/courseEnrolmentWithoutRulesManagerDA">
+		<html:form action="/courseEnrolmentWithoutRulesManagerDA.do">
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="unEnrollCourses"/>
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentNumber" property="studentNumber" />
@@ -109,7 +109,7 @@
 		</td>
 	</tr>
 </table>
-<html:form action="/courseEnrolmentWithoutRulesManagerDA">
+<html:form action="/courseEnrolmentWithoutRulesManagerDA.do">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareEnrollmentCourses"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentNumber" property="studentNumber" />
@@ -124,7 +124,7 @@
 <hr/>
 <br />
 <%-- HELP ANOTHER STUDENT OR CANCEL --%>
-<html:form action="/courseEnrolmentWithoutRulesManagerDA">
+<html:form action="/courseEnrolmentWithoutRulesManagerDA.do">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareEnrollmentChooseStudentAndExecutionYear"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeType" property="degreeType" />

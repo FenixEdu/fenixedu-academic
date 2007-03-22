@@ -39,17 +39,11 @@ public class ReadCurricularCoursesToEnroll extends Service {
 	return result;
     }
 
-    public List<CurricularCourse2Enroll> run(final Registration registration,
+    public List<CurricularCourse2Enroll> run(final StudentCurricularPlan studentCurricularPlan,
 	    final DegreeType degreeType, final ExecutionPeriod executionPeriod,
 	    final Integer executionDegreeID, final List<Integer> curricularYearsList,
 	    final List<Integer> curricularSemestersList) throws FenixServiceException {
 
-	if (registration == null) {
-	    throw new FenixServiceException("error.student.curriculum.noCurricularPlans");
-	}
-
-	final StudentCurricularPlan studentCurricularPlan = registration
-		.getActiveOrConcludedStudentCurricularPlan();
 	if (studentCurricularPlan == null) {
 	    throw new FenixServiceException("error.student.curriculum.noCurricularPlans");
 	}
@@ -71,7 +65,7 @@ public class ReadCurricularCoursesToEnroll extends Service {
 	final List<CurricularCourse> searchedCurricularCourses;
 
 	if (filterByYearAndSemester(curricularYearsList, curricularSemestersList)) {
-	    if (registration.getDegreeType().equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA)) {
+	    if (studentCurricularPlan.getRegistration().getDegreeType().equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA)) {
 		searchedCurricularCourses = getActiveAndFilteredCurricularCoursesForBolonhaDegrees(
 			possibleStudentCurricularCoursesToEnrol, verifyYears(curricularYearsList),
 			verifySemesters(curricularSemestersList), executionPeriod);
@@ -82,7 +76,7 @@ public class ReadCurricularCoursesToEnroll extends Service {
 	    }
 
 	} else {
-	    if (registration.getDegreeType().equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA)) {
+	    if (studentCurricularPlan.getRegistration().getDegreeType().equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA)) {
 		searchedCurricularCourses = getActiveCurricularCoursesForBolonha(
 			possibleStudentCurricularCoursesToEnrol, executionPeriod);
 	    } else {

@@ -19,16 +19,10 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class WriteEnrollmentsList extends Service {
 
-    public void run(final Registration registration, DegreeType degreeType,
+    public void run(final StudentCurricularPlan studentCurricularPlan, DegreeType degreeType,
 	    ExecutionPeriod executionPeriod, List<String> curricularCourses, Map optionalEnrollments,
 	    IUserView userView) throws FenixServiceException {
 
-	if (registration == null) {
-	    throw new FenixServiceException("error.student.curriculum.noCurricularPlans");
-	}
-
-	final StudentCurricularPlan studentCurricularPlan = registration
-		.getActiveStudentCurricularPlan();
 	if (studentCurricularPlan == null) {
 	    throw new FenixServiceException("error.student.curriculum.noCurricularPlans");
 	}

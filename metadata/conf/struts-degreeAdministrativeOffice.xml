@@ -336,13 +336,19 @@
 			name="curricularCoursesEnrollmentWithoutRuleForm"
 			scope="request"
 			parameter="method">
-			<forward name="prepareEnrollmentChooseStudentWithoutRules" path="df.page.prepareEnrollmentChooseStudentWithoutRules"/>			
+			<forward name="prepareEnrollmentChooseStudentWithoutRules" path="df.page.prepareEnrollmentChooseStudentWithoutRules2"/>			
 			<forward name="curricularCourseEnrollmentList" path="df.page.curricularCourseEnrollmentList"/>
 			<forward name="readCurricularCourseEnrollmentList" path="/courseEnrolmentWithoutRulesManagerDA.do?method=readEnrollments" />
 			<forward name="choosesForEnrollment" path="df.page.choosesForEnrollment" />
 			<forward name="showCurricularCourseToEnroll" path="df.page.showCurricularCourseToEnroll" />
 			<forward name="globalEnrolment" path="/globalEnrolment.do"/>
 			<forward name="exit" path="/index.do"/>
+			<forward name="viewRegistrations" path="df.page.viewRegistrations"/>
+			<forward name="viewStudentCurricularPlans" path="df.page.viewStudentCurricularPlans"/>
+			<forward name="curricularCourseEnrollmentList2" path="df.page.curricularCourseEnrollmentList2"/>
+			<forward name="choosesForEnrollment2" path="df.page.choosesForEnrollment2" />
+			<forward name="showCurricularCourseToEnroll2" path="df.page.showCurricularCourseToEnroll2" />			
+			
 		</action>		
 
 
