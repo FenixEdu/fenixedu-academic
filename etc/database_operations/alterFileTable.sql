@@ -1,0 +1,1 @@
+alter table FILE add column KEY_PROTOCOL int(11) default NULL;
