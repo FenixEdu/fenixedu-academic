@@ -56,7 +56,7 @@ public class Degree extends Degree_Base implements Comparable {
 	if (degreeType == null) {
 	    throw new DomainException("degree.degree.type.not.null");
 	}
-	this.setTipoCurso(degreeType);
+	this.setDegreeType(degreeType);
 
 	if (concreteClassForDegreeCurricularPlans == null) {
 	    throw new DomainException("degree.concrete.class.not.null");
@@ -94,7 +94,7 @@ public class Degree extends Degree_Base implements Comparable {
 	    throw new DomainException("degree.ectsCredits.not.null");
 	}
 
-	this.setTipoCurso(degreeType);
+	this.setDegreeType(degreeType);
 	this.setEctsCredits(ectsCredits);
 	this.setPrevailingScientificArea(prevailingScientificArea == null ? null : prevailingScientificArea.trim());
     }
@@ -106,7 +106,7 @@ public class Degree extends Degree_Base implements Comparable {
 	if (degreeType == null) {
 	    throw new DomainException("degree.degree.type.not.null");
 	}
-	this.setTipoCurso(degreeType);
+	this.setDegreeType(degreeType);
     }
 
     public void edit(String name, String nameEn, String acronym, DegreeType degreeType,
@@ -196,28 +196,6 @@ public class Degree extends Degree_Base implements Comparable {
 	    deleteDomainObject();
     }
 
-    public DegreeType getDegreeType() {
-	return getTipoCurso();
-    }
-
-    // @Override
-    // public void setBolonhaDegreeType(BolonhaDegreeType bolonhaDegreeType)
-        // {
-    // super.setBolonhaDegreeType(bolonhaDegreeType);
-    // final DegreeType degreeType = bolonhaDegreeType == null ? null :
-        // DegreeType.valueOf("BOLONHA_"
-    // + bolonhaDegreeType.getName());
-    // setTipoCurso(degreeType);
-    // }
-    //
-    // public void setDegreeType(Enum degreeType) {
-    // if (degreeType instanceof BolonhaDegreeType) {
-    // setBolonhaDegreeType((BolonhaDegreeType) degreeType);
-    // } else {
-    // setTipoCurso((DegreeType) degreeType);
-    // }
-    // }
-
     public DegreeCurricularPlan getNewDegreeCurricularPlan() {
 	DegreeCurricularPlan degreeCurricularPlan = null;
 
@@ -236,7 +214,7 @@ public class Degree extends Degree_Base implements Comparable {
     }
 
     public GradeScale getGradeScaleChain() {
-	return super.getGradeScale() != null ? super.getGradeScale() : getTipoCurso().getGradeScale();
+	return super.getGradeScale() != null ? super.getGradeScale() : getDegreeType().getGradeScale();
     }
 
     public DegreeCurricularPlan createPreBolonhaDegreeCurricularPlan(String name,
@@ -287,8 +265,37 @@ public class Degree extends Degree_Base implements Comparable {
 	}
     }
 
+    @Override
+    @Deprecated
+    public DegreeType getTipoCurso() {
+        return getDegreeType();
+    }
+    
+    @Override
+    @Deprecated
+    public void setTipoCurso(final DegreeType degreeType) {
+        setDegreeType(degreeType);
+    }
+    
+    public DegreeType getDegreeType() {
+	return super.getTipoCurso();
+    }
+
+    public void setDegreeType(final DegreeType degreeType) {
+        super.setTipoCurso(degreeType);
+    }
+    
+    @Deprecated
+    public DegreeType getBolonhaDegreeType() {
+	return getDegreeType();
+    }
+
     public boolean isBolonhaDegree() {
-	return this.getTipoCurso().isBolonhaType();
+	return getDegreeType().isBolonhaType();
+    }
+
+    public boolean isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegree() {
+	return getDegreeType().isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegree();
     }
 
     public String getPresentationName() {
@@ -296,7 +303,7 @@ public class Degree extends Degree_Base implements Comparable {
 		.getBundle("resources.EnumerationResources");
 	final ResourceBundle appResourceBundle = ResourceBundle
 		.getBundle("resources.ApplicationResources");
-	return enumResourceBundle.getString(getTipoCurso().toString()) + " "
+	return enumResourceBundle.getString(getDegreeType().toString()) + " "
 		+ appResourceBundle.getString("label.in") + " " + getNome();
     }
 
@@ -577,7 +584,7 @@ public class Degree extends Degree_Base implements Comparable {
     public static List<Degree> readAllByDegreeType(final DegreeType degreeType) {
 	List<Degree> result = new ArrayList<Degree>();
 	for (final Degree degree : RootDomainObject.getInstance().getDegrees()) {
-	    if (degree.getTipoCurso() != null && degree.getTipoCurso() == degreeType) {
+	    if (degree.getDegreeType() != null && degree.getDegreeType() == degreeType) {
 		result.add(degree);
 	    }
 	}
@@ -650,11 +657,11 @@ public class Degree extends Degree_Base implements Comparable {
 	    for (int i = 1; i <= this.getDegreeType().getYears(); i++) {
 		result.add(i);
 	    }
-	} else if (this.getTipoCurso().equals(DegreeType.DEGREE)) {
+	} else if (this.getDegreeType().equals(DegreeType.DEGREE)) {
 	    for (int i = 1; i <= 5; i++) {
 		result.add(i);
 	    }
-	} else if (this.getTipoCurso().equals(DegreeType.MASTER_DEGREE)) {
+	} else if (this.getDegreeType().equals(DegreeType.MASTER_DEGREE)) {
 	    for (int i = 1; i <= 2; i++) {
 		result.add(i);
 	    }
@@ -759,10 +766,6 @@ public class Degree extends Degree_Base implements Comparable {
     public String constructSchoolClassPrefix(final Integer curricularYear) {
 	return isBolonhaDegree() ? StringAppender.append(getSigla(), "0", curricularYear.toString())
 		: "";
-    }
-
-    public DegreeType getBolonhaDegreeType() {
-	return this.getTipoCurso();
     }
 
     public MultiLanguageString getNameI18N() {
