@@ -92,7 +92,7 @@ public class Article extends Article_Base {
 
 	BibtexEntry bibEntry = bibtexFile.makeEntry("article", generateBibtexKey());
 	bibEntry.setField("title", bibtexFile.makeString(getTitle()));
-	bibEntry.setField("journal", bibtexFile.makeString(getScientificJournal().getName() + ":" + getJournalIssue().getVolume() + "(" + getJournalIssue().getNumber() + ")"));
+	bibEntry.setField("journal", bibtexFile.makeString(getScientificJournal().getName()));
 	bibEntry.setField("year", bibtexFile.makeString(getYear().toString()));
 	if ((getVolume() != null) && (getVolume().length() > 0))
 	    bibEntry.setField("volume", bibtexFile.makeString(getVolume()));
