@@ -106,9 +106,9 @@ public class ImportBibtexBean implements Serializable {
 	}
 
 	public boolean moveToNextPublicaton() {
-		currentPublicationPosition++;
-		resetBeanCounters();
-		return (hasMorePublications()) ? true : false;
+	    resetBeanCounters();
+	    currentPublicationPosition++;
+	    return (hasMorePublications()) ? true : false;
 	}
 
 	public int getNumberOfAuthors() {
