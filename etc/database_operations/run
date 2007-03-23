@@ -26,3 +26,5 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "Moving to scientific journals from national to international due to user request" < fixScientificJournalsByRequest.sql
