@@ -1407,8 +1407,7 @@ public class Registration extends Registration_Base {
     }
 
     public boolean isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegree() {
-	final DegreeType degreeType = getDegreeType();
-	return (degreeType == DegreeType.DEGREE || degreeType == DegreeType.BOLONHA_DEGREE || degreeType == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
+	return getDegreeType().isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegree();
     }
 
     public boolean isMasterDegreeOrBolonhaMasterDegree() {
