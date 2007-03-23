@@ -18,10 +18,8 @@ public class Building extends Building_Base {
 
     public final static Comparator<Building> BUILDING_COMPARATOR_BY_PRESENTATION_NAME = new ComparatorChain();
     static {
-	((ComparatorChain) BUILDING_COMPARATOR_BY_PRESENTATION_NAME).addComparator(new BeanComparator(
-		"spaceInformation.presentationName", Collator.getInstance()));
-	((ComparatorChain) BUILDING_COMPARATOR_BY_PRESENTATION_NAME).addComparator(new BeanComparator(
-		"idInternal"));
+	((ComparatorChain) BUILDING_COMPARATOR_BY_PRESENTATION_NAME).addComparator(new BeanComparator("spaceInformation.presentationName", Collator.getInstance()));
+	((ComparatorChain) BUILDING_COMPARATOR_BY_PRESENTATION_NAME).addComparator(new BeanComparator("idInternal"));
     }
 
     public static abstract class BuildingFactory implements Serializable, FactoryExecutor {

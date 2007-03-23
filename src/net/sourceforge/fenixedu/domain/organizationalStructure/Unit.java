@@ -512,8 +512,8 @@ public class Unit extends Unit_Base {
 
     public List<Employee> getAllCurrentNonTeacherEmployees() {
         List<Employee> employees = getAllCurrentActiveWorkingEmployees();
-        for (Iterator iter = employees.iterator(); iter.hasNext();) {
-            Employee employee = (Employee) iter.next();            
+        for (Iterator<Employee> iter = employees.iterator(); iter.hasNext();) {
+            Employee employee = iter.next();            
             Teacher teacher = employee.getPerson().getTeacher();
             if (teacher != null && teacher.getCurrentLegalRegimenWithoutSpecialSitutions() != null) {
                 iter.remove();

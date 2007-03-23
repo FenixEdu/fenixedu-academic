@@ -2,9 +2,7 @@ package net.sourceforge.fenixedu.domain.organizationalStructure;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -95,18 +93,19 @@ public class ExternalContract extends ExternalContract_Base {
     }
     
     private boolean externalPersonsAlreadyExists(String name, String address, Unit institution) {
-	for (ExternalContract externalPerson : readAllExternalContracts()) {
-	    if (externalPerson.hasPerson()) {
-		Person person = externalPerson.getPerson();
-		if (((person.getNome() != null && person.getNome().equalsIgnoreCase(name)) || ((person
-			.getNome() == null || person.getNome().equals("")) && name.equals("")))
-			&& ((person.getAddress() != null && person.getAddress()
-				.equalsIgnoreCase(address)) || ((person.getAddress() == null || person
-				.getAddress().equals("")) && address.equals("")))
-			&& externalPerson.getInstitutionUnit().equals(institution)
-			&& !externalPerson.equals(this))
-
-		    return true;
+	for (Accountability accountability : RootDomainObject.getInstance().getAccountabilitys()) {
+	    if(accountability instanceof ExternalContract) {
+		ExternalContract externalPerson = (ExternalContract) accountability;
+		if (externalPerson.hasPerson()) {
+		    Person person = externalPerson.getPerson();
+		    if (((person.getNome() != null && person.getNome().equalsIgnoreCase(name)) || 
+			    ((person.getNome() == null || person.getNome().equals("")) && name.equals("")))
+			    && ((person.getAddress() != null && person.getAddress().equalsIgnoreCase(address)) ||
+				    ((person.getAddress() == null || person.getAddress().equals("")) && address.equals("")))
+					    && externalPerson.getInstitutionUnit().equals(institution)
+					    && !externalPerson.equals(this))
+			return true;
+		}
 	    }
 	}
 	return false;
@@ -115,37 +114,31 @@ public class ExternalContract extends ExternalContract_Base {
     /***********************************************************************
          * OTHER METHODS *
          **********************************************************************/
-      
-    public static Set<ExternalContract> readAllExternalContracts() {
-	Set<ExternalContract> accountabilities = new HashSet<ExternalContract>();
-	for (Accountability accountability : RootDomainObject.getInstance().getAccountabilitys()) {
-	    if (accountability instanceof ExternalContract) {
-		accountabilities.add((ExternalContract) accountability);
-	    }
-	}
-	return accountabilities;
-    }
-
+        
     public static List<ExternalContract> readByPersonName(String name) {
-	final String nameToMatch = (name == null) ? null : name.replaceAll("%", ".*").toLowerCase();
 	List<ExternalContract> allExternalPersons = new ArrayList<ExternalContract>();
-	for (ExternalContract externalPerson : readAllExternalContracts()) {
-	    if (externalPerson.hasPerson()
-		    && externalPerson.getPerson().getName().toLowerCase().matches(nameToMatch)) {
-		allExternalPersons.add(externalPerson);
+	final String nameToMatch = (name == null) ? null : name.replaceAll("%", ".*").toLowerCase();	
+	for (Accountability accountability : RootDomainObject.getInstance().getAccountabilitys()) {
+	    if(accountability instanceof ExternalContract) {
+		ExternalContract externalPerson = (ExternalContract) accountability;
+		if (externalPerson.hasPerson() && externalPerson.getPerson().getName().toLowerCase().matches(nameToMatch)) {
+		    allExternalPersons.add(externalPerson);	
+		}
 	    }
-	}
+	}	
 	return allExternalPersons;
     }
 
-    public static ExternalContract readByPersonNameAddressAndInstitutionID(String name, String address,
-	    Integer institutionID) {
-	for (ExternalContract externalPerson : readAllExternalContracts()) {
-	    if (externalPerson.hasPerson() && externalPerson.getPerson().getName().equals(name)
-		    && externalPerson.getInstitutionUnit().equals(institutionID)
-		    && externalPerson.getPerson().getAddress().equals(address)) {
-		return externalPerson;
-	    }
+    public static ExternalContract readByPersonNameAddressAndInstitutionID(String name, String address, Integer institutionID) {
+	for (Accountability accountability : RootDomainObject.getInstance().getAccountabilitys()) {
+	    if(accountability instanceof ExternalContract) {
+		ExternalContract externalPerson = (ExternalContract) accountability;
+		if (externalPerson.hasPerson() && externalPerson.getPerson().getName().equals(name)
+			&& externalPerson.getInstitutionUnit().getIdInternal().equals(institutionID)
+			&& externalPerson.getPerson().getAddress().equals(address)) {
+		    return externalPerson;
+		}
+	    }	    
 	}
 	return null;
     }
@@ -155,9 +148,12 @@ public class ExternalContract extends ExternalContract_Base {
 	if (accountabilityIDs == null || accountabilityIDs.isEmpty()) {
 	    return externalPersons;
 	}
-	for (ExternalContract externalPerson : readAllExternalContracts()) {
-	    if (accountabilityIDs.contains(externalPerson.getIdInternal())) {
-		externalPersons.add(externalPerson);
+	for (Accountability accountability : RootDomainObject.getInstance().getAccountabilitys()) {
+	    if(accountability instanceof ExternalContract) {
+		ExternalContract externalPerson = (ExternalContract) accountability;	
+		if (accountabilityIDs.contains(externalPerson.getIdInternal())) {
+		    externalPersons.add(externalPerson);
+		}
 	    }
 	}
 	return externalPersons;
