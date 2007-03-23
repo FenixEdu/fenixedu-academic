@@ -138,18 +138,18 @@ public class ViewCurriculumDispatchAction extends FenixAction {
 	request.setAttribute("guidances", guidances);
 	request.setAttribute("lectures", lectures);
 	request.setAttribute("resultPublications", resultPublications);
-	request.setAttribute("books", books);
-	request.setAttribute("local-articles", localArticles);
-	request.setAttribute("national-articles", nationalArticles);
-	request.setAttribute("international-articles", internationalArticles);
-	request.setAttribute("inproceedings", inproceedings);
-	request.setAttribute("proceedings", proceedings);
-	request.setAttribute("theses", thesis);
-	request.setAttribute("manuals", manuals);
-	request.setAttribute("technicalReports", technicalReports);
-	request.setAttribute("otherPublications", otherPublication);
+	request.setAttribute("books", ResearchResultPublication.sort(books));
+	request.setAttribute("local-articles", ResearchResultPublication.sort(localArticles));
+	request.setAttribute("national-articles", ResearchResultPublication.sort(nationalArticles));
+	request.setAttribute("international-articles", ResearchResultPublication.sort(internationalArticles));
+	request.setAttribute("inproceedings", ResearchResultPublication.sort(inproceedings));
+	request.setAttribute("proceedings", ResearchResultPublication.sort(proceedings));
+	request.setAttribute("theses", ResearchResultPublication.sort(thesis));
+	request.setAttribute("manuals", ResearchResultPublication.sort(manuals));
+	request.setAttribute("technicalReports", ResearchResultPublication.sort(technicalReports));
+	request.setAttribute("otherPublications", ResearchResultPublication.sort(otherPublication));
 	request.setAttribute("unstructureds", unstructured);
-	request.setAttribute("inbooks", bookParts);
+	request.setAttribute("inbooks", ResearchResultPublication.sort(bookParts));
 
     }
 
