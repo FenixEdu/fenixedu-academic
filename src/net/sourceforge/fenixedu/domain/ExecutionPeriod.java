@@ -358,4 +358,15 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable 
 	}
 	return count;
     }
+    
+    public EnrolmentPeriod getEnrolmentPeriod(final Class<? extends EnrolmentPeriod> clazz, final DegreeCurricularPlan degreeCurricularPlan) {
+	for (final EnrolmentPeriod enrolmentPeriod : getEnrolmentPeriodSet()) {
+	    if (enrolmentPeriod.getClass().equals(clazz) && enrolmentPeriod.getDegreeCurricularPlan() == degreeCurricularPlan) {
+		return enrolmentPeriod;
+	    }
+	}
+	
+	return null;
+    }
+    
 }
