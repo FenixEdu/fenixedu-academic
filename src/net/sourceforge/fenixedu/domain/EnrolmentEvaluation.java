@@ -459,8 +459,13 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         super.setGrade((grade != null) ? grade.toUpperCase() : null);
     }
     
+    @Deprecated
     public Registration getStudent() {
-        return this.getEnrolment().getRegistration();
+        return this.getRegistration();
+    }
+    
+    public Registration getRegistration() {
+        return getEnrolment().getRegistration();
     }
     
     public MarkSheet getRectificationMarkSheet() {
