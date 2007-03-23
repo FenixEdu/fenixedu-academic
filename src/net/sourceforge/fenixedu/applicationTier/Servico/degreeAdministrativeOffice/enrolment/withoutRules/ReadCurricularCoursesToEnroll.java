@@ -29,7 +29,7 @@ public class ReadCurricularCoursesToEnroll extends Service {
 
 	final List<CurricularCourse> result = new ArrayList<CurricularCourse>();
 	for (final CurricularCourse curricularCourse : curricularCourses) {
-	    if (!studentCurricularPlan.isCurricularCourseApprovedInCurrentOrPreviousPeriod(
+	    if (!studentCurricularPlan.isCurricularCourseNotExtraApprovedInCurrentOrPreviousPeriod(
 		    curricularCourse, executionPeriod)
 		    && !studentCurricularPlan.isCurricularCourseEnrolledInExecutionPeriod(
 			    curricularCourse, executionPeriod)) {

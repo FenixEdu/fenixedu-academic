@@ -379,6 +379,21 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
 	return isApproved(course, approvedCurricularCourses);
     }
+    
+    public boolean isCurricularCourseNotExtraApprovedInCurrentOrPreviousPeriod(final CurricularCourse course,
+	    final ExecutionPeriod executionPeriod) {
+	final List studentApprovedEnrollments = getStudentEnrollmentsWithApprovedState();
+	final List<CurricularCourse> approvedCurricularCourses = new ArrayList<CurricularCourse>();
+
+	for (Iterator iter = studentApprovedEnrollments.iterator(); iter.hasNext();) {
+	    Enrolment enrolment = (Enrolment) iter.next();
+	    if (!enrolment.isExtraCurricular() && enrolment.getExecutionPeriod().compareTo(executionPeriod) <= 0) {
+		approvedCurricularCourses.add(enrolment.getCurricularCourse());
+	    }
+	}
+
+	return isApproved(course, approvedCurricularCourses);
+    }
 
     public boolean isCurricularCourseApprovedWithoutEquivalencesInCurrentOrPreviousPeriod(
 	    final CurricularCourse course, final ExecutionPeriod executionPeriod) {
