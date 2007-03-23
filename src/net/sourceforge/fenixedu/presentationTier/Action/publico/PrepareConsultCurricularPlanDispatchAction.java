@@ -128,7 +128,7 @@ public class PrepareConsultCurricularPlanDispatchAction extends FenixContextDisp
         List<LabelValueBean> types = new ArrayList<LabelValueBean>();
         types.add(new LabelValueBean("*", null));
         types.add(new LabelValueBean("Anfiteatro", (Integer.valueOf(TipoSala.ANFITEATRO)).toString()));
-        types.add(new LabelValueBean("Laboratï¿½rio", (Integer.valueOf(TipoSala.LABORATORIO)).toString()));
+        types.add(new LabelValueBean("Laboratório", (Integer.valueOf(TipoSala.LABORATORIO)).toString()));
         types.add(new LabelValueBean("Plana", (Integer.valueOf(TipoSala.PLANA)).toString()));
         request.setAttribute("publico.types", types);
 
