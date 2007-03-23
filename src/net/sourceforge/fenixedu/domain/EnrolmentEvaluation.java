@@ -465,7 +465,11 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
     }
     
     public Registration getRegistration() {
-        return getEnrolment().getRegistration();
+        return getStudentCurricularPlan().getRegistration();
+    }
+    
+    public StudentCurricularPlan getStudentCurricularPlan() {
+        return getEnrolment().getStudentCurricularPlan();
     }
     
     public MarkSheet getRectificationMarkSheet() {
