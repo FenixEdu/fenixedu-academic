@@ -52,21 +52,25 @@ public class ExternalUnitsDispatchAction extends FenixDispatchAction {
 	    searchBean.clearResults();
 	    searchUnits(searchBean);
 	    searchExternalCurricularCourses(searchBean);
-	    Collections.sort(searchBean.getResults(), new BeanComparator("name"));
+	    Collections.sort(searchBean.getResults(), new BeanComparator("fullName"));
 	    searchBean.setEarthUnit(UnitUtils.readEarthUnit());
 	}
 
 	return mapping.findForward("searchExternalUnits");
     }
 
+    private String buildNameToSearch(final String name) {
+	return "%" + name.replaceAll("[ ]", "%") + "%";
+    }
+    
     private void searchUnits(final ExternalUnitsSearchBean searchBean) {
-	for (final Unit unit : UnitUtils.readExternalUnitsByNameAndTypesStartingAtEarth(searchBean.getUnitName(), getUnitTypes(searchBean))) {
+	for (final Unit unit : UnitUtils.readExternalUnitsByNameAndTypesStartingAtEarth(buildNameToSearch(searchBean.getUnitName()), getUnitTypes(searchBean))) {
 	    searchBean.add(new ExternalUnitResultBean(unit));
 	}
     }
     
     private void searchExternalCurricularCourses(final ExternalUnitsSearchBean searchBean) {
-	for (final ExternalCurricularCourse externalCurricularCourse : ExternalCurricularCourse.readByName(searchBean.getUnitName())) {
+	for (final ExternalCurricularCourse externalCurricularCourse : ExternalCurricularCourse.readByName(buildNameToSearch(searchBean.getUnitName()))) {
 	    searchBean.add(new ExternalCurricularCourseResultBean(externalCurricularCourse));
 	}
     }
