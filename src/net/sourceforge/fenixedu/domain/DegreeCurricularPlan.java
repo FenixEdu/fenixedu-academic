@@ -70,8 +70,8 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
 	public int compare(DegreeCurricularPlan degreeCurricularPlan1,
 		DegreeCurricularPlan degreeCurricularPlan2) {
-	    final int degreeTypeCompare = degreeCurricularPlan1.getDegree().getDegreeType().toString()
-		    .compareTo(degreeCurricularPlan2.getDegree().getDegreeType().toString());
+	    final int degreeTypeCompare = degreeCurricularPlan1.getDegreeType().toString()
+		    .compareTo(degreeCurricularPlan2.getDegreeType().toString());
 	    if (degreeTypeCompare != 0) {
 		return degreeTypeCompare;
 	    }
@@ -183,11 +183,11 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     private DegreeType getCourseGroupType() {
-	switch (getDegree().getDegreeType()) {
+	switch (getDegreeType()) {
 	case BOLONHA_DEGREE:
 	case BOLONHA_MASTER_DEGREE:
 	case BOLONHA_INTEGRATED_MASTER_DEGREE:
-	    return getDegree().getDegreeType();
+	    return getDegreeType();
 	default:
 	    return null;
 	}
@@ -1198,7 +1198,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     private CurricularPeriodInfoDTO[] buildCurricularPeriodInfoDTOsFor(int year, int semester) {
 	final CurricularPeriodInfoDTO[] curricularPeriodInfos;
-	if (getDegree().getDegreeType().getYears() > 1) {
+	if (getDegreeType().getYears() > 1) {
 
 	    curricularPeriodInfos = new CurricularPeriodInfoDTO[] {
 		    new CurricularPeriodInfoDTO(year, CurricularPeriodType.YEAR),
@@ -1458,6 +1458,14 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
     
     
+    public DegreeType getDegreeType() {
+	return getDegree().getDegreeType();
+    }
+    
+    public boolean isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegree() {
+	return getDegreeType().isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegree();
+    }
+
     public CourseGroup getFirstCycleCourseGroup() {
 	return isBolonha() ? getRoot().getFirstCycleCourseGroup() : null;
     }
