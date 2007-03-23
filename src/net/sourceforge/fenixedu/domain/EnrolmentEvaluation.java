@@ -468,6 +468,10 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         return getStudentCurricularPlan().getRegistration();
     }
     
+    public DegreeCurricularPlan getDegreeCurricularPlan() {
+        return getStudentCurricularPlan().getDegreeCurricularPlan();
+    }
+    
     public StudentCurricularPlan getStudentCurricularPlan() {
         return getEnrolment().getStudentCurricularPlan();
     }
