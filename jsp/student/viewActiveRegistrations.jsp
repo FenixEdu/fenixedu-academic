@@ -6,6 +6,7 @@
 <html:xhtml/>
 
 <h3 class="mtop15 mbottom025"><bean:message key="label.studentRegistrations" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
+<p><span class="error"><!-- Error messages go here --><html:errors /></span></p>
 
 <logic:notEmpty name="registrations">
 	<fr:view name="registrations" schema="student.registrationsWithStartData" >
