@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.Date;
 
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 
 import org.joda.time.DateTime;
@@ -25,6 +26,10 @@ public abstract class EnrolmentPeriod extends EnrolmentPeriod_Base {
 	    final ExecutionPeriod executionPeriod, final Date startDate, final Date endDate) {
 	setDegreeCurricularPlan(degreeCurricularPlan);
 	setExecutionPeriod(executionPeriod);
+	
+	if (!endDate.after(startDate)) {
+	    throw new DomainException("EnrolmentPeriod.end.date.must.be.after.start.date");
+	}
 	setStartDate(startDate);
 	setEndDate(endDate);
     }
