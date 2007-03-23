@@ -14,7 +14,16 @@ public class ResearchScientificJournalCreationBean implements Serializable {
     private MultiLanguageString scientificJournalName;
     private ResearchActivityParticipationRole role;
     private ResearchActivityLocationType locationType;
+    private String issn;
     
+    public String getIssn() {
+        return issn;
+    }
+
+    public void setIssn(String issn) {
+        this.issn = issn;
+    }
+
     public ResearchScientificJournalCreationBean() {
     	setScientificJournal(null);
     }

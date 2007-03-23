@@ -1,24 +1,22 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.io.Serializable;
-import java.util.Comparator;
 
-import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.research.activity.ResearchActivityLocationType;
 
 public class MergeScientificJournalPageContainerBean extends MergeResearchActivityPageContainerBean implements Serializable{
     
     private String name;
-    private Integer issn;
+    private String issn;
     private ResearchActivityLocationType researchActivityLocationType;
     private String url;
 
     
-    public Integer getIssn() {
+    public String getIssn() {
         return this.issn;
     }
 
-    public void setIssn(Integer issn) {
+    public void setIssn(String issn) {
         this.issn = issn;
     }
 

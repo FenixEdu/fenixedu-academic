@@ -3,13 +3,11 @@ package net.sourceforge.fenixedu.presentationTier.Action.research.activity;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.dataTransferObject.research.activity.ResearchEventCreationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.activity.ResearchScientificJournalCreationBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.research.activity.ScientificJournal;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
@@ -90,7 +88,7 @@ public class CreateScientificJournalDispatchAction extends FenixDispatchAction {
         
     	ScientificJournal journal = null;
         try {
-        	journal = (ScientificJournal) executeService(request, "CreateScientificJournal", new Object[] {bean.getScientificJournalName(), bean.getLocationType() } );
+        	journal = (ScientificJournal) executeService(request, "CreateScientificJournal", new Object[] {bean.getScientificJournalName(), bean.getIssn(), bean.getLocationType() } );
         	executeService(request,"CreateResearchActivityParticipation", new Object[] { journal, bean.getRole(), person});
         } catch (DomainException e) {
         	addActionMessage(request, e.getMessage(), null);

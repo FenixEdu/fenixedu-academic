@@ -4105,7 +4105,7 @@ class net.sourceforge.fenixedu.domain.research.activity.Meeting extends net.sour
 }
 
 class net.sourceforge.fenixedu.domain.research.activity.ScientificJournal extends net.sourceforge.fenixedu.domain.research.activity.ResearchActivity{
-	Integer issn;
+	String issn;
     String url;
 	ResearchActivityLocationType locationType;
 }
@@ -9341,7 +9341,7 @@ relation ProtocolHistoryProtocol {
 relation ProtocolFileProtocol {
 	net.sourceforge.fenixedu.domain.protocols.Protocol playsRole protocol;
 	net.sourceforge.fenixedu.domain.protocols.ProtocolFile playsRole protocolFiles{
-		multiplicity*;
+		multiplicity *;
 	}	
 }
 

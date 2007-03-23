@@ -12,7 +12,7 @@ public class CreateJournalIssue extends Service {
 	ScientificJournal journal;
 	if(bean.getJournal()==null) {
 	    CreateScientificJournal service = new CreateScientificJournal();
-	    journal = service.run(bean.getScientificJournalName(), bean.getLocation());
+	    journal = service.run(bean.getScientificJournalName(), bean.getIssn(), bean.getLocation());
 	}
 	else {
 	    journal = bean.getJournal();
