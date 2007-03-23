@@ -14,14 +14,10 @@ import org.joda.time.YearMonthDay;
 public class ResearchEventCreationBean implements Serializable {
 	private DomainReference<Event> event;
     private ResearchActivityParticipationRole role;
-    private String userInput;
-    private MultiLanguageString eventName;
+    private String eventName;
     private EventType eventType;
     private ResearchActivityLocationType locationType;
-    private String eventLocation;
-    private YearMonthDay startDate;
-    private YearMonthDay endDate;
-    
+    private String url;
 
     public ResearchEventCreationBean() {
     	setEvent(null);
@@ -34,22 +30,6 @@ public class ResearchEventCreationBean implements Serializable {
     public void setRole(ResearchActivityParticipationRole role) {
         this.role = role;
     }
-
-    public YearMonthDay getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(YearMonthDay endDate) {
-        this.endDate = endDate;
-    }
-
-    public String getEventLocation() {
-        return eventLocation;
-    }
-
-    public void setEventLocation(String eventLocation) {
-        this.eventLocation = eventLocation;
-    }
     
     public ResearchActivityLocationType getLocationType() {
         return locationType;
@@ -58,30 +38,13 @@ public class ResearchEventCreationBean implements Serializable {
     public void setLocationType(ResearchActivityLocationType locationType) {
         this.locationType = locationType;
     }
-
-    public YearMonthDay getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(YearMonthDay startDate) {
-        this.startDate = startDate;
-    }
     
-    public MultiLanguageString getEventName() {
+    public String getEventName() {
         return eventName;
     }
     
-    public void setEventName(MultiLanguageString eventName) {
+    public void setEventName(String eventName) {
         this.eventName = eventName;
-    }
-    
-    public String getUserInput() {
-        return userInput;
-    }
-
-    public void setUserInput(String userInput) {
-    	this.userInput = userInput;
-        this.eventName = new MultiLanguageString(this.userInput);
     }
 
     public EventType getEventType() {
@@ -99,5 +62,13 @@ public class ResearchEventCreationBean implements Serializable {
 	public void setEvent(Event event) {
 		this.event = new DomainReference<Event>(event);
 	}
+	
+	public String getUrl() {
+        return url;
+    }
+    
+    public void setUrl(String url) {
+        this.url = url;
+    }
     
 }

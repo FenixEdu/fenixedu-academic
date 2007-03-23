@@ -9131,7 +9131,12 @@
 			<chain name="ResearcherAuthorization" />
 		</filterChains>
 	</service> 
-
+		<service>
+		<name>CreateResearchEventEdition</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.activity.CreateResearchEventEdition</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+	</service>
 	<service>
 		<name>CreateJournalIssue</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.activity.CreateJournalIssue</implementationClass>
@@ -11418,7 +11423,7 @@
         <filterChains>
         	<chain name="AcademicAdministrativeOfficeAuthorization"></chain>
         </filterChains>     
-    </service>
+    </service>   
     <service>
     	<name>CreateExternalEnrolments</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.enrolment.CreateExternalEnrolments</implementationClass>
@@ -11632,7 +11637,7 @@
         <filterChains>
             <chain name="CoordinatorDegreeCurricularPlanAuthorization"/>
         </filterChains>
-    </service>
+    </service>   
     <service>
         <name>ApproveThesisProposal</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.thesis.ApproveThesisProposal</implementationClass>
@@ -11677,8 +11682,8 @@
         <filterChains>
             <chain name="CoordinatorDegreeCurricularPlanAuthorization"/>
         </filterChains>
-    </service>
-    <service>
+    </service>   
+	<service>
         <name>CreateThesisDissertationFile</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.thesis.CreateThesisDissertationFile</implementationClass>
         <description></description>

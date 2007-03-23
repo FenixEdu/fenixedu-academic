@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.research.activity.Event;
+import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFile.FileResultPermittedGroupType;
 import net.sourceforge.fenixedu.domain.research.result.ResultEventAssociation.ResultEventAssociationRole;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
@@ -113,7 +113,7 @@ public abstract class ResearchResult extends ResearchResult_Base {
     }
 
     @Checked("ResultPredicates.writePredicate")
-    public ResultEventAssociation addEventAssociation(Event event, ResultEventAssociationRole role) {
+    public ResultEventAssociation addEventAssociation(EventEdition event, ResultEventAssociationRole role) {
         final ResultEventAssociation association = new ResultEventAssociation(this, event, role);
         updateModifiedByAndDate();
         return association;
@@ -225,7 +225,7 @@ public abstract class ResearchResult extends ResearchResult_Base {
      * Returns true if exists an association between result and the given event
      * and role.
      */
-    public boolean hasAssociationWithEventRole(Event event, ResultEventAssociationRole role) {
+    public boolean hasAssociationWithEventRole(EventEdition event, ResultEventAssociationRole role) {
         if (event != null && role != null && this.hasAnyResultEventAssociations()) {
             final List<ResultEventAssociation> list = this.getResultEventAssociations();
 

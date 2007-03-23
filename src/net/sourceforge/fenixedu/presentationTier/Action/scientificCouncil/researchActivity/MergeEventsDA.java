@@ -9,9 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.MergeEventPageContainerBean;
 import net.sourceforge.fenixedu.dataTransferObject.MergeResearchActivityPageContainerBean;
-import net.sourceforge.fenixedu.dataTransferObject.MergeScientificJournalPageContainerBean;
 import net.sourceforge.fenixedu.domain.research.activity.Event;
-import net.sourceforge.fenixedu.domain.research.activity.ScientificJournal;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -20,46 +18,42 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 public class MergeEventsDA extends MergeResearchActivityDA {
-    
-    public ActionForward chooseScientificJournal(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	MergeEventPageContainerBean researchActivityPageContainerBean = 
-	    (MergeEventPageContainerBean) getRenderedObject("mergeList");
-	Event event = (Event) researchActivityPageContainerBean.getSelected();
-	researchActivityPageContainerBean.setSelected(null);
-	
-	copyProperties(event, researchActivityPageContainerBean);
-	
-	RenderUtils.invalidateViewState();
-	request.setAttribute("mergeList", researchActivityPageContainerBean);
-	return mapping.findForward("show-research-activity-merge-list");
-    }
 
-    private void copyProperties(Event event, MergeEventPageContainerBean researchActivityPageContainerBean) {
-	researchActivityPageContainerBean.setName(event.getName());
-	researchActivityPageContainerBean.setResearchActivityLocationType(event.getLocationType());
-	researchActivityPageContainerBean.setEndDate(event.getEndDate());
-	researchActivityPageContainerBean.setStartDate(event.getStartDate());
-	researchActivityPageContainerBean.setEventType(event.getEventType());
-	researchActivityPageContainerBean.setEventLocation(event.getEventLocation());
-    }
+	public ActionForward chooseScientificJournal(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
+		MergeEventPageContainerBean researchActivityPageContainerBean = (MergeEventPageContainerBean) getRenderedObject("mergeList");
+		Event event = (Event) researchActivityPageContainerBean.getSelected();
+		researchActivityPageContainerBean.setSelected(null);
 
+		copyProperties(event, researchActivityPageContainerBean);
 
-    @Override
-    protected MergeResearchActivityPageContainerBean getNewBean() {
-	return new MergeEventPageContainerBean();
-    }
+		RenderUtils.invalidateViewState();
+		request.setAttribute("mergeList", researchActivityPageContainerBean);
+		return mapping.findForward("show-research-activity-merge-list");
+	}
 
-    @Override
-    protected String getServiceName() {
-	return "MergeScientificJournals";
-    }
+	private void copyProperties(Event event, MergeEventPageContainerBean researchActivityPageContainerBean) {
+		researchActivityPageContainerBean.setName(event.getName());
+		researchActivityPageContainerBean.setResearchActivityLocationType(event.getLocationType());
+		researchActivityPageContainerBean.setEventType(event.getEventType());
 
-    @Override
-    protected List getObjects() {
-	List<Event> events = Event.readAll();
-	Collections.sort(events, new BeanComparator("name", Collator.getInstance()));
-        return events;
-    }
+	}
+
+	@Override
+	protected MergeResearchActivityPageContainerBean getNewBean() {
+		return new MergeEventPageContainerBean();
+	}
+
+	@Override
+	protected String getServiceName() {
+		return "MergeScientificJournals";
+	}
+
+	@Override
+	protected List getObjects() {
+		List<Event> events = Event.readAll();
+		Collections.sort(events, new BeanComparator("name", Collator.getInstance()));
+		return events;
+	}
 
 }

@@ -7,7 +7,7 @@
 
 <logic:present role="RESEARCHER">		
 	<bean:define id="researchActivityId" name="researchActivity" property="idInternal" toScope="request"/>
-	<bean:define id="researchActivityName" name="researchActivity" property="name.content" toScope="request"/>
+	<bean:define id="researchActivityName" name="researchActivity" property="name" toScope="request"/>
 	<bean:define id="parameter" value="<%= "researchActivityId=" +  researchActivityId%>" toScope="request"/>
 	<bean:define id="activityType" name="researchActivity" property="class.simpleName" />
 

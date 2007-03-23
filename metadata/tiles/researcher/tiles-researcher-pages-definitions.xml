@@ -148,5 +148,12 @@
     <definition name="edit-journal" extends="researcher.masterPage">
        <put name="body" value="/researcher/result/publications/editJournal.jsp"/>  
     </definition>    
+    
+    <definition name="show.event" extends="researcher.masterPage">
+       <put name="body" value="/researcher/showEvent.jsp"/>  
+    </definition>
 
+	<definition name="edit-event" extends="researcher.masterPage">
+       <put name="body" value="/researcher/result/publications/editEvent.jsp"/>  
+    </definition>
 </tiles-definitions>

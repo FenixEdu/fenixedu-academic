@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.research.result.publication;
 
 import net.sourceforge.fenixedu.injectionCode.Checked;
+import net.sourceforge.fenixedu.util.Month;
 import bibtex.dom.BibtexEntry;
 
 /**
@@ -15,10 +16,26 @@ public abstract class ConferenceArticles extends ConferenceArticles_Base {
 
     @Checked("ResultPredicates.writePredicate")
     public void delete() {
-	super.delete();
+		if(this.hasEventConferenceArticlesAssociation()) {
+			this.getEventConferenceArticlesAssociation().delete();
+			this.setEventConferenceArticlesAssociation(null);
+		}
+		super.delete();
     }
 
-    @Override
+	public Month getOldMonth() {
+		return super.getMonth();
+	}
+	
+	public String getOldOrganization() {
+		return super.getOrganization();
+	}
+	
+	public Integer getOldYear() {
+		return super.getYear();
+	}
+	
+	@Override
     public abstract BibtexEntry exportToBibtexEntry();
 
     @Override

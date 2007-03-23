@@ -57,6 +57,7 @@
 						<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 					</fr:layout>
 				</fr:edit>
+				<br/>
 				<html:submit><bean:message bundle="RESEARCHER_RESOURCES" key="button.finish"/></html:submit>
 				<html:cancel><bean:message bundle="RESEARCHER_RESOURCES" key="button.cancel"/></html:cancel>	
 			</fr:form>

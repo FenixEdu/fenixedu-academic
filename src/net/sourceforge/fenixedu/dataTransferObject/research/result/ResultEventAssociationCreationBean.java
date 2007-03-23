@@ -3,14 +3,14 @@ package net.sourceforge.fenixedu.dataTransferObject.research.result;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.research.activity.Event;
+import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
 import net.sourceforge.fenixedu.domain.research.activity.EventType;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.ResultEventAssociation.ResultEventAssociationRole;
 
 public class ResultEventAssociationCreationBean implements Serializable {
     private DomainReference<ResearchResult> result;
-    private DomainReference<Event> event;
+    private DomainReference<EventEdition> event;
     private ResultEventAssociationRole role;
     private String eventNameMLS;
     private String eventNameStr;
@@ -41,12 +41,12 @@ public class ResultEventAssociationCreationBean implements Serializable {
         this.eventNameMLS = name;
     }
 
-    public Event getEvent() {
+    public EventEdition getEvent() {
         return (this.event == null) ? null : this.event.getObject();
     }
 
-    public void setEvent(Event event) {
-        this.event = (event != null) ? new DomainReference<Event>(event) : null;
+    public void setEvent(EventEdition event) {
+        this.event = (event != null) ? new DomainReference<EventEdition>(event) : null;
     }
     
     public ResearchResult getResult() {

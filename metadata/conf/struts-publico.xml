@@ -864,6 +864,12 @@
 	        	 type="net.sourceforge.fenixedu.presentationTier.Action.research.ScientificJournalsManagement">
 		    <forward name="showJournal" path="show.journal"/>
 	</action>
+	
+	<action path="/showEvents"
+	        	 parameter="method"
+	        	 type="net.sourceforge.fenixedu.presentationTier.Action.research.ResearchEventManagement">
+		    <forward name="showEvent" path="show.event"/>
+	</action>
 
 	<!-- =========== RSS ======================== -->
 		<action path="/announcementsRSS"

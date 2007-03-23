@@ -172,12 +172,14 @@ public class EditResearchActivityDispatchAction extends ActivitiesManagementDisp
 		
 		final Integer oid = Integer.parseInt(request.getParameter("participationId"));
 		Participation participation = (Participation) RootDomainObject.readDomainObjectByOID(Participation.class, oid);
-
-		try{
-			executeService(request, "RemoveResearchActivityParticipation", new Object[] { person, participation, researchActivity});
-		} catch (DomainException e) {
-        	addActionMessage(request, e.getMessage(), null);
-        }
+		
+		if(participation != null) {
+			try{
+				executeService(request, "RemoveResearchActivityParticipation", new Object[] { person, participation, researchActivity});
+			} catch (DomainException e) {
+	        	addActionMessage(request, e.getMessage(), null);
+	        }
+		}
 		
 		return prepareEditParticipants(mapping, form, request, response);
 	}

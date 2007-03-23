@@ -3,12 +3,12 @@ package net.sourceforge.fenixedu.dataTransferObject.research;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.research.activity.Event;
+import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
 import net.sourceforge.fenixedu.domain.research.project.ProjectEventAssociation.ProjectEventAssociationRole;
 
 public class ProjectEventAssociationSimpleCreationBean implements Serializable {
   
-    private DomainReference<Event> event;
+    private DomainReference<EventEdition> event;
     private ProjectEventAssociationRole role;
     private String eventName;
 
@@ -28,12 +28,12 @@ public class ProjectEventAssociationSimpleCreationBean implements Serializable {
         this.eventName = name;
     }
 
-    public Event getEvent() {
+    public EventEdition getEvent() {
         return (this.event == null) ? null : this.event.getObject();
     }
 
-    public void setEvent(Event event) {
-        this.event = (event != null) ? new DomainReference<Event>(event) : null;
+    public void setEvent(EventEdition event) {
+        this.event = (event != null) ? new DomainReference<EventEdition>(event) : null;
     }
 
 }

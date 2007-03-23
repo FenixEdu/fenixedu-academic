@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
 import net.sourceforge.fenixedu.domain.research.activity.Cooperation;
 import net.sourceforge.fenixedu.domain.research.activity.CooperationType;
 import net.sourceforge.fenixedu.domain.research.activity.Participation.ResearchActivityParticipationRole;
@@ -13,7 +14,7 @@ import org.joda.time.YearMonthDay;
 public class ResearchCooperationCreationBean implements Serializable {
 			 
 	private DomainReference<Cooperation> cooperation;
-    private DomainReference<Unit> unit;
+    private DomainReference<UnitName> unitNameObject;
     private ResearchActivityParticipationRole role;
     private CooperationType type;
     private String cooperationName;
@@ -24,7 +25,7 @@ public class ResearchCooperationCreationBean implements Serializable {
     
     public ResearchCooperationCreationBean() {
     	setCooperation(null);
-    	setUnit(null);
+    	setUnitNameObject(null);
     } 
 	
     public Cooperation getCooperation() {
@@ -109,11 +110,24 @@ public class ResearchCooperationCreationBean implements Serializable {
     	return unitName;
     }
     
+    public UnitName getUnitNameObject() {
+    	return unitNameObject.getObject();
+    }
+    
+    public void setUnitNameObject(UnitName unitName) {
+    	this.unitNameObject = new DomainReference<UnitName>(unitName);
+    }
+    
     public Unit getUnit() {
-        return this.unit.getObject();
+    	UnitName unitName = getUnitNameObject();
+    	return (unitName!=null) ? unitName.getUnit() : null; 
     }
     
     public void setUnit (Unit organization) {
-        this.unit = new DomainReference<Unit>(organization);
+    	UnitName unitName = null;
+    	if(organization!=null)  {
+    		unitName = organization.getUnitName();
+    	}
+    	setUnitNameObject(unitName);
     } 
 }

@@ -182,9 +182,9 @@ valueType net.sourceforge.fenixedu.domain.RequestState															as RequestS
 valueType net.sourceforge.fenixedu.domain.assiduousness.util.ScheduleClockingType								as ScheduleClockingType;
 valueType net.sourceforge.fenixedu.domain.util.EmailAddressList								                    as EmailAddressList;
 valueType net.sourceforge.fenixedu.domain.thesis.ThesisState								                    as ThesisState;
-valueType net.sourceforge.fenixedu.domain.CompetenceCourseType													as CompetenceCourseType;
-valueType net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType							            as ThesisParticipationType;
-valueType net.sourceforge.fenixedu.domain.vigilancy.AttendingStatus												as AttendingStatus;						                    
+valueType net.sourceforge.fenixedu.domain.CompetenceCourseType								                    as CompetenceCourseType;
+valueType net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType							                        as ThesisParticipationType;
+valueType net.sourceforge.fenixedu.domain.vigilancy.AttendingStatus												as AttendingStatus;
 valueType net.sourceforge.fenixedu.domain.protocols.util.ProtocolAction											as ProtocolAction;
 
 /*
@@ -374,7 +374,7 @@ class net.sourceforge.fenixedu.domain.accounting.Event extends net.sourceforge.f
 
 		class net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent extends net.sourceforge.fenixedu.domain.accounting.events.AnnualEvent {
 		}
-
+		
 
 class net.sourceforge.fenixedu.domain.accounting.Exemption extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyEvent;
@@ -1424,7 +1424,7 @@ class net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule extends
 		
 		class net.sourceforge.fenixedu.domain.Enrolment extends net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine {
             String createdBy;
-	        	DateTime creationDateDateTime;
+        	DateTime creationDateDateTime;
             Integer keyExecutionPeriod;
             Integer keyStudentCurricularPlan;
             EnrollmentState enrollmentState;
@@ -1468,7 +1468,6 @@ class net.sourceforge.fenixedu.domain.EmailAddress extends net.sourceforge.fenix
 	String value;
 	Boolean isInstitutionalEmail;
 }
-
 
 class net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment extends net.sourceforge.fenixedu.domain.DomainObject {
 	String grade;
@@ -2141,7 +2140,7 @@ class net.sourceforge.fenixedu.domain.File extends net.sourceforge.fenixedu.doma
 		Integer keyParkingDocument;
 		Integer keyNewParkingDocument;
 	}
-	
+
 	class net.sourceforge.fenixedu.domain.protocols.ProtocolFile extends net.sourceforge.fenixedu.domain.File {
 		Integer keyProtocol;
 	}
@@ -3291,7 +3290,6 @@ class net.sourceforge.fenixedu.domain.Teacher extends net.sourceforge.fenixedu.d
 	Integer keyPublicationsNumber;
 	Integer keyWeeklyOcupation;
 }
-
 class net.sourceforge.fenixedu.domain.teacher.TeacherLegalRegimen extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyCategory;
 	Integer keyTeacher;
@@ -3710,7 +3708,7 @@ class net.sourceforge.fenixedu.domain.TeacherPersonalExpectationPeriod extends n
 class net.sourceforge.fenixedu.domain.ExpectationEvaluationGroup extends net.sourceforge.fenixedu.domain.DomainObject {         
 	Integer keyAppraiser;
 	Integer keyEvaluated;
-	Integer keyExecutionYear;	
+    Integer keyExecutionYear;
 }
 
 class net.sourceforge.fenixedu.domain.assiduousness.Assiduousness extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -3999,18 +3997,18 @@ class net.sourceforge.fenixedu.domain.research.result.ResearchResult extends net
 			
 			Integer keyArticleAssociation;
 		}
-		
 		class net.sourceforge.fenixedu.domain.research.result.publication.ConferenceArticles extends net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication {
 			ScopeType scope;
 			String conference;
+			Integer keyEventConferenceArticlesAssociation;
 		}
-			class net.sourceforge.fenixedu.domain.research.result.publication.Inproceedings extends net.sourceforge.fenixedu.domain.research.result.publication.ConferenceArticles {
+		class net.sourceforge.fenixedu.domain.research.result.publication.Inproceedings extends net.sourceforge.fenixedu.domain.research.result.publication.ConferenceArticles {
 			String address;
 			Integer firstPage;
 			Integer lastPage;
 			String language;
 		}
-			class net.sourceforge.fenixedu.domain.research.result.publication.Proceedings extends net.sourceforge.fenixedu.domain.research.result.publication.ConferenceArticles {
+		class net.sourceforge.fenixedu.domain.research.result.publication.Proceedings extends net.sourceforge.fenixedu.domain.research.result.publication.ConferenceArticles {
 			String address;
 		}
 		class net.sourceforge.fenixedu.domain.research.result.publication.Thesis extends net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication {
@@ -4094,14 +4092,24 @@ class net.sourceforge.fenixedu.domain.research.activity.Participation extends ne
 
 class net.sourceforge.fenixedu.domain.research.activity.Event extends net.sourceforge.fenixedu.domain.research.activity.ResearchActivity {
 	EventType eventType;
+	String url;
 	ResearchActivityLocationType locationType;
+}
+
+class net.sourceforge.fenixedu.domain.research.activity.EventEdition extends net.sourceforge.fenixedu.domain.DomainObject {
+	String edition;
 	String eventLocation;
 	YearMonthDay startDate;
 	YearMonthDay endDate;
+	String organization;
+	String url;
+	Integer keyEvent;
 }
 
-class net.sourceforge.fenixedu.domain.research.activity.Meeting extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer keyEvent;
+class net.sourceforge.fenixedu.domain.research.activity.EventConferenceArticlesAssociation extends net.sourceforge.fenixedu.domain.DomainObject{
+	Integer keyEventEdition;
+	Integer keyPerson;
+	Integer keyConferenceArticle;
 }
 
 class net.sourceforge.fenixedu.domain.research.activity.ScientificJournal extends net.sourceforge.fenixedu.domain.research.activity.ResearchActivity{
@@ -4141,7 +4149,7 @@ class net.sourceforge.fenixedu.domain.research.activity.Cooperation extends net.
 class net.sourceforge.fenixedu.domain.research.project.ProjectEventAssociation extends net.sourceforge.fenixedu.domain.DomainObject{
 	ProjectEventAssociationRole role;
 	Integer keyProject;
-	Integer keyEvent;
+	Integer keyEventEdition;
 }
 
 class net.sourceforge.fenixedu.domain.research.ResearchInterest extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -4771,14 +4779,14 @@ class net.sourceforge.fenixedu.domain.vigilancy.Vigilancy extends net.sourceforg
 	}
 	
 	class net.sourceforge.fenixedu.domain.vigilancy.OtherCourseVigilancy extends net.sourceforge.fenixedu.domain.vigilancy.Vigilancy {
-		Boolean confirmed;
+	Boolean confirmed;
 	}
 	
 class net.sourceforge.fenixedu.domain.vigilancy.VigilantBound extends net.sourceforge.fenixedu.domain.DomainObject {
   Boolean convokable;
   String justification;
   
-  Integer keyVigilant;
+	Integer keyVigilant;
   Integer keyVigilantGroup;
 }
 
@@ -4978,7 +4986,7 @@ class net.sourceforge.fenixedu.domain.thesis.Thesis extends net.sourceforge.feni
 	DateTime approval;
 	DateTime confirmation;
 	DateTime evaluation;
-
+	
 	Integer keyDissertation;
 	Integer keyExtendedAbstract;
 	
@@ -5008,7 +5016,6 @@ class net.sourceforge.fenixedu.domain.student.RegistrationNumber extends net.sou
 	Integer keyRegistration;
 	Integer number;
 }
-
 
 /*
  * Relations definitions
@@ -8101,14 +8108,7 @@ relation ResultEventAssociationEvent {
 	net.sourceforge.fenixedu.domain.research.result.ResultEventAssociation playsRole resultEventAssociations {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.research.activity.Event playsRole event;
-}
-
-relation EventMeeting {
-	net.sourceforge.fenixedu.domain.research.activity.Event playsRole event;
-	net.sourceforge.fenixedu.domain.research.activity.Meeting playsRole meetins {
-		multiplicity *;
-	}
+	net.sourceforge.fenixedu.domain.research.activity.EventEdition playsRole event;
 }
 
 relation JournalIssueScientificJournal {
@@ -8693,6 +8693,32 @@ relation ParticipationResearchActivity {
 	}
 }
 
+relation EventEventEdition {
+	net.sourceforge.fenixedu.domain.research.activity.Event playsRole event;
+	net.sourceforge.fenixedu.domain.research.activity.EventEdition playsRole eventEditions {
+		multiplicity *;
+	}
+}
+
+relation EventEditionEventConferenceArticlesAssociation {
+	net.sourceforge.fenixedu.domain.research.activity.EventEdition playsRole eventEdition;
+	net.sourceforge.fenixedu.domain.research.activity.EventConferenceArticlesAssociation playsRole eventConferenceArticlesAssociations{
+		multiplicity *;
+	}
+}
+
+relation ConferenceArticlesEventConferenceArticlesAssociation {
+	net.sourceforge.fenixedu.domain.research.result.publication.ConferenceArticles playsRole conferenceArticle;
+	net.sourceforge.fenixedu.domain.research.activity.EventConferenceArticlesAssociation playsRole eventConferenceArticlesAssociation;
+}
+
+relation PersonEventConferenceArticlesAssociation {
+	net.sourceforge.fenixedu.domain.Person playsRole person;
+	net.sourceforge.fenixedu.domain.research.activity.EventConferenceArticlesAssociation playsRole eventConferenceArticlesAssociations {
+		multiplicity *;
+	}
+}
+
 relation CooperationUnit {
 	net.sourceforge.fenixedu.domain.research.activity.Cooperation playsRole cooperation {
 		multiplicity *;
@@ -8718,7 +8744,7 @@ relation EventProjectEventAssociation{
 	net.sourceforge.fenixedu.domain.research.project.ProjectEventAssociation playsRole associatedProjects {
 		multiplicity *;
 	}	
-	net.sourceforge.fenixedu.domain.research.activity.Event playsRole event;
+	net.sourceforge.fenixedu.domain.research.activity.EventEdition playsRole eventEdition;
 }
 
 relation CronScriptStateCronScriptInvocation {
@@ -10568,13 +10594,6 @@ relation RootDomainObjectResearchActivity {
 	}
 }
 
-relation RootDomainObjectMeeting {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.research.activity.Meeting playsRole meetings {
-		multiplicity *;
-	}
-}
-
 relation RootDomainObjectArticleAssociation {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.research.activity.ArticleAssociation playsRole articleAssociations {
@@ -10588,6 +10607,21 @@ relation RootDomainObjectJournalIssues {
 		multiplicity *;
 	}
 }
+
+relation RootDomainObjectEventEdition {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.research.activity.EventEdition playsRole eventEditions {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectEventConferenceArticlesAssociation {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.research.activity.EventConferenceArticlesAssociation playsRole eventConferenceArticlesAssociations {
+		multiplicity *;
+	}
+}
+
 relation RootDomainObjectExportGrouping {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.ExportGrouping playsRole exportGroupings {
@@ -12325,7 +12359,6 @@ relation ExternalRegistrationDataRegistration {
 	net.sourceforge.fenixedu.domain.student.ExternalRegistrationData playsRole externalRegistrationData;
 	net.sourceforge.fenixedu.domain.student.Registration playsRole registration;
 }
-
 relation RootDomainObjectExpectationEvaluationGroup {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.ExpectationEvaluationGroup playsRole expectationEvaluationGroups {

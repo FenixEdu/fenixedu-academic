@@ -77,24 +77,28 @@ public class ActivitiesManagementDispatchAction extends FenixDispatchAction {
     public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
     	Person person = getLoggedPerson(request);
-    	ResearchActivity activity = getResearchActivity(request);
     	String forwardTo = request.getParameter("forwardTo");
-        
-		if(request.getParameter("cancel") != null) {
-			request.setAttribute("loggedPerson", person);
-			request.setAttribute("researchActivity", activity);
-			return mapping.findForward(forwardTo);
-		}
-        
-        if(request.getParameter("confirm") != null) {
-        	try {
-        		executeService(request, "RemoveResearchActivityParticipation", new Object[] { person, activity });
-        	} catch (Exception e) {
-				addActionMessage(request, e.getMessage());
+    	ResearchActivity activity = getResearchActivity(request);
+    	
+        if(activity != null) {
+			if(request.getParameter("cancel") != null) {
+				request.setAttribute("loggedPerson", person);
+				request.setAttribute("researchActivity", activity);
 			}
+			else if(request.getParameter("confirm") != null) {
+	        	try {
+	        		executeService(request, "RemoveResearchActivityParticipation", new Object[] { person, activity });
+	        	} catch (Exception e) {
+					addActionMessage(request, e.getMessage());
+				}
+	        	return listActivities(mapping, form, request, response);
+	        }
+			
+			return mapping.findForward(forwardTo);
         }
-        
-        return listActivities(mapping, form, request, response);  
+        else {
+        	return listActivities(mapping, form, request, response);
+        }
     }
     
     protected ResearchActivity getResearchActivity(HttpServletRequest request) {
@@ -105,6 +109,12 @@ public class ActivitiesManagementDispatchAction extends FenixDispatchAction {
     		activity = (ResearchActivity) rootDomainObject.readResearchActivityByOID(oid);
     	}
     	
-    	return (ResearchActivity) ((activity != null) ? activity : RenderUtils.getViewState("researchActivity").getMetaObject().getObject());
+    	if(activity == null && RenderUtils.getViewState() != null) {
+    		return (ResearchActivity) RenderUtils.getViewState("researchActivity").getMetaObject().getObject();
+    	}
+    	
+    	return activity;
+    	
+    	//return (ResearchActivity) ((activity != null) ? activity : RenderUtils.getViewState("researchActivity").getMetaObject().getObject());
     }
 }

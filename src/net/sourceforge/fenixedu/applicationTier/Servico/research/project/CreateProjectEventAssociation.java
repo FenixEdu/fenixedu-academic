@@ -4,7 +4,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.research.ProjectEventAssociationFullCreationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.ProjectEventAssociationSimpleCreationBean;
-import net.sourceforge.fenixedu.domain.research.activity.Event;
+import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
 import net.sourceforge.fenixedu.domain.research.project.Project;
 import net.sourceforge.fenixedu.domain.research.project.ProjectEventAssociation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -28,7 +28,7 @@ public class CreateProjectEventAssociation extends Service  {
         
         association = new ProjectEventAssociation();
         association.setProject(project);
-        association.setEvent(bean.getEvent());
+        association.setEventEdition(bean.getEvent());
         association.setRole(bean.getRole());
         return association;
     }
@@ -49,13 +49,13 @@ public class CreateProjectEventAssociation extends Service  {
             throw new FenixServiceException();
         }
         
-        final Event event = new Event(bean.getEventName(), bean.getEventType());
+        final EventEdition event = new EventEdition(bean.getEventName());
         
         //Insert this line when inner enums are supported by the domain factory
 //      participation = new ProjectParticipation(project, externalPerson.getPerson(), bean.getRole());
         association = new ProjectEventAssociation();
         association.setProject(project);
-        association.setEvent(event);
+        association.setEventEdition(event);
         association.setRole(bean.getRole());        
         
         return association;

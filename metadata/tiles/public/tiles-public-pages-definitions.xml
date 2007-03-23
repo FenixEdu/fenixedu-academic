@@ -395,5 +395,10 @@
     <definition name="show.journal" extends="definition.public.homepage">
        <put name="body" value="/publico/researcher/showJournal.jsp"/>  
     </definition>
+
+    <definition name="show.event" extends="definition.public.homepage">
+       <put name="body" value="/publico/researcher/showEvent.jsp"/>  
+    </definition>    
+   
     
 </tiles-definitions>

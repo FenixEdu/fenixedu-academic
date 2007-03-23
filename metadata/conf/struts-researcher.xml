@@ -154,6 +154,7 @@
 			<forward name="SearchPublication"  path="publications.search"/>
 			<forward name="ShowResult" path="show-result-loggedin"/>
 			<forward name="editJournal" path="edit-journal"/>
+			<forward name="editEvent" path="edit-event"/>
 		</action>
 		
 		<!-- Bibtex Publications Management Action Mapping -->
@@ -230,7 +231,13 @@
 	        	 parameter="method"
 	        	 type="net.sourceforge.fenixedu.presentationTier.Action.research.ScientificJournalsManagement">
 		    <forward name="showJournal" path="show.journal"/>
-	</action>
+		</action>
+		
+		<action path="/showEvents"
+	        	 parameter="method"
+	        	 type="net.sourceforge.fenixedu.presentationTier.Action.research.ResearchEventManagement">
+		    <forward name="showEvent" path="show.event"/>
+		</action>
 	
 	</action-mappings>
     

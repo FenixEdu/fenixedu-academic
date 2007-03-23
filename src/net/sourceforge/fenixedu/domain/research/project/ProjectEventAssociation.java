@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.domain.research.project;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.research.activity.Event;
+import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
 
 public class ProjectEventAssociation extends ProjectEventAssociation_Base {
     
@@ -12,10 +12,10 @@ public class ProjectEventAssociation extends ProjectEventAssociation_Base {
     }
    
     public void delete(){
-        final Event event = this.getEvent();
+        final EventEdition event = this.getEventEdition();
         final Project project = this.getProject();
         
-        this.removeEvent();
+        this.removeEventEdition();
         event.sweep();
         
         this.removeProject();

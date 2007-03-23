@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain.research.result;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.research.activity.Event;
+import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 
 public class ResultEventAssociation extends ResultEventAssociation_Base {
@@ -20,7 +20,7 @@ public class ResultEventAssociation extends ResultEventAssociation_Base {
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    ResultEventAssociation(ResearchResult result, Event event, ResultEventAssociationRole role) {
+    ResultEventAssociation(ResearchResult result, EventEdition event, ResultEventAssociationRole role) {
 	this();
 	checkParameters(result, event, role);
 	fillAllAttributes(result, event, role);
@@ -38,7 +38,7 @@ public class ResultEventAssociation extends ResultEventAssociation_Base {
 		this.getResult().setModifiedByAndDate();
 	    } else {
 		throw new DomainException("error.researcher.ResultEventAssociation.association.exists",
-			this.getEvent().getName(), this.getRole().toString());
+			this.getEvent().getFullName(), this.getRole().toString());
 	    }
 	}
     }
@@ -57,7 +57,7 @@ public class ResultEventAssociation extends ResultEventAssociation_Base {
      * Method responsible for deleting a ResultEventAssociation
      */
     public final void delete() {
-	final Event event = this.getEvent();
+	final EventEdition event = this.getEvent();
 
 	removeReferences();
 	removeRootDomainObject();
@@ -66,13 +66,13 @@ public class ResultEventAssociation extends ResultEventAssociation_Base {
 	event.sweep();
     }
     
-    private void fillAllAttributes(ResearchResult result, Event event, ResultEventAssociationRole role){
+    private void fillAllAttributes(ResearchResult result, EventEdition event, ResultEventAssociationRole role){
 	super.setResult(result);
 	super.setEvent(event);
 	super.setRole(role);
     }
     
-    private void checkParameters(ResearchResult result, Event event, ResultEventAssociationRole role) {
+    private void checkParameters(ResearchResult result, EventEdition event, ResultEventAssociationRole role) {
 	if (result == null) {
 	    throw new DomainException("error.researcher.ResultEventAssociation.result.null");
 	}
@@ -101,7 +101,7 @@ public class ResultEventAssociation extends ResultEventAssociation_Base {
     }
 
     @Override
-    public void setEvent(Event Event) {
+    public void setEvent(EventEdition Event) {
 	throw new DomainException("error.researcher.ResultEventAssociation.call","setEvent");
     }
     

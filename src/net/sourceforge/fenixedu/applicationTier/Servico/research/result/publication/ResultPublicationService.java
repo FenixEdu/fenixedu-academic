@@ -45,9 +45,9 @@ public abstract class ResultPublicationService extends Service {
 	    return new BookPart(bean.getPerson(), bean.getRole(), bean.getTitle(), bean
 			.getKeywords(), bean.getBookTitle(), bean.getChapter(), bean.getVolume(), bean.getPublisher(), bean.getYear(), bean.getFirstPage(), bean.getLastPage(),
 			bean.getSeries(), bean.getEdition(), bean.getOrganization(),
-			bean.getCountry(), bean.getAddress(), bean.getNote(), bean.getMonth(), bean.getUrl());
+				bean.getCountry(), bean.getAddress(), bean.getNote(), bean.getMonth(), bean.getUrl());
 	}
-	
+
 	protected Article createArticleFromBean(ArticleBean bean) {
 	    return new Article(bean.getPerson(), bean.getTitle(), bean.getKeywords(), bean.getJournalIssue(), bean.getFirstPage(),
 				bean.getLastPage(), bean.getNote(), bean.getLanguage(), bean.getUrl());
@@ -55,17 +55,14 @@ public abstract class ResultPublicationService extends Service {
 
 	protected Inproceedings createInproceedingsFromBean(InproceedingsBean bean) {
 
-		return new Inproceedings(bean.getPerson(), bean.getRole(), bean.getTitle(), bean.getKeywords(), bean
-				.getYear(), bean.getConference(), bean.getScope(), bean.getPublisher(), bean.getOrganization(),
-				bean.getAddress(), bean.getFirstPage(), bean.getLastPage(), bean.getNote(), bean
-						.getLanguage(), bean.getMonth(), bean.getUrl());
+		return new Inproceedings(bean.getPerson(), bean.getRole(), bean.getTitle(), bean.getKeywords(), bean.getEventEdition(),
+				bean.getPublisher(), bean.getAddress(), bean.getFirstPage(), bean.getLastPage(), bean.getNote(), bean.getLanguage(), bean.getUrl());
 	}
 
 	protected Proceedings createProceedingsFromBean(ProceedingsBean bean) {
 
-		return new Proceedings(bean.getPerson(), bean.getTitle(), bean.getKeywords(), bean.getYear(), bean
-				.getConference(), bean.getScope(), bean.getPublisher(), bean.getOrganization(), bean
-				.getAddress(), bean.getNote(), bean.getMonth(), bean.getUrl());
+		return new Proceedings(bean.getPerson(), bean.getTitle(), bean.getKeywords(), bean.getEventEdition(), bean.getPublisher(),
+				bean.getAddress(), bean.getNote(), bean.getUrl());
 	}
 
 	protected Thesis createThesisFromBean(ThesisBean bean) {
@@ -95,4 +92,5 @@ public abstract class ResultPublicationService extends Service {
 				bean.getCountry(), bean.getMonth(), bean.getUrl());
 	}
 
-}
+	}
+

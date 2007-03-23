@@ -5,21 +5,13 @@ import net.sourceforge.fenixedu.domain.research.activity.Event;
 import net.sourceforge.fenixedu.domain.research.activity.EventType;
 import net.sourceforge.fenixedu.domain.research.activity.ResearchActivityLocationType;
 
-import org.joda.time.YearMonthDay;
-
 public class CreateResearchEvent extends Service {
 
 
-	public Event run(String name, EventType eventType, ResearchActivityLocationType locationType,
-			String location, YearMonthDay startDate, YearMonthDay endDate) {
+	public Event run(String name, EventType eventType, ResearchActivityLocationType locationType, String url) {
 	
-		Event event = new Event();
-		event.setName(name);
-		event.setEventType(eventType);
-		event.setLocationType(locationType);
-		event.setEventLocation(location);
-		event.setStartDate(startDate);
-		event.setEndDate(endDate);
+		Event event = new Event(name, eventType, locationType);
+		event.setUrl(url);
 		
 		return event;
 	}

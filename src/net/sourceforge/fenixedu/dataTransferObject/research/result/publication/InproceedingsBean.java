@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.dataTransferObject.research.result.publication;
 
 import java.io.Serializable;
 
+import net.sourceforge.fenixedu.domain.research.result.publication.Article;
 import net.sourceforge.fenixedu.domain.research.result.publication.Inproceedings;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import bibtex.dom.BibtexEntry;
@@ -44,8 +45,11 @@ public class InproceedingsBean extends ConferenceArticlesBean implements Seriali
 	this.setFirstPage(((Inproceedings) publication).getFirstPage());
 	this.setLastPage(((Inproceedings) publication).getLastPage());
 	this.setLanguage(((Inproceedings) publication).getLanguage());
-	this.setConference(((Inproceedings) publication).getConference());
-	this.setScope(((Inproceedings) publication).getScope());
+//	this.setConference(((Inproceedings) publication).getConference());
+//	this.setScope(((Inproceedings) publication).getScope());
+	this.setEvent(((Inproceedings) publication).getEvent());
+	this.setEventEdition(((Inproceedings) publication).getEventEdition());
+	this.setEventName(((Inproceedings) publication).getEvent().getName());
     }
 
     @Override

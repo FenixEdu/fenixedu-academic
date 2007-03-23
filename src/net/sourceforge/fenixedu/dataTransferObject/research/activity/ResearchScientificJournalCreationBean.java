@@ -6,12 +6,10 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.research.activity.ResearchActivityLocationType;
 import net.sourceforge.fenixedu.domain.research.activity.ScientificJournal;
 import net.sourceforge.fenixedu.domain.research.activity.Participation.ResearchActivityParticipationRole;
-import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public class ResearchScientificJournalCreationBean implements Serializable {
     private DomainReference<ScientificJournal> scientificJournal;
-    private String userInput;
-    private MultiLanguageString scientificJournalName;
+    private String scientificJournalName;
     private ResearchActivityParticipationRole role;
     private ResearchActivityLocationType locationType;
     private String issn;
@@ -36,22 +34,14 @@ public class ResearchScientificJournalCreationBean implements Serializable {
         this.role = participationRole;
     }
 
-    public MultiLanguageString getScientificJournalName() {
+    public String getScientificJournalName() {
         return scientificJournalName;
     }
     
-    public void setScientificJournalName(MultiLanguageString scientificJournalName) {
+    public void setScientificJournalName(String scientificJournalName) {
         this.scientificJournalName = scientificJournalName;
     }
     
-    public String getUserInput() {
-        return userInput;
-    }
-
-    public void setUserInput(String userInput) {
-    	this.userInput = userInput;
-        this.scientificJournalName = new MultiLanguageString(this.userInput);
-    }
 
     public ScientificJournal getScientificJournal() {
         return this.scientificJournal.getObject();

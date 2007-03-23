@@ -1,18 +1,22 @@
 package net.sourceforge.fenixedu.domain.research.result.publication;
 
-import bibtex.dom.BibtexEntry;
-import bibtex.dom.BibtexFile;
-import bibtex.dom.BibtexPersonList;
-import bibtex.dom.BibtexString;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.activity.Event;
+import net.sourceforge.fenixedu.domain.research.activity.EventConferenceArticlesAssociation;
+import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
+import net.sourceforge.fenixedu.domain.research.activity.ResearchActivityLocationType;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.Month;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
+import bibtex.dom.BibtexEntry;
+import bibtex.dom.BibtexFile;
+import bibtex.dom.BibtexPersonList;
+import bibtex.dom.BibtexString;
 
 /**
  * (collection: A collection of works. Same as Proceedings.) The proceedings of
@@ -29,46 +33,40 @@ public class Proceedings extends Proceedings_Base {
 	super();
     }
 
-    public Proceedings(Person participator, String title, MultiLanguageString keywords, Integer year, String conference, ScopeType scope,
-	    String publisher, String organization, String address, MultiLanguageString note, Month month, String url) {
+    public Proceedings(Person participator, String title, MultiLanguageString keywords, EventEdition eventEdition, 
+    		String publisher, String address, MultiLanguageString note, String url) {
 	this();
 	super.checkRequiredParameters(keywords, note);
-	checkRequiredParameters(title, year, conference);
+	checkRequiredParameters(title, eventEdition);
 	super.setCreatorParticipation(participator, ResultParticipationRole.Editor);
-	fillAllAttributes(title, keywords, year, conference, scope, publisher, organization, address, note, month, url);
+	fillAllAttributes(title, keywords, eventEdition, publisher, address, note, url);
     }
 
     @Checked("ResultPredicates.writePredicate")
-    public void setEditAll(String title, MultiLanguageString keywords, Integer year, String conference, ScopeType scope, String publisher,
-	    String organization, String address, MultiLanguageString note, Month month, String url) {
+    public void setEditAll(String title, MultiLanguageString keywords, EventEdition eventEdition, String publisher, String address, 
+    		MultiLanguageString note, String url) {
     super.checkRequiredParameters(keywords, note);
-    checkRequiredParameters(title, year, conference);
-	fillAllAttributes(title, keywords, year, conference, scope, publisher, organization, address, note, month, url);
+    checkRequiredParameters(title, eventEdition);
+	fillAllAttributes(title, keywords, eventEdition, publisher, address, note, url);
 	super.setModifiedByAndDate();
     }
 
-    private void fillAllAttributes(String title, MultiLanguageString keywords, Integer year, String conference, ScopeType scope,
-	    String publisher, String organization, String address, MultiLanguageString note, Month month, String url) {
+    private void fillAllAttributes(String title, MultiLanguageString keywords, EventEdition eventEdition, String publisher, String address,
+    		MultiLanguageString note, String url) {
 	super.setTitle(title);
-	super.setYear(year);
-	super.setConference(conference);
-	super.setScope(scope);
 	super.setPublisher(publisher);
-	super.setOrganization(organization);
 	super.setAddress(address);
 	super.setNote(note);
-	super.setMonth(month);
 	super.setUrl(url);
 	super.setKeywords(keywords);
+	setEventEdition(eventEdition);
     }
 
-    private void checkRequiredParameters(String title, Integer year, String conference) {
+    private void checkRequiredParameters(String title, EventEdition eventEdition) {
 	if ((title == null) || (title.length() == 0))
 	    throw new DomainException("error.researcher.Proceedings.title.null");
-	if (year == null)
-	    throw new DomainException("error.researcher.Proceedings.year.null");
-	if (conference == null)
-	    throw new DomainException("error.researcher.Proceedings.event.null");
+	if (eventEdition == null)
+		throw new DomainException("error.researcher.Proceedings.eventEdition.null");
     }
 
     @Override
@@ -78,8 +76,8 @@ public class Proceedings extends Proceedings_Base {
 	    resume = resume + getPublisher() + ", ";
 	if ((getYear() != null) && (getYear() > 0))
 	    resume = resume + getYear() + ", ";
-	if (getConference() != null)
-	    resume = resume + getConference() + ", ";
+	if (getConferenceName() != null)
+	    resume = resume + getConferenceName() + ", ";
 
 	resume = finishResume(resume);
 	return resume;
@@ -123,11 +121,6 @@ public class Proceedings extends Proceedings_Base {
     }
 
     @Override
-    public void setConference(String conference) {
-	throw new DomainException("error.researcher.Proceedings.call", "setConference");
-    }
-
-    @Override
     public void setPublisher(String publisher) {
 	throw new DomainException("error.researcher.Proceedings.call", "setPublisher");
     }
@@ -162,13 +155,50 @@ public class Proceedings extends Proceedings_Base {
 	throw new DomainException("error.researcher.Proceedings.call", "setCountry");
     }
 
-    @Override
-    public void setScope(ScopeType scope) {
-	throw new DomainException("error.researcher.Inproceedings.call", "setScope");
-    }
-
 	@Override
 	public String getSchema() {
 		return usedSchema;
-}
+	}
+	
+	public Event getEvent() {
+		return this.getEventEdition().getEvent();
+	}
+	
+	public EventEdition getEventEdition() {
+		return this.getEventConferenceArticlesAssociation().getEventEdition();
+	}
+	
+	@Checked("ResultPredicates.writePredicate")
+	public void setEventEdition(EventEdition eventEdition) {
+		EventConferenceArticlesAssociation association = this.getEventConferenceArticlesAssociation();
+		
+		if (association==null) {
+		    Person creator = AccessControl.getPerson();
+		    if(creator==null) {
+		    	creator = getCreator();
+		    }
+		    association = new EventConferenceArticlesAssociation(eventEdition, this, creator);
+		} else {
+		    association.setEventEdition(eventEdition);
+		}
+	}
+	
+	@Override
+    public Integer getYear() {
+		return getEventEdition().getStartDate().getYear();
+    }
+	
+	@Override
+    public Month getMonth() {
+		return Month.values()[getEventEdition().getStartDate().getMonthOfYear()-1];
+    }
+		
+	@Override
+	public String getOrganization() {
+		return getEventEdition().getOrganization();
+	}
+	
+	public String getConferenceName() {
+		return getEventEdition().getFullName();
+	}	
 }

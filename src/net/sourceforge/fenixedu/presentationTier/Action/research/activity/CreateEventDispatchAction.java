@@ -88,7 +88,7 @@ public class CreateEventDispatchAction extends FenixDispatchAction {
         
         Event event = null;
         try {
-        	event = (Event) executeService(request, "CreateResearchEvent", new Object[] {bean.getEventName(), bean.getEventType(), bean.getLocationType(), bean.getEventLocation(), bean.getStartDate(), bean.getEndDate() } );
+        	event = (Event) executeService(request, "CreateResearchEvent", new Object[] {bean.getEventName(), bean.getEventType(), bean.getLocationType(), bean.getUrl()} );
         	executeService(request,"CreateResearchActivityParticipation", new Object[] { event, bean.getRole(), person});
         } catch (DomainException e) {
         	addActionMessage(request, e.getMessage(), null);

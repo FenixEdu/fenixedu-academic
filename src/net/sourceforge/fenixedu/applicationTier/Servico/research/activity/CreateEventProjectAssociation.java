@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.research.activity.EventProjectAssociationFullCreationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.activity.EventProjectAssociationSimpleCreationBean;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.research.activity.Event;
+import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
 import net.sourceforge.fenixedu.domain.research.project.Project;
 import net.sourceforge.fenixedu.domain.research.project.ProjectEventAssociation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -22,13 +22,13 @@ public class CreateEventProjectAssociation extends Service  {
      */
     public ProjectEventAssociation run(EventProjectAssociationSimpleCreationBean bean, Integer eventId) throws ExcepcaoPersistencia, FenixServiceException {
         ProjectEventAssociation association = null;
-        final Event event = (Event)rootDomainObject.readResearchActivityByOID(eventId);
+        final EventEdition event = (EventEdition)rootDomainObject.readEventEditionByOID(eventId);
         if(event == null){
             throw new FenixServiceException();
         }
         
         association = new ProjectEventAssociation();
-        association.setEvent(event);
+        association.setEventEdition(event);
         association.setProject(bean.getProject());
         association.setRole(bean.getRole());
         return association;
@@ -45,7 +45,7 @@ public class CreateEventProjectAssociation extends Service  {
     public ProjectEventAssociation run(EventProjectAssociationFullCreationBean bean, Integer eventId) throws ExcepcaoPersistencia, FenixServiceException {
         final ProjectEventAssociation association;
         
-        final Event event = (Event)rootDomainObject.readResearchActivityByOID(eventId);
+        final EventEdition event = (EventEdition)rootDomainObject.readEventEditionByOID(eventId);
         if(event == null){
             throw new FenixServiceException();
         }
@@ -56,7 +56,7 @@ public class CreateEventProjectAssociation extends Service  {
 //      participation = new ProjectParticipation(project, externalPerson.getPerson(), bean.getRole());
         association = new ProjectEventAssociation();
         association.setProject(project);
-        association.setEvent(event);
+        association.setEventEdition(event);
         association.setRole(bean.getRole());        
         
         return association;

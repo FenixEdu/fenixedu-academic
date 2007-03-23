@@ -72,6 +72,16 @@
 		<html:link page="<%= "/resultPublications/prepareEditJournal.do?" + parameters %>">
 			<bean:message key="label.journal" bundle="RESEARCHER_RESOURCES"/>
 		</html:link>, 
+	</logic:equal>
+	<logic:equal name="result" property="class.simpleName" value="Proceedings">
+		<html:link page="<%= "/resultPublications/prepareEditEvent.do?" + parameters %>">
+			<bean:message key="label.event" bundle="RESEARCHER_RESOURCES"/>
+		</html:link>, 
+	</logic:equal>
+	<logic:equal name="result" property="class.simpleName" value="Inproceedings">
+		<html:link page="<%= "/resultPublications/prepareEditEvent.do?" + parameters %>">
+			<bean:message key="label.event" bundle="RESEARCHER_RESOURCES"/>
+		</html:link>, 
 	</logic:equal> 
 	<html:link page="<%="/resultParticipations/prepareEdit.do?" + parameters %>">
 			<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.importBibtex.authors" />
