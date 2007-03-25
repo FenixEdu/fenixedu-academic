@@ -1,8 +1,9 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
+<%@ taglib uri="/WEB-INF/enum.tld" prefix="e"%>
+<html:xhtml/>
 
 <h2><bean:message bundle="MANAGER_RESOURCES" key="title.manage.enrolement.period"/></h2>
 
@@ -44,10 +45,12 @@
 			<th class="listClasses-header">
 			</th>
 			<td class="listClasses">
+				<e:labelValues id="degreeTypes"
+					enumeration="net.sourceforge.fenixedu.domain.degree.DegreeType"
+					bundle="ENUMERATION_RESOURCES" /> 
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.degreeType" property="degreeType">
 					<html:option bundle="MANAGER_RESOURCES" key="label.all" value=""/>
-					<html:option bundle="ENUMERATION_RESOURCES" key="DEGREE" value="DEGREE"/>
-					<html:option bundle="ENUMERATION_RESOURCES" key="MASTER_DEGREE" value="MASTER_DEGREE"/>
+					<html:options collection="degreeTypes" property="value" labelProperty="label" />
 				</html:select>
 			</td>
 		</tr>
@@ -62,6 +65,8 @@
 							value="net.sourceforge.fenixedu.domain.EnrolmentPeriodInClasses"/>
 					<html:option bundle="MANAGER_RESOURCES" key="label.class.enrolment.period.in.curricular.course.special.season"
 							value="net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCoursesSpecialSeason"/>
+					<html:option bundle="MANAGER_RESOURCES" key="label.class.enrolment.period.in.improvement.of.approved.enrolment"
+							value="net.sourceforge.fenixedu.domain.EnrolmentPeriodInImprovementOfApprovedEnrolment"/>
 				</html:select>
 			</td>
 		</tr>
@@ -99,10 +104,10 @@
 		<table>
 			<tr>
 				<th class="listClasses-header">
-					<bean:message bundle="MANAGER_RESOURCES" key="label.choose.execution.period"/>
+					<bean:message bundle="MANAGER_RESOURCES" key="label.manager.degree.tipoCurso"/>
 				</th>
 				<th class="listClasses-header">
-					<bean:message bundle="MANAGER_RESOURCES" key="label.manager.degree.tipoCurso"/>
+					<bean:message bundle="MANAGER_RESOURCES" key="label.manager.degree.name"/>
 				</th>
 				<th class="listClasses-header">
 					<bean:message bundle="MANAGER_RESOURCES" key="label.enrolment.period.type"/>
@@ -132,7 +137,7 @@
 
 					<tr>
 						<td class="listClasses">
-							<bean:write name="infoEnrolmentPeriod" property="infoDegreeCurricularPlan.infoDegree.tipoCurso"/>
+							<bean:write name="infoEnrolmentPeriod" property="infoDegreeCurricularPlan.degreeCurricularPlan.degreeType.localizedName"/>
 						</td>
 						<td class="listClasses">
 							<bean:write name="infoEnrolmentPeriod" property="infoDegreeCurricularPlan.infoDegree.nome"/>

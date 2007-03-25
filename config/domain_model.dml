@@ -405,7 +405,7 @@ class net.sourceforge.fenixedu.domain.accounting.Exemption extends net.sourcefor
 	 	
 	 	class net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsurancePenaltyExemption extends net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemption {
 	 	}
-	 
+
 class net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemptionJustification extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyPenaltyExemption;
 	PenaltyExemptionJustificationType justificationType;
@@ -1561,6 +1561,9 @@ class net.sourceforge.fenixedu.domain.EnrolmentPeriod extends net.sourceforge.fe
     }
 
 	class net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCoursesSpecialSeason extends net.sourceforge.fenixedu.domain.EnrolmentPeriod {
+	}	
+
+	class net.sourceforge.fenixedu.domain.EnrolmentPeriodInImprovementOfApprovedEnrolment extends net.sourceforge.fenixedu.domain.EnrolmentPeriod {
 	}	
 
 	class net.sourceforge.fenixedu.domain.CandidacyPeriodInDegreeCurricularPlan extends net.sourceforge.fenixedu.domain.EnrolmentPeriod {

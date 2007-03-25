@@ -4,6 +4,7 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.EnrolmentPeriod">
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCourses" />
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCoursesSpecialSeason" />
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.EnrolmentPeriodInImprovementOfApprovedEnrolment" />
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.EnrolmentPeriodInClasses" />
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.CandidacyPeriodInDegreeCurricularPlan" />		
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.RegistrationPeriodInDegreeCurricularPlan" />
@@ -18,6 +19,10 @@
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCoursesSpecialSeason"
+		table="ENROLMENT_PERIOD">
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.EnrolmentPeriodInImprovementOfApprovedEnrolment"
 		table="ENROLMENT_PERIOD">
 </class-descriptor>
 
