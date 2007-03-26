@@ -20,17 +20,16 @@
 </fr:edit>
 
 
-
-<logic:notEmpty name="searchBean" property="results">
-	<fr:view name="searchBean" property="results" schema="AbstractExternalUnitResultBean.view">
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4 thlight"/>
-			<fr:property name="columnClasses" value=",,acenter,acenter,acenter,acenter"/>
-		</fr:layout>
-	</fr:view>
-</logic:notEmpty>
-
 <logic:present name="searchBean" property="results">
+
+	<logic:notEmpty name="searchBean" property="results">
+		<fr:view name="searchBean" property="results" schema="AbstractExternalUnitResultBean.view">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle4 thlight"/>
+				<fr:property name="columnClasses" value=",,acenter,acenter,acenter,acenter"/>
+			</fr:layout>
+		</fr:view>
+	</logic:notEmpty>
 	
 	<logic:empty name="searchBean" property="results">
 		<p>
