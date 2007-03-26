@@ -423,7 +423,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	final YearMonthDay yearMonthDay = new YearMonthDay();
 	enrolmentEvaluation.setGradeAvailableDateYearMonthDay(yearMonthDay);
 	if (evaluationDate != null) {
-	    enrolmentEvaluation.setExamDate(evaluationDate);
+	    enrolmentEvaluation.setExamDateYearMonthDay(new YearMonthDay(evaluationDate));
 	} else {
 	    enrolmentEvaluation.setExamDateYearMonthDay(yearMonthDay);
 	}
