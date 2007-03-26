@@ -3,16 +3,22 @@ package net.sourceforge.fenixedu.dataTransferObject.accounting.gratuityExemption
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import org.joda.time.YearMonthDay;
+
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
-import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityExemptionType;
+import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityExemptionJustificationType;
 import net.sourceforge.fenixedu.util.Money;
 
 public class CreateGratuityExemptionBean implements Serializable {
 
     private DomainReference<GratuityEvent> gratuityEvent;
 
-    private GratuityExemptionType exemptionType;
+    private GratuityExemptionJustificationType exemptionJustificationType;
+
+    private String reason;
+
+    private YearMonthDay dispatchDate;
 
     private BigDecimal otherPercentage;
 
@@ -33,12 +39,12 @@ public class CreateGratuityExemptionBean implements Serializable {
 	this.amount = amount;
     }
 
-    public GratuityExemptionType getExemptionType() {
-	return exemptionType;
+    public GratuityExemptionJustificationType getExemptionJustificationType() {
+	return exemptionJustificationType;
     }
 
-    public void setExemptionType(GratuityExemptionType exemptionType) {
-	this.exemptionType = exemptionType;
+    public void setExemptionJustificationType(GratuityExemptionJustificationType exemptionType) {
+	this.exemptionJustificationType = exemptionType;
     }
 
     public GratuityEvent getGratuityEvent() {
@@ -72,6 +78,22 @@ public class CreateGratuityExemptionBean implements Serializable {
 
     public BigDecimal getSelectedPercentage() {
 	return getOtherPercentage() != null ? getOtherPercentage() : getPercentage();
+    }
+
+    public String getReason() {
+	return reason;
+    }
+
+    public void setReason(String reason) {
+	this.reason = reason;
+    }
+
+    public YearMonthDay getDispatchDate() {
+	return dispatchDate;
+    }
+
+    public void setDispatchDate(YearMonthDay dispatchDate) {
+	this.dispatchDate = dispatchDate;
     }
 
 }

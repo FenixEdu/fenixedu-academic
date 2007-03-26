@@ -10,14 +10,24 @@
 	<br />
 
 
-	<logic:messagesPresent message="true">
+	<logic:messagesPresent message="true" property="context">
 		<ul>
-			<html:messages id="messages" message="true" bundle="APPLICATION_RESOURCES">
+			<html:messages id="messages" message="true" bundle="ACADEMIC_OFFICE_RESOURCES" property="context">
 				<li><span class="error0"><bean:write name="messages" /></span></li>
 			</html:messages>
 		</ul>
 		<br />
 	</logic:messagesPresent>
+	
+	<logic:messagesPresent message="true" property="<%=org.apache.struts.action.ActionMessages.GLOBAL_MESSAGE%>">
+		<ul>
+			<html:messages id="messages" message="true" bundle="APPLICATION_RESOURCES" property="<%=org.apache.struts.action.ActionMessages.GLOBAL_MESSAGE%>">
+				<li><span class="error0"><bean:write name="messages" /></span></li>
+			</html:messages>
+		</ul>
+		<br />
+	</logic:messagesPresent>
+	
 
 	<fr:hasMessages for="create-penalty-exemption-bean" type="conversion">
 		<ul>

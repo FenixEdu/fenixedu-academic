@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.Money;
 
@@ -52,17 +53,21 @@ public class Receipt extends Receipt_Base {
 	super.setWhenCreated(new DateTime());
     }
 
-    public Receipt(Employee employee, Person person, Party contributor, List<Entry> entries) {
+    public Receipt(Employee employee, Person person, Party contributor, Unit creatorUnit,
+	    Unit ownerUnit, List<Entry> entries) {
 	this();
-	init(employee, person, contributor, entries);
+	init(employee, person, contributor, creatorUnit, ownerUnit, entries);
     }
 
-    private void init(Employee employee, Person person, Party contributor, List<Entry> entries) {
-	checkParameters(employee, person, contributor, entries);
+    private void init(Employee employee, Person person, Party contributor, Unit creatorUnit,
+	    Unit ownerUnit, List<Entry> entries) {
+	checkParameters(employee, person, contributor, creatorUnit, ownerUnit, entries);
 	checkRulesToCreate(entries);
 	super.setPerson(person);
 	super.setContributorParty(contributor);
 	changeState(employee, ReceiptState.ACTIVE);
+	super.setCreatorUnit(creatorUnit);
+	super.setOwnerUnit(ownerUnit);
 
 	for (final Entry entry : entries) {
 	    entry.setActiveReceipt(this);
@@ -79,7 +84,8 @@ public class Receipt extends Receipt_Base {
 	}
     }
 
-    private void checkParameters(Employee employee, Person person, Party contributor, List<Entry> entries) {
+    private void checkParameters(Employee employee, Person person, Party contributor, Unit creatorUnit,
+	    Unit ownerUnit, List<Entry> entries) {
 	if (person == null) {
 	    throw new DomainException("error.accouting.receipt.person.cannot.be.null");
 	}
@@ -91,6 +97,12 @@ public class Receipt extends Receipt_Base {
 	}
 	if (employee == null) {
 	    throw new DomainException("error.accounting.Receipt.employeee.cannot.be.null");
+	}
+	if (creatorUnit == null) {
+	    throw new DomainException("error.accounting.Receipt.creatorUnit.cannot.be.null");
+	}
+	if (ownerUnit == null) {
+	    throw new DomainException("error.accounting.Receipt.ownerUnit.cannot.be.null");
 	}
 	if (entries.isEmpty()) {
 	    throw new DomainException("error.accounting.receipt.entries.cannot.be.empty");
@@ -158,17 +170,17 @@ public class Receipt extends Receipt_Base {
     public void addCreditNotes(CreditNote creditNote) {
 	throw new DomainException("error.accounting.Receipt.cannot.add.creditNote");
     }
-    
+
     @Override
     public void setEmployee(Employee employee) {
 	throw new DomainException("error.accounting.receipt.cannot.modify.employee");
     }
-    
+
     @Override
     public void setContributor(Contributor contributor) {
 	throw new DomainException("error.accounting.receipt.cannot.modify.contributor");
     }
-    
+
     @Override
     public void setContributorParty(Party contributorParty) {
 	throw new DomainException("error.accounting.receipt.cannot.modify.contributorParty");
@@ -216,7 +228,7 @@ public class Receipt extends Receipt_Base {
 	return result;
     }
 
-    public ReceiptPrintVersion createReceiptVersion(Employee employee) {
+    public ReceiptPrintVersion createReceiptPrintVersion(Employee employee) {
 	return new ReceiptPrintVersion(this, employee);
     }
 
@@ -287,29 +299,30 @@ public class Receipt extends Receipt_Base {
 
 	return result;
     }
-    
+
     @Checked("RolePredicates.MANAGER_PREDICATE")
     public void deleteReceiptPrintVersions() {
-	for (; hasAnyReceiptsVersions() ; getReceiptsVersions().get(0).delete());
+	for (; hasAnyReceiptsVersions(); getReceiptsVersions().get(0).delete())
+	    ;
     }
-    
+
     @Checked("RolePredicates.MANAGER_PREDICATE")
     public void delete() {
-	
+
 	if (!canBeDeleted()) {
 	    throw new DomainException("error.accounting.Receipt.cannot.be.deleted");
 	}
-	
+
 	deleteReceiptPrintVersions();
-	
+
 	super.setContributor(null);
 	super.setContributorParty(null);
 	super.setEmployee(null);
 	super.getEntries().clear();
 	super.setPerson(null);
-	
+
 	removeRootDomainObject();
-	
+
 	super.deleteDomainObject();
     }
 

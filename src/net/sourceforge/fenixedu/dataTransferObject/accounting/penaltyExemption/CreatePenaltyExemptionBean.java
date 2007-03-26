@@ -12,22 +12,22 @@ public abstract class CreatePenaltyExemptionBean implements Serializable {
 
     private DomainReference<Event> event;
 
-    private String comments;
+    private String reason;
 
     private PenaltyExemptionJustificationType justificationType;
 
-    private YearMonthDay directiveCouncilDispatchDate;
+    private YearMonthDay dispatchDate;
 
     protected CreatePenaltyExemptionBean(final Event event) {
 	setEvent(event);
     }
 
-    public String getComments() {
-	return comments;
+    public String getReason() {
+	return reason;
     }
 
-    public void setComments(String comments) {
-	this.comments = comments;
+    public void setReason(String reason) {
+	this.reason = reason;
 
     }
 
@@ -47,12 +47,12 @@ public abstract class CreatePenaltyExemptionBean implements Serializable {
 	this.justificationType = exemptionType;
     }
 
-    public YearMonthDay getDirectiveCouncilDispatchDate() {
-	return directiveCouncilDispatchDate;
+    public YearMonthDay getDispatchDate() {
+	return dispatchDate;
     }
 
-    public void setDirectiveCouncilDispatchDate(YearMonthDay directiveCouncilDispatchDate) {
-	this.directiveCouncilDispatchDate = directiveCouncilDispatchDate;
+    public void setDispatchDate(YearMonthDay dispatchDate) {
+	this.dispatchDate = dispatchDate;
     }
 
 }

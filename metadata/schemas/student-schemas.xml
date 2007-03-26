@@ -227,3 +227,16 @@
         <property name="fileSizeSlot" value="fileSize"/>
     </slot>
 </schema>
+
+<schema name="student.StudentsSearchBean" type="net.sourceforge.fenixedu.domain.student.StudentsSearchBean" bundle="APPLICATION_RESOURCES">
+	<slot name="number" />
+	<slot name="identificationNumber" />
+	<slot name="documentType" />
+	<slot name="name" />
+	<slot name="username" />
+</schema>
+
+<schema name="Student.view-with-number-and-name" type="net.sourceforge.fenixedu.domain.student.Student" bundle="APPLICATION_RESOURCES">
+	<slot name="number"/>
+	<slot name="person.name"/>
+</schema>

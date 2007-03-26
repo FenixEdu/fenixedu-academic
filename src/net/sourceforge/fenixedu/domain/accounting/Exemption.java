@@ -2,7 +2,9 @@ package net.sourceforge.fenixedu.domain.accounting;
 
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.accounting.events.ExemptionJustification;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
 import org.joda.time.DateTime;
 
@@ -31,14 +33,17 @@ public abstract class Exemption extends Exemption_Base {
 	super.setWhenCreated(new DateTime());
     }
 
-    protected void init(final Employee employee, final Event event) {
-	checkParameters(employee, event);
+    protected void init(final Employee employee, final Event event,
+	    final ExemptionJustification exemptionJustification) {
+	checkParameters(employee, event, exemptionJustification);
 
 	super.setEmployee(employee);
 	super.setEvent(event);
+	super.setExemptionJustification(exemptionJustification);
     }
 
-    private void checkParameters(Employee employee, Event event) {
+    private void checkParameters(Employee employee, Event event,
+	    ExemptionJustification exemptionJustification) {
 	if (employee == null) {
 	    throw new DomainException(
 		    "error.accounting.events.gratuity.GratuityExemption.field_name.cannot.be.null");
@@ -46,6 +51,10 @@ public abstract class Exemption extends Exemption_Base {
 
 	if (event == null) {
 	    throw new DomainException("error.accounting.Exemption.event.cannot.be.null");
+	}
+
+	if (exemptionJustification == null) {
+	    throw new DomainException("error.accounting.Exemption.exemptionJustification.cannot.be.null");
 	}
     }
 
@@ -64,10 +73,16 @@ public abstract class Exemption extends Exemption_Base {
 	throw new DomainException("error.accounting.Exemption.cannot.modify.whenCreated");
     }
 
+    @Override
+    public void setExemptionJustification(ExemptionJustification exemptionJustification) {
+	throw new DomainException("error.accounting.Exemption.cannot.modify.exemptionJustification");
+    }
+
     public void delete() {
 	removeRootDomainObject();
 	removeEmployee();
 	removeEvent();
+	getExemptionJustification().delete();
 
 	super.deleteDomainObject();
     }
@@ -80,6 +95,14 @@ public abstract class Exemption extends Exemption_Base {
     @Override
     public void removeEvent() {
 	super.setEvent(null);
+    }
+
+    public LabelFormatter getDescription() {
+	return getExemptionJustification().getDescription();
+    }
+
+    public String getReason() {
+	return getExemptionJustification().getReason();
     }
 
 }

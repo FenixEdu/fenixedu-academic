@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
+import org.joda.time.YearMonthDay;
 
 import dml.runtime.RelationAdapter;
 
@@ -42,30 +43,26 @@ public abstract class GratuityExemption extends GratuityExemption_Base {
 	super();
     }
 
-    protected void init(final Employee employee, final GratuityExemptionType exemptionType,
-	    final GratuityEvent gratuityEvent) {
-	super.init(employee, gratuityEvent);
-	checkParameters(exemptionType);
-	super.setGratuityExemptionType(exemptionType);
+    protected void init(final Employee employee, final GratuityEvent gratuityEvent,
+	    final GratuityExemptionJustificationType exemptionType, final String reason,
+	    final YearMonthDay dispatchDate) {
+	super.init(employee, gratuityEvent, GratuityExemptionJustificationFactory.create(this,
+		exemptionType, reason, dispatchDate));
 
 	gratuityEvent.recalculateState(new DateTime());
     }
 
-    private void checkParameters(GratuityExemptionType exemptionType) {
-	if (exemptionType == null) {
-	    throw new DomainException(
-		    "error.accounting.events.gratuity.GratuityExemption.exemptionType.cannot.be.null");
-	}
+    public GratuityEvent getGratuityEvent() {
+	return (GratuityEvent) getEvent();
+    }
+
+    public GratuityExemptionJustificationType getJustificationType() {
+	return getExemptionJustification().getGratuityExemptionJustificationType();
     }
 
     @Override
-    public void setGratuityExemptionType(GratuityExemptionType gratuityExemptionType) {
-	throw new DomainException(
-		"error.net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityExemption.cannot.modify.gratuityExemptionType");
-    }
-
-    public GratuityEvent getGratuityEvent() {
-	return (GratuityEvent) getEvent();
+    public GratuityExemptionJustification getExemptionJustification() {
+	return (GratuityExemptionJustification) super.getExemptionJustification();
     }
 
     public void delete() {

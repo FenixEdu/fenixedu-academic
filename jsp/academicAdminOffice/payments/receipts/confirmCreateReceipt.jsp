@@ -11,9 +11,16 @@
 <em><bean:message key="label.payments" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.confirmCreateReceipt" /></h2>
 
-<logic:messagesPresent message="true">
-	<ul class="nobullet list2">
-		<html:messages id="messages" message="true">
+<logic:messagesPresent message="true" property="context">
+	<ul class="nobullet list6">
+		<html:messages id="messages" message="true" property="context" bundle="ACADEMIC_OFFICE_RESOURCES">
+			<li><span class="error0"><bean:write name="messages" /></span></li>
+		</html:messages>
+	</ul>
+</logic:messagesPresent>
+<logic:messagesPresent message="true"  property="<%=org.apache.struts.action.ActionMessages.GLOBAL_MESSAGE%>">
+	<ul class="nobullet list6">
+		<html:messages id="messages" message="true" property="<%=org.apache.struts.action.ActionMessages.GLOBAL_MESSAGE%>"  bundle="APPLICATION_RESOURCES">
 			<li><span class="error0"><bean:write name="messages" /></span></li>
 		</html:messages>
 	</ul>
@@ -22,7 +29,7 @@
 <strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.person" /></strong>
 <fr:view name="createReceiptBean" property="person" schema="person.view-with-name-and-idDocumentType-and-documentIdNumber">
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle2 thlight thright mtop05" />
+		<fr:property name="classes" value="tstyle4 thlight thright mtop05" />
 		<fr:property name="rowClasses" value="tdhl1,," />
 	</fr:layout>
 </fr:view>
@@ -53,9 +60,9 @@
 
 <bean:define id="personId" name="createReceiptBean" property="person.idInternal"/>
 
-<fr:form action='<%= "/payments.do?personId=" + personId %>'>
+<fr:form action='<%= "/receipts.do?personId=" + personId %>'>
 
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" name="paymentsForm" property="method" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" name="receiptsForm" property="method" />
 	<fr:edit id="createReceiptBeanConfirm" name="createReceiptBean" visible="false" />
 	<p>	
 		<span class="warning0"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.confirmCreateReceiptQuestion"/></span>

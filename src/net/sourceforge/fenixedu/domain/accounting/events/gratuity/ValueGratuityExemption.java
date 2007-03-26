@@ -3,26 +3,29 @@ package net.sourceforge.fenixedu.domain.accounting.events.gratuity;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+import org.joda.time.YearMonthDay;
+
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.Money;
 
 public class ValueGratuityExemption extends ValueGratuityExemption_Base {
 
-    public ValueGratuityExemption(final Employee employee,
-	    final GratuityExemptionType gratuityExemptionType, final GratuityEvent gratuityEvent,
-	    final Money value) {
+    public ValueGratuityExemption(final Employee employee, final GratuityEvent gratuityEvent,
+	    final GratuityExemptionJustificationType gratuityExemptionType, final String reason,
+	    final YearMonthDay dispatchDate, final Money value) {
 	super();
-	init(employee, gratuityExemptionType, gratuityEvent, value);
+	init(employee, gratuityEvent, gratuityExemptionType, reason, dispatchDate, value);
     }
 
-    protected void init(Employee employee, GratuityExemptionType exemptionType,
-	    GratuityEvent gratuityEvent, Money value) {
+    protected void init(Employee employee, GratuityEvent gratuityEvent,
+	    GratuityExemptionJustificationType exemptionType, String reason, YearMonthDay dispatchDate,
+	    Money value) {
 
 	checkParameters(value);
 	super.setValue(value);
 
-	super.init(employee, exemptionType, gratuityEvent);
+	super.init(employee, gratuityEvent, exemptionType, reason, dispatchDate);
     }
 
     private void checkParameters(Money value) {

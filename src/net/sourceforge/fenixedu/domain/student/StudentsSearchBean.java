@@ -65,6 +65,12 @@ public class StudentsSearchBean implements Serializable {
 	this.username = username;
     }
 
+    public boolean hasSearchParameters() {
+	return getNumber() != null
+		|| (!StringUtils.isEmpty(getIdentificationNumber()) && getDocumentType() != null)
+		|| !StringUtils.isEmpty(getName()) || !StringUtils.isEmpty(getUsername());
+    }
+
     public Set<Student> search() {
 	final Set<Student> students = new HashSet<Student>();
 

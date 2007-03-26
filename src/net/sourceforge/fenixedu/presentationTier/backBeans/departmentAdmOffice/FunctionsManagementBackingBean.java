@@ -209,7 +209,8 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 	    this.activeFunctions = new ArrayList<PersonFunction>();
 
 	    addValidFunctions(activeFunctions, this.activeFunctions);
-	    Collections.sort(this.activeFunctions, new ReverseComparator(PersonFunction.COMPARATOR_BY_BEGIN_DATE));
+	    Collections.sort(this.activeFunctions, new ReverseComparator(
+		    PersonFunction.COMPARATOR_BY_BEGIN_DATE));
 	}
 	return this.activeFunctions;
     }
@@ -223,7 +224,8 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 	    this.inactiveFunctions = new ArrayList<PersonFunction>();
 
 	    addValidFunctions(inactiveFunctions, this.inactiveFunctions);
-	    Collections.sort(this.inactiveFunctions, new ReverseComparator(PersonFunction.COMPARATOR_BY_BEGIN_DATE));
+	    Collections.sort(this.inactiveFunctions, new ReverseComparator(
+		    PersonFunction.COMPARATOR_BY_BEGIN_DATE));
 	}
 	return this.inactiveFunctions;
     }
@@ -296,10 +298,11 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 	}
     }
 
-    private Collection<Person> getAllValidPersonsByName() throws FenixServiceException, FenixFilterException {
+    private Collection<Person> getAllValidPersonsByName() throws FenixServiceException,
+	    FenixFilterException {
 
 	SearchParameters searchParameters = new SearchPerson.SearchParameters(personName, null, null,
-		null, null, null, null, null, Boolean.TRUE);
+		null, null, null, null, null, null, Boolean.TRUE, null);
 	SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
 		
 	CollectionPager<Person> allPersons = (CollectionPager<Person>) ServiceUtils.executeService(getUserView(), "SearchPerson", new Object[] {searchParameters, predicate});

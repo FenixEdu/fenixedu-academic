@@ -55,7 +55,7 @@ public class FindPersonAction extends FenixDispatchAction {
 	}
 
 	SearchParameters searchParameters = new SearchPerson.SearchParameters(null, null, username,
-		documentIdNumber, null, null, null, null, Boolean.TRUE);
+		documentIdNumber, null, null, null, null, null, Boolean.TRUE, null);
 
 	SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
 
@@ -81,7 +81,7 @@ public class FindPersonAction extends FenixDispatchAction {
 	final String pageNumberString = request.getParameter("pageNumber");
 	final Integer pageNumber = !StringUtils.isEmpty(pageNumberString) ? Integer
 		.valueOf(pageNumberString) : Integer.valueOf(1);
-		
+
 	request.setAttribute("pageNumber", pageNumber);
 	request.setAttribute("numberOfPages", Integer.valueOf(result.getNumberOfPages()));
 	request.setAttribute("totalFindedPersons", result.getCollection().size());

@@ -9,6 +9,22 @@
     
     <!-- ========== Form Bean Definitions ================================== -->
     <form-beans type="org.apache.struts.action.ActionFormBean">
+    
+       	<!-- Payments -->
+		<form-bean name="paymentsForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="method" type="java.lang.String" />
+			<form-property name="creditNoteState" type="java.lang.String" />
+	    </form-bean>
+	    
+      	<!-- Receipts -->
+		<form-bean name="receiptsForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="method" type="java.lang.String" />
+	    </form-bean>
+	    
+       	<!-- Guide -->
+		<form-bean name="guidesForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="method" type="java.lang.String" />
+	    </form-bean>
      
     </form-beans>
     
@@ -28,32 +44,81 @@
     
     <!-- ========== Global Forward Definitions =============================== -->
     <global-forwards type="org.apache.struts.action.ActionForward">
-	  <forward name="index" path="index.do" redirect="true"/>
-      <forward name="Treasury" path="/indexTreasury.jsp" contextRelative="true" redirect="true" />
-      <forward name="firstPage" path="/index.do"/>
-      <forward name="logoff" path="/logoff.do" contextRelative="true"/>
-      <forward name="redirect" path="/redirect.do" contextRelative="true"/>
     </global-forwards>
     
     <!-- ========== Action Mapping Definitions =============================== -->
     <action-mappings type="org.apache.struts.action.ActionMapping">
-      <!-- page fronting actions -->
-      <action path="/index" forward="/indexTreasury.jsp"/>
-      <action path="/home" forward="/switchAction.do?prefix=&amp;page=/mainPortalPage.jsp"/>
-      <action path="/switchAction" type="org.apache.struts.actions.SwitchAction" />
-      <action path="/guideSection" forward="/guide/indexGuide.jsp"/>
-      
+    	<action path="/index" forward="index"/>
+      		
+		<action path="/payments"
+				parameter="method"
+		        type="net.sourceforge.fenixedu.presentationTier.Action.treasury.payments.TreasuryPaymentsManagementDA"
+		        name="paymentsForm"
+		 		scope="request">
+				 				 		
+		 		<forward name="searchPersons" path="payments.management.searchPersons" />
+		 		<forward name="chooseAdministrativeOffice" path="payments.management.chooseAdministrativeOffice" />
+		 		<forward name="chooseAdministrativeOfficeUnit" path="payments.management.chooseAdministrativeOfficeUnit" />
+		 		<forward name="showOperations" path="payments.management.showOperations" />
+		 		<forward name="showEvents" path="payments.management.showEvents" />
+		 	    <forward name="showEventsWithInstallments" path="payments.management.showEventsWithInstallments"/>
+		 	    <forward name="showEventsWithPayments" path="payments.management.showEventsWithPayments"/>
+   		 	    <forward name="preparePayment" path="payments.management.preparePayment"/>      
+		 	    <forward name="paymentConfirmed" path="payments.management.paymentConfirmed"/> 
+		 	    <forward name="preparePrintGuide" path="/guides.do?method=preparePrintGuide"/> 
+   		 	    <forward name="preparePrintGuideWithInstallments" path="/guides.do?method=preparePrintGuideWithInstallments"/>
+		</action>
+		
+		<action path="/receipts"
+				parameter="method"
+		        type="net.sourceforge.fenixedu.presentationTier.Action.treasury.payments.TreasuryReceiptsManagementDA"
+		        name="receiptsForm"
+		 		scope="request">
+
+		 	    <forward name="showPaymentsWithoutReceipt" path="payments.management.receipts.showPaymentsWithoutReceipt"/>
+   		 	    <forward name="confirmCancelReceipt" path="payments.management.receipts.confirmCancelReceipt"/>
+   		 	    <forward name="confirmCreateReceipt" path="payments.management.receipts.confirmCreateReceipt"/>
+		 	    <forward name="showReceipts" path="payments.management.receipts.showReceipts"/>
+		 	    <forward name="showReceipt" path="payments.management.receipts.showReceipt"/>
+		 	    <forward name="printReceipt" path="payments.management.receipts.printReceipt"/>
+		 	    <forward name="showOperations" path="/payments.do?method=showOperations"/>
+    		 	    
+		</action>
+		
+		<action path="/guides"
+				parameter="method"
+		        type="net.sourceforge.fenixedu.presentationTier.Action.treasury.payments.TreasuryGuidesManagementDA"
+		        name="guidesForm"
+		 		scope="request">
+	 		
+		 	    <forward name="showGuide" path="payments.management.guides.showGuide"/>
+		 	    <forward name="printGuide" path="payments.management.guides.printGuide"/>
+   		 	    <forward name="showEvents" path="/payments.do?method=showEvents"/>
+   		 	    <forward name="showEventsWithInstallments" path="/payments.do?method=showEventsWithInstallments"/>
+    		 	    
+		</action>
     </action-mappings>
     
     <!-- ========== Controller Configuration ================================ -->
-     <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessor"/>
+    <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>
     
     <!-- ========== Message Resources Definitions ============================ -->
+	<message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
+    <message-resources parameter="resources.ApplicationResources" key="APPLICATION_RESOURCES" null="false"/>	
+	<message-resources parameter="resources.TreasuryResources" key="TREASURY_RESOURCES" null="false"/>
+   	<message-resources parameter="resources.EnumerationResources" key="ENUMERATION_RESOURCES" null="false"/>
     
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
       <set-property property="pathnames" 
                     value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-treasury.xml"/>
+    </plug-in>
+    
+    <plug-in className="org.apache.struts.tiles.TilesPlugin" >
+        <set-property property="definitions-config" 
+            value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/treasury/tiles-treasury-definitions.xml,/WEB-INF/tiles/treasury/tiles-treasury-pages-definitions.xml" />
+        <set-property property="moduleAware" value="true" />
+        <set-property property="definitions-parser-validate" value="true" />
     </plug-in>
     
 </struts-config>

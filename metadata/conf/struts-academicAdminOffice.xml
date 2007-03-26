@@ -59,6 +59,16 @@
 			<form-property name="method" type="java.lang.String" />
 			<form-property name="creditNoteState" type="java.lang.String" />
 	    </form-bean>
+	    
+       	<!-- Receipts -->
+		<form-bean name="receiptsForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="method" type="java.lang.String" />
+	    </form-bean>
+	    
+       	<!-- Guides -->
+		<form-bean name="guidesForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="method" type="java.lang.String" />
+	    </form-bean>
 
       <!-- Bean for The Creation of a Contributor -->
       <form-bean name="createContributorForm" 
@@ -346,17 +356,15 @@
 		 		<forward name="showOperations" path="payments.management.showOperations"/> 
 		 	    <forward name="showEvents" path="payments.management.showEvents"/>
 		 	    <forward name="showEventsWithInstallments" path="payments.management.showEventsWithInstallments"/>
-		 	    <forward name="showGuide" path="payments.management.showGuide"/>
-		 	    <forward name="printGuide" path="/payments/guides/printGuidePage.jsp"/>
-		 	    <forward name="showReceipts" path="payments.management.showReceipts"/>
-		 	    <forward name="showReceipt" path="payments.management.showReceipt"/>
-		 	    <forward name="printReceipt" path="/payments/receipts/printReceiptPage.jsp"/>
-		 	    <forward name="confirmCancelReceipt" path="payments.management.confirmCancelReceipt"/>
-		 	    <forward name="preparePayment" path="payments.management.preparePayment"/> 
-	 	        <forward name="showPaymentsWithoutReceipt" path="payments.management.showPaymentsWithoutReceipt"/> 
-		 	    <forward name="confirmCreateReceipt" path="payments.management.confirmCreateReceipt"/> 
+		 	    <forward name="showEventsWithPayments" path="payments.management.showEventsWithPayments" />
+		 	    		 	    
+		 	    <forward name="preparePayment" path="payments.management.preparePayment"/>      
 		 	    <forward name="paymentConfirmed" path="payments.management.paymentConfirmed"/> 
-		 	    		 	    	 	    
+		 	    
+   		 	    <forward name="preparePrintGuide" path="/guides.do?method=preparePrintGuide"/>		 	    
+   		 	    <forward name="preparePrintGuideWithInstallments" path="/guides.do?method=preparePrintGuideWithInstallments"/>
+		 	    
+		 	    <!-- 		 	    		 	    	 	    
    		 	    <forward name="creditNotes.list" path="payments.management.creditNotes.list"/> 
 		 	    <forward name="creditNotes.create" path="payments.management.creditNotes.create"/>
 		 	    <forward name="creditNotes.show" path="payments.management.creditNotes.show"/>
@@ -369,10 +377,37 @@
 		 	    <forward name="otherPartyPayment.confirmCreate" path="payments.management.otherPartyPayment.confirmCreate"/>
 		 	    <forward name="otherPartyPayment.showGuide" path="payments.management.otherPartyPayment.showGuide"/>
 		 	    <forward name="otherPartyPayment.printGuide" path="/payments/otherPartyPayment/printGuideForOtherPartyPayment.jsp"/>
-		 	    
-		 	    <forward name="extract.showEventsWithPayments" path="payments.management.extract.showEventsWithPayments" />
+		 	   -->	    
 		 	   
 		</action>
+		
+		<action path="/receipts"
+				parameter="method"
+		        type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.payments.AcademicAdminOfficeReceiptsManagementDA"
+		 		name="receiptsForm"
+		 		scope="request">
+		 		
+		 	    <forward name="showReceipts" path="payments.management.showReceipts"/>
+		 	    <forward name="showReceipt" path="payments.management.showReceipt"/>
+		 	    <forward name="printReceipt" path="/payments/receipts/printReceiptPage.jsp"/>
+		 	    <forward name="confirmCancelReceipt" path="payments.management.confirmCancelReceipt"/>
+		 	    <forward name="showPaymentsWithoutReceipt" path="payments.management.showPaymentsWithoutReceipt"/> 
+   		 	    <forward name="confirmCreateReceipt" path="payments.management.confirmCreateReceipt"/> 
+   		 	    <forward name="showOperations" path="/payments.do?method=showOperations"/>
+		 		
+		 </action>
+		 
+		 <action path="/guides"
+				parameter="method"
+		        type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.payments.AcademicAdminOfficeGuidesManagementDA"
+		 		name="guidesForm"
+		 		scope="request">
+		 		
+				<forward name="showGuide" path="payments.management.showGuide"/>
+		 	    <forward name="printGuide" path="/payments/guides/printGuidePage.jsp"/>
+   		 	    <forward name="showEvents" path="/payments.do?method=showEvents"/>
+   		 	    <forward name="showEventsWithInstallments" path="/payments.do?method=showEventsWithInstallments"/>
+		 </action>
 		
 		
 		<action path="/exemptionsManagement"

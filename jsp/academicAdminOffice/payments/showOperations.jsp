@@ -30,10 +30,10 @@
 				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.eventsWithInstallments" />
 			</html:link></li>
 			<li><html:link
-				action="<%="/payments.do?method=showPaymentsWithoutReceipt&amp;personId=" + personId %>">
+				action="<%="/receipts.do?method=showPaymentsWithoutReceipt&amp;personId=" + personId %>">
 				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.paymentsWithoutReceipt" />
 			</html:link></li>
-			<li><html:link action="<%="/payments.do?method=showReceipts&amp;personId=" + personId%>">
+			<li><html:link action="<%="/receipts.do?method=showReceipts&amp;personId=" + personId%>">
 				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.receipts" />
 			</html:link></li>
 			<li><html:link action="<%="/exemptionsManagement.do?method=showEventsToApplyExemption&amp;personId=" + personId%>">

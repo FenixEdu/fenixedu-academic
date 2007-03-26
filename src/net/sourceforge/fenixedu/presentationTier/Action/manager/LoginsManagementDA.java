@@ -41,124 +41,126 @@ public class LoginsManagementDA extends FenixDispatchAction {
 	PersonBean personBean = (PersonBean) viewState.getMetaObject().getObject();
 
 	SearchPerson.SearchParameters parameters = new SearchParameters(personBean.getName(), null,
-		personBean.getUsername(), personBean.getDocumentIdNumber(), null, null, null, null, null);	
+		personBean.getUsername(), personBean.getDocumentIdNumber(), null, null, null, null,
+		null, null, null);
 	SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(parameters);
 
-	CollectionPager<Person> persons = (CollectionPager<Person>) executeService("SearchPerson", new Object[] {parameters, predicate});
+	CollectionPager<Person> persons = (CollectionPager<Person>) executeService("SearchPerson",
+		new Object[] { parameters, predicate });
 
 	request.setAttribute("resultPersons", persons.getCollection());
 	request.setAttribute("personBean", personBean);
 	return mapping.findForward("prepareSearchPerson");
-    }   
-    
+    }
+
     public ActionForward prepareManageAlias(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-        
+
 	Person person = getPersonFromParameter(request);
-	request.setAttribute("login",  person.getLoginIdentification());	
+	request.setAttribute("login", person.getLoginIdentification());
 	return mapping.findForward("prepareManageLoginAlias");
     }
-    
+
     public ActionForward deleteAlias(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-        
+
 	LoginAlias loginAlias = getLoginAliasFromParameter(request);
 	Login login = (loginAlias != null) ? loginAlias.getLogin() : null;
-		
+
 	try {
-	    executeService("DeleteLoginAlias", new Object[] { loginAlias });	    
+	    executeService("DeleteLoginAlias", new Object[] { loginAlias });
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	}
-	
-	request.setAttribute("login", login);	
+
+	request.setAttribute("login", login);
 	return mapping.findForward("prepareManageLoginAlias");
     }
-    
+
     public ActionForward createNewLoginAlias(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-        
+
 	LoginAliasBean bean = null;
 	IViewState viewState = RenderUtils.getViewState("newRoleTypeAliasBeanID");
-	if(viewState == null) {
+	if (viewState == null) {
 	    viewState = RenderUtils.getViewState("newCustomAliasBeanID");
 	}
-	
+
 	bean = (LoginAliasBean) viewState.getMetaObject().getObject();
 	Login login = (bean != null) ? bean.getLogin() : null;
-			
+
 	try {
-	    executeService("CreateNewLoginAlias", new Object[] { bean });	    
+	    executeService("CreateNewLoginAlias", new Object[] { bean });
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
-            request.setAttribute("aliasType", bean.getLoginAliasType());	
-            request.setAttribute("loginAliasBean", bean);	
-            return mapping.findForward("prepareCreateNewLoginAlias");
+	    request.setAttribute("aliasType", bean.getLoginAliasType());
+	    request.setAttribute("loginAliasBean", bean);
+	    return mapping.findForward("prepareCreateNewLoginAlias");
 	}
-		
-	request.setAttribute("login", login);	
+
+	request.setAttribute("login", login);
 	return mapping.findForward("prepareManageLoginAlias");
     }
-    
+
     public ActionForward prepareCreateRoleTypeAlias(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 	return goToInsertNewAliasPage(mapping, request, LoginAliasType.ROLE_TYPE_ALIAS);
     }
-    
+
     public ActionForward prepareCreateCustomAlias(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {	
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 	return goToInsertNewAliasPage(mapping, request, LoginAliasType.CUSTOM_ALIAS);
-    }    
-       
+    }
+
     public ActionForward prepareEditAlias(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	
+
 	LoginAlias loginAlias = getLoginAliasFromParameter(request);
 	request.setAttribute("loginAlias", loginAlias);
 	return mapping.findForward("prepareEditLoginAlias");
-    }  
-    
+    }
+
     public ActionForward prepareManageLoginTimeIntervals(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	
-	Person person = getPersonFromParameter(request);      
+
+	Person person = getPersonFromParameter(request);
 	request.setAttribute("login", person.getLoginIdentification());
 	return mapping.findForward("prepareManageLoginTimeIntervals");
-    }   
-    
+    }
+
     public ActionForward prepareEditLoginTimeInterval(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	
+
 	LoginPeriod loginPeriod = getLoginPeriodFromParameter(request);
 	request.setAttribute("loginPeriod", loginPeriod);
 	return mapping.findForward("prepareEditLoginTimeInterval");
-    }  
-    
+    }
+
     public ActionForward prepareCreateLoginTimeInterval(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	
+
 	Login login = getLoginFromParameter(request);
 	request.setAttribute("login", login);
 	return mapping.findForward("prepareCreateNewLoginTimeInterval");
-    }          
-   
+    }
+
     public ActionForward deleteLoginTimeInterval(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-        
+
 	LoginPeriod loginPeriod = getLoginPeriodFromParameter(request);
 	Login login = (loginPeriod != null) ? loginPeriod.getLogin() : null;
-		
+
 	try {
-	    executeService("DeleteLoginPeriod", new Object[] { loginPeriod });	    
+	    executeService("DeleteLoginPeriod", new Object[] { loginPeriod });
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	}
-	
-	request.setAttribute("login", login);	
+
+	request.setAttribute("login", login);
 	return mapping.findForward("prepareManageLoginTimeIntervals");
-    }   
+    }
     
-    public ActionForward prepareCreateInstitutionalAlias(ActionMapping mapping, ActionForm actionForm,
+     public ActionForward prepareCreateInstitutionalAlias(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 	
 	Login login = getLoginFromParameter(request);	
@@ -178,38 +180,39 @@ public class LoginsManagementDA extends FenixDispatchAction {
 	request.setAttribute("login", login);
 	return mapping.findForward("prepareManageLoginAlias");
     } 
-    
-    
+  
     // Private Methods
     
-    private ActionForward goToInsertNewAliasPage(ActionMapping mapping, HttpServletRequest request, LoginAliasType type) {
+
+    private ActionForward goToInsertNewAliasPage(ActionMapping mapping, HttpServletRequest request,
+	    LoginAliasType type) {
 	Login login = getLoginFromParameter(request);
-	request.setAttribute("aliasType", type);	
-	request.setAttribute("loginAliasBean", new LoginAliasBean(login, type));	
+	request.setAttribute("aliasType", type);
+	request.setAttribute("loginAliasBean", new LoginAliasBean(login, type));
 	return mapping.findForward("prepareCreateNewLoginAlias");
     }
-    
+
     private Person getPersonFromParameter(HttpServletRequest request) {
 	String personIDString = request.getParameter("personID");
 	return (Person) ((StringUtils.isEmpty(personIDString)) ? null : rootDomainObject
 		.readPartyByOID(Integer.valueOf(personIDString)));
     }
-    
+
     private Login getLoginFromParameter(HttpServletRequest request) {
 	String loginIDString = request.getParameter("loginID");
 	return (Login) ((StringUtils.isEmpty(loginIDString)) ? null : rootDomainObject
 		.readIdentificationByOID(Integer.valueOf(loginIDString)));
     }
-    
+
     private LoginAlias getLoginAliasFromParameter(HttpServletRequest request) {
 	String loginAliasIDString = request.getParameter("loginAliasID");
 	return (LoginAlias) ((StringUtils.isEmpty(loginAliasIDString)) ? null : rootDomainObject
 		.readLoginAliasByOID(Integer.valueOf(loginAliasIDString)));
-    }    
-    
+    }
+
     private LoginPeriod getLoginPeriodFromParameter(HttpServletRequest request) {
 	String loginPeriodIDString = request.getParameter("loginPeriodID");
 	return (LoginPeriod) ((StringUtils.isEmpty(loginPeriodIDString)) ? null : rootDomainObject
 		.readLoginPeriodByOID(Integer.valueOf(loginPeriodIDString)));
-    }    
+    }
 }

@@ -27,7 +27,7 @@
 	</logic:equal>
 	
 	<logic:greaterThan name="numberStudents" value="1">
-		<fr:view name="students" schema="student.searchResult">
+		<fr:view name="students" schema="Student.view-with-number-and-name">
 			<fr:layout name="tabular" >
 				<fr:property name="classes" value="tstyle1"/>
 	        	<fr:property name="columnClasses" value="listClasses,,"/>

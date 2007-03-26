@@ -13,27 +13,19 @@ public class PenaltyExemptionJustification extends PenaltyExemptionJustification
     }
 
     public PenaltyExemptionJustification(final PenaltyExemption penaltyExemption,
-	    final PenaltyExemptionJustificationType justificationType, final String comments) {
+	    final PenaltyExemptionJustificationType justificationType, final String reason) {
 	this();
-	init(penaltyExemption, justificationType, comments);
+	init(penaltyExemption, justificationType, reason);
     }
 
     protected void init(PenaltyExemption penaltyExemption,
-	    PenaltyExemptionJustificationType justificationType, String comments) {
-	checkParameters(penaltyExemption, justificationType);
-	super.setPenaltyExemption(penaltyExemption);
-	super.setJustificationType(justificationType);
-	super.setComments(comments);
+	    PenaltyExemptionJustificationType justificationType, String reason) {
+	checkParameters(justificationType);
+	super.init(penaltyExemption, reason);
+	super.setPenaltyExemptionJustificationType(justificationType);
     }
 
-    private void checkParameters(PenaltyExemption penaltyExemption,
-	    PenaltyExemptionJustificationType justificationType) {
-
-	if (penaltyExemption == null) {
-	    throw new DomainException(
-		    "error.net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemptionJustification.penaltyExemption.cannot.be.null");
-	}
-
+    private void checkParameters(PenaltyExemptionJustificationType justificationType) {
 	if (justificationType == null) {
 	    throw new DomainException(
 		    "error.net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemptionJustification.justificationType.cannot.be.null");
@@ -42,26 +34,16 @@ public class PenaltyExemptionJustification extends PenaltyExemptionJustification
     }
 
     @Override
-    public void setPenaltyExemption(PenaltyExemption penaltyExemption) {
+    public void setPenaltyExemptionJustificationType(
+	    PenaltyExemptionJustificationType penaltyExemptionJustificationType) {
 	throw new DomainException(
-		"error.net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemptionJustification.cannot.modify.penaltyExemption");
+		"error.net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemptionJustification.cannot.modify.penaltyExemptionJustificationType");
     }
 
     @Override
-    public void setJustificationType(PenaltyExemptionJustificationType justificationType) {
-	throw new DomainException(
-		"error.net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemptionJustification.cannot.modify.justificationType");
-    }
-
-    @Override
-    public void setComments(String comments) {
-	throw new DomainException(
-		"error.net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemptionJustification.cannot.modify.comments");
-    }
-
     public LabelFormatter getDescription() {
 	final LabelFormatter labelFormatter = new LabelFormatter();
-	labelFormatter.appendLabel(getJustificationType().getQualifiedName(),
+	labelFormatter.appendLabel(getPenaltyExemptionJustificationType().getQualifiedName(),
 		LabelFormatter.ENUMERATION_RESOURCES);
 
 	return labelFormatter;

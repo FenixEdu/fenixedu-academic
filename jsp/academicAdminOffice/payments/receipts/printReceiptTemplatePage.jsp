@@ -15,12 +15,19 @@
 <table style="width: 95%;">
 <tr>
 	<td rowspan="2" style="width: 95%px;">
-		<img src="<%= request.getContextPath() %>/images/LogoIST.gif" alt="<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="LogoIST" bundle="IMAGE_RESOURCES" />"/>
+		<img src="<%= request.getContextPath() %>/images/LogoIST.gif" alt="<bean:message key="LogoIST" bundle="IMAGE_RESOURCES" />"/>
 	</td>
 	<td style="padding-left: 1em;">
 		<h3><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.printTemplates.institutionName.upper.case"/></h3>
-		<b><bean:write name="currentUnit" property="name"/></b><br/>
-		<b><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.printTemplates.costCenter"/> <bean:write name="currentUnit" property="costCenterCode"/></b>
+		<bean:define id="ownerUnit" name="receipt" property="ownerUnit" />
+		<b><bean:write name="ownerUnit" property="name"/></b><br/>
+		<b><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.printTemplates.costCenter"/> <bean:write name="ownerUnit" property="costCenterCode"/></b>
+		<br/>
+		<bean:define id="creatorUnit" name="receipt" property="creatorUnit" />
+		<bean:define id="creatorUnitId" name="creatorUnit" property="idInternal" />
+		<logic:notEqual name="ownerUnit" property="idInternal" value="<%=creatorUnitId.toString()%>">
+			<strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.payments.printTemplates.issuedBy"/>:</strong> <bean:write name="creatorUnit" property="name"/>
+		</logic:notEqual>
 		<hr size="1"/>
 	</td>
 </tr>

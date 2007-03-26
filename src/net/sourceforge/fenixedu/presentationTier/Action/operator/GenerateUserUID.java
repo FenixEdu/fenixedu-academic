@@ -24,7 +24,7 @@ import org.apache.struts.action.ActionMapping;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 public class GenerateUserUID extends FenixDispatchAction {
-    
+
     public ActionForward prepareSearchPerson(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
@@ -35,58 +35,62 @@ public class GenerateUserUID extends FenixDispatchAction {
     public ActionForward searchPerson(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	PersonBean personBean = (PersonBean) getRenderedObject("personBeanID");	
+	PersonBean personBean = (PersonBean) getRenderedObject("personBeanID");
 	readAndSetResultPersons(request, personBean);
 	return mapping.findForward("prepareSearchPerson");
     }
-      
+
     public ActionForward generateUserUID(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	Person person = getPersonFromParameter(request);	
+	Person person = getPersonFromParameter(request);
 	Login login = person.getLoginIdentification();
-	
+
 	LoginAliasBean bean = null;
-	if(login != null) {
-	    bean = new LoginAliasBean(login, LoginAliasType.INSTITUTION_ALIAS);   		   
+	if (login != null) {
+	    bean = new LoginAliasBean(login, LoginAliasType.INSTITUTION_ALIAS);
 	    try {
-                executeService("CreateNewLoginAlias", new Object[] { bean });	    
-            
-            } catch (DomainException e) {
-                addActionMessage(request, e.getMessage());                
-            }
-            
-            if(login.getInstitutionalLoginAlias() == null) {
-    	    	addActionMessage(request, "error.no.conditions.create.institutional.alias");
-            }
-            
+		executeService("CreateNewLoginAlias", new Object[] { bean });
+
+	    } catch (DomainException e) {
+		addActionMessage(request, e.getMessage());
+	    }
+
+	    if (login.getInstitutionalLoginAlias() == null) {
+		addActionMessage(request, "error.no.conditions.create.institutional.alias");
+	    }
+
 	} else {
 	    addActionMessage(request, "error.person.without.login.identification");
 	}
-		
-	PersonBean personBean = new PersonBean(person.getName(), person.getUsername(), person.getDocumentIdNumber().toString());
+
+	PersonBean personBean = new PersonBean(person.getName(), person.getUsername(), person
+		.getDocumentIdNumber().toString());
 	readAndSetResultPersons(request, personBean);
-	
+
 	return mapping.findForward("prepareSearchPerson");
     }
-    
-    
+
     // Private Methods
-    
-    private void readAndSetResultPersons(HttpServletRequest request, PersonBean personBean) throws FenixFilterException, FenixServiceException {
-	
-	SearchPerson.SearchParameters parameters = new SearchParameters(personBean.getName(), null, 
-		personBean.getUsername(), personBean.getDocumentIdNumber(), null, null, null, null, null);	
+
+    private void readAndSetResultPersons(HttpServletRequest request, PersonBean personBean)
+	    throws FenixFilterException, FenixServiceException {
+
+	SearchPerson.SearchParameters parameters = new SearchParameters(personBean.getName(), null,
+		personBean.getUsername(), personBean.getDocumentIdNumber(), null, null, null, null,
+		null, null, null);
 	SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(parameters);
 
-	CollectionPager<Person> persons = (CollectionPager<Person>) executeService("SearchPerson", new Object[] {parameters, predicate});
-	
+	CollectionPager<Person> persons = (CollectionPager<Person>) executeService("SearchPerson",
+		new Object[] { parameters, predicate });
+
 	request.setAttribute("resultPersons", persons.getCollection());
 	request.setAttribute("personBean", personBean);
-    } 
-    
+    }
+
     private Person getPersonFromParameter(HttpServletRequest request) {
 	String personIDString = request.getParameter("personID");
-	return (Person) ((StringUtils.isEmpty(personIDString)) ? null : rootDomainObject.readPartyByOID(Integer.valueOf(personIDString)));
-    }      
+	return (Person) ((StringUtils.isEmpty(personIDString)) ? null : rootDomainObject
+		.readPartyByOID(Integer.valueOf(personIDString)));
+    }
 }

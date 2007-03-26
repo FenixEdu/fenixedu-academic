@@ -152,14 +152,14 @@
 		<put name="body" value="/academicAdminOffice/payments/showOperations.jsp"/>
 	</definition>
 	
-	<definition name="payments.management.showPaymentsWithoutReceipt" extends="academicAdminOffice.masterPage">
-		<put name="body" value="/academicAdminOffice/payments/showPaymentsWithoutReceipt.jsp"/>
-	</definition>
-
 	<definition name="payments.management.showGuide" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/payments/guides/showGuide.jsp"/>
 	</definition>
-	
+
+	<definition name="payments.management.showPaymentsWithoutReceipt" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/payments/receipts/showPaymentsWithoutReceipt.jsp"/>
+	</definition>
+		
 	<definition name="payments.management.showReceipts" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/payments/receipts/showReceipts.jsp"/>
 	</definition>
@@ -218,8 +218,8 @@
 	</definition>
 	
 	
-	<definition name="payments.management.extract.showEventsWithPayments" extends="academicAdminOffice.masterPage">
-		<put name="body" value="/academicAdminOffice/payments/extract/showEventsWithPayments.jsp"/>
+	<definition name="payments.management.showEventsWithPayments" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/payments/showEventsWithPayments.jsp"/>
 	</definition>
 	
 	<!-- Exemptions -->	

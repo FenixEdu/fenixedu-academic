@@ -38,247 +38,246 @@ import pt.utl.ist.fenix.tools.util.CollectionPager;
  */
 public class FindPersonAction extends FenixDispatchAction {
     public ActionForward prepareFindPerson(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-        return mapping.findForward("findPerson");
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	return mapping.findForward("findPerson");
     }
 
     public ActionForward preparePerson(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        DynaActionForm findPersonForm = (DynaActionForm) actionForm;
+	DynaActionForm findPersonForm = (DynaActionForm) actionForm;
 
-        String roleType = null;
-        String degreeType = null;
+	String roleType = null;
+	String degreeType = null;
 
-        if (request.getParameter("roleType") != null && request.getParameter("roleType").length() > 0) {
-            roleType = (String) request.getParameter("roleType");
+	if (request.getParameter("roleType") != null && request.getParameter("roleType").length() > 0) {
+	    roleType = (String) request.getParameter("roleType");
 
-        } else if (findPersonForm.get("roleType") != null) {
-            roleType = (String) findPersonForm.get("roleType");
-        }
-        if (request.getParameter("degreeType") != null
-                && request.getParameter("degreeType").length() > 0) {
-            degreeType = (String) request.getParameter("degreeType");
+	} else if (findPersonForm.get("roleType") != null) {
+	    roleType = (String) findPersonForm.get("roleType");
+	}
+	if (request.getParameter("degreeType") != null
+		&& request.getParameter("degreeType").length() > 0) {
+	    degreeType = (String) request.getParameter("degreeType");
 
-        } else if (findPersonForm.get("degreeType") != null) {
-            degreeType = (String) findPersonForm.get("degreeType");
-        }
+	} else if (findPersonForm.get("degreeType") != null) {
+	    degreeType = (String) findPersonForm.get("degreeType");
+	}
 
-        if (roleType != null && roleType.length() != 0) {
-            if (roleType.equals(RoleType.EMPLOYEE.getName())
-                    || roleType.equals(RoleType.TEACHER.getName())) {
-                if (roleType.equals(RoleType.TEACHER.getName())) {
-                    List departments = (List) ServiceUtils.executeService(null, "ReadAllDepartments",
-                            null);
-                    request.setAttribute("departments", departments);
-                }
-                // request.removeAttribute("degreeType");
-            }
+	if (roleType != null && roleType.length() != 0) {
+	    if (roleType.equals(RoleType.EMPLOYEE.getName())
+		    || roleType.equals(RoleType.TEACHER.getName())) {
+		if (roleType.equals(RoleType.TEACHER.getName())) {
+		    List departments = (List) ServiceUtils.executeService(null, "ReadAllDepartments",
+			    null);
+		    request.setAttribute("departments", departments);
+		}
+		// request.removeAttribute("degreeType");
+	    }
 
-            if (roleType.equals(RoleType.STUDENT.getName())) {
+	    if (roleType.equals(RoleType.STUDENT.getName())) {
 
-                if (degreeType.length() != 0) {
-                    Object[] args = { degreeType };
-                    List nonMasterDegree = (List) ServiceUtils.executeService(null,
-                            "ReadAllDegreesByType", args);
+		if (degreeType.length() != 0) {
+		    Object[] args = { degreeType };
+		    List nonMasterDegree = (List) ServiceUtils.executeService(null,
+			    "ReadAllDegreesByType", args);
 
-                    request.setAttribute("nonMasterDegree", nonMasterDegree);
-                    request.setAttribute("degreeType", true);
+		    request.setAttribute("nonMasterDegree", nonMasterDegree);
+		    request.setAttribute("degreeType", true);
 
-                }
-                findPersonForm.set("degreeType", degreeType);
-                request.setAttribute("degreeType", degreeType);
-            }
+		}
+		findPersonForm.set("degreeType", degreeType);
+		request.setAttribute("degreeType", degreeType);
+	    }
 
-            findPersonForm.set("roleType", roleType);
-            request.setAttribute("roleType", roleType);
+	    findPersonForm.set("roleType", roleType);
+	    request.setAttribute("roleType", roleType);
 
-        }
-        String name = null;
-        if (request.getParameter("name") != null && request.getParameter("name").length() > 0) {
-            name = request.getParameter("name");
-        } else if (findPersonForm.get("name") != null) {
-            name = (String) findPersonForm.get("name");
-        }
-        if (name != null && name.length() > 0) {
-            findPersonForm.set("name", name);
-        }
-        
-        Boolean viewPhoto = null;
-       
-        if (request.getParameter("viewPhoto") != null
-                && request.getParameter("viewPhoto").length() > 0) {
-        	viewPhoto = getCheckBoxValue((String) request.getParameter("viewPhoto"));
+	}
+	String name = null;
+	if (request.getParameter("name") != null && request.getParameter("name").length() > 0) {
+	    name = request.getParameter("name");
+	} else if (findPersonForm.get("name") != null) {
+	    name = (String) findPersonForm.get("name");
+	}
+	if (name != null && name.length() > 0) {
+	    findPersonForm.set("name", name);
+	}
 
-        } else if (findPersonForm.get("viewPhoto") != null) {
-        	viewPhoto = getCheckBoxValue((String) findPersonForm.get("viewPhoto"));
-        }
-        findPersonForm.set("viewPhoto",viewPhoto.toString());
-        request.setAttribute("viewPhoto", viewPhoto);
-      
-        return mapping.findForward("findPerson");
+	Boolean viewPhoto = null;
+
+	if (request.getParameter("viewPhoto") != null && request.getParameter("viewPhoto").length() > 0) {
+	    viewPhoto = getCheckBoxValue((String) request.getParameter("viewPhoto"));
+
+	} else if (findPersonForm.get("viewPhoto") != null) {
+	    viewPhoto = getCheckBoxValue((String) findPersonForm.get("viewPhoto"));
+	}
+	findPersonForm.set("viewPhoto", viewPhoto.toString());
+	request.setAttribute("viewPhoto", viewPhoto);
+
+	return mapping.findForward("findPerson");
     }
 
     public ActionForward findPerson(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-        ActionErrors errors = new ActionErrors();
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	ActionErrors errors = new ActionErrors();
 
-        IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = SessionUtils.getUserView(request);
 
-        DynaActionForm findPersonForm = (DynaActionForm) actionForm;
-        String name = null;
-        if (request.getParameter("name") != null && request.getParameter("name").length() > 0) {
-            name = request.getParameter("name");
-        } else if (findPersonForm.get("name") != null) {
-            name = (String) findPersonForm.get("name");
-        }     
+	DynaActionForm findPersonForm = (DynaActionForm) actionForm;
+	String name = null;
+	if (request.getParameter("name") != null && request.getParameter("name").length() > 0) {
+	    name = request.getParameter("name");
+	} else if (findPersonForm.get("name") != null) {
+	    name = (String) findPersonForm.get("name");
+	}
 
-        String roleType = null;
-        Integer departmentId = null;
-        Integer degreeId = null;
-        String degreeType = null;
+	String roleType = null;
+	Integer departmentId = null;
+	Integer degreeId = null;
+	String degreeType = null;
 
-        if (request.getParameter("roleType") != null && request.getParameter("roleType").length() > 0) {
-            roleType = (String) request.getParameter("roleType");
+	if (request.getParameter("roleType") != null && request.getParameter("roleType").length() > 0) {
+	    roleType = (String) request.getParameter("roleType");
 
-        } else if (findPersonForm.get("roleType") != null) {
-            roleType = (String) findPersonForm.get("roleType");
-        }
+	} else if (findPersonForm.get("roleType") != null) {
+	    roleType = (String) findPersonForm.get("roleType");
+	}
 
-        if (request.getParameter("degreeType") != null
-                && request.getParameter("degreeType").length() > 0) {
-            degreeType = (String) request.getParameter("degreeType");
+	if (request.getParameter("degreeType") != null
+		&& request.getParameter("degreeType").length() > 0) {
+	    degreeType = (String) request.getParameter("degreeType");
 
-        } else if (findPersonForm.get("degreeType") != null) {
-            degreeType = (String) findPersonForm.get("degreeType");
-        }
-        if (degreeType.length() == 0 && roleType.length() == 0) {
-            degreeType = null;
-        } else if (roleType.equals(RoleType.STUDENT.getName())) {
-            if (degreeType.length() != 0) {
-                Object[] args1 = { degreeType };
-                List nonMasterDegree = (List) ServiceUtils.executeService(null, "ReadAllDegreesByType",
-                        args1);
+	} else if (findPersonForm.get("degreeType") != null) {
+	    degreeType = (String) findPersonForm.get("degreeType");
+	}
+	if (degreeType.length() == 0 && roleType.length() == 0) {
+	    degreeType = null;
+	} else if (roleType.equals(RoleType.STUDENT.getName())) {
+	    if (degreeType.length() != 0) {
+		Object[] args1 = { degreeType };
+		List nonMasterDegree = (List) ServiceUtils.executeService(null, "ReadAllDegreesByType",
+			args1);
 
-                request.setAttribute("nonMasterDegree", nonMasterDegree);
-                request.setAttribute("degreeType", degreeType);
+		request.setAttribute("nonMasterDegree", nonMasterDegree);
+		request.setAttribute("degreeType", degreeType);
 
-            } else {
-                request.setAttribute("degreeType", true);
-            }
-        }
-        if (request.getParameter("departmentId") != null
-                && request.getParameter("departmentId").length() > 0) {
-            departmentId = Integer.valueOf(request.getParameter("departmentId"));
+	    } else {
+		request.setAttribute("degreeType", true);
+	    }
+	}
+	if (request.getParameter("departmentId") != null
+		&& request.getParameter("departmentId").length() > 0) {
+	    departmentId = Integer.valueOf(request.getParameter("departmentId"));
 
-        } else if (findPersonForm.get("departmentId") != null) {
-            departmentId = (Integer) findPersonForm.get("departmentId");
-        }
+	} else if (findPersonForm.get("departmentId") != null) {
+	    departmentId = (Integer) findPersonForm.get("departmentId");
+	}
 
-        if (roleType.equals(RoleType.TEACHER.getName())) {
-            List departments = (List) ServiceUtils.executeService(null, "ReadAllDepartments", null);
-            request.setAttribute("departments", departments);
-        }
+	if (roleType.equals(RoleType.TEACHER.getName())) {
+	    List departments = (List) ServiceUtils.executeService(null, "ReadAllDepartments", null);
+	    request.setAttribute("departments", departments);
+	}
 
-        if (request.getParameter("degreeId") != null && request.getParameter("degreeId").length() > 0) {
-            degreeId = Integer.valueOf(request.getParameter("degreeId"));
+	if (request.getParameter("degreeId") != null && request.getParameter("degreeId").length() > 0) {
+	    degreeId = Integer.valueOf(request.getParameter("degreeId"));
 
-        } else if (findPersonForm.get("degreeId") != null) {
-            degreeId = (Integer) findPersonForm.get("degreeId");
-        }
+	} else if (findPersonForm.get("degreeId") != null) {
+	    degreeId = (Integer) findPersonForm.get("degreeId");
+	}
 
-        SearchParameters searchParameters = new SearchPerson.SearchParameters(name, null, null, null,
-                roleType, degreeType, degreeId, departmentId, Boolean.TRUE);
+	SearchParameters searchParameters = new SearchPerson.SearchParameters(name, null, null, null,
+		null, roleType, degreeType, degreeId, departmentId, Boolean.TRUE, null);
 
-        SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
+	SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
 
-        Object[] args = { searchParameters, predicate };
-      
-        CollectionPager result = null;        
-        try {
-            result = (CollectionPager) ServiceManagerServiceFactory.executeService(userView,
-                    "SearchPerson", args);               
+	Object[] args = { searchParameters, predicate };
 
-        } catch (FenixServiceException e) {
-            errors.add("impossibleFindPerson", new ActionError(e.getMessage()));
-            saveErrors(request, errors);
-            return preparePerson(mapping, actionForm, request, response);
-        }
+	CollectionPager result = null;
+	try {
+	    result = (CollectionPager) ServiceManagerServiceFactory.executeService(userView,
+		    "SearchPerson", args);
 
-        if (result == null) {
-            errors.add("impossibleFindPerson", new ActionError("error.manager.implossible.findPerson"));
-        }
+	} catch (FenixServiceException e) {
+	    errors.add("impossibleFindPerson", new ActionError(e.getMessage()));
+	    saveErrors(request, errors);
+	    return preparePerson(mapping, actionForm, request, response);
+	}
 
-        if (result.getCollection().isEmpty()) {
-            errors.add("impossibleFindPerson", new ActionError("error.manager.implossible.findPerson"));
-            saveErrors(request, errors);
+	if (result == null) {
+	    errors.add("impossibleFindPerson", new ActionError("error.manager.implossible.findPerson"));
+	}
 
-        }
-        if (!errors.isEmpty()) {
-            saveErrors(request, errors);
-            return preparePerson(mapping, actionForm, request, response);
-        }     
+	if (result.getCollection().isEmpty()) {
+	    errors.add("impossibleFindPerson", new ActionError("error.manager.implossible.findPerson"));
+	    saveErrors(request, errors);
 
-        final String pageNumberString = request.getParameter("pageNumber");
-        final Integer pageNumber = !StringUtils.isEmpty(pageNumberString) ? Integer.valueOf(pageNumberString) : Integer.valueOf(1);         
+	}
+	if (!errors.isEmpty()) {
+	    saveErrors(request, errors);
+	    return preparePerson(mapping, actionForm, request, response);
+	}
+
+	final String pageNumberString = request.getParameter("pageNumber");
+	final Integer pageNumber = !StringUtils.isEmpty(pageNumberString) ? Integer
+		.valueOf(pageNumberString) : Integer.valueOf(1);
 	request.setAttribute("pageNumber", pageNumber);
 	request.setAttribute("numberOfPages", Integer.valueOf(result.getNumberOfPages()));
-	
-	request.setAttribute("personListFinded", result.getPage(pageNumber.intValue()));	
-        request.setAttribute("totalFindedPersons", result.getCollection().size());
-                                      
-        request.setAttribute("name", name);
-        request.setAttribute("roleType", roleType);
-        request.setAttribute("degreeId", degreeId);
-        request.setAttribute("departmentId", departmentId);        
-        findPersonForm.set("name", name);
 
-        if (isEmployeeOrTeacher(userView)) {
-            request.setAttribute("show", Boolean.TRUE);
-        } else {
-            request.setAttribute("show", Boolean.FALSE);
-        }
-        Boolean viewPhoto = null;
-        if (request.getParameter("viewPhoto") != null
-                && request.getParameter("viewPhoto").length() > 0) {            
-        	viewPhoto = getCheckBoxValue((String) request.getParameter("viewPhoto"));
+	request.setAttribute("personListFinded", result.getPage(pageNumber.intValue()));
+	request.setAttribute("totalFindedPersons", result.getCollection().size());
 
-        } else if (findPersonForm.get("viewPhoto") != null) {
-        	viewPhoto = getCheckBoxValue((String) findPersonForm.get("viewPhoto"));
-        }
-        findPersonForm.set("viewPhoto", viewPhoto.toString());
-        request.setAttribute("viewPhoto", viewPhoto);
-        return mapping.findForward("findPerson");
+	request.setAttribute("name", name);
+	request.setAttribute("roleType", roleType);
+	request.setAttribute("degreeId", degreeId);
+	request.setAttribute("departmentId", departmentId);
+	findPersonForm.set("name", name);
+
+	if (isEmployeeOrTeacher(userView)) {
+	    request.setAttribute("show", Boolean.TRUE);
+	} else {
+	    request.setAttribute("show", Boolean.FALSE);
+	}
+	Boolean viewPhoto = null;
+	if (request.getParameter("viewPhoto") != null && request.getParameter("viewPhoto").length() > 0) {
+	    viewPhoto = getCheckBoxValue((String) request.getParameter("viewPhoto"));
+
+	} else if (findPersonForm.get("viewPhoto") != null) {
+	    viewPhoto = getCheckBoxValue((String) findPersonForm.get("viewPhoto"));
+	}
+	findPersonForm.set("viewPhoto", viewPhoto.toString());
+	request.setAttribute("viewPhoto", viewPhoto);
+	return mapping.findForward("findPerson");
 
     }
 
     private boolean isEmployeeOrTeacher(IUserView userView) {
-        return userView.hasRoleType(RoleType.EMPLOYEE) || userView.hasRoleType(RoleType.TEACHER);
+	return userView.hasRoleType(RoleType.EMPLOYEE) || userView.hasRoleType(RoleType.TEACHER);
     }
 
     private Boolean getCheckBoxValue(String value) {
 
-        if (value != null && (value.equals("true") || value.equals("yes") || value.equals("on"))) {
-            return Boolean.TRUE;
-        }
-        return Boolean.FALSE;
+	if (value != null && (value.equals("true") || value.equals("yes") || value.equals("on"))) {
+	    return Boolean.TRUE;
+	}
+	return Boolean.FALSE;
 
     }
 
     private List getPageList(Integer totalPersons) {
-        List pagesList = new ArrayList();
-        int numberOfPages;
+	List pagesList = new ArrayList();
+	int numberOfPages;
 
-        if ((totalPersons % SessionConstants.LIMIT_FINDED_PERSONS) != 0) {
-            numberOfPages = (totalPersons / SessionConstants.LIMIT_FINDED_PERSONS) + 1;
-        } else {
-            numberOfPages = (totalPersons / SessionConstants.LIMIT_FINDED_PERSONS);
-        }
+	if ((totalPersons % SessionConstants.LIMIT_FINDED_PERSONS) != 0) {
+	    numberOfPages = (totalPersons / SessionConstants.LIMIT_FINDED_PERSONS) + 1;
+	} else {
+	    numberOfPages = (totalPersons / SessionConstants.LIMIT_FINDED_PERSONS);
+	}
 
-        for (int i = 1; i <= numberOfPages; i++) {
-            pagesList.add(i);
-        }
+	for (int i = 1; i <= numberOfPages; i++) {
+	    pagesList.add(i);
+	}
 
-        return pagesList;
+	return pagesList;
     }
 }

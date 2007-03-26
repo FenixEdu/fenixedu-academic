@@ -154,6 +154,8 @@ public class Unit extends Unit_Base {
 		&& !hasAnyResearchActivities() 
 		&& !hasAnyBoards()
 		&& (!hasSite() || getSite().canBeDeleted())
+		&& !hasAnyOwnedReceipts()
+		&& !hasAnyCreatedReceipts()
                 && !hasAnyProtocols()
                 && !hasAnyPartnerProtocols();
     }

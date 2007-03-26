@@ -13,27 +13,34 @@
 	<em><bean:message key="label.payments" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 	<h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.preparePayment" /></h2>
 
-	<logic:messagesPresent message="true">
-		<ul class="nobullet list2">
-			<html:messages id="messages" message="true">
+	<logic:messagesPresent message="true" property="context">
+		<ul class="nobullet list6">
+			<html:messages id="messages" message="true" property="context" bundle="ACADEMIC_OFFICE_RESOURCES">
+				<li><span class="error0"><bean:write name="messages" /></span></li>
+			</html:messages>
+		</ul>
+	</logic:messagesPresent>
+	<logic:messagesPresent message="true"  property="<%=org.apache.struts.action.ActionMessages.GLOBAL_MESSAGE%>">
+		<ul class="nobullet list6">
+			<html:messages id="messages" message="true" property="<%=org.apache.struts.action.ActionMessages.GLOBAL_MESSAGE%>" bundle="APPLICATION_RESOURCES">
 				<li><span class="error0"><bean:write name="messages" /></span></li>
 			</html:messages>
 		</ul>
 	</logic:messagesPresent>
 	
-	<p class="mtop15 mbottom05"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.person"/></strong></p>
+	<strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.person"/></strong>
 	<fr:view name="paymentsManagementDTO" property="person"
 		schema="person.view-with-name-and-idDocumentType-and-documentIdNumber">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle2 thlight thright mtop05" />
+			<fr:property name="classes" value="tstyle4 thlight thright mtop05" />
 			<fr:property name="rowClasses" value="tdhl1,," />
 		</fr:layout>
 	</fr:view>
 	
 	<fr:edit id="paymentsManagementDTO-edit" name="paymentsManagementDTO" schema="paymentsManagementDTO.edit-with-paymentDate">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle5 thlight thright thmiddle" />
-			<fr:property name="columnClasses" value=",,tdclear tderror1" />
+			<fr:property name="classes" value="tstyle4 thlight thright" />
+			<fr:property name="columnClasses" value=",,tdclear" />
 		</fr:layout>
 		<fr:destination name="invalid" path="/payments.do?method=preparePaymentInvalid"/>
 	</fr:edit>
@@ -42,7 +49,7 @@
 	<fr:view name="paymentsManagementDTO" property="selectedEntries" schema="entryDTO.view">
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle4 mtop05 mbottom0" />
-			<fr:property name="columnClasses" value="width30em,width15em aright"/>
+			<fr:property name="columnClasses" value="width30em acenter,width15em aright"/>
 		</fr:layout>
 	</fr:view>
 

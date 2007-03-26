@@ -11,7 +11,13 @@ public enum PenaltyExemptionJustificationType {
 
     ENROLMENT_AFTER_EQUIVALENCE,
 
-    DIRECTIVE_COUNCIL_AUTHORIZATION;
+    DIRECTIVE_COUNCIL_AUTHORIZATION,
+
+    NUCLEUS_COORDINATOR_AUTHORIZATION;
+
+    private PenaltyExemptionJustificationType() {
+
+    }
 
     public String getName() {
 	return name();
@@ -29,13 +35,15 @@ public enum PenaltyExemptionJustificationType {
 	switch (eventType) {
 	case ADMINISTRATIVE_OFFICE_FEE_INSURANCE:
 	    return Arrays.asList(new PenaltyExemptionJustificationType[] { ENROLMENT_AFTER_EQUIVALENCE,
-		    DIRECTIVE_COUNCIL_AUTHORIZATION });
+		    DIRECTIVE_COUNCIL_AUTHORIZATION, NUCLEUS_COORDINATOR_AUTHORIZATION });
 	case GRATUITY:
 	    return Arrays.asList(new PenaltyExemptionJustificationType[] { SOCIAL_SHARE_GRANT_OWNER,
-		    ENROLMENT_AFTER_EQUIVALENCE, DIRECTIVE_COUNCIL_AUTHORIZATION });
+		    ENROLMENT_AFTER_EQUIVALENCE, DIRECTIVE_COUNCIL_AUTHORIZATION,
+		    NUCLEUS_COORDINATOR_AUTHORIZATION });
 	default:
 	    return Collections.EMPTY_LIST;
 	}
 
     }
+
 }

@@ -17,13 +17,15 @@ public class CreateGratuityExemption extends Service {
     public void run(final Employee employee,
 	    final CreateGratuityExemptionBean createGratuityExemptionBean) {
 	if (createGratuityExemptionBean.isPercentageExemption()) {
-	    new PercentageGratuityExemption(employee, createGratuityExemptionBean.getExemptionType(),
-		    createGratuityExemptionBean.getGratuityEvent(), createGratuityExemptionBean
-			    .getSelectedPercentage().divide(BigDecimal.valueOf(100)));
+	    new PercentageGratuityExemption(employee, createGratuityExemptionBean.getGratuityEvent(),
+		    createGratuityExemptionBean.getExemptionJustificationType(), createGratuityExemptionBean
+			    .getReason(), createGratuityExemptionBean.getDispatchDate(),
+		    createGratuityExemptionBean.getSelectedPercentage().divide(BigDecimal.valueOf(100)));
 	} else {
-	    new ValueGratuityExemption(employee, createGratuityExemptionBean.getExemptionType(),
-		    createGratuityExemptionBean.getGratuityEvent(), createGratuityExemptionBean
-			    .getAmount());
+	    new ValueGratuityExemption(employee, createGratuityExemptionBean.getGratuityEvent(),
+		    createGratuityExemptionBean.getExemptionJustificationType(), createGratuityExemptionBean
+			    .getReason(), createGratuityExemptionBean.getDispatchDate(),
+		    createGratuityExemptionBean.getAmount());
 	}
     }
 

@@ -10,9 +10,16 @@
 
 <h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.receipt" /></h2>
 
-<logic:messagesPresent message="true">
+<logic:messagesPresent message="true" property="context">
+	<ul class="nobullet list6">
+		<html:messages id="messages" message="true" property="context" bundle="ACADEMIC_OFFICE_RESOURCES">
+			<li><span class="error0"><bean:write name="messages" /></span></li>
+		</html:messages>
+	</ul>
+</logic:messagesPresent>
+<logic:messagesPresent message="true"  property="<%=org.apache.struts.action.ActionMessages.GLOBAL_MESSAGE%>">
 		<ul>
-			<html:messages id="messages" message="true">
+			<html:messages id="messages" message="true" property="<%=org.apache.struts.action.ActionMessages.GLOBAL_MESSAGE%>"  bundle="APPLICATION_RESOURCES">
 				<li><span class="error0"><bean:write name="messages" /></span></li>
 			</html:messages>
 		</ul>
@@ -73,7 +80,7 @@
 <span class="warning0"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.payments.confirmCancelReceiptQuestion"/></span>
 
 <bean:define id="personId" name="receipt" property="person.idInternal"/>
-<html:form action='<%= "/payments.do?personId=" + personId %>'>
+<html:form action='<%= "/receipts.do?personId=" + personId %>'>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="cancelReceipt" />
 	<br/>
 	<fr:edit id="receiptToCancel" name="receipt" visible="false" />

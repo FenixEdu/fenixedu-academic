@@ -11,9 +11,16 @@
 <em><bean:message key="label.payments" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.receipt" /></h2>
 
-<logic:messagesPresent message="true">
-	<ul class="nobullet">
-			<html:messages id="messages" message="true">
+<logic:messagesPresent message="true" property="context">
+	<ul class="nobullet list6">
+		<html:messages id="messages" message="true" property="context" bundle="ACADEMIC_OFFICE_RESOURCES">
+			<li><span class="error0"><bean:write name="messages" /></span></li>
+		</html:messages>
+	</ul>
+</logic:messagesPresent>
+<logic:messagesPresent message="true" property="<%=org.apache.struts.action.ActionMessages.GLOBAL_MESSAGE%>">
+	<ul class="nobullet list6">
+			<html:messages id="messages" message="true"  property="<%=org.apache.struts.action.ActionMessages.GLOBAL_MESSAGE%>" bundle="APPLICATION_RESOURCES">
 				<li><span class="error0"><bean:write name="messages" /></span></li>
 			</html:messages>
 		</ul>
@@ -63,7 +70,7 @@
 <table>
 		<tr>
 			<td>
-				<html:form action='<%= "/payments.do?personId=" + personId %>' target="_blank">
+				<html:form action='<%= "/receipts.do?personId=" + personId %>' target="_blank">
 					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="printReceipt" />
 						<fr:edit id="receipt" name="receipt" visible="false" />
 						<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.print"/></html:submit>
@@ -71,7 +78,7 @@
 			</td>
 			<%--
 			<td>
-				<html:form action="<%="/payments.do?method=showCreditNotes&amp;personId=" + personId%>">
+				<html:form action="<%="/receipts.do?method=showCreditNotes&amp;personId=" + personId%>">
 					<fr:edit id="receipt" name="receipt" visible="false" />
 					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
 						<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.payments.creditNotes"/>
@@ -80,7 +87,7 @@
 			</td>
 			--%>
 			<td>
-				<html:form action="<%="/payments.do?method=showReceipts&amp;personId=" + personId%>">
+				<html:form action="<%="/receipts.do?method=showReceipts&amp;personId=" + personId%>">
 					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
 						<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.payments.back"/>
 					</html:submit>
@@ -95,7 +102,7 @@
 	<table>
 		<tr>
 			<td>
-				<html:form action="<%="/payments.do?method=showReceipts&amp;personId=" + personId%>">
+				<html:form action="<%="/receipts.do?method=showReceipts&amp;personId=" + personId%>">
 					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
 						<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.payments.back"/>
 					</html:submit>

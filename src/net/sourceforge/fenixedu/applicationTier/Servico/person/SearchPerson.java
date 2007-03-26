@@ -17,8 +17,10 @@ import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.Student;
 
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
@@ -32,6 +34,8 @@ public class SearchPerson extends Service {
 
 	private String email, username, documentIdNumber;
 
+	private IDDocumentType idDocumentType;
+
 	private String name;
 
 	private String[] nameWords;
@@ -43,11 +47,14 @@ public class SearchPerson extends Service {
 	private Department department;
 
 	private DegreeType degreeType;
-	
+
 	private Boolean activePersons;
 
+	private Integer studentNumber;
+
 	public SearchParameters(String name, String email, String username, String documentIdNumber,
-		String roleType, String degreeTypeString, Integer degreeId, Integer departmentId, Boolean activePersons) {
+		String idDocumentType, String roleType, String degreeTypeString, Integer degreeId,
+		Integer departmentId, Boolean activePersons, Integer studentNumber) {
 
 	    this.activePersons = activePersons;
 	    this.name = (name != null && !name.equals("")) ? name : null;
@@ -59,6 +66,9 @@ public class SearchPerson extends Service {
 	    this.documentIdNumber = (documentIdNumber != null && !documentIdNumber.equals("")) ? documentIdNumber
 		    .trim().toLowerCase()
 		    : null;
+	    this.idDocumentType = StringUtils.isEmpty(idDocumentType) ? null : IDDocumentType
+		    .valueOf(idDocumentType);
+	    this.studentNumber = studentNumber;
 
 	    if (roleType != null && roleType.length() > 0) {
 		role = (Role) Role.getRoleByRoleType(RoleType.valueOf(roleType));
@@ -81,7 +91,8 @@ public class SearchPerson extends Service {
 	    return StringUtils.isEmpty(this.email) && StringUtils.isEmpty(this.username)
 		    && StringUtils.isEmpty(this.documentIdNumber) && this.role == null
 		    && this.degree == null && this.department == null && this.degreeType == null
-		    && this.nameWords == null;
+		    && this.nameWords == null && this.studentNumber == null
+		    && this.idDocumentType == null;
 	}
 
 	private static String[] getNameWords(String name) {
@@ -109,6 +120,10 @@ public class SearchPerson extends Service {
 	    return documentIdNumber;
 	}
 
+	public IDDocumentType getIdDocumentType() {
+	    return idDocumentType;
+	}
+
 	public String getEmail() {
 	    return email;
 	}
@@ -132,6 +147,11 @@ public class SearchPerson extends Service {
 	public Boolean getActivePersons() {
 	    return activePersons;
 	}
+
+	public Integer getStudentNumber() {
+	    return studentNumber;
+	}
+
     }
 
     public CollectionPager run(SearchParameters searchParameters, Predicate predicate)
@@ -150,8 +170,15 @@ public class SearchPerson extends Service {
 	    if (person != null) {
 		persons.add(person);
 	    }
-	} else if (searchParameters.getDocumentIdNumber() != null && searchParameters.getDocumentIdNumber().length() > 0) {
+	} else if (searchParameters.getDocumentIdNumber() != null
+		&& searchParameters.getDocumentIdNumber().length() > 0) {
 	    persons = Person.findPersonByDocumentID(searchParameters.getDocumentIdNumber());
+	} else if (searchParameters.getStudentNumber() != null) {
+	    final Student student = Student.readStudentByNumber(searchParameters.getStudentNumber());
+	    persons = new ArrayList<Person>();
+	    if (student != null) {
+		persons.add(student.getPerson());
+	    }
 	} else if (searchParameters.getEmail() != null && searchParameters.getEmail().length() > 0) {
 	    final Person person = Person.readPersonByEmailAddress(searchParameters.getEmail());
 	    persons = new ArrayList<Person>();
@@ -162,7 +189,8 @@ public class SearchPerson extends Service {
 	    persons = Person.findInternalPerson(searchParameters.getName());
 	    final Role roleBd = searchParameters.getRole();
 	    if (roleBd != null) {
-		for (final Iterator<Person> peopleIterator = persons.iterator(); peopleIterator.hasNext(); ) {
+		for (final Iterator<Person> peopleIterator = persons.iterator(); peopleIterator
+			.hasNext();) {
 		    final Person person = peopleIterator.next();
 		    if (!person.hasPersonRoles(roleBd)) {
 			peopleIterator.remove();
@@ -171,13 +199,14 @@ public class SearchPerson extends Service {
 	    }
 	    final Department department = searchParameters.getDepartment();
 	    if (department != null) {
-		for (final Iterator<Person> peopleIterator = persons.iterator(); peopleIterator.hasNext(); ) {
+		for (final Iterator<Person> peopleIterator = persons.iterator(); peopleIterator
+			.hasNext();) {
 		    final Person person = peopleIterator.next();
 		    final Teacher teacher = person.getTeacher();
 		    if (teacher == null || teacher.getCurrentWorkingDepartment() != department) {
 			peopleIterator.remove();
 		    }
-		}		
+		}
 	    }
 	} else {
 	    persons = new ArrayList<Person>(0);
@@ -200,12 +229,23 @@ public class SearchPerson extends Service {
 	    Person person = (Person) arg0;
 
 	    return verifyActiveState(searchParameters.getActivePersons(), person)
-		    && verifySimpleParameter(person.getDocumentIdNumber(), searchParameters.getDocumentIdNumber())
+		    && verifySimpleParameter(person.getDocumentIdNumber(), searchParameters
+			    .getDocumentIdNumber())
+		    && verifyIdDocumentType(searchParameters.getIdDocumentType(), person)
 		    && verifyUsernameEquality(searchParameters.getUsername(), person)
 		    && verifyNameEquality(searchParameters.getNameWords(), person)
 		    && verifyParameter(person.getEmail(), searchParameters.getEmail())
 		    && verifyDegreeType(searchParameters.getDegree(), searchParameters.getDegreeType(),
-			    person);
+			    person) && verifyStudentNumber(searchParameters.getStudentNumber(), person);
+	}
+
+	private boolean verifyIdDocumentType(IDDocumentType idDocumentType, Person person) {
+	    return (idDocumentType == null || person.getIdDocumentType() == idDocumentType);
+	}
+
+	private boolean verifyStudentNumber(Integer studentNumber, Person person) {
+	    return (studentNumber == null || (person.hasStudent() && person.getStudent().getNumber()
+		    .equals(studentNumber)));
 	}
 
 	private boolean verifyActiveState(Boolean activePersons, Person person) {
@@ -271,5 +311,5 @@ public class SearchPerson extends Service {
 	public SearchParameters getSearchParameters() {
 	    return searchParameters;
 	}
-    }    
+    }
 }

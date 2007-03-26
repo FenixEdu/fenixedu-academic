@@ -7,21 +7,34 @@
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
 
 <bean:define id="personId" name="person" property="idInternal"/>
-<html:form action="<%="/payments.do?personId=" + personId %>">
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" />
 
-	<em><bean:message key="label.payments" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
-	<h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="title.payments.paymentConfirmed" /></h2>
 
-	<fr:edit id="entriesToSelect" name="entriesToSelect" visible="false" nested="true"/>
-	
-	<p class="mtop25 mbottom2">
-		<span class="success0"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.paymentConfirmed"/>.</span>
-	</p>
+<em><bean:message key="label.payments" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
+<h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.paymentConfirmed" /></h2>
 
-			
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='showPaymentsWithoutReceipt';"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.payments.createReceipt"/></html:submit>
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='backToShowOperations';"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.payments.back"/></html:submit>
-</html:form>
+<p class="mtop2 mbottom15">
+	<span class="success0"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.paymentConfirmed"/></span>
+</p>
+
+
+<table>
+  <tr>
+    <td>
+		<html:form action="<%="/receipts.do?method=showPaymentsWithoutReceipt&amp;personId=" + personId %>">			
+			<fr:edit id="entriesToSelect" name="entriesToSelect" visible="false" nested="true"/>
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.payments.createReceipt"/>
+			</html:submit>
+		</html:form>
+	</td>
+	<td>
+		<html:form action="<%="/payments.do?method=backToShowOperations&amp;personId=" + personId %>">
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.payments.back"/>
+			</html:submit>
+		</html:form>
+	</td>
+  </tr>
+</table>
 
 </logic:present>

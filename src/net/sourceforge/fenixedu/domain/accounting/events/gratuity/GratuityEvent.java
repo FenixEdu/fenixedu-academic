@@ -43,8 +43,6 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
 			}
 		    }
 		});
-	
-
 
     }
 
@@ -55,13 +53,14 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
     protected void init(AdministrativeOffice administrativeOffice, Person person,
 	    StudentCurricularPlan studentCurricularPlan, ExecutionYear executionYear) {
 	super.init(administrativeOffice, EventType.GRATUITY, person);
-	checkParameters(studentCurricularPlan, executionYear);
+	checkParameters(administrativeOffice, studentCurricularPlan, executionYear);
 	super.setExecutionYear(executionYear);
 	super.setStudentCurricularPlan(studentCurricularPlan);
 
     }
 
-    private void checkParameters(StudentCurricularPlan studentCurricularPlan, ExecutionYear executionYear) {
+    private void checkParameters(AdministrativeOffice administrativeOffice,
+	    StudentCurricularPlan studentCurricularPlan, ExecutionYear executionYear) {
 	if (studentCurricularPlan == null) {
 	    throw new DomainException(
 		    "error.accounting.events.gratuity.GratuityEvent.studentCurricularPlan.cannot.be.null");
@@ -72,6 +71,10 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
 		    "error.accounting.events.gratuity.GratuityEvent.executionYear.cannot.be.null");
 	}
 
+	if (administrativeOffice == null) {
+	    throw new DomainException(
+		    "error.accounting.events.gratuity.GratuityEvent.administrativeOffice.cannot.be.null");
+	}
     }
 
     @Override

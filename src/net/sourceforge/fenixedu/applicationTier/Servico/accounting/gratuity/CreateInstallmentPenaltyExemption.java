@@ -17,8 +17,8 @@ public class CreateInstallmentPenaltyExemption extends Service {
 	for (final Installment installment : penaltyExemptionBean.getInstallments()) {
 	    new InstallmentPenaltyExemption(penaltyExemptionBean.getJustificationType(),
 		    penaltyExemptionBean.getGratuityEventWithPaymentPlan(), employee, installment,
-		    penaltyExemptionBean.getComments(), penaltyExemptionBean
-			    .getDirectiveCouncilDispatchDate());
+		    penaltyExemptionBean.getReason(), penaltyExemptionBean
+			    .getDispatchDate());
 	}
     }
 

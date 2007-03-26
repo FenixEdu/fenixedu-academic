@@ -1,0 +1,71 @@
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+<tiles-definitions>
+    <definition name="index" extends="treasury.masterPage">
+        <put name="body" value="/treasury/index.jsp"></put>
+    </definition>	
+    
+    <!-- Payments Management -->
+    <definition name="payments.management.searchPersons" extends="treasury.masterPage">
+    	<put name="body" value="/treasury/payments/searchPersons.jsp"></put>
+    </definition>
+    <definition name="payments.management.chooseAdministrativeOffice" extends="treasury.masterPage">
+    	<put name="body" value="/treasury/payments/chooseAdministrativeOffice.jsp"></put>
+    </definition>
+    <definition name="payments.management.chooseAdministrativeOfficeUnit" extends="treasury.masterPage">
+    	<put name="body" value="/treasury/payments/chooseAdministrativeOfficeUnit.jsp"></put>
+    </definition>
+    <definition name="payments.management.showOperations" extends="treasury.masterPage">
+    	<put name="body" value="/treasury/payments/showOperations.jsp"></put>
+    </definition>
+    <definition name="payments.management.showEvents" extends="treasury.masterPage">
+    	<put name="body" value="/treasury/payments/showEvents.jsp"></put>
+    </definition>
+    <definition name="payments.management.showEventsWithInstallments" extends="treasury.masterPage">
+    	<put name="body" value="/treasury/payments/showEventsWithInstallments.jsp"></put>
+    </definition>
+    <definition name="payments.management.showEventsWithPayments" extends="treasury.masterPage">
+    	<put name="body" value="/treasury/payments/showEventsWithPayments.jsp"></put>
+    </definition>
+   	<definition name="payments.management.preparePayment" extends="treasury.masterPage">
+		<put name="body" value="/treasury/payments/preparePayment.jsp"/>
+	</definition>
+	<definition name="payments.management.paymentConfirmed" extends="treasury.masterPage">
+		<put name="body" value="/treasury/payments/paymentConfirmed.jsp"/>
+	</definition>
+		      
+    <!-- End of Payments Management -->
+    
+    <!-- Receipts Management -->
+    <definition name="payments.management.receipts.showPaymentsWithoutReceipt" extends="treasury.masterPage">
+		<put name="body" value="/treasury/payments/receipts/showPaymentsWithoutReceipt.jsp"/>
+	</definition>
+    <definition name="payments.management.receipts.confirmCancelReceipt" extends="treasury.masterPage">
+		<put name="body" value="/treasury/payments/receipts/confirmCancelReceipt.jsp"/>
+	</definition>
+    <definition name="payments.management.receipts.confirmCreateReceipt" extends="treasury.masterPage">
+		<put name="body" value="/treasury/payments/receipts/confirmCreateReceipt.jsp"/>
+	</definition>
+    <definition name="payments.management.receipts.showReceipts" extends="treasury.masterPage">
+		<put name="body" value="/treasury/payments/receipts/showReceipts.jsp"/>
+	</definition>
+    <definition name="payments.management.receipts.showReceipt" extends="treasury.masterPage">
+		<put name="body" value="/treasury/payments/receipts/showReceipt.jsp"/>	
+	</definition>
+    <definition name="payments.management.receipts.printReceipt" extends="df.layout.print">
+		<put name="body" value="/treasury/payments/receipts/printReceiptPage.jsp"/>	
+	</definition>      
+    <!-- End Of Receipts Management -->
+    
+    <!-- Guides Management -->
+    <definition name="payments.management.guides.showGuide" extends="treasury.masterPage">
+		<put name="body" value="/treasury/payments/guides/showGuide.jsp"/>	
+	</definition>
+    <definition name="payments.management.guides.printGuide" extends="df.layout.print">
+		<put name="body" value="/treasury/payments/guides/printGuidePage.jsp"/>	
+	</definition>      
+    
+    <!-- End Of Guides Management -->
+            
+	
+</tiles-definitions>

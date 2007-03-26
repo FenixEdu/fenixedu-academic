@@ -211,3 +211,8 @@
 	<slot name="user.userUId" key="label.person.istUsername"/>
 	<slot name="user.aliass" key="label.person.aliass"/>
 </schema>
+
+<schema name="Unit.view-nameWithAcronym-and-costCenterCode" type="net.sourceforge.fenixedu.domain.organizationalStructure.Unit" bundle="APPLICATION_RESOURCES"> 
+	<slot name="nameWithAcronym" key="label.net.sourceforge.fenixedu.domain.organizationalStructure.Unit.name"/>
+	<slot name="costCenterCode" key="label.net.sourceforge.fenixedu.domain.organizationalStructure.Unit.costCenterCode"/>
+</schema>

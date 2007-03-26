@@ -629,9 +629,21 @@
 		<slot name="idDocumentType"/>
 		<slot name="documentIdNumber"/>
 	</schema>
+	
+	<schema name="SimpleSearchPersonWithStudentBean.edit" type="net.sourceforge.fenixedu.dataTransferObject.person.SimpleSearchPersonWithStudentBean" bundle="APPLICATION_RESOURCES">
+		<slot name="studentNumber"/>
+		<slot name="documentIdNumber"/>
+		<slot name="idDocumentType"/>
+		<slot name="name"/>
+		<slot name="username"/>
+	</schema>
 		
     <schema name="group.description" type="java.lang.Object">
         <slot name="class" layout="label"/>
+    </schema>
+    
+    <schema name="AdministrativeOffice.view" type="net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice" bundle="APPLICATION_RESOURCES">
+    	<slot name="administrativeOfficeType" />
     </schema>
 		
 	&researcher;
