@@ -30,7 +30,7 @@ public class NotInDegreeCurriculumCurriculumEntry extends CurriculumEntry {
 
     @Override
     public double getWeigth() {
-	return getEnrolment().getWeigth().doubleValue();
+	return getEnrolment().getEnrolmentWeigth().doubleValue();
     }
 
     @Override

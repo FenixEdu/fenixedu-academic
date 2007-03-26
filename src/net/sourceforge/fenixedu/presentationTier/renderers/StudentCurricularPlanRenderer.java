@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
-import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
@@ -458,7 +457,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 		// Enrolment Weight
 		final HtmlTableCell enrolmentWeightCell = lineRow.createCell();
 		enrolmentWeightCell.setClasses(getEnrolmentClasses()[6]);
-		final String enrolmentWeight = enrolment.getFinalGrade() == null ? "-" : enrolment.getWeigth().toString();
+		final String enrolmentWeight = enrolment.getFinalGrade() == null ? "-" : enrolment.getEnrolmentWeigth().toString();
 		enrolmentWeightCell.setBody(new HtmlText(enrolmentWeight));
 
 		// Enrolment Credits

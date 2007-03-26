@@ -31,7 +31,7 @@ public class EnrolmentCurriculumEntry extends SimpleCurriculumEntry {
 
     @Override
     public double getWeigth() {
-	return getEnrolment().getWeigth().doubleValue();
+	return getEnrolment().getEnrolmentWeigth().doubleValue();
     }
 
     @Override

@@ -1020,26 +1020,58 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	if (isExtraCurricular()) {
 	    return Double.valueOf(0);
 	}
-
+	
 	final Double weigth = super.getWeigth();
 	return (weigth == null || weigth == 0) ? getCurricularCourse().getWeigth() : weigth;
+    }
+    
+    public Double getEnrolmentWeigth() {
+	if (isExtraCurricular()) {
+	    return Double.valueOf(0d);
+	}
+	
+	if (!isBolonha()) {
+	    
+	    if (isExecutionYearEnrolmentAfterOrEqualsExecutionYear0607()) {
+		return getEctsCredits();
+	    }
+	    if (isFromLMAC() || isFromLCI()) {
+		return calculateLCIorLMACWeigth();
+	    }
+	}
+	
+	return getWeigth();
+    }
+    
+    private boolean isExecutionYearEnrolmentAfterOrEqualsExecutionYear0607() {
+	final ExecutionYear executionYear = getExecutionPeriod().getExecutionYear();
+	final ExecutionYear executionYear0607 = ExecutionYear.readExecutionYearByName("2006/2007");
+	return executionYear.isAfterOrEquals(executionYear0607);
+    }
+    
+    private boolean isFromLCI() {
+	final DegreeCurricularPlan degreeCurricularPlanLCI = DegreeCurricularPlan.readByNameAndDegreeSigla("LCI 2003", "LCI-pB");
+	return getStudentCurricularPlan().getDegreeCurricularPlan() == degreeCurricularPlanLCI;
+    }
+
+    private boolean isFromLMAC() {
+	final DegreeCurricularPlan degreeCurricularPlanLMAC = DegreeCurricularPlan.readByNameAndDegreeSigla("LMAC 2003", "LMAC-pB");
+	return getStudentCurricularPlan().getDegreeCurricularPlan() == degreeCurricularPlanLMAC;
+    }
+    
+    private Double calculateLCIorLMACWeigth() {
+	final double weigth = getWeigth().doubleValue();
+	return Double.valueOf(weigth * 0.25d);
     }
 
     @Override
     public Double getEctsCredits() {
-	if (isExtraCurricular()) {
-	    return Double.valueOf(0);
-	}
-
-	return getCurricularCourse().getEctsCredits(getExecutionPeriod());
+	return isExtraCurricular() ? Double.valueOf(0d) : getCurricularCourse().getEctsCredits(getExecutionPeriod());
     }
 
     @Override
     public Double getAprovedEctsCredits() {
-	if (isApproved()) {
-	    return getEctsCredits();
-	}
-	return Double.valueOf(0);
+	return isApproved() ? getEctsCredits() : Double.valueOf(0d);
     }
 
     public boolean isExtraCurricular() {
