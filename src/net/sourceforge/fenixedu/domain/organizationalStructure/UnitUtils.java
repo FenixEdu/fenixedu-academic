@@ -145,9 +145,7 @@ public class UnitUtils {
 	throw new DomainException("error.unitUtils.unit.full.path.has.more.than.one.parent");
     }
 
-    public static List<Unit> readExternalUnitsByNameAndTypesStartingAtEarth(final String unitName,
-	    List<PartyTypeEnum> types) {
-
+    public static List<Unit> readExternalUnitsByNameAndTypesStartingAtEarth(final String unitName, final List<PartyTypeEnum> types) {
 	if (unitName == null) {
 	    return Collections.emptyList();
 	}
@@ -156,8 +154,7 @@ public class UnitUtils {
 	return readExternalUnitsByNameAndTypesStartingEarth(nameToSearch, types, readEarthUnit());
     }
 
-    private static List<Unit> readExternalUnitsByNameAndTypesStartingEarth(String unitName,
-	    List<PartyTypeEnum> types, Unit unit) {
+    private static List<Unit> readExternalUnitsByNameAndTypesStartingEarth(final String unitName, final List<PartyTypeEnum> types, final Unit unit) {
 	final List<Unit> result = new ArrayList<Unit>();
 	for (final Unit each : unit.getSubUnits()) {
 	    checkUnit(unitName, types, result, each);
@@ -166,10 +163,8 @@ public class UnitUtils {
 	return result;
     }
 
-    private static void checkUnit(String unitName, List<PartyTypeEnum> types, final List<Unit> result,
-	    final Unit unit) {
-	if (types.contains(unit.getType()) && unit.getName().toLowerCase().matches(unitName)
-		&& !unit.isInternal()) {
+    private static void checkUnit(String unitName, List<PartyTypeEnum> types, final List<Unit> result, final Unit unit) {
+	if (types.contains(unit.getType()) && unit.getName().toLowerCase().matches(unitName) && !unit.isInternal()) {
 	    result.add(unit);
 	}
     }

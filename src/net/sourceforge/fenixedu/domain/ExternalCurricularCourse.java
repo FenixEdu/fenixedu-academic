@@ -131,11 +131,11 @@ public class ExternalCurricularCourse extends ExternalCurricularCourse_Base {
 	return result;
     }
 
-    static public List<ExternalCurricularCourse> readByName(final String regex) {
-	if (regex == null) {
+    static public List<ExternalCurricularCourse> readByName(final String name) {
+	if (name == null) {
 	    return Collections.emptyList();
 	}
-	final String nameToMatch = regex.replaceAll("%", ".*").toLowerCase();
+	final String nameToMatch = name.replaceAll("%", ".*").toLowerCase();
 	final List<ExternalCurricularCourse> result = new ArrayList<ExternalCurricularCourse>();
 	for (final ExternalCurricularCourse externalCurricularCourse : RootDomainObject.getInstance()
 		.getExternalCurricularCoursesSet()) {
