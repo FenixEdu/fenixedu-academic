@@ -43,219 +43,159 @@ import org.joda.time.YearMonthDay;
 public class AssiduousnessResponsibleDispatchAction extends FenixDispatchAction {
 
     public ActionForward showEmployeeList(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
-            FenixFilterException {
-        final IUserView userView = SessionUtils.getUserView(request);
-        YearMonth yearMonth = null;
-        ViewState viewState = (ViewState) RenderUtils.getViewState();
-        if (viewState != null) {
-            yearMonth = (YearMonth) viewState.getMetaObject().getObject();
-        }
-        if (yearMonth == null) {
-            yearMonth = new YearMonth();
-            yearMonth.setYear(new YearMonthDay().getYear());
-            yearMonth.setMonth(Month.values()[new YearMonthDay().getMonthOfYear() - 1]);
-        } else if (yearMonth.getYear() > new YearMonthDay().getYear()
-                || (yearMonth.getYear() == new YearMonthDay().getYear() && yearMonth.getMonth()
-                        .compareTo(Month.values()[new YearMonthDay().getMonthOfYear() - 1]) > 0)) {
-            saveErrors(request, "error.invalidFutureDate");
-            yearMonth = new YearMonth();
-            yearMonth.setYear(new YearMonthDay().getYear());
-            yearMonth.setMonth(Month.values()[new YearMonthDay().getMonthOfYear() - 1]);
-            request.setAttribute("yearMonth", yearMonth);
-            return mapping.getInputForward();
-        } else if (yearMonth.getYear() < 2006
-                || (yearMonth.getYear() == 2006 && yearMonth.getMonth().compareTo(Month.SEPTEMBER) < 0)) {
-            saveErrors(request, "error.invalidPastDate");
-            request.setAttribute("yearMonth", yearMonth);
-            return mapping.getInputForward();
-        }
+	    HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
+	    FenixFilterException {
+	final IUserView userView = SessionUtils.getUserView(request);
+	YearMonth yearMonth = null;
+	ViewState viewState = (ViewState) RenderUtils.getViewState();
+	if (viewState != null) {
+	    yearMonth = (YearMonth) viewState.getMetaObject().getObject();
+	}
+	if (yearMonth == null) {
+	    yearMonth = new YearMonth();
+	    yearMonth.setYear(new YearMonthDay().getYear());
+	    yearMonth.setMonth(Month.values()[new YearMonthDay().getMonthOfYear() - 1]);
+	} else if (yearMonth.getYear() > new YearMonthDay().getYear()
+		|| (yearMonth.getYear() == new YearMonthDay().getYear() && yearMonth.getMonth()
+			.compareTo(Month.values()[new YearMonthDay().getMonthOfYear() - 1]) > 0)) {
+	    saveErrors(request, "error.invalidFutureDate");
+	    yearMonth = new YearMonth();
+	    yearMonth.setYear(new YearMonthDay().getYear());
+	    yearMonth.setMonth(Month.values()[new YearMonthDay().getMonthOfYear() - 1]);
+	    request.setAttribute("yearMonth", yearMonth);
+	    return mapping.getInputForward();
+	} else if (yearMonth.getYear() < 2006
+		|| (yearMonth.getYear() == 2006 && yearMonth.getMonth().compareTo(Month.SEPTEMBER) < 0)) {
+	    saveErrors(request, "error.invalidPastDate");
+	    request.setAttribute("yearMonth", yearMonth);
+	    return mapping.getInputForward();
+	}
 
-        YearMonthDay beginDate = new YearMonthDay(yearMonth.getYear(),
-                yearMonth.getMonth().ordinal() + 1, 01);
-        YearMonthDay endDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1,
-                beginDate.dayOfMonth().getMaximumValue());
+	YearMonthDay beginDate = new YearMonthDay(yearMonth.getYear(),
+		yearMonth.getMonth().ordinal() + 1, 01);
+	YearMonthDay endDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1,
+		beginDate.dayOfMonth().getMaximumValue());
 
-        request.setAttribute("yearMonth", yearMonth);
-        List<UnitEmployees> unitEmployeesList = new ArrayList<UnitEmployees>();
-        for (PersonFunction personFunction : userView.getPerson().getPersonFuntions(beginDate, endDate)) {
-            if (personFunction.getFunction().getFunctionType() == FunctionType.ASSIDUOUSNESS_RESPONSIBLE) {
-                List<Employee> employeeList = personFunction.getFunction().getUnit()
-                        .getAllWorkingEmployees(beginDate, endDate);
-                if (!employeeList.isEmpty()) {
-                    UnitEmployees unitEmployees = new UnitEmployees();
-                    unitEmployees.setUnit(personFunction.getFunction().getUnit());
-                    unitEmployees.setEmployeeList(employeeList);
-                    Collections.sort(unitEmployees.getEmployeeList(), new BeanComparator(
-                            "employeeNumber"));
-                    unitEmployeesList.add(unitEmployees);
-                }
-                for (Unit unit : personFunction.getFunction().getUnit().getAllActiveSubUnits(
-                        new YearMonthDay())) {
-                    employeeList = unit.getAllWorkingEmployees(beginDate, endDate);
-                    if (!employeeList.isEmpty()) {
-                        UnitEmployees unitEmployees = new UnitEmployees();
-                        unitEmployees.setUnit(unit);
-                        unitEmployees.setEmployeeList(employeeList);
-                        Collections.sort(unitEmployees.getEmployeeList(), new BeanComparator(
-                                "employeeNumber"));
-                        unitEmployeesList.add(unitEmployees);
-                    }
-                }
-            }
-        }
-        unitEmployeesList = filterRepeatedUnits(unitEmployeesList);
-        Collections.sort(unitEmployeesList, new BeanComparator("unitCode"));
-        request.setAttribute("unitEmployeesList", unitEmployeesList);
-        return mapping.findForward("show-employee-list");
+	request.setAttribute("yearMonth", yearMonth);
+	List<UnitEmployees> unitEmployeesList = new ArrayList<UnitEmployees>();
+	for (PersonFunction personFunction : userView.getPerson().getPersonFuntions(beginDate, endDate)) {
+	    if (personFunction.getFunction().getFunctionType() == FunctionType.ASSIDUOUSNESS_RESPONSIBLE) {
+		List<Employee> employeeList = personFunction.getFunction().getUnit()
+			.getAllWorkingEmployees(beginDate, endDate);
+		if (!employeeList.isEmpty()) {
+		    UnitEmployees unitEmployees = new UnitEmployees();
+		    unitEmployees.setUnit(personFunction.getFunction().getUnit());
+		    unitEmployees.setEmployeeList(employeeList);
+		    Collections.sort(unitEmployees.getEmployeeList(), new BeanComparator(
+			    "employeeNumber"));
+		    unitEmployeesList.add(unitEmployees);
+		}
+		for (Unit unit : personFunction.getFunction().getUnit().getAllActiveSubUnits(
+			new YearMonthDay())) {
+		    employeeList = unit.getAllWorkingEmployees(beginDate, endDate);
+		    if (!employeeList.isEmpty()) {
+			UnitEmployees unitEmployees = new UnitEmployees();
+			unitEmployees.setUnit(unit);
+			unitEmployees.setEmployeeList(employeeList);
+			Collections.sort(unitEmployees.getEmployeeList(), new BeanComparator(
+				"employeeNumber"));
+			unitEmployeesList.add(unitEmployees);
+		    }
+		}
+	    }
+	}
+	unitEmployeesList = filterRepeatedUnits(unitEmployeesList);
+	Collections.sort(unitEmployeesList, new BeanComparator("unitCode"));
+	request.setAttribute("unitEmployeesList", unitEmployeesList);
+	return mapping.findForward("show-employee-list");
     }
-    
+
     private List<UnitEmployees> filterRepeatedUnits(List<UnitEmployees> unitEmployeesList) {
-        List<UnitEmployees> result = new ArrayList<UnitEmployees>();
-        for (UnitEmployees unitEmployees : unitEmployeesList) {
-            if(!containsUnit(result,unitEmployees.getUnit())){
-                result.add(unitEmployees);
-            }
-        }
-        return result;
+	List<UnitEmployees> result = new ArrayList<UnitEmployees>();
+	for (UnitEmployees unitEmployees : unitEmployeesList) {
+	    if (!containsUnit(result, unitEmployees.getUnit())) {
+		result.add(unitEmployees);
+	    }
+	}
+	return result;
     }
 
     private boolean containsUnit(List<UnitEmployees> unitEmployeesList, Unit unit) {
-        for (UnitEmployees tempUnitEmployees : unitEmployeesList) {
-            if(tempUnitEmployees.getUnit() == unit){
-                return true;
-            }
-        }
-        return false;
+	for (UnitEmployees tempUnitEmployees : unitEmployeesList) {
+	    if (tempUnitEmployees.getUnit() == unit) {
+		return true;
+	    }
+	}
+	return false;
     }
 
     public ActionForward showEmployeeWorkSheet(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
-            FenixFilterException {
-        final IUserView userView = SessionUtils.getUserView(request);
-        Integer employeeNumber = new Integer(request.getParameter("employeeNumber"));
-        Employee employee = Employee.readByNumber(employeeNumber);
-        if (employee == null) {
-            ActionMessages actionMessages = new ActionMessages();
-            actionMessages.add("message", new ActionMessage("error.invalidEmployee"));
-            saveMessages(request, actionMessages);
-            return mapping.getInputForward();
-        }
-        String year = request.getParameter("year");
-        String month = request.getParameter("month");
+	    HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
+	    FenixFilterException {
+	final IUserView userView = SessionUtils.getUserView(request);
+	Integer employeeNumber = new Integer(request.getParameter("employeeNumber"));
+	Employee employee = Employee.readByNumber(employeeNumber);
+	if (employee == null) {
+	    ActionMessages actionMessages = new ActionMessages();
+	    actionMessages.add("message", new ActionMessage("error.invalidEmployee"));
+	    saveMessages(request, actionMessages);
+	    return mapping.getInputForward();
+	}
+	String year = request.getParameter("year");
+	String month = request.getParameter("month");
 
-        YearMonth yearMonth = new YearMonth();
-        yearMonth.setYear(new Integer(year));
-        yearMonth.setMonth(Month.valueOf(month));
-        if (yearMonth.getYear() > new YearMonthDay().getYear()
-                || (yearMonth.getYear() == new YearMonthDay().getYear() && yearMonth.getMonth()
-                        .compareTo(Month.values()[new YearMonthDay().getMonthOfYear() - 1]) > 0)) {
-            saveErrors(request, "error.invalidFutureDate");
-            EmployeeWorkSheet employeeWorkSheet = new EmployeeWorkSheet();
-            employeeWorkSheet.setEmployee(employee);
-            request.setAttribute("employeeWorkSheet", employeeWorkSheet);
-            return mapping.findForward("show-employee-work-sheet");
-        } else if (yearMonth.getYear() < 2006
-                || (yearMonth.getYear() == 2006 && yearMonth.getMonth().compareTo(Month.SEPTEMBER) < 0)) {
-            saveErrors(request, "error.invalidPastDate");
-            EmployeeWorkSheet employeeWorkSheet = new EmployeeWorkSheet();
-            employeeWorkSheet.setEmployee(employee);
-            request.setAttribute("employeeWorkSheet", employeeWorkSheet);
-            return mapping.findForward("show-employee-work-sheet");
-        }
+	YearMonth yearMonth = new YearMonth();
+	yearMonth.setYear(new Integer(year));
+	yearMonth.setMonth(Month.valueOf(month));
+	if (yearMonth.getYear() > new YearMonthDay().getYear()
+		|| (yearMonth.getYear() == new YearMonthDay().getYear() && yearMonth.getMonth()
+			.compareTo(Month.values()[new YearMonthDay().getMonthOfYear() - 1]) > 0)) {
+	    saveErrors(request, "error.invalidFutureDate");
+	    EmployeeWorkSheet employeeWorkSheet = new EmployeeWorkSheet();
+	    employeeWorkSheet.setEmployee(employee);
+	    request.setAttribute("employeeWorkSheet", employeeWorkSheet);
+	    return mapping.findForward("show-employee-work-sheet");
+	} else if (yearMonth.getYear() < 2006
+		|| (yearMonth.getYear() == 2006 && yearMonth.getMonth().compareTo(Month.SEPTEMBER) < 0)) {
+	    saveErrors(request, "error.invalidPastDate");
+	    EmployeeWorkSheet employeeWorkSheet = new EmployeeWorkSheet();
+	    employeeWorkSheet.setEmployee(employee);
+	    request.setAttribute("employeeWorkSheet", employeeWorkSheet);
+	    return mapping.findForward("show-employee-work-sheet");
+	}
 
-        YearMonthDay beginDate = new YearMonthDay(yearMonth.getYear(),
-                yearMonth.getMonth().ordinal() + 1, 01);
-        int endDay = beginDate.dayOfMonth().getMaximumValue();
-        if (yearMonth.getYear() == new YearMonthDay().getYear()
-                && yearMonth.getMonth().ordinal() + 1 == new YearMonthDay().getMonthOfYear()) {
-            endDay = new YearMonthDay().getDayOfMonth();
-            request.setAttribute("displayCurrentDayNote", "true");
-        }
-        YearMonthDay endDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1,
-                endDay);
-        EmployeeWorkSheet employeeWorkSheet = new EmployeeWorkSheet();
-        employeeWorkSheet.setEmployee(employee);
-        if (employee.getAssiduousness() != null) {
-            try {
-                Object[] args = { employee.getAssiduousness(), beginDate, endDate };
-                employeeWorkSheet = (EmployeeWorkSheet) ServiceUtils.executeService(userView,
-                        "ReadAssiduousnessResponsibleWorkSheet", args);
-                request.setAttribute("employeeWorkSheet", employeeWorkSheet);
-            } catch (NotAuthorizedFilterException e) {
-                saveErrors(request, "error.notAuthorized");
-                return mapping.findForward("show-employee-work-sheet");
-            }
-        }
-        
-        if (yearMonth.getYear() == 2007 && yearMonth.getMonth().equals(Month.FEBRUARY)) {
-            DateTimeFieldType[] dateTimeFieldType = { DateTimeFieldType.year(),
-                    DateTimeFieldType.monthOfYear() };
-            int[] dateTimeValues = { 2007, 1 };
-            Partial closedMonthPartial = new Partial(dateTimeFieldType, dateTimeValues);
-            verifyMultipleMonthBalanceJustificationForCurrentAndPreviousMonth(employee
-                    .getAssiduousness(), employeeWorkSheet, closedMonthPartial, request);
-        } else if (yearMonth.getYear() == 2007 && yearMonth.getMonth().equals(Month.MARCH)) {
-            DateTimeFieldType[] dateTimeFieldType = { DateTimeFieldType.year(),
-                    DateTimeFieldType.monthOfYear() };
-            int[] dateTimeValues = { 2007, 2 };
-            Partial closedMonthPartial = new Partial(dateTimeFieldType, dateTimeValues);
-            verifyMultipleMonthBalanceJustificationForTwoPreviousMonth(employee.getAssiduousness(),
-                    closedMonthPartial, request);
-        }
-        
-        request.setAttribute("employeeWorkSheet", employeeWorkSheet);
-        request.setAttribute("yearMonth", yearMonth);
-        return mapping.findForward("show-employee-work-sheet");
+	YearMonthDay beginDate = new YearMonthDay(yearMonth.getYear(),
+		yearMonth.getMonth().ordinal() + 1, 01);
+	int endDay = beginDate.dayOfMonth().getMaximumValue();
+	if (yearMonth.getYear() == new YearMonthDay().getYear()
+		&& yearMonth.getMonth().ordinal() + 1 == new YearMonthDay().getMonthOfYear()) {
+	    endDay = new YearMonthDay().getDayOfMonth();
+	    request.setAttribute("displayCurrentDayNote", "true");
+	}
+	YearMonthDay endDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1,
+		endDay);
+	EmployeeWorkSheet employeeWorkSheet = new EmployeeWorkSheet();
+	employeeWorkSheet.setEmployee(employee);
+	if (employee.getAssiduousness() != null) {
+	    try {
+		Object[] args = { employee.getAssiduousness(), beginDate, endDate };
+		employeeWorkSheet = (EmployeeWorkSheet) ServiceUtils.executeService(userView,
+			"ReadAssiduousnessResponsibleWorkSheet", args);
+		request.setAttribute("employeeWorkSheet", employeeWorkSheet);
+	    } catch (NotAuthorizedFilterException e) {
+		saveErrors(request, "error.notAuthorized");
+		return mapping.findForward("show-employee-work-sheet");
+	    }
+	}
+
+	request.setAttribute("employeeWorkSheet", employeeWorkSheet);
+	request.setAttribute("yearMonth", yearMonth);
+	return mapping.findForward("show-employee-work-sheet");
     }
 
-    private void verifyMultipleMonthBalanceJustificationForTwoPreviousMonth(Assiduousness assiduousness,
-            Partial closedMonthPartial, HttpServletRequest request) {
-        if (assiduousness != null) {
-            AssiduousnessClosedMonth assiduousnessClosedMonth = assiduousness
-                    .getClosedMonth(closedMonthPartial);
-            if (!assiduousnessClosedMonth.getBalanceToDiscount().isEqual(Duration.ZERO)) {
-                YearMonthDay yearMonthDay = new YearMonthDay(closedMonthPartial.get(DateTimeFieldType
-                        .year()), closedMonthPartial.get(DateTimeFieldType.monthOfYear()), 1);
-                yearMonthDay = yearMonthDay.minusMonths(1);
-                DateTimeFieldType[] dateTimeFieldType = { DateTimeFieldType.year(),
-                        DateTimeFieldType.monthOfYear() };
-                int[] dateTimeValues = { yearMonthDay.getYear(), yearMonthDay.getMonthOfYear() };
-                Partial previousClosedMonthPartial = new Partial(dateTimeFieldType, dateTimeValues);
-                AssiduousnessClosedMonth assiduousnessPreviousClosedMonth = assiduousness
-                        .getClosedMonth(previousClosedMonthPartial);
-                Duration monthsBalance = assiduousnessClosedMonth.getBalance();
-                monthsBalance = monthsBalance.plus(assiduousnessPreviousClosedMonth.getBalance());
-                if (monthsBalance.isShorterThan(Duration.ZERO)) {
-                    request.setAttribute("hasToCompensateThisMonth", "hasToCompensateThisMonth");
-                    return;
-                }
-            }
-        }
-    }
-
-    private void verifyMultipleMonthBalanceJustificationForCurrentAndPreviousMonth(
-            Assiduousness assiduousness, EmployeeWorkSheet employeeWorkSheet,
-            Partial closedMonthPartial, HttpServletRequest request) {
-        if (assiduousness != null) {
-            AssiduousnessClosedMonth assiduousnessClosedMonth = assiduousness
-                    .getClosedMonth(closedMonthPartial);
-            Duration monthsBalance = assiduousnessClosedMonth.getBalance();
-            monthsBalance = monthsBalance.plus(employeeWorkSheet.getTotalBalance());
-            if (monthsBalance.isShorterThan(Duration.ZERO)) {
-                for (WorkDaySheet workDaySheet : employeeWorkSheet.getWorkDaySheetList()) {
-                    if (workDaySheet.hasLeaveType(JustificationType.MULTIPLE_MONTH_BALANCE)) {
-                        request.setAttribute("hasToCompensateNextMonth", "hasToCompensateNextMonth");
-                        return;
-                    }
-                }
-            }
-        }
-    }
-    
     private void saveErrors(HttpServletRequest request, String message) {
-        ActionMessages actionMessages = new ActionMessages();
-        actionMessages.add("message", new ActionMessage(message));
-        saveMessages(request, actionMessages);
+	ActionMessages actionMessages = new ActionMessages();
+	actionMessages.add("message", new ActionMessage(message));
+	saveMessages(request, actionMessages);
     }
 }

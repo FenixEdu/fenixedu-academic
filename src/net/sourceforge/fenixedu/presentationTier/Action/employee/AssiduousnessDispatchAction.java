@@ -234,70 +234,9 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
 	Object[] args = { employee.getAssiduousness(), beginDate, endDate };
 	EmployeeWorkSheet employeeWorkSheet = (EmployeeWorkSheet) ServiceUtils.executeService(userView,
 		"ReadEmployeeWorkSheet", args);
-
-	if (yearMonth.getYear() == 2007 && yearMonth.getMonth().equals(Month.FEBRUARY)) {
-	    DateTimeFieldType[] dateTimeFieldType = { DateTimeFieldType.year(),
-		    DateTimeFieldType.monthOfYear() };
-	    int[] dateTimeValues = { 2007, 1 };
-	    Partial closedMonthPartial = new Partial(dateTimeFieldType, dateTimeValues);
-	    verifyMultipleMonthBalanceJustificationForCurrentAndPreviousMonth(employee
-		    .getAssiduousness(), employeeWorkSheet, closedMonthPartial, request);
-	} else if (yearMonth.getYear() == 2007 && yearMonth.getMonth().equals(Month.MARCH)) {
-	    DateTimeFieldType[] dateTimeFieldType = { DateTimeFieldType.year(),
-		    DateTimeFieldType.monthOfYear() };
-	    int[] dateTimeValues = { 2007, 2 };
-	    Partial closedMonthPartial = new Partial(dateTimeFieldType, dateTimeValues);
-	    verifyMultipleMonthBalanceJustificationForTwoPreviousMonth(employee.getAssiduousness(),
-		    closedMonthPartial, request);
-	}
-
 	request.setAttribute("employeeWorkSheet", employeeWorkSheet);
 	request.setAttribute("yearMonth", yearMonth);
 	return mapping.findForward("show-work-sheet");
-    }
-
-    private void verifyMultipleMonthBalanceJustificationForTwoPreviousMonth(Assiduousness assiduousness,
-	    Partial closedMonthPartial, HttpServletRequest request) {
-	if (assiduousness != null) {
-	    AssiduousnessClosedMonth assiduousnessClosedMonth = assiduousness
-		    .getClosedMonth(closedMonthPartial);
-	    if (!assiduousnessClosedMonth.getBalanceToDiscount().isEqual(Duration.ZERO)) {
-		YearMonthDay yearMonthDay = new YearMonthDay(closedMonthPartial.get(DateTimeFieldType
-			.year()), closedMonthPartial.get(DateTimeFieldType.monthOfYear()), 1);
-		yearMonthDay = yearMonthDay.minusMonths(1);
-		DateTimeFieldType[] dateTimeFieldType = { DateTimeFieldType.year(),
-			DateTimeFieldType.monthOfYear() };
-		int[] dateTimeValues = { yearMonthDay.getYear(), yearMonthDay.getMonthOfYear() };
-		Partial previousClosedMonthPartial = new Partial(dateTimeFieldType, dateTimeValues);
-		AssiduousnessClosedMonth assiduousnessPreviousClosedMonth = assiduousness
-			.getClosedMonth(previousClosedMonthPartial);
-		Duration monthsBalance = assiduousnessClosedMonth.getBalance();
-		monthsBalance = monthsBalance.plus(assiduousnessPreviousClosedMonth.getBalance());
-		if (monthsBalance.isShorterThan(Duration.ZERO)) {
-		    request.setAttribute("hasToCompensateThisMonth", "hasToCompensateThisMonth");
-		    return;
-		}
-	    }
-	}
-    }
-
-    private void verifyMultipleMonthBalanceJustificationForCurrentAndPreviousMonth(
-	    Assiduousness assiduousness, EmployeeWorkSheet employeeWorkSheet,
-	    Partial closedMonthPartial, HttpServletRequest request) {
-	if (assiduousness != null) {
-	    AssiduousnessClosedMonth assiduousnessClosedMonth = assiduousness
-		    .getClosedMonth(closedMonthPartial);
-	    Duration monthsBalance = assiduousnessClosedMonth.getBalance();
-	    monthsBalance = monthsBalance.plus(employeeWorkSheet.getTotalBalance());
-	    if (monthsBalance.isShorterThan(Duration.ZERO)) {
-		for (WorkDaySheet workDaySheet : employeeWorkSheet.getWorkDaySheetList()) {
-		    if (workDaySheet.hasLeaveType(JustificationType.MULTIPLE_MONTH_BALANCE)) {
-			request.setAttribute("hasToCompensateNextMonth", "hasToCompensateNextMonth");
-			return;
-		    }
-		}
-	    }
-	}
     }
 
     private ActionForward verifyYearMonth(String returnPath, HttpServletRequest request,
