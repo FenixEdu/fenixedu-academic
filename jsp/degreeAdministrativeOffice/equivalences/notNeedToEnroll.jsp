@@ -2,18 +2,25 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 <h2><bean:message bundle="DEGREE_ADM_OFFICE" key="link.notNeedToEnroll"/></h2>
+
+<fr:edit name="chooseSCPBean" schema="choose.studentCurricularPlan" action="/showNotNeedToEnroll.do?method=prepare">
+	<fr:layout name="tabular">
+		<fr:property name="classes" value="tstyle4 thright thlight mtop025"/>
+	</fr:layout>
+	<fr:destination name="registrationPostBack" path="/showNotNeedToEnroll.do?method=prepare"/>
+	<fr:destination name="studentCurricularPlanPostBack" path="/showNotNeedToEnroll.do?method=prepare"/>	
+</fr:edit>
+
 <html:form action="showNotNeedToEnroll">
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareNotNeedToEnroll"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="insertNotNeedToEnroll"/>
 	
-	<bean:message bundle="DEGREE_ADM_OFFICE" key="label.choose.student"/> <html:text bundle="HTMLALT_RESOURCES" altKey='text.studentNumber' size='6' property="studentNumber"/>
-	<br/><br/>
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="DEGREE_ADM_OFFICE" key="button.continue"/></html:submit>
 	<br/><br/>
 	<logic:present name="infoStudentCurricularPlan">
-		<html:link page="/showNotNeedToEnroll.do?method=prepareNotNeedToEnroll&amp;insert=true" paramId="studentNumber" paramName="equivalencesForm" 
-			paramProperty="studentNumber"><bean:message bundle="DEGREE_ADM_OFFICE" key="link.notNeedToEnroll.insert"/></html:link>
+		<html:link page="/showNotNeedToEnroll.do?method=prepareNotNeedToEnroll&amp;insert=true" paramId="scpID" paramName="infoStudentCurricularPlan" 
+			paramProperty="idInternal"><bean:message bundle="DEGREE_ADM_OFFICE" key="link.notNeedToEnroll.insert"/></html:link>
 		<br/><br/>
 		
 		<bean:define id="infoDegreeCurricularPlan" name="infoStudentCurricularPlan" property="infoDegreeCurricularPlan"/>
@@ -25,7 +32,7 @@
 				<td class="listClasses-header"></td>
 			</tr>
 		
-		<bean:define id="studentNumber" name="equivalencesForm" property="studentNumber" type="java.lang.String"/>
+		<bean:define id="scpID" name="infoStudentCurricularPlan" property="idInternal" />
 		<logic:iterate id="infoNotNeedToEnroll" name="infoNotNeedToEnrollCurricularCourses">
 			<tr>
 				<td class="listClasses"><bean:write name="infoNotNeedToEnroll" property="infoCurricularCourse.infoDegreeCurricularPlan.name"/></td>
@@ -34,7 +41,7 @@
 					<bean:write name="infoNotNeedToEnroll" property="infoCurricularCourse.code"/>
 				</td>
 				<td class="listClasses">
-					<html:link page="<%= "/showNotNeedToEnroll.do?method=deleteNotNeedToEnroll&amp;studentNumber=" + studentNumber %>"
+					<html:link page="<%= "/showNotNeedToEnroll.do?method=deleteNotNeedToEnroll&amp;scpID=" + scpID %>"
 					paramId="notNeedToEnrollID" paramName="infoNotNeedToEnroll" paramProperty="idInternal">
 					<bean:message bundle="DEGREE_ADM_OFFICE" key="link.notNeedToEnroll.delete"/></html:link>
 				</td>
@@ -68,7 +75,7 @@
 			</logic:iterate>
 			</table>
 			<br/>
-			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick="document.forms[0].method.value='insertNotNeedToEnroll'">
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" >
 				<bean:message bundle="DEGREE_ADM_OFFICE" key="button.insert"/></html:submit>
 		</logic:present>
 	</logic:present>

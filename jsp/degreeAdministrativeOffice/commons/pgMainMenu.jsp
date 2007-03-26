@@ -15,7 +15,7 @@
 	<li><html:link page="/changeStudentAreas.do?method=chooseStudent&amp;degreeType=DEGREE"><bean:message key="link.student.areas"/></html:link></li>
 
 	<li class="navheader"><bean:message key="label.navheader.equivalences" /></li>
-	<li><html:link page="/prepareNotNeedToEnroll.do"><bean:message key="link.notNeedToEnroll" /></html:link></li>
+	<li><html:link page="/showNotNeedToEnroll.do?method=prepare"><bean:message key="link.notNeedToEnroll" /></html:link></li>
 	<li><html:link page="/curricularCourseEquivalencies.do?method=prepare"><bean:message key="label.navheader.equivalences" /></html:link></li>
 	<li class="navheader"><bean:message key="label.navheader.curriculums" /></li>
 	<li><html:link page="/curricularPlans/chooseCurricularPlan.faces"><bean:message key="link.consultCurriculum"/></html:link></li>

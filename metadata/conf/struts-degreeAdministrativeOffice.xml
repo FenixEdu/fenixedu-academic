@@ -153,7 +153,7 @@
 			<form-property name="method" type="java.lang.String"/>
 			<form-property name="studentNumber" type="java.lang.String"/>
 			<form-property name="curricularCoursesID" type="java.lang.Integer[]"/>
-			<form-property name="studentCurricularPlanID" type="java.lang.String"/>
+			<form-property name="studentCurricularPlanID" type="java.lang.Integer"/>
 		</form-bean>	
 
 		<form-bean name="changeDegreeForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
@@ -211,7 +211,6 @@
 		<action path="/outOfPeriod" forward="definition.out.of.period"/>
 		<action path="/globalEnrolment" forward="df.page.globalEnrolment"/>	
 		<action path="/cantEnroll" forward="definition.cant.enroll"/>	
-		<action path="/prepareNotNeedToEnroll" forward="show-not-need-to-enroll"/>
    		
 		<!-- ****************** Index **************************** -->
 		<action path="/index" type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction">
