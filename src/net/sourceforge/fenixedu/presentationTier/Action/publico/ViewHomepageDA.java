@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.homepage.Homepage;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Contract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.research.activity.ResearchActivityLocationType;
 import net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent;
 import net.sourceforge.fenixedu.domain.research.result.publication.Article;
 import net.sourceforge.fenixedu.domain.research.result.publication.Book;
@@ -389,7 +390,8 @@ public class ViewHomepageDA extends SiteVisualizationDA {
 	private void setRequestAttributesToList(HttpServletRequest request, Person person) {
 
 		request.setAttribute("books", person.getBooks());
-		request.setAttribute("articles", person.getArticles());
+		request.setAttribute("national-articles", person.getArticles(ResearchActivityLocationType.NATIONAL));
+		request.setAttribute("international-articles", person.getArticles(ResearchActivityLocationType.INTERNATIONAL));
 		request.setAttribute("inproceedings", person.getInproceedings());
 		request.setAttribute("proceedings", person.getProceedings());
 		request.setAttribute("theses", person.getTheses());

@@ -61,23 +61,22 @@
 	<logic:notEmpty name="international-articles"> 
 		<bean:define id="hasArticles" value="true" toScope="request"/>
 	</logic:notEmpty>	
-
+	
 	<logic:equal name="hasArticles" value="true">
-		<p id='books' class="mtop3 mbottom0"/><span><strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.Articles"/></span></strong></p>
+		<p id='books' class="mtop2 mbottom0"/>
 		<bean:define id="currentSchema" value="result.publication.presentation.Article" toScope="request"/>
 
 		<logic:notEmpty name="international-articles">
-		<p class="indent1p5 mtop15"><em><bean:message key="label.internationalScope" bundle="RESEARCHER_RESOURCES"/>:</em></p>
+		<p class="mtop3 mbottom0"><strong><bean:message key="label.internationalArticles" bundle="RESEARCHER_RESOURCES"/></strong></p>
 		<bean:define id="results" name="international-articles" toScope="request"/>
 		<jsp:include page="publicationsResume.jsp"/>
 		</logic:notEmpty>
-				
+		
 		<logic:notEmpty name="national-articles">
-		<p class="indent1p5 mtop15"><em><bean:message key="label.nationalScope" bundle="RESEARCHER_RESOURCES"/>:</em></p>
+		<p class="mtop3 mbottom0"><strong><bean:message key="label.nationalArticles" bundle="RESEARCHER_RESOURCES"/></strong></p>
 		<bean:define id="results" name="national-articles" toScope="request"/>
 		<jsp:include page="publicationsResume.jsp"/>
 		</logic:notEmpty>
-				
 	</logic:equal>
 	
 	<logic:notEmpty name="inproceedings">
