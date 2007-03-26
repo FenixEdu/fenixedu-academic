@@ -9,10 +9,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadAllExecutionYears;
 import net.sourceforge.fenixedu.domain.candidacy.degree.ShiftDistribution;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -79,12 +77,20 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable {
 	return getYear().compareTo(executionYear.getYear());
     }
 
-    public boolean isAfter(ExecutionYear executionYear) {
+    public boolean isAfter(final ExecutionYear executionYear) {
 	return this.compareTo(executionYear) > 0;
     }
+    
+    public boolean isAfterOrEquals(final ExecutionYear executionYear) {
+	return this.compareTo(executionYear) >= 0;
+    }
 
-    public boolean isBefore(ExecutionYear executionYear) {
+    public boolean isBefore(final ExecutionYear executionYear) {
 	return this.compareTo(executionYear) < 0;
+    }
+    
+    public boolean isBeforeOrEquals(final ExecutionYear executionYear) {
+	return this.compareTo(executionYear) <= 0;
     }
 
     public Collection<ExecutionDegree> getExecutionDegreesSortedByDegreeName() {
