@@ -269,7 +269,9 @@
 	</logic:equal>
 		
 	<logic:equal name="importBibtexBean" property="currentProcessedParticipators" value="true">
-		<fr:form action="/bibtexManagement/createPublication.do">
+
+		<logic:notPresent name="issueBean"> 
+		<fr:form action="/bibtexManagement/createPublicationWrapper.do">
 			<fr:edit id="importBibtexBean" visible="false" name="importBibtexBean" type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.bibtex.ImportBibtexBean"/>
 			
 			<bean:define id="publicationData" name="importBibtexBean" property="currentPublicationBean" type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean"/>
@@ -328,7 +330,70 @@
 	   			</fr:view>
 			</logic:equal>
 			
-			<html:submit><bean:message bundle="RESEARCHER_RESOURCES" key="button.create"/></html:submit>
+			<bean:define id="label" value="button.create"/>
+			<logic:equal name="importBibtexBean" property="currentPublicationBean.class.simpleName" value="ArticleBean">
+				<bean:define id="label" value="button.next"/>
+			</logic:equal>
+			<html:submit><bean:message bundle="RESEARCHER_RESOURCES" key="<%= label %>"/></html:submit>
 		</fr:form>
+		</logic:notPresent>
+		
+		<logic:present name="issueBean">
+						<logic:messagesPresent message="true">
+					<p>
+					<html:messages id="messages" message="true" bundle="RESEARCHER_RESOURCES">
+						<span class="error0"><!-- Error messages go here --><bean:write name="messages" /></span>
+					</html:messages>
+					</p>
+		   	    </logic:messagesPresent>
+			<div class="dinline forminline">	
+				<fr:form action="/bibtexManagement/createJournalWorkFlow.do">
+					<fr:edit id="importBibtexBean" visible="false" name="importBibtexBean" type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.bibtex.ImportBibtexBean"/>
+					<fr:edit id="createMagazine" name="issueBean" visible="false"/>
+					
+					<p class="mtop1 mbottom05"><strong><bean:message key="label.journal" bundle="RESEARCHER_RESOURCES"/>:</strong></p>
+					<logic:equal name="issueBean" property="journalAlreadyChosen" value="false">
+					<fr:edit id="journalInfo" name="issueBean" schema="result.publication.create.Article.createMagazine">
+						<fr:layout name="tabular">
+						 <fr:property name="classes" value="tstyle5 thright thlight thtop mtop05"/>
+		        		<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+						</fr:layout>
+					</fr:edit>
+	
+					</logic:equal>
+					<logic:equal name="issueBean" property="journalAlreadyChosen" value="true">
+						<span><fr:view name="issueBean" property="journal.name"/></span>
+					</logic:equal>
+					
+					<p class="mtop1 mbottom05"><strong><bean:message key="label.journalIssue" bundle="RESEARCHER_RESOURCES"/>:</strong></p>
+
+					<bean:define id="issueSchema" value="result.publication.create.Article.createIssue" type="java.lang.String"/>
+					<logic:equal name="issueBean" property="specialIssue" value="true">
+						<bean:define id="issueSchema" value="result.publication.create.Article.createSpecialIssue" type="java.lang.String"/>
+					</logic:equal>
+					
+					<fr:edit id="issueInfo" name="issueBean" schema="<%= issueSchema %>">
+						<fr:layout name="tabular">
+						 <fr:property name="classes" value="tstyle5 thright thlight thtop mtop05"/>
+		        		<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+						</fr:layout>
+						<fr:destination name="postBack" path="/bibtexManagement/changeSpecialIssueInImport.do"/>
+						<fr:destination name="invalid"  path="/bibtexManagement/createJournalWorkFlow.do"/>
+					</fr:edit>
+					<br/>		
+					<html:submit>
+					<logic:equal name="issueBean" property="journalAlreadyChosen" value="false">
+					<bean:message key="label.insertJournalArticle" bundle="RESEARCHER_RESOURCES"/>
+					</logic:equal>
+					<logic:equal name="issueBean" property="journalAlreadyChosen" value="true">					
+					<bean:message key="label.createNewIssue" bundle="RESEARCHER_RESOURCES"/>
+					</logic:equal>
+					</html:submit>
+				</fr:form>
+			   <fr:form action="/resultPublications/listPublications.do">
+				<html:submit><bean:message key="button.cancel"/></html:submit>
+		   	   </fr:form>
+		   	   </div>
+		</logic:present>
 	</logic:equal>
 </logic:present>
