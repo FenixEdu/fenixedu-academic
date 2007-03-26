@@ -1146,5 +1146,9 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	}
 	return Collections.emptySet();
     }
+    
+    public String getDescription() {
+	return getStudentCurricularPlan().getDegree().getPresentationName() + " > " + getName().getContent();
+    }
 
 }

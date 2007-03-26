@@ -10,4 +10,6 @@ public interface IEnrolment {
     
     String getGrade();
     
+    String getDescription();
+    
 }

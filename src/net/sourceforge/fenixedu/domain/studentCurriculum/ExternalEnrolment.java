@@ -68,6 +68,10 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
 	return getExternalCurricularCourse().getFullPathName();
     }
     
+    public String getDescription() {
+        return getFullPathName();
+    }
+    
     public void delete() {
 	removeExecutionPeriod();
 	removeExternalCurricularCourse();
