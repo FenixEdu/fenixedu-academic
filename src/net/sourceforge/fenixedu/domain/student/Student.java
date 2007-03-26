@@ -76,6 +76,18 @@ public class Student extends Student_Base {
 	return result;
     }
 
+    public Collection<Registration> getRegistrationsByDegreeTypeAndExecutionPeriod(
+	    DegreeType degreeType, ExecutionPeriod executionPeriod) {
+	List<Registration> result = new ArrayList<Registration>();
+	for (Registration registration : getRegistrations()) {
+	    if (registration.getDegreeType().equals(degreeType)
+		    && registration.hasStudentCurricularPlanInExecutionPeriod(executionPeriod)) {
+		result.add(registration);
+	    }
+	}
+	return result;
+    }
+
     public Collection<Registration> getRegistrationsByDegreeTypes(DegreeType... degreeTypes) {
 	List<DegreeType> degreeTypesList = Arrays.asList(degreeTypes);
 	List<Registration> result = new ArrayList<Registration>();
@@ -87,6 +99,7 @@ public class Student extends Student_Base {
 	return result;
     }
 
+    @Deprecated
     public Registration getActiveRegistrationByDegreeType(DegreeType degreeType) {
 	for (Registration registration : getRegistrations()) {
 	    if (registration.getDegreeType().equals(degreeType) && registration.isActive()) {
@@ -589,52 +602,55 @@ public class Student extends Student_Base {
     }
 
     public boolean isCurrentlyEnroled(DegreeCurricularPlan degreeCurricularPlan) {
-        for (Registration registration : getRegistrations()) {
-            if (! registration.isActive()) {
-                continue;
-            }
-            
-            StudentCurricularPlan lastStudentCurricularPlan = registration.getLastStudentCurricularPlan();
-            if (lastStudentCurricularPlan == null) {
-                continue;
-            }
-            
-            if (lastStudentCurricularPlan.getDegreeCurricularPlan() != degreeCurricularPlan) {
-                continue;
-            }
-         
-            return true;
-        }
-        
-        return false;
+	for (Registration registration : getRegistrations()) {
+	    if (!registration.isActive()) {
+		continue;
+	    }
+
+	    StudentCurricularPlan lastStudentCurricularPlan = registration
+		    .getLastStudentCurricularPlan();
+	    if (lastStudentCurricularPlan == null) {
+		continue;
+	    }
+
+	    if (lastStudentCurricularPlan.getDegreeCurricularPlan() != degreeCurricularPlan) {
+		continue;
+	    }
+
+	    return true;
+	}
+
+	return false;
     }
 
     public Enrolment getDissertationEnrolment() {
-        return getDissertationEnrolment(null);
+	return getDissertationEnrolment(null);
     }
-    
-    public Enrolment getDissertationEnrolment(DegreeCurricularPlan degreeCurricularPlan) {
-        for (Registration registration : getRegistrations()) {
-            if (! registration.isActive()) {
-                continue;
-            }
-            
-            StudentCurricularPlan lastStudentCurricularPlan = registration.getLastStudentCurricularPlan();
-            if (lastStudentCurricularPlan == null) {
-                continue;
-            }
-            
-            if (degreeCurricularPlan != null && lastStudentCurricularPlan.getDegreeCurricularPlan() != degreeCurricularPlan) {
-                continue;
-            }
 
-            for (Enrolment enrolment : lastStudentCurricularPlan.getEnrolments()) {
-                if (enrolment.getCurricularCourse().isDissertation()) {
-                    return enrolment;
-                }
-            }
-        }
-        
-        return null;
+    public Enrolment getDissertationEnrolment(DegreeCurricularPlan degreeCurricularPlan) {
+	for (Registration registration : getRegistrations()) {
+	    if (!registration.isActive()) {
+		continue;
+	    }
+
+	    StudentCurricularPlan lastStudentCurricularPlan = registration
+		    .getLastStudentCurricularPlan();
+	    if (lastStudentCurricularPlan == null) {
+		continue;
+	    }
+
+	    if (degreeCurricularPlan != null
+		    && lastStudentCurricularPlan.getDegreeCurricularPlan() != degreeCurricularPlan) {
+		continue;
+	    }
+
+	    for (Enrolment enrolment : lastStudentCurricularPlan.getEnrolments()) {
+		if (enrolment.getCurricularCourse().isDissertation()) {
+		    return enrolment;
+		}
+	    }
+	}
+
+	return null;
     }
 }

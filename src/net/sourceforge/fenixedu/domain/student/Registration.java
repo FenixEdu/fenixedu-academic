@@ -655,14 +655,19 @@ public class Registration extends Registration_Base {
 	return null;
     }
 
+    @Deprecated
     public static Registration readStudentByNumberAndDegreeType(Integer number, DegreeType degreeType) {
+	Registration nonActiveRegistration = null;
 	for (Registration registration : RootDomainObject.getInstance().getRegistrations()) {
 	    if (registration.getNumber().equals(number)
 		    && registration.getDegreeType().equals(degreeType)) {
-		return registration;
+		if (registration.isActive()) {
+		    return registration;
+		}
+		nonActiveRegistration = registration;
 	    }
 	}
-	return null;
+	return nonActiveRegistration;
     }
 
     public static Registration readRegisteredRegistrationByNumberAndDegreeType(Integer number,
@@ -1512,6 +1517,11 @@ public class Registration extends Registration_Base {
 		: getStudentCurricularPlan(executionYear.getEndDateYearMonthDay());
     }
 
+    public StudentCurricularPlan getStudentCurricularPlan(final ExecutionPeriod executionPeriod) {
+	return executionPeriod == null ? getStudentCurricularPlan(new YearMonthDay())
+		: getStudentCurricularPlan(executionPeriod.getEndDateYearMonthDay());
+    }
+
     public StudentCurricularPlan getStudentCurricularPlan(final YearMonthDay date) {
 	StudentCurricularPlan result = null;
 	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
@@ -1537,6 +1547,10 @@ public class Registration extends Registration_Base {
     public YearMonthDay getStartDate() {
 	return super.getStartDate() != null ? super.getStartDate() : getStudentCandidacy()
 		.getActiveCandidacySituation().getSituationDate().toYearMonthDay();
+    }
+
+    public boolean hasStudentCurricularPlanInExecutionPeriod(ExecutionPeriod executionPeriod) {
+	return getStudentCurricularPlan(executionPeriod) != null;
     }
 
     public boolean isCustomEnrolmentModel(final ExecutionYear executionYear) {
