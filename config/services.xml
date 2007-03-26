@@ -9707,7 +9707,7 @@
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="DegreeOrMasterDegreeAdmininstrativeOfficeChain" />
+			<chain name="AcademicAdministrativeOfficeOrTreasuryAuthorization" />
 		</filterChains>
 	</service>
 	<service>
@@ -9716,16 +9716,16 @@
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="DegreeOrMasterDegreeAdmininstrativeOfficeChain" />
+			<chain name="AcademicAdministrativeOfficeOrTreasuryAuthorization" />
 		</filterChains>
 	</service>
 	<service>
-		<name>CreateReceiptVersion</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.CreateReceiptVersion</implementationClass>
+		<name>CreateReceiptPrintVersion</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.CreateReceiptPrintVersion</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="DegreeOrMasterDegreeAdmininstrativeOfficeChain" />
+			<chain name="AcademicAdministrativeOfficeOrTreasuryAuthorization" />
 		</filterChains>
 	</service>
 	<service>

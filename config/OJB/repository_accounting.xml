@@ -459,19 +459,43 @@
 		</class-descriptor>
 
 
-<!-- ************************************************************************************************************ -->
-<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemptionJustification -->
-<!-- ************************************************************************************************************ -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemptionJustification" table="PENALTY_EXEMPTION_JUSTIFICATION">
-	<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.events.penaltyExemptionJustifications.DirectiveCouncilAuthorizationJustification" />
-</class-descriptor>	
 
 <!-- ************************************************************************************************************ -->
-<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.events.penaltyExemptionJustifications.DirectiveCouncilAuthorizationJustification -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.events.ExemptionJustification -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.events.penaltyExemptionJustifications.DirectiveCouncilAuthorizationJustification" table="PENALTY_EXEMPTION_JUSTIFICATION">
+<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.events.ExemptionJustification" table="EXEMPTION_JUSTIFICATION">
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemptionJustification" />
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityExemptionJustification" />
+</class-descriptor>
 
-</class-descriptor>	
+	<!-- ************************************************************************************************************ -->
+	<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemptionJustification -->
+	<!-- ************************************************************************************************************ -->
+	<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemptionJustification" table="EXEMPTION_JUSTIFICATION">
+		<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.events.penaltyExemptionJustifications.PenaltyExemptionJustificationByDispatch" />
+	</class-descriptor>	
+
+		<!-- ************************************************************************************************************ -->
+		<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.events.penaltyExemptionJustifications.PenaltyExemptionJustificationByDispatch -->
+		<!-- ************************************************************************************************************ -->
+		<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.events.penaltyExemptionJustifications.PenaltyExemptionJustificationByDispatch" table="EXEMPTION_JUSTIFICATION">
+		
+		</class-descriptor>	
+		
+		
+	<!-- ************************************************************************************************************ -->
+	<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityExemptionJustification -->
+	<!-- ************************************************************************************************************ -->
+	<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityExemptionJustification" table="EXEMPTION_JUSTIFICATION">
+		<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityExemptionJustificationByDispatch" />
+	</class-descriptor>	
+
+		<!-- ************************************************************************************************************ -->
+		<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityExemptionJustificationByDispatch -->
+		<!-- ************************************************************************************************************ -->
+		<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityExemptionJustificationByDispatch" table="EXEMPTION_JUSTIFICATION">
+		
+		</class-descriptor>
 
 
 

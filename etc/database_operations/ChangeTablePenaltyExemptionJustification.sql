@@ -1,0 +1,7 @@
+alter table PENALTY_EXEMPTION_JUSTIFICATION CHANGE COMMENTS REASON TEXT null;
+
+
+update PENALTY_EXEMPTION_JUSTIFICATION 
+set OJB_CONCRETE_CLASS='net.sourceforge.fenixedu.domain.accounting.events.penaltyExemptionJustifications.PenaltyExemptionJustificationByDispatch'
+where OJB_CONCRETE_CLASS='net.sourceforge.fenixedu.domain.accounting.events.penaltyExemptionJustifications.DirectiveCouncilAuthorizationJustification';
+

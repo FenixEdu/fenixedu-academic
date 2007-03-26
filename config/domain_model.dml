@@ -173,7 +173,7 @@ valueType net.sourceforge.fenixedu.domain.accounting.PaymentCodeState											
 valueType net.sourceforge.fenixedu.domain.accounting.PaymentCodeType											as PaymentCodeType;
 valueType net.sourceforge.fenixedu.domain.accounting.CreditNoteState											as CreditNoteState;
 valueType net.sourceforge.fenixedu.domain.student.StudentStatuteType											as StudentStatuteType;
-valueType net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityExemptionType						as GratuityExemptionType;
+valueType net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityExemptionJustificationType						as GratuityExemptionJustificationType;
 valueType net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemptionJustificationType					as PenaltyExemptionJustificationType;
 valueType net.sourceforge.fenixedu.domain.parking.DocumentDeliveryType											as DocumentDeliveryType;
 valueType net.sourceforge.fenixedu.domain.parking.NewParkingDocumentType										as NewParkingDocumentType;
@@ -181,7 +181,7 @@ valueType net.sourceforge.fenixedu.domain.FrequencyType															as Frequen
 valueType net.sourceforge.fenixedu.domain.RequestState															as RequestState;
 valueType net.sourceforge.fenixedu.domain.assiduousness.util.ScheduleClockingType								as ScheduleClockingType;
 valueType net.sourceforge.fenixedu.domain.util.EmailAddressList								                    as EmailAddressList;
-valueType net.sourceforge.fenixedu.domain.thesis.ThesisState								                    as ThesisState;
+valueType net.sourceforge.fenixedu.domain.thesis.ThesisState								                        as ThesisState;
 valueType net.sourceforge.fenixedu.domain.CompetenceCourseType								                    as CompetenceCourseType;
 valueType net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType							                        as ThesisParticipationType;
 valueType net.sourceforge.fenixedu.domain.vigilancy.AttendingStatus												as AttendingStatus;
@@ -381,10 +381,10 @@ class net.sourceforge.fenixedu.domain.accounting.Exemption extends net.sourcefor
 	Integer keyEmployee;
 	String ojbConcreteClass;
 	DateTime whenCreated;
+	Integer keyExemptionJustification;
 }
 
 	class net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityExemption extends net.sourceforge.fenixedu.domain.accounting.Exemption {
-		GratuityExemptionType gratuityExemptionType;
 	}
 
 		class net.sourceforge.fenixedu.domain.accounting.events.gratuity.PercentageGratuityExemption extends net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityExemption {
@@ -396,7 +396,6 @@ class net.sourceforge.fenixedu.domain.accounting.Exemption extends net.sourcefor
 	
 
 	class net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemption extends net.sourceforge.fenixedu.domain.accounting.Exemption {
-		Integer keyPenaltyExemptionJustification;
 	}
 
 		class net.sourceforge.fenixedu.domain.accounting.events.gratuity.exemption.penalty.InstallmentPenaltyExemption extends net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemption {
@@ -405,17 +404,31 @@ class net.sourceforge.fenixedu.domain.accounting.Exemption extends net.sourcefor
 	 	
 	 	class net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsurancePenaltyExemption extends net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemption {
 	 	}
+	 
 
-class net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemptionJustification extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer keyPenaltyExemption;
-	PenaltyExemptionJustificationType justificationType;
-	String comments;
+class net.sourceforge.fenixedu.domain.accounting.events.ExemptionJustification extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyExemption;
+	String reason;
 	String ojbConcreteClass;
 }
 
-	class net.sourceforge.fenixedu.domain.accounting.events.penaltyExemptionJustifications.DirectiveCouncilAuthorizationJustification extends net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemptionJustification {
-		YearMonthDay dispatchDate;
+	class net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemptionJustification extends net.sourceforge.fenixedu.domain.accounting.events.ExemptionJustification {
+		PenaltyExemptionJustificationType penaltyExemptionJustificationType;
+	
 	}
+
+		class net.sourceforge.fenixedu.domain.accounting.events.penaltyExemptionJustifications.PenaltyExemptionJustificationByDispatch extends net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemptionJustification {
+			YearMonthDay penaltyExemptionDispatchDate;
+		}
+	
+	class net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityExemptionJustification extends net.sourceforge.fenixedu.domain.accounting.events.ExemptionJustification {
+		GratuityExemptionJustificationType gratuityExemptionJustificationType;
+	}
+
+		class net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityExemptionJustificationByDispatch extends net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityExemptionJustification {
+			YearMonthDay gratuityExemptionDispatchDate;
+		}
+
 
 class net.sourceforge.fenixedu.domain.accounting.Receipt extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyPerson;
@@ -427,6 +440,8 @@ class net.sourceforge.fenixedu.domain.accounting.Receipt extends net.sourceforge
 	Integer keyEmployee;
 	ReceiptState state;
 	DateTime whenUpdated;
+	Integer keyCreatorUnit;
+	Integer keyOwnerUnit;
 }
 
 class net.sourceforge.fenixedu.domain.accounting.ReceiptPrintVersion extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -1424,7 +1439,7 @@ class net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule extends
 		
 		class net.sourceforge.fenixedu.domain.Enrolment extends net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine {
             String createdBy;
-        	DateTime creationDateDateTime;
+	        	DateTime creationDateDateTime;
             Integer keyExecutionPeriod;
             Integer keyStudentCurricularPlan;
             EnrollmentState enrollmentState;
@@ -1468,6 +1483,7 @@ class net.sourceforge.fenixedu.domain.EmailAddress extends net.sourceforge.fenix
 	String value;
 	Boolean isInstitutionalEmail;
 }
+
 
 class net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment extends net.sourceforge.fenixedu.domain.DomainObject {
 	String grade;
@@ -2143,7 +2159,7 @@ class net.sourceforge.fenixedu.domain.File extends net.sourceforge.fenixedu.doma
 		Integer keyParkingDocument;
 		Integer keyNewParkingDocument;
 	}
-
+	
 	class net.sourceforge.fenixedu.domain.protocols.ProtocolFile extends net.sourceforge.fenixedu.domain.File {
 		Integer keyProtocol;
 	}
@@ -3293,6 +3309,7 @@ class net.sourceforge.fenixedu.domain.Teacher extends net.sourceforge.fenixedu.d
 	Integer keyPublicationsNumber;
 	Integer keyWeeklyOcupation;
 }
+
 class net.sourceforge.fenixedu.domain.teacher.TeacherLegalRegimen extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyCategory;
 	Integer keyTeacher;
@@ -3711,7 +3728,7 @@ class net.sourceforge.fenixedu.domain.TeacherPersonalExpectationPeriod extends n
 class net.sourceforge.fenixedu.domain.ExpectationEvaluationGroup extends net.sourceforge.fenixedu.domain.DomainObject {         
 	Integer keyAppraiser;
 	Integer keyEvaluated;
-    Integer keyExecutionYear;
+	Integer keyExecutionYear;	
 }
 
 class net.sourceforge.fenixedu.domain.assiduousness.Assiduousness extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -4000,18 +4017,19 @@ class net.sourceforge.fenixedu.domain.research.result.ResearchResult extends net
 			
 			Integer keyArticleAssociation;
 		}
+		
 		class net.sourceforge.fenixedu.domain.research.result.publication.ConferenceArticles extends net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication {
 			ScopeType scope;
 			String conference;
 			Integer keyEventConferenceArticlesAssociation;
 		}
-		class net.sourceforge.fenixedu.domain.research.result.publication.Inproceedings extends net.sourceforge.fenixedu.domain.research.result.publication.ConferenceArticles {
+			class net.sourceforge.fenixedu.domain.research.result.publication.Inproceedings extends net.sourceforge.fenixedu.domain.research.result.publication.ConferenceArticles {
 			String address;
 			Integer firstPage;
 			Integer lastPage;
 			String language;
 		}
-		class net.sourceforge.fenixedu.domain.research.result.publication.Proceedings extends net.sourceforge.fenixedu.domain.research.result.publication.ConferenceArticles {
+			class net.sourceforge.fenixedu.domain.research.result.publication.Proceedings extends net.sourceforge.fenixedu.domain.research.result.publication.ConferenceArticles {
 			String address;
 		}
 		class net.sourceforge.fenixedu.domain.research.result.publication.Thesis extends net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication {
@@ -8930,6 +8948,20 @@ relation ReceiptEmployee {
 	}
 }
 
+relation ReceiptCreatorUnit {
+	 net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole creatorUnit;
+	net.sourceforge.fenixedu.domain.accounting.Receipt playsRole createdReceipts {
+		multiplicity *;
+	}
+}
+
+relation ReceiptOwnerUnit {
+	 net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole ownerUnit;
+	net.sourceforge.fenixedu.domain.accounting.Receipt playsRole ownedReceipts {
+		multiplicity *;
+	}
+}
+
 relation ReceiptPrintVersionEmployee {
 	net.sourceforge.fenixedu.domain.Employee playsRole employee;
 	net.sourceforge.fenixedu.domain.accounting.ReceiptPrintVersion playsRole receiptsVersions {
@@ -9167,9 +9199,9 @@ relation ExemptionEmployee {
 	}
 }
 
-relation RootDomainObjectPenaltyExemptionJustification {
+relation RootDomainObjectExemptionJustification {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemptionJustification playsRole penaltyExemptionJustifications {
+	net.sourceforge.fenixedu.domain.accounting.events.ExemptionJustification playsRole exemptionJustifications {
 		multiplicity *;
 	}
 }
@@ -9182,9 +9214,9 @@ relation InstallmentPenaltyExemptionInstallment {
 	}
 }
 
-relation PenaltyExemptionPenaltyExemptionJustification {
-	net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemptionJustification playsRole penaltyExemptionJustification;
-	net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemption playsRole penaltyExemption;
+relation ExemptionExemptionJustification {
+	net.sourceforge.fenixedu.domain.accounting.events.ExemptionJustification playsRole exemptionJustification;
+	net.sourceforge.fenixedu.domain.accounting.Exemption playsRole exemption;
 }
 
 
@@ -9370,7 +9402,7 @@ relation ProtocolHistoryProtocol {
 relation ProtocolFileProtocol {
 	net.sourceforge.fenixedu.domain.protocols.Protocol playsRole protocol;
 	net.sourceforge.fenixedu.domain.protocols.ProtocolFile playsRole protocolFiles{
-		multiplicity *;
+		multiplicity*;
 	}	
 }
 
@@ -10614,7 +10646,7 @@ relation RootDomainObjectJournalIssues {
 relation RootDomainObjectEventEdition {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.research.activity.EventEdition playsRole eventEditions {
-		multiplicity *;
+     multiplicity *;
 	}
 }
 
@@ -10624,7 +10656,6 @@ relation RootDomainObjectEventConferenceArticlesAssociation {
 		multiplicity *;
 	}
 }
-
 relation RootDomainObjectExportGrouping {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.ExportGrouping playsRole exportGroupings {
@@ -12362,6 +12393,7 @@ relation ExternalRegistrationDataRegistration {
 	net.sourceforge.fenixedu.domain.student.ExternalRegistrationData playsRole externalRegistrationData;
 	net.sourceforge.fenixedu.domain.student.Registration playsRole registration;
 }
+
 relation RootDomainObjectExpectationEvaluationGroup {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.ExpectationEvaluationGroup playsRole expectationEvaluationGroups {
@@ -12495,7 +12527,6 @@ relation RootDomainObjectFunctionalityPrinters {
 		multiplicity *;
 	}
 }
-
 relation RootDomainObjectRegistrationNumber {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.student.RegistrationNumber playsRole registrationNumbers {
