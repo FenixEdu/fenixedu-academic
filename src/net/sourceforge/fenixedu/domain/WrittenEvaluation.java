@@ -352,9 +352,9 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
 
         final Set<OldRoom> occupiedRooms = new HashSet<OldRoom>();
         for (final RoomOccupation roomOccupation : getAssociatedRoomOccupationSet()) {
-            if (roomOccupation.getRoom().findOccupationSet(period, this.getBeginning(), this.getEnd(), roomOccupation.getDayOfWeek(), 
+            if (((OldRoom)roomOccupation.getRoom()).findOccupationSet(period, this.getBeginning(), this.getEnd(), roomOccupation.getDayOfWeek(), 
         	    null, null, Boolean.TRUE, Boolean.TRUE).size() > 1) {
-                occupiedRooms.add(roomOccupation.getRoom());
+                occupiedRooms.add((OldRoom) roomOccupation.getRoom());
             }
         }
         if (!occupiedRooms.isEmpty()) {
@@ -424,7 +424,7 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
 	public List<OldRoom> getAssociatedRooms() {
 		final List<OldRoom> result = new ArrayList<OldRoom>();
 		for (final RoomOccupation roomOccupation : this.getAssociatedRoomOccupation()) {
-			result.add(roomOccupation.getRoom());
+			result.add((OldRoom) roomOccupation.getRoom());
 		}
 		return result;
 	}
@@ -626,7 +626,7 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
 	public Integer getCountNumberReservedSeats() {
 		int i = 0;
 		for (final RoomOccupation roomOccupation : getAssociatedRoomOccupation()) {
-			i += roomOccupation.getRoom().getCapacidadeExame().intValue();
+			i += ((OldRoom)roomOccupation.getRoom()).getCapacidadeExame().intValue();
 		}
 		return i;
 	}

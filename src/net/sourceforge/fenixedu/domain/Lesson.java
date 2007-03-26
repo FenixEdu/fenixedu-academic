@@ -29,14 +29,11 @@ import org.joda.time.YearMonthDay;
 
 public class Lesson extends Lesson_Base {
 
-    public static final Comparator LESSON_COMPARATOR_BY_WEEKDAY_AND_STARTTIME = new ComparatorChain();
+    public static final Comparator<Lesson> LESSON_COMPARATOR_BY_WEEKDAY_AND_STARTTIME = new ComparatorChain();
     static {
-	((ComparatorChain) LESSON_COMPARATOR_BY_WEEKDAY_AND_STARTTIME).addComparator(new BeanComparator(
-		"diaSemana.diaSemana"));
-	((ComparatorChain) LESSON_COMPARATOR_BY_WEEKDAY_AND_STARTTIME).addComparator(new BeanComparator(
-		"beginHourMinuteSecond"));
-	((ComparatorChain) LESSON_COMPARATOR_BY_WEEKDAY_AND_STARTTIME).addComparator(new BeanComparator(
-		"idInternal"));
+	((ComparatorChain) LESSON_COMPARATOR_BY_WEEKDAY_AND_STARTTIME).addComparator(new BeanComparator("diaSemana.diaSemana"));
+	((ComparatorChain) LESSON_COMPARATOR_BY_WEEKDAY_AND_STARTTIME).addComparator(new BeanComparator("beginHourMinuteSecond"));
+	((ComparatorChain) LESSON_COMPARATOR_BY_WEEKDAY_AND_STARTTIME).addComparator(new BeanComparator("idInternal"));
     }
 
     public Lesson() {
@@ -202,7 +199,7 @@ public class Lesson extends Lesson_Base {
     }
    
     private Campus getLessonCampus() {
-	net.sourceforge.fenixedu.domain.Campus oldCampus = getSala().getBuilding().getCampus();
+	net.sourceforge.fenixedu.domain.Campus oldCampus = ((OldRoom)getSala()).getBuilding().getCampus();
 	if (oldCampus != null) {
 	    for (Campus campus : Space.getAllCampus()) {
 		if (campus.getSpaceInformation().getName().equalsIgnoreCase(oldCampus.getName())) {
@@ -396,7 +393,7 @@ public class Lesson extends Lesson_Base {
 	return possibleDate;
     }
 
-    private SortedSet<Summary> getSummaries(Comparator comparator) {
+    private SortedSet<Summary> getSummaries(Comparator<Summary> comparator) {
 	SortedSet<Summary> lessonSummaries = new TreeSet<Summary>(comparator);
 	lessonSummaries.addAll(getAssociatedSummariesSet());
 	return lessonSummaries;
@@ -404,25 +401,23 @@ public class Lesson extends Lesson_Base {
 
     public String prettyPrint() {
 	final StringBuilder result = new StringBuilder();
-
 	result.append(getDiaSemana().getDiaSemanaString());
 	result.append(", ");
 	result.append(getInicio().get(Calendar.HOUR_OF_DAY));
 	result.append(":");
 	result.append(getInicio().get(Calendar.MINUTE));
 	result.append(", ");
-	result.append(getSala().getName());
-
+	result.append(((OldRoom)getSala()).getName());
 	return result.toString();
     }
     
     public boolean contains(Interval interval) {
     	YearMonthDay lessonStartDay = getLessonStartDay();
-		YearMonthDay lessonEndDay = getLessonEndDay();
-		HourMinuteSecond start = getBeginHourMinuteSecond();
-		HourMinuteSecond end = getEndHourMinuteSecond();
-				return new Interval(new DateTime(lessonStartDay.getYear(), lessonStartDay.getMonthOfYear(),
-				lessonStartDay.getDayOfMonth(),start.getHour(),start.getMinuteOfHour(),0,0), new DateTime(lessonEndDay.getYear(), lessonEndDay.getMonthOfYear(),
-						lessonEndDay.getDayOfMonth(),end.getHour(),end.getMinuteOfHour(),0,0)).contains(interval);
+	YearMonthDay lessonEndDay = getLessonEndDay();
+	HourMinuteSecond start = getBeginHourMinuteSecond();
+	HourMinuteSecond end = getEndHourMinuteSecond();
+
+	return new Interval(new DateTime(lessonStartDay.getYear(), lessonStartDay.getMonthOfYear(), lessonStartDay.getDayOfMonth(),start.getHour(),start.getMinuteOfHour(),0,0), 
+		new DateTime(lessonEndDay.getYear(), lessonEndDay.getMonthOfYear(), lessonEndDay.getDayOfMonth(),end.getHour(),end.getMinuteOfHour(),0,0)).contains(interval);
     }
 }

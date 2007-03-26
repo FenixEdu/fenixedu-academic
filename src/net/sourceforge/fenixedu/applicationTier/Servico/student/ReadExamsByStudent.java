@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
+import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -67,7 +68,7 @@ public class ReadExamsByStudent extends Service {
                         .getStudent());
                 infoWrittenEvaluationEnrolment.setInfoStudent(infoStudent);
                 if (writtenEvaluationEnrolment.getRoom() != null) {
-                    InfoRoom infoRoom = InfoRoom.newInfoFromDomain(writtenEvaluationEnrolment.getRoom());
+                    InfoRoom infoRoom = InfoRoom.newInfoFromDomain(((OldRoom)writtenEvaluationEnrolment.getRoom()));
                     infoWrittenEvaluationEnrolment.setInfoRoom(infoRoom);
                 }
                 infoWrittenEvaluationEnrolmentList.add(infoWrittenEvaluationEnrolment);

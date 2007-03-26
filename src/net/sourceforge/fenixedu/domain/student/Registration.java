@@ -377,7 +377,7 @@ public class Registration extends Registration_Base {
 	for (final WrittenEvaluationEnrolment writtenEvaluationEnrolment : this
 		.getWrittenEvaluationEnrolments()) {
 	    if (writtenEvaluationEnrolment.getWrittenEvaluation() == writtenEvaluation) {
-		return writtenEvaluationEnrolment.getRoom();
+		return (OldRoom) writtenEvaluationEnrolment.getRoom();
 	    }
 	}
 	return null;

@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.renderers;
 
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.renderers.OutputRenderer;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlText;
@@ -30,7 +31,7 @@ public class ShiftPlainRenderer extends OutputRenderer {
                             .append("-");
                     lessonsLabel.append(DateFormatUtil.format("HH:mm", lesson.getFim().getTime())).append(") ");
                     if (lesson.getSala() != null) {
-                        lessonsLabel.append(lesson.getSala().getName().toString());
+                        lessonsLabel.append(((OldRoom)lesson.getSala()).getName().toString());
                     }
                     if (index < shift.getAssociatedLessonsCount()) {
                         lessonsLabel.append(" ; ");

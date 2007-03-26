@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
+import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class EditarTurno extends Service {
@@ -97,9 +98,9 @@ public class EditarTurno extends Service {
 	for (int i = 0; i < shiftLessons.size(); i++) {
 	    Lesson lesson = ((Lesson) shiftLessons.get(i));
 	    shiftDuration += (getLessonDurationInMinutes(lesson).doubleValue() / 60);
-	    if (lesson.getRoomOccupation().getRoom().getCapacidadeNormal().intValue() > maxCapacity
+	    if (((OldRoom)lesson.getRoomOccupation().getRoom()).getCapacidadeNormal().intValue() > maxCapacity
 		    .intValue()) {
-		maxCapacity = lesson.getRoomOccupation().getRoom().getCapacidadeNormal();
+		maxCapacity = ((OldRoom)lesson.getRoomOccupation().getRoom()).getCapacidadeNormal();
 	    }
 	}
 

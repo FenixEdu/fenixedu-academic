@@ -136,7 +136,7 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
     public List<OldRoom> getAssociatedRooms(){
 	List<OldRoom> result = new ArrayList<OldRoom>();
 	for (RoomOccupation occupation : getRoomOccupationsSet()) {
-	    result.add(occupation.getRoom());	
+	    result.add((OldRoom) occupation.getRoom());	
 	}
 	return result;
     }
@@ -220,7 +220,7 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
     public String getGanttDiagramEventObservations() {
 	StringBuilder builder = new StringBuilder();
 	for (RoomOccupation roomOccupation : getRoomOccupations()) {
-	    builder.append(" ").append(roomOccupation.getRoom().getName());
+	    builder.append(" ").append(((OldRoom)roomOccupation.getRoom()).getName());
 	}
 	return builder.toString();
     }

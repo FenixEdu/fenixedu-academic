@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -58,7 +59,7 @@ public class ReadExamsByDate extends Service {
             final Integer numberStudentesAttendingCourse) {
         int totalExamCapacity = 0;
         for (final RoomOccupation roomOccupation : exam.getAssociatedRoomOccupation()) {
-            totalExamCapacity += roomOccupation.getRoom().getCapacidadeExame().intValue();
+            totalExamCapacity += ((OldRoom)roomOccupation.getRoom()).getCapacidadeExame().intValue();
         }
         return Integer.valueOf(numberStudentesAttendingCourse.intValue() - totalExamCapacity);
     }

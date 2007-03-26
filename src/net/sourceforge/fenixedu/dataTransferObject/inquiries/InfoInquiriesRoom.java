@@ -8,6 +8,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesRoom;
+import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.util.InquiriesUtil;
 
 /**
@@ -137,7 +138,7 @@ public class InfoInquiriesRoom extends InfoObject implements Comparable {
         this.setIdInternal(inquiriesRoom.getIdInternal());
         this.setSpaceAdequation(inquiriesRoom.getSpaceAdequation());
         this.setInquiriesCourse(InfoInquiriesCourse.newInfoFromDomain(inquiriesRoom.getInquiriesCourse()));
-        this.setRoom(InfoRoomWithInfoInquiriesRoom.newInfoFromDomain(inquiriesRoom.getRoom()));        
+        this.setRoom(InfoRoomWithInfoInquiriesRoom.newInfoFromDomain((OldRoom) inquiriesRoom.getRoom()));        
     }
         
 	public String toString() {

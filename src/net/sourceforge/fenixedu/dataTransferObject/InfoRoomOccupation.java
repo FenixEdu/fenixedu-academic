@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.util.Calendar;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.util.DiaSemana;
 
@@ -70,7 +71,7 @@ public class InfoRoomOccupation extends InfoObject {
      * @return Returns the infoRoom.
      */
     public InfoRoom getInfoRoom() {
-        return InfoRoom.newInfoFromDomain(getRoomOccupation().getRoom());
+        return InfoRoom.newInfoFromDomain((OldRoom) getRoomOccupation().getRoom());
     }
 
 }

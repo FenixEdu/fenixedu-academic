@@ -809,7 +809,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     private OldRoom getRoom(final Integer roomID) throws FenixFilterException, FenixServiceException {
         for (final RoomOccupation roomOccupation : ((WrittenEvaluation) getEvaluation()).getAssociatedRoomOccupation()) {
             if (roomOccupation.getRoom().getIdInternal().equals(roomID)) {
-                return roomOccupation.getRoom();
+                return (OldRoom) roomOccupation.getRoom();
             }
         }
         return null;
@@ -865,7 +865,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     public List<SelectItem> getNames() throws FenixFilterException, FenixServiceException {
         final List<SelectItem> result = new ArrayList(((WrittenEvaluation) getEvaluation()).getAssociatedRoomOccupationCount());
         for (final RoomOccupation roomOccupation : ((WrittenEvaluation) getEvaluation()).getAssociatedRoomOccupation()) {
-            result.add(new SelectItem(roomOccupation.getRoom().getIdInternal(), roomOccupation.getRoom()
+            result.add(new SelectItem(roomOccupation.getRoom().getIdInternal(), ((OldRoom)roomOccupation.getRoom())
                     .getNome()));
         }
         return result;

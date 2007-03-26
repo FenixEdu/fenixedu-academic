@@ -107,7 +107,7 @@ public class Exam extends Exam_Base {
         outter:
         for (Exam exam : Exam.readExams()) {
             for (RoomOccupation occupation : exam.getAssociatedRoomOccupation()) {
-                if (! occupation.getRoom().getNome().equals(room)) {
+                if (! ((OldRoom)occupation.getRoom()).getNome().equals(room)) {
                     continue outter;
                 }
             }

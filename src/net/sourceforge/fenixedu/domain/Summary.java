@@ -169,9 +169,9 @@ public class Summary extends Summary_Base {
     @Override
     public OldRoom getRoom() {
 	if (getLesson() != null) {
-	    return getLesson().getSala();
+	    return (OldRoom) getLesson().getSala();
 	}
-	return super.getRoom();
+	return (OldRoom) super.getRoom();
     }
 
     @Override

@@ -14,6 +14,7 @@ import java.util.Map;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.WrittenTest;
+import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLink;
 
@@ -56,8 +57,8 @@ public class CoordinatorWrittenTestsInformationBackingBean extends
             final StringBuilder buffer = new StringBuilder(20);
 
             for (final RoomOccupation roomOccupation : writtenTest.getAssociatedRoomOccupation()) {
-                buffer.append(roomOccupation.getRoom().getNome()).append(";");
-                totalCapacity += roomOccupation.getRoom().getCapacidadeExame();
+                buffer.append(((OldRoom)roomOccupation.getRoom()).getNome()).append(";");
+                totalCapacity += ((OldRoom)roomOccupation.getRoom()).getCapacidadeExame();
             }
             if (buffer.length() > 0) {
                 buffer.deleteCharAt(buffer.length() - 1);

@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.renderers;
 import net.sourceforge.fenixedu.dataTransferObject.SummariesManagementBean.SummaryType;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Summary;
+import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.renderers.OutputRenderer;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlText;
@@ -47,7 +48,7 @@ public class SummaryPlainRenderer extends OutputRenderer {
 		    }
 		}
 		if (lesson != null && lesson.getSala() != null) {
-		    builder.append(lesson.getSala().getName().toString());
+		    builder.append(((OldRoom)lesson.getSala()).getName().toString());
 		}
 
 		return new HtmlText(builder.toString());

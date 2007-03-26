@@ -6031,7 +6031,7 @@ relation WrittenEvaluationEnrolmentRoom {
 	net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment playsRole writtenEvaluationEnrolments {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.space.OldRoom playsRole room;
+	net.sourceforge.fenixedu.domain.space.Room playsRole room;
 }
 
 relation WrittenEvaluationEnrolmentStudent {
@@ -6737,7 +6737,7 @@ relation InquiriesRoomDomainRoom {
     net.sourceforge.fenixedu.domain.inquiries.InquiriesRoom playsRole associatedInquiriesRooms {
         multiplicity *;
     }
-    net.sourceforge.fenixedu.domain.space.OldRoom playsRole room;
+    net.sourceforge.fenixedu.domain.space.Room playsRole room;
 }
 
 relation InquiriesTeacherInquiriesCourse {
@@ -7404,7 +7404,7 @@ relation RoomLesson {
 	net.sourceforge.fenixedu.domain.Lesson playsRole associatedLessons {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.space.OldRoom playsRole sala;
+	net.sourceforge.fenixedu.domain.space.Room playsRole sala;
 }
 
 relation RoomClassificationRoomClassification {
@@ -7425,14 +7425,14 @@ relation RoomRoomOccupation {
 	net.sourceforge.fenixedu.domain.space.RoomOccupation playsRole roomOccupations {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.space.OldRoom playsRole room;
+	net.sourceforge.fenixedu.domain.space.Room playsRole room;
 }
 
 relation RoomSummary {
 	net.sourceforge.fenixedu.domain.Summary playsRole associatedSummaries {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.space.OldRoom playsRole room;
+	net.sourceforge.fenixedu.domain.space.Room playsRole room;
 }
 
 relation SectionItem {
