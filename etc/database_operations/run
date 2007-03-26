@@ -32,4 +32,4 @@ execute "Create RESEARCH_EVENT table." createResearchEventTable.sql
 execute "Create EVENT_CONFERENCE_ARTICLES_ASSOCIATION table." createEventConferenceArticlesAssociationsTable.sql 
 execute "Alter RESULT table, adding KEY_EVENT_CONFERENCE_ARTICLES_ASSOCIATION column." alterResearchResultTable.sql
 execute "Alter RESEARCH_ACTIVITY table, droping EVENT_LOCATION column." alterResearchActivityTable.sql
-
+execute "Alter RoomOccupation Table" alterTableRoomOccupation.sql
