@@ -1,9 +1,8 @@
 package net.sourceforge.fenixedu.renderers.plugin;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
@@ -454,55 +453,31 @@ public class ConfigurationReader {
     private Element readConfigRootElement(final ServletContext context, String name, final String configFile) throws ServletException {
         
         if (configFile != null) {
-            InputStream input = context.getResourceAsStream(configFile);
-            
-            if (input == null) {
-                input = getClass().getResourceAsStream(configFile);
-            }
+            final String realPath = "file://" + context.getRealPath(configFile);
 
-            if (input == null) {
+            if (realPath == null) {
                 throw new ServletException("Could not load " + name + ": " + configFile);
             }
-            
+
             try {
                 SAXBuilder build = new SAXBuilder();
                 build.setExpandEntities(true);
                 build.setEntityResolver(new EntityResolver() {
 
-                    // TODO: understand the API better and use something less hackish
                     public InputSource resolveEntity(String publicId, String systemId) throws SAXException, IOException {
                         if (systemId == null) {
                             return null;
                         }
 
-                        String entityPath = systemId.substring("file://".length());
-                        
-                        // relative to configuration file
-                        File file = new File(context.getRealPath(configFile));
-                        
-                        // remove home path automatically appended 
-                        String currentPath = new File(System.getProperty("user.dir")).getCanonicalPath();
-                        currentPath = currentPath.replace(" ", "%20");
-                        
-                        if (File.separatorChar != '/') {
-                            currentPath = "/" + currentPath.replace(File.separatorChar, '/');
-                        }
-                        
-                        if (currentPath != null && entityPath.startsWith(currentPath)) {
-                            entityPath = entityPath.substring(currentPath.length());
-                        }
-                        
-                        entityPath=entityPath.substring(1);
-                        
-                        File entityFile = new File(file.getParentFile(), entityPath);
-                        FileInputStream fileInputStream = new FileInputStream(entityFile);
-                        
-                        return new InputSource(fileInputStream);
+                        final URL url = new URL(systemId);
+                        final InputStream inputStream = url.openStream();
+                        return new InputSource(inputStream);
                     }
                     
                 });
-                
-                Document document = build.build(input);
+
+                final URL url = new URL(realPath);
+                final Document document = build.build(url);
 
                 return document.getRootElement();
             } catch (JDOMException e) {
