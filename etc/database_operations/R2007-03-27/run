@@ -26,3 +26,9 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "Create new PartyContact table" createPartyContactTable.sql
+executeWithTempFile "Migrating Party WebAddress" migratePartyWebAddress.sql
+executeWithTempFile "Migrating Party PhysicalAddress" migratePartyPhysicalAddress.sql
+executeWithTempFile "Migrating Party Phones" migratePartyPhones.sql
+executeWithTempFile "Migrating Party Emails" migratePartyEmails.sql
