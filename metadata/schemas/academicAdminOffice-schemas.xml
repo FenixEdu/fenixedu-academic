@@ -611,7 +611,7 @@
 </schema>
 
 <schema name="equivalence.view" bundle="ACADEMIC_OFFICE_RESOURCES" type="net.sourceforge.fenixedu.domain.IEnrolment" >
-	<slot name="name"/>
+	<slot name="description"/>
 </schema>
 
 <schema name="Enrolment.edit-extra-curricular-status" bundle="ACADEMIC_OFFICE_RESOURCES" type="net.sourceforge.fenixedu.domain.Enrolment" >

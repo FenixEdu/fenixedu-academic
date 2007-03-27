@@ -686,7 +686,7 @@ public class Installer extends Task implements TaskContainer {
 				persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 				persistentSupport.iniciarTransaccao();
 
-				Person pUserAdmin = new Person(name, gender, null, null, null, null, null, null, null);
+				Person pUserAdmin = new Person(name, gender, null, null);
 				Login login = Login.readLoginByUsername(username);
 				// crypt password? PasswordEncryptor.encryptPassword(newPassword)
 				login.setPassword(PasswordEncryptor.encryptPassword(password));

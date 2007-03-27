@@ -173,7 +173,7 @@ valueType net.sourceforge.fenixedu.domain.accounting.PaymentCodeState											
 valueType net.sourceforge.fenixedu.domain.accounting.PaymentCodeType											as PaymentCodeType;
 valueType net.sourceforge.fenixedu.domain.accounting.CreditNoteState											as CreditNoteState;
 valueType net.sourceforge.fenixedu.domain.student.StudentStatuteType											as StudentStatuteType;
-valueType net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityExemptionJustificationType						as GratuityExemptionJustificationType;
+valueType net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityExemptionJustificationType			as GratuityExemptionJustificationType;
 valueType net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemptionJustificationType					as PenaltyExemptionJustificationType;
 valueType net.sourceforge.fenixedu.domain.parking.DocumentDeliveryType											as DocumentDeliveryType;
 valueType net.sourceforge.fenixedu.domain.parking.NewParkingDocumentType										as NewParkingDocumentType;
@@ -181,11 +181,12 @@ valueType net.sourceforge.fenixedu.domain.FrequencyType															as Frequen
 valueType net.sourceforge.fenixedu.domain.RequestState															as RequestState;
 valueType net.sourceforge.fenixedu.domain.assiduousness.util.ScheduleClockingType								as ScheduleClockingType;
 valueType net.sourceforge.fenixedu.domain.util.EmailAddressList								                    as EmailAddressList;
-valueType net.sourceforge.fenixedu.domain.thesis.ThesisState								                        as ThesisState;
+valueType net.sourceforge.fenixedu.domain.thesis.ThesisState													as ThesisState;
 valueType net.sourceforge.fenixedu.domain.CompetenceCourseType								                    as CompetenceCourseType;
-valueType net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType							                        as ThesisParticipationType;
+valueType net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType							            as ThesisParticipationType;
 valueType net.sourceforge.fenixedu.domain.vigilancy.AttendingStatus												as AttendingStatus;
 valueType net.sourceforge.fenixedu.domain.protocols.util.ProtocolAction											as ProtocolAction;
+valueType net.sourceforge.fenixedu.domain.contacts.PartyContactType												as PartyContactType;
 
 /*
 *
@@ -374,7 +375,7 @@ class net.sourceforge.fenixedu.domain.accounting.Event extends net.sourceforge.f
 
 		class net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent extends net.sourceforge.fenixedu.domain.accounting.events.AnnualEvent {
 		}
-		
+
 
 class net.sourceforge.fenixedu.domain.accounting.Exemption extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyEvent;
@@ -1439,7 +1440,7 @@ class net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule extends
 		
 		class net.sourceforge.fenixedu.domain.Enrolment extends net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine {
             String createdBy;
-	        	DateTime creationDateDateTime;
+        	DateTime creationDateDateTime;
             Integer keyExecutionPeriod;
             Integer keyStudentCurricularPlan;
             EnrollmentState enrollmentState;
@@ -1466,7 +1467,6 @@ class net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule extends
     class net.sourceforge.fenixedu.domain.EnrolmentInOptionalCurricularCourse extends net.sourceforge.fenixedu.domain.Enrolment {
     }
 
-
 class net.sourceforge.fenixedu.domain.util.Email extends net.sourceforge.fenixedu.domain.DomainObject {
 	String fromName;
 	String fromAddress;
@@ -1477,13 +1477,6 @@ class net.sourceforge.fenixedu.domain.util.Email extends net.sourceforge.fenixed
 	String subject;
 	String body;
 }
-
-class net.sourceforge.fenixedu.domain.EmailAddress extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer keyPerson;
-	String value;
-	Boolean isInstitutionalEmail;
-}
-
 
 class net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment extends net.sourceforge.fenixedu.domain.DomainObject {
 	String grade;
@@ -3380,17 +3373,7 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 	
     String ojbConcreteClass;
 	String name;
-	String webAddress;
 	String socialSecurityNumber;
-
-	String address;	
-	String areaCode;
-	String areaOfAreaCode;
-	String area;
-	String parishOfResidence;
-	String districtSubdivisionOfResidence;	
-	String districtOfResidence;	
-	
 }
 	class net.sourceforge.fenixedu.domain.organizationalStructure.Unit extends net.sourceforge.fenixedu.domain.organizationalStructure.Party {
 		Integer costCenterCode;
@@ -3419,7 +3402,6 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 	    Integer keyHomepage;
 		Integer keyNationality;
 		Integer keyCountryOfBirth;
-		Integer keyCountryOfResidence;		
 		Integer keyStudent;
 
 	    Gender gender;
@@ -3438,13 +3420,7 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 		String districtOfBirth;
 		String nameOfFather;
 		String nameOfMother;
-		
-		String phone;
-		String workPhone;
-		String mobile;
-		String email;
-		String institutionalEmail;
-		Boolean availableEmail;
+
 		Boolean availableWebSite;
 		Boolean availablePhoto;
 
@@ -3525,6 +3501,48 @@ class net.sourceforge.fenixedu.domain.University extends net.sourceforge.fenixed
 	String name;
 }
 
+/*
+ * Begin: Party Contacts
+ */
+class net.sourceforge.fenixedu.domain.contacts.PartyContact extends net.sourceforge.fenixedu.domain.DomainObject {
+	String ojbConcreteClass;
+	Integer keyParty;
+
+	Boolean visible;
+	Boolean defaultContact;
+
+	PartyContactType type;
+}
+
+class net.sourceforge.fenixedu.domain.contacts.WebAddress extends net.sourceforge.fenixedu.domain.contacts.PartyContact {
+	String url;
+}
+
+class net.sourceforge.fenixedu.domain.contacts.EmailAddress extends net.sourceforge.fenixedu.domain.contacts.PartyContact {
+	String value;
+}
+
+class net.sourceforge.fenixedu.domain.contacts.PhysicalAddress extends net.sourceforge.fenixedu.domain.contacts.PartyContact {
+	String address;	
+	String areaCode;
+	String areaOfAreaCode;
+	String area;
+	String parishOfResidence;
+	String districtSubdivisionOfResidence;	
+	String districtOfResidence;
+	Integer keyCountryOfResidence;
+}
+
+class net.sourceforge.fenixedu.domain.contacts.Phone extends net.sourceforge.fenixedu.domain.contacts.PartyContact {
+	String number;
+}
+
+class net.sourceforge.fenixedu.domain.contacts.MobilePhone extends net.sourceforge.fenixedu.domain.contacts.PartyContact {
+	String number;
+}
+/*
+ * End Party Contacts
+ */
 
 class net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyTeacher;
@@ -3728,7 +3746,7 @@ class net.sourceforge.fenixedu.domain.TeacherPersonalExpectationPeriod extends n
 class net.sourceforge.fenixedu.domain.ExpectationEvaluationGroup extends net.sourceforge.fenixedu.domain.DomainObject {         
 	Integer keyAppraiser;
 	Integer keyEvaluated;
-	Integer keyExecutionYear;	
+    Integer keyExecutionYear;
 }
 
 class net.sourceforge.fenixedu.domain.assiduousness.Assiduousness extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -4800,14 +4818,14 @@ class net.sourceforge.fenixedu.domain.vigilancy.Vigilancy extends net.sourceforg
 	}
 	
 	class net.sourceforge.fenixedu.domain.vigilancy.OtherCourseVigilancy extends net.sourceforge.fenixedu.domain.vigilancy.Vigilancy {
-	Boolean confirmed;
+		Boolean confirmed;
 	}
 	
 class net.sourceforge.fenixedu.domain.vigilancy.VigilantBound extends net.sourceforge.fenixedu.domain.DomainObject {
   Boolean convokable;
   String justification;
   
-	Integer keyVigilant;
+  Integer keyVigilant;
   Integer keyVigilantGroup;
 }
 
@@ -5007,7 +5025,7 @@ class net.sourceforge.fenixedu.domain.thesis.Thesis extends net.sourceforge.feni
 	DateTime approval;
 	DateTime confirmation;
 	DateTime evaluation;
-	
+
 	Integer keyDissertation;
 	Integer keyExtendedAbstract;
 	
@@ -7130,8 +7148,8 @@ relation PersonCountryOfBirth {
 	net.sourceforge.fenixedu.domain.Country playsRole countryOfBirth;
 }
 
-relation PersonCountryOfResidence {
-	net.sourceforge.fenixedu.domain.Person playsRole associatedResidentPersons {
+relation PhysicalAddressCountryOfResidence {
+	net.sourceforge.fenixedu.domain.contacts.PhysicalAddress playsRole associatedPhysicalAddresses {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Country playsRole countryOfResidence;
@@ -9402,7 +9420,7 @@ relation ProtocolHistoryProtocol {
 relation ProtocolFileProtocol {
 	net.sourceforge.fenixedu.domain.protocols.Protocol playsRole protocol;
 	net.sourceforge.fenixedu.domain.protocols.ProtocolFile playsRole protocolFiles{
-		multiplicity*;
+		multiplicity *;
 	}	
 }
 
@@ -10646,7 +10664,7 @@ relation RootDomainObjectJournalIssues {
 relation RootDomainObjectEventEdition {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.research.activity.EventEdition playsRole eventEditions {
-     multiplicity *;
+		multiplicity *;
 	}
 }
 
@@ -10656,6 +10674,7 @@ relation RootDomainObjectEventConferenceArticlesAssociation {
 		multiplicity *;
 	}
 }
+
 relation RootDomainObjectExportGrouping {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.ExportGrouping playsRole exportGroupings {
@@ -12493,20 +12512,6 @@ relation RootDomainObjectIdDocumentTypeObject {
 	}
 }
 
-relation PersonEmailAddress {
-	net.sourceforge.fenixedu.domain.Person playsRole person;
-	net.sourceforge.fenixedu.domain.EmailAddress playsRole emailAddresses {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectEmailAddress {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.EmailAddress playsRole emailAddresses {
-		multiplicity *;
-	}
-}
-
 relation RootDomainObjectUsernameCounter {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.util.UsernameCounter playsRole usernameCounter;
@@ -12527,6 +12532,7 @@ relation RootDomainObjectFunctionalityPrinters {
 		multiplicity *;
 	}
 }
+
 relation RootDomainObjectRegistrationNumber {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.student.RegistrationNumber playsRole registrationNumbers {
@@ -12537,4 +12543,18 @@ relation RootDomainObjectRegistrationNumber {
 relation RegistrationRegistrationNumber {
 	net.sourceforge.fenixedu.domain.student.Registration playsRole registration;
 	net.sourceforge.fenixedu.domain.student.RegistrationNumber playsRole registrationNumber;
+}
+
+relation PartyPartyContact {
+	net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole party;
+	net.sourceforge.fenixedu.domain.contacts.PartyContact playsRole partyContacts {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectPartyContact {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.contacts.PartyContact playsRole partyContacts {
+		multiplicity *;
+	}
 }

@@ -1,0 +1,36 @@
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for class net.sourceforge.fenixedu.domain.contacts.PartyContact -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.contacts.PartyContact" table="PARTY_CONTACT">
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.contacts.WebAddress" />
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.contacts.EmailAddress" />
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.contacts.PhysicalAddress" />
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.contacts.Phone" />
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.contacts.MobilePhone" />
+	
+</class-descriptor>
+
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.contacts.WebAddress -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.contacts.WebAddress" table="PARTY_CONTACT" />
+
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.contacts.EmailAddress -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.contacts.EmailAddress" table="PARTY_CONTACT" />
+
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.contacts.PhysicalAddress -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.contacts.PhysicalAddress" table="PARTY_CONTACT" />
+
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.contacts.Phone -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.contacts.Phone" table="PARTY_CONTACT" />
+
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.contacts.MobileAddress -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.contacts.MobilePhone" table="PARTY_CONTACT" />

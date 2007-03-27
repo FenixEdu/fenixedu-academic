@@ -13,9 +13,17 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.Account;
 import net.sourceforge.fenixedu.domain.accounting.AccountType;
+import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
+import net.sourceforge.fenixedu.domain.contacts.MobilePhone;
+import net.sourceforge.fenixedu.domain.contacts.PartyContact;
+import net.sourceforge.fenixedu.domain.contacts.PartyContactType;
+import net.sourceforge.fenixedu.domain.contacts.Phone;
+import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
+import net.sourceforge.fenixedu.domain.contacts.WebAddress;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.parking.ParkingPartyClassification;
 import net.sourceforge.fenixedu.domain.research.activity.Participation;
@@ -372,4 +380,222 @@ public abstract class Party extends Party_Base {
             }
     	}
     }
+    
+    public List<PartyContact> getPartyContacts(final Class<? extends PartyContact> clazz, final PartyContactType type) {
+	final List<PartyContact> result = new ArrayList<PartyContact>();
+	for (final PartyContact contact : getPartyContactsSet()) {
+	    if (clazz.isAssignableFrom(contact.getClass()) && (type == null || contact.getType() == type)) {
+		result.add(contact);
+	    }
+	}
+	return result;
+    }
+    
+    public List<PartyContact> getPartyContacts(final Class<? extends PartyContact> clazz) {
+	return getPartyContacts(clazz, null);
+    }
+    
+    public boolean hasAnyPartyContact(final Class<? extends PartyContact> clazz, final PartyContactType type) {
+	for (final PartyContact contact : getPartyContactsSet()) {
+	    if (clazz.isAssignableFrom(contact.getClass()) && contact.getType() == type) {
+		return true;
+	    }
+	}
+	return false;
+    }
+    
+    public PartyContact getDefaultPartyContact(final Class<? extends PartyContact> clazz) {
+	for (final PartyContact contact : getPartyContactsSet()) {
+	    if (clazz.isAssignableFrom(contact.getClass()) && contact.isDefault()) {
+		return contact;
+	    }
+	}
+	return null;
+    }
+    
+    public boolean hasDefaultPartyContact(final Class<? extends PartyContact> clazz) {
+	return getDefaultPartyContact(clazz) != null;
+    }
+    
+    public WebAddress getDefaultWebAddress() {
+	return (WebAddress) getDefaultPartyContact(WebAddress.class);
+    }
+    
+    public PhysicalAddress getDefaultPhysicalAddress() {
+	return (PhysicalAddress) getDefaultPartyContact(PhysicalAddress.class);
+    }
+    
+    public Phone getDefaultPhone() {
+	return (Phone) getDefaultPartyContact(Phone.class);
+    }
+    
+    public MobilePhone getDefaultMobilePhone() {
+	return (MobilePhone) getDefaultPartyContact(MobilePhone.class);
+    }
+    
+    public EmailAddress getDefaultEmailAddress() {
+	return (EmailAddress) getDefaultPartyContact(EmailAddress.class);
+    }
+    
+    /* ~~~~~~~~~~~~~~~~~~~~~
+     * PartyContacts
+     * ~~~~~~~~~~~~~~~~~~~~~
+     * These methods are used to support current functionality (physicalAddress, webAddress, ... - limited to one for each type)
+     * after interface changes we must edit contacts in another way and remove the following methods
+     * 
+     */
+    protected PhysicalAddress getOrCreateDefaultPhysicalAddress() {
+	final PhysicalAddress physicalAdress = getDefaultPhysicalAddress();
+	return physicalAdress != null ? physicalAdress : PartyContact.createDefaultPersonalPhysicalAddress(this);
+    }
+    
+    public String getAddress() {
+	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
+	return physicalAddress != null ? physicalAddress.getAddress() : null;
+    }
+    
+    public void setAddress(String address) {
+	getOrCreateDefaultPhysicalAddress().setAddress(address);
+    }
+    
+    public String getAreaCode() {
+	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
+	return physicalAddress != null ? physicalAddress.getAreaCode() : null;
+    }
+    
+    public void setAreaCode(String areaCode) {
+	getOrCreateDefaultPhysicalAddress().setAreaCode(areaCode);
+    }
+    
+    public String getAreaOfAreaCode() {
+	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
+	return physicalAddress != null ? physicalAddress.getAreaOfAreaCode() : null;
+    }
+    
+    public void setAreaOfAreaCode(String areaOfAreaCode) {
+	getOrCreateDefaultPhysicalAddress().setAreaOfAreaCode(areaOfAreaCode);
+    }
+    
+    public String getArea() {
+	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
+	return physicalAddress != null ? physicalAddress.getArea() : null;
+    }
+    
+    public void setArea(String area) {
+	getOrCreateDefaultPhysicalAddress().setArea(area);
+    }
+    
+    public String getParishOfResidence() {
+	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
+	return physicalAddress != null ? physicalAddress.getParishOfResidence() : null;
+    }
+    
+    public void setParishOfResidence(String parishOfResidence) {
+	getOrCreateDefaultPhysicalAddress().setParishOfResidence(parishOfResidence);
+    }
+    
+    public String getDistrictSubdivisionOfResidence() {
+	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
+	return physicalAddress != null ? physicalAddress.getDistrictSubdivisionOfResidence() : null;
+    }
+    
+    public void setDistrictSubdivisionOfResidence(String districtSubdivisionOfResidence) {
+	getOrCreateDefaultPhysicalAddress().setDistrictSubdivisionOfResidence(districtSubdivisionOfResidence);
+    }
+    
+    public String getDistrictOfResidence() {
+	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
+	return physicalAddress != null ? physicalAddress.getDistrictOfResidence() : null;
+    }
+    
+    public void setDistrictOfResidence(String districtOfResidence) {
+        getOrCreateDefaultPhysicalAddress().setDistrictOfResidence(districtOfResidence);
+    }
+    
+    public Country getCountryOfResidence() {
+	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
+	return physicalAddress != null ? physicalAddress.getCountryOfResidence() : null;
+    }
+    
+    public void setCountryOfResidence(Country countryOfResidence) {
+	getOrCreateDefaultPhysicalAddress().setCountryOfResidence(countryOfResidence);
+    }
+
+    protected WebAddress getOrCreateDefaultWebAddress() {
+	final WebAddress webAddress = getDefaultWebAddress();
+	return webAddress != null ? webAddress : PartyContact.createDefaultPersonalWebAddress(this);
+    }
+    
+    public String getWebAddress() {
+        final WebAddress webAddress = getDefaultWebAddress();
+        return webAddress != null ? webAddress.getUrl() : null;
+    }
+    
+    public void setWebAddress(String webAddress) {
+	getOrCreateDefaultWebAddress().setUrl(webAddress);
+    }
+    
+    protected Phone getOrCreateDefaultPhone() {
+	final Phone phone = getDefaultPhone();
+	return phone != null ? phone : (Phone) PartyContact.createDefaultPersonalPhone(this);
+    }
+    
+    public String getPhone() {
+	final Phone phone = getDefaultPhone();
+	return phone != null ? phone.getNumber() : null;
+    }
+    
+    public void setPhone(String phone) {
+	getOrCreateDefaultPhone().setNumber(phone);
+    }
+    
+    protected MobilePhone getOrCreateDefaultMobilePhone() {
+	final MobilePhone mobilePhone = getDefaultMobilePhone();
+	return mobilePhone != null ? mobilePhone : (MobilePhone) PartyContact.createDefaultPersonalMobilePhone(this);
+    }
+    
+    public String getMobile() {
+	final MobilePhone phone = getDefaultMobilePhone();
+	return phone != null ? phone.getNumber() : null;
+    }
+    
+    public void setMobile(String mobile) {
+	getOrCreateDefaultMobilePhone().setNumber(mobile);
+    }
+    
+    private EmailAddress getPersonalEmailAddress() {
+	final List<PartyContact> partyContacts = getPartyContacts(EmailAddress.class, PartyContactType.PERSONAL);
+	return partyContacts.isEmpty() ? null : (EmailAddress) partyContacts.get(0); // actually exists only one
+    }
+
+    public String getEmail() {
+	final EmailAddress emailAddress = getPersonalEmailAddress();
+	return emailAddress != null ? emailAddress.getValue() : null;
+    }
+    
+    public void setEmail(String email) {
+	final EmailAddress emailAddress = getPersonalEmailAddress();
+	if (emailAddress == null) {
+	    PartyContact.createEmailAddress(this, PartyContactType.PERSONAL, true, false, email);
+	} else {
+	    emailAddress.setValue(email);
+	}
+    }
+    
+    // this method is not necessary if we filter EmailAddress by visible attribute
+    public Boolean getAvailableEmail() {
+	final EmailAddress emailAddress = getPersonalEmailAddress();
+	return emailAddress != null ? emailAddress.isVisible() : false;
+    }
+    
+    public void setAvailableEmail(Boolean availableEmail) {
+	final EmailAddress emailAddress = getPersonalEmailAddress();
+	if (emailAddress != null) {
+	    emailAddress.setVisible(availableEmail);
+	}
+    }
+    /* ~~~~~~~~~~~~~~~~~~~~~
+     * End: PartyContacts
+     * ~~~~~~~~~~~~~~~~~~~~~
+     */
 }
