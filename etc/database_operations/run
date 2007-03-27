@@ -29,3 +29,6 @@ function executeWithTempFile() {
 
 execute "Research Domain Refactoring" createResearchTables.sql
 execute "Changing table Receipt" AlterTableReceipt.sql
+execute "Fixing wrong Creator and Owner units on Receipt" FixWrongCreatorAndOwnerUnitsOnReceipt.sql
+
+
