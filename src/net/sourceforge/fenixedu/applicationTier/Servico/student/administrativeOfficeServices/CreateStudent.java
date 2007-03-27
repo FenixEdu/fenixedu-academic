@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.candidacy.RegisteredCandidacySituation;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
