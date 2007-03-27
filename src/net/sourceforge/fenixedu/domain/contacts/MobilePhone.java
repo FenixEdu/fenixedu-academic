@@ -33,5 +33,9 @@ public class MobilePhone extends MobilePhone_Base {
     public boolean isMobile() {
         return true;
     }
+
+    public void edit(final String number) {
+	super.setNumber(number);
+    }
     
 }

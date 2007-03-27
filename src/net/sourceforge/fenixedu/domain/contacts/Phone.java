@@ -34,4 +34,7 @@ public class Phone extends Phone_Base {
         return true;
     }
     
+    public void edit(final String number) {
+	super.setNumber(number);
+    }
 }

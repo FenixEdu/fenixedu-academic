@@ -41,4 +41,8 @@ public class WebAddress extends WebAddress_Base {
     public boolean isWebAddress() {
 	return true;
     }
+    
+    public void edit(final String url) {
+	super.setUrl(url);
+    }
 }
