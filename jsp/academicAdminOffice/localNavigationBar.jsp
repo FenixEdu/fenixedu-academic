@@ -35,10 +35,10 @@
 		<li class="navheader"><bean:message key="label.payments" bundle="ACADEMIC_OFFICE_RESOURCES"/></li>
 		<li><html:link page="/pricesManagement.do?method=viewPrices"><bean:message key="link.pricesManagement" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:link></li>
 	</ul>
-<%-- 
+
 	<ul>
 		<li class="navheader"><bean:message key="label.institutions" bundle="ACADEMIC_OFFICE_RESOURCES"/></li>
 		<li><html:link page="/externalUnits.do?method=prepareSearch"><bean:message key="label.externalUnits" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:link></li>
 	</ul>
---%>    
+
 </logic:present>
