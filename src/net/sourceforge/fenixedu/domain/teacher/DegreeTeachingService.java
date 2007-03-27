@@ -16,10 +16,8 @@ import net.sourceforge.fenixedu.util.WeekDay;
 public class DegreeTeachingService extends DegreeTeachingService_Base {
 
     public static final Comparator<DegreeTeachingService> DEGREE_TEACHING_SERVICE_COMPARATOR_BY_SHIFT = new Comparator<DegreeTeachingService>() {
-        public int compare(DegreeTeachingService degreeTeachingService1,
-                DegreeTeachingService degreeTeachingService2) {
-            return Shift.SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS.compare(degreeTeachingService1
-                    .getShift(), degreeTeachingService2.getShift());
+        public int compare(DegreeTeachingService degreeTeachingService1, DegreeTeachingService degreeTeachingService2) {
+            return Shift.SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS.compare(degreeTeachingService1.getShift(), degreeTeachingService2.getShift());
         }
     };
 
@@ -27,21 +25,22 @@ public class DegreeTeachingService extends DegreeTeachingService_Base {
             Shift shift, Double percentage, RoleType roleType) {
 
         super();
-
         if (teacherService == null || professorship == null || shift == null || percentage == null) {
-            throw new DomainException("arguments can't be null");
-        }
-        if (percentage == 0 || percentage > 100 || percentage < 0) {
-            throw new DomainException("message.invalid.professorship.percentage");
-        }
-
+	    throw new DomainException("arguments can't be null");
+	}
+	if (percentage == 0 || percentage > 100 || percentage < 0) {
+	    throw new DomainException("message.invalid.professorship.percentage");
+	}
+	if (professorship.getExecutionCourse().isMasterDegreeDFAOrDEAOnly()) {
+	    throw new DomainException("message.invalid.executionCourse");
+	}
+        
         setTeacherService(teacherService);
         getTeacherService().getExecutionPeriod().checkValidCreditsPeriod(roleType);
         setProfessorship(professorship);
         setShift(shift);
 
-        Double availablePercentage = getShift().getAvailableShiftPercentageForTeacher(
-                getProfessorship().getTeacher());
+        Double availablePercentage = getShift().getAvailableShiftPercentageForTeacher(getProfessorship().getTeacher());
         
         if(percentage > availablePercentage) {
             throw new DomainException("message.exceeded.professorship.percentage");
@@ -50,6 +49,7 @@ public class DegreeTeachingService extends DegreeTeachingService_Base {
         if (percentage == 100) {
             verifyAnyOverLapPeriod();
         }
+        
         setPercentage(percentage);
     }
 
@@ -93,10 +93,8 @@ public class DegreeTeachingService extends DegreeTeachingService_Base {
             WeekDay lessonWeekDay = WeekDay.getWeekDay(lesson.getDiaSemana());
             Date lessonStart = lesson.getBegin();
             Date lessonEnd = lesson.getEnd();
-            getTeacherService().verifyOverlappingWithInstitutionWorkingTime(lessonStart, lessonEnd,
-                    lessonWeekDay);
-            getTeacherService()
-                    .verifyOverlappingWithSupportLesson(lessonStart, lessonEnd, lessonWeekDay);
+            getTeacherService().verifyOverlappingWithInstitutionWorkingTime(lessonStart, lessonEnd, lessonWeekDay);
+            getTeacherService().verifyOverlappingWithSupportLesson(lessonStart, lessonEnd, lessonWeekDay);
         }
     }
 

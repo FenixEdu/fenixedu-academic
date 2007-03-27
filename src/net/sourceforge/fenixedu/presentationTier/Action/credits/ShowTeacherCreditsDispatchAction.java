@@ -98,8 +98,7 @@ public class ShowTeacherCreditsDispatchAction extends FenixDispatchAction {
     private void setTeachingServicesAndSupportLessons(HttpServletRequest request, Teacher teacher,
             ExecutionPeriod executionPeriod) {
 
-        List<Professorship> professorships = teacher
-                .getDegreeProfessorshipsByExecutionPeriod(executionPeriod);
+        List<Professorship> professorships = teacher.getDegreeProfessorshipsByExecutionPeriod(executionPeriod);
 
         List<ProfessorshipDTO> professorshipDTOs = (List<ProfessorshipDTO>) CollectionUtils.collect(
                 professorships, new Transformer() {

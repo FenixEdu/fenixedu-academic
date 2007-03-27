@@ -101,7 +101,7 @@ public class TeacherService extends TeacherService_Base {
         for (DegreeTeachingService degreeTeachingService : getDegreeTeachingServices()) {
             ExecutionCourse executionCourse = degreeTeachingService.getProfessorship().getExecutionCourse();
             ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
-            if (!executionCourse.isMasterDegreeOnly() && (executionPeriod.getExecutionYear().isBefore(executionYear20062007) ||
+            if (!executionCourse.isMasterDegreeDFAOrDEAOnly() && (executionPeriod.getExecutionYear().isBefore(executionYear20062007) ||
                     !executionCourse.areAllOptionalCurricularCoursesWithLessTenEnrolments())) {                
                 Teacher teacher = degreeTeachingService.getProfessorship().getTeacher();                
                 Category teacherCategory = teacher.getCategoryForCreditsByPeriod(executionPeriod);
@@ -269,7 +269,7 @@ public class TeacherService extends TeacherService_Base {
         for (Professorship professorship : getTeacher().getProfessorships()) {
             ExecutionCourse executionCourse = professorship.getExecutionCourse();
             if (executionCourse.getExecutionPeriod() == getExecutionPeriod()) {
-                if (!executionCourse.isMasterDegreeOnly()) {
+                if (!executionCourse.isMasterDegreeDFAOrDEAOnly()) {
                     supportLessons.addAll(professorship.getSupportLessons());
                 }
             }

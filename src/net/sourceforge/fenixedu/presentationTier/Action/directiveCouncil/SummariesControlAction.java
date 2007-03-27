@@ -146,7 +146,7 @@ public class SummariesControlAction extends FenixDispatchAction {
                 BigDecimal lessonHours = EMPTY, summaryHours = EMPTY, courseDifference = EMPTY;
                 BigDecimal shiftDifference = EMPTY, courseSummaryHours = EMPTY;
 
-                if (professorship.belongsToExecutionPeriod(executionPeriod) && !professorship.getExecutionCourse().isMasterDegreeOnly()) {
+                if (professorship.belongsToExecutionPeriod(executionPeriod) && !professorship.getExecutionCourse().isMasterDegreeDFAOrDEAOnly()) {
 
                     for (Shift shift : professorship.getExecutionCourse().getAssociatedShifts()) {
 

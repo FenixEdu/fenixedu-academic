@@ -44,12 +44,11 @@ public class ReadLecturedExecutionCoursesByTeacherIDAndExecutionYearIDAndDegreeT
 
     }
 
-    private List<ExecutionCourse> filterExecutionCourses(List<ExecutionCourse> executionCourses,
-            boolean masterDegreeOnly) {
+    private List<ExecutionCourse> filterExecutionCourses(List<ExecutionCourse> executionCourses, boolean masterDegreeOnly) {
         List<ExecutionCourse> masterDegreeExecutionCourses = new ArrayList<ExecutionCourse>();
 
         for (ExecutionCourse executionCourse : executionCourses) {
-            if (executionCourse.isMasterDegreeOnly() == masterDegreeOnly) {
+            if (executionCourse.isMasterDegreeDFAOrDEAOnly() == masterDegreeOnly) {
                 masterDegreeExecutionCourses.add(executionCourse);
             }
         }

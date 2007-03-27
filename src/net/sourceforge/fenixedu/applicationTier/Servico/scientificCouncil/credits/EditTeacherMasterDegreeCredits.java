@@ -36,8 +36,7 @@ public class EditTeacherMasterDegreeCredits extends Service {
             
             TeacherMasterDegreeService teacherMasterDegreeService = teacherService.getMasterDegreeServiceByProfessorship(professorship);
             if (teacherMasterDegreeService == null) {
-                teacherMasterDegreeService = new TeacherMasterDegreeService(
-                        teacherService, professorship);
+                teacherMasterDegreeService = new TeacherMasterDegreeService(teacherService, professorship);
             }
             
             Double credits = null;

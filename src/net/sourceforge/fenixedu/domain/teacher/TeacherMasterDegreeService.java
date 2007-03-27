@@ -6,14 +6,21 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 public class TeacherMasterDegreeService extends TeacherMasterDegreeService_Base {
 
     public TeacherMasterDegreeService(TeacherService teacherService, Professorship professorship) {
+	
 	super();
+	if (teacherService == null || professorship == null) {
+	    throw new DomainException("arguments can't be null");
+	}
+	if (!professorship.getExecutionCourse().isMasterDegreeDFAOrDEAOnly()) {
+	    throw new DomainException("message.invalid.executionCourse");
+	}	
+	
 	setTeacherService(teacherService);
-	setProfessorship(professorship);
+	setProfessorship(professorship);	
     }
 
     public void updateValues(Double hours, Double credits) {	
-	if ((hours == null && credits == null)
-		|| ((hours == null || hours == 0) && (credits == null || credits == 0))) {
+	if ((hours == null && credits == null) || ((hours == null || hours == 0) && (credits == null || credits == 0))) {
 	    delete();
 	} else {
 	    setCredits(credits);

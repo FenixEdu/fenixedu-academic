@@ -122,7 +122,7 @@ public abstract class InfoCreditsBuilder {
             Professorship professorship = (Professorship) professorships.get(i);
             ExecutionCourse executionCourse = professorship.getExecutionCourse();
             if (executionCourse.getExecutionPeriod().equals(executionPeriod)) {
-                if (!executionCourse.isMasterDegreeOnly()) {
+                if (!executionCourse.isMasterDegreeDFAOrDEAOnly()) {
                     List shiftProfessorships = professorship.getAssociatedShiftProfessorship();
                     for (int j = 0; j < shiftProfessorships.size(); j++) {
                         ShiftProfessorship shiftProfessorship = (ShiftProfessorship) shiftProfessorships
