@@ -250,6 +250,7 @@ public class ObjectLinkRenderer extends OutputRenderer {
 
                 if (isAllowedToLink(usedObject)) {
                     HtmlLink link = getLink(usedObject);
+                    link.setIndented(false);
     
                     String text = getLinkText();
                     if (text != null) {
