@@ -1256,6 +1256,7 @@ public class Person extends Person_Base {
 	    case GRANT_OWNER_MANAGER:
 	    case MASTER_DEGREE_ADMINISTRATIVE_OFFICE:
 	    case TREASURY:
+		return person.hasRole(RoleType.EMPLOYEE);
 	    case CREDITS_MANAGER:
 	    case DEPARTMENT_ADMINISTRATIVE_OFFICE:
 		return person.hasRole(RoleType.EMPLOYEE);
