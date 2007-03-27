@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
 
+import net.sourceforge.fenixedu.domain.accounting.events.ImprovementOfApprovedEnrolmentEvent;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.curriculum.GradeFactory;
@@ -337,7 +338,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
     }
 
     public boolean getCanBeDeleted() {
-        return isTemporary();
+        return isTemporary() && (!hasImprovementOfApprovedEnrolmentEvent() || !getImprovementOfApprovedEnrolmentEvent().isPayed());
     }
 
     public boolean isTemporary() {
@@ -373,8 +374,12 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         removeMarkSheet();
         removeRectification();
         removeRectified();
+        if (hasImprovementOfApprovedEnrolmentEvent()) {
+            getImprovementOfApprovedEnrolmentEvent().removeImprovementEnrolmentEvaluations(this);
+        }
 
         removeRootDomainObject();
+        
         super.deleteDomainObject();
     }
     
