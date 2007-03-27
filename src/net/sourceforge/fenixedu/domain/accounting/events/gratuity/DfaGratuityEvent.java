@@ -12,6 +12,8 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
+import net.sourceforge.fenixedu.domain.accounting.EventState;
+import net.sourceforge.fenixedu.domain.accounting.PaymentCodeState;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
@@ -87,6 +89,46 @@ public class DfaGratuityEvent extends DfaGratuityEvent_Base {
 	    Money amountToPay, SibsTransactionDetailDTO transactionDetail) {
 	return internalProcess(responsibleUser, Collections.singletonList(new EntryDTO(
 		EntryType.GRATUITY_FEE, this, amountToPay)), transactionDetail);
+    }
+
+    @Override
+    public boolean isOpen() {
+	if (isCancelled()) {
+	    return false;
+	}
+
+	return calculateAmountToPay(new DateTime()).greaterThan(Money.ZERO);
+    }
+
+    @Override
+    public boolean isClosed() {
+	if (isCancelled()) {
+	    return false;
+	}
+
+	return calculateAmountToPay(new DateTime()).lessOrEqualThan(Money.ZERO);
+    }
+
+    @Override
+    public void internalRecalculateState(DateTime whenRegistered) {
+	if (canCloseEvent(whenRegistered)) {
+	    closeNonProcessedCodes();
+	    closeEvent();
+	} else {
+	    if (!isOpen()) {
+		changeState(EventState.OPEN, new DateTime());
+		reopenCancelledCodes();
+	    }
+	}
+    }
+
+    // TODO: Perhaps this method should be in superclass and each subclass
+    // should reimplement
+    // logic to reopen payment codes
+    private void reopenCancelledCodes() {
+	for (final AccountingEventPaymentCode paymentCode : getCancelledPaymentCodes()) {
+	    paymentCode.setState(PaymentCodeState.NEW);
+	}
     }
 
 }

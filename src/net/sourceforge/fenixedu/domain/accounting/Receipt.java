@@ -211,6 +211,18 @@ public class Receipt extends Receipt_Base {
 	throw new DomainException("error.accounting.Receipt.cannot.modify.state");
     }
 
+    @Override
+    public void setOwnerUnit(Unit ownerUnit) {
+	throw new DomainException(
+		"error.net.sourceforge.fenixedu.domain.accounting.Receipt.cannot.modify.ownerUnit");
+    }
+
+    @Override
+    public void setCreatorUnit(Unit creatorUnit) {
+	throw new DomainException(
+		"error.net.sourceforge.fenixedu.domain.accounting.Receipt.cannot.modify.creatorUnit");
+    }
+
     private Integer generateReceiptNumber(int year) {
 	final List<Receipt> receipts = getReceiptsFor(year);
 	return receipts.isEmpty() ? 1 : Collections.max(receipts, Receipt.COMPARATOR_BY_NUMBER)

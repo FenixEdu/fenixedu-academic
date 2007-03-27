@@ -311,14 +311,23 @@ public abstract class Event extends Event_Base {
 	return false;
     }
 
-    public void recalculateState(final DateTime whenRegistered) {
+    public final void recalculateState(final DateTime whenRegistered) {
+	if (isCancelled()) {
+	    throw new DomainException(
+		    "error.net.sourceforge.fenixedu.domain.accounting.Event.cannot.recalculate.state.on.cancelled.events");
+	}
+
+	internalRecalculateState(whenRegistered);
+    }
+
+    protected void internalRecalculateState(final DateTime whenRegistered) {
 	if (canCloseEvent(whenRegistered)) {
 	    closeNonProcessedCodes();
 	    closeEvent();
 	}
     }
 
-    private void closeNonProcessedCodes() {
+    protected void closeNonProcessedCodes() {
 	for (final AccountingEventPaymentCode paymentCode : getNonProcessedPaymentCodes()) {
 	    paymentCode.setState(PaymentCodeState.CANCELLED);
 	}
@@ -422,6 +431,17 @@ public abstract class Event extends Event_Base {
 	return result;
     }
 
+    public List<AccountingEventPaymentCode> getCancelledPaymentCodes() {
+	final List<AccountingEventPaymentCode> result = new ArrayList<AccountingEventPaymentCode>();
+	for (final AccountingEventPaymentCode paymentCode : super.getPaymentCodesSet()) {
+	    if (paymentCode.isCancelled()) {
+		result.add(paymentCode);
+	    }
+	}
+
+	return result;
+    }
+
     @Override
     public void addPaymentCodes(AccountingEventPaymentCode paymentCode) {
 	throw new DomainException(
@@ -493,7 +513,7 @@ public abstract class Event extends Event_Base {
 	return !isClosed() ? new DateTime() : getEventStateDate();
     }
 
-    private void changeState(EventState state, DateTime when) {
+    protected void changeState(EventState state, DateTime when) {
 	super.setEventState(state);
 	super.setEventStateDate(when);
     }
@@ -674,7 +694,7 @@ public abstract class Event extends Event_Base {
 	return result;
 
     }
-    
+
     public DateTime getLastPaymentDate() {
 	final AccountingTransaction transaction = getLastNonAdjustingAccountingTransaction();
 	return (transaction != null) ? transaction.getWhenRegistered() : null;
