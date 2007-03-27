@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.renderers.providers.researcher
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.dataTransferObject.research.activity.ResearchActivityParticipantBean;
+import net.sourceforge.fenixedu.dataTransferObject.research.activity.ParticipantBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.activity.ResearchActivityParticipantEditionBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.activity.ResearchCooperationCreationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.activity.ResearchEventCreationBean;
@@ -17,13 +17,13 @@ public class ResearchActivityRolesDataProvider implements DataProvider {
 	public Object provide(Object source, Object currentValue) {
 		List<ResearchActivityParticipationRole> roles = null;
 		
-		if(source instanceof ResearchActivityParticipantBean){
-			ResearchActivityParticipantBean bean = (ResearchActivityParticipantBean)source;
-			roles = bean.getResearchActivity().getAllowedRoles();
+		if(source instanceof ParticipantBean){
+			ParticipantBean bean = (ParticipantBean)source;
+			roles = bean.getAllowedRoles();
 			
 		} else if(source instanceof ResearchActivityParticipantEditionBean){
 			ResearchActivityParticipantEditionBean bean = (ResearchActivityParticipantEditionBean)source;
-			roles = bean.getResearchActivity().getAllowedRoles();
+			roles = bean.getAllowedRoles();
 
 		} else if(source instanceof ResearchEventCreationBean) {
 			roles = ResearchActivityParticipationRole.getAllEventParticipationRoles();

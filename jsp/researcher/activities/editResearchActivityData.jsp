@@ -6,9 +6,9 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <logic:present role="RESEARCHER">	
-	<bean:define id="researchActivityId" name="researchActivity" property="idInternal" />
+	<bean:define id="participationId" name="participation" property="idInternal" />
 	<bean:define id="researchActivityName" name="researchActivity" property="name" />
-	<bean:define id="parameter" value="<%="researchActivityId=" + researchActivityId %>" />
+	<bean:define id="parameter" value="<%="participationId=" + participationId %>" />
 	<bean:define id="schema" name="schema" type="java.lang.String" scope="request" />
 	<bean:define id="activityType" name="researchActivity" property="class.simpleName" />
 

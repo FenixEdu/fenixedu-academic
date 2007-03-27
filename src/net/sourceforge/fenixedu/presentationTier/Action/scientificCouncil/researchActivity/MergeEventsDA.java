@@ -52,9 +52,10 @@ public class MergeEventsDA extends MergeResearchActivityDA {
 
     @Override
     protected List getObjects() {
-	List<Event> events = Event.readAll();
+	List<Event> events = rootDomainObject.getEvents();
 	Collections.sort(events, new BeanComparator("name", Collator.getInstance()));
 	return events;
     }
+
 
 }

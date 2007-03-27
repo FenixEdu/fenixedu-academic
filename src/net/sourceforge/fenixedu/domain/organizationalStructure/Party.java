@@ -26,8 +26,19 @@ import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.contacts.WebAddress;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.parking.ParkingPartyClassification;
+import net.sourceforge.fenixedu.domain.research.activity.Cooperation;
+import net.sourceforge.fenixedu.domain.research.activity.CooperationParticipation;
+import net.sourceforge.fenixedu.domain.research.activity.Event;
+import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
+import net.sourceforge.fenixedu.domain.research.activity.EventEditionParticipation;
+import net.sourceforge.fenixedu.domain.research.activity.EventParticipation;
+import net.sourceforge.fenixedu.domain.research.activity.JournalIssue;
+import net.sourceforge.fenixedu.domain.research.activity.JournalIssueParticipation;
 import net.sourceforge.fenixedu.domain.research.activity.Participation;
-import net.sourceforge.fenixedu.domain.research.activity.ResearchActivity;
+import net.sourceforge.fenixedu.domain.research.activity.ResearchActivityLocationType;
+import net.sourceforge.fenixedu.domain.research.activity.ScientificJournal;
+import net.sourceforge.fenixedu.domain.research.activity.ScientificJournalParticipation;
+import net.sourceforge.fenixedu.domain.research.activity.Participation.ResearchActivityParticipationRole;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -336,52 +347,136 @@ public abstract class Party extends Party_Base {
 	}
 	return false;
     }
-    
-    public List<ResearchActivity> getResearchActivities() {
-    	List<ResearchActivity> activities = new ArrayList<ResearchActivity> ();
-    	for(Participation participation : this.getParticipations()) {
-    	    activities.add(participation.getResearchActivity());
-    	}
-    	return activities;
+     
+    private List<EventParticipation> getEventParticipationsForScope(ResearchActivityLocationType type) {
+	List<EventParticipation> participations = new ArrayList<EventParticipation>();
+	for(Participation participation : getParticipations()) {
+	    if(participation.isEventParticipation()) {
+		if(type==null) {
+		    participations.add((EventParticipation)participation);
+		}
+		else {
+		    if(type.equals(((EventParticipation)participation).getEvent().getLocationType())) {
+			participations.add((EventParticipation)participation);
+		    }
+		}
+	    }
+	}
+	return participations;
     }
     
-    public List<Participation> getAllEventParticipations(){
-    	List<Participation> eventParticipations = new ArrayList<Participation> ();
+    public List<EventParticipation> getAllEventParticipations(){
+    	return getEventParticipationsForScope(null);
+    }
+    
+    public List<EventParticipation> getAllNationalEventParticipations() {
+	return getEventParticipationsForScope(ResearchActivityLocationType.NATIONAL);
+    }
+    
+    public List<EventParticipation> getAllInternationalEventParticipations() {
+	return getEventParticipationsForScope(ResearchActivityLocationType.INTERNATIONAL);
+    }
+    
+    public Set<Event> getAssociatedEvents() {
+	Set<Event> events = new HashSet<Event>();
+	for(EventParticipation participation : getAllEventParticipations()) {
+	    events.add(participation.getEvent());
+	}
+	return events;
+    }
+    
+    public List<EventEditionParticipation> getAllEventEditionParticipations() {
+	List<EventEditionParticipation> eventEditionParticipations = new ArrayList<EventEditionParticipation> ();
     	for(Participation participation : this.getParticipations()) {
-            if(participation.isEventParticipation()) {
-            	eventParticipations.add(participation);
+            if(participation.isEventEditionParticipation()) {
+            	eventEditionParticipations.add((EventEditionParticipation)participation);
             }
     	}
-    	return eventParticipations;
+    	return eventEditionParticipations;
     }
     
-    public List<Participation> getAllScientificJournalsParticipations(){
-    	List<Participation> scientifJournalParticipations = new ArrayList<Participation> ();
+    public Set<EventEdition> getAssociatedEventEditions() {
+	Set<EventEdition> eventEditions = new HashSet<EventEdition> ();
+	for(EventEditionParticipation participation : getAllEventEditionParticipations()) {
+	    eventEditions.add(participation.getEventEdition());
+	}
+	return eventEditions;
+    }
+    
+    private List<ScientificJournalParticipation> getAllScientificJournalParticiationsForScope(ResearchActivityLocationType type) {
+	List<ScientificJournalParticipation> participations = new ArrayList<ScientificJournalParticipation>();
+	for(Participation participation : getParticipations()) {
+	    if(participation.isScientificJournaltParticipation()) {
+		if(type==null) {
+		    participations.add((ScientificJournalParticipation)participation);
+		}
+		else {
+		    if(type.equals(((ScientificJournalParticipation)participation).getScientificJournal().getLocationType())) {
+			participations.add((ScientificJournalParticipation)participation);
+		    }
+		}
+	    }
+	}
+	return participations;
+    }
+    
+    public List<ScientificJournalParticipation> getAllScientificJournalParticipations(){
+    	return getAllScientificJournalParticiationsForScope(null);
+    }
+    
+    public List<ScientificJournalParticipation> getAllNationalScientificJournalParticipations() {
+	return getAllScientificJournalParticiationsForScope(ResearchActivityLocationType.NATIONAL);
+    }
+    
+    public List<ScientificJournalParticipation> getAllInternationalScientificJournalParticipations() {
+	return getAllScientificJournalParticiationsForScope(ResearchActivityLocationType.INTERNATIONAL);
+    }
+  
+    public Set<ScientificJournal> getAssociatedScientificJournals() {
+	Set<ScientificJournal> journals = new HashSet<ScientificJournal> ();
+	for(ScientificJournalParticipation participation : getAllScientificJournalParticipations()) {
+	    journals.add(participation.getScientificJournal());
+	}
+	return journals;
+    }
+    
+    public List<JournalIssueParticipation> getAllJournalIssueParticipations() {
+	List<JournalIssueParticipation> issueParticipations = new ArrayList<JournalIssueParticipation> ();
     	for(Participation participation : this.getParticipations()) {
-            if(participation.isScientificJournaltParticipation()) {
-            	scientifJournalParticipations.add(participation);
+            if(participation.isJournalIssueParticipation()) {
+            	issueParticipations.add((JournalIssueParticipation)participation);
             }
     	}
-    	return scientifJournalParticipations;
+    	return issueParticipations;
+    }
+        
+    public Set<JournalIssue> getAssociatedJournalIssues() {
+	Set<JournalIssue> issues = new HashSet<JournalIssue> ();
+	for(JournalIssueParticipation participation : this.getAllJournalIssueParticipations()) {
+	    issues.add(participation.getJournalIssue());
+	}
+	return issues;
     }
     
-    public Integer getResearchActivitiesCount() {
-    	return this.getResearchActivities().size();
-    }
-    
-    public boolean hasAnyResearchActivities() {
-    	return this.hasAnyParticipations();
-    }
-    
-    public void removeResearchActivities(ResearchActivity researchActivity) {
+    public List<CooperationParticipation> getAllCooperationParticipations() {
+	List<CooperationParticipation> cooperationParticipations = new ArrayList<CooperationParticipation> ();
     	for(Participation participation : this.getParticipations()) {
-            if(participation.getResearchActivity().equals(researchActivity)) {
-            	participation.delete();
+            if(participation.isCooperationParticipation()) {
+        	cooperationParticipations.add((CooperationParticipation)participation);
             }
     	}
+    	return cooperationParticipations;
     }
     
-    public List<PartyContact> getPartyContacts(final Class<? extends PartyContact> clazz, final PartyContactType type) {
+    public Set<Cooperation> getAssociatedCooperations() {
+	Set<Cooperation> cooperations = new HashSet<Cooperation>();
+	for(CooperationParticipation participation : getAllCooperationParticipations()) {
+	    cooperations.add(participation.getCooperation());
+	}
+	return cooperations;
+    }
+    
+      public List<PartyContact> getPartyContacts(final Class<? extends PartyContact> clazz, final PartyContactType type) {
 	final List<PartyContact> result = new ArrayList<PartyContact>();
 	for (final PartyContact contact : getPartyContactsSet()) {
 	    if (clazz.isAssignableFrom(contact.getClass()) && (type == null || contact.getType() == type)) {

@@ -18,7 +18,7 @@ public class ResearchEventManagement extends FenixDispatchAction {
 	
 	String eventId  = request.getParameter("eventId");
 	if(eventId!=null) {
-	    Event event = (Event) rootDomainObject.readResearchActivityByOID(Integer.valueOf(eventId));
+	    Event event = rootDomainObject.readEventByOID(Integer.valueOf(eventId));
 	    request.setAttribute("event",event);
 	}
 	

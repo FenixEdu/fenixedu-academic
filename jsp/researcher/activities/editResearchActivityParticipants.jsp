@@ -6,9 +6,9 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <logic:present role="RESEARCHER">		
-	<bean:define id="researchActivityId" name="researchActivity" property="idInternal" toScope="request"/>
+	<bean:define id="participationId" name="participation" property="idInternal" toScope="request"/>
 	<bean:define id="researchActivityName" name="researchActivity" property="name" toScope="request"/>
-	<bean:define id="parameter" value="<%= "researchActivityId=" +  researchActivityId%>" toScope="request"/>
+	<bean:define id="parameter" value="<%= "participationId=" +  participationId %>" toScope="request"/>
 	<bean:define id="activityType" name="researchActivity" property="class.simpleName" />
 
 	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.superTitle"/></em>
@@ -17,7 +17,7 @@
 	
 	<ul class="list5 mtop2 mbottom1">
 		<li>
-			<html:link page="<%="/activities/editResearchActivity.do?method=prepare&researchActivityId="+researchActivityId%>">
+			<html:link page="<%="/activities/editResearchActivity.do?method=prepare&participationId="+ participationId%>">
 				<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.goBack" />
 			</html:link>
 		</li>

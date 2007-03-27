@@ -151,7 +151,7 @@ public class Unit extends Unit_Base {
 		&& !hasUnitServiceAgreementTemplate()	
 		&& !hasAnyResearchInterests()
 		&& !hasAnyProjectParticipations() 
-		&& !hasAnyResearchActivities() 
+		&& !hasAnyParticipations()
 		&& !hasAnyBoards()
 		&& (!hasSite() || getSite().canBeDeleted())
 		&& !hasAnyOwnedReceipts()

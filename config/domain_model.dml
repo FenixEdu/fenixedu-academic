@@ -148,7 +148,6 @@ valueType net.sourceforge.fenixedu.domain.research.result.publication.ResearchRe
 valueType net.sourceforge.fenixedu.domain.research.project.ProjectParticipation.ProjectParticipationType 		as ProjectParticipationType;
 valueType net.sourceforge.fenixedu.domain.research.project.ProjectEventAssociation.ProjectEventAssociationRole 	as ProjectEventAssociationRole;
 valueType net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation.ResultUnitAssociationRole 		as ResultUnitAssociationRole;
-valueType net.sourceforge.fenixedu.domain.research.result.ResultEventAssociation.ResultEventAssociationRole 	as ResultEventAssociationRole;
 valueType net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole			as ResultParticipationRole;
 valueType net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFile.FileResultPermittedGroupType		as FileResultPermittedGroupType;
 valueType net.sourceforge.fenixedu.domain.research.activity.Participation.ResearchActivityParticipationRole 		as ResearchActivityParticipationRole;
@@ -3613,12 +3612,6 @@ class net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation exte
 	Integer keyUnit;
 }
 	
-class net.sourceforge.fenixedu.domain.research.result.ResultEventAssociation extends net.sourceforge.fenixedu.domain.DomainObject {
-	ResultEventAssociationRole role;
-	Integer keyResult;
-	Integer keyEvent;
-}
-
 class net.sourceforge.fenixedu.domain.teacher.PublicationsNumber extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer national;
 	Integer keyTeacher;
@@ -4118,18 +4111,35 @@ class net.sourceforge.fenixedu.domain.research.project.ProjectParticipation exte
 }
 
 
-class net.sourceforge.fenixedu.domain.research.activity.ResearchActivity extends net.sourceforge.fenixedu.domain.DomainObject {
-    String ojbConcreteClass;
-	String name;
-}
-
 class net.sourceforge.fenixedu.domain.research.activity.Participation extends net.sourceforge.fenixedu.domain.DomainObject {
 	ResearchActivityParticipationRole role;
-	Integer keyResearchActivity;
+    String ojbConcreteClass;
 	Integer keyParty;
 }
 
-class net.sourceforge.fenixedu.domain.research.activity.Event extends net.sourceforge.fenixedu.domain.research.activity.ResearchActivity {
+class net.sourceforge.fenixedu.domain.research.activity.ScientificJournalParticipation extends net.sourceforge.fenixedu.domain.research.activity.Participation {
+	Integer keyScientificJournal;
+}
+
+class net.sourceforge.fenixedu.domain.research.activity.JournalIssueParticipation extends net.sourceforge.fenixedu.domain.research.activity.Participation {
+    Integer keyJournalIssue;
+}
+
+class net.sourceforge.fenixedu.domain.research.activity.EventParticipation extends net.sourceforge.fenixedu.domain.research.activity.Participation {
+   Integer keyEvent;
+}
+
+class net.sourceforge.fenixedu.domain.research.activity.EventEditionParticipation extends net.sourceforge.fenixedu.domain.research.activity.Participation {
+   Integer keyEventEdition;
+}
+
+class net.sourceforge.fenixedu.domain.research.activity.CooperationParticipation extends net.sourceforge.fenixedu.domain.research.activity.Participation {
+   Integer keyCooperation;
+}
+
+
+class net.sourceforge.fenixedu.domain.research.activity.Event extends net.sourceforge.fenixedu.domain.DomainObject {
+	String name;
 	EventType eventType;
 	String url;
 	ResearchActivityLocationType locationType;
@@ -4151,7 +4161,8 @@ class net.sourceforge.fenixedu.domain.research.activity.EventConferenceArticlesA
 	Integer keyConferenceArticle;
 }
 
-class net.sourceforge.fenixedu.domain.research.activity.ScientificJournal extends net.sourceforge.fenixedu.domain.research.activity.ResearchActivity{
+class net.sourceforge.fenixedu.domain.research.activity.ScientificJournal extends net.sourceforge.fenixedu.domain.DomainObject {
+	String name;
 	String issn;
     String url;
 	ResearchActivityLocationType locationType;
@@ -4178,7 +4189,8 @@ class net.sourceforge.fenixedu.domain.research.activity.ArticleAssociation exten
   Integer keyCreator;
 }
 
-class net.sourceforge.fenixedu.domain.research.activity.Cooperation extends net.sourceforge.fenixedu.domain.research.activity.ResearchActivity{
+class net.sourceforge.fenixedu.domain.research.activity.Cooperation extends net.sourceforge.fenixedu.domain.DomainObject {
+	String name;
 	CooperationType cooperationType;
 	Integer keyUnit;
 	YearMonthDay startDate;
@@ -8136,20 +8148,6 @@ relation ResulUnitAssociationUnit {
 	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole unit;
 }
 
-relation ResultEventAssociationResearchResult {
-	net.sourceforge.fenixedu.domain.research.result.ResultEventAssociation playsRole resultEventAssociations {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.research.result.ResearchResult playsRole result;
-}
-
-relation ResultEventAssociationEvent {
-	net.sourceforge.fenixedu.domain.research.result.ResultEventAssociation playsRole resultEventAssociations {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.research.activity.EventEdition playsRole event;
-}
-
 relation JournalIssueScientificJournal {
 	net.sourceforge.fenixedu.domain.research.activity.ScientificJournal playsRole scientificJournal;
 	net.sourceforge.fenixedu.domain.research.activity.JournalIssue playsRole journalIssues {
@@ -8725,13 +8723,41 @@ relation ParticipationParty{
 	}
 }
 
-relation ParticipationResearchActivity {
-	net.sourceforge.fenixedu.domain.research.activity.ResearchActivity playsRole researchActivity ;
-	net.sourceforge.fenixedu.domain.research.activity.Participation playsRole participations {
+relation ParticipationsInEvent {
+	net.sourceforge.fenixedu.domain.research.activity.Event playsRole event ;
+	net.sourceforge.fenixedu.domain.research.activity.EventParticipation playsRole participations {
 		multiplicity *;
 	}
 }
 
+relation ParticipationsInEventEdition {
+	net.sourceforge.fenixedu.domain.research.activity.EventEdition playsRole eventEdition ;
+	net.sourceforge.fenixedu.domain.research.activity.EventEditionParticipation playsRole participations {
+		multiplicity *;
+	}
+}
+	
+relation ParticipationsInJournalIssue {
+	net.sourceforge.fenixedu.domain.research.activity.JournalIssue playsRole journalIssue ;
+	net.sourceforge.fenixedu.domain.research.activity.JournalIssueParticipation playsRole participations {
+		multiplicity *;
+	}
+}
+
+relation ParticipationsInScientificJournal {
+	net.sourceforge.fenixedu.domain.research.activity.ScientificJournal playsRole scientificJournal ;
+	net.sourceforge.fenixedu.domain.research.activity.ScientificJournalParticipation playsRole participations {
+		multiplicity *;
+	}
+}
+	
+relation ParticipationsInCooperation {
+	net.sourceforge.fenixedu.domain.research.activity.Cooperation playsRole cooperation ;
+	net.sourceforge.fenixedu.domain.research.activity.CooperationParticipation playsRole participations {
+		multiplicity *;
+	}
+}
+	
 relation EventEventEdition {
 	net.sourceforge.fenixedu.domain.research.activity.Event playsRole event;
 	net.sourceforge.fenixedu.domain.research.activity.EventEdition playsRole eventEditions {
@@ -9940,13 +9966,6 @@ relation RootDomainObjectResultUnitAssociation {
 	}
 }
 
-relation RootDomainObjectResultEventAssociation {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.research.result.ResultEventAssociation playsRole resultEventAssociations {
-		multiplicity *;
-	}
-}
-
 relation RootDomainObjectAssiduousness {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.assiduousness.Assiduousness playsRole assiduousnesss {
@@ -10640,13 +10659,6 @@ relation RootDomainObjectDegreeCurricularPlan {
 	}
 }
 
-relation RootDomainObjectResearchActivity {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.research.activity.ResearchActivity playsRole researchActivities {
-		multiplicity *;
-	}
-}
-
 relation RootDomainObjectArticleAssociation {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.research.activity.ArticleAssociation playsRole articleAssociations {
@@ -10657,6 +10669,27 @@ relation RootDomainObjectArticleAssociation {
 relation RootDomainObjectJournalIssues {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.research.activity.JournalIssue playsRole journalIssues {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectScientificJournal {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.research.activity.ScientificJournal playsRole scientificJournals {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectEvent {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.research.activity.Event playsRole events {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectCooperation {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.research.activity.Cooperation playsRole cooperations {
 		multiplicity *;
 	}
 }

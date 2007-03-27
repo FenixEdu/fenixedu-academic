@@ -7,12 +7,9 @@ import net.sourceforge.fenixedu.domain.research.activity.Event;
 import net.sourceforge.fenixedu.domain.research.activity.EventType;
 import net.sourceforge.fenixedu.domain.research.activity.ResearchActivityLocationType;
 import net.sourceforge.fenixedu.domain.research.activity.Participation.ResearchActivityParticipationRole;
-import net.sourceforge.fenixedu.util.MultiLanguageString;
-
-import org.joda.time.YearMonthDay;
 
 public class ResearchEventCreationBean implements Serializable {
-	private DomainReference<Event> event;
+    private DomainReference<Event> event;
     private ResearchActivityParticipationRole role;
     private String eventName;
     private EventType eventType;

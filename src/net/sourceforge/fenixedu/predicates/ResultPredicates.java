@@ -4,7 +4,6 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFile;
-import net.sourceforge.fenixedu.domain.research.result.ResultEventAssociation;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
 import net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -42,21 +41,6 @@ public class ResultPredicates {
 	 */
 	public static final AccessControlPredicate<ResultUnitAssociation> unitWritePredicate = new AccessControlPredicate<ResultUnitAssociation>() {
 		public boolean evaluate(ResultUnitAssociation association) {
-			final ResearchResult result = association.getResult();
-			final IUserView userView = AccessControl.getUserView();
-			if (userView != null && userView.hasRoleType(RoleType.RESEARCHER)
-					&& result.hasPersonParticipation(userView.getPerson())) {
-				return true;
-			}
-			return false;
-		}
-	};
-
-	/**
-	 * Predicates to access ResultEventAssociation objects.
-	 */
-	public static final AccessControlPredicate<ResultEventAssociation> eventWritePredicate = new AccessControlPredicate<ResultEventAssociation>() {
-		public boolean evaluate(ResultEventAssociation association) {
 			final ResearchResult result = association.getResult();
 			final IUserView userView = AccessControl.getUserView();
 			if (userView != null && userView.hasRoleType(RoleType.RESEARCHER)

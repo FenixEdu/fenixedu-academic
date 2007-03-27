@@ -9487,18 +9487,6 @@
 		<isTransactional>true</isTransactional>
 	</service>
 	<service>
-		<name>CreateResultEventAssociation</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.result.CreateResultEventAssociation</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-	</service>
-	<service>
-		<name>DeleteResultEventAssociation</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.result.DeleteResultEventAssociation</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-	</service>
-	<service>
 		<name>CreateResultUnitAssociation</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.result.CreateResultUnitAssociation</implementationClass>
 		<description />

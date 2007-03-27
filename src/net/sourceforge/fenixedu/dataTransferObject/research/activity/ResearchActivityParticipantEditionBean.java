@@ -1,10 +1,10 @@
 package net.sourceforge.fenixedu.dataTransferObject.research.activity;
 
 import java.io.Serializable;
+import java.util.List;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.research.activity.Participation;
-import net.sourceforge.fenixedu.domain.research.activity.ResearchActivity;
 import net.sourceforge.fenixedu.domain.research.activity.Participation.ResearchActivityParticipationRole;
 
 public class ResearchActivityParticipantEditionBean implements Serializable {
@@ -12,21 +12,13 @@ public class ResearchActivityParticipantEditionBean implements Serializable {
 	 DomainReference<Participation> participation;
 	 ResearchActivityParticipationRole role;
 	 
-	 public ResearchActivityParticipantEditionBean() {
-		setParticipation(null);
-		//setRole(ResearchActivityParticipationRole.getDefaultEventPersonRoleType());
+	 public ResearchActivityParticipantEditionBean(Participation participation, ResearchActivityParticipationRole role) {
+		setParticipation(participation);
+		setRole(role);
 	}
 	 
-	public ResearchActivity getResearchActivity() {
-		return participation.getObject().getResearchActivity();
-	}
-	
-	public void setResearchActivity(ResearchActivity activity) {
-		this.participation.getObject().setResearchActivity(activity);
-	}
-
 	public Participation getParticipation() {
-		return participation.getObject();
+	    return participation.getObject();
 	}
 
 	public void setParticipation(Participation participation) {
@@ -40,5 +32,11 @@ public class ResearchActivityParticipantEditionBean implements Serializable {
 	public void setRole(ResearchActivityParticipationRole role) {
 		this.role = role;
 	} 
+	
+	public List<ResearchActivityParticipationRole> getAllowedRoles() {
+	    Participation participation = this.getParticipation();
+	    return (participation==null) ? null : participation.getAllowedRoles();
+	}
+	
 	
 }

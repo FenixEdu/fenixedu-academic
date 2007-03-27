@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFile;
-import net.sourceforge.fenixedu.domain.research.result.ResultEventAssociation;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
 import net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
@@ -195,7 +194,6 @@ public abstract class ResearchResultPublication extends ResearchResultPublicatio
 	
 	public void copyReferecesTo(ResearchResultPublication publication) {
 		createNewParticipationsIn(publication);
-		createNewEventAssociationsIn(publication);
 		createNewUnitAssociationsIn(publication);
 		moveFilesTo(publication);
 		publication.setUniqueStorageId(getUniqueStorageId());
@@ -211,12 +209,6 @@ public abstract class ResearchResultPublication extends ResearchResultPublicatio
 	private void createNewUnitAssociationsIn(ResearchResultPublication publication) {
 		for (ResultUnitAssociation association : getResultUnitAssociations()) {
 			publication.addUnitAssociation(association.getUnit(), association.getRole());
-		}
-	}
-
-	private void createNewEventAssociationsIn(ResearchResultPublication publication) {
-		for (ResultEventAssociation association : getResultEventAssociations()) {
-			publication.addEventAssociation(association.getEvent(), association.getRole());
 		}
 	}
 

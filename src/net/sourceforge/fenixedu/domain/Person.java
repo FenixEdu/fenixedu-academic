@@ -1158,7 +1158,7 @@ public class Person extends Person_Base {
 		&& !hasParking()		
 		&& !hasAnyResearchInterests()
 		&& !hasAnyProjectParticipations()
-		&& !hasAnyResearchActivities() 
+		&& !hasAnyParticipations() 
 		&& !hasAnyBoards() 		
 		&& !hasAnyPersonFunctions()
 		&& !hasAnyStudents()

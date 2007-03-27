@@ -8,6 +8,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.research.result.publication.Article;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
@@ -53,6 +54,12 @@ public class JournalIssue extends JournalIssue_Base {
 	return articles;
     }
 
+    public void sweep() {
+	if (!hasAnyParticipations() && !hasAnyArticleAssociations()) {
+	    delete();
+	}
+    }
+    
     public void delete() {
 	for (; !this.getArticleAssociations().isEmpty(); this.getArticleAssociations().get(0).delete());
 	
@@ -67,4 +74,13 @@ public class JournalIssue extends JournalIssue_Base {
 	return people.size()==1 && people.contains(currentUser); 
     }
     
+    public List<JournalIssueParticipation> getParticipationsFor(Party party) {
+	List<JournalIssueParticipation> participations = new ArrayList<JournalIssueParticipation>();
+	for(JournalIssueParticipation participation : getParticipations()) {
+	    if(participation.getParty().equals(party)) {
+		participations.add(participation);
+	    }
+	}
+	return participations;
+    }
 }

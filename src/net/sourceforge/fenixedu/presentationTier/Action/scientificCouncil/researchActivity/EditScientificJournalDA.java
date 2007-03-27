@@ -14,7 +14,7 @@ public class EditScientificJournalDA extends EditResearchActivityDA {
     
     @Override
     protected List getObjects() {
-	List<ScientificJournal> scientificJournals = ScientificJournal.readAll();
+	List<ScientificJournal> scientificJournals = rootDomainObject.getScientificJournals();
 	Collections.sort(scientificJournals, new BeanComparator("name", Collator.getInstance()));
         return scientificJournals;
     }

@@ -5,7 +5,6 @@ import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 public class SQL2JavaConverters {
     public static FieldConversion LoginAliasType2SqlLoginAliasTypeConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.LoginAliasType2SqlLoginAliasTypeConversion();
     public static FieldConversion ResultUnitAssociationRole2SqlResultUnitAssociationRoleConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.ResultUnitAssociationRole2SqlResultUnitAssociationRoleConversion();
-    public static FieldConversion ResultEventAssociationRole2SqlResultEventAssociationRoleConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.ResultEventAssociationRole2SqlResultEventAssociationRoleConversion();
     public static FieldConversion ResultPatentType2SqlResultPatentTypeConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.ResultPatentType2SqlResultPatentTypeConversion();
     public static FieldConversion ResultPatentStatus2SqlResultPatentStatusConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.ResultPatentStatus2SqlResultPatentStatusConversion();
     public static FieldConversion FileResultPermittedGroupType2SqlFileResultPermittedGroupTypeConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.FileResultPermittedGroupType2SqlFileResultPermittedGroupTypeConversion();

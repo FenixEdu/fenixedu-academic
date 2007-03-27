@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.accounting.PaymentsManagementDTO;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.SelectableEntryBean;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.PaymentMode;
@@ -212,7 +213,7 @@ public abstract class PaymentsManagementDispatchAction extends FenixDispatchActi
     }
 
     protected Event getEvent(HttpServletRequest request) {
-	return rootDomainObject.readEventByOID(getIntegerFromRequest(request, "eventId"));
+	return (Event) RootDomainObject.readDomainObjectByOID(Event.class, getIntegerFromRequest(request, "eventId"));
     }
 
     public ActionForward preparePrintGuide(ActionMapping mapping, ActionForm actionForm,

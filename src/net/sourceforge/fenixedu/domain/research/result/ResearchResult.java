@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFile.FileResultPermittedGroupType;
-import net.sourceforge.fenixedu.domain.research.result.ResultEventAssociation.ResultEventAssociationRole;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
 import net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation.ResultUnitAssociationRole;
 import net.sourceforge.fenixedu.domain.research.result.publication.Book;
@@ -108,19 +107,6 @@ public abstract class ResearchResult extends ResearchResult_Base {
 
     @Checked("ResultPredicates.writePredicate")
     public void removeUnitAssociation(ResultUnitAssociation association) {
-        association.delete();
-        updateModifiedByAndDate();
-    }
-
-    @Checked("ResultPredicates.writePredicate")
-    public ResultEventAssociation addEventAssociation(EventEdition event, ResultEventAssociationRole role) {
-        final ResultEventAssociation association = new ResultEventAssociation(this, event, role);
-        updateModifiedByAndDate();
-        return association;
-    }
-
-    @Checked("ResultPredicates.writePredicate")
-    public void removeEventAssociation(ResultEventAssociation association) {
         association.delete();
         updateModifiedByAndDate();
     }
@@ -222,24 +208,6 @@ public abstract class ResearchResult extends ResearchResult_Base {
     }
 
     /**
-     * Returns true if exists an association between result and the given event
-     * and role.
-     */
-    public boolean hasAssociationWithEventRole(EventEdition event, ResultEventAssociationRole role) {
-        if (event != null && role != null && this.hasAnyResultEventAssociations()) {
-            final List<ResultEventAssociation> list = this.getResultEventAssociations();
-
-            for (ResultEventAssociation association : list) {
-                if (association.getEvent() != null && association.getEvent().equals(event)
-                        && association.getRole().equals(role)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    /**
      * Returns true if exists an association between result and the given unit
      * and role.
      */
@@ -324,10 +292,6 @@ public abstract class ResearchResult extends ResearchResult_Base {
             documentFile.delete();
         }
 
-        for (ResultEventAssociation association : getResultEventAssociations()) {
-            association.delete();
-        }
-
         for (ResultUnitAssociation association : getResultUnitAssociations()) {
             association.delete();
         }
@@ -366,31 +330,6 @@ public abstract class ResearchResult extends ResearchResult_Base {
     /**
      * Block operations on relation lists.
      */
-    @Override
-    public void addResultEventAssociations(ResultEventAssociation resultEventAssociations) {
-        throw new DomainException("error.researcher.Result.call", "addResultEventAssociations");
-    }
-
-    @Override
-    public void removeResultEventAssociations(ResultEventAssociation resultEventAssociations) {
-        throw new DomainException("error.researcher.Result.call", "removeResultEventAssociations");
-    }
-
-    @Override
-    public List<ResultEventAssociation> getResultEventAssociations() {
-        return Collections.unmodifiableList(super.getResultEventAssociations());
-    }
-
-    @Override
-    public Iterator<ResultEventAssociation> getResultEventAssociationsIterator() {
-        return getResultEventAssociationsSet().iterator();
-    }
-
-    @Override
-    public Set<ResultEventAssociation> getResultEventAssociationsSet() {
-        return Collections.unmodifiableSet(super.getResultEventAssociationsSet());
-    }
-
     @Override
     public void addResultParticipations(ResultParticipation resultParticipations) {
         throw new DomainException("error.researcher.Result.call", "addResultParticipations");
