@@ -33,3 +33,14 @@ execute "Create EVENT_CONFERENCE_ARTICLES_ASSOCIATION table." createEventConfere
 execute "Alter RESULT table, adding KEY_EVENT_CONFERENCE_ARTICLES_ASSOCIATION column." alterResearchResultTable.sql
 execute "Alter RESEARCH_ACTIVITY table, droping EVENT_LOCATION column." alterResearchActivityTable.sql
 execute "Alter RoomOccupation Table" alterTableRoomOccupation.sql
+
+execute "Fixing Administrative office for Gratuity Events with Payment Plan" FixAdministrativeOfficeForGratuityEventsWithPaymentPlan.sql
+execute "Changing Table Receipt" AlterTableReceipt.sql
+execute "Adding Treasury Functionalities" AddTreasuryFunctionalities.sql
+execute "Changing Table PenaltyExemptionJustification" ChangeTablePenaltyExemptionJustification.sql
+execute "Renaming Table PenaltyExemptionJustification ExemptionJustification" RenameTablePenaltyExemptionJustificationToExemptionJustification.sql
+execute "Changing Table Exemption" AlterTableExemption.sql
+execute "Changing Table Exemption Justification" AlterTableExemptionJustification.sql
+execute "Migrating GratuityExemptionType to GratuityExemptionJustification" MigrateGratuityExemptionTypeToGratuityExemptionJustification.sql
+executeWithTempFile "Updating GratuityExemption to GratuityExemptionJustification keys" UpdateGratuityExemptionToGratuityExemptionJustificationKeys.sql
+executeWithTempFile "Fixing Exemption Justification Broken Keys to Exemption" FixExemptionJustificationToExemptionBrokenKeys.sql
