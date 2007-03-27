@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 
 public class SimpleStudentCurriculum extends StudentCurriculumBase {
 
@@ -30,6 +31,7 @@ public class SimpleStudentCurriculum extends StudentCurriculumBase {
         addCurricularEnrolments(curriculumEntries, studentCurricularPlan, approvedEnrolments);
 
         addNotNeedToEnrols(curriculumEntries, studentCurricularPlan);
+        addDismissals(curriculumEntries, studentCurricularPlan);
 
         return curriculumEntries;
     }
@@ -55,6 +57,12 @@ public class SimpleStudentCurriculum extends StudentCurriculumBase {
             final CurricularCourse curricularCourse = notNeedToEnrollInCurricularCourse.getCurricularCourse();
             curriculumEntries.add(new NotNeedToEnrolCurriculumEntry(curricularCourse, notNeedToEnrollInCurricularCourse));
         }
+    }
+    
+    private void addDismissals(Collection<CurriculumEntry> curriculumEntries, StudentCurricularPlan studentCurricularPlan) {
+	for (final Dismissal dismissal : studentCurricularPlan.getDismissals()) {
+            curriculumEntries.add(new DismissalEntry(dismissal));
+        }	
     }
 
 }

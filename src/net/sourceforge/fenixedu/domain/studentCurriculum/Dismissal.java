@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.studentCurriculum;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -128,6 +129,11 @@ public class Dismissal extends Dismissal_Base {
 	    multiLanguageString.setContent(Language.pt, ResourceBundle.getBundle("resources/AcademicAdminOffice", new Locale("pt", "PT")).getString("label.group.credits"));
 	    return multiLanguageString;
 	}
+    }
+    
+    @Override
+    public void collectDismissals(final List<Dismissal> result) {
+	result.add(this);
     }
     
     @Override

@@ -42,6 +42,11 @@ public abstract class CurriculumLine extends CurriculumLine_Base {
     }
     
     @Override
+    public void collectDismissals(final List<Dismissal> result) {
+	// nothing to do
+    }
+    
+    @Override
     public StudentCurricularPlan getStudentCurricularPlan() {
         return hasCurriculumGroup() ? getCurriculumGroup().getStudentCurricularPlan() : null; 
     }

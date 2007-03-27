@@ -183,6 +183,12 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	}
 	return result;
     }
+    
+    public void collectDismissals(final List<Dismissal> result) {
+	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
+	    curriculumModule.collectDismissals(result);
+	}
+    }
 
     public boolean isRoot() {
 	return hasParentStudentCurricularPlan();

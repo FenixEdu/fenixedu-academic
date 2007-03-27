@@ -36,6 +36,12 @@ public abstract class CurriculumEntry implements Serializable {
 	public boolean getIsNotInDegreeCurriculumEnrolmentEntry() {
 	    return isNotInDegreeCurriculumEnrolmentEntry();
 	}
+	public boolean isDismissalEntry() {
+	    return false;
+	}
+	public boolean getIsDismissalEntry() {
+	    return isDismissalEntry();
+	}
 
 	protected double ectsCredits(final CurricularCourse curricularCourse) {
 	    final double ectsCredits = curricularCourse.getEctsCredits().doubleValue();

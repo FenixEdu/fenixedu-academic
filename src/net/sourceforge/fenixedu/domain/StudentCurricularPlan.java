@@ -50,6 +50,7 @@ import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPl
 import net.sourceforge.fenixedu.domain.studentCurriculum.Credits;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
+import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Equivalence;
 import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroupType;
@@ -2231,6 +2232,14 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		enrolment.setIsFirstTime(Boolean.FALSE);
 	    }
 	}
+    }
+
+    public List<Dismissal> getDismissals() {
+	final List<Dismissal> result = new ArrayList<Dismissal>();
+	if (isBolonha()) {
+	    getRoot().collectDismissals(result);
+	}
+	return result;
     }
 
 }
