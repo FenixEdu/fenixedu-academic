@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.BothAreasAreT
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedBranchChangeException;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean.SelectedCurricularCourse;
+import net.sourceforge.fenixedu.domain.accounting.events.ImprovementOfApprovedEnrolmentEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
@@ -1420,6 +1421,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return false;
     }
 
+    public ImprovementOfApprovedEnrolmentEvent getNotPayedImprovementOfApprovedEnrolmentEvent() {
+	return getPerson().getNotPayedImprovementOfApprovedEnrolmentEvent();
+    }
+
     public boolean isEnroledInSpecialSeason(ExecutionPeriod executionPeriod) {
 	List<Enrolment> enrolments = getAllStudentEnrollmentsInExecutionPeriod(executionPeriod);
 	for (Enrolment enrolment : enrolments) {
@@ -1729,7 +1734,24 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return false;
     }
 
-    // Improvement
+    // Improvements
+    public void createEnrolmentEvaluationForImprovement(final Collection<Enrolment> toCreate, final Employee employee, final ExecutionPeriod executionPeriod) {
+	final Collection<EnrolmentEvaluation> created = new HashSet<EnrolmentEvaluation>();
+	
+	for (final Enrolment enrolment : toCreate) {
+	    created.add(enrolment.createEnrolmentEvaluationForImprovement(employee, executionPeriod));
+	}
+
+	final ImprovementOfApprovedEnrolmentEvent improvementOfApprovedEnrolmentEvent = getNotPayedImprovementOfApprovedEnrolmentEvent();
+	if (improvementOfApprovedEnrolmentEvent == null) {
+	    new ImprovementOfApprovedEnrolmentEvent(employee.getAdministrativeOffice(), getPerson(), created);
+	} else {
+	    for (final EnrolmentEvaluation enrolmentEvaluation : created) {
+		improvementOfApprovedEnrolmentEvent.addImprovementEnrolmentEvaluations(enrolmentEvaluation);		
+	    }
+	}
+    }
+
     public List<Enrolment> getEnroledImprovements() {
 	List<Enrolment> enroledImprovements = new ArrayList<Enrolment>();
 	for (Enrolment enrolment : getEnrolments()) {
@@ -2013,6 +2035,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	super.setStudent(registration);
     }
 
+    public Person getPerson() {
+	return getRegistration().getPerson();
+    }
+    
     public void createOptionalEnrolment(final CurriculumGroup curriculumGroup,
 	    final ExecutionPeriod executionPeriod,
 	    final OptionalCurricularCourse optionalCurricularCourse,
@@ -2198,14 +2224,14 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    if (this.getEnrolments().size() > 0) {
 	    ExecutionDegree firstExecutionDegree = this.getDegreeCurricularPlan()
 		    .getExecutionDegreeByYear(this.getFirstExecutionPeriod().getExecutionYear());
-	    for (final MasterDegreeCandidate candidate : this.getRegistration().getPerson()
+	    for (final MasterDegreeCandidate candidate : this.getPerson()
 		    .getMasterDegreeCandidates()) {
 		if (candidate.getExecutionDegree() == firstExecutionDegree) {
 		    return candidate;
 		}
 	    }
-	    } else if (this.getRegistration().getPerson().getMasterDegreeCandidatesCount() == 1) {
-		return this.getRegistration().getPerson().getMasterDegreeCandidates().iterator().next();
+	    } else if (this.getPerson().getMasterDegreeCandidatesCount() == 1) {
+		return this.getPerson().getMasterDegreeCandidates().iterator().next();
 	}
 	}
 	return null;
