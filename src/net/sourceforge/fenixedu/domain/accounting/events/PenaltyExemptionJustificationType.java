@@ -12,7 +12,7 @@ public enum PenaltyExemptionJustificationType {
     ENROLMENT_AFTER_EQUIVALENCE,
 
     DIRECTIVE_COUNCIL_AUTHORIZATION,
-
+    
     NUCLEUS_COORDINATOR_AUTHORIZATION;
 
     private PenaltyExemptionJustificationType() {
@@ -40,10 +40,11 @@ public enum PenaltyExemptionJustificationType {
 	    return Arrays.asList(new PenaltyExemptionJustificationType[] { SOCIAL_SHARE_GRANT_OWNER,
 		    ENROLMENT_AFTER_EQUIVALENCE, DIRECTIVE_COUNCIL_AUTHORIZATION,
 		    NUCLEUS_COORDINATOR_AUTHORIZATION });
+	case IMPROVEMENT_OF_APPROVED_ENROLMENT:
+	    return Arrays.asList(new PenaltyExemptionJustificationType[] { NUCLEUS_COORDINATOR_AUTHORIZATION });
 	default:
 	    return Collections.EMPTY_LIST;
 	}
 
     }
-
 }
