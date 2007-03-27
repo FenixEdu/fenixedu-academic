@@ -8,6 +8,7 @@ import java.io.Serializable;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressData;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
@@ -20,8 +21,6 @@ import org.joda.time.YearMonthDay;
  * 
  */
 public class PersonBean implements Serializable {
-
-    private static final Integer DEFAULT_COUNTRY_ID = Integer.valueOf(1);
 
     private DomainReference<Person> person;
 
@@ -436,4 +435,7 @@ public class PersonBean implements Serializable {
 	this.person = person == null ? null : new DomainReference<Person>(person);
     }
 
+    public PhysicalAddressData getPhysicalAddressData() {
+	return new PhysicalAddressData(getAddress(), getAreaCode(), getAreaOfAreaCode(), getArea(), getParishOfResidence(), getDistrictSubdivisionOfResidence(), getDistrictOfResidence(), getCountryOfResidence());
+    }
 }
