@@ -143,7 +143,7 @@
             <property name="key" value="true"/>
         </validator>
     </slot>
-	<slot name="institution" layout="autoComplete" >
+	<slot name="institutionUnitName" layout="autoComplete" >
 		<property name="size" value="40"/>
 		<property name="labelField" value="unit.name"/>
 		<property name="indicatorShown" value="true"/>		

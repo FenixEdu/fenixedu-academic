@@ -8,6 +8,7 @@ import java.io.Serializable;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 
 /**
@@ -97,11 +98,13 @@ public class PrecedentDegreeInformationBean implements Serializable {
 	this.institutionName = institutionName;
     }
 
-    // public boolean isInstitutionFilled() {
-    // return (getInstitution() != null
-    // || (getNewInstitutionName() != null &&
-        // getNewInstitutionName().length() > 0) || getCurrentInstitutionName()
-        // != null);
-    // }
+    public UnitName getInstitutionUnitName() {
+	return (institution == null) ? null : institution.getObject().getUnitName();
+    }
+
+    public void setInstitutionUnitName(UnitName institutionUnitName) {
+	this.institution = (institution == null) ? null : new DomainReference<Unit>(institutionUnitName
+		.getUnit());
+    }
 
 }
