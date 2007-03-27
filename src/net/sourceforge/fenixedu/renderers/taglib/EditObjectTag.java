@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.renderers.components.HtmlBlockContainer;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlForm;
 import net.sourceforge.fenixedu.renderers.components.HtmlHiddenField;
+import net.sourceforge.fenixedu.renderers.components.HtmlText;
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 import net.sourceforge.fenixedu.renderers.components.state.HiddenSlot;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
@@ -229,17 +230,22 @@ public class EditObjectTag extends BaseRenderObjectTag {
         }
         
         if (isNested() || hasFormParent()) {
-            HtmlBlockContainer container = new HtmlBlockContainer();
-            container.setClasses("dinline");
-            for (HtmlHiddenField field : hiddenFields) {
-                container.addChild(field);    
+            if (hiddenFields != null && !hiddenFields.isEmpty()) {
+                HtmlBlockContainer container = new HtmlBlockContainer();
+                container.setClasses("dinline");
+                for (HtmlHiddenField field : hiddenFields) {
+                    container.addChild(field);    
+                }
+              
+                if (component != null) {
+                    container.addChild(component);
+                }
+                
+                componentToDraw = container;
             }
-          
-            if (component != null) {
-                container.addChild(component);
+            else {
+                componentToDraw = component == null ? new HtmlText() : component;
             }
-            
-            componentToDraw = container;
         }
         else {
             HtmlForm form = inputContext.getForm();
