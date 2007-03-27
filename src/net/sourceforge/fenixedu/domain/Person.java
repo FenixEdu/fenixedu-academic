@@ -29,6 +29,7 @@ import net.sourceforge.fenixedu.domain.accounting.Receipt;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreement;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
+import net.sourceforge.fenixedu.domain.accounting.events.ImprovementOfApprovedEnrolmentEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
@@ -1999,6 +2000,98 @@ public class Person extends Person_Base {
 	return result;
     }
 
+    public Set<? extends Event> getEventsByEventType(final EventType eventType) {
+	final Set<Event> result = new HashSet<Event>();
+
+	for (final Event event : getEventsSet()) {
+	    if (!event.isCancelled() && event.getEventType() == eventType) {
+		result.add(event);
+	    }
+	}
+
+	return result;
+    }
+
+    public boolean hasInsuranceEventOrAdministrativeOfficeFeeInsuranceEventFor(
+	    final ExecutionYear executionYear) {
+	return hasInsuranceEventFor(executionYear) || hasAdministrativeOfficeFeeInsuranceEvent(executionYear);
+    }
+
+    public boolean hasAdministrativeOfficeFeeInsuranceEvent(final ExecutionYear executionYear) {
+	for (final Event event : getEventsByEventType(EventType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE)) {
+	    if (((AdministrativeOfficeFeeAndInsuranceEvent) event).getExecutionYear() == executionYear) {
+		return true;
+	    }
+	}
+
+	return false;
+    }
+
+    public boolean hasInsuranceEventFor(final ExecutionYear executionYear) {
+	for (final Event event : getEventsByEventType(EventType.INSURANCE)) {
+	    if (((InsuranceEvent) event).getExecutionYear() == executionYear) {
+		return true;
+	    }
+	}
+
+	return false;
+    }
+
+    public boolean hasAdministrativeOfficeFeeInsuranceEventFor(final ExecutionYear executionYear) {
+	for (final Event event : getEventsByEventType(EventType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE)) {
+	    if (((AdministrativeOfficeFeeAndInsuranceEvent) event).getExecutionYear() == executionYear) {
+		return true;
+	    }
+	}
+
+	return false;
+    }
+
+    public Set<Event> getEventsSupportingPaymentByOtherParties() {
+	final Set<Event> result = new HashSet<Event>();
+	for (final Event event : getEventsSet()) {
+	    if (!event.isCancelled() && event.isOtherPartiesPaymentsSupported()) {
+		result.add(event);
+	    }
+	}
+
+	return result;
+    }
+
+    public ImprovementOfApprovedEnrolmentEvent getNotPayedImprovementOfApprovedEnrolmentEvent() {
+	for (final Event event : getEventsByEventType(EventType.IMPROVEMENT_OF_APPROVED_ENROLMENT)) {
+	    if (!event.isPayed()) {
+		return (ImprovementOfApprovedEnrolmentEvent) event;
+	    }
+	}
+
+	return null;
+    }
+
+    public Set<GratuityEvent> getGratuityEvents() {
+	return (Set<GratuityEvent>) getEventsByEventType(EventType.GRATUITY);
+    }
+
+    public List<Event> getEventsWithExemptionAppliable() {
+	final List<Event> result = new ArrayList<Event>();
+	for (final Event event : getEventsSet()) {
+	    if (event.isExemptionAppliable()) {
+		result.add(event);
+	    }
+	}
+
+	return result;
+    }
+
+    public Money getPayedAmount(final EventType eventType, final int civilYear) {
+	Money result = Money.ZERO;
+	for (final Event event : (Set<Event>) getEventsByEventType(eventType)) {
+	    result = result.add(event.getPayedAmountFor(civilYear));
+	}
+
+	return result;
+    }
+
     public Set<Receipt> getReceiptsByAdministrativeOffice(AdministrativeOffice administrativeOffice) {
 	final Set<Receipt> result = new HashSet<Receipt>();
 	for (final Receipt receipt : getReceipts()) {
@@ -2346,43 +2439,6 @@ public class Person extends Person_Base {
 	return false;
     }
 
-    public Set<? extends Event> getEventsByEventType(final EventType eventType) {
-	final Set<Event> result = new HashSet<Event>();
-
-	for (final Event event : getEventsSet()) {
-	    if (!event.isCancelled() && event.getEventType() == eventType) {
-		result.add(event);
-	    }
-	}
-
-	return result;
-    }
-
-    public boolean hasInsuranceEventOrAdministrativeOfficeFeeInsuranceEventFor(
-	    final ExecutionYear executionYear) {
-	return hasInsuranceEventFor(executionYear) || hasAdministrativeOfficeFeeInsuranceEvent(executionYear);
-    }
-
-    public boolean hasAdministrativeOfficeFeeInsuranceEvent(final ExecutionYear executionYear) {
-	for (final Event event : getEventsByEventType(EventType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE)) {
-	    if (((AdministrativeOfficeFeeAndInsuranceEvent) event).getExecutionYear() == executionYear) {
-		return true;
-	    }
-	}
-
-	return false;
-    }
-
-    public boolean hasInsuranceEventFor(final ExecutionYear executionYear) {
-	for (final Event event : getEventsByEventType(EventType.INSURANCE)) {
-	    if (((InsuranceEvent) event).getExecutionYear() == executionYear) {
-		return true;
-	    }
-	}
-
-	return false;
-    }
-
     public String getHomepageWebAddress() {
 	final Homepage homepage = getHomepage();
 	if (homepage == null) {
@@ -2468,50 +2524,6 @@ public class Person extends Person_Base {
 	return getServiceAgreementFor(serviceAgreementTemplate) != null;
     }
 
-    public boolean hasAdministrativeOfficeFeeInsuranceEventFor(final ExecutionYear executionYear) {
-	for (final Event event : getEventsByEventType(EventType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE)) {
-	    if (((AdministrativeOfficeFeeAndInsuranceEvent) event).getExecutionYear() == executionYear) {
-		return true;
-	    }
-	}
-
-	return false;
-    }
-
-    public Set<Event> getEventsSupportingPaymentByOtherParties() {
-	final Set<Event> result = new HashSet<Event>();
-	for (final Event event : getEventsSet()) {
-	    if (!event.isCancelled() && event.isOtherPartiesPaymentsSupported()) {
-		result.add(event);
-	    }
-	}
-
-	return result;
-    }
-
-    public Set<GratuityEvent> getGratuityEvents() {
-	return (Set<GratuityEvent>) getEventsByEventType(EventType.GRATUITY);
-    }
-
-    public List<Event> getEventsWithExemptionAppliable() {
-	final List<Event> result = new ArrayList<Event>();
-	for (final Event event : getEventsSet()) {
-	    if (event.isExemptionAppliable()) {
-		result.add(event);
-	    }
-	}
-
-	return result;
-    }
-
-    public Money getPayedAmount(final EventType eventType, final int civilYear) {
-	Money result = Money.ZERO;
-	for (final Event event : (Set<Event>) getEventsByEventType(eventType)) {
-	    result = result.add(event.getPayedAmountFor(civilYear));
-	}
-
-	return result;
-    }
 
     public boolean isHomePageAvailable() {
 	return hasHomepage() && getHomepage().getActivated();
