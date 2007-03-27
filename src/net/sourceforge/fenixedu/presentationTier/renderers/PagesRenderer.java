@@ -33,8 +33,6 @@ public class PagesRenderer extends InputRenderer {
     
     private String subSchema;
     
-    private String sortBy;
-    
     private String objectsPerPage;
     
     private String paged;
@@ -302,14 +300,6 @@ public class PagesRenderer extends InputRenderer {
 
     public void setRowClasses(String rowClasses) {
         this.renderer.setRowClasses(rowClasses);
-    }
-
-    public String getSortBy() {
-        return sortBy;
-    }
-
-    public void setSortBy(String sortBy) {
-        this.sortBy = sortBy;
     }
 
     public String getStyle() {

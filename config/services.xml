@@ -11718,5 +11718,14 @@
 		<filterChains>
 			<chain name="ScientificCouncilAuthorization" />
 		</filterChains>
+    </service>
+     	<service>
+        <name>MergeEvents</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.researchActivity.MergeEvents</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+		<filterChains>
+			<chain name="ScientificCouncilAuthorization" />
+		</filterChains>
     </service> 
 </serviceDefinitions>

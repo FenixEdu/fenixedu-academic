@@ -25,9 +25,9 @@ public abstract class MergeResearchActivityDA extends FenixDispatchAction {
 	
 	if(mergeResearchActivityPageContainerBean == null) {
 	    mergeResearchActivityPageContainerBean = getNewBean();
-	} else {
-	    RenderUtils.invalidateViewState();
-	}
+	} 
+	
+	RenderUtils.invalidateViewState();
 
 	return setObjects(mapping, form, request, response, mergeResearchActivityPageContainerBean);
     }
@@ -65,7 +65,7 @@ public abstract class MergeResearchActivityDA extends FenixDispatchAction {
 	RenderUtils.invalidateViewState();
 	return setObjects(mapping, form, request, response, researchActivityPageContainerBean);
     }
-
+    
     protected ActionForward setObjects(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response, MergeResearchActivityPageContainerBean mergeResearchActivityPageContainerBean) {
 	mergeResearchActivityPageContainerBean.setObjects(getObjects());
@@ -80,7 +80,7 @@ public abstract class MergeResearchActivityDA extends FenixDispatchAction {
     
     public ActionForward invalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	return pageTwo(mapping, form, request, response, "scientificJournal", false);
+	return pageTwo(mapping, form, request, response, "researchActivity", false);
     }
     
     private ActionForward pageTwo(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -98,7 +98,7 @@ public abstract class MergeResearchActivityDA extends FenixDispatchAction {
     public ActionForward mergeResearchActivity(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	MergeResearchActivityPageContainerBean researchActivityPageContainerBean = 
-	    (MergeResearchActivityPageContainerBean) getRenderedObject("scientificJournal");
+	    (MergeResearchActivityPageContainerBean) getRenderedObject("researchActivity");
 	
 	executeService(request, getServiceName(), new Object[] { researchActivityPageContainerBean });
 	

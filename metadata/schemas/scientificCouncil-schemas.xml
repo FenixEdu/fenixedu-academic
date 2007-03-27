@@ -89,7 +89,7 @@
 </schema>
 
 
-<schema name="scientific.journal.new.properties" type="net.sourceforge.fenixedu.dataTransferObject.MergeResearchActivityPageContainerBean" >
+<schema name="scientific.journal.new.properties" type="net.sourceforge.fenixedu.dataTransferObject.MergeScientificJournalPageContainerBean" >
 	<slot name="name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="50"/>
 	</slot>
@@ -98,20 +98,77 @@
 		<property name="commentClasses" value="smalltxt color555"/>
 		<property name="bundle" value="SCIENTIFIC_COUNCIL_RESOURCES"/>
 	</slot>
-	<slot name="url" key="label.scientific.journal.url" validator="net.sourceforge.fenixedu.renderers.validators.UrlValidator"/>
+	<slot name="url" key="label.scientific.journal.url">
+		<property name="size" value="80"/>
+		<validator name="net.sourceforge.fenixedu.renderers.validators.UrlValidator">
+			<property name="required" value="false"/>
+		</validator>
+	</slot>
 	<slot name="researchActivityLocationType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" key="label.scientific.journal.locationType"/>
 </schema>
 
+<schema name="scientific.journal.edit" type="net.sourceforge.fenixedu.domain.research.activity.ScientificJournal" >
+	<slot name="name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="50"/>
+	</slot>
+	<slot name="issn" key="label.scientific.journal.issn" layout="input-with-comment" validator="net.sourceforge.fenixedu.renderers.validators.ISSNValidator"> 
+		<property name="comment" value="label.issn.explanation"/>
+		<property name="commentClasses" value="smalltxt color555"/>
+		<property name="bundle" value="SCIENTIFIC_COUNCIL_RESOURCES"/>
+	</slot>
+	<slot name="url" key="label.scientific.journal.url">
+		<property name="size" value="80"/>
+		<validator name="net.sourceforge.fenixedu.renderers.validators.UrlValidator">
+			<property name="required" value="false"/>
+		</validator>
+	</slot>
+	<slot name="locationType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" key="label.scientific.journal.locationType"/>
+</schema>
+
+
 <schema name="page.goto" type="net.sourceforge.fenixedu.dataTransferObject.PageContainerBean" >
-	<slot name="pageJump" key="label.page.goto">
+	<slot name="pageJump" key="label.page.goto" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="4"/>
 	</slot>
 </schema>
 
 <schema name="event.merge.list" type="net.sourceforge.fenixedu.domain.research.activity.Event" >
 	<slot name="name" />
-	<slot name="eventLocation" key="label.event.eventLocation"/>
+	<slot name="eventType" key="label.event.eventType"/>
 </schema>
+<schema name="event.merge.list.full" type="net.sourceforge.fenixedu.domain.research.activity.Event" >
+	<slot name="name" />
+	<slot name="locationType" key="label.scientific.journal.locationType"/>
+	<slot name="eventType" key="label.event.eventType"/>
+	<slot name="url" key="label.scientific.journal.url"/>
+</schema>
+<schema name="event.new.properties" type="net.sourceforge.fenixedu.dataTransferObject.MergeEventPageContainerBean" >
+	<slot name="name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="50"/>
+	</slot>
+	<slot name="eventType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" key="label.event.eventType"/>
+	<slot name="url" key="label.scientific.journal.url">
+		<property name="size" value="80"/>
+		<validator name="net.sourceforge.fenixedu.renderers.validators.UrlValidator">
+			<property name="required" value="false"/>
+		</validator>
+	</slot>
+	<slot name="researchActivityLocationType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" key="label.scientific.journal.locationType"/>
+</schema>
+<schema name="event.edit" type="net.sourceforge.fenixedu.domain.research.activity.Event" >
+	<slot name="name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="50"/>
+	</slot>
+	<slot name="eventType" key="label.event.eventType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="url" key="label.scientific.journal.url">
+		<property name="size" value="80"/>
+		<validator name="net.sourceforge.fenixedu.renderers.validators.UrlValidator">
+			<property name="required" value="false"/>
+		</validator>
+	</slot>
+	<slot name="locationType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" key="label.scientific.journal.locationType"/>
+</schema>
+
 
 
 

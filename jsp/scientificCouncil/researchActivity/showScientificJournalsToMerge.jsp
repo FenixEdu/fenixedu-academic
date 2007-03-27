@@ -51,6 +51,7 @@
 			<th>
 				<fr:edit id="qq" name="mergeBean"  property="pageContainerBean" type="net.sourceforge.fenixedu.dataTransferObject.PageContainerBean"
 				layout="tabular" schema="page.goto">
+					<fr:destination name="input" path="/mergeScientificJournal.do?method=goToPage"/>
 					<fr:layout>
 						<fr:property name="classes" value="tstylenone mvert0"/>
 					</fr:layout>
@@ -76,7 +77,6 @@
 			<fr:property name="objectsPerPage" value="20"/>
 			<fr:property name="subSchema" value="scientific.journal.merge.list"/>
 			<fr:property name="buttonLabel" value="button.researchActivity.add"/>
-			<fr:property name="sortBy" value="number"/>
 		</fr:layout>
 	</fr:edit>
 	<fr:edit id="mergeListNotVisible" name="mergeBean" visible="false"/>

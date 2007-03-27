@@ -131,16 +131,28 @@
     <definition name="show-scientific-journal-merge-page" extends="scientificCouncil.masterPage">
     	<put name="body" value="/scientificCouncil/researchActivity/showScientificJournalsToMerge.jsp"/>
     </definition>
-        <definition name="show-scientific-journal-merge-list" extends="scientificCouncil.masterPage">
+    <definition name="show-scientific-journal-list-page" extends="scientificCouncil.masterPage">
+    	<put name="body" value="/scientificCouncil/researchActivity/showScientificJournalsToEdit.jsp"/>
+    </definition>
+    <definition name="show-scientific-journal-edit-page" extends="scientificCouncil.masterPage">
+    	<put name="body" value="/scientificCouncil/researchActivity/showEditScientificJournal.jsp"/>
+    </definition>    
+	<definition name="show-scientific-journal-merge-list" extends="scientificCouncil.masterPage">
     	<put name="body" value="/scientificCouncil/researchActivity/showScientificJournalsToMergeList.jsp"/>
     </definition>
-    
     <definition name="show-event-merge-page" extends="scientificCouncil.masterPage">
     	<put name="body" value="/scientificCouncil/researchActivity/showEventsToMerge.jsp"/>
     </definition>
         <definition name="show-event-merge-list" extends="scientificCouncil.masterPage">
     	<put name="body" value="/scientificCouncil/researchActivity/showEventsToMergeList.jsp"/>
     </definition>
+    <definition name="show-event-list-page" extends="scientificCouncil.masterPage">
+    	<put name="body" value="/scientificCouncil/researchActivity/showEventsToEdit.jsp"/>
+    </definition>
+    <definition name="show-event-edit-page" extends="scientificCouncil.masterPage">
+    	<put name="body" value="/scientificCouncil/researchActivity/showEditEvent.jsp"/>
+    </definition>    
+    
 
     <!-- Protocols -->          
     <definition name="show-protocols" extends="scientificCouncil.masterPage">

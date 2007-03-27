@@ -13,25 +13,8 @@ public class MergeEventPageContainerBean extends MergeResearchActivityPageContai
     private String name;
     private EventType eventType;
     private ResearchActivityLocationType researchActivityLocationType;
-    private String eventLocation;
-    private YearMonthDay startDate;
-    private YearMonthDay endDate;
+    private String url;
     
-    public YearMonthDay getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(YearMonthDay endDate) {
-        this.endDate = endDate;
-    }
-
-    public String getEventLocation() {
-        return eventLocation;
-    }
-
-    public void setEventLocation(String eventLocation) {
-        this.eventLocation = eventLocation;
-    }
 
     public EventType getEventType() {
         return eventType;
@@ -57,12 +40,12 @@ public class MergeEventPageContainerBean extends MergeResearchActivityPageContai
         this.researchActivityLocationType = researchActivityLocationType;
     }
 
-    public YearMonthDay getStartDate() {
-        return startDate;
+    public String getUrl() {
+        return url;
     }
 
-    public void setStartDate(YearMonthDay startDate) {
-        this.startDate = startDate;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
 }

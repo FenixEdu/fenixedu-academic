@@ -59,22 +59,32 @@
 			<html:link page="/creditsReport.do?method=prepare">
 		  		<bean:message key="link.credits.viewReport"/>
 		  	</html:link>
-		</li>	
-<%--		<br />
+		</li>		
+		<br />
 		<li class="navheader">
-			Merge
+			<bean:message key="label.research.activity.navigation.header"/>
 		</li>
 		<li>
-			<html:link page="/mergeScientificJournal.do?method=prepare">
-		  		ScientificJournal Merge
+			<html:link page="/editScientificJournal.do?method=prepare">
+		  		<bean:message key="link.research.activity.edit.scientific.journal"/>
 		  	</html:link>
 		</li>		
 		<li>
-			<html:link page="/mergeEvents.do?method=prepare">
-		  		Event Merge
+			<html:link page="/editEvent.do?method=prepare">
+		  		<bean:message key="link.research.activity.edit.event"/>
 		  	</html:link>
-		</li>		--%>		
-<%--		<br/>
+		</li>							
+		<li>
+			<html:link page="/mergeScientificJournal.do?method=prepare">
+		  		<bean:message key="link.research.activity.merge.scientific.journal"/>
+		  	</html:link>
+		</li>				
+		<li>
+			<html:link page="/mergeEvents.do?method=prepare">
+		  		<bean:message key="link.research.activity.merge.event"/>
+		  	</html:link>
+		</li>
+		<%--		<br/>
 		<li class="navheader">
 			<bean:message key="label.protocols.navigation.header"/>
 		</li>
@@ -83,5 +93,5 @@
 		  		<bean:message key="link.protocols.view"/>
 		  	</html:link>
 		</li>		--%>
-	</ul>
+	</ul> 
 </logic:present>
