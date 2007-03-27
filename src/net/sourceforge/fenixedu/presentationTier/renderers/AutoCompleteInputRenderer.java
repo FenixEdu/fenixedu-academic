@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.renderers.components.controllers.HtmlController;
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
+import net.sourceforge.fenixedu.renderers.model.MetaSlot;
 import net.sourceforge.fenixedu.renderers.model.MetaSlotKey;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.renderers.utils.RendererPropertyUtils;
@@ -419,7 +420,7 @@ public class AutoCompleteInputRenderer extends InputRenderer {
                 
                 link.setUrl(SERVLET_URI);
                 link.setParameter("serviceName", getServiceName());
-                link.setParameter("serviceArgs", getServiceArgs());
+                link.setParameter("serviceArgs", getFormatedServiceArgs());
                 link.setParameter("labelField", getLabelField());
                 link.setParameter("valueField", "idInternal"); // TODO: allow configuration, needs also converter
                 link.setParameter("styleClass", getAutoCompleteItemsStyleClass() == null ? "" : getAutoCompleteItemsStyleClass());
@@ -445,6 +446,11 @@ public class AutoCompleteInputRenderer extends InputRenderer {
                 script.setScript(scriptText);
                 
                 container.addChild(script);
+            }
+
+            private String getFormatedServiceArgs() {
+                Object object = ((MetaSlot) getInputContext().getMetaObject()).getMetaObject().getObject();
+                return RenderUtils.getFormattedProperties(getServiceArgs(), object);
             }
 
         };
