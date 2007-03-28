@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -63,6 +64,10 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
     public abstract List<Enrolment> getEnrolments();
     
     public abstract StudentCurricularPlan getStudentCurricularPlan();
+    
+    public DegreeCurricularPlan getDegreeCurricularPlan() {
+	return getStudentCurricularPlan().getDegreeCurricularPlan();
+    }
     
     public MultiLanguageString getName() {
 	final MultiLanguageString multiLanguageString = new MultiLanguageString();
