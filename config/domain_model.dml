@@ -185,6 +185,7 @@ valueType net.sourceforge.fenixedu.domain.CompetenceCourseType								          
 valueType net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType							            as ThesisParticipationType;
 valueType net.sourceforge.fenixedu.domain.vigilancy.AttendingStatus												as AttendingStatus;
 valueType net.sourceforge.fenixedu.domain.protocols.util.ProtocolAction											as ProtocolAction;
+valueType net.sourceforge.fenixedu.domain.research.activity.ResearchActivityStage								as ResearchActivityStage;
 valueType net.sourceforge.fenixedu.domain.contacts.PartyContactType												as PartyContactType;
 
 /*
@@ -4143,6 +4144,7 @@ class net.sourceforge.fenixedu.domain.research.activity.Event extends net.source
 	EventType eventType;
 	String url;
 	ResearchActivityLocationType locationType;
+	ResearchActivityStage stage;
 }
 
 class net.sourceforge.fenixedu.domain.research.activity.EventEdition extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -4166,6 +4168,7 @@ class net.sourceforge.fenixedu.domain.research.activity.ScientificJournal extend
 	String issn;
     String url;
 	ResearchActivityLocationType locationType;
+	ResearchActivityStage stage;
 }
 
 class net.sourceforge.fenixedu.domain.research.activity.JournalIssue extends net.sourceforge.fenixedu.domain.DomainObject {

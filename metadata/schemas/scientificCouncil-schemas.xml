@@ -77,15 +77,22 @@
 </schema>
 
 <schema name="scientific.journal.merge.list" type="net.sourceforge.fenixedu.domain.research.activity.ScientificJournal" >
-	<slot name="name" />
+	<slot name="name" layout="scientific-journal-stage">
+		<property name="enumClasses(DRAFT)" value=""/>
+		<property name="enumClasses(APPROVED)" value=""/>
+	</slot>
 	<slot name="issn" key="label.scientific.journal.issn"/>
 </schema>
 
 <schema name="scientific.journal.merge.list.full" type="net.sourceforge.fenixedu.domain.research.activity.ScientificJournal" >
-	<slot name="name" />
+	<slot name="name" layout="scientific-journal-stage">
+		<property name="enumClasses(DRAFT)" value=""/>
+		<property name="enumClasses(APPROVED)" value=""/>
+	</slot>
 	<slot name="locationType" key="label.scientific.journal.locationType"/>
 	<slot name="issn" key="label.scientific.journal.issn"/>
 	<slot name="url" key="label.scientific.journal.url"/>
+	<slot name="stage" key="label.research.activity.stage"/>
 </schema>
 
 
@@ -105,6 +112,7 @@
 		</validator>
 	</slot>
 	<slot name="researchActivityLocationType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" key="label.scientific.journal.locationType"/>
+	<slot name="stage" key="label.research.activity.stage" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 </schema>
 
 <schema name="scientific.journal.edit" type="net.sourceforge.fenixedu.domain.research.activity.ScientificJournal" >
@@ -123,6 +131,7 @@
 		</validator>
 	</slot>
 	<slot name="locationType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" key="label.scientific.journal.locationType"/>
+	<slot name="stage" key="label.research.activity.stage" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 </schema>
 
 
@@ -133,14 +142,21 @@
 </schema>
 
 <schema name="event.merge.list" type="net.sourceforge.fenixedu.domain.research.activity.Event" >
-	<slot name="name" />
+	<slot name="name" layout="event-stage">
+		<property name="enumClasses(DRAFT)" value=""/>
+		<property name="enumClasses(APPROVED)" value=""/>
+	</slot>
 	<slot name="eventType" key="label.event.eventType"/>
 </schema>
 <schema name="event.merge.list.full" type="net.sourceforge.fenixedu.domain.research.activity.Event" >
-	<slot name="name" />
+	<slot name="name" layout="event-stage">
+		<property name="enumClasses(DRAFT)" value=""/>
+		<property name="enumClasses(APPROVED)" value=""/>
+	</slot>
 	<slot name="locationType" key="label.scientific.journal.locationType"/>
 	<slot name="eventType" key="label.event.eventType"/>
 	<slot name="url" key="label.scientific.journal.url"/>
+	<slot name="stage" key="label.research.activity.stage"/>
 </schema>
 <schema name="event.new.properties" type="net.sourceforge.fenixedu.dataTransferObject.MergeEventPageContainerBean" >
 	<slot name="name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
@@ -154,6 +170,7 @@
 		</validator>
 	</slot>
 	<slot name="researchActivityLocationType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" key="label.scientific.journal.locationType"/>
+	<slot name="stage" key="label.research.activity.stage" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 </schema>
 <schema name="event.edit" type="net.sourceforge.fenixedu.domain.research.activity.Event" >
 	<slot name="name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
@@ -167,9 +184,5 @@
 		</validator>
 	</slot>
 	<slot name="locationType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" key="label.scientific.journal.locationType"/>
+	<slot name="stage" key="label.research.activity.stage" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 </schema>
-
-
-
-
-

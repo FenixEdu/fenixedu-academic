@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.researchActivity;
 
 import java.text.Collator;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class EditScientificJournalDA extends EditResearchActivityDA {
     
     @Override
     protected List getObjects() {
-	List<ScientificJournal> scientificJournals = rootDomainObject.getScientificJournals();
+	List<ScientificJournal> scientificJournals = new ArrayList<ScientificJournal>(rootDomainObject.getScientificJournals());
 	Collections.sort(scientificJournals, new BeanComparator("name", Collator.getInstance()));
         return scientificJournals;
     }

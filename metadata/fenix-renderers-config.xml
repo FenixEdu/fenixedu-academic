@@ -756,4 +756,8 @@ Documentation:
     
     <renderer mode="input" layout="pages" type="net.sourceforge.fenixedu.dataTransferObject.PageContainerBean" class="net.sourceforge.fenixedu.presentationTier.renderers.PagesRenderer" />
     
+    <renderer layout="scientific-journal-stage" type="java.lang.Object" class="net.sourceforge.fenixedu.presentationTier.renderers.ScientificJournalStageRenderer" />
+    
+    <renderer layout="event-stage" type="java.lang.Object" class="net.sourceforge.fenixedu.presentationTier.renderers.EventStageRenderer" />
+    
 </renderers-config>

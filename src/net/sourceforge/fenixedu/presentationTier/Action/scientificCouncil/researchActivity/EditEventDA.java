@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.researchActivity;
 
 import java.text.Collator;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -12,7 +13,7 @@ public class EditEventDA extends EditResearchActivityDA {
     
     @Override
     protected List getObjects() {
-	List<Event> events = rootDomainObject.getEvents();
+	List<Event> events = new ArrayList<Event>(rootDomainObject.getEvents());
 	Collections.sort(events, new BeanComparator("name", Collator.getInstance()));
         return events;
     }

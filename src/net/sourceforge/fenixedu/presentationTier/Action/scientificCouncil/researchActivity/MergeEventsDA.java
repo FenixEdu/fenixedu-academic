@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.researchActivity;
 
 import java.text.Collator;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -38,6 +39,7 @@ public class MergeEventsDA extends MergeResearchActivityDA {
 	researchActivityPageContainerBean.setResearchActivityLocationType(event.getLocationType());
 	researchActivityPageContainerBean.setEventType(event.getEventType());
 	researchActivityPageContainerBean.setUrl(event.getUrl());
+	researchActivityPageContainerBean.setStage(event.getStage());
     }
 
     @Override
@@ -52,7 +54,7 @@ public class MergeEventsDA extends MergeResearchActivityDA {
 
     @Override
     protected List getObjects() {
-	List<Event> events = rootDomainObject.getEvents();
+	List<Event> events = new ArrayList<Event>(rootDomainObject.getEvents());
 	Collections.sort(events, new BeanComparator("name", Collator.getInstance()));
 	return events;
     }
