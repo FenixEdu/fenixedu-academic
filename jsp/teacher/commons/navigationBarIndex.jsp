@@ -36,8 +36,9 @@
   		<bean:message key="link.manage.finalWork"/>
   	</html:link>
   </li>
+<%--
    <li>
-<%--   	<html:link href="<%= request.getContextPath() + "/teacher/publicationManagement.do" %>">
+   	<html:link href="<%= request.getContextPath() + "/teacher/publicationManagement.do" %>">
   		<bean:message key="link.manage.publications"/>
   	</html:link>  
   </li>--%>
