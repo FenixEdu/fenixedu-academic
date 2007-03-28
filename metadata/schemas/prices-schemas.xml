@@ -6,6 +6,13 @@
 	<slot name="endDate" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.PostingRule.endDate"/>
 </schema>
 
+<schema name="ImprovementOfApprovedEnrolmentPR.view"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.ImprovementOfApprovedEnrolmentPR"
+	bundle="APPLICATION_RESOURCES" extends="PostingRule.view">
+	<slot name="fixedAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR.fixedAmount"/>
+	<slot name="fixedAmountPenalty" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountWithPenaltyPR.fixedAmountPenalty"/>
+</schema>
+
 <schema name="FixedAmountPR.view"
 	type="net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR"
 	bundle="APPLICATION_RESOURCES" extends="PostingRule.view">
@@ -56,6 +63,14 @@
 	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR"
 	bundle="APPLICATION_RESOURCES" extends="BaseAmountPlusAmountPerUnitPR.view">
 	<slot name="amountPerPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR.amountPerPage"  />
+</schema>
+
+<schema name="ImprovementOfApprovedEnrolmentPR.edit"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.ImprovementOfApprovedEnrolmentPR"
+	bundle="APPLICATION_RESOURCES">
+	<slot name="fixedAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR.fixedAmount" />
+	<slot name="fixedAmountPenalty" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountWithPenaltyPR.fixedAmountPenalty" />
+	<setter signature="edit(fixedAmount,fixedAmountPenalty)"/>
 </schema>
 
 <schema name="FixedAmountPR.edit"
@@ -117,6 +132,11 @@
 
 <!-- Student Prices View -->
 <schema name="PostingRule.view-student"	type="net.sourceforge.fenixedu.domain.accounting.PostingRule" bundle="APPLICATION_RESOURCES">
+</schema>
+
+<schema name="ImprovementOfApprovedEnrolmentPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.ImprovementOfApprovedEnrolmentPR" extends="PostingRule.view-student" bundle="APPLICATION_RESOURCES">
+	<slot name="fixedAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR.fixedAmount"  />
+	<slot name="fixedAmountPenalty" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountWithPenaltyPR.fixedAmountPenalty" />
 </schema>
 
 <schema name="FixedAmountPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR" extends="PostingRule.view-student" bundle="APPLICATION_RESOURCES">

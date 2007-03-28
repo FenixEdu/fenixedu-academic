@@ -9,10 +9,8 @@ import java.util.Set;
 import java.util.Map.Entry;
 
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.accounting.events.ImprovementOfApprovedEnrolmentEvent;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.ImprovementOfApprovedEnrolment;
 import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.EnrolmentResultType;
@@ -70,7 +68,7 @@ public class StudentCurricularPlanImprovementOfApprovedEnrolmentManager extends 
 
     @Override
     protected void performEnrolments(final Map<EnrolmentResultType, List<IDegreeModuleToEvaluate>> degreeModulesToEvaluate) {
-	Collection<EnrolmentEvaluation> created = new HashSet<EnrolmentEvaluation>();
+	Collection<Enrolment> toCreate = new HashSet<Enrolment>();
 	
 	for (final Entry<EnrolmentResultType, List<IDegreeModuleToEvaluate>> entry : degreeModulesToEvaluate.entrySet()) {
 
@@ -80,7 +78,7 @@ public class StudentCurricularPlanImprovementOfApprovedEnrolmentManager extends 
 
 		    if (moduleEnroledWrapper.getCurriculumModule() instanceof Enrolment) {
 			final Enrolment enrolment = (Enrolment) moduleEnroledWrapper.getCurriculumModule();
-			created.add(enrolment.createEnrolmentEvaluationForImprovement(responsiblePerson.getEmployee(), enrolmentContext.getExecutionPeriod()));
+			toCreate.add(enrolment);
 		    } else {
 			throw new DomainException("StudentCurricularPlanImprovementOfApprovedEnrolmentManager.can.only.manage.enrolment.evaluations.of.enrolments");
 		    }
@@ -88,11 +86,8 @@ public class StudentCurricularPlanImprovementOfApprovedEnrolmentManager extends 
 	    }
 	}
 	
-	// TODO: enable once the ImprovementOfApprovedEnrolmentPR is finished 
-	if (false && !created.isEmpty()) {
-	    new ImprovementOfApprovedEnrolmentEvent(
-		    responsiblePerson.getEmployee().getAdministrativeOffice(), 
-		    studentCurricularPlan.getRegistration().getPerson(), created);
+	if (!toCreate.isEmpty()) {
+	    studentCurricularPlan.createEnrolmentEvaluationForImprovement(toCreate, responsiblePerson.getEmployee(), enrolmentContext.getExecutionPeriod());
 	}
     }
 

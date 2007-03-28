@@ -11353,6 +11353,15 @@
     </service>
     
     <service>
+    	<name>CreateImprovementOfApprovedEnrolmentPenaltyExemption</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.CreateImprovementOfApprovedEnrolmentPenaltyExemption</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="AcademicAdministrativeOfficeAuthorization"></chain>
+        </filterChains>     
+    </service>
+    <service>
     	<name>CreateAdministrativeOfficeFeeAndInsurancePenaltyExemption</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.CreateAdministrativeOfficeFeeAndInsurancePenaltyExemption</implementationClass>
         <description></description>

@@ -7,11 +7,13 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.gratuityExemption.CreateGratuityExemptionBean;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.penaltyExemption.CreateAdministrativeOfficeFeeAndInsurancePenaltyExemptionBean;
+import net.sourceforge.fenixedu.dataTransferObject.accounting.penaltyExemption.CreateImprovementOfApprovedEnrolmentPenaltyExemptionBean;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.penaltyExemption.CreateInstallmentPenaltyExemptionBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.Exemption;
 import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
+import net.sourceforge.fenixedu.domain.accounting.events.ImprovementOfApprovedEnrolmentEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -196,6 +198,8 @@ public class ExemptionsManagementDispatchAction extends
 	    return mapping.findForward("showForGratuityEvent");
 	} else if (event instanceof AdministrativeOfficeFeeAndInsuranceEvent) {
 	    return mapping.findForward("showForAdministrativeOfficeFeeAndInsuranceEvent");
+	} else if (event instanceof ImprovementOfApprovedEnrolmentEvent) {
+	    return mapping.findForward("showForImprovementOfApprovedEnrolmentEvent");
 	} else {
 	    throw new UnsupportedOperationException();
 	}
@@ -204,6 +208,48 @@ public class ExemptionsManagementDispatchAction extends
     private Exemption getExemption(final HttpServletRequest request) {
 	return (Exemption) rootDomainObject.readExemptionByOID(getIntegerFromRequest(request,
 		"exemptionId"));
+    }
+
+    public ActionForward prepareCreateImprovementOfApprovedEnrolmentPenaltyExemption(
+	    ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	request.setAttribute("createPenaltyExemptionBean",
+		new CreateImprovementOfApprovedEnrolmentPenaltyExemptionBean(
+			(ImprovementOfApprovedEnrolmentEvent) getEvent(request)));
+
+	return mapping.findForward("createImprovementOfApprovedEnrolmentPenaltyExemption");
+
+    }
+
+    public ActionForward prepareCreateImprovementOfApprovedEnrolmentPenaltyExemptionInvalid(
+	    ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute("createPenaltyExemptionBean",
+		RenderUtils.getViewState("create-penalty-exemption-bean").getMetaObject().getObject());
+
+	return mapping.findForward("createImprovementOfApprovedEnrolmentPenaltyExemption");
+    }
+
+    public ActionForward createImprovementOfApprovedEnrolmentPenaltyExemption(
+	    ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+
+	final CreateImprovementOfApprovedEnrolmentPenaltyExemptionBean penaltyExemptionBean = (CreateImprovementOfApprovedEnrolmentPenaltyExemptionBean) RenderUtils
+		.getViewState("create-penalty-exemption-bean").getMetaObject().getObject();
+	request.setAttribute("eventId", penaltyExemptionBean.getEvent().getIdInternal());
+
+	try {
+	    executeService(request, "CreateImprovementOfApprovedEnrolmentPenaltyExemption", new Object[] {
+		    getLoggedPerson(request).getEmployee(), penaltyExemptionBean });
+	} catch (DomainException ex) {
+	    addActionMessage(request, ex.getKey(), ex.getArgs());
+
+	    return prepareCreateImprovementOfApprovedEnrolmentPenaltyExemptionInvalid(mapping,
+		    form, request, response);
+	}
+
+	return showExemptions(mapping, form, request, response);
     }
 
     public ActionForward prepareCreateAdministrativeOfficeFeeAndInsurancePenaltyExemption(

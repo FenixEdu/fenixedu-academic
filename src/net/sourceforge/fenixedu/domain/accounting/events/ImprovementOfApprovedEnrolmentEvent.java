@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.accounting.Account;
 import net.sourceforge.fenixedu.domain.accounting.AccountType;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
+import net.sourceforge.fenixedu.domain.accounting.Exemption;
 import net.sourceforge.fenixedu.domain.accounting.PostingRule;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -40,15 +41,28 @@ public class ImprovementOfApprovedEnrolmentEvent extends ImprovementOfApprovedEn
     }
 
     @Override
-    public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
-	final LabelFormatter labelFormatter = new LabelFormatter();
+    public LabelFormatter getDescription() {
+	final LabelFormatter labelFormatter = super.getDescription();
 	
-	labelFormatter.appendLabel(entryType.name(), LabelFormatter.ENUMERATION_RESOURCES);
+	getDetailedDescription(labelFormatter);
+	
+	return labelFormatter;
+    }
+
+    private void getDetailedDescription(final LabelFormatter labelFormatter) {
 	labelFormatter.appendLabel(" (");
 	labelFormatter.appendLabel(String.valueOf(getImprovementEnrolmentEvaluationsCount()));
 	labelFormatter.appendLabel(" ");
 	labelFormatter.appendLabel("label.markSheet.curricularCourse", LabelFormatter.APPLICATION_RESOURCES);
 	labelFormatter.appendLabel(")");
+    }
+
+    @Override
+    public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
+	final LabelFormatter labelFormatter = new LabelFormatter();
+
+	labelFormatter.appendLabel(entryType.name(), LabelFormatter.ENUMERATION_RESOURCES);
+	getDetailedDescription(labelFormatter);
 	
 	return labelFormatter;
     }
@@ -66,6 +80,34 @@ public class ImprovementOfApprovedEnrolmentEvent extends ImprovementOfApprovedEn
     @Override
     public PostingRule getPostingRule() {
 	return getAdministrativeOffice().getServiceAgreementTemplate().findPostingRuleByEventTypeAndDate(getEventType(), getWhenOccured());
+    }
+    
+    public boolean hasImprovementOfApprovedEnrolmentPenaltyExemption() {
+	return getImprovementOfApprovedEnrolmentPenaltyExemption() != null;
+    }
+
+    public ImprovementOfApprovedEnrolmentPenaltyExemption getImprovementOfApprovedEnrolmentPenaltyExemption() {
+	for (final Exemption exemption : getExemptionsSet()) {
+	    if (exemption instanceof ImprovementOfApprovedEnrolmentPenaltyExemption) {
+		return (ImprovementOfApprovedEnrolmentPenaltyExemption) exemption;
+	    }
+	}
+
+	return null;
+    }
+
+    @Override
+    public boolean isExemptionAppliable() {
+	return true;
+    }
+
+    @Override
+    public void removeImprovementEnrolmentEvaluations(EnrolmentEvaluation improvementEnrolmentEvaluations) {
+        super.removeImprovementEnrolmentEvaluations(improvementEnrolmentEvaluations);
+        
+        if (!hasAnyImprovementEnrolmentEvaluations()) {
+            this.delete();
+        }
     }
     
 }

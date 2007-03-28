@@ -418,11 +418,12 @@
 
 		 	    <forward name="showEventsToApplyExemption" path="payments.management.exemptions.showEventsToApplyExemption"/> 		 	      
 				<forward name="showForGratuityEvent" path="payments.management.exemptions.showForGratuityEvent"/> 
+				<forward name="showForImprovementOfApprovedEnrolmentEvent" path="payments.management.exemptions.showForImprovementOfApprovedEnrolmentEvent"/> 
 				<forward name="showForAdministrativeOfficeFeeAndInsuranceEvent" path="payments.management.exemptions.showForAdministrativeOfficeFeeAndInsuranceEvent"/> 
 				<forward name="createGratuityExemption" path="payments.management.exemptions.gratuity.create"/> 
 		 	    <forward name="createInstallmentPenaltyExemption" path="payments.management.exemptions.penalty.createInstallmentExemption"/>
+		 	    <forward name="createImprovementOfApprovedEnrolmentPenaltyExemption" path="payments.management.exemptions.penalty.createImprovementOfApprovedEnrolmentExemption"/>
 		 	    <forward name="createAdministrativeOfficeFeeAndInsurancePenaltyExemption" path="payments.management.exemptions.penalty.createAdministrativeOfficeFeeAndInsuranceExemption"/>
-		 	    	 	    		 	   
 		</action>
 		
 		<!-- End Payments -->

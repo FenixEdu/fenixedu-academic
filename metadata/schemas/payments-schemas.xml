@@ -118,6 +118,7 @@
 </schema>
 
 <schema name="AccountingEvent.view" type="net.sourceforge.fenixedu.domain.accounting.Event" bundle="APPLICATION_RESOURCES">
+	<slot name="whenOccured" read-only="true" key="label.net.sourceforge.fenixedu.domain.accounting.Event.whenOccured" />
 	<slot name="description" key="label.net.sourceforge.fenixedu.domain.accounting.Event.description" />
 </schema>
 
@@ -188,6 +189,18 @@
     <slot name="reason" key="label.net.sourceforge.fenixedu.dataTransferObject.accounting.penaltyExemption.CreatePenaltyExemptionBean.reason" layout="longText" />
 </schema>
 
+<schema name="CreateImprovementOfApprovedEnrolmentPenaltyExemptionBean.edit" 
+		type="net.sourceforge.fenixedu.dataTransferObject.accounting.penaltyExemption.CreateImprovementOfApprovedEnrolmentPenaltyExemptionBean" 
+		bundle="APPLICATION_RESOURCES" >
+   	<slot name="justificationType" layout="radio-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" 
+   	key="label.net.sourceforge.fenixedu.dataTransferObject.accounting.penaltyExemption.CreatePenaltyExemptionBean.justificationType">
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.payments.PenaltyExemptionTypeProviderForCreatePenaltyExemptionBean" />
+        <property name="saveOptions" value="true"/>
+    </slot>
+    <slot name="dispatchDate" key="label.net.sourceforge.fenixedu.dataTransferObject.accounting.penaltyExemption.CreatePenaltyExemptionBean.dispatchDate" />
+    <slot name="reason" key="label.net.sourceforge.fenixedu.dataTransferObject.accounting.penaltyExemption.CreatePenaltyExemptionBean.reason" layout="longText" />
+</schema>
+
 <schema name="CreateAdministrativeOfficeFeeAndInsurancePenaltyExemptionBean.edit" 
 		type="net.sourceforge.fenixedu.dataTransferObject.accounting.penaltyExemption.CreateAdministrativeOfficeFeeAndInsurancePenaltyExemptionBean" 
 		bundle="APPLICATION_RESOURCES" >
@@ -207,6 +220,13 @@
 	<slot name="installment.description" key="label.net.sourceforge.fenixedu.domain.accounting.events.gratuity.exemption.penalty.InstallmentPenaltyExemption.installment" />
 	<slot name="description" key="label.net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemption.description" />
     <slot name="reason" key="label.net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemption.reason" />
+</schema>
+
+<schema name="ImprovementOfApprovedEnrolmentPenaltyExemption.view" 
+		type="net.sourceforge.fenixedu.domain.accounting.events.ImprovementOfApprovedEnrolmentPenaltyExemption" 
+		bundle="APPLICATION_RESOURCES">
+	<slot name="description" key="label.net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemption.description" />
+    <slot name="comments" key="label.net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemption.comments" />
 </schema>
 
 <schema name="AdministrativeOfficeFeeAndInsurancePenaltyExemption.view" 

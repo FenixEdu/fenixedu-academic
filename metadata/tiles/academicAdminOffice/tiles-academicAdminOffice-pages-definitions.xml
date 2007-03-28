@@ -232,6 +232,10 @@
 		<put name="body" value="/academicAdminOffice/payments/exemptions/showForGratuityEvent.jsp"/>
 	</definition>
 	
+	<definition name="payments.management.exemptions.showForImprovementOfApprovedEnrolmentEvent" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/payments/exemptions/showForImprovementOfApprovedEnrolmentEvent.jsp"/>
+	</definition>
+		
 	<definition name="payments.management.exemptions.showForAdministrativeOfficeFeeAndInsuranceEvent" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/payments/exemptions/showForAdministrativeOfficeFeeAndInsuranceEvent.jsp"/>
 	</definition>
@@ -242,6 +246,10 @@
 			
 	<definition name="payments.management.exemptions.penalty.createInstallmentExemption" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/payments/exemptions/penalty/createInstallmentExemption.jsp"/>
+	</definition>
+	
+	<definition name="payments.management.exemptions.penalty.createImprovementOfApprovedEnrolmentExemption" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/payments/exemptions/penalty/createImprovementOfApprovedEnrolmentExemption.jsp"/>
 	</definition>
 	
 	<definition name="payments.management.exemptions.penalty.createAdministrativeOfficeFeeAndInsuranceExemption" extends="academicAdminOffice.masterPage">
