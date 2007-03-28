@@ -74,6 +74,10 @@ public class JournalIssue extends JournalIssue_Base {
 	return people.size()==1 && people.contains(currentUser); 
     }
     
+    public ResearchActivityStage getStage() {
+	return getScientificJournal().getStage();
+    }
+    
     public List<JournalIssueParticipation> getParticipationsFor(Party party) {
 	List<JournalIssueParticipation> participations = new ArrayList<JournalIssueParticipation>();
 	for(JournalIssueParticipation participation : getParticipations()) {

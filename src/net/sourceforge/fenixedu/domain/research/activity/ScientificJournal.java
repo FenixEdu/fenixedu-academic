@@ -14,6 +14,7 @@ public class ScientificJournal extends ScientificJournal_Base {
     
     public  ScientificJournal() {
         super();
+        setStage(ResearchActivityStage.DRAFT);
         setRootDomainObject(RootDomainObject.getInstance());
     }
     

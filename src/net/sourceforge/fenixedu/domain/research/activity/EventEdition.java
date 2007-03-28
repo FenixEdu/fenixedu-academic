@@ -88,5 +88,10 @@ public class EventEdition extends EventEdition_Base {
 	}
 	return participations;
     }
+    
+    public ResearchActivityStage getStage() {
+	return getEvent().getStage();
+    }
+
 
 }

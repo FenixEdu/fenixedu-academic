@@ -14,6 +14,7 @@ public class Event extends Event_Base {
 
     public Event() {
 	super();
+	setStage(ResearchActivityStage.DRAFT);
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 

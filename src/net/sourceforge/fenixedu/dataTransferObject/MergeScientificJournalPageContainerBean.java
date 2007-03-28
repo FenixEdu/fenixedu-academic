@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.research.activity.ResearchActivityLocationType;
+import net.sourceforge.fenixedu.domain.research.activity.ResearchActivityStage;
 
 public class MergeScientificJournalPageContainerBean extends MergeResearchActivityPageContainerBean implements Serializable{
     
@@ -10,6 +11,7 @@ public class MergeScientificJournalPageContainerBean extends MergeResearchActivi
     private String issn;
     private ResearchActivityLocationType researchActivityLocationType;
     private String url;
+    private ResearchActivityStage stage;
 
     
     public String getIssn() {
@@ -42,6 +44,14 @@ public class MergeScientificJournalPageContainerBean extends MergeResearchActivi
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public ResearchActivityStage getStage() {
+        return stage;
+    }
+
+    public void setStage(ResearchActivityStage stage) {
+        this.stage = stage;
     }
 
 

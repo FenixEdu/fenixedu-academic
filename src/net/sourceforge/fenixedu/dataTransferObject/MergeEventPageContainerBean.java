@@ -1,12 +1,8 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import java.util.Comparator;
-
-import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.research.activity.EventType;
 import net.sourceforge.fenixedu.domain.research.activity.ResearchActivityLocationType;
-
-import org.joda.time.YearMonthDay;
+import net.sourceforge.fenixedu.domain.research.activity.ResearchActivityStage;
 
 public class MergeEventPageContainerBean extends MergeResearchActivityPageContainerBean {
     
@@ -14,6 +10,7 @@ public class MergeEventPageContainerBean extends MergeResearchActivityPageContai
     private EventType eventType;
     private ResearchActivityLocationType researchActivityLocationType;
     private String url;
+    private ResearchActivityStage stage;
     
 
     public EventType getEventType() {
@@ -46,6 +43,14 @@ public class MergeEventPageContainerBean extends MergeResearchActivityPageContai
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public ResearchActivityStage getStage() {
+        return stage;
+    }
+
+    public void setStage(ResearchActivityStage stage) {
+        this.stage = stage;
     }
 
 }
