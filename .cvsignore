@@ -1,5 +1,4 @@
 src_gen
-build
 src_gen/*
 classes
 classes_tests
@@ -14,7 +13,6 @@ web
 bin
 build.properties
 build.properties.localhost
-build
 build_autoprocesses.xml
 cvspass
 cvsImage
