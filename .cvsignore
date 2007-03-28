@@ -1,4 +1,5 @@
 src_gen
+build
 src_gen/*
 classes
 classes_tests
