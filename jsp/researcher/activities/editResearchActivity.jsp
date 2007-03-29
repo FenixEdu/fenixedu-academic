@@ -6,8 +6,8 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <logic:present role="RESEARCHER">
-	<bean:define id="participationId" name="participation" property="idInternal" />
-	<bean:define id="parameter" value="<%="participationId=" + participationId %>" />
+	<bean:define id="activityId" name="researchActivity" property="idInternal"/>
+	<bean:define id="parameter" value="<%= "activityId=" + activityId %>"/>
 	<bean:define id="schema" name="schema" type="java.lang.String" scope="request" />
 	<bean:define id="activityType" name="researchActivity" property="class.simpleName" />
 	
@@ -21,15 +21,36 @@
 			</html:link>
 		</li>
 		<li>
-			<html:link page="<%="/activities/activitiesManagement.do?method=prepareDelete&forwardTo=EditResearchActivity&" + parameter%>">
+			<bean:define id="method" value=""/>
+			<logic:equal name="activityType" value="Event">
+				<bean:define id="method" value="prepareDeleteEventParticipations"/>
+			</logic:equal>
+			<logic:equal name="activityType" value="ScientificJournal">
+				<bean:define id="method" value="prepareDeleteJournalParticipations"/>
+			</logic:equal>
+			<logic:equal name="activityType" value="Cooperation">
+				<bean:define id="method" value="prepareDeleteCooperationParticipations"/>
+			</logic:equal>
+			<html:link page="<%="/activities/activitiesManagement.do?method=" + method + "&forwardTo=Edit" + activityType +"&amp;" + parameter%>">
 				<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.delete" />
 			</html:link> 
 		</li>
 	</ul>
 	
 	<logic:equal name="confirm" value="yes">
+		<bean:define id="deleteMethod" value=""/>
+		<logic:equal name="activityType" value="Event">
+			<bean:define id="deleteMethod" value="deleteEventParticipations"/>
+		</logic:equal>
+		<logic:equal name="activityType" value="ScientificJournal">
+			<bean:define id="deleteMethod" value="deleteJournalParticipations"/>
+		</logic:equal>
+		<logic:equal name="activityType" value="Cooperation">
+			<bean:define id="deleteMethod" value="deleteCooperationParticipations"/>
+		</logic:equal>
+		
 		<p class="mbottom1 mtop2"><span class="warning0"><bean:message key="researcher.activity.activitiesManagement.delete.useCase"/></span></p>
-		<fr:form action="<%="/activities/activitiesManagement.do?method=delete&forwardTo=EditResearchActivity&" + parameter%>">
+		<fr:form action="<%="/activities/activitiesManagement.do?method=" + deleteMethod +"&forwardTo=Edit" + activityType + "&amp;" + parameter%>">
 			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.confirm" property="confirm">
 				<bean:message bundle="RESEARCHER_RESOURCES" key="button.delete"/>
 			</html:submit>
@@ -41,19 +62,18 @@
 	</logic:equal>
 
 	<bean:message key="link.edit" bundle="RESEARCHER_RESOURCES"/>: 
-	<html:link page="<%="/activities/editResearchActivity.do?method=prepareEditData&" + parameter %>">
+	<html:link page="<%="/activities/editResearchActivity.do?method=prepareEdit" + activityType + "Data&" + parameter %>">
 			<bean:message bundle="RESEARCHER_RESOURCES" key="label.activityData" />
 	</html:link>, 
-	<logic:equal name="activityType" value="Cooperation">
-		<html:link page="<%="/activities/editResearchActivity.do?method=prepareEditParticipants&" + parameter %>">
+
+	<html:link page="<%="/activities/editResearchActivity.do?method=prepareEdit" + activityType + "Participants&" + parameter %>">
+		<logic:equal name="activityType" value="Cooperation">
 				<bean:message bundle="RESEARCHER_RESOURCES" key="label.cooperation.colaborationForm" />
-		</html:link>
-	</logic:equal>
-	<logic:notEqual name="activityType" value="Cooperation">
-		<html:link page="<%="/activities/editResearchActivity.do?method=prepareEditParticipants&" + parameter %>">
+		</logic:equal>
+		<logic:notEqual name="activityType" value="Cooperation">
 				<bean:message bundle="RESEARCHER_RESOURCES" key="label.activityRoles" />
-		</html:link>
-	</logic:notEqual>
+		</logic:notEqual>
+	</html:link>
 
 	<%-- DATA --%>		
 	<fr:view name="editionBean" schema="<%= schema %>">

@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.research.activity.Participation.ResearchActivityParticipationRole;
 import net.sourceforge.fenixedu.domain.research.result.publication.Article;
+import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
 
 
 public class ScientificJournal extends ScientificJournal_Base {
@@ -18,7 +19,7 @@ public class ScientificJournal extends ScientificJournal_Base {
         setRootDomainObject(RootDomainObject.getInstance());
     }
     
-    public ScientificJournal(String name, ResearchActivityLocationType type) {
+    public ScientificJournal(String name, ScopeType type) {
 	this();
 	this.setName(name);
 	this.setLocationType(type);

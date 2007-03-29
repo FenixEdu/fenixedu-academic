@@ -1,14 +1,14 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
 import net.sourceforge.fenixedu.domain.research.activity.EventType;
-import net.sourceforge.fenixedu.domain.research.activity.ResearchActivityLocationType;
 import net.sourceforge.fenixedu.domain.research.activity.ResearchActivityStage;
+import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
 
 public class MergeEventPageContainerBean extends MergeResearchActivityPageContainerBean {
     
     private String name;
     private EventType eventType;
-    private ResearchActivityLocationType researchActivityLocationType;
+    private ScopeType researchActivityLocationType;
     private String url;
     private ResearchActivityStage stage;
     
@@ -29,11 +29,11 @@ public class MergeEventPageContainerBean extends MergeResearchActivityPageContai
         this.name = name;
     }
 
-    public ResearchActivityLocationType getResearchActivityLocationType() {
+    public ScopeType getResearchActivityLocationType() {
         return researchActivityLocationType;
     }
 
-    public void setResearchActivityLocationType(ResearchActivityLocationType researchActivityLocationType) {
+    public void setResearchActivityLocationType(ScopeType researchActivityLocationType) {
         this.researchActivityLocationType = researchActivityLocationType;
     }
 

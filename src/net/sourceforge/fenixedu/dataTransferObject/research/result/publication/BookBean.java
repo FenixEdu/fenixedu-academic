@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.dataTransferObject.research.result.publication;
 import java.io.Serializable;
 import net.sourceforge.fenixedu.domain.research.result.publication.Book;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
-import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication.ScopeType;
+import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
 import bibtex.dom.BibtexEntry;
 
 public class BookBean extends ResultPublicationBean implements Serializable {

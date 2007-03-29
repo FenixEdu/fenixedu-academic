@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.research.activity.Event;
 import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
 import net.sourceforge.fenixedu.domain.research.activity.EventType;
-import net.sourceforge.fenixedu.domain.research.activity.ResearchActivityLocationType;
+import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
 
 import org.joda.time.YearMonthDay;
 
@@ -15,7 +15,7 @@ public class ResultEventAssociationBean implements Serializable {
 	private DomainReference<EventEdition> eventEdition;
     private String eventName;
     private EventType eventType;
-    private ResearchActivityLocationType locationType;
+    private ScopeType locationType;
     private String eventLocation;
     private YearMonthDay startDate;
     private YearMonthDay endDate;
@@ -53,11 +53,11 @@ public class ResultEventAssociationBean implements Serializable {
         this.eventLocation = eventLocation;
     }
     
-    public ResearchActivityLocationType getLocationType() {
+    public ScopeType getLocationType() {
         return locationType;
     }
 
-    public void setLocationType(ResearchActivityLocationType locationType) {
+    public void setLocationType(ScopeType locationType) {
         this.locationType = locationType;
     }
 

@@ -5,8 +5,9 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-<bean:define id="participationId" name="participation" property="idInternal" scope="request"/>
-<bean:define id="parameter" value="<%= "participationId=" +  participationId%>" toScope="request"/>
+<bean:define id="activityId" name="researchActivity" property="idInternal" scope="request"/>
+<bean:define id="activityType" name="researchActivity" property="class.simpleName" />
+<bean:define id="parameter" value="<%= "activityId=" +  activityId + "&amp;forwardTo=" + "prepareEdit" + activityType + "Participants" %>" toScope="request"/>
 
 <%-- CREATION OF A NEW PARTICIPATION ROLE --%>
 	<logic:present name="participationRoleBean">

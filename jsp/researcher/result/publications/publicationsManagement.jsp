@@ -79,10 +79,17 @@
 		</logic:notEmpty>
 	</logic:equal>
 	
-	<logic:notEmpty name="inproceedings">
-		<p id='inproceedings' class="mtop3 mbottom0"/><span><strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.Inproceedings"/></span></strong></p>
+	<logic:notEmpty name="national-inproceedings">
+		<p id='inproceedings' class="mtop2 mbottom0"/><span><strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.NationalInproceedings"/></span></strong></p>
 		<bean:define id="currentSchema" value="result.publication.presentation.Inproceedings" toScope="request"/>
-		<bean:define id="results" name="inproceedings" toScope="request"/>
+		<bean:define id="results" name="national-inproceedings" toScope="request"/>
+		<jsp:include page="publicationsResume.jsp"/>
+	</logic:notEmpty>
+	
+	<logic:notEmpty name="international-inproceedings">
+		<p id='inproceedings' class="mtop2 mbottom0"/><span><strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.InternationalInproceedings"/></span></strong></p>
+		<bean:define id="currentSchema" value="result.publication.presentation.Inproceedings" toScope="request"/>
+		<bean:define id="results" name="international-inproceedings" toScope="request"/>
 		<jsp:include page="publicationsResume.jsp"/>
 	</logic:notEmpty>
 	

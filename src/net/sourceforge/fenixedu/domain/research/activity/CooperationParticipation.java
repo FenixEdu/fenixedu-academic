@@ -47,5 +47,10 @@ public class CooperationParticipation extends CooperationParticipation_Base {
 	return this.getCooperation().getParticipationsFor(this.getParty()).size() == 1;
     }
     
+    @Override 
+    public void delete() {
+	removeCooperation();
+	super.delete();
+    }
     
 }

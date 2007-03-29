@@ -2,13 +2,10 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.research.activity.ResearchActivityLocationType;
 
 public abstract class MergeResearchActivityPageContainerBean extends PageContainerBean implements Serializable {
     

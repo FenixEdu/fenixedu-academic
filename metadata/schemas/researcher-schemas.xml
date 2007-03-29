@@ -198,38 +198,49 @@
 </schema>
 
 
-<schema name="researchEventParticipation.summary" type="net.sourceforge.fenixedu.domain.research.activity.EventParticipation">
-	<slot name="event.name" layout="link">
+<schema name="researchEventParticipation.summary" type="net.sourceforge.fenixedu.domain.research.activity.Event">
+	<slot name="name" layout="link">
 		<property name="classes" value="bold" />
 		<property name="useParent" value="true"/>
-		<property name="linkFormat" value="/activities/editResearchActivity.do?method=prepare&amp;participationId=${idInternal}"/>
+		<property name="linkFormat" value="/activities/editResearchActivity.do?method=prepareEvent&amp;activityId=${idInternal}"/>
 		<property name="contextRelative" value="true" />
 		<property name="moduleRelative" value="true" />
 	</slot>
-	<slot name="role"/>
-	<slot name="event.eventType"/>
+	<slot name="participations" layout="show-participation-list">
+		<property name="subLayout" value="values"/>
+		<property name="subSchema" value="showNickName"/>
+	</slot>
 </schema>
 
-<schema name="researchScientificJournalParticipation.summary" type="net.sourceforge.fenixedu.domain.research.activity.ScientificJournalParticipation">
-	<slot name="scientificJournal.name" layout="link">
+<schema name="showNickName" type="net.sourceforge.fenixedu.domain.Person">
+	<slot name="nickname"/>
+</schema>
+<schema name="researchScientificJournalParticipation.summary" type="net.sourceforge.fenixedu.domain.research.activity.ScientificJournal">
+	<slot name="name" layout="link">
 		<property name="classes" value="bold" />
 		<property name="useParent" value="true"/>
-		<property name="linkFormat" value="/activities/editResearchActivity.do?method=prepare&amp;participationId=${idInternal}"/>
+		<property name="linkFormat" value="/activities/editResearchActivity.do?method=prepareScientificJournal&amp;activityId=${idInternal}"/>
 		<property name="contextRelative" value="true" />
 		<property name="moduleRelative" value="true" />
 	</slot>
-	<slot name="role"/>
+		<slot name="participations" layout="show-participation-list">
+		<property name="subLayout" value="values"/>
+		<property name="subSchema" value="showNickName"/>
+	</slot>
 </schema>
 
-<schema name="researchCooperationParticipation.summary" type="net.sourceforge.fenixedu.domain.research.activity.CooperationParticipation">
-	<slot name="cooperation.name" layout="link">
+<schema name="researchCooperationParticipation.summary" type="net.sourceforge.fenixedu.domain.research.activity.Cooperation">
+	<slot name="name" layout="link">
 		<property name="classes" value="bold" />
 		<property name="useParent" value="true"/>
-		<property name="linkFormat" value="/activities/editResearchActivity.do?method=prepare&amp;participationId=${idInternal}"/>
+		<property name="linkFormat" value="/activities/editResearchActivity.do?method=prepareCooperation&amp;activityId=${idInternal}"/>
 		<property name="contextRelative" value="true" />
 		<property name="moduleRelative" value="true" />
 	</slot>
-	<slot name="role"/>
+		<slot name="participations" layout="show-participation-list">
+		<property name="subLayout" value="values"/>
+		<property name="subSchema" value="showNickName"/>
+	</slot>
 </schema>
 
 <schema name="activityParticipation.summary" type="net.sourceforge.fenixedu.domain.research.activity.Participation">
@@ -336,6 +347,7 @@
 	<slot name="scientificJournalName" key="label.scientificJournal.name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="75"/>
 	</slot>
+	<slot name="issn" validator="net.sourceforge.fenixedu.renderers.validators.ISSNValidator"/>
 	<slot name="locationType" key="label.scientificJournal.locationType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="role" key="label.activityRole" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.researcher.activity.ResearchActivityRolesDataProvider"/>

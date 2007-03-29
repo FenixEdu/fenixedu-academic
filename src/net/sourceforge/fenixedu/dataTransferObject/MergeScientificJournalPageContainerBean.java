@@ -2,14 +2,15 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.research.activity.ResearchActivityLocationType;
+
 import net.sourceforge.fenixedu.domain.research.activity.ResearchActivityStage;
+import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
 
 public class MergeScientificJournalPageContainerBean extends MergeResearchActivityPageContainerBean implements Serializable{
     
     private String name;
     private String issn;
-    private ResearchActivityLocationType researchActivityLocationType;
+    private ScopeType researchActivityLocationType;
     private String url;
     private ResearchActivityStage stage;
 
@@ -30,11 +31,11 @@ public class MergeScientificJournalPageContainerBean extends MergeResearchActivi
         this.name = name;
     }
 
-    public ResearchActivityLocationType getResearchActivityLocationType() {
+    public ScopeType getResearchActivityLocationType() {
         return researchActivityLocationType;
     }
 
-    public void setResearchActivityLocationType(ResearchActivityLocationType researchActivityLocationType) {
+    public void setResearchActivityLocationType(ScopeType researchActivityLocationType) {
         this.researchActivityLocationType = researchActivityLocationType;
     }
 

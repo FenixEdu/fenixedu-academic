@@ -3,8 +3,8 @@ package net.sourceforge.fenixedu.dataTransferObject.research.result.publication;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.research.activity.ResearchActivityLocationType;
 import net.sourceforge.fenixedu.domain.research.activity.ScientificJournal;
+import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
 import net.sourceforge.fenixedu.util.Month;
 
 public class CreateIssueBean implements Serializable{
@@ -12,7 +12,7 @@ public class CreateIssueBean implements Serializable{
     private DomainReference<ScientificJournal> journal;
     private String journalName = null;
     private String scientificJournalName;
-    private ResearchActivityLocationType location;
+    private ScopeType location;
     private Integer year;
     private String issn;
     private String magazineUrl;
@@ -110,11 +110,11 @@ public class CreateIssueBean implements Serializable{
         this.year = year;
     }
 
-    public ResearchActivityLocationType getLocation() {
+    public ScopeType getLocation() {
         return location;
     }
 
-    public void setLocation(ResearchActivityLocationType location) {
+    public void setLocation(ScopeType location) {
         this.location = location;
     }
 

@@ -68,5 +68,10 @@ public class ScientificJournalParticipation extends ScientificJournalParticipati
     public boolean isLastParticipation() {
 	return this.getScientificJournal().getParticipationsFor(this.getParty()).size() == 1;
     }
-    
+ 
+    @Override
+    public void delete() {
+	removeScientificJournal();
+	super.delete();
+    }
 }

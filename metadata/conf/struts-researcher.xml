@@ -89,7 +89,9 @@
 		<!--  ACTIVITIES  -->
 		<action path="/activities/activitiesManagement" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.research.activity.ActivitiesManagementDispatchAction">
 		    <forward name="ListActivities" path="activities.activitiesManagement"/>
-		    <forward name="EditResearchActivity" path="/activities/editResearchActivity.do?method=prepare"/>
+		    <forward name="EditEvent" path="/activities/editResearchActivity.do?method=prepareEvent"/>
+   		    <forward name="EditScientificJournal" path="/activities/editResearchActivity.do?method=prepareScientificJournal"/>
+   		    <forward name="EditCooperation" path="/activities/editResearchActivity.do?method=prepareCooperation"/>
 		    <forward name="EditParticipants" path="/activities/editResearchActivity.do?method=prepareEditParticipants"/>
 		</action>
 		
@@ -99,6 +101,9 @@
 				parameter="method">
 			<forward name="EditResearchActivity" path="activities.editResearchActivity"/>
 			<forward name="EditData" path="activities.editResearchActivityData"/>
+			<forward name="prepareEditEventParticipants" path="/activities/editResearchActivity.do?method=prepareEditEventParticipants"/>
+			<forward name="prepareEditScientificJournalParticipants" path="/activities/editResearchActivity.do?method=prepareEditScientificJournalParticipants"/>
+			<forward name="prepareEditCooperationParticipants" path="/activities/editResearchActivity.do?method=prepareEditCooperationParticipants"/>
 			<forward name="EditParticipants" path="activities.editResearchActivityParticipants"/>
 		</action>
 		

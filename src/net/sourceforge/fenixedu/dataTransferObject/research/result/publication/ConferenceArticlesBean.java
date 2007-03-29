@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.research.activity.Event;
 import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
 import net.sourceforge.fenixedu.domain.research.activity.EventType;
-import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication.ScopeType;
+import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.joda.time.YearMonthDay;

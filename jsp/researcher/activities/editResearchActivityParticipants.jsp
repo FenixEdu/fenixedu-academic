@@ -6,10 +6,10 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <logic:present role="RESEARCHER">		
-	<bean:define id="participationId" name="participation" property="idInternal" toScope="request"/>
+	<bean:define id="activityId" name="researchActivity" property="idInternal" toScope="request"/>
 	<bean:define id="researchActivityName" name="researchActivity" property="name" toScope="request"/>
-	<bean:define id="parameter" value="<%= "participationId=" +  participationId %>" toScope="request"/>
 	<bean:define id="activityType" name="researchActivity" property="class.simpleName" />
+	<bean:define id="parameter" value="<%= "activityId=" +  activityId + "&amp;forwardTo=" + "prepareEdit" + activityType + "Participants" %>" toScope="request"/>
 
 	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.superTitle"/></em>
 	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="<%= "researcher.activity.editResearchActivityParticipants." + activityType %>"/>:&nbsp;
@@ -17,7 +17,7 @@
 	
 	<ul class="list5 mtop2 mbottom1">
 		<li>
-			<html:link page="<%="/activities/editResearchActivity.do?method=prepare&participationId="+ participationId%>">
+			<html:link page="<%="/activities/editResearchActivity.do?method=prepare" + activityType + "&activityId="+ activityId%>">
 				<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.goBack" />
 			</html:link>
 		</li>
@@ -78,14 +78,14 @@
 				<fr:edit id="participantsTable" name="participantBeans" layout="tabular-editable" schema="activityParticipants.edit-role">
 					<fr:layout>
 						<logic:notEqual name="lastRole" value="yes">
-							<fr:property name="link(remove)" value="<%= "/activities/editResearchActivity.do?method=removeParticipation&" + parameter %>"/>
+							<fr:property name="link(remove)" value="<%= "/activities/editResearchActivity.do?method=removeParticipation&amp;" + parameter %>"/>
 							<fr:property name="param(remove)" value="participation.idInternal/participationId"/>
 							<fr:property name="key(remove)" value="researcher.activity.remove"/>
 							<fr:property name="bundle(remove)" value="RESEARCHER_RESOURCES"/>
 						</logic:notEqual>
 			    	    <fr:property name="classes" value="tstyle1"/>
 					</fr:layout>
-					<fr:destination name="invalid" path="<%="/activities/editResearchActivity.do?method=prepareEditParticipants&" + parameter %>"/>
+					<fr:destination name="invalid" path="<%="/activities/editResearchActivity.do?method=prepareEditParticipants&amp;" + parameter %>"/>
 				</fr:edit>
 				<html:submit><bean:message key="button.change" bundle="RESEARCHER_RESOURCES"/></html:submit>
 			</fr:form>
@@ -95,7 +95,7 @@
 			<logic:notPresent name="participationRoleBean">
 				<ul class="list5 mtop2 mbottom1">
 					<li>
-						<html:link page="<%="/activities/editResearchActivity.do?method=prepareCreateNewParticipationRole&" + parameter %>">
+						<html:link page="<%="/activities/editResearchActivity.do?method=prepareCreateNew" + activityType +"ParticipationRole&amp;" + parameter %>">
 							<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.editResearchActivityParticipants.createNewParticipationRole" />
 						</html:link>
 					</li>

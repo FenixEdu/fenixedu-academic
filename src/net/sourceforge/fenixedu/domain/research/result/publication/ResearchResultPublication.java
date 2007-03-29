@@ -24,13 +24,6 @@ import bibtex.dom.BibtexPersonList;
 
 public abstract class ResearchResultPublication extends ResearchResultPublication_Base {
 
-    public enum ScopeType {
-	NATIONAL, INTERNATIONAL;
-    }
-
-    /**
-         * Comparator than can be used to order publications by Year.
-         */
     static class OrderComparator implements Comparator<ResearchResultPublication> {
 	public int compare(ResearchResultPublication rp1, ResearchResultPublication rp2) {
 	    Integer pub1 = rp1.getYear();
@@ -110,7 +103,7 @@ public abstract class ResearchResultPublication extends ResearchResultPublicatio
 	}
 	return null;
     }
-    						   
+
     protected BibtexPersonList getBibtexEditorsList(BibtexFile bibtexFile, List<Person> editors) {
 	if ((editors != null) && (editors.size() > 0)) {
 	    BibtexPersonList editorsList = bibtexFile.makePersonList();
@@ -158,70 +151,73 @@ public abstract class ResearchResultPublication extends ResearchResultPublicatio
 	}
 	return personList;
     }
-    
+
     protected void checkRequiredParameters(MultiLanguageString keywords, MultiLanguageString note) {
-    	if(note == null)
-    		throw new DomainException("error.researcher.Book.description.null");
-    	if(keywords == null)
-    		throw new DomainException("error.researcher.Book.keywords.null");
+	if (note == null)
+	    throw new DomainException("error.researcher.Book.description.null");
+	if (keywords == null)
+	    throw new DomainException("error.researcher.Book.keywords.null");
     }
-    	
+
     public List<String> getKeywordsList() {
-    	List<String> keywordList = new ArrayList<String>();
-    	if(keywordHasContent()) {
-    		for(String keywordsForLanguage : this.getKeywords().getAllContents()) {
-    			String[] keywords = keywordsForLanguage.split(",");
-    			for(int i=0; i<keywords.length;i++) {
-    				keywordList.add(keywords[i].trim());
-    			}
-    		}
-    	}
-    	return keywordList;
+	List<String> keywordList = new ArrayList<String>();
+	if (keywordHasContent()) {
+	    for (String keywordsForLanguage : this.getKeywords().getAllContents()) {
+		String[] keywords = keywordsForLanguage.split(",");
+		for (int i = 0; i < keywords.length; i++) {
+		    keywordList.add(keywords[i].trim());
+		}
+	    }
+	}
+	return keywordList;
     }
 
-	private boolean keywordHasContent() {
-		if(this.getKeywords()==null)  
-			return false;
-		for(String content : getKeywords().getAllContents()) {
-			if(content.length()>0) return true;
-		}
-		return false;
+    private boolean keywordHasContent() {
+	if (this.getKeywords() == null)
+	    return false;
+	for (String content : getKeywords().getAllContents()) {
+	    if (content.length() > 0)
+		return true;
 	}
-	
-	public String getLocalizedType() {
-		return RenderUtils.getResourceString("RESEARCHER_RESOURCES", "researcher.ResultPublication.type." + getClass().getSimpleName());
-	}
-	
-	public void copyReferecesTo(ResearchResultPublication publication) {
-		createNewParticipationsIn(publication);
-		createNewUnitAssociationsIn(publication);
-		moveFilesTo(publication);
-		publication.setUniqueStorageId(getUniqueStorageId());
-		publication.setCreator(getCreator());
-	}
-	
-	private void moveFilesTo(ResearchResult publication) {
-		for (ResearchResultDocumentFile file : getAllResultDocumentFiles()) {
-			file.moveFileToNewResearchResultType(publication);
-		}
-	}
+	return false;
+    }
 
-	private void createNewUnitAssociationsIn(ResearchResultPublication publication) {
-		for (ResultUnitAssociation association : getResultUnitAssociations()) {
-			publication.addUnitAssociation(association.getUnit(), association.getRole());
-		}
-	}
+    public String getLocalizedType() {
+	return RenderUtils.getResourceString("RESEARCHER_RESOURCES", "researcher.ResultPublication.type."
+		+ getClass().getSimpleName());
+    }
 
-	private void createNewParticipationsIn(ResearchResult publication) {
-		for (ResultParticipation participation : getOrderedResultParticipations()) {
-			ResultParticipationRole role = participation.getRole();
-			
-			if (!publication.acceptsParticipationRole(role)) {
-				role = (publication instanceof Proceedings) ? ResultParticipationRole.Editor : ResultParticipationRole.Author;
-			}
-			if (!publication.hasPersonParticipationWithRole(participation.getPerson(), role)) {
-				publication.addParticipation(participation.getPerson(), role);
-			}
-		}
+    public void copyReferecesTo(ResearchResultPublication publication) {
+	createNewParticipationsIn(publication);
+	createNewUnitAssociationsIn(publication);
+	moveFilesTo(publication);
+	publication.setUniqueStorageId(getUniqueStorageId());
+	publication.setCreator(getCreator());
+    }
+
+    private void moveFilesTo(ResearchResult publication) {
+	for (ResearchResultDocumentFile file : getAllResultDocumentFiles()) {
+	    file.moveFileToNewResearchResultType(publication);
 	}
+    }
+
+    private void createNewUnitAssociationsIn(ResearchResultPublication publication) {
+	for (ResultUnitAssociation association : getResultUnitAssociations()) {
+	    publication.addUnitAssociation(association.getUnit(), association.getRole());
+	}
+    }
+
+    private void createNewParticipationsIn(ResearchResult publication) {
+	for (ResultParticipation participation : getOrderedResultParticipations()) {
+	    ResultParticipationRole role = participation.getRole();
+
+	    if (!publication.acceptsParticipationRole(role)) {
+		role = (publication instanceof Proceedings) ? ResultParticipationRole.Editor
+			: ResultParticipationRole.Author;
+	    }
+	    if (!publication.hasPersonParticipationWithRole(participation.getPerson(), role)) {
+		publication.addParticipation(participation.getPerson(), role);
+	    }
+	}
+    }
 }

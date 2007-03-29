@@ -68,5 +68,10 @@ public class JournalIssueParticipation extends JournalIssueParticipation_Base {
     public boolean isLastParticipation() {
 	return this.getJournalIssue().getParticipationsFor(this.getParty()).size() == 1;
     }
- 
+
+    @Override
+    public void delete() {
+	removeJournalIssue();
+	super.delete();
+    }
 }

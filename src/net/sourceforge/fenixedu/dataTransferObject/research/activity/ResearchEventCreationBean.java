@@ -5,15 +5,15 @@ import java.io.Serializable;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.research.activity.Event;
 import net.sourceforge.fenixedu.domain.research.activity.EventType;
-import net.sourceforge.fenixedu.domain.research.activity.ResearchActivityLocationType;
 import net.sourceforge.fenixedu.domain.research.activity.Participation.ResearchActivityParticipationRole;
+import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
 
 public class ResearchEventCreationBean implements Serializable {
     private DomainReference<Event> event;
     private ResearchActivityParticipationRole role;
     private String eventName;
     private EventType eventType;
-    private ResearchActivityLocationType locationType;
+    private ScopeType locationType;
     private String url;
 
     public ResearchEventCreationBean() {
@@ -28,11 +28,11 @@ public class ResearchEventCreationBean implements Serializable {
         this.role = role;
     }
     
-    public ResearchActivityLocationType getLocationType() {
+    public ScopeType getLocationType() {
         return locationType;
     }
 
-    public void setLocationType(ResearchActivityLocationType locationType) {
+    public void setLocationType(ScopeType locationType) {
         this.locationType = locationType;
     }
     

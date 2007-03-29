@@ -43,7 +43,6 @@ valueType net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType                
 valueType net.sourceforge.fenixedu.domain.curriculum.EnrollmentState                            				as EnrollmentState;
 valueType net.sourceforge.fenixedu.util.EntryPhase                                              				as EntryPhase;
 valueType net.sourceforge.fenixedu.domain.research.activity.EventType							    			as EventType;
-valueType net.sourceforge.fenixedu.domain.research.activity.ResearchActivityLocationType						as ResearchActivityLocationType;
 valueType net.sourceforge.fenixedu.domain.research.activity.CooperationType									    as CooperationType;
 valueType net.sourceforge.fenixedu.domain.gratuity.ExemptionGratuityType                        				as ExemptionGratuityType;
 valueType net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus                           				as FinalDegreeWorkProposalStatus;  
@@ -144,7 +143,7 @@ valueType net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Docum
 valueType net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentPurposeType  				as DocumentPurposeType;
 valueType net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent.ResultPatentType  				as ResultPatentType;
 valueType net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent.ResultPatentStatus 				as ResultPatentStatus;
-valueType net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication.ScopeType 				as ScopeType;
+valueType net.sourceforge.fenixedu.domain.research.result.publication.ScopeType 								as ScopeType;
 valueType net.sourceforge.fenixedu.domain.research.project.ProjectParticipation.ProjectParticipationType 		as ProjectParticipationType;
 valueType net.sourceforge.fenixedu.domain.research.project.ProjectEventAssociation.ProjectEventAssociationRole 	as ProjectEventAssociationRole;
 valueType net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation.ResultUnitAssociationRole 		as ResultUnitAssociationRole;
@@ -4148,7 +4147,7 @@ class net.sourceforge.fenixedu.domain.research.activity.Event extends net.source
 	String name;
 	EventType eventType;
 	String url;
-	ResearchActivityLocationType locationType;
+	ScopeType locationType;
 	ResearchActivityStage stage;
 }
 
@@ -4172,7 +4171,7 @@ class net.sourceforge.fenixedu.domain.research.activity.ScientificJournal extend
 	String name;
 	String issn;
     String url;
-	ResearchActivityLocationType locationType;
+	ScopeType locationType;
 	ResearchActivityStage stage;
 }
 

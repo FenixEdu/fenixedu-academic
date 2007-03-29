@@ -5,7 +5,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.research.activity.ArticleAssociation;
 import net.sourceforge.fenixedu.domain.research.activity.JournalIssue;
-import net.sourceforge.fenixedu.domain.research.activity.ResearchActivityLocationType;
 import net.sourceforge.fenixedu.domain.research.activity.ScientificJournal;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -223,8 +222,8 @@ public class Article extends Article_Base {
 	super.delete();
     }
     
-    public ResearchActivityLocationType getScope() {
-	return getJournalIssue().getScientificJournal().getLocationType();
+    public ScopeType getScope() {
+	return getScientificJournal().getLocationType();
     }
     
     public String getVolume() {

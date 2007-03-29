@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.research.activity.Participation.ResearchActivityParticipationRole;
 import net.sourceforge.fenixedu.domain.research.result.publication.ConferenceArticles;
+import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
 
 public class Event extends Event_Base {
 
@@ -18,7 +19,7 @@ public class Event extends Event_Base {
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public Event(String name, EventType type, ResearchActivityLocationType scope) {
+    public Event(String name, EventType type, ScopeType scope) {
 	this();
 
 	if (name == null)

@@ -6,7 +6,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.research.activity.Event;
 import net.sourceforge.fenixedu.domain.research.activity.EventConferenceArticlesAssociation;
 import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
-import net.sourceforge.fenixedu.domain.research.activity.ResearchActivityLocationType;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.Checked;
@@ -180,53 +179,57 @@ public class Inproceedings extends Inproceedings_Base {
 	throw new DomainException("error.researcher.Inproceedings.call", "setCountry");
     }
 
-	@Override
-	public String getSchema() {
-		return usedSchema;
+    @Override
+    public String getSchema() {
+	return usedSchema;
+    }
+	
+    public Event getEvent() {
+	return this.getEventEdition().getEvent();
+    }
+	
+    public EventEdition getEventEdition() {
+	return this.getEventConferenceArticlesAssociation().getEventEdition();
+    }
+	
+    @Checked("ResultPredicates.writePredicate")
+    public void setEventEdition(EventEdition eventEdition) {
+	EventConferenceArticlesAssociation association = this.getEventConferenceArticlesAssociation();
+	
+	if (association==null) {
+	    Person creator = AccessControl.getPerson();
+	    if(creator==null) {
+	    	creator = getCreator();
+	    }
+	    association = new EventConferenceArticlesAssociation(eventEdition, this, creator);
+	} else {
+	    association.setEventEdition(eventEdition);
 	}
 	
-	public Event getEvent() {
-		return this.getEventEdition().getEvent();
-	}
-	
-	public EventEdition getEventEdition() {
-		return this.getEventConferenceArticlesAssociation().getEventEdition();
-	}
-	
-	@Checked("ResultPredicates.writePredicate")
-	public void setEventEdition(EventEdition eventEdition) {
-		EventConferenceArticlesAssociation association = this.getEventConferenceArticlesAssociation();
-		
-		if (association==null) {
-		    Person creator = AccessControl.getPerson();
-		    if(creator==null) {
-		    	creator = getCreator();
-		    }
-		    association = new EventConferenceArticlesAssociation(eventEdition, this, creator);
-		} else {
-		    association.setEventEdition(eventEdition);
-		}
-		
-	}
-	
-	@Override
+    }
+    
+    @Override
     public Integer getYear() {
-		return getEventEdition().getStartDate().getYear();
+	return getEventEdition().getStartDate().getYear();
     }
 		
-	@Override
+    @Override
     public Month getMonth() {
-		return Month.values()[getEventEdition().getStartDate().getMonthOfYear()-1];
-		
+	return Month.values()[getEventEdition().getStartDate().getMonthOfYear()-1];
     }
 		
-	@Override
-	public String getOrganization() {
-		return getEventEdition().getOrganization();
-	}
+    @Override
+    public String getOrganization() {
+	return getEventEdition().getOrganization();
+    }
 	
-	public String getConferenceName() {
-		return getEventEdition().getFullName();
-	}
+    public String getConferenceName() {
+	return getEventEdition().getFullName();
+    }
+    
+    @Override
+    public ScopeType getScope() {
+	return this.getEvent().getLocationType();
+    }
 	
 }

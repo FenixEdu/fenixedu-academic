@@ -69,5 +69,11 @@ public class EventEditionParticipation extends EventEditionParticipation_Base {
     public boolean isLastParticipation() {
 	return this.getEventEdition().getParticipationsFor(this.getParty()).size() == 1;
     }
+    
+    @Override
+    public void delete() {
+	removeEventEdition();
+	super.delete();
+    }
         
 }

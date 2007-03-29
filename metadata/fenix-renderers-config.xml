@@ -83,8 +83,7 @@ Documentation:
     <!--@ This layout shows each slot value after the previous without a special organization. You can specify
           a separator between values and achive simple presentations like "6666 / José Dias" for a person. -->
     <renderer type="java.lang.Object" layout="values" class="net.sourceforge.fenixedu.renderers.ValuesRenderer"/>
-
-
+	
 	<!--@ Same thing as values renderer but does not displays slots with null values -->
     <renderer type="java.lang.Object" layout="nonNullValues" class="net.sourceforge.fenixedu.presentationTier.renderers.NonNullValuesRenderer"/>
 
@@ -107,6 +106,14 @@ Documentation:
     	<property name="labelTerminator" value=":" />
     	<property name="labelStyle" value="font-weight: bold;" />
     </renderer>
+
+
+	<!--@ This layout shows participations for a given activity in the research package -->
+	<renderer type="java.util.List" layout="show-participation-list" class="net.sourceforge.fenixedu.presentationTier.renderers.ParticipationsRenderer">
+		<property name="moduleRelative" value="false"/>
+		<property name="contextRelative" value="true"/>
+		<property name="linkFormat" value="/homepage/${istUsername}"/>
+	</renderer>
 
     <renderer type="net.sourceforge.fenixedu.domain.Person" layout="person-email-identity" class="net.sourceforge.fenixedu.presentationTier.renderers.EmailIdentityRenderer"/>
   

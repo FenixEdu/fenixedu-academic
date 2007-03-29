@@ -9,7 +9,6 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.dataTransferObject.research.result.ExecutionYearBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ExecutionYearIntervalBean;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -19,8 +18,8 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.research.ResearchInterest;
-import net.sourceforge.fenixedu.domain.research.activity.ResearchActivityLocationType;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
+import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
 import net.sourceforge.fenixedu.domain.teacher.Advise;
 import net.sourceforge.fenixedu.domain.teacher.AdviseType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
@@ -47,12 +46,8 @@ public class ViewCurriculumDispatchAction extends FenixAction {
 
 	ExecutionYearIntervalBean bean = retrieveExecutionYearBeanFromRequest(request);
 
-	if (bean.getFirstExecutionYear() != null || bean.getFinalExecutionYear() != null) {
-	    putInformationOnRequestForGivenExecutionYear(bean.getFirstExecutionYear(), bean
-		    .getFinalExecutionYear(), person, request);
-	} else {
-	    putAllInformationOnRequest(person, request);
-	}
+	putInformationOnRequestForGivenExecutionYear(bean.getFirstExecutionYear(), bean
+		.getFinalExecutionYear(), person, request);
 
 	final List<ResearchInterest> researchInterests = person.getResearchInterests();
 	request.setAttribute("researchInterests", researchInterests);
@@ -62,8 +57,8 @@ public class ViewCurriculumDispatchAction extends FenixAction {
 
     private ExecutionYearIntervalBean retrieveExecutionYearBeanFromRequest(HttpServletRequest request) {
 	IViewState viewState = RenderUtils.getViewState("executionYearIntervalBean");
-	ExecutionYearIntervalBean bean = (viewState != null) ? (ExecutionYearIntervalBean) viewState.getMetaObject()
-		.getObject() : new ExecutionYearIntervalBean();
+	ExecutionYearIntervalBean bean = (viewState != null) ? (ExecutionYearIntervalBean) viewState
+		.getMetaObject().getObject() : new ExecutionYearIntervalBean();
 	request.setAttribute("executionYearIntervalBean", bean);
 	return bean;
     }
@@ -79,7 +74,8 @@ public class ViewCurriculumDispatchAction extends FenixAction {
 	Set<ResearchResultPublication> localArticles = new HashSet<ResearchResultPublication>();
 	Set<ResearchResultPublication> nationalArticles = new HashSet<ResearchResultPublication>();
 	Set<ResearchResultPublication> internationalArticles = new HashSet<ResearchResultPublication>();
-	Set<ResearchResultPublication> inproceedings = new HashSet<ResearchResultPublication>();
+	Set<ResearchResultPublication> nationalInproceedings = new HashSet<ResearchResultPublication>();
+	Set<ResearchResultPublication> internationalInproceedings = new HashSet<ResearchResultPublication>();
 	Set<ResearchResultPublication> proceedings = new HashSet<ResearchResultPublication>();
 	Set<ResearchResultPublication> thesis = new HashSet<ResearchResultPublication>();
 	Set<ResearchResultPublication> manuals = new HashSet<ResearchResultPublication>();
@@ -114,10 +110,13 @@ public class ViewCurriculumDispatchAction extends FenixAction {
 		    .getEndDateYearMonthDay()));
 	    resultPublications.addAll(person.getResearchResultPublicationsByExecutionYear(iteratorYear));
 	    books.addAll(person.getBooks(iteratorYear));
-	    nationalArticles.addAll(person.getArticles(ResearchActivityLocationType.NATIONAL, iteratorYear));
-	    internationalArticles.addAll(person.getArticles(ResearchActivityLocationType.INTERNATIONAL,
+	    nationalArticles.addAll(person.getArticles(ScopeType.NATIONAL, iteratorYear));
+	    internationalArticles.addAll(person.getArticles(ScopeType.INTERNATIONAL,
 		    iteratorYear));
-	    inproceedings.addAll(person.getInproceedings(iteratorYear));
+	    nationalInproceedings.addAll(person.getInproceedings(ScopeType.NATIONAL,
+		    iteratorYear));
+	    internationalInproceedings.addAll(person.getInproceedings(
+		    ScopeType.INTERNATIONAL, iteratorYear));
 	    proceedings.addAll(person.getProceedings(iteratorYear));
 	    thesis.addAll(person.getTheses(iteratorYear));
 	    manuals.addAll(person.getManuals(iteratorYear));
@@ -142,7 +141,9 @@ public class ViewCurriculumDispatchAction extends FenixAction {
 	request.setAttribute("local-articles", ResearchResultPublication.sort(localArticles));
 	request.setAttribute("national-articles", ResearchResultPublication.sort(nationalArticles));
 	request.setAttribute("international-articles", ResearchResultPublication.sort(internationalArticles));
-	request.setAttribute("inproceedings", ResearchResultPublication.sort(inproceedings));
+	request.setAttribute("national-inproceedings", ResearchResultPublication.sort(nationalInproceedings));
+	request.setAttribute("international-inproceedings", ResearchResultPublication
+		.sort(internationalInproceedings));
 	request.setAttribute("proceedings", ResearchResultPublication.sort(proceedings));
 	request.setAttribute("theses", ResearchResultPublication.sort(thesis));
 	request.setAttribute("manuals", ResearchResultPublication.sort(manuals));
@@ -152,40 +153,4 @@ public class ViewCurriculumDispatchAction extends FenixAction {
 	request.setAttribute("inbooks", ResearchResultPublication.sort(bookParts));
 
     }
-
-    private void putAllInformationOnRequest(Person person, HttpServletRequest request) {
-	if (person.hasTeacher()) {
-	    Teacher teacher = person.getTeacher();
-
-	    List<Advise> final_works = new ArrayList<Advise>(teacher
-		    .getAdvisesByAdviseType(AdviseType.FINAL_WORK_DEGREE));
-	    Collections.sort(final_works, new ReverseComparator(new BeanComparator("startExecutionPeriod")));
-
-	    request.setAttribute("final_works", final_works);
-	    request.setAttribute("guidances", teacher.getAllGuidedMasterDegreeThesis());
-	    request.setAttribute("lectures", teacher.getAllLecturedExecutionCourses());
-	}
-
-	List<PersonFunction> functions = new ArrayList<PersonFunction>(person.getPersonFunctions());
-	Collections.sort(functions, new ReverseComparator(new BeanComparator("beginDateInDateType")));
-	request.setAttribute("functions", functions);
-	final List<ResearchResultPublication> resultPublications = person.getResearchResultPublications();
-	request.setAttribute("resultPublications", resultPublications);
-
-	request.setAttribute("books", person.getBooks());
-	request.setAttribute("national-articles", person.getArticles(ResearchActivityLocationType.NATIONAL));
-	request.setAttribute("international-articles", person
-		.getArticles(ResearchActivityLocationType.INTERNATIONAL));
-	request.setAttribute("inproceedings", person.getInproceedings());
-	request.setAttribute("proceedings", person.getProceedings());
-	request.setAttribute("theses", person.getTheses());
-	request.setAttribute("manuals", person.getManuals());
-	request.setAttribute("technicalReports", person.getTechnicalReports());
-	request.setAttribute("otherPublications", person.getOtherPublications());
-	request.setAttribute("unstructureds", person.getUnstructureds());
-	request.setAttribute("inbooks", person.getInbooks());
-
-	request.setAttribute("resultPatents", person.getResearchResultPatents());
-    }
-
 }

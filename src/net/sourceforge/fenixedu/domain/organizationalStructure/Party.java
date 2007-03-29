@@ -35,10 +35,9 @@ import net.sourceforge.fenixedu.domain.research.activity.EventParticipation;
 import net.sourceforge.fenixedu.domain.research.activity.JournalIssue;
 import net.sourceforge.fenixedu.domain.research.activity.JournalIssueParticipation;
 import net.sourceforge.fenixedu.domain.research.activity.Participation;
-import net.sourceforge.fenixedu.domain.research.activity.ResearchActivityLocationType;
 import net.sourceforge.fenixedu.domain.research.activity.ScientificJournal;
 import net.sourceforge.fenixedu.domain.research.activity.ScientificJournalParticipation;
-import net.sourceforge.fenixedu.domain.research.activity.Participation.ResearchActivityParticipationRole;
+import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -55,10 +54,10 @@ public abstract class Party extends Party_Base {
 	createAccount(AccountType.INTERNAL);
 	createAccount(AccountType.EXTERNAL);
     }
-    
+
     @Override
     public void setName(String name) {
-	if(name == null || StringUtils.isEmpty(name.trim())) {
+	if (name == null || StringUtils.isEmpty(name.trim())) {
 	    throw new DomainException("error.unit.empty.name");
 	}
 	super.setName(name);
@@ -87,20 +86,21 @@ public abstract class Party extends Party_Base {
     public PartyTypeEnum getType() {
 	return getPartyType() != null ? getPartyType().getType() : null;
     }
-    
+
     public void setType(PartyTypeEnum partyTypeEnum) {
-        if(partyTypeEnum != null) {
-            PartyType partyType = PartyType.readPartyTypeByType(partyTypeEnum);
-            if(partyType == null) {
-                throw new DomainException("error.Party.unknown.partyType");
-            }
-            setPartyType(partyType);
-        } else {
-            setPartyType(null);
-        }
+	if (partyTypeEnum != null) {
+	    PartyType partyType = PartyType.readPartyTypeByType(partyTypeEnum);
+	    if (partyType == null) {
+		throw new DomainException("error.Party.unknown.partyType");
+	    }
+	    setPartyType(partyType);
+	} else {
+	    setPartyType(null);
+	}
     }
-    
-    public Collection<? extends Party> getParentParties(AccountabilityTypeEnum accountabilityTypeEnum, Class<? extends Party> parentPartyClass) {
+
+    public Collection<? extends Party> getParentParties(AccountabilityTypeEnum accountabilityTypeEnum,
+	    Class<? extends Party> parentPartyClass) {
 	final Set<Party> result = new HashSet<Party>();
 	for (final Accountability accountability : getParentsSet()) {
 	    if (accountability.getAccountabilityType().getType() == accountabilityTypeEnum
@@ -121,7 +121,8 @@ public abstract class Party extends Party_Base {
 	return result;
     }
 
-    public Collection<? extends Party> getParentParties(List<AccountabilityTypeEnum> accountabilityTypeEnums, Class<? extends Party> parentPartyClass) {
+    public Collection<? extends Party> getParentParties(List<AccountabilityTypeEnum> accountabilityTypeEnums,
+	    Class<? extends Party> parentPartyClass) {
 	final Set<Party> result = new HashSet<Party>();
 	for (final Accountability accountability : getParentsSet()) {
 	    if (accountabilityTypeEnums.contains(accountability.getAccountabilityType().getType())
@@ -131,7 +132,6 @@ public abstract class Party extends Party_Base {
 	}
 	return result;
     }
-
 
     public Collection<? extends Party> getChildParties(Class<? extends Party> childPartyClass) {
 	final Set<Party> result = new HashSet<Party>();
@@ -143,7 +143,8 @@ public abstract class Party extends Party_Base {
 	return result;
     }
 
-    public Collection<? extends Party> getChildParties(AccountabilityTypeEnum accountabilityTypeEnum, Class<? extends Party> childPartyClass) {
+    public Collection<? extends Party> getChildParties(AccountabilityTypeEnum accountabilityTypeEnum,
+	    Class<? extends Party> childPartyClass) {
 	final Set<Party> result = new HashSet<Party>();
 	for (final Accountability accountability : getChildsSet()) {
 	    if (accountability.getAccountabilityType().getType() == accountabilityTypeEnum
@@ -154,7 +155,8 @@ public abstract class Party extends Party_Base {
 	return result;
     }
 
-    public Collection<? extends Party> getChildParties(List<AccountabilityTypeEnum> accountabilityTypeEnums, Class<? extends Party> childPartyClass) {
+    public Collection<? extends Party> getChildParties(List<AccountabilityTypeEnum> accountabilityTypeEnums,
+	    Class<? extends Party> childPartyClass) {
 	final Set<Party> result = new HashSet<Party>();
 	for (final Accountability accountability : getChildsSet()) {
 	    if (accountabilityTypeEnums.contains(accountability.getAccountabilityType().getType())
@@ -168,15 +170,16 @@ public abstract class Party extends Party_Base {
     protected Collection<? extends Party> getChildParties(PartyTypeEnum type, Class<? extends Party> clazz) {
 	final Set<Party> result = new HashSet<Party>();
 	for (final Accountability accountability : getChildsSet()) {
-	    if (accountability.getChildParty().getType() == type 
+	    if (accountability.getChildParty().getType() == type
 		    && accountability.getChildParty().getClass().equals(clazz)) {
 		result.add(accountability.getChildParty());
 	    }
 	}
 	return result;
     }
-        
-    public Collection<? extends Accountability> getParentAccountabilities(AccountabilityTypeEnum accountabilityTypeEnum) {
+
+    public Collection<? extends Accountability> getParentAccountabilities(
+	    AccountabilityTypeEnum accountabilityTypeEnum) {
 	final Set<Accountability> result = new HashSet<Accountability>();
 	for (final Accountability accountability : getParentsSet()) {
 	    if (accountability.getAccountabilityType().getType() == accountabilityTypeEnum) {
@@ -186,7 +189,8 @@ public abstract class Party extends Party_Base {
 	return result;
     }
 
-    public Collection<? extends Accountability> getChildAccountabilities(AccountabilityTypeEnum accountabilityTypeEnum) {
+    public Collection<? extends Accountability> getChildAccountabilities(
+	    AccountabilityTypeEnum accountabilityTypeEnum) {
 	final Set<Accountability> result = new HashSet<Accountability>();
 	for (final Accountability accountability : getChildsSet()) {
 	    if (accountability.getAccountabilityType().getType() == accountabilityTypeEnum) {
@@ -196,7 +200,8 @@ public abstract class Party extends Party_Base {
 	return result;
     }
 
-    public Collection<? extends Accountability> getParentAccountabilities(AccountabilityTypeEnum accountabilityTypeEnum, Class<? extends Accountability> accountabilityClass) {
+    public Collection<? extends Accountability> getParentAccountabilities(
+	    AccountabilityTypeEnum accountabilityTypeEnum, Class<? extends Accountability> accountabilityClass) {
 	final Set<Accountability> result = new HashSet<Accountability>();
 	for (final Accountability accountability : getParentsSet()) {
 	    if (accountability.getAccountabilityType().getType() == accountabilityTypeEnum
@@ -207,7 +212,8 @@ public abstract class Party extends Party_Base {
 	return result;
     }
 
-    public Collection<? extends Accountability> getChildAccountabilities(AccountabilityTypeEnum accountabilityTypeEnum, Class<? extends Accountability> accountabilityClass) {
+    public Collection<? extends Accountability> getChildAccountabilities(
+	    AccountabilityTypeEnum accountabilityTypeEnum, Class<? extends Accountability> accountabilityClass) {
 	final Set<Accountability> result = new HashSet<Accountability>();
 	for (final Accountability accountability : getChildsSet()) {
 	    if (accountability.getAccountabilityType().getType() == accountabilityTypeEnum
@@ -218,7 +224,8 @@ public abstract class Party extends Party_Base {
 	return result;
     }
 
-    public Collection<? extends Accountability> getParentAccountabilitiesByParentClass(Class<? extends Party> parentClass) {
+    public Collection<? extends Accountability> getParentAccountabilitiesByParentClass(
+	    Class<? extends Party> parentClass) {
 	final Set<Accountability> result = new HashSet<Accountability>();
 	for (final Accountability accountability : getParentsSet()) {
 	    if (accountability.getParentParty().getClass().equals(parentClass)) {
@@ -228,7 +235,8 @@ public abstract class Party extends Party_Base {
 	return result;
     }
 
-    public Collection<? extends Accountability> getChildAccountabilitiesByChildClass(Class<? extends Party> childClass) {
+    public Collection<? extends Accountability> getChildAccountabilitiesByChildClass(
+	    Class<? extends Party> childClass) {
 	final Set<Accountability> result = new HashSet<Accountability>();
 	for (final Accountability accountability : getChildsSet()) {
 	    if (accountability.getChildParty().getClass().equals(childClass)) {
@@ -237,8 +245,9 @@ public abstract class Party extends Party_Base {
 	}
 	return result;
     }
-    
-    public Collection<? extends Accountability> getChildAccountabilitiesByAccountabilityClass(Class<? extends Accountability> accountabilityClass) {
+
+    public Collection<? extends Accountability> getChildAccountabilitiesByAccountabilityClass(
+	    Class<? extends Accountability> accountabilityClass) {
 	final Set<Accountability> result = new HashSet<Accountability>();
 	for (final Accountability accountability : getChildsSet()) {
 	    if (accountability.getClass().equals(accountabilityClass)) {
@@ -248,9 +257,10 @@ public abstract class Party extends Party_Base {
 	return result;
     }
 
-    protected void delete() {	
-	for (; !getAccounts().isEmpty(); getAccounts().get(0).delete());
-	removePartyType();	
+    protected void delete() {
+	for (; !getAccounts().isEmpty(); getAccounts().get(0).delete())
+	    ;
+	removePartyType();
 	removeRootDomainObject();
 	deleteDomainObject();
     }
@@ -260,11 +270,10 @@ public abstract class Party extends Party_Base {
 	Comparator caseInsensitiveName = new Comparator<Party>() {
 	    public int compare(Party party, Party otherParty) {
 		Collator collator = Collator.getInstance();
-		return collator.compare(party.getName().toLowerCase(), otherParty.getName()
-			.toLowerCase());
+		return collator.compare(party.getName().toLowerCase(), otherParty.getName().toLowerCase());
 	    }
 	};
-	
+
 	chain.addComparator(caseInsensitiveName);
 	chain.addComparator(new BeanComparator("socialSecurityNumber"));
 
@@ -290,9 +299,9 @@ public abstract class Party extends Party_Base {
 	return null;
     }
 
-    public void editContributor(String contributorName, String contributorNumber,
-	    String contributorAddress, String areaCode, String areaOfAreaCode, String area,
-	    String parishOfResidence, String districtSubdivisionOfResidence, String districtOfResidence) {
+    public void editContributor(String contributorName, String contributorNumber, String contributorAddress,
+	    String areaCode, String areaOfAreaCode, String area, String parishOfResidence,
+	    String districtSubdivisionOfResidence, String districtOfResidence) {
 
 	final Party existing = Party.readByContributorNumber(contributorNumber);
 	if (existing != null && existing != this) {
@@ -312,11 +321,11 @@ public abstract class Party extends Party_Base {
     }
 
     public boolean isPerson() {
-    	return false;
+	return false;
     }
-    
+
     public boolean isUnit() {
-    	return false;
+	return false;
     }
 
     public abstract ParkingPartyClassification getPartyClassification();
@@ -347,136 +356,132 @@ public abstract class Party extends Party_Base {
 	}
 	return false;
     }
-     
-    private List<EventParticipation> getEventParticipationsForScope(ResearchActivityLocationType type) {
+
+    public List<EventParticipation> getEventParticipationsForScope(ScopeType type) {
 	List<EventParticipation> participations = new ArrayList<EventParticipation>();
-	for(Participation participation : getParticipations()) {
-	    if(participation.isEventParticipation()) {
-		if(type==null) {
-		    participations.add((EventParticipation)participation);
+	for (Participation participation : getParticipations()) {
+	    if (participation.isEventParticipation()) {
+		if (type == null
+			|| (type != null && type.equals(((EventParticipation) participation).getEvent()
+				.getLocationType()))) {
+		    participations.add((EventParticipation) participation);
 		}
-		else {
-		    if(type.equals(((EventParticipation)participation).getEvent().getLocationType())) {
-			participations.add((EventParticipation)participation);
-		    }
-		}
+
 	    }
 	}
 	return participations;
     }
-    
-    public List<EventParticipation> getAllEventParticipations(){
-    	return getEventParticipationsForScope(null);
+
+    public List<EventParticipation> getAllEventParticipations() {
+	return getEventParticipationsForScope(null);
     }
-    
-    public List<EventParticipation> getAllNationalEventParticipations() {
-	return getEventParticipationsForScope(ResearchActivityLocationType.NATIONAL);
-    }
-    
-    public List<EventParticipation> getAllInternationalEventParticipations() {
-	return getEventParticipationsForScope(ResearchActivityLocationType.INTERNATIONAL);
-    }
-    
-    public Set<Event> getAssociatedEvents() {
+
+    public Set<Event> getAssociatedEvents(ScopeType locationType) {
 	Set<Event> events = new HashSet<Event>();
-	for(EventParticipation participation : getAllEventParticipations()) {
-	    events.add(participation.getEvent());
+	for (EventParticipation participation : getAllEventParticipations()) {
+	    if ((locationType != null && locationType.equals(participation.getEvent().getLocationType()))
+		    || locationType == null) {
+		events.add(participation.getEvent());
+	    }
 	}
 	return events;
     }
-    
-    public List<EventEditionParticipation> getAllEventEditionParticipations() {
-	List<EventEditionParticipation> eventEditionParticipations = new ArrayList<EventEditionParticipation> ();
-    	for(Participation participation : this.getParticipations()) {
-            if(participation.isEventEditionParticipation()) {
-            	eventEditionParticipations.add((EventEditionParticipation)participation);
-            }
-    	}
-    	return eventEditionParticipations;
+
+    public Set<Event> getAssociatedEvents() {
+	return getAssociatedEvents(null);
     }
-    
+
+    public List<EventEditionParticipation> getAllEventEditionParticipations() {
+	List<EventEditionParticipation> eventEditionParticipations = new ArrayList<EventEditionParticipation>();
+	for (Participation participation : this.getParticipations()) {
+	    if (participation.isEventEditionParticipation()) {
+		eventEditionParticipations.add((EventEditionParticipation) participation);
+	    }
+	}
+	return eventEditionParticipations;
+    }
+
     public Set<EventEdition> getAssociatedEventEditions() {
-	Set<EventEdition> eventEditions = new HashSet<EventEdition> ();
-	for(EventEditionParticipation participation : getAllEventEditionParticipations()) {
+	Set<EventEdition> eventEditions = new HashSet<EventEdition>();
+	for (EventEditionParticipation participation : getAllEventEditionParticipations()) {
 	    eventEditions.add(participation.getEventEdition());
 	}
 	return eventEditions;
     }
-    
-    private List<ScientificJournalParticipation> getAllScientificJournalParticiationsForScope(ResearchActivityLocationType type) {
+
+    public List<ScientificJournalParticipation> getAllScientificJournalParticiationsForScope(
+	    ScopeType type) {
 	List<ScientificJournalParticipation> participations = new ArrayList<ScientificJournalParticipation>();
-	for(Participation participation : getParticipations()) {
-	    if(participation.isScientificJournaltParticipation()) {
-		if(type==null) {
-		    participations.add((ScientificJournalParticipation)participation);
-		}
-		else {
-		    if(type.equals(((ScientificJournalParticipation)participation).getScientificJournal().getLocationType())) {
-			participations.add((ScientificJournalParticipation)participation);
-		    }
+	for (Participation participation : getParticipations()) {
+	    if (participation.isScientificJournaltParticipation()) {
+		if (type == null
+			|| (type != null && type.equals(((ScientificJournalParticipation) participation)
+				.getScientificJournal().getLocationType()))) {
+		    participations.add((ScientificJournalParticipation) participation);
 		}
 	    }
 	}
 	return participations;
     }
-    
-    public List<ScientificJournalParticipation> getAllScientificJournalParticipations(){
-    	return getAllScientificJournalParticiationsForScope(null);
+
+    public List<ScientificJournalParticipation> getAllScientificJournalParticipations() {
+	return getAllScientificJournalParticiationsForScope(null);
     }
-    
-    public List<ScientificJournalParticipation> getAllNationalScientificJournalParticipations() {
-	return getAllScientificJournalParticiationsForScope(ResearchActivityLocationType.NATIONAL);
-    }
-    
-    public List<ScientificJournalParticipation> getAllInternationalScientificJournalParticipations() {
-	return getAllScientificJournalParticiationsForScope(ResearchActivityLocationType.INTERNATIONAL);
-    }
-  
-    public Set<ScientificJournal> getAssociatedScientificJournals() {
-	Set<ScientificJournal> journals = new HashSet<ScientificJournal> ();
-	for(ScientificJournalParticipation participation : getAllScientificJournalParticipations()) {
-	    journals.add(participation.getScientificJournal());
+
+    public Set<ScientificJournal> getAssociatedScientificJournals(ScopeType locationType) {
+	Set<ScientificJournal> journals = new HashSet<ScientificJournal>();
+	for (ScientificJournalParticipation participation : getAllScientificJournalParticipations()) {
+	    if (locationType == null
+		    || (locationType != null && locationType.equals(participation.getScientificJournal()
+			    .getLocationType()))) {
+		journals.add(participation.getScientificJournal());
+	    }
 	}
 	return journals;
     }
-    
-    public List<JournalIssueParticipation> getAllJournalIssueParticipations() {
-	List<JournalIssueParticipation> issueParticipations = new ArrayList<JournalIssueParticipation> ();
-    	for(Participation participation : this.getParticipations()) {
-            if(participation.isJournalIssueParticipation()) {
-            	issueParticipations.add((JournalIssueParticipation)participation);
-            }
-    	}
-    	return issueParticipations;
+
+    public Set<ScientificJournal> getAssociatedScientificJournals() {
+	return getAssociatedScientificJournals(null);
     }
-        
+
+    public List<JournalIssueParticipation> getAllJournalIssueParticipations() {
+	List<JournalIssueParticipation> issueParticipations = new ArrayList<JournalIssueParticipation>();
+	for (Participation participation : this.getParticipations()) {
+	    if (participation.isJournalIssueParticipation()) {
+		issueParticipations.add((JournalIssueParticipation) participation);
+	    }
+	}
+	return issueParticipations;
+    }
+
     public Set<JournalIssue> getAssociatedJournalIssues() {
-	Set<JournalIssue> issues = new HashSet<JournalIssue> ();
-	for(JournalIssueParticipation participation : this.getAllJournalIssueParticipations()) {
+	Set<JournalIssue> issues = new HashSet<JournalIssue>();
+	for (JournalIssueParticipation participation : this.getAllJournalIssueParticipations()) {
 	    issues.add(participation.getJournalIssue());
 	}
 	return issues;
     }
-    
+
     public List<CooperationParticipation> getAllCooperationParticipations() {
-	List<CooperationParticipation> cooperationParticipations = new ArrayList<CooperationParticipation> ();
-    	for(Participation participation : this.getParticipations()) {
-            if(participation.isCooperationParticipation()) {
-        	cooperationParticipations.add((CooperationParticipation)participation);
-            }
-    	}
-    	return cooperationParticipations;
+	List<CooperationParticipation> cooperationParticipations = new ArrayList<CooperationParticipation>();
+	for (Participation participation : this.getParticipations()) {
+	    if (participation.isCooperationParticipation()) {
+		cooperationParticipations.add((CooperationParticipation) participation);
+	    }
+	}
+	return cooperationParticipations;
     }
-    
+
     public Set<Cooperation> getAssociatedCooperations() {
 	Set<Cooperation> cooperations = new HashSet<Cooperation>();
-	for(CooperationParticipation participation : getAllCooperationParticipations()) {
+	for (CooperationParticipation participation : getAllCooperationParticipations()) {
 	    cooperations.add(participation.getCooperation());
 	}
 	return cooperations;
     }
-    
-      public List<PartyContact> getPartyContacts(final Class<? extends PartyContact> clazz, final PartyContactType type) {
+
+    public List<PartyContact> getPartyContacts(final Class<? extends PartyContact> clazz,
+	    final PartyContactType type) {
 	final List<PartyContact> result = new ArrayList<PartyContact>();
 	for (final PartyContact contact : getPartyContactsSet()) {
 	    if (clazz.isAssignableFrom(contact.getClass()) && (type == null || contact.getType() == type)) {
@@ -485,11 +490,11 @@ public abstract class Party extends Party_Base {
 	}
 	return result;
     }
-    
+
     public List<PartyContact> getPartyContacts(final Class<? extends PartyContact> clazz) {
 	return getPartyContacts(clazz, null);
     }
-    
+
     public boolean hasAnyPartyContact(final Class<? extends PartyContact> clazz, final PartyContactType type) {
 	for (final PartyContact contact : getPartyContactsSet()) {
 	    if (clazz.isAssignableFrom(contact.getClass()) && contact.getType() == type) {
@@ -498,7 +503,7 @@ public abstract class Party extends Party_Base {
 	}
 	return false;
     }
-    
+
     public PartyContact getDefaultPartyContact(final Class<? extends PartyContact> clazz) {
 	for (final PartyContact contact : getPartyContactsSet()) {
 	    if (clazz.isAssignableFrom(contact.getClass()) && contact.isDefault()) {
@@ -507,111 +512,113 @@ public abstract class Party extends Party_Base {
 	}
 	return null;
     }
-    
+
     public boolean hasDefaultPartyContact(final Class<? extends PartyContact> clazz) {
 	return getDefaultPartyContact(clazz) != null;
     }
-    
+
     public WebAddress getDefaultWebAddress() {
 	return (WebAddress) getDefaultPartyContact(WebAddress.class);
     }
-    
+
     public PhysicalAddress getDefaultPhysicalAddress() {
 	return (PhysicalAddress) getDefaultPartyContact(PhysicalAddress.class);
     }
-    
+
     public Phone getDefaultPhone() {
 	return (Phone) getDefaultPartyContact(Phone.class);
     }
-    
+
     public MobilePhone getDefaultMobilePhone() {
 	return (MobilePhone) getDefaultPartyContact(MobilePhone.class);
     }
-    
+
     public EmailAddress getDefaultEmailAddress() {
 	return (EmailAddress) getDefaultPartyContact(EmailAddress.class);
     }
-    
-    /* ~~~~~~~~~~~~~~~~~~~~~
-     * PartyContacts
-     * ~~~~~~~~~~~~~~~~~~~~~
-     * These methods are used to support current functionality (physicalAddress, webAddress, ... - limited to one for each type)
-     * after interface changes we must edit contacts in another way and remove the following methods
-     * 
-     */
+
+    /*
+         * ~~~~~~~~~~~~~~~~~~~~~ PartyContacts ~~~~~~~~~~~~~~~~~~~~~ These
+         * methods are used to support current functionality (physicalAddress,
+         * webAddress, ... - limited to one for each type) after interface
+         * changes we must edit contacts in another way and remove the following
+         * methods
+         * 
+         */
     protected PhysicalAddress getOrCreateDefaultPhysicalAddress() {
 	final PhysicalAddress physicalAdress = getDefaultPhysicalAddress();
-	return physicalAdress != null ? physicalAdress : PartyContact.createDefaultPersonalPhysicalAddress(this);
+	return physicalAdress != null ? physicalAdress : PartyContact
+		.createDefaultPersonalPhysicalAddress(this);
     }
-    
+
     public String getAddress() {
 	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
 	return physicalAddress != null ? physicalAddress.getAddress() : null;
     }
-    
+
     public void setAddress(String address) {
 	getOrCreateDefaultPhysicalAddress().setAddress(address);
     }
-    
+
     public String getAreaCode() {
 	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
 	return physicalAddress != null ? physicalAddress.getAreaCode() : null;
     }
-    
+
     public void setAreaCode(String areaCode) {
 	getOrCreateDefaultPhysicalAddress().setAreaCode(areaCode);
     }
-    
+
     public String getAreaOfAreaCode() {
 	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
 	return physicalAddress != null ? physicalAddress.getAreaOfAreaCode() : null;
     }
-    
+
     public void setAreaOfAreaCode(String areaOfAreaCode) {
 	getOrCreateDefaultPhysicalAddress().setAreaOfAreaCode(areaOfAreaCode);
     }
-    
+
     public String getArea() {
 	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
 	return physicalAddress != null ? physicalAddress.getArea() : null;
     }
-    
+
     public void setArea(String area) {
 	getOrCreateDefaultPhysicalAddress().setArea(area);
     }
-    
+
     public String getParishOfResidence() {
 	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
 	return physicalAddress != null ? physicalAddress.getParishOfResidence() : null;
     }
-    
+
     public void setParishOfResidence(String parishOfResidence) {
 	getOrCreateDefaultPhysicalAddress().setParishOfResidence(parishOfResidence);
     }
-    
+
     public String getDistrictSubdivisionOfResidence() {
 	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
 	return physicalAddress != null ? physicalAddress.getDistrictSubdivisionOfResidence() : null;
     }
-    
+
     public void setDistrictSubdivisionOfResidence(String districtSubdivisionOfResidence) {
 	getOrCreateDefaultPhysicalAddress().setDistrictSubdivisionOfResidence(districtSubdivisionOfResidence);
     }
-    
+
     public String getDistrictOfResidence() {
 	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
 	return physicalAddress != null ? physicalAddress.getDistrictOfResidence() : null;
     }
-    
+
     public void setDistrictOfResidence(String districtOfResidence) {
-        getOrCreateDefaultPhysicalAddress().setDistrictOfResidence(districtOfResidence);
+	getOrCreateDefaultPhysicalAddress().setDistrictOfResidence(districtOfResidence);
     }
-    
+
     public Country getCountryOfResidence() {
 	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
 	return physicalAddress != null ? physicalAddress.getCountryOfResidence() : null;
     }
-    
+
     public void setCountryOfResidence(Country countryOfResidence) {
 	getOrCreateDefaultPhysicalAddress().setCountryOfResidence(countryOfResidence);
     }
@@ -620,54 +627,59 @@ public abstract class Party extends Party_Base {
 	final WebAddress webAddress = getDefaultWebAddress();
 	return webAddress != null ? webAddress : PartyContact.createDefaultPersonalWebAddress(this);
     }
-    
+
     public String getWebAddress() {
-        final WebAddress webAddress = getDefaultWebAddress();
-        return webAddress != null ? webAddress.getUrl() : null;
+	final WebAddress webAddress = getDefaultWebAddress();
+	return webAddress != null ? webAddress.getUrl() : null;
     }
-    
+
     public void setWebAddress(String webAddress) {
 	getOrCreateDefaultWebAddress().setUrl(webAddress);
     }
-    
+
     protected Phone getOrCreateDefaultPhone() {
 	final Phone phone = getDefaultPhone();
 	return phone != null ? phone : (Phone) PartyContact.createDefaultPersonalPhone(this);
     }
-    
+
     public String getPhone() {
 	final Phone phone = getDefaultPhone();
 	return phone != null ? phone.getNumber() : null;
     }
-    
+
     public void setPhone(String phone) {
 	getOrCreateDefaultPhone().setNumber(phone);
     }
-    
+
     protected MobilePhone getOrCreateDefaultMobilePhone() {
 	final MobilePhone mobilePhone = getDefaultMobilePhone();
-	return mobilePhone != null ? mobilePhone : (MobilePhone) PartyContact.createDefaultPersonalMobilePhone(this);
+	return mobilePhone != null ? mobilePhone : (MobilePhone) PartyContact
+		.createDefaultPersonalMobilePhone(this);
     }
-    
+
     public String getMobile() {
 	final MobilePhone phone = getDefaultMobilePhone();
 	return phone != null ? phone.getNumber() : null;
     }
-    
+
     public void setMobile(String mobile) {
 	getOrCreateDefaultMobilePhone().setNumber(mobile);
     }
-    
+
     private EmailAddress getPersonalEmailAddress() {
-	final List<PartyContact> partyContacts = getPartyContacts(EmailAddress.class, PartyContactType.PERSONAL);
-	return partyContacts.isEmpty() ? null : (EmailAddress) partyContacts.get(0); // actually exists only one
+	final List<PartyContact> partyContacts = getPartyContacts(EmailAddress.class,
+		PartyContactType.PERSONAL);
+	return partyContacts.isEmpty() ? null : (EmailAddress) partyContacts.get(0); // actually
+	// exists
+	// only
+	// one
     }
 
     public String getEmail() {
 	final EmailAddress emailAddress = getPersonalEmailAddress();
 	return emailAddress != null ? emailAddress.getValue() : null;
     }
-    
+
     public void setEmail(String email) {
 	final EmailAddress emailAddress = getPersonalEmailAddress();
 	if (emailAddress == null) {
@@ -676,21 +688,21 @@ public abstract class Party extends Party_Base {
 	    emailAddress.setValue(email);
 	}
     }
-    
-    // this method is not necessary if we filter EmailAddress by visible attribute
+
+    // this method is not necessary if we filter EmailAddress by visible
+    // attribute
     public Boolean getAvailableEmail() {
 	final EmailAddress emailAddress = getPersonalEmailAddress();
 	return emailAddress != null ? emailAddress.isVisible() : false;
     }
-    
+
     public void setAvailableEmail(Boolean availableEmail) {
 	final EmailAddress emailAddress = getPersonalEmailAddress();
 	if (emailAddress != null) {
 	    emailAddress.setVisible(availableEmail);
 	}
     }
-    /* ~~~~~~~~~~~~~~~~~~~~~
-     * End: PartyContacts
-     * ~~~~~~~~~~~~~~~~~~~~~
-     */
+    /*
+         * ~~~~~~~~~~~~~~~~~~~~~ End: PartyContacts ~~~~~~~~~~~~~~~~~~~~~
+         */
 }

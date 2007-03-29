@@ -25,6 +25,7 @@
 		<bean:define id="forwardTo" value="EditEvent" toScope="request"/>
 		<bean:define id="schema" value="researchEventParticipation.summary" toScope="request"/>
 		<jsp:include page="researchActivitiesList.jsp"/>
+		
 	</logic:notEmpty>
 	
 	<logic:notEmpty name="international-events">
