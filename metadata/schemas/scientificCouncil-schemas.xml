@@ -78,16 +78,16 @@
 
 <schema name="scientific.journal.merge.list" type="net.sourceforge.fenixedu.domain.research.activity.ScientificJournal" >
 	<slot name="name" layout="scientific-journal-stage">
-		<property name="enumClasses(DRAFT)" value=""/>
-		<property name="enumClasses(APPROVED)" value=""/>
+		<property name="enumClasses(DRAFT)" value="color973"/>
+		<property name="enumClasses(APPROVED)" value="color379"/>
 	</slot>
 	<slot name="issn" key="label.scientific.journal.issn"/>
 </schema>
 
 <schema name="scientific.journal.merge.list.full" type="net.sourceforge.fenixedu.domain.research.activity.ScientificJournal" >
 	<slot name="name" layout="scientific-journal-stage">
-		<property name="enumClasses(DRAFT)" value=""/>
-		<property name="enumClasses(APPROVED)" value=""/>
+		<property name="enumClasses(DRAFT)" value="color973"/>
+		<property name="enumClasses(APPROVED)" value="color379"/>
 	</slot>
 	<slot name="locationType" key="label.scientific.journal.locationType"/>
 	<slot name="issn" key="label.scientific.journal.issn"/>

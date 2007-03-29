@@ -7,7 +7,7 @@
 <em><bean:message key="title.scientificCouncil.portalTitle" /></em>
 <h2><bean:message key="title.event.merge" /></h2>
 
-<p class="mtop15 mbottom05"><strong><bean:message key="label.event.merge.selected" /></strong></p>
+<p class="mtop2 mbottom05"><strong><bean:message key="label.event.merge.selected" /></strong></p>
 <logic:notEmpty name="mergeBean" property="selectedObjects">
 	<fr:form action="/mergeEvents.do">
 		<html:hidden property="method" value="removeFromMergeList"/>
@@ -40,7 +40,7 @@
 </logic:empty>
 
 
-<p class="mtop15 mbottom05"><strong><bean:message key="label.merge.event.completeList"/>:</strong></p>
+<p class="mtop2 mbottom05"><strong><bean:message key="label.merge.event.completeList"/>:</strong></p>
 
 <fr:form action="/mergeEvents.do?method=goToPage">
 	<table class="tstyle5 thlight thmiddle mtop05">

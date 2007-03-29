@@ -8,7 +8,7 @@
 <h2><bean:message key="title.scientificJournal.merge" /></h2>
 
 
-<p class="mtop15 mbottom05"><strong><bean:message key="label.scientificJournal.merge.selected" /></strong></p>
+<p class="mtop2 mbottom05"><strong><bean:message key="label.scientificJournal.merge.selected" /></strong></p>
 <logic:notEmpty name="mergeBean" property="selectedObjects">
 	<fr:form action="/mergeScientificJournal.do">
 		<html:hidden property="method" value="removeFromMergeList"/>
@@ -42,7 +42,7 @@
 
 
 
-<p class="mtop15 mbottom05"><strong><bean:message key="label.merge.scientific.journal.completeList"/>:</strong></p>
+<p class="mtop2 mbottom05"><strong><bean:message key="label.merge.scientific.journal.completeList"/>:</strong></p>
 	
 	
 <fr:form action="/mergeScientificJournal.do?method=goToPage">
@@ -81,3 +81,17 @@
 	</fr:edit>
 	<fr:edit id="mergeListNotVisible" name="mergeBean" visible="false"/>
 </fr:form>
+
+
+
+<p class="mtop2 mbottom025"><em><bean:message key="label.legend"/></em>:</p>
+<table class="mtop0">
+<tr>
+	<td><div style="width: 10px; height: 10px; border: 1px solid #973; background: #ca6; float:left;"></div></td>
+	<td><em style="color: #973;"><bean:message key="label.legend.draftScientificJournals"/></em></td>
+</tr>
+<tr>
+	<td><div style="width: 10px; height: 10px; border: 1px solid #379; background: #6ac; float:left;"></div></td>
+	<td><em style="color: #379;"><bean:message key="label.legend.aprovedScientificJournals"/></em></td>
+</tr>
+</table>

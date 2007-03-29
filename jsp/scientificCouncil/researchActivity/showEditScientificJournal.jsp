@@ -7,8 +7,6 @@
 <em><bean:message key="title.scientificCouncil.portalTitle" /></em>
 <h2><bean:message key="title.scientificJournal.edit" /></h2>
 
-<br />
-<br />
 <div class="forminline dinline">
 	<fr:form action="/editScientificJournal.do?method=prepare">
 		<fr:edit schema="scientific.journal.edit" id="edit" name="pageContainerBean" property="selected" type="net.sourceforge.fenixedu.domain.research.activity.ScientificJournal">

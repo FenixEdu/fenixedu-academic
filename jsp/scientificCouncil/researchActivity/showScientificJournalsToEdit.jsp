@@ -42,3 +42,15 @@
 		</fr:layout>
 	</fr:edit>
 </fr:form>
+
+<p class="mtop2 mbottom025"><em><bean:message key="label.legend"/>:</em></p>
+<table class="mtop0">
+<tr>
+	<td><div style="width: 10px; height: 10px; border: 1px solid #973; background: #ca6; float:left;"></div></td>
+	<td><em style="color: #973;"><bean:message key="label.legend.draftScientificJournals"/></em></td>
+</tr>
+<tr>
+	<td><div style="width: 10px; height: 10px; border: 1px solid #379; background: #6ac; float:left;"></div></td>
+	<td><em style="color: #379;"><bean:message key="label.legend.aprovedScientificJournals"/></em></td>
+</tr>
+</table>

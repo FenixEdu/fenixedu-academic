@@ -11,7 +11,7 @@
 	<p><bean:message key="label.merge.scientific.journal.instructions" /></p>
 </div>
 
-<p class="mtop15 mbottom05"><strong><bean:message key="label.merge.scientific.journal.selected" />:</strong></p>
+<p class="mtop2 mbottom05"><strong><bean:message key="label.merge.scientific.journal.selected" />:</strong></p>
 <fr:form action="/mergeScientificJournal.do?method=chooseScientificJournal">
 	<fr:edit id="mergeList" name="mergeList" 
 		type="net.sourceforge.fenixedu.dataTransferObject.PageContainerBean">
@@ -24,7 +24,8 @@
 	</fr:edit>
 </fr:form>
 
-<p class="mtop1 mbottom05"><strong><bean:message key="label.merge.scientific.journal.new.details" />:</strong></p>
+
+<p class="mtop15 mbottom05"><strong><bean:message key="label.merge.scientific.journal.new.details" />:</strong></p>
 <div class="forminline dinline">
 	<fr:form action="/mergeScientificJournal.do">
 		<html:hidden property="method" value="mergeResearchActivity"/>
