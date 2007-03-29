@@ -6,9 +6,10 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 public class ParkingGroup extends ParkingGroup_Base {
 
-    public ParkingGroup() {
+    public ParkingGroup(String groupName) {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
+        setGroupName(groupName);
     }
 
     public static List<ParkingGroup> getAll() {
