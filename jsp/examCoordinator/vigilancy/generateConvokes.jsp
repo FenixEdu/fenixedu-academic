@@ -78,7 +78,7 @@
 </fr:layout>
 </fr:edit>
 
-<a name="vigilantTable"/>
+<a name="vigilantTable"></a>
 <logic:notEmpty name="incompatibleVigilants">
 <strong><bean:message key="label.vigilancy.incompatibilityDetected" bundle="VIGILANCY_RESOURCES"/></strong>:
 <fr:view name="incompatibleVigilants">
@@ -108,23 +108,35 @@
 <fr:destination name="cancel" path="/vigilancy/convokeManagement.do?method=prepareConvoke"/>
 </fr:edit>
 
-<logic:notEmpty name="bean" property="unavailableInformation">
-<p class="mbottom05"><strong><bean:message key="label.vigilancy.whyUnavailable" bundle="VIGILANCY_RESOURCES"/>:</strong></p>
-<fr:view name="bean" property="unavailableInformation">
-<fr:layout>
-	<fr:property name="eachLayout" value="values"/>
-	<fr:property name="eachSchema" value="showWhyUnavailable"/>
-	<fr:property name="classes" value="list2"/>
-</fr:layout>
-</fr:view>
-</logic:notEmpty>
-</div>
-
-
 <p>
 	<span class="switchInline"><a href="javascript:checkall('addVigilantsForm')"><bean:message bundle="VIGILANCY_RESOURCES" key="label.selectAll"/></a>, </span>
 	<span class="switchInline"><a href="javascript:uncheckall('addVigilantsForm')"><bean:message bundle="VIGILANCY_RESOURCES" key="label.unselectAll"/></a></span>
 </p>
+
+<logic:notEmpty name="bean" property="unavailableInformation">
+<p class="mbottom05"><strong><bean:message key="label.vigilancy.whyUnavailable" bundle="VIGILANCY_RESOURCES"/>:</strong></p>
+
+<ul>
+<logic:iterate id="information" name="bean" property="unavailableInformation" type="net.sourceforge.fenixedu.domain.vigilancy.strategies.UnavailableInformation"> 
+	<li>
+	<fr:view name="information" property="vigilant.person.name"/>: <fr:view name="information" property="reason"/>
+	<logic:equal name="information" property="reason" value="UNAVAILABLE_PERIOD">
+		<fr:view name="information" property="vigilant.unavailablePeriods">
+		<fr:layout>
+			<fr:property name="eachLayout" value="values"/>
+			<fr:property name="eachSchema" value="unavailableShow"/>
+			<fr:property name="classes" value="list3"/>
+		</fr:layout>
+		 </fr:view>
+	</logic:equal>
+	</li>
+</logic:iterate>
+</ul>
+</logic:notEmpty>
+</div>
+
+
+
 
 <p class="mtop15">
 <html:submit><bean:message key="label.next" bundle="VIGILANCY_RESOURCES"/></html:submit>

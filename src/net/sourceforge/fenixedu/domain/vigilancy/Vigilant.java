@@ -462,6 +462,10 @@ public class Vigilant extends Vigilant_Base {
 			}
 		}
 
+		if(teacher != null && teacher.hasLessons(begin, end)) {
+		    return UnavailableTypes.LESSON_AT_SAME_TIME;
+		}
+		
 		Person person = this.getIncompatiblePerson();
 		if (person != null) {
 			List<Vigilancy> convokes = writtenEvaluation.getVigilancies();
