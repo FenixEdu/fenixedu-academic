@@ -2901,6 +2901,8 @@ class net.sourceforge.fenixedu.domain.space.Space extends net.sourceforge.fenixe
 	}
 
 	class net.sourceforge.fenixedu.domain.space.Room extends net.sourceforge.fenixedu.domain.space.Space {
+		Integer normalCapacity;
+		Integer examCapacity;
 	}
 
 	class net.sourceforge.fenixedu.domain.space.OldRoom extends net.sourceforge.fenixedu.domain.space.Room {
