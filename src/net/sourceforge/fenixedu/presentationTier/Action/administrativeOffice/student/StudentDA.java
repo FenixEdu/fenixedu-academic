@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.contacts.PartyContact;
 import net.sourceforge.fenixedu.domain.contacts.Phone;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.contacts.WebAddress;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -173,7 +174,11 @@ public class StudentDA extends FenixDispatchAction {
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
 	    FenixServiceException {
 
-	executeService("DeletePartyContact", new Object[] {getPartyContact(getStudent(request), request)});
+	try {
+	    executeService("DeletePartyContact", new Object[] {getPartyContact(getStudent(request), request)});
+	} catch (DomainException e) {
+	    addActionMessage(request, e.getMessage(), e.getArgs());
+	}
 	return prepareEditPersonalData(mapping, actionForm, request, response);
     }
     
