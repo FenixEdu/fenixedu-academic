@@ -198,15 +198,6 @@
 	<slot name="nameOfFather" key="label.person.fatherName"/>
 	<slot name="nameOfMother" key="label.person.motherName"/>
 </schema>
-<schema name="net.sourceforge.fenixedu.domain.Person.residence" type="net.sourceforge.fenixedu.domain.Person"> 
-	<slot name="address" key="label.person.address"/>
-	<slot name="areaCode" key="label.person.postCode"/>
-	<slot name="areaOfAreaCode" key="label.person.areaOfPostCode"/>
-	<slot name="area" key="label.person.place"/>
-	<slot name="parishOfResidence" key="label.person.addressParish"/>
-	<slot name="districtSubdivisionOfResidence" key="label.person.addressMunicipality"/>
-	<slot name="districtOfResidence" key="label.person.addressDistrict"/>
-</schema>
 <schema name="net.sourceforge.fenixedu.domain.Person.user.info" type="net.sourceforge.fenixedu.domain.Person"> 
 	<slot name="user.userUId" key="label.person.istUsername"/>
 	<slot name="user.aliass" key="label.person.aliass"/>

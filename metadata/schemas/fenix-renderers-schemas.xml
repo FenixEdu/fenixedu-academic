@@ -36,6 +36,7 @@
     <!ENTITY operator SYSTEM "operator-schemas.xml">
     <!ENTITY scientificCouncil SYSTEM "scientificCouncil-schemas.xml">
     <!ENTITY protocol SYSTEM "protocol-schemas.xml">
+    <!ENTITY partyContacts SYSTEM "partyContacts-schemas.xml">
 ]>
 
 <schemas>
@@ -677,5 +678,6 @@
     &coordinator;
     &operator;
     &scientificCouncil;
-    &protocol;        
+    &protocol;
+    &partyContacts;
 </schemas>
