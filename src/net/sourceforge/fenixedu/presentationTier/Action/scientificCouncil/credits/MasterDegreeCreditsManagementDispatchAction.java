@@ -58,6 +58,8 @@ import pt.ist.utl.fenix.utils.Pair;
 
 public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAction {
 
+    private final static String LINE_BRAKE = "\r\n";
+    
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
@@ -336,15 +338,14 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
 	    for (ExecutionPeriod executionPeriod : executionCoursesMap.keySet()) {
 		for (GenericTrio<Pair<ExecutionCourse, Boolean>, Integer, Integer> executionCourseMap : executionCoursesMap.get(executionPeriod)) {
 		    ExecutionCourse executionCourse = executionCourseMap.getFirst().getKey();		    		    
-		    final Row row = spreadsheet.addRow();
-		    row.setCell(executionDegree.getDegreeCurricularPlan().getName());
+		    final Row row = spreadsheet.addRow();		  
 		    row.setCell(masterDegreeCreditsDTO.getCurricularCourse().getName());
 		    row.setCell(enumerationResources.getString(masterDegreeCreditsDTO.getCurricularCourse().getType().getName()));
 		    row.setCell(masterDegreeCreditsDTO.getCurricularCourse().getCredits().toString());
 		    row.setCell(String.valueOf(executionCourseMap.getSecond()));
 		    row.setCell(String.valueOf(executionCourseMap.getThird()));		    
 		    row.setCell(executionCourse.getExecutionPeriod().getSemester().toString());
-		    row.setCell(executionCourse.getSigla() + "\n");
+		    row.setCell(executionCourse.getSigla() + LINE_BRAKE);
 		    row.setCell(getTeachersNumbers(executionCourse).toString());
 		    row.setCell(getTeachersNames(executionCourse).toString());
 		    row.setCell(getTeachersDepartaments(executionCourse).toString());
@@ -359,7 +360,7 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
     private StringBuilder getExecutionCourseDCPNames(ExecutionCourse executionCourse) {
 	StringBuilder builder = new StringBuilder();
         for (CurricularCourse tempCurricularCourse : executionCourse.getAssociatedCurricularCourses()) {                	
-            builder.append(tempCurricularCourse.getDegreeCurricularPlan().getName()).append(";\n");
+            builder.append(tempCurricularCourse.getDegreeCurricularPlan().getName()).append(";").append(LINE_BRAKE);
         }
         return builder;
     }    
@@ -372,7 +373,7 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
 	    if(teacherService != null){
 		masterDegreeService = teacherService.getMasterDegreeServiceByProfessorship(professorship);	
 	    } 	    
-	    teachers.append(masterDegreeService != null ? masterDegreeService.getCredits() : "").append("\n");	   
+	    teachers.append(masterDegreeService != null ? masterDegreeService.getCredits() : "").append(LINE_BRAKE);	   
 	}
 	return teachers;
     }
@@ -385,7 +386,7 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
 	    if(teacherService != null){
 		masterDegreeService = teacherService.getMasterDegreeServiceByProfessorship(professorship);	
 	    } 	    
-	    teachers.append(masterDegreeService != null ? masterDegreeService.getHours() : "").append("\n");	   
+	    teachers.append(masterDegreeService != null ? masterDegreeService.getHours() : "").append(LINE_BRAKE);	   
 	}
 	return teachers;
     }
@@ -395,7 +396,7 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
 	for (Professorship professorship : executionCourse.getProfessorships()) {
 	    ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
 	    Department department = professorship.getTeacher().getLastWorkingDepartment(executionPeriod.getBeginDateYearMonthDay(), executionPeriod.getEndDateYearMonthDay());
-	    teachers.append(department != null ? department.getRealName() : "").append("\n");
+	    teachers.append(department != null ? department.getRealName() : "").append(LINE_BRAKE);
 	}
 	return teachers;
     }
@@ -403,7 +404,7 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
     private StringBuilder getTeachersNames(ExecutionCourse executionCourse) {
 	StringBuilder teachers = new StringBuilder();
 	for (Professorship professorship : executionCourse.getProfessorships()) {
-	    teachers.append(professorship.getTeacher().getPerson().getName()).append("\n");
+	    teachers.append(professorship.getTeacher().getPerson().getName()).append(LINE_BRAKE);
 	}
 	return teachers;
     }
@@ -411,7 +412,7 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
     private StringBuilder getTeachersNumbers(ExecutionCourse executionCourse) {
 	StringBuilder teachers = new StringBuilder();
 	for (Professorship professorship : executionCourse.getProfessorships()) {
-	    teachers.append(professorship.getTeacher().getTeacherNumber()).append("\n");
+	    teachers.append(professorship.getTeacher().getTeacherNumber()).append(LINE_BRAKE);
 	}
 	return teachers;
     }
@@ -421,8 +422,7 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
     }
     
     private List<Object> getHeaders() {
-        final List<Object> headers = new ArrayList<Object>();        
-        headers.add("Plano Curricular");
+        final List<Object> headers = new ArrayList<Object>();                
         headers.add("Disciplina");        
         headers.add("Tipo");        
         headers.add("Créditos");
@@ -435,7 +435,7 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
         headers.add("Departamento");
         headers.add("Horas Leccionadas");
         headers.add("Créditos Lectivos");
-        headers.add("Planos Curriculares");
+        headers.add("Cursos");
         return headers;
     }   
     
