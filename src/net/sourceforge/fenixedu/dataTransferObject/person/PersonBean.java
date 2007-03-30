@@ -120,36 +120,41 @@ public class PersonBean implements Serializable {
 	setArea(person.getArea());
 	setAreaCode(person.getAreaCode());
 	setAreaOfAreaCode(person.getAreaOfAreaCode());
-	setCountryOfBirth(person.getCountryOfBirth());
-	setCountryOfResidence(person.getCountryOfResidence());
-	setDateOfBirth(person.getDateOfBirthYearMonthDay());
-	setDistrictOfBirth(person.getDistrictOfBirth());
-	setDistrictOfResidence(person.getDistrictOfResidence());
-	setDistrictSubdivisionOfBirth(person.getDistrictSubdivisionOfBirth());
+	setParishOfResidence(person.getParishOfResidence());
 	setDistrictSubdivisionOfResidence(person.getDistrictSubdivisionOfResidence());
+	setDistrictOfResidence(person.getDistrictOfResidence());
+	setCountryOfResidence(person.getCountryOfResidence());
+	
+	setCountryOfBirth(person.getCountryOfBirth());
+	setDateOfBirth(person.getDateOfBirthYearMonthDay());
+	setParishOfBirth(person.getParishOfBirth());
+	setDistrictOfBirth(person.getDistrictOfBirth());
+	setDistrictSubdivisionOfBirth(person.getDistrictSubdivisionOfBirth());
+
 	setDocumentIdEmissionDate(person.getEmissionDateOfDocumentIdYearMonthDay());
 	setDocumentIdEmissionLocation(person.getEmissionLocationOfDocumentId());
 	setDocumentIdExpirationDate(person.getExpirationDateOfDocumentIdYearMonthDay());
 	setDocumentIdNumber(person.getDocumentIdNumber());
-	setEmail(person.getEmail());
-	setFatherName(person.getNameOfFather());
-	setGender(person.getGender());
 	setIdDocumentType(person.getIdDocumentType());
+	setSocialSecurityNumber(person.getSocialSecurityNumber());
+	
+	setEmail(person.getEmail());
 	setEmailAvailable(person.getAvailableEmail());
+	setPhone(person.getPhone());
+	setMobile(person.getMobile());
+	setWebAddress(person.getWebAddress());
+	
+	setName(person.getName());
+	setUsername(person.getUsername());
+	setGender(person.getGender());
+	setMaritalStatus(person.getMaritalStatus());
+	setFatherName(person.getNameOfFather());
+	setMotherName(person.getNameOfMother());
+	setProfession(person.getProfession());
+	setNationality(person.getNationality());
+
 	setHomepageAvailable(person.getAvailableWebSite());
 	setPhotoAvailable(person.getAvailablePhoto());
-	setMaritalStatus(person.getMaritalStatus());
-	setMobile(person.getMobile());
-	setMotherName(person.getNameOfMother());
-	setName(person.getName());
-	setNationality(person.getNationality());
-	setParishOfBirth(person.getParishOfBirth());
-	setParishOfResidence(person.getParishOfResidence());
-	setPhone(person.getPhone());
-	setProfession(person.getProfession());
-	setSocialSecurityNumber(person.getSocialSecurityNumber());
-	setUsername(person.getUsername());
-	setWebAddress(person.getWebAddress());
 
 	setPerson(person);
     }
