@@ -5,6 +5,7 @@ import java.util.Collection;
 import org.apache.commons.collections.CollectionUtils;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.Registration;
 
 /**
  * @author David Santos in Jun 29, 2004
@@ -46,4 +47,15 @@ public class CurricularCourseEquivalence extends CurricularCourseEquivalence_Bas
         super.deleteDomainObject();
     }
 
+    public boolean isSatisfied(final Registration registration) {
+	boolean result = true;
+
+	final Collection<CurricularCourse> curricularCoursesApprovedByEnrolment = registration.getCurricularCoursesApprovedByEnrolment();
+	for (final CurricularCourse oldCurricularCourse : getOldCurricularCoursesSet()) {
+	    result &= curricularCoursesApprovedByEnrolment.contains(oldCurricularCourse);
+	}
+	
+	return result;
+    }
+    
 }
