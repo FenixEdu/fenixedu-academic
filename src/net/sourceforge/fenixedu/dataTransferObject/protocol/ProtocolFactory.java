@@ -5,11 +5,13 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 
-import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.OpenFileBean;
+import net.sourceforge.fenixedu.domain.DomainListReference;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
+import net.sourceforge.fenixedu.domain.person.PersonName;
 import net.sourceforge.fenixedu.domain.protocols.Protocol;
 import net.sourceforge.fenixedu.domain.protocols.ProtocolHistory;
 import net.sourceforge.fenixedu.domain.protocols.util.ProtocolAction;
@@ -19,6 +21,12 @@ import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import org.joda.time.YearMonthDay;
 
 public class ProtocolFactory implements Serializable, FactoryExecutor {
+
+    public static enum EditProtocolAction {
+        EDIT_PROTOCOL_DATA, EDIT_PROTOCOL_RESPONSIBLES, EDIT_PROTOCOL_UNITS, EDIT_PROTOCOL_FILES
+    }
+
+    EditProtocolAction editProtocolAction;
 
     DomainReference<Protocol> protocol;
 
@@ -41,20 +49,36 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
     YearMonthDay endDate;
 
     String otherActionTypes;
-    
+
     Integer[] filesToDelete;
+
+    Boolean istResponsible;
+
+    Boolean internalUnit;
+
+    DomainReference<PersonName> responsible;
+
+    String responsibleName;
+
+    DomainReference<UnitName> unitObject;
+
+    String unitName;
+
+    DomainReference<Person> responsibleToAdd;
+
+    DomainReference<Unit> unitToAdd;
 
     List<ProtocolActionType> actionTypes;
 
     List<ProtocolHistory> protocolHistories;//só pode editar o ultimo (actual) ou criar novo caso n exista
 
-    List<ChoosePersonBean> responsibles;
+    DomainListReference<Person> responsibles;
 
-    List<ChoosePersonBean> partnerResponsibles;
+    DomainListReference<Person> partnerResponsibles;
 
-    List<UnitSearchBean> partnerUnits;
+    DomainListReference<Unit> partnerUnits;
 
-    List<UnitSearchBean> units;
+    DomainListReference<Unit> units;
 
     List<OpenFileBean> files;
 
@@ -73,45 +97,31 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
         setPartnerResponsiblesList(protocol.getPartnerResponsibles());
         setUnitsList(protocol.getUnits());
         setPartnersList(protocol.getPartners());
+        setIstResponsible(true);
+        setInternalUnit(true);
     }
 
     private void setPartnersList(List<Unit> partners) {
         if (partners != null) {
-            ArrayList<UnitSearchBean> partnersList = new ArrayList<UnitSearchBean>();
-            for (Unit partner : partners) {
-                partnersList.add(new UnitSearchBean(partner));
-            }
-            setPartnerUnits(partnersList);
+            setPartnerUnits(new DomainListReference<Unit>(partners));
         }
     }
 
     private void setUnitsList(List<Unit> units) {
         if (units != null) {
-            ArrayList<UnitSearchBean> unitsList = new ArrayList<UnitSearchBean>();
-            for (Unit unit : units) {
-                unitsList.add(new UnitSearchBean(unit));
-            }
-            setUnits(unitsList);
+            setUnits(new DomainListReference<Unit>(units));
         }
     }
 
     private void setPartnerResponsiblesList(List<Person> partnerResponsibles) {
         if (partnerResponsibles != null) {
-            ArrayList<ChoosePersonBean> persons = new ArrayList<ChoosePersonBean>();
-            for (Person person : partnerResponsibles) {
-                persons.add(new ChoosePersonBean(person));
-            }
-            setPartnerResponsibles(persons);
+            setPartnerResponsibles(new DomainListReference<Person>(partnerResponsibles));
         }
     }
 
     private void setResponsiblesList(List<Person> responsibles) {
         if (responsibles != null) {
-            ArrayList<ChoosePersonBean> persons = new ArrayList<ChoosePersonBean>();
-            for (Person person : responsibles) {
-                persons.add(new ChoosePersonBean(person));
-            }
-            setResponsibles(persons);
+            setResponsibles(new DomainListReference<Person>(responsibles));
         }
     }
 
@@ -126,56 +136,31 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
     }
 
     public ProtocolFactory() {
-        addResponsible();
-        addPartnerResponsible();
-        addUnit();
-        addPartnerUnit();
-        addFile();
+        setIstResponsible(true);
+        setInternalUnit(true);
     }
 
     public Object execute() {
         if (getProtocol() == null) {
             return new Protocol(this);
         } else {
+            if (getEditProtocolAction().equals(EditProtocolAction.EDIT_PROTOCOL_DATA)) {
+                getProtocol().editData(this);
+                return getProtocol();
+            } else if (getEditProtocolAction().equals(EditProtocolAction.EDIT_PROTOCOL_RESPONSIBLES)) {
+                getProtocol().editResponsibles(this);
+                return getProtocol();
+            } else if (getEditProtocolAction().equals(EditProtocolAction.EDIT_PROTOCOL_UNITS)) {
+                getProtocol().editUnits(this);
+                return getProtocol();
+            } else if (getEditProtocolAction().equals(EditProtocolAction.EDIT_PROTOCOL_FILES)) {
+                //getProtocol().editFiles(this);
+                //return getProtocol();
+            }
             //editar, se já existir um ficheiro com o mesmo nome e tiver inputstream, apaga e poe o novo
             //tem de ter link para apagar, provavelmente vai ter de ser protocolFileBean, com id do file
         }
         return null;
-    }
-
-    public void addResponsible() {
-        if (getResponsibles() == null) {
-            setResponsibles(new ArrayList<ChoosePersonBean>());
-        }
-        getResponsibles().add(new ChoosePersonBean());
-    }
-
-    public void addPartnerResponsible() {
-        if (getPartnerResponsibles() == null) {
-            setPartnerResponsibles(new ArrayList<ChoosePersonBean>());
-        }
-        getPartnerResponsibles().add(new ChoosePersonBean());
-    }
-
-    public void addPartnerUnit() {
-        if (getPartnerUnits() == null) {
-            setPartnerUnits(new ArrayList<UnitSearchBean>());
-        }
-        getPartnerUnits().add(new UnitSearchBean());
-    }
-
-    public void addUnit() {
-        if (getUnits() == null) {
-            setUnits(new ArrayList<UnitSearchBean>());
-        }
-        getUnits().add(new UnitSearchBean());
-    }
-
-    public void addFile() {
-        if (getFiles() == null) {
-            setFiles(new ArrayList<OpenFileBean>());
-        }
-        getFiles().add(new OpenFileBean());
     }
 
     public Boolean getActive() {
@@ -194,19 +179,19 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
         this.observations = observations;
     }
 
-    public List<ChoosePersonBean> getPartnerResponsibles() {
+    public List<Person> getPartnerResponsibles() {
         return partnerResponsibles;
     }
 
-    public void setPartnerResponsibles(List<ChoosePersonBean> partnerResponsibles) {
-        this.partnerResponsibles = partnerResponsibles;
+    public void setPartnerResponsibles(List<Person> partnerResponsibles) {
+        this.partnerResponsibles = new DomainListReference<Person>(partnerResponsibles);
     }
 
-    public List<UnitSearchBean> getPartnerUnits() {
+    public DomainListReference<Unit> getPartnerUnits() {
         return partnerUnits;
     }
 
-    public void setPartnerUnits(List<UnitSearchBean> partnerUnits) {
+    public void setPartnerUnits(DomainListReference<Unit> partnerUnits) {
         this.partnerUnits = partnerUnits;
     }
 
@@ -254,12 +239,12 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
         this.renewable = renewable;
     }
 
-    public List<ChoosePersonBean> getResponsibles() {
+    public List<Person> getResponsibles() {
         return responsibles;
     }
 
-    public void setResponsibles(List<ChoosePersonBean> responsibles) {
-        this.responsibles = responsibles;
+    public void setResponsibles(List<Person> responsibles) {
+        this.responsibles = new DomainListReference<Person>(responsibles);
     }
 
     public String getScientificAreas() {
@@ -278,11 +263,11 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
         this.signedDate = signedDate;
     }
 
-    public List<UnitSearchBean> getUnits() {
+    public DomainListReference<Unit> getUnits() {
         return units;
     }
 
-    public void setUnits(List<UnitSearchBean> units) {
+    public void setUnits(DomainListReference<Unit> units) {
         this.units = units;
     }
 
@@ -332,6 +317,94 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
 
     public void setFilesToDelete(Integer[] filesToDelete) {
         this.filesToDelete = filesToDelete;
+    }
+
+    public EditProtocolAction getEditProtocolAction() {
+        return editProtocolAction;
+    }
+
+    public void setEditProtocolAction(EditProtocolAction editProtocolAction) {
+        this.editProtocolAction = editProtocolAction;
+    }
+
+    public Boolean getIstResponsible() {
+        return istResponsible;
+    }
+
+    public void setIstResponsible(Boolean istResponsible) {
+        this.istResponsible = istResponsible;
+    }
+
+    public PersonName getResponsible() {
+        return responsible != null ? responsible.getObject() : null;
+    }
+
+    public void setResponsible(PersonName responsible) {
+        this.responsible = (responsible != null) ? new DomainReference<PersonName>(responsible) : null;
+    }
+
+    public UnitName getUnitObject() {
+        return unitObject != null ? unitObject.getObject() : null;
+    }
+
+    public void setUnitObject(UnitName unitObject) {
+        this.unitObject = unitObject != null ? new DomainReference<UnitName>(unitObject) : null;
+    }
+
+    public Boolean getInternalUnit() {
+        return internalUnit;
+    }
+
+    public void setInternalUnit(Boolean internalUnit) {
+        this.internalUnit = internalUnit;
+    }
+
+    public String getResponsibleName() {
+        return responsibleName;
+    }
+
+    public void setResponsibleName(String responsibleName) {
+        this.responsibleName = responsibleName;
+    }
+
+    public String getUnitName() {
+        return unitName;
+    }
+
+    public void setUnitName(String unitName) {
+        this.unitName = unitName;
+    }
+
+    public void addPartnerResponsible(Person person) {
+        if (getPartnerResponsibles() != null) {
+            getPartnerResponsibles().add(person);
+        } else {
+            setPartnerResponsibles(new DomainListReference<Person>());
+            getPartnerResponsibles().add(person);
+        }
+    }
+
+    public void resetSearches() {
+        setResponsible(null);
+        setResponsibleName(null);
+        setUnitObject(null);
+        setUnitName(null);
+    }
+
+    public Person getResponsibleToAdd() {
+        return responsibleToAdd != null ? responsibleToAdd.getObject() : null;
+    }
+
+    public void setResponsibleToAdd(Person responsibleToAdd) {
+        this.responsibleToAdd = responsibleToAdd != null ? new DomainReference<Person>(responsibleToAdd) : null;
+    }
+
+    public Unit getUnitToAdd() {
+        return unitToAdd != null ? unitToAdd.getObject() : null;
+    }
+
+    public void setUnitToAdd(Unit unitToAdd) {
+        this.unitToAdd = unitToAdd != null ? new DomainReference<Unit>(unitToAdd) : null;
     }
 
 }

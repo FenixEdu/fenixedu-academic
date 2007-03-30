@@ -2709,4 +2709,13 @@ public class Person extends Person_Base {
 	final EmailAddress emailAddress = EmailAddress.find(email);
 	return (emailAddress != null && emailAddress.getParty().isPerson()) ? (Person) emailAddress.getParty() : null;
     }
+
+    public String getUnitText(){
+        if(getEmployee() != null && getEmployee().getLastWorkingPlace() != null){
+            return getEmployee().getLastWorkingPlace().getNameWithAcronym();
+        } else if (hasExternalPerson()){
+            return getExternalPerson().getInstitutionUnit().getPresentationNameWithParents();
+        }
+        return "";
+    }
 }
