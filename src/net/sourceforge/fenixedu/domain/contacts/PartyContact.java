@@ -6,6 +6,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+import net.sourceforge.fenixedu.injectionCode.Checked;
 
 public abstract class PartyContact extends PartyContact_Base {
     
@@ -52,7 +53,8 @@ public abstract class PartyContact extends PartyContact_Base {
 	    throw new DomainException("error.contacts.PartyContact.contactType.cannot.be.null");
 	}
     }
-    
+
+    @Checked("PartyContactPredicates.checkPermissionsToManage")
     public void edit(final PartyContactType type, final boolean visible, final boolean defaultContact) {
 	
 	checkParameters(getParty(), type);
@@ -63,6 +65,7 @@ public abstract class PartyContact extends PartyContact_Base {
 	setDefaultContactInformation(defaultContact);
     }
     
+    @Checked("PartyContactPredicates.checkPermissionsToManage")
     public void changeToDefault() {
 	final PartyContact defaultPartyContact = getParty().getDefaultPartyContact(getClass());
 	if (defaultPartyContact != null) {
@@ -103,6 +106,7 @@ public abstract class PartyContact extends PartyContact_Base {
 	return false;
     }
     
+    @Checked("PartyContactPredicates.checkPermissionsToManage")
     public void delete() {
 	setAnotherContactAsDefault();
 	removeParty();

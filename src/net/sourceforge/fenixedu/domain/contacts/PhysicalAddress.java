@@ -6,6 +6,7 @@ import org.apache.commons.lang.StringUtils;
 
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+import net.sourceforge.fenixedu.injectionCode.Checked;
 
 public class PhysicalAddress extends PhysicalAddress_Base {
     
@@ -36,11 +37,13 @@ public class PhysicalAddress extends PhysicalAddress_Base {
 			districtSubdivisionOfResidence, districtOfResidence, countryOfResidence));
     }
     
+    @Checked("PartyContactPredicates.checkPermissionsToManage")
     public PhysicalAddress(final Party party, final PartyContactType type, final boolean visible, final boolean defaultContact) {
 	this();
 	super.init(party, type, visible, defaultContact);
     }
 
+    @Checked("PartyContactPredicates.checkPermissionsToManage")
     public PhysicalAddress(final Party party, final PartyContactType type, final boolean visible, final boolean defaultContact, final PhysicalAddressData physicalAddressData) {
 	this();
 	init(party, type, visible, defaultContact, physicalAddressData);
@@ -51,6 +54,7 @@ public class PhysicalAddress extends PhysicalAddress_Base {
 	edit(data);
     }
     
+    @Checked("PartyContactPredicates.checkPermissionsToManage")
     public void edit(final PhysicalAddressData data) {
 	super.setAddress(data.getAddress());
 	super.setAreaCode(data.getAreaCode());
@@ -72,6 +76,7 @@ public class PhysicalAddress extends PhysicalAddress_Base {
     }
     
     @Override
+    @Checked("PartyContactPredicates.checkPermissionsToManage")
     public void delete() {
         removeCountryOfResidence();
         super.delete();

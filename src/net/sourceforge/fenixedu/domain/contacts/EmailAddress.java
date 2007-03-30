@@ -5,6 +5,7 @@ import java.util.Comparator;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+import net.sourceforge.fenixedu.injectionCode.Checked;
 import pt.utl.ist.fenix.tools.smtp.EmailSender;
 
 public class EmailAddress extends EmailAddress_Base {
@@ -32,6 +33,7 @@ public class EmailAddress extends EmailAddress_Base {
         this(party, type, visible, false, value);
     }
     
+    @Checked("PartyContactPredicates.checkPermissionsToManage")
     public EmailAddress(final Party party, final PartyContactType type, final boolean visible, final boolean defaultContact, final String value) {
 	this();
 	init(party, type, visible, defaultContact, value);
@@ -64,6 +66,11 @@ public class EmailAddress extends EmailAddress_Base {
     @Override
     public boolean isEmailAddress() {
         return true;
+    }
+    
+    @Checked("PartyContactPredicates.checkPermissionsToManage")
+    public void edit(final String value) {
+	super.setValue(value);
     }
 
     static public EmailAddress find(final String emailAddressString) {

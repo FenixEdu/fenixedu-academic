@@ -6,6 +6,7 @@ import org.apache.commons.lang.StringUtils;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+import net.sourceforge.fenixedu.injectionCode.Checked;
 
 public class MobilePhone extends MobilePhone_Base {
     
@@ -32,11 +33,13 @@ public class MobilePhone extends MobilePhone_Base {
         this(party, type, visible, false, number);
     }
     
+    @Checked("PartyContactPredicates.checkPermissionsToManage")
     public MobilePhone(final Party party, final PartyContactType type, final boolean visible, final boolean defaultContact) {
         this();
         super.init(party, type, visible, defaultContact);
     }
     
+    @Checked("PartyContactPredicates.checkPermissionsToManage")
     public MobilePhone(final Party party, final PartyContactType type, final boolean visible, final boolean defaultContact, final String number) {
         this();
         super.init(party, type, visible, defaultContact);
@@ -55,6 +58,7 @@ public class MobilePhone extends MobilePhone_Base {
         return true;
     }
 
+    @Checked("PartyContactPredicates.checkPermissionsToManage")
     public void edit(final String number) {
 	super.setNumber(number);
     }

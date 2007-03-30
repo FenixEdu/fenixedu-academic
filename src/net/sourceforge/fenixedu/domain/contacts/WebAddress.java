@@ -6,6 +6,7 @@ import org.apache.commons.lang.StringUtils;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+import net.sourceforge.fenixedu.injectionCode.Checked;
 
 public class WebAddress extends WebAddress_Base {
     
@@ -32,11 +33,13 @@ public class WebAddress extends WebAddress_Base {
         this(party, type, visible, false, url);
     }
     
+    @Checked("PartyContactPredicates.checkPermissionsToManage")
     public WebAddress(final Party party, final PartyContactType type, final boolean visible, final boolean defaultContact, final String url) {
 	this();
 	init(party, type, visible, defaultContact, url);
     }
     
+    @Checked("PartyContactPredicates.checkPermissionsToManage")
     public WebAddress(final Party party, final PartyContactType type, final boolean visible, final boolean defaultContact) {
 	this();
 	super.init(party, type, visible, defaultContact);
@@ -63,6 +66,7 @@ public class WebAddress extends WebAddress_Base {
 	return true;
     }
     
+    @Checked("PartyContactPredicates.checkPermissionsToManage")
     public void edit(final String url) {
 	super.setUrl(url);
     }
