@@ -58,7 +58,7 @@ import pt.ist.utl.fenix.utils.Pair;
 
 public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAction {
 
-    private final static String LINE_BRAKE = "\r\n";
+    private final static String LINE_BRAKE = "\n";
     
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
