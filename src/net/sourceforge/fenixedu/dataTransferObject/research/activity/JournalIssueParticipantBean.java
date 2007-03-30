@@ -27,7 +27,7 @@ public class JournalIssueParticipantBean extends ParticipantBean implements Seri
     
     @Override
     public List<ResearchActivityParticipationRole> getAllowedRoles() {
-	return null;
+	return ResearchActivityParticipationRole.getAllJournalIssueRoles();
     }
 
     @Override

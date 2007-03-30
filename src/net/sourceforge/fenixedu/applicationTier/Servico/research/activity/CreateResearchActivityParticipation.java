@@ -10,6 +10,8 @@ import net.sourceforge.fenixedu.domain.research.activity.Cooperation;
 import net.sourceforge.fenixedu.domain.research.activity.CooperationParticipation;
 import net.sourceforge.fenixedu.domain.research.activity.Event;
 import net.sourceforge.fenixedu.domain.research.activity.EventParticipation;
+import net.sourceforge.fenixedu.domain.research.activity.JournalIssue;
+import net.sourceforge.fenixedu.domain.research.activity.JournalIssueParticipation;
 import net.sourceforge.fenixedu.domain.research.activity.ScientificJournal;
 import net.sourceforge.fenixedu.domain.research.activity.ScientificJournalParticipation;
 import net.sourceforge.fenixedu.domain.research.activity.Participation.ResearchActivityParticipationRole;
@@ -41,6 +43,10 @@ public class CreateResearchActivityParticipation extends Service {
 	
 		Unit unit = getUnit(bean.getUnit(), bean.getUnitName(), bean.isExternalParticipation());
 		new EventParticipation(unit, bean.getRole(), event);
+	}
+	
+	public void run(JournalIssue issue, ResearchActivityParticipationRole role, Person person) {
+	    new JournalIssueParticipation(person,role,issue);
 	}
 	
 //	public void run(ScientificJournal journal, ResearchActivityUnitParticipantBean bean)

@@ -141,7 +141,14 @@ public abstract class Participation extends Participation_Base {
 
 	    return cooperationRoles;
 	}
+	
+	public static List<ResearchActivityParticipationRole> getAllJournalIssueRoles() {
+	    return getAllScientificJournalParticipationRoles();
+	}
 
+	public static List<ResearchActivityParticipationRole> getAllEventEditionRoles() {
+	    return getAllEventParticipationRoles();
+	}
     }
 
 }

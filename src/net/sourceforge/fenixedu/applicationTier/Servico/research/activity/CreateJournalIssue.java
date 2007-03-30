@@ -4,6 +4,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.CreateIssueBean;
 import net.sourceforge.fenixedu.domain.research.activity.JournalIssue;
 import net.sourceforge.fenixedu.domain.research.activity.ScientificJournal;
+import net.sourceforge.fenixedu.util.Month;
 
 public class CreateJournalIssue extends Service {
 
@@ -17,13 +18,18 @@ public class CreateJournalIssue extends Service {
 	else {
 	    journal = bean.getJournal();
 	}
+	return run(journal,bean.getYear(),bean.getMonth(),bean.getVolume(),bean.getNumber(),bean.getPublisher(),bean.getUrl());
+    }
+    
+    
+    public JournalIssue run(ScientificJournal journal, Integer year, Month month, String volume, String number, String publisher, String url) {
 	JournalIssue issue = new JournalIssue(journal);
-	issue.setYear(bean.getYear());
-	issue.setMonth(bean.getMonth());
-	issue.setVolume(bean.getVolume());
-	issue.setNumber(bean.getNumber());
-	issue.setPublisher(bean.getPublisher());
-	issue.setUrl(bean.getUrl());
+	issue.setYear(year);
+	issue.setMonth(month);
+	issue.setVolume(volume);
+	issue.setNumber(number);
+	issue.setPublisher(publisher);
+	issue.setUrl(url);
 	return issue;
     }
  }

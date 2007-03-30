@@ -57,7 +57,7 @@ public class EventEditionParticipation extends EventEditionParticipation_Base {
 
     @Override
     public List<ResearchActivityParticipationRole> getAllowedRoles() {
-	return null;
+	return ResearchActivityParticipationRole.getAllEventEditionRoles();
     }
 
     @Override

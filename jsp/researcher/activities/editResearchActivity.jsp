@@ -21,36 +21,15 @@
 			</html:link>
 		</li>
 		<li>
-			<bean:define id="method" value=""/>
-			<logic:equal name="activityType" value="Event">
-				<bean:define id="method" value="prepareDeleteEventParticipations"/>
-			</logic:equal>
-			<logic:equal name="activityType" value="ScientificJournal">
-				<bean:define id="method" value="prepareDeleteJournalParticipations"/>
-			</logic:equal>
-			<logic:equal name="activityType" value="Cooperation">
-				<bean:define id="method" value="prepareDeleteCooperationParticipations"/>
-			</logic:equal>
-			<html:link page="<%="/activities/activitiesManagement.do?method=" + method + "&forwardTo=Edit" + activityType +"&amp;" + parameter%>">
+			<html:link page="<%="/activities/activitiesManagement.do?method=prepareDelete" + activityType + "Participations&forwardTo=Edit" + activityType +"&amp;" + parameter%>">
 				<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.delete" />
 			</html:link> 
 		</li>
 	</ul>
 	
 	<logic:equal name="confirm" value="yes">
-		<bean:define id="deleteMethod" value=""/>
-		<logic:equal name="activityType" value="Event">
-			<bean:define id="deleteMethod" value="deleteEventParticipations"/>
-		</logic:equal>
-		<logic:equal name="activityType" value="ScientificJournal">
-			<bean:define id="deleteMethod" value="deleteJournalParticipations"/>
-		</logic:equal>
-		<logic:equal name="activityType" value="Cooperation">
-			<bean:define id="deleteMethod" value="deleteCooperationParticipations"/>
-		</logic:equal>
-		
 		<p class="mbottom1 mtop2"><span class="warning0"><bean:message key="researcher.activity.activitiesManagement.delete.useCase"/></span></p>
-		<fr:form action="<%="/activities/activitiesManagement.do?method=" + deleteMethod +"&forwardTo=Edit" + activityType + "&amp;" + parameter%>">
+		<fr:form action="<%="/activities/activitiesManagement.do?method=delete" + activityType +"Participations&forwardTo=Edit" + activityType + "&amp;" + parameter%>">
 			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.confirm" property="confirm">
 				<bean:message bundle="RESEARCHER_RESOURCES" key="button.delete"/>
 			</html:submit>

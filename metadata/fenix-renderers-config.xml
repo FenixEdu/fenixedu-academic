@@ -113,6 +113,7 @@ Documentation:
 		<property name="moduleRelative" value="false"/>
 		<property name="contextRelative" value="true"/>
 		<property name="linkFormat" value="/homepage/${istUsername}"/>
+		<property name="showRoles" value="false"/>
 	</renderer>
 
     <renderer type="net.sourceforge.fenixedu.domain.Person" layout="person-email-identity" class="net.sourceforge.fenixedu.presentationTier.renderers.EmailIdentityRenderer"/>

@@ -455,12 +455,19 @@ public abstract class Party extends Party_Base {
 	return issueParticipations;
     }
 
-    public Set<JournalIssue> getAssociatedJournalIssues() {
+    public Set<JournalIssue> getAssociatedJournalIssues(ScopeType locationType) {
 	Set<JournalIssue> issues = new HashSet<JournalIssue>();
 	for (JournalIssueParticipation participation : this.getAllJournalIssueParticipations()) {
-	    issues.add(participation.getJournalIssue());
+	    if(locationType==null || (locationType!=null && locationType.equals(participation.getJournalIssue().getLocationType()))) {
+		issues.add(participation.getJournalIssue());
+	    }
 	}
 	return issues;
+	
+    }
+    
+    public Set<JournalIssue> getAssociatedJournalIssues() {
+	return getAssociatedJournalIssues(null);
     }
 
     public List<CooperationParticipation> getAllCooperationParticipations() {

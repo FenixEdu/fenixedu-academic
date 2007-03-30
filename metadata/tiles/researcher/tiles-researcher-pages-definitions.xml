@@ -55,6 +55,9 @@
     <definition name="activities.createEvent" extends="researcher.masterPage">
         <put name="body" value="/researcher/activities/createEvent.jsp"></put>
     </definition>
+    <definition name="activities.createIssue" extends="researcher.masterPage">
+        <put name="body" value="/researcher/activities/createJournalIssue.jsp"></put>
+    </definition>
     <definition name="activities.createScientificJournal" extends="researcher.masterPage">
         <put name="body" value="/researcher/activities/createScientificJournal.jsp"></put>
     </definition>

@@ -23,33 +23,47 @@ import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 public class ParticipationsRenderer extends OutputRenderer {
 
     private String linkFormat;
+
     private String subSchema;
+
     private String subLayout;
+
     private boolean moduleRelative;
+
     private boolean contextRelative;
-    
+
+    private boolean showRoles;
+
+    public boolean isShowRoles() {
+	return showRoles;
+    }
+
+    public void setShowRoles(boolean showRoles) {
+	this.showRoles = showRoles;
+    }
+
     public String getSubLayout() {
-        return subLayout;
+	return subLayout;
     }
 
     public void setSubLayout(String layout) {
-        this.subLayout = layout;
+	this.subLayout = layout;
     }
 
     public String getSubSchema() {
-        return subSchema;
+	return subSchema;
     }
 
     public void setSubSchema(String schema) {
-        this.subSchema = schema;
+	this.subSchema = schema;
     }
 
     public String getLinkFormat() {
-        return linkFormat;
+	return linkFormat;
     }
 
     public void setLinkFormat(String linkFormat) {
-        this.linkFormat = linkFormat;
+	this.linkFormat = linkFormat;
     }
 
     @Override
@@ -70,30 +84,31 @@ public class ParticipationsRenderer extends OutputRenderer {
 		} else {
 		    ArrayList<ResearchActivityParticipationRole> roles = new ArrayList<ResearchActivityParticipationRole>();
 		    roles.add(participation.getRole());
-		    participationsMap.put((Person)participation.getParty(), roles);
+		    participationsMap.put((Person) participation.getParty(), roles);
 		}
 	    }
 
-	    
 	    HtmlInlineContainer container = new HtmlInlineContainer();
-	    
+
 	    Set<Person> keySet = participationsMap.keySet();
 	    int keySetSize = keySet.size();
-	    
-	    for(Person person : keySet) {
+
+	    for (Person person : keySet) {
 		container.addChild(getPersonComponent(person));
-		container.addChild(new HtmlText(" ("));
-		List<ResearchActivityParticipationRole> roleList = participationsMap.get(person);
-		int size = roleList.size();
-		for(ResearchActivityParticipationRole role : roleList) {
-		    container.addChild(new HtmlText(RenderUtils.getEnumString(role)));
-		    if(size>1) {
-			container.addChild(new HtmlText(", "));
-			size--;
+		if (isShowRoles()) {
+		    container.addChild(new HtmlText(" ("));
+		    List<ResearchActivityParticipationRole> roleList = participationsMap.get(person);
+		    int size = roleList.size();
+		    for (ResearchActivityParticipationRole role : roleList) {
+			container.addChild(new HtmlText(RenderUtils.getEnumString(role)));
+			if (size > 1) {
+			    container.addChild(new HtmlText(", "));
+			    size--;
+			}
 		    }
+		    container.addChild(new HtmlText(")"));
 		}
-		container.addChild(new HtmlText(")"));
-		if(keySetSize>1) {
+		if (keySetSize > 1) {
 		    container.addChild(new HtmlText(", "));
 		    keySetSize--;
 		}
@@ -103,14 +118,13 @@ public class ParticipationsRenderer extends OutputRenderer {
 
 	private HtmlComponent getPersonComponent(Person person) {
 	    HtmlComponent component;
-	    
+
 	    Schema findSchema = RenderKit.getInstance().findSchema(getSubSchema());
-            HtmlComponent personComponent = renderValue(person, findSchema, getSubLayout());
-	       
-            if(!person.isHomePageAvailable()) {
-        	component = personComponent;
-            }
-            else {
+	    HtmlComponent personComponent = renderValue(person, findSchema, getSubLayout());
+
+	    if (!person.isHomePageAvailable()) {
+		component = personComponent;
+	    } else {
 		HtmlLink link = new HtmlLink();
 		link.setTarget(Target.BLANK);
 		link.setModuleRelative(isModuleRelative());
@@ -125,19 +139,19 @@ public class ParticipationsRenderer extends OutputRenderer {
     }
 
     public boolean isContextRelative() {
-        return contextRelative;
+	return contextRelative;
     }
 
     public void setContextRelative(boolean contextRelative) {
-        this.contextRelative = contextRelative;
+	this.contextRelative = contextRelative;
     }
 
     public boolean isModuleRelative() {
-        return moduleRelative;
+	return moduleRelative;
     }
 
     public void setModuleRelative(boolean moduleRelative) {
-        this.moduleRelative = moduleRelative;
+	this.moduleRelative = moduleRelative;
     }
 
 }

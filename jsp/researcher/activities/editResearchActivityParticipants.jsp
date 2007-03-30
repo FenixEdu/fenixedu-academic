@@ -7,13 +7,11 @@
 
 <logic:present role="RESEARCHER">		
 	<bean:define id="activityId" name="researchActivity" property="idInternal" toScope="request"/>
-	<bean:define id="researchActivityName" name="researchActivity" property="name" toScope="request"/>
 	<bean:define id="activityType" name="researchActivity" property="class.simpleName" />
 	<bean:define id="parameter" value="<%= "activityId=" +  activityId + "&amp;forwardTo=" + "prepareEdit" + activityType + "Participants" %>" toScope="request"/>
 
 	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.superTitle"/></em>
-	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="<%= "researcher.activity.editResearchActivityParticipants." + activityType %>"/>:&nbsp;
-	<%= researchActivityName %></h2>
+	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.editResearchActivityParticipants"/></h2>
 	
 	<ul class="list5 mtop2 mbottom1">
 		<li>
@@ -55,11 +53,11 @@
 		<%-- LIST OF EXISTING PARTICIPATIONS --%>	
 		<logic:notEmpty name="participantBeans">
 			<p class="mtop1 mbottom05">
-				<strong><bean:message bundle="RESEARCHER_RESOURCES" key="<%="researcher.activity.editResearchActivityParticipants.editRoles." + activityType%>"/></strong>
+				<strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.editResearchActivityParticipants.editRoles"/></strong>
 			</p>
 			<logic:notEmpty name="unableToEdit">
 				<div class="error2">
-					<bean:message bundle="RESEARCHER_RESOURCES" key="<%="researcher.activity.editResearchActivityParticipants.unableToEdit." + activityType%>"/>
+					<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.editResearchActivityParticipants.unableToEdit"/>
 					<fr:view name="unableToEdit">
 						<fr:layout>
 							<fr:property name="eachLayout" value="values"/>

@@ -7,14 +7,13 @@
 
 <logic:present role="RESEARCHER">	
 	<bean:define id="activityId" name="researchActivity" property="idInternal" />
-	<bean:define id="researchActivityName" name="researchActivity" property="name" />
+
 	<bean:define id="parameter" value="<%="activityId=" + activityId %>" />
 	<bean:define id="schema" name="schema" type="java.lang.String" scope="request" />
 	<bean:define id="activityType" name="researchActivity" property="class.simpleName" />
 
 	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.superTitle"/></em>
-	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="<%= "researcher.activity.editResearchActivityData." + activityType %>"/>:&nbsp;
-	<%= researchActivityName %></h2>
+	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="<%= "researcher.activity.editResearchActivityData." + activityType %>"/></h2>
 	
 	<ul class="list5 mtop2 mbottom1">
 		<li>

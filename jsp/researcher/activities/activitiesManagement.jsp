@@ -12,7 +12,8 @@
 	<ul class="mtop15 mbottom1 list5">
 		<li> <bean:message key="researcher.activity.activitiesManagement.createParticipation" bundle="RESEARCHER_RESOURCES"/>: 
 			<html:link page="/activities/createEvent.do?method=prepareEventSearch"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.events" /></html:link>, 
-			<html:link page="/activities/createScientificJournal.do?method=prepareJournalSearch"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.scientificJournals" /></html:link>,	
+			<html:link page="/activities/createScientificJournal.do?method=prepareJournalSearch"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.scientificJournals" /></html:link>,
+			<html:link page="/activities/createJournalIssue.do?method=prepareJournalIssueSearch"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.journalIssues" /></html:link>,
 			<html:link page="/activities/createCooperation.do?method=prepareCreateCooperationParticipation"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.cooperations" /></html:link>
 		</li>
 	</ul>
@@ -50,14 +51,34 @@
 	
 	<logic:notEmpty name="international-journals">
 		<p id='scientificJournals' class="mtop2 mbottom0">
-			<strong><span><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.scientificJournalsTitle.international" /></span></strong>
+		<strong><span><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.issueTitle.international" /></span></strong>
 		</p>
 		<bean:define id="participations" name="international-journals" toScope="request"/>
 		<bean:define id="forwardTo" value="EditScientificJournal" toScope="request"/>
 		<bean:define id="schema" value="researchScientificJournalParticipation.summary" toScope="request"/>
 		<jsp:include page="researchActivitiesList.jsp"/>
 	</logic:notEmpty>
+
+	<logic:notEmpty name="national-issues">
+		<p id='issues' class="mtop2 mbottom0">
+			<strong><span><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.issueTitle.national" /></span></strong>
+		</p>
+		<bean:define id="participations" name="national-issues" toScope="request"/>
+		<bean:define id="forwardTo" value="EditJournalIssue" toScope="request"/>
+		<bean:define id="schema" value="researchJournalIssueParticipation.summary" toScope="request"/>
+		<jsp:include page="researchActivitiesList.jsp"/>
+	</logic:notEmpty>
 	
+	<logic:notEmpty name="international-issues">
+		<p id='issues' class="mtop2 mbottom0">
+			<strong><span><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.scientificJournalsTitle.international" /></span></strong>
+		</p>
+		<bean:define id="participations" name="international-issues" toScope="request"/>
+		<bean:define id="forwardTo" value="EditJournalIssue" toScope="request"/>
+		<bean:define id="schema" value="researchJournalIssueParticipation.summary" toScope="request"/>
+		<jsp:include page="researchActivitiesList.jsp"/>
+	</logic:notEmpty>
+		
 	<logic:notEmpty name="cooperations">
 		<p id='cooperations' class="mtop2 mbottom0">
 			<strong><span><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.cooperationsTitle" /></span></strong>

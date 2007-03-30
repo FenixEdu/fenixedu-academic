@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.research.result.publication.Article;
+import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public class JournalIssue extends JournalIssue_Base {
@@ -86,5 +87,13 @@ public class JournalIssue extends JournalIssue_Base {
 	    }
 	}
 	return participations;
+    }
+    
+    public ScopeType getLocationType() {
+	return getScientificJournal().getLocationType();
+    }
+    
+    public String getNameWithScientificJournal() {
+	return this.getScientificJournal().getName() + " - " + this.getVolume() + " (" + this.getNumber() + ")"; 
     }
 }

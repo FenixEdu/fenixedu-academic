@@ -6,6 +6,7 @@ import net.sourceforge.fenixedu.dataTransferObject.research.activity.Participant
 import net.sourceforge.fenixedu.dataTransferObject.research.activity.ResearchActivityParticipantEditionBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.activity.ResearchCooperationCreationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.activity.ResearchEventCreationBean;
+import net.sourceforge.fenixedu.dataTransferObject.research.activity.ResearchJournalIssueCreationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.activity.ResearchScientificJournalCreationBean;
 import net.sourceforge.fenixedu.domain.research.activity.CooperationType;
 import net.sourceforge.fenixedu.domain.research.activity.Participation.ResearchActivityParticipationRole;
@@ -38,6 +39,8 @@ public class ResearchActivityRolesDataProvider implements DataProvider {
 			} else {
 				roles = CooperationType.getParticipationRoles(bean.getType());
 			}
+		} else if(source instanceof ResearchJournalIssueCreationBean) {
+		    roles = ResearchActivityParticipationRole.getAllJournalIssueRoles();
 		}
 		
 		return roles;

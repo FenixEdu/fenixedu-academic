@@ -92,6 +92,7 @@
 		    <forward name="EditEvent" path="/activities/editResearchActivity.do?method=prepareEvent"/>
    		    <forward name="EditScientificJournal" path="/activities/editResearchActivity.do?method=prepareScientificJournal"/>
    		    <forward name="EditCooperation" path="/activities/editResearchActivity.do?method=prepareCooperation"/>
+		    <forward name="EditJournalIssue" path="/activities/editResearchActivity.do?method=prepareJournalIssue"/>
 		    <forward name="EditParticipants" path="/activities/editResearchActivity.do?method=prepareEditParticipants"/>
 		</action>
 		
@@ -103,6 +104,7 @@
 			<forward name="EditData" path="activities.editResearchActivityData"/>
 			<forward name="prepareEditEventParticipants" path="/activities/editResearchActivity.do?method=prepareEditEventParticipants"/>
 			<forward name="prepareEditScientificJournalParticipants" path="/activities/editResearchActivity.do?method=prepareEditScientificJournalParticipants"/>
+			<forward name="prepareEditJournalIssueParticipants" path="/activities/editResearchActivity.do?method=prepareEditJournalIssueParticipants"/>
 			<forward name="prepareEditCooperationParticipants" path="/activities/editResearchActivity.do?method=prepareEditCooperationParticipants"/>
 			<forward name="EditParticipants" path="activities.editResearchActivityParticipants"/>
 		</action>
@@ -122,6 +124,15 @@
 			<forward name="CreateScientificJournal" path="activities.createScientificJournal"/>
 			<forward name="Success" path="/activities/activitiesManagement.do?method=listActivities"/>
 		</action>
+		
+		<action path="/activities/createJournalIssue"
+				type="net.sourceforge.fenixedu.presentationTier.Action.research.activity.CreateJournalIssueDispatchAction"
+				scope="request"
+				parameter="method">
+			<forward name="CreateIssue" path="activities.createIssue"/>
+			<forward name="Success" path="/activities/activitiesManagement.do?method=listActivities"/>
+		</action>
+		
 		
 		<action path="/activities/createCooperation"
 				type="net.sourceforge.fenixedu.presentationTier.Action.research.activity.CreateCooperationDispatchAction"

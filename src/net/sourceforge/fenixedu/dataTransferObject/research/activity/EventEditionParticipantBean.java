@@ -27,7 +27,7 @@ public class EventEditionParticipantBean extends ParticipantBean implements Seri
     
     @Override
     public List<ResearchActivityParticipationRole> getAllowedRoles() {
-	return null;
+	return ResearchActivityParticipationRole.getAllEventEditionRoles();
     }
 
     @Override

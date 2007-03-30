@@ -197,6 +197,9 @@
 	</slot>
 </schema>
 
+<schema name="showNickName" type="net.sourceforge.fenixedu.domain.Person">
+	<slot name="nickname"/>
+</schema>
 
 <schema name="researchEventParticipation.summary" type="net.sourceforge.fenixedu.domain.research.activity.Event">
 	<slot name="name" layout="link">
@@ -210,11 +213,11 @@
 		<property name="subLayout" value="values"/>
 		<property name="subSchema" value="showNickName"/>
 	</slot>
+	<slot name="url">
+		<property name="link" value="true"/>		
+	</slot>
 </schema>
 
-<schema name="showNickName" type="net.sourceforge.fenixedu.domain.Person">
-	<slot name="nickname"/>
-</schema>
 <schema name="researchScientificJournalParticipation.summary" type="net.sourceforge.fenixedu.domain.research.activity.ScientificJournal">
 	<slot name="name" layout="link">
 		<property name="classes" value="bold" />
@@ -226,6 +229,33 @@
 		<slot name="participations" layout="show-participation-list">
 		<property name="subLayout" value="values"/>
 		<property name="subSchema" value="showNickName"/>
+	</slot>
+	<slot name="url">
+		<property name="link" value="true"/>		
+	</slot>
+</schema>
+
+<schema name="researchJournalIssueParticipation.summary" type="net.sourceforge.fenixedu.domain.research.activity.JournalIssue">
+	<slot name="nameWithScientificJournal" layout="link">
+		<property name="classes" value="bold" />
+		<property name="useParent" value="true"/>
+		<property name="linkFormat" value="/activities/editResearchActivity.do?method=prepareJournalIssue&amp;activityId=${idInternal}"/>
+		<property name="contextRelative" value="true" />
+		<property name="moduleRelative" value="true" />
+	</slot>
+	<slot name="scientificJournal" layout="link">
+		<property name="contextRelative" value="true"/>
+		<property name="moduleRelative" value="true"/>
+		<property name="subLayout" value="values"/>
+		<property name="subSchema" value="presentJournalName"/>
+ 	    <property name="linkFormat" value="/showJournals.do?method=showScientificJournal&amp;journalId=${idInternal}"/>
+	</slot>
+	<slot name="participations" layout="show-participation-list">
+		<property name="subLayout" value="values"/>
+		<property name="subSchema" value="showNickName"/>
+	</slot>
+	<slot name="url">
+		<property name="link" value="true"/>		
 	</slot>
 </schema>
 
@@ -263,10 +293,10 @@
 		<property name="eachSchema" value="researchActivity.ParticipationRoles"/>
 		<property name="htmlSeparator" value=", "/>
 	</slot>
-	<slot name="otherParticipationsAsList" layout="flowLayout" key="label.activityParticipants">
-		<property name="eachLayout" value="values"/>
-		<property name="eachSchema" value="researchActivity.participations"/>
-		<property name="htmlSeparator" value=", "/>
+	<slot name="otherParticipations" layout="show-participation-list" key="label.activityParticipants">
+		<property name="subLayout" value="values"/>
+		<property name="subSchema" value="showNickName"/>
+		<property name="showRoles" value="true"/>
 	</slot>
 </schema>
 
@@ -278,10 +308,29 @@
 		<property name="eachSchema" value="researchActivity.ParticipationRoles"/>
 		<property name="htmlSeparator" value=", "/>
 	</slot>
-	<slot name="otherParticipationsAsList" layout="flowLayout" key="label.activityParticipants">
+	<slot name="otherParticipations" layout="show-participation-list" key="label.activityParticipants">
+		<property name="subLayout" value="values"/>
+		<property name="subSchema" value="showNickName"/>
+		<property name="showRoles" value="true"/>
+	</slot>
+</schema>
+
+<schema name="issue.view-defaults" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.research.activity.ResearchJournalIssueEditonBean">
+	<slot name="journalIssue" key="label.journal">
+		<property name="contextRelative" value="true"/>
+		<property name="moduleRelative" value="true"/>
+ 	    <property name="linkFormat" value="/showJournals.do?method=showScientificJournal&amp;journalId=${scientificJournal.idInternal}"/>
+	</slot>
+	<slot name="journalIssue.locationType" key="label.scientificJournal.locationType"/>
+	<slot name="participations" layout="flowLayout" key="label.activityRoles">
 		<property name="eachLayout" value="values"/>
-		<property name="eachSchema" value="researchActivity.participations"/>
+		<property name="eachSchema" value="researchActivity.ParticipationRoles"/>
 		<property name="htmlSeparator" value=", "/>
+	</slot>
+	<slot name="otherParticipations" layout="show-participation-list" key="label.activityParticipants">
+		<property name="subLayout" value="values"/>
+		<property name="subSchema" value="showNickName"/>
+		<property name="showRoles" value="true"/>
 	</slot>
 </schema>
 
@@ -291,26 +340,10 @@
 	<slot name="cooperation.startDate" key="label.event.startDate" read-only="true" />
 	<slot name="cooperation.endDate" key="label.event.endDate" read-only="true" />
 	<slot name="cooperation.unit.name" key="label.cooperation.cooperationUnitName" read-only="true" />
-	<slot name="participations" layout="flowLayout" key="label.cooperation.colaborationForm">
-		<property name="eachLayout" value="values"/>
-		<property name="eachSchema" value="researchActivity.ParticipationRoles"/>
-		<property name="htmlSeparator" value=", "/>
-	</slot>		
-</schema>
-
-<schema name="researchActivity.participations" type="net.sourceforge.fenixedu.dataTransferObject.research.activity.ResearchActivityEditionBean$PartyParticipationsBean">
-	<slot name="party" key="researcher.viewCurriculum.name" layout="conditional-link">
-		<property name="visibleIf" value="homePageAvailable"/>
-		<property name="contextRelative" value="true"/>
-		<property name="linkFormat" value="/homepage/${istUsername}"/>	
+	<slot name="participations" layout="show-participation-list" key="label.activityParticipants">
 		<property name="subLayout" value="values"/>
-		<property name="subSchema" value="showName"/>
+		<property name="subSchema" value="showNickName"/>
 	</slot>
-<!--	<slot name="participations" layout="flowLayout">-->
-<!--		<property name="eachLayout" value="values"/>-->
-<!--		<property name="eachSchema" value="researchActivity.ParticipationRoles"/>-->
-<!--		<property name="htmlSeparator" value=", "/>-->
-<!--	</slot>-->
 </schema>
 
 <schema name="researchActivity.ParticipationRoles" type="net.sourceforge.fenixedu.domain.research.activity.Participation">
@@ -320,6 +353,32 @@
 <schema name="activityUnitParticipation.unit-summary" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.research.activity.Participation">
 	<slot name="party.name"/>
 	<slot name="role"/>
+</schema>
+
+
+<schema name="journalIssueCreation" type="net.sourceforge.fenixedu.dataTransferObject.research.activity.ResearchJournalIssueCreationBean" bundle="RESEARCHER_RESOURCES">
+	<slot name="scientificJournal" key="label.scientificJournal.name" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="50"/>
+		<property name="rawSlotName" value="scientificJournalName"/>
+		<property name="labelField" value="name"/>
+		<property name="indicatorShown" value="true"/>		
+		<property name="serviceName" value="SearchObjects"/>
+		<property name="serviceArgs" value="slot=name"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.research.activity.ScientificJournal"/>				
+		<property name="minChars" value="3"/>
+	</slot>
+</schema>
+
+<schema name="journalIssueCreation.journalSelected" type="net.sourceforge.fenixedu.dataTransferObject.research.activity.ResearchJournalIssueCreationBean" bundle="RESEARCHER_RESOURCES">
+	<slot name="scientificJournal.name" read-only="true"/>
+	<slot name="journalIssue" layout="menu-select">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.researcher.publication.JournalIssuesForScienficalJournalProvider"/>
+		<property name="eachLayout" value=""/>
+	</slot>
+	<slot name="role" key="label.activityRole" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.researcher.activity.ResearchActivityRolesDataProvider"/>
+		<property name="eachLayout" value=""/>
+	</slot>
 </schema>
 
 <schema name="scientificJournalCreation.journalName" type="net.sourceforge.fenixedu.dataTransferObject.research.activity.ResearchScientificJournalCreationBean" bundle="RESEARCHER_RESOURCES">
@@ -380,6 +439,15 @@
 		<property name="size" value="75"/>
 	</slot>
 	<slot name="locationType" key="label.scientificJournal.locationType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+</schema>
+
+<schema name="issue.edit-defaults" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.research.activity.JournalIssue">
+	<slot name="volume" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="20"/>
+	</slot>
+	<slot name="number" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="20"/>
+	</slot>
 </schema>
 
 <schema name="cooperationParticipation.cooperationType" type="net.sourceforge.fenixedu.dataTransferObject.research.activity.ResearchCooperationCreationBean" bundle="RESEARCHER_RESOURCES">

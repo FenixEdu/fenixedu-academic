@@ -100,9 +100,6 @@ public class CreateEventDispatchAction extends FenixDispatchAction {
         return mapping.findForward("Success");
     }
     
-    /*
-     * Gets the submited form bean, either it is a normal bean or a backup state bean
-     */
     public ResearchEventCreationBean getEventBean(HttpServletRequest request) {
     	ResearchEventCreationBean bean = null;
     	if(RenderUtils.getViewState() != null){

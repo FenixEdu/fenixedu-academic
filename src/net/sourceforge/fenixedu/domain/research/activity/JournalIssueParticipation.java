@@ -56,7 +56,7 @@ public class JournalIssueParticipation extends JournalIssueParticipation_Base {
 
     @Override
     public List<ResearchActivityParticipationRole> getAllowedRoles() {
-	return null;
+	return ResearchActivityParticipationRole.getAllJournalIssueRoles();
     }
 
     @Override

@@ -12,6 +12,8 @@ import net.sourceforge.fenixedu.domain.research.activity.Cooperation;
 import net.sourceforge.fenixedu.domain.research.activity.CooperationParticipation;
 import net.sourceforge.fenixedu.domain.research.activity.Event;
 import net.sourceforge.fenixedu.domain.research.activity.EventParticipation;
+import net.sourceforge.fenixedu.domain.research.activity.JournalIssue;
+import net.sourceforge.fenixedu.domain.research.activity.JournalIssueParticipation;
 import net.sourceforge.fenixedu.domain.research.activity.Participation;
 import net.sourceforge.fenixedu.domain.research.activity.ScientificJournal;
 import net.sourceforge.fenixedu.domain.research.activity.ScientificJournalParticipation;
@@ -37,39 +39,49 @@ public class ActivitiesManagementDispatchAction extends FenixDispatchAction {
 	request.setAttribute("international-journals", new ArrayList<ScientificJournal>(person
 		.getAssociatedScientificJournals(ScopeType.INTERNATIONAL)));
 	request.setAttribute("cooperations", new ArrayList<Cooperation>(person.getAssociatedCooperations()));
+	request.setAttribute("national-issues", new ArrayList<JournalIssue>(person.getAssociatedJournalIssues(ScopeType.NATIONAL)));
+	request.setAttribute("international-issues", new ArrayList<JournalIssue>(person.getAssociatedJournalIssues(ScopeType.INTERNATIONAL)));
 	return mapping.findForward("ListActivities");
     }
 
     public ActionForward prepareDeleteEventParticipations(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	Event event = (Event) RootDomainObject.readDomainObjectByOID(Event.class, Integer.valueOf(request
-		.getParameter("activityId")));
+	Event event = getEventFromRequest(request);
 	request.setAttribute("researchActivity", event);
 
 	return prepareDelete(mapping, form, request, response);
     }
 
-    public ActionForward prepareDeleteJournalParticipations(ActionMapping mapping, ActionForm form,
+    public ActionForward prepareDeleteScientificJournalParticipations(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	ScientificJournal event = (ScientificJournal) RootDomainObject.readDomainObjectByOID(
-		ScientificJournal.class, Integer.valueOf(request.getParameter("activityId")));
-	request.setAttribute("researchActivity", event);
+	ScientificJournal journal = getScientificJournalFromRequest(request);
+	request.setAttribute("researchActivity", journal);
 
 	return prepareDelete(mapping, form, request, response);
     }
 
+    public ActionForward prepareDeleteJournalIssueParticipations(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+	JournalIssue issue = getIssueFromRequest(request);
+	request.setAttribute("researchActivity", issue);
+
+	return prepareDelete(mapping, form, request, response);
+    }
+
+    
     public ActionForward prepareDeleteCooperationParticipations(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	Cooperation event = (Cooperation) RootDomainObject.readDomainObjectByOID(Cooperation.class, Integer
-		.valueOf(request.getParameter("activityId")));
-	request.setAttribute("researchActivity", event);
+	Cooperation cooperation = getCooperationFromRequest(request);
+	request.setAttribute("researchActivity", cooperation);
 
 	return prepareDelete(mapping, form, request, response);
     }
 
+    
     private ActionForward prepareDelete(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
@@ -86,30 +98,38 @@ public class ActivitiesManagementDispatchAction extends FenixDispatchAction {
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 	Person person = getLoggedPerson(request);
-	Event event = (Event) RootDomainObject.readDomainObjectByOID(Event.class, Integer.valueOf(request
-		.getParameter("activityId")));
+	Event event = getEventFromRequest(request);
 	request.setAttribute("researchActivity",event);
 	List<EventParticipation> participationsForUser = event.getParticipationsFor(person);
 	return delete(mapping, form, request, response, participationsForUser);
     }
 
-    public ActionForward deleteJournalParticipations(ActionMapping mapping, ActionForm form,
+    public ActionForward deleteScientificJournalParticipations(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 	Person person = getLoggedPerson(request);
-	ScientificJournal journal = (ScientificJournal) RootDomainObject.readDomainObjectByOID(ScientificJournal.class, Integer.valueOf(request
-		.getParameter("activityId")));
+	ScientificJournal journal = getScientificJournalFromRequest(request);
 	request.setAttribute("researchActivity",journal);
 	List<ScientificJournalParticipation> participationsForUser = journal.getParticipationsFor(person);
 	return delete(mapping, form, request, response, participationsForUser);
     }
     
+    public ActionForward deleteJournalIssueParticipations(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+	Person person = getLoggedPerson(request);
+	JournalIssue issue = getIssueFromRequest(request);
+	request.setAttribute("researchActivity",issue);
+	List<JournalIssueParticipation> participationsForUser = issue.getParticipationsFor(person);
+	return delete(mapping, form, request, response, participationsForUser);
+    }
+
+    
     public ActionForward deleteCooperationParticipations(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 	Person person = getLoggedPerson(request);
-	Cooperation cooperation = (Cooperation) RootDomainObject.readDomainObjectByOID(Cooperation.class, Integer.valueOf(request
-		.getParameter("activityId")));
+	Cooperation cooperation = getCooperationFromRequest(request);
 	request.setAttribute("researchActivity",cooperation);
 	List<CooperationParticipation> participationsForUser = cooperation.getParticipationsFor(person);
 	return delete(mapping, form, request, response, participationsForUser);
@@ -136,6 +156,26 @@ public class ActivitiesManagementDispatchAction extends FenixDispatchAction {
 	}
 
 	return mapping.findForward(forwardTo);
+    }
+
+    protected Cooperation getCooperationFromRequest(HttpServletRequest request) {
+	return (Cooperation) RootDomainObject.readDomainObjectByOID(Cooperation.class, Integer
+		.valueOf(request.getParameter("activityId")));
+    }
+
+    protected JournalIssue getIssueFromRequest(HttpServletRequest request) {
+	return (JournalIssue) RootDomainObject.readDomainObjectByOID(JournalIssue.class, Integer
+		.valueOf(request.getParameter("activityId")));
+    }
+
+    protected ScientificJournal getScientificJournalFromRequest(HttpServletRequest request) {
+	return (ScientificJournal) RootDomainObject.readDomainObjectByOID(ScientificJournal.class, Integer
+		.valueOf(request.getParameter("activityId")));
+    }
+
+    protected Event getEventFromRequest(HttpServletRequest request) {
+	return (Event) RootDomainObject.readDomainObjectByOID(Event.class, Integer.valueOf(request
+		.getParameter("activityId")));
     }
 
 }
