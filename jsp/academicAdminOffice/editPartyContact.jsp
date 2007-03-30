@@ -4,18 +4,18 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <html:xhtml/>
 
+<bean:define id="partyContactClass" name="partyContact" property="class.simpleName" />
+
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
-<h2><bean:message key="link.student.editPersonalData" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
+<h2><bean:message key="<%= "label.partyContacts.edit" +  partyContactClass %>" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
 <fr:form action="/student.do">	
+	
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="editPartyContact"/>
 	<bean:define id="studentID" type="java.lang.Integer" name="student" property="idInternal"/>
-	
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="studentID" value="<%= studentID.toString() %>"/>
 
-	<bean:define id="partyContactClass" name="partyContact" property="class.simpleName" />
-	<h3 class="mbottom025"><bean:message key="label.person.title.addressesInfo" bundle="ACADEMIC_OFFICE_RESOURCES" /></h3>
-	<fr:edit name="partyContact" schema="<%= "student.contacts." + partyContactClass + ".manage" %>">
+	<fr:edit name="partyContact" schema="<%= "contacts." + partyContactClass + ".manage" %>">
 		<fr:layout name="tabular-editable" >
 			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 	        <fr:property name="columnClasses" value="width14em,,tdclear tderror1"/>

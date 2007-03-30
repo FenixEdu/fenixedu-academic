@@ -41,7 +41,7 @@
 
 <h3 class="mbottom025"><bean:message key="label.person.title.addressesInfo" bundle="ACADEMIC_OFFICE_RESOURCES" /></h3>
 <logic:notEmpty name="personBean" property="sortedPhysicalAdresses">
-	<fr:view name="personBean" property="sortedPhysicalAdresses" schema="student.contacts.PhysicalAddress.view" >
+	<fr:view name="personBean" property="sortedPhysicalAdresses" schema="contacts.PhysicalAddress.view" >
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle4 mtop05" />
 		</fr:layout>
@@ -56,7 +56,7 @@
 
 <strong><bean:message key="label.phones" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong>
 <logic:notEmpty name="personBean" property="sortedPhones">
-	<fr:view name="personBean" property="sortedPhones" schema="student.contacts.Phone.view">
+	<fr:view name="personBean" property="sortedPhones" schema="contacts.Phone.view">
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle4 mtop05" />
 		</fr:layout>
@@ -69,7 +69,7 @@
 
 <strong><bean:message key="label.mobilePhones" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong>
 <logic:notEmpty name="personBean" property="sortedMobilePhones">
-	<fr:view name="personBean" property="sortedMobilePhones" schema="student.contacts.MobilePhone.view">
+	<fr:view name="personBean" property="sortedMobilePhones" schema="contacts.MobilePhone.view">
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle4 mtop05" />
 		</fr:layout>
@@ -82,7 +82,7 @@
 
 <strong><bean:message key="label.email" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong>
 <logic:notEmpty name="personBean" property="sortedEmailAddresses">
-	<fr:view name="personBean" property="sortedEmailAddresses" schema="student.contacts.EmailAddress.view">
+	<fr:view name="personBean" property="sortedEmailAddresses" schema="contacts.EmailAddress.view">
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle4 mtop05" />
 		</fr:layout>
@@ -95,7 +95,7 @@
 
 <strong><bean:message key="label.webAddresses" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong>
 <logic:notEmpty name="personBean" property="sortedWebAddresses">
-	<fr:view name="personBean" property="sortedWebAddresses" schema="student.contacts.WebAddress.view">
+	<fr:view name="personBean" property="sortedWebAddresses" schema="contacts.WebAddress.view">
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle4 mtop05" />
 		</fr:layout>

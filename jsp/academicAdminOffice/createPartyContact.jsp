@@ -3,9 +3,10 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <html:xhtml/>
+<bean:define id="partyContactName" name="partyContactName" />
 
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
-<h2><bean:message key="link.student.editPersonalData" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
+<h2><bean:message key="<%= "label.partyContacts.add" +  partyContactName %>" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
 <fr:form action="/student.do">	
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="createPartyContact"/>
@@ -14,10 +15,8 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="studentID" value="<%= studentID.toString() %>"/>
 
 	<bean:define id="person" name="student" property="person" />
-	<bean:define id="partyContactName" name="partyContactName" />
 	
-	<h3 class="mbottom025"><bean:message key="label.partyContacts.addPhysicalAddress" bundle="ACADEMIC_OFFICE_RESOURCES" /></h3>
-	<fr:create schema="<%= "student.contacts." + partyContactName + ".manage" %>" type="<%= "net.sourceforge.fenixedu.domain.contacts." + partyContactName  %>" >
+	<fr:create schema="<%= "contacts." + partyContactName + ".manage" %>" type="<%= "net.sourceforge.fenixedu.domain.contacts." + partyContactName  %>" >
 		<fr:layout name="tabular-editable" >
 			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 	        <fr:property name="columnClasses" value="width14em,,tdclear tderror1"/>

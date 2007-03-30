@@ -43,7 +43,7 @@
 	<br/>
 	
 	<h3 class="mbottom025"><bean:message key="label.person.title.addressesInfo" bundle="ACADEMIC_OFFICE_RESOURCES" /></h3>
-	<fr:view name="personBean" property="sortedPhysicalAdresses" schema="student.contacts.PhysicalAddress.view">
+	<fr:view name="personBean" property="sortedPhysicalAdresses" schema="contacts.PhysicalAddress.view">
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle4 mtop05" />
 			
@@ -73,7 +73,7 @@
 	<h3 class="mbottom025"><bean:message key="label.person.title.contactInfo" bundle="ACADEMIC_OFFICE_RESOURCES" /></h3>
 	
 	<strong><bean:message key="label.phones" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong>
-	<fr:view name="personBean" property="sortedPhones" schema="student.contacts.Phone.view">
+	<fr:view name="personBean" property="sortedPhones" schema="contacts.Phone.view">
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle4 mtop05" />
 
@@ -101,7 +101,7 @@
 	<br/><br/>
 	
 	<strong><bean:message key="label.mobilePhones" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong>
-	<fr:view name="personBean" property="sortedMobilePhones" schema="student.contacts.MobilePhone.view">
+	<fr:view name="personBean" property="sortedMobilePhones" schema="contacts.MobilePhone.view">
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle4 mtop05" />
 
@@ -129,7 +129,7 @@
 	<br/><br/>
 
 	<strong><bean:message key="label.email" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong>
-	<fr:view name="personBean" property="sortedEmailAddresses" schema="student.contacts.EmailAddress.view">
+	<fr:view name="personBean" property="sortedEmailAddresses" schema="contacts.EmailAddress.view">
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle4 mtop05" />
 			
@@ -142,11 +142,13 @@
 			<fr:property name="linkFormat(edit)" value="<%="/student.do?method=prepareEditPartyContact&amp;contactId=${idInternal}&amp;studentID=" + studentID %>"/>
 			<fr:property name="key(edit)" value="label.partyContacts.edit"/>
 			<fr:property name="bundle(edit)" value="ACADEMIC_OFFICE_RESOURCES"/>
+			<fr:property name="visibleIfNot(edit)" value="institutionalType"/>
 			<fr:property name="order(edit)" value="2"/>
 
 			<fr:property name="linkFormat(delete)" value="<%="/student.do?method=deletePartyContact&amp;contactId=${idInternal}&amp;studentID=" + studentID %>"/>
 			<fr:property name="key(delete)" value="label.partyContacts.delete"/>
 			<fr:property name="bundle(delete)" value="ACADEMIC_OFFICE_RESOURCES"/>
+			<fr:property name="visibleIfNot(delete)" value="institutionalType"/>
 			<fr:property name="order(delete)" value="3"/>
 		</fr:layout>
 	</fr:view>
@@ -157,7 +159,7 @@
 	<br/><br/>
 	
 	<strong><bean:message key="label.webAddresses" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong>
-	<fr:view name="personBean" property="sortedWebAddresses" schema="student.contacts.WebAddress.view">
+	<fr:view name="personBean" property="sortedWebAddresses" schema="contacts.WebAddress.view">
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle4 mtop05" />
 			
