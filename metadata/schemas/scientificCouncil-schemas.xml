@@ -5,7 +5,7 @@
         <property name="length" value="60"/>
     </slot>
     <slot name="state" key="label.thesis.state">
-        <property bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+        <property name="bundle" value="SCIENTIFIC_COUNCIL_RESOURCES"/>
     </slot>
 </schema>
 
@@ -58,15 +58,15 @@
 <schema name="thesis.rejection.comment" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
     <slot name="rejectionComment" layout="longText" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
         <property name="columns" value="60"/>
-        <property name="rows" value="10"/>
+        <property name="rows" value="7"/>
     </slot>
     <setter signature="rejectProposal(rejectionComment)"/>
 </schema>
 
 <schema name="thesis.context.bean" type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.thesis.ThesisContextBean">
     <slot name="degree" key="label.degree" layout="menu-select-postback">
-    	<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DegreesProvider"/>
-    	<property name="format" value="${name} (${sigla})"/>    	
+    	<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DegreesWithDissertationProvider"/>
+    	<property name="format" value="${name} (${sigla})"/>	
     	<property name="destination" value="listThesis"/>
     </slot>
     <slot name="executionYear" key="label.execution.year" layout="menu-select-postback">

@@ -29,6 +29,7 @@ import net.sourceforge.fenixedu.domain.accessControl.NoOneGroup;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.accessControl.StudentGroupStudentsGroup;
+import net.sourceforge.fenixedu.domain.accessControl.ThesisFileReadersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.UnitEmployeesGroup;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupBuilderNameTakenException;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.NoSuchGroupBuilderException;
@@ -156,6 +157,7 @@ public class GroupBuilderRegistry {
         register("ifTrue", IfTrueGroup.class, new IfTrueGroup.Builder());
         register("currentDegreeCoordinators", CurrentDegreeCoordinatorsGroup.class, new CurrentDegreeCoordinatorsGroup.Builder());
         register("departmentEmployees", DepartmentEmployeesGroup.class, new DepartmentEmployeesGroup.Builder());
+        register("thesisFileReaders", ThesisFileReadersGroup.class, new ThesisFileReadersGroup.Builder());
         
         registerGroupsWithNoArguments();
     }

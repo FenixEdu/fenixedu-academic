@@ -669,9 +669,53 @@ public class Degree extends Degree_Base implements Comparable {
 	return result;
     }
 
+    public boolean isMemberOfCurrentScientificCommission(Person person) {
+        for (ScientificCommission member : getCurrentScientificCommissionMembers()) {
+            if (member.getPerson() == person) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
+    public Collection<ScientificCommission> getCurrentScientificCommissionMembers() {
+        for (ExecutionYear ey = ExecutionYear.readCurrentExecutionYear(); ey != null; ey = ey.getPreviousExecutionYear()) {
+            Collection<ScientificCommission> members = getScientificCommissionMembers(ey);
+            
+            if (! members.isEmpty()) {
+                return members;
+            }
+        }
+        
+        return Collections.emptyList();
+    }
+    
+    public Collection<ScientificCommission> getScientificCommissionMembers(ExecutionYear executionYear) {
+        for (DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlansForYear(executionYear)) {
+            ExecutionDegree executionDegree = degreeCurricularPlan.getExecutionDegreeByYear(executionYear);
+            
+            if (executionDegree != null) {
+                return new ArrayList<ScientificCommission>(executionDegree.getScientificCommissionMembers());
+            }
+        }
+        
+        return Collections.emptyList();
+    }
+
+    public boolean isCurrentCoordinator(Person person) {
+        for (Coordinator coordinator : getCurrentResponsibleCoordinators()) {
+            if (coordinator.getPerson() == person) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
     public Collection<Coordinator> getCurrentResponsibleCoordinators() {
-        for (ExecutionYear ey = ExecutionYear.readCurrentExecutionYear(); ey != null; ey = ey.getNextExecutionYear()) {
-            Collection<Coordinator> coordinators = getResponsibleCoordinators(ExecutionYear.readCurrentExecutionYear());
+        for (ExecutionYear ey = ExecutionYear.readCurrentExecutionYear(); ey != null; ey = ey.getPreviousExecutionYear()) {
+            Collection<Coordinator> coordinators = getResponsibleCoordinators(ey);
             
             if (! coordinators.isEmpty()) {
                 return coordinators;

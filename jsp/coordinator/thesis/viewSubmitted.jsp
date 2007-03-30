@@ -17,13 +17,13 @@
             <bean:message key="title.coordinator.thesis.back"/>
         </html:link>
     </li>
-    <li>
-        <logic:equal name="thesis" property="valid" value="true">
+    <logic:equal name="thesis" property="valid" value="true">
+        <li>
             <html:link page="<%= String.format("/manageThesis.do?method=printApprovalDocument&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
                 <bean:message key="label.coordinator.list.submitted.thesis.print"/>
             </html:link>
-        </logic:equal>
-    </li>
+        </li>
+    </logic:equal>
 </ul>
 
 <%-- errors --%>
@@ -59,43 +59,60 @@
 <h3 class="separator2 mtop15"><bean:message key="title.coordinator.thesis.edit.section.jury"/></h3>
 
 
-<%-- Orientator --%>
-<h4 class="mtop2 mbottom05"><bean:message key="title.coordinator.thesis.edit.section.orientation.orientator"/></h4>
+<%-- Orientation --%>
+<h4 class="mtop25 mbottom05"><bean:message key="title.coordinator.thesis.edit.section.orientation"/></h4>
 
 <logic:empty name="thesis" property="orientator">
-    <p>
-        <em><bean:message key="title.coordinator.thesis.edit.orientator.empty"/></em>
-    </p>
+    <logic:empty name="thesis" property="coorientator">
+        <p>
+            <em><bean:message key="title.coordinator.thesis.edit.orientation.empty"/></em>
+        </p>
+    </logic:empty>
 </logic:empty>
 
 <logic:notEmpty name="thesis" property="orientator">
     <fr:view name="thesis" property="orientator" layout="tabular" schema="thesis.jury.proposal.person">
         <fr:layout name="tabular">
-           	<fr:property name="classes" value="tstyle2 thlight thright mtop05 mbottom05"/>
-	    	<fr:property name="columnClasses" value="width12em,,"/>
+           	<fr:property name="classes" value="tstyle2 thlight thright mtop05 mbottom0"/>
+	        	<fr:property name="columnClasses" value="width12em,width35em,"/>
         </fr:layout>
     </fr:view>
+    <logic:equal name="thesis" property="orientatorCreditsDistributionNeeded" value="true">
+        <table class="tstyle2 thlight thright mtop0 mbottom05 tgluetop">
+            <tr>
+                <th class="width12em"><bean:message key="label.coordinator.thesis.edit.teacher.credits"/>:</th>
+                <td class="width35em">
+                    <logic:empty name="thesis" property="orientatorCreditsDistribution">-</logic:empty>
+                    <logic:notEmpty name="thesis" property="orientatorCreditsDistribution">
+                        <fr:view name="thesis" property="orientatorCreditsDistribution"/> %
+                    </logic:notEmpty>
+                </td>
+            </tr>
+        </table>
+    </logic:equal>
 </logic:notEmpty>
-
-
-<%-- Coorientator --%>
-<h4 class="mtop2 mbottom05"><bean:message key="title.coordinator.thesis.edit.section.orientation.coorientator"/></h4>
-
-<logic:empty name="thesis" property="coorientator">
-    <p>
-        <em><bean:message key="title.coordinator.thesis.edit.coorientator.empty"/></em>
-    </p>
-</logic:empty>
-
+  
 <logic:notEmpty name="thesis" property="coorientator">
     <fr:view name="thesis" property="coorientator" layout="tabular" schema="thesis.jury.proposal.person">
         <fr:layout name="tabular">
-           	<fr:property name="classes" value="tstyle2 thlight thright mtop05 mbottom05"/>
-	    	<fr:property name="columnClasses" value="width12em,,"/>
+        	    	<fr:property name="classes" value="tstyle2 thlight thright mtop05 mbottom0"/>
+        	    	<fr:property name="columnClasses" value="width12em,width35em,"/>
         </fr:layout>
     </fr:view>
+    <logic:equal name="thesis" property="coorientatorCreditsDistributionNeeded" value="true">
+        <table class="tstyle2 thlight thright mtop0 mbottom05 tgluetop">
+            <tr>
+                <th class="width12em"><bean:message key="label.coordinator.thesis.edit.teacher.credits"/>:</th>
+                <td class="width35em">
+                    <logic:empty name="thesis" property="coorientatorCreditsDistribution">-</logic:empty>
+                    <logic:notEmpty name="thesis" property="coorientatorCreditsDistribution">
+                        <fr:view name="thesis" property="coorientatorCreditsDistribution"/> %
+                    </logic:notEmpty>
+                </td>
+            </tr>
+        </table>
+    </logic:equal>
 </logic:notEmpty>
-
 
 <%-- Jury/President --%>
 <h4 class="mtop2 mbottom05"><bean:message key="title.coordinator.thesis.edit.section.jury.president"/></h4>
@@ -110,7 +127,7 @@
     <fr:view name="thesis" property="president" layout="tabular" schema="thesis.jury.proposal.person">
         <fr:layout name="tabular">
            	<fr:property name="classes" value="tstyle2 thlight thright mtop05 mbottom05"/>
-	    	<fr:property name="columnClasses" value="width12em,,"/>
+	    	<fr:property name="columnClasses" value="width12em,width35em,"/>
         </fr:layout>
     </fr:view>
 </logic:notEmpty>
@@ -130,7 +147,7 @@
         <fr:view name="vowel" layout="tabular" schema="thesis.jury.proposal.person">
             <fr:layout name="tabular">
 	           	<fr:property name="classes" value="tstyle2 thlight thright mtop05 mbottom05"/>
-		    	<fr:property name="columnClasses" value="width12em,,"/>
+		        	<fr:property name="columnClasses" value="width12em,width35em,"/>
             </fr:layout>
         </fr:view>
     </logic:iterate>

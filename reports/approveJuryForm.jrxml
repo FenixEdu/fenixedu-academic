@@ -46,6 +46,8 @@
 	<parameter name="vowel3Name" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="vowel3Category" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="vowel3Affiliation" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="date" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="author" isForPrompting="false" class="java.lang.String"/>
 
 		<background>
 			<band height="0"  isSplitAllowed="true" >
@@ -67,8 +69,57 @@
 			<band height="790"  isSplitAllowed="true" >
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
+						x="40"
+						y="228"
+						width="472"
+						height="51"
+						key="textField-5"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Top" rotation="None" lineSpacing="1_1_2">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="Cp1252" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Nome: " + $P{coorientatorName} + 
+"\nCategoria: " + $P{coorientatorCategory} + 
+"\nAfiliação: " + $P{coorientatorAffiliation}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="40"
+						y="154"
+						width="473"
+						height="68"
+						key="textField-4"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Top" rotation="None" lineSpacing="1_1_2">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="Cp1252" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["ORIENTAÇÃO" + 
+"\nNome: " + $P{orientatorName} + 
+"\nCategoria: " + $P{orientatorCategory} + 
+"\nAfiliação: " + $P{orientatorAffiliation}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="40"
+						y="94"
+						width="475"
+						height="57"
+						key="textField-3"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Top" rotation="None" lineSpacing="1_1_2">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="Cp1252" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["ALUNO" + 
+"\nNúmero: " + $P{studentNumber} +
+"\nNome: " + $P{studentName}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
 						x="1"
-						y="21"
+						y="31"
 						width="534"
 						height="26"
 						key="textField-1"/>
@@ -78,25 +129,11 @@
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{institutionName}]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="30"
-						y="49"
-						width="496"
-						height="23"
-						key="textField-2"
-						stretchType="RelativeToTallestObject"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
-					<textElement textAlignment="Left">
-						<font fontName="Arial" pdfFontName="Helvetica" size="14" isPdfEmbedded ="true" pdfEncoding ="Cp1252"/>
-					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{studentDegreeName}]]></textFieldExpression>
-				</textField>
 				<staticText>
 					<reportElement
-						x="30"
-						y="726"
-						width="494"
+						x="40"
+						y="716"
+						width="475"
 						height="37"
 						key="staticText-1"
 						positionType="Float"/>
@@ -110,9 +147,9 @@ Assinatura: ]]></text>
 				</staticText>
 				<line direction="TopDown">
 					<reportElement
-						x="71"
-						y="116"
-						width="74"
+						x="81"
+						y="127"
+						width="55"
 						height="0"
 						key="line-1"
 						positionType="Float"/>
@@ -120,9 +157,9 @@ Assinatura: ]]></text>
 				</line>
 				<staticText>
 					<reportElement
-						x="30"
-						y="636"
-						width="251"
+						x="40"
+						y="626"
+						width="232"
 						height="15"
 						key="staticText-2"
 						positionType="Float"/>
@@ -132,27 +169,27 @@ Assinatura: ]]></text>
 					</textElement>
 				<text><![CDATA[A COORDENAÇÃO DO CURSO]]></text>
 				</staticText>
-				<staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="30"
-						y="655"
-						width="494"
+						x="40"
+						y="645"
+						width="475"
 						height="37"
-						key="staticText-3"
+						key="textField-11"
 						positionType="Float"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
-					<textElement>
-						<font fontName="Arial" pdfFontName="Helvetica" isPdfEmbedded ="true" pdfEncoding ="Cp1252"/>
+					<textElement verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="Cp1252" isStrikeThrough="false" />
 					</textElement>
-				<text><![CDATA[Data:                                                 Nome: 
-
-Assinatura: ]]></text>
-				</staticText>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Data: " + $P{date} +
+"\n" +
+"\nAssinatura: "]]></textFieldExpression>
+				</textField>
 				<staticText>
 					<reportElement
-						x="30"
-						y="707"
-						width="253"
+						x="40"
+						y="697"
+						width="352"
 						height="15"
 						key="staticText-4"
 						positionType="Float"/>
@@ -160,13 +197,13 @@ Assinatura: ]]></text>
 					<textElement>
 						<font fontName="Arial" pdfFontName="Helvetica" isPdfEmbedded ="true" pdfEncoding ="Cp1252"/>
 					</textElement>
-				<text><![CDATA[HOMOLGAÇÃO DO JÚRI PELO CONSELHO CIENTÍFICO]]></text>
+				<text><![CDATA[HOMOLOGAÇÃO DO JÚRI PELO CONSELHO CIENTÍFICO]]></text>
 				</staticText>
 				<line direction="TopDown">
 					<reportElement
-						x="62"
-						y="133"
-						width="445"
+						x="72"
+						y="143"
+						width="426"
 						height="0"
 						key="line-2"
 						positionType="Float"/>
@@ -174,9 +211,9 @@ Assinatura: ]]></text>
 				</line>
 				<line direction="TopDown">
 					<reportElement
-						x="62"
-						y="176"
-						width="445"
+						x="72"
+						y="186"
+						width="426"
 						height="0"
 						key="line-4"
 						positionType="Float"/>
@@ -184,9 +221,9 @@ Assinatura: ]]></text>
 				</line>
 				<line direction="TopDown">
 					<reportElement
-						x="79"
-						y="192"
-						width="428"
+						x="89"
+						y="203"
+						width="409"
 						height="0"
 						key="line-5"
 						positionType="Float"/>
@@ -194,9 +231,9 @@ Assinatura: ]]></text>
 				</line>
 				<line direction="TopDown">
 					<reportElement
-						x="73"
-						y="209"
-						width="434"
+						x="83"
+						y="219"
+						width="415"
 						height="0"
 						key="line-6"
 						positionType="Float"/>
@@ -204,9 +241,9 @@ Assinatura: ]]></text>
 				</line>
 				<line direction="TopDown">
 					<reportElement
-						x="62"
-						y="253"
-						width="445"
+						x="72"
+						y="244"
+						width="426"
 						height="0"
 						key="line-7"
 						positionType="Float"/>
@@ -214,9 +251,9 @@ Assinatura: ]]></text>
 				</line>
 				<line direction="TopDown">
 					<reportElement
-						x="79"
-						y="269"
-						width="428"
+						x="89"
+						y="261"
+						width="409"
 						height="0"
 						key="line-8"
 						positionType="Float"/>
@@ -224,9 +261,9 @@ Assinatura: ]]></text>
 				</line>
 				<line direction="TopDown">
 					<reportElement
-						x="73"
-						y="286"
-						width="434"
+						x="83"
+						y="277"
+						width="415"
 						height="0"
 						key="line-9"
 						positionType="Float"/>
@@ -234,9 +271,9 @@ Assinatura: ]]></text>
 				</line>
 				<line direction="TopDown">
 					<reportElement
-						x="62"
-						y="390"
-						width="445"
+						x="72"
+						y="380"
+						width="426"
 						height="0"
 						key="line-10"
 						positionType="Float"/>
@@ -244,9 +281,9 @@ Assinatura: ]]></text>
 				</line>
 				<line direction="TopDown">
 					<reportElement
-						x="79"
-						y="406"
-						width="428"
+						x="89"
+						y="396"
+						width="409"
 						height="0"
 						key="line-11"
 						positionType="Float"/>
@@ -254,9 +291,9 @@ Assinatura: ]]></text>
 				</line>
 				<line direction="TopDown">
 					<reportElement
-						x="73"
-						y="423"
-						width="434"
+						x="83"
+						y="413"
+						width="415"
 						height="0"
 						key="line-12"
 						positionType="Float"/>
@@ -264,9 +301,9 @@ Assinatura: ]]></text>
 				</line>
 				<line direction="TopDown">
 					<reportElement
-						x="62"
-						y="468"
-						width="445"
+						x="72"
+						y="458"
+						width="426"
 						height="0"
 						key="line-13"
 						positionType="Float"/>
@@ -274,9 +311,9 @@ Assinatura: ]]></text>
 				</line>
 				<line direction="TopDown">
 					<reportElement
-						x="79"
-						y="484"
-						width="428"
+						x="89"
+						y="474"
+						width="409"
 						height="0"
 						key="line-14"
 						positionType="Float"/>
@@ -284,9 +321,9 @@ Assinatura: ]]></text>
 				</line>
 				<line direction="TopDown">
 					<reportElement
-						x="73"
-						y="501"
-						width="434"
+						x="83"
+						y="491"
+						width="415"
 						height="0"
 						key="line-15"
 						positionType="Float"/>
@@ -294,9 +331,9 @@ Assinatura: ]]></text>
 				</line>
 				<line direction="TopDown">
 					<reportElement
-						x="62"
-						y="529"
-						width="445"
+						x="72"
+						y="519"
+						width="426"
 						height="0"
 						key="line-16"
 						positionType="Float"/>
@@ -304,9 +341,9 @@ Assinatura: ]]></text>
 				</line>
 				<line direction="TopDown">
 					<reportElement
-						x="79"
-						y="545"
-						width="428"
+						x="89"
+						y="535"
+						width="409"
 						height="0"
 						key="line-17"
 						positionType="Float"/>
@@ -314,9 +351,9 @@ Assinatura: ]]></text>
 				</line>
 				<line direction="TopDown">
 					<reportElement
-						x="73"
-						y="562"
-						width="434"
+						x="83"
+						y="552"
+						width="415"
 						height="0"
 						key="line-18"
 						positionType="Float"/>
@@ -324,9 +361,9 @@ Assinatura: ]]></text>
 				</line>
 				<line direction="TopDown">
 					<reportElement
-						x="62"
-						y="589"
-						width="445"
+						x="72"
+						y="579"
+						width="426"
 						height="0"
 						key="line-19"
 						positionType="Float"/>
@@ -334,9 +371,9 @@ Assinatura: ]]></text>
 				</line>
 				<line direction="TopDown">
 					<reportElement
-						x="79"
-						y="605"
-						width="428"
+						x="89"
+						y="595"
+						width="409"
 						height="0"
 						key="line-20"
 						positionType="Float"/>
@@ -344,9 +381,9 @@ Assinatura: ]]></text>
 				</line>
 				<line direction="TopDown">
 					<reportElement
-						x="73"
-						y="622"
-						width="434"
+						x="83"
+						y="612"
+						width="415"
 						height="0"
 						key="line-21"
 						positionType="Float"/>
@@ -354,9 +391,9 @@ Assinatura: ]]></text>
 				</line>
 				<line direction="TopDown">
 					<reportElement
-						x="59"
-						y="666"
-						width="117"
+						x="66"
+						y="657"
+						width="98"
 						height="0"
 						key="line-22"
 						positionType="Float"/>
@@ -364,9 +401,9 @@ Assinatura: ]]></text>
 				</line>
 				<line direction="TopDown">
 					<reportElement
-						x="224"
-						y="666"
-						width="283"
+						x="234"
+						y="657"
+						width="264"
 						height="0"
 						key="line-23"
 						positionType="Float"/>
@@ -374,9 +411,9 @@ Assinatura: ]]></text>
 				</line>
 				<line direction="TopDown">
 					<reportElement
-						x="83"
-						y="690"
-						width="424"
+						x="93"
+						y="680"
+						width="405"
 						height="0"
 						key="line-24"
 						positionType="Float"/>
@@ -384,9 +421,9 @@ Assinatura: ]]></text>
 				</line>
 				<line direction="TopDown">
 					<reportElement
-						x="83"
-						y="761"
-						width="424"
+						x="93"
+						y="751"
+						width="405"
 						height="0"
 						key="line-25"
 						positionType="Float"/>
@@ -394,9 +431,9 @@ Assinatura: ]]></text>
 				</line>
 				<line direction="TopDown">
 					<reportElement
-						x="59"
-						y="737"
-						width="117"
+						x="66"
+						y="728"
+						width="98"
 						height="0"
 						key="line-26"
 						positionType="Float"/>
@@ -404,9 +441,9 @@ Assinatura: ]]></text>
 				</line>
 				<line direction="TopDown">
 					<reportElement
-						x="224"
-						y="737"
-						width="283"
+						x="234"
+						y="728"
+						width="264"
 						height="0"
 						key="line-27"
 						positionType="Float"/>
@@ -414,59 +451,9 @@ Assinatura: ]]></text>
 				</line>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="30"
-						y="84"
-						width="494"
-						height="51"
-						key="textField-3"
-						positionType="Float"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
-					<textElement verticalAlignment="Top" rotation="None" lineSpacing="1_1_2">
-						<font fontName="Arial" pdfFontName="Helvetica" size="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="Cp1252" isStrikeThrough="false" />
-					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["ALUNO" + 
-"\nNúmero: " + $P{studentNumber} +
-"\nNome: " + $P{studentName}]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="30"
-						y="144"
-						width="492"
-						height="68"
-						key="textField-4"
-						positionType="Float"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
-					<textElement verticalAlignment="Top" rotation="None" lineSpacing="1_1_2">
-						<font fontName="Arial" pdfFontName="Helvetica" size="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="Cp1252" isStrikeThrough="false" />
-					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["ORIENTADOR" + 
-"\nNome: " + $P{orientatorName} + 
-"\nCategoria: " + $P{orientatorCategory} + 
-"\nAfiliação: " + $P{orientatorAffiliation}]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="30"
-						y="221"
-						width="491"
-						height="68"
-						key="textField-5"
-						positionType="Float"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
-					<textElement verticalAlignment="Top" rotation="None" lineSpacing="1_1_2">
-						<font fontName="Arial" pdfFontName="Helvetica" size="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="Cp1252" isStrikeThrough="false" />
-					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["CO-ORIENTADOR" + 
-"\nNome: " + $P{coorientatorName} + 
-"\nCategoria: " + $P{coorientatorCategory} + 
-"\nAfiliação: " + $P{coorientatorAffiliation}]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="30"
-						y="341"
-						width="488"
+						x="40"
+						y="331"
+						width="469"
 						height="85"
 						key="textField-7"
 						positionType="Float"/>
@@ -482,9 +469,9 @@ Assinatura: ]]></text>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="30"
-						y="435"
-						width="489"
+						x="40"
+						y="425"
+						width="470"
 						height="68"
 						key="textField-8"
 						positionType="Float"/>
@@ -499,9 +486,9 @@ Assinatura: ]]></text>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="30"
-						y="512"
-						width="489"
+						x="40"
+						y="502"
+						width="470"
 						height="51"
 						key="textField-9"
 						positionType="Float"/>
@@ -515,9 +502,9 @@ Assinatura: ]]></text>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="30"
-						y="572"
-						width="487"
+						x="40"
+						y="562"
+						width="468"
 						height="51"
 						key="textField-10"
 						positionType="Float"/>
@@ -531,9 +518,9 @@ Assinatura: ]]></text>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="30"
-						y="298"
-						width="489"
+						x="40"
+						y="287"
+						width="470"
 						height="34"
 						key="textField-6"
 						positionType="Float"/>
@@ -542,8 +529,80 @@ Assinatura: ]]></text>
 						<font fontName="Arial" pdfFontName="Helvetica" size="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="Cp1252" isStrikeThrough="false" />
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA["DISSERTAÇÃO" + 
-"\nTitulo: " + $P{thesisTitle}]]></textFieldExpression>
+"\nTítulo: " + $P{thesisTitle}]]></textFieldExpression>
 				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="201"
+						y="645"
+						width="287"
+						height="18"
+						key="textField-12"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Nome: " + $P{author}]]></textFieldExpression>
+				</textField>
+				<line direction="TopDown">
+					<reportElement
+						x="70"
+						y="320"
+						width="428"
+						height="0"
+						key="line-28"
+						positionType="Float"/>
+					<graphicElement stretchType="NoStretch" pen="Thin"/>
+				</line>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="40"
+						y="59"
+						width="451"
+						height="23"
+						key="textField-13"
+						stretchType="RelativeToTallestObject"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" pdfFontName="Helvetica" size="14" isPdfEmbedded ="true" pdfEncoding ="Cp1252"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Curso em " + $P{studentDegreeName}]]></textFieldExpression>
+				</textField>
+				<line direction="TopDown">
+					<reportElement
+						x="105"
+						y="74"
+						width="384"
+						height="0"
+						key="line-29"/>
+					<graphicElement stretchType="NoStretch" pen="Thin"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="40"
+						y="90"
+						width="449"
+						height="0"
+						key="line-30"/>
+					<graphicElement stretchType="NoStretch" pen="Thin"/>
+				</line>
+				<staticText>
+					<reportElement
+						mode="Opaque"
+						x="30"
+						y="87"
+						width="482"
+						height="5"
+						key="staticText-5"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[Static text]]></text>
+				</staticText>
 			</band>
 		</detail>
 		<columnFooter>

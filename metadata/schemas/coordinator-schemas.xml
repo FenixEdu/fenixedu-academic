@@ -4,19 +4,13 @@
 </schema>
 
 <schema name="thesis.jury.proposal.person" type="net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant">
-    <slot name="person.name" key="label.person.name"/>
+    <slot name="person" layout="name-with-alias" key="label.person.name"/>
     <slot name="category" key="label.teacher.category" layout="null-as-label">
         <property name="label" value="-"/>
-        <property name="subLayout" value="values"/>
-        <property name="subSchema" value="thesis.jury.proposal.person.category"/>
     </slot>
     <slot name="affiliation" key="label.coordinator.thesis.edit.teacher.currentWorkingDepartment" layout="null-as-label">
         <property name="label" value="-"/>
     </slot>
-</schema>
-
-<schema name="thesis.jury.proposal.person.category" type="net.sourceforge.fenixedu.domain.teacher.Category">
-    <slot name="name"/>
 </schema>
 
 <schema name="thesis.bean.selectPerson.internal" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisBean">
@@ -26,6 +20,52 @@
         <property name="destination" value="changePersonType"/>
         <property name="classes" value="nobullet liinline"/>
     </slot>
+</schema>
+
+<schema name="thesis.bean.selectPerson.internal.orientator" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisBean"
+        extends="thesis.bean.selectPerson.internal">
+    <slot name="personName" key="label.coordinator.thesis.edit.personName" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+        <property name="size" value="70"/>
+        <property name="rawSlotName" value="rawPersonName"/>
+        <property name="labelField" value="text"/>
+        <property name="format" value="${text}"/>
+        <property name="indicatorShown" value="true"/>
+        <property name="serviceName" value="SearchPersonsForParticipations"/>
+        <property name="serviceArgs" value="slot=name"/>
+        <property name="minChars" value="3"/>
+    </slot>
+</schema>
+
+<schema name="thesis.bean.selectPerson.internal.coorientator" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisBean"
+        extends="thesis.bean.selectPerson.internal">
+    <slot name="personName" key="label.coordinator.thesis.edit.personName" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+        <property name="size" value="70"/>
+        <property name="rawSlotName" value="rawPersonName"/>
+        <property name="labelField" value="text"/>
+        <property name="format" value="${text}"/>
+        <property name="indicatorShown" value="true"/>
+        <property name="serviceName" value="SearchPersonsForParticipations"/>
+        <property name="serviceArgs" value="slot=name"/>
+        <property name="minChars" value="3"/>
+    </slot>
+</schema>
+
+<schema name="thesis.bean.selectPerson.internal.president" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisBean"
+        extends="thesis.bean.selectPerson.internal">
+    <slot name="personName" key="label.coordinator.thesis.edit.personName" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+        <property name="size" value="70"/>
+        <property name="rawSlotName" value="rawPersonName"/>
+        <property name="labelField" value="text"/>
+        <property name="format" value="${text}"/>
+        <property name="indicatorShown" value="true"/>
+        <property name="serviceName" value="SearchPresidentForThesis"/>
+        <property name="serviceArgs" value="degree=${degree.idInternal}"/>
+        <property name="minChars" value="0"/>
+    </slot>
+</schema>
+
+<schema name="thesis.bean.selectPerson.internal.vowel" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisBean"
+        extends="thesis.bean.selectPerson.internal">
     <slot name="personName" key="label.coordinator.thesis.edit.personName" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
         <property name="size" value="70"/>
         <property name="rawSlotName" value="rawPersonName"/>
@@ -130,16 +170,15 @@
 
 <schema name="coordinator.thesis.evaluate" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
     <slot name="mark" key="label.thesis.evaluate.mark">
-        <validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.GradeValidator">
+        <validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.NumberRangeValidator">
             <property name="required" value="true"/>
+            <property name="lowerBound" value="0"/>
+            <property name="upperBound" value="20"/>
+            <property name="message" value="label.coordinator.thesis.evaluation.grade.range"/>
         </validator>
+        <property name="size" value="6"/>
     </slot>
-    <slot name="discussed" key="label.thesis.evaluate.discussion.date" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator">
-        <validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator">
-            <property name="required" value="true"/>
-        </validator>
-    </slot>
-    <setter signature="confirm(mark, discussed)"/>
+    <setter signature="confirm(mark)"/>
 </schema>
 
 <schema name="coordinator.thesis.revision.view" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
@@ -171,4 +210,27 @@
         <property name="length" value="60"/>
     </slot>
     <slot name="state" key="label.thesis.state"/>
+</schema>
+
+<schema name="coordinator.commissionTeam.manage.contacts" type="net.sourceforge.fenixedu.domain.ScientificCommission">
+    <slot name="person" layout="format" read-only="true" key="label.member">
+        <property name="format" value="${name} (${loginIdentification.mostImportantAlias})"/>
+    </slot>
+    <slot name="contact" key="label.scientificCommission.contact"/>
+</schema>
+
+<schema name="coordinator.commissionTeam.addMember" type="net.sourceforge.fenixedu.dataTransferObject.VariantBean">
+    <slot name="integer" key="label.mecanographicNumber" validator="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
+</schema>
+
+<schema name="thesis.jury.proposal.participant.edit" type="net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant">
+    <slot name="person.name" read-only="true" key="label.person.name"/>
+    <slot name="category" layout="menu-select-with-other" key="label.teacher.category">
+        <property name="style" value="margin-right: 0.5em;"/>
+        <property name="otherSize" value="50"/>
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CategoryProvider"/>
+    </slot>
+    <slot name="affiliation" key="label.coordinator.thesis.edit.teacher.currentWorkingDepartment">
+        <property name="size" value="60"/>
+    </slot>
 </schema>

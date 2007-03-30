@@ -5,7 +5,16 @@
 
 <html:xhtml/>
 
+<em><bean:message key="title.student.portalTitle"/></em>
 <h2><bean:message key="title.student.thesis.submission"/></h2>
+
+<ul>
+    <li>
+        <html:link page="/thesisSubmission.do?method=downloadIdentificationSheet">
+            <bean:message key="link.student.thesis.identification.download"/>
+        </html:link>
+    </li>
+</ul>
 
 <div class="infoop2">
     <p>
@@ -13,7 +22,10 @@
     </p>
 </div>
 
+<h3 class="mtop15 mbottom05"><bean:message key="title.student.thesis.submit.details"/></h3>
+
 <fr:view name="thesis" schema="student.thesis.details">
+
     <fr:layout name="tabular">
         <fr:property name="classes" value="tstyle5 thlight mtop05"/>
     </fr:layout>
@@ -37,6 +49,19 @@
     </fr:layout>
 </fr:view>
 
+<h3 class="mtop15 mbottom05"><bean:message key="title.student.thesis.submit.declaration"/></h3>
+
+<fr:view name="thesis" schema="student.thesis.details.declaration">
+    <fr:layout name="tabular">
+        <fr:property name="classes" value="tstyle2 thlight thright mtop05 mbottom05"/>
+        <fr:property name="columnClasses" value="width12em,,"/>
+    </fr:layout>
+</fr:view>
+
+<html:link page="/thesisSubmission.do?method=viewDeclaration">
+    <bean:message key="label.student.thesis.declaration.view"/>
+</html:link>
+
 <h3><bean:message key="title.student.thesis.submit.dissertation"/></h3>
 
 <logic:empty name="thesis" property="dissertation">
@@ -44,7 +69,7 @@
 </logic:empty>
 
 <logic:notEmpty name="thesis" property="dissertation">
-    <fr:view name="thesis" property="dissertation" schema="student.thesis.file">
+    <fr:view name="thesis" property="dissertation" schema="student.thesis.file.dissertation">
         <fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thlight thright mtop05 mbottom05"/>
 			<fr:property name="columnClasses" value="width12em,,"/>

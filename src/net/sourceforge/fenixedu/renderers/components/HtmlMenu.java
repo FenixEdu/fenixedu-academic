@@ -45,6 +45,10 @@ public class HtmlMenu extends HtmlSimpleValueComponent {
         this.onChange = onChange;
     }
 
+    public List<HtmlMenuEntry> getEntries() {
+        return this.entries;
+    }
+
     public HtmlMenuGroup createGroup(String label) {
         HtmlMenuGroup group = new HtmlMenuGroup(label);
         
@@ -95,7 +99,7 @@ public class HtmlMenu extends HtmlSimpleValueComponent {
         tag.setName("select");
         
         tag.setAttribute("size", getSize());
-        tag.setAttribute("onChange", getOnChange());
+        tag.setAttribute("onchange", getOnChange());
         
         if (isDisabled()) {
             tag.setAttribute("disabled", true);

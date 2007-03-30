@@ -278,6 +278,7 @@
             <forward name="list-thesis" path="thesis-list"/>
             <forward name="review-proposal" path="thesis-review-proposal"/>
             <forward name="review-thesis" path="thesis-review-thesis"/>
+            <forward name="view-thesis" path="thesis-view-thesis"/>
   		</action>
      
         
@@ -491,6 +492,7 @@
     <message-resources parameter="resources.ScientificCouncilResources" null="false"/>
     <message-resources parameter="resources.ScientificCouncilResources" key="SCIENTIFIC_COUNCIL_RESOURCES" null="false"/>
     <message-resources parameter="resources.EnumerationResources" key="ENUMERATION_RESOURCES" null="false"/>	
+    <message-resources parameter="resources.ApplicationResources" key="APPLICATION_RESOURCES" null="false"/>
 
 	<!-- ========== Plug Ins Configuration ================================= -->
 	<plug-in className="org.apache.struts.validator.ValidatorPlugIn">

@@ -813,4 +813,14 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable 
 	return result;
     }
 
+    public boolean isPersonInScientificCommission(Person person) {
+        for (ScientificCommission commission : getScientificCommissionMembers()) {
+            if (commission.getPerson() == person) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+
 }

@@ -929,6 +929,10 @@
 			<forward name="thesis-submit" path="thesis-submit" />
 			<forward name="thesis-edit-abstract" path="thesis-edit-abstract" />
 			<forward name="thesis-edit-keywords" path="thesis-edit-keywords" />
+			<forward name="thesis-declaration" path="thesis-declaration" />
+			<forward name="thesis-declaration-view" path="thesis-declaration-view" />
+			<forward name="thesis-upload-dissertation" path="thesis-upload-dissertation" />
+			<forward name="thesis-upload-abstract" path="thesis-upload-abstract" />
         </action>
 		
 		

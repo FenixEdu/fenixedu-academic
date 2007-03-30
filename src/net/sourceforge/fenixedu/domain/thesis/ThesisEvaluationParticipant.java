@@ -3,9 +3,13 @@ package net.sourceforge.fenixedu.domain.thesis;
 import java.text.Collator;
 import java.util.Comparator;
 
+import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.teacher.Category;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -28,6 +32,8 @@ public class ThesisEvaluationParticipant extends ThesisEvaluationParticipant_Bas
     public ThesisEvaluationParticipant(Thesis thesis, Person person, ThesisParticipationType type) {
         super();
 
+        setRootDomainObject(RootDomainObject.getInstance());
+        
         setType(type);
         setThesis(thesis);
         setPerson(person);
@@ -46,13 +52,23 @@ public class ThesisEvaluationParticipant extends ThesisEvaluationParticipant_Bas
         Teacher teacher = person.getTeacher();
         
         if (teacher != null) {
-            setCategory(teacher.getCategory());
+            setCategory(teacher.getCategory().getName().getContent());
             setAffiliation(teacher.getCurrentWorkingDepartment().getRealName());
         }
         else {
             ExternalContract contract = person.getExternalPerson();
             if (contract != null) {
                 setAffiliation(contract.getInstitutionUnit().getName());
+            }
+            else {
+                Employee employee = person.getEmployee();
+                if (employee != null) {
+                    Unit currentWorkingPlace = employee.getCurrentWorkingPlace();
+                    
+                    if (currentWorkingPlace != null) {
+                        setAffiliation(currentWorkingPlace.getNameWithAcronym());
+                    }
+                }
             }
         }
     }

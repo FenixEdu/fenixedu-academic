@@ -9456,6 +9456,15 @@
         </filterChains>
     </service>
 	<service>
+        <name>SearchPresidentForThesis</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchPresidentForThesis</implementationClass>
+        <description>
+        </description>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+        </filterChains>
+    </service>
+	<service>
 		<name>SearchExternalPersonForParticipations</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.SearchExternalPersonForParticipations</implementationClass>
 		<description/>
@@ -11596,7 +11605,7 @@
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
-            <chain name="CoordinatorDegreeCurricularPlanAuthorization"/>
+            <chain name="ScientificCommissionAuthorization"/>
         </filterChains>
     </service>   
     <service>
@@ -11605,7 +11614,7 @@
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
-            <chain name="CoordinatorDegreeCurricularPlanAuthorization"/>
+            <chain name="ScientificCommissionAuthorization"/>
         </filterChains>
     </service>   
     <service>
@@ -11614,25 +11623,16 @@
         <description></description>
         <isTransactional>true</isTransactional>
         <filterChains>
-            <chain name="CoordinatorDegreeCurricularPlanAuthorization"/>
+            <chain name="ScientificCommissionAuthorization"/>
         </filterChains>
-    </service>   
+    </service>
     <service>
         <name>ChangeThesisPerson</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.thesis.ChangeThesisPerson</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>
         <filterChains>
-            <chain name="CoordinatorDegreeCurricularPlanAuthorization"/>
-        </filterChains>
-    </service>   
-    <service>
-        <name>ApproveThesis</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.thesis.ApproveThesis</implementationClass>
-        <description></description>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="CoordinatorDegreeCurricularPlanAuthorization"/>
+            <chain name="ScientificCommissionAuthorization"/>
         </filterChains>
     </service>   
     <service>
@@ -11654,21 +11654,12 @@
         </filterChains>
     </service>
     <service>
-        <name>DisapproveThesisDiscussion</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.thesis.DisapproveThesisDiscussion</implementationClass>
-        <description></description>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="ScientificCouncilAuthorization"/>
-        </filterChains>
-    </service>
-    <service>
         <name>EvaluateThesis</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.thesis.EvaluateThesis</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>
         <filterChains>
-            <chain name="CoordinatorDegreeCurricularPlanAuthorization"/>
+            <chain name="ScientificCommissionAuthorization"/>
         </filterChains>
     </service>   
     <service>
@@ -11677,10 +11668,28 @@
         <description></description>
         <isTransactional>true</isTransactional>
         <filterChains>
-            <chain name="CoordinatorDegreeCurricularPlanAuthorization"/>
+            <chain name="ScientificCommissionAuthorization"/>
         </filterChains>
-    </service>   
-	<service>
+    </service>
+    <service>
+        <name>AcceptThesisDeclaration</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.thesis.AcceptThesisDeclaration</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="StudentThesisAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>RejectThesisDeclaration</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.thesis.RejectThesisDeclaration</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="StudentThesisAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
         <name>CreateThesisDissertationFile</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.thesis.CreateThesisDissertationFile</implementationClass>
         <description></description>
@@ -11734,6 +11743,24 @@
 			<chain name="StudentOrAcademicAdministrativeOfficeAuthorization" />
 		</filterChains>
     </service> 
+	<service>
+        <name>AddScientificCommission</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.coordinator.AddScientificCommission</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+		<filterChains>
+			<chain name="ResponsibleDegreeCoordinatorAuthorization" />
+		</filterChains>
+    </service> 
+	<service>
+        <name>DeleteScientificCommission</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.coordinator.DeleteScientificCommission</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+		<filterChains>
+			<chain name="ResponsibleDegreeCoordinatorAuthorization" />
+		</filterChains>
+    </service>
 	<service>
         <name>DeletePartyContact</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.contacts.DeletePartyContact</implementationClass>

@@ -50,10 +50,14 @@
 </logic:present>
 
 <logic:present name="hasThesis">
-    <bean:message key="label.coordinator.thesis.existing"/>
+    <div class="warning0" style="padding: 1em;">
+        <p class="mtop0 mbottom0">
+            <bean:message key="label.coordinator.thesis.existing"/>
 
-    <bean:define id="thesisId" name="thesis" property="idInternal"/>
-    <html:link page="<%= String.format("/manageThesis.do?method=viewThesis&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
-        <bean:message key="label.coordinator.thesis.state.view"/>
-    </html:link>
+            <bean:define id="thesisId" name="thesis" property="idInternal"/>
+            <html:link page="<%= String.format("/manageThesis.do?method=viewThesis&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
+                <bean:message key="label.coordinator.thesis.state.view"/>
+            </html:link>
+        </p>
+    </div>
 </logic:present>

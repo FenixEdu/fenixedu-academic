@@ -1115,12 +1115,19 @@
         <description/>
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
-    </filterChain>
+    </filterChain>    
     <filterChain>
         <name>AcademicAdministrativeOfficeOrTreasuryAuthorization</name>
         <expression>AcademicAdministrativeOfficeAuthorization || TreasuryAuthorization</expression>
         <description/>
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByRoleFilter</filterClass>
+    </filterChain>
+	<filterChain>
+        <name>ScientificCommissionAuthorization</name>
+        <expression>ScientificCommissionAuthorizationFilter</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>
 </filterChainsDefinitions>

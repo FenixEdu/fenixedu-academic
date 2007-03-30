@@ -58,19 +58,28 @@ public class Login extends Login_Base {
     }
 
     public String getUsername() {
-	String userUId = getUserUId();
-	if (userUId == null) {
-	    Role mostImportantRole = UsernameUtils.getMostImportantRole(getUser().getPerson()
-		    .getPersonRoles());
-	    if (mostImportantRole != null) {
-		List<LoginAlias> loginAlias = getRoleLoginAlias(mostImportantRole.getRoleType());
-		if (!loginAlias.isEmpty()) {
-		    return loginAlias.get(0).getAlias();
-		}
-	    }
-	    return (getAlias().isEmpty()) ? null : getAlias().get(0).getAlias();
-	}
-	return userUId;
+        String userUId = getUserUId();
+        if (userUId != null) {
+            return userUId;
+        }
+        else {
+            return getMostImportantAlias();
+        }
+    }
+    
+    public String getMostImportantAlias() {
+        List<Role> personRoles = getUser().getPerson().getPersonRoles();
+        Role mostImportantRole = UsernameUtils.getMostImportantRole(personRoles);
+        if (mostImportantRole != null) {
+            RoleType roleType = mostImportantRole.getRoleType();
+            List<LoginAlias> loginAlias = getRoleLoginAlias(roleType);
+            
+            if (!loginAlias.isEmpty()) {
+                return loginAlias.get(0).getAlias();
+            }
+        }
+        
+        return getAlias().isEmpty() ? null : getAlias().get(0).getAlias();
     }
 
     public String getUserUId() {

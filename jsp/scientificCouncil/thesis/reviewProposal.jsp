@@ -10,6 +10,7 @@
 
 <html:xhtml />
 
+<em><bean:message key="scientificCouncil.thesis.process" /></em>
 <h2><bean:message key="title.scientificCouncil.thesis.proposal.approve" /></h2>
 
 <ul>
@@ -39,92 +40,126 @@
     </logic:equal>
 </ul>
 
+<%-- rejection comment --%>
 <logic:present name="confirmReject">
-    <bean:message key="label.scientificCouncil.thesis.proposal.reject.confirm"/>
-    
+    <div class="warning0" style="padding: 1em">
+        <p class="mvert0">
+            <strong><bean:message key="label.attention" bundle="APPLICATION_RESOURCES"/>:</strong><br/>
+            <bean:message key="label.scientificCouncil.thesis.proposal.reject.confirm"/>
+        </p>
+    </div>
     <fr:form action="<%= String.format("/scientificCouncilManageThesis.do?method=listThesis&amp;thesisID=%s&amp;degreeID=%s&amp;executionYearID=%s", thesisId, degreeId, executionYearId) %>">
         <fr:edit id="thesisRejection" name="thesis" schema="thesis.rejection.comment">
             <fr:layout name="tabular">
+	           <fr:property name="classes" value="tstyle5 thtop thlight"/>
             </fr:layout>
             
             <fr:destination name="cancel" path="<%= String.format("/scientificCouncilManageThesis.do?method=reviewProposal&amp;thesisID=%s&amp;degreeID=%s&amp;executionYearID=%s", thesisId, degreeId, executionYearId) %>"/>
             <fr:destination name="invalid" path="<%= String.format("/scientificCouncilManageThesis.do?method=confirmRejectProposal&amp;thesisID=%s&amp;degreeID=%s&amp;executionYearID=%s", thesisId, degreeId, executionYearId) %>"/>
         </fr:edit>
-    
-        <html:submit>
-            <bean:message key="button.submit"/>
-        </html:submit>
-        <html:cancel>
-            <bean:message key="button.cancel"/>
-        </html:cancel>
+        <p class="mbottom15">
+            <html:submit>
+                <bean:message key="button.submit"/>
+            </html:submit>
+            <html:cancel>
+                <bean:message key="button.cancel"/>
+            </html:cancel>
+        </p>
     </fr:form>
 </logic:present>
 
 <%-- Student information--%>
-<h3><bean:message key="title.scientificCouncil.thesis.review.section.dissertation" /></h3>
+<h3 class="mtop15 mbottom05"><bean:message key="title.scientificCouncil.thesis.review.section.dissertation" /></h3>
 
 <fr:view name="thesis" layout="tabular" schema="scientificCouncil.thesis.approve.dissertation">
 	<fr:layout name="tabular">
+		<fr:property name="classes" value="tstyle2 thlight thright mtop05 mbottom05"/>
+		<fr:property name="columnClasses" value="width12em,,"/>
 	</fr:layout>
 </fr:view>
 
 <%-- Jury --%>
-<h3><bean:message key="title.scientificCouncil.thesis.review.section.jury"/></h3>
+<h3 class="separator2 mtop2"><bean:message key="title.scientificCouncil.thesis.review.section.jury"/></h3>
 
-<%-- Orientator --%>
-<h4><bean:message key="title.scientificCouncil.thesis.review.section.orientation.orientator"/></h4>
+<%-- Orientation --%>
+<h4 class="mtop25 mbottom05"><bean:message key="title.scientificCouncil.thesis.review.section.orientation"/></h4>
 
 <logic:empty name="thesis" property="orientator">
-    <p>
-        <bean:message key="title.scientificCouncil.thesis.review.orientator.empty"/>
-    </p>
+    <logic:empty name="thesis" property="coorientator">
+        <p>
+            <em><bean:message key="title.scientificCouncil.thesis.review.orientation.empty"/></em>
+        </p>
+    </logic:empty>
 </logic:empty>
 
 <logic:notEmpty name="thesis" property="orientator">
     <fr:view name="thesis" property="orientator" layout="tabular" schema="thesis.jury.proposal.person">
         <fr:layout name="tabular">
+            <fr:property name="classes" value="tstyle2 thlight thright mtop05 mbottom0"/>
+            <fr:property name="columnClasses" value="width12em,width35em,"/>
         </fr:layout>
     </fr:view>
+    <logic:equal name="thesis" property="orientatorCreditsDistributionNeeded" value="true">
+        <table class="tstyle2 thlight thright mtop0 mbottom05 tgluetop">
+            <tr>
+                <th class="width12em"><bean:message key="label.scientificCouncil.thesis.edit.teacher.credits"/>:</th>
+                <td class="width35em">
+                    <logic:empty name="thesis" property="orientatorCreditsDistribution">-</logic:empty>
+                    <logic:notEmpty name="thesis" property="orientatorCreditsDistribution">
+                        <fr:view name="thesis" property="orientatorCreditsDistribution"/> %
+                    </logic:notEmpty>
+                </td>
+            </tr>
+        </table>
+    </logic:equal>
 </logic:notEmpty>
-
-<%-- Coorientator --%>
-<h4><bean:message key="title.scientificCouncil.thesis.review.section.orientation.coorientator"/></h4>
-
-<logic:empty name="thesis" property="coorientator">
-    <p>
-        <bean:message key="title.scientificCouncil.thesis.review.coorientator.empty"/>
-    </p>
-</logic:empty>
-
+  
 <logic:notEmpty name="thesis" property="coorientator">
     <fr:view name="thesis" property="coorientator" layout="tabular" schema="thesis.jury.proposal.person">
         <fr:layout name="tabular">
+            <fr:property name="classes" value="tstyle2 thlight thright mtop05 mbottom0"/>
+            <fr:property name="columnClasses" value="width12em,width35em,"/>
         </fr:layout>
     </fr:view>
+    <logic:equal name="thesis" property="coorientatorCreditsDistributionNeeded" value="true">
+        <table class="tstyle2 thlight thright mtop0 mbottom05 tgluetop">
+            <tr>
+                <th class="width12em"><bean:message key="label.scientificCouncil.thesis.edit.teacher.credits"/>:</th>
+                <td class="width35em">
+                    <logic:empty name="thesis" property="coorientatorCreditsDistribution">-</logic:empty>
+                    <logic:notEmpty name="thesis" property="coorientatorCreditsDistribution">
+                        <fr:view name="thesis" property="coorientatorCreditsDistribution"/> %
+                    </logic:notEmpty>
+                </td>
+            </tr>
+        </table>
+    </logic:equal>
 </logic:notEmpty>
 
 <%-- Jury/President --%>
-<h4><bean:message key="title.scientificCouncil.thesis.review.section.jury.president"/></h4>
+<h4 class="mtop2 mbottom05"><bean:message key="title.scientificCouncil.thesis.review.section.jury.president"/></h4>
 
 <logic:empty name="thesis" property="president">
     <p>
-        <bean:message key="title.scientificCouncil.thesis.review.president.empty"/>
+        <em><bean:message key="title.scientificCouncil.thesis.review.president.empty"/></em>
     </p>
 </logic:empty>
 
 <logic:notEmpty name="thesis" property="president">
     <fr:view name="thesis" property="president" layout="tabular" schema="thesis.jury.proposal.person">
         <fr:layout name="tabular">
+            <fr:property name="classes" value="tstyle2 thlight thright mtop05 mbottom05"/>
+            <fr:property name="columnClasses" value="width12em,width35em,"/>        
         </fr:layout>
     </fr:view>
 </logic:notEmpty>
 
 <%-- Jury/"Vowels" --%>
-<h4><bean:message key="title.scientificCouncil.thesis.review.section.vowels"/></h4>
+<h4 class="mtop2 mbottom05"><bean:message key="title.scientificCouncil.thesis.review.section.vowels"/></h4>
 
 <logic:empty name="thesis" property="vowels">
     <p>
-        <bean:message key="title.scientificCouncil.thesis.review.vowels.empty"/>
+        <em><bean:message key="title.scientificCouncil.thesis.review.vowels.empty"/></em>
     </p>
 </logic:empty>
 
@@ -132,6 +167,8 @@
     <logic:iterate id="vowel" name="thesis" property="vowels">
         <fr:view name="vowel" layout="tabular" schema="thesis.jury.proposal.person">
             <fr:layout name="tabular">
+            		<fr:property name="classes" value="tstyle2 thlight thright mtop05 mbottom05"/>
+            		<fr:property name="columnClasses" value="width12em,width35em,"/>
             </fr:layout>
         </fr:view>
     </logic:iterate>

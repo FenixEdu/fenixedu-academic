@@ -59,11 +59,11 @@ public class StudentThesisInfo {
             this.state = ThesisPresentationState.UNEXISTING;
         }
         else {
-            if (thesis.isDraft()) {
-                this.state = ThesisPresentationState.DRAFT;
-            }
-            else if (thesis.isRejected()) {
+            if (thesis.isRejected()) {
                 this.state = ThesisPresentationState.REJECTED;
+            }
+            else if (thesis.isDraft()) {
+                this.state = ThesisPresentationState.DRAFT;
             }
             else if (thesis.isSubmitted()) {
                 this.state = ThesisPresentationState.SUBMITTED;

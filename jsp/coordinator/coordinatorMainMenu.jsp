@@ -6,15 +6,33 @@
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree" %>
 <%@ page import="net.sourceforge.fenixedu.domain.degree.DegreeType" %>
+<%@ page import="net.sourceforge.fenixedu.domain.Degree" %>
+<%@ page import="net.sourceforge.fenixedu.domain.RootDomainObject" %>
+
+<bean:define id="person" name="UserView" property="person" type="net.sourceforge.fenixedu.domain.Person"/>
 
 <logic:present name="<%= SessionConstants.MASTER_DEGREE %>"  >
 	<bean:define id="infoExecutionDegree" name="<%= SessionConstants.MASTER_DEGREE %>" scope="session" type="InfoExecutionDegree" />
 	<bean:define id="infoDegreeCurricularPlan" name="infoExecutionDegree" property="infoDegreeCurricularPlan" />
-	<bean:define id="degreeCurricularPlanID" name="infoDegreeCurricularPlan" property="idInternal" />
+	<bean:define id="degreeCurricularPlanID" name="infoDegreeCurricularPlan" property="idInternal" type="java.lang.Integer"/>
 	<bean:define id="executionDegreeID" name="infoExecutionDegree" property="idInternal" />
+
+    <%
+        Degree degree = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanID).getDegree();
+        if (degree.isCurrentCoordinator(person)) {
+            request.setAttribute("isCoordinator", true);
+        }
+        
+        if (degree.isMemberOfCurrentScientificCommission(person)) {
+            request.setAttribute("isScientificCommissionMember", true);
+        }
+    %>
 
 	<ul>
 
+        <%--  start of isCoordinator logic, search for isCoordinator --%>
+        <logic:present name="isCoordinator">
+        
 		<%-- Start of Common Options --%>	
 		<li class="navheader">
 			<bean:message key="label.coordinator.management"/>		
@@ -22,6 +40,11 @@
 		<li>
 			<html:link page="<%= "/viewCoordinationTeam.do?method=chooseExecutionYear&degreeCurricularPlanID=" + degreeCurricularPlanID.toString()  %>" >
 				<bean:message key="link.coordinator.degreeCurricularPlan.coordinationTeam"/>
+			</html:link> 
+		</li>
+		<li>
+			<html:link page="<%= "/scientificCommissionTeamDA.do?method=manage&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString()  %>" >
+				<bean:message key="link.coordinator.degreeCurricularPlan.scientificCommissionTeam"/>
 			</html:link> 
 		</li>
 		<li>
@@ -86,21 +109,7 @@
 			</li>
 	--%>
 		</logic:equal>	
-<%--
-            <li class="navheader">
-                <bean:message key="label.coordinator.thesis"/>
-            </li>
-            <li>
-              <html:link page="<%= "/manageThesis.do?method=searchStudent&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString()%>">
-                    <bean:message key="link.coordinator.thesis.viewStudent" />
-              </html:link>
-            </li>
-            <li>
-              <html:link page="<%= "/manageThesis.do?method=listThesis&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString()%>">
-                    <bean:message key="link.coordinator.thesis.list" />
-              </html:link>
-            </li>
---%>
+
 		<%-- Start of Master Degree Coordinator Options --%>
 		<logic:equal name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.tipoCurso" value="<%= DegreeType.MASTER_DEGREE.toString() %>">
 			<li class="navheader">
@@ -228,5 +237,23 @@
 				</li>
 			</logic:equal>
 		</logic:notEqual>
+        </logic:present>
+        <%-- end of isCoordinator logic --%>
+        
+        <logic:present name="isScientificCommissionMember">
+            <li class="navheader">
+                <bean:message key="label.coordinator.thesis"/>
+            </li>
+            <li>
+              <html:link page="<%= "/manageThesis.do?method=searchStudent&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString()%>">
+                    <bean:message key="link.coordinator.thesis.viewStudent" />
+              </html:link>
+            </li>
+            <li>
+              <html:link page="<%= "/manageThesis.do?method=listThesis&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString()%>">
+                    <bean:message key="link.coordinator.thesis.list" />
+              </html:link>
+            </li>
+        </logic:present>
 	</ul>
 </logic:present>

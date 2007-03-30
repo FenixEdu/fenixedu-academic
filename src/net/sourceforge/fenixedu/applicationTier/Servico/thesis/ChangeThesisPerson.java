@@ -3,9 +3,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.thesis;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.externalPerson.InsertExternalPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
+import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 
 public class ChangeThesisPerson extends Service {
 
@@ -17,14 +19,14 @@ public class ChangeThesisPerson extends Service {
     };
     
     public static class PersonChange {
-        public PersonTarget type;
+        PersonTarget type;
         Person person;
         String personName;
         Unit unit;
         String unitName;
-        Person target;
+        ThesisEvaluationParticipant target;
         
-        public PersonChange(PersonTarget type, Person person, Person target) {
+        public PersonChange(PersonTarget type, Person person, ThesisEvaluationParticipant target) {
             super();
         
             this.type = type;
@@ -32,7 +34,7 @@ public class ChangeThesisPerson extends Service {
             this.target = target;
         }
 
-        public PersonChange(PersonTarget type, String personName, Unit unit, Person target) {
+        public PersonChange(PersonTarget type, String personName, Unit unit, ThesisEvaluationParticipant target) {
             super();
             
             this.type = type;
@@ -41,7 +43,7 @@ public class ChangeThesisPerson extends Service {
             this.target = target;
         }
 
-        public PersonChange(PersonTarget type, String personName, String unitName, Person target) {
+        public PersonChange(PersonTarget type, String personName, String unitName, ThesisEvaluationParticipant target) {
             super();
         
             this.type = type;
@@ -51,7 +53,7 @@ public class ChangeThesisPerson extends Service {
         }
     }
     
-    public void run(Integer degreeCurricularPlanId, Thesis thesis, PersonChange change) throws FenixServiceException {
+    public void run(DegreeCurricularPlan degreeCurricularPlan, Thesis thesis, PersonChange change) throws FenixServiceException {
         Person person = getPerson(change);
         
         switch (change.type) {
@@ -66,7 +68,7 @@ public class ChangeThesisPerson extends Service {
             break;
         case vowel:
             if (change.target != null) {
-        	thesis.removeVowel(change.target);
+                thesis.removeParticipations(change.target);
                 if (person != null) {
                     thesis.addVowel(person);
                 }

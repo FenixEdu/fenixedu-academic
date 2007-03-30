@@ -349,5 +349,17 @@
     <definition name="thesis-edit-keywords" extends="definition.student.masterPage">
         <put name="body" value="/student/thesis/editKeywords.jsp"/>
     </definition>
+    <definition name="thesis-declaration" extends="definition.student.masterPage">
+        <put name="body" value="/student/thesis/declaration.jsp"/>
+    </definition>
+    <definition name="thesis-declaration-view" extends="definition.student.masterPage">
+        <put name="body" value="/student/thesis/viewDeclaration.jsp"/>
+    </definition>
+    <definition name="thesis-upload-dissertation" extends="definition.student.masterPage">
+        <put name="body" value="/student/thesis/uploadDissertation.jsp"/>
+    </definition>
+    <definition name="thesis-upload-abstract" extends="definition.student.masterPage">
+        <put name="body" value="/student/thesis/uploadAbstract.jsp"/>
+    </definition>
 
 </tiles-definitions>

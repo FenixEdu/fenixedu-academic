@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.predicates;
 
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.RoleTypeGroup;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
@@ -20,6 +21,17 @@ public class ThesisPredicates {
 
         public boolean evaluate(Thesis thesis) {
             return new RoleTypeGroup(RoleType.SCIENTIFIC_COUNCIL).isMember(AccessControl.getPerson());
+        }
+        
+    };
+    
+    public static final AccessControlPredicate<Thesis> student = new AccessControlPredicate<Thesis>() {
+
+        public boolean evaluate(Thesis thesis) {
+            Person person = AccessControl.getPerson();
+            
+            return person.getStudent() == thesis.getStudent()
+                    && thesis.isWaitingConfirmation();
         }
         
     };

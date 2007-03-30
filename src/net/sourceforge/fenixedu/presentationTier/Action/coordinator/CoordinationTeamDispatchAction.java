@@ -186,22 +186,4 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
         return viewTeam(mapping, form, request, response);
     }
     
-    public ActionForward selectThesisCoordinationTeam(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
-            FenixServiceException, FenixFilterException {
-        Integer degreeCurricularPlanID = null;
-        if (request.getParameter("degreeCurricularPlanID") != null) {
-            degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
-            request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
-        }
-
-        Integer executionDegreeID = new Integer(request.getParameter("infoExecutionDegreeId"));
-        request.setAttribute("executionDegreeId", executionDegreeID);
-        
-        ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeID);
-        request.setAttribute("coordinators", executionDegree.getCoordinatorsList());
-        
-        return mapping.findForward("editThesisCoordinationTeam");
-    }
-    
 }

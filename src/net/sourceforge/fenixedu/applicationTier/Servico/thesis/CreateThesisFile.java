@@ -6,11 +6,12 @@ import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.accessControl.CurrentDegreeCoordinatorsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
-import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.accessControl.RoleTypeGroup;
+import net.sourceforge.fenixedu.domain.accessControl.ThesisFileReadersGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
@@ -24,9 +25,13 @@ import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
 public abstract class CreateThesisFile extends Service {
 
-    public ThesisFile run(Thesis thesis, InputStream stream, String fileName) {
+    public ThesisFile run(Thesis thesis, InputStream stream, String fileName, String title, String subTitle, Language language) {
 
         if (! thesis.isWaitingConfirmation()) {
+            throw new DomainException("thesis.files.submit.unavailable");
+        }
+        
+        if (! thesis.isDeclarationAccepted()) {
             throw new DomainException("thesis.files.submit.unavailable");
         }
         
@@ -50,9 +55,11 @@ public abstract class CreateThesisFile extends Service {
         RoleTypeGroup scientificCouncil = new RoleTypeGroup(RoleType.SCIENTIFIC_COUNCIL);
         CurrentDegreeCoordinatorsGroup coordinators = new CurrentDegreeCoordinatorsGroup(thesis.getDegree());
         PersonGroup student = thesis.getStudent().getPerson().getPersonGroup();
-        file.setPermittedGroup(new GroupUnion(scientificCouncil, new GroupUnion(coordinators, student)));
+        ThesisFileReadersGroup thesisGroup = new ThesisFileReadersGroup(thesis);
         
-        updateThesis(thesis, file);
+        file.setPermittedGroup(new GroupUnion(scientificCouncil, coordinators, student, thesisGroup));
+        
+        updateThesis(thesis, file, title, subTitle, language);
         
         return file;
     }
@@ -88,6 +95,6 @@ public abstract class CreateThesisFile extends Service {
     }
 
     protected abstract void removePreviousFile(Thesis thesis);
-    protected abstract void updateThesis(Thesis thesis, ThesisFile file);
+    protected abstract void updateThesis(Thesis thesis, ThesisFile file, String title, String subTitle, Language language);
 
 }

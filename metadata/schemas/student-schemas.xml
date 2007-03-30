@@ -146,17 +146,31 @@
 
 <schema name="student.thesis.details" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
     <slot name="title"/>
-    <slot name="orientator" layout="null-as-label" key="label.thesis.orientator">
-        <property name="label" value="label.thesis.field.empty"/>
-        <property name="key" value="true"/>
-        <property name="subLayout" value="values"/>
-        <property name="subSchema" value="student.thesis.person.name"/>
+    <slot name="orientation" layout="flowLayout" key="label.thesis.orientation">
+        <property name="eachInline" value="true"/>
+        <property name="htmlSeparator" value=", "/>
+        <property name="eachLayout" value="values"/>
+        <property name="eachSchema" value="student.thesis.person.name"/>
     </slot>
-    <slot name="coorientator" layout="null-as-label" key="label.thesis.coorientator">
+    <slot name="discussed" key="label.thesis.evaluate.discussion.date" layout="null-as-label">
         <property name="label" value="label.thesis.field.empty"/>
         <property name="key" value="true"/>
-        <property name="subLayout" value="values"/>
-        <property name="subSchema" value="student.thesis.person.name"/>
+        <property name="subLayout" value="dataDependent"/>
+    </slot>
+</schema>
+
+<schema name="student.thesis.details.edit" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
+    <slot name="title" read-only="true"/>
+    <slot name="orientation" read-only="true" layout="flowLayout" key="label.thesis.orientation">
+        <property name="eachInline" value="true"/>
+        <property name="htmlSeparator" value=", "/>
+        <property name="eachLayout" value="values"/>
+        <property name="eachSchema" value="student.thesis.person.name"/>
+    </slot>
+    <slot name="discussed" key="label.thesis.evaluate.discussion.date">
+        <validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator">
+            <property name="required" value="true"/>
+        </validator>
     </slot>
 </schema>
 
@@ -176,11 +190,23 @@
 </schema>
 
 <schema name="student.thesis.abstract.edit" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
-    <slot name="thesisAbstractPt" layout="longText" key="label.thesis.abstract.pt" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+    <slot name="thesisAbstractPt" layout="longText" key="label.thesis.abstract.pt">
+        <validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
+            <property name="required" value="true"/>
+            <property name="type" value="word"/>
+            <property name="length" value="200"/>
+        </validator>
+        
         <property name="columns" value="65"/>
         <property name="rows" value="12"/>
     </slot>
-    <slot name="thesisAbstractEn" layout="longText" key="label.thesis.abstract.en" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+    <slot name="thesisAbstractEn" layout="longText" key="label.thesis.abstract.en">
+        <validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
+            <property name="required" value="true"/>
+            <property name="type" value="word"/>
+            <property name="length" value="200"/>
+        </validator>
+        
         <property name="columns" value="65"/>
         <property name="rows" value="12"/>
     </slot>
@@ -206,6 +232,22 @@
     </slot>
 </schema>
 
+<schema name="student.thesis.file.dissertation" type="net.sourceforge.fenixedu.domain.thesis.ThesisFile">
+    <slot name="title" key="label.thesis.title"/>
+    <slot name="subTitle" key="label.thesis.subtitle" layout="null-as-label">
+        <property name="label" value="-"/>
+    </slot>
+    <slot name="language" key="label.thesis.language" layout="null-as-label">
+        <property name="label" value="-"/>
+    </slot>
+    <slot name="displayName" layout="link" key="label.thesis.file.name">
+        <property name="useParent" value="true"/>
+        <property name="linkFormat" value="${downloadUrl}"/>
+    </slot>
+    <slot name="size" layout="fileSize" key="label.thesis.file.size"/>
+    <slot name="uploadTime" key="label.thesis.file.name.uploadTime"/>
+</schema>
+
 <schema name="student.thesis.file" type="net.sourceforge.fenixedu.domain.thesis.ThesisFile">
     <slot name="displayName" layout="link" key="label.thesis.file.name">
         <property name="useParent" value="true"/>
@@ -225,6 +267,38 @@
         <property name="size" value="60"/>
         <property name="fileNameSlot" value="fileName"/>
         <property name="fileSizeSlot" value="fileSize"/>
+    </slot>
+</schema>
+
+<schema name="student.thesisBean.upload.dissertation" type="net.sourceforge.fenixedu.presentationTier.Action.student.thesis.ThesisFileBean">
+    <slot name="title" key="label.thesis.title" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+        <property name="size" value="60"/>
+    </slot>
+    <slot name="subTitle" key="label.thesis.subtitle">
+        <property name="size" value="60"/>
+    </slot>
+    <slot name="language" key="label.thesis.language" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+        <property name="includedValues" value="pt, en"/>
+    </slot>
+    <slot name="file" key="label.thesis.file">
+        <validator class="net.sourceforge.fenixedu.renderers.validators.FileValidator">
+            <property name="required" value="true"/>
+            <property name="acceptedTypes" value="application/pdf"/>
+        </validator>
+        
+        <property name="size" value="60"/>
+        <property name="fileNameSlot" value="fileName"/>
+        <property name="fileSizeSlot" value="fileSize"/>
+    </slot>
+</schema>
+
+<schema name="student.thesis.details.declaration" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
+    <slot name="declarationAccepted" key="label.thesis.declaration.state">
+        <property name="trueLabel" value="label.thesis.declaration.accepted"/>
+        <property name="falseLabel" value="label.thesis.declaration.notAccepted"/>
+    </slot>
+    <slot name="visibility" key="label.thesis.declaration.visibility" layout="null-as-label">
+        <property name="label" value="-"/>
     </slot>
 </schema>
 

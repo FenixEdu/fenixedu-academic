@@ -10,6 +10,7 @@ import net.sf.jasperreports.engine.JRException;
 import net.sourceforge.fenixedu.applicationTier.Servico.thesis.ChangeThesisPerson.PersonChange;
 import net.sourceforge.fenixedu.applicationTier.Servico.thesis.ChangeThesisPerson.PersonTarget;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -20,6 +21,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
+import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.docs.thesis.ApproveJuryDocument;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
@@ -174,8 +176,12 @@ public class ManageThesisDA extends FenixDispatchAction {
             return viewApproved(mapping, actionForm, request, response);
         }
         
-        if (thesis.isAtLeastConfirmed()) {
+        if (thesis.isConfirmed()) {
             return viewConfirmed(mapping, actionForm, request, response);
+        }
+        
+        if (thesis.isEvaluated()) {
+            return viewEvaluated(mapping, actionForm, request, response);
         }
         
         return searchStudent(mapping, actionForm, request, response);
@@ -186,6 +192,7 @@ public class ManageThesisDA extends FenixDispatchAction {
 
         List<StudentThesisInfo> result = new ArrayList<StudentThesisInfo>();
         for (CurricularCourse curricularCourse : degreeCurricularPlan.getDissertationCurricularCourses()) {
+            // TODO: thesis, allow to choose executionYear
             for (Enrolment enrolment : curricularCourse.getEnrolmentsByExecutionYear(ExecutionYear.readCurrentExecutionYear())) {
                 StudentCurricularPlan studentCurricularPlan = enrolment.getStudentCurricularPlan();
                 
@@ -226,7 +233,7 @@ public class ManageThesisDA extends FenixDispatchAction {
             return selectStudent(mapping, actionForm, request, response);
         }
         
-        Thesis thesis = (Thesis) executeService("CreateThesisProposal", degreeCurricularPlan.getIdInternal(), bean.getStudent(), bean.getTitle(), bean.getComment());
+        Thesis thesis = (Thesis) executeService("CreateThesisProposal", degreeCurricularPlan, bean.getStudent(), bean.getTitle(), bean.getComment());
         request.setAttribute("thesis", thesis);
         
         return editProposal(mapping, actionForm, request, response);
@@ -242,11 +249,82 @@ public class ManageThesisDA extends FenixDispatchAction {
         }
 
         request.setAttribute("conditions", thesis.getConditions());
+
+        if (thesis.isOrientatorCreditsDistributionNeeded()) {
+            request.setAttribute("orientatorCreditsDistribution", true);
+        }
+        
+        if (thesis.isCoorientatorCreditsDistributionNeeded()) {
+            request.setAttribute("coorientatorCreditsDistribution", true);
+        }
+        
         return mapping.findForward("edit-thesis");
     }
     
     public ActionForward changeInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
         return mapping.findForward("change-information");
+    }
+    
+    public ActionForward changeCredits(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String target = request.getParameter("target");
+        
+        if (target == null) {
+            return editProposal(mapping, actionForm, request, response);
+        }
+
+        switch (PersonTarget.valueOf(target)) {
+        case orientator:
+            request.setAttribute("editOrientatorCreditsDistribution", true);
+            break;
+        case coorientator:
+            request.setAttribute("editCoorientatorCreditsDistribution", true);
+            break;
+        default:
+        }
+        
+        return editProposal(mapping, actionForm, request, response);
+    }
+    
+    public ActionForward changeParticipationInfo(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String target = request.getParameter("target");
+
+        if (target == null) {
+            return editProposal(mapping, actionForm, request, response);
+        }
+        
+        Thesis thesis = getThesis(request);
+        ThesisEvaluationParticipant participant;
+        
+        PersonTarget targetType = PersonTarget.valueOf(target);
+        switch (targetType) {
+        case orientator:
+            participant = thesis.getOrientator();
+            break;
+        case coorientator:
+            participant = thesis.getCoorientator();
+            
+            // HACK: ouch! type is used for a lable in the destination page, and we don't
+            // want to make a distinction between orientator and coorientator
+            targetType = PersonTarget.orientator;
+            break;
+        case president:
+            participant = thesis.getPresident();
+            break;
+        case vowel:
+            participant = getVowel(request);
+            break;
+        default:
+            participant = null;
+        }
+
+        if (participant == null) {
+            return editProposal(mapping, actionForm, request, response);
+        }
+        else {
+            request.setAttribute("targetType", targetType);
+            request.setAttribute("participant", participant);
+            return mapping.findForward("editParticipant");
+        }
     }
     
     public ActionForward changePerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -258,12 +336,15 @@ public class ManageThesisDA extends FenixDispatchAction {
         }
         
         ThesisBean bean = new ThesisBean();
+
+        Degree degree = getDegreeCurricularPlan(request).getDegree();
+        bean.setDegree(degree);
         
         PersonTarget targetType = PersonTarget.valueOf(target);
         bean.setTargetType(targetType);
         
         if (targetType.equals(PersonTarget.vowel)) {
-            Person targetVowel = getVowel(request);
+            ThesisEvaluationParticipant targetVowel = getVowel(request);
             
             if (targetVowel != null) {
                 bean.setTarget(targetVowel);
@@ -276,8 +357,7 @@ public class ManageThesisDA extends FenixDispatchAction {
         if (remove) {
             DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
             Thesis thesis = getThesis(request);
-            
-            executeService("ChangeThesisPerson", degreeCurricularPlan.getIdInternal(), thesis, new PersonChange(bean.getTargetType(), null, bean.getTarget()));
+            executeService("ChangeThesisPerson", degreeCurricularPlan, thesis, new PersonChange(bean.getTargetType(), null, bean.getTarget()));
             
             return editProposal(mapping, actionForm, request, response);
         }
@@ -287,14 +367,22 @@ public class ManageThesisDA extends FenixDispatchAction {
         }
     }
 
-    private Person getVowel(HttpServletRequest request) {
+    private ThesisEvaluationParticipant getVowel(HttpServletRequest request) {
         String parameter = request.getParameter("vowelID");
         if (parameter == null) {
             return null;
         }
         
-        final Integer id = Integer.valueOf(parameter);
-        return (Person) RootDomainObject.getInstance().readPartyByOID(id);
+        Integer id = Integer.valueOf(parameter);
+        
+        Thesis thesis = getThesis(request);
+        for (ThesisEvaluationParticipant participant : thesis.getVowels()) {
+            if (participant.getIdInternal().equals(id)) {
+                return participant;
+            }
+        }
+        
+        return null;
     }
 
     public ActionForward changePersonInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -342,8 +430,7 @@ public class ManageThesisDA extends FenixDispatchAction {
         else {
             DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
             Thesis thesis = getThesis(request);
-            
-            executeService("ChangeThesisPerson", degreeCurricularPlan.getIdInternal(), thesis, new PersonChange(bean.getTargetType(), selectedPerson, bean.getTarget()));
+            executeService("ChangeThesisPerson", degreeCurricularPlan, thesis, new PersonChange(bean.getTargetType(), selectedPerson, bean.getTarget()));
             
             return editProposal(mapping, actionForm, request, response);
         }
@@ -390,8 +477,7 @@ public class ManageThesisDA extends FenixDispatchAction {
         else {
             DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
             Thesis thesis = getThesis(request);
-            
-            executeService("ChangeThesisPerson", degreeCurricularPlan.getIdInternal(), thesis, new PersonChange(bean.getTargetType(), selectedPerson, bean.getTarget()));
+            executeService("ChangeThesisPerson", degreeCurricularPlan, thesis, new PersonChange(bean.getTargetType(), selectedPerson, bean.getTarget()));
             
             return editProposal(mapping, actionForm, request, response);
         }
@@ -423,7 +509,7 @@ public class ManageThesisDA extends FenixDispatchAction {
             if (create) {
                 DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
                 Thesis thesis = getThesis(request);
-                executeService("ChangeThesisPerson", degreeCurricularPlan.getIdInternal(), thesis, new PersonChange(bean.getTargetType(), bean.getRawPersonName(), bean.getRawUnitName(), bean.getTarget()));
+                executeService("ChangeThesisPerson", degreeCurricularPlan, thesis, new PersonChange(bean.getTargetType(), bean.getRawPersonName(), bean.getRawUnitName(), bean.getTarget()));
                 
                 return editProposal(mapping, actionForm, request, response);
             }
@@ -441,15 +527,13 @@ public class ManageThesisDA extends FenixDispatchAction {
         else {
             DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
             Thesis thesis = getThesis(request);
-            
-            executeService("ChangeThesisPerson", degreeCurricularPlan.getIdInternal(), thesis, new PersonChange(bean.getTargetType(), bean.getRawPersonName(), bean.getUnit(), bean.getTarget()));
+            executeService("ChangeThesisPerson", degreeCurricularPlan, thesis, new PersonChange(bean.getTargetType(), bean.getRawPersonName(), bean.getUnit(), bean.getTarget()));
             
             return editProposal(mapping, actionForm, request, response);
         }
     }
     
     public ActionForward submitProposal(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
         Thesis thesis = getThesis(request);
         
         if (thesis == null) {
@@ -457,9 +541,11 @@ public class ManageThesisDA extends FenixDispatchAction {
         }
 
         try {
-            executeService("SubmitThesis", degreeCurricularPlan.getIdInternal(), thesis);
+            DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
+            executeService("SubmitThesis", degreeCurricularPlan, thesis);
         } catch (DomainException e) {
             addActionMessage("error", request, e.getKey(), e.getArgs());
+            return editProposal(mapping, actionForm, request, response);
         }
         
         return listThesis(mapping, actionForm, request, response);
@@ -471,7 +557,6 @@ public class ManageThesisDA extends FenixDispatchAction {
     }
 
     public ActionForward deleteProposal(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
         Thesis thesis = getThesis(request);
         
         if (thesis == null) {
@@ -479,7 +564,8 @@ public class ManageThesisDA extends FenixDispatchAction {
         }
 
         try {
-            executeService("DeleteThesis", degreeCurricularPlan.getIdInternal(), thesis);
+            DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
+            executeService("DeleteThesis", degreeCurricularPlan, thesis);
         } catch (DomainException e) {
             addActionMessage("error", request, e.getKey(), e.getArgs());
         }
@@ -537,7 +623,6 @@ public class ManageThesisDA extends FenixDispatchAction {
     }
 
     public ActionForward enterRevision(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
         Thesis thesis = getThesis(request);
         
         if (thesis == null) {
@@ -545,7 +630,8 @@ public class ManageThesisDA extends FenixDispatchAction {
         }
         
         try {
-            executeService("ReviseThesis", degreeCurricularPlan.getIdInternal(), thesis);
+            DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
+            executeService("ReviseThesis", degreeCurricularPlan, thesis);
         } catch (DomainException e) {
             addActionMessage("error", request, e.getKey(), e.getArgs());
         }

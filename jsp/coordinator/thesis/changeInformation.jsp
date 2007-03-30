@@ -11,15 +11,15 @@
 
 <h2><bean:message key="title.coordinator.thesis.edit"/></h2>
 
-<p class="mtop15">
-	<trong><bean:message key="title.coordinator.thesis.changeInformation"/></strong>
+<p class="mtop15 mbottom05">
+	<strong><bean:message key="title.coordinator.thesis.changeInformation"/></strong>
 </p>
 
 <fr:edit name="thesis"
          action="<%= String.format("/manageThesis.do?method=editProposal&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>"
          schema="thesis.jury.proposal.information.edit">
      <fr:layout name="tabular">
-        <fr:property name="classes" value="tstyle5 tdtop thlight thright"/>
+        <fr:property name="classes" value="tstyle5 tdtop thlight thright mtop05"/>
         <fr:property name="columnClasses" value=",,tdclear tderror1"/>
     </fr:layout>
     

@@ -3,12 +3,14 @@ package net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.thesis.ChangeThesisPerson.PersonTarget;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
 import net.sourceforge.fenixedu.domain.person.PersonName;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.joda.time.DateTime;
@@ -23,8 +25,9 @@ public class ThesisBean implements Serializable {
     private DomainReference<Student> student;
     
     private PersonTarget targetType;
-    private DomainReference<Person> target;
+    private DomainReference<ThesisEvaluationParticipant> target;
 
+    private DomainReference<Degree> degree;
     private boolean internal;
     private String rawPersonName;
     private DomainReference<PersonName> personName;
@@ -36,16 +39,25 @@ public class ThesisBean implements Serializable {
     
     private String mark;
     private DateTime discussion;
-    
+
     public ThesisBean() {
         super();
         
+        this.degree     = new DomainReference<Degree>(null);
         this.student    = new DomainReference<Student>(null);
         this.personName = new DomainReference<PersonName>(null);
         this.unitName   = new DomainReference<UnitName>(null);
-        this.target     = new DomainReference<Person>(null);
+        this.target     = new DomainReference<ThesisEvaluationParticipant>(null);
         
         this.internal = true;
+    }
+
+    public Degree getDegree() {
+        return this.degree.getObject();
+    }
+
+    public void setDegree(Degree degree) {
+        this.degree = new DomainReference<Degree>(degree);
     }
 
     public Student getStudent() {
@@ -64,12 +76,12 @@ public class ThesisBean implements Serializable {
         this.targetType = target;
     }
     
-    public Person getTarget() {
+    public ThesisEvaluationParticipant getTarget() {
         return this.target.getObject();
     }
 
-    public void setTarget(Person target) {
-        this.target = new DomainReference<Person>(target);
+    public void setTarget(ThesisEvaluationParticipant target) {
+        this.target = new DomainReference<ThesisEvaluationParticipant>(target);
     }
 
     public Person getPerson() {

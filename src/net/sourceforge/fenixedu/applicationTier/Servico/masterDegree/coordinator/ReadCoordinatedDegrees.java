@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.ScientificCommission;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 
 public class ReadCoordinatedDegrees extends Service {
@@ -38,6 +39,15 @@ public class ReadCoordinatedDegrees extends Service {
 	    }
 	}
 
+    for (ScientificCommission commission : person.getScientificCommissions()) {
+        ExecutionDegree executionDegree = commission.getExecutionDegree();
+        DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
+        
+        if (degreeCurricularPlan.getState() == DegreeCurricularPlanState.ACTIVE) {
+            activeDegreeCurricularPlans.add(degreeCurricularPlan);
+        }
+    }
+    
 	final List<InfoDegreeCurricularPlan> result = new ArrayList<InfoDegreeCurricularPlan>();
 	for (final DegreeCurricularPlan degreeCurricularPlan : activeDegreeCurricularPlans) {
 	    result.add(InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan));

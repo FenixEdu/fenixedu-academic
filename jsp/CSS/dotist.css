@@ -813,12 +813,11 @@ div.autoComplete {
       border:1px solid #888; 
       margin:0px; 
       padding:0px; 
-      
     } 
 ul.autoCompleteItems  { 
       list-style-type: none; 
-      margin:0px; 
-      padding:0px; 
+      margin:0px;
+      padding:0px;
   } 
  
 ul.autoCompleteItems li.selected { background-color:  #cef; }

@@ -3,6 +3,13 @@ package net.sourceforge.fenixedu.presentationTier.renderers;
 import net.sourceforge.fenixedu.renderers.StringRenderer;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 
+/**
+ * Presents a string considering that it's a person's name. So it allows you to
+ * choose if only the first and last name is shown and if the middle names
+ * appear as inicials.
+ * 
+ * @author cfgi
+ */
 public class PersonNameRenderer extends StringRenderer {
 
     private boolean firstLastOnly;

@@ -35,7 +35,11 @@
      ======================  -->
 
 <fr:view name="functionality" layout="tabular" 
-         schema="functionalities.functionality.view.simple"/>
+         schema="functionalities.functionality.view.simple">
+     <fr:layout>
+		<fr:property name="classes" value="tstyle1 thlight thright mtop05 mbottom025"/>
+	</fr:layout>
+</fr:view>
 
 <!-- ======================
          buttons

@@ -127,6 +127,7 @@ public class ScientificCouncilManageThesisDA extends FenixDispatchAction {
 
         if (thesis != null) {
             executeService("ApproveThesisProposal", thesis);
+            addActionMessage("mail", request, "thesis.approved.mail.sent");
         }
         
         return listThesis(mapping, actionForm, request, response);
@@ -156,19 +157,14 @@ public class ScientificCouncilManageThesisDA extends FenixDispatchAction {
 
         if (thesis != null) {
             executeService("ApproveThesisDiscussion", thesis);
+            addActionMessage("mail", request, "thesis.evaluated.mail.sent");
         }
         
         return listThesis(mapping, actionForm, request, response);
     }
     
-    public ActionForward disapproveThesis(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        Thesis thesis = getThesis(request);
+    public ActionForward viewThesis(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        return mapping.findForward("view-thesis");
+    }
 
-        if (thesis != null) {
-            executeService("DisapproveThesisDiscussion", thesis);
-        }
-        
-        return listThesis(mapping, actionForm, request, response);
-    }
-    
 }

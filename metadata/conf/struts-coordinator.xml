@@ -616,7 +616,6 @@
 	         <forward name="coordinationTeam" path="coordinationTeam" /> 
 	         <forward name="addCoordinator" path="addCoordinator" />
 	         <forward name="noAuthorization" path="df.page.notAuthorized" />
-	         <forward name="editThesisCoordinationTeam" path="editThesisCoordinationTeam" />
 		</action>		
 		<action path="/addCoordinator"
 			  input="/viewCoordinationTeam.do?method=prepareAddCoordinator"	
@@ -916,7 +915,14 @@
   			<forward name="view-approved" path="thesis-view-approved"/>
   			<forward name="view-confirmed" path="thesis-view-confirmed"/>
   			<forward name="view-evaluated" path="thesis-view-evaluated"/>
+  			<forward name="editParticipant" path="thesis-edit-participant"/>
   		</action>
+
+        <action path="/scientificCommissionTeamDA"
+            type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.ScientificCommissionTeamDA"
+            parameter="method">
+            <forward name="viewScientificCommission" path="scientificCommission-view"/>
+        </action>
 
     </action-mappings>
     

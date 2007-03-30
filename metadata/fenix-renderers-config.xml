@@ -135,9 +135,14 @@ Documentation:
         <property name="firstLastOnly" value="true"/>
     </renderer>
 
+    <renderer type="net.sourceforge.fenixedu.domain.Person" layout="name-with-alias" class="net.sourceforge.fenixedu.presentationTier.renderers.PersonNameWithAliasRenderer">
+        <property name="label" value="label.person.login.external"/>
+    </renderer>
+
     <renderer type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" layout="degree-label" class="net.sourceforge.fenixedu.renderers.FormatRenderer">
         <property name="format" value="${degree.sigla} ${initialDateYearMonthDay.year}"/>
     </renderer>
+    
     <renderer type="net.sourceforge.fenixedu.domain.Shift" layout="shift-plain" class="net.sourceforge.fenixedu.presentationTier.renderers.ShiftPlainRenderer"/>
 
 	<renderer type="net.sourceforge.fenixedu.domain.Summary" layout="summary-plain-to-create-summary" class="net.sourceforge.fenixedu.presentationTier.renderers.SummaryPlainRenderer"/>
@@ -351,6 +356,7 @@ Documentation:
           Note that since the selection is made through a menu the presentatio of each object must be short and 
           valid as a menu option text. Use the <tt>format</tt> property if possible. -->
     <renderer mode="input" type="java.lang.Object" layout="menu-select" class="net.sourceforge.fenixedu.presentationTier.renderers.InputMenuOptionListRenderer"/>
+    <renderer mode="input" type="java.lang.String" layout="menu-select-with-other" class="net.sourceforge.fenixedu.presentationTier.renderers.StringInputMenuOptionListRenderer"/>
 
     <!--@ Can be used to fill a slot with one of many possible objects. The objects are presented in an html menu. 
           Note that since the selection is made through a menu the presentatio of each object must be short and 
@@ -483,6 +489,8 @@ Documentation:
 	<renderer type="org.joda.time.DateTime" layout="no-time" class="net.sourceforge.fenixedu.renderers.FormatRenderer">
 		<property name="format" value="${dayOfMonth,02d}-${monthOfYear,02d}-${year}"/>
 	</renderer>
+
+    <renderer type="org.joda.time.DateTime" layout="as-date" class="net.sourceforge.fenixedu.presentationTier.renderers.DateTimeAsDateRenderer"/>
 
 	<renderer type="org.joda.time.DateTime" class="net.sourceforge.fenixedu.presentationTier.renderers.DateTimeDataDependentRenderer" layout="dataDependent">
 		<property name="formatWithTime" value="${dayOfMonth,02d}-${monthOfYear,02d}-${year} ${hourOfDay,02d}:${minuteOfHour,02d}"/>

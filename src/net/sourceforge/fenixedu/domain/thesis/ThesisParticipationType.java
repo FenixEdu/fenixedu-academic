@@ -1,6 +1,12 @@
 package net.sourceforge.fenixedu.domain.thesis;
 
 public enum ThesisParticipationType {
+    STATE_CREATOR(true),
+    STATE_SUBMITTER(true),
+    STATE_PROPOSAL_APPROVER(true),
+    STATE_CONFIRMER(true),
+    STATE_EVALUATION_APPROVER(true),
+    
     ORIENTATOR(true),
     COORIENTATOR(true),
     PRESIDENT(true),

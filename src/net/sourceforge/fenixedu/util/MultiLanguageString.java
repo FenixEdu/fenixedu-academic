@@ -157,19 +157,22 @@ public class MultiLanguageString implements Serializable, Comparable<MultiLangua
 
     @Override
     public String toString() {
-	return getContent();
+        return getContent();
     }
 
     public int compareTo(MultiLanguageString languageString) {
-	if (!hasContent() && !languageString.hasContent()) {
-	    return 0;
-	}
-	if (!hasContent() && languageString.hasContent()) {
-	    return -1;
-	}
-	if (hasContent() && !languageString.hasContent()) {
-	    return 1;
-	}
-	return getContent().compareTo(languageString.getContent());
+        	if (!hasContent() && !languageString.hasContent()) {
+        	    return 0;
+        	}
+            
+        	if (!hasContent() && languageString.hasContent()) {
+        	    return -1;
+        	}
+            
+        	if (hasContent() && !languageString.hasContent()) {
+        	    return 1;
+        	}
+            
+        	return getContent().compareTo(languageString.getContent());
     }
 }

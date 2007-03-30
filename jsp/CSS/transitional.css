@@ -1320,3 +1320,7 @@ margin: 0;
 font-size: 80%;
 text-decoration: underline;
 }
+
+table.tgluetop tr td, table.tgluetop tr th { 
+border-top: none; 
+}

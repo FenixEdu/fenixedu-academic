@@ -21,7 +21,10 @@
 
 <logic:messagesPresent message="true" property="info">
     <html:messages id="message" message="true" property="info">
-        <p><span class="info0"><bean:write name="message"/></span></p>
+        <div class="warning0">
+            <strong><bean:message key="label.attention"/></strong>:<br/>
+            <bean:write name="message"/><br/>
+        </div>
     </html:messages>
 </logic:messagesPresent>
 
@@ -35,9 +38,9 @@
 <logic:equal name="bean" property="internal" value="true">
     <div class="dinline forminline">
         <fr:form action="<%= String.format("/manageThesis.do?method=selectPerson&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
-            <fr:edit id="bean" name="bean" schema="thesis.bean.selectPerson.internal">
+            <fr:edit id="bean" name="bean" schema="<%= "thesis.bean.selectPerson.internal." + target %>">
                 <fr:layout name="tabular">
-                    <fr:property name="classes" value="tstyle5 thlight mtop05 dinline"/>
+                    <fr:property name="classes" value="tstyle5 thlight thright thmiddle mtop05 dinline"/>
                     <fr:property name="columnClasses" value=",,tdclear tderror1"/>
                 </fr:layout>
                 
@@ -64,7 +67,7 @@
         <fr:form action="<%= String.format("/manageThesis.do?method=selectExternalPerson&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
             <fr:edit id="bean" name="bean" layout="tabular" schema="thesis.bean.selectPerson.external">
                 <fr:layout name="tabular">
-                    <fr:property name="classes" value="tstyle5 thlight mtop05 dinline"/>
+                    <fr:property name="classes" value="tstyle5 thlight thright thmiddle mtop05 dinline"/>
                     <fr:property name="columnClasses" value=",,tdclear tderror1"/>
                 </fr:layout>
                 

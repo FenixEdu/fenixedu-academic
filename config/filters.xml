@@ -905,4 +905,10 @@
         <description/>
         <isTransactional>false</isTransactional>
     </filter>             
+    <filter>
+        <name>ScientificCommissionAuthorizationFilter</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.coordinator.ScientificComissionMemberAuthorizationFilter</implementationClass>
+        <description/>
+        <isTransactional>false</isTransactional>
+    </filter>             
 </filterDefinitions>

@@ -183,9 +183,11 @@ valueType net.sourceforge.fenixedu.domain.thesis.ThesisState								            
 valueType net.sourceforge.fenixedu.domain.CompetenceCourseType								                    as CompetenceCourseType;
 valueType net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType							                        as ThesisParticipationType;
 valueType net.sourceforge.fenixedu.domain.vigilancy.AttendingStatus												as AttendingStatus;
+valueType net.sourceforge.fenixedu.domain.thesis.ThesisVisibilityType											as ThesisVisibilityType;
 valueType net.sourceforge.fenixedu.domain.protocols.util.ProtocolAction											as ProtocolAction;
 valueType net.sourceforge.fenixedu.domain.research.activity.ResearchActivityStage								as ResearchActivityStage;
 valueType net.sourceforge.fenixedu.domain.contacts.PartyContactType												as PartyContactType;
+valueType net.sourceforge.fenixedu.domain.Language																as Language;
 
 /*
 *
@@ -871,7 +873,6 @@ class net.sourceforge.fenixedu.domain.Coordinator extends net.sourceforge.fenixe
 	Integer keyExecutionDegree;
 	Integer keyPerson;
 	Boolean responsible;
-	Boolean thesisCoordinator;
 }
 
 class net.sourceforge.fenixedu.domain.Country extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -2164,6 +2165,10 @@ class net.sourceforge.fenixedu.domain.File extends net.sourceforge.fenixedu.doma
 	class net.sourceforge.fenixedu.domain.thesis.ThesisFile extends net.sourceforge.fenixedu.domain.File {
 		Integer keyDissertationThesis;
 		Integer keyAbstractThesis;
+		
+		String title;
+		String subTitle;
+		Language language;
 	}
 
 class net.sourceforge.fenixedu.domain.FileEntry extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -5036,7 +5041,7 @@ class net.sourceforge.fenixedu.domain.thesis.Thesis extends net.sourceforge.feni
 
 	ThesisState state;
 
-	String mark;
+	Integer mark;
 	DateTime discussed;
 
 	DateTime creation;
@@ -5050,13 +5055,18 @@ class net.sourceforge.fenixedu.domain.thesis.Thesis extends net.sourceforge.feni
 	
 	Integer keyEnrolment;
 	Integer keyDegree;
+	
+	Integer orientatorCreditsDistribution;
+	ThesisVisibilityType visibility;
+	Boolean declarationAccepted;
+	DateTime declarationAcceptedTime;
 }
 
 class net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyPerson;
 	Integer keyThesis;
 
-	Integer keyCategory;
+	String category;
 	ThesisParticipationType type;
 	String affiliation;
 }
@@ -5073,6 +5083,12 @@ class net.sourceforge.fenixedu.domain.util.FunctionalityPrinters extends net.sou
 class net.sourceforge.fenixedu.domain.student.RegistrationNumber extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyRegistration;
 	Integer number;
+}
+
+class net.sourceforge.fenixedu.domain.ScientificCommission extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyExecutionDegree;
+	Integer keyPerson;
+	Boolean contact;
 }
 
 /*
@@ -12511,8 +12527,8 @@ relation ThesisHasExtendedAbstractFile {
 	net.sourceforge.fenixedu.domain.thesis.Thesis playsRole abstractThesis;
 }
 
-relation ThesisEvaluationParticipantCategory {
-	net.sourceforge.fenixedu.domain.teacher.Category playsRole category;
+relation ThesisEvaluationParticipantRootDomainObject {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant playsRole thesisParticipations {
 		multiplicity *;
 	}
@@ -12584,6 +12600,28 @@ relation RegistrationRegistrationNumber {
 	net.sourceforge.fenixedu.domain.student.RegistrationNumber playsRole registrationNumber;
 }
 
+relation ExecutionDegreeScientificCommission {
+	net.sourceforge.fenixedu.domain.ExecutionDegree playsRole executionDegree;
+	net.sourceforge.fenixedu.domain.ScientificCommission playsRole scientificCommissionMembers {
+		multiplicity *;
+	}
+}
+
+relation ScientificCommissionPerson {
+	net.sourceforge.fenixedu.domain.ScientificCommission playsRole scientificCommissions {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Person playsRole person;
+}
+
+relation ScientificCommissionRootDomainObject {
+	net.sourceforge.fenixedu.domain.ScientificCommission playsRole scientificCommissions {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+}
+
+
 relation PartyPartyContact {
 	net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole party;
 	net.sourceforge.fenixedu.domain.contacts.PartyContact playsRole partyContacts {
@@ -12597,3 +12635,4 @@ relation RootDomainObjectPartyContact {
 		multiplicity *;
 	}
 }
+

@@ -2619,6 +2619,17 @@ public class Person extends Person_Base {
 	return getImportantRoles(new ArrayList<String>());
     }
     
+    public String getMostImportantAlias() {
+        Login login = getLoginIdentification();
+        
+        if (login == null) {
+            return "";
+        }
+        else {
+            return login.getMostImportantAlias();
+        }
+    }
+    
     /* 
      * Currently, Person can only have one WorkPhone (so use get(0) - after interface updates remove these methods) 
      */

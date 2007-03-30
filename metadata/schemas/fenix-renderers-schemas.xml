@@ -641,9 +641,9 @@
     <schema name="group.description" type="java.lang.Object">
         <slot name="class" layout="label"/>
     </schema>
-    
+
     <schema name="AdministrativeOffice.view" type="net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice" bundle="APPLICATION_RESOURCES">
-    	<slot name="administrativeOfficeType" />
+	    	<slot name="administrativeOfficeType" />
     </schema>
 		
 	&researcher;

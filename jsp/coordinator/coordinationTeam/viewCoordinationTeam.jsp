@@ -16,7 +16,6 @@
 <table>
 <tr>
 <th class="listClasses-header"><bean:message key="label.coordinator.name"/></th>
-<th class="listClasses-header"><bean:message key="label.coordinator.thesisTeam"/></th>
 	<th class="listClasses-header">
    <logic:equal name="isResponsible" value="true">
    <bean:message key="label.remove"/>
@@ -29,10 +28,6 @@
 	
 	</td>
     
-	<td class="listClasses">
-        <fr:view name="coordinator" property="coordinator.thesisCoordinator" /> 
-	</td>
-   
 	<td class="listClasses">
   	
    		<logic:equal name="coordinator" property="responsible" value="true">
@@ -65,11 +60,6 @@
 	infoExecutionDegreeId.toString() + "&amp;degreeCurricularPlanID=" + degreeCurricularPlanID %>" >
 	<bean:message key="title.addCoordinator"/>
 	</html:link>
-</p>
-<p>
-    <html:link page="<%= String.format("/viewCoordinationTeam.do?method=selectThesisCoordinationTeam&amp;infoExecutionDegreeId=%s&amp;degreeCurricularPlanID=%s", infoExecutionDegreeId, degreeCurricularPlanID) %>">
-        <bean:message key="link.coordinator.define.thesisCoordination"/>
-    </html:link>
 </p>
 </logic:equal>	
 </html:form>

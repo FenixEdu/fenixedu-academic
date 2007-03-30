@@ -5,14 +5,11 @@
    <class-descriptor class="net.sourceforge.fenixedu.domain.Coordinator"
    	  table="COORDINATOR"
    >
-      
-      
-     
-      
-	
-       
 	    
    </class-descriptor>
+   
+  <class-descriptor class="net.sourceforge.fenixedu.domain.ScientificCommission" table="SCIENTIFIC_COMMISSION">
+  </class-descriptor>
    
 <!-- Definitions for net.sourceforge.fenixedu.domain.DegreeInfo -->   
    <class-descriptor class="net.sourceforge.fenixedu.domain.DegreeInfo"
