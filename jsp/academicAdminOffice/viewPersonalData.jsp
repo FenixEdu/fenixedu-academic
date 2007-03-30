@@ -48,6 +48,7 @@
 	</fr:view>
 </logic:notEmpty>
 <logic:empty name="personBean" property="sortedPhysicalAdresses">
+	<br/>
 	<em><bean:message key="label.partyContacts.no.webAddresses" bundle="ACADEMIC_OFFICE_RESOURCES" /></em>
 </logic:empty>
 
@@ -62,6 +63,7 @@
 	</fr:view>
 </logic:notEmpty>
 <logic:empty name="personBean" property="sortedPhones">
+	<br/>
 	<em><bean:message key="label.partyContacts.no.webAddresses" bundle="ACADEMIC_OFFICE_RESOURCES" /></em>
 </logic:empty>
 
@@ -74,6 +76,7 @@
 	</fr:view>
 </logic:notEmpty>
 <logic:empty name="personBean" property="sortedMobilePhones">
+	<br/>
 	<em><bean:message key="label.partyContacts.no.webAddresses" bundle="ACADEMIC_OFFICE_RESOURCES" /></em>
 </logic:empty>
 
@@ -86,6 +89,7 @@
 	</fr:view>
 </logic:notEmpty>
 <logic:empty name="personBean" property="sortedEmailAddresses">
+	<br/>
 	<em><bean:message key="label.partyContacts.no.webAddresses" bundle="ACADEMIC_OFFICE_RESOURCES" /></em>
 </logic:empty>
 
@@ -98,6 +102,7 @@
 	</fr:view>
 </logic:notEmpty>
 <logic:empty name="personBean" property="sortedWebAddresses">
+	<br/>
 	<em><bean:message key="label.partyContacts.no.webAddresses" bundle="ACADEMIC_OFFICE_RESOURCES" /></em>
 </logic:empty>
 	
