@@ -511,6 +511,16 @@ public class Registration extends Registration_Base {
 	return result;
     }
 
+    public Collection<CurricularCourse> getCurricularCoursesApprovedByEnrolment() {
+	final Collection<CurricularCourse> result = new HashSet<CurricularCourse>();
+	
+	for (final Enrolment enrolment : getApprovedEnrolments()) {
+	    result.add(enrolment.getCurricularCourse());
+	}
+
+	return result;
+    }
+
     public boolean hasAnyApprovedEnrolment() {
 	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
 	    if (studentCurricularPlan.hasAnyApprovedEnrolment()) {
