@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.research.activity.Participation.ResearchA
 
 import org.joda.time.YearMonthDay;
 
-public class Cooperation extends Cooperation_Base {
+public class Cooperation extends Cooperation_Base implements ParticipationsInterface {
     
     private Cooperation() {
 	super();

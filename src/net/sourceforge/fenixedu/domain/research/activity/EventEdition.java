@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.research.result.publication.ConferenceArticles;
 
-public class EventEdition extends EventEdition_Base {
+public class EventEdition extends EventEdition_Base implements ParticipationsInterface {
 
     public EventEdition(Event event) {
 	super();

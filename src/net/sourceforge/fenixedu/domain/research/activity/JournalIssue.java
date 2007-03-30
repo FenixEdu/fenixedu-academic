@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.research.result.publication.Article;
 import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
-public class JournalIssue extends JournalIssue_Base {
+public class JournalIssue extends JournalIssue_Base implements ParticipationsInterface {
 
     public JournalIssue(ScientificJournal journal) {
 	super();

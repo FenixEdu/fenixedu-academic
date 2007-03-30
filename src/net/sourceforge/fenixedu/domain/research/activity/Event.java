@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.research.activity.Participation.ResearchA
 import net.sourceforge.fenixedu.domain.research.result.publication.ConferenceArticles;
 import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
 
-public class Event extends Event_Base {
+public class Event extends Event_Base implements ParticipationsInterface {
 
     public Event() {
 	super();

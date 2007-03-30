@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.research.result.publication.Article;
 import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
 
 
-public class ScientificJournal extends ScientificJournal_Base {
+public class ScientificJournal extends ScientificJournal_Base implements ParticipationsInterface {
     
     public  ScientificJournal() {
         super();
