@@ -1,10 +1,8 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.io.Serializable;
-import java.nio.channels.GatheringByteChannel;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.DomainObject;
