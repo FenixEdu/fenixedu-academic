@@ -102,18 +102,17 @@
 
 		<logic:notPresent name="issueBean">
 			<logic:notPresent name="publicationBean" property="scientificJournal">
+				<p class="mbottom05"><strong><bean:message key="label.articleJournal" bundle="RESEARCHER_RESOURCES"/></strong></p>
 
 				<logic:present name="publicationBean" property="scientificJournalName">
 					<div class="warning0">
 						<p style="margin:0; padding: 0.5em 0.75em;">
-							<b><bean:message key="label.attention" bundle="RESEARCHER_RESOURCES"/>:</b><br/>
+							<b><bean:message key="label.attention" bundle="RESEARCHER_RESOURCES"/></b><br/>
 							<bean:message key="label.informationForCreateMagazine" bundle="RESEARCHER_RESOURCES"/>
 						</p>
 					</div>
-				</logic:present>
+				</logic:present>				
 				
-				
-				<p class="mbottom05"><strong><bean:message key="label.articleJournal" bundle="RESEARCHER_RESOURCES"/>:</strong></p>
 				<p class="color888 mvert05"><bean:message key="label.chooseJournal.instructions" bundle="RESEARCHER_RESOURCES"/></p>
 		
 				
@@ -125,7 +124,7 @@
 					        	<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 							</fr:layout>
 						</fr:edit>
-						<br/><br/>
+						<br/>
 						<html:submit property="confirm"><bean:message key="label.chooseMagazineFromList" bundle="RESEARCHER_RESOURCES"/></html:submit>
 						<logic:present name="publicationBean" property="scientificJournalName">
 							<html:submit property="new"><bean:message key="label.createMagazine" bundle="RESEARCHER_RESOURCES"/></html:submit>	
@@ -140,14 +139,15 @@
 					
 			<logic:present name="publicationBean" property="scientificJournal">
 			
-				<p><strong><bean:message key="label.articleIssue" bundle="RESEARCHER_RESOURCES"/>:</strong></p>
-				<p class="color888"><bean:message key="label.chooseIssue.instructions" bundle="RESEARCHER_RESOURCES"/></p>
+				<p><strong><bean:message key="label.articleIssue" bundle="RESEARCHER_RESOURCES"/></strong></p>
+				
+				<p class="color888 mvert05"><bean:message key="label.chooseIssue.instructions" bundle="RESEARCHER_RESOURCES"/></p>
 				
 				<div class="dinline forminline">	
 				<fr:form action="/resultPublications/create.do">
 					<fr:edit id="publicationBean" name="publicationBean" schema="result.publication.create.Article.selectIssue">
 					<fr:layout name="tabular">
-						<fr:property name="classes" value="tstyle5 thright thlight thtop"/>
+						<fr:property name="classes" value="tstyle5 thright thlight thtop dinline mtop05"/>
 			        	<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 					</fr:layout>
 				</fr:edit>
@@ -178,7 +178,7 @@
 					<fr:edit id="publicationBean" name="publicationBean" visible="false"/>
 					<fr:edit id="createMagazine" name="issueBean" visible="false"/>
 					
-					<p class="mtop1 mbottom05"><strong><bean:message key="label.journal" bundle="RESEARCHER_RESOURCES"/>:</strong></p>
+					<p class="mtop15 mbottom05"><strong><bean:message key="label.journal" bundle="RESEARCHER_RESOURCES"/></strong></p>
 					<logic:equal name="issueBean" property="journalAlreadyChosen" value="false">
 					<fr:edit id="journalInfo" name="issueBean" schema="result.publication.create.Article.createMagazine">
 						<fr:layout name="tabular">
@@ -192,7 +192,7 @@
 						<span><fr:view name="issueBean" property="journal.name"/></span>
 					</logic:equal>
 					
-					<p class="mtop1 mbottom05"><strong><bean:message key="label.journalIssue" bundle="RESEARCHER_RESOURCES"/>:</strong></p>
+					<p class="mtop15 mbottom05"><strong><bean:message key="label.journalIssue" bundle="RESEARCHER_RESOURCES"/></strong></p>
 
 					<bean:define id="issueSchema" value="result.publication.create.Article.createIssue" type="java.lang.String"/>
 					<logic:equal name="issueBean" property="specialIssue" value="true">
@@ -201,7 +201,7 @@
 					
 					<fr:edit id="issueInfo" name="issueBean" schema="<%= issueSchema %>">
 						<fr:layout name="tabular">
-						 <fr:property name="classes" value="tstyle5 thright thlight thtop mtop05"/>
+						 <fr:property name="classes" value="tstyle5 thright thlight thtop mtop05 dinline"/>
 		        		<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 						</fr:layout>
 						<fr:destination name="postBack" path="/resultPublications/changeSpecialIssueInCreation.do"/>
@@ -253,6 +253,15 @@
 					
 					<!-- Select event, using autocomplete -->
 					<logic:equal name="eventEditionBean" property="selectEventState" value="true">
+
+						<p class="mbottom05"><strong><bean:message key="label.articleEvent" bundle="RESEARCHER_RESOURCES"/></strong></p>
+						
+						<%--
+						<p class="color888 mvert05"><bean:message key="label.chooseEvent.instructions" bundle="RESEARCHER_RESOURCES"/></p>
+						--%>
+
+						<p class="color888 mvert05"><bean:message key="label.chooseEvent.instructions" bundle="RESEARCHER_RESOURCES"/></p>
+
 						<logic:present name="eventEditionBean" property="eventName">
 							<div class="warning0">
 								<p style="margin:0; padding: 0.5em 0.75em;">
@@ -261,8 +270,6 @@
 								</p>
 							</div>
 						</logic:present>
-						<p class="mbottom05"><strong><bean:message key="label.articleEvent" bundle="RESEARCHER_RESOURCES"/>:</strong></p>
-						<p class="color888 mvert05"><bean:message key="label.chooseEvent.instructions" bundle="RESEARCHER_RESOURCES"/></p>
 						
 						<fr:edit id="eventEditionBean" name="eventEditionBean" schema="result.publication.select.Event">
 							<fr:layout name="tabular">
@@ -271,7 +278,7 @@
 								</fr:layout>
 							<fr:destination name="invalid" path="/resultPublications/prepareCreateEvent.do"/>
 						</fr:edit>
-						<br/><br/>
+						<br/>
 						<html:submit property="goToNextStep"><bean:message key="label.chooseEventFromList" bundle="RESEARCHER_RESOURCES"/></html:submit>
 						<logic:present name="eventEditionBean" property="eventName">
 							<html:submit property="createNewEvent"><bean:message key="label.createEvent" bundle="RESEARCHER_RESOURCES"/></html:submit>	
@@ -280,7 +287,7 @@
 					 
 					 <!-- Select event edition, using autocomplete -->
 					 <logic:equal name="eventEditionBean" property="selectEventEditionState" value="true">
-					 	<p class="mbottom05"><strong><bean:message key="label.articleEventEdition" bundle="RESEARCHER_RESOURCES"/>:</strong></p>
+					 	<p class="mbottom05"><strong><bean:message key="label.articleEventEdition" bundle="RESEARCHER_RESOURCES"/></strong></p>
 						<p class="color888 mvert05"><bean:message key="label.chooseEventEdition.instructions" bundle="RESEARCHER_RESOURCES"/></p>
 						
 						<fr:edit id="eventEditionBean" name="eventEditionBean" schema="result.publication.select.EventEdition">
@@ -290,7 +297,7 @@
 								</fr:layout>
 							<fr:destination name="invalid" path="/resultPublications/prepareCreateEvent.do"/>			
 						</fr:edit>
-						<br/><br/>
+						<br/>
 						<html:submit property="goToNextStep"><bean:message key="label.chooseEventEditionFromList" bundle="RESEARCHER_RESOURCES"/></html:submit>
 					 </logic:equal>
 					 
@@ -306,8 +313,8 @@
 							</fr:layout>
 							<fr:destination name="invalid" path="/resultPublications/prepareCreateEvent.do"/>			
 						</fr:edit>
-						<br/>
-						<p><strong><bean:message key="label.eventEdition" bundle="RESEARCHER_RESOURCES"/></strong></p>
+
+						<p class="mtop15"><strong><bean:message key="label.eventEdition" bundle="RESEARCHER_RESOURCES"/></strong></p>
 					 	<p class="color888"><bean:message key="label.newEventEdition.instructions" bundle="RESEARCHER_RESOURCES"/></p>
 
 						<fr:edit id="eventEditionBean" name="eventEditionBean" schema="result.publication.create.NewEventEdition">
@@ -317,7 +324,7 @@
 								</fr:layout>
 							<fr:destination name="invalid" path="/resultPublications/prepareCreateEvent.do"/>			
 						</fr:edit>
-						<br/><br/>
+						<br/>
 						<html:submit property="goToNextStep"><bean:message key="label.insertArticle" bundle="RESEARCHER_RESOURCES"/></html:submit>
 				 	</logic:equal>
 				 	
@@ -337,7 +344,7 @@
 								</fr:layout>
 							<fr:destination name="invalid" path="/resultPublications/prepareCreateEvent.do"/>			
 						</fr:edit>
-						<br/><br/>
+						<br/>
 					 	<html:submit property="goToNextStep"><bean:message key="label.createEventEdition" bundle="RESEARCHER_RESOURCES"/></html:submit>
 				 	</logic:equal>
 				</fr:form>

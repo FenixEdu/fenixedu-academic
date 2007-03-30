@@ -51,7 +51,7 @@ public class StringInputRendererWithComment extends StringInputRenderer {
 	    	HtmlComponent component = super.createLayout(object, type);
 	    
 		HtmlText text = new HtmlText((getBundle() != null) ? RenderUtils.getResourceString(
-			getBundle(), getComment()) : getComment());
+			getBundle(), getComment()) : getComment(), getBundle() == null);
 
 		text.setClasses(getCommentClasses());
 		HtmlContainer container = new HtmlBlockContainer();
