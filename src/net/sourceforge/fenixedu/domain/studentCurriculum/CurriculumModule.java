@@ -65,8 +65,12 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
     
     public abstract StudentCurricularPlan getStudentCurricularPlan();
     
-    public DegreeCurricularPlan getDegreeCurricularPlan() {
+    public DegreeCurricularPlan getDegreeCurricularPlanOfStudent() {
 	return getStudentCurricularPlan().getDegreeCurricularPlan();
+    }
+    
+    public DegreeCurricularPlan getDegreeCurricularPlanOfDegreeModule() {
+	return getDegreeModule().getParentDegreeCurricularPlan();
     }
     
     public MultiLanguageString getName() {
