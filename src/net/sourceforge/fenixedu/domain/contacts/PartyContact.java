@@ -86,6 +86,10 @@ public abstract class PartyContact extends PartyContact_Base {
 	return getVisible().booleanValue();
     }
     
+    public boolean isInstitutionalType() {
+	return getType() == PartyContactType.INSTITUTIONAL;
+    }
+    
     public boolean isWebAddress() {
 	return false;
     }

@@ -73,6 +73,18 @@ public class EmailAddress extends EmailAddress_Base {
 	super.setValue(value);
     }
 
+    @Override
+    public void delete() {
+	if (!canBeDeleted()) {
+	    throw new DomainException("error.contacts.EmailAddress.cannot.delete.emailAddress", getValue());
+	}
+        super.delete();
+    }
+
+    private boolean canBeDeleted() {
+	return !isInstitutionalType();
+    }
+    
     static public EmailAddress find(final String emailAddressString) {
 	for (final PartyContact contact : RootDomainObject.getInstance().getPartyContactsSet()) {
 	    if (contact.isEmailAddress()) {
@@ -84,5 +96,4 @@ public class EmailAddress extends EmailAddress_Base {
 	}
 	return null;
     }
-
 }
