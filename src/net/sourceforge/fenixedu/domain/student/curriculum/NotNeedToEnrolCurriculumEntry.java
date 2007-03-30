@@ -26,7 +26,7 @@ public class NotNeedToEnrolCurriculumEntry extends SimpleCurriculumEntry {
 
     @Override
     public double getEctsCredits() {
-	return getNotNeedToEnrol().getCurricularCourse().getEctsCredits().doubleValue();
+	return getNotNeedToEnrol().getEctsCredits().doubleValue();
     }
 
     @Override
