@@ -602,18 +602,10 @@ public class Degree extends Degree_Base implements Comparable {
 	return result;
     }
 
-    /**
-         * @param executionYearToShow
-         * @return the most recent info of this degree.
-         */
     public DegreeInfo getMostRecentDegreeInfo() {
 	return getMostRecentDegreeInfo(ExecutionYear.readCurrentExecutionYear());
     }
 
-    /**
-         * @param executionYearToShow
-         * @return the most recent info of this degree.
-         */
     public DegreeInfo getMostRecentDegreeInfo(ExecutionYear executionYear) {
 	DegreeInfo result = executionYear.getDegreeInfo(this);
 

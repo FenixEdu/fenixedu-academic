@@ -37,7 +37,6 @@ import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad;
-import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.tests.NewTestGroup;
 import net.sourceforge.fenixedu.domain.tests.TestGroupStatus;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
@@ -153,7 +152,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     public boolean isMasterDegreeDFAOrDEAOnly() {
 	for (final CurricularCourse curricularCourse : getAssociatedCurricularCourses()) {
-	    DegreeType degreeType = curricularCourse.getDegreeCurricularPlan().getDegree().getTipoCurso();
+	    DegreeType degreeType = curricularCourse.getDegreeCurricularPlan().getDegree().getDegreeType();
 	    if (!degreeType.equals(DegreeType.MASTER_DEGREE)
 		    && !degreeType.equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA)
 		    && !degreeType.equals(DegreeType.BOLONHA_SPECIALIZATION_DEGREE)) {
@@ -419,13 +418,11 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	ExecutionPeriod courseExecutionPeriod = getExecutionPeriod();
 
 	for (CurricularCourse curricularCourseFromExecutionCourseEntry : getAssociatedCurricularCourses()) {
-	    for (CurriculumModule curriculumModule : curricularCourseFromExecutionCourseEntry
-		    .getCurriculumModules()) {
-		Enrolment enrolmentsEntry = (Enrolment) curriculumModule;
-		if (enrolmentsEntry.getExecutionPeriod() == courseExecutionPeriod) {
+	    for (Enrolment enrolment : curricularCourseFromExecutionCourseEntry.getEnrolments()) {
 
-		    StudentCurricularPlan studentCurricularPlanEntry = enrolmentsEntry
-			    .getStudentCurricularPlan();
+		if (enrolment.getExecutionPeriod() == courseExecutionPeriod) {
+
+		    StudentCurricularPlan studentCurricularPlanEntry = enrolment.getStudentCurricularPlan();
 		    int numberOfEnrolmentsForThatExecutionCourse = 0;
 
 		    for (Enrolment enrolmentsFromStudentCPEntry : studentCurricularPlanEntry
@@ -452,28 +449,21 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     public Integer getTotalEnrolmentStudentNumber() {
 	int executionCourseStudentNumber = 0;
-	ExecutionPeriod courseExecutionPeriod = getExecutionPeriod();
-
-	for (CurricularCourse curricularCourseFromExecutionCourseEntry : getAssociatedCurricularCourses()) {
-	    for (CurriculumModule curriculumModule : curricularCourseFromExecutionCourseEntry
-		    .getCurriculumModules()) {
-		Enrolment enrolmentsEntry = (Enrolment) curriculumModule;
-		if (enrolmentsEntry.getExecutionPeriod() == courseExecutionPeriod) {
+	for (final CurricularCourse curricularCourseFromExecutionCourseEntry : getAssociatedCurricularCourses()) {
+	    for (final Enrolment enrolment : curricularCourseFromExecutionCourseEntry.getEnrolments()) {
+		if (enrolment.getExecutionPeriod() == getExecutionPeriod()) {
 		    executionCourseStudentNumber++;
 		}
 	    }
 	}
-
 	return executionCourseStudentNumber;
     }
 
     public Integer getFirstTimeEnrolmentStudentNumber() {
-
 	return countAssociatedStudentsByEnrolmentNumber(1);
     }
 
     public Integer getSecondOrMoreTimeEnrolmentStudentNumber() {
-
 	return getTotalEnrolmentStudentNumber() - getFirstTimeEnrolmentStudentNumber();
     }
 
@@ -583,8 +573,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	    dml.runtime.RelationAdapter<ExecutionCourse, CurricularCourse> {
 	@Override
 	public void afterAdd(ExecutionCourse execution, CurricularCourse curricular) {
-	    for (final CurriculumModule curriculumModule : curricular.getCurriculumModules()) {
-		Enrolment enrolment = (Enrolment) curriculumModule;
+	    for (final Enrolment enrolment : curricular.getEnrolments()) {
 		if (enrolment.getExecutionPeriod().equals(execution.getExecutionPeriod())) {
 		    associateAttend(enrolment, execution);
 		}
@@ -1040,9 +1029,9 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	List<CurricularCourse> result = new ArrayList<CurricularCourse>();
 	for (CurricularCourse curricularCourse : this.getAssociatedCurricularCoursesSet()) {
 	    Degree degree = curricularCourse.getDegree();
-	    if (degree.getTipoCurso() == DegreeType.DEGREE
-		    || degree.getTipoCurso() == DegreeType.BOLONHA_DEGREE 
-		    || degree.getTipoCurso() == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) {
+	    if (degree.getDegreeType() == DegreeType.DEGREE
+		    || degree.getDegreeType() == DegreeType.BOLONHA_DEGREE 
+		    || degree.getDegreeType() == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) {
 		result.add(curricularCourse);
 	    }
 	}

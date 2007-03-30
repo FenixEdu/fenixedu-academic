@@ -5,7 +5,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Factory.TeacherAdministrationSiteComponentBuilder;
-import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
@@ -18,87 +17,60 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
-import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-/**
- * @author Fernanda Quitério
- * @author Tânia Pousão
- * @author Ângela
- *  
- */
 public class ReadStudentsByCurricularCourse extends Service {
 
-    public Object run(Integer executionCourseCode, Integer courseCode) throws ExcepcaoInexistente,
-            FenixServiceException, ExcepcaoPersistencia {
+    public Object run(Integer executionCourseCode, Integer courseCode) throws FenixServiceException {
 
-        List infoStudentList = null;
         CurricularCourse curricularCourse = null;
 
     	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID( executionCourseCode);
-        final ExecutionCourseSite site = executionCourse.getSite();
 
-        if (courseCode == null) {
-            infoStudentList = getAllAttendingStudents(site);
+        final List<InfoStudent> infoStudentList;
+        if (executionCourse == null) {
+            infoStudentList = getAllAttendingStudents(executionCourse.getSite());
         } else {
             curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(courseCode);
-
             infoStudentList = getCurricularCourseStudents(curricularCourse);
-
         }
-
-        TeacherAdministrationSiteView siteView = createSiteView(infoStudentList, site, curricularCourse);
-        return siteView;
+        return createSiteView(infoStudentList, executionCourse.getSite(), curricularCourse);
     }
 
-    private List getCurricularCourseStudents(CurricularCourse curricularCourse)
-            throws ExcepcaoPersistencia {
-        List infoStudentList;
-
-        List enrolments = curricularCourse.getCurriculumModules();
-
-        infoStudentList = (List) CollectionUtils.collect(enrolments, new Transformer() {
+    private List<InfoStudent> getCurricularCourseStudents(CurricularCourse curricularCourse) {
+        return (List) CollectionUtils.collect(curricularCourse.getEnrolments(), new Transformer() {
             public Object transform(Object input) {
                 Enrolment enrolment = (Enrolment) input;
                 Registration registration = enrolment.getStudentCurricularPlan().getRegistration();
-
-                InfoStudent infoStudent = InfoStudent.newInfoFromDomain(registration);
-                return infoStudent;
+                return InfoStudent.newInfoFromDomain(registration);
             }
         });
-        return infoStudentList;
     }
 
-    private List getAllAttendingStudents(final ExecutionCourseSite site) throws ExcepcaoPersistencia {
-        final List<Attends> attendList = site.getExecutionCourse().getAttends();
+    private List<InfoStudent> getAllAttendingStudents(final ExecutionCourseSite site) {
         final List<InfoStudent> infoStudentList = new ArrayList<InfoStudent>();
-        for (final Attends attends : attendList) {
-            final Registration registration = attends.getRegistration();
-            infoStudentList.add(InfoStudent.newInfoFromDomain(registration));
+        for (final Attends attends : site.getExecutionCourse().getAttends()) {
+            infoStudentList.add(InfoStudent.newInfoFromDomain(attends.getRegistration()));
         }
         return infoStudentList;
     }
 
     private TeacherAdministrationSiteView createSiteView(List infoStudentList, ExecutionCourseSite site,
-            CurricularCourse curricularCourse) throws FenixServiceException, ExcepcaoPersistencia {
-        InfoSiteStudents infoSiteStudents = new InfoSiteStudents();
+            CurricularCourse curricularCourse) throws FenixServiceException {
+	
+        final InfoSiteStudents infoSiteStudents = new InfoSiteStudents();
         infoSiteStudents.setStudents(infoStudentList);
 
         if (curricularCourse != null) {
-            infoSiteStudents.setInfoCurricularCourse(InfoCurricularCourse
-                    .newInfoFromDomain(curricularCourse));
+            infoSiteStudents.setInfoCurricularCourse(InfoCurricularCourse.newInfoFromDomain(curricularCourse));
         }
 
-        TeacherAdministrationSiteComponentBuilder componentBuilder = new TeacherAdministrationSiteComponentBuilder();
-        ISiteComponent commonComponent = componentBuilder.getComponent(new InfoSiteCommon(), site, null,
-                null, null);
+        final TeacherAdministrationSiteComponentBuilder componentBuilder = new TeacherAdministrationSiteComponentBuilder();
+        final ISiteComponent commonComponent = componentBuilder.getComponent(new InfoSiteCommon(), site, null, null, null);
 
-        TeacherAdministrationSiteView siteView = new TeacherAdministrationSiteView(commonComponent,
-                infoSiteStudents);
-        return siteView;
+        return new TeacherAdministrationSiteView(commonComponent, infoSiteStudents);
     }
 }

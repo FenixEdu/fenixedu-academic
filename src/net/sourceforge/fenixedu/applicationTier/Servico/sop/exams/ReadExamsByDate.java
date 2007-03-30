@@ -21,13 +21,10 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
-import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadExamsByDate extends Service {
 
-    public InfoViewExam run(Calendar examDay, Calendar examStartTime, Calendar examEndTime)
-            throws ExcepcaoPersistencia {
+    public InfoViewExam run(Calendar examDay, Calendar examStartTime, Calendar examEndTime) {
         
         final List<Exam> filteredExams = Exam.getAllByDate(examDay, examStartTime, examEndTime);
 
@@ -92,8 +89,7 @@ public class ReadExamsByDate extends Service {
     private Integer calculateNumberOfEnrolmentStudents(final CurricularCourse curricularCourse,
             final ExecutionPeriod executionPeriod) {
         int numberOfStudents = 0;
-        for (final CurriculumModule curriculumModule : curricularCourse.getCurriculumModules()) {
-        	Enrolment enrolment = (Enrolment) curriculumModule;
+        for (final Enrolment enrolment : curricularCourse.getEnrolments()) {
             if (enrolment.getExecutionPeriod() == executionPeriod) {
                 numberOfStudents++;
             }

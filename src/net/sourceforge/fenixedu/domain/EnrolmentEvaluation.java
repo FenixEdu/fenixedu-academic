@@ -4,7 +4,6 @@ import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
 
-import net.sourceforge.fenixedu.domain.accounting.events.ImprovementOfApprovedEnrolmentEvent;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.curriculum.GradeFactory;
@@ -18,6 +17,7 @@ import net.sourceforge.fenixedu.util.MarkType;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.DateTime;
+import org.joda.time.YearMonthDay;
 
 public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Comparable {
 
@@ -297,15 +297,15 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
             throw new DomainException("error.enrolmentEvaluation.invalid.parameters");
         }
         setGrade(grade);
-        setGradeAvailableDate(availableDate);
+        setGradeAvailableDateYearMonthDay(YearMonthDay.fromDateFields(availableDate));
         setPersonResponsibleForGrade(responsibleFor);
 
         if (examDate != null) {
-            setExamDate(examDate);
+            setExamDateYearMonthDay(YearMonthDay.fromDateFields(examDate));
         } else if (grade == null) {
-            setExamDate(null);
+            setExamDateYearMonthDay(null);
         } else {
-            setExamDate(availableDate);
+            setExamDateYearMonthDay(YearMonthDay.fromDateFields(availableDate));
         }
         generateCheckSum();
     }
@@ -491,6 +491,10 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         } else {
             return null;
         }
+    }
+    
+    public boolean hasGrade() {
+	return getGrade() != null && getGrade().length() > 0;
     }
 
 }

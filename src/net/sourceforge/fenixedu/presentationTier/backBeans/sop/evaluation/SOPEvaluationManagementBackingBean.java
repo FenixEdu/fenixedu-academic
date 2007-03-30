@@ -9,7 +9,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -32,7 +31,6 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
-import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -41,11 +39,9 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope.DegreeModuleScopeCurricularCourseScope;
-import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context.DegreeModuleScopeContext;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
-import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.teacher.evaluation.EvaluationManagementBackingBean;
@@ -223,8 +219,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         ExecutionDegree executionDegreeSelected = getExecutionDegree();
 
         StringBuilder stringBuffer = new StringBuilder();
-        stringBuffer.append(enumerations.getMessage(executionDegreeSelected.getDegreeCurricularPlan()
-                .getDegree().getTipoCurso().toString()));
+        stringBuffer.append(enumerations.getMessage(executionDegreeSelected.getDegreeCurricularPlan().getDegree().getDegreeType().toString()));
         stringBuffer.append(" em ");
         stringBuffer.append(executionDegreeSelected.getDegreeCurricularPlan().getDegree().getNome());
 
@@ -800,39 +795,6 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         return executionCoursesWithWrittenEvaluations;
     }
 
-    private int calculateEnroledStudents(
-            final List<WrittenEvaluation> associatedWrittenEvaluations,
-            final ExecutionPeriod executionPeriod) {
-
-        final Set<Integer> curricularCourseIDs = new HashSet<Integer>();
-        int numberOfEnroledStudents = 0;
-        for (final WrittenEvaluation evaluation : associatedWrittenEvaluations) {
-            for (final CurricularCourseScope curricularCourseScope : evaluation.getAssociatedCurricularCourseScope()) {
-                if (!curricularCourseIDs.contains(curricularCourseScope.getCurricularCourse().getIdInternal())) {
-                    curricularCourseIDs.add(curricularCourseScope.getCurricularCourse().getIdInternal());
-                    for (final CurriculumModule curriculumModule : curricularCourseScope.getCurricularCourse().getCurriculumModules()) {
-                    	Enrolment enrolment = (Enrolment) curriculumModule;
-                        if (enrolment.getExecutionPeriod() == executionPeriod) {
-                            numberOfEnroledStudents++;
-                        }
-                    }
-                }
-            }
-            for (final Context context : evaluation.getAssociatedContexts()) {
-                if (!curricularCourseIDs.contains(context.getChildDegreeModule().getIdInternal())) {
-                    curricularCourseIDs.add(context.getChildDegreeModule().getIdInternal());
-                    for (final CurriculumModule curriculumModule : context.getChildDegreeModule().getCurriculumModules()) {
-                        Enrolment enrolment = (Enrolment) curriculumModule;
-                        if (enrolment.getExecutionPeriod() == executionPeriod) {
-                            numberOfEnroledStudents++;
-                        }
-                    }
-                }
-            }
-        }
-        return numberOfEnroledStudents;
-    }
-
     private void processWrittenTestAdditionalValues(final ExecutionCourse executionCourse,
             final List<WrittenEvaluation> associatedWrittenEvaluations) {
         
@@ -840,7 +802,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
             int totalCapacity = 0;
             final StringBuilder buffer = new StringBuilder(20);
             for (final OldRoom room : writtenTest.getAssociatedRooms()) {
-                buffer.append(room.getNome()).append("; ");
+                buffer.append(room.getName()).append("; ");
                 totalCapacity += room.getCapacidadeExame();
             }
             if (buffer.length() > 0) {
@@ -848,8 +810,6 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
             }
             writtenEvaluationsRooms.put(writtenTest.getIdInternal(), buffer.toString());
             int numberOfEnroledStudents = writtenTest.getCountStudentsEnroledAttendingExecutionCourses();
-//            int numberOfEnroledStudents = calculateEnroledStudents(associatedWrittenEvaluations, getExecutionPeriod());
-//            executionCoursesEnroledStudents.put(executionCourse.getIdInternal(), numberOfEnroledStudents);
             executionCoursesEnroledStudents.put(writtenTest.getIdInternal(), numberOfEnroledStudents);
             writtenEvaluationsMissingPlaces.put(writtenTest.getIdInternal(), Integer.valueOf(numberOfEnroledStudents - totalCapacity));
         }
@@ -1037,7 +997,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         if (this.getChosenRoomsIDs() != null && this.getChosenRoomsIDs().length != 0) {
             for (Integer chosenRoomID : this.getChosenRoomsIDs()) {                
                 OldRoom room = (OldRoom) rootDomainObject.readSpaceByOID(chosenRoomID);
-                result.append(room.getNome());
+                result.append(room.getName());
                 result.append("; ");
             }
 

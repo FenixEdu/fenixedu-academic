@@ -16,20 +16,15 @@ import org.apache.commons.beanutils.BeanComparator;
 
 public class ReadStudentListByCurricularCourse extends Service {
 
-    public List run(IUserView userView, Integer curricularCourseID, String executionYear)
+    public List run(final IUserView userView, final Integer curricularCourseID, final String executionYear)
 	    throws FenixServiceException {
 
-	final CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject
-		.readDegreeModuleByOID(curricularCourseID);
-
-	if (executionYear != null) {
-	    return cleanList(curricularCourse.getEnrolmentsByYear(executionYear));
-	} else {
-	    return cleanList(curricularCourse.getCurriculumModules());
-	}
+	final CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseID);
+	return (executionYear != null) ? cleanList(curricularCourse.getEnrolmentsByYear(executionYear))
+		: cleanList(curricularCourse.getEnrolments());
     }
 
-    private List cleanList(final List enrolmentList) throws FenixServiceException {
+    private List cleanList(final List<Enrolment> enrolmentList) throws FenixServiceException {
 
 	if (enrolmentList.isEmpty()) {
 	    throw new NonExistingServiceException();
@@ -37,12 +32,11 @@ public class ReadStudentListByCurricularCourse extends Service {
 
 	Integer studentNumber = null;
 	final List<InfoEnrolment> result = new ArrayList<InfoEnrolment>();
-	for (final Enrolment enrolment : (List<Enrolment>) enrolmentList) {
+	for (final Enrolment enrolment : enrolmentList) {
 
 	    if (studentNumber == null
 		    || studentNumber.intValue() != enrolment.getStudentCurricularPlan().getRegistration()
 			    .getNumber().intValue()) {
-
 		studentNumber = enrolment.getStudentCurricularPlan().getRegistration().getNumber();
 		result.add(InfoEnrolment.newInfoFromDomain(enrolment));
 	    }

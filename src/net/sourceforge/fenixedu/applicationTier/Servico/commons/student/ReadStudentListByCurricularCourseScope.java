@@ -26,16 +26,14 @@ public class ReadStudentListByCurricularCourseScope extends Service {
     public List run(IUserView userView, Integer curricularCourseScopeID) throws FenixServiceException {
         CurricularCourseScope curricularCourseScope = rootDomainObject.readCurricularCourseScopeByOID(curricularCourseScopeID);
 
-        List enrolmentList = curricularCourseScope.getCurricularCourse().getCurriculumModules();
-
+        final List<Enrolment> enrolmentList = curricularCourseScope.getCurricularCourse().getEnrolments();
         if ((enrolmentList == null) || (enrolmentList.size() == 0)) {
             throw new NonExistingServiceException();
         }
-
         return cleanList(enrolmentList);
     }
 
-    private List cleanList(final List enrolmentList) throws FenixServiceException {
+    private List cleanList(final List<Enrolment> enrolmentList) throws FenixServiceException {
 
 	if (enrolmentList.isEmpty()) {
 	    throw new NonExistingServiceException();
@@ -43,7 +41,7 @@ public class ReadStudentListByCurricularCourseScope extends Service {
 
 	Integer studentNumber = null;
 	final List<InfoEnrolment> result = new ArrayList<InfoEnrolment>();
-	for (final Enrolment enrolment : (List<Enrolment>) enrolmentList) {
+	for (final Enrolment enrolment : enrolmentList) {
 
 	    if (studentNumber == null
 		    || studentNumber.intValue() != enrolment.getStudentCurricularPlan().getRegistration()
