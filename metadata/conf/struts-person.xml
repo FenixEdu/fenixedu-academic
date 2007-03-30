@@ -162,16 +162,12 @@
       
       <action path="/index"
 				type="net.sourceforge.fenixedu.presentationTier.Action.base.FenixForwardAction" 
-            	parameter="/person/personMainPage.jsp"/>
+            	parameter="/person/personMainPage.jsp" />
      
       <!-- Action for Visualization Of the Person's Personal Information -->
       <action path="/visualizePersonalInfo"
-             input="/visualizePersonalInfo.jsp"
-      	      type="net.sourceforge.fenixedu.presentationTier.Action.person.VisualizePersonalInfoAction">
-      	  <forward name="Success" path="/visualizePersonalInfo.jsp"/>      	      
-      </action>
-
-
+      	      type="net.sourceforge.fenixedu.presentationTier.Action.base.FenixForwardAction"
+      	      parameter="visualize.personal.information" />
       
       <!-- Action to Prepare the Change of the Candidate's Application Information -->
       <action path="/changePersonalInfoDispatchAction"
@@ -341,6 +337,7 @@
     <message-resources parameter="resources.EnumerationResources" key="ENUMERATION_RESOURCES" null="false"/>
     <message-resources parameter="resources.HomepageResources" key="HOMEPAGE_RESOURCES" null="false"/>
     <message-resources parameter="resources.ParkingResources" key="PARKING_RESOURCES" null="false"/>
+    <message-resources parameter="resources.AcademicAdminOffice" key="ACADEMIC_OFFICE_RESOURCES" null="false"/>
     
 
     <!-- ========== Plug Ins Configuration ================================= -->

@@ -3,6 +3,11 @@
 	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
 <!-- Tiles definitions -->
 <tiles-definitions>
+
+	<definition name="visualize.personal.information" extends="definition.person.masterPage">
+		 <put name="body" value="/person/visualizePersonalInfo.jsp"/>
+	</definition>
+
 	<definition name="view-qualifications" extends="teacher-information">
 		<put name="body" value="/person/qualificationManagement.jsp" />
 	</definition>
