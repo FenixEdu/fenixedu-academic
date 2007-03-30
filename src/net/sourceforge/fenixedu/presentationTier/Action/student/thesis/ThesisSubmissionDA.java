@@ -141,10 +141,13 @@ public class ThesisSubmissionDA extends FenixDispatchAction {
             boolean accepted = request.getParameter("accept") != null;
             if (accepted) {
                 if (bean.getVisibility() != null) {
-                    executeService("AcceptThesisDeclaration", thesis, bean.getVisibility());
+                    executeService("AcceptThesisDeclaration", thesis, bean.getVisibility(), bean.getAvailableAfter());
                 }
                 else {
-                    addActionMessage("error", request, "error.student.thesis.declaration.visibility.required");
+                    if (bean.getVisibility() == null) {
+                        addActionMessage("error", request, "error.student.thesis.declaration.visibility.required");
+                    }
+                    
                     return mapping.findForward("thesis-declaration");
                 }
             }

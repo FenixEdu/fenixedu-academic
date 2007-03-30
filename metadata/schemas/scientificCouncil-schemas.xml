@@ -186,3 +186,14 @@
 	<slot name="locationType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" key="label.scientific.journal.locationType"/>
 	<slot name="stage" key="label.research.activity.stage" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 </schema>
+
+<schema name="thesis.jury.proposal.person.loginInfo" type="net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant">
+    <slot name="personNameWithLogin" key="label.person.name"/>
+    <slot name="category" key="label.teacher.category" layout="null-as-label">
+        <property name="label" value="-"/>
+    </slot>
+    <slot name="affiliation" key="label.coordinator.thesis.edit.teacher.currentWorkingDepartment" layout="null-as-label">
+        <property name="label" value="-"/>
+    </slot>
+</schema>
+

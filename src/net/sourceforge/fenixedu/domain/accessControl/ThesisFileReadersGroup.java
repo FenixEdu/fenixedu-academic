@@ -10,6 +10,8 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.IdOperator;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 
+import org.joda.time.DateTime;
+
 /**
  * This group represents all the persons that can read the files associated with 
  * a certain Thesis. This takes in a account the declaration accepted by the student.
@@ -35,6 +37,14 @@ public class ThesisFileReadersGroup extends DomainBackedGroup<Thesis> {
             return false;
         }
         
+        if (thesis.getDocumentsAvailableAfter() != null) {
+            DateTime time = thesis.getDocumentsAvailableAfter();
+            
+            if (time.isAfterNow()) {
+                return false;
+            }
+        }
+        
         if (thesis.getVisibility() == null) {
             return false;
         }
@@ -55,6 +65,14 @@ public class ThesisFileReadersGroup extends DomainBackedGroup<Thesis> {
         
         if (thesis == null) {
             return Collections.emptySet();
+        }
+        
+        if (thesis.getDocumentsAvailableAfter() != null) {
+            DateTime time = thesis.getDocumentsAvailableAfter();
+            
+            if (time.isAfterNow()) {
+                return Collections.emptySet();
+            }
         }
         
         if (thesis.getVisibility() == null) {

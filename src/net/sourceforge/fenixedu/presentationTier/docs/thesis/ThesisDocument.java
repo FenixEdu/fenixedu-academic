@@ -78,13 +78,13 @@ public abstract class ThesisDocument extends FenixReport {
 
     protected void fillOrientation() {
         final ThesisEvaluationParticipant orientator = thesis.getOrientator();
-        parameters.put("orientatorName", orientator.getPerson().getName());
+        parameters.put("orientatorName", orientator.getPersonName());
         parameters.put("orientatorCategory", participantCategoryName(orientator));
         parameters.put("orientatorAffiliation", neverNull(orientator.getAffiliation()));
     
         final ThesisEvaluationParticipant coorientator = thesis.getCoorientator();
         if (coorientator != null) {
-                parameters.put("coorientatorName", coorientator.getPerson().getName());
+                parameters.put("coorientatorName", coorientator.getPersonName());
                 parameters.put("coorientatorCategory", participantCategoryName(coorientator));
                 parameters.put("coorientatorAffiliation", neverNull(coorientator.getAffiliation()));
         }
@@ -97,7 +97,7 @@ public abstract class ThesisDocument extends FenixReport {
 
     protected void fillJury() {
         final ThesisEvaluationParticipant juryPresident = thesis.getPresident();
-        parameters.put("juryPresidentName", juryPresident.getPerson().getName());
+        parameters.put("juryPresidentName", juryPresident.getPersonName());
         parameters.put("juryPresidentCategory", participantCategoryName(juryPresident));
         parameters.put("juryPresidentAffiliation", neverNull(juryPresident.getAffiliation()));
     
@@ -111,7 +111,7 @@ public abstract class ThesisDocument extends FenixReport {
             if (iterator.hasNext()) {
                 ThesisEvaluationParticipant vowel = iterator.next();
                 
-                parameters.put(vowelPrefix + "Name", vowel.getPerson().getName());
+                parameters.put(vowelPrefix + "Name", vowel.getPersonName());
                 parameters.put(vowelPrefix + "Category", participantCategoryName(vowel));
                 parameters.put(vowelPrefix + "Affiliation", neverNull(vowel.getAffiliation()));
             }

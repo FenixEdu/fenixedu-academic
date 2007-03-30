@@ -91,7 +91,7 @@ public class ApproveThesisProposal extends ThesisServiceWithMailNotification {
     }
 
     private String name(ThesisEvaluationParticipant participant) {
-        return participant == null ? null : participant.getPerson().getName();
+        return participant == null ? null : participant.getPersonName();
     }
 
     private String name(List<ThesisEvaluationParticipant> participants, int index) {

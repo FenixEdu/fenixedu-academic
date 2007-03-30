@@ -1147,6 +1147,8 @@ public class Person extends Person_Base {
 	removeNationality();
 	removeCountryOfBirth();
 	
+    for (; !getThesisEvaluationParticipants().isEmpty(); getThesisEvaluationParticipants().iterator().next().delete());
+    
 	super.delete();
     }
 

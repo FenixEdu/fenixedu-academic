@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.teacher.Category;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -37,6 +36,18 @@ public class ThesisEvaluationParticipant extends ThesisEvaluationParticipant_Bas
         setType(type);
         setThesis(thesis);
         setPerson(person);
+        setPersonName(person.getName());
+    }
+
+    public String getPersonNameWithLogin() {
+        Person person = getPerson();
+        
+        if (person.hasExternalPerson()) {
+            return getPersonName() + " (Externa)";
+        }
+        else {
+            return getPersonName() + " (" + person.getMostImportantAlias() + ")";
+        }
     }
 
     @Override

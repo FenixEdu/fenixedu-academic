@@ -93,7 +93,7 @@
 </logic:empty>
 
 <logic:notEmpty name="thesis" property="orientator">
-    <fr:view name="thesis" property="orientator" layout="tabular" schema="thesis.jury.proposal.person">
+    <fr:view name="thesis" property="orientator" layout="tabular" schema="thesis.jury.proposal.person.loginInfo">
         <fr:layout name="tabular">
             <fr:property name="classes" value="tstyle2 thlight thright mtop05 mbottom0"/>
             <fr:property name="columnClasses" value="width12em,width35em,"/>
@@ -115,7 +115,7 @@
 </logic:notEmpty>
   
 <logic:notEmpty name="thesis" property="coorientator">
-    <fr:view name="thesis" property="coorientator" layout="tabular" schema="thesis.jury.proposal.person">
+    <fr:view name="thesis" property="coorientator" layout="tabular" schema="thesis.jury.proposal.person.loginInfo">
         <fr:layout name="tabular">
             <fr:property name="classes" value="tstyle2 thlight thright mtop05 mbottom0"/>
             <fr:property name="columnClasses" value="width12em,width35em,"/>
@@ -146,7 +146,7 @@
 </logic:empty>
 
 <logic:notEmpty name="thesis" property="president">
-    <fr:view name="thesis" property="president" layout="tabular" schema="thesis.jury.proposal.person">
+    <fr:view name="thesis" property="president" layout="tabular" schema="thesis.jury.proposal.person.loginInfo">
         <fr:layout name="tabular">
             <fr:property name="classes" value="tstyle2 thlight thright mtop05 mbottom05"/>
             <fr:property name="columnClasses" value="width12em,width35em,"/>        
@@ -165,7 +165,7 @@
 
 <logic:notEmpty name="thesis" property="vowels">
     <logic:iterate id="vowel" name="thesis" property="vowels">
-        <fr:view name="vowel" layout="tabular" schema="thesis.jury.proposal.person">
+        <fr:view name="vowel" layout="tabular" schema="thesis.jury.proposal.person.loginInfo">
             <fr:layout name="tabular">
             		<fr:property name="classes" value="tstyle2 thlight thright mtop05 mbottom05"/>
             		<fr:property name="columnClasses" value="width12em,width35em,"/>

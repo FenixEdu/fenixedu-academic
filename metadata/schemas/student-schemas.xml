@@ -148,13 +148,13 @@
     <slot name="title"/>
     <slot name="orientation" layout="flowLayout" key="label.thesis.orientation">
         <property name="eachInline" value="true"/>
+        <property name="indented" value="false"/>
         <property name="htmlSeparator" value=", "/>
         <property name="eachLayout" value="values"/>
         <property name="eachSchema" value="student.thesis.person.name"/>
     </slot>
     <slot name="discussed" key="label.thesis.evaluate.discussion.date" layout="null-as-label">
-        <property name="label" value="label.thesis.field.empty"/>
-        <property name="key" value="true"/>
+        <property name="label" value="-"/>
         <property name="subLayout" value="dataDependent"/>
     </slot>
 </schema>
@@ -163,6 +163,7 @@
     <slot name="title" read-only="true"/>
     <slot name="orientation" read-only="true" layout="flowLayout" key="label.thesis.orientation">
         <property name="eachInline" value="true"/>
+        <property name="indented" value="false"/>
         <property name="htmlSeparator" value=", "/>
         <property name="eachLayout" value="values"/>
         <property name="eachSchema" value="student.thesis.person.name"/>
@@ -175,7 +176,7 @@
 </schema>
 
 <schema name="student.thesis.person.name" type="net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant">
-    <slot name="person.nickname"/>
+    <slot name="personName" layout="person-name"/>
 </schema>
 
 <schema name="student.thesis.details.abstract" type="net.sourceforge.fenixedu.domain.thesis.Thesis">

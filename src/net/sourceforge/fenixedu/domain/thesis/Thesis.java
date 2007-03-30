@@ -433,7 +433,7 @@ public class Thesis extends Thesis_Base {
         setState(ThesisState.EVALUATED);
     }
     
-    public void acceptDeclaration(ThesisVisibilityType visibility) {
+    public void acceptDeclaration(ThesisVisibilityType visibility, DateTime availableAfter) {
         if (visibility == null) {
             throw new DomainException("thesis.acceptDeclaration.visibility.required");
         }
@@ -444,12 +444,14 @@ public class Thesis extends Thesis_Base {
         
         setDeclarationAccepted(true);
         setVisibility(visibility);
+        setDocumentsAvailableAfter(availableAfter);
         setDeclarationAcceptedTime(new DateTime());
     }
     
     public void rejectDeclaration() {
         setDeclarationAccepted(false);
         setVisibility(null);
+        setDocumentsAvailableAfter(null);
         setDeclarationAcceptedTime(null);
         
         if (! isWaitingConfirmation()) {
@@ -513,7 +515,7 @@ public class Thesis extends Thesis_Base {
             scale = GradeScale.TYPE20;
         }
         
-        return scale.isValid(mark.toString(), EvaluationType.FINAL_TYPE);
+        return scale.isValid(mark.toString(), EvaluationType.EXAM_TYPE); // TODO: thesis, check grade type
     }
 
     private Person getParticipationPerson(ThesisEvaluationParticipant participant) {

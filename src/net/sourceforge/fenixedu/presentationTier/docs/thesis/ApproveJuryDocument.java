@@ -24,7 +24,7 @@ public class ApproveJuryDocument extends ThesisDocument {
 
         String date = String.format(new Locale("pt"), "%1$td de %1$tB de %1$tY", new Date());
         
-        parameters.put("author", thesis.getSubmitter().getPerson().getName());
+        parameters.put("author", thesis.getSubmitter().getPersonName());
         parameters.put("date", date);
     }
 

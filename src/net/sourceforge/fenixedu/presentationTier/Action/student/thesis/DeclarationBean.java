@@ -5,6 +5,8 @@ import java.io.Serializable;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisVisibilityType;
 
+import org.joda.time.DateTime;
+
 public class DeclarationBean implements Serializable {
 
     /**
@@ -13,11 +15,13 @@ public class DeclarationBean implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private ThesisVisibilityType visibility;
+    private DateTime availableAfter;
 
     public DeclarationBean(Thesis thesis) {
         super();
         
         setVisibility(thesis.getVisibility());
+        setAvailableAfter(thesis.getDocumentsAvailableAfter());
     }
 
     public ThesisVisibilityType getVisibility() {
@@ -26,6 +30,14 @@ public class DeclarationBean implements Serializable {
 
     public void setVisibility(ThesisVisibilityType visibility) {
         this.visibility = visibility;
+    }
+
+    public DateTime getAvailableAfter() {
+        return this.availableAfter;
+    }
+
+    public void setAvailableAfter(DateTime availableAfter) {
+        this.availableAfter = availableAfter;
     }
     
 }

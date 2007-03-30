@@ -43,6 +43,23 @@ public class FlowCollectionRenderer extends OutputRenderer {
 
     private String eachInline;
     
+    private boolean indented = true;
+    
+    public boolean isIndented() {
+        return this.indented;
+    }
+
+    /**
+     * Allows to prevent identation of the generated markup. This is specially
+     * usefull when you need to prevent extra spaces between elements and the
+     * separator.
+     * 
+     * @property
+     */
+    public void setIndented(boolean indented) {
+        this.indented = indented;
+    }
+
     public String getEachLayout() {
         return eachLayout;
     }
@@ -196,6 +213,7 @@ public class FlowCollectionRenderer extends OutputRenderer {
                 this.empty = true;
             } else {
                 component = super.createComponent(object, type);
+                component.setIndented(isIndented());
                 this.empty = false;
             }
 

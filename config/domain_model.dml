@@ -5058,6 +5058,7 @@ class net.sourceforge.fenixedu.domain.thesis.Thesis extends net.sourceforge.feni
 	
 	Integer orientatorCreditsDistribution;
 	ThesisVisibilityType visibility;
+	DateTime documentsAvailableAfter;
 	Boolean declarationAccepted;
 	DateTime declarationAcceptedTime;
 }
@@ -5066,8 +5067,9 @@ class net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant extends
 	Integer keyPerson;
 	Integer keyThesis;
 
-	String category;
 	ThesisParticipationType type;
+	String personName;
+	String category;
 	String affiliation;
 }
 

@@ -118,21 +118,21 @@
 <%-- Confirmação --%>
 <h3 class="mtop15 mbottom05"><bean:message key="title.coordinator.thesis.confirm.section"/></h3>
 
-<p>
+<p id="confirmation">
     <em><bean:message key="label.coordinator.thesis.confirm.message"/></em>
 </p>
 
 <logic:messagesPresent message="true">
     <html:messages id="message" message="true">
-        <p><span class="error0"><bean:write name="message"/></span></p>
+        <p><span class="error0"><bean:write name="message" filter="false"/></span></p>
     </html:messages>
 </logic:messagesPresent>
 
 <fr:edit name="thesis" schema="coordinator.thesis.evaluate"
-         action="<%= String.format("/manageThesis.do?method=listThesis&amp;degreeCurricularPlanID=%s", dcpId) %>">
+         action="<%= String.format("/manageThesis.do?method=listThesis&amp;degreeCurricularPlanID=%s#confirmation", dcpId) %>">
     <fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle5 thlight thright thmiddle mtop05 mbottom05"/>
-		<fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
+		<fr:property name="columnClasses" value=",,tdclear tderror1"/>
     </fr:layout>
     
     <fr:destination name="cancel" path="<%= String.format("/manageThesis.do?method=listThesis&amp;degreeCurricularPlanID=%s", dcpId) %>"/>

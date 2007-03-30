@@ -4,7 +4,7 @@
 </schema>
 
 <schema name="thesis.jury.proposal.person" type="net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant">
-    <slot name="person" layout="name-with-alias" key="label.person.name"/>
+    <slot name="personName" key="label.person.name"/>
     <slot name="category" key="label.teacher.category" layout="null-as-label">
         <property name="label" value="-"/>
     </slot>
@@ -178,6 +178,7 @@
         </validator>
         <property name="size" value="6"/>
     </slot>
+    <slot name="discussed" key="label.thesis.evaluate.discussion.date" layout="dataDependent" read-only="true"/>
     <setter signature="confirm(mark)"/>
 </schema>
 
@@ -224,7 +225,7 @@
 </schema>
 
 <schema name="thesis.jury.proposal.participant.edit" type="net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant">
-    <slot name="person.name" read-only="true" key="label.person.name"/>
+    <slot name="personName" read-only="true" key="label.person.name"/>
     <slot name="category" layout="menu-select-with-other" key="label.teacher.category">
         <property name="style" value="margin-right: 0.5em;"/>
         <property name="otherSize" value="50"/>
