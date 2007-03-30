@@ -1050,11 +1050,11 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
     
     private boolean isFromLCI() {
-	return Degree.readBySigla("LCI-pB").hasDegreeCurricularPlans(getDegreeCurricularPlan());
+	return Degree.readBySigla("LCI-pB").hasDegreeCurricularPlans(getDegreeCurricularPlanOfDegreeModule());
     }
 
     private boolean isFromLMAC() {
-	return Degree.readBySigla("LMAC-pB").hasDegreeCurricularPlans(getDegreeCurricularPlan());
+	return Degree.readBySigla("LMAC-pB").hasDegreeCurricularPlans(getDegreeCurricularPlanOfDegreeModule());
     }
     
     private Double calculateLCIorLMACWeigth() {
