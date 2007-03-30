@@ -11716,7 +11716,7 @@
 			<chain name="ScientificCouncilAuthorization" />
 		</filterChains>
     </service>
-     	<service>
+   	<service>
         <name>MergeEvents</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.researchActivity.MergeEvents</implementationClass>
         <description></description>
@@ -11724,5 +11724,23 @@
 		<filterChains>
 			<chain name="ScientificCouncilAuthorization" />
 		</filterChains>
+    </service>
+    <service>
+        <name>ChangeDefaultPartyContact</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.contacts.ChangeDefaultPartyContact</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+		<filterChains>
+			<chain name="StudentOrAcademicAdministrativeOfficeAuthorization" />
+		</filterChains>
     </service> 
+	<service>
+        <name>DeletePartyContact</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.contacts.DeletePartyContact</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+		<filterChains>
+			<chain name="StudentOrAcademicAdministrativeOfficeAuthorization" />
+		</filterChains>
+    </service>
 </serviceDefinitions>

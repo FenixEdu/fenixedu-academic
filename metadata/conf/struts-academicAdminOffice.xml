@@ -210,7 +210,10 @@
 			<forward name="editPersonalData" path="student.editPersonalData"/>
 			<forward name="viewPersonalData" path="student.viewPersonalData"/>
 			<forward name="viewStudentDetails" path="students.viewStudentDetails"/>
-			<forward name="viewRegistrationDetails" path="student.viewRegistrationDetails"/>			
+			<forward name="viewRegistrationDetails" path="student.viewRegistrationDetails"/>
+			
+			<forward name="createPartyContact" path="student.createPartyContact"/>
+			<forward name="editPartyContact" path="student.editPartyContact"/>
 		</action>         
 		
 		<action path="/registration"

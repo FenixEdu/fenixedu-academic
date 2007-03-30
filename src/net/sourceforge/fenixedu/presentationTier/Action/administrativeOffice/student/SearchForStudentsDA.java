@@ -30,7 +30,7 @@ public class SearchForStudentsDA extends FenixDispatchAction {
             
             final Set<Student> students = studentsSearchBean.searchForOffice(administrativeOffice);
         
-            if(students.size() == 1){
+            if(students.size() == 1) {
                 request.setAttribute("student", students.iterator().next());
                 return mapping.findForward("viewStudentDetails");
             }

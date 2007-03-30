@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.contacts;
 
+import java.util.Comparator;
+
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
@@ -7,8 +9,27 @@ import pt.utl.ist.fenix.tools.smtp.EmailSender;
 
 public class EmailAddress extends EmailAddress_Base {
     
+    public static Comparator<EmailAddress> COMPARATOR_BY_EMAIL = new Comparator<EmailAddress>() {
+	public int compare(EmailAddress contact, EmailAddress otherContact) {
+	    final String value = contact.getValue();
+	    final String otherValue = otherContact.getValue();
+	    int result = 0;
+	    if (value != null && otherValue != null) {
+		result = value.compareTo(otherValue);
+	    } else if (value != null) {
+		result = 1;
+	    } else if (otherValue != null) {
+		result = -1;
+	    }
+	    return (result == 0) ? COMPARATOR_BY_TYPE.compare(contact, otherContact) : result;
+	}};
+    
     protected EmailAddress() {
         super();
+    }
+    
+    public EmailAddress(final Party party, final PartyContactType type, final Boolean visible, final String value) {
+        this(party, type, visible, false, value);
     }
     
     public EmailAddress(final Party party, final PartyContactType type, final boolean visible, final boolean defaultContact, final String value) {
@@ -28,7 +49,7 @@ public class EmailAddress extends EmailAddress_Base {
     
     private void checkParameters(final String value) {
 	if (!EmailSender.emailAddressFormatIsValid(value)) {
-	    throw new DomainException("error.net.sourceforge.fenixedu.domain.contacts.EmailAddress.invalid.format");
+	    throw new DomainException("error.net.sourceforge.fenixedu.domain.contacts.EmailAddress.invalid.format", value);
 	}
     }
     

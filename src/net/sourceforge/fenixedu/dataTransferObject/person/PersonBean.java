@@ -4,11 +4,18 @@
 package net.sourceforge.fenixedu.dataTransferObject.person;
 
 import java.io.Serializable;
+import java.util.Collections;
+import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
+import net.sourceforge.fenixedu.domain.contacts.MobilePhone;
+import net.sourceforge.fenixedu.domain.contacts.Phone;
+import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressData;
+import net.sourceforge.fenixedu.domain.contacts.WebAddress;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
@@ -434,8 +441,39 @@ public class PersonBean implements Serializable {
     public void setPerson(Person person) {
 	this.person = person == null ? null : new DomainReference<Person>(person);
     }
+    
+    public List<PhysicalAddress> getSortedPhysicalAdresses() {
+	final List<PhysicalAddress> result = getPerson().getPhysicalAddresses();
+	Collections.sort(result, PhysicalAddress.COMPARATOR_BY_ADDRESS);
+	return result;
+    }
 
     public PhysicalAddressData getPhysicalAddressData() {
 	return new PhysicalAddressData(getAddress(), getAreaCode(), getAreaOfAreaCode(), getArea(), getParishOfResidence(), getDistrictSubdivisionOfResidence(), getDistrictOfResidence(), getCountryOfResidence());
     }
+    
+    public List<Phone> getSortedPhones() {
+	final List<Phone> result = getPerson().getPhones();
+	Collections.sort(result, Phone.COMPARATOR_BY_NUMBER);
+	return result;
+    }
+    
+    public List<MobilePhone> getSortedMobilePhones() {
+	final List<MobilePhone> result = getPerson().getMobilePhones();
+	Collections.sort(result, MobilePhone.COMPARATOR_BY_NUMBER);
+	return result;
+    }
+    
+    public List<EmailAddress> getSortedEmailAddresses() {
+	final List<EmailAddress> result = getPerson().getEmailAddresses();
+	Collections.sort(result, EmailAddress.COMPARATOR_BY_EMAIL);
+	return result;
+    }
+    
+    public List<WebAddress> getSortedWebAddresses() {
+	final List<WebAddress> result = getPerson().getWebAddresses();
+	Collections.sort(result, WebAddress.COMPARATOR_BY_URL);
+	return result;
+    }
+    
 }

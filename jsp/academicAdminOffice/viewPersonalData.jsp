@@ -39,21 +39,67 @@
 	</fr:layout>
 </fr:view>
 
-<h3 class="mbottom025"><bean:message key="label.person.title.addressInfo" bundle="ACADEMIC_OFFICE_RESOURCES" /></h3>
-<fr:view name="personBean" schema="student.address-edit" >
-	<fr:layout name="tabular" >
-		<fr:property name="classes" value="tstyle4 thright thlight mtop0"/>
-		<fr:property name="columnClasses" value="width14em,"/>
-	</fr:layout>
-</fr:view>
+<h3 class="mbottom025"><bean:message key="label.person.title.addressesInfo" bundle="ACADEMIC_OFFICE_RESOURCES" /></h3>
+<logic:notEmpty name="personBean" property="sortedPhysicalAdresses">
+	<fr:view name="personBean" property="sortedPhysicalAdresses" schema="student.contacts.PhysicalAddress.view" >
+		<fr:layout name="tabular" >
+			<fr:property name="classes" value="tstyle4 mtop05" />
+		</fr:layout>
+	</fr:view>
+</logic:notEmpty>
+<logic:empty name="personBean" property="sortedPhysicalAdresses">
+	<em><bean:message key="label.partyContacts.no.webAddresses" bundle="ACADEMIC_OFFICE_RESOURCES" /></em>
+</logic:empty>
 
 <h3 class="mbottom025"><bean:message key="label.person.title.contactInfo" bundle="ACADEMIC_OFFICE_RESOURCES" /></h3>
-<fr:view name="personBean" schema="student.contacts-edit" >
-	<fr:layout name="tabular" >
-		<fr:property name="classes" value="tstyle4 thright thlight mtop0"/>
-		<fr:property name="columnClasses" value="width14em,"/>
-	</fr:layout>
-</fr:view>
+
+<strong><bean:message key="label.phones" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong>
+<logic:notEmpty name="personBean" property="sortedPhones">
+	<fr:view name="personBean" property="sortedPhones" schema="student.contacts.Phone.view">
+		<fr:layout name="tabular" >
+			<fr:property name="classes" value="tstyle4 mtop05" />
+		</fr:layout>
+	</fr:view>
+</logic:notEmpty>
+<logic:empty name="personBean" property="sortedPhones">
+	<em><bean:message key="label.partyContacts.no.webAddresses" bundle="ACADEMIC_OFFICE_RESOURCES" /></em>
+</logic:empty>
+
+<strong><bean:message key="label.mobilePhones" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong>
+<logic:notEmpty name="personBean" property="sortedMobilePhones">
+	<fr:view name="personBean" property="sortedMobilePhones" schema="student.contacts.MobilePhone.view">
+		<fr:layout name="tabular" >
+			<fr:property name="classes" value="tstyle4 mtop05" />
+		</fr:layout>
+	</fr:view>
+</logic:notEmpty>
+<logic:empty name="personBean" property="sortedMobilePhones">
+	<em><bean:message key="label.partyContacts.no.webAddresses" bundle="ACADEMIC_OFFICE_RESOURCES" /></em>
+</logic:empty>
+
+<strong><bean:message key="label.email" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong>
+<logic:notEmpty name="personBean" property="sortedEmailAddresses">
+	<fr:view name="personBean" property="sortedEmailAddresses" schema="student.contacts.EmailAddress.view">
+		<fr:layout name="tabular" >
+			<fr:property name="classes" value="tstyle4 mtop05" />
+		</fr:layout>
+	</fr:view>
+</logic:notEmpty>
+<logic:empty name="personBean" property="sortedEmailAddresses">
+	<em><bean:message key="label.partyContacts.no.webAddresses" bundle="ACADEMIC_OFFICE_RESOURCES" /></em>
+</logic:empty>
+
+<strong><bean:message key="label.webAddresses" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong>
+<logic:notEmpty name="personBean" property="sortedWebAddresses">
+	<fr:view name="personBean" property="sortedWebAddresses" schema="student.contacts.WebAddress.view">
+		<fr:layout name="tabular" >
+			<fr:property name="classes" value="tstyle4 mtop05" />
+		</fr:layout>
+	</fr:view>
+</logic:notEmpty>
+<logic:empty name="personBean" property="sortedWebAddresses">
+	<em><bean:message key="label.partyContacts.no.webAddresses" bundle="ACADEMIC_OFFICE_RESOURCES" /></em>
+</logic:empty>
 	
 <ul>
 	<li>

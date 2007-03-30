@@ -8,6 +8,12 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationSelectExecutionYearBean;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person.PersonBeanFactoryEditor;
+import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
+import net.sourceforge.fenixedu.domain.contacts.MobilePhone;
+import net.sourceforge.fenixedu.domain.contacts.PartyContact;
+import net.sourceforge.fenixedu.domain.contacts.Phone;
+import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
+import net.sourceforge.fenixedu.domain.contacts.WebAddress;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -91,4 +97,84 @@ public class StudentDA extends FenixDispatchAction {
 	return mapping.findForward("view-registration-curriculum");
     }
 
+    public ActionForward prepareCreatePhysicalAddress(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	return prepareCreatePartyContact(mapping, actionForm, request, response, PhysicalAddress.class);
+    }
+    
+    public ActionForward prepareCreatePhone(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	return prepareCreatePartyContact(mapping, actionForm, request, response, Phone.class);
+    }
+    
+    public ActionForward prepareCreateMobilePhone(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	return prepareCreatePartyContact(mapping, actionForm, request, response, MobilePhone.class);
+    }
+    
+    public ActionForward prepareCreateEmailAddress(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	return prepareCreatePartyContact(mapping, actionForm, request, response, EmailAddress.class);
+    }
+    
+    public ActionForward prepareCreateWebAddress(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	return prepareCreatePartyContact(mapping, actionForm, request, response, WebAddress.class);
+    }
+    
+    private ActionForward prepareCreatePartyContact(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response, Class<? extends PartyContact> clazz) {
+	
+	request.setAttribute("student", getStudent(request));
+	request.setAttribute("partyContactName", clazz.getSimpleName());
+	
+	return mapping.findForward("createPartyContact");
+    }
+    
+    public ActionForward createPartyContact(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	return prepareEditPersonalData(mapping, actionForm, request, response);
+    }
+    
+    public ActionForward prepareEditPartyContact(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	
+	final Student student = getStudent(request);
+	request.setAttribute("student", student);
+	request.setAttribute("partyContact", getPartyContact(student, request));
+	return mapping.findForward("editPartyContact");
+    }
+
+    private PartyContact getPartyContact(final Student student, final HttpServletRequest request) {
+	final Integer contactId = getIntegerFromRequest(request, "contactId");
+	for (final PartyContact contact : student.getPerson().getPartyContacts()) {
+	    if (contact.getIdInternal().equals(contactId)) {
+		return contact;
+	    }
+	}
+	return null;
+    }
+    
+    public ActionForward editPartyContact(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	return prepareEditPersonalData(mapping, actionForm, request, response);
+    }
+    
+    public ActionForward changeDefaultPartyContact(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+	    FenixServiceException {
+
+	executeService("ChangeDefaultPartyContact", new Object[] {getPartyContact(getStudent(request), request)});
+	return prepareEditPersonalData(mapping, actionForm, request, response);
+    }
+
+    
+    public ActionForward deletePartyContact(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+	    FenixServiceException {
+
+	executeService("DeletePartyContact", new Object[] {getPartyContact(getStudent(request), request)});
+	return prepareEditPersonalData(mapping, actionForm, request, response);
+    }
+    
 }

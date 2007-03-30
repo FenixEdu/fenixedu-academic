@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.contacts;
 
+import java.util.Comparator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -7,6 +8,12 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 
 public abstract class PartyContact extends PartyContact_Base {
+    
+    public static Comparator<PartyContact> COMPARATOR_BY_TYPE = new Comparator<PartyContact>() {
+	public int compare(PartyContact contact, PartyContact otherContact) {
+	    int result = contact.getType().compareTo(otherContact.getType());
+	    return (result == 0) ? contact.getIdInternal().compareTo(otherContact.getIdInternal()) : result;
+	}};
     
     protected PartyContact() {
         super();
@@ -22,10 +29,18 @@ public abstract class PartyContact extends PartyContact_Base {
 	super.setType(type);
 	super.setVisible(Boolean.valueOf(visible));
 	
+	setDefaultContactInformation(defaultContact);
+    }
+    
+    private void setDefaultContactInformation(final boolean defaultContact) {
 	if (defaultContact) {
 	    changeToDefault();
 	} else {
-	    super.setDefaultContact(Boolean.FALSE);
+	    if (getParty().hasDefaultPartyContact(getClass())) {
+		super.setDefaultContact(Boolean.FALSE);
+	    } else {
+		super.setDefaultContact(Boolean.TRUE);
+	    }
 	}
     }
 
@@ -45,11 +60,7 @@ public abstract class PartyContact extends PartyContact_Base {
 	super.setType(type);
 	super.setVisible(Boolean.valueOf(visible));
 	
-	if (defaultContact) {
-	    changeToDefault();
-	} else {
-	    super.setDefaultContact(Boolean.FALSE);
-	}
+	setDefaultContactInformation(defaultContact);
     }
     
     public void changeToDefault() {
@@ -61,10 +72,14 @@ public abstract class PartyContact extends PartyContact_Base {
     }
     
     public boolean isDefault() {
-	return getDefaultContact() != null && getDefaultContact().booleanValue();
+	return hasDefaultContactValue() && getDefaultContact().booleanValue();
     }
     
-    public boolean isVisible() {
+    private boolean hasDefaultContactValue() {
+	return getDefaultContact() != null;
+    }
+    
+    public boolean isContactVisible() {
 	return getVisible().booleanValue();
     }
     
@@ -97,7 +112,7 @@ public abstract class PartyContact extends PartyContact_Base {
     
     private void setAnotherContactAsDefault() {
 	if (isDefault()) {
-	    final List<PartyContact> contacts = getParty().getPartyContacts(getClass());
+	    final List<PartyContact> contacts = (List<PartyContact>) getParty().getPartyContacts(getClass());
 	    if (!contacts.isEmpty()) {
 		contacts.get(0).setDefaultContact(Boolean.TRUE);
 	    }

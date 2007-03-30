@@ -100,6 +100,7 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
+import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
@@ -216,26 +217,11 @@ public class Person extends Person_Base {
 	setNationality(country);
 	setIsPassInKerberos(Boolean.FALSE);
     }
-
-    public Person(PersonBean personBean) {
-
-	super();
-
-	createUserAndLoginEntity();
-
-	setProperties(personBean);
-	setIsPassInKerberos(Boolean.FALSE);
-    }
-
-    private void createUserAndLoginEntity() {
-	new Login(new User(this));
-    }
-
+    
     public Person(String name, String identificationDocumentNumber,
 	    IDDocumentType identificationDocumentType, Gender gender) {
 
 	super();
-
 	createUserAndLoginEntity();
 
 	setNome(name);
@@ -248,6 +234,30 @@ public class Person extends Person_Base {
 	setIsPassInKerberos(Boolean.FALSE);
     }
 
+    public Person(PersonBean personBean) {
+	super();
+
+	createUserAndLoginEntity();
+	setProperties(personBean);
+	setIsPassInKerberos(Boolean.FALSE);
+	
+	updateDefaultPhysicalAddress(personBean.getPhysicalAddressData());
+	updateDefaultPhone(personBean.getPhone());
+	updateDefaultMobilePhone(personBean.getMobile());
+	updateDefaultWebAddress(personBean.getWebAddress());
+	createUserEmailAddress(personBean.getEmail(), personBean.isEmailAvailable());
+    }
+
+    private void createUserAndLoginEntity() {
+	new Login(new User(this));
+    }
+    
+    private void createUserEmailAddress(final String email, final boolean emailAvailable) {
+	if (!StringUtils.isEmpty(email)) {
+	    PartyContact.createEmailAddress(this, PartyContactType.PERSONAL, emailAvailable, true, email);
+	}
+    }
+
     private Person(String name, Gender gender, String address, String areaCode, String areaOfAreaCode,
 	    String area, String parishOfResidence, String districtSubdivisionOfResidence,
 	    String districtOfResidence, String phone, String mobile, String homepage, String email,
@@ -256,27 +266,26 @@ public class Person extends Person_Base {
 	super();
 	setNome(name);
 	setGender(gender);
-
-	PartyContact.createPhysicalAddress(this, PartyContactType.PERSONAL, true, true,
-		new PhysicalAddressData(address, areaCode, areaOfAreaCode, area, parishOfResidence,
-			districtSubdivisionOfResidence, districtOfResidence, null));
-
+	
+	updateDefaultPhysicalAddress(new PhysicalAddressData(address, areaCode, areaOfAreaCode, area,
+		parishOfResidence, districtSubdivisionOfResidence, districtOfResidence, null));
+	
 	if (!StringUtils.isEmpty(phone)) {
-	    PartyContact.createPhone(this, PartyContactType.PERSONAL, true, true, phone);
+	    updateDefaultPhone(phone);
 	}
-
+	
 	if (!StringUtils.isEmpty(mobile)) {
-	    PartyContact.createMobilePhone(this, PartyContactType.PERSONAL, true, false, mobile);
+	    updateDefaultMobilePhone(mobile);
 	}
-
+	
 	if (!StringUtils.isEmpty(homepage)) {
-	    PartyContact.createWebAddress(this, PartyContactType.PERSONAL, true, true, homepage);
+	    updateDefaultWebAddress(homepage);
 	}
 
 	if (!StringUtils.isEmpty(email)) {
-	    PartyContact.createEmailAddress(this, PartyContactType.PERSONAL, false, true, email);
+	    createUserEmailAddress(email, false);
 	}
-
+	
 	setIdentification(documentIDNumber, documentType);
 	setAvailableWebSite(Boolean.FALSE);
 	setAvailablePhoto(Boolean.FALSE);
@@ -302,11 +311,11 @@ public class Person extends Person_Base {
 	setNome(name);
 	setGender(gender);
 	setIdentification(documentIDNumber, documentType);
-
+	
 	setAvailableEmail(Boolean.FALSE);
 	setAvailableWebSite(Boolean.FALSE);
 	setAvailablePhoto(Boolean.FALSE);
-
+	
 	setMaritalStatus(MaritalStatus.UNKNOWN);
 	setIsPassInKerberos(Boolean.FALSE);
     }
@@ -331,6 +340,18 @@ public class Person extends Person_Base {
 
     public void edit(PersonBean personBean) {
 	setProperties(personBean);
+    }
+    
+    public void editPersonalDataAndContactsInformation(PersonBean personBean) {
+	edit(personBean);
+	
+	updateDefaultPhysicalAddress(personBean.getPhysicalAddressData());
+	updateDefaultPhone(personBean.getPhone());
+	updateDefaultMobilePhone(personBean.getMobile());
+	updateDefaultWebAddress(personBean.getWebAddress());
+	
+	setEmail(personBean.getEmail());
+	setAvailableEmail(personBean.isEmailAvailable());
     }
 
     public void update(InfoPersonEditor updatedPersonalData, Country country) {
@@ -748,10 +769,10 @@ public class Person extends Person_Base {
 
     @Override
     public List<Advisory> getAdvisories() {
-	Date currentDate = Calendar.getInstance().getTime();
-	List<Advisory> result = new ArrayList<Advisory>();
-	for (Advisory advisory : super.getAdvisories()) {
-	    if (advisory.getExpires() == null || advisory.getExpires().after(currentDate)) {
+	final DateTime currentDate = new DateTime();
+	final List<Advisory> result = new ArrayList<Advisory>();
+	for (final Advisory advisory : super.getAdvisories()) {
+	    if (advisory.getExpiresDateTime() == null || advisory.getExpiresDateTime().isAfter(currentDate)) {
 		result.add(advisory);
 	    }
 	}
@@ -825,10 +846,9 @@ public class Person extends Person_Base {
     private void setProperties(InfoPersonEditor infoPerson) {
 
 	setNome(infoPerson.getNome());
-	setIdentification(infoPerson.getNumeroDocumentoIdentificacao(), infoPerson
-		.getTipoDocumentoIdentificacao());
+	setIdentification(infoPerson.getNumeroDocumentoIdentificacao(), infoPerson.getTipoDocumentoIdentificacao());
 	setFiscalCode(infoPerson.getCodigoFiscal());
-
+	
 	setAddress(infoPerson.getMorada());
 	setAreaCode(infoPerson.getCodigoPostal());
 	setAreaOfAreaCode(infoPerson.getLocalidadeCodigoPostal());
@@ -836,22 +856,19 @@ public class Person extends Person_Base {
 	setParishOfResidence(infoPerson.getFreguesiaMorada());
 	setDistrictSubdivisionOfResidence(infoPerson.getConcelhoMorada());
 	setDistrictOfResidence(infoPerson.getDistritoMorada());
-
+	
 	setEmail(infoPerson.getEmail());
 	setWebAddress(infoPerson.getEnderecoWeb());
 	setPhone(infoPerson.getTelefone());
 	setMobile(infoPerson.getTelemovel());
 	setWorkPhone(infoPerson.getWorkPhone());
-
+	
 	setDistrictSubdivisionOfBirth(infoPerson.getConcelhoNaturalidade());
-	setEmissionDateOfDocumentIdYearMonthDay(YearMonthDay.fromDateFields(infoPerson
-		.getDataEmissaoDocumentoIdentificacao()));
-	setExpirationDateOfDocumentIdYearMonthDay(YearMonthDay.fromDateFields(infoPerson
-		.getDataValidadeDocumentoIdentificacao()));
+	setEmissionDateOfDocumentIdYearMonthDay(YearMonthDay.fromDateFields(infoPerson.getDataEmissaoDocumentoIdentificacao()));
+	setExpirationDateOfDocumentIdYearMonthDay(YearMonthDay.fromDateFields(infoPerson.getDataValidadeDocumentoIdentificacao()));
 	setDistrictOfBirth(infoPerson.getDistritoNaturalidade());
-
-	setMaritalStatus((infoPerson.getMaritalStatus() == null) ? MaritalStatus.UNKNOWN : infoPerson
-		.getMaritalStatus());
+	
+	setMaritalStatus((infoPerson.getMaritalStatus() == null) ? MaritalStatus.UNKNOWN : infoPerson.getMaritalStatus());
 	setParishOfBirth(infoPerson.getFreguesiaNaturalidade());
 	setEmissionLocationOfDocumentId(infoPerson.getLocalEmissaoDocumentoIdentificacao());
 
@@ -865,56 +882,12 @@ public class Person extends Person_Base {
 
 	// Generate person's Password
 	if (getPassword() == null) {
-	    setPassword(PasswordEncryptor.encryptPassword(GeneratePassword.getInstance().generatePassword(
-		    this)));
+	    setPassword(PasswordEncryptor.encryptPassword(GeneratePassword.getInstance().generatePassword(this)));
 	}
 
-	setAvailableEmail(infoPerson.getAvailableEmail() != null ? infoPerson.getAvailableEmail()
-		: Boolean.TRUE);
-	setAvailableWebSite(infoPerson.getAvailableWebSite() != null ? infoPerson.getAvailableWebSite()
-		: Boolean.TRUE);
+	setAvailableEmail(infoPerson.getAvailableEmail() != null ? infoPerson.getAvailableEmail() : Boolean.TRUE);
+	setAvailableWebSite(infoPerson.getAvailableWebSite() != null ? infoPerson.getAvailableWebSite() : Boolean.TRUE);
 	setAvailablePhoto(Boolean.TRUE);
-    }
-
-    public void setProperties(PersonBean personBean) {
-
-	setName(personBean.getName());
-	setGender(personBean.getGender());
-	setIdentification(personBean.getDocumentIdNumber(), personBean.getIdDocumentType());
-	setEmissionLocationOfDocumentId(personBean.getDocumentIdEmissionLocation());
-	setEmissionDateOfDocumentIdYearMonthDay(personBean.getDocumentIdEmissionDate());
-	setExpirationDateOfDocumentIdYearMonthDay(personBean.getDocumentIdExpirationDate());
-	setSocialSecurityNumber(personBean.getSocialSecurityNumber());
-	setProfession(personBean.getProfession());
-	setMaritalStatus(personBean.getMaritalStatus());
-
-	setDateOfBirthYearMonthDay(personBean.getDateOfBirth());
-	setNationality(personBean.getNationality());
-	setParishOfBirth(personBean.getParishOfBirth());
-	setDistrictSubdivisionOfBirth(personBean.getDistrictSubdivisionOfBirth());
-	setDistrictOfBirth(personBean.getDistrictOfBirth());
-	setCountryOfBirth(personBean.getCountryOfBirth());
-	setNameOfMother(personBean.getMotherName());
-	setNameOfFather(personBean.getFatherName());
-
-	setAddress(personBean.getAddress());
-	setAreaCode(personBean.getAreaCode());
-	setAreaOfAreaCode(personBean.getAreaOfAreaCode());
-	setArea(personBean.getArea());
-	setParishOfResidence(personBean.getParishOfResidence());
-	setDistrictSubdivisionOfResidence(personBean.getDistrictSubdivisionOfResidence());
-	setDistrictOfResidence(personBean.getDistrictOfResidence());
-	setCountryOfResidence(personBean.getCountryOfResidence());
-
-	setPhone(personBean.getPhone());
-	setMobile(personBean.getMobile());
-	setEmail(personBean.getEmail());
-	setWebAddress(personBean.getWebAddress());
-
-	setAvailableEmail(personBean.isEmailAvailable());
-	setAvailablePhoto(personBean.isPhotoAvailable());
-	setAvailableWebSite(personBean.isHomepageAvailable());
-
     }
 
     private void updateProperties(InfoPersonEditor infoPerson) {
@@ -923,46 +896,32 @@ public class Person extends Person_Base {
 	setIdentification(valueToUpdateIfNewNotNull(getDocumentIdNumber(), infoPerson
 		.getNumeroDocumentoIdentificacao()), (IDDocumentType) valueToUpdateIfNewNotNull(
 		getIdDocumentType(), infoPerson.getTipoDocumentoIdentificacao()));
-
+	
 	setFiscalCode(valueToUpdateIfNewNotNull(getFiscalCode(), infoPerson.getCodigoFiscal()));
-
+	
 	setAddress(valueToUpdateIfNewNotNull(getAddress(), infoPerson.getMorada()));
 	setAreaCode(valueToUpdateIfNewNotNull(getAreaCode(), infoPerson.getCodigoPostal()));
-	setAreaOfAreaCode(valueToUpdateIfNewNotNull(getAreaOfAreaCode(), infoPerson
-		.getLocalidadeCodigoPostal()));
+	setAreaOfAreaCode(valueToUpdateIfNewNotNull(getAreaOfAreaCode(), infoPerson.getLocalidadeCodigoPostal()));
 	setArea(valueToUpdateIfNewNotNull(getArea(), infoPerson.getLocalidade()));
-	setParishOfResidence(valueToUpdateIfNewNotNull(getParishOfResidence(), infoPerson
-		.getFreguesiaMorada()));
-	setDistrictSubdivisionOfResidence(valueToUpdateIfNewNotNull(getDistrictSubdivisionOfResidence(),
-		infoPerson.getConcelhoMorada()));
-	setDistrictOfResidence(valueToUpdateIfNewNotNull(getDistrictOfResidence(), infoPerson
-		.getDistritoMorada()));
-
-	setEmissionDateOfDocumentIdYearMonthDay(infoPerson.getDataEmissaoDocumentoIdentificacao() != null ? YearMonthDay
-		.fromDateFields(infoPerson.getDataEmissaoDocumentoIdentificacao())
-		: getEmissionDateOfDocumentIdYearMonthDay());
-	setEmissionLocationOfDocumentId(valueToUpdateIfNewNotNull(getEmissionLocationOfDocumentId(),
-		infoPerson.getLocalEmissaoDocumentoIdentificacao()));
-	setExpirationDateOfDocumentIdYearMonthDay(infoPerson.getDataValidadeDocumentoIdentificacao() != null ? YearMonthDay
-		.fromDateFields(infoPerson.getDataValidadeDocumentoIdentificacao())
-		: getExpirationDateOfDocumentIdYearMonthDay());
-
-	MaritalStatus maritalStatus = (MaritalStatus) valueToUpdateIfNewNotNull(getMaritalStatus(),
-		infoPerson.getMaritalStatus());
+	setParishOfResidence(valueToUpdateIfNewNotNull(getParishOfResidence(), infoPerson.getFreguesiaMorada()));
+	setDistrictSubdivisionOfResidence(valueToUpdateIfNewNotNull(getDistrictSubdivisionOfResidence(), infoPerson.getConcelhoMorada()));
+	setDistrictOfResidence(valueToUpdateIfNewNotNull(getDistrictOfResidence(), infoPerson.getDistritoMorada()));
+	
+	setEmissionDateOfDocumentIdYearMonthDay(infoPerson.getDataEmissaoDocumentoIdentificacao() != null ? YearMonthDay.fromDateFields(infoPerson.getDataEmissaoDocumentoIdentificacao()) : getEmissionDateOfDocumentIdYearMonthDay());
+	setEmissionLocationOfDocumentId(valueToUpdateIfNewNotNull(getEmissionLocationOfDocumentId(), infoPerson.getLocalEmissaoDocumentoIdentificacao()));
+	setExpirationDateOfDocumentIdYearMonthDay(infoPerson.getDataValidadeDocumentoIdentificacao() != null ? YearMonthDay.fromDateFields(infoPerson.getDataValidadeDocumentoIdentificacao()) : getExpirationDateOfDocumentIdYearMonthDay());
+	
+	MaritalStatus maritalStatus = (MaritalStatus) valueToUpdateIfNewNotNull(getMaritalStatus(), infoPerson.getMaritalStatus());
 	setMaritalStatus((maritalStatus == null) ? MaritalStatus.UNKNOWN : maritalStatus);
-
-	setDateOfBirthYearMonthDay(infoPerson.getNascimento() != null ? YearMonthDay
-		.fromDateFields(infoPerson.getNascimento()) : getDateOfBirthYearMonthDay());
+	
+	setDateOfBirthYearMonthDay(infoPerson.getNascimento() != null ? YearMonthDay.fromDateFields(infoPerson.getNascimento()) : getDateOfBirthYearMonthDay());
 	setParishOfBirth(valueToUpdateIfNewNotNull(getParishOfBirth(), infoPerson.getFreguesiaNaturalidade()));
-	setDistrictSubdivisionOfBirth(valueToUpdateIfNewNotNull(getDistrictSubdivisionOfBirth(), infoPerson
-		.getConcelhoNaturalidade()));
-	setDistrictOfBirth(valueToUpdateIfNewNotNull(getDistrictOfBirth(), infoPerson
-		.getDistritoNaturalidade()));
-
+	setDistrictSubdivisionOfBirth(valueToUpdateIfNewNotNull(getDistrictSubdivisionOfBirth(), infoPerson.getConcelhoNaturalidade()));
+	setDistrictOfBirth(valueToUpdateIfNewNotNull(getDistrictOfBirth(), infoPerson.getDistritoNaturalidade()));
+	
 	setNameOfMother(valueToUpdateIfNewNotNull(getNameOfMother(), infoPerson.getNomeMae()));
 	setNameOfFather(valueToUpdateIfNewNotNull(getNameOfFather(), infoPerson.getNomePai()));
-	setSocialSecurityNumber(valueToUpdateIfNewNotNull(getSocialSecurityNumber(), infoPerson
-		.getNumContribuinte()));
+	setSocialSecurityNumber(valueToUpdateIfNewNotNull(getSocialSecurityNumber(), infoPerson.getNumContribuinte()));
 	setProfession(valueToUpdateIfNewNotNull(getProfession(), infoPerson.getProfissao()));
 	setGender((Gender) valueToUpdateIfNewNotNull(getGender(), infoPerson.getSexo()));
 
@@ -1002,6 +961,31 @@ public class Person extends Person_Base {
 	}
 	return newValue;
 
+    }
+    
+    private void setProperties(final PersonBean personBean) {
+
+	setName(personBean.getName());
+	setGender(personBean.getGender());
+	setIdentification(personBean.getDocumentIdNumber(), personBean.getIdDocumentType());
+	setEmissionLocationOfDocumentId(personBean.getDocumentIdEmissionLocation());
+	setEmissionDateOfDocumentIdYearMonthDay(personBean.getDocumentIdEmissionDate());
+	setExpirationDateOfDocumentIdYearMonthDay(personBean.getDocumentIdExpirationDate());
+	setSocialSecurityNumber(personBean.getSocialSecurityNumber());
+	setProfession(personBean.getProfession());
+	setMaritalStatus(personBean.getMaritalStatus());
+
+	setDateOfBirthYearMonthDay(personBean.getDateOfBirth());
+	setNationality(personBean.getNationality());
+	setParishOfBirth(personBean.getParishOfBirth());
+	setDistrictSubdivisionOfBirth(personBean.getDistrictSubdivisionOfBirth());
+	setDistrictOfBirth(personBean.getDistrictOfBirth());
+	setCountryOfBirth(personBean.getCountryOfBirth());
+	setNameOfMother(personBean.getMotherName());
+	setNameOfFather(personBean.getFatherName());
+
+	setAvailablePhoto(personBean.isPhotoAvailable());
+	setAvailableWebSite(personBean.isHomepageAvailable());
     }
 
     /***********************************************************************
@@ -1072,7 +1056,7 @@ public class Person extends Person_Base {
     public boolean hasAnyPersonFunctions() {
 	return !getPersonFunctions().isEmpty();
     }
-
+    
     public Collection<PersonFunction> getPersonFunctions() {
 	return (Collection<PersonFunction>) getParentAccountabilities(
 		AccountabilityTypeEnum.MANAGEMENT_FUNCTION, PersonFunction.class);
@@ -1113,20 +1097,11 @@ public class Person extends Person_Base {
 	return false;
     }
 
-    public boolean hasFunctionType(FunctionType functionType) {
-	for (PersonFunction accountability : getActivePersonFunctions()) {
-	    if (accountability.getFunction().getFunctionType() == functionType) {
-		return true;
-	    }
-	}
-	return false;
-    }
-
     public PersonFunction addPersonFunction(Function function, YearMonthDay begin, YearMonthDay end,
 	    Double credits) {
 	return new PersonFunction(function.getUnit(), this, function, begin, end, credits);
     }
-
+    
     /**
          * @return a group that only contains this person
          */
@@ -1142,7 +1117,7 @@ public class Person extends Person_Base {
          * 
          * @return true if the person have been deleted, false otherwise
          */
-    public void delete() {
+    public void delete() {	
 	if (!canBeDeleted()) {
 	    throw new DomainException("error.person.cannot.be.deleted");
 	}
@@ -1154,41 +1129,55 @@ public class Person extends Person_Base {
 	}
 	if (hasAssociatedPersonAccount()) {
 	    getAssociatedPersonAccount().delete();
-	}
-	if (hasHomepage()) { // check if can delete made in #canBeDeleted()
-	    getHomepage().delete();
-	}
-	if (hasUser()) {
+	}        
+        if (hasHomepage()) { // check if can delete made in #canBeDeleted()
+            getHomepage().delete();
+        }
+        if (hasUser()) {
 	    getUser().delete();
 	}
-
+	
 	getPersonRoles().clear();
 	getManageableDepartmentCredits().clear();
 	getAdvisories().clear();
-
+	
 	getPersonName().delete();
-	for (; !getIdDocumentsSet().isEmpty(); getIdDocumentsSet().iterator().next().delete())
-	    ;
-	for (; !getPartyContactsSet().isEmpty(); getPartyContactsSet().iterator().next().delete())
-	    ;
-
+	for ( ; !getIdDocumentsSet().isEmpty(); getIdDocumentsSet().iterator().next().delete());
+	
 	removeNationality();
 	removeCountryOfBirth();
-
+	
 	super.delete();
     }
 
-    private boolean canBeDeleted() {
-	return !hasAnyChilds() && !hasAnyParents() && !hasAnyDomainObjectActionLogs() && !hasAnySentSms()
-		&& !hasAnyExportGroupingReceivers() && !hasAnyAssociatedQualifications()
-		&& !hasAnyAssociatedAlteredCurriculums() && !hasAnyEnrolmentEvaluations()
-		&& !hasAnyExportGroupingSenders() && !hasAnyResponsabilityTransactions()
-		&& !hasAnyMasterDegreeCandidates() && !hasAnyGuides() && !hasAnyProjectAccesses()
-		&& !hasAnyPersonAuthorships() && !hasEmployee() && !hasTeacher() && !hasGrantOwner()
-		&& !hasAnyPayedGuides() && !hasAnyPayedReceipts() && !hasParking()
-		&& !hasAnyResearchInterests() && !hasAnyProjectParticipations() && !hasAnyParticipations()
-		&& !hasAnyBoards() && !hasAnyPersonFunctions() && !hasAnyStudents()
-		&& (!hasHomepage() || getHomepage().canBeDeleted());
+    private boolean canBeDeleted() {	
+	return !hasAnyChilds()
+		&& !hasAnyParents()		
+		&& !hasAnyDomainObjectActionLogs() 		
+		&& !hasAnySentSms()
+		&& !hasAnyExportGroupingReceivers()		
+		&& !hasAnyAssociatedQualifications()
+		&& !hasAnyAssociatedAlteredCurriculums()
+		&& !hasAnyEnrolmentEvaluations()
+		&& !hasAnyExportGroupingSenders()
+		&& !hasAnyResponsabilityTransactions()
+		&& !hasAnyMasterDegreeCandidates()
+		&& !hasAnyGuides()
+		&& !hasAnyProjectAccesses()
+		&& !hasAnyPersonAuthorships()
+		&& !hasEmployee()
+		&& !hasTeacher()
+		&& !hasGrantOwner()		
+		&& !hasAnyPayedGuides()
+		&& !hasAnyPayedReceipts()
+		&& !hasParking()		
+		&& !hasAnyResearchInterests()
+		&& !hasAnyProjectParticipations()
+		&& !hasAnyParticipations() 
+		&& !hasAnyBoards() 		
+		&& !hasAnyPersonFunctions()
+		&& !hasAnyStudents()
+		&& (!hasHomepage() || getHomepage().canBeDeleted());                                  
     }
 
     private boolean hasParking() {
@@ -1726,7 +1715,7 @@ public class Person extends Person_Base {
     public boolean hasAnyInvitation() {
 	return !getParentAccountabilities(AccountabilityTypeEnum.INVITATION, Invitation.class).isEmpty();
     }
-
+    
     // -------------------------------------------------------------
     // static methods
     // -------------------------------------------------------------
@@ -1758,8 +1747,7 @@ public class Person extends Person_Base {
 	return result;
     }
 
-    public static Person readByDocumentIdNumberAndIdDocumentType(final String documentIdNumber,
-	    final IDDocumentType idDocumentType) {
+    public static Person readByDocumentIdNumberAndIdDocumentType(final String documentIdNumber, final IDDocumentType idDocumentType) {
 	for (final IdDocument idDocument : IdDocument.find(documentIdNumber)) {
 	    if (idDocument.getIdDocumentType().getValue() == idDocumentType) {
 		return idDocument.getPerson();
@@ -1768,8 +1756,7 @@ public class Person extends Person_Base {
 	return null;
     }
 
-    public static Person readByDocumentIdNumberAndDateOfBirth(final String documentIdNumber,
-	    final YearMonthDay dateOfBirth) {
+    public static Person readByDocumentIdNumberAndDateOfBirth(final String documentIdNumber, final YearMonthDay dateOfBirth) {
 	for (final IdDocument idDocument : IdDocument.find(documentIdNumber)) {
 	    final Person person = idDocument.getPerson();
 	    if (person.getDateOfBirthYearMonthDay().equals(dateOfBirth)) {
@@ -2185,7 +2172,8 @@ public class Person extends Person_Base {
 	final Collection<AnnouncementBoard> result = new HashSet<AnnouncementBoard>();
 	for (final Registration registration : getStudent().getRegistrationsSet()) {
 	    for (final Attends attends : registration.getAssociatedAttendsSet()) {
-		if (attends.getExecutionCourse().isLecturedIn(ExecutionPeriod.readActualExecutionPeriod())) {
+		if (attends.getExecutionCourse().isLecturedIn(
+			ExecutionPeriod.readActualExecutionPeriod())) {
 		    final AnnouncementBoard board = attends.getExecutionCourse().getBoard();
 		    if (board != null && board.hasReaderOrWriter(this)) {
 			result.add(board);
@@ -2208,7 +2196,7 @@ public class Person extends Person_Base {
     public boolean hasAnyStudents() {
 	return getStudentsCount() > 0;
     }
-
+    
     public int getStudentsCount() {
 	if (getStudent() != null) {
 	    return getStudent().getRegistrationsCount();
@@ -2551,6 +2539,7 @@ public class Person extends Person_Base {
 	return getServiceAgreementFor(serviceAgreementTemplate) != null;
     }
 
+
     public boolean isHomePageAvailable() {
 	return hasHomepage() && getHomepage().getActivated();
     }
@@ -2629,24 +2618,20 @@ public class Person extends Person_Base {
     public List<String> getMainRoles() {
 	return getImportantRoles(new ArrayList<String>());
     }
-
-    /*
-         * Currently, Person can only have one WorkPhone (so use get(0) - after
-         * interface updates remove these methods)
-         */
+    
+    /* 
+     * Currently, Person can only have one WorkPhone (so use get(0) - after interface updates remove these methods) 
+     */
     private Phone getPersonWorkPhone() {
-	final List<PartyContact> partyContacts = getPartyContacts(Phone.class, PartyContactType.WORK);
-	return partyContacts.isEmpty() ? null : (Phone) partyContacts.get(0); // actually
-                                                                                // exists
-                                                                                // only
-                                                                                // one
+	final List<Phone> partyContacts = (List<Phone>) getPartyContacts(Phone.class, PartyContactType.WORK);
+	return partyContacts.isEmpty() ? null : (Phone) partyContacts.get(0); // actually exists only one
     }
-
+    
     public String getWorkPhone() {
 	final Phone workPhone = getPersonWorkPhone();
-	return workPhone != null ? workPhone.getNumber() : null;
+        return workPhone != null ? workPhone.getNumber() : null;
     }
-
+    
     public void setWorkPhone(String workPhone) {
 	final Phone phone = getPersonWorkPhone();
 	if (phone == null) {
@@ -2657,29 +2642,24 @@ public class Person extends Person_Base {
 	    phone.setNumber(workPhone);
 	}
     }
-
-    /*
-         * Currently, Person can only have one InstitutionalEmailAddress (so use
-         * get(0) - after interface updates remove these methods)
-         */
+    
+    /* 
+     * Currently, Person can only have one InstitutionalEmailAddress (so use get(0) - after interface updates remove these methods) 
+     */
     public String getEmail() {
 	return hasInstitutionalEmail() ? getInstitutionalEmail() : super.getEmail();
     }
-
+    
     private EmailAddress getInstitutionalEmailAddress() {
-	final List<PartyContact> partyContacts = getPartyContacts(EmailAddress.class,
-		PartyContactType.INSTITUTIONAL);
-	return partyContacts.isEmpty() ? null : (EmailAddress) partyContacts.get(0); // actually
-                                                                                        // exists
-                                                                                        // only
-                                                                                        // one
+	final List<EmailAddress> partyContacts = (List<EmailAddress>) getPartyContacts(EmailAddress.class, PartyContactType.INSTITUTIONAL);
+	return partyContacts.isEmpty() ? null : (EmailAddress) partyContacts.get(0); // actually exists only one
     }
-
+    
     public String getInstitutionalEmail() {
 	final EmailAddress institutionalEmailAddress = getInstitutionalEmailAddress();
 	return institutionalEmailAddress != null ? institutionalEmailAddress.getValue() : null;
     }
-
+    
     public void setInstitutionalEmail(final String institutionalEmailString) {
 	final EmailAddress institutionalEmailAddress = getInstitutionalEmailAddress();
 	if (institutionalEmailAddress == null) {
@@ -2688,7 +2668,7 @@ public class Person extends Person_Base {
 	    institutionalEmailAddress.setValue(institutionalEmailString);
 	}
     }
-
+    
     public Boolean getHasInstitutionalEmail() {
 	return Boolean.valueOf(hasInstitutionalEmail());
     }
@@ -2716,8 +2696,6 @@ public class Person extends Person_Base {
 
     public static Person readPersonByEmailAddress(final String email) {
 	final EmailAddress emailAddress = EmailAddress.find(email);
-	return (emailAddress != null && emailAddress.getParty().isPerson()) ? (Person) emailAddress
-		.getParty() : null;
+	return (emailAddress != null && emailAddress.getParty().isPerson()) ? (Person) emailAddress.getParty() : null;
     }
-
 }
