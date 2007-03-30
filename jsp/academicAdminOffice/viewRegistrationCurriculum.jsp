@@ -434,7 +434,7 @@
 			</logic:iterate>				
 			<tr>
 				<td colspan="8" style="text-align: right;">
-					Sumatórios
+					Somatórios
 				</td>
 				<td class="acenter">
 					<bean:write name="sumPi"/>
