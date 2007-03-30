@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.renderers.model;
 
-public interface UserIdentity {
+import java.io.Serializable;
+
+public interface UserIdentity extends Serializable {
 
 }

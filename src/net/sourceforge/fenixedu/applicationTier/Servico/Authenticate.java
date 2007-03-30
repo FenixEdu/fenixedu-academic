@@ -143,6 +143,22 @@ public class Authenticate extends Service implements Serializable {
 	public boolean isPublicRequester() {
 	    return false;
 	}
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (! (obj instanceof UserView)) {
+            return false;
+        }
+        
+        UserView other = (UserView) obj;
+        return this.personRef.equals(other.personRef)
+                    && this.roleTypes.equals(other.roleTypes);
+    }
+    
+    @Override
+    public int hashCode() {
+        return this.personRef.hashCode() + this.roleTypes.hashCode();
+    }
     }
 
     public static final boolean isValidUserView(IUserView userView) {

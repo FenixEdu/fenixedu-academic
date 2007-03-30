@@ -62,6 +62,16 @@ public class CloseTransactionFilter implements Filter {
 		public DateTime getExpirationDate() {
 		    throw makeException();
 		}
+        
+        @Override
+        public boolean equals(Object obj) {
+            return obj instanceof PublicRequester;
+        }
+        
+        @Override
+        public int hashCode() {
+            return 0;
+        }
 	}
 
 	public void init(FilterConfig config) {

@@ -52,7 +52,7 @@ public class ViewState implements IViewState {
     
     // Properties set after each deserialization 
     
-    transient private UserIdentity user;
+    private UserIdentity user;
 
     transient private HtmlComponent component;
 

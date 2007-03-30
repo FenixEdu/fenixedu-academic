@@ -39,10 +39,17 @@ public class EditRequest extends HttpServletRequestWrapper {
         UserIdentity userIdentity = UserIdentityFactory.create(this);
         for (IViewState viewState : this.viewStates) {
             viewState.setRequest(this);
-            viewState.setUser(userIdentity);
+            
+            checkUserIdentity(viewState, userIdentity);
         }
         
         return this.viewStates;
+    }
+
+    private void checkUserIdentity(IViewState viewState, UserIdentity userIdentity) {
+        if (! viewState.getUser().equals(userIdentity)) {
+            throw new RuntimeException("viewstate.user.changed");
+        }
     }
     
 }
