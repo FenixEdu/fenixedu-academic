@@ -83,27 +83,19 @@ public class WorkScheduleType extends WorkScheduleType_Base {
 		return Duration.ZERO;
 	    }
 	    // /////////remove in 2007
-	    if (!getMeal().getMinimumMealBreakInterval().equals(Duration.ZERO)) {
-		if (getMeal().getMealBreak().overlap(lunchBreak) == null) {
+	    // if
+	    // (!getMeal().getMinimumMealBreakInterval().equals(Duration.ZERO))
+	    // {
+	    Interval overlaps = getMeal().getMealBreak().overlap(lunchBreak);
+	    Duration overlapsDuration = Duration.ZERO;
+	    if (overlaps == null) {
+		if (!getMeal().getMealBreak().abuts(lunchBreak)) {
 		    return Duration.ZERO;
 		}
-		Duration mealDiscount = getMeal().calculateMealDiscount(
-			getMeal().getMealBreak().overlap(lunchBreak).toDuration());
-		if (discount.isLongerThan(mealDiscount)) {
-		    return Duration.ZERO;
-		}
-		Duration finalDiscount = mealDiscount.minus(discount);
-		if (!justification
-			&& getMeal().getMandatoryMealDiscount() != Duration.ZERO
-			&& lunchBreakDuration.isShorterThan(getMeal().getMinimumMealBreakInterval())
-			&& getMeal().getMandatoryMealDiscount().minus(finalDiscount).isShorterThan(
-				getMeal().getMinimumMealBreakInterval())) {
-		    return null;
-		}
-		return finalDiscount;
+	    }else {
+		overlapsDuration = overlaps.toDuration();
 	    }
-	    // /////////////////////////
-	    Duration mealDiscount = getMeal().calculateMealDiscount(lunchBreakDuration);
+	    Duration mealDiscount = getMeal().calculateMealDiscount(overlapsDuration);
 	    if (discount.isLongerThan(mealDiscount)) {
 		return Duration.ZERO;
 	    }
@@ -116,6 +108,24 @@ public class WorkScheduleType extends WorkScheduleType_Base {
 		return null;
 	    }
 	    return finalDiscount;
+	    // }
+	    // /////////////////////////
+	    // Duration mealDiscount =
+	    // getMeal().calculateMealDiscount(lunchBreakDuration);
+	    // if (discount.isLongerThan(mealDiscount)) {
+	    // return Duration.ZERO;
+	    // }
+	    // Duration finalDiscount = mealDiscount.minus(discount);
+	    // if (!justification
+	    // && getMeal().getMandatoryMealDiscount() != Duration.ZERO
+	    // &&
+	    // lunchBreakDuration.isShorterThan(getMeal().getMinimumMealBreakInterval())
+	    // &&
+	    // getMeal().getMandatoryMealDiscount().minus(finalDiscount).isShorterThan(
+	    // getMeal().getMinimumMealBreakInterval())) {
+	    // return null;
+	    // }
+	    // return finalDiscount;
 	}
 
 	return Duration.ZERO;

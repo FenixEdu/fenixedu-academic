@@ -291,6 +291,11 @@ public class TimeInterval implements Serializable {
 	return toInterval(now).overlap(interval.toInterval(now));
     }
 
+    public boolean abuts(TimeInterval interval) {
+	DateTime now = new DateTime();
+	return toInterval(now).abuts(interval.toInterval(now));
+    }
+
     // // TODO reminder to turn to immutable
     // /**
     // * @param regularSchedule1
