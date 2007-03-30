@@ -734,7 +734,9 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 		CompetenceCourse.COMPETENCE_COURSE_COMPARATOR_BY_NAME);
 	if (this.isBolonha()) {
 	    for (final CurricularCourse curricularCourse : getCurricularCourses(executionYear)) {
-		result.add(curricularCourse.getCompetenceCourse());
+		if (!curricularCourse.isOptionalCurricularCourse()) {
+		    result.add(curricularCourse.getCompetenceCourse());
+		}
 	    }
 	    return new ArrayList<CompetenceCourse>(result);
 	} else {
