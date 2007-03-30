@@ -1172,9 +1172,11 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     public void addActiveEnrollments(final Collection<Enrolment> enrolments, final ExecutionPeriod executionPeriod) {
 	for (final CurriculumModule curriculumModule : getCurriculumModules()) {
-	    final Enrolment enrolment = (Enrolment) curriculumModule;
-	    if (!enrolment.isAnnulled() && enrolment.getExecutionPeriod() == executionPeriod) {
-		enrolments.add(enrolment);
+	    if (curriculumModule.isEnrolment()) {
+		final Enrolment enrolment = (Enrolment) curriculumModule;
+		if (!enrolment.isAnnulled() && enrolment.getExecutionPeriod() == executionPeriod) {
+		    enrolments.add(enrolment);
+		}
 	    }
 	}	
     }
