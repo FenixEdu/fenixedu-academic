@@ -13,6 +13,7 @@
 <bean:define id="executionDegree" name="executionDegree" type="net.sourceforge.fenixedu.domain.ExecutionDegree"/>
 
 <div class="simpleblock1">
+	<p><bean:message key="message.credits.masterDegree.degree"/>: <strong><bean:write name="executionDegree" property="degreeCurricularPlan.degree.presentationName"/></strong></p>
 	<p><bean:message key="message.credits.masterDegree.curricularPlan"/>: <strong><bean:write name="executionDegree" property="degreeCurricularPlan.name"/></strong></p>
 	<p><bean:message key="message.credits.masterDegree.executionYear"/>: <strong><bean:write name="executionDegree" property="executionYear.year"/></strong></p>
 </div>
