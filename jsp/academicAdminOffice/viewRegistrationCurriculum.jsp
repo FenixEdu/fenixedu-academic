@@ -354,7 +354,12 @@
 					<tr>
 						<td><bean:write name="curriculumEntry" property="curricularCourse.code"/></td>
 						<td><bean:write name="curriculumEntry" property="curricularCourse.name"/></td>
-						<td colspan="2"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.not.need.to.enrol"/></td>
+						<td colspan="2">
+							<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.not.need.to.enrol"/>
+							<logic:equal name="curriculumEntry" property="ectsCredits" value="0">
+								(<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.equivalency"/>)
+							</logic:equal>
+						</td>
 						<td class="acenter">-</td>
 						<td class="acenter">-</td>
 						<td class="acenter">-</td>
@@ -362,7 +367,12 @@
 						<td class="acenter">-</td>
 						<td class="acenter">-</td>
 						<td class="acenter">-</td>
-						<td class="acenter"><bean:write name="curriculumEntry" property="ectsCredits"/></td>
+						<td class="acenter">
+							<logic:equal name="curriculumEntry" property="ectsCredits" value="0">-</logic:equal>
+							<logic:notEqual name="curriculumEntry" property="ectsCredits" value="0">
+								<bean:write name="curriculumEntry" property="ectsCredits"/>
+							</logic:notEqual>
+						</td>
 					</tr>
 				</logic:equal>
 			</logic:iterate>				
