@@ -31,3 +31,4 @@ execute "Add more title and subtitle to the Thesis file" ChangeThesisFileTable.s
 execute "Change Thesis to accomodate credits distribution and the declaration state" ChangeThesisTable.sql
 execute "Separate Scientific Commission from the coordinators of the Degree" RefactorDegreeScientificCommission.sql
 execute "Alter table Space" alterTableSpace.sql
+execute "Update Table AssiduousnessClosedMonth" updateTableAssiduousnessClosedMonth.sql
