@@ -226,7 +226,7 @@
 		type="net.sourceforge.fenixedu.domain.accounting.events.ImprovementOfApprovedEnrolmentPenaltyExemption" 
 		bundle="APPLICATION_RESOURCES">
 	<slot name="description" key="label.net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemption.description" />
-    <slot name="comments" key="label.net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemption.comments" />
+    <slot name="reason" key="label.net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemption.reason" />
 </schema>
 
 <schema name="AdministrativeOfficeFeeAndInsurancePenaltyExemption.view" 
