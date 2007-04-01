@@ -369,6 +369,8 @@
 						   property="webServices.external.urls"/>
 				<replacefilter token="@externalServices.StudentInfoByUsername.externalAppPassword@"
 						   property="externalServices.StudentInfoByUsername.externalAppPassword"/>
+				<replacefilter token="@object.id.execution.period.for.from.mark.sheet.managment@"
+						   property="object.id.execution.period.for.from.mark.sheet.managment"/>
 			</replace>
 
 			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
