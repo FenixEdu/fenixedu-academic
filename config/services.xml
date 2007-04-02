@@ -3743,14 +3743,6 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>ReadDepartmentTeachersCreditsDetailsService</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.department.ReadDepartmentTeachersCreditsDetailsService</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains />
-	</service>
-	<service>
 		<name>ReadDepartmentByUser</name>
 		<implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.department.ReadDepartmentByUser</implementationClass>
