@@ -32,9 +32,17 @@
 	</span>
 </p>
 
-<%--
-	<span style="background-color: #fafade; border: 1px solid #f2f2a6; padding: 0.4em 0.6em;">
---%>
+
+
+<logic:messagesPresent message="true">
+	<ul class="list7 mtop2 warning0" style="list-style: none;">
+		<html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES">
+			<li>
+				<span><!-- Error messages go here --><bean:write name="message" /></span>
+			</li>
+		</html:messages>
+	</ul>
+</logic:messagesPresent>
 
 
 
@@ -96,13 +104,6 @@
 		</logic:equal>
 	</span>	
 </p>
-
-
-<html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<p class="mtop15">
-		<span class="warning0"><!-- Error messages go here --><bean:write name="message" /></span>
-	</p>
-</html:messages>
 
 
 
