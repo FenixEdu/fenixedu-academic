@@ -1084,6 +1084,15 @@ public class Person extends Person_Base {
 	return result;
     }
 
+    public boolean hasFunctionType(FunctionType functionType) {
+	for (PersonFunction accountability : getActivePersonFunctions()) {
+	    if (accountability.getFunction().getFunctionType() == functionType) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
     public boolean hasActivePersonFunction(FunctionType functionType, Unit unit) {
 	YearMonthDay currentDate = new YearMonthDay();
 	for (PersonFunction personFunction : (Collection<PersonFunction>) getParentAccountabilities(
