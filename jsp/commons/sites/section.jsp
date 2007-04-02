@@ -26,6 +26,7 @@
 	<fr:view name="section" property="name" />
 </h2>
 
+
 <div class="mvert1">
     <html:link page="<%= String.format("%s?method=sections&amp;%s", actionName, context) %>">
         <bean:message key="link.breadCrumbs.top" bundle="SITE_RESOURCES"/>
@@ -121,8 +122,8 @@
 
 <div id="<%= deleteSectionId %>" class="dnone mvert05">
     <fr:form action="<%= String.format("%s?method=confirmSectionDelete&amp;%s&amp;sectionID=%s&amp;confirm=true", actionName, context, sectionId) %>">
-        <p class="width550px">
-        <span class="warning0 mright075">
+        <p class="warning0" style="padding: 0.5em;">
+        <span class="mright075">
             <logic:equal name="section" property="deletable" value="true">
                 <bean:message key="message.section.delete.confirm" bundle="SITE_RESOURCES"/>
             </logic:equal>

@@ -21,6 +21,12 @@
 	<bean:message key="label.executionCourseManagement.menu.sections"/>
 </h2>
 
+<logic:empty name="site" property="orderedTopLevelSections">
+    <div class="infoop2">
+		<bean:message key="message.sections.instructions"/>
+    </div>
+</logic:empty>
+
 <p>
 	<span>
 		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
@@ -38,10 +44,10 @@
 </p>
 
 <logic:empty name="site" property="orderedTopLevelSections">
-    <p>
-        <span class="warning0">
+    <p class="mvert15">
+        <em>
             <bean:message key="message.sections.empty" bundle="SITE_RESOURCES"/>
-        </span>
+        </em>
     </p>
 </logic:empty>
 
