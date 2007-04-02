@@ -14,7 +14,7 @@
 
 <div class="dinline forminline">
     <fr:form action="<%= "/scientificCommissionTeamDA.do?method=manage&amp;degreeCurricularPlanID=" + degreeCurricularPlanId %>">
-        <fr:edit id="executionDegreeChoice" name="executionDegreeBean" schema="executionDegree.context.choose">
+        <fr:edit id="executionDegreeChoice" name="executionDegreeBean" schema="executionDegree.context.choose.noNull">
             <fr:layout name="tabular">
                 <fr:property name="classes" value="tstyle5 tdtop thlight thright thmiddle dinline"/>
                 <fr:property name="columnClasses" value=",,tdclear"/>
@@ -45,22 +45,32 @@
                     <span class="success0"><bean:message key="label.coordinator.scientificCommision.contact.updated"/></span>
                 </logic:present>
             
-                <fr:edit id="membersContacts" name="members" schema="coordinator.commissionTeam.manage.contacts">
-                    <fr:layout name="tabular-editable">
-                        <logic:present name="responsible">
+                <logic:present name="responsible">
+                    <fr:edit id="membersContacts" name="members" schema="coordinator.commissionTeam.manage.contacts">
+                        <fr:layout name="tabular-editable">
                             <fr:property name="classes" value="tstyle1"/>
                             <fr:property name="columnClasses" value=",acenter,"/>
-                            
-                            <fr:property name="link(delete)" value="<%= String.format("/scientificCommissionTeamDA.do?method=removeMember&amp;degreeCurricularPlanID=%s&amp;executionDegreeID=%s", degreeCurricularPlanId, executionDegreeId) %>"/>
-                            <fr:property name="param(delete)" value="idInternal/memberID"/>
-                            <fr:property name="key(delete)" value="label.coordinator.scientificCommision.remove"/>
-                        </logic:present>
-                    </fr:layout>
-                </fr:edit>
+                                
+                                <fr:property name="link(delete)" value="<%= String.format("/scientificCommissionTeamDA.do?method=removeMember&amp;degreeCurricularPlanID=%s&amp;executionDegreeID=%s", degreeCurricularPlanId, executionDegreeId) %>"/>
+                                <fr:property name="param(delete)" value="idInternal/memberID"/>
+                                <fr:property name="key(delete)" value="label.coordinator.scientificCommision.remove"/>
+                        </fr:layout>
+                    </fr:edit>
+                </logic:present>
+                <logic:notPresent name="responsible">
+                    <fr:view name="members" schema="coordinator.commissionTeam.manage.contacts">
+                        <fr:layout name="tabular">
+                            <fr:property name="classes" value="tstyle1"/>
+                            <fr:property name="columnClasses" value=",acenter,"/>
+                        </fr:layout>
+                    </fr:view>
+                </logic:notPresent>
 
-            <html:submit>
-                <bean:message key="button.change"/> 
-            </html:submit>
+            <logic:present name="responsible">
+                <html:submit>
+                    <bean:message key="button.change"/> 
+                </html:submit>
+            </logic:present>
             </fr:form>
         </logic:notEmpty>
     </div>

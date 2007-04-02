@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.coordinator;
 
-import java.util.Set;
 import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
@@ -64,15 +63,10 @@ public class ScientificCommissionTeamDA extends FenixDispatchAction {
     private ExecutionDegree getDefaultExecutionDegree(HttpServletRequest request) {
         DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
         
-        Set<ExecutionDegree> executionDegrees = new TreeSet<ExecutionDegree>(ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_YEAR);
+        TreeSet<ExecutionDegree> executionDegrees = new TreeSet<ExecutionDegree>(ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_YEAR);
         executionDegrees.addAll(degreeCurricularPlan.getExecutionDegrees());
         
-        return executionDegrees.isEmpty() ? null : executionDegrees.iterator().next();
-//        for (ExecutionDegree executionDegree : executionDegrees) {
-//            if (isResponsible(request, executionDegree)) {
-//                return executionDegree;
-//            }
-//        }
+        return executionDegrees.isEmpty() ? null : executionDegrees.last();
     }
     
     private Integer getId(String id) {
