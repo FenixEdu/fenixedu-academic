@@ -9,17 +9,17 @@
 <em><bean:message key="label.payments" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.guide"/></h2>
 
-<strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.person"/></strong>
+<p class="mtop15 mbottom05"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.person"/></strong></p>
 <fr:view name="paymentsManagementDTO" property="person"
 	schema="person.view-with-name-and-idDocumentType-and-documentIdNumber">
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle4 thlight thright mtop05" />
+		<fr:property name="classes" value="tstyle2 thlight thright mtop05" />
 		<fr:property name="rowClasses" value="tdhl1,," />
 	</fr:layout>
 </fr:view>
 
 
-<strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments"/></strong>
+<p class="mbottom05"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments"/></strong></p>
 <logic:notEmpty name="paymentsManagementDTO" property="selectedEntries">
 
 	<fr:view name="paymentsManagementDTO" property="selectedEntries" schema="entryDTO.view">

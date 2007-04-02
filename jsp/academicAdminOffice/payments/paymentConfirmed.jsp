@@ -10,7 +10,7 @@
 
 
 <em><bean:message key="label.payments" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
-<h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.paymentConfirmed" /></h2>
+<h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments" /></h2>
 
 <p class="mtop2 mbottom15">
 	<span class="success0"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.paymentConfirmed"/></span>

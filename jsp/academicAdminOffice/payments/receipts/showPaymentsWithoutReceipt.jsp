@@ -30,11 +30,11 @@
 		</ul>
 	</logic:messagesPresent>
 	
-	<strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.person" /></strong>
+	<p class="mtop15 mbottom05"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.person" /></strong></p>
 	<fr:view name="createReceiptBean" property="person"
 		schema="person.view-with-name-and-idDocumentType-and-documentIdNumber">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4 thlight thright mtop05" />
+			<fr:property name="classes" value="tstyle2 thlight thright mtop05" />
 			<fr:property name="rowClasses" value="tdhl1,," />
 		</fr:layout>
 	</fr:view>
