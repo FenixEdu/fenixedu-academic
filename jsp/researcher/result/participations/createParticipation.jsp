@@ -17,15 +17,11 @@
 	<bean:define id="cancel" value="<%="/resultParticipations/backToResult.do?" + parameters%>"/>
 	<bean:define id="createExternalPerson" value="<%= "/resultParticipations/prepareCreateParticipator.do?" + parameters%>"/>
 	
-	<%--
-	<p class="mtop2 mbottom0"><b><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultParticipation.add"/></b></p>
-	--%>
-
  	<logic:notEqual name="bean" property="beanExternal" value="true">
-		<p class="mtop2 mbottom0"><b><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultParticipation.add"/></b></p>
+		<p class="mtop2 mbottom05"><b><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultParticipation.add"/></b></p>
  	</logic:notEqual>
  	<logic:equal name="bean" property="beanExternal" value="true">
-	 	<p class="mtop2 mbottom0"><b><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultParticipation.addExternal"/></b></p>
+	 	<p class="mtop2 mbottom05"><b><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultParticipation.addExternal"/></b></p>
  	</logic:equal>
  	
 	<logic:messagesPresent name="messages" message="true">
@@ -36,10 +32,10 @@
 
  	<logic:present name="needToCreatePerson"> 	
 		<logic:messagesNotPresent name="messages" message="true">
-		<div class="warning0">
-			<strong><bean:message key="label.attention" bundle="RESEARCHER_RESOURCES"/></strong>:<br/>
-			<bean:message key="label.informationForCreateUser" bundle="RESEARCHER_RESOURCES"/><br/>
-		</div>
+			<div class="warning0">
+				<strong><bean:message key="label.attention" bundle="RESEARCHER_RESOURCES"/>:</strong><br/>
+				<bean:message key="label.informationForCreateUser" bundle="RESEARCHER_RESOURCES"/>
+			</div>
 		</logic:messagesNotPresent>
  	</logic:present>
  	
@@ -79,25 +75,28 @@
 	<bean:define id="path" value="<%= "/resultParticipations/createParticipator.do?" + parameters %>"/>
 	
 	<logic:notPresent name="createUnit">
+	
+	<p class="mvert05"><span class="color888"><bean:message key="label.chooseExternalUnit" bundle="RESEARCHER_RESOURCES"/>:</span></p>
 	<fr:edit id="beanForExternalPerson" name="bean" schema="<%= schema %>" action="<%= path %>">
 		<fr:layout name="tabular">
-	        <fr:property name="classes" value="tstyle5 thlight mtop05"/>
+	        <fr:property name="classes" value="tstyle5 thlight thright mtop05"/>
 	        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
 		</fr:layout>
 		<fr:destination name="cancel" path="<%= cancel %>"/>
 	</fr:edit>	
 	</logic:notPresent>
+	
 	 
 	<logic:present name="createUnit">
 		<div class="warning0">
-			<strong><bean:message key="label.attention" bundle="RESEARCHER_RESOURCES"/></strong>:<br/>
+			<strong><bean:message key="label.attention" bundle="RESEARCHER_RESOURCES"/>:</strong><br/>
 			<bean:message key="label.informationForCreateUnit" bundle="RESEARCHER_RESOURCES"/>	
 		</div>
-		<table class="tstyle5 thlight mtop05">
-		<tr><th><bean:message key="label.person" bundle="RESEARCHER_RESOURCES"/></th><td><fr:view name="bean" property="personParticipationType"/></td></tr>
-		<tr><th><bean:message key="label.personName" bundle="RESEARCHER_RESOURCES"/></th><td><fr:view name="bean" property="participatorName"/></td></tr>
-		<tr><th><bean:message key="label.role" bundle="RESEARCHER_RESOURCES"/></th><td><fr:view name="bean" property="unitParticipationType"/></td></tr>
-		<tr><th><bean:message key="label.unit" bundle="RESEARCHER_RESOURCES"/></th><td><fr:view name="bean" property="organizationName"/></td></tr>
+		<table class="tstyle1 thright thlight mtop05">
+			<tr><th><bean:message key="label.person" bundle="RESEARCHER_RESOURCES"/>:</th><td><fr:view name="bean" property="personParticipationType"/></td></tr>
+			<tr><th><bean:message key="label.personName" bundle="RESEARCHER_RESOURCES"/>:</th><td><fr:view name="bean" property="participatorName"/></td></tr>
+			<tr><th><bean:message key="label.role" bundle="RESEARCHER_RESOURCES"/>:</th><td><fr:view name="bean" property="unitParticipationType"/></td></tr>
+			<tr><th><bean:message key="label.unit" bundle="RESEARCHER_RESOURCES"/>:</th><td><fr:view name="bean" property="organizationName"/></td></tr>
 		</table>
 	
 		<bean:define id="name" name="bean" property="participatorName"/>
