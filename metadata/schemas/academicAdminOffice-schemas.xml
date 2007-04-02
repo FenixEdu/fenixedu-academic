@@ -272,6 +272,9 @@
 	<slot name="executionYear" layout="menu-select" key="label.executionYear">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsForRegistrationProvider"/>
 		<property name="format" value="${year}"/>
+		<property name="key" value="true" />
+		<property name="defaultText" value="label.dropDown.all" />
+		<property name="bundle" value="ACADEMIC_OFFICE_RESOURCES" />
 	</slot>
 </schema>
 
