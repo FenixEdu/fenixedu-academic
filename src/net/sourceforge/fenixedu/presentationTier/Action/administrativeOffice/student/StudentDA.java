@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationSelectExecutionYearBean;
 import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person.PersonBeanFactoryEditor;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.contacts.MobilePhone;
@@ -92,6 +93,10 @@ public class StudentDA extends FenixDispatchAction {
 	RegistrationSelectExecutionYearBean bean = (RegistrationSelectExecutionYearBean) getRenderedObject();
 	if (bean == null) {
 	    bean = new RegistrationSelectExecutionYearBean(getRegistration(request));
+	    final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+	    if (bean.getRegistration().hasAnyEnrolmentsIn(currentExecutionYear)) {
+		bean.setExecutionYear(currentExecutionYear);
+	    }
 	}
 	
 	request.setAttribute("bean", bean);
