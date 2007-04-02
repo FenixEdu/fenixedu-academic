@@ -62,7 +62,9 @@
 						width="58"
 						height="11"
 						key="staticText-7"
-						stretchType="RelativeToTallestObject"/>
+						stretchType="RelativeToTallestObject">
+							<printWhenExpression><![CDATA[Boolean.valueOf(((net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest)$P{documentRequest}).hasEvent())]]></printWhenExpression>
+						</reportElement>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement lineSpacing="Single">
 						<font pdfFontName="Courier-Oblique" size="8" isItalic="true"/>
@@ -76,7 +78,9 @@
 						width="62"
 						height="11"
 						key="staticText-8"
-						stretchType="RelativeToTallestObject"/>
+						stretchType="RelativeToTallestObject">
+							<printWhenExpression><![CDATA[Boolean.valueOf(((net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest)$P{documentRequest}).hasEvent())]]></printWhenExpression>
+						</reportElement>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement lineSpacing="Single">
 						<font pdfFontName="Courier-Oblique" size="8" isItalic="true"/>
@@ -90,7 +94,9 @@
 						width="58"
 						height="11"
 						key="staticText-9"
-						stretchType="RelativeToTallestObject"/>
+						stretchType="RelativeToTallestObject">
+							<printWhenExpression><![CDATA[Boolean.valueOf(((net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest)$P{documentRequest}).hasEvent())]]></printWhenExpression>
+						</reportElement>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement lineSpacing="Single">
 						<font pdfFontName="Courier-Oblique" size="8" isItalic="true"/>
@@ -104,7 +110,9 @@
 						width="25"
 						height="11"
 						key="staticText-10"
-						stretchType="RelativeToTallestObject"/>
+						stretchType="RelativeToTallestObject">
+							<printWhenExpression><![CDATA[Boolean.valueOf(((net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest)$P{documentRequest}).hasEvent())]]></printWhenExpression>
+						</reportElement>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement lineSpacing="Single">
 						<font pdfFontName="Courier-Oblique" size="8" isItalic="true"/>
@@ -117,7 +125,9 @@
 						y="113"
 						width="50"
 						height="11"
-						key="textField-11"/>
+						key="textField-11">
+							<printWhenExpression><![CDATA[Boolean.valueOf(((net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest)$P{documentRequest}).hasEvent())]]></printWhenExpression>
+						</reportElement>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Right">
 						<font pdfFontName="Courier-Oblique" size="8" isItalic="true"/>
@@ -130,7 +140,9 @@
 						y="124"
 						width="50"
 						height="11"
-						key="textField-12"/>
+						key="textField-12">
+							<printWhenExpression><![CDATA[Boolean.valueOf(((net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest)$P{documentRequest}).hasEvent())]]></printWhenExpression>
+						</reportElement>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Right">
 						<font pdfFontName="Courier-Oblique" size="8" isItalic="true"/>
@@ -143,7 +155,9 @@
 						y="135"
 						width="50"
 						height="11"
-						key="textField-13"/>
+						key="textField-13">
+							<printWhenExpression><![CDATA[Boolean.valueOf(((net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest)$P{documentRequest}).hasEvent())]]></printWhenExpression>
+						</reportElement>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Right">
 						<font pdfFontName="Courier-Oblique" size="8" isItalic="true"/>
@@ -169,8 +183,7 @@
 						y="203"
 						width="271"
 						height="11"
-						key="staticText-11"
-						stretchType="RelativeToTallestObject"/>
+						key="staticText-11"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement lineSpacing="Single">
 						<font pdfFontName="Courier-Oblique" size="8" isItalic="true"/>
@@ -183,7 +196,9 @@
 						y="146"
 						width="50"
 						height="11"
-						key="textField-15"/>
+						key="textField-15">
+							<printWhenExpression><![CDATA[Boolean.valueOf(((net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest)$P{documentRequest}).hasEvent())]]></printWhenExpression>
+						</reportElement>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Right">
 						<font pdfFontName="Courier-Oblique" size="8" isItalic="true"/>
