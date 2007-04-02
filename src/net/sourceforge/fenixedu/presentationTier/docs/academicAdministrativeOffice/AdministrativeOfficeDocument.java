@@ -107,7 +107,7 @@ public class AdministrativeOfficeDocument extends FenixReport {
             parameters.put("situation", getDocumentRequest().getExecutionYear().containsDate(new DateTime()) ? " ESTÁ" : " ESTEVE");
         }
         
-        if (getDocumentRequest().isCertificate()) {
+        if (getDocumentRequest().isCertificate() && getDocumentRequest().hasEvent()) {
             final CertificateRequest certificateRequest = (CertificateRequest) getDocumentRequest();
             final CertificateRequestPR certificateRequestPR = (CertificateRequestPR) certificateRequest.getEvent().getPostingRule();
             
