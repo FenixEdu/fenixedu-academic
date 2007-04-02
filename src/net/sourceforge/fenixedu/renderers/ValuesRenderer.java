@@ -171,7 +171,7 @@ public class ValuesRenderer extends OutputRenderer {
 		protected HtmlComponent getNextComponent() {
 			if (this.insertSeparator) {
 				this.insertSeparator = false;
-				return new HtmlText(getHtmlSeparator());
+				return new HtmlText(getHtmlSeparator(), false);
 			}
 			else {
 				MetaSlot slot = getNextSlot();

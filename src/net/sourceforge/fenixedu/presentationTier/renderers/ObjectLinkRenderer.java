@@ -52,6 +52,8 @@ public class ObjectLinkRenderer extends OutputRenderer {
     private String linkIf;
     
     private boolean blankTarget = false;
+
+    private boolean indentation = false;
         
 	public boolean isBlankTarget() {
 		return blankTarget;
@@ -235,6 +237,21 @@ public class ObjectLinkRenderer extends OutputRenderer {
     public void setLinkIf(String linkIf) {
         this.linkIf = linkIf;
     }
+    
+    /**
+     * Chooses if the generated elements should be indented or not. This can be
+     * usefull when you want to introduce a separator but need to remove extra
+     * spaces.
+     * 
+     * @property
+     */
+    public void setIndentation(boolean indentation) {
+    	this.indentation  = indentation;
+    }
+    
+    public boolean isIndentation() {
+    	return this.indentation;
+    }
 
     @Override
     protected Layout getLayout(Object object, Class type) {
@@ -250,7 +267,7 @@ public class ObjectLinkRenderer extends OutputRenderer {
 
                 if (isAllowedToLink(usedObject)) {
                     HtmlLink link = getLink(usedObject);
-                    link.setIndented(false);
+                    link.setIndented(isIndentation());
     
                     String text = getLinkText();
                     if (text != null) {

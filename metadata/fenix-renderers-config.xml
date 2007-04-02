@@ -564,6 +564,10 @@ Documentation:
         <property name="htmlSeparator" value=", "/>
     </renderer>
 
+    <renderer type="java.lang.Object" layout="values-with-br" class="net.sourceforge.fenixedu.renderers.ValuesRenderer">
+  			<property name="htmlSeparator" value="&lt;br/&gt;"/>
+    </renderer>
+    
     <renderer mode="input" type="java.lang.String" layout="allow-case-change" class="net.sourceforge.fenixedu.renderers.StringCaseChangerRenderer"/>
 
     <!--@ The layout username-as-person allows you to insert a person given a username -->

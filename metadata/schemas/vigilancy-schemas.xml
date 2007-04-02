@@ -241,8 +241,9 @@
 <schema name="presentSimpleConvokesWithLink" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES">	
 		<slot name="writtenEvaluation" key="label.vigilancy.writtenEvaluation.header" layout="link">
 			<property name="linkFormat" value="/examCoordination/vigilancy/convokeManagement.do?writtenEvaluationId=${idInternal}&amp;method=showReport"/>
-			<property name="subLayout" value="values"/>
+			<property name="subLayout" value="values-with-br"/>
 			<property name="subSchema" value="presentWrittenEvaluationName"/>
+			<property name="indentation" value="true"/>
 			<property name="contextRelative" value="true"/>
 		</slot>
 		<slot name="points" key="label.vigilancy.points.header"/>
@@ -251,6 +252,7 @@
 <schema name="presentSimpleConvokesWithoutLink" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES">	
 		<slot name="writtenEvaluation" key="label.vigilancy.writtenEvaluation.header" layout="values" schema="presentWrittenEvaluationName">
 			<property name="classes" value="bluetxt"/>
+			<property name="indentation" value="true"/>
 		</slot>
 		<slot name="points" key="label.vigilancy.points.header"/>
 </schema>
