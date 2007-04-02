@@ -242,19 +242,30 @@ public class ResultParticipationManagementAction extends ResultsManagementAction
 	    request.setAttribute("duringCreation", true);
 	    request.setAttribute("bean", bean);
 	    setResParticipationRequestAttributes(request, result, bean);
-
+	    RenderUtils.invalidateViewState();
 	    return mapping.findForward("editParticipation");
 	}
 	return prepareEdit(mapping, form, request, response);
     }
 
+    public ActionForward unitWrapper(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	
+	if(getFromRequest(request, "createNewUnit")!=null) {
+	    return createUnit(mapping, form, request, response);
+	}
+	else {
+	    return createParticipator(mapping, form, request, response);
+	}
+    }
+    
     public ActionForward createUnit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	getResultFromRequest(request);
 
 	ResultParticipationCreationBean bean = (ResultParticipationCreationBean) RenderUtils.getViewState(
-		"externalUnitBean").getMetaObject().getObject();
+		"beanForExternalPerson").getMetaObject().getObject();
 	Object args[] = { bean.getOrganizationName() };
 	Unit unit = (Unit) executeService("CreateExternalUnitByName", args);
 	bean.setOrganization(unit);

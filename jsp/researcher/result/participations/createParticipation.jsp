@@ -45,27 +45,27 @@
 	
  	<%-- From to Create Participation --%>
 	<div class="dinline forminline">
-	<fr:form action="<%="/resultParticipations/createWrapper.do?" + parameters%>">
-		<fr:edit id="bean" name="bean" schema="<%= createSchema %>" >
-			<fr:layout name="tabular">
-		        <fr:property name="classes" value="tstyle5 thlight mtop05 dinline"/>
-		        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
-			</fr:layout>
-			<fr:destination name="exception" path="<%= prepareEdit %>"/>	
-			<fr:destination name="invalid" path="<%= prepareEdit %>"/>	
-			<fr:destination name="cancel" path="<%= cancel %>"/>
-			<fr:destination name="postBack" path="/resultParticipations/changeParticipationType.do"/>	
-			<fr:destination name="change.unitType" path="/resultParticipations/changeUnitType.do"/>
-		</fr:edit>
-		<br/>
-		<html:submit><bean:message key="label.submit" bundle="APPLICATION_RESOURCES"/></html:submit>
-		<logic:present name="needToCreatePerson"> 	
-			<html:submit property="createNew"><bean:message key="label.createPerson" bundle="RESEARCHER_RESOURCES"/></html:submit>
-	 	</logic:present>
-	</fr:form>
-	<fr:form action="<%= cancel %>">
-		<html:submit><bean:message key="button.cancel" bundle="APPLICATION_RESOURCES"/></html:submit>
-	</fr:form>
+		<fr:form action="<%="/resultParticipations/createWrapper.do?" + parameters%>">
+			<fr:edit id="bean" name="bean" schema="<%= createSchema %>" >
+				<fr:layout name="tabular">
+			        <fr:property name="classes" value="tstyle5 thlight mtop05 dinline"/>
+			        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
+				</fr:layout>
+				<fr:destination name="exception" path="<%= prepareEdit %>"/>	
+				<fr:destination name="invalid" path="<%= prepareEdit %>"/>	
+				<fr:destination name="cancel" path="<%= cancel %>"/>
+				<fr:destination name="postBack" path="/resultParticipations/changeParticipationType.do"/>	
+				<fr:destination name="change.unitType" path="/resultParticipations/changeUnitType.do"/>
+			</fr:edit>
+			<br/>
+			<html:submit><bean:message key="label.submit" bundle="APPLICATION_RESOURCES"/></html:submit>
+			<logic:present name="needToCreatePerson"> 	
+				<html:submit property="createNew"><bean:message key="label.createPerson" bundle="RESEARCHER_RESOURCES"/></html:submit>
+		 	</logic:present>
+		</fr:form>
+		<fr:form action="<%= cancel %>">
+			<html:submit><bean:message key="button.cancel" bundle="APPLICATION_RESOURCES"/></html:submit>
+		</fr:form>
 	</div>
 	</logic:notPresent>
 	
@@ -88,28 +88,30 @@
 	
 	 
 	<logic:present name="createUnit">
+		<bean:define id="schema" value="<%= "resultParticipation.fullCreation" + (bean.getResult().getIsPossibleSelectPersonRole() ? "WithRole" : "") + ".external.readOnly"%>" type="java.lang.String"/>
+		
 		<div class="warning0">
 			<strong><bean:message key="label.attention" bundle="RESEARCHER_RESOURCES"/>:</strong><br/>
 			<bean:message key="label.informationForCreateUnit" bundle="RESEARCHER_RESOURCES"/>	
 		</div>
-		<table class="tstyle1 thright thlight mtop05">
-			<tr><th><bean:message key="label.person" bundle="RESEARCHER_RESOURCES"/>:</th><td><fr:view name="bean" property="personParticipationType"/></td></tr>
-			<tr><th><bean:message key="label.personName" bundle="RESEARCHER_RESOURCES"/>:</th><td><fr:view name="bean" property="participatorName"/></td></tr>
-			<tr><th><bean:message key="label.role" bundle="RESEARCHER_RESOURCES"/>:</th><td><fr:view name="bean" property="unitParticipationType"/></td></tr>
-			<tr><th><bean:message key="label.unit" bundle="RESEARCHER_RESOURCES"/>:</th><td><fr:view name="bean" property="organizationName"/></td></tr>
-		</table>
-	
 		<bean:define id="name" name="bean" property="participatorName"/>
 		<bean:define id="role" name="bean" property="role"/>
-	
+		
 		<div class="dinline forminline">
-		<fr:form action="createUnit" action="<%= "/resultParticipations/createUnit.do?" + parameters %>">
-			<fr:edit id="externalUnitBean" name="bean" visible="false"/>
-			<html:submit><bean:message key="label.createUnit" bundle="RESEARCHER_RESOURCES"/></html:submit>
-		</fr:form>
-		<fr:form action="createUnit" action="<%= "/resultParticipations/prepareCreateParticipator.do?" + parameters + "&amp;name=" + name + "&amp;role=" + role%>">
-			<html:submit><bean:message key="label.changeUnit" bundle="RESEARCHER_RESOURCES"/></html:submit>
-		</fr:form>	
+			<fr:form action="createUnit" action="<%= "/resultParticipations/unitWrapper.do?" + parameters %>">
+				<fr:edit id="beanForExternalPerson" name="bean" schema="<%= schema %>">
+					<fr:layout name="tabular">
+				        <fr:property name="classes" value="tstyle5 thlight mtop05 dinline"/>
+				        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
+					</fr:layout>
+				</fr:edit>
+				<br/>
+				<html:submit><bean:message key="button.submit" bundle="RESEARCHER_RESOURCES"/></html:submit>
+				<html:submit property="createNewUnit" ><bean:message key="label.createUnit" bundle="RESEARCHER_RESOURCES"/></html:submit>
+			</fr:form>
+			<fr:form action="createUnit" action="<%= "/resultParticipations/prepareEdit.do?" + parameters %>">
+				<html:submit><bean:message key="button.cancel" bundle="RESEARCHER_RESOURCES"/></html:submit>
+			</fr:form>		
 		</div>
 	</logic:present>
 		
