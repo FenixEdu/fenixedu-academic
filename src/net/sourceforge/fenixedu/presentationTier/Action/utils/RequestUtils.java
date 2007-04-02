@@ -5,6 +5,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.utils;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -142,7 +143,10 @@ public class RequestUtils {
         final Enumeration enumeration = request.getAttributeNames();
         while (enumeration.hasMoreElements()) {
             final String attributeName = (String) enumeration.nextElement();
-            attributeMap.put(attributeName, request.getAttribute(attributeName));
+            final Object attribute = request.getAttribute(attributeName);
+            if (attribute instanceof Serializable) {
+        	attributeMap.put(attributeName, attribute);
+            }
         }
         httpSession.setAttribute("ORIGINAL_ATTRIBUTE_MAP", attributeMap);
 
