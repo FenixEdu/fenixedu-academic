@@ -82,4 +82,16 @@ public abstract class OperatorArgument extends DynamicArgument {
     protected Argument argument(int index) {
         return getArgumentList().get(index);
     }
+
+    @Override
+    public boolean isDynamic() {
+        for (Argument argument : getArguments()) {
+            if (argument.isDynamic()) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
 }
