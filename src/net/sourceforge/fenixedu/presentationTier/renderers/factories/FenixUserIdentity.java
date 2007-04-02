@@ -30,7 +30,12 @@ public class FenixUserIdentity implements UserIdentity {
         
         FenixUserIdentity other = (FenixUserIdentity) obj;
         
-        return this.userView.equals(other.userView);
+        if (this.userView == null) {
+            return other.userView == null;
+        }
+        else {
+            return this.userView.equals(other.userView);
+        }
     }
     
     @Override
