@@ -10,16 +10,19 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope.DegreeModuleScopeCurricularCourseScope;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context.DegreeModuleScopeContext;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.EvaluationType;
@@ -159,6 +162,13 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
     }
 
     protected void checkIntervalBetweenEvaluations() {
+	final IUserView userView = AccessControl.getUserView();
+	if (userView == null || !userView.hasRoleType(RoleType.TIME_TABLE_MANAGER)) {
+	    checkIntervalBetweenEvaluationsCondition();
+	}
+    }
+
+    public void checkIntervalBetweenEvaluationsCondition() {
 	if (getDayDateYearMonthDay() != null && getBeginningDateHourMinuteSecond() != null) {
 	    for (final ExecutionCourse executionCourse : getAssociatedExecutionCoursesSet()) {
 		for (final Evaluation evaluation : executionCourse.getAssociatedEvaluationsSet()) {
@@ -185,21 +195,6 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
 	    }
 	}
     	return false;
-    }
-
-    private void checkIntervalBetweenEvaluations(Set<WrittenEvaluation> associatedWrittenEvaluationsSet) {
-	System.out.println("Running check for: " + getIdInternal());
-	for (final WrittenEvaluation writtenEvaluation : associatedWrittenEvaluationsSet) {
-	    if (writtenEvaluation != this) {
-		System.out.println("Testing against: " + writtenEvaluation.getIdInternal());
-		System.out.println("   t1: " + containsCommonExecutionCourse(getAssociatedExecutionCoursesSet(), writtenEvaluation.getAssociatedExecutionCoursesSet()));
-		System.out.println("   t2: " + isIntervalBetweenEvaluationsIsLessThan48Hours(this, writtenEvaluation));
-		if (containsCommonExecutionCourse(getAssociatedExecutionCoursesSet(), writtenEvaluation.getAssociatedExecutionCoursesSet())
-			&& isIntervalBetweenEvaluationsIsLessThan48Hours(this, writtenEvaluation)) {
-		    throw new DomainException("two.evaluations.cannot.occur.withing.48.hours");
-		}
-	    }
-	}
     }
 
     private boolean containsCommonExecutionCourse(Set<ExecutionCourse> associatedExecutionCoursesSet1, Set<ExecutionCourse> associatedExecutionCoursesSet2) {
