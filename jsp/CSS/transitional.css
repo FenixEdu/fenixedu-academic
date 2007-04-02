@@ -102,6 +102,10 @@ ul.list4 li { padding: 0.25em 0; }
 ul.list5 { padding-left: 2.5em; margin-left: 0; }
 ul.list6 { margin: 0; padding: 0; } /* list without margins */
 ul.list6 li { margin: 0; padding: 0; }
+ul.list7 { margin-left: 0; padding: 0.5em; } /* ul without left margins */
+ul.list7 li { margin: 0; padding: 0; } /* li without margins */
+
+
 
 /* lists */
 ul.liinline {
