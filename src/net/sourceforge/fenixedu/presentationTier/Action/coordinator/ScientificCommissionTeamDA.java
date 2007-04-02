@@ -67,13 +67,12 @@ public class ScientificCommissionTeamDA extends FenixDispatchAction {
         Set<ExecutionDegree> executionDegrees = new TreeSet<ExecutionDegree>(ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_YEAR);
         executionDegrees.addAll(degreeCurricularPlan.getExecutionDegrees());
         
-        for (ExecutionDegree executionDegree : executionDegrees) {
-            if (isResponsible(request, executionDegree)) {
-                return executionDegree;
-            }
-        }
-        
-        return null;
+        return executionDegrees.isEmpty() ? null : executionDegrees.iterator().next();
+//        for (ExecutionDegree executionDegree : executionDegrees) {
+//            if (isResponsible(request, executionDegree)) {
+//                return executionDegree;
+//            }
+//        }
     }
     
     private Integer getId(String id) {
@@ -103,9 +102,9 @@ public class ScientificCommissionTeamDA extends FenixDispatchAction {
         }
 
         request.setAttribute("executionDegree", executionDegree);
-        request.setAttribute("members", executionDegree.getScientificCommissionMembers());
         request.setAttribute("executionDegreeBean", bean);
         request.setAttribute("usernameBean", new VariantBean());
+        request.setAttribute("members", executionDegree == null ? null : executionDegree.getScientificCommissionMembers());
         
         if (isResponsible(request, executionDegree)) {
             request.setAttribute("responsible", true);
