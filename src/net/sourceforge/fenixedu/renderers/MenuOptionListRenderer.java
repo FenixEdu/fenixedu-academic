@@ -55,6 +55,7 @@ public class MenuOptionListRenderer extends InputRenderer {
     
     private boolean saveOptions;
     
+    private boolean nullOptionHidden;
     private String defaultText;
     private String bundle;
     private boolean key;
@@ -184,6 +185,19 @@ public class MenuOptionListRenderer extends InputRenderer {
         this.saveOptions = saveOptions;
     }
 
+    public boolean isNullOptionHidden() {
+        return this.nullOptionHidden;
+    }
+
+    /**
+     * Don't show the default option, that is, the options meaning no value selected.
+     * 
+     * @property
+     */
+    public void setNullOptionHidden(boolean nullOptionHidden) {
+        this.nullOptionHidden = nullOptionHidden;
+    }
+
     @Override
     protected Layout getLayout(Object object, Class type) {
         return new MenuOptionLayout();
@@ -240,8 +254,10 @@ public class MenuOptionListRenderer extends InputRenderer {
         public HtmlComponent createComponent(Object object, Class type) {
             HtmlMenu menu = new HtmlMenu();
             
-            String defaultOptionTitle = getDefaultTitle();
-            menu.createDefaultOption(defaultOptionTitle).setSelected(object == null);
+            if (! isNullOptionHidden()) {
+                String defaultOptionTitle = getDefaultTitle();
+                menu.createDefaultOption(defaultOptionTitle).setSelected(object == null);
+            }
             
             RenderKit kit = RenderKit.getInstance();
             Schema schema = kit.findSchema(getEachSchema()); 
