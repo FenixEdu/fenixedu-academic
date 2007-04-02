@@ -50,7 +50,7 @@ public class GrantOwner extends GrantOwner_Base {
     }
 
     public static GrantOwner readGrantOwnerByNumber(Integer grantOwnerNumber) {
-        for (GrantOwner grantOwner : RootDomainObject.getInstance().getGrantOwners()) {
+        for (final GrantOwner grantOwner : RootDomainObject.getInstance().getGrantOwners()) {
             if (grantOwner.getNumber().equals(grantOwnerNumber)) {
                 return grantOwner;
             }
