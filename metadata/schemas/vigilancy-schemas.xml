@@ -260,7 +260,7 @@
 <schema name="presentSimpleConvokesForVigilant" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES">	
 		<slot name="writtenEvaluation" key="label.vigilancy.writtenEvaluation.header" layout="link">
 			<property name="linkFormat" value="/departmentMember/vigilancy/vigilantManagement.do?writtenEvaluationId=${idInternal}&amp;method=showWrittenEvaluationReport"/>
-			<property name="subLayout" value="values"/>
+			<property name="subLayout" value="values-with-br"/>
 			<property name="subSchema" value="presentWrittenEvaluationName"/>
 			<property name="contextRelative" value="true"/>
 		</slot>
