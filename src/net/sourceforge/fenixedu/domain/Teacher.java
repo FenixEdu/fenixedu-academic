@@ -15,9 +15,7 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.InvalidCategory;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.MaxResponsibleForExceed;
-import net.sourceforge.fenixedu.dataTransferObject.credits.InfoCredits;
 import net.sourceforge.fenixedu.domain.credits.ManagementPositionCreditLine;
-import net.sourceforge.fenixedu.domain.credits.util.InfoCreditsBuilder;
 import net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
@@ -58,7 +56,7 @@ import org.joda.time.YearMonthDay;
 
 public class Teacher extends Teacher_Base {
 
-    public static final Comparator TEACHER_COMPARATOR_BY_CATEGORY_AND_NUMBER = new Comparator<Teacher>() {
+    public static final Comparator<Teacher> TEACHER_COMPARATOR_BY_CATEGORY_AND_NUMBER = new Comparator<Teacher>() {
 
 	public int compare(Teacher teacher1, Teacher teacher2) {
 	    final int teacherNumberCompare = teacher1.getTeacherNumber().compareTo(
@@ -341,8 +339,8 @@ public class Teacher extends Teacher_Base {
 
     public List<Proposal> getFinalDegreeWorksByExecutionYear(ExecutionYear executionYear) {
 	List<Proposal> proposalList = new ArrayList<Proposal>();
-	for (Iterator iter = getAssociatedProposalsByOrientator().iterator(); iter.hasNext();) {
-	    Proposal proposal = (Proposal) iter.next();
+	for (Iterator<Proposal> iter = getAssociatedProposalsByOrientator().iterator(); iter.hasNext();) {
+	    Proposal proposal = iter.next();
 	    if (proposal.getScheduleing().getExecutionDegreesSet().iterator().next().getExecutionYear()
 		    .equals(executionYear)) {
 		// if it was attributed by the coordinator the proposal is
@@ -357,9 +355,8 @@ public class Teacher extends Teacher_Base {
 		    Group attributedGroupByTeacher = proposal.getGroupAttributedByTeacher();
 		    if (attributedGroupByTeacher != null) {
 			boolean toAdd = false;
-			for (Iterator iterator = attributedGroupByTeacher.getGroupStudents().iterator(); iterator
-				.hasNext();) {
-			    GroupStudent groupStudent = (GroupStudent) iterator.next();
+			for (Iterator<GroupStudent> iterator = attributedGroupByTeacher.getGroupStudents().iterator(); iterator.hasNext();) {
+			    GroupStudent groupStudent = iterator.next();
 			    Proposal studentProposal = groupStudent.getFinalDegreeWorkProposalConfirmation();
 			    if (studentProposal != null && studentProposal.equals(proposal)) {
 				toAdd = true;
@@ -378,19 +375,18 @@ public class Teacher extends Teacher_Base {
     }
 
     public List<ExecutionCourse> getLecturedExecutionCoursesByExecutionYear(ExecutionYear executionYear) {
-	List<ExecutionCourse> executionCourses = new ArrayList();
-	for (Iterator iter = executionYear.getExecutionPeriods().iterator(); iter.hasNext();) {
-	    ExecutionPeriod executionPeriod = (ExecutionPeriod) iter.next();
+	List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
+	for (Iterator<ExecutionPeriod> iter = executionYear.getExecutionPeriods().iterator(); iter.hasNext();) {
+	    ExecutionPeriod executionPeriod = iter.next();
 	    executionCourses.addAll(getLecturedExecutionCoursesByExecutionPeriod(executionPeriod));
 	}
 	return executionCourses;
     }
 
-    public List<ExecutionCourse> getLecturedExecutionCoursesByExecutionPeriod(
-	    final ExecutionPeriod executionPeriod) {
+    public List<ExecutionCourse> getLecturedExecutionCoursesByExecutionPeriod(final ExecutionPeriod executionPeriod) {
 	List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
-	for (Iterator iter = getProfessorships().iterator(); iter.hasNext();) {
-	    Professorship professorship = (Professorship) iter.next();
+	for (Iterator<Professorship> iter = getProfessorships().iterator(); iter.hasNext();) {
+	    Professorship professorship = iter.next();
 	    ExecutionCourse executionCourse = professorship.getExecutionCourse();
 
 	    if (executionCourse.getExecutionPeriod().equals(executionPeriod)) {
@@ -455,15 +451,7 @@ public class Teacher extends Teacher_Base {
 	    }
 	});
     }
-
-    /***********************************************************************
-         * OTHER METHODS *
-         **********************************************************************/
-
-    public InfoCredits getExecutionPeriodCredits(ExecutionPeriod executionPeriod) {
-	return InfoCreditsBuilder.build(this, executionPeriod);
-    }
-
+  
     /***********************************************************************
          * PRIVATE METHODS *
          **********************************************************************/

@@ -88,8 +88,7 @@ public class TeacherService extends TeacherService_Base {
 
     public Double getCredits() throws ParseException {
         double credits = getMasterDegreeServiceCredits();
-        credits += getTeachingDegreeCredits();
-        // credits += getPastServiceCredits();
+        credits += getTeachingDegreeCredits();        
         credits += getOtherServiceCredits();
         credits += getTeacherAdviseServiceCredits();
         return round(credits);
