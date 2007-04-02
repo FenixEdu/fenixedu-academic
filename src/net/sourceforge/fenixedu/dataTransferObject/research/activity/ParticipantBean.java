@@ -8,6 +8,12 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.research.activity.Cooperation;
+import net.sourceforge.fenixedu.domain.research.activity.Event;
+import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
+import net.sourceforge.fenixedu.domain.research.activity.JournalIssue;
+import net.sourceforge.fenixedu.domain.research.activity.ParticipationsInterface;
+import net.sourceforge.fenixedu.domain.research.activity.ScientificJournal;
 import net.sourceforge.fenixedu.domain.research.activity.Participation.ResearchActivityParticipationRole;
 
 public abstract class ParticipantBean implements Serializable {
@@ -113,4 +119,30 @@ public abstract class ParticipantBean implements Serializable {
     public abstract List<ResearchActivityParticipationRole> getAllowedRoles();
     public abstract DomainObject getActivity();
 
+    public static ParticipantBean getParticipantBean(ParticipationsInterface objectWithParticipations) {
+	
+	ParticipantBean bean = null;
+	if (objectWithParticipations instanceof Event) {
+	    bean = new EventParticipantBean();
+	    ((EventParticipantBean) bean).setEvent((Event) objectWithParticipations);
+	}
+	if (objectWithParticipations instanceof EventEdition) {
+	    bean = new EventEditionParticipantBean();
+	    ((EventEditionParticipantBean) bean).setEventEdition((EventEdition) objectWithParticipations);
+	}
+	if (objectWithParticipations instanceof ScientificJournal) {
+	    bean = new ScientificJournalParticipantBean();
+	    ((ScientificJournalParticipantBean) bean)
+		    .setScientificJournal((ScientificJournal) objectWithParticipations);
+	}
+	if (objectWithParticipations instanceof JournalIssue) {
+	    bean = new JournalIssueParticipantBean();
+	    ((JournalIssueParticipantBean) bean).setJournalIssue((JournalIssue)objectWithParticipations);
+	}
+	if (objectWithParticipations instanceof Cooperation) {
+	    bean = new CooperationParticipantBean();
+	    ((CooperationParticipantBean) bean).setCooperation((Cooperation) objectWithParticipations);
+	}
+	return bean;
+    }
 }

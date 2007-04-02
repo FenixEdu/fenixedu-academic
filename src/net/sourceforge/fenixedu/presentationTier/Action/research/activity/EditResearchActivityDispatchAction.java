@@ -6,6 +6,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.research.activity.EventParticipantBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.activity.JournalIssueParticipantBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.activity.ParticipantBean;
@@ -15,7 +17,6 @@ import net.sourceforge.fenixedu.dataTransferObject.research.activity.ScientificJ
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.research.activity.Cooperation;
 import net.sourceforge.fenixedu.domain.research.activity.Event;
 import net.sourceforge.fenixedu.domain.research.activity.JournalIssue;
 import net.sourceforge.fenixedu.domain.research.activity.Participation;
@@ -30,50 +31,16 @@ import org.apache.struts.action.ActionMapping;
 public class EditResearchActivityDispatchAction extends ActivitiesManagementDispatchAction {
 
     private ActionForward generalPrepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response, ParticipationsInterface objectWithParticipationObject)
-    throws Exception {
-	
+	    HttpServletResponse response, ParticipationsInterface objectWithParticipationObject) {
+
 	ResearchActivityEditionBean bean = ResearchActivityEditionBean
-	.getResearchActivityEditionBean(objectWithParticipationObject);
+		.getResearchActivityEditionBean(objectWithParticipationObject);
 	Person loggedPerson = getLoggedPerson(request);
 	fillParticipations(bean, loggedPerson, objectWithParticipationObject.getParticipations());
 	request.setAttribute("researchActivity", objectWithParticipationObject);
 	request.setAttribute("editionBean", bean);
 	request.setAttribute("party", loggedPerson);
 	return mapping.findForward("EditResearchActivity");
-    }
-    
-    public ActionForward prepareEvent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	Event event = getEventFromRequest(request);
-	request.setAttribute("schema", "event.view-defaults");
-	return generalPrepare(mapping, form, request, response, event);
-    }
-
-
-    public ActionForward prepareScientificJournal(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-	ScientificJournal journal = getScientificJournalFromRequest(request);
-	request.setAttribute("schema", "journal.view-defaults");
-	return generalPrepare(mapping, form, request, response, journal);
-    }
-
-    public ActionForward prepareJournalIssue(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-	JournalIssue issue = getIssueFromRequest(request);
-	request.setAttribute("schema", "issue.view-defaults");
-	return generalPrepare(mapping, form, request, response, issue);
-    }
-
-    public ActionForward prepareCooperation(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-	Cooperation cooperation = getCooperationFromRequest(request);
-	request.setAttribute("schema", "cooperation.view-defaults");
-	return generalPrepare(mapping, form, request, response, cooperation);
     }
 
     private void fillParticipations(ResearchActivityEditionBean bean, Person person,
@@ -93,104 +60,138 @@ public class EditResearchActivityDispatchAction extends ActivitiesManagementDisp
 	bean.setOtherParticipations(otherParticipations);
     }
 
-    public ActionForward prepareEditEventData(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward prepareEvent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 
-	Event event = getEventFromRequest(request);
-	request.setAttribute("schema", "event.edit-defaults");
-	request.setAttribute("researchActivity", event);
+	return generalPrepare(mapping, form, request, response, getEventFromRequest(request));
+    }
+
+    public ActionForward prepareEventEdition(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	return generalPrepare(mapping, form, request, response, getEventEditionFromRequest(request));
+    }
+
+    public ActionForward prepareScientificJournal(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	return generalPrepare(mapping, form, request, response, getScientificJournalFromRequest(request));
+    }
+
+    public ActionForward prepareJournalIssue(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	return generalPrepare(mapping, form, request, response, getIssueFromRequest(request));
+    }
+
+    public ActionForward prepareCooperation(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	return generalPrepare(mapping, form, request, response, getCooperationFromRequest(request));
+    }
+
+    private ActionForward generalPrepareData(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response,
+	    ParticipationsInterface objectWithParticipation) {
+
+	request.setAttribute("researchActivity", objectWithParticipation);
 	return mapping.findForward("EditData");
     }
 
-    public ActionForward prepareEditScientificJournalData(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward prepareEditEventData(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
 
-	ScientificJournal journal = getScientificJournalFromRequest(request);
-	request.setAttribute("schema", "journal.edit-defaults");
-	request.setAttribute("researchActivity", journal);
-	return mapping.findForward("EditData");
+	return generalPrepareData(mapping, form, request, response, getEventFromRequest(request));
+
+    }
+
+    public ActionForward prepareEditEventEditionData(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	return generalPrepareData(mapping, form, request, response, getEventEditionFromRequest(request));
+
+    }
+    
+    public ActionForward prepareEditScientificJournalData(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	
+	ScientificJournal scientificJournal = getScientificJournalFromRequest(request);
+	if(scientificJournal.canBeEditedByCurrentUser()) {
+	    return generalPrepareData(mapping,form,request,response,scientificJournal);
+	}
+	else {
+	    addActionMessage(request, "label.error.othersAssociatedToJournal");
+	    return generalPrepare(mapping, form, request, response, scientificJournal);
+	}
     }
 
     public ActionForward prepareEditJournalIssueData(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	    HttpServletRequest request, HttpServletResponse response) {
 
-	JournalIssue journal = getIssueFromRequest(request);
-	request.setAttribute("schema", "issue.edit-defaults");
-	request.setAttribute("researchActivity", journal);
-	return mapping.findForward("EditData");
+	JournalIssue issue = getIssueFromRequest(request);
+	if(issue.canBeEditedByCurrentUser()) {
+	    return generalPrepareData(mapping, form, request, response, issue);
+	}
+	else {
+	    addActionMessage(request, "label.error.othersAssociatedToIssue");
+	    return generalPrepare(mapping, form, request, response, issue);
+	}
     }
 
     public ActionForward prepareEditCooperationData(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	    HttpServletRequest request, HttpServletResponse response) {
 
-	Cooperation cooperation = getCooperationFromRequest(request);
-	request.setAttribute("schema", "cooperation.edit-defaults");
-	request.setAttribute("researchActivity", cooperation);
-	return mapping.findForward("EditData");
+	return generalPrepareData(mapping, form, request, response, getCooperationFromRequest(request));
+    }
+
+    private ActionForward generalPrepareParticipants(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response,
+	    ParticipationsInterface objectWithParticipations) {
+
+	Person person = getLoggedPerson(request);
+	if (objectWithParticipations.getParticipationsFor(person).size() == 1) {
+	    request.setAttribute("lastRole", "yes");
+	}
+	request.setAttribute("loggedPerson", person);
+	request.setAttribute("participantBeans", createRoleBeans(objectWithParticipations
+		.getParticipationsFor(person)));
+	request.setAttribute("researchActivity", objectWithParticipations);
+	return mapping.findForward("EditParticipants");
     }
 
     public ActionForward prepareEditEventParticipants(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	    HttpServletRequest request, HttpServletResponse response) {
 
-	Event event = getEventFromRequest(request);
-	Person person = getLoggedPerson(request);
-	if (event.getParticipationsFor(person).size() == 1) {
-	    request.setAttribute("lastRole", "yes");
-	}
+	return generalPrepareParticipants(mapping, form, request, response, getEventFromRequest(request));
+    }
 
-	request.setAttribute("loggedPerson", person);
-	request.setAttribute("participantBeans", createRoleBeans(event.getParticipationsFor(person)));
-	request.setAttribute("researchActivity", event);
-	return mapping.findForward("EditParticipants");
+    public ActionForward prepareEditEventEditionParticipants(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	return generalPrepareParticipants(mapping, form, request, response, getEventEditionFromRequest(request));
     }
 
     public ActionForward prepareEditScientificJournalParticipants(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	    HttpServletRequest request, HttpServletResponse response) {
 
-	ScientificJournal journal = getScientificJournalFromRequest(request);
-	Person person = getLoggedPerson(request);
-	if (journal.getParticipationsFor(person).size() == 1) {
-	    request.setAttribute("lastRole", "yes");
-	}
-
-	request.setAttribute("loggedPerson", person);
-	request.setAttribute("participantBeans", createRoleBeans(journal.getParticipationsFor(person)));
-	request.setAttribute("researchActivity", journal);
-	return mapping.findForward("EditParticipants");
+	return generalPrepareParticipants(mapping, form, request, response, getScientificJournalFromRequest(request));
     }
 
     public ActionForward prepareEditJournalIssueParticipants(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	    HttpServletRequest request, HttpServletResponse response) {
 
-	JournalIssue issue = getIssueFromRequest(request);
-	Person person = getLoggedPerson(request);
-	if (issue.getParticipationsFor(person).size() == 1) {
-	    request.setAttribute("lastRole", "yes");
-	}
-
-	request.setAttribute("loggedPerson", person);
-	request.setAttribute("participantBeans", createRoleBeans(issue.getParticipationsFor(person)));
-	request.setAttribute("researchActivity", issue);
-	return mapping.findForward("EditParticipants");
+	return generalPrepareParticipants(mapping, form, request, response, getIssueFromRequest(request));
     }
 
     public ActionForward prepareEditCooperationParticipants(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	    HttpServletRequest request, HttpServletResponse response) {
 
-	Cooperation cooperation = getCooperationFromRequest(request);
-	Person person = getLoggedPerson(request);
-	if (cooperation.getParticipationsFor(person).size() == 1) {
-	    request.setAttribute("lastRole", "yes");
-	}
-
-	request.setAttribute("loggedPerson", person);
-	request.setAttribute("participantBeans", createRoleBeans(cooperation.getParticipationsFor(person)));
-	request.setAttribute("researchActivity", cooperation);
-	return mapping.findForward("EditParticipants");
+	return generalPrepareParticipants(mapping, form, request, response, getCooperationFromRequest(request));
     }
 
     public ActionForward editParticipants(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	String forwardTo = request.getParameter("forwardTo");
 
@@ -213,44 +214,41 @@ public class EditResearchActivityDispatchAction extends ActivitiesManagementDisp
 
 	return mapping.findForward(forwardTo);
     }
-
-    public ActionForward prepareCreateNewEventParticipationRole(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-
+    
+    private ActionForward generalPrepareCreateNewParticipatonRole (ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response, ParticipationsInterface objectWithParticipations) {
+	
+	
 	String forwardTo = request.getParameter("forwardTo");
-	Event event = getEventFromRequest(request);
-	EventParticipantBean bean = new EventParticipantBean();
-	bean.setEvent(event);
+	ParticipantBean bean = ParticipantBean.getParticipantBean(objectWithParticipations);
 	bean.setPerson(getLoggedPerson(request));
-
 	request.setAttribute("participationRoleBean", bean);
 	return mapping.findForward(forwardTo);
     }
+    
+    public ActionForward prepareCreateNewEventParticipationRole(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	
+	return generalPrepareCreateNewParticipatonRole(mapping, form, request, response, getEventFromRequest(request));
+    }
 
+    public ActionForward prepareCreateNewEventEditionParticipationRole(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	
+	return generalPrepareCreateNewParticipatonRole(mapping, form, request, response, getEventEditionFromRequest(request));
+    }
+    
     public ActionForward prepareCreateNewScientificJournalParticipationRole(ActionMapping mapping,
 	    ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	String forwardTo = request.getParameter("forwardTo");
-	ScientificJournal journal = getScientificJournalFromRequest(request);
-	ScientificJournalParticipantBean bean = new ScientificJournalParticipantBean();
-	bean.setScientificJournal(journal);
-	bean.setPerson(getLoggedPerson(request));
-
-	request.setAttribute("participationRoleBean", bean);
-	return mapping.findForward(forwardTo);
+	return generalPrepareCreateNewParticipatonRole(mapping, form, request, response, getScientificJournalFromRequest(request));
+	
     }
 
     public ActionForward prepareCreateNewJournalIssueParticipationRole(ActionMapping mapping,
 	    ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	String forwardTo = request.getParameter("forwardTo");
-	JournalIssue issue = getIssueFromRequest(request);
-	JournalIssueParticipantBean bean = new JournalIssueParticipantBean();
-	bean.setJournalIssue(issue);
-	bean.setPerson(getLoggedPerson(request));
-
-	request.setAttribute("participationRoleBean", bean);
-	return mapping.findForward(forwardTo);
+	return generalPrepareCreateNewParticipatonRole(mapping, form, request, response, getIssueFromRequest(request));
     }
 
     public ActionForward createNewParticipationRole(ActionMapping mapping, ActionForm form,

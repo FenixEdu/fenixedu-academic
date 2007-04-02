@@ -1,7 +1,9 @@
 package net.sourceforge.fenixedu.domain.research.activity;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -9,6 +11,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.research.activity.Participation.ResearchActivityParticipationRole;
 import net.sourceforge.fenixedu.domain.research.result.publication.Article;
 import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 
 public class ScientificJournal extends ScientificJournal_Base implements ParticipationsInterface {
@@ -67,5 +70,19 @@ public class ScientificJournal extends ScientificJournal_Base implements Partici
 	    }
 	}
 	return participations;
+    }
+    
+    public boolean canBeEditedByUser(Person person) {
+	for(JournalIssue issue : getJournalIssues()) {
+	    if(!issue.canBeEditedByUser(person)) {
+		return false;
+	    }
+	}
+	return getParticipations().size() == getParticipationsFor(person).size();
+	
+    }
+    
+    public boolean canBeEditedByCurrentUser() {
+	return canBeEditedByUser(AccessControl.getPerson());
     }
 }

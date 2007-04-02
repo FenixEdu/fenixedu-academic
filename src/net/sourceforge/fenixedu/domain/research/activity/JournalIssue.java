@@ -69,10 +69,24 @@ public class JournalIssue extends JournalIssue_Base implements ParticipationsInt
 	super.deleteDomainObject();
     }
 
-    public boolean canBeEditedByCurrentUser() {
+    public boolean canBeEditedByUser(Person person) {
 	Set<Person> people = getPeopleWhoHaveAssociatedArticles(); 
-	Person currentUser = AccessControl.getPerson();
-	return people.size()==1 && people.contains(currentUser); 
+	people.addAll(getPeopleWhoHaveParticipations());
+	return people.size()==1 && people.contains(person);	
+    }
+    
+    public Set<Person> getPeopleWhoHaveParticipations() {
+	Set<Person> people = new HashSet<Person>();
+	for(JournalIssueParticipation participation : getParticipations()) {
+	    if(participation.getParty().isPerson()) {
+		people.add((Person)participation.getParty());
+	    }
+	}
+	return people;
+    }
+
+    public boolean canBeEditedByCurrentUser() {
+	return canBeEditedByUser(AccessControl.getPerson());
     }
     
     public ResearchActivityStage getStage() {

@@ -8,8 +8,8 @@
 <logic:present role="RESEARCHER">
 	<bean:define id="activityId" name="researchActivity" property="idInternal"/>
 	<bean:define id="parameter" value="<%= "activityId=" + activityId %>"/>
-	<bean:define id="schema" name="schema" type="java.lang.String" scope="request" />
 	<bean:define id="activityType" name="researchActivity" property="class.simpleName" />
+	<bean:define id="schema" value="<%= activityType + ".view-defaults" %>" type="java.lang.String" scope="request" />
 	
 	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.superTitle"/></em>
 	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="<%= "researcher.activity.editResearchActivity." + activityType %>"/></h2>
@@ -39,6 +39,14 @@
 		</fr:form>
 		<br />
 	</logic:equal>
+
+	<logic:messagesPresent message="true">
+		<p>
+			<html:messages id="messages" message="true" bundle="RESEARCHER_RESOURCES">
+				<span class="error0"><bean:write name="messages"/></span>
+			</html:messages>
+		</p>
+	</logic:messagesPresent>
 
 	<bean:message key="link.edit" bundle="RESEARCHER_RESOURCES"/>: 
 	<html:link page="<%="/activities/editResearchActivity.do?method=prepareEdit" + activityType + "Data&" + parameter %>">

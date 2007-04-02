@@ -358,6 +358,25 @@ public abstract class Party extends Party_Base {
 	return false;
     }
     
+    public List<EventEditionParticipation> getEventEditionParticipationsForScope(ScopeType type) {
+	List<EventEditionParticipation> participations = new ArrayList<EventEditionParticipation>();
+	for (Participation participation : getParticipations()) {
+	    if (participation.isEventEditionParticipation()) {
+		if (type == null
+			|| (type != null && type.equals(((EventEditionParticipation) participation).getEventEdition()
+				.getEvent().getLocationType()))) {
+		    participations.add((EventEditionParticipation) participation);
+		}
+
+	    }
+	}
+	return participations;
+    }
+    
+    public List<EventEditionParticipation> getAllEventEditionParticipations() {
+	return getEventEditionParticipationsForScope(null);
+    }
+    
     public List<EventParticipation> getEventParticipationsForScope(ScopeType type) {
 	List<EventParticipation> participations = new ArrayList<EventParticipation>();
 	for (Participation participation : getParticipations()) {
@@ -392,16 +411,6 @@ public abstract class Party extends Party_Base {
 	return getAssociatedEvents(null);
     }
 
-    public List<EventEditionParticipation> getAllEventEditionParticipations() {
-	List<EventEditionParticipation> eventEditionParticipations = new ArrayList<EventEditionParticipation>();
-	for (Participation participation : this.getParticipations()) {
-	    if (participation.isEventEditionParticipation()) {
-		eventEditionParticipations.add((EventEditionParticipation) participation);
-	    }
-	}
-	return eventEditionParticipations;
-    }
-
     public Set<EventEdition> getAssociatedEventEditions() {
 	Set<EventEdition> eventEditions = new HashSet<EventEdition>();
 	for (EventEditionParticipation participation : getAllEventEditionParticipations()) {
@@ -410,6 +419,17 @@ public abstract class Party extends Party_Base {
 	return eventEditions;
     }
 
+    public Set<EventEdition> getAssociatedEventEditions(ScopeType type) {
+	Set<EventEdition> editions = new HashSet<EventEdition>();
+	for (EventEditionParticipation participation : getAllEventEditionParticipations()) {
+	    if (type == null
+		    || (type != null && type.equals(participation.getEventEdition().getEvent()
+			    .getLocationType()))) {
+		editions.add(participation.getEventEdition());
+	    }
+	}
+	return editions;
+    }
     public List<ScientificJournalParticipation> getAllScientificJournalParticiationsForScope(
 	    ScopeType type) {
 	List<ScientificJournalParticipation> participations = new ArrayList<ScientificJournalParticipation>();

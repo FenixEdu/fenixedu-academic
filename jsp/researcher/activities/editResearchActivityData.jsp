@@ -9,9 +9,8 @@
 	<bean:define id="activityId" name="researchActivity" property="idInternal" />
 
 	<bean:define id="parameter" value="<%="activityId=" + activityId %>" />
-	<bean:define id="schema" name="schema" type="java.lang.String" scope="request" />
 	<bean:define id="activityType" name="researchActivity" property="class.simpleName" />
-
+	<bean:define id="schema" value="<%= activityType + ".edit-defaults" %>" type="java.lang.String" scope="request" />
 	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.superTitle"/></em>
 	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="<%= "researcher.activity.editResearchActivityData." + activityType %>"/></h2>
 	

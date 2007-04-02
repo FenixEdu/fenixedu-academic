@@ -90,6 +90,7 @@
 		<action path="/activities/activitiesManagement" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.research.activity.ActivitiesManagementDispatchAction">
 		    <forward name="ListActivities" path="activities.activitiesManagement"/>
 		    <forward name="EditEvent" path="/activities/editResearchActivity.do?method=prepareEvent"/>
+		    <forward name="EditEventEdition" path="/activities/editResearchActivity.do?method=prepareEventEdition"/>
    		    <forward name="EditScientificJournal" path="/activities/editResearchActivity.do?method=prepareScientificJournal"/>
    		    <forward name="EditCooperation" path="/activities/editResearchActivity.do?method=prepareCooperation"/>
 		    <forward name="EditJournalIssue" path="/activities/editResearchActivity.do?method=prepareJournalIssue"/>
@@ -106,7 +107,16 @@
 			<forward name="prepareEditScientificJournalParticipants" path="/activities/editResearchActivity.do?method=prepareEditScientificJournalParticipants"/>
 			<forward name="prepareEditJournalIssueParticipants" path="/activities/editResearchActivity.do?method=prepareEditJournalIssueParticipants"/>
 			<forward name="prepareEditCooperationParticipants" path="/activities/editResearchActivity.do?method=prepareEditCooperationParticipants"/>
+			<forward name="prepareEditEventEditionParticipants" path="/activities/editResearchActivity.do?method=prepareEditEventEditionParticipants"/>
 			<forward name="EditParticipants" path="activities.editResearchActivityParticipants"/>
+		</action>
+		
+		<action path="/activities/createEventEdition"
+				type="net.sourceforge.fenixedu.presentationTier.Action.research.activity.CreateEventEditionDispatchAction"
+				scope="request"
+				parameter="method">
+			<forward name="CreateEventEdition" path="activities.createEventEdition"/>
+			<forward name="Success" path="/activities/activitiesManagement.do?method=listActivities"/>
 		</action>
 		
 		<action path="/activities/createEvent"

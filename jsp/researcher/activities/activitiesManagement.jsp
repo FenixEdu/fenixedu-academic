@@ -12,6 +12,7 @@
 	<ul class="mtop15 mbottom1 list5">
 		<li> <bean:message key="researcher.activity.activitiesManagement.createParticipation" bundle="RESEARCHER_RESOURCES"/>: 
 			<html:link page="/activities/createEvent.do?method=prepareEventSearch"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.events" /></html:link>, 
+			<html:link page="/activities/createEventEdition.do?method=prepareEventEditionSearch"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.eventEditions" /></html:link>, 
 			<html:link page="/activities/createScientificJournal.do?method=prepareJournalSearch"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.scientificJournals" /></html:link>,
 			<html:link page="/activities/createJournalIssue.do?method=prepareJournalIssueSearch"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.journalIssues" /></html:link>,
 			<html:link page="/activities/createCooperation.do?method=prepareCreateCooperationParticipation"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.cooperations" /></html:link>
@@ -35,10 +36,31 @@
 		</p>
 		<bean:define id="participations" name="international-events" toScope="request"/>
 		<bean:define id="forwardTo" value="EditEvent" toScope="request"/>
-		<bean:define id="schema" value="researchEventParticipation.summary" toScope="request"/>
+		<bean:define id="schema" value="researchEventEditionParticipation.summary" toScope="request"/>
 		<jsp:include page="researchActivitiesList.jsp"/>
 	</logic:notEmpty>
+
+	<logic:notEmpty name="national-eventEditions">
+		<p id='events' class="mtop2 mbottom0">
+		<strong><span><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.eventEditionsTitle.national" /></span></strong>
+		</p>
+		<bean:define id="participations" name="national-eventEditions" toScope="request"/>
+		<bean:define id="forwardTo" value="EditEventEdition" toScope="request"/>
+		<bean:define id="schema" value="researchEventEditionParticipation.summary" toScope="request"/>
+		<jsp:include page="researchActivitiesList.jsp"/>
+		
+	</logic:notEmpty>
 	
+	<logic:notEmpty name="international-eventEditions">
+		<p id='events' class="mtop2 mbottom0">
+		<strong><span><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.eventEditionsTitle.international" /></span></strong>
+		</p>
+		<bean:define id="participations" name="international-eventEditions" toScope="request"/>
+		<bean:define id="forwardTo" value="EditEventEdition" toScope="request"/>
+		<bean:define id="schema" value="researchEventEditionParticipation.summary" toScope="request"/>
+		<jsp:include page="researchActivitiesList.jsp"/>
+	</logic:notEmpty>
+		
 	<logic:notEmpty name="national-journals">
 		<p id='scientificJournals' class="mtop2 mbottom0">
 			<strong><span><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.scientificJournalsTitle.national" /></span></strong>

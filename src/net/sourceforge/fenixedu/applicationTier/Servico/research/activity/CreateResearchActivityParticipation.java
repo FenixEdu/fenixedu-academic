@@ -9,6 +9,8 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.activity.Cooperation;
 import net.sourceforge.fenixedu.domain.research.activity.CooperationParticipation;
 import net.sourceforge.fenixedu.domain.research.activity.Event;
+import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
+import net.sourceforge.fenixedu.domain.research.activity.EventEditionParticipation;
 import net.sourceforge.fenixedu.domain.research.activity.EventParticipation;
 import net.sourceforge.fenixedu.domain.research.activity.JournalIssue;
 import net.sourceforge.fenixedu.domain.research.activity.JournalIssueParticipation;
@@ -46,24 +48,13 @@ public class CreateResearchActivityParticipation extends Service {
 	}
 	
 	public void run(JournalIssue issue, ResearchActivityParticipationRole role, Person person) {
-	    new JournalIssueParticipation(person,role,issue);
+	    new JournalIssueParticipation(issue,role,person);
 	}
 	
-//	public void run(ScientificJournal journal, ResearchActivityUnitParticipantBean bean)
-//		throws FenixServiceException {
-//		
-//		Unit unit = getUnit(bean.getUnit(), bean.getUnitName(), bean.isExternalParticipation());
-//	
-//		new ScientificJournalParticipation(unit, bean.getRole(), journal);
-//	}
-//		
-//	public void run(Event event, ResearchActivityUnitParticipantBean bean) throws ExcepcaoPersistencia,
-//		FenixServiceException {
-//		
-//		Unit unit = getUnit(bean.getUnit(), bean.getUnitName(), bean.isExternalParticipation());
-//		new Participation(unit, bean.getRole(), event);
-//	}
-	
+	public void run(EventEdition edition, ResearchActivityParticipationRole role, Person person) {
+	    new EventEditionParticipation(person,role,edition);
+	}
+		
 	public void run(ResearchCooperationCreationBean cooperationBean, Person person) 
 	throws ExcepcaoPersistencia, FenixServiceException {
 

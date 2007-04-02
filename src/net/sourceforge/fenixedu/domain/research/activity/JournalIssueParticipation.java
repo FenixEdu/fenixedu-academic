@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 
 public class JournalIssueParticipation extends JournalIssueParticipation_Base {
     
-    public  JournalIssueParticipation(Party party, ResearchActivityParticipationRole role, JournalIssue issue) {
+    public  JournalIssueParticipation(JournalIssue issue, ResearchActivityParticipationRole role, Party party) {
 	super();
 	if(alreadyHasParticipation(party, role, issue)) {
 	    throw new DomainException("error.researcher.ResearchActivityParticipation.participation.exists");
