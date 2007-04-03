@@ -184,9 +184,38 @@
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.researcher.publication.EventEditionsForEventProvider"/>
 		<property name="format" value="${fullName}"/>
 	</slot>
-	<slot name="role" key="label.activityRole" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="editionRole" key="label.activityRole" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.researcher.activity.ResearchActivityRolesDataProvider"/>
 		<property name="eachLayout" value=""/>
+	</slot>
+</schema>
+
+<schema name="eventEditionCreation.fullInfo" type="net.sourceforge.fenixedu.dataTransferObject.research.activity.ResearchEventEditionCreationBean" bundle="RESEARCHER_RESOURCES">
+
+	<slot name="eventEditionName" key="label.eventEdition" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" property="70"/>
+	</slot>
+	<slot name="startDate" key="label.event.startDate" layout="year-month-day">
+		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+			<property name="dateFormat" value="dd/MM/yyyy"/>
+		</validator>
+		<property name="size" value="10"/>
+	</slot>
+	<slot name="endDate" key="label.event.endDate" layout="year-month-day">
+		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+			<property name="required" value="false"/>
+			<property name="dateFormat" value="dd/MM/yyyy"/>
+		</validator>
+		<property name="size" value="10"/>
+	</slot>
+	<slot name="organization" key="label.organization">
+		<property name="size" property="70"/>
+	</slot>
+	<slot name="eventLocation" key="label.event.eventLocation">
+			<property name="size" property="70"/>
+	</slot>
+	<slot name="editionUrl" key="label.url">
+			<property name="size" property="70"/>
 	</slot>
 </schema>
 
@@ -212,13 +241,18 @@
 	</slot>
 </schema>
 
-<schema name="eventCreation.inexistentEvent" type="net.sourceforge.fenixedu.dataTransferObject.research.activity.ResearchEventCreationBean" bundle="RESEARCHER_RESOURCES">
+<schema name="eventCreation" type="net.sourceforge.fenixedu.dataTransferObject.research.activity.ResearchEventCreationBean" bundle="RESEARCHER_RESOURCES">
 	<slot name="eventName" key="label.eventName" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="75"/>
 	</slot>
 	<slot name="eventType" key="label.event.eventType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="locationType" key="label.event.locationType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="url" key="label.url" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+</schema>
+
+
+<schema name="eventCreation.inexistentEvent" type="net.sourceforge.fenixedu.dataTransferObject.research.activity.ResearchEventCreationBean" bundle="RESEARCHER_RESOURCES" 
+extends="eventCreation">
 	<slot name="role" key="label.activityRole" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.researcher.activity.ResearchActivityRolesDataProvider"/>
 		<property name="eachLayout" value=""/>

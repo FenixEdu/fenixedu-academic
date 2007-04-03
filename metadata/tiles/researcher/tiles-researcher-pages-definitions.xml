@@ -53,20 +53,20 @@
         <put name="body" value="/researcher/activities/activitiesManagement.jsp"></put>
     </definition>
     <definition name="activities.createEvent" extends="researcher.masterPage">
-        <put name="body" value="/researcher/activities/createEvent.jsp"></put>
+        <put name="body" value="/researcher/activities/createEventParticipation.jsp"></put>
     </definition>
      <definition name="activities.createEventEdition" extends="researcher.masterPage">
-        <put name="body" value="/researcher/activities/createEventEdition.jsp"></put>
+        <put name="body" value="/researcher/activities/createEventEditionParticipation.jsp"></put>
     </definition>
 
     <definition name="activities.createIssue" extends="researcher.masterPage">
-        <put name="body" value="/researcher/activities/createJournalIssue.jsp"></put>
+        <put name="body" value="/researcher/activities/createJournalIssueParticipation.jsp"></put>
     </definition>
     <definition name="activities.createScientificJournal" extends="researcher.masterPage">
-        <put name="body" value="/researcher/activities/createScientificJournal.jsp"></put>
+        <put name="body" value="/researcher/activities/createScientificJournalParticipation.jsp"></put>
     </definition>
     <definition name="activities.createCooperation" extends="researcher.masterPage">
-        <put name="body" value="/researcher/activities/createCooperation.jsp"></put>
+        <put name="body" value="/researcher/activities/createCooperationParticipation.jsp"></put>
     </definition>
     <definition name="activities.editResearchActivity" extends="researcher.masterPage">
         <put name="body" value="/researcher/activities/editResearchActivity.jsp"></put>

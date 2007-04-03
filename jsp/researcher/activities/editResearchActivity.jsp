@@ -11,7 +11,7 @@
 	<bean:define id="activityType" name="researchActivity" property="class.simpleName" />
 	<bean:define id="schema" value="<%= activityType + ".view-defaults" %>" type="java.lang.String" scope="request" />
 	
-	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.superTitle"/></em>
+	<em><bean:message bundle="RESEARCHER_RESOURCES" key="label.researchPortal"/></em> 
 	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="<%= "researcher.activity.editResearchActivity." + activityType %>"/></h2>
 	
 	<ul class="mvert2 list5">

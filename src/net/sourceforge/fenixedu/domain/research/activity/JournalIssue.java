@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import dml.runtime.RelationAdapter;
+
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -15,6 +17,22 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public class JournalIssue extends JournalIssue_Base implements ParticipationsInterface {
 
+    static {
+	JournalIssueScientificJournal.addListener(new RelationAdapter<JournalIssue, ScientificJournal>() {
+
+	    @Override
+	    public void afterRemove(JournalIssue issue, ScientificJournal journal) {
+		super.afterRemove(issue, journal);
+		if (issue != null && journal != null && !journal.hasAnyParticipations()
+			&& !journal.hasAnyJournalIssues()) {
+		    journal.delete();
+		}
+	    }
+
+	});
+
+    }
+
     public JournalIssue(ScientificJournal journal) {
 	super();
 	this.setRootDomainObject(RootDomainObject.getInstance());
@@ -23,30 +41,29 @@ public class JournalIssue extends JournalIssue_Base implements ParticipationsInt
 
     @Override
     public void addArticleAssociations(ArticleAssociation articleAssociations) {
-	if(!containsArticle(articleAssociations.getArticle())) {
+	if (!containsArticle(articleAssociations.getArticle())) {
 	    super.addArticleAssociations(articleAssociations);
-	}
-	else {
+	} else {
 	    throw new DomainException("error.articleAlreadyAssociated");
 	}
     }
 
-    
-    public boolean containsArticle(Article article) { 
-	for(ArticleAssociation association : this.getArticleAssociations()) {
-	    if(association.getArticle().equals(article)) return true;
+    public boolean containsArticle(Article article) {
+	for (ArticleAssociation association : this.getArticleAssociations()) {
+	    if (association.getArticle().equals(article))
+		return true;
 	}
 	return false;
     }
-    
+
     public Set<Person> getPeopleWhoHaveAssociatedArticles() {
-	Set<Person> people = new HashSet<Person> ();
-	for(ArticleAssociation association : this.getArticleAssociations()) {
+	Set<Person> people = new HashSet<Person>();
+	for (ArticleAssociation association : this.getArticleAssociations()) {
 	    people.add(association.getCreator());
 	}
 	return people;
     }
-    
+
     public List<Article> getArticles() {
 	List<Article> articles = new ArrayList<Article>();
 	for (ArticleAssociation association : this.getArticleAssociations()) {
@@ -60,26 +77,27 @@ public class JournalIssue extends JournalIssue_Base implements ParticipationsInt
 	    delete();
 	}
     }
-    
+
     public void delete() {
-	for (; !this.getArticleAssociations().isEmpty(); this.getArticleAssociations().get(0).delete());
-	
+	for (; !this.getArticleAssociations().isEmpty(); this.getArticleAssociations().get(0).delete())
+	    ;
+
 	removeScientificJournal();
 	removeRootDomainObject();
 	super.deleteDomainObject();
     }
 
     public boolean canBeEditedByUser(Person person) {
-	Set<Person> people = getPeopleWhoHaveAssociatedArticles(); 
+	Set<Person> people = getPeopleWhoHaveAssociatedArticles();
 	people.addAll(getPeopleWhoHaveParticipations());
-	return people.size()==1 && people.contains(person);	
+	return people.size() == 1 && people.contains(person);
     }
-    
+
     public Set<Person> getPeopleWhoHaveParticipations() {
 	Set<Person> people = new HashSet<Person>();
-	for(JournalIssueParticipation participation : getParticipations()) {
-	    if(participation.getParty().isPerson()) {
-		people.add((Person)participation.getParty());
+	for (JournalIssueParticipation participation : getParticipations()) {
+	    if (participation.getParty().isPerson()) {
+		people.add((Person) participation.getParty());
 	    }
 	}
 	return people;
@@ -88,26 +106,27 @@ public class JournalIssue extends JournalIssue_Base implements ParticipationsInt
     public boolean canBeEditedByCurrentUser() {
 	return canBeEditedByUser(AccessControl.getPerson());
     }
-    
+
     public ResearchActivityStage getStage() {
 	return getScientificJournal().getStage();
     }
-    
+
     public List<JournalIssueParticipation> getParticipationsFor(Party party) {
 	List<JournalIssueParticipation> participations = new ArrayList<JournalIssueParticipation>();
-	for(JournalIssueParticipation participation : getParticipations()) {
-	    if(participation.getParty().equals(party)) {
+	for (JournalIssueParticipation participation : getParticipations()) {
+	    if (participation.getParty().equals(party)) {
 		participations.add(participation);
 	    }
 	}
 	return participations;
     }
-    
+
     public ScopeType getLocationType() {
 	return getScientificJournal().getLocationType();
     }
-    
+
     public String getNameWithScientificJournal() {
-	return this.getScientificJournal().getName() + " - " + this.getVolume() + " (" + this.getNumber() + ")"; 
+	return this.getScientificJournal().getName() + " - " + this.getVolume() + " (" + this.getNumber()
+		+ ")";
     }
 }

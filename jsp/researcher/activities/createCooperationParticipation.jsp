@@ -7,7 +7,7 @@
 
 <logic:present role="RESEARCHER">		
 
-	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.createCooperation.mainTitle"/></em> <!-- tobundle -->
+	<em><bean:message bundle="RESEARCHER_RESOURCES" key="label.researchPortal"/></em> 
 	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.createCooperation.useCasetitle"/></h2>	
 	
 	<!-- SELECT COOPERATION TYPE -->

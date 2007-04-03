@@ -3,21 +3,33 @@ package net.sourceforge.fenixedu.domain.research.activity;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.research.result.publication.ConferenceArticles;
+import dml.runtime.RelationAdapter;
 
 public class EventEdition extends EventEdition_Base implements ParticipationsInterface {
 
+    static {
+	EventEventEdition.addListener(new RelationAdapter<EventEdition, Event>() {
+	    
+	    @Override
+	    public void afterRemove(EventEdition edition, Event event) {
+	        super.afterRemove(edition, event);
+	        if(edition!=null && event!=null && !event.hasAnyEventEditions() && !event.hasAnyParticipations()) {
+	            event.delete();
+	        }
+	    }
+	});
+    }
+    
     public EventEdition(Event event) {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 	this.setEvent(event);
     }
 
-    // TODO Retirar este construtor, utilizado em ProjectEventAssociation
     public EventEdition(String name) {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());

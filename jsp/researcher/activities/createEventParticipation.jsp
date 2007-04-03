@@ -8,7 +8,7 @@
 <logic:present role="RESEARCHER">
 	<bean:define id="schema" name="eventCreationSchema" type="java.lang.String" />	
 
-	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.createEvent.mainTitle"/></em>
+	<em><bean:message bundle="RESEARCHER_RESOURCES" key="label.researchPortal"/></em> 
 	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.createEvent.useCasetitle"/></h2>
 	
 	<logic:present name="eventBean">

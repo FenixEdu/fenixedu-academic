@@ -94,8 +94,6 @@
 			<strong><bean:message key="label.attention" bundle="RESEARCHER_RESOURCES"/>:</strong><br/>
 			<bean:message key="label.informationForCreateUnit" bundle="RESEARCHER_RESOURCES"/>	
 		</div>
-		<bean:define id="name" name="bean" property="participatorName"/>
-		<bean:define id="role" name="bean" property="role"/>
 		
 		<div class="dinline forminline">
 			<fr:form action="createUnit" action="<%= "/resultParticipations/unitWrapper.do?" + parameters %>">

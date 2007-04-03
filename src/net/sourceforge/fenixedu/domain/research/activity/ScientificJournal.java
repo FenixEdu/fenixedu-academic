@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public class ScientificJournal extends ScientificJournal_Base implements ParticipationsInterface {
     
+    
     public  ScientificJournal() {
         super();
         setStage(ResearchActivityStage.DRAFT);
@@ -37,7 +38,7 @@ public class ScientificJournal extends ScientificJournal_Base implements Partici
     
     public void delete(){
         for(;!this.getJournalIssues().isEmpty();this.getJournalIssues().get(0).delete());
-        for(;!this.getParticipations().isEmpty();this.getParticipations().get(0).delete())
+        for(;!this.getParticipations().isEmpty();this.getParticipations().get(0).delete());
         removeRootDomainObject();
 	super.deleteDomainObject();
     }
