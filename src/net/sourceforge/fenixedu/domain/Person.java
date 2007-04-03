@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -89,7 +88,6 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
-import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.PeriodState;
 import net.sourceforge.fenixedu.util.UsernameUtils;
@@ -199,6 +197,7 @@ public class Person extends Person_Base {
     public Person() {
 	super();
 	this.setMaritalStatus(MaritalStatus.UNKNOWN);
+	
 	this.setAvailableEmail(Boolean.FALSE);
 	this.setAvailableWebSite(Boolean.FALSE);
 	this.setAvailablePhoto(Boolean.FALSE);
@@ -212,7 +211,6 @@ public class Person extends Person_Base {
 	}
 
 	createUserAndLoginEntity();
-
 	setProperties(personToCreate);
 	setNationality(country);
 	setIsPassInKerberos(Boolean.FALSE);
@@ -227,10 +225,12 @@ public class Person extends Person_Base {
 	setNome(name);
 	setIdentification(identificationDocumentNumber, identificationDocumentType);
 	setGender(gender);
+	
 	setAvailableEmail(Boolean.FALSE);
 	setAvailableWebSite(Boolean.FALSE);
 	setAvailablePhoto(Boolean.FALSE);
 	setMaritalStatus(MaritalStatus.SINGLE);
+	
 	setIsPassInKerberos(Boolean.FALSE);
     }
 
@@ -245,16 +245,16 @@ public class Person extends Person_Base {
 	updateDefaultPhone(personBean.getPhone());
 	updateDefaultMobilePhone(personBean.getMobile());
 	updateDefaultWebAddress(personBean.getWebAddress());
-	createUserEmailAddress(personBean.getEmail(), personBean.isEmailAvailable());
+	createUserEmailAddress(personBean.getEmail());
     }
 
     private void createUserAndLoginEntity() {
 	new Login(new User(this));
     }
     
-    private void createUserEmailAddress(final String email, final boolean emailAvailable) {
+    private void createUserEmailAddress(final String email) {
 	if (!StringUtils.isEmpty(email)) {
-	    PartyContact.createEmailAddress(this, PartyContactType.PERSONAL, emailAvailable, true, email);
+	    PartyContact.createEmailAddress(this, PartyContactType.PERSONAL, true, true, email);
 	}
     }
 
@@ -283,7 +283,7 @@ public class Person extends Person_Base {
 	}
 
 	if (!StringUtils.isEmpty(email)) {
-	    createUserEmailAddress(email, false);
+	    createUserEmailAddress(email);
 	}
 	
 	setIdentification(documentIDNumber, documentType);
@@ -374,11 +374,14 @@ public class Person extends Person_Base {
     }
 
     public void edit(String name, String address, String phone, String mobile, String homepage, String email) {
+	
 	setNome(name);
-	setAddress(address);
-	setPhone(phone);
-	setMobile(mobile);
-	setWebAddress(homepage);
+
+	updateDefaultPhysicalAddress().setAddress(address);
+	updateDefaultPhone(phone);
+	updateDefaultMobilePhone(mobile);
+	updateDefaultWebAddress(homepage);
+	
 	setEmail(email);
     }
 
@@ -849,19 +852,13 @@ public class Person extends Person_Base {
 	setIdentification(infoPerson.getNumeroDocumentoIdentificacao(), infoPerson.getTipoDocumentoIdentificacao());
 	setFiscalCode(infoPerson.getCodigoFiscal());
 	
-	setAddress(infoPerson.getMorada());
-	setAreaCode(infoPerson.getCodigoPostal());
-	setAreaOfAreaCode(infoPerson.getLocalidadeCodigoPostal());
-	setArea(infoPerson.getLocalidade());
-	setParishOfResidence(infoPerson.getFreguesiaMorada());
-	setDistrictSubdivisionOfResidence(infoPerson.getConcelhoMorada());
-	setDistrictOfResidence(infoPerson.getDistritoMorada());
+	updateDefaultPhysicalAddress(infoPerson.getPhysicalAddressData());
+	updateDefaultWebAddress(infoPerson.getEnderecoWeb());
+	updateDefaultPhone(infoPerson.getTelefone());
+	updateDefaultMobilePhone(infoPerson.getTelemovel());
 	
-	setEmail(infoPerson.getEmail());
-	setWebAddress(infoPerson.getEnderecoWeb());
-	setPhone(infoPerson.getTelefone());
-	setMobile(infoPerson.getTelemovel());
 	setWorkPhone(infoPerson.getWorkPhone());
+	setEmail(infoPerson.getEmail());
 	
 	setDistrictSubdivisionOfBirth(infoPerson.getConcelhoNaturalidade());
 	setEmissionDateOfDocumentIdYearMonthDay(YearMonthDay.fromDateFields(infoPerson.getDataEmissaoDocumentoIdentificacao()));
@@ -984,6 +981,7 @@ public class Person extends Person_Base {
 	setNameOfMother(personBean.getMotherName());
 	setNameOfFather(personBean.getFatherName());
 
+	setAvailableEmail(personBean.isEmailAvailable());
 	setAvailablePhoto(personBean.isPhotoAvailable());
 	setAvailableWebSite(personBean.isHomepageAvailable());
     }
@@ -1351,12 +1349,14 @@ public class Person extends Person_Base {
     }
 
     public int countSentSmsBetween(final Date startDate, final Date endDate) {
+	final DateTime start = new DateTime(startDate);
+	final DateTime end = new DateTime(endDate);
+	
 	int count = 0;
 	for (final SentSms sentSms : this.getSentSmsSet()) {
 	    if (sentSms.getDeliveryType() != SmsDeliveryType.NOT_SENT_TYPE
-		    && (sentSms.getSendDate().after(startDate) || sentSms.getSendDate().equals(startDate))
-		    && sentSms.getSendDate().before(endDate)) {
-
+		    && (sentSms.getSendDateDateTime().isAfter(start) || sentSms.getSendDateDateTime().equals(start))
+		    && sentSms.getSendDateDateTime().isBefore(end)) {
 		count++;
 	    }
 	}
@@ -1446,9 +1446,9 @@ public class Person extends Person_Base {
 
     public String getPostalCode() {
 	final StringBuilder result = new StringBuilder();
-	result.append(getAreaCode());
+	result.append(getDefaultPhysicalAddress().getAreaCode());
 	result.append(" ");
-	result.append(getAreaOfAreaCode());
+	result.append(getDefaultPhysicalAddress().getAreaOfAreaCode());
 
 	return result.toString();
     }
@@ -1852,13 +1852,15 @@ public class Person extends Person_Base {
 	return studentCurricularPlans;
     }
 
-    public List<ProjectAccess> readProjectAccessesByCoordinator(Integer coordinatorCode) {
-	List<ProjectAccess> result = new ArrayList<ProjectAccess>();
-	Date currentDate = Calendar.getInstance().getTime();
-	for (ProjectAccess projectAccess : getProjectAccessesSet()) {
+    public List<ProjectAccess> readProjectAccessesByCoordinator(final Integer coordinatorCode) {
+	
+	final YearMonthDay now = new YearMonthDay();
+	final List<ProjectAccess> result = new ArrayList<ProjectAccess>();
+	
+	for (final ProjectAccess projectAccess : getProjectAccessesSet()) {
 	    if (projectAccess.getKeyProjectCoordinator().equals(coordinatorCode)) {
-		if (!DateFormatUtil.isBefore("yyyy/MM/dd", currentDate, projectAccess.getBegin())
-			&& !DateFormatUtil.isAfter("yyyy/MM/dd", currentDate, projectAccess.getEnd())) {
+		if (!now.isBefore(projectAccess.getBeginDateTime().toYearMonthDay()) && 
+			!now.isAfter(projectAccess.getEndDateTime().toYearMonthDay())) {
 		    result.add(projectAccess);
 		}
 	    }

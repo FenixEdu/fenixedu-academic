@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.util.Date;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressData;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
@@ -513,5 +514,9 @@ public class InfoPersonEditor extends InfoObject {
 
     public void setIstUsername(String istUsername) {
 	this.istUsername = istUsername;
+    }
+    
+    public PhysicalAddressData getPhysicalAddressData() {
+	return new PhysicalAddressData(getMorada(), getCodigoPostal(), getLocalidadeCodigoPostal(), getLocalidade(), getFreguesiaMorada(), getConcelhoMorada(), getDistritoMorada(), null);
     }
 }
