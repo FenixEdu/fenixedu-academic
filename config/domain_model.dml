@@ -3431,6 +3431,7 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 		String nameOfFather;
 		String nameOfMother;
 		
+		Boolean availableEmail;
 		Boolean availableWebSite;
 		Boolean availablePhoto;
 

@@ -593,6 +593,10 @@ public abstract class Party extends Party_Base {
 	getOrCreateDefaultPhysicalAddress().edit(data);
     }
     
+    protected PhysicalAddress updateDefaultPhysicalAddress() {
+	return getOrCreateDefaultPhysicalAddress();
+    }
+    
     private WebAddress getOrCreateDefaultWebAddress() {
 	final WebAddress webAddress = getDefaultWebAddress();
 	return webAddress != null ? webAddress : PartyContact.createDefaultPersonalWebAddress(this);
@@ -629,8 +633,7 @@ public abstract class Party extends Party_Base {
      */
     
     public String getAddress() {
-	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
-	return physicalAddress != null ? physicalAddress.getAddress() : null;
+	return getOrCreateDefaultPhysicalAddress().getAddress();
     }
     
     public void setAddress(String address) {
@@ -746,18 +749,6 @@ public abstract class Party extends Party_Base {
 	}
     }
     
-    // this method is not necessary if we filter EmailAddress by visible attribute
-    public Boolean getAvailableEmail() {
-	final EmailAddress emailAddress = getPersonalEmailAddress();
-	return emailAddress != null ? emailAddress.isContactVisible() : false;
-    }
-    
-    public void setAvailableEmail(Boolean availableEmail) {
-	final EmailAddress emailAddress = getPersonalEmailAddress();
-	if (emailAddress != null) {
-	    emailAddress.setVisible(availableEmail);
-	}
-    }
     /* ~~~~~~~~~~~~~~~~~~~~~
      * End: PartyContacts
      * ~~~~~~~~~~~~~~~~~~~~~
