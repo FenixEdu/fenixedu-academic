@@ -11,7 +11,7 @@ public enum DocumentRequestType {
     SCHOOL_REGISTRATION_DECLARATION(false, AdministrativeOfficeType.DEGREE, true), 
     ENROLMENT_DECLARATION(false, AdministrativeOfficeType.DEGREE, true), 
     IRS_DECLARATION(true, AdministrativeOfficeType.DEGREE, true), 
-    DEGREE_DIPLOMA(false, AdministrativeOfficeType.DEGREE, false);
+    DIPLOMA_REQUEST(false, AdministrativeOfficeType.DEGREE, false);
 
     private boolean hasAdditionalInformation;
     

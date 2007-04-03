@@ -880,9 +880,9 @@ public class Registration extends Registration_Base {
 	return result;
     }
 
-    public boolean hasDegreeDiplomaDocumentRequest() {
+    public boolean hasDiplomaRequest() {
 	for (final DocumentRequest documentRequest : getDocumentRequests()) {
-	    if (documentRequest.isDegreeDiploma()) {
+	    if (documentRequest.isDiploma()) {
 		return true;
 	    }
 	}
@@ -1687,15 +1687,6 @@ public class Registration extends Registration_Base {
 	}
 
 	return null;
-    }
-
-    public boolean hasDegreeDiplomaRequest() {
-	for (final DocumentRequest documentRequest : this.getDocumentRequests()) {
-	    if (documentRequest.isDegreeDiploma()) {
-		return true;
-	    }
-	}
-	return false;
     }
 
     public Set<DocumentRequest> getSucessfullyFinishedDocumentRequestsBy(ExecutionYear executionYear,

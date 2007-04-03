@@ -4417,7 +4417,7 @@ class net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest ext
 				}
 	
 
-			class net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DegreeDiploma extends net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest {
+			class net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaRequest extends net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest {
 			}
 	
 			

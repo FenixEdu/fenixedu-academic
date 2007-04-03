@@ -7,9 +7,9 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 
-public class DegreeDiploma extends DegreeDiploma_Base {
+public class DiplomaRequest extends DiplomaRequest_Base {
     
-    public DegreeDiploma() {
+    public DiplomaRequest() {
         super();
     }
 
@@ -24,7 +24,7 @@ public class DegreeDiploma extends DegreeDiploma_Base {
 
     @Override
     public DocumentRequestType getDocumentRequestType() {
-	return DocumentRequestType.DEGREE_DIPLOMA;
+	return DocumentRequestType.DIPLOMA_REQUEST;
     }
 
     @Override

@@ -61,9 +61,9 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 	super.internalChangeState(academicServiceRequestSituationType, employee);
 
 	if (academicServiceRequestSituationType == AcademicServiceRequestSituationType.PROCESSING) {
-	    if (!getRegistration().hasDegreeDiplomaDocumentRequest()) {
+	    if (!getRegistration().hasDiplomaRequest()) {
 		throw new DomainException(
-		    "DegreeFinalizationCertificateRequest.registration.withoutDegreeDiplomaDocumentRequest");
+		    "DegreeFinalizationCertificateRequest.registration.withoutDiplomaRequest");
 	    }
 	}
     }
