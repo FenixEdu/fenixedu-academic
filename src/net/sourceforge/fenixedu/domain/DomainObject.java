@@ -25,6 +25,8 @@ import pt.utl.ist.fenix.tools.util.StringAppender;
  */
 public abstract class DomainObject extends DomainObject_Base implements dml.runtime.FenixDomainObject {
 
+    private static final boolean ERROR_IF_DELETED_OBJECT_NOT_DISCONNECTED = false;
+
     public class UnableToDetermineIdException extends DomainException {
         public UnableToDetermineIdException(Throwable cause) {
             super("unable.to.determine.idException", cause);
@@ -120,8 +122,16 @@ public abstract class DomainObject extends DomainObject_Base implements dml.runt
 
     protected final void deleteDomainObject() {
         if (lockMode) {
-                PersistenceSupportFactory.getDefaultPersistenceSupport()
-                        .getIPersistentObject().deleteByOID(this.getClass(), getIdInternal());
+            if (! checkDisconnected()) {
+                if (ERROR_IF_DELETED_OBJECT_NOT_DISCONNECTED) {
+                    throw new Error("Trying to delete a DomainObject that is still connected to other objects: " + this);
+                } else {
+                    System.err.println("WARNING: Deleting a DomainObject that is still connected to other objects: " + this);
+                }
+            }
+
+            PersistenceSupportFactory.getDefaultPersistenceSupport()
+                .getIPersistentObject().deleteByOID(this.getClass(), getIdInternal());
         }
     }
 

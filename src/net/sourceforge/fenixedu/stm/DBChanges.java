@@ -24,6 +24,8 @@ import org.apache.ojb.broker.util.ObjectModificationDefaultImpl;
 
 
 class DBChanges {
+    private static final boolean ERROR_IF_CHANGING_DELETED_OBJECT = false;
+
     private static final String SQL_CHANGE_LOGS_CMD_PREFIX = "INSERT INTO TX_CHANGE_LOGS VALUES ";
     // The following value is the approximate length of each tuple to add after the VALUES
     private static final int PER_RECORD_LENGTH = 100;
@@ -57,9 +59,7 @@ class DBChanges {
 	    newObjs = new HashSet<DomainObject>();
 	}
 	newObjs.add(obj);
-	if (objsToDelete != null) {
-	    objsToDelete.remove(obj);
-	}
+        removeFromDeleted(obj);
     }
 
     public void storeObject(DomainObject obj, String attrName) {
@@ -69,9 +69,7 @@ class DBChanges {
 	    objsToStore = new HashSet();
 	}
 	objsToStore.add(obj);
-	if (objsToDelete != null) {
-	    objsToDelete.remove(obj);
-	}
+        removeFromDeleted(obj);
     }
 
     public void deleteObject(Object obj) {
@@ -93,6 +91,18 @@ class DBChanges {
 
     public void removeRelationTuple(String relation, Object obj1, String colNameOnObj1, Object obj2, String colNameOnObj2) {
 	setRelationTuple(relation, obj1, colNameOnObj1, obj2, colNameOnObj2, true);
+    }
+
+    private void removeFromDeleted(DomainObject obj) {
+	if (objsToDelete != null) {
+	    if (objsToDelete.remove(obj)) {
+                if (ERROR_IF_CHANGING_DELETED_OBJECT) {
+                    throw new Error("Changing object after it was deleted: " + obj);
+                } else {
+                    System.err.println("WARNING: Changing object after it was deleted: " + obj);
+                }
+            }
+	}
     }
 
     private void setRelationTuple(String relation, Object obj1, String colNameOnObj1, Object obj2, String colNameOnObj2, boolean remove) {
