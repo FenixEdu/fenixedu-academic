@@ -85,5 +85,12 @@ public class EnumOperator extends OperatorArgument {
     public String getMainValueString() {
         return String.format("$E(%s, %s)", argument(VALUE), argument(TYPE));
     }
+
+    @Override
+    public boolean isDynamic() {
+        checkOperatorArguments();
+        
+        return argument(VALUE).isDynamic() || argument(TYPE).isDynamic();
+    }
     
 }

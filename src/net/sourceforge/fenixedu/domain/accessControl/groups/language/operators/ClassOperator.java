@@ -102,18 +102,6 @@ public class ClassOperator extends OperatorArgument {
         }
     }
     
-    /**
-     * Since the class operator only translates the value of it's firts argument
-     * into a class the dynamic nature of this operator depends on the dynamic
-     * nature of it's argument.
-     * 
-     * @return <code>true</code> if the argument is dynamic and no properties
-     *         need to be applied to the operator's value.
-     * 
-     * @exception WrongNumberOfArgumentsException
-     *                if the number of arguments for this operator is not the
-     *                correct one
-     */
     @Override
     public boolean isDynamic() {
         checkOperatorArguments();

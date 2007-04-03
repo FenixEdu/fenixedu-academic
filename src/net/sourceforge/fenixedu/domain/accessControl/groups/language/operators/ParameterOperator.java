@@ -88,4 +88,13 @@ public class ParameterOperator extends OperatorArgument {
         return String.format("$P(%s)", argument(NAME));
     }
 
+    /**
+     * This operator obtains the value from the current request. So it is always
+     * dynamic.
+     */
+    @Override
+    public boolean isDynamic() {
+        return true;
+    }
+    
 }

@@ -60,7 +60,7 @@ public class IdOperator extends OperatorArgument {
 
     protected Integer getNumber() {
         Argument argument = argument(PARAMETER);
-        if (! argument.isDynamic()) {
+        if (argument instanceof StaticArgument) {
             StaticArgument staticArgument = (StaticArgument) argument;
             
             if (staticArgument.isNumber()) {
@@ -81,6 +81,23 @@ public class IdOperator extends OperatorArgument {
         }
 
         return this.number;
+    }
+
+    @Override
+    public boolean isDynamic() {
+        checkOperatorArguments();
+        
+        Argument argument = argument(PARAMETER);
+        
+        if (argument instanceof StaticArgument) {
+            StaticArgument staticArgument = (StaticArgument) argument;
+            
+            if (staticArgument.isString()) {
+                return true;
+            }
+        }
+
+        return argument(TYPE).isDynamic();
     }
 
     /**
