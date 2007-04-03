@@ -633,7 +633,8 @@ public abstract class Party extends Party_Base {
      */
     
     public String getAddress() {
-	return getOrCreateDefaultPhysicalAddress().getAddress();
+	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
+	return physicalAddress != null ? physicalAddress.getAddress() : null;
     }
     
     public void setAddress(String address) {
