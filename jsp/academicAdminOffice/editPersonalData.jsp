@@ -47,12 +47,6 @@
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle4 mtop05" />
 			
-			<fr:property name="linkFormat(default)" value="<%="/student.do?method=changeDefaultPartyContact&amp;contactId=${idInternal}&amp;studentID=" + studentID %>"/>
-			<fr:property name="key(default)" value="label.partyContacts.setDefaultContact"/>
-			<fr:property name="bundle(default)" value="ACADEMIC_OFFICE_RESOURCES"/>
-			<fr:property name="visibleIfNot(default)" value="defaultContact"/>
-			<fr:property name="order(default)" value="1"/>
-			
 			<fr:property name="linkFormat(edit)" value="<%="/student.do?method=prepareEditPartyContact&amp;contactId=${idInternal}&amp;studentID=" + studentID %>"/>
 			<fr:property name="key(edit)" value="label.partyContacts.edit"/>
 			<fr:property name="bundle(edit)" value="ACADEMIC_OFFICE_RESOURCES"/>
@@ -77,12 +71,6 @@
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle4 mtop05" />
 
-			<fr:property name="linkFormat(default)" value="<%="/student.do?method=changeDefaultPartyContact&amp;contactId=${idInternal}&amp;studentID=" + studentID %>"/>
-			<fr:property name="key(default)" value="label.partyContacts.setDefaultContact"/>
-			<fr:property name="bundle(default)" value="ACADEMIC_OFFICE_RESOURCES"/>
-			<fr:property name="visibleIfNot(default)" value="defaultContact"/>
-			<fr:property name="order(default)" value="1"/>
-			
 			<fr:property name="linkFormat(edit)" value="<%="/student.do?method=prepareEditPartyContact&amp;contactId=${idInternal}&amp;studentID=" + studentID %>"/>
 			<fr:property name="key(edit)" value="label.partyContacts.edit"/>
 			<fr:property name="bundle(edit)" value="ACADEMIC_OFFICE_RESOURCES"/>
@@ -105,12 +93,6 @@
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle4 mtop05" />
 
-			<fr:property name="linkFormat(default)" value="<%="/student.do?method=changeDefaultPartyContact&amp;contactId=${idInternal}&amp;studentID=" + studentID %>"/>
-			<fr:property name="key(default)" value="label.partyContacts.setDefaultContact"/>
-			<fr:property name="bundle(default)" value="ACADEMIC_OFFICE_RESOURCES"/>
-			<fr:property name="visibleIfNot(default)" value="defaultContact"/>
-			<fr:property name="order(default)" value="1"/>
-
 			<fr:property name="linkFormat(edit)" value="<%="/student.do?method=prepareEditPartyContact&amp;contactId=${idInternal}&amp;studentID=" + studentID %>"/>
 			<fr:property name="key(edit)" value="label.partyContacts.edit"/>
 			<fr:property name="bundle(edit)" value="ACADEMIC_OFFICE_RESOURCES"/>
@@ -132,12 +114,6 @@
 	<fr:view name="personBean" property="sortedEmailAddresses" schema="contacts.EmailAddress.view">
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle4 mtop05" />
-			
-			<fr:property name="linkFormat(default)" value="<%="/student.do?method=changeDefaultPartyContact&amp;contactId=${idInternal}&amp;studentID=" + studentID %>"/>
-			<fr:property name="key(default)" value="label.partyContacts.setDefaultContact"/>
-			<fr:property name="bundle(default)" value="ACADEMIC_OFFICE_RESOURCES"/>
-			<fr:property name="visibleIfNot(default)" value="defaultContact"/>
-			<fr:property name="order(default)" value="1"/>
 
 			<fr:property name="linkFormat(edit)" value="<%="/student.do?method=prepareEditPartyContact&amp;contactId=${idInternal}&amp;studentID=" + studentID %>"/>
 			<fr:property name="key(edit)" value="label.partyContacts.edit"/>
@@ -162,13 +138,7 @@
 	<fr:view name="personBean" property="sortedWebAddresses" schema="contacts.WebAddress.view">
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle4 mtop05" />
-			
-			<fr:property name="linkFormat(default)" value="<%="/student.do?method=changeDefaultPartyContact&amp;contactId=${idInternal}&amp;studentID=" + studentID %>"/>
-			<fr:property name="key(default)" value="label.partyContacts.setDefaultContact"/>
-			<fr:property name="bundle(default)" value="ACADEMIC_OFFICE_RESOURCES"/>
-			<fr:property name="visibleIfNot(default)" value="defaultContact"/>
-			<fr:property name="order(default)" value="1"/>
-			
+		
 			<fr:property name="linkFormat(edit)" value="<%="/student.do?method=prepareEditPartyContact&amp;contactId=${idInternal}&amp;studentID=" + studentID %>"/>
 			<fr:property name="key(edit)" value="label.partyContacts.edit"/>
 			<fr:property name="bundle(edit)" value="ACADEMIC_OFFICE_RESOURCES"/>
