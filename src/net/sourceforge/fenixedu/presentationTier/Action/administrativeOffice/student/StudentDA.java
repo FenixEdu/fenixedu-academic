@@ -166,15 +166,6 @@ public class StudentDA extends FenixDispatchAction {
 	return prepareEditPersonalData(mapping, actionForm, request, response);
     }
     
-    public ActionForward changeDefaultPartyContact(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-	    FenixServiceException {
-
-	executeService("ChangeDefaultPartyContact", new Object[] {getPartyContact(getStudent(request), request)});
-	return prepareEditPersonalData(mapping, actionForm, request, response);
-    }
-
-    
     public ActionForward deletePartyContact(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
 	    FenixServiceException {

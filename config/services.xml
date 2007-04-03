@@ -11726,15 +11726,6 @@
 			<chain name="ScientificCouncilAuthorization" />
 		</filterChains>
     </service>
-    <service>
-        <name>ChangeDefaultPartyContact</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.contacts.ChangeDefaultPartyContact</implementationClass>
-        <description></description>
-        <isTransactional>true</isTransactional>  
-		<filterChains>
-			<chain name="StudentOrAcademicAdministrativeOfficeAuthorization" />
-		</filterChains>
-    </service> 
 	<service>
         <name>AddScientificCommission</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.coordinator.AddScientificCommission</implementationClass>
