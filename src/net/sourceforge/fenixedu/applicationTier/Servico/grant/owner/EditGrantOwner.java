@@ -12,28 +12,24 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class EditGrantOwner extends Service {
-  
-    private GrantOwner checkIfGrantOwnerExists(Integer grantOwnerNumber) throws FenixServiceException,
-	    ExcepcaoPersistencia {
+
+    private GrantOwner checkIfGrantOwnerExists(Integer grantOwnerNumber) {
 	return GrantOwner.readGrantOwnerByNumber(grantOwnerNumber);
     }
 
-    private GrantOwner prepareGrantOwner(GrantOwner grantOwner, Person person,
-	    InfoGrantOwner infoGrantOwner, Integer maxNumber) throws ExcepcaoPersistencia {
+    private GrantOwner prepareGrantOwner(GrantOwner grantOwner, Person person, InfoGrantOwner infoGrantOwner, Integer maxNumber) {
 
-    if (infoGrantOwner.getGrantOwnerNumber() == null) {
-        // Generate the GrantOwner's number
-        int aux = maxNumber + 1;
-        Integer nextNumber = Integer.valueOf(aux);
-        grantOwner.setNumber(nextNumber);
-    } else{
-        grantOwner.setNumber(infoGrantOwner.getGrantOwnerNumber());
-    }
-    grantOwner.setPerson(person);
+	if (infoGrantOwner.getGrantOwnerNumber() == null) {
+	    // Generate the GrantOwner's number
+	    int aux = maxNumber + 1;
+	    Integer nextNumber = Integer.valueOf(aux);
+	    grantOwner.setNumber(nextNumber);
+	} else {
+	    grantOwner.setNumber(infoGrantOwner.getGrantOwnerNumber());
+	}
+	grantOwner.setPerson(person);
 	grantOwner.setCardCopyNumber(infoGrantOwner.getCardCopyNumber());
 	grantOwner.setDateSendCGD(infoGrantOwner.getDateSendCGD());
-
-	
 
 	return grantOwner;
     }
@@ -54,7 +50,8 @@ public class EditGrantOwner extends Service {
 	} else {
 	    // If the person country is undefined it is set to default
 	    // "PORTUGUESA NATURAL DO CONTINENTE"
-	    // In a not distance future this will not be needed since the coutry
+	    // In a not distance future this will not be needed since the
+                // coutry
 	    // can never be null
 	    country = Country.readCountryByNationality("PORTUGUESA NATURAL DO CONTINENTE");
 	}
@@ -79,11 +76,11 @@ public class EditGrantOwner extends Service {
 	if (grantOwner == null) {
 	    maxNumber = GrantOwner.readMaxGrantOwnerNumber();
 	    grantOwner = new GrantOwner();
- 	    
+
 	}
-	
+
 	grantOwner = prepareGrantOwner(grantOwner, person, infoGrantOwner, maxNumber);
-    
+
 	if (!person.hasRole(RoleType.PERSON)) {
 	    person.addPersonRoles(Role.getRoleByRoleType(RoleType.PERSON));
 	}
