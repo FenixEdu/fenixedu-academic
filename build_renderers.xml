@@ -66,6 +66,8 @@
 		<javadoc access="private">
 			<classpath refid="tools.run.classpath"/>
 			
+			<arg line="-J-Xms64m -J-Xmx256m"/>
+			
 			<packageset dir="${src}">
 				<include name="net/sourceforge/fenixedu/renderers/**"/>
 			    <include name="net/sourceforge/fenixedu/presentationTier/renderers/**"/>
