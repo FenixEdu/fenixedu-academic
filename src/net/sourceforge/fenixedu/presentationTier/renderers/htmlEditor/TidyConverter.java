@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.Properties;
 
 import net.sourceforge.fenixedu.renderers.components.converters.ConversionException;
@@ -17,6 +18,7 @@ import org.w3c.tidy.TidyMessageListener;
 public abstract class TidyConverter extends Converter {
 
     public static final String TIDY_PROPERTIES = "HtmlEditor-Tidy.properties";
+    private static final String ENCODING = "iso-8859-1";
     
     @Override
     public Object convert(Class type, Object value) {
@@ -42,7 +44,12 @@ public abstract class TidyConverter extends Converter {
 
         parseDocument(outStream, tidy, document);
 
-        return new String(outStream.toByteArray());
+        try {
+            return new String(outStream.toByteArray(), ENCODING);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            throw new ConversionException("tidy.converter.ending.notSupported.critical");
+        }
     }
 
     private Tidy createTidyParser() {
