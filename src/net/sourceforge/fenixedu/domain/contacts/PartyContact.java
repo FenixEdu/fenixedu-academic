@@ -37,12 +37,23 @@ public abstract class PartyContact extends PartyContact_Base {
 	if (defaultContact) {
 	    changeToDefault();
 	} else {
-	    if (getParty().hasDefaultPartyContact(getClass())) {
-		super.setDefaultContact(Boolean.FALSE);
-	    } else {
+	    final List<PartyContact> partyContacts = (List<PartyContact>) getParty().getPartyContacts(getClass());
+	    if (partyContacts.isEmpty() || partyContacts.size() == 1) {
 		super.setDefaultContact(Boolean.TRUE);
+	    } else {
+		setAnotherContactAsDefault();
+		super.setDefaultContact(Boolean.FALSE);
 	    }
+	}	    
+    }
+
+    @Checked("PartyContactPredicates.checkPermissionsToManage")
+    public void changeToDefault() {
+	final PartyContact defaultPartyContact = getParty().getDefaultPartyContact(getClass());
+	if (defaultPartyContact != null && defaultPartyContact != this) {
+	    defaultPartyContact.setDefaultContact(Boolean.FALSE);
 	}
+	super.setDefaultContact(Boolean.TRUE);
     }
 
     private void checkParameters(final Party party, final PartyContactType type) {
@@ -63,15 +74,6 @@ public abstract class PartyContact extends PartyContact_Base {
 	super.setVisible(Boolean.valueOf(visible));
 	
 	setDefaultContactInformation(defaultContact);
-    }
-    
-    @Checked("PartyContactPredicates.checkPermissionsToManage")
-    public void changeToDefault() {
-	final PartyContact defaultPartyContact = getParty().getDefaultPartyContact(getClass());
-	if (defaultPartyContact != null) {
-	    defaultPartyContact.setDefaultContact(Boolean.FALSE);
-	}
-	super.setDefaultContact(Boolean.TRUE);
     }
     
     public boolean isDefault() {
@@ -112,16 +114,23 @@ public abstract class PartyContact extends PartyContact_Base {
     
     @Checked("PartyContactPredicates.checkPermissionsToManage")
     public void delete() {
+	checkRulesToDelete();
 	setAnotherContactAsDefault();
+
 	removeParty();
 	removeRootDomainObject();
 	super.deleteDomainObject();
     }
     
+    protected void checkRulesToDelete() {
+	// nothing to check
+    }
+
     private void setAnotherContactAsDefault() {
 	if (isDefault()) {
 	    final List<PartyContact> contacts = (List<PartyContact>) getParty().getPartyContacts(getClass());
-	    if (!contacts.isEmpty()) {
+	    if (!contacts.isEmpty() && contacts.size() > 1) {
+		contacts.remove(this);
 		contacts.get(0).setDefaultContact(Boolean.TRUE);
 	    }
 	}
