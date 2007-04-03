@@ -1097,7 +1097,14 @@
     </filterChain>
     <filterChain>
         <name>StudentOrAcademicAdministrativeOfficeAuthorization</name>
-        <expression> StudentAuthorization || AcademicAdministrativeOfficeAuthorization</expression>
+        <expression>StudentAuthorization || AcademicAdministrativeOfficeAuthorization</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
+    </filterChain>
+    <filterChain>
+        <name>PersonOrAcademicAdministrativeOfficeAuthorization</name>
+        <expression>PersonAuthorization || AcademicAdministrativeOfficeAuthorization</expression>
         <description/>
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
