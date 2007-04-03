@@ -27,3 +27,5 @@ function executeWithTempFile() {
 	echo
 }
 
+executeWithTempFile "Correct Party WorkPhones" correctPartyWorkPhones.sql
+execute "Set visible information in party contacts" setVisibleInformationInPartyContacts.sql
