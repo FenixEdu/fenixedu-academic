@@ -2,14 +2,9 @@
   Definitions for groups related mappings 
   -->
   
-<class-descriptor class="net.sourceforge.fenixedu.domain.PersonalGroup" table="PERSONAL_GROUP">
-    
-    
-    
-    
-    
-      
-    
-    
-    
+<class-descriptor class="net.sourceforge.fenixedu.domain.PersonalGroup" table="PERSONAL_GROUP">  
+</class-descriptor>
+
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.ManagementGroups" table="MANAGEMENT_GROUPS">
 </class-descriptor>

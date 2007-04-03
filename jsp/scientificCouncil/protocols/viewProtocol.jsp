@@ -18,7 +18,7 @@
 </fr:view>
 <ul>
 	<li>		
-		<html:link page="<%= "/protocols.do?method=prepareEditProtocolData&amp;protocolID=" + protocolID %>"><bean:message key="link.protocol.manage.data"/></html:link>
+		<html:link page="<%= "/editProtocol.do?method=prepareEditProtocolData&amp;protocolID=" + protocolID %>"><bean:message key="link.protocol.manage.data"/></html:link>
 	</li>
 </ul>
 <br/>
@@ -53,7 +53,7 @@
 </logic:empty>
 <ul>
 	<li>		
-		<html:link page="<%= "/protocols.do?method=prepareEditResponsibles&amp;protocolID=" + protocolID %>"><bean:message key="link.protocol.manage.responsibles" /></html:link>
+		<html:link page="<%= "/editProtocol.do?method=prepareEditResponsibles&amp;protocolID=" + protocolID %>"><bean:message key="link.protocol.manage.responsibles" /></html:link>
 	</li>
 </ul>
 <br/>
@@ -84,7 +84,7 @@
 </logic:empty>
 <ul>
 	<li>		
-		<html:link page="<%= "/protocols.do?method=prepareEditUnits&amp;protocolID=" + protocolID %>"><bean:message key="link.protocol.manage.units" /></html:link>
+		<html:link page="<%= "/editProtocol.do?method=prepareEditUnits&amp;protocolID=" + protocolID %>"><bean:message key="link.protocol.manage.units" /></html:link>
 	</li>
 </ul>
 <br/>
@@ -103,6 +103,6 @@
 </logic:empty>
 <ul>
 	<li>		
-		<html:link page="<%= "/protocols.do?method=prepareEditProtocolFiles&amp;protocolID=" + protocolID %>"><bean:message key="link.protocol.manage.files" /></html:link>
+		<html:link page="<%= "/editProtocol.do?method=prepareEditProtocolFiles&amp;protocolID=" + protocolID %>"><bean:message key="link.protocol.manage.files" /></html:link>
 	</li>
 </ul>

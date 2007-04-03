@@ -26,6 +26,10 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
         EDIT_PROTOCOL_DATA, ADD_RESPONSIBLE, REMOVE_RESPONSIBLE, ADD_UNIT, REMOVE_UNIT, ADD_FILE, DELETE_FILE
     }
 
+    public static enum FilePermissionType {
+        IST_PEOPLE, RESPONSIBLES_AND_SCIENTIFIC_COUNCIL
+    }
+
     private EditProtocolAction editProtocolAction;
 
     private DomainReference<Protocol> protocol;
@@ -88,6 +92,8 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
 
     private String fileName;
 
+    private FilePermissionType filePermissionType;
+
     public ProtocolFactory(Protocol protocol) {
         setProtocol(protocol);
         setProtocolNumber(protocol.getProtocolNumber());
@@ -105,6 +111,7 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
         setPartnersList(protocol.getPartners());
         setIstResponsible(true);
         setInternalUnit(true);
+        setFilePermissionType(FilePermissionType.RESPONSIBLES_AND_SCIENTIFIC_COUNCIL);
     }
 
     private void setPartnersList(List<Unit> partners) {
@@ -144,6 +151,7 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
     public ProtocolFactory() {
         setIstResponsible(true);
         setInternalUnit(true);
+        setFilePermissionType(FilePermissionType.RESPONSIBLES_AND_SCIENTIFIC_COUNCIL);
     }
 
     public Object execute() {
@@ -372,15 +380,34 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
         this.unitName = unitName;
     }
 
-    public void addPartnerResponsible(Person person) {
-        if (getPartnerResponsibles() != null) {
-            getPartnerResponsibles().add(person);
-        } else {
-            setPartnerResponsibles(new DomainListReference<Person>());
-            getPartnerResponsibles().add(person);
+    public void addISTResponsible() {
+        if (getResponsibles() == null) {
+            setResponsibles(new DomainListReference<Person>());
         }
+        getResponsibles().add(getResponsible().getPerson());
     }
-
+    
+    public void addPartnerResponsible() {
+        if (getPartnerResponsibles() == null) {
+            setPartnerResponsibles(new DomainListReference<Person>());
+        }
+        getPartnerResponsibles().add(getResponsible().getPerson());
+    }
+    
+    public void addISTUnit() {
+        if (getUnits() == null) {
+            setUnits(new DomainListReference<Unit>());
+        }
+        getUnits().add(getUnitObject().getUnit());
+    }
+    
+    public void addPartnerUnit() {
+        if (getPartnerUnits() == null) {
+            setPartnerUnits(new DomainListReference<Unit>());
+        }
+        getPartnerUnits().add(getUnitObject().getUnit());
+    }
+    
     public void resetSearches() {
         setResponsible(null);
         setResponsibleName(null);
@@ -445,5 +472,13 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
 
     public void setInputStream(InputStream inputStream) {
         this.inputStream = inputStream;
+    }
+
+    public FilePermissionType getFilePermissionType() {
+        return filePermissionType;
+    }
+
+    public void setFilePermissionType(FilePermissionType filePermissionType) {
+        this.filePermissionType = filePermissionType;
     }
 }

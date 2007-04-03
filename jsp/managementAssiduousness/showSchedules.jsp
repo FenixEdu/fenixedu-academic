@@ -9,8 +9,7 @@
 <h2><bean:message key="link.schedules" /></h2>
 <%net.sourceforge.fenixedu.applicationTier.IUserView user = (net.sourceforge.fenixedu.applicationTier.IUserView) session
                     .getAttribute(net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants.U_VIEW);
-            if (net.sourceforge.fenixedu.domain.assiduousness.StaffManagementSection.isMember(user
-                    .getPerson())) {
+            if (net.sourceforge.fenixedu.domain.ManagementGroups.isAssiduousnessManagerMember(user.getPerson())) {
 
                 %>
 <ul class="list5 mtop15">
@@ -27,7 +26,7 @@
 	<fr:view name="workScheduleList" schema="show.workScheduleType">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle1 printborder tdleft" />
-			<%if (net.sourceforge.fenixedu.domain.assiduousness.StaffManagementSection.isMember(user.getPerson())) {%>
+			<%if (net.sourceforge.fenixedu.domain.ManagementGroups.isAssiduousnessManagerMember(user.getPerson())) {%>
 			<fr:property name="link(view)"
 				value="/assiduousnessParametrization.do?method=prepareEditSchedule" />
 			<fr:property name="key(view)" value="label.edit" />

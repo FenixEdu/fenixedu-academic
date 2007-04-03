@@ -3879,10 +3879,6 @@ class net.sourceforge.fenixedu.domain.assiduousness.Schedule extends net.sourcef
 	Boolean exception;
 }
 
-class net.sourceforge.fenixedu.domain.assiduousness.StaffManagementSection extends net.sourceforge.fenixedu.domain.DomainObject {
-	Group sectionManagers;
-}
-
 class net.sourceforge.fenixedu.domain.assiduousness.WorkPeriod extends net.sourceforge.fenixedu.domain.DomainObject{
 	TimeOfDay firstPeriod;
 	Duration firstPeriodDuration;
@@ -3989,6 +3985,10 @@ class net.sourceforge.fenixedu.domain.assiduousness.Card extends net.sourceforge
        CardType type;
 }
 
+class net.sourceforge.fenixedu.domain.ManagementGroups extends net.sourceforge.fenixedu.domain.DomainObject {
+	Group assiduousnessManagers;
+	Group protocolManagers;
+}
 
 class net.sourceforge.fenixedu.domain.research.result.ResearchResult extends net.sourceforge.fenixedu.domain.DomainObject {
 	String title;
@@ -9628,9 +9628,9 @@ relation RootDomainObjectAssiduousnessExtraWork {
 	}
 }
 
-relation RootDomainObjectStaffManagementSection {
+relation RootDomainObjectManagementGroups {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.assiduousness.StaffManagementSection playsRole staffManagementSections{
+	net.sourceforge.fenixedu.domain.ManagementGroups playsRole managementGroups{
 		multiplicity *;
 	}
 }

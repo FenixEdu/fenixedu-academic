@@ -11,7 +11,7 @@
 <h3 class="mtop15"><bean:message key="label.protocol.units"/></h3>
 
 <!-- IST Units -->
-<fr:form action="/editProtocol.do">
+<fr:form action="/createProtocol.do">
 <html:hidden bundle="HTMLALT_RESOURCES" name="protocolsForm" property="method" value="removeISTUnit"/>
 <html:hidden bundle="HTMLALT_RESOURCES" name="protocolsForm" property="unitID"/>
 <fr:edit id="protocolFactory" name="protocolFactory" visible="false"/>
@@ -71,7 +71,7 @@
 
 <!-- Add Unit -->
 <logic:notPresent name="createExternalUnit">
-<fr:form action="/editProtocol.do?method=editUnits">
+<fr:form action="/createProtocol.do?method=insertUnit">
 
 <span class="error0">
 	<html:errors/>
@@ -93,7 +93,7 @@
 		<fr:property name="classes" value="tstyle5 thlight mtop05 dinline"/>
         <fr:property name="columnClasses" value=",,tdclear tderror1"/>
 	</fr:layout>
-	<fr:destination name="changeUnitType" path="/editProtocol.do?method=prepareEditUnits"/>
+	<fr:destination name="changeUnitType" path="/createProtocol.do?method=prepareCreateProtocolUnits"/>
 </fr:edit>
 </logic:equal>
 
@@ -103,7 +103,7 @@
 		<fr:property name="classes" value="tstyle5 thlight mtop05 dinline"/>
         <fr:property name="columnClasses" value=",,tdclear tderror1"/>
 	</fr:layout>
-	<fr:destination name="changeUnitType" path="/editProtocol.do?method=prepareEditUnits"/>
+	<fr:destination name="changeUnitType" path="/createProtocol.do?method=prepareCreateProtocolUnits"/>
 </fr:edit>
 </logic:equal>
 
@@ -130,7 +130,7 @@
 
 <!-- Create External Unit -->
 <logic:present name="createExternalUnit">
-<fr:form action="/editProtocol.do?method=createExternalUnit">
+<fr:form action="/createProtocol.do?method=createExternalUnit">
 <strong><bean:message key="label.protocol.inserNewExternalUnit"/></strong><br/>
 <fr:view name="protocolFactory" schema="partnerUnit.creation">
 	<fr:layout name="tabular">

@@ -157,7 +157,7 @@
     </definition>    
     
 
-    <!-- Protocols -->          
+    <!-- PROTOCOLS -->          
     <definition name="show-protocols" extends="scientificCouncil.masterPage">
         <put name="body" value="/scientificCouncil/protocols/showProtocols.jsp"/>
     </definition>
@@ -167,6 +167,7 @@
     <definition name="view-protocol" extends="scientificCouncil.masterPage">
         <put name="body" value="/scientificCouncil/protocols/viewProtocol.jsp"/>
     </definition>
+    <!-- Edit -->
     <definition name="edit-protocol-data" extends="scientificCouncil.masterPage">
         <put name="body" value="/scientificCouncil/protocols/editProtocolData.jsp"/>
     </definition>
@@ -178,5 +179,18 @@
     </definition>
     <definition name="edit-protocol-files" extends="scientificCouncil.masterPage">
         <put name="body" value="/scientificCouncil/protocols/editProtocolFiles.jsp"/>
-    </definition>               
+    </definition>
+    <!-- Create -->
+    <definition name="prepareCreate-protocol-data" extends="scientificCouncil.masterPage">
+        <put name="body" value="/scientificCouncil/protocols/prepareCreateProtocolData.jsp"/>
+    </definition>
+    <definition name="prepareCreate-protocol-responsibles" extends="scientificCouncil.masterPage">
+        <put name="body" value="/scientificCouncil/protocols/prepareCreateProtocolResponsibles.jsp"/>
+    </definition>
+    <definition name="prepareCreate-protocol-units" extends="scientificCouncil.masterPage">
+        <put name="body" value="/scientificCouncil/protocols/prepareCreateProtocolUnits.jsp"/>
+    </definition>
+    <definition name="prepareCreate-protocol-files" extends="scientificCouncil.masterPage">
+        <put name="body" value="/scientificCouncil/protocols/prepareCreateProtocolFiles.jsp"/>
+    </definition>             
 </tiles-definitions>

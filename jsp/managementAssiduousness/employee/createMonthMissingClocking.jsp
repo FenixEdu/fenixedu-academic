@@ -15,7 +15,7 @@
 
 	<logic:present name="employee">
 		<bean:define id="employeeNumber" name="employee" property="employeeNumber" />
-		<%if (net.sourceforge.fenixedu.domain.assiduousness.StaffManagementSection.isMember(user.getPerson())) {%>
+		<%if (net.sourceforge.fenixedu.domain.ManagementGroups.isAssiduousnessManagerMember(user.getPerson())) {%>
 		<logic:equal name="yearMonth" property="isThisYearMonthClosed" value="false">
 		
 		<p class="mtop2">
@@ -236,7 +236,7 @@
 				<fr:property name="classes" value="tstyle1 printborder" />
 				<fr:property name="columnClasses" value="acenter" />
 				<fr:property name="headerClasses" value="acenter" />
-				<%if (net.sourceforge.fenixedu.domain.assiduousness.StaffManagementSection.isMember(user.getPerson())) {%>
+				<%if (net.sourceforge.fenixedu.domain.ManagementGroups.isAssiduousnessManagerMember(user.getPerson())) {%>
 				<logic:equal name="yearMonth" property="isThisYearMonthClosed" value="false">
 	                <fr:property name="link(edit)" value="<%="/employeeAssiduousness.do?method=prepareEditEmployeeJustification&month="+month.toString()+"&year="+year.toString()%>" />
 					<fr:property name="key(edit)" value="label.edit" />

@@ -19,6 +19,10 @@
 		<property name="size" value="10"/>
 		<property name="format" value="dd/MM/yyyy"/>
 	</slot>
+	<slot name="scientificAreas" key="label.protocol.scientificAreas" layout="longText">
+		<property name="columns" value="40" />
+		<property name="rows" value="2" />
+	</slot>
 	<slot name="actionTypes" key="label.protocol.actionTypes" layout="option-select">
 		<property name="choiceType"	value="net.sourceforge.fenixedu.domain.protocols.util.ProtocolActionType" />
 		<property name="eachLayout" value="this-does-not-exist" />
@@ -39,6 +43,10 @@
 		<property name="size" value="10"/>
 		<property name="format" value="dd/MM/yyyy"/>
 	</slot>
+	<slot name="scientificAreas" key="label.protocol.scientificAreas" layout="longText">
+		<property name="columns" value="40" />
+		<property name="rows" value="2" />
+	</slot>	
 	<slot name="actionTypes" key="label.protocol.actionTypes" layout="option-select">
 		<property name="choiceType"	value="net.sourceforge.fenixedu.domain.protocols.util.ProtocolActionType" />
 		<property name="eachLayout" value="this-does-not-exist" />
@@ -202,6 +210,9 @@
 </schema>
 
 <schema name="edit.protocolFile" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolFactory">
+	<slot name="filePermissionType" key="label.filePermission" layout="radio">
+		<property name="classes" value="nobullet liinline"/>
+	</slot>
 	<slot name="inputStream" key="label.file">
 		<property name="fileNameSlot" value="fileName" />
 		<property name="size" value="60"/>

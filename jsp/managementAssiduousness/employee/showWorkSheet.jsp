@@ -17,8 +17,7 @@
 
 		<%net.sourceforge.fenixedu.applicationTier.IUserView user = (net.sourceforge.fenixedu.applicationTier.IUserView) session
                     .getAttribute(net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants.U_VIEW);
-            if (net.sourceforge.fenixedu.domain.assiduousness.StaffManagementSection.isMember(user
-                    .getPerson())) {
+            if (net.sourceforge.fenixedu.domain.ManagementGroups.isAssiduousnessManagerMember(user.getPerson())) {
                 %>
        <logic:equal name="yearMonth" property="isThisYearMonthClosed" value="false">
 		<logic:present name="employeeJustificationFactory">
@@ -191,9 +190,7 @@
 				<fr:property name="columnClasses"
 					value="bgcolor3 acenter,,acenter,aright,aright,aleft,aleft,acenter invisible" />
 				<fr:property name="headerClasses" value="acenter" />
-				<%if (net.sourceforge.fenixedu.domain.assiduousness.StaffManagementSection.isMember(user
-                    .getPerson())) {
-                %>
+				<%if (net.sourceforge.fenixedu.domain.ManagementGroups.isAssiduousnessManagerMember(user.getPerson())) { %>
                 <logic:equal name="yearMonth" property="isThisYearMonthClosed" value="false">
 	                <fr:property name="link(justification)" value="<%="/employeeAssiduousness.do?method=prepareCreateEmployeeJustification&correction=JUSTIFICATION&employeeNumber="+employeeNumber.toString()%>" />
 					<fr:property name="key(justification)" value="label.justification" />

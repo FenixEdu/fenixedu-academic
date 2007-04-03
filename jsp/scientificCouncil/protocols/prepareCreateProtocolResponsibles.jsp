@@ -11,7 +11,7 @@
 <h3 class="mtop15"><bean:message key="label.protocol.responsibles"/></h3>
 
 <!-- IST Responsibles -->
-<fr:form action="/editProtocol.do">
+<fr:form action="/createProtocol.do">
 <html:hidden bundle="HTMLALT_RESOURCES" name="protocolsForm" property="method" value="removeISTResponsible"/>
 <html:hidden bundle="HTMLALT_RESOURCES" name="protocolsForm" property="responsibleID"/>
 <fr:edit id="protocolFactory" name="protocolFactory" visible="false"/>
@@ -75,7 +75,7 @@
 <!-- Add responsible -->
 <logic:notPresent name="createExternalPerson">
 <logic:notPresent name="createExternalUnit">
-<fr:form action="/editProtocol.do?method=editResponsibles">
+<fr:form action="/createProtocol.do?method=insertResponsible">
 <span class="error0">
 	<html:errors/>
 	<html:messages id="message" name="errorMessage" message="true">
@@ -96,7 +96,7 @@
 		<fr:property name="classes" value="tstyle5 thlight mtop05 dinline"/>
         <fr:property name="columnClasses" value=",,tdclear tderror1"/>
 	</fr:layout>
-	<fr:destination name="changePersonType" path="/editProtocol.do?method=prepareEditResponsibles"/>
+	<fr:destination name="changePersonType" path="/createProtocol.do?method=prepareCreateProtocolResponsibles"/>
 </fr:edit>
 </logic:equal>
 
@@ -106,7 +106,7 @@
 		<fr:property name="classes" value="tstyle5 thlight mtop05 dinline"/>
         <fr:property name="columnClasses" value=",,tdclear tderror1"/>
 	</fr:layout>
-	<fr:destination name="changePersonType" path="/editProtocol.do?method=prepareEditResponsibles"/>
+	<fr:destination name="changePersonType" path="/createProtocol.do?method=prepareCreateProtocolResponsibles"/>
 </fr:edit>
 </logic:equal>
 
@@ -116,7 +116,10 @@
 		<bean:message key="button.insert" />
 	</html:submit>
 	<logic:notPresent name="needToCreatePerson">
-		<html:cancel bundle="HTMLALT_RESOURCES" altKey="submit.cancel" property="back">
+		<html:cancel bundle="HTMLALT_RESOURCES" property="next">
+			<bean:message key="button.next" />
+		</html:cancel>	
+		<html:cancel bundle="HTMLALT_RESOURCES" property="back">
 			<bean:message key="button.back" />
 		</html:cancel>
 	</logic:notPresent>
@@ -135,7 +138,7 @@
 
 <!-- Create External Person -->
 <logic:present name="createExternalPerson">
-<fr:form action="/editProtocol.do?method=createExternalResponsible">
+<fr:form action="/createProtocol.do?method=createExternalResponsible">
 <logic:present name="needToCreateUnit">
 	<div class="warning0">
 		<strong><bean:message key="label.attention"/></strong>:<br/>
@@ -167,7 +170,7 @@
 
 <!-- Create External Unit -->
 <logic:present name="createExternalUnit">
-<fr:form action="/editProtocol.do?method=createExternalPersonAndUnit">
+<fr:form action="/createProtocol.do?method=createExternalPersonAndUnit">
 <strong><bean:message key="label.protocol.inserNewExternalUnit"/></strong><br/>
 <fr:view name="protocolFactory" schema="partnerUnit.fullCreation">
 	<fr:layout name="tabular">

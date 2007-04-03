@@ -470,24 +470,38 @@
             <forward name="show-research-activity-edit" path="show-event-edit-page"/> 
         </action>             
            
-
 	    <action path="/protocols"
+	      	scope="request"
+	      	parameter="method"  
+	      	type="net.sourceforge.fenixedu.presentationTier.Action.protocols.ProtocolsDispatchAction"> 	                   
+	       <forward name="show-protocols" path="show-protocols"/>
+   	       <forward name="create-protocol" path="create-protocol"/>
+   	       <forward name="view-protocol" path="view-protocol"/>   	       
+	    </action>
+	    	    	
+ 		<action path="/editProtocol"
 	      	scope="request"
 	      	parameter="method"
 	      	name="protocolsForm"   
-	      	type="net.sourceforge.fenixedu.presentationTier.Action.protocols.ProtocolsDispatchAction">
-			<exception type="net.sourceforge.fenixedu.domain.exceptions.DomainException" 
-                key="" 
-                handler="net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler"/>  	                   
-	       <forward name="show-protocols" path="show-protocols"/>
-   	       <forward name="create-protocol" path="create-protocol"/>
+	      	type="net.sourceforge.fenixedu.presentationTier.Action.protocols.EditProtocolDispatchAction">
    	       <forward name="view-protocol" path="view-protocol"/>
    	       <forward name="edit-protocol-data" path="edit-protocol-data"/>
    	       <forward name="edit-protocol-responsibles" path="edit-protocol-responsibles"/>
    	       <forward name="edit-protocol-units" path="edit-protocol-units"/>
    	       <forward name="edit-protocol-files" path="edit-protocol-files"/>   	       
 	    </action>
-	    	    	    	    
+	    
+	    <action path="/createProtocol"
+	      	scope="request"
+	      	parameter="method"
+	      	name="protocolsForm"   
+	      	type="net.sourceforge.fenixedu.presentationTier.Action.protocols.CreateProtocolDispatchAction">
+	       <forward name="show-protocols" path="show-protocols"/>
+   	       <forward name="prepareCreate-protocol-data" path="prepareCreate-protocol-data"/>
+   	       <forward name="prepareCreate-protocol-responsibles" path="prepareCreate-protocol-responsibles"/>
+   	       <forward name="prepareCreate-protocol-units" path="prepareCreate-protocol-units"/>
+   	       <forward name="prepareCreate-protocol-files" path="prepareCreate-protocol-files"/>   	       
+	    </action>    	    	    	    
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->

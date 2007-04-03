@@ -1,5 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><html:xhtml/>
-<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%><%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%><bean:define id="yearMonthUrl" value="" /><logic:present name="yearMonth"> <%net.sourceforge.fenixedu.applicationTier.IUserView user = (net.sourceforge.fenixedu.applicationTier.IUserView) session                    .getAttribute(net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants.U_VIEW);            if (net.sourceforge.fenixedu.domain.assiduousness.StaffManagementSection.isMember(user                    .getPerson())) {    %>	<bean:define id="month" name="yearMonth" property="month" />	<bean:define id="year" name="yearMonth" property="year"/>	<bean:define id="yearMonthUrl" value="<%="&month="+month.toString()+"&year="+year.toString()%>" />	<%}%></logic:present>	
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%><%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%><bean:define id="yearMonthUrl" value="" /><logic:present name="yearMonth"> <%net.sourceforge.fenixedu.applicationTier.IUserView user = (net.sourceforge.fenixedu.applicationTier.IUserView) session                    .getAttribute(net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants.U_VIEW);            if (net.sourceforge.fenixedu.domain.ManagementGroups.isAssiduousnessManagerMember(user.getPerson())) {    %>	<bean:define id="month" name="yearMonth" property="month" />	<bean:define id="year" name="yearMonth" property="year"/>	<bean:define id="yearMonthUrl" value="<%="&month="+month.toString()+"&year="+year.toString()%>" />	<%}%></logic:present>	
 <ul>
 	<li class="navheader"><bean:message key="link.employeeConsult" /></li>
 	<li><html:link page="<%="/viewEmployeeAssiduousness.do?method=chooseEmployee&amp;action=showWorkSheet"+yearMonthUrl%>"><bean:message key="link.workSheet" /></html:link></li>
@@ -15,8 +15,7 @@
     
     <%net.sourceforge.fenixedu.applicationTier.IUserView user = (net.sourceforge.fenixedu.applicationTier.IUserView) session
                     .getAttribute(net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants.U_VIEW);
-            if (net.sourceforge.fenixedu.domain.assiduousness.StaffManagementSection.isMember(user
-                    .getPerson())) {
+            if (net.sourceforge.fenixedu.domain.ManagementGroups.isAssiduousnessManagerMember(user.getPerson())) {
 
     %>
     <%-- 

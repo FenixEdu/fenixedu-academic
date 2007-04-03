@@ -4,12 +4,16 @@ import java.io.InputStream;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolFactory;
+import net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolFactory.FilePermissionType;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.OpenFileBean;
 import net.sourceforge.fenixedu.domain.DomainListReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
+import net.sourceforge.fenixedu.domain.accessControl.InternalPersonGroup;
+import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -81,18 +85,18 @@ public class Protocol extends Protocol_Base {
     private void writeFiles(List<OpenFileBean> files) {
         final VirtualPath filePath = getFilePath();
         for (OpenFileBean openFileBean : files) {
-            writeFile(filePath, openFileBean.getInputStream(), openFileBean.getFileName());
+            //writeFile(filePath, openFileBean.getInputStream(), openFileBean.getFileName());
         }
     }
 
-    private void writeFile(VirtualPath filePath, InputStream inputStream, String fileName) {
-        final Group group = getGroup();
+    private void writeFile(VirtualPath filePath, InputStream inputStream, String fileName,
+            FilePermissionType filePermissionType) {
         final FileDescriptor fileDescriptor = FileManagerFactory.getFactoryInstance().getFileManager()
-                .saveFile(filePath, fileName, false, null, fileName, inputStream);
+                .saveFile(filePath, fileName, true, null, fileName, inputStream);
 
         final ProtocolFile protocolFile = new ProtocolFile(fileName, fileName, fileDescriptor
                 .getMimeType(), fileDescriptor.getChecksum(), fileDescriptor.getChecksumAlgorithm(),
-                fileDescriptor.getSize(), fileDescriptor.getUniqueId(), group);
+                fileDescriptor.getSize(), fileDescriptor.getUniqueId(), getGroup(filePermissionType));
         getProtocolFiles().add(protocolFile);
     }
 
@@ -103,10 +107,24 @@ public class Protocol extends Protocol_Base {
         return filePath;
     }
 
-    private Group getGroup() {
-        // final PersonGroup personGroup = new PersonGroup((Person) party);
-        return new RoleGroup(Role.getRoleByRoleType(RoleType.SCIENTIFIC_COUNCIL));
-        // return new GroupUnion(personGroup, roleGroup);
+    private Group getGroup(FilePermissionType filePermissionType) {
+        if (filePermissionType.equals(FilePermissionType.RESPONSIBLES_AND_SCIENTIFIC_COUNCIL)) {
+            Group unionGroup = null;
+            for (Person responsible : getResponsibles()) {
+                PersonGroup personGroup = new PersonGroup(responsible);
+                if (unionGroup == null) {
+                    unionGroup = new GroupUnion(personGroup, personGroup);
+                } else {
+                    unionGroup = new GroupUnion(unionGroup, personGroup);
+                }
+            }
+            final RoleGroup roleGroup = new RoleGroup(Role
+                    .getRoleByRoleType(RoleType.SCIENTIFIC_COUNCIL));
+            return new GroupUnion(unionGroup, roleGroup);
+        } else if (filePermissionType.equals(FilePermissionType.IST_PEOPLE)) {
+            return new InternalPersonGroup();
+        }
+        return null;
     }
 
     private void setResponsables(List<Person> responsibles) {
@@ -174,7 +192,8 @@ public class Protocol extends Protocol_Base {
     }
 
     public void addFile(ProtocolFactory protocolFactory) {
-        writeFile(getFilePath(), protocolFactory.getInputStream(), protocolFactory.getFileName());
+        writeFile(getFilePath(), protocolFactory.getInputStream(), protocolFactory.getFileName(),
+                protocolFactory.getFilePermissionType());
     }
 
     public void deleteFile(ProtocolFactory protocolFactory) {
