@@ -1095,10 +1095,15 @@ div.announcement div.ann_body br {
 margin: -4px 0;
 padding: 0;
 }
-
 div.announcement h3 a { text-decoration: none; }
 .greytxt2 { color: #999; }
-.ann_body { }
+
+div.announcement div.ann_body * { /* overrides user defined font-family and font-size */
+font-size: 1.0em !important;
+font-family: Verdana, Arial, Helvetica, sans-serif !important;
+}
+
+
 
 .section1 {
 background: #fafaff;
@@ -1328,3 +1333,12 @@ text-decoration: underline;
 table.tgluetop tr td, table.tgluetop tr th { 
 border-top: none; 
 }
+
+/* showsection1: section header as h2, item as h3 */
+div.showsection1 h1.section { font: bold 14px "bitstream vera sans", "Trebuchet MS", Georgia, Arial, Helvetica, sans-serif; margin: 0 0 0.5em 0; color: #c30; }
+div.showsection1 h2.item { font: bold 12px "bitstream vera sans", "Lucida Grande", "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif; color: #333; margin-bottom: 0; }
+/* showsection2: section header as h1, item as h2 */
+div.showsection2 h1.section { color: #069; font: 18px/0.75em "bitstream vera sans", "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif; clear: both; }
+div.showsection2 h2.item { font: bold 14px "bitstream vera sans", "Trebuchet MS", Georgia, Arial, Helvetica, sans-serif; margin: 0 0 0.5em 0; color: #c30; }
+/* showsection3: item as h1 */
+div.showsection3 h2.item { color: #069; font: 18px/0.75em "bitstream vera sans", "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif; clear: both; }
