@@ -211,7 +211,7 @@ public class AnnouncementsStartPageHandler extends AnnouncementManagement {
 
         final AnnouncementsStartPageForm form = (AnnouncementsStartPageForm) actionForm;
 
-        Collection<UnitAnnouncementBoard> unitAnnouncementBoards = new TreeSet<UnitAnnouncementBoard>(AnnouncementBoard.BY_NAME);
+        Collection<UnitAnnouncementBoard> unitAnnouncementBoards = new TreeSet<UnitAnnouncementBoard>(UnitAnnouncementBoard.BY_UNIT_DEPTH_AND_NAME);
         Collection<ExecutionCourseAnnouncementBoard> executionCourseAnnouncementBoards = new TreeSet<ExecutionCourseAnnouncementBoard>(ExecutionCourseAnnouncementBoard.COMPARE_BY_EXECUTION_PERIOD_AND_NAME);
 
         for (final AnnouncementBoard board : rootDomainObject.getAnnouncementBoards()) {

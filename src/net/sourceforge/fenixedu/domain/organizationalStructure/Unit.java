@@ -608,6 +608,16 @@ public class Unit extends Unit_Base {
 	return !getSubUnits().isEmpty();
     }
 
+    public int getUnitDepth() {
+        int depth = 0;
+        
+        for (Unit unit : getParentUnits()) {
+            depth = Math.max(depth, 1 + unit.getUnitDepth());
+        }
+        
+        return depth;
+    }
+    
     public Accountability addParentUnit(Unit parentUnit, AccountabilityType accountabilityType) {
 	if (this.equals(parentUnit)) {
 	    throw new DomainException("error.unit.equals.parentUnit");
