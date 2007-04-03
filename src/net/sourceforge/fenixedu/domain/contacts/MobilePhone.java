@@ -29,8 +29,8 @@ public class MobilePhone extends MobilePhone_Base {
         super();
     }
     
-    public MobilePhone(final Party party, final PartyContactType type, final Boolean visible, final String number) {
-        this(party, type, visible, false, number);
+    public MobilePhone(final Party party, final PartyContactType type, final Boolean defaultContact, final String number) {
+        this(party, type, true, defaultContact.booleanValue(), number);
     }
     
     @Checked("PartyContactPredicates.checkPermissionsToManage")
@@ -61,6 +61,11 @@ public class MobilePhone extends MobilePhone_Base {
     @Checked("PartyContactPredicates.checkPermissionsToManage")
     public void edit(final String number) {
 	super.setNumber(number);
+    }
+    
+    public void edit(final PartyContactType type, final Boolean defaultContact, final String number) {
+	super.edit(type, true, defaultContact);
+	edit(number);
     }
     
 }

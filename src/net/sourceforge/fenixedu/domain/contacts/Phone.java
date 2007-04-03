@@ -29,8 +29,8 @@ public class Phone extends Phone_Base {
         super();
     }
     
-    public Phone(final Party party, final PartyContactType type, final Boolean visible, final String number) {
-        this(party, type, visible, false, number);
+    public Phone(final Party party, final PartyContactType type, final Boolean defaultContact, final String number) {
+        this(party, type, true, defaultContact, number);
     }
     
     @Checked("PartyContactPredicates.checkPermissionsToManage")
@@ -61,5 +61,17 @@ public class Phone extends Phone_Base {
     @Checked("PartyContactPredicates.checkPermissionsToManage")
     public void edit(final String number) {
 	super.setNumber(number);
+    }
+    
+    public void edit(final PartyContactType type, final Boolean defaultContact, final String number) {
+	super.edit(type, true, defaultContact);
+	edit(number);
+    }
+    
+    @Override
+    protected void checkRulesToDelete() {
+	if (getParty().getPartyContacts(getClass()).size() == 1) {
+	    throw new DomainException("error.domain.contacts.Phone.cannot.remove.last.phone");
+	}
     }
 }

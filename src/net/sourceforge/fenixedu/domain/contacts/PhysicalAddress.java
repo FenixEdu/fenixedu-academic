@@ -2,11 +2,12 @@ package net.sourceforge.fenixedu.domain.contacts;
 
 import java.util.Comparator;
 
-import org.apache.commons.lang.StringUtils;
-
 import net.sourceforge.fenixedu.domain.Country;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.injectionCode.Checked;
+
+import org.apache.commons.lang.StringUtils;
 
 public class PhysicalAddress extends PhysicalAddress_Base {
     
@@ -29,11 +30,12 @@ public class PhysicalAddress extends PhysicalAddress_Base {
         super();
     }
     
-    public PhysicalAddress(final Party party, final PartyContactType type, final Boolean visible, final String address, final String areaCode,
+    public PhysicalAddress(final Party party, final PartyContactType type, final Boolean defaultContact, final String address, final String areaCode,
 	    final String areaOfAreaCode, final String area, final String parishOfResidence, final String districtSubdivisionOfResidence,
 	    final String districtOfResidence, final Country countryOfResidence) {
 	
-	this(party, type, visible.booleanValue(), false, new PhysicalAddressData(address, areaCode, areaOfAreaCode, area, parishOfResidence,
+	this(party, type, defaultContact.booleanValue(), false, 
+		new PhysicalAddressData(address, areaCode, areaOfAreaCode, area, parishOfResidence,
 			districtSubdivisionOfResidence, districtOfResidence, countryOfResidence));
     }
     
@@ -66,6 +68,15 @@ public class PhysicalAddress extends PhysicalAddress_Base {
 	super.setCountryOfResidence(data.getCountryOfResidence());
     }
     
+    public void edit(final PartyContactType type, final Boolean defaultContact, final String address, final String areaCode,
+	    final String areaOfAreaCode, final String area, final String parishOfResidence, final String districtSubdivisionOfResidence,
+	    final String districtOfResidence, final Country countryOfResidence) {
+	
+	super.edit(type, true, defaultContact);
+	edit(new PhysicalAddressData(address, areaCode, areaOfAreaCode, area, parishOfResidence,
+		districtSubdivisionOfResidence, districtOfResidence, countryOfResidence));
+    }
+    
     @Override
     public boolean isPhysicalAddress() {
         return true;
@@ -80,5 +91,11 @@ public class PhysicalAddress extends PhysicalAddress_Base {
     public void delete() {
         removeCountryOfResidence();
         super.delete();
+    }
+
+    protected void checkRulesToDelete() {
+	if (getParty().getPartyContacts(getClass()).size() == 1) {
+	    throw new DomainException("error.domain.contacts.PhysicalAddress.cannot.remove.last.physicalAddress");
+	}
     }
 }

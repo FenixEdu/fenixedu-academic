@@ -29,18 +29,14 @@ public class EmailAddress extends EmailAddress_Base {
         super();
     }
     
-    public EmailAddress(final Party party, final PartyContactType type, final Boolean visible, final String value) {
-        this(party, type, visible, false, value);
+    public EmailAddress(final Party party, final PartyContactType type, final Boolean defaultContact, final String value) {
+	this(party, type, true, defaultContact.booleanValue(), value);
     }
     
     @Checked("PartyContactPredicates.checkPermissionsToManage")
     public EmailAddress(final Party party, final PartyContactType type, final boolean visible, final boolean defaultContact, final String value) {
 	this();
 	init(party, type, visible, defaultContact, value);
-    }
-    
-    public EmailAddress(final Party party, final PartyContactType type, final boolean defaultContact, final String value) {
-	this(party, type, true, defaultContact, value);
     }
     
     protected void init(final Party party, final PartyContactType type, final boolean visible, final boolean defaultContact, final String value) {
@@ -72,17 +68,20 @@ public class EmailAddress extends EmailAddress_Base {
     public void edit(final String value) {
 	super.setValue(value);
     }
-
-    @Override
-    public void delete() {
-	if (!canBeDeleted()) {
-	    throw new DomainException("error.contacts.EmailAddress.cannot.delete.emailAddress", getValue());
-	}
-        super.delete();
+    
+    public void edit(final PartyContactType type, final Boolean defaultContact, final String value) {
+	super.edit(type, true, defaultContact);
+	edit(value);
     }
 
-    private boolean canBeDeleted() {
-	return !isInstitutionalType();
+    @Override
+    protected void checkRulesToDelete() {
+	if (isInstitutionalType()) {
+	    throw new DomainException("error.contacts.EmailAddress.cannot.delete.institution.emailAddress", getValue());
+	}
+	if (getParty().getPartyContacts(getClass()).size() == 1) {
+	    throw new DomainException("error.contacts.EmailAddress.cannot.remove.last.emailAddress");
+	}
     }
     
     static public EmailAddress find(final String emailAddressString) {

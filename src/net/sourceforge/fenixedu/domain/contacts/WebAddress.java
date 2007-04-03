@@ -29,15 +29,10 @@ public class WebAddress extends WebAddress_Base {
         super();
     }
     
-    public WebAddress(final Party party, final PartyContactType type, final Boolean visible, final String url) {
-        this(party, type, visible, false, url);
+    public WebAddress(final Party party, final PartyContactType type, final Boolean defaultContact, final String url) {
+	this(party, type, true, defaultContact.booleanValue(), url);
     }
     
-    @Checked("PartyContactPredicates.checkPermissionsToManage")
-    public WebAddress(final Party party, final PartyContactType type, final boolean visible, final boolean defaultContact, final String url) {
-	this();
-	init(party, type, visible, defaultContact, url);
-    }
     
     @Checked("PartyContactPredicates.checkPermissionsToManage")
     public WebAddress(final Party party, final PartyContactType type, final boolean visible, final boolean defaultContact) {
@@ -45,8 +40,10 @@ public class WebAddress extends WebAddress_Base {
 	super.init(party, type, visible, defaultContact);
     }
     
-    public WebAddress(final Party party, final PartyContactType type, final boolean defaultContact, final String url) {
-	this(party, type, true, defaultContact, url);
+    @Checked("PartyContactPredicates.checkPermissionsToManage")
+    public WebAddress(final Party party, final PartyContactType type, final boolean visible, final boolean defaultContact, final String url) {
+	this();
+	init(party, type, visible, defaultContact, url);
     }
     
     protected void init(final Party party, final PartyContactType type, final boolean visible, final boolean defaultContact, final String url) {
@@ -69,5 +66,10 @@ public class WebAddress extends WebAddress_Base {
     @Checked("PartyContactPredicates.checkPermissionsToManage")
     public void edit(final String url) {
 	super.setUrl(url);
+    }
+    
+    public void edit(final PartyContactType type, final Boolean defaultContact, final String url) {
+	super.edit(type, true, defaultContact);
+	edit(url);
     }
 }
