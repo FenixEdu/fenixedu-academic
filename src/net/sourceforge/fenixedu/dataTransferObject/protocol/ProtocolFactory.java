@@ -1,11 +1,11 @@
 package net.sourceforge.fenixedu.dataTransferObject.protocol;
 
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 
-import net.sourceforge.fenixedu.dataTransferObject.research.result.OpenFileBean;
 import net.sourceforge.fenixedu.domain.DomainListReference;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
 import net.sourceforge.fenixedu.domain.person.PersonName;
 import net.sourceforge.fenixedu.domain.protocols.Protocol;
-import net.sourceforge.fenixedu.domain.protocols.ProtocolHistory;
+import net.sourceforge.fenixedu.domain.protocols.ProtocolFile;
 import net.sourceforge.fenixedu.domain.protocols.util.ProtocolAction;
 import net.sourceforge.fenixedu.domain.protocols.util.ProtocolActionType;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
@@ -23,64 +23,70 @@ import org.joda.time.YearMonthDay;
 public class ProtocolFactory implements Serializable, FactoryExecutor {
 
     public static enum EditProtocolAction {
-        EDIT_PROTOCOL_DATA, EDIT_PROTOCOL_RESPONSIBLES, EDIT_PROTOCOL_UNITS, EDIT_PROTOCOL_FILES
+        EDIT_PROTOCOL_DATA, ADD_RESPONSIBLE, REMOVE_RESPONSIBLE, ADD_UNIT, REMOVE_UNIT, ADD_FILE, DELETE_FILE
     }
 
-    EditProtocolAction editProtocolAction;
+    private EditProtocolAction editProtocolAction;
 
-    DomainReference<Protocol> protocol;
+    private DomainReference<Protocol> protocol;
 
-    String protocolNumber;
+    private String protocolNumber;
 
-    YearMonthDay signedDate;
+    private YearMonthDay signedDate;
 
-    Boolean renewable;
+    private Boolean renewable;
 
-    Boolean active;
+    private Boolean active;
 
-    String scientificAreas;
+    private String scientificAreas;
 
-    String observations;
+    private String observations;
 
-    ProtocolAction protocolAction;
+    private ProtocolAction protocolAction;
 
-    YearMonthDay beginDate;
+    private YearMonthDay beginDate;
 
-    YearMonthDay endDate;
+    private YearMonthDay endDate;
 
-    String otherActionTypes;
+    private String otherActionTypes;
 
-    Integer[] filesToDelete;
+    private Boolean istResponsible;
 
-    Boolean istResponsible;
+    private Boolean internalUnit;
 
-    Boolean internalUnit;
+    private DomainReference<PersonName> responsible;
 
-    DomainReference<PersonName> responsible;
+    private String responsibleName;
 
-    String responsibleName;
+    private DomainReference<UnitName> unitObject;
 
-    DomainReference<UnitName> unitObject;
+    private String unitName;
 
-    String unitName;
+    private DomainReference<Person> responsibleToAdd;
 
-    DomainReference<Person> responsibleToAdd;
+    private DomainReference<Person> responsibleToRemove;
 
-    DomainReference<Unit> unitToAdd;
+    private DomainReference<Unit> unitToAdd;
 
-    List<ProtocolActionType> actionTypes;
+    private DomainReference<Unit> unitToRemove;
 
-    List<ProtocolHistory> protocolHistories;//só pode editar o ultimo (actual) ou criar novo caso n exista
+    private List<ProtocolActionType> actionTypes;
 
-    DomainListReference<Person> responsibles;
+    private DomainListReference<Person> responsibles;
 
-    DomainListReference<Person> partnerResponsibles;
+    private DomainListReference<Person> partnerResponsibles;
 
-    DomainListReference<Unit> partnerUnits;
+    private DomainListReference<Unit> partnerUnits;
 
-    DomainListReference<Unit> units;
+    private DomainListReference<Unit> units;
 
-    List<OpenFileBean> files;
+    private DomainListReference<ProtocolFile> files;
+
+    private DomainReference<ProtocolFile> fileToDelete;
+
+    private transient InputStream inputStream;
+
+    private String fileName;
 
     public ProtocolFactory(Protocol protocol) {
         setProtocol(protocol);
@@ -147,18 +153,25 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
             if (getEditProtocolAction().equals(EditProtocolAction.EDIT_PROTOCOL_DATA)) {
                 getProtocol().editData(this);
                 return getProtocol();
-            } else if (getEditProtocolAction().equals(EditProtocolAction.EDIT_PROTOCOL_RESPONSIBLES)) {
-                getProtocol().editResponsibles(this);
+            } else if (getEditProtocolAction().equals(EditProtocolAction.ADD_RESPONSIBLE)) {
+                getProtocol().addResponsible(this);
                 return getProtocol();
-            } else if (getEditProtocolAction().equals(EditProtocolAction.EDIT_PROTOCOL_UNITS)) {
-                getProtocol().editUnits(this);
+            } else if (getEditProtocolAction().equals(EditProtocolAction.REMOVE_RESPONSIBLE)) {
+                getProtocol().removeResponsible(this);
                 return getProtocol();
-            } else if (getEditProtocolAction().equals(EditProtocolAction.EDIT_PROTOCOL_FILES)) {
-                //getProtocol().editFiles(this);
-                //return getProtocol();
+            } else if (getEditProtocolAction().equals(EditProtocolAction.ADD_UNIT)) {
+                getProtocol().addUnit(this);
+                return getProtocol();
+            } else if (getEditProtocolAction().equals(EditProtocolAction.REMOVE_UNIT)) {
+                getProtocol().removeUnit(this);
+                return getProtocol();
+            } else if (getEditProtocolAction().equals(EditProtocolAction.ADD_FILE)) {
+                getProtocol().addFile(this);
+                return getProtocol();
+            } else if (getEditProtocolAction().equals(EditProtocolAction.DELETE_FILE)) {
+                getProtocol().deleteFile(this);
+                return getProtocol();
             }
-            //editar, se já existir um ficheiro com o mesmo nome e tiver inputstream, apaga e poe o novo
-            //tem de ter link para apagar, provavelmente vai ter de ser protocolFileBean, com id do file
         }
         return null;
     }
@@ -213,14 +226,6 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
 
     public void setProtocolAction(ProtocolAction protocolAction) {
         this.protocolAction = protocolAction;
-    }
-
-    public List<ProtocolHistory> getProtocolHistories() {
-        return protocolHistories;
-    }
-
-    public void setProtocolHistories(List<ProtocolHistory> protocolHistories) {
-        this.protocolHistories = protocolHistories;
     }
 
     public String getProtocolNumber() {
@@ -303,20 +308,12 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
         this.otherActionTypes = otherActionTypes;
     }
 
-    public List<OpenFileBean> getFiles() {
+    public DomainListReference<ProtocolFile> getFiles() {
         return files;
     }
 
-    public void setFiles(List<OpenFileBean> files) {
+    public void setFiles(DomainListReference<ProtocolFile> files) {
         this.files = files;
-    }
-
-    public Integer[] getFilesToDelete() {
-        return filesToDelete;
-    }
-
-    public void setFilesToDelete(Integer[] filesToDelete) {
-        this.filesToDelete = filesToDelete;
     }
 
     public EditProtocolAction getEditProtocolAction() {
@@ -396,7 +393,17 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
     }
 
     public void setResponsibleToAdd(Person responsibleToAdd) {
-        this.responsibleToAdd = responsibleToAdd != null ? new DomainReference<Person>(responsibleToAdd) : null;
+        this.responsibleToAdd = responsibleToAdd != null ? new DomainReference<Person>(responsibleToAdd)
+                : null;
+    }
+
+    public Person getResponsibleToRemove() {
+        return responsibleToRemove != null ? responsibleToRemove.getObject() : null;
+    }
+
+    public void setResponsibleToRemove(Person responsibleToRemove) {
+        this.responsibleToRemove = responsibleToRemove != null ? new DomainReference<Person>(
+                responsibleToRemove) : null;
     }
 
     public Unit getUnitToAdd() {
@@ -407,4 +414,36 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
         this.unitToAdd = unitToAdd != null ? new DomainReference<Unit>(unitToAdd) : null;
     }
 
+    public Unit getUnitToRemove() {
+        return unitToRemove != null ? unitToRemove.getObject() : null;
+    }
+
+    public void setUnitToRemove(Unit unitToRemove) {
+        this.unitToRemove = unitToRemove != null ? new DomainReference<Unit>(unitToRemove) : null;
+    }
+
+    public ProtocolFile getFileToDelete() {
+        return fileToDelete != null ? fileToDelete.getObject() : null;
+    }
+
+    public void setFileToDelete(ProtocolFile fileToDelete) {
+        this.fileToDelete = fileToDelete != null ? new DomainReference<ProtocolFile>(fileToDelete)
+                : null;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public InputStream getInputStream() {
+        return inputStream;
+    }
+
+    public void setInputStream(InputStream inputStream) {
+        this.inputStream = inputStream;
+    }
 }

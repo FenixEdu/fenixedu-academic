@@ -152,6 +152,15 @@
  	<slot name="unitName" key="label.name"/>		
 </schema>
 
+<schema name="partnerUnit.creation" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolFactory" >
+	<slot name="internalUnit" key="label.unit.type" layout="radio">
+        <property name="trueLabel" value="label.protocol.ist"/>
+        <property name="falseLabel" value="label.protocol.partner"/>
+        <property name="classes" value="nobullet liinline"/>
+    </slot>
+ 	<slot name="unitName" key="label.name"/>		
+</schema>
+
 <schema name="search.unit" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolFactory">
     <slot name="internalUnit" key="label.protocol.type" layout="radio-postback">
         <property name="trueLabel" value="label.protocol.ist"/>
@@ -192,10 +201,10 @@
 	</slot>
 </schema>
 
-<schema name="edit.protocolFile" type="net.sourceforge.fenixedu.dataTransferObject.research.result.OpenFileBean">
+<schema name="edit.protocolFile" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolFactory">
 	<slot name="inputStream" key="label.file">
 		<property name="fileNameSlot" value="fileName" />
-		<property name="size" value="40"/>
+		<property name="size" value="60"/>
 	</slot>
 </schema>
 
@@ -209,7 +218,7 @@
 </schema>
 
 <schema name="show.protocol.partnerUnit" type="net.sourceforge.fenixedu.domain.organizationalStructure.Unit">
-	<slot name="presentationNameWithParents" key="label.person.name"/>
+	<slot name="presentationNameWithParents" key="label.name"/>
 </schema>
 
 <schema name="unit.type" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolFactory">

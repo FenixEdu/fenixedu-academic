@@ -10,56 +10,69 @@
 
 <h3 class="mtop15"><bean:message key="label.protocol.responsibles"/></h3>
 
-<fr:form action="/protocols.do?method=removeResponsible">
+<!-- IST Responsibles -->
+<fr:form action="/protocols.do">
+<html:hidden bundle="HTMLALT_RESOURCES" name="protocolsForm" property="method" value="removeISTResponsible"/>
+<html:hidden bundle="HTMLALT_RESOURCES" name="protocolsForm" property="responsibleID"/>
+<fr:edit id="protocolFactory" name="protocolFactory" visible="false"/>
+
 <strong><bean:message key="label.protocol.ist"/></strong><br/>
 <logic:notEmpty name="protocolFactory" property="responsibles">
-<fr:view name="protocolFactory" property="responsibles" schema="show.protocol.responsible">
-	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle1"/>
-	</fr:layout>
-</fr:view>
-</logic:notEmpty>
-<logic:empty name="protocolFactory" property="responsibles">
-	<p><em><bean:message key="label.protocol.hasNone"/></em></p>
-</logic:empty>
-<br/>
-
-<strong><bean:message key="label.protocol.partner"/></strong><br/>
-<logic:notEmpty name="protocolFactory" property="partnerResponsibles">
-<table>
+<table class="tstyle1">
 	<tr>
 		<th><bean:message key="label.person.name"/></th>
 		<th><bean:message key="label.unit"/></th>
 		<th></th>				
 	</tr>
-	<logic:iterate id="partnerResponsible" name="protocolFactory" property="partnerResponsibles">
+	<logic:iterate id="responsible" name="protocolFactory" property="responsibles" type="net.sourceforge.fenixedu.domain.Person">
 	<tr>
-		<td><bean:write name="partnerResponsible" property="name"/></td>
-		<td><bean:write name="partnerResponsible" property="unitText"/></td>
+		<td><bean:write name="responsible" property="name"/></td>
+		<td><bean:write name="responsible" property="unitText"/></td>
 		<td>
-			<html:submit property="createNew">
+			<html:submit onclick="<%= "this.form.responsibleID.value=" + responsible.getIdInternal().toString()%>">
 				<bean:message key="button.remove" />
 			</html:submit>
 		</td>				
 	</tr>
 	</logic:iterate>
 </table>
-	
-<fr:view name="protocolFactory" property="partnerResponsibles" schema="show.protocol.responsible">
-	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle1"/>
-		<fr:property name="link(delete)" value="<%="/protocols.do?method=removeISTResponsible&amp;protocolID"%>" />
-		<fr:property name="key(delete)" value="label.remove" />
-		<fr:property name="param(delete)" value="idInternal" />
-	</fr:layout>
-</fr:view>
 </logic:notEmpty>
+
+<logic:empty name="protocolFactory" property="responsibles">
+	<p><em><bean:message key="label.protocol.hasNone"/></em></p>
+</logic:empty>
+<br/>
+
+<!-- Partner Responsibles -->
+<strong><bean:message key="label.protocol.partner"/></strong><br/>
+<logic:notEmpty name="protocolFactory" property="partnerResponsibles">
+<table class="tstyle1">
+	<tr>
+		<th><bean:message key="label.person.name"/></th>
+		<th><bean:message key="label.unit"/></th>
+		<th></th>				
+	</tr>
+	<logic:iterate id="partnerResponsible" name="protocolFactory" property="partnerResponsibles" type="net.sourceforge.fenixedu.domain.Person">
+	<tr>
+		<td><bean:write name="partnerResponsible" property="name"/></td>
+		<td><bean:write name="partnerResponsible" property="unitText"/></td>
+		<td>
+			<html:submit onclick="<%= "this.form.responsibleID.value=" + partnerResponsible.getIdInternal().toString() + ";this.form.method.value='removePartnerResponsible'"%>">
+				<bean:message key="button.remove" />
+			</html:submit>
+		</td>				
+	</tr>
+	</logic:iterate>
+</table>
+</logic:notEmpty>
+
 <logic:empty name="protocolFactory" property="partnerResponsibles">
 	<p><em><bean:message key="label.protocol.hasNone"/></em></p>
 </logic:empty>
 </fr:form>
 <br/>
 
+<!-- Add responsible -->
 <logic:notPresent name="createExternalPerson">
 <logic:notPresent name="createExternalUnit">
 <fr:form action="/protocols.do?method=editResponsibles">
@@ -102,10 +115,15 @@
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
 		<bean:message key="button.insert" />
 	</html:submit>
-	<html:cancel bundle="HTMLALT_RESOURCES" altKey="submit.cancel" property="cancel">
-		<bean:message key="button.back" />
-	</html:cancel>
+	<logic:notPresent name="needToCreatePerson">
+		<html:cancel bundle="HTMLALT_RESOURCES" altKey="submit.cancel" property="back">
+			<bean:message key="button.back" />
+		</html:cancel>
+	</logic:notPresent>
 	<logic:present name="needToCreatePerson">
+		<html:cancel bundle="HTMLALT_RESOURCES" altKey="submit.cancel" property="cancel">
+			<bean:message key="button.cancel" />
+		</html:cancel>	
 		<html:submit bundle="HTMLALT_RESOURCES" property="createNew">
 			<bean:message key="button.insertNewExternalPerson" />
 		</html:submit>

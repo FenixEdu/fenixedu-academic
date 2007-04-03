@@ -8,8 +8,6 @@
 <h2><bean:message key="title.protocols"/></h2>
 <br/>
 
-<fr:form action="/protocols.do?method=editProtocol" encoding="multipart/form-data">
-
 <bean:define id="protocolID"><bean:write name="protocolFactory" property="protocol.idInternal"/></bean:define>
 
 <h3><bean:message key="label.protocol.data"/></h3>
@@ -108,15 +106,3 @@
 		<html:link page="<%= "/protocols.do?method=prepareEditProtocolFiles&amp;protocolID=" + protocolID %>"><bean:message key="link.protocol.manage.files" /></html:link>
 	</li>
 </ul>
-<br/>
-
-<p>
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
-		<bean:message key="button.submit" />
-	</html:submit>
-	<html:cancel bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
-		<bean:message key="button.cancel" />
-	</html:cancel>
-	<%-- onclick="this.form.method.value='showProtocols';this.form.submit();" --%>
-</p>
-</fr:form>

@@ -175,5 +175,8 @@
     </definition>
     <definition name="edit-protocol-units" extends="scientificCouncil.masterPage">
         <put name="body" value="/scientificCouncil/protocols/editProtocolUnits.jsp"/>
-    </definition>           
+    </definition>
+    <definition name="edit-protocol-files" extends="scientificCouncil.masterPage">
+        <put name="body" value="/scientificCouncil/protocols/editProtocolFiles.jsp"/>
+    </definition>               
 </tiles-definitions>

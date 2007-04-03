@@ -135,8 +135,9 @@
         
         <form-bean name="protocolsForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 	      	<form-property name="method" type="java.lang.String" />
-	      	<form-property name="addElement" type="java.lang.String" />   	     	
-	      	<form-property name="filesToDelete" type="java.lang.Integer[]"/>
+	      	<form-property name="responsibleID" type="java.lang.String"/>
+	      	<form-property name="unitID" type="java.lang.String"/>
+	      	<form-property name="fileID" type="java.lang.String"/>	      	
 	    </form-bean>
     </form-beans>
 
@@ -472,7 +473,8 @@
 
 	    <action path="/protocols"
 	      	scope="request"
-	      	parameter="method"	   
+	      	parameter="method"
+	      	name="protocolsForm"   
 	      	type="net.sourceforge.fenixedu.presentationTier.Action.protocols.ProtocolsDispatchAction">
 			<exception type="net.sourceforge.fenixedu.domain.exceptions.DomainException" 
                 key="" 
@@ -482,7 +484,8 @@
    	       <forward name="view-protocol" path="view-protocol"/>
    	       <forward name="edit-protocol-data" path="edit-protocol-data"/>
    	       <forward name="edit-protocol-responsibles" path="edit-protocol-responsibles"/>
-   	       <forward name="edit-protocol-units" path="edit-protocol-units"/>   	       
+   	       <forward name="edit-protocol-units" path="edit-protocol-units"/>
+   	       <forward name="edit-protocol-files" path="edit-protocol-files"/>   	       
 	    </action>
 	    	    	    	    
 	</action-mappings>

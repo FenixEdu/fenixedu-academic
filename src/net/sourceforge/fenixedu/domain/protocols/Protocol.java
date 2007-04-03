@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.protocols;
 
+import java.io.InputStream;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolFactory;
@@ -43,7 +44,7 @@ public class Protocol extends Protocol_Base {
         setUnits(protocolFactory.getUnits());
         setPartnerUnits(protocolFactory.getPartnerUnits());
         if (protocolFactory.getFiles() != null) {
-            writeFiles(protocolFactory.getFiles());
+            //writeFiles(protocolFactory.getFiles());
         }
     }
 
@@ -80,20 +81,18 @@ public class Protocol extends Protocol_Base {
     private void writeFiles(List<OpenFileBean> files) {
         final VirtualPath filePath = getFilePath();
         for (OpenFileBean openFileBean : files) {
-            writeFile(filePath, openFileBean);
+            writeFile(filePath, openFileBean.getInputStream(), openFileBean.getFileName());
         }
     }
 
-    private void writeFile(VirtualPath filePath, OpenFileBean openFileBean) {
+    private void writeFile(VirtualPath filePath, InputStream inputStream, String fileName) {
         final Group group = getGroup();
         final FileDescriptor fileDescriptor = FileManagerFactory.getFactoryInstance().getFileManager()
-                .saveFile(filePath, openFileBean.getFileName(), false, null, openFileBean.getFileName(),
-                        openFileBean.getInputStream());
+                .saveFile(filePath, fileName, false, null, fileName, inputStream);
 
-        final ProtocolFile protocolFile = new ProtocolFile(openFileBean.getFileName(), openFileBean
-                .getFileName(), fileDescriptor.getMimeType(), fileDescriptor.getChecksum(),
-                fileDescriptor.getChecksumAlgorithm(), fileDescriptor.getSize(), fileDescriptor
-                        .getUniqueId(), group);
+        final ProtocolFile protocolFile = new ProtocolFile(fileName, fileName, fileDescriptor
+                .getMimeType(), fileDescriptor.getChecksum(), fileDescriptor.getChecksumAlgorithm(),
+                fileDescriptor.getSize(), fileDescriptor.getUniqueId(), group);
         getProtocolFiles().add(protocolFile);
     }
 
@@ -142,7 +141,7 @@ public class Protocol extends Protocol_Base {
         setObservations(protocolFactory.getObservations());
     }
 
-    public void editResponsibles(ProtocolFactory protocolFactory) {
+    public void addResponsible(ProtocolFactory protocolFactory) {
         if (protocolFactory.getIstResponsible()) {
             getResponsibles().add(protocolFactory.getResponsibleToAdd());
         } else {
@@ -150,11 +149,40 @@ public class Protocol extends Protocol_Base {
         }
     }
 
-    public void editUnits(ProtocolFactory protocolFactory) {
+    public void removeResponsible(ProtocolFactory protocolFactory) {
+        if (protocolFactory.getIstResponsible()) {
+            getResponsibles().remove(protocolFactory.getResponsibleToRemove());
+        } else {
+            getPartnerResponsibles().remove(protocolFactory.getResponsibleToRemove());
+        }
+    }
+
+    public void addUnit(ProtocolFactory protocolFactory) {
         if (protocolFactory.getInternalUnit()) {
             getUnits().add(protocolFactory.getUnitToAdd());
         } else {
             getPartners().add(protocolFactory.getUnitToAdd());
+        }
+    }
+
+    public void removeUnit(ProtocolFactory protocolFactory) {
+        if (protocolFactory.getInternalUnit()) {
+            getUnits().remove(protocolFactory.getUnitToRemove());
+        } else {
+            getPartners().remove(protocolFactory.getUnitToRemove());
+        }
+    }
+
+    public void addFile(ProtocolFactory protocolFactory) {
+        writeFile(getFilePath(), protocolFactory.getInputStream(), protocolFactory.getFileName());
+    }
+
+    public void deleteFile(ProtocolFactory protocolFactory) {
+        for (ProtocolFile protocolFile : getProtocolFiles()) {
+            if (protocolFile == protocolFactory.getFileToDelete()) {
+                protocolFile.delete();
+                break;
+            }
         }
     }
 }
