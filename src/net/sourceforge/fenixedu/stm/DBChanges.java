@@ -11,6 +11,7 @@ import java.util.Set;
 
 import jvstm.CommitException;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.persistenceTier.cache.FenixCache;
 
@@ -24,7 +25,9 @@ import org.apache.ojb.broker.util.ObjectModificationDefaultImpl;
 
 
 class DBChanges {
-    private static final boolean ERROR_IF_CHANGING_DELETED_OBJECT = false;
+    private static final boolean ERROR_IF_CHANGING_DELETED_OBJECT = 
+            PropertiesManager.getBooleanProperty("error.if.changing.deleted.object");
+
 
     private static final String SQL_CHANGE_LOGS_CMD_PREFIX = "INSERT INTO TX_CHANGE_LOGS VALUES ";
     // The following value is the approximate length of each tuple to add after the VALUES

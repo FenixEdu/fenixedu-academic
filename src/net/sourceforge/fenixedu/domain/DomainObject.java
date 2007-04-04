@@ -5,9 +5,8 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -25,7 +24,8 @@ import pt.utl.ist.fenix.tools.util.StringAppender;
  */
 public abstract class DomainObject extends DomainObject_Base implements dml.runtime.FenixDomainObject {
 
-    private static final boolean ERROR_IF_DELETED_OBJECT_NOT_DISCONNECTED = false;
+    private static final boolean ERROR_IF_DELETED_OBJECT_NOT_DISCONNECTED = 
+		PropertiesManager.getBooleanProperty("error.if.deleted.object.not.disconnected");
 
     public class UnableToDetermineIdException extends DomainException {
         public UnableToDetermineIdException(Throwable cause) {

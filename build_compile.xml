@@ -371,6 +371,10 @@
 						   property="externalServices.StudentInfoByUsername.externalAppPassword"/>
 				<replacefilter token="@object.id.execution.period.for.from.mark.sheet.managment@"
 						   property="object.id.execution.period.for.from.mark.sheet.managment"/>
+				<replacefilter token="@error.if.deleted.object.not.disconnected@"
+						   property="error.if.deleted.object.not.disconnected"/>
+				<replacefilter token="@error.if.changing.deleted.object@"
+						   property="error.if.changing.deleted.object"/>
 			</replace>
 
 			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"

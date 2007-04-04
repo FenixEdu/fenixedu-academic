@@ -506,6 +506,24 @@ webServices.external.urls=
 
 
 #------------------------------------------------------------------------------
+# Persistence delete error/warning configuration 
+#------------------------------------------------------------------------------
+#
+#  error.if.deleted.object.not.disconnected:
+#      If false issues a warning whenever an object is deleted but still has
+#      some connections to other objects. If true throw an error.
+#
+#  error.if.changing.deleted.object:
+#      If false issues a warning whenever an object is changed in any way 
+#      after it is deleted. If true thow an error.
+#
+#------------------------------------------------------------------------------
+
+error.if.deleted.object.not.disconnected=false
+error.if.changing.deleted.object=false
+
+
+#------------------------------------------------------------------------------
 # Configuration properties for data dependend propetires
 #------------------------------------------------------------------------------
 #
