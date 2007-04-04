@@ -253,9 +253,7 @@ public class ListGrantContractAndInsuranceByCriteria extends Service {
             if (grantContract == null) {
                 continue;
             }
-           if (grantContract.getGrantOwner().getNumber().toString().equals("2801")){
-System.out.println(" original " + grantContract.getContractNumber() +  " contract number " +grantContract.getGrantOwner().getNumber());
-           }
+
             
             if ((validToTheDate == null || validToTheDate.equals(""))
                     && (dateBeginContract == null || dateBeginContract.equals(""))
