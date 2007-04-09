@@ -27,9 +27,9 @@ public class UnavailableTest extends TestNGBase {
         writtenEvaluation.setDayDateYearMonthDay(new YearMonthDay(2006, 2, 2));
         writtenEvaluation.setBeginningDateHourMinuteSecond(new HourMinuteSecond(13, 3, 0));
         writtenEvaluation.setEndDateHourMinuteSecond(new HourMinuteSecond(15, 3, 0));
-        Convoke convoke = new Convoke();
-        convoke.setWrittenEvaluation(writtenEvaluation);
-        vigilant.addConvokes(convoke);
+//        Convoke convoke = new Convoke();
+//        convoke.setWrittenEvaluation(writtenEvaluation);
+//        vigilant.addConvokes(convoke);
 
         DateTime begin = new DateTime(2006, 3, 1, 1, 0, 0, 0);
         DateTime end = new DateTime(2006, 3, 2, 1, 0, 0, 0);
