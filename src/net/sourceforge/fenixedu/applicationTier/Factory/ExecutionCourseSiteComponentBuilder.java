@@ -303,6 +303,7 @@ public class ExecutionCourseSiteComponentBuilder {
 
 	// set all the required information to the component
 
+	
 	component.setAlternativeSite(site.getAlternativeSite());
 	component.setInitialStatement(site.getInitialStatement());
 	component.setIntroduction(site.getIntroduction());
