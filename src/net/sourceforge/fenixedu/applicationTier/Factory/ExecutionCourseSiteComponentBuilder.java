@@ -129,17 +129,17 @@ public class ExecutionCourseSiteComponentBuilder {
 	    throws FenixServiceException, ExcepcaoPersistencia {
 
 	List allSections = null;
-	List infoSectionsList = null;
+	List<InfoSection> infoSectionsList = null;
 
-	List infoCurricularCourseList = null;
-	List infoCurricularCourseListByDegree = null;
+	List<InfoCurricularCourse> infoCurricularCourseList = null;
+	List<InfoCurricularCourse> infoCurricularCourseListByDegree = null;
 	// read sections
 
 	allSections = site.getAssociatedSections();
 
 	// build the result of this service
 	Iterator iterator = allSections.iterator();
-	infoSectionsList = new ArrayList(allSections.size());
+	infoSectionsList = new ArrayList<InfoSection>(allSections.size());
 
 	while (iterator.hasNext()) {
 	    infoSectionsList.add(copyISection2InfoSection((Section) iterator.next()));
@@ -188,16 +188,16 @@ public class ExecutionCourseSiteComponentBuilder {
 
     private ISiteComponent getInfoSiteShifts(InfoSiteShifts component, ExecutionCourseSite site)
 	    throws FenixServiceException {
-	List shiftsWithAssociatedClassesAndLessons = new ArrayList();
+	List<InfoShiftWithAssociatedInfoClassesAndInfoLessons> shiftsWithAssociatedClassesAndLessons = new ArrayList<InfoShiftWithAssociatedInfoClassesAndInfoLessons>();
 
 	ExecutionCourse disciplinaExecucao = site.getExecutionCourse();
 	List<Shift> shifts = disciplinaExecucao.getAssociatedShifts();
 
 	for (final Shift shift : shifts) {
 	    List<Lesson> lessons = shift.getAssociatedLessons();
-	    List infoLessons = new ArrayList(lessons.size());
+	    List<InfoLesson> infoLessons = new ArrayList<InfoLesson>(lessons.size());
 	    List<SchoolClass> classesShifts = shift.getAssociatedClasses();
-	    List infoClasses = new ArrayList(classesShifts.size());
+	    List<InfoClass> infoClasses = new ArrayList<InfoClass>(classesShifts.size());
 
 	    for (final Lesson lesson : lessons) {
 		infoLessons.add(InfoLesson.newInfoFromDomain(lesson));
@@ -224,7 +224,7 @@ public class ExecutionCourseSiteComponentBuilder {
 
     private ISiteComponent getInfoSiteTimetable(InfoSiteTimetable component, ExecutionCourseSite site)
 	    throws FenixServiceException, ExcepcaoPersistencia {
-	List infoLessonList = null;
+	List<InfoLesson> infoLessonList = null;
 
 	ExecutionCourse executionCourse = site.getExecutionCourse();
 
@@ -239,7 +239,7 @@ public class ExecutionCourseSiteComponentBuilder {
 	}
 
 	Iterator iterator = aulas.iterator();
-	infoLessonList = new ArrayList();
+	infoLessonList = new ArrayList<InfoLesson>();
 	while (iterator.hasNext()) {
 	    infoLessonList.add(InfoLesson.newInfoFromDomain((Lesson) iterator.next()));
 	}
@@ -250,7 +250,7 @@ public class ExecutionCourseSiteComponentBuilder {
 
     private ISiteComponent getInfoSiteAssociatedCurricularCourses(
 	    InfoSiteAssociatedCurricularCourses component, ExecutionCourseSite site) {
-	List infoCurricularCourseList = new ArrayList();
+	List<InfoCurricularCourse> infoCurricularCourseList = new ArrayList<InfoCurricularCourse>();
 
 	ExecutionCourse executionCourse = site.getExecutionCourse();
 
@@ -267,7 +267,7 @@ public class ExecutionCourseSiteComponentBuilder {
 	List references = executionCourse.getAssociatedBibliographicReferences();
 
 	Iterator iterator = references.iterator();
-	List infoBibRefs = new ArrayList();
+	List<InfoBibliographicReference> infoBibRefs = new ArrayList<InfoBibliographicReference>();
 	while (iterator.hasNext()) {
 	    BibliographicReference bibRef = (BibliographicReference) iterator.next();
 
@@ -297,9 +297,9 @@ public class ExecutionCourseSiteComponentBuilder {
 
 	ExecutionCourse executionCourse = site.getExecutionCourse();
 
-	List responsibleInfoTeachersList = readResponsibleTeachers(executionCourse);
+	List<InfoTeacher> responsibleInfoTeachersList = readResponsibleTeachers(executionCourse);
 
-	List lecturingInfoTeachersList = readLecturingTeachers(executionCourse);
+	List<InfoTeacher> lecturingInfoTeachersList = readLecturingTeachers(executionCourse);
 
 	// set all the required information to the component
 
@@ -310,7 +310,7 @@ public class ExecutionCourseSiteComponentBuilder {
 	if (!responsibleInfoTeachersList.isEmpty()) {
 	    component.setResponsibleTeachers(responsibleInfoTeachersList);
 	} else {
-	    responsibleInfoTeachersList = new ArrayList();
+	    responsibleInfoTeachersList = new ArrayList<InfoTeacher>();
 	}
 	lecturingInfoTeachersList.removeAll(responsibleInfoTeachersList);
 	if (!lecturingInfoTeachersList.isEmpty()) {
@@ -320,10 +320,10 @@ public class ExecutionCourseSiteComponentBuilder {
 	return component;
     }
 
-    private List readLecturingTeachers(ExecutionCourse executionCourse) throws ExcepcaoPersistencia {
+    private List<InfoTeacher> readLecturingTeachers(ExecutionCourse executionCourse) throws ExcepcaoPersistencia {
 	List domainLecturingTeachersList = executionCourse.getProfessorships();
 
-	List lecturingInfoTeachersList = new ArrayList();
+	List<InfoTeacher> lecturingInfoTeachersList = new ArrayList<InfoTeacher>();
 	if (domainLecturingTeachersList != null) {
 
 	    Iterator iter = domainLecturingTeachersList.iterator();
@@ -337,11 +337,11 @@ public class ExecutionCourseSiteComponentBuilder {
 	return lecturingInfoTeachersList;
     }
 
-    private List readResponsibleTeachers(ExecutionCourse executionCourse) throws ExcepcaoPersistencia {
+    private List<InfoTeacher> readResponsibleTeachers(ExecutionCourse executionCourse) throws ExcepcaoPersistencia {
 
 	List responsibleDomainTeachersList = executionCourse.responsibleFors();
 
-	List responsibleInfoTeachersList = new ArrayList();
+	List<InfoTeacher> responsibleInfoTeachersList = new ArrayList<InfoTeacher>();
 	if (responsibleDomainTeachersList != null) {
 	    Iterator iter = responsibleDomainTeachersList.iterator();
 	    while (iter.hasNext()) {
@@ -355,15 +355,15 @@ public class ExecutionCourseSiteComponentBuilder {
 	return responsibleInfoTeachersList;
     }
 
-    private List readCurricularCourses(ExecutionCourse executionCourse) {
-	List infoCurricularCourseScopeList;
-	List infoCurricularCourseList = new ArrayList();
+    private List<InfoCurricularCourse> readCurricularCourses(ExecutionCourse executionCourse) {
+	List<InfoCurricularCourseScope> infoCurricularCourseScopeList;
+	List<InfoCurricularCourse> infoCurricularCourseList = new ArrayList<InfoCurricularCourse>();
 	if (executionCourse.getAssociatedCurricularCourses() != null)
 	    for (int i = 0; i < executionCourse.getAssociatedCurricularCourses().size(); i++) {
 		CurricularCourse curricularCourse = executionCourse.getAssociatedCurricularCourses()
 			.get(i);
 		InfoCurricularCourse infoCurricularCourse = copyFromDomain(curricularCourse);
-		infoCurricularCourseScopeList = new ArrayList();
+		infoCurricularCourseScopeList = new ArrayList<InfoCurricularCourseScope>();
 		for (int j = 0; j < curricularCourse.getScopes().size(); j++) {
 		    CurricularCourseScope curricularCourseScope = curricularCourse.getScopes().get(j);
 		    InfoCurricularCourseScope infoCurricularCourseScope = copyFromDomain(curricularCourseScope);
@@ -381,12 +381,12 @@ public class ExecutionCourseSiteComponentBuilder {
          * Curricular courses list organized by degree (curricular information
          * in first page).
          */
-    private List readCurricularCoursesOrganizedByDegree(ExecutionCourse executionCourse) {
+    private List<InfoCurricularCourse> readCurricularCoursesOrganizedByDegree(ExecutionCourse executionCourse) {
 	final List curricularCourses = executionCourse.getAssociatedCurricularCourses();
 	final int estimatedResultSize = curricularCourses.size();
 
-	final List infoCurricularCourses = new ArrayList(estimatedResultSize);
-	final Set degreesCodes = new HashSet(estimatedResultSize);
+	final List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>(estimatedResultSize);
+	final Set<String> degreesCodes = new HashSet<String>(estimatedResultSize);
 	for (final Iterator iterator = curricularCourses.iterator(); iterator.hasNext();) {
 	    final CurricularCourse curricularCourse = (CurricularCourse) iterator.next();
 	    final String degreeCode = curricularCourse.getDegreeCurricularPlan().getDegree().getSigla();
@@ -395,7 +395,7 @@ public class ExecutionCourseSiteComponentBuilder {
 		// final InfoCurricularCourse infoCurricularCourse =
 		// InfoCurricularCourse.newInfoFromDomain(curricularCourse);
 		infoCurricularCourses.add(infoCurricularCourse);
-		infoCurricularCourse.setInfoScopes(new ArrayList());
+		infoCurricularCourse.setInfoScopes(new ArrayList<InfoCurricularCourseScope>());
 
 		for (final Iterator scopeIterator = curricularCourse.getScopes().iterator(); scopeIterator
 			.hasNext();) {
