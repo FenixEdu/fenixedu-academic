@@ -1231,7 +1231,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     @Override
     public YearMonthDay getInitialDateYearMonthDay() {
 	if (isBolonha() && hasAnyExecutionDegrees()) {
-	    final ExecutionDegree firstExecutionDegree = getExecutionDegrees().get(0);
+	    final ExecutionDegree firstExecutionDegree = getFirstExecutionDegree();
 	    return firstExecutionDegree.getExecutionYear().getBeginDateYearMonthDay();
 	} else {
 	    return super.getInitialDateYearMonthDay();
