@@ -103,7 +103,7 @@ public class DateInputRenderer extends TextFieldRenderer {
         this.key = key;
     }
 
-    private Locale getLocale() {
+    protected Locale getLocale() {
         HttpServletRequest request = getInputContext().getViewState().getRequest();
         return RequestUtils.getUserLocale(request, null);
     }

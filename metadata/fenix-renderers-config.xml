@@ -440,6 +440,8 @@ Documentation:
 
     <renderer mode="input" type="java.util.Date" class="net.sourceforge.fenixedu.renderers.DateInputRenderer"/>
     <renderer mode="input" type="org.joda.time.DateTime" class="net.sourceforge.fenixedu.presentationTier.renderers.DateTimeInputRenderer"/>
+    <renderer mode="input" layout="picker" type="java.util.Date" class="net.sourceforge.fenixedu.presentationTier.renderers.DateInputRendererWithPicker"/>
+    <renderer mode="input" layout="picker" type="org.joda.time.DateTime" class="net.sourceforge.fenixedu.presentationTier.renderers.DateTimeInputRendererWithPicker"/>
 
 	<!--@ The layout year-month allows you to insert a joda time partial given a month and a year -->
 	<renderer mode="input" type="org.joda.time.Partial" layout="year-month" class="net.sourceforge.fenixedu.presentationTier.renderers.PartialInputRenderer">

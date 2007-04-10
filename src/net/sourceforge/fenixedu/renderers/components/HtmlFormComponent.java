@@ -148,10 +148,10 @@ public abstract class HtmlFormComponent extends HtmlComponent implements Convert
         bind(object.getSlot(slotName));
     }
     
-    public String getNewName() {
+    public static String getNewName() {
         int number;
         
-        synchronized (getClass()) {
+        synchronized (HtmlFormComponent.class) {
             number = HtmlFormComponent.COMPONENT_NUMBER++;
         }
         

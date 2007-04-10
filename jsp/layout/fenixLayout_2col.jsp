@@ -12,6 +12,7 @@
 <link href="<%= request.getContextPath() %>/CSS/transitional.css" rel="stylesheet" media="screen" type="text/css" />
 <link href="<%= request.getContextPath() %>/CSS/dotist_calendars.css" rel="stylesheet" media="screen, print" type="text/css" />
 <link href="<%= request.getContextPath() %>/CSS/inquiries_style.css" rel="stylesheet" media="screen" type="text/css" />
+<link href="<%= request.getContextPath() %>/CSS/calendar.css" rel="stylesheet" media="screen" type="text/css" />
 <title><bean:message key="dot.title" bundle="GLOBAL_RESOURCES"/> - <tiles:getAsString name="title" ignore="true" /></title>
 <script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/hideButtons.js"></script>
 <script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/check.js"></script>
