@@ -7,7 +7,15 @@
 	<definition name="visualize.personal.information" extends="definition.person.masterPage">
 		 <put name="body" value="/person/visualizePersonalInfo.jsp"/>
 	</definition>
-
+	
+	<definition name="partyContacts.createPartyContact" extends="definition.person.masterPage">
+		 <put name="body" value="/person/contacts/createPartyContact.jsp"/>
+	</definition>
+	
+	<definition name="partyContacts.editPartyContact" extends="definition.person.masterPage">
+		 <put name="body" value="/person/contacts/editPartyContact.jsp"/>
+	</definition>
+	
 	<definition name="view-qualifications" extends="teacher-information">
 		<put name="body" value="/person/qualificationManagement.jsp" />
 	</definition>

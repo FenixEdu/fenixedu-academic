@@ -35,7 +35,12 @@
 <schema name="contacts.Phone.manage" type="net.sourceforge.fenixedu.domain.contacts.Phone" extends="contacts.PartyContact.manage"
 		bundle="ACADEMIC_OFFICE_RESOURCES" constructor="party, type, defaultContact, number">
 	<slot name="number" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="size" value="10"/>
+		<property name="size" value="15"/>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
+            <property name="regexp" value="[0-9]*"/>
+            <property name="message" value="error.phone.invalidFormat"/>
+            <property name="key" value="true"/>
+        </validator>
 	</slot>
 	<setter signature="edit(type, defaultContact, number)" />
 </schema>
@@ -43,7 +48,12 @@
 <schema name="contacts.MobilePhone.manage" type="net.sourceforge.fenixedu.domain.contacts.MobilePhone" extends="contacts.PartyContact.manage"
 		bundle="ACADEMIC_OFFICE_RESOURCES" constructor="party, type, defaultContact, number">
 	<slot name="number" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="size" value="10"/>
+		<property name="size" value="15"/>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
+            <property name="regexp" value="[0-9]*"/>
+            <property name="message" value="error.phone.invalidFormat"/>
+            <property name="key" value="true"/>
+        </validator>
 	</slot>
 	<setter signature="edit(type, defaultContact, number)" />
 </schema>
@@ -88,7 +98,6 @@
 <schema name="contacts.PhysicalAddress.view-for-student" type="net.sourceforge.fenixedu.domain.contacts.PhysicalAddress"
 		extends="contacts.PhysicalAddress.view" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<remove name="defaultContact" />
-	<remove name="visible" />
 </schema>
 
 <schema name="contacts.Phone.view" type="net.sourceforge.fenixedu.domain.contacts.Phone" extends="contacts.PartyContact.view"
@@ -109,4 +118,55 @@
 <schema name="contacts.WebAddress.view" type="net.sourceforge.fenixedu.domain.contacts.WebAddress" extends="contacts.PartyContact.view"
 		bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="url" key="label.webAddress" />
+</schema>
+
+<!-- student schemas -->
+<schema name="contacts.PartyContact.manage-student" type="net.sourceforge.fenixedu.domain.contacts.PartyContact" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="party" hidden="true"/>
+	<slot name="type" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="excludedValues" value="INSTITUTIONAL" />
+	</slot>
+	<slot name="defaultContact" key="label.partyContacts.defaultContact" />
+</schema>
+
+<schema name="contacts.Phone.manage-student" type="net.sourceforge.fenixedu.domain.contacts.Phone" extends="contacts.PartyContact.manage-student"
+		bundle="ACADEMIC_OFFICE_RESOURCES" constructor="party, type, defaultContact, number">
+	<slot name="number" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="15"/>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
+            <property name="regexp" value="[0-9]*"/>
+            <property name="message" value="error.phone.invalidFormat"/>
+            <property name="key" value="true"/>
+        </validator>
+	</slot>
+	<setter signature="edit(type, defaultContact, number)" />
+</schema>
+
+<schema name="contacts.MobilePhone.manage-student" type="net.sourceforge.fenixedu.domain.contacts.MobilePhone" extends="contacts.PartyContact.manage-student"
+		bundle="ACADEMIC_OFFICE_RESOURCES" constructor="party, type, defaultContact, number">
+	<slot name="number" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="15"/>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
+            <property name="regexp" value="[0-9]*"/>
+            <property name="message" value="error.phone.invalidFormat"/>
+            <property name="key" value="true"/>
+        </validator>
+	</slot>
+	<setter signature="edit(type, defaultContact, number)" />
+</schema>
+
+<schema name="contacts.EmailAddress.manage-student" type="net.sourceforge.fenixedu.domain.contacts.EmailAddress" extends="contacts.PartyContact.manage-student"
+		bundle="ACADEMIC_OFFICE_RESOURCES" constructor="party, type, defaultContact, value">
+	<slot name="value" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" key="label.email">
+		<property name="size" value="50"/>
+	</slot>
+	<setter signature="edit(type, defaultContact, value)" />
+</schema>
+
+<schema name="contacts.WebAddress.manage-student" type="net.sourceforge.fenixedu.domain.contacts.WebAddress" extends="contacts.PartyContact.manage-student"
+		bundle="ACADEMIC_OFFICE_RESOURCES" constructor="party, type, defaultContact, url">
+	<slot name="url" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" key="label.webAddress">
+		<property name="size" value="40"/>
+	</slot>
+	<setter signature="edit(type, defaultContact, url)" />
 </schema>

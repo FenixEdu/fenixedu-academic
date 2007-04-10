@@ -26,33 +26,195 @@
 	</tr>
 </table>
 
-<fr:form action="/visualizePersonalInfo.do">
-	<logic:equal name="UserView" property="person.hasInstitutionalEmail" value="true">
-		<fr:edit id="contact" name="UserView" property="person" schema="net.sourceforge.fenixedu.domain.Person.contact.info.without.email">
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle4 thleft thlight"/>
-				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
-			</fr:layout>
-		</fr:edit>
-		<fr:view name="UserView" property="person" schema="net.sourceforge.fenixedu.domain.Person.contact.info.email">
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle4 thleft thlight"/>
-				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
-			</fr:layout>
-		</fr:view>
-	</logic:equal>
-	<logic:notEqual name="UserView" property="person.hasInstitutionalEmail" value="true">
-		<fr:edit id="contact" name="UserView" property="person" schema="net.sourceforge.fenixedu.domain.Person.contact.info">
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle4 thleft thlight"/>
-				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
-			</fr:layout>
-		</fr:edit>
-	</logic:notEqual>
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="mvert05">
-		<bean:message key="person.homepage.update" bundle="HOMEPAGE_RESOURCES"/>
-	</html:submit>
-</fr:form>
+<bean:define id="person" name="UserView" property="person"/>
+<logic:messagesPresent message="true" property="contacts">
+	<ul class="nobullet list6">
+		<html:messages id="messages" property="contacts" message="true">
+			<li><span class="error0"><bean:write name="messages" /></span></li>
+		</html:messages>
+	</ul>
+</logic:messagesPresent>
+<table class="tstyle4 thlight thleft">
+
+<bean:define id="phones" name="person" property="phones" />
+<bean:size id="size" name="phones" />
+<logic:notEmpty name="phones">
+	<logic:iterate id="contact" name="phones">
+		<tr>
+			<th><bean:message key="label.partyContacts.Phone" /> (<bean:message name="contact" property="type.qualifiedName" bundle="ENUMERATION_RESOURCES" />):</th>
+			<td>
+				<bean:write name="contact" property="number" />
+				<logic:equal name="contact" property="defaultContact" value="true">
+					<logic:notEqual name="size" value="1">
+						 (<bean:message key="label.partyContacts.defaultContact" />)
+					</logic:notEqual>
+					
+				</logic:equal>
+			</td>
+			<td>
+				<html:link action="/partyContacts.do?method=prepareEditPartyContact" paramId="contactId" paramName="contact" paramProperty="idInternal">
+					<bean:message key="label.edit" />
+				</html:link>
+				,
+				<html:link action="/partyContacts.do?method=prepareCreatePhone" paramId="contactId" paramName="contact" paramProperty="idInternal">
+					<bean:message key="label.add" />
+				</html:link>
+				,
+				<html:link action="/partyContacts.do?method=deletePartyContact" paramId="contactId" paramName="contact" paramProperty="idInternal">
+					<bean:message key="label.clear" />
+				</html:link>
+			</td>
+		</tr>
+	</logic:iterate>
+</logic:notEmpty>
+<logic:empty name="phones">
+	<tr>
+		<th><bean:message key="label.partyContacts.Phone" />:</th>
+		<td class="acenter">-</td>
+		<td>
+			<html:link action="/partyContacts.do?method=prepareCreatePhone" paramId="contactId" paramName="contact" paramProperty="idInternal">
+				<bean:message key="label.add" />
+			</html:link>
+		</td>
+	</tr>
+</logic:empty>
+
+<bean:define id="mobilePhones" name="person" property="mobilePhones" />
+<bean:size id="size" name="mobilePhones" />
+<logic:notEmpty name="mobilePhones">
+	<logic:iterate id="contact" name="mobilePhones">
+		<tr>
+			<th><bean:message key="label.partyContacts.MobilePhone" /> (<bean:message name="contact" property="type.qualifiedName" bundle="ENUMERATION_RESOURCES" />):</th>
+			<td>
+				<bean:write name="contact" property="number" />
+				<logic:equal name="contact" property="defaultContact" value="true">
+					<logic:notEqual name="size" value="1">
+						 (<bean:message key="label.partyContacts.defaultContact" />)
+					</logic:notEqual>
+					
+				</logic:equal>
+			</td>
+			<td>
+				<html:link action="/partyContacts.do?method=prepareEditPartyContact" paramId="contactId" paramName="contact" paramProperty="idInternal">
+					<bean:message key="label.edit" />
+				</html:link>
+				,
+				<html:link action="/partyContacts.do?method=prepareCreateMobilePhone">
+					<bean:message key="label.add" />
+				</html:link>
+				,
+				<html:link action="/partyContacts.do?method=deletePartyContact" paramId="contactId" paramName="contact" paramProperty="idInternal">
+					<bean:message key="label.clear" />
+				</html:link>
+			</td>
+		</tr>
+	</logic:iterate>
+</logic:notEmpty>
+<logic:empty name="mobilePhones">
+	<tr>
+		<th><bean:message key="label.partyContacts.MobilePhone" />:</th>
+		<td class="acenter">-</td>
+		<td>
+			<html:link action="/partyContacts.do?method=prepareCreateMobilePhone" paramId="contactId" paramName="contact" paramProperty="idInternal">
+				<bean:message key="label.add" />
+			</html:link>
+		</td>
+	</tr>
+</logic:empty>
+
+<bean:define id="emailAddresses" name="person" property="emailAddresses" />
+<bean:size id="size" name="emailAddresses" />
+<logic:notEmpty name="emailAddresses">
+	<logic:iterate id="contact" name="emailAddresses">
+		<tr>
+			<th><bean:message key="label.partyContacts.EmailAddress" /> (<bean:message name="contact" property="type.qualifiedName" bundle="ENUMERATION_RESOURCES" />):</th>
+			<td>
+				<bean:write name="contact" property="value" />
+				<logic:equal name="contact" property="defaultContact" value="true">
+					<logic:notEqual name="size" value="1">
+						 (<bean:message key="label.partyContacts.defaultContact" />)
+					</logic:notEqual>
+					
+				</logic:equal>
+			</td>
+			<td>
+				<logic:notEqual name="contact" property="type.name" value="INSTITUTIONAL">
+					<html:link action="/partyContacts.do?method=prepareEditPartyContact" paramId="contactId" paramName="contact" paramProperty="idInternal">
+						<bean:message key="label.edit" />
+					</html:link>
+					,
+					<html:link action="/partyContacts.do?method=prepareCreateEmailAddress">
+						<bean:message key="label.add" />
+					</html:link>
+					,
+					<html:link action="/partyContacts.do?method=deletePartyContact" paramId="contactId" paramName="contact" paramProperty="idInternal">
+						<bean:message key="label.clear" />
+					</html:link>
+				</logic:notEqual>
+				<logic:equal name="contact" property="type.name" value="INSTITUTIONAL">
+					<html:link action="/partyContacts.do?method=prepareCreateEmailAddress">
+						<bean:message key="label.add" />
+					</html:link>
+				</logic:equal>
+			</td>
+		</tr>
+	</logic:iterate>
+</logic:notEmpty>
+<logic:empty name="emailAddresses">
+	<tr>
+		<th><bean:message key="label.partyContacts.EmailAddress" />:</th>
+		<td class="acenter">-</td>
+		<td>
+			<html:link action="/partyContacts.do?method=prepareCreateEmailAddress" paramId="contactId" paramName="contact" paramProperty="idInternal">
+				<bean:message key="label.add" />
+			</html:link>
+		</td>
+	</tr>
+</logic:empty>
+
+<bean:define id="webAddresses" name="person" property="webAddresses" />
+<bean:size id="size" name="webAddresses" />
+<logic:notEmpty name="webAddresses">
+	<logic:iterate id="contact" name="webAddresses">
+		<tr>
+			<th><bean:message key="label.partyContacts.WebAddress" /> (<bean:message name="contact" property="type.qualifiedName" bundle="ENUMERATION_RESOURCES" />):</th>
+			<td>
+				<bean:write name="contact" property="url" />
+				<logic:equal name="contact" property="defaultContact" value="true">
+					<logic:notEqual name="size" value="1">
+						 (<bean:message key="label.partyContacts.defaultContact" />)
+					</logic:notEqual>
+					
+				</logic:equal>
+			</td>
+			<td>
+				<html:link action="/partyContacts.do?method=prepareEditPartyContact" paramId="contactId" paramName="contact" paramProperty="idInternal">
+					<bean:message key="label.edit" />
+				</html:link>
+				,
+				<html:link action="/partyContacts.do?method=prepareCreateWebAddress">
+					<bean:message key="label.add" />
+				</html:link>
+				,
+				<html:link action="/partyContacts.do?method=deletePartyContact" paramId="contactId" paramName="contact" paramProperty="idInternal">
+					<bean:message key="label.clear" />
+				</html:link>
+			</td>
+		</tr>
+	</logic:iterate>
+</logic:notEmpty>
+<logic:empty name="webAddresses">
+	<tr>
+		<th><bean:message key="label.partyContacts.WebAddress" />:</th>
+		<td class="acenter">-</td>
+		<td>
+			<html:link action="/partyContacts.do?method=prepareCreateWebAddress" paramId="contactId" paramName="contact" paramProperty="idInternal">
+				<bean:message key="label.add" />
+			</html:link>
+		</td>
+	</tr>
+</logic:empty>
+</table>
 
 <br/>
 <table width="100%" cellpadding="0" cellspacing="0">
