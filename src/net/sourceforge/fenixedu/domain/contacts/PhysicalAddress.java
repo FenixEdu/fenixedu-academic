@@ -30,6 +30,12 @@ public class PhysicalAddress extends PhysicalAddress_Base {
         super();
     }
     
+    @Checked("PartyContactPredicates.checkPermissionsToManage")
+    protected PhysicalAddress(final Party party, final PartyContactType type, final boolean visible, final boolean defaultContact) {
+	this();
+	super.init(party, type, visible, defaultContact);
+    }
+    
     public PhysicalAddress(final Party party, final PartyContactType type, final Boolean defaultContact, final String address, final String areaCode,
 	    final String areaOfAreaCode, final String area, final String parishOfResidence, final String districtSubdivisionOfResidence,
 	    final String districtOfResidence, final Country countryOfResidence) {
@@ -39,12 +45,6 @@ public class PhysicalAddress extends PhysicalAddress_Base {
 			districtSubdivisionOfResidence, districtOfResidence, countryOfResidence));
     }
     
-    @Checked("PartyContactPredicates.checkPermissionsToManage")
-    public PhysicalAddress(final Party party, final PartyContactType type, final boolean visible, final boolean defaultContact) {
-	this();
-	super.init(party, type, visible, defaultContact);
-    }
-
     @Checked("PartyContactPredicates.checkPermissionsToManage")
     public PhysicalAddress(final Party party, final PartyContactType type, final boolean visible, final boolean defaultContact, final PhysicalAddressData physicalAddressData) {
 	this();

@@ -168,6 +168,14 @@ public abstract class PartyContact extends PartyContact_Base {
 	return new MobilePhone(party, type, visible, defaultContact, number);
     }
     
+    static public EmailAddress createDefaultEmailAddress(final Party party) {
+	return new EmailAddress(party, PartyContactType.PERSONAL, true, true);
+    }
+    
+    static public EmailAddress createDefaultEmailAddress(final Party party, final String value) {
+	return createEmailAddress(party, PartyContactType.PERSONAL, true, true, value);
+    }
+    
     static public EmailAddress createEmailAddress(final Party party, final PartyContactType type, final boolean visible, final boolean defaultContact, final String value) {
 	return new EmailAddress(party, type, visible, defaultContact, value);
     }

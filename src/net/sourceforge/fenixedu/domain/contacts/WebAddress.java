@@ -29,15 +29,14 @@ public class WebAddress extends WebAddress_Base {
         super();
     }
     
-    public WebAddress(final Party party, final PartyContactType type, final Boolean defaultContact, final String url) {
-	this(party, type, true, defaultContact.booleanValue(), url);
-    }
-    
-    
     @Checked("PartyContactPredicates.checkPermissionsToManage")
-    public WebAddress(final Party party, final PartyContactType type, final boolean visible, final boolean defaultContact) {
+    protected WebAddress(final Party party, final PartyContactType type, final boolean visible, final boolean defaultContact) {
 	this();
 	super.init(party, type, visible, defaultContact);
+    }
+    
+    public WebAddress(final Party party, final PartyContactType type, final Boolean defaultContact, final String url) {
+	this(party, type, true, defaultContact.booleanValue(), url);
     }
     
     @Checked("PartyContactPredicates.checkPermissionsToManage")

@@ -29,14 +29,14 @@ public class MobilePhone extends MobilePhone_Base {
         super();
     }
     
-    public MobilePhone(final Party party, final PartyContactType type, final Boolean defaultContact, final String number) {
-        this(party, type, true, defaultContact.booleanValue(), number);
-    }
-    
     @Checked("PartyContactPredicates.checkPermissionsToManage")
-    public MobilePhone(final Party party, final PartyContactType type, final boolean visible, final boolean defaultContact) {
+    protected MobilePhone(final Party party, final PartyContactType type, final boolean visible, final boolean defaultContact) {
         this();
         super.init(party, type, visible, defaultContact);
+    }
+    
+    public MobilePhone(final Party party, final PartyContactType type, final Boolean defaultContact, final String number) {
+        this(party, type, true, defaultContact.booleanValue(), number);
     }
     
     @Checked("PartyContactPredicates.checkPermissionsToManage")
