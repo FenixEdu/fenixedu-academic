@@ -266,6 +266,8 @@ public class Person extends Person_Base {
 	super();
 	setNome(name);
 	setGender(gender);
+	setMaritalStatus(MaritalStatus.UNKNOWN);
+	setIdentification(documentIDNumber, documentType);
 	
 	updateDefaultPhysicalAddress(new PhysicalAddressData(address, areaCode, areaOfAreaCode, area,
 		parishOfResidence, districtSubdivisionOfResidence, districtOfResidence, null));
@@ -286,10 +288,10 @@ public class Person extends Person_Base {
 	    createUserEmailAddress(email);
 	}
 	
-	setIdentification(documentIDNumber, documentType);
+	
+	setAvailableEmail(Boolean.FALSE);
 	setAvailableWebSite(Boolean.FALSE);
 	setAvailablePhoto(Boolean.FALSE);
-	setMaritalStatus(MaritalStatus.UNKNOWN);
     }
 
     public static Person createExternalPerson(String name, Gender gender, String address, String areaCode,
