@@ -51,12 +51,18 @@ public class ScientificCommissionTeamDA extends FenixDispatchAction {
     }
     
     private ExecutionDegree getExecutionDegree(HttpServletRequest request) {
-        Integer id = getId(request.getParameter("executionDegreeID"));
-        if (id == null) {
-            return getDefaultExecutionDegree(request);
+        ExecutionDegreeBean bean = (ExecutionDegreeBean) getRenderedObject("executionDegreeChoice");
+        if (bean != null) {
+            return bean.getExecutionDegree();
         }
         else {
-            return RootDomainObject.getInstance().readExecutionDegreeByOID(id);
+            Integer id = getId(request.getParameter("executionDegreeID"));
+            if (id == null) {
+                return getDefaultExecutionDegree(request);
+            }
+            else {
+                return RootDomainObject.getInstance().readExecutionDegreeByOID(id);
+            }
         }
     }
 
@@ -87,10 +93,7 @@ public class ScientificCommissionTeamDA extends FenixDispatchAction {
         ExecutionDegree executionDegree = getExecutionDegree(request);
 
         ExecutionDegreeBean bean = (ExecutionDegreeBean) getRenderedObject("executionDegreeChoice");
-        if (bean != null) {
-            executionDegree = bean.getExecutionDegree();
-        }
-        else {
+        if (bean == null) {
             bean = new ExecutionDegreeBean(degreeCurricularPlan);
             bean.setExecutionDegree(executionDegree);
         }

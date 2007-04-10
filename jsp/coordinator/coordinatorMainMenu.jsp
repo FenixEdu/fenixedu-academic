@@ -23,7 +23,7 @@
             request.setAttribute("isCoordinator", true);
         }
         
-        if (degree.isMemberOfCurrentScientificCommission(person)) {
+        if (degree.isMemberOfAnyScientificCommission(person)) {
             request.setAttribute("isScientificCommissionMember", true);
         }
     %>

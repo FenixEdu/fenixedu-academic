@@ -12611,10 +12611,10 @@ relation ExecutionDegreeScientificCommission {
 }
 
 relation ScientificCommissionPerson {
+	net.sourceforge.fenixedu.domain.Person playsRole person;
 	net.sourceforge.fenixedu.domain.ScientificCommission playsRole scientificCommissions {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.Person playsRole person;
 }
 
 relation ScientificCommissionRootDomainObject {

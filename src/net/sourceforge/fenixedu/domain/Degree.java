@@ -661,6 +661,22 @@ public class Degree extends Degree_Base implements Comparable {
 	return result;
     }
 
+    public ScientificCommission getMostRecentScientificCommission(Person person) {
+        for (ExecutionYear ey = ExecutionYear.readCurrentExecutionYear(); ey != null; ey = ey.getPreviousExecutionYear()) {
+            for (ScientificCommission member : getScientificCommissionMembers(ey)) {
+                if (member.getPerson() == person) {
+                    return member;
+                }
+            }
+        }
+        
+        return null;
+    }
+    
+    public boolean isMemberOfAnyScientificCommission(Person person) {
+        return getMostRecentScientificCommission(person) != null;
+    }
+
     public boolean isMemberOfCurrentScientificCommission(Person person) {
         for (ScientificCommission member : getCurrentScientificCommissionMembers()) {
             if (member.getPerson() == person) {

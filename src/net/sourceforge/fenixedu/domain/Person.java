@@ -1158,6 +1158,10 @@ public class Person extends Person_Base {
 	
     for (; !getThesisEvaluationParticipants().isEmpty(); getThesisEvaluationParticipants().iterator().next().delete());
     
+    while (hasAnyScientificCommissions()) {
+        getScientificCommissions().iterator().next().delete();
+    }
+    
 	super.delete();
     }
 
