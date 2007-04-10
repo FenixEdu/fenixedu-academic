@@ -499,7 +499,7 @@ public class CreateTestData {
         person.setIdDocumentType(IDDocumentType.IDENTITY_CARD);
         person.setDocumentIdNumber(person.getIdInternal().toString());
         
-        PartyContact.createDefaultEmailAddress(person, "abc" + person.getIdInternal() + "@gmail.com");
+        PartyContact.createDefaultPersonalEmailAddress(person, "abc" + person.getIdInternal() + "@gmail.com");
         
         final User user = person.getUser();
         final Login login = user.readUserLoginIdentification();

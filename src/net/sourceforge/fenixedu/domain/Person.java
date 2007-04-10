@@ -241,23 +241,17 @@ public class Person extends Person_Base {
 	setProperties(personBean);
 	setIsPassInKerberos(Boolean.FALSE);
 	
-	updateDefaultPhysicalAddress(personBean.getPhysicalAddressData());
-	updateDefaultPhone(personBean.getPhone());
-	updateDefaultMobilePhone(personBean.getMobile());
-	updateDefaultWebAddress(personBean.getWebAddress());
-	createUserEmailAddress(personBean.getEmail());
+	createDefaultPhysicalAddress(personBean.getPhysicalAddressData());
+	createDefaultPhone(personBean.getPhone());
+	createDefaultMobilePhone(personBean.getMobile());
+	createDefaultWebAddress(personBean.getWebAddress());
+	createDefaultEmailAddress(personBean.getEmail());
     }
 
     private void createUserAndLoginEntity() {
 	new Login(new User(this));
     }
     
-    private void createUserEmailAddress(final String email) {
-	if (!StringUtils.isEmpty(email)) {
-	    PartyContact.createEmailAddress(this, PartyContactType.PERSONAL, true, true, email);
-	}
-    }
-
     private Person(String name, Gender gender, String address, String areaCode, String areaOfAreaCode,
 	    String area, String parishOfResidence, String districtSubdivisionOfResidence,
 	    String districtOfResidence, String phone, String mobile, String homepage, String email,
@@ -269,25 +263,12 @@ public class Person extends Person_Base {
 	setMaritalStatus(MaritalStatus.UNKNOWN);
 	setIdentification(documentIDNumber, documentType);
 	
-	updateDefaultPhysicalAddress(new PhysicalAddressData(address, areaCode, areaOfAreaCode, area,
+	createDefaultPhone(phone);
+	createDefaultMobilePhone(mobile);
+	createDefaultWebAddress(homepage);
+	createDefaultEmailAddress(email);
+	createDefaultPhysicalAddress(new PhysicalAddressData(address, areaCode, areaOfAreaCode, area,
 		parishOfResidence, districtSubdivisionOfResidence, districtOfResidence, null));
-	
-	if (!StringUtils.isEmpty(phone)) {
-	    updateDefaultPhone(phone);
-	}
-	
-	if (!StringUtils.isEmpty(mobile)) {
-	    updateDefaultMobilePhone(mobile);
-	}
-	
-	if (!StringUtils.isEmpty(homepage)) {
-	    updateDefaultWebAddress(homepage);
-	}
-
-	if (!StringUtils.isEmpty(email)) {
-	    createUserEmailAddress(email);
-	}
-	
 	
 	setAvailableEmail(Boolean.FALSE);
 	setAvailableWebSite(Boolean.FALSE);
@@ -573,6 +554,7 @@ public class Person extends Person_Base {
 	return null;
     }
 
+    @Deprecated
     public String getNacionalidade() {
 	return this.getPais().getNationality();
     }

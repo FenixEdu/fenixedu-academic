@@ -136,43 +136,59 @@ public abstract class PartyContact extends PartyContact_Base {
 	}
     }
 
+    @Deprecated
     static public WebAddress createDefaultPersonalWebAddress(final Party party) {
 	return new WebAddress(party, PartyContactType.PERSONAL, true, true);
+    }
+    
+    static public WebAddress createDefaultPersonalWebAddress(final Party party, final String url) {
+	return new WebAddress(party, PartyContactType.PERSONAL, true, true, url);
     }
     
     static public WebAddress createWebAddress(final Party party, final PartyContactType type, final boolean visible, final boolean defaultContact, final String url) {
 	return new WebAddress(party, type, visible, defaultContact, url);
     }
     
+    @Deprecated
     static public PhysicalAddress createDefaultPersonalPhysicalAddress(final Party party) {
 	return new PhysicalAddress(party, PartyContactType.PERSONAL, true, true);
+    }
+    
+    static public PhysicalAddress createDefaultPersonalPhysicalAddress(final Party party, final PhysicalAddressData data) {
+	return new PhysicalAddress(party, PartyContactType.PERSONAL, true, true, data);
     }
     
     static public PhysicalAddress createPhysicalAddress(final Party party, final PartyContactType type, final boolean visible, final boolean defaultContact, final PhysicalAddressData data) {
 	return new PhysicalAddress(party, type, visible, defaultContact, data);
     }
     
+    @Deprecated
     static public Phone createDefaultPersonalPhone(final Party party) {
 	return new Phone(party, PartyContactType.PERSONAL, true, true);
+    }
+    
+    static public Phone createDefaultPersonalPhone(final Party party, final String number) {
+	return new Phone(party, PartyContactType.PERSONAL, true, true, number);
     }
     
     static public Phone createPhone(final Party party, final PartyContactType type, boolean visible, boolean defaultContact, final String number) {
 	return new Phone(party, type, visible, defaultContact, number);
     }
 
+    @Deprecated
     static public MobilePhone createDefaultPersonalMobilePhone(final Party party) {
 	return new MobilePhone(party, PartyContactType.PERSONAL, true, true);
+    }
+    
+    static public MobilePhone createDefaultPersonalMobilePhone(final Party party, final String number) {
+	return new MobilePhone(party, PartyContactType.PERSONAL, true, true, number);
     }
     
     static public MobilePhone createMobilePhone(final Party party, final PartyContactType type, final boolean visible, final boolean defaultContact, final String number) {
 	return new MobilePhone(party, type, visible, defaultContact, number);
     }
     
-    static public EmailAddress createDefaultEmailAddress(final Party party) {
-	return new EmailAddress(party, PartyContactType.PERSONAL, true, true);
-    }
-    
-    static public EmailAddress createDefaultEmailAddress(final Party party, final String value) {
+    static public EmailAddress createDefaultPersonalEmailAddress(final Party party, final String value) {
 	return createEmailAddress(party, PartyContactType.PERSONAL, true, true, value);
     }
     

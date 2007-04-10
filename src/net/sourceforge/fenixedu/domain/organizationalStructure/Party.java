@@ -584,9 +584,14 @@ public abstract class Party extends Party_Base {
 	return (List<EmailAddress>) getPartyContacts(EmailAddress.class);
     }
 
+    @Deprecated
     private PhysicalAddress getOrCreateDefaultPhysicalAddress() {
 	final PhysicalAddress physicalAdress = getDefaultPhysicalAddress();
 	return physicalAdress != null ? physicalAdress : PartyContact.createDefaultPersonalPhysicalAddress(this);
+    }
+    
+    protected void createDefaultPhysicalAddress(final PhysicalAddressData data) {
+	PartyContact.createDefaultPersonalPhysicalAddress(this, data);
     }
     
     protected void updateDefaultPhysicalAddress(final PhysicalAddressData data) {
@@ -597,31 +602,58 @@ public abstract class Party extends Party_Base {
 	return getOrCreateDefaultPhysicalAddress();
     }
     
+    @Deprecated
     private WebAddress getOrCreateDefaultWebAddress() {
 	final WebAddress webAddress = getDefaultWebAddress();
 	return webAddress != null ? webAddress : PartyContact.createDefaultPersonalWebAddress(this);
+    }
+    
+    protected void createDefaultWebAddress(final String url) {
+	if (!StringUtils.isEmpty(url)) {
+	    PartyContact.createDefaultPersonalWebAddress(this, url);
+	}
     }
     
     protected void updateDefaultWebAddress(final String url) {
 	getOrCreateDefaultWebAddress().edit(url);
     }
     
+    @Deprecated
     private Phone getOrCreateDefaultPhone() {
 	final Phone phone = getDefaultPhone();
 	return phone != null ? phone : (Phone) PartyContact.createDefaultPersonalPhone(this);
+    }
+    
+    protected void createDefaultPhone(final String number) {
+	if (!StringUtils.isEmpty(number)) {
+	    PartyContact.createDefaultPersonalPhone(this, number);
+	}
     }
     
     protected void updateDefaultPhone(final String number) {
 	getOrCreateDefaultPhone().edit(number);
     }
     
+    @Deprecated
     private MobilePhone getOrCreateDefaultMobilePhone() {
 	final MobilePhone mobilePhone = getDefaultMobilePhone();
 	return mobilePhone != null ? mobilePhone : (MobilePhone) PartyContact.createDefaultPersonalMobilePhone(this);
     }
     
+    protected void createDefaultMobilePhone(final String number) {
+	if (!StringUtils.isEmpty(number)) {
+	    PartyContact.createDefaultPersonalMobilePhone(this, number);
+	}
+    }
+    
     protected void updateDefaultMobilePhone(final String number) {
 	getOrCreateDefaultMobilePhone().edit(number);
+    }
+    
+    protected void createDefaultEmailAddress(final String value) {
+	if (!StringUtils.isEmpty(value)) {
+	    PartyContact.createDefaultPersonalEmailAddress(this, value);
+	}
     }
     
     /* ~~~~~~~~~~~~~~~~~~~~~
@@ -637,96 +669,117 @@ public abstract class Party extends Party_Base {
 	return physicalAddress != null ? physicalAddress.getAddress() : null;
     }
     
+    @Deprecated
     public void setAddress(String address) {
 	getOrCreateDefaultPhysicalAddress().setAddress(address);
     }
     
+    @Deprecated
     public String getAreaCode() {
 	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
 	return physicalAddress != null ? physicalAddress.getAreaCode() : null;
     }
     
+    @Deprecated
     public void setAreaCode(String areaCode) {
 	getOrCreateDefaultPhysicalAddress().setAreaCode(areaCode);
     }
     
+    @Deprecated
     public String getAreaOfAreaCode() {
 	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
 	return physicalAddress != null ? physicalAddress.getAreaOfAreaCode() : null;
     }
     
+    @Deprecated
     public void setAreaOfAreaCode(String areaOfAreaCode) {
 	getOrCreateDefaultPhysicalAddress().setAreaOfAreaCode(areaOfAreaCode);
     }
     
+    @Deprecated
     public String getArea() {
 	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
 	return physicalAddress != null ? physicalAddress.getArea() : null;
     }
     
+    @Deprecated
     public void setArea(String area) {
 	getOrCreateDefaultPhysicalAddress().setArea(area);
     }
     
+    @Deprecated
     public String getParishOfResidence() {
 	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
 	return physicalAddress != null ? physicalAddress.getParishOfResidence() : null;
     }
     
+    @Deprecated
     public void setParishOfResidence(String parishOfResidence) {
 	getOrCreateDefaultPhysicalAddress().setParishOfResidence(parishOfResidence);
     }
     
+    @Deprecated
     public String getDistrictSubdivisionOfResidence() {
 	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
 	return physicalAddress != null ? physicalAddress.getDistrictSubdivisionOfResidence() : null;
     }
     
+    @Deprecated
     public void setDistrictSubdivisionOfResidence(String districtSubdivisionOfResidence) {
 	getOrCreateDefaultPhysicalAddress().setDistrictSubdivisionOfResidence(districtSubdivisionOfResidence);
     }
     
+    @Deprecated
     public String getDistrictOfResidence() {
 	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
 	return physicalAddress != null ? physicalAddress.getDistrictOfResidence() : null;
     }
     
+    @Deprecated
     public void setDistrictOfResidence(String districtOfResidence) {
         getOrCreateDefaultPhysicalAddress().setDistrictOfResidence(districtOfResidence);
     }
     
+    @Deprecated
     public Country getCountryOfResidence() {
 	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
 	return physicalAddress != null ? physicalAddress.getCountryOfResidence() : null;
     }
     
+    @Deprecated
     public void setCountryOfResidence(Country countryOfResidence) {
 	getOrCreateDefaultPhysicalAddress().setCountryOfResidence(countryOfResidence);
     }
 
+    @Deprecated
     public String getWebAddress() {
         final WebAddress webAddress = getDefaultWebAddress();
         return webAddress != null ? webAddress.getUrl() : null;
     }
     
+    @Deprecated
     public void setWebAddress(String webAddress) {
 	updateDefaultWebAddress(webAddress);
     }
     
+    @Deprecated
     public String getPhone() {
 	final Phone phone = getDefaultPhone();
 	return phone != null ? phone.getNumber() : null;
     }
     
+    @Deprecated
     public void setPhone(String phone) {
 	updateDefaultPhone(phone);
     }
     
+    @Deprecated
     public String getMobile() {
 	final MobilePhone phone = getDefaultMobilePhone();
 	return phone != null ? phone.getNumber() : null;
     }
     
+    @Deprecated
     public void setMobile(String mobile) {
 	updateDefaultMobilePhone(mobile);
     }

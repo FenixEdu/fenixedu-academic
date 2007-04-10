@@ -20,6 +20,10 @@ public class PhysicalAddressData implements Serializable {
     public PhysicalAddressData() {
     }
     
+    public PhysicalAddressData(final String address, final String areaCode, final String areaOfAreaCode, final String area) {
+	this(address, areaCode, areaOfAreaCode, area, null, null, null, null);
+    }
+    
     public PhysicalAddressData(final String address, final String areaCode, final String areaOfAreaCode, final String area,
 	    final String parishOfResidence, final String districtSubdivisionOfResidence, final String districtOfResidence,
 	    final Country countryOfResidence) {
@@ -33,7 +37,7 @@ public class PhysicalAddressData implements Serializable {
 	setDistrictOfResidence(districtOfResidence);
 	setCountryOfResidence(countryOfResidence);
     }
-
+    
     public String getAddress() {
         return address;
     }
