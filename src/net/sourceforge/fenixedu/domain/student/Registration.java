@@ -1617,12 +1617,7 @@ public class Registration extends Registration_Base {
     }
 
     public boolean hasToPayGratuityOrInsurance() {
-	if (getInterruptedStudies()) {
-	    return false;
-	}
-
-	return getRegistrationAgreement().equals(RegistrationAgreement.NORMAL);
-
+	return getInterruptedStudies() ? false : getRegistrationAgreement() == RegistrationAgreement.NORMAL;  
     }
 
     public RegistrationState getStateInDate(DateTime dateTime) {
