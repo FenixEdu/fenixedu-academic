@@ -697,8 +697,19 @@
 			<forward name="changeSpecialSeasonCode" path="student.enrollment.bolonha.changeSpecialSeasonCode" />
 		</action>
 		
-		
 		<!-- End : Bolonha Student Enrollment -->
+		
+		<!-- ===== Contacts ======== -->
+		<action path="/partyContacts"
+				type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.PartyContactsAcademicAdministrativeOfficeDA"
+				name="studentManagementForm"
+				parameter="method"
+				scope="request"
+				>
+				<forward name="createPartyContact" path="student.createPartyContact"/>
+				<forward name="editPartyContact" path="student.editPartyContact"/>
+				<forward name="editPersonalData" path="/student.do?method=prepareEditPersonalData"/>
+		</action>
 
     </action-mappings>
 

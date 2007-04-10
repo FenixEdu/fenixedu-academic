@@ -9,7 +9,7 @@
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2><bean:message key="<%= "label.partyContacts.edit" +  partyContactClass %>" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
-<fr:form action="/student.do">	
+<fr:form action="/partyContacts.do">	
 	
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="editPartyContact"/>
 	<bean:define id="studentID" type="java.lang.Integer" name="student" property="idInternal"/>
@@ -24,6 +24,6 @@
 	
 	<p>
 		<html:submit><bean:message key="button.submit" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:submit>
-		<html:cancel onclick="this.form.method.value='prepareEditPersonalData';"><bean:message key="button.cancel" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:cancel>
+		<html:cancel onclick="this.form.method.value='backToShowInformation';"><bean:message key="button.cancel" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:cancel>
 	</p>
 </fr:form>

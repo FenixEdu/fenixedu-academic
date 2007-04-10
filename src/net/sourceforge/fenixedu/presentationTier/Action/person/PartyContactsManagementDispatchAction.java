@@ -50,7 +50,7 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
     private ActionForward prepareCreatePartyContact(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response, Class<? extends PartyContact> clazz) {
 	
-	request.setAttribute("person", getPerson());
+	request.setAttribute("person", getPerson(request));
 	request.setAttribute("partyContactName", clazz.getSimpleName());
 	
 	return mapping.findForward("createPartyContact");
@@ -64,8 +64,8 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
     public ActionForward prepareEditPartyContact(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 	
-	request.setAttribute("person", getPerson());
-	request.setAttribute("partyContact", getPartyContact(getPerson(), request));
+	request.setAttribute("person", getPerson(request));
+	request.setAttribute("partyContact", getPartyContact(getPerson(request), request));
 	return mapping.findForward("editPartyContact");
     }
 
@@ -89,14 +89,14 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
 	    FenixServiceException {
 
 	try {
-	    executeService("DeletePartyContact", new Object[] {getPartyContact(getPerson(), request)});
+	    executeService("DeletePartyContact", new Object[] {getPartyContact(getPerson(request), request)});
 	} catch (DomainException e) {
 	    addActionMessage("contacts", request, e.getMessage(), e.getArgs());
 	}
 	return backToShowInformation(mapping, actionForm, request, response);
     }
 
-    protected Person getPerson() {
+    protected Person getPerson(final HttpServletRequest request) {
 	return AccessControl.getPerson();
     }
     

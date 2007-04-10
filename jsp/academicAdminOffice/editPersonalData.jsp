@@ -42,24 +42,33 @@
 	</p>
 	<br/>
 	
+	<logic:messagesPresent message="true" property="contacts">
+	<ul class="nobullet list6">
+		<html:messages id="messages" property="contacts" message="true">
+			<li><span class="error0"><bean:write name="messages" /></span></li>
+		</html:messages>
+	</ul>
+	<br/>
+	</logic:messagesPresent>
+	
 	<h3 class="mbottom025"><bean:message key="label.person.title.addressesInfo" bundle="ACADEMIC_OFFICE_RESOURCES" /></h3>
 	<fr:view name="personBean" property="sortedPhysicalAdresses" schema="contacts.PhysicalAddress.view">
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle4 mtop05" />
 			
-			<fr:property name="linkFormat(edit)" value="<%="/student.do?method=prepareEditPartyContact&amp;contactId=${idInternal}&amp;studentID=" + studentID %>"/>
+			<fr:property name="linkFormat(edit)" value="<%="/partyContacts.do?method=prepareEditPartyContact&amp;contactId=${idInternal}&amp;studentID=" + studentID %>"/>
 			<fr:property name="key(edit)" value="label.partyContacts.edit"/>
 			<fr:property name="bundle(edit)" value="ACADEMIC_OFFICE_RESOURCES"/>
-			<fr:property name="order(edit)" value="2"/>
+			<fr:property name="order(edit)" value="1"/>
 			
-			<fr:property name="linkFormat(delete)" value="<%="/student.do?method=deletePartyContact&amp;contactId=${idInternal}&amp;studentID=" + studentID %>"/>
+			<fr:property name="linkFormat(delete)" value="<%="/partyContacts.do?method=deletePartyContact&amp;contactId=${idInternal}&amp;studentID=" + studentID %>"/>
 			<fr:property name="key(delete)" value="label.partyContacts.delete"/>
 			<fr:property name="bundle(delete)" value="ACADEMIC_OFFICE_RESOURCES"/>
-			<fr:property name="order(delete)" value="3"/>
+			<fr:property name="order(delete)" value="2"/>
 		</fr:layout>
 	</fr:view>
 	<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-	<html:link action="/student.do?method=prepareCreatePhysicalAddress" paramId="studentID" paramName="studentID">
+	<html:link action="/partyContacts.do?method=prepareCreatePhysicalAddress" paramId="studentID" paramName="studentID">
 		<bean:message key="label.partyContacts.addPhysicalAddress" bundle="ACADEMIC_OFFICE_RESOURCES" />
 	</html:link>
 	<br/><br/>
@@ -71,19 +80,19 @@
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle4 mtop05" />
 
-			<fr:property name="linkFormat(edit)" value="<%="/student.do?method=prepareEditPartyContact&amp;contactId=${idInternal}&amp;studentID=" + studentID %>"/>
+			<fr:property name="linkFormat(edit)" value="<%="/partyContacts.do?method=prepareEditPartyContact&amp;contactId=${idInternal}&amp;studentID=" + studentID %>"/>
 			<fr:property name="key(edit)" value="label.partyContacts.edit"/>
 			<fr:property name="bundle(edit)" value="ACADEMIC_OFFICE_RESOURCES"/>
-			<fr:property name="order(edit)" value="2"/>
+			<fr:property name="order(edit)" value="1"/>
 			
-			<fr:property name="linkFormat(delete)" value="<%="/student.do?method=deletePartyContact&amp;contactId=${idInternal}&amp;studentID=" + studentID %>"/>
+			<fr:property name="linkFormat(delete)" value="<%="/partyContacts.do?method=deletePartyContact&amp;contactId=${idInternal}&amp;studentID=" + studentID %>"/>
 			<fr:property name="key(delete)" value="label.partyContacts.delete"/>
 			<fr:property name="bundle(delete)" value="ACADEMIC_OFFICE_RESOURCES"/>
-			<fr:property name="order(delete)" value="3"/>
+			<fr:property name="order(delete)" value="2"/>
 		</fr:layout>
 	</fr:view>
 	<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-	<html:link action="/student.do?method=prepareCreatePhone" paramId="studentID" paramName="studentID">
+	<html:link action="/partyContacts.do?method=prepareCreatePhone" paramId="studentID" paramName="studentID">
 		<bean:message key="label.partyContacts.addPhone" bundle="ACADEMIC_OFFICE_RESOURCES" />
 	</html:link>
 	<br/><br/>
@@ -93,19 +102,19 @@
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle4 mtop05" />
 
-			<fr:property name="linkFormat(edit)" value="<%="/student.do?method=prepareEditPartyContact&amp;contactId=${idInternal}&amp;studentID=" + studentID %>"/>
+			<fr:property name="linkFormat(edit)" value="<%="/partyContacts.do?method=prepareEditPartyContact&amp;contactId=${idInternal}&amp;studentID=" + studentID %>"/>
 			<fr:property name="key(edit)" value="label.partyContacts.edit"/>
 			<fr:property name="bundle(edit)" value="ACADEMIC_OFFICE_RESOURCES"/>
-			<fr:property name="order(edit)" value="2"/>
+			<fr:property name="order(edit)" value="1"/>
 
-			<fr:property name="linkFormat(delete)" value="<%="/student.do?method=deletePartyContact&amp;contactId=${idInternal}&amp;studentID=" + studentID %>"/>
+			<fr:property name="linkFormat(delete)" value="<%="/partyContacts.do?method=deletePartyContact&amp;contactId=${idInternal}&amp;studentID=" + studentID %>"/>
 			<fr:property name="key(delete)" value="label.partyContacts.delete"/>
 			<fr:property name="bundle(delete)" value="ACADEMIC_OFFICE_RESOURCES"/>
-			<fr:property name="order(delete)" value="3"/>
+			<fr:property name="order(delete)" value="2"/>
 		</fr:layout>
 	</fr:view>
 	<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-	<html:link action="/student.do?method=prepareCreateMobilePhone" paramId="studentID" paramName="studentID">
+	<html:link action="/partyContacts.do?method=prepareCreateMobilePhone" paramId="studentID" paramName="studentID">
 		<bean:message key="label.partyContacts.addMobilePhone" bundle="ACADEMIC_OFFICE_RESOURCES" />
 	</html:link>
 	<br/><br/>
@@ -115,21 +124,21 @@
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle4 mtop05" />
 
-			<fr:property name="linkFormat(edit)" value="<%="/student.do?method=prepareEditPartyContact&amp;contactId=${idInternal}&amp;studentID=" + studentID %>"/>
+			<fr:property name="linkFormat(edit)" value="<%="/partyContacts.do?method=prepareEditPartyContact&amp;contactId=${idInternal}&amp;studentID=" + studentID %>"/>
 			<fr:property name="key(edit)" value="label.partyContacts.edit"/>
 			<fr:property name="bundle(edit)" value="ACADEMIC_OFFICE_RESOURCES"/>
 			<fr:property name="visibleIfNot(edit)" value="institutionalType"/>
-			<fr:property name="order(edit)" value="2"/>
+			<fr:property name="order(edit)" value="1"/>
 
-			<fr:property name="linkFormat(delete)" value="<%="/student.do?method=deletePartyContact&amp;contactId=${idInternal}&amp;studentID=" + studentID %>"/>
+			<fr:property name="linkFormat(delete)" value="<%="/partyContacts.do?method=deletePartyContact&amp;contactId=${idInternal}&amp;studentID=" + studentID %>"/>
 			<fr:property name="key(delete)" value="label.partyContacts.delete"/>
 			<fr:property name="bundle(delete)" value="ACADEMIC_OFFICE_RESOURCES"/>
 			<fr:property name="visibleIfNot(delete)" value="institutionalType"/>
-			<fr:property name="order(delete)" value="3"/>
+			<fr:property name="order(delete)" value="2"/>
 		</fr:layout>
 	</fr:view>
 	<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-	<html:link action="/student.do?method=prepareCreateEmailAddress" paramId="studentID" paramName="studentID">
+	<html:link action="/partyContacts.do?method=prepareCreateEmailAddress" paramId="studentID" paramName="studentID">
 		<bean:message key="label.partyContacts.addEmailAddress" bundle="ACADEMIC_OFFICE_RESOURCES" />
 	</html:link>
 	<br/><br/>
@@ -139,19 +148,19 @@
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle4 mtop05" />
 		
-			<fr:property name="linkFormat(edit)" value="<%="/student.do?method=prepareEditPartyContact&amp;contactId=${idInternal}&amp;studentID=" + studentID %>"/>
+			<fr:property name="linkFormat(edit)" value="<%="/partyContacts.do?method=prepareEditPartyContact&amp;contactId=${idInternal}&amp;studentID=" + studentID %>"/>
 			<fr:property name="key(edit)" value="label.partyContacts.edit"/>
 			<fr:property name="bundle(edit)" value="ACADEMIC_OFFICE_RESOURCES"/>
-			<fr:property name="order(edit)" value="2"/>
+			<fr:property name="order(edit)" value="1"/>
 
-			<fr:property name="linkFormat(delete)" value="<%="/student.do?method=deletePartyContact&amp;contactId=${idInternal}&amp;studentID=" + studentID %>"/>
+			<fr:property name="linkFormat(delete)" value="<%="/partyContacts.do?method=deletePartyContact&amp;contactId=${idInternal}&amp;studentID=" + studentID %>"/>
 			<fr:property name="key(delete)" value="label.partyContacts.delete"/>
 			<fr:property name="bundle(delete)" value="ACADEMIC_OFFICE_RESOURCES"/>
-			<fr:property name="order(delete)" value="3"/>
+			<fr:property name="order(delete)" value="2"/>
 		</fr:layout>
 	</fr:view>
 	<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-	<html:link action="/student.do?method=prepareCreateWebAddress" paramId="studentID" paramName="studentID">
+	<html:link action="/partyContacts.do?method=prepareCreateWebAddress" paramId="studentID" paramName="studentID">
 		<bean:message key="label.partyContacts.addWebAddress" bundle="ACADEMIC_OFFICE_RESOURCES" />
 	</html:link>
 	<br/><br/>
