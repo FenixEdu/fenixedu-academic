@@ -73,15 +73,15 @@ public class DiaSemana extends FenixUtil {
         case DOMINGO:
             return "Domingo";
         case SEGUNDA_FEIRA:
-            return "2a feira";
+            return "2ª feira";
         case TERCA_FEIRA:
-            return "3a feira";
+            return "3ª feira";
         case QUARTA_FEIRA:
-            return "4a feira";
+            return "4ª feira";
         case QUINTA_FEIRA:
-            return "5a feira";
+            return "5ª feira";
         case SEXTA_FEIRA:
-            return "6a feira";
+            return "6ª feira";
         case SABADO:
             return "Sábado";
         }
