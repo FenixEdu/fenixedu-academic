@@ -4,11 +4,11 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
+<em><bean:message key="title.scientificCouncil.portalTitle" /></em>
+<h2><bean:message key="title.scientificJournal.merge" /></h2>
 
-<h2><bean:message key="title.scientificJournal.merge" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></h2>
 
-
-<p class="mtop2 mbottom05"><strong><bean:message key="label.scientificJournal.merge.selected" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></strong></p>
+<p class="mtop2 mbottom05"><strong><bean:message key="label.scientificJournal.merge.selected" /></strong></p>
 <logic:notEmpty name="mergeBean" property="selectedObjects">
 	<fr:form action="/mergeScientificJournal.do">
 		<html:hidden property="method" value="removeFromMergeList"/>
@@ -21,13 +21,12 @@
 				<fr:property name="subSchema" value="scientific.journal.merge.list"/>
 				<fr:property name="paged" value="false"/>
 				<fr:property name="buttonLabel" value="button.researchActivity.remove"/>
-				<fr:property name="bundle" value="SCIENTIFIC_COUNCIL_RESOURCES"/>
 			</fr:layout>
 		</fr:edit>
 		<table class="tstyle1 mtop0 width50em bgcolor3">
 			<tr>
 				<td>
-					<html:submit onclick="this.form.method.value='prepareResearchActivityMerge';this.form.submit();"><bean:message key="button.merge" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></html:submit>
+					<html:submit onclick="this.form.method.value='prepareResearchActivityMerge';this.form.submit();"><bean:message key="button.merge"/></html:submit>
 				</td>
 			</tr>
 		</table>
@@ -37,13 +36,13 @@
 
 <logic:empty name="mergeBean" property="selectedObjects">
 	<p class="mtop05">
-		<em><bean:message key="label.scientificJournal.merge.no.selected" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></em>
+		<em><bean:message key="label.scientificJournal.merge.no.selected"/></em>
 	</p>
 </logic:empty>
 
 
 
-<p class="mtop2 mbottom05"><strong><bean:message key="label.merge.scientific.journal.completeList" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>:</strong></p>
+<p class="mtop2 mbottom05"><strong><bean:message key="label.merge.scientific.journal.completeList"/>:</strong></p>
 	
 	
 <fr:form action="/mergeScientificJournal.do?method=goToPage">
@@ -60,7 +59,7 @@
 				<fr:edit id="page" name="mergeBean" visible="false"/>
 			</th>
 			<td>
-				<html:submit><bean:message key="submit" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></html:submit>
+				<html:submit><bean:message key="submit"/></html:submit>
 			</td>
 		</tr>
 	</table>
@@ -78,7 +77,6 @@
 			<fr:property name="objectsPerPage" value="20"/>
 			<fr:property name="subSchema" value="scientific.journal.merge.list"/>
 			<fr:property name="buttonLabel" value="button.researchActivity.add"/>
-			<fr:property name="bundle" value="SCIENTIFIC_COUNCIL_RESOURCES"/>
 		</fr:layout>
 	</fr:edit>
 	<fr:edit id="mergeListNotVisible" name="mergeBean" visible="false"/>
@@ -86,14 +84,14 @@
 
 
 
-<p class="mtop2 mbottom025"><em><bean:message key="label.legend" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></em>:</p>
+<p class="mtop2 mbottom025"><em><bean:message key="label.legend"/></em>:</p>
 <table class="mtop0">
 <tr>
 	<td><div style="width: 10px; height: 10px; border: 1px solid #973; background: #ca6; float:left;"></div></td>
-	<td><em style="color: #973;"><bean:message key="label.legend.draftScientificJournals" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></em></td>
+	<td><em style="color: #973;"><bean:message key="label.legend.draftScientificJournals"/></em></td>
 </tr>
 <tr>
 	<td><div style="width: 10px; height: 10px; border: 1px solid #379; background: #6ac; float:left;"></div></td>
-	<td><em style="color: #379;"><bean:message key="label.legend.aprovedScientificJournals" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></em></td>
+	<td><em style="color: #379;"><bean:message key="label.legend.aprovedScientificJournals"/></em></td>
 </tr>
 </table>

@@ -4,8 +4,8 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
-
-<h2><bean:message key="title.event.edit" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></h2>
+<em><bean:message key="title.scientificCouncil.portalTitle" /></em>
+<h2><bean:message key="title.event.edit" /></h2>
 
 <br />
 <br />
@@ -19,10 +19,10 @@
 			</fr:layout>
 		</fr:edit>
 		<fr:edit id="pageContainerBean" name="pageContainerBean" visible="false"/>
-		<html:submit><bean:message key="submit" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></html:submit>
+		<html:submit><bean:message key="submit"/></html:submit>
 	</fr:form>
 	<fr:form action="/editEvent.do?method=back">
 		<fr:edit id="back" name="pageContainerBean" visible="false"/>
-		<html:submit><bean:message key="return" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></html:submit>
+		<html:submit><bean:message key="return"/></html:submit>
 	</fr:form>
 </div>

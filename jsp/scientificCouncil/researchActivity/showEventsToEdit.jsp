@@ -4,8 +4,8 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
-
-<h2><bean:message key="title.event.edit" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></h2>
+<em><bean:message key="title.scientificCouncil.portalTitle" /></em>
+<h2><bean:message key="title.event.edit" /></h2>
 	
 <fr:form action="/editEvent.do?method=goToPage">
 	<table class="tstyle5 thlight thmiddle mtop05">
@@ -21,7 +21,7 @@
 				<fr:edit id="page" name="pageContainerBean" visible="false"/>
 			</th>
 			<td>
-				<html:submit><bean:message key="submit" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></html:submit>
+				<html:submit><bean:message key="submit"/></html:submit>
 			</td>
 		</tr>
 	</table>
@@ -39,7 +39,6 @@
 			<fr:property name="objectsPerPage" value="20"/>
 			<fr:property name="subSchema" value="event.merge.list"/>
 			<fr:property name="buttonLabel" value="edit"/>
-			<fr:property name="bundle" value="SCIENTIFIC_COUNCIL_RESOURCES"/>
 		</fr:layout>
 	</fr:edit>
 </fr:form>
