@@ -157,6 +157,7 @@ public class PersonName extends PersonName_Base implements Comparable<PersonName
 	final Set<PersonNamePart> personNameParts = new HashSet<PersonNamePart>(getPersonNamePartSet());
 	getPersonNamePartSet().clear();
 	removeRootDomainObject();
+	removePerson();
 	deleteDomainObject();
 	for (final PersonNamePart personNamePart : personNameParts) {
 	    personNamePart.deleteIfEmpty();
