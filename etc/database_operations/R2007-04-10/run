@@ -26,3 +26,9 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+executeWithTempFile "Correct Party WorkPhones" correctPartyWorkPhones.sql
+execute "Set visible information in party contacts" setVisibleInformationInPartyContacts.sql
+execute "Correct some scientific journal scopes" alterSomeScientificJournalsLocationType.sql
+execute "Alter Table StaffManagementSection" alterTableStaffManagementSection.sql
+execute "Add research activities" addResearchActivitiesFunctionalities.sql
