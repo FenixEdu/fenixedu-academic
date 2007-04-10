@@ -253,7 +253,7 @@ public class Student extends Student_Base {
         if (isStudentOfDegreeType(DegreeType.BOLONHA_PHD_PROGRAM))
             return DegreeType.BOLONHA_PHD_PROGRAM;
         if (isStudentOfDegreeType(DegreeType.BOLONHA_MASTER_DEGREE))
-            return DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE;
+            return DegreeType.BOLONHA_MASTER_DEGREE;
         if (isStudentOfDegreeType(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE))
             return DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE;
         if (isStudentOfDegreeType(DegreeType.BOLONHA_DEGREE))
