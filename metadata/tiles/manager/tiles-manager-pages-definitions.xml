@@ -845,5 +845,32 @@
 	<definition name="confirmation-to-merge" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/organizationalStructureManagament/mergeUnits/confirmation.jsp" />
 	</definition>	
+	
+	    <!-- ============  =========== -->
+    <definition name="show-scientific-journal-merge-page" extends="definition.manager.masterPage">
+    	<put name="body" value="/manager/researchActivity/showScientificJournalsToMerge.jsp"/>
+    </definition>
+    <definition name="show-scientific-journal-list-page" extends="definition.manager.masterPage">
+    	<put name="body" value="/manager/researchActivity/showScientificJournalsToEdit.jsp"/>
+    </definition>
+    <definition name="show-scientific-journal-edit-page" extends="definition.manager.masterPage">
+    	<put name="body" value="/manager/researchActivity/showEditScientificJournal.jsp"/>
+    </definition>    
+	<definition name="show-scientific-journal-merge-list" extends="definition.manager.masterPage">
+    	<put name="body" value="/manager/researchActivity/showScientificJournalsToMergeList.jsp"/>
+    </definition>
+    <definition name="show-event-merge-page" extends="definition.manager.masterPage">
+    	<put name="body" value="/manager/researchActivity/showEventsToMerge.jsp"/>
+    </definition>
+        <definition name="show-event-merge-list" extends="definition.manager.masterPage">
+    	<put name="body" value="/manager/researchActivity/showEventsToMergeList.jsp"/>
+    </definition>
+    <definition name="show-event-list-page" extends="definition.manager.masterPage">
+    	<put name="body" value="/manager/researchActivity/showEventsToEdit.jsp"/>
+    </definition>
+    <definition name="show-event-edit-page" extends="definition.manager.masterPage">
+    	<put name="body" value="/manager/researchActivity/showEditEvent.jsp"/>
+    </definition>    
+	
 					
 </tiles-definitions>

@@ -4,8 +4,8 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
-<em><bean:message key="title.scientificCouncil.portalTitle" /></em>
-<h2><bean:message key="title.scientificJournal.edit" /></h2>
+
+<h2><bean:message key="title.scientificJournal.edit" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></h2>
 	
 <fr:form action="/editScientificJournal.do?method=goToPage">
 	<table class="tstyle5 thlight thmiddle mtop05">
@@ -21,7 +21,7 @@
 				<fr:edit id="page" name="pageContainerBean" visible="false"/>
 			</th>
 			<td>
-				<html:submit><bean:message key="submit"/></html:submit>
+				<html:submit><bean:message key="submit" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></html:submit>
 			</td>
 		</tr>
 	</table>
@@ -39,18 +39,19 @@
 			<fr:property name="objectsPerPage" value="20"/>
 			<fr:property name="subSchema" value="scientific.journal.merge.list"/>
 			<fr:property name="buttonLabel" value="edit"/>
+			<fr:property name="bundle" value="SCIENTIFIC_COUNCIL_RESOURCES"/>
 		</fr:layout>
 	</fr:edit>
 </fr:form>
 
-<p class="mtop2 mbottom025"><em><bean:message key="label.legend"/>:</em></p>
+<p class="mtop2 mbottom025"><em><bean:message key="label.legend" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>:</em></p>
 <table class="mtop0">
-<tr>
-	<td><div style="width: 10px; height: 10px; border: 1px solid #973; background: #ca6; float:left;"></div></td>
-	<td><em style="color: #973;"><bean:message key="label.legend.draftScientificJournals"/></em></td>
-</tr>
-<tr>
-	<td><div style="width: 10px; height: 10px; border: 1px solid #379; background: #6ac; float:left;"></div></td>
-	<td><em style="color: #379;"><bean:message key="label.legend.aprovedScientificJournals"/></em></td>
-</tr>
+	<tr>
+		<td><div style="width: 10px; height: 10px; border: 1px solid #973; background: #ca6; float:left;"></div></td>
+		<td><em style="color: #973;"><bean:message key="label.legend.draftScientificJournals" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></em></td>
+	</tr>
+	<tr>
+		<td><div style="width: 10px; height: 10px; border: 1px solid #379; background: #6ac; float:left;"></div></td>
+		<td><em style="color: #379;"><bean:message key="label.legend.aprovedScientificJournals" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></em></td>
+	</tr>
 </table>

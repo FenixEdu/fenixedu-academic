@@ -4,10 +4,10 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
-<em><bean:message key="title.scientificCouncil.portalTitle" /></em>
-<h2><bean:message key="title.event.merge" /></h2>
 
-<p class="mtop2 mbottom05"><strong><bean:message key="label.event.merge.selected" /></strong></p>
+<h2><bean:message key="title.event.merge" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></h2>
+
+<p class="mtop2 mbottom05"><strong><bean:message key="label.event.merge.selected" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></strong></p>
 <logic:notEmpty name="mergeBean" property="selectedObjects">
 	<fr:form action="/mergeEvents.do">
 		<html:hidden property="method" value="removeFromMergeList"/>
@@ -20,12 +20,13 @@
 				<fr:property name="subSchema" value="event.merge.list"/>
 				<fr:property name="paged" value="false"/>
 				<fr:property name="buttonLabel" value="button.researchActivity.remove"/>
+				<fr:property name="bundle" value="SCIENTIFIC_COUNCIL_RESOURCES"/>
 			</fr:layout>
 		</fr:edit>
 		<table class="tstyle1 mtop0 width50em bgcolor3">
 			<tr>
 				<td>
-					<html:submit onclick="this.form.method.value='prepareResearchActivityMerge';this.form.submit();"><bean:message key="button.merge"/></html:submit>
+					<html:submit onclick="this.form.method.value='prepareResearchActivityMerge';this.form.submit();"><bean:message key="button.merge" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></html:submit>
 				</td>
 			</tr>
 		</table>
@@ -35,12 +36,12 @@
 
 <logic:empty name="mergeBean" property="selectedObjects">
 	<p class="mtop05">
-		<em><bean:message key="label.event.merge.no.selected"/></em>
+		<em><bean:message key="label.event.merge.no.selected" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></em>
 	</p>
 </logic:empty>
 
 
-<p class="mtop2 mbottom05"><strong><bean:message key="label.merge.event.completeList"/>:</strong></p>
+<p class="mtop2 mbottom05"><strong><bean:message key="label.merge.event.completeList" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>:</strong></p>
 
 <fr:form action="/mergeEvents.do?method=goToPage">
 	<table class="tstyle5 thlight thmiddle mtop05">
@@ -73,6 +74,7 @@
 			<fr:property name="objectsPerPage" value="20"/>
 			<fr:property name="subSchema" value="event.merge.list"/>
 			<fr:property name="buttonLabel" value="button.researchActivity.add"/>
+			<fr:property name="bundle" value="SCIENTIFIC_COUNCIL_RESOURCES"/>
 		</fr:layout>
 	</fr:edit>
 	<fr:edit id="mergeListNotVisible" name="mergeBean" visible="false"/>

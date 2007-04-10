@@ -2260,6 +2260,41 @@
 			<forward name="goToConfirmation" path="confirmation-to-merge"/>							
 		</action>
       
+      <!-- =================== Research Activity =================== -->
+      
+		<action path="/mergeScientificJournal" 	    	
+   	        parameter="method"
+   	        scope="request"
+            type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.researchActivity.MergeScientificJournalDA">                                    
+            <forward name="show-research-activity-merge-page" path="show-scientific-journal-merge-page"/> 
+            <forward name="show-research-activity-merge-list" path="show-scientific-journal-merge-list"/> 
+        </action>
+        
+		<action path="/editScientificJournal" 	    	
+   	        parameter="method"
+   	        scope="request"
+            type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.researchActivity.EditScientificJournalDA">                                    
+            <forward name="show-research-activity-list" path="show-scientific-journal-list-page"/> 
+            <forward name="show-research-activity-edit" path="show-scientific-journal-edit-page"/> 
+        </action>             
+                             
+		<action path="/mergeEvents" 	    	
+   	        parameter="method"
+   	        scope="request"
+            type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.researchActivity.MergeEventsDA">                                    
+            <forward name="show-research-activity-merge-page" path="show-event-merge-page"/> 
+            <forward name="show-research-activity-merge-list" path="show-event-merge-list"/> 
+        </action> 	 
+        
+		<action path="/editEvent" 	    	
+   	        parameter="method"
+   	        scope="request"
+            type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.researchActivity.EditEventDA">                                    
+            <forward name="show-research-activity-list" path="show-event-list-page"/> 
+            <forward name="show-research-activity-edit" path="show-event-edit-page"/> 
+        </action>             
+      
+      
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->
@@ -2275,6 +2310,7 @@
 	<message-resources parameter="resources.EnumerationResources" key="ENUMERATION_RESOURCES" null="false"/>
 	<message-resources parameter="resources.AcademicAdminOffice" key="ACADEMIC_OFFICE_RESOURCES" null="false"/>
     <message-resources parameter="resources.SiteResources" key="SITE_RESOURCES" null="false"/>
+    <message-resources parameter="resources.ScientificCouncilResources" key="SCIENTIFIC_COUNCIL_RESOURCES" null="false"/>    
 
 	<!-- ========== Plug Ins Configuration ================================= -->
 			

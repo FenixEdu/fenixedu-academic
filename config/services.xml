@@ -11714,7 +11714,7 @@
         <description></description>
         <isTransactional>true</isTransactional>  
 		<filterChains>
-			<chain name="ScientificCouncilAuthorization" />
+			<chain name="ManagerOrCientificCouncilAuthentication" />
 		</filterChains>
     </service>
    	<service>
@@ -11723,7 +11723,7 @@
         <description></description>
         <isTransactional>true</isTransactional>  
 		<filterChains>
-			<chain name="ScientificCouncilAuthorization" />
+			<chain name="ManagerOrCientificCouncilAuthentication" />
 		</filterChains>
     </service>
 	<service>
