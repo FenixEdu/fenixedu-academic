@@ -50,7 +50,8 @@
 		<bean:define id="createComplexSummaryURL" type="java.lang.String">/summariesManagement.do?method=prepareCreateComplexSummaryInSummariesCalendarMode&page=0&executionCourseID=<bean:write name="executionCourseID"/></bean:define>
 		<fr:view name="summariesCalendarResult" schema="SummariesCalendarList">
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle1 mtop025 mbottom0"/>
+				<fr:property name="classes" value="tstyle1 mtop025 mbottom0 tdcenter"/>
+				<fr:property name="columnClasses" value=",,,,,,"/>
 				<fr:property name="link(insertNewSummary)" value="<%= createComplexSummaryURL %>"/>
 	            <fr:property name="param(insertNewSummary)" value="checkBoxValue/summaryDate"/>
 		        <fr:property name="key(insertNewSummary)" value="title.summary.insert"/>
