@@ -52,6 +52,10 @@ public enum DocumentRequestType {
 		|| this == IRS_DECLARATION;
     }
 
+    public boolean isDiploma() {
+	return this == DIPLOMA_REQUEST;
+    }
+
     public boolean getHasAdditionalInformation() {
 	return hasAdditionalInformation;
     }
