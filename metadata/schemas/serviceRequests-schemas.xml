@@ -76,6 +76,9 @@
 <schema name="CertificateRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest"  extends="DocumentRequest.view" bundle="ACADEMIC_OFFICE_RESOURCES">
 </schema>
 
+<schema name="DiplomaRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaRequest"  extends="AcademicServiceRequest.view" bundle="ACADEMIC_OFFICE_RESOURCES">
+</schema>
+
 <schema name="DegreeFinalizationCertificateRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DegreeFinalizationCertificateRequest"  extends="CertificateRequest.view" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="average" key="label.documentRequestsManagement.searchDocumentRequests.average" />
 	<slot name="detailed" key="label.documentRequestsManagement.searchDocumentRequests.detailed" />	
