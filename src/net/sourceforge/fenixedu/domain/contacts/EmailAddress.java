@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.contacts;
 
 import java.util.Comparator;
+import java.util.List;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -51,6 +52,22 @@ public class EmailAddress extends EmailAddress_Base {
 	}
     }
     
+    @Override
+    public void setType(PartyContactType type) {
+        checkEmailType(type);
+        super.setType(type);
+    }
+    
+    private void checkEmailType(PartyContactType type) {
+	if (type == PartyContactType.INSTITUTIONAL) {
+	    final List<PartyContact> contacts = (List<PartyContact>) getParty().getPartyContacts(getClass(), type);
+	    contacts.remove(this);
+	    if (!contacts.isEmpty()) {
+		throw new DomainException("error.domain.contacts.EmailAddress.can.only.have.one.institutional.emailAddress");
+	    }
+	}
+    }
+
     public boolean hasValue() {
 	return getValue() != null;
     }
