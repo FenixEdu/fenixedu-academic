@@ -94,6 +94,7 @@ import net.sourceforge.fenixedu.domain.accounting.serviceAgreements.DegreeCurric
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
+import net.sourceforge.fenixedu.domain.contacts.PartyContact;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -196,6 +197,7 @@ public class CreateTestData {
         person.addPersonRoles(Role.getRoleByRoleType(RoleType.MANAGER));
         person.setIdDocumentType(IDDocumentType.IDENTITY_CARD);
         person.setDocumentIdNumber(person.getIdInternal().toString());
+        
         final User user = person.getUser();
         final Login login = user.readUserLoginIdentification();
         login.setPassword(PasswordEncryptor.encryptPassword("pass"));
@@ -490,12 +492,15 @@ public class CreateTestData {
 
     private static Person createPerson(final String namePrefix, final String usernamePrefix, final int i) {
         final Person person = new Person();
+        
         person.setName(namePrefix + i);
         person.addPersonRoles(Role.getRoleByRoleType(RoleType.PERSON));
         person.setDateOfBirthYearMonthDay(new YearMonthDay().minusYears(23));
         person.setIdDocumentType(IDDocumentType.IDENTITY_CARD);
         person.setDocumentIdNumber(person.getIdInternal().toString());
-        person.setEmail("abc" + person.getIdInternal() + "@gmail.com");
+        
+        PartyContact.createDefaultEmailAddress(person, "abc" + person.getIdInternal() + "@gmail.com");
+        
         final User user = person.getUser();
         final Login login = user.readUserLoginIdentification();
         login.setPassword(PasswordEncryptor.encryptPassword("pass"));

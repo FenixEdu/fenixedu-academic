@@ -198,6 +198,7 @@ public class DataInitializer {
 	person.setName("Fenix System Administrator");
 	person.addPersonRoles(Role.getRoleByRoleType(RoleType.PERSON));
 	person.addPersonRoles(Role.getRoleByRoleType(RoleType.MANAGER));
+	
 	final User user = person.getUser();
 	final Login login = user.readUserLoginIdentification();
 	login.setActive(Boolean.TRUE);
