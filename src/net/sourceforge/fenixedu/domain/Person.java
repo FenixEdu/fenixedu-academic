@@ -2649,8 +2649,8 @@ public class Person extends Person_Base {
         }
     }
     
-    /* 
-     * Currently, Person can only have one WorkPhone (so use get(0) - after interface updates remove these methods) 
+    /*
+     * Currently, a Person can only have one WorkPhone (so use get(0) - after interface updates remove these methods)
      */
     private Phone getPersonWorkPhone() {
 	final List<Phone> partyContacts = (List<Phone>) getPartyContacts(Phone.class, PartyContactType.WORK);
@@ -2661,7 +2661,7 @@ public class Person extends Person_Base {
 	final Phone workPhone = getPersonWorkPhone();
         return workPhone != null ? workPhone.getNumber() : null;
     }
-    
+
     public void setWorkPhone(String workPhone) {
 	final Phone phone = getPersonWorkPhone();
 	if (phone == null) {
@@ -2673,16 +2673,19 @@ public class Person extends Person_Base {
 	}
     }
     
-    /* 
-     * Currently, Person can only have one InstitutionalEmailAddress (so use get(0) - after interface updates remove these methods) 
+    /**
+     *@deprecated All references to this method must be removed and refactored according to each use case
+     *@see getDefaultEmailAddress()
      */
+    @Override
     public String getEmail() {
 	return hasInstitutionalEmail() ? getInstitutionalEmail() : super.getEmail();
     }
-    
+     
+    // Currently, a Person can only have one InstitutionalEmailAddress (so use get(0) method) 
     private EmailAddress getInstitutionalEmailAddress() {
 	final List<EmailAddress> partyContacts = (List<EmailAddress>) getPartyContacts(EmailAddress.class, PartyContactType.INSTITUTIONAL);
-	return partyContacts.isEmpty() ? null : (EmailAddress) partyContacts.get(0); // actually exists only one
+	return partyContacts.isEmpty() ? null : (EmailAddress) partyContacts.get(0); // actually exists only one (protected in domain)
     }
     
     public String getInstitutionalEmail() {
