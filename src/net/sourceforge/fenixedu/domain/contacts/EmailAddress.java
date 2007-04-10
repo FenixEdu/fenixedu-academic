@@ -48,7 +48,7 @@ public class EmailAddress extends EmailAddress_Base {
     
     private void checkParameters(final String value) {
 	if (!EmailSender.emailAddressFormatIsValid(value)) {
-	    throw new DomainException("error.net.sourceforge.fenixedu.domain.contacts.EmailAddress.invalid.format", value);
+	    throw new DomainException("error.domain.contacts.EmailAddress.invalid.format", value);
 	}
     }
     
@@ -94,10 +94,10 @@ public class EmailAddress extends EmailAddress_Base {
     @Override
     protected void checkRulesToDelete() {
 	if (isInstitutionalType()) {
-	    throw new DomainException("error.contacts.EmailAddress.cannot.delete.institution.emailAddress", getValue());
+	    throw new DomainException("error.domain.contacts.EmailAddress.cannot.delete.institution.emailAddress", getValue());
 	}
 	if (getParty().getPartyContacts(getClass()).size() == 1) {
-	    throw new DomainException("error.contacts.EmailAddress.cannot.remove.last.emailAddress");
+	    throw new DomainException("error.domain.contacts.EmailAddress.cannot.remove.last.emailAddress");
 	}
     }
     
