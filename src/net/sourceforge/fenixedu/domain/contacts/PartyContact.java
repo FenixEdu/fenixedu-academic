@@ -28,8 +28,8 @@ public abstract class PartyContact extends PartyContact_Base {
 	
 	super.setParty(party);
 	super.setType(type);
-	super.setVisible(Boolean.valueOf(visible));
 	
+	super.setVisible(Boolean.valueOf(visible));
 	setDefaultContactInformation(defaultContact);
     }
     
