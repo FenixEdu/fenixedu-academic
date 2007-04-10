@@ -1132,7 +1132,9 @@ public class Person extends Person_Base {
 	getManageableDepartmentCredits().clear();
 	getAdvisories().clear();
 	
-	getPersonName().delete();
+	if(hasPersonName()){
+	    getPersonName().delete();
+	}
 	for ( ; !getIdDocumentsSet().isEmpty(); getIdDocumentsSet().iterator().next().delete());
 	
 	removeNationality();
