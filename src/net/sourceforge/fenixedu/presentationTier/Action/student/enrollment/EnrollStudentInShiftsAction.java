@@ -36,7 +36,7 @@ public class EnrollStudentInShiftsAction extends FenixAction {
 	try {
 	    ShiftEnrollmentErrorReport errorReport = (ShiftEnrollmentErrorReport) ServiceUtils
 		    .executeService(userView, "EnrollStudentInShifts", new Object[] {
-			    getStudent(userView), shiftId });
+			    getRegistration(request), shiftId });
 
 	    if (errorReport.getUnAvailableShifts().size() > 0) {
 		for (final Shift shift : (List<Shift>) errorReport.getUnAvailableShifts()) {
@@ -59,6 +59,10 @@ public class EnrollStudentInShiftsAction extends FenixAction {
 
 	saveMessages(request);
 	return mapping.findForward("enrollmentConfirmation");
+    }
+    
+    private Registration getRegistration(HttpServletRequest request) {
+	return rootDomainObject.readRegistrationByOID(Integer.valueOf(request.getParameter("registrationOID")));
     }
 
     private Registration getStudent(final IUserView userView) {
