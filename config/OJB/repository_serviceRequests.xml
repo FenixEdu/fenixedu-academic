@@ -16,6 +16,12 @@
 	<!-- ************************************************************************************************************ -->
 	<!-- Definitions for net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest -->
 	<!-- ************************************************************************************************************ -->
+	<class-descriptor class="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaRequest" table="ACADEMIC_SERVICE_REQUEST">
+	</class-descriptor>
+	
+	<!-- ************************************************************************************************************ -->
+	<!-- Definitions for net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest -->
+	<!-- ************************************************************************************************************ -->
 	<class-descriptor class="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest" table="ACADEMIC_SERVICE_REQUEST">
 		<extent-class class-ref="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DegreeFinalizationCertificateRequest" />
 		<extent-class class-ref="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ApprovementCertificateRequest" />
