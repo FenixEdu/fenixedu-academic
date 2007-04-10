@@ -62,25 +62,32 @@
 				</html:link>
 			</td>
 			<td class="listClasses" style="text-align:left">
-				<logic:iterate id="degree" name="executionCourse" property="degreesSortedByDegreeName">
-					<bean:define id="degreeCode" type="java.lang.String" name="degree" property="sigla"/>
-					<bean:define id="degreeLabel" type="java.lang.String"><bean:message bundle="ENUMERATION_RESOURCES" name="degree" property="tipoCurso.name"/> <bean:message key="label.in"/> <bean:write name="degree" property="name"/></bean:define>
-					<html:link href="<%= hostURL + degreeCode %>" title="<%= degreeLabel %>">
-						<bean:write name="degreeCode"/>
-					</html:link>
-				</logic:iterate>
+	            <span class="smalltxt">
+					<logic:iterate id="degree" name="executionCourse" property="degreesSortedByDegreeName">
+						<bean:define id="degreeCode" type="java.lang.String" name="degree" property="sigla"/>
+						<bean:define id="degreeLabel" type="java.lang.String"><bean:message bundle="ENUMERATION_RESOURCES" name="degree" property="tipoCurso.name"/> <bean:message key="label.in"/> <bean:write name="degree" property="name"/></bean:define>
+						<html:link href="<%= hostURL + degreeCode %>" title="<%= degreeLabel %>">
+							<bean:write name="degreeCode"/>
+						</html:link>
+					</logic:iterate>
+				</span>
 			</td>
 			<td class="listClasses nowrap" style="text-align:left">
-				<bean:write name="executionCourse" property="executionPeriod.qualifiedName"/>
-			</td>
-            <td class="listClasses aleft">
-	            <bean:define id="executionCourseURL"><%= hostURL2 + ExecutionCourseProcessor.getExecutionCourseAbsolutePath(executionCourse) %></bean:define>	            
 	            <span class="smalltxt">
-                <html:link href="<%= executionCourseURL %>" >
-                    <bean:write name="executionCourseURL"/>
-                </html:link>
+					<bean:write name="executionCourse" property="executionPeriod.qualifiedName"/>
+				</span>
+			</td>
+            <td class="listClasses aleft breakword" style="word-wrap: break-word !important;">
+	            <bean:define id="executionCourseURL"><%= hostURL2 + ExecutionCourseProcessor.getExecutionCourseAbsolutePath(executionCourse) %></bean:define>	            
+	            <span class="smalltxt breakword" style="word-wrap: break-word !important;">
+	                <html:link href="<%= executionCourseURL %>" >
+	                    <bean:write name="executionCourseURL"/>
+	                </html:link>
                 </span>
             </td>
 		</tr>		
 	</logic:iterate>
 </table>
+
+
+
