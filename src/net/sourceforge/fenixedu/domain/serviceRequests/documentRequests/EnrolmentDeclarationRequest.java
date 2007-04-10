@@ -22,7 +22,7 @@ public class EnrolmentDeclarationRequest extends EnrolmentDeclarationRequest_Bas
 	this.init(registration, documentPurposeType, otherDocumentPurposeTypeDescription, freeProcessed);
     }
 
-    protected void init(Registration registration,DocumentPurposeType documentPurposeType,
+    final protected void init(Registration registration,DocumentPurposeType documentPurposeType,
             String otherDocumentPurposeTypeDescription, Boolean freeProcessed) {
 
         super.init(registration, documentPurposeType, otherDocumentPurposeTypeDescription, freeProcessed);
