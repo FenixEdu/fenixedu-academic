@@ -29,7 +29,6 @@ public class Phone extends Phone_Base {
         super();
     }
     
-    @Checked("PartyContactPredicates.checkPermissionsToManage")
     protected Phone(final Party party, final PartyContactType type, final boolean visible, final boolean defaultContact) {
         this();
         super.init(party, type, visible, defaultContact);
@@ -39,7 +38,6 @@ public class Phone extends Phone_Base {
         this(party, type, true, defaultContact, number);
     }
     
-    @Checked("PartyContactPredicates.checkPermissionsToManage")
     public Phone(final Party party, final PartyContactType type, final boolean visible, final boolean defaultContact, final String number) {
 	this();
 	super.init(party, type, visible, defaultContact);

@@ -47,7 +47,6 @@ public abstract class PartyContact extends PartyContact_Base {
 	}	    
     }
 
-    @Checked("PartyContactPredicates.checkPermissionsToManage")
     public void changeToDefault() {
 	final PartyContact defaultPartyContact = getParty().getDefaultPartyContact(getClass());
 	if (defaultPartyContact != null && defaultPartyContact != this) {
