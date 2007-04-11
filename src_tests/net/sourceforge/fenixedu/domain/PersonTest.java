@@ -6,7 +6,6 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPersonEditor;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.domain.person.Gender;
@@ -602,7 +601,7 @@ public class PersonTest extends DomainTestBase {
 
 	private void assertPersonContent(Person person, Country country) {
 
-		assertEquals(person.getPais(), country);
+		assertEquals(person.getNationality(), country);
 		assertEquals(person.getAvailableEmail(), availableEmail);
 		assertEquals(person.getAvailablePhoto(), availablePhoto);
 		assertEquals(person.getAvailableWebSite(), availableWebSite);
@@ -618,9 +617,9 @@ public class PersonTest extends DomainTestBase {
 		assertEquals(person.getWebAddress(), enderecoWeb);
 		assertEquals(person.getParishOfResidence(), freguesiaMorada);
 		assertEquals(person.getParishOfBirth(), freguesiaNaturalidade);
-		assertEquals(person.getPais().getName(), "Portugal");
-		assertEquals(person.getPais().getCode(), "PT");
-		assertEquals(person.getPais().getNationality(), "Portuguese");
+		assertEquals(person.getNationality().getName(), "Portugal");
+		assertEquals(person.getNationality().getCode(), "PT");
+		assertEquals(person.getNationality().getNationality(), "Portuguese");
 		assertEquals(person.getEmissionLocationOfDocumentId(),
 				localEmissaoDocumentoIdentificacao);
 		assertEquals(person.getArea(), localidade);
@@ -630,7 +629,7 @@ public class PersonTest extends DomainTestBase {
 		if (country == null) {
 			assertEquals(person.getNacionalidade(), nacionalidade);
 		} else {
-			assertEquals(person.getNacionalidade(), person.getPais()
+			assertEquals(person.getNacionalidade(), person.getNationality()
 					.getNationality());
 		}
 		assertEquals(person.getDateOfBirth(), dataNascimento);
