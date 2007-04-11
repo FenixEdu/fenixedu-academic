@@ -21,24 +21,21 @@ public class CreateOrEditGrantContract extends Service {
             ExcepcaoPersistencia {
 
         final GrantOwner grantOwner = rootDomainObject.readGrantOwnerByOID(infoGrantContract.getGrantOwnerInfo().getIdInternal());
-        final GrantContract grantContract;
+        GrantContract grantContract;
         if (infoGrantContract.getContractNumber() == null) {
             GrantContract maxGrantContract = grantOwner.readGrantContractWithMaximumContractNumber();
             final Integer maxNumber = (maxGrantContract != null) ? maxGrantContract.getContractNumber() : 0;
             final Integer newContractNumber = Integer.valueOf(maxNumber + 1);
+            grantContract = new GrantContract(grantOwner,newContractNumber);
             infoGrantContract.setContractNumber(newContractNumber);
-            grantContract = new GrantContract();
         } else {
             grantContract = grantOwner.readGrantContractByNumber(infoGrantContract.getContractNumber()); 
         }
-
-        grantContract.setGrantOwner(grantOwner);
 
         GrantType grantType = GrantType.readBySigla(infoGrantContract.getGrantTypeInfo().getSigla());
         if (grantType == null) {
             throw new GrantTypeNotFoundException();
         }
-        grantContract.setGrantType(grantType);
 
         GrantOrientationTeacher grantOrientationTeacher = rootDomainObject
                 .readGrantOrientationTeacherByOID(infoGrantContract.getGrantOrientationTeacherInfo()
@@ -60,7 +57,6 @@ public class CreateOrEditGrantContract extends Service {
                 grantOrientationTeacher.setOrientationTeacher(teacher);
             }
         }
-        grantContract.addGrantOrientationTeachers(grantOrientationTeacher);
 
         if (infoGrantContract.getGrantCostCenterInfo() != null
                 && infoGrantContract.getGrantCostCenterInfo().getNumber() != null) {
@@ -73,8 +69,8 @@ public class CreateOrEditGrantContract extends Service {
         } else {
             grantContract.setGrantCostCenter(null);
         }
-
-        grantContract.setContractNumber(infoGrantContract.getContractNumber());
+        grantContract.setGrantType(grantType);
+        grantContract.addGrantOrientationTeachers(grantOrientationTeacher);
         grantContract.setDateAcceptTerm(infoGrantContract.getDateAcceptTerm());
         grantContract.setEndContractMotive(infoGrantContract.getEndContractMotive());
     }
