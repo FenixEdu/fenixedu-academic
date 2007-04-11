@@ -11,12 +11,14 @@
 	<class-descriptor class="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest" table="ACADEMIC_SERVICE_REQUEST">
 		<extent-class class-ref="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest" />
 		<extent-class class-ref="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DeclarationRequest" />
+		<extent-class class-ref="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaRequest" />
 	</class-descriptor>
 
 	<!-- ************************************************************************************************************ -->
-	<!-- Definitions for net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest -->
+	<!-- Definitions for net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaRequest -->
 	<!-- ************************************************************************************************************ -->
 	<class-descriptor class="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaRequest" table="ACADEMIC_SERVICE_REQUEST">
+	
 	</class-descriptor>
 	
 	<!-- ************************************************************************************************************ -->
