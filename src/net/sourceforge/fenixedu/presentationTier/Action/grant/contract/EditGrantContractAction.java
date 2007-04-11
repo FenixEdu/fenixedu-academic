@@ -129,6 +129,10 @@ public class EditGrantContractAction extends FenixDispatchAction {
                     infoGrantContractRegime.getDateEndContract())) {
                 return setError(request, mapping, "errors.grant.contract.conflictdates", null, null);
             }
+            Teacher teacher = Teacher.readByNumber(new Integer((String) editGrantContractForm.get("grantContractOrientationTeacherNumber")));
+            if(teacher==null){
+            	 return setError(request, mapping, "errors.grant.contract.orientation.teacher.not.found", null, null);	
+            }
 
             request.setAttribute("idInternal", editGrantContractForm.get("idInternal"));
             
