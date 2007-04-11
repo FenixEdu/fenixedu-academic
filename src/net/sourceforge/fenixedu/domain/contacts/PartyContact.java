@@ -187,6 +187,11 @@ public abstract class PartyContact extends PartyContact_Base {
 	return new MobilePhone(party, type, visible, defaultContact, number);
     }
     
+    @Deprecated
+    static public EmailAddress createDefaultPersonalEmailAddress(final Party party) {
+    return new EmailAddress(party, PartyContactType.PERSONAL, true, true);
+    }
+    
     static public EmailAddress createDefaultPersonalEmailAddress(final Party party, final String value) {
 	return createEmailAddress(party, PartyContactType.PERSONAL, true, true, value);
     }
