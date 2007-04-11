@@ -90,21 +90,17 @@ public class Homepage extends Homepage_Base {
 
     @Override
     public long getQuota() {
-        Person person = getPerson();
-
-        if (person.hasTeacher()) {
-            return TEACHER_QUOTA;
-        }
-        else {
-            return REGULAR_QUOTA;
-        }
+        final Person person = getPerson();
+        return person.hasTeacher() ? TEACHER_QUOTA : REGULAR_QUOTA;
     }
 
     @Override
     protected void deleteRelations() {
         super.deleteRelations();
-        
         removePerson();
     }
-    
+
+    public boolean isHomepageActivated() {
+	return getActivated() != null && getActivated().booleanValue();
+    }
 }
