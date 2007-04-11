@@ -328,9 +328,9 @@ public class SummariesControlAction extends FenixDispatchAction {
             row.setCell(summariesControlElementDTO.getSiglas());
             row.setCell(summariesControlElementDTO.getLessonHours().toString());
             row.setCell(summariesControlElementDTO.getSummaryHours().toString());
-            row.setCell(summariesControlElementDTO.getShiftDifference().toString());
+            row.setCell(summariesControlElementDTO.getShiftDifference() == null ? "" : summariesControlElementDTO.getShiftDifference().toString());
             row.setCell(summariesControlElementDTO.getCourseSummaryHours().toString());
-            row.setCell(summariesControlElementDTO.getCourseDifference().toString());
+            row.setCell(summariesControlElementDTO.getCourseDifference() == null ? "" : summariesControlElementDTO.getCourseDifference().toString());
         }
     }
 
