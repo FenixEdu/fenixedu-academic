@@ -21,28 +21,16 @@ public abstract class DeclarationRequest extends DeclarationRequest_Base {
     protected void init(Registration registration, DocumentPurposeType documentPurposeType,
 	    String otherDocumentPurposeTypeDescription, Boolean freeProcessed) {
 
-	init(registration);
-	checkParameters(documentPurposeType, otherDocumentPurposeTypeDescription);
-
+	super.init(registration, Boolean.FALSE, freeProcessed);
+	
+	super.checkParameters(documentPurposeType, otherDocumentPurposeTypeDescription);
 	super.setDocumentPurposeType(documentPurposeType);
 	super.setOtherDocumentPurposeTypeDescription(otherDocumentPurposeTypeDescription);
-	super.setFreeProcessed(freeProcessed);
     }
 
-    private void checkParameters(DocumentPurposeType documentPurposeType,
-	    String otherDocumentPurposeTypeDescription) {
-
-	if (documentPurposeType == DocumentPurposeType.OTHER
-		&& otherDocumentPurposeTypeDescription == null) {
-	    throw new DomainException(
-		    "error.serviceRequests.documentRequests.DeclarationRequest.otherDocumentPurposeTypeDescription.cannot.be.null.for.other.purpose.type");
-	}
-
-    }
-
-    protected static DeclarationRequest create(Registration registration,
+    static final protected DeclarationRequest create(Registration registration,
 	    DocumentRequestType chosenDocumentRequestType,
-	    DocumentPurposeType chosenDocumentPurposeType, String otherPurpose, String notes,
+	    DocumentPurposeType chosenDocumentPurposeType, String otherPurpose,
 	    Boolean average, Boolean detailed, Integer year, Boolean freeProcessed) {
 
 	switch (chosenDocumentRequestType) {
@@ -60,25 +48,23 @@ public abstract class DeclarationRequest extends DeclarationRequest_Base {
     }
 
     @Override
-    public void setDocumentPurposeType(DocumentPurposeType documentPurposeType) {
+    final public void setDocumentPurposeType(DocumentPurposeType documentPurposeType) {
 	throw new DomainException(
 		"error.serviceRequests.documentRequests.DeclarationRequest.cannot.modify.documentPurposeType");
     }
 
     @Override
-    public void setOtherDocumentPurposeTypeDescription(String otherDocumentTypeDescription) {
+    final public void setOtherDocumentPurposeTypeDescription(String otherDocumentTypeDescription) {
 	throw new DomainException(
 		"error.serviceRequests.documentRequests.DeclarationRequest.cannot.modify.otherDocumentTypeDescription");
     }
 
     @Override
-    public void setFreeProcessed(Boolean freeProcessed) {
-	throw new DomainException(
-		"error.serviceRequests.documentRequests.DeclarationRequest.cannot.modify.freeProcessed");
-
+    final public Boolean getUrgentRequest() {
+	return Boolean.FALSE;
     }
-
-    public void edit(AcademicServiceRequestSituationType academicServiceRequestSituationType,
+    
+    final public void edit(AcademicServiceRequestSituationType academicServiceRequestSituationType,
 	    Employee employee, String justification, Integer numberOfPages) {
 	
 	if (isPayable() && isPayed() && !getNumberOfPages().equals(numberOfPages)) {
@@ -106,12 +92,7 @@ public abstract class DeclarationRequest extends DeclarationRequest_Base {
 	}
     }
 
-    @Override
-    public Boolean getUrgentRequest() {
-	return Boolean.FALSE;
-    }
-    
-    protected boolean isFree() {
+    final protected boolean isFree() {
 	if (getDocumentPurposeType() == DocumentPurposeType.PPRE) {
 	    return false;
 	}

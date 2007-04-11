@@ -14,36 +14,19 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
 	super.setNumberOfPages(0);
     }
 
-    protected void init(Registration registration, DocumentPurposeType documentPurposeType,
+    final protected void init(Registration registration, DocumentPurposeType documentPurposeType,
 	    String otherDocumentPurposeTypeDescription, Boolean urgentRequest) {
 
-	init(registration);
-	checkParameters(documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest);
+	super.init(registration, urgentRequest, Boolean.FALSE);
 
+	super.checkParameters(documentPurposeType, otherDocumentPurposeTypeDescription);
 	super.setDocumentPurposeType(documentPurposeType);
 	super.setOtherDocumentPurposeTypeDescription(otherDocumentPurposeTypeDescription);
-	super.setUrgentRequest(urgentRequest);
-	super.setFreeProcessed(false);
     }
 
-    private void checkParameters(DocumentPurposeType documentPurposeType,
-	    String otherDocumentPurposeTypeDescription, Boolean urgentRequest) {
-
-	if (documentPurposeType == DocumentPurposeType.OTHER
-		&& otherDocumentPurposeTypeDescription == null) {
-	    throw new DomainException(
-		    "error.serviceRequests.documentRequests.CertificateRequest.otherDocumentPurposeTypeDescription.cannot.be.null.for.other.purpose.type");
-	}
-
-	if (urgentRequest == null) {
-	    throw new DomainException(
-		    "error.serviceRequests.documentRequests.CertificateRequest.urgentRequest.cannot.be.null");
-	}
-    }
-
-    public static CertificateRequest create(Registration registration,
+    static final public CertificateRequest create(Registration registration,
 	    DocumentRequestType chosenDocumentRequestType,
-	    DocumentPurposeType chosenDocumentPurposeType, String otherPurpose, String notes,
+	    DocumentPurposeType chosenDocumentPurposeType, String otherPurpose,
 	    Boolean urgentRequest, Boolean average, Boolean detailed, ExecutionYear executionYear) {
 
 	switch (chosenDocumentRequestType) {
@@ -65,31 +48,20 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
     }
 
     @Override
-    public void setDocumentPurposeType(DocumentPurposeType documentPurposeType) {
+    final public void setDocumentPurposeType(DocumentPurposeType documentPurposeType) {
 	throw new DomainException(
 		"error.serviceRequests.documentRequests.CertificateRequest.cannot.modify.documentPurposeType");
     }
 
     @Override
-    public void setOtherDocumentPurposeTypeDescription(String otherDocumentTypeDescription) {
+    final public void setOtherDocumentPurposeTypeDescription(String otherDocumentTypeDescription) {
 	throw new DomainException(
 		"error.serviceRequests.documentRequests.CertificateRequest.cannot.modify.otherDocumentTypeDescription");
     }
 
-    @Override
-    public void setUrgentRequest(Boolean urgentRequest) {
-	throw new DomainException(
-		"error.serviceRequests.documentRequests.CertificateRequest.cannot.modify.urgentRequest");
-    }
+    abstract public Integer getNumberOfUnits();
 
-    @Override
-    public void setFreeProcessed(Boolean freeProcessed) {
-	throw new DomainException(
-		"error.serviceRequests.documentRequests.CertificateRequest.cannot.modify.freeProcessed");
-    }
-
-
-    public void edit(AcademicServiceRequestSituationType academicServiceRequestSituationType,
+    final public void edit(AcademicServiceRequestSituationType academicServiceRequestSituationType,
 	    Employee employee, String justification, Integer numberOfPages) {
 
 	if (isPayable() && isPayed() && !getNumberOfPages().equals(numberOfPages)) {
@@ -101,7 +73,6 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
 	super.setNumberOfPages(numberOfPages);
     }
 
-    abstract public Integer getNumberOfUnits();
     
     @Override
     protected void internalChangeState(AcademicServiceRequestSituationType academicServiceRequestSituationType, Employee employee) {
@@ -119,7 +90,7 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
 	}
     }
 
-    protected boolean isFree() {
+    final protected boolean isFree() {
 	if (getDocumentRequestType() == DocumentRequestType.SCHOOL_REGISTRATION_CERTIFICATE
 		|| getDocumentRequestType() == DocumentRequestType.ENROLMENT_CERTIFICATE) {
 	    return super.isFree() || (!isRequestForPreviousExecutionYear() && isFirstRequestOfCurrentExecutionYear());

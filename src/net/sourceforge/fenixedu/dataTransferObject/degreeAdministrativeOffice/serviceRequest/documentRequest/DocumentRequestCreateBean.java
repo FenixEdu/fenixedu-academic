@@ -17,8 +17,6 @@ public class DocumentRequestCreateBean extends RegistrationSelectExecutionYearBe
 
     private String otherPurpose;
 
-    private String notes;
-
     private Boolean urgentRequest;
     
     private Boolean freeProcessed;
@@ -61,14 +59,6 @@ public class DocumentRequestCreateBean extends RegistrationSelectExecutionYearBe
 
     public void setOtherPurpose(String otherPurpose) {
 	this.otherPurpose = otherPurpose;
-    }
-
-    public String getNotes() {
-	return notes;
-    }
-
-    public void setNotes(String notes) {
-	this.notes = notes;
     }
 
     public Boolean getUrgentRequest() {
@@ -159,7 +149,7 @@ public class DocumentRequestCreateBean extends RegistrationSelectExecutionYearBe
 	if (chosenDocumentPurposeType != null
 		&& chosenDocumentPurposeType.equals(DocumentPurposeType.OTHER)
 		&& (otherPurpose == null || otherPurpose.length() == 0)) {
-	    throw new DomainException("error.other.purpose.required");
+	    throw new DomainException("DocumentRequestCreateBean.error.other.purpose.required");
 	}
 
 	this.chosenDocumentPurposeType = chosenDocumentPurposeType;

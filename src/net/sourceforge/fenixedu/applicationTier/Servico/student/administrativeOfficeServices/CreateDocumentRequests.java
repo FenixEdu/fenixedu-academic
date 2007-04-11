@@ -23,7 +23,6 @@ public class CreateDocumentRequests extends Service {
                             documentRequestCreateBean.getChosenDocumentRequestType(), 
                             documentRequestCreateBean.getChosenDocumentPurposeType(),
                             documentRequestCreateBean.getOtherPurpose(), 
-                            documentRequestCreateBean.getNotes(),
                             documentRequestCreateBean.getUrgentRequest(),
                             documentRequestCreateBean.getAverage(), 
                             documentRequestCreateBean.getDetailed(),
