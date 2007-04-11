@@ -801,9 +801,9 @@ public abstract class Party extends Party_Base {
     public void setEmail(String email) {
 	final EmailAddress emailAddress = getPersonalEmailAddress();
 	if (emailAddress == null) {
-	    PartyContact.createEmailAddress(this, PartyContactType.PERSONAL, true, false, email);
+	    PartyContact.createDefaultPersonalEmailAddress(this).edit(email);
 	} else {
-	    emailAddress.setValue(email);
+	    emailAddress.edit(email);
 	}
     }
     
