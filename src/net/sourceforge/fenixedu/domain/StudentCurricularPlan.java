@@ -1456,6 +1456,17 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	}
 	return count;
     }
+    
+    public int countEnrolmentsByCurricularCourse(final CurricularCourse curricularCourse, ExecutionPeriod untilExecutionPeriod) {
+	int count = 0;
+	for (Enrolment enrolment : this.getEnrolments()) {
+	    if (enrolment.getCurricularCourse() == curricularCourse
+		    && enrolment.getExecutionPeriod().isBeforeOrEquals(untilExecutionPeriod)) {
+		count++;
+	    }
+	}
+	return count;
+    }
 
     public List<Enrolment> getEnrolmentsByState(EnrollmentState state) {
 	List<Enrolment> results = new ArrayList<Enrolment>();

@@ -744,6 +744,11 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 		this.getCurricularCourse());
     }
 
+    public int getNumberOfTotalEnrolmentsInThisCourse(ExecutionPeriod untilExecutionPeriod) {
+	return this.getStudentCurricularPlan().countEnrolmentsByCurricularCourse(
+		this.getCurricularCourse(), untilExecutionPeriod);
+    }
+    
     protected void createEnrolmentLog(Registration registration, EnrolmentAction action) {
 	new EnrolmentLog(action, registration, this.getCurricularCourse(), this.getExecutionPeriod(),
 		getCurrentUser());
