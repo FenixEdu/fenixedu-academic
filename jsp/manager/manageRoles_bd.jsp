@@ -24,7 +24,17 @@
 			<td>
 				<html:text bundle="HTMLALT_RESOURCES" altKey="text.username" property="username" size="25"/>
 			</td>
+		</tr>
+		<tr>
 			<td>
+			 	<bean:message bundle="MANAGER_RESOURCES" key="property.documentIdNumber"/>
+			</td>
+			<td>
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.documentIdNumber" property="documentIdNumber" size="25"/>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
 				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 					<bean:message bundle="MANAGER_RESOURCES" key="label.select"/>
 				</html:submit>
@@ -40,11 +50,22 @@
 		<tr>
     		<td class="infoselected">
     			Utilizador selecionado:
-    			<strong><bean:write name="username"/></strong>
+    			<br/>
+    			<strong>
+	    			<logic:iterate id="loginAlias" name="person" property="loginAliasOrderByImportance" length="1">
+		    			<strong><bean:write name="loginAlias" property="alias"/></strong>
+   					</logic:iterate>
+	    			<logic:iterate id="loginAlias" name="person" property="loginAliasOrderByImportance" offset="1">
+		    			, <strong><bean:write name="loginAlias" property="alias"/></strong>
+   					</logic:iterate>
+   				</strong>
+   				 <br/>
+    			<strong><bean:write name="person" property="name"/></strong>
+    			<br/>
+    			<strong><bean:write name="person" property="documentIdNumber"/></strong>
 			</td>
-		</tr>
 	</table>
-
+	<br/>
 	<table>
 		<tr>
 			<th class="listClasses-header">

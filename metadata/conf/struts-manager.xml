@@ -291,6 +291,7 @@
                 >
         <form-property name="roleOIDs" type="java.lang.String[]"/>
         <form-property name="username" type="java.lang.String"/>
+        <form-property name="documentIdNumber" type="java.lang.String"/>
         <form-property name="page" type="java.lang.Integer"/>
      </form-bean>
      
@@ -1522,7 +1523,7 @@
 		      input="/manageRoles.do?method=prepare&amp;page=0"
               type="net.sourceforge.fenixedu.presentationTier.Action.manager.ManageRolesDA"
               parameter="method"
-              validate="true"
+              validate="false"
               scope="request"
               >
           <forward name="SelectUserPage" path="df.page.manage-roles"/>
