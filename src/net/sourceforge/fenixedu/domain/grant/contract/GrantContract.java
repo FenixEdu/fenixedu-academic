@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
@@ -17,6 +18,12 @@ public class GrantContract extends GrantContract_Base {
     public GrantContract() {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
+    }
+
+    public GrantContract(GrantOwner grantOwner, Integer contractNumber) {
+	this();
+        setGrantOwner(grantOwner);
+        setContractNumber(contractNumber);
     }
 
     public void delete() {
