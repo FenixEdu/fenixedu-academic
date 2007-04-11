@@ -44,16 +44,16 @@
   Example:
   
     <schema name="person.birth" type="net.sourceforge.fenixedu.domain.Person">
-        <slot name="nascimento" key="person.nascimento.special-case" layout="heading-date">
-            <property name="format" value="yyyy - MM - dd HH:mm"/>
+        <slot name="birthYearMonthDay" key="person.nascimento.special-case" layout="heading-date">
+            <property name="format" value="yyyy - MM - dd"/>
         </slot>
     </schema>
     
     <schema name="person.country" type="net.sourceforge.fenixedu.domain.Person">
-        <slot name="pais" schema="pais.minimal"/>
+        <slot name="nationality" schema="pais.minimal"/>
     </schema>
     
-    <schema name="pais.minimal" type="net.sourceforge.fenixedu.domain.Person">
+    <schema name="country.minimal" type="net.sourceforge.fenixedu.domain.Person">
         <slot name="name"/>
         <slot name="nacionality"/>
     </schema>
@@ -65,18 +65,18 @@
   
   <!-- FIXME: remove schemas after this, they are used only as example -->
   <schema name="person.simple-admin-info" type="net.sourceforge.fenixedu.domain.Person">
-    <slot name="nome"/>
+    <slot name="name"/>
     <slot name="username"/>
     <slot name="email"/>
   </schema>
   
   <schema name="person.simple-admin-info.extended" type="net.sourceforge.fenixedu.domain.Person">
-    <slot name="nome"/>
+    <slot name="name"/>
     <slot name="username" layout="link"/>
     <slot name="email">
         <property name="link" value="true"/>
     </slot>
-    <slot name="pais" schema="country.short" layout="values">
+    <slot name="nationality" schema="country.short" layout="values">
         <property name="htmlSeparator" value=" - "/>
     </slot>
   </schema>
@@ -87,13 +87,13 @@
   </schema>
   
   <schema name="person.simple-edit" type="net.sourceforge.fenixedu.domain.Person">
-    <slot name="nome">
+    <slot name="name">
         <property name="size" value="50"/>
     </slot>
     <slot name="gender"/>
     <slot name="idDocumentType"/>
-    <slot name="numeroDocumentoIdentificacao"/>
-    <slot name="dataValidadeDocumentoIdentificacao">
+    <slot name="documentIdNumber"/>
+    <slot name="expirationDateOfDocumentIdYearMonthDay">
         <property name="size" value="12"/>
         <property name="maxLength" value="10"/>
     </slot>
@@ -101,7 +101,7 @@
   </schema>
   
   <schema name="person.simple-edit-validated" type="net.sourceforge.fenixedu.domain.Person">
-    <slot name="nome">
+    <slot name="name">
         <validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
             <property name="regexp" value="\p{Space}*[^ ]+\p{Space}+[^ ]+.*"/>
             <property name="message" value="Escreva pelo menos o primeiro e último nome"/>
@@ -111,8 +111,8 @@
     </slot>
     <slot name="gender" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
     <slot name="idDocumentType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-    <slot name="numeroDocumentoIdentificacao" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-    <slot name="dataValidadeDocumentoIdentificacao">
+    <slot name="documentIdNumber" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+    <slot name="expirationDateOfDocumentIdYearMonthDay">
         <validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
             <property name="regexp" value="\p{Digit}?\p{Digit}/\p{Digit}?\p{Digit}/(\p{Digit}\p{Digit})?\p{Digit}\p{Digit}"/>
         </validator>
@@ -123,7 +123,7 @@
   </schema>
   
   <schema name="person.create-minimal" type="net.sourceforge.fenixedu.domain.Person">
-    <slot name="nome">
+    <slot name="name">
         <validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
             <property name="regexp" value="\p{Space}*[^ ]+\p{Space}+[^ ]+.*"/>
             <property name="message" value="Escreva pelo menos o primeiro e último nome"/>
@@ -133,14 +133,14 @@
     </slot>
     <slot name="username" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
     <slot name="idDocumentType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-    <slot name="numeroDocumentoIdentificacao" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+    <slot name="documentIdNumber" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
     <slot name="gender" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
     <slot name="maritalStatus" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
     <slot name="isPassInKerberos"/>
   </schema>
   
   <schema name="person.create-minimal-defaults" type="net.sourceforge.fenixedu.domain.Person">
-    <slot name="nome">
+    <slot name="name">
         <validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
             <property name="regexp" value="\p{Space}*[^ ]+\p{Space}+[^ ]+.*"/>
             <property name="message" value="Escreva pelo menos o primeiro e último nome"/>
@@ -152,7 +152,7 @@
           validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
     <slot name="idDocumentType" default="IDENTITY_CARD"
           validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-    <slot name="numeroDocumentoIdentificacao" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+    <slot name="documentIdNumber" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
     <slot name="gender" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
     <slot name="maritalStatus" default="UNKNOWN"
           validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
@@ -160,7 +160,7 @@
   </schema>
   
   <schema name="person.name" type="net.sourceforge.fenixedu.domain.Person">
-    <slot name="nome" layout="allow-case-change"/>
+    <slot name="name" layout="allow-case-change"/>
   </schema>
   
   <schema name="teacherPersonalExpectation.view-all-except-tutorComment" type="net.sourceforge.fenixedu.domain.Person">
@@ -219,7 +219,7 @@
 
   <schema name="person.admin.simple" type="net.sourceforge.fenixedu.domain.Person">
     <slot name="username" layout="link"/>
-    <slot name="nome"/>
+    <slot name="name"/>
   </schema>
   
   <schema name="weekly.work.load.bean" type="net.sourceforge.fenixedu.presentationTier.Action.student.WeeklyWorkLoadBean">
@@ -250,64 +250,56 @@
   </schema>
   
 	<!-- Paulo Zenida and Dinis Martins - 2006-02-17 -->
-	<schema name="person.create-validated"
-		type="net.sourceforge.fenixedu.domain.Person">
+	<schema name="person.create-validated" type="net.sourceforge.fenixedu.domain.Person">
+
 		<!-- Personal data -->
-		<slot name="nome" key="person.name" default="[Primeiro Ultimo]">
-			<validator
-				class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
-				<property name="regexp"
-					value="\p{Space}*[^ ]+\p{Space}+[^ ]+.*" />
-				<property name="message"
-					value="Escreva pelo menos o primeiro e último nome" />
+		<slot name="name" key="person.name" default="[Primeiro Ultimo]">
+			<validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
+				<property name="regexp" value="\p{Space}*[^ ]+\p{Space}+[^ ]+.*" />
+				<property name="message" value="Escreva pelo menos o primeiro e �ltimo nome" />
 				<property name="key" value="false" />
 			</validator>
 			<property name="size" value="50" />
 		</slot>
-		<slot name="gender"
-			validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
-		<slot name="numeroDocumentoIdentificacao"
-			validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
-		<slot name="idDocumentType" default="IDENTITY_CARD"
-			validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
-		<slot name="localEmissaoDocumentoIdentificacao" />
-		<slot name="dataEmissaoDocumentoIdentificacao">
+		<slot name="gender" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
+		<slot name="documentIdNumber" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
+		<slot name="idDocumentType" default="IDENTITY_CARD" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
+		<slot name="emissionLocationOfDocumentId" />
+		<slot name="emissionDateOfDocumentIdYearMonthDay">
 			<property name="size" value="12" />
 			<property name="maxLength" value="10" />
 		</slot>
-		<slot name="dataValidadeDocumentoIdentificacao">
+		<slot name="expirationDateOfDocumentIdYearMonthDay">
 			<property name="size" value="12" />
 			<property name="maxLength" value="10" />
 		</slot>
-		<slot name="numContribuinte" />
-		<slot name="profissao" />
+		<slot name="socialSecurityNumber" />
+		<slot name="profession" />
 		<slot name="maritalStatus" default="UNKNOWN" />
 		<!-- Filiation -->
-		<slot name="nascimento" layout="heading-date">
-			<property name="format" value="yyyy - MM - dd HH:mm" />
-		</slot>
-		<slot name="pais" layout="menu-select"> 
+		<slot name="dateOfBirthYearMonthDay" />
+		<slot name="nationality" layout="menu-select"> 
 			<property name="choiceType" value="net.sourceforge.fenixedu.domain.Country"/> 
 			<property name="format" value="${nationality}"/>
 		</slot>
-		<slot name="freguesiaNaturalidade" />
-		<slot name="concelhoNaturalidade" />
-		<slot name="distritoNaturalidade" />
-		<slot name="nomePai" />
-		<slot name="nomeMae" />
+		<slot name="parishOfBirth" />
+		<slot name="districtSubdivisionOfBirth" />
+		<slot name="districtOfBirth" />
+		<slot name="nameOfFather" />
+		<slot name="nameOfMother" />
 		<!-- Residence -->
-		<slot name="morada" />
-		<slot name="codigoPostal" />
-		<slot name="localidadeCodigoPostal" />
-		<slot name="localidade" />
-		<slot name="freguesiaMorada" />
-		<slot name="concelhoMorada" />
-		<slot name="distritoMorada" />
+		<slot name="address" />
+		<slot name="areaCode" />
+		<slot name="areaOfAreaCode" />
+		<slot name="area" />
+		<slot name="parishOfResidence" />
+		<slot name="districtSubdivisionOfResidence" />
+		<slot name="districtOfResidence" />
 		<!-- Contacts -->
-		<slot name="telefone" />
-		<slot name="telemovel" />
+		<slot name="phone" />
+		<slot name="mobile" />
 		<slot name="email" />
-		<slot name="enderecoWeb" />
+		<slot name="webAddress" />
 
 		<slot name="isPassInKerberos" />
 	</schema>

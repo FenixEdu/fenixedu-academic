@@ -33,12 +33,12 @@ public class ChangePersonalStudentInfo extends Service {
         Country country = null;
         if ((newInfoPerson.getInfoPais() != null)
             && (newInfoPerson.getInfoPais().getNationality().length() != 0)) {
-            if ((person.getPais() == null)
+            if ((person.getNationality() == null)
                     || (!newInfoPerson.getInfoPais().getNationality().equals(
-                            person.getPais().getNationality()))) {
+                            person.getNationality().getNationality()))) {
                 country = Country.readCountryByNationality(newInfoPerson.getInfoPais().getNationality());
             }else{
-                country = person.getPais();
+                country = person.getNationality();
             }
         }
         else {

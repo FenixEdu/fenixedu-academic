@@ -1,7 +1,7 @@
 <%@ taglib uri="/WEB-INF/fenix-template.tld" prefix="ft" %>
 
 <!-- Defines a page attribute with the value of the property "nome" of the shown object -->
-<ft:define id="personName" property="nome"/>
+<ft:define id="personName" property="name"/>
 
 <table style="border-bottom: 1px solid gray">
     <thead>
@@ -17,9 +17,9 @@
             <!-- separator -->
             <td width="100px" rowspan="2"></td>
             
-            <td>(4) <ft:label property="nascimento"/></td>
+            <td>(4) <ft:label property="dateOfBirthYearMonthDay"/></td>
             <td>(5)
-                <ft:view property="nascimento">
+                <ft:view property="dateOfBirthYearMonthDay">
                     <ft:layout>
                         <ft:property name="format" value="dd MMMM yyyy"/>
                     </ft:layout>
@@ -30,8 +30,8 @@
             <td>(6) <ft:label property="username"/></td>
             <td>(7) <ft:view property="username"/></td>
 
-            <td>(8) <ft:label property="pais.nationality"/></td>
-            <td>(9) <ft:view property="pais.nationality"/> </td>
+            <td>(8) <ft:label property="nationality.nationality"/></td>
+            <td>(9) <ft:view property="nationality.nationality"/> </td>
         </tr>
     </tbody>
 </table>

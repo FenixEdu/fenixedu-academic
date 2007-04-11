@@ -176,10 +176,12 @@ public class Person extends Person_Base {
 	return false;
     }
 
+    @Deprecated
     public String getNome() {
 	return getName();
     }
 
+    @Deprecated
     public void setNome(String name) {
 	setName(name);
     }
@@ -258,7 +260,7 @@ public class Person extends Person_Base {
 	    String documentIDNumber, IDDocumentType documentType) {
 
 	super();
-	setNome(name);
+	setName(name);
 	setGender(gender);
 	setMaritalStatus(MaritalStatus.UNKNOWN);
 	setIdentification(documentIDNumber, documentType);
@@ -556,7 +558,7 @@ public class Person extends Person_Base {
 
     @Deprecated
     public String getNacionalidade() {
-	return this.getPais().getNationality();
+	return getNationality().getNationality();
     }
 
     public List<ResearchResultPublication> getResearchResultPublications() {
@@ -1444,16 +1446,6 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public String getCodigoFiscal() {
-	return super.getFiscalCode();
-    }
-
-    @Deprecated
-    public String getCodigoPostal() {
-	return super.getAreaCode();
-    }
-
-    @Deprecated
     public String getConcelhoMorada() {
 	return super.getDistrictSubdivisionOfResidence();
     }
@@ -1671,16 +1663,6 @@ public class Person extends Person_Base {
     @Deprecated
     public void setTelemovel(String telemovel) {
 	super.setMobile(telemovel);
-    }
-
-    @Deprecated
-    public Country getPais() {
-	return super.getNationality();
-    }
-
-    @Deprecated
-    public void setPais(final Country nationality) {
-	super.setNationality(nationality);
     }
 
     @Override
@@ -2140,10 +2122,6 @@ public class Person extends Person_Base {
 	return externalPerson;
     }
 
-    public Country getCountry() {
-	return super.getNationality();
-    }
-
     public Collection<AnnouncementBoard> getCurrentExecutionCoursesAnnouncementBoards() {
 	final Collection<AnnouncementBoard> result = new HashSet<AnnouncementBoard>();
 	result.addAll(getTeacherCurrentExecutionCourseAnnouncementBoards());
@@ -2201,17 +2179,11 @@ public class Person extends Person_Base {
     }
     
     public int getStudentsCount() {
-	if (getStudent() != null) {
-	    return getStudent().getRegistrationsCount();
-	}
-	return 0;
+	return hasStudent() ? getStudent().getRegistrationsCount() : 0;
     }
 
     public Set<Registration> getStudentsSet() {
-	if (getStudent() != null) {
-	    return getStudent().getRegistrationsSet();
-	}
-	return new HashSet<Registration>();
+	return hasStudent() ? getStudent().getRegistrationsSet() : Collections.EMPTY_SET;
     }
 
     @Override
@@ -2458,21 +2430,17 @@ public class Person extends Person_Base {
     }
 
     public String getHomepageWebAddress() {
-	final Homepage homepage = getHomepage();
-	if (homepage == null) {
-	    if (getAvailableWebSite() != null && getAvailableWebSite().booleanValue()
-		    && getWebAddress() != null && getWebAddress().length() > 0) {
-		return getWebAddress();
-	    }
-	} else {
-	    if (homepage.getActivated() != null && homepage.getActivated().booleanValue()) {
-		return "/homepage/" + getUsername();
-	    } else if (getAvailableWebSite() != null && getAvailableWebSite().booleanValue()
-		    && getWebAddress() != null && getWebAddress().length() > 0) {
-		return getWebAddress();
-	    }
+	if (hasHomepage() && getHomepage().isHomepageActivated()) {
+	    return "/homepage/" + getUsername();
+	}
+	if (hasAvailableWebSite() && hasDefaultWebAddress() && getDefaultWebAddress().hasUrl()) {
+	    return getDefaultWebAddress().getUrl();
 	}
 	return null;
+    }
+    
+    public boolean hasAvailableWebSite() {
+	return getAvailableWebSite() != null && getAvailableWebSite().booleanValue();
     }
 
     public Collection<ExecutionDegree> getCoordinatedExecutionDegrees(
@@ -2591,7 +2559,7 @@ public class Person extends Person_Base {
 	return name[0] + " " + name[name.length - 1];
     }
 
-    private List<String> getImportantRoles(List<String> mainRoles) {
+    private List<String> getImportantRoles(final List<String> mainRoles) {
 
 	if (getPersonRolesCount() != 0) {
 	    boolean teacher = false, employee = false;
@@ -2623,14 +2591,8 @@ public class Person extends Person_Base {
     }
     
     public String getMostImportantAlias() {
-        Login login = getLoginIdentification();
-        
-        if (login == null) {
-            return "";
-        }
-        else {
-            return login.getMostImportantAlias();
-        }
+        final Login login = getLoginIdentification();
+        return (login != null) ? login.getMostImportantAlias() : "";
     }
     
     /*
@@ -2641,11 +2603,13 @@ public class Person extends Person_Base {
 	return partyContacts.isEmpty() ? null : (Phone) partyContacts.get(0); // actually exists only one
     }
     
+    @Deprecated
     public String getWorkPhone() {
 	final Phone workPhone = getPersonWorkPhone();
         return workPhone != null ? workPhone.getNumber() : null;
     }
 
+    @Deprecated
     public void setWorkPhone(String workPhone) {
 	final Phone phone = getPersonWorkPhone();
 	if (phone == null) {

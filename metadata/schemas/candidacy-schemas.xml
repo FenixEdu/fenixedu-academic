@@ -83,7 +83,7 @@
 		<property name="size" value="12"/>
 		<property name="maxLength" value="10"/>
 	</slot>
-	<slot name="pais" layout="menu-select" key="label.nationality" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" >
+	<slot name="nationality" layout="menu-select" key="label.nationality" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" >
 		<property name="choiceType" value="net.sourceforge.fenixedu.domain.Country"/>
 		<property name="format" value="${nationality}" />
 		<property name="sortBy" value="nationality"/>
@@ -228,7 +228,7 @@
 
 <schema name="candidate.filiation" type="net.sourceforge.fenixedu.domain.Person" bundle="CANDIDATE_RESOURCES">
 	<slot name="dateOfBirth" />
-	<slot name="pais" layout="format">
+	<slot name="nationality" layout="format">
 		<property name="format" value="${nationality}"/>
 	</slot>
 	<slot name="parishOfBirth" />
@@ -301,7 +301,7 @@
 		<property name="size" value="12"/>
 		<property name="maxLength" value="10"/>
 	</slot>
-	<slot name="pais" layout="menu-select" key="label.nationality" >
+	<slot name="nationality" layout="menu-select" key="label.nationality" >
 		<property name="choiceType" value="net.sourceforge.fenixedu.domain.Country"/>
 		<property name="format" value="${nationality}"/>
 		<property name="sortBy" value="nationality"/>

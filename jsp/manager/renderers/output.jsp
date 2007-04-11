@@ -112,7 +112,7 @@
 </p>
 
     <ul>
-        <li><code>"person.pais.code"</code></li>
+        <li><code>"person.nationality.code"</code></li>
         <li>or <code>"person.students[0].number"</code></li>
     </ul>
    
@@ -121,7 +121,7 @@
 </p>
 
 <p>
-    As F�nix domain objects are persistent you have and additional way of refering to a domain object.
+    As Fénix domain objects are persistent you have and additional way of refering to a domain object.
     You can specify the object internal id type directly in the tag. If you do this the object will
     be retrieved from the database and displayed as before. So to display the same person as in the
     last example you could write:
@@ -162,7 +162,7 @@
 
 <p>
     If no key is present the programmatic name of the slot is shown. <strong>Note</strong> that slots 
-    may have more complex names like <code>pais.code</code>. This does not correspond directly to a getter
+    may have more complex names like <code>nationality.code</code>. This does not correspond directly to a getter
     of person but is treated the same way as before.
 </p>
 
@@ -363,7 +363,7 @@
     &lt;slot name=&quot;email&quot;&gt;
         &lt;property name=&quot;link&quot; value=&quot;true&quot;/&gt;
     &lt;/slot&gt;
-    &lt;slot name=&quot;pais&quot; schema=&quot;country.short&quot; layout=&quot;values&quot;&gt;
+    &lt;slot name=&quot;nationality&quot; schema=&quot;country.short&quot; layout=&quot;values&quot;&gt;
         &lt;property name=&quot;htmlSeparator&quot; value=&quot; - &quot;/&gt;
     &lt;/slot&gt;
 &lt;/schema&gt;
@@ -444,7 +444,7 @@
     <div>
         <p><strong>Schemas</strong></p>
         <pre>(...)
-    &lt;slot name=&quot;pais&quot; schema=&quot;country.short&quot; layout=&quot;values-dash&quot;/&gt;
+    &lt;slot name=&quot;country&quot; schema=&quot;country.short&quot; layout=&quot;values-dash&quot;/&gt;
 (...)
 </pre>
     </div>
@@ -552,9 +552,9 @@
             &lt;!-- separator --&gt;
             &lt;td width=&quot;100px&quot; rowspan=&quot;2&quot;&gt;&lt;/td&gt;
             
-            &lt;td&gt;(4) &lt;ft:label property=&quot;nascimento&quot;/&gt;&lt;/td&gt;
+            &lt;td&gt;(4) &lt;ft:label property=&quot;dateOfBirthYearMonthDay&quot;/&gt;&lt;/td&gt;
             &lt;td&gt;(5)
-                &lt;ft:view property=&quot;nascimento&quot;&gt;
+                &lt;ft:view property=&quot;dateOfBirthYearMonthDay&quot;&gt;
                     &lt;ft:layout&gt;
                         &lt;ft:property name=&quot;format&quot; value=&quot;dd MMMM yyyy&quot;/&gt;
                     &lt;/ft:layout&gt;
@@ -565,8 +565,8 @@
             &lt;td&gt;(6) &lt;ft:label property=&quot;username&quot;/&gt;&lt;/td&gt;
             &lt;td&gt;(7) &lt;ft:view property=&quot;username&quot;/&gt;&lt;/td&gt;
 
-            &lt;td&gt;(8) &lt;ft:label property=&quot;pais.nationality&quot;/&gt;&lt;/td&gt;
-            &lt;td&gt;(9) &lt;ft:view property=&quot;pais.nationality&quot;/&gt; &lt;/td&gt;
+            &lt;td&gt;(8) &lt;ft:label property=&quot;nationality.nationality&quot;/&gt;&lt;/td&gt;
+            &lt;td&gt;(9) &lt;ft:view property=&quot;nationality.nationality&quot;/&gt; &lt;/td&gt;
         &lt;/tr&gt;
     &lt;/tbody&gt;
 &lt;/table&gt;</pre>

@@ -228,19 +228,6 @@
 			</logic:present>
 		</td>
 	</tr>
-
-<%--	
-	<tr>
-		<td align="left">
-			<bean:message key="label.grant.owner.infoperson.country"/>:&nbsp;
-		</td>
-		<td>
-			<logic:present name="infoGrantOwner" property="personInfo.infoPais">
-				<bean:write name="infoGrantOwner" property="personInfo.infoPais.name"/>
-			</logic:present>
-		</td>
-	</tr> 
---%>
 	<tr>
 		<td align="left">
 			<bean:message key="label.grant.owner.infoperson.address"/>:&nbsp;
@@ -380,18 +367,6 @@
 		</td>
 	</tr>
 
-<%--	
-	<tr>
-		<td align="left">
-			<bean:message key="label.grant.owner.infoperson.fiscalCode"/>:&nbsp;
-		</td>
-		<td>
-			<logic:present name="infoGrantOwner" property="personInfo.codigoFiscal">
-				<bean:write name="infoGrantOwner" property="personInfo.codigoFiscal"/>
-			</logic:present>
-		</td>
-	</tr>
---%>
 </table> 
 
 <br/>

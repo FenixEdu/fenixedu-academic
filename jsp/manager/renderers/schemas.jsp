@@ -44,7 +44,7 @@
 
 <div style="border: 1px solid #000; padding: 20px 20px 20px 20px" >
     <pre>&lt;schema name=&quot;person.simple-admin-info&quot; type=&quot;net.sourceforge.fenixedu.domain.Person&quot;&gt;
-  &lt;slot name=&quot;nome&quot;/&gt;
+  &lt;slot name=&quot;name&quot;/&gt;
   &lt;slot name=&quot;username&quot;/&gt;
   &lt;slot name=&quot;email&quot;/&gt;
 &lt;/schema&gt;</pre>
@@ -80,21 +80,21 @@
 
 <div style="border: 1px solid #000; padding: 20px 20px 20px 20px" >
     <pre>&lt;schema name=&quot;person.simple-admin-info.extended&quot; type=&quot;net.sourceforge.fenixedu.domain.Person&quot;&gt;
-  &lt;slot name=&quot;nome&quot;/&gt;
+  &lt;slot name=&quot;name&quot;/&gt;
   &lt;slot name=&quot;username&quot; layout=&quot;link&quot;/&gt;
   &lt;slot name=&quot;email&quot;&gt;
       &lt;property name=&quot;link&quot; value=&quot;true&quot;/&gt;
   &lt;/slot&gt;
-  &lt;slot name=&quot;pais&quot; schema=&quot;country.short&quot; layout=&quot;values&quot;&gt;
+  &lt;slot name=&quot;nationality&quot; schema=&quot;country.short&quot; layout=&quot;values&quot;&gt;
       &lt;property name=&quot;htmlSeparator&quot; value=&quot; - &quot;/&gt;
   &lt;/slot&gt;
 &lt;/schema&gt;</pre>
 </div>
 
 <p>
-    In this example the <code>email</code> and <code>pais</code> slots have their presentation customized.
+    In this example the <code>email</code> and <code>nationality</code> slots have their presentation customized.
     In the <code>email</code> slot we are just passing properties to the renderer associated with 
-    the default layout for slot's type. Nevertheless, in the <code>pais</code> slot, we are 
+    the default layout for slot's type. Nevertheless, in the <code>nationality</code> slot, we are 
     specifying both the <code>schema</code> and <code>attributes</code> and passing a property to
     the renderer associated with the layout <code>values</code>.
 </p>

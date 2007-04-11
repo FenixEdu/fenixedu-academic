@@ -53,7 +53,7 @@ public class StandByCandidacySituation extends StandByCandidacySituation_Base {
                 && person.getExpirationDateOfDocumentIdYearMonthDay() != null
                 && person.getSocialSecurityNumber() != null && person.getProfession() != null
                 && person.getMaritalStatus() != null && person.getDateOfBirthYearMonthDay() != null
-                && person.getPais() != null && person.getParishOfBirth() != null
+                && person.getNationality() != null && person.getParishOfBirth() != null
                 && person.getDistrictSubdivisionOfBirth() != null && person.getDistrictOfBirth() != null
                 && person.getCountryOfBirth() != null && person.getNameOfFather() != null
                 && person.getNameOfMother() != null && person.getAddress() != null
