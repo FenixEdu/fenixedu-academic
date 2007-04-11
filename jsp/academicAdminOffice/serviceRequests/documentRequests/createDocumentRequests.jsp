@@ -79,21 +79,17 @@
 	</logic:present>
 	
 	<logic:notEmpty name="documentRequestCreateBean" property="chosenDocumentRequestType">
+		<logic:notEqual name="documentRequestCreateBean" property="chosenDocumentRequestType" value="<%=DocumentRequestType.DIPLOMA_REQUEST.name()%>">
 	
-		<fr:edit name="documentRequestCreateBean" schema="DocumentRequestCreateBean.purposes" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean">
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle5 thright thlight mvert0 thmiddle"/>
-				<fr:property name="columnClasses" value="width14em,width40em,tdclear tderror1"/>
-			</fr:layout>	
-		</fr:edit>
+			<fr:edit name="documentRequestCreateBean" schema="DocumentRequestCreateBean.purposes" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean">
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle5 thright thlight mvert0 thmiddle"/>
+					<fr:property name="columnClasses" value="width14em,width40em,tdclear tderror1"/>
+				</fr:layout>	
+			</fr:edit>
 	
-		<fr:edit name="documentRequestCreateBean" schema="DocumentRequestCreateBean.notes" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean">
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle5 thright thlight mvert0 thmiddle"/>
-				<fr:property name="columnClasses" value="width14em,width40em,tdclear tderror1"/>
-			</fr:layout>	
-		</fr:edit>
-		
+		</logic:notEqual>
+
 		<logic:equal name="documentRequestCreateBean" property="chosenDocumentRequestType.canBeFreeProcessed" value="true">
 			<fr:edit name="documentRequestCreateBean" schema="DocumentRequestCreateBean.freeProcessed" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean">
 				<fr:layout name="tabular">
@@ -102,7 +98,7 @@
 				</fr:layout>	
 			</fr:edit>
 		</logic:equal>
-	
+
 	</logic:notEmpty>
 	
 	<p class="mtop15">

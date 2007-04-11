@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
+<%@ page import="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType" %>
 
 <html:xhtml/>
 
@@ -53,22 +54,17 @@
 		</fr:view>		
 	</logic:present>
 	
+	<logic:notEqual name="documentRequestCreateBean" property="chosenDocumentRequestType" value="<%=DocumentRequestType.DIPLOMA_REQUEST.name()%>">	
 	
-	<fr:view name="documentRequestCreateBean" schema="DocumentRequestCreateBean.purposes" 
-		type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean">
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4 thright thlight mvert0"/>
-			<fr:property name="columnClasses" value="width14em,width20em,tdclear tderror1"/>
-		</fr:layout>	
-	</fr:view>
-	
-	<fr:view name="documentRequestCreateBean" schema="DocumentRequestCreateBean.notes" 
-		type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean">
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4 thright thlight mvert0"/>
-			<fr:property name="columnClasses" value="width14em,width20em,tdclear tderror1"/>
-		</fr:layout>	
-	</fr:view>	
+		<fr:view name="documentRequestCreateBean" schema="DocumentRequestCreateBean.purposes" 
+			type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle4 thright thlight mvert0"/>
+				<fr:property name="columnClasses" value="width14em,width20em,tdclear tderror1"/>
+			</fr:layout>	
+		</fr:view>
+
+	</logic:notEqual>
 	
 	<logic:equal name="documentRequestCreateBean" property="chosenDocumentRequestType.canBeFreeProcessed" value="true">
 		<fr:view name="documentRequestCreateBean" schema="DocumentRequestCreateBean.freeProcessed" 
