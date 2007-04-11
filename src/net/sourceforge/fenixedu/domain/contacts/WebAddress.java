@@ -69,4 +69,8 @@ public class WebAddress extends WebAddress_Base {
 	super.edit(type, true, defaultContact);
 	edit(url);
     }
+    
+    public boolean hasUrl() {
+	return getUrl() != null && getUrl().length() > 0;
+    }
 }
