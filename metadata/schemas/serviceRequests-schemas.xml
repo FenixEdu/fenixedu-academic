@@ -88,12 +88,10 @@
 </schema>
 
 <schema name="EnrolmentCertificateRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.EnrolmentCertificateRequest"  extends="CertificateRequest.view" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="executionYear.year" key="label.executionYear"/>
 	<slot name="detailed" key="label.documentRequestsManagement.searchDocumentRequests.detailed" />
 </schema>
 
 <schema name="SchoolRegistrationCertificateRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.SchoolRegistrationCertificateRequest"  extends="CertificateRequest.view" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="executionYear.year" key="label.serviceRequests.documentRequests.executionYear"/>
 </schema>
 
 
@@ -101,7 +99,6 @@
 </schema>
 
 <schema name="SchoolRegistrationDeclarationRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.SchoolRegistrationDeclarationRequest"  extends="DeclarationRequest.view" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="executionYear.year" key="label.serviceRequests.documentRequests.executionYear"/>
 </schema>
 
 <schema name="IRSDeclarationRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IRSDeclarationRequest"  extends="DeclarationRequest.view" bundle="ACADEMIC_OFFICE_RESOURCES">
@@ -109,7 +106,6 @@
 </schema>
 
 <schema name="EnrolmentDeclarationRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.EnrolmentDeclarationRequest"  extends="DeclarationRequest.view" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="executionYear.year" key="label.serviceRequests.documentRequests.executionYear"/>
 </schema>
 
 
@@ -182,12 +178,6 @@
 	<setter signature="setPurpose(chosenDocumentPurposeType,otherPurpose)"/>
 </schema>
 
-<schema name="DocumentRequestCreateBean.notes" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="notes" key="label.documentRequestsManagement.searchDocumentRequests.notes">
-		<property name="size" value="50"/>
-	</slot>
-</schema>
-
 <schema name="DocumentRequestCreateBean.freeProcessed" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="freeProcessed" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.freeProcessed"/>
 </schema>
@@ -196,7 +186,6 @@
 	<slot name="chosenDocumentRequestType" read-only="true" key="label.documentRequestsManagement.searchDocumentRequests.documentRequestType"/>
 	<slot name="chosenDocumentPurposeType" read-only="true" key="label.documentRequestsManagement.searchDocumentRequests.document.purpose"/>
 	<slot name="otherPurpose" read-only="true" key="label.documentRequestsManagement.searchDocumentRequests.otherPurpose"/>	
-	<slot name="notes" read-only="true" key="label.documentRequestsManagement.searchDocumentRequests.urgent"/>
 	<slot name="urgentRequest" read-only="true" key="urgency.charge.view"/>		
 	<slot name="detailed" read-only="true" key="label.documentRequestsManagement.searchDocumentRequests.detailed"/>			
 	<slot name="average" read-only="true" key="label.documentRequestsManagement.searchDocumentRequests.average"/>
