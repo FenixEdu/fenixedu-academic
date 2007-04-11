@@ -548,6 +548,10 @@ public abstract class Party extends Party_Base {
 	return (WebAddress) getDefaultPartyContact(WebAddress.class);
     }
     
+    public boolean hasDefaultWebAddress() {
+	return hasDefaultPartyContact(WebAddress.class);
+    }
+    
     public List<WebAddress> getWebAddresses() {
 	return (List<WebAddress>) getPartyContacts(WebAddress.class);
     }
