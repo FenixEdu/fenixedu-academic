@@ -30,6 +30,9 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.utl.ist.fenix.tools.file.FileManagerException;
+import pt.utl.ist.fenix.tools.file.dspace.DSpaceClientException;
+
 public class ResultPublicationsManagementDispatchAction extends ResultsManagementAction {
 
     public ActionForward listPublications(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -166,7 +169,12 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
 		addActionMessage(request, ex.getKey());
 		request.setAttribute("publicationBean", bean);
 		return mapping.findForward("PreparedToCreate");
+	    } catch (FileManagerException e) {
+		e.printStackTrace();
+		addActionMessage(request, "label.communicationError");
+		return listPublications(mapping, form, request, response);
 	    } catch (Exception ex) {
+		addActionMessage(request, ex.getMessage());
 		return listPublications(mapping, form, request, response);
 	    }
 	} else {
@@ -335,8 +343,12 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
 		addActionMessage(request, ex.getMessage());
 		request.setAttribute("publicationBean", bean);
 		return mapping.findForward("PreparedToEdit");
-	    } catch (Exception ex) {
-		addActionMessage(request, ex.getMessage());
+	    } catch (FileManagerException e) {
+		e.printStackTrace();
+		addActionMessage(request, "label.communicationError");
+		return listPublications(mapping, form, request, response);
+	    } catch (Exception e) {
+		addActionMessage(request, e.getMessage());
 		return listPublications(mapping, form, request, response);
 	    }
 	} else {
@@ -370,6 +382,10 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
 	    try {
 		final Object[] args = { resultId };
 		executeService(request, "DeleteResultPublication", args);
+	    } catch (FileManagerException e) {
+		e.printStackTrace();
+		addActionMessage(request, "label.communicationError");
+		return listPublications(mapping, form, request, response);
 	    } catch (Exception e) {
 		addActionMessage(request, e.getMessage());
 		return listPublications(mapping, form, request, response);
@@ -477,7 +493,12 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
 	    request.setAttribute("eventEditionBean", eventBean);
 	    request.setAttribute("publicationBean", publicationBean);
 	    return mapping.findForward(forwardOnError);
-	} catch (Exception ex) {
+	} catch (FileManagerException e) {
+	    e.printStackTrace();
+	    addActionMessage(request, "label.communicationError");
+	    return listPublications(mapping, form, request, response);
+	} catch (Exception e) {
+	    addActionMessage(request, e.getMessage());
 	    return listPublications(mapping, form, request, response);
 	}
 

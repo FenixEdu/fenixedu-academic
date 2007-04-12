@@ -13,6 +13,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.utl.ist.fenix.tools.file.FileManagerException;
+
 public class ResultAssociationsManagementAction extends ResultsManagementAction {
 
     /**
@@ -62,7 +64,10 @@ public class ResultAssociationsManagementAction extends ResultsManagementAction 
 	try {
 	    final Object[] args = { bean };
 	    executeService(request, "CreateResultUnitAssociation", args);
-	} catch (Exception e) {
+	} catch (FileManagerException e) {
+	    e.printStackTrace();
+	    addActionMessage(request, "label.communicationError");
+	}catch(Exception e) {
 	    addActionMessage(request, e.getMessage());
 	}
 	
