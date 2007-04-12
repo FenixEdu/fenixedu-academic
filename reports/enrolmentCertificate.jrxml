@@ -454,6 +454,15 @@
 		</pageFooter>
 		<summary>
 			<band height="65"  isSplitAllowed="true" >
+				<break>
+					<reportElement
+						x="0"
+						y="0"
+						width="595"
+						height="0"
+						key="element-1"
+						isPrintWhenDetailOverflows="true"/>
+				</break>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="68"
