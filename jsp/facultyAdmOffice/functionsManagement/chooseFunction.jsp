@@ -21,7 +21,7 @@
 		
 		<h:panelGrid columns="2" columnClasses="valigntop">
 			<h:outputText value="<b>#{bundle['label.name']}</b>: " escape="false"/>		
-			<h:outputText value="#{facultyAdmOfficeFunctionsManagementBackingBean.person.nome}" escape="false"/>									
+			<h:outputText value="#{facultyAdmOfficeFunctionsManagementBackingBean.person.name}" escape="false"/>									
 				
 			<h:outputText value="<b>#{bundle['label.search.unit']}:</b>" escape="false"/>				
 			<h:outputText value="#{facultyAdmOfficeFunctionsManagementBackingBean.unit.presentationNameWithParentsAndBreakLine}" escape="false"/>			

@@ -79,7 +79,7 @@ function cleanSelect() {
 	<logic:iterate id="student" name="studentList"> 
 		<tr><td></td>
 			<td class="listClasses"><bean:write name="student" property="number"/></td>
-			<td class="listClasses"><bean:write name="student" property="person.nome"/></td>
+			<td class="listClasses"><bean:write name="student" property="person.name"/></td>
 			<td class="listClasses">
 				<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.selected" property="selected" onclick="cleanSelect()">
 			    <bean:write name="student" property="idInternal"/>

@@ -1,6 +1,6 @@
 <%@ taglib uri="/WEB-INF/fenix-template.tld" prefix="ft" %>
 
-<!-- Defines a page attribute with the value of the property "nome" of the shown object -->
+<!-- Defines a page attribute with the value of the property "name" of the shown object -->
 <ft:define id="personName" property="name"/>
 
 <table style="border-bottom: 1px solid gray">

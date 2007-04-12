@@ -33,11 +33,11 @@
 	<h:dataTable rendered="#{!empty evaluationManagementBackingBean.alreadySubmitedMarks}" value="#{evaluationManagementBackingBean.alreadySubmitedMarks}" var="mark" headerClass="listClasses-header" columnClasses="listClasses">
 		<h:column>
 			<f:facet name="header"><h:outputText value="#{bundle['label.number']}"/></f:facet>
-			<h:outputText value="#{mark.attend.aluno.number}" />
+			<h:outputText value="#{mark.attend.registration.number}" />
 		</h:column>
 		<h:column>
 			<f:facet name="header"><h:outputText value="#{bundle['label.name']}"/></f:facet>
-			<h:outputText value="#{mark.attend.aluno.person.nome}" />
+			<h:outputText value="#{mark.attend.registration.person.name}" />
 		</h:column>
 		<h:column>
 			<f:facet name="header"><h:outputText value="#{bundle['label.submitedMark']}"/></f:facet>
@@ -80,11 +80,11 @@
 				</h:column>
 				<h:column>
 					<f:facet name="header"><h:outputText value="#{bundle['label.number']}"/></f:facet>
-					<h:outputText value="#{attend.aluno.number}" />
+					<h:outputText value="#{attend.registration.number}" />
 				</h:column>
 				<h:column>
 					<f:facet name="header"><h:outputText value="#{bundle['label.name']}"/></f:facet>
-					<h:outputText value="#{attend.aluno.person.nome}" />
+					<h:outputText value="#{attend.registration.person.name}" />
 				</h:column>
 				<h:column>
 					<f:facet name="header"><h:outputText value="#{bundle['label.markToSubmit']}"/></f:facet>

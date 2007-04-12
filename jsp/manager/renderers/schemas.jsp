@@ -61,7 +61,7 @@
     The example shows the simples way of using a schema. A set of slots is declared meaning that
     whenever the schema is presented only those slots should be visible. No matter were each
     slot will be presented, the presentation will obey the slot's declared order. This means
-    that, according to the example, the slot <code>nome</code> will appear before the slot
+    that, according to the example, the slot <code>name</code> will appear before the slot
     <code>username</code> and this one will appear before <code>email</code>. When editing a single
     object this specifies, for example, the order of the rows and when editing several objects
     this chooses the order of the columns.

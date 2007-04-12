@@ -41,7 +41,7 @@
 					<h:outputText value="#{bundle['label.teacher.name']}"></h:outputText>
 				</f:facet>
 
-			<h:outputLink value="#{viewDepartmentTeachers.contextPath}/researcher/viewCurriculum.do?personOID=#{teacher.person.idInternal}" ><h:outputText value="#{teacher.person.nome}" styleClass="aright"/></h:outputLink>
+			<h:outputLink value="#{viewDepartmentTeachers.contextPath}/researcher/viewCurriculum.do?personOID=#{teacher.person.idInternal}" ><h:outputText value="#{teacher.person.name}" styleClass="aright"/></h:outputLink>
 
 			</h:column>
 			<h:column>

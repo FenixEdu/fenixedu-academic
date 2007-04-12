@@ -79,7 +79,7 @@
 				<bean:write name="teachersCredits" property="teacher.teacherNumber"/>
 			</td>
 			<td style="text-align:left">
-				<bean:write name="teachersCredits" property="teacher.person.nome"/>			
+				<bean:write name="teachersCredits" property="teacher.person.name"/>			
 			</td>
 			<td>
 				<logic:present name="teachersCredits" property="category">

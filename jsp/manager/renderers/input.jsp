@@ -53,7 +53,7 @@
     <div>
         <p><strong>Schema</strong></p>
         <pre>&lt;schema name=&quot;person.simple-edit&quot; type=&quot;net.sourceforge.fenixedu.domain.Person&quot;&gt;
-    &lt;slot name=&quot;nome&quot;&gt;
+    &lt;slot name=&quot;name&quot;&gt;
         &lt;property name=&quot;size&quot; value=&quot;50&quot;/&gt;
     &lt;/slot&gt;
     &lt;slot name=&quot;gender&quot;/&gt;
@@ -123,10 +123,10 @@
     <div>
         <p><strong>Schema</strong></p>
         <pre>&lt;schema name=&quot;person.simple-edit-validated&quot; type=&quot;net.sourceforge.fenixedu.domain.Person&quot;&gt;
-    &lt;slot name=&quot;nome&quot;&gt;
+    &lt;slot name=&quot;name&quot;&gt;
         &lt;validator class=&quot;net.sourceforge.fenixedu.renderers.validators.RegexpValidator&quot;&gt;
             &lt;property name=&quot;regexp&quot; value=&quot;\p{Space}*[^ ]+\p{Space}+[^ ]+.*&quot;/&gt;
-            &lt;property name=&quot;message&quot; value=&quot;Escreva pelo menos o primeiro e ï¿½ltimo nome&quot;/&gt;
+            &lt;property name=&quot;message&quot; value=&quot;Escreva pelo menos o primeiro e último nome&quot;/&gt;
             &lt;property name=&quot;key&quot; value=&quot;false&quot;/&gt;
         &lt;/validator&gt;
         &lt;property name=&quot;size&quot; value=&quot;50&quot;/&gt;
@@ -249,10 +249,10 @@ public class RegexpValidator extends HtmlValidator {
     <div>
         <p><strong>Schema</strong></p>
         <pre>&lt;schema name=&quot;person.create-minimal&quot; type=&quot;net.sourceforge.fenixedu.domain.Person&quot;&gt;
-    &lt;slot name=&quot;nome&quot;&gt;
+    &lt;slot name=&quot;name&quot;&gt;
         &lt;validator class=&quot;net.sourceforge.fenixedu.renderers.validators.RegexpValidator&quot;&gt;
             &lt;property name=&quot;regexp&quot; value=&quot;\p{Space}*[^ ]+\p{Space}+[^ ]+.*&quot;/&gt;
-            &lt;property name=&quot;message&quot; value=&quot;Escreva pelo menos o primeiro e ï¿½ltimo nome&quot;/&gt;
+            &lt;property name=&quot;message&quot; value=&quot;Escreva pelo menos o primeiro e último nome&quot;/&gt;
             &lt;property name=&quot;key&quot; value=&quot;false&quot;/&gt;
         &lt;/validator&gt;
         &lt;property name=&quot;size&quot; value=&quot;50&quot;/&gt;
@@ -381,7 +381,7 @@ public class RegexpValidator extends HtmlValidator {
         &lt;fr:property name=&quot;columnClasses&quot; value=&quot;listClasses,,&quot;/&gt;
     &lt;/fr:layout&gt;
     
-    &lt;fr:default slot=&quot;nome&quot; name=&quot;UserView&quot; property=&quot;person.nome&quot;/&gt;
+    &lt;fr:default slot=&quot;name&quot; name=&quot;UserView&quot; property=&quot;person.name&quot;/&gt;
     &lt;fr:default slot=&quot;username&quot; value=&quot;&lt;%= &quot;p&quot; + 12345 %&gt;&quot;/&gt;
     &lt;fr:default slot=&quot;idDocumentType&quot; value=&quot;IDENTITY_CARD&quot; 
                 converter=&quot;net.sourceforge.fenixedu.renderers.converters.EnumConverter&quot;/&gt;
@@ -399,7 +399,7 @@ public class RegexpValidator extends HtmlValidator {
                     <fr:property name="columnClasses" value="listClasses,,"/>
                 </fr:layout>
                 
-                <fr:default slot="nome" name="UserView" property="person.nome"/>
+                <fr:default slot="name" name="UserView" property="person.name"/>
                 <fr:default slot="username" value="<%= "p" + 12345 %>"/>
                 <fr:default slot="idDocumentType" value="IDENTITY_CARD" 
                             converter="net.sourceforge.fenixedu.renderers.converters.EnumConverter"/>

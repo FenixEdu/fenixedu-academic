@@ -162,7 +162,7 @@
 					<f:facet name="header">
 						<h:outputText value="#{bundle['label.teacher.details.orientationInformation.finalDegreeWorkStudentName']}" />
 					</f:facet>
-					<h:outputText value="#{finalDegreeWorkAdvise.student.person.nome}" />
+					<h:outputText value="#{finalDegreeWorkAdvise.student.person.name}" />
 				</h:column>
 			</h:dataTable>
 		</h:panelGroup>
@@ -186,7 +186,7 @@
 					<f:facet name="header">
 						<h:outputText value="#{bundle['label.teacher.details.orientationInformation.masterDegreeThesisStudentName']}" />
 					</f:facet>
-					<h:outputText value="#{masterDegreeThesisDataVersion.masterDegreeThesis.studentCurricularPlan.student.person.nome}" />
+					<h:outputText value="#{masterDegreeThesisDataVersion.masterDegreeThesis.studentCurricularPlan.student.person.name}" />
 				</h:column>
 				<h:column>
 					<f:facet name="header">

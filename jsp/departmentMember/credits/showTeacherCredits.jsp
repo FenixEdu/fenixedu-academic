@@ -20,7 +20,7 @@
 </bean:define>
 
 <div class="infoop">
-	<p class="mvert05"><b><bean:message key="label.teacher.name.short"  bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</b> <bean:write name="teacher" property="person.nome"/></p>
+	<p class="mvert05"><b><bean:message key="label.teacher.name.short"  bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</b> <bean:write name="teacher" property="person.name"/></p>
 	<p class="mvert05"><b><bean:message key="label.teacher.number.short" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</b> <bean:write name="teacher" property="teacherNumber"/></p>
 	<logic:notEmpty name="teacherCategory">
 		<p class="mvert05"><b><bean:message key="label.category" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</b> <bean:write name="teacherCategory" property="name.content"/></p>
@@ -350,7 +350,7 @@
 						<bean:write name="adviseService" property="advise.student.number"/>
 					</td>
 					<td style="text-align:left">
-						<bean:write name="adviseService" property="advise.student.person.nome"/>
+						<bean:write name="adviseService" property="advise.student.person.name"/>
 					</td>
 					<td>
 						<bean:write name="adviseService" property="percentage"/>

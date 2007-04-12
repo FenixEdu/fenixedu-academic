@@ -358,7 +358,7 @@ SearchBean bean = (SearchBean) viewState.getMetaObject().getObject();
     <div>
         <p><strong>Schema</strong></p>
         <pre>&lt;schema name=&quot;person.create-minimal-defaults&quot; type=&quot;net.sourceforge.fenixedu.domain.Person&quot;&gt;
-    &lt;slot name=&quot;nome&quot; layout=&quot;allow-case-change&quot;/&gt;
+    &lt;slot name=&quot;name&quot; layout=&quot;allow-case-change&quot;/&gt;
 &lt;/schema&gt;</pre>
     </div>
 

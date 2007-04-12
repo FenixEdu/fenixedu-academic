@@ -63,7 +63,7 @@
 				<td><bean:write name="nonAffiliatedTeacher" property="name"/></td>
 				<td><bean:write name="nonAffiliatedTeacher" property="infoInstitution.name"/></td>
 				<bean:define id="nonAffiliatedTeacherID" name="nonAffiliatedTeacher" property="idInternal"/>
-				<td><td><html:link module="/manager" page="<%="/insertProfessorShipNonAffiliatedTeacher.do?method=insertProfessorship&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId") + "&amp;executionCourseId=" + request.getParameter("executionCourseId") + "&amp;nonAffiliatedTeacherID=" + nonAffiliatedTeacherID %>" paramId="executionCourseName" paramName="executionCourseName">Associar ï¿½ disciplina</html:link></td>
+				<td><td><html:link module="/manager" page="<%="/insertProfessorShipNonAffiliatedTeacher.do?method=insertProfessorship&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId") + "&amp;executionCourseId=" + request.getParameter("executionCourseId") + "&amp;nonAffiliatedTeacherID=" + nonAffiliatedTeacherID %>" paramId="executionCourseName" paramName="executionCourseName">Associar à disciplina</html:link></td>
 			</tr>
 		</logic:iterate>
 	</table>
@@ -82,7 +82,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td> Escolha a instituiï¿½ï¿½o ï¿½ qual o docente pertence </td>		
+			<td> Escolha a instituição à qual o docente pertence </td>		
 			<td>
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.institutionID" property="institutionID">
 					<logic:notEmpty name="institutions">
@@ -93,19 +93,19 @@
 		</tr>
 		<logic:notPresent parameter="insertInstitution">
 			<tr>
-				<td><html:link module="/manager" page="<%="/insertProfessorShipNonAffiliatedTeacher.do?method=prepare&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId") + "&amp;executionCourseId=" + request.getParameter("executionCourseId") + "&amp;insertInstitution=true"%>" paramId="executionCourseName" paramName="executionCourseName">Inserir nova instituiï¿½ï¿½o</html:link></td>
+				<td><html:link module="/manager" page="<%="/insertProfessorShipNonAffiliatedTeacher.do?method=prepare&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId") + "&amp;executionCourseId=" + request.getParameter("executionCourseId") + "&amp;insertInstitution=true"%>" paramId="executionCourseName" paramName="executionCourseName">Inserir nova instituição</html:link></td>
 			</tr>
 		</logic:notPresent>
 		<logic:present parameter="insertInstitution"> 
 			<tr><td colspan="2"><hr/></td></tr>
 			<tr>
-				<td>Introduza o nome da instituiï¿½ï¿½o:</td>
+				<td>Introduza o nome da instituição:</td>
 				<td>
 					<html:text bundle="HTMLALT_RESOURCES" altKey="text.institutionName" size="50" property="institutionName" />
 				</td>			
 			</tr>
 			<tr>
-				<td><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick="this.form.method.value='insertInstitution'">Inserir Instituiï¿½ï¿½o</html:submit></td>
+				<td><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick="this.form.method.value='insertInstitution'">Inserir Instituição</html:submit></td>
 			</tr>
 			<tr><td colspan="2"><hr/></td></tr>			
 		</logic:present>	

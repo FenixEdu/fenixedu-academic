@@ -175,16 +175,6 @@ public class Person extends Person_Base {
 	return false;
     }
 
-    @Deprecated
-    public String getNome() {
-	return getName();
-    }
-
-    @Deprecated
-    public void setNome(String name) {
-	setName(name);
-    }
-
     @Override
     public void setName(final String name) {
 	super.setName(name);

@@ -87,7 +87,7 @@
 					</bean:define>
 					<tr>
 						<td><bean:write name="teacherCreditsReport" property="teacher.teacherNumber"/></td>
-						<td class="aleft"><bean:write name="teacherCreditsReport" property="teacher.person.nome"/></td>
+						<td class="aleft"><bean:write name="teacherCreditsReport" property="teacher.person.name"/></td>
 						<td class="aright">
 							<bean:define id="pastCredits" name="teacherCreditsReport" property="pastCredits"/>
 							<% totalCreditsBalance += ((Double)pastCredits).doubleValue(); %>

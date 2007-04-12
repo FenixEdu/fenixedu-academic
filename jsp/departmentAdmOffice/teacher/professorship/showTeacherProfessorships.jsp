@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <bean:parameter id="executionPeriodId" name="executionPeriodId" />
 <p class="infoselected">
-	<b><bean:message key="label.teacher.name" /></b> <bean:write name="teacher" property="person.nome"/><br />
+	<b><bean:message key="label.teacher.name" /></b> <bean:write name="teacher" property="person.name"/><br />
 	<b><bean:message key="label.teacher.number" /></b> <bean:write name="teacher" property="teacherNumber"/> <br />
 </p>
 

@@ -166,14 +166,14 @@
 				<logic:notEmpty name="summary" property="professorship">
 					<span class="author">
 						<bean:message key="label.teacher.abbreviation" />				
-						<bean:write name="summary" property="professorship.teacher.person.nome" />	
+						<bean:write name="summary" property="professorship.teacher.person.name" />	
 					</span>
 				</logic:notEmpty>
 		
 				<logic:notEmpty name="summary" property="teacher">
 					<span class="author">
 						<bean:message key="label.teacher.abbreviation" />
-						<bean:write name="summary" property="teacher.person.nome" />
+						<bean:write name="summary" property="teacher.person.name" />
 					</span>
 				</logic:notEmpty>
 		

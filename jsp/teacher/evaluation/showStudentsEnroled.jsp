@@ -46,7 +46,7 @@
 				</h:column>			
 				<h:column>
 					<f:facet name="header"><h:outputText value="#{bundle['label.name']}"/></f:facet>
-					<h:outputText value="#{writtenEvaluationEnrolment.student.person.nome}" />
+					<h:outputText value="#{writtenEvaluationEnrolment.student.person.name}" />
 				</h:column>
 				<h:column>
 					<f:facet name="header"><h:outputText value="#{bundle['label.room']}"/></f:facet>

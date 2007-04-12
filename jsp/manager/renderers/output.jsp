@@ -149,15 +149,15 @@
     in town: <code>RendererResources</code>. The text that appears in the left side is fetched from this
     resource bundle or from the default resource bundle associated with the module, that is, in the last case
     the <code>ApplicationResources</code> is used. Labels are searched in the resources using a simple
-    convention. Each row correspondes to a slot of the object. For example, <code>nome</code> is one of the 
-    person's slots because we have the <code>getNome</code> getter. When the label for a slot is needed we 
+    convention. Each row correspondes to a slot of the object. For example, <code>name</code> is one of the 
+    person's slots because we have the <code>getName</code> getter. When the label for a slot is needed we 
     search the renderer's resources for a key using the following order:
 </p>
 
     <ol>
-      <li><code>label.net.sourceforge.fenixedu.domain.Person.nome</code></li>
-      <li><code>label.nome</code></li>
-      <li><code>nome</code></li>
+      <li><code>label.net.sourceforge.fenixedu.domain.Person.name</code></li>
+      <li><code>label.name</code></li>
+      <li><code>name</code></li>
     </ol>
 
 <p>
@@ -183,7 +183,7 @@
 <p>
     Well, direct slots already gain the semantic of "data" in the DML. Relations are more related to business
     logic and domain organization than to data. Each person is related to a country. when you present a person
-    you most probably want to show the slot <code>nome</code> but do you wan't to present the country? You may
+    you most probably want to show the slot <code>name</code> but do you wan't to present the country? You may
     wan't to present the country's code or country's name but not all the information of the country because
     then you would have to handle and the country's relations as well. Now consider an external person. Itself
     it has no direct slots, only relations. So when you present a person you want to present it's relation
@@ -210,7 +210,7 @@
 
 <div style="border: 1px solid #000; padding: 20px 20px 20px 20px" >
     <pre>&lt;schema name=&quot;person.simple-admin-info&quot; type=&quot;net.sourceforge.fenixedu.domain.Person&quot;&gt;
-    &lt;slot name=&quot;nome&quot;/&gt;
+    &lt;slot name=&quot;name&quot;/&gt;
     &lt;slot name=&quot;username&quot;/&gt;
     &lt;slot name=&quot;email&quot;/&gt;
 &lt;/schema&gt;</pre>
@@ -358,7 +358,7 @@
     <div>
         <p><strong>Schemas</strong></p>
         <pre>&lt;schema name=&quot;person.simple-admin-info.extended&quot; type=&quot;net.sourceforge.fenixedu.domain.Person&quot;&gt;
-    &lt;slot name=&quot;nome&quot;/&gt;
+    &lt;slot name=&quot;name&quot;/&gt;
     &lt;slot name=&quot;username&quot; layout=&quot;link&quot;/&gt;
     &lt;slot name=&quot;email&quot;&gt;
         &lt;property name=&quot;link&quot; value=&quot;true&quot;/&gt;
@@ -535,8 +535,8 @@
 <div style="border: 1px solid #000; padding: 20px 20px 20px 20px">
     <pre>&lt;%@ taglib uri=&quot;/WEB-INF/fenix-template.tld&quot; prefix=&quot;ft&quot; %&gt;
 
-&lt;!-- Defines a page attribute with the value of the property &quot;nome&quot; of the shown object --&gt;
-&lt;ft:define id=&quot;personName&quot; property=&quot;nome&quot;/&gt;
+&lt;!-- Defines a page attribute with the value of the property &quot;name&quot; of the shown object --&gt;
+&lt;ft:define id=&quot;personName&quot; property=&quot;name&quot;/&gt;
 
 &lt;table style=&quot;border-bottom: 1px solid gray&quot;&gt;
     &lt;thead&gt;

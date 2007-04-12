@@ -351,7 +351,7 @@
             name="otherTypeCreditLineForm"
             scope="request"
             parameter="method" 
-            type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.credits.ManageOtherServiceDispatchAction">                                     
+            type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.credits.ManageOtherServiceDispatchAction">
             <exception type="net.sourceforge.fenixedu.domain.exceptions.DomainException" 
                 key="" 
                 handler="net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler"/> 

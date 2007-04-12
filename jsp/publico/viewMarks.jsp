@@ -45,10 +45,10 @@
 	<logic:iterate id="attends" name="executionCourse" property="orderedAttends">
 		<tr>
 			<td nowrap>
-				<bean:write name="attends" property="aluno.number"/>
+				<bean:write name="attends" property="registration.number"/>
 			</td>
 			<td nowrap>
-				<bean:write name="attends" property="aluno.person.nome"/>
+				<bean:write name="attends" property="registration.person.name"/>
 			</td>
 			<logic:iterate id="mark" name="attends" property="associatedMarksOrderedByEvaluationDate">
 				<td nowrap>

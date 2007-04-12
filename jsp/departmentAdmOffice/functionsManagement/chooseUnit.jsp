@@ -35,7 +35,7 @@
 		
 		<h:panelGroup styleClass="infoop">
 			<h:outputText value="<b>#{bundle['label.name']}</b>: " escape="false"/>		
-			<h:outputText value="#{functionsManagementBackingBean.person.nome}" escape="false"/>		
+			<h:outputText value="#{functionsManagementBackingBean.person.name}" escape="false"/>		
 		</h:panelGroup>
 		<h:outputText value="<br/><br/><br/>" escape="false" />
 						

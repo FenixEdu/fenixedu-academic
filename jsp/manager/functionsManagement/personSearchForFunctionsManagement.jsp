@@ -80,22 +80,6 @@
 		</c:if>
 	</c:if>
 	
-	<%-- 
-	<h:panelGroup rendered="#{!empty managerFunctionsManagementBackingBean.personsList}">
-		<h:outputText value="<ul>" escape="false" />
-		<h:dataTable value="#{managerFunctionsManagementBackingBean.personsList}" var="person">		
-			<h:column>
-				<h:outputText value="<li>" escape="false" />				
-					<h:outputLink value="#{managerFunctionsManagementBackingBean.contextPath}/departmentAdmOffice/teacher/functionsManagement/unitChoose.faces?personID=#{person.idInternal}">
-						<h:outputText value="#{person.nome}"/>
-					</h:outputLink>		
-				<h:outputText value="</li>" escape="false"/>
-			</h:column>		
-		</h:dataTable>
-		<h:outputText value="</ul>" escape="false" />
-	</h:panelGroup>		
-	--%>
-	
 	<c:if test="${managerFunctionsManagementBackingBean.personsNumber > 0}">
 		<c:out value="<ul>" escapeXml="false"/>	
 		<c:forEach items="${managerFunctionsManagementBackingBean.personsList}" var="person">

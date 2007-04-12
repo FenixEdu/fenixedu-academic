@@ -124,7 +124,7 @@
 </schema>
 
 <schema name="net.sourceforge.fenixedu.domain.Person.personal.info" type="net.sourceforge.fenixedu.domain.Person"> 
-	<slot name="nome" key="label.person.name"/>
+	<slot name="name" key="label.person.name"/>
 	<slot name="gender" key="label.person.sex"/>
 	<slot name="documentIdNumber" key="label.person.identificationDocumentNumber"/>
 	<slot name="idDocumentType" key="label.person.identificationDocumentType"/>

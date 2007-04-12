@@ -79,30 +79,14 @@
 			<c:out value="<br/><br/>" escapeXml="false" />
 		</c:if>
 	</c:if>
-	
-	<%-- 
-	<h:panelGroup rendered="#{!empty scientificCouncilFunctionsManagementBackingBean.personsList}">
-		<h:outputText value="<ul>" escape="false" />
-		<h:dataTable value="#{scientificCouncilFunctionsManagementBackingBean.personsList}" var="person">		
-			<h:column>
-				<h:outputText value="<li>" escape="false" />				
-					<h:outputLink value="#{scientificCouncilFunctionsManagementBackingBean.contextPath}/scientificCouncil/teacher/functionsManagement/unitChoose.faces?personID=#{person.idInternal}">
-						<h:outputText value="#{person.nome}"/>
-					</h:outputLink>		
-				<h:outputText value="</li>" escape="false"/>
-			</h:column>		
-		</h:dataTable>
-		<h:outputText value="</ul>" escape="false" />
-	</h:panelGroup>		
-	--%>
-	
+
 	<c:if test="${scientificCouncilFunctionsManagementBackingBean.personsNumber > 0}">
 		<c:out value="<ul>" escapeXml="false"/>	
 		<c:forEach items="${scientificCouncilFunctionsManagementBackingBean.personsList}" var="person">
 			<c:url var="url" value="/scientificCouncil/functionsManagement/listPersonFunctions.faces?personID=${person.idInternal}" />
 			<c:out value="<li>" escapeXml="false"/>
 			<a href=" <c:out value="${url}"/> ">
-				<c:out value="${person.nome}" />
+				<c:out value="${person.name}" />
 			</a>
 			<c:out value="</li>" escapeXml="false"/>										
 		</c:forEach>

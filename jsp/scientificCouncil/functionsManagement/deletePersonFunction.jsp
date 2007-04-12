@@ -22,7 +22,7 @@
 		
 		<h:panelGrid columns="2">
 			<h:outputText value="<b>#{bundle['label.name']}</b>: " escape="false"/>		
-			<h:outputText value="#{scientificCouncilFunctionsManagementBackingBean.person.nome}"/>		
+			<h:outputText value="#{scientificCouncilFunctionsManagementBackingBean.person.name}"/>		
 		</h:panelGrid>	
 		
 		<h:outputText value="<br/>" escape="false" />

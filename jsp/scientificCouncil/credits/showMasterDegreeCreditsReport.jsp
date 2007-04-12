@@ -147,7 +147,7 @@
 								
 								<td class="aright"><bean:write name="teacher" property="teacherNumber"/></td>					
 								
-								<td><bean:write name="teacher" property="person.nome"/></td>														
+								<td><bean:write name="teacher" property="person.name"/></td>														
 								
 								<% 
 									TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionCourse.getExecutionPeriod());

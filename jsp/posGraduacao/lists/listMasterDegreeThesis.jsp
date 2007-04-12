@@ -27,13 +27,13 @@
 		
 		<logic:notEmpty name="masterDegreeThesis" property="activeMasterDegreeThesisDataVersion.guiders" >
 			<logic:iterate id="guider" name="masterDegreeThesis" property="activeMasterDegreeThesisDataVersion.guiders">
-				<strong><bean:message key="label.guider"/>:</strong> <bean:write name="guider" property="person.nome" /><br/>
+				<strong><bean:message key="label.guider"/>:</strong> <bean:write name="guider" property="person.name" /><br/>
 			</logic:iterate>
 		</logic:notEmpty>
 		<logic:empty name="masterDegreeThesis" property="activeMasterDegreeThesisDataVersion.guiders" >
 			<logic:notEmpty name="masterDegreeThesis" property="activeMasterDegreeThesisDataVersion.externalGuiders" >
 				<logic:iterate id="externalGuider" name="masterDegreeThesis" property="activeMasterDegreeThesisDataVersion.externalGuiders">
-					<strong><bean:message key="label.externalGuider"/>:</strong> <bean:write name="externalGuider" property="person.nome" /><br/>
+					<strong><bean:message key="label.externalGuider"/>:</strong> <bean:write name="externalGuider" property="person.name" /><br/>
 				</logic:iterate>
 			</logic:notEmpty>
 		</logic:empty>

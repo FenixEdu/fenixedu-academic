@@ -2168,7 +2168,7 @@
    	        name="teacherCreditsForm"
    	        parameter="method"
    	        scope="request"
-            type="net.sourceforge.fenixedu.presentationTier.Action.departmentMember.credits.DepartmentMemberShowTeacherCreditsDispatchAction">             
+            type="net.sourceforge.fenixedu.presentationTier.Action.departmentMember.credits.DepartmentMemberShowTeacherCreditsDispatchAction">
             <forward name="show-teacher-credits" path="show-teacher-credits-sheet"/>
             <forward name="teacher-not-found" path="/showAllTeacherCreditsResume.do?method=showTeacherCreditsResume&amp;page=0"/>
         </action>

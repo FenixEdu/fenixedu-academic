@@ -87,7 +87,7 @@ Alunos Inscritos
 					<bean:write name="student" property="number"/>
 				</td>
 				<td class="listClasses">
-					<bean:write name="student" property="student.person.nome"/>
+					<bean:write name="student" property="student.person.name"/>
 				</td>
 				<td class="listClasses">
 					<bean:write name="student" property="student.person.email"/>

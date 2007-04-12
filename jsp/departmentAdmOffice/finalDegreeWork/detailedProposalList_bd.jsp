@@ -63,7 +63,7 @@
 			</th>
 			<td>
 				<em><bean:message key="label.teacher.finalWork.number"/>:</em> <bean:write name="finalDegreeWorkProposal" property="orientator.teacherNumber"/><br/>
-				<em><bean:message key="label.teacher.finalWork.name"/>:</em> <bean:write name="finalDegreeWorkProposal" property="orientator.person.nome"/><br/>
+				<em><bean:message key="label.teacher.finalWork.name"/>:</em> <bean:write name="finalDegreeWorkProposal" property="orientator.person.name"/><br/>
 				<em><bean:message key="label.teacher.finalWork.credits.short"/>:</em> <bean:write name="finalDegreeWorkProposal" property="orientatorsCreditsPercentage"/><br/>
 			</td>
 		</tr>
@@ -80,7 +80,7 @@
 				</th>
 				<td>
 					<em><bean:message key="label.teacher.finalWork.number"/>:</em> <bean:write name="finalDegreeWorkProposal" property="coorientator.teacherNumber"/><br/>
-					<em><bean:message key="label.teacher.finalWork.name"/>:</em> <bean:write name="finalDegreeWorkProposal" property="coorientator.person.nome"/><br/>
+					<em><bean:message key="label.teacher.finalWork.name"/>:</em> <bean:write name="finalDegreeWorkProposal" property="coorientator.person.name"/><br/>
 					<em><bean:message key="label.teacher.finalWork.credits.short"/>:</em> <bean:write name="finalDegreeWorkProposal" property="coorientatorsCreditsPercentage"/><br/>
 				</td>			
 			</tr>
@@ -212,7 +212,7 @@
 		
 		<tr>
 			<th>
-				Trabalho attribuï¿½do a:
+				Trabalho attribuído a:
 			</th>
 			<td>
 				<logic:present name="finalDegreeWorkProposal" property="groupAttributed">

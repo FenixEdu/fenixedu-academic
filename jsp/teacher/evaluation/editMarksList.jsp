@@ -72,11 +72,11 @@
 			<h:dataTable value="#{evaluationManagementBackingBean.executionCourseAttends}" var="attends" headerClass="listClasses-header" columnClasses="listClasses">
 				<h:column>
 					<f:facet name="header"><h:outputText value="#{bundle['label.number']}"/></f:facet>
-					<h:outputText value="#{attends.aluno.number}" />
+					<h:outputText value="#{attends.registration.number}" />
 				</h:column>
 				<h:column>
 					<f:facet name="header"><h:outputText value="#{bundle['label.name']}"/></f:facet>
-					<h:outputText value="#{attends.aluno.person.nome}" />
+					<h:outputText value="#{attends.registration.person.name}" />
 				</h:column>
 				<h:column>
 					<f:facet name="header"><h:outputText value="#{bundle['label.enrolmentEvaluationType']}"/></f:facet>

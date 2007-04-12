@@ -87,7 +87,7 @@
 			<h:column>
 				<h:outputText value="<li>" escape="false" />				
 					<h:outputLink value="#{functionsManagementBackingBean.contextPath}/departmentAdmOffice/teacher/functionsManagement/unitChoose.faces?personID=#{person.idInternal}">
-						<h:outputText value="#{person.nome}"/>
+						<h:outputText value="#{person.name}"/>
 					</h:outputLink>		
 				<h:outputText value="</li>" escape="false"/>
 			</h:column>		
@@ -102,7 +102,7 @@
 			<c:url var="url" value="/departmentAdmOffice/functionsManagement/listPersonFunctions.faces?personID=${person.idInternal}" />
 			<c:out value="<li>" escapeXml="false"/>
 			<a href=" <c:out value="${url}"/> ">
-				<c:out value="${person.nome}" />
+				<c:out value="${person.name}" />
 			</a>
 			<c:out value="</li>" escapeXml="false"/>										
 		</c:forEach>

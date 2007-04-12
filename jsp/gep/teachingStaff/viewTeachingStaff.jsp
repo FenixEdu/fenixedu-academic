@@ -18,7 +18,7 @@
 	<logic:iterate id="professorship" name="professorships" >
 		<tr class="listClasses">
 			<td>
-				<bean:write name="professorship" property="teacher.person.nome"/>
+				<bean:write name="professorship" property="teacher.person.name"/>
 			</td>
 			<td>
 				<bean:write name="professorship" property="teacher.teacherNumber"/>

@@ -19,7 +19,7 @@
 		
 		<h:panelGrid columns="2" columnClasses="valigntop">
 			<h:outputText value="<b>#{bundle['label.name']}</b>: " escape="false"/>		
-			<h:outputText value="#{managerFunctionsManagementBackingBean.person.nome}" escape="false"/>									
+			<h:outputText value="#{managerFunctionsManagementBackingBean.person.name}" escape="false"/>									
 				
 			<h:outputText value="<b>#{bundle['label.search.unit']}:</b>" escape="false"/>	
 			<h:outputText value="#{managerFunctionsManagementBackingBean.unit.presentationNameWithParentsAndBreakLine}" escape="false"/>				

@@ -13,7 +13,6 @@
 	>
 	<html:link page='<%= "/teacherServiceDistribution.do?method=showTeacherServiceDistributionServices&amp;teacherServiceDistribution=" + ((TeacherServiceDistribution) request.getAttribute("teacherServiceDistribution")).getIdInternal().toString() %>'>
 		<bean:write name="teacherServiceDistribution" property="name"/>&nbsp;
-<%--		(<bean:write name="teacherServiceDistribution" property="executionPeriod.semester"/>�<bean:message key="label.common.courseSemester"/>--%>
 		<bean:write name="teacherServiceDistribution" property="executionYear.year"/>
 	</html:link>
 	>
@@ -57,7 +56,7 @@
 	<logic:iterate id="teacher" name="teachersList">
 		<tr>
 			<td>
-				<bean:write name="teacher" property="person.nome" />
+				<bean:write name="teacher" property="person.name" />
     		</td>
     		<td>
     			<bean:write name="teacher" property="category.shortName" />

@@ -44,10 +44,10 @@
 		<bean:define id="attends" name="attendEntry" property="key"/>
 		<tr>
 			<td nowrap>
-				<bean:write name="attends" property="aluno.number"/>
+				<bean:write name="attends" property="registration.number"/>
 			</td>
 			<td nowrap>
-				<bean:write name="attends" property="aluno.person.nome"/>
+				<bean:write name="attends" property="registration.person.name"/>
 			</td>
 			<logic:iterate id="evaluationEntry" name="attendEntry" property="value">
 				<td nowrap>
