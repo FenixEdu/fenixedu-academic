@@ -2,6 +2,7 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<%@ taglib uri="/WEB-INF/enum.tld" prefix="e"%>
 
 <script type='text/javascript' src='<%= request.getContextPath() + "/dwr/engine.js" %>'></script>
 <script type='text/javascript' src='<%= request.getContextPath() + "/dwr/util.js" %>'></script>
@@ -60,6 +61,15 @@
 			<html:options collection="executionYears" property="idInternal"
 				labelProperty="year" />
 		</html:select>	
+		<br/>
+		<bean:message key="label.gep.registrationAgreement" bundle="GEP_RESOURCES" />: 
+		<e:labelValues id="agreementValues"
+			enumeration="net.sourceforge.fenixedu.domain.student.RegistrationAgreement"
+			bundle="ENUMERATION_RESOURCES" /> 
+		<html:select property="registrationAgreement">
+			<html:option key="dropDown.Default" value="" />
+			<html:options collection="agreementValues" property="value" labelProperty="label" />
+		</html:select>		
 		<br/><br/>
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="startClock()">Ok</html:submit>		
 		<br/><br/>

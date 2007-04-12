@@ -22,9 +22,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
+import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.ajax.gep.CurricularCourseStatisticsStatusBridge;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -52,6 +54,9 @@ public class CompetenceCourseStatisticsDispatchAction extends FenixDispatchActio
 	IUserView userView = getUserView(request);
 	DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
 	Integer executionYearID = (Integer) dynaActionForm.get("executionYearID");
+	String agreementName = (String) dynaActionForm.get("registrationAgreement");
+	RegistrationAgreement agreement = StringUtils.isEmpty(agreementName) ? null
+		: RegistrationAgreement.valueOf(agreementName);
 
 	Collection<String> processedDegreeCurricularPlans = new ArrayList<String>();
 	Collection<String> processingDegreeCurricularPlans = new ArrayList<String>();
@@ -85,7 +90,7 @@ public class CompetenceCourseStatisticsDispatchAction extends FenixDispatchActio
 	    toProcessDegreeCurricularPlans.remove(degreeCurricularPlan.getName());
 	    processingDegreeCurricularPlans.add(degreeCurricularPlan.getName());
 
-	    Object[] args = { degreeCurricularPlan.getIdInternal(), executionYearID };
+	    Object[] args = { degreeCurricularPlan.getIdInternal(), executionYearID, agreement };
 	    result.append((String) executeService(request, "ComputeCurricularCourseStatistics", args));
 
 	    processingDegreeCurricularPlans.clear();

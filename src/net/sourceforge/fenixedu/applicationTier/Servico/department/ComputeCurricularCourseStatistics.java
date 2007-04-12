@@ -18,6 +18,8 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -25,7 +27,8 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
  */
 public class ComputeCurricularCourseStatistics extends Service {
 
-    public String run(Integer degreeCurricularPlanID, Integer executionYearID) {
+    public String run(Integer degreeCurricularPlanID, Integer executionYearID,
+	    RegistrationAgreement agreement) {
 
 	ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
 	DegreeCurricularPlan degreeCurricularPlan = rootDomainObject
@@ -55,7 +58,7 @@ public class ComputeCurricularCourseStatistics extends Service {
 		int semester = 0;
 		// for (CurricularCourseScope scope : scopes) {
 		// Integer scopeYear =
-                // scope.getCurricularSemester().getCurricularYear().getYear();
+		// scope.getCurricularSemester().getCurricularYear().getYear();
 		// if (scopeYear > year) {
 		// year = scopeYear;
 		// semester = scope.getCurricularSemester().getSemester();
@@ -73,43 +76,47 @@ public class ComputeCurricularCourseStatistics extends Service {
 		// Get Execution Course
 		List<ExecutionCourse> executionCourses = curricularCourse
 			.getExecutionCoursesByExecutionPeriod(executionPeriod);
-		if (executionCourses.isEmpty() || executionCourses.size() > 1) {
-		    // Houston, we have a problem...!!
-		    continue;
-		}
-		ExecutionCourse executionCourse = executionCourses.get(0);
+		// if (executionCourses.isEmpty() || executionCourses.size() >
+                // 1) {
+		// // Houston, we have a problem...!!
+		// continue;
+		// }
+		// ExecutionCourse executionCourse = executionCourses.get(0);
 
-		// Organize enrolments by DegreeCurricularPlans
-		Map<DegreeCurricularPlan, Collection<Enrolment>> enrolmentsMap = organizeEnrolmentsByDCP(
-			curricularCourse, executionPeriod);
+		for (ExecutionCourse executionCourse : executionCourses) {
 
-		// Calculate enrolments for each DegreeCurricularPlan
-		for (DegreeCurricularPlan enrolmentDCP : enrolmentsMap.keySet()) {
+		    // Organize enrolments by DegreeCurricularPlans
+		    Map<DegreeCurricularPlan, Collection<Enrolment>> enrolmentsMap = organizeEnrolmentsByDCP(
+			    curricularCourse, executionPeriod, agreement, executionCourse);
 
-		    int firstEnrolledCount = 0;
-		    int secondEnrolledCount = 0;
+		    // Calculate enrolments for each DegreeCurricularPlan
+		    for (DegreeCurricularPlan enrolmentDCP : enrolmentsMap.keySet()) {
 
-		    Collection<Enrolment> dcpEnrolments = enrolmentsMap.get(enrolmentDCP);
-		    for (Enrolment enrolment : dcpEnrolments) {
-			switch (enrolment.getNumberOfTotalEnrolmentsInThisCourse(executionPeriod)) {
+			int firstEnrolledCount = 0;
+			int secondEnrolledCount = 0;
 
-			case 1:
-			    firstEnrolledCount++;
-			    break;
-			case 2:
-			    secondEnrolledCount++;
-			    break;
-			default:
-			    break;
+			Collection<Enrolment> dcpEnrolments = enrolmentsMap.get(enrolmentDCP);
+			for (Enrolment enrolment : dcpEnrolments) {
+			    switch (enrolment.getNumberOfTotalEnrolmentsInThisCourse(executionPeriod)) {
+
+			    case 1:
+				firstEnrolledCount++;
+				break;
+			    case 2:
+				secondEnrolledCount++;
+				break;
+			    default:
+				break;
+			    }
 			}
-		    }
 
-		    // Add to result
-		    result.format("%s\t%s\t%d\t%s\t%d\t%s\t%d\t%d\t%d\t%d\t%d\n", curricularCourse
-			    .getCode(), curricularCourse.getName(), executionCourse.getIdInternal(),
-			    executionCourse.getSigla(), enrolmentDCP.getIdInternal(), enrolmentDCP
-				    .getName(), semester, year, firstEnrolledCount, secondEnrolledCount,
-			    dcpEnrolments.size());
+			// Add to result
+			result.format("%s\t%s\t%d\t%s\t%d\t%s\t%d\t%d\t%d\t%d\t%d\n", curricularCourse
+				.getCode(), curricularCourse.getName(), executionCourse.getIdInternal(),
+				executionCourse.getSigla(), enrolmentDCP.getIdInternal(), enrolmentDCP
+					.getName(), semester, year, firstEnrolledCount,
+				secondEnrolledCount, dcpEnrolments.size());
+		    }
 		}
 	    }
 	}
@@ -118,14 +125,25 @@ public class ComputeCurricularCourseStatistics extends Service {
     }
 
     private Map<DegreeCurricularPlan, Collection<Enrolment>> organizeEnrolmentsByDCP(
-	    CurricularCourse curricularCourse, ExecutionPeriod executionPeriod) {
+	    CurricularCourse curricularCourse, ExecutionPeriod executionPeriod,
+	    RegistrationAgreement agreement, ExecutionCourse executionCourse) {
 	Map<DegreeCurricularPlan, Collection<Enrolment>> enrolmentsMap = new HashMap<DegreeCurricularPlan, Collection<Enrolment>>();
 
 	List<Enrolment> enrolments = curricularCourse.getEnrolmentsByExecutionPeriod(executionPeriod);
 	for (Enrolment enrolment : enrolments) {
 
-	    DegreeCurricularPlan studentDCP = enrolment.getStudentCurricularPlan()
-		    .getDegreeCurricularPlan();
+	    if(enrolment.getAttendsByExecutionCourse(executionCourse) == null){
+		continue;
+	    }
+	    
+	    final StudentCurricularPlan studentCurricularPlan = enrolment.getStudentCurricularPlan();
+
+	    if (agreement != null
+		    && studentCurricularPlan.getRegistration().getRegistrationAgreement() != agreement) {
+		continue;
+	    }
+
+	    DegreeCurricularPlan studentDCP = studentCurricularPlan.getDegreeCurricularPlan();
 	    Collection<Enrolment> dcpEnrolments = enrolmentsMap.get(studentDCP);
 	    if (dcpEnrolments == null) {
 		dcpEnrolments = new ArrayList<Enrolment>();
