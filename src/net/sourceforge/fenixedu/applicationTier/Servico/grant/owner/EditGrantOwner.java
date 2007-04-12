@@ -44,7 +44,7 @@ public class EditGrantOwner extends Service {
 	GrantOwner grantOwner = null;
 	Country country = null;
 
-	if (infoGrantOwner.getInfoPersonEditor().getInfoPais() != null) {
+	if (infoGrantOwner.getInfoPersonEditor().getInfoPais().getIdInternal()!= null) {
 	    country = rootDomainObject.readCountryByOID(infoGrantOwner.getInfoPersonEditor()
 		    .getInfoPais().getIdInternal());
 	} else {
@@ -58,7 +58,7 @@ public class EditGrantOwner extends Service {
 
 	// create or edit person information
 	if (infoGrantOwner.getInfoPersonEditor().getIdInternal() == null) {
-	    infoGrantOwner.getInfoPersonEditor().setUsername("X" + System.currentTimeMillis());
+		infoGrantOwner.getInfoPersonEditor().setUsername("X" + System.currentTimeMillis());
 	    person = new Person(infoGrantOwner.getInfoPersonEditor(), country);
 	} else {
 	    person = (Person) rootDomainObject.readPartyByOID(infoGrantOwner.getInfoPersonEditor()
