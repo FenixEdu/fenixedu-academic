@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.domain.degreeStructure;
 
+import java.text.Collator;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -18,9 +20,18 @@ import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 
+import org.apache.commons.beanutils.BeanComparator;
+
 
 public abstract class DegreeModule extends DegreeModule_Base {
 
+    static final public Comparator<DegreeModule> COMPARATOR_BY_NAME = new DegreeModuleComparatorByName();
+    static private class DegreeModuleComparatorByName implements Comparator<DegreeModule> {
+        public int compare(DegreeModule d1, DegreeModule d2) {
+            return new BeanComparator("name", Collator.getInstance()).compare(d1, d2);
+        }
+    }
+    
     public DegreeModule() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
