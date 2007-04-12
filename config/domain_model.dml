@@ -3380,6 +3380,7 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 	Integer keyPartyType;	
 	Integer keyParkingParty;
 	Integer keyQuestionBank;
+	Integer keyNationality;
 	
     String ojbConcreteClass;
 	String name;
@@ -3410,7 +3411,6 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 		Integer keyResearcher;
 		Integer keyUser;
 	    Integer keyHomepage;
-		Integer keyNationality;
 		Integer keyCountryOfBirth;
 		Integer keyStudent;
 
@@ -7172,8 +7172,8 @@ relation PersonAdvisory {
 	}
 }
 
-relation PersonCountry {
-	net.sourceforge.fenixedu.domain.Person playsRole associatedPersons {
+relation PartyCountry {
+	net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole associatedParties {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Country playsRole nationality;

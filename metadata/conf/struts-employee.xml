@@ -8,6 +8,12 @@
 
 	<!-- ========== Form Bean Definitions =================================== -->
 	<form-beans type="org.apache.struts.action.ActionFormBean">
+		<form-bean name="protocolsForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+	      	<form-property name="method" type="java.lang.String" />
+	      	<form-property name="responsibleID" type="java.lang.String"/>
+	      	<form-property name="unitID" type="java.lang.String"/>
+	      	<form-property name="fileID" type="java.lang.String"/>	      	
+	    </form-bean>
 	</form-beans>
 
 	<!-- ========== Global Exception Definitions ============================== -->
@@ -60,6 +66,42 @@
 			<forward name="show-employee-list" path="show-employee-list" />
 			<forward name="show-employee-work-sheet" path="show-employee-work-sheet" />
 		</action>
+		
+	    <action path="/protocols"
+	      	scope="request"
+	      	parameter="method"  
+	      	type="net.sourceforge.fenixedu.presentationTier.Action.protocols.ProtocolsDispatchAction"> 	                   
+	       <forward name="show-protocols" path="show-protocols"/>
+   	       <forward name="create-protocol" path="create-protocol"/>
+   	       <forward name="view-protocol" path="view-protocol"/>   	       
+   	       <forward name="show-protocol-alerts" path="show-protocol-alerts"/>
+   	       <forward name="renew-protocol" path="renew-protocol"/>
+   	       <forward name="edit-protocol-history" path="edit-protocol-history"/>
+	    </action>
+	    	    	
+ 		<action path="/editProtocol"
+	      	scope="request"
+	      	parameter="method"
+	      	name="protocolsForm"   
+	      	type="net.sourceforge.fenixedu.presentationTier.Action.protocols.EditProtocolDispatchAction">
+   	       <forward name="view-protocol" path="view-protocol"/>
+   	       <forward name="edit-protocol-data" path="edit-protocol-data"/>
+   	       <forward name="edit-protocol-responsibles" path="edit-protocol-responsibles"/>
+   	       <forward name="edit-protocol-units" path="edit-protocol-units"/>
+   	       <forward name="edit-protocol-files" path="edit-protocol-files"/>
+	    </action>
+	    
+	    <action path="/createProtocol"
+	      	scope="request"
+	      	parameter="method"
+	      	name="protocolsForm"   
+	      	type="net.sourceforge.fenixedu.presentationTier.Action.protocols.CreateProtocolDispatchAction">
+	       <forward name="show-protocols" path="show-protocols"/>
+   	       <forward name="prepareCreate-protocol-data" path="prepareCreate-protocol-data"/>
+   	       <forward name="prepareCreate-protocol-responsibles" path="prepareCreate-protocol-responsibles"/>
+   	       <forward name="prepareCreate-protocol-units" path="prepareCreate-protocol-units"/>
+   	       <forward name="prepareCreate-protocol-files" path="prepareCreate-protocol-files"/>   	       
+	    </action>
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->
@@ -73,6 +115,8 @@
 		key="GLOBAL_RESOURCES" null="false" />
 	<message-resources parameter="resources.EnumerationResources"
 		key="ENUMERATION_RESOURCES" null="false" />
+	<message-resources parameter="resources.ScientificCouncilResources"
+		key="SCIENTIFIC_COUNCIL_RESOURCES" null="false"/>
 	<!-- ========== Plug Ins Configuration ================================= -->
 	<plug-in className="org.apache.struts.tiles.TilesPlugin">
 		<set-property property="definitions-config"

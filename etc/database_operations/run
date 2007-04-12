@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "alter Table ProtocolHistory and Table Protocol" alterTableProtocolHistoryAndTableProtocol.sql

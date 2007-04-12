@@ -74,13 +74,11 @@
 					</li>																
 				</logic:equal>
 			</logic:notEmpty>	
-				
+		</ul>	
 		<%
 			IUserView user = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         	if (user.getPerson().hasFunctionType(net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType.ASSIDUOUSNESS_RESPONSIBLE)) {
         %>
-        
-		</ul>
 		<ul style="margin-top: 1em">
 			<li class="navheader"><bean:message key="title.assiduousnessResponsible" bundle="ASSIDUOUSNESS_RESOURCES"/></li>
 			<li>
@@ -88,13 +86,19 @@
 					<bean:message key="label.employees" bundle="ASSIDUOUSNESS_RESOURCES"/>
 				</html:link>
 			</li>
-				
+		</ul>
 		<%
 			} 
 		%>
 		
-		</ul>
-		
+		<logic:notEmpty name="UserView" property="person.protocols">
+			<ul style="margin-top: 1em">
+			<li class="navheader"><bean:message key="title.protocolsResponsible" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></li>
+			<li>
+				<html:link page="/protocols.do?method=showProtocols"><bean:message key="title.protocols" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></html:link>
+			</li>	
+			</ul>
+		</logic:notEmpty>
 		<%-- TeacherServiceDistribution entry point				
 		<ul style="margin-top: 1em">
 	  		<li>

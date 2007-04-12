@@ -582,6 +582,14 @@
 			<forward name="seeTeacherPersonalExpectations" path="see-teacher-personal-expectations-for-evaluate"/>	
 		</action>
 		
+		<action path="/protocols"
+	      	scope="request"
+	      	parameter="method"
+	      	type="net.sourceforge.fenixedu.presentationTier.Action.protocols.ProtocolsResponsibleDispatchAction">
+	       <forward name="show-protocols" path="show-protocols"/>
+	       <forward name="view-protocol" path="view-protocol"/>
+	    </action>
+	    
     </action-mappings>
     <!-- ========== Controller Configuration ================================ -->
     <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>
@@ -591,6 +599,7 @@
     <message-resources parameter="resources.DepartmentMemberResources" null="false"/>
 	<message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
 	<message-resources parameter="resources.AssiduousnessResources" key="ASSIDUOUSNESS_RESOURCES" null="false" />
+	<message-resources parameter="resources.ScientificCouncilResources" key="SCIENTIFIC_COUNCIL_RESOURCES" null="false"/>
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
         <set-property property="pathnames" 

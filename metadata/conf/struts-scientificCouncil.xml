@@ -476,7 +476,10 @@
 	      	type="net.sourceforge.fenixedu.presentationTier.Action.protocols.ProtocolsDispatchAction"> 	                   
 	       <forward name="show-protocols" path="show-protocols"/>
    	       <forward name="create-protocol" path="create-protocol"/>
-   	       <forward name="view-protocol" path="view-protocol"/>   	       
+   	       <forward name="view-protocol" path="view-protocol"/>   	   
+   	       <forward name="show-protocol-alerts" path="show-protocol-alerts"/>
+   	       <forward name="renew-protocol" path="renew-protocol"/>
+   	       <forward name="edit-protocol-history" path="edit-protocol-history"/>
 	    </action>
 	    	    	
  		<action path="/editProtocol"
@@ -488,7 +491,7 @@
    	       <forward name="edit-protocol-data" path="edit-protocol-data"/>
    	       <forward name="edit-protocol-responsibles" path="edit-protocol-responsibles"/>
    	       <forward name="edit-protocol-units" path="edit-protocol-units"/>
-   	       <forward name="edit-protocol-files" path="edit-protocol-files"/>   	       
+   	       <forward name="edit-protocol-files" path="edit-protocol-files"/>
 	    </action>
 	    
 	    <action path="/createProtocol"

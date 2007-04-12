@@ -83,14 +83,25 @@
 		  		<bean:message key="link.research.activity.merge.event"/>
 		  	</html:link>
 		</li>
-		<%--		<br/>
-		<li class="navheader">
-			<bean:message key="label.protocols.navigation.header"/>
-		</li>
-		<li>
-			<html:link page="/protocols.do?method=showProtocols">
-		  		<bean:message key="link.protocols.view"/>
-		  	</html:link>
-		</li>		--%>
+				<br/>
+		<%net.sourceforge.fenixedu.applicationTier.IUserView user = (net.sourceforge.fenixedu.applicationTier.IUserView) session
+                    .getAttribute(net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants.U_VIEW);
+            if (net.sourceforge.fenixedu.domain.ManagementGroups.isProtocolManagerMember(user.getPerson())) {
+
+	    %>
+			<li class="navheader">
+				<bean:message key="label.protocols.navigation.header"/>
+			</li>
+			<li>
+				<html:link page="/protocols.do?method=showProtocolAlerts">
+			  		<bean:message key="link.protocols.showAlerts"/>
+			  	</html:link>
+			</li>
+			<li>
+				<html:link page="/protocols.do?method=showProtocols">
+			  		<bean:message key="link.protocols.view"/>
+			  	</html:link>
+			</li>		
+		<%}%>
 	</ul> 
 </logic:present>

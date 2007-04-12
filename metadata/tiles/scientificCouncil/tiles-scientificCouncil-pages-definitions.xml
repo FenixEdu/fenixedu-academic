@@ -159,38 +159,49 @@
 
     <!-- PROTOCOLS -->          
     <definition name="show-protocols" extends="scientificCouncil.masterPage">
-        <put name="body" value="/scientificCouncil/protocols/showProtocols.jsp"/>
+        <put name="body" value="/protocols/showProtocols.jsp"/>
     </definition>
     <definition name="create-protocol" extends="scientificCouncil.masterPage">
-        <put name="body" value="/scientificCouncil/protocols/createProtocol.jsp"/>
+        <put name="body" value="/protocols/createProtocol.jsp"/>
     </definition>
     <definition name="view-protocol" extends="scientificCouncil.masterPage">
-        <put name="body" value="/scientificCouncil/protocols/viewProtocol.jsp"/>
+        <put name="body" value="/protocols/viewProtocol.jsp"/>
     </definition>
+    <definition name="show-protocol-alerts" extends="scientificCouncil.masterPage">
+        <put name="body" value="/protocols/showProtocolAlerts.jsp"/>
+    </definition>  
     <!-- Edit -->
     <definition name="edit-protocol-data" extends="scientificCouncil.masterPage">
-        <put name="body" value="/scientificCouncil/protocols/editProtocolData.jsp"/>
+        <put name="body" value="/protocols/editProtocolData.jsp"/>
     </definition>
     <definition name="edit-protocol-responsibles" extends="scientificCouncil.masterPage">
-        <put name="body" value="/scientificCouncil/protocols/editProtocolResponsibles.jsp"/>
+        <put name="body" value="/protocols/editProtocolResponsibles.jsp"/>
     </definition>
     <definition name="edit-protocol-units" extends="scientificCouncil.masterPage">
-        <put name="body" value="/scientificCouncil/protocols/editProtocolUnits.jsp"/>
+        <put name="body" value="/protocols/editProtocolUnits.jsp"/>
     </definition>
     <definition name="edit-protocol-files" extends="scientificCouncil.masterPage">
-        <put name="body" value="/scientificCouncil/protocols/editProtocolFiles.jsp"/>
-    </definition>
+        <put name="body" value="/protocols/editProtocolFiles.jsp"/>
+    </definition>     
     <!-- Create -->
     <definition name="prepareCreate-protocol-data" extends="scientificCouncil.masterPage">
-        <put name="body" value="/scientificCouncil/protocols/prepareCreateProtocolData.jsp"/>
+        <put name="body" value="/protocols/prepareCreateProtocolData.jsp"/>
     </definition>
     <definition name="prepareCreate-protocol-responsibles" extends="scientificCouncil.masterPage">
-        <put name="body" value="/scientificCouncil/protocols/prepareCreateProtocolResponsibles.jsp"/>
+        <put name="body" value="/protocols/prepareCreateProtocolResponsibles.jsp"/>
     </definition>
     <definition name="prepareCreate-protocol-units" extends="scientificCouncil.masterPage">
-        <put name="body" value="/scientificCouncil/protocols/prepareCreateProtocolUnits.jsp"/>
+        <put name="body" value="/protocols/prepareCreateProtocolUnits.jsp"/>
     </definition>
     <definition name="prepareCreate-protocol-files" extends="scientificCouncil.masterPage">
-        <put name="body" value="/scientificCouncil/protocols/prepareCreateProtocolFiles.jsp"/>
-    </definition>             
+        <put name="body" value="/protocols/prepareCreateProtocolFiles.jsp"/>
+    </definition>
+    <!-- Renew -->
+    <definition name="renew-protocol" extends="scientificCouncil.masterPage">
+        <put name="body" value="/protocols/renewProtocol.jsp"/>
+    </definition>  
+    <definition name="edit-protocol-history" extends="scientificCouncil.masterPage">
+        <put name="body" value="/protocols/editProtocolHistory.jsp"/>
+    </definition>  	
+    
 </tiles-definitions>

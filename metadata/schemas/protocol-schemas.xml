@@ -1,8 +1,8 @@
 <schema name="show.protocol.toList"	type="net.sourceforge.fenixedu.domain.protocols.Protocol">
-	<slot name="protocolNumber" key="label.protocol.number"/>
-	<slot name="signedDate" key="label.protocol.signedDate"/>
-	<slot name="protocolAction.text" key="label.protocol.scientificAreas"/>
-	<slot name="observations" key="label.protocol.observations"/>		
+	<slot name="protocolNumber" key="label.protocol.number" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+	<slot name="signedDate" key="label.protocol.signedDate" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+	<slot name="protocolAction.text" key="label.protocol.scientificAreas" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+	<slot name="observations" key="label.protocol.observations" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>		
 </schema>
 
 <schema name="create.protocol" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolFactory">
@@ -73,7 +73,7 @@
 </schema>
 
 <schema name="show.file" type="net.sourceforge.fenixedu.domain.protocols.ProtocolFile">
-	<slot name="filename" key="label.filename" layout="link">
+	<slot name="filename" key="label.filename" layout="link" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
 		<property name="linkFormat" value="${downloadUrl}" />
 		<property name="useParent" value="true" />
 		<property name="contextRelative" value="false"/>
@@ -220,16 +220,16 @@
 </schema>
 
 <schema name="show.protocol.responsible" type="net.sourceforge.fenixedu.domain.Person">
-	<slot name="name" key="label.person.name"/>
-	<slot name="unitText" key="label.unit"/>
+	<slot name="name" key="label.person.name" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+	<slot name="unitText" key="label.unit" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
 </schema>
 										
 <schema name="show.protocol.unit" type="net.sourceforge.fenixedu.domain.organizationalStructure.Unit">
-	<slot name="name" key="label.name"/>
+	<slot name="name" key="label.name" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
 </schema>
 
 <schema name="show.protocol.partnerUnit" type="net.sourceforge.fenixedu.domain.organizationalStructure.Unit">
-	<slot name="presentationNameWithParents" key="label.name"/>
+	<slot name="presentationNameWithParents" key="label.name" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
 </schema>
 
 <schema name="unit.type" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolFactory">
@@ -239,4 +239,43 @@
         <property name="destination" value="changePersonType"/>
         <property name="classes" value="nobullet liinline"/>
     </slot>	
+</schema>
+
+<!-- ProtocolHistory -->
+<schema name="show.protocolHistories.alerts" type="net.sourceforge.fenixedu.domain.protocols.ProtocolHistory">
+	<slot name="protocol.protocolNumber" key="label.protocol.number" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+	<slot name="beginDate" key="label.protocol.beginDate" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+	<slot name="endDate" key="label.protocol.endDate" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+</schema>
+
+<schema name="show.protocolHistories" type="net.sourceforge.fenixedu.domain.protocols.ProtocolHistory">
+	<slot name="beginDate" key="label.protocol.beginDate" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+	<slot name="endDate" key="label.protocol.endDate" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+</schema>
+
+<schema name="renew.protocolHistoryFactory" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolHistoryFactory">
+	<slot name="duration" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<property name="maxLength" value="2"/>
+		<property name="size" value="4"/>
+	</slot>
+	<slot name="renewTime" layout="option-select" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+</schema>
+<schema name="edit.protocolHistoryFactory" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolHistoryFactory">
+	<slot name="beginDate" key="label.protocol.beginDate" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<property name="size" value="10"/>
+		<property name="format" value="dd/MM/yyyy"/>
+	</slot>
+	<slot name="endDate" key="label.protocol.endDate" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<property name="size" value="10"/>
+		<property name="format" value="dd/MM/yyyy"/>
+	</slot>
+</schema>
+
+<!-- show Protocol -->
+<schema name="view.protocol" type="net.sourceforge.fenixedu.domain.protocols.Protocol">
+	<slot name="protocolNumber"	key="label.protocol.number" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+	<slot name="signedDate" key="label.protocol.signedDate" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+	<slot name="protocolAction.procotolActionTypes" key="label.protocol.actionTypes" layout="tabular" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+	<slot name="protocolAction.otherTypes" key="label.protocol.otherActionTypes" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+	<slot name="observations" key="label.protocol.observations" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
 </schema>

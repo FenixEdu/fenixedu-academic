@@ -253,4 +253,11 @@
 		<put name="body" value="/departmentMember/expectationManagement/seeTeacherPersonalExpectationsToEvaluate.jsp"/>
 	</definition>	
 	
+	<!-- Protocols -->          
+    <definition name="show-protocols" extends="departmentMember.masterPage">
+        <put name="body" value="/departmentMember/protocols/showProtocols.jsp"/>
+    </definition>
+    <definition name="view-protocol" extends="departmentMember.masterPage">
+        <put name="body" value="/departmentMember/protocols/viewProtocol.jsp"/>
+    </definition>
 </tiles-definitions>
