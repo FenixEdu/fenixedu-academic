@@ -24,13 +24,11 @@ public class DocumentRequestTypeForStudentTypeProvider implements DataProvider {
 
         DegreeType degreeType = documentRequestCreateBean.getRegistration().getDegreeType();
 
-        Collection<DocumentRequestType> result = new ArrayList<DocumentRequestType>();
-        if (degreeType.getAdministrativeOfficeType().equals(
-                DocumentRequestType.SCHOOL_REGISTRATION_CERTIFICATE.getAdministrativeOfficeType())) {
+        final Collection<DocumentRequestType> result = new ArrayList<DocumentRequestType>();
+        if (DocumentRequestType.SCHOOL_REGISTRATION_CERTIFICATE.getAdministrativeOfficeTypes().contains(degreeType.getAdministrativeOfficeType())){
             result.add(DocumentRequestType.SCHOOL_REGISTRATION_CERTIFICATE);
         }
-        if (degreeType.getAdministrativeOfficeType().equals(
-                DocumentRequestType.ENROLMENT_CERTIFICATE.getAdministrativeOfficeType())) {
+        if (DocumentRequestType.ENROLMENT_CERTIFICATE.getAdministrativeOfficeTypes().contains(degreeType.getAdministrativeOfficeType())) {
             result.add(DocumentRequestType.ENROLMENT_CERTIFICATE);
         }
 

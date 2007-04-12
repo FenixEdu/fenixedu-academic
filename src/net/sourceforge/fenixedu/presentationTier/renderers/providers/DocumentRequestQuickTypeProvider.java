@@ -22,7 +22,7 @@ public class DocumentRequestQuickTypeProvider implements DataProvider {
 
 	Collection<DocumentRequestType> result = new ArrayList<DocumentRequestType>();
 	for (final DocumentRequestType documentRequestType : DocumentRequestType.values()) {
-	    if (administrativeOfficeType.equals(documentRequestType.getAdministrativeOfficeType()) && documentRequestType.isAllowedToQuickDeliver()) {
+	    if (documentRequestType.getAdministrativeOfficeTypes().contains(administrativeOfficeType) && documentRequestType.isAllowedToQuickDeliver()) {
 		result.add(documentRequestType);
 	    }
 	}

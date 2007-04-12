@@ -25,23 +25,20 @@ public class DocumentRequestTypeProvider implements DataProvider {
 		.getAdministrativeOffice().getAdministrativeOfficeType();
 
 	Collection<DocumentRequestType> result = new ArrayList<DocumentRequestType>();
-	if (administrativeOfficeType.equals(DocumentRequestType.SCHOOL_REGISTRATION_CERTIFICATE
-		.getAdministrativeOfficeType())) {
+	if (DocumentRequestType.SCHOOL_REGISTRATION_CERTIFICATE.getAdministrativeOfficeTypes().contains(administrativeOfficeType)) {
 	    result.add(DocumentRequestType.SCHOOL_REGISTRATION_CERTIFICATE);
 	}
-	if (administrativeOfficeType.equals(DocumentRequestType.ENROLMENT_CERTIFICATE
-		.getAdministrativeOfficeType())) {
+	if (DocumentRequestType.ENROLMENT_CERTIFICATE.getAdministrativeOfficeTypes().contains(administrativeOfficeType)) {
 	    result.add(DocumentRequestType.ENROLMENT_CERTIFICATE);
 	}
-	if (administrativeOfficeType.equals(DocumentRequestType.APPROVEMENT_CERTIFICATE
-		.getAdministrativeOfficeType())) {
+	if (DocumentRequestType.APPROVEMENT_CERTIFICATE.getAdministrativeOfficeTypes().contains(administrativeOfficeType)) {
 	    result.add(DocumentRequestType.APPROVEMENT_CERTIFICATE);
 	}
 	
 // Once all DocumentRequestTypes are allowed, this provider should look like this:
 //
 //	for (final DocumentRequestType documentRequestType : DocumentRequestType.values()) {
-//	    if (administrativeOfficeType.equals(documentRequestType.getAdministrativeOfficeType())
+//	    if (documentRequestType.getAdministrativeOfficeTypes().contains(administrativeOfficeType)
 //		    && !documentRequestType.isAllowedToQuickDeliver()) {
 //		result.add(documentRequestType);
 //	    }
