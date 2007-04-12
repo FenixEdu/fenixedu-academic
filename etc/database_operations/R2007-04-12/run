@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Fixing Projects Table" alterProjectAssociationTable.sql
