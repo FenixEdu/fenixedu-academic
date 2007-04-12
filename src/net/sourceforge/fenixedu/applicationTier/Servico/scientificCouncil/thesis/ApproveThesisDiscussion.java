@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.thesis;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Set;
@@ -7,10 +8,8 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.ScientificCommission;
-import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.injectionCode.IGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.mailSender.MailBean;
 
 public class ApproveThesisDiscussion extends ThesisServiceWithMailNotification {
@@ -50,7 +49,7 @@ public class ApproveThesisDiscussion extends ThesisServiceWithMailNotification {
     }
 
     @Override
-    protected IGroup getReceivers(Thesis thesis) {
+    protected Collection<Person> getReceivers(Thesis thesis) {
         Person student = thesis.getStudent().getPerson();
         Person president = getPerson(thesis.getPresident());
         
@@ -63,7 +62,7 @@ public class ApproveThesisDiscussion extends ThesisServiceWithMailNotification {
             }
         }
         
-        return new FixedSetGroup(persons);
+        return persons;
     }
 
 }

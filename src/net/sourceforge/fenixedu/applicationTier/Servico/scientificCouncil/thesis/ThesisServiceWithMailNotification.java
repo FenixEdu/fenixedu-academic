@@ -1,7 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.thesis;
 
 import java.text.MessageFormat;
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -10,12 +12,12 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.cms.messaging.email.SendEMail;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.cms.messaging.email.SendMailReport;
 import net.sourceforge.fenixedu.domain.cms.messaging.email.EMailSender.SenderNotAllowed;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.injectionCode.IGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.mailSender.MailBean;
 
 public abstract class ThesisServiceWithMailNotification extends Service {
@@ -57,10 +59,21 @@ public abstract class ThesisServiceWithMailNotification extends Service {
     }
 
     private void setReceivers(Thesis thesis, MailBean bean) {
-        bean.setReceiversGroup(getReceivers(thesis));
+        Collection<Person> receivers = getReceivers(thesis);
+
+        Iterator<Person> iterator = receivers.iterator();
+        while (iterator.hasNext()) {
+            Person person = iterator.next();
+            
+            if (person.getEmail() == null) {
+                iterator.remove();
+            }
+        }
+        
+        bean.setReceiversGroup(new FixedSetGroup(receivers));
     }
 
-    protected abstract IGroup getReceivers(Thesis thesis);
+    protected abstract Collection<Person> getReceivers(Thesis thesis);
 
     //
     // Utility methods
