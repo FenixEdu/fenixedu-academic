@@ -13,7 +13,7 @@
 <h2><bean:message key="label.teaching.service.alter" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h2>
 
 <div class="infoop mtop2 mbottom1">
-	<p class="mvert025"><b><bean:message key="label.teacher.name"/>:</b> <bean:write name="teacher" property="person.nome"/></p>
+	<p class="mvert025"><b><bean:message key="label.teacher.name"/>:</b> <bean:write name="teacher" property="person.name"/></p>
 	<p class="mvert025"><bean:define id="teacherNumber" name="teacher" property="teacherNumber"/><b><bean:message key="label.teacher.number"/>:</b> <bean:write name="teacherNumber"/></p>
 	<p class="mvert025"><b> <bean:message key="label.execution-course.name"/>:</b> <bean:write name="executionCourse" property="nome"/></p>
 	<p class="mvert025"><b> <bean:message key="label.execution-period"/>:</b> <bean:write name="executionPeriod" property="name"/> - <bean:write name="executionPeriod" property="executionYear.year"/></p>

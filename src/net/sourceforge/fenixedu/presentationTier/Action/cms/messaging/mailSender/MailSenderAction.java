@@ -107,7 +107,7 @@ public abstract class MailSenderAction extends FenixDispatchAction {
             String[] components = person.getEmail().split("@");
             address.setUser(components[0]);
             address.setDomain(components[1]);
-            address.setPersonalName(person.getNome());
+            address.setPersonalName(person.getName());
         }
 
         return address;
@@ -282,7 +282,7 @@ public abstract class MailSenderAction extends FenixDispatchAction {
                     addressToShow = resources.getMessage(this
                             .getLocale(request), "cms.mailSender.emptyAddress");
                 }
-                invalidAddress.append("<li>").append(person.getNome()).append(
+                invalidAddress.append("<li>").append(person.getName()).append(
                         " (").append(addressToShow).append(") </li>");
             }
         }
@@ -309,7 +309,7 @@ public abstract class MailSenderAction extends FenixDispatchAction {
                 if (invalidPersonalNameCount == 0)
                     invalidName.append("<ul> ");
                 invalidPersonalNameCount++;
-                invalidName.append("<li>").append(person.getNome()).append(
+                invalidName.append("<li>").append(person.getName()).append(
                         "</li>");
             }
         }
@@ -321,7 +321,7 @@ public abstract class MailSenderAction extends FenixDispatchAction {
                 if (transportErrorCount == 0)
                     transportError.append("<ul>");
                 transportErrorCount++;
-                transportError.append("<li>").append(person.getNome()).append(
+                transportError.append("<li>").append(person.getName()).append(
                         " (").append(person.getEmail()).append(") </li>");
             }
         }
@@ -343,7 +343,7 @@ public abstract class MailSenderAction extends FenixDispatchAction {
                 if (sentCount == 0)
                     sent.append("<ul>");
                 sentCount++;
-                sent.append("<li>").append(person.getNome()).append(" (")
+                sent.append("<li>").append(person.getName()).append(" (")
                         .append(person.getEmail()).append(")</li>");
             }
         }

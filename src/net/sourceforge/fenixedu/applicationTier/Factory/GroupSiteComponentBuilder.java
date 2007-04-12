@@ -188,7 +188,7 @@ public class GroupSiteComponentBuilder {
 
 				infoSiteStudentInformation.setNumber(attend.getRegistration().getNumber());
 
-				infoSiteStudentInformation.setName(attend.getRegistration().getPerson().getNome());
+				infoSiteStudentInformation.setName(attend.getRegistration().getPerson().getName());
 
 				infoSiteStudentInformation.setEmail(attend.getRegistration().getPerson().getEmail());
 
@@ -238,7 +238,7 @@ public class GroupSiteComponentBuilder {
 
 				infoSiteStudentInformation.setNumber(attend.getRegistration().getNumber());
 
-				infoSiteStudentInformation.setName(attend.getRegistration().getPerson().getNome());
+				infoSiteStudentInformation.setName(attend.getRegistration().getPerson().getName());
 
 				infoSiteStudentInformation.setEmail(attend.getRegistration().getPerson().getEmail());
 
@@ -289,7 +289,7 @@ public class GroupSiteComponentBuilder {
 
 				infoSiteStudentInformation.setNumber(attend.getRegistration().getNumber());
 
-				infoSiteStudentInformation.setName(attend.getRegistration().getPerson().getNome());
+				infoSiteStudentInformation.setName(attend.getRegistration().getPerson().getName());
 
 				infoSiteStudentInformation.setEmail(attend.getRegistration().getPerson().getEmail());
 
@@ -407,7 +407,7 @@ public class GroupSiteComponentBuilder {
 
 			infoSiteStudentInformation.setNumber(attend.getRegistration().getNumber());
 
-			infoSiteStudentInformation.setName(attend.getRegistration().getPerson().getNome());
+			infoSiteStudentInformation.setName(attend.getRegistration().getPerson().getName());
 
 			infoSiteStudentInformation.setEmail(attend.getRegistration().getPerson().getEmail());
 

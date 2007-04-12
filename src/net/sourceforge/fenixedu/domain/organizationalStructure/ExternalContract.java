@@ -98,8 +98,8 @@ public class ExternalContract extends ExternalContract_Base {
 		ExternalContract externalPerson = (ExternalContract) accountability;
 		if (externalPerson.hasPerson()) {
 		    Person person = externalPerson.getPerson();
-		    if (((person.getNome() != null && person.getNome().equalsIgnoreCase(name)) || 
-			    ((person.getNome() == null || person.getNome().equals("")) && name.equals("")))
+		    if (((person.getName() != null && person.getName().equalsIgnoreCase(name)) || 
+			    ((person.getName() == null || person.getName().equals("")) && name.equals("")))
 			    && ((person.getAddress() != null && person.getAddress().equalsIgnoreCase(address)) ||
 				    ((person.getAddress() == null || person.getAddress().equals("")) && address.equals("")))
 					    && externalPerson.getInstitutionUnit().equals(institution)

@@ -54,7 +54,6 @@
     <!-- Numero do Documento de Identificacao -->
     <tr>
      <td><bean:message key="label.person.identificationDocumentNumber"  /></td>
-      <!-- <bean:write name="personalInfo" property="numeroDocumentoIdentificacao"/> -->
 	   <td><html:text bundle="HTMLALT_RESOURCES" altKey="text.identificationDocumentNumber" property="identificationDocumentNumber"/> </td>
 	  <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.identificationDocumentNumber" property="identificationDocumentNumber" />
     </tr>

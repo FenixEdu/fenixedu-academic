@@ -123,7 +123,7 @@ public class ListExecutionCoursesDA extends FenixDispatchAction {
                     responsibleForStringBuilder.append(" ");
 
                     final Person person = teacher.getPerson();
-                    responsibleForStringBuilder.append(person.getNome());
+                    responsibleForStringBuilder.append(person.getName());
                     responsibleForEmailsStringBuilder.append(person.getEmail());
                 }
             }

@@ -186,7 +186,7 @@ public class NewProjectProposal extends Service {
         } else {
             advisory.setExpires(new Date(Calendar.getInstance().getTimeInMillis() + 1728000000));
         }
-        advisory.setSender("Docente " + senderPerson.getNome() + " da disciplina "
+        advisory.setSender("Docente " + senderPerson.getName() + " da disciplina "
                 + startExecutionCourse.getNome());
 
         advisory.setSubject("Proposta de Co-Avaliação");
@@ -211,13 +211,13 @@ public class NewProjectProposal extends Service {
         } else {
             advisory.setExpires(new Date(Calendar.getInstance().getTimeInMillis() + 1728000000));
         }
-        advisory.setSender("Docente " + senderPerson.getNome() + " da disciplina "
+        advisory.setSender("Docente " + senderPerson.getName() + " da disciplina "
                 + startExecutionCourse.getNome());
 
         advisory.setSubject("Proposta de Co-Avaliação");
 
         String msg;
-        msg = new String("O Docente " + senderPerson.getNome() + " da disciplina "
+        msg = new String("O Docente " + senderPerson.getName() + " da disciplina "
                 + startExecutionCourse.getNome()
                 + " fez uma proposta de co-avaliação para a disciplina " + goalExecutionCourse.getNome()
                 + " relativa ao agrupamento " + groupProperties.getName() + "!");
@@ -235,13 +235,13 @@ public class NewProjectProposal extends Service {
         } else {
             advisory.setExpires(new Date(Calendar.getInstance().getTimeInMillis() + 1728000000));
         }
-        advisory.setSender("Docente " + senderPerson.getNome() + " da disciplina "
+        advisory.setSender("Docente " + senderPerson.getName() + " da disciplina "
                 + startExecutionCourse.getNome());
 
         advisory.setSubject("Realização de Co-Avaliação");
 
         String msg;
-        msg = new String("O Docente " + senderPerson.getNome() + " da disciplina "
+        msg = new String("O Docente " + senderPerson.getName() + " da disciplina "
                 + startExecutionCourse.getNome() + " criou uma co-avaliação para a disciplina "
                 + goalExecutionCourse.getNome() + " relativa ao agrupamento "
                 + groupProperties.getName() + "!");

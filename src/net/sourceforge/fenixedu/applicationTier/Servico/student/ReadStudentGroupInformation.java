@@ -59,7 +59,7 @@ public class ReadStudentGroupInformation extends Service {
 
             infoSiteStudentInformation.setNumber(attend.getRegistration().getNumber());
 
-            infoSiteStudentInformation.setName(attend.getRegistration().getPerson().getNome());
+            infoSiteStudentInformation.setName(attend.getRegistration().getPerson().getName());
 
             infoSiteStudentInformation.setEmail(attend.getRegistration().getPerson().getEmail());
 

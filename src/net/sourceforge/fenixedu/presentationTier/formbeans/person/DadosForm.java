@@ -13,6 +13,7 @@ import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
+import org.joda.time.YearMonthDay;
 
 public final class DadosForm extends ActionForm {
 
@@ -532,55 +533,50 @@ public final class DadosForm extends ActionForm {
 
     public void setPessoa(Person pessoa) {
         if (getMorada() != null)
-            pessoa.setMorada(getMorada());
+            pessoa.setAddress(getMorada());
         if (getLocalidade() != null)
-            pessoa.setLocalidade(getLocalidade());
+            pessoa.setArea(getLocalidade());
         if (getCodigoPostal() != null)
-            pessoa.setCodigoPostal(getCodigoPostal());
+            pessoa.setAreaCode(getCodigoPostal());
         if (getFreguesiaMorada() != null)
-            pessoa.setFreguesiaMorada(getFreguesiaMorada());
+            pessoa.setParishOfResidence(getFreguesiaMorada());
         if (getConcelhoMorada() != null)
-            pessoa.setConcelhoMorada(getConcelhoMorada());
+            pessoa.setDistrictSubdivisionOfResidence(getConcelhoMorada());
         if (getDistritoMorada() != null)
-            pessoa.setDistritoMorada(getDistritoMorada());
+            pessoa.setDistrictOfResidence(getDistritoMorada());
 
         if (getTelefone() != null)
-            pessoa.setTelefone(getTelefone());
+            pessoa.setPhone(getTelefone());
         if (getTelemovel() != null)
-            pessoa.setTelemovel(getTelemovel());
+            pessoa.setMobile(getTelemovel());
 
         if (getEmail() != null)
             pessoa.setEmail(getEmail());
 
         if (getEnderecoInternet() != null)
-            pessoa.setEnderecoWeb(getEnderecoInternet());
+            pessoa.setWebAddress(getEnderecoInternet());
 
         if ("Criar".equals(getAction())) {
             pessoa.setIdInternal(new Integer(getCodigoInterno()));
-            pessoa.setNumeroDocumentoIdentificacao(getNumeroDocumentoIdentificacao());
+            pessoa.setDocumentIdNumber(getNumeroDocumentoIdentificacao());
             pessoa.setIdDocumentType(IDDocumentType.valueOf(getTipoDocumentoIdentificacao()));
-            pessoa.setLocalEmissaoDocumentoIdentificacao(getLocalEmissaoDocumentoIdentificacao());
+            pessoa.setEmissionLocationOfDocumentId(getLocalEmissaoDocumentoIdentificacao());
 
             Calendar calendar = Calendar.getInstance();
             calendar.set(getAnoValidadeDocumentoIdentificacao(), getMesValidadeDocumentoIdentificacao(),
                     getDiaValidadeDocumentoIdentificacao());
 
-            pessoa.setDataValidadeDocumentoIdentificacao(calendar.getTime());
-            /*
-             * pessoa.setPrimeiroNome(getPrimeiroNome());
-             * pessoa.setUltimoNome(getUltimoNome());
-             * pessoa.setNomesMeio(getNomesMeio()); pessoa.setSexo(getSexo());
-             * pessoa.setMaritalStatus(getMaritalStatus());
-             */
+            pessoa.setExpirationDateOfDocumentIdYearMonthDay(YearMonthDay.fromCalendarFields(calendar));
+
             calendar.set(getAnoNascimento(), getMesNascimento(), getDiaNascimento());
-            pessoa.setNascimento(calendar.getTime());
-            pessoa.setNomePai(getNomePai());
-            pessoa.setNomeMae(getNomeMae());
-            pessoa.setFreguesiaNaturalidade(getFreguesiaNaturalidade());
-            pessoa.setConcelhoNaturalidade(getConcelhoNaturalidade());
-            pessoa.setDistritoNaturalidade(getDistritoNaturalidade());
-            pessoa.setNumContribuinte(getNumContribuinte());
-            pessoa.setCodigoFiscal(getCodigoFiscal());                      
+            pessoa.setDateOfBirthYearMonthDay(YearMonthDay.fromCalendarFields(calendar));
+            pessoa.setNameOfFather(getNomePai());
+            pessoa.setNameOfMother(getNomeMae());
+            pessoa.setParishOfBirth(getFreguesiaNaturalidade());
+            pessoa.setDistrictSubdivisionOfBirth(getConcelhoNaturalidade());
+            pessoa.setDistrictOfBirth(getDistritoNaturalidade());
+            pessoa.setSocialSecurityNumber(getNumContribuinte());
+            pessoa.setFiscalCode(getCodigoFiscal());                      
             pessoa.setUsername(RoleType.PERSON);                       
             pessoa.setPassword(getPassword());
         }

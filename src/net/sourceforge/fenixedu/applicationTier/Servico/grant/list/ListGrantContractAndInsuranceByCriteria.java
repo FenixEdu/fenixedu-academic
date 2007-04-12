@@ -91,9 +91,9 @@ public class ListGrantContractAndInsuranceByCriteria extends Service {
 
         if (!(grantContractRegime.getGrantContract().getGrantOwner().getPerson() == null)) {
             infoListGrantOwnerByOrder.setFirstName(NameUtils.getFirstName(grantContractRegime
-                    .getGrantContract().getGrantOwner().getPerson().getNome()));
+                    .getGrantContract().getGrantOwner().getPerson().getName()));
             infoListGrantOwnerByOrder.setLastName(NameUtils.getLastName(grantContractRegime
-                    .getGrantContract().getGrantOwner().getPerson().getNome()));
+                    .getGrantContract().getGrantOwner().getPerson().getName()));
         } else {
             infoListGrantOwnerByOrder.setFirstName("");
             infoListGrantOwnerByOrder.setLastName("");

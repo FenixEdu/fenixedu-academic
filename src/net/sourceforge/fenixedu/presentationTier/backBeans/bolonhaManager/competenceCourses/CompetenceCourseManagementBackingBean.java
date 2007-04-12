@@ -146,7 +146,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
             result = new ArrayList<String>();
 
             for (Person person: competenceCoursesManagementGroup.getElements()) {                
-                result.add(person.getNome() + " (" + person.getUsername() + ")");
+                result.add(person.getName() + " (" + person.getUsername() + ")");
             }
         }
 

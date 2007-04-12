@@ -4,8 +4,6 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -45,6 +43,7 @@ import pt.utl.ist.fenix.tools.util.CollectionPager;
  * 
  */
 public class PersonManagementAction extends FenixDispatchAction {
+    
     public ActionForward firstPage(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 	return mapping.findForward("firstPage");

@@ -75,7 +75,7 @@ public class CreateProjectSubmission extends Service {
         final VirtualPath filePath = getVirtualPath(attends.getExecutionCourse(), project, studentGroup);
       
         Collection<FileSetMetaData> metaData = new ArrayList<FileSetMetaData>();
-        metaData.add(FileSetMetaData.createAuthorMeta(attends.getRegistration().getPerson().getNome()));
+        metaData.add(FileSetMetaData.createAuthorMeta(attends.getRegistration().getPerson().getName()));
         metaData.add(FileSetMetaData.createTitleMeta(filename));
         metaData.add(new FileSetMetaData("type",null,null,EducationalResourceType.PROJECT_SUBMISSION.toString()));
         

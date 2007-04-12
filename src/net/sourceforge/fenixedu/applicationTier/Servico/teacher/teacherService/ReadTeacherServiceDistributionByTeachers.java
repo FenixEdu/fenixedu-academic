@@ -69,7 +69,7 @@ public class ReadTeacherServiceDistributionByTeachers extends Service {
 		    Double accumulatedCredits = (startPeriod == null ? 0.0 : teacher
 			    .getBalanceOfCreditsUntil(endPeriod));
 		    returnDTO.addTeacher(teacher.getIdInternal(), teacher.getTeacherNumber(), teacher
-			    .getCategory().getCode(), teacher.getPerson().getNome(), teacher
+			    .getCategory().getCode(), teacher.getPerson().getName(), teacher
 			    .getLessonHours(executionPeriodEntry), accumulatedCredits);
 		}
 

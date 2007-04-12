@@ -87,7 +87,9 @@ public class EmailAddress extends EmailAddress_Base {
     
     @Checked("PartyContactPredicates.checkPermissionsToManage")
     public void edit(final String value) {
-	super.setValue(value);
+	if (!isInstitutionalType()) {
+	    super.setValue(value);
+	}
     }
     
     public void edit(final PartyContactType type, final Boolean defaultContact, final String value) {

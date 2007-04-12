@@ -32,19 +32,19 @@ public class AuthorshipTest extends DomainTestBase {
         super.setUp();
         
         person1 = new Person();
-        person1.setNome("Autor1");
+        person1.setName("Autor1");
         
         person2 = new Person();
-        person2.setNome("Autor2");
+        person2.setName("Autor2");
         
         person3 = new Person();
-        person3.setNome("Autor3");
+        person3.setName("Autor3");
         
         person4 = new Person();
-        person4.setNome("Autor4");
+        person4.setName("Autor4");
         
         person5 = new Person();
-        person5.setNome("Autor5");
+        person5.setName("Autor5");
         
         authors = new ArrayList<Person>();
         authors.add(person1);

@@ -16,11 +16,11 @@ public class CurriculumTest extends DomainTestBase {
                
         person = new Person();
         person.setIdInternal(0);
-        person.setNome("Mrsp");
+        person.setName("Mrsp");
         
         person2 = new Person();
         person2.setIdInternal(1);
-        person2.setNome("Jdnf");
+        person2.setName("Jdnf");
        
         curricularCourse = new CurricularCourse();
         curricularCourse.setIdInternal(0);
@@ -51,7 +51,7 @@ public class CurriculumTest extends DomainTestBase {
         testOperacionalObjectives("operacionalObjectives2", "operacionalObjectivesEn");      
         testProgram("program2", "programEn"); 
         
-        assertEquals("Person Name Unexpected", person.getNome(), curriculum.getPersonWhoAltered().getNome());
+        assertEquals("Person Name Unexpected", person.getName(), curriculum.getPersonWhoAltered().getName());
         
         curriculum.edit("", "", "", "generalObjectivesEn2", "operacionalObjectivesEn2", "programEn2");
                       
@@ -59,7 +59,7 @@ public class CurriculumTest extends DomainTestBase {
         testOperacionalObjectives("operacionalObjectives2", "operacionalObjectivesEn2");
         testProgram("program2", "programEn2");
         
-        assertEquals("Person Name Unexpected", person2.getNome(), curriculum.getPersonWhoAltered().getNome());
+        assertEquals("Person Name Unexpected", person2.getName(), curriculum.getPersonWhoAltered().getName());
     }
     
     private void testGeneralObjectives(String generalObjectives, String generalObjectivesEng){

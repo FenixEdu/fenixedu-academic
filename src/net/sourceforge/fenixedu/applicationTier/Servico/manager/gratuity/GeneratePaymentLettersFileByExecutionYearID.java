@@ -773,7 +773,7 @@ public class GeneratePaymentLettersFileByExecutionYearID extends Service {
 
             // Registration name
             letterFile.append(gratuityLetterFileEntry.getStudentCurricularPlan().getRegistration()
-                    .getPerson().getNome()
+                    .getPerson().getName()
                     + DATA_SEPARATOR);
 
             // Registration address

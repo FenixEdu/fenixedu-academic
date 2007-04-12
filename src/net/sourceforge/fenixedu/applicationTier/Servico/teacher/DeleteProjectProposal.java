@@ -117,19 +117,19 @@ public class DeleteProjectProposal extends Service {
         } else {
             advisory.setExpires(new Date(Calendar.getInstance().getTimeInMillis() + 1728000000));
         }
-        advisory.setSender("Docente " + withdrawalPerson.getNome() + " da disciplina "
+        advisory.setSender("Docente " + withdrawalPerson.getName() + " da disciplina "
                 + startExecutionCourse.getNome());
 
         advisory.setSubject("Desistência de proposta de Co-Avaliação");
 
         String msg;
-        msg = new String("O Docente " + withdrawalPerson.getNome() + " da disciplina "
+        msg = new String("O Docente " + withdrawalPerson.getName() + " da disciplina "
                 + startExecutionCourse.getNome()
                 + " desistiu da proposta de co-avaliação para a disciplina "
                 + goalExecutionCourse.getNome() + " relativa ao agrupamento "
                 + grouping.getName()
                 + " previamente enviada pelo docente "
-                + groupPropertiesExecutionCourse.getSenderPerson().getNome() + " da disciplina "
+                + groupPropertiesExecutionCourse.getSenderPerson().getName() + " da disciplina "
                 + groupPropertiesExecutionCourse.getSenderExecutionCourse().getNome() + "!");
 
         advisory.setMessage(msg);        

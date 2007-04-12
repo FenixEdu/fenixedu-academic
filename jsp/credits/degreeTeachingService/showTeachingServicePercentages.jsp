@@ -14,7 +14,7 @@
 <h2><bean:message key="label.teaching.service.alter" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h2>
 
 <div class="infoop mtop2 mbottom1">
-	<p class="mvert025"><b><bean:message key="label.teacher.name" />:</b> <bean:write name="teacher" property="person.nome"/></p>
+	<p class="mvert025"><b><bean:message key="label.teacher.name" />:</b> <bean:write name="teacher" property="person.name"/></p>
 	<p class="mvert025"><bean:define id="teacherNumber" name="teacher" property="teacherNumber"/><b><bean:message key="label.teacher.number" />:</b> <bean:write name="teacherNumber"/></p>
 	<p class="mvert025"><b> <bean:message key="label.execution-course.name" />:</b> <bean:write name="executionCourse" property="nome"/></p>
 	<p class="mvert025"><b><bean:message key="label.execution-period" />:</b> <bean:write name="executionCourse" property="executionPeriod.name"/> - <bean:write name="executionCourse" property="executionPeriod.executionYear.year"/></p>
@@ -113,7 +113,7 @@
 								<logic:equal name="teachingServiceSize" value="0">&nbsp;</logic:equal>
 								<logic:notEqual name="teachingServiceSize" value="0">
 									<logic:iterate id="teachingService"	name="shift" property="degreeTeachingServices" indexId="indexPercentage">						
-							    		<bean:write name="teachingService" property="professorship.teacher.person.nome" />
+							    		<bean:write name="teachingService" property="professorship.teacher.person.name" />
 				 						<bean:define id="teachingServicePercentage" name="teachingService" property="percentage"/>
 				 						&nbsp;-&nbsp;<%= ((Math.round(((Double)teachingServicePercentage).doubleValue() * 100.0)) / 100.0) %>
 				 						<br />

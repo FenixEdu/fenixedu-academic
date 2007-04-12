@@ -157,7 +157,7 @@ public class EMailSender {
 				}
 			}
 			else if (recipient instanceof PersonRecipient
-					&& !EMailAddress.isValid(((PersonRecipient) recipient).getSubject().getNome(), ((PersonRecipient) recipient).getSubject().getEmail())) {
+					&& !EMailAddress.isValid(((PersonRecipient) recipient).getSubject().getName(), ((PersonRecipient) recipient).getSubject().getEmail())) {
 				report.add(SendStatus.INVALID_PERSONAL_NAME, ((PersonRecipient) recipient).getSubject());
 			}
 			else {

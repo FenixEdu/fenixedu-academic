@@ -222,7 +222,7 @@ public class CreateClassificationsForStudents extends Service {
 		    .hasPrevious();) {
 		Registration registration = (Registration) studentIter.previous();
 		fmt.format("%d\t%s\t%f\t%c\n", registration.getNumber(), registration.getPerson()
-			.getNome(), transformer.transform(registration), classification);
+			.getName(), transformer.transform(registration), classification);
 	    }
 	}
 

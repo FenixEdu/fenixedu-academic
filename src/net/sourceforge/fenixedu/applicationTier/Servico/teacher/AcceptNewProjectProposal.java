@@ -152,7 +152,7 @@ public class AcceptNewProjectProposal extends Service {
 		} else {
 			advisory.setExpires(new Date(Calendar.getInstance().getTimeInMillis() + 1728000000));
 		}
-		advisory.setSender("Docente " + receiverPerson.getNome() + " da disciplina "
+		advisory.setSender("Docente " + receiverPerson.getName() + " da disciplina "
 				+ executionCourse.getNome());
 
 		advisory.setSubject("Proposta Enviada Aceite");
@@ -162,11 +162,11 @@ public class AcceptNewProjectProposal extends Service {
 				"A proposta de co-avaliação do agrupamento "
 						+ groupPropertiesExecutionCourse.getGrouping().getName()
 						+ ", enviada pelo docente "
-						+ senderPerson.getNome()
+						+ senderPerson.getName()
 						+ "da disciplina "
 						+ groupPropertiesExecutionCourse.getSenderExecutionCourse().getNome()
 						+ " foi aceite pelo docente "
-						+ receiverPerson.getNome()
+						+ receiverPerson.getName()
 						+ " da disciplina "
 						+ executionCourse.getNome()
 						+ "!"

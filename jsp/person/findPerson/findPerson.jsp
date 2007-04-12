@@ -184,8 +184,7 @@ function check(e,v){
 				<tr>
 					<td width="70%">
 						<strong>
-							<%--<bean:write name="personalInfo" property="person.nickname"/>--%>
-							<bean:write name="personalInfo" property="nome"/>
+							<bean:write name="personalInfo" property="name"/>
 						</strong> (<bean:write name="personalInfo" property="username"/>)
 						<bean:size id="mainRolesSize" name="personalInfo" property="mainRoles"></bean:size> 
 						<logic:greaterThan name="mainRolesSize" value="0">
@@ -288,7 +287,7 @@ function check(e,v){
 								<td class="ppright">	            	
 									<logic:present name="personalInfo" property="webAddress">
 										<bean:define id="homepage" name="personalInfo" property="webAddress" />
-										<html:link target="_blank" href="<%= pageContext.findAttribute("homepage").toString() %>"><bean:write name="personalInfo" property="enderecoWeb"/></html:link>
+										<html:link target="_blank" href="<%= pageContext.findAttribute("homepage").toString() %>"><bean:write name="personalInfo" property="webAddress"/></html:link>
 									</logic:present>
 								</td>
 							</tr>

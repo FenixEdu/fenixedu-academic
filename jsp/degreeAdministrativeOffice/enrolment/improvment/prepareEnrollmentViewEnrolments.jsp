@@ -11,7 +11,7 @@
 		<td align="center" class="infoselected">
 			<b><bean:message key="label.student.enrollment.number"/></b>
 			<bean:write name="student" property="number" />&nbsp;-&nbsp;
-			<bean:write name="student" property="person.nome" />
+			<bean:write name="student" property="person.name" />
 			<br />
 			<b><bean:message key="label.student.enrollment.executionPeriod"/></b>
 			<bean:write name="executionPeriod" property="name" />&nbsp;				

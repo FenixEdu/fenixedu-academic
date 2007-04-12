@@ -78,7 +78,7 @@
 	</logic:present>
 	
 	<div class="infoop2 mtop1 mbottom15">
-		<p><b><bean:message bundle="APPLICATION_RESOURCES" key="label.student"/>:</b> <bean:write name="studentCurricularPlan" property="student.person.nome" /> / 
+		<p><b><bean:message bundle="APPLICATION_RESOURCES" key="label.student"/>:</b> <bean:write name="studentCurricularPlan" property="student.person.name" /> / 
 		<bean:message key="label.student.number"/> <bean:write name="studentCurricularPlan" property="student.number" /></p>
 		<p><b><bean:message key="label.student.enrollment.executionPeriod"/></b>: <bean:write name="executionPeriod" property="name" /> <bean:write name="executionPeriod" property="executionYear.year" /></p>
 	</div>
@@ -118,7 +118,7 @@
 			<th>&nbsp;</th>
 		</tr>
 		<logic:present name="studentCurricularPlan" property="branch">
-			<bean:define id="name" name="studentCurricularPlan" property="student.person.nome"/>
+			<bean:define id="name" name="studentCurricularPlan" property="student.person.name"/>
 			<bean:define id="number" name="studentCurricularPlan" property="student.number"/>
 			<bean:define id="executionPeriodName" name="executionPeriod" property="name"/>
 			<bean:define id="executionYear" name="executionPeriod" property="executionYear.year"/>	
@@ -173,7 +173,7 @@
 				</td>
 				<td>
 				
-					<bean:define id="name" name="studentCurricularPlan" property="student.person.nome"/>
+					<bean:define id="name" name="studentCurricularPlan" property="student.person.name"/>
 					<bean:define id="number" name="studentCurricularPlan" property="student.number"/>
 					<bean:define id="executionPeriodName" name="executionPeriod" property="name"/>
 					<bean:define id="executionYear" name="executionPeriod" property="executionYear.year"/>

@@ -59,7 +59,7 @@ public class ComputeExecutionCourseStatistics extends ComputeCourseStatistics {
     private String getResponsibleTeacherName(ExecutionCourse executionCourse) {
         for (Professorship professorship : executionCourse.getProfessorships()) {
             if (professorship.getResponsibleFor().booleanValue()) {
-                return professorship.getTeacher().getPerson().getNome();
+                return professorship.getTeacher().getPerson().getName();
             }
         }
 

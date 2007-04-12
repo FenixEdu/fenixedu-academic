@@ -89,7 +89,7 @@ public class EditMasterDegreeCandidate extends Service {
 	StringBuilder text = new StringBuilder();
 	text.append(rb.getString("masterDegreeCandidate.email.greeting"));
 	text.append(" ");
-	text.append(masterDegreeCandidate.getPerson().getNome());
+	text.append(masterDegreeCandidate.getPerson().getName());
 	text.append(rb.getString("masterDegreeCandidate.email.period"));
 	text.append(rb.getString("masterDegreeCandidate.email.newLine"));
 	text.append(rb.getString("masterDegreeCandidate.email.body"));

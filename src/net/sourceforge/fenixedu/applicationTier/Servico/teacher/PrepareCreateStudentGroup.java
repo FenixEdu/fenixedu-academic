@@ -52,7 +52,7 @@ public class PrepareCreateStudentGroup extends Service {
             final Person person = registration.getPerson();
             InfoSiteStudentInformation infoSiteStudentInformation = new InfoSiteStudentInformation();
             infoSiteStudentInformation.setEmail(person.getEmail());
-            infoSiteStudentInformation.setName(person.getNome());
+            infoSiteStudentInformation.setName(person.getName());
             infoSiteStudentInformation.setNumber(registration.getNumber());
             infoSiteStudentInformation.setUsername(person.getUsername());
             infoStudentInformationList.add(infoSiteStudentInformation);

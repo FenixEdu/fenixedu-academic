@@ -946,7 +946,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 		final List<InfoSiteStudentInformation> infoSiteStudentInformations = new ArrayList<InfoSiteStudentInformation>();
 		for (final Attends attend : studentGroup.getAttends()) {
 			infoSiteStudentInformations.add(new InfoSiteStudentInformation(attend.getRegistration().getPerson()
-					.getNome(), attend.getRegistration().getPerson().getEmail(), attend.getRegistration().getPerson()
+					.getName(), attend.getRegistration().getPerson().getEmail(), attend.getRegistration().getPerson()
 					.getUsername(), attend.getRegistration().getNumber()));
 		}
 		Collections.sort(infoSiteStudentInformations, new BeanComparator("number"));

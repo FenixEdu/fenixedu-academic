@@ -80,7 +80,7 @@ public class InfoStudentTestQuestionMark extends InfoObject {
                 setStudentIdInternal(studentTestQuestion.getStudent().getIdInternal());
                 setStudentNumber(studentTestQuestion.getStudent().getNumber());
                 if (studentTestQuestion.getStudent().getPerson() != null)
-                    setStudentName(studentTestQuestion.getStudent().getPerson().getNome());
+                    setStudentName(studentTestQuestion.getStudent().getPerson().getName());
             }
             addTestQuestionMark(studentTestQuestion.getTestQuestionMark());
             setMaximumMark(studentTestQuestion.getTestQuestionValue());

@@ -58,13 +58,13 @@ public class QualificationTest extends DomainTestBase {
 		
 		country1 = new Country("country1Name", "country1Nacionality", "country1Code");
 		person1 = new Person();
-		person1.setNome("person1Name");
+		person1.setName("person1Name");
 		person1.setUsername(RoleType.PERSON);
 		
 		
 		country2 = new Country("nameCountry2", "nacionalityCountry2", "codeCountry2");
 		person2 = new Person();
-		person2.setNome("namePerson2");
+		person2.setName("namePerson2");
 		person2.setUsername(RoleType.PERSON);
 		
 		infoQualificationToCreate = new InfoQualification();

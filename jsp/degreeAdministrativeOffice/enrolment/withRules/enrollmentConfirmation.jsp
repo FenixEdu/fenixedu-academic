@@ -17,7 +17,7 @@
 </logic:messagesPresent>
 
 	<div class="infoop2">
-	<p><b><bean:message bundle="APPLICATION_RESOURCES" key="label.student"/>:</b> <bean:write name="studentCurricularPlan" property="student.person.nome" /> / 
+	<p><b><bean:message bundle="APPLICATION_RESOURCES" key="label.student"/>:</b> <bean:write name="studentCurricularPlan" property="student.person.name" /> / 
 	<bean:message key="label.student.number"/> <bean:write name="studentCurricularPlan" property="student.number" /></p>
 	<p><b><bean:message key="label.student.enrollment.executionPeriod"/></b>: <bean:write name="executionPeriod" property="name" /> <bean:write name="executionPeriod" property="executionYear.year" /></p>
 	</div>

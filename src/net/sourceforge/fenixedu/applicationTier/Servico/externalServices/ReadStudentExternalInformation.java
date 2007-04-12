@@ -249,7 +249,7 @@ public class ReadStudentExternalInformation extends Service {
 	info.setEmail(person.getEmail());
 	info.setFiscalNumber(person.getSocialSecurityNumber());
 	info.setIdentification(this.buildExternalIdentificationInfo(person));
-	info.setName(person.getNome());
+	info.setName(person.getName());
 	info.setNationality(person.getNationality().getCode());
 	info.setPhone(person.getPhone());
 	info.setSex(person.getGender().toString());

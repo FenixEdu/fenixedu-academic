@@ -43,9 +43,9 @@ public class SelectCandidaciesService extends Service {
 
 			CandidacyDTO candidacyDTO = new CandidacyDTO();
 			candidacyDTO.setNumber(registration.getNumber());
-			candidacyDTO.setName(registration.getPerson().getNome());
+			candidacyDTO.setName(registration.getPerson().getName());
 			candidacyDTO.setUsername(registration.getPerson().getUsername());
-			candidacyDTO.setEmail(registration.getPerson().getNome());
+			candidacyDTO.setEmail(registration.getPerson().getName());
 			candidacyDTO.setInfoClassification(getInfoClassification(studentCurricularPlan.getEnrolments()));
 			candidacyDTO.setCandidacyId(candidacy.getIdInternal());
 			if (candidacy.getApproved() != null) {

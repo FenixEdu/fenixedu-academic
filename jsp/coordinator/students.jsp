@@ -166,7 +166,7 @@
 			<f:facet name="header">
 				<h:outputLink>
 					<f:param name="degreeCurricularPlanID" value="#{CoordinatorStudentsBackingBean.degreeCurricularPlanID}"/>
-					<f:param name="sortBy" value="student.person.nome"/>
+					<f:param name="sortBy" value="student.person.name"/>
 					<f:param name="studentCurricularPlanStateString" value="#{CoordinatorStudentsBackingBean.studentCurricularPlanStateString}"/>
 					<f:param name="minGradeString" value="#{CoordinatorStudentsBackingBean.minGradeString}"/>
 					<f:param name="maxGradeString" value="#{CoordinatorStudentsBackingBean.maxGradeString}"/>
@@ -179,7 +179,7 @@
 				</h:outputLink>
 			</f:facet>
 			<h:outputText value="<a href='#{CoordinatorStudentsBackingBean.contextPath}/coordinator/viewCurriculum.do?method=prepare&degreeCurricularPlanID=#{CoordinatorStudentsBackingBean.degreeCurricularPlanID}&registrationOID=#{studentCurricularPlan.registration.idInternal}'>" escape="false"/>
-				<h:outputText value="#{studentCurricularPlan.student.person.nome}"/>
+				<h:outputText value="#{studentCurricularPlan.student.person.name}"/>
 			<h:outputText value="</a>" escape="false"/>
 		</h:column>
 		<h:column>

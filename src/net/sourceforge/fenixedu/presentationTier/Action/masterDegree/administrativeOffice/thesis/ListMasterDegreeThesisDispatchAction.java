@@ -66,14 +66,14 @@ public class ListMasterDegreeThesisDispatchAction extends FenixDispatchAction {
 	    List<Teacher> guiders = thesis.getActiveMasterDegreeThesisDataVersion().getGuiders();
 	    if (!guiders.isEmpty()) {
 		for (Teacher teacher : guiders) {
-		    resultFormatter.format("%s\t", teacher.getPerson().getNome());
+		    resultFormatter.format("%s\t", teacher.getPerson().getName());
 		}
 	    } else {
 		List<ExternalContract> externalGuiders = thesis.getActiveMasterDegreeThesisDataVersion()
 			.getExternalGuiders();
 		if (!externalGuiders.isEmpty()) {
 		    for (ExternalContract externalPerson : externalGuiders) {
-			resultFormatter.format("%s\t", externalPerson.getPerson().getNome());
+			resultFormatter.format("%s\t", externalPerson.getPerson().getName());
 		    }
 		}
 	    }

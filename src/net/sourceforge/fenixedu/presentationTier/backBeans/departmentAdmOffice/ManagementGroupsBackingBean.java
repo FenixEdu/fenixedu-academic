@@ -51,7 +51,7 @@ public class ManagementGroupsBackingBean extends FenixBackingBean {
         for (Employee departmentEmployee : employees) {
             Person person = departmentEmployee.getPerson();
             if (competenceCoursesManagementGroup == null || !competenceCoursesManagementGroup.isMember(person)) {
-                result.add(new SelectItem(person.getIdInternal(), person.getNome() + " (" + person.getUsername() + ")"));    
+                result.add(new SelectItem(person.getIdInternal(), person.getName() + " (" + person.getUsername() + ")"));    
             }
         }
         return result;
@@ -70,7 +70,7 @@ public class ManagementGroupsBackingBean extends FenixBackingBean {
         Group competenceCoursesManagementGroup = getDepartment().getCompetenceCourseMembersGroup();
         if (competenceCoursesManagementGroup != null) {            
             for(Person person: competenceCoursesManagementGroup.getElements()) {
-                result.add(new SelectItem(person.getIdInternal(), person.getNome() + " (" + person.getUsername() + ")"));
+                result.add(new SelectItem(person.getIdInternal(), person.getName() + " (" + person.getUsername() + ")"));
             }
         }
 

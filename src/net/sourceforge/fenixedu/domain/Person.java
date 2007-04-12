@@ -45,7 +45,6 @@ import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressData;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
-import net.sourceforge.fenixedu.domain.homepage.Homepage;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType;
@@ -224,7 +223,7 @@ public class Person extends Person_Base {
 	super();
 	createUserAndLoginEntity();
 
-	setNome(name);
+	setName(name);
 	setIdentification(identificationDocumentNumber, identificationDocumentType);
 	setGender(gender);
 	
@@ -293,7 +292,7 @@ public class Person extends Person_Base {
 
 	createUserAndLoginEntity();
 
-	setNome(name);
+	setName(name);
 	setGender(gender);
 	setIdentification(documentIDNumber, documentType);
 	
@@ -348,11 +347,14 @@ public class Person extends Person_Base {
 
     public void editPersonalContactInformation(InfoPersonEditor personToEdit) {
 	if (personToEdit != null) {
-	    setMobile(personToEdit.getTelemovel());
+	    
+	    updateDefaultMobilePhone(personToEdit.getTelemovel());
+	    updateDefaultWebAddress(personToEdit.getEnderecoWeb());
+	    
 	    setWorkPhone(personToEdit.getWorkPhone());
 	    setEmail(personToEdit.getEmail());
+	    
 	    setAvailableEmail(personToEdit.getAvailableEmail());
-	    setWebAddress(personToEdit.getEnderecoWeb());
 	    setAvailableWebSite(personToEdit.getAvailableWebSite());
 	    setAvailablePhoto(personToEdit.getAvailablePhoto());
 	}
@@ -360,7 +362,7 @@ public class Person extends Person_Base {
 
     public void edit(String name, String address, String phone, String mobile, String homepage, String email) {
 	
-	setNome(name);
+	setName(name);
 
 	updateDefaultPhysicalAddress().setAddress(address);
 	updateDefaultPhone(phone);
@@ -554,11 +556,6 @@ public class Person extends Person_Base {
 	    }
 	}
 	return null;
-    }
-
-    @Deprecated
-    public String getNacionalidade() {
-	return getNationality().getNationality();
     }
 
     public List<ResearchResultPublication> getResearchResultPublications() {
@@ -834,7 +831,7 @@ public class Person extends Person_Base {
 
     private void setProperties(InfoPersonEditor infoPerson) {
 
-	setNome(infoPerson.getNome());
+	setName(infoPerson.getNome());
 	setIdentification(infoPerson.getNumeroDocumentoIdentificacao(), infoPerson.getTipoDocumentoIdentificacao());
 	setFiscalCode(infoPerson.getCodigoFiscal());
 	
@@ -875,7 +872,7 @@ public class Person extends Person_Base {
 
     private void updateProperties(InfoPersonEditor infoPerson) {
 
-	setNome(valueToUpdateIfNewNotNull(getNome(), infoPerson.getNome()));
+	setName(valueToUpdateIfNewNotNull(getName(), infoPerson.getNome()));
 	setIdentification(valueToUpdateIfNewNotNull(getDocumentIdNumber(), infoPerson
 		.getNumeroDocumentoIdentificacao()), (IDDocumentType) valueToUpdateIfNewNotNull(
 		getIdDocumentType(), infoPerson.getTipoDocumentoIdentificacao()));
@@ -1096,8 +1093,8 @@ public class Person extends Person_Base {
     }
     
     /**
-         * @return a group that only contains this person
-         */
+     * @return a group that only contains this person
+     */
     public PersonGroup getPersonGroup() {
 	return new PersonGroup(this);
     }
@@ -1137,16 +1134,17 @@ public class Person extends Person_Base {
 	if(hasPersonName()){
 	    getPersonName().delete();
 	}
+	
 	for ( ; !getIdDocumentsSet().isEmpty(); getIdDocumentsSet().iterator().next().delete());
 	
 	removeNationality();
 	removeCountryOfBirth();
 	
-    for (; !getThesisEvaluationParticipants().isEmpty(); getThesisEvaluationParticipants().iterator().next().delete());
+	for (; !getThesisEvaluationParticipants().isEmpty(); getThesisEvaluationParticipants().iterator().next().delete());
     
-    while (hasAnyScientificCommissions()) {
-        getScientificCommissions().iterator().next().delete();
-    }
+	while (hasAnyScientificCommissions()) {
+	    getScientificCommissions().iterator().next().delete();
+	}
     
 	super.delete();
     }
@@ -1441,228 +1439,7 @@ public class Person extends Person_Base {
 	result.append(getDefaultPhysicalAddress().getAreaCode());
 	result.append(" ");
 	result.append(getDefaultPhysicalAddress().getAreaOfAreaCode());
-
 	return result.toString();
-    }
-
-    @Deprecated
-    public String getConcelhoMorada() {
-	return super.getDistrictSubdivisionOfResidence();
-    }
-
-    @Deprecated
-    public String getConcelhoNaturalidade() {
-	return super.getDistrictSubdivisionOfBirth();
-    }
-
-    @Deprecated
-    public Date getDataEmissaoDocumentoIdentificacao() {
-	return super.getEmissionDateOfDocumentId();
-    }
-
-    @Deprecated
-    public Date getDataValidadeDocumentoIdentificacao() {
-	return super.getExpirationDateOfDocumentId();
-    }
-
-    @Deprecated
-    public String getDistritoMorada() {
-	return super.getDistrictOfResidence();
-    }
-
-    @Deprecated
-    public String getDistritoNaturalidade() {
-	return super.getDistrictOfBirth();
-    }
-
-    @Deprecated
-    public String getEnderecoWeb() {
-	return super.getWebAddress();
-    }
-
-    @Deprecated
-    public String getFreguesiaMorada() {
-	return super.getParishOfResidence();
-    }
-
-    @Deprecated
-    public String getFreguesiaNaturalidade() {
-	return super.getParishOfBirth();
-    }
-
-    @Deprecated
-    public String getLocalEmissaoDocumentoIdentificacao() {
-	return super.getEmissionLocationOfDocumentId();
-    }
-
-    @Deprecated
-    public String getLocalidade() {
-	return super.getArea();
-    }
-
-    @Deprecated
-    public String getLocalidadeCodigoPostal() {
-	return super.getAreaOfAreaCode();
-    }
-
-    @Deprecated
-    public String getMorada() {
-	return super.getAddress();
-    }
-
-    @Deprecated
-    public Date getNascimento() {
-	return super.getDateOfBirth();
-    }
-
-    @Deprecated
-    public String getNomeMae() {
-	return super.getNameOfMother();
-    }
-
-    @Deprecated
-    public String getNomePai() {
-	return super.getNameOfFather();
-    }
-
-    @Deprecated
-    public String getNumContribuinte() {
-	return super.getSocialSecurityNumber();
-    }
-
-    @Deprecated
-    public String getNumeroDocumentoIdentificacao() {
-	return super.getDocumentIdNumber();
-    }
-
-    @Deprecated
-    public String getProfissao() {
-	return super.getProfession();
-    }
-
-    @Deprecated
-    public String getTelefone() {
-	return super.getPhone();
-    }
-
-    @Deprecated
-    public String getTelemovel() {
-	return super.getMobile();
-    }
-
-    @Deprecated
-    public void setCodigoFiscal(String codigoFiscal) {
-	super.setFiscalCode(codigoFiscal);
-    }
-
-    @Deprecated
-    public void setCodigoPostal(String codigoPostal) {
-	super.setAreaCode(codigoPostal);
-    }
-
-    @Deprecated
-    public void setConcelhoMorada(String concelhoMorada) {
-	super.setDistrictSubdivisionOfResidence(concelhoMorada);
-    }
-
-    @Deprecated
-    public void setConcelhoNaturalidade(String concelhoNaturalidade) {
-	super.setDistrictSubdivisionOfBirth(concelhoNaturalidade);
-    }
-
-    @Deprecated
-    public void setDataEmissaoDocumentoIdentificacao(Date dataEmissaoDocumentoIdentificacao) {
-	super.setEmissionDateOfDocumentId(dataEmissaoDocumentoIdentificacao);
-    }
-
-    @Deprecated
-    public void setDataValidadeDocumentoIdentificacao(Date dataValidadeDocumentoIdentificacao) {
-	super.setExpirationDateOfDocumentId(dataValidadeDocumentoIdentificacao);
-    }
-
-    @Deprecated
-    public void setDistritoMorada(String distritoMorada) {
-	super.setDistrictOfResidence(distritoMorada);
-    }
-
-    @Deprecated
-    public void setDistritoNaturalidade(String distritoNaturalidade) {
-	super.setDistrictOfBirth(distritoNaturalidade);
-    }
-
-    @Deprecated
-    public void setEnderecoWeb(String enderecoWeb) {
-	super.setWebAddress(enderecoWeb);
-    }
-
-    @Deprecated
-    public void setFreguesiaMorada(String freguesiaMorada) {
-	super.setParishOfResidence(freguesiaMorada);
-    }
-
-    @Deprecated
-    public void setFreguesiaNaturalidade(String freguesiaNaturalidade) {
-	super.setParishOfBirth(freguesiaNaturalidade);
-    }
-
-    @Deprecated
-    public void setLocalEmissaoDocumentoIdentificacao(String localEmissaoDocumentoIdentificacao) {
-	super.setEmissionLocationOfDocumentId(localEmissaoDocumentoIdentificacao);
-    }
-
-    @Deprecated
-    public void setLocalidade(String localidade) {
-	super.setArea(localidade);
-    }
-
-    @Deprecated
-    public void setLocalidadeCodigoPostal(String localidadeCodigoPostal) {
-	super.setAreaOfAreaCode(localidadeCodigoPostal);
-    }
-
-    @Deprecated
-    public void setMorada(String morada) {
-	super.setAddress(morada);
-    }
-
-    @Deprecated
-    public void setNascimento(Date nascimento) {
-	super.setDateOfBirth(nascimento);
-    }
-
-    @Deprecated
-    public void setNomeMae(String nomeMae) {
-	super.setNameOfMother(nomeMae);
-    }
-
-    @Deprecated
-    public void setNomePai(String nomePai) {
-	super.setNameOfFather(nomePai);
-    }
-
-    @Deprecated
-    public void setNumContribuinte(String numContribuinte) {
-	this.setSocialSecurityNumber(numContribuinte);
-    }
-
-    @Deprecated
-    public void setNumeroDocumentoIdentificacao(String numeroDocumentoIdentificacao) {
-	super.setDocumentIdNumber(numeroDocumentoIdentificacao);
-    }
-
-    @Deprecated
-    public void setProfissao(String profissao) {
-	super.setProfession(profissao);
-    }
-
-    @Deprecated
-    public void setTelefone(String telefone) {
-	super.setPhone(telefone);
-    }
-
-    @Deprecated
-    public void setTelemovel(String telemovel) {
-	super.setMobile(telemovel);
     }
 
     @Override

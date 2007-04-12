@@ -43,7 +43,7 @@ public class EnrollmentLEECAuthorizationFilter extends EnrollmentAuthorizationFi
             if (tutor != null) {
                 return new String("error.enrollment.student.withTutor+"
                         + tutor.getTeacher().getTeacherNumber().toString() + "+"
-                        + tutor.getTeacher().getPerson().getNome());
+                        + tutor.getTeacher().getPerson().getName());
             }
         } else {
             // verify if the student to enroll is a LEEC degree student

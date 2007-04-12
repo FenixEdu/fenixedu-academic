@@ -118,7 +118,7 @@ public class RejectNewProjectProposal extends Service {
 		} else {
 			advisory.setExpires(new Date(Calendar.getInstance().getTimeInMillis() + 1728000000));
 		}
-		advisory.setSender("Docente " + receiverPerson.getNome() + " da disciplina "
+		advisory.setSender("Docente " + receiverPerson.getName() + " da disciplina "
 				+ executionCourse.getNome());
 
 		advisory.setSubject("Proposta Enviada Rejeitada");
@@ -126,9 +126,9 @@ public class RejectNewProjectProposal extends Service {
 		String msg;
 		msg = new String("A proposta de co-avaliação do agrupamento "
 				+ groupPropertiesExecutionCourse.getGrouping().getName() + ", enviada pelo docente "
-				+ senderPerson.getNome() + " da disciplina "
+				+ senderPerson.getName() + " da disciplina "
 				+ groupPropertiesExecutionCourse.getSenderExecutionCourse().getNome()
-				+ " foi rejeitada pelo docente " + receiverPerson.getNome() + " da disciplina "
+				+ " foi rejeitada pelo docente " + receiverPerson.getName() + " da disciplina "
 				+ executionCourse.getNome() + "!");
 
 		advisory.setMessage(msg);

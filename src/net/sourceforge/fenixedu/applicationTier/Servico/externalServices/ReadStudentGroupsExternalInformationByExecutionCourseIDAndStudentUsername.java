@@ -103,7 +103,7 @@ public class ReadStudentGroupsExternalInformationByExecutionCourseIDAndStudentUs
 		.getExecutionCourse()));
 	student.setDegree(InfoExternalDegreeCurricularPlanInfo.newFromDegreeCurricularPlan(attend
 		.getRegistration().getActiveStudentCurricularPlan().getDegreeCurricularPlan()));
-	student.setName(new String(attend.getRegistration().getPerson().getNome()));
+	student.setName(new String(attend.getRegistration().getPerson().getName()));
 	student.setNumber(new Integer(attend.getRegistration().getNumber().intValue()));
 
 	Collection shifts = this.findShifts(attend.getRegistration(), attend.getExecutionCourse());

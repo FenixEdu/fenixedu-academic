@@ -203,7 +203,7 @@ public class Publication extends Publication_Base {
         while (iteratorAuthors.hasNext()) {
             Person author = (Person) iteratorAuthors.next();
 
-            publication += author.getNome()+", ";
+            publication += author.getName()+", ";
         }
 
         if (getJournalName() != null && getJournalName().length() != 0) {

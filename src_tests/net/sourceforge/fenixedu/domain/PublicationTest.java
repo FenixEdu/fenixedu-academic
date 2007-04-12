@@ -69,13 +69,13 @@ public class PublicationTest extends DomainTestBase {
         newPublicationType.setPublicationType("Book");
         
         person1 = new Person();
-        person1.setNome("Autor1");
+        person1.setName("Autor1");
         
         person2 = new Person();
-        person2.setNome("Autor2");
+        person2.setName("Autor2");
         
         person3 = new Person();
-        person3.setNome("Autor3");
+        person3.setName("Autor3");
         
         authors = new ArrayList<Person>();
         authors.add(person1);

@@ -58,8 +58,8 @@
     &lt;/slot&gt;
     &lt;slot name=&quot;gender&quot;/&gt;
     &lt;slot name=&quot;idDocumentType&quot;/&gt;
-    &lt;slot name=&quot;numeroDocumentoIdentificacao&quot;/&gt;
-    &lt;slot name=&quot;dataValidadeDocumentoIdentificacao&quot;&gt;
+    &lt;slot name=&quot;documentIdNumber&quot;/&gt;
+    &lt;slot name=&quot;expirationDateOfDocumentIdYearMonthDay&quot;&gt;
         &lt;property name=&quot;size&quot; value=&quot;12&quot;/&gt;
         &lt;property name=&quot;maxLength&quot; value=&quot;10&quot;/&gt;
     &lt;/slot&gt;
@@ -133,8 +133,8 @@
     &lt;/slot&gt;
     &lt;slot name=&quot;gender&quot; validator=&quot;net.sourceforge.fenixedu.renderers.validators.RequiredValidator&quot;/&gt;
     &lt;slot name=&quot;idDocumentType&quot; validator=&quot;net.sourceforge.fenixedu.renderers.validators.RequiredValidator&quot;/&gt;
-    &lt;slot name=&quot;numeroDocumentoIdentificacao&quot; validator=&quot;net.sourceforge.fenixedu.renderers.validators.RequiredValidator&quot;/&gt;
-    &lt;slot name=&quot;dataValidadeDocumentoIdentificacao&quot;&gt;
+    &lt;slot name=&quot;documentIdNumber&quot; validator=&quot;net.sourceforge.fenixedu.renderers.validators.RequiredValidator&quot;/&gt;
+    &lt;slot name=&quot;expirationDateOfDocumentIdYearMonthDay&quot;&gt;
         &lt;validator class=&quot;net.sourceforge.fenixedu.renderers.validators.RegexpValidator&quot;&gt;
             &lt;property name=&quot;regexp&quot; value=&quot;\p{Digit}?\p{Digit}/\p{Digit}?\p{Digit}/(\p{Digit}\p{Digit})?\p{Digit}\p{Digit}&quot;/&gt;
         &lt;/validator&gt;
@@ -261,7 +261,7 @@ public class RegexpValidator extends HtmlValidator {
           validator=&quot;net.sourceforge.fenixedu.renderers.validators.RequiredValidator&quot;/&gt;
     &lt;slot name=&quot;idDocumentType&quot; 
           validator=&quot;net.sourceforge.fenixedu.renderers.validators.RequiredValidator&quot;/&gt;
-    &lt;slot name=&quot;numeroDocumentoIdentificacao&quot; validator=&quot;net.sourceforge.fenixedu.renderers.validators.RequiredValidator&quot;/&gt;
+    &lt;slot name=&quot;documentIdNumber&quot; validator=&quot;net.sourceforge.fenixedu.renderers.validators.RequiredValidator&quot;/&gt;
     &lt;slot name=&quot;gender&quot; validator=&quot;net.sourceforge.fenixedu.renderers.validators.RequiredValidator&quot;/&gt;
     &lt;slot name=&quot;maritalStatus&quot; 
           validator=&quot;net.sourceforge.fenixedu.renderers.validators.RequiredValidator&quot;/&gt;

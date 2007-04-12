@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
 
-<strong><p align="center"><bean:message key="label.grant.owner.management"/></p></strong>
+<p align="center"><strong><bean:message key="label.grant.owner.management"/></strong></p>
 
 <%-- Presenting errors --%>
 <logic:messagesPresent>
@@ -77,42 +77,6 @@
 			</logic:present>
 		</td>
 	</tr>
-<%--	
-	<tr>
-		<td align="left">
-			<bean:message key="label.grant.owner.infoperson.idLocation"/>:&nbsp;
-		</td>
-		<td>
-			<logic:present name="infoGrantOwner" property="personInfo.localEmissaoDocumentoIdentificacao">
-				<bean:write name="infoGrantOwner" property="personInfo.localEmissaoDocumentoIdentificacao"/>
-			</logic:present>
-		</td>
-	</tr>
-	<tr>
-		<td align="left">
-			<bean:message key="label.grant.owner.infoperson.idDate"/>:&nbsp;
-		</td>
-		<td>
-			<logic:present name="infoGrantOwner" property="personInfo.dataEmissaoDocumentoIdentificacao">
-				<dt:format pattern="yyyy-MM-dd">
-					<bean:write name="infoGrantOwner" property="personInfo.dataEmissaoDocumentoIdentificacao.time"/>
-				</dt:format>
-			</logic:present>
-		</td>
-	</tr>
-	<tr>
-		<td align="left">
-			<bean:message key="label.grant.owner.infoperson.idValidDate"/>:&nbsp;
-		</td>
-		<td>
-			<logic:present name="infoGrantOwner" property="personInfo.dataValidadeDocumentoIdentificacao">
-				<dt:format pattern="yyyy-MM-dd">
-					<bean:write name="infoGrantOwner" property="personInfo.dataValidadeDocumentoIdentificacao.time"/>
-				</dt:format>
-			</logic:present>
-		</td>
-	</tr> 
---%>
 </table>
 
 <br/>
@@ -131,29 +95,6 @@
 			</logic:present>
 		</td>
 	</tr>
-<%--	
-	<tr>
-		<td align="left">
-			<bean:message key="label.grant.owner.infoperson.sex"/>:&nbsp;
-		</td>
-		<td>
-			<logic:present name="infoGrantOwner" property="personInfo.sexo">
-				<bean:write name="infoGrantOwner" property="personInfo.sexo"/>
-			</logic:present>
-		</td>
-	</tr>
-	<tr>
-		<td align="left">
-			<bean:message key="label.grant.owner.infoperson.maritalStatus"/>:&nbsp;
-		</td>
-		<td>
-			<logic:present name="infoGrantOwner" property="personInfo.maritalStatus">
-				<bean:define id="maritalStatus" name="infoGrantOwner" property="personInfo.maritalStatus"/>
-				<bean:message key='<%= maritalStatus.toString() %>'/>
-			</logic:present>
-		</td>
-	</tr> 
---%>
 	<tr>
 		<td align="left">
 			<bean:message key="label.grant.owner.infoperson.birthdate"/>:&nbsp;
@@ -166,58 +107,7 @@
 			</logic:present>
 		</td>
 	</tr>
-<%--	
-	<tr>
-		<td align="left">
-			<bean:message key="label.grant.owner.infoperson.fatherName"/>:&nbsp;
-		</td>
-		<td>
-			<logic:present name="infoGrantOwner" property="personInfo.nomePai">
-				<bean:write name="infoGrantOwner" property="personInfo.nomePai"/>
-			</logic:present>
-		</td>
-	</tr>
-	<tr>
-		<td align="left">
-			<bean:message key="label.grant.owner.infoperson.motherName"/>:&nbsp;
-		</td>
-		<td>
-			<logic:present name="infoGrantOwner" property="personInfo.nomeMae">
-				<bean:write name="infoGrantOwner" property="personInfo.nomeMae"/>
-			</logic:present>
-		</td>
-	</tr>	
-	<tr>
-		<td align="left">
-			<bean:message key="label.grant.owner.infoperson.districtBirth"/>:&nbsp;
-		</td>
-		<td>
-			<logic:present name="infoGrantOwner" property="personInfo.distritoNaturalidade">
-				<bean:write name="infoGrantOwner" property="personInfo.distritoNaturalidade"/>
-			</logic:present>
-		</td>
-	</tr>
-	<tr>
-		<td align="left">
-			<bean:message key="label.grant.owner.infoperson.parishOfBirth"/>:&nbsp;
-		</td>
-		<td>
-			<logic:present name="infoGrantOwner" property="personInfo.freguesiaNaturalidade">
-				<bean:write name="infoGrantOwner" property="personInfo.freguesiaNaturalidade"/>
-			</logic:present>
-		</td>
-	</tr>
-	<tr>
-		<td align="left">
-			<bean:message key="label.grant.owner.infoperson.districtSubBirth"/>:&nbsp;
-		</td>
-		<td>
-			<logic:present name="infoGrantOwner" property="personInfo.concelhoNaturalidade">
-				<bean:write name="infoGrantOwner" property="personInfo.concelhoNaturalidade"/>
-			</logic:present>
-		</td>			
-	</tr> 
---%>
+
 	<tr>
 		<td align="left">
 			<bean:message key="label.grant.owner.infoperson.nationality"/>:&nbsp;
@@ -259,49 +149,6 @@
 		</td>
 	</tr>
 
-<%--	
-	<tr>
-		<td align="left">
-			<bean:message key="label.grant.owner.infoperson.areaOfAreaCode"/>:&nbsp;
-		</td>
-		<td>
-			<logic:present name="infoGrantOwner" property="personInfo.localidadeCodigoPostal">
-				<bean:write name="infoGrantOwner" property="personInfo.localidadeCodigoPostal"/>
-			</logic:present>
-		</td>
-	</tr>
-	<tr>
-		<td align="left">
-			<bean:message key="label.grant.owner.infoperson.addressParish"/>:&nbsp;
-		</td>
-		<td>
-			<logic:present name="infoGrantOwner" property="personInfo.freguesiaMorada">
-				<bean:write name="infoGrantOwner" property="personInfo.freguesiaMorada"/>
-			</logic:present>
-		</td>
-	</tr>
-	<tr>
-		<td align="left">
-			<bean:message key="label.grant.owner.infoperson.addressDistrictSub"/>:&nbsp;
-		</td>
-		<td>
-			<logic:present name="infoGrantOwner" property="personInfo.concelhoMorada">
-				<bean:write name="infoGrantOwner" property="personInfo.concelhoMorada"/>
-			</logic:present>
-		</td>
-	</tr> 
-	<tr>
-		<td align="left">
-			<bean:message key="label.grant.owner.infoperson.addressDistrict"/>:&nbsp;
-		</td>
-		<td>
-			<logic:present name="infoGrantOwner" property="personInfo.distritoMorada">
-				<bean:write name="infoGrantOwner" property="personInfo.distritoMorada"/>
-			</logic:present>
-		</td>
-	</tr> 
---%>
-
 	<tr>
 		<td align="left">
 			<bean:message key="label.grant.owner.infoperson.phone"/>:&nbsp;
@@ -332,19 +179,6 @@
 			</logic:present>
 		</td>
 	</tr>
-
-<%--
-	<tr>
-		<td align="left">
-			<bean:message key="label.grant.owner.infoperson.homepage"/>:&nbsp;
-		</td>
-		<td>
-			<logic:present name="infoGrantOwner" property="personInfo.enderecoWeb">
-				<bean:write name="infoGrantOwner" property="personInfo.enderecoWeb"/>
-			</logic:present>
-		</td>
-	</tr>
---%>
 
 	<tr>
 		<td align="left">

@@ -71,7 +71,7 @@ public class InfoTeacher extends InfoObject implements ISmsDTO {
     }
 
     public String toSmsText() {
-        return "Nome: " + getTeacher().getPerson().getNome() + " Numero: " + getTeacherNumber();
+        return "Nome: " + getTeacher().getPerson().getName() + " Numero: " + getTeacherNumber();
     }
 
     @Override

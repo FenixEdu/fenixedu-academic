@@ -150,7 +150,7 @@ public class ReadTeacherServiceDistributionByCourse extends Service {
 			Teacher teacher = professorShipEntry.getTeacher();
 
 			Integer teacherIdInternal = teacher.getIdInternal();
-			String teacherName = teacher.getPerson().getNome();
+			String teacherName = teacher.getPerson().getName();
 			Double teacherRequiredHours = StrictMath.ceil(teacher
 					.getHoursLecturedOnExecutionCourse(executionCourse));
 

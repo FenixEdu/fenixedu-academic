@@ -63,7 +63,7 @@ public class ReadDistributedTestMarksToString extends Service {
             if (questionIndex == 0) {
                 result.append(studentTestQuestion.getStudent().getNumber());
                 result.append("\t");
-                result.append(studentTestQuestion.getStudent().getPerson().getNome());
+                result.append(studentTestQuestion.getStudent().getPerson().getName());
                 result.append("\t");
             }
             result.append(df.format(studentTestQuestion.getTestQuestionMark()));
@@ -133,7 +133,7 @@ public class ReadDistributedTestMarksToString extends Service {
             result.append("\n");
             result.append(registration.getNumber());
             result.append("\t");
-            result.append(registration.getPerson().getNome());
+            result.append(registration.getPerson().getName());
             result.append("\t");
 
             for (int i = 0; i < distributedTestCodes.length; i++) {

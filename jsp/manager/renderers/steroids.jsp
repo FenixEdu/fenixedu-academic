@@ -159,7 +159,7 @@
         &lt;/tr&gt;
         &lt;tr&gt;
             &lt;td&gt;
-                &lt;fr:edit name=&quot;UserView&quot; property=&quot;person&quot; slot=&quot;numeroDocumentoIdentificacao&quot;&gt;
+                &lt;fr:edit name=&quot;UserView&quot; property=&quot;person&quot; slot=&quot;documentIdNumber&quot;&gt;
                     &lt;fr:layout&gt;
                         &lt;fr:property name=&quot;size&quot; value=&quot;12&quot;/&gt;
                         &lt;fr:property name=&quot;maxLength&quot; value=&quot;10&quot;/&gt;
@@ -167,7 +167,7 @@
                 &lt;/fr:edit&gt;
             &lt;/td&gt;
             &lt;td&gt;
-                &lt;fr:edit name=&quot;UserView&quot; property=&quot;person&quot; slot=&quot;dataValidadeDocumentoIdentificacao&quot;/&gt;
+                &lt;fr:edit name=&quot;UserView&quot; property=&quot;person&quot; slot=&quot;expirationDateOfDocumentIdYearMonthDay&quot;/&gt;
             &lt;/td&gt;
             &lt;td&gt;
                 &lt;fr:edit name=&quot;UserView&quot; property=&quot;person&quot; slot=&quot;availablePhoto&quot;/&gt;
@@ -202,7 +202,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <fr:edit name="UserView" property="person" slot="numeroDocumentoIdentificacao">
+                            <fr:edit name="UserView" property="person" slot="documentIdNumber">
                                 <fr:layout>
                                     <fr:property name="size" value="12"/>
                                     <fr:property name="maxLength" value="10"/>
@@ -210,7 +210,7 @@
                             </fr:edit>
                         </td>
                         <td>
-                            <fr:edit name="UserView" property="person" slot="dataValidadeDocumentoIdentificacao"/>
+                            <fr:edit name="UserView" property="person" slot="expirationDateOfDocumentIdYearMonthDay"/>
                         </td>
                         <td>
                             <fr:edit name="UserView" property="person" slot="availablePhoto"/>

@@ -668,6 +668,7 @@ public abstract class Party extends Party_Base {
      * 
      */
     
+    @Deprecated
     public String getAddress() {
 	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
 	return physicalAddress != null ? physicalAddress.getAddress() : null;
@@ -793,11 +794,13 @@ public abstract class Party extends Party_Base {
 	return partyContacts.isEmpty() ? null : (EmailAddress) partyContacts.get(0); // actually exists only one
     }
 
+    @Deprecated
     public String getEmail() {
 	final EmailAddress emailAddress = getPersonalEmailAddress();
 	return emailAddress != null ? emailAddress.getValue() : null;
     }
     
+    @Deprecated
     public void setEmail(String email) {
 	final EmailAddress emailAddress = getPersonalEmailAddress();
 	if (emailAddress == null) {

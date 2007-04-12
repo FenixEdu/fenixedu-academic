@@ -26,7 +26,7 @@ public class InfoAuthor extends InfoObject {
     public void copyFromDomain(Person author) {
         super.copyFromDomain(author);
         if (author != null) {
-            setAuthor(author.getNome());
+            setAuthor(author.getName());
             setIdInternal(author.getIdInternal());
             setKeyPerson(author.getIdInternal());
             setOrganization((author.getExternalPerson() != null) ? (author.getExternalPerson()

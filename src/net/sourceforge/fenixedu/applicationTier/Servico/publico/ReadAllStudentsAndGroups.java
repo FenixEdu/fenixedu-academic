@@ -67,7 +67,7 @@ public class ReadAllStudentsAndGroups extends Service {
                 infoSiteStudentInformation.setNumber(attend.getRegistration()
                         .getNumber());
 
-                infoSiteStudentInformation.setName(attend.getRegistration().getPerson().getNome());
+                infoSiteStudentInformation.setName(attend.getRegistration().getPerson().getName());
 
                 infoSiteStudentInformation.setUsername((attend.getRegistration().getPerson().getUsername()));
 

@@ -176,7 +176,7 @@ public class SummariesControlAction extends FenixDispatchAction {
                     String siglas = getSiglas(professorship);
 
                     SummariesControlElementDTO listElementDTO = new SummariesControlElementDTO(teacher
-                            .getPerson().getNome(), professorship.getExecutionCourse().getNome(),
+                            .getPerson().getName(), professorship.getExecutionCourse().getNome(),
                             teacher.getTeacherNumber(), categoryName, lessonHours, summaryHours,
                             courseSummaryHours, shiftDifference, courseDifference, siglas);
 

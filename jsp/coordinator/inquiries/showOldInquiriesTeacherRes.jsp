@@ -15,26 +15,6 @@
 <h2>
 	<bean:message key="title.teacher.inquiries.individual.results" bundle="INQUIRIES_RESOURCES"/>
 </h2>
-
-
-<%--ISTO VAI SER PRA POR O NOME DA CADEIRA, PERÍODO DE EXECUÇÃO
-<table class="infoselected" width="100%">
-	<tr>
-		<td width="50%">
-			<bean:message key="message.teacherInformation.name" />
-			&nbsp;
-		</td> 
-		<td width="50%">
-			<bean:message key="message.teacherInformation.birthDate" />
-			&nbsp;<bean:write name="infoSiteTeacherInformation" property="infoTeacher.infoPerson.nascimento" />
-		</td>	
-	</tr>
-	<tr>
-		<td><bean:message key="message.teacherInformation.category" />
-			&nbsp;</td>
-	</tr>
-</table>
- --%>
  
 <logic:present name="oldInquiriesTeachersResListOfLists">
 	<logic:iterate id="oldInquiriesTeachersResList" name="oldInquiriesTeachersResListOfLists" type="java.util.List">

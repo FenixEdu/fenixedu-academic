@@ -3,11 +3,7 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ page import="java.util.Date" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
-<%@ page import="net.sourceforge.fenixedu.util.State" %>
-<%@ page import="net.sourceforge.fenixedu.util.Data" %>
-<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoCandidateSituation" %>
+
 <bean:define id="personalInfo" name="masterDegreeCandidate" scope="request" property="infoPerson"/>
 <bean:define id="masterDegreeCandidate" name="masterDegreeCandidate" scope="request" type="net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate"/>
 <bean:define id="studyPlan" name="candidateStudyPlan" scope="request"/>

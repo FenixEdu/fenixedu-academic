@@ -32,7 +32,7 @@
 		  <!-- Nome -->
 		  <tr>
             	<td class="infoop" width="25"><span class="emphasis-box"><%= String.valueOf(personIndex.intValue() + 1) %></span></td>
-		    	<td class="infoop"><strong><bean:write name="personalInfo" property="nome"/></strong></td>
+		    	<td class="infoop"><strong><bean:write name="personalInfo" property="name"/></strong></td>
           </tr>
 	 	</table>
 		<table width="100%">       
@@ -54,7 +54,7 @@
   	      <!-- Numero do Documento de Identificacao -->
           <tr>
             <td width="30%"><bean:message bundle="MANAGER_RESOURCES" key="label.person.identificationDocumentNumber" /></td>
-            <td class="greytxt"><bean:write name="personalInfo" property="numeroDocumentoIdentificacao"/></td>
+            <td class="greytxt"><bean:write name="personalInfo" property="documentIdNumber"/></td>
           </tr>
           <!-- Tipo do Documento de Identificacao -->
           <tr>
@@ -67,17 +67,17 @@
           <!-- Profissao -->
           <tr>
             <td width="30%"><bean:message bundle="MANAGER_RESOURCES" key="label.person.occupation" /></td>
-            <td class="greytxt"><bean:write name="personalInfo" property="profissao"/></td>
+            <td class="greytxt"><bean:write name="personalInfo" property="profession"/></td>
           </tr>
           <!-- Telefone -->
           <tr>
             <td width="30%"><bean:message bundle="MANAGER_RESOURCES" key="label.person.telephone" /></td>
-            <td class="greytxt"><bean:write name="personalInfo" property="telefone"/></td>
+            <td class="greytxt"><bean:write name="personalInfo" property="phone"/></td>
           </tr>
           <!-- Telemovel -->
           <tr>
             <td width="30%"><bean:message bundle="MANAGER_RESOURCES" key="label.person.mobilePhone" /></td>
-            <td class="greytxt"><bean:write name="personalInfo" property="telemovel"/></td>
+            <td class="greytxt"><bean:write name="personalInfo" property="mobile"/></td>
           </tr>
           <!-- E-Mail -->
           <tr>
@@ -87,7 +87,7 @@
           <!-- WebPage -->
           <tr>
             <td width="30%"><bean:message bundle="MANAGER_RESOURCES" key="label.person.webSite" /></td>
-            <td class="greytxt"><bean:write name="personalInfo" property="enderecoWeb"/></td>
+            <td class="greytxt"><bean:write name="personalInfo" property="webAddress"/></td>
           </tr>
     	</table>
     	<br />

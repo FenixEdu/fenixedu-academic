@@ -626,14 +626,10 @@ public class PersonTest extends DomainTestBase {
 		assertEquals(person.getAreaOfAreaCode(), localidadeCodigoPostal);
 		assertEquals(person.getMaritalStatus(), maritalStatus);
 		assertEquals(person.getAddress(), address);
-		if (country == null) {
-			assertEquals(person.getNacionalidade(), nacionalidade);
-		} else {
-			assertEquals(person.getNacionalidade(), person.getNationality()
-					.getNationality());
-		}
+		assertEquals(person.getNationality().getNationality(), nacionalidade);
+		
 		assertEquals(person.getDateOfBirth(), dataNascimento);
-		assertEquals(person.getNome(), nome);
+		assertEquals(person.getName(), nome);
 		assertEquals(person.getNameOfMother(), nomeMae);
 		assertEquals(person.getNameOfFather(), nomePai);
 		assertEquals(person.getSocialSecurityNumber(), numContribuinte);

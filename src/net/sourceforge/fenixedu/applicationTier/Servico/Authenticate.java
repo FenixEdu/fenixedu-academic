@@ -129,7 +129,7 @@ public class Authenticate extends Service implements Serializable {
 	}
 
 	public String getFullName() {
-	    return getPerson().getNome();
+	    return getPerson().getName();
 	}
 	
 	private void setExpirationDate(DateTime expirationDate) {

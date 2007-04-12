@@ -83,8 +83,8 @@ public class ListGrantOwners extends Service {
         infoListGrantOwnerByOrder.setGrantOwnerId(grantOwner.getIdInternal());
         infoListGrantOwnerByOrder.setGrantOwnerNumber(grantOwner.getNumber());
 
-        infoListGrantOwnerByOrder.setFirstName(NameUtils.getFirstName(grantOwner.getPerson().getNome()));
-        infoListGrantOwnerByOrder.setLastName(NameUtils.getLastName(grantOwner.getPerson().getNome()));
+        infoListGrantOwnerByOrder.setFirstName(NameUtils.getFirstName(grantOwner.getPerson().getName()));
+        infoListGrantOwnerByOrder.setLastName(NameUtils.getLastName(grantOwner.getPerson().getName()));
 
         return infoListGrantOwnerByOrder;
     }

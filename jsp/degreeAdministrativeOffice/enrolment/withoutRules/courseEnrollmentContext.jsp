@@ -5,7 +5,7 @@
 
 <logic:present name="studentCurricularPlan">
 	<bean:define id="studentNumber" name="studentCurricularPlan" property="student.number" />
-	<bean:define id="studentName" name="studentCurricularPlan" property="student.person.nome" />
+	<bean:define id="studentName" name="studentCurricularPlan" property="student.person.name" />
 	<bean:define id="executionYear" name="executionPeriod" property="executionYear.year" />
 </logic:present>
 

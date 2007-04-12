@@ -473,7 +473,7 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
         for (final TeacherCreditsReportDTO teacherCreditsReportDTO : allListElements) {
             final Row row = spreadsheet.addRow();
             row.setCell(teacherCreditsReportDTO.getTeacher().getTeacherNumber().toString());
-            row.setCell(teacherCreditsReportDTO.getTeacher().getPerson().getNome());
+            row.setCell(teacherCreditsReportDTO.getTeacher().getPerson().getName());
             Double pastCredits = NumberUtils.formatNumber((Double) teacherCreditsReportDTO
                     .getPastCredits(), 2);
             row.setCell(pastCredits.toString().replace('.', ','));

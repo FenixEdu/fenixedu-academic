@@ -81,7 +81,7 @@ public class CurricularPlansMembersManagementBackingBean extends FenixBackingBea
         Group curricularPlanMembersGroup = getDegreeCurricularPlan().getCurricularPlanMembersGroup();
         if (curricularPlanMembersGroup != null) {
             for(Person person: curricularPlanMembersGroup.getElements()){
-                result.add(new SelectItem(person.getIdInternal(), person.getNome() + " (" + person.getUsername() + ")"));
+                result.add(new SelectItem(person.getIdInternal(), person.getName() + " (" + person.getUsername() + ")"));
             }
         }
 
@@ -94,7 +94,7 @@ public class CurricularPlansMembersManagementBackingBean extends FenixBackingBea
         Group curricularPlanMembersGroup = getDegreeCurricularPlan().getCurricularPlanMembersGroup();
         if (curricularPlanMembersGroup != null) {
             for(Person person: curricularPlanMembersGroup.getElements()){
-                result.add(person.getNome() + " (" + person.getUsername() + ")");
+                result.add(person.getName() + " (" + person.getUsername() + ")");
             }
         }
 
@@ -116,7 +116,7 @@ public class CurricularPlansMembersManagementBackingBean extends FenixBackingBea
             for (Employee departmentEmployee : employees) {
                 Person person = departmentEmployee.getPerson();
                 if (curricularPlanMembersGroup == null || !curricularPlanMembersGroup.isMember(person)) {
-                    result.add(new SelectItem(person.getIdInternal(), person.getNome() + " ("
+                    result.add(new SelectItem(person.getIdInternal(), person.getName() + " ("
                             + person.getUsername() + ")"));
                 }
             }
