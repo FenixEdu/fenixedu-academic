@@ -11,8 +11,6 @@ import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObje
 import net.sourceforge.fenixedu.renderers.DataProvider;
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 
-import org.apache.commons.beanutils.BeanComparator;
-
 public class CurricularCoursesForDegreeCurricularPlan implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
@@ -32,7 +30,8 @@ public class CurricularCoursesForDegreeCurricularPlan implements DataProvider {
                 markSheetManagementBean.setCurricularCourse(null);
             }
         }
-        Collections.sort(result, new BeanComparator("name"));
+
+        Collections.sort(result, DegreeModule.COMPARATOR_BY_NAME);
         return result;
     }
 
