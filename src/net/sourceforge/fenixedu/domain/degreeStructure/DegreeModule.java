@@ -21,14 +21,19 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
 
 
 public abstract class DegreeModule extends DegreeModule_Base {
 
-    static final public Comparator<DegreeModule> COMPARATOR_BY_NAME = new DegreeModuleComparatorByName();
-    static private class DegreeModuleComparatorByName implements Comparator<DegreeModule> {
+    static final public Comparator<DegreeModule> COMPARATOR_BY_NAME = new ComparatorByName();
+    static private class ComparatorByName implements Comparator<DegreeModule> {
         public int compare(DegreeModule d1, DegreeModule d2) {
-            return new BeanComparator("name", Collator.getInstance()).compare(d1, d2);
+            final ComparatorChain comparatorChain = new ComparatorChain();
+            comparatorChain.addComparator(new BeanComparator("idInternal"));
+            comparatorChain.addComparator(new BeanComparator("name", Collator.getInstance()));
+            
+            return comparatorChain.compare(d1, d2);
         }
     }
     
