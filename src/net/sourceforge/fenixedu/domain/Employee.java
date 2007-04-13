@@ -12,8 +12,8 @@ import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Contract;
+import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
-import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -69,7 +69,7 @@ public class Employee extends Employee_Base {
     }
 
     public List<Contract> getContractsByContractType(ContractType contractType) {
-	final List<Contract> contracts = new ArrayList();
+	final List<Contract> contracts = new ArrayList<Contract>();
 	for (final Contract accountability : getEmployeeContracts()) {
 	    if (accountability.getContractType().equals(contractType)) {
 		contracts.add(accountability);
@@ -79,7 +79,7 @@ public class Employee extends Employee_Base {
     }
 
     public List<Contract> getContractsByContractType(ContractType contractType, YearMonthDay begin, YearMonthDay end) {
-	final List<Contract> contracts = new ArrayList();
+	final List<Contract> contracts = new ArrayList<Contract>();
 	for (final Contract accountability : getEmployeeContracts()) {
 	    if (accountability.getContractType().equals(contractType) && accountability.belongsToPeriod(begin, end)) {
 		contracts.add(accountability);
@@ -137,7 +137,7 @@ public class Employee extends Employee_Base {
     }
 
     public List<Contract> getWorkingContracts(YearMonthDay begin, YearMonthDay end) {
-	final List<Contract> contracts = new ArrayList();
+	final List<Contract> contracts = new ArrayList<Contract>();
 	for (final Contract accountability : getEmployeeContracts()) {
 	    if (accountability.getContractType().equals(ContractType.WORKING) && accountability.belongsToPeriod(begin, end)) {
 		contracts.add(accountability);
@@ -196,18 +196,18 @@ public class Employee extends Employee_Base {
 
     public Department getLastDepartmentWorkingPlace(YearMonthDay begin, YearMonthDay end) {
 	Unit unit = getLastWorkingPlace(begin, end);
-	Unit departmentUnit = (unit != null) ? unit.getDepartmentUnit() : null;
+	DepartmentUnit departmentUnit = (unit != null) ? unit.getDepartmentUnit() : null;
 	return (departmentUnit != null) ? departmentUnit.getDepartment() : null;
     }
 
     private Department getEmployeeDepartmentUnit(Unit unit, boolean onlyActiveEmployees) {
 	Collection<Unit> parentUnits = unit.getParentUnits();
 	if (unitDepartment(unit, onlyActiveEmployees)) {
-	    return unit.getDepartment();
+	    return ((DepartmentUnit)unit).getDepartment();
 	} else if (!parentUnits.isEmpty()) {
 	    for (Unit parentUnit : parentUnits) {
 		if (unitDepartment(parentUnit, onlyActiveEmployees)) {
-		    return parentUnit.getDepartment();
+		    return ((DepartmentUnit)parentUnit).getDepartment();
 		} else if (parentUnit.hasAnyParentUnits()) {
 		    Department department = getEmployeeDepartmentUnit(parentUnit, onlyActiveEmployees);
 		    if (department != null) {
@@ -220,9 +220,8 @@ public class Employee extends Employee_Base {
     }
 
     private boolean unitDepartment(Unit unit, boolean onlyActiveEmployees) {
-	return (unit.getType() != null && unit.getType().equals(PartyTypeEnum.DEPARTMENT)
-		&& unit.getDepartment() != null && (!onlyActiveEmployees || unit.getDepartment()
-		.getAllCurrentActiveWorkingEmployees().contains(this)));
+	return (unit.isDepartmentUnit() && ((DepartmentUnit)unit).getDepartment() != null 
+		&& (!onlyActiveEmployees || ((DepartmentUnit)unit).getDepartment().getAllCurrentActiveWorkingEmployees().contains(this)));
     }
 
     public static Employee readByNumber(final Integer employeeNumber) {

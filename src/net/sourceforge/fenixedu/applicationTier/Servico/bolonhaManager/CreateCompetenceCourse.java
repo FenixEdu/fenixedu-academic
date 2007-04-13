@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.CompetenceCourseType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLevel;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit;
 import net.sourceforge.fenixedu.util.StringFormatter;
 
 public class CreateCompetenceCourse extends Service {
@@ -20,7 +20,7 @@ public class CreateCompetenceCourse extends Service {
             RegimeType regimeType, CompetenceCourseLevel competenceCourseLevel, CompetenceCourseType type, Integer unitID)
             throws FenixServiceException {
 
-        final Unit unit = (Unit) rootDomainObject.readPartyByOID(unitID);
+        final CompetenceCourseGroupUnit unit = (CompetenceCourseGroupUnit) rootDomainObject.readPartyByOID(unitID);
         if (unit == null) {
             throw new FenixServiceException("error.invalidUnit");
         }

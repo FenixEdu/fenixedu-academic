@@ -153,10 +153,10 @@ public class ValuationPhase extends ValuationPhase_Base {
 		sonGrouping.setParent(newGrouping);
 	    }
 
-	    for (Unit parentUnit : unit.getParentByOrganizationalStructureAccountabilityType()) {
+	    for (Unit parentUnit : unit.getParentUnitsByOrganizationalStructureAccountabilityType()) {
 		for (Unit grandParentUnit : parentUnit
-			.getParentByOrganizationalStructureAccountabilityType()) {
-		    if (!grandParentUnit.getParentByOrganizationalStructureAccountabilityType()
+			.getParentUnitsByOrganizationalStructureAccountabilityType()) {
+		    if (!grandParentUnit.getParentUnitsByOrganizationalStructureAccountabilityType()
 			    .isEmpty()) {
 			createChildUnitsGroupingsForTeachers(valuationTeacher, parentUnit, newGrouping,
 				rootGrouping, unitNewGrouping);

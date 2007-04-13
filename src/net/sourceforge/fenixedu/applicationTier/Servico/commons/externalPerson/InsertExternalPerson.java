@@ -33,7 +33,7 @@ public class InsertExternalPerson extends Service {
     }
 
     public ExternalContract run(String personName, String organizationName) {
-	final Unit organization = Unit.createNewExternalInstitution(organizationName);
+	final Unit organization = Unit.createNewNoOfficialExternalInstitution(organizationName);
 	Person externalPerson = Person.createExternalPerson(personName, Gender.MALE, null, null, null,
 		null, null, null, null, null, null, null, null, String.valueOf(System
 			.currentTimeMillis()), IDDocumentType.EXTERNAL);

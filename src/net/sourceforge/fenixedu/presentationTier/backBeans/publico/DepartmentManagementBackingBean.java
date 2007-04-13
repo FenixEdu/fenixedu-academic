@@ -11,6 +11,7 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.domain.teacher.Category;
@@ -25,11 +26,9 @@ public class DepartmentManagementBackingBean extends FenixBackingBean {
 
     private Map<Category, List<Teacher>> teachersByCategory;
 
-    public List<Unit> getDepartmentUnits() {
-        List<Unit> result = UnitUtils.readAllDepartmentUnits(); 
-        
-        Collections.sort(result, new BeanComparator("department.realName"));
-        
+    public List<DepartmentUnit> getDepartmentUnits() {
+        List<DepartmentUnit> result = UnitUtils.readAllDepartmentUnits();         
+        Collections.sort(result, new BeanComparator("department.realName"));        
         return result;
     }
     

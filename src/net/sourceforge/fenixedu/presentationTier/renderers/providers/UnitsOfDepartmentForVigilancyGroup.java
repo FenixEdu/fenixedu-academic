@@ -16,25 +16,23 @@ import org.apache.commons.beanutils.BeanComparator;
 public class UnitsOfDepartmentForVigilancyGroup implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
-        VigilancyCourseGroupBean bean = (VigilancyCourseGroupBean) source;
-        Department department = bean.getSelectedDepartment();
+	VigilancyCourseGroupBean bean = (VigilancyCourseGroupBean) source;
+	Department department = bean.getSelectedDepartment();
 
-        List<Unit> unitsOfDepartment;
+	List<Unit> unitsOfDepartment = new ArrayList<Unit>();
+	if (department != null) {
+	    for (Unit unit : department.getDepartmentUnit().getScientificAreaUnits()) {
+		unitsOfDepartment.add(unit);
+	    }
+	    unitsOfDepartment.add(department.getDepartmentUnit());
+	}
 
-        if (department != null) {
-            unitsOfDepartment = department.getDepartmentUnit().getScientificAreaUnits();
-            unitsOfDepartment.add(department.getDepartmentUnit());
-        } else {
-            unitsOfDepartment = new ArrayList<Unit>();
-        }
-
-        Collections.sort(unitsOfDepartment, new BeanComparator("name"));
-
-        return unitsOfDepartment;
+	Collections.sort(unitsOfDepartment, new BeanComparator("name"));
+	return unitsOfDepartment;
     }
 
     public Converter getConverter() {
-        return new DomainObjectKeyConverter();
+	return new DomainObjectKeyConverter();
     }
 
 }

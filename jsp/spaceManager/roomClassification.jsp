@@ -7,6 +7,8 @@
 
 <h2><bean:message bundle="SPACE_RESOURCES" key="space.manager.room.classification.title"/></h2>
 
+<bean:define id="person" name="UserView" property="person" type="net.sourceforge.fenixedu.domain.Person"/>
+
 <logic:messagesPresent message="true">
 	<p>
 		<span class="error0"><!-- Error messages go here -->
@@ -17,7 +19,11 @@
 	</p>
 </logic:messagesPresent>
 
+<%
+	if(net.sourceforge.fenixedu.domain.space.Space.personIsSpacesAdministrator(person)){
+%>
 <logic:notPresent name="roomClassificationEditor">
+	
 	<h4 class="mtop15 mbottom05"><bean:message bundle="SPACE_RESOURCES" key="space.manager.room.classification.create"/></h4>
 	<fr:hasMessages for="create" type="conversion">
 		<p>
@@ -26,7 +32,7 @@
 			</span>
 		</p>
 	</fr:hasMessages>
-
+	
 	<fr:edit id="create" name="roomClassificationCreator"
 			type="net.sourceforge.fenixedu.domain.space.RoomClassification$RoomClassificationFactoryCreator"
 			schema="RoomClassificationFactory"
@@ -38,10 +44,16 @@
 			<fr:property name="classes" value="tstyle5 thlight thright mtop05"/>
 	        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
 		</fr:layout>
-	</fr:edit>
+	</fr:edit>	
+	
 </logic:notPresent>
+<%
+	}
 
+	if(net.sourceforge.fenixedu.domain.space.Space.personIsSpacesAdministrator(person)){
+%>
 <logic:present name="roomClassificationEditor">
+
 	<h4 class="mtop15 mbottom05"><bean:message bundle="SPACE_RESOURCES" key="space.manager.room.classification.edit"/></h4>
 	<fr:hasMessages for="edit" type="conversion">
 		<p>
@@ -50,6 +62,7 @@
 			</span>
 		</p>
 	</fr:hasMessages>
+	
 	<fr:edit id="edit" name="roomClassificationEditor"
 			type="net.sourceforge.fenixedu.domain.space.RoomClassification$RoomClassificationFactoryEditor"
 			schema="RoomClassificationFactory"
@@ -63,7 +76,9 @@
 		</fr:layout>
 	</fr:edit>
 </logic:present>
-
+<%
+	}
+%>
 
 <h4 class="mtop2 mbottom05"><bean:message bundle="SPACE_RESOURCES" key="space.manager.room.classification.list"/></h4>
 
@@ -71,13 +86,22 @@
 	<fr:layout name="tabular" >
 		<fr:property name="classes" value="tstyle4 thlight mtop05"/>
         <fr:property name="columnClasses" value="aleft,aleft,aleft"/>
+		
+		<%
+			if(net.sourceforge.fenixedu.domain.space.Space.personIsSpacesAdministrator(person)){
+		%>
 		<fr:property name="link(edit)" value="/roomClassification.do?method=prepareRoomClassification"/>
 		<fr:property name="param(edit)" value="idInternal/roomClassificationID"/>
         <fr:property name="key(edit)" value="space.manager.room.link.edit"/>
         <fr:property name="bundle(edit)" value="SPACE_RESOURCES"/>
+		
 		<fr:property name="link(delete)" value="/roomClassification.do?method=deleteRoomClassification"/>
 		<fr:property name="param(delete)" value="idInternal/roomClassificationID"/>
         <fr:property name="key(delete)" value="space.manager.room.link.delete"/>
-        <fr:property name="bundle(delete)" value="SPACE_RESOURCES"/>
+        <fr:property name="bundle(delete)" value="SPACE_RESOURCES"/>        
+        <%
+        	}
+        %>
+        
 	</fr:layout>
 </fr:view>

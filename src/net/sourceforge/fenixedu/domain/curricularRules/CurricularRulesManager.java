@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.util.LogicOperators;
 
 public class CurricularRulesManager {
@@ -83,7 +83,7 @@ public class CurricularRulesManager {
 		.readDegreeModuleByOID(parametersDTO.getContextCourseGroupID());
 	final Degree degree = RootDomainObject.getInstance().readDegreeByOID(
 		parametersDTO.getSelectedDegreeID());
-	final Unit departmentUnit = (Unit) RootDomainObject.getInstance().readPartyByOID(
+	final DepartmentUnit departmentUnit = (DepartmentUnit) RootDomainObject.getInstance().readPartyByOID(
 		parametersDTO.getSelectedDepartmentUnitID());
 
 	return new AnyCurricularCourse((OptionalCurricularCourse) toApplyRule, contextCourseGroup, begin, end,

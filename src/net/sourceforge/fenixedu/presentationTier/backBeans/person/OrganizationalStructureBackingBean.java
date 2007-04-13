@@ -27,7 +27,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Contract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
-import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
@@ -39,6 +38,8 @@ import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
+
+import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
@@ -61,7 +62,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	this.bundle = ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale());
     }
 
-    public List getExecutionYears() throws FenixFilterException, FenixServiceException {
+    public List<SelectItem> getExecutionYears() throws FenixFilterException, FenixServiceException {
 	final Set<ExecutionYear> executionYears = rootDomainObject.getExecutionYearsSet();
 
 	List<SelectItem> result = new ArrayList<SelectItem>(executionYears.size());
@@ -86,31 +87,22 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     public String getUnits() throws FenixFilterException, FenixServiceException, ExcepcaoPersistencia {
 	StringBuilder buffer = new StringBuilder();
 	YearMonthDay currentDate = new YearMonthDay();
-	PartyTypeEnum partyType = null;
-	boolean writeSeparatorLine = false;
+	String partyTypeOrClassificationName = null;
+	
+	Map<String, Set<Unit>> allInstitutionSubUnits = getAllInstitutionSubUnits();
 
-	Map<PartyTypeEnum, Set<Unit>> allInstitutionSubUnits = getAllInstitutionSubUnits();
-
-	for (PartyTypeEnum partyTypeEnum : allInstitutionSubUnits.keySet()) {
-	    for (Unit unit : allInstitutionSubUnits.get(partyTypeEnum)) {
-		if (unit.getType() != null) {
-
-		    // Title
-		    if (partyType == null || !partyType.equals(unit.getType())) {
-			partyType = unit.getType();
-			buffer.append("<h3 class='mtop2'>").append(this.bundle.getString(partyType.getName())).append("</h3>\r\n");
-		    }
-
-		} else if (unit.getType() == null) {
-
-		    // End Separator Line
-		    if (writeSeparatorLine == false) {
-			buffer.append("<div class='mtop2' style='color: #aaa;'>- - - - - - - -</div>\r\n");
-			buffer.append("<h3 class='mtop2'>").append(this.bundle.getString(PartyTypeEnum.UNKNOWN.getName())).append("</h3>\r\n");
-			writeSeparatorLine = true;
-		    }
+	for (String typeOrClassificationName : allInstitutionSubUnits.keySet()) {
+	    
+	    partyTypeOrClassificationName = null;
+	    
+	    for (Unit unit : allInstitutionSubUnits.get(typeOrClassificationName)) {
+				   
+		// Title
+		if (partyTypeOrClassificationName == null) {
+		    partyTypeOrClassificationName = typeOrClassificationName;
+		    buffer.append("<h3 class='mtop2'>").append(getBundle().getString(partyTypeOrClassificationName)).append("</h3>\r\n");
 		}
-
+		
 		buffer.append("<ul class='padding nobullet'>\r\n");
 
 		List<Unit> activeSubUnits = unit.getActiveSubUnits(currentDate, AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE);
@@ -182,8 +174,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     private void getSubUnitsWithoutAggregatedUnitsList(StringBuilder buffer, YearMonthDay currentDate, Unit subUnit) {
 	List<Unit> validInstitutionSubUnits = null;
-	if (subUnit.getType() != null && subUnit.getType().equals(PartyTypeEnum.AGGREGATE_UNIT)) {
-	    validInstitutionSubUnits = getValidInstitutionSubUnits(subUnit, currentDate);
+	if (subUnit.isAggregateUnit()) {
+	    validInstitutionSubUnits = getValidSubUnits(subUnit, currentDate);
 	}
 	if (validInstitutionSubUnits != null) {
 	    for (Unit validSubUnit : validInstitutionSubUnits) {
@@ -194,31 +186,30 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	}
     }
 
-    public Map<PartyTypeEnum, Set<Unit>> getAllInstitutionSubUnits() throws FenixFilterException,
+    public Map<String, Set<Unit>> getAllInstitutionSubUnits() throws FenixFilterException,
 	    FenixServiceException, ExcepcaoPersistencia {
 
 	YearMonthDay currentDate = new YearMonthDay();
-	List<Unit> othersUnits = new ArrayList<Unit>();
-	Map<PartyTypeEnum, Set<Unit>> resultMap = new TreeMap<PartyTypeEnum, Set<Unit>>(
-		new Comparator() {
-		    public int compare(Object arg0, Object arg1) {
-			PartyTypeEnum partyTypeEnum1 = (PartyTypeEnum) arg0;
-			PartyTypeEnum partyTypeEnum2 = (PartyTypeEnum) arg1;
-			return partyTypeEnum1.compareTo(partyTypeEnum2);
+
+	Map<String, Set<Unit>> resultMap = new TreeMap<String, Set<Unit>>(
+		new Comparator<String>() {
+		    public int compare(String arg0, String arg1) {		
+			String firstString = StringNormalizer.normalize(getBundle().getString(arg0));
+			String secondString = StringNormalizer.normalize(getBundle().getString(arg1));			
+			return firstString.compareToIgnoreCase(secondString);
 		    }
 		});
 
 	Unit istUnit = UnitUtils.readInstitutionUnit();
 	if (istUnit == null) {
-	    return new HashMap<PartyTypeEnum, Set<Unit>>();
+	    return new HashMap<String, Set<Unit>>();
 	}
 
 	for (Unit subUnit : istUnit.getActiveSubUnits(currentDate, AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE)) {
-	    if (subUnit.getType() != null && subUnit.getType().equals(PartyTypeEnum.AGGREGATE_UNIT)) {
-		othersUnits.addAll(getValidInstitutionSubUnits(subUnit, currentDate));
-		for (Unit unit : othersUnits) {
+	    if (subUnit.isAggregateUnit()) {		
+		for (Unit unit : getValidSubUnits(subUnit, currentDate)) {
 		    addUnitToMap(resultMap, unit);
-		}
+		}		
 	    } else {
 		addUnitToMap(resultMap, subUnit);
 	    }
@@ -227,29 +218,31 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	return resultMap;
     }
 
-    private void addUnitToMap(Map<PartyTypeEnum, Set<Unit>> resultMap, Unit subUnit) {
-	PartyTypeEnum type = subUnit.getType();
-	if (type == null) {
-	    type = PartyTypeEnum.UNKNOWN;
+    private void addUnitToMap(Map<String, Set<Unit>> resultMap, Unit subUnit) {
+		
+	String typeName = subUnit.getClassification() != null ? subUnit.getClassification().getName() : null; 	
+	if(StringUtils.isEmpty(typeName)) {
+	    typeName = subUnit.getType() != null ? subUnit.getType().getName() : null;
 	}
-
-	if (!resultMap.containsKey(type)) {
-	    Set newSet = new TreeSet<Unit>(Unit.UNIT_COMPARATOR_BY_NAME);
-	    newSet.add(subUnit);
-	    resultMap.put(type, newSet);
-	} else {
-	    resultMap.get(type).add(subUnit);
+	
+	if (typeName != null) {	    
+	    if (!resultMap.containsKey(typeName)) {
+		Set<Unit> newSet = new TreeSet<Unit>(Unit.UNIT_COMPARATOR_BY_NAME);
+    	    	newSet.add(subUnit);
+    	    	resultMap.put(typeName, newSet);
+	    } else {
+		resultMap.get(typeName).add(subUnit);
+	    }
 	}
     }
-
-    private List<Unit> getValidInstitutionSubUnits(Unit unit, YearMonthDay currentDate) {
+      
+    private List<Unit> getValidSubUnits(Unit unit, YearMonthDay currentDate) {
 	List<Unit> result = new ArrayList<Unit>();
-	for (Unit subUnit : unit.getActiveSubUnits(currentDate,
-		AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE)) {
-	    if (subUnit.getType() == null || !subUnit.getType().equals(PartyTypeEnum.AGGREGATE_UNIT)) {
+	for (Unit subUnit : unit.getActiveSubUnits(currentDate, AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE)) {
+	    if (!subUnit.isAggregateUnit()) {
 		result.add(subUnit);
-	    } else if (subUnit.getType().equals(PartyTypeEnum.AGGREGATE_UNIT)) {
-		result.addAll(getValidInstitutionSubUnits(subUnit, currentDate));
+	    } else {
+		result.addAll(getValidSubUnits(subUnit, currentDate));
 	    }
 	}
 	return result;
@@ -408,8 +401,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     private void getSubUnitsWithoutAggregatedUnitsToFunctionList(StringBuffer buffer, ExecutionYear iExecutionYear, YearMonthDay currentDate, Unit subUnit) {
 	List<Unit> validInstitutionSubUnits = null;
-	if (subUnit.getType() != null && subUnit.getType().equals(PartyTypeEnum.AGGREGATE_UNIT)) {
-	    validInstitutionSubUnits = getValidInstitutionSubUnits(subUnit, currentDate);
+	if (subUnit.isAggregateUnit()) {
+	    validInstitutionSubUnits = getValidSubUnits(subUnit, currentDate);
 	}
 	if (validInstitutionSubUnits != null) {
 	    for (Unit validSubUnit : validInstitutionSubUnits) {
@@ -449,10 +442,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     private List<Function> getSortFunctionList(Unit unit) {
 	List<Function> allFunctions = new ArrayList<Function>();
 	allFunctions.addAll(unit.getFunctions());
-	Collections.sort(allFunctions, new Comparator() {
-	    public int compare(Object arg0, Object arg1) {
-		Function function1 = (Function) arg0;
-		Function function2 = (Function) arg1;
+	Collections.sort(allFunctions, new Comparator<Function>() {
+	    public int compare(Function function1, Function function2) {		
 		if (function1.getFunctionType() != null && function2.getFunctionType() != null) {
 		    return function1.getFunctionType().compareTo(function2.getFunctionType());
 		} else if (function1.getFunctionType() == null && function2.getFunctionType() != null) {

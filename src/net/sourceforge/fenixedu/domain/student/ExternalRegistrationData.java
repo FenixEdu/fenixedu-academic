@@ -28,7 +28,7 @@ public class ExternalRegistrationData extends ExternalRegistrationData_Base {
 	    institution = UnitUtils.readExternalInstitutionUnitByName(externalRegistrationDataBean
 		    .getInstitutionName());
 	    if (institution == null) {
-		institution = Unit.createNewExternalInstitution(externalRegistrationDataBean
+		institution = Unit.createNewNoOfficialExternalInstitution(externalRegistrationDataBean
 			.getInstitutionName());
 	    }
 	}

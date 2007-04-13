@@ -118,7 +118,7 @@ public class UnitSiteRenderer extends OutputRenderer {
 				
 				Collection<Unit> parentUnits = CollectionUtils.select(unit.getParentUnits(), new Predicate() {
 						public boolean evaluate(Object arg0) {
-						return ((Unit)arg0).getType() != PartyTypeEnum.AGGREGATE_UNIT;
+						return !((Unit)arg0).isAggregateUnit();
 					}
 					
 				});
@@ -158,20 +158,20 @@ public class UnitSiteRenderer extends OutputRenderer {
 		}
 
 		private boolean unitHasSite(Unit unit) {
-			if(unit.getType() == PartyTypeEnum.DEGREE_UNIT) {
+			if(unit.isDegreeUnit()) {
 				return unit.getDegree().hasSite();
 			}
-			if(unit.getType() == PartyTypeEnum.DEPARTMENT) {
+			if(unit.isDepartmentUnit()) {
 				return unit.getDepartmentUnit().hasSite();
 			}
 			return false;
 		}
 		
 		private String resolveUnitURL(Unit unit) {
-			if(unit.getType() == PartyTypeEnum.DEGREE_UNIT) {
+			if(unit.isDegreeUnit()) {
 				return DegreeProcessor.getDegreePath(unit.getDegree());
 			}
-			if(unit.getType() == PartyTypeEnum.DEPARTMENT) {
+			if(unit.isDepartmentUnit()) {
 				return DepartmentProcessor.getDepartmentPath(unit.getDepartment());
 			}
 			return null;

@@ -5,8 +5,62 @@
 </class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.organizationalStructure.Unit -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.Unit" table="PARTY">
+<class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.Unit" table="PARTY">	
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit"/>
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.DegreeUnit"/>
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.AdministrativeOfficeUnit"/>	
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.AggregateUnit"/>	
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.PlanetUnit"/>
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.CountryUnit"/>	
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit"/>
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.SchoolUnit"/>	
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit"/>	
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit"/>
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.SectionUnit"/>
+</class-descriptor>
 
+<!-- Definitions for net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit" table="PARTY">
+</class-descriptor>
+
+<!-- Definitions for net.sourceforge.fenixedu.domain.organizationalStructure.DegreeUnit -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.DegreeUnit" table="PARTY">
+</class-descriptor>
+
+<!-- Definitions for net.sourceforge.fenixedu.domain.organizationalStructure.AdministrativeOfficeUnit -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.AdministrativeOfficeUnit" table="PARTY">
+</class-descriptor>
+
+<!-- Definitions for net.sourceforge.fenixedu.domain.organizationalStructure.AggregateUnit -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.AggregateUnit" table="PARTY">
+</class-descriptor>
+
+<!-- Definitions for net.sourceforge.fenixedu.domain.organizationalStructure.PlanetUnit -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.PlanetUnit" table="PARTY">
+</class-descriptor>
+
+<!-- Definitions for net.sourceforge.fenixedu.domain.organizationalStructure.CountryUnit -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.CountryUnit" table="PARTY">
+</class-descriptor>
+
+<!-- Definitions for net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit" table="PARTY">
+</class-descriptor>
+
+<!-- Definitions for net.sourceforge.fenixedu.domain.organizationalStructure.SchoolUnit -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.SchoolUnit" table="PARTY">
+</class-descriptor>
+
+<!-- Definitions for net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit" table="PARTY">
+</class-descriptor>
+
+<!-- Definitions for net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit" table="PARTY">
+</class-descriptor>
+
+<!-- Definitions for net.sourceforge.fenixedu.domain.organizationalStructure.SectionUnit -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.SectionUnit" table="PARTY">
 </class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.organizationalStructure.Accountability -->

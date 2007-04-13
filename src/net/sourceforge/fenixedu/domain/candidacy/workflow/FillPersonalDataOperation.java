@@ -175,7 +175,7 @@ public class FillPersonalDataOperation extends CandidacyOperation {
 	    institution = UnitUtils.readExternalInstitutionUnitByName(getOriginInformationForm()
 		    .getInstitutionName());
 	    if (institution == null) {
-		institution = Unit.createNewExternalInstitution(getOriginInformationForm()
+		institution = Unit.createNewNoOfficialExternalInstitution(getOriginInformationForm()
 			.getInstitutionName());
 	    }
 	}

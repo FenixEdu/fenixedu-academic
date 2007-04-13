@@ -16,12 +16,9 @@ public class UnitSpaceOccupation extends UnitSpaceOccupation_Base {
 
     public final static Comparator<UnitSpaceOccupation> COMPARATOR_BY_OCCUPATION_INTERVAL_AND_UNIT = new ComparatorChain();
     static {
-	((ComparatorChain) COMPARATOR_BY_OCCUPATION_INTERVAL_AND_UNIT).addComparator(new BeanComparator(
-		"begin"));
-	((ComparatorChain) COMPARATOR_BY_OCCUPATION_INTERVAL_AND_UNIT).addComparator(new BeanComparator(
-		"unit.name"));
-	((ComparatorChain) COMPARATOR_BY_OCCUPATION_INTERVAL_AND_UNIT).addComparator(new BeanComparator(
-		"idInternal"));
+	((ComparatorChain) COMPARATOR_BY_OCCUPATION_INTERVAL_AND_UNIT).addComparator(new BeanComparator("begin"));
+	((ComparatorChain) COMPARATOR_BY_OCCUPATION_INTERVAL_AND_UNIT).addComparator(new BeanComparator("unit.name"));
+	((ComparatorChain) COMPARATOR_BY_OCCUPATION_INTERVAL_AND_UNIT).addComparator(new BeanComparator("idInternal"));
     }
 
     @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageUnitSpaceOccupations")
@@ -56,6 +53,9 @@ public class UnitSpaceOccupation extends UnitSpaceOccupation_Base {
     public void setUnit(Unit unit) {
 	if (unit == null) {
 	    throw new DomainException("error.unitSpaceOccupation.empty.unit");
+	}
+	if(unit.isAggregateUnit()) {
+	    throw new DomainException("error.space.aggregate.unit");
 	}
 	super.setUnit(unit);
     }

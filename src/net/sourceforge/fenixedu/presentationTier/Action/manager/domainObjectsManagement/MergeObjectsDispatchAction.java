@@ -225,6 +225,7 @@ public class MergeObjectsDispatchAction extends FenixDispatchAction {
 	try {
 	    ServiceUtils.executeService(userView, "DeleteObjectByOID", args);
 	} catch (DomainException e) {
+	    e.printStackTrace();
 	    return chooseObjects(mapping, form, request, response);
 	}
 	request.setAttribute("domainClasses", getClasses());

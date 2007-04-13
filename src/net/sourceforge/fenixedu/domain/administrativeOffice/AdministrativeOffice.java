@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.AdministrativeOfficeUnit;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
@@ -27,12 +27,12 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public AdministrativeOffice(AdministrativeOfficeType administrativeOfficeType, Unit unit) {
+    public AdministrativeOffice(AdministrativeOfficeType administrativeOfficeType, AdministrativeOfficeUnit unit) {
 	this();
 	init(administrativeOfficeType, unit);
     }
 
-    private void checkParameters(AdministrativeOfficeType administrativeOfficeType, Unit unit) {
+    private void checkParameters(AdministrativeOfficeType administrativeOfficeType, AdministrativeOfficeUnit unit) {
 	if (administrativeOfficeType == null) {
 	    throw new DomainException(
 		    "error.administrativeOffice.AdministrativeOffice.administrativeOfficeType.cannot.be.null");
@@ -57,7 +57,7 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
 	}
     }
 
-    protected void init(AdministrativeOfficeType administrativeOfficeType, Unit unit) {
+    protected void init(AdministrativeOfficeType administrativeOfficeType, AdministrativeOfficeUnit unit) {
 	checkParameters(administrativeOfficeType, unit);
 	super.setAdministrativeOfficeType(administrativeOfficeType);
 	super.setUnit(unit);
@@ -71,7 +71,7 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
     }
 
     @Override
-    public void setUnit(Unit unit) {
+    public void setUnit(AdministrativeOfficeUnit unit) {
 	throw new DomainException("error.administrativeOffice.AdministrativeOffice.cannot.modify.unit");
     }
 

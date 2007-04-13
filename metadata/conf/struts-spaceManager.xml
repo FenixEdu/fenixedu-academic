@@ -40,10 +40,10 @@
     
     <!-- ========== Action Mapping Definitions =============================== -->
     <action-mappings type="org.apache.struts.action.ActionMapping">
+        
         <action path="/index"
         		type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction"
-        		forward="/manageSpaces.do?method=viewSpaces"
-        		/>
+        		forward="/manageSpaces.do?method=viewSpaces" />
 
         <action path="/manageSpaces"
         		type="net.sourceforge.fenixedu.presentationTier.Action.spaceManager.ManageSpacesDA"

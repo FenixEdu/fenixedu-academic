@@ -122,6 +122,7 @@ valueType net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType    
 valueType net.sourceforge.fenixedu.domain.util.LogicOperators   												as LogicOperators;
 valueType net.sourceforge.fenixedu.domain.research.project.ProjectType											as ProjectType;
 valueType net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum									as PartyType;
+valueType net.sourceforge.fenixedu.domain.organizationalStructure.UnitClassification							as UnitClassification;
 valueType net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum						as AccountabilityType;
 valueType net.sourceforge.fenixedu.util.MultiLanguageString														as MultiLanguageString;
 valueType net.sourceforge.fenixedu.domain.system.WhenToSendEmail                               					as WhenToSendEmail;
@@ -3387,22 +3388,7 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 	String name;
 	String socialSecurityNumber;
 }
-	class net.sourceforge.fenixedu.domain.organizationalStructure.Unit extends net.sourceforge.fenixedu.domain.organizationalStructure.Party {
-		Integer costCenterCode;
-		String acronym;
-		YearMonthDay beginDateYearMonthDay;
-		YearMonthDay endDateYearMonthDay;
-		Integer keyDepartment;	
-		Integer keyDegree;
-		Integer keyAdministrativeOffice;
-		Integer keyRootDomainObjectForInstitutionUnit;
-		Integer keyRootDomainObjectForExternalInstitutionUnit;
-		Integer keyUnitServiceAgreementTemplate;
-		Integer keyRootDomainObjectForEarthUnit;
-		Integer keySite;
-		Integer keyUnitName;
-	}
-
+	
 	class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.domain.organizationalStructure.Party {
 		Integer keyEmployee;
 		Integer keyTeacher;	
@@ -3440,6 +3426,57 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 		Integer keyPersonName;
 	}
 
+	class net.sourceforge.fenixedu.domain.organizationalStructure.Unit extends net.sourceforge.fenixedu.domain.organizationalStructure.Party {		
+		String acronym;
+		Integer costCenterCode;		
+		YearMonthDay beginDateYearMonthDay;
+		YearMonthDay endDateYearMonthDay;			
+		UnitClassification classification;
+		Boolean canBeResponsibleOfSpaces;
+		Integer keyRootDomainObjectForInstitutionUnit;
+		Integer keyRootDomainObjectForExternalInstitutionUnit;						
+		Integer keyUnitServiceAgreementTemplate;
+		Integer keyRootDomainObjectForEarthUnit;
+		Integer keySite;
+		Integer keyUnitName;
+	}
+					
+		class net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit extends net.sourceforge.fenixedu.domain.organizationalStructure.Unit {
+			Integer keyDepartment;		
+		}
+		
+		class net.sourceforge.fenixedu.domain.organizationalStructure.DegreeUnit extends net.sourceforge.fenixedu.domain.organizationalStructure.Unit {
+			Integer keyDegree;		
+		}
+		
+		class net.sourceforge.fenixedu.domain.organizationalStructure.AdministrativeOfficeUnit extends net.sourceforge.fenixedu.domain.organizationalStructure.Unit {
+			Integer keyAdministrativeOffice;		
+		}
+					
+		class net.sourceforge.fenixedu.domain.organizationalStructure.AggregateUnit extends net.sourceforge.fenixedu.domain.organizationalStructure.Unit {			
+		}
+				
+		class net.sourceforge.fenixedu.domain.organizationalStructure.PlanetUnit extends net.sourceforge.fenixedu.domain.organizationalStructure.Unit {				
+		}
+		
+		class net.sourceforge.fenixedu.domain.organizationalStructure.CountryUnit extends net.sourceforge.fenixedu.domain.organizationalStructure.Unit {					
+		}
+		
+		class net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit extends net.sourceforge.fenixedu.domain.organizationalStructure.Unit {					
+		}
+		
+		class net.sourceforge.fenixedu.domain.organizationalStructure.SchoolUnit extends net.sourceforge.fenixedu.domain.organizationalStructure.Unit {					
+		}
+		
+		class net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit extends net.sourceforge.fenixedu.domain.organizationalStructure.Unit {					
+		}
+		
+		class net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit extends net.sourceforge.fenixedu.domain.organizationalStructure.Unit {					
+		}
+		
+		class net.sourceforge.fenixedu.domain.organizationalStructure.SectionUnit extends net.sourceforge.fenixedu.domain.organizationalStructure.Unit {					
+		}
+
 class net.sourceforge.fenixedu.domain.person.PersonName extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyPerson;
 	Boolean isExternalPerson;
@@ -3469,7 +3506,6 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType
 	String name;
     String ojbConcreteClass;
 }	 
-
 	class net.sourceforge.fenixedu.domain.organizationalStructure.Function extends net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType {
 		YearMonthDay beginDateYearMonthDay;
 		YearMonthDay endDateYearMonthDay;
@@ -5738,7 +5774,7 @@ relation CompetenceCourseUnit {
 	net.sourceforge.fenixedu.domain.CompetenceCourse playsRole competenceCourses {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole competenceCourseGroupUnit;
+	net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit playsRole competenceCourseGroupUnit;
 }
 
 relation ConversationMessagePerson {
@@ -8293,12 +8329,12 @@ relation UnitHasSite {
 
 relation DepartmentUnit {
     net.sourceforge.fenixedu.domain.Department playsRole department;    
-	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole departmentUnit;
+	net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit playsRole departmentUnit;
 }
 
 relation DegreeUnit {
     net.sourceforge.fenixedu.domain.Degree playsRole degree;    
-	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole unit;
+	net.sourceforge.fenixedu.domain.organizationalStructure.DegreeUnit playsRole unit;
 }
 
 relation TeacherLegalRegimenCategory {
@@ -8557,7 +8593,7 @@ relation AnyCurricularCourseDepartmentUnit {
 	net.sourceforge.fenixedu.domain.curricularRules.AnyCurricularCourse playsRole participatingAnyCurricularCourseCurricularRules {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole departmentUnit;
+	net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit playsRole departmentUnit;
 }
 
 relation AccountabilityAccountabilityType {
@@ -9304,7 +9340,7 @@ relation RootDomainObjectSibsPaymentFileProcessReport {
 
 relation AdministrativeOfficeUnit {
 	net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice playsRole administrativeOffice;
-	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole unit;
+	net.sourceforge.fenixedu.domain.organizationalStructure.AdministrativeOfficeUnit playsRole unit;
 }
 
 relation StudentDataByExecutionYearStudent {

@@ -29,6 +29,8 @@ import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReference;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -90,16 +92,16 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         return (employee != null) ? employee.getCurrentDepartmentWorkingPlace() : null;
     }
     
-    public Unit getSelectedDepartmentUnit() {
+    public DepartmentUnit getSelectedDepartmentUnit() {
         if (this.getSelectedDepartmentUnitID() != null) {
-            return (Unit) rootDomainObject.readPartyByOID(this.getSelectedDepartmentUnitID());
+            return (DepartmentUnit) rootDomainObject.readPartyByOID(this.getSelectedDepartmentUnitID());
         } else {
             return null;
         }
     }
     
-    public List<Unit> getScientificAreaUnits() {
-        Unit departmentUnit = null;
+    public List<ScientificAreaUnit> getScientificAreaUnits() {
+        DepartmentUnit departmentUnit = null;
         if (getSelectedDepartmentUnit() != null) {
             departmentUnit = getSelectedDepartmentUnit();
         } else if (getPersonDepartment() != null) {
@@ -109,7 +111,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     }
 
     public List<CompetenceCourse> getDepartmentCompetenceCourses(CurricularStage curricularStage) {
-        Unit selectedDepartmentUnit = getSelectedDepartmentUnit();
+        DepartmentUnit selectedDepartmentUnit = getSelectedDepartmentUnit();
         if (selectedDepartmentUnit != null) {
             return selectedDepartmentUnit.getDepartmentUnitCompetenceCourses(curricularStage);
         }
@@ -889,7 +891,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     private List<SelectItem> readScientificAreaUnitLabels(Integer transferToDepartmentUnitID) {
         final List<SelectItem> result = new ArrayList<SelectItem>();
         if (transferToDepartmentUnitID != null && transferToDepartmentUnitID != 0) {
-            for (final Unit unit : readDepartmentUnitToTransferTo(transferToDepartmentUnitID).getScientificAreaUnits()) {
+            for (final ScientificAreaUnit unit : readDepartmentUnitToTransferTo(transferToDepartmentUnitID).getScientificAreaUnits()) {
                 result.add(new SelectItem(unit.getIdInternal(), unit.getName()));
             }
         }
@@ -909,8 +911,8 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         this.getViewState().setAttribute("transferToDepartmentUnitID", transferToDepartmentUnitID);
     }
 
-    private Unit readDepartmentUnitToTransferTo(Integer transferToDepartmentUnitID) {
-        return (Unit) rootDomainObject.readPartyByOID(transferToDepartmentUnitID);
+    private DepartmentUnit readDepartmentUnitToTransferTo(Integer transferToDepartmentUnitID) {
+        return (DepartmentUnit) rootDomainObject.readPartyByOID(transferToDepartmentUnitID);
     }
     
     public UISelectItems getCompetenceCourseGroupUnitItems() {
@@ -948,8 +950,8 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         this.getViewState().setAttribute("transferToScientificAreaUnitID", transferToScientificAreaUnitID);
     }    
 
-    private Unit readScientificAreaUnitToTransferTo(Integer transferToScientificAreaUnitID) {
-        return (Unit) rootDomainObject.readPartyByOID(transferToScientificAreaUnitID);
+    private ScientificAreaUnit readScientificAreaUnitToTransferTo(Integer transferToScientificAreaUnitID) {
+        return (ScientificAreaUnit) rootDomainObject.readPartyByOID(transferToScientificAreaUnitID);
     }
     
     public String transferCompetenceCourse() {

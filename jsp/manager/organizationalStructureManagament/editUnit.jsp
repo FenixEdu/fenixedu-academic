@@ -62,12 +62,15 @@
 				<h:outputText value="#{bundle['date.format']}"/>	
 				<h:message for="endDate" styleClass="error"/>			
 			</h:panelGroup>
-		
-			<h:outputText value="<b>#{bundle['message.uniType']}</b>" escape="false"/>
-			<fc:selectOneMenu value="#{organizationalStructureBackingBean.unitTypeName}">
-				<f:selectItems value="#{organizationalStructureBackingBean.validUnitType}"/>				
-			</fc:selectOneMenu>
 			
+			<h:outputText value="<b>#{bundle['message.canBeResponsibleOfSpaces']}</b>" escape="false"/>
+			<h:selectBooleanCheckbox value="#{organizationalStructureBackingBean.canBeResponsibleOfSpaces}" />
+		
+			<h:outputText value="<b>#{bundle['message.classification']}</b>" escape="false"/>
+			<fc:selectOneMenu value="#{organizationalStructureBackingBean.unitClassificationName}">
+				<f:selectItems value="#{organizationalStructureBackingBean.validUnitClassifications}"/>				
+			</fc:selectOneMenu>
+				
 			<h:outputText value="<b>#{bundle['message.department']}</b>" escape="false"/>
 			<fc:selectOneMenu value="#{organizationalStructureBackingBean.departmentID}">
 				<f:selectItems value="#{organizationalStructureBackingBean.departments}"/>				

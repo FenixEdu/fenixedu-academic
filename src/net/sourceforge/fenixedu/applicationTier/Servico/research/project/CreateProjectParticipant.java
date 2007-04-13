@@ -84,7 +84,7 @@ public class CreateProjectParticipant extends Service  {
         }
         
         if (bean.getUnit() == null) {          
-        	unit = Unit.createNewExternalInstitution(bean.getUnitName());
+        	unit = Unit.createNewNoOfficialExternalInstitution(bean.getUnitName());
         }
         else{
         	unit = bean.getUnit();

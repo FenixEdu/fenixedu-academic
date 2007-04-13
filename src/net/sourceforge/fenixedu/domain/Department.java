@@ -16,6 +16,9 @@ import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.commons.CollectionUtils;
+import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
@@ -144,10 +147,10 @@ public class Department extends Department_Base {
     }
 
     public List<CompetenceCourse> getBolonhaCompetenceCourses() {
-	Unit departmentUnit = this.getDepartmentUnit();
+	DepartmentUnit departmentUnit = this.getDepartmentUnit();
 	List<CompetenceCourse> courses = new ArrayList<CompetenceCourse>();
-	for (Unit areaUnit : departmentUnit.getScientificAreaUnits()) {
-	    for (Unit competenceCourseGroupUnit : areaUnit.getCompetenceCourseGroupUnits()) {
+	for (ScientificAreaUnit areaUnit : departmentUnit.getScientificAreaUnits()) {
+	    for (CompetenceCourseGroupUnit competenceCourseGroupUnit : areaUnit.getCompetenceCourseGroupUnits()) {
 		courses.addAll(competenceCourseGroupUnit.getCompetenceCourses());
 	    }
 	}

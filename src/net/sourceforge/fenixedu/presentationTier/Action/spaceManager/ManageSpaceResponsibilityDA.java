@@ -50,9 +50,10 @@ public class ManageSpaceResponsibilityDA extends FenixDispatchAction {
 
     private void readAndSetAllAttributes(HttpServletRequest request) throws FenixFilterException,
 	    FenixServiceException, ExcepcaoPersistencia {
+	
 	SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
-	setSpaceInformation(request, spaceInformation);
-	request.setAttribute("initialUnit", UnitUtils.readInstitutionUnit());
+	setSpaceInformation(request, spaceInformation);	
+	request.setAttribute("possibleInternalUnits", UnitUtils.readAllActiveUnitsThatCanBeResponsibleOfSpaces());		
 	request.setAttribute("searchExternalPartyBean", new SearchPartyBean());
     }
 

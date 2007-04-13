@@ -7,7 +7,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
-import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 
@@ -22,9 +21,9 @@ public class ExternalCurricularCourse extends ExternalCurricularCourse_Base {
 	    @Override
 	    public void beforeAdd(ExternalCurricularCourse externalCurricularCourse, Unit unit) {
 		if (unit != null) {
-		    if (!unit.getType().equals(PartyTypeEnum.UNIVERSITY)
-			    && !unit.getType().equals(PartyTypeEnum.SCHOOL)
-			    && !unit.getType().equals(PartyTypeEnum.DEPARTMENT)) {
+		    if (!unit.isUniversityUnit()
+			    && !unit.isSchoolUnit()
+			    && !unit.isDepartmentUnit()) {
 			throw new DomainException("error.extraCurricularCourse.invalid.unit.type");
 		    }
 		}

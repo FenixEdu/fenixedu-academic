@@ -157,7 +157,7 @@ public class ExternalUnitsDispatchAction extends FenixDispatchAction {
 	
 	try {
 	    final Unit unit = (Unit) executeService("CreateExternalUnit", new Object[] {externalUnitBean});
-	    final Integer oid = (externalUnitBean.getParentUnit().getType() != PartyTypeEnum.PLANET) ? 
+	    final Integer oid = (!externalUnitBean.getParentUnit().isPlanetUnit()) ? 
 		    externalUnitBean.getParentUnit().getIdInternal() : unit.getIdInternal(); 
             request.setAttribute("oid", oid);
 	    return viewUnit(mapping, actionForm, request, response);

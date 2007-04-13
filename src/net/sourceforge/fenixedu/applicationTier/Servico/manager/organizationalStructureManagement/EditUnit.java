@@ -1,38 +1,35 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement;
 
-import java.util.Date;
-
-import org.joda.time.YearMonthDay;
-
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.UnitClassification;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+
+import org.joda.time.YearMonthDay;
 
 public class EditUnit extends Service {
 
     public void run(Integer unitID, String unitName, String unitCostCenter, String acronym,
-            Date beginDate, Date endDate, PartyTypeEnum type, Integer departmentID, Integer degreeID,
-            String webAddress) throws ExcepcaoPersistencia, FenixServiceException, DomainException,
-            FenixFilterException {
+	    YearMonthDay begin, YearMonthDay end, Integer departmentID, Integer degreeID,
+            String webAddress, UnitClassification classification, Boolean canBeResponsibleOfSpaces)
+    		throws ExcepcaoPersistencia, FenixServiceException, DomainException, FenixFilterException {
 
         Unit unit = (Unit) rootDomainObject.readPartyByOID(unitID);
         if (unit == null) {
             throw new FenixServiceException("error.noUnit");
         }
-        
-        YearMonthDay begin = (beginDate != null) ? YearMonthDay.fromDateFields(beginDate) : null;
-	YearMonthDay end = (endDate != null) ? YearMonthDay.fromDateFields(endDate) : null;
+              
         Integer costCenterCode = getCostCenterCode(unitCostCenter);
-        unit.edit(unitName, costCenterCode, acronym, begin, end, type, webAddress);
-
-        setDepartment(departmentID, unit);
-        setDegree(degreeID, unit);
+        
+        Degree degree = rootDomainObject.readDegreeByOID(degreeID);
+        Department department = rootDomainObject.readDepartmentByOID(departmentID);        
+        
+        unit.edit(unitName, costCenterCode, acronym, begin, end, webAddress, classification, department, degree, canBeResponsibleOfSpaces);	                 
     }
     
     private Integer getCostCenterCode(String unitCostCenter) {
@@ -41,34 +38,5 @@ public class EditUnit extends Service {
             costCenterCode = (Integer.valueOf(unitCostCenter));
         }
         return costCenterCode;
-    }
-
-    private void setDegree(Integer degreeID, Unit unit) throws ExcepcaoPersistencia {
-
-        Degree degree = null;
-        if (degreeID != null && unit.getType() != null
-                && (unit.getType().equals(PartyTypeEnum.DEGREE_UNIT))) {
-
-            degree = rootDomainObject.readDegreeByOID(degreeID);
-            unit.setDegree(degree);
-
-        } else if (unit.getDegree() != null) {
-            unit.removeDegree();
-        }
-    }
-
-    private void setDepartment(Integer departmentID, Unit unit) throws ExcepcaoPersistencia {
-
-        Department department = null;
-        if (departmentID != null && unit.getType() != null
-                && unit.getType().equals(PartyTypeEnum.DEPARTMENT)) {
-
-            department = rootDomainObject.readDepartmentByOID(departmentID);
-            unit.setDepartment(department);
-
-        } else if (unit.getDepartment() != null) {
-            unit.removeDepartment();
-        }
-    }
-    
+    }       
 }

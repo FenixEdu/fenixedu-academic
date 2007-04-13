@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 
 public class AnyCurricularCourse extends AnyCurricularCourse_Base {
     
@@ -24,7 +24,7 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
 	    final CourseGroup contextCourseGroup, final ExecutionPeriod begin,
 	    final ExecutionPeriod end, final Double credits, final Integer curricularPeriodOrder,
 	    final Integer minimumYear, final Integer maximumYear, final DegreeType degreeType,
-	    final Degree degree, final Unit departmentUnit) {
+	    final Degree degree, final DepartmentUnit departmentUnit) {
         
         super();
         init(toApplyRule, contextCourseGroup, begin, end, CurricularRuleType.ANY_CURRICULAR_COURSE);
@@ -42,7 +42,7 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
     
     protected void edit(final CourseGroup contextCourseGroup, final Double credits,
 	    final Integer curricularPeriodOrder, final Integer minimumYear, final Integer maximumYear,
-	    final DegreeType degreeType, final Degree degree, final Unit departmentUnit) {
+	    final DegreeType degreeType, final Degree degree, final DepartmentUnit departmentUnit) {
 
 	checkYears(minimumYear, maximumYear);
 	setContextCourseGroup(contextCourseGroup);

@@ -16,6 +16,6 @@ public class InsertInstitution extends Service {
         if (UnitUtils.readExternalInstitutionUnitByName(institutionName) != null) {
             throw new ExistingServiceException("error.exception.commons.institution.institutionAlreadyExists");
         }      
-        return Unit.createNewExternalInstitution(institutionName);
+        return Unit.createNewNoOfficialExternalInstitution(institutionName);
     }
 }

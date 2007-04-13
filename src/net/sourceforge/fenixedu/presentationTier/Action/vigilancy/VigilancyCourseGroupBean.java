@@ -7,6 +7,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 
@@ -24,7 +25,7 @@ public class VigilancyCourseGroupBean implements Serializable {
 
     private DomainReference<VigilantGroup> selectedGroup;
 
-    private DomainReference<Unit> selectedCompetenceCourseGroupUnit;
+    private DomainReference<CompetenceCourseGroupUnit> selectedCompetenceCourseGroupUnit;
 
     public VigilancyCourseGroupBean() {
 
@@ -61,12 +62,12 @@ public class VigilancyCourseGroupBean implements Serializable {
         this.selectedUnit = new DomainReference<Unit>(unit);
     }
 
-    public Unit getSelectedCompetenceCourseGroupUnit() {
+    public CompetenceCourseGroupUnit getSelectedCompetenceCourseGroupUnit() {
         return selectedCompetenceCourseGroupUnit.getObject();
     }
 
-    public void setSelectedCompetenceCourseGroupUnit(Unit unit) {
-        this.selectedCompetenceCourseGroupUnit = new DomainReference<Unit>(unit);
+    public void setSelectedCompetenceCourseGroupUnit(CompetenceCourseGroupUnit unit) {
+        this.selectedCompetenceCourseGroupUnit = new DomainReference<CompetenceCourseGroupUnit>(unit);
     }
 
     public Department getSelectedDepartment() {

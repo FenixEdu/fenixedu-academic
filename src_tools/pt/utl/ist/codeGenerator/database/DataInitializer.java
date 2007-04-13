@@ -9,6 +9,8 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.User;
+import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType;
+import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -49,6 +51,7 @@ public class DataInitializer {
 	createCountries();
 	createManagerUser();
 	createPartyTypeEnums();
+	createAccountabilityTypeEnums();
     }
 
     private static void createRoles() {
@@ -198,7 +201,6 @@ public class DataInitializer {
 	person.setName("Fenix System Administrator");
 	person.addPersonRoles(Role.getRoleByRoleType(RoleType.PERSON));
 	person.addPersonRoles(Role.getRoleByRoleType(RoleType.MANAGER));
-	
 	final User user = person.getUser();
 	final Login login = user.readUserLoginIdentification();
 	login.setActive(Boolean.TRUE);
@@ -212,4 +214,9 @@ public class DataInitializer {
 	}
     }
 
+    private static void createAccountabilityTypeEnums() {
+	for (final AccountabilityTypeEnum accountabilityTypeEnum : AccountabilityTypeEnum.values()) {
+	    new AccountabilityType(accountabilityTypeEnum);
+	}
+    }
 }

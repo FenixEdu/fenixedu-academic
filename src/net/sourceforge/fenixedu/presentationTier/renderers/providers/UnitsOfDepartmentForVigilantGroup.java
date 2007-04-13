@@ -19,17 +19,16 @@ public class UnitsOfDepartmentForVigilantGroup implements DataProvider {
         VigilantGroupBean bean = (VigilantGroupBean) source;
         Department department = bean.getSelectedDepartment();
 
-        List<Unit> unitsOfDepartment;
+        List<Unit> unitsOfDepartment = new ArrayList<Unit>();
 
-        if (department != null) {
-            unitsOfDepartment = department.getDepartmentUnit().getScientificAreaUnits();
+        if (department != null) {            
+            for(Unit unit : department.getDepartmentUnit().getScientificAreaUnits()) {
+        	unitsOfDepartment.add(unit);
+            }
             unitsOfDepartment.add(department.getDepartmentUnit());
-        } else {
-            unitsOfDepartment = new ArrayList<Unit>();
-        }
-
+        } 
+        
         Collections.sort(unitsOfDepartment, new BeanComparator("name"));
-
         return unitsOfDepartment;
     }
 

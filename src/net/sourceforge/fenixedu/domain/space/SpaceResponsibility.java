@@ -15,14 +15,11 @@ import org.joda.time.YearMonthDay;
 
 public class SpaceResponsibility extends SpaceResponsibility_Base {
 
-    public static final Comparator COMPARATOR_BY_UNIT_NAME_AND_RESPONSIBILITY_INTERVAL = new ComparatorChain();
+    public static final Comparator<SpaceResponsibility> COMPARATOR_BY_UNIT_NAME_AND_RESPONSIBILITY_INTERVAL = new ComparatorChain();
     static {
-	((ComparatorChain) COMPARATOR_BY_UNIT_NAME_AND_RESPONSIBILITY_INTERVAL)
-		.addComparator(new BeanComparator("begin"));
-	((ComparatorChain) COMPARATOR_BY_UNIT_NAME_AND_RESPONSIBILITY_INTERVAL)
-		.addComparator(new BeanComparator("unit.name", Collator.getInstance()));
-	((ComparatorChain) COMPARATOR_BY_UNIT_NAME_AND_RESPONSIBILITY_INTERVAL)
-		.addComparator(new BeanComparator("idInternal"));
+	((ComparatorChain) COMPARATOR_BY_UNIT_NAME_AND_RESPONSIBILITY_INTERVAL).addComparator(new BeanComparator("begin"));
+	((ComparatorChain) COMPARATOR_BY_UNIT_NAME_AND_RESPONSIBILITY_INTERVAL).addComparator(new BeanComparator("unit.name", Collator.getInstance()));
+	((ComparatorChain) COMPARATOR_BY_UNIT_NAME_AND_RESPONSIBILITY_INTERVAL).addComparator(new BeanComparator("idInternal"));
     }
 
     @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageResponsabilityUnits")
@@ -74,6 +71,9 @@ public class SpaceResponsibility extends SpaceResponsibility_Base {
     public void setUnit(Unit unit) {
 	if (unit == null) {
 	    throw new DomainException("error.space.responsability.no.unit");
+	}
+	if(unit.isAggregateUnit()) {
+	    throw new DomainException("error.space.aggregate.unit");
 	}
 	super.setUnit(unit);
     }

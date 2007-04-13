@@ -15,11 +15,21 @@
 		<h:inputHidden binding="#{organizationalStructureBackingBean.listingTypeValueToFunctionsHidden}"/>
 		<h:inputHidden binding="#{organizationalStructureBackingBean.listingTypeValueToUnitsHidden}"/>
 					
-		<h:outputText styleClass="error" rendered="#{!empty organizationalStructureBackingBean.errorMessage}"
-				value="#{bundle[organizationalStructureBackingBean.errorMessage]}<br/>" escape="false"/>
+		<h:outputText styleClass="error" rendered="#{!empty organizationalStructureBackingBean.errorMessage}" value="#{bundle[organizationalStructureBackingBean.errorMessage]}<br/>" escape="false"/>
 		
 		<h:outputText value="<h2>#{bundle['title.unitDetails']}</h2>" escape="false" />
+					
+		<h:selectBooleanCheckbox value="#{organizationalStructureBackingBean.institutionUnit}" onclick="this.form.submit()"/>
+		<h:outputText value="<b>#{bundle['label.rootInstitution']}</b>" escape="false" />&nbsp;&nbsp;										
 		
+		<h:selectBooleanCheckbox value="#{organizationalStructureBackingBean.externalInstitutionUnit}" onclick="this.form.submit()"/>
+		<h:outputText value="<b>#{bundle['label.rootExternalInstitution']}</b>" escape="false" />&nbsp;&nbsp;					
+		
+		<h:selectBooleanCheckbox value="#{organizationalStructureBackingBean.earthUnit}" onclick="this.form.submit()"/>				
+		<h:outputText value="<b>#{bundle['label.earthUnit']}</b>" escape="false" />
+		
+		<h:outputText value="<br/><br/>" escape="false" />
+				
 		<h:dataTable value="#{organizationalStructureBackingBean.unit}" var="unit"
 			 headerClass="listClasses-header" columnClasses="listClasses" rendered="#{!empty organizationalStructureBackingBean.unit}">
 			<h:column>
@@ -37,8 +47,8 @@
 			<h:column>
 				<f:facet name="header">
 					<h:outputText value="#{bundle['message.superiorUnit']}" />
-				</f:facet>				
-				<h:outputText value="#{unit.parentUnitsPresentationName}" escape="false"/>
+				</f:facet>								
+				<h:outputText value="#{organizationalStructureBackingBean.parentUnitsLinks}" escape="false"/>			
 			</h:column>
 			<h:column>
 				<f:facet name="header">
@@ -58,6 +68,12 @@
 				</f:facet>				
 				<h:outputText value="#{bundleEnum[unit.type.name]}" escape="false"/>
 			</h:column>
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="#{bundle['message.unitClassification']}" />
+				</f:facet>				
+				<h:outputText value="#{bundleEnum[unit.classification.name]}" escape="false"/>
+			</h:column>
 			<h:column>	
 				<f:facet name="header">
 					<h:outputText value="#{bundle['message.unitBeginDate']}" />
@@ -73,6 +89,12 @@
 				<h:outputFormat value="{0, date, dd/MM/yyyy}" rendered="#{!empty organizationalStructureBackingBean.unit.endDate}">
 					<f:param value="#{organizationalStructureBackingBean.unit.endDate}"/>
 				</h:outputFormat>					
+			</h:column>	
+			<h:column>	
+				<f:facet name="header">
+					<h:outputText value="#{bundle['message.canBeResponsibleOfSpaces']}" />
+				</f:facet>								
+				<h:outputText value="#{unit.canBeResponsibleOfSpaces}" escape="false"/>				
 			</h:column>	
 			<h:column>	
 				<f:facet name="header">
@@ -105,28 +127,15 @@
 				</fc:commandLink> 				
 			</h:column>					
 		</h:dataTable>									
-				
-						
-		<h:outputText value="<b>#{bundle['label.rootInstitution']}</b>" escape="false" />				
-		<h:selectBooleanCheckbox value="#{organizationalStructureBackingBean.institutionUnit}" onclick="this.form.submit()"/>					
-
-		<h:outputText value="<b>#{bundle['label.rootExternalInstitution']}</b>" escape="false" />
-		<h:selectBooleanCheckbox value="#{organizationalStructureBackingBean.externalInstitutionUnit}" onclick="this.form.submit()"/>					
-
-		<h:outputText value="<b>#{bundle['label.earthUnit']}</b>" escape="false" />
-		<h:selectBooleanCheckbox value="#{organizationalStructureBackingBean.earthUnit}" onclick="this.form.submit()"/>					
-					
-					
+																
 		<h:outputText value="<br/><h3>#{bundle['message.subUnits']}</h3>" escape="false" />
 		<fc:commandLink action="prepareCreateNewSubUnit" value="#{bundle['link.new.unit3']}"/>		
 		<h:outputText value="<br/><br/>" escape="false"/>		
 			
 		<h:outputText value="<b>#{bundle['message.subUnitListingType']}</b>" escape="false"/>
-		<fc:selectOneMenu value="#{organizationalStructureBackingBean.listingTypeValueToUnits}" 
-			onchange="this.form.submit();">
+		<fc:selectOneMenu value="#{organizationalStructureBackingBean.listingTypeValueToUnits}"	onchange="this.form.submit();">
 			<f:selectItems value="#{organizationalStructureBackingBean.listingTypeToUnits}"/>				
-		</fc:selectOneMenu>
-		<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
+		</fc:selectOneMenu>		
 		<h:outputText value="<br/><br/>" escape="false"/>		
 			
 		<h:dataTable value="#{organizationalStructureBackingBean.allSubUnits}" var="unit"
@@ -135,7 +144,9 @@
 				<f:facet name="header">
 					<h:outputText value="#{bundle['message.unitName']}" />
 				</f:facet>				
-				<h:outputText value="<strong>#{unit.name}</strong>" escape="false"/>
+				<h:outputLink value="#{organizationalStructureBackingBean.contextPath}/manager/organizationalStructureManagament/unitDetails.faces?unitID=#{unit.idInternal}">
+					<h:outputText value="#{unit.name}" escape="false"/>
+				</h:outputLink>	
 			</h:column>
 			<h:column>
 				<f:facet name="header">
@@ -161,6 +172,12 @@
 				</f:facet>				
 				<h:outputText value="#{bundleEnum[unit.type.name]}" escape="false"/>
 			</h:column>
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="#{bundle['message.unitClassification']}" />
+				</f:facet>				
+				<h:outputText value="#{bundleEnum[unit.classification.name]}" escape="false"/>
+			</h:column>
 			<h:column>	
 				<f:facet name="header">
 					<h:outputText value="#{bundle['message.unitBeginDate']}" />
@@ -176,7 +193,13 @@
 				<h:outputFormat value="{0, date, dd/MM/yyyy}" rendered="#{!empty unit.endDate}">
 					<f:param value="#{unit.endDate}"/>
 				</h:outputFormat>					
-			</h:column>	
+			</h:column>
+			<h:column>	
+				<f:facet name="header">
+					<h:outputText value="#{bundle['message.canBeResponsibleOfSpaces']}" />
+				</f:facet>								
+				<h:outputText value="#{unit.canBeResponsibleOfSpaces}" escape="false"/>				
+			</h:column>		
 			<h:column>	
 				<f:facet name="header">
 					<h:outputText value="#{bundle['title.relation.type']}" />
@@ -201,19 +224,16 @@
 			</h:column>				
 		</h:dataTable>
 		
-		<h:outputText value="#{bundle['unit.withoutSubUnits']}<br/>" rendered="#{empty organizationalStructureBackingBean.allSubUnits}" 
-				styleClass="error" escape="false"/>
+		<h:outputText value="<em>#{bundle['unit.withoutSubUnits']}</em><br/>" rendered="#{empty organizationalStructureBackingBean.allSubUnits}" escape="false"/>
 		
 		<h:outputText value="<br/><h3>#{bundle['title.Functions']}</h3>" escape="false" />		
 		<fc:commandLink action="prepareCreateNewFunction" value="#{bundle['link.new.function']}"/>		
 		<h:outputText value="<br/><br/>" escape="false"/>
 		
 		<h:outputText value="<b>#{bundle['message.functionListingType']}</b>" escape="false"/>
-		<fc:selectOneMenu value="#{organizationalStructureBackingBean.listingTypeValueToFunctions}" 
-			onchange="this.form.submit();">
-			<f:selectItems value="#{organizationalStructureBackingBean.listingTypeToFunctions}"/>				
-		</fc:selectOneMenu>
-		<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
+		<fc:selectOneMenu value="#{organizationalStructureBackingBean.listingTypeValueToFunctions}"	onchange="this.form.submit();">
+			<f:selectItems value="#{organizationalStructureBackingBean.listingTypeToFunctions}"/>						
+		</fc:selectOneMenu>		
 		<h:outputText value="<br/><br/>" escape="false"/>
 		
 		<h:dataTable value="#{organizationalStructureBackingBean.allNonInherentFunctions}" var="function"
@@ -273,8 +293,7 @@
 			</h:column>
 		</h:dataTable>					
 				
-		<h:outputText value="#{bundle['unit.withoutNonInherentFunctions']}<br/>" rendered="#{empty organizationalStructureBackingBean.allNonInherentFunctions}" 
-				styleClass="error" escape="false"/>
+		<h:outputText value="<em>#{bundle['unit.withoutNonInherentFunctions']}</em><br/>" rendered="#{empty organizationalStructureBackingBean.allNonInherentFunctions}" escape="false"/>
 				
 		<h:outputText value="<br/><h3>#{bundle['title.inherentFunctions']}</h3>" escape="false" />				
 		
@@ -346,12 +365,11 @@
 			</h:column>
 		</h:dataTable>			
 		
-		<h:outputText value="#{bundle['unit.withoutInherentFunctions']}<br/>" rendered="#{empty organizationalStructureBackingBean.allInherentFunctions}" 
-				styleClass="error" escape="false"/>		
+		<h:outputText value="<em>#{bundle['unit.withoutInherentFunctions']}</em><br/>" rendered="#{empty organizationalStructureBackingBean.allInherentFunctions}" escape="false"/>		
 		
-		<h:outputText value="<br/>" escape="false" />	
+		<h:outputText value="<br/><br/>" escape="false" />
 		<h:commandButton alt="#{htmlAltBundle['commandButton.return']}" action="#{organizationalStructureBackingBean.prepareListAllUnits}" immediate="true" value="#{bundle['label.return']}" styleClass="inputbutton"/>								
-				
+								
 	</h:form>
 	
 </ft:tilesView>

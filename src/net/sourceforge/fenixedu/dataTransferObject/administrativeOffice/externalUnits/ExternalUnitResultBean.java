@@ -54,19 +54,17 @@ public class ExternalUnitResultBean extends AbstractExternalUnitResultBean {
     }
     
     public String getNumberOfUniversities() {
-	return getUnit().getType() == PartyTypeEnum.COUNTRY ? 
+	return getUnit().isCountryUnit() ? 
 		String.valueOf(getUnit().getSubUnits(PartyTypeEnum.UNIVERSITY).size()) : super.getNumberOfUniversities(); 
     }
     
-    public String getNumberOfSchools() {
-	final PartyTypeEnum unitType = getUnit().getType();
-	return (unitType == PartyTypeEnum.COUNTRY || unitType == PartyTypeEnum.UNIVERSITY) ? 
+    public String getNumberOfSchools() {	
+	return (getUnit().isCountryUnit() || getUnit().isUniversityUnit()) ? 
 		String.valueOf(countNumberOfUnitsWithType(getUnit(), PartyTypeEnum.SCHOOL)) : super.getNumberOfSchools();
     }
 
-    public String getNumberOfDepartments() {
-	final PartyTypeEnum unitType = getUnit().getType();
-	return (unitType == PartyTypeEnum.UNIVERSITY || unitType == PartyTypeEnum.SCHOOL) ? 
+    public String getNumberOfDepartments() {	
+	return (getUnit().isUniversityUnit() || getUnit().isSchoolUnit()) ? 
 		String.valueOf(countNumberOfUnitsWithType(getUnit(), PartyTypeEnum.DEPARTMENT)) : super.getNumberOfDepartments();
     }
 
@@ -105,7 +103,7 @@ public class ExternalUnitResultBean extends AbstractExternalUnitResultBean {
     }
 
     public String getNumberOfExternalCurricularCourses() {
-	return (getUnit().getType() != PartyTypeEnum.COUNTRY) ? String.valueOf(countNumberOfExternalCurricularCourses(getUnit())) : super.getNumberOfExternalCurricularCourses();
+	return !getUnit().isCountryUnit() ? String.valueOf(countNumberOfExternalCurricularCourses(getUnit())) : super.getNumberOfExternalCurricularCourses();
     }
     
     private int countNumberOfExternalCurricularCourses(final Unit unit) {

@@ -36,7 +36,7 @@ public class UnitUtils {
     public static List<Unit> readAllUnitsWithoutParents() {
 	List<Unit> allUnitsWithoutParent = new ArrayList<Unit>();
 	for (Party party : RootDomainObject.getInstance().getPartys()) {
-	    if (party instanceof Unit) {
+	    if (party.isUnit()) {
                 Unit unit = (Unit) party;
                 if (unit.getParentUnits().isEmpty()) {
                     allUnitsWithoutParent.add(unit);
@@ -46,28 +46,59 @@ public class UnitUtils {
 	return allUnitsWithoutParent;
     }
 
+    public static List<Unit> readAllActiveUnitsThatCanBeResponsibleOfSpaces(){
+	List<Unit> result = new ArrayList<Unit>();
+	final YearMonthDay now = new YearMonthDay();	
+	for (Party party : RootDomainObject.getInstance().getPartys()) {
+	    if (party.isUnit() && ((Unit)party).getCanBeResponsibleOfSpaces() && ((Unit)party).isActive(now)) {
+		result.add((Unit) party);                
+	    }
+	}
+	return result;
+    }
+    
     public static List<Unit> readAllActiveUnitsByType(PartyTypeEnum type) {
 	final List<Unit> result = new ArrayList<Unit>();
-	final YearMonthDay now = new YearMonthDay();
-	
+	final YearMonthDay now = new YearMonthDay();	
 	PartyType partyType = PartyType.readPartyTypeByType(type);
 	if(partyType != null) {
 	    List<Party> parties = partyType.getParties();
 	    for (Party party : parties) {
-		if (party instanceof Unit) {
+		if (party.isUnit()) {
 		    Unit unit = (Unit) party;
                     if (unit.isActive(now)) {
                         result.add(unit);
                     }
 		}
 	    }
-	}
-	
+	}	
+	return result;
+    }
+    
+    public static List<Unit> readAllActiveUnitsByClassification(UnitClassification unitClassification) {
+	final List<Unit> result = new ArrayList<Unit>();
+	final YearMonthDay now = new YearMonthDay();		
+	if(unitClassification != null) {
+	    for (Party party : RootDomainObject.getInstance().getPartys()) {
+		if (party.isUnit()) {
+		    Unit unit = (Unit) party;
+		    if(unit.getClassification() != null && unit.getClassification().equals(unitClassification)
+			    && unit.isActive(now)) {
+			result.add(unit);
+		    }
+		}
+	    }
+	}	
 	return result;
     }
 
-    public static List<Unit> readAllDepartmentUnits() {
-	return readAllActiveUnitsByType(PartyTypeEnum.DEPARTMENT);
+    public static List<DepartmentUnit> readAllDepartmentUnits() {
+	List<DepartmentUnit> result = new ArrayList<DepartmentUnit>();
+	List<Unit> readAllActiveUnitsByType = readAllActiveUnitsByType(PartyTypeEnum.DEPARTMENT);
+	for (Unit unit : readAllActiveUnitsByType) {
+	    result.add((DepartmentUnit) unit);
+	}
+	return result;
     }
 
     public static Unit readUnitWithoutParentstByAcronym(String acronym) {
@@ -91,12 +122,10 @@ public class UnitUtils {
 	return RootDomainObject.getInstance().getEarthUnit();
     }
 
-    public static Set<Unit> readExternalUnitsByNameAndTypes(final String unitName,
-	    List<PartyTypeEnum> types) {
+    public static Set<Unit> readExternalUnitsByNameAndTypes(final String unitName, List<PartyTypeEnum> types) {
 	if (unitName == null) {
 	    return Collections.emptySet();
 	}
-
 	final String nameToSearch = unitName.replaceAll("%", ".*").toLowerCase();
 	final Set<Unit> result = new HashSet<Unit>();
 	for (final Unit unit : Unit.readAllUnits()) {
@@ -108,8 +137,7 @@ public class UnitUtils {
 	return result;
     }
 
-    public static List<Unit> getUnitFullPath(final Unit unit,
-	    final List<AccountabilityTypeEnum> validAccountabilityTypes) {
+    public static List<Unit> getUnitFullPath(final Unit unit, final List<AccountabilityTypeEnum> validAccountabilityTypes) {
 	final Collection<Unit> parentUnits = unit.getParentUnits(validAccountabilityTypes);
 	if (parentUnits.isEmpty()) {
 	    return Collections.emptyList();
@@ -123,23 +151,18 @@ public class UnitUtils {
 	throw new DomainException("error.unitUtils.unit.full.path.has.more.than.one.parent");
     }
 
-    public static StringBuilder getUnitFullPathName(final Unit unit,
-	    final List<AccountabilityTypeEnum> validAccountabilityTypes) {
-
+    public static StringBuilder getUnitFullPathName(final Unit unit, final List<AccountabilityTypeEnum> validAccountabilityTypes) {
 	if (unit == readEarthUnit()) {
 	    return new StringBuilder(0);
 	}
-
 	final Collection<Unit> parentUnits = unit.getParentUnits(validAccountabilityTypes);
 	if (parentUnits.isEmpty()) {
 	    return new StringBuilder(unit.getName());
 	}
 	if (parentUnits.size() == 1) {
 	    final StringBuilder builder = new StringBuilder();
-	    builder.append(parentUnits.iterator().next() == readEarthUnit() ? "" : " > ").append(
-		    unit.getName());
-	    builder.insert(0, getUnitFullPathName(parentUnits.iterator().next(),
-		    validAccountabilityTypes));
+	    builder.append(parentUnits.iterator().next() == readEarthUnit() ? "" : " > ").append(unit.getName());
+	    builder.insert(0, getUnitFullPathName(parentUnits.iterator().next(), validAccountabilityTypes));
 	    return builder;
 	}
 	throw new DomainException("error.unitUtils.unit.full.path.has.more.than.one.parent");

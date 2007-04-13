@@ -10,6 +10,9 @@ import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilancyCourseGroupBean;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyArrayConverter;
@@ -25,7 +28,7 @@ public class ExecutionCoursesForUnit implements DataProvider {
 
         Unit unit = bean.getSelectedUnit();
         Department department = bean.getSelectedDepartment();
-        Unit competenceCourseGroup = bean.getSelectedCompetenceCourseGroupUnit();
+        CompetenceCourseGroupUnit competenceCourseGroup = bean.getSelectedCompetenceCourseGroupUnit();
 
 
         Set<ExecutionCourse> courses = new HashSet<ExecutionCourse>();
@@ -44,24 +47,24 @@ public class ExecutionCoursesForUnit implements DataProvider {
         return coursesToProvide;
     }
 
-    private List<ExecutionCourse> getBolonhaCoursesForGivenGroup(Unit competenceCourseGroup) {
+    private List<ExecutionCourse> getBolonhaCoursesForGivenGroup(CompetenceCourseGroupUnit competenceCourseGroup) {
         return getExecutionCoursesFromCompetenceCourses(competenceCourseGroup.getCompetenceCourses());
     }
 
     private List<ExecutionCourse> getBolonhaCourses(Unit unit) {
 
-        List<Unit> courseGroups = new ArrayList<Unit>();
+        List<CompetenceCourseGroupUnit> courseGroups = new ArrayList<CompetenceCourseGroupUnit>();
         List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
         if (unit.isDepartmentUnit()) {
-            List<Unit> scientificAreaUnits = unit.getScientificAreaUnits();
-            for (Unit areaUnit : scientificAreaUnits) {
+            List<ScientificAreaUnit> scientificAreaUnits = ((DepartmentUnit)unit).getScientificAreaUnits();
+            for (ScientificAreaUnit areaUnit : scientificAreaUnits) {
                 courseGroups.addAll(areaUnit.getCompetenceCourseGroupUnits());
             }
         } else {
-            courseGroups.addAll(unit.getCompetenceCourseGroupUnits());
+            courseGroups.addAll(((ScientificAreaUnit)unit).getCompetenceCourseGroupUnits());
         }
 
-        for (Unit courseGroup : courseGroups) {
+        for (CompetenceCourseGroupUnit courseGroup : courseGroups) {
             executionCourses.addAll(getBolonhaCoursesForGivenGroup(courseGroup));
         }
 

@@ -17,8 +17,8 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.CompetenceCourse;
-import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.ExternalCurricularCourse;
@@ -28,8 +28,6 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.accounting.Receipt;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
-import net.sourceforge.fenixedu.domain.degreeStructure.Context;
-import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.parking.ParkingPartyClassification;
 import net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation;
@@ -51,10 +49,23 @@ public class Unit extends Unit_Base {
 	((ComparatorChain) UNIT_COMPARATOR_BY_NAME).addComparator(new BeanComparator("idInternal"));
     }
 
-    private Unit() {
-	super();
+    protected Unit() {	
+	super();	
     }
 
+    protected void init(String name, Integer costCenterCode, String acronym, YearMonthDay beginDate, YearMonthDay endDate, 
+	    String webAddress, UnitClassification classification, Boolean canBeResponsibleOfSpaces) {
+	
+	setName(name);	
+	setAcronym(acronym);
+	setCostCenterCode(costCenterCode);	
+	setBeginDateYearMonthDay(beginDate);
+	setEndDateYearMonthDay(endDate);
+	setWebAddress(webAddress);
+	setClassification(classification);
+	setCanBeResponsibleOfSpaces(canBeResponsibleOfSpaces);
+    }
+    
     @Override
     public void setName(String name) {
 	super.setName(name);
@@ -66,18 +77,17 @@ public class Unit extends Unit_Base {
     }
 
     public void edit(String unitName, Integer unitCostCenter, String acronym, YearMonthDay beginDate,
-	    YearMonthDay endDate, PartyTypeEnum type, String webAddress) {
-
-	checkAcronym(acronym, this.getType());
-	setCostCenterCode(unitCostCenter);
-	setName(unitName);
-	setBeginDateYearMonthDay(beginDate);
-	setEndDateYearMonthDay(endDate);
-	setType(type);
-	setWebAddress(webAddress);
-	setAcronym(acronym);
+	    YearMonthDay endDate, String webAddress, UnitClassification classification, 
+	    Department department, Degree degree, Boolean canBeResponsibleOfSpaces) {
+	
+	init(unitName, unitCostCenter, acronym, beginDate, endDate, webAddress, classification, canBeResponsibleOfSpaces);	
     }
 
+    @Override
+    public void setCanBeResponsibleOfSpaces(Boolean canBeResponsibleOfSpaces) {
+        super.setCanBeResponsibleOfSpaces(canBeResponsibleOfSpaces != null ? canBeResponsibleOfSpaces : Boolean.FALSE);
+    }
+    
     @Override
     public void setCostCenterCode(Integer costCenterCode) {
 	Unit unit = readByCostCenterCode(costCenterCode);
@@ -104,14 +114,7 @@ public class Unit extends Unit_Base {
 	}
 	super.setEndDateYearMonthDay(endDateYearMonthDay);
     }
-
-    private void checkAcronym(String acronym, PartyTypeEnum partyTypeEnum) {
-	Unit unit = readUnitByAcronymAndType(acronym, partyTypeEnum);
-	if (unit != null && !unit.equals(this)) {
-	    throw new DomainException("error.existent.acronym");
-	}
-    }
-
+    
     public void delete() {
 	if (!canBeDeleted()) {
 	    throw new DomainException("error.unit.cannot.be.deleted");
@@ -122,13 +125,8 @@ public class Unit extends Unit_Base {
 	if (hasSite()) {
 	    getSite().delete();
     	}
-	
-	for (; !getParticipatingAnyCurricularCourseCurricularRules().isEmpty(); getParticipatingAnyCurricularCourseCurricularRules().get(0).delete());	
-	
+		
 	getUnitName().delete();		
-	removeDepartment();
-	removeDegree();	
-	
 	super.delete();
     }
 
@@ -138,16 +136,14 @@ public class Unit extends Unit_Base {
 		&& !hasAnyFunctions()				
 		&& !hasAnySpaceResponsibility()
 		&& !hasAnyMaterials()
-		&& !hasAnyVigilantGroups()
-		&& !hasAnyCompetenceCourses()
+		&& !hasAnyVigilantGroups()		
 		&& !hasAnyAssociatedNonAffiliatedTeachers()
 		&& !hasAnyPayedGuides()
 		&& !hasAnyPayedReceipts()
 		&& !hasAnyExtraPayingUnitAuthorizations()
                 && !hasAnyExtraWorkingUnitAuthorizations()		
 		&& !hasAnyExternalCurricularCourses()
-		&& !hasAnyResultUnitAssociations()
-		&& !hasAdministrativeOffice()
+		&& !hasAnyResultUnitAssociations()		
 		&& !hasUnitServiceAgreementTemplate()	
 		&& !hasAnyResearchInterests()
 		&& !hasAnyProjectParticipations() 
@@ -186,11 +182,20 @@ public class Unit extends Unit_Base {
 	return false;
     }
     
+    public boolean isOfficialExternal() {
+	return !isInternal() && !isNoOfficialExternal(); 
+    }
+    
     public boolean isActive(YearMonthDay currentDate) {
 	return (!this.getBeginDateYearMonthDay().isAfter(currentDate) && (this.getEndDateYearMonthDay() == null || !this
 		.getEndDateYearMonthDay().isBefore(currentDate)));
     }
-
+    
+    @Override
+    public boolean isUnit(){
+    	return true;    
+    }
+           
     public List<Unit> getTopUnits() {
 	Unit unit = this;
 	List<Unit> allTopUnits = new ArrayList<Unit>();
@@ -210,32 +215,34 @@ public class Unit extends Unit_Base {
 	return allTopUnits;
     }
 
-    public Unit getDepartmentUnit() {
-	Collection<Unit> parentUnits = this.getParentUnits();
-	if (isUnitDepartment(this)) {
-	    return this;
-	} else if (!parentUnits.isEmpty()) {
-	    for (Unit parentUnit : parentUnits) {
-		if (isUnitDepartment(parentUnit)) {
-		    return parentUnit;
+    public Department getDepartment() {
+	return null;
+    }
+    
+    public Degree getDegree() {
+	return null;
+    }
+         
+    public DepartmentUnit getDepartmentUnit() {	
+	if (this.isDepartmentUnit()) {
+	    return (DepartmentUnit) this;
+	} else {	    
+	    for (Unit parentUnit : getParentUnits()) {
+		if (parentUnit.isDepartmentUnit()) {
+		    return (DepartmentUnit) parentUnit;
 		} else if (parentUnit.hasAnyParentUnits()) {
 		    Unit departmentUnit = parentUnit.getDepartmentUnit();
 		    if (departmentUnit == null) {
 			continue;
 		    } else {
-			return departmentUnit;
+			return (DepartmentUnit) departmentUnit;
 		    }
 		}
 	    }
 	}
 	return null;
     }
-
-    private boolean isUnitDepartment(Unit unit) {
-	return (unit.getType() != null && unit.getType().equals(PartyTypeEnum.DEPARTMENT) && unit
-		.getDepartment() != null);
-    }
-
+   
     public List<Unit> getInactiveSubUnits(YearMonthDay currentDate) {
 	return getSubUnitsByState(currentDate, false);
     }
@@ -380,8 +387,7 @@ public class Unit extends Unit_Base {
 	    allParentUnits.addAll(subUnit.getAllParentUnits());
 	}
 	return allParentUnits;
-    }
-
+    }   
 
     public Collection<ExternalContract> getExternalPersons() {
 	return (Collection<ExternalContract>) getChildAccountabilities(AccountabilityTypeEnum.EMPLOYEE_CONTRACT, ExternalContract.class);
@@ -414,67 +420,6 @@ public class Unit extends Unit_Base {
 	}
 	return contracts;
     }
-
-    // begin SCIENTIFIC AREA UNITS, COMPETENCE COURSE GROUP UNITS AND
-    // RELATED
-    public List<Unit> getScientificAreaUnits() {
-	final SortedSet<Unit> result = new TreeSet<Unit>(Unit.UNIT_COMPARATOR_BY_NAME);
-
-	for (Unit unit : this.getSubUnits()) {
-	    if (unit.getType() != null && unit.getType().equals(PartyTypeEnum.SCIENTIFIC_AREA)) {
-		result.add(unit);
-	    }
-	}
-
-	return new ArrayList<Unit>(result);
-    }
-
-    public Double getScientificAreaUnitEctsCredits() {
-	double result = 0.0;
-	for (Unit competenceCourseGroupUnit : getCompetenceCourseGroupUnits()) {
-	    for (CompetenceCourse competenceCourse : competenceCourseGroupUnit.getCompetenceCourses()) {
-		result += competenceCourse.getEctsCredits();
-	    }
-	}
-	return result;
-    }
-
-    public Double getScientificAreaUnitEctsCredits(List<Context> contexts) {
-	double result = 0.0;
-	for (Context context : contexts) {
-	    if (context.getChildDegreeModule().isLeaf()) {
-		CurricularCourse curricularCourse = (CurricularCourse) context.getChildDegreeModule();
-
-		if (!curricularCourse.isOptional()
-			&& curricularCourse.getCompetenceCourse().getScientificAreaUnit().equals(this)) {
-		    result += curricularCourse.getCompetenceCourse().getEctsCredits();
-		}
-	    }
-	}
-	return result;
-    }
-
-    public List<Unit> getCompetenceCourseGroupUnits() {
-	final SortedSet<Unit> result = new TreeSet<Unit>(Unit.UNIT_COMPARATOR_BY_NAME);
-
-	for (Unit unit : this.getSubUnits()) {
-	    if (unit.getType() != null && unit.getType().equals(PartyTypeEnum.COMPETENCE_COURSE_GROUP)) {
-		result.add(unit);
-	    }
-	}
-
-	return new ArrayList<Unit>(result);
-    }
-
-    @Override
-    public List<CompetenceCourse> getCompetenceCourses() {
-	final SortedSet<CompetenceCourse> result = new TreeSet<CompetenceCourse>(
-		CompetenceCourse.COMPETENCE_COURSE_COMPARATOR_BY_NAME);
-	result.addAll(super.getCompetenceCourses());
-	return new ArrayList<CompetenceCourse>(result);
-    }
-
-    // end SCIENTIFIC AREA UNITS, COMPETENCE COURSE GROUP UNITS AND RELATED
 
     public List<Teacher> getAllTeachers() {
 	List<Teacher> teachers = new ArrayList<Teacher>();
@@ -573,31 +518,31 @@ public class Unit extends Unit_Base {
     }
 
     public Collection<Unit> getParentUnits() {
-	return (Collection<Unit>) getParentParties(getClass());
+	return (Collection<Unit>) getParentParties(Unit.class);
     }
 
     public Collection<Unit> getParentUnits(AccountabilityTypeEnum accountabilityTypeEnum) {
-	return (Collection<Unit>) getParentParties(accountabilityTypeEnum, getClass());
+	return (Collection<Unit>) getParentParties(accountabilityTypeEnum, Unit.class);
     }
 
     public Collection<Unit> getParentUnits(List<AccountabilityTypeEnum> accountabilityTypeEnums) {
-	return (Collection<Unit>) getParentParties(accountabilityTypeEnums, getClass());
+	return (Collection<Unit>) getParentParties(accountabilityTypeEnums, Unit.class);
     }
 
     public Collection<Unit> getSubUnits() {
-	return (Collection<Unit>) getChildParties(getClass());
+	return (Collection<Unit>) getChildParties(Unit.class);
     }
 
     public Collection<Unit> getSubUnits(AccountabilityTypeEnum accountabilityTypeEnum) {
-	return (Collection<Unit>) getChildParties(accountabilityTypeEnum, getClass());
+	return (Collection<Unit>) getChildParties(accountabilityTypeEnum, Unit.class);
     }
 
     public Collection<Unit> getSubUnits(List<AccountabilityTypeEnum> accountabilityTypeEnums) {
-	return (Collection<Unit>) getChildParties(accountabilityTypeEnums, getClass());
+	return (Collection<Unit>) getChildParties(accountabilityTypeEnums, Unit.class);
     }
 
     public Collection<Unit> getSubUnits(final PartyTypeEnum type) {
-	return (Collection<Unit>) getChildParties(type, getClass());
+	return (Collection<Unit>) getChildParties(type, Unit.class);
     }
 
     public boolean hasAnyParentUnits() {
@@ -617,7 +562,7 @@ public class Unit extends Unit_Base {
         
         return depth;
     }
-    
+
     public Accountability addParentUnit(Unit parentUnit, AccountabilityType accountabilityType) {
 	if (this.equals(parentUnit)) {
 	    throw new DomainException("error.unit.equals.parentUnit");
@@ -634,24 +579,16 @@ public class Unit extends Unit_Base {
 	
 	return new Accountability(parentUnit, this, accountabilityType);
     }
-
-    public Accountability addSubUnit(Unit childUnit, AccountabilityType accountabilityType) {
-	if (this.equals(childUnit)) {
-	    throw new DomainException("error.unit.equals.subUnit");
-	}
-	if (this.getSubUnits(accountabilityType.getType()).contains(childUnit)) {
-	    throw new DomainException("error.unit.subUnit.is.already.subUnit");
-	}
-	
-	YearMonthDay currentDate = new YearMonthDay();
-	List<Unit> parentUnits = (childUnit.isActive(currentDate)) ? getAllActiveParentUnits(currentDate) : getAllInactiveParentUnits(currentDate);
-	if (parentUnits.contains(childUnit)) {
-	    throw new DomainException("error.unit.childUnit.is.already.parentUnit");
-	}
-	
-	return new Accountability(this, childUnit, accountabilityType);
+           
+    public AdministrativeOffice getAdministrativeOffice() {	
+	for (Unit parentUnit : getParentUnits(AccountabilityTypeEnum.ADMINISTRATIVE_STRUCTURE)) {
+	    if (parentUnit.isAdministrativeOfficeUnit()) {
+		return (parentUnit).getAdministrativeOffice();
+	    }
+	}	
+	return null;
     }
-
+    
     public NonAffiliatedTeacher findNonAffiliatedTeacherByName(final String name) {
 	for (final NonAffiliatedTeacher nonAffiliatedTeacher : getAssociatedNonAffiliatedTeachersSet()) {
 	    if (nonAffiliatedTeacher.getName().equalsIgnoreCase(name)) {
@@ -681,16 +618,16 @@ public class Unit extends Unit_Base {
     }
 
     /**
-         * This method should be used only for Unit types where acronyms are
-         * unique.
-         */
+     * 
+     *  This method should be used only for Unit types where acronyms are unique.
+     *  
+     **/
     public static Unit readUnitByAcronymAndType(String acronym, PartyTypeEnum partyTypeEnum) {
 	if (acronym != null
 		&& !acronym.equals("")
 		&& partyTypeEnum != null
 		&& (partyTypeEnum.equals(PartyTypeEnum.DEGREE_UNIT)
-			|| partyTypeEnum.equals(PartyTypeEnum.DEPARTMENT)
-			|| partyTypeEnum.equals(PartyTypeEnum.ACADEMIC_SERVICES_SUPERVISION)
+			|| partyTypeEnum.equals(PartyTypeEnum.DEPARTMENT)			
 			|| partyTypeEnum.equals(PartyTypeEnum.PLANET)
 			|| partyTypeEnum.equals(PartyTypeEnum.COUNTRY)
 			|| partyTypeEnum.equals(PartyTypeEnum.DEPARTMENT)
@@ -711,7 +648,7 @@ public class Unit extends Unit_Base {
 	List<Unit> result = new ArrayList<Unit>();
 	if (!StringUtils.isEmpty(acronym.trim())) {
 	    for (Party party : RootDomainObject.getInstance().getPartys()) {
-		if (party instanceof Unit && ((Unit) party).getAcronym() != null
+		if (party.isUnit() && ((Unit) party).getAcronym() != null
 			&& ((Unit) party).getAcronym().equals(acronym)) {
 		    result.add((Unit) party);
 		}
@@ -723,168 +660,52 @@ public class Unit extends Unit_Base {
     public static Unit readByCostCenterCode(Integer costCenterCode) {
 	if (costCenterCode != null) {
 	    for (Party party : RootDomainObject.getInstance().getPartys()) {
-		if (party instanceof Unit && ((Unit) party).getCostCenterCode() != null
+		if (party.isUnit() && ((Unit) party).getCostCenterCode() != null
 			&& ((Unit) party).getCostCenterCode().equals(costCenterCode)) {
 		    return (Unit) party;
 		}
 	    }
 	}
 	return null;
-    }
-
-    public List<CompetenceCourse> getDepartmentUnitCompetenceCourses(CurricularStage curricularStage) {
-	List<CompetenceCourse> result = new ArrayList<CompetenceCourse>();
-	if (isUnitDepartment(this)) {
-	    for (Unit scientificAreaUnit : this.getScientificAreaUnits()) {
-		for (Unit competenceCourseGroupUnit : scientificAreaUnit.getCompetenceCourseGroupUnits()) {
-		    for (CompetenceCourse competenceCourse : competenceCourseGroupUnit
-			    .getCompetenceCourses()) {
-			if (competenceCourse.getCurricularStage().equals(curricularStage)) {
-			    result.add(competenceCourse);
-			}
-		    }
-		}
-	    }
-	}
-	return result;
-    }
-
-    public Collection<Unit> getParentByOrganizationalStructureAccountabilityType() {
-	return (Collection<Unit>) getParentParties(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE,
-		getClass());
+    }    
+    
+    public Collection<Unit> getParentUnitsByOrganizationalStructureAccountabilityType() {
+	return (Collection<Unit>) getParentParties(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE, Unit.class);
     }
 
     public static Unit createNewUnit(String unitName, Integer costCenterCode, String acronym,
-	    YearMonthDay beginDate, YearMonthDay endDate, PartyTypeEnum type, Unit parentUnit,
-	    AccountabilityType accountabilityType, String webAddress) throws FenixFilterException,
+	    YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit,
+	    AccountabilityType accountabilityType, String webAddress, UnitClassification classification,
+	    Boolean canBeResponsibleOfSpaces) throws FenixFilterException,
 	    FenixServiceException {
 
 	Unit unit = new Unit();
-	unit.checkAcronym(acronym, type);
-	unit.setCostCenterCode(costCenterCode);
-	unit.setName(unitName);
-	unit.setBeginDateYearMonthDay(beginDate);
-	unit.setEndDateYearMonthDay(endDate);
-	unit.setType(type);
-	unit.setWebAddress(webAddress);
-	unit.setAcronym(acronym);
+	unit.init(unitName, costCenterCode, acronym, beginDate, endDate, webAddress, classification, canBeResponsibleOfSpaces);	
 	if (parentUnit != null && accountabilityType != null) {
 	    unit.addParentUnit(parentUnit, accountabilityType);
 	}
 	return unit;
     }
 
-    public static Unit createNewExternalInstitution(String unitName) {
+    public static Unit createNewNoOfficialExternalInstitution(String unitName) {
+	Unit externalInstitutionUnit = UnitUtils.readExternalInstitutionUnit();		
+	Unit noOfficialExternalInstitutionUnit = new Unit();
+	noOfficialExternalInstitutionUnit.init(unitName, null, null, new YearMonthDay(), null, null, null, null);
+	noOfficialExternalInstitutionUnit.addParentUnit(externalInstitutionUnit,
+		AccountabilityType.readAccountabilityTypeByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE));
 
-	Unit externalInstitutionUnit = UnitUtils.readExternalInstitutionUnit();
-	if (externalInstitutionUnit == null) {
-	    throw new DomainException("error.exception.commons.institution.rootInstitutionNotFound");
-	} else if (UnitUtils.readInstitutionUnit() != null
-		&& externalInstitutionUnit.equals(UnitUtils.readInstitutionUnit())) {
-	    throw new DomainException(
-		    "error.exception.commons.institution.rootInstitutionNotFound.equals.rootExternalInstitutionUnit");
-	}
-
-	Unit institutionUnit = new Unit();
-	institutionUnit.setName(unitName);
-	institutionUnit.setBeginDateYearMonthDay(new YearMonthDay());
-	institutionUnit.setType(PartyTypeEnum.EXTERNAL_INSTITUTION);
-	institutionUnit.addParentUnit(externalInstitutionUnit, AccountabilityType
-		.readAccountabilityTypeByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE));
-
-	return institutionUnit;
-    }
-
-    public static Unit createNewAcademicInstitution(String institutionName, String institutionCode,
-	    PartyTypeEnum institutionType, Unit parentUnit) {
-
-	if (StringUtils.isEmpty(institutionName)) {
-	    throw new DomainException("error.exception.commons.institution.nameIsEmpty");
-	}
-
-	if (StringUtils.isEmpty(institutionCode)) {
-	    throw new DomainException("error.exception.commons.institution.codeIsEmpty");
-	}
-
-	if (parentUnit == null) {
-	    throw new DomainException("error.exception.commons.institution.rootInstitutionNotFound");
-	}
-
-	if (readUnitByAcronymAndType(institutionCode, institutionType) != null) {
-	    throw new DomainException("error.exception.commons.institution.alreadyExistsWithSameCodeAndType");
-	}
-	
-	checkChildsWithSameNameAndType(parentUnit, institutionType, institutionName);
-
-	Unit institutionUnit = new Unit();
-	institutionUnit.setName(institutionName);
-	institutionUnit.setAcronym(institutionCode);
-	institutionUnit.setBeginDateYearMonthDay(new YearMonthDay());
-	institutionUnit.setType(institutionType);
-	institutionUnit.addParentUnit(parentUnit, getAccountabilityType(parentUnit, institutionType));
-
-	return institutionUnit;
-    }
-    
-    private static void checkChildsWithSameNameAndType(final Unit parentUnit, final PartyTypeEnum type, final String unitName) {
-	final String name = unitName.toLowerCase();
-	for (final Unit child : parentUnit.getSubUnits(type)) {
-	    if (child.getName().toLowerCase().equals(name)) {
-		throw new DomainException(
-			"error.exception.commons.institution.parent.already.has.child.with.same.name.and.type");
-	    }
-	}
-    }
-
-    private static AccountabilityType getAccountabilityType(Unit parentUnit,
-	    PartyTypeEnum institutionType) {
-
-	switch (institutionType) {
-	case COUNTRY:
-	    if (!parentUnit.getType().equals(PartyTypeEnum.PLANET)) {
-		throw new DomainException("error.exception.commons.institution.invalidParentUnit");
-	    }
-	    return AccountabilityType.readAccountabilityTypeByType(AccountabilityTypeEnum.GEOGRAPHIC);
-	case UNIVERSITY:
-	    if (!parentUnit.getType().equals(PartyTypeEnum.PLANET)
-		    && !parentUnit.getType().equals(PartyTypeEnum.COUNTRY)) {
-		throw new DomainException("error.exception.commons.institution.invalidParentUnit");
-	    }
-	    return AccountabilityType.readAccountabilityTypeByType(AccountabilityTypeEnum.GEOGRAPHIC);
-	case DEPARTMENT:
-	    if (!parentUnit.getType().equals(PartyTypeEnum.SCHOOL)
-		    && !parentUnit.getType().equals(PartyTypeEnum.UNIVERSITY)) {
-		throw new DomainException("error.exception.commons.institution.invalidParentUnit");
-	    }
-	    return AccountabilityType
-		    .readAccountabilityTypeByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE);
-	case SCHOOL:
-	    if (parentUnit.getType().equals(PartyTypeEnum.COUNTRY)) {
-		return AccountabilityType
-			.readAccountabilityTypeByType(AccountabilityTypeEnum.GEOGRAPHIC);
-
-	    } else if (parentUnit.getType().equals(PartyTypeEnum.UNIVERSITY)) {
-		return AccountabilityType
-			.readAccountabilityTypeByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE);
-
-	    } else {
-		throw new DomainException("error.exception.commons.institution.invalidParentUnit");
-	    }
-	default:
-	    throw new DomainException("error.exception.commons.institution.invalidType");
-	}
-    }
+	return noOfficialExternalInstitutionUnit;
+    }   
 
     public static Party createContributor(String contributorName, String contributorNumber,
 	    String contributorAddress, String areaCode, String areaOfAreaCode, String area,
 	    String parishOfResidence, String districtSubdivisionOfResidence, String districtOfResidence) {
 
 	if (Party.readByContributorNumber(contributorNumber) != null) {
-	    throw new DomainException(
-		    "EXTERNAL_INSTITUTION_UNIT.createContributor.existing.contributor.number");
+	    throw new DomainException("EXTERNAL_INSTITUTION_UNIT.createContributor.existing.contributor.number");
 	}
 
-	Unit contributor = Unit.createNewExternalInstitution(contributorName);
+	Unit contributor = Unit.createNewNoOfficialExternalInstitution(contributorName);
 	
 	contributor.setSocialSecurityNumber(contributorNumber);
 	contributor.setAddress(contributorAddress);
@@ -896,21 +717,6 @@ public class Unit extends Unit_Base {
 	contributor.setDistrictOfResidence(districtOfResidence);
 
 	return contributor;
-    }
-
-    public boolean isDepartmentUnit() {
-	return isUnitDepartment(this);
-    }
-
-    public List<CurricularCourse> getCurricularCourses() {
-	List<CompetenceCourse> competenceCourses = this.getCompetenceCourses();
-	List<CurricularCourse> curricularCourses = new ArrayList<CurricularCourse>();
-
-	for (CompetenceCourse competenceCourse : competenceCourses) {
-	    curricularCourses.addAll(competenceCourse.getAssociatedCurricularCourses());
-	}
-
-	return curricularCourses;
     }
 
     public List<VigilantGroup> getVigilantGroupsForGivenExecutionYear(ExecutionYear executionYear) {
@@ -925,19 +731,7 @@ public class Unit extends Unit_Base {
 
 	return vigilantGroupsInExecutionYear;
     }
-
-    public List<CompetenceCourse> getCompetenceCoursesByExecutionYear(ExecutionYear executionYear) {
-	List<CompetenceCourse> competenceCourses = this.getCompetenceCourses();
-	List<CompetenceCourse> competenceCoursesByExecutionYear = new ArrayList<CompetenceCourse>();
-	for (CompetenceCourse competenceCourse : competenceCourses) {
-	    if (competenceCourse.hasActiveScopesInExecutionYear(executionYear)) {
-		competenceCoursesByExecutionYear.add(competenceCourse);
-	    }
-
-	}
-	return competenceCoursesByExecutionYear;
-    }
-
+  
     public List<ExamCoordinator> getExamCoordinatorsForGivenYear(ExecutionYear executionYear) {
 	List<ExamCoordinator> examCoordinators = new ArrayList<ExamCoordinator>();
 	for (ExamCoordinator coordinator : this.getExamCoordinators()) {
@@ -957,8 +751,7 @@ public class Unit extends Unit_Base {
 	if (unitName == null || unitName.length() == 0) {
 	    return null;
 	}
-	for (final Party party : RootDomainObject.getInstance().getExternalInstitutionUnit()
-		.getSubUnits()) {
+	for (final Party party : RootDomainObject.getInstance().getExternalInstitutionUnit().getSubUnits()) {
 	    if (!party.isPerson() && unitName.equalsIgnoreCase(party.getName())) {
 		final Unit unit = (Unit) party;
 		return unit;
@@ -972,7 +765,7 @@ public class Unit extends Unit_Base {
             return null;
         }
         for (final Party party : RootDomainObject.getInstance().getPartys()) {
-            if (party instanceof Unit && unitName.equalsIgnoreCase(party.getName())) {
+            if (party.isUnit() && unitName.equalsIgnoreCase(party.getName())) {
                 final Unit unit = (Unit) party;
                 return unit;
             }
@@ -1018,75 +811,61 @@ public class Unit extends Unit_Base {
     public String getDirectParentUnitsPresentationName() {
     	StringBuilder builder = new StringBuilder();
     	for(Unit unit : getParentUnits()) {
-    		if(!unit.getType().equals(PartyTypeEnum.AGGREGATE_UNIT)) {
-    			builder.append(unit.getNameWithAcronym());
-    		}
+    	    if(!unit.isAggregateUnit()) {
+    		builder.append(unit.getNameWithAcronym());
+    	    }
     	}
     	return builder.toString();
     }
     
     private String getParentUnitsPresentationName(String separator) {
 	StringBuilder builder = new StringBuilder();
-	Unit externalInstitutionUnit = UnitUtils.readExternalInstitutionUnit();
-	Unit institutionUnit = UnitUtils.readInstitutionUnit();
-	List<Unit> parentUnits = new ArrayList<Unit>();
-	Unit searchedUnit = this;
-
-	while (searchedUnit.getParentUnits().size() == 1) {
-	    Iterator<Unit> iter = searchedUnit.getParentUnits().iterator();
-	    Unit parentUnit = iter.hasNext() ? iter.next() : null;
-	    if (parentUnit != institutionUnit && parentUnit != externalInstitutionUnit) {
-		if (parentUnit.getType() == null
-			|| !parentUnit.getType().equals(PartyTypeEnum.AGGREGATE_UNIT)) {
-		    parentUnits.add(0, parentUnit);
-		}
-		searchedUnit = parentUnit;
-	    } else {
-		parentUnits.add(0, parentUnit);
-		break;
-	    }
-	}
-
-	if (searchedUnit.getParentUnits().size() > 1) {
-	    if (searchedUnit.getType() != null
-		    && searchedUnit.getType().equals(PartyTypeEnum.EXTERNAL_INSTITUTION)) {
-		parentUnits.add(0, externalInstitutionUnit);
-	    } else {
-		parentUnits.add(0, institutionUnit);
-	    }
-	}
-
+	List<Unit> parentUnits = getParentUnitsPath();	
 	int index = 1;
+	
 	for (Unit unit : parentUnits) {
-	    if (index == parentUnits.size()) {
-		builder.append(unit.getNameWithAcronym());
-	    } else {
-		builder.append(unit.getNameWithAcronym() + separator);
+	    if(!unit.isAggregateUnit()) {
+		if (index == parentUnits.size()) {
+		    builder.append(unit.getNameWithAcronym());
+	    	} else {
+	    	    builder.append(unit.getNameWithAcronym() + separator);
+	    	}
 	    }
 	    index++;
 	}
-
+	
 	return builder.toString();
     }
     
-    @Override
-    public boolean isUnit(){
-    	return true;    
-    }
-    
-    @Override
-    public AdministrativeOffice getAdministrativeOffice() {
-	if (super.getAdministrativeOffice() != null) {
-	    return super.getAdministrativeOffice();
-	}
+    public List<Unit> getParentUnitsPath(){
 	
-	for (Unit parentUnit : getParentUnits(AccountabilityTypeEnum.ADMINISTRATIVE_STRUCTURE)) {
-	    if (parentUnit.hasAdministrativeOffice()) {
-		return parentUnit.getAdministrativeOffice();
+	List<Unit> parentUnits = new ArrayList<Unit>();
+	Unit searchedUnit = this;
+	Unit externalInstitutionUnit = UnitUtils.readExternalInstitutionUnit();
+	Unit institutionUnit = UnitUtils.readInstitutionUnit();
+	Unit earthUnit = UnitUtils.readEarthUnit();
+	
+	while (searchedUnit.getParentUnits().size() == 1) {
+	    Unit parentUnit = searchedUnit.getParentUnits().iterator().next();
+	    parentUnits.add(0, parentUnit);
+	    if (parentUnit != institutionUnit && parentUnit != externalInstitutionUnit && parentUnit != earthUnit) {				
+		searchedUnit = parentUnit;
+		continue;
+	    } 		
+	    break;	    
+	}
+
+	if (searchedUnit.getParentUnits().size() > 1) {
+	    if(searchedUnit.isInternal()) {
+		parentUnits.add(0, institutionUnit);
+	    } else if (searchedUnit.isNoOfficialExternal()) {
+		parentUnits.add(0, externalInstitutionUnit);		
+	    } else {
+		parentUnits.add(0, earthUnit);
 	    }
 	}
 	
-	return null;
+	return parentUnits;
     }
     
     public SortedSet<Unit> getSortedExternalChilds() {
@@ -1097,61 +876,12 @@ public class Unit extends Unit_Base {
 	    }
 	}
 	return result;
-    }
-    
-    @Override
-    public boolean hasCompetenceCourses(final CompetenceCourse competenceCourse) {
-	switch (getType()) {
-	case DEPARTMENT:
-	    return searchCompetenceCourseInChilds(competenceCourse, PartyTypeEnum.SCIENTIFIC_AREA);
-	case SCIENTIFIC_AREA:
-	    return searchCompetenceCourseInChilds(competenceCourse, PartyTypeEnum.COMPETENCE_COURSE_GROUP);
-	case COMPETENCE_COURSE_GROUP:
-	    return super.hasCompetenceCourses(competenceCourse);
-	default:
-	    return false;
-	}
-    }
+    }    
     
     public List<ExternalCurricularCourse> getAllExternalCurricularCourses() {
-	final List<ExternalCurricularCourse> result = new ArrayList<ExternalCurricularCourse>(getExternalCurricularCourses());
-	
-	switch (getType()) {
-	case COUNTRY:
-	    addAllExternalCurricularCourses(result, PartyTypeEnum.UNIVERSITY);
-	    addAllExternalCurricularCourses(result, PartyTypeEnum.SCHOOL);
-	    break;
-	    
-	case UNIVERSITY:
-	    addAllExternalCurricularCourses(result, PartyTypeEnum.SCHOOL);
-	    addAllExternalCurricularCourses(result, PartyTypeEnum.DEPARTMENT);
-	    break;
-	    
-	case SCHOOL:
-	    addAllExternalCurricularCourses(result, PartyTypeEnum.DEPARTMENT);
-	    break;
-	    
-	case DEPARTMENT:
-	default:
-	}
-	return result;
-    }
-
-    private void addAllExternalCurricularCourses(final List<ExternalCurricularCourse> result, final PartyTypeEnum type) {
-	for (final Unit unit : getSubUnits(type)) {
-	    result.addAll(unit.getAllExternalCurricularCourses());
-	}
-    }
-
-    private boolean searchCompetenceCourseInChilds(final CompetenceCourse competenceCourse, final PartyTypeEnum type) {
-	for (final Unit unit : getSubUnits(type)) {
-	    if (unit.hasCompetenceCourses(competenceCourse)) {
-		return true;
-	    }
-	}
-	return false;
-    }
-
+	return new ArrayList<ExternalCurricularCourse>(getExternalCurricularCourses());		
+    }   
+    
     public static void mergeExternalUnits(Unit fromUnit, Unit destinationUnit) {
 	
 	if(fromUnit == null || destinationUnit == null || fromUnit.equals(destinationUnit)) {

@@ -24,7 +24,10 @@ import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReference;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
+import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
@@ -54,13 +57,13 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     public CompetenceCourse(String name, String nameEn, Boolean basic, RegimeType regimeType,
-	    CompetenceCourseLevel competenceCourseLevel, CompetenceCourseType type, CurricularStage curricularStage, Unit unit) {
+	    CompetenceCourseLevel competenceCourseLevel, CompetenceCourseType type, CurricularStage curricularStage, CompetenceCourseGroupUnit unit) {
 
 	this();
 	super.setCurricularStage(curricularStage);
-    setType(type);
+	setType(type);
 
-	if (unit.getType() != PartyTypeEnum.COMPETENCE_COURSE_GROUP) {
+	if (!unit.isCompetenceCourseGroupUnit()) {
 	    throw new DomainException("");
 	}
 	super.setCompetenceCourseGroupUnit(unit);
@@ -71,7 +74,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 
 	// unique acronym creation
 	try {
-	    final UniqueAcronymCreator uniqueAcronymCreator = new UniqueAcronymCreator<CompetenceCourse>(
+	    final UniqueAcronymCreator<CompetenceCourse> uniqueAcronymCreator = new UniqueAcronymCreator<CompetenceCourse>(
 		    "name", "acronym", (Set<CompetenceCourse>) CompetenceCourse
 			    .readBolonhaCompetenceCourses(), true);
 	    competenceCourseInformation.setAcronym((String) uniqueAcronymCreator.create(this).getLeft());
@@ -174,7 +177,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	// unique acronym creation
 	String acronym = null;
 	try {
-	    final UniqueAcronymCreator uniqueAcronymCreator = new UniqueAcronymCreator<CompetenceCourse>(
+	    final UniqueAcronymCreator<CompetenceCourse> uniqueAcronymCreator = new UniqueAcronymCreator<CompetenceCourse>(
 		    "name", "acronym", (Set<CompetenceCourse>) CompetenceCourse
 			    .readBolonhaCompetenceCourses(), true);
 	    acronym = (String) uniqueAcronymCreator.create(this).getLeft();
@@ -601,7 +604,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	return false;
     }
 
-    public Unit getDepartmentUnit() {
+    public DepartmentUnit getDepartmentUnit() {
 	return this.getCompetenceCourseGroupUnit().getDepartmentUnit();
     }
 
@@ -673,8 +676,8 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 
     @Override
     @Checked("CompetenceCoursePredicates.writePredicate")
-    public void setCompetenceCourseGroupUnit(Unit unit) {
-	super.setCompetenceCourseGroupUnit(unit);
+    public void setCompetenceCourseGroupUnit(CompetenceCourseGroupUnit competenceCourseGroupUnit) {
+	super.setCompetenceCourseGroupUnit(competenceCourseGroupUnit);
     }
 
     @Override
@@ -683,13 +686,13 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	super.addAssociatedCurricularCourses(associatedCurricularCourses);
     }
 
-    public Unit getScientificAreaUnit() {
+    public ScientificAreaUnit getScientificAreaUnit() {
 	if (this.getCompetenceCourseGroupUnit().hasAnyParentUnits()) {
 	    if (this.getCompetenceCourseGroupUnit().getParentUnits().size() > 1) {
 		throw new DomainException("compentence.course.should.have.only.one.scientific.area");
 	    }
 
-	    return (Unit) this.getCompetenceCourseGroupUnit().getParentUnits().iterator().next();
+	    return (ScientificAreaUnit) this.getCompetenceCourseGroupUnit().getParentUnits().iterator().next();
 	}
 	return null;
     }
@@ -702,7 +705,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	return getCurricularStage() == CurricularStage.APPROVED;
     }
 
-    public void transfer(Unit competenceCourseGroupUnit) {
+    public void transfer(CompetenceCourseGroupUnit competenceCourseGroupUnit) {
 	super.setCompetenceCourseGroupUnit(competenceCourseGroupUnit);
     }
 

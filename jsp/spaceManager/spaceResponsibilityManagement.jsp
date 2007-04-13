@@ -4,30 +4,12 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
-<%@ taglib uri="/WEB-INF/units.tld" prefix="un" %>
 
 <em><bean:message bundle="SPACE_RESOURCES" key="space.manager.page.title"/></em>
 <h2><bean:message key="label.space.responsibility.management" bundle="SPACE_RESOURCES"/></h2>
 
 <logic:present name="selectedSpaceInformation">
-
-	<script language="JavaScript">
-		function check(e,v)
-		{	
-			var contextPath = '<%= request.getContextPath() %>';	
-			if (e.style.display == "none")
-			  {
-			  e.style.display = "";
-			  v.src = contextPath + '/images/toggle_minus10.gif';
-			  }
-			else
-			  {
-			  e.style.display = "none";
-			  v.src = contextPath + '/images/toggle_plus10.gif';
-			  }
-		}
-	</script>
-		
+	
 	<bean:define id="space" name="selectedSpaceInformation" property="space" toScope="request"/>
 	<bean:define id="selectedSpaceInformationId" name="selectedSpaceInformation" property="idInternal" />
 	<jsp:include page="spaceCrumbs.jsp"/>
@@ -80,9 +62,18 @@
 	</fr:view>
 	
 	<p class="mtop15 mbottom05"><strong><bean:message key="label.choose.unit" bundle="SPACE_RESOURCES"/></strong></p>
-	<bean:define id="path">/SpaceManager/manageSpaceResponsibility.do?method=manageResponsabilityInterval&spaceInformationID=<bean:write name="selectedSpaceInformationId"/></bean:define>	
-	<un:tree initialUnit="initialUnit" unitParamName="unitID" path="<%= path %>" state="true"/>
-				
+	<logic:notEmpty name="possibleInternalUnits">	
+		<logic:iterate id="internalUnit" name="possibleInternalUnits">
+			<bean:define id="path">/manageSpaceResponsibility.do?method=manageResponsabilityInterval&spaceInformationID=<bean:write name="selectedSpaceInformationId"/>&unitID=<bean:write name="internalUnit" property="idInternal"/></bean:define>	
+			<p>
+				<html:link page="<%= path %>"><bean:write name="internalUnit" property="nameWithAcronym"/></html:link>
+			</p>
+		</logic:iterate>
+	</logic:notEmpty>
+	<logic:empty name="possibleInternalUnits">
+		<em><bean:message key="label.empty.internal.units" bundle="SPACE_RESOURCES"/></em>
+	</logic:empty>
+					
 	<p class="mtop2 mbottom05"><strong><bean:message key="label.choose.external.unit" bundle="SPACE_RESOURCES"/></strong></p>
 	<bean:define id="pathToAddExternalUnit">/manageSpaceResponsibility.do?method=prepareAddExternalUnit&spaceInformationID=<bean:write name="selectedSpaceInformationId"/></bean:define>	
 

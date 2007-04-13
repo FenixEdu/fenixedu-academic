@@ -23,7 +23,7 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
 	    institution = UnitUtils.readExternalInstitutionUnitByName(precedentDegreeInformationBean
 		    .getInstitutionName());
 	    if (institution == null) {
-		institution = Unit.createNewExternalInstitution(precedentDegreeInformationBean
+		institution = Unit.createNewNoOfficialExternalInstitution(precedentDegreeInformationBean
 			.getInstitutionName());
 	    }
 	}

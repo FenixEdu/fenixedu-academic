@@ -255,7 +255,7 @@ public class GroupCheckService extends Service {
 	    NonExistingServiceException {
 	Unit unit = getUnit(unitAcronyms, 3);
 
-	if (unit.getType() != PartyTypeEnum.DEGREE_UNIT) {
+	if (!unit.isDegreeUnit()) {
 	    throw new NonExistingServiceException();
 	}
 
@@ -266,7 +266,7 @@ public class GroupCheckService extends Service {
     private Department getDepartment(String[] unitAcronyms) throws ExcepcaoPersistencia,
 	    NonExistingServiceException {
 	final Unit unit = getUnit(unitAcronyms, 2);
-	if (unit.getType() != PartyTypeEnum.DEPARTMENT) {
+	if (!unit.isDepartmentUnit()) {
 	    throw new NonExistingServiceException();
 	}
 

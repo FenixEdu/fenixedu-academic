@@ -33,6 +33,9 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -207,9 +210,9 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         return (courseGroup == null) ? (courseGroup = (CourseGroup) rootDomainObject.readDegreeModuleByOID(getCourseGroupID())) : courseGroup;
     }
 
-    public Unit getDepartmentUnit() {
+    public DepartmentUnit getDepartmentUnit() {
        if (getDepartmentUnitID() != null && !getDepartmentUnitID().equals(0)) {
-           return (Unit) rootDomainObject.readPartyByOID(getDepartmentUnitID());
+           return (DepartmentUnit) rootDomainObject.readPartyByOID(getDepartmentUnitID());
        }
        return null;
     }
@@ -645,10 +648,10 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
 
     private List<SelectItem> readCompetenceCourses() {
         final List<SelectItem> result = new ArrayList<SelectItem>();
-        final Unit departmentUnit = getDepartmentUnit();
+        final DepartmentUnit departmentUnit = getDepartmentUnit();
         if (departmentUnit != null) {
-            for (final Unit scientificAreaUnit : departmentUnit.getScientificAreaUnits()) {
-                for (final Unit competenceCourseGroupUnit : scientificAreaUnit.getCompetenceCourseGroupUnits()) {
+            for (final ScientificAreaUnit scientificAreaUnit : departmentUnit.getScientificAreaUnits()) {
+                for (final CompetenceCourseGroupUnit competenceCourseGroupUnit : scientificAreaUnit.getCompetenceCourseGroupUnits()) {
                     for (final CompetenceCourse competenceCourse : competenceCourseGroupUnit.getCompetenceCourses()) {
                         if (competenceCourse.getCurricularStage() != CurricularStage.DRAFT) {
                             result.add(new SelectItem(competenceCourse.getIdInternal(), competenceCourse.getName() + " ("

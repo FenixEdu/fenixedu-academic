@@ -69,7 +69,7 @@ public class CreateResearchActivityParticipation extends Service {
 	private Unit getUnit(Unit unit, String unitName, boolean isExternalUnit) throws FenixServiceException {
 		if (unit == null) {
 			if (isExternalUnit) {
-				return Unit.createNewExternalInstitution(unitName);
+				return Unit.createNewNoOfficialExternalInstitution(unitName);
 			} else {
 				throw new FenixServiceException("error.researcher.ResearchActivityParticipation.unitMustBeExternal");
 			}
