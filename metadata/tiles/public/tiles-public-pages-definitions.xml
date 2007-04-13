@@ -196,6 +196,12 @@
 	<definition name="show-interests" extends="definition.public.homepage">
 		<put name="body" value="/publico/homepage/research/interests.jsp"/>
 	</definition>
+	<definition name="show-participations" extends="definition.public.homepage">
+		<put name="body" value="/publico/homepage/research/participations.jsp"/>
+	</definition>
+	<definition name="show-participationDetails" extends="definition.public.homepage">
+		<put name="body" value="/publico/researcher/participationDetails.jsp"/>
+	</definition>	
     <definition name="view-homepage-section" extends="definition.public.homepage">
         <put name="body" value="/commons/sites/public/section.jsp"/>
     </definition>

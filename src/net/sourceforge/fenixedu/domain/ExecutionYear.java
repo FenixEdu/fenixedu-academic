@@ -261,6 +261,14 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable {
 	return false;
     }
     
+    public boolean isBeforeCivilYear(int civilYear) {
+	return getEndDateYearMonthDay().getYear() < civilYear;
+    }
+    
+    public boolean isAfterCivilYear(int civilYear) {
+	return getBeginDateYearMonthDay().getYear() > civilYear;
+    }
+    
     public static List<ExecutionYear> readExecutionYearsByCivilYear(int civilYear) {
 
 	final List<ExecutionYear> result = new ArrayList<ExecutionYear>();

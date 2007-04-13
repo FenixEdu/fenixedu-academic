@@ -27,3 +27,7 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Fixing Projects Table" alterProjectAssociationTable.sql
+execute "Add show participations options to site" addShowParticipationsToSite.sql
+execute "Alter Project submission" alterProjectSubmissionTable.sql
+execute "Adding activity participation functionality" changes-20070411111156.sql

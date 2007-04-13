@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.research.activity.Participation.ResearchActivityParticipationRole;
 import net.sourceforge.fenixedu.domain.research.result.publication.ConferenceArticles;
 import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public class Event extends Event_Base implements ParticipationsInterface {
 
@@ -69,5 +70,19 @@ public class Event extends Event_Base implements ParticipationsInterface {
 	    }
 	}
 	return participations;
+    }
+    
+    public boolean canBeEditedByUser(Person person) {
+	for(EventEdition edition: getEventEditions()) {
+	    if(!edition.canBeEditedByUser(person)) {
+		return false;
+	    }
+	}
+	return getParticipations().size() == getParticipationsFor(person).size();
+	
+    }
+    
+    public boolean canBeEditedByCurrentUser() {
+	return canBeEditedByUser(AccessControl.getPerson());
     }
 }

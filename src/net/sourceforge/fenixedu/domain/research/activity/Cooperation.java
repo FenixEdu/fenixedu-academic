@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.activity.Participation.ResearchActivityParticipationRole;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.YearMonthDay;
 
@@ -56,5 +57,13 @@ public class Cooperation extends Cooperation_Base implements ParticipationsInter
 	    }
 	}
 	return participations;
+    }
+    
+    public boolean canBeEditedByUser(Person person) {
+	return getParticipations().size() == getParticipationsFor(person).size();
+    }
+    
+    public boolean canBeEditedByCurrentUser() {
+	return canBeEditedByUser(AccessControl.getPerson());
     }
 }

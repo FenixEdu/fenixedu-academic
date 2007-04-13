@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.publico;
 
 import java.io.DataOutputStream;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.SortedMap;
@@ -25,6 +26,11 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.homepage.Homepage;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Contract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.research.activity.Cooperation;
+import net.sourceforge.fenixedu.domain.research.activity.Event;
+import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
+import net.sourceforge.fenixedu.domain.research.activity.JournalIssue;
+import net.sourceforge.fenixedu.domain.research.activity.ScientificJournal;
 import net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
@@ -347,7 +353,7 @@ public class ViewHomepageDA extends SiteVisualizationDA {
 	Homepage homepage = (Homepage) RootDomainObject.readDomainObjectByOID(Homepage.class, Integer
 		.valueOf(homepageId));
 
-	setRequestAttributesToList(request, homepage.getPerson());
+	setPublicationsInRequest(request, homepage.getPerson());
 
 	return mapping.findForward("showPublications");
     }
@@ -376,7 +382,20 @@ public class ViewHomepageDA extends SiteVisualizationDA {
 	return mapping.findForward("showInterests");
     }
 
-    private void setRequestAttributesToList(HttpServletRequest request, Person person) {
+    public ActionForward showParticipations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	
+	final String homepageId = request.getParameter("homepageID");
+	Homepage homepage = (Homepage) RootDomainObject.readDomainObjectByOID(Homepage.class, Integer
+		.valueOf(homepageId));
+
+	setParticipationsInRequest(request,homepage.getPerson());
+	
+	return mapping.findForward("showParticipations");
+	
+    }
+    
+    private void setPublicationsInRequest(HttpServletRequest request, Person person) {
 
 	request.setAttribute("books", ResearchResultPublication.sort(person.getBooks()));
 	request.setAttribute("national-articles", ResearchResultPublication.sort(person
@@ -401,6 +420,26 @@ public class ViewHomepageDA extends SiteVisualizationDA {
 	request.setAttribute("person", getLoggedPerson(request));
     }
 
+    private void setParticipationsInRequest(HttpServletRequest request, Person person) {
+	request.setAttribute("national-events", new ArrayList<Event>(person
+		.getAssociatedEvents(ScopeType.NATIONAL)));
+	request.setAttribute("international-events", new ArrayList<Event>(person
+		.getAssociatedEvents(ScopeType.INTERNATIONAL)));
+	request.setAttribute("international-eventEditions", new ArrayList<EventEdition>(person
+		.getAssociatedEventEditions(ScopeType.INTERNATIONAL)));
+	request.setAttribute("national-eventEditions", new ArrayList<EventEdition>(person
+		.getAssociatedEventEditions(ScopeType.NATIONAL)));
+	request.setAttribute("national-journals", new ArrayList<ScientificJournal>(person
+		.getAssociatedScientificJournals(ScopeType.NATIONAL)));
+	request.setAttribute("international-journals", new ArrayList<ScientificJournal>(person
+		.getAssociatedScientificJournals(ScopeType.INTERNATIONAL)));
+	request.setAttribute("cooperations", new ArrayList<Cooperation>(person.getAssociatedCooperations()));
+	request.setAttribute("national-issues", new ArrayList<JournalIssue>(person
+		.getAssociatedJournalIssues(ScopeType.NATIONAL)));
+	request.setAttribute("international-issues", new ArrayList<JournalIssue>(person
+		.getAssociatedJournalIssues(ScopeType.INTERNATIONAL)));
+    }
+    
     @Override
     protected ActionForward getSiteDefaultView(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {

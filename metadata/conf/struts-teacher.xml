@@ -2162,6 +2162,7 @@
         	<forward name="viewLastProjectSubmissionForEachGroup" path="view-last-project-submission-for-each-group"/>
         	<forward name="viewProjectSubmissionsByGroup" path="view-project-submissions-by-group"/>
         	<forward name="selectiveDownload" path="selective-download"/>
+        	<forward name="editProjectObservations" path="edit-project-observations"/>
         </action>
 
         <action path="/credits"

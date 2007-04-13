@@ -3050,6 +3050,15 @@
 		</filterChains>
 	</service>
 	<service>
+		<name>NotifyStudentGroup</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.NotifyStudentGroup</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="TeacherAuthorization" />
+		</filterChains>
+	</service>
+	<service>
 		<name>EditCareer</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.EditCareer</implementationClass>
 		<description />

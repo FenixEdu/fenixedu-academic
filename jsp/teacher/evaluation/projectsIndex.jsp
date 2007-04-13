@@ -31,11 +31,11 @@
 					<h:outputText value="<strong>#{bundle['label.project']}:</strong> " escape="false" />
 					<h:outputText value="#{project.name}, " />
 					
-					<h:outputText value="#{bundle['label.publish.date']}: " />
+					<h:outputText value="#{bundle['label.net.sourceforge.fenixedu.domain.Project.projectBeginDateTime']}: " />
 					<h:outputFormat value="{0, date, dd/MM/yyyy}">
 						<f:param value="#{project.begin}" />
 					</h:outputFormat>
-					<h:outputText value=", #{bundle['label.delivery.date']}: " />
+					<h:outputText value=", #{bundle['label.net.sourceforge.fenixedu.domain.Project.projectEndDateTime']}: " />
 					<h:outputFormat value="{0, date, dd/MM/yyyy}">
 						<f:param value="#{project.end}" />
 					</h:outputFormat>

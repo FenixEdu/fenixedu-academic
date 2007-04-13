@@ -805,6 +805,20 @@
     		<forward name="showInterests" path="show-interests"/>
 		</action>
 				
+		<action path="/showParticipations"
+    			type="net.sourceforge.fenixedu.presentationTier.Action.publico.ViewHomepageDA"
+    			parameter="method"
+    			>
+    		<forward name="showParticipations" path="show-participations"/>
+		</action>				
+	
+		<action path="/activities/editResearchActivity"
+			type="net.sourceforge.fenixedu.presentationTier.Action.research.activity.EditResearchActivityDispatchAction"
+			parameter="method">
+			
+			<forward name="EditResearchActivity" path="show-participationDetails"/>			
+		</action>
+
 		<action path="/viewHomepage"
     			type="net.sourceforge.fenixedu.presentationTier.Action.publico.ViewHomepageDA"
     			parameter="method"

@@ -14,6 +14,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Country;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.Account;
 import net.sourceforge.fenixedu.domain.accounting.AccountType;
@@ -41,6 +42,8 @@ import net.sourceforge.fenixedu.domain.research.activity.ScientificJournalPartic
 import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 
@@ -55,7 +58,7 @@ public abstract class Party extends Party_Base {
 	createAccount(AccountType.INTERNAL);
 	createAccount(AccountType.EXTERNAL);
     }
-    
+
     @Override
     public void setName(String name) {
 	if (name == null || StringUtils.isEmpty(name.trim())) {
@@ -87,7 +90,7 @@ public abstract class Party extends Party_Base {
     public PartyTypeEnum getType() {
 	return getPartyType() != null ? getPartyType().getType() : null;
     }
-    
+
     public void setType(PartyTypeEnum partyTypeEnum) {
 	if (partyTypeEnum != null) {
 	    PartyType partyType = PartyType.readPartyTypeByType(partyTypeEnum);
@@ -258,10 +261,12 @@ public abstract class Party extends Party_Base {
 	return result;
     }
 
-    protected void delete() {	
-	for (; !getAccounts().isEmpty(); getAccounts().get(0).delete());
-	for (; hasAnyPartyContacts(); getPartyContacts().get(0).delete());
-	removePartyType();	
+    protected void delete() {
+	for (; !getAccounts().isEmpty(); getAccounts().get(0).delete())
+	    ;
+	for (; hasAnyPartyContacts(); getPartyContacts().get(0).delete())
+	    ;
+	removePartyType();
 	removeRootDomainObject();
 	deleteDomainObject();
     }
@@ -357,140 +362,201 @@ public abstract class Party extends Party_Base {
 	}
 	return false;
     }
-    
-    public List<EventEditionParticipation> getEventEditionParticipationsForScope(ScopeType type) {
-	List<EventEditionParticipation> participations = new ArrayList<EventEditionParticipation>();
-	for (Participation participation : getParticipations()) {
-	    if (participation.isEventEditionParticipation()) {
-		if (type == null
-			|| (type != null && type.equals(((EventEditionParticipation) participation).getEventEdition()
-				.getEvent().getLocationType()))) {
-		    participations.add((EventEditionParticipation) participation);
-		}
 
+    private List<? extends Participation> filterParticipationsByYear(
+	    List<? extends Participation> participations, ExecutionYear begin, ExecutionYear end) {
+	List<Participation> participationsForInterval = new ArrayList<Participation>();
+	for (Participation participation : participations) {
+	    Integer year = participation.getCivilYear();
+	    if (year == null
+		    || (begin == null || begin.isBeforeCivilYear(year) || begin.belongsToCivilYear(year))
+		    && (end == null || end.isAfterCivilYear(year) || end.belongsToCivilYear(year))) {
+		participationsForInterval.add(participation);
 	    }
 	}
-	return participations;
+	return participationsForInterval;
     }
-    
-    public List<EventEditionParticipation> getAllEventEditionParticipations() {
-	return getEventEditionParticipationsForScope(null);
-    }
-    
-    public List<EventParticipation> getEventParticipationsForScope(ScopeType type) {
-	List<EventParticipation> participations = new ArrayList<EventParticipation>();
-	for (Participation participation : getParticipations()) {
-	    if (participation.isEventParticipation()) {
-		if (type == null
-			|| (type != null && type.equals(((EventParticipation) participation).getEvent()
-				.getLocationType()))) {
-		    participations.add((EventParticipation) participation);
-		}
 
+    private List<? extends Participation> filterParticipationsByType(Class<? extends Participation> clazz,
+	    ScopeType scopeType) {
+	List<Participation> participations = new ArrayList<Participation>();
+	for (Participation participation : getParticipations()) {
+	    if (participation.getClass().equals(clazz)
+		    && (scopeType == null || participation.scopeMatches(scopeType))) {
+		participations.add(participation);
 	    }
 	}
 	return participations;
     }
 
-    public List<EventParticipation> getAllEventParticipations() {
-	return getEventParticipationsForScope(null);
+    public List<EventEditionParticipation> getEventEditionParticipations(ScopeType type, ExecutionYear begin,
+	    ExecutionYear end) {
+	return (List<EventEditionParticipation>) filterParticipationsByYear(
+		getEventEditionParticipations(type), begin, end);
     }
 
-    public Set<Event> getAssociatedEvents(ScopeType locationType) {
+    public List<EventEditionParticipation> getEventEditionParticipations(ExecutionYear begin,
+	    ExecutionYear end) {
+	return (List<EventEditionParticipation>) filterParticipationsByYear(getEventEditionParticipations(),
+		begin, end);
+    }
+
+    public List<EventEditionParticipation> getEventEditionParticipations(ScopeType type) {
+	return (List<EventEditionParticipation>) filterParticipationsByType(EventEditionParticipation.class,
+		type);
+    }
+
+    public List<EventEditionParticipation> getEventEditionParticipations() {
+	return getEventEditionParticipations(null);
+    }
+
+    public List<EventParticipation> getEventParticipations(ScopeType type) {
+	return (List<EventParticipation>) filterParticipationsByType(EventParticipation.class, type);
+    }
+
+    public Set<EventEdition> getAssociatedEventEditions(ScopeType type, ExecutionYear begin, ExecutionYear end) {
+	Set<EventEdition> eventEditions = new HashSet<EventEdition>();
+	for (EventEditionParticipation participation : getEventEditionParticipations(type, begin, end)) {
+	    eventEditions.add(participation.getEventEdition());
+	}
+	return eventEditions;
+    }
+
+    public Set<EventEdition> getAssociatedEventEditions(ExecutionYear begin, ExecutionYear end) {
+	return getAssociatedEventEditions(null, begin, end);
+    }
+
+    public Set<EventEdition> getAssociatedEventEditions() {
+	return getAssociatedEventEditions(null);
+    }
+
+    public Set<EventEdition> getAssociatedEventEditions(ScopeType type) {
+	return getAssociatedEventEditions(type, null, null);
+    }
+
+    public List<EventParticipation> getEventParticipations(ScopeType type, ExecutionYear begin,
+	    ExecutionYear end) {
+	return (List<EventParticipation>) filterParticipationsByYear(getEventParticipations(type), begin, end);
+    }
+
+    public List<EventParticipation> getEventParticipation(ExecutionYear begin, ExecutionYear end) {
+	return (List<EventParticipation>) filterParticipationsByYear(getEventParticipations(), begin, end);
+    }
+
+    public List<EventParticipation> getEventParticipations() {
+	return getEventParticipations(null);
+    }
+
+    public Set<Event> getAssociatedEvents(ScopeType type, ExecutionYear begin, ExecutionYear end) {
 	Set<Event> events = new HashSet<Event>();
-	for (EventParticipation participation : getAllEventParticipations()) {
-	    if ((locationType != null && locationType.equals(participation.getEvent().getLocationType()))
-		    || locationType == null) {
-		events.add(participation.getEvent());
-	    }
+	for (EventParticipation participation : getEventParticipations(type, begin, end)) {
+	    events.add(participation.getEvent());
 	}
 	return events;
+    }
+
+    public Set<Event> getAssociatedEvents(ExecutionYear begin, ExecutionYear end) {
+	return getAssociatedEvents(null, begin, end);
+    }
+
+    public Set<Event> getAssociatedEvents(ScopeType type) {
+	return getAssociatedEvents(type, null, null);
     }
 
     public Set<Event> getAssociatedEvents() {
 	return getAssociatedEvents(null);
     }
 
-    public Set<EventEdition> getAssociatedEventEditions() {
-	Set<EventEdition> eventEditions = new HashSet<EventEdition>();
-	for (EventEditionParticipation participation : getAllEventEditionParticipations()) {
-	    eventEditions.add(participation.getEventEdition());
-	}
-	return eventEditions;
+    public List<ScientificJournalParticipation> getScientificJournalParticipations(ScopeType type,
+	    ExecutionYear begin, ExecutionYear end) {
+	return (List<ScientificJournalParticipation>) filterParticipationsByYear(
+		getScientificJournalParticipations(type), begin, end);
     }
 
-    public Set<EventEdition> getAssociatedEventEditions(ScopeType type) {
-	Set<EventEdition> editions = new HashSet<EventEdition>();
-	for (EventEditionParticipation participation : getAllEventEditionParticipations()) {
-	    if (type == null
-		    || (type != null && type.equals(participation.getEventEdition().getEvent()
-			    .getLocationType()))) {
-		editions.add(participation.getEventEdition());
-	    }
-	}
-	return editions;
-    }
-    public List<ScientificJournalParticipation> getAllScientificJournalParticiationsForScope(
-	    ScopeType type) {
-	List<ScientificJournalParticipation> participations = new ArrayList<ScientificJournalParticipation>();
-	for (Participation participation : getParticipations()) {
-	    if (participation.isScientificJournaltParticipation()) {
-		if (type == null
-			|| (type != null && type.equals(((ScientificJournalParticipation) participation)
-				.getScientificJournal().getLocationType()))) {
-		    participations.add((ScientificJournalParticipation) participation);
-		}
-	    }
-	}
-	return participations;
+    public List<ScientificJournalParticipation> getScientificJournalParticipations(ExecutionYear begin,
+	    ExecutionYear end) {
+	return (List<ScientificJournalParticipation>) filterParticipationsByYear(
+		getScientificJournalParticipations(), begin, end);
     }
 
-    public List<ScientificJournalParticipation> getAllScientificJournalParticipations() {
-	return getAllScientificJournalParticiationsForScope(null);
+    public List<ScientificJournalParticipation> getScientificJournalParticipations(ScopeType type) {
+	return (List<ScientificJournalParticipation>) filterParticipationsByType(
+		ScientificJournalParticipation.class, type);
     }
 
-    public Set<ScientificJournal> getAssociatedScientificJournals(ScopeType locationType) {
+    public List<ScientificJournalParticipation> getScientificJournalParticipations() {
+	return getScientificJournalParticipations(null);
+    }
+
+    public Set<ScientificJournal> getAssociatedScientificJournals(ScopeType type, ExecutionYear begin,
+	    ExecutionYear end) {
 	Set<ScientificJournal> journals = new HashSet<ScientificJournal>();
-	for (ScientificJournalParticipation participation : getAllScientificJournalParticipations()) {
-	    if (locationType == null
-		    || (locationType != null && locationType.equals(participation.getScientificJournal()
-			    .getLocationType()))) {
-		journals.add(participation.getScientificJournal());
-	    }
+	for (ScientificJournalParticipation participation : getScientificJournalParticipations(type, begin,
+		end)) {
+	    journals.add(participation.getScientificJournal());
 	}
 	return journals;
+    }
+
+    public Set<ScientificJournal> getAssociatedScientificJournals(ExecutionYear begin, ExecutionYear end) {
+	return getAssociatedScientificJournals(null, begin, end);
+    }
+
+    public Set<ScientificJournal> getAssociatedScientificJournals(ScopeType type) {
+	return getAssociatedScientificJournals(type, null, null);
     }
 
     public Set<ScientificJournal> getAssociatedScientificJournals() {
 	return getAssociatedScientificJournals(null);
     }
 
-    public List<JournalIssueParticipation> getAllJournalIssueParticipations() {
-	List<JournalIssueParticipation> issueParticipations = new ArrayList<JournalIssueParticipation>();
-	for (Participation participation : this.getParticipations()) {
-	    if (participation.isJournalIssueParticipation()) {
-		issueParticipations.add((JournalIssueParticipation) participation);
-	    }
+    public List<JournalIssueParticipation> getJournalIssueParticipations(ScopeType type, ExecutionYear begin,
+	    ExecutionYear end) {
+	return (List<JournalIssueParticipation>) filterParticipationsByYear(
+		getJournalIssueParticipations(type), begin, end);
+    }
+
+    public List<JournalIssueParticipation> getJournalIssueParticipations(ExecutionYear begin,
+	    ExecutionYear end) {
+	return (List<JournalIssueParticipation>) filterParticipationsByYear(getJournalIssueParticipations(),
+		begin, end);
+    }
+
+    public List<JournalIssueParticipation> getJournalIssueParticipations(ScopeType type) {
+	return (List<JournalIssueParticipation>) filterParticipationsByType(JournalIssueParticipation.class,
+		type);
+    }
+
+    public List<JournalIssueParticipation> getJournalIssueParticipations() {
+	return getJournalIssueParticipations(null);
+    }
+
+    public Set<JournalIssue> getAssociatedJournalIssues(ScopeType type, ExecutionYear begin, ExecutionYear end) {
+	Set<JournalIssue> issues = new HashSet<JournalIssue>();
+	for (JournalIssueParticipation participation : this.getJournalIssueParticipations(type, begin, end)) {
+	    issues.add(participation.getJournalIssue());
 	}
-	return issueParticipations;
+	return issues;
+    }
+
+    public Set<JournalIssue> getAssociatedJournalIssues(ExecutionYear begin, ExecutionYear end) {
+	return getAssociatedJournalIssues(null, begin, end);
     }
 
     public Set<JournalIssue> getAssociatedJournalIssues(ScopeType locationType) {
-	Set<JournalIssue> issues = new HashSet<JournalIssue>();
-	for (JournalIssueParticipation participation : this.getAllJournalIssueParticipations()) {
-	    if(locationType==null || (locationType!=null && locationType.equals(participation.getJournalIssue().getLocationType()))) {
-		issues.add(participation.getJournalIssue());
-	    }
-	}
-	return issues;
-	
+	return getAssociatedJournalIssues(locationType, null, null);
     }
-    
+
     public Set<JournalIssue> getAssociatedJournalIssues() {
 	return getAssociatedJournalIssues(null);
     }
 
-    public List<CooperationParticipation> getAllCooperationParticipations() {
+    public List<CooperationParticipation> getCooperationParticipations(ExecutionYear begin, ExecutionYear end) {
+	return (List<CooperationParticipation>) filterParticipationsByYear(getCooperationParticipations(),
+		begin, end);
+    }
+
+    public List<CooperationParticipation> getCooperationParticipations() {
 	List<CooperationParticipation> cooperationParticipations = new ArrayList<CooperationParticipation>();
 	for (Participation participation : this.getParticipations()) {
 	    if (participation.isCooperationParticipation()) {
@@ -500,15 +566,20 @@ public abstract class Party extends Party_Base {
 	return cooperationParticipations;
     }
 
-    public Set<Cooperation> getAssociatedCooperations() {
+    public Set<Cooperation> getAssociatedCooperations(ExecutionYear begin, ExecutionYear end) {
 	Set<Cooperation> cooperations = new HashSet<Cooperation>();
-	for (CooperationParticipation participation : getAllCooperationParticipations()) {
+	for (CooperationParticipation participation : getCooperationParticipations(begin, end)) {
 	    cooperations.add(participation.getCooperation());
 	}
 	return cooperations;
     }
-    
-    public List<? extends PartyContact> getPartyContacts(final Class<? extends PartyContact> clazz, final PartyContactType type) {
+
+    public Set<Cooperation> getAssociatedCooperations() {
+	return getAssociatedCooperations(null, null);
+    }
+
+    public List<? extends PartyContact> getPartyContacts(final Class<? extends PartyContact> clazz,
+	    final PartyContactType type) {
 	final List<PartyContact> result = new ArrayList<PartyContact>();
 	for (final PartyContact contact : getPartyContactsSet()) {
 	    if (clazz.isAssignableFrom(contact.getClass()) && (type == null || contact.getType() == type)) {
@@ -517,11 +588,11 @@ public abstract class Party extends Party_Base {
 	}
 	return result;
     }
-    
+
     public List<? extends PartyContact> getPartyContacts(final Class<? extends PartyContact> clazz) {
 	return getPartyContacts(clazz, null);
     }
-    
+
     public boolean hasAnyPartyContact(final Class<? extends PartyContact> clazz, final PartyContactType type) {
 	for (final PartyContact contact : getPartyContactsSet()) {
 	    if (clazz.isAssignableFrom(contact.getClass()) && contact.getType() == type) {
@@ -530,7 +601,7 @@ public abstract class Party extends Party_Base {
 	}
 	return false;
     }
-    
+
     public PartyContact getDefaultPartyContact(final Class<? extends PartyContact> clazz) {
 	for (final PartyContact contact : getPartyContactsSet()) {
 	    if (clazz.isAssignableFrom(contact.getClass()) && contact.isDefault()) {
@@ -539,15 +610,15 @@ public abstract class Party extends Party_Base {
 	}
 	return null;
     }
-    
+
     public boolean hasDefaultPartyContact(final Class<? extends PartyContact> clazz) {
 	return getDefaultPartyContact(clazz) != null;
     }
-    
+
     public WebAddress getDefaultWebAddress() {
 	return (WebAddress) getDefaultPartyContact(WebAddress.class);
     }
-    
+
     public boolean hasDefaultWebAddress() {
 	return hasDefaultPartyContact(WebAddress.class);
     }
@@ -555,35 +626,35 @@ public abstract class Party extends Party_Base {
     public List<WebAddress> getWebAddresses() {
 	return (List<WebAddress>) getPartyContacts(WebAddress.class);
     }
-    
+
     public PhysicalAddress getDefaultPhysicalAddress() {
 	return (PhysicalAddress) getDefaultPartyContact(PhysicalAddress.class);
     }
-    
+
     public List<PhysicalAddress> getPhysicalAddresses() {
 	return (List<PhysicalAddress>) getPartyContacts(PhysicalAddress.class);
     }
-    
+
     public Phone getDefaultPhone() {
 	return (Phone) getDefaultPartyContact(Phone.class);
     }
-    
+
     public List<Phone> getPhones() {
 	return (List<Phone>) getPartyContacts(Phone.class);
     }
-    
+
     public MobilePhone getDefaultMobilePhone() {
 	return (MobilePhone) getDefaultPartyContact(MobilePhone.class);
     }
-    
+
     public List<MobilePhone> getMobilePhones() {
 	return (List<MobilePhone>) getPartyContacts(MobilePhone.class);
     }
-    
+
     public EmailAddress getDefaultEmailAddress() {
 	return (EmailAddress) getDefaultPartyContact(EmailAddress.class);
     }
-    
+
     public List<EmailAddress> getEmailAddresses() {
 	return (List<EmailAddress>) getPartyContacts(EmailAddress.class);
     }
@@ -591,9 +662,10 @@ public abstract class Party extends Party_Base {
     @Deprecated
     private PhysicalAddress getOrCreateDefaultPhysicalAddress() {
 	final PhysicalAddress physicalAdress = getDefaultPhysicalAddress();
-	return physicalAdress != null ? physicalAdress : PartyContact.createDefaultPersonalPhysicalAddress(this);
+	return physicalAdress != null ? physicalAdress : PartyContact
+		.createDefaultPersonalPhysicalAddress(this);
     }
-    
+
     protected void createDefaultPhysicalAddress(final PhysicalAddressData data) {
 	PartyContact.createDefaultPersonalPhysicalAddress(this, data);
     }
@@ -601,17 +673,17 @@ public abstract class Party extends Party_Base {
     protected void updateDefaultPhysicalAddress(final PhysicalAddressData data) {
 	getOrCreateDefaultPhysicalAddress().edit(data);
     }
-    
+
     protected PhysicalAddress updateDefaultPhysicalAddress() {
 	return getOrCreateDefaultPhysicalAddress();
     }
-    
+
     @Deprecated
     private WebAddress getOrCreateDefaultWebAddress() {
 	final WebAddress webAddress = getDefaultWebAddress();
 	return webAddress != null ? webAddress : PartyContact.createDefaultPersonalWebAddress(this);
     }
-    
+
     protected void createDefaultWebAddress(final String url) {
 	if (!StringUtils.isEmpty(url)) {
 	    PartyContact.createDefaultPersonalWebAddress(this, url);
@@ -621,13 +693,13 @@ public abstract class Party extends Party_Base {
     protected void updateDefaultWebAddress(final String url) {
 	getOrCreateDefaultWebAddress().edit(url);
     }
-    
+
     @Deprecated
     private Phone getOrCreateDefaultPhone() {
 	final Phone phone = getDefaultPhone();
 	return phone != null ? phone : (Phone) PartyContact.createDefaultPersonalPhone(this);
     }
-    
+
     protected void createDefaultPhone(final String number) {
 	if (!StringUtils.isEmpty(number)) {
 	    PartyContact.createDefaultPersonalPhone(this, number);
@@ -637,13 +709,14 @@ public abstract class Party extends Party_Base {
     protected void updateDefaultPhone(final String number) {
 	getOrCreateDefaultPhone().edit(number);
     }
-    
+
     @Deprecated
     private MobilePhone getOrCreateDefaultMobilePhone() {
 	final MobilePhone mobilePhone = getDefaultMobilePhone();
-	return mobilePhone != null ? mobilePhone : (MobilePhone) PartyContact.createDefaultPersonalMobilePhone(this);
+	return mobilePhone != null ? mobilePhone : (MobilePhone) PartyContact
+		.createDefaultPersonalMobilePhone(this);
     }
-    
+
     protected void createDefaultMobilePhone(final String number) {
 	if (!StringUtils.isEmpty(number)) {
 	    PartyContact.createDefaultPersonalMobilePhone(this, number);
@@ -673,84 +746,84 @@ public abstract class Party extends Party_Base {
 	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
 	return physicalAddress != null ? physicalAddress.getAddress() : null;
     }
-    
+
     @Deprecated
     public void setAddress(String address) {
 	getOrCreateDefaultPhysicalAddress().setAddress(address);
     }
-    
+
     @Deprecated
     public String getAreaCode() {
 	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
 	return physicalAddress != null ? physicalAddress.getAreaCode() : null;
     }
-    
+
     @Deprecated
     public void setAreaCode(String areaCode) {
 	getOrCreateDefaultPhysicalAddress().setAreaCode(areaCode);
     }
-    
+
     @Deprecated
     public String getAreaOfAreaCode() {
 	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
 	return physicalAddress != null ? physicalAddress.getAreaOfAreaCode() : null;
     }
-    
+
     @Deprecated
     public void setAreaOfAreaCode(String areaOfAreaCode) {
 	getOrCreateDefaultPhysicalAddress().setAreaOfAreaCode(areaOfAreaCode);
     }
-    
+
     @Deprecated
     public String getArea() {
 	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
 	return physicalAddress != null ? physicalAddress.getArea() : null;
     }
-    
+
     @Deprecated
     public void setArea(String area) {
 	getOrCreateDefaultPhysicalAddress().setArea(area);
     }
-    
+
     @Deprecated
     public String getParishOfResidence() {
 	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
 	return physicalAddress != null ? physicalAddress.getParishOfResidence() : null;
     }
-    
+
     @Deprecated
     public void setParishOfResidence(String parishOfResidence) {
 	getOrCreateDefaultPhysicalAddress().setParishOfResidence(parishOfResidence);
     }
-    
+
     @Deprecated
     public String getDistrictSubdivisionOfResidence() {
 	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
 	return physicalAddress != null ? physicalAddress.getDistrictSubdivisionOfResidence() : null;
     }
-    
+
     @Deprecated
     public void setDistrictSubdivisionOfResidence(String districtSubdivisionOfResidence) {
 	getOrCreateDefaultPhysicalAddress().setDistrictSubdivisionOfResidence(districtSubdivisionOfResidence);
     }
-    
+
     @Deprecated
     public String getDistrictOfResidence() {
 	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
 	return physicalAddress != null ? physicalAddress.getDistrictOfResidence() : null;
     }
-    
+
     @Deprecated
     public void setDistrictOfResidence(String districtOfResidence) {
-        getOrCreateDefaultPhysicalAddress().setDistrictOfResidence(districtOfResidence);
+	getOrCreateDefaultPhysicalAddress().setDistrictOfResidence(districtOfResidence);
     }
-    
+
     @Deprecated
     public Country getCountryOfResidence() {
 	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
 	return physicalAddress != null ? physicalAddress.getCountryOfResidence() : null;
     }
-    
+
     @Deprecated
     public void setCountryOfResidence(Country countryOfResidence) {
 	getOrCreateDefaultPhysicalAddress().setCountryOfResidence(countryOfResidence);
@@ -758,40 +831,44 @@ public abstract class Party extends Party_Base {
 
     @Deprecated
     public String getWebAddress() {
-        final WebAddress webAddress = getDefaultWebAddress();
-        return webAddress != null ? webAddress.getUrl() : null;
+	final WebAddress webAddress = getDefaultWebAddress();
+	return webAddress != null ? webAddress.getUrl() : null;
     }
-    
+
     @Deprecated
     public void setWebAddress(String webAddress) {
 	updateDefaultWebAddress(webAddress);
     }
-    
+
     @Deprecated
     public String getPhone() {
 	final Phone phone = getDefaultPhone();
 	return phone != null ? phone.getNumber() : null;
     }
-    
+
     @Deprecated
     public void setPhone(String phone) {
 	updateDefaultPhone(phone);
     }
-    
+
     @Deprecated
     public String getMobile() {
 	final MobilePhone phone = getDefaultMobilePhone();
 	return phone != null ? phone.getNumber() : null;
     }
-    
+
     @Deprecated
     public void setMobile(String mobile) {
 	updateDefaultMobilePhone(mobile);
     }
-    
+
     private EmailAddress getPersonalEmailAddress() {
-	final List<EmailAddress> partyContacts = (List<EmailAddress>) getPartyContacts(EmailAddress.class, PartyContactType.PERSONAL);
-	return partyContacts.isEmpty() ? null : (EmailAddress) partyContacts.get(0); // actually exists only one
+	final List<EmailAddress> partyContacts = (List<EmailAddress>) getPartyContacts(EmailAddress.class,
+		PartyContactType.PERSONAL);
+	return partyContacts.isEmpty() ? null : (EmailAddress) partyContacts.get(0); // actually
+	// exists
+	// only
+	// one
     }
 
     @Deprecated
@@ -809,9 +886,8 @@ public abstract class Party extends Party_Base {
 	    emailAddress.edit(email);
 	}
     }
-    
-    /* ~~~~~~~~~~~~~~~~~~~~~
-     * End: PartyContacts
-     * ~~~~~~~~~~~~~~~~~~~~~
-     */
+
+    /*
+         * ~~~~~~~~~~~~~~~~~~~~~ End: PartyContacts ~~~~~~~~~~~~~~~~~~~~~
+         */
 }

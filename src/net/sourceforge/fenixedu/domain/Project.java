@@ -205,6 +205,15 @@ public class Project extends Project_Base {
         return lastProjectSubmissionByStudentGroup.values();
     }
 
+    public ProjectSubmission getLastProjectSubmissionForStudentGroup(StudentGroup group) {
+	for(ProjectSubmission projectSubmission : getLastProjectSubmissionForEachStudentGroup()) {
+	    if(projectSubmission.getStudentGroup().equals(group)) {
+		return projectSubmission;
+	    }
+	}
+	return null;
+    }
+    
     public List<ProjectSubmissionLog> getProjectSubmissionLogsByStudentGroup(StudentGroup studentGroup) {
         List<ProjectSubmissionLog> result = new ArrayList<ProjectSubmissionLog>();
 

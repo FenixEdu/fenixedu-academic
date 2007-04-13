@@ -1616,6 +1616,7 @@ class net.sourceforge.fenixedu.domain.Evaluation extends net.sourceforge.fenixed
 
 	class net.sourceforge.fenixedu.domain.ProjectSubmission extends net.sourceforge.fenixedu.domain.DomainObject {
 	    DateTime submissionDateTime;
+	    String teacherObservation;
 	    Integer keyStudentGroup;
 	    Integer keyAttends;
 	    Integer keyProject;
@@ -4547,6 +4548,7 @@ class net.sourceforge.fenixedu.domain.Site extends net.sourceforge.fenixedu.doma
 		Boolean showPublications;
 		Boolean showPatents;
 		Boolean showInterests;
+		Boolean showParticipations;
 		MultiLanguageString researchUnit;
 		String researchUnitHomepage;
 		Boolean showCurrentAttendingExecutionCourses;

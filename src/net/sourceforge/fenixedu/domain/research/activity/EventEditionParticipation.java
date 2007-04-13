@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
 
 public class EventEditionParticipation extends EventEditionParticipation_Base {
     
@@ -19,7 +20,7 @@ public class EventEditionParticipation extends EventEditionParticipation_Base {
     }
     
     private boolean alreadyHasParticipation(Party party, ResearchActivityParticipationRole role, EventEdition eventEdition) {
-	for(EventEditionParticipation participation : party.getAllEventEditionParticipations()) {
+	for(EventEditionParticipation participation : party.getEventEditionParticipations()) {
 	    if(participation.match(party,role,eventEdition)) {
 		return true;
 	    }
@@ -74,6 +75,16 @@ public class EventEditionParticipation extends EventEditionParticipation_Base {
     public void delete() {
 	removeEventEdition();
 	super.delete();
+    }
+
+    @Override
+    public Integer getCivilYear() {
+	return this.getEventEdition().getStartDate().getYear();
+    }
+
+    @Override
+    public boolean scopeMatches(ScopeType type) {
+	return this.getEventEdition().getEvent().getLocationType().equals(type);
     }
         
 }

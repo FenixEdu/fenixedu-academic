@@ -15,6 +15,7 @@
 	</fr:layout>
 </fr:view>
 
+<logic:notEmpty name="event" property="articles">
 <p class="mbottom05"><bean:message key="label.articleList" bundle="RESEARCHER_RESOURCES"/>:</p>
 <fr:view name="journal" property="articles" schema="presentArticlesInJournal">
 	<fr:layout name="tabular">
@@ -24,3 +25,8 @@
 		<fr:property name="sortBy" value="volume, number"/>
 	</fr:layout>
 </fr:view>
+</logic:notEmpty>
+
+<logic:empty name="event" property="articles">
+	<bean:message key="label.noArticlesAssociated" bundle="RESEARCHER_RESOURCES"/>
+</logic:empty>

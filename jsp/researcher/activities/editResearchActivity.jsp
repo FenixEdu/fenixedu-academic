@@ -17,7 +17,7 @@
 	<ul class="mvert2 list5">
 		<li>
 			<html:link page="/activities/activitiesManagement.do?method=listActivities">
-				<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.goBack" />
+				<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.showParticipations" />
 			</html:link>
 		</li>
 		<li>
@@ -63,7 +63,7 @@
 	</html:link>
 
 	<%-- DATA --%>		
-	<fr:view name="editionBean" schema="<%= schema %>">
+	<fr:view name="researchActivity" schema="<%= schema %>">
 	    <fr:layout name="tabular-nonNullValues">
     	    <fr:property name="classes" value="tstyle2 thlight thtop thleft"/>
     	    <fr:property name="rowClasses" value="tdbold,,,,,,,,,,,,"/>

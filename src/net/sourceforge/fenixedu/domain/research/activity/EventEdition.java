@@ -1,12 +1,17 @@
 package net.sourceforge.fenixedu.domain.research.activity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.research.result.publication.ConferenceArticles;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import dml.runtime.RelationAdapter;
 
 public class EventEdition extends EventEdition_Base implements ParticipationsInterface {
@@ -103,6 +108,34 @@ public class EventEdition extends EventEdition_Base implements ParticipationsInt
     
     public ResearchActivityStage getStage() {
 	return getEvent().getStage();
+    }
+
+    public boolean canBeEditedByUser(Person person) {
+	Set<Person> people = getPeopleWhoHaveAssociatedArticles();
+	people.addAll(getPeopleWhoHaveParticipations());
+	return people.size() == 1 && people.contains(person);
+    }
+
+    public boolean canBeEditedByCurrentUser() {
+	return canBeEditedByUser(AccessControl.getPerson());
+    }
+    
+    public Set<Person> getPeopleWhoHaveAssociatedArticles() {
+	Set<Person> people = new HashSet<Person>();
+	for(EventConferenceArticlesAssociation association : getEventConferenceArticlesAssociations()) {
+	    people.add(association.getPerson());
+	}
+	return people;
+    }
+    
+    public Set<Person> getPeopleWhoHaveParticipations() {
+	Set<Person> people = new HashSet<Person>();
+	for (EventEditionParticipation participation : getParticipations()) {
+	    if (participation.getParty().isPerson()) {
+		people.add((Person) participation.getParty());
+	    }
+	}
+	return people;
     }
 
 

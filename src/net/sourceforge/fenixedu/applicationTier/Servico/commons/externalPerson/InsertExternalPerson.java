@@ -42,16 +42,20 @@ public class InsertExternalPerson extends Service {
     }
 
     public ExternalContract run(String personName, Unit organization) throws FenixServiceException {
+	return run(personName,null,organization);
+    }
+    
+    public ExternalContract run(String personName, String email, Unit organization) throws FenixServiceException  {
 	ExternalContract storedExternalContract = null;
 	storedExternalContract = ExternalContract.readByPersonNameAddressAndInstitutionID(personName, null,
 		organization.getIdInternal());
 	if (storedExternalContract != null)
 	    throw new ExistingServiceException(
-		    "error.exception.commons.ExternalContract.existingExternalContract");
-
+	    "error.exception.commons.ExternalContract.existingExternalContract");
+	
 	Person externalPerson = Person.createExternalPerson(personName, Gender.MALE, null, null, null,
-		null, null, null, null, null, null, null, null, String.valueOf(System
+		null, null, null, null, null, null, null, email, String.valueOf(System
 			.currentTimeMillis()), IDDocumentType.EXTERNAL);
-	return new ExternalContract(externalPerson, organization, new YearMonthDay(), null);
+	return new ExternalContract(externalPerson, organization, new YearMonthDay(), null);	
     }
 }

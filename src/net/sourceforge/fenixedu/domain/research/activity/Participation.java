@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
 
 public abstract class Participation extends Participation_Base {
 
@@ -52,10 +53,12 @@ public abstract class Participation extends Participation_Base {
     public boolean isPartyParticipation() {
 	return getParty().isUnit();
     }
-    
+        
     public abstract List<ResearchActivityParticipationRole> getAllowedRoles();
     public abstract String getParticipationName();
     public abstract boolean isLastParticipation();
+    public abstract Integer getCivilYear();
+    public abstract boolean scopeMatches(ScopeType type);
     
     public enum ResearchActivityParticipationRole {
 	Editor_in_Chief, Associate_Editor, Committee_Chair, General_Chair, Committee_Member, Invited_Speaker, Reviewer,

@@ -233,7 +233,7 @@ public class ResultParticipationManagementAction extends ResultsManagementAction
 		"beanForExternalPerson").getMetaObject().getObject();
 
 	if (bean.getOrganization() != null) {
-	    Object[] args = { bean.getParticipatorName(), bean.getOrganization() };
+	    Object[] args = { bean.getParticipatorName(), bean.getEmail(), bean.getOrganization() };
 	    ExternalContract contract = (ExternalContract) executeService("InsertExternalPerson", args);
 	    bean.setParticipator(contract.getPerson().getPersonName());
 	    createParticipation(bean);

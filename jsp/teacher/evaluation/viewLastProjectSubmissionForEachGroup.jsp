@@ -39,9 +39,12 @@
 	<fr:view name="projectSubmissions" schema="projectSubmission.view-full">
 		<fr:layout name="tabular">
 	        <fr:property name="classes" value="tstyle2"/>
-	        <fr:property name="columnClasses" value="acenter,acenter,nowrap,nowrap acenter,smalltxt,,"/>
+	        <fr:property name="columnClasses" value="acenter,acenter,nowrap,nowrap acenter,smalltxt,aright,nowrap"/>
 	        <fr:property name="linkFormat(viewProjectSubmissionsForGroup)" value="<%="/projectSubmissionsManagement.do?method=viewProjectSubmissionsByGroup&studentGroupID=${studentGroup.idInternal}&projectID=${project.idInternal}&executionCourseID=" + executionCourseID %>"/>
 			<fr:property name="key(viewProjectSubmissionsForGroup)" value="link.teacher.executionCourseManagement.evaluation.project.viewLastProjectSubmissionForEachGroup.viewProjectSubmissionsByGroup"/>
+			<fr:property name="linkFormat(groupComment)" value="<%= "/projectSubmissionsManagement.do?method=prepareGroupComment&studentGroupID=${studentGroup.idInternal}&projectID=${project.idInternal}&executionCourseID=" + executionCourseID  + "&edit=false" %>"/>
+			<fr:property name="key(groupComment)" value="link.teacher.executionCourseManagement.evaluation.project.viewLastProjectSubmissionForEachGroup.groupComment"/>
+			<fr:property name="visibleIfNot(groupComment)" value="project.submissionPeriodOpen"/>
 	    </fr:layout>
 	</fr:view>
 </logic:notEmpty>

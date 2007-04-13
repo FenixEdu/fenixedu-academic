@@ -18,6 +18,11 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.research.ResearchInterest;
+import net.sourceforge.fenixedu.domain.research.activity.Cooperation;
+import net.sourceforge.fenixedu.domain.research.activity.Event;
+import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
+import net.sourceforge.fenixedu.domain.research.activity.JournalIssue;
+import net.sourceforge.fenixedu.domain.research.activity.ScientificJournal;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
 import net.sourceforge.fenixedu.domain.teacher.Advise;
@@ -84,11 +89,11 @@ public class ViewCurriculumDispatchAction extends FenixAction {
 	Set<ResearchResultPublication> unstructured = new HashSet<ResearchResultPublication>();
 	Set<ResearchResultPublication> bookParts = new HashSet<ResearchResultPublication>();
 	Set<ResearchResultPublication> resultPublications = new HashSet<ResearchResultPublication>();
-
+	
 	if (firstExecutionYear == null) {
 	    firstExecutionYear = ExecutionYear.readFirstExecutionYear();
 	}
-	if (finaltExecutionYear == null) {
+	if (finaltExecutionYear == null || finaltExecutionYear.isBefore(firstExecutionYear)) {
 	    finaltExecutionYear = ExecutionYear.readLastExecutionYear();
 	}
 
@@ -125,6 +130,8 @@ public class ViewCurriculumDispatchAction extends FenixAction {
 	    unstructured.addAll(person.getUnstructureds(iteratorYear));
 	    bookParts.addAll(person.getInbooks(iteratorYear));
 
+	    
+		
 	    iteratorYear = iteratorYear.getNextExecutionYear();
 	}
 
@@ -151,6 +158,24 @@ public class ViewCurriculumDispatchAction extends FenixAction {
 	request.setAttribute("otherPublications", ResearchResultPublication.sort(otherPublication));
 	request.setAttribute("unstructureds", unstructured);
 	request.setAttribute("inbooks", ResearchResultPublication.sort(bookParts));
+	request.setAttribute("national-events", new ArrayList<Event>(person
+		.getAssociatedEvents(ScopeType.NATIONAL,firstExecutionYear, finaltExecutionYear)));
+	request.setAttribute("international-events", new ArrayList<Event>(person
+		.getAssociatedEvents(ScopeType.INTERNATIONAL,firstExecutionYear, finaltExecutionYear)));
+	request.setAttribute("international-eventEditions", new ArrayList<EventEdition>(person
+		.getAssociatedEventEditions(ScopeType.INTERNATIONAL,firstExecutionYear, finaltExecutionYear)));
+	request.setAttribute("national-eventEditions", new ArrayList<EventEdition>(person
+		.getAssociatedEventEditions(ScopeType.NATIONAL,firstExecutionYear, finaltExecutionYear)));
+	request.setAttribute("national-journals", new ArrayList<ScientificJournal>(person
+		.getAssociatedScientificJournals(ScopeType.NATIONAL,firstExecutionYear, finaltExecutionYear)));
+	request.setAttribute("international-journals", new ArrayList<ScientificJournal>(person
+		.getAssociatedScientificJournals(ScopeType.INTERNATIONAL,firstExecutionYear, finaltExecutionYear)));
+	request.setAttribute("cooperations", new ArrayList<Cooperation>(person.getAssociatedCooperations(firstExecutionYear,finaltExecutionYear)));
+	request.setAttribute("national-issues", new ArrayList<JournalIssue>(person
+		.getAssociatedJournalIssues(ScopeType.NATIONAL,firstExecutionYear, finaltExecutionYear)));
+	request.setAttribute("international-issues", new ArrayList<JournalIssue>(person
+		.getAssociatedJournalIssues(ScopeType.INTERNATIONAL,firstExecutionYear, finaltExecutionYear)));
 
+	request.setAttribute("participations", person.getParticipations());
     }
 }

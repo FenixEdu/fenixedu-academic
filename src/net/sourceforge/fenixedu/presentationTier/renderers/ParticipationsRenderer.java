@@ -20,6 +20,16 @@ import net.sourceforge.fenixedu.renderers.schemas.Schema;
 import net.sourceforge.fenixedu.renderers.utils.RenderKit;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
+/**
+ * This renderer provides a way of presenting a list of 
+ * net.sourceforge.fenixedu.domain.research.activity.Participation
+ * objects.
+ * <p>
+ * Roles displayment is configurable
+ * 
+ * @author pcma
+ */
+
 public class ParticipationsRenderer extends OutputRenderer {
 
     private String linkFormat;
@@ -37,7 +47,12 @@ public class ParticipationsRenderer extends OutputRenderer {
     public boolean isShowRoles() {
 	return showRoles;
     }
-
+    
+    /**
+     * If roles will or not be displayed
+     * 
+     * @property
+     */
     public void setShowRoles(boolean showRoles) {
 	this.showRoles = showRoles;
     }
@@ -46,6 +61,11 @@ public class ParticipationsRenderer extends OutputRenderer {
 	return subLayout;
     }
 
+    /**
+     * Defines a sublayout for each participator 
+     * 
+     * @property
+     */
     public void setSubLayout(String layout) {
 	this.subLayout = layout;
     }
@@ -54,6 +74,11 @@ public class ParticipationsRenderer extends OutputRenderer {
 	return subSchema;
     }
 
+    /**
+     * Difines a subSchema for each participator
+     * 
+     * @property
+     */
     public void setSubSchema(String schema) {
 	this.subSchema = schema;
     }
@@ -62,6 +87,12 @@ public class ParticipationsRenderer extends OutputRenderer {
 	return linkFormat;
     }
 
+    /**
+     * Defines a link format, see layout link for more
+     * information about this property.
+     * 
+     * @property
+     */
     public void setLinkFormat(String linkFormat) {
 	this.linkFormat = linkFormat;
     }
@@ -113,6 +144,8 @@ public class ParticipationsRenderer extends OutputRenderer {
 		    keySetSize--;
 		}
 	    }
+	    
+	    container.setIndented(false);
 	    return container;
 	}
 

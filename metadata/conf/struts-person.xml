@@ -95,6 +95,7 @@
         <form-property name="showPublications" type="java.lang.String" />
         <form-property name="showPatents" type="java.lang.String" />
         <form-property name="showInterests" type="java.lang.String" />
+        <form-property name="showParticipations" type="java.lang.String"/>
       </form-bean>
       
       <!-- ================= PARKING REQUEST FORM =================== -->

@@ -586,7 +586,11 @@
 	
 	<schema name="evaluation.project.view-with-name-description-and-grouping" type="net.sourceforge.fenixedu.domain.Project" bundle="APPLICATION_RESOURCES">
 	    <slot name="name" />
-	    <slot name="description"/>
+	    <slot name="description" layout="null-as-label">
+	    	<property name="label" value="-"/>
+	    </slot>
+	    <slot name="projectBeginDateTime" key="label.net.sourceforge.fenixedu.domain.Project.projectBeginDateTime"/>
+	    <slot name="projectEndDateTime" key="label.net.sourceforge.fenixedu.domain.Project.projectEndDateTime"/>
    	    <slot name="grouping.name" />
 	</schema>
 	
@@ -601,7 +605,25 @@
    	    </slot>
    	    <slot name="projectSubmissionFile.size" layout="fileSize"/>
 	</schema>
-	
+
+
+	<schema name="projectSubmission.viewObservation" type="net.sourceforge.fenixedu.domain.ProjectSubmission" bundle="APPLICATION_RESOURCES">
+	    <slot name="studentGroup.groupNumber" />
+   	    <slot name="attends.aluno.number" />
+   	    <slot name="attends.aluno.person.name" key="label.name" />		
+   	    <slot name="teacherObservation" key="link.teacher.executionCourseManagement.evaluation.project.viewLastProjectSubmissionForEachGroup.groupComment"/>
+	</schema>
+
+	<schema name="projectSubmission.editObservation" type="net.sourceforge.fenixedu.domain.ProjectSubmission" bundle="APPLICATION_RESOURCES">
+	    <slot name="studentGroup.groupNumber" read-only="true"/>
+   	    <slot name="attends.aluno.number" read-only="true"/>
+   	    <slot name="attends.aluno.person.name" key="label.name" read-only="true"/>
+		<slot name="teacherObservation" layout="longText" key="link.teacher.executionCourseManagement.evaluation.project.viewLastProjectSubmissionForEachGroup.groupComment">
+			<property name="rows" value="10"/>
+			<property name="columns" value="60"/>
+		</slot>
+	</schema>
+		
 	<schema name="projectSubmission.create" type="net.sourceforge.fenixedu.dataTransferObject.projectSubmission.CreateProjectSubmissionBean">
 		<slot name="inputStream" key="label.projectSubmission.projectFile" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 			<property name="fileNameSlot" value="filename"/>
