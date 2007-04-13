@@ -526,8 +526,11 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	    return this;
 	}
 	
-	for (final CurriculumGroup curriculumGroup : getCurriculumGroups()) {
-	    final CurriculumGroup firstCycleCurriculumGroup = curriculumGroup.getFirstCycleCurriculumGroup();
+	for (final CurriculumModule curriculumModule : getCurriculumModules()) {
+	    if (curriculumModule.isLeaf()) {
+		continue;
+	    }
+	    final CurriculumGroup firstCycleCurriculumGroup = ((CurriculumGroup) curriculumModule).getFirstCycleCurriculumGroup();
 	    if (firstCycleCurriculumGroup != null) {
 		return firstCycleCurriculumGroup;
 	    }
@@ -541,8 +544,11 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	    return this;
 	}
 	
-	for (final CurriculumGroup curriculumGroup : getCurriculumGroups()) {
-	    final CurriculumGroup secondCycleCurriculumGroup = curriculumGroup.getSecondCycleCurriculumGroup();
+	for (final CurriculumModule curriculumModule : getCurriculumModules()) {
+	    if (curriculumModule.isLeaf()) {
+		continue;
+	    }
+	    final CurriculumGroup secondCycleCurriculumGroup = ((CurriculumGroup) curriculumModule).getSecondCycleCurriculumGroup();
 	    if (secondCycleCurriculumGroup != null) {
 		return secondCycleCurriculumGroup;
 	    }
