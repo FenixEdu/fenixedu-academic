@@ -178,7 +178,10 @@
         </validator>
         <property name="size" value="6"/>
     </slot>
-    <slot name="discussed" key="label.thesis.evaluate.discussion.date" layout="dataDependent" read-only="true"/>
+    <slot name="discussed" key="label.thesis.evaluate.discussion.date" layout="null-as-label" read-only="true">
+        <property name="label" value="-"/>
+        <property name="subLayout" value="dataDependent"/>
+    </slot>
     <setter signature="confirm(mark)"/>
 </schema>
 
