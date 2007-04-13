@@ -325,7 +325,6 @@ public class Person extends Person_Base {
 	updateDefaultWebAddress(personBean.getWebAddress());
 	
 	setEmail(personBean.getEmail());
-	setAvailableEmail(personBean.isEmailAvailable());
     }
 
     public void update(InfoPersonEditor updatedPersonalData, Country country) {
@@ -2388,15 +2387,10 @@ public class Person extends Person_Base {
 	}
     }
     
-    /**
-     *@deprecated All references to this method must be removed and refactored according to each use case
-     *@see getDefaultEmailAddress()
-     */
-    @Override
     public String getEmail() {
 	return hasInstitutionalEmail() ? getInstitutionalEmail() : super.getEmail();
     }
-     
+
     // Currently, a Person can only have one InstitutionalEmailAddress (so use get(0) method) 
     private EmailAddress getInstitutionalEmailAddress() {
 	final List<EmailAddress> partyContacts = (List<EmailAddress>) getPartyContacts(EmailAddress.class, PartyContactType.INSTITUTIONAL);

@@ -42,8 +42,6 @@ import net.sourceforge.fenixedu.domain.research.activity.ScientificJournalPartic
 import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
 
 import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 
@@ -659,13 +657,6 @@ public abstract class Party extends Party_Base {
 	return (List<EmailAddress>) getPartyContacts(EmailAddress.class);
     }
 
-    @Deprecated
-    private PhysicalAddress getOrCreateDefaultPhysicalAddress() {
-	final PhysicalAddress physicalAdress = getDefaultPhysicalAddress();
-	return physicalAdress != null ? physicalAdress : PartyContact
-		.createDefaultPersonalPhysicalAddress(this);
-    }
-
     protected void createDefaultPhysicalAddress(final PhysicalAddressData data) {
 	PartyContact.createDefaultPersonalPhysicalAddress(this, data);
     }
@@ -674,11 +665,15 @@ public abstract class Party extends Party_Base {
 	getOrCreateDefaultPhysicalAddress().edit(data);
     }
 
+    private PhysicalAddress getOrCreateDefaultPhysicalAddress() {
+	final PhysicalAddress physicalAdress = getDefaultPhysicalAddress();
+	return physicalAdress != null ? physicalAdress : PartyContact.createDefaultPersonalPhysicalAddress(this);
+    }
+    
     protected PhysicalAddress updateDefaultPhysicalAddress() {
 	return getOrCreateDefaultPhysicalAddress();
     }
 
-    @Deprecated
     private WebAddress getOrCreateDefaultWebAddress() {
 	final WebAddress webAddress = getDefaultWebAddress();
 	return webAddress != null ? webAddress : PartyContact.createDefaultPersonalWebAddress(this);
@@ -862,32 +857,22 @@ public abstract class Party extends Party_Base {
 	updateDefaultMobilePhone(mobile);
     }
 
-    private EmailAddress getPersonalEmailAddress() {
-	final List<EmailAddress> partyContacts = (List<EmailAddress>) getPartyContacts(EmailAddress.class,
-		PartyContactType.PERSONAL);
-	return partyContacts.isEmpty() ? null : (EmailAddress) partyContacts.get(0); // actually
-	// exists
-	// only
-	// one
-    }
-
-    @Deprecated
     public String getEmail() {
-	final EmailAddress emailAddress = getPersonalEmailAddress();
+	final EmailAddress emailAddress = getDefaultEmailAddress();
 	return emailAddress != null ? emailAddress.getValue() : null;
     }
     
     @Deprecated
     public void setEmail(String email) {
-	final EmailAddress emailAddress = getPersonalEmailAddress();
+	final EmailAddress emailAddress = getDefaultEmailAddress();
 	if (emailAddress == null) {
-	    PartyContact.createDefaultPersonalEmailAddress(this).edit(email);
+	    PartyContact.createDefaultPersonalEmailAddress(this, email);
 	} else {
 	    emailAddress.edit(email);
 	}
     }
 
     /*
-         * ~~~~~~~~~~~~~~~~~~~~~ End: PartyContacts ~~~~~~~~~~~~~~~~~~~~~
-         */
+     * ~~~~~~~~~~~~~~~~~~~~~ End: PartyContacts ~~~~~~~~~~~~~~~~~~~~~
+     */
 }
