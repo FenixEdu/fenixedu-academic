@@ -2278,5 +2278,13 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	}
 	return result;
     }
+    
+    public CurriculumGroup getFirstCycleCurriculumGroup() {
+	return isBolonha() ? getRoot().getFirstCycleCurriculumGroup() : null;
+    }
+    
+    public CurriculumGroup getSecondCycleCurriculumGroup() {
+	return isBolonha() ? getRoot().getSecondCycleCurriculumGroup() : null;
+    }
 
 }

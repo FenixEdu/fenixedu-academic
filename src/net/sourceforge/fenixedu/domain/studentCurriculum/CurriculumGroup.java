@@ -521,4 +521,33 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	return result;
     }
 
+    public CurriculumGroup getFirstCycleCurriculumGroup() {
+	if (getDegreeModule().isFirstCycle()) {
+	    return this;
+	}
+	
+	for (final CurriculumGroup curriculumGroup : getCurriculumGroups()) {
+	    final CurriculumGroup firstCycleCurriculumGroup = curriculumGroup.getFirstCycleCurriculumGroup();
+	    if (firstCycleCurriculumGroup != null) {
+		return firstCycleCurriculumGroup;
+	    }
+	}
+	
+	return null;
+    }
+
+    public CurriculumGroup getSecondCycleCurriculumGroup() {
+	if (getDegreeModule().isSecondCycle()) {
+	    return this;
+	}
+	
+	for (final CurriculumGroup curriculumGroup : getCurriculumGroups()) {
+	    final CurriculumGroup secondCycleCurriculumGroup = curriculumGroup.getSecondCycleCurriculumGroup();
+	    if (secondCycleCurriculumGroup != null) {
+		return secondCycleCurriculumGroup;
+	    }
+	}
+	
+	return null;
+    }
 }
