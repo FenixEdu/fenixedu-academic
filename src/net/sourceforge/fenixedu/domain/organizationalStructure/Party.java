@@ -862,11 +862,12 @@ public abstract class Party extends Party_Base {
 	return emailAddress != null ? emailAddress.getValue() : null;
     }
     
-    @Deprecated
     public void setEmail(String email) {
 	final EmailAddress emailAddress = getDefaultEmailAddress();
 	if (emailAddress == null) {
-	    PartyContact.createDefaultPersonalEmailAddress(this, email);
+	    if (!StringUtils.isEmpty(email)) {
+		PartyContact.createDefaultPersonalEmailAddress(this, email);
+	    }
 	} else {
 	    emailAddress.edit(email);
 	}
