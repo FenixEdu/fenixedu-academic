@@ -3,24 +3,37 @@ package net.sourceforge.fenixedu.domain.thesis;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetEnrolmentEvaluationBean;
+import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.Language;
+import net.sourceforge.fenixedu.domain.MarkSheet;
+import net.sourceforge.fenixedu.domain.MarkSheetType;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ScientificCommission;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.FieldIsRequiredException;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.Checked;
+import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 import net.sourceforge.fenixedu.util.EvaluationType;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
@@ -403,6 +416,10 @@ public class Thesis extends Thesis_Base {
             throw new DomainException("thesis.confirm.noDissertation");
         }
         
+        if (getDiscussed() == null) {
+            throw new DomainException("thesis.confirm.noDiscussionDate");
+        }
+        
         setMark(mark);
 
         setConfirmation(new DateTime());
@@ -431,8 +448,135 @@ public class Thesis extends Thesis_Base {
         setEvaluationApprover(AccessControl.getPerson());
         
         setState(ThesisState.EVALUATED);
+        
+        updateMarkSheet();
     }
     
+    public boolean hasFinalEnrolmentEvaluation() {
+        Enrolment enrolment = getEnrolment();
+        EnrolmentEvaluationState finalState = EnrolmentEvaluationState.FINAL_OBJ;
+        
+        return !enrolment.getEnrolmentEvaluationsByEnrolmentEvaluationState(finalState).isEmpty();
+    }
+    
+    /**
+     * Generates a new mark sheet in the administrative office or merges the
+     * grade for this enrolment in an existing, unconfirmed, mark sheet for this
+     * enrolment.
+     */
+    public void updateMarkSheet() { // TODO: thesis, make this protected
+        MarkSheet markSheet = getExistingMarkSheet();
+        
+        if (markSheet == null) {
+            markSheet = createMarkSheet();
+        }
+        else {
+            mergeInMarkSheet(markSheet);
+        }
+    }
+
+    protected MarkSheet getExistingMarkSheet() {
+        CurricularCourse curricularCourse = getEnrolment().getCurricularCourse();
+        
+        for (MarkSheet markSheet : curricularCourse.getMarkSheets()) {
+            if (markSheet.isConfirmed()) {
+                continue;
+            }
+            
+            if (markSheet.getMarkSheetType() != MarkSheetType.SPECIAL_AUTHORIZATION) {
+                continue;
+            }
+            
+            return markSheet;
+        }
+        
+        return null;
+    }
+
+    private void mergeInMarkSheet(MarkSheet markSheet) {
+        List<MarkSheetEnrolmentEvaluationBean> empty = Collections.emptyList();
+        markSheet.editNormal(empty, getStudentEvalutionBean(), empty);
+    }
+
+    protected MarkSheet createMarkSheet() {
+        CurricularCourse curricularCourse = getEnrolment().getCurricularCourse();
+        ExecutionPeriod executionPeriod = getEnrolment().getExecutionPeriod();
+        Teacher responsible = getExecutionCourseTeacher();
+        Date evaluationDate = getDiscussed().toDate();
+        MarkSheetType type = MarkSheetType.SPECIAL_AUTHORIZATION;
+        Employee employee = responsible.getPerson().getEmployee();
+        
+        List<MarkSheetEnrolmentEvaluationBean> evaluations = getStudentEvalutionBean();
+        
+        return curricularCourse.createNormalMarkSheet(executionPeriod, responsible, evaluationDate, type, true, evaluations, employee);
+    }
+
+    private List<MarkSheetEnrolmentEvaluationBean> getStudentEvalutionBean() {
+        return Arrays.asList(
+            new MarkSheetEnrolmentEvaluationBean(getEnrolment(), getDiscussed().toDate(), getEvaluationMark())
+        );
+    }
+    
+    private Teacher getExecutionCourseTeacher() {
+        ExecutionCourse executionCourse = getExecutionCourse();
+        
+        List<Teacher> teachers = new ArrayList<Teacher>();
+        for (Professorship professorship : executionCourse.getProfessorships()) {
+            if (professorship.isResponsibleFor()) {
+                teachers.add(professorship.getTeacher());
+            }
+        }
+
+        CurricularCourse curricularCourse = getEnrolment().getCurricularCourse();
+        Degree degree = curricularCourse.getDegree();
+        
+        if (teachers.isEmpty()) {
+            for (Coordinator coordinator : degree.getCurrentResponsibleCoordinators()) {
+                if (coordinator.isResponsible()) {
+                    teachers.add(coordinator.getPerson().getTeacher());
+                }
+            }
+        }
+        
+        List<Department> departments = degree.getDepartments();
+
+        for (Teacher teacher : teachers) {
+            if (departments.contains(teacher.getCurrentWorkingDepartment())) {
+                return teacher;
+            }
+        }
+        
+        return null;
+    }
+
+    private ExecutionCourse getExecutionCourse() {
+        Enrolment enrolment = getEnrolment();
+        CurricularCourse curricularCourse = enrolment.getCurricularCourse();
+        
+        List<ExecutionCourse> executionCourses = curricularCourse.getExecutionCoursesByExecutionPeriod(enrolment.getExecutionPeriod());
+        if (! executionCourses.isEmpty()) {
+            return executionCourses.iterator().next();
+        }
+        
+        executionCourses = curricularCourse.getExecutionCoursesByExecutionYear(enrolment.getExecutionYear());
+        if (! executionCourses.isEmpty()) {
+            return executionCourses.iterator().next();
+        }
+        
+        return null;
+    }
+
+    private String getEvaluationMark() {
+        Integer mark = getMark();
+        
+        if (mark >= 0) {
+            return mark.toString();
+        }
+        else {
+            return "RE";
+        }
+    }
+
     public void acceptDeclaration(ThesisVisibilityType visibility, DateTime availableAfter) {
         if (visibility == null) {
             throw new DomainException("thesis.acceptDeclaration.visibility.required");
