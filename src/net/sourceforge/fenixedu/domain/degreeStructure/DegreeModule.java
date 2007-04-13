@@ -30,8 +30,8 @@ public abstract class DegreeModule extends DegreeModule_Base {
     static private class ComparatorByName implements Comparator<DegreeModule> {
         public int compare(DegreeModule d1, DegreeModule d2) {
             final ComparatorChain comparatorChain = new ComparatorChain();
-            comparatorChain.addComparator(new BeanComparator("idInternal"));
             comparatorChain.addComparator(new BeanComparator("name", Collator.getInstance()));
+            comparatorChain.addComparator(new BeanComparator("idInternal"));
             
             return comparatorChain.compare(d1, d2);
         }
