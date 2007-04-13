@@ -465,7 +465,11 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
     
     @Override
     public void setGrade(String grade) {
-        super.setGrade((grade != null) ? grade.toUpperCase() : null);
+        if (isPayable() && !isPayed()) {
+            throw new DomainException("EnrolmentEvaluation.cannot.set.grade.on.not.payed.enrolment.evaluation", getRegistration().getNumber().toString());
+        }
+	
+        super.setGrade((grade == null) ? null : grade.toUpperCase());
     }
     
     @Deprecated
@@ -495,6 +499,14 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
     
     public boolean hasGrade() {
 	return getGrade() != null && getGrade().length() > 0;
+    }
+
+    public boolean isPayable() {
+	return hasImprovementOfApprovedEnrolmentEvent();
+    }
+
+    public boolean isPayed() {
+	return getImprovementOfApprovedEnrolmentEvent().isPayed();
     }
 
 }
