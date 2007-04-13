@@ -3,6 +3,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.externalServices;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
+
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -59,13 +61,8 @@ public class SetEmail extends Service {
 	if (person == null) {
 	    throw new UserDoesNotExistException();
 	}
-//	final String currentEmail = person.getInstitutionalEmail();
-//	if (currentEmail == null || currentEmail.length() == 0) {
-        final String newEmail = email != null && email.length() > 0 ? email : null; 
-	person.setInstitutionalEmail(newEmail);
-//	} else {
-//	    throw new UserAlreadyHasEmailException(currentEmail);
-//	}
+        final String newEmail = StringUtils.isEmpty(email) ? null : email; 
+	person.updateInstitutionalEmail(newEmail);
     }
 
     public void run(final String host, final String ip, final String password, final String userUId, final String email)

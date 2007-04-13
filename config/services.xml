@@ -11219,14 +11219,6 @@
         	<chain name="ManagerAuthorization"></chain>
         </filterChains>     
     </service>            
-    <service>    
-    	<name>SetInstitutionalEmail</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.externalServices.SetInstitutionalEmail</implementationClass>
-        <description></description>
-        <isTransactional>true</isTransactional>  
-        <filterChains />    
-    </service>
-    
     <service>
     	<name>CreateGratuityExemption</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.gratuity.CreateGratuityExemption</implementationClass>

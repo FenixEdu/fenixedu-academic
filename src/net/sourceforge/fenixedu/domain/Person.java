@@ -2361,9 +2361,7 @@ public class Person extends Person_Base {
         return (login != null) ? login.getMostImportantAlias() : "";
     }
     
-    /*
-     * Currently, a Person can only have one WorkPhone (so use get(0) - after interface updates remove these methods)
-     */
+    // Currently, a Person can only have one WorkPhone (so use get(0) - after interface updates remove these methods)
     private Phone getPersonWorkPhone() {
 	final List<Phone> partyContacts = (List<Phone>) getPartyContacts(Phone.class, PartyContactType.WORK);
 	return partyContacts.isEmpty() ? null : (Phone) partyContacts.get(0); // actually exists only one
@@ -2391,24 +2389,24 @@ public class Person extends Person_Base {
 	return hasInstitutionalEmail() ? getInstitutionalEmail() : super.getEmail();
     }
 
-    // Currently, a Person can only have one InstitutionalEmailAddress (so use get(0) method) 
-    private EmailAddress getInstitutionalEmailAddress() {
-	final List<EmailAddress> partyContacts = (List<EmailAddress>) getPartyContacts(EmailAddress.class, PartyContactType.INSTITUTIONAL);
-	return partyContacts.isEmpty() ? null : (EmailAddress) partyContacts.get(0); // actually exists only one (protected in domain)
-    }
-    
     public String getInstitutionalEmail() {
 	final EmailAddress institutionalEmailAddress = getInstitutionalEmailAddress();
 	return institutionalEmailAddress != null ? institutionalEmailAddress.getValue() : null;
     }
     
-    public void setInstitutionalEmail(final String institutionalEmailString) {
+    public void updateInstitutionalEmail(final String institutionalEmailString) {
 	final EmailAddress institutionalEmailAddress = getInstitutionalEmailAddress();
 	if (institutionalEmailAddress == null) {
-	    new EmailAddress(this, PartyContactType.INSTITUTIONAL, true, true, institutionalEmailString);
+	    PartyContact.createEmailAddress(this, PartyContactType.INSTITUTIONAL, true, false, institutionalEmailString);
 	} else {
 	    institutionalEmailAddress.setValue(institutionalEmailString);
 	}
+    }
+    
+    // Currently, a Person can only have one InstitutionalEmailAddress (so use get(0) method) 
+    private EmailAddress getInstitutionalEmailAddress() {
+	final List<EmailAddress> partyContacts = (List<EmailAddress>) getPartyContacts(EmailAddress.class, PartyContactType.INSTITUTIONAL);
+	return partyContacts.isEmpty() ? null : (EmailAddress) partyContacts.get(0); // actually exists only one (protected in domain)
     }
     
     public Boolean getHasInstitutionalEmail() {
