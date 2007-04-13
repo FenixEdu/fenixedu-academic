@@ -11,6 +11,8 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -43,10 +45,12 @@ import org.joda.time.YearMonthDay;
 
 public class Unit extends Unit_Base {
 
+    private final static ResourceBundle applicationResourcesBundle;
     public final static Comparator<Unit> UNIT_COMPARATOR_BY_NAME = new ComparatorChain();
     static {
 	((ComparatorChain) UNIT_COMPARATOR_BY_NAME).addComparator(new BeanComparator("name", Collator.getInstance()));
 	((ComparatorChain) UNIT_COMPARATOR_BY_NAME).addComparator(new BeanComparator("idInternal"));
+	applicationResourcesBundle = ResourceBundle.getBundle("resources.ApplicationResources", new Locale("pt"));
     }
 
     protected Unit() {	
@@ -798,12 +802,12 @@ public class Unit extends Unit_Base {
     }
 
     public String getPresentationNameWithParentsAndBreakLine() {
-	String parentUnits = getParentUnitsPresentationNameWithBreakLine();
-	return (!StringUtils.isEmpty(parentUnits.trim())) ? parentUnits + " <br/> " + getPresentationName() : getPresentationName();
+	String parentUnits = getParentUnitsPresentationNameWithBreakLine();		
+	return (!StringUtils.isEmpty(parentUnits.trim())) ? parentUnits + applicationResourcesBundle.getString("label.html.breakLine") + getPresentationName() : getPresentationName();
     }
 
     public String getParentUnitsPresentationNameWithBreakLine() {
-	return getParentUnitsPresentationName("<br/>");
+	return getParentUnitsPresentationName(applicationResourcesBundle.getString("label.html.breakLine"));
     }
 
     public String getParentUnitsPresentationName() {
@@ -827,10 +831,10 @@ public class Unit extends Unit_Base {
 	
 	for (Unit unit : parentUnits) {
 	    if(!unit.isAggregateUnit()) {
-		if (index == parentUnits.size()) {
+		if (index == 1) {
 		    builder.append(unit.getNameWithAcronym());
 	    	} else {
-	    	    builder.append(unit.getNameWithAcronym() + separator);
+	    	    builder.append(separator + unit.getNameWithAcronym());
 	    	}
 	    }
 	    index++;
