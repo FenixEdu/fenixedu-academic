@@ -7,7 +7,6 @@
   <!-- ========== Form Bean Definitions =================================== -->
   <form-beans type="org.apache.struts.action.ActionFormBean">
   	
-    <form-bean name="DadosForm" type="net.sourceforge.fenixedu.presentationTier.formbeans.person.DadosForm" />
 	<form-bean name="AlterarPasswordForm" type="net.sourceforge.fenixedu.presentationTier.formbeans.person.AlterarPasswordForm" />
 		
     <!-- Nanda e Tania -->
@@ -43,7 +42,6 @@
     <forward name="Index" path="/index.jsp" />
     <forward name="FirstPage" path="/switchAction.do?prefix=&amp;page=/loginPage.jsp"/>
 
-    <forward name="forgotPassword" path="/person/forgotPassword.jsp" />
 	<forward name="AlterarPassword" path="/person/alterarPassword.jsp" />
 	<forward name="AlterarPasswordConfirmar" path="/person/alterarPasswordConfirmar.jsp" />
 	 
@@ -93,13 +91,6 @@
             <forward name="sucesso" path="/index.html" />
     </action>
     
-    <action path="/forgotPassword"
-            type="net.sourceforge.fenixedu.presentationTier.Action.person.ForgotPasswordAction"
-            name="DadosForm"
-            scope="request"
-            input="/person/forgotPassword.jsp">
-    </action>
-	
     <action path="/alterarPassword"
             type="net.sourceforge.fenixedu.presentationTier.Action.person.AlterarPasswordAction"
             name="AlterarPasswordForm"
