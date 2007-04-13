@@ -10,13 +10,13 @@ public class ManagementGroups extends ManagementGroups_Base {
 
     public static boolean isAssiduousnessManagerMember(Person person) {
         List<ManagementGroups> managementGroups = RootDomainObject.getInstance().getManagementGroups();
-        return managementGroups.isEmpty() ? false : managementGroups.iterator().next()
-                .getAssiduousnessManagers().isMember(person);
+        return managementGroups == null || managementGroups.isEmpty() ? false
+        	: managementGroups.iterator().next().getAssiduousnessManagers().isMember(person);
     }
 
     public static boolean isProtocolManagerMember(Person person) {
         List<ManagementGroups> managementGroups = RootDomainObject.getInstance().getManagementGroups();
-        return managementGroups.isEmpty() ? false : managementGroups.iterator().next()
-                .getProtocolManagers().isMember(person);
+        return managementGroups == null || managementGroups.isEmpty() ? false
+        	: managementGroups.iterator().next().getProtocolManagers().isMember(person);
     }
 }
