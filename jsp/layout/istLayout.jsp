@@ -57,7 +57,7 @@
 <table id="bigtable" width="100%" border="0" cellpadding="0" cellspacing="0">
 <tr>
 
-<td id="latnav_container" width="155" nowrap="nowrap">
+<td id="latnav_container" width="155">
 <!--MAIN NAVIGATION -->   
 <div id="latnav">
 	<tiles:insert attribute="main_navigation" ignore="true"/>
