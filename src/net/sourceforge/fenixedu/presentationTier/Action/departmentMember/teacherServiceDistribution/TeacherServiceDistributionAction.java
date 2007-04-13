@@ -40,13 +40,13 @@ public class TeacherServiceDistributionAction extends FenixDispatchAction {
 			HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		
-		TeacherServiceBean bean = new TeacherServiceBean();
-		ExecutionYear currentYear = ExecutionYear.readCurrentExecutionYear(); 
-		bean.setExecutionYear(currentYear);
-		Department department = getLoggedPerson(request).getEmployee().getCurrentDepartmentWorkingPlace();
-		bean.setDepartment(department);
-		bean.setTeacherServiceDistribution(department.getTeacherServiceDistributionsByExecutionYear(currentYear));
-		request.setAttribute("bean", bean);
+//		TeacherServiceBean bean = new TeacherServiceBean();
+//		ExecutionYear currentYear = ExecutionYear.readCurrentExecutionYear(); 
+//		bean.setExecutionYear(currentYear);
+//		Department department = getLoggedPerson(request).getEmployee().getCurrentDepartmentWorkingPlace();
+//		bean.setDepartment(department);
+//		bean.setTeacherServiceDistribution(department.getTeacherServiceDistributionsByExecutionYear(currentYear));
+//		request.setAttribute("bean", bean);
 		return mapping.findForward("showMain");
 	}
 
