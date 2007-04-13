@@ -23,7 +23,11 @@ public class PartyContactPredicates {
 	    if (loggedPerson.hasRole(RoleType.MANAGER)) {
 		return true;
 	    }
-	    
+
+	    if (loggedPerson.hasRole(RoleType.PARKING_MANAGER)) {
+		return true;
+	    }
+
 	    if (loggedPerson.hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)) {
 		final Party party = contact.getParty();
 		
