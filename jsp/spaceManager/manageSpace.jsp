@@ -303,7 +303,7 @@
    		</fr:layout>
 	</fr:view>
 	<%	
-		if(Space.personIsSpacesAdministrator(person)) {		 
+		if(thisSpace.personHasPermissionsToManageSpace(person)) {		 
 	%>
 		<p>
 		<html:img border="0" src="<%= request.getContextPath() + "/images/excel.gif"%>" altKey="excel" bundle="IMAGE_RESOURCES" />

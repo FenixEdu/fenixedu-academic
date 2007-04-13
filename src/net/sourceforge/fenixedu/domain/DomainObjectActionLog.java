@@ -91,8 +91,7 @@ public class DomainObjectActionLog extends DomainObjectActionLog_Base {
 	return stringBuilder.toString();
     }
 
-    public static Set<DomainObjectActionLog> readDomainObjectActionLogsOrderedByInstant(
-	    Set<Class> domainObjectClasss) {
+    public static Set<DomainObjectActionLog> readDomainObjectActionLogsOrderedByInstant(Set<Class<? extends DomainObject>> domainObjectClasss) {
 	
 	Set<DomainObjectActionLog> resultList = new TreeSet<DomainObjectActionLog>(DomainObjectActionLog.COMPARATOR_BY_INSTANT);
 	for (DomainObjectActionLog log : RootDomainObject.getInstance().getDomainObjectActionLogsSet()) {

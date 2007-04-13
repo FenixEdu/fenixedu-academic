@@ -11,7 +11,7 @@ import org.joda.time.YearMonthDay;
 
 public abstract class MaterialSpaceOccupation extends MaterialSpaceOccupation_Base {
     
-    public final static Comparator COMPARATOR_BY_CLASS_NAME = new ComparatorChain();
+    public final static Comparator<MaterialSpaceOccupation> COMPARATOR_BY_CLASS_NAME = new ComparatorChain();
     static {
 	((ComparatorChain) COMPARATOR_BY_CLASS_NAME).addComparator(new BeanComparator("class.simpleName"));
 	((ComparatorChain) COMPARATOR_BY_CLASS_NAME).addComparator(new BeanComparator("begin"));

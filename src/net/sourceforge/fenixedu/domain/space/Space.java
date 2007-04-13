@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.DomainObjectActionLog;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -207,7 +208,7 @@ public abstract class Space extends Space_Base {
 	return materialOccupations;
     }
 
-    public Set<? extends MaterialSpaceOccupation> getMaterialSpaceOccupationsByMaterialClass(Class clazz) {
+    public Set<? extends MaterialSpaceOccupation> getMaterialSpaceOccupationsByMaterialClass(Class<? extends MaterialSpaceOccupation> clazz) {
 	Set<MaterialSpaceOccupation> materialOccupations = new HashSet<MaterialSpaceOccupation>();
 	for (MaterialSpaceOccupation occupation : getMaterialSpaceOccupations()) {
 	    if (occupation.getClass().equals(clazz)) {
@@ -218,7 +219,7 @@ public abstract class Space extends Space_Base {
     }
 
     public static Set<DomainObjectActionLog> getListOfChangesInSpacesOrderedByInstant() {
-	Set<Class> classs = new HashSet<Class>();
+	Set<Class<? extends DomainObject>> classs = new HashSet<Class<? extends DomainObject>>();
 	Person loggedPerson = AccessControl.getPerson();
 	if (personIsSpacesAdministrator(loggedPerson)) {
 	    classs.add(Room.class);
