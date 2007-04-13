@@ -37,7 +37,7 @@
 <br/>
 
 
-<html:link href="javascript:document.valuationGroupingSupportForm.viewType.value=2; document.valuationGroupingSupportForm.method.value='loadValuationGroupingsForPermissionServices'; document.valuationGroupingSupportForm.submit();">
+<html:link href="javascript:document.forms[0].viewType.value=2; document.forms[0].method.value='loadValuationGroupingsForPermissionServices'; document.forms[0].submit();">
 <bean:message key="label.teacherService.viewByValuationGrouping"/> 
 </html:link> | 
 <b> <bean:message key="label.teacherService.viewByPerson"/> </b>

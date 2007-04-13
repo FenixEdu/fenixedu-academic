@@ -58,7 +58,7 @@
     		</td>
     		<td>
     			<bean:define id="courseID" name="course" property="idInternal"/>
-    			<html:link href='<%= "javascript:document.valuationTeachersGroupForm.method.value='addCourse'; document.valuationTeachersGroupForm.valuationCourse.value=" + courseID.toString() + "; document.valuationTeachersGroupForm.submit()" %>'>
+    			<html:link href='<%= "javascript:document.forms[0].method.value='addCourse'; document.forms[0].valuationCourse.value=" + courseID.toString() + "; document.forms[0].submit()" %>'>
     				<bean:message key="button.add"/>
     			</html:link>
     		</td>

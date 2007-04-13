@@ -24,10 +24,6 @@
 
 
 <ul>
-<li><html:link page='<%= "/teacherServiceDistribution.do?method=showTeacherServiceDistributionServices&amp;teacherServiceDistribution=" + selectedId %>'>
-	<bean:message key="link.back"/>
-</html:link>
-</li>
 <li>
 <html:link page="<%= "/valuationPhasesManagement.do?method=prepareForOmissionValuesValuation&edit=yes&teacherServiceDistribution=" +  selectedId %>">
 	<bean:message key="link.edit"/>
@@ -59,3 +55,7 @@
 </html:submit>
 </fr:form>
 </logic:equal>
+
+<html:link page='<%= "/teacherServiceDistribution.do?method=showTeacherServiceDistributionServices&amp;teacherServiceDistribution=" + selectedId %>'>
+	<bean:message key="link.back"/>
+</html:link>

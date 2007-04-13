@@ -11,6 +11,28 @@
 	<bean:message key="link.teacherServiceDistribution"/>
 </h2>
 
+<ul>
+	<li>
+	  	<html:link page="/globalTeacherServiceDistributionValuation.do?method=prepareForGlobalTeacherServiceDistributionValuation">
+	  		<bean:message key="link.teacherServiceDistribution.teacherServiceDistributionVisualization"/>
+	  	</html:link>
+	</li>
+<logic:present role="DEPARTMENT_ADMINISTRATIVE_OFFICE">
+	<li>
+	  	<html:link page="/teacherServiceDistribution.do?method=prepareForTeacherServiceDistributionCreation">
+	  		<bean:message key="link.teacherServiceDistribution.teacherServiceDistributionCreation"/>
+	  	</html:link>
+	</li>
+</logic:present>
+	<li>
+	  	<html:link page="/teacherServiceDistribution.do?method=prepareForTeacherServiceDistributionEdition">
+	  		<bean:message key="link.teacherServiceDistribution.teacherServiceDistributionEdition"/>
+	  	</html:link>
+	</li>	
+</ul>
+
+<%-- 
+
 <fr:edit name="bean" id="selectYearAndPeriod" schema="selectPeriod" action="/teacherServiceDistribution.do?method=showTeacherServiceDistributions">
 	<fr:destination name="cancel" path="/teacherServiceDistribution.do?method=prepareTeacherServiceDistribution"/>
 </fr:edit>
@@ -45,3 +67,4 @@
 </ul>
 </logic:present>
 
+--%>

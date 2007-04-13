@@ -67,7 +67,7 @@
 <br/>
 <logic:notEmpty name="valuationTeacherDTOEntryList">
 	<b>&bull;</b>&nbsp;
-	<html:link href="javascript:document.teacherServiceDistributionValuationForm.method.value='exportTeacherServiceDistributionValuationToExcel'; document.teacherServiceDistributionValuationForm.submit();">
+	<html:link href="javascript:document.forms[0].method.value='exportTeacherServiceDistributionValuationToExcel'; document.forms[0].submit();">
 		<bean:message key="label.teacherService.exportToExcel"/>
 	</html:link>
 </logic:notEmpty>
@@ -76,14 +76,14 @@
 <br/>
 
 <bean:message key="label.teacherService.navigateBy"/>:
-<html:link href="javascript:document.teacherServiceDistributionValuationForm.method.value='changeToViewCourses'; document.teacherServiceDistributionValuationForm.submit();">
+<html:link href="javascript:document.forms[0].method.value='changeToViewCourses'; document.forms[0].submit();">
 	<bean:message key="label.teacherService.navigateByCourse"/>
 </html:link> | 
 <b> <bean:message key="label.teacherService.navigateByTeacher"/> </b> | 
-<html:link href="javascript:document.teacherServiceDistributionValuationForm.method.value='changeToViewTeacherAndCourses'; document.teacherServiceDistributionValuationForm.submit();">
+<html:link href="javascript:document.forms[0].method.value='changeToViewTeacherAndCourses'; document.forms[0].submit();">
 	<bean:message key="label.teacherService.viewByCoursesAndTeachers"/>
 </html:link> |
-<html:link href="javascript:document.teacherServiceDistributionValuationForm.method.value='changeToViewCharts'; document.teacherServiceDistributionValuationForm.submit();">
+<html:link href="javascript:document.forms[0].method.value='changeToViewCharts'; document.forms[0].submit();">
 	<bean:message key="label.teacherServiceDistribution.viewByCharts"/>
 </html:link>
 <br/>

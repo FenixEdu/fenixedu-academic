@@ -36,7 +36,7 @@
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0"/>
 
 <b> <bean:message key="label.teacherService.navigateByCourse"/> </b> |
-<html:link href="javascript:document.professorshipValuationForm.method.value='loadProfessorshipValuations'; document.professorshipValuationForm.viewType.value=0; document.professorshipValuationForm.submit()">
+<html:link href="javascript:document.forms[0].method.value='loadProfessorshipValuations'; document.forms[0].viewType.value=0; document.forms[0].submit()">
 	<bean:message key="label.teacherService.navigateByTeacher"/> 
 </html:link>
 <br/>
@@ -176,7 +176,7 @@
 		<td>
 		</td>
 		<td>
-			<html:link href='<%= "javascript:document.professorshipValuationForm.method.value='removeProfessorshipValuation'; document.professorshipValuationForm.professorshipValuation.value=" + ((ProfessorshipValuation) professorshipValuation).getIdInternal().toString() + ";document.professorshipValuationForm.submit();" %>' >
+			<html:link href='<%= "javascript:document.forms[0].method.value='removeProfessorshipValuation'; document.forms[0].professorshipValuation.value=" + ((ProfessorshipValuation) professorshipValuation).getIdInternal().toString() + ";document.forms[0].submit();" %>' >
 				<bean:message key="label.teacherServiceDistribution.delete"/>
 			</html:link>
 		</td>

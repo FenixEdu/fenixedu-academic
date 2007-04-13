@@ -24,13 +24,6 @@
 	<bean:message key="label.teacherService.createTeacher"/>
 </h3>
 
-<ul>
-<li>
-<html:link page='<%= "/valuationTeachersGroup.do?method=prepareForValuationTeachersGroupServices&amp;valuationGroupingID=" + ((TeacherServiceDistribution) request.getAttribute("teacherServiceDistribution")).getCurrentValuationPhase().getRootValuationGrouping().getIdInternal().toString() %>'>
-	<bean:message key="link.back"/>
-</html:link>
-</li>
-</ul>
 
 <br/>
 <br/>
@@ -86,4 +79,6 @@
 </span>
 <br/>
 <br/>
-
+<html:link page='<%= "/valuationTeachersGroup.do?method=prepareForValuationTeachersGroupServices&amp;valuationGroupingID=" + ((TeacherServiceDistribution) request.getAttribute("teacherServiceDistribution")).getCurrentValuationPhase().getRootValuationGrouping().getIdInternal().toString() %>'>
+	<bean:message key="link.back"/>
+</html:link>

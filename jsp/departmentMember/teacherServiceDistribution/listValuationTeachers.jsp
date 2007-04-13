@@ -31,22 +31,22 @@
 
 <ul>
 	<li>
-		<html:link href="javascript:document.valuationTeachersGroupForm.method.value='showDepartmentTeachers'; document.valuationTeachersGroupForm.submit()">
+		<html:link href="javascript:document.forms[0].method.value='showDepartmentTeachers'; document.forms[0].submit()">
 		  	<bean:message key="label.teacherServiceDistribution.addTeacher"/>
 		</html:link>
 	</li>
 	<li>	
-		<html:link href="javascript:document.valuationTeachersGroupForm.method.value='showFormToCreateTeacher'; document.valuationTeachersGroupForm.submit()">
+		<html:link href="javascript:document.forms[0].method.value='showFormToCreateTeacher'; document.forms[0].submit()">
 		  	<bean:message key="label.teacherService.createTeacher"/>
 		</html:link>
 	</li>
 	<li>
-		<html:link href="javascript:document.valuationTeachersGroupForm.method.value='showDepartmentCourses'; document.valuationTeachersGroupForm.submit()">
+		<html:link href="javascript:document.forms[0].method.value='showDepartmentCourses'; document.forms[0].submit()">
 		  	<bean:message key="label.teacherServiceDistribution.addCourse"/>
 		</html:link>
 	</li>
 	<li>	
-		<html:link href="javascript:document.valuationTeachersGroupForm.method.value='showFormToCreateCourse'; document.valuationTeachersGroupForm.submit()">
+		<html:link href="javascript:document.forms[0].method.value='showFormToCreateCourse'; document.forms[0].submit()">
 		  	<bean:message key="label.teacherServiceDistribution.createCourse"/>
 		</html:link>
 	</li>
@@ -80,7 +80,7 @@
 			<bean:write name="valuationTeacher" property="department.acronym"/>
 		</td>
 		<td>
-			<html:link href='<%= "javascript:document.valuationTeachersGroupForm.valuationTeacher.value=" + ((ValuationTeacher) valuationTeacher).getIdInternal() + ";document.valuationTeachersGroupForm.method.value='removeTeacher'; document.valuationTeachersGroupForm.submit()" %>'>
+			<html:link href='<%= "javascript:document.forms[0].valuationTeacher.value=" + ((ValuationTeacher) valuationTeacher).getIdInternal() + ";document.forms[0].method.value='removeTeacher'; document.forms[0].submit()" %>'>
 				<bean:message key="link.remove"/>
 			</html:link>
 		</td>			
@@ -109,7 +109,7 @@
 			<bean:write name="valuationCompetenceCourse" property="competenceCourseDepartment.acronym"/>
 		</td>
 		<td>
-			<html:link href='<%= "javascript:document.valuationTeachersGroupForm.valuationCourse.value=" + ((ValuationCompetenceCourse) valuationCompetenceCourse).getIdInternal() + ";document.valuationTeachersGroupForm.method.value='removeCourse'; document.valuationTeachersGroupForm.submit()" %>'>
+			<html:link href='<%= "javascript:document.forms[0].valuationCourse.value=" + ((ValuationCompetenceCourse) valuationCompetenceCourse).getIdInternal() + ";document.forms[0].method.value='removeCourse'; document.forms[0].submit()" %>'>
 				<bean:message key="link.remove"/>
 			</html:link>
 		</td>						

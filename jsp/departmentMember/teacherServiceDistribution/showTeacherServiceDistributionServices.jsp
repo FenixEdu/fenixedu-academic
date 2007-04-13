@@ -10,13 +10,6 @@
 <h3><bean:message key="link.teacherServiceDistribution"/></h3>
 <em><bean:write name="teacherServiceDistribution" property="name"/></em>
 
-<ul>
-<li>
-	<html:link page='/teacherServiceDistribution.do?method=prepareTeacherServiceDistribution'>
-	<bean:message key="link.back"/> 
-	</html:link>
-</li>
-</ul>
 
 <h4>
 	<table class='vtsbc'>

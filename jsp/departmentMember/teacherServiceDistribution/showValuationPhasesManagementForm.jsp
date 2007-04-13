@@ -32,11 +32,6 @@
 <bean:define id="teacherServiceDistribution" name="valuationPhasesManagementForm" property="teacherServiceDistribution"/>
 
 <ul class="list5">
-	<li>
-		<html:link page='<%= "/teacherServiceDistribution.do?method=showTeacherServiceDistributionServices&amp;teacherServiceDistribution=" + ((TeacherServiceDistribution) request.getAttribute("teacherServiceDistribution")).getIdInternal().toString() %>'>
-			<bean:message key="link.back"/>
-		</html:link>
-	</li>
 	<span class="switchInline"><li><a href="#" onclick="switchDisplay('createNewValuationPhase')"><bean:message key="label.teacherServiceDistribution.createNewValuationPhase"/></a></li></span>
 </ul>
 
@@ -173,3 +168,7 @@
 <script type="text/javascript" language="javascript">
 switchGlobal();
 </script>
+
+<html:link page='<%= "/teacherServiceDistribution.do?method=showTeacherServiceDistributionServices&amp;teacherServiceDistribution=" + ((TeacherServiceDistribution) request.getAttribute("teacherServiceDistribution")).getIdInternal().toString() %>'>
+	<bean:message key="link.back"/>
+</html:link>
