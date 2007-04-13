@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.student;
 
+import org.apache.commons.lang.StringUtils;
+
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -11,15 +13,16 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
     }
-    
-    public String getInstitutionName(){
+
+    public String getInstitutionName() {
 	return hasInstitution() ? getInstitution().getName() : null;
     }
 
     public void edit(PrecedentDegreeInformationBean precedentDegreeInformationBean) {
 
 	Unit institution = precedentDegreeInformationBean.getInstitution();
-	if (institution == null) {
+	if (institution == null
+		&& !StringUtils.isEmpty(precedentDegreeInformationBean.getInstitutionName())) {
 	    institution = UnitUtils.readExternalInstitutionUnitByName(precedentDegreeInformationBean
 		    .getInstitutionName());
 	    if (institution == null) {
