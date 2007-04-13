@@ -86,7 +86,7 @@ public class ValuationTeachersGroupAction extends FenixDispatchAction {
 		List<Teacher> teachersList = selectedValuationGrouping.getDepartmentTeachersNotInGrouping(selectedDepartment);
 						
 		if(!teachersList.isEmpty()){
-			Collections.sort(teachersList, new BeanComparator("person.nome"));
+			Collections.sort(teachersList, new BeanComparator("person.name"));
 			request.setAttribute("teachersList", teachersList);
 		}
 		
