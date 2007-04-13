@@ -6,9 +6,9 @@
 
 
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
-<h2><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.rectifyMarkSheet"/></h2>
+<h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.rectifyMarkSheet"/></h2>
 
-<p class="breadcumbs"><span><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.rectifyMarkSheet.step.one"/></span> &gt; <span class="actual"><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.rectifyMarkSheet.step.two"/></span></p>
+<p class="breadcumbs"><span><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.rectifyMarkSheet.step.one"/></span> &gt; <span class="actual"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.rectifyMarkSheet.step.two"/></span></p>
 
 <fr:view name="rectifyBean" property="markSheet" schema="degreeAdministrativeOffice.markSheet.view">
 	<fr:layout name="tabular">
@@ -21,7 +21,7 @@
 <html:errors/>
 
 <logic:messagesPresent message="true">
-	<html:messages bundle="DEGREE_OFFICE_RESOURCES" id="messages" message="true">
+	<html:messages bundle="ACADEMIC_OFFICE_RESOURCES" id="messages" message="true">
 		<span class="error0"><bean:write name="messages" /></span>
 	</html:messages>
 </logic:messagesPresent>
@@ -50,11 +50,11 @@
 	</fr:edit>
 
 	<p>
-		<bean:message bundle="DEGREE_OFFICE_RESOURCES" key="message.markSheet.rectify"/>
+		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="message.markSheet.rectify"/>
 	</p>
 	
 	<p>
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.rectify"/></html:submit>
-		<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton" onclick="this.form.method.value='prepareSearchMarkSheetFilled';this.form.submit();"><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.cancel"/></html:cancel>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.rectify"/></html:submit>
+		<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton" onclick="this.form.method.value='prepareSearchMarkSheetFilled';this.form.submit();"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.cancel"/></html:cancel>
 	</p>
 </fr:form>

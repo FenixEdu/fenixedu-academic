@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
-<h2><strong><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.send.mail"/> / <bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.send.mail.search.criteria"/></strong></h2>
+<h2><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.send.mail"/> / <bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.send.mail.search.criteria"/></strong></h2>
 
 <fr:form action="/markSheetSendMail.do?method=searchSendMail">
 	<fr:edit id="search"
@@ -20,12 +20,12 @@
 		        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
 		</fr:layout>
 	</fr:edit>
-	<html:submit><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.search"/></html:submit>
+	<html:submit><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.search"/></html:submit>
 </fr:form>
 
 
 <logic:present name="bean" property="markSheetToConfirmSendMailBean">
-	<p class="mtop15 mbottom05"><strong><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.markSheets.to.confirm"/>:</strong></p>
+	<p class="mtop15 mbottom05"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.markSheets.to.confirm"/>:</strong></p>
 	<fr:form action="/markSheetSendMail.do?method=prepareMarkSheetsToConfirmSendMail">
 		<fr:edit id="sendMailBean" name="bean" visible="false"/>
 		<fr:edit id="markSheetsToSubmit" name="bean" property="markSheetToConfirmSendMailBean" 
@@ -35,13 +35,13 @@
 			    <fr:property name="columnClasses" value=",,"/>
 			</fr:layout>
 		</fr:edit>
-		<html:submit><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.write.mail"/></html:submit>
+		<html:submit><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.write.mail"/></html:submit>
 	</fr:form>
 </logic:present>
 
 
 <logic:present name="bean" property="gradesToSubmitExecutionCourseSendMailBean">
-	<p class="mtop15 mbottom05"><strong><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.markSheets.executionCourse.grades.to.submit"/>:</strong></p>
+	<p class="mtop15 mbottom05"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.markSheets.executionCourse.grades.to.submit"/>:</strong></p>
 	<fr:form action="/markSheetSendMail.do?method=prepareGradesToSubmitSendMail">
 		<fr:edit id="sendMailBean" name="bean" visible="false"/>
 		<fr:edit id="markSheetsToSubmit" name="bean" property="gradesToSubmitExecutionCourseSendMailBean" 
@@ -51,7 +51,7 @@
 			    <fr:property name="columnClasses" value=",,"/>
 			</fr:layout>
 		</fr:edit>
-		<html:submit><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.write.mail"/></html:submit>
+		<html:submit><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.write.mail"/></html:submit>
 	</fr:form>
 </logic:present>
 

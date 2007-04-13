@@ -18,11 +18,11 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.mst" name="markSheetManagementForm" property="mst" />
 	
 	<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
-	<h2><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.markSheet.edit"/> <bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.markSheet"/></h2>
+	<h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.markSheet.edit"/> <bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.markSheet"/></h2>
 	
 	<logic:messagesPresent message="true">
 		<ul class="mvert15">
-			<html:messages bundle="DEGREE_OFFICE_RESOURCES" id="messages" message="true">
+			<html:messages bundle="ACADEMIC_OFFICE_RESOURCES" id="messages" message="true">
 				<li><span class="error0"><bean:write name="messages" /></span></li>
 			</html:messages>
 		</ul>
@@ -36,7 +36,7 @@
 	</fr:view>
 	
 	<logic:equal name="edit" property="markSheet.markSheetState.name" value="NOT_CONFIRMED">
-		<p class="mbottom05"><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.markSheet.edit"/>:</p>
+		<p class="mbottom05"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.markSheet.edit"/>:</p>
 		<fr:edit id="edit-markSheet" name="edit" schema="markSheet.edit">
 			<fr:layout name="tabular" >
 				<fr:property name="classes" value="tstyle4 thlight thright mvert05"/>
@@ -45,7 +45,7 @@
 		</fr:edit>
 	
 		<p class="mtop05">
-			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick="this.form.method.value='updateMarkSheet';"><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.markSheet.update" /></html:submit>
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick="this.form.method.value='updateMarkSheet';"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.markSheet.update" /></html:submit>
 		</p>
 	</logic:equal>
 	
@@ -54,7 +54,7 @@
 	</logic:notEqual>
 	<logic:notEmpty name="edit" property="enrolmentEvaluationBeansToEdit">
 	
-		<p class="mtop2 mbottom05"><strong><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.markSheet.students.with.grade" />:</strong></p>
+		<p class="mtop2 mbottom05"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.markSheet.students.with.grade" />:</strong></p>
 		
 		<fr:hasMessages for="edit-marksheet-enrolments">
 			<ul>
@@ -79,7 +79,7 @@
 	
 	<logic:notEmpty name="edit" property="enrolmentEvaluationBeansToAppend">
 
-		<p class="mtop15 mbottom05"><strong><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.markSheet.students.without.grade" />:</strong></p>
+		<p class="mtop15 mbottom05"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.markSheet.students.without.grade" />:</strong></p>
 		
 		<fr:hasMessages for="append-enrolments">
 			<ul>
@@ -101,7 +101,7 @@
 	</logic:notEmpty>
 	
 	<p>	
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.markSheet.change" /></html:submit>
-		<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton" onclick="this.form.method.value='backSearchMarkSheet';"><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.back"/></html:cancel>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.markSheet.change" /></html:submit>
+		<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton" onclick="this.form.method.value='backSearchMarkSheet';"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.back"/></html:cancel>
 	</p>
 </fr:form>

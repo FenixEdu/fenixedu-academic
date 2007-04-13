@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
-<h2><strong><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.send.mail"/> / <bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.markSheets.to.confirm"/></strong></h2>
+<h2><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.send.mail"/> / <bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.markSheets.to.confirm"/></strong></h2>
 
 <fr:view name="bean" 
 		 type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetSendMailBean"
@@ -26,5 +26,5 @@
 			<fr:property name="columnClasses" value=",," />
 		</fr:layout>
 	</fr:edit>
-	<html:submit><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.send.mail"/></html:submit>
+	<html:submit><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.send.mail"/></html:submit>
 </fr:form>

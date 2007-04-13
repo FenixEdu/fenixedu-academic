@@ -19,9 +19,9 @@
 	</ul>
 
 	<ul>
-		<li class="navheader"><bean:message key="label.navheader.marksSheet" bundle="DEGREE_OFFICE_RESOURCES"/></li>
-		<li><html:link page="/markSheetManagement.do?method=prepareSearchMarkSheet"><bean:message key="link.markSheet.management" bundle="DEGREE_OFFICE_RESOURCES"/></html:link></li>
-		<li><html:link page="/chooseExecutionYearAndDegreeCurricularPlan.do?method=prepare"><bean:message key="link.consult" bundle="DEGREE_OFFICE_RESOURCES"/></html:link></li>
+		<li class="navheader"><bean:message key="label.navheader.marksSheet" bundle="ACADEMIC_OFFICE_RESOURCES"/></li>
+		<li><html:link page="/markSheetManagement.do?method=prepareSearchMarkSheet"><bean:message key="link.markSheet.management" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link></li>
+		<li><html:link page="/chooseExecutionYearAndDegreeCurricularPlan.do?method=prepare"><bean:message key="link.consult" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link></li>
 	</ul>
 	
 	<ul>

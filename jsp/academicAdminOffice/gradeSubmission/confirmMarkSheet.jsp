@@ -7,7 +7,7 @@
 <%@page import="net.sourceforge.fenixedu.util.FenixDigestUtils"%>
 
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
-<h2><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.confirmMarkSheet"/></h2>
+<h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.confirmMarkSheet"/></h2>
 
 <fr:view name="markSheet" schema="degreeAdministrativeOffice.markSheet.view">
 	<fr:layout name="tabular" >
@@ -17,7 +17,7 @@
 </fr:view>
 
 
-<p class="mtop1 mbottom05"><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.markSheet.students.capitalized"/>:</p>
+<p class="mtop1 mbottom05"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.markSheet.students.capitalized"/>:</p>
 <fr:view name="markSheet" property="enrolmentEvaluations" schema="markSheet.view.evaluation">
 	<fr:layout name="tabular" >
 		<fr:property name="classes" value="tstyle4 thlight mtop05"/>
@@ -30,11 +30,11 @@
 
 
 <p>
-	<span class="highlight1"><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.checksum"/></strong> : <bean:write name="checksum"/></span>
+	<span class="highlight1"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.checksum"/></strong> : <bean:write name="checksum"/></span>
 </p>
 
 <p class="mtop15">
-	<bean:message bundle="DEGREE_OFFICE_RESOURCES" key="message.markSheet.confirm"/>
+	<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="message.markSheet.confirm"/>
 </p>
 
 
@@ -50,7 +50,7 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.mss" property="mss" />
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.mst" property="mst" />
 	<p>
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.confirm"/></html:submit>
-		<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton" onclick="this.form.method.value='prepareSearchMarkSheetFilled';this.form.submit();"><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.back"/></html:cancel>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.confirm"/></html:submit>
+		<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton" onclick="this.form.method.value='prepareSearchMarkSheetFilled';this.form.submit();"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.back"/></html:cancel>
 	</p>
 </html:form>

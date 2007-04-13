@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
-<h2><strong><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.send.mail"/> / <bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.markSheets.executionCourse.grades.to.submit"/></strong></h2>
+<h2><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.send.mail"/> / <bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.markSheets.executionCourse.grades.to.submit"/></strong></h2>
 
 <fr:form action="/markSheetSendMail.do?method=gradesToSubmitSendMail">
 	<fr:edit id="mail" name="bean"
@@ -15,7 +15,7 @@
 			<fr:property name="columnClasses" value="listClasses,," />
 		</fr:layout>
 	</fr:edit>
-	<html:submit><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.send.mail"/></html:submit>
+	<html:submit><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.send.mail"/></html:submit>
 </fr:form>
 <br/>
 <br/>

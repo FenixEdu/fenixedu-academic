@@ -6,9 +6,9 @@
 
 
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
-<h2><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.createMarkSheet"/></h2>
+<h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.createMarkSheet"/></h2>
 
-<p class="breadcumbs"><span><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.createMarkSheet.step.one"/></span> &gt; <span class="actual"><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.createMarkSheet.step.two"/></span></p>
+<p class="breadcumbs"><span><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.createMarkSheet.step.one"/></span> &gt; <span class="actual"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.createMarkSheet.step.two"/></span></p>
 
 <fr:view name="edit" 
 		schema="markSheet.view.step2">
@@ -21,7 +21,7 @@
 
 <logic:messagesPresent message="true">
 	<ul>
-	<html:messages bundle="DEGREE_OFFICE_RESOURCES" id="messages" message="true">
+	<html:messages bundle="ACADEMIC_OFFICE_RESOURCES" id="messages" message="true">
 		<li><span class="error0"><bean:write name="messages" /></span></li>
 	</html:messages>
 	</ul>
@@ -51,7 +51,7 @@
 
 	<fr:edit id="edit-invisible" name="edit" visible="false"/>
 
-	<p class="mtop15 mbottom05"><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.markSheet.students.capitalized"/>:</p>
+	<p class="mtop15 mbottom05"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.markSheet.students.capitalized"/>:</p>
 	
 	<fr:edit id="edit-enrolments" name="edit" property="enrolmentEvaluationBeans" 
 			 schema="markSheet.create.step.two" layout="tabular-editable">
@@ -63,6 +63,6 @@
 		<fr:destination name="invalid" path="/createMarkSheet.do?method=createMarkSheetStepTwoInvalid"/>
 	</fr:edit>
 	<br/>
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.markSheet.submit" /></html:submit>
-	<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton" onclick="this.form.method.value='backSearchMarkSheet';"><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="button.cancel"/></html:cancel>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.markSheet.submit" /></html:submit>
+	<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton" onclick="this.form.method.value='backSearchMarkSheet';"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.cancel"/></html:cancel>
 </fr:form>

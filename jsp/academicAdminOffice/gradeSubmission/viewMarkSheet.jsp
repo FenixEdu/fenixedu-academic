@@ -7,10 +7,10 @@
 
 <%@ page import="net.sourceforge.fenixedu.util.FenixDigestUtils"%>
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
-<h2><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.viewMarkSheet"/></h2>
+<h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.viewMarkSheet"/></h2>
 <logic:messagesPresent message="true">
 	<ul>
-		<html:messages bundle="DEGREE_OFFICE_RESOURCES" id="messages" message="true">
+		<html:messages bundle="ACADEMIC_OFFICE_RESOURCES" id="messages" message="true">
 			<li><span class="error0"><bean:write name="messages" /></span></li>
 		</html:messages>
 	</ul>
@@ -35,13 +35,13 @@
 		</fr:layout>
 	</fr:view>
 
-	<bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.markSheet.students.capitalized"/>:
+	<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.markSheet.students.capitalized"/>:
 	<table class="tstyle4 thlight tdcenter">
 		<tr>
-			<th><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.student.number"/></th>
-			<th><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.student.name"/></th>
-			<th><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.evaluationDate"/></th>
-			<th><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.grades"/></th>
+			<th><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.student.number"/></th>
+			<th><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.student.name"/></th>
+			<th><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.evaluationDate"/></th>
+			<th><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.grades"/></th>
 			<th>&nbsp;</th>
 		</tr>
 		<bean:define id="url" name="url" />
@@ -64,7 +64,7 @@
 				<td>
 					<% if(enrolmentEvaluation.getEnrolmentEvaluationState() == net.sourceforge.fenixedu.util.EnrolmentEvaluationState.RECTIFIED_OBJ) { %>
 						<html:link action='<%= "/markSheetManagement.do?method=prepareViewRectificationMarkSheet" + url %>' paramId="evaluationID" paramName="enrolmentEvaluation" paramProperty="idInternal">
-							<bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.rectified"/>
+							<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.rectified"/>
 						</html:link>
 					<% } %>
 				</td>
@@ -75,12 +75,12 @@
 	<p class="mtop15 mbottom1">
 		<bean:define id="mark" name="markSheet" type="net.sourceforge.fenixedu.domain.MarkSheet"/>
 		<bean:define id="checksum" value="<%= FenixDigestUtils.getPrettyCheckSum(mark.getCheckSum())%>"/>
-		<span class="highlight1"><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.checksum"/>: <bean:write name="checksum"/></span>
+		<span class="highlight1"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.checksum"/>: <bean:write name="checksum"/></span>
 	</p>
 	
 	<p class="mtop15">
-		<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton" onclick="this.form.method.value='prepareSearchMarkSheetFilled';this.form.submit();"><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.back"/></html:cancel>
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.print"/></html:submit>
+		<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton" onclick="this.form.method.value='prepareSearchMarkSheetFilled';this.form.submit();"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.back"/></html:cancel>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.print"/></html:submit>
 	</p>
 	
 </html:form>

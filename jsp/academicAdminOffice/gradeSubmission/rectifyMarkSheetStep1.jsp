@@ -8,9 +8,9 @@
 <%@page import="net.sourceforge.fenixedu.util.EnrolmentEvaluationState"%>
 
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
-<h2><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.rectifyMarkSheet"/></h2>
+<h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.rectifyMarkSheet"/></h2>
 
-<p class="breadcumbs"><span class="actual"><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.rectifyMarkSheet.step.one"/></span> &gt; <span><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.rectifyMarkSheet.step.two"/></span></p>
+<p class="breadcumbs"><span class="actual"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.rectifyMarkSheet.step.one"/></span> &gt; <span><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.rectifyMarkSheet.step.two"/></span></p>
 
 <fr:view name="rectifyBean" property="markSheet" schema="degreeAdministrativeOffice.markSheet.view">
 	<fr:layout name="tabular">
@@ -33,11 +33,11 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.mst" name="markSheetManagementForm" property="mst" />
 	
 	<p>
-		<strong><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.rectifyMarkSheet.chooseStudent"/></strong>
+		<strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.rectifyMarkSheet.chooseStudent"/></strong>
 	</p>
 	
 	<p class="mtop15">
-		a) <bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.rectifyMarkSheet.chooseStudent.studentNumber"/>
+		a) <bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.rectifyMarkSheet.chooseStudent.studentNumber"/>
 	</p>
 
 
@@ -48,7 +48,7 @@
 	</fr:hasMessages>
 
 	<logic:messagesPresent message="true">
-		<html:messages bundle="DEGREE_OFFICE_RESOURCES" id="messages" message="true">
+		<html:messages bundle="ACADEMIC_OFFICE_RESOURCES" id="messages" message="true">
 			<span class="error0"><bean:write name="messages" /></span>
 		</html:messages>
 	</logic:messagesPresent>
@@ -64,29 +64,29 @@
 
 
 	<p class="mtop025">
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.continue"/></html:submit>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.continue"/></html:submit>
 	</p>
 
 
 	<p class="mtop2 mbottom05">
-		b) <bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.rectifyMarkSheet.chooseStudent.fromList"/>
+		b) <bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.rectifyMarkSheet.chooseStudent.fromList"/>
 	</p>
 	
 	
 	<table class="tstyle4 thlight mtop05">
 		<tr>
 			<th>
-				<bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.student.number"/>
+				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.student.number"/>
 			</th>
 		
 			<th>
-				<bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.student.name"/>
+				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.student.name"/>
 			</th>
 			<th>
-				<bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.evaluationDate"/>
+				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.evaluationDate"/>
 			</th>
 			<th>
-				<bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.student.grade"/>
+				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.student.grade"/>
 			</th>		
 			<th>
 				&nbsp;
@@ -129,7 +129,7 @@
 				<td>				
 					<logic:equal name="evaluation" property="enrolmentEvaluationState" value="<%= EnrolmentEvaluationState.RECTIFIED_OBJ.toString() %>">
 						<html:link action='<%= "/rectifyMarkSheet.do?method=showRectificationHistoric" + url %>' paramId="evaluationID" paramName="evaluationID">
-							<bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.markSheet.rectificationHistoric" />		
+							<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.markSheet.rectificationHistoric" />		
 						</html:link>										
 					</logic:equal>
 					&nbsp;
@@ -139,6 +139,6 @@
 	</table>
 	
 	<p>
-		<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton" onclick="this.form.method.value='prepareSearchMarkSheetFilled';this.form.submit();"><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.back"/></html:cancel>
+		<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton" onclick="this.form.method.value='prepareSearchMarkSheetFilled';this.form.submit();"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.back"/></html:cancel>
 	</p>
 </fr:form>

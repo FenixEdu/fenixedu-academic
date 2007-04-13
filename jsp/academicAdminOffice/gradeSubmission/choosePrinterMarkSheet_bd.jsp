@@ -6,9 +6,9 @@
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
 
 
-<h3><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.choosePrinter"/></h3>
+<h3><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.choosePrinter"/></h3>
 <logic:messagesPresent message="true">
-	<html:messages bundle="DEGREE_OFFICE_RESOURCES" id="messages" message="true" >
+	<html:messages bundle="ACADEMIC_OFFICE_RESOURCES" id="messages" message="true" >
 		<p><span class="error0"><bean:write name="messages" /></span></p>
 	</html:messages>
 </logic:messagesPresent>
@@ -36,7 +36,7 @@
 		</tr>
 	</table>
 	<br/>
-	<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton"><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.back"/></html:cancel>
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="DEGREE_OFFICE_RESOURCES" key="label.print"/></html:submit>
+	<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.back"/></html:cancel>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.print"/></html:submit>
 	
 </html:form>
