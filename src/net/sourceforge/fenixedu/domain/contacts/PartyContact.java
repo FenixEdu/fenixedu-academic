@@ -135,7 +135,11 @@ public abstract class PartyContact extends PartyContact_Base {
 	}
     }
 
-    @Deprecated
+    /**
+     * @deprecated This method will be removed as soon as possible
+     * @see createDefaultPersonalWebAddress(final Party party, final String url)
+     * @see createWebAddress(final Party party, final PartyContactType type, final boolean visible, final boolean defaultContact, final String url)
+     */
     static public WebAddress createDefaultPersonalWebAddress(final Party party) {
 	return new WebAddress(party, PartyContactType.PERSONAL, true, true);
     }
@@ -148,7 +152,11 @@ public abstract class PartyContact extends PartyContact_Base {
 	return new WebAddress(party, type, visible, defaultContact, url);
     }
     
-    @Deprecated
+    /**
+     * @deprecated This method will be removed as soon as possible
+     * @see createDefaultPersonalPhysicalAddress(final Party party, final PhysicalAddressData data)
+     * @see createPhysicalAddress(final Party party, final PartyContactType type, final boolean visible, final boolean defaultContact, final PhysicalAddressData data)
+     */
     static public PhysicalAddress createDefaultPersonalPhysicalAddress(final Party party) {
 	return new PhysicalAddress(party, PartyContactType.PERSONAL, true, true);
     }
@@ -161,7 +169,11 @@ public abstract class PartyContact extends PartyContact_Base {
 	return new PhysicalAddress(party, type, visible, defaultContact, data);
     }
     
-    @Deprecated
+    /**
+     * @deprecated This method will be removed as soon as possible
+     * @see createDefaultPersonalPhone(final Party party, final String number)
+     * @see createPhone(final Party party, final PartyContactType type, boolean visible, boolean defaultContact, final String number)
+     */
     static public Phone createDefaultPersonalPhone(final Party party) {
 	return new Phone(party, PartyContactType.PERSONAL, true, true);
     }
@@ -174,7 +186,11 @@ public abstract class PartyContact extends PartyContact_Base {
 	return new Phone(party, type, visible, defaultContact, number);
     }
 
-    @Deprecated
+    /**
+     * @deprecated This method will be removed as soon as possible
+     * @see createDefaultPersonalMobilePhone(final Party party, final String number)
+     * @see createMobilePhone(final Party party, final PartyContactType type, final boolean visible, final boolean defaultContact, final String number)
+     */
     static public MobilePhone createDefaultPersonalMobilePhone(final Party party) {
 	return new MobilePhone(party, PartyContactType.PERSONAL, true, true);
     }
@@ -187,9 +203,13 @@ public abstract class PartyContact extends PartyContact_Base {
 	return new MobilePhone(party, type, visible, defaultContact, number);
     }
     
-    @Deprecated
+    /**
+     * @deprecated This method will be removed as soon as possible
+     * @see createDefaultPersonalEmailAddress(final Party party, final String value)
+     * @see createEmailAddress(final Party party, final PartyContactType type, final boolean visible, final boolean defaultContact, final String value)
+     */
     static public EmailAddress createDefaultPersonalEmailAddress(final Party party) {
-    return new EmailAddress(party, PartyContactType.PERSONAL, true, true);
+	return new EmailAddress(party, PartyContactType.PERSONAL, true, true);
     }
     
     static public EmailAddress createDefaultPersonalEmailAddress(final Party party, final String value) {
