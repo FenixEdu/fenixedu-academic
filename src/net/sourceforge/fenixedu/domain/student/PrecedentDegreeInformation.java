@@ -20,6 +20,7 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
 
     public void edit(PrecedentDegreeInformationBean precedentDegreeInformationBean) {
 
+	//
 	Unit institution = precedentDegreeInformationBean.getInstitution();
 	if (institution == null
 		&& !StringUtils.isEmpty(precedentDegreeInformationBean.getInstitutionName())) {
