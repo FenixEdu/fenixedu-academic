@@ -386,6 +386,7 @@ public class CreateTestData {
     }
 
     private static void createUnits() {
+	/*
         final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
         final Unit institutionUnit = rootDomainObject.getInstitutionUnit();
         institutionUnit.setName("Escola do Galo");
@@ -395,7 +396,7 @@ public class CreateTestData {
         new FixedAmountPR(EntryType.INSURANCE_FEE, EventType.INSURANCE, new DateTime().minusYears(1), null, unitServiceAgreementTemplate, Money.valueOf(2));
         final AdministrativeOffice administrativeOfficeDegree = new AdministrativeOffice(AdministrativeOfficeType.DEGREE, institutionUnit);
         new AdministrativeOfficeServiceAgreementTemplate(administrativeOfficeDegree);
-        final AdministrativeOffice administrativeOfficeMasterDegree = new AdministrativeOffice(AdministrativeOfficeType.MASTER_DEGREE, rootDomainObject.getExternalInstitutionUnit());
+        //final AdministrativeOffice administrativeOfficeMasterDegree = new AdministrativeOffice(AdministrativeOfficeType.MASTER_DEGREE, rootDomainObject.getExternalInstitutionUnit());
         new AdministrativeOfficeServiceAgreementTemplate(administrativeOfficeMasterDegree);
         new FixedAmountWithPenaltyFromDatePR(EntryType.ADMINISTRATIVE_OFFICE_FEE,
                     EventType.ADMINISTRATIVE_OFFICE_FEE, new DateTime(), null, administrativeOfficeDegree
@@ -417,6 +418,7 @@ public class CreateTestData {
 
         createAdminPostingRules(administrativeOfficeDegree.getServiceAgreementTemplate());
         createAdminPostingRules(administrativeOfficeMasterDegree.getServiceAgreementTemplate());
+        */
     }
 
     private static void createAdminPostingRules(AdministrativeOfficeServiceAgreementTemplate agreementTemplate) {
@@ -680,7 +682,10 @@ public class CreateTestData {
             final Unit unit = RootDomainObject.getInstance().getInstitutionUnit();
             final Department department = unit.getDepartment();
             department.addDegrees(degree);
-            degree.setUnit(unit);
+            /*
+             * NOT COMPILING 
+             */
+            //degree.setUnit(unit);
 
             createDegreeInfo(degree);
             degreeCurricularPlan.setDescription("Bla bla bla. Descrição do plano curricular do curso. Bla bla bla");
