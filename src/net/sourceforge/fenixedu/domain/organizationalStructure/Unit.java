@@ -553,6 +553,10 @@ public class Unit extends Unit_Base {
 	return !getSubUnits().isEmpty();
     }
 
+    public Collection<Unit> getParentByOrganizationalStructureAccountabilityType() {
+	return (Collection<Unit>) getParentParties(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE, Unit.class);
+    }
+    
     public int getUnitDepth() {
         int depth = 0;
         
@@ -790,14 +794,12 @@ public class Unit extends Unit_Base {
 
     public String getPresentationNameWithParents() {
 	String parentUnits = getParentUnitsPresentationName();
-	return (!StringUtils.isEmpty(parentUnits.trim())) ? parentUnits + " - " + getPresentationName()
-		: getPresentationName();
+	return (!StringUtils.isEmpty(parentUnits.trim())) ? parentUnits + " - " + getPresentationName() : getPresentationName();
     }
 
     public String getPresentationNameWithParentsAndBreakLine() {
 	String parentUnits = getParentUnitsPresentationNameWithBreakLine();
-	return (!StringUtils.isEmpty(parentUnits.trim())) ? parentUnits + " <br/> "
-		+ getPresentationName() : getPresentationName();
+	return (!StringUtils.isEmpty(parentUnits.trim())) ? parentUnits + " <br/> " + getPresentationName() : getPresentationName();
     }
 
     public String getParentUnitsPresentationNameWithBreakLine() {
