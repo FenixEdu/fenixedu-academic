@@ -26,3 +26,11 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+executeWithTempFile "Alter table Party - 1º Step" alterTableParty.sql
+execute "Alter table Party - 2º Step" alterTableParty2.sql
+
+execute "Add show participations options to site" addShowParticipationsToSite.sql
+execute "Alter Project submission" alterProjectSubmissionTable.sql
+execute "Adding activity participation functionality" changes-20070411111156.sql
+
