@@ -5,6 +5,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 <bean:define id="hoursPattern" value="HH : mm"/>
 <bean:define id="datePattern" value="dd-MM-yyyy"/>
 
@@ -368,9 +369,70 @@
 </p>
 
 <%-- ======================================================================================== --%>
+<%-- ========================================= THESIS ======================================= --%>
+
+<h3 class="mtop2"><span class="underline1">4) <bean:message key="label.teacherCreditsSheet.thesis" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
+
+<logic:present name="teacherThesisEvaluationParticipants">
+	<table class="tstyle4 mbottom05">
+			<tr>
+				<th>
+					<bean:message key="label.teacher-thesis-student.student-number" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+				</th>
+				<th>
+					<bean:message key="label.teacher-thesis-student.student-name" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+				</th>
+				<th>
+					<bean:message key="label.teacher-thesis-student.title" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+				</th>
+				<th>
+					<bean:message key="label.teacher-thesis-student.percentage" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+				</th>
+				<th>
+					<bean:message key="label.teacher-thesis-student.function" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+				</th>
+			</tr>			
+			<logic:iterate id="thesis" name="teacherThesisEvaluationParticipants">
+				<tr>
+					<td>
+						<bean:write name="thesis" property="thesis.student.number"/>
+					</td>
+					<td>
+						<bean:write name="thesis" property="thesis.student.person.name"/>
+					</td>
+					<td>
+						<bean:write name="thesis" property="thesis.title"/>
+					</td>
+					<td>
+						<fmt:formatNumber maxFractionDigits="1" minFractionDigits="1" pattern="###.#">
+							<logic:equal value="ORIENTATOR" name="thesis" property="type">
+								<bean:write name="thesis" property="thesis.orientatorCreditsDistribution"/>
+							</logic:equal>
+							<logic:equal value="COORIENTATOR" name="thesis" property="type">
+								<bean:write name="thesis" property="thesis.coorientatorCreditsDistribution"/>
+							</logic:equal>
+						</fmt:formatNumber>
+					</td>
+					<td>
+						<bean:message name="thesis" property="type.name" bundle="ENUMERATION_RESOURCES"/>
+					</td>
+				</tr>				
+			</logic:iterate>
+		</table>
+</logic:present>
+
+<logic:notPresent name="teacherThesisEvaluationParticipants">
+	<table class="tstyle4 mbottom05">
+		<tr>
+			<td colspan="3">
+				<i><bean:message key="label.teacherCreditsSheet.noThesis" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></i>			
+			</td>
+		</tr>
+	</table>
+</logic:notPresent>
 
 <%-- ========================== TEACHER INSTITUTION WORKING TIME ============================ --%>
-<h3 class="mtop2"><span class="underline1">4) <bean:message key="label.teacherCreditsSheet.institutionWorkingTime" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
+<h3 class="mtop2"><span class="underline1">5) <bean:message key="label.teacherCreditsSheet.institutionWorkingTime" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
 
 <p class="mbottom0"><strong><bean:message key="label.teacherCreditsSheet.institutionWorkingTime.items" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong></p>
 
@@ -418,7 +480,7 @@
 
 <%-- ================================================================================== --%>
 <%-- ========================== FUNCTIONS_ACCUMULATING ================================ --%>
-<h3 class="mtop2"><span class="underline1">5) <bean:message key="label.teacherCreditsSheet.functionsAccumulation" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
+<h3 class="mtop2"><span class="underline1">6) <bean:message key="label.teacherCreditsSheet.functionsAccumulation" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
 
 <p class="mbottom0"><strong><bean:message key="label.teacherCreditsSheet.functionsAccumulation" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong></p>
 	
@@ -458,7 +520,7 @@
 
 <%-- ================================================================================== --%>
 <%-- ========================== OTHER SERVICES CREDTIS ================================ --%>
-<h3 class="mtop2"><span class="underline1">6) <bean:message key="label.teacherCreditsSheet.otherTypeCreditLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
+<h3 class="mtop2"><span class="underline1">7) <bean:message key="label.teacherCreditsSheet.otherTypeCreditLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
 
 <p class="mbottom0"><strong><bean:message key="label.teacherCreditsSheet.otherTypeCreditLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong></p>
 	
@@ -514,7 +576,7 @@
 </logic:notEmpty>
 
 <%-- ========================== Management Position Lines =============================== --%>
-<h3 class="mtop2"><span class="underline1">7) <bean:message key="label.teacherCreditsSheet.managementPositionLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
+<h3 class="mtop2"><span class="underline1">8) <bean:message key="label.teacherCreditsSheet.managementPositionLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
 
 <p class="mbottom0"><strong><bean:message key="label.teacherCreditsSheet.managementPositionLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong></p>
 	
@@ -583,7 +645,7 @@
 </logic:notEmpty>
 
 <%-- ============================ SERVICE EXEMPTIONS ================================= --%>
-<h3 class="mtop2"><span class="underline1">8) <bean:message key="label.teacherCreditsSheet.serviceExemptionLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
+<h3 class="mtop2"><span class="underline1">9) <bean:message key="label.teacherCreditsSheet.serviceExemptionLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
 
 <p class="mbottom0"><strong><bean:message key="label.teacherCreditsSheet.serviceExemptionLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong></p>
 

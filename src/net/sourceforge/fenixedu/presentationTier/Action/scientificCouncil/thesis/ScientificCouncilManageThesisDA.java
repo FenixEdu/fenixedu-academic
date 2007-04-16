@@ -32,10 +32,10 @@ public class ScientificCouncilManageThesisDA extends FenixDispatchAction {
     }
 
     private void setFilterContext(HttpServletRequest request, Degree degree, ExecutionYear executionYear) {
-	request.setAttribute("degree", degree);
+    	request.setAttribute("degree", degree);
         request.setAttribute("degreeId", degree == null ? "" : degree.getIdInternal());
-	request.setAttribute("executionYear", executionYear);
-	request.setAttribute("executionYearId", executionYear == null ? "" : executionYear.getIdInternal());
+        request.setAttribute("executionYear", executionYear);
+        request.setAttribute("executionYearId", executionYear == null ? "" : executionYear.getIdInternal());
     }
 
     private Thesis getThesis(HttpServletRequest request) {
@@ -111,7 +111,7 @@ public class ScientificCouncilManageThesisDA extends FenixDispatchAction {
             ExecutionYear executionYear = getExecutionYear(request);
 
             if (executionYear == null) {
-        	executionYear = ExecutionYear.readCurrentExecutionYear();
+            	executionYear = ExecutionYear.readCurrentExecutionYear();
             }
             
             return new ThesisContextBean(degree, executionYear);

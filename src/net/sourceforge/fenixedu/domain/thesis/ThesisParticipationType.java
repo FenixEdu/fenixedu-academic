@@ -14,6 +14,10 @@ public enum ThesisParticipationType {
     
     private boolean single;
     
+    public String getName() {
+    	return name();
+    }
+    
     private ThesisParticipationType(boolean single) {
         this.single = single;
     }

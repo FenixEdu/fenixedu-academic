@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -23,6 +24,7 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisContextBean;
 import net.sourceforge.fenixedu.presentationTier.docs.thesis.ApproveJuryDocument;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.util.ReportsUtils;
@@ -39,7 +41,16 @@ public class ManageThesisDA extends FenixDispatchAction {
         request.setAttribute("thesis", getThesis(request));
         request.setAttribute("student", getStudent(request));
         
+        ExecutionYear executionYear = getExecutionYear(request);
+        
+        setFilterContext(request, executionYear);
+        
         return super.execute(mapping, actionForm, request, response);
+    }
+    
+    private void setFilterContext(HttpServletRequest request, ExecutionYear executionYear) {
+        request.setAttribute("executionYear", executionYear);
+        request.setAttribute("executionYearId", executionYear == null ? "" : executionYear.getIdInternal());
     }
 
     private DegreeCurricularPlan getDegreeCurricularPlan(HttpServletRequest request) {
@@ -84,6 +95,33 @@ public class ManageThesisDA extends FenixDispatchAction {
                 return RootDomainObject.getInstance().readStudentByOID(id);
             }
         }
+    }
+    
+    private ExecutionYear getExecutionYear(HttpServletRequest request) {
+    	Integer id = getId(request.getParameter("executionYearId"));
+    	if (id == null) {
+    	    return ExecutionYear.readCurrentExecutionYear();
+    	} else {
+    	    return RootDomainObject.getInstance().readExecutionYearByOID(id);
+    	}
+    }
+    
+    private ThesisContextBean getContextBean(HttpServletRequest request) {
+    	ThesisContextBean bean = (ThesisContextBean) getRenderedObject("contextBean");
+    	RenderUtils.invalidateViewState("contextBean");
+    	
+    	if (bean != null) {
+    	    return bean;
+    	}
+    	else {
+			ExecutionYear executionYear = getExecutionYear(request);
+
+			if (executionYear == null) {
+				executionYear = ExecutionYear.readCurrentExecutionYear();
+			}
+
+			return new ThesisContextBean(executionYear);
+		}
     }
     
     private Integer getId(String id) {
@@ -188,12 +226,13 @@ public class ManageThesisDA extends FenixDispatchAction {
     }
     
     public ActionForward listThesis(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
+        DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);       
+        ThesisContextBean bean = getContextBean(request);
 
         List<StudentThesisInfo> result = new ArrayList<StudentThesisInfo>();
         for (CurricularCourse curricularCourse : degreeCurricularPlan.getDissertationCurricularCourses()) {
             // TODO: thesis, allow to choose executionYear
-            for (Enrolment enrolment : curricularCourse.getEnrolmentsByExecutionYear(ExecutionYear.readCurrentExecutionYear())) {
+            for (Enrolment enrolment : curricularCourse.getEnrolmentsByExecutionYear(bean.getExecutionYear())) {
                 StudentCurricularPlan studentCurricularPlan = enrolment.getStudentCurricularPlan();
                 
                 if (studentCurricularPlan.getDegreeCurricularPlan() != degreeCurricularPlan) {
@@ -206,6 +245,8 @@ public class ManageThesisDA extends FenixDispatchAction {
         }
         
         request.setAttribute("theses", result);
+        request.setAttribute("contextBean", bean);
+        
         return mapping.findForward("list-thesis");
     }
     

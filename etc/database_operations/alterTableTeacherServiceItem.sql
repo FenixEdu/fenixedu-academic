@@ -1,0 +1,1 @@
+alter table TEACHER_SERVICE_ITEM add column THESIS_NOTE text; 

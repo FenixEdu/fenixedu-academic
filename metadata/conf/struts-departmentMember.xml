@@ -76,7 +76,8 @@
 			<form-property name="serviceExemptionNote" type="java.lang.String" />
 			<form-property name="otherNote" type="java.lang.String" />
 			<form-property name="masterDegreeTeachingNote" type="java.lang.String" />		
-			<form-property name="functionsAccumulationNote" type="java.lang.String" />												
+			<form-property name="functionsAccumulationNote" type="java.lang.String" />
+			<form-property name="thesisNote" type="java.lang.String" />												
 			<form-property name="executionPeriodId" type="java.lang.Integer"/>
 			<form-property name="teacherId" type="java.lang.Integer" />												
 		</form-bean>

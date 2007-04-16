@@ -5,6 +5,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.credits;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -25,14 +26,17 @@ import net.sourceforge.fenixedu.domain.teacher.InstitutionWorkTime;
 import net.sourceforge.fenixedu.domain.teacher.TeacherAdviseService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption;
+import net.sourceforge.fenixedu.domain.thesis.Thesis;
+import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
+import net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.thesis.TeacherThesisCreditsInfoBean;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.comparators.ComparatorChain;
-import org.joda.time.YearMonthDay;
 
 /**
  * @author Ricardo Rodrigues
@@ -64,27 +68,38 @@ public class ShowTeacherCreditsDispatchAction extends FenixDispatchAction {
                         executionPeriod.getEndDateYearMonthDay());
 
         if (!serviceExemptions.isEmpty()) {
-            Iterator orderedServiceExemptions = new OrderedIterator(serviceExemptions.iterator(),
+            Iterator<TeacherServiceExemption> orderedServiceExemptions = new OrderedIterator<TeacherServiceExemption>(serviceExemptions.iterator(),
                     new BeanComparator("start"));
             request.setAttribute("serviceExemptions", orderedServiceExemptions);
         }
 
-        List<PersonFunction> personFuntions = teacher.getPersonFuntions(YearMonthDay
-                .fromDateFields(executionPeriod.getBeginDate()), YearMonthDay
-                .fromDateFields(executionPeriod.getEndDate()));
+        List<PersonFunction> personFuntions = teacher.getPersonFuntions(executionPeriod.getBeginDateYearMonthDay(),
+                executionPeriod.getEndDateYearMonthDay());
 
         if (!personFuntions.isEmpty()) {
-            Iterator orderedPersonFuntions = new OrderedIterator(personFuntions.iterator(),
-                    new BeanComparator("beginDate"));
+            Iterator<PersonFunction> orderedPersonFuntions = new OrderedIterator<PersonFunction>(personFuntions.iterator(), new BeanComparator("beginDate"));
             request.setAttribute("personFunctions", orderedPersonFuntions);
         }
-            
+        
+        Collection<ThesisEvaluationParticipant> thesisEvaluationParticipants = teacher.getPerson().getThesisEvaluationParticipants(executionPeriod);
+        Collection<ThesisEvaluationParticipant> teacherThesisEvaluationParticipants = new ArrayList<ThesisEvaluationParticipant>();
+        for (ThesisEvaluationParticipant participant : thesisEvaluationParticipants) {
+        	if (participant.getCreditsDistribution() > 0) {
+        		teacherThesisEvaluationParticipants.add(participant);
+        	}
+        }
+        
+        if (!teacherThesisEvaluationParticipants.isEmpty()) {
+        	request.setAttribute("teacherThesisEvaluationParticipants", teacherThesisEvaluationParticipants);
+        }
+        
         double managementCredits = teacher.getManagementFunctionsCredits(executionPeriod);
-        double serviceExemptionCredits = teacher.getServiceExemptionCredits(executionPeriod);        
+        double serviceExemptionCredits = teacher.getServiceExemptionCredits(executionPeriod); 
+        double thesesCredits = teacher.getThesesCredits(executionPeriod);
         int mandatoryLessonHours = teacher.getMandatoryLessonHours(executionPeriod);
         
         CreditLineDTO creditLineDTO = new CreditLineDTO(executionPeriod, teacherService,
-                managementCredits, serviceExemptionCredits, mandatoryLessonHours, teacher);
+                managementCredits, serviceExemptionCredits, mandatoryLessonHours, teacher, thesesCredits);
 
         request.setAttribute("creditLineDTO", creditLineDTO);
     } 

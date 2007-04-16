@@ -84,6 +84,7 @@ import net.sourceforge.fenixedu.domain.sms.SentSms;
 import net.sourceforge.fenixedu.domain.sms.SmsDeliveryType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
@@ -2403,5 +2404,17 @@ public class Person extends Person_Base {
             return getExternalPerson().getInstitutionUnit().getPresentationNameWithParents();
         }
         return "";
+    }
+    
+    public List<ThesisEvaluationParticipant> getThesisEvaluationParticipants(ExecutionPeriod executionPeriod) {
+    	ArrayList<ThesisEvaluationParticipant> participants = new ArrayList<ThesisEvaluationParticipant>();
+    	
+    	for (ThesisEvaluationParticipant participant : this.getThesisEvaluationParticipants()) {
+    		if (participant.getThesis().getEnrolment().getExecutionYear().equals(executionPeriod.getExecutionYear())) {
+    			participants.add(participant);
+    		}
+    	}
+    	Collections.sort(participants, ThesisEvaluationParticipant.COMPARATOR_BY_STUDENT_NUMBER);
+    	return participants;
     }
 }

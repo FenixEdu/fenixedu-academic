@@ -122,7 +122,61 @@
 		<property name="size" value="50"/>
 	</slot>
 </schema>
-
+<schema name="net.sourceforge.fenixedu.domain.Person.contact.info" type="net.sourceforge.fenixedu.domain.Person"> 
+	<slot name="phone" key="label.person.telephone">
+		 <validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
+            <property name="required" value="false"/>
+        </validator>
+		<property name="size" value="50"/>
+	</slot>
+	<slot name="mobile" key="label.person.mobilePhone">
+		<property name="size" value="50"/>
+	</slot>
+	<slot name="workPhone" key="label.person.workPhone">    	
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
+            <property name="regexp" value="[0-9]*"/>
+            <property name="message" value="error.phone.invalidFormat"/>
+            <property name="key" value="true"/>
+        </validator>
+    </slot>
+	<slot name="email" key="label.person.email" validator="net.sourceforge.fenixedu.renderers.validators.EmailValidator">
+		<property name="size" value="50"/>
+	</slot>
+	<slot name="webAddress" key="label.person.webSite">
+		 <validator class="net.sourceforge.fenixedu.renderers.validators.UrlValidator">
+            <property name="required" value="false"/>
+        </validator>
+		<property name="size" value="50"/>
+	</slot>
+</schema>
+<schema name="net.sourceforge.fenixedu.domain.Person.contact.info.without.email" type="net.sourceforge.fenixedu.domain.Person"> 
+	<slot name="phone" key="label.person.telephone">
+		 <validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
+            <property name="required" value="false"/>
+        </validator>
+		<property name="size" value="50"/>
+	</slot>
+	<slot name="mobile" key="label.person.mobilePhone">
+		<property name="size" value="50"/>
+	</slot>
+	<slot name="workPhone" key="label.person.workPhone">    	
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
+            <property name="regexp" value="[0-9]*"/>
+            <property name="message" value="error.phone.invalidFormat"/>
+            <property name="key" value="true"/>
+        </validator>
+    </slot>
+	<slot name="email" hidden="true"/>
+	<slot name="webAddress" key="label.person.webSite">
+		 <validator class="net.sourceforge.fenixedu.renderers.validators.UrlValidator">
+            <property name="required" value="false"/>
+        </validator>
+		<property name="size" value="50"/>
+	</slot>
+</schema>
+<schema name="net.sourceforge.fenixedu.domain.Person.contact.info.email" type="net.sourceforge.fenixedu.domain.Person"> 
+	<slot name="email"/>
+</schema>
 <schema name="net.sourceforge.fenixedu.domain.Person.personal.info" type="net.sourceforge.fenixedu.domain.Person"> 
 	<slot name="name" key="label.person.name"/>
 	<slot name="gender" key="label.person.sex"/>

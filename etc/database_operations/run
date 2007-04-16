@@ -27,4 +27,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Alter table thesis note" alterTableTeacherServiceItem.sql
 execute "Remove keyThesis from Enrolment" ChangeThesisRelation.sql

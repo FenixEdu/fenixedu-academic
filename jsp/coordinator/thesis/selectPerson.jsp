@@ -5,6 +5,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 <bean:define id="dcpId" name="degreeCurricularPlan" property="idInternal"/>
+<bean:define id="executionYearId" name="executionYearId"/>
 <bean:define id="thesisId" name="thesis" property="idInternal"/>
 
 <html:xhtml/>
@@ -37,7 +38,7 @@
 
 <logic:equal name="bean" property="internal" value="true">
     <div class="dinline forminline">
-        <fr:form action="<%= String.format("/manageThesis.do?method=selectPerson&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
+        <fr:form action="<%= String.format("/manageThesis.do?method=selectPerson&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
             <fr:edit id="bean" name="bean" schema="<%= "thesis.bean.selectPerson.internal." + target %>">
                 <fr:layout name="tabular">
                     <fr:property name="classes" value="tstyle5 thlight thright thmiddle mtop05 dinline"/>
@@ -54,7 +55,7 @@
             </html:submit>
         </fr:form>
         
-        <fr:form action="<%= String.format("/manageThesis.do?method=editProposal&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
+        <fr:form action="<%= String.format("/manageThesis.do?method=editProposal&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
             <html:submit>
                 <bean:message key="label.cancel"/>
             </html:submit>
@@ -64,7 +65,7 @@
 
 <logic:equal name="bean" property="internal" value="false">
     <div class="dinline forminline">
-        <fr:form action="<%= String.format("/manageThesis.do?method=selectExternalPerson&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
+        <fr:form action="<%= String.format("/manageThesis.do?method=selectExternalPerson&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
             <fr:edit id="bean" name="bean" layout="tabular" schema="thesis.bean.selectPerson.external">
                 <fr:layout name="tabular">
                     <fr:property name="classes" value="tstyle5 thlight thright thmiddle mtop05 dinline"/>
@@ -87,7 +88,7 @@
             </logic:present>    
         </fr:form>
     
-        <fr:form action="<%= String.format("/manageThesis.do?method=editProposal&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
+        <fr:form action="<%= String.format("/manageThesis.do?method=editProposal&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
             <html:submit>
                 <bean:message key="label.cancel"/>
             </html:submit>

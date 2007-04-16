@@ -26,7 +26,7 @@
 <%-- select degree and curricular year --%>
 <logic:present name="contextBean">
     <fr:form action="<%= "/scientificCouncilManageThesis.do?method=listThesis" %>">
-	    <fr:edit id="contextBean" name="contextBean" schema="thesis.context.bean">
+	    <fr:edit id="contextBean" name="contextBean" schema="scientificCouncil.thesis.context.bean">
 	        <fr:layout name="tabular">
 	            <fr:property name="classes" value="tstyle5 tdtop thlight thright"/>
 	            <fr:property name="columnClasses" value=",,tdclear"/>

@@ -238,3 +238,12 @@
         <property name="size" value="60"/>
     </slot>
 </schema>
+
+<schema name="thesis.context.bean" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisContextBean">
+    <slot name="executionYear" key="label.execution.year" layout="menu-select-postback">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProviderForThesisContextBean" />
+		<property name="choiceType" value="net.sourceforge.fenixedu.domain.ExecutionYear" />
+		<property name="format" value="${year}" />
+    	<property name="destination" value="listThesis"/>
+    </slot>
+</schema>

@@ -23,6 +23,8 @@ public class CreditLineDTO {
     private double masterDegreeCredits = 0;
 
     private double tfcAdviseCredits = 0;
+    
+    private double thesesCredits = 0;
 
     private double otherCredits = 0;
 
@@ -41,7 +43,8 @@ public class CreditLineDTO {
     private ExecutionPeriod executionPeriod;
 
     public CreditLineDTO(ExecutionPeriod executionPeriod, TeacherService teacherService,
-            double managementCredits, double exemptionCredits, int lessonHours, Teacher teacher) throws ParseException {
+            double managementCredits, double exemptionCredits, int lessonHours, Teacher teacher,
+            double thesesCredits) throws ParseException {
         
         setExecutionPeriod(executionPeriod);
         if (teacherService != null) {
@@ -49,6 +52,7 @@ public class CreditLineDTO {
             setSupportLessonHours(teacherService.getSupportLessonHours());
             setMasterDegreeCredits(teacherService.getMasterDegreeServiceCredits());
             setTfcAdviseCredits(teacherService.getTeacherAdviseServiceCredits());
+            setThesesCredits(thesesCredits);
             setOtherCredits(teacherService.getOtherServiceCredits());
             setInstitutionWorkingHours(teacherService.getInstitutionWorkingHours());
             setPastServiceCredits(teacherService.getPastServiceCredits());            
@@ -61,8 +65,8 @@ public class CreditLineDTO {
 
     public double getTotalCredits() {
         double totalCredits = getTeachingDegreeCredits() + getMasterDegreeCredits()
-                + getTfcAdviseCredits() + getOtherCredits() + getManagementCredits()
-                + getServiceExemptionCredits();
+                + getTfcAdviseCredits() + getThesesCredits() + getOtherCredits()
+                + getManagementCredits() + getServiceExemptionCredits();
         return round(totalCredits);
     }
     
@@ -165,4 +169,12 @@ public class CreditLineDTO {
     public void setBalanceOfCredits(double balanceOfCredits) {
         this.balanceOfCredits = balanceOfCredits;
     }
+
+	public double getThesesCredits() {
+		return thesesCredits;
+	}
+
+	public void setThesesCredits(double thesesCredits) {
+		this.thesesCredits = thesesCredits;
+	}
 }

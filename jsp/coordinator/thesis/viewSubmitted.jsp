@@ -5,6 +5,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 <bean:define id="dcpId" name="degreeCurricularPlan" property="idInternal"/>
+<bean:define id="executionYearId" name="executionYearId"/>
 <bean:define id="thesisId" name="thesis" property="idInternal"/>
 
 <html:xhtml/>
@@ -13,13 +14,13 @@
 
 <ul>
     <li>
-        <html:link page="<%= String.format("/manageThesis.do?method=listThesis&amp;degreeCurricularPlanID=%s", dcpId) %>">
+        <html:link page="<%= String.format("/manageThesis.do?method=listThesis&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s", dcpId, executionYearId) %>">
             <bean:message key="title.coordinator.thesis.back"/>
         </html:link>
     </li>
     <logic:equal name="thesis" property="valid" value="true">
         <li>
-            <html:link page="<%= String.format("/manageThesis.do?method=printApprovalDocument&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
+            <html:link page="<%= String.format("/manageThesis.do?method=printApprovalDocument&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
                 <bean:message key="label.coordinator.list.submitted.thesis.print"/>
             </html:link>
         </li>

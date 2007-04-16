@@ -5,6 +5,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 <bean:define id="dcpId" name="degreeCurricularPlan" property="idInternal"/>
+<bean:define id="executionYearId" name="executionYearId"/>
 <bean:define id="thesisId" name="thesis" property="idInternal"/>
 
 <html:xhtml/>
@@ -13,13 +14,13 @@
 
 <ul>
     <li>
-        <html:link page="<%= String.format("/manageThesis.do?method=listThesis&amp;degreeCurricularPlanID=%s", dcpId) %>">
+        <html:link page="<%= String.format("/manageThesis.do?method=listThesis&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s", dcpId, executionYearId) %>">
             <bean:message key="title.coordinator.thesis.back"/>
         </html:link>
     </li>
     <li>
         <logic:equal name="thesis" property="valid" value="true">
-            <html:link page="<%= String.format("/manageThesis.do?method=submitProposal&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
+            <html:link page="<%= String.format("/manageThesis.do?method=submitProposal&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
                 <bean:message key="title.coordinator.thesis.submit"/>
             </html:link>
         </logic:equal>
@@ -28,7 +29,7 @@
         </logic:notEqual>
     </li>
     <li>
-        <html:link page="<%= String.format("/manageThesis.do?method=confirmDeleteProposal&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
+        <html:link page="<%= String.format("/manageThesis.do?method=confirmDeleteProposal&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
             <bean:message key="title.coordinator.thesis.delete"/>
         </html:link>
     </li>
@@ -49,12 +50,12 @@
             <bean:message key="label.coordinator.thesis.delete.confirm"/>
         </p>
         <div class="forminline">
-            <fr:form action="<%= String.format("/manageThesis.do?method=deleteProposal&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
+            <fr:form action="<%= String.format("/manageThesis.do?method=deleteProposal&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
                 <html:submit>
                     <bean:message key="button.coordinator.thesis.delete"/>
                 </html:submit>
             </fr:form>
-            <fr:form action="<%= String.format("/manageThesis.do?method=editProposal&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
+            <fr:form action="<%= String.format("/manageThesis.do?method=editProposal&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
                 <html:submit>
                     <bean:message key="button.cancel"/>
                 </html:submit>
@@ -85,7 +86,7 @@
 </fr:view>
 
 <p class="mtop05">
-	<html:link page="<%= String.format("/manageThesis.do?method=changeInformation&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
+	<html:link page="<%= String.format("/manageThesis.do?method=changeInformation&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
 	    <bean:message key="link.coordinator.thesis.edit.changeInformation"/>
 	</html:link>
 </p>
@@ -132,7 +133,7 @@
 <h4 class="mtop25 mbottom05"><bean:message key="title.coordinator.thesis.edit.section.orientation"/></h4>
 
 <logic:empty name="thesis" property="orientator">
-    <html:link page="<%= String.format("/manageThesis.do?method=changePerson&amp;target=orientator&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
+    <html:link page="<%= String.format("/manageThesis.do?method=changePerson&amp;target=orientator&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
         <p>
             <bean:message key="link.coordinator.thesis.edit.addOrientation"/>
         </p>
@@ -140,7 +141,7 @@
 </logic:empty>
 <logic:notEmpty name="thesis" property="orientator">
     <logic:empty name="thesis" property="coorientator">
-        <html:link page="<%= String.format("/manageThesis.do?method=changePerson&amp;target=coorientator&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
+        <html:link page="<%= String.format("/manageThesis.do?method=changePerson&amp;target=coorientator&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
             <p>
                 <bean:message key="link.coordinator.thesis.edit.addOrientation"/>
             </p>
@@ -170,7 +171,7 @@
                 <tr>
                     <th class="width12em"><bean:message key="label.coordinator.thesis.edit.teacher.credits"/>:</th>
                     <td class="width35em">
-                        <fr:form action="<%= String.format("/manageThesis.do?method=editProposal&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
+                        <fr:form action="<%= String.format("/manageThesis.do?method=editProposal&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
                             <fr:edit id="editCreditsOrientator" name="thesis" slot="orientatorCreditsDistribution">
                                 <fr:validator name="net.sourceforge.fenixedu.presentationTier.renderers.validators.LongRangeValidator">
                                     <fr:property name="lowerBound" value="0"/>
@@ -207,7 +208,7 @@
                             <fr:view name="thesis" property="orientatorCreditsDistribution"/> %
                         </logic:notEmpty>
                         &nbsp;&nbsp;&nbsp;&nbsp;
-                        (<html:link page="<%= String.format("/manageThesis.do?method=changeCredits&amp;target=orientator&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
+                        (<html:link page="<%= String.format("/manageThesis.do?method=changeCredits&amp;target=orientator&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
                             <bean:message key="label.change"/>
                         </html:link>)
                     </td>
@@ -217,10 +218,10 @@
     </logic:present>
     
     <p class="mtop05">
-        <html:link page="<%= String.format("/manageThesis.do?method=changeParticipationInfo&amp;target=orientator&amp;remove=true&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
+        <html:link page="<%= String.format("/manageThesis.do?method=changeParticipationInfo&amp;target=orientator&amp;remove=true&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
             <bean:message key="link.coordinator.thesis.edit.changePerson"/>
         </html:link>,
-        <html:link page="<%= String.format("/manageThesis.do?method=changePerson&amp;target=orientator&amp;remove=true&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
+        <html:link page="<%= String.format("/manageThesis.do?method=changePerson&amp;target=orientator&amp;remove=true&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
             <bean:message key="link.coordinator.thesis.edit.removePerson"/>
         </html:link>
     </p>
@@ -240,7 +241,7 @@
                 <tr>
                     <th class="width12em"><bean:message key="label.coordinator.thesis.edit.teacher.credits"/>:</th>
                     <td class="width35em">
-                        <fr:form action="<%= String.format("/manageThesis.do?method=editProposal&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
+                        <fr:form action="<%= String.format("/manageThesis.do?method=editProposal&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
                             <fr:edit id="editCreditsCoorientator" name="thesis" slot="coorientatorCreditsDistribution">
                                 <fr:validator name="net.sourceforge.fenixedu.presentationTier.renderers.validators.LongRangeValidator">
                                     <fr:property name="lowerBound" value="0"/>
@@ -277,7 +278,7 @@
                             <fr:view name="thesis" property="coorientatorCreditsDistribution"/> %
                         </logic:notEmpty>
                         &nbsp;&nbsp;&nbsp;&nbsp;
-                        (<html:link page="<%= String.format("/manageThesis.do?method=changeCredits&amp;target=coorientator&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
+                        (<html:link page="<%= String.format("/manageThesis.do?method=changeCredits&amp;target=coorientator&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
                             <bean:message key="label.change"/>
                         </html:link>)
                     </td>

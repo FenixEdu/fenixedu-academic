@@ -28,6 +28,8 @@ public class ThesisEvaluationParticipant extends ThesisEvaluationParticipant_Bas
         ((ComparatorChain) COMPARATOR_BY_PERSON_NAME).addComparator(new BeanComparator("idInternal"));
     }
     
+    public final static Comparator<ThesisEvaluationParticipant> COMPARATOR_BY_STUDENT_NUMBER = new BeanComparator("thesis.student.number");
+
     public ThesisEvaluationParticipant(Thesis thesis, Person person, ThesisParticipationType type) {
         super();
 
@@ -83,7 +85,31 @@ public class ThesisEvaluationParticipant extends ThesisEvaluationParticipant_Bas
             }
         }
     }
-
+    
+    public double getParticipationCredits() {
+		Thesis thesis = this.getThesis();
+		
+		if (!thesis.hasCredits()) {
+			return (double)0.0;
+		}
+		
+		return Thesis.getCredits() * getCreditsDistribution() / 100;
+    }
+    
+    public double getCreditsDistribution() {
+    	ThesisParticipationType type = this.getType();
+    	
+    	if (type.equals(ThesisParticipationType.ORIENTATOR)) {
+			return this.getThesis().getOrientatorCreditsDistribution();
+		}
+		
+		if (type.equals(ThesisParticipationType.COORIENTATOR)) {
+			return this.getThesis().getCoorientatorCreditsDistribution();
+		}
+		
+		return (double)0.0;
+    }
+    
     public void delete() {
         removeRootDomainObject();
         removePerson();

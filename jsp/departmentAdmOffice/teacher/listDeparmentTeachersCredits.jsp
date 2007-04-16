@@ -62,6 +62,7 @@
 		<th><bean:message key="label.credits.supportLessons.simpleCode" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
 		<th><bean:message key="label.credits.masterDegreeLessons.simpleCode" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>			
 		<th><bean:message key="label.credits.degreeFinalProjectStudents.simpleCode" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
+		<th><bean:message key="label.credits.thesis.simpleCode" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
 		<th><bean:message key="label.credits.institutionWorkTime.simpleCode" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
 		<th><bean:message key="label.credits.otherTypeCreditLine.simpleCode" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
 		<th><bean:message key="label.credits.managementPositions.simpleCode" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
@@ -79,7 +80,7 @@
 				<bean:write name="teachersCredits" property="teacher.teacherNumber"/>
 			</td>
 			<td style="text-align:left">
-				<bean:write name="teachersCredits" property="teacher.person.name"/>			
+				<bean:write name="teachersCredits" property="teacher.person.nome"/>			
 			</td>
 			<td>
 				<logic:present name="teachersCredits" property="category">

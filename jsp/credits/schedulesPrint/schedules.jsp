@@ -284,7 +284,7 @@
 			<logic:iterate id="adviseService" name="adviseServicesBean" offset="<%= String.valueOf(advisesLength) %>">
 			<tr> 
 				<td><bean:write name="adviseService" property="advise.student.number"/></td>
-				<td><bean:write name="adviseService" property="advise.student.person.name"/></td>
+				<td><bean:write name="adviseService" property="advise.student.person.nome"/></td>
 				<td><bean:write name="adviseService" property="percentage"/>%</td>
 			</tr>			
 			</logic:iterate>
@@ -293,6 +293,80 @@
 	<% } %>
 </logic:notEmpty>
 <br style="clear: both;"/>
+
+<h3 class="mbottom05"><bean:message key="label.thesis" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h3>
+<logic:notEmpty name="teacherThesisEvaluationParticipants">
+
+	<bean:define id="participantsBean" name="teacherThesisEvaluationParticipants" type="java.util.List"/>
+	<% 
+	   int participantsLength = 0; 
+	   if(participantsBean.size() % 2 == 0){
+		   participantsLength = participantsBean.size() / 2;
+	   } else {
+		   participantsLength = Math.round((participantsBean.size() / 2)) + 1;
+	   }			
+	%>
+
+	<p class="mbottom05">Alunos:</p>		
+	<div style="width: 49%; float: left;">
+		<table class="tb01">
+			<tr>
+				<th style="width: 5em;"><bean:message key="label.number" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
+				<th><bean:message key="label.name" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
+				<th style="width: 7em;"><bean:message key="label.professorship" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> (%)</th>
+			</tr>
+			<logic:iterate id="participant" name="participantsBean" length="<%= String.valueOf(participantsLength) %>">
+				<tr> 
+					<td><bean:write name="participant" property="thesis.student.number"/></td>
+					<td><bean:write name="participant" property="thesis.student.person.name"/></td>
+					<td><bean:write name="participant" property="creditsDistribution"/>%</td>
+				</tr>			
+			</logic:iterate>					
+		</table>
+	</div>
+	
+	<% if(participantsLength != participantsBean.size()){ %>
+	<div style="width: 49%; float: left;">
+		<table class="tb01" style="margin-left: 2%;">
+			<tr>
+				<th style="width: 5em;"><bean:message key="label.number" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
+				<th><bean:message key="label.name" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
+				<th style="width: 7em;"><bean:message key="label.professorship" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> (%)</th>
+			</tr>
+			<logic:iterate id="participant" name="participantsBean" offset="<%= String.valueOf(participantsLength) %>">
+				<tr> 
+					<td><bean:write name="participant" property="thesis.student.number"/></td>
+					<td><bean:write name="participant" property="thesis.student.person.name"/></td>
+					<td><bean:write name="participant" property="creditsDistribution"/>%</td>
+				</tr>			
+			</logic:iterate>					
+		</table>
+	</div>
+	<% } %>
+	
+	<br style="clear: both;"/>
+	<logic:notEmpty name="teacherServiceNotes">
+		<logic:notEmpty name="teacherServiceNotes" property="thesisNote">
+			<br/>
+		</logic:notEmpty>
+	</logic:notEmpty>
+</logic:notEmpty>
+
+<logic:notEmpty name="teacherServiceNotes">
+	<logic:notEmpty name="teacherServiceNotes" property="thesisNote">
+		<table class="tb01" style="width: 99%;">
+			<tr><th style="width: 20em;text-align: center;"><bean:message key="label.notes" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th></tr>		
+			<tr class="height2">
+				<td>
+					<bean:define id="thesisNotesAux" name="teacherServiceNotes" property="thesisNote"/>
+					<%= thesisNotesAux.toString().replaceAll("(\r\n)|(\n)", "<br />") %>				
+				</td>
+			</tr>
+		</table>
+	</logic:notEmpty>
+</logic:notEmpty>
+<br style="clear: both;"/>
+
 
 <h3 class="mbottom05"><bean:message key="label.institution.working.time"  bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h3>
 <logic:present name="institutionWorkTimeList">

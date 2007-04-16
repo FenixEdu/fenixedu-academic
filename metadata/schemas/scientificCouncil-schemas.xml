@@ -63,7 +63,7 @@
     <setter signature="rejectProposal(rejectionComment)"/>
 </schema>
 
-<schema name="thesis.context.bean" type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.thesis.ThesisContextBean">
+<schema name="scientificCouncil.thesis.context.bean" type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.thesis.ThesisContextBean">
     <slot name="degree" key="label.degree" layout="menu-select-postback">
     	<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DegreesWithDissertationProvider"/>
     	<property name="format" value="${name} (${sigla})"/>	

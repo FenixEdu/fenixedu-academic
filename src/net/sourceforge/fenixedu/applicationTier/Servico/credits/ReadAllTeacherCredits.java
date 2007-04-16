@@ -34,10 +34,11 @@ public class ReadAllTeacherCredits extends Service {
             
             double managementCredits = teacher.getManagementFunctionsCredits(tempExecutionPeriod);
             double serviceExemptionsCredits = teacher.getServiceExemptionCredits(tempExecutionPeriod);
+            double thesesCredits = teacher.getThesesCredits(tempExecutionPeriod);
             int mandatoryLessonHours = teacher.getMandatoryLessonHours(tempExecutionPeriod);                               
             TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(tempExecutionPeriod);
             
-            CreditLineDTO creditLineDTO = new CreditLineDTO(tempExecutionPeriod, teacherService, managementCredits, serviceExemptionsCredits, mandatoryLessonHours, teacher);
+            CreditLineDTO creditLineDTO = new CreditLineDTO(tempExecutionPeriod, teacherService, managementCredits, serviceExemptionsCredits, mandatoryLessonHours, teacher, thesesCredits);
             creditLines.add(creditLineDTO);
             
             if (tempExecutionPeriod.getState().equals(PeriodState.CURRENT)) {

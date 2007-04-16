@@ -17,7 +17,8 @@ public class TeacherServiceNotes extends TeacherServiceNotes_Base {
     }        
     
     public void editNotes(String managementFunctionNote, String serviceExemptionNote,
-            String otherNote, String masterDegreeTeachingNote, String functionsAccumulation , RoleType roleType) {
+            String otherNote, String masterDegreeTeachingNote, String functionsAccumulation,
+            String thesisNote, RoleType roleType) {
         
         getTeacherService().getExecutionPeriod().checkValidCreditsPeriod(roleType);
         
@@ -35,6 +36,9 @@ public class TeacherServiceNotes extends TeacherServiceNotes_Base {
         }
         if(functionsAccumulation != null) {
             setFunctionsAccumulation(functionsAccumulation);                
+        }
+        if(thesisNote != null) {
+        	setThesisNote(thesisNote);
         }
     }
 }

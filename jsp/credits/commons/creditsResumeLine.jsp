@@ -17,6 +17,10 @@
 		<bean:message key="label.credits.masterDegreeLessons.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>,		
 		<b>
 			<bean:write name="creditLineDTO" property="tfcAdviseCredits"/>						
+		</b>
+		<bean:message key="label.credits.thesis.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>,		
+		<b>
+			<bean:write name="creditLineDTO" property="thesesCredits"/>						
 		</b>							
 		<bean:message key="label.credits.degreeFinalProjectStudents.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>,
 		<b>							

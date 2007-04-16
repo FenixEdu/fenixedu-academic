@@ -3066,6 +3066,7 @@ class net.sourceforge.fenixedu.domain.teacher.TeacherServiceItem extends net.sou
 		String serviceExemptionNotes;
 		String othersNotes;
 		String functionsAccumulation;
+		String thesisNote;
 	}
 	
 class net.sourceforge.fenixedu.domain.teacher.ServiceProviderRegime extends net.sourceforge.fenixedu.domain.DomainObject {

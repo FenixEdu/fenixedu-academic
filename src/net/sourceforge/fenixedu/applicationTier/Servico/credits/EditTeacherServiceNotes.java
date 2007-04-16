@@ -14,7 +14,7 @@ import org.apache.commons.lang.StringUtils;
 public class EditTeacherServiceNotes extends Service {
 
     public Boolean run(Integer teacherId, Integer executionPeriodId, String managementFunctionNote, String serviceExemptionNote,
-            String otherNote, String masterDegreeTeachingNote, String functionsAccumulation, RoleType roleType) 
+            String otherNote, String masterDegreeTeachingNote, String functionsAccumulation, String thesisNote, RoleType roleType) 
             throws FenixServiceException, ExcepcaoPersistencia {    
         
         Teacher teacher = rootDomainObject.readTeacherByOID(teacherId);
@@ -31,13 +31,14 @@ public class EditTeacherServiceNotes extends Service {
         }
         
         teacherServiceNotes.editNotes(managementFunctionNote, serviceExemptionNote, otherNote, masterDegreeTeachingNote,
-                functionsAccumulation, roleType);
+                functionsAccumulation, thesisNote, roleType);
         
         if(StringUtils.isEmpty(teacherServiceNotes.getManagementFunctionNotes()) && 
                 StringUtils.isEmpty(teacherServiceNotes.getServiceExemptionNotes()) &&
                 StringUtils.isEmpty(teacherServiceNotes.getOthersNotes()) &&
                 StringUtils.isEmpty(teacherServiceNotes.getFunctionsAccumulation()) &&
-                StringUtils.isEmpty(teacherServiceNotes.getMasterDegreeTeachingNotes())) {            
+                StringUtils.isEmpty(teacherServiceNotes.getMasterDegreeTeachingNotes()) &&
+                StringUtils.isEmpty(teacherServiceNotes.getThesisNote())) {            
             teacherServiceNotes.delete();
         }
         

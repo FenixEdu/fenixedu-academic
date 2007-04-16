@@ -33,6 +33,7 @@ public class ManageCreditsNotes extends FenixDispatchAction {
             dynaActionForm.set("masterDegreeTeachingNote", teacherService.getTeacherServiceNotes().getMasterDegreeTeachingNotes());
             dynaActionForm.set("otherNote", teacherService.getTeacherServiceNotes().getOthersNotes());
             dynaActionForm.set("functionsAccumulationNote", teacherService.getTeacherServiceNotes().getFunctionsAccumulation());
+            dynaActionForm.set("thesisNote", teacherService.getTeacherServiceNotes().getThesisNote());
         }
 
         dynaActionForm.set("noteType", noteType);
@@ -46,7 +47,7 @@ public class ManageCreditsNotes extends FenixDispatchAction {
 
         Teacher teacher = rootDomainObject.readTeacherByOID(teacherId);
         ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodId);
-        String managementFunctionNote, serviceExemptionNote, otherNote, masterDegreeTeachingNote, functionsAccumulation;
+        String managementFunctionNote, serviceExemptionNote, otherNote, masterDegreeTeachingNote, functionsAccumulation, thesisNote;
                      
         managementFunctionNote = (!StringUtils.isEmpty(dynaActionForm.getString("managementFunctionNote"))) ? 
                 dynaActionForm.getString("managementFunctionNote") : (noteType.equals("managementFunctionNote")) ? "" : null;                 
@@ -61,10 +62,13 @@ public class ManageCreditsNotes extends FenixDispatchAction {
                 dynaActionForm.getString("masterDegreeTeachingNote") : (noteType.equals("masterDegreeTeachingNote")) ? "" : null;   
         
         functionsAccumulation = (!StringUtils.isEmpty(dynaActionForm.getString("functionsAccumulationNote"))) ? 
-                        dynaActionForm.getString("functionsAccumulationNote") : (noteType.equals("functionsAccumulationNote")) ? "" : null;   
+        		dynaActionForm.getString("functionsAccumulationNote") : (noteType.equals("functionsAccumulationNote")) ? "" : null;   
         
+        thesisNote = (!StringUtils.isEmpty(dynaActionForm.getString("thesisNote"))) ? 
+        		dynaActionForm.getString("thesisNote") : (noteType.equals("thesisNote")) ? "" : null;   
+                
         Object[] args = { teacherId, executionPeriodId, managementFunctionNote, serviceExemptionNote, otherNote,
-                masterDegreeTeachingNote, functionsAccumulation, roleType};
+                masterDegreeTeachingNote, functionsAccumulation, thesisNote, roleType};
 
         try {
             ServiceUtils.executeService(getUserView(request), "EditTeacherServiceNotes", args);

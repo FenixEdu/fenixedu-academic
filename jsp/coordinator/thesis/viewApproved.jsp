@@ -5,6 +5,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 <bean:define id="dcpId" name="degreeCurricularPlan" property="idInternal"/>
+<bean:define id="executionYearId" name="executionYearId"/>
 <bean:define id="thesisId" name="thesis" property="idInternal"/>
 
 <html:xhtml/>
@@ -13,7 +14,7 @@
 
 <ul>
     <li>
-        <html:link page="<%= String.format("/manageThesis.do?method=listThesis&amp;degreeCurricularPlanID=%s", dcpId) %>">
+        <html:link page="<%= String.format("/manageThesis.do?method=listThesis&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s", dcpId, executionYearId) %>">
             <bean:message key="title.coordinator.thesis.back"/>
         </html:link>
     </li>
@@ -129,13 +130,13 @@
 </logic:messagesPresent>
 
 <fr:edit name="thesis" schema="coordinator.thesis.evaluate"
-         action="<%= String.format("/manageThesis.do?method=listThesis&amp;degreeCurricularPlanID=%s#confirmation", dcpId) %>">
+         action="<%= String.format("/manageThesis.do?method=listThesis&amp;degreeCurricularPlanID=%s#confirmation&amp;executionYearId=%s", dcpId, executionYearId) %>">
     <fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle5 thlight thright thmiddle mtop05 mbottom05"/>
 		<fr:property name="columnClasses" value=",,tdclear tderror1"/>
     </fr:layout>
     
-    <fr:destination name="cancel" path="<%= String.format("/manageThesis.do?method=listThesis&amp;degreeCurricularPlanID=%s", dcpId) %>"/>
+    <fr:destination name="cancel" path="<%= String.format("/manageThesis.do?method=listThesis&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s", dcpId, executionYearId) %>"/>
 </fr:edit>
 
 <%-- Jury --%>

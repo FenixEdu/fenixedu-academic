@@ -39,6 +39,7 @@ import net.sourceforge.fenixedu.domain.teacher.TeacherLegalRegimen;
 import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption;
+import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 import net.sourceforge.fenixedu.util.LegalRegimenType;
 import net.sourceforge.fenixedu.util.OldPublicationType;
 import net.sourceforge.fenixedu.util.OrientationType;
@@ -533,7 +534,17 @@ public class Teacher extends Teacher_Base {
 	}
 	return 0;
     }
+    
+    public double getThesesCredits(ExecutionPeriod executionPeriod){
+    	double totalCredits = 0.0;
 
+    	for (ThesisEvaluationParticipant participant : this.getPerson().getThesisEvaluationParticipants(executionPeriod)) {
+    		totalCredits += participant.getParticipationCredits();
+    	}
+
+    	return round(totalCredits);
+    }
+    
     public double getManagementFunctionsCredits(ExecutionPeriod executionPeriod) {
 	double totalCredits = 0.0;
 	for (PersonFunction personFunction : this.getPerson().getPersonFunctions()) {
@@ -891,6 +902,7 @@ public class Teacher extends Teacher_Base {
 	    if (teacherService != null) {
 		totalCredits += teacherService.getCredits();
 	    }
+	    totalCredits += getThesesCredits(startPeriod);
 	    totalCredits += getManagementFunctionsCredits(startPeriod);
 	    totalCredits += getServiceExemptionCredits(startPeriod);
 	    totalCredits -= getMandatoryLessonHours(startPeriod);

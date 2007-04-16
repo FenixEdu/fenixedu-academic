@@ -8,6 +8,7 @@
 
 <bean:define id="target" name="bean" property="targetType"/>
 <bean:define id="dcpId" name="degreeCurricularPlan" property="idInternal"/>
+<bean:define id="executionYearId" name="executionYearId"/>
 <bean:define id="thesisId" name="thesis" property="idInternal"/>
 
 <h2><bean:message key="title.coordinator.thesis.proposal"/></h2>
@@ -31,7 +32,7 @@
 </logic:present>
 
 <div class="dinline forminline">
-    <fr:form action="<%= String.format("/manageThesis.do?method=selectExternalUnit&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
+    <fr:form action="<%= String.format("/manageThesis.do?method=selectExternalUnit&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
         <fr:edit id="bean" name="bean" layout="tabular" schema="thesis.bean.selectUnit.external">
             <fr:layout name="tabular">
                 <fr:property name="classes" value="tstyle5 thlight mtop05 dinline"/>
@@ -54,7 +55,7 @@
         </logic:present>
     </fr:form>
 
-    <fr:form action="<%= String.format("/manageThesis.do?method=editProposal&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
+    <fr:form action="<%= String.format("/manageThesis.do?method=editProposal&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
         <fr:edit id="bean-invisible" name="bean" visible="false"/>
     
         <html:submit>

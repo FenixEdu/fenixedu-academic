@@ -28,6 +28,11 @@
 		</td>
 		<td>
 			<fmt:formatNumber maxFractionDigits="2" minFractionDigits="2" pattern="###.##">
+				<bean:write name="creditLineDTO" property="thesesCredits"/>
+			</fmt:formatNumber>
+		</td>
+		<td>
+			<fmt:formatNumber maxFractionDigits="2" minFractionDigits="2" pattern="###.##">
 				<bean:write name="creditLineDTO" property="institutionWorkingHours"/>
 			</fmt:formatNumber>h				
 		</td>

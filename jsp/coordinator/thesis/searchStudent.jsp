@@ -7,6 +7,7 @@
 <html:xhtml/>
 
 <bean:define id="dcpId" name="degreeCurricularPlan" property="idInternal"/>
+<bean:define id="executionYearId" name="executionYearId"/>
 
 <h2><bean:message key="title.coordinator.viewStudent"/></h2>
 
@@ -20,7 +21,7 @@
 <p class="mtop15 mbottom025"><strong><bean:message key="title.coordinator.viewStudent.subTitle"/>:</strong></p>
 --%>
 
-<fr:form action="<%= "/manageThesis.do?method=selectStudent&amp;degreeCurricularPlanID=" + dcpId %>">
+<fr:form action="<%= String.format("/manageThesis.do?method=selectStudent&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s", dcpId, executionYearId) %>">
     <fr:edit id="student" name="bean" schema="thesis.bean.student">
         <fr:layout name="tabular">
             <fr:property name="classes" value="tstyle5 tdtop thlight thright thmiddle mtop15 mbottom05"/>
@@ -41,7 +42,7 @@
 		    <bean:message key="label.coordinator.thesis.propose.shortcut"/>
 	    </p>
 	    <bean:define id="studentId" name="bean" property="student.idInternal"/>
-	    <fr:form action="<%= String.format("/manageThesis.do?method=prepareCreateProposal&amp;degreeCurricularPlanID=%s&amp;studentID=%s", dcpId, studentId) %>">
+	    <fr:form action="<%= String.format("/manageThesis.do?method=prepareCreateProposal&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;studentID=%s", dcpId, executionYearId, studentId) %>">
 	        <html:submit>
 	            <bean:message key="button.coordinator.thesis.proposal.create"/>
 	        </html:submit>
@@ -55,7 +56,7 @@
             <bean:message key="label.coordinator.thesis.existing"/>
 
             <bean:define id="thesisId" name="thesis" property="idInternal"/>
-            <html:link page="<%= String.format("/manageThesis.do?method=viewThesis&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
+            <html:link page="<%= String.format("/manageThesis.do?method=viewThesis&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
                 <bean:message key="label.coordinator.thesis.state.view"/>
             </html:link>
         </p>
