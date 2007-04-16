@@ -46,15 +46,15 @@ public class ChangeApplicationInfoDispatchAction extends FenixDispatchAction {
 
         IUserView userView = SessionUtils.getUserView(request);
         DynaActionForm changeApplicationInfoForm = (DynaActionForm) form;
+        
+        Integer candidateID = (Integer) changeApplicationInfoForm.get("candidateID");
+        request.setAttribute("candidateID", candidateID);
 
         if (!isTokenValid(request)) {
             return mapping.findForward("BackError");
         }
         generateToken(request);
         saveToken(request);
-
-        Integer candidateID = (Integer) changeApplicationInfoForm.get("candidateID");
-        request.setAttribute("candidateID", candidateID);
         
         InfoMasterDegreeCandidate masterDegreeCandidate = readMasterDegreeCandidate(userView, candidateID);
 
@@ -106,10 +106,12 @@ public class ChangeApplicationInfoDispatchAction extends FenixDispatchAction {
         infoPerson.setFreguesiaMorada((String) changeApplicationInfoForm.get("addressParish"));
         infoPerson.setConcelhoMorada((String) changeApplicationInfoForm.get("addressMunicipality"));
         infoPerson.setDistritoMorada((String) changeApplicationInfoForm.get("addressDistrict"));
+        
         infoPerson.setTelefone((String) changeApplicationInfoForm.get("telephone"));
         infoPerson.setTelemovel((String) changeApplicationInfoForm.get("mobilePhone"));
         infoPerson.setEmail((String) changeApplicationInfoForm.get("email"));
         infoPerson.setEnderecoWeb((String) changeApplicationInfoForm.get("webSite"));
+        
         infoPerson.setNumContribuinte((String) changeApplicationInfoForm.get("contributorNumber"));
         infoPerson.setProfissao((String) changeApplicationInfoForm.get("occupation"));
         infoPerson.setUsername((String) changeApplicationInfoForm.get("username"));

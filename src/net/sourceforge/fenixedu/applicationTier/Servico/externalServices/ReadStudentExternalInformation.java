@@ -292,10 +292,6 @@ public class ReadStudentExternalInformation extends Service {
 	return info;
     }
 
-    /**
-         * @param infoPerson
-         * @return
-         */
     private InfoExternalAdressInfo buildInfoExternalAdressInfo(Person person) {
 	InfoExternalAdressInfo info = new InfoExternalAdressInfo();
 	info.setPostalCode(person.getAreaCode());

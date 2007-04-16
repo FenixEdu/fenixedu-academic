@@ -63,7 +63,7 @@ public class CreateStudent extends Service {
 	Person person = null;
 	if (personBean.getPerson() != null) {
 	    person = personBean.getPerson();
-	    person.editPersonalDataAndContactsInformation(personBean);
+	    person.edit(personBean);
 	} else {
 	    // create person
 	    person = new Person(personBean);

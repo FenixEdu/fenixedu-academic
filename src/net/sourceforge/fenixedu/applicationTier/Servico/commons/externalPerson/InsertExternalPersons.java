@@ -18,34 +18,21 @@ import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 
 public class InsertExternalPersons extends Service {
 
-    public List<ExternalContract> run(List<InfoExternalPersonEditor> infoExternalPersons)
-	    throws FenixServiceException {
+    public List<ExternalContract> run(final List<InfoExternalPersonEditor> infoExternalPersons) throws FenixServiceException {
 
 	final List<ExternalContract> externalPersons = new ArrayList<ExternalContract>();
-
-	List<Unit> institutions = Unit.readAllUnits();
-
 	for (final InfoExternalPersonEditor infoExternalPerson : infoExternalPersons) {
-
-	    // retrieving existing work location
-	    Unit currentInstitution = UnitUtils.readExternalInstitutionUnitByName(infoExternalPerson
-		    .getInfoInstitution().getName());
-
-	    // creating a new one if it doesn't already exist
+	    // Retrieving existing work location
+	    Unit currentInstitution = UnitUtils.readExternalInstitutionUnitByName(infoExternalPerson.getInfoInstitution().getName());
 	    if (currentInstitution == null) {
 		currentInstitution = new InsertInstitution().run(infoExternalPerson.getInfoInstitution().getName());
-		institutions.add(currentInstitution);
 	    }
 
-	    // creating a new ExternalPerson
-	    Person externalPerson = Person.createExternalPerson(infoExternalPerson.getName(),
-		    Gender.MALE, null, null, null, null, null, null, null, null, null, null, null,
-		    String.valueOf(System.currentTimeMillis()), IDDocumentType.EXTERNAL);
+	    final Person externalPerson = Person.createExternalPerson(infoExternalPerson.getName(),
+		    Gender.MALE, null, null, null, null, null, String.valueOf(System.currentTimeMillis()), IDDocumentType.EXTERNAL);
 	    
-	    ExternalContract contract = new ExternalContract(externalPerson, currentInstitution, new YearMonthDay(), null);
-	    externalPersons.add(contract);
+	    externalPersons.add(new ExternalContract(externalPerson, currentInstitution, new YearMonthDay(), null));
 	}
-
 	return externalPersons;
     }
 

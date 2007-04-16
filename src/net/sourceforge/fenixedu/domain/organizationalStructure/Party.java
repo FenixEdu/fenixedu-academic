@@ -710,8 +710,8 @@ public abstract class Party extends Party_Base {
 	return (List<EmailAddress>) getPartyContacts(EmailAddress.class);
     }
 
-    protected void createDefaultPhysicalAddress(final PhysicalAddressData data) {
-	PartyContact.createDefaultPersonalPhysicalAddress(this, data);
+    protected PhysicalAddress createDefaultPhysicalAddress(final PhysicalAddressData data) {
+	return (data != null) ? PartyContact.createDefaultPersonalPhysicalAddress(this, data) : null;
     }
     
     protected void updateDefaultPhysicalAddress(final PhysicalAddressData data) {
@@ -723,62 +723,56 @@ public abstract class Party extends Party_Base {
 	return physicalAdress != null ? physicalAdress : PartyContact.createDefaultPersonalPhysicalAddress(this);
     }
     
-    protected PhysicalAddress updateDefaultPhysicalAddress() {
-	return getOrCreateDefaultPhysicalAddress();
-    }
-
     private WebAddress getOrCreateDefaultWebAddress() {
 	final WebAddress webAddress = getDefaultWebAddress();
 	return webAddress != null ? webAddress : PartyContact.createDefaultPersonalWebAddress(this);
     }
 
-    protected void createDefaultWebAddress(final String url) {
-	if (!StringUtils.isEmpty(url)) {
-	    PartyContact.createDefaultPersonalWebAddress(this, url);
-	}
+    protected WebAddress createDefaultWebAddress(final String url) {
+	return (!StringUtils.isEmpty(url)) ? PartyContact.createDefaultPersonalWebAddress(this, url) : null;
     }
     
-    protected void updateDefaultWebAddress(final String url) {
+    public void updateDefaultWebAddress(final String url) {
 	getOrCreateDefaultWebAddress().edit(url);
     }
 
-    @Deprecated
     private Phone getOrCreateDefaultPhone() {
 	final Phone phone = getDefaultPhone();
 	return phone != null ? phone : (Phone) PartyContact.createDefaultPersonalPhone(this);
     }
 
-    protected void createDefaultPhone(final String number) {
-	if (!StringUtils.isEmpty(number)) {
-	    PartyContact.createDefaultPersonalPhone(this, number);
-	}
+    protected Phone createDefaultPhone(final String number) {
+	return (!StringUtils.isEmpty(number)) ? PartyContact.createDefaultPersonalPhone(this, number) : null;
     }
     
     protected void updateDefaultPhone(final String number) {
 	getOrCreateDefaultPhone().edit(number);
     }
 
-    @Deprecated
     private MobilePhone getOrCreateDefaultMobilePhone() {
 	final MobilePhone mobilePhone = getDefaultMobilePhone();
-	return mobilePhone != null ? mobilePhone : (MobilePhone) PartyContact
-		.createDefaultPersonalMobilePhone(this);
+	return mobilePhone != null ? mobilePhone : (MobilePhone) PartyContact.createDefaultPersonalMobilePhone(this);
     }
 
-    protected void createDefaultMobilePhone(final String number) {
-	if (!StringUtils.isEmpty(number)) {
-	    PartyContact.createDefaultPersonalMobilePhone(this, number);
-	}
+    protected MobilePhone createDefaultMobilePhone(final String number) {
+	return (!StringUtils.isEmpty(number)) ? PartyContact.createDefaultPersonalMobilePhone(this, number) : null;
     }
     
-    protected void updateDefaultMobilePhone(final String number) {
+    public void updateDefaultMobilePhone(final String number) {
 	getOrCreateDefaultMobilePhone().edit(number);
     }
     
-    protected void createDefaultEmailAddress(final String value) {
-	if (!StringUtils.isEmpty(value)) {
-	    PartyContact.createDefaultPersonalEmailAddress(this, value);
-	}
+    protected EmailAddress createDefaultEmailAddress(final String value) {
+	return (!StringUtils.isEmpty(value)) ? PartyContact.createDefaultPersonalEmailAddress(this, value) : null;
+    }
+    
+    private EmailAddress getOrCreateDefaultEmailAddress() {
+	final EmailAddress emailAddress = getDefaultEmailAddress();
+	return emailAddress != null ? emailAddress : PartyContact.createDefaultPersonalEmailAddress(this);
+    }
+    
+    public void updateDefaultEmailAddress(final String email) {
+	getOrCreateDefaultEmailAddress().edit(email);
     }
     
     /* ~~~~~~~~~~~~~~~~~~~~~
@@ -915,6 +909,7 @@ public abstract class Party extends Party_Base {
 	return emailAddress != null ? emailAddress.getValue() : null;
     }
     
+    @Deprecated
     public void setEmail(String email) {
 	final EmailAddress emailAddress = getDefaultEmailAddress();
 	if (emailAddress == null) {

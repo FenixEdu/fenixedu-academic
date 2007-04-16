@@ -187,13 +187,18 @@ public class Person extends Person_Base {
 
     public Person() {
 	super();
-	this.setMaritalStatus(MaritalStatus.UNKNOWN);
-	
-	this.setAvailableEmail(Boolean.FALSE);
-	this.setAvailableWebSite(Boolean.FALSE);
-	this.setAvailablePhoto(Boolean.FALSE);
+	setMaritalStatus(MaritalStatus.UNKNOWN);
+	setIsPassInKerberos(Boolean.FALSE);
+	setAvailableEmail(Boolean.FALSE);
+	setAvailableWebSite(Boolean.FALSE);
+	setAvailablePhoto(Boolean.FALSE);
     }
 
+    /**
+     * 
+     * @deprecated use Person(PersonBean personBean)
+     * @see Person(PersonBean personBean)
+     */
     public Person(InfoPersonEditor personToCreate, Country country) {
 
 	super();
@@ -207,31 +212,24 @@ public class Person extends Person_Base {
 	setIsPassInKerberos(Boolean.FALSE);
     }
     
-    public Person(String name, String identificationDocumentNumber,
-	    IDDocumentType identificationDocumentType, Gender gender) {
+    public Person(final String name, final String identificationDocumentNumber,
+	    final IDDocumentType identificationDocumentType, final Gender gender) {
 
-	super();
-	createUserAndLoginEntity();
-
+	this();
 	setName(name);
-	setIdentification(identificationDocumentNumber, identificationDocumentType);
 	setGender(gender);
-	
-	setAvailableEmail(Boolean.FALSE);
-	setAvailableWebSite(Boolean.FALSE);
-	setAvailablePhoto(Boolean.FALSE);
 	setMaritalStatus(MaritalStatus.SINGLE);
-	
-	setIsPassInKerberos(Boolean.FALSE);
+	setIdentification(identificationDocumentNumber, identificationDocumentType);
+	createUserAndLoginEntity();
     }
 
-    public Person(PersonBean personBean) {
+    public Person(final PersonBean personBean) {
 	super();
 
-	createUserAndLoginEntity();
 	setProperties(personBean);
 	setIsPassInKerberos(Boolean.FALSE);
 	
+	createUserAndLoginEntity();
 	createDefaultPhysicalAddress(personBean.getPhysicalAddressData());
 	createDefaultPhone(personBean.getPhone());
 	createDefaultMobilePhone(personBean.getMobile());
@@ -243,55 +241,37 @@ public class Person extends Person_Base {
 	new Login(new User(this));
     }
     
-    private Person(String name, Gender gender, String address, String areaCode, String areaOfAreaCode,
-	    String area, String parishOfResidence, String districtSubdivisionOfResidence,
-	    String districtOfResidence, String phone, String mobile, String homepage, String email,
-	    String documentIDNumber, IDDocumentType documentType) {
+    private Person(final String name, final Gender gender, final PhysicalAddressData data,
+	    final String phone, final String mobile, final String homepage, final String email,
+	    final String documentIDNumber, final IDDocumentType documentType) {
+	
+	this();
 
-	super();
 	setName(name);
 	setGender(gender);
-	setMaritalStatus(MaritalStatus.UNKNOWN);
 	setIdentification(documentIDNumber, documentType);
 	
+	createDefaultPhysicalAddress(data);
 	createDefaultPhone(phone);
 	createDefaultMobilePhone(mobile);
 	createDefaultWebAddress(homepage);
 	createDefaultEmailAddress(email);
-	createDefaultPhysicalAddress(new PhysicalAddressData(address, areaCode, areaOfAreaCode, area,
-		parishOfResidence, districtSubdivisionOfResidence, districtOfResidence, null));
-	
-	setAvailableEmail(Boolean.FALSE);
-	setAvailableWebSite(Boolean.FALSE);
-	setAvailablePhoto(Boolean.FALSE);
     }
 
-    public static Person createExternalPerson(String name, Gender gender, String address, String areaCode,
-	    String areaOfAreaCode, String area, String parishOfResidence,
-	    String districtSubdivisionOfResidence, String districtOfResidence, String phone, String mobile,
-	    String homepage, String email, String documentIdNumber, IDDocumentType documentType) {
-
-	return new Person(name, gender, address, areaCode, areaOfAreaCode, area, parishOfResidence,
-		districtSubdivisionOfResidence, districtOfResidence, phone, mobile, homepage, email,
-		documentIdNumber, documentType);
+    static public Person createExternalPerson(final String name, final Gender gender,
+	    final PhysicalAddressData data, final String phone, final String mobile,
+	    final String homepage, final String email, final String documentIdNumber,
+	    final IDDocumentType documentType) {
+	return new Person(name, gender, data, phone, mobile, homepage, email, documentIdNumber, documentType);
     }
 
-    public Person(String name, Gender gender, String documentIDNumber, IDDocumentType documentType) {
+    public Person(final String name, final Gender gender, final String documentIDNumber, final IDDocumentType documentType) {
 
-	super();
-
-	createUserAndLoginEntity();
-
+	this();
 	setName(name);
 	setGender(gender);
 	setIdentification(documentIDNumber, documentType);
-	
-	setAvailableEmail(Boolean.FALSE);
-	setAvailableWebSite(Boolean.FALSE);
-	setAvailablePhoto(Boolean.FALSE);
-	
-	setMaritalStatus(MaritalStatus.UNKNOWN);
-	setIsPassInKerberos(Boolean.FALSE);
+	createUserAndLoginEntity();
     }
 
     public Person(PersonBean creator, boolean createExternalPerson) {
@@ -305,68 +285,50 @@ public class Person extends Person_Base {
 	}
     }
 
-    public void edit(InfoPersonEditor personToEdit, Country country) {
-	setProperties(personToEdit);
-	if (country != null) {
-	    setNationality(country);
-	}
-    }
-
     public void edit(PersonBean personBean) {
 	setProperties(personBean);
-    }
-    
-    public void editPersonalDataAndContactsInformation(PersonBean personBean) {
-	edit(personBean);
-	
 	updateDefaultPhysicalAddress(personBean.getPhysicalAddressData());
 	updateDefaultPhone(personBean.getPhone());
 	updateDefaultMobilePhone(personBean.getMobile());
 	updateDefaultWebAddress(personBean.getWebAddress());
-	
-	setEmail(personBean.getEmail());
+	updateDefaultEmailAddress(personBean.getEmail());
+    }
+    
+    public void edit(String name, String address, String phone, String mobile, String homepage, String email) {
+	setName(name);
+	updateDefaultPhysicalAddress(new PhysicalAddressData().setAddress(address));
+	updateDefaultPhone(phone);
+	updateDefaultMobilePhone(mobile);
+	updateDefaultEmailAddress(email);
+	updateDefaultWebAddress(homepage);
     }
 
+    public void editPersonalData(String documentIdNumber, IDDocumentType documentType, String personName,
+	    String socialSecurityNumber) {
+
+	setName(personName);
+	setIdentification(documentIdNumber, documentType);
+	setSocialSecurityNumber(socialSecurityNumber);
+    }
+
+    @Deprecated
     public void update(InfoPersonEditor updatedPersonalData, Country country) {
 	updateProperties(updatedPersonalData);
 	if (country != null) {
 	    setNationality(country);
 	}
     }
-
-    public void editPersonalContactInformation(InfoPersonEditor personToEdit) {
-	if (personToEdit != null) {
-	    
-	    updateDefaultMobilePhone(personToEdit.getTelemovel());
-	    updateDefaultWebAddress(personToEdit.getEnderecoWeb());
-	    
-	    setWorkPhone(personToEdit.getWorkPhone());
-	    setEmail(personToEdit.getEmail());
-	    
-	    setAvailableEmail(personToEdit.getAvailableEmail());
-	    setAvailableWebSite(personToEdit.getAvailableWebSite());
-	    setAvailablePhoto(personToEdit.getAvailablePhoto());
+    
+    /**
+     * 
+     * @deprecated use edit(PersonBean personBean)
+     * @see edit(PersonBean personBean)
+     */
+    public void edit(InfoPersonEditor personToEdit, Country country) {
+	setProperties(personToEdit);
+	if (country != null) {
+	    setNationality(country);
 	}
-    }
-
-    public void edit(String name, String address, String phone, String mobile, String homepage, String email) {
-	
-	setName(name);
-
-	updateDefaultPhysicalAddress().setAddress(address);
-	updateDefaultPhone(phone);
-	updateDefaultMobilePhone(mobile);
-	updateDefaultWebAddress(homepage);
-	
-	setEmail(email);
-    }
-
-    public void editPersonalData(String documentIdNumber, IDDocumentType documentType, String personName,
-	    String socialSecurityNumber) {
-
-	setIdentification(documentIdNumber, documentType);
-	setName(personName);
-	setSocialSecurityNumber(socialSecurityNumber);
     }
 
     public Login getLoginIdentification() {
@@ -405,13 +367,11 @@ public class Person extends Person_Base {
     }
 
     public void setPassword(String password) {
-	Login login = createLoginIdentificationAndUserIfNecessary();
-	login.setPassword(password);
+	createLoginIdentificationAndUserIfNecessary().setPassword(password);
     }
 
     public void setIsPassInKerberos(Boolean isPassInKerberos) {
-	Login login = createLoginIdentificationAndUserIfNecessary();
-	login.setIsPassInKerberos(isPassInKerberos);
+	createLoginIdentificationAndUserIfNecessary().setIsPassInKerberos(isPassInKerberos);
     }
 
     public Boolean getIsPassInKerberos() {
@@ -420,8 +380,7 @@ public class Person extends Person_Base {
     }
 
     public void setIstUsername() {
-	Login login = createLoginIdentificationAndUserIfNecessary();
-	login.setUserUID();
+	createLoginIdentificationAndUserIfNecessary().setUserUID();
     }
 
     private Login createLoginIdentificationAndUserIfNecessary() {
@@ -828,9 +787,9 @@ public class Person extends Person_Base {
 	updateDefaultWebAddress(infoPerson.getEnderecoWeb());
 	updateDefaultPhone(infoPerson.getTelefone());
 	updateDefaultMobilePhone(infoPerson.getTelemovel());
+	updateDefaultEmailAddress(infoPerson.getEmail());
 	
 	setWorkPhone(infoPerson.getWorkPhone());
-	setEmail(infoPerson.getEmail());
 	
 	setDistrictSubdivisionOfBirth(infoPerson.getConcelhoNaturalidade());
 	setEmissionDateOfDocumentIdYearMonthDay(YearMonthDay.fromDateFields(infoPerson.getDataEmissaoDocumentoIdentificacao()));
@@ -1869,21 +1828,19 @@ public class Person extends Person_Base {
 	return result;
     }
 
-    public static Party createContributor(String contributorName, String contributorNumber,
-	    String contributorAddress, String areaCode, String areaOfAreaCode, String area,
-	    String parishOfResidence, String districtSubdivisionOfResidence, String districtOfResidence) {
+    static public Party createContributor(final String contributorName, final String contributorNumber,
+	    final PhysicalAddressData data) {
 
 	if (Party.readByContributorNumber(contributorNumber) != null) {
 	    throw new DomainException("EXTERNAL_PERSON.createContributor.existing.contributor.number");
 	}
 
-	Person externalPerson = Person.createExternalPerson(contributorName, Gender.MALE, contributorAddress,
-		areaCode, areaOfAreaCode, area, parishOfResidence, districtSubdivisionOfResidence,
-		districtOfResidence, null, null, null, null, String.valueOf(System.currentTimeMillis()),
-		IDDocumentType.EXTERNAL);
+	Person externalPerson = createExternalPerson(contributorName, Gender.MALE, data, null, null,
+		null, null, String.valueOf(System.currentTimeMillis()), IDDocumentType.EXTERNAL);
 	externalPerson.setSocialSecurityNumber(contributorNumber);
-	new ExternalContract(externalPerson, RootDomainObject.getInstance().getExternalInstitutionUnit(),
-		new YearMonthDay(), null);
+
+	new ExternalContract(externalPerson,
+		RootDomainObject.getInstance().getExternalInstitutionUnit(), new YearMonthDay(), null);
 
 	return externalPerson;
     }

@@ -2288,15 +2288,6 @@
 		<filterChains />
 	</service>
 	<service>
-		<name>ChangePersonalContactInformation</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.ChangePersonalContactInformation</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="PersonAuthorization" />
-		</filterChains>
-	</service>
-	<service>
 		<name>EditQualification</name>
 		<implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.person.qualification.EditQualification</implementationClass>

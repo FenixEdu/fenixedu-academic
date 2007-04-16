@@ -17,8 +17,6 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Employee;
@@ -30,6 +28,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.accounting.Receipt;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
+import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressData;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.parking.ParkingPartyClassification;
 import net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation;
@@ -65,9 +64,9 @@ public class Unit extends Unit_Base {
 	setCostCenterCode(costCenterCode);	
 	setBeginDateYearMonthDay(beginDate);
 	setEndDateYearMonthDay(endDate);
-	setWebAddress(webAddress);
 	setClassification(classification);
 	setCanBeResponsibleOfSpaces(canBeResponsibleOfSpaces);
+	updateDefaultWebAddress(webAddress);
     }
     
     @Override
@@ -616,8 +615,8 @@ public class Unit extends Unit_Base {
     }
 
     public static List<Unit> readAllUnits() {
-	List<Unit> allUnits = new ArrayList<Unit>();
-	for (Party party : RootDomainObject.getInstance().getPartys()) {
+	final List<Unit> allUnits = new ArrayList<Unit>();
+	for (final Party party : RootDomainObject.getInstance().getPartys()) {
 	    if (party instanceof Unit) {
 		allUnits.add((Unit) party);
 	    }
@@ -626,9 +625,7 @@ public class Unit extends Unit_Base {
     }
 
     /**
-     * 
      *  This method should be used only for Unit types where acronyms are unique.
-     *  
      **/
     public static Unit readUnitByAcronymAndType(String acronym, PartyTypeEnum partyTypeEnum) {
 	if (acronym != null
@@ -684,8 +681,7 @@ public class Unit extends Unit_Base {
     public static Unit createNewUnit(String unitName, Integer costCenterCode, String acronym,
 	    YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit,
 	    AccountabilityType accountabilityType, String webAddress, UnitClassification classification,
-	    Boolean canBeResponsibleOfSpaces) throws FenixFilterException,
-	    FenixServiceException {
+	    Boolean canBeResponsibleOfSpaces) {
 
 	Unit unit = new Unit();
 	unit.init(unitName, costCenterCode, acronym, beginDate, endDate, webAddress, classification, canBeResponsibleOfSpaces);	
@@ -705,24 +701,16 @@ public class Unit extends Unit_Base {
 	return noOfficialExternalInstitutionUnit;
     }   
 
-    public static Party createContributor(String contributorName, String contributorNumber,
-	    String contributorAddress, String areaCode, String areaOfAreaCode, String area,
-	    String parishOfResidence, String districtSubdivisionOfResidence, String districtOfResidence) {
+    public static Party createContributor(final String contributorName, final String contributorNumber,
+	    final PhysicalAddressData data) {
 
 	if (Party.readByContributorNumber(contributorNumber) != null) {
 	    throw new DomainException("EXTERNAL_INSTITUTION_UNIT.createContributor.existing.contributor.number");
 	}
 
-	Unit contributor = Unit.createNewNoOfficialExternalInstitution(contributorName);
-	
+	final Unit contributor = Unit.createNewNoOfficialExternalInstitution(contributorName);
 	contributor.setSocialSecurityNumber(contributorNumber);
-	contributor.setAddress(contributorAddress);
-	contributor.setAreaCode(areaCode);
-	contributor.setAreaOfAreaCode(areaOfAreaCode);
-	contributor.setArea(area);
-	contributor.setParishOfResidence(parishOfResidence);
-	contributor.setDistrictSubdivisionOfResidence(districtSubdivisionOfResidence);
-	contributor.setDistrictOfResidence(districtOfResidence);
+	contributor.createDefaultPhysicalAddress(data);
 
 	return contributor;
     }

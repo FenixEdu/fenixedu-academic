@@ -25,21 +25,6 @@
         <form-property name="reTypeNewPassword" type="java.lang.String" />
       </form-bean>
 
-      <!-- Bean for change of Application Information -->
-      <form-bean name="changePersonalInfoForm" 
-                 type="org.apache.struts.validator.DynaValidatorForm"
-                 dynamic="true">
-            <form-property name="page" type="java.lang.Integer" />
-        	
-        	<form-property name="mobilePhone" type="java.lang.String" />
-        	<form-property name="workPhone" type="java.lang.String" />
-        	<form-property name="email" type="java.lang.String" />
-        	<form-property name="availableEmail" type="java.lang.String" />
-        	<form-property name="webSite" type="java.lang.String" />
-        	<form-property name="availableWebSite" type="java.lang.String" />
-			<form-property name="availablePhoto" type="java.lang.String" />
-      </form-bean>
-
 	  <!-- Dynamic-FormBean for Qualification Edit-->
       <form-bean name="qualificationForm" 
                  type="org.apache.struts.validator.DynaValidatorForm"
@@ -170,19 +155,6 @@
       	      type="net.sourceforge.fenixedu.presentationTier.Action.base.FenixForwardAction"
       	      parameter="visualize.personal.information" />
       
-      <!-- Action to Prepare the Change of the Candidate's Application Information -->
-      <action path="/changePersonalInfoDispatchAction"
-	     attribute="changePersonalInfoForm"
-              name="changePersonalInfoForm"
-             input="/changePersonalInfo.jsp"
-	      validate="true"
-		 parameter="method"
-		     scope="request"
-      	      type="net.sourceforge.fenixedu.presentationTier.Action.person.ChangePersonalInfoDispatchAction">
-      	  <forward name="Success" path="/changeSuccess.jsp"/>
-      	  <forward name="prepareReady" path="/changePersonalInfo.jsp"/>
-      </action>
-
       <!-- Action to Change Candidate's Password -->
       <action path="/changePasswordForm"
       	      attribute="changePasswordForm"

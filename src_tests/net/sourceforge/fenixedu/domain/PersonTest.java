@@ -277,13 +277,6 @@ public class PersonTest extends DomainTestBase {
 		assertPersonContent(person, country);
 	}
 
-	public void testEditPersonalContactInformation() {
-		Person person = new Person(infoPerson3, country);
-
-		person.editPersonalContactInformation(infoPerson1);
-		assertPersonContent(person, country);
-	}
-
 	public void testEdit() {
 	    /*
 		Person person = new Person(username, nome, Gender.MALE, address,

@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.person.ChangePersonalContactInformation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPersonEditor;
@@ -61,7 +60,9 @@ public class ChangeApplicationInfo extends Service {
 	    person.edit(infoPersonEditor, country);
 
 	} else {
-	    new ChangePersonalContactInformation().run(userView, infoPersonEditor);
+	    userView.getPerson().updateDefaultMobilePhone(infoPersonEditor.getTelemovel());
+	    userView.getPerson().updateDefaultWebAddress(infoPersonEditor.getEnderecoWeb());
+	    userView.getPerson().updateDefaultEmailAddress(infoPersonEditor.getEmail());
 	}
 
 	// Change Candidate Information
