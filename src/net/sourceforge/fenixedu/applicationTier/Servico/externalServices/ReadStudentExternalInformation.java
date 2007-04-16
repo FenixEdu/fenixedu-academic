@@ -31,6 +31,7 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.StudentCurriculum;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
@@ -110,12 +111,6 @@ public class ReadStudentExternalInformation extends Service {
 	return false;
     }
 
-    /**
-         * @param registration
-         * @return
-         * @throws FenixServiceException
-         * @throws ExcepcaoPersistencia
-         */
     private Collection buildExternalEnrollmentsInfo(Registration registration)
 	    throws FenixServiceException, ExcepcaoPersistencia {
 	Collection enrollments = new ArrayList();
@@ -181,10 +176,6 @@ public class ReadStudentExternalInformation extends Service {
 	return enrollments;
     }
 
-    /**
-         * @param registration
-         * @return
-         */
     private InfoExternalDegreeCurricularPlanInfo buildExternalDegreeCurricularPlanInfo(
 	    Registration registration) {
 	InfoExternalDegreeCurricularPlanInfo info = new InfoExternalDegreeCurricularPlanInfo();
@@ -222,10 +213,6 @@ public class ReadStudentExternalInformation extends Service {
 	return info;
     }
 
-    /**
-         * @param registration
-         * @return
-         */
     private InfoExternalDegreeBranchInfo buildExternalDegreeBranchInfo(Registration registration) {
 	InfoExternalDegreeBranchInfo info = new InfoExternalDegreeBranchInfo();
 	if (registration.getActiveStudentCurricularPlan().getBranch() != null) {
@@ -236,10 +223,6 @@ public class ReadStudentExternalInformation extends Service {
 	return info;
     }
 
-    /**
-         * @param infoPerson
-         * @return
-         */
     private InfoExternalPersonInfo buildExternalPersonInfo(Person person) {
 	InfoExternalPersonInfo info = new InfoExternalPersonInfo();
 	info.setAddress(this.buildInfoExternalAdressInfo(person));
@@ -257,10 +240,6 @@ public class ReadStudentExternalInformation extends Service {
 	return info;
     }
 
-    /**
-         * @param infoPerson
-         * @return
-         */
     private InfoExternalIdentificationInfo buildExternalIdentificationInfo(Person person) {
 	InfoExternalIdentificationInfo info = new InfoExternalIdentificationInfo();
 	info.setDocumentType(person.getIdDocumentType().toString());
@@ -280,10 +259,6 @@ public class ReadStudentExternalInformation extends Service {
 	return info;
     }
 
-    /**
-         * @param infoPerson
-         * @return
-         */
     private InfoExternalCitizenshipInfo builsExternalCitizenshipInfo(Person person) {
 	InfoExternalCitizenshipInfo info = new InfoExternalCitizenshipInfo();
 	info.setArea(person.getParishOfBirth());
@@ -294,9 +269,13 @@ public class ReadStudentExternalInformation extends Service {
 
     private InfoExternalAdressInfo buildInfoExternalAdressInfo(Person person) {
 	InfoExternalAdressInfo info = new InfoExternalAdressInfo();
-	info.setPostalCode(person.getAreaCode());
-	info.setStreet(person.getAddress());
-	info.setTown(person.getArea());
+
+	if (person.hasDefaultPhysicalAddress()) {
+	    final PhysicalAddress physicalAddress = person.getDefaultPhysicalAddress();
+	    info.setPostalCode(physicalAddress.getAreaCode());
+	    info.setStreet(physicalAddress.getAddress());
+	    info.setTown(physicalAddress.getArea());
+	}
 
 	return info;
     }
