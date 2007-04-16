@@ -37,10 +37,6 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
 	    throw new DomainException(
 		    "error.administrativeOffice.AdministrativeOffice.administrativeOfficeType.cannot.be.null");
 	}
-	if (unit == null) {
-	    throw new DomainException(
-		    "error.administrativeOffice.AdministrativeOffice.unit.cannot.be.null");
-	}
 
 	checkIfExistsAdministrativeOfficeForType(administrativeOfficeType);
     }

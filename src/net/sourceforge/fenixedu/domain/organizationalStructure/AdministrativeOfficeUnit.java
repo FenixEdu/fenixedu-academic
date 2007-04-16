@@ -12,7 +12,7 @@ public class AdministrativeOfficeUnit extends AdministrativeOfficeUnit_Base {
         super.setType(PartyTypeEnum.ADMINISTRATIVE_OFFICE_UNIT);        
     }
     
-    public static Unit createNewAdministrativeOfficeUnit(String unitName, Integer costCenterCode, String acronym,
+    public static AdministrativeOfficeUnit createNewAdministrativeOfficeUnit(String unitName, Integer costCenterCode, String acronym,
 	    YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit, AccountabilityType accountabilityType, 
 	    String webAddress, UnitClassification classification, AdministrativeOffice administrativeOffice) {
 	

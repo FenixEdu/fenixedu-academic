@@ -14,7 +14,7 @@ public class DegreeUnit extends DegreeUnit_Base {
         super.setType(PartyTypeEnum.DEGREE_UNIT);
     }
         
-    public static Unit createNewInternalDegreeUnit(String unitName, Integer costCenterCode, String acronym,
+    public static DegreeUnit createNewInternalDegreeUnit(String unitName, Integer costCenterCode, String acronym,
 	    YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit, AccountabilityType accountabilityType, 
 	    String webAddress, Degree degree, UnitClassification classification, Boolean canBeResponsibleOfSpaces) {
 	

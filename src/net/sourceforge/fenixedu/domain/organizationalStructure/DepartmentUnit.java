@@ -21,7 +21,7 @@ public class DepartmentUnit extends DepartmentUnit_Base {
 	super.setType(PartyTypeEnum.DEPARTMENT);
     }
        
-    public static Unit createNewInternalDepartmentUnit(String departmentName, Integer costCenterCode, String departmentAcronym,
+    public static DepartmentUnit createNewInternalDepartmentUnit(String departmentName, Integer costCenterCode, String departmentAcronym,
 	    YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit, AccountabilityType accountabilityType,
 	    String webAddress, Department department, UnitClassification classification, Boolean canBeResponsibleOfSpaces) {
 			
@@ -35,7 +35,7 @@ public class DepartmentUnit extends DepartmentUnit_Base {
 	return departmentUnit;
     }    
     
-    public static Unit createNewOfficialExternalDepartmentUnit(String departmentName, Integer costCenterCode, String departmentAcronym,
+    public static DepartmentUnit createNewOfficialExternalDepartmentUnit(String departmentName, Integer costCenterCode, String departmentAcronym,
 	    YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit, AccountabilityType accountabilityType,
 	    String webAddress, Department department, UnitClassification classification, Boolean canBeResponsibleOfSpaces) {							
 	
