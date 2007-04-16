@@ -62,7 +62,8 @@ public abstract class Participation extends Participation_Base {
     
     public enum ResearchActivityParticipationRole {
 	Editor_in_Chief, Associate_Editor, Committee_Chair, General_Chair, Committee_Member, Invited_Speaker, Reviewer,
-
+	Organization_Chair, Managing_Editor, Advisory_Editor,
+	
 	// ScientificOrganizationsAndNetworks
 	President, Vice_President, Secretary,
 
@@ -96,7 +97,8 @@ public abstract class Participation extends Participation_Base {
 	    eventRoles.add(Committee_Chair);
 	    eventRoles.add(Invited_Speaker);
 	    eventRoles.add(Reviewer);
-
+	    eventRoles.add(Organization_Chair);
+	    
 	    return eventRoles;
 	}
 
@@ -106,7 +108,6 @@ public abstract class Participation extends Participation_Base {
 	    journalRoles.add(Editor_in_Chief);
 	    journalRoles.add(Committee_Member);
 	    journalRoles.add(Associate_Editor);
-	    journalRoles.add(Reviewer);
 
 	    return journalRoles;
 	}
@@ -146,7 +147,15 @@ public abstract class Participation extends Participation_Base {
 	}
 	
 	public static List<ResearchActivityParticipationRole> getAllJournalIssueRoles() {
-	    return getAllScientificJournalParticipationRoles();
+	    List<ResearchActivityParticipationRole> issueRoles = new ArrayList<ResearchActivityParticipationRole>();
+
+	    issueRoles.add(Editor_in_Chief);
+	    issueRoles.add(Committee_Member);
+	    issueRoles.add(Associate_Editor);
+	    issueRoles.add(Managing_Editor);
+	    issueRoles.add(Advisory_Editor);
+	    
+	    return issueRoles;
 	}
 
 	public static List<ResearchActivityParticipationRole> getAllEventEditionRoles() {

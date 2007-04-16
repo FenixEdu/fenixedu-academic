@@ -20,11 +20,13 @@ import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultPartici
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ArticleBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.BookBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.BookPartBean;
+import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ConferenceArticlesBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.CreateIssueBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.InproceedingsBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ManualBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.OtherPublicationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ProceedingsBean;
+import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultEventAssociationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.TechnicalReportBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ThesisBean;
@@ -35,6 +37,7 @@ import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.b
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
 import net.sourceforge.fenixedu.domain.research.activity.JournalIssue;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
@@ -339,7 +342,8 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward createPublicationWrapper(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+	    FenixServiceException {
 
 	ImportBibtexBean importBibtexBean = (ImportBibtexBean) RenderUtils.getViewState("importBibtexBean")
 		.getMetaObject().getObject();
@@ -349,15 +353,61 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
 		&& ((ArticleBean) currentPublicationBean).getJournalIssue() == null) {
 	    return createJournalWorkFlow(mapping, form, request, response);
 	}
+	if ((currentPublicationBean instanceof ProceedingsBean || currentPublicationBean instanceof InproceedingsBean)
+		&& ((ConferenceArticlesBean) currentPublicationBean).getEventEdition() == null) {
+	    return createEventWorkFlow(mapping, form, request, response);
 
+	}
 	return createPublication(mapping, form, request, response);
     }
-    
-    public ActionForward createJournalWorkFlow(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response ) throws FenixFilterException, FenixServiceException {
+
+    public ActionForward createEventWorkFlow(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+	    FenixServiceException {
 
 	ImportBibtexBean importBean = (ImportBibtexBean) RenderUtils.getViewState("importBibtexBean")
-	.getMetaObject().getObject();
+		.getMetaObject().getObject();
+	ConferenceArticlesBean bean = (ConferenceArticlesBean) importBean.getCurrentPublicationBean();
+	ResultEventAssociationBean eventBean = (ResultEventAssociationBean) getRenderedObject("createEvent");
+	if (eventBean != null) {
+	    if (eventBean.getEvent() == null && eventBean.getEventName() != null) {
+		bean.setCreateEvent(true);
+	    }
+	    if (eventBean.getEventAlreadyChosen()) {
+		try {
+		    eventBean.setEventName(bean.getEventName());
+		    eventBean.setLocationType(bean.getScope());
+		    eventBean.setEventUrl(bean.getUrl());
+		    eventBean.setEventType(bean.getEventType());
+		    Object[] args = { eventBean };
+		    EventEdition edition = (EventEdition) executeService("CreateResearchEventEdition", args);
+		    bean.setEventEdition(edition);
+		    bean.setCreateEvent(false);
+		    return createPublication(mapping, form, request, response);
+		} catch (DomainException e) {
+		    addActionMessage(request, e.getKey());
+		    request.setAttribute("importBibtexBean", importBean);
+		    return mapping.findForward("ImportBibtex");
+		}
+	    }
+	} else {
+	    eventBean = new ResultEventAssociationBean();
+	    eventBean.setEvent(bean.getEvent());
+	    eventBean.setEventName(bean.getEventName());
+	    bean.setCreateEvent(true);
+	}
+
+	request.setAttribute("eventBean", eventBean);
+	request.setAttribute("importBibtexBean", importBean);
+	return mapping.findForward("ImportBibtex");
+    }
+
+    public ActionForward createJournalWorkFlow(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+	    FenixServiceException {
+
+	ImportBibtexBean importBean = (ImportBibtexBean) RenderUtils.getViewState("importBibtexBean")
+		.getMetaObject().getObject();
 	ArticleBean bean = (ArticleBean) importBean.getCurrentPublicationBean();
 	CreateIssueBean issueBean = (CreateIssueBean) getRenderedObject("createMagazine");
 
@@ -389,16 +439,17 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
 	    issueBean = new CreateIssueBean();
 	    issueBean.setJournal(bean.getScientificJournal());
 	    issueBean.setScientificJournalName(bean.getScientificJournalName());
-	    
+
 	}
 
 	request.setAttribute("issueBean", issueBean);
 	request.setAttribute("importBibtexBean", importBean);
 	return mapping.findForward("ImportBibtex");
     }
-    
-    public ActionForward changeSpecialIssueInImport(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+
+    public ActionForward changeSpecialIssueInImport(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+	    FenixServiceException {
 
 	final ImportBibtexBean bean = (ImportBibtexBean) getRenderedObject("importBibtexBean");
 	CreateIssueBean issueBean = (CreateIssueBean) getRenderedObject("createMagazine");
@@ -408,7 +459,7 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
 	RenderUtils.invalidateViewState();
 	return mapping.findForward("ImportBibtex");
     }
-    
+
     public ActionForward createPublication(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
 

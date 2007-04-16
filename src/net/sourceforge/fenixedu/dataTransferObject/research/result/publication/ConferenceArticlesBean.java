@@ -7,9 +7,6 @@ import net.sourceforge.fenixedu.domain.research.activity.Event;
 import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
 import net.sourceforge.fenixedu.domain.research.activity.EventType;
 import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
-import net.sourceforge.fenixedu.util.MultiLanguageString;
-
-import org.joda.time.YearMonthDay;
 
 public abstract class ConferenceArticlesBean extends ResultPublicationBean implements Serializable {
     private ScopeType scope;
@@ -87,13 +84,13 @@ public abstract class ConferenceArticlesBean extends ResultPublicationBean imple
 //	this.eventNameAutoComplete = name;
 //    }
 
-//    public ScopeType getScope() {
-//	return scope;
-//    }
-//
-//    public void setScope(ScopeType scope) {
-//	this.scope = scope;
-//    }
+    public ScopeType getScope() {
+	return scope;
+    }
+
+    public void setScope(ScopeType scope) {
+	this.scope = scope;
+    }
 	
 	public EventEdition getEventEdition() {
 		return (eventEdition != null) ? eventEdition.getObject() : null;

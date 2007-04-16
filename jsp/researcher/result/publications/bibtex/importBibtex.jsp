@@ -269,18 +269,17 @@
 	</logic:equal>
 		
 	<logic:equal name="importBibtexBean" property="currentProcessedParticipators" value="true">
+		<bean:define id="publicationData" name="importBibtexBean" property="currentPublicationBean" type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean"/>	
+		<fr:form action="/bibtexManagement/createPublicationWrapper.do">
+		<fr:edit id="importBibtexBean" visible="false" name="importBibtexBean" type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.bibtex.ImportBibtexBean"/>
 
 		<logic:notPresent name="issueBean"> 
-		<fr:form action="/bibtexManagement/createPublicationWrapper.do">
-			<fr:edit id="importBibtexBean" visible="false" name="importBibtexBean" type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.bibtex.ImportBibtexBean"/>
-			
-			<bean:define id="publicationData" name="importBibtexBean" property="currentPublicationBean" type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean"/>
-			
-			<logic:equal name="publicationData" property="createEvent" value="false">
-				<!-- Set Publication data -->
-		 		<h3 class="mtop15 mbottom05"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.importBibtex.publicationData"/></h3>
+		<logic:notPresent name="eventBean">
 
-	<p class="mvert1 breadcumbs">
+		<!-- Set Publication data -->
+		<h3 class="mtop15 mbottom05"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.importBibtex.publicationData"/></h3>
+
+		<p class="mvert1 breadcumbs">
 		<span>
 		<strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.importBibtex.step"/> 1 : </strong>
 		<bean:message key="researcher.result.publication.importBibtex.insertAuthorsAndEditors" bundle="RESEARCHER_RESOURCES"/></span>
@@ -289,7 +288,7 @@
 		<strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.importBibtex.step"/> 2 : </strong>
 			<bean:message key="researcher.result.publication.importBibtex.publicationData" bundle="RESEARCHER_RESOURCES"/></span>
 		</span>
- 	</p>
+	 	</p>
 			 	
 				<logic:messagesPresent message="true">
 					<p>
@@ -306,12 +305,39 @@
 			    </fr:layout>
 					<fr:destination name="invalid" path="/bibtexManagement/invalidSubmit.do"/>
 		   		</fr:edit>
-		   	</logic:equal>
-	   		
-	   		<!-- Create event in case of inproceedings or proceedings -->
+		   	
+	  	
+			<bean:define id="label" value="button.create"/>
+			<logic:equal name="importBibtexBean" property="currentPublicationBean.class.simpleName" value="ArticleBean">
+				<bean:define id="label" value="button.next"/>
+			</logic:equal>
+			<logic:equal name="importBibtexBean" property="currentPublicationBean.class.simpleName" value="ProceedingsBean">
+				<bean:define id="label" value="button.next"/>
+			</logic:equal>
+			<logic:equal name="importBibtexBean" property="currentPublicationBean.class.simpleName" value="InproceedingsBean">
+				<bean:define id="label" value="button.next"/>
+			</logic:equal>
+			<html:submit><bean:message bundle="RESEARCHER_RESOURCES" key="<%= label %>"/></html:submit>
+		</logic:notPresent>
+		</logic:notPresent>
+
+		<logic:present name="eventBean">
+			<!-- Create event in case of inproceedings or proceedings -->
+			
+			<fr:edit id="createEvent"  name="eventBean" visible="false"/>
+			<%-- 
+			<h3><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.importBibtex.publicationData"/></h3>
+				<fr:view name="importBibtexBean" property="currentPublicationBean" schema="<%=publicationData.getActiveSchema()%>">
+					<fr:layout name="tabular">
+			    	    <fr:property name="classes" value="tstyle5 thlight thright thtop width600px"/>
+        				<fr:property name="columnClasses" value="width12em,,"/>
+					</fr:layout>
+	   		</fr:view>
+	   			--%>
 			<logic:equal name="publicationData" property="createEvent" value="true">
+
 				<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.createConference"/>
-				<fr:edit id="createEvent" name="importBibtexBean" property="currentPublicationBean" schema="result.publication.create.Event" nested="true">
+				<fr:edit id="createNewEvent" name="importBibtexBean" property="currentPublicationBean" schema="result.publication.create.Event" nested="true">
 				    <fr:layout name="tabular">
 			    	    <fr:property name="classes" value="tstyle5 thright thlight thtop"/>
 			        	<fr:property name="columnClasses" value=",,tdclear tderror1"/>
@@ -319,25 +345,19 @@
 			   		<fr:destination name="invalid" path="/bibtexManagement/invalidSubmit.do"/>
 			   		<fr:destination name="input" path="/bibtexManagement/invalidSubmit.do"/>
 				</fr:edit>
-				
-				<!-- present publication fields -->
-				<h3><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.importBibtex.publicationData"/></h3>
-				<fr:view name="importBibtexBean" property="currentPublicationBean" schema="<%=publicationData.getActiveSchema()%>">
-					<fr:layout name="tabular">
-			    	    <fr:property name="classes" value="tstyle5 thlight thright thtop width600px"/>
-        				<fr:property name="columnClasses" value="width12em,,"/>
-					</fr:layout>
-	   			</fr:view>
+				<fr:edit id="createEventEdition" name="eventBean" schema="result.publication.create.NewEventEdition" nested="true">
+				    <fr:layout name="tabular">
+			    	    <fr:property name="classes" value="tstyle5 thright thlight thtop"/>
+			        	<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+				    </fr:layout>
+			   		<fr:destination name="invalid" path="/bibtexManagement/invalidSubmit.do"/>
+			   		<fr:destination name="input" path="/bibtexManagement/invalidSubmit.do"/>
+				</fr:edit>
 			</logic:equal>
-			
-			<bean:define id="label" value="button.create"/>
-			<logic:equal name="importBibtexBean" property="currentPublicationBean.class.simpleName" value="ArticleBean">
-				<bean:define id="label" value="button.next"/>
-			</logic:equal>
-			<html:submit><bean:message bundle="RESEARCHER_RESOURCES" key="<%= label %>"/></html:submit>
+			<html:submit><bean:message bundle="RESEARCHER_RESOURCES" key="button.create"/></html:submit>
+		</logic:present>		
 		</fr:form>
-		</logic:notPresent>
-		
+
 		<logic:present name="issueBean">
 						<logic:messagesPresent message="true">
 					<p>

@@ -134,13 +134,9 @@ public class ResultEventAssociationBean implements Serializable {
 	}
 	
 	public boolean getEventAlreadyChosen() {
-		return eventAlreadyChosen;
+	    return eventEdition!=null || edition != null;
 	}
-	
-	public void setEventAlreadyChosen(boolean alreadyChosenEvent) {
-		eventAlreadyChosen = alreadyChosenEvent;
-	}
-	
+		
 	public void setCreateNewEventEdition(boolean createEventEdition) {
 		this.createEventEdition = createEventEdition;
 	}

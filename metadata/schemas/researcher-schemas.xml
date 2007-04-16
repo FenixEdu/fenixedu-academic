@@ -1497,24 +1497,11 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Cr
 <!-- CONFERENCE ARTICLES -->
 <schema name="result.publication.create.Event" bundle="RESEARCHER_RESOURCES"
 		type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ConferenceArticlesBean">
-	<slot name="eventName" key="label.event" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
+	<slot name="eventName" key="label.event" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="60"/>
 	</slot>
-	<slot name="eventLocal" key="label.conferenceLocal">
-		<property name="size" value="40"/>
-	</slot>
-	<slot name="eventStartDate" key="label.conferenceStartDate" layout="year-month-day">
-		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
-			<property name="dateFormat" value="dd/MM/yyyy"/>
-		</validator>
-		<property name="size" value="10"/>
-	</slot>
-	<slot name="eventEndDate" key="label.conferenceEndDate" layout="year-month-day">
-		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
-			<property name="dateFormat" value="dd/MM/yyyy"/>
-		</validator>
-		<property name="size" value="10"/>
-	</slot>
+	<slot name="eventType"/>
+	<slot name="scope"/>
 	<slot name="url" layout="input-with-comment">
 		<property name="size" value="60"/>
 		<property name="bundle" value="RESEARCHER_RESOURCES"/>

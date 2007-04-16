@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.dataTransferObject.research.result.publication;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.research.result.publication.Article;
 import net.sourceforge.fenixedu.domain.research.result.publication.Inproceedings;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import bibtex.dom.BibtexEntry;
@@ -17,6 +16,7 @@ public class InproceedingsBean extends ConferenceArticlesBean implements Seriali
     private String language;
 
     public InproceedingsBean() {
+	super();
 	this.setPublicationType(ResultPublicationType.Inproceedings);
 	this.setActiveSchema("result.publication.create.Inproceedings");
 	this.setParticipationSchema("resultParticipation.simple");

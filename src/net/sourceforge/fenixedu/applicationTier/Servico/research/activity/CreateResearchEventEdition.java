@@ -21,7 +21,7 @@ public class CreateResearchEventEdition extends Service {
 	    event = eventBean.getEvent();
 	}
 
-	return run(eventBean.getEvent(), eventBean.getEdition(), eventBean.getEventLocation(), eventBean
+	return run(event, eventBean.getEdition(), eventBean.getEventLocation(), eventBean
 		.getStartDate(), eventBean.getEndDate(), eventBean.getOrganization(), eventBean
 		.getEventEditionUrl());
     }
