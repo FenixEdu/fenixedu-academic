@@ -8,6 +8,8 @@
 <bean:define id="type" name="extraEnrolmentBean" property="groupType"/>
 <h2><strong><bean:message key="label.course.enrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/> <bean:message key="<%= type.toString() %>" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></h2>
 <br/>
+
+
 <fr:form action="/studentExtraEnrolments.do">
 	<fr:edit id="extraEnrolmentBean"
 			 name="extraEnrolmentBean"
