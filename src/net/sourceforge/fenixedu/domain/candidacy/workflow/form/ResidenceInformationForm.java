@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.util.workflow.Form;
 import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
@@ -38,21 +39,41 @@ public class ResidenceInformationForm extends Form {
 	    final String areaOfAreaCode, final String area, final String parishOfResidence,
 	    final String districtSubdivisionOfResidence, final String districtOfResidence,
 	    final Country countryOfResidence) {
-	this.address = address;
-	this.areaCode = areaCode;
-	this.areaOfAreaCode = areaOfAreaCode;
-	this.area = area;
-	this.parishOfResidence = parishOfResidence;
-	this.districtSubdivisionOfResidence = districtSubdivisionOfResidence;
-	this.districtOfResidence = districtOfResidence;
+	
+	setAddress(address);
+	setAreaCode(areaCode);
+	setAreaOfAreaCode(areaOfAreaCode);
+	setArea(area);
+	setParishOfResidence(parishOfResidence);
+	setDistrictSubdivisionOfResidence(districtSubdivisionOfResidence);
+	setDistrictOfResidence(districtOfResidence);
 	setCountryOfResidence(countryOfResidence);
     }
 
     public static ResidenceInformationForm createFromPerson(final Person person) {
-	return new ResidenceInformationForm(person.getAddress(), person.getAreaCode(), person
-		.getAreaOfAreaCode(), person.getArea(), person.getParishOfResidence(), person
-		.getDistrictSubdivisionOfBirth(), person.getDistrictOfResidence(), RootDomainObject
-		.getInstance().readCountryByOID(DEFAULT_COUNTRY_ID));
+	if (person.hasDefaultPhysicalAddress()) {
+	    final PhysicalAddress physicalAddress = person.getDefaultPhysicalAddress();
+	    final Country country = getCountryOfResidenceFromPhysicalAddress(physicalAddress);
+
+	    return new ResidenceInformationForm(
+		    physicalAddress.getAddress(),
+		    physicalAddress.getAreaCode(),
+		    physicalAddress.getAreaOfAreaCode(),
+		    physicalAddress.getArea(),
+		    physicalAddress.getParishOfResidence(),
+		    physicalAddress.getDistrictSubdivisionOfResidence(),
+		    physicalAddress.getDistrictOfResidence(),
+		    country);
+	} else {
+	    final ResidenceInformationForm residenceInformationForm = new ResidenceInformationForm();
+	    residenceInformationForm.setCountryOfResidence(RootDomainObject.getInstance().readCountryByOID(DEFAULT_COUNTRY_ID));
+	    return residenceInformationForm;
+	}
+    }
+
+    private static Country getCountryOfResidenceFromPhysicalAddress(final PhysicalAddress physicalAddress) {
+	return physicalAddress.hasCountryOfResidence() ? physicalAddress.getCountryOfResidence()
+		: RootDomainObject.getInstance().readCountryByOID(DEFAULT_COUNTRY_ID);
     }
 
     public String getAddress() {
