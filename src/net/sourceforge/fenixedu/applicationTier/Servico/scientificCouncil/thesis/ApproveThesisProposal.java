@@ -8,6 +8,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.ScientificCommission;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -36,6 +37,14 @@ public class ApproveThesisProposal extends ThesisServiceWithMailNotification {
         Set<Person> persons = personSet(student, orientator, coorientator, president); 
         for (ThesisEvaluationParticipant participant : thesis.getVowels()) {
             persons.add(participant.getPerson());
+        }
+        
+        // also send proposal approval to the contact team
+        ExecutionYear executionYear = thesis.getEnrolment().getExecutionYear();
+        for (ScientificCommission member : thesis.getDegree().getScientificCommissionMembers(executionYear)) {
+            if (member.isContact()) {
+                persons.add(member.getPerson());
+            }
         }
         
         return persons;
