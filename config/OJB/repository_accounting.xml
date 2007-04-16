@@ -65,7 +65,8 @@
 	<!-- ************************************************************************************************************ -->
 	<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicServiceRequestEvent" table="ACCOUNTING_EVENT">
 		<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent" />
-		<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DeclarationRequestEvent" />	
+		<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DeclarationRequestEvent" />
+		<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DiplomaRequestEvent" />
 	</class-descriptor>
 	
 		<!-- ************************************************************************************************************ -->
@@ -79,6 +80,13 @@
 		<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DeclarationRequestEvent -->
 		<!-- ************************************************************************************************************ -->
 		<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DeclarationRequestEvent" table="ACCOUNTING_EVENT">
+		
+		</class-descriptor>
+		
+		<!-- ************************************************************************************************************ -->
+		<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DiplomaRequestEvent -->
+		<!-- ************************************************************************************************************ -->
+		<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DiplomaRequestEvent" table="ACCOUNTING_EVENT">
 		
 		</class-descriptor>
 		

@@ -20,6 +20,8 @@ public enum EntryType {
 
     ENROLMENT_DECLARATION_REQUEST_FEE,
 
+    DIPLOMA_REQUEST_FEE,
+    
     GRATUITY_FEE,
 
     REGISTRATION_FEE,
