@@ -558,7 +558,6 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
 	    if (((ConferenceArticlesBean) publicationBean).getEvent() != null) {
 		eventBean.setEventEdition(((ConferenceArticlesBean) publicationBean).getEventEdition());
 		eventBean.setEvent(((ConferenceArticlesBean) publicationBean).getEvent());
-		eventBean.setEventAlreadyChosen(true);
 	    }
 	}
 
