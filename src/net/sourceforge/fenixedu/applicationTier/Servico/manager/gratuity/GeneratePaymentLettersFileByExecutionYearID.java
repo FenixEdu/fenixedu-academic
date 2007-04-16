@@ -23,7 +23,9 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.GratuitySituation;
 import net.sourceforge.fenixedu.domain.GratuityValues;
 import net.sourceforge.fenixedu.domain.InsuranceValue;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentType;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -33,39 +35,6 @@ import net.sourceforge.fenixedu.util.gratuity.fileParsers.sibs.SibsOutgoingPayme
 import pt.ist.utl.fenix.utils.SibsPaymentCodeFactory;
 
 public class GeneratePaymentLettersFileByExecutionYearID extends Service {
-
-    // private class GratuityLetterPaymentPhase {
-    //
-    // private String endDate;
-    //
-    // private String fullSibsReference;
-    //
-    // private String value;
-    //
-    // public String getEndDate() {
-    // return endDate;
-    // }
-    //
-    // public void setEndDate(String endDate) {
-    // this.endDate = endDate;
-    // }
-    //
-    // public String getFullSibsReference() {
-    // return fullSibsReference;
-    // }
-    //
-    // public void setFullSibsReference(String fullSibsReference) {
-    // this.fullSibsReference = fullSibsReference;
-    // }
-    //
-    // public String getValue() {
-    // return value;
-    // }
-    //
-    // public void setValue(String value) {
-    // this.value = value;
-    // }
-    // }
 
     private class GratuityLetterFileEntry {
 
@@ -85,13 +54,9 @@ public class GeneratePaymentLettersFileByExecutionYearID extends Service {
 
         private String insuranceValue;
 
-        // private List gratuityLetterPaymentPhases;
-
         public GratuityLetterFileEntry(StudentCurricularPlan studentCurricularPlan) {
             this.numberOfPaymentPhases = 0;
-            // this.gratuityLetterPaymentPhases = new ArrayList();
             this.studentCurricularPlan = studentCurricularPlan;
-
         }
 
         public String getInsuranceEndDate() {
@@ -125,15 +90,6 @@ public class GeneratePaymentLettersFileByExecutionYearID extends Service {
         public void setTotalGratuityFullSibsReference(String totalGratuityFullSibsReference) {
             this.totalGratuityFullSibsReference = totalGratuityFullSibsReference;
         }
-
-        // public List getGratuityLetterPaymentPhases() {
-        // return gratuityLetterPaymentPhases;
-        // }
-        //
-        // public void setGratuityLetterPaymentPhases(List
-        // gratuityLetterPaymentPhases) {
-        // this.gratuityLetterPaymentPhases = gratuityLetterPaymentPhases;
-        // }
 
         public String getTotalGratuityValue() {
             return totalGratuityValue;
@@ -218,12 +174,8 @@ public class GeneratePaymentLettersFileByExecutionYearID extends Service {
             throw new InsuranceNotDefinedServiceException("error.insurance.notDefinedForThisYear");
         }
 
-        // Date insurancePaymentEndDate = Calendar.getInstance().getTime();
-
         String shortYear = executionYear.getYear().split("/")[0].trim().substring(2);
 
-        // read master degree and persistentSupportecialization execution
-        // degrees
         List executionDegreeList = ExecutionDegree.getAllByExecutionYearAndDegreeType(executionYear
                 .getYear(), DegreeType.MASTER_DEGREE);
 
@@ -284,16 +236,12 @@ public class GeneratePaymentLettersFileByExecutionYearID extends Service {
                                 + SibsPaymentCodeFactory.getCode(SibsPaymentType.INSURANCE));
 
                         gratuityLetterFileEntryInsurancePart.setInsuranceValue(decimalFormat
-                                .format(insuranceValue.getAnnualValue()));
+                                .format(insuranceValue.getAnnualValueBigDecimal().doubleValue()));
 
                     }
                 }
 
                 GratuityLetterFileEntry gratuityLetterFileEntry = null;
-
-                // if ((studentCurricularPlan.getSpecialization().equals(
-                // Specialization.INTEGRADO_TYPE) == false)
-                // && (gratuityValues != null)) {
 
                 if (gratuityValues != null) {
 
@@ -345,25 +293,9 @@ public class GeneratePaymentLettersFileByExecutionYearID extends Service {
         return fileContent;
     }
 
-    /**
-     * 
-     * @param gratuityLetterFileEntry
-     * @param gratuitySituation
-     * @param shortYear
-     * @return
-     * @throws ExcepcaoPersistencia
-     * @throws InsufficientSibsPaymentPhaseCodesServiceException
-     */
     private GratuityLetterFileEntry createGratuityLetterFileEntryForGratuitySituation(
             GratuitySituation gratuitySituation, String shortYear, Date totalPaymentEndDate)
             throws InsufficientSibsPaymentPhaseCodesServiceException {
-
-        // ignore integrated master degrees for now
-        // if (gratuitySituation.getStudentCurricularPlan().getSpecialization()
-        // .equals(Specialization.INTEGRADO_TYPE)) {
-        //
-        // return gratuityLetterFileEntry;
-        // }
 
         if ((gratuitySituation.getRemainingValue() == null)
                 || (gratuitySituation.getRemainingValue().doubleValue() <= 0)) {
@@ -395,15 +327,6 @@ public class GeneratePaymentLettersFileByExecutionYearID extends Service {
 
         // add total payment line
         String sibsPaymentCode = determineTotalPaymentCode(studentCurricularPlan);
-        // Date endDate = gratuitySituation.getGratuityValues().getEndPayment();
-        //
-        // if (endDate != null &&
-        // endDate.before(Calendar.getInstance().getTime()) == true) {
-        // // end date already passed
-        // return null;
-        // }
-
-        // Date totalPaymentEndDate = Calendar.getInstance().getTime();
 
         GratuityLetterFileEntry gratuityLetterFileEntry = new GratuityLetterFileEntry(
                 studentCurricularPlan);
@@ -422,93 +345,10 @@ public class GeneratePaymentLettersFileByExecutionYearID extends Service {
 
         gratuityLetterFileEntry.setTotalGratuityEndDate(simpleDateFormat.format(totalPaymentEndDate));
 
-        // int totalNumberOfPaymentPhases = 0;
-        //
-        // // add phase payment lines
-        // List paymentPhaseList =
-        // gratuitySituation.getGratuityValues().getPaymentPhaseList();
-        //
-        // double totalValueInPhases = 0;
-        // for (Iterator iter = paymentPhaseList.iterator(); iter.hasNext();) {
-        // PaymentPhase paymentPhase = (PaymentPhase) iter.next();
-        // totalValueInPhases += paymentPhase.getValue().doubleValue();
-        // }
-        //
-        // if ((scholarShipPartValue.doubleValue() - totalValueInPhases) > 0) {
-        // // there are no sufficient phases to pay the remaining value
-        // // so send the total value only
-        // return gratuityLetterFileEntry;
-        // }
-        //
-        // BeanComparator paymentPhaseDateComparator = new
-        // BeanComparator("endDate");
-        // ComparatorChain chainComparator = new ComparatorChain();
-        // chainComparator.addComparator(paymentPhaseDateComparator, true);
-        // paymentPhaseList = new ArrayList(paymentPhaseList);
-        // Collections.sort(paymentPhaseList, chainComparator);
-        //
-        // int paymentPhaseNumber = 1;
-        // double totalValueToDivideInPhases =
-        // scholarShipPartValue.doubleValue();
-        //
-        // for (Iterator iter = paymentPhaseList.iterator(); iter.hasNext();) {
-        // PaymentPhase paymentPhase = (PaymentPhase) iter.next();
-        //
-        // if
-        // (paymentPhase.getEndDate().before(Calendar.getInstance().getTime()))
-        // {
-        // // end date for that phase already passed
-        // continue;
-        // }
-        //
-        // if ((paymentPhaseNumber == 1)
-        // && (paymentPhase.getValue().doubleValue() >=
-        // totalValueToDivideInPhases)) {
-        // // phases are not required, because the total value is less then
-        // // the first phase
-        // return gratuityLetterFileEntry;
-        // }
-        //
-        // totalValueToDivideInPhases -= paymentPhase.getValue().doubleValue();
-        //
-        // sibsPaymentCode = determinePaymentPhaseCode(paymentPhaseNumber,
-        // studentCurricularPlan,
-        // gratuitySituation);
-        //
-        // GratuityLetterPaymentPhase gratuityLetterPaymentPhase = new
-        // GratuityLetterPaymentPhase();
-        // gratuityLetterPaymentPhase.setEndDate(simpleDateFormat.format(paymentPhase.getEndDate()));
-        //
-        // gratuityLetterPaymentPhase.setValue(paymentPhase.getValue().toString());
-        // gratuityLetterPaymentPhase.setFullSibsReference(shortYear
-        // + addCharToStringUntilMax(SibsOutgoingPaymentFileConstants.ZERO_CHAR,
-        // studentCurricularPlan.getRegistration().getNumber().toString(),
-        // SibsOutgoingPaymentFileConstants.MAX_STUDENT_NUMBER_LENGTH)
-        // + sibsPaymentCode);
-        // gratuityLetterPaymentPhase.setEndDate(simpleDateFormat.format(paymentPhase.getEndDate()));
-        //
-        // gratuityLetterFileEntry.getGratuityLetterPaymentPhases().add(gratuityLetterPaymentPhase);
-        //
-        // totalNumberOfPaymentPhases++;
-        //
-        // paymentPhaseNumber++;
-        //
-        // }
-        //
-        // gratuityLetterFileEntry.setNumberOfPaymentPhases(totalNumberOfPaymentPhases);
-
         return gratuityLetterFileEntry;
 
     }
 
-    /**
-     * add a char to the string until reach the max lenth
-     * 
-     * @param maximum
-     *            digits for the number
-     * @param number
-     * @return string
-     */
     private String addCharToStringUntilMax(char c, String string, int maxlength) {
         StringBuilder stringComplete = new StringBuilder();
 
@@ -547,220 +387,9 @@ public class GeneratePaymentLettersFileByExecutionYearID extends Service {
         return sibsPaymentCode + "";
     }
 
-    // /**
-    // * @param paymentPhaseNumber
-    // * @param studentCurricularPlan
-    // * @return
-    // */
-    // private String determinePaymentPhaseCode(int paymentPhaseNumber,
-    // StudentCurricularPlan studentCurricularPlan, GratuitySituation
-    // gratuitySituation)
-    // throws InsufficientSibsPaymentPhaseCodesServiceException {
-    //
-    // int sibsPaymentCode = 0;
-    //
-    // if (paymentPhaseNumber == 1) {
-    // if
-    // (studentCurricularPlan.getSpecialization().equals(Specialization.SPECIALIZATION))
-    // {
-    //
-    // sibsPaymentCode = SibsPaymentCodeFactory
-    // .getCode(SibsPaymentType.SPECIALIZATION_GRATUTITY_FIRST_PHASE);
-    //
-    // } else {
-    //
-    // sibsPaymentCode = SibsPaymentCodeFactory
-    // .getCode(SibsPaymentType.MASTER_DEGREE_GRATUTITY_FIRST_PHASE);
-    // }
-    // // IMPORTANT NOTE: In future integrated master degree codes should
-    // // be inserted here
-    //
-    // } else if (paymentPhaseNumber == 2) {
-    //
-    // if
-    // (studentCurricularPlan.getSpecialization().equals(Specialization.SPECIALIZATION))
-    // {
-    // sibsPaymentCode = SibsPaymentCodeFactory
-    // .getCode(SibsPaymentType.SPECIALIZATION_GRATUTITY_SECOND_PHASE);
-    //
-    // } else {
-    //
-    // sibsPaymentCode = SibsPaymentCodeFactory
-    // .getCode(SibsPaymentType.MASTER_DEGREE_GRATUTITY_SECOND_PHASE);
-    // }
-    //
-    // // IMPORTANT NOTE: In future integrated master degree codes should
-    // // be inserted here
-    //
-    // } else {
-    // throw new
-    // InsufficientSibsPaymentPhaseCodesServiceException(gratuitySituation
-    // .getGratuityValues().getExecutionDegree().getDegreeCurricularPlan().getName()
-    // + " - "
-    // +
-    // gratuitySituation.getGratuityValues().getExecutionDegree().getExecutionYear()
-    // .getYear());
-    // }
-    //
-    // return sibsPaymentCode + "";
-    //
-    // }
-
-    /**
-     * @param gratuityLetterFileEntries
-     * @throws FileNotCreatedServiceException
-     */
-    // private void writeLetterFiles(List gratuityLetterFileEntries,
-    // ExecutionYear executionYear)
-    // throws FileNotCreatedServiceException {
-    // HashMap letterFiles = new HashMap();
-    // Integer numberOfPhases = null;
-    //
-    // for (Iterator iter = gratuityLetterFileEntries.iterator();
-    // iter.hasNext();) {
-    //
-    // GratuityLetterFileEntry gratuityLetterFileEntry =
-    // (GratuityLetterFileEntry) iter.next();
-    //
-    // numberOfPhases = new
-    // Integer(gratuityLetterFileEntry.getGratuityLetterPaymentPhases().size());
-    //
-    // StringBuilder letterFile = (StringBuilder)
-    // letterFiles.get(numberOfPhases);
-    //
-    // if (letterFile == null) {
-    // letterFile =
-    // createLetterFile(gratuityLetterFileEntry.getGratuityLetterPaymentPhases()
-    // .size());
-    // letterFiles.put(numberOfPhases, letterFile);
-    // }
-    //
-    // // Registration number
-    // letterFile.append(gratuityLetterFileEntry.getStudentCurricularPlan().getRegistration()
-    // .getNumber()
-    // + DATA_SEPARATOR);
-    //
-    // // Registration name
-    // letterFile.append(gratuityLetterFileEntry.getStudentCurricularPlan().getRegistration()
-    // .getPerson().getNome()
-    // + DATA_SEPARATOR);
-    //
-    // // Registration address
-    // letterFile.append(gratuityLetterFileEntry.getStudentCurricularPlan().getRegistration()
-    // .getPerson().getMorada()
-    // + DATA_SEPARATOR);
-    //
-    // // Registration localidade
-    // letterFile.append(gratuityLetterFileEntry.getStudentCurricularPlan().getRegistration()
-    // .getPerson().getLocalidade()
-    // + DATA_SEPARATOR);
-    //
-    // // Registration cod. postal
-    // letterFile.append(gratuityLetterFileEntry.getStudentCurricularPlan().getRegistration()
-    // .getPerson().getCodigoPostal()
-    // + DATA_SEPARATOR);
-    //
-    // // Registration localidade - cod. postal
-    // letterFile.append(gratuityLetterFileEntry.getStudentCurricularPlan().getRegistration()
-    // .getPerson().getLocalidadeCodigoPostal()
-    // + DATA_SEPARATOR);
-    //
-    // // Master degree name
-    // letterFile.append(gratuityLetterFileEntry.getStudentCurricularPlan()
-    // .getDegreeCurricularPlan().getDegree().getNome()
-    // + DATA_SEPARATOR);
-    //
-    // // Master degree curricular plan name
-    // letterFile.append(gratuityLetterFileEntry.getStudentCurricularPlan()
-    // .getDegreeCurricularPlan().getName()
-    // + DATA_SEPARATOR);
-    //
-    // // gratuity full payment end date
-    // letterFile.append(gratuityLetterFileEntry.getTotalGratuityEndDate() +
-    // DATA_SEPARATOR);
-    //
-    // // gratuity full payment full sibs reference
-    // letterFile.append(gratuityLetterFileEntry.getTotalGratuityFullSibsReference()
-    // + DATA_SEPARATOR);
-    //
-    // // gratuity full payment value
-    // letterFile.append(gratuityLetterFileEntry.getTotalGratuityValue() +
-    // DATA_SEPARATOR);
-    //
-    // // insurance payment end date
-    // letterFile.append(gratuityLetterFileEntry.getInsuranceEndDate() +
-    // DATA_SEPARATOR);
-    //
-    // // insurance payment full sibs reference
-    // letterFile.append(gratuityLetterFileEntry.getInsuranceFullSibsReference()
-    // + DATA_SEPARATOR);
-    //
-    // // insurance payment value
-    // letterFile.append(gratuityLetterFileEntry.getInsuranceValue() +
-    // DATA_SEPARATOR);
-    //
-    // for (Iterator iterator =
-    // gratuityLetterFileEntry.getGratuityLetterPaymentPhases().iterator();
-    // iterator
-    // .hasNext();) {
-    //
-    // GratuityLetterPaymentPhase gratuityLetterPaymentPhase =
-    // (GratuityLetterPaymentPhase) iterator
-    // .next();
-    //
-    // // payment phase end date
-    // letterFile.append(gratuityLetterPaymentPhase.getEndDate() +
-    // DATA_SEPARATOR);
-    //
-    // // payment phase full sibs reference
-    // letterFile.append(gratuityLetterPaymentPhase.getFullSibsReference() +
-    // DATA_SEPARATOR);
-    //
-    // // payment phase value
-    // letterFile.append(gratuityLetterPaymentPhase.getValue() +
-    // DATA_SEPARATOR);
-    //
-    // }
-    //
-    // letterFile.append("\n");
-    // }
-    //
-    // String year = executionYear.getYear().replace('/', '-');
-    // try {
-    //
-    // for (Iterator iter = letterFiles.keySet().iterator(); iter.hasNext();) {
-    //
-    // Integer phasesNumber = (Integer) iter.next();
-    // StringBuilder letterFile = (StringBuilder) letterFiles.get(phasesNumber);
-    //
-    // String filename = System.getProperty("java.io.tmpdir") + File.separator +
-    // "Cartas"
-    // + year + "-" + phasesNumber + "fases" + ".txt";
-    //
-    // BufferedWriter bufferedWriter = new BufferedWriter(new
-    // FileWriter(filename));
-    //
-    // bufferedWriter.write(letterFile.toString());
-    // bufferedWriter.close();
-    //
-    // }
-    //
-    // } catch (IOException e) {
-    // throw new FileNotCreatedServiceException("error.creating.letters.file",
-    // e);
-    // }
-    //
-    // }
-    /**
-     * @param gratuityLetterFileEntries
-     * @throws FileNotCreatedServiceException
-     */
     private byte[] writeLetterFiles(List gratuityLetterFileEntries, ExecutionYear executionYear)
             throws FileNotCreatedServiceException {
         StringBuilder letterFile = createLetterFile(0); // this needs cleanup.
-        // for we are not using
-        // payment phases so set
-        // the value to 0
 
         for (Iterator iter = gratuityLetterFileEntries.iterator(); iter.hasNext();) {
 
@@ -777,25 +406,20 @@ public class GeneratePaymentLettersFileByExecutionYearID extends Service {
                     + DATA_SEPARATOR);
 
             // Registration address
-            letterFile.append(gratuityLetterFileEntry.getStudentCurricularPlan().getRegistration()
-                    .getPerson().getAddress()
-                    + DATA_SEPARATOR);
-
-            // Registration localidade
-            letterFile.append(gratuityLetterFileEntry.getStudentCurricularPlan().getRegistration()
-                    .getPerson().getArea()
-                    + DATA_SEPARATOR);
-
-            // Registration cod. postal
-            letterFile.append(gratuityLetterFileEntry.getStudentCurricularPlan().getRegistration()
-                    .getPerson().getAreaCode()
-                    + DATA_SEPARATOR);
-
-            // Registration localidade - cod. postal
-            letterFile.append(gratuityLetterFileEntry.getStudentCurricularPlan().getRegistration()
-                    .getPerson().getAreaOfAreaCode()
-                    + DATA_SEPARATOR);
-
+            final Person person = gratuityLetterFileEntry.getStudentCurricularPlan().getRegistration().getPerson();
+            if (person.hasDefaultPhysicalAddress()) {
+        	final PhysicalAddress physicalAddress = person.getDefaultPhysicalAddress();
+        	letterFile.append(physicalAddress.getAddress()).append(DATA_SEPARATOR);
+        	letterFile.append(physicalAddress.getArea()).append(DATA_SEPARATOR);
+        	letterFile.append(physicalAddress.getAreaCode()).append(DATA_SEPARATOR);
+        	letterFile.append(physicalAddress.getAreaOfAreaCode()).append(DATA_SEPARATOR);
+            } else {
+        	letterFile.append(DATA_SEPARATOR);
+        	letterFile.append(DATA_SEPARATOR);
+        	letterFile.append(DATA_SEPARATOR);
+        	letterFile.append(DATA_SEPARATOR);
+            }
+            
             // Master degree name
             letterFile.append(gratuityLetterFileEntry.getStudentCurricularPlan()
                     .getDegreeCurricularPlan().getDegree().getNome()
@@ -825,22 +449,6 @@ public class GeneratePaymentLettersFileByExecutionYearID extends Service {
             // insurance payment value
             letterFile.append(gratuityLetterFileEntry.getInsuranceValue() + DATA_SEPARATOR);
 
-            /*
-             * for (Iterator iterator =
-             * gratuityLetterFileEntry.getGratuityLetterPaymentPhases().iterator();
-             * iterator .hasNext();) {
-             * 
-             * GratuityLetterPaymentPhase gratuityLetterPaymentPhase =
-             * (GratuityLetterPaymentPhase) iterator .next(); // payment phase
-             * end date
-             * letterFile.append(gratuityLetterPaymentPhase.getEndDate() +
-             * DATA_SEPARATOR); // payment phase full sibs reference
-             * letterFile.append(gratuityLetterPaymentPhase.getFullSibsReference() +
-             * DATA_SEPARATOR); // payment phase value
-             * letterFile.append(gratuityLetterPaymentPhase.getValue() +
-             * DATA_SEPARATOR); }
-             */
-
             letterFile.append("\n");
         }
 
@@ -856,11 +464,6 @@ public class GeneratePaymentLettersFileByExecutionYearID extends Service {
 
     }
 
-    /**
-     * 
-     * @param numberOfPhases
-     * @return
-     */
     private StringBuilder createLetterFile(int numberOfPhases) {
         StringBuilder file = new StringBuilder();
 
