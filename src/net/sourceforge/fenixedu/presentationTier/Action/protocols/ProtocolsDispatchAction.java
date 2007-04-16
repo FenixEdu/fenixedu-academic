@@ -92,6 +92,9 @@ public class ProtocolsDispatchAction extends FenixDispatchAction {
 
     public ActionForward renewProtocol(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	if (isCancelled(request)) {
+	    return showProtocolAlerts(mapping, actionForm, request, response);
+	}
 	ProtocolHistoryRenewerFactory protocolHistoryFactory = (ProtocolHistoryRenewerFactory) getRenderedObject("protocolHistoryFactory");
 	ActionMessage actionMessage = (ActionMessage) executeService(request, "ExecuteFactoryMethod",
 		new Object[] { protocolHistoryFactory });
@@ -116,6 +119,9 @@ public class ProtocolsDispatchAction extends FenixDispatchAction {
 
     public ActionForward editProtocolHistory(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	if (isCancelled(request)) {
+	    return showProtocolAlerts(mapping, actionForm, request, response);
+	}
 	ProtocolHistoryEditorFactory protocolHistoryFactory = (ProtocolHistoryEditorFactory) getRenderedObject("protocolHistoryFactory");
 	ActionMessage actionMessage = (ActionMessage) executeService(request, "ExecuteFactoryMethod",
 		new Object[] { protocolHistoryFactory });

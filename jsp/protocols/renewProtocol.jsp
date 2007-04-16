@@ -30,5 +30,8 @@
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
 		<bean:message key="button.submit" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
 	</html:submit>
+	<html:cancel bundle="HTMLALT_RESOURCES" altKey="submit.back">
+		<bean:message key="button.back" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+	</html:cancel>
 </p>
 </fr:form>

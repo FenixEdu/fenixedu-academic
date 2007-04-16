@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory.EmployeeAnulateJustificationFactory;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory.EmployeeJustificationFactoryCreator;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory.EmployeeJustificationFactoryEditor;
+import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory.SeveralEmployeeJustificationFactoryCreator;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.assiduousness.Clocking;
@@ -370,6 +371,36 @@ public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
 	}
 	return new ViewEmployeeAssiduousnessDispatchAction().showClockings(mapping, form, request,
 		response);
+    }
+
+    public ActionForward prepareInsertJustification(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
+	    FenixFilterException {
+	request.setAttribute("employeeJustificationFactory",
+		new SeveralEmployeeJustificationFactoryCreator());
+	return mapping.findForward("insert-justification");
+    }
+
+    public ActionForward chooseInsertJustificationMotivePostBack(ActionMapping mapping,
+	    ActionForm actionForm, HttpServletRequest request, HttpServletResponse response)
+	    throws FenixServiceException, FenixFilterException {
+	EmployeeJustificationFactory employeeJustificationFactory = (EmployeeJustificationFactory) getFactoryObject();
+	RenderUtils.invalidateViewState();
+	request.setAttribute("employeeJustificationFactory", employeeJustificationFactory);
+	return mapping.findForward("insert-justification");
+    }
+
+    public ActionForward insertJustification(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
+	    FenixFilterException {
+	SeveralEmployeeJustificationFactoryCreator severalEmployeeJustificationFactoryCreator = (SeveralEmployeeJustificationFactoryCreator) getFactoryObject();
+	Object result = executeService(request, "ExecuteFactoryMethod",
+		new Object[] { severalEmployeeJustificationFactoryCreator });
+	RenderUtils.invalidateViewState();
+	if (result != null) {
+	    setError(request, "errorMessage", (ActionMessage) result);
+	}
+	return prepareInsertJustification(mapping, form, request, response);
     }
 
     private boolean areEmptyDays(EmployeeScheduleFactory employeeScheduleFactory) {

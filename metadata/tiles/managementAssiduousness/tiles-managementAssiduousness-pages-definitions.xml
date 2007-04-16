@@ -24,6 +24,10 @@
 	<definition name="create-missing-clocking-month" extends="definition.managementAssiduousness.masterPage">
 		<put name="body" value="/managementAssiduousness/employee/createMonthMissingClocking.jsp"/>
 	</definition>	
+	<!-- Insert Justification for several employees -->
+	<definition name="insert-justification" extends="definition.managementAssiduousness.masterPage">
+		<put name="body" value="/managementAssiduousness/employee/insertJustification.jsp"/>
+	</definition>	
 	<!-- Consults -->
 	<definition name="show-all-schedules" extends="definition.managementAssiduousness.masterPage">
 		<put name="body" value="/managementAssiduousness/showSchedules.jsp"/>

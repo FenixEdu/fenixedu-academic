@@ -18,6 +18,10 @@
 	<slot name="endDate"/>
 </schema>
 
+<schema name="show.status" type="net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatus">
+	<slot name="description" key="label.status" bundle="ASSIDUOUSNESS_RESOURCES"/>
+</schema>
+
 <schema name="show.employeePersonalInformation"
 	type="net.sourceforge.fenixedu.domain.Person">
 	<slot name="employee.employeeNumber" key="label.employeeNumber" bundle="ASSIDUOUSNESS_RESOURCES"/>
@@ -457,6 +461,14 @@
 	<slot name="year" hidden="true"/>
 </schema>
 
+<schema name="edit.employeeDayJustificationType" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory">
+	<slot name="justificationDayType" key="label.dayType" bundle="ASSIDUOUSNESS_RESOURCES" layout="menu-select-postback">
+		<property name="choiceType" value="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory$JustificationDayType" />
+		<property name="eachLayout" value="this-does-not-exist" />
+		<property name="destination" value="justificationMotivePostBack"/>
+	</slot>
+</schema>
+
 <schema name="edit.employeeJustificationType" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory">
 	<slot name="justificationType" key="label.type" bundle="ASSIDUOUSNESS_RESOURCES" layout="menu-select-postback">
 		<property name="choiceType" value="net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType" />
@@ -509,6 +521,22 @@
 	</slot>
 </schema>
 
+<schema name="edit.employeeHalfOccurrenceJustificationMotive" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory">
+	<slot name="justificationMotive" key="label.justification" bundle="ASSIDUOUSNESS_RESOURCES" layout="menu-select">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.assiduousness.JustificationMotiveAsProvider" />
+		<property name="choiceType" value="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive" />
+		<property name="format" value="${acronym} - ${description}"/>
+	</slot>
+	<slot name="beginDate" key="label.date" bundle="ASSIDUOUSNESS_RESOURCES" >
+		<property name="format" value="dd/MM/yyyy"/>
+	</slot>
+	<slot name="workPeriodType" layout="radio" key="label.workPeriod" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="notes" key="label.notes" bundle="ASSIDUOUSNESS_RESOURCES" layout="longText">
+		<property name="columns" value="60" />
+		<property name="rows" value="3" />
+	</slot>
+</schema>
+
 <schema name="edit.employeeBalanceJustificationMotive" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory">
 	<slot name="justificationMotive" key="label.justification" bundle="ASSIDUOUSNESS_RESOURCES" layout="menu-select">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.assiduousness.JustificationMotiveAsProvider" />
@@ -526,6 +554,15 @@
 	<slot name="notes" key="label.notes" bundle="ASSIDUOUSNESS_RESOURCES" layout="longText">
 		<property name="columns" value="60" />
 		<property name="rows" value="3" />
+	</slot>
+</schema>
+
+<schema name="edit.severalEmployeeJustificationFactoryCreator" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory$SeveralEmployeeJustificationFactoryCreator">
+	<slot name="assiduousnessStatus" layout="option-select" key="label.status" bundle="ASSIDUOUSNESS_RESOURCES">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.assiduousness.AssidousnessStatusAsProvider" />
+		<property name="choiceType" value="net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatus" />
+		<property name="eachSchema" value="show.status" />
+		<property name="eachLayout" value="values" />
 	</slot>
 </schema>
 

@@ -44,6 +44,16 @@
 				</fr:edit>
 				<logic:notEmpty name="employeeJustificationFactory" property="correctionType">
 					<logic:equal name="employeeJustificationFactory" property="correctionType" value="<%= net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory.CorrectionType.JUSTIFICATION.toString()%>">
+						<fr:edit id="editEmployeeDayJustificationType" name="employeeJustificationFactory"
+							type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory"
+							schema="edit.employeeDayJustificationType">
+							<fr:destination name="justificationMotivePostBack" path="/employeeAssiduousness.do?method=chooseJustificationMotivePostBack" />
+							<fr:layout>
+								<fr:property name="classes" value="tstyle5 thlight mvert0 thright thmiddle"/>
+								<fr:property name="columnClasses" value="width8em,width40em,tdclear"/>
+							</fr:layout>
+						</fr:edit>
+						<logic:notEmpty name="employeeJustificationFactory" property="justificationDayType">
 						<fr:edit id="editEmployeeJustificationType" name="employeeJustificationFactory"
 							type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory"
 							schema="edit.employeeJustificationType">
@@ -94,9 +104,30 @@
 									</fr:layout>
 								</fr:edit>
 							</logic:equal>
+							<logic:equal name="employeeJustificationFactory" property="justificationType" value="<%= net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType.HALF_OCCURRENCE.toString()%>">
+								<fr:edit id="editEmployeeJustificationMotive" name="employeeJustificationFactory"
+									type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory"
+									schema="edit.employeeHalfOccurrenceJustificationMotive">
+									<fr:layout>
+										<fr:property name="classes" value="tstyle5 thlight mvert0 thright thmiddle"/>
+										<fr:property name="columnClasses" value="width8em,width40em,tdclear"/>
+									</fr:layout>
+								</fr:edit>
+							</logic:equal>
+							<logic:equal name="employeeJustificationFactory" property="justificationType" value="<%= net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType.HALF_MULTIPLE_MONTH_BALANCE.toString()%>">
+								<fr:edit id="editEmployeeJustificationMotive" name="employeeJustificationFactory"
+									type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory"
+									schema="edit.employeeHalfOccurrenceJustificationMotive">
+									<fr:layout>
+										<fr:property name="classes" value="tstyle5 thlight mvert0 thright thmiddle"/>
+										<fr:property name="columnClasses" value="width8em,width40em,tdclear"/>
+									</fr:layout>
+								</fr:edit>
+							</logic:equal>
 							<p><html:submit>
 								<bean:message key="button.submit" />
 							</html:submit></p>
+						</logic:notEmpty>
 						</logic:notEmpty>
 					</logic:equal>
 					<logic:equal name="employeeJustificationFactory" property="correctionType" value="<%= net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory.CorrectionType.REGULARIZATION.toString()%>">
