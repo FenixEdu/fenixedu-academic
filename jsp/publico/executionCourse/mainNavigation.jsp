@@ -19,9 +19,7 @@
 
 <ul>
     <li>
-        <img src="<%= request.getContextPath() + "/images/rss_ico.png" %>" style="display: inline; float: left; padding-left: 10px; padding-top: 3px; margin-right: -8px;"/>
-        <html:link page="/executionCourse.do?method=rss"
-                paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+        <html:link page="/executionCourse.do?method=rss" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal" styleClass="rss">
             <bean:message  key="link.rss"/>
         </html:link>
     </li>

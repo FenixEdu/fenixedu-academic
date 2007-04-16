@@ -35,5 +35,5 @@
 </logic:present>
 
 <logic:notPresent name="siteView" property="component">
-	<h2><bean:message key="message.announcements.not.available" /></h2>
+	<p><em><bean:message key="message.announcements.not.available" /></em></p>
 </logic:notPresent>

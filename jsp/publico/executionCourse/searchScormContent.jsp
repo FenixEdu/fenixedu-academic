@@ -14,15 +14,10 @@
 <html:xhtml/>
 <h2><bean:message key="label.search.scorm"/></h2>
 
-<style>
-@import url(<%= request.getContextPath() %>/CSS/transitional.css);
-/* @import url(<%= request.getContextPath() %>/CSS/dotist.css); */
-</style>
-
-	<div class="infoop2">
+	<p>
 		<bean:message key="label.information.about.search.line1"/>
 		<bean:message key="label.information.about.search.line2"/>
-	</div>
+	</p>
 
  	<fr:form id="searchForm" action="<%= "/searchScormContent.do?method=searchScormContents&amp;executionCourseID=" + request.getParameter("executionCourseID") %>">
 		<fr:hasMessages for="search" type="validation">

@@ -30,7 +30,7 @@
 				<bean:message key="label.generalObjectives"/>
 			</h4>
 			<logic:present name="competenceCourse" property="objectives">
-				<div class="mtop05" style="line-height: 1.5em;">
+				<div class="coutput2 mvert0">
 				<fr:view name="competenceCourse" property="objectivesI18N">
 					<fr:layout>
 						<fr:property name="escaped" value="false" />
@@ -63,7 +63,7 @@
 						<h4 class="mbottom05 greytxt">
 							<bean:message key="label.generalObjectives"/>
 						</h4>
-						<div class="mtop05" style="line-height: 1.5em;">
+						<div class="coutput2 mvert0">
 						<fr:view name="curriculum" property="generalObjectivesI18N">
 							<fr:layout name="html">
 								<fr:property name="escaped" value="false" />
@@ -74,7 +74,7 @@
 							<h4 class="mbottom05 greytxt">
 								<bean:message key="label.operacionalObjectives"/>
 							</h4>
-							<div class="mtop05" style="line-height: 1.5em;">
+							<div class="coutput2 mvert0">
 							<fr:view name="curriculum" property="operacionalObjectivesI18N">
 								<fr:layout name="html">
 									<fr:property name="escaped" value="false" />

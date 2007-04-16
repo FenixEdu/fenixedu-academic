@@ -221,8 +221,8 @@ if (month != null && year!=null)
 	</logic:notEmpty>
 	
 	<logic:empty name="announcements">
-		<p class="mtop2">
-			<em><bean:message key="label.noAnnouncements" bundle="MESSAGING_RESOURCES"/></em>
+		<p>
+			<em><bean:message key="label.noAnnouncements" bundle="MESSAGING_RESOURCES"/></em>.
 		</p>
 	</logic:empty>
 </logic:present>
