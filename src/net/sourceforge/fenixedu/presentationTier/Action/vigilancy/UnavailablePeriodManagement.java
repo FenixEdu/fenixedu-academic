@@ -1,8 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.vigilancy;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -22,12 +19,7 @@ import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.velocity.runtime.parser.node.GetExecutor;
 import org.joda.time.DateTime;
-
-import pt.utl.ist.fenix.tools.codeGenerator.RootDomainObjectGenerator;
-
-import sun.misc.Perf.GetPerfAction;
 
 public class UnavailablePeriodManagement extends FenixDispatchAction {
 
@@ -206,7 +198,7 @@ public class UnavailablePeriodManagement extends FenixDispatchAction {
         try {
         	
         Object[] args = { bean.getVigilant(), bean.getBeginDate(), bean.getEndDate(),
-                bean.getJustification() };
+                bean.getJustification(), bean.getSelectedVigilantGroup() };
         executeService(request, "CreateUnavailablePeriod", args);
         }catch(DomainException e) {
         	String gid =  request.getParameter("gid");

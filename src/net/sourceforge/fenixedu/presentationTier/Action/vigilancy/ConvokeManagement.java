@@ -125,6 +125,12 @@ public class ConvokeManagement extends FenixDispatchAction {
 	}
     }
 
+    public ActionForward convokeActive(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	editActive(mapping, form, request, response);
+	return prepareEditConvoke(mapping, form, request, response);
+    }
+    
     public ActionForward convokeActiveEditInReport(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	
