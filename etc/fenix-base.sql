@@ -25,4 +25,4 @@ create table ROOT_DOMAIN_OBJECT (
 	index (KEY_USERNAME_COUNTER)
 ) TYPE=InnoDB;
 
-insert into ROOT_DOMAIN_OBJECT values (1, null, null, null, null);
+insert into ROOT_DOMAIN_OBJECT values (1, null, null, null, null, null);

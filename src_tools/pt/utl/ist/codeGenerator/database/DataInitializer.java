@@ -201,6 +201,7 @@ public class DataInitializer {
 	person.setName("Fenix System Administrator");
 	person.addPersonRoles(Role.getRoleByRoleType(RoleType.PERSON));
 	person.addPersonRoles(Role.getRoleByRoleType(RoleType.MANAGER));
+	person.setIsPassInKerberos(Boolean.FALSE);
 	final User user = person.getUser();
 	final Login login = user.readUserLoginIdentification();
 	login.setActive(Boolean.TRUE);
