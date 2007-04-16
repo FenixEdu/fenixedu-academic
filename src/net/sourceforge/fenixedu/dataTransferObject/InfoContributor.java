@@ -5,6 +5,7 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 
@@ -53,13 +54,18 @@ public class InfoContributor extends InfoObject {
         if (contributor != null) {
             setContributorName(contributor.getName());
             setContributorNumber(contributor.getSocialSecurityNumber());
-            setContributorAddress(contributor.getAddress());
-            setAreaCode(contributor.getAreaCode());
-            setAreaOfAreaCode(contributor.getAreaOfAreaCode());
-            setArea(contributor.getArea());
-            setParishOfResidence(contributor.getParishOfResidence());
-            setDistrictSubdivisionOfResidence(contributor.getDistrictSubdivisionOfResidence());
-            setDistrictOfResidence(contributor.getDistrictOfResidence());
+            
+            if (contributor.hasDefaultPhysicalAddress()) {
+        	final PhysicalAddress physicalAddress = contributor.getDefaultPhysicalAddress();
+        	setContributorAddress(physicalAddress.getAddress());
+                setAreaCode(physicalAddress.getAreaCode());
+                setAreaOfAreaCode(physicalAddress.getAreaOfAreaCode());
+                setArea(physicalAddress.getArea());
+                setParishOfResidence(physicalAddress.getParishOfResidence());
+                setDistrictSubdivisionOfResidence(physicalAddress.getDistrictSubdivisionOfResidence());
+                setDistrictOfResidence(physicalAddress.getDistrictOfResidence());
+            }
+            
             if (contributor.getSocialSecurityNumber() == null && contributor instanceof Person) {
 		Person contributorPerson = (Person) contributor;
 		setDocumentIdNumber(contributorPerson.getDocumentIdNumber());
