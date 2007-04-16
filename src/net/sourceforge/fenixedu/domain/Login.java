@@ -23,6 +23,7 @@ public class Login extends Login_Base {
 	super();
 	checkIfUserAlreadyHaveLogin(user);
 	setUser(user);
+	setIsPassInKerberos(Boolean.FALSE);
     }
 
     public void delete() {
