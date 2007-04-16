@@ -2,11 +2,10 @@ package net.sourceforge.fenixedu.domain.contacts;
 
 import java.util.Comparator;
 
-import org.apache.commons.lang.StringUtils;
-
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
-import net.sourceforge.fenixedu.injectionCode.Checked;
+
+import org.apache.commons.lang.StringUtils;
 
 public class Phone extends Phone_Base {
     
@@ -56,7 +55,6 @@ public class Phone extends Phone_Base {
         return true;
     }
     
-    @Checked("PartyContactPredicates.checkPermissionsToManage")
     public void edit(final String number) {
 	super.setNumber(number);
     }

@@ -6,7 +6,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
-import net.sourceforge.fenixedu.injectionCode.Checked;
 import pt.utl.ist.fenix.tools.smtp.EmailSender;
 
 public class EmailAddress extends EmailAddress_Base {
@@ -85,7 +84,6 @@ public class EmailAddress extends EmailAddress_Base {
         return true;
     }
     
-    @Checked("PartyContactPredicates.checkPermissionsToManage")
     public void edit(final String value) {
 	if (!isInstitutionalType()) {
 	    super.setValue(value);

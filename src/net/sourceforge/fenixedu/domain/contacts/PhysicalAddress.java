@@ -51,17 +51,16 @@ public class PhysicalAddress extends PhysicalAddress_Base {
 
     private void init(final Party party, final PartyContactType type, final boolean visible, final boolean defaultContact, final PhysicalAddressData data) {
 	super.init(party, type, visible, defaultContact);
-    super.setAddress(data.getAddress());
-    super.setAreaCode(data.getAreaCode());
-    super.setAreaOfAreaCode(data.getAreaOfAreaCode());
-    super.setArea(data.getArea());
-    super.setParishOfResidence(data.getParishOfResidence());
-    super.setDistrictSubdivisionOfResidence(data.getDistrictSubdivisionOfResidence());
-    super.setDistrictOfResidence(data.getDistrictOfResidence());
-    super.setCountryOfResidence(data.getCountryOfResidence());
+        super.setAddress(data.getAddress());
+        super.setAreaCode(data.getAreaCode());
+        super.setAreaOfAreaCode(data.getAreaOfAreaCode());
+        super.setArea(data.getArea());
+        super.setParishOfResidence(data.getParishOfResidence());
+        super.setDistrictSubdivisionOfResidence(data.getDistrictSubdivisionOfResidence());
+        super.setDistrictOfResidence(data.getDistrictOfResidence());
+        super.setCountryOfResidence(data.getCountryOfResidence());
     }
     
-    @Checked("PartyContactPredicates.checkPermissionsToManage")
     public void edit(final PhysicalAddressData data) {
 	super.setAddress(data.getAddress());
 	super.setAreaCode(data.getAreaCode());
@@ -77,7 +76,7 @@ public class PhysicalAddress extends PhysicalAddress_Base {
 	    final String areaOfAreaCode, final String area, final String parishOfResidence, final String districtSubdivisionOfResidence,
 	    final String districtOfResidence, final Country countryOfResidence) {
 	
-	super.edit(type, true, defaultContact);
+	super.edit(type, getVisible(), defaultContact);
 	edit(new PhysicalAddressData(address, areaCode, areaOfAreaCode, area, parishOfResidence,
 		districtSubdivisionOfResidence, districtOfResidence, countryOfResidence));
     }
