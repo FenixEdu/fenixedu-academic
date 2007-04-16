@@ -355,6 +355,9 @@ class net.sourceforge.fenixedu.domain.accounting.Event extends net.sourceforge.f
 		class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DeclarationRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicServiceRequestEvent {
 		}
 		
+		class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DiplomaRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicServiceRequestEvent {
+		}
+		
 	class net.sourceforge.fenixedu.domain.accounting.events.ImprovementOfApprovedEnrolmentEvent extends net.sourceforge.fenixedu.domain.accounting.Event {
 	}
 		
