@@ -69,6 +69,7 @@ import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.domain.WrittenTest;
+import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.accounting.Account;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.Event;
@@ -105,10 +106,16 @@ import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.messaging.Forum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
+import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType;
+import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
+import net.sourceforge.fenixedu.domain.organizationalStructure.AdministrativeOfficeUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Contract;
+import net.sourceforge.fenixedu.domain.organizationalStructure.DegreeUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.UnitClassification;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.OldBuilding;
@@ -386,39 +393,54 @@ public class CreateTestData {
     }
 
     private static void createUnits() {
-	/*
+	createInstitutionalUnit();
+	createDegreeAdministrativeOfficeUnit(AdministrativeOfficeType.DEGREE, 1);
+	createDegreeAdministrativeOfficeUnit(AdministrativeOfficeType.MASTER_DEGREE, 2);
+    }
+
+    private static void createInstitutionalUnit() {
         final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
-        final Unit institutionUnit = rootDomainObject.getInstitutionUnit();
-        institutionUnit.setName("Escola do Galo");
-        institutionUnit.setAcronym("Fenix");
-        institutionUnit.setType(PartyTypeEnum.DEPARTMENT);
-        final UnitServiceAgreementTemplate unitServiceAgreementTemplate = new UnitServiceAgreementTemplate(institutionUnit);
+        final Unit institutionUnit = Unit.createNewUnit(
+        	"Escola do Galo", null, "Fenix", new YearMonthDay().minusYears(10), null, null, null, null, null, Boolean.TRUE);
+        rootDomainObject.setInstitutionUnit(institutionUnit);
+        institutionUnit.setType(PartyTypeEnum.SCHOOL);
+    }
+
+    private static void createDegreeAdministrativeOfficeUnit(final AdministrativeOfficeType administrativeOfficeType, final int someNumber) {
+        final AdministrativeOffice administrativeOfficeDegree = new AdministrativeOffice(administrativeOfficeType, null);
+
+	final AdministrativeOfficeUnit unit = AdministrativeOfficeUnit.createNewAdministrativeOfficeUnit(
+		"Secretaria Academica " + someNumber, Integer.valueOf(2001 + someNumber), "SA" + someNumber, new YearMonthDay().minusMonths(1), null,
+		RootDomainObject.getInstance().getInstitutionUnit(),
+		AccountabilityType.readAccountabilityTypeByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE), null,
+		UnitClassification.ACADEMIC_SERVICES_SUPERVISION, administrativeOfficeDegree);
+
+        final UnitServiceAgreementTemplate unitServiceAgreementTemplate = new UnitServiceAgreementTemplate(unit);
         new FixedAmountPR(EntryType.INSURANCE_FEE, EventType.INSURANCE, new DateTime().minusYears(1), null, unitServiceAgreementTemplate, Money.valueOf(2));
-        final AdministrativeOffice administrativeOfficeDegree = new AdministrativeOffice(AdministrativeOfficeType.DEGREE, institutionUnit);
         new AdministrativeOfficeServiceAgreementTemplate(administrativeOfficeDegree);
-        //final AdministrativeOffice administrativeOfficeMasterDegree = new AdministrativeOffice(AdministrativeOfficeType.MASTER_DEGREE, rootDomainObject.getExternalInstitutionUnit());
-        new AdministrativeOfficeServiceAgreementTemplate(administrativeOfficeMasterDegree);
+
         new FixedAmountWithPenaltyFromDatePR(EntryType.ADMINISTRATIVE_OFFICE_FEE,
                     EventType.ADMINISTRATIVE_OFFICE_FEE, new DateTime(), null, administrativeOfficeDegree
                             .getServiceAgreementTemplate(), new Money("21"), new Money("10.50"),
                     new YearMonthDay(2006, 12, 16));
-        new FixedAmountWithPenaltyFromDatePR(EntryType.ADMINISTRATIVE_OFFICE_FEE,
-                EventType.ADMINISTRATIVE_OFFICE_FEE, new DateTime(), null, administrativeOfficeMasterDegree
-                        .getServiceAgreementTemplate(), new Money("21"), new Money("10.50"),
-                new YearMonthDay(2006, 12, 16));
         new AdministrativeOfficeFeeAndInsurancePR(new DateTime(), null, administrativeOfficeDegree
                 .getServiceAgreementTemplate());
-        new AdministrativeOfficeFeeAndInsurancePR(new DateTime(), null, administrativeOfficeMasterDegree
-                .getServiceAgreementTemplate());
-        final Department department = new Department();
-        department.setDepartmentUnit(institutionUnit);
-        department.setName("Department Name");
-        department.setRealName("Xpto");
-        department.setCode("Xpto");
 
         createAdminPostingRules(administrativeOfficeDegree.getServiceAgreementTemplate());
-        createAdminPostingRules(administrativeOfficeMasterDegree.getServiceAgreementTemplate());
-        */
+    }
+
+    private static DepartmentUnit createDepartmentUnut(int someNumber, final Department department) {
+	return DepartmentUnit.createNewInternalDepartmentUnit(
+		"Department Name " + someNumber, Integer.valueOf(2100 + someNumber), "DU" + someNumber, new YearMonthDay().minusMonths(1), null,
+		RootDomainObject.getInstance().getInstitutionUnit(), AccountabilityType.readAccountabilityTypeByType(AccountabilityTypeEnum.ACADEMIC_STRUCTURE),
+		null, department, null, Boolean.FALSE);
+    }
+
+    private static DegreeUnit createNewDegreeUnit(int i, Degree degree) {
+	return DegreeUnit.createNewInternalDegreeUnit(
+		degree.getName() + " " + i, Integer.valueOf(5020 + i), degree.getSigla() + (1000 + i), new YearMonthDay().minusYears(1), null,
+		RootDomainObject.getInstance().getInstitutionUnit(), AccountabilityType.readAccountabilityTypeByType(AccountabilityTypeEnum.ACADEMIC_STRUCTURE),
+		null, degree, null, Boolean.FALSE);
     }
 
     private static void createAdminPostingRules(AdministrativeOfficeServiceAgreementTemplate agreementTemplate) {
@@ -679,13 +701,17 @@ public class CreateTestData {
             }
 
 
-            final Unit unit = RootDomainObject.getInstance().getInstitutionUnit();
-            final Department department = unit.getDepartment();
+            final Department department = new Department();
+            department.setCode(degree.getSigla());
+            department.setCompetenceCourseMembersGroup(new RoleGroup(Role.getRoleByRoleType(RoleType.TEACHER)));
+            
+            department.setName("Department " + degree.getName());
+            department.setRealName("Department " + degree.getName());
+            final DepartmentUnit departmentUnit = createDepartmentUnut(3020 + i, department);
+            department.setDepartmentUnit(departmentUnit);
             department.addDegrees(degree);
-            /*
-             * NOT COMPILING 
-             */
-            //degree.setUnit(unit);
+
+            createNewDegreeUnit(4020 + i, degree);
 
             createDegreeInfo(degree);
             degreeCurricularPlan.setDescription("Bla bla bla. Descrição do plano curricular do curso. Bla bla bla");
@@ -820,7 +846,7 @@ public class CreateTestData {
                     if (teacherService == null) {
                         teacherService = new TeacherService(teacher, executionPeriod);
                     }
-                    final DegreeTeachingService degreeTeachingService = new DegreeTeachingService(teacherService, professorship, shift, Double.valueOf(100), RoleType.SCIENTIFIC_COUNCIL);
+//                    final DegreeTeachingService degreeTeachingService = new DegreeTeachingService(teacherService, professorship, shift, Double.valueOf(100), RoleType.SCIENTIFIC_COUNCIL);
 
                     final SupportLessonDTO supportLessonDTO = new SupportLessonDTO();
                     supportLessonDTO.setProfessorshipID(professorship.getIdInternal());
