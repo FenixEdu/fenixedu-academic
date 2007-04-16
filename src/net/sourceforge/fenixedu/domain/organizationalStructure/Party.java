@@ -665,7 +665,10 @@ public abstract class Party extends Party_Base {
     public boolean hasDefaultPartyContact(final Class<? extends PartyContact> clazz) {
 	return getDefaultPartyContact(clazz) != null;
     }
-
+    
+    /*
+     * WebAddress
+     */
     public WebAddress getDefaultWebAddress() {
 	return (WebAddress) getDefaultPartyContact(WebAddress.class);
     }
@@ -678,51 +681,6 @@ public abstract class Party extends Party_Base {
 	return (List<WebAddress>) getPartyContacts(WebAddress.class);
     }
 
-    public PhysicalAddress getDefaultPhysicalAddress() {
-	return (PhysicalAddress) getDefaultPartyContact(PhysicalAddress.class);
-    }
-
-    public List<PhysicalAddress> getPhysicalAddresses() {
-	return (List<PhysicalAddress>) getPartyContacts(PhysicalAddress.class);
-    }
-
-    public Phone getDefaultPhone() {
-	return (Phone) getDefaultPartyContact(Phone.class);
-    }
-
-    public List<Phone> getPhones() {
-	return (List<Phone>) getPartyContacts(Phone.class);
-    }
-
-    public MobilePhone getDefaultMobilePhone() {
-	return (MobilePhone) getDefaultPartyContact(MobilePhone.class);
-    }
-
-    public List<MobilePhone> getMobilePhones() {
-	return (List<MobilePhone>) getPartyContacts(MobilePhone.class);
-    }
-
-    public EmailAddress getDefaultEmailAddress() {
-	return (EmailAddress) getDefaultPartyContact(EmailAddress.class);
-    }
-
-    public List<EmailAddress> getEmailAddresses() {
-	return (List<EmailAddress>) getPartyContacts(EmailAddress.class);
-    }
-
-    protected PhysicalAddress createDefaultPhysicalAddress(final PhysicalAddressData data) {
-	return (data != null) ? PartyContact.createDefaultPersonalPhysicalAddress(this, data) : null;
-    }
-    
-    protected void updateDefaultPhysicalAddress(final PhysicalAddressData data) {
-	getOrCreateDefaultPhysicalAddress().edit(data);
-    }
-
-    private PhysicalAddress getOrCreateDefaultPhysicalAddress() {
-	final PhysicalAddress physicalAdress = getDefaultPhysicalAddress();
-	return physicalAdress != null ? physicalAdress : PartyContact.createDefaultPersonalPhysicalAddress(this);
-    }
-    
     private WebAddress getOrCreateDefaultWebAddress() {
 	final WebAddress webAddress = getDefaultWebAddress();
 	return webAddress != null ? webAddress : PartyContact.createDefaultPersonalWebAddress(this);
@@ -734,6 +692,21 @@ public abstract class Party extends Party_Base {
     
     public void updateDefaultWebAddress(final String url) {
 	getOrCreateDefaultWebAddress().edit(url);
+    }
+    
+    /*
+     * Phone
+     */
+    public Phone getDefaultPhone() {
+	return (Phone) getDefaultPartyContact(Phone.class);
+    }
+    
+    public boolean hasDefaultPhone() {
+	return hasDefaultPartyContact(Phone.class);
+    }
+
+    public List<Phone> getPhones() {
+	return (List<Phone>) getPartyContacts(Phone.class);
     }
 
     private Phone getOrCreateDefaultPhone() {
@@ -748,7 +721,22 @@ public abstract class Party extends Party_Base {
     protected void updateDefaultPhone(final String number) {
 	getOrCreateDefaultPhone().edit(number);
     }
+    
+    /*
+     * MobilePhone
+     */
+    public MobilePhone getDefaultMobilePhone() {
+	return (MobilePhone) getDefaultPartyContact(MobilePhone.class);
+    }
+    
+    public boolean hasDefaultMobilePhone() {
+	return hasDefaultPartyContact(MobilePhone.class);
+    }
 
+    public List<MobilePhone> getMobilePhones() {
+	return (List<MobilePhone>) getPartyContacts(MobilePhone.class);
+    }
+    
     private MobilePhone getOrCreateDefaultMobilePhone() {
 	final MobilePhone mobilePhone = getDefaultMobilePhone();
 	return mobilePhone != null ? mobilePhone : (MobilePhone) PartyContact.createDefaultPersonalMobilePhone(this);
@@ -762,6 +750,9 @@ public abstract class Party extends Party_Base {
 	getOrCreateDefaultMobilePhone().edit(number);
     }
     
+    /*
+     * EmailAddress
+     */
     protected EmailAddress createDefaultEmailAddress(final String value) {
 	return (!StringUtils.isEmpty(value)) ? PartyContact.createDefaultPersonalEmailAddress(this, value) : null;
     }
@@ -775,153 +766,148 @@ public abstract class Party extends Party_Base {
 	getOrCreateDefaultEmailAddress().edit(email);
     }
     
-    /* ~~~~~~~~~~~~~~~~~~~~~
-     * PartyContacts
-     * ~~~~~~~~~~~~~~~~~~~~~
-     * These methods are used to support current functionality (physicalAddress, webAddress, ... - limited to one for each type)
-     * after interface changes we must edit contacts in another way and remove the following methods
-     * 
-     */
+    public EmailAddress getDefaultEmailAddress() {
+	return (EmailAddress) getDefaultPartyContact(EmailAddress.class);
+    }
+
+    public List<EmailAddress> getEmailAddresses() {
+	return (List<EmailAddress>) getPartyContacts(EmailAddress.class);
+    }
     
-    @Deprecated
-    public String getAddress() {
-	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
-	return physicalAddress != null ? physicalAddress.getAddress() : null;
-    }
-
-    @Deprecated
-    public void setAddress(String address) {
-	getOrCreateDefaultPhysicalAddress().setAddress(address);
-    }
-
-    @Deprecated
-    public String getAreaCode() {
-	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
-	return physicalAddress != null ? physicalAddress.getAreaCode() : null;
-    }
-
-    @Deprecated
-    public void setAreaCode(String areaCode) {
-	getOrCreateDefaultPhysicalAddress().setAreaCode(areaCode);
-    }
-
-    @Deprecated
-    public String getAreaOfAreaCode() {
-	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
-	return physicalAddress != null ? physicalAddress.getAreaOfAreaCode() : null;
-    }
-
-    @Deprecated
-    public void setAreaOfAreaCode(String areaOfAreaCode) {
-	getOrCreateDefaultPhysicalAddress().setAreaOfAreaCode(areaOfAreaCode);
-    }
-
-    @Deprecated
-    public String getArea() {
-	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
-	return physicalAddress != null ? physicalAddress.getArea() : null;
-    }
-
-    @Deprecated
-    public void setArea(String area) {
-	getOrCreateDefaultPhysicalAddress().setArea(area);
-    }
-
-    @Deprecated
-    public String getParishOfResidence() {
-	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
-	return physicalAddress != null ? physicalAddress.getParishOfResidence() : null;
-    }
-
-    @Deprecated
-    public void setParishOfResidence(String parishOfResidence) {
-	getOrCreateDefaultPhysicalAddress().setParishOfResidence(parishOfResidence);
-    }
-
-    @Deprecated
-    public String getDistrictSubdivisionOfResidence() {
-	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
-	return physicalAddress != null ? physicalAddress.getDistrictSubdivisionOfResidence() : null;
-    }
-
-    @Deprecated
-    public void setDistrictSubdivisionOfResidence(String districtSubdivisionOfResidence) {
-	getOrCreateDefaultPhysicalAddress().setDistrictSubdivisionOfResidence(districtSubdivisionOfResidence);
-    }
-
-    @Deprecated
-    public String getDistrictOfResidence() {
-	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
-	return physicalAddress != null ? physicalAddress.getDistrictOfResidence() : null;
-    }
-
-    @Deprecated
-    public void setDistrictOfResidence(String districtOfResidence) {
-	getOrCreateDefaultPhysicalAddress().setDistrictOfResidence(districtOfResidence);
-    }
-
-    @Deprecated
-    public Country getCountryOfResidence() {
-	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
-	return physicalAddress != null ? physicalAddress.getCountryOfResidence() : null;
-    }
-
-    @Deprecated
-    public void setCountryOfResidence(Country countryOfResidence) {
-	getOrCreateDefaultPhysicalAddress().setCountryOfResidence(countryOfResidence);
-    }
-
-    @Deprecated
-    public String getWebAddress() {
-	final WebAddress webAddress = getDefaultWebAddress();
-	return webAddress != null ? webAddress.getUrl() : null;
-    }
-
-    @Deprecated
-    public void setWebAddress(String webAddress) {
-	updateDefaultWebAddress(webAddress);
-    }
-
-    @Deprecated
-    public String getPhone() {
-	final Phone phone = getDefaultPhone();
-	return phone != null ? phone.getNumber() : null;
-    }
-
-    @Deprecated
-    public void setPhone(String phone) {
-	updateDefaultPhone(phone);
-    }
-
-    @Deprecated
-    public String getMobile() {
-	final MobilePhone phone = getDefaultMobilePhone();
-	return phone != null ? phone.getNumber() : null;
-    }
-
-    @Deprecated
-    public void setMobile(String mobile) {
-	updateDefaultMobilePhone(mobile);
-    }
-
     public String getEmail() {
 	final EmailAddress emailAddress = getDefaultEmailAddress();
 	return emailAddress != null ? emailAddress.getValue() : null;
     }
     
-    @Deprecated
     public void setEmail(String email) {
-	final EmailAddress emailAddress = getDefaultEmailAddress();
-	if (emailAddress == null) {
-	    if (!StringUtils.isEmpty(email)) {
-		PartyContact.createDefaultPersonalEmailAddress(this, email);
-	    }
-	} else {
-	    emailAddress.edit(email);
-	}
+	getOrCreateDefaultEmailAddress().edit(email);
+    }
+    
+    /*
+     * PhysicalAddress
+     */
+    protected PhysicalAddress createDefaultPhysicalAddress(final PhysicalAddressData data) {
+	return (data != null) ? PartyContact.createDefaultPersonalPhysicalAddress(this, data) : null;
+    }
+    
+    protected void updateDefaultPhysicalAddress(final PhysicalAddressData data) {
+	getOrCreateDefaultPhysicalAddress().edit(data);
     }
 
-    /*
-     * ~~~~~~~~~~~~~~~~~~~~~ End: PartyContacts ~~~~~~~~~~~~~~~~~~~~~
-     */
+    private PhysicalAddress getOrCreateDefaultPhysicalAddress() {
+	final PhysicalAddress physicalAdress = getDefaultPhysicalAddress();
+	return physicalAdress != null ? physicalAdress : PartyContact.createDefaultPersonalPhysicalAddress(this);
+    }
+    
+    public PhysicalAddress getDefaultPhysicalAddress() {
+	return (PhysicalAddress) getDefaultPartyContact(PhysicalAddress.class);
+    }
+    
+    public boolean hasDefaultPhysicalAddress() {
+	return hasDefaultPartyContact(PhysicalAddress.class);
+    }
+
+    public List<PhysicalAddress> getPhysicalAddresses() {
+	return (List<PhysicalAddress>) getPartyContacts(PhysicalAddress.class);
+    }
+    
+    public String getAddress() {
+	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
+	return physicalAddress != null ? physicalAddress.getAddress() : null;
+    }
+
+    public void setAddress(String address) {
+	getOrCreateDefaultPhysicalAddress().setAddress(address);
+    }
+
+    public String getAreaCode() {
+	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
+	return physicalAddress != null ? physicalAddress.getAreaCode() : null;
+    }
+
+    public void setAreaCode(String areaCode) {
+	getOrCreateDefaultPhysicalAddress().setAreaCode(areaCode);
+    }
+
+    public String getAreaOfAreaCode() {
+	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
+	return physicalAddress != null ? physicalAddress.getAreaOfAreaCode() : null;
+    }
+
+    public void setAreaOfAreaCode(String areaOfAreaCode) {
+	getOrCreateDefaultPhysicalAddress().setAreaOfAreaCode(areaOfAreaCode);
+    }
+
+    public String getArea() {
+	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
+	return physicalAddress != null ? physicalAddress.getArea() : null;
+    }
+
+    public void setArea(String area) {
+	getOrCreateDefaultPhysicalAddress().setArea(area);
+    }
+
+    public String getParishOfResidence() {
+	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
+	return physicalAddress != null ? physicalAddress.getParishOfResidence() : null;
+    }
+
+    public void setParishOfResidence(String parishOfResidence) {
+	getOrCreateDefaultPhysicalAddress().setParishOfResidence(parishOfResidence);
+    }
+
+    public String getDistrictSubdivisionOfResidence() {
+	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
+	return physicalAddress != null ? physicalAddress.getDistrictSubdivisionOfResidence() : null;
+    }
+
+    public void setDistrictSubdivisionOfResidence(String districtSubdivisionOfResidence) {
+	getOrCreateDefaultPhysicalAddress().setDistrictSubdivisionOfResidence(districtSubdivisionOfResidence);
+    }
+
+    public String getDistrictOfResidence() {
+	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
+	return physicalAddress != null ? physicalAddress.getDistrictOfResidence() : null;
+    }
+
+    public void setDistrictOfResidence(String districtOfResidence) {
+	getOrCreateDefaultPhysicalAddress().setDistrictOfResidence(districtOfResidence);
+    }
+
+    public Country getCountryOfResidence() {
+	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
+	return physicalAddress != null ? physicalAddress.getCountryOfResidence() : null;
+    }
+
+    public void setCountryOfResidence(Country countryOfResidence) {
+	getOrCreateDefaultPhysicalAddress().setCountryOfResidence(countryOfResidence);
+    }
+
+    public String getWebAddress() {
+	final WebAddress webAddress = getDefaultWebAddress();
+	return webAddress != null ? webAddress.getUrl() : null;
+    }
+
+    public void setWebAddress(String webAddress) {
+	updateDefaultWebAddress(webAddress);
+    }
+
+    public String getPhone() {
+	final Phone phone = getDefaultPhone();
+	return phone != null ? phone.getNumber() : null;
+    }
+
+    public void setPhone(String phone) {
+	updateDefaultPhone(phone);
+    }
+
+    public String getMobile() {
+	final MobilePhone phone = getDefaultMobilePhone();
+	return phone != null ? phone.getNumber() : null;
+    }
+
+    public void setMobile(String mobile) {
+	updateDefaultMobilePhone(mobile);
+    }
+
 }
