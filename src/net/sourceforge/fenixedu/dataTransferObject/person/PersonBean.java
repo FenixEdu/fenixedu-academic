@@ -115,16 +115,16 @@ public class PersonBean implements Serializable {
     }
 
     public PersonBean(Person person) {
-
-	setAddress(person.getAddress());
-	setArea(person.getArea());
-	setAreaCode(person.getAreaCode());
-	setAreaOfAreaCode(person.getAreaOfAreaCode());
-	setParishOfResidence(person.getParishOfResidence());
-	setDistrictSubdivisionOfResidence(person.getDistrictSubdivisionOfResidence());
-	setDistrictOfResidence(person.getDistrictOfResidence());
-	setCountryOfResidence(person.getCountryOfResidence());
 	
+	setName(person.getName());
+	setUsername(person.getUsername());
+	setGender(person.getGender());
+	setMaritalStatus(person.getMaritalStatus());
+	setFatherName(person.getNameOfFather());
+	setMotherName(person.getNameOfMother());
+	setProfession(person.getProfession());
+	setNationality(person.getNationality());
+
 	setCountryOfBirth(person.getCountryOfBirth());
 	setDateOfBirth(person.getDateOfBirthYearMonthDay());
 	setParishOfBirth(person.getParishOfBirth());
@@ -138,21 +138,25 @@ public class PersonBean implements Serializable {
 	setIdDocumentType(person.getIdDocumentType());
 	setSocialSecurityNumber(person.getSocialSecurityNumber());
 	
-	setEmail(person.getEmail());
-	setEmailAvailable(person.getAvailableEmail());
-	setPhone(person.getPhone());
-	setMobile(person.getMobile());
-	setWebAddress(person.getWebAddress());
+	if (person.hasDefaultPhysicalAddress()) {
+	    final PhysicalAddress physicalAddress = person.getDefaultPhysicalAddress();
+	    setAddress(physicalAddress.getAddress());
+	    setArea(physicalAddress.getArea());
+	    setAreaCode(physicalAddress.getAreaCode());
+	    setAreaOfAreaCode(physicalAddress.getAreaOfAreaCode());
+	    setParishOfResidence(physicalAddress.getParishOfResidence());
+	    setDistrictSubdivisionOfResidence(physicalAddress.getDistrictSubdivisionOfResidence());
+	    setDistrictOfResidence(physicalAddress.getDistrictOfResidence());
+	    setCountryOfResidence(physicalAddress.getCountryOfResidence());
+	}
 	
-	setName(person.getName());
-	setUsername(person.getUsername());
-	setGender(person.getGender());
-	setMaritalStatus(person.getMaritalStatus());
-	setFatherName(person.getNameOfFather());
-	setMotherName(person.getNameOfMother());
-	setProfession(person.getProfession());
-	setNationality(person.getNationality());
-
+	setPhone(person.hasDefaultPhone() ? person.getDefaultPhone().getNumber() : null);
+	setMobile(person.hasDefaultMobilePhone() ? person.getDefaultMobilePhone().getNumber() : null);
+	setWebAddress(person.hasDefaultWebAddress() ? person.getDefaultWebAddress().getUrl() : null);
+	
+	setEmail(person.getEmail());
+	
+	setEmailAvailable(person.getAvailableEmail());
 	setHomepageAvailable(person.getAvailableWebSite());
 	setPhotoAvailable(person.getAvailablePhoto());
 
