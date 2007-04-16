@@ -27,7 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
-
-
-
-
+execute "Remove keyThesis from Enrolment" ChangeThesisRelation.sql

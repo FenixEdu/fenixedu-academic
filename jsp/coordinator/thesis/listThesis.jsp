@@ -73,6 +73,12 @@
             <fr:property name="order(evaluated)" value="6"/>
             <fr:property name="visibleIf(evaluated)" value="evaluated"/>
 
+            <fr:property name="link(recreate)" value="<%= "/manageThesis.do?method=prepareCreateProposal&amp;degreeCurricularPlanID=" + dcpId %>"/>
+            <fr:property name="key(recreate)" value="link.coordinator.list.create"/>
+            <fr:property name="param(recreate)" value="student.idInternal/studentID"/>
+            <fr:property name="order(recreate)" value="7"/>
+            <fr:property name="visibleIf(recreate)" value="preEvaluated"/>
+
             <fr:property name="sortParameter" value="sortBy"/>
             <fr:property name="sortUrl" value="<%= "/manageThesis.do?method=listThesis&amp;degreeCurricularPlanID=" + dcpId %>"/>
             <fr:property name="sortBy" value="<%= request.getParameter("sortBy") == null ? "student.number" : request.getParameter("sortBy") %>"/>

@@ -75,7 +75,12 @@ public class StudentThesisInfo {
                 this.state = ThesisPresentationState.CONFIRMED;
             }
             else if (thesis.isEvaluated()) {
-                this.state = ThesisPresentationState.EVALUATED;
+                if (thesis.isFinalThesis()) {
+                    this.state = ThesisPresentationState.EVALUATED;
+                }
+                else {
+                    this.state = ThesisPresentationState.EVALUATED_1ST;
+                }
             }
             else {
                 this.state = ThesisPresentationState.UNKNOWN;
@@ -88,7 +93,7 @@ public class StudentThesisInfo {
         
         return thesis == null ? null : thesis.getIdInternal();
     }
-
+    
     public boolean isUnassigned() {
         return getThesis() == null;
     }
@@ -111,6 +116,10 @@ public class StudentThesisInfo {
     
     public boolean isEvaluated() {
         return getThesis() != null && getThesis().isEvaluated();
+    }
+    
+    public boolean isPreEvaluated() {
+        return isEvaluated() && !getThesis().isFinalThesis();
     }
     
 }

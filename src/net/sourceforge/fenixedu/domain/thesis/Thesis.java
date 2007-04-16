@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -223,6 +224,7 @@ public class Thesis extends Thesis_Base {
         removeDissertation();
         removeExtendedAbstract();
         
+        removeDegree();
         removeEnrolment();
         
         deleteDomainObject();
@@ -463,8 +465,21 @@ public class Thesis extends Thesis_Base {
      * Generates a new mark sheet in the administrative office or merges the
      * grade for this enrolment in an existing, unconfirmed, mark sheet for this
      * enrolment.
+     * 
+     * <p>
+     * This is only done if there isn't already a MarkSheet with an evaluation
+     * for the Enrolment related to this Thesis and if this Thesis has a
+     * positive grade or is the second Thesis of the enrolment.
      */
-    public void updateMarkSheet() { // TODO: thesis, make this protected
+    public void updateMarkSheet() {
+        if (hasAnyEvaluations()) {
+            return;
+        }
+        
+        if (! isFinalThesis()) {
+            return;
+        }
+        
         MarkSheet markSheet = getExistingMarkSheet();
         
         if (markSheet == null) {
@@ -473,6 +488,34 @@ public class Thesis extends Thesis_Base {
         else {
             mergeInMarkSheet(markSheet);
         }
+    }
+
+    public boolean isFinalThesis() {
+        Enrolment enrolment = getEnrolment();
+        
+        if (enrolment.getTheses().size() == 1) {
+            return !getEvaluationMark().equals(GradeScale.RE);
+        }
+        else {
+            return true;
+        }
+    }
+
+    /**
+     * Verifies if the student has any EnrolmentEvaluation crated by a
+     * MarkSheet.
+     * 
+     * @return <code>true</code> if the Enrolment related to this Thesis has
+     *         at least one EnrolmentEvaluation connected to a MarkSheet
+     */
+    public boolean hasAnyEvaluations() {
+        for (EnrolmentEvaluation evaluation : getEnrolment().getEvaluations()) {
+            if (evaluation.hasMarkSheet()) {
+                return true;
+            }
+        }
+        
+        return false;
     }
 
     protected MarkSheet getExistingMarkSheet() {
@@ -569,11 +612,16 @@ public class Thesis extends Thesis_Base {
     private String getEvaluationMark() {
         Integer mark = getMark();
         
-        if (mark >= 0) {
-            return mark.toString();
+        GradeScale scale = getEnrolment().getCurricularCourse().getGradeScaleChain();
+        if (scale != GradeScale.TYPE20) {
+            throw new DomainException("thesis.grade.type20.expected");
+        }
+        
+        if (mark == null || mark < 10) {
+            return GradeScale.RE;
         }
         else {
-            return "RE";
+            return mark.toString();
         }
     }
 

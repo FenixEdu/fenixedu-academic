@@ -1457,7 +1457,6 @@ class net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule extends
        		Double weigth;
        		Boolean isExtraCurricular;
        		Boolean isFirstTime;
-       		Integer keyThesis;
         }
 
             class net.sourceforge.fenixedu.domain.OptionalEnrolment extends net.sourceforge.fenixedu.domain.Enrolment {
@@ -12587,7 +12586,9 @@ relation ThesisHasParticipations {
 
 relation ThesisEnrolment {
 	net.sourceforge.fenixedu.domain.Enrolment playsRole enrolment;
-	net.sourceforge.fenixedu.domain.thesis.Thesis playsRole thesis;
+	net.sourceforge.fenixedu.domain.thesis.Thesis playsRole theses {
+		multiplicity 0..2;
+	}
 }
 
 relation ThesisDegree {

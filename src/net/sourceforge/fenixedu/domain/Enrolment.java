@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.log.EnrolmentLog;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
+import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.util.EnrolmentAction;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
@@ -31,6 +32,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
@@ -42,6 +44,8 @@ import org.joda.time.YearMonthDay;
 
 public class Enrolment extends Enrolment_Base implements IEnrolment {
 
+    private static final Logger logger = Logger.getLogger(Enrolment.class);
+    
     public static final Comparator<Enrolment> COMPARATOR_BY_EXECUTION_PERIOD = new BeanComparator(
 	    "executionPeriod");
 
@@ -1152,6 +1156,33 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     
     public String getDescription() {
 	return getStudentCurricularPlan().getDegree().getPresentationName() + " > " + getName().getContent();
+    }
+
+    /**
+     * Obtains the first non evaluated thesis associated with this Enrolment or
+     * the Thesis with the final evaluation. This method assumes that each
+     * Student has at most one non evaluated Thesis and no more that two Thesis.
+     * 
+     * @return the first non evaluated Thesis for this Enrolment
+     */
+    public Thesis getThesis() {
+        List<Thesis> theses = getTheses();
+        
+        switch (theses.size()) {
+        case 0:
+            return null;
+        case 1:
+            return theses.iterator().next();
+        default:
+            for (Thesis thesis : theses) {
+                if (!thesis.isEvaluated()) {
+                    return thesis;
+                }
+            }
+
+            logger.warn(String.format("Several thesis associated to this enrolment and no thesis is evaluated: enrolment=%s", this.getIdInternal()));
+            return null;
+        }
     }
 
 }

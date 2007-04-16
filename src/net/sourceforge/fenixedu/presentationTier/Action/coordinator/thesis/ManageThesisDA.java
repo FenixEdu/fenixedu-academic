@@ -213,7 +213,7 @@ public class ManageThesisDA extends FenixDispatchAction {
         Student student = getStudent(request);
         
         if (student == null) {
-            return searchStudent(mapping, actionForm, request, response);   
+            return listThesis(mapping, actionForm, request, response);   
         }
         
         ThesisBean bean = new ThesisBean();

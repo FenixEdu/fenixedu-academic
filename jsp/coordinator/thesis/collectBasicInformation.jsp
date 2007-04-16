@@ -24,7 +24,7 @@
         </html:submit>
     </fr:form>
     
-    <fr:form action="<%= "/manageThesis.do?method=searchStudent&amp;degreeCurricularPlanID=" + dcpId %>">
+    <fr:form action="<%= "/manageThesis.do?method=listThesis&amp;degreeCurricularPlanID=" + dcpId %>">
         <html:submit>
             <bean:message key="label.cancel"/>
         </html:submit>
