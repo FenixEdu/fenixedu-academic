@@ -284,7 +284,7 @@
 			<logic:iterate id="adviseService" name="adviseServicesBean" offset="<%= String.valueOf(advisesLength) %>">
 			<tr> 
 				<td><bean:write name="adviseService" property="advise.student.number"/></td>
-				<td><bean:write name="adviseService" property="advise.student.person.nome"/></td>
+				<td><bean:write name="adviseService" property="advise.student.person.name"/></td>
 				<td><bean:write name="adviseService" property="percentage"/>%</td>
 			</tr>			
 			</logic:iterate>
