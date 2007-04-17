@@ -83,8 +83,8 @@ public class InfoSpanListGrantOwner extends InfoObject {
     public Integer getNumberOfSpans() {
         if (this.totalElements != null) {
             return new Integer(
-                    (this.totalElements.intValue() / SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN
-                            .intValue()) + 1);
+                    (this.totalElements.intValue() / new Integer(100).intValue()) + 1);			//SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN
+                           
         }
         return new Integer(-1);
     }
