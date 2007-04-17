@@ -72,7 +72,7 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
 	    }
 	});
 
-	Iterator orderedExecutionYearsIter = new OrderedIterator(notClosedExecutionYears.iterator(), new BeanComparator("beginDate"));
+	Iterator<ExecutionYear> orderedExecutionYearsIter = new OrderedIterator<ExecutionYear>(notClosedExecutionYears.iterator(), new BeanComparator("beginDate"));
 	request.setAttribute("executionYears", orderedExecutionYearsIter);
 	DynaActionForm dynaForm = (DynaActionForm) form;
 	final Integer executionYearID = (Integer) dynaForm.get("executionYearID");
@@ -99,7 +99,7 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
 	executionDegrees.addAll(executionYear.getExecutionDegreesByType(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA));
 	executionDegrees.addAll(executionYear.getExecutionDegreesByType(DegreeType.BOLONHA_SPECIALIZATION_DEGREE));
 		
-	Iterator orderedExecutionDegreesIter = new OrderedIterator(executionDegrees.iterator(), new BeanComparator("degreeCurricularPlan.name"));
+	Iterator<ExecutionDegree> orderedExecutionDegreesIter = new OrderedIterator<ExecutionDegree>(executionDegrees.iterator(), new BeanComparator("degreeCurricularPlan.name"));
 	request.setAttribute("masterDegreeExecutions", orderedExecutionDegreesIter);
 	return mapping.findForward("chooseMasterDegreeExecution");
     }
@@ -117,7 +117,7 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
 	   
 	    List<MasterDegreeCreditsDTO> masterDegreeCoursesDTOs = getListing(executionDegree);	    
 	    if (!masterDegreeCoursesDTOs.isEmpty()) {
-		Iterator orderedCoursesIter = new OrderedIterator(masterDegreeCoursesDTOs.iterator(), new BeanComparator("curricularCourse.name"));
+		Iterator<MasterDegreeCreditsDTO> orderedCoursesIter = new OrderedIterator<MasterDegreeCreditsDTO>(masterDegreeCoursesDTOs.iterator(), new BeanComparator("curricularCourse.name"));
 		request.setAttribute("masterDegreeCoursesDTOs", orderedCoursesIter);
 	    }
 	    
