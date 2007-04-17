@@ -35,6 +35,9 @@
     <definition name="view-protocol" extends="definition.employee.two-column">
         <put name="body" value="/protocols/viewProtocol.jsp"/>
     </definition>
+    <definition name="show-protocol-alerts" extends="definition.employee.two-column">
+        <put name="body" value="/protocols/showProtocolAlerts.jsp"/>
+    </definition>  
     <!-- Edit -->
     <definition name="edit-protocol-data" extends="definition.employee.two-column">
         <put name="body" value="/protocols/editProtocolData.jsp"/>
@@ -60,14 +63,11 @@
     </definition>
     <definition name="prepareCreate-protocol-files" extends="definition.employee.two-column">
         <put name="body" value="/protocols/prepareCreateProtocolFiles.jsp"/>
-    </definition>             
-    <definition name="show-protocol-alerts" extends="definition.employee.two-column">
-        <put name="body" value="/protocols/showProtocolAlerts.jsp"/>
     </definition>
     <!-- Renew -->
     <definition name="renew-protocol" extends="definition.employee.two-column">
         <put name="body" value="/protocols/renewProtocol.jsp"/>
-    </definition>  	
+    </definition>  
     <definition name="edit-protocol-history" extends="definition.employee.two-column">
         <put name="body" value="/protocols/editProtocolHistory.jsp"/>
     </definition>  	

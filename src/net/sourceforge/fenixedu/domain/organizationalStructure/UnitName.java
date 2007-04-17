@@ -74,7 +74,7 @@ public class UnitName extends UnitName_Base implements Comparable<UnitName> {
 	UnitNamePart.reindex(this);
     }
 
-    private static boolean conatinsAll(final String normalizedUnitName, final String[] nameParts) {
+    private static boolean containsAll(final String normalizedUnitName, final String[] nameParts) {
 	for (final String namePart : nameParts) {
 	    if (normalizedUnitName.indexOf(namePart) == -1) {
 		return false;
@@ -95,7 +95,7 @@ public class UnitName extends UnitName_Base implements Comparable<UnitName> {
 			.getUnitNameSet() : unitNamePart.getUnitNameSet();
 		for (final UnitName unitName : unitNames) {
 		    final String normalizedUnitName = unitName.getName();
-		    if (conatinsAll(normalizedUnitName, nameParts)) {
+		    if (containsAll(normalizedUnitName, nameParts)) {
 			unitNameLimitedOrderedSet.add(unitName);
 		    }
 		}

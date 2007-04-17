@@ -137,7 +137,8 @@
 	      	<form-property name="method" type="java.lang.String" />
 	      	<form-property name="responsibleID" type="java.lang.String"/>
 	      	<form-property name="unitID" type="java.lang.String"/>
-	      	<form-property name="fileID" type="java.lang.String"/>	      	
+	      	<form-property name="fileID" type="java.lang.String"/>
+	      	<form-property name="fileName" type="java.lang.String"/>
 	    </form-bean>
     </form-beans>
 
@@ -503,7 +504,8 @@
    	       <forward name="prepareCreate-protocol-data" path="prepareCreate-protocol-data"/>
    	       <forward name="prepareCreate-protocol-responsibles" path="prepareCreate-protocol-responsibles"/>
    	       <forward name="prepareCreate-protocol-units" path="prepareCreate-protocol-units"/>
-   	       <forward name="prepareCreate-protocol-files" path="prepareCreate-protocol-files"/>   	       
+   	       <forward name="prepareCreate-protocol-files" path="prepareCreate-protocol-files"/> 
+		   <forward name="view-protocol" path="view-protocol"/> 	       
 	    </action>    	    	    	    
 	</action-mappings>
 

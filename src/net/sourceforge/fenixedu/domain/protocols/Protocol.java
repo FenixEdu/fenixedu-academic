@@ -6,8 +6,8 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolFactory;
+import net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolFileBean;
 import net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolFactory.FilePermissionType;
-import net.sourceforge.fenixedu.dataTransferObject.research.result.OpenFileBean;
 import net.sourceforge.fenixedu.domain.DomainListReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
@@ -37,22 +37,22 @@ public class Protocol extends Protocol_Base {
     }
 
     public Protocol(ProtocolFactory protocolFactory) {
-	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-	setProtocolNumber(protocolFactory.getProtocolNumber());
-	setSignedDate(protocolFactory.getSignedDate());
-	setDates(protocolFactory);
-	setProtocolAction(new ProtocolAction(protocolFactory.getActionTypes(), protocolFactory
-		.getOtherActionTypes()));
-	setObservations(protocolFactory.getObservations());
-	setScientificAreas(protocolFactory.getScientificAreas());
-	setResponsables(protocolFactory.getResponsibles());
-	setPartnerResponsibles(protocolFactory.getPartnerResponsibles());
-	setUnits(protocolFactory.getUnits());
-	setPartnerUnits(protocolFactory.getPartnerUnits());
-	if (protocolFactory.getFiles() != null) {
-	    // writeFiles(protocolFactory.getFiles());
-	}
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+        setProtocolNumber(protocolFactory.getProtocolNumber());
+        setSignedDate(protocolFactory.getSignedDate());
+        setDates(protocolFactory);
+        setProtocolAction(new ProtocolAction(protocolFactory.getActionTypes(), protocolFactory
+                .getOtherActionTypes()));
+        setObservations(protocolFactory.getObservations());
+        setScientificAreas(protocolFactory.getScientificAreas());
+        setResponsables(protocolFactory.getResponsibles());
+        setPartnerResponsibles(protocolFactory.getPartnerResponsibles());
+        setUnits(protocolFactory.getUnits());
+        setPartnerUnits(protocolFactory.getPartnerUnits());
+        if (protocolFactory.getFileBeans() != null) {
+            writeFiles(protocolFactory.getFileBeans());
+        }
     }
 
     public Protocol(String protocolNumber, YearMonthDay signedDate, Boolean renewable, Boolean active,
@@ -85,12 +85,12 @@ public class Protocol extends Protocol_Base {
 	getProtocolHistories().add(protocolHistory);
     }
 
-    private void writeFiles(List<OpenFileBean> files) {
-	final VirtualPath filePath = getFilePath();
-	for (OpenFileBean openFileBean : files) {
-	    // writeFile(filePath, openFileBean.getInputStream(),
-	    // openFileBean.getFileName());
-	}
+    private void writeFiles(List<ProtocolFileBean> files) {
+        final VirtualPath filePath = getFilePath();
+        for (ProtocolFileBean protocolFileBean : files) {
+            writeFile(filePath, protocolFileBean.getInputStream(), protocolFileBean.getFileName(),
+                    protocolFileBean.getFilePermissionType());
+        }
     }
 
     private void writeFile(VirtualPath filePath, InputStream inputStream, String fileName,

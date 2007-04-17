@@ -9,6 +9,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.DomainListReference;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
 import net.sourceforge.fenixedu.domain.person.PersonName;
@@ -58,7 +59,9 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
 
     private Boolean internalUnit;
 
-    private DomainReference<PersonName> responsible;
+    private DomainReference<Teacher> responsible;
+    
+    private DomainReference<PersonName> partnerResponsible;
 
     private String responsibleName;
 
@@ -84,7 +87,7 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
 
     private DomainListReference<Unit> units;
 
-    private DomainListReference<ProtocolFile> files;
+    private DomainListReference<ProtocolFile> protocolFiles;
 
     private DomainReference<ProtocolFile> fileToDelete;
 
@@ -93,6 +96,8 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
     private String fileName;
 
     private FilePermissionType filePermissionType;
+
+    private List<ProtocolFileBean> fileBeans;
 
     public ProtocolFactory(Protocol protocol) {
         setProtocol(protocol);
@@ -316,12 +321,12 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
         this.otherActionTypes = otherActionTypes;
     }
 
-    public DomainListReference<ProtocolFile> getFiles() {
-        return files;
+    public DomainListReference<ProtocolFile> getProtocolFiles() {
+        return protocolFiles;
     }
 
-    public void setFiles(DomainListReference<ProtocolFile> files) {
-        this.files = files;
+    public void setProtocolFiles(DomainListReference<ProtocolFile> protocolFiles) {
+        this.protocolFiles = protocolFiles;
     }
 
     public EditProtocolAction getEditProtocolAction() {
@@ -340,12 +345,20 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
         this.istResponsible = istResponsible;
     }
 
-    public PersonName getResponsible() {
+    public PersonName getPartnerResponsible() {
+        return partnerResponsible != null ? partnerResponsible.getObject() : null;
+    }
+
+    public void setPartnerResponsible(PersonName responsible) {
+        this.partnerResponsible = (responsible != null) ? new DomainReference<PersonName>(responsible) : null;
+    }
+    
+    public Teacher getResponsible() {
         return responsible != null ? responsible.getObject() : null;
     }
 
-    public void setResponsible(PersonName responsible) {
-        this.responsible = (responsible != null) ? new DomainReference<PersonName>(responsible) : null;
+    public void setResponsible(Teacher responsible) {
+        this.responsible = (responsible != null) ? new DomainReference<Teacher>(responsible) : null;
     }
 
     public UnitName getUnitObject() {
@@ -380,39 +393,92 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
         this.unitName = unitName;
     }
 
-    public void addISTResponsible() {
+    public boolean addISTResponsible() {
         if (getResponsibles() == null) {
             setResponsibles(new DomainListReference<Person>());
         }
-        getResponsibles().add(getResponsible().getPerson());
+        if (getResponsibles().contains(getResponsible().getPerson())) {
+            return false;
+        } else {
+            return getResponsibles().add(getResponsible().getPerson());
+        }
     }
-    
-    public void addPartnerResponsible() {
+
+    public boolean addPartnerResponsible() {
         if (getPartnerResponsibles() == null) {
             setPartnerResponsibles(new DomainListReference<Person>());
         }
-        getPartnerResponsibles().add(getResponsible().getPerson());
+        if (getPartnerResponsibles().contains(getPartnerResponsible().getPerson())) {
+            return false;
+        } else {
+            return getPartnerResponsibles().add(getPartnerResponsible().getPerson());
+        }
     }
-    
-    public void addISTUnit() {
+
+    public void addPartnerResponsible(Person responsible) {
+        if (getPartnerResponsibles() == null) {
+            setPartnerResponsibles(new DomainListReference<Person>());
+        }
+        getPartnerResponsibles().add(responsible);
+    }
+
+    public boolean addISTUnit() {
         if (getUnits() == null) {
             setUnits(new DomainListReference<Unit>());
         }
-        getUnits().add(getUnitObject().getUnit());
+        if (getUnits().contains(getUnitObject().getUnit())) {
+            return false;
+        } else {
+            return getUnits().add(getUnitObject().getUnit());
+        }
     }
-    
-    public void addPartnerUnit() {
+
+    public boolean addPartnerUnit() {
         if (getPartnerUnits() == null) {
             setPartnerUnits(new DomainListReference<Unit>());
         }
-        getPartnerUnits().add(getUnitObject().getUnit());
+        if (getPartnerUnits().contains(getUnitObject().getUnit())) {
+            return false;
+        } else {
+            return getPartnerUnits().add(getUnitObject().getUnit());
+        }
     }
-    
+
+    public void addPartnerUnit(Unit unit) {
+        if (getPartnerUnits() == null) {
+            setPartnerUnits(new DomainListReference<Unit>());
+        }
+        getPartnerUnits().add(unit);
+    }
+
+    public void addFile() {
+        if (getFileBeans() == null) {
+            setFileBeans(new ArrayList<ProtocolFileBean>());
+        }
+        getFileBeans().add(
+                new ProtocolFileBean(getInputStream(), getFileName(), getFilePermissionType()));
+    }
+
+    public void removeFile(String fileName) {
+        for (ProtocolFileBean protocolFileBean : getFileBeans()) {
+            if (protocolFileBean.getFileName().equals(fileName)) {
+                getFileBeans().remove(protocolFileBean);
+                break;
+            }
+        }
+    }
+
     public void resetSearches() {
+        setPartnerResponsible(null);
         setResponsible(null);
         setResponsibleName(null);
         setUnitObject(null);
         setUnitName(null);
+    }
+
+    public void resetFile() {
+        setFileName(null);
+        setInputStream(null);
     }
 
     public Person getResponsibleToAdd() {
@@ -480,5 +546,13 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
 
     public void setFilePermissionType(FilePermissionType filePermissionType) {
         this.filePermissionType = filePermissionType;
+    }
+
+    public List<ProtocolFileBean> getFileBeans() {
+        return fileBeans;
+    }
+
+    public void setFileBeans(List<ProtocolFileBean> fileBeans) {
+        this.fileBeans = fileBeans;
     }
 }
