@@ -26,3 +26,5 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "Remove Broken Links in Lesson Plannings" removeBrokenLinksInLessonPlannings.sql

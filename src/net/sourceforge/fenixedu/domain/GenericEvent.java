@@ -262,5 +262,5 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
             }
         }
 	return false;
-    }      
+    }       
 }

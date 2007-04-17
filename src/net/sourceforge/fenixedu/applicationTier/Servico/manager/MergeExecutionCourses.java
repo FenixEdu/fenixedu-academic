@@ -57,14 +57,12 @@ public class MergeExecutionCourses extends Service {
             throw new SourceAndDestinationAreTheSameException();
         }
 
-        final ExecutionCourse executionCourseFrom = rootDomainObject
-                .readExecutionCourseByOID(executionCourseSourceId);
+        final ExecutionCourse executionCourseFrom = rootDomainObject.readExecutionCourseByOID(executionCourseSourceId);
         if (executionCourseFrom == null) {
             throw new InvalidArgumentsServiceException();
         }
 
-        final ExecutionCourse executionCourseTo = rootDomainObject
-                .readExecutionCourseByOID(executionCourseDestinationId);
+        final ExecutionCourse executionCourseTo = rootDomainObject.readExecutionCourseByOID(executionCourseDestinationId);
         if (executionCourseTo == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -81,12 +79,15 @@ public class MergeExecutionCourses extends Service {
         copyProfessorships(executionCourseFrom, executionCourseTo);
         copyAttends(executionCourseFrom, executionCourseTo);
         copyBibliographicReference(executionCourseFrom, executionCourseTo);
+        
         if (executionCourseFrom.getEvaluationMethod() != null) {
             executionCourseFrom.getEvaluationMethod().delete();
         }
+        
         if (executionCourseFrom.getCourseReport() != null) {
             executionCourseFrom.getCourseReport().delete();
         }
+        
         copySummaries(executionCourseFrom, executionCourseTo);
         copyGroupPropertiesExecutionCourse(executionCourseFrom, executionCourseTo);
         copySite(executionCourseFrom, executionCourseTo);
@@ -94,9 +95,10 @@ public class MergeExecutionCourses extends Service {
         copyForuns(executionCourseFrom, executionCourseTo);
         copyBoard(executionCourseFrom, executionCourseTo);
 
-        executionCourseTo.getAssociatedCurricularCourses().addAll(
-                executionCourseFrom.getAssociatedCurricularCourses());
+        executionCourseTo.getAssociatedCurricularCourses().addAll(executionCourseFrom.getAssociatedCurricularCourses());
 
+        executionCourseTo.copyLessonPlanningsFrom(executionCourseFrom);
+        
         executionCourseFrom.delete();
     }
 
@@ -151,8 +153,7 @@ public class MergeExecutionCourses extends Service {
                 && executionCourseFrom != executionCourseTo && distributedTestAuthorization;
     }
 
-    private void copySummaries(final ExecutionCourse executionCourseFrom,
-            final ExecutionCourse executionCourseTo) {
+    private void copySummaries(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo) {
         final List<Summary> associatedSummaries = new ArrayList<Summary>();
         associatedSummaries.addAll(executionCourseFrom.getAssociatedSummaries());
         for (final Summary summary : associatedSummaries) {
@@ -234,10 +235,10 @@ public class MergeExecutionCourses extends Service {
             }
         }
 
-        final Iterator associatedAttendsFromDestination = executionCourseTo.getAttendsIterator();
+        final Iterator<Attends> associatedAttendsFromDestination = executionCourseTo.getAttendsIterator();
         final Map<String, Attends> alreadyAttendingDestination = new HashMap<String, Attends>();
         while (associatedAttendsFromDestination.hasNext()) {
-            Attends attend = (Attends) associatedAttendsFromDestination.next();
+            Attends attend = associatedAttendsFromDestination.next();
             alreadyAttendingDestination.put(attend.getRegistration().getNumber().toString(), attend);
         }
         final List<Attends> associatedAttendsFromSource = new ArrayList<Attends>();

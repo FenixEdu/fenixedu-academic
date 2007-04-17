@@ -138,7 +138,7 @@ public class RoomOccupation extends RoomOccupation_Base {
 	endTime.set(Calendar.SECOND, 0);
 	endTime.set(Calendar.MILLISECOND, 0);
 	
-	if (getPeriod().intersectPeriods(startDate, endDate)) {                       	   	    	    			   
+	if (getPeriod().nestedOccupationPeriodsIntersectDates(startDate, endDate)) {                       	   	    	    			   
 	    
 	    List<Interval> thisOccupationIntervals = getRoomOccupationIntervals();
 	    List<Interval> passedOccupationIntervals = getRoomOccupationIntervals(new YearMonthDay(startDate), new YearMonthDay(endDate),  
@@ -341,8 +341,8 @@ public class RoomOccupation extends RoomOccupation_Base {
     public static boolean periodQuinzenalContainsWeekPeriod(Calendar startDate, Calendar endDate,
             int startWeek, DiaSemana weekDay, Calendar day, Calendar endDay, OccupationPeriod nextPeriod) {
       
-	ArrayList listWeekly = weeklyDatesInPeriod(day, endDay, weekDay, nextPeriod);
-        ArrayList listQuinzenal = quinzenalDatesInPeriod(startDate, endDate, startWeek, weekDay);
+	List<Calendar> listWeekly = weeklyDatesInPeriod(day, endDay, weekDay, nextPeriod);
+	List<Calendar> listQuinzenal = quinzenalDatesInPeriod(startDate, endDate, startWeek, weekDay);
         for (int i = 0; i < listQuinzenal.size(); i++) {
             Calendar quinzenalDate = (Calendar) listQuinzenal.get(i);
             for (int j = 0; j < listWeekly.size(); j++) {
@@ -358,7 +358,7 @@ public class RoomOccupation extends RoomOccupation_Base {
         return false;
     }    
 
-    public static ArrayList quinzenalDatesInPeriod(Calendar startDate, Calendar endDate, int startWeek, DiaSemana weekDay) {
+    public static List<Calendar> quinzenalDatesInPeriod(Calendar startDate, Calendar endDate, int startWeek, DiaSemana weekDay) {
        
 	ArrayList<Calendar> list = new ArrayList<Calendar>();
         Calendar date = Calendar.getInstance();
@@ -374,9 +374,9 @@ public class RoomOccupation extends RoomOccupation_Base {
         return list;
     }
 
-    public static ArrayList weeklyDatesInPeriod(Calendar day, Calendar endDay, DiaSemana weekDay, OccupationPeriod nextPeriod) {
+    public static List<Calendar> weeklyDatesInPeriod(Calendar day, Calendar endDay, DiaSemana weekDay, OccupationPeriod nextPeriod) {
 	
-        ArrayList<Calendar> list = new ArrayList<Calendar>();
+        List<Calendar> list = new ArrayList<Calendar>();
         Calendar date = Calendar.getInstance();
         date.setTimeInMillis(day.getTimeInMillis());
         date.add(Calendar.DATE, weekDay.getDiaSemana().intValue() - date.get(Calendar.DAY_OF_WEEK));

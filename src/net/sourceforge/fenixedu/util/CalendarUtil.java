@@ -19,8 +19,7 @@ public class CalendarUtil {
     public CalendarUtil() {
     }
 
-    public static boolean intersectDates(Calendar startDate1, Calendar endDate1, Calendar startDate2,
-            Calendar endDate2) {
+    public static boolean intersectDates(Calendar startDate1, Calendar endDate1, Calendar startDate2, Calendar endDate2) {
         String startDate1String = date2string(startDate1);
         String endDate1String = date2string(endDate1);
         String startDate2String = date2string(startDate2);

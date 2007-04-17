@@ -44,10 +44,10 @@ public class OccupationPeriod extends OccupationPeriod_Base {
   
     @Override
     public void setNextPeriod(OccupationPeriod nextPeriod) {
-	if(!allNestedPeriodsAreEmpty()) {
+	if (!allNestedPeriodsAreEmpty()) {
 	    throw new DomainException("error.occupationPeriod.previous.periods.not.empty");
 	}
-	if(nextPeriod != null && !nextPeriod.getStartYearMonthDay().isAfter(getEndYearMonthDay())) {
+	if (nextPeriod != null && !nextPeriod.getStartYearMonthDay().isAfter(getEndYearMonthDay())) {
 	    throw new DomainException("error.occupationPeriod.invalid.nextPeriod");
 	}
 	super.setNextPeriod(nextPeriod);
@@ -55,10 +55,10 @@ public class OccupationPeriod extends OccupationPeriod_Base {
            
     @Override
     public void setPreviousPeriod(OccupationPeriod previousPeriod) {
-	if(!allNestedPeriodsAreEmpty()) {
+	if (!allNestedPeriodsAreEmpty()) {
 	    throw new DomainException("error.occupationPeriod.next.periods.not.empty");
 	}
-	if(previousPeriod != null && !previousPeriod.getEndYearMonthDay().isBefore(getStartYearMonthDay())) {
+	if (previousPeriod != null && !previousPeriod.getEndYearMonthDay().isBefore(getStartYearMonthDay())) {
 	    throw new DomainException("error.occupationPeriod.invalid.previousPeriod");
 	}
 	super.setPreviousPeriod(previousPeriod);
@@ -106,33 +106,20 @@ public class OccupationPeriod extends OccupationPeriod_Base {
             period = period.getNextPeriod();
         }
         return end;
-    }
+    }    
 
-    public boolean intersectPeriods(final Calendar start, final Calendar end) {
-        return CalendarUtil.intersectDates(start, end, getFirstOccupationPeriodOfNestedPeriods().getStartDate(), 
-        	getLastOccupationPeriodOfNestedPeriods().getEndDate());
+    private boolean intersectPeriods(final Calendar start, final Calendar end) {
+        return CalendarUtil.intersectDates(start, end, getStartDate(), getEndDate());
     }
-
-    public boolean intersectPeriods(OccupationPeriod period) {
-        return intersectPeriods(period.getFirstOccupationPeriodOfNestedPeriods().getStartDate(), 
-        	period.getLastOccupationPeriodOfNestedPeriods().getEndDate());
-    }
-
-    public boolean containsDay(Calendar day) {
-        return !(getFirstOccupationPeriodOfNestedPeriods().getStartDate().after(day) || 
-        	getLastOccupationPeriodOfNestedPeriods().getEndDate().before(day));
-    }
-
-    public boolean containsDay(Date day) {
-        return !(getFirstOccupationPeriodOfNestedPeriods().getStart().after(day) || 
-        	getLastOccupationPeriodOfNestedPeriods().getEnd().before(day));
+      
+    private boolean intersectPeriods(YearMonthDay start, YearMonthDay end) {
+        return !getStartYearMonthDay().isAfter(end) && !getEndYearMonthDay().isBefore(start);
     }
     
-    public boolean containsDay(YearMonthDay yearMonthDay) {
-        return !(getFirstOccupationPeriodOfNestedPeriods().getStartYearMonthDay().isAfter(yearMonthDay) || 
-        	getLastOccupationPeriodOfNestedPeriods().getEndYearMonthDay().isBefore(yearMonthDay));
+    private boolean containsDay(YearMonthDay day) {
+        return intersectPeriods(day, day);
     }
-    
+               
     public void delete() {	       
 	if (allNestedPeriodsAreEmpty()) {            	    	    	               
 	    removeNextPeriod();
@@ -142,9 +129,53 @@ public class OccupationPeriod extends OccupationPeriod_Base {
         }
     }   
     
+    public boolean allNestedPeriodsAreEmpty() {	
+	OccupationPeriod firstOccupationPeriod = getFirstOccupationPeriodOfNestedPeriods();
+	if(!firstOccupationPeriod.isEmpty()) {
+	    return false;
+	}	
+	while(firstOccupationPeriod.getNextPeriod() != null) {
+	    if(!firstOccupationPeriod.getNextPeriod().isEmpty()) {
+		return false;
+	    }
+	    firstOccupationPeriod = firstOccupationPeriod.getNextPeriod();
+	}	
+	return true;   
+    }
+    
+    private boolean isEmpty() {
+        return getRoomOccupations().isEmpty()
+        	&& getExecutionDegreesForExamsSpecialSeason().isEmpty()
+                && getExecutionDegreesForExamsFirstSemester().isEmpty()
+                && getExecutionDegreesForExamsSecondSemester().isEmpty()
+                && getExecutionDegreesForLessonsFirstSemester().isEmpty()
+                && getExecutionDegreesForLessonsSecondSemester().isEmpty()
+                && getExecutionDegreesForGradeSubmissionNormalSeasonFirstSemester().isEmpty()
+                && getExecutionDegreesForGradeSubmissionNormalSeasonSecondSemester().isEmpty()
+                && getExecutionDegreesForGradeSubmissionSpecialSeason().isEmpty();
+    }
+    
+    public OccupationPeriod getLastOccupationPeriodOfNestedPeriods() {
+	OccupationPeriod occupationPeriod = this;
+	while(occupationPeriod.getNextPeriod() != null) {	    
+	    occupationPeriod = occupationPeriod.getNextPeriod();
+	}
+	return occupationPeriod;
+    }
+    
+    private OccupationPeriod getFirstOccupationPeriodOfNestedPeriods() {		
+	OccupationPeriod occupationPeriod = this;
+	while(occupationPeriod.getPreviousPeriod() != null) {	    
+	    occupationPeriod = occupationPeriod.getPreviousPeriod();
+	}
+	return occupationPeriod;
+    }
+               
     public static OccupationPeriod readByDates(Date startDate, Date endDate) {
         for (OccupationPeriod occupationPeriod : RootDomainObject.getInstance().getOccupationPeriods()) {
-            if (DateFormatUtil.equalDates("yyyy-MM-dd", occupationPeriod.getStart(), startDate)
+            if (occupationPeriod.getNextPeriod() == null 
+        	    && occupationPeriod.getPreviousPeriod() == null 
+        	    && DateFormatUtil.equalDates("yyyy-MM-dd", occupationPeriod.getStart(), startDate)
                     && DateFormatUtil.equalDates("yyyy-MM-dd", occupationPeriod.getEnd(), endDate)) {
         	return occupationPeriod;
             }
@@ -154,7 +185,9 @@ public class OccupationPeriod extends OccupationPeriod_Base {
 
     public static OccupationPeriod readOccupationPeriod(YearMonthDay start, YearMonthDay end) {
 	for (final OccupationPeriod occupationPeriod : RootDomainObject.getInstance().getOccupationPeriodsSet()) {
-	    if (occupationPeriod.getStartYearMonthDay().equals(start)
+	    if (occupationPeriod.getNextPeriod() == null 
+		    && occupationPeriod.getPreviousPeriod() == null 
+		    && occupationPeriod.getStartYearMonthDay().equals(start)
 		    && occupationPeriod.getEndYearMonthDay().equals(end)) {
 		return occupationPeriod;
 	    }
@@ -162,45 +195,37 @@ public class OccupationPeriod extends OccupationPeriod_Base {
 	return null;
     }
     
-    public OccupationPeriod getFirstOccupationPeriodOfNestedPeriods() {		
-	OccupationPeriod occupationPeriod = this;
-	while(occupationPeriod.getPreviousPeriod() != null) {	    
-	    occupationPeriod = occupationPeriod.getPreviousPeriod();
-	}
-	return occupationPeriod;
-    }
-    
-    public OccupationPeriod getLastOccupationPeriodOfNestedPeriods() {		
-	OccupationPeriod occupationPeriod = this;
-	while(occupationPeriod.getNextPeriod() != null) {	    
-	    occupationPeriod = occupationPeriod.getNextPeriod();
-	}
-	return occupationPeriod;
-    }
-    
-    public boolean allNestedPeriodsAreEmpty() {
-	OccupationPeriod firstOccupationPeriod = getFirstOccupationPeriodOfNestedPeriods();
-	if(!firstOccupationPeriod.isEmpty()) {
-	    return false;
-	}
-	
-	while(firstOccupationPeriod.getNextPeriod() != null) {
-	    if(!firstOccupationPeriod.getNextPeriod().isEmpty()) {
-		return false;
+    public boolean nestedOccupationPeriodsIntersectDates(OccupationPeriod occupationPeriod) {	
+	OccupationPeriod firstOccupationPeriod = this;
+	while(firstOccupationPeriod != null) {
+	    if(firstOccupationPeriod.intersectPeriods(occupationPeriod.getStartYearMonthDay(), 
+		    occupationPeriod.getEndYearMonthDay())) {
+		return true;
 	    }
 	    firstOccupationPeriod = firstOccupationPeriod.getNextPeriod();
-	}
-	return true;   
+	}	        
+	return false;
     }
     
-    private boolean isEmpty() {
-        return getRoomOccupations().isEmpty()
-                && getExecutionDegreesForExamsFirstSemester().isEmpty()
-                && getExecutionDegreesForExamsSecondSemester().isEmpty()
-                && getExecutionDegreesForLessonsFirstSemester().isEmpty()
-                && getExecutionDegreesForLessonsSecondSemester().isEmpty()
-                && getExecutionDegreesForGradeSubmissionNormalSeasonFirstSemester().isEmpty()
-                && getExecutionDegreesForGradeSubmissionNormalSeasonSecondSemester().isEmpty()
-                && getExecutionDegreesForGradeSubmissionSpecialSeason().isEmpty();
-    }           
+    public boolean nestedOccupationPeriodsIntersectDates(Calendar start, Calendar end) {	
+	OccupationPeriod firstOccupationPeriod = this;
+	while(firstOccupationPeriod != null) {
+	    if(firstOccupationPeriod.intersectPeriods(start, end)) {
+		return true;
+	    }
+	    firstOccupationPeriod = firstOccupationPeriod.getNextPeriod();
+	}	        
+	return false;
+    }
+    
+    public boolean nestedOccupationPeriodsContainsDay(YearMonthDay day) {
+	OccupationPeriod firstOccupationPeriod = this;
+	while(firstOccupationPeriod != null) {
+	    if(firstOccupationPeriod.containsDay(day)) {
+		return true;
+	    }
+	    firstOccupationPeriod = firstOccupationPeriod.getNextPeriod();
+	}	        
+	return false;
+    }
 }

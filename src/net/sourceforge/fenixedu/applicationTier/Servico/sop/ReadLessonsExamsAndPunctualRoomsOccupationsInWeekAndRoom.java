@@ -49,7 +49,7 @@ import org.joda.time.YearMonthDay;
 public class ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom extends Service {
 
     // FIXME duplicated code: this method is (almost?) identical to RoomSiteComponentBuilder.getInfoSiteRoomTimeTable
-    public List run(InfoRoom infoRoom, Calendar day, InfoExecutionPeriod infoExecutionPeriod) throws ExcepcaoPersistencia, FenixServiceException {
+    public List<InfoObject> run(InfoRoom infoRoom, Calendar day, InfoExecutionPeriod infoExecutionPeriod) throws ExcepcaoPersistencia, FenixServiceException {
     	final OldRoom room = (OldRoom) rootDomainObject.readSpaceByOID(infoRoom.getIdInternal());
 
         List<InfoObject> infoShowOccupations = new ArrayList<InfoObject>();
@@ -69,11 +69,11 @@ public class ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom extends Se
         if (this.intersectPeriods(day, endDay,lessonsInfoPeriod)) {
             //adicionar as aulas
         	
-            List lessonList = room.findLessonsForExecutionPeriod(executionPeriod);
-            Iterator iterator = lessonList.iterator();
+            List<Lesson> lessonList = room.findLessonsForExecutionPeriod(executionPeriod);
+            Iterator<Lesson> iterator = lessonList.iterator();
 
             while (iterator.hasNext()) {
-                Lesson aula = (Lesson) iterator.next();
+                Lesson aula = iterator.next();
                 RoomOccupation roomOccupation = aula.getRoomOccupation();
 
                 OccupationPeriod period = roomOccupation.getPeriod();
@@ -147,9 +147,9 @@ public class ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom extends Se
 	    Calendar endDay, final YearMonthDay weekStartYearMonthDay,
 	    final YearMonthDay weekEndYearMonthDay, final GenericEvent genericEvent) {
 	
-	if (genericEvent != null) {
-	    if (genericEvent.getOccupationPeriod().intersectPeriods(startDay, endDay)) {
-
+	if (genericEvent != null) {	    
+	    if(genericEvent.getOccupationPeriod().nestedOccupationPeriodsIntersectDates(startDay, endDay)) {
+		
 		List<Interval> genericEventIntervals = genericEvent.getGenericEventIntervals(weekStartYearMonthDay, weekEndYearMonthDay);
 		TimeOfDay eightAM = new TimeOfDay(8, 0, 0, 0);
 

@@ -69,6 +69,7 @@ public class Lesson extends Lesson_Base {
     }
 
     public void delete() {
+	
 	if (getShift().hasAnyAssociatedStudentGroups()) {
 	    throw new DomainException("error.deleteLesson.with.Shift.with.studentGroups", prettyPrint());
 	}
@@ -184,20 +185,35 @@ public class Lesson extends Lesson_Base {
 	return (allLessonDatesEvenToday.isEmpty() || date == null) ? false : allLessonDatesEvenToday.contains(date);
     }
 
-    public YearMonthDay getLessonStartDay() {
-	YearMonthDay periodStart = getRoomOccupation().getPeriod().getStartYearMonthDay();
+    public YearMonthDay getLessonStartDay() {	
+	YearMonthDay periodStart = getLessonOccupationPeriod().getStartYearMonthDay();		
 	int weekOfQuinzenalStart = (getWeekOfQuinzenalStart() != null) ? getWeekOfQuinzenalStart().intValue() : 0;
-	YearMonthDay lessonStart = periodStart.plusDays(7 * weekOfQuinzenalStart);
+	YearMonthDay lessonStart = periodStart.plusDays(7 * weekOfQuinzenalStart);	
 	int lessonStartDayOfWeek = lessonStart.toDateTimeAtMidnight().getDayOfWeek();
 	return lessonStart.plusDays(getDiaSemana().getDiaSemanaInDayOfWeekJodaFormat() - lessonStartDayOfWeek);
     }
 
     public YearMonthDay getLessonEndDay() {
-	YearMonthDay periodEnd = getRoomOccupation().getPeriod().getEndYearMonthDay();
+	YearMonthDay periodEnd = getLessonOccupationPeriod().getLastOccupationPeriodOfNestedPeriods().getEndYearMonthDay();		  	
 	int lessonEndDayOfWeek = periodEnd.toDateTimeAtMidnight().getDayOfWeek();
 	return periodEnd.minusDays(lessonEndDayOfWeek - getDiaSemana().getDiaSemanaInDayOfWeekJodaFormat());
     }
-   
+           
+    private OccupationPeriod getLessonOccupationPeriod() {	
+	if(getRoomOccupation() == null) {
+	    ExecutionYear executionYear = getShift().getDisciplinaExecucao().getExecutionYear();
+	    Integer semester = getShift().getDisciplinaExecucao().getExecutionPeriod().getSemester();
+	    ExecutionDegree executionDegree = getShift().getDisciplinaExecucao().getFirsExecutionDegreesByYearWithExecutionIn(executionYear).first();
+	    if(semester.intValue() == 1) {
+		return executionDegree.getPeriodLessonsFirstSemester();
+	    } else {
+		return executionDegree.getPeriodLessonsSecondSemester();
+	    }
+	} else {
+	    return getRoomOccupation().getPeriod();
+	}
+    }
+    
     private Campus getLessonCampus() {
 	net.sourceforge.fenixedu.domain.Campus oldCampus = ((OldRoom)getSala()).getBuilding().getCampus();
 	if (oldCampus != null) {
@@ -211,10 +227,13 @@ public class Lesson extends Lesson_Base {
     }
 
     public YearMonthDay getNextPossibleSummaryDate() {
+	
 	YearMonthDay currentDate = new YearMonthDay();
 	YearMonthDay lessonEndDay = getLessonEndDay();
 	YearMonthDay endDateToSearch = (lessonEndDay.isAfter(currentDate)) ? currentDate : lessonEndDay;
 
+	OccupationPeriod lessonOccupationPeriod = getLessonOccupationPeriod();
+	
 	HourMinuteSecond now = new HourMinuteSecond();
 	Campus lessonCampus = getLessonCampus();
 	Summary lastSummary = getLastSummary();
@@ -227,7 +246,9 @@ public class Lesson extends Lesson_Base {
 		if (nextSummaryDate.isAfter(endDateToSearch)) {
 		    break;
 		}
-		if (!Holiday.isHoliday(nextSummaryDate, lessonCampus) && isTimeValidToInsertSummary(now, nextSummaryDate)) {
+		if (!Holiday.isHoliday(nextSummaryDate, lessonCampus) 
+			&& lessonOccupationPeriod.nestedOccupationPeriodsContainsDay(nextSummaryDate)
+			&& isTimeValidToInsertSummary(now, nextSummaryDate)) {
 		    return nextSummaryDate;
 		}
 		nextSummaryDate = nextSummaryDate.plusDays(7);
@@ -241,10 +262,13 @@ public class Lesson extends Lesson_Base {
     }
 
     public List<YearMonthDay> getPossibleDatesToInsertSummary() {
+	
 	SortedSet<Summary> summaries = getSummariesSortedByDate();
 	List<YearMonthDay> datesToInsert = new ArrayList<YearMonthDay>();
 	List<YearMonthDay> datesSearched = new ArrayList<YearMonthDay>();
 
+	OccupationPeriod lessonOccupationPeriod = getLessonOccupationPeriod();
+	
 	YearMonthDay lessonEndDay = getLessonEndDay();
 	YearMonthDay currentDate = new YearMonthDay();
 
@@ -257,7 +281,7 @@ public class Lesson extends Lesson_Base {
 	if (!startDateToSearch.isAfter(endDateToSearch)) {
 	    if (summaries.isEmpty()) {
 		while (true) {
-		    startDateToSearch = addPossibleDate(datesToInsert, startDateToSearch, startDateToSearch, now, lessonCampus);
+		    startDateToSearch = addPossibleDate(datesToInsert, startDateToSearch, startDateToSearch, now, lessonCampus, lessonOccupationPeriod);
 		    if (startDateToSearch.isAfter(endDateToSearch)) {
 			break;
 		    }
@@ -269,7 +293,8 @@ public class Lesson extends Lesson_Base {
 			while (true) {
 			    if (!hasLessonWeekDayChanges(summaryDate)) {
 				if (startDateToSearch.isBefore(summaryDate)) {
-				    startDateToSearch = addPossibleDate(datesToInsert, startDateToSearch, startDateToSearch, now, lessonCampus);
+				    startDateToSearch = addPossibleDate(datesToInsert, startDateToSearch, startDateToSearch, 
+					    now, lessonCampus, lessonOccupationPeriod);				
 				} else if (startDateToSearch.isEqual(summaryDate)) {
 				    startDateToSearch = startDateToSearch.plusDays(7);
 				    break;
@@ -285,7 +310,8 @@ public class Lesson extends Lesson_Base {
 
 			    } else if (startDateToSearch.isBefore(summaryDate)) {
 				YearMonthDay day = getPossibleDateInValidSummaryDateWeekDay(startDateToSearch, summaryDate);
-				startDateToSearch = addPossibleDate(datesToInsert, day,	startDateToSearch, now, lessonCampus);
+				startDateToSearch = addPossibleDate(datesToInsert, day,	startDateToSearch, 
+					now, lessonCampus, lessonOccupationPeriod);
 
 			    } else {
 				// ERROR: I hope that never enter here
@@ -302,7 +328,8 @@ public class Lesson extends Lesson_Base {
 		}
 		if (!startDateToSearch.isAfter(endDateToSearch)) {
 		    while (true) {
-			startDateToSearch = addPossibleDate(datesToInsert, startDateToSearch, startDateToSearch, now, lessonCampus);
+			startDateToSearch = addPossibleDate(datesToInsert, startDateToSearch, startDateToSearch, 
+				now, lessonCampus, lessonOccupationPeriod);
 			if (startDateToSearch.isAfter(endDateToSearch)) {
 			    break;
 			}
@@ -314,11 +341,14 @@ public class Lesson extends Lesson_Base {
     }
 
     private YearMonthDay addPossibleDate(List<YearMonthDay> datesToInsert, YearMonthDay dayToInsert,
-	    YearMonthDay startDateToSearch, HourMinuteSecond now, Campus lessonCampus) {
+	    YearMonthDay startDateToSearch, HourMinuteSecond now, Campus lessonCampus, OccupationPeriod lessonOccupationPeriod) {
 	
-	if (!Holiday.isHoliday(dayToInsert, lessonCampus) && isTimeValidToInsertSummary(now, dayToInsert)) {
+	if (!Holiday.isHoliday(dayToInsert, lessonCampus) 
+		&& lessonOccupationPeriod.nestedOccupationPeriodsContainsDay(dayToInsert) 
+		&& isTimeValidToInsertSummary(now, dayToInsert)) {
 	    datesToInsert.add(dayToInsert);
 	}
+	
 	return startDateToSearch.plusDays(7);
     }
 
@@ -352,8 +382,10 @@ public class Lesson extends Lesson_Base {
 	List<YearMonthDay> dates = new ArrayList<YearMonthDay>();
 	if (!startDateToSearch.isAfter(endDateToSearch)) {
 	    Campus lessonCampus = getLessonCampus();
+	    OccupationPeriod lessonOccupationPeriod = getLessonOccupationPeriod();
 	    while (true) {
-		if (!Holiday.isHoliday(startDateToSearch, lessonCampus)) {
+		if (!Holiday.isHoliday(startDateToSearch, lessonCampus) 
+			&& lessonOccupationPeriod.nestedOccupationPeriodsContainsDay(startDateToSearch)) {
 		    dates.add(startDateToSearch);
 		}
 		startDateToSearch = startDateToSearch.plusDays(7);
@@ -364,7 +396,7 @@ public class Lesson extends Lesson_Base {
 	}
 	return dates;
     }
-
+    
     private Summary getLastSummary() {
 	SortedSet<Summary> summaries = getSummariesSortedByNewestDate();
 	return (summaries.isEmpty()) ? null : summaries.first();

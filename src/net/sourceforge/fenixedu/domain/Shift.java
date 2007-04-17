@@ -20,12 +20,9 @@ public class Shift extends Shift_Base {
 
     public static final Comparator<Shift> SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS = new ComparatorChain();
     static {
-	((ComparatorChain) SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS)
-		.addComparator(new BeanComparator("tipo"));
-	((ComparatorChain) SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS)
-		.addComparator(new BeanComparator("lessonsStringComparator"));
-	((ComparatorChain) SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS)
-		.addComparator(new BeanComparator("idInternal"));
+	((ComparatorChain) SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS).addComparator(new BeanComparator("tipo"));
+	((ComparatorChain) SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS).addComparator(new BeanComparator("lessonsStringComparator"));
+	((ComparatorChain) SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS).addComparator(new BeanComparator("idInternal"));
     }
 
     static {
@@ -45,11 +42,8 @@ public class Shift extends Shift_Base {
 
     public void delete() {
 	if (canBeDeleted()) {
-	    for (; hasAnyAssociatedLessons(); getAssociatedLessons().get(0).delete())
-		;
-	    for (; hasAnyAssociatedShiftProfessorship(); getAssociatedShiftProfessorship().get(0)
-		    .delete())
-		;
+	    for (; hasAnyAssociatedLessons(); getAssociatedLessons().get(0).delete());
+	    for (; hasAnyAssociatedShiftProfessorship(); getAssociatedShiftProfessorship().get(0).delete());
 
 	    getAssociatedClasses().clear();
 	    final ExecutionCourse executionCourse = getDisciplinaExecucao();
@@ -98,9 +92,9 @@ public class Shift extends Shift_Base {
 
     public double hours() {
 	double hours = 0;
-	List lessons = this.getAssociatedLessons();
+	List<Lesson> lessons = this.getAssociatedLessons();
 	for (int i = 0; i < lessons.size(); i++) {
-	    Lesson lesson = (Lesson) lessons.get(i);
+	    Lesson lesson = lessons.get(i);
 	    hours += lesson.hours();
 	}
 	return hours;
@@ -108,9 +102,9 @@ public class Shift extends Shift_Base {
 
     public double hoursAfter(int hour) {
 	double hours = 0;
-	List lessons = this.getAssociatedLessons();
+	List<Lesson> lessons = this.getAssociatedLessons();
 	for (int i = 0; i < lessons.size(); i++) {
-	    Lesson lesson = (Lesson) lessons.get(i);
+	    Lesson lesson = lessons.get(i);
 	    hours += lesson.hoursAfter(hour);
 	}
 	return hours;

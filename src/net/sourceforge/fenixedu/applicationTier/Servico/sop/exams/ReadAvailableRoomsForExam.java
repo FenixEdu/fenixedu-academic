@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.util.TipoSala;
  */
 public class ReadAvailableRoomsForExam extends Service {
 
-    public List run(Calendar periodStart, Calendar periodEnd, Calendar startTime, Calendar endTime,
+    public List<InfoRoom> run(Calendar periodStart, Calendar periodEnd, Calendar startTime, Calendar endTime,
 	    DiaSemana dayOfWeek, Integer roomOccupationToRemoveId, Integer normalCapacity,
 	    Integer frequency, Integer weekOfStart, Boolean withLabs) throws ExcepcaoPersistencia {
 
@@ -40,7 +40,7 @@ public class ReadAvailableRoomsForExam extends Service {
         // already being materialized anyways.
 	// This also reduced the comparisons that are performed.
 	for (final OccupationPeriod period : rootDomainObject.getOccupationPeriodsSet()) {
-	    if (period.intersectPeriods(periodStart, periodEnd)) {
+	    if (period.nestedOccupationPeriodsIntersectDates(periodStart, periodEnd)) {
 		for (final RoomOccupation roomOccupation : period.getRoomOccupationsSet()) {
 		    if (!roomOccupation.getIdInternal().equals(roomOccupationToRemoveId)) {
 			final Room room = roomOccupation.getRoom();
@@ -55,37 +55,10 @@ public class ReadAvailableRoomsForExam extends Service {
 	}
 
 	final List<InfoRoom> availableInfoRooms = new ArrayList<InfoRoom>();
-	for (final OldRoom room : rooms) {
-	    // if (!isOccupied(room, periodStart, periodEnd, startTime,
-                // endTime, dayOfWeek, frequency,
-	    // weekOfStart, roomOccupationToRemoveId)) {
-	    availableInfoRooms.add(InfoRoom.newInfoFromDomain(room));
-	    // }
+	for (final OldRoom room : rooms) {	  
+	    availableInfoRooms.add(InfoRoom.newInfoFromDomain(room));	  
 	}
 
 	return availableInfoRooms;
-    }
-
-    // private boolean isOccupied(final OldRoom room, final Calendar
-        // periodStart, final Calendar periodEnd,
-    // final Calendar startTime, final Calendar endTime, final DiaSemana
-        // dayOfWeek,
-    // Integer frequency, Integer weekOfStart, Integer
-        // roomOccupationToRemoveId) {
-    // final List<RoomOccupation> roomOccupations =
-        // room.getRoomOccupations();
-    // for (final RoomOccupation roomOccupation : roomOccupations) {
-    // if (!roomOccupation.getIdInternal().equals(roomOccupationToRemoveId))
-        // {
-    // boolean isOccupied =
-        // roomOccupation.roomOccupationForDateAndTime(periodStart,
-    // periodEnd, startTime, endTime, dayOfWeek, frequency, weekOfStart);
-    // if (isOccupied) {
-    // return true;
-    // }
-    // }
-    // }
-    // return false;
-    // }
-
+    } 
 }

@@ -81,61 +81,90 @@
 			</p>
 		</logic:empty>
 		<logic:notEmpty name="comments">
-			<logic:iterate id="comment" name="comments">
-				<p class="color888 mtop15 mbottom025"><bean:write name="comment" property="presentationInstant"/></p>
-				<p class="mvert025"><strong><bean:write name="comment" property="owner.name"/> (<bean:write name="comment" property="owner.username"/>)</strong></p>
-				<p class="mvert025"><fr:view name="comment" property="description"/></p>
-				<logic:notEmpty name="comment" property="state">
-					<logic:equal name="comment" property="state.name" value="RESOLVED">
-						<p class="mvert025"><strong><bean:message key="label.rooms.reserve.resolved" bundle="APPLICATION_RESOURCES"/></strong></p>		
-					</logic:equal>
-				</logic:notEmpty>		
+			<bean:define id="punctualRequestObject" name="punctualRequest" type="net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest" />
+			<logic:iterate id="comment" name="comments" type="net.sourceforge.fenixedu.domain.PunctualRoomsOccupationComment">
+				
+				<%
+					if(punctualRequestObject.getRequestor().equals(comment.getOwner())) {
+				%>					
+					<div style="border: 1px solid #ddc; padding: 0.5em; background: #fafaea;" class="mtop15">			
+						<p class="color888 mvert025"><bean:write name="comment" property="presentationInstant"/></p>
+						<p class="mvert025"><strong><bean:write name="comment" property="owner.name"/> (<bean:write name="comment" property="owner.username"/>)</strong></p>
+						<p class="mvert025"><fr:view name="comment" property="description"/></p>
+						<logic:notEmpty name="comment" property="state">
+							<logic:equal name="comment" property="state.name" value="RESOLVED">
+								<p class="mvert05"><strong><bean:message key="label.rooms.reserve.resolved" bundle="SOP_RESOURCES"/></strong></p>		
+							</logic:equal>
+						</logic:notEmpty>		
+					</div>
+				<%
+					} else {
+				%>								
+					<div style="border: 1px solid #ddd; padding: 0.5em; background: #fafafa;" class="mtop15">			
+						<p class="color888 mvert025"><bean:write name="comment" property="presentationInstant"/></p>
+						<p class="mvert025"><strong><bean:write name="comment" property="owner.name"/> (<bean:write name="comment" property="owner.username"/>)</strong></p>
+						<p class="mvert025"><fr:view name="comment" property="description"/></p>
+						<logic:notEmpty name="comment" property="state">
+							<logic:equal name="comment" property="state.name" value="RESOLVED">
+								<p class="mvert05"><strong><bean:message key="label.rooms.reserve.resolved" bundle="SOP_RESOURCES"/></strong></p>		
+							</logic:equal>
+						</logic:notEmpty>		
+					</div>			
+				<%
+					}
+				%>
+						
 			</logic:iterate>
 		</logic:notEmpty>
+				
+		<logic:notEqual name="currentStateName" value="NEW">
 		
-		<logic:equal name="currentStateName" value="RESOLVED">
-			<div class="infoop2 mtop15">
-				<p><bean:message key="label.rooms.reserve.teacher.reopen.instructions" bundle="APPLICATION_RESOURCES"/></p>
-			</div>
-		</logic:equal>
-
-		
-		<p class="mtop15 mbottom05"><bean:message key="label.rooms.reserve.new.comment" bundle="APPLICATION_RESOURCES"/>:</p>
-		<fr:form action="/roomsReserveManagement.do">
-			<html:hidden property="method" value="createNewComment"/>
-			<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserve&amp;punctualReserveID=<bean:write name="punctualRequest" property="idInternal"/></bean:define>
-
-			<fr:hasMessages for="roomsReserveNewComment">
-				<p>
-					<span class="error0">			
-						<fr:message for="roomsReserveNewComment" show="message"/>
-					</span>
-				</p>
-			</fr:hasMessages>
-			
-			<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserve&punctualReserveID=<bean:write name="punctualRequest" property="idInternal"/></bean:define>
-			<fr:edit id="roomsReserveNewComment" name="roomsReserveBean" slot="description" 
-				validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator"
-				type="net.sourceforge.fenixedu.dataTransferObject.teacher.RoomsReserveBean">
-				<fr:edit name="roomsReserveBean" id="roomsReserveBeanWithNewComment" nested="true" visible="false"/>
-				<fr:layout name="area">
-					<fr:property name="rows" value="6" />
-					<fr:property name="columns" value="55"/>										
-				</fr:layout>
-				<fr:destination name="input" path="<%= seeReserveURL %>"/>
-			</fr:edit>		
-			
-			<p>
-			<html:submit><bean:message key="label.submit" bundle="APPLICATION_RESOURCES"/></html:submit>
 			<logic:equal name="currentStateName" value="RESOLVED">
-				<html:submit onclick="this.form.method.value='createNewCommentAndReOpenRequest';this.form.sumit();">
-					<bean:message key="label.submit.and.reopen" bundle="APPLICATION_RESOURCES"/>
-				</html:submit>
-			</logic:equal>			
-			</p>
-		</fr:form>
+				<div class="infoop2 mtop15">
+					<p><bean:message key="label.rooms.reserve.teacher.reopen.instructions" bundle="APPLICATION_RESOURCES"/></p>
+				</div>
+			</logic:equal>
 		
-		<jsp:include page="../../sop/roomsPunctualScheduling/legend.jsp" />
+			<p class="mtop15 mbottom05"><bean:message key="label.rooms.reserve.new.comment" bundle="APPLICATION_RESOURCES"/>:</p>
+			<fr:form action="/roomsReserveManagement.do">
+				<html:hidden property="method" value="createNewComment"/>
+				<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserve&amp;punctualReserveID=<bean:write name="punctualRequest" property="idInternal"/></bean:define>
+	
+				<fr:hasMessages for="roomsReserveNewComment">
+					<p>
+						<span class="error0">			
+							<fr:message for="roomsReserveNewComment" show="message"/>
+						</span>
+					</p>
+				</fr:hasMessages>
+				
+				<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserve&punctualReserveID=<bean:write name="punctualRequest" property="idInternal"/></bean:define>
+				<fr:edit id="roomsReserveNewComment" name="roomsReserveBean" slot="description" 
+					validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator"
+					type="net.sourceforge.fenixedu.dataTransferObject.teacher.RoomsReserveBean">
+					<fr:edit name="roomsReserveBean" id="roomsReserveBeanWithNewComment" nested="true" visible="false"/>
+					<fr:layout name="area">
+						<fr:property name="rows" value="6" />
+						<fr:property name="columns" value="55"/>										
+					</fr:layout>
+					<fr:destination name="input" path="<%= seeReserveURL %>"/>
+				</fr:edit>		
+				
+				<p>
+				<html:submit><bean:message key="label.submit" bundle="APPLICATION_RESOURCES"/></html:submit>
+				<logic:equal name="currentStateName" value="RESOLVED">
+					<html:submit onclick="this.form.method.value='createNewCommentAndReOpenRequest';this.form.sumit();">
+						<bean:message key="label.submit.and.reopen" bundle="APPLICATION_RESOURCES"/>
+					</html:submit>
+				</logic:equal>			
+				</p>
+			</fr:form>
+			
+			<logic:notEmpty name="punctualRequest" property="genericEvents">
+				<jsp:include page="../../sop/roomsPunctualScheduling/legend.jsp" />
+			</logic:notEmpty>
+					
+		</logic:notEqual>
 		
 	</logic:notEmpty>
 

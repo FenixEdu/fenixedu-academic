@@ -90,6 +90,14 @@ public class RoomInformation extends RoomInformation_Base {
     }
 
     @Override
+    public void setRoomClassification(RoomClassification roomClassification) {
+        if(!roomClassification.hasParentRoomClassification()) {
+            throw new DomainException("error.roomInformation.invalid.roomClassification");
+        }
+	super.setRoomClassification(roomClassification);
+    }
+    
+    @Override
     public void setBlueprintNumber(String blueprintNumber) {
 	if (blueprintNumber == null || StringUtils.isEmpty(blueprintNumber.trim())) {
 	    throw new DomainException("error.roomInformation.empty.blueprintNumber");

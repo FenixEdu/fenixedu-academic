@@ -80,7 +80,7 @@
 	<slot name="description" />
 	<slot name="roomClassification"  key="label.classification" layout="menu-select">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.RoomClassificationsProvider"/>		
-		<property name="format"	value="${presentationCode} - ${name}" />
+		<property name="format"	value="${presentationCode} (${parentRoomClassification.name}) - ${name}" />
 	</slot>						
 	<slot name="area" />
 	<slot name="heightQuality" />
@@ -99,7 +99,7 @@
 	<slot name="description"/>
 	<slot name="roomClassification" key="label.classification" layout="menu-select">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.RoomClassificationsProvider"/>		
-		<property name="format"	value="${presentationCode} - ${name}" />
+		<property name="format"	value="${presentationCode} (${parentRoomClassification.name}) - ${name}" />
 	</slot>						
 	<slot name="area"/>
 	<slot name="heightQuality"/>
@@ -118,7 +118,7 @@
 	<slot name="description" />
 	<slot name="roomClassification"  key="label.classification" layout="menu-select">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.RoomClassificationsProvider"/>		
-		<property name="format"	value="${presentationCode} - ${name}" />
+		<property name="format"	value="${presentationCode} (${parentRoomClassification.name}) - ${name}" />
 	</slot>							
 	<slot name="observations"/>
 	<slot name="begin" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
@@ -131,7 +131,7 @@
 	<slot name="description"/>
 	<slot name="roomClassification" key="label.classification" layout="menu-select">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.RoomClassificationsProvider"/>		
-		<property name="format"	value="${presentationCode} - ${name}" />
+		<property name="format"	value="${presentationCode} (${parentRoomClassification.name}) - ${name}" />
 	</slot>							
 	<slot name="observations"/>
 	<slot name="begin" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
@@ -163,7 +163,7 @@
 	<slot name="description"/>
 	<slot name="roomClassification" key="label.classification" layout="menu-select">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.RoomClassificationsProvider"/>		
-		<property name="format"	value="${presentationCode} - ${name}" />
+		<property name="format"	value="${presentationCode} (${parentRoomClassification.name}) - ${name}" />
 	</slot>						
 	<slot name="area"/>
 	<slot name="heightQuality"/>
@@ -183,7 +183,7 @@
 	<slot name="description"/>
 	<slot name="roomClassification" key="label.classification" layout="menu-select">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.RoomClassificationsProvider"/>		
-		<property name="format"	value="${presentationCode} - ${name}" />
+		<property name="format"	value="${presentationCode} (${parentRoomClassification.name}) - ${name}" />
 	</slot>						
 	<slot name="observations"/>
 	<slot name="validFrom" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>

@@ -169,9 +169,9 @@ public class CreateLesson extends Service {
     private double getTotalHoursOfShiftType(Shift shift) {
         Lesson lesson = null;
         double duration = 0;
-        List associatedLessons = shift.getAssociatedLessons();
+        List<Lesson> associatedLessons = shift.getAssociatedLessons();
         for (int i = 0; i < associatedLessons.size(); i++) {
-            lesson = (Lesson) associatedLessons.get(i);
+            lesson = associatedLessons.get(i);
             lesson.getIdInternal();
             duration += (getLessonDurationInMinutes(lesson).doubleValue() / 60);
         }

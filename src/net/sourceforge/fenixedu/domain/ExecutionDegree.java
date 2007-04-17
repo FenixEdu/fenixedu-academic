@@ -36,7 +36,7 @@ import org.joda.time.YearMonthDay;
  * @author rpfi
  */
 
-public class ExecutionDegree extends ExecutionDegree_Base implements Comparable {
+public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<ExecutionDegree> {
 
     public static final Comparator<ExecutionDegree> EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME;
 
@@ -44,22 +44,18 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable 
 
     public static final Comparator<ExecutionDegree> EXECUTION_DEGREE_COMPARATORY_BY_YEAR;
     static {
-	final Comparator degreeTypeComparator = new BeanComparator(
-		"degreeCurricularPlan.degree.tipoCurso");
-	final Comparator degreeNameComparator = new BeanComparator("degreeCurricularPlan.degree.nome");
+	final Comparator<ExecutionDegree> degreeTypeComparator = new BeanComparator("degreeCurricularPlan.degree.tipoCurso");
+	final Comparator<ExecutionDegree> degreeNameComparator = new BeanComparator("degreeCurricularPlan.degree.nome");
 	EXECUTION_DEGREE_COMPARATORY_BY_YEAR = new BeanComparator("executionYear.year");
+	
 	EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME = new ComparatorChain();
-	((ComparatorChain) EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME)
-		.addComparator(degreeTypeComparator);
-	((ComparatorChain) EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME)
-		.addComparator(degreeNameComparator);
+	((ComparatorChain) EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME).addComparator(degreeTypeComparator);
+	((ComparatorChain) EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME).addComparator(degreeNameComparator);
+	
 	EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME_AND_EXECUTION_YEAR = new ComparatorChain();
-	((ComparatorChain) EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME_AND_EXECUTION_YEAR)
-		.addComparator(degreeTypeComparator);
-	((ComparatorChain) EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME_AND_EXECUTION_YEAR)
-		.addComparator(degreeNameComparator);
-	((ComparatorChain) EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME_AND_EXECUTION_YEAR)
-		.addComparator(EXECUTION_DEGREE_COMPARATORY_BY_YEAR);
+	((ComparatorChain) EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME_AND_EXECUTION_YEAR).addComparator(degreeTypeComparator);
+	((ComparatorChain) EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME_AND_EXECUTION_YEAR).addComparator(degreeNameComparator);
+	((ComparatorChain) EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME_AND_EXECUTION_YEAR).addComparator(EXECUTION_DEGREE_COMPARATORY_BY_YEAR);
     }
 
     private ExecutionDegree() {
@@ -241,10 +237,8 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable 
 	return this.getDegreeCurricularPlan().isBolonha();
     }
 
-    public int compareTo(Object object) {
-	final ExecutionDegree executionDegree = (ExecutionDegree) object;
+    public int compareTo(ExecutionDegree executionDegree) {	
 	final ExecutionYear executionYear = executionDegree.getExecutionYear();
-
 	return getExecutionYear().compareTo(executionYear);
     }
 
@@ -631,11 +625,10 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable 
 	return (markSheetType == MarkSheetType.SPECIAL_AUTHORIZATION);
     }
 
-    private boolean checkOccupationPeriod(Date evaluationDate, ExecutionPeriod executionPeriod,
-	    MarkSheetType markSheetType) {
+    private boolean checkOccupationPeriod(Date evaluationDate, ExecutionPeriod executionPeriod, MarkSheetType markSheetType) {
 	OccupationPeriod occupationPeriod = getOccupationPeriodFor(executionPeriod, markSheetType);
-	return (evaluationDate != null && occupationPeriod != null && occupationPeriod
-		.containsDay(evaluationDate));
+	return (evaluationDate != null && occupationPeriod != null 
+		&& occupationPeriod.nestedOccupationPeriodsContainsDay(YearMonthDay.fromDateFields(evaluationDate)));
     }
 
     public OccupationPeriod getOccupationPeriodFor(ExecutionPeriod executionPeriod,
@@ -672,17 +665,17 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable 
 
     public boolean isDateInFirstSemesterNormalSeasonOfGradeSubmission(YearMonthDay date) {
 	return (getPeriodGradeSubmissionNormalSeasonFirstSemester() != null && getPeriodGradeSubmissionNormalSeasonFirstSemester()
-		.containsDay(date));
+		.nestedOccupationPeriodsContainsDay(date));
     }
 
     public boolean isDateInSecondSemesterNormalSeasonOfGradeSubmission(YearMonthDay date) {
 	return (getPeriodGradeSubmissionNormalSeasonSecondSemester() != null && getPeriodGradeSubmissionNormalSeasonSecondSemester()
-		.containsDay(date));
+		.nestedOccupationPeriodsContainsDay(date));
     }
 
     public boolean isDateInSpecialSeasonOfGradeSubmission(YearMonthDay date) {
 	return (getPeriodGradeSubmissionSpecialSeason() != null && getPeriodGradeSubmissionSpecialSeason()
-		.containsDay(date));
+		.nestedOccupationPeriodsContainsDay(date));
     }
 
     public Degree getDegree() {

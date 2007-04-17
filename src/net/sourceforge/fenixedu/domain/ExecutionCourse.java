@@ -136,16 +136,14 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     public boolean hasProposals() {
 	boolean result = false;
 	boolean found = false;
-	List groupPropertiesExecutionCourseList = getExportGroupings();
-	Iterator iter = groupPropertiesExecutionCourseList.iterator();
+	List<ExportGrouping> groupPropertiesExecutionCourseList = getExportGroupings();
+	Iterator<ExportGrouping> iter = groupPropertiesExecutionCourseList.iterator();
 	while (iter.hasNext() && !found) {
-
-	    ExportGrouping groupPropertiesExecutionCourseAux = (ExportGrouping) iter.next();
+	    ExportGrouping groupPropertiesExecutionCourseAux = iter.next();
 	    if (groupPropertiesExecutionCourseAux.getProposalState().getState().intValue() == 3) {
 		result = true;
 		found = true;
 	    }
-
 	}
 	return result;
     }
@@ -341,17 +339,13 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	    if (hasSite()) {
 		getSite().delete();
 	    }
-	    for (; !getProfessorships().isEmpty(); getProfessorships().get(0).delete())
-		;
-	    for (; !getExecutionCourseProperties().isEmpty(); getExecutionCourseProperties().get(0)
-		    .delete())
-		;
-	    for (; !getAttends().isEmpty(); getAttends().get(0).delete())
-		;
-
-	    for (; !getForuns().isEmpty(); getForuns().get(0).delete())
-		;
-
+	    
+	    for (; !getProfessorships().isEmpty(); getProfessorships().get(0).delete());
+	    for (; !getLessonPlannings().isEmpty(); getLessonPlannings().get(0).delete());
+	    for (; !getExecutionCourseProperties().isEmpty(); getExecutionCourseProperties().get(0).delete());
+	    for (; !getAttends().isEmpty(); getAttends().get(0).delete());
+	    for (; !getForuns().isEmpty(); getForuns().get(0).delete());
+	    
 	    if (hasBoard()) {
 		getBoard().delete();
 	    }
@@ -361,6 +355,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	    removeExecutionPeriod();
 	    removeRootDomainObject();
 	    super.deleteDomainObject();
+	    
 	} else {
 	    throw new DomainException("error.execution.course.cant.delete");
 	}
@@ -1276,12 +1271,10 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	Set<ShiftType> shiftTypes = getShiftTypes();
 	for (ShiftType shiftType : executionCourseFrom.getShiftTypes()) {
 	    if (shiftTypes.contains(shiftType)) {
-		List<LessonPlanning> lessonPlanningsFrom = executionCourseFrom
-			.getLessonPlanningsOrderedByOrder(shiftType);
+		List<LessonPlanning> lessonPlanningsFrom = executionCourseFrom.getLessonPlanningsOrderedByOrder(shiftType);
 		if (!lessonPlanningsFrom.isEmpty()) {
 		    for (LessonPlanning planning : lessonPlanningsFrom) {
-			new LessonPlanning(planning.getTitle(), planning.getPlanning(), planning
-				.getLessonType(), this);
+			new LessonPlanning(planning.getTitle(), planning.getPlanning(), planning.getLessonType(), this);
 		    }
 		}
 	    }
@@ -1629,4 +1622,15 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return strategy.checkEnrolmentDate(grouping, Calendar.getInstance());
 
     }
+    
+    public SortedSet<ExecutionDegree> getFirsExecutionDegreesByYearWithExecutionIn(ExecutionYear executionYear){
+	SortedSet<ExecutionDegree> result = new TreeSet<ExecutionDegree>(ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_YEAR);
+	for (CurricularCourse curricularCourse : getAssociatedCurricularCourses()) {
+	    ExecutionDegree executionDegree = curricularCourse.getDegreeCurricularPlan().getExecutionDegreeByYear(executionYear);
+	    if(executionDegree != null) {
+		result.add(executionDegree);
+	    }
+	}
+	return result;
+    }    
 }
