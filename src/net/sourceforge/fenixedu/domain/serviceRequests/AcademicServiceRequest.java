@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicServiceRequestEvent;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
@@ -386,6 +387,10 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
 
     final public Degree getDegree() {
 	return getStudentCurricularPlan().getDegree();
+    }
+
+    final public DegreeType getDegreeType() {
+	return getDegree().getDegreeType();
     }
 
     final public boolean isBolonha() {
