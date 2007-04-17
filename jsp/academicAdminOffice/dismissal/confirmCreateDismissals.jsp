@@ -38,7 +38,7 @@
 	<logic:notEmpty name="dismissalBean" property="selectedEnrolments">
 		<ul>
 		<logic:iterate id="ienrolment" name="dismissalBean" property="selectedEnrolments">
-			<li><bean:write name="ienrolment" property="name" /> (<bean:message key="label.grade" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <bean:write name="ienrolment" property="grade"/>)</li>
+			<li><bean:write name="ienrolment" property="name" /> (<bean:message key="label.studentDismissal.grade" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <bean:write name="ienrolment" property="grade"/>)</li>
 		</logic:iterate>
 		</ul>
 	</logic:notEmpty>

@@ -545,7 +545,7 @@
 		<property name="size" value="7"/>
 		<property name="maxLength" value="6"/>
 	</slot>
-	<slot name="grade" key="label.grade">
+	<slot name="grade" key="label.studentDismissal.grade">
 		<property name="size" value="7"/>
 		<property name="maxLength" value="6"/>
 	</slot>
@@ -553,7 +553,7 @@
 
 <schema name="DismissalBean.DismissalType.CURRICULAR_COURSE_CREDITS" bundle="ACADEMIC_OFFICE_RESOURCES"
 	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean" >
-	<slot name="grade" key="label.grade">
+	<slot name="grade" key="label.studentDismissal.grade">
 		<property name="size" value="7"/>
 		<property name="maxLength" value="6"/>
 	</slot>
@@ -576,7 +576,7 @@
 	<slot name="enrolment.executionPeriod" layout="format" key="lable.year.semester" read-only="true">
 		<property name="format" value="${executionYear.year} ${semester}º Sem"/>
 	</slot>	
-	<slot name="enrolment.grade" key="label.grade" read-only="true"/>	
+	<slot name="enrolment.grade" key="label.studentDismissal.grade" read-only="true"/>	
 </schema>
 
 <schema name="student.Dismissal.choose.internal.enrolments" bundle="ACADEMIC_OFFICE_RESOURCES"
@@ -591,7 +591,7 @@
 	<slot name="externalEnrolment.executionPeriod" layout="format" key="lable.year.semester" read-only="true">
 		<property name="format" value="${executionYear.year} ${semester}º Sem"/>
 	</slot>	
-	<slot name="externalEnrolment.grade" key="label.grade" read-only="true"/>	
+	<slot name="externalEnrolment.grade" key="label.studentDismissal.grade" read-only="true"/>	
 </schema>
 
 <schema name="student.Dismissal.choose.external.enrolments" bundle="ACADEMIC_OFFICE_RESOURCES"
@@ -610,7 +610,7 @@
 		<property name="eachSchema" value="equivalence.view" />
 	</slot>
 	<slot name="givenCredits" key="label.ects.credits"/>	
-	<slot name="givenGrade" key="label.grade"/>	
+	<slot name="givenGrade" key="label.studentDismissal.grade"/>	
 </schema>
 
 <schema name="equivalence.view" bundle="ACADEMIC_OFFICE_RESOURCES" type="net.sourceforge.fenixedu.domain.IEnrolment" >
@@ -646,7 +646,7 @@
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionPeriodsReverseOrderProvider" />
 		<property name="format" value="${semester} º semestre - ${executionYear.year}" />
 	</slot>
-	<slot name="grade" key="label.grade" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="grade" key="label.studentDismissal.grade" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="8" />
 		<property name="maxLength" value="8" />
 	</slot>
@@ -773,7 +773,7 @@
 		<property name="destination" value="postback"/>
 	</slot>
 	<slot name="externalEnrolmentBean.studentNumber" key="label.number" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-	<slot name="externalEnrolmentBean.grade" key="label.grade" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="externalEnrolmentBean.grade" key="label.studentDismissal.grade" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="externalEnrolmentBean.executionPeriod" layout="menu-select" key="label.executionPeriod">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionPeriodsReverseOrderProvider" />
 		<property name="format" value="${semester} º semestre - ${executionYear.year}" />
@@ -785,7 +785,7 @@
 		
 	<slot name="externalCurricularCourse.name" read-only="true" key="label.externalUnits.externalCurricularCourse"/>
 	<slot name="studentNumber" key="label.number" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-	<slot name="grade" key="label.grade" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="grade" key="label.studentDismissal.grade" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="executionPeriod" layout="menu-select">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionPeriodsReverseOrderProvider" />
 		<property name="format" value="${semester} º semestre - ${executionYear.year}" />
@@ -804,7 +804,7 @@
 	<slot name="creationDateDateTime" key="label.enrolment.date" layout="no-time" read-only="true"/>
 	<slot name="student.number" key="label.number" read-only="true"/>
 	<slot name="student.person.name" key="label.name" read-only="true"/>
-	<slot name="grade" key="label.grade" read-only="true"/>
+	<slot name="grade" key="label.studentDismissal.grade" read-only="true"/>
 	<slot name="executionPeriod" key="label.executionPeriod" layout="format" read-only="true">
 		<property name="format" value="${semester}º semestre - ${executionYear.year}" />
 	</slot>
@@ -815,7 +815,7 @@
 		
 	<slot name="creationDateDateTime" key="label.enrolment.date" layout="no-time" read-only="true"/>
 	<slot name="externalCurricularCourse.fullPathName" key="label.externalUnits.externalCurricularCourse" read-only="true"/>
-	<slot name="grade" key="label.grade" read-only="true"/>
+	<slot name="grade" key="label.studentDismissal.grade" read-only="true"/>
 	<slot name="executionPeriod" key="label.executionPeriod" layout="format" read-only="true">
 		<property name="format" value="${semester}º semestre - ${executionYear.year}" />
 	</slot>
