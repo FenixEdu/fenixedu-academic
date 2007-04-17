@@ -138,10 +138,12 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public DegreeCurricularPlan getParentDegreeCurricularPlan() {
-	// FIXME: in the future, a curricular course may be included in contexts
-	// of diferent curricular plans
-	return (isBolonha()) ? getParentContexts().get(0).getParentCourseGroup()
-		.getParentDegreeCurricularPlan() : super.getDegreeCurricularPlan();
+	//FIXME: in the future, a curricular course may be included in contexts of diferent curricular plans
+	if (isBolonha()) {
+	    return hasAnyParentContexts() ? getParentContexts().get(0).getParentCourseGroup().getParentDegreeCurricularPlan() : null;
+	} else {
+	    return super.getDegreeCurricularPlan();
+	}
     }
 
     @Override

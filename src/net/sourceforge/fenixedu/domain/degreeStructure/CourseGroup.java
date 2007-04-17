@@ -139,7 +139,7 @@ public class CourseGroup extends CourseGroup_Base {
 	if (isRoot()) {
 	    return super.getParentDegreeCurricularPlan();
 	}
-	return getParentContexts().get(0).getParentCourseGroup().getParentDegreeCurricularPlan();
+	return hasAnyParentContexts() ? getParentContexts().get(0).getParentCourseGroup().getParentDegreeCurricularPlan() : null;
     }
 
     public List<Context> getChildContexts(Class<? extends DegreeModule> clazz) {
