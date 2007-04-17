@@ -776,7 +776,7 @@ public abstract class Party extends Party_Base {
     
     public String getEmail() {
 	final EmailAddress emailAddress = getDefaultEmailAddress();
-	return emailAddress != null ? emailAddress.getValue() : null;
+	return emailAddress != null ? emailAddress.getValue() : StringUtils.EMPTY;
     }
     
     public void setEmail(String email) {
@@ -813,7 +813,7 @@ public abstract class Party extends Party_Base {
     
     public String getAddress() {
 	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
-	return physicalAddress != null ? physicalAddress.getAddress() : null;
+	return physicalAddress != null ? physicalAddress.getAddress() : StringUtils.EMPTY;
     }
 
     public void setAddress(String address) {
@@ -822,7 +822,7 @@ public abstract class Party extends Party_Base {
 
     public String getAreaCode() {
 	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
-	return physicalAddress != null ? physicalAddress.getAreaCode() : null;
+	return physicalAddress != null ? physicalAddress.getAreaCode() : StringUtils.EMPTY;
     }
 
     public void setAreaCode(String areaCode) {
@@ -831,7 +831,7 @@ public abstract class Party extends Party_Base {
 
     public String getAreaOfAreaCode() {
 	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
-	return physicalAddress != null ? physicalAddress.getAreaOfAreaCode() : null;
+	return physicalAddress != null ? physicalAddress.getAreaOfAreaCode() : StringUtils.EMPTY;
     }
 
     public void setAreaOfAreaCode(String areaOfAreaCode) {
@@ -840,7 +840,7 @@ public abstract class Party extends Party_Base {
 
     public String getArea() {
 	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
-	return physicalAddress != null ? physicalAddress.getArea() : null;
+	return physicalAddress != null ? physicalAddress.getArea() : StringUtils.EMPTY;
     }
 
     public void setArea(String area) {
@@ -849,7 +849,7 @@ public abstract class Party extends Party_Base {
 
     public String getParishOfResidence() {
 	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
-	return physicalAddress != null ? physicalAddress.getParishOfResidence() : null;
+	return physicalAddress != null ? physicalAddress.getParishOfResidence() : StringUtils.EMPTY;
     }
 
     public void setParishOfResidence(String parishOfResidence) {
@@ -858,7 +858,7 @@ public abstract class Party extends Party_Base {
 
     public String getDistrictSubdivisionOfResidence() {
 	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
-	return physicalAddress != null ? physicalAddress.getDistrictSubdivisionOfResidence() : null;
+	return physicalAddress != null ? physicalAddress.getDistrictSubdivisionOfResidence() : StringUtils.EMPTY;
     }
 
     public void setDistrictSubdivisionOfResidence(String districtSubdivisionOfResidence) {
@@ -867,7 +867,7 @@ public abstract class Party extends Party_Base {
 
     public String getDistrictOfResidence() {
 	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
-	return physicalAddress != null ? physicalAddress.getDistrictOfResidence() : null;
+	return physicalAddress != null ? physicalAddress.getDistrictOfResidence() : StringUtils.EMPTY;
     }
 
     public void setDistrictOfResidence(String districtOfResidence) {
@@ -885,7 +885,7 @@ public abstract class Party extends Party_Base {
 
     public String getWebAddress() {
 	final WebAddress webAddress = getDefaultWebAddress();
-	return webAddress != null ? webAddress.getUrl() : null;
+	return webAddress != null ? webAddress.getUrl() : StringUtils.EMPTY;
     }
 
     public void setWebAddress(String webAddress) {
@@ -894,7 +894,7 @@ public abstract class Party extends Party_Base {
 
     public String getPhone() {
 	final Phone phone = getDefaultPhone();
-	return phone != null ? phone.getNumber() : null;
+	return phone != null ? phone.getNumber() : StringUtils.EMPTY;
     }
 
     public void setPhone(String phone) {
@@ -903,7 +903,7 @@ public abstract class Party extends Party_Base {
 
     public String getMobile() {
 	final MobilePhone phone = getDefaultMobilePhone();
-	return phone != null ? phone.getNumber() : null;
+	return phone != null ? phone.getNumber() : StringUtils.EMPTY;
     }
 
     public void setMobile(String mobile) {
