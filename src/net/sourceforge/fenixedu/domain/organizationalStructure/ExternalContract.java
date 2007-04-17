@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.PersonName;
 
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
 
 public class ExternalContract extends ExternalContract_Base {
@@ -83,38 +84,42 @@ public class ExternalContract extends ExternalContract_Base {
 	return getParentParty() != null;
     }
 
-    /***********************************************************************
-         * PRIVATE METHODS *
-         **********************************************************************/
     private void checkIfPersonAlreadyIsExternalPerson(Person person) {
 	if(person.hasExternalPerson()) {
 	    throw new DomainException("error.externalContract.person.already.is.externalPerson");
 	}	
     }
     
-    private boolean externalPersonsAlreadyExists(String name, String address, Unit institution) {
-	for (Accountability accountability : RootDomainObject.getInstance().getAccountabilitys()) {
+    private boolean externalPersonsAlreadyExists(final String name, final String address, final Unit institution) {
+	
+	for (final Accountability accountability : RootDomainObject.getInstance().getAccountabilitys()) {
 	    if(accountability instanceof ExternalContract) {
-		ExternalContract externalPerson = (ExternalContract) accountability;
+		final ExternalContract externalPerson = (ExternalContract) accountability;
 		if (externalPerson.hasPerson()) {
-		    Person person = externalPerson.getPerson();
-		    if (((person.getName() != null && person.getName().equalsIgnoreCase(name)) || 
-			    ((person.getName() == null || person.getName().equals("")) && name.equals("")))
-			    && ((person.getAddress() != null && person.getAddress().equalsIgnoreCase(address)) ||
-				    ((person.getAddress() == null || person.getAddress().equals("")) && address.equals("")))
-					    && externalPerson.getInstitutionUnit().equals(institution)
-					    && !externalPerson.equals(this))
+		    final Person person = externalPerson.getPerson();
+		    
+		    if (isNameCorrect(person, name) && isAddressFieldCorrect(person, address)
+			    && externalPerson.getInstitutionUnit() == institution
+			    && externalPerson != this) {
 			return true;
+		    }
 		}
 	    }
 	}
 	return false;
     }
+    
+    private boolean isNameCorrect(final Person person, final String name) {
+	return (person.getName() != null && person.getName().equalsIgnoreCase(name))
+		|| (StringUtils.isEmpty(person.getName()) && name.length() == 0);
+    }
+    
+    private boolean isAddressFieldCorrect(final Person person, final String address) {
+	final String personAddress = person.getAddress();
+	return (personAddress != null && personAddress.equalsIgnoreCase(address))
+		|| (StringUtils.isEmpty(personAddress) && address.length() == 0);
+    }
 
-    /***********************************************************************
-         * OTHER METHODS *
-         **********************************************************************/
-        
     public static List<ExternalContract> readByPersonName(String name) {
 	List<ExternalContract> allExternalPersons = new ArrayList<ExternalContract>();
 	final String nameToMatch = (name == null) ? null : name.replaceAll("%", ".*").toLowerCase();	
@@ -129,13 +134,14 @@ public class ExternalContract extends ExternalContract_Base {
 	return allExternalPersons;
     }
 
-    public static ExternalContract readByPersonNameAddressAndInstitutionID(String name, String address, Integer institutionID) {
+    public static ExternalContract readByPersonNameAddressAndInstitutionID(final String name, final String address, final Integer institutionID) {
 	for (Accountability accountability : RootDomainObject.getInstance().getAccountabilitys()) {
 	    if(accountability instanceof ExternalContract) {
 		ExternalContract externalPerson = (ExternalContract) accountability;
 		if (externalPerson.hasPerson() && externalPerson.getPerson().getName().equals(name)
 			&& externalPerson.getInstitutionUnit().getIdInternal().equals(institutionID)
-			&& externalPerson.getPerson().getAddress().equals(address)) {
+			&& externalPerson.getPerson().hasDefaultPhysicalAddress()
+			&& externalPerson.getPerson().getDefaultPhysicalAddress().getAddress().equals(address)) {
 		    return externalPerson;
 		}
 	    }	    
