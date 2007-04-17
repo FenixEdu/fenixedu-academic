@@ -481,6 +481,7 @@
    	       <forward name="show-protocol-alerts" path="show-protocol-alerts"/>
    	       <forward name="renew-protocol" path="renew-protocol"/>
    	       <forward name="edit-protocol-history" path="edit-protocol-history"/>
+   	       <forward name="search-protocols" path="search-protocols"/>
 	    </action>
 	    	    	
  		<action path="/editProtocol"

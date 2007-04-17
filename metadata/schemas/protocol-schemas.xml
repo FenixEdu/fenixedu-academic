@@ -296,3 +296,54 @@
 	<slot name="protocolAction.otherTypes" key="label.protocol.otherActionTypes" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
 	<slot name="observations" key="label.protocol.observations" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
 </schema>
+
+<!-- Search Protocol -->
+<schema name="edit.protocolSearch.number" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolSearch">
+	<slot name="protocolNumber"	key="label.protocol.number" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+</schema>
+
+<schema name="edit.protocolSearch.protocolBeginDate" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolSearch">
+	<slot name="beginProtocolBeginDate" key="label.protocol.beginDate" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<property name="formatText" value=""/>
+	</slot>
+	<slot name="endProtocolBeginDate" key="label.protocol.a" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+</schema>
+
+<schema name="edit.protocolSearch.protocolEndDate" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolSearch">
+	<slot name="beginProtocolEndDate" key="label.protocol.endDate" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<property name="formatText" value=""/>
+	</slot>
+	<slot name="endProtocolEndDate" key="label.protocol.a" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+</schema>
+
+<schema name="edit.protocolSearch.signedDate" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolSearch">
+	<slot name="beginSignedDate" key="label.protocol.signedDate" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<property name="formatText" value=""/>
+	</slot>
+	<slot name="endSignedDate" key="label.protocol.a" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+</schema>
+
+<schema name="edit.protocolSearch" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolSearch">
+	<slot name="country" key="label.protocol.country" layout="menu-select" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<property name="choiceType"	value="net.sourceforge.fenixedu.domain.Country" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CountryProvider" />
+		<property name="format" value="${name}"/>
+	</slot>
+	<slot name="protocolActionTypes" key="label.protocol.actionTypes" layout="option-select" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<property name="choiceType"	value="net.sourceforge.fenixedu.domain.protocols.util.ProtocolActionType" />
+		<property name="eachLayout" value="this-does-not-exist" />
+	</slot>
+	<slot name="otherProtocolActionTypes" key="label.protocol.otherActionTypes" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+	<slot name="partnerName" key="label.protocol.partner" layout="autoComplete" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<property name="size" value="80"/>
+		<property name="labelField" value="unit.name"/>		
+		<property name="rawSlotName" value="partnerNameString"/>		
+		<property name="format" value="${unit.presentationNameWithParents}"/>
+		<property name="indicatorShown" value="true"/>		
+		<property name="serviceName" value="SearchExternalUnits"/>
+		<property name="serviceArgs" value="slot=name"/>	
+		<property name="minChars" value="3"/>
+		<property name="errorStyleClass" value="error0"/>
+	</slot>
+</schema>
+

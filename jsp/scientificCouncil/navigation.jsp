@@ -101,6 +101,11 @@
 				<html:link page="/protocols.do?method=showProtocols">
 			  		<bean:message key="link.protocols.view"/>
 			  	</html:link>
+			</li>
+			<li>
+				<html:link page="/protocols.do?method=searchProtocols">
+			  		<bean:message key="link.protocols.search"/>
+			  	</html:link>
 			</li>		
 		<%}%>
 	</ul> 

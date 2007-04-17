@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolFactory;
+import net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolSearch;
 import net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolHistoryFactory.ProtocolHistoryEditorFactory;
 import net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolHistoryFactory.ProtocolHistoryRenewerFactory;
 import net.sourceforge.fenixedu.domain.protocols.Protocol;
@@ -133,6 +134,16 @@ public class ProtocolsDispatchAction extends FenixDispatchAction {
 	}
 	request.setAttribute("protocols", rootDomainObject.getProtocols());
 	return showProtocolAlerts(mapping, actionForm, request, response);
+    }
+
+    public ActionForward searchProtocols(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	ProtocolSearch protocolSearch = (ProtocolSearch) getRenderedObject("protocolSearch");
+	if (protocolSearch == null) {
+	    protocolSearch = new ProtocolSearch();
+	}
+	request.setAttribute("protocolSearch", protocolSearch);
+	return mapping.findForward("search-protocols");
     }
 
     private void setError(HttpServletRequest request, String error, ActionMessage actionMessage) {

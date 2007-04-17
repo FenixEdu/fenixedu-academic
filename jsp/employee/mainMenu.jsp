@@ -50,7 +50,12 @@
 			<html:link page="/protocols.do?method=showProtocols">
 		  		<bean:message key="link.protocols.view" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
 		  	</html:link>
-		</li>		
+		</li>
+		<li>
+			<html:link page="/protocols.do?method=searchProtocols">
+		  		<bean:message key="link.protocols.search" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+		  	</html:link>
+		</li>			
 	<%}%>
 </ul>
 

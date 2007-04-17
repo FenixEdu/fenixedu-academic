@@ -71,5 +71,9 @@
     <definition name="edit-protocol-history" extends="definition.employee.two-column">
         <put name="body" value="/protocols/editProtocolHistory.jsp"/>
     </definition>  	
+    <!-- Search -->
+    <definition name="search-protocols" extends="definition.employee.two-column">
+        <put name="body" value="/protocols/searchProtocols.jsp"/>
+    </definition>  
     
 </tiles-definitions>
