@@ -3403,7 +3403,7 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 	    Integer keyHomepage;
 		Integer keyCountryOfBirth;
 		Integer keyStudent;
-
+		
 	    Gender gender;
 		String documentIdNumber;
 	    IDDocumentType idDocumentType; 
@@ -3478,6 +3478,10 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 		}
 		
 		class net.sourceforge.fenixedu.domain.organizationalStructure.SectionUnit extends net.sourceforge.fenixedu.domain.organizationalStructure.Unit {					
+		}
+
+		class net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit extends net.sourceforge.fenixedu.domain.organizationalStructure.Unit {					
+			Integer keyResearchUnitSite;
 		}
 
 class net.sourceforge.fenixedu.domain.person.PersonName extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -4217,6 +4221,7 @@ class net.sourceforge.fenixedu.domain.research.activity.ScientificJournal extend
 	String name;
 	String issn;
     String url;
+	String publisher;
 	ScopeType locationType;
 	ResearchActivityStage stage;
 }
@@ -4227,7 +4232,6 @@ class net.sourceforge.fenixedu.domain.research.activity.JournalIssue extends net
   Integer year;
   String number;
   Month month;
-  String publisher;
   String url;
   Boolean specialIssue;
   String specialIssueComment;
@@ -4616,6 +4620,10 @@ class net.sourceforge.fenixedu.domain.Site extends net.sourceforge.fenixedu.doma
 
 	class net.sourceforge.fenixedu.domain.DepartmentSite extends net.sourceforge.fenixedu.domain.UnitSite {
 		MultiLanguageString description;
+	}
+	
+	class net.sourceforge.fenixedu.domain.ResearchUnitSite extends net.sourceforge.fenixedu.domain.UnitSite {
+		Integer keyResearchUnit;
 	}
 
 //
@@ -6207,7 +6215,6 @@ relation ExecutionCourseSiteSite {
 	}
 	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
 }
-
 
 relation ExecutionCourseSummary {
 	net.sourceforge.fenixedu.domain.Summary playsRole associatedSummaries {
@@ -8281,6 +8288,11 @@ relation PublicationsNumberTeacher {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
+}
+
+relation ResearchUnitSiteResearchUnit {
+	net.sourceforge.fenixedu.domain.ResearchUnitSite playsRole researchUnitSite;
+	net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit playsRole researchUnit;
 }
 
 relation SeminaryCourseEquivalency {

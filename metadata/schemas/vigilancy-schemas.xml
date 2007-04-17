@@ -9,6 +9,7 @@
 		<slot name="person.username" key="label.vigilancy.username"/>
 		<slot name="person.name" key="label.vigilancy.name"/>
 		<slot name="points" key="label.vigilancy.points"/>
+		<slot name="estimatedPoints"/>
 </schema>
 
 <schema name="presentTeacherCategoryCode" type="net.sourceforge.fenixedu.domain.Teacher" bundle="VIGILANCY_RESOURCES">

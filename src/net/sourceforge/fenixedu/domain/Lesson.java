@@ -442,14 +442,32 @@ public class Lesson extends Lesson_Base {
 	result.append(((OldRoom)getSala()).getName());
 	return result.toString();
     }
-    
+        
     public boolean contains(Interval interval) {
-    	YearMonthDay lessonStartDay = getLessonStartDay();
-	YearMonthDay lessonEndDay = getLessonEndDay();
-	HourMinuteSecond start = getBeginHourMinuteSecond();
-	HourMinuteSecond end = getEndHourMinuteSecond();
-
-	return new Interval(new DateTime(lessonStartDay.getYear(), lessonStartDay.getMonthOfYear(), lessonStartDay.getDayOfMonth(),start.getHour(),start.getMinuteOfHour(),0,0), 
-		new DateTime(lessonEndDay.getYear(), lessonEndDay.getMonthOfYear(), lessonEndDay.getDayOfMonth(),end.getHour(),end.getMinuteOfHour(),0,0)).contains(interval);
+    	
+	YearMonthDay intervalStartDate = interval.getStart().toYearMonthDay();
+	YearMonthDay intervalEndDate = interval.getEnd().toYearMonthDay();
+	
+	HourMinuteSecond intervalBegin = new HourMinuteSecond(interval.getStart().getHourOfDay(), interval.getStart().getMinuteOfHour(), interval.getStart().getSecondOfMinute());
+	HourMinuteSecond intervalEnd = new HourMinuteSecond(interval.getEnd().getHourOfDay(), interval.getEnd().getMinuteOfHour(), interval.getEnd().getSecondOfMinute());
+	
+	List<YearMonthDay> allLessonDates = getAllLessonDates();
+	
+	for (YearMonthDay day : allLessonDates) {	    
+	    if(intervalStartDate.isEqual(intervalEndDate)){
+		if(day.isEqual(intervalStartDate) 
+			&& !intervalBegin.isAfter(getEndHourMinuteSecond()) 
+			&& !intervalEnd.isBefore(getBeginHourMinuteSecond())){
+		    return true;
+		}		
+	    } else {
+		if((day.isAfter(intervalStartDate) && day.isBefore(intervalEndDate)) 
+			|| day.isEqual(intervalStartDate) && !getEndHourMinuteSecond().isBefore(intervalBegin)
+			|| (day.isEqual(intervalEndDate) && !getBeginHourMinuteSecond().isAfter(intervalEnd))){
+		    return true;
+		}
+	    }	      
+	}	    	    	        	        	        	     	
+	return false;
     }
 }

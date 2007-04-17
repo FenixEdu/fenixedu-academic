@@ -13,22 +13,21 @@ public class CreateJournalIssue extends Service {
 	ScientificJournal journal;
 	if(bean.getJournal()==null) {
 	    CreateScientificJournal service = new CreateScientificJournal();
-	    journal = service.run(bean.getScientificJournalName(), bean.getIssn(), bean.getLocation());
+	    journal = service.run(bean.getScientificJournalName(), bean.getIssn(), bean.getPublisher(), bean.getLocation());
 	}
 	else {
 	    journal = bean.getJournal();
 	}
-	return run(journal,bean.getYear(),bean.getMonth(),bean.getVolume(),bean.getNumber(),bean.getPublisher(),bean.getUrl());
+	return run(journal,bean.getYear(),bean.getMonth(),bean.getVolume(),bean.getNumber(),bean.getUrl());
     }
     
     
-    public JournalIssue run(ScientificJournal journal, Integer year, Month month, String volume, String number, String publisher, String url) {
+    public JournalIssue run(ScientificJournal journal, Integer year, Month month, String volume, String number, String url) {
 	JournalIssue issue = new JournalIssue(journal);
 	issue.setYear(year);
 	issue.setMonth(month);
 	issue.setVolume(volume);
 	issue.setNumber(number);
-	issue.setPublisher(publisher);
 	issue.setUrl(url);
 	return issue;
     }

@@ -369,6 +369,10 @@ public abstract class Party extends Party_Base {
 	return false;
     }
     
+    public boolean isResearchUnit() {
+	return false;
+    }
+    
     public boolean hasCompetenceCourses(final CompetenceCourse competenceCourse) {
 	return false;
     }        

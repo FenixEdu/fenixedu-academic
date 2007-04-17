@@ -6,11 +6,12 @@ import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
 
 public class CreateScientificJournal extends Service{
 
-	public ScientificJournal run(String name, String issn, ScopeType locationType)  {
+	public ScientificJournal run(String name, String issn, String publisher, ScopeType locationType)  {
 		ScientificJournal journal = new ScientificJournal();
 		journal.setName(name);
 		journal.setLocationType(locationType);
 		journal.setIssn(issn);
+		journal.setPublisher(publisher);
 		
 		return journal;
 	}

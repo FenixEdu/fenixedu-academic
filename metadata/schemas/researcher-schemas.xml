@@ -308,6 +308,7 @@ extends="eventCreation">
 		<property name="contextRelative" value="true" />
 		<property name="moduleRelative" value="true" />
 	</slot>
+	<slot name="publisher"/>
 	<slot name="participations" layout="show-participation-list">
 		<property name="subLayout" value="values"/>
 		<property name="subSchema" value="showNickName"/>
@@ -550,6 +551,9 @@ extends="eventCreation">
 <schema name="ScientificJournal.edit-defaults" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.research.activity.ScientificJournal">
 	<slot name="name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="75"/>
+	</slot>
+	<slot name="publisher">
+			<property name="size" value="75"/>
 	</slot>
 	<slot name="locationType" key="label.scientificJournal.locationType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 </schema>
@@ -1338,6 +1342,9 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Cr
 	</slot>
 	<slot name="issn" validator="net.sourceforge.fenixedu.renderers.validators.ISSNValidator"/>
 	<slot name="location" key="label.scope"/>
+	<slot name="publisher">
+		<property name="size" value="70"/>
+	</slot>
 	<slot name="url" layout="input-with-comment">
 		<property name="size" value="60"/>
 		<property name="bundle" value="RESEARCHER_RESOURCES"/>
@@ -1369,9 +1376,6 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Cr
 			<property name="size" value="10"/>
 		</slot>		
 		<slot name="month"/>
-		<slot name="publisher">
-			<property name="size" value="50"/>
-		</slot>
 	<slot name="url" layout="input-with-comment">
 		<property name="size" value="60"/>
 		<property name="bundle" value="RESEARCHER_RESOURCES"/>
@@ -1395,9 +1399,6 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Cr
 		<slot name="month"/>
 		<slot name="number" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 			<property name="size" value="10"/>
-		</slot>
-		<slot name="publisher">
-			<property name="size" value="50"/>
 		</slot>
 	<slot name="url" layout="input-with-comment">
 		<property name="size" value="60"/>
@@ -2432,6 +2433,7 @@ type="net.sourceforge.fenixedu.domain.research.activity.EventEdition">
 <schema name="presentJournal" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.research.activity.ScientificJournal">
 	<slot name="name"/>
 	<slot name="issn"/>
+	<slot name="publisher"/>
 	<slot name="url"/>
 	<slot name="locationType" key="label.scope"/>
 </schema>

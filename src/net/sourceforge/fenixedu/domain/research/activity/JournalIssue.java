@@ -129,4 +129,8 @@ public class JournalIssue extends JournalIssue_Base implements ParticipationsInt
 	return this.getScientificJournal().getName() + " - " + this.getVolume() + " (" + this.getNumber()
 		+ ")";
     }
+    
+    public String getPublisher() {
+	return this.getScientificJournal().getPublisher();
+    }
 }
