@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Remove Broken Links in Lesson Plannings" removeBrokenLinksInLessonPlannings.sql
