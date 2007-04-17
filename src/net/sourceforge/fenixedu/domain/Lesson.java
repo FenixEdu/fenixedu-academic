@@ -240,7 +240,7 @@ public class Lesson extends Lesson_Base {
 
 	if (lastSummary != null) {
 	    YearMonthDay summaryDateYearMonthDay = lastSummary.getSummaryDateYearMonthDay();
-	    YearMonthDay nextSummaryDate = summaryDateYearMonthDay.plusDays(7);
+	    YearMonthDay nextSummaryDate = summaryDateYearMonthDay.plusDays(getNumberOfDaysToSumBetweenTwoLessons());
 	    while (true) {
 		nextSummaryDate = getPossibleDateInValidLessonWeekDay(nextSummaryDate);
 		if (nextSummaryDate.isAfter(endDateToSearch)) {
@@ -251,7 +251,7 @@ public class Lesson extends Lesson_Base {
 			&& isTimeValidToInsertSummary(now, nextSummaryDate)) {
 		    return nextSummaryDate;
 		}
-		nextSummaryDate = nextSummaryDate.plusDays(7);
+		nextSummaryDate = nextSummaryDate.plusDays(getNumberOfDaysToSumBetweenTwoLessons());
 	    }
 	} else {
 	    YearMonthDay lessonStartDay = getLessonStartDay();
@@ -277,7 +277,7 @@ public class Lesson extends Lesson_Base {
 
 	HourMinuteSecond now = new HourMinuteSecond();
 	Campus lessonCampus = getLessonCampus();
-
+	
 	if (!startDateToSearch.isAfter(endDateToSearch)) {
 	    if (summaries.isEmpty()) {
 		while (true) {
@@ -296,16 +296,16 @@ public class Lesson extends Lesson_Base {
 				    startDateToSearch = addPossibleDate(datesToInsert, startDateToSearch, startDateToSearch, 
 					    now, lessonCampus, lessonOccupationPeriod);				
 				} else if (startDateToSearch.isEqual(summaryDate)) {
-				    startDateToSearch = startDateToSearch.plusDays(7);
+				    startDateToSearch = startDateToSearch.plusDays(getNumberOfDaysToSumBetweenTwoLessons());
 				    break;
 				} else {
 				    // ERROR: I hope that never enter here
 				    System.out.println("3 2 1 ... BOOOOOOMMMMMMMMM!!!");
-				    startDateToSearch = startDateToSearch.plusDays(7);
+				    startDateToSearch = startDateToSearch.plusDays(getNumberOfDaysToSumBetweenTwoLessons());
 				}
 
 			    } else if (isInSameWeek(startDateToSearch, summaryDate)) {
-				startDateToSearch = startDateToSearch.plusDays(7);
+				startDateToSearch = startDateToSearch.plusDays(getNumberOfDaysToSumBetweenTwoLessons());
 				break;
 
 			    } else if (startDateToSearch.isBefore(summaryDate)) {
@@ -316,7 +316,7 @@ public class Lesson extends Lesson_Base {
 			    } else {
 				// ERROR: I hope that never enter here
 				System.out.println("3 2 1 ... BOOOOOOMMMMMMMMM!!!");
-				startDateToSearch = startDateToSearch.plusDays(7);
+				startDateToSearch = startDateToSearch.plusDays(getNumberOfDaysToSumBetweenTwoLessons());
 			    }
 
 			    if (startDateToSearch.isAfter(endDateToSearch)) {
@@ -349,7 +349,7 @@ public class Lesson extends Lesson_Base {
 	    datesToInsert.add(dayToInsert);
 	}
 	
-	return startDateToSearch.plusDays(7);
+	return startDateToSearch.plusDays(getNumberOfDaysToSumBetweenTwoLessons());
     }
 
     public List<YearMonthDay> getAllLessonDatesEvenToday() {
@@ -377,7 +377,7 @@ public class Lesson extends Lesson_Base {
 	int summaryWeek = summaryDate.toDateTimeAtMidnight().getWeekOfWeekyear();
 	return dateWeek == summaryWeek;
     }
-
+    
     private List<YearMonthDay> getLessonDates(YearMonthDay startDateToSearch, YearMonthDay endDateToSearch) {
 	List<YearMonthDay> dates = new ArrayList<YearMonthDay>();
 	if (!startDateToSearch.isAfter(endDateToSearch)) {
@@ -387,8 +387,8 @@ public class Lesson extends Lesson_Base {
 		if (!Holiday.isHoliday(startDateToSearch, lessonCampus) 
 			&& lessonOccupationPeriod.nestedOccupationPeriodsContainsDay(startDateToSearch)) {
 		    dates.add(startDateToSearch);
-		}
-		startDateToSearch = startDateToSearch.plusDays(7);
+		}		
+		startDateToSearch = startDateToSearch.plusDays(getNumberOfDaysToSumBetweenTwoLessons());
 		if (startDateToSearch.isAfter(endDateToSearch)) {
 		    break;
 		}
@@ -431,6 +431,10 @@ public class Lesson extends Lesson_Base {
 	return lessonSummaries;
     }
 
+    private int getNumberOfDaysToSumBetweenTwoLessons() {
+	return (getFrequency().intValue() == 1) ? 1 : (getFrequency().intValue() - 1) * 7;
+    }
+    
     public String prettyPrint() {
 	final StringBuilder result = new StringBuilder();
 	result.append(getDiaSemana().getDiaSemanaString());
