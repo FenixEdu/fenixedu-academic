@@ -58,6 +58,11 @@ public class VigilantGroup extends VigilantGroup_Base {
 		} else {
 		    vigilant.addVigilancies(new OtherCourseVigilancy(writtenEvaluation));
 		}
+	    } else {
+		Vigilancy vigilancy = vigilant.getVigilancyFor(writtenEvaluation);
+		if (!vigilancy.isActive()) {
+		    vigilancy.setActive(true);
+		}
 	    }
 	}
     }

@@ -78,7 +78,7 @@ public class ConvokeByPoints extends Strategy {
 			WrittenEvaluation writtenEvaluation) {
 		List<Vigilancy> convokes = vigilant.getVigilancies();
 		for (Vigilancy convoke : convokes) {
-			if (convoke.getWrittenEvaluation().equals(writtenEvaluation))
+			if (convoke.getWrittenEvaluation().equals(writtenEvaluation) && convoke.isActive())
 				return true;
 		}
 		return false;

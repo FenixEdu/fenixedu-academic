@@ -310,7 +310,9 @@ public class Vigilant extends Vigilant_Base {
 		boolean isInExamPeriod = writtenEvaluation.getAssociatedExecutionCourses().get(0).isInExamPeriod();
 		return this.isAvailableOnDate(beginOfExam, endOfExam)
 				&& this.hasNoEvaluationsOnDate(beginOfExam, endOfExam)
-				&& (isInExamPeriod || (!isInExamPeriod && !hasLessons(beginOfExam, endOfExam)));
+				&& (isInExamPeriod || (!isInExamPeriod && (
+					(this.getTeacher()!=null && this.getTeacher().teachesAny(writtenEvaluation.getAssociatedExecutionCourses()))
+					|| !hasLessons(beginOfExam, endOfExam))));
 	}
 
 	private boolean hasLessons(DateTime beginOfExam, DateTime endOfExam) {
@@ -407,6 +409,16 @@ public class Vigilant extends Vigilant_Base {
 		return activeVigilancies;
 	}
 
+	public Vigilancy getVigilancyFor(WrittenEvaluation evaluation) {
+	
+	    for(Vigilancy vigilancy : this.getVigilancies()) {
+		if(vigilancy.getWrittenEvaluation().equals(evaluation)) {
+		    return vigilancy;
+		}
+	    }
+	    return null;
+	}
+	
 	public List<Vigilancy> getVigilancies(VigilantGroup group) {
 		return group.getVigilancies(this);
 	}

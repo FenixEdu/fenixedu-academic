@@ -699,4 +699,14 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
 		}
 		return rooms;
 	}
+	
+	public List<Vigilancy> getActiveVigilancies() {
+	    List<Vigilancy> vigilancies = new ArrayList<Vigilancy>();
+	    for(Vigilancy vigilancy : this.getVigilancies()) {
+		if(vigilancy.isActive()) {
+		    vigilancies.add(vigilancy);
+		}
+	    }
+	    return vigilancies;
+	}
 }
