@@ -41,7 +41,7 @@ public abstract class CoordinatorAuthorizationFilter extends Filtro {
         Coordinator coordinator = coordinators.first();
         ExecutionYear coordinatorExecutionYear = coordinator.getExecutionDegree().getExecutionYear();
         
-        if (coordinatorExecutionYear.compareTo(executionYear) < 0) {
+        if (executionYear == null || coordinatorExecutionYear.compareTo(executionYear) < 0) {
             deny();
         }
     }

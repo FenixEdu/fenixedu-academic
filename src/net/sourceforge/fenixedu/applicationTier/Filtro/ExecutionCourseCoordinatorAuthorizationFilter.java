@@ -26,7 +26,7 @@ public class ExecutionCourseCoordinatorAuthorizationFilter extends CoordinatorAu
             executionCourse = rootDomainObject.readExecutionCourseByOID((Integer) argument);
         }
         
-        return executionCourse.getExecutionYear();
+        return (executionCourse == null) ? null : executionCourse.getExecutionYear();
     }
 
 }
