@@ -111,15 +111,15 @@
 					<logic:present name="summary" property="studentsNumber">			
 						<logic:notEmpty name="summary" property="studentsNumber">			
 							<bean:define id="studentsAttended" name="summary" property="studentsNumber" />
-							<logic:greaterThan name="studentsAttended" value="0">
+							<logic:greaterEqual name="studentsAttended" value="0">
 								<bean:message key="message.studentsnumber.attended.lesson" bundle="DEFAULT" arg0="<%= studentsAttended.toString() %>"/>
-							</logic:greaterThan>
-							<logic:lessEqual name="studentsAttended" value="0">
+							</logic:greaterEqual>
+							<logic:lessThan name="studentsAttended" value="0">
 								<bean:message key="message.studentsnumber.attended.lesson.no" bundle="DEFAULT"/>				
-							</logic:lessEqual>
+							</logic:lessThan>
 						</logic:notEmpty>
 						<logic:empty name="summary" property="studentsNumber">			
-								<bean:message key="message.studentsnumber.attended.lesson.no" bundle="DEFAULT"/>								
+							<bean:message key="message.studentsnumber.attended.lesson.no" bundle="DEFAULT"/>								
 						</logic:empty>
 					</logic:present>				
 					<logic:notPresent name="summary" property="studentsNumber">			

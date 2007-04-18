@@ -120,15 +120,15 @@
 					<logic:present name="summary" property="studentsNumber">			
 						<logic:notEmpty name="summary" property="studentsNumber">			
 							<bean:define id="studentsAttended" name="summary" property="studentsNumber" />
-							<logic:greaterThan name="studentsAttended" value="0">
+							<logic:greaterEqual name="studentsAttended" value="0">
 								<bean:message key="message.studentsnumber.attended.lesson" arg0="<%= studentsAttended.toString() %>"/>
-							</logic:greaterThan>
-							<logic:lessEqual name="studentsAttended" value="0">
+							</logic:greaterEqual>
+							<logic:lessThan name="studentsAttended" value="0">
 								<bean:message key="message.studentsnumber.attended.lesson.no" />				
-							</logic:lessEqual>
+							</logic:lessThan>
 						</logic:notEmpty>
 						<logic:empty name="summary" property="studentsNumber">			
-								<bean:message key="message.studentsnumber.attended.lesson.no" />								
+							<bean:message key="message.studentsnumber.attended.lesson.no" />								
 						</logic:empty>
 					</logic:present>				
 					<logic:notPresent name="summary" property="studentsNumber">			

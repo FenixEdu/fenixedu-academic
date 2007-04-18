@@ -309,8 +309,8 @@ public class CurricularCourse extends CurricularCourse_Base {
     public List<CurricularCourseScope> getActiveScopesInExecutionPeriodAndSemester(
 	    final ExecutionPeriod executionPeriod) {
 	List<CurricularCourseScope> activeScopesInExecutionPeriod = new ArrayList<CurricularCourseScope>();
-	for (Iterator iter = getScopes().iterator(); iter.hasNext();) {
-	    CurricularCourseScope scope = (CurricularCourseScope) iter.next();
+	for (Iterator<CurricularCourseScope> iter = getScopes().iterator(); iter.hasNext();) {
+	    CurricularCourseScope scope = iter.next();
 	    if ((scope.getCurricularSemester().getSemester().equals(executionPeriod.getSemester()))
 		    && (scope.getBeginDate().getTime().getTime() <= executionPeriod.getBeginDate()
 			    .getTime())
@@ -551,9 +551,10 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     public boolean hasActiveScopeInGivenSemesterForCommonAndGivenBranch(final Integer semester,
 	    final Branch branch) {
-	List scopes = this.getScopes();
+	
+	List<CurricularCourseScope> scopes = this.getScopes();
 
-	List result = (List) CollectionUtils.select(scopes, new Predicate() {
+	List<CurricularCourseScope> result = (List<CurricularCourseScope>) CollectionUtils.select(scopes, new Predicate() {
 	    public boolean evaluate(Object obj) {
 		CurricularCourseScope curricularCourseScope = (CurricularCourseScope) obj;
 		return ((curricularCourseScope.getBranch().getBranchType().equals(BranchType.COMNBR) || curricularCourseScope
@@ -721,7 +722,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 
 	public CurriculumFactoryEditCurriculum(Curriculum curriculum) {
 	    super(curriculum.getCurricularCourse());
-	    this.curriculum = new DomainReference(curriculum);
+	    this.curriculum = new DomainReference<Curriculum>(curriculum);
 	}
 
 	public Curriculum getCurriculum() {
@@ -729,7 +730,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 	}
 
 	public void setCurriculum(Curriculum curriculum) {
-	    this.curriculum = new DomainReference(curriculum);
+	    this.curriculum = new DomainReference<Curriculum>(curriculum);
 	    populateCurriculum(this, curriculum);
 	}
 
@@ -820,7 +821,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     public List<ExecutionCourse> getExecutionCoursesByExecutionPeriod(
 	    final ExecutionPeriod executionPeriod) {
-	return (List) CollectionUtils.select(getAssociatedExecutionCourses(), new Predicate() {
+	return (List<ExecutionCourse>) CollectionUtils.select(getAssociatedExecutionCourses(), new Predicate() {
 	    public boolean evaluate(Object o) {
 		ExecutionCourse executionCourse = (ExecutionCourse) o;
 		return executionCourse.getExecutionPeriod().equals(executionPeriod);
@@ -829,7 +830,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public List<ExecutionCourse> getExecutionCoursesByExecutionYear(final ExecutionYear executionYear) {
-	return (List) CollectionUtils.select(getAssociatedExecutionCourses(), new Predicate() {
+	return (List<ExecutionCourse>) CollectionUtils.select(getAssociatedExecutionCourses(), new Predicate() {
 	    public boolean evaluate(Object o) {
 		ExecutionCourse executionCourse = (ExecutionCourse) o;
 		return executionCourse.getExecutionPeriod().getExecutionYear().equals(executionYear);
@@ -1757,17 +1758,20 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public boolean isActive(final ExecutionYear executionYear) {
-	final ExecutionYear executionYearToCheck = executionYear == null ? ExecutionYear
-		.readCurrentExecutionYear() : executionYear;
+	final ExecutionYear executionYearToCheck = executionYear == null ? ExecutionYear.readCurrentExecutionYear() : executionYear;
 	for (final ExecutionPeriod executionPeriod : executionYearToCheck.getExecutionPeriodsSet()) {
-	    if (getActiveScopesInExecutionPeriod(executionPeriod).size() > 0
-		    || getActiveDegreeModuleScopesInExecutionPeriod(executionPeriod).size() > 0) {
-		return true;
-	    }
+	   if(isActive(executionPeriod)) {
+	       return true;
+	   }
 	}
 	return false;
     }
 
+    public boolean isActive(final ExecutionPeriod executionPeriod) {
+	return getActiveScopesInExecutionPeriod(executionPeriod).size() > 0 
+		|| getActiveDegreeModuleScopesInExecutionPeriod(executionPeriod).size() > 0 ;	
+    }
+    
     public boolean hasEnrolmentForPeriod(final ExecutionPeriod executionPeriod) {
 	for (final CurriculumModule curriculumModule : getCurriculumModules()) {
 	    if (curriculumModule.isEnrolment()) {

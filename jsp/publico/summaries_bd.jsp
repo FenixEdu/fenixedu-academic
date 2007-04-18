@@ -144,13 +144,14 @@
 						<bean:message key="message.presences" />			
 						<logic:notEmpty name="summary" property="studentsNumber">			
 							<bean:define id="studentsAttended" name="summary" property="studentsNumber" />
-							<logic:greaterThan name="studentsAttended" value="0">
+							
+							<logic:greaterEqual name="studentsAttended" value="0">
 								<bean:message key="message.students" arg0="<%= studentsAttended.toString() %>"/>
-							</logic:greaterThan>
+							</logic:greaterEqual>
 				
-							<logic:lessEqual name="studentsAttended" value="0">
+							<logic:lessThan name="studentsAttended" value="0">
 								<i><bean:message key="message.notSpecified" /></i>				
-							</logic:lessEqual>
+							</logic:lessThan>
 						</logic:notEmpty>
 			
 						<logic:empty name="summary" property="studentsNumber">			

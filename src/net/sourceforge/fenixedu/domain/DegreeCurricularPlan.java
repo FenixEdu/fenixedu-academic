@@ -66,7 +66,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
          * 
          * For an example, see the coordinator's portal.
          */
-    public static final Comparator DEGREE_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_EXECUTION_DEGREE_AND_DEGREE_CODE = new Comparator<DegreeCurricularPlan>() {
+    public static final Comparator<DegreeCurricularPlan> DEGREE_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_EXECUTION_DEGREE_AND_DEGREE_CODE = new Comparator<DegreeCurricularPlan>() {
 
 	public int compare(DegreeCurricularPlan degreeCurricularPlan1,
 		DegreeCurricularPlan degreeCurricularPlan2) {
@@ -499,8 +499,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	List<CurricularCourse> curricularCourses = new ArrayList<CurricularCourse>();
 	for (CurricularCourse curricularCourse : getCurricularCourses()) {
 	    for (ExecutionPeriod executionPeriod : executionYear.getExecutionPeriods()) {
-		List<ExecutionCourse> executionCourses = curricularCourse
-			.getExecutionCoursesByExecutionPeriod(executionPeriod);
+		List<ExecutionCourse> executionCourses = curricularCourse.getExecutionCoursesByExecutionPeriod(executionPeriod);
 		if (!executionCourses.isEmpty()) {
 		    curricularCourses.add(curricularCourse);
 		    break;
@@ -508,7 +507,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	    }
 	}
 	return curricularCourses;
-    }
+    }    
 
     public List<CurricularCourse> getCurricularCoursesByBasicAttribute(Boolean basic) {
 	List<CurricularCourse> curricularCourses = new ArrayList<CurricularCourse>();
@@ -601,7 +600,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     public List<CurricularCourse> getCurricularCoursesFromArea(Branch area, AreaType areaType) {
 	List<CurricularCourse> curricularCourses = new ArrayList<CurricularCourse>();
 
-	List scopes = area.getScopes();
+	List<CurricularCourseScope> scopes = area.getScopes();
 
 	int scopesSize = scopes.size();
 
@@ -618,11 +617,11 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	return curricularCourses;
     }
 
-    public List getCurricularCoursesFromAnyArea() {
-	List curricularCourses = new ArrayList();
-	for (Iterator iter = getAreas().iterator(); iter.hasNext();) {
-	    Branch branch = (Branch) iter.next();
-	    getCurricularCoursesFromArea(branch, null);
+    public List<CurricularCourse> getCurricularCoursesFromAnyArea() {
+	List<CurricularCourse> curricularCourses = new ArrayList<CurricularCourse>();
+	for (Iterator<Branch> iter = getAreas().iterator(); iter.hasNext();) {
+	    Branch branch = iter.next();
+	    curricularCourses.addAll(getCurricularCoursesFromArea(branch, null));
 	}
 	return curricularCourses;
     }
@@ -745,7 +744,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     public List<Branch> getCommonAreas() {
-	return (List) CollectionUtils.select(getAreas(), new Predicate() {
+	return (List<Branch>) CollectionUtils.select(getAreas(), new Predicate() {
 	    public boolean evaluate(Object obj) {
 		Branch branch = (Branch) obj;
 		if (branch.getBranchType() == null) {
@@ -769,9 +768,9 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	return curricularCourses;
     }
 
-    public List getSpecializationAreas() {
+    public List<Branch> getSpecializationAreas() {
 
-	return (List) CollectionUtils.select(getAreas(), new Predicate() {
+	return (List<Branch>) CollectionUtils.select(getAreas(), new Predicate() {
 
 	    public boolean evaluate(Object arg0) {
 		Branch branch = (Branch) arg0;
@@ -781,8 +780,8 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	});
     }
 
-    public List getSecundaryAreas() {
-	return (List) CollectionUtils.select(getAreas(), new Predicate() {
+    public List<Branch> getSecundaryAreas() {
+	return (List<Branch>) CollectionUtils.select(getAreas(), new Predicate() {
 
 	    public boolean evaluate(Object arg0) {
 		Branch branch = (Branch) arg0;

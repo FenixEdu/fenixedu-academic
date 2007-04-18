@@ -3399,7 +3399,6 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 		Integer keyGrantOwner;
 		Integer keyPersonalPhoto;
 		Integer keyAssociatedPersonAccount;
-		Integer keyResearcher;
 		Integer keyUser;
 	    Integer keyHomepage;
 		Integer keyCountryOfBirth;

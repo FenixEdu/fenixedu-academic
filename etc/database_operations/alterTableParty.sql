@@ -1,0 +1,1 @@
+alter table PARTY drop column KEY_RESEARCHER;
