@@ -17,6 +17,8 @@ import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatus;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatusHistory;
 import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth;
+import net.sourceforge.fenixedu.domain.assiduousness.ContinuousSchedule;
+import net.sourceforge.fenixedu.domain.assiduousness.HalfTimeSchedule;
 import net.sourceforge.fenixedu.domain.assiduousness.Justification;
 import net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive;
 import net.sourceforge.fenixedu.domain.assiduousness.Leave;
@@ -36,6 +38,7 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Duration;
 import org.joda.time.DurationFieldType;
+import org.joda.time.Interval;
 import org.joda.time.Partial;
 import org.joda.time.Period;
 import org.joda.time.PeriodType;
@@ -208,6 +211,9 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			if (!hasScheduleAndActive(getEmployee().getAssiduousness(), getBeginDate(),
 				dayDuration)) {
 			    return new ActionMessage("errors.employeeHasNoScheduleOrInactive");
+			}
+			if (hasMoreThanOneOfTheKind(getEmployee().getAssiduousness(), getBeginDate())) {
+			    return new ActionMessage("errors.hasMoreThanOneOfTheKind");
 			}
 
 			Schedule schedule = getEmployee().getAssiduousness().getSchedule(getBeginDate());
@@ -645,6 +651,24 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 	}
 
 	private String createJustification(DateTime dateTime, Duration duration, ResourceBundle bundle) {
+	    List<Assiduousness> assisuousnesssList = new ArrayList<Assiduousness>();
+	    if (getJustificationMotive().getJustificationType()
+		    .equals(JustificationType.HALF_OCCURRENCE)
+		    || getJustificationMotive().getJustificationType().equals(
+			    JustificationType.HALF_MULTIPLE_MONTH_BALANCE)) {
+
+		for (AssiduousnessRecord assiduousnessRecord : RootDomainObject.getInstance()
+			.getAssiduousnessRecords()) {
+		    if (assiduousnessRecord.isLeave()
+			    && !assiduousnessRecord.isAnulated()
+			    && ((Leave) assiduousnessRecord).getJustificationMotive()
+				    .getJustificationType().equals(getJustificationType())
+			    && ((Leave) assiduousnessRecord).getDate().toYearMonthDay().equals(
+				    getBeginDate())) {
+			assisuousnesssList.add(assiduousnessRecord.getAssiduousness());
+		    }
+		}
+	    }
 	    StringBuilder result = new StringBuilder();
 	    YearMonthDay end = dateTime.plus(duration).toYearMonthDay();
 	    List<Assiduousness> assiduousnessOrderedList = new ArrayList<Assiduousness>(RootDomainObject
@@ -707,7 +731,23 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			    JustificationType.HALF_OCCURRENCE)
 			    || getJustificationMotive().getJustificationType().equals(
 				    JustificationType.HALF_MULTIPLE_MONTH_BALANCE)) {
+
+			if (assisuousnesssList.contains(assiduousness)) {
+			    result.append(assiduousness.getEmployee().getEmployeeNumber());
+			    result.append(" - ");
+			    result.append(bundle.getString("errors.hasMoreThanOneOfTheKind"));
+			    result.append("<br/>");
+			    continue;
+			}
+
 			Schedule schedule = assiduousness.getSchedule(getBeginDate());
+			if (schedule == null) {
+			    result.append(assiduousness.getEmployee().getEmployeeNumber());
+			    result.append(" - ");
+			    result.append(bundle.getString("errors.employeeHasNoScheduleOrInactive"));
+			    result.append("<br/>");
+			    continue;
+			}
 			WorkSchedule workSchedule = schedule.workScheduleWithDate(getBeginDate());
 			if (workSchedule == null) {
 			    result.append(assiduousness.getEmployee().getEmployeeNumber());
@@ -716,28 +756,50 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			    result.append("<br/>");
 			    continue;
 			}
+
 			dateTime = getBeginDate().toDateTime(
 				workSchedule.getWorkScheduleType().getNormalWorkPeriod()
 					.getFirstPeriod());
-			duration = workSchedule.getWorkScheduleType().getNormalWorkPeriod()
-				.getFirstPeriodDuration();
-			if (getWorkPeriodType().equals(WorkPeriodType.SECOND_PERIOD)) {
-			    if (workSchedule.getWorkScheduleType().getNormalWorkPeriod()
-				    .getSecondPeriod() == null) {
+			if ((workSchedule.getWorkScheduleType() instanceof HalfTimeSchedule)) {
+
+			    if (((getWorkPeriodType().equals(WorkPeriodType.FIRST_PERIOD) && ((HalfTimeSchedule) workSchedule
+				    .getWorkScheduleType()).isMorningSchedule()) || (getWorkPeriodType()
+				    .equals(WorkPeriodType.SECOND_PERIOD) && !((HalfTimeSchedule) workSchedule
+				    .getWorkScheduleType()).isMorningSchedule()))) {
+				duration = workSchedule.getWorkScheduleType().getNormalWorkPeriod()
+					.getWorkPeriodDuration();
+			    } else {
 				result.append(assiduousness.getEmployee().getEmployeeNumber());
 				result.append(" - ");
-				result
-					.append(bundle
-						.getString("errors.workScheduleWithoutSecondPeriod"));
+				result.append(bundle
+					.getString("errors.employeeHasPartTimeScheduleInOtherDayTime"));
 				result.append("<br/>");
 				continue;
 			    }
+			} else {
+			    duration = workSchedule.getWorkScheduleType().getNormalWorkPeriod()
+				    .getFirstPeriodDuration();
 			    dateTime = getBeginDate().toDateTime(
 				    workSchedule.getWorkScheduleType().getNormalWorkPeriod()
 					    .getSecondPeriod());
-			    duration = workSchedule.getWorkScheduleType().getNormalWorkPeriod()
-				    .getSecondPeriodDuration();
-
+			    if ((workSchedule.getWorkScheduleType() instanceof ContinuousSchedule)) {
+				duration = new Duration(workSchedule.getWorkScheduleType()
+					.getNormalWorkPeriod().getWorkPeriodDuration().getMillis() / 2);
+			    }
+			    if (getWorkPeriodType().equals(WorkPeriodType.SECOND_PERIOD)
+				    && !(workSchedule.getWorkScheduleType() instanceof ContinuousSchedule)) {
+				if (workSchedule.getWorkScheduleType().getNormalWorkPeriod()
+					.getSecondPeriod() == null) {
+				    result.append(assiduousness.getEmployee().getEmployeeNumber());
+				    result.append(" - ");
+				    result.append(bundle
+					    .getString("errors.workScheduleWithoutSecondPeriod"));
+				    result.append("<br/>");
+				    continue;
+				}
+				duration = workSchedule.getWorkScheduleType().getNormalWorkPeriod()
+					.getSecondPeriodDuration();
+			    }
 			}
 		    }
 		    new Leave(assiduousness, dateTime, duration, getJustificationMotive(), null,
@@ -1103,6 +1165,10 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 
     public void setJustificationDayType(JustificationDayType justificationDayType) {
 	this.justificationDayType = justificationDayType;
+    }
+
+    protected boolean hasMoreThanOneOfTheKind(Assiduousness assiduousness, YearMonthDay date) {
+	return (assiduousness.getLeavesByType(date, date, getJustificationType())).isEmpty();
     }
 
 }

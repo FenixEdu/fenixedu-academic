@@ -181,12 +181,12 @@ public class Assiduousness extends Assiduousness_Base {
 	    if (dayOccurrences.isEmpty() || !workDaySheet.getAssiduousnessRecords().isEmpty()) {
 		List<Leave> timeLeaves = getLeavesByType(workDaySheet.getLeaves(),
 			JustificationType.TIME);
-		timeLeaves.addAll(getLeavesByType(workDaySheet.getLeaves(),
-			JustificationType.HALF_OCCURRENCE));
-		timeLeaves.addAll(getLeavesByType(workDaySheet.getLeaves(),
-			JustificationType.HALF_MULTIPLE_MONTH_BALANCE));
+		List<Leave> halfOccurrenceLeaves = getLeavesByType(workDaySheet.getLeaves(),
+			JustificationType.HALF_OCCURRENCE);
 		List<Leave> balanceLeaves = getLeavesByType(workDaySheet.getLeaves(),
 			JustificationType.BALANCE);
+		balanceLeaves.addAll(getLeavesByType(workDaySheet.getLeaves(),
+			JustificationType.HALF_MULTIPLE_MONTH_BALANCE));	
 		List<Leave> balanceOcurrenceLeaves = getLeavesByType(workDaySheet.getLeaves(),
 			JustificationType.MULTIPLE_MONTH_BALANCE);
 		if (!workDaySheet.getAssiduousnessRecords().isEmpty() || !timeLeaves.isEmpty()) {
@@ -210,6 +210,7 @@ public class Assiduousness extends Assiduousness_Base {
 		}
 		workDaySheet.discountBalanceLeaveInFixedPeriod(balanceLeaves);
 		workDaySheet.discountBalanceOcurrenceLeaveInFixedPeriod(balanceOcurrenceLeaves);
+		workDaySheet.discountBalance(halfOccurrenceLeaves);
 	    }
 	} else {
 	    if (!workDaySheet.getAssiduousnessRecords().isEmpty()) {

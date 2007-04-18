@@ -27,5 +27,5 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Remove Unused Column KEY_RESEARCHER" alterTableParty.sql=======
 execute "Drop table EmailAddress" dropOldEmailAddressTable.sql
+execute "correct Work Schedule Type" correctWorkScheduleType.sql
