@@ -332,6 +332,8 @@ public class Receipt extends Receipt_Base {
 	super.setEmployee(null);
 	super.getEntries().clear();
 	super.setPerson(null);
+	super.setOwnerUnit(null);
+	super.setCreatorUnit(null);
 
 	removeRootDomainObject();
 
