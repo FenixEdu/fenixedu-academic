@@ -2254,7 +2254,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     public void resetIsFirstTimeEnrolmentForCurricularCourse(final CurricularCourse curricularCourse) {
-	final SortedSet<Enrolment> enrolments = new TreeSet<Enrolment>(Enrolment.COMPARATOR_BY_EXECUTION_PERIOD_AND_ID);
+	final SortedSet<Enrolment> enrolments = new TreeSet<Enrolment>(Enrolment.COMPARATOR_BY_EXECUTION_PERIOD);
 	for (final Enrolment enrolment : getEnrolmentsSet()) {
 	    if (curricularCourse == enrolment.getCurricularCourse()) {
 		enrolments.add(enrolment);

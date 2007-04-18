@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.log.EnrolmentLog;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.util.EnrolmentAction;
@@ -46,25 +47,36 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     private static final Logger logger = Logger.getLogger(Enrolment.class);
     
-    public static final Comparator<Enrolment> COMPARATOR_BY_EXECUTION_PERIOD = new BeanComparator(
-	    "executionPeriod");
+    static public final Comparator<Enrolment> COMPARATOR_BY_EXECUTION_PERIOD = new Comparator<Enrolment>() {
+        public int compare(Enrolment e1, Enrolment e2) {
+	    int result = e1.getExecutionPeriod().compareTo(e2.getExecutionPeriod());
+	    return (result == 0) ? e1.getIdInternal().compareTo(e2.getIdInternal()) : result;
+        }
+    };
 
-    public static final Comparator<Enrolment> COMPARATOR_BY_EXECUTION_PERIOD_AND_ID = new ComparatorChain();
-    static {
-	((ComparatorChain) COMPARATOR_BY_EXECUTION_PERIOD_AND_ID).addComparator(new BeanComparator(
-		"executionPeriod"));
-	((ComparatorChain) COMPARATOR_BY_EXECUTION_PERIOD_AND_ID).addComparator(new BeanComparator(
-		"idInternal"));
-    }
-
-    public static final Comparator<Enrolment> REVERSE_COMPARATOR_BY_EXECUTION_PERIOD = new ComparatorChain();
-    static {
-	((ComparatorChain) REVERSE_COMPARATOR_BY_EXECUTION_PERIOD).addComparator(new BeanComparator(
-		"executionPeriod"), true);
-	((ComparatorChain) REVERSE_COMPARATOR_BY_EXECUTION_PERIOD).addComparator(new BeanComparator(
-		"idInternal"));
-    }
-
+    static public final Comparator<Enrolment> REVERSE_COMPARATOR_BY_EXECUTION_PERIOD = new Comparator<Enrolment>() {
+	public int compare(Enrolment e1, Enrolment e2) {
+	    return -COMPARATOR_BY_EXECUTION_PERIOD.compare(e1, e2);
+	}
+    };
+    
+    static final public Comparator<Enrolment> COMPARATOR_BY_EXECUTION_YEAR = new Comparator<Enrolment>() {
+        public int compare(Enrolment e1, Enrolment e2) {
+	    int result = e1.getExecutionYear().compareTo(e2.getExecutionYear());
+	    return (result == 0) ? e1.getIdInternal().compareTo(e2.getIdInternal()) : result;
+        }
+    };
+    
+    static final public Comparator<Enrolment> COMPARATOR_BY_NAME_AND_EXECUTION_YEAR = new Comparator<Enrolment>() {
+        public int compare(Enrolment e1, Enrolment e2) {
+            final ComparatorChain comparatorChain = new ComparatorChain();
+            comparatorChain.addComparator(Enrolment.COMPARATOR_BY_EXECUTION_YEAR);
+            comparatorChain.addComparator(CurriculumModule.COMPARATOR_BY_NAME);
+            
+            return comparatorChain.compare(e1, e2);
+        }
+    };
+    
     private Integer accumulatedWeight;
 
     private Double accumulatedEctsCredits;
