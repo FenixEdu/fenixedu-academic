@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.studentCurriculum;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -23,12 +24,12 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 
 public abstract class CurriculumModule extends CurriculumModule_Base {
 
-    public static final ComparatorChain COMPARATOR_BY_NAME = new ComparatorChain();
-
-    static {
-	COMPARATOR_BY_NAME.addComparator(new BeanComparator("name"));
-	COMPARATOR_BY_NAME.addComparator(new BeanComparator("idInternal"));
-    }
+    static public final Comparator<CurriculumModule> COMPARATOR_BY_NAME = new Comparator<CurriculumModule>() {
+        public int compare(CurriculumModule o1, CurriculumModule o2) {
+	    int result = o1.getName().compareTo(o2.getName());
+	    return (result == 0) ? o1.getIdInternal().compareTo(o2.getIdInternal()) : result;
+        }
+    };
 
     public CurriculumModule() {
 	super();
