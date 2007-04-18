@@ -4620,6 +4620,9 @@ class net.sourceforge.fenixedu.domain.Site extends net.sourceforge.fenixedu.doma
 		Integer keyUnit;
 	}
 
+	class net.sourceforge.fenixedu.domain.InstitutionSite extends net.sourceforge.fenixedu.domain.UnitSite {
+	}
+
 	class net.sourceforge.fenixedu.domain.DepartmentSite extends net.sourceforge.fenixedu.domain.UnitSite {
 		MultiLanguageString description;
 	}
@@ -8346,12 +8349,12 @@ relation UnitHasSite {
 }
 
 relation UnitSiteManagers {
-    net.sourceforge.fenixedu.domain.UnitSite playsRole unitSites {
-	    	multiplicity *;
-    }
 	net.sourceforge.fenixedu.domain.Person playsRole managers {
 		multiplicity *;
 	}
+    net.sourceforge.fenixedu.domain.UnitSite playsRole unitSites {
+	    	multiplicity *;
+    }
 }
 
 relation DepartmentUnit {

@@ -23,3 +23,8 @@
 <schema name="site.item.name" type="net.sourceforge.fenixedu.domain.Item">
     <slot name="name"/>
 </schema>
+
+<schema name="websiteManagement.site.choose" type="net.sourceforge.fenixedu.domain.UnitSite">
+    <slot name="unit.nameWithAcronym" key="label.site.name"/>
+</schema>
+

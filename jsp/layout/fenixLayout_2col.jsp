@@ -48,6 +48,7 @@
    <tr>
      <td id="navlateral" align="left" valign="top" nowrap="nowrap">
      	<tiles:insert attribute="navLocal" ignore="true"/>
+        <tiles:insert attribute="navLocalExtra" ignore="true"/>
     </td>
      <td id="bodycontent" width="100%" align="left" valign="top" >
      	<tiles:insert attribute="body-context" ignore="true"/>

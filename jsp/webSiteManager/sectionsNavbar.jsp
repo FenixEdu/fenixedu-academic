@@ -12,12 +12,15 @@
 	<bean:define id="person" name="person" type="net.sourceforge.fenixedu.domain.Person"/>
 
 	<ul>
-	<logic:iterate id="announcementBoard" name="announcementBoards" type="net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard">
-		<li>
-			<html:link action="<%= contextPrefix + "method=viewAnnouncementBoard&announcementBoardId="+announcementBoard.getIdInternal() +"&" +extraParameters%>">
-				<bean:write name="announcementBoard" property="name"/>
-			</html:link>
-		</li>
-	</logic:iterate>
+        <li class="navheader">
+            <bean:message key="ist.unit.name"/>
+        </li>
+        	<logic:iterate id="announcementBoard" name="announcementBoards" type="net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard">
+        		<li>
+        			<html:link action="<%= contextPrefix + "method=viewAnnouncementBoard&announcementBoardId="+announcementBoard.getIdInternal() +"&" +extraParameters%>">
+        				<bean:write name="announcementBoard" property="name"/>
+        			</html:link>
+        		</li>
+        	</logic:iterate>
 	</ul>
 </logic:present>

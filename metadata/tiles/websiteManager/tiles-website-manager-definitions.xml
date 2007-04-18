@@ -4,10 +4,11 @@
 <!-- Tiles definitions -->
 <tiles-definitions>
 	<definition name="definition.websiteManager.masterPage" extends="df.layout.two-column">
+        <put name="title" value="Gestão do WebSite" />
 		<put name="serviceName" value="Gestão WebSite" />
 		<put name="navGeral" value="/webSiteManager/commonNavGeral.jsp" />  
 		<put name="body" value="/commons/blank.jsp" />
-		<put name="navLocal" value="/webSiteManager/navbar.jsp" type="page"/>
+        <put name="navLocal" value="/webSiteManager/navbar.jsp"/>
 		<put name="footer" value="/sop/commonFooterSop.jsp" />
 	</definition>	
 </tiles-definitions>

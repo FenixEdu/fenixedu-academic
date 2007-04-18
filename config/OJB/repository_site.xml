@@ -37,10 +37,15 @@
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.UnitSite" table="SITE">
     <extent-class class-ref="net.sourceforge.fenixedu.domain.DepartmentSite"/>
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.InstitutionSite"/>
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.DepartmentSite" table="SITE">
 </class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.InstitutionSite" table="SITE">
+</class-descriptor>
+
 
 <!-- ******************************** -->
 <!-- **********   SECTION  ********** -->

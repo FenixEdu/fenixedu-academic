@@ -38,7 +38,13 @@
     <!-- ========== Action Mapping Definitions =============================== -->
     <action-mappings type="org.apache.struts.action.ActionMapping">
       <!-- page fronting actions -->
-      <action path="/index" forward="/index.jsp"/>
+      <action path="/index" type="net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.ListSitesAction">
+        <forward name="list"  path="website-index"/>
+      </action>
+
+      <action path="/manageInstitutionSite" type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction">
+        <forward name="Success" path="announcementsManagement.do?method=start" redirect="true"/>
+      </action>
        
        <action path="/announcementsManagement"
               type="net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.WebSiteAnnouncementManagement"
@@ -53,10 +59,14 @@
           <forward name="unitStructuredBoards" path="unit-structured-boards"/>
           <forward name="viewAnnouncementBoard" path="websiteManager-view-announcementBoard"/>
    		  <forward name="viewAnnouncement" path="websiteManager-view-announcement"/>
-      </action>     
-     </action-mappings>     
+      </action>
+     </action-mappings>
 
-    
+    <!-- 
+    <action path="/manageDepartmentSite" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.ManageDepartmentSiteDA">
+    </action>
+     -->
+     
     <!-- ========== Controller Configuration ================================ -->
 	  <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>
 	     
