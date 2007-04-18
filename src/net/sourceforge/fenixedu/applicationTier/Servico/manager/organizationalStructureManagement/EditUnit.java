@@ -5,6 +5,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitClassification;
@@ -15,7 +16,7 @@ import org.joda.time.YearMonthDay;
 public class EditUnit extends Service {
 
     public void run(Integer unitID, String unitName, String unitCostCenter, String acronym,
-	    YearMonthDay begin, YearMonthDay end, Integer departmentID, Integer degreeID,
+	    YearMonthDay begin, YearMonthDay end, Integer departmentID, Integer degreeID, Integer administrativeOfficeID,
             String webAddress, UnitClassification classification, Boolean canBeResponsibleOfSpaces)
     		throws ExcepcaoPersistencia, FenixServiceException, DomainException, FenixFilterException {
 
@@ -28,8 +29,9 @@ public class EditUnit extends Service {
         
         Degree degree = rootDomainObject.readDegreeByOID(degreeID);
         Department department = rootDomainObject.readDepartmentByOID(departmentID);        
+        AdministrativeOffice administrativeOffice = rootDomainObject.readAdministrativeOfficeByOID(administrativeOfficeID);
         
-        unit.edit(unitName, costCenterCode, acronym, begin, end, webAddress, classification, department, degree, canBeResponsibleOfSpaces);	                 
+        unit.edit(unitName, costCenterCode, acronym, begin, end, webAddress, classification, department, degree, administrativeOffice, canBeResponsibleOfSpaces);	                 
     }
     
     private Integer getCostCenterCode(String unitCostCenter) {

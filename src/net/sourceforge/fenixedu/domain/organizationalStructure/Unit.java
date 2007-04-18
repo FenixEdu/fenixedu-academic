@@ -50,6 +50,7 @@ public class Unit extends Unit_Base {
     static {
 	((ComparatorChain) UNIT_COMPARATOR_BY_NAME).addComparator(new BeanComparator("name", Collator.getInstance()));
 	((ComparatorChain) UNIT_COMPARATOR_BY_NAME).addComparator(new BeanComparator("idInternal"));
+	
 	applicationResourcesBundle = ResourceBundle.getBundle("resources.ApplicationResources", new Locale("pt"));
     }
 
@@ -82,7 +83,7 @@ public class Unit extends Unit_Base {
 
     public void edit(String unitName, Integer unitCostCenter, String acronym, YearMonthDay beginDate,
 	    YearMonthDay endDate, String webAddress, UnitClassification classification, 
-	    Department department, Degree degree, Boolean canBeResponsibleOfSpaces) {
+	    Department department, Degree degree, AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces) {
 	
 	init(unitName, unitCostCenter, acronym, beginDate, endDate, webAddress, classification, canBeResponsibleOfSpaces);	
     }

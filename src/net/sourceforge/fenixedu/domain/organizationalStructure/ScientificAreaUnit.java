@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -22,7 +23,7 @@ public class ScientificAreaUnit extends ScientificAreaUnit_Base {
         super.setType(PartyTypeEnum.SCIENTIFIC_AREA);
     }
     
-    public static Unit createNewScientificArea(String name, Integer costCenterCode, String acronym,
+    public static Unit createNewInternalScientificArea(String name, Integer costCenterCode, String acronym,
 	    YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit,
 	    AccountabilityType accountabilityType, String webAddress, UnitClassification classification, 
 	    Boolean canBeResponsibleOfSpaces) {
@@ -39,9 +40,9 @@ public class ScientificAreaUnit extends ScientificAreaUnit_Base {
     @Override
     public void edit(String unitName, Integer unitCostCenter, String acronym, YearMonthDay beginDate,
             YearMonthDay endDate, String webAddress, UnitClassification classification,
-            Department department, Degree degree, Boolean canBeResponsibleOfSpaces) {
+            Department department, Degree degree, AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces) {
      	
-	super.edit(unitName, unitCostCenter, acronym, beginDate, endDate, webAddress, classification, department, degree, canBeResponsibleOfSpaces);
+	super.edit(unitName, unitCostCenter, acronym, beginDate, endDate, webAddress, classification, department, degree, administrativeOffice, canBeResponsibleOfSpaces);
 	
 	checkIfAlreadyExistsOneScientificAreaUnitWithSameAcronymAndName(this);
     }

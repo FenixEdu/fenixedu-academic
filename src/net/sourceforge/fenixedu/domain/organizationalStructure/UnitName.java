@@ -126,6 +126,7 @@ public class UnitName extends UnitName_Base implements Comparable<UnitName> {
     public void delete() {
 	final Set<UnitNamePart> unitNameParts = new HashSet<UnitNamePart>(getUnitNamePartSet());
 	getUnitNamePartSet().clear();
+	removeUnit();
 	removeRootDomainObject();
 	deleteDomainObject();
 	for (final UnitNamePart unitNamePart : unitNameParts) {

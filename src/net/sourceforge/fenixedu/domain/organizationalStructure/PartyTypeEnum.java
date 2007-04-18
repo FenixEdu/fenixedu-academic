@@ -17,8 +17,7 @@ public enum PartyTypeEnum {
     DEPARTMENT,
     DEGREE_UNIT,    
     SECTION,
-    RESEARCH_UNIT
-    ;                  
+    RESEARCH_UNIT;                  
                    
     public String getName() {
         return name();

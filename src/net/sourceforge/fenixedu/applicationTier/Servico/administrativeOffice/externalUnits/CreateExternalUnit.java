@@ -16,6 +16,6 @@ public class CreateExternalUnit extends Service {
     public Unit run(final CreateExternalUnitBean externalUnitBean) throws DomainException, FenixFilterException, ExcepcaoPersistencia, FenixServiceException {
 	return new CreateUnit().run(externalUnitBean.getParentUnit(),
 		externalUnitBean.getUnitName(), null, externalUnitBean.getUnitCode(), 
-		new YearMonthDay(), null, externalUnitBean.getUnitType(), null, null, null, null, null, null);
+		new YearMonthDay(), null, externalUnitBean.getUnitType(), null, null, null, null, null, null, null);
     }
 }

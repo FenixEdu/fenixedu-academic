@@ -27,43 +27,34 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public AdministrativeOffice(AdministrativeOfficeType administrativeOfficeType, AdministrativeOfficeUnit unit) {
+    public AdministrativeOffice(AdministrativeOfficeType administrativeOfficeType) {
 	this();
-	init(administrativeOfficeType, unit);
+	init(administrativeOfficeType);
     }
 
-    private void checkParameters(AdministrativeOfficeType administrativeOfficeType, AdministrativeOfficeUnit unit) {
+    private void checkParameters(AdministrativeOfficeType administrativeOfficeType) {
 	if (administrativeOfficeType == null) {
-	    throw new DomainException(
-		    "error.administrativeOffice.AdministrativeOffice.administrativeOfficeType.cannot.be.null");
+	    throw new DomainException("error.administrativeOffice.AdministrativeOffice.administrativeOfficeType.cannot.be.null");
 	}
-
 	checkIfExistsAdministrativeOfficeForType(administrativeOfficeType);
     }
 
-    private void checkIfExistsAdministrativeOfficeForType(
-	    AdministrativeOfficeType administrativeOfficeType) {
-
-	for (final AdministrativeOffice administrativeOffice : RootDomainObject.getInstance()
-		.getAdministrativeOffices()) {
+    private void checkIfExistsAdministrativeOfficeForType(AdministrativeOfficeType administrativeOfficeType) {
+	for (final AdministrativeOffice administrativeOffice : RootDomainObject.getInstance().getAdministrativeOffices()) {
 	    if (administrativeOffice.getAdministrativeOfficeType() == administrativeOfficeType) {
-		throw new DomainException(
-			"error.administrativeOffice.AdministrativeOffice.already.exists.with.administrativeOfficeType");
+		throw new DomainException("error.administrativeOffice.AdministrativeOffice.already.exists.with.administrativeOfficeType");
 	    }
 	}
     }
 
-    protected void init(AdministrativeOfficeType administrativeOfficeType, AdministrativeOfficeUnit unit) {
-	checkParameters(administrativeOfficeType, unit);
-	super.setAdministrativeOfficeType(administrativeOfficeType);
-	super.setUnit(unit);
-
+    protected void init(AdministrativeOfficeType administrativeOfficeType) {
+	checkParameters(administrativeOfficeType);
+	super.setAdministrativeOfficeType(administrativeOfficeType);	
     }
 
     @Override
     public void setAdministrativeOfficeType(AdministrativeOfficeType administrativeOfficeType) {
-	throw new DomainException(
-		"error.administrativeOffice.AdministrativeOffice.cannot.modify.administrativeOfficeType");
+	throw new DomainException("error.administrativeOffice.AdministrativeOffice.cannot.modify.administrativeOfficeType");
     }
 
     @Override

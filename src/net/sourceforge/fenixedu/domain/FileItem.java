@@ -65,7 +65,7 @@ public class FileItem extends FileItem_Base {
         if (this.hasItem()) {
             throw new DomainException("fileItem.cannotBeDeleted");
         }
-
+        removeRootDomainObject();
         super.deleteDomainObject();
     }
 

@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.organizationalStructure;
 
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -14,23 +16,26 @@ public class AdministrativeOfficeUnit extends AdministrativeOfficeUnit_Base {
     
     public static AdministrativeOfficeUnit createNewAdministrativeOfficeUnit(String unitName, Integer costCenterCode, String acronym,
 	    YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit, AccountabilityType accountabilityType, 
-	    String webAddress, UnitClassification classification, AdministrativeOffice administrativeOffice) {
+	    String webAddress, UnitClassification classification, AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces) {
 	
 	AdministrativeOfficeUnit administrativeOfficeUnit = new AdministrativeOfficeUnit();	
-
-	administrativeOfficeUnit.setName(unitName);
-	administrativeOfficeUnit.setAdministrativeOffice(administrativeOffice);
-	administrativeOfficeUnit.setAcronym(acronym);
-	administrativeOfficeUnit.setCostCenterCode(costCenterCode);	
-	administrativeOfficeUnit.setBeginDateYearMonthDay(beginDate);
-	administrativeOfficeUnit.setEndDateYearMonthDay(endDate);
-	administrativeOfficeUnit.setWebAddress(webAddress);
-	administrativeOfficeUnit.setClassification(classification);
+	administrativeOfficeUnit.init(unitName, costCenterCode, acronym, beginDate, endDate, webAddress, classification, canBeResponsibleOfSpaces);	
+	administrativeOfficeUnit.setAdministrativeOffice(administrativeOffice);	
 	administrativeOfficeUnit.addParentUnit(parentUnit, accountabilityType);	
 		
-	return administrativeOfficeUnit;
+	return administrativeOfficeUnit;    
     }
     
+    @Override
+    public void edit(String unitName, Integer unitCostCenter, String acronym, YearMonthDay beginDate,
+            YearMonthDay endDate, String webAddress, UnitClassification classification,
+            Department department, Degree degree, AdministrativeOffice administrativeOffice,
+            Boolean canBeResponsibleOfSpaces) {
+        
+	super.edit(unitName, unitCostCenter, acronym, beginDate, endDate, webAddress, classification, department, degree, administrativeOffice, canBeResponsibleOfSpaces);
+        setAdministrativeOffice(administrativeOffice); 
+    }
+           
     @Override
     public Accountability addParentUnit(Unit parentUnit, AccountabilityType accountabilityType) {
         if(parentUnit != null && !parentUnit.isInternal()) {

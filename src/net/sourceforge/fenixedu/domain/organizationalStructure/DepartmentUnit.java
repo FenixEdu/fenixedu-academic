@@ -8,6 +8,7 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -51,10 +52,12 @@ public class DepartmentUnit extends DepartmentUnit_Base {
     @Override
     public void edit(String unitName, Integer unitCostCenter, String acronym, YearMonthDay beginDate,
             YearMonthDay endDate, String webAddress, UnitClassification classification, Department department, 
-            Degree degree, Boolean canBeResponsibleOfSpaces) {
+            Degree degree, AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces) {
     	
-	super.edit(unitName, unitCostCenter, acronym, beginDate, endDate, webAddress, classification, department, degree, canBeResponsibleOfSpaces);
-	setDepartment(department);
+	super.edit(unitName, unitCostCenter, acronym, beginDate, endDate, webAddress, classification, department, degree, administrativeOffice, canBeResponsibleOfSpaces);
+	if(isInternal()) {
+	    setDepartment(department);
+	}
 	
 	checkIfAlreadyExistsOneDepartmentUnitWithSameAcronymAndName(this);
     }

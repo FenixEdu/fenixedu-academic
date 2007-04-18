@@ -78,6 +78,11 @@
 				<f:selectItems value="#{organizationalStructureBackingBean.departments}"/>				
 			</fc:selectOneMenu>
 			
+			<h:outputText value="<b>#{bundle['message.administrativeOffice']}</b>" escape="false"/>
+			<fc:selectOneMenu value="#{organizationalStructureBackingBean.administrativeOfficeID}">
+				<f:selectItems value="#{organizationalStructureBackingBean.administrativeOffices}"/>				
+			</fc:selectOneMenu>
+			
 			<h:outputText value="<b>#{bundle['message.degree']}</b>" escape="false"/>
 			<fc:selectOneMenu value="#{organizationalStructureBackingBean.degreeID}">
 				<f:selectItems value="#{organizationalStructureBackingBean.degrees}"/>				

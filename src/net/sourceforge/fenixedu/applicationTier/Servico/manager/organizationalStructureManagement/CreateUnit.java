@@ -5,8 +5,10 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType;
+import net.sourceforge.fenixedu.domain.organizationalStructure.AdministrativeOfficeUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AggregateUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.CountryUnit;
@@ -14,6 +16,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.DegreeUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PlanetUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.SchoolUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.SectionUnit;
@@ -28,8 +31,8 @@ public class CreateUnit extends Service {
     
     public Unit run(Unit parentUnit, String unitName, String unitCostCenter,
             String acronym, YearMonthDay begin, YearMonthDay end, PartyTypeEnum type, Integer departmentID,
-            Integer degreeID, AccountabilityType accountabilityType, String webAddress, UnitClassification classification,
-            Boolean canBeResponsibleOfSpaces)
+            Integer degreeID, Integer administrativeOfficeID, AccountabilityType accountabilityType, String webAddress, 
+            UnitClassification classification, Boolean canBeResponsibleOfSpaces)
             throws ExcepcaoPersistencia, FenixServiceException, DomainException, FenixFilterException {
                 
         Integer costCenterCode = getCostCenterCode(unitCostCenter);
@@ -59,21 +62,24 @@ public class CreateUnit extends Service {
 		return UniversityUnit.createNewUniversityUnit(unitName, costCenterCode, acronym, begin, end, parentUnit, webAddress, classification, canBeResponsibleOfSpaces);
 			
 	    case ADMINISTRATIVE_OFFICE_UNIT:
-		// Talk with Shezad !!
-		//return AdministrativeOfficeUnit.createNewAdministrativeOfficeUnit(unitName, costCenterCode, acronym, begin, end, parentUnit, accountabilityType, webAddress, classification, administrativeOffice)	
+		AdministrativeOffice administrativeOffice = rootDomainObject.readAdministrativeOfficeByOID(administrativeOfficeID);
+		return AdministrativeOfficeUnit.createNewAdministrativeOfficeUnit(unitName, costCenterCode, acronym, begin, end, parentUnit, accountabilityType, webAddress, classification, administrativeOffice, canBeResponsibleOfSpaces);	
 		
 	    case AGGREGATE_UNIT:
 		return AggregateUnit.createNewAggregateUnit(unitName, costCenterCode, acronym, begin, end, parentUnit, accountabilityType, webAddress, classification, canBeResponsibleOfSpaces);	
 	
 	    case COMPETENCE_COURSE_GROUP:
-		return CompetenceCourseGroupUnit.createNewCompetenceCourseGroupUnit(unitName, costCenterCode, acronym, begin, end, parentUnit, accountabilityType, webAddress, classification, canBeResponsibleOfSpaces);
+		return CompetenceCourseGroupUnit.createNewInternalCompetenceCourseGroupUnit(unitName, costCenterCode, acronym, begin, end, parentUnit, accountabilityType, webAddress, classification, canBeResponsibleOfSpaces);
 				
 	    case SCIENTIFIC_AREA:
-		return ScientificAreaUnit.createNewScientificArea(unitName, costCenterCode, acronym, begin, end, parentUnit, accountabilityType, webAddress, classification, canBeResponsibleOfSpaces);
+		return ScientificAreaUnit.createNewInternalScientificArea(unitName, costCenterCode, acronym, begin, end, parentUnit, accountabilityType, webAddress, classification, canBeResponsibleOfSpaces);
 				
 	    case SECTION:
-		return SectionUnit.createNewSectionUnit(unitName, costCenterCode, acronym, begin, end, parentUnit, accountabilityType, webAddress, classification, canBeResponsibleOfSpaces);		
-	    }	    
+		return SectionUnit.createNewSectionUnit(unitName, costCenterCode, acronym, begin, end, parentUnit, accountabilityType, webAddress, classification, canBeResponsibleOfSpaces);			    
+	    
+	    case RESEARCH_UNIT:
+		return ResearchUnit.createNewResearchUnit(unitName, costCenterCode, acronym, begin, end, parentUnit, accountabilityType, webAddress, classification, canBeResponsibleOfSpaces);
+	    }
 	    
 	} else {
 	    return Unit.createNewUnit(unitName, costCenterCode, acronym, begin, end, parentUnit, accountabilityType, webAddress, classification, canBeResponsibleOfSpaces);

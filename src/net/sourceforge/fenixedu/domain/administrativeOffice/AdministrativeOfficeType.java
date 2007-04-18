@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.administrativeOffice;
 
 public enum AdministrativeOfficeType {
+    
     DEGREE, MASTER_DEGREE;
 
     public String getName() {

@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.YearMonthDay;
@@ -21,7 +22,7 @@ public class CompetenceCourseGroupUnit extends CompetenceCourseGroupUnit_Base {
         super.setType(PartyTypeEnum.COMPETENCE_COURSE_GROUP);
     }
     
-    public static Unit createNewCompetenceCourseGroupUnit(String name, Integer costCenterCode, String acronym,
+    public static Unit createNewInternalCompetenceCourseGroupUnit(String name, Integer costCenterCode, String acronym,
 	    YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit,
 	    AccountabilityType accountabilityType, String webAddress, UnitClassification classification, 
 	    Boolean canBeResponsibleOfSpaces) {
@@ -38,9 +39,9 @@ public class CompetenceCourseGroupUnit extends CompetenceCourseGroupUnit_Base {
     @Override
     public void edit(String unitName, Integer unitCostCenter, String acronym, YearMonthDay beginDate,
             YearMonthDay endDate, String webAddress, UnitClassification classification,
-            Department department, Degree degree, Boolean canBeResponsibleOfSpaces) {
+            Department department, Degree degree, AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces) {
         
-	super.edit(unitName, unitCostCenter, acronym, beginDate, endDate, webAddress, classification, department, degree, canBeResponsibleOfSpaces);
+	super.edit(unitName, unitCostCenter, acronym, beginDate, endDate, webAddress, classification, department, degree, administrativeOffice, canBeResponsibleOfSpaces);
 	
 	checkIfAlreadyExistsOneCompetenceCourseGroupUnitWithSameAcronymAndName(this);
     }
