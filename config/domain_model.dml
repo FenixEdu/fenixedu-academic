@@ -8342,6 +8342,15 @@ relation UnitHasSite {
 	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole unit;
 }
 
+relation UnitSiteManagers {
+    net.sourceforge.fenixedu.domain.UnitSite playsRole unitSites {
+	    	multiplicity *;
+    }
+	net.sourceforge.fenixedu.domain.Person playsRole managers {
+		multiplicity *;
+	}
+}
+
 relation DepartmentUnit {
     net.sourceforge.fenixedu.domain.Department playsRole department;    
 	net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit playsRole departmentUnit;

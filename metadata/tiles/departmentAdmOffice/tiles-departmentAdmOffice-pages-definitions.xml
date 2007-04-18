@@ -392,6 +392,9 @@
     <definition name="departmentSite-editFile" extends="definition.departmentAdmOffice.site.management" >
         <put name="body" value="/commons/sites/editFile.jsp"/>
     </definition>             
+    <definition name="departmentSite-chooseManagers" extends="definition.departmentAdmOffice.site.management" >
+        <put name="body" value="/departmentAdmOffice/site/chooseManagers.jsp"/>
+    </definition>             
     <definition name="departmentSite-organizeItems" extends="definition.departmentAdmOffice.site.management" >
         <put name="body" value="/commons/sites/organizeItems.jsp"/>
     </definition>   

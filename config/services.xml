@@ -11745,4 +11745,22 @@
 			<chain name="PersonOrAcademicAdministrativeOfficeAuthorization" />
 		</filterChains>
     </service>
+	<service>
+        <name>AddDepartmentSiteManager</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.site.AddUnitSiteManager</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+		<filterChains>
+			<chain name="DepartmentAdministrativeOfficeAuthorization" />
+		</filterChains>
+    </service>
+	<service>
+        <name>RemoveDepartmentSiteManager</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.site.RemoveUnitSiteManager</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+		<filterChains>
+			<chain name="DepartmentAdministrativeOfficeAuthorization" />
+		</filterChains>
+    </service>
 </serviceDefinitions>

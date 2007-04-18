@@ -174,6 +174,11 @@
             <bean:message key="link.site.announcements"/>
         </html:link>
     </li>
+    <li>
+        <html:link page="/departmentSite.do?method=chooseManagers">
+            <bean:message key="link.site.managers.choose"/>
+        </html:link>
+    </li>
     
 	</ul>
 </logic:present>

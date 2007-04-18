@@ -62,3 +62,13 @@
 <schema name="createExpectationEvaluationGroup" type="net.sourceforge.fenixedu.dataTransferObject.department.ExpectationEvaluationGroupBean" bundle="DEPARTMENT_ADM_OFFICE_RESOURCES">
 	<slot name="evaluated" layout="teacherNumber-as-teacher" key="label.teacher.number" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 </schema>
+
+<schema name="departmentSite.managers.add" type="net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.DepartmentUnitManagerBean">
+    <slot name="alias"/>
+    <slot name="idNumber"/>
+</schema>
+
+<schema name="departmentSite.manager" type="net.sourceforge.fenixedu.domain.Person">
+    <slot name="mostImportantAlias" key="label.alias"/>
+    <slot name="name" key="label.name"/>
+</schema>

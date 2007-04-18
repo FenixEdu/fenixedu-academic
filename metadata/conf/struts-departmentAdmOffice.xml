@@ -1025,6 +1025,7 @@
         <forward name="editSectionPermissions" path="departmentSite-editSectionPermissions"/>
         <forward name="editItemPermissions" path="departmentSite-editItemPermissions"/>
         <forward name="editFile" path="departmentSite-editFile"/>
+        <forward name="chooseManagers" path="departmentSite-chooseManagers"/>
     </action>   
 
     <action path="/announcements"
