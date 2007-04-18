@@ -174,7 +174,15 @@
         <property name="falseLabel" value="label.protocol.partner" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
         <property name="classes" value="nobullet liinline"/>
     </slot>
- 	<slot name="unitName" key="label.name" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>		
+ 	<slot name="unitName" key="label.name" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+</schema>
+
+<schema name="partnerUnit.country" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolFactory">
+	<slot name="country" key="label.protocol.partnerCountry" layout="menu-select" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<property name="choiceType"	value="net.sourceforge.fenixedu.domain.Country" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CountryProvider" />
+		<property name="format" value="${name}"/>
+	</slot>
 </schema>
 
 <schema name="partnerUnit.creation" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolFactory">

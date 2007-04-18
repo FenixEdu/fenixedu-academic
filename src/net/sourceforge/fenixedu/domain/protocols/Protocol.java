@@ -96,7 +96,7 @@ public class Protocol extends Protocol_Base {
     private void writeFile(VirtualPath filePath, InputStream inputStream, String fileName,
 	    FilePermissionType filePermissionType) {
 	final FileDescriptor fileDescriptor = FileManagerFactory.getFactoryInstance().getFileManager()
-		.saveFile(filePath, fileName, true, null, fileName, inputStream);
+		.saveFile(filePath, fileName, false, null, fileName, inputStream);
 
 	final ProtocolFile protocolFile = new ProtocolFile(fileName, fileName, fileDescriptor
 		.getMimeType(), fileDescriptor.getChecksum(), fileDescriptor.getChecksumAlgorithm(),

@@ -177,7 +177,8 @@ public class EditProtocolDispatchAction extends FenixDispatchAction {
         }
 
         ExternalContract externalContract = (ExternalContract) executeService("InsertExternalPerson",
-                new Object[] { protocolFactory.getResponsibleName(), protocolFactory.getUnitName() });
+                new Object[] { protocolFactory.getResponsibleName(), protocolFactory.getUnitName(),
+                        protocolFactory.getCountry() });
         protocolFactory.setResponsibleToAdd(externalContract.getPerson());
         protocolFactory.setEditProtocolAction(EditProtocolAction.ADD_RESPONSIBLE);
         Protocol protocol = (Protocol) executeService(request, "ExecuteFactoryMethod",
@@ -257,8 +258,8 @@ public class EditProtocolDispatchAction extends FenixDispatchAction {
             return mapping.findForward("edit-protocol-units");
         }
 
-        Unit externalUnit = (Unit) executeService("CreateExternalUnitByName",
-                new Object[] { protocolFactory.getUnitName() });
+        Unit externalUnit = (Unit) executeService("CreateExternalUnitByNameAndCountry",
+                new Object[] { protocolFactory.getUnitName(), protocolFactory.getCountry() });
         protocolFactory.setUnitToAdd(externalUnit);
         protocolFactory.setEditProtocolAction(EditProtocolAction.ADD_UNIT);
         Protocol protocol = (Protocol) executeService(request, "ExecuteFactoryMethod",

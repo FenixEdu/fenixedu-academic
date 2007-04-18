@@ -134,7 +134,8 @@ public class CreateProtocolDispatchAction extends FenixDispatchAction {
         }
 
         ExternalContract externalContract = (ExternalContract) executeService("InsertExternalPerson",
-                new Object[] { protocolFactory.getResponsibleName(), protocolFactory.getUnitName() });
+                new Object[] { protocolFactory.getResponsibleName(), protocolFactory.getUnitName(),
+                        protocolFactory.getCountry() });
         protocolFactory.addPartnerResponsible(externalContract.getPerson());
         request.setAttribute("protocolFactory", protocolFactory);
         return mapping.findForward("prepareCreate-protocol-responsibles");
@@ -226,8 +227,8 @@ public class CreateProtocolDispatchAction extends FenixDispatchAction {
             return mapping.findForward("prepareCreate-protocol-units");
         }
 
-        Unit externalUnit = (Unit) executeService("CreateExternalUnitByName",
-                new Object[] { protocolFactory.getUnitName() });
+        Unit externalUnit = (Unit) executeService("CreateExternalUnitByNameAndCountry",
+                new Object[] { protocolFactory.getUnitName(), protocolFactory.getCountry() });
         protocolFactory.addPartnerUnit(externalUnit);
         request.setAttribute("protocolFactory", protocolFactory);
         return mapping.findForward("prepareCreate-protocol-units");

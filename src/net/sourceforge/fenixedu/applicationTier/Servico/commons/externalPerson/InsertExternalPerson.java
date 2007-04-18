@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons.externalPerson;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressData;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
@@ -39,6 +40,14 @@ public class InsertExternalPerson extends Service {
 	return new ExternalContract(externalPerson, organization, new YearMonthDay(), null);
     }
 
+    public ExternalContract run(String personName, String organizationName, Country country) {
+        final Unit organization = Unit.createNewNoOfficialExternalInstitution(organizationName, country);
+        Person externalPerson = Person.createExternalPerson(personName, Gender.MALE, null, null, null,
+                null, null, String.valueOf(System.currentTimeMillis()), IDDocumentType.EXTERNAL);
+
+        return new ExternalContract(externalPerson, organization, new YearMonthDay(), null);
+    }
+    
     public ExternalContract run(String personName, Unit organization) throws FenixServiceException {
 	return run(personName, null, organization);
     }

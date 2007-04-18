@@ -11395,7 +11395,13 @@
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.externalUnits.CreateExternalUnitByName</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
-    </service>    
+    </service>
+    <service>
+    	<name>CreateExternalUnitByNameAndCountry</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.externalUnits.CreateExternalUnitByNameAndCountry</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+    </service>  
     <service>
     	<name>CreateExternalCurricularCourse</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.externalUnits.CreateExternalCurricularCourse</implementationClass>

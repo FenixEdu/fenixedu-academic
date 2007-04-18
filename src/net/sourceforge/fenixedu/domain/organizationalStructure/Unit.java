@@ -17,6 +17,7 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Employee;
@@ -691,16 +692,20 @@ public class Unit extends Unit_Base {
 	return unit;
     }
 
-    public static Unit createNewNoOfficialExternalInstitution(String unitName) {
-	Unit externalInstitutionUnit = UnitUtils.readExternalInstitutionUnit();		
-	Unit noOfficialExternalInstitutionUnit = new Unit();
-	noOfficialExternalInstitutionUnit.init(unitName, null, null, new YearMonthDay(), null, null, null, null);
-	noOfficialExternalInstitutionUnit.addParentUnit(externalInstitutionUnit,
-		AccountabilityType.readAccountabilityTypeByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE));
-
-	return noOfficialExternalInstitutionUnit;
+    public static Unit createNewNoOfficialExternalInstitution(String unitName) {	
+	return createNewNoOfficialExternalInstitution(unitName, null);
     }   
 
+    public static Unit createNewNoOfficialExternalInstitution(String unitName, Country country) {
+        Unit externalInstitutionUnit = UnitUtils.readExternalInstitutionUnit();         
+        Unit noOfficialExternalInstitutionUnit = new Unit();
+        noOfficialExternalInstitutionUnit.init(unitName, null, null, new YearMonthDay(), null, null, null, null);
+        noOfficialExternalInstitutionUnit.addParentUnit(externalInstitutionUnit,
+                AccountabilityType.readAccountabilityTypeByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE));
+        noOfficialExternalInstitutionUnit.setNationality(country);
+        return noOfficialExternalInstitutionUnit;
+    }
+    
     public static Party createContributor(final String contributorName, final String contributorNumber,
 	    final PhysicalAddressData data) {
 

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.DomainListReference;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
@@ -60,7 +61,7 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
     private Boolean internalUnit;
 
     private DomainReference<Teacher> responsible;
-    
+
     private DomainReference<PersonName> partnerResponsible;
 
     private String responsibleName;
@@ -98,6 +99,8 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
     private FilePermissionType filePermissionType;
 
     private List<ProtocolFileBean> fileBeans;
+
+    private DomainReference<Country> country;
 
     public ProtocolFactory(Protocol protocol) {
         setProtocol(protocol);
@@ -350,9 +353,10 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
     }
 
     public void setPartnerResponsible(PersonName responsible) {
-        this.partnerResponsible = (responsible != null) ? new DomainReference<PersonName>(responsible) : null;
+        this.partnerResponsible = (responsible != null) ? new DomainReference<PersonName>(responsible)
+                : null;
     }
-    
+
     public Teacher getResponsible() {
         return responsible != null ? responsible.getObject() : null;
     }
@@ -554,5 +558,13 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
 
     public void setFileBeans(List<ProtocolFileBean> fileBeans) {
         this.fileBeans = fileBeans;
+    }
+
+    public Country getCountry() {
+        return country != null ? country.getObject() : null;
+    }
+
+    public void setCountry(Country country) {
+        this.country = country != null ? new DomainReference<Country>(country) : null;
     }
 }

@@ -138,6 +138,13 @@
         <fr:property name="columnClasses" value=",,tdclear tderror1"/>
 	</fr:layout>
 </fr:view>
+<br/>
+<fr:edit id="country" name="protocolFactory" schema="partnerUnit.country">
+	<fr:layout name="tabular">
+		<fr:property name="classes" value="tstyle5 thlight mtop0 dinline"/>
+        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
+	</fr:layout>
+</fr:edit>
 <fr:edit id="protocolFactory" name="protocolFactory" visible="false"/>
 <p>
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
