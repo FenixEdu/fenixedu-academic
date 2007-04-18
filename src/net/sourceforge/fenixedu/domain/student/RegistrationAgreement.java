@@ -15,4 +15,33 @@ public enum RegistrationAgreement {
     public String getName() {
 	return name();
     }
+
+    public static RegistrationAgreement getByLegacyCode(int code) {
+
+	switch (code) {
+	case 1:
+	    return AFA;
+	case 2:
+	    return MA;
+	case 3:
+	    return NC;
+	case 4:
+	    return ERASMUS;
+	case 5:
+	    return SOCRATES;
+	case 6:
+	    return SOCRATES_ERASMUS;
+	case 7:
+	    return TEMPUS;
+	case 8:
+	    return BILATERAL_AGREEMENT;
+	case 9:
+	    return ALFA2;
+	case 10:
+	    return UNIFOR;
+	}
+
+	return null;
+    }
+
 }
