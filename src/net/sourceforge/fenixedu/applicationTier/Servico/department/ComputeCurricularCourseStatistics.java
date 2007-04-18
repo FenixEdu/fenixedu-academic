@@ -77,51 +77,66 @@ public class ComputeCurricularCourseStatistics extends Service {
 		List<ExecutionCourse> executionCourses = curricularCourse
 			.getExecutionCoursesByExecutionPeriod(executionPeriod);
 		// if (executionCourses.isEmpty() || executionCourses.size() >
-                // 1) {
+		// 1) {
 		// // Houston, we have a problem...!!
 		// continue;
 		// }
 		// ExecutionCourse executionCourse = executionCourses.get(0);
 
-		for (ExecutionCourse executionCourse : executionCourses) {
-
+		if (executionCourses.size() == 1) {
 		    // Organize enrolments by DegreeCurricularPlans
 		    Map<DegreeCurricularPlan, Collection<Enrolment>> enrolmentsMap = organizeEnrolmentsByDCP(
-			    curricularCourse, executionPeriod, agreement, executionCourse);
+			    curricularCourse, executionPeriod, agreement, null);
 
-		    // Calculate enrolments for each DegreeCurricularPlan
-		    for (DegreeCurricularPlan enrolmentDCP : enrolmentsMap.keySet()) {
+		    calculateEnrolmentsForDCP(result, curricularCourse, executionPeriod, year, semester,
+			    executionCourses.iterator().next(), enrolmentsMap);
+		} else {
+		    for (ExecutionCourse executionCourse : executionCourses) {
+			// Organize enrolments by DegreeCurricularPlans
+			Map<DegreeCurricularPlan, Collection<Enrolment>> enrolmentsMap = organizeEnrolmentsByDCP(
+				curricularCourse, executionPeriod, agreement, executionCourse);
 
-			int firstEnrolledCount = 0;
-			int secondEnrolledCount = 0;
-
-			Collection<Enrolment> dcpEnrolments = enrolmentsMap.get(enrolmentDCP);
-			for (Enrolment enrolment : dcpEnrolments) {
-			    switch (enrolment.getNumberOfTotalEnrolmentsInThisCourse(executionPeriod)) {
-
-			    case 1:
-				firstEnrolledCount++;
-				break;
-			    case 2:
-				secondEnrolledCount++;
-				break;
-			    default:
-				break;
-			    }
-			}
-
-			// Add to result
-			result.format("%s\t%s\t%d\t%s\t%d\t%s\t%d\t%d\t%d\t%d\t%d\n", curricularCourse
-				.getCode(), curricularCourse.getName(), executionCourse.getIdInternal(),
-				executionCourse.getSigla(), enrolmentDCP.getIdInternal(), enrolmentDCP
-					.getName(), semester, year, firstEnrolledCount,
-				secondEnrolledCount, dcpEnrolments.size());
+			calculateEnrolmentsForDCP(result, curricularCourse, executionPeriod, year,
+				semester, executionCourse, enrolmentsMap);
 		    }
 		}
+
 	    }
 	}
 
 	return result.toString();
+    }
+
+    private void calculateEnrolmentsForDCP(Formatter result, CurricularCourse curricularCourse,
+	    ExecutionPeriod executionPeriod, int year, int semester, ExecutionCourse executionCourse,
+	    Map<DegreeCurricularPlan, Collection<Enrolment>> enrolmentsMap) {
+	// Calculate enrolments for each DegreeCurricularPlan
+	for (DegreeCurricularPlan enrolmentDCP : enrolmentsMap.keySet()) {
+
+	    int firstEnrolledCount = 0;
+	    int secondEnrolledCount = 0;
+
+	    Collection<Enrolment> dcpEnrolments = enrolmentsMap.get(enrolmentDCP);
+	    for (Enrolment enrolment : dcpEnrolments) {
+		switch (enrolment.getNumberOfTotalEnrolmentsInThisCourse(executionPeriod)) {
+
+		case 1:
+		    firstEnrolledCount++;
+		    break;
+		case 2:
+		    secondEnrolledCount++;
+		    break;
+		default:
+		    break;
+		}
+	    }
+
+	    // Add to result
+	    result.format("%s\t%s\t%d\t%s\t%d\t%s\t%d\t%d\t%d\t%d\t%d\n", curricularCourse.getCode(),
+		    curricularCourse.getName(), executionCourse.getIdInternal(), executionCourse
+			    .getSigla(), enrolmentDCP.getIdInternal(), enrolmentDCP.getName(), semester,
+		    year, firstEnrolledCount, secondEnrolledCount, dcpEnrolments.size());
+	}
     }
 
     private Map<DegreeCurricularPlan, Collection<Enrolment>> organizeEnrolmentsByDCP(
@@ -132,10 +147,11 @@ public class ComputeCurricularCourseStatistics extends Service {
 	List<Enrolment> enrolments = curricularCourse.getEnrolmentsByExecutionPeriod(executionPeriod);
 	for (Enrolment enrolment : enrolments) {
 
-	    if(enrolment.getAttendsByExecutionCourse(executionCourse) == null){
+	    if (executionCourse != null
+		    && enrolment.getAttendsByExecutionCourse(executionCourse) == null) {
 		continue;
 	    }
-	    
+
 	    final StudentCurricularPlan studentCurricularPlan = enrolment.getStudentCurricularPlan();
 
 	    if (agreement != null
