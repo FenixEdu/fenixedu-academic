@@ -268,6 +268,10 @@ public abstract class Event extends Event_Base {
     }
 
     public Money getPayedAmount() {
+	return getPayedAmount(null);
+    }
+    
+    public Money getPayedAmount(final DateTime until) {
 	if (isCancelled()) {
 	    throw new DomainException(
 		    "error.accounting.Event.cannot.calculatePayedAmount.on.invalid.events");
@@ -275,7 +279,9 @@ public abstract class Event extends Event_Base {
 
 	Money payedAmount = Money.ZERO;
 	for (final AccountingTransaction transaction : getNonAdjustingTransactions()) {
-	    payedAmount = payedAmount.add(transaction.getToAccountEntry().getAmountWithAdjustment());
+	    if (until == null || !transaction.getWhenRegistered().isAfter(until)) {
+		payedAmount = payedAmount.add(transaction.getToAccountEntry().getAmountWithAdjustment());
+	    }
 	}
 
 	return payedAmount;
