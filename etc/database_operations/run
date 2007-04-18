@@ -27,5 +27,3 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Add Research Unit" addResearchUnit.sql
-execute "Move Publisher From Issue To Scientific Journal" movePublisherFromIssueToJournal.sql

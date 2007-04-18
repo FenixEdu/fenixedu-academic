@@ -28,3 +28,5 @@ function executeWithTempFile() {
 }
 
 execute "Remove Broken Links in Lesson Plannings" removeBrokenLinksInLessonPlannings.sql
+execute "Add Research Unit" addResearchUnit.sql
+execute "Move Publisher From Issue To Scientific Journal" movePublisherFromIssueToJournal.sql
