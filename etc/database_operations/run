@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Drop table EmailAddress" dropOldEmailAddressTable.sql
