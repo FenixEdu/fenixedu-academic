@@ -5,7 +5,6 @@ import java.util.Comparator;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
-import net.sourceforge.fenixedu.injectionCode.Checked;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -91,7 +90,6 @@ public class PhysicalAddress extends PhysicalAddress_Base {
     }
     
     @Override
-    @Checked("PartyContactPredicates.checkPermissionsToManage")
     public void delete() {
         removeCountryOfResidence();
         super.delete();
