@@ -44,11 +44,6 @@
 <fr:edit name="documentRequestCreateBean" schema="DocumentRequestCreateBean.purposes"  visible="false"
 	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" />
 
-<fr:edit name="documentRequestCreateBean" schema="DocumentRequestCreateBean.notes"  visible="false"
-	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" />
-
-
-
 <fr:view schema="DocumentRequestCreateBean.chooseDocumentRequestType" name="documentRequestCreateBean" >
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle4 thright thlight mvert0"/>
@@ -76,15 +71,6 @@
 		<fr:property name="columnClasses" value="width14em,width20em,tdclear tderror1"/>
 	</fr:layout>	
 </fr:view>
-
-
-<fr:view name="documentRequestCreateBean" schema="DocumentRequestCreateBean.notes" 
-	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean">
-	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle4 thright thlight mvert0"/>
-		<fr:property name="columnClasses" value="width14em,width20em,tdclear tderror1"/>
-	</fr:layout>	
-</fr:view>	
 
 <p class="mtop15">
 	<html:submit><bean:message key="button.confirm" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit>

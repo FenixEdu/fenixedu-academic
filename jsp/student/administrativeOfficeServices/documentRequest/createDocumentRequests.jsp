@@ -88,13 +88,6 @@
 				</fr:layout>	
 			</fr:edit>
 		
-			<fr:edit name="documentRequestCreateBean" schema="DocumentRequestCreateBean.notes" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean">
-				<fr:layout name="tabular">
-					<fr:property name="classes" value="tstyle4 thright thlight mvert0"/>
-					<fr:property name="columnClasses" value="width14em,width20em,tdclear tderror1"/>
-				</fr:layout>	
-			</fr:edit>
-		
 		</logic:notEmpty>
 		
 		<p class="mtop15">
