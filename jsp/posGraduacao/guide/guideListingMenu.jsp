@@ -5,7 +5,6 @@
 
 <ul>
 	<li><html:link page="/candidateSection.do"><bean:message key="link.masterDegree.administrativeOffice.candidate" /></html:link></li>
-	<li><html:link page="/contributorSection.do"><bean:message key="link.masterDegree.administrativeOffice.contributor" /></html:link></li>
 		<li class="navheader"><bean:message key="label.masterDegree.administrativeOffice.guide" /></li>
 		<li><html:link page="/chooseDataToCreateGuide.do?method=chooseDegreeFromList"><bean:message key="link.masterDegree.administrativeOffice.createGuide" /></html:link></li>
 		<li><html:link page="/chooseGuideDispatchAction.do?method=prepareChoose&page=0&action=visualize"><bean:message key="link.masterDegree.administrativeOffice.visualizeGuide" /></html:link></li>

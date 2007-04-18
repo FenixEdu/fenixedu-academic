@@ -11,7 +11,6 @@
 	<li><html:link page="/chooseExecutionYearToCandidateStudyPlan.do?method=chooseDegreeFromList&page=0"><bean:message key="link.masterDegree.administrativeOffice.makeStudyPlan" /></html:link></li>
 	<li><html:link page="/chooseExecutionYearToRegisterCandidate.do?method=chooseDegreeFromList&page=0"><bean:message key="link.masterDegree.administrativeOffice.candidateRegistration" /></html:link></li>
 <br/>
-	<li><html:link page="/contributorSection.do"><bean:message key="link.masterDegree.administrativeOffice.contributor" /></html:link></li>
 	<li><html:link page="/guideSection.do"><bean:message key="link.masterDegree.administrativeOffice.guide" /></html:link></li>
 	<li><html:link page="/studentSection.do"><bean:message key="label.coordinator.student" /></html:link></li>
 	<li><html:link page="/thesisSection.do"><bean:message key="link.masterDegree.administrativeOffice.thesis.title" /></html:link></li>

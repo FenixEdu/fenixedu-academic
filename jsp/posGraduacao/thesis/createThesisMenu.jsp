@@ -1,4 +1,5 @@
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><html:xhtml/>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoStudent" %>
@@ -16,7 +17,6 @@
   
 <ul>
     <li><html:link page="/candidateSection.do"><bean:message key="link.masterDegree.administrativeOffice.candidate" /></html:link></li>
-    <li><html:link page="/contributorSection.do"><bean:message key="link.masterDegree.administrativeOffice.contributor" /></html:link></li>
 	<li><html:link page="/guideSection.do"><bean:message key="link.masterDegree.administrativeOffice.guide" /></html:link></li>
 	<li><html:link page="/studentSection.do"><bean:message key="label.coordinator.student" /></html:link></li>
 
