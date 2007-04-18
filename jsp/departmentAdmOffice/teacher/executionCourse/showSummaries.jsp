@@ -41,18 +41,17 @@
 			<fr:edit id="showSummariesBeanWithChoicesHidden" name="showSummariesBean" nested="true" visible="false" />
 			<fr:view name="nextPossibleLessonsDates" schema="PossibleNextSummaryLessonAndDate">
 				<fr:layout name="tabular">
-					<fr:property name="style" value="width: 500px;"/>
+					<fr:property name="style" value=""/>
 					<fr:property name="checkable" value="true"/>
 					<fr:property name="checkboxName" value="selectedLessonAndDate"/>
 					<fr:property name="checkboxValue" value="checkBoxValue"/>
-					<fr:property name="classes" value="tstyle1 mtop025 mbottom0"/>
-					<fr:property name="columnClasses" value="acenter,,,"/>
+					<fr:property name="classes" value="tstyle1 mtop025 mbottom05"/>
+					<fr:property name="columnClasses" value="acenter,,width15em,,smalltxt color888,smalltxt color888"/>
 				</fr:layout>
 			</fr:view>
 
-			<table style="width: 500px;" class="tstyle1 mtop0">
-				<tr><td><html:submit><bean:message key="label.fill" bundle="DEFAULT"/></html:submit></td></tr>
-			</table>
+			<p class="mtop05"><html:submit><bean:message key="label.fill" bundle="DEFAULT"/></html:submit></p>
+
 		</fr:form>
 	</logic:notEmpty>	
 

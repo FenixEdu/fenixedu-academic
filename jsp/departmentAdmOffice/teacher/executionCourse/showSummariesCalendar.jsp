@@ -53,10 +53,9 @@
 			
 		<fr:view name="summariesCalendarResult" schema="SummariesCalendarList">
 			<fr:layout name="tabular">
-				<fr:property name="style" value="width: 500px;"/>			
+				<fr:property name="style" value=""/>			
 				<fr:property name="classes" value="tstyle1 mtop025 mbottom0"/>
-				<fr:property name="columnClasses" value="acenter,,,"/>
-				
+				<fr:property name="columnClasses" value=",,,,,smalltxt color888,smalltxt color888,,"/>				
 				<fr:property name="link(insertNewSummary)" value="<%= createComplexSummaryURL %>"/>
 	            <fr:property name="param(insertNewSummary)" value="checkBoxValue/summaryDate"/>
 		        <fr:property name="key(insertNewSummary)" value="title.summary.insert"/>

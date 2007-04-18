@@ -47,18 +47,18 @@
 			<fr:edit id="showSummariesBeanWithChoicesHidden" name="showSummariesBean" nested="true" visible="false" />
 			<fr:view name="nextPossibleLessonsDates" schema="PossibleNextSummaryLessonAndDate">
 				<fr:layout name="tabular">
-					<fr:property name="style" value="width: 600px;"/>
+					<fr:property name="style" value=""/>
 					<fr:property name="checkable" value="true"/>
 					<fr:property name="checkboxName" value="selectedLessonAndDate"/>
 					<fr:property name="checkboxValue" value="checkBoxValue"/>
-					<fr:property name="classes" value="tstyle1 mtop025 mbottom0"/>
-					<fr:property name="columnClasses" value="acenter,,,"/>
+					<fr:property name="classes" value="tstyle1 mtop025 mbottom05"/>
+					<fr:property name="columnClasses" value="acenter,,width15em,,smalltxt color888,smalltxt color888"/>
 				</fr:layout>
 			</fr:view>
 			
-			<table style="width: 600px;" class="tstyle1 mtop0">
-				<tr><td><html:submit><bean:message key="label.fill.summaries"/></html:submit></td></tr>
-			</table>
+
+			<p class="mtop05"><html:submit><bean:message key="label.fill.summaries"/></html:submit></p>
+
 			
 		</fr:form>
 
@@ -113,9 +113,9 @@
 					
 					<fr:view name="summary" property="summaryDateYearMonthDay" />
 					<fr:view name="summary" property="summaryHourHourMinuteSecond" />
-						
+				
 					 - 															 
-	
+				
 					<%-- Students Number --%>
 					<logic:present name="summary" property="studentsNumber">			
 						<logic:notEmpty name="summary" property="studentsNumber">			
@@ -170,7 +170,7 @@
 					<bean:message key="button.edit" /> 
 				</html:link>				 
 				<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-				<html:link page="<%= deleteSummaryLink %>" onclick="return confirm('Tem a certeza que deseja apagar este sumï¿½rio?')">
+				<html:link page="<%= deleteSummaryLink %>" onclick="return confirm('Tem a certeza que deseja apagar este sumário?')">
 					<bean:message key="button.delete" />
 				</html:link>
 			</div>

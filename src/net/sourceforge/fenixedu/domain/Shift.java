@@ -15,22 +15,17 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 
 public class Shift extends Shift_Base {
 
-    public static final Comparator<Shift> SHIFT_COMPARATOR_BY_NAME = new BeanComparator("nome", Collator
-	    .getInstance());
-
+    public static final Comparator<Shift> SHIFT_COMPARATOR_BY_NAME = new BeanComparator("nome", Collator.getInstance());
     public static final Comparator<Shift> SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS = new ComparatorChain();
     static {
 	((ComparatorChain) SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS).addComparator(new BeanComparator("tipo"));
 	((ComparatorChain) SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS).addComparator(new BeanComparator("lessonsStringComparator"));
 	((ComparatorChain) SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS).addComparator(new BeanComparator("idInternal"));
-    }
-
-    static {
+	
 	Registration.ShiftStudent.addListener(new ShiftStudentListener());
     }
 
-    public Shift(final ExecutionCourse executionCourse, final ShiftType shiftType,
-	    final Integer lotacao, final Integer availabilityFinal) {
+    public Shift(final ExecutionCourse executionCourse, final ShiftType shiftType, final Integer lotacao, final Integer availabilityFinal) {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 	setDisciplinaExecucao(executionCourse);
@@ -41,12 +36,13 @@ public class Shift extends Shift_Base {
     }
 
     public void delete() {
-	if (canBeDeleted()) {
+	if (canBeDeleted()) {	    
+	    final ExecutionCourse executionCourse = getDisciplinaExecucao();
+	    
 	    for (; hasAnyAssociatedLessons(); getAssociatedLessons().get(0).delete());
 	    for (; hasAnyAssociatedShiftProfessorship(); getAssociatedShiftProfessorship().get(0).delete());
-
-	    getAssociatedClasses().clear();
-	    final ExecutionCourse executionCourse = getDisciplinaExecucao();
+	    
+	    getAssociatedClasses().clear();	    
 	    removeDisciplinaExecucao();
 	    removeRootDomainObject();
 	    deleteDomainObject();
@@ -65,28 +61,22 @@ public class Shift extends Shift_Base {
 	}
     }
 
-    public boolean canBeDeleted() {
-	
+    public boolean canBeDeleted() {	
 	if (hasAnyAssociatedStudentGroups()) {
 	    throw new DomainException("error.deleteShift.with.studentGroups", getNome());
 	}
-
 	if (hasAnyStudents()) {
 	    throw new DomainException("error.deleteShift.with.students", getNome());
 	}
-
 	if (hasAnyAssociatedSummaries()) {
 	    throw new DomainException("error.deleteShift.with.summaries", getNome());
 	}
-
 	if (hasAnyDegreeTeachingServices()) {
 	    throw new DomainException("error.deleteShift.with.degreeTeachingServices", getNome());
-	}
-	
+	}	
 	if (hasAnyShiftDistributionEntries()) {
 	    throw new DomainException("error.deleteShift.with.shiftDistributionEntries", getNome());
 	}
-
 	return true;
     }
 
@@ -138,8 +128,7 @@ public class Shift extends Shift_Base {
     }
 
     public SortedSet<Lesson> getLessonsOrderedByWeekDayAndStartTime() {
-	final SortedSet<Lesson> lessons = new TreeSet<Lesson>(
-		Lesson.LESSON_COMPARATOR_BY_WEEKDAY_AND_STARTTIME);
+	final SortedSet<Lesson> lessons = new TreeSet<Lesson>(Lesson.LESSON_COMPARATOR_BY_WEEKDAY_AND_STARTTIME);
 	lessons.addAll(getAssociatedLessonsSet());
 	return lessons;
     }
@@ -168,6 +157,19 @@ public class Shift extends Shift_Base {
 	return shiftEnrolments;
     }
 
+    public String getClassesPrettyPrint() {
+	StringBuilder builder = new StringBuilder();
+	int index = 0;
+	for (SchoolClass schoolClass : getAssociatedClasses()) {
+	    builder.append(schoolClass.getNome());
+	    index++;
+	    if(index < getAssociatedClassesCount()) {
+		builder.append(", ");
+	    }
+	}
+	return builder.toString();
+    }
+    
     private static class ShiftStudentListener extends dml.runtime.RelationAdapter<Registration, Shift> {
 
         @Override

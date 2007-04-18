@@ -473,11 +473,13 @@
 	</slot>	
 </schema>
 <schema name="PossibleNextSummaryLessonAndDate" type="net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.NextPossibleSummaryLessonsAndDatesBean" bundle="DEFAULT">
+	<slot name="date" />
 	<slot name="lesson" key="label.lesson">
 		<property name="format"	value="${diaSemana.diaSemanaString} (${beginHourMinuteSecond.hour,02d}:${beginHourMinuteSecond.minuteOfHour,02d} - ${endHourMinuteSecond.hour,02d}:${endHourMinuteSecond.minuteOfHour,02d}) ${sala.name}" />
-	</slot>			
+	</slot>
 	<slot name="lesson.tipo" layout="" key="label.type"/>
-	<slot name="date" />
+	<slot name="lesson.shift" key="label.shift" layout="shift-plain"/>
+	<slot name="lesson.shift.classesPrettyPrint" key="label.classes"/>		
 </schema>
 <schema name="EditPossibleNextSummaryLessonAndDates" type="net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.NextPossibleSummaryLessonsAndDatesBean" bundle="DEFAULT">
 	<slot name="studentsNumber" key="property.number.students.attending.course">
@@ -512,8 +514,10 @@
 	<slot name="date.year" key="labe.summary.year"/>
 	<slot name="lesson" key="label.lesson">
 		<property name="format"	value="${diaSemana.diaSemanaString} (${beginHourMinuteSecond.hour,02d}:${beginHourMinuteSecond.minuteOfHour,02d} - ${endHourMinuteSecond.hour,02d}:${endHourMinuteSecond.minuteOfHour,02d}) ${sala.name}" />
-	</slot>			
+	</slot>		
 	<slot name="lesson.tipo" layout="" key="label.type"/>
+	<slot name="lesson.shift" key="label.shift" layout="shift-plain"/>
+	<slot name="lesson.shift.classesPrettyPrint" key="label.classes"/>			
 	<slot name="writtenSummary" key="label.summary"/>
 </schema>
 <schema name="site.item.file.basic" type="net.sourceforge.fenixedu.domain.FileItem">

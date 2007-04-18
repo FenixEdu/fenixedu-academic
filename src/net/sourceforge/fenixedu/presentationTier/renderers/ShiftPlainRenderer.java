@@ -16,19 +16,17 @@ public class ShiftPlainRenderer extends OutputRenderer {
         return new Layout() {
 
             @Override
-            public HtmlComponent createComponent(Object object, Class type) {
-                if (object == null) {
+            public HtmlComponent createComponent(Object object, Class type) {                
+        	if (object == null) {
                     return new HtmlText();
-                }
-                
+                }               
                 Shift shift = (Shift) object;
                 final StringBuilder lessonsLabel = new StringBuilder();
                 int index = 0;
                 for (Lesson lesson : shift.getAssociatedLessonsSet()) {
                     index++;
                     lessonsLabel.append(lesson.getDiaSemana().toString()).append(" (");
-                    lessonsLabel.append(DateFormatUtil.format("HH:mm", lesson.getInicio().getTime()))
-                            .append("-");
+                    lessonsLabel.append(DateFormatUtil.format("HH:mm", lesson.getInicio().getTime())).append("-");
                     lessonsLabel.append(DateFormatUtil.format("HH:mm", lesson.getFim().getTime())).append(") ");
                     if (lesson.getSala() != null) {
                         lessonsLabel.append(((OldRoom)lesson.getSala()).getName().toString());
@@ -43,5 +41,4 @@ public class ShiftPlainRenderer extends OutputRenderer {
             }            
         };
     }
-
 }
