@@ -281,7 +281,7 @@ public abstract class Event extends Event_Base {
     public Money getPayedAmount() {
 	return getPayedAmount(null);
     }
-    
+
     public Money getPayedAmount(final DateTime until) {
 	if (isCancelled()) {
 	    throw new DomainException(
@@ -291,7 +291,7 @@ public abstract class Event extends Event_Base {
 	Money payedAmount = Money.ZERO;
 	for (final AccountingTransaction transaction : getNonAdjustingTransactions()) {
 	    if (until == null || !transaction.getWhenRegistered().isAfter(until)) {
-	    payedAmount = payedAmount.add(transaction.getToAccountEntry().getAmountWithAdjustment());
+		payedAmount = payedAmount.add(transaction.getToAccountEntry().getAmountWithAdjustment());
 	    }
 	}
 
@@ -530,7 +530,11 @@ public abstract class Event extends Event_Base {
     }
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
-    public final void changeState(EventState state, DateTime when) {
+    public final void forceChangeState(EventState state, DateTime when) {
+	changeState(state, when);
+    }
+
+    protected void changeState(EventState state, DateTime when) {
 	super.setEventState(state);
 	super.setEventStateDate(when);
     }
@@ -632,7 +636,7 @@ public abstract class Event extends Event_Base {
 	return result;
 
     }
-    
+
     public static List<Event> readByEventsWithPaymentsForCivilYear(int civilYear) {
 	final List<Event> result = new ArrayList<Event>();
 	for (final Event event : RootDomainObject.getInstance().getAccountingEvents()) {

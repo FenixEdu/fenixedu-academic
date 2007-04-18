@@ -42,7 +42,7 @@ public class PercentageGratuityExemption extends PercentageGratuityExemption_Bas
     public void setPercentage(BigDecimal percentage) {
 	super.setPercentage(percentage);
 	final DateTime now = new DateTime();
-	getGratuityEvent().changeState(EventState.OPEN, now);
+	getGratuityEvent().forceChangeState(EventState.OPEN, now);
 	getGratuityEvent().recalculateState(now);
     }
 

@@ -43,7 +43,7 @@ public class ValueGratuityExemption extends ValueGratuityExemption_Base {
     public void setValue(Money value) {
 	super.setValue(value);
 	final DateTime now = new DateTime();
-	getGratuityEvent().changeState(EventState.OPEN, now);
+	getGratuityEvent().forceChangeState(EventState.OPEN, now);
 	getGratuityEvent().recalculateState(now);
     }
 
