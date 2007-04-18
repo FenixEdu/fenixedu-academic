@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
@@ -59,7 +60,7 @@ public abstract class Event extends Event_Base {
     }
 
     public boolean isOpen() {
-	return (getEventState() == EventState.OPEN);
+	return (super.getEventState() == EventState.OPEN);
     }
 
     public boolean isInDebt() {
@@ -67,7 +68,7 @@ public abstract class Event extends Event_Base {
     }
 
     public boolean isClosed() {
-	return (getEventState() == EventState.CLOSED);
+	return (super.getEventState() == EventState.CLOSED);
     }
 
     public boolean isPayed() {
@@ -75,7 +76,17 @@ public abstract class Event extends Event_Base {
     }
 
     public boolean isCancelled() {
-	return (getEventState() == EventState.CANCELLED);
+	return (super.getEventState() == EventState.CANCELLED);
+    }
+
+    @Override
+    public EventState getEventState() {
+	throw new DomainException(
+		"error.net.sourceforge.fenixedu.domain.accounting.Event.dot.not.call.this.method.directly.use.isInState.instead");
+    }
+
+    public boolean isInState(final EventState eventState) {
+	return super.getEventState() == eventState;
     }
 
     public final Set<Entry> process(final User responsibleUser, final List<EntryDTO> entryDTOs,
@@ -280,7 +291,7 @@ public abstract class Event extends Event_Base {
 	Money payedAmount = Money.ZERO;
 	for (final AccountingTransaction transaction : getNonAdjustingTransactions()) {
 	    if (until == null || !transaction.getWhenRegistered().isAfter(until)) {
-		payedAmount = payedAmount.add(transaction.getToAccountEntry().getAmountWithAdjustment());
+	    payedAmount = payedAmount.add(transaction.getToAccountEntry().getAmountWithAdjustment());
 	    }
 	}
 
@@ -480,8 +491,7 @@ public abstract class Event extends Event_Base {
     private static List<Event> readBy(final ExecutionYear executionYear, EventState eventState) {
 	final List<Event> result = new ArrayList<Event>();
 	for (final Event event : RootDomainObject.getInstance().getAccountingEventsSet()) {
-	    if (event.getEventState() == eventState
-		    && executionYear.containsDate(event.getWhenOccured())) {
+	    if (event.isInState(eventState) && executionYear.containsDate(event.getWhenOccured())) {
 		result.add(event);
 	    }
 	}
@@ -519,7 +529,8 @@ public abstract class Event extends Event_Base {
 	return !isClosed() ? new DateTime() : getEventStateDate();
     }
 
-    protected void changeState(EventState state, DateTime when) {
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    public final void changeState(EventState state, DateTime when) {
 	super.setEventState(state);
 	super.setEventStateDate(when);
     }
@@ -621,7 +632,7 @@ public abstract class Event extends Event_Base {
 	return result;
 
     }
-
+    
     public static List<Event> readByEventsWithPaymentsForCivilYear(int civilYear) {
 	final List<Event> result = new ArrayList<Event>();
 	for (final Event event : RootDomainObject.getInstance().getAccountingEvents()) {

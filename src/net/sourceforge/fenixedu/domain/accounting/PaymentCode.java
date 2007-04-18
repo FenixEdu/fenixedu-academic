@@ -164,6 +164,12 @@ public abstract class PaymentCode extends PaymentCode_Base {
 	throw new DomainException("error.accounting.PaymentCode.cannot.modify.entityCode");
     }
 
+    @Override
+    public void setStudent(Student student) {
+	throw new DomainException(
+		"error.net.sourceforge.fenixedu.domain.accounting.PaymentCode.cannot.modify.student");
+    }
+
     public boolean isNew() {
 	return getState() == PaymentCodeState.NEW;
     }
@@ -209,6 +215,8 @@ public abstract class PaymentCode extends PaymentCode_Base {
 	if (isProcessed()) {
 	    throw new DomainException("error.accounting.PaymentCode.cannot.delete.processed.codes");
 	}
+
+	super.setStudent(null);
 
 	removeRootDomainObject();
 	deleteDomainObject();

@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.accounting.events.gratuity;
 
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -55,8 +56,11 @@ public class DfaGratuityEvent extends DfaGratuityEvent_Base {
     @Override
     protected List<AccountingEventPaymentCode> updatePaymentCodes() {
 	final EntryDTO entryDTO = calculateEntries(new DateTime()).get(0);
-	getNonProcessedPaymentCodes().get(0).update(new YearMonthDay(), calculatePaymentCodeEndDate(),
-		entryDTO.getAmountToPay(), entryDTO.getAmountToPay());
+
+	if (!getNonProcessedPaymentCodes().isEmpty()) {
+	    getNonProcessedPaymentCodes().get(0).update(new YearMonthDay(),
+		    calculatePaymentCodeEndDate(), entryDTO.getAmountToPay(), entryDTO.getAmountToPay());
+	}
 
 	return getNonProcessedPaymentCodes();
 
@@ -110,6 +114,20 @@ public class DfaGratuityEvent extends DfaGratuityEvent_Base {
     }
 
     @Override
+    public boolean isInState(final EventState eventState) {
+	if (eventState == EventState.OPEN) {
+	    return isOpen();
+	} else if (eventState == EventState.CLOSED) {
+	    return isClosed();
+	} else if (eventState == EventState.CANCELLED) {
+	    return isCancelled();
+	} else {
+	    throw new DomainException(
+		    "error.net.sourceforge.fenixedu.domain.accounting.events.gratuity.DfaGratuityEvent.unexpected.state.to.test");
+	}
+    }
+
+    @Override
     public void internalRecalculateState(DateTime whenRegistered) {
 	if (canCloseEvent(whenRegistered)) {
 	    closeNonProcessedCodes();
@@ -129,6 +147,6 @@ public class DfaGratuityEvent extends DfaGratuityEvent_Base {
 	for (final AccountingEventPaymentCode paymentCode : getCancelledPaymentCodes()) {
 	    paymentCode.setState(PaymentCodeState.NEW);
 	}
-    }
+    }  
 
 }

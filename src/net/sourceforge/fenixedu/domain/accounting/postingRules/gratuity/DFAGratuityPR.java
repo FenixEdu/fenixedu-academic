@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
+import net.sourceforge.fenixedu.domain.accounting.events.gratuity.DfaGratuityEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
@@ -185,9 +186,7 @@ public class DFAGratuityPR extends DFAGratuityPR_Base {
     }
 
     private BigDecimal getDiscountPercentage(final Event event, final Money amount) {
-	final GratuityEvent gratuityEvent = (GratuityEvent) event;
-	return gratuityEvent.hasGratuityExemption() ? gratuityEvent.getGratuityExemption()
-		.calculateDiscountPercentage(amount) : BigDecimal.ZERO;
+	return ((DfaGratuityEvent) event).calculateDiscountPercentage(amount);
     }
 
     @Override

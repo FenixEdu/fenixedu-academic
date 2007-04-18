@@ -82,7 +82,6 @@ public class MasterDegreeInsurancePaymentCode extends MasterDegreeInsurancePayme
 
     @Override
     public void delete() {
-	super.setStudent(null);
 	super.setExecutionYear(null);
 	super.delete();
     }

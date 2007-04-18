@@ -36,16 +36,6 @@ public abstract class PaymentPlan extends PaymentPlan_Base {
 					"error.domain.accounting.ServiceAgreementTemplate.already.has.a.default.payment.plan.for.execution.year");
 			    }
 
-			    for (final PaymentPlan paymentPlan : serviceAgreementTemplate
-				    .getPaymentPlansSet()) {
-				if (paymentPlan.getClass().equals(paymentPlanToAdd.getClass())
-					&& paymentPlan.getExecutionYear() == paymentPlanToAdd
-						.getExecutionYear()) {
-				    throw new DomainException(
-					    "error.domain.accounting.PaymentPlan.is.already.defined.for.execution.year.in.service.agreement.template");
-				}
-
-			    }
 			}
 		    }
 		});
@@ -166,8 +156,7 @@ public abstract class PaymentPlan extends PaymentPlan_Base {
 	    final Set<Installment> installmentsWithoutPenalty) {
 
 	final Map<Installment, Money> result = new HashMap<Installment, Money>();
-	Money totalPayedAmount = calculateTotalPayedAmountForInstallments(event).add(
-		event.calculateOtherPartiesPayedAmount());
+	Money totalPayedAmount = event.getPayedAmount();
 	Money remainingAmountAfterPayed = Money.ZERO;
 	Installment lastInstallmentToBePayed = null;
 
@@ -203,21 +192,6 @@ public abstract class PaymentPlan extends PaymentPlan_Base {
 
     }
 
-    private Money calculateTotalPayedAmountForInstallments(final Event event) {
-	Money payedAmount = Money.ZERO;
-	for (final Installment installment : getInstallmentsSortedByEndDate()) {
-	    final InstallmentAccountingTransaction installmentAccountingTransaction = event
-		    .getAccountingTransactionFor(installment);
-
-	    if (installmentAccountingTransaction != null) {
-		payedAmount = payedAmount
-			.add(calculateInstallmentPayedAmount(installmentAccountingTransaction));
-	    }
-	}
-
-	return payedAmount;
-    }
-
     private Money calculateInstallmentAmount(final DateTime when, final BigDecimal discountPercentage,
 	    final Installment installment,
 	    final InstallmentAccountingTransaction installmentAccountingTransaction,
@@ -226,13 +200,6 @@ public abstract class PaymentPlan extends PaymentPlan_Base {
 		.getWhenRegistered()
 		: when;
 	return installment.calculateAmount(whenToCalculate, discountPercentage, applyPenalty);
-    }
-
-    private Money calculateInstallmentPayedAmount(
-	    final InstallmentAccountingTransaction installmentAccountingTransaction) {
-	return (installmentAccountingTransaction != null) ? installmentAccountingTransaction
-		.getToAccountEntry().getAmountWithAdjustment() : Money.ZERO;
-
     }
 
     private Money calculateTransportAmountToDiscount(Money installmentTransportAmount,
@@ -244,12 +211,32 @@ public abstract class PaymentPlan extends PaymentPlan_Base {
     public Money calculateRemainingAmountFor(final Installment installment, final Event event,
 	    final DateTime when, final BigDecimal discountPercentage,
 	    final Set<Installment> installmentsWithoutPenalty) {
-	
+
 	final Map<Installment, Money> amountsByInstallment = calculateInstallmentRemainingAmounts(event,
 		when, discountPercentage, installmentsWithoutPenalty);
 	final Money installmentAmount = amountsByInstallment.get(installment);
 
 	return (installmentAmount != null) ? installmentAmount : Money.ZERO;
+    }
+
+    public boolean isInstallmentInDebt(final Installment installment, final Event event,
+	    final DateTime when, final BigDecimal discountPercentage,
+	    final Set<Installment> installmentsWithoutPenalty) {
+
+	return calculateRemainingAmountFor(installment, event, when, discountPercentage,
+		installmentsWithoutPenalty).isPositive();
+
+    }
+
+    public Installment getInstallmentByOrder(int order) {
+	for (final Installment installment : getInstallments()) {
+	    if (installment.getInstallmentOrder() == order) {
+		return installment;
+	    }
+	}
+
+	return null;
+
     }
 
 }

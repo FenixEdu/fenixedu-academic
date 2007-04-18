@@ -373,6 +373,7 @@ class net.sourceforge.fenixedu.domain.accounting.Event extends net.sourceforge.f
 			}
 	
 			class net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan extends net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent {
+				Integer keyGratuityPaymentPlan;
 			}
 	
 		class net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent extends net.sourceforge.fenixedu.domain.accounting.events.AnnualEvent {
@@ -3390,8 +3391,8 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
     String ojbConcreteClass;
 	String name;
 	String socialSecurityNumber;
-}
-	
+	}
+
 	class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.domain.organizationalStructure.Party {
 		Integer keyEmployee;
 		Integer keyTeacher;	
@@ -3403,7 +3404,7 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 	    Integer keyHomepage;
 		Integer keyCountryOfBirth;
 		Integer keyStudent;
-		
+
 	    Gender gender;
 		String documentIdNumber;
 	    IDDocumentType idDocumentType; 
@@ -3466,8 +3467,8 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 		}
 		
 		class net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit extends net.sourceforge.fenixedu.domain.organizationalStructure.Unit {					
-		}
-		
+	}
+
 		class net.sourceforge.fenixedu.domain.organizationalStructure.SchoolUnit extends net.sourceforge.fenixedu.domain.organizationalStructure.Unit {					
 		}
 		
@@ -3513,6 +3514,7 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType
 	String name;
     String ojbConcreteClass;
 }	 
+
 	class net.sourceforge.fenixedu.domain.organizationalStructure.Function extends net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType {
 		YearMonthDay beginDateYearMonthDay;
 		YearMonthDay endDateYearMonthDay;
@@ -4621,7 +4623,7 @@ class net.sourceforge.fenixedu.domain.Site extends net.sourceforge.fenixedu.doma
 	class net.sourceforge.fenixedu.domain.DepartmentSite extends net.sourceforge.fenixedu.domain.UnitSite {
 		MultiLanguageString description;
 	}
-	
+
 	class net.sourceforge.fenixedu.domain.ResearchUnitSite extends net.sourceforge.fenixedu.domain.UnitSite {
 		Integer keyResearchUnit;
 	}
@@ -6215,6 +6217,7 @@ relation ExecutionCourseSiteSite {
 	}
 	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
 }
+
 
 relation ExecutionCourseSummary {
 	net.sourceforge.fenixedu.domain.Summary playsRole associatedSummaries {
@@ -9174,6 +9177,15 @@ relation ServiceAgreementTemplatePostingRule {
 relation ServiceAgreementPerson {
 	net.sourceforge.fenixedu.domain.Person playsRole person;
 	net.sourceforge.fenixedu.domain.accounting.ServiceAgreement playsRole serviceAgreements {
+		multiplicity *;
+	}
+}
+
+
+relation GratuityPaymentPlanGratuityEventWithPaymentPlan {
+	net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityPaymentPlan playsRole gratuityPaymentPlan;
+	
+	net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan playsRole gratuityEventsWithPaymentPlan {
 		multiplicity *;
 	}
 }

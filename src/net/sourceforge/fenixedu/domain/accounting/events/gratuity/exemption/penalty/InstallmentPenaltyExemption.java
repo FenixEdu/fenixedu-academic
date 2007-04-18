@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.domain.accounting.events.gratuity.exemption.penalty;
 
-import org.joda.time.YearMonthDay;
-
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.Exemption;
@@ -9,6 +7,10 @@ import net.sourceforge.fenixedu.domain.accounting.Installment;
 import net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemptionJustificationType;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.injectionCode.Checked;
+
+import org.joda.time.YearMonthDay;
+
 import dml.runtime.RelationAdapter;
 
 public class InstallmentPenaltyExemption extends InstallmentPenaltyExemption_Base {
@@ -70,10 +72,10 @@ public class InstallmentPenaltyExemption extends InstallmentPenaltyExemption_Bas
 	}
     }
 
+    @Checked("RolePredicates.MANAGER_PREDICATE")
     @Override
     public void setInstallment(Installment installment) {
-	throw new DomainException(
-		"error.net.sourceforge.fenixedu.domain.accounting.events.gratuity.exemption.penalty.InstallmentPenaltyExemption.cannot.modify.installment");
+	super.setInstallment(installment);
     }
 
     @Override

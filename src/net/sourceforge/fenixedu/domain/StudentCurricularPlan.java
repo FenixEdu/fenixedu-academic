@@ -106,7 +106,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     protected Integer creditsInSpecializationArea; // For enrollment
 
     // purposes only
-    
+
     private Map<ExecutionPeriod, Collection<CurricularCourse>> previouslyEnroledCurricularCoursesByExecutionPeriod;
 
     public StudentCurricularPlan() {
@@ -284,8 +284,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public void initEctsCreditsToEnrol(List<CurricularCourse2Enroll> setOfCurricularCoursesToEnroll,
 	    ExecutionPeriod executionPeriod) {
 	for (CurricularCourse2Enroll curricularCourse2Enroll : setOfCurricularCoursesToEnroll) {
-	    curricularCourse2Enroll.setEctsCredits(this
-		    .getAccumulatedEctsCredits(executionPeriod, curricularCourse2Enroll.getCurricularCourse()));
+	    curricularCourse2Enroll.setEctsCredits(this.getAccumulatedEctsCredits(executionPeriod,
+		    curricularCourse2Enroll.getCurricularCourse()));
 	}
     }
 
@@ -381,15 +381,16 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
 	return isApproved(course, approvedCurricularCourses);
     }
-    
-    public boolean isCurricularCourseNotExtraApprovedInCurrentOrPreviousPeriod(final CurricularCourse course,
-	    final ExecutionPeriod executionPeriod) {
+
+    public boolean isCurricularCourseNotExtraApprovedInCurrentOrPreviousPeriod(
+	    final CurricularCourse course, final ExecutionPeriod executionPeriod) {
 	final List studentApprovedEnrollments = getStudentEnrollmentsWithApprovedState();
 	final List<CurricularCourse> approvedCurricularCourses = new ArrayList<CurricularCourse>();
 
 	for (Iterator iter = studentApprovedEnrollments.iterator(); iter.hasNext();) {
 	    Enrolment enrolment = (Enrolment) iter.next();
-	    if (!enrolment.isExtraCurricular() && enrolment.getExecutionPeriod().compareTo(executionPeriod) <= 0) {
+	    if (!enrolment.isExtraCurricular()
+		    && enrolment.getExecutionPeriod().compareTo(executionPeriod) <= 0) {
 		approvedCurricularCourses.add(enrolment.getCurricularCourse());
 	    }
 	}
@@ -477,11 +478,13 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return false;
     }
 
-    public Integer getCurricularCourseAcumulatedEnrollments(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod) {
+    public Integer getCurricularCourseAcumulatedEnrollments(CurricularCourse curricularCourse,
+	    ExecutionPeriod executionPeriod) {
 
 	String key = curricularCourse.getCurricularCourseUniqueKeyForEnrollment();
 
-	Integer curricularCourseAcumulatedEnrolments = getAcumulatedEnrollmentsMap(executionPeriod).get(key);
+	Integer curricularCourseAcumulatedEnrolments = getAcumulatedEnrollmentsMap(executionPeriod).get(
+		key);
 
 	if (curricularCourseAcumulatedEnrolments == null) {
 	    curricularCourseAcumulatedEnrolments = new Integer(0);
@@ -500,9 +503,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
 	return curricularCourseAcumulatedEnrolments;
     }
-    
+
     public Integer getCurricularCourseAcumulatedEnrollments(CurricularCourse curricularCourse) {
-	return getCurricularCourseAcumulatedEnrollments(curricularCourse, ExecutionPeriod.readActualExecutionPeriod());
+	return getCurricularCourseAcumulatedEnrollments(curricularCourse, ExecutionPeriod
+		.readActualExecutionPeriod());
     }
 
     public List<Enrolment> getAllStudentEnrolledEnrollmentsInExecutionPeriod(
@@ -521,7 +525,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     private void initEctsCredits(ExecutionPeriod executionPeriod, List<Enrolment> enrolments) {
 	for (final Enrolment enrolment : enrolments) {
-	    enrolment.setAccumulatedEctsCredits(this.getAccumulatedEctsCredits(executionPeriod, enrolment.getCurricularCourse()));
+	    enrolment.setAccumulatedEctsCredits(this.getAccumulatedEctsCredits(executionPeriod,
+		    enrolment.getCurricularCourse()));
 	}
     }
 
@@ -740,19 +745,24 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return result;
     }
 
-    public double getAccumulatedEctsCredits(final ExecutionPeriod executionPeriod, final CurricularCourse curricularCourse) {
+    public double getAccumulatedEctsCredits(final ExecutionPeriod executionPeriod,
+	    final CurricularCourse curricularCourse) {
 	if (curricularCourse.isBolonha()) {
 	    return isAccumulated(executionPeriod, curricularCourse) ? MaximumNumberOfCreditsForEnrolmentPeriod
-		    .getAccumulatedEctsCredits(curricularCourse) : curricularCourse.getEctsCredits();
+		    .getAccumulatedEctsCredits(curricularCourse)
+		    : curricularCourse.getEctsCredits();
 	} else {
 	    return getAccumulatedEctsCreditsForOldCurricularCourses(curricularCourse, executionPeriod);
 	}
     }
 
-    private double getAccumulatedEctsCreditsForOldCurricularCourses(final CurricularCourse curricularCourse, ExecutionPeriod executionPeriod) {
+    private double getAccumulatedEctsCreditsForOldCurricularCourses(
+	    final CurricularCourse curricularCourse, ExecutionPeriod executionPeriod) {
 	Double factor;
-	Integer curricularCourseAcumulatedEnrolments = getAcumulatedEnrollmentsMap(executionPeriod).get(curricularCourse.getCurricularCourseUniqueKeyForEnrollment());
-	if (curricularCourseAcumulatedEnrolments == null || curricularCourseAcumulatedEnrolments.intValue() == 0) {
+	Integer curricularCourseAcumulatedEnrolments = getAcumulatedEnrollmentsMap(executionPeriod).get(
+		curricularCourse.getCurricularCourseUniqueKeyForEnrollment());
+	if (curricularCourseAcumulatedEnrolments == null
+		|| curricularCourseAcumulatedEnrolments.intValue() == 0) {
 	    factor = 1.0;
 	} else {
 	    factor = 0.75;
@@ -760,26 +770,30 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return curricularCourse.getEctsCredits() * factor;
     }
 
-    private boolean isAccumulated(final ExecutionPeriod executionPeriod, final CurricularCourse curricularCourse) {
+    private boolean isAccumulated(final ExecutionPeriod executionPeriod,
+	    final CurricularCourse curricularCourse) {
 	if (curricularCourse.isBolonha()) {
 	    return getPreviouslyEnroledCurricularCourses(executionPeriod).contains(curricularCourse);
 	} else {
-	    Integer curricularCourseAcumulatedEnrolments = getAcumulatedEnrollmentsMap(executionPeriod).get(
-		    curricularCourse.getCurricularCourseUniqueKeyForEnrollment());
+	    Integer curricularCourseAcumulatedEnrolments = getAcumulatedEnrollmentsMap(executionPeriod)
+		    .get(curricularCourse.getCurricularCourseUniqueKeyForEnrollment());
 	    return curricularCourseAcumulatedEnrolments != null
 		    && curricularCourseAcumulatedEnrolments.intValue() != 0;
 	}
-    }  
+    }
 
-    private Collection<CurricularCourse> getPreviouslyEnroledCurricularCourses(final ExecutionPeriod executionPeriod) {
+    private Collection<CurricularCourse> getPreviouslyEnroledCurricularCourses(
+	    final ExecutionPeriod executionPeriod) {
 	if (previouslyEnroledCurricularCoursesByExecutionPeriod == null) {
 	    previouslyEnroledCurricularCoursesByExecutionPeriod = new HashMap<ExecutionPeriod, Collection<CurricularCourse>>();
 	}
-	
-	Collection<CurricularCourse> previouslyEnroledCurricularCourses = previouslyEnroledCurricularCoursesByExecutionPeriod.get(executionPeriod);
+
+	Collection<CurricularCourse> previouslyEnroledCurricularCourses = previouslyEnroledCurricularCoursesByExecutionPeriod
+		.get(executionPeriod);
 	if (previouslyEnroledCurricularCourses == null && this.isBolonha()) {
 	    previouslyEnroledCurricularCourses = new HashSet<CurricularCourse>();
-	    previouslyEnroledCurricularCoursesByExecutionPeriod.put(executionPeriod, previouslyEnroledCurricularCourses);
+	    previouslyEnroledCurricularCoursesByExecutionPeriod.put(executionPeriod,
+		    previouslyEnroledCurricularCourses);
 
 	    for (final Enrolment enrolment : getEnrolmentsSet()) {
 		if (!enrolment.isAnnulled() && enrolment.getExecutionPeriod().isBefore(executionPeriod)) {
@@ -812,19 +826,21 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     // -------------------------------------------------------------
 
     private void calculateStudentAcumulatedEnrollments(ExecutionPeriod executionPeriod) {
-	if(!this.isBolonha()) {
+	if (!this.isBolonha()) {
 	    if (this.acumulatedEnrollments == null) {
-		this.acumulatedEnrollments = new HashMap<ExecutionPeriod, Map<String,Integer>>();
+		this.acumulatedEnrollments = new HashMap<ExecutionPeriod, Map<String, Integer>>();
 	    }
-	    
-	    if(this.acumulatedEnrollments.get(executionPeriod) == null) {
+
+	    if (this.acumulatedEnrollments.get(executionPeriod) == null) {
 		List<String> curricularCourses = new ArrayList<String>();
 		for (Enrolment enrolment : this.getEnrolments()) {
-		    if(!enrolment.isAnnulled() && enrolment.getExecutionPeriod().isBefore(executionPeriod)) {
-			curricularCourses.add(enrolment.getCurricularCourse().getCurricularCourseUniqueKeyForEnrollment());
+		    if (!enrolment.isAnnulled()
+			    && enrolment.getExecutionPeriod().isBefore(executionPeriod)) {
+			curricularCourses.add(enrolment.getCurricularCourse()
+				.getCurricularCourseUniqueKeyForEnrollment());
 		    }
 		}
-		
+
 		Map<String, Integer> map = CollectionUtils.getCardinalityMap(curricularCourses);
 		this.acumulatedEnrollments.put(executionPeriod, map);
 	    }
@@ -985,11 +1001,11 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     private Map<String, Integer> getAcumulatedEnrollmentsMap(ExecutionPeriod executionPeriod) {
-	if(!this.isBolonha()) {
-	    if(this.acumulatedEnrollments == null) {
+	if (!this.isBolonha()) {
+	    if (this.acumulatedEnrollments == null) {
 		calculateStudentAcumulatedEnrollments(executionPeriod);
 	    } else {
-		if(this.acumulatedEnrollments.get(executionPeriod) == null) {
+		if (this.acumulatedEnrollments.get(executionPeriod) == null) {
 		    calculateStudentAcumulatedEnrollments(executionPeriod);
 		}
 	    }
@@ -1369,7 +1385,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     public GratuityEvent getGratuityEvent(final ExecutionYear executionYear) {
 	for (final GratuityEvent gratuityEvent : getGratuityEvents()) {
-	    if (gratuityEvent.getExecutionYear() == executionYear) {
+	    if (!gratuityEvent.isCancelled() && gratuityEvent.getExecutionYear() == executionYear) {
 		return gratuityEvent;
 	    }
 	}
@@ -1378,13 +1394,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     public boolean hasGratuityEvent(final ExecutionYear executionYear) {
-	for (final GratuityEvent gratuityEvent : getGratuityEvents()) {
-	    if (gratuityEvent.getExecutionYear() == executionYear) {
-		return true;
-	    }
-	}
-
-	return false;
+	return getGratuityEvent(executionYear) != null;
     }
 
     public Set<GratuityEvent> getNotPayedGratuityEvents() {
@@ -1456,8 +1466,9 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	}
 	return count;
     }
-    
-    public int countEnrolmentsByCurricularCourse(final CurricularCourse curricularCourse, ExecutionPeriod untilExecutionPeriod) {
+
+    public int countEnrolmentsByCurricularCourse(final CurricularCourse curricularCourse,
+	    ExecutionPeriod untilExecutionPeriod) {
 	int count = 0;
 	for (Enrolment enrolment : this.getEnrolments()) {
 	    if (enrolment.getCurricularCourse() == curricularCourse
@@ -1715,7 +1726,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	if (isBolonha()) {
 	    return getRoot().getSpecialSeasonEnrolments(executionYear);
 	}
-	
+
 	Set<Enrolment> result = new HashSet<Enrolment>();
 	for (Enrolment enrolment : getEnrolmentsSet()) {
 	    if (enrolment.getEnrolmentEvaluationType() == EnrolmentEvaluationType.SPECIAL_SEASON
@@ -1746,19 +1757,22 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     // Improvements
-    public void createEnrolmentEvaluationForImprovement(final Collection<Enrolment> toCreate, final Employee employee, final ExecutionPeriod executionPeriod) {
+    public void createEnrolmentEvaluationForImprovement(final Collection<Enrolment> toCreate,
+	    final Employee employee, final ExecutionPeriod executionPeriod) {
 	final Collection<EnrolmentEvaluation> created = new HashSet<EnrolmentEvaluation>();
-	
+
 	for (final Enrolment enrolment : toCreate) {
 	    created.add(enrolment.createEnrolmentEvaluationForImprovement(employee, executionPeriod));
 	}
 
 	final ImprovementOfApprovedEnrolmentEvent improvementOfApprovedEnrolmentEvent = getNotPayedImprovementOfApprovedEnrolmentEvent();
 	if (improvementOfApprovedEnrolmentEvent == null) {
-	    new ImprovementOfApprovedEnrolmentEvent(employee.getAdministrativeOffice(), getPerson(), created);
+	    new ImprovementOfApprovedEnrolmentEvent(employee.getAdministrativeOffice(), getPerson(),
+		    created);
 	} else {
 	    for (final EnrolmentEvaluation enrolmentEvaluation : created) {
-		improvementOfApprovedEnrolmentEvent.addImprovementEnrolmentEvaluations(enrolmentEvaluation);		
+		improvementOfApprovedEnrolmentEvent
+			.addImprovementEnrolmentEvaluations(enrolmentEvaluation);
 	    }
 	}
     }
@@ -1822,8 +1836,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    ExecutionPeriod executionPeriod) {
 	List<Enrolment> result = new ArrayList<Enrolment>();
 	for (Enrolment enrolment : getEnrolments()) {
-	    if (enrolment.canBeImproved()
-		    && enrolment.getExecutionPeriod().equals(executionPeriod)) {
+	    if (enrolment.canBeImproved() && enrolment.getExecutionPeriod().equals(executionPeriod)) {
 		result.add(enrolment);
 	    }
 	}
@@ -1836,12 +1849,13 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
 	    public boolean evaluate(Object arg0) {
 		Enrolment enrolment = (Enrolment) arg0;
-		for (CurricularCourseScope curricularCourseScope : enrolment.getCurricularCourse().getScopes()) {
-		    if(curricularCourseScope.isActiveForExecutionPeriod(previousExecPeriod)) {
+		for (CurricularCourseScope curricularCourseScope : enrolment.getCurricularCourse()
+			.getScopes()) {
+		    if (curricularCourseScope.isActiveForExecutionPeriod(previousExecPeriod)) {
 			return false;
 		    }
 		}
-		
+
 		return true;
 	    }
 
@@ -1889,14 +1903,14 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     /**
-         * Note: This is enrolment without rules and should only be used for
-         * first time enrolments
-         * 
-         * @param curriculumGroup
-         * @param curricularPeriod
-         * @param executionPeriod
-         * @param createdBy
-         */
+     * Note: This is enrolment without rules and should only be used for first
+     * time enrolments
+     * 
+     * @param curriculumGroup
+     * @param curricularPeriod
+     * @param executionPeriod
+     * @param createdBy
+     */
     private void internalCreateFirstTimeStudentEnrolmentsFor(CurriculumGroup curriculumGroup,
 	    CurricularPeriod curricularPeriod, ExecutionPeriod executionPeriod, String createdBy) {
 
@@ -1953,17 +1967,20 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
 	assertEnrolmentPreConditions(responsiblePerson, executionPeriod);
 
-	final EnrolmentContext enrolmentContext = new EnrolmentContext(this, executionPeriod, degreeModulesToEnrol, curriculumModulesToRemove, curricularRuleLevel);
-	return net.sourceforge.fenixedu.domain.studentCurriculum.StudentCurricularPlanEnrolment.createManager(this, enrolmentContext, responsiblePerson).manage();
+	final EnrolmentContext enrolmentContext = new EnrolmentContext(this, executionPeriod,
+		degreeModulesToEnrol, curriculumModulesToRemove, curricularRuleLevel);
+	return net.sourceforge.fenixedu.domain.studentCurriculum.StudentCurricularPlanEnrolment
+		.createManager(this, enrolmentContext, responsiblePerson).manage();
     }
 
-    private void assertEnrolmentPreConditions(final Person responsiblePerson, final ExecutionPeriod executionPeriod) {
+    private void assertEnrolmentPreConditions(final Person responsiblePerson,
+	    final ExecutionPeriod executionPeriod) {
 	final Registration registration = this.getRegistration();
 	if (!registration.isActive()) {
 	    throw new DomainException(
 		    "error.StudentCurricularPlan.cannot.enrol.with.registration.inactive");
 	}
-	
+
 	final DegreeCurricularPlan degreeCurricularPlan = this.getDegreeCurricularPlan();
 	if (responsiblePerson.hasRole(RoleType.STUDENT)) {
 	    if (!degreeCurricularPlan.hasOpenEnrolmentPeriodInCurricularCoursesFor(executionPeriod)) {
@@ -2049,7 +2066,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public Person getPerson() {
 	return getRegistration().getPerson();
     }
-    
+
     public void createOptionalEnrolment(final CurriculumGroup curriculumGroup,
 	    final ExecutionPeriod executionPeriod,
 	    final OptionalCurricularCourse optionalCurricularCourse,
@@ -2233,21 +2250,21 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public MasterDegreeCandidate getMasterDegreeCandidate() {
 	if (getDegreeType().equals(DegreeType.MASTER_DEGREE)) {
 	    if (this.getEnrolments().size() > 0) {
-	    ExecutionDegree firstExecutionDegree = this.getDegreeCurricularPlan()
-		    .getExecutionDegreeByYear(this.getFirstExecutionPeriod().getExecutionYear());
-	    for (final MasterDegreeCandidate candidate : this.getPerson()
-		    .getMasterDegreeCandidates()) {
-		if (candidate.getExecutionDegree() == firstExecutionDegree) {
-		    return candidate;
+		ExecutionDegree firstExecutionDegree = this.getDegreeCurricularPlan()
+			.getExecutionDegreeByYear(this.getFirstExecutionPeriod().getExecutionYear());
+		for (final MasterDegreeCandidate candidate : this.getPerson()
+			.getMasterDegreeCandidates()) {
+		    if (candidate.getExecutionDegree() == firstExecutionDegree) {
+			return candidate;
+		    }
 		}
-	    }
 	    } else if (this.getPerson().getMasterDegreeCandidatesCount() == 1) {
 		return this.getPerson().getMasterDegreeCandidates().iterator().next();
-	}
+	    }
 	}
 	return null;
     }
-    
+
     public Double getEctsCreditsForCourseGroup(final CourseGroup courseGroup) {
 	final CurriculumGroup curriculumGroup = findCurriculumGroupFor(courseGroup);
 	return (curriculumGroup == null) ? Double.valueOf(0d) : curriculumGroup.getAprovedEctsCredits();
@@ -2278,13 +2295,41 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	}
 	return result;
     }
-    
+
     public CurriculumGroup getFirstCycleCurriculumGroup() {
 	return isBolonha() ? getRoot().getFirstCycleCurriculumGroup() : null;
     }
-    
+
     public CurriculumGroup getSecondCycleCurriculumGroup() {
 	return isBolonha() ? getRoot().getSecondCycleCurriculumGroup() : null;
+    }
+
+    public boolean isSecondCycle() {
+	if (getDegreeType() == DegreeType.BOLONHA_MASTER_DEGREE) {
+	    return true;
+	} else if (getDegreeType() == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) {
+	    final CurriculumGroup secondCycleCurriculumGroup = getSecondCycleCurriculumGroup();
+	    if (secondCycleCurriculumGroup == null) {
+		return false;
+	    }
+
+	    return !secondCycleCurriculumGroup.getEnrolments().isEmpty();
+
+	} else {
+	    return false;
+	}
+    }
+
+    public boolean isFirstCycle() {
+	switch (getDegreeType()) {
+	case DEGREE:
+	case BOLONHA_DEGREE:
+	    return true;
+	case BOLONHA_INTEGRATED_MASTER_DEGREE:
+	    return !isSecondCycle();
+	default:
+	    return false;
+	}
     }
 
 }

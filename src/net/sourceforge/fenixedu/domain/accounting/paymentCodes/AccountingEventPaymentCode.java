@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.accounting.paymentCodes;
 
 import net.sourceforge.fenixedu.dataTransferObject.accounting.SibsTransactionDetailDTO;
+import net.sourceforge.fenixedu.domain.AccessibleItem;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
@@ -10,12 +11,15 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.Money;
 
+import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 import dml.runtime.RelationAdapter;
 
 public class AccountingEventPaymentCode extends AccountingEventPaymentCode_Base {
+
+    private static final Logger logger = Logger.getLogger(AccountingEventPaymentCode.class);
 
     static {
 	PaymentCodeAccountingEvent.addListener(new RelationAdapter<AccountingEventPaymentCode, Event>() {
@@ -94,8 +98,19 @@ public class AccountingEventPaymentCode extends AccountingEventPaymentCode_Base 
     @Override
     protected void internalProcess(Person person, Money amount, DateTime whenRegistered,
 	    String sibsTransactionId) {
-	getAccountingEvent().process(person.getUser(), this, amount,
-		new SibsTransactionDetailDTO(whenRegistered, sibsTransactionId, getCode()));
+	final Event event = getAccountingEvent();
+	if (event.isCancelled()) {
+	    logger
+		    .warn("############################ PROCESSING CODE FOR CANCELLED EVENT ###############################");
+	    logger.warn("Event " + event.getIdInternal() + " for person "
+		    + event.getPerson().getIdInternal() + " is cancelled");
+	    logger
+		    .warn("################################################################################################");
+
+	}
+
+	event.process(person.getUser(), this, amount, new SibsTransactionDetailDTO(whenRegistered,
+		sibsTransactionId, getCode()));
     }
 
     @Override

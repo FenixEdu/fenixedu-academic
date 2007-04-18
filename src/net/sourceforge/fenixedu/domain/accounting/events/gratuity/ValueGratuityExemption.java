@@ -3,11 +3,14 @@ package net.sourceforge.fenixedu.domain.accounting.events.gratuity;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-import org.joda.time.YearMonthDay;
-
 import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.accounting.EventState;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.Money;
+
+import org.joda.time.DateTime;
+import org.joda.time.YearMonthDay;
 
 public class ValueGratuityExemption extends ValueGratuityExemption_Base {
 
@@ -35,10 +38,13 @@ public class ValueGratuityExemption extends ValueGratuityExemption_Base {
 	}
     }
 
+    @Checked("RolePredicates.MANAGER_PREDICATE")
     @Override
     public void setValue(Money value) {
-	throw new DomainException(
-		"error.accounting.events.gratuity.ValueGratuityExemption.cannot.modify.value");
+	super.setValue(value);
+	final DateTime now = new DateTime();
+	getGratuityEvent().changeState(EventState.OPEN, now);
+	getGratuityEvent().recalculateState(now);
     }
 
     @Override

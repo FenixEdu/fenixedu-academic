@@ -6,6 +6,7 @@ import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
 import net.sourceforge.fenixedu.domain.accounting.util.PaymentCodeGenerator;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.YearMonthDay;
@@ -72,10 +73,10 @@ public class InstallmentPaymentCode extends InstallmentPaymentCode_Base {
 
     }
 
+    @Checked("RolePredicates.MANAGER_PREDICATE")
     @Override
     public void setInstallment(Installment installment) {
-	throw new DomainException(
-		"error.accounting.paymentCodes.InstallmentPaymentCode.cannot.modify.installment");
+	super.setInstallment(installment);
     }
 
     @Override

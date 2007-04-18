@@ -183,7 +183,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	}
 	return result;
     }
-    
+
     public void collectDismissals(final List<Dismissal> result) {
 	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
 	    curriculumModule.collectDismissals(result);
@@ -264,7 +264,8 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     }
 
     @Override
-    public boolean isEnroledInExecutionPeriod(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod) {
+    public boolean isEnroledInExecutionPeriod(CurricularCourse curricularCourse,
+	    ExecutionPeriod executionPeriod) {
 	for (final CurriculumModule curriculumModule : this.getCurriculumModules()) {
 	    if (curriculumModule.isEnroledInExecutionPeriod(curricularCourse, executionPeriod)) {
 		return true;
@@ -272,9 +273,10 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	}
 	return false;
     }
-    
+
     @Override
-    public boolean hasEnrolmentWithEnroledState(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
+    public boolean hasEnrolmentWithEnroledState(final CurricularCourse curricularCourse,
+	    final ExecutionPeriod executionPeriod) {
 	for (final CurriculumModule curriculumModule : this.getCurriculumModules()) {
 	    if (curriculumModule.hasEnrolmentWithEnroledState(curricularCourse, executionPeriod)) {
 		return true;
@@ -282,7 +284,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	}
 	return false;
     }
-    
+
     @Override
     public boolean hasDegreeModule(DegreeModule degreeModule) {
 	if (super.hasDegreeModule(degreeModule)) {
@@ -309,11 +311,13 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	}
 	return false;
     }
-    
+
     @Override
-    public Enrolment findEnrolmentFor(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
+    public Enrolment findEnrolmentFor(final CurricularCourse curricularCourse,
+	    final ExecutionPeriod executionPeriod) {
 	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
-	    final Enrolment search = curriculumModule.findEnrolmentFor(curricularCourse, executionPeriod);
+	    final Enrolment search = curriculumModule
+		    .findEnrolmentFor(curricularCourse, executionPeriod);
 	    if (search != null) {
 		return search;
 	    }
@@ -328,7 +332,8 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
 	    if (!curriculumModule.isLeaf()) {
 		final CurriculumGroup curriculumGroup = (CurriculumGroup) curriculumModule;
-		final CurriculumGroup searchCurriculumGroup = curriculumGroup.findCurriculumGroupFor(courseGroup);
+		final CurriculumGroup searchCurriculumGroup = curriculumGroup
+			.findCurriculumGroupFor(courseGroup);
 		if (searchCurriculumGroup != null) {
 		    return searchCurriculumGroup;
 		}
@@ -457,7 +462,8 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     public Double getEnroledEctsCredits(final ExecutionPeriod executionPeriod) {
 	BigDecimal bigDecimal = BigDecimal.ZERO;
 	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
-	    bigDecimal = bigDecimal.add(new BigDecimal(curriculumModule.getEnroledEctsCredits(executionPeriod)));
+	    bigDecimal = bigDecimal.add(new BigDecimal(curriculumModule
+		    .getEnroledEctsCredits(executionPeriod)));
 	}
 	return Double.valueOf(bigDecimal.doubleValue());
     }
@@ -505,7 +511,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     public Set<IDegreeModuleToEvaluate> getDegreeModulesToEvaluate(final ExecutionPeriod executionPeriod) {
 	final Set<IDegreeModuleToEvaluate> result = new HashSet<IDegreeModuleToEvaluate>();
 	result.add(new CurriculumModuleEnroledWrapper(this, executionPeriod));
-	
+
 	for (final CurriculumModule curriculumModule : getCurriculumModules()) {
 	    result.addAll(curriculumModule.getDegreeModulesToEvaluate(executionPeriod));
 	}
@@ -513,7 +519,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     }
 
     @Override
-    public Collection<Enrolment> getSpecialSeasonEnrolments(final ExecutionYear executionYear){
+    public Collection<Enrolment> getSpecialSeasonEnrolments(final ExecutionYear executionYear) {
 	Collection<Enrolment> result = new HashSet<Enrolment>();
 	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
 	    result.addAll(curriculumModule.getSpecialSeasonEnrolments(executionYear));
@@ -522,38 +528,40 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     }
 
     public CurriculumGroup getFirstCycleCurriculumGroup() {
-	if (getDegreeModule().isFirstCycle()) {
+	if (hasDegreeModule() && getDegreeModule().isFirstCycle()) {
 	    return this;
 	}
-	
+
 	for (final CurriculumModule curriculumModule : getCurriculumModules()) {
 	    if (curriculumModule.isLeaf()) {
 		continue;
 	    }
-	    final CurriculumGroup firstCycleCurriculumGroup = ((CurriculumGroup) curriculumModule).getFirstCycleCurriculumGroup();
+	    final CurriculumGroup firstCycleCurriculumGroup = ((CurriculumGroup) curriculumModule)
+		    .getFirstCycleCurriculumGroup();
 	    if (firstCycleCurriculumGroup != null) {
 		return firstCycleCurriculumGroup;
 	    }
 	}
-	
+
 	return null;
     }
 
     public CurriculumGroup getSecondCycleCurriculumGroup() {
-	if (getDegreeModule().isSecondCycle()) {
+	if (hasDegreeModule() && getDegreeModule().isSecondCycle()) {
 	    return this;
 	}
-	
+
 	for (final CurriculumModule curriculumModule : getCurriculumModules()) {
 	    if (curriculumModule.isLeaf()) {
 		continue;
 	    }
-	    final CurriculumGroup secondCycleCurriculumGroup = ((CurriculumGroup) curriculumModule).getSecondCycleCurriculumGroup();
+	    final CurriculumGroup secondCycleCurriculumGroup = ((CurriculumGroup) curriculumModule)
+		    .getSecondCycleCurriculumGroup();
 	    if (secondCycleCurriculumGroup != null) {
 		return secondCycleCurriculumGroup;
 	    }
 	}
-	
+
 	return null;
     }
 }

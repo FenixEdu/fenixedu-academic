@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain.accounting.paymentPlans;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
+import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate;
 
 public class GratuityPaymentPlanForStudentsEnroledOnlyInSecondSemester extends
 	GratuityPaymentPlanForStudentsEnroledOnlyInSecondSemester_Base {
@@ -12,12 +12,12 @@ public class GratuityPaymentPlanForStudentsEnroledOnlyInSecondSemester extends
     }
 
     public GratuityPaymentPlanForStudentsEnroledOnlyInSecondSemester(final ExecutionYear executionYear,
-	    final ServiceAgreementTemplate serviceAgreementTemplate) {
+	    final DegreeCurricularPlanServiceAgreementTemplate serviceAgreementTemplate) {
 	this(executionYear, serviceAgreementTemplate, false);
     }
 
     public GratuityPaymentPlanForStudentsEnroledOnlyInSecondSemester(final ExecutionYear executionYear,
-	    final ServiceAgreementTemplate serviceAgreementTemplate, final Boolean defaultPlan) {
+	    final DegreeCurricularPlanServiceAgreementTemplate serviceAgreementTemplate, final Boolean defaultPlan) {
 	this();
 	super.init(executionYear, serviceAgreementTemplate, defaultPlan);
     }

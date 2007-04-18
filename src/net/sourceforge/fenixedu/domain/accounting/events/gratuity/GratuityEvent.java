@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.domain.accounting.events.gratuity;
 import java.math.BigDecimal;
 
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
@@ -88,16 +89,11 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
     }
 
     private Unit getUnit() {
-	return getExecutionDegree().getDegreeCurricularPlan().getDegree().getUnit();
-    }
-
-    public ExecutionDegree getExecutionDegree() {
-	return getStudentCurricularPlan().getDegreeCurricularPlan().getExecutionDegreeByYear(
-		getExecutionYear());
+	return getDegree().getUnit();
     }
 
     public Degree getDegree() {
-	return getExecutionDegree().getDegree();
+	return getDegreeCurricularPlan().getDegree();
     }
 
     @Override
@@ -123,7 +119,11 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
 
     @Override
     protected DegreeCurricularPlanServiceAgreementTemplate getServiceAgreementTemplate() {
-	return getExecutionDegree().getDegreeCurricularPlan().getServiceAgreementTemplate();
+	return getDegreeCurricularPlan().getServiceAgreementTemplate();
+    }
+
+    private DegreeCurricularPlan getDegreeCurricularPlan() {
+	return getStudentCurricularPlan().getDegreeCurricularPlan();
     }
 
     public Registration getRegistration() {
@@ -136,10 +136,10 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
 		"error.accounting.events.gratuity.GratuityEvent.cannot.modify.executionYear");
     }
 
+    @Checked("RolePredicates.MANAGER_PREDICATE")
     @Override
     public void setStudentCurricularPlan(StudentCurricularPlan studentCurricularPlan) {
-	throw new DomainException(
-		"error.accounting.events.gratuity.GratuityEvent.cannot.modify.studentCurricularPlan");
+	super.setStudentCurricularPlan(studentCurricularPlan);
     }
 
     public boolean isCompleteEnrolmentModel() {
@@ -200,4 +200,8 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
 	return true;
     }
 
+    public BigDecimal calculateDiscountPercentage(final Money amount) {
+	return hasGratuityExemption() ? getGratuityExemption().calculateDiscountPercentage(amount)
+		: BigDecimal.ZERO;
+    }
 }

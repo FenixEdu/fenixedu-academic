@@ -114,9 +114,10 @@ public class AccountingTransaction extends AccountingTransaction_Base {
 	throw new DomainException("error.accounting.accountingTransaction.cannot.remove.entries");
     }
 
+    @Checked("RolePredicates.MANAGER_PREDICATE")
     @Override
     public void setEvent(Event event) {
-	throw new DomainException("error.accounting.accountingTransaction.cannot.modify.event");
+	super.setEvent(event);
     }
 
     @Override

@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.domain.accounting.Installment;
 import net.sourceforge.fenixedu.domain.accounting.PaymentPlan;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.accounting.accountingTransactions.InstallmentAccountingTransaction;
-import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
@@ -65,10 +64,8 @@ public class GratuityWithPaymentPlanPR extends GratuityWithPaymentPlanPR_Base {
     }
 
     private BigDecimal getDiscountPercentage(final Event event) {
-	final GratuityEvent gratuityEvent = (GratuityEvent) event;
-	return gratuityEvent.hasGratuityExemption() ? gratuityEvent.getGratuityExemption()
-		.calculateDiscountPercentage(getPaymentPlan(event).calculateOriginalTotalAmount())
-		: BigDecimal.ZERO;
+	return ((GratuityEventWithPaymentPlan) event).calculateDiscountPercentage(getPaymentPlan(event)
+		.calculateOriginalTotalAmount());
     }
 
     @Override
@@ -106,7 +103,8 @@ public class GratuityWithPaymentPlanPR extends GratuityWithPaymentPlanPR_Base {
     }
 
     private boolean needsTotalAmountEntry(final PaymentPlan paymentPlan, List<EntryDTO> result) {
-	return paymentPlan.getInstallmentsCount() != 1 && paymentPlan.getInstallmentsCount() == result.size();
+	return paymentPlan.getInstallmentsCount() != 1
+		&& paymentPlan.getInstallmentsCount() == result.size();
     }
 
     @Override

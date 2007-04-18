@@ -24,11 +24,14 @@ import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPa
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.InstallmentPaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityPaymentPlan;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate;
+import net.sourceforge.fenixedu.domain.accounting.serviceAgreements.DegreeCurricularPlanServiceAgreement;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.Money;
 
+import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_Base {
@@ -48,6 +51,34 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
     protected void init(AdministrativeOffice administrativeOffice, Person person,
 	    StudentCurricularPlan studentCurricularPlan, ExecutionYear executionYear) {
 	super.init(administrativeOffice, person, studentCurricularPlan, executionYear);
+
+	configuratePaymentPlan();
+    }
+
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Override
+    public void setGratuityPaymentPlan(GratuityPaymentPlan gratuityPaymentPlan) {
+	ensureServiceAgreement();
+	super.setGratuityPaymentPlan(gratuityPaymentPlan);
+    }
+
+    public void configuratePaymentPlan() {
+	ensureServiceAgreement();
+
+	if (!hasGratuityPaymentPlan()) {
+	    super.setGratuityPaymentPlan(getDegreeCurricularPlanServiceAgreement()
+		    .getGratuityPaymentPlanFor(getStudentCurricularPlan(), getExecutionYear()));
+	}
+
+    }
+
+    private void ensureServiceAgreement() {
+	if (getDegreeCurricularPlanServiceAgreement() == null) {
+	    new DegreeCurricularPlanServiceAgreement(getPerson(),
+		    DegreeCurricularPlanServiceAgreementTemplate
+			    .readByDegreeCurricularPlan(getStudentCurricularPlan()
+				    .getDegreeCurricularPlan()));
+	}
     }
 
     @Override
@@ -68,21 +99,29 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
     @Override
     protected List<AccountingEventPaymentCode> updatePaymentCodes() {
 	final List<EntryDTO> entryDTOs = calculateEntries();
+	final List<AccountingEventPaymentCode> result = new ArrayList<AccountingEventPaymentCode>();
+
 	for (final AccountingEventPaymentCode paymentCode : getNonProcessedPaymentCodes()) {
 	    final EntryDTO entryDTO = findEntryDTOForPaymentCode(entryDTOs, paymentCode);
+	    if (entryDTO == null) {
+		continue;
+	    }
+
 	    if (paymentCode instanceof InstallmentPaymentCode) {
 		final InstallmentPaymentCode installmentPaymentCode = (InstallmentPaymentCode) paymentCode;
 		paymentCode.update(new YearMonthDay(),
 			calculateInstallmentPaymentCodeEndDate(installmentPaymentCode.getInstallment()),
 			entryDTO.getAmountToPay(), entryDTO.getAmountToPay());
+		result.add(paymentCode);
 	    } else {
 		paymentCode.update(new YearMonthDay(), calculateFullPaymentCodeEndDate(), entryDTO
 			.getAmountToPay(), entryDTO.getAmountToPay());
+		result.add(paymentCode);
 	    }
 
 	}
 
-	return getNonProcessedPaymentCodes();
+	return result;
     }
 
     private YearMonthDay calculateInstallmentPaymentCodeEndDate(final Installment installment) {
@@ -113,8 +152,10 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
 	    }
 	}
 
-	throw new DomainException(
-		"error.accounting.events.gratuity.GratuityEventWithPaymentPlan.paymentCode.does.not.have.corresponding.entryDTO.because.data.is.corrupted");
+	return null;
+
+	// throw new DomainException(
+	// "error.accounting.events.gratuity.GratuityEventWithPaymentPlan.paymentCode.does.not.have.corresponding.entryDTO.because.data.is.corrupted");
 
     }
 
@@ -174,18 +215,10 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
 	return getGratuityPaymentPlan().getLastInstallment();
     }
 
-    public GratuityPaymentPlan getGratuityPaymentPlan() {
-	final GratuityPaymentPlan gratuityPaymentPlanFor = getServiceAgreementTemplate()
-		.getGratuityPaymentPlanFor(getStudentCurricularPlan(), getExecutionYear());
+    public DegreeCurricularPlanServiceAgreement getDegreeCurricularPlanServiceAgreement() {
+	return (DegreeCurricularPlanServiceAgreement) getPerson().getServiceAgreementFor(
+		getServiceAgreementTemplate());
 
-	return (gratuityPaymentPlanFor != null ? gratuityPaymentPlanFor
-		: (GratuityPaymentPlan) getServiceAgreementTemplate().getDefaultPaymentPlan(
-			getExecutionYear()));
-    }
-
-    @Override
-    protected DegreeCurricularPlanServiceAgreementTemplate getServiceAgreementTemplate() {
-	return getStudentCurricularPlan().getDegreeCurricularPlan().getServiceAgreementTemplate();
     }
 
     @Override
@@ -231,15 +264,20 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
 	}
     }
 
-    public boolean installmentIsInDebt(Installment installment) {
-	return !hasAccountingTransactionFor(installment)
-		&& new YearMonthDay().isAfter(installment.getEndDate());
+    private boolean installmentIsInDebtToday(Installment installment) {
+	return installmentIsInDebt(installment) && new YearMonthDay().isAfter(installment.getEndDate());
+    }
+
+    private boolean installmentIsInDebt(Installment installment) {
+	return getGratuityPaymentPlan().isInstallmentInDebt(installment, this, new DateTime(),
+		calculateDiscountPercentage(getGratuityPaymentPlan().calculateOriginalTotalAmount()),
+		getInstallmentsWithoutPenalty());
     }
 
     @Override
     public boolean isInDebt() {
-	return !isClosed()
-		&& (installmentIsInDebt(getFirstInstallment()) || installmentIsInDebt(getLastInstallment()));
+	return isOpen()
+		&& (installmentIsInDebtToday(getFirstInstallment()) || installmentIsInDebtToday(getLastInstallment()));
     }
 
     public InstallmentPenaltyExemption getInstallmentPenaltyExemptionFor(final Installment installment) {

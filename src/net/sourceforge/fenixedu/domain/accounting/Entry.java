@@ -139,6 +139,16 @@ public class Entry extends Entry_Base {
 	super.addReceipts(receipt);
     }
 
+    public Receipt getActiveReceipt() {
+	for (final Receipt receipt : getReceiptsSet()) {
+	    if (receipt.isActive()) {
+		return receipt;
+	    }
+	}
+
+	return null;
+    }
+
     public LabelFormatter getDescription() {
 	return getAccountingTransaction().getDescriptionForEntryType(getEntryType());
     }

@@ -37,10 +37,10 @@ public class AdministrativeOfficeFeeAndInsurancePenaltyExemption extends
     public AdministrativeOfficeFeeAndInsurancePenaltyExemption(
 	    final PenaltyExemptionJustificationType penaltyExemptionType,
 	    final AdministrativeOfficeFeeAndInsuranceEvent administrativeOfficeFeeAndInsuranceEvent,
-	    final Employee employee, final String comments,
+	    final Employee employee, final String reason,
 	    final YearMonthDay directiveCouncilDispatchDate) {
 	this();
-	super.init(penaltyExemptionType, administrativeOfficeFeeAndInsuranceEvent, employee, comments,
+	super.init(penaltyExemptionType, administrativeOfficeFeeAndInsuranceEvent, employee, reason,
 		directiveCouncilDispatchDate);
     }
 
