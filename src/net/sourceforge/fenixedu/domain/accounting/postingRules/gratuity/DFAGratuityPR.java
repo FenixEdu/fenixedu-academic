@@ -111,16 +111,14 @@ public class DFAGratuityPR extends DFAGratuityPR_Base {
 	} else {
 	    checkIfCanAddAmountForCompleteEnrolmentModel(amountToAdd, event, when);
 	}
-
     }
 
     private void checkIfCanAddAmountForCustomEnrolmentModel(Event event, DateTime when, Money amountToAdd) {
-	if (!event.calculateAmountToPay(when).equals(amountToAdd)) {
+	if (event.calculateAmountToPay(when).greaterThan(amountToAdd)) {
 	    throw new DomainExceptionWithLabelFormatter(
 		    "error.accounting.postingRules.gratuity.DFAGratuityPR.amount.being.payed.must.be.equal.to.amout.in.debt",
 		    event.getDescriptionForEntryType(getEntryType()));
 	}
-
     }
 
     private void checkIfCanAddAmountForCompleteEnrolmentModel(final Money amountToAdd,
@@ -130,11 +128,9 @@ public class DFAGratuityPR extends DFAGratuityPR_Base {
 	    throw new DomainExceptionWithLabelFormatter(
 		    "error.accounting.postingRules.gratuity.DFAGratuityPR.amount.being.payed.must.be.equal.to.amout.in.debt",
 		    event.getDescriptionForEntryType(getEntryType()));
-
 	}
 
-	if (!isPayingTotalAmount(event, when, amountToAdd)
-		&& !isPayingPartialAmount(event, when, amountToAdd)) {
+	if (!isPayingTotalAmount(event, when, amountToAdd) && !isPayingPartialAmount(event, when, amountToAdd)) {
 	    final LabelFormatter percentageLabelFormatter = new LabelFormatter();
 	    percentageLabelFormatter.appendLabel(getDfaPartialAcceptedPercentage().multiply(
 		    BigDecimal.valueOf(100)).toString());
@@ -146,7 +142,7 @@ public class DFAGratuityPR extends DFAGratuityPR_Base {
     }
 
     private boolean isPayingTotalAmount(final Event event, final DateTime when, Money amountToAdd) {
-	return event.calculateAmountToPay(when).equals(amountToAdd);
+	return amountToAdd.greaterOrEqualThan(event.calculateAmountToPay(when));
     }
 
     private boolean isPayingPartialAmount(final Event event, final DateTime when, final Money amountToAdd) {
@@ -154,7 +150,7 @@ public class DFAGratuityPR extends DFAGratuityPR_Base {
     }
 
     private boolean isPayingRemaingAmount(final Event event, final DateTime when, final Money amountToAdd) {
-	return amountToAdd.equals(event.calculateAmountToPay(when));
+	return amountToAdd.greaterOrEqualThan(event.calculateAmountToPay(when));
     }
 
     private boolean hasAlreadyPayedAnyAmount(final Event event, final DateTime when) {
