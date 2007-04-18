@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Added managers to unit site" UnitSiteManagers.sql
