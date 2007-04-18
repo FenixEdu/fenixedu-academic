@@ -27,3 +27,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Changing table AccountingEvent" AlterTableAccountingEvent.sql
+execute "Added managers to unit site" UnitSiteManagers.sql
