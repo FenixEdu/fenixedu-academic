@@ -8,8 +8,11 @@
 <em><bean:message key="title.scientificCouncil.portalTitle" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></em>
 <h2><bean:message key="title.protocols.create" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></h2>
 
-
-<p class="breadcumbs"><span>Passo 1: Inserir dados do protocolo</span> > <span class="actual">Passo 2: Escolher responsáveis</span> > <span>Passo 3: Escolher unidade</span></p>
+<p class="breadcumbs">
+	<span><bean:message key="label.protocol.create.step1" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></span> > 
+	<span class="actual"><bean:message key="label.protocol.create.step2" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></span> > 
+	<span><bean:message key="label.protocol.create.step3" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></span>
+</p>
 
 
 <fr:form action="/createProtocol.do">

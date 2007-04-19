@@ -10,11 +10,6 @@
 
 <fr:form action="/createProtocol.do?method=prepareCreateProtocolResponsibles">
 
-<%--
-<h3 class="mtop15 mbottom05"><bean:message key="label.protocol.data" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></h3>
---%>
-
-
 <p class="breadcumbs">
 	<span class="actual"><bean:message key="label.protocol.create.step1" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></span> > 
 	<span><bean:message key="label.protocol.create.step2" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></span> > 
