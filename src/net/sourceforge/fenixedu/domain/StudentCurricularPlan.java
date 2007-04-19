@@ -1509,6 +1509,18 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
 	return result;
     }
+    
+    public Collection<Enrolment> getLatestCurricularCoursesEnrolments(final ExecutionYear executionYear) {
+	final Map<CurricularCourse, Enrolment> result = new HashMap<CurricularCourse, Enrolment>();
+	
+	for (final Enrolment enrolment : getEnrolmentsByExecutionYear(executionYear)) {
+	    if (!result.containsKey(enrolment.getCurricularCourse()) || result.get(enrolment.getCurricularCourse()).isBefore(enrolment)) {
+		result.put(enrolment.getCurricularCourse(), enrolment);
+	    }
+	}
+	
+	return result.values();
+    }
 
     public MasterDegreeProofVersion readActiveMasterDegreeProofVersion() {
 	MasterDegreeThesis masterDegreeThesis = this.getMasterDegreeThesis();
