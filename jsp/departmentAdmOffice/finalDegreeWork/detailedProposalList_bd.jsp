@@ -62,8 +62,8 @@
 				<bean:message key="label.teacher.finalWork.responsable"/>:
 			</th>
 			<td>
-				<em><bean:message key="label.teacher.finalWork.number"/>:</em> <bean:write name="finalDegreeWorkProposal" property="orientator.teacherNumber"/><br/>
-				<em><bean:message key="label.teacher.finalWork.name"/>:</em> <bean:write name="finalDegreeWorkProposal" property="orientator.person.name"/><br/>
+				<em><bean:message key="label.teacher.finalWork.number"/>:</em> <bean:write name="finalDegreeWorkProposal" property="orientator.employee.employeeNumber"/><br/>
+				<em><bean:message key="label.teacher.finalWork.name"/>:</em> <bean:write name="finalDegreeWorkProposal" property="orientator.name"/><br/>
 				<em><bean:message key="label.teacher.finalWork.credits.short"/>:</em> <bean:write name="finalDegreeWorkProposal" property="orientatorsCreditsPercentage"/><br/>
 			</td>
 		</tr>
@@ -79,8 +79,8 @@
 					<bean:message key="label.teacher.finalWork.coResponsable"/>:
 				</th>
 				<td>
-					<em><bean:message key="label.teacher.finalWork.number"/>:</em> <bean:write name="finalDegreeWorkProposal" property="coorientator.teacherNumber"/><br/>
-					<em><bean:message key="label.teacher.finalWork.name"/>:</em> <bean:write name="finalDegreeWorkProposal" property="coorientator.person.name"/><br/>
+					<em><bean:message key="label.teacher.finalWork.number"/>:</em> <bean:write name="finalDegreeWorkProposal" property="coorientator.employee.employeeNumber"/><br/>
+					<em><bean:message key="label.teacher.finalWork.name"/>:</em> <bean:write name="finalDegreeWorkProposal" property="coorientator.name"/><br/>
 					<em><bean:message key="label.teacher.finalWork.credits.short"/>:</em> <bean:write name="finalDegreeWorkProposal" property="coorientatorsCreditsPercentage"/><br/>
 				</td>			
 			</tr>

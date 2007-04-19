@@ -8,7 +8,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
+import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus;
 
@@ -22,9 +22,9 @@ public class InfoProposalEditor extends InfoObject {
 
     private String title;
 
-    private InfoTeacher orientator;
+    private InfoPerson orientator;
 
-    private InfoTeacher coorientator;
+    private InfoPerson coorientator;
 
     private String companionName;
 
@@ -88,11 +88,11 @@ public class InfoProposalEditor extends InfoObject {
         this.companyName = companyName;
     }
 
-    public InfoTeacher getCoorientator() {
+    public InfoPerson getCoorientator() {
         return coorientator;
     }
 
-    public void setCoorientator(InfoTeacher coorientator) {
+    public void setCoorientator(InfoPerson coorientator) {
         this.coorientator = coorientator;
     }
 
@@ -136,11 +136,11 @@ public class InfoProposalEditor extends InfoObject {
         this.observations = observations;
     }
 
-    public InfoTeacher getOrientator() {
+    public InfoPerson getOrientator() {
         return orientator;
     }
 
-    public void setOrientator(InfoTeacher orientator) {
+    public void setOrientator(InfoPerson orientator) {
         this.orientator = orientator;
     }
 

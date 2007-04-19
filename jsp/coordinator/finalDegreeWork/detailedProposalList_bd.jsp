@@ -82,10 +82,10 @@
 		</tr>
 		<tr>
 			<td bgcolor="#eae7e4" align="center">
-				<bean:write name="finalDegreeWorkProposal" property="orientator.teacherNumber"/>
+				<bean:write name="finalDegreeWorkProposal" property="orientator.employee.employeeNumber"/>
 			</td>
 			<td bgcolor="#eae7e4" align="center">
-				<bean:write name="finalDegreeWorkProposal" property="orientator.person.name"/>
+				<bean:write name="finalDegreeWorkProposal" property="orientator.name"/>
 			</td>
 			<td bgcolor="#eae7e4" align="center">
 				<bean:write name="finalDegreeWorkProposal" property="orientatorsCreditsPercentage"/>
@@ -110,10 +110,10 @@
 			</tr>
 			<tr>
 				<td bgcolor="#eae7e4" align="center">
-					<bean:write name="finalDegreeWorkProposal" property="coorientator.teacherNumber"/>
+					<bean:write name="finalDegreeWorkProposal" property="coorientator.employee.employeeNumber"/>
 				</td>
 				<td bgcolor="#eae7e4" align="center">
-					<bean:write name="finalDegreeWorkProposal" property="coorientator.person.name"/>
+					<bean:write name="finalDegreeWorkProposal" property="coorientator.name"/>
 				</td>
 				<td bgcolor="#eae7e4" align="center">
 					<bean:write name="finalDegreeWorkProposal" property="coorientatorsCreditsPercentage"/>

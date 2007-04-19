@@ -44,6 +44,7 @@ import net.sourceforge.fenixedu.domain.contacts.Phone;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressData;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
@@ -2416,4 +2417,13 @@ public class Person extends Person_Base {
     	Collections.sort(participants, ThesisEvaluationParticipant.COMPARATOR_BY_STUDENT_NUMBER);
     	return participants;
     }
+
+    public Set<Proposal> findFinalDegreeWorkProposals() {
+	final Set<Proposal> proposals = new HashSet<Proposal>();
+	proposals.addAll(getAssociatedProposalsByCoorientatorSet());
+	proposals.addAll(getAssociatedProposalsByOrientatorSet());
+	return proposals;
+    }
+
+
 }

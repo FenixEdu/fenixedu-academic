@@ -7422,7 +7422,7 @@ relation ProposalTeacherByOrientator {
 	net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal playsRole associatedProposalsByOrientator {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.Teacher playsRole orientator;
+	net.sourceforge.fenixedu.domain.Person playsRole orientator;
 }
 
 
@@ -7438,7 +7438,7 @@ relation ProposalTeacherByCoorientator {
 	net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal playsRole associatedProposalsByCoorientator {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.Teacher playsRole coorientator;
+	net.sourceforge.fenixedu.domain.Person playsRole coorientator;
 }
 
 

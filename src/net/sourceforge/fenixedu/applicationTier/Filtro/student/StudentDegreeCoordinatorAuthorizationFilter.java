@@ -14,8 +14,8 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
@@ -87,9 +87,9 @@ public class StudentDegreeCoordinatorAuthorizationFilter extends AccessControlFi
                 for (Iterator it = groupProposals.iterator(); it.hasNext();) {
                     GroupProposal groupProposal = (GroupProposal) it.next();
                     Proposal proposal = groupProposal.getFinalDegreeWorkProposal();
-                    Teacher teacher = proposal.getOrientator();
+                    Person person = proposal.getOrientator();
 
-                    if (teacher.getPerson() == id.getPerson()) {
+                    if (person == id.getPerson()) {
                         // The student is a candidate for a final degree
                         // work of
                         // oriented by the
@@ -97,8 +97,8 @@ public class StudentDegreeCoordinatorAuthorizationFilter extends AccessControlFi
                         return null;
                     }
 
-                    teacher = proposal.getCoorientator();
-                    if (teacher != null && teacher.getPerson() == id.getPerson()) {
+                    person = proposal.getCoorientator();
+                    if (person != null && person == id.getPerson()) {
                         // The student is a candidate for a final degree
                         // work of
                         // cooriented by the

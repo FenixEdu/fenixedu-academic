@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDepartment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
+import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -225,15 +225,15 @@ public class InfoProposal extends InfoObject {
     /**
      * @return Returns the orientator.
      */
-    public InfoTeacher getOrientator() {
-        return InfoTeacher.newInfoFromDomain(getProposal().getOrientator());
+    public InfoPerson getOrientator() {
+        return InfoPerson.newInfoFromDomain(getProposal().getOrientator());
     }
 
     /**
      * @return Returns the coorientator.
      */
-    public InfoTeacher getCoorientator() {
-        return InfoTeacher.newInfoFromDomain(getProposal().getCoorientator());
+    public InfoPerson getCoorientator() {
+        return InfoPerson.newInfoFromDomain(getProposal().getCoorientator());
     }
 
     /**
@@ -247,14 +247,16 @@ public class InfoProposal extends InfoObject {
      * @return Returns the orientatorsDepartment.
      */
     public InfoDepartment getOrientatorsDepartment() {
-        return InfoDepartment.newInfoFromDomain(getProposal().getOrientator().getCurrentWorkingDepartment());
+	return getProposal().getOrientator().getTeacher() == null ? null :
+	    	InfoDepartment.newInfoFromDomain(getProposal().getOrientator().getTeacher().getCurrentWorkingDepartment());
     }
 
     /**
      * @return Returns the coorientatorsDepartment.
      */
     public InfoDepartment getCoorientatorsDepartment() {
-        return InfoDepartment.newInfoFromDomain(getProposal().getCoorientator().getCurrentWorkingDepartment());
+	return getProposal().getCoorientator().getTeacher() == null ? null :
+	    	InfoDepartment.newInfoFromDomain(getProposal().getCoorientator().getTeacher().getCurrentWorkingDepartment());
     }
 
     /**

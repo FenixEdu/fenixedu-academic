@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.OutOfPeriodException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
+import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroup;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoProposal;
@@ -38,11 +38,13 @@ import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.GradeScale;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -51,6 +53,7 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -364,18 +367,16 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
                         finalWorkForm.set("orientatorOID", infoProposal.getOrientator().getIdInternal()
                                 .toString());
                         finalWorkForm.set("responsableTeacherNumber", infoProposal.getOrientator()
-                                .getTeacherNumber().toString());
-                        finalWorkForm.set("responsableTeacherName", infoProposal.getOrientator()
-                                .getInfoPerson().getNome());
+                        	.getPerson().getEmployee().getEmployeeNumber().toString());
+                        finalWorkForm.set("responsableTeacherName", infoProposal.getOrientator().getNome());
                     }
                     if (infoProposal.getCoorientator() != null
                             && infoProposal.getCoorientator().getIdInternal() != null) {
                         finalWorkForm.set("coorientatorOID", infoProposal.getCoorientator()
                                 .getIdInternal().toString());
                         finalWorkForm.set("coResponsableTeacherNumber", infoProposal.getCoorientator()
-                                .getTeacherNumber().toString());
-                        finalWorkForm.set("coResponsableTeacherName", infoProposal.getCoorientator()
-                                .getInfoPerson().getNome());
+                        	.getPerson().getEmployee().getEmployeeNumber().toString());
+                        finalWorkForm.set("coResponsableTeacherName", infoProposal.getCoorientator().getNome());
                     }
                     if (infoProposal.getExecutionDegree() != null
                             && infoProposal.getExecutionDegree().getIdInternal() != null) {
@@ -686,9 +687,9 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         final DegreeType dt = (degreeType != null && degreeType.length() > 0) ? DegreeType.valueOf(degreeType) : null;
         infoFinalWorkProposal.setDegreeType(dt);
 
-        infoFinalWorkProposal.setOrientator(new InfoTeacher(rootDomainObject.readTeacherByOID(Integer.valueOf(orientatorOID))));
+        infoFinalWorkProposal.setOrientator(new InfoPerson((Person) rootDomainObject.readPartyByOID(Integer.valueOf(orientatorOID))));
         if (coorientatorOID != null && !coorientatorOID.equals("")) {
-            infoFinalWorkProposal.setCoorientator(new InfoTeacher(rootDomainObject.readTeacherByOID(Integer.valueOf(coorientatorOID))));
+            infoFinalWorkProposal.setCoorientator(new InfoPerson((Person) rootDomainObject.readPartyByOID(Integer.valueOf(coorientatorOID))));
         } else {
             if (coorientatorCreditsPercentage.intValue() != 0) {
                 ActionErrors actionErrors = new ActionErrors();
@@ -774,37 +775,31 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
             return prepareFinalWorkInformation(mapping, form, request, response);
         }
 
-        Object[] args = { Integer.valueOf(number) };
-        InfoTeacher infoTeacher;
-        try {
-            infoTeacher = (InfoTeacher) ServiceUtils.executeService(userView, "ReadTeacherByNumber",
-                    args);
-            if (infoTeacher == null) {
-                ActionErrors actionErrors = new ActionErrors();
-                actionErrors.add("finalWorkInformationForm.unexistingTeacher", new ActionError(
-                        "finalWorkInformationForm.unexistingTeacher"));
-                saveErrors(request, actionErrors);
-                return mapping.getInputForward();
-            }
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
+        final Employee employee = Employee.readByNumber(Integer.valueOf(number));
+        final Person person = employee.getPerson();
+	if (employee == null || !(person.hasRole(RoleType.TEACHER) || person.hasRole(RoleType.RESEARCHER))) {
+	    ActionErrors actionErrors = new ActionErrors();
+	    actionErrors.add("finalWorkInformationForm.unexistingTeacher", new ActionError(
+	    		"finalWorkInformationForm.unexistingTeacher"));
+	    saveErrors(request, actionErrors);
+	    return mapping.getInputForward();
         }
 
         if (alteredField.equals("orientator")) {
-            finalWorkForm.set("orientatorOID", infoTeacher.getIdInternal().toString());
-            finalWorkForm.set("responsableTeacherName", infoTeacher.getIdInternal().toString());
-            request.setAttribute("orientator", infoTeacher);
+            finalWorkForm.set("orientatorOID", person.getIdInternal().toString());
+            finalWorkForm.set("responsableTeacherName", person.getName());
+            request.setAttribute("orientator", person);
         } else {
             if (alteredField.equals("coorientator")) {
-                finalWorkForm.set("coorientatorOID", infoTeacher.getIdInternal().toString());
-                finalWorkForm.set("coResponsableTeacherName", infoTeacher.getIdInternal().toString());
+                finalWorkForm.set("coorientatorOID", person.getIdInternal().toString());
+                finalWorkForm.set("coResponsableTeacherName", person.getName());
                 finalWorkForm.set("companionName", "");
                 finalWorkForm.set("companionMail", "");
                 finalWorkForm.set("companionPhone", "");
                 finalWorkForm.set("companyAdress", "");
                 finalWorkForm.set("companyName", "");
                 finalWorkForm.set("alteredField", "");
-                request.setAttribute("coorientator", infoTeacher);
+                request.setAttribute("coorientator", person);
             }
         }
 
@@ -1220,11 +1215,11 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 				row.setCell("");
 			}
 			row.setCell(proposal.getTitle());
-			row.setCell(proposal.getOrientator().getTeacherNumber().toString());
-			row.setCell(proposal.getOrientator().getPerson().getName());
+			row.setCell(proposal.getOrientator().getEmployee().getEmployeeNumber().toString());
+			row.setCell(proposal.getOrientator().getName());
 			if (proposal.getCoorientator() != null) {
-				row.setCell(proposal.getCoorientator().getTeacherNumber().toString());
-				row.setCell(proposal.getCoorientator().getPerson().getName());
+				row.setCell(proposal.getCoorientator().getEmployee().getEmployeeNumber().toString());
+				row.setCell(proposal.getCoorientator().getName());
 			} else {
 				row.setCell("");
 				row.setCell("");				

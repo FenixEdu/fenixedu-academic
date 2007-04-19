@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -80,17 +81,17 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
 	    for (int i = 0; i < group.getGroupProposals().size(); i++) {
 		GroupProposal groupProposal = group.getGroupProposals().get(i);
 		Proposal proposal = groupProposal.getFinalDegreeWorkProposal();
-		Teacher teacher = proposal.getOrientator();
+		Person person = proposal.getOrientator();
 
-		if (teacher.getPerson().getUsername().equals(id.getUtilizador())) {
+		if (person.getUsername().equals(id.getUtilizador())) {
 		    // The student is a candidate for a final degree work of
 		    // oriented by the
 		    // teacher making the request. Allow access.
 		    return null;
 		}
 
-		teacher = proposal.getCoorientator();
-		if (teacher != null && teacher.getPerson().getUsername().equals(id.getUtilizador())) {
+		person = proposal.getCoorientator();
+		if (person != null && person.getUsername().equals(id.getUtilizador())) {
 		    // The student is a candidate for a final degree work of
 		    // cooriented by the
 		    // teacher making the request. Allow access.

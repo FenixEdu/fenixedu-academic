@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoProposalEditor;
 import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -49,8 +49,7 @@ public class SubmitFinalWorkProposal extends Service {
         proposal.setCompanyName(infoProposal.getCompanyName());
 
         if (infoProposal.getCoorientator() != null) {
-            Integer coorientatorId = infoProposal.getCoorientator().getIdInternal();
-            Teacher coorientator = rootDomainObject.readTeacherByOID(coorientatorId);
+            Person coorientator = infoProposal.getCoorientator().getPerson();
             proposal.setCoorientator(coorientator);
         } else {
             proposal.setCoorientator(null);
@@ -70,8 +69,7 @@ public class SubmitFinalWorkProposal extends Service {
         proposal.setObjectives(infoProposal.getObjectives());
         proposal.setObservations(infoProposal.getObservations());
 
-        Integer orientatorId = infoProposal.getOrientator().getIdInternal();
-        Teacher orientator = rootDomainObject.readTeacherByOID(orientatorId);
+        Person orientator = infoProposal.getOrientator().getPerson();
 
         proposal.setOrientator(orientator);
         proposal.setOrientatorsCreditsPercentage(infoProposal.getOrientatorsCreditsPercentage());

@@ -340,7 +340,7 @@ public class Teacher extends Teacher_Base {
 
     public List<Proposal> getFinalDegreeWorksByExecutionYear(ExecutionYear executionYear) {
 	List<Proposal> proposalList = new ArrayList<Proposal>();
-	for (Iterator<Proposal> iter = getAssociatedProposalsByOrientator().iterator(); iter.hasNext();) {
+	for (Iterator<Proposal> iter = getPerson().getAssociatedProposalsByOrientator().iterator(); iter.hasNext();) {
 	    Proposal proposal = iter.next();
 	    if (proposal.getScheduleing().getExecutionDegreesSet().iterator().next().getExecutionYear()
 		    .equals(executionYear)) {
@@ -1089,13 +1089,6 @@ public class Teacher extends Teacher_Base {
 	    }
 	}
 	return executionCourses;
-    }
-
-    public Set<Proposal> findFinalDegreeWorkProposals() {
-	final Set<Proposal> proposals = new HashSet<Proposal>();
-	proposals.addAll(getAssociatedProposalsByCoorientatorSet());
-	proposals.addAll(getAssociatedProposalsByOrientatorSet());
-	return proposals;
     }
 
     public boolean isResponsibleFor(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod) {

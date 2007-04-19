@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
-
 import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.domain.Branch;
@@ -19,6 +17,8 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus;
+
+import org.apache.commons.lang.StringUtils;
 
 /**
  * @author Luis Cruz
@@ -97,7 +97,7 @@ public class FinalDegreeWorkProposalHeader extends InfoObject {
      * @return Returns the coorientatorName.
      */
     public String getCoorientatorName() {
-	return getProposal().hasCoorientator() ? getProposal().getCoorientator().getPerson().getName() : StringUtils.EMPTY;
+	return getProposal().hasCoorientator() ? getProposal().getCoorientator().getName() : StringUtils.EMPTY;
     }
 
     /**
@@ -111,7 +111,7 @@ public class FinalDegreeWorkProposalHeader extends InfoObject {
      * @return Returns the orientatorName.
      */
     public String getOrientatorName() {
-	return getProposal().getOrientator().getPerson().getName();
+	return getProposal().getOrientator().getName();
     }
 
     /**

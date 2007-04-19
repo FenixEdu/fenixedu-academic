@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
@@ -19,12 +20,9 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
  */
 public class ReadFinalDegreeWorkProposalHeadersByTeacher extends Service {
 
-    public List run(Integer teacherOID) throws FenixServiceException {
+    public List run(final Person person) throws FenixServiceException {
 	final List<FinalDegreeWorkProposalHeader> result = new ArrayList<FinalDegreeWorkProposalHeader>();
-
-	final Teacher teacher = rootDomainObject.readTeacherByOID(teacherOID);
-
-	for (final Proposal proposal : teacher.findFinalDegreeWorkProposals()) {
+	for (final Proposal proposal : person.findFinalDegreeWorkProposals()) {
 	    final Scheduleing scheduleing = proposal.getScheduleing();
 
 	    for (final ExecutionDegree executionDegree : scheduleing.getExecutionDegrees()) {

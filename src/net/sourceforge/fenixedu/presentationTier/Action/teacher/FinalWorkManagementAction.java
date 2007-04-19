@@ -31,10 +31,13 @@ import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoProposal;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoProposalEditor;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoScheduleing;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
@@ -145,11 +148,9 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 		.valueOf(degreeType) : null;
 	infoFinalWorkProposal.setDegreeType(tipoCurso);
 
-	infoFinalWorkProposal.setOrientator(new InfoTeacher(rootDomainObject.readTeacherByOID(Integer
-		.valueOf(orientatorOID))));
+	infoFinalWorkProposal.setOrientator(new InfoPerson((Person) rootDomainObject.readPartyByOID(Integer.valueOf(orientatorOID))));
 	if (coorientatorOID != null && !coorientatorOID.equals("")) {
-	    infoFinalWorkProposal.setCoorientator(new InfoTeacher(rootDomainObject
-		    .readTeacherByOID(Integer.valueOf(coorientatorOID))));
+	    infoFinalWorkProposal.setCoorientator(new InfoPerson((Person) rootDomainObject.readPartyByOID(Integer.valueOf(coorientatorOID))));
 	} else {
 	    if (coorientatorCreditsPercentage.intValue() != 0) {
 		ActionErrors actionErrors = new ActionErrors();
@@ -239,8 +240,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 	Collections.sort(executionDegreeList, name);
 	request.setAttribute("executionDegreeList", executionDegreeList);
 
-	final InfoTeacher infoTeacher = getTeacher(userView);
-	final Object args[] = { infoTeacher.getIdInternal() };
+	final Object args[] = { userView.getPerson() };
 	final List<FinalDegreeWorkProposalHeader> finalDegreeWorkProposalHeaders = (List) ServiceUtils.executeService(userView,
 		"ReadFinalDegreeWorkProposalHeadersByTeacher", args);
 
@@ -316,16 +316,15 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 	    throw new FenixActionException(fse);
 	}
 
-	InfoTeacher infoTeacher = getTeacher(userView);
-
+	final Person person = userView.getPerson();
 	if (role != null && role.equals("responsable")) {
-	    finalWorkForm.set("orientatorOID", infoTeacher.getIdInternal().toString());
-	    finalWorkForm.set("responsableTeacherName", infoTeacher.getInfoPerson().getNome());
-	    request.setAttribute("orientator", infoTeacher);
+	    finalWorkForm.set("orientatorOID", person.getIdInternal().toString());
+	    finalWorkForm.set("responsableTeacherName", person.getName());
+	    request.setAttribute("orientator", person);
 	} else if (role != null && role.equals("coResponsable")) {
-	    finalWorkForm.set("coorientatorOID", infoTeacher.getIdInternal().toString());
-	    finalWorkForm.set("coResponsableTeacherName", infoTeacher.getInfoPerson().getNome());
-	    request.setAttribute("coorientator", infoTeacher);
+	    finalWorkForm.set("coorientatorOID", person.getIdInternal().toString());
+	    finalWorkForm.set("coResponsableTeacherName", person.getName());
+	    request.setAttribute("coorientator", person);
 	}
 
 	final ExecutionDegree executionDegree = (ExecutionDegree) readDomainObject(request,
@@ -375,43 +374,35 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 	    return prepareFinalWorkInformation(mapping, form, request, response);
 	}
 
-	Object[] args = { Integer.valueOf(number) };
-	InfoTeacher infoTeacher;
-	try {
-	    infoTeacher = (InfoTeacher) ServiceUtils.executeService(userView, "ReadTeacherByNumber",
-		    args);
-	    if (infoTeacher == null) {
-		ActionErrors actionErrors = new ActionErrors();
-		actionErrors.add("finalWorkInformationForm.unexistingTeacher", new ActionError(
-			"finalWorkInformationForm.unexistingTeacher"));
-		saveErrors(request, actionErrors);
-		return mapping.getInputForward();
-	    }
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
-	}
-
-	InfoTeacher teacherUser = getTeacher(userView);
+        final Employee employee = Employee.readByNumber(Integer.valueOf(number));
+        final Person person = employee.getPerson();
+	if (employee == null || !(person.hasRole(RoleType.TEACHER) || person.hasRole(RoleType.RESEARCHER))) {
+	    ActionErrors actionErrors = new ActionErrors();
+	    actionErrors.add("finalWorkInformationForm.unexistingTeacher", new ActionError(
+	    		"finalWorkInformationForm.unexistingTeacher"));
+	    saveErrors(request, actionErrors);
+	    return mapping.getInputForward();
+        }
 
 	if (alteredField.equals("orientator")) {
-	    finalWorkForm.set("orientatorOID", infoTeacher.getIdInternal().toString());
-	    finalWorkForm.set("responsableTeacherName", infoTeacher.getIdInternal().toString());
-	    request.setAttribute("orientator", infoTeacher);
-	    if (infoTeacher.getIdInternal().equals(teacherUser.getIdInternal())) {
+	    finalWorkForm.set("orientatorOID", person.getIdInternal().toString());
+	    finalWorkForm.set("responsableTeacherName", person.getName());
+	    request.setAttribute("orientator", person);
+	    if (person == userView.getPerson()) {
 		finalWorkForm.set("role", "responsable");
 	    }
 	} else {
 	    if (alteredField.equals("coorientator")) {
-		finalWorkForm.set("coorientatorOID", infoTeacher.getIdInternal().toString());
-		finalWorkForm.set("coResponsableTeacherName", infoTeacher.getIdInternal().toString());
+		finalWorkForm.set("coorientatorOID", person.getIdInternal().toString());
+		finalWorkForm.set("coResponsableTeacherName", person.getName());
 		finalWorkForm.set("companionName", "");
 		finalWorkForm.set("companionMail", "");
 		finalWorkForm.set("companionPhone", "");
 		finalWorkForm.set("companyAdress", "");
 		finalWorkForm.set("companyName", "");
 		finalWorkForm.set("alteredField", "");
-		request.setAttribute("coorientator", infoTeacher);
-		if (infoTeacher.getIdInternal().equals(teacherUser.getIdInternal())) {
+		request.setAttribute("coorientator", person);
+		if (person == userView.getPerson()) {
 		    finalWorkForm.set("role", "coResponsable");
 		}
 	    }
@@ -554,13 +545,10 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 			finalWorkForm.set("orientatorOID", infoProposal.getOrientator().getIdInternal()
 				.toString());
 			finalWorkForm.set("responsableTeacherNumber", infoProposal.getOrientator()
-				.getTeacherNumber().toString());
-			finalWorkForm.set("responsableTeacherName", infoProposal.getOrientator()
-				.getInfoPerson().getNome());
+				.getPerson().getEmployee().getEmployeeNumber().toString());
+			finalWorkForm.set("responsableTeacherName", infoProposal.getOrientator().getNome());
 
-			InfoTeacher infoTeacher = getTeacher(userView);
-			if (infoTeacher.getTeacherNumber().equals(
-				infoProposal.getOrientator().getTeacherNumber())) {
+			if (userView.getPerson() == infoProposal.getOrientator().getPerson()) {
 			    finalWorkForm.set("role", "responsable");
 			} else {
 			    finalWorkForm.set("role", "coResponsable");
@@ -571,9 +559,8 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 			finalWorkForm.set("coorientatorOID", infoProposal.getCoorientator()
 				.getIdInternal().toString());
 			finalWorkForm.set("coResponsableTeacherNumber", infoProposal.getCoorientator()
-				.getTeacherNumber().toString());
-			finalWorkForm.set("coResponsableTeacherName", infoProposal.getCoorientator()
-				.getInfoPerson().getNome());
+				.getPerson().getEmployee().getEmployeeNumber().toString());
+			finalWorkForm.set("coResponsableTeacherName", infoProposal.getCoorientator().getNome());
 		    }
 		    if (infoProposal.getExecutionDegree() != null
 			    && infoProposal.getExecutionDegree().getIdInternal() != null) {
@@ -622,23 +609,6 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 	}
 
 	return mapping.findForward("submitFinalWorkProposal");
-    }
-
-    InfoTeacher getTeacher(IUserView userView) throws FenixActionException, FenixFilterException {
-	Object argsTeacher[] = { userView.getUtilizador() };
-
-	InfoTeacher infoTeacher;
-	try {
-	    infoTeacher = (InfoTeacher) ServiceUtils.executeService(userView, "ReadTeacherByUsername",
-		    argsTeacher);
-	    if (infoTeacher == null) {
-		throw new FenixActionException("Unable to identify user as a teacher.");
-	    }
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
-	}
-
-	return infoTeacher;
     }
 
     public ActionForward attributeFinalDegreeWork(ActionMapping mapping, ActionForm form,

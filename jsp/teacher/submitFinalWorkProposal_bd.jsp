@@ -1,7 +1,7 @@
 <%@ page language="java" %><%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoTeacher" %>
+<%@ page import="net.sourceforge.fenixedu.domain.Person" %>
 
 <h2><bean:message key="title.teacher.finalWorkInformation"/></h2>
 <span class="error"><!-- Error messages go here -->
@@ -47,7 +47,7 @@
 			<td width="10%">
 				<logic:present name="orientator">
 					<html:text bundle="HTMLALT_RESOURCES" altKey="text.responsableTeacherNumber" property="responsableTeacherNumber" maxlength="6" size="6"
-						value='<%= ((InfoTeacher) pageContext.findAttribute("orientator")).getTeacherNumber().toString() %>'
+						value='<%= ((Person) pageContext.findAttribute("orientator")).getEmployee().getEmployeeNumber().toString() %>'
 						 onchange="this.form.method.value='showTeacherName';this.form.page.value='1';this.form.alteredField.value='orientator';this.form.submit();"  
 						/>
 				</logic:present>
@@ -64,7 +64,7 @@
 			<td width="66%">
 				<logic:present name="orientator">
 					<html:text bundle="HTMLALT_RESOURCES" altKey="text.responsableTeacherName" property="responsableTeacherName" size="55"
-						value='<%= ((InfoTeacher) pageContext.findAttribute("orientator")).getInfoPerson().getNome().toString() %>'/>
+						value='<%= ((Person) pageContext.findAttribute("orientator")).getName().toString() %>'/>
 				</logic:present>
 				<logic:notPresent name="orientator">
 					<html:text bundle="HTMLALT_RESOURCES" altKey="text.responsableTeacherName" property="responsableTeacherName" size="55"/>
@@ -86,7 +86,7 @@
 			<td width="10%">
 				<logic:present name="coorientator">
 					<html:text bundle="HTMLALT_RESOURCES" altKey="text.coResponsableTeacherNumber" property="coResponsableTeacherNumber" maxlength="6" size="6"
-						value='<%= ((InfoTeacher) pageContext.findAttribute("coorientator")).getTeacherNumber().toString() %>'
+						value='<%= ((Person) pageContext.findAttribute("coorientator")).getEmployee().getEmployeeNumber().toString() %>'
 						 onchange="this.form.method.value='showTeacherName';this.form.page.value='1';this.form.alteredField.value='coorientator';this.form.submit();"  
 						/>
 				</logic:present>
@@ -104,7 +104,7 @@
 			<td width="66%">
 				<logic:present name="coorientator">
 					<html:text bundle="HTMLALT_RESOURCES" altKey="text.coResponsableTeacherName" property="coResponsableTeacherName" size="55"
-						value='<%= ((InfoTeacher) pageContext.findAttribute("coorientator")).getInfoPerson().getNome().toString() %>'/>
+						value='<%= ((Person) pageContext.findAttribute("coorientator")).getName().toString() %>'/>
 				</logic:present>
 				<logic:notPresent name="coorientator">
 					<html:text bundle="HTMLALT_RESOURCES" altKey="text.coResponsableTeacherName" property="coResponsableTeacherName" size="55"/>
