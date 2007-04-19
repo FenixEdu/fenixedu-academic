@@ -50,4 +50,87 @@
 	    <put name="body" value="/messaging/announcements/viewAnnouncement.jsp" />
 	</definition>					
 	
+    <!-- ==== Department Site === -->
+    <definition name="definition.department.site.management" extends="definition.websiteManager.masterPage">
+        <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
+        <put name="body-context" value="/webSiteManager/departmentSite/siteContext.jsp"/>
+        <put name="navLocalExtra" value="/webSiteManager/departmentSite/siteMenu.jsp"/>
+    </definition>
+    
+    <definition name="departmentSite-start" extends="definition.department.site.management">
+        <put name="body" value="/webSiteManager/departmentSite/start.jsp"/>
+    </definition>
+
+    <definition name="departmentSite-edit-information" extends="definition.department.site.management">
+        <put name="body" value="/webSiteManager/departmentSite/edit-information.jsp"/>
+    </definition>
+    
+    <definition name="departmentSite-sectionsManagement" extends="definition.department.site.management" >
+        <put name="body" value="/commons/sites/sectionsManagement.jsp"/>
+    </definition>
+    <definition name="departmentSite-section" extends="definition.department.site.management" >
+        <put name="body" value="/commons/sites/section.jsp"/>
+    </definition>
+    <definition name="departmentSite-editSection" extends="definition.department.site.management" >
+        <put name="body" value="/commons/sites/editSection.jsp"/>
+    </definition>   
+    <definition name="departmentSite-createSection" extends="definition.department.site.management" >
+        <put name="body" value="/commons/sites/createSection.jsp"/>
+    </definition>   
+    <definition name="departmentSite-createItem" extends="definition.department.site.management" >
+        <put name="body" value="/commons/sites/createItem.jsp"/>
+    </definition>   
+    <definition name="departmentSite-editItem" extends="definition.department.site.management" >
+        <put name="body" value="/commons/sites/editItem.jsp"/>
+    </definition>   
+    <definition name="departmentSite-uploadFile" extends="definition.department.site.management" >
+        <put name="body" value="/commons/sites/uploadFile.jsp"/>
+    </definition>   
+    <definition name="departmentSite-editFile" extends="definition.department.site.management" >
+        <put name="body" value="/commons/sites/editFile.jsp"/>
+    </definition>             
+    <definition name="departmentSite-organizeItems" extends="definition.department.site.management" >
+        <put name="body" value="/commons/sites/organizeItems.jsp"/>
+    </definition>   
+    <definition name="departmentSite-organizeFiles" extends="definition.department.site.management" >
+        <put name="body" value="/commons/sites/organizeFiles.jsp"/>
+    </definition>   
+    <definition name="departmentSite-confirmSectionDelete" extends="definition.department.site.management" >
+        <put name="body" value="/commons/sites/confirmSectionDelete.jsp"/>
+    </definition>   
+    <definition name="departmentSite-editSectionPermissions" extends="definition.department.site.management" >
+        <put name="body" value="/commons/sites/editSectionPermissions.jsp"/>
+    </definition>   
+    <definition name="departmentSite-editItemPermissions" extends="definition.department.site.management" >
+        <put name="body" value="/commons/sites/editItemPermissions.jsp"/>
+    </definition>   
+    <definition name="departmentSite-editFile" extends="definition.department.site.management" >
+        <put name="body" value="/commons/sites/editFile.jsp"/>
+    </definition>
+        <!-- announcements -->
+
+    <definition name="definition.department.site.announcements.management" extends="definition.websiteManager.masterPage">
+        <put name="body-context" value="/webSiteManager/departmentSite/siteContext.jsp"/>
+        <put name="navLocalExtra" value="/webSiteManager/departmentSite/siteMenu.jsp"/>
+    </definition>
+        
+    <definition name="department-announcements-no-boards" extends="definition.department.site.announcements.management">
+        <put name="body" value="/webSiteManager/departmentSite/noBoards.jsp" />
+    </definition>
+    <definition name="department-announcements-list-boards" extends="definition.department.site.announcements.management">
+        <put name="body" value="/messaging/announcements/listAnnouncementBoards.jsp" />
+    </definition>
+    <definition name="department-announcements-list-announcements" extends="definition.department.site.announcements.management">
+        <put name="body" value="/messaging/announcements/listBoardAnnouncements.jsp" />
+    </definition>
+    <definition name="department-announcements-add-announcement" extends="definition.department.site.announcements.management">
+        <put name="body" value="/messaging/announcements/addAnnouncement.jsp" />
+    </definition>
+    <definition name="department-announcements-view-announcement" extends="definition.department.site.announcements.management">
+        <put name="body" value="/messaging/announcements/viewAnnouncement.jsp" />
+    </definition>
+    <definition name="department-announcements-edit-announcement" extends="definition.department.site.announcements.management">
+        <put name="body" value="/messaging/announcements/editAnnouncement.jsp" />
+    </definition>
+    
 </tiles-definitions>

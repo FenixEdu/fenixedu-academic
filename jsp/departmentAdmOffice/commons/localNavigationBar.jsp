@@ -159,21 +159,22 @@
             <bean:message key="link.site.department.view"/>
         </html:link>
     </li>
+    
+    <bean:define id="person" name="UserView" property="person" type="net.sourceforge.fenixedu.domain.Person"/>
+    <bean:define id="site" name="person" property="employee.currentDepartmentWorkingPlace.departmentUnit.site" type="net.sourceforge.fenixedu.domain.UnitSite"/>
+    <bean:define id="siteId" name="site" property="idInternal"/>
+    
+    <%
+        if (site.hasManagers(person)) {
+    %>
     <li>
-        <html:link page="/departmentSite.do?method=information">
-            <bean:message key="link.site.department.information"/>
+        <html:link page="<%= "/manageDepartmentSite.do?method=prepare&amp;oid=" + siteId %>" module="/webSiteManager">
+            <bean:message key="link.site.department.manage"/>
         </html:link>
     </li>
-    <li>
-        <html:link page="/departmentSite.do?method=sections">
-            <bean:message key="link.site.sectionsManagement"/>
-        </html:link>
-    </li>
-    <li>
-        <html:link page="/announcements.do?method=viewBoards&amp;tabularVersion=true">
-            <bean:message key="link.site.announcements"/>
-        </html:link>
-    </li>
+    <%
+        }
+    %>
     <li>
         <html:link page="/departmentSite.do?method=chooseManagers">
             <bean:message key="link.site.managers.choose"/>

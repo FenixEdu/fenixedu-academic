@@ -354,86 +354,6 @@
 		<put name="body" value="/directiveCouncil/summariesControl/listTeacherSummariesControl.jsp"/>
 	</definition>
     
-    <!-- ==== Site === -->
-    <definition name="definition.departmentAdmOffice.site.management" extends="departmentAdmOffice.masterPage">
-        <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
-        <put name="body-context" value="/departmentAdmOffice/site/siteContext.jsp"/>
-    </definition>
-    
-    <definition name="departmentSite-no-site" extends="definition.departmentAdmOffice.site.management">
-        <put name="body" value="/departmentAdmOffice/site/no-site.jsp"/>
-    </definition>
-    
-    <definition name="departmentSite-edit-information" extends="departmentAdmOffice.masterPage">
-        <put name="body" value="/departmentAdmOffice/site/edit-information.jsp"/>
-    </definition>
-    
-    <definition name="departmentSite-sectionsManagement" extends="definition.departmentAdmOffice.site.management" >
-        <put name="body" value="/commons/sites/sectionsManagement.jsp"/>
-    </definition>
-    <definition name="departmentSite-section" extends="definition.departmentAdmOffice.site.management" >
-        <put name="body" value="/commons/sites/section.jsp"/>
-    </definition>
-    <definition name="departmentSite-editSection" extends="definition.departmentAdmOffice.site.management" >
-        <put name="body" value="/commons/sites/editSection.jsp"/>
-    </definition>   
-    <definition name="departmentSite-createSection" extends="definition.departmentAdmOffice.site.management" >
-        <put name="body" value="/commons/sites/createSection.jsp"/>
-    </definition>   
-    <definition name="departmentSite-createItem" extends="definition.departmentAdmOffice.site.management" >
-        <put name="body" value="/commons/sites/createItem.jsp"/>
-    </definition>   
-    <definition name="departmentSite-editItem" extends="definition.departmentAdmOffice.site.management" >
-        <put name="body" value="/commons/sites/editItem.jsp"/>
-    </definition>   
-    <definition name="departmentSite-uploadFile" extends="definition.departmentAdmOffice.site.management" >
-        <put name="body" value="/commons/sites/uploadFile.jsp"/>
-    </definition>   
-    <definition name="departmentSite-editFile" extends="definition.departmentAdmOffice.site.management" >
-        <put name="body" value="/commons/sites/editFile.jsp"/>
-    </definition>             
-    <definition name="departmentSite-chooseManagers" extends="definition.departmentAdmOffice.site.management" >
-        <put name="body" value="/departmentAdmOffice/site/chooseManagers.jsp"/>
-    </definition>             
-    <definition name="departmentSite-organizeItems" extends="definition.departmentAdmOffice.site.management" >
-        <put name="body" value="/commons/sites/organizeItems.jsp"/>
-    </definition>   
-    <definition name="departmentSite-organizeFiles" extends="definition.departmentAdmOffice.site.management" >
-        <put name="body" value="/commons/sites/organizeFiles.jsp"/>
-    </definition>   
-    <definition name="departmentSite-confirmSectionDelete" extends="definition.departmentAdmOffice.site.management" >
-        <put name="body" value="/commons/sites/confirmSectionDelete.jsp"/>
-    </definition>   
-    <definition name="departmentSite-editSectionPermissions" extends="definition.departmentAdmOffice.site.management" >
-        <put name="body" value="/commons/sites/editSectionPermissions.jsp"/>
-    </definition>   
-    <definition name="departmentSite-editItemPermissions" extends="definition.departmentAdmOffice.site.management" >
-        <put name="body" value="/commons/sites/editItemPermissions.jsp"/>
-    </definition>   
-    <definition name="departmentSite-editFile" extends="definition.departmentAdmOffice.site.management" >
-        <put name="body" value="/commons/sites/editFile.jsp"/>
-    </definition>
-
-    <!-- ANNOUNCEMENTS -->
-    <definition name="department-announcements-no-boards" extends="departmentAdmOffice.masterPage">
-        <put name="body" value="/departmentAdmOffice/noBoards.jsp" />
-    </definition>
-    <definition name="department-announcements-list-boards" extends="departmentAdmOffice.masterPage">
-        <put name="body" value="/messaging/announcements/listAnnouncementBoards.jsp" />
-    </definition>
-    <definition name="department-announcements-list-announcements" extends="departmentAdmOffice.masterPage">
-        <put name="body" value="/messaging/announcements/listBoardAnnouncements.jsp" />
-    </definition>
-    <definition name="department-announcements-add-announcement" extends="departmentAdmOffice.masterPage">
-        <put name="body" value="/messaging/announcements/addAnnouncement.jsp" />
-    </definition>
-    <definition name="department-announcements-view-announcement" extends="departmentAdmOffice.masterPage">
-        <put name="body" value="/messaging/announcements/viewAnnouncement.jsp" />
-    </definition>
-    <definition name="department-announcements-edit-announcement" extends="departmentAdmOffice.masterPage">
-        <put name="body" value="/messaging/announcements/editAnnouncement.jsp" />
-    </definition>    
-    
     <!-- Teacher Auto Evaluation Period -->    
    	<definition name="show-definition-autoEvaluation-period" extends="departmentAdmOffice.masterPage">
 		<put name="body" value="/departmentAdmOffice/teacher/teacherPersonalExpectationsManagement/showAutoEvaluationPeriodDefinition.jsp"/>
@@ -482,4 +402,8 @@
 		<put name="body" value="/departmentAdmOffice/teacher/teacherPersonalExpectationsManagement/manageExpectationEvaluationGroups.jsp"/>
 	</definition>        
         
+    <definition name="departmentSite-chooseManagers" extends="departmentAdmOffice.masterPage" >
+        <put name="body" value="/departmentAdmOffice/site/chooseManagers.jsp"/>
+    </definition>
+
 </tiles-definitions>

@@ -1010,37 +1010,9 @@
             type="net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.DepartmentSiteDA"
             scope="request">
         <forward name="no-site" path="departmentSite-no-site"/>
-        <forward name="edit-site-information" path="departmentSite-edit-information"/>
-        <forward name="createSection" path="departmentSite-createSection"/>
-        <forward name="sectionsManagement" path="departmentSite-sectionsManagement"/>
-        <forward name="section" path="departmentSite-section"/>
-        <forward name="editSection" path="departmentSite-editSection"/>
-        <forward name="createItem" path="departmentSite-createItem"/>
-        <forward name="editItem" path="departmentSite-editItem"/>
-        <forward name="uploadFile" path="departmentSite-uploadFile"/>
-        <forward name="editFile" path="departmentSite-editFile"/>          
-        <forward name="organizeItems" path="departmentSite-organizeItems"/>
-        <forward name="organizeFiles" path="departmentSite-organizeFiles"/>
-        <forward name="confirmSectionDelete" path="departmentSite-confirmSectionDelete"/>
-        <forward name="editSectionPermissions" path="departmentSite-editSectionPermissions"/>
-        <forward name="editItemPermissions" path="departmentSite-editItemPermissions"/>
-        <forward name="editFile" path="departmentSite-editFile"/>
         <forward name="chooseManagers" path="departmentSite-chooseManagers"/>
     </action>   
 
-    <action path="/announcements"
-            parameter="method"
-            type="net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.AnnouncementsDA"
-            scope="request">
-        <forward name="noBoards" path="department-announcements-no-boards"/>
-        <forward name="viewAnnouncementsRedirect" path="/announcements.do?method=viewAnnouncements&amp;tabularVersion=true"/>
-        <forward name="listAnnouncementBoards" path="department-announcements-list-boards"/>
-        <forward name="listAnnouncements" path="department-announcements-list-announcements"/>
-        <forward name="add" path="department-announcements-add-announcement"/>
-        <forward name="viewAnnouncement" path="department-announcements-view-announcement"/>
-        <forward name="edit" path="department-announcements-edit-announcement"/>
-    </action>
-        
 	<!-- Teacher Auto Evaluation Period -->
 	<action path="/autoEvaluationTeacherExpectationManagementAction" 
 			type="net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.AutoEvaluationTeacherExpectationManagementAction"

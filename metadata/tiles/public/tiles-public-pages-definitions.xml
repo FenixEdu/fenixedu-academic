@@ -394,6 +394,9 @@
     <definition name="public-department-list-announcements" extends="definition.public.department">
         <put name="body" value="/publico/department/listAnnouncements.jsp" />
     </definition>
+    <definition name="public-department-list-events" extends="definition.public.department">
+        <put name="body" value="/publico/department/listEvents.jsp" />
+    </definition>
     <definition name="department-view-announcement" extends="definition.public.department">
         <put name="body" value="/publico/department/viewAnnouncement.jsp" />
     </definition>

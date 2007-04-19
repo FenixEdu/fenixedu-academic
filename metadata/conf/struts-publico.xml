@@ -923,6 +923,13 @@
             <forward name="listAnnouncements" path="public-department-list-announcements"/>
             <forward name="viewAnnouncement" path="department-view-announcement"/>
         </action>
+
+        <action path="/department/events"
+                parameter="method"
+                type="net.sourceforge.fenixedu.presentationTier.Action.publico.department.DepartmentEventsDA">
+            <forward name="listAnnouncements" path="public-department-list-events"/>
+            <forward name="viewAnnouncement" path="department-view-announcement"/>
+        </action>
      </action-mappings>
     
     <!-- ========== Controller Configuration ================================ -->

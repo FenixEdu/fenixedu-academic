@@ -26,3 +26,6 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "Edd events to Department Site (functionality)" AddDepartmentEventsFunctionality.sql
+execute "Edd events to Department Site (section)" CreateDepartmentEventsSection.sql

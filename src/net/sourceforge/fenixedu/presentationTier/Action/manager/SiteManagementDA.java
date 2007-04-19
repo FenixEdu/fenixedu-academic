@@ -757,7 +757,12 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
 
     protected Site getSite(HttpServletRequest request) {
         Integer siteId = getId(request.getParameter("siteID"));
-        return (Site) RootDomainObject.readDomainObjectByOID(Site.class, siteId);
+        
+        if (siteId == null) {
+            return null;
+        }
+        
+        return RootDomainObject.getInstance().readSiteByOID(siteId);
     }
 
     protected abstract String getAuthorNameForFile(HttpServletRequest request, Item item);

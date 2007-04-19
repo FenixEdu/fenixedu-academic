@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice;
+package net.sourceforge.fenixedu.presentationTier.Action.webSiteManager;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.DepartmentSite;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.messaging.PartyAnnouncementBoard;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -19,8 +21,39 @@ import org.apache.struts.action.ActionMapping;
 
 public class AnnouncementsDA extends AnnouncementManagement {
 
-    private Department getDepartment(HttpServletRequest request) {
-        return getUserView(request).getPerson().getEmployee().getCurrentDepartmentWorkingPlace();
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        request.setAttribute("site", getSite(request));
+        return super.execute(mapping, actionForm, request, response);
+    }
+    
+    private Integer getId(String id) {
+        if (id == null || id.equals("")) {
+            return null;
+        }
+
+        try {
+            return new Integer(id);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    private DepartmentSite getSite(HttpServletRequest request) {
+        Integer oid = getId(request.getParameter("oid"));
+
+        if (oid == null) {
+            return null;
+        }
+        
+        return (DepartmentSite) RootDomainObject.getInstance().readSiteByOID(oid);
+    }
+    
+    private Department getDepartment(final HttpServletRequest request) {
+        DepartmentSite site = getSite(request);
+        
+        return site == null ? null : site.getDepartment();
     }
     
     private Unit getUnit(HttpServletRequest request) {
@@ -61,6 +94,7 @@ public class AnnouncementsDA extends AnnouncementManagement {
         StringBuilder builder = new StringBuilder();
         
         addExtraParameter(request, builder, "tabularVersion");
+        addExtraParameter(request, builder, "oid");
         
         return builder.toString();
     }
@@ -78,7 +112,7 @@ public class AnnouncementsDA extends AnnouncementManagement {
     
     @Override
     protected String getContextInformation(HttpServletRequest request) {
-        return "/announcements.do";
+        return "/manageDepartmentSiteAnnouncements.do";
     }
 
     @Override
