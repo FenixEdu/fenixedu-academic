@@ -181,7 +181,9 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
     }
 
     public void delete() {
-	removeRootDomainObject();
+	removeUnit();
+	removeServiceAgreementTemplate();	
+	removeRootDomainObject();	
 	deleteDomainObject();
     }
 

@@ -30,8 +30,7 @@ import org.joda.time.YearMonthDay;
 public class Employee extends Employee_Base {
 
     public Employee(Person person, Integer employeeNumber, Boolean active) {
-	super();
-	checkParameters(person, employeeNumber);
+	super();	
 	setEmployeeNumber(employeeNumber);
 	setCreationDate(new DateTime());
 	setPerson(person);
@@ -44,19 +43,21 @@ public class Employee extends Employee_Base {
 
     @Override
     public void setEmployeeNumber(Integer employeeNumber) {
+	if (employeeNumber == null) {
+	    throw new DomainException("error.employee.no.employeeNumber");
+	}
 	checkEmployeeNumber(employeeNumber);
 	super.setEmployeeNumber(employeeNumber);
     }
 
-    private void checkParameters(Person person, Integer employeeNumber) {
+    @Override
+    public void setPerson(Person person) {
 	if (person == null) {
 	    throw new DomainException("error.employee.no.person");
 	}
-	if (employeeNumber == null) {
-	    throw new DomainException("error.employee.no.employeeNumber");
-	}
+	super.setPerson(person);
     }
-
+   
     private void checkEmployeeNumber(Integer employeeNumber) {
 	Employee employee = readByNumber(employeeNumber);
 	if (employee != null && !employee.equals(this)) {

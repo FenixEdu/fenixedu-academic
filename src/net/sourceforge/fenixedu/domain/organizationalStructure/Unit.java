@@ -620,7 +620,7 @@ public class Unit extends Unit_Base {
     public static List<Unit> readAllUnits() {
 	final List<Unit> allUnits = new ArrayList<Unit>();
 	for (final Party party : RootDomainObject.getInstance().getPartys()) {
-	    if (party instanceof Unit) {
+	    if (party.isUnit()) {
 		allUnits.add((Unit) party);
 	    }
 	}

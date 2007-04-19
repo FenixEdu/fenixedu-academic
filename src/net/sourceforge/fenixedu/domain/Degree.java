@@ -148,52 +148,46 @@ public class Degree extends Degree_Base implements Comparable {
 
         checkDeletion();
         
-	    Iterator oicrIterator = getAssociatedOldInquiriesCoursesResIterator();
-	    while (oicrIterator.hasNext()) {
-		OldInquiriesCoursesRes oicr = (OldInquiriesCoursesRes) oicrIterator.next();
-		oicrIterator.remove();
-		oicr.removeDegree();
-		oicr.delete();
-	    }
+        Iterator<OldInquiriesCoursesRes> oicrIterator = getAssociatedOldInquiriesCoursesResIterator();
+        while (oicrIterator.hasNext()) {
+            OldInquiriesCoursesRes oicr = oicrIterator.next();
+            oicrIterator.remove();            
+            oicr.delete();
+        }
 
-	    Iterator oitrIterator = getAssociatedOldInquiriesTeachersResIterator();
-	    while (oitrIterator.hasNext()) {
-		OldInquiriesTeachersRes oitr = (OldInquiriesTeachersRes) oitrIterator.next();
-		oitrIterator.remove();
-		oitr.removeDegree();
-		oitr.delete();
-	    }
+        Iterator<OldInquiriesTeachersRes> oitrIterator = getAssociatedOldInquiriesTeachersResIterator();
+        while (oitrIterator.hasNext()) {
+            OldInquiriesTeachersRes oitr = oitrIterator.next();
+            oitrIterator.remove();            
+            oitr.delete();
+        }
 
-	    Iterator oisIterator = getAssociatedOldInquiriesSummariesIterator();
-	    while (oisIterator.hasNext()) {
-		OldInquiriesSummary ois = (OldInquiriesSummary) oisIterator.next();
-		oisIterator.remove();
-		ois.removeDegree();
-		ois.delete();
-	    }
+        Iterator<OldInquiriesSummary> oisIterator = getAssociatedOldInquiriesSummariesIterator();
+        while (oisIterator.hasNext()) {
+            OldInquiriesSummary ois = oisIterator.next();
+            oisIterator.remove();            
+            ois.delete();
+        }
 
-	    Iterator delegatesIterator = getDelegateIterator();
-	    while (delegatesIterator.hasNext()) {
-		Delegate delegate = (Delegate) delegatesIterator.next();
-		delegatesIterator.remove();
-		delegate.removeDegree();
-		delegate.delete();
-	    }
+        Iterator<Delegate> delegatesIterator = getDelegateIterator();
+        while (delegatesIterator.hasNext()) {
+            Delegate delegate = delegatesIterator.next();
+            delegatesIterator.remove();          
+            delegate.delete();
+        }
 
-	    Iterator degreeInfosIterator = getDegreeInfosIterator();
-	    while (degreeInfosIterator.hasNext()) {
-		DegreeInfo degreeInfo = (DegreeInfo) degreeInfosIterator.next();
-		degreeInfosIterator.remove();
-		degreeInfo.removeDegree();
-		degreeInfo.delete();
-	    }
+        Iterator<DegreeInfo> degreeInfosIterator = getDegreeInfosIterator();
+        while (degreeInfosIterator.hasNext()) {
+            DegreeInfo degreeInfo = degreeInfosIterator.next();
+            degreeInfosIterator.remove();           
+            degreeInfo.delete();
+        }
 
-	    for (; !getParticipatingAnyCurricularCourseCurricularRules().isEmpty(); getParticipatingAnyCurricularCourseCurricularRules()
-		    .get(0).delete())
-		;
+        for (; !getParticipatingAnyCurricularCourseCurricularRules().isEmpty(); getParticipatingAnyCurricularCourseCurricularRules().get(0).delete());
 
-	    removeRootDomainObject();
-	    deleteDomainObject();
+        removeRootDomainObject();
+        removeUnit();
+        deleteDomainObject();
     }
 
     public DegreeCurricularPlan getNewDegreeCurricularPlan() {

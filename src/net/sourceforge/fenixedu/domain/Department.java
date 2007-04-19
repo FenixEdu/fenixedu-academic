@@ -239,7 +239,7 @@ public class Department extends Department_Base {
 	}	
     }
 
-	public void delete() {
+    public void delete() {
         removeDepartmentUnit();
         removeRootDomainObject();
         deleteDomainObject();

@@ -279,7 +279,8 @@ public class Authenticate extends Service implements Serializable {
     }
 
     protected void filterEmployeeRoleForTeachers(Map<RoleType, Role> infoRoles) {
-	if (infoRoles.containsKey(RoleType.TEACHER) && infoRoles.containsKey(RoleType.EMPLOYEE)) {
+	if (infoRoles.containsKey(RoleType.EMPLOYEE) && 
+		(infoRoles.containsKey(RoleType.TEACHER) || infoRoles.containsKey(RoleType.RESEARCHER))) {
 	    infoRoles.remove(RoleType.EMPLOYEE);
 	}
     }

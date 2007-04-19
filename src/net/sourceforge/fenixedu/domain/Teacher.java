@@ -78,8 +78,7 @@ public class Teacher extends Teacher_Base {
     };
 
     public Teacher(Integer teacherNumber, Person person) {
-	super();
-	checkParamaters(person, teacherNumber);
+	super();	
 	setTeacherNumber(teacherNumber);
 	setPerson(person);
 	setRootDomainObject(RootDomainObject.getInstance());
@@ -87,17 +86,19 @@ public class Teacher extends Teacher_Base {
 
     @Override
     public void setTeacherNumber(Integer teacherNumber) {
-	checkTeacherNumber(teacherNumber);
-	super.setTeacherNumber(teacherNumber);
-    }
-
-    private void checkParamaters(Person person, Integer teacherNumber) {
-	if (person == null) {
-	    throw new DomainException("error.teacher.no.person");
-	}
 	if (teacherNumber == null) {
 	    throw new DomainException("error.teacher.no.teacherNumber");
 	}
+	checkTeacherNumber(teacherNumber);
+	super.setTeacherNumber(teacherNumber);
+    }
+    
+    @Override
+    public void setPerson(Person person) {
+	if (person == null) {
+	    throw new DomainException("error.teacher.no.person");
+	}
+	super.setPerson(person);
     }
 
     private void checkTeacherNumber(Integer teacherNumber) {
@@ -245,8 +246,7 @@ public class Teacher extends Teacher_Base {
 
     public TeacherLegalRegimen getCurrentLegalRegimenWithoutSpecialSitutions() {
 	TeacherLegalRegimen lastLegalRegimen = getLastLegalRegimenWithoutSpecialSituations();
-	return (lastLegalRegimen != null && lastLegalRegimen.isActive(new YearMonthDay())) ? lastLegalRegimen
-		: null;
+	return (lastLegalRegimen != null && lastLegalRegimen.isActive(new YearMonthDay())) ? lastLegalRegimen : null;
     }
 
     public TeacherLegalRegimen getLastLegalRegimenWithoutSpecialSituations() {
