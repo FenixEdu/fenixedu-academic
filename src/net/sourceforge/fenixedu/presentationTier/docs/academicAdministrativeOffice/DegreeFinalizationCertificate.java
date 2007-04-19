@@ -13,9 +13,6 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.StringUtils;
 
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ComparatorChain;
-
 public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument {
 
     private static final ResourceBundle enumerationBundle = ResourceBundle.getBundle(
@@ -50,11 +47,7 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 	    degreeFinalizationInfo.append(resourceBundle.getString("documents.registration.approved.enrolments.info")).append(":\n");
 	    
 	    final List<Enrolment> approvedEnrolments = new ArrayList<Enrolment>(registration.getApprovedEnrolments());
-
-	    final ComparatorChain comparatorChain = new ComparatorChain();
-	    comparatorChain.addComparator(new BeanComparator("executionPeriod"));
-	    comparatorChain.addComparator(new BeanComparator("name"));
-	    Collections.sort(approvedEnrolments, comparatorChain);
+	    Collections.sort(approvedEnrolments, Enrolment.COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME_AND_ID);
 
 	    for (final Enrolment approvedEnrolment : approvedEnrolments) {
 		final EnrolmentEvaluation latestEnrolmentEvaluation = approvedEnrolment.getLatestEnrolmentEvaluation();
@@ -73,14 +66,20 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 
 		degreeFinalizationInfo.append(
 			StringUtils.multipleLineRightPadWithSuffix(
-				approvedEnrolment.getName().getContent(LanguageUtils.getLanguage()).toUpperCase(), 
+				approvedEnrolment.getName().getContent().toUpperCase(), 
 				LINE_LENGTH,
 				'-', 
 				gradeInfo.toString())).append("\n");
 	    }
+	    
+	    degreeFinalizationInfo.append(StringUtils.multipleLineRightPad(
+		    org.apache.commons.lang.StringUtils.EMPTY,
+		    LINE_LENGTH, 
+		    '-')).append("\n");
 	}
 	parameters.put("degreeFinalizationInfo", degreeFinalizationInfo.toString());
 
     }
 
 }
+
