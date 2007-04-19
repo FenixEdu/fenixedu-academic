@@ -5,16 +5,17 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <html:xhtml/>
+<em><bean:message key="title.scientificCouncil.portalTitle" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></em>
 <h2><bean:message key="title.protocols.edit" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></h2>
 
 
-<h3 class="mtop15"><bean:message key="label.protocol.files" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></h3>
 
 <fr:form action="/editProtocol.do">
 <html:hidden bundle="HTMLALT_RESOURCES" name="protocolsForm" property="method" value="deleteProtocolFile"/>
 <html:hidden bundle="HTMLALT_RESOURCES" name="protocolsForm" property="fileID"/>
 <fr:edit id="protocolFactory" name="protocolFactory" visible="false"/>
 
+<p class="mtop2 mbottom0"><strong><bean:message key="label.protocol.files" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></strong></p>
 <logic:notEmpty name="protocolFactory" property="protocol.protocolFiles">
 <table class="tstyle1">
 	<tr>
@@ -37,9 +38,8 @@
 </logic:notEmpty>
 
 <logic:empty name="protocolFactory" property="protocol.protocolFiles">
-	<p><em><bean:message key="label.protocol.hasNone" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></em></p>
+	<p><em><bean:message key="label.protocol.hasNone" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></em>.</p>
 </logic:empty>
-<br/>
 </fr:form>
 
 <fr:form action="/editProtocol.do?method=addProtocolFile" encoding="multipart/form-data">
@@ -54,7 +54,7 @@
 		<bean:message key="button.insert" bundle="SCIENTIFIC_COUNCIL_RESOURCES" />
 	</html:submit>
 	<html:cancel bundle="HTMLALT_RESOURCES" altKey="submit.cancel" property="back">
-		<bean:message key="button.back" bundle="SCIENTIFIC_COUNCIL_RESOURCES" />
+		<bean:message key="button.cancel" bundle="SCIENTIFIC_COUNCIL_RESOURCES" />
 	</html:cancel>
 
 </fr:form>

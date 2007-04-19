@@ -3,20 +3,20 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
-
 <html:xhtml/>
+
+<em><bean:message key="title.scientificCouncil.portalTitle" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></em>
 <h2><bean:message key="title.protocols.edit" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></h2>
 
 
-<h3 class="mtop15"><bean:message key="label.protocol.units" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></h3>
-
-<!-- IST Units -->
 <fr:form action="/editProtocol.do">
 <html:hidden bundle="HTMLALT_RESOURCES" name="protocolsForm" property="method" value="removeISTUnit"/>
 <html:hidden bundle="HTMLALT_RESOURCES" name="protocolsForm" property="unitID"/>
 <fr:edit id="protocolFactory" name="protocolFactory" visible="false"/>
 
-<strong><bean:message key="label.protocol.ist" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></strong><br/>
+<!-- IST Units -->
+<div class="mtop2 mbottom2">
+<p class="mbottom0"><strong><bean:message key="label.protocol.internalUnits" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></strong></p>
 <logic:notEmpty name="protocolFactory" property="units">
 <table class="tstyle1">
 	<tr>
@@ -35,15 +35,15 @@
 	</logic:iterate>
 </table>
 </logic:notEmpty>
-
 <logic:empty name="protocolFactory" property="units">
 	<p><em><bean:message key="label.protocol.hasNone" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></em></p>
 </logic:empty>
-<br/>
+</div>
 
 
 <!-- Partner Units -->
-<strong><bean:message key="label.protocol.partner" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></strong><br/>
+<div class="mbottom2">
+<p class="mbottom0"><strong><bean:message key="label.protocol.externalUnits" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></strong></p>
 <logic:notEmpty name="protocolFactory" property="partnerUnits">
 <table class="tstyle1">
 	<tr>
@@ -67,22 +67,24 @@
 	<p><em><bean:message key="label.protocol.hasNone" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></em></p>
 </logic:empty>
 </fr:form>
-<br/>
+</div>
 
 <!-- Add Unit -->
 <logic:notPresent name="createExternalUnit">
 <fr:form action="/editProtocol.do?method=editUnits">
 
+<p>
 <span class="error0">
 	<html:errors bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
 	<html:messages id="message" message="true" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
 		<bean:write name="message" />
-		<br />
 	</html:messages>
 </span>
+<p>
+
 <logic:present name="needToCreateUnit">
 	<div class="warning0">
-		<strong><bean:message key="label.attention" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></strong>:<br/>
+		<strong><bean:message key="label.attention" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>:</strong><br/>
 		<bean:message key="message.protocol.createNewUnit" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
 	</div>
 </logic:present>
@@ -90,7 +92,7 @@
 <logic:equal name="protocolFactory" property="internalUnit" value="true">
 <fr:edit id="unit" name="protocolFactory" schema="search.unit">
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle5 thlight mtop05 dinline"/>
+		<fr:property name="classes" value="tstyle5 thlight"/>
         <fr:property name="columnClasses" value=",,tdclear tderror1"/>
 	</fr:layout>
 	<fr:destination name="changeUnitType" path="/editProtocol.do?method=prepareEditUnits"/>
@@ -100,14 +102,14 @@
 <logic:equal name="protocolFactory" property="internalUnit" value="false">
 <fr:edit id="partnerUnit" name="protocolFactory" schema="search.partnerUnit">
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle5 thlight mtop05 dinline"/>
+		<fr:property name="classes" value="tstyle5 thlight mbottom05"/>
         <fr:property name="columnClasses" value=",,tdclear tderror1"/>
 	</fr:layout>
 	<fr:destination name="changeUnitType" path="/editProtocol.do?method=prepareEditUnits"/>
 </fr:edit>
 </logic:equal>
 
-<p>
+<p class="mtop05">
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
 		<bean:message key="button.insert" bundle="SCIENTIFIC_COUNCIL_RESOURCES" />
 	</html:submit>
@@ -131,22 +133,22 @@
 <!-- Create External Unit -->
 <logic:present name="createExternalUnit">
 <fr:form action="/editProtocol.do?method=createExternalUnit">
-<strong><bean:message key="label.protocol.insertNewExternalUnit" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></strong><br/>
+<p class="mbottom0"><strong><bean:message key="label.protocol.insertNewExternalUnit" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></strong></p>
 <fr:view name="protocolFactory" schema="partnerUnit.creation">
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle5 thlight mtop05 dinline"/>
+		<fr:property name="classes" value="tstyle5 thlight mbottom05"/>
         <fr:property name="columnClasses" value=",,tdclear tderror1"/>
 	</fr:layout>
 </fr:view>
-<br/>
+
 <fr:edit id="country" name="protocolFactory" schema="partnerUnit.country">
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle5 thlight mtop0 dinline"/>
+		<fr:property name="classes" value="tstyle5 thlight mbottom05"/>
         <fr:property name="columnClasses" value=",,tdclear tderror1"/>
 	</fr:layout>
 </fr:edit>
 <fr:edit id="protocolFactory" name="protocolFactory" visible="false"/>
-<p>
+<p class="mtop05">
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
 		<bean:message key="button.insert" bundle="SCIENTIFIC_COUNCIL_RESOURCES" />
 	</html:submit>

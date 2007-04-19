@@ -5,10 +5,12 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <html:xhtml/>
+<em><bean:message key="title.scientificCouncil.portalTitle" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></em>
 <h2><bean:message key="title.protocols.create" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></h2>
 
 
-<h3 class="mtop15"><bean:message key="label.protocol.units" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></h3>
+<p class="breadcumbs"><span>Passo 1: Inserir dados do protocolo</span> > <span>Passo 2: Escolher responsáveis</span> > <span class="actual">Passo 3: Escolher unidade</span></p>
+
 
 <!-- IST Units -->
 <fr:form action="/createProtocol.do">
@@ -16,7 +18,7 @@
 <html:hidden bundle="HTMLALT_RESOURCES" name="protocolsForm" property="unitID"/>
 <fr:edit id="protocolFactory" name="protocolFactory" visible="false"/>
 
-<strong><bean:message key="label.protocol.ist" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></strong><br/>
+<strong><bean:message key="label.protocol.internalUnits" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></strong><br/>
 <logic:notEmpty name="protocolFactory" property="units">
 <table class="tstyle1">
 	<tr>
@@ -37,13 +39,13 @@
 </logic:notEmpty>
 
 <logic:empty name="protocolFactory" property="units">
-	<p><em><bean:message key="label.protocol.hasNone" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></em></p>
+	<p><em><bean:message key="label.protocol.hasNone" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></em>.</p>
 </logic:empty>
 <br/>
 
 
 <!-- Partner Units -->
-<strong><bean:message key="label.protocol.partner" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></strong><br/>
+<strong><bean:message key="label.protocol.externalUnits" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></strong><br/>
 <logic:notEmpty name="protocolFactory" property="partnerUnits">
 <table class="tstyle1">
 	<tr>
@@ -64,7 +66,7 @@
 </logic:notEmpty>
 
 <logic:empty name="protocolFactory" property="partnerUnits">
-	<p><em><bean:message key="label.protocol.hasNone" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></em></p>
+	<p><em><bean:message key="label.protocol.hasNone" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></em>.</p>
 </logic:empty>
 </fr:form>
 <br/>

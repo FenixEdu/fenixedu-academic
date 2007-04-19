@@ -4,9 +4,14 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <html:xhtml/>
+<em><bean:message key="title.scientificCouncil.portalTitle" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></em>
 <h2><bean:message key="title.protocols" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></h2>
 
-<html:link page="/createProtocol.do?method=prepareCreateProtocolData"><bean:message key="link.protocols.insert" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></html:link>
+<ul class="list5">
+	<li>
+		<html:link page="/createProtocol.do?method=prepareCreateProtocolData"><bean:message key="link.protocols.insert" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></html:link>
+	</li>
+</ul>
 
 <logic:notEmpty name="protocols">
 	<fr:view name="protocols" schema="show.protocol.toList">

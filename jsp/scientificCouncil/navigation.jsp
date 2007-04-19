@@ -59,7 +59,6 @@
 		  		<bean:message key="link.credits.viewReport"/>
 		  	</html:link>
 		</li>		
-		<br />
 		<li class="navheader">
 			<bean:message key="label.research.activity.navigation.header"/>
 		</li>
@@ -83,7 +82,6 @@
 		  		<bean:message key="link.research.activity.merge.event"/>
 		  	</html:link>
 		</li>
-				<br/>
 		<%net.sourceforge.fenixedu.applicationTier.IUserView user = (net.sourceforge.fenixedu.applicationTier.IUserView) session
                     .getAttribute(net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants.U_VIEW);
             if (net.sourceforge.fenixedu.domain.ManagementGroups.isProtocolManagerMember(user.getPerson())) {

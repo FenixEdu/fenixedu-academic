@@ -5,10 +5,12 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <html:xhtml/>
+<em><bean:message key="title.scientificCouncil.portalTitle" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></em>
 <h2><bean:message key="title.protocols.create" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></h2>
 
 
-<h3 class="mtop15"><bean:message key="label.protocol.responsibles" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></h3>
+<p class="breadcumbs"><span>Passo 1: Inserir dados do protocolo</span> > <span class="actual">Passo 2: Escolher responsáveis</span> > <span>Passo 3: Escolher unidade</span></p>
+
 
 <fr:form action="/createProtocol.do">
 <html:hidden bundle="HTMLALT_RESOURCES" name="protocolsForm" property="method" value="removeISTResponsible"/>
@@ -16,7 +18,11 @@
 <fr:edit id="protocolFactory" name="protocolFactory" visible="false"/>
 
 <!-- IST Responsibles -->
+<%--
 <strong><bean:message key="label.protocol.ist" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></strong><br/>
+--%>
+
+<strong><bean:message key="label.protocol.internalResponsibles" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></strong><br/>
 <logic:notEmpty name="protocolFactory" property="responsibles">
 <table class="tstyle1">
 	<tr>
@@ -39,12 +45,15 @@
 </logic:notEmpty>
 
 <logic:empty name="protocolFactory" property="responsibles">
-	<p><em><bean:message key="label.protocol.hasNone" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></em></p>
+	<p><em><bean:message key="label.protocol.hasNone" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>.</em></p>
 </logic:empty>
 <br/>
 
 <!-- Partner Responsibles -->
+<%--
 <strong><bean:message key="label.protocol.partner" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></strong><br/>
+--%>
+<strong><bean:message key="label.protocol.externalResponsibles" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></strong><br/>
 <logic:notEmpty name="protocolFactory" property="partnerResponsibles">
 <table class="tstyle1">
 	<tr>
@@ -67,7 +76,7 @@
 </logic:notEmpty>
 
 <logic:empty name="protocolFactory" property="partnerResponsibles">
-	<p><em><bean:message key="label.protocol.hasNone" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></em></p>
+	<p><em><bean:message key="label.protocol.hasNone" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>.</em></p>
 </logic:empty>
 </fr:form>
 <br/>
@@ -85,7 +94,7 @@
 </span>
 <logic:present name="needToCreatePerson">
 	<div class="warning0">
-		<strong><bean:message key="label.attention" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></strong>:<br/>
+		<strong><bean:message key="label.attention" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>:</strong><br/>
 		<bean:message key="message.protocol.createNewPerson" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
 	</div>
 </logic:present>
@@ -93,7 +102,7 @@
 <logic:equal name="protocolFactory" property="istResponsible" value="true">
 <fr:edit id="istResponsible" name="protocolFactory" schema="search.istResponsible">
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle5 thlight mtop05 dinline"/>
+		<fr:property name="classes" value="tstyle5 thlight mtop05 thmiddle"/>
         <fr:property name="columnClasses" value=",,tdclear tderror1"/>
 	</fr:layout>
 	<fr:destination name="changePersonType" path="/createProtocol.do?method=prepareCreateProtocolResponsibles"/>
@@ -103,7 +112,7 @@
 <logic:equal name="protocolFactory" property="istResponsible" value="false">
 <fr:edit id="partnerResponsible" name="protocolFactory" schema="search.partnerResponsible">
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle5 thlight mtop05 dinline"/>
+		<fr:property name="classes" value="tstyle5 thlight mtop05 thmiddle"/>
         <fr:property name="columnClasses" value=",,tdclear tderror1"/>
 	</fr:layout>
 	<fr:destination name="changePersonType" path="/createProtocol.do?method=prepareCreateProtocolResponsibles"/>
@@ -125,7 +134,7 @@
 	</logic:notPresent>
 	<logic:present name="needToCreatePerson">
 		<html:cancel bundle="HTMLALT_RESOURCES" altKey="submit.cancel" property="cancel">
-			<bean:message key="button.cancel" bundle="SCIENTIFIC_COUNCIL_RESOURCES" />
+			<bean:message key="button.back" bundle="SCIENTIFIC_COUNCIL_RESOURCES" /> <%-- Changed from cancel to back --%>
 		</html:cancel>	
 		<html:submit bundle="HTMLALT_RESOURCES" property="createNew">
 			<bean:message key="button.insertNewExternalPerson" bundle="SCIENTIFIC_COUNCIL_RESOURCES" />
@@ -141,14 +150,14 @@
 <fr:form action="/createProtocol.do?method=createExternalResponsible">
 <logic:present name="needToCreateUnit">
 	<div class="warning0">
-		<strong><bean:message key="label.attention"/></strong>:<br/>
+		<strong><bean:message key="label.attention"/>:</strong><br/>
 		<bean:message key="message.protocol.createNewUnit" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
 	</div>
 </logic:present>
 <strong><bean:message key="label.protocol.insertNewExternalPerson"/></strong><br/>
 <fr:edit id="responsible" name="protocolFactory" schema="partnerResponsible.fullCreation">
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle5 thlight mtop05 dinline"/>
+		<fr:property name="classes" value="tstyle5 thlight mtop05 thmiddle"/>
         <fr:property name="columnClasses" value=",,tdclear tderror1"/>
 	</fr:layout>
 </fr:edit>
@@ -174,7 +183,7 @@
 <strong><bean:message key="label.protocol.insertNewExternalPersonUnit" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></strong><br/>
 <fr:view name="protocolFactory" schema="partnerUnit.fullCreation">
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle5 thlight mtop05 dinline"/>
+		<fr:property name="classes" value="tstyle5 thlight mtop05 thmiddle"/>
         <fr:property name="columnClasses" value=",,tdclear tderror1"/>
 	</fr:layout>
 </fr:view>
