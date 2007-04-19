@@ -1,1 +1,0 @@
-UPDATE WORK_SCHEDULE_TYPE SET OJB_CONCRETE_CLASS="net.sourceforge.fenixedu.domain.assiduousness.HalfTimeSchedule" WHERE ID_INTERNAL IN (19226, 19227, 19267, 19270);
