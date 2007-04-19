@@ -19,9 +19,6 @@ import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ComparatorChain;
-
 public abstract class CurriculumModule extends CurriculumModule_Base {
 
     static public final Comparator<CurriculumModule> COMPARATOR_BY_NAME = new Comparator<CurriculumModule>() {
