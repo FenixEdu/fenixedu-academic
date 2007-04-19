@@ -1207,4 +1207,8 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         }
     }
 
+    public boolean isBefore(final Enrolment enrolment) {
+	return getExecutionPeriod().isBefore(enrolment.getExecutionPeriod());
+    }
+
 }
