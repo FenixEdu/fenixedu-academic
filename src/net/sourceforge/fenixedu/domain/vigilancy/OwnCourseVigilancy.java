@@ -15,6 +15,11 @@ public class OwnCourseVigilancy extends OwnCourseVigilancy_Base {
     }
 
     @Override
+    public int getEstimatedPoints() {
+	return getAssociatedVigilantGroup().getPointsForTeacher();
+    }
+    
+    @Override
     public int getPoints() {
 	if (isActive()) {
 	    return isAttended() ? getAssociatedVigilantGroup().getPointsForTeacher()

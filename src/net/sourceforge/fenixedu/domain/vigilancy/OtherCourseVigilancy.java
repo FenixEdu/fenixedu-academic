@@ -12,6 +12,11 @@ public class OtherCourseVigilancy extends OtherCourseVigilancy_Base {
     }
 
     @Override
+    public int getEstimatedPoints() {
+	return getAssociatedVigilantGroup().getPointsForConvoked();
+    }
+    
+    @Override
     public int getPoints() {
 
 	if (this.getWrittenEvaluation() == null) {
@@ -40,6 +45,7 @@ public class OtherCourseVigilancy extends OtherCourseVigilancy_Base {
 	return getAssociatedVigilantGroup().getPointsForMissing();
     }
 
+    
     public OtherCourseVigilancy(WrittenEvaluation writtenEvaluation) {
 	this();
 	super.setWrittenEvaluation(writtenEvaluation);

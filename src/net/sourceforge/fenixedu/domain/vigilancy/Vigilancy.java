@@ -221,4 +221,5 @@ public abstract class Vigilancy extends Vigilancy_Base {
     }
 
     public abstract int getPoints();
+    public abstract int getEstimatedPoints();
 }

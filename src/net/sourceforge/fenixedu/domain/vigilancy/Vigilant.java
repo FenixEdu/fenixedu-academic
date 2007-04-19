@@ -32,6 +32,8 @@ public class Vigilant extends Vigilant_Base {
 
     public static final Comparator<Vigilant> POINTS_COMPARATOR = new BeanComparator("points");
 
+    public static final Comparator<Vigilant> ESTIMATED_POINTS_COMPARATOR = new BeanComparator("estimatedPoints");
+    
     public static final Comparator<Vigilant> NAME_COMPARATOR = new BeanComparator("person.name");
 
     public static final Comparator<Vigilant> USERNAME_COMPARATOR = new ReverseComparator(new BeanComparator(
@@ -91,13 +93,15 @@ public class Vigilant extends Vigilant_Base {
     }
 
     public double getEstimatedPoints() {
-	double points = getStartPoints();
+	double totalPoints = getStartPoints();
 	BigDecimal weight = getPointsWeight();
 
 	for (Vigilancy vigilancy : getActiveVigilancies()) {
-	    points += vigilancy.hasPointsAttributed() ? vigilancy.getPoints() * weight.doubleValue() : 1;
+	    int points = vigilancy.hasPointsAttributed() ? vigilancy.getPoints() : vigilancy.getEstimatedPoints();   
+	    totalPoints += points * weight.doubleValue();
 	}
-	return points;
+	
+	return totalPoints;
     }
 
     public Integer getNumber() {

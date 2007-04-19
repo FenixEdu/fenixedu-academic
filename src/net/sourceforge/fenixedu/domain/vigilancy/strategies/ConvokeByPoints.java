@@ -1,9 +1,7 @@
 package net.sourceforge.fenixedu.domain.vigilancy.strategies;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -64,7 +62,7 @@ public class ConvokeByPoints extends Strategy {
 		}
 
 		ComparatorChain comparator = new ComparatorChain();
-		comparator.addComparator(new PointsComparator());
+		comparator.addComparator(Vigilant.ESTIMATED_POINTS_COMPARATOR);
 		//comparator.addComparator(new ConvokeComparator());
 		comparator.addComparator(Vigilant.CATEGORY_COMPARATOR);
 		comparator.addComparator(Vigilant.USERNAME_COMPARATOR);
@@ -94,29 +92,4 @@ public class ConvokeByPoints extends Strategy {
 		return people;
 	}
 
-	class PointsComparator implements Comparator<Vigilant> {
-
-		public int compare(Vigilant v1, Vigilant v2) {
-			return getPointsUsingCriteria(v1).compareTo(getPointsUsingCriteria(v2));
-		}
-		
-		private Double getPointsUsingCriteria(Vigilant vigilant) {
-		
-			double points = vigilant.getStartPoints();
-			BigDecimal weight = vigilant.getPointsWeight();
-			
-			for(Vigilancy vigilancy : vigilant.getActiveVigilancies()) {
-				points += vigilancy.hasPointsAttributed() ? vigilancy.getPoints() * weight.doubleValue() : 1;
-			}
-			return points;
-		}
-	}
-	
-	class ConvokeComparator implements Comparator<Vigilant> {
-
-		public int compare(Vigilant v1, Vigilant v2) {
-			return new Integer(v1.getActiveVigilancies().size()).compareTo(v2.getActiveVigilancies().size());
-		}
-		
-	}
 }
