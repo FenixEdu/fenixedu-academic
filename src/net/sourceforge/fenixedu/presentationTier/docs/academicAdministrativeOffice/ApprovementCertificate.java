@@ -9,11 +9,7 @@ import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ApprovementCertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
-import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.StringUtils;
-
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ComparatorChain;
 
 public class ApprovementCertificate extends AdministrativeOfficeDocument {
     
@@ -30,10 +26,7 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
 	final List<Enrolment> approvedEnrolments = new ArrayList<Enrolment>(approvementCertificateRequest.getRegistration().getApprovedEnrolments());
 	parameters.put("numberApprovements", Integer.valueOf(approvedEnrolments.size()));
 
-	final ComparatorChain comparatorChain = new ComparatorChain();
-	comparatorChain.addComparator(new BeanComparator("executionPeriod"));
-	comparatorChain.addComparator(new BeanComparator("name"));
-	Collections.sort(approvedEnrolments, comparatorChain);
+	Collections.sort(approvedEnrolments, Enrolment.COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME_AND_ID);
 
 	final StringBuilder approvementsInfo = new StringBuilder();
 	ExecutionYear lastReportedExecutionYear = approvedEnrolments.get(0).getExecutionPeriod().getExecutionYear(); 
@@ -61,11 +54,18 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
 	    
 	    approvementsInfo.append(
 		    StringUtils.multipleLineRightPadWithSuffix(
-			    approvedEnrolment.getName().getContent(LanguageUtils.getLanguage()).toUpperCase(),
+			    approvedEnrolment.getName().getContent().toUpperCase(),
 			    LINE_LENGTH, 
 			    '-',
 			    gradeInfo.toString())).append("\n");
 	}
+
+	approvementsInfo.append(StringUtils.multipleLineRightPad(
+		org.apache.commons.lang.StringUtils.EMPTY,
+		LINE_LENGTH, 
+		'-')).append("\n");
+
+	
 	parameters.put("approvementsInfo", approvementsInfo.toString());
     }
 

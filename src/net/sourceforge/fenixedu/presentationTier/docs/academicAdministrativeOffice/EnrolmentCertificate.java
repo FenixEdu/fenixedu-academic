@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice;
 
-import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -10,11 +9,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.EnrolmentCertificateRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.StringUtils;
-
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ComparatorChain;
 
 public class EnrolmentCertificate extends AdministrativeOfficeDocument {
 
@@ -38,17 +33,19 @@ public class EnrolmentCertificate extends AdministrativeOfficeDocument {
 	
 	StringBuilder enrolmentsInfo = new StringBuilder();
 	if (enrolmentCertificateRequest.getDetailed()) {
-	    final ComparatorChain comparatorChain = new ComparatorChain();
-	    comparatorChain.addComparator(new BeanComparator("executionPeriod.executionYear"));
-	    comparatorChain.addComparator(new BeanComparator("name.content", Collator.getInstance()));
-	    Collections.sort(enrolments, comparatorChain);
+	    Collections.sort(enrolments, Enrolment.COMPARATOR_BY_EXECUTION_YEAR_AND_NAME_AND_ID);
 	    
 	    for (final Enrolment enrolment : enrolments) {
 		enrolmentsInfo.append(StringUtils.multipleLineRightPad(
-			enrolment.getName().getContent(LanguageUtils.getLanguage()).toUpperCase(),
+			enrolment.getName().getContent().toUpperCase(),
 			LINE_LENGTH, 
 			'-')).append("\n");
 	    }
+	    
+	    enrolmentsInfo.append(StringUtils.multipleLineRightPad(
+		    org.apache.commons.lang.StringUtils.EMPTY,
+		    LINE_LENGTH, 
+		    '-')).append("\n");
 	} 
 	parameters.put("enrolmentsInfo", enrolmentsInfo.toString());
     }
