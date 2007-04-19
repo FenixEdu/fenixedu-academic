@@ -3481,7 +3481,6 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 		}
 
 		class net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit extends net.sourceforge.fenixedu.domain.organizationalStructure.Unit {					
-			Integer keyResearchUnitSite;
 		}
 
 class net.sourceforge.fenixedu.domain.person.PersonName extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -4627,7 +4626,6 @@ class net.sourceforge.fenixedu.domain.Site extends net.sourceforge.fenixedu.doma
 	}
 
 	class net.sourceforge.fenixedu.domain.ResearchUnitSite extends net.sourceforge.fenixedu.domain.UnitSite {
-		Integer keyResearchUnit;
 	}
 
 //
@@ -8293,11 +8291,6 @@ relation PublicationsNumberTeacher {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
-}
-
-relation ResearchUnitSiteResearchUnit {
-	net.sourceforge.fenixedu.domain.ResearchUnitSite playsRole researchUnitSite;
-	net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit playsRole researchUnit;
 }
 
 relation SeminaryCourseEquivalency {

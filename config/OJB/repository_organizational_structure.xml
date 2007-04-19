@@ -17,6 +17,7 @@
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit"/>	
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit"/>
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.SectionUnit"/>
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit"/>
 </class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit -->
@@ -61,6 +62,10 @@
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.organizationalStructure.SectionUnit -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.SectionUnit" table="PARTY">
+</class-descriptor>
+
+<!-- Definitions for net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit" table="PARTY">
 </class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.organizationalStructure.Accountability -->

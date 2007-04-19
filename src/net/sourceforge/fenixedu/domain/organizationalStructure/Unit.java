@@ -916,4 +916,8 @@ public class Unit extends Unit_Base {
 	}
 	return new String[0];
     }
+    
+    public boolean isSiteAvailable() {
+	return hasSite();
+    }
 }

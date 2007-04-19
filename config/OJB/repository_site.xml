@@ -38,6 +38,7 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.UnitSite" table="SITE">
     <extent-class class-ref="net.sourceforge.fenixedu.domain.DepartmentSite"/>
     <extent-class class-ref="net.sourceforge.fenixedu.domain.InstitutionSite"/>
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.ResearchUnitSite"/>
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.DepartmentSite" table="SITE">
@@ -46,6 +47,8 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.InstitutionSite" table="SITE">
 </class-descriptor>
 
+<class-descriptor class="net.sourceforge.fenixedu.domain.ResearchUnitSite" table="SITE">
+</class-descriptor>
 
 <!-- ******************************** -->
 <!-- **********   SECTION  ********** -->

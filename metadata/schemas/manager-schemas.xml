@@ -450,3 +450,27 @@
 		<property name="size" value="50" />
 	</slot>
 </schema>
+
+<schema name="researchUnit" type="net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit" bundle="MANAGER_RESOURCES">
+	<slot name="nameWithAcronym" key="label.name"/>
+	<slot name="siteAvailable"/>
+</schema>
+
+
+<schema name="selectPerson" type="net.sourceforge.fenixedu.dataTransferObject.person.PersonBean" bundle="MANAGER_RESOURCES">
+	<slot name="person" layout="autoComplete" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator" key="label.managerName">
+		<property name="size" value="70"/>
+		<property name="rawSlotName" value="name"/>
+		<property name="indicatorShown" value="true"/>
+		<property name="serviceName" value="SearchInternalPersons"/>
+		<property name="serviceArgs" value="slot=name,size=30"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.person.PersonName"/>				
+		<property name="minChars" value="4"/>
+		<property name="labelField" value="person.name"/>
+		<property name="format" value="${person.name} (${person.istUsername})"/>
+	</slot>
+</schema>
+
+<schema name="showPersonName" type="net.sourceforge.fenixedu.dataTransferObject.person.PersonBean" bundle="MANAGER_RESOURCES">
+	<slot name="name"/>
+</schema>

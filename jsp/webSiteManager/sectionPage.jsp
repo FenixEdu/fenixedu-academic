@@ -9,7 +9,7 @@
 	<bean:define id="extraParameters" name="extraParameters" />
 	<bean:define id="announcementBoardId" name="announcementBoard" property="idInternal"/>
 	<h2>
-		<bean:message key="management.label" bundle="WEBSITEMANAGER_RESOURCES"/> 
+		<bean:message key="label.section" bundle="WEBSITEMANAGER_RESOURCES"/> 
 		<bean:write name="announcementBoard" property="name"/>
 	</h2>
 	

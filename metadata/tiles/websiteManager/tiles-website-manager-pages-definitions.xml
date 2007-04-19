@@ -49,8 +49,78 @@
 	    <put name="navLocalExtra" value="/webSiteManager/sectionsNavbar.jsp"/>
 	    <put name="body" value="/messaging/announcements/viewAnnouncement.jsp" />
 	</definition>					
+
+  	<definition name="edit-research-site" extends="definition.websiteManager.masterPage" >
+	    <put name="navLocalExtra" value="/webSiteManager/researchUnitSite/researchUnitSiteEditionNavBar.jsp"/>
+	</definition>
 	
-    <!-- ==== Department Site === -->
+	<!-- ========== Research Unit Site Management -->
+	
+	<definition name="definition.researchUnitSite.masterPage" extends="definition.websiteManager.masterPage">
+		<put name="navLocalExtra" value="/webSiteManager/researchUnitSite/researchUnitSiteEditionNavBar.jsp"/>
+		<put name="body-context" value="/webSiteManager/researchUnitSite/siteContext.jsp"/>
+	</definition>
+	
+	
+	<definition name="manage-researchSite-createSection" extends="definition.researchUnitSite.masterPage">
+		<put name="body" value="/commons/sites/createSection.jsp" />
+	</definition>
+
+	<definition name="manage-researchSite-sectionsManagement" extends="definition.researchUnitSite.masterPage">
+        <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
+		<put name="body" value="/commons/sites/sectionsManagement.jsp" />
+	</definition>
+	
+	<definition name="manage-researchSite-section" extends="definition.researchUnitSite.masterPage">
+        <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
+		<put name="body" value="/commons/sites/section.jsp" />
+	</definition>
+
+	<definition name="manage-researchSite-editSection" extends="definition.researchUnitSite.masterPage">
+		<put name="body" value="/commons/sites/editSection.jsp" />
+	</definition>
+
+	<definition name="manage-researchSite-createItem" extends="definition.researchUnitSite.masterPage">
+		<put name="body" value="/commons/sites/createItem.jsp" />
+	</definition>
+
+	<definition name="manage-researchSite-editItem" extends="definition.researchUnitSite.masterPage">
+		<put name="body" value="/commons/sites/editItem.jsp" />
+	</definition>
+
+	<definition name="manage-researchSite-uploadFile" extends="definition.researchUnitSite.masterPage">
+		<put name="body" value="/commons/sites/uploadFile.jsp" />
+	</definition>
+
+	<definition name="manage-researchSite-editFile" extends="definition.researchUnitSite.masterPage">
+		<put name="body" value="/commons/sites/editFile.jsp" />
+	</definition>
+
+    <definition name="manage-researchSite-organizeItems" extends="definition.researchUnitSite.masterPage">
+        <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
+        <put name="body" value="/commons/sites/organizeItems.jsp" />
+    </definition>
+
+    <definition name="manage-researchSite-organizeFiles" extends="definition.researchUnitSite.masterPage">
+        <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
+        <put name="body" value="/commons/sites/organizeFiles.jsp" />
+    </definition>
+
+    <definition name="manage-researchSite-confirmSectionDelete" extends="definition.researchUnitSite.masterPage">
+		<put name="body" value="/commons/sites/confirmSectionDelete.jsp" />
+    </definition>
+
+    <definition name="manage-researchSite-editSectionPermissions" extends="definition.researchUnitSite.masterPage">
+        <put name="body" value="/commons/sites/editSectionPermissions.jsp" />
+    </definition>
+
+    <definition name="manage-researchSite-editItemPermissions" extends="definition.researchUnitSite.masterPage">
+		<put name="body" value="/commons/sites/editItemPermissions.jsp" />
+    </definition>
+	
+	<!-- ======  -->
+
+   <!-- ==== Department Site === -->
     <definition name="definition.department.site.management" extends="definition.websiteManager.masterPage">
         <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
         <put name="body-context" value="/webSiteManager/departmentSite/siteContext.jsp"/>
@@ -132,5 +202,4 @@
     <definition name="department-announcements-edit-announcement" extends="definition.department.site.announcements.management">
         <put name="body" value="/messaging/announcements/editAnnouncement.jsp" />
     </definition>
-    
 </tiles-definitions>

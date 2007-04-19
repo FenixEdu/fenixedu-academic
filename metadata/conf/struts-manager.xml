@@ -2295,9 +2295,20 @@
             <forward name="show-research-activity-edit" path="show-event-edit-page"/> 
         </action>             
       
-      
+ 
+    	<!-- ========== Research Unit Site Creation ============================= -->
+	    <action path="/researchUnitSiteManagement"
+	      parameter="method"
+	      scope="request"
+	      type="net.sourceforge.fenixedu.presentationTier.Action.manager.organizationalStructure.ResearchUnitManagementDA">
+	      <forward name="showResearchUnits" path="show-research-units"/>
+	      <forward name="editResearchUnitSiteManagers" path="edit-research-site-managers"/>
+         </action>
+          
 	</action-mappings>
 
+ 
+    
 	<!-- ========== Controller Configuration ================================ -->
     <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>
 

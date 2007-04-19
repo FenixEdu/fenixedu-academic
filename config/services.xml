@@ -11706,6 +11706,15 @@
 			<chain name="ManagerAuthorization" />
 		</filterChains>
     </service> 
+    <service>
+        <name>CreateResearchUnitSite</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.CreateResearchUnitSite</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+		<filterChains>
+			<chain name="ManagerAuthorization" />
+		</filterChains>
+    </service> 
 	<service>
         <name>MergeScientificJournals</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.researchActivity.MergeScientificJournals</implementationClass>
@@ -11769,4 +11778,22 @@
 			<chain name="DepartmentAdministrativeOfficeAuthorization" />
 		</filterChains>
     </service>
+    <service>
+        <name>AddResearchUnitSiteManager</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.site.AddUnitSiteManager</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+		<filterChains>
+			<chain name="ResearchUnitSiteAuthorization"/>
+		</filterChains>
+    </service>
+	<service>
+        <name>RemoveResearchUnitSiteManager</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.site.RemoveUnitSiteManager</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+		<filterChains>
+			<chain name="ResearchUnitSiteAuthorization"/>
+		</filterChains>
+    </service>    
 </serviceDefinitions>

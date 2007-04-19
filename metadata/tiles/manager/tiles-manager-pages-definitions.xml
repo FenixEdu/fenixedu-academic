@@ -872,5 +872,14 @@
     	<put name="body" value="/manager/researchActivity/showEditEvent.jsp"/>
     </definition>    
 	
-					
+
+	<!--  =========== Research Unit Site Management ========== -->					
+	 
+	<definition name="show-research-units" extends="definition.manager.masterPage">
+		<put name="body" value="/manager/organizationalStructureManagament/researchUnits/showResearchUnits.jsp"/>
+	</definition> 
+	<definition name="edit-research-site-managers" extends="definition.manager.masterPage">
+		<put name="body" value="/manager/organizationalStructureManagament/researchUnits/editSiteManagers.jsp"/>
+	</definition> 	
+	
 </tiles-definitions>

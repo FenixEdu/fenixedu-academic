@@ -1137,4 +1137,12 @@
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>
+   	<filterChain>
+        <name>ResearchUnitSiteAuthorization</name>
+        <expression>ManagerAuthorization || ResearchSiteManagerAuthorization</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
+    </filterChain>
+
 </filterChainsDefinitions>

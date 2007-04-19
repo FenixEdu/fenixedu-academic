@@ -108,6 +108,16 @@
 		<put name="footer" value="/publico/homepage/footer.jsp" />
 	</definition>
 
+	<definition name="definition.public.researchUnitSite" page="/layout/istLayout.jsp">
+		<put name="title" value="Instituto Superior Técnico" /> 
+		<put name="symbols_row" value="/publico/homepage/symbolsRow.jsp" />
+		<put name="main_navigation" value="/publico/researchUnitSite/mainNavigation.jsp"/>
+		<put name="profile_navigation" value="/publico/homepage/profileNavigation.jsp" />
+		<put name="body-context" value="/publico/researchUnitSite/siteContext.jsp" />
+		<put name="body" value="/commons/blank.jsp" />
+		<put name="footer" value="/publico/researchUnitSite/footer.jsp" />
+	</definition>
+	
 	<definition name="definition.public.departments" page="/layout/istLayout.jsp">
 		<put name="title" value="Instituto Superior Técnico" />
 		<put name="symbols_row" value="/publico/homepage/symbolsRow.jsp" />

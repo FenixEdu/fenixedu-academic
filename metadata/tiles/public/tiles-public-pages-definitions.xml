@@ -409,5 +409,27 @@
        <put name="body" value="/publico/researcher/showEvent.jsp"/>  
     </definition>    
    
-    
+	<!--  ===== RESEARCH UNIT SITE ======== -->
+	<definition name="researchSite-front-page" extends="definition.public.researchUnitSite">
+		<put name="body" value="/publico/researchUnitSite/frontPage.jsp"/>
+	</definition>
+	
+	<definition name="view-researchUnit-section" extends="definition.public.researchUnitSite">
+        <put name="body" value="/commons/sites/public/section.jsp"/>
+    </definition>
+    <definition name="view-researchUnit-section-deny" extends="definition.public.researchUnitSite">
+        <put name="body" value="/commons/sites/public/section-deny.jsp"/>
+    </definition>
+    <definition name="view-researchUnit-section-adviseLogin" extends="definition.public.researchUnitSite">
+        <put name="body" value="/commons/sites/public/section-adviseLogin.jsp"/>
+    </definition>
+    <definition name="view-researchUnit-item" extends="definition.public.researchUnitSite">
+        <put name="body" value="/commons/sites/public/item.jsp"/>
+    </definition>
+    <definition name="view-researchUnit-item-deny" extends="definition.public.researchUnitSite">
+        <put name="body" value="/commons/sites/public/item-deny.jsp"/>
+    </definition>
+    <definition name="view-researchUnit-item-adviseLogin" extends="definition.public.researchUnitSite">
+        <put name="body" value="/commons/sites/public/item-adviseLogin.jsp"/>
+    </definition>
 </tiles-definitions>

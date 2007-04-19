@@ -910,5 +910,12 @@
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.coordinator.ScientificComissionMemberAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
-    </filter>             
+    </filter>    
+    <filter>
+        <name>ResearchSiteManagerAuthorization</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.ResearchSiteManagerAuthorizationFilter</implementationClass>
+        <description/>
+        <isTransactional>false</isTransactional>
+    </filter>        
+             
 </filterDefinitions>

@@ -13,7 +13,7 @@
     <li>
         <bean:define id="unitId" name="site" property="unit.idInternal"/>
         <html:link page="<%= "/department/departmentSite.do?method=presentation&amp;selectedDepartmentUnitID=" + unitId %>" module="/publico" target="_blank">
-            <bean:message key="link.site.department.view" bundle="WEBSITEMANAGER_RESOURCES"/>
+            <bean:message key="link.site.view" bundle="WEBSITEMANAGER_RESOURCES"/>
         </html:link>
     </li>
     <li>

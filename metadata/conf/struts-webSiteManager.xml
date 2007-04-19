@@ -45,7 +45,27 @@
       <action path="/manageInstitutionSite" type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction">
         <forward name="Success" path="announcementsManagement.do?method=start" redirect="true"/>
       </action>
-       
+
+	  <action path="/manageResearchUnitSite" 
+	  type="net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.ResearchUnitSiteManagementDA"
+	  parameter="method">
+	  	<forward name="editResearchSite" path="edit-research-site"/>
+        <forward name="createSection" path="manage-researchSite-createSection"/>
+        <forward name="sectionsManagement" path="manage-researchSite-sectionsManagement"/>
+        <forward name="section" path="manage-researchSite-section"/>
+        <forward name="editSection" path="manage-researchSite-editSection"/>
+        <forward name="createItem" path="manage-researchSite-createItem"/>
+        <forward name="editItem" path="manage-researchSite-editItem"/>
+        <forward name="uploadFile" path="manage-researchSite-uploadFile"/>
+        <forward name="editFile" path="manage-researchSite-editFile"/>          
+        <forward name="organizeItems" path="manage-researchSite-organizeItems"/>
+        <forward name="organizeFiles" path="manage-researchSite-organizeFiles"/>
+        <forward name="confirmSectionDelete" path="manage-researchSite-confirmSectionDelete"/>
+        <forward name="editSectionPermissions" path="manage-researchSite-editSectionPermissions"/>
+        <forward name="editItemPermissions" path="manage-researchSite-editItemPermissions"/>
+        <forward name="editFile" path="manage-researchSite-editFile"/>
+	  </action>
+	  
        <action path="/announcementsManagement"
               type="net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.WebSiteAnnouncementManagement"
               parameter="method"
@@ -60,6 +80,7 @@
           <forward name="viewAnnouncementBoard" path="websiteManager-view-announcementBoard"/>
    		  <forward name="viewAnnouncement" path="websiteManager-view-announcement"/>
       </action>
+
 
     <action path="/manageDepartmentSite" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.DepartmentSiteManagementDA">
         <forward name="start" path="departmentSite-start"/>
@@ -102,6 +123,7 @@
     <message-resources parameter="resources.SiteResources" key="SITE_RESOURCES" null="false"/>    
     <message-resources parameter="resources.MessagingResources" key="MESSAGING_RESOURCES" null="false"/>	
 	<message-resources parameter="resources.WebsiteManagerResources" key="WEBSITEMANAGER_RESOURCES" null="false"/>
+    <message-resources parameter="resources.ApplicationResources" key="DEFAULT" null="false"/>
     <!-- ========== Plug Ins Configuration ================================= -->
      <plug-in className="org.apache.struts.tiles.TilesPlugin" >
 		<set-property property="definitions-config"

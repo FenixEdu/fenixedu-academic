@@ -50,6 +50,7 @@
         <action path="/interests/interestsManagement"
                 parameter="method" 
                 type="net.sourceforge.fenixedu.presentationTier.Action.research.interest.InterestsManagementDispatchAction">
+
 	        <forward name="EditInterest" path="interests.edit.interest"/>
 		    <forward name="Success" path="interests.interestsManagement"/>
 		    <forward name="InsertNewInterest" path="interests.insert.interest"/>
