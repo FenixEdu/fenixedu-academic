@@ -5,8 +5,8 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <bean:define id="infoFinalResult" name="<%= SessionConstants.INFO_FINAL_RESULT%>" />
-<bean:define id="conclusionDate" name="<%= SessionConstants.CONCLUSION_DATE %>" scope="session" />
-<bean:define id="date" name="<%= SessionConstants.DATE %>" scope="session" />
+<bean:define id="conclusionDate" name="<%= SessionConstants.CONCLUSION_DATE %>" />
+<bean:define id="date" name="<%= SessionConstants.DATE %>" />
 <bean:define id="infoStudentCurricularPlan" name="<%= SessionConstants.INFO_STUDENT_CURRICULAR_PLAN%>" />
 <table class="apura-final" width="90%" cellspacing="0">
 	<tr>

@@ -6,7 +6,7 @@
 <%@ taglib uri="/WEB-INF/taglibs-string.tld" prefix="str" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <bean:define id="infoStudentCurricularPlan" name="<%= SessionConstants.INFO_STUDENT_CURRICULAR_PLAN%>" />
-<bean:define id="infoExecutionYear" name="<%= SessionConstants.INFO_EXECUTION_YEAR %>" scope="session" />
+<bean:define id="infoExecutionYear" name="<%= SessionConstants.INFO_EXECUTION_YEAR %>" />
 <bean:define id="infoEnrolmentStudentCurricularPlan" name="<%= SessionConstants.ENROLMENT_LIST%>" />
 <table width="90%">
 	<tr> 
@@ -17,7 +17,7 @@
 		</td>
 	<tr>
 	<logic:present name="<%= SessionConstants.INFO_BRANCH %>" >
-		<bean:define id="infoBranch" name="<%= SessionConstants.INFO_BRANCH %>" scope="session" />
+		<bean:define id="infoBranch" name="<%= SessionConstants.INFO_BRANCH %>" />
 	 		<td>Area de especialização em <b><bean:write name="infoBranch" /></b>   			
 			</td>	
 		<tr>

@@ -208,7 +208,7 @@
 		
 	<!-- ************* Certificates ************* -->
 	<definition name="df.page.chooseStudentenCurricularPlanForCertificate" extends="definition.masterDegreeAdministrativeOffice.studentOperations">
-		<put name="body" value="/posGraduacao/certificate/chooseStudentCurricularPlan.jsp"/>
+		<put name="body" value="/posGraduacao/certificate/chooseStudentCurricularPlanForFinalResult.jsp"/>
 	</definition>
 	
 	<definition name="df.page.chooseStudentenCurricularPlanForDeclaration" extends="definition.masterDegreeAdministrativeOffice.studentOperations">
