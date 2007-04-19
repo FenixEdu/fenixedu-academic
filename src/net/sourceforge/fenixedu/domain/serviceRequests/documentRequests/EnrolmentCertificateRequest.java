@@ -90,7 +90,7 @@ public class EnrolmentCertificateRequest extends EnrolmentCertificateRequest_Bas
     }
 
     public Collection<Enrolment> getEnrolmentsToDisplay() {
-	return getRegistration().getEnrolments(getExecutionYear());
+	return getRegistration().getLatestCurricularCoursesEnrolments(getExecutionYear());
     }
     
     @Override
