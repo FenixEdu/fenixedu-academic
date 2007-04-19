@@ -696,6 +696,7 @@ public class Registration extends Registration_Base {
 	return null;
     }
 
+    @Deprecated
     public static Registration readRegistrationByNumberAndDegreeTypes(Integer number,
 	    DegreeType... degreeTypes) {
 	final List<DegreeType> degreeTypesList = Arrays.asList(degreeTypes);
@@ -713,6 +714,18 @@ public class Registration extends Registration_Base {
 	for (RegistrationNumber registrationNumber : RootDomainObject.getInstance()
 		.getRegistrationNumbersSet()) {
 	    if (registrationNumber.getNumber().equals(number)) {
+		registrations.add(registrationNumber.getRegistration());
+	    }
+	}
+	return registrations;
+    }
+    
+    public static List<Registration> readByNumberAndDegreeType(Integer number, DegreeType degreeType) {
+	final List<Registration> registrations = new ArrayList<Registration>();
+	for (RegistrationNumber registrationNumber : RootDomainObject.getInstance()
+		.getRegistrationNumbersSet()) {
+	    if (registrationNumber.getNumber().equals(number)
+		    && registrationNumber.getRegistration().getDegreeType() == degreeType) {
 		registrations.add(registrationNumber.getRegistration());
 	    }
 	}
