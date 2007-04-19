@@ -127,7 +127,6 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.StudentDataByExecutionYear;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
-import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherServiceItem;
 import net.sourceforge.fenixedu.domain.vigilancy.OtherCourseVigilancy;
@@ -407,13 +406,13 @@ public class CreateTestData {
     }
 
     private static void createDegreeAdministrativeOfficeUnit(final AdministrativeOfficeType administrativeOfficeType, final int someNumber) {
-        final AdministrativeOffice administrativeOfficeDegree = new AdministrativeOffice(administrativeOfficeType, null);
+        final AdministrativeOffice administrativeOfficeDegree = new AdministrativeOffice(administrativeOfficeType);
 
 	final AdministrativeOfficeUnit unit = AdministrativeOfficeUnit.createNewAdministrativeOfficeUnit(
 		"Secretaria Academica " + someNumber, Integer.valueOf(2001 + someNumber), "SA" + someNumber, new YearMonthDay().minusMonths(1), null,
 		RootDomainObject.getInstance().getInstitutionUnit(),
 		AccountabilityType.readAccountabilityTypeByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE), null,
-		UnitClassification.ACADEMIC_SERVICES_SUPERVISION, administrativeOfficeDegree);
+		UnitClassification.ACADEMIC_SERVICES_SUPERVISION, administrativeOfficeDegree, false);
 
         final UnitServiceAgreementTemplate unitServiceAgreementTemplate = new UnitServiceAgreementTemplate(unit);
         new FixedAmountPR(EntryType.INSURANCE_FEE, EventType.INSURANCE, new DateTime().minusYears(1), null, unitServiceAgreementTemplate, Money.valueOf(2));
