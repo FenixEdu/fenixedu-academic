@@ -1168,7 +1168,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
     }
 
     protected boolean hasMoreThanOneOfTheKind(Assiduousness assiduousness, YearMonthDay date) {
-	return (assiduousness.getLeavesByType(date, date, getJustificationType())).isEmpty();
+	return !(assiduousness.getLeavesByType(date, date, getJustificationType())).isEmpty();
     }
 
 }
