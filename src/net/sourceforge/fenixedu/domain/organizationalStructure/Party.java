@@ -48,7 +48,23 @@ import org.apache.commons.lang.StringUtils;
 
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
-public abstract class Party extends Party_Base {
+abstract public class Party extends Party_Base {
+
+    static final private Comparator<Party> COMPARATOR_BY_NAME = new Comparator<Party>() {
+        public int compare(final Party o1, final Party o2) {
+	    return Collator.getInstance().compare(o1.getName(), o2.getName());
+        }
+    };
+
+    static final public Comparator<Party> COMPARATOR_BY_NAME_AND_ID = new Comparator<Party>() {
+        public int compare(final Party o1, final Party o2) {
+            final ComparatorChain comparatorChain = new ComparatorChain();
+            comparatorChain.addComparator(Party.COMPARATOR_BY_NAME);
+            comparatorChain.addComparator(Party.COMPARATOR_BY_ID);
+            
+            return comparatorChain.compare(o1, o2);
+        }
+    };
 
     public Party() {
 	super();

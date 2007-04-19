@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
@@ -87,7 +88,7 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
         openLITag(buffer);
 
         List<Unit> subUnits = new ArrayList<Unit>(getSubUnits(parentUnit, currentDate));
-        Collections.sort(subUnits, Unit.UNIT_COMPARATOR_BY_NAME);
+        Collections.sort(subUnits, Unit.COMPARATOR_BY_NAME_AND_ID);
         
         if (!subUnits.isEmpty()) {
             putImage(parentUnit, buffer, parentUnitParent);

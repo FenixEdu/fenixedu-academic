@@ -27,6 +27,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Contract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
@@ -106,7 +107,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 		buffer.append("<ul class='padding nobullet'>\r\n");
 
 		List<Unit> activeSubUnits = unit.getActiveSubUnits(currentDate, AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE);
-		Collections.sort(activeSubUnits, Unit.UNIT_COMPARATOR_BY_NAME);
+		Collections.sort(activeSubUnits, Unit.COMPARATOR_BY_NAME_AND_ID);
 
 		if (!activeSubUnits.isEmpty()) {
 
@@ -227,7 +228,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	
 	if (typeName != null) {	    
 	    if (!resultMap.containsKey(typeName)) {
-		Set<Unit> newSet = new TreeSet<Unit>(Unit.UNIT_COMPARATOR_BY_NAME);
+		Set<Unit> newSet = new TreeSet<Unit>(Unit.COMPARATOR_BY_NAME_AND_ID);
     	    	newSet.add(subUnit);
     	    	resultMap.put(typeName, newSet);
 	    } else {
@@ -296,7 +297,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	}
 
 	List<Unit> activeSubUnit = chooseUnit.getActiveSubUnits(currentDate, AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE);
-	Collections.sort(activeSubUnit, Unit.UNIT_COMPARATOR_BY_NAME);
+	Collections.sort(activeSubUnit, Unit.COMPARATOR_BY_NAME_AND_ID);
 
 	for (Unit subUnit : activeSubUnit) {
 	    getSubUnitsWithoutAggregatedUnitsToFunctionList(buffer, iExecutionYear, currentDate, subUnit);

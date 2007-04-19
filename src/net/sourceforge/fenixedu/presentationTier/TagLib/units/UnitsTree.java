@@ -14,6 +14,7 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 import org.apache.commons.lang.StringUtils;
@@ -79,7 +80,7 @@ public class UnitsTree extends TagSupport {
 		    (parentUnitParent != null) ? parentUnitParent.getIdInternal() : "").append("\" ")
 		    .append("style='display:" + (getExpanded() != null && Boolean.valueOf(getExpanded()) ? "block" : "none")).append("'>\r\n");
 
-	    Collections.sort(subUnits, Unit.UNIT_COMPARATOR_BY_NAME);
+	    Collections.sort(subUnits, Unit.COMPARATOR_BY_NAME_AND_ID);
 	}
 
 	for (Unit subUnit : subUnits) {

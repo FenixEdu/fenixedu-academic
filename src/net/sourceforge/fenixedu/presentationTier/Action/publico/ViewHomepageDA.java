@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.homepage.Homepage;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Contract;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.activity.Cooperation;
 import net.sourceforge.fenixedu.domain.research.activity.Event;
@@ -155,7 +156,7 @@ public class ViewHomepageDA extends SiteVisualizationDA {
     public ActionForward listTeachers(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 	final SortedMap<Unit, SortedSet<Homepage>> homepages = new TreeMap<Unit, SortedSet<Homepage>>(
-		Unit.UNIT_COMPARATOR_BY_NAME);
+		Unit.COMPARATOR_BY_NAME_AND_ID);
 	for (final Teacher teacher : rootDomainObject.getTeachersSet()) {
 	    final Person person = teacher.getPerson();
 	    final Employee employee = person.getEmployee();
@@ -190,7 +191,7 @@ public class ViewHomepageDA extends SiteVisualizationDA {
     public ActionForward listEmployees(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 	final SortedMap<Unit, SortedSet<Homepage>> homepages = new TreeMap<Unit, SortedSet<Homepage>>(
-		Unit.UNIT_COMPARATOR_BY_NAME);
+		Unit.COMPARATOR_BY_NAME_AND_ID);
 	for (final Employee employee : rootDomainObject.getEmployeesSet()) {
 	    final Person person = employee.getPerson();
 	    if (person != null) {

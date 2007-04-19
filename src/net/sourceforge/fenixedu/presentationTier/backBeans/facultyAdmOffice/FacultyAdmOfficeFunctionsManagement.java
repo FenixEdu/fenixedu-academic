@@ -10,6 +10,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -50,7 +51,7 @@ public class FacultyAdmOfficeFunctionsManagement extends ManagerFunctionsManagem
 
         List<Unit> subUnits = new ArrayList<Unit>();
         subUnits.addAll(parentUnit.getSubUnits());
-        Collections.sort(subUnits, Unit.UNIT_COMPARATOR_BY_NAME);
+        Collections.sort(subUnits, Unit.COMPARATOR_BY_NAME_AND_ID);
         
         for (Unit subUnit : subUnits) {
             if (subUnit.isActive(new YearMonthDay())) {

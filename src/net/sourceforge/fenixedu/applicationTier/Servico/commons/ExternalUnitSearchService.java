@@ -30,7 +30,7 @@ public class ExternalUnitSearchService extends Service implements AutoCompleteSe
         	    }
         	}
             }
-            Collections.sort(result, Unit.UNIT_COMPARATOR_BY_NAME);
+            Collections.sort(result, Unit.COMPARATOR_BY_NAME_AND_ID);
         }
         return result;
     }

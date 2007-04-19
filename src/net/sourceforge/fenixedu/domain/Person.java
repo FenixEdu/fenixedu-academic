@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.io.Serializable;
-import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -44,7 +43,6 @@ import net.sourceforge.fenixedu.domain.contacts.Phone;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressData;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
@@ -96,7 +94,6 @@ import net.sourceforge.fenixedu.util.UsernameUtils;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
-import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
@@ -107,13 +104,6 @@ import pt.utl.ist.fenix.tools.util.StringNormalizer;
 public class Person extends Person_Base {
 
     final static Comparator PERSON_SENTSMS_COMPARATOR_BY_SENT_DATE = new BeanComparator("sendDate");
-
-    public final static Comparator<Person> COMPARATOR_BY_NAME = new ComparatorChain();
-    static {
-	((ComparatorChain) COMPARATOR_BY_NAME).addComparator(new BeanComparator("name", Collator.getInstance()));
-	((ComparatorChain) COMPARATOR_BY_NAME).addComparator(DomainObject.COMPARATOR_BY_ID);
-    }
-
     static {
 	Role.PersonRole.addListener(new PersonRoleListener());
     }
@@ -1151,7 +1141,10 @@ public class Person extends Person_Base {
 
 	@Override
 	public void beforeAdd(Role newRole, Person person) {
-	    // Do nothing!!
+	    if (person != null && newRole != null && !person.hasRole(newRole.getRoleType())
+		    && !verifiesDependencies(person, newRole)) {
+		throw new DomainException("error.person.addingInvalidRole", newRole.getRoleType().toString());
+	    }
 	}
 
 	@Override
@@ -1176,60 +1169,47 @@ public class Person extends Person_Base {
 		person.removeAlias(removedRole);
 		person.updateIstUsername();
 	    }
-	}	
+	}
+
+	private static Boolean verifiesDependencies(Person person, Role role) {
+	    switch (role.getRoleType()) {
+	    case DIRECTIVE_COUNCIL:
+	    case SEMINARIES_COORDINATOR:
+	    case DEPARTMENT_MEMBER:
+	    case RESEARCHER:
+	    case COORDINATOR:
+	    case DEGREE_ADMINISTRATIVE_OFFICE:
+	    case DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER:
+	    case DEPARTMENT_CREDITS_MANAGER:
+	    case GRANT_OWNER_MANAGER:
+	    case MASTER_DEGREE_ADMINISTRATIVE_OFFICE:
+	    case TREASURY:	
+	    case CREDITS_MANAGER:
+	    case DEPARTMENT_ADMINISTRATIVE_OFFICE:
+		return person.hasRole(RoleType.EMPLOYEE);
+	    case DELEGATE:
+		return person.hasRole(RoleType.STUDENT);
+	    case GRANT_OWNER:
+	    case MESSAGING:
+	    case ALUMNI:
+		return person.hasRole(RoleType.PERSON);
+
+	    default:
+		return true;
+	    }
+	}
 
 	private void addDependencies(Role role, Person person) {
 	    switch (role.getRoleType()) {
-	    
 	    case PERSON:
 		addRoleIfNotPresent(person, RoleType.MESSAGING);
 		break;
 
 	    case TEACHER:
-		addRoleIfNotPresent(person, RoleType.PERSON);
-		addRoleIfNotPresent(person, RoleType.EMPLOYEE);
 		addRoleIfNotPresent(person, RoleType.RESEARCHER);
 		addRoleIfNotPresent(person, RoleType.DEPARTMENT_MEMBER);
 		break;
 
-	    case DELEGATE:
-		addRoleIfNotPresent(person, RoleType.STUDENT);
-		break;	   	 
-			    
-	    case OPERATOR:
-	    case GEP:
-	    case MANAGER:
-	    case WEBSITE_MANAGER:
-	    case MESSAGING:
-	    case TIME_TABLE_MANAGER:	
-	    case EMPLOYEE:			
-	    case STUDENT:		
-	    case ALUMNI:
-	    case GRANT_OWNER:
-	    case SPACE_MANAGER_SUPER_USER:
-	    case SPACE_MANAGER:
-		addRoleIfNotPresent(person, RoleType.PERSON);
-		break;
-		
-	    case DIRECTIVE_COUNCIL:
-	    case SEMINARIES_COORDINATOR:
-	    case RESEARCHER:
-	    case COORDINATOR:
-	    case DEGREE_ADMINISTRATIVE_OFFICE:
-	    case DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER:
-	    case MASTER_DEGREE_ADMINISTRATIVE_OFFICE:
-	    case DEPARTMENT_CREDITS_MANAGER:
-	    case GRANT_OWNER_MANAGER:	
-	    case TREASURY:	
-	    case CREDITS_MANAGER:
-	    case EXAM_COORDINATOR:	
-	    case DEPARTMENT_ADMINISTRATIVE_OFFICE:
-	    case MANAGEMENT_ASSIDUOUSNESS:
-	    case PROJECTS_MANAGER:
-	    case INSTITUCIONAL_PROJECTS_MANAGER:
-		addRoleIfNotPresent(person, RoleType.EMPLOYEE);
-		break;
-		
 	    default:
 		break;
 	    }
@@ -1237,7 +1217,6 @@ public class Person extends Person_Base {
 
 	private static void removeDependencies(Person person, Role removedRole) {
 	    switch (removedRole.getRoleType()) {
-	    
 	    case PERSON:
 		removeRoleIfPresent(person, RoleType.TEACHER);
 		removeRoleIfPresent(person, RoleType.EMPLOYEE);
@@ -1250,42 +1229,31 @@ public class Person extends Person_Base {
 		removeRoleIfPresent(person, RoleType.WEBSITE_MANAGER);
 		removeRoleIfPresent(person, RoleType.MESSAGING);
 		removeRoleIfPresent(person, RoleType.ALUMNI);
-		removeRoleIfPresent(person, RoleType.SPACE_MANAGER);
-		removeRoleIfPresent(person, RoleType.SPACE_MANAGER_SUPER_USER);
 		break;
 
-	    case TEACHER:				
-		removeRoleIfPresent(person, RoleType.EMPLOYEE);
+	    case TEACHER:
+		removeRoleIfPresent(person, RoleType.DIRECTIVE_COUNCIL);
+		removeRoleIfPresent(person, RoleType.SEMINARIES_COORDINATOR);
 		removeRoleIfPresent(person, RoleType.RESEARCHER);
 		removeRoleIfPresent(person, RoleType.DEPARTMENT_MEMBER);
 		break;
 
 	    case EMPLOYEE:
-		removeRoleIfPresent(person, RoleType.SEMINARIES_COORDINATOR);
-		removeRoleIfPresent(person, RoleType.RESEARCHER);
-		removeRoleIfPresent(person, RoleType.GRANT_OWNER_MANAGER);
-		removeRoleIfPresent(person, RoleType.SEMINARIES_COORDINATOR);
-		removeRoleIfPresent(person, RoleType.DIRECTIVE_COUNCIL);
 		removeRoleIfPresent(person, RoleType.COORDINATOR);
 		removeRoleIfPresent(person, RoleType.CREDITS_MANAGER);
-		removeRoleIfPresent(person, RoleType.TREASURY);
 		removeRoleIfPresent(person, RoleType.DEGREE_ADMINISTRATIVE_OFFICE);
-		removeRoleIfPresent(person, RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER);		
-		removeRoleIfPresent(person, RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);		
+		removeRoleIfPresent(person, RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER);
+		removeRoleIfPresent(person, RoleType.GRANT_OWNER_MANAGER);
+		removeRoleIfPresent(person, RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
+		removeRoleIfPresent(person, RoleType.TREASURY);
 		removeRoleIfPresent(person, RoleType.DEPARTMENT_CREDITS_MANAGER);
 		removeRoleIfPresent(person, RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE);
-		removeRoleIfPresent(person, RoleType.MANAGEMENT_ASSIDUOUSNESS);
-		removeRoleIfPresent(person, RoleType.PROJECTS_MANAGER);
-		removeRoleIfPresent(person, RoleType.INSTITUCIONAL_PROJECTS_MANAGER);			 
-		break;	
-		
+		break;
+
 	    case STUDENT:
 		removeRoleIfPresent(person, RoleType.DELEGATE);
 		break;
-		
-	    default:
-		break;
-	    }	    	
+	    }
 	}
 
 	private static void removeRoleIfPresent(Person person, RoleType roleType) {
@@ -2039,7 +2007,7 @@ public class Person extends Person_Base {
 	    final String[] documentIdNumberValues = documentIdNumber == null ? null : StringNormalizer
 		    .normalize(documentIdNumber).toLowerCase().split("\\p{Space}+");
 
-	    final SortedSet<Person> people = new TreeSet<Person>(COMPARATOR_BY_NAME);
+	    final SortedSet<Person> people = new TreeSet<Person>(Party.COMPARATOR_BY_NAME_AND_ID);
 	    for (final Party party : RootDomainObject.getInstance().getPartysSet()) {
 		if (party.isPerson()) {
 		    final Person person = (Person) party;
@@ -2438,13 +2406,4 @@ public class Person extends Person_Base {
     	Collections.sort(participants, ThesisEvaluationParticipant.COMPARATOR_BY_STUDENT_NUMBER);
     	return participants;
     }
-
-    public Set<Proposal> findFinalDegreeWorkProposals() {
-	final Set<Proposal> proposals = new HashSet<Proposal>();
-	proposals.addAll(getAssociatedProposalsByCoorientatorSet());
-	proposals.addAll(getAssociatedProposalsByOrientatorSet());
-	return proposals;
-    }
-
-
 }

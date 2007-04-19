@@ -30,6 +30,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTyp
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitClassification;
@@ -174,7 +175,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
 	if (!subUnits.isEmpty()) {
 	    openULTag(parentUnit, buffer, parentUnitParent);
-	    Collections.sort(subUnits, Unit.UNIT_COMPARATOR_BY_NAME);
+	    Collections.sort(subUnits, Unit.COMPARATOR_BY_NAME_AND_ID);
 	}
 
 	for (Unit subUnit : subUnits) {
@@ -191,7 +192,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     private List<Unit> getSubUnits(boolean active, Unit unit, YearMonthDay currentDate) {
 	List<Unit> subUnits = (active) ? unit.getActiveSubUnits(currentDate) : unit.getInactiveSubUnits(currentDate);
 	if(!subUnits.isEmpty()) {
-	    Collections.sort(subUnits, Unit.UNIT_COMPARATOR_BY_NAME);
+	    Collections.sort(subUnits, Unit.COMPARATOR_BY_NAME_AND_ID);
 	}
 	return subUnits;
     }
@@ -199,7 +200,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     private List<Unit> getAllSubUnits(boolean active, Unit unit, YearMonthDay currentDate) {
 	List<Unit> subUnits = (active) ? unit.getAllActiveSubUnits(currentDate) : unit.getAllInactiveSubUnits(currentDate);
 	if(!subUnits.isEmpty()) {
-	    Collections.sort(subUnits, Unit.UNIT_COMPARATOR_BY_NAME);
+	    Collections.sort(subUnits, Unit.COMPARATOR_BY_NAME_AND_ID);
 	}
 	return subUnits;
     }
@@ -219,7 +220,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	YearMonthDay currentDate = new YearMonthDay();
 
 	if (getViewExternalUnits()) {
-	    Collections.sort(allUnitsWithoutParent, Unit.UNIT_COMPARATOR_BY_NAME);
+	    Collections.sort(allUnitsWithoutParent, Unit.COMPARATOR_BY_NAME_AND_ID);
 	} else {
 	    allUnitsWithoutParent.remove(UnitUtils.readExternalInstitutionUnit());
 	}
@@ -259,7 +260,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
 	if (!subUnits.isEmpty()) {
 	    openULTag(parentUnit, buffer, parentUnitParent);
-	    Collections.sort(subUnits, Unit.UNIT_COMPARATOR_BY_NAME);
+	    Collections.sort(subUnits, Unit.COMPARATOR_BY_NAME_AND_ID);
 	}
 
 	for (Unit subUnit : subUnits) {
@@ -308,7 +309,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
 	if (!subUnits.isEmpty()) {
 	    openULTag(parentUnit, buffer, parentUnitParent);
-	    Collections.sort(subUnits, Unit.UNIT_COMPARATOR_BY_NAME);
+	    Collections.sort(subUnits, Unit.COMPARATOR_BY_NAME_AND_ID);
 	}
 
 	for (Unit subUnit : subUnits) {

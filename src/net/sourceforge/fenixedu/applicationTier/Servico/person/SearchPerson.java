@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -213,7 +214,7 @@ public class SearchPerson extends Service {
 	}
 
 	allValidPersons = (List<Person>) CollectionUtils.select(persons, predicate);
-	Collections.sort(allValidPersons, Person.COMPARATOR_BY_NAME);
+	Collections.sort(allValidPersons, Person.COMPARATOR_BY_NAME_AND_ID);
 	return new CollectionPager<Person>(allValidPersons, 25);
     }
 

@@ -4,10 +4,8 @@
  */
 package net.sourceforge.fenixedu.domain.organizationalStructure;
 
-import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -20,7 +18,6 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.ExternalCurricularCourse;
@@ -39,21 +36,12 @@ import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.util.ContractType;
 
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
 
 public class Unit extends Unit_Base {
 
-    private final static ResourceBundle applicationResourcesBundle;
-    public final static Comparator<Unit> UNIT_COMPARATOR_BY_NAME = new ComparatorChain();
-    static {
-	((ComparatorChain) UNIT_COMPARATOR_BY_NAME).addComparator(new BeanComparator("name", Collator.getInstance()));
-	((ComparatorChain) UNIT_COMPARATOR_BY_NAME).addComparator(DomainObject.COMPARATOR_BY_ID);
-	
-	applicationResourcesBundle = ResourceBundle.getBundle("resources.ApplicationResources", new Locale("pt"));
-    }
+    static final private ResourceBundle applicationResourcesBundle = ResourceBundle.getBundle("resources.ApplicationResources", new Locale("pt"));
 
     protected Unit() {	
 	super();	
@@ -870,7 +858,7 @@ public class Unit extends Unit_Base {
     }
     
     public SortedSet<Unit> getSortedExternalChilds() {
-	final SortedSet<Unit> result = new TreeSet<Unit>(new BeanComparator("name"));	
+	final SortedSet<Unit> result = new TreeSet<Unit>(Unit.COMPARATOR_BY_NAME_AND_ID);	
 	for (final Unit unit : getSubUnits()) {
 	    if (!unit.isInternal()) {
 		result.add(unit);

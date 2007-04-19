@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.space.Space.SpaceAccessGroupType;
@@ -88,14 +89,14 @@ public class SpaceAccessGroupsManagement extends Service {
     }
 
     private Set<Person> addPersonToAccessGroup(Person person, Set<Person> elements) {
-	Set<Person> newList = new TreeSet<Person>(Person.COMPARATOR_BY_NAME);
+	Set<Person> newList = new TreeSet<Person>(Person.COMPARATOR_BY_NAME_AND_ID);
 	newList.addAll(elements);
 	newList.add(person);
 	return newList;
     }
 
     private Set<Person> removePersonFromAccessGroup(Person person, Set<Person> elements) {
-	Set<Person> newList = new TreeSet<Person>(Person.COMPARATOR_BY_NAME);
+	Set<Person> newList = new TreeSet<Person>(Person.COMPARATOR_BY_NAME_AND_ID);
 	newList.addAll(elements);
 	newList.remove(person);
 	return newList;

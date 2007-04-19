@@ -77,7 +77,7 @@ public class DepartmentUnit extends DepartmentUnit_Base {
     }
     
     public List<ScientificAreaUnit> getScientificAreaUnits() {
-	final SortedSet<ScientificAreaUnit> result = new TreeSet<ScientificAreaUnit>(Unit.UNIT_COMPARATOR_BY_NAME);
+	final SortedSet<ScientificAreaUnit> result = new TreeSet<ScientificAreaUnit>(ScientificAreaUnit.COMPARATOR_BY_NAME_AND_ID);
 	for (Unit unit : getSubUnits()) {
 	    if (unit.isScientificAreaUnit()) {
 		result.add((ScientificAreaUnit) unit);

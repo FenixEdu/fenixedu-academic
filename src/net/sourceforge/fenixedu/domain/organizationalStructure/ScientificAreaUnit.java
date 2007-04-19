@@ -84,7 +84,7 @@ public class ScientificAreaUnit extends ScientificAreaUnit_Base {
     }
     
     public List<CompetenceCourseGroupUnit> getCompetenceCourseGroupUnits() {
-	final SortedSet<CompetenceCourseGroupUnit> result = new TreeSet<CompetenceCourseGroupUnit>(Unit.UNIT_COMPARATOR_BY_NAME);
+	final SortedSet<CompetenceCourseGroupUnit> result = new TreeSet<CompetenceCourseGroupUnit>(CompetenceCourseGroupUnit.COMPARATOR_BY_NAME_AND_ID);
 	for (Unit unit : getSubUnits()) {
 	    if (unit.isCompetenceCourseGroupUnit()) {
 		result.add((CompetenceCourseGroupUnit) unit);

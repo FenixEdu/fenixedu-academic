@@ -35,6 +35,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -497,7 +498,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 	openLITag(buffer);
 
 	List<Unit> subUnits = new ArrayList<Unit>(getSubUnits(parentUnit, currentDate));
-	Collections.sort(subUnits, Unit.UNIT_COMPARATOR_BY_NAME);
+	Collections.sort(subUnits, Unit.COMPARATOR_BY_NAME_AND_ID);
 
 	if (!subUnits.isEmpty()) {
 	    putImage(parentUnit, buffer, parentUnitParent);
