@@ -353,7 +353,7 @@
 					<textElement lineSpacing="1_1_2">
 						<font pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["concluiu o curso " + $P{documentRequest}.getRegistration().getDegreeType().getLocalizedName().toUpperCase() + " em " + $P{documentRequest}.getRegistration().getDegree().getName().toUpperCase() + " deste Instituto a " + $P{degreeFinalizationDate} + $P{degreeFinalizationGrade} + ", pelo que tem direito ao grau académico de RAIOS, tendo-lhe sido passada a respectiva carta."]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["concluiu o curso " + $P{documentRequest}.getRegistration().getDegreeType().getLocalizedName().toUpperCase() + " em " + $P{documentRequest}.getRegistration().getDegree().getName().toUpperCase() + " deste Instituto a " + $P{degreeFinalizationDate} + $P{degreeFinalizationGrade} + ", pelo que tem direito ao grau académico de " + $P{documentRequest}.getRegistration().getDegreeType().getSeniorTitle() + ", tendo-lhe sido passada a respectiva carta."]]></textFieldExpression>
 				</textField>
 			</band>
 		</detail>
