@@ -41,6 +41,46 @@
 	<parameter name="enrolmentsInfo" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="employeeLocation" isForPrompting="false" class="java.lang.String"/>
 
+
+		<group  name="endLine" >
+			<groupExpression><![CDATA[]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="91"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="65"
+						y="22"
+						width="468"
+						height="22"
+						key="textField-30"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement lineSpacing="1_1_2">
+						<font pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Secretaria dos Serviços Académicos do Instituto Superior Técnico, em " + $P{employeeLocation} + ", " + $P{day}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="65"
+						y="44"
+						width="468"
+						height="41"
+						key="staticText-16"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement lineSpacing="1_1_2">
+						<font pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
+					</textElement>
+				<text><![CDATA[                          A Técnica Superior]]></text>
+				</staticText>
+			</band>
+			</groupFooter>
+		</group>
 		<background>
 			<band height="0"  isSplitAllowed="true" >
 			</band>
@@ -219,7 +259,7 @@
 			</band>
 		</columnHeader>
 		<detail>
-			<band height="305"  isSplitAllowed="true" >
+			<band height="308"  isSplitAllowed="true" >
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="65"
@@ -453,44 +493,7 @@
 			</band>
 		</pageFooter>
 		<summary>
-			<band height="65"  isSplitAllowed="true" >
-				<break>
-					<reportElement
-						x="0"
-						y="0"
-						width="595"
-						height="0"
-						key="element-1"
-						isPrintWhenDetailOverflows="true"/>
-				</break>
-				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="68"
-						y="1"
-						width="468"
-						height="22"
-						key="textField-7"
-						positionType="Float"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
-					<textElement lineSpacing="1_1_2">
-						<font pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
-					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["Secretaria dos Serviços Académicos do Instituto Superior Técnico, em " + $P{employeeLocation} + ", " + $P{day}]]></textFieldExpression>
-				</textField>
-				<staticText>
-					<reportElement
-						x="68"
-						y="24"
-						width="468"
-						height="41"
-						key="staticText-3"
-						positionType="Float"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
-					<textElement lineSpacing="1_1_2">
-						<font pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
-					</textElement>
-				<text><![CDATA[                          A Técnica Superior]]></text>
-				</staticText>
+			<band height="0"  isSplitAllowed="true" >
 			</band>
 		</summary>
 </jasperReport>
