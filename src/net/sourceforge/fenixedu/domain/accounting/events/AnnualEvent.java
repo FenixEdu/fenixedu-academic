@@ -49,6 +49,10 @@ public abstract class AnnualEvent extends AnnualEvent_Base {
 	return getServiceAgreementTemplate().findPostingRuleBy(getEventType(), getStartDate(),
 		getEndDate());
     }
+    
+    public boolean isFor(final ExecutionYear executionYear) {
+        return super.getExecutionYear() == executionYear;
+    }
 
     abstract protected ServiceAgreementTemplate getServiceAgreementTemplate();
 
