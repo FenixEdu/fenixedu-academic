@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
-import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
@@ -223,9 +222,8 @@ public abstract class Event extends Event_Base {
     }
 
     @Override
+    @Checked("RolePredicates.MANAGER_PREDICATE")
     public void setEventStateDate(DateTime eventStateDate) {
-	// throw new
-	// DomainException("error.accounting.Event.cannot.modify.eventStateDate");
 	super.setEventStateDate(eventStateDate);
     }
 
