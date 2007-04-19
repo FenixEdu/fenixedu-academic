@@ -149,11 +149,18 @@ public enum DegreeType {
     }
 
     public String getLocalizedName() {
-	return ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale())
-		.getString(name());
+	return ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale()).getString(getQualifiedName());
     }
 
-    public static List<DegreeType> getBolonhaDegreeTypes() {
+    public String getQualifiedName() {
+	return DegreeType.class.getSimpleName() + "." + name();
+    }
+
+    public String getSeniorTitle() {
+	return ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale()).getString(getQualifiedName() + ".senior.title");
+    }
+
+   public static List<DegreeType> getBolonhaDegreeTypes() {
 	final List<DegreeType> result = new ArrayList<DegreeType>();
 
 	for (final DegreeType degreeType : values()) {
@@ -164,5 +171,5 @@ public enum DegreeType {
 
 	return result;
     }
-
-}
+    
+ }
