@@ -47,43 +47,51 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     private static final Logger logger = Logger.getLogger(Enrolment.class);
     
-    static public final Comparator<Enrolment> COMPARATOR_BY_EXECUTION_PERIOD = new Comparator<Enrolment>() {
-        public int compare(Enrolment e1, Enrolment e2) {
-	    int result = e1.getExecutionPeriod().compareTo(e2.getExecutionPeriod());
-	    return (result == 0) ? e1.getIdInternal().compareTo(e2.getIdInternal()) : result;
+    static final private Comparator<Enrolment> COMPARATOR_BY_EXECUTION_PERIOD = new Comparator<Enrolment>() {
+        public int compare(Enrolment o1, Enrolment o2) {
+	    return o1.getExecutionPeriod().compareTo(o2.getExecutionPeriod());
         }
     };
 
-    static public final Comparator<Enrolment> REVERSE_COMPARATOR_BY_EXECUTION_PERIOD = new Comparator<Enrolment>() {
-	public int compare(Enrolment e1, Enrolment e2) {
-	    return -COMPARATOR_BY_EXECUTION_PERIOD.compare(e1, e2);
+    static final private Comparator<Enrolment> COMPARATOR_BY_EXECUTION_YEAR = new Comparator<Enrolment>() {
+        public int compare(Enrolment o1, Enrolment o2) {
+            return o1.getExecutionYear().compareTo(o2.getExecutionYear());
+        }
+    };
+    
+    static final public Comparator<Enrolment> COMPARATOR_BY_EXECUTION_PERIOD_AND_ID = new Comparator<Enrolment>() {
+        public int compare(Enrolment o1, Enrolment o2) {
+            final ComparatorChain comparatorChain = new ComparatorChain();
+            comparatorChain.addComparator(Enrolment.COMPARATOR_BY_EXECUTION_PERIOD);
+            comparatorChain.addComparator(DomainObject.COMPARATOR_BY_ID);
+            
+            return comparatorChain.compare(o1, o2);
+        }
+    };
+
+    static final public Comparator<Enrolment> REVERSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_ID = new Comparator<Enrolment>() {
+	public int compare(Enrolment o1, Enrolment o2) {
+	    return -COMPARATOR_BY_EXECUTION_PERIOD_AND_ID.compare(o1, o2);
 	}
     };
     
-    static final public Comparator<Enrolment> COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME = new Comparator<Enrolment>() {
-        public int compare(Enrolment e1, Enrolment e2) {
+    static final public Comparator<Enrolment> COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME_AND_ID = new Comparator<Enrolment>() {
+        public int compare(Enrolment o1, Enrolment o2) {
             final ComparatorChain comparatorChain = new ComparatorChain();
             comparatorChain.addComparator(Enrolment.COMPARATOR_BY_EXECUTION_PERIOD);
-            comparatorChain.addComparator(CurriculumModule.COMPARATOR_BY_NAME);
+            comparatorChain.addComparator(CurriculumModule.COMPARATOR_BY_NAME_AND_ID);
             
-            return comparatorChain.compare(e1, e2);
+            return comparatorChain.compare(o1, o2);
         }
     };
     
-    static final public Comparator<Enrolment> COMPARATOR_BY_EXECUTION_YEAR = new Comparator<Enrolment>() {
-        public int compare(Enrolment e1, Enrolment e2) {
-	    int result = e1.getExecutionYear().compareTo(e2.getExecutionYear());
-	    return (result == 0) ? e1.getIdInternal().compareTo(e2.getIdInternal()) : result;
-        }
-    };
-    
-    static final public Comparator<Enrolment> COMPARATOR_BY_EXECUTION_YEAR_AND_NAME = new Comparator<Enrolment>() {
-        public int compare(Enrolment e1, Enrolment e2) {
+    static final public Comparator<Enrolment> COMPARATOR_BY_EXECUTION_YEAR_AND_NAME_AND_ID = new Comparator<Enrolment>() {
+        public int compare(Enrolment o1, Enrolment o2) {
             final ComparatorChain comparatorChain = new ComparatorChain();
             comparatorChain.addComparator(Enrolment.COMPARATOR_BY_EXECUTION_YEAR);
-            comparatorChain.addComparator(CurriculumModule.COMPARATOR_BY_NAME);
+            comparatorChain.addComparator(CurriculumModule.COMPARATOR_BY_NAME_AND_ID);
             
-            return comparatorChain.compare(e1, e2);
+            return comparatorChain.compare(o1, o2);
         }
     };
     

@@ -343,7 +343,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     }
 
     public Set<CurriculumLine> getCurriculumLines() {
-	Set<CurriculumLine> result = new TreeSet<CurriculumLine>(CurriculumModule.COMPARATOR_BY_NAME);
+	Set<CurriculumLine> result = new TreeSet<CurriculumLine>(CurriculumModule.COMPARATOR_BY_NAME_AND_ID);
 
 	for (final CurriculumModule curriculumModule : getCurriculumModules()) {
 	    if (curriculumModule.isLeaf()) {
@@ -355,7 +355,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     }
 
     public Set<CurriculumGroup> getCurriculumGroups() {
-	Set<CurriculumGroup> result = new TreeSet<CurriculumGroup>(CurriculumModule.COMPARATOR_BY_NAME);
+	Set<CurriculumGroup> result = new TreeSet<CurriculumGroup>(CurriculumModule.COMPARATOR_BY_NAME_AND_ID);
 
 	for (final CurriculumModule curriculumModule : getCurriculumModules()) {
 	    if (!curriculumModule.isLeaf()) {

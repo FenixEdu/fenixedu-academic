@@ -1390,7 +1390,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 	}
 
     private String findGradeForCurricularCourse(final Registration registration, final CurricularCourse curricularCourse) {
-    	final SortedSet<Enrolment> enrolments = new TreeSet<Enrolment>(Enrolment.REVERSE_COMPARATOR_BY_EXECUTION_PERIOD);
+    	final SortedSet<Enrolment> enrolments = new TreeSet<Enrolment>(Enrolment.REVERSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_ID);
     	for (final StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
     		for (final Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
     			final CurricularCourse enrolmentCurricularCourse = enrolment.getCurricularCourse();

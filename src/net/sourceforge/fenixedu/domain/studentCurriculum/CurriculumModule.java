@@ -8,6 +8,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -21,10 +22,10 @@ import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public abstract class CurriculumModule extends CurriculumModule_Base {
 
-    static public final Comparator<CurriculumModule> COMPARATOR_BY_NAME = new Comparator<CurriculumModule>() {
+    static final public Comparator<CurriculumModule> COMPARATOR_BY_NAME_AND_ID = new Comparator<CurriculumModule>() {
         public int compare(CurriculumModule o1, CurriculumModule o2) {
 	    int result = o1.getName().compareTo(o2.getName());
-	    return (result == 0) ? o1.getIdInternal().compareTo(o2.getIdInternal()) : result;
+	    return (result == 0) ? DomainObject.COMPARATOR_BY_ID.compare(o1, o2) : result;
         }
     };
 

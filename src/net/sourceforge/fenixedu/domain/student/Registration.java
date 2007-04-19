@@ -538,7 +538,7 @@ public class Registration extends Registration_Base {
     public DateTime getLastApprovedEnrolmentEvaluationDate() {
 	final StudentCurricularPlan studentCurricularPlan = getLastStudentCurricularPlanExceptPast();
 	final SortedSet<Enrolment> enrolments = new TreeSet<Enrolment>(
-		Enrolment.COMPARATOR_BY_EXECUTION_PERIOD);
+		Enrolment.COMPARATOR_BY_EXECUTION_PERIOD_AND_ID);
 	enrolments.addAll(studentCurricularPlan.getAprovedEnrolments());
 
 	final Iterator<Enrolment> iterator = enrolments.tailSet(enrolments.last()).iterator();

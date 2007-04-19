@@ -11,7 +11,7 @@ public class EnrolmentSet extends TreeSet<Enrolment> {
     private final ExecutionYear executionYear;
 
     public EnrolmentSet(final ExecutionYear executionYear) {
-	super(Enrolment.REVERSE_COMPARATOR_BY_EXECUTION_PERIOD);
+	super(Enrolment.REVERSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_ID);
 	this.executionYear = executionYear;
     }
 

@@ -117,7 +117,7 @@ public abstract class NoCourseGroupCurriculumGroup extends NoCourseGroupCurricul
     @Override
     protected Integer searchChildOrderForChild(final CurriculumGroup child, final ExecutionPeriod executionPeriod) {
 	final List<CurriculumModule> result = new ArrayList<CurriculumModule>(getCurriculumModulesSet());
-	Collections.sort(result, CurriculumModule.COMPARATOR_BY_NAME);
+	Collections.sort(result, CurriculumModule.COMPARATOR_BY_NAME_AND_ID);
         return result.indexOf(child);
     }
     

@@ -681,10 +681,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	    emptyCell.setClasses(getGroupNameClasses());
 	    emptyCell.setColspan(RENDERED_CELLS_UNTIL_GRADE - 3);
 	    
-	    final ComparatorChain comparatorChain = new ComparatorChain();
-	    comparatorChain.addComparator(CurriculumLine.COMPARATOR_BY_NAME);
-
-	    final Set<CurriculumLine> sortedCurriculumLines = new TreeSet<CurriculumLine>(comparatorChain);
+	    final Set<CurriculumLine> sortedCurriculumLines = new TreeSet<CurriculumLine>(CurriculumLine.COMPARATOR_BY_NAME_AND_ID);
 	    sortedCurriculumLines.addAll(studentCurricularPlan.getEnrolmentsByExecutionPeriod(executionPeriod));
 	    
 	    for (final CurriculumLine curriculumLine : sortedCurriculumLines) {
@@ -781,11 +778,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	    executionPeriodNameCell.setColspan(6);
 	    executionPeriodNameCell.setBody(new HtmlText(yearSemester.getLeft() + " Ano, " + yearSemester.getRight() + " Semestre"));
 
-	    final ComparatorChain comparatorChain = new ComparatorChain();
-	    comparatorChain.addComparator(CurriculumLine.COMPARATOR_BY_NAME);
-	    comparatorChain.addComparator(new BeanComparator("idInternal"));
-	    
-	    final Set<CurriculumLine> sortedCurriculumLines = new TreeSet<CurriculumLine>(comparatorChain);
+	    final Set<CurriculumLine> sortedCurriculumLines = new TreeSet<CurriculumLine>(CurriculumLine.COMPARATOR_BY_NAME_AND_ID);
 	    sortedCurriculumLines.addAll(enrolmentsByCurricularPeriod);
 	    
 	    for (final CurriculumLine curriculumLine : sortedCurriculumLines) {
