@@ -60,6 +60,16 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	}
     };
     
+    static final public Comparator<Enrolment> COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME = new Comparator<Enrolment>() {
+        public int compare(Enrolment e1, Enrolment e2) {
+            final ComparatorChain comparatorChain = new ComparatorChain();
+            comparatorChain.addComparator(Enrolment.COMPARATOR_BY_EXECUTION_PERIOD);
+            comparatorChain.addComparator(CurriculumModule.COMPARATOR_BY_NAME);
+            
+            return comparatorChain.compare(e1, e2);
+        }
+    };
+    
     static final public Comparator<Enrolment> COMPARATOR_BY_EXECUTION_YEAR = new Comparator<Enrolment>() {
         public int compare(Enrolment e1, Enrolment e2) {
 	    int result = e1.getExecutionYear().compareTo(e2.getExecutionYear());
@@ -67,7 +77,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         }
     };
     
-    static final public Comparator<Enrolment> COMPARATOR_BY_NAME_AND_EXECUTION_YEAR = new Comparator<Enrolment>() {
+    static final public Comparator<Enrolment> COMPARATOR_BY_EXECUTION_YEAR_AND_NAME = new Comparator<Enrolment>() {
         public int compare(Enrolment e1, Enrolment e2) {
             final ComparatorChain comparatorChain = new ComparatorChain();
             comparatorChain.addComparator(Enrolment.COMPARATOR_BY_EXECUTION_YEAR);
