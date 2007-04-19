@@ -19,7 +19,7 @@ public class DomainObjectActionLog extends DomainObjectActionLog_Base {
     static {
 	((ComparatorChain) COMPARATOR_BY_INSTANT).addComparator(new ReverseComparator(
 		new BeanComparator("instant")));
-	((ComparatorChain) COMPARATOR_BY_INSTANT).addComparator(new BeanComparator("idInternal"));
+	((ComparatorChain) COMPARATOR_BY_INSTANT).addComparator(DomainObject.COMPARATOR_BY_ID);
     }
 
     public DomainObjectActionLog(Person person, DomainObject domainObject, String action,

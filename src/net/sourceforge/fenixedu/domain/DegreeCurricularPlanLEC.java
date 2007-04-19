@@ -5,7 +5,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.LECBolonhaEnrolmentRule;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.LECEvenAndOddNumbersEnrollmentRule;
-import net.sourceforge.fenixedu.domain.degree.enrollment.rules.LECOptionalPairGroupsEnrollmentRule;
 
 /**
  * @author David Santos in Jun 25, 2004

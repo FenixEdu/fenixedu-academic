@@ -40,7 +40,7 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
 		((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(new BeanComparator("dayDateYearMonthDay"));
 		((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(new BeanComparator(
 				"beginningDateHourMinuteSecond"));
-		((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(new BeanComparator("idInternal"));
+		((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(DomainObject.COMPARATOR_BY_ID);
 	}
 
 	public static List<WrittenEvaluation> readWrittenEvaluations() {

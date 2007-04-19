@@ -111,7 +111,7 @@ public class Person extends Person_Base {
     static {
 	((ComparatorChain) COMPARATOR_BY_NAME).addComparator(new BeanComparator("name", Collator
 		.getInstance()));
-	((ComparatorChain) COMPARATOR_BY_NAME).addComparator(new BeanComparator("idInternal"));
+	((ComparatorChain) COMPARATOR_BY_NAME).addComparator(DomainObject.COMPARATOR_BY_ID);
     }
 
     static {

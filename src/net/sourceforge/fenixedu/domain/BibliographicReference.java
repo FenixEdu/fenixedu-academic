@@ -19,7 +19,7 @@ public class BibliographicReference extends BibliographicReference_Base {
                 chain.addComparator(new BeanComparator("referenceOrder", new NullComparator(true)));
                 chain.addComparator(new BeanComparator("title"));
                 chain.addComparator(new BeanComparator("year"));
-                chain.addComparator(new BeanComparator("idInternal"));
+                chain.addComparator(DomainObject.COMPARATOR_BY_ID);
             }
             
             return chain.compare(one, other);

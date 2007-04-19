@@ -31,7 +31,7 @@ public class Summary extends Summary_Base {
     static {
 	((ComparatorChain) COMPARATOR_BY_DATE_AND_HOUR).addComparator(new BeanComparator("summaryDateYearMonthDay"), true);
 	((ComparatorChain) COMPARATOR_BY_DATE_AND_HOUR).addComparator(new BeanComparator("summaryHourHourMinuteSecond"), true);
-	((ComparatorChain) COMPARATOR_BY_DATE_AND_HOUR).addComparator(new BeanComparator("idInternal"));
+	((ComparatorChain) COMPARATOR_BY_DATE_AND_HOUR).addComparator(DomainObject.COMPARATOR_BY_ID);
     }
 
     public Summary(MultiLanguageString title, MultiLanguageString summaryText, Integer studentsNumber,

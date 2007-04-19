@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.organizationalStructure;
 import java.util.Collection;
 import java.util.Comparator;
 
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.LoginPeriod;
 import net.sourceforge.fenixedu.domain.Person;
@@ -22,7 +23,7 @@ public class Invitation extends Invitation_Base {
     public static final Comparator<Invitation> COMPARATOR_BY_BEGIN_DATE = new ComparatorChain();
     static {
 	((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(new ReverseComparator(new BeanComparator("beginDate")));
-	((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(new BeanComparator("idInternal"));
+	((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(DomainObject.COMPARATOR_BY_ID);
     }
 
     public static AccountabilityType getInvitationAccountabilityType() {

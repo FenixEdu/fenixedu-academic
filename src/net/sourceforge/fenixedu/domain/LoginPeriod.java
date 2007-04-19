@@ -13,7 +13,7 @@ public class LoginPeriod extends LoginPeriod_Base {
     public static final Comparator<LoginPeriod> COMPARATOR_BY_BEGIN_DATE = new ComparatorChain();
     static {
 	((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(new BeanComparator("beginDate"), true);
-	((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(new BeanComparator("idInternal"));
+	((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(DomainObject.COMPARATOR_BY_ID);
     }
     
     public LoginPeriod(YearMonthDay begin, YearMonthDay end, Login login) {

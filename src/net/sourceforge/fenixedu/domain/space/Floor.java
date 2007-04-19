@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.space;
 import java.io.Serializable;
 import java.util.Comparator;
 
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.injectionCode.Checked;
@@ -19,7 +20,7 @@ public class Floor extends Floor_Base {
     static {
 	((ComparatorChain) FLOOR_COMPARATOR_BY_LEVEL).addComparator(new ReverseComparator(
 		new BeanComparator("spaceInformation.level")));
-	((ComparatorChain) FLOOR_COMPARATOR_BY_LEVEL).addComparator(new BeanComparator("idInternal"));
+	((ComparatorChain) FLOOR_COMPARATOR_BY_LEVEL).addComparator(DomainObject.COMPARATOR_BY_ID);
     }
 
     public static abstract class FloorFactory implements Serializable, FactoryExecutor {

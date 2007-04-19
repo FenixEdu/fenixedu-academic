@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.space;
 
 import java.util.Comparator;
 
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -18,7 +19,7 @@ public class UnitSpaceOccupation extends UnitSpaceOccupation_Base {
     static {
 	((ComparatorChain) COMPARATOR_BY_OCCUPATION_INTERVAL_AND_UNIT).addComparator(new BeanComparator("begin"));
 	((ComparatorChain) COMPARATOR_BY_OCCUPATION_INTERVAL_AND_UNIT).addComparator(new BeanComparator("unit.name"));
-	((ComparatorChain) COMPARATOR_BY_OCCUPATION_INTERVAL_AND_UNIT).addComparator(new BeanComparator("idInternal"));
+	((ComparatorChain) COMPARATOR_BY_OCCUPATION_INTERVAL_AND_UNIT).addComparator(DomainObject.COMPARATOR_BY_ID);
     }
 
     @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageUnitSpaceOccupations")

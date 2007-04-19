@@ -22,10 +22,10 @@ public class PunctualRoomsOccupationRequest extends PunctualRoomsOccupationReque
     public static final Comparator<PunctualRoomsOccupationRequest> COMPARATOR_BY_MORE_RECENT_COMMENT_INSTANT = new ComparatorChain();
     static {	
 	((ComparatorChain) COMPARATOR_BY_MORE_RECENT_COMMENT_INSTANT).addComparator(new BeanComparator("moreRecentCommentInstant"), true);
-	((ComparatorChain) COMPARATOR_BY_MORE_RECENT_COMMENT_INSTANT).addComparator(new BeanComparator("idInternal"));
+	((ComparatorChain) COMPARATOR_BY_MORE_RECENT_COMMENT_INSTANT).addComparator(DomainObject.COMPARATOR_BY_ID);
 	
 	((ComparatorChain) COMPARATOR_BY_INSTANT).addComparator(new BeanComparator("instant"), true);	
-	((ComparatorChain) COMPARATOR_BY_INSTANT).addComparator(new BeanComparator("idInternal"));
+	((ComparatorChain) COMPARATOR_BY_INSTANT).addComparator(DomainObject.COMPARATOR_BY_ID);
     }
     
     public PunctualRoomsOccupationRequest(Person requestor, MultiLanguageString subject, MultiLanguageString description) {

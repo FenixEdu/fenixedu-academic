@@ -31,7 +31,7 @@ public class Item extends Item_Base {
                 
                 chain.addComparator(new BeanComparator("itemOrder"));
                 chain.addComparator(new BeanComparator("name"));
-                chain.addComparator(new BeanComparator("idInternal"));
+                chain.addComparator(DomainObject.COMPARATOR_BY_ID);
             }
             
             return chain.compare(one, other);

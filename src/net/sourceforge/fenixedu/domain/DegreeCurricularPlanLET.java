@@ -6,9 +6,7 @@ package net.sourceforge.fenixedu.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.degree.enrollment.rules.AMIIICDIIRule;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.LETBolonhaEnrolmentRule;
-import net.sourceforge.fenixedu.domain.degree.enrollment.rules.LETOptionalExclusiveEnrollmentRule;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.MaximumNumberEctsCreditsEnrolmentRule;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.PrecedencesEnrollmentRule;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.PreviousYearsCurricularCourseEnrollmentRule;

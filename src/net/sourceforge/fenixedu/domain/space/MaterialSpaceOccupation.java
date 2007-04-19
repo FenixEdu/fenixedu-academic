@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.space;
 
 import java.util.Comparator;
 
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.material.Material;
 
@@ -15,7 +16,7 @@ public abstract class MaterialSpaceOccupation extends MaterialSpaceOccupation_Ba
     static {
 	((ComparatorChain) COMPARATOR_BY_CLASS_NAME).addComparator(new BeanComparator("class.simpleName"));
 	((ComparatorChain) COMPARATOR_BY_CLASS_NAME).addComparator(new BeanComparator("begin"));
-	((ComparatorChain) COMPARATOR_BY_CLASS_NAME).addComparator(new BeanComparator("idInternal"));
+	((ComparatorChain) COMPARATOR_BY_CLASS_NAME).addComparator(DomainObject.COMPARATOR_BY_ID);
     }
     
     public abstract Material getMaterial();

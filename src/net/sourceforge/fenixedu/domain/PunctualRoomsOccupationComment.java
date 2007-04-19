@@ -2,19 +2,19 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.Comparator;
 
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
+
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.DateTime;
-
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public class PunctualRoomsOccupationComment extends PunctualRoomsOccupationComment_Base {
     
     public static final Comparator<PunctualRoomsOccupationComment> COMPARATOR_BY_INSTANT = new ComparatorChain();
     static {
 	((ComparatorChain) COMPARATOR_BY_INSTANT).addComparator(new BeanComparator("instant"));	
-	((ComparatorChain) COMPARATOR_BY_INSTANT).addComparator(new BeanComparator("idInternal"));
+	((ComparatorChain) COMPARATOR_BY_INSTANT).addComparator(DomainObject.COMPARATOR_BY_ID);
     }
     
     public PunctualRoomsOccupationComment(PunctualRoomsOccupationRequest request, MultiLanguageString subject, 

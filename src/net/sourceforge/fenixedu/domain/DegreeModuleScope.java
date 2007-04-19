@@ -18,9 +18,9 @@ public abstract class DegreeModuleScope {
         ((ComparatorChain) COMPARATOR_BY_CURRICULAR_YEAR_AND_SEMESTER_AND_CURRICULAR_COURSE_NAME).addComparator(new BeanComparator("curricularYear"));
         ((ComparatorChain) COMPARATOR_BY_CURRICULAR_YEAR_AND_SEMESTER_AND_CURRICULAR_COURSE_NAME).addComparator(new BeanComparator("curricularSemester"));
         ((ComparatorChain) COMPARATOR_BY_CURRICULAR_YEAR_AND_SEMESTER_AND_CURRICULAR_COURSE_NAME).addComparator(new BeanComparator("curricularCourse.name", Collator.getInstance()));
-        ((ComparatorChain) COMPARATOR_BY_CURRICULAR_YEAR_AND_SEMESTER_AND_CURRICULAR_COURSE_NAME).addComparator(new BeanComparator("idInternal"));
+        ((ComparatorChain) COMPARATOR_BY_CURRICULAR_YEAR_AND_SEMESTER_AND_CURRICULAR_COURSE_NAME).addComparator(DomainObject.COMPARATOR_BY_ID);
         ((ComparatorChain) COMPARATOR_BY_NAME).addComparator(new BeanComparator("curricularCourse.name", Collator.getInstance()));
-        ((ComparatorChain) COMPARATOR_BY_NAME).addComparator(new BeanComparator("idInternal"));
+        ((ComparatorChain) COMPARATOR_BY_NAME).addComparator(DomainObject.COMPARATOR_BY_ID);
     }
 
     public abstract Integer getIdInternal();

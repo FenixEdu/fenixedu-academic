@@ -9,6 +9,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Language;
@@ -31,7 +32,7 @@ public abstract class DegreeModule extends DegreeModule_Base {
         public int compare(DegreeModule d1, DegreeModule d2) {
             final ComparatorChain comparatorChain = new ComparatorChain();
             comparatorChain.addComparator(new BeanComparator("name", Collator.getInstance()));
-            comparatorChain.addComparator(new BeanComparator("idInternal"));
+            comparatorChain.addComparator(DomainObject.COMPARATOR_BY_ID);
             
             return comparatorChain.compare(d1, d2);
         }

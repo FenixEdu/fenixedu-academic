@@ -35,7 +35,7 @@ public class Section extends Section_Base {
                 
                 chain.addComparator(new BeanComparator("sectionOrder"));
                 chain.addComparator(new BeanComparator("name"));
-                chain.addComparator(new BeanComparator("idInternal"));
+                chain.addComparator(DomainObject.COMPARATOR_BY_ID);
             }
             
             return chain.compare(one, other);

@@ -13,7 +13,7 @@ public class ShiftEnrolment extends ShiftEnrolment_Base {
     public static final Comparator<ShiftEnrolment> COMPARATOR_BY_DATE = new ComparatorChain();
     static {
 	((ComparatorChain) COMPARATOR_BY_DATE).addComparator(new BeanComparator("createdOn"));
-	((ComparatorChain) COMPARATOR_BY_DATE).addComparator(new BeanComparator("idInternal"));
+	((ComparatorChain) COMPARATOR_BY_DATE).addComparator(DomainObject.COMPARATOR_BY_ID);
     }
 
     public ShiftEnrolment(final Shift shift, final Registration registration) {

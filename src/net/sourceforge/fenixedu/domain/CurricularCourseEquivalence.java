@@ -2,10 +2,10 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.Collection;
 
-import org.apache.commons.collections.CollectionUtils;
-
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
+
+import org.apache.commons.collections.CollectionUtils;
 
 /**
  * @author David Santos in Jun 29, 2004

@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.domain.teacher;
 
 import java.util.Comparator;
 
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -22,7 +23,7 @@ public class TeacherServiceExemption extends TeacherServiceExemption_Base {
     public static final Comparator<TeacherServiceExemption> COMPARATOR_BY_BEGIN_DATE = new ComparatorChain();
     static {
 	((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(new BeanComparator("startYearMonthDay"));
-	((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(new BeanComparator("idInternal"));
+	((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(DomainObject.COMPARATOR_BY_ID);
     }
 
     public TeacherServiceExemption(Teacher teacher, YearMonthDay beginDate, YearMonthDay endDate,

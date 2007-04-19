@@ -5,11 +5,11 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.Comparator;
-import java.util.List;
+
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.commons.beanutils.BeanComparator;
 
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import dml.runtime.RelationAdapter;
 
 /**

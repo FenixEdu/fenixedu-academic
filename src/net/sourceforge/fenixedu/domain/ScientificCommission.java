@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.domain;
 
-import dml.runtime.RelationAdapter;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import dml.runtime.RelationAdapter;
 
 public class ScientificCommission extends ScientificCommission_Base {
 

@@ -4,6 +4,7 @@ import java.text.Collator;
 import java.util.Comparator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -24,7 +25,7 @@ public class PersonSpaceOccupation extends PersonSpaceOccupation_Base {
 	((ComparatorChain) COMPARATOR_BY_PERSON_NAME_AND_OCCUPATION_INTERVAL)
 		.addComparator(new BeanComparator("person.name", Collator.getInstance()));
 	((ComparatorChain) COMPARATOR_BY_PERSON_NAME_AND_OCCUPATION_INTERVAL)
-		.addComparator(new BeanComparator("idInternal"));
+		.addComparator(DomainObject.COMPARATOR_BY_ID);
     }
 
     @Checked("SpacePredicates.checkPermissionsToManageOccupations")

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.AMIIICDIIRule;
-import net.sourceforge.fenixedu.domain.degree.enrollment.rules.LEMAUBranchPSIRule;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.LEMBolonhaEnrolmentRule;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.LEMOptionalPairGroupsEnrollmentRule;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.MaximumNumberEctsCreditsEnrolmentRule;

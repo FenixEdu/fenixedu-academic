@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ComparatorChain;
-
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.domain.InverseOrderedRelationAdapter;
+
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
 
 public class FileItem extends FileItem_Base {
 
@@ -23,7 +23,7 @@ public class FileItem extends FileItem_Base {
                 
                 chain.addComparator(new BeanComparator("orderInItem"));
                 chain.addComparator(new BeanComparator("displayName"));
-                chain.addComparator(new BeanComparator("idInternal"));
+                chain.addComparator(DomainObject.COMPARATOR_BY_ID);
             }
             
             return chain.compare(one, other);

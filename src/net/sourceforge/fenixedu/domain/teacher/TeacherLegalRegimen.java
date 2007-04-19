@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.domain.teacher;
 
 import java.util.Comparator;
 
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -21,7 +22,7 @@ public class TeacherLegalRegimen extends TeacherLegalRegimen_Base {
     public static final Comparator<TeacherLegalRegimen> TEACHER_LEGAL_REGIMEN_COMPARATOR_BY_BEGIN_DATE = new ComparatorChain();
     static {
 	((ComparatorChain) TEACHER_LEGAL_REGIMEN_COMPARATOR_BY_BEGIN_DATE).addComparator(new BeanComparator("beginDateYearMonthDay"));
-	((ComparatorChain) TEACHER_LEGAL_REGIMEN_COMPARATOR_BY_BEGIN_DATE).addComparator(new BeanComparator("idInternal"));
+	((ComparatorChain) TEACHER_LEGAL_REGIMEN_COMPARATOR_BY_BEGIN_DATE).addComparator(DomainObject.COMPARATOR_BY_ID);
     }
 
     public TeacherLegalRegimen(Teacher teacher, Category category, YearMonthDay beginDate,

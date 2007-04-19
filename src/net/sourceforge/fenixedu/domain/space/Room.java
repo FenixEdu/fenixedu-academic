@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.text.Collator;
 import java.util.Comparator;
 
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -21,7 +22,7 @@ public class Room extends Room_Base {
     public final static Comparator<Room> ROOM_COMPARATOR_BY_PRESENTATION_NAME = new ComparatorChain();
     static {
 	((ComparatorChain) ROOM_COMPARATOR_BY_PRESENTATION_NAME).addComparator(new BeanComparator("spaceInformation.presentationName", Collator.getInstance()));
-	((ComparatorChain) ROOM_COMPARATOR_BY_PRESENTATION_NAME).addComparator(new BeanComparator("idInternal"));
+	((ComparatorChain) ROOM_COMPARATOR_BY_PRESENTATION_NAME).addComparator(DomainObject.COMPARATOR_BY_ID);
     }
 
     public static abstract class RoomFactory implements Serializable, FactoryExecutor {

@@ -68,10 +68,10 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	
 	((ComparatorChain) EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME).addComparator(new BeanComparator("executionPeriod"));
 	((ComparatorChain) EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME).addComparator(new BeanComparator("nome", Collator.getInstance()));
-        ((ComparatorChain) EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME).addComparator(new BeanComparator("idInternal"));
+        ((ComparatorChain) EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME).addComparator(DomainObject.COMPARATOR_BY_ID);
 
         ((ComparatorChain) EXECUTION_COURSE_NAME_COMPARATOR).addComparator(new BeanComparator("nome", Collator.getInstance()));
-        ((ComparatorChain) EXECUTION_COURSE_NAME_COMPARATOR).addComparator(new BeanComparator("idInternal"));
+        ((ComparatorChain) EXECUTION_COURSE_NAME_COMPARATOR).addComparator(DomainObject.COMPARATOR_BY_ID);
         
         BIBLIOGRAPHIC_REFERENCE_ORDER_ADAPTER = new OrderedRelationAdapter<ExecutionCourse, BibliographicReference>("associatedBibliographicReferences", "referenceOrder");
         ExecutionCourseBibliographicReference.addListener(BIBLIOGRAPHIC_REFERENCE_ORDER_ADAPTER);

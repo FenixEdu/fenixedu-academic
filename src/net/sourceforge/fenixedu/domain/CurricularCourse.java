@@ -55,7 +55,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 	((ComparatorChain) CURRICULAR_COURSE_COMPARATOR_BY_DEGREE_AND_NAME).addComparator(new BeanComparator("degreeCurricularPlan.degree.tipoCurso.name", Collator.getInstance()));
 	((ComparatorChain) CURRICULAR_COURSE_COMPARATOR_BY_DEGREE_AND_NAME).addComparator(new BeanComparator("degreeCurricularPlan.degree.nome", Collator.getInstance()));
 	((ComparatorChain) CURRICULAR_COURSE_COMPARATOR_BY_DEGREE_AND_NAME).addComparator(new BeanComparator("name", Collator.getInstance()));
-	((ComparatorChain) CURRICULAR_COURSE_COMPARATOR_BY_DEGREE_AND_NAME).addComparator(new BeanComparator("idInternal"));
+	((ComparatorChain) CURRICULAR_COURSE_COMPARATOR_BY_DEGREE_AND_NAME).addComparator(DomainObject.COMPARATOR_BY_ID);
     }
 
     public static List<CurricularCourse> readCurricularCourses() {

@@ -20,6 +20,7 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.ExternalCurricularCourse;
@@ -49,7 +50,7 @@ public class Unit extends Unit_Base {
     public final static Comparator<Unit> UNIT_COMPARATOR_BY_NAME = new ComparatorChain();
     static {
 	((ComparatorChain) UNIT_COMPARATOR_BY_NAME).addComparator(new BeanComparator("name", Collator.getInstance()));
-	((ComparatorChain) UNIT_COMPARATOR_BY_NAME).addComparator(new BeanComparator("idInternal"));
+	((ComparatorChain) UNIT_COMPARATOR_BY_NAME).addComparator(DomainObject.COMPARATOR_BY_ID);
 	
 	applicationResourcesBundle = ResourceBundle.getBundle("resources.ApplicationResources", new Locale("pt"));
     }

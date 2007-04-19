@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
@@ -27,7 +28,7 @@ public class OldRoom extends OldRoom_Base {
     public static final Comparator<OldRoom> OLD_ROOM_COMPARATOR_BY_NAME = new ComparatorChain();
     static {
 	((ComparatorChain) OLD_ROOM_COMPARATOR_BY_NAME).addComparator(new BeanComparator("name", Collator.getInstance()));
-	((ComparatorChain) OLD_ROOM_COMPARATOR_BY_NAME).addComparator(new BeanComparator("idInternal"));
+	((ComparatorChain) OLD_ROOM_COMPARATOR_BY_NAME).addComparator(DomainObject.COMPARATOR_BY_ID);
     }
     
     public OldRoom() {

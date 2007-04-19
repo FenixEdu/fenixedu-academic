@@ -1,10 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-
-import org.apache.commons.beanutils.BeanComparator;
 
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.EvaluationType;
