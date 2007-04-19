@@ -501,6 +501,10 @@ public class Registration extends Registration_Base {
 	return getStudentCurricularPlan(executionYear).getEnrolmentsByExecutionYear(executionYear);
     }
 
+    public Collection<Enrolment> getLatestCurricularCoursesEnrolments(final ExecutionYear executionYear) {
+	return getStudentCurricularPlan(executionYear).getLatestCurricularCoursesEnrolments(executionYear);
+    }
+
     public Collection<Enrolment> getApprovedEnrolments() {
 	final Collection<Enrolment> result = new HashSet<Enrolment>();
 
