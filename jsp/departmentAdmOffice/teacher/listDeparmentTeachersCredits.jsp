@@ -42,7 +42,7 @@
 <table class="ts01">
 	<tr>
 		<th colspan="3"><bean:message key="label.teacher" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>		
-		<th colspan="8"><bean:message key="label.teacherService.credits.resume"/></th>				
+		<th colspan="9"><bean:message key="label.teacherService.credits.resume"/></th>				
 		<th colspan="4"><bean:message key="label.teacherService.credits"/></th>	
 		<th></th>
 	</tr>
@@ -80,7 +80,7 @@
 				<bean:write name="teachersCredits" property="teacher.teacherNumber"/>
 			</td>
 			<td style="text-align:left">
-				<bean:write name="teachersCredits" property="teacher.person.nome"/>			
+				<bean:write name="teachersCredits" property="teacher.person.name"/>			
 			</td>
 			<td>
 				<logic:present name="teachersCredits" property="category">
