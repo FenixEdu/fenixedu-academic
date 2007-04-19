@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.domain.protocols.Protocol;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
-import org.apache.commons.collections.ListUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -31,7 +30,7 @@ public class CreateProtocolDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareCreateProtocolResponsibles(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        ProtocolFactory protocolFactory = protocolFactory = (ProtocolFactory) getRenderedObject();
+        ProtocolFactory protocolFactory = (ProtocolFactory) getRenderedObject();
         request.setAttribute("protocolFactory", protocolFactory);
         if (isCancelled(request)) {
             request.setAttribute("protocols", rootDomainObject.getProtocols());
@@ -49,7 +48,7 @@ public class CreateProtocolDispatchAction extends FenixDispatchAction {
 
     public ActionForward insertResponsible(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        ProtocolFactory protocolFactory = protocolFactory = (ProtocolFactory) getRenderedObject();
+        ProtocolFactory protocolFactory = (ProtocolFactory) getRenderedObject();
         if (request.getParameter("back") != null) {
             request.setAttribute("protocolFactory", protocolFactory);
             return mapping.findForward("prepareCreate-protocol-data");
@@ -143,7 +142,7 @@ public class CreateProtocolDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareCreateProtocolUnits(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        ProtocolFactory protocolFactory = protocolFactory = (ProtocolFactory) getRenderedObject();
+        ProtocolFactory protocolFactory = (ProtocolFactory) getRenderedObject();
         protocolFactory.resetSearches();
         request.setAttribute("protocolFactory", protocolFactory);
         return mapping.findForward("prepareCreate-protocol-units");

@@ -67,7 +67,8 @@ public class EditProtocolDispatchAction extends FenixDispatchAction {
 
     private boolean isProtocolNumberValid(ProtocolFactory protocolFactory) {
         for (Protocol protocol : rootDomainObject.getProtocols()) {
-            if (protocol.getProtocolNumber().equals(protocolFactory.getProtocolNumber())) {
+            if (protocol.getProtocolNumber().equals(protocolFactory.getProtocolNumber())
+                    && protocol != protocolFactory.getProtocol()) {
                 return false;
             }
         }
@@ -258,8 +259,8 @@ public class EditProtocolDispatchAction extends FenixDispatchAction {
             return mapping.findForward("edit-protocol-units");
         }
 
-        Unit externalUnit = (Unit) executeService("CreateExternalUnitByNameAndCountry",
-                new Object[] { protocolFactory.getUnitName(), protocolFactory.getCountry() });
+        Unit externalUnit = (Unit) executeService("CreateExternalUnitByNameAndCountry", new Object[] {
+                protocolFactory.getUnitName(), protocolFactory.getCountry() });
         protocolFactory.setUnitToAdd(externalUnit);
         protocolFactory.setEditProtocolAction(EditProtocolAction.ADD_UNIT);
         Protocol protocol = (Protocol) executeService(request, "ExecuteFactoryMethod",

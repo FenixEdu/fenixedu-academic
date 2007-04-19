@@ -113,6 +113,7 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
         setProtocolAction(protocol.getProtocolAction());
         setOtherActionTypes(protocol.getProtocolAction().getOtherTypes());
         setActionTypes(protocol.getProtocolAction().getProcotolActionTypes());
+        setScientificAreas(protocol.getScientificAreas());
         setResponsiblesList(protocol.getResponsibles());
         setPartnerResponsiblesList(protocol.getPartnerResponsibles());
         setUnitsList(protocol.getUnits());
