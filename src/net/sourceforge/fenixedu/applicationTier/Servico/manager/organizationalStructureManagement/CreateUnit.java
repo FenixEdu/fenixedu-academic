@@ -1,12 +1,10 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AdministrativeOfficeUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AggregateUnit;
@@ -23,7 +21,6 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.SectionUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitClassification;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.joda.time.YearMonthDay;
 
@@ -33,7 +30,7 @@ public class CreateUnit extends Service {
             String acronym, YearMonthDay begin, YearMonthDay end, PartyTypeEnum type, Integer departmentID,
             Integer degreeID, Integer administrativeOfficeID, AccountabilityType accountabilityType, String webAddress, 
             UnitClassification classification, Boolean canBeResponsibleOfSpaces)
-            throws ExcepcaoPersistencia, FenixServiceException, DomainException, FenixFilterException {
+            throws FenixServiceException {
                 
         Integer costCenterCode = getCostCenterCode(unitCostCenter);
  
