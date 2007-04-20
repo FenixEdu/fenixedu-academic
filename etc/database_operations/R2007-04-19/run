@@ -30,3 +30,9 @@ function executeWithTempFile() {
 execute "Alter table party" alterTableParty.sql
 execute "Drop table EmailAddress" dropOldEmailAddressTable.sql
 execute "Alter table JustificationMotive" alterTableJustificationMotive.sql
+
+execute "Adding functionalities for Research Unit Site" changes-20070419175100.sql
+execute "Adding Sections for Research Unit Site" researchUnitSiteFunctionalities.sql
+execute "Edd events to Department Site (functionality)" AddDepartmentEventsFunctionality.sql
+execute "Edd events to Department Site (section)" CreateDepartmentEventsSection.sql
+execute "Migrating final degree work orientation relations." refactorFinalDegreeWorkOrientationRelations.sql
