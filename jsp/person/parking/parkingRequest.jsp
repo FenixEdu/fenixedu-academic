@@ -11,7 +11,8 @@
 
 
 <logic:present name="parkingParty">
-	<p class="mbottom025"><bean:message	key="label.person.title.personal.info" /></p>
+
+	<p class="mtop15 mbottom025"><strong><bean:message	key="label.person.title.personal.info" /></strong></p>
 
 	<fr:view name="parkingParty" property="party" schema="viewPersonInfo">
 		<fr:layout name="tabular">
@@ -49,7 +50,7 @@
 			</logic:equal>
 			<logic:notEqual name="parkingParty" property="acceptedRegulation" value="false">
 				
-				<div class="simpleblock5"> <%-- message.acceptedRegulation --%>
+				<div class="infoop2 mvert15"> <%-- message.acceptedRegulation --%>
 					<bean:write name="parkingParty" property="parkingAcceptedRegulationMessage" filter="false"/>
 				</div>
 				

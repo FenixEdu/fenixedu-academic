@@ -1,9 +1,17 @@
 <schema name="viewPersonInfo"
 	type="net.sourceforge.fenixedu.domain.Person">
-	<slot name="name" key="label.name" bundle="PARKING_RESOURCES" />
-	<slot name="workPhone" key="label.phone" bundle="PARKING_RESOURCES" />
-	<slot name="mobile" key="label.mobile" bundle="PARKING_RESOURCES" />
-	<slot name="email" key="label.email" bundle="PARKING_RESOURCES" />
+	<slot name="name" key="label.name" bundle="PARKING_RESOURCES" layout="null-as-label">
+		<property name="label" value="-"/>
+	</slot>
+	<slot name="workPhone" key="label.phone" bundle="PARKING_RESOURCES" layout="null-as-label">
+		<property name="label" value="-"/>
+	</slot>
+	<slot name="mobile" key="label.mobile" bundle="PARKING_RESOURCES" layout="null-as-label">
+		<property name="label" value="-"/>
+	</slot>
+	<slot name="email" key="label.email" bundle="PARKING_RESOURCES" layout="null-as-label">
+		<property name="label" value="-"/>
+	</slot>
 </schema>
 
 <schema name="view.parkingParty.personalInfo"
