@@ -137,7 +137,7 @@ public class ReadMonthBalances extends Service {
 	if (assiduousnessRecords != null) {
 	    final List<AssiduousnessRecord> clockings = new ArrayList<AssiduousnessRecord>(
 		    assiduousnessRecords);
-	    Collections.sort(clockings, AssiduousnessRecord.COMPARATORY_BY_DATE);
+	    Collections.sort(clockings, AssiduousnessRecord.COMPARATOR_BY_DATE);
 	    for (AssiduousnessRecord record : clockings) {
 		if (record.isClocking() || record.isMissingClocking()) {
 		    YearMonthDay clockDay = record.getDate().toYearMonthDay();
@@ -220,7 +220,7 @@ public class ReadMonthBalances extends Service {
 	if (clockingsList == null) {
 	    clockingsList = new ArrayList<AssiduousnessRecord>();
 	}
-	Collections.sort(clockingsList, AssiduousnessRecord.COMPARATORY_BY_DATE);
+	Collections.sort(clockingsList, AssiduousnessRecord.COMPARATOR_BY_DATE);
 	return clockingsList;
     }
 

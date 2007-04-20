@@ -921,7 +921,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 
 	final List<AssiduousnessRecord> clockings = assiduousness.getClockingsAndMissingClockings(init
 		.minusDays(1), end);
-	Collections.sort(clockings, AssiduousnessRecord.COMPARATORY_BY_DATE);
+	Collections.sort(clockings, AssiduousnessRecord.COMPARATOR_BY_DATE);
 	HashMap<YearMonthDay, List<AssiduousnessRecord>> clockingsMap = new HashMap<YearMonthDay, List<AssiduousnessRecord>>();
 	for (AssiduousnessRecord record : clockings) {
 	    YearMonthDay clockDay = record.getDate().toYearMonthDay();
@@ -945,7 +945,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 	    return "errors.irregularClockings";
 	}
 	if (clocks != null) {
-	    Collections.sort(clocks, AssiduousnessRecord.COMPARATORY_BY_DATE);
+	    Collections.sort(clocks, AssiduousnessRecord.COMPARATOR_BY_DATE);
 	    int before = 0;
 	    int middle = 0;
 	    for (AssiduousnessRecord assiduousnessRecord : clocks) {

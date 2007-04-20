@@ -119,7 +119,7 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
 		beginDate.dayOfMonth().getMaximumValue());
 	if (employee.getAssiduousness() != null) {
 	    List<Clocking> clockings = employee.getAssiduousness().getClockings(beginDate, endDate);
-	    Collections.sort(clockings, AssiduousnessRecord.COMPARATORY_BY_DATE);
+	    Collections.sort(clockings, AssiduousnessRecord.COMPARATOR_BY_DATE);
 	    HashMap<YearMonthDay, ClockingsDaySheet> clockingsDaySheetList = new HashMap<YearMonthDay, ClockingsDaySheet>();
 	    for (Clocking clocking : clockings) {
 		if (clockingsDaySheetList.containsKey(clocking.getDate().toYearMonthDay())) {
@@ -182,7 +182,7 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
 	    justifications.addAll(employee.getAssiduousness().getLeaves(beginDate, endDate));
 	    justifications.addAll(employee.getAssiduousness().getMissingClockings(beginDate, endDate));
 	    List<Justification> orderedJustifications = new ArrayList<Justification>(justifications);
-	    Collections.sort(orderedJustifications, AssiduousnessRecord.COMPARATORY_BY_DATE);
+	    Collections.sort(orderedJustifications, AssiduousnessRecord.COMPARATOR_BY_DATE);
 	    request.setAttribute("justifications", orderedJustifications);
 	}
 	request.setAttribute("yearMonth", yearMonth);

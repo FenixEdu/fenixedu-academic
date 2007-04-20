@@ -111,7 +111,7 @@ public class Assiduousness extends Assiduousness_Base {
         HashMap<YearMonthDay, List<AssiduousnessRecord>> clockingsMap = new HashMap<YearMonthDay, List<AssiduousnessRecord>>();
         final List<AssiduousnessRecord> clockings = getClockingsAndMissingClockings(init.minusDays(1),
                 end);
-        Collections.sort(clockings, AssiduousnessRecord.COMPARATORY_BY_DATE);
+        Collections.sort(clockings, AssiduousnessRecord.COMPARATOR_BY_DATE);
         for (AssiduousnessRecord record : clockings) {
             YearMonthDay clockDay = record.getDate().toYearMonthDay();
             if (WorkSchedule.overlapsSchedule(record.getDate(), workScheduleMap)) {

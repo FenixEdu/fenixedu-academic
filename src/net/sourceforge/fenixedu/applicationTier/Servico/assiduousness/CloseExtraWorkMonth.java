@@ -64,7 +64,7 @@ public class CloseExtraWorkMonth extends Service {
 	    YearMonthDay beginDate, YearMonthDay endDate) {
 	StringBuilder result = new StringBuilder();
 	if (leaves != null && !leaves.isEmpty()) {
-	    Collections.sort(leaves, AssiduousnessRecord.COMPARATORY_BY_DATE);
+	    Collections.sort(leaves, AssiduousnessRecord.COMPARATOR_BY_DATE);
 	    for (Leave leave : leaves) {
 		if (leave.getJustificationMotive().getJustificationType().equals(
 			JustificationType.OCCURRENCE)) {

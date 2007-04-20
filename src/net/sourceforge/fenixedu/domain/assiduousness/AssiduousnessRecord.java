@@ -5,13 +5,16 @@ import java.util.Comparator;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.assiduousness.util.AnulationState;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 
 public class AssiduousnessRecord extends AssiduousnessRecord_Base {
 
-    public static final Comparator<AssiduousnessRecord> COMPARATORY_BY_DATE = new BeanComparator("date");
+    static final public Comparator<AssiduousnessRecord> COMPARATOR_BY_DATE = new Comparator<AssiduousnessRecord>() {
+	public int compare(final AssiduousnessRecord o1, final AssiduousnessRecord o2) {
+	    return o1.getDate().compareTo(o2.getDate());
+	}
+    };
 
     public AssiduousnessRecord() {
 	super();

@@ -121,7 +121,7 @@ public class ReadAssiduousnessWorkSheet extends Service {
                 if (clockingsList == null) {
                     clockingsList = new ArrayList<AssiduousnessRecord>();
                 }
-                Collections.sort(clockingsList, AssiduousnessRecord.COMPARATORY_BY_DATE);
+                Collections.sort(clockingsList, AssiduousnessRecord.COMPARATOR_BY_DATE);
                 workDaySheet.setAssiduousnessRecords(clockingsList);
                 List<Leave> leavesList = leavesMap.get(thisDay);
                 if (leavesList == null) {
