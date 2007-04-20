@@ -595,7 +595,7 @@ public class Registration extends Registration_Base {
 	List<StudentCurricularPlan> result = new ArrayList<StudentCurricularPlan>();
 	for (StudentCurricularPlan studentCurricularPlan : this.getStudentCurricularPlans()) {
 	    if (studentCurricularPlan.getCurrentState().equals(state)
-		    && studentCurricularPlan.getDegreeCurricularPlan().getDegree().getTipoCurso()
+		    && studentCurricularPlan.getDegreeCurricularPlan().getDegree().getDegreeType()
 			    .equals(type)) {
 		result.add(studentCurricularPlan);
 	    }
@@ -1837,6 +1837,15 @@ public class Registration extends Registration_Base {
 		&& !hasExternalRegistrationData()) {
 	    new ExternalRegistrationData(this);
 	}
+    }
+
+    public boolean hasGratuityEvent(final ExecutionYear executionYear) {
+	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlans()) {
+	    if (studentCurricularPlan.hasGratuityEvent(executionYear)) {
+		return true;
+	    }
+	}
+	return false;
     }
 
 }
