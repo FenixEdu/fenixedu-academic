@@ -36,15 +36,14 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
 			    StudentCurricularPlan studentCurricularPlan) {
 			if (gratuityEvent != null
 				&& studentCurricularPlan != null
-				&& studentCurricularPlan.hasGratuityEvent(gratuityEvent
-					.getExecutionYear())) {
+				&& studentCurricularPlan.getRegistration().hasGratuityEvent(
+					gratuityEvent.getExecutionYear())) {
 			    throw new DomainException(
 				    "error.accounting.events.gratuity.GratuityEvent.person.already.has.gratuity.event.for.student.curricular.plan.and.year");
 
 			}
 		    }
 		});
-
     }
 
     protected GratuityEvent() {
