@@ -110,7 +110,7 @@ public class GratuitySituation extends GratuitySituation_Base {
 		: getTransactionsUntil(date));
 	for (GratuityTransaction gratuityTransaction : transactions) {
 
-	    payedValue += gratuityTransaction.getValue();
+	    payedValue += gratuityTransaction.getValueBigDecimal().doubleValue();
 
 	    if (gratuityTransaction.getGuideEntry() != null) {
 
@@ -121,7 +121,7 @@ public class GratuitySituation extends GratuitySituation_Base {
 			    .getActiveReimbursementGuideSituation().getReimbursementGuideState().equals(
 				    ReimbursementGuideState.PAYED)) {
 
-			reimbursedValue += reimbursementGuideEntry.getValue();
+			reimbursedValue += reimbursementGuideEntry.getValueBigDecimal().doubleValue();
 		    }
 		}
 	    }
@@ -167,6 +167,10 @@ public class GratuitySituation extends GratuitySituation_Base {
 
     private Student getStudent() {
 	return getStudentCurricularPlan().getRegistration().getStudent();
+    }
+    
+    private Person getPerson() {
+	return getStudent().getPerson();
     }
 
     @Override
@@ -265,16 +269,16 @@ public class GratuitySituation extends GratuitySituation_Base {
 
 	final GratuityTransaction transaction = new GratuityTransaction(amount.getAmount(),
 		whenRegistered, paymentType, TransactionType.GRATUITY_ADHOC_PAYMENT, responsiblePerson,
-		getPersonAccount(), this);
+		getOrCreatePersonAccount(), this);
 
 	updateRemainingValue();
 
 	return transaction;
 
     }
-
-    private PersonAccount getPersonAccount() {
-	return getStudent().getPerson().getAssociatedPersonAccount();
+    
+    private PersonAccount getOrCreatePersonAccount() {
+	return getPerson().hasAssociatedPersonAccount() ? getPerson().getAssociatedPersonAccount() : new PersonAccount(getPerson()); 
     }
 
     @Override
