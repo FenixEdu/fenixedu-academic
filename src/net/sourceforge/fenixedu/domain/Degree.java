@@ -1,9 +1,11 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.lang.ref.SoftReference;
+import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Hashtable;
@@ -27,18 +29,46 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.MarkType;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 
 import pt.utl.ist.fenix.tools.util.StringAppender;
 
-public class Degree extends Degree_Base implements Comparable {
+public class Degree extends Degree_Base implements Comparable<Degree> {
 
-    public static final ComparatorChain DEGREE_COMPARATOR_BY_NAME_AND_DEGREE_TYPE = new ComparatorChain();
+    static final private Comparator<Degree> COMPARATOR_BY_NAME = new Comparator<Degree>() {
+        public int compare(final Degree o1, final Degree o2) {
+	    return Collator.getInstance().compare(o1.getName(), o2.getName());
+        }
+    };
 
-    static {
-	DEGREE_COMPARATOR_BY_NAME_AND_DEGREE_TYPE.addComparator(new BeanComparator("tipoCurso"));
-	DEGREE_COMPARATOR_BY_NAME_AND_DEGREE_TYPE.addComparator(new BeanComparator("nome"));
+    static final public Comparator<Degree> COMPARATOR_BY_NAME_AND_ID = new Comparator<Degree>() {
+        public int compare(final Degree o1, final Degree o2) {
+            final ComparatorChain comparatorChain = new ComparatorChain();
+            comparatorChain.addComparator(Degree.COMPARATOR_BY_NAME);
+            comparatorChain.addComparator(Degree.COMPARATOR_BY_ID);
+            
+            return comparatorChain.compare(o1, o2);
+        }
+    };
+
+    static final private Comparator<Degree> COMPARATOR_BY_DEGREE_TYPE = new Comparator<Degree>() {
+        public int compare(final Degree o1, final Degree o2) {
+	    return Collator.getInstance().compare(o1.getDegreeType().getLocalizedName(), o2.getDegreeType().getLocalizedName());
+        }
+    };
+
+    static final public Comparator<Degree> COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID = new Comparator<Degree>() {
+        public int compare(final Degree o1, final Degree o2) {
+            final ComparatorChain comparatorChain = new ComparatorChain();
+            comparatorChain.addComparator(Degree.COMPARATOR_BY_DEGREE_TYPE);
+            comparatorChain.addComparator(Degree.COMPARATOR_BY_NAME_AND_ID);
+            
+            return comparatorChain.compare(o1, o2);
+        }
+    };
+
+    public int compareTo(final Degree o) {
+	return Degree.COMPARATOR_BY_NAME_AND_ID.compare(this, o);
     }
 
     protected Degree() {
@@ -823,11 +853,6 @@ public class Degree extends Degree_Base implements Comparable {
 	    multiLanguageString.setContent(Language.en, getNameEn());
 	}
 	return multiLanguageString;
-    }
-    
-    public int compareTo(Object object) {
-	final Degree degree = (Degree) object;
-	return getName().compareTo(degree.getName());
     }
 
 }

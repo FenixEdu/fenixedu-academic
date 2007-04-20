@@ -23,7 +23,6 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -112,7 +111,7 @@ public class MergeExecutionCourseDispatchionAction extends FenixDispatchAction {
             FenixServiceException, FenixFilterException {
         IUserView userView = getUserView(request);
         
-        SortedSet<Degree> degrees = new TreeSet(Degree.DEGREE_COMPARATOR_BY_NAME_AND_DEGREE_TYPE); 
+        SortedSet<Degree> degrees = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID); 
         degrees.addAll(RootDomainObject.getInstance().getDegrees()); 
         
         List executionPeriods = (List) ServiceUtils.executeService(userView, "ReadAllExecutionPeriods",

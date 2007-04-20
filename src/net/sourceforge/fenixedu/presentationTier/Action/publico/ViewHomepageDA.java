@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.homepage.Homepage;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Contract;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.activity.Cooperation;
 import net.sourceforge.fenixedu.domain.research.activity.Event;
@@ -228,7 +227,7 @@ public class ViewHomepageDA extends SiteVisualizationDA {
     public ActionForward listStudents(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 	final SortedMap<Degree, SortedSet<Homepage>> homepages = new TreeMap<Degree, SortedSet<Homepage>>(
-		Degree.DEGREE_COMPARATOR_BY_NAME_AND_DEGREE_TYPE);
+		Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
 	for (final Registration registration : rootDomainObject.getRegistrationsSet()) {
 	    final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
 	    if (studentCurricularPlan != null) {
@@ -262,7 +261,7 @@ public class ViewHomepageDA extends SiteVisualizationDA {
     public ActionForward listAlumni(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	final SortedMap<Degree, SortedSet<Homepage>> homepages = new TreeMap<Degree, SortedSet<Homepage>>(
-		Degree.DEGREE_COMPARATOR_BY_NAME_AND_DEGREE_TYPE);
+		Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
 	for (final Registration registration : rootDomainObject.getRegistrationsSet()) {
 
 	    if (registration.getActiveState().getStateType().equals(RegistrationStateType.CONCLUDED)) {

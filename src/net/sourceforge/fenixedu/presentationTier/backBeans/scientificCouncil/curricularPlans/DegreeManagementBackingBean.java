@@ -49,7 +49,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
 
     public List<Degree> getBolonhaDegrees() {
         final List<Degree> result = Degree.readBolonhaDegrees();
-        Collections.sort(result, Degree.DEGREE_COMPARATOR_BY_NAME_AND_DEGREE_TYPE);
+        Collections.sort(result, Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
         return result;
     }
 
@@ -66,7 +66,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
         }
 
         final List<Degree> orderedResult = new ArrayList<Degree>(result);
-        Collections.sort(orderedResult, Degree.DEGREE_COMPARATOR_BY_NAME_AND_DEGREE_TYPE);
+        Collections.sort(orderedResult, Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
 
         return orderedResult;
     }

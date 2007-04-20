@@ -23,7 +23,7 @@ public class ReadDegreesAction extends FenixAction {
 
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException {
-        final SortedSet<Degree> degrees = new TreeSet(Degree.DEGREE_COMPARATOR_BY_NAME_AND_DEGREE_TYPE); 
+        final SortedSet<Degree> degrees = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID); 
         degrees.addAll(Degree.readOldDegrees()); 
         request.setAttribute("degreesList", degrees);
         return mapping.findForward("readDegrees");

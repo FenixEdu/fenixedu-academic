@@ -35,7 +35,7 @@ public class SearchStudentsWithEnrolmentsByDepartment implements Serializable {
                 degrees.add(degreeDomainReference.getObject());
             }
         }
-        Collections.sort(degrees, Degree.DEGREE_COMPARATOR_BY_NAME_AND_DEGREE_TYPE);
+        Collections.sort(degrees, Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
         return degrees;
     }
 

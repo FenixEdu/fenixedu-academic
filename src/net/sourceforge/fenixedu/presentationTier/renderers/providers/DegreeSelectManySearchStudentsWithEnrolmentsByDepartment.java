@@ -15,7 +15,7 @@ public class DegreeSelectManySearchStudentsWithEnrolmentsByDepartment implements
     public Object provide(Object source, Object currentValue) {
         final SearchStudentsWithEnrolmentsByDepartment bean = (SearchStudentsWithEnrolmentsByDepartment) source;
         final Department department = bean.getDepartment();
-        final SortedSet<Degree> degrees = new TreeSet<Degree>(Degree.DEGREE_COMPARATOR_BY_NAME_AND_DEGREE_TYPE);
+        final SortedSet<Degree> degrees = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
         degrees.addAll(department.getDegreesSet());
         return degrees;
     }

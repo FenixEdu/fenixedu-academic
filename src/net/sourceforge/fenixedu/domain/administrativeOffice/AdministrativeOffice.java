@@ -140,7 +140,7 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
     }
 
     public Set<Degree> getAdministratedDegrees() {
-	final Set<Degree> result = new TreeSet<Degree>(Degree.DEGREE_COMPARATOR_BY_NAME_AND_DEGREE_TYPE);
+	final Set<Degree> result = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
 	for (Degree degree : RootDomainObject.getInstance().getDegreesSet()) {
 	    final DegreeType degreeType = degree.getDegreeType();
 	    if (degreeType.getAdministrativeOfficeType().equals(this.getAdministrativeOfficeType())) {
@@ -152,7 +152,7 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
     }
 
     public Set<Degree> getAdministratedDegreesForMarkSheets() {
-	final Set<Degree> result = new TreeSet<Degree>(Degree.DEGREE_COMPARATOR_BY_NAME_AND_DEGREE_TYPE);
+	final Set<Degree> result = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
 	for (Degree degree : RootDomainObject.getInstance().getDegreesSet()) {
 	    final DegreeType degreeType = degree.getDegreeType();
 	    if (degreeType.getAdministrativeOfficeType().equals(this.getAdministrativeOfficeType())
@@ -176,7 +176,7 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
 	    }
 	}
 
-	Collections.sort(result, Degree.DEGREE_COMPARATOR_BY_NAME_AND_DEGREE_TYPE);
+	Collections.sort(result, Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
 	return result;
     }
 

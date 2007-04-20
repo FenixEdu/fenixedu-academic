@@ -978,8 +978,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     public SortedSet<Degree> getDegreesSortedByDegreeName() {
-	final SortedSet<Degree> degrees = new TreeSet<Degree>(
-		Degree.DEGREE_COMPARATOR_BY_NAME_AND_DEGREE_TYPE);
+	final SortedSet<Degree> degrees = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
 	for (final CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
 	    final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
 	    degrees.add(degreeCurricularPlan.getDegree());

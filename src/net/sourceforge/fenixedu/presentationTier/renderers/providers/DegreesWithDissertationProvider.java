@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 public class DegreesWithDissertationProvider implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
-        SortedSet<Degree> degrees = new TreeSet<Degree>(Degree.DEGREE_COMPARATOR_BY_NAME_AND_DEGREE_TYPE);
+        SortedSet<Degree> degrees = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
         
         for (Degree degree : RootDomainObject.getInstance().getDegrees()) {
             switch (degree.getDegreeType()) {

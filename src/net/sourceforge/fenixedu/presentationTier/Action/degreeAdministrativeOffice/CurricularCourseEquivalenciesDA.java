@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseEquivalence;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.CurricularCourseEquivalence;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -133,7 +132,7 @@ public class CurricularCourseEquivalenciesDA extends FenixDispatchAction {
 
     private void setInfoDegrees(final HttpServletRequest request, final IUserView userView)
 	    throws FenixFilterException, FenixServiceException {
-	SortedSet<Degree> degrees = new TreeSet(Degree.DEGREE_COMPARATOR_BY_NAME_AND_DEGREE_TYPE);
+	SortedSet<Degree> degrees = new TreeSet(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
 	degrees.addAll(Degree.readAllByDegreeType(DegreeType.DEGREE));
 	request.setAttribute("infoDegrees", degrees);
     }
