@@ -790,16 +790,16 @@ function changeElementsDisplay(elementId, elementId2,elementDisplay, topDisplay)
 		<logic:notEqual name="person" property="partyClassification" value="EMPLOYEE">		
 		<p class="mtop2">
 			<logic:notPresent name="allowToChoose">
-			<span class="infoop2">
+			<div class="infoop2">
 				<bean:message key="message.requestQuotasFinishedPeriod" bundle="PARKING_RESOURCES"/>
-			</span>
+			</div>
 			</logic:notPresent>
 			
 			<logic:present name="allowToChoose">		
-			<span class="infoop2">
+			<div class="infoop2">
 				<bean:define id="link"><html:link page="/parking.do?method=downloadParkingRegulamentation"><bean:message key="link.regulation" bundle="PARKING_RESOURCES"/></html:link></bean:define>
 				<bean:message key="message.requestQuotas" bundle="PARKING_RESOURCES" arg0="<%= link %>"/>
-			</span>
+			</div>
 			<div class="separator1"></div>		
 				<fr:edit name="<%= factoryName %>" schema="<%= action+".parkingRequestFactory.limitlessAccessCard" %>" type="<%= type %>">
 					<fr:layout name="tabular">
