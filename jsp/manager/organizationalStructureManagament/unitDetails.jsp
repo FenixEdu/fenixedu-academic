@@ -18,7 +18,9 @@
 		<h:outputText styleClass="error" rendered="#{!empty organizationalStructureBackingBean.errorMessage}" value="#{bundle[organizationalStructureBackingBean.errorMessage]}<br/>" escape="false"/>
 		
 		<h:outputText value="<h2>#{bundle['title.unitDetails']}</h2>" escape="false" />
-					
+								
+		<h:outputText value="<div class='warning0'><strong>#{bundle['label.attention']}:</strong><br/>#{bundle['label.root.units.note']}</div>" escape="false"/>
+						
 		<h:selectBooleanCheckbox value="#{organizationalStructureBackingBean.institutionUnit}" onclick="this.form.submit()"/>
 		<h:outputText value="<b>#{bundle['label.rootInstitution']}</b>" escape="false" />&nbsp;&nbsp;										
 		
@@ -26,8 +28,8 @@
 		<h:outputText value="<b>#{bundle['label.rootExternalInstitution']}</b>" escape="false" />&nbsp;&nbsp;					
 		
 		<h:selectBooleanCheckbox value="#{organizationalStructureBackingBean.earthUnit}" onclick="this.form.submit()"/>				
-		<h:outputText value="<b>#{bundle['label.earthUnit']}</b>" escape="false" />
-		
+		<h:outputText value="<b>#{bundle['label.rootEarthUnit']}</b>" escape="false" />
+			
 		<h:outputText value="<br/><br/>" escape="false" />
 				
 		<h:dataTable value="#{organizationalStructureBackingBean.unit}" var="unit"
