@@ -85,14 +85,30 @@
 
 <schema name="contacts.PhysicalAddress.view" type="net.sourceforge.fenixedu.domain.contacts.PhysicalAddress" extends="contacts.PartyContact.view"
 		bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="address" />
-	<slot name="area" />
-	<slot name="areaCode" />
-	<slot name="areaOfAreaCode" />
-	<slot name="parishOfResidence" />
-	<slot name="districtSubdivisionOfResidence" />
-	<slot name="districtOfResidence" />
-	<slot name="countryOfResidenceName" key="label.countryOfResidence" />
+	<slot name="address" layout="null-as-label">
+		<property name="label" value="-" />
+	</slot>
+	<slot name="area" layout="null-as-label">
+		<property name="label" value="-" />
+	</slot>
+	<slot name="areaCode" layout="null-as-label">
+		<property name="label" value="-" />
+	</slot>
+	<slot name="areaOfAreaCode" layout="null-as-label">
+		<property name="label" value="-" />
+	</slot>
+	<slot name="parishOfResidence" layout="null-as-label">
+		<property name="label" value="-" />
+	</slot>
+	<slot name="districtSubdivisionOfResidence" layout="null-as-label">
+		<property name="label" value="-" />
+	</slot>
+	<slot name="districtOfResidence" layout="null-as-label">
+		<property name="label" value="-" />
+	</slot>
+	<slot name="countryOfResidenceName" key="label.countryOfResidence" layout="null-as-label">
+		<property name="label" value="-" />
+	</slot>
 </schema>
 
 <schema name="contacts.PhysicalAddress.view-for-student" type="net.sourceforge.fenixedu.domain.contacts.PhysicalAddress"

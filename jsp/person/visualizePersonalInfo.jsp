@@ -10,7 +10,7 @@
 <logic:present role="PERSON">
 
 <em><bean:message key="label.person.main.title" /></em>
-<h2><bean:message key="label.person.title.personalConsult" /></h2>
+<h2><bean:message key="label.person.title.personalConsult"/></h2>
 
 <html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveOwnPhoto" %>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="float: right; border: 1px solid #aaa; padding: 3px;"/>
 
@@ -19,6 +19,7 @@
 </p>
 
 
+<!-- Contactos -->
 <table class="mtop15" width="100%" cellpadding="0" cellspacing="0">
 	<tr>
 		<td class="infoop" width="25"><span class="emphasis-box">1</span></td>
@@ -34,8 +35,8 @@
 		</html:messages>
 	</ul>
 </logic:messagesPresent>
-<table class="tstyle4 thlight thleft">
 
+<table class="tstyle2 thlight thleft">
 <bean:define id="phones" name="person" property="phones" />
 <bean:size id="size" name="phones" />
 <logic:notEmpty name="phones">
@@ -51,15 +52,13 @@
 					
 				</logic:equal>
 			</td>
-			<td>
+			<td class="tdclear">
 				<html:link action="/partyContacts.do?method=prepareEditPartyContact" paramId="contactId" paramName="contact" paramProperty="idInternal">
 					<bean:message key="label.edit" />
-				</html:link>
-				,
+				</html:link>,
 				<html:link action="/partyContacts.do?method=prepareCreatePhone" paramId="contactId" paramName="contact" paramProperty="idInternal">
 					<bean:message key="label.add" />
-				</html:link>
-				,
+				</html:link>,
 				<html:link action="/partyContacts.do?method=deletePartyContact" paramId="contactId" paramName="contact" paramProperty="idInternal">
 					<bean:message key="label.clear" />
 				</html:link>
@@ -70,8 +69,8 @@
 <logic:empty name="phones">
 	<tr>
 		<th><bean:message key="label.partyContacts.Phone" />:</th>
-		<td class="acenter">-</td>
-		<td>
+		<td>-</td>
+		<td class="tdclear">
 			<html:link action="/partyContacts.do?method=prepareCreatePhone" paramId="contactId" paramName="contact" paramProperty="idInternal">
 				<bean:message key="label.add" />
 			</html:link>
@@ -94,15 +93,13 @@
 					
 				</logic:equal>
 			</td>
-			<td>
+			<td class="tdclear">
 				<html:link action="/partyContacts.do?method=prepareEditPartyContact" paramId="contactId" paramName="contact" paramProperty="idInternal">
 					<bean:message key="label.edit" />
-				</html:link>
-				,
+				</html:link>,
 				<html:link action="/partyContacts.do?method=prepareCreateMobilePhone">
 					<bean:message key="label.add" />
-				</html:link>
-				,
+				</html:link>,
 				<html:link action="/partyContacts.do?method=deletePartyContact" paramId="contactId" paramName="contact" paramProperty="idInternal">
 					<bean:message key="label.clear" />
 				</html:link>
@@ -113,8 +110,8 @@
 <logic:empty name="mobilePhones">
 	<tr>
 		<th><bean:message key="label.partyContacts.MobilePhone" />:</th>
-		<td class="acenter">-</td>
-		<td>
+		<td>-</td>
+		<td class="tdclear">
 			<html:link action="/partyContacts.do?method=prepareCreateMobilePhone" paramId="contactId" paramName="contact" paramProperty="idInternal">
 				<bean:message key="label.add" />
 			</html:link>
@@ -137,16 +134,14 @@
 					
 				</logic:equal>
 			</td>
-			<td>
+			<td class="tdclear">
 				<logic:notEqual name="contact" property="type.name" value="INSTITUTIONAL">
 					<html:link action="/partyContacts.do?method=prepareEditPartyContact" paramId="contactId" paramName="contact" paramProperty="idInternal">
 						<bean:message key="label.edit" />
-					</html:link>
-					,
+					</html:link>,
 					<html:link action="/partyContacts.do?method=prepareCreateEmailAddress">
 						<bean:message key="label.add" />
-					</html:link>
-					,
+					</html:link>,
 					<html:link action="/partyContacts.do?method=deletePartyContact" paramId="contactId" paramName="contact" paramProperty="idInternal">
 						<bean:message key="label.clear" />
 					</html:link>
@@ -163,8 +158,8 @@
 <logic:empty name="emailAddresses">
 	<tr>
 		<th><bean:message key="label.partyContacts.EmailAddress" />:</th>
-		<td class="acenter">-</td>
-		<td>
+		<td>-</td>
+		<td class="tdclear">
 			<html:link action="/partyContacts.do?method=prepareCreateEmailAddress" paramId="contactId" paramName="contact" paramProperty="idInternal">
 				<bean:message key="label.add" />
 			</html:link>
@@ -187,15 +182,13 @@
 					
 				</logic:equal>
 			</td>
-			<td>
+			<td class="tdclear">
 				<html:link action="/partyContacts.do?method=prepareEditPartyContact" paramId="contactId" paramName="contact" paramProperty="idInternal">
 					<bean:message key="label.edit" />
-				</html:link>
-				,
+				</html:link>,
 				<html:link action="/partyContacts.do?method=prepareCreateWebAddress">
 					<bean:message key="label.add" />
-				</html:link>
-				,
+				</html:link>,
 				<html:link action="/partyContacts.do?method=deletePartyContact" paramId="contactId" paramName="contact" paramProperty="idInternal">
 					<bean:message key="label.clear" />
 				</html:link>
@@ -206,8 +199,8 @@
 <logic:empty name="webAddresses">
 	<tr>
 		<th><bean:message key="label.partyContacts.WebAddress" />:</th>
-		<td class="acenter">-</td>
-		<td>
+		<td>-</td>
+		<td class="tdclear">
 			<html:link action="/partyContacts.do?method=prepareCreateWebAddress" paramId="contactId" paramName="contact" paramProperty="idInternal">
 				<bean:message key="label.add" />
 			</html:link>
@@ -216,18 +209,19 @@
 </logic:empty>
 </table>
 
-<br/>
-<table width="100%" cellpadding="0" cellspacing="0">
+
+<!-- Autorizações de Disponibilização de Informação -->
+<table class="mtop15" width="100%" cellpadding="0" cellspacing="0">
 	<tr>
 		<td class="infoop" width="25"><span class="emphasis-box">2</span></td>
 		<td class="infoop"><strong><bean:message key="label.person.information.to.publish" /></strong></td>
 	</tr>
 </table>
-<br />
+
 <fr:form action="/visualizePersonalInfo.do">
 	<fr:edit id="photo" name="UserView" property="person" schema="net.sourceforge.fenixedu.domain.Person.information.to.publish">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4 thleft thlight"/>
+			<fr:property name="classes" value="tstyle2 thleft thlight mbottom05"/>
 			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 		</fr:layout>
 	</fr:edit>
@@ -236,19 +230,19 @@
 	</html:submit>
 </fr:form>
 
-<br/>
-<table width="100%" cellpadding="0" cellspacing="0">
+
+<!-- Dados Pessoais -->
+<table class="mtop15" width="100%" cellpadding="0" cellspacing="0">
 	<tr>
 		<td class="infoop" width="25"><span class="emphasis-box">3</span></td>
 		<td class="infoop"><strong><bean:message key="label.person.title.personal.info" /></strong></td>
 	</tr>
 </table>
 <fr:form action="/visualizePersonalInfo.do">
-	<br/>
 	<bean:message key="label.homepage.name.instructions" bundle="HOMEPAGE_RESOURCES"/>
 	<fr:edit id="nickname" name="UserView" property="person" schema="net.sourceforge.fenixedu.domain.Person.nickname">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4 thleft thlight"/>
+			<fr:property name="classes" value="tstyle2 thleft thlight mbottom05"/>
 			<fr:property name="columnClasses" value=",,tdclear "/>
 		</fr:layout>
 	</fr:edit>
@@ -256,13 +250,16 @@
 		<bean:message key="person.homepage.update" bundle="HOMEPAGE_RESOURCES"/>
 	</html:submit>
 </fr:form>
+
 <fr:view name="UserView" property="person" schema="net.sourceforge.fenixedu.domain.Person.personal.info">
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle4 thleft thlight"/>
+		<fr:property name="classes" value="tstyle2 thleft thlight mtop15"/>
 	</fr:layout>	
 </fr:view>
 
-<table width="100%" cellpadding="0" cellspacing="0">
+
+<!-- Informação de Utilizador -->
+<table class="mtop15" width="100%" cellpadding="0" cellspacing="0">
 	<tr>
 		<td class="infoop" width="25"><span class="emphasis-box">4</span></td>
 		<td class="infoop"><strong><bean:message key="label.person.login.info" /></strong></td>
@@ -270,12 +267,13 @@
 </table>
 <fr:view name="UserView" property="person" schema="net.sourceforge.fenixedu.domain.Person.user.info">
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle4 thleft thlight"/>
+		<fr:property name="classes" value="tstyle2 thleft thlight"/>
 	</fr:layout>	
 </fr:view>
 
-<br/>
-<table width="100%" cellpadding="0" cellspacing="0">
+
+<!-- Filiação -->
+<table class="mtop15" width="100%" cellpadding="0" cellspacing="0">
 	<tr>
 		<td class="infoop" width="25"><span class="emphasis-box">5</span></td>
 		<td class="infoop"><strong><bean:message key="label.person.title.filiation" /></strong></td>
@@ -283,12 +281,13 @@
 </table>
 <fr:view name="UserView" property="person" schema="net.sourceforge.fenixedu.domain.Person.family">
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle4 thleft thlight"/>
+		<fr:property name="classes" value="tstyle2 thleft thlight"/>
 	</fr:layout>	
 </fr:view>
 
-<br/>
-<table width="100%" cellpadding="0" cellspacing="0">
+
+<!-- Residência -->
+<table class="mtop15" width="100%" cellpadding="0" cellspacing="0">
 	<tr>
 		<td class="infoop" width="25"><span class="emphasis-box">6</span></td>
 		<td class="infoop"><strong><bean:message key="label.person.title.addressInfo" /></strong></td>
@@ -297,7 +296,7 @@
 <logic:iterate id="address" name="UserView" property="person.physicalAddresses">
 	<fr:view name="address" schema="contacts.PhysicalAddress.view-for-student">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4 thleft thlight"/>
+			<fr:property name="classes" value="tstyle2 thleft thlight"/>
 		</fr:layout>	
 	</fr:view>
 </logic:iterate>
