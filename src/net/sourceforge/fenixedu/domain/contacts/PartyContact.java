@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.contacts;
 import java.util.Comparator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
@@ -12,7 +13,7 @@ public abstract class PartyContact extends PartyContact_Base {
     public static Comparator<PartyContact> COMPARATOR_BY_TYPE = new Comparator<PartyContact>() {
 	public int compare(PartyContact contact, PartyContact otherContact) {
 	    int result = contact.getType().compareTo(otherContact.getType());
-	    return (result == 0) ? contact.getIdInternal().compareTo(otherContact.getIdInternal()) : result;
+	    return (result == 0) ? DomainObject.COMPARATOR_BY_ID.compare(contact, otherContact) : result;
 	}};
     
     protected PartyContact() {
