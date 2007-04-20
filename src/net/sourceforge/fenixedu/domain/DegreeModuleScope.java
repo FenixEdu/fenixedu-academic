@@ -12,6 +12,12 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 
 public abstract class DegreeModuleScope {
 
+    static final protected Comparator<DomainObject> COMPARATOR_BY_ID = new Comparator<DomainObject>() {
+        public int compare(DomainObject o1, DomainObject o2) {
+	    return o1.getIdInternal().compareTo(o2.getIdInternal());
+        }
+    };
+
     public static final Comparator<DegreeModuleScope> COMPARATOR_BY_CURRICULAR_YEAR_AND_SEMESTER_AND_CURRICULAR_COURSE_NAME = new ComparatorChain();
     public static final Comparator<DegreeModuleScope> COMPARATOR_BY_NAME = new ComparatorChain();
     static {
@@ -20,7 +26,7 @@ public abstract class DegreeModuleScope {
         ((ComparatorChain) COMPARATOR_BY_CURRICULAR_YEAR_AND_SEMESTER_AND_CURRICULAR_COURSE_NAME).addComparator(new BeanComparator("curricularCourse.name", Collator.getInstance()));
         ((ComparatorChain) COMPARATOR_BY_CURRICULAR_YEAR_AND_SEMESTER_AND_CURRICULAR_COURSE_NAME).addComparator(DomainObject.COMPARATOR_BY_ID);
         ((ComparatorChain) COMPARATOR_BY_NAME).addComparator(new BeanComparator("curricularCourse.name", Collator.getInstance()));
-        ((ComparatorChain) COMPARATOR_BY_NAME).addComparator(DomainObject.COMPARATOR_BY_ID);
+        ((ComparatorChain) COMPARATOR_BY_NAME).addComparator(DegreeModuleScope.COMPARATOR_BY_ID);
     }
 
     public abstract Integer getIdInternal();
