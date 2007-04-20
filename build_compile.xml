@@ -365,8 +365,6 @@
 						   property="sibs.sourceInstitutionId"/>
 				<replacefilter token="@sibs.destinationInstitutionId@"
 						   property="sibs.destinationInstitutionId"/>
-				<replacefilter token="@webServices.external.urls@"
-						   property="webServices.external.urls"/>
 				<replacefilter token="@externalServices.StudentInfoByUsername.externalAppPassword@"
 						   property="externalServices.StudentInfoByUsername.externalAppPassword"/>
 				<replacefilter token="@object.id.execution.period.for.from.mark.sheet.managment@"
@@ -374,7 +372,11 @@
 				<replacefilter token="@error.if.deleted.object.not.disconnected@"
 						   property="error.if.deleted.object.not.disconnected"/>
 				<replacefilter token="@error.if.changing.deleted.object@"
-						   property="error.if.changing.deleted.object"/>
+						   property="error.if.changing.deleted.object"/>				
+				<replacefilter token="@webServices.external.urls@"
+						   property="webServices.external.urls"/>
+				<replacefilter token="@merge.units.emails@"
+						   property="merge.units.emails"/>
 			</replace>
 
 			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
@@ -406,6 +408,7 @@
 				<replacefilter token="@db.projectManagement.alias@"
 							   property="db.projectManagement.alias"/>
 			</replace>
+			
 			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
 								 propertyFile="build.properties">
 							<include name="assiduousness.properties"/>

@@ -1048,6 +1048,7 @@ public class Person extends Person_Base {
          * @return true if the person have been deleted, false otherwise
          */
     public void delete() {	
+	
 	if (!canBeDeleted()) {
 	    throw new DomainException("error.person.cannot.be.deleted");
 	}

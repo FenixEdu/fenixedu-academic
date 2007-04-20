@@ -16,68 +16,65 @@ public class Qualification extends Qualification_Base {
     }
 
     public Qualification(Person person, Country country, InfoQualification infoQualification) {
-	this();
-	if (person == null)
-	    throw new DomainException("The person should not be null!");
-	this.setPerson(person);
-	if (country != null)
-	    this.setCountry(country);
+	this();	
+	setPerson(person);
+	if (country != null) {
+	    setCountry(country);
+	}	
 	setBasicProperties(infoQualification);
     }
 
     public Qualification(Person person, PrecedentDegreeInformation precedentDegreeInformation) {
-	this();
+	this();	
+	setPerson(person);
+	setMark(precedentDegreeInformation.getConclusionGrade() == null ? null : precedentDegreeInformation.getConclusionGrade());
+	setSchool(precedentDegreeInformation.getInstitution() == null ? null : precedentDegreeInformation.getInstitution().getName());
+	setDegree(precedentDegreeInformation.getDegreeDesignation() == null ? null	: precedentDegreeInformation.getDegreeDesignation());
+	setDateYearMonthDay(precedentDegreeInformation.getConclusionYear() == null ? null : new YearMonthDay(precedentDegreeInformation.getConclusionYear(), 1, 1));
+	setCountry(precedentDegreeInformation.getCountry() == null ? null : precedentDegreeInformation.getCountry());
+    }
+
+    @Override
+    public void setPerson(Person person) {
 	if (person == null) {
 	    throw new DomainException("The person should not be null!");
 	}
-	this.setPerson(person);
-
-	this.setMark(precedentDegreeInformation.getConclusionGrade() == null ? null
-		: precedentDegreeInformation.getConclusionGrade());
-	this.setSchool(precedentDegreeInformation.getInstitution() == null ? null
-		: precedentDegreeInformation.getInstitution().getName());
-	this.setDegree(precedentDegreeInformation.getDegreeDesignation() == null ? null
-		: precedentDegreeInformation.getDegreeDesignation());
-	this.setDateYearMonthDay(precedentDegreeInformation.getConclusionYear() == null ? null
-		: new YearMonthDay(precedentDegreeInformation.getConclusionYear(), 1, 1));
-	this.setCountry(precedentDegreeInformation.getCountry() == null ? null
-		: precedentDegreeInformation.getCountry());
+	super.setPerson(person);
     }
-
-    public void delete() {
-	removePerson();
+    
+    public void delete() {	
+	super.setPerson(null);
 	removeCountry();
 	removeRootDomainObject();
 	super.deleteDomainObject();
     }
 
-    public void edit(InfoQualification infoQualification, Country country) {
-	// The country can be null
-	this.setBasicProperties(infoQualification);
-	if (country == null)
+    public void edit(InfoQualification infoQualification, Country country) {	
+	setBasicProperties(infoQualification);
+	if (country == null) {
 	    removeCountry();
-	else
-	    this.setCountry(country);
-    }
-
-    /* PRIVATE METHODS */
-    private void setBasicProperties(InfoQualification infoQualification) {
-	this.setBranch(infoQualification.getBranch());
-	this.setDate(infoQualification.getDate());
-	if (this.getDate() != null && !this.getDate().equals("")) {
-	    Calendar calendar = Calendar.getInstance();
-	    calendar.setTime(this.getDate());
-	    this.setYear(String.valueOf(calendar.get(Calendar.YEAR)));
 	} else {
-	    this.setYear(null);
+	    setCountry(country);
 	}
-	this.setDegree(infoQualification.getDegree());
-	this.setDegreeRecognition(infoQualification.getDegreeRecognition());
-	this.setEquivalenceDate(infoQualification.getEquivalenceDate());
-	this.setEquivalenceSchool(infoQualification.getEquivalenceSchool());
-	this.setMark(infoQualification.getMark());
-	this.setSchool(infoQualification.getSchool());
-	this.setSpecializationArea(infoQualification.getSpecializationArea());
-	this.setTitle(infoQualification.getTitle());
+    }
+    
+    private void setBasicProperties(InfoQualification infoQualification) {
+	setBranch(infoQualification.getBranch());
+	setDate(infoQualification.getDate());
+	if (getDate() != null && !getDate().equals("")) {
+	    Calendar calendar = Calendar.getInstance();
+	    calendar.setTime(getDate());
+	    setYear(String.valueOf(calendar.get(Calendar.YEAR)));
+	} else {
+	    setYear(null);
+	}
+	setDegree(infoQualification.getDegree());
+	setDegreeRecognition(infoQualification.getDegreeRecognition());
+	setEquivalenceDate(infoQualification.getEquivalenceDate());
+	setEquivalenceSchool(infoQualification.getEquivalenceSchool());
+	setMark(infoQualification.getMark());
+	setSchool(infoQualification.getSchool());
+	setSpecializationArea(infoQualification.getSpecializationArea());
+	setTitle(infoQualification.getTitle());
     }
 }

@@ -90,6 +90,12 @@ public class PhysicalAddress extends PhysicalAddress_Base {
     }
     
     @Override
+    public void deleteWihtoutCheckRules() {
+	removeCountryOfResidence();
+        super.deleteWihtoutCheckRules();
+    }
+    
+    @Override
     public void delete() {
         removeCountryOfResidence();
         super.delete();

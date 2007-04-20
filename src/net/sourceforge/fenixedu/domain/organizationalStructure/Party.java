@@ -270,7 +270,7 @@ abstract public class Party extends Party_Base {
 
     protected void delete() {
 	for (; !getAccounts().isEmpty(); getAccounts().get(0).delete());
-	for (; hasAnyPartyContacts(); getPartyContacts().get(0).delete());
+	for (; hasAnyPartyContacts(); getPartyContacts().get(0).deleteWihtoutCheckRules());
 	removePartyType();
 	removeRootDomainObject();
 	deleteDomainObject();

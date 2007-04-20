@@ -110,10 +110,17 @@ public abstract class PartyContact extends PartyContact_Base {
 	return false;
     }
     
+    public void deleteWihtoutCheckRules() {
+	processDelete();
+    }
+    
     public void delete() {
 	checkRulesToDelete();
-	setAnotherContactAsDefault();
+	processDelete();
+    }
 
+    private void processDelete() {
+	setAnotherContactAsDefault();
 	removeParty();
 	removeRootDomainObject();
 	super.deleteDomainObject();

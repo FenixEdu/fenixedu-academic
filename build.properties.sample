@@ -504,6 +504,13 @@ sibs.destinationInstitutionId=11111111
 
 webServices.external.urls=
 
+#----------------------------------------------------------------
+# Merge Units - Emails for log
+#----------------------------------------------------------------
+# merge.units.emails: comma separated emails of persons who want to receive emails about merge of units.
+#							 
+
+merge.units.emails=
 
 #------------------------------------------------------------------------------
 # Persistence delete error/warning configuration 

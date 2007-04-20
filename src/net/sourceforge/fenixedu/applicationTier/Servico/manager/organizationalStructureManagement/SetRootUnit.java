@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 public class SetRootUnit extends Service{
 
-    public void run(final Unit unit, final Boolean institutionUnit ){
+    public void run(final Unit unit, final Boolean institutionUnit){
 	
 	if (unit.isPlanetUnit()) {
 	    rootDomainObject.setEarthUnit(unit);
