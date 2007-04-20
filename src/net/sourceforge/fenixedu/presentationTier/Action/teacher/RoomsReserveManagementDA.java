@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGenericEvent;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.RoomsReserveBean;
-import net.sourceforge.fenixedu.domain.DomainObjectActionLog;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -151,7 +150,7 @@ public class RoomsReserveManagementDA extends FenixDispatchAction {
     private List<PunctualRoomsOccupationRequest> readAndSetPunctualRequests(HttpServletRequest request) {
 	Person person = getLoggedPerson(request);	
 	List<PunctualRoomsOccupationRequest> requests = person.getPunctualRoomsOccupationRequestsOrderByMoreRecentComment();		
-	CollectionPager<DomainObjectActionLog> collectionPager = new CollectionPager<DomainObjectActionLog>(requests != null ? requests : new ArrayList(), 10);
+	CollectionPager<PunctualRoomsOccupationRequest> collectionPager = new CollectionPager<PunctualRoomsOccupationRequest>(requests != null ? requests : new ArrayList<PunctualRoomsOccupationRequest>(), 10);
 	
 	final String pageNumberString = request.getParameter("pageNumber");
 	final Integer pageNumber = !StringUtils.isEmpty(pageNumberString) ? Integer.valueOf(pageNumberString) : Integer.valueOf(1); 

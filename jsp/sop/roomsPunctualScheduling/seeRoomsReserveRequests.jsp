@@ -172,7 +172,7 @@
 						-
 						</logic:empty>	
 					</td>					
-					<td class="aleft smalltxt">					
+					<td class="acenter smalltxt">					
 						<logic:notEmpty name="openedRequest" property="genericEvents">
 							<bean:message key="label.yes.capitalized" bundle="SOP_RESOURCES"/>
 						</logic:notEmpty>
