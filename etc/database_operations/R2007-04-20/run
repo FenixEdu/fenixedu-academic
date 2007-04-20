@@ -27,4 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
-
+execute "Change RootUnits links" alterTableParty.sql
