@@ -28,6 +28,7 @@ public class NotNeedToEnrollInCurricularCourse extends NotNeedToEnrollInCurricul
     public void delete() {
 	removeStudentCurricularPlan();
 	removeCurricularCourse();
+	removeRootDomainObject();
 	deleteDomainObject();
     }
 
