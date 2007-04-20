@@ -351,7 +351,7 @@
 						<bean:write name="adviseService" property="advise.student.number"/>
 					</td>
 					<td style="text-align:left">
-						<bean:write name="adviseService" property="advise.student.person.nome"/>
+						<bean:write name="adviseService" property="advise.student.person.name"/>
 					</td>
 					<td>
 						<bean:write name="adviseService" property="percentage"/>
