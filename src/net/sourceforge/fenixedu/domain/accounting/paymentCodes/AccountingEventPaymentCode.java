@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.domain.accounting.paymentCodes;
 
 import net.sourceforge.fenixedu.dataTransferObject.accounting.SibsTransactionDetailDTO;
-import net.sourceforge.fenixedu.domain.AccessibleItem;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
@@ -97,20 +96,17 @@ public class AccountingEventPaymentCode extends AccountingEventPaymentCode_Base 
 
     @Override
     protected void internalProcess(Person person, Money amount, DateTime whenRegistered,
-	    String sibsTransactionId) {
+	    String sibsTransactionId, String comments) {
 	final Event event = getAccountingEvent();
 	if (event.isCancelled()) {
-	    logger
-		    .warn("############################ PROCESSING CODE FOR CANCELLED EVENT ###############################");
-	    logger.warn("Event " + event.getIdInternal() + " for person "
-		    + event.getPerson().getIdInternal() + " is cancelled");
-	    logger
-		    .warn("################################################################################################");
-
+	    logger.warn("############################ PROCESSING CODE FOR CANCELLED EVENT ###############################");
+	    logger.warn("Event " + event.getIdInternal() + " for person " + event.getPerson().getIdInternal() + " is cancelled");
+	    logger.warn("Code Number: " + getCode());
+	    logger.warn("################################################################################################");
 	}
 
 	event.process(person.getUser(), this, amount, new SibsTransactionDetailDTO(whenRegistered,
-		sibsTransactionId, getCode()));
+		sibsTransactionId, getCode(), comments));
     }
 
     @Override

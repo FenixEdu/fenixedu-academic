@@ -11,14 +11,14 @@ public class SibsTransactionDetail extends SibsTransactionDetail_Base {
 	super();
     }
 
-    public SibsTransactionDetail(DateTime whenRegistered, String sibsTransactionId, String sibsCode) {
+    public SibsTransactionDetail(DateTime whenRegistered, String sibsTransactionId, String sibsCode, String comments) {
 	this();
-	init(whenRegistered, sibsTransactionId, sibsCode);
+	init(whenRegistered, sibsTransactionId, sibsCode, comments);
     }
 
-    protected void init(DateTime whenRegistered, String sibsTransactionId, String sibsCode) {
+    protected void init(DateTime whenRegistered, String sibsTransactionId, String sibsCode, String comments) {
 
-	super.init(whenRegistered, PaymentMode.ATM);
+	super.init(whenRegistered, PaymentMode.ATM, comments);
 
 	checkParameters(sibsTransactionId, sibsCode);
 

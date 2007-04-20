@@ -67,7 +67,7 @@ public class MasterDegreeInsurancePaymentCode extends MasterDegreeInsurancePayme
 
     @Override
     protected void internalProcess(Person responsiblePerson, Money amount, DateTime whenRegistered,
-	    String sibsTransactionId) {
+	    String sibsTransactionId, String comments) {
 	new InsuranceTransaction(amount.getAmount(), whenRegistered, PaymentType.SIBS,
 		responsiblePerson, getPersonAccount(), getExecutionYear(), getRegistration());
     }

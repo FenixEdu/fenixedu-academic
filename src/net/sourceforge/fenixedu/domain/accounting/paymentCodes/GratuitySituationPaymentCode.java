@@ -63,7 +63,7 @@ public class GratuitySituationPaymentCode extends GratuitySituationPaymentCode_B
 
     @Override
     protected void internalProcess(Person responsiblePerson, Money amount, DateTime whenRegistered,
-	    String sibsTransactionId) {
+	    String sibsTransactionId, String comments) {
 	getGratuitySituation()
 		.processAmount(responsiblePerson, amount, whenRegistered, PaymentType.SIBS);
     }

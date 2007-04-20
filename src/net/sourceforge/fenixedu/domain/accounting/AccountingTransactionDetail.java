@@ -14,10 +14,14 @@ public class AccountingTransactionDetail extends AccountingTransactionDetail_Bas
 	super.setOjbConcreteClass(this.getClass().getName());
 	super.setWhenProcessed(new DateTime());
     }
+    
+    public AccountingTransactionDetail(final DateTime whenRegistered, final PaymentMode paymentMode) {
+	this(whenRegistered, paymentMode, null);
+    }
 
-    public AccountingTransactionDetail(DateTime whenRegistered, PaymentMode paymentMode) {
+    public AccountingTransactionDetail(final DateTime whenRegistered, final PaymentMode paymentMode, final String comments) {
 	this();
-	init(whenRegistered, paymentMode);
+	init(whenRegistered, paymentMode, comments);
     }
 
     private void checkParameters(DateTime whenRegistered, PaymentMode paymentMode) {
@@ -33,12 +37,13 @@ public class AccountingTransactionDetail extends AccountingTransactionDetail_Bas
 	}
     }
 
-    protected void init(DateTime whenRegistered, PaymentMode paymentMode) {
+    protected void init(DateTime whenRegistered, PaymentMode paymentMode, final String comments) {
 
 	checkParameters(whenRegistered, paymentMode);
 
 	super.setWhenRegistered(whenRegistered);
 	super.setPaymentMode(paymentMode);
+	super.setComments(comments);
     }
 
     @Override

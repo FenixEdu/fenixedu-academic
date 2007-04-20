@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.accounting;
 
+import org.apache.commons.lang.StringUtils;
+
 import pt.utl.ist.fenix.tools.util.FileUtils;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -21,7 +23,7 @@ public class UploadSibsPaymentsFile extends Service {
 	for (final SibsIncommingPaymentFileDetailLine detailLine : sibsIncomingPaymentFile
 		.getDetailLines()) {
 	    getPaymentCode(detailLine).process(person, detailLine.getAmount(),
-		    detailLine.getWhenOccuredTransaction(), detailLine.getSibsTransactionId());
+		    detailLine.getWhenOccuredTransaction(), detailLine.getSibsTransactionId(), StringUtils.EMPTY);
 	}
     }
 
