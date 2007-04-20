@@ -202,10 +202,10 @@ public abstract class PostingRule extends PostingRule_Base {
 	    final SibsTransactionDetailDTO sibsTransactionDetailDTO = (SibsTransactionDetailDTO) transactionDetailDTO;
 	    return new SibsTransactionDetail(sibsTransactionDetailDTO.getWhenRegistered(),
 		    sibsTransactionDetailDTO.getSibsTransactionId(), sibsTransactionDetailDTO
-			    .getSibsCode());
+			    .getSibsCode(), sibsTransactionDetailDTO.getComments());
 	} else {
 	    return new AccountingTransactionDetail(transactionDetailDTO.getWhenRegistered(),
-		    transactionDetailDTO.getPaymentMode());
+		    transactionDetailDTO.getPaymentMode(), transactionDetailDTO.getComments());
 	}
     }
 

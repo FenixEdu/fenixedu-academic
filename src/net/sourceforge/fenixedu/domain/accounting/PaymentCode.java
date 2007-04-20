@@ -201,13 +201,13 @@ public abstract class PaymentCode extends PaymentCode_Base {
     }
 
     public void process(Person responsiblePerson, Money amount, DateTime whenRegistered,
-	    String sibsTransactionId) {
+	    String sibsTransactionId, String comments) {
 
 	if (isProcessed()) {
 	    return;
 	}
 
-	internalProcess(responsiblePerson, amount, whenRegistered, sibsTransactionId);
+	internalProcess(responsiblePerson, amount, whenRegistered, sibsTransactionId, comments);
 	setState(PaymentCodeState.PROCESSED);
     }
 
@@ -223,6 +223,6 @@ public abstract class PaymentCode extends PaymentCode_Base {
     }
 
     abstract protected void internalProcess(final Person person, final Money amount,
-	    final DateTime whenRegistered, final String sibsTransactionId);
+	    final DateTime whenRegistered, final String sibsTransactionId, final String comments);
 
 }
