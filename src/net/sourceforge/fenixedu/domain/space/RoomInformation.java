@@ -91,7 +91,7 @@ public class RoomInformation extends RoomInformation_Base {
 
     @Override
     public void setRoomClassification(RoomClassification roomClassification) {
-        if(!roomClassification.hasParentRoomClassification()) {
+        if(roomClassification != null && !roomClassification.hasParentRoomClassification()) {
             throw new DomainException("error.roomInformation.invalid.roomClassification");
         }
 	super.setRoomClassification(roomClassification);
