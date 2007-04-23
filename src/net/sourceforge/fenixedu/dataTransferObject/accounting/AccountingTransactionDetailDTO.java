@@ -15,12 +15,12 @@ public class AccountingTransactionDetailDTO implements Serializable {
     private String comments;
 
     public AccountingTransactionDetailDTO(DateTime whenRegistered, PaymentMode paymentMode) {
-	this(null, whenRegistered, paymentMode);
+	this(whenRegistered, paymentMode, null);
 
     }
 
-    public AccountingTransactionDetailDTO(String comments, DateTime whenRegistered,
-	    PaymentMode paymentMode) {
+    public AccountingTransactionDetailDTO(DateTime whenRegistered, PaymentMode paymentMode,
+	    String comments) {
 	this.comments = comments;
 	this.paymentMode = paymentMode;
 	this.whenRegistered = whenRegistered;

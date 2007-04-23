@@ -16,7 +16,7 @@ public class SibsTransactionDetailDTO extends AccountingTransactionDetailDTO {
 
     public SibsTransactionDetailDTO(DateTime whenRegistered, String sibsTransactionId,
 	    String sibsCode, String comments) {
-	super(comments, whenRegistered, PaymentMode.ATM);
+	super(whenRegistered, PaymentMode.ATM, comments);
 	this.sibsTransactionId = sibsTransactionId;
 	this.sibsCode = sibsCode;
 
