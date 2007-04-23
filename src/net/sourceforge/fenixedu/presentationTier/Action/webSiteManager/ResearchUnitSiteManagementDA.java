@@ -1,22 +1,18 @@
 package net.sourceforge.fenixedu.presentationTier.Action.webSiteManager;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
 
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.ResearchUnitSite;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Section;
-import net.sourceforge.fenixedu.domain.messaging.PartyAnnouncementBoard;
-import net.sourceforge.fenixedu.presentationTier.Action.manager.SiteManagementDA;
 
-public class ResearchUnitSiteManagementDA extends SiteManagementDA {
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+
+public class ResearchUnitSiteManagementDA extends CustomUnitSiteManagementDA {
 
 	public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {	
 		return mapping.findForward("editResearchSite");

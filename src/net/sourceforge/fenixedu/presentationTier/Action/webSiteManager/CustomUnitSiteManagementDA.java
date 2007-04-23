@@ -47,7 +47,7 @@ public abstract class CustomUnitSiteManagementDA extends SiteManagementDA {
             return null;
         }
         
-        return (DepartmentSite) RootDomainObject.getInstance().readSiteByOID(oid);
+        return (UnitSite) RootDomainObject.getInstance().readSiteByOID(oid);
     }
 
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {

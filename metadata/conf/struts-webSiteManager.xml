@@ -64,6 +64,10 @@
         <forward name="editSectionPermissions" path="manage-researchSite-editSectionPermissions"/>
         <forward name="editItemPermissions" path="manage-researchSite-editItemPermissions"/>
         <forward name="editFile" path="manage-researchSite-editFile"/>
+        <forward name="editIntroduction" path="researchSite-edit-introduction"/>
+        <forward name="editConfiguration" path="researchSite-edit-configuration"/>
+        <forward name="editLogo" path="researchSite-edit-logo"/>
+        <forward name="editBanners" path="researchSite-edit-banners"/>
 	  </action>
 	  
 	  <action path="/manageResearchUnitAnnouncements"
@@ -76,8 +80,8 @@
             <forward name="edit" path="research-announcements-edit-announcement"/>
             <forward name="viewAnnouncement" path="research-announcements-view-announcement"/>
       </action>
-	
-	  <action path="/announcementsManagement"
+		
+	<action path="/announcementsManagement"
               type="net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.WebSiteAnnouncementManagement"
               parameter="method"
               validate="true"

@@ -661,6 +661,14 @@
 	    	<slot name="administrativeOfficeType" />
     </schema>
 		
+	<schema name="showFooterLink" type="net.sourceforge.fenixedu.domain.UnitSiteLink">
+		<slot name="label" layout="link">
+			<property name="useParent" value="true"/>
+			<property name="linkFormat" value="${url}"/>
+			<property name="moduleRelative" value="false"/>
+			<property name="contextRelative" value="false"/> 
+		</slot>
+	</schema>	
 	&researcher;
 	&markSheet;
 	&messaging;
