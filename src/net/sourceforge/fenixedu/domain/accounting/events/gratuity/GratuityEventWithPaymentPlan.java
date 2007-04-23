@@ -305,6 +305,10 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
 
 	return false;
     }
+    
+    public List<Installment> getInstallments() {
+	return getGratuityPaymentPlan().getInstallmentsSortedByEndDate();
+    }
 
     public Set<Installment> getInstallmentsWithoutPenalty() {
 	final Set<Installment> result = new HashSet<Installment>();
