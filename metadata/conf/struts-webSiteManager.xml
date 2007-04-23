@@ -113,6 +113,7 @@
         <forward name="viewAnnouncement" path="department-announcements-view-announcement"/>
         <forward name="edit" path="department-announcements-edit-announcement"/>
     </action>
+    
     </action-mappings>
 
     <!-- ========== Controller Configuration ================================ -->

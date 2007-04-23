@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
+import net.sourceforge.fenixedu.dataTransferObject.person.PersonNameBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -56,7 +56,7 @@ public class ResearchUnitManagementDA extends FenixDispatchAction {
 	String unitId = request.getParameter("unitID");
 	ResearchUnit unit = (ResearchUnit) RootDomainObject.readDomainObjectByOID(ResearchUnit.class, Integer
 		.valueOf(unitId));
-	PersonBean bean = new PersonBean();
+	PersonNameBean bean = new PersonNameBean();
 
 	request.setAttribute("personBean", bean);
 	request.setAttribute("unit", unit);
@@ -68,7 +68,7 @@ public class ResearchUnitManagementDA extends FenixDispatchAction {
 
 	IViewState viewState = RenderUtils.getViewState("addManager");
 	if (viewState != null) {
-	    PersonBean bean = (PersonBean) viewState.getMetaObject().getObject();
+		PersonNameBean bean = (PersonNameBean) viewState.getMetaObject().getObject();
 	    String unitId = request.getParameter("unitID");
 	    ResearchUnit unit = (ResearchUnit) RootDomainObject.readDomainObjectByOID(ResearchUnit.class,
 		    Integer.valueOf(unitId));

@@ -32,7 +32,7 @@
 </logic:empty>
 </p>
 
-<fr:form action="<%= "researchUnitSiteManagement.do?method=addManager&amp;unitID=" + request.getParameter("unitID") %>">
+<fr:form action="<%= "/researchUnitSiteManagement.do?method=addManager&amp;unitID=" + request.getParameter("unitID") %>">
 <fr:edit id="addManager" name="personBean" schema="selectPerson" >
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle5"/>

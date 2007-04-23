@@ -457,8 +457,8 @@
 </schema>
 
 
-<schema name="selectPerson" type="net.sourceforge.fenixedu.dataTransferObject.person.PersonBean" bundle="MANAGER_RESOURCES">
-	<slot name="person" layout="autoComplete" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator" key="label.managerName">
+<schema name="selectPerson" type="net.sourceforge.fenixedu.dataTransferObject.person.PersonNameBean" bundle="MANAGER_RESOURCES">
+	<slot name="personName" layout="autoComplete" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator" key="label.managerName">
 		<property name="size" value="70"/>
 		<property name="rawSlotName" value="name"/>
 		<property name="indicatorShown" value="true"/>
