@@ -118,7 +118,7 @@
         <fr:property name="classes" value="tstyle5 thlight thright"/>
     </fr:layout>
     
-    <fr:destination name="functionalitySection.view" module="/manager/functionalities" path="/functionality/view.do?functionality=${functionality.idInternal}"/>
+    <fr:destination name="functionality.view" module="/manager/functionalities" path="/functionality/view.do?functionality=${functionality.idInternal}"/>
 </fr:view>
 
 <!-- Change item delete operation if possible -->
