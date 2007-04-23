@@ -12,8 +12,8 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 
 public abstract class DegreeModuleScope {
 
-    static final protected Comparator<DomainObject> COMPARATOR_BY_ID = new Comparator<DomainObject>() {
-        public int compare(DomainObject o1, DomainObject o2) {
+    static final protected Comparator<DegreeModuleScope> COMPARATOR_BY_ID = new Comparator<DegreeModuleScope>() {
+        public int compare(DegreeModuleScope o1, DegreeModuleScope o2) {
 	    return o1.getIdInternal().compareTo(o2.getIdInternal());
         }
     };
@@ -24,7 +24,7 @@ public abstract class DegreeModuleScope {
         ((ComparatorChain) COMPARATOR_BY_CURRICULAR_YEAR_AND_SEMESTER_AND_CURRICULAR_COURSE_NAME).addComparator(new BeanComparator("curricularYear"));
         ((ComparatorChain) COMPARATOR_BY_CURRICULAR_YEAR_AND_SEMESTER_AND_CURRICULAR_COURSE_NAME).addComparator(new BeanComparator("curricularSemester"));
         ((ComparatorChain) COMPARATOR_BY_CURRICULAR_YEAR_AND_SEMESTER_AND_CURRICULAR_COURSE_NAME).addComparator(new BeanComparator("curricularCourse.name", Collator.getInstance()));
-        ((ComparatorChain) COMPARATOR_BY_CURRICULAR_YEAR_AND_SEMESTER_AND_CURRICULAR_COURSE_NAME).addComparator(DomainObject.COMPARATOR_BY_ID);
+        ((ComparatorChain) COMPARATOR_BY_CURRICULAR_YEAR_AND_SEMESTER_AND_CURRICULAR_COURSE_NAME).addComparator(DegreeModuleScope.COMPARATOR_BY_ID);
         ((ComparatorChain) COMPARATOR_BY_NAME).addComparator(new BeanComparator("curricularCourse.name", Collator.getInstance()));
         ((ComparatorChain) COMPARATOR_BY_NAME).addComparator(DegreeModuleScope.COMPARATOR_BY_ID);
     }
