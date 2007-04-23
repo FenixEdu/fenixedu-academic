@@ -1139,7 +1139,14 @@
     </filterChain>
    	<filterChain>
         <name>ResearchUnitSiteAuthorization</name>
-        <expression>ManagerAuthorization || ResearchSiteManagerAuthorization</expression>
+        <expression>ManagerAuthorization || UnitSiteManagerAuthorization</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
+    </filterChain>
+   	<filterChain>
+        <name>UnitSiteManagerAuthorization</name>
+        <expression>UnitSiteManagerAuthorization</expression>
         <description/>
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>

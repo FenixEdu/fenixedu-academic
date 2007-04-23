@@ -125,6 +125,10 @@ public class FileValidator extends HtmlValidator {
             return;
         }
         
+        if (file == null) {
+            return;
+        }
+        
         if (getMaxSize() != null) {
             long size = file.getSize();
             long maxSize = convertedMaxSize();

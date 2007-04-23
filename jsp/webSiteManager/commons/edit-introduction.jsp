@@ -4,26 +4,32 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
+<bean:define id="site" name="site" type="net.sourceforge.fenixedu.domain.UnitSite"/>
+<bean:define id="actionName" name="siteActionName"/>
+<bean:define id="contextParam" name="siteContextParam"/>
+<bean:define id="contextParamValue" name="siteContextParamValue"/>
+<bean:define id="context" value="<%= contextParam + "=" + contextParamValue %>"/>
+
 <h2>
-    <bean:message key="title.departmentSite.site.information" bundle="WEBSITEMANAGER_RESOURCES"/>
+    <bean:message key="title.site.information" bundle="WEBSITEMANAGER_RESOURCES"/>
 </h2>
 
 <div class="infoop2 mbottom15">
     <p class="mvert0">
-        <bean:message key="label.departmentSite.info.information" bundle="WEBSITEMANAGER_RESOURCES"/>
+        <bean:message key="label.site.information" bundle="WEBSITEMANAGER_RESOURCES"/>
     </p>
 </div>
 
 <logic:present name="successful">
     <p>
         <span class="success0">
-            <bean:message key="message.departmentSite.information.changed" bundle="WEBSITEMANAGER_RESOURCES"/>
+            <bean:message key="message.site.information.changed" bundle="WEBSITEMANAGER_RESOURCES"/>
         </span>
     </p>
 </logic:present>
 
 <bean:define id="oid" name="site" property="idInternal"/>
-<fr:form action="<%= "/manageDepartmentSite.do?method=information&amp;oid=" + oid %>">
+<fr:form action="<%= String.format("%s?method=introduction&amp;%s", actionName, context) %>">
     <fr:edit name="site" slot="description">
         <fr:layout name="rich-text">
             <fr:property name="rows" value="20"/>

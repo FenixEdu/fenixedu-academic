@@ -17,18 +17,45 @@
         </html:link>
     </li>
     <li>
-        <html:link page="<%= "/manageDepartmentSite.do?method=information&amp;oid=" + oid %>">
-            <bean:message key="link.departmentSite.department.information" bundle="WEBSITEMANAGER_RESOURCES"/>
+        <html:link page="<%= "/manageDepartmentSite.do?method=introduction&amp;oid=" + oid %>">
+            <bean:message key="link.site.introduction" bundle="WEBSITEMANAGER_RESOURCES"/>
+        </html:link>
+    </li>
+    <%--
+    <li>
+        <html:link page="<%= "/manageDepartmentSite.do?method=manageConfiguration&amp;oid=" + oid %>">
+            <bean:message key="link.site.configuration" bundle="WEBSITEMANAGER_RESOURCES"/>
         </html:link>
     </li>
     <li>
+        <html:link page="<%= "/manageDepartmentSite.do?method=chooseLogo&amp;oid=" + oid %>">
+            <bean:message key="link.site.logo" bundle="WEBSITEMANAGER_RESOURCES"/>
+        </html:link>
+    </li>
+    <li>
+        <html:link page="<%= "/manageDepartmentSite.do?method=manageBanners&amp;oid=" + oid %>">
+            <bean:message key="link.site.banners" bundle="WEBSITEMANAGER_RESOURCES"/>
+        </html:link>
+    </li>
+    <li>
+        <html:link page="<%= "/manageDepartmentSite.do?method=topNavigation&amp;oid=" + oid %>">
+            <bean:message key="link.site.topNavigation" bundle="WEBSITEMANAGER_RESOURCES"/>
+        </html:link>
+    </li>
+    <li>
+        <html:link page="<%= "/manageDepartmentSite.do?method=footerNavigation&amp;oid=" + oid %>">
+            <bean:message key="link.site.footerNavigation" bundle="WEBSITEMANAGER_RESOURCES"/>
+        </html:link>
+    </li>
+    --%>
+    <li>
         <html:link page="<%= "/manageDepartmentSite.do?method=sections&amp;oid=" + oid %>">
-            <bean:message key="link.departmentSite.sectionsManagement" bundle="WEBSITEMANAGER_RESOURCES"/>
+            <bean:message key="link.site.sectionsManagement" bundle="WEBSITEMANAGER_RESOURCES"/>
         </html:link>
     </li>
     <li>
         <html:link page="<%= "/manageDepartmentSiteAnnouncements.do?method=viewBoards&amp;tabularVersion=true&amp;oid=" + oid %>">
-            <bean:message key="link.departmentSite.announcements" bundle="WEBSITEMANAGER_RESOURCES"/>
+            <bean:message key="link.site.announcements" bundle="WEBSITEMANAGER_RESOURCES"/>
         </html:link>
     </li>
 </ul>

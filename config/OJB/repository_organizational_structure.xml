@@ -124,3 +124,9 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.UnitNamePart" table="UNIT_NAME_PART">
     	
 </class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.UnitSiteBanner" table="UNIT_SITE_BANNER">
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.UnitSiteLink" table="UNIT_SITE_LINK">
+</class-descriptor>

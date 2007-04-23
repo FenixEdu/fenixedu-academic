@@ -41,6 +41,9 @@
     <extent-class class-ref="net.sourceforge.fenixedu.domain.ResearchUnitSite"/>
 </class-descriptor>
 
+<class-descriptor class="net.sourceforge.fenixedu.domain.UnitSiteBanner" table="UNIT_SITE_BANNER">
+</class-descriptor>
+
 <class-descriptor class="net.sourceforge.fenixedu.domain.DepartmentSite" table="SITE">
 </class-descriptor>
 

@@ -130,11 +130,18 @@
     <definition name="departmentSite-start" extends="definition.department.site.management">
         <put name="body" value="/webSiteManager/departmentSite/start.jsp"/>
     </definition>
-
-    <definition name="departmentSite-edit-information" extends="definition.department.site.management">
-        <put name="body" value="/webSiteManager/departmentSite/edit-information.jsp"/>
+    <definition name="departmentSite-edit-introduction" extends="definition.department.site.management">
+        <put name="body" value="/webSiteManager/commons/edit-introduction.jsp"/>
     </definition>
-    
+    <definition name="departmentSite-edit-configuration" extends="definition.department.site.management">
+        <put name="body" value="/webSiteManager/departmentSite/edit-configuration.jsp"/>
+    </definition>
+    <definition name="departmentSite-edit-logo" extends="definition.department.site.management">
+        <put name="body" value="/webSiteManager/commons/edit-logo.jsp"/>
+    </definition>
+    <definition name="departmentSite-edit-banners" extends="definition.department.site.management">
+        <put name="body" value="/webSiteManager/commons/edit-banners.jsp"/>
+    </definition>
     <definition name="departmentSite-sectionsManagement" extends="definition.department.site.management" >
         <put name="body" value="/commons/sites/sectionsManagement.jsp"/>
     </definition>

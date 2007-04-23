@@ -7,10 +7,6 @@
 <bean:define id="siteContextParam" value="oid" toScope="request"/>
 <bean:define id="siteContextParamValue" name="site" property="idInternal" toScope="request"/>
 
-<h2><bean:message key="label.WebSiteManagement"/></h2>
-
-<div class="mbottom05">
-    <strong>
-        <fr:view name="site" property="unit.nameWithAcronym"/>
-    </strong>
-</div>
+<h2>
+    <fr:view name="site" property="unit.nameWithAcronym"/>
+</h2>

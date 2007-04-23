@@ -16,6 +16,12 @@ public class DepartmentSite extends DepartmentSite_Base {
     public DepartmentSite(Department department) {
         super();
         
+        setShowSectionTeachers(true);
+        setShowSectionEmployees(true);
+        setShowSectionCourses(true);
+        setShowSectionStudents(true);
+        setShowSectionDegrees(true);
+        
         Unit unit = department.getDepartmentUnit();
         if (unit.hasSite()) {
             throw new DomainException("site.department.unit.already.has.site");
@@ -24,6 +30,36 @@ public class DepartmentSite extends DepartmentSite_Base {
         setUnit(department.getDepartmentUnit());
     }
 
+    @Override
+    public Boolean getShowSectionTeachers() {
+        Boolean value = super.getShowSectionTeachers();
+        return value == null ? true : value;
+    }
+    
+    @Override
+    public Boolean getShowSectionEmployees() {
+        Boolean value = super.getShowSectionEmployees();
+        return value == null ? true : value;
+    }
+    
+    @Override
+    public Boolean getShowSectionCourses() {
+        Boolean value = super.getShowSectionCourses();
+        return value == null ? true : value;
+    }
+    
+    @Override
+    public Boolean getShowSectionStudents() {
+        Boolean value = super.getShowSectionStudents();
+        return value == null ? true : value;
+    }
+    
+    @Override
+    public Boolean getShowSectionDegrees() {
+        Boolean value = super.getShowSectionDegrees();
+        return value == null ? true : value;
+    }
+    
     public Department getDepartment() {
         return getUnit().getDepartment();
     }

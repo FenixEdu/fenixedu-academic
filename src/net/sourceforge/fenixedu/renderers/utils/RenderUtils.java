@@ -224,7 +224,7 @@ public class RenderUtils {
         
         // TODO: use a separator different than ',' because the comma can be used as a flag in the format 
         
-        List args = new ArrayList();
+        List<Object> args = new ArrayList<Object>();
         StringBuilder builder = new StringBuilder();
         
         if (format != null) {

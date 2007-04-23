@@ -9,6 +9,8 @@
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.parking.ParkingFile"/>
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.tests.PictureMaterialFile"/>
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.thesis.ThesisFile"/>
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.UnitSiteBannerFile"/>
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.UnitSiteFile"/>
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.FileItem" table="FILE">
@@ -30,3 +32,7 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.tests.PictureMaterialFile" table="FILE"/>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.protocols.ProtocolFile" table="FILE"/>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.UnitSiteBannerFile" table="FILE"/>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.UnitSiteFile" table="FILE"/>

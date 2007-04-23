@@ -13,7 +13,7 @@
 
 	<ul>
         <li class="navheader">
-            <bean:message key="ist.unit.name"/>
+            <bean:message key="title.site.manage" bundle="WEBSITEMANAGER_RESOURCES"/>
         </li>
         	<logic:iterate id="announcementBoard" name="announcementBoards" type="net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard">
         		<li>

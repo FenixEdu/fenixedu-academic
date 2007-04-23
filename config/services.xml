@@ -11796,4 +11796,49 @@
 			<chain name="ResearchUnitSiteAuthorization"/>
 		</filterChains>
     </service>    
+	<service>
+        <name>ChangeUnitSiteLayout</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.site.ChangeUnitSiteLayout</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+		<filterChains>
+			<chain name="UnitSiteManagerAuthorization"/>
+		</filterChains>
+    </service>    
+	<service>
+        <name>UploadUnitSiteLogo</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.UploadUnitSiteLogo</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+		<filterChains>
+			<chain name="UnitSiteManagerAuthorization"/>
+		</filterChains>
+    </service>    
+	<service>
+        <name>CreateUnitSiteBanner</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.CreateUnitSiteBanner</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+		<filterChains>
+			<chain name="UnitSiteManagerAuthorization"/>
+		</filterChains>
+    </service>    
+	<service>
+        <name>DeleteUnitSiteBanner</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.DeleteUnitSiteBanner</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+		<filterChains>
+			<chain name="UnitSiteManagerAuthorization"/>
+		</filterChains>
+    </service>    
+	<service>
+        <name>UpdateUnitSiteBanner</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.UpdateUnitSiteBanner</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+		<filterChains>
+			<chain name="UnitSiteManagerAuthorization"/>
+		</filterChains>
+    </service>    
 </serviceDefinitions>

@@ -9,7 +9,7 @@ public class ProtocolFile extends ProtocolFile_Base {
 
     public ProtocolFile() {
         super();
-        setOjbConcreteClass(ProtocolFile.class.getName());
+        setOjbConcreteClass(getClass().getName());
     }
 
     public ProtocolFile(String filename, String displayName, String mimeType, String checksum,

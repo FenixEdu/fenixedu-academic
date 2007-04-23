@@ -1342,3 +1342,25 @@ div.showsection2 h1.section { color: #069; font: 18px/0.75em "bitstream vera san
 div.showsection2 h2.item { font: bold 14px "bitstream vera sans", "Trebuchet MS", Georgia, Arial, Helvetica, sans-serif; margin: 0 0 0.5em 0; color: #c30; }
 /* showsection3: item as h1 */
 div.showsection3 h2.item { color: #069; font: 18px/0.75em "bitstream vera sans", "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif; clear: both; }
+
+a.aimage img {
+padding: 0.5em;
+border: 2px solid #eee;
+}
+
+a:hover.aimage img {
+padding: 0.5em;
+border: 2px solid #888;
+}
+
+a.aimageselected img {
+padding: 0.5em;
+border: 2px solid #eee;
+background: #fafabb;
+}
+
+a:hover.aimageselected img {
+padding: 0.5em;
+border: 2px solid #888;
+background: #fafabb;
+}

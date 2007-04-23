@@ -783,5 +783,7 @@ Documentation:
     <renderer layout="scientific-journal-stage" type="java.lang.Object" class="net.sourceforge.fenixedu.presentationTier.renderers.ScientificJournalStageRenderer" />
     
     <renderer layout="event-stage" type="java.lang.Object" class="net.sourceforge.fenixedu.presentationTier.renderers.EventStageRenderer" />
-    
+
+    <renderer layout="webcolor" type="java.lang.String" class="net.sourceforge.fenixedu.presentationTier.renderers.WebcolorRenderer" />
+
 </renderers-config>

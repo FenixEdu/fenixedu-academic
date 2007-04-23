@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.domain.UnitSite;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
-public class ResearchSiteManagerAuthorizationFilter extends Filtro {
+public class UnitSiteManagerAuthorizationFilter extends Filtro {
 
     @Override
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {

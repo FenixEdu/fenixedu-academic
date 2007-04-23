@@ -11,6 +11,12 @@ public abstract class UnitSite extends UnitSite_Base {
     
     public UnitSite() {
         super();
+        
+        setPersonalizedLogo(false);
+        setShowIntroduction(true);
+        setShowBanner(true);
+        setShowAnnouncements(true);
+        setShowEvents(true);
     }
     
     @Override

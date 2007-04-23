@@ -27,4 +27,5 @@ function executeWithTempFile() {
 	echo
 }
 
-
+execute "Create banners and custom links for UnitSite" CreateUnitSiteArtifacts.sql
+execute "Add department site configuration" AddDepartmentSiteConfiguration.sql

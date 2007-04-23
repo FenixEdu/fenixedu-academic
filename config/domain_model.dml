@@ -189,6 +189,7 @@ valueType net.sourceforge.fenixedu.domain.protocols.util.ProtocolAction									
 valueType net.sourceforge.fenixedu.domain.research.activity.ResearchActivityStage								as ResearchActivityStage;
 valueType net.sourceforge.fenixedu.domain.contacts.PartyContactType												as PartyContactType;
 valueType net.sourceforge.fenixedu.domain.Language																as Language;
+valueType net.sourceforge.fenixedu.domain.UnitSiteLayoutType                                                              as UnitSiteLayoutType;
 
 /*
 *
@@ -2176,6 +2177,15 @@ class net.sourceforge.fenixedu.domain.File extends net.sourceforge.fenixedu.doma
 		Language language;
 	}
 
+	class net.sourceforge.fenixedu.domain.UnitSiteBannerFile extends net.sourceforge.fenixedu.domain.File {
+		Integer keyMainBanner;
+		Integer keyBackgroundBanner;
+	}
+
+	class net.sourceforge.fenixedu.domain.UnitSiteFile extends net.sourceforge.fenixedu.domain.File {
+		Integer keyUnitSite;
+	}
+	
 class net.sourceforge.fenixedu.domain.FileEntry extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyPerson;
     ByteArray content;
@@ -4616,13 +4626,42 @@ class net.sourceforge.fenixedu.domain.Site extends net.sourceforge.fenixedu.doma
 
 	class net.sourceforge.fenixedu.domain.UnitSite extends net.sourceforge.fenixedu.domain.Site {
 		Integer keyUnit;
+		Integer keyLogo;
+		
+		MultiLanguageString description;
+		Boolean personalizedLogo;
+		Boolean showBanner;
+		Boolean showIntroduction;
+		Boolean showAnnouncements;
+		Boolean showEvents;
+		UnitSiteLayoutType layout;
+	}
+
+	class net.sourceforge.fenixedu.domain.UnitSiteBanner extends net.sourceforge.fenixedu.domain.DomainObject {
+		Integer keySite;
+		Integer keyMainImage;
+		Integer keyBackgroundImage;
+	
+		String color;
+	}
+
+	class net.sourceforge.fenixedu.domain.UnitSiteLink extends net.sourceforge.fenixedu.domain.DomainObject {
+		Integer keyTopUnitSite;
+		Integer keyFooterUnitSite;
+	
+		String url;
+		MultiLanguageString label;
 	}
 
 	class net.sourceforge.fenixedu.domain.InstitutionSite extends net.sourceforge.fenixedu.domain.UnitSite {
 	}
 
 	class net.sourceforge.fenixedu.domain.DepartmentSite extends net.sourceforge.fenixedu.domain.UnitSite {
-		MultiLanguageString description;
+		Boolean showSectionTeachers;
+		Boolean showSectionEmployees;
+		Boolean showSectionCourses;
+		Boolean showSectionStudents;
+		Boolean showSectionDegrees;
 	}
 
 	class net.sourceforge.fenixedu.domain.ResearchUnitSite extends net.sourceforge.fenixedu.domain.UnitSite {
@@ -12710,3 +12749,52 @@ relation RootDomainObjectPartyContact {
 	}
 }
 
+relation UnitSiteHasBanners {
+	net.sourceforge.fenixedu.domain.UnitSite playsRole site;
+	net.sourceforge.fenixedu.domain.UnitSiteBanner playsRole banners {
+		multiplicity *;
+	}
+}
+
+relation UnitSiteBannerHasMainFile {
+	net.sourceforge.fenixedu.domain.UnitSiteBanner playsRole mainBanner;
+	net.sourceforge.fenixedu.domain.UnitSiteBannerFile playsRole mainImage;
+}
+
+relation UnitSiteBannerHasBackgroundFile {
+	net.sourceforge.fenixedu.domain.UnitSiteBanner playsRole backgroundBanner;
+	net.sourceforge.fenixedu.domain.UnitSiteBannerFile playsRole backgroundImage;
+}
+
+relation RootDomainObjectUnitSiteBanner {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.UnitSiteBanner playsRole unitSiteBanners  {
+		multiplicity *;
+	}
+}
+
+relation UnitSiteTopLinks {
+	net.sourceforge.fenixedu.domain.UnitSite playsRole topUnitSite;
+	net.sourceforge.fenixedu.domain.UnitSiteLink playsRole topLinks {
+		multiplicity *;
+	}
+}
+
+relation UnitSiteHasLogo {
+	net.sourceforge.fenixedu.domain.UnitSite playsRole unitSite;
+	net.sourceforge.fenixedu.domain.UnitSiteFile playsRole logo;
+}
+
+relation UnitSiteFooterLinks {
+	net.sourceforge.fenixedu.domain.UnitSite playsRole footerUnitSite;
+	net.sourceforge.fenixedu.domain.UnitSiteLink playsRole footerLinks {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectUnitSiteLink {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.UnitSiteLink playsRole unitSiteLinks  {
+		multiplicity *;
+	}
+}

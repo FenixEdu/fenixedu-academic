@@ -912,7 +912,7 @@
         <isTransactional>false</isTransactional>
     </filter>    
     <filter>
-        <name>ResearchSiteManagerAuthorization</name>
+        <name>UnitSiteManagerAuthorization</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.ResearchSiteManagerAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>

@@ -192,8 +192,10 @@ public class Section extends Section_Base {
         }
 
         // Delete Associations with Site
-        this.setSite(null);
+        removeSite();
 
+        removeSuperiorSection();
+        removeAvailabilityPolicy();
         removeRootDomainObject();
         super.deleteDomainObject();
     }
