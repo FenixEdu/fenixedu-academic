@@ -22,21 +22,23 @@ public class UpdateAndReadGratuitySituationsByStudentNumber extends Service {
 
     public List<InfoGratuitySituation> run(Integer studentNumber) throws ExcepcaoPersistencia {
         
-        Registration registration = Registration.readStudentByNumberAndDegreeType(studentNumber, DegreeType.MASTER_DEGREE);
-        List<StudentCurricularPlan> studentCurricularPlansList = registration.getStudentCurricularPlans();
-
-        List<InfoGratuitySituation> infoGratuitySituationsList = new ArrayList<InfoGratuitySituation>();
-
-        for (StudentCurricularPlan studentCurricularPlan : studentCurricularPlansList) {
-
-            List<GratuitySituation> gratuitySituations = studentCurricularPlan.getGratuitySituations();
-            for (GratuitySituation gratuitySituation : gratuitySituations) {
-                gratuitySituation.updateValues();
-                
-                infoGratuitySituationsList.add(InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree
-                        .newInfoFromDomain(gratuitySituation));
+	List<InfoGratuitySituation> infoGratuitySituationsList = new ArrayList<InfoGratuitySituation>();
+	
+        for (Registration registration : Registration.readByNumberAndDegreeType(studentNumber, DegreeType.MASTER_DEGREE)) {
+            List<StudentCurricularPlan> studentCurricularPlansList = registration.getStudentCurricularPlans();
+            
+            for (StudentCurricularPlan studentCurricularPlan : studentCurricularPlansList) {
+        	
+        	List<GratuitySituation> gratuitySituations = studentCurricularPlan.getGratuitySituations();
+        	for (GratuitySituation gratuitySituation : gratuitySituations) {
+        	    gratuitySituation.updateValues();
+        	    
+        	    infoGratuitySituationsList.add(InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree
+        		    .newInfoFromDomain(gratuitySituation));
+        	}
             }
-        }
+	    
+	}
 
         return infoGratuitySituationsList;
     }
