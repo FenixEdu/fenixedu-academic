@@ -1720,7 +1720,7 @@ public class Person extends Person_Base {
 	final Set<Entry> result = new HashSet<Entry>();
 
 	for (final Event event : getEventsSet()) {
-	    if (isPayableOnAdministrativeOffice(administrativeOffice, event)) {
+	    if (!event.isCancelled() && isPayableOnAdministrativeOffice(administrativeOffice, event)) {
 		result.addAll(event.getEntriesWithoutReceipt());
 	    }
 	}
