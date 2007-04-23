@@ -118,6 +118,30 @@
 		<put name="body" value="/commons/sites/editItemPermissions.jsp" />
     </definition>
 	
+	<definition name="research-announcements-list-boards" extends="definition.researchUnitSite.masterPage">
+		<put name="body" value="/messaging/announcements/listAnnouncementBoards.jsp" />
+	</definition>
+	
+	<definition name="research-site-no-boards" extends="definition.researchUnitSite.masterPage">
+		<put name="body" value="/webSiteManager/researchUnitSite/noBoards.jsp"/>
+	</definition>
+	
+	<definition name="research-announcements-list-announcements" extends="definition.researchUnitSite.masterPage">
+		<put name="body" value="/messaging/announcements/listBoardAnnouncements.jsp"/>
+	</definition>
+
+	<definition name="research-announcements-add-announcement" extends="definition.researchUnitSite.masterPage">
+		<put name="body" value="/messaging/announcements/addAnnouncement.jsp"/>
+	</definition>
+
+	<definition name="research-announcements-edit-announcement" extends="definition.researchUnitSite.masterPage">
+		<put name="body" value="/messaging/announcements/editAnnouncement.jsp"/>
+	</definition>
+	
+    <definition name="research-announcements-view-announcement" extends="definition.researchUnitSite.masterPage">
+        <put name="body" value="/messaging/announcements/viewAnnouncement.jsp" />
+    </definition>
+
 	<!-- ======  -->
 
    <!-- ==== Department Site === -->

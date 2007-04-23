@@ -942,6 +942,7 @@
 	        <forward name="site-item" path="view-researchUnit-item"/>
 	        <forward name="site-item-deny" path="view-researchUnit-item-deny"/>
 	        <forward name="site-item-adviseLogin" path="view-researchUnit-item-adviseLogin"/>
+	        <forward name="showBoardAnnouncements" path="show-research-unit-board-announcements"/>
         </action>
        
      </action-mappings>

@@ -5,3 +5,5 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
 <fr:view name="researchUnit" property="name"/>
+
+<fr:view name="researchUnit" property="boards"/>

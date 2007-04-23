@@ -110,7 +110,7 @@ public abstract class DepartmentBoardsDA extends AnnouncementManagement {
         Unit unit = getUnit(request);
         List<AnnouncementBoard> boards = new ArrayList<AnnouncementBoard>();
         
-        if (unit != null) {
+        if (unit == null) {
             return boards;
         }
 

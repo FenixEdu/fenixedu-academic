@@ -429,7 +429,12 @@
     <definition name="view-researchUnit-item-deny" extends="definition.public.researchUnitSite">
         <put name="body" value="/commons/sites/public/item-deny.jsp"/>
     </definition>
+    
     <definition name="view-researchUnit-item-adviseLogin" extends="definition.public.researchUnitSite">
         <put name="body" value="/commons/sites/public/item-adviseLogin.jsp"/>
+    </definition>
+    
+    <definition name="show-research-unit-board-announcements" extends="definition.public.researchUnitSite">
+        <put name="body" value="messaging/announcements/listAnnoouncements.jsp"/>
     </definition>
 </tiles-definitions>

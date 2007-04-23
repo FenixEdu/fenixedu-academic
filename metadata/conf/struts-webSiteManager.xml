@@ -66,7 +66,18 @@
         <forward name="editFile" path="manage-researchSite-editFile"/>
 	  </action>
 	  
-       <action path="/announcementsManagement"
+	  <action path="/manageResearchUnitAnnouncements"
+	   type="net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.ManageResearchUnitAnnouncementsDA"
+	   parameter="method">
+	   	  	<forward name="noBoards" path="research-site-no-boards"/>
+            <forward name="listAnnouncementBoards" path="research-announcements-list-boards"/>
+            <forward name="listAnnouncements" path="research-announcements-list-announcements"/>
+            <forward name="add" path="research-announcements-add-announcement"/>
+            <forward name="edit" path="research-announcements-edit-announcement"/>
+            <forward name="viewAnnouncement" path="research-announcements-view-announcement"/>
+      </action>
+	
+	  <action path="/announcementsManagement"
               type="net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.WebSiteAnnouncementManagement"
               parameter="method"
               validate="true"
@@ -117,6 +128,10 @@
         <forward name="edit" path="department-announcements-edit-announcement"/>
     </action>
     
+     <action path="/manageUnitAnnouncementBoard"
+        type="net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.ManagerAnnouncementForwardAction"
+		/>
+            
     </action-mappings>
 
     <!-- ========== Controller Configuration ================================ -->
