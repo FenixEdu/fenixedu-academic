@@ -31,10 +31,12 @@ public class EnrolStudentInWrittenEvaluation extends Service {
 
     private Registration findCorrectRegistration(final Student student, final Set<ExecutionCourse> associatedExecutionCoursesSet) {
 	for (final Registration registration : student.getRegistrationsSet()) {
-	    for (final Attends attends : registration.getAssociatedAttendsSet()) {
-		final ExecutionCourse executionCourse = attends.getExecutionCourse();
-		if (associatedExecutionCoursesSet.contains(executionCourse)) {
-		    return registration;
+	    if (registration.isActive()) {
+		for (final Attends attends : registration.getAssociatedAttendsSet()) {
+		    final ExecutionCourse executionCourse = attends.getExecutionCourse();
+		    if (associatedExecutionCoursesSet.contains(executionCourse)) {
+			return registration;
+		    }
 		}
 	    }
 	}
