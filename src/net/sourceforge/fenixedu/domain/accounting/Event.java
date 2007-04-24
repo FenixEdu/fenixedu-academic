@@ -276,6 +276,10 @@ public abstract class Event extends Event_Base {
 	return !getNonAdjustingTransactions().isEmpty();
     }
 
+    public boolean hasAnyPayments() {
+	return hasAnyNonAdjustingAccountingTransactions();
+    }
+
     public Money getPayedAmount() {
 	return getPayedAmount(null);
     }
