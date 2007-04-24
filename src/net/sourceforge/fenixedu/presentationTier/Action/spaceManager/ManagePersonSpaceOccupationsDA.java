@@ -85,8 +85,7 @@ public class ManagePersonSpaceOccupationsDA extends FenixDispatchAction {
 	final String spaceInformationIDString = request.getParameterMap().containsKey(
 		"spaceInformationID") ? request.getParameter("spaceInformationID") : (String) request
 		.getAttribute("spaceInformationID");
-	final Integer spaceInformationID = spaceInformationIDString != null ? Integer
-		.valueOf(spaceInformationIDString) : null;
+	final Integer spaceInformationID = spaceInformationIDString != null ? Integer.valueOf(spaceInformationIDString) : null;
 	return rootDomainObject.readSpaceInformationByOID(spaceInformationID);
     }
 
@@ -94,9 +93,7 @@ public class ManagePersonSpaceOccupationsDA extends FenixDispatchAction {
 	final String personSpaceOccupationIDString = request.getParameterMap().containsKey(
 		"spaceOccupationID") ? request.getParameter("spaceOccupationID") : (String) request
 		.getAttribute("spaceOccupationID");
-	final Integer personSpaceOccupationID = personSpaceOccupationIDString != null ? Integer
-		.valueOf(personSpaceOccupationIDString) : null;
-	return (PersonSpaceOccupation) rootDomainObject
-		.readSpaceOccupationByOID(personSpaceOccupationID);
+	final Integer personSpaceOccupationID = personSpaceOccupationIDString != null ? Integer.valueOf(personSpaceOccupationIDString) : null;
+	return (PersonSpaceOccupation) rootDomainObject.readResourceAllocationByOID(personSpaceOccupationID);
     }
 }

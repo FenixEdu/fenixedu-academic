@@ -103,7 +103,7 @@ public class CreateWrittenEvaluation extends Service {
     private List<OldRoom> readRooms(final List<String> roomIDs) throws ExcepcaoPersistencia, FenixServiceException {
         final List<OldRoom> result = new ArrayList<OldRoom>();
         for (final String roomID : roomIDs) {
-            final OldRoom room = (OldRoom) rootDomainObject.readSpaceByOID(Integer.valueOf(roomID));
+            final OldRoom room = (OldRoom) rootDomainObject.readResourceByOID(Integer.valueOf(roomID));
             if (room == null) {
                 throw new FenixServiceException("error.noRoom");
             }

@@ -169,7 +169,7 @@ public class RoomsPunctualSchedulingDA extends FenixDispatchAction {
 	if (selectedRooms != null && selectedRooms.length > 0) {	    		   
             for (int i = 0; i < selectedRooms.length; i++) {
         	Integer roomIdInternal = Integer.valueOf(selectedRooms[i]);
-        	OldRoom room = (OldRoom) rootDomainObject.readSpaceByOID(roomIdInternal);
+        	OldRoom room = (OldRoom) rootDomainObject.readResourceByOID(roomIdInternal);
         	bean.removeRoom(room);
             }
 	}

@@ -27,7 +27,7 @@ public class UnitSpaceOccupation extends UnitSpaceOccupation_Base {
 	    "space", "unit", "begin", "end" })
     public UnitSpaceOccupation(Unit unit, Space space, YearMonthDay begin, YearMonthDay end) {
 	super();
-	setSpace(space);
+	setResource(space);
 	setUnit(unit);
 	checkUnitSpaceOccupationIntersection(begin, end, space, unit);
 	super.setBegin(begin);
@@ -50,6 +50,11 @@ public class UnitSpaceOccupation extends UnitSpaceOccupation_Base {
 	super.setEnd(end);
     }
 
+    @Override
+    public boolean isUnitSpaceOccupation() {
+        return true;
+    }
+    
     @Override
     public void setUnit(Unit unit) {
 	if (unit == null) {

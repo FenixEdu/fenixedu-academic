@@ -13,13 +13,13 @@ import net.sourceforge.fenixedu.domain.space.OldRoom;
 
 public class LerAulasDeSalaEmSemestre extends Service {
 
-    public List run(InfoExecutionPeriod infoExecutionPeriod, InfoRoom infoRoom, Integer executionPeriodId) {
+    public List<InfoLesson> run(InfoExecutionPeriod infoExecutionPeriod, InfoRoom infoRoom, Integer executionPeriodId) {
     	
         if (executionPeriodId == null) {
             executionPeriodId = infoExecutionPeriod.getIdInternal();
         }
 
-    	final OldRoom room = (OldRoom) rootDomainObject.readSpaceByOID(infoRoom.getIdInternal());
+    	final OldRoom room = (OldRoom) rootDomainObject.readResourceByOID(infoRoom.getIdInternal());
     	final ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodId);
 
         final List<InfoLesson> infoAulas = new ArrayList<InfoLesson>();

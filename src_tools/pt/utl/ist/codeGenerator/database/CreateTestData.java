@@ -118,6 +118,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitClassification;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.resource.Resource;
 import net.sourceforge.fenixedu.domain.space.OldBuilding;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
@@ -364,8 +365,16 @@ public class CreateTestData {
         System.out.println("Deleting occupation periods.");
         for (final Set<OccupationPeriod> occupationPeriods = rootDomainObject.getOccupationPeriodsSet(); !occupationPeriods.isEmpty(); occupationPeriods.iterator().next().delete());
 
-        System.out.println("Deleting spaces.");
-        for (final Set<Space> spaces = rootDomainObject.getSpacesSet(); !spaces.isEmpty(); spaces.iterator().next().delete());
+        System.out.println("Deleting spaces.");        
+        Iterator<Resource> resourcesIterator = rootDomainObject.getResourcesIterator();
+        for (; resourcesIterator.hasNext() ;) {
+	    Resource resource = resourcesIterator.next();
+	    if(resource.isSpace()) {
+		resourcesIterator.remove();
+		((Space)resource).delete();
+	    }	    
+	}
+                
         System.out.println("Deleting campi.");
         for (final Set<Campus> campi = rootDomainObject.getCampussSet(); !campi.isEmpty(); campi.iterator().next().delete());
 
@@ -483,15 +492,15 @@ public class CreateTestData {
 
     private static Teacher createTeachers(final int i) {
         final Person person = createPerson("Guru Diplomado", "teacher", i);
-        final Employee employee = new Employee(person, Integer.valueOf(i), Boolean.TRUE);
+        new Employee(person, Integer.valueOf(i), Boolean.TRUE);
         final Teacher teacher = new Teacher(Integer.valueOf(i), person);
         person.addPersonRoleByRoleType(RoleType.EMPLOYEE);
         person.addPersonRoleByRoleType(RoleType.TEACHER);
         final Login login = person.getUser().readUserLoginIdentification();
         login.openLoginIfNecessary(RoleType.TEACHER);
-        final Contract contractWorking = new Contract(person, new YearMonthDay().minusYears(2), new YearMonthDay().plusYears(2), RootDomainObject.getInstance().getInstitutionUnit(), ContractType.WORKING);
-        final Contract contractSalary = new Contract(person, new YearMonthDay().minusYears(2), new YearMonthDay().plusYears(2), RootDomainObject.getInstance().getInstitutionUnit(), ContractType.SALARY);
-        final Contract contractMailing = new Contract(person, new YearMonthDay().minusYears(2), new YearMonthDay().plusYears(2), RootDomainObject.getInstance().getInstitutionUnit(), ContractType.MAILING);
+        new Contract(person, new YearMonthDay().minusYears(2), new YearMonthDay().plusYears(2), RootDomainObject.getInstance().getInstitutionUnit(), ContractType.WORKING);
+        new Contract(person, new YearMonthDay().minusYears(2), new YearMonthDay().plusYears(2), RootDomainObject.getInstance().getInstitutionUnit(), ContractType.SALARY);
+        new Contract(person, new YearMonthDay().minusYears(2), new YearMonthDay().plusYears(2), RootDomainObject.getInstance().getInstitutionUnit(), ContractType.MAILING);
         person.addPersonRoleByRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE);
         person.addPersonRoleByRoleType(RoleType.TIME_TABLE_MANAGER);
         person.addPersonRoleByRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE);
@@ -853,7 +862,7 @@ public class CreateTestData {
                     supportLessonDTO.setStartTime(new DateTime().withField(DateTimeFieldType.hourOfDay(), 20).toDate());
                     supportLessonDTO.setEndTime(new DateTime().withField(DateTimeFieldType.hourOfDay(), 21).toDate());
                     supportLessonDTO.setWeekDay(new DiaSemana(DiaSemana.SABADO));
-                    final SupportLesson supportLesson = SupportLesson.create(supportLessonDTO, professorship, RoleType.SCIENTIFIC_COUNCIL);
+                    SupportLesson.create(supportLessonDTO, professorship, RoleType.SCIENTIFIC_COUNCIL);
                 }
             }
         }

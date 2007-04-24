@@ -84,7 +84,7 @@
 <!ENTITY administrativeOffice SYSTEM "repository_administrativeOffice.xml">
 <!ENTITY serviceRequests SYSTEM "repository_serviceRequests.xml">
 <!ENTITY functionalities SYSTEM "repository_functionalities.xml">
-<!ENTITY material SYSTEM "repository_material.xml">
+<!ENTITY resource SYSTEM "repository_resource.xml">
 <!ENTITY teacherServiceDistribution SYSTEM "repository_teacher_service_distribution.xml">
 <!ENTITY parking SYSTEM "repository_parking.xml">
 <!ENTITY vigilancy SYSTEM "repository_vigilancy.xml">
@@ -187,7 +187,7 @@
 	&administrativeOffice;
 	&serviceRequests;
     &functionalities;
-    &material;
+    &resource;
     &teacherServiceDistribution;
     &parking;
 	&vigilancy;

@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+executeWithTempFile "Resources and Resources Allocation Refactorization" alterTableSpaceOccupation.sql

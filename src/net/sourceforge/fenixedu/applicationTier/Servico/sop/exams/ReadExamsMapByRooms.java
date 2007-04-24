@@ -34,11 +34,10 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadExamsMapByRooms extends Service {
 
-    public List run(InfoExecutionPeriod infoExecutionPeriod, List<InfoRoom> infoRooms) throws Exception {
+    public List<InfoRoomExamsMap> run(InfoExecutionPeriod infoExecutionPeriod, List<InfoRoom> infoRooms) throws Exception {
         final List<InfoRoomExamsMap> infoRoomExamMapList = new ArrayList<InfoRoomExamsMap>();
 
-        final InfoPeriod period = calculateExamsSeason(infoExecutionPeriod
-                .getInfoExecutionYear().getYear(), infoExecutionPeriod.getSemester().intValue());
+        final InfoPeriod period = calculateExamsSeason(infoExecutionPeriod.getInfoExecutionYear().getYear(), infoExecutionPeriod.getSemester().intValue());
 
         final Calendar startSeason1 = period.getStartDate();
         final Calendar endSeason2 = period.getEndDate();
@@ -71,9 +70,9 @@ public class ReadExamsMapByRooms extends Service {
         return infoRoomExamMapList;
     }
 
-    private List getInfoExams(final InfoRoom infoRoom, final ExecutionPeriod executionPeriod) {
+    private List<InfoExam> getInfoExams(final InfoRoom infoRoom, final ExecutionPeriod executionPeriod) {
         final List<InfoExam> result = new ArrayList<InfoExam>();
-        final OldRoom oldRoom = (OldRoom) rootDomainObject.readSpaceByOID(infoRoom.getIdInternal());
+        final OldRoom oldRoom = (OldRoom) rootDomainObject.readResourceByOID(infoRoom.getIdInternal());
         for (final RoomOccupation roomOccupation : oldRoom.getRoomOccupations()) {
             final WrittenEvaluation writtenEvaluation = roomOccupation.getWrittenEvaluation();
             if (writtenEvaluation != null && writtenEvaluation instanceof Exam) {

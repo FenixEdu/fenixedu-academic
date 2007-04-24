@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class DeleteBuilding extends Service {
 
     public void run(final Integer buildingId) throws ExcepcaoPersistencia, NotEmptyServiceException {
-        final OldBuilding building = (OldBuilding) rootDomainObject.readSpaceByOID(buildingId);
+        final OldBuilding building = (OldBuilding) rootDomainObject.readResourceByOID(buildingId);
         if (building.hasAnyRooms()) {
             throw new NotEmptyServiceException();
         }

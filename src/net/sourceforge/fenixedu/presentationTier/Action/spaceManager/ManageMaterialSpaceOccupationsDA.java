@@ -103,8 +103,7 @@ public class ManageMaterialSpaceOccupationsDA extends FenixDispatchAction {
         final String spaceInformationIDString = request.getParameterMap().containsKey(
                 "spaceInformationID") ? request.getParameter("spaceInformationID") : (String) request
                 .getAttribute("spaceInformationID");
-        final Integer spaceInformationID = spaceInformationIDString != null ? Integer
-                .valueOf(spaceInformationIDString) : null;
+        final Integer spaceInformationID = spaceInformationIDString != null ? Integer.valueOf(spaceInformationIDString) : null;
         return rootDomainObject.readSpaceInformationByOID(spaceInformationID);
     }
     
@@ -112,8 +111,7 @@ public class ManageMaterialSpaceOccupationsDA extends FenixDispatchAction {
         final String materialOccupationIDString = request.getParameterMap().containsKey(
                 "materialOccupationID") ? request.getParameter("materialOccupationID") : (String) request
                 .getAttribute("materialOccupationID");
-        final Integer materialOccupationID = materialOccupationIDString != null ? Integer
-                .valueOf(materialOccupationIDString) : null;
-        return (MaterialSpaceOccupation)rootDomainObject.readSpaceOccupationByOID(materialOccupationID);
+        final Integer materialOccupationID = materialOccupationIDString != null ? Integer.valueOf(materialOccupationIDString) : null;
+        return (MaterialSpaceOccupation) rootDomainObject.readResourceAllocationByOID(materialOccupationID);
     }
 }

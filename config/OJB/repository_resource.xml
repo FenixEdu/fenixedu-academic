@@ -1,0 +1,26 @@
+<class-descriptor class="net.sourceforge.fenixedu.domain.resource.Resource" table="RESOURCE">
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.material.Material" />
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.space.Space" />
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.resource.Vehicle" />
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.resource.Vehicle" table="RESOURCE">
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.material.Material" table="RESOURCE">
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.material.Extension" />   
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.material.Extension" table="RESOURCE">
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.material.PersonExtension" table="PERSON_EXTENSION">
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.resource.ResourceAllocation" table="RESOURCE_ALLOCATION">
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.resource.VehicleAllocation" />
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.space.SpaceOccupation" />    
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.resource.VehicleAllocation" table="RESOURCE_ALLOCATION">
+</class-descriptor>

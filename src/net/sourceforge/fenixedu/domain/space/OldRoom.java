@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.resource.Resource;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.TipoSala;
@@ -192,9 +193,9 @@ public class OldRoom extends OldRoom_Base {
 
     public static Set<OldRoom> getOldRooms() {
 	final Set<OldRoom> oldRooms = new HashSet<OldRoom>();
-	for (final Space space : RootDomainObject.getInstance().getSpacesSet()) {
-	    if (space instanceof OldRoom) {
-		OldRoom oldRoom = (OldRoom) space;
+	for (final Resource resource : RootDomainObject.getInstance().getResources()) {
+	    if (resource instanceof OldRoom) {
+		OldRoom oldRoom = (OldRoom) resource;
 		oldRooms.add(oldRoom);
 	    }
 	}

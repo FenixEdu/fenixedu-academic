@@ -366,7 +366,8 @@ public class MarkSheet extends MarkSheet_Base {
         if (!getCanBeDeleted()) {
             throw new DomainException("error.markSheet.cannot.be.deleted");
         }
-        
+               
+        removeExecutionPeriod();
         removeCurricularCourse();
         removeResponsibleTeacher();
         removeConfirmationEmployee();

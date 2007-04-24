@@ -1,0 +1,31 @@
+alter table SPACE_OCCUPATION rename to RESOURCE_ALLOCATION;
+alter table SPACE rename to RESOURCE;
+
+alter table RESOURCE_ALLOCATION add column BEGIN_DATE_TIME timestamp;
+alter table RESOURCE_ALLOCATION add column END_DATE_TIME timestamp;
+alter table RESOURCE_ALLOCATION add column KEY_REQUESTOR int(11) unsigned default NULL;
+alter table RESOURCE_ALLOCATION add column KEY_RESOURCE int(11) unsigned default NULL;
+alter table RESOURCE_ALLOCATION add key KEY_REQUESTOR (KEY_REQUESTOR);
+alter table RESOURCE_ALLOCATION add key KEY_RESOURCE (KEY_RESOURCE);
+
+alter table RESOURCE add column NUMBER_PLATE varchar(30); 
+alter table RESOURCE add column MAKE varchar(30);
+alter table RESOURCE add column MODEL varchar(30);
+alter table RESOURCE add column BAR_CODE_NUMBER int(11) default NULL;
+alter table RESOURCE add column NUMBER int(11) default NULL;
+alter table RESOURCE add column CEASE varchar(10) default NULL;
+alter table RESOURCE add column ACQUISITION varchar(10) default NULL;
+alter table RESOURCE add column KEY_OWNER int(11) unsigned default NULL;
+alter table RESOURCE add key KEY_OWNER (KEY_OWNER);
+
+update RESOURCE_ALLOCATION set RESOURCE_ALLOCATION.KEY_RESOURCE = RESOURCE_ALLOCATION.KEY_SPACE where RESOURCE_ALLOCATION.KEY_SPACE is not NULL;
+alter table RESOURCE_ALLOCATION drop column KEY_SPACE;
+
+alter table RESOURCE add column KEY_OLDER_MATERIAL int(11) default NULL;
+insert into RESOURCE (KEY_OLDER_MATERIAL, OJB_CONCRETE_CLASS, KEY_OWNER, BAR_CODE_NUMBER, NUMBER, ACQUISITION, CEASE) select MATERIAL.ID_INTERNAL, MATERIAL.OJB_CONCRETE_CLASS, MATERIAL.KEY_OWNER, MATERIAL.BAR_CODE_NUMBER, MATERIAL.NUMBER, MATERIAL.ACQUISITION, MATERIAL.CEASE from MATERIAL;
+select concat('update RESOURCE_ALLOCATION set RESOURCE_ALLOCATION.KEY_EXTENSION=' , RESOURCE.ID_INTERNAL , ' where RESOURCE_ALLOCATION.KEY_EXTENSION = ' , RESOURCE.KEY_OLDER_MATERIAL , ' and RESOURCE_ALLOCATION.OJB_CONCRETE_CLASS like \"%Extension%\";') as "" from RESOURCE where RESOURCE.OJB_CONCRETE_CLASS like '%Extension%';
+alter table RESOURCE drop column KEY_OLDER_MATERIAL;
+
+drop table MATERIAL;
+
+delete from OJB_HL_SEQ;

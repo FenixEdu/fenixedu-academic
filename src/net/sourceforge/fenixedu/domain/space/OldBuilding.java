@@ -8,6 +8,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.resource.Resource;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -37,9 +38,9 @@ public class OldBuilding extends OldBuilding_Base {
     
     public static Set<OldBuilding> getOldBuildings() {
 	final Set<OldBuilding> oldBuildings = new HashSet<OldBuilding>();
-	for (Space space : RootDomainObject.getInstance().getSpacesSet()) {
-	    if (space instanceof OldBuilding) {
-		OldBuilding oldBuilding = (OldBuilding) space;
+	for (Resource resource : RootDomainObject.getInstance().getResources()) {
+	    if (resource instanceof OldBuilding) {
+		OldBuilding oldBuilding = (OldBuilding) resource;
 		oldBuildings.add(oldBuilding);
 	    }
 	}

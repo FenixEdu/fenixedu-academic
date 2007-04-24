@@ -344,7 +344,8 @@
 	<slot name="materialType" layout="menu-select-postback" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">				
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.spaceManager.MaterialTypes"/>
 		<property name="eachLayout" value="label-to-space-management"/>
-		<property name="destination" value="postBack"/>	
+		<property name="destination" value="postBack"/>
+		<property name="saveOptions" value="true"/>	
     </slot>        
 </schema>
 <schema name="AddNewMaterialSpaceOccupation" type="net.sourceforge.fenixedu.domain.space.MaterialSpaceOccupation" bundle="SPACE_RESOURCES">

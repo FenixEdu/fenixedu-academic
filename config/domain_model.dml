@@ -2339,24 +2339,6 @@ class net.sourceforge.fenixedu.domain.Mark extends net.sourceforge.fenixedu.doma
 		YearMonthDay whenSubmitedYearMonthDay;
 	}
 
-class net.sourceforge.fenixedu.domain.material.Material extends net.sourceforge.fenixedu.domain.DomainObject {
-	String ojbConcreteClass;
-	Integer keyOwner;
-	Integer barCodeNumber;
-	YearMonthDay acquisition;
-	YearMonthDay cease;
-}
-	class net.sourceforge.fenixedu.domain.material.Extension extends net.sourceforge.fenixedu.domain.material.Material {
-		Integer number;	
-	}			
-
-class net.sourceforge.fenixedu.domain.material.PersonExtension extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer keyExtension;
-	Integer keyPerson;
-	YearMonthDay begin;
-	YearMonthDay end;
-}
-
 class net.sourceforge.fenixedu.domain.MasterDegreeCandidate extends net.sourceforge.fenixedu.domain.DomainObject {
 	Double average;
 	String specializationArea;
@@ -2898,42 +2880,61 @@ class net.sourceforge.fenixedu.domain.ScientificArea extends net.sourceforge.fen
 	String name;
 }
 
-class net.sourceforge.fenixedu.domain.space.Space extends net.sourceforge.fenixedu.domain.DomainObject {
-	String ojbConcreteClass;
-	Integer keySuroundingSpace;
-	YearMonthDay createdOn;
-	Group personOccupationsAccessGroup;
-	Group extensionOccupationsAccessGroup;
-	Group spaceManagementAccessGroup;
+class net.sourceforge.fenixedu.domain.resource.Resource extends net.sourceforge.fenixedu.domain.DomainObject {
+	String ojbConcreteClass;	
 }
-	class net.sourceforge.fenixedu.domain.space.Campus extends net.sourceforge.fenixedu.domain.space.Space {
-		Integer keyOldCampus;
+
+	class net.sourceforge.fenixedu.domain.resource.Vehicle extends net.sourceforge.fenixedu.domain.resource.Resource {
+		String numberPlate;
+		String make;
+		String model;		 
 	}
 
-	class net.sourceforge.fenixedu.domain.space.Building extends net.sourceforge.fenixedu.domain.space.Space {
+	class net.sourceforge.fenixedu.domain.material.Material extends net.sourceforge.fenixedu.domain.resource.Resource {
+		Integer keyOwner;
+		Integer barCodeNumber;
+		YearMonthDay acquisition;
+		YearMonthDay cease;
 	}
+		class net.sourceforge.fenixedu.domain.material.Extension extends net.sourceforge.fenixedu.domain.material.Material {
+			Integer number;	
+		}			
 
-	class net.sourceforge.fenixedu.domain.space.OldBuilding extends net.sourceforge.fenixedu.domain.space.Building {
-		String name;
-		Integer keyCampus;
+	class net.sourceforge.fenixedu.domain.space.Space extends net.sourceforge.fenixedu.domain.resource.Resource {	
+		Integer keySuroundingSpace;
+		YearMonthDay createdOn;
+		Group personOccupationsAccessGroup;
+		Group extensionOccupationsAccessGroup;
+		Group spaceManagementAccessGroup;
 	}
-
-	class net.sourceforge.fenixedu.domain.space.Floor extends net.sourceforge.fenixedu.domain.space.Space {
-	}
-
-	class net.sourceforge.fenixedu.domain.space.Room extends net.sourceforge.fenixedu.domain.space.Space {
-		Integer normalCapacity;
-		Integer examCapacity;
-	}
-
-	class net.sourceforge.fenixedu.domain.space.OldRoom extends net.sourceforge.fenixedu.domain.space.Room {
-		Integer keyBuilding;
-		String name;
-		Integer capacidadeNormal;
-		Integer capacidadeExame;
-		Integer piso;
-	    TipoSala tipo;
-	}
+		class net.sourceforge.fenixedu.domain.space.Campus extends net.sourceforge.fenixedu.domain.space.Space {
+			Integer keyOldCampus;
+		}
+	
+		class net.sourceforge.fenixedu.domain.space.Building extends net.sourceforge.fenixedu.domain.space.Space {
+		}
+	
+		class net.sourceforge.fenixedu.domain.space.OldBuilding extends net.sourceforge.fenixedu.domain.space.Building {
+			String name;
+			Integer keyCampus;
+		}
+	
+		class net.sourceforge.fenixedu.domain.space.Floor extends net.sourceforge.fenixedu.domain.space.Space {
+		}
+	
+		class net.sourceforge.fenixedu.domain.space.Room extends net.sourceforge.fenixedu.domain.space.Space {
+			Integer normalCapacity;
+			Integer examCapacity;
+		}
+	
+		class net.sourceforge.fenixedu.domain.space.OldRoom extends net.sourceforge.fenixedu.domain.space.Room {
+			Integer keyBuilding;
+			String name;
+			Integer capacidadeNormal;
+			Integer capacidadeExame;
+			Integer piso;
+		    TipoSala tipo;
+		}
 
 
 class net.sourceforge.fenixedu.domain.space.SpaceInformation extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -2970,44 +2971,59 @@ class net.sourceforge.fenixedu.domain.space.SpaceInformation extends net.sourcef
 		Integer keyRoomClassification;
 	}
 
-
-class net.sourceforge.fenixedu.domain.space.SpaceOccupation extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer keySpace;
-	String ojbConcreteClass;
+class net.sourceforge.fenixedu.domain.material.PersonExtension extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyExtension;
+	Integer keyPerson;
+	YearMonthDay begin;
+	YearMonthDay end;
 }
 
-	class net.sourceforge.fenixedu.domain.space.MaterialSpaceOccupation extends net.sourceforge.fenixedu.domain.space.SpaceOccupation {
-		YearMonthDay begin;
-		YearMonthDay end;
-	}
-		class net.sourceforge.fenixedu.domain.space.ExtensionSpaceOccupation extends net.sourceforge.fenixedu.domain.space.MaterialSpaceOccupation {
-		Integer keyExtension;
+class net.sourceforge.fenixedu.domain.resource.ResourceAllocation extends net.sourceforge.fenixedu.domain.DomainObject {
+	String ojbConcreteClass;
+	Integer keyResource;
+}
+
+	class net.sourceforge.fenixedu.domain.resource.VehicleAllocation extends net.sourceforge.fenixedu.domain.resource.ResourceAllocation {			
+		DateTime beginDateTime;
+		DateTime endDateTime;		
+		Integer keyRequestor;
 	}
 
-	class net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation extends net.sourceforge.fenixedu.domain.space.SpaceOccupation {
-		YearMonthDay begin;
-		YearMonthDay end;
-		Integer keyPerson;
-	}
-
-	class net.sourceforge.fenixedu.domain.space.RoomOccupation extends net.sourceforge.fenixedu.domain.DomainObject {		
-		Integer keyRoom;
-		Integer keyPeriod;	
-		Integer keyWrittenEvaluation;
-	    Integer keyLesson;	    
-    	Integer keyGenericEvent;
-	    DiaSemana dayOfWeek;
-		HourMinuteSecond startTimeDateHourMinuteSecond;
-		HourMinuteSecond endTimeDateHourMinuteSecond;	    
-		Boolean dailyFrequencyMarkSunday;
-		Boolean dailyFrequencyMarkSaturday;
-	}
+	class net.sourceforge.fenixedu.domain.space.SpaceOccupation extends net.sourceforge.fenixedu.domain.resource.ResourceAllocation {		
+	}	
 		
-	class net.sourceforge.fenixedu.domain.space.UnitSpaceOccupation extends net.sourceforge.fenixedu.domain.space.SpaceOccupation {
-		YearMonthDay begin;
-		YearMonthDay end;
-		Integer keyUnit;
-	}
+		class net.sourceforge.fenixedu.domain.space.MaterialSpaceOccupation extends net.sourceforge.fenixedu.domain.space.SpaceOccupation {
+			YearMonthDay begin;
+			YearMonthDay end;
+		}
+			class net.sourceforge.fenixedu.domain.space.ExtensionSpaceOccupation extends net.sourceforge.fenixedu.domain.space.MaterialSpaceOccupation {
+				Integer keyExtension; 				
+			}
+	
+		class net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation extends net.sourceforge.fenixedu.domain.space.SpaceOccupation {
+			YearMonthDay begin;
+			YearMonthDay end;
+			Integer keyPerson;
+		}
+		
+		class net.sourceforge.fenixedu.domain.space.UnitSpaceOccupation extends net.sourceforge.fenixedu.domain.space.SpaceOccupation {
+			YearMonthDay begin;
+			YearMonthDay end;
+			Integer keyUnit;
+		}
+	
+		class net.sourceforge.fenixedu.domain.space.RoomOccupation extends net.sourceforge.fenixedu.domain.DomainObject {					
+			Integer keyRoom;
+			Integer keyPeriod;	
+			Integer keyWrittenEvaluation;
+		    Integer keyLesson;	    
+	    	Integer keyGenericEvent;
+		    DiaSemana dayOfWeek;
+			HourMinuteSecond startTimeDateHourMinuteSecond;
+			HourMinuteSecond endTimeDateHourMinuteSecond;	    
+			Boolean dailyFrequencyMarkSunday;
+			Boolean dailyFrequencyMarkSaturday;
+		}			
 
 class net.sourceforge.fenixedu.domain.space.SpaceResponsibility extends net.sourceforge.fenixedu.domain.DomainObject {
 	YearMonthDay begin;
@@ -7784,11 +7800,18 @@ relation SpaceSpaceInformation {
 	net.sourceforge.fenixedu.domain.space.Space playsRole space;
 }
 
-relation SpaceSpaceOccupation {
-	net.sourceforge.fenixedu.domain.space.SpaceOccupation playsRole spaceOccupations {
+relation ResourceAllocationResource {	
+	net.sourceforge.fenixedu.domain.resource.Resource playsRole resource;
+	net.sourceforge.fenixedu.domain.resource.ResourceAllocation playsRole resourceAllocations {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.space.Space playsRole space;
+}
+
+relation ExtensionSpaceOccupationExtension {
+	net.sourceforge.fenixedu.domain.material.Extension playsRole extension;
+	net.sourceforge.fenixedu.domain.space.ExtensionSpaceOccupation playsRole extensionSpaceOccupations {
+		multiplicity *;
+	}
 }
 
 relation SpaceSpaceResponsibility {
@@ -10573,13 +10596,6 @@ relation RootDomainObjectGuide {
 	}
 }
 
-relation RootDomainObjectSpace {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.space.Space playsRole spaces {
-		multiplicity *;
-	}
-}
-
 relation RootDomainObjectGroupProposal {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal playsRole groupProposals {
@@ -10706,9 +10722,9 @@ relation RootDomainObjectEnrolmentEquivalence {
 	}
 }
 
-relation RootDomainObjectSpaceOccupation {
+relation RootDomainObjectResourceAllocation {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.space.SpaceOccupation playsRole spaceOccupations {
+	net.sourceforge.fenixedu.domain.resource.ResourceAllocation playsRole resourceAllocations {
 		multiplicity *;
 	}
 }
@@ -11577,9 +11593,9 @@ relation ExecutionYearEnrolmentDecalrationRequest {
 	}
 }
 
-relation RootDomainObjectMaterial {
+relation RootDomainObjectResource {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.material.Material playsRole materials {
+	net.sourceforge.fenixedu.domain.resource.Resource playsRole resources {
 		multiplicity *;
 	}
 }
@@ -11587,13 +11603,6 @@ relation RootDomainObjectMaterial {
 relation MaterialUnit {
 	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole owner;
 	net.sourceforge.fenixedu.domain.material.Material playsRole materials {
-		multiplicity *;
-	}
-}
-
-relation ExtensionSpaceOccupationExtension {
-	net.sourceforge.fenixedu.domain.material.Extension playsRole extension;
-	net.sourceforge.fenixedu.domain.space.ExtensionSpaceOccupation playsRole extensionSpaceOccupations {
 		multiplicity *;
 	}
 }
@@ -12749,6 +12758,13 @@ relation PartyPartyContact {
 relation RootDomainObjectPartyContact {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.contacts.PartyContact playsRole partyContacts {
+		multiplicity *;
+	}
+}
+
+relation VehicleAllocationRequestor {
+	net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole requestor;
+	net.sourceforge.fenixedu.domain.resource.VehicleAllocation playsRole vehicleAllocations {
 		multiplicity *;
 	}
 }

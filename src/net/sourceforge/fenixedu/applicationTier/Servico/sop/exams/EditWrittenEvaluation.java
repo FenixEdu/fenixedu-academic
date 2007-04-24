@@ -106,7 +106,7 @@ public class EditWrittenEvaluation extends Service {
 	    FenixServiceException {
 	final List<OldRoom> result = new ArrayList<OldRoom>();
 	for (final String roomID : roomIDs) {
-	    final OldRoom room = (OldRoom) rootDomainObject.readSpaceByOID(Integer.valueOf(roomID));
+	    final OldRoom room = (OldRoom) rootDomainObject.readResourceByOID(Integer.valueOf(roomID));
 	    if (room == null) {
 		throw new FenixServiceException("error.noRoom");
 	    }

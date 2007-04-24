@@ -19,7 +19,7 @@ public class ExtensionSpaceOccupation extends ExtensionSpaceOccupation_Base {
     public ExtensionSpaceOccupation(Space space, Extension extension, YearMonthDay begin,
 	    YearMonthDay end) {
 	super();	
-	setSpace(space);
+	setResource(space);
 	setExtension(extension);
 	checkExtensionSpaceOccupationIntersection(begin, end, extension);
 	super.setBegin(begin);
@@ -46,7 +46,12 @@ public class ExtensionSpaceOccupation extends ExtensionSpaceOccupation_Base {
 	super.setExtension(null);
 	super.delete();
     }
-           
+    
+    @Override
+    public boolean isExtensionSpaceOccupation() {
+        return true;
+    }
+    
     @Override    
     public void setExtension(Extension extension) {
 	if (extension == null) {

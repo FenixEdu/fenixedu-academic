@@ -428,7 +428,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     // END day, month, year, hour, minute
 
     // BEGIN Drop down menu logic
-    public List getExecutionPeriods() throws FenixFilterException, FenixServiceException {
+    public List<SelectItem> getExecutionPeriods() throws FenixFilterException, FenixServiceException {
         List<InfoExecutionPeriod> infoExecutionPeriods = (List<InfoExecutionPeriod>) ServiceUtils
                 .executeService(getUserView(), "ReadNotClosedExecutionPeriods", null);
 
@@ -463,9 +463,9 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         return;
     }
 
-    public List getExecutionDegrees() throws FenixFilterException, FenixServiceException {
+    public List<SelectItem> getExecutionDegrees() throws FenixFilterException, FenixServiceException {
         if (this.getDisableDropDown()) {
-            return new ArrayList();
+            return new ArrayList<SelectItem>();
         }
 
         Object[] args = { this.getExecutionPeriod().getExecutionYear().getIdInternal() };
@@ -796,8 +796,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     }
 
     private void processWrittenTestAdditionalValues(final ExecutionCourse executionCourse,
-            final List<WrittenEvaluation> associatedWrittenEvaluations) {
-        
+	    final List<WrittenEvaluation> associatedWrittenEvaluations) {        
         for (final WrittenEvaluation writtenTest : associatedWrittenEvaluations) {
             int totalCapacity = 0;
             final StringBuilder buffer = new StringBuilder(20);
@@ -996,7 +995,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 
         if (this.getChosenRoomsIDs() != null && this.getChosenRoomsIDs().length != 0) {
             for (Integer chosenRoomID : this.getChosenRoomsIDs()) {                
-                OldRoom room = (OldRoom) rootDomainObject.readSpaceByOID(chosenRoomID);
+                OldRoom room = (OldRoom) rootDomainObject.readResourceByOID(chosenRoomID);
                 result.append(room.getName());
                 result.append("; ");
             }
@@ -1464,8 +1463,8 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(this.getSelectedExecutionDegreeID());            
         final Object args[] = { executionDegree.getDegreeCurricularPlan().getIdInternal(),
                 this.getExecutionPeriodID(), this.getSelectedCurricularYearID() };
-        List<ExecutionCourse> executionCourses = new ArrayList(
-                (List) ServiceManagerServiceFactory
+        List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>(
+                (List<ExecutionCourse>) ServiceManagerServiceFactory
                 .executeService(getUserView(), "ReadExecutionCoursesByDegreeCurricularPlanAndExecutionPeriodAndCurricularYear", args));
         Collections.sort(executionCourses, new BeanComparator("sigla"));
         return executionCourses;            

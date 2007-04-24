@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.dataTransferObject.spaceManager.MoveSpaceBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.resource.Resource;
 import net.sourceforge.fenixedu.domain.space.Blueprint;
 import net.sourceforge.fenixedu.domain.space.BlueprintFile;
 import net.sourceforge.fenixedu.domain.space.Building;
@@ -62,10 +63,12 @@ public class ManageSpacesDA extends FenixDispatchAction {
 	// When this happens, spaces.addAll(rootDomainObject.getSpacesSet())
 	// will replace the following snip.
 	// ---> Start of snip <---
-	for (final Space space : rootDomainObject.getSpacesSet()) {
-	    if (!(space instanceof OldBuilding) && !(space instanceof OldRoom)
-		    && !space.hasSuroundingSpace()) {
-		spaces.add(space);
+	for (final Resource resource : rootDomainObject.getResources()) {
+	    if(resource.isSpace()) {
+		Space space = (Space) resource;
+		if (!(space instanceof OldBuilding) && !(space instanceof OldRoom) && !space.hasSuroundingSpace()) {
+		    spaces.add(space);
+	    	}
 	    }
 	}
 	// ---> End of snip <---
@@ -508,6 +511,6 @@ public class ManageSpacesDA extends FenixDispatchAction {
     private Space getSpaceFromParameter(final HttpServletRequest request) {
 	final String spaceIDString = request.getParameter("spaceID");
 	final Integer spaceID = Integer.valueOf(spaceIDString);
-	return rootDomainObject.readSpaceByOID(spaceID);
+	return (Space) rootDomainObject.readResourceByOID(spaceID);
     }
 }

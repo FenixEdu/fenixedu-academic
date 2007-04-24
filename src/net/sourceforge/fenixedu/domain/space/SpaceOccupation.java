@@ -1,25 +1,17 @@
 package net.sourceforge.fenixedu.domain.space;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.resource.Resource;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public abstract class SpaceOccupation extends SpaceOccupation_Base {
 
-    public SpaceOccupation() {
-	super();
-	setOjbConcreteClass(this.getClass().getName());
-	setRootDomainObject(RootDomainObject.getInstance());
+    protected SpaceOccupation() {
+	super();	
     }
-        
-    public void delete() {
-	super.setSpace(null);
-	removeRootDomainObject();
-	super.deleteDomainObject();
-    }
-
+            
     public abstract Group getAccessGroup();
 
     public void checkPermissionsToManageSpaceOccupations() {
@@ -36,11 +28,20 @@ public abstract class SpaceOccupation extends SpaceOccupation_Base {
 	throw new DomainException("error.logged.person.not.authorized.to.make.operation");
     }
 
+    public Space getSpace() {
+	return (Space) getResource();
+    }
+
     @Override
-    public void setSpace(Space space) {
-	if (space == null) {
-	    throw new DomainException("error.space.occupation.no.space");
+    public void setResource(Resource resource) {	
+	super.setResource(resource);
+	if (!resource.isSpace()) {
+	    throw new DomainException("error.allocation.invalid.resource.type");
 	}
-	super.setSpace(space);
+    }
+    
+    @Override
+    public boolean isSpaceOccupation() {
+        return true;
     }
 }

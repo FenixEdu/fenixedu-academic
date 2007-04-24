@@ -1,12 +1,11 @@
 package net.sourceforge.fenixedu.domain.material;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.resource.Resource;
 import net.sourceforge.fenixedu.domain.space.ExtensionSpaceOccupation;
+import net.sourceforge.fenixedu.domain.space.MaterialSpaceOccupation;
 
 import org.joda.time.YearMonthDay;
 
@@ -28,7 +27,7 @@ public class Extension extends Extension_Base {
     }
 
     @Override
-    public Class getMaterialSpaceOccupationSubClass() {
+    public Class<? extends MaterialSpaceOccupation> getMaterialSpaceOccupationSubClass() {
 	return ExtensionSpaceOccupation.class;
     }
 
@@ -46,26 +45,21 @@ public class Extension extends Extension_Base {
 	super.setNumber(number);
     }
 
+    @Override
+    public boolean isExtension() {
+        return true;
+    }
+    
     public static Extension readByNumber(Integer number) {
-	for (Material material : RootDomainObject.getInstance().getMaterials()) {
-	    if (material instanceof Extension && ((Extension) material).getNumber() != null
-		    && ((Extension) material).getNumber().equals(number)) {
-		return (Extension) material;
+	for (Resource resource : RootDomainObject.getInstance().getResources()) {
+	    if (resource.isExtension() && ((Extension) resource).getNumber() != null
+		    && ((Extension) resource).getNumber().equals(number)) {
+		return (Extension) resource;
 	    }
 	}
 	return null;
     }
-
-    public static List<Extension> readAllExtensions() {
-	List<Extension> extensions = new ArrayList<Extension>();
-	for (Material material : RootDomainObject.getInstance().getMaterials()) {
-	    if (material instanceof Extension) {
-		extensions.add((Extension) material);
-	    }
-	}
-	return extensions;
-    }
-    
+       
     private void checkNumber(Integer number) {
 	Extension extension = readByNumber(number);
 	if (extension != null && !extension.equals(this)) {

@@ -63,11 +63,10 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
     
     public void edit(MultiLanguageString title, MultiLanguageString description, List<OldRoom> newRooms, List<RoomOccupation> roomOccupationsToRemove) {	
 		
-	if(getPunctualRoomsOccupationRequest() != null && 
-		getPunctualRoomsOccupationRequest().getCurrentState().equals(RequestState.RESOLVED)) {
-            throw new DomainException("error.GenericEvent.request.was.resolved");
+	if(getPunctualRoomsOccupationRequest() != null && !getPunctualRoomsOccupationRequest().getCurrentState().equals(RequestState.NEW)) {
+            throw new DomainException("error.edit.GenericEvent.request.was.resolved.or.opened");
         }		
-	
+		
 	setTitle(title);
 	setDescription(description);	
 	
@@ -105,6 +104,7 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
 	if(getLastInstant().isBeforeNow()) {
 	    throw new DomainException("error.GenericEvent.impossible.delete.because.was.old.event");
 	}	
+	
 	if(getPunctualRoomsOccupationRequest() != null && getPunctualRoomsOccupationRequest().getCurrentState().equals(RequestState.RESOLVED)) {
             throw new DomainException("error.GenericEvent.request.was.resolved");
         }

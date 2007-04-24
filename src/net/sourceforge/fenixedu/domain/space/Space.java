@@ -15,6 +15,8 @@ import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.material.Material;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.resource.Resource;
+import net.sourceforge.fenixedu.domain.resource.ResourceAllocation;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.injectionCode.FenixDomainObjectActionLogAnnotation;
@@ -25,12 +27,23 @@ import org.joda.time.YearMonthDay;
 public abstract class Space extends Space_Base {
 
     protected Space() {
-	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-	setOjbConcreteClass(this.getClass().getName());
+	super();	
 	setCreatedOn(new YearMonthDay());
     }
 
+    @Checked("SpacePredicates.checkPermissionsToManageSpace")
+    @FenixDomainObjectActionLogAnnotation(actionName = "Set new Parent space", parameters = {"this", "newParentSpace" })
+    public void setNewPossibleParentSpace(Space newParentSpace) {
+	if(newParentSpace != null) {
+	    setSuroundingSpace(newParentSpace);
+	}
+    }
+    
+    @Override
+    public boolean isSpace() {
+        return true;
+    }
+    
     public SpaceInformation getMostRecentSpaceInformation() {
 	SpaceInformation selectedSpaceInformation = null;
 	for (final SpaceInformation spaceInformation : getSpaceInformations()) {
@@ -82,9 +95,9 @@ public abstract class Space extends Space_Base {
 
     public List<PersonSpaceOccupation> getPersonSpaceOccupations() {
 	List<PersonSpaceOccupation> personSpaceOccupations = new ArrayList<PersonSpaceOccupation>();
-	for (SpaceOccupation spaceOccupation : getSpaceOccupations()) {
-	    if (spaceOccupation instanceof PersonSpaceOccupation) {
-		personSpaceOccupations.add((PersonSpaceOccupation) spaceOccupation);
+	for (ResourceAllocation allocation : getResourceAllocations()) {
+	    if (allocation.isPersonSpaceOccupation()) {
+		personSpaceOccupations.add((PersonSpaceOccupation) allocation);
 	    }
 	}
 	return personSpaceOccupations;
@@ -92,9 +105,9 @@ public abstract class Space extends Space_Base {
 
     public List<MaterialSpaceOccupation> getMaterialSpaceOccupations() {
 	List<MaterialSpaceOccupation> materialSpaceOccupations = new ArrayList<MaterialSpaceOccupation>();
-	for (SpaceOccupation spaceOccupation : getSpaceOccupations()) {
-	    if (spaceOccupation instanceof MaterialSpaceOccupation) {
-		materialSpaceOccupations.add((MaterialSpaceOccupation) spaceOccupation);
+	for (ResourceAllocation	allocation : getResourceAllocations()) {
+	    if (allocation.isMaterialSpaceOccupation()) {
+		materialSpaceOccupations.add((MaterialSpaceOccupation) allocation);
 	    }
 	}
 	return materialSpaceOccupations;
@@ -102,9 +115,9 @@ public abstract class Space extends Space_Base {
     
     public List<UnitSpaceOccupation> getUnitSpaceOccupations() {
 	List<UnitSpaceOccupation> unitSpaceOccupations = new ArrayList<UnitSpaceOccupation>();
-	for (SpaceOccupation spaceOccupation : getSpaceOccupations()) {
-	    if (spaceOccupation instanceof UnitSpaceOccupation) {
-		unitSpaceOccupations.add((UnitSpaceOccupation) spaceOccupation);
+	for (ResourceAllocation	allocation : getResourceAllocations()) {
+	    if (allocation.isUnitSpaceOccupation()) {
+		unitSpaceOccupations.add((UnitSpaceOccupation) allocation);
 	    }
 	}
 	return unitSpaceOccupations;
@@ -199,9 +212,9 @@ public abstract class Space extends Space_Base {
 
 	for (MaterialSpaceOccupation materialSpaceOccupation : getMaterialSpaceOccupations()) {
 	    if (materialSpaceOccupation.isActive(current) == state
-		    && (materialSpaceOccupation.getSpace().personHasPermissionsToManageSpace(
-			    loggedPerson) || (materialSpaceOccupation.getAccessGroup() != null && materialSpaceOccupation
-			    .getAccessGroup().isMember(loggedPerson)))) {
+		    && (materialSpaceOccupation.getSpace().personHasPermissionsToManageSpace(loggedPerson)
+			    || (materialSpaceOccupation.getAccessGroup() != null 
+				    && materialSpaceOccupation.getAccessGroup().isMember(loggedPerson)))) {
 		materialOccupations.add(materialSpaceOccupation);
 	    }
 	}
@@ -260,25 +273,19 @@ public abstract class Space extends Space_Base {
 	if (!canBeDeleted()) {
 	    throw new DomainException("error.space.cannot.be.deleted");
 	}
-	for (; !getBlueprints().isEmpty(); getBlueprints().get(0).delete())
-	    ;
-	for (; !getSpaceInformations().isEmpty(); getSpaceInformations().get(0)
-		.deleteWithoutCheckNumberOfSpaceInformations())
-	    ;
-
+	
+	for (; !getBlueprints().isEmpty(); getBlueprints().get(0).delete());
+	for (; !getSpaceInformations().isEmpty(); getSpaceInformations().get(0).deleteWithoutCheckNumberOfSpaceInformations());
+	
 	removeSuroundingSpace();
 	removeRootDomainObject();
 	deleteDomainObject();
     }
 
     private boolean canBeDeleted() {
-	if (hasAnyContainedSpaces()) {
-	    return false;
-	}
-	if (hasAnySpaceOccupations()) {
-	    return false;
-	}
-	if (hasAnySpaceResponsibility()) {
+	if (hasAnyContainedSpaces() 
+		|| hasAnyResourceAllocations()
+		|| hasAnySpaceResponsibility()) {
 	    return false;
 	}
 	return true;
@@ -290,9 +297,9 @@ public abstract class Space extends Space_Base {
 
     public static Set<Campus> getAllCampus() {
 	Set<Campus> campus = new HashSet<Campus>();
-	for (Space space : RootDomainObject.getInstance().getSpacesSet()) {
-	    if (space instanceof Campus) {
-		campus.add((Campus) space);
+	for (Resource resource : RootDomainObject.getInstance().getResources()) {
+	    if (resource.isCampus()) {
+		campus.add((Campus) resource);
 	    }
 	}
 	return campus;
@@ -396,26 +403,10 @@ public abstract class Space extends Space_Base {
 	public String getSpaceAccessGroupSlotName() {
 	    return spaceAccessGroupSlotName;
 	}
-    }
-
-    public boolean isCampus() {
-	return false;
-    }
-
-    public boolean isBuilding() {
-	return false;
-    }
-
-    public boolean isFloor() {
-	return false;
-    }
-
-    public boolean isRoom() {
-	return false;
-    }
+    }   
 
     public Building getSpaceBuilding() {
-	if(this instanceof Building) {
+	if(isBuilding()) {
 	    return (Building) this;
 	}	
 	if(getSuroundingSpace() == null) {
@@ -425,7 +416,7 @@ public abstract class Space extends Space_Base {
     }
     
     public Floor getSpaceFloor() {
-	if(this instanceof Floor) {
+	if(isFloor()) {
 	    return (Floor) this;
 	}	
 	if(getSuroundingSpace() == null) {
@@ -436,7 +427,7 @@ public abstract class Space extends Space_Base {
 
     public Set<Space> getPossibleParentSpacesToMoveSpaceUp() {
 	Set<Space> result = new HashSet<Space>();
-	if(!(this instanceof Campus)) {
+	if(!(isCampus())) {
 	    result = getPossibleParentSpacesToMoveSpaceUp(result);			
 	    result.addAll(Space.getAllCampus());    	
             if(getSuroundingSpace() != null) {
@@ -456,20 +447,12 @@ public abstract class Space extends Space_Base {
     
     public List<Space> getPossibleParentSpacesToMoveSpaceDown() {
 	List<Space> result = new ArrayList<Space>();
-	if(!(this instanceof Campus)) {
+	if(!(isCampus())) {
             if(getSuroundingSpace() != null) {
                 result.addAll(getSuroundingSpace().getContainedSpaces());	
             }
             result.remove(this);
 	}
 	return result;
-    }
-    
-    @Checked("SpacePredicates.checkPermissionsToManageSpace")
-    @FenixDomainObjectActionLogAnnotation(actionName = "Set new Parent space", parameters = {"this", "newParentSpace" })
-    public void setNewPossibleParentSpace(Space newParentSpace) {
-	if(newParentSpace != null) {
-	    setSuroundingSpace(newParentSpace);
-	}
-    }       
+    }    
 }

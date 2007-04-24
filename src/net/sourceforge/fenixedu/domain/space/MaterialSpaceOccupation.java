@@ -45,4 +45,9 @@ public abstract class MaterialSpaceOccupation extends MaterialSpaceOccupation_Ba
 	}
 	super.setEnd(endDate);
     }
+    
+    @Override
+    public boolean isMaterialSpaceOccupation() {
+        return true;
+    }
 }

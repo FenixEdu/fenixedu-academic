@@ -8,8 +8,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.resource.Resource;
 import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.space.Space.SpaceAccessGroupType;
 
@@ -107,13 +107,15 @@ public class SpaceAccessGroupsManagement extends Service {
 	    if (!person.hasRole(RoleType.SPACE_MANAGER)) {
 		person.addPersonRoleByRoleType(RoleType.SPACE_MANAGER);
 	    }
-	} else {
-	    Set<Space> spacesSet = rootDomainObject.getSpacesSet();
-	    for (Space space : spacesSet) {
-		if (space.personHasPermissionToManageExtensionOccupations(person)
-			|| space.personHasPermissionToManagePersonOccupations(person)
-			|| space.personHasSpecialPermissionToManageSpace(person)) {
-		    return;
+	} else {	    
+	    for (Resource resource : rootDomainObject.getResources()) {
+		if(resource.isSpace()) {
+		    Space space = (Space) resource;
+		    if (space.personHasPermissionToManageExtensionOccupations(person)
+			    || space.personHasPermissionToManagePersonOccupations(person)
+			    || space.personHasSpecialPermissionToManageSpace(person)) {
+			return;
+		    }
 		}
 	    }
 	    person.removeRoleByType(RoleType.SPACE_MANAGER);

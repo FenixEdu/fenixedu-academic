@@ -5,7 +5,6 @@ import java.text.Collator;
 import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.injectionCode.FenixDomainObjectActionLogAnnotation;
@@ -18,10 +17,8 @@ public class Campus extends Campus_Base {
 
     public final static Comparator<Campus> CAMPUS_COMPARATOR_BY_PRESENTATION_NAME = new ComparatorChain();
     static {
-	((ComparatorChain) CAMPUS_COMPARATOR_BY_PRESENTATION_NAME).addComparator(new BeanComparator(
-		"spaceInformation.presentationName", Collator.getInstance()));
-	((ComparatorChain) CAMPUS_COMPARATOR_BY_PRESENTATION_NAME).addComparator(new BeanComparator(
-		"idInternal"));
+	((ComparatorChain) CAMPUS_COMPARATOR_BY_PRESENTATION_NAME).addComparator(new BeanComparator("spaceInformation.presentationName", Collator.getInstance()));
+	((ComparatorChain) CAMPUS_COMPARATOR_BY_PRESENTATION_NAME).addComparator(new BeanComparator("idInternal"));
     }
 
     public static abstract class CampusFactory implements Serializable, FactoryExecutor {

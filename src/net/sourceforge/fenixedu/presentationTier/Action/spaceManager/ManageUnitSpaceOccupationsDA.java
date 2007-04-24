@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.domain.space.SpaceInformation;
-import net.sourceforge.fenixedu.domain.space.SpaceResponsibility;
 import net.sourceforge.fenixedu.domain.space.UnitSpaceOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -119,9 +118,8 @@ public class ManageUnitSpaceOccupationsDA extends FenixDispatchAction {
 	final String unitSpaceOccupationIDString = request.getParameterMap().containsKey(
 		"unitSpaceOccupationID") ? request.getParameter("unitSpaceOccupationID")
 		: (String) request.getAttribute("unitSpaceOccupationID");
-	final Integer unitSpaceOccupationID = unitSpaceOccupationIDString != null ? Integer
-		.valueOf(unitSpaceOccupationIDString) : null;
-	return (UnitSpaceOccupation) rootDomainObject.readSpaceOccupationByOID(unitSpaceOccupationID);
+	final Integer unitSpaceOccupationID = unitSpaceOccupationIDString != null ? Integer.valueOf(unitSpaceOccupationIDString) : null;
+	return (UnitSpaceOccupation) rootDomainObject.readResourceAllocationByOID(unitSpaceOccupationID);
     }
 
     private void setSpaceInformation(HttpServletRequest request, final SpaceInformation spaceInformation) {

@@ -40,16 +40,18 @@
 				<th><bean:message key="label.rooms.reserve.periods" bundle="SOP_RESOURCES"/></th>					
 				<th><bean:message key="label.rooms.reserve.action" bundle="SOP_RESOURCES"/></th>	
 			</tr>
-			<logic:iterate id="myRequest" name="personRequests" type="net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest">					
+			<logic:iterate id="myRequest" name="personRequests" type="net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest">
+				<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserveRequest&amp;reserveRequestID=<bean:write name="myRequest" property="idInternal"/></bean:define>					
 				<tr>
-					<td class="acenter">
-						<bean:write name="myRequest" property="identification"/>						
+					<td class="acenter">						
+						<html:link page="<%= seeReserveURL %>">
+							<bean:write name="myRequest" property="identification"/>
+						</html:link>						
 					</td>
 					<td class="nowrap smalltxt">
 						<bean:write name="myRequest" property="presentationInstant"/>						
 					</td>
-					<td style="width: 250px;">
-						<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserveRequest&amp;reserveRequestID=<bean:write name="myRequest" property="idInternal"/></bean:define>
+					<td style="width: 250px;">						
 						<html:link page="<%= seeReserveURL %>">
 							<bean:write name="myRequest" property="subject"/>
 						</html:link>								
@@ -73,8 +75,8 @@
 					</td>
 
 					<td class="nowrap">
-						<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=closeRequest&amp;reserveRequestID=<bean:write name="myRequest" property="idInternal"/></bean:define>
-						<html:link page="<%= seeReserveURL %>">
+						<bean:define id="closeRequestURL">/roomsReserveManagement.do?method=closeRequest&amp;reserveRequestID=<bean:write name="myRequest" property="idInternal"/></bean:define>
+						<html:link page="<%= closeRequestURL %>">
 							<bean:message key="label.resolve.rooms.reserve.request" bundle="SOP_RESOURCES"/>
 						</html:link>											
 					</td>					
@@ -100,16 +102,18 @@
 				<th><bean:message key="label.rooms.reserve.requestor" bundle="SOP_RESOURCES"/></th>								
 				<th><bean:message key="label.rooms.reserve.action" bundle="SOP_RESOURCES"/></th>	
 			</tr>
-			<logic:iterate id="newRequest" name="newRequests">					
+			<logic:iterate id="newRequest" name="newRequests">
+				<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserveRequest&amp;reserveRequestID=<bean:write name="newRequest" property="idInternal"/></bean:define>					
 				<tr>
 					<td class="acenter">
-						<bean:write name="newRequest" property="identification"/>						
+						<html:link page="<%= seeReserveURL %>">
+							<bean:write name="newRequest" property="identification"/>
+						</html:link>												
 					</td>				
 					<td class="nowrap smalltxt">
 						<bean:write name="newRequest" property="presentationInstant"/>						
 					</td>
-					<td style="width: 250px;">
-						<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserveRequest&amp;reserveRequestID=<bean:write name="newRequest" property="idInternal"/></bean:define>
+					<td style="width: 250px;">						
 						<html:link page="<%= seeReserveURL %>">
 							<bean:write name="newRequest" property="subject"/>
 						</html:link>										
@@ -119,8 +123,8 @@
 						<acronym title="<%= requestorName %>"><bean:write name="newRequest" property="requestor.username"/></acronym>
 					</td>															
 					<td>
-						<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=openRequest&amp;reserveRequestID=<bean:write name="newRequest" property="idInternal"/></bean:define>
-						<html:link page="<%= seeReserveURL %>">
+						<bean:define id="openRequestURL">/roomsReserveManagement.do?method=openRequest&amp;reserveRequestID=<bean:write name="newRequest" property="idInternal"/></bean:define>
+						<html:link page="<%= openRequestURL %>">
 							<bean:message key="label.open.rooms.reserve.request" bundle="SOP_RESOURCES"/>
 						</html:link>											
 					</td>						
@@ -145,16 +149,18 @@
 				<th><bean:message key="label.rooms.reserve.periods" bundle="SOP_RESOURCES"/></th>
 				<th><bean:message key="label.rooms.reserve.action" bundle="SOP_RESOURCES"/></th>	
 			</tr>
-			<logic:iterate id="openedRequest" name="openedRequests">					
+			<logic:iterate id="openedRequest" name="openedRequests">
+				<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserveRequest&amp;reserveRequestID=<bean:write name="openedRequest" property="idInternal"/></bean:define>					
 				<tr>
 					<td class="acenter">
-						<bean:write name="openedRequest" property="identification"/>						
+						<html:link page="<%= seeReserveURL %>">
+							<bean:write name="openedRequest" property="identification"/>
+						</html:link>											
 					</td>				
 					<td class="nowrap smalltxt">
 						<bean:write name="openedRequest" property="presentationInstant"/>						
 					</td>
-					<td style="width: 250px;">
-						<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserveRequest&amp;reserveRequestID=<bean:write name="openedRequest" property="idInternal"/></bean:define>
+					<td style="width: 250px;">						
 						<html:link page="<%= seeReserveURL %>">
 							<bean:write name="openedRequest" property="subject"/>
 						</html:link>										
@@ -181,8 +187,8 @@
 						</logic:empty>
 					</td>	
 					<td>
-						<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=closeRequest&amp;reserveRequestID=<bean:write name="openedRequest" property="idInternal"/></bean:define>
-						<html:link page="<%= seeReserveURL %>">
+						<bean:define id="closeRequestURL">/roomsReserveManagement.do?method=closeRequest&amp;reserveRequestID=<bean:write name="openedRequest" property="idInternal"/></bean:define>
+						<html:link page="<%= closeRequestURL %>">
 							<bean:message key="label.resolve.rooms.reserve.request" bundle="SOP_RESOURCES"/>
 						</html:link>											
 					</td>						
@@ -214,16 +220,18 @@
 				<th><bean:message key="label.rooms.reserve.periods" bundle="SOP_RESOURCES"/></th>				
 				<th><bean:message key="label.rooms.reserve.action" bundle="SOP_RESOURCES"/></th>	
 			</tr>
-			<logic:iterate id="resolvedRequest" name="resolvedRequests" type="net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest">					
+			<logic:iterate id="resolvedRequest" name="resolvedRequests" type="net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest">
+				<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserveRequest&amp;reserveRequestID=<bean:write name="resolvedRequest" property="idInternal"/></bean:define>					
 				<tr>
 					<td class="acenter">
-						<bean:write name="resolvedRequest" property="identification"/>						
+						<html:link page="<%= seeReserveURL %>">
+							<bean:write name="resolvedRequest" property="identification"/>
+						</html:link>												
 					</td>					
 					<td class="nowrap smalltxt">
 						<bean:write name="resolvedRequest" property="presentationInstant"/>						
 					</td>
-					<td style="width: 250px;">
-						<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserveRequest&amp;reserveRequestID=<bean:write name="resolvedRequest" property="idInternal"/></bean:define>
+					<td style="width: 250px;">						
 						<html:link page="<%= seeReserveURL %>">
 							<bean:write name="resolvedRequest" property="subject"/>
 						</html:link>										
@@ -258,8 +266,8 @@
 						</logic:empty>
 					</td>						
 					<td>
-						<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=openRequest&amp;reserveRequestID=<bean:write name="resolvedRequest" property="idInternal"/></bean:define>
-						<html:link page="<%= seeReserveURL %>">
+						<bean:define id="openRequestURL">/roomsReserveManagement.do?method=openRequest&amp;reserveRequestID=<bean:write name="resolvedRequest" property="idInternal"/></bean:define>
+						<html:link page="<%= openRequestURL %>">
 							<bean:message key="label.reopen.rooms.reserve.request" bundle="SOP_RESOURCES"/>
 						</html:link>											
 					</td>							

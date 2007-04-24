@@ -18,14 +18,11 @@ import org.joda.time.YearMonthDay;
 
 public class PersonSpaceOccupation extends PersonSpaceOccupation_Base {
 
-    public static final Comparator COMPARATOR_BY_PERSON_NAME_AND_OCCUPATION_INTERVAL = new ComparatorChain();
+    public static final Comparator<PersonSpaceOccupation> COMPARATOR_BY_PERSON_NAME_AND_OCCUPATION_INTERVAL = new ComparatorChain();
     static {
-	((ComparatorChain) COMPARATOR_BY_PERSON_NAME_AND_OCCUPATION_INTERVAL)
-		.addComparator(new BeanComparator("begin"));
-	((ComparatorChain) COMPARATOR_BY_PERSON_NAME_AND_OCCUPATION_INTERVAL)
-		.addComparator(new BeanComparator("person.name", Collator.getInstance()));
-	((ComparatorChain) COMPARATOR_BY_PERSON_NAME_AND_OCCUPATION_INTERVAL)
-		.addComparator(DomainObject.COMPARATOR_BY_ID);
+	((ComparatorChain) COMPARATOR_BY_PERSON_NAME_AND_OCCUPATION_INTERVAL).addComparator(new BeanComparator("begin"));
+	((ComparatorChain) COMPARATOR_BY_PERSON_NAME_AND_OCCUPATION_INTERVAL).addComparator(new BeanComparator("person.name", Collator.getInstance()));
+	((ComparatorChain) COMPARATOR_BY_PERSON_NAME_AND_OCCUPATION_INTERVAL).addComparator(DomainObject.COMPARATOR_BY_ID);
     }
 
     @Checked("SpacePredicates.checkPermissionsToManageOccupations")
@@ -37,7 +34,7 @@ public class PersonSpaceOccupation extends PersonSpaceOccupation_Base {
 	    final YearMonthDay end) {
 	
 	super();
-	setSpace(space);
+	setResource(space);
 	setPerson(person);
 	checkPersonSpaceOccupationIntersection(begin, end, person, space);
 	super.setBegin(begin);
@@ -65,6 +62,11 @@ public class PersonSpaceOccupation extends PersonSpaceOccupation_Base {
 	super.delete();
     }
 
+    @Override
+    public boolean isPersonSpaceOccupation() {
+        return true;
+    }
+    
     @Override       
     public void setPerson(Person person) {
 	if (person == null) {
