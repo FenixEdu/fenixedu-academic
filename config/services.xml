@@ -7150,6 +7150,17 @@
 		<description/>
 		<isTransactional>true</isTransactional>
 	</service>
+	<service>
+		<name>SelectAllExecutionCoursesForInquiries</name>
+		<implementationClass> 
+            net.sourceforge.fenixedu.applicationTier.Servico.gep.inquiries.SelectAllExecutionCoursesForInquiries
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="GEPAuthorization" />
+		</filterChains>
+	</service>
 
 	<!-- =============================================================================================== -->
 

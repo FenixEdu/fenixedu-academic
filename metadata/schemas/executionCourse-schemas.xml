@@ -596,6 +596,11 @@
 	</slot>
 </schema>
 
+<schema name="net.sourceforge.fenixedu.domain.executionCourse.ExecutionCourseSearchBean.selectAll" type="net.sourceforge.fenixedu.domain.executionCourse.ExecutionCourseSearchBean">
+	<slot name="executionPeriod" hidden="true"/>
+	<slot name="executionDegree" hidden="true"/>
+</schema>
+
 <schema name="net.sourceforge.fenixedu.domain.ExecutionCourse.ForInquiryEvaluationDefinition" type="net.sourceforge.fenixedu.domain.ExecutionCourse" bundle="APPLICATION_RESOURCES">
 	<slot name="nome" key="label.executionCourse.name" read-only="true"/>
 	<slot name="availableForInquiries" key="label.executionCourse.availableForInquiries"/>

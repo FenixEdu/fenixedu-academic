@@ -35,4 +35,11 @@ public class ExecutionCourseInquiriesDA extends FenixDispatchAction {
         return mapping.findForward("showExecutionCoursesForInquiries");
     }
 
+    public ActionForward selectAll(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response)
+    		throws Exception {
+	final ExecutionCourseSearchBean executionCourseSearchBean = (ExecutionCourseSearchBean) getRenderedObject();
+	executeService(request, "SelectAllExecutionCoursesForInquiries", new Object[] { executionCourseSearchBean });
+	return search(mapping, actionForm, request, response);
+    }
+
 }
