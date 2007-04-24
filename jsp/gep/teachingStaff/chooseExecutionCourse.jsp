@@ -12,10 +12,10 @@
 		<th/>					
 	</tr>
 
+	<bean:define id="executionYear" name="executionYear" type="java.lang.String" />
 	<logic:iterate id="degreeModuleScope" name="sortedScopes">
 		<bean:define id="curricularCourse" name="degreeModuleScope" property="curricularCourse"/>
 		<logic:iterate id="executionCourse" name="curricularCourse" property="associatedExecutionCourses" >
-			<bean:define id="executionYear" name="executionYear" type="java.lang.String" />
 			<logic:equal name="executionCourse" property="executionPeriod.state" value="CURRENT">
 			<logic:equal name="executionCourse" property="availableForInquiries" value="true">
 				<tr class="listClasses">
