@@ -735,6 +735,18 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         return Collections.emptyList();
     }
 
+    public boolean isCoordinator(Person person) {
+        for (ExecutionYear ey = ExecutionYear.readCurrentExecutionYear(); ey != null; ey = ey.getPreviousExecutionYear()) {
+            for (Coordinator coordinator : getResponsibleCoordinators(ey)) {
+                if (coordinator.getPerson() == person) {
+                    return true;
+                }
+            }
+        }
+        
+        return false;
+    }
+
     public boolean isCurrentCoordinator(Person person) {
         for (Coordinator coordinator : getCurrentResponsibleCoordinators()) {
             if (coordinator.getPerson() == person) {
