@@ -65,13 +65,13 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
             session.removeAttribute(SessionConstants.DEGREE_LETTER);
             session.removeAttribute(SessionConstants.DATE);
             session.removeAttribute("notString");
-            InfoStudentCurricularPlan infoStudentCurricularPlan = (InfoStudentCurricularPlan) session
+            InfoStudentCurricularPlan infoStudentCurricularPlan = (InfoStudentCurricularPlan) request
                     .getAttribute(SessionConstants.INFO_STUDENT_CURRICULAR_PLAN);
-            InfoMasterDegreeThesisDataVersion infoMasterDegreeThesisDataVersion = (InfoMasterDegreeThesisDataVersion) session
+            InfoMasterDegreeThesisDataVersion infoMasterDegreeThesisDataVersion = (InfoMasterDegreeThesisDataVersion) request
                     .getAttribute(SessionConstants.MASTER_DEGREE_THESIS_DATA_VERSION);
-            InfoMasterDegreeProofVersion infoMasterDegreeProofVersion = (InfoMasterDegreeProofVersion) session
+            InfoMasterDegreeProofVersion infoMasterDegreeProofVersion = (InfoMasterDegreeProofVersion) request
                     .getAttribute(SessionConstants.MASTER_DEGREE_PROOF_HISTORY);
-            String certificate = (String) session.getAttribute(SessionConstants.CERTIFICATE_TYPE);
+            String certificate = (String) request.getAttribute(SessionConstants.CERTIFICATE_TYPE);
  
             String anoLectivo = new String();
             InfoExecutionYear infoExecutionYear = null;

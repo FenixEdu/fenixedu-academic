@@ -300,6 +300,7 @@
         	<form-property name="graduationType" type="java.lang.String" />
         	<form-property name="certificateList" type="java.lang.String"/>
 			<form-property name="destination" type="java.lang.String[]"/>
+        	<form-property name="studentCurricularPlanID" type="java.lang.Integer"/>
       </form-bean>
 
 	  <!-- Bean to Choose the Information for the Certificate  -->
@@ -1496,11 +1497,11 @@
 	         <forward name="PrintReady" path="/certificate/printDeclarationPage.jsp"/> 
       </action>
 
-	  <!-- Print Declaration -->
+	  <!-- Print Certificate -->
       <action path="/printCertificate"
 		      attribute="chooseCertificateInfoForm"
 	          name="chooseCertificateInfoForm"
-	          input="/certificate/chooseCertificate.jsp"
+	          input="df.page.chooseStudentForCertificate"
 	      	  validate="true"
 		      parameter="method"
   	          scope="request"
@@ -1520,7 +1521,7 @@
       <action path="/chooseDeclarationInfoAction"
 	          attribute="chooseCertificateInfoForm"
 	          name="chooseCertificateInfoForm"
-	          input="/certificate/chooseDeclaration.jsp"
+	          input="df.page.chooseStudentForDeclaration"
 	      	  validate="true"
 			  parameter="method"
   	          scope="request"
@@ -1528,8 +1529,8 @@
    		 <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
             key="resources.Action.exceptions.NonExistingActionException"
             handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
-      	 <forward name="PrepareReady" path="/certificate/chooseDeclaration.jsp"/>
-   		 <forward name="ChooseStudentCurricularPlan" path="df.page.chooseStudentenCurricularPlanForDeclaration"/>     	  		  
+      	 <forward name="PrepareReady" path="df.page.chooseStudentForDeclaration"/>
+   		 <forward name="ChooseStudentCurricularPlan" path="df.page.chooseStudentCurricularPlanForDeclaration"/>     	  		  
       	 <forward name="ChooseSuccess" path="/printDeclaration.do?method=prepare"/>
       </action>
 	  
@@ -1537,7 +1538,7 @@
       <action path="/chooseCertificateInfoAction"
 	     attribute="chooseCertificateInfoForm"
 	          name="chooseCertificateInfoForm"
-	          input="/certificate/chooseCertificate.jsp"
+	          input="df.page.chooseStudentForCertificate"
 	      	  validate="true"
 		      parameter="method"
   	          scope="request"
@@ -1548,8 +1549,8 @@
          <exception	type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ScholarshipNotFinishedActionException"
 			key="resources.Action.exceptions.ScholarshipNotFinishedActionException"
 			handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
-      	  <forward name="PrepareReady" path="/certificate/chooseCertificate.jsp"/>
-		  <forward name="ChooseStudentCurricularPlan" path="df.page.chooseStudentenCurricularPlanForCertificate"/>     	  		  
+      	  <forward name="PrepareReady" path="df.page.chooseStudentForCertificate"/>
+		  <forward name="ChooseStudentCurricularPlan" path="df.page.chooseStudentCurricularPlanForCertificate"/>     
       	  <forward name="ChooseSuccess" path="/printCertificate.do?method=prepare"/>     	  
       </action>
 
@@ -1570,7 +1571,7 @@
             key="resources.Action.exceptions.FinalResulUnreachedActionException"
             handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
       	 <forward name="PrepareReady" path="/certificate/chooseFinalResult.jsp"/>
-   		 <forward name="ChooseStudentCurricularPlan" path="df.page.chooseStudentenCurricularPlanForCertificate"/>     	  		  
+   		 <forward name="ChooseStudentCurricularPlan" path="df.page.chooseStudentCurricularPlanForFinalResult"/>
       	 <forward name="ChooseSuccess" path="/certificate/finalResultPage.jsp"/>
       </action>
     

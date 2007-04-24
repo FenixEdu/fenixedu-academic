@@ -207,7 +207,7 @@
 	</definition>	
 		
 	<!-- ************* Certificates ************* -->
-	<definition name="df.page.chooseStudentenCurricularPlanForCertificate" extends="definition.masterDegreeAdministrativeOffice.studentOperations">
+	<definition name="df.page.chooseStudentCurricularPlanForFinalResult" extends="definition.masterDegreeAdministrativeOffice.studentOperations">
 		<put name="body" value="/posGraduacao/certificate/chooseStudentCurricularPlanForFinalResult.jsp"/>
 	</definition>
 	
@@ -215,6 +215,20 @@
 		<put name="body" value="/posGraduacao/certificate/chooseStudentCurricularPlan.jsp"/>
 	</definition>
 
+	<definition name="df.page.chooseStudentForCertificate" extends="definition.masterDegreeAdministrativeOffice.studentOperations">
+		<put name="body" value="/posGraduacao/certificate/chooseStudentForCertificate.jsp"/>
+	</definition>
+	<definition name="df.page.chooseStudentCurricularPlanForCertificate" extends="definition.masterDegreeAdministrativeOffice.studentOperations">
+		<put name="body" value="/posGraduacao/certificate/chooseStudentCurricularPlanForCertificate.jsp"/>
+	</definition>
+
+	<definition name="df.page.chooseStudentForDeclaration" extends="definition.masterDegreeAdministrativeOffice.studentOperations">
+		<put name="body" value="/posGraduacao/certificate/chooseStudentForDeclaration.jsp"/>
+	</definition>
+	<definition name="df.page.chooseStudentCurricularPlanForDeclaration" extends="definition.masterDegreeAdministrativeOffice.studentOperations">
+		<put name="body" value="/posGraduacao/certificate/chooseStudentCurricularPlanForDeclaration.jsp"/>
+	</definition>
+	
 	<!-- ************* Master Degree Thesis ************* -->
 	<definition name="showMasterDegreeThesisList" extends="definition.masterDegreeAdministrativeOffice.masterPage">
 		<put name="body" value="/posGraduacao/lists/listMasterDegreeThesis.jsp"/>

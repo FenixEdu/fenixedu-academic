@@ -309,7 +309,7 @@
       <field property="requesterNumber" depends="required, integer" page="1">
         <arg0 key="label.masterDegree.administrativeOffice.requesterNumber" />
       </field>
-      <field property="graduationType" depends="required" page="1">
+      <field property="studentCurricularPlanID" depends="required" page="2">
         <arg0 key="label.masterDegree.administrativeOffice.graduationType" />
       </field>
       <field property="certificateList" depends="required" page="2">

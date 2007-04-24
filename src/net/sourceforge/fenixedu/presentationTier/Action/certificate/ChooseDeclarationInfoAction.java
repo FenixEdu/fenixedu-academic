@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.masterDegree.DocumentReason;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -34,166 +35,85 @@ import org.apache.struts.action.DynaActionForm;
 /**
  * 
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
- *  
+ * 
  */
 public class ChooseDeclarationInfoAction extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+	    HttpServletResponse response) throws Exception {
 
-        HttpSession session = request.getSession(false);
-        if (session != null) {
-
-            session.removeAttribute(SessionConstants.SPECIALIZATIONS);
-            session.removeAttribute(SessionConstants.DOCUMENT_REASON);
-            session.setAttribute(SessionConstants.DOCUMENT_REASON, DocumentReason.values());
-
-            return mapping.findForward("PrepareReady");
-        }
-        throw new Exception();
-
+	return mapping.findForward("PrepareReady");
     }
 
-    public ActionForward choose(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+    public ActionForward chooseStudent(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        HttpSession session = request.getSession(false);
+	Integer number = new Integer((String) ((DynaActionForm) form).get("requesterNumber"));
+	request.setAttribute("registrations", Registration.readByNumberAndDegreeType(number,
+		DegreeType.MASTER_DEGREE));
 
-        if (session != null) {
-            DynaActionForm chooseDeclaration = (DynaActionForm) form;
+	request.setAttribute(SessionConstants.DOCUMENT_REASON, DocumentReason.values());
 
-            IUserView userView = getUserView(request);
-
-            //remove sessions variables
-            session.removeAttribute(SessionConstants.DEGREE_TYPE);
-            session.removeAttribute(SessionConstants.DOCUMENT_REASON_LIST);
-
-            // Get request Information
-            Integer requesterNumber = new Integer((String) chooseDeclaration.get("requesterNumber"));
-            String graduationType = (String) chooseDeclaration.get("graduationType");
-            String[] destination = (String[]) chooseDeclaration.get("destination");
-
-            if (destination.length != 0)
-                session.setAttribute(SessionConstants.DOCUMENT_REASON_LIST, destination);
-
-            final Registration registration = Registration.readStudentByNumberAndDegreeType(requesterNumber, DegreeType.MASTER_DEGREE);
-
-            // inputs
-            InfoStudent infoStudent = new InfoStudent(registration);
-            session.setAttribute(SessionConstants.DEGREE_TYPE, infoStudent.getDegreeType());
-
-            // output
-            List infoStudentCurricularPlanList = null;
-
-            //get informations
-            try {
-                ArrayList states = new ArrayList();
-                states.add(StudentCurricularPlanState.ACTIVE);
-                states.add(StudentCurricularPlanState.SCHOOLPARTCONCLUDED);
-                Object args[] = { infoStudent, Specialization.valueOf(graduationType), states };
-                infoStudentCurricularPlanList = (List) ServiceManagerServiceFactory.executeService(
-                        userView, "CreateDeclaration", args);
-
-            } catch (NonExistingServiceException e) {
-                throw new NonExistingActionException("A Declaração", e);
-            }
-
-            if (infoStudentCurricularPlanList == null) {
-                throw new NonExistingActionException("O aluno");
-            }
-
-            if (infoStudentCurricularPlanList.size() == 1) {
-                InfoStudentCurricularPlan infoStudentCurricularPlan = (InfoStudentCurricularPlan) infoStudentCurricularPlanList
-                        .get(0);
-                request.setAttribute("studentCurricularPlanID", infoStudentCurricularPlan
-                        .getIdInternal());
-
-                return chooseFinal(mapping, form, request, response);
-
-            }
-            request.setAttribute("studentCurricularPlans", infoStudentCurricularPlanList);
-            request.setAttribute("path", "Declaration");
-
-            return mapping.findForward("ChooseStudentCurricularPlan");
-
-        }
-        throw new Exception();
+	return mapping.findForward("ChooseStudentCurricularPlan");
     }
 
     /**
-     * @param mapping
-     * @param form
-     * @param request
-     * @param response
-     * @return
-     */
+         * @param mapping
+         * @param form
+         * @param request
+         * @param response
+         * @return
+         */
     public ActionForward chooseFinal(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+	    HttpServletResponse response) throws Exception {
 
-        HttpSession session = request.getSession(false);
+	IUserView userView = getUserView(request);
 
-        if (session != null) {
-            String anoLectivo;
-            IUserView userView = getUserView(request);
+	DynaActionForm chooseDeclaration = (DynaActionForm) form;
 
-            session.removeAttribute(SessionConstants.INFO_STUDENT_CURRICULAR_PLAN);
-            session.removeAttribute(SessionConstants.DATE);
+	// Get the Information
+	String[] destination = (String[]) chooseDeclaration.get("destination");
+	Integer studentCurricularPlanID = (Integer) chooseDeclaration.get("studentCurricularPlanID");
 
-            Integer studentCurricularPlanID = (Integer) request.getAttribute("studentCurricularPlanID");
-            if (studentCurricularPlanID == null) {
-                studentCurricularPlanID = Integer.valueOf(request
-                        .getParameter("studentCurricularPlanID"));
-            }
+	if (destination.length != 0) {
+	    request.setAttribute(SessionConstants.DOCUMENT_REASON_LIST, destination);
+	}
 
-            InfoStudentCurricularPlan infoStudentCurricularPlan = null;
+	InfoStudentCurricularPlan infoStudentCurricularPlan = InfoStudentCurricularPlan
+		.newInfoFromDomain(rootDomainObject
+			.readStudentCurricularPlanByOID(studentCurricularPlanID));
 
-            Object args[] = { studentCurricularPlanID };
-            try {
-                infoStudentCurricularPlan = (InfoStudentCurricularPlan) ServiceManagerServiceFactory
-                        .executeService(userView, "ReadStudentCurricularPlan", args);
-            } catch (NonExistingServiceException e) {
-                throw new NonExistingActionException("O aluno");
-            }
+	InfoExecutionYear infoExecutionYear = InfoExecutionYear.newInfoFromDomain(ExecutionYear
+		.readCurrentExecutionYear());
 
-            InfoExecutionYear infoExecutionYear = null;
-            try {
-                infoExecutionYear = (InfoExecutionYear) ServiceManagerServiceFactory.executeService(
-                        userView, "ReadCurrentExecutionYear", null);
+	List enrolmentList = null;
+	Object argsEnrolment[] = { infoStudentCurricularPlan.getIdInternal() };
+	try {
+	    enrolmentList = (List) ServiceManagerServiceFactory.executeService(userView,
+		    "GetEnrolmentList", argsEnrolment);
 
-            } catch (RuntimeException e) {
-                throw new RuntimeException("Error", e);
-            }
-            List enrolmentList = null;
-            Object argsEnrolment[] = { infoStudentCurricularPlan.getIdInternal() };
-            try {
-                enrolmentList = (List) ServiceManagerServiceFactory.executeService(userView,
-                        "GetEnrolmentList", argsEnrolment);
+	} catch (NonExistingServiceException e) {
+	    throw new NonExistingActionException("Inscrição", e);
+	}
 
-            } catch (NonExistingServiceException e) {
-                throw new NonExistingActionException("Inscrição", e);
-            }
+	String anoLectivo;
+	if (enrolmentList.size() == 0) {
+	    anoLectivo = infoExecutionYear.getYear();
+	} else {
+	    anoLectivo = ((InfoEnrolment) enrolmentList.get(0)).getInfoExecutionPeriod()
+		    .getInfoExecutionYear().getYear();
+	}
 
-            if (enrolmentList.size() == 0) {
-                anoLectivo = infoExecutionYear.getYear();
-            } else {
-                anoLectivo = ((InfoEnrolment) enrolmentList.get(0)).getInfoExecutionPeriod()
-                        .getInfoExecutionYear().getYear();
-            }
+	Locale locale = new Locale("pt", "PT");
+	Date date = new Date();
+	String formatedDate = "Lisboa, "
+		+ DateFormat.getDateInstance(DateFormat.LONG, locale).format(date);
+	request.setAttribute(SessionConstants.INFO_STUDENT_CURRICULAR_PLAN, infoStudentCurricularPlan);
+	request.setAttribute(SessionConstants.DATE, formatedDate);
+	request.setAttribute(SessionConstants.INFO_EXECUTION_YEAR, infoExecutionYear);
+	request.setAttribute("anoLectivo", anoLectivo);
+	return mapping.findForward("ChooseSuccess");
 
-            Locale locale = new Locale("pt", "PT");
-            Date date = new Date();
-            String formatedDate = "Lisboa, "
-                    + DateFormat.getDateInstance(DateFormat.LONG, locale).format(date);
-            session.setAttribute(SessionConstants.INFO_STUDENT_CURRICULAR_PLAN,
-                    infoStudentCurricularPlan);
-            session.setAttribute(SessionConstants.DATE, formatedDate);
-            session.setAttribute(SessionConstants.INFO_EXECUTION_YEAR, infoExecutionYear);
-            request.setAttribute("anoLectivo", anoLectivo);
-            return mapping.findForward("ChooseSuccess");
-
-        }
-
-        throw new Exception();
     }
 
 }
