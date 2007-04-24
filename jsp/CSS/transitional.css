@@ -1364,3 +1364,66 @@ padding: 0.5em;
 border: 2px solid #888;
 background: #fafabb;
 }
+
+
+
+
+
+.usitemain {
+padding: 0 !important;
+}
+.usitebanner {
+text-align: center;
+}
+.usiteintro {
+text-align: left;
+margin: 1em;
+padding: 1em;
+}
+.usiteintrofloated {
+text-align: left;
+margin: 1em;
+padding: 1em;
+float: right;
+width: 300px;
+border: 1px solid #ddd;
+}
+
+
+.usitechannels {
+width: 100%;
+border-collapse: collapse;
+}
+.usitechannel1, .usitechannel2 {
+font-family: "bitstream vera sans", "Lucida Grande", "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+font-weight: bold;
+font-size: 15px;
+text-align: left;
+color: #fff;
+padding: 0 0 0 8px;
+height: 25px;
+}
+.usitechannel1 { background: #a8a88e; }
+.usitechannel2 { background: #cc9; }
+
+.usitechannels td {
+width: 50%;
+font-family: "bitstream vera sans", "Lucida Grande", "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+font-size: 11px;
+color: #333;
+background: #fff;
+vertical-align: top;
+border-right: 1px solid #ccc;
+padding: 5px 10px 5px 10px;
+}
+
+.usitechannels td div.usitebody p {
+margin: 0;
+padding: 0;
+}
+
+#version {
+padding: 1em;
+float: right;
+width: 100px;
+}

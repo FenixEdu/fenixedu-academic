@@ -23,6 +23,15 @@ public abstract class UnitSite extends UnitSite_Base {
         setShowAnnouncements(true);
         setShowEvents(true);
     }
+
+    public boolean isDefaultLogoUsed() {
+    	Boolean bool = getPersonalizedLogo();
+    	return (bool==null) ? true : !bool;
+    }
+    
+    public void setDefaultLogoUsed(boolean bool) {
+    	setPersonalizedLogo(!bool);
+    }
     
     @Override
     public String getAlternativeSite() {
@@ -107,5 +116,5 @@ public abstract class UnitSite extends UnitSite_Base {
         }
         
     }
-
+    
 }

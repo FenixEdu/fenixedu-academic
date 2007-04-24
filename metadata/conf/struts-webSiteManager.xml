@@ -68,6 +68,11 @@
         <forward name="editConfiguration" path="researchSite-edit-configuration"/>
         <forward name="editLogo" path="researchSite-edit-logo"/>
         <forward name="editBanners" path="researchSite-edit-banners"/>
+        <forward name="editSideBanner" path="researchSite-edit-side-banner"/>
+        <forward name="editTopNavigation" path="researchSite-edit-top-navigation"/>
+        <forward name="editFooterNavigation" path="researchSite-edit-footer-navigation"/>
+        <forward name="organizeTopLinks" path="researchSite-edit-organizeTopLinks"/>
+        <forward name="organizeFooterLinks" path="researchSite-edit-organizeFooterLinks"/>
 	  </action>
 	  
 	  <action path="/manageResearchUnitAnnouncements"

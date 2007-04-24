@@ -5,3 +5,6 @@
 <bean:define id="siteActionName" value="/researchSite/viewResearchUnitSite.do" toScope="request"/>
 <bean:define id="siteContextParam" value="siteID" toScope="request"/>
 <bean:define id="siteContextParamValue" name="site" property="idInternal" toScope="request"/>
+<bean:define id="site" name="site" toScope="request"/>
+<bean:define id="contextPrefix" value="/researchSite/manageResearchUnitAnnouncements.do" toScope="request"/>
+<bean:define id="extraParameters" value="<%= "?siteID=" + siteContextParamValue %>" toScope="request"/>

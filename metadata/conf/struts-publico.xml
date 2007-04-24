@@ -935,7 +935,9 @@
        <action path="/researchSite/viewResearchUnitSite"
         parameter="method"
         type="net.sourceforge.fenixedu.presentationTier.Action.publico.ViewResearchUnitSiteDA">
-        	<forward name="frontPage" path="researchSite-front-page"/>
+        	<forward name="frontPage-BANNER_INTRO" path="research-site-front-page-banner-intro"/>
+			<forward name="frontPage-INTRO_BANNER" path="research-site-front-page-intro-banner"/>
+			<forward name="frontPage-BANNER_INTRO_COLLAPSED" path="research-site-front-page-intro-float"/>
         	<forward name="site-section" path="view-researchUnit-section"/>
 	        <forward name="site-section-deny" path="view-researchUnit-section-deny"/>
 	        <forward name="site-section-adviseLogin" path="view-researchUnit-section-adviseLogin"/>
@@ -945,6 +947,12 @@
 	        <forward name="showBoardAnnouncements" path="show-research-unit-board-announcements"/>
         </action>
        
+        <action path="/researchSite/manageResearchUnitAnnouncements"
+	   type="net.sourceforge.fenixedu.presentationTier.Action.publico.ManageResearchUnitAnnoucementsDA"
+	   parameter="method">
+            <forward name="viewAnnouncement" path="research-view-announcement"/>
+            <forward name="listAnnouncements" path="/researchSite/viewResearchUnitSite.do?method=listAnnouncements"/>
+      </action>
      </action-mappings>
     
     <!-- ========== Controller Configuration ================================ -->

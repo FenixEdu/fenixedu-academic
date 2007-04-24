@@ -34,7 +34,7 @@
         <th class="valigntop"><bean:message key="label.site.logo" bundle="WEBSITEMANAGER_RESOURCES"/>:</th>
         <td>
             <fr:form action="<%= String.format("%s?method=chooseLogo&amp;%s", actionName, context) %>">
-                <fr:edit id="personalizedLogo" name="site" slot="personalizedLogo">
+                <fr:edit id="personalizedLogo" name="site" slot="defaultLogoUsed">
                     <fr:layout name="radio-postback">
                         <fr:property name="trueLabel" value="label.site.personalizedLogo.true"/>
                         <fr:property name="classes" value="dinline liinline nobullet"/>

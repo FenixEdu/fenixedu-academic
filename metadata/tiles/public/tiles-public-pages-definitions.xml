@@ -410,31 +410,43 @@
     </definition>    
    
 	<!--  ===== RESEARCH UNIT SITE ======== -->
-	<definition name="researchSite-front-page" extends="definition.public.researchUnitSite">
-		<put name="body" value="/publico/researchUnitSite/frontPage.jsp"/>
+	<definition name="research-site-front-page-banner-intro" extends="definition.public.researchUnit">
+		<put name="body" value="/commons/sites/unitSite/frontPage_BannerIntro.jsp"/>
 	</definition>
 	
-	<definition name="view-researchUnit-section" extends="definition.public.researchUnitSite">
+	<definition name="research-site-front-page-intro-banner" extends="definition.public.researchUnit">
+		<put name="body" value="/commons/sites/unitSite/frontPage_IntroBanner.jsp"/>
+	</definition>
+	
+	<definition name="research-site-front-page-intro-float" extends="definition.public.researchUnit">
+		<put name="body" value="/commons/sites/unitSite/frontPage_IntroFloat.jsp"/>
+	</definition>
+	
+	<definition name="view-researchUnit-section" extends="definition.public.researchUnit">
         <put name="body" value="/commons/sites/public/section.jsp"/>
     </definition>
-    <definition name="view-researchUnit-section-deny" extends="definition.public.researchUnitSite">
+    <definition name="view-researchUnit-section-deny" extends="definition.public.researchUnit">
         <put name="body" value="/commons/sites/public/section-deny.jsp"/>
     </definition>
-    <definition name="view-researchUnit-section-adviseLogin" extends="definition.public.researchUnitSite">
+    <definition name="view-researchUnit-section-adviseLogin" extends="definition.public.researchUnit">
         <put name="body" value="/commons/sites/public/section-adviseLogin.jsp"/>
     </definition>
-    <definition name="view-researchUnit-item" extends="definition.public.researchUnitSite">
+    <definition name="view-researchUnit-item" extends="definition.public.researchUnit">
         <put name="body" value="/commons/sites/public/item.jsp"/>
     </definition>
-    <definition name="view-researchUnit-item-deny" extends="definition.public.researchUnitSite">
+    <definition name="view-researchUnit-item-deny" extends="definition.public.researchUnit">
         <put name="body" value="/commons/sites/public/item-deny.jsp"/>
     </definition>
     
-    <definition name="view-researchUnit-item-adviseLogin" extends="definition.public.researchUnitSite">
+    <definition name="view-researchUnit-item-adviseLogin" extends="definition.public.researchUnit">
         <put name="body" value="/commons/sites/public/item-adviseLogin.jsp"/>
     </definition>
     
-    <definition name="show-research-unit-board-announcements" extends="definition.public.researchUnitSite">
-        <put name="body" value="messaging/announcements/listAnnoouncements.jsp"/>
+    <definition name="show-research-unit-board-announcements" extends="definition.public.researchUnit">
+        <put name="body" value="/messaging/announcements/listAnnouncements.jsp"/>
     </definition>
+    
+    <definition name="research-view-announcement" extends="definition.public.researchUnit">
+		<put name="body" value="/messaging/announcements/viewAnnouncement.jsp" />
+	</definition>		
 </tiles-definitions>
