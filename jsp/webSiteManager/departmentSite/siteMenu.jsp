@@ -21,6 +21,7 @@
             <bean:message key="link.site.introduction" bundle="WEBSITEMANAGER_RESOURCES"/>
         </html:link>
     </li>
+    <%--
     <li>
         <html:link page="<%= "/manageDepartmentSite.do?method=manageConfiguration&amp;oid=" + oid %>">
             <bean:message key="link.site.configuration" bundle="WEBSITEMANAGER_RESOURCES"/>
@@ -51,6 +52,7 @@
             <bean:message key="link.site.footerNavigation" bundle="WEBSITEMANAGER_RESOURCES"/>
         </html:link>
     </li>
+    --%>
     <li>
         <html:link page="<%= "/manageDepartmentSite.do?method=sections&amp;oid=" + oid %>">
             <bean:message key="link.site.sectionsManagement" bundle="WEBSITEMANAGER_RESOURCES"/>
