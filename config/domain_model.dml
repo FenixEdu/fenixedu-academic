@@ -336,6 +336,7 @@ class net.sourceforge.fenixedu.domain.accounting.Event extends net.sourceforge.f
     DateTime eventStateDate;
     Integer keyEmployeeResponsibleForCancel;
     String cancelJustification;
+    YearMonthDay whenSentLetter;
 }
 
 	class net.sourceforge.fenixedu.domain.accounting.events.dfa.DFACandidacyEvent extends net.sourceforge.fenixedu.domain.accounting.Event {
@@ -381,6 +382,7 @@ class net.sourceforge.fenixedu.domain.accounting.Event extends net.sourceforge.f
 		}
 
 		class net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent extends net.sourceforge.fenixedu.domain.accounting.events.AnnualEvent {
+			YearMonthDay paymentEndDate;
 		}
 		
 
@@ -2185,7 +2187,7 @@ class net.sourceforge.fenixedu.domain.File extends net.sourceforge.fenixedu.doma
 	class net.sourceforge.fenixedu.domain.UnitSiteFile extends net.sourceforge.fenixedu.domain.File {
 		Integer keyUnitSite;
 	}
-	
+
 class net.sourceforge.fenixedu.domain.FileEntry extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyPerson;
     ByteArray content;
@@ -8383,11 +8385,11 @@ relation UnitHasSite {
 
 relation UnitSiteManagers {
 	net.sourceforge.fenixedu.domain.Person playsRole managers {
-		multiplicity *;
-	}
-    net.sourceforge.fenixedu.domain.UnitSite playsRole unitSites {
 	    	multiplicity *;
     }
+    net.sourceforge.fenixedu.domain.UnitSite playsRole unitSites {
+		multiplicity *;
+	}
 }
 
 relation DepartmentUnit {
@@ -12756,7 +12758,7 @@ relation UnitSiteHasBanners {
 	net.sourceforge.fenixedu.domain.UnitSiteBanner playsRole banners {
 		multiplicity *;
 	}
-}
+	}
 
 relation UnitSiteBannerHasMainFile {
 	net.sourceforge.fenixedu.domain.UnitSiteBanner playsRole mainBanner;

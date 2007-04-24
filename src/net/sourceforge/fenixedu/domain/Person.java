@@ -27,6 +27,7 @@ import net.sourceforge.fenixedu.domain.accounting.Receipt;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreement;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
+import net.sourceforge.fenixedu.domain.accounting.events.AnnualEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.ImprovementOfApprovedEnrolmentEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent;
@@ -109,9 +110,9 @@ public class Person extends Person_Base {
 	Role.PersonRole.addListener(new PersonRoleListener());
     }
 
-    /***********************************************************************
-         * BUSINESS SERVICES *
-         **********************************************************************/
+    /***************************************************************************
+     * BUSINESS SERVICES *
+     **************************************************************************/
 
     private IdDocument getIdDocument() {
 	final Iterator<IdDocument> documentIterator = getIdDocumentsSet().iterator();
@@ -203,7 +204,7 @@ public class Person extends Person_Base {
 	setNationality(country);
 	setIsPassInKerberos(Boolean.FALSE);
     }
-    
+
     public Person(final String name, final String identificationDocumentNumber,
 	    final IDDocumentType identificationDocumentType, final Gender gender) {
 
@@ -220,7 +221,7 @@ public class Person extends Person_Base {
 
 	setProperties(personBean);
 	setIsPassInKerberos(Boolean.FALSE);
-	
+
 	createUserAndLoginEntity();
 	createDefaultPhysicalAddress(personBean.getPhysicalAddressData());
 	createDefaultPhone(personBean.getPhone());
@@ -232,17 +233,17 @@ public class Person extends Person_Base {
     private void createUserAndLoginEntity() {
 	new Login(new User(this));
     }
-    
+
     private Person(final String name, final Gender gender, final PhysicalAddressData data,
 	    final String phone, final String mobile, final String homepage, final String email,
 	    final String documentIDNumber, final IDDocumentType documentType) {
-	
+
 	this();
 
 	setName(name);
 	setGender(gender);
 	setIdentification(documentIDNumber, documentType);
-	
+
 	createDefaultPhysicalAddress(data);
 	createDefaultPhone(phone);
 	createDefaultMobilePhone(mobile);
@@ -254,10 +255,12 @@ public class Person extends Person_Base {
 	    final PhysicalAddressData data, final String phone, final String mobile,
 	    final String homepage, final String email, final String documentIdNumber,
 	    final IDDocumentType documentType) {
-	return new Person(name, gender, data, phone, mobile, homepage, email, documentIdNumber, documentType);
+	return new Person(name, gender, data, phone, mobile, homepage, email, documentIdNumber,
+		documentType);
     }
 
-    public Person(final String name, final Gender gender, final String documentIDNumber, final IDDocumentType documentType) {
+    public Person(final String name, final Gender gender, final String documentIDNumber,
+	    final IDDocumentType documentType) {
 
 	this();
 	setName(name);
@@ -285,8 +288,9 @@ public class Person extends Person_Base {
 	updateDefaultWebAddress(personBean.getWebAddress());
 	updateDefaultEmailAddress(personBean.getEmail());
     }
-    
-    public void edit(String name, String address, String phone, String mobile, String homepage, String email) {
+
+    public void edit(String name, String address, String phone, String mobile, String homepage,
+	    String email) {
 	setName(name);
 	updateDefaultPhysicalAddress(new PhysicalAddressData().setAddress(address));
 	updateDefaultPhone(phone);
@@ -295,8 +299,8 @@ public class Person extends Person_Base {
 	updateDefaultWebAddress(homepage);
     }
 
-    public void editPersonalData(String documentIdNumber, IDDocumentType documentType, String personName,
-	    String socialSecurityNumber) {
+    public void editPersonalData(String documentIdNumber, IDDocumentType documentType,
+	    String personName, String socialSecurityNumber) {
 
 	setName(personName);
 	setIdentification(documentIdNumber, documentType);
@@ -310,7 +314,7 @@ public class Person extends Person_Base {
 	    setNationality(country);
 	}
     }
-    
+
     /**
      * 
      * @deprecated use edit(PersonBean personBean)
@@ -544,13 +548,14 @@ public class Person extends Person_Base {
     }
 
     public List<ResearchResultPublication> getArticles(ScopeType locationType) {
-	return filterArticlesWithType(this.getResearchResultPublicationsByType(Article.class), locationType);
+	return filterArticlesWithType(this.getResearchResultPublicationsByType(Article.class),
+		locationType);
     }
 
     public List<ResearchResultPublication> getArticles(ScopeType locationType,
 	    ExecutionYear executionYear) {
-	return filterArticlesWithType(this.getResearchResultPublicationsByType(Article.class, executionYear),
-		locationType);
+	return filterArticlesWithType(this.getResearchResultPublicationsByType(Article.class,
+		executionYear), locationType);
     }
 
     public List<ResearchResultPublication> getArticles() {
@@ -562,8 +567,8 @@ public class Person extends Person_Base {
     }
 
     public List<ResearchResultPublication> getInproceedings(ScopeType locationType) {
-	return filterInproceedingsWithType(this.getResearchResultPublicationsByType(Inproceedings.class),
-		locationType);
+	return filterInproceedingsWithType(
+		this.getResearchResultPublicationsByType(Inproceedings.class), locationType);
     }
 
     public List<ResearchResultPublication> getInproceedings(ScopeType locationType,
@@ -605,8 +610,8 @@ public class Person extends Person_Base {
     }
 
     public List<ResearchResultPublication> getTechnicalReports() {
-	return ResearchResultPublication
-		.sort(this.getResearchResultPublicationsByType(TechnicalReport.class));
+	return ResearchResultPublication.sort(this
+		.getResearchResultPublicationsByType(TechnicalReport.class));
     }
 
     public List<ResearchResultPublication> getTechnicalReports(ExecutionYear executionYear) {
@@ -698,7 +703,8 @@ public class Person extends Person_Base {
 	final DateTime currentDate = new DateTime();
 	final List<Advisory> result = new ArrayList<Advisory>();
 	for (final Advisory advisory : super.getAdvisories()) {
-	    if (advisory.getExpiresDateTime() == null || advisory.getExpiresDateTime().isAfter(currentDate)) {
+	    if (advisory.getExpiresDateTime() == null
+		    || advisory.getExpiresDateTime().isAfter(currentDate)) {
 		result.add(advisory);
 	    }
 	}
@@ -765,30 +771,34 @@ public class Person extends Person_Base {
 	return points;
     }
 
-    /***********************************************************************
-         * PRIVATE METHODS *
-         **********************************************************************/
+    /***************************************************************************
+     * PRIVATE METHODS *
+     **************************************************************************/
 
     private void setProperties(InfoPersonEditor infoPerson) {
 
 	setName(infoPerson.getNome());
-	setIdentification(infoPerson.getNumeroDocumentoIdentificacao(), infoPerson.getTipoDocumentoIdentificacao());
+	setIdentification(infoPerson.getNumeroDocumentoIdentificacao(), infoPerson
+		.getTipoDocumentoIdentificacao());
 	setFiscalCode(infoPerson.getCodigoFiscal());
-	
+
 	updateDefaultPhysicalAddress(infoPerson.getPhysicalAddressData());
 	updateDefaultWebAddress(infoPerson.getEnderecoWeb());
 	updateDefaultPhone(infoPerson.getTelefone());
 	updateDefaultMobilePhone(infoPerson.getTelemovel());
 	updateDefaultEmailAddress(infoPerson.getEmail());
-	
+
 	setWorkPhone(infoPerson.getWorkPhone());
-	
+
 	setDistrictSubdivisionOfBirth(infoPerson.getConcelhoNaturalidade());
-	setEmissionDateOfDocumentIdYearMonthDay(YearMonthDay.fromDateFields(infoPerson.getDataEmissaoDocumentoIdentificacao()));
-	setExpirationDateOfDocumentIdYearMonthDay(YearMonthDay.fromDateFields(infoPerson.getDataValidadeDocumentoIdentificacao()));
+	setEmissionDateOfDocumentIdYearMonthDay(YearMonthDay.fromDateFields(infoPerson
+		.getDataEmissaoDocumentoIdentificacao()));
+	setExpirationDateOfDocumentIdYearMonthDay(YearMonthDay.fromDateFields(infoPerson
+		.getDataValidadeDocumentoIdentificacao()));
 	setDistrictOfBirth(infoPerson.getDistritoNaturalidade());
-	
-	setMaritalStatus((infoPerson.getMaritalStatus() == null) ? MaritalStatus.UNKNOWN : infoPerson.getMaritalStatus());
+
+	setMaritalStatus((infoPerson.getMaritalStatus() == null) ? MaritalStatus.UNKNOWN : infoPerson
+		.getMaritalStatus());
 	setParishOfBirth(infoPerson.getFreguesiaNaturalidade());
 	setEmissionLocationOfDocumentId(infoPerson.getLocalEmissaoDocumentoIdentificacao());
 
@@ -802,11 +812,14 @@ public class Person extends Person_Base {
 
 	// Generate person's Password
 	if (getPassword() == null) {
-	    setPassword(PasswordEncryptor.encryptPassword(GeneratePassword.getInstance().generatePassword(this)));
+	    setPassword(PasswordEncryptor.encryptPassword(GeneratePassword.getInstance()
+		    .generatePassword(this)));
 	}
 
-	setAvailableEmail(infoPerson.getAvailableEmail() != null ? infoPerson.getAvailableEmail() : Boolean.TRUE);
-	setAvailableWebSite(infoPerson.getAvailableWebSite() != null ? infoPerson.getAvailableWebSite() : Boolean.TRUE);
+	setAvailableEmail(infoPerson.getAvailableEmail() != null ? infoPerson.getAvailableEmail()
+		: Boolean.TRUE);
+	setAvailableWebSite(infoPerson.getAvailableWebSite() != null ? infoPerson.getAvailableWebSite()
+		: Boolean.TRUE);
 	setAvailablePhoto(Boolean.TRUE);
     }
 
@@ -816,32 +829,47 @@ public class Person extends Person_Base {
 	setIdentification(valueToUpdateIfNewNotNull(getDocumentIdNumber(), infoPerson
 		.getNumeroDocumentoIdentificacao()), (IDDocumentType) valueToUpdateIfNewNotNull(
 		getIdDocumentType(), infoPerson.getTipoDocumentoIdentificacao()));
-	
+
 	setFiscalCode(valueToUpdateIfNewNotNull(getFiscalCode(), infoPerson.getCodigoFiscal()));
-	
+
 	setAddress(valueToUpdateIfNewNotNull(getAddress(), infoPerson.getMorada()));
 	setAreaCode(valueToUpdateIfNewNotNull(getAreaCode(), infoPerson.getCodigoPostal()));
-	setAreaOfAreaCode(valueToUpdateIfNewNotNull(getAreaOfAreaCode(), infoPerson.getLocalidadeCodigoPostal()));
+	setAreaOfAreaCode(valueToUpdateIfNewNotNull(getAreaOfAreaCode(), infoPerson
+		.getLocalidadeCodigoPostal()));
 	setArea(valueToUpdateIfNewNotNull(getArea(), infoPerson.getLocalidade()));
-	setParishOfResidence(valueToUpdateIfNewNotNull(getParishOfResidence(), infoPerson.getFreguesiaMorada()));
-	setDistrictSubdivisionOfResidence(valueToUpdateIfNewNotNull(getDistrictSubdivisionOfResidence(), infoPerson.getConcelhoMorada()));
-	setDistrictOfResidence(valueToUpdateIfNewNotNull(getDistrictOfResidence(), infoPerson.getDistritoMorada()));
-	
-	setEmissionDateOfDocumentIdYearMonthDay(infoPerson.getDataEmissaoDocumentoIdentificacao() != null ? YearMonthDay.fromDateFields(infoPerson.getDataEmissaoDocumentoIdentificacao()) : getEmissionDateOfDocumentIdYearMonthDay());
-	setEmissionLocationOfDocumentId(valueToUpdateIfNewNotNull(getEmissionLocationOfDocumentId(), infoPerson.getLocalEmissaoDocumentoIdentificacao()));
-	setExpirationDateOfDocumentIdYearMonthDay(infoPerson.getDataValidadeDocumentoIdentificacao() != null ? YearMonthDay.fromDateFields(infoPerson.getDataValidadeDocumentoIdentificacao()) : getExpirationDateOfDocumentIdYearMonthDay());
-	
-	MaritalStatus maritalStatus = (MaritalStatus) valueToUpdateIfNewNotNull(getMaritalStatus(), infoPerson.getMaritalStatus());
+	setParishOfResidence(valueToUpdateIfNewNotNull(getParishOfResidence(), infoPerson
+		.getFreguesiaMorada()));
+	setDistrictSubdivisionOfResidence(valueToUpdateIfNewNotNull(getDistrictSubdivisionOfResidence(),
+		infoPerson.getConcelhoMorada()));
+	setDistrictOfResidence(valueToUpdateIfNewNotNull(getDistrictOfResidence(), infoPerson
+		.getDistritoMorada()));
+
+	setEmissionDateOfDocumentIdYearMonthDay(infoPerson.getDataEmissaoDocumentoIdentificacao() != null ? YearMonthDay
+		.fromDateFields(infoPerson.getDataEmissaoDocumentoIdentificacao())
+		: getEmissionDateOfDocumentIdYearMonthDay());
+	setEmissionLocationOfDocumentId(valueToUpdateIfNewNotNull(getEmissionLocationOfDocumentId(),
+		infoPerson.getLocalEmissaoDocumentoIdentificacao()));
+	setExpirationDateOfDocumentIdYearMonthDay(infoPerson.getDataValidadeDocumentoIdentificacao() != null ? YearMonthDay
+		.fromDateFields(infoPerson.getDataValidadeDocumentoIdentificacao())
+		: getExpirationDateOfDocumentIdYearMonthDay());
+
+	MaritalStatus maritalStatus = (MaritalStatus) valueToUpdateIfNewNotNull(getMaritalStatus(),
+		infoPerson.getMaritalStatus());
 	setMaritalStatus((maritalStatus == null) ? MaritalStatus.UNKNOWN : maritalStatus);
-	
-	setDateOfBirthYearMonthDay(infoPerson.getNascimento() != null ? YearMonthDay.fromDateFields(infoPerson.getNascimento()) : getDateOfBirthYearMonthDay());
-	setParishOfBirth(valueToUpdateIfNewNotNull(getParishOfBirth(), infoPerson.getFreguesiaNaturalidade()));
-	setDistrictSubdivisionOfBirth(valueToUpdateIfNewNotNull(getDistrictSubdivisionOfBirth(), infoPerson.getConcelhoNaturalidade()));
-	setDistrictOfBirth(valueToUpdateIfNewNotNull(getDistrictOfBirth(), infoPerson.getDistritoNaturalidade()));
-	
+
+	setDateOfBirthYearMonthDay(infoPerson.getNascimento() != null ? YearMonthDay
+		.fromDateFields(infoPerson.getNascimento()) : getDateOfBirthYearMonthDay());
+	setParishOfBirth(valueToUpdateIfNewNotNull(getParishOfBirth(), infoPerson
+		.getFreguesiaNaturalidade()));
+	setDistrictSubdivisionOfBirth(valueToUpdateIfNewNotNull(getDistrictSubdivisionOfBirth(),
+		infoPerson.getConcelhoNaturalidade()));
+	setDistrictOfBirth(valueToUpdateIfNewNotNull(getDistrictOfBirth(), infoPerson
+		.getDistritoNaturalidade()));
+
 	setNameOfMother(valueToUpdateIfNewNotNull(getNameOfMother(), infoPerson.getNomeMae()));
 	setNameOfFather(valueToUpdateIfNewNotNull(getNameOfFather(), infoPerson.getNomePai()));
-	setSocialSecurityNumber(valueToUpdateIfNewNotNull(getSocialSecurityNumber(), infoPerson.getNumContribuinte()));
+	setSocialSecurityNumber(valueToUpdateIfNewNotNull(getSocialSecurityNumber(), infoPerson
+		.getNumContribuinte()));
 	setProfession(valueToUpdateIfNewNotNull(getProfession(), infoPerson.getProfissao()));
 	setGender((Gender) valueToUpdateIfNewNotNull(getGender(), infoPerson.getSexo()));
 
@@ -882,7 +910,7 @@ public class Person extends Person_Base {
 	return newValue;
 
     }
-    
+
     private void setProperties(final PersonBean personBean) {
 
 	setName(personBean.getName());
@@ -909,9 +937,9 @@ public class Person extends Person_Base {
 	setAvailableWebSite(personBean.isHomepageAvailable());
     }
 
-    /***********************************************************************
-         * OTHER METHODS *
-         **********************************************************************/
+    /***************************************************************************
+     * OTHER METHODS *
+     **************************************************************************/
 
     public String getSlideName() {
 	return "/photos/person/P" + getIdInternal();
@@ -977,7 +1005,7 @@ public class Person extends Person_Base {
     public boolean hasAnyPersonFunctions() {
 	return !getPersonFunctions().isEmpty();
     }
-    
+
     public Collection<PersonFunction> getPersonFunctions() {
 	return (Collection<PersonFunction>) getParentAccountabilities(
 		AccountabilityTypeEnum.MANAGEMENT_FUNCTION, PersonFunction.class);
@@ -1031,7 +1059,7 @@ public class Person extends Person_Base {
 	    Double credits) {
 	return new PersonFunction(function.getUnit(), this, function, begin, end, credits);
     }
-    
+
     /**
      * @return a group that only contains this person
      */
@@ -1040,15 +1068,13 @@ public class Person extends Person_Base {
     }
 
     /**
-         * 
-         * IMPORTANT: This method is evil and should NOT be used! You are NOT
-         * God!
-         * 
-         * 
-         * @return true if the person have been deleted, false otherwise
-         */
-    public void delete() {	
-	
+     * 
+     * IMPORTANT: This method is evil and should NOT be used! You are NOT God!
+     * 
+     * 
+     * @return true if the person have been deleted, false otherwise
+     */
+    public void delete() {
 	if (!canBeDeleted()) {
 	    throw new DomainException("error.person.cannot.be.deleted");
 	}
@@ -1060,64 +1086,51 @@ public class Person extends Person_Base {
 	}
 	if (hasAssociatedPersonAccount()) {
 	    getAssociatedPersonAccount().delete();
-	}        
-        if (hasHomepage()) { // check if can delete made in #canBeDeleted()
-            getHomepage().delete();
-        }
-        if (hasUser()) {
+	}
+	if (hasHomepage()) { // check if can delete made in #canBeDeleted()
+	    getHomepage().delete();
+	}
+	if (hasUser()) {
 	    getUser().delete();
 	}
-	
+
 	getPersonRoles().clear();
 	getManageableDepartmentCredits().clear();
 	getAdvisories().clear();
-	
-	if(hasPersonName()){
+
+	if (hasPersonName()) {
 	    getPersonName().delete();
 	}
-	
-	for ( ; !getIdDocumentsSet().isEmpty(); getIdDocumentsSet().iterator().next().delete());
-	
+
+	for (; !getIdDocumentsSet().isEmpty(); getIdDocumentsSet().iterator().next().delete())
+	    ;
+
 	removeNationality();
 	removeCountryOfBirth();
-	
-	for (; !getThesisEvaluationParticipants().isEmpty(); getThesisEvaluationParticipants().iterator().next().delete());
-    
+
+	for (; !getThesisEvaluationParticipants().isEmpty(); getThesisEvaluationParticipants()
+		.iterator().next().delete())
+	    ;
+
 	while (hasAnyScientificCommissions()) {
 	    getScientificCommissions().iterator().next().delete();
 	}
-    
+
 	super.delete();
     }
 
-    private boolean canBeDeleted() {	
-	return !hasAnyChilds()
-		&& !hasAnyParents()		
-		&& !hasAnyDomainObjectActionLogs() 		
-		&& !hasAnySentSms()
-		&& !hasAnyExportGroupingReceivers()		
-		&& !hasAnyAssociatedQualifications()
-		&& !hasAnyAssociatedAlteredCurriculums()
-		&& !hasAnyEnrolmentEvaluations()
-		&& !hasAnyExportGroupingSenders()
-		&& !hasAnyResponsabilityTransactions()
-		&& !hasAnyMasterDegreeCandidates()
-		&& !hasAnyGuides()
-		&& !hasAnyProjectAccesses()
-		&& !hasAnyPersonAuthorships()
-		&& !hasEmployee()
-		&& !hasTeacher()
-		&& !hasGrantOwner()		
-		&& !hasAnyPayedGuides()
-		&& !hasAnyPayedReceipts()
-		&& !hasParking()		
-		&& !hasAnyResearchInterests()
-		&& !hasAnyProjectParticipations()
-		&& !hasAnyParticipations() 
-		&& !hasAnyBoards() 		
-		&& !hasAnyPersonFunctions()
-		&& !hasAnyStudents()
-		&& (!hasHomepage() || getHomepage().canBeDeleted());                                  
+    private boolean canBeDeleted() {
+	return !hasAnyChilds() && !hasAnyParents() && !hasAnyDomainObjectActionLogs()
+		&& !hasAnySentSms() && !hasAnyExportGroupingReceivers()
+		&& !hasAnyAssociatedQualifications() && !hasAnyAssociatedAlteredCurriculums()
+		&& !hasAnyEnrolmentEvaluations() && !hasAnyExportGroupingSenders()
+		&& !hasAnyResponsabilityTransactions() && !hasAnyMasterDegreeCandidates()
+		&& !hasAnyGuides() && !hasAnyProjectAccesses() && !hasAnyPersonAuthorships()
+		&& !hasEmployee() && !hasTeacher() && !hasGrantOwner() && !hasAnyPayedGuides()
+		&& !hasAnyPayedReceipts() && !hasParking() && !hasAnyResearchInterests()
+		&& !hasAnyProjectParticipations() && !hasAnyParticipations() && !hasAnyBoards()
+		&& !hasAnyPersonFunctions() && !hasAnyStudents()
+		&& (!hasHomepage() || getHomepage().canBeDeleted());
     }
 
     private boolean hasParking() {
@@ -1302,12 +1315,12 @@ public class Person extends Person_Base {
     public int countSentSmsBetween(final Date startDate, final Date endDate) {
 	final DateTime start = new DateTime(startDate);
 	final DateTime end = new DateTime(endDate);
-	
+
 	int count = 0;
 	for (final SentSms sentSms : this.getSentSmsSet()) {
 	    if (sentSms.getDeliveryType() != SmsDeliveryType.NOT_SENT_TYPE
-		    && (sentSms.getSendDateDateTime().isAfter(start) || sentSms.getSendDateDateTime().equals(start))
-		    && sentSms.getSendDateDateTime().isBefore(end)) {
+		    && (sentSms.getSendDateDateTime().isAfter(start) || sentSms.getSendDateDateTime()
+			    .equals(start)) && sentSms.getSendDateDateTime().isBefore(end)) {
 		count++;
 	    }
 	}
@@ -1408,8 +1421,9 @@ public class Person extends Person_Base {
 	if (!StringUtils.isEmpty(socialSecurityNumber)) {
 	    final Party existingContributor = Party.readByContributorNumber(socialSecurityNumber);
 	    if (existingContributor != null && existingContributor != this) {
-		System.out.println("existingContributorIDInternal: " + existingContributor.getIdInternal()
-			+ " socialSecurityNumber: " + socialSecurityNumber);
+		System.out.println("existingContributorIDInternal: "
+			+ existingContributor.getIdInternal() + " socialSecurityNumber: "
+			+ socialSecurityNumber);
 		throw new DomainException("PERSON.createContributor.existing.contributor.number");
 	    }
 	    super.setSocialSecurityNumber(socialSecurityNumber);
@@ -1436,7 +1450,7 @@ public class Person extends Person_Base {
     public boolean hasAnyInvitation() {
 	return !getParentAccountabilities(AccountabilityTypeEnum.INVITATION, Invitation.class).isEmpty();
     }
-    
+
     // -------------------------------------------------------------
     // static methods
     // -------------------------------------------------------------
@@ -1468,7 +1482,8 @@ public class Person extends Person_Base {
 	return result;
     }
 
-    public static Person readByDocumentIdNumberAndIdDocumentType(final String documentIdNumber, final IDDocumentType idDocumentType) {
+    public static Person readByDocumentIdNumberAndIdDocumentType(final String documentIdNumber,
+	    final IDDocumentType idDocumentType) {
 	for (final IdDocument idDocument : IdDocument.find(documentIdNumber)) {
 	    if (idDocument.getIdDocumentType().getValue() == idDocumentType) {
 		return idDocument.getPerson();
@@ -1477,7 +1492,8 @@ public class Person extends Person_Base {
 	return null;
     }
 
-    public static Person readByDocumentIdNumberAndDateOfBirth(final String documentIdNumber, final YearMonthDay dateOfBirth) {
+    public static Person readByDocumentIdNumberAndDateOfBirth(final String documentIdNumber,
+	    final YearMonthDay dateOfBirth) {
 	for (final IdDocument idDocument : IdDocument.find(documentIdNumber)) {
 	    final Person person = idDocument.getPerson();
 	    if (person.getDateOfBirthYearMonthDay().equals(dateOfBirth)) {
@@ -1539,7 +1555,8 @@ public class Person extends Person_Base {
 	final SortedSet<StudentCurricularPlan> studentCurricularPlans = new TreeSet<StudentCurricularPlan>(
 		StudentCurricularPlan.STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_DEGREE_NAME);
 	for (final Registration registration : getStudentsSet()) {
-	    final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
+	    final StudentCurricularPlan studentCurricularPlan = registration
+		    .getActiveStudentCurricularPlan();
 	    if (studentCurricularPlan != null) {
 		studentCurricularPlans.add(studentCurricularPlan);
 	    }
@@ -1553,7 +1570,8 @@ public class Person extends Person_Base {
 
 	for (final Registration registration : getStudentsSet()) {
 	    if (registration.isConcluded()) {
-		StudentCurricularPlan lastStudent = registration.getLastStudentCurricularPlanExceptPast();
+		StudentCurricularPlan lastStudent = registration
+			.getLastStudentCurricularPlanExceptPast();
 		if (lastStudent != null) {
 		    studentCurricularPlans.add(lastStudent);
 		}
@@ -1563,14 +1581,14 @@ public class Person extends Person_Base {
     }
 
     public List<ProjectAccess> readProjectAccessesByCoordinator(final Integer coordinatorCode) {
-	
+
 	final YearMonthDay now = new YearMonthDay();
 	final List<ProjectAccess> result = new ArrayList<ProjectAccess>();
-	
+
 	for (final ProjectAccess projectAccess : getProjectAccessesSet()) {
 	    if (projectAccess.getKeyProjectCoordinator().equals(coordinatorCode)) {
-		if (!now.isBefore(projectAccess.getBeginDateTime().toYearMonthDay()) && 
-			!now.isAfter(projectAccess.getEndDateTime().toYearMonthDay())) {
+		if (!now.isBefore(projectAccess.getBeginDateTime().toYearMonthDay())
+			&& !now.isAfter(projectAccess.getEndDateTime().toYearMonthDay())) {
 		    result.add(projectAccess);
 		}
 	    }
@@ -1750,19 +1768,38 @@ public class Person extends Person_Base {
 	return result;
     }
 
-    public boolean hasInsuranceEventOrAdministrativeOfficeFeeInsuranceEventFor(
-	    final ExecutionYear executionYear) {
-	return hasInsuranceEventFor(executionYear) || hasAdministrativeOfficeFeeInsuranceEvent(executionYear);
-    }
-
-    public boolean hasAdministrativeOfficeFeeInsuranceEvent(final ExecutionYear executionYear) {
-	for (final Event event : getEventsByEventType(EventType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE)) {
-	    if (((AdministrativeOfficeFeeAndInsuranceEvent) event).getExecutionYear() == executionYear) {
-		return true;
+    public Set<AnnualEvent> getAnnualEventsFor(final ExecutionYear executionYear) {
+	final Set<AnnualEvent> result = new HashSet<AnnualEvent>();
+	for (final Event event : getEventsSet()) {
+	    if (event instanceof AnnualEvent) {
+		final AnnualEvent annualEvent = (AnnualEvent) event;
+		if (annualEvent.isFor(executionYear) && !annualEvent.isCancelled()) {
+		    result.add(annualEvent);
+		}
 	    }
 	}
 
-	return false;
+	return result;
+    }
+
+    public Set<AnnualEvent> getOpenAnnualEventsFor(final ExecutionYear executionYear) {
+	final Set<AnnualEvent> result = new HashSet<AnnualEvent>();
+	for (final Event event : getEventsSet()) {
+	    if (event instanceof AnnualEvent) {
+		final AnnualEvent annualEvent = (AnnualEvent) event;
+		if (annualEvent.isFor(executionYear) && annualEvent.isOpen()) {
+		    result.add(annualEvent);
+		}
+	    }
+	}
+
+	return result;
+    }
+
+    public boolean hasInsuranceEventOrAdministrativeOfficeFeeInsuranceEventFor(
+	    final ExecutionYear executionYear) {
+	return hasInsuranceEventFor(executionYear)
+		|| hasAdministrativeOfficeFeeInsuranceEventFor(executionYear);
     }
 
     public boolean hasInsuranceEventFor(final ExecutionYear executionYear) {
@@ -1775,14 +1812,19 @@ public class Person extends Person_Base {
 	return false;
     }
 
-    public boolean hasAdministrativeOfficeFeeInsuranceEventFor(final ExecutionYear executionYear) {
+    public AdministrativeOfficeFeeAndInsuranceEvent getAdministrativeOfficeFeeInsuranceEventFor(
+	    final ExecutionYear executionYear) {
 	for (final Event event : getEventsByEventType(EventType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE)) {
 	    if (((AdministrativeOfficeFeeAndInsuranceEvent) event).getExecutionYear() == executionYear) {
-		return true;
+		return (AdministrativeOfficeFeeAndInsuranceEvent) event;
 	    }
 	}
 
-	return false;
+	return null;
+    }
+
+    public boolean hasAdministrativeOfficeFeeInsuranceEventFor(final ExecutionYear executionYear) {
+	return getAdministrativeOfficeFeeInsuranceEventFor(executionYear) != null;
     }
 
     public Set<Event> getEventsSupportingPaymentByOtherParties() {
@@ -1913,7 +1955,7 @@ public class Person extends Person_Base {
     public boolean hasAnyStudents() {
 	return getStudentsCount() > 0;
     }
-    
+
     public int getStudentsCount() {
 	return hasStudent() ? getStudent().getRegistrationsCount() : 0;
     }
@@ -2012,8 +2054,8 @@ public class Person extends Person_Base {
 	    this.name = name;
 	}
 
-	private boolean matchesAnyCriteria(final String[] nameValues, final String[] documentIdNumberValues,
-		final Person person) {
+	private boolean matchesAnyCriteria(final String[] nameValues,
+		final String[] documentIdNumberValues, final Person person) {
 	    return matchesAnyCriteriaField(nameValues, name, person.getName())
 		    || matchesAnyCriteriaField(documentIdNumberValues, documentIdNumber, person
 			    .getDocumentIdNumber());
@@ -2025,8 +2067,8 @@ public class Person extends Person_Base {
 	}
 
 	public SortedSet<Person> search() {
-	    final String[] nameValues = name == null ? null : StringNormalizer.normalize(name).toLowerCase()
-		    .split("\\p{Space}+");
+	    final String[] nameValues = name == null ? null : StringNormalizer.normalize(name)
+		    .toLowerCase().split("\\p{Space}+");
 	    final String[] documentIdNumberValues = documentIdNumber == null ? null : StringNormalizer
 		    .normalize(documentIdNumber).toLowerCase().split("\\p{Space}+");
 
@@ -2130,7 +2172,8 @@ public class Person extends Person_Base {
 
     private boolean validNickname(final String name) {
 	if (name != null && name.length() > 0) {
-	    final String normalizedName = StringNormalizer.normalize(name.replace('-', ' ')).toLowerCase();
+	    final String normalizedName = StringNormalizer.normalize(name.replace('-', ' '))
+		    .toLowerCase();
 	    final String normalizedPersonName = StringNormalizer.normalize(getName().replace('-', ' '))
 		    .toLowerCase();
 
@@ -2174,7 +2217,7 @@ public class Person extends Person_Base {
 	}
 	return null;
     }
-    
+
     public boolean hasAvailableWebSite() {
 	return getAvailableWebSite() != null && getAvailableWebSite().booleanValue();
     }
@@ -2190,7 +2233,8 @@ public class Person extends Person_Base {
 	return result;
     }
 
-    public boolean isCoordinatorFor(DegreeCurricularPlan degreeCurricularPlan, ExecutionYear executionYear) {
+    public boolean isCoordinatorFor(DegreeCurricularPlan degreeCurricularPlan,
+	    ExecutionYear executionYear) {
 	for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
 	    if (executionDegree.getExecutionYear() == executionYear) {
 		return executionDegree.getCoordinatorByTeacher(this) != null;
@@ -2208,8 +2252,8 @@ public class Person extends Person_Base {
     }
 
     public boolean isMasterDegreeOrBolonhaMasterDegreeCoordinatorFor(ExecutionYear executionYear) {
-	return isCoordinatorFor(executionYear, Arrays.asList(new DegreeType[] { DegreeType.MASTER_DEGREE,
-		DegreeType.BOLONHA_MASTER_DEGREE }));
+	return isCoordinatorFor(executionYear, Arrays.asList(new DegreeType[] {
+		DegreeType.MASTER_DEGREE, DegreeType.BOLONHA_MASTER_DEGREE }));
 
     }
 
@@ -2224,7 +2268,8 @@ public class Person extends Person_Base {
 	for (final Coordinator coordinator : getCoordinatorsSet()) {
 	    if (coordinator.hasExecutionDegree()
 		    && coordinator.getExecutionDegree().getExecutionYear() == executionYear
-		    && degreeTypes.contains(coordinator.getExecutionDegree().getDegree().getDegreeType())) {
+		    && degreeTypes
+			    .contains(coordinator.getExecutionDegree().getDegree().getDegreeType())) {
 		return true;
 	    }
 	}
@@ -2233,7 +2278,8 @@ public class Person extends Person_Base {
 
     }
 
-    public ServiceAgreement getServiceAgreementFor(final ServiceAgreementTemplate serviceAgreementTemplate) {
+    public ServiceAgreement getServiceAgreementFor(
+	    final ServiceAgreementTemplate serviceAgreementTemplate) {
 	for (final ServiceAgreement serviceAgreement : getServiceAgreementsSet()) {
 	    if (serviceAgreement.getServiceAgreementTemplate() == serviceAgreementTemplate) {
 		return serviceAgreement;
@@ -2245,7 +2291,6 @@ public class Person extends Person_Base {
     public boolean hasServiceAgreementFor(final ServiceAgreementTemplate serviceAgreementTemplate) {
 	return getServiceAgreementFor(serviceAgreementTemplate) != null;
     }
-
 
     public boolean isHomePageAvailable() {
 	return hasHomepage() && getHomepage().getActivated();
@@ -2270,8 +2315,8 @@ public class Person extends Person_Base {
 	List<PunctualRoomsOccupationRequest> result = new ArrayList<PunctualRoomsOccupationRequest>();
 	result.addAll(getPunctualRoomsOccupationRequests());
 	if (!result.isEmpty()) {
-	    Collections
-		    .sort(result, PunctualRoomsOccupationRequest.COMPARATOR_BY_MORE_RECENT_COMMENT_INSTANT);
+	    Collections.sort(result,
+		    PunctualRoomsOccupationRequest.COMPARATOR_BY_MORE_RECENT_COMMENT_INSTANT);
 	}
 	return result;
     }
@@ -2325,22 +2370,27 @@ public class Person extends Person_Base {
     public List<String> getMainRoles() {
 	return getImportantRoles(new ArrayList<String>());
     }
-    
+
     public String getMostImportantAlias() {
-        final Login login = getLoginIdentification();
-        return (login != null) ? login.getMostImportantAlias() : "";
+	final Login login = getLoginIdentification();
+	return (login != null) ? login.getMostImportantAlias() : "";
     }
-    
-    // Currently, a Person can only have one WorkPhone (so use get(0) - after interface updates remove these methods)
+
+    // Currently, a Person can only have one WorkPhone (so use get(0) - after
+    // interface updates remove these methods)
     private Phone getPersonWorkPhone() {
-	final List<Phone> partyContacts = (List<Phone>) getPartyContacts(Phone.class, PartyContactType.WORK);
-	return partyContacts.isEmpty() ? null : (Phone) partyContacts.get(0); // actually exists only one
+	final List<Phone> partyContacts = (List<Phone>) getPartyContacts(Phone.class,
+		PartyContactType.WORK);
+	return partyContacts.isEmpty() ? null : (Phone) partyContacts.get(0); // actually
+	// exists
+	// only
+	// one
     }
-    
+
     @Deprecated
     public String getWorkPhone() {
 	final Phone workPhone = getPersonWorkPhone();
-        return workPhone != null ? workPhone.getNumber() : null;
+	return workPhone != null ? workPhone.getNumber() : null;
     }
 
     @Deprecated
@@ -2354,7 +2404,7 @@ public class Person extends Person_Base {
 	    phone.setNumber(workPhone);
 	}
     }
-    
+
     public String getEmail() {
 	return hasInstitutionalEmail() ? getInstitutionalEmail() : super.getEmail();
     }
@@ -2363,22 +2413,31 @@ public class Person extends Person_Base {
 	final EmailAddress institutionalEmailAddress = getInstitutionalEmailAddress();
 	return institutionalEmailAddress != null ? institutionalEmailAddress.getValue() : null;
     }
-    
+
     public void updateInstitutionalEmail(final String institutionalEmailString) {
 	final EmailAddress institutionalEmailAddress = getInstitutionalEmailAddress();
 	if (institutionalEmailAddress == null) {
-	    PartyContact.createEmailAddress(this, PartyContactType.INSTITUTIONAL, true, false, institutionalEmailString);
+	    PartyContact.createEmailAddress(this, PartyContactType.INSTITUTIONAL, true, false,
+		    institutionalEmailString);
 	} else {
 	    institutionalEmailAddress.setValue(institutionalEmailString);
 	}
     }
-    
-    // Currently, a Person can only have one InstitutionalEmailAddress (so use get(0) method) 
+
+    // Currently, a Person can only have one InstitutionalEmailAddress (so use
+    // get(0) method)
     private EmailAddress getInstitutionalEmailAddress() {
-	final List<EmailAddress> partyContacts = (List<EmailAddress>) getPartyContacts(EmailAddress.class, PartyContactType.INSTITUTIONAL);
-	return partyContacts.isEmpty() ? null : (EmailAddress) partyContacts.get(0); // actually exists only one (protected in domain)
+	final List<EmailAddress> partyContacts = (List<EmailAddress>) getPartyContacts(
+		EmailAddress.class, PartyContactType.INSTITUTIONAL);
+	return partyContacts.isEmpty() ? null : (EmailAddress) partyContacts.get(0); // actually
+	// exists
+	// only
+	// one
+	// (protected
+	// in
+	// domain)
     }
-    
+
     public Boolean getHasInstitutionalEmail() {
 	return Boolean.valueOf(hasInstitutionalEmail());
     }
@@ -2406,28 +2465,31 @@ public class Person extends Person_Base {
 
     public static Person readPersonByEmailAddress(final String email) {
 	final EmailAddress emailAddress = EmailAddress.find(email);
-	return (emailAddress != null && emailAddress.getParty().isPerson()) ? (Person) emailAddress.getParty() : null;
+	return (emailAddress != null && emailAddress.getParty().isPerson()) ? (Person) emailAddress
+		.getParty() : null;
     }
 
-    public String getUnitText(){
-        if(getEmployee() != null && getEmployee().getLastWorkingPlace() != null){
-            return getEmployee().getLastWorkingPlace().getNameWithAcronym();
-        } else if (hasExternalPerson()){
-            return getExternalPerson().getInstitutionUnit().getPresentationNameWithParents();
-        }
-        return "";
+    public String getUnitText() {
+	if (getEmployee() != null && getEmployee().getLastWorkingPlace() != null) {
+	    return getEmployee().getLastWorkingPlace().getNameWithAcronym();
+	} else if (hasExternalPerson()) {
+	    return getExternalPerson().getInstitutionUnit().getPresentationNameWithParents();
+	}
+	return "";
     }
-    
-    public List<ThesisEvaluationParticipant> getThesisEvaluationParticipants(ExecutionPeriod executionPeriod) {
-    	ArrayList<ThesisEvaluationParticipant> participants = new ArrayList<ThesisEvaluationParticipant>();
-    	
-    	for (ThesisEvaluationParticipant participant : this.getThesisEvaluationParticipants()) {
-    		if (participant.getThesis().getEnrolment().getExecutionYear().equals(executionPeriod.getExecutionYear())) {
-    			participants.add(participant);
-    		}
-    	}
-    	Collections.sort(participants, ThesisEvaluationParticipant.COMPARATOR_BY_STUDENT_NUMBER);
-    	return participants;
+
+    public List<ThesisEvaluationParticipant> getThesisEvaluationParticipants(
+	    ExecutionPeriod executionPeriod) {
+	ArrayList<ThesisEvaluationParticipant> participants = new ArrayList<ThesisEvaluationParticipant>();
+
+	for (ThesisEvaluationParticipant participant : this.getThesisEvaluationParticipants()) {
+	    if (participant.getThesis().getEnrolment().getExecutionYear().equals(
+		    executionPeriod.getExecutionYear())) {
+		participants.add(participant);
+	    }
+	}
+	Collections.sort(participants, ThesisEvaluationParticipant.COMPARATOR_BY_STUDENT_NUMBER);
+	return participants;
     }
 
     public Set<Proposal> findFinalDegreeWorkProposals() {

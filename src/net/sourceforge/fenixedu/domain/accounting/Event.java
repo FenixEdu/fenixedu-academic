@@ -719,4 +719,12 @@ public abstract class Event extends Event_Base {
 	return (transaction != null) ? transaction.getWhenRegistered() : null;
     }
 
+    public boolean isLetterSent() {
+	return getWhenSentLetter() != null;
+    }
+
+    public void markLetterSent() {
+	setWhenSentLetter(new YearMonthDay());
+    }
+
 }

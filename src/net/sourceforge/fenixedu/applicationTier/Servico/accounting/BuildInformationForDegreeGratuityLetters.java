@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.administrativeOffice.DebtDTO;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.administrativeOffice.DegreeGratuityLetterDTO;
+import net.sourceforge.fenixedu.dataTransferObject.accounting.administrativeOffice.InstallmentDebtDTO;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.Event;
@@ -31,26 +32,28 @@ public class BuildInformationForDegreeGratuityLetters extends
 	super();
     }
 
-    public List<DegreeGratuityLetterDTO> run(final ExecutionYear executionYear) throws FenixServiceException {
-	final List<DegreeGratuityLetterDTO> result = new ArrayList<DegreeGratuityLetterDTO>();
-	for (final Entry<Person, List<Event>> entry : getNotPayedEventsGroupedByPerson(executionYear)
-		.entrySet()) {
-	    result.add(buildDTO(entry.getKey(), entry.getValue(), executionYear));
-	}
+    public List<DegreeGratuityLetterDTO> run(final ExecutionYear executionYear)
+	    throws FenixServiceException {
+	throw new RuntimeException(
+		"Rewrite service to consider event.isLetterSent and to set whenSentLetter and support more than one gratuity events");
 
-	return result;
+	// final List<DegreeGratuityLetterDTO> result = new
+	// ArrayList<DegreeGratuityLetterDTO>();
+	// for (final Entry<Person, List<Event>> entry :
+	// getNotPayedEventsGroupedByPerson(executionYear)
+	// .entrySet()) {
+	// result.add(buildDTO(entry.getKey(), entry.getValue(),
+	// executionYear));
+	// }
+	//
+	// return result;
 
     }
 
     protected DegreeGratuityLetterDTO buildDTO(final Person person, final List<Event> eventsForPerson,
 	    final ExecutionYear executionYear) throws FenixServiceException {
-	final DegreeGratuityLetterDTO gratuityLetterDTO = new DegreeGratuityLetterDTO(person, executionYear,
-		ENTITY_CODE);
-	final AdministrativeOffice administrativeOffice = AdministrativeOffice
-		.readByAdministrativeOfficeType(AdministrativeOfficeType.DEGREE);
-
-	fillInsuranceAndAdminOfficeFeePriceInformation(administrativeOffice, gratuityLetterDTO,
-		executionYear);
+	final DegreeGratuityLetterDTO gratuityLetterDTO = new DegreeGratuityLetterDTO(person,
+		executionYear, ENTITY_CODE);
 
 	for (final Event event : eventsForPerson) {
 	    if (event instanceof AdministrativeOfficeFeeAndInsuranceEvent) {
@@ -73,8 +76,9 @@ public class BuildInformationForDegreeGratuityLetters extends
 	    final InstallmentPaymentCode installmentPaymentCode = event
 		    .getInstallmentPaymentCodeFor(installment);
 	    if (installmentPaymentCode != null) {
-		gratuityLetterDTO.addGratuityDebtInstallments(new DebtDTO(installment.getEndDate(),
-			installmentPaymentCode.getFormattedCode(), installment.getAmount()));
+		gratuityLetterDTO.addGratuityDebtInstallments(new InstallmentDebtDTO(installment
+			.getEndDate(), installmentPaymentCode.getFormattedCode(), installment
+			.getAmount(), installment));
 	    }
 	}
 
@@ -87,37 +91,16 @@ public class BuildInformationForDegreeGratuityLetters extends
 			    totalAmount));
 	}
 
-	gratuityLetterDTO.setGratuityTotalAmout(totalAmount);
-
     }
 
-    private void fillInsuranceAndAdminOfficeFeeDebtInformation(DegreeGratuityLetterDTO gratuityLetterDTO,
-	    AdministrativeOfficeFeeAndInsuranceEvent event) {
+    private void fillInsuranceAndAdminOfficeFeeDebtInformation(
+	    DegreeGratuityLetterDTO gratuityLetterDTO, AdministrativeOfficeFeeAndInsuranceEvent event) {
 	final Money totalAmount = event.getInsuranceAmount().add(
 		event.getAdministrativeOfficeFeeAmount());
 	gratuityLetterDTO.setAdministrativeOfficeAndInsuranceFeeDebt(new DebtDTO(event
 		.getAdministrativeOfficeFeePaymentLimitDate(), event.calculatePaymentCode()
 		.getFormattedCode(), totalAmount));
 
-    }
-
-    private void fillInsuranceAndAdminOfficeFeePriceInformation(
-	    AdministrativeOffice administrativeOffice, DegreeGratuityLetterDTO debtDTO,
-	    final ExecutionYear executionYear) {
-	final AdministrativeOfficeServiceAgreementTemplate serviceAgreementTemplate = administrativeOffice
-		.getServiceAgreementTemplate();
-	final AdministrativeOfficeFeeAndInsurancePR postingRule = (AdministrativeOfficeFeeAndInsurancePR) serviceAgreementTemplate
-		.findPostingRuleByEventType(EventType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE);
-	final DateTime executionYearStartDate = executionYear.getBeginDateYearMonthDay()
-		.toDateTimeAtMidnight();
-	final DateTime executionYearEndDate = executionYear.getEndDateYearMonthDay()
-		.toDateTimeAtMidnight();
-	debtDTO.setInsuranceAmount(postingRule.getInsuranceAmount(executionYearStartDate,
-		executionYearEndDate));
-	debtDTO.setAdministrativeOfficeFeeAmount(postingRule.getAdministrativeOfficeFeeAmount(
-		executionYearStartDate, executionYearEndDate));
-	debtDTO.setAdministrativeOfficeFeePenalty(postingRule.getAdministrativeOfficeFeePenaltyAmount(
-		executionYearStartDate, executionYearEndDate));
     }
 
 }

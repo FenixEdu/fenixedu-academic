@@ -36,8 +36,10 @@ public class InsuranceEvent extends InsuranceEvent_Base {
 	    @Override
 	    public void beforeAdd(Event event, Person person) {
 		if (event instanceof InsuranceEvent) {
-		    if (person.hasAdministrativeOfficeFeeInsuranceEvent(((InsuranceEvent) event)
-			    .getExecutionYear())) {
+		    final InsuranceEvent insuranceEvent = ((InsuranceEvent) event);
+		    if (person.hasAdministrativeOfficeFeeInsuranceEventFor(insuranceEvent
+			    .getExecutionYear())
+			    || person.hasInsuranceEventFor(insuranceEvent.getExecutionYear())) {
 			throw new DomainException(
 				"error.accounting.events.insurance.InsuranceEvent.person.already.has.insurance.event.for.execution.year");
 

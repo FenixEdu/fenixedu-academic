@@ -4,6 +4,7 @@ import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
+import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsurancePenaltyExemption;
 import net.sourceforge.fenixedu.util.Money;
 
@@ -28,8 +29,18 @@ public class AdministrativeOfficeFeePR extends AdministrativeOfficeFeePR_Base {
 
     @Override
     protected boolean hasPenalty(Event event, DateTime when) {
-	return event.hasAnyPenaltyExemptionsFor(AdministrativeOfficeFeeAndInsurancePenaltyExemption.class) ? false
-		: super.hasPenalty(event, when);
+	if (event.hasAnyPenaltyExemptionsFor(AdministrativeOfficeFeeAndInsurancePenaltyExemption.class)) {
+	    return false;
+	}
+
+	final AdministrativeOfficeFeeAndInsuranceEvent administrativeOfficeFeeAndInsuranceEvent = (AdministrativeOfficeFeeAndInsuranceEvent) event;
+	if (administrativeOfficeFeeAndInsuranceEvent.getPaymentEndDate() != null) {
+	    return new YearMonthDay().isAfter(administrativeOfficeFeeAndInsuranceEvent
+		    .getPaymentEndDate());
+	}
+
+	return super.hasPenalty(event, when);
+
     }
 
     @Override

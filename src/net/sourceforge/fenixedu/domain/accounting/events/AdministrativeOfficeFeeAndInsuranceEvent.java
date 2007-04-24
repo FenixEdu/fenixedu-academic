@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.accounting.AccountType;
 import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
 import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
+import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.Exemption;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
@@ -23,14 +24,36 @@ import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPa
 import net.sourceforge.fenixedu.domain.accounting.postingRules.AdministrativeOfficeFeeAndInsurancePR;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.AdministrativeOfficeServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
+import dml.runtime.RelationAdapter;
+
 public class AdministrativeOfficeFeeAndInsuranceEvent extends
 	AdministrativeOfficeFeeAndInsuranceEvent_Base {
+
+    static {
+	PersonAccountingEvent.addListener(new RelationAdapter<Event, Person>() {
+	    @Override
+	    public void beforeAdd(Event event, Person person) {
+		if (event instanceof AdministrativeOfficeFeeAndInsuranceEvent) {
+		    final AdministrativeOfficeFeeAndInsuranceEvent administrativeOfficeFeeAndInsuranceEvent = (AdministrativeOfficeFeeAndInsuranceEvent) event;
+		    if (person
+			    .hasAdministrativeOfficeFeeInsuranceEventFor(administrativeOfficeFeeAndInsuranceEvent
+				    .getExecutionYear())) {
+			throw new DomainException(
+				"error.net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent.event.is.already.defined.for.execution.year");
+
+		    }
+
+		}
+	    }
+	});
+    }
 
     protected AdministrativeOfficeFeeAndInsuranceEvent() {
 	super();
@@ -97,8 +120,9 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends
     }
 
     public YearMonthDay getAdministrativeOfficeFeePaymentLimitDate() {
-	return getAdministrativeOfficeFeeAndInsurancePR().getAdministrativeOfficeFeePaymentLimitDate(
-		getStartDate(), getEndDate());
+	return getPaymentEndDate() != null ? getPaymentEndDate()
+		: getAdministrativeOfficeFeeAndInsurancePR().getAdministrativeOfficeFeePaymentLimitDate(
+			getStartDate(), getEndDate());
     }
 
     public Money getAdministrativeOfficeFeePenaltyAmount() {
@@ -219,5 +243,15 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends
 	}
 
 	return null;
+    }
+
+    @Override
+    public void setPaymentEndDate(YearMonthDay paymentEndDate) {
+	if (!isOpen()) {
+	    throw new DomainException(
+		    "error.net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent.payment.end.date.can.only.be.modified.on.open.events");
+	}
+
+	super.setPaymentEndDate(paymentEndDate);
     }
 }

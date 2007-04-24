@@ -1837,7 +1837,7 @@ public class Registration extends Registration_Base {
 		&& !hasExternalRegistrationData()) {
 	    new ExternalRegistrationData(this);
 	}
-    }
+	}
 
     public boolean hasGratuityEvent(final ExecutionYear executionYear) {
 	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlans()) {
@@ -1847,5 +1847,5 @@ public class Registration extends Registration_Base {
 	}
 	return false;
     }
-
+    
 }
