@@ -39,7 +39,7 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
 				&& studentCurricularPlan.getRegistration().hasGratuityEvent(
 					gratuityEvent.getExecutionYear())) {
 			    throw new DomainException(
-				    "error.accounting.events.gratuity.GratuityEvent.person.already.has.gratuity.event.for.student.curricular.plan.and.year");
+				    "error.accounting.events.gratuity.GratuityEvent.person.already.has.gratuity.event.in.registration.and.year");
 
 			}
 		    }
