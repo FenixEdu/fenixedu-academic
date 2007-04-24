@@ -101,6 +101,7 @@
         <forward name="start" path="departmentSite-start"/>
         <forward name="editIntroduction" path="departmentSite-edit-introduction"/>
         <forward name="editConfiguration" path="departmentSite-edit-configuration"/>
+        <forward name="editSideBanner" path="departmentSite-edit-side-banner"/>
         <forward name="editLogo" path="departmentSite-edit-logo"/>
         <forward name="editBanners" path="departmentSite-edit-banners"/>
         <forward name="editTopNavigation" path="departmentSite-edit-top-navigation"/>

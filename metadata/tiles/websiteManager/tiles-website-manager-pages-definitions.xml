@@ -180,6 +180,9 @@
     <definition name="departmentSite-edit-configuration" extends="definition.department.site.management">
         <put name="body" value="/webSiteManager/departmentSite/edit-configuration.jsp"/>
     </definition>
+    <definition name="departmentSite-edit-side-banner" extends="definition.department.site.management">
+        <put name="body" value="/webSiteManager/commons/edit-side-banner.jsp"/>
+    </definition>
     <definition name="departmentSite-edit-logo" extends="definition.department.site.management">
         <put name="body" value="/webSiteManager/commons/edit-logo.jsp"/>
     </definition>

@@ -37,6 +37,11 @@
         </html:link>
     </li>
     <li>
+        <html:link page="<%= "/manageDepartmentSite.do?method=sideBanner&amp;oid=" + oid %>">
+            <bean:message key="link.site.sideBanner" bundle="WEBSITEMANAGER_RESOURCES"/>
+        </html:link>
+    </li>
+    <li>
         <html:link page="<%= "/manageDepartmentSite.do?method=topNavigation&amp;oid=" + oid %>">
             <bean:message key="link.site.topNavigation" bundle="WEBSITEMANAGER_RESOURCES"/>
         </html:link>

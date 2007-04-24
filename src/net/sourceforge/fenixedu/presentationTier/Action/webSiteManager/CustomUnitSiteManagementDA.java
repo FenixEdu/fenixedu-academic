@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.DepartmentSite;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Section;
@@ -68,6 +67,15 @@ public abstract class CustomUnitSiteManagementDA extends SiteManagementDA {
         }
         
         return mapping.findForward("editIntroduction");
+    }
+
+    public ActionForward sideBanner(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        IViewState viewState = RenderUtils.getViewState();
+        if (viewState != null && viewState.isValid() && !viewState.skipUpdate()) {
+            request.setAttribute("successful", true);
+        }
+        
+        return mapping.findForward("editSideBanner");
     }
 
     public ActionForward manageConfiguration(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {

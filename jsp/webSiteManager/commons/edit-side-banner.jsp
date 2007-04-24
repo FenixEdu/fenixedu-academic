@@ -11,34 +11,34 @@
 <bean:define id="context" value="<%= contextParam + "=" + contextParamValue %>"/>
 
 <h2>
-    <bean:message key="title.site.information" bundle="WEBSITEMANAGER_RESOURCES"/>
+    <bean:message key="title.site.sideBanner" bundle="WEBSITEMANAGER_RESOURCES"/>
 </h2>
 
 <div class="infoop2 mbottom15">
     <p class="mvert0">
-        <bean:message key="label.site.information" bundle="WEBSITEMANAGER_RESOURCES"/>
+        <bean:message key="label.site.sideBanner" bundle="WEBSITEMANAGER_RESOURCES"/>
     </p>
 </div>
 
 <logic:present name="successful">
     <p>
         <span class="success0">
-            <bean:message key="message.site.information.changed" bundle="WEBSITEMANAGER_RESOURCES"/>
+            <bean:message key="message.site.sideBanner.changed" bundle="WEBSITEMANAGER_RESOURCES"/>
         </span>
     </p>
 </logic:present>
 
-<fr:hasMessages for="editSiteIntroduction" type="validation">
+<fr:hasMessages for="editSideBanner" type="validation">
     <div class="mbottom15">
         <span class="error0">
-            <fr:message for="editSiteIntroduction" type="validation"/>
+            <fr:message for="editSideBanner" type="validation"/>
         </span>
     </div>
 </fr:hasMessages>
 
 <bean:define id="oid" name="site" property="idInternal"/>
-<fr:form action="<%= String.format("%s?method=introduction&amp;%s", actionName, context) %>">
-    <fr:edit id="editSiteIntroduction" name="site" slot="description">
+<fr:form action="<%= String.format("%s?method=sideBanner&amp;%s", actionName, context) %>">
+    <fr:edit id="editSideBanner" name="site" slot="sideBanner">
         <fr:layout name="rich-text">
             <fr:property name="rows" value="20"/>
             <fr:property name="columns" value="70"/>

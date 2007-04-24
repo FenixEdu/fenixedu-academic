@@ -32,7 +32,7 @@
         <ul class="mtop2">
             <li>
                 <html:link page="<%= String.format("%s?method=organizeFooterLinks&amp;location=footer&amp;%s", actionName, context) %>">
-                    <bean:message key="link.site.links.order"/>
+                    <bean:message key="link.site.links.order" bundle="WEBSITEMANAGER_RESOURCES"/>
                 </html:link>
             </li>
         </ul>
