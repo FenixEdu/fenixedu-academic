@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.executionCourse.ExecutionCourseSearchBean;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -28,6 +29,7 @@ public class ExecutionCourseInquiriesDA extends FenixDispatchAction {
             if (executionCourses != null) {
                 request.setAttribute("executionCourses", executionCourses);
             }
+            RenderUtils.invalidateViewState("executionCourses");
         }
         request.setAttribute("executionCourseSearchBean", executionCourseSearchBean);
         return mapping.findForward("showExecutionCoursesForInquiries");
