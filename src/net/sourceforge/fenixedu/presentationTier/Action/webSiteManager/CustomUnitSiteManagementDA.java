@@ -1,8 +1,13 @@
 package net.sourceforge.fenixedu.presentationTier.Action.webSiteManager;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DepartmentSite;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -10,7 +15,9 @@ import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.UnitSiteBanner;
 import net.sourceforge.fenixedu.domain.UnitSiteLayoutType;
+import net.sourceforge.fenixedu.domain.UnitSiteLink;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.SiteManagementDA;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.model.MetaSlot;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
@@ -196,6 +203,112 @@ public abstract class CustomUnitSiteManagementDA extends SiteManagementDA {
         executeService("CreateUnitSiteBanner", site, main.getFile(), main.getName(), background.getFile(), background.getName(), bean.getColor());
         
         return manageBanners(mapping, actionForm, request, response);
+    }
+
+    public ActionForward topNavigation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        UnitSite site = getSite(request);
+        request.setAttribute("customLinks", site.getSortedTopLinks());
+
+        return mapping.findForward("editTopNavigation");
+    }
+
+    public ActionForward editTopLink(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        request.setAttribute("editLink" + request.getParameter("linkID"), true);
+        return topNavigation(mapping, actionForm, request, response);
+    }
+    
+    public ActionForward removeTopLink(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        UnitSite site = getSite(request);
+        Integer linkId = getId(request.getParameter("linkID"));
+        
+        for (UnitSiteLink link : site.getTopLinks()) {
+            if (link.getIdInternal().equals(linkId)) {
+                executeService("DeleteUnitSiteLink", site, link);
+                break;
+            }
+        }
+        
+        return topNavigation(mapping, actionForm, request, response);
+    }
+
+    public ActionForward createTopLink(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        RenderUtils.invalidateViewState();
+        return topNavigation(mapping, actionForm, request, response);
+    }
+    
+    public ActionForward footerNavigation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        UnitSite site = getSite(request);
+        request.setAttribute("customLinks", site.getSortedFooterLinks());
+        
+        return mapping.findForward("editFooterNavigation");
+    }
+
+    public ActionForward editFooterLink(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        request.setAttribute("editLink" + request.getParameter("linkID"), true);
+        return footerNavigation(mapping, actionForm, request, response);
+    }
+
+    public ActionForward removeFooterLink(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        UnitSite site = getSite(request);
+        Integer linkId = getId(request.getParameter("linkID"));
+        
+        for (UnitSiteLink link : site.getFooterLinks()) {
+            if (link.getIdInternal().equals(linkId)) {
+                executeService("DeleteUnitSiteLink", site, link);
+                break;
+            }
+        }
+        
+        return footerNavigation(mapping, actionForm, request, response);
+    }
+
+    public ActionForward createFooterLink(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        RenderUtils.invalidateViewState();
+        return footerNavigation(mapping, actionForm, request, response);
+    }
+
+    public ActionForward organizeTopLinks(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        UnitSite site = getSite(request);
+        request.setAttribute("customLinks", site.getSortedTopLinks());
+        
+        return mapping.findForward("organizeTopLinks");
+    }
+
+    public ActionForward organizeFooterLinks(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        UnitSite site = getSite(request);
+        request.setAttribute("customLinks", site.getSortedFooterLinks());
+        
+        return mapping.findForward("organizeFooterLinks");
+    }
+
+    public ActionForward saveTopLinksOrder(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        RenderUtils.invalidateViewState();
+        saveLinksOrder(request, true);
+        return topNavigation(mapping, actionForm, request, response);
+    }
+    
+    public ActionForward saveFooterLinksOrder(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        RenderUtils.invalidateViewState();
+        saveLinksOrder(request, false);
+        return footerNavigation(mapping, actionForm, request, response);
+    }
+
+    protected void saveLinksOrder(HttpServletRequest request, boolean top) throws FenixFilterException, FenixServiceException {
+        UnitSite site = getSite(request);
+        String orderString = request.getParameter("linksOrder");
+
+        List<UnitSiteLink> initialLinks = new ArrayList<UnitSiteLink>(top ? site.getSortedTopLinks() : site.getSortedFooterLinks());
+        List<UnitSiteLink> orderedLinks = new ArrayList<UnitSiteLink>();
+
+        String[] nodes = orderString.split(",");
+        for (int i = 0; i < nodes.length; i++) {
+            String[] parts = nodes[i].split("-");
+
+            Integer itemIndex = getId(parts[0]);
+            orderedLinks.add(initialLinks.get(itemIndex - 1));
+        }
+
+        ServiceUtils.executeService(getUserView(request), "RearrangeUnitSiteLinks", site, top, orderedLinks);
     }
     
 }

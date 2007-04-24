@@ -75,7 +75,7 @@ Documentation:
     <renderer type="java.lang.Object" layout="tabular" class="net.sourceforge.fenixedu.renderers.StandardObjectRenderer">
     		<property name="labelTerminator" value=":"/>
     </renderer>
-  
+
     <!--@ The template layout is used when you specify the template attribute of a renderer's tag. It delegates
           the presentation of the object to a JSP that is extended with the <tt>fenix-template.tld</tt>. -->
     <renderer type="java.lang.Object" layout="template" class="net.sourceforge.fenixedu.renderers.TemplateRenderer"/>
@@ -347,6 +347,13 @@ Documentation:
           right of the editor. -->  
     <renderer mode="input" type="java.lang.Object" layout="tabular" class="net.sourceforge.fenixedu.renderers.StandardInputRenderer">
     		<property name="labelTerminator" value=":"/>
+    </renderer>
+
+    <!--@ This layout is the same as the default tabular layout but it includes the default presentation for an objecti input.  -->  
+    <renderer mode="input" type="java.lang.Object" layout="tabular-style5" class="net.sourceforge.fenixedu.renderers.StandardInputRenderer">
+        <property name="labelTerminator" value=":"/>
+        <property name="classes" value="tstyle5 thlight thright mbottom05"/>
+        <property name="columnClasses" value=",,tdclear tderror1"/>
     </renderer>
     
     <!--@ This layout allows several slots to be edited without a specific organization. Each slot's editor e shown after the

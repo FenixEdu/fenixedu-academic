@@ -103,6 +103,10 @@
         <forward name="editConfiguration" path="departmentSite-edit-configuration"/>
         <forward name="editLogo" path="departmentSite-edit-logo"/>
         <forward name="editBanners" path="departmentSite-edit-banners"/>
+        <forward name="editTopNavigation" path="departmentSite-edit-top-navigation"/>
+        <forward name="editFooterNavigation" path="departmentSite-edit-footer-navigation"/>
+        <forward name="organizeTopLinks" path="departmentSite-edit-organizeTopLinks"/>
+        <forward name="organizeFooterLinks" path="departmentSite-edit-organizeFooterLinks"/>
         <forward name="createSection" path="departmentSite-createSection"/>
         <forward name="sectionsManagement" path="departmentSite-sectionsManagement"/>
         <forward name="section" path="departmentSite-section"/>

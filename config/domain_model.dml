@@ -4649,6 +4649,7 @@ class net.sourceforge.fenixedu.domain.Site extends net.sourceforge.fenixedu.doma
 		Integer keyTopUnitSite;
 		Integer keyFooterUnitSite;
 	
+		Integer linkOrder;
 		String url;
 		MultiLanguageString label;
 	}

@@ -186,6 +186,18 @@
     <definition name="departmentSite-edit-banners" extends="definition.department.site.management">
         <put name="body" value="/webSiteManager/commons/edit-banners.jsp"/>
     </definition>
+    <definition name="departmentSite-edit-top-navigation" extends="definition.department.site.management">
+        <put name="body" value="/webSiteManager/commons/edit-top-navigation.jsp"/>
+    </definition>
+    <definition name="departmentSite-edit-footer-navigation" extends="definition.department.site.management">
+        <put name="body" value="/webSiteManager/commons/edit-footer-navigation.jsp"/>
+    </definition>
+    <definition name="departmentSite-edit-organizeTopLinks" extends="definition.department.site.management">
+        <put name="body" value="/webSiteManager/commons/organize-top-links.jsp"/>
+    </definition>
+    <definition name="departmentSite-edit-organizeFooterLinks" extends="definition.department.site.management">
+        <put name="body" value="/webSiteManager/commons/organize-footer-links.jsp"/>
+    </definition>
     <definition name="departmentSite-sectionsManagement" extends="definition.department.site.management" >
         <put name="body" value="/commons/sites/sectionsManagement.jsp"/>
     </definition>

@@ -109,3 +109,21 @@
         <property name="linkFormat" value="${downloadUrl}"/>
     </slot>
 </schema>
+
+<schema name="site.customLink.view" type="net.sourceforge.fenixedu.domain.UnitSiteLink" bundle="WEBSITEMANAGER_RESOURCES">
+    <slot name="url" key="label.site.link.url"/>
+    <slot name="label" key="label.site.link.label"/>
+</schema>
+
+<schema name="site.customLink.edit" type="net.sourceforge.fenixedu.domain.UnitSiteLink" bundle="WEBSITEMANAGER_RESOURCES">
+    <slot name="url" key="label.site.link.url" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+        <property name="size" value="70"/>
+    </slot>
+    <slot name="label" key="label.site.link.label"  validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
+        <property name="size" value="40"/>
+    </slot>
+</schema>
+
+<schema name="site.customLink.label" type="net.sourceforge.fenixedu.domain.UnitSiteLink" bundle="WEBSITEMANAGER_RESOURCES">
+    <slot name="label"/>
+</schema>

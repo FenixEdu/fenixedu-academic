@@ -1,5 +1,10 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.List;
+import java.util.Random;
+import java.util.SortedSet;
+import java.util.TreeSet;
+
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import dml.runtime.RelationAdapter;
 
@@ -37,6 +42,38 @@ public abstract class UnitSite extends UnitSite_Base {
         removeUnit();
     }
 
+    public void setTopLinksOrder(List<UnitSiteLink> links) {
+        UnitSiteLink.TOP_ORDER_ADAPTER.updateOrder(this, links);
+    }
+
+    public SortedSet<UnitSiteLink> getSortedTopLinks() {
+        SortedSet<UnitSiteLink> sorted = new TreeSet<UnitSiteLink>(UnitSiteLink.COMPARATOR_BY_ORDER);
+        sorted.addAll(getTopLinks());
+        
+        return sorted;
+    }
+    
+    public void setFooterLinksOrder(List<UnitSiteLink> links) {
+        UnitSiteLink.FOOTER_ORDER_ADAPTER.updateOrder(this, links);
+    }
+
+    public SortedSet<UnitSiteLink> getSortedFooterLinks() {
+        SortedSet<UnitSiteLink> sorted = new TreeSet<UnitSiteLink>(UnitSiteLink.COMPARATOR_BY_ORDER);
+        sorted.addAll(getFooterLinks());
+        
+        return sorted;
+    }
+    
+    public UnitSiteBanner getCurrentBanner() {
+        List<UnitSiteBanner> banners = getBanners();
+        
+        if (banners.isEmpty()) {
+            return null;
+        }
+        
+        return banners.get(new Random().nextInt() % banners.size());
+    }
+    
     /**
      * Manage the role WEBSITE_MANAGER associated with the person. The person
      * becomes a WEBSITE_MANAGER when it's added as a manager of a UnitSite. This
@@ -70,4 +107,5 @@ public abstract class UnitSite extends UnitSite_Base {
         }
         
     }
+
 }

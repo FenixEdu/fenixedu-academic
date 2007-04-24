@@ -11841,4 +11841,22 @@
 			<chain name="UnitSiteManagerAuthorization"/>
 		</filterChains>
     </service>    
+	<service>
+        <name>DeleteUnitSiteLink</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.DeleteUnitSiteLink</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+		<filterChains>
+			<chain name="UnitSiteManagerAuthorization"/>
+		</filterChains>
+    </service>    
+	<service>
+        <name>RearrangeUnitSiteLinks</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.RearrangeUnitSiteLinks</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+		<filterChains>
+			<chain name="UnitSiteManagerAuthorization"/>
+		</filterChains>
+    </service>    
 </serviceDefinitions>
