@@ -27,3 +27,10 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Create banners and custom links for UnitSite" CreateUnitSiteArtifacts.sql
+execute "Add department site configuration" AddDepartmentSiteConfiguration.sql
+execute "Add show functionalities to department site" AddShowFunctionalitiesDepartmentSites.sql
+
+execute "Alter table AccountingEvent" AlterTableAccountingEvent.sql
+execute "Updating table AccountingEvent" UpdateTableAccountingEvent.sql
+
