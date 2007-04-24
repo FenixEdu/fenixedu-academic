@@ -48,6 +48,14 @@ public class VehicleAllocation extends VehicleAllocation_Base {
 	super.delete();
     }
     
+    @Override
+    public void setResource(Resource resource) {	
+	super.setResource(resource);
+	if (!resource.isVehicle()) {
+	    throw new DomainException("error.allocation.invalid.resource.type");
+	}
+    }
+        
     public Vehicle getVehicle() {
 	return (Vehicle) getResource();
     }
