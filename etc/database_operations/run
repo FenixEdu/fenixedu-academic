@@ -29,3 +29,4 @@ function executeWithTempFile() {
 
 execute "Create banners and custom links for UnitSite" CreateUnitSiteArtifacts.sql
 execute "Add department site configuration" AddDepartmentSiteConfiguration.sql
+execute "Add show functionalities to department site" AddShowFunctionalitiesDepartmentSites
