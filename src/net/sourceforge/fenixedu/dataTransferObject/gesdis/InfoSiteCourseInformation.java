@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
+import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.Curriculum;
@@ -38,6 +39,7 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -394,6 +396,23 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
         Collections.sort(result, new ReverseComparator(new BeanComparator("infoExecutionPeriod.infoExecutionYear.year")));
         
         return result;
+    }
+
+    public String getEvaluationMethod() {
+	final ExecutionCourse executionCourse = getExecutionCourse();
+	if (executionCourse != null) {
+	    final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
+	    for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
+		final CompetenceCourse competenceCourse = curricularCourse.getCompetenceCourse();
+		if (curricularCourse.isActive(executionPeriod) && competenceCourse != null) {
+		    final CompetenceCourseInformation competenceCourseInformation = competenceCourse.findCompetenceCourseInformationForExecutionPeriod(executionPeriod);
+		    if (competenceCourseInformation != null) {
+			competenceCourseInformation.getEvaluationMethod();
+		    }
+		}
+	    }
+	}
+	return null;
     }
 
 }

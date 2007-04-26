@@ -268,9 +268,15 @@
 						<tr>
 							<td colspan="7">
 								<p>
-									<bean:write name="infoSiteCourseInformation" 
-												property="infoEvaluationMethod.evaluationElements" 
-												filter="false"/>
+									<logic:present name="infoSiteCourseInformation" property="infoEvaluationMethod">
+										<bean:write name="infoSiteCourseInformation" 
+													property="infoEvaluationMethod.evaluationElements" 
+													filter="false"/>
+									</logic:present>
+									<logic:notPresent name="infoSiteCourseInformation" property="infoEvaluationMethod">
+										<bean:write name="infoSiteCourseInformation" property="evaluationMethod" 
+													filter="false"/>
+									</logic:notPresent>									
 								</p>
 							</td>
 						</tr>
@@ -538,9 +544,15 @@
 					<tr>
 						<td colspan="7">
 							<p>
-								<bean:write name="infoSiteCourseInformation" 
-											property="infoEvaluationMethod.evaluationElements" 
-											filter="false"/>
+								<logic:present name="infoSiteCourseInformation" property="infoEvaluationMethod">
+									<bean:write name="infoSiteCourseInformation" 
+												property="infoEvaluationMethod.evaluationElements" 
+												filter="false"/>
+								</logic:present>
+								<logic:notPresent name="infoSiteCourseInformation" property="infoEvaluationMethod">
+									<bean:write name="infoSiteCourseInformation" property="evaluationMethod" 
+												filter="false"/>
+								</logic:notPresent>
 							</p>
 						</td>
 					</tr>
