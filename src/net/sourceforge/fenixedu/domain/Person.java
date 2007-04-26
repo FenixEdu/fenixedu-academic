@@ -110,9 +110,9 @@ public class Person extends Person_Base {
 	Role.PersonRole.addListener(new PersonRoleListener());
     }
 
-    /***************************************************************************
-     * BUSINESS SERVICES *
-     **************************************************************************/
+    /***********************************************************************
+         * BUSINESS SERVICES *
+         **********************************************************************/
 
     private IdDocument getIdDocument() {
 	final Iterator<IdDocument> documentIterator = getIdDocumentsSet().iterator();
@@ -188,10 +188,10 @@ public class Person extends Person_Base {
     }
 
     /**
-     * 
-     * @deprecated use Person(PersonBean personBean)
-     * @see Person(PersonBean personBean)
-     */
+         * 
+         * @deprecated use Person(PersonBean personBean)
+         * @see Person(PersonBean personBean)
+         */
     public Person(InfoPersonEditor personToCreate, Country country) {
 
 	super();
@@ -316,10 +316,10 @@ public class Person extends Person_Base {
     }
 
     /**
-     * 
-     * @deprecated use edit(PersonBean personBean)
-     * @see edit(PersonBean personBean)
-     */
+         * 
+         * @deprecated use edit(PersonBean personBean)
+         * @see edit(PersonBean personBean)
+         */
     public void edit(InfoPersonEditor personToEdit, Country country) {
 	setProperties(personToEdit);
 	if (country != null) {
@@ -771,9 +771,9 @@ public class Person extends Person_Base {
 	return points;
     }
 
-    /***************************************************************************
-     * PRIVATE METHODS *
-     **************************************************************************/
+    /***********************************************************************
+         * PRIVATE METHODS *
+         **********************************************************************/
 
     private void setProperties(InfoPersonEditor infoPerson) {
 
@@ -937,9 +937,9 @@ public class Person extends Person_Base {
 	setAvailableWebSite(personBean.isHomepageAvailable());
     }
 
-    /***************************************************************************
-     * OTHER METHODS *
-     **************************************************************************/
+    /***********************************************************************
+         * OTHER METHODS *
+         **********************************************************************/
 
     public String getSlideName() {
 	return "/photos/person/P" + getIdInternal();
@@ -1061,19 +1061,20 @@ public class Person extends Person_Base {
     }
 
     /**
-     * @return a group that only contains this person
-     */
+         * @return a group that only contains this person
+         */
     public PersonGroup getPersonGroup() {
 	return new PersonGroup(this);
     }
 
     /**
-     * 
-     * IMPORTANT: This method is evil and should NOT be used! You are NOT God!
-     * 
-     * 
-     * @return true if the person have been deleted, false otherwise
-     */
+         * 
+         * IMPORTANT: This method is evil and should NOT be used! You are NOT
+         * God!
+         * 
+         * 
+         * @return true if the person have been deleted, false otherwise
+         */
     public void delete() {
 	if (!canBeDeleted()) {
 	    throw new DomainException("error.person.cannot.be.deleted");
@@ -1170,7 +1171,8 @@ public class Person extends Person_Base {
 
 	@Override
 	public void beforeRemove(Role roleToBeRemoved, Person person) {
-	    if (person != null && roleToBeRemoved != null && person.hasRole(roleToBeRemoved.getRoleType())) {
+	    if (person != null && roleToBeRemoved != null
+		    && person.hasRole(roleToBeRemoved.getRoleType())) {
 		removeDependencies(person, roleToBeRemoved);
 	    }
 	}
@@ -1185,7 +1187,7 @@ public class Person extends Person_Base {
 
 	private void addDependencies(Role role, Person person) {
 	    switch (role.getRoleType()) {
-	    
+
 	    case PERSON:
 		addRoleIfNotPresent(person, RoleType.MESSAGING);
 		break;
@@ -1199,23 +1201,23 @@ public class Person extends Person_Base {
 
 	    case DELEGATE:
 		addRoleIfNotPresent(person, RoleType.STUDENT);
-		break;	   	 
-			    
+		break;
+
 	    case OPERATOR:
 	    case GEP:
 	    case MANAGER:
 	    case WEBSITE_MANAGER:
 	    case MESSAGING:
-	    case TIME_TABLE_MANAGER:	
-	    case EMPLOYEE:			
-	    case STUDENT:		
+	    case TIME_TABLE_MANAGER:
+	    case EMPLOYEE:
+	    case STUDENT:
 	    case ALUMNI:
 	    case GRANT_OWNER:
 	    case SPACE_MANAGER_SUPER_USER:
 	    case SPACE_MANAGER:
 		addRoleIfNotPresent(person, RoleType.PERSON);
 		break;
-		
+
 	    case DIRECTIVE_COUNCIL:
 	    case SEMINARIES_COORDINATOR:
 	    case RESEARCHER:
@@ -1225,9 +1227,9 @@ public class Person extends Person_Base {
 	    case MASTER_DEGREE_ADMINISTRATIVE_OFFICE:
 	    case DEPARTMENT_CREDITS_MANAGER:
 	    case GRANT_OWNER_MANAGER:
-	    case TREASURY:	
+	    case TREASURY:
 	    case CREDITS_MANAGER:
-	    case EXAM_COORDINATOR:	
+	    case EXAM_COORDINATOR:
 	    case DEPARTMENT_ADMINISTRATIVE_OFFICE:
 	    case MANAGEMENT_ASSIDUOUSNESS:
 	    case PROJECTS_MANAGER:
@@ -1280,13 +1282,13 @@ public class Person extends Person_Base {
 		removeRoleIfPresent(person, RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE);
 		removeRoleIfPresent(person, RoleType.MANAGEMENT_ASSIDUOUSNESS);
 		removeRoleIfPresent(person, RoleType.PROJECTS_MANAGER);
-		removeRoleIfPresent(person, RoleType.INSTITUCIONAL_PROJECTS_MANAGER);			 
+		removeRoleIfPresent(person, RoleType.INSTITUCIONAL_PROJECTS_MANAGER);
 		break;
 
 	    case STUDENT:
 		removeRoleIfPresent(person, RoleType.DELEGATE);
 		break;
-		
+
 	    default:
 		break;
 	    }
@@ -1802,21 +1804,29 @@ public class Person extends Person_Base {
 		|| hasAdministrativeOfficeFeeInsuranceEventFor(executionYear);
     }
 
-    public boolean hasInsuranceEventFor(final ExecutionYear executionYear) {
+    public InsuranceEvent getInsuranceEventFor(final ExecutionYear executionYear) {
 	for (final Event event : getEventsByEventType(EventType.INSURANCE)) {
-	    if (((InsuranceEvent) event).getExecutionYear() == executionYear) {
-		return true;
+	    final InsuranceEvent insuranceEvent = (InsuranceEvent) event;
+	    if (!insuranceEvent.isCancelled() && insuranceEvent.isFor(executionYear)) {
+		return insuranceEvent;
 	    }
 	}
 
-	return false;
+	return null;
+
+    }
+
+    public boolean hasInsuranceEventFor(final ExecutionYear executionYear) {
+	return getInsuranceEventFor(executionYear) != null;
     }
 
     public AdministrativeOfficeFeeAndInsuranceEvent getAdministrativeOfficeFeeInsuranceEventFor(
 	    final ExecutionYear executionYear) {
 	for (final Event event : getEventsByEventType(EventType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE)) {
-	    if (((AdministrativeOfficeFeeAndInsuranceEvent) event).getExecutionYear() == executionYear) {
-		return (AdministrativeOfficeFeeAndInsuranceEvent) event;
+	    final AdministrativeOfficeFeeAndInsuranceEvent administrativeOfficeFeeAndInsuranceEvent = (AdministrativeOfficeFeeAndInsuranceEvent) event;
+	    if (!administrativeOfficeFeeAndInsuranceEvent.isCancelled()
+		    && administrativeOfficeFeeAndInsuranceEvent.isFor(executionYear)) {
+		return administrativeOfficeFeeAndInsuranceEvent;
 	    }
 	}
 
@@ -2376,7 +2386,8 @@ public class Person extends Person_Base {
 	return (login != null) ? login.getMostImportantAlias() : "";
     }
 
-    // Currently, a Person can only have one WorkPhone (so use get(0) - after
+    // Currently, a Person can only have one WorkPhone (so use get(0) -
+    // after
     // interface updates remove these methods)
     private Phone getPersonWorkPhone() {
 	final List<Phone> partyContacts = (List<Phone>) getPartyContacts(Phone.class,
@@ -2422,7 +2433,8 @@ public class Person extends Person_Base {
 	}
     }
 
-    // Currently, a Person can only have one InstitutionalEmailAddress (so use
+    // Currently, a Person can only have one InstitutionalEmailAddress (so
+    // use
     // get(0) method)
     private EmailAddress getInstitutionalEmailAddress() {
 	final List<EmailAddress> partyContacts = (List<EmailAddress>) getPartyContacts(

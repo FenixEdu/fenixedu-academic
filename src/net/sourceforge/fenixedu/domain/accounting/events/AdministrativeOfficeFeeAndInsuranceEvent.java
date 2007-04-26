@@ -254,4 +254,30 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends
 
 	super.setPaymentEndDate(paymentEndDate);
     }
+
+    public Money getInsurancePayedAmount() {
+	Money result = Money.ZERO;
+
+	for (final AccountingTransaction transaction : getNonAdjustingTransactions()) {
+	    if (transaction.getToAccountEntry().getEntryType() == EntryType.INSURANCE_FEE) {
+		result = result.add(transaction.getToAccountEntry().getAmountWithAdjustment());
+	    }
+	}
+
+	return result;
+
+    }
+
+    public Money getAdministrativeOfficeFeePayedAmount() {
+	Money result = Money.ZERO;
+
+	for (final AccountingTransaction transaction : getNonAdjustingTransactions()) {
+	    if (transaction.getToAccountEntry().getEntryType() == EntryType.ADMINISTRATIVE_OFFICE_FEE) {
+		result = result.add(transaction.getToAccountEntry().getAmountWithAdjustment());
+	    }
+	}
+	
+	return result;
+    }
+
 }
