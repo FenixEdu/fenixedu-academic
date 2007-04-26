@@ -1,114 +1,192 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.ResourceBundle;
+
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.EvaluationType;
+import net.sourceforge.fenixedu.util.LanguageUtils;
 
 public enum GradeScale {
-	
-	TYPE20  { 
-		protected boolean checkFinal(final String mark) {
-			if(mark.equals(NA) || mark.equals(RE)) {
-				return true;
-			}
-			try {
-				Integer markValue = Integer.valueOf(mark);
-				if((markValue >= 10) && (markValue <= 20)) {
-					return true;
-				} else {
-					return false;
-				}
-			} catch(NumberFormatException e) {
-				return false;
-			}
-		}
-		
-		protected boolean checkNotFinal(final String mark) {
-            if(mark.equals(NA) || mark.equals(RE)) {
-                return true;
-            }
-			try {
-				Double markValue = Double.valueOf(mark);
-				if((markValue >= 0) && (markValue <= 20)) {
-					return true;
-				} else {
-					return false;
-				}
-			} catch(NumberFormatException e) {
-				return false;
-			}
-		}
-	},
-	
-	TYPE5{
-		protected boolean checkFinal(final String mark) {
-			if(mark.equals(NA) || mark.equals(RE)) {
-				return true;
-			}
-			try {
-				Integer markValue = Integer.valueOf(mark);
-				if((markValue >= 3) && (markValue <= 5)) {
-					return true;
-				} else {
-					return false;
-				}
-			} catch(NumberFormatException e) {
-				return false;
-			}
-		}
-		
-		protected boolean checkNotFinal(final String mark) {
-            if(mark.equals(NA) || mark.equals(RE)) {
-                return true;
-            }
-			try {
-				Double markValue = Double.valueOf(mark);
-				if((markValue >= 0) && (markValue <= 20)) {
-					return true;
-				} else {
-					return false;
-				}
-			} catch(NumberFormatException e) {
-				return false;
-			}
-		}
-	},
-	
-	TYPEAP{
-		protected boolean checkFinal(final String mark) {
-			if(mark.equals(NA) || mark.equals(RE) || mark.equals(AP)) {
-				return true;
-			}
-			return false;
-		}
-		
-		protected boolean checkNotFinal(final String mark) {
-            if(mark.equals(NA) || mark.equals(RE) || mark.equals(AP)) {
-                return true;
-            }
-			return false;
-		}
-	};
-	
 
-	public static final String NA = "NA";
-	public static final String RE = "RE";
-	public static final String AP = "AP";
+    TYPE20 {
+	@Override
+	protected boolean checkFinal(final String mark) {
+	    if (mark.equals(NA) || mark.equals(RE)) {
+		return true;
+	    }
+	    try {
+		Integer markValue = Integer.valueOf(mark);
+		if ((markValue >= 10) && (markValue <= 20)) {
+		    return true;
+		} else {
+		    return false;
+		}
+	    } catch (NumberFormatException e) {
+		return false;
+	    }
+	}
+
+	@Override
+	protected boolean checkNotFinal(final String mark) {
+	    if (mark.equals(NA) || mark.equals(RE)) {
+		return true;
+	    }
+	    try {
+		Double markValue = Double.valueOf(mark);
+		if ((markValue >= 0) && (markValue <= 20)) {
+		    return true;
+		} else {
+		    return false;
+		}
+	    } catch (NumberFormatException e) {
+		return false;
+	    }
+	}
 	
-	public String getName() {
-        return name();
+	@Override
+	protected String qualify(final String grade) {
+	    try {
+		final int gradeValue = Integer.valueOf(grade);
+		final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale());
+
+		if (18 <= gradeValue && gradeValue <= 20) {
+		    return enumerationResources.getString("label.grade.a");
+		} else if (16 <= gradeValue && gradeValue <= 17) {
+		    return enumerationResources.getString("label.grade.b");
+		} else if (14 <= gradeValue && gradeValue <= 15) {
+		    return enumerationResources.getString("label.grade.c");
+		} else if (10 <= gradeValue && gradeValue <= 13) {
+		    return enumerationResources.getString("label.grade.d");
+		} else {
+		    throw new DomainException("GradeScale.unable.to.qualify.given.grade");
+		}
+	    } catch (NumberFormatException e) {
+		throw new DomainException("GradeScale.unable.to.qualify.given.grade");
+	    }
+	}
+	
+    },
+
+    TYPE5 {
+	@Override
+	protected boolean checkFinal(final String mark) {
+	    if (mark.equals(NA) || mark.equals(RE)) {
+		return true;
+	    }
+	    try {
+		Integer markValue = Integer.valueOf(mark);
+		if ((markValue >= 3) && (markValue <= 5)) {
+		    return true;
+		} else {
+		    return false;
+		}
+	    } catch (NumberFormatException e) {
+		return false;
+	    }
+	}
+
+	@Override
+	protected boolean checkNotFinal(final String mark) {
+	    if (mark.equals(NA) || mark.equals(RE)) {
+		return true;
+	    }
+	    try {
+		Double markValue = Double.valueOf(mark);
+		if ((markValue >= 0) && (markValue <= 20)) {
+		    return true;
+		} else {
+		    return false;
+		}
+	    } catch (NumberFormatException e) {
+		return false;
+	    }
+	}
+    
+	@Override
+	protected String qualify(final String grade) {
+	    try {
+		final int gradeValue = Integer.valueOf(grade);
+		final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale());
+
+		if (gradeValue == 5) {
+		    return enumerationResources.getString("label.grade.a");
+		} else if (gradeValue == 4) {
+		    return enumerationResources.getString("label.grade.b");
+		} else if (gradeValue == 3) {
+		    return enumerationResources.getString("label.grade.c");
+		} else {
+		    throw new DomainException("GradeScale.unable.to.qualify.given.grade");
+		}
+	    } catch (NumberFormatException e) {
+		throw new DomainException("GradeScale.unable.to.qualify.given.grade");
+	    }
+	}
+	
+    },
+
+    TYPEAP {
+	@Override
+	protected boolean checkFinal(final String mark) {
+	    if (mark.equals(NA) || mark.equals(RE) || mark.equals(AP)) {
+		return true;
+	    }
+	    return false;
+	}
+
+	@Override
+	protected boolean checkNotFinal(final String mark) {
+	    if (mark.equals(NA) || mark.equals(RE) || mark.equals(AP)) {
+		return true;
+	    }
+	    return false;
+	}
+
+	@Override
+	protected String qualify(final String grade) {
+	    final ResourceBundle applicationResources = ResourceBundle.getBundle("resources.ApplicationResources", LanguageUtils.getLocale());
+	    if (grade.equals(AP)) {
+		return applicationResources.getString("msg.approved");
+	    } else if (grade.equals(RE)) {
+		return applicationResources.getString("msg.notApproved");
+	    } else if (grade.equals(NA)) {
+		return applicationResources.getString("msg.notEvaluated");
+	    } else {
+		throw new DomainException("GradeScale.unable.to.qualify.given.grade");
+	    }
+	}
+    
+    };
+
+    static final public String NA = "NA";
+    static final public String RE = "RE";
+    static final public String AP = "AP";
+
+    public String getName() {
+	return name();
+    }
+
+    public boolean isValid(String mark, EvaluationType evaluationType) {
+	mark = mark.toUpperCase();
+	if (EvaluationType.FINAL_TYPE.equals(evaluationType)) {
+	    return checkFinal(mark);
+	} else {
+	    return checkNotFinal(mark);
+	}
+
+    }
+
+    abstract protected boolean checkFinal(final String mark);
+
+    abstract protected boolean checkNotFinal(final String mark);
+
+    abstract protected String qualify(final String grade);
+
+    final public String getQualifiedName(final String grade) {
+	if (checkFinal(grade)) {
+	    return qualify(grade);
+	} else {
+	    throw new DomainException("GradeScale.unable.to.qualify.given.grade");
+	}
     }
     
-    public boolean isValid(String mark, EvaluationType	evaluationType) {
-    	mark = mark.toUpperCase();
-    	if(EvaluationType.FINAL_TYPE.equals(evaluationType)) {
-    		return checkFinal(mark);
-    	} else {
-    		return checkNotFinal(mark);
-    	}
-    	
-    }
-    
-    protected abstract boolean checkFinal(final String mark);
-    
-    protected abstract boolean checkNotFinal(final String mark);
-
 }
