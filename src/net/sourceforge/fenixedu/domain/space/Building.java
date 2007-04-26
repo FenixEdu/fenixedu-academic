@@ -22,6 +22,40 @@ public class Building extends Building_Base {
 	((ComparatorChain) BUILDING_COMPARATOR_BY_PRESENTATION_NAME).addComparator(new BeanComparator("spaceInformation.presentationName", Collator.getInstance()));
 	((ComparatorChain) BUILDING_COMPARATOR_BY_PRESENTATION_NAME).addComparator(DomainObject.COMPARATOR_BY_ID);
     }
+    
+    protected Building() {
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
+	setOjbConcreteClass(getClass().getName());
+    }
+
+    public Building(Space surroundingSpace, String name, YearMonthDay begin, YearMonthDay end,
+	    String blueprintNumber) {
+	this();
+	setSuroundingSpace(surroundingSpace);
+	new BuildingInformation(this, name, begin, end, blueprintNumber);
+    }
+
+    @Override
+    public BuildingInformation getSpaceInformation() {
+	return (BuildingInformation) super.getSpaceInformation();
+    }
+
+    @Override
+    public BuildingInformation getSpaceInformation(final YearMonthDay when) {
+	return (BuildingInformation) super.getSpaceInformation(when);
+    }
+
+    @Checked("SpacePredicates.checkPermissionsToManageSpace")
+    @FenixDomainObjectActionLogAnnotation(actionName = "Deleted building", parameters = {})
+    public void delete() {
+	super.delete();
+    }
+
+    @Override
+    public boolean isBuilding() {
+	return true;
+    }
 
     public static abstract class BuildingFactory implements Serializable, FactoryExecutor {
 	private String name;
@@ -104,39 +138,4 @@ public class Building extends Building_Base {
 		    getBlueprintNumber());
 	}
     }
-
-    protected Building() {
-	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-	setOjbConcreteClass(getClass().getName());
-    }
-
-    public Building(Space surroundingSpace, String name, YearMonthDay begin, YearMonthDay end,
-	    String blueprintNumber) {
-	this();
-	setSuroundingSpace(surroundingSpace);
-	new BuildingInformation(this, name, begin, end, blueprintNumber);
-    }
-
-    @Override
-    public BuildingInformation getSpaceInformation() {
-	return (BuildingInformation) super.getSpaceInformation();
-    }
-
-    @Override
-    public BuildingInformation getSpaceInformation(final YearMonthDay when) {
-	return (BuildingInformation) super.getSpaceInformation(when);
-    }
-
-    @Checked("SpacePredicates.checkPermissionsToManageSpace")
-    @FenixDomainObjectActionLogAnnotation(actionName = "Deleted building", parameters = {})
-    public void delete() {
-	super.delete();
-    }
-
-    @Override
-    public boolean isBuilding() {
-	return true;
-    }
-
 }

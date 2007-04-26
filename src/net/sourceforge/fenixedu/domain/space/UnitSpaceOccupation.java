@@ -22,7 +22,7 @@ public class UnitSpaceOccupation extends UnitSpaceOccupation_Base {
 	((ComparatorChain) COMPARATOR_BY_OCCUPATION_INTERVAL_AND_UNIT).addComparator(DomainObject.COMPARATOR_BY_ID);
     }
 
-    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageUnitSpaceOccupations")
+    @Checked("SpacePredicates.checkPermissionsToManageOccupations")
     @FenixDomainObjectActionLogAnnotation(actionName = "Created unit space occupation", parameters = {
 	    "space", "unit", "begin", "end" })
     public UnitSpaceOccupation(Unit unit, Space space, YearMonthDay begin, YearMonthDay end) {
@@ -34,14 +34,14 @@ public class UnitSpaceOccupation extends UnitSpaceOccupation_Base {
 	super.setEnd(end);
     }
 
-    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageUnitSpaceOccupations")
+    @Checked("SpacePredicates.checkPermissionsToManageOccupations")
     @FenixDomainObjectActionLogAnnotation(actionName = "Deleted unit space occupation", parameters = {})
     public void delete() {
 	super.setUnit(null);
 	super.delete();
     }
     
-    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageUnitSpaceOccupations")
+    @Checked("SpacePredicates.checkPermissionsToManageOccupations")
     @FenixDomainObjectActionLogAnnotation(actionName = "Edited unit space occupation", parameters = {
 	    "begin", "end" })
     public void setOccupationInterval(final YearMonthDay begin, final YearMonthDay end) {
@@ -68,7 +68,7 @@ public class UnitSpaceOccupation extends UnitSpaceOccupation_Base {
 
     @Override
     public Group getAccessGroup() {
-	return null;
+	return getSpace().getUnitOccupationsAccessGroupWithChainOfResponsibility();
     }
 
     @Override

@@ -312,6 +312,12 @@
 		<property name="fileNameSlot" value="filename"/>
 	</slot>
 </schema>
+<schema name="ViewSubSpacesState" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.MoveSpaceBean" bundle="SPACE_RESOURCES">
+	<slot name="spaceState" key="label.view.subspaces" layout="radio-postback" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">						
+		<property name="destination" value="postBack"/>
+		<property name="classes" value="list2 liinline"/>			
+    </slot>        
+</schema>
 
 <!-- Material  -->
 <schema name="ViewMaterialDetails" type="net.sourceforge.fenixedu.domain.material.Material" bundle="SPACE_RESOURCES">

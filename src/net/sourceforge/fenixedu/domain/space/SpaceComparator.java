@@ -13,8 +13,8 @@ public class SpaceComparator {
 	    if (space1 == space2) {
 		return 0;
 	    }
-	    final Class class1 = space1.getClass();
-	    final Class class2 = space2.getClass();
+	    final Class<? extends Space> class1 = space1.getClass();
+	    final Class<? extends Space> class2 = space2.getClass();
 	    if (class1 == class2) {
 		return compareSpacesOfSameType(class1, space1, space2);
 	    } else if (class1 == Campus.class) {
@@ -34,12 +34,11 @@ public class SpaceComparator {
 	    }
 	}
 
-	private int compareSpacesOfSameType(final Class clazz, final Space space1, final Space space2) {
+	private int compareSpacesOfSameType(final Class<? extends Space> clazz, final Space space1, final Space space2) {
 	    if (clazz == Campus.class) {
 		return Campus.CAMPUS_COMPARATOR_BY_PRESENTATION_NAME.compare((Campus) space1, (Campus) space2);
 	    } else if (clazz == Building.class) {
-		return Building.BUILDING_COMPARATOR_BY_PRESENTATION_NAME
-			.compare((Building) space1, (Building) space2);
+		return Building.BUILDING_COMPARATOR_BY_PRESENTATION_NAME.compare((Building) space1, (Building) space2);
 	    } else if (clazz == Floor.class) {
 		return Floor.FLOOR_COMPARATOR_BY_LEVEL.compare((Floor) space1, (Floor) space2);
 	    } else if (clazz == Room.class) {

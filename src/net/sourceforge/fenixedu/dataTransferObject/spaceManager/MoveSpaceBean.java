@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.space.Space;
+import net.sourceforge.fenixedu.domain.space.SpaceState;
 
 public class MoveSpaceBean implements Serializable {
 
@@ -11,9 +12,11 @@ public class MoveSpaceBean implements Serializable {
         
     private DomainReference<Space> spaceReference;
   
+    private SpaceState spaceState;
     
     public MoveSpaceBean(Space thisSpace) {
 	setSpace(thisSpace);
+	setSpaceState(SpaceState.ACTIVE);
     }     
        
     public void setSelectedParentSpace(Space parentSpace) {
@@ -30,5 +33,13 @@ public class MoveSpaceBean implements Serializable {
     
     public Space getSpace() {
         return (this.spaceReference != null) ? this.spaceReference.getObject() : null;
+    }
+
+    public SpaceState getSpaceState() {
+        return spaceState;
+    }
+
+    public void setSpaceState(SpaceState spaceState) {
+        this.spaceState = spaceState;
     }
 }

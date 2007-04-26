@@ -20,7 +20,7 @@ public class FloorInformation extends FloorInformation_Base {
 	setFirstTimeInterval(begin, end);
     }
 
-    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageSpaceInformation")
+    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToEditSpaceInformation")
     @FenixDomainObjectActionLogAnnotation(actionName = "Edited floor information", parameters = {
 	    "level", "begin", "end", "blueprintNumber" })
     public void editFloorCharacteristics(Integer level, YearMonthDay begin, YearMonthDay end, String blueprintNumber) {

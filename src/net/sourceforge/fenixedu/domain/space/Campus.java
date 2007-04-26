@@ -21,6 +21,62 @@ public class Campus extends Campus_Base {
 	((ComparatorChain) CAMPUS_COMPARATOR_BY_PRESENTATION_NAME).addComparator(new BeanComparator("idInternal"));
     }
 
+    protected Campus() {
+	super();
+    }
+
+    public Campus(String name, YearMonthDay begin, YearMonthDay end, String blueprintNumber) {
+	this();	
+	new CampusInformation(this, name, begin, end, blueprintNumber);
+    }
+    
+    @Override
+    public CampusInformation getSpaceInformation() {
+	return (CampusInformation) super.getSpaceInformation();
+    }
+
+    @Override
+    public CampusInformation getSpaceInformation(final YearMonthDay when) {
+	return (CampusInformation) super.getSpaceInformation(when);
+    }
+    
+    @Checked("SpacePredicates.checkPermissionsToManageSpace")
+    @FenixDomainObjectActionLogAnnotation(actionName = "Deleted campus", parameters = {})
+    public void delete() {
+	super.delete();
+    }
+    
+    // TODO : fix this when the new spaces structure is introduced
+    // and the location of each campus is known.
+    public String getLocation() {
+	if (getSpaceInformation().getName().equals("Alameda")) {
+	    return "Lisboa";
+	} else if (getSpaceInformation().getName().equals("TagusPark")) {
+	    return "Oeiras";
+	}
+	
+	return null;
+    }
+
+    public String getName() {
+	return getSpaceInformation().getName();
+    }
+    
+    public static Campus readOldestCampus() {
+	Campus result = null;	
+	for (final Campus campus : Space.getAllCampus()) {
+	    if (result == null || result.getCreatedOn().isAfter(campus.getCreatedOn())) {
+		result = campus;
+	    }
+	}	
+	return result;
+    }
+
+    @Override
+    public boolean isCampus() {
+	return true;
+    }
+
     public static abstract class CampusFactory implements Serializable, FactoryExecutor {
 	private String name;
 
@@ -86,63 +142,4 @@ public class Campus extends Campus_Base {
 	    return new CampusInformation(getSpace(), getName(), getBegin(), getEnd(), getBlueprintNumber());
 	}
     }
-
-    protected Campus() {
-	super();
-    }
-
-    public Campus(String name, YearMonthDay begin, YearMonthDay end, String blueprintNumber) {
-	this();	
-	new CampusInformation(this, name, begin, end, blueprintNumber);
-    }
-    
-    @Override
-    public CampusInformation getSpaceInformation() {
-	return (CampusInformation) super.getSpaceInformation();
-    }
-
-    @Override
-    public CampusInformation getSpaceInformation(final YearMonthDay when) {
-	return (CampusInformation) super.getSpaceInformation(when);
-    }
-    
-    @Checked("SpacePredicates.checkPermissionsToManageSpace")
-    @FenixDomainObjectActionLogAnnotation(actionName = "Deleted campus", parameters = {})
-    public void delete() {
-	super.delete();
-    }
-    
-    // TODO : fix this when the new spaces structure is introduced
-    // and the location of each campus is known.
-    public String getLocation() {
-	if (getSpaceInformation().getName().equals("Alameda")) {
-	    return "Lisboa";
-	} else if (getSpaceInformation().getName().equals("TagusPark")) {
-	    return "Oeiras";
-	}
-	
-	return null;
-    }
-
-    public String getName() {
-	return getSpaceInformation().getName();
-    }
-    
-    public static Campus readOldestCampus() {
-	Campus result = null;
-	
-	for (final Campus campus : Space.getAllCampus()) {
-	    if (result == null || result.getCreatedOn().isAfter(campus.getCreatedOn())) {
-		result = campus;
-	    }
-	}
-	
-	return result;
-    }
-
-    @Override
-    public boolean isCampus() {
-	return true;
-    }
-
 }

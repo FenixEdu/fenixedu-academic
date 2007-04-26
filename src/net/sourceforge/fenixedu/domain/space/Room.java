@@ -24,6 +24,50 @@ public class Room extends Room_Base {
 	((ComparatorChain) ROOM_COMPARATOR_BY_PRESENTATION_NAME).addComparator(new BeanComparator("spaceInformation.presentationName", Collator.getInstance()));
 	((ComparatorChain) ROOM_COMPARATOR_BY_PRESENTATION_NAME).addComparator(DomainObject.COMPARATOR_BY_ID);
     }
+   
+    protected Room() {
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
+	setOjbConcreteClass(this.getClass().getName());
+    }
+
+    public Room(Space suroundingSpace, String blueprintNumber, String identification,
+	    String description, RoomClassification roomClassification, BigDecimal area,
+	    Boolean heightQuality, Boolean illuminationQuality,
+	    Boolean distanceFromSanitaryInstalationsQuality, Boolean securityQuality,
+	    Boolean ageQuality, String observations, YearMonthDay begin, YearMonthDay end, String doorNumber) {
+
+	this();
+
+	if (suroundingSpace == null) {
+	    throw new DomainException("error.surrounding.space");
+	}
+	setSuroundingSpace(suroundingSpace);
+	new RoomInformation(this, blueprintNumber, identification, description, roomClassification,
+		area, heightQuality, illuminationQuality, distanceFromSanitaryInstalationsQuality,
+		securityQuality, ageQuality, observations, begin, end, doorNumber);
+    }
+    
+    @Override
+    public RoomInformation getSpaceInformation() {
+	return (RoomInformation) super.getSpaceInformation();
+    }
+
+    @Override
+    public RoomInformation getSpaceInformation(final YearMonthDay when) {
+	return (RoomInformation) super.getSpaceInformation(when);
+    }
+
+    @Checked("SpacePredicates.checkPermissionsToManageSpace")
+    @FenixDomainObjectActionLogAnnotation(actionName = "Deleted room", parameters = {})
+    public void delete() {
+	super.delete();
+    }
+
+    @Override
+    public boolean isRoom() {
+	return true;
+    }
 
     public static abstract class RoomFactory implements Serializable, FactoryExecutor {
 	private String blueprintNumber;
@@ -212,49 +256,4 @@ public class Room extends Room_Base {
 		    getSecurityQuality(), getAgeQuality(), getObservations(), getBegin(), getEnd(), getDoorNumber());
 	}
     }
-
-    protected Room() {
-	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-	setOjbConcreteClass(this.getClass().getName());
-    }
-
-    public Room(Space suroundingSpace, String blueprintNumber, String identification,
-	    String description, RoomClassification roomClassification, BigDecimal area,
-	    Boolean heightQuality, Boolean illuminationQuality,
-	    Boolean distanceFromSanitaryInstalationsQuality, Boolean securityQuality,
-	    Boolean ageQuality, String observations, YearMonthDay begin, YearMonthDay end, String doorNumber) {
-
-	this();
-
-	if (suroundingSpace == null) {
-	    throw new DomainException("error.surrounding.space");
-	}
-	setSuroundingSpace(suroundingSpace);
-	new RoomInformation(this, blueprintNumber, identification, description, roomClassification,
-		area, heightQuality, illuminationQuality, distanceFromSanitaryInstalationsQuality,
-		securityQuality, ageQuality, observations, begin, end, doorNumber);
-    }
-    
-    @Override
-    public RoomInformation getSpaceInformation() {
-	return (RoomInformation) super.getSpaceInformation();
-    }
-
-    @Override
-    public RoomInformation getSpaceInformation(final YearMonthDay when) {
-	return (RoomInformation) super.getSpaceInformation(when);
-    }
-
-    @Checked("SpacePredicates.checkPermissionsToManageSpace")
-    @FenixDomainObjectActionLogAnnotation(actionName = "Deleted room", parameters = {})
-    public void delete() {
-	super.delete();
-    }
-
-    @Override
-    public boolean isRoom() {
-	return true;
-    }
-
 }

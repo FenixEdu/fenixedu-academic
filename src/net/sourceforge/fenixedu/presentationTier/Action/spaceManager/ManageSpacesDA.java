@@ -95,14 +95,14 @@ public class ManageSpacesDA extends FenixDispatchAction {
     protected ActionForward manageSpace(final ActionMapping mapping, final HttpServletRequest request,
 	    final SpaceInformation spaceInformation) throws IOException {
 
-	final Space space = spaceInformation.getSpace();
+	final Space space = spaceInformation.getSpace();	
 	return returnToManageSpacePage(mapping, request, space, spaceInformation);
     }
 
     public ActionForward manageSpace(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws IOException {
 
-	final SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
+	final SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);		
 	return manageSpace(mapping, request, spaceInformation);
     }
 
@@ -225,7 +225,7 @@ public class ManageSpacesDA extends FenixDispatchAction {
 		(bean != null) ? bean.getMaintainElements() : false };
 	try {
 	    executeService(request, "SpaceAccessGroupsManagement", args);
-	} catch (FenixServiceException e) {
+	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	}
 	return manageAccessGroups(mapping, form, request, response);
@@ -244,7 +244,7 @@ public class ManageSpacesDA extends FenixDispatchAction {
 	final Object[] args = { space, groupType, person, false, false };
 	try {
 	    executeService(request, "SpaceAccessGroupsManagement", args);
-	} catch (FenixServiceException e) {
+	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	}
 	return manageAccessGroups(mapping, form, request, response);
@@ -309,13 +309,18 @@ public class ManageSpacesDA extends FenixDispatchAction {
     
     private ActionForward returnToManageSpacePage(ActionMapping mapping, HttpServletRequest request, Space space, SpaceInformation spaceInformation) throws IOException {
 	
-	SortedSet<Space> spaces = new TreeSet<Space>(SpaceComparator.SPACE_COMPARATOR_BY_CLASS);
-	spaces.addAll(space.getContainedSpaces());
+	MoveSpaceBean spaceBean = (MoveSpaceBean) getRenderedObject("subSpacesStateBeanID");
+	spaceBean = (spaceBean == null) ? new MoveSpaceBean(spaceInformation.getSpace()) : spaceBean;
+		
+	SortedSet<Space> spaces = new TreeSet<Space>(SpaceComparator.SPACE_COMPARATOR_BY_CLASS);	
+	spaces.addAll(space.getContainedSpacesByState(spaceBean.getSpaceState()));
 	setBlueprintTextRectangles(request, space);
 	
+	request.setAttribute("subSpacesStateBean", spaceBean);
 	request.setAttribute("selectedSpace", space);
 	request.setAttribute("spaces", spaces);
 	request.setAttribute("selectedSpaceInformation", spaceInformation);
+		
 	return mapping.findForward("ManageSpace");
     }
     
@@ -444,14 +449,14 @@ public class ManageSpacesDA extends FenixDispatchAction {
 			    viewDoorNumbers);
 
 	    request.setAttribute("mostRecentBlueprint", mostRecentBlueprint);
-	    request.setAttribute("blueprintTextRectangles", blueprintTextRectangles);    
-
-	    request.setAttribute("viewDoorNumbers", viewDoorNumbers);
-	    request.setAttribute("viewSpaceIdentifications", viewSpaceIdentifications);
-	    request.setAttribute("viewBlueprintNumbers", viewBlueprintNumbers);
-	    request.setAttribute("viewOriginalSpaceBlueprint", viewOriginalSpaceBlueprint);
+	    request.setAttribute("blueprintTextRectangles", blueprintTextRectangles);	    	   
 	    request.setAttribute("suroundingSpaceBlueprint", suroundingSpaceBlueprint);
 	}
+	
+	request.setAttribute("viewDoorNumbers", viewDoorNumbers);
+	request.setAttribute("viewSpaceIdentifications", viewSpaceIdentifications);
+	request.setAttribute("viewBlueprintNumbers", viewBlueprintNumbers);
+	request.setAttribute("viewOriginalSpaceBlueprint", viewOriginalSpaceBlueprint);	   
     }
 
     private void saveMessages(HttpServletRequest request, DomainException e) {

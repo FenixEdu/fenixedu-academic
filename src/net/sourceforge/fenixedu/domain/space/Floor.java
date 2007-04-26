@@ -18,9 +18,44 @@ public class Floor extends Floor_Base {
 
     public final static Comparator<Floor> FLOOR_COMPARATOR_BY_LEVEL = new ComparatorChain();
     static {
-	((ComparatorChain) FLOOR_COMPARATOR_BY_LEVEL).addComparator(new ReverseComparator(
-		new BeanComparator("spaceInformation.level")));
+	((ComparatorChain) FLOOR_COMPARATOR_BY_LEVEL).addComparator(new ReverseComparator(new BeanComparator("spaceInformation.level")));
 	((ComparatorChain) FLOOR_COMPARATOR_BY_LEVEL).addComparator(DomainObject.COMPARATOR_BY_ID);
+    }
+    
+    protected Floor() {
+	super();
+    }
+
+    public Floor(Space suroundingSpace, Integer level, YearMonthDay begin, YearMonthDay end,
+	    String blueprintNumber) {
+	this();
+
+	if (suroundingSpace == null) {
+	    throw new NullPointerException("error.surrounding.space");
+	}
+	setSuroundingSpace(suroundingSpace);
+	new FloorInformation(this, level, begin, end, blueprintNumber);
+    }
+
+    @Override
+    public FloorInformation getSpaceInformation() {
+	return (FloorInformation) super.getSpaceInformation();
+    }
+
+    @Override
+    public FloorInformation getSpaceInformation(final YearMonthDay when) {
+	return (FloorInformation) super.getSpaceInformation(when);
+    }
+
+    @Checked("SpacePredicates.checkPermissionsToManageSpace")
+    @FenixDomainObjectActionLogAnnotation(actionName = "Deleted floor", parameters = {})
+    public void delete() {
+	super.delete();
+    }
+
+    @Override
+    public boolean isFloor() {
+	return true;
     }
 
     public static abstract class FloorFactory implements Serializable, FactoryExecutor {
@@ -105,41 +140,4 @@ public class Floor extends Floor_Base {
 	}
 
     }
-
-    protected Floor() {
-	super();
-    }
-
-    public Floor(Space suroundingSpace, Integer level, YearMonthDay begin, YearMonthDay end,
-	    String blueprintNumber) {
-	this();
-
-	if (suroundingSpace == null) {
-	    throw new NullPointerException("error.surrounding.space");
-	}
-	setSuroundingSpace(suroundingSpace);
-	new FloorInformation(this, level, begin, end, blueprintNumber);
-    }
-
-    @Override
-    public FloorInformation getSpaceInformation() {
-	return (FloorInformation) super.getSpaceInformation();
-    }
-
-    @Override
-    public FloorInformation getSpaceInformation(final YearMonthDay when) {
-	return (FloorInformation) super.getSpaceInformation(when);
-    }
-
-    @Checked("SpacePredicates.checkPermissionsToManageSpace")
-    @FenixDomainObjectActionLogAnnotation(actionName = "Deleted floor", parameters = {})
-    public void delete() {
-	super.delete();
-    }
-
-    @Override
-    public boolean isFloor() {
-	return true;
-    }
-
 }

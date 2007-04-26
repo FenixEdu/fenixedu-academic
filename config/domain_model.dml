@@ -2903,6 +2903,7 @@ class net.sourceforge.fenixedu.domain.resource.Resource extends net.sourceforge.
 	class net.sourceforge.fenixedu.domain.space.Space extends net.sourceforge.fenixedu.domain.resource.Resource {	
 		Integer keySuroundingSpace;
 		YearMonthDay createdOn;
+		Group unitOccupationsAccessGroup;
 		Group personOccupationsAccessGroup;
 		Group extensionOccupationsAccessGroup;
 		Group spaceManagementAccessGroup;

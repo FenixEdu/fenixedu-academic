@@ -104,12 +104,18 @@
 		<html:link page="/manageSpaces.do?method=prepareEditSpace&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
 			<bean:message bundle="SPACE_RESOURCES" key="link.edit.space.information"/>
 		</html:link>&nbsp;,
+		<%
+			if(thisSpace.personIsSpacesAdministrator(person)){
+		%>
 		<html:link page="/manageSpaces.do?method=deleteSpaceInformation&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal" onclick="return confirm('Tem a certeza que deseja apagar a versão?')">
 			<bean:message bundle="SPACE_RESOURCES" key="link.delete.space.information"/>
 		</html:link>&nbsp;,
 		<html:link page="/manageSpaces.do?method=prepareCreateSpaceInformation&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
 			<bean:message bundle="SPACE_RESOURCES" key="link.create.space.information"/>
 		</html:link>&nbsp;,
+		<%
+			}
+		%>
 		<html:link page="/manageSpaces.do?method=prepareMoveSpace&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
 			<bean:message bundle="SPACE_RESOURCES" key="link.move.space"/>
 		</html:link>&nbsp;,
@@ -150,7 +156,7 @@
 		   		<html:link page="<%= urlToViewBlueprinNumbers %>"><bean:message bundle="SPACE_RESOURCES" key="link.view.blueprint.numbers"/></html:link> 	
 			</logic:equal>
 			<logic:equal name="viewBlueprintNumbers" value="true">
-					<bean:message bundle="SPACE_RESOURCES" key="link.view.blueprint.numbers"/>
+				<bean:message bundle="SPACE_RESOURCES" key="link.view.blueprint.numbers"/>
 			</logic:equal>											
 			|
 			<logic:equal name="viewOriginalSpaceBlueprint" value="false">
@@ -199,6 +205,17 @@
 	<%-- Subspaces --%>
 	<logic:present name="spaces">
 		<h3 class="mtop2 mbottom05"><bean:message bundle="SPACE_RESOURCES" key="title.subspaces"/></h3>
+						
+		<bean:define id="ViewSubSpacesStateURL">/manageSpaces.do?method=manageSpace&page=0&spaceInformationID=<bean:write name="selectedSpaceInformation" property="idInternal"/>&viewBlueprintNumbers=<bean:write name="viewBlueprintNumbers"/>&viewDoorNumbers=<bean:write name="viewDoorNumbers"/>&viewSpaceIdentifications=<bean:write name="viewSpaceIdentifications"/>&viewOriginalSpaceBlueprint=<bean:write name="viewOriginalSpaceBlueprint"/></bean:define>		
+		<fr:form>
+			<fr:edit id="subSpacesStateBeanID" name="subSpacesStateBean" schema="ViewSubSpacesState" nested="true">
+				<fr:destination name="postBack" path="<%= ViewSubSpacesStateURL %>"/>
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="vamiddle thlight" />
+				</fr:layout>
+			</fr:edit>
+		</fr:form>
+		
 		<bean:size id="spacesSize" name="spaces"/>
 		<logic:equal name="spacesSize" value="0">
 			<p class="mtop05"><em><bean:message key="label.empty.space" bundle="SPACE_RESOURCES"/>.</em></p>		

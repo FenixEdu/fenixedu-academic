@@ -66,7 +66,7 @@
 					<bean:define id="accessGroup" name="space" property="<%= slotNameWithChain %>" type="net.sourceforge.fenixedu.domain.accessControl.Group"/>
 					<logic:notEmpty name="accessGroup">	
 						<logic:notEmpty name="accessGroup" property="elements">	
-							<p class="mtop2 mbottom05"><strong><bean:write name="accessGroupType" property="label"/> (<bean:message key="label.defined.elements.in.parent.space" bundle="SPACE_RESOURCES"/>)</strong></p>																		
+							<p class="mtop2 mbottom05"><strong><bean:write name="accessGroupType" property="label"/> - (<bean:message key="label.defined.elements.in.parent.space" bundle="SPACE_RESOURCES"/>)</strong></p>																		
 							<fr:view schema="ViewPersonToListAccessGroups" name="accessGroup" property="elements">
 								<fr:layout name="tabular">     										  
 						   			<fr:property name="classes" value="tstyle4 thlight tdcenter mtop05"/>				  
@@ -84,7 +84,7 @@
 				<bean:define id="accessGroup" name="space" property="<%= slotNameWithChain %>" type="net.sourceforge.fenixedu.domain.accessControl.Group"/>
 				<logic:notEmpty name="accessGroup">	
 					<logic:notEmpty name="accessGroup" property="elements">	
-						<p class="mtop2 mbottom05"><strong><bean:write name="accessGroupType" property="label"/> (<bean:message key="label.defined.elements.in.parent.space" bundle="SPACE_RESOURCES"/>)</strong></p>																		
+						<p class="mtop2 mbottom05"><strong><bean:write name="accessGroupType" property="label"/> - (<bean:message key="label.defined.elements.in.parent.space" bundle="SPACE_RESOURCES"/>)</strong></p>																		
 						<fr:view schema="ViewPersonToListAccessGroups" name="accessGroup" property="elements">
 							<fr:layout name="tabular">     										  
 					   			<fr:property name="classes" value="tstyle4 thlight tdcenter mtop05"/>				  
@@ -103,13 +103,11 @@
 	<fr:form action="<%= addPersonToAccessGroupUrl %>">
 		<fr:create nested="true" id="addPersonToPersonOccupationAccessGroup" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.AccessGroupPersonBean" schema="AddPersonToAccessGroup">
 			<fr:layout name="tabular">  
-				<fr:property name="classes" value="tstyle5 thmiddle thright thlight mtop05 mbottom1"/>
+				<fr:property name="classes" value="tstyle5 thmiddle thright thlight mtop05 mbottom05"/>
 				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 			</fr:layout>		
 		</fr:create>
-		<p>
-		<html:submit><bean:message key="button.add" bundle="SPACE_RESOURCES"/></html:submit>
-		</p>
+		<p><html:submit><bean:message key="button.add" bundle="SPACE_RESOURCES"/></html:submit></p>
 	</fr:form>
 				
 </logic:notEmpty>

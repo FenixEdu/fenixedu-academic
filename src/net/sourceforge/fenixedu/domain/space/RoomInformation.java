@@ -66,7 +66,7 @@ public class RoomInformation extends RoomInformation_Base {
 	setDoorNumber(doorNumber);
     }
     
-    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageSpaceInformation")
+    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToEditSpaceInformation")
     @FenixDomainObjectActionLogAnnotation(actionName = "Edited room information", parameters = {
 	    "blueprintNumber", "identification", "description", "roomClassification", 
 	    "observations", "begin", "end", "doorNumber" })
@@ -120,13 +120,11 @@ public class RoomInformation extends RoomInformation_Base {
 	roomFactoryEditor.setBlueprintNumber(getBlueprintNumber());
 	roomFactoryEditor.setIdentification(getIdentification());
 	roomFactoryEditor.setDescription(getDescription());
-	roomFactoryEditor
-		.setRoomClassification(getRoomClassification() != null ? getRoomClassification() : null);
+	roomFactoryEditor.setRoomClassification(getRoomClassification() != null ? getRoomClassification() : null);
 	roomFactoryEditor.setArea(getArea());
 	roomFactoryEditor.setHeightQuality(getHeightQuality());
 	roomFactoryEditor.setIlluminationQuality(getIlluminationQuality());
-	roomFactoryEditor
-		.setDistanceFromSanitaryInstalationsQuality(getDistanceFromSanitaryInstalationsQuality());
+	roomFactoryEditor.setDistanceFromSanitaryInstalationsQuality(getDistanceFromSanitaryInstalationsQuality());
 	roomFactoryEditor.setSecurityQuality(getSecurityQuality());
 	roomFactoryEditor.setAgeQuality(getAgeQuality());
 	roomFactoryEditor.setObservations(getObservations());

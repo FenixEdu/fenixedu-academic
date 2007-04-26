@@ -8,6 +8,7 @@ alter table RESOURCE_ALLOCATION add column KEY_RESOURCE int(11) unsigned default
 alter table RESOURCE_ALLOCATION add key KEY_REQUESTOR (KEY_REQUESTOR);
 alter table RESOURCE_ALLOCATION add key KEY_RESOURCE (KEY_RESOURCE);
 
+alter table RESOURCE add column UNIT_OCCUPATIONS_ACCESS_GROUP text;
 alter table RESOURCE add column NUMBER_PLATE varchar(30); 
 alter table RESOURCE add column MAKE varchar(30);
 alter table RESOURCE add column MODEL varchar(30);
