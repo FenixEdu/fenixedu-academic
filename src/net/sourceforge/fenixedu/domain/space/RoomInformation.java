@@ -85,10 +85,16 @@ public class RoomInformation extends RoomInformation_Base {
 
     @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageSpaceInformation")
     @FenixDomainObjectActionLogAnnotation(actionName = "Deleted room information", parameters = {})
-    public void delete() {
-	super.delete();
+    public void delete() {	
+	super.delete();	
     }
 
+    @Override
+    public void deleteWithoutCheckNumberOfSpaceInformations() {
+	removeRoomClassification();
+	super.deleteWithoutCheckNumberOfSpaceInformations();
+    }
+    
     @Override
     public void setRoomClassification(RoomClassification roomClassification) {
         if(roomClassification != null && !roomClassification.hasParentRoomClassification()) {

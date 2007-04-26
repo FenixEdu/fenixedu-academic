@@ -32,7 +32,7 @@ public class BuildingInformation extends BuildingInformation_Base {
 
     @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageSpaceInformation")
     @FenixDomainObjectActionLogAnnotation(actionName = "Deleted building information", parameters = {})
-    public void delete() {
+    public void delete() {	
 	super.delete();
     }
 

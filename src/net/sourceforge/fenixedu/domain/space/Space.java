@@ -51,8 +51,7 @@ public abstract class Space extends Space_Base {
 	    if (spaceInformation.getValidUntil() == null) {
 		return spaceInformation;
 	    } else if (selectedSpaceInformation == null
-		    || spaceInformation.getValidUntil()
-			    .isAfter(selectedSpaceInformation.getValidUntil())) {
+		    || spaceInformation.getValidUntil().isAfter(selectedSpaceInformation.getValidUntil())) {
 		selectedSpaceInformation = spaceInformation;
 	    }
 	}

@@ -50,8 +50,8 @@ public abstract class SpaceInformation extends SpaceInformation_Base implements
     }
                   
     public void deleteWithoutCheckNumberOfSpaceInformations() {
-	super.setSpace(null);
-	removeRootDomainObject();
+	super.setSpace(null);	
+	removeRootDomainObject();	
 	deleteDomainObject();
     }
         
