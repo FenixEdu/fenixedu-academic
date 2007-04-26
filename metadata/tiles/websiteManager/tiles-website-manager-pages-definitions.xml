@@ -223,7 +223,7 @@
         <put name="body" value="/webSiteManager/commons/organize-footer-links.jsp"/>
     </definition>
     <definition name="departmentSite-sectionsManagement" extends="definition.department.site.management" >
-        <put name="body" value="/commons/sites/sectionsManagement.jsp"/>
+        <put name="body" value="/webSiteManager/commons/sectionsManagement.jsp"/>
     </definition>
     <definition name="departmentSite-section" extends="definition.department.site.management" >
         <put name="body" value="/commons/sites/section.jsp"/>

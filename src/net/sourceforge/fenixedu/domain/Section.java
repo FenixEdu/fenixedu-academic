@@ -57,7 +57,9 @@ public class Section extends Section_Base {
     
     protected Section() {
         super();
+
         setRootDomainObject(RootDomainObject.getInstance());
+        setVisible(true);
     }
 
     public Section(Site site, MultiLanguageString name) {

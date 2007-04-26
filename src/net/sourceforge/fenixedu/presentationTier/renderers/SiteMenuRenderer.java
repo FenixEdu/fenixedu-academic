@@ -117,7 +117,7 @@ public class SiteMenuRenderer extends OutputRenderer {
                 }
                   
                 Site site = (Site) object;
-                List<Section> sections = site.getAllOrderedTopLevelSections();
+                List<Section> sections = getSections(site);
                 addSiteSections(context, site, sections, list);
                 
                 return list;
@@ -135,7 +135,7 @@ public class SiteMenuRenderer extends OutputRenderer {
                     HtmlComponent nameComponent = createSectionComponent(context, site, section);
 
                     // TODO: make a better design and add configuration to this renderer
-                    if (section.getSuperiorSection() != null) {
+                    if (! isTopSection(section)) {
                         nameComponent.setStyle("margin-left: 1em;");
                     }
 
@@ -214,6 +214,20 @@ public class SiteMenuRenderer extends OutputRenderer {
             }
 
         };
+    }
+
+    /**
+     * @return the list of sections to render
+     */
+    protected List<Section> getSections(Site site) {
+        return site.getAllOrderedTopLevelSections();
+    }
+
+    /**
+     * @return <code>true</code> if the section is treated as a top section
+     */
+    protected boolean isTopSection(Section section) {
+        return section.getSuperiorSection() == null;
     }
 
 }

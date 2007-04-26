@@ -17,11 +17,10 @@
     }
 %>
 
-<fr:view name="unit" property="site" type="net.sourceforge.fenixedu.domain.Site" layout="side-menu">
+<fr:view name="unit" property="site" type="net.sourceforge.fenixedu.domain.UnitSite" layout="unit-side-menu">
     <fr:layout>
         <fr:property name="sectionUrl" value="<%= request.getContextPath() + "/publico/department/departmentSite.do?method=section" %>"/>
         <fr:property name="contextParam" value="selectedDepartmentUnitID"/>
         <fr:property name="contextRelative" value="false"/>
     </fr:layout>
 </fr:view>
-
