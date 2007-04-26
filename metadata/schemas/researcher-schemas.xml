@@ -274,6 +274,7 @@ extends="eventCreation">
 	<slot name="participations" layout="show-participation-list">
 		<property name="subLayout" value="values"/>
 		<property name="subSchema" value="showNickName"/>
+		<property name="showRoles" value="true"/>
 	</slot>
 	<slot name="url">
 		<property name="link" value="true"/>		
@@ -291,6 +292,7 @@ extends="eventCreation">
 	<slot name="participations" layout="show-participation-list">
 		<property name="subLayout" value="values"/>
 		<property name="subSchema" value="showNickName"/>
+		<property name="showRoles" value="true"/>
 	</slot>
 	<slot name="startDate"/>
 	<slot name="endDate"/>
@@ -312,6 +314,7 @@ extends="eventCreation">
 	<slot name="participations" layout="show-participation-list">
 		<property name="subLayout" value="values"/>
 		<property name="subSchema" value="showNickName"/>
+		<property name="showRoles" value="true"/>
 	</slot>
 	<slot name="url">
 		<property name="link" value="true"/>		
@@ -329,6 +332,7 @@ extends="eventCreation">
 	<slot name="participations" layout="show-participation-list">
 		<property name="subLayout" value="values"/>
 		<property name="subSchema" value="showNickName"/>
+		<property name="showRoles" value="true"/>
 	</slot>
 	<slot name="year"/>
 	<slot name="url">
@@ -347,6 +351,7 @@ extends="eventCreation">
 	<slot name="participations" layout="show-participation-list">
 		<property name="subLayout" value="values"/>
 		<property name="subSchema" value="showNickName"/>
+		<property name="showRoles" value="true"/>
 	</slot>
 	<slot name="startDate"/>
 	<slot name="endDate"/>

@@ -9,6 +9,11 @@
 <ul>
 	<li class="navheader"><bean:message bundle="WEBSITEMANAGER_RESOURCES" key="title.site.manage"/></li>
 	<li>
+		<html:link page="<%= "/manageResearchUnitSite.do?method=prepareAddManager&amp;oid=" + siteID%>">
+			<bean:message bundle="WEBSITEMANAGER_RESOURCES" key="link.site.addManager"/>
+		</html:link>
+	</li>
+	<li>
 		<html:link target="blank" module="/publico" page="<%= "/researchSite/viewResearchUnitSite.do?method=frontPage&amp;siteID=" + siteID%>">
 			<bean:message bundle="WEBSITEMANAGER_RESOURCES" key="link.site.view"/>
 		</html:link>

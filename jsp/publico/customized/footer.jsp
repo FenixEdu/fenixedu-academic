@@ -4,15 +4,8 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <div id="foot_links">
-	<bean:define id="contactsUrl"><bean:message bundle="GLOBAL_RESOURCES" key="footer.contacts.link"/></bean:define>
-	<a href="<%= contactsUrl %>"><bean:message bundle="GLOBAL_RESOURCES" key="footer.contacts.label"/></a>
-	|  
-	<bean:define id="webmasterUrl"><bean:message bundle="GLOBAL_RESOURCES" key="footer.webmaster.link"/></bean:define>
-	<a href="<%= webmasterUrl %>"><bean:message bundle="GLOBAL_RESOURCES" key="footer.webmaster.label"/></a>
-
-
+	
 <logic:notEmpty name="site" property="sortedFooterLinks">
-    | 
 	<fr:view name="site" property="sortedFooterLinks">
 		<fr:layout name="flowLayout">
 			<fr:property name="eachLayout" value="values"/>

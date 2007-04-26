@@ -4,6 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
+<bean:define id="action" name="announcementActionVariable" toScope="request"/>
 
 <table class="usitechannels">
 	<tr>
@@ -27,6 +28,7 @@
 				<div class="usitebody mvert025">
 					<fr:view name="announcement" property="body">
 						<fr:layout name="short-html">
+							<fr:property name="length" value="350"/>
 							<fr:property name="tooltipShown" value="false"/>
 						</fr:layout>
 					</fr:view>
@@ -34,7 +36,7 @@
 				<bean:define id="announcementID" name="announcement" property="idInternal"/>
 				<bean:define id="siteID" name="site" property="idInternal"/>
 				<p class="mtop025 mbottom15">
-					<html:link page="<%= "/researchSite/manageResearchUnitAnnouncements.do?method=viewAnnouncement&amp;siteID=" + siteID + "&amp;announcementId=" + announcementID%>"><bean:message key="label.permalink"/></html:link><br/>				</p>
+					<html:link page="<%= action + "?method=viewAnnouncement&amp;siteID=" + siteID + "&amp;announcementId=" + announcementID%>"><bean:message key="link.more"/></html:link><br/>				</p>
 			</logic:iterate>
 		</td>
 	</logic:present>
@@ -46,13 +48,14 @@
 				<p class="mtop025 mbottom05" style="color: #888;">
 					<fr:view name="announcement" property="referedSubjectBegin" type="org.joda.time.DateTime" layout="no-time" />
 					<logic:present name="announcement" property="referedSubjectEnd">
-						a 
+						<bean:message key="label.listAnnouncements.event.occurs.to" bundle="MESSAGING_RESOURCES"/>
 						<fr:view name="announcement" property="referedSubjectEnd" type="org.joda.time.DateTime" layout="no-time" />
 					</logic:present>
 				</p>
 				<div class="usitebody mvert025">
 					<fr:view name="announcement" property="body">
 						<fr:layout name="short-html">
+								<fr:property name="length" value="350"/>
 								<fr:property name="tooltipShown" value="false"/>
 							</fr:layout>
 					</fr:view>
@@ -60,7 +63,7 @@
 				<bean:define id="announcementID" name="announcement" property="idInternal"/>
 				<bean:define id="siteID" name="site" property="idInternal"/>
 				<p class="mtop025 mbottom15">
-					<html:link page="<%= "/researchSite/manageResearchUnitAnnouncements.do?method=viewAnnouncement&amp;siteID=" + siteID + "&amp;announcementId=" + announcementID%>"><bean:message key="label.permalink"/></html:link><br/>
+					<html:link page="<%= action + "?method=viewEvent&amp;siteID=" + siteID + "&amp;announcementId=" + announcementID%>"><bean:message key="link.more"/></html:link><br/>
 				</p>
 			</logic:iterate>
 		</td>

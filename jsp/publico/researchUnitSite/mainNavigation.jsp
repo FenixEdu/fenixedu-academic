@@ -19,3 +19,6 @@
     
 </ul>
 
+<div class="usitebannerlat">
+	<fr:view name="site" property="sideBanner" layout="html" type="net.sourceforge.fenixedu.util.MultiLanguageString"/>
+</div>

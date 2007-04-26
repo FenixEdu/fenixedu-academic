@@ -1382,7 +1382,7 @@ padding: 1em;
 }
 .usiteintrofloated {
 text-align: left;
-margin: 1em;
+margin: 3em 1em;
 padding: 1em;
 float: right;
 width: 300px;
@@ -1422,8 +1422,19 @@ margin: 0;
 padding: 0;
 }
 
+.usitebannerlat {
+margin-top: 50px;
+text-align: center;
+}
+
+/* ? */
 #version {
 padding: 1em;
 float: right;
 width: 100px;
+}
+
+#main #version { /* fixes public flag padding */
+padding: 0;
+width: auto;
 }

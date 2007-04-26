@@ -126,16 +126,28 @@
 		<put name="footer" value="/publico/homepage/footer.jsp" />
 	</definition>	
 
-	<definition name="definition.public.customizedLayout" page="/layout/unitSiteLayout.jsp">
+	<definition name="definition.public.noPaddingLayout" page="/layout/unitSiteLayout.jsp">
+			<put name="useFlags" value="true"/>
 			<put name="title" value="Instituto Superior Técnico" />
 			<put name="symbols_row" value="/publico/customized/symbolsRow.jsp" />
 			<put name="profile_navigation" value="/publico/customized/profileNavigation.jsp" />
-			<put name="main_navigation" value="/publico/customized/mainNavigation.jsp" />
+			<put name="main_navigation" value="/commons/blank.jsp"/>
 			<put name="body" value="/commons/blank.jsp" />
 			<put name="footer" value="/publico/customized/footer.jsp" />
 	</definition>
 
-	<definition name="definition.public.researchUnit" extends="definition.public.customizedLayout">
+	<definition name="definition.public.researchUnit" page="/layout/istLayout.jsp">
+			<put name="title" value="Instituto Superior Técnico" />
+			<put name="symbols_row" value="/publico/customized/symbolsRow.jsp" />
+			<put name="profile_navigation" value="/publico/customized/profileNavigation.jsp" />
+			<put name="main_navigation" value="/publico/researchUnitSite/mainNavigation.jsp" />
+			<put name="body" value="/commons/blank.jsp" />
+			<put name="body-context" value="/publico/researchUnitSite/siteContext.jsp" />
+			<put name="footer" value="/publico/customized/footer.jsp" />
+	</definition>
+	
+	<definition name="definition.public.researchUnit.noPaddingLayout" extends="definition.public.noPaddingLayout">
+			<put name="main_navigation" value="/publico/researchUnitSite/mainNavigation.jsp" />
 			<put name="body-context" value="/publico/researchUnitSite/siteContext.jsp" />
 	</definition>
 		

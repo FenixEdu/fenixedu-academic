@@ -51,7 +51,7 @@ public class ViewResearchUnitSiteDA extends SiteVisualizationDA {
 		List<Announcement> announcements = getEventAnnouncements(site);
 
 		request.setAttribute("announcements", announcements);
-		return mapping.findForward("showBoardAnnouncements");
+		return mapping.findForward("showBoardEvents");
 	}
 
 	public ActionForward listAnnouncements(ActionMapping mapping, ActionForm form, HttpServletRequest request,

@@ -49,6 +49,7 @@
 	  <action path="/manageResearchUnitSite" 
 	  type="net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.ResearchUnitSiteManagementDA"
 	  parameter="method">
+	  	<forward name="addManager" path="add-manager-to-research-site"/>
 	  	<forward name="editResearchSite" path="edit-research-site"/>
         <forward name="createSection" path="manage-researchSite-createSection"/>
         <forward name="sectionsManagement" path="manage-researchSite-sectionsManagement"/>

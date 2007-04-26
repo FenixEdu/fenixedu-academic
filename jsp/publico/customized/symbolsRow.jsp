@@ -1,6 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@page import="net.sourceforge.fenixedu._development.PropertiesManager"%>
+<%@ page import="net.sourceforge.fenixedu._development.PropertiesManager"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
@@ -14,15 +14,13 @@
 <div id="logoist">
 
 	<a href="<%= institutionUrl %>">
-			<img alt="<bean:message key="institution.logo" bundle="IMAGE_RESOURCES" />" width="234" height="51" src="<bean:message bundle="GLOBAL_RESOURCES" key="university.logo.public" arg0="<%= request.getContextPath() %>"/>"/>
+		<img alt="<bean:message key="institution.logo" bundle="IMAGE_RESOURCES" />" src="<%= request.getContextPath() + "/images/ist_logo.gif"%>"/>
 	</a>
 
 	<logic:equal name="site" property="defaultLogoUsed" value="false">
 	<logic:present name="site" property="logo">
 		<bean:define id="logoFile" type="net.sourceforge.fenixedu.domain.UnitSiteFile" name="site" property="logo"/>
-  	    <a href="<%= institutionUrl %>">
-			<img alt="Logo" src="<%= logoFile.getDownloadUrl() %>"/>
-		</a>
+				<img alt="Logo" src="<%= logoFile.getDownloadUrl() %>"/>
 	</logic:present>
 	</logic:equal>
 
@@ -32,10 +30,6 @@
 	<a href="<%= loginUrl %>">
 		<bean:message bundle="GLOBAL_RESOURCES" key="dot.login"/>
 		<bean:message bundle="GLOBAL_RESOURCES" key="dot.title"/>
-	</a>
-	|
-	<a href="<%= siteMapUrl %>">
-		<bean:message bundle="GLOBAL_RESOURCES" key="siteMap.title"/>
 	</a>
 
 <logic:notEmpty name="site" property="sortedTopLinks">

@@ -53,6 +53,11 @@
   	<definition name="edit-research-site" extends="definition.websiteManager.masterPage" >
 	    <put name="navLocalExtra" value="/webSiteManager/researchUnitSite/researchUnitSiteEditionNavBar.jsp"/>
 	</definition>
+
+  	<definition name="add-manager-to-research-site" extends="definition.websiteManager.masterPage" >
+	    <put name="navLocalExtra" value="/webSiteManager/researchUnitSite/researchUnitSiteEditionNavBar.jsp"/>
+	    <put name="body" value="/webSiteManager/researchUnitSite/addManager.jsp"/>
+	</definition>	
 	
 	<!-- ========== Research Unit Site Management -->
 	

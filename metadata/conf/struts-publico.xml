@@ -947,12 +947,14 @@
 	        <forward name="site-item-deny" path="view-researchUnit-item-deny"/>
 	        <forward name="site-item-adviseLogin" path="view-researchUnit-item-adviseLogin"/>
 	        <forward name="showBoardAnnouncements" path="show-research-unit-board-announcements"/>
+	        <forward name="showBoardEvents" path="show-research-unit-board-events"/>
         </action>
        
         <action path="/researchSite/manageResearchUnitAnnouncements"
 	   type="net.sourceforge.fenixedu.presentationTier.Action.publico.ManageResearchUnitAnnoucementsDA"
 	   parameter="method">
             <forward name="viewAnnouncement" path="research-view-announcement"/>
+            <forward name="viewEvent" path="research-view-event"/>
             <forward name="listAnnouncements" path="/researchSite/viewResearchUnitSite.do?method=listAnnouncements"/>
       </action>
      </action-mappings>

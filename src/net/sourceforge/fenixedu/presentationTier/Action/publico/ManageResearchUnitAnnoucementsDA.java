@@ -39,6 +39,14 @@ public class ManageResearchUnitAnnoucementsDA extends AnnouncementManagement {
 				: "listAnnouncementBoards");
 	}
 
+	public ActionForward viewEvent(ActionMapping mapping,
+			ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		
+		super.viewAnnouncement(mapping, form, request, response);
+		return mapping.findForward("viewEvent");
+	} 
+
 	private void setUnit(HttpServletRequest request) {
 		request.setAttribute("site", getSite(request));
 
@@ -114,6 +122,8 @@ public class ManageResearchUnitAnnoucementsDA extends AnnouncementManagement {
 		setReturnMethodToView(request);
 		return super.viewAnnouncements(mapping, form, request, response);
 	}
+	
+	
 	
 	private void setReturnMethodToView(HttpServletRequest request) { 
 		request.setAttribute("returnMethod", "viewAnnouncements");

@@ -10,8 +10,7 @@
 <link rel="stylesheet" type="text/css" media="screen" href="<%= request.getContextPath() %>/CSS/iststyle.css" />
 <link rel="stylesheet" type="text/css" media="print" href="<%= request.getContextPath() %>/CSS/dotist_print.css" />
 <link rel="stylesheet" type="text/css" media="print" href="<%= request.getContextPath() %>/CSS/print.css" />
-<link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/CSS/transitional.css" />
-
+<link rel="stylesheet" type="text/css" media="screen" href="<%= request.getContextPath() %>/CSS/transitional.css" />
 <script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/expmenu.js"></script>
 <script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/hideButtons.js"></script>
 
@@ -61,6 +60,11 @@
 <!-- DEGREE SITE -->
 <td width="100%" colspan="3" id="main" class="usitemain">
 
+	<bean:define id="useFlags">
+		<tiles:getAsString name="useFlags" ignore="true"/>
+	</bean:define>
+
+	<logic:notEqual name="useFlags" value="false">
 	 <div id="version">
 		<html:form action="/changeLocaleTo.do">
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.windowLocation" property="windowLocation" value=""/>
@@ -84,6 +88,7 @@
 
 	</html:form>
 	</div> 
+	</logic:notEqual>
 
 	<tiles:insert attribute="body-context" ignore="true"/>
 	<tiles:insert attribute="body" ignore="true"/>
