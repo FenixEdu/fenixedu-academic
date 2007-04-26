@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
-import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroupProposal;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoProposal;
@@ -36,6 +35,7 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
@@ -484,7 +484,23 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 	return mapping.findForward("viewFinalDegreeWorkProposal");
     }
 
-    public ActionForward editFinalDegreeWorkProposal(ActionMapping mapping, ActionForm form,
+    public ActionForward print(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
+	    FenixFilterException {
+	final String finalDegreeWorkProposalOIDString = request.getParameter("finalDegreeWorkProposalOID");
+	final IUserView userView = getUserView(request);
+	if (finalDegreeWorkProposalOIDString != null && userView != null) {
+	    final Integer finalDegreeWorkProposalOID = Integer.valueOf(finalDegreeWorkProposalOIDString);
+	    final Proposal finalDegreeWorkProposal = rootDomainObject.readProposalByOID(finalDegreeWorkProposalOID);
+	    final Person person = userView.getPerson();
+	    if (finalDegreeWorkProposal.getOrientator() == person || finalDegreeWorkProposal.getCoorientator() ==  person) {		
+		request.setAttribute("finalDegreeWorkProposal", finalDegreeWorkProposal);
+	    }
+	}
+	return mapping.findForward("print");
+    }
+
+	public ActionForward editFinalDegreeWorkProposal(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
 	    FenixFilterException {
 	String finalDegreeWorkProposalOIDString = request.getParameter("finalDegreeWorkProposalOID");

@@ -204,7 +204,10 @@
 	<definition name="show-teacher-credits-sheet" extends="definition.teacher.two-column">
 		<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>
 		<put name="body" value="/teacher/credits.jsp"/>
-	</definition>   
+	</definition>
+	<definition name="df.page.final.degree.work.print" extends="df.layout.print">
+		<put name="body" value="/teacher/printFinalDegreeWorkProposal_bd.jsp"></put>
+	</definition>
 <!-- TESTS DEFINITIONS -->
 	<definition name="tests-First-Page" extends="definition.teacher.testsPage">
 		<put name="body" value="/teacher/onlineTests/testsFirstPage.jsp"></put>		

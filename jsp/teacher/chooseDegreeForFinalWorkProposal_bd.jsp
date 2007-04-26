@@ -78,6 +78,8 @@
 				</th>
 				<th class="listClasses-header" rowspan="2">
 				</th>
+				<th class="listClasses-header" rowspan="2">
+				</th>
 			</tr>
 			<tr>
 		        <th class="listClasses-header">
@@ -115,6 +117,11 @@
 							<bean:write name="finalDegreeWorkProposalHeader" property="companyLink"/>
 						</td>
 						<td class="listClasses" rowspan="2">
+						</td>
+						<td class="listClasses" rowspan="2">
+				        	<html:link target="_blank" page="<%= "/finalWorkManagement.do?method=print&amp;finalDegreeWorkProposalOID=" + ((net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader) finalDegreeWorkProposalHeader).getIdInternal().toString() %>">
+								<bean:message key="print"/>
+					        </html:link>
 						</td>
 					</tr>
 					<tr>
