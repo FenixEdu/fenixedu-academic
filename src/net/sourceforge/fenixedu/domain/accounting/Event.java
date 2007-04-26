@@ -246,7 +246,7 @@ public abstract class Event extends Event_Base {
 	final Set<Entry> result = new HashSet<Entry>();
 	for (final AccountingTransaction transaction : getNonAdjustingTransactions()) {
 	    final Entry entry = transaction.getToAccountEntry();
-	    if (!entry.isAssociatedToAnyActiveReceipt()) {
+	    if (!entry.isAssociatedToAnyActiveReceipt() && entry.isPositiveAmount()) {
 		result.add(entry);
 	    }
 	}
