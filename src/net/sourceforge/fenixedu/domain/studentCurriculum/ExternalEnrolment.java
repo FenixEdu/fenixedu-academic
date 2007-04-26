@@ -80,4 +80,8 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
 	super.deleteDomainObject();
     }
 
+    public Double getEctsCredits() {
+	return Double.valueOf(0d);
+    }
+
 }

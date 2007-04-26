@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
@@ -102,7 +103,15 @@ public class Dismissal extends Dismissal_Base {
         if(getCurricularCourse() == null) {
             return getCredits().getGivenCredits();
         } 
-        return getCurricularCourse().getEctsCredits();
+        return getCurricularCourse().isOptionalCurricularCourse() ? getEnrolmentsEcts() : getCurricularCourse().getEctsCredits();
+    }
+    
+    private Double getEnrolmentsEcts() {
+	Double res = 0d;
+	for (IEnrolment enrolment : getCredits().getIEnrolments()) {
+	    res = res + enrolment.getEctsCredits();
+	}
+	return res;
     }
     
     @Override

@@ -12,4 +12,6 @@ public interface IEnrolment {
     
     String getDescription();
     
+    Double getEctsCredits();
+    
 }
