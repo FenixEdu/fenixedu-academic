@@ -47,16 +47,16 @@ public enum GradeScale {
 	protected String qualify(final String grade) {
 	    try {
 		final int gradeValue = Integer.valueOf(grade);
-		final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale());
+		final ResourceBundle applicationResources = ResourceBundle.getBundle("resources.ApplicationResources", LanguageUtils.getLocale());
 
 		if (18 <= gradeValue && gradeValue <= 20) {
-		    return enumerationResources.getString("label.grade.a");
+		    return applicationResources.getString("label.grade.a");
 		} else if (16 <= gradeValue && gradeValue <= 17) {
-		    return enumerationResources.getString("label.grade.b");
+		    return applicationResources.getString("label.grade.b");
 		} else if (14 <= gradeValue && gradeValue <= 15) {
-		    return enumerationResources.getString("label.grade.c");
+		    return applicationResources.getString("label.grade.c");
 		} else if (10 <= gradeValue && gradeValue <= 13) {
-		    return enumerationResources.getString("label.grade.d");
+		    return applicationResources.getString("label.grade.d");
 		} else {
 		    throw new DomainException("GradeScale.unable.to.qualify.given.grade");
 		}
@@ -106,14 +106,14 @@ public enum GradeScale {
 	protected String qualify(final String grade) {
 	    try {
 		final int gradeValue = Integer.valueOf(grade);
-		final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale());
+		final ResourceBundle applicationResources = ResourceBundle.getBundle("resources.ApplicationResources", LanguageUtils.getLocale());
 
 		if (gradeValue == 5) {
-		    return enumerationResources.getString("label.grade.a");
+		    return applicationResources.getString("label.grade.a");
 		} else if (gradeValue == 4) {
-		    return enumerationResources.getString("label.grade.b");
+		    return applicationResources.getString("label.grade.b");
 		} else if (gradeValue == 3) {
-		    return enumerationResources.getString("label.grade.c");
+		    return applicationResources.getString("label.grade.c");
 		} else {
 		    throw new DomainException("GradeScale.unable.to.qualify.given.grade");
 		}
