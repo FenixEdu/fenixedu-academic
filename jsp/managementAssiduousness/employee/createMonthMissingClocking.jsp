@@ -33,7 +33,7 @@
 			<fr:edit id="justificationMotive" name="regularizationMonthFactory"	schema="edit.employeeMonthRegularization">
 				<fr:layout>
 					<fr:property name="classes" value="tstyle5 thlight mvert0 thright thmiddle width40em"/>
-					<fr:property name="columnClasses" value="width8em,,tdclear"/>				
+					<fr:property name="columnClasses" value="width8em,,tderror1 tdclear"/>				
 				</fr:layout>
 			</fr:edit>
 			
