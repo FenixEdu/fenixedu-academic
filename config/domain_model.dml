@@ -4680,7 +4680,6 @@ class net.sourceforge.fenixedu.domain.Site extends net.sourceforge.fenixedu.doma
 		Boolean showSectionTeachers;
 		Boolean showSectionEmployees;
 		Boolean showSectionCourses;
-		Boolean showSectionStudents;
 		Boolean showSectionDegrees;
 	}
 

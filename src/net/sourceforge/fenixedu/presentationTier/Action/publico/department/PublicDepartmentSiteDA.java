@@ -3,15 +3,21 @@ package net.sourceforge.fenixedu.presentationTier.Action.publico.department;
 import java.net.MalformedURLException;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.DepartmentSite;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -111,4 +117,37 @@ public class PublicDepartmentSiteDA extends SiteVisualizationDA {
         request.setAttribute("employees", employees);
         return mapping.findForward("department-employees");
     }
+
+    public ActionForward degrees(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+        Unit unit = getUnit(request);
+        
+        Department department = unit.getDepartment();
+        if (department == null) {
+            return presentation(mapping, actionForm, request, response);
+        }
+        
+        Map<DegreeType, SortedSet<Degree>> degreeAndTypes = new HashMap<DegreeType, SortedSet<Degree>>();
+        
+        for (Degree degree : department.getDegrees()) {
+            DegreeType type = degree.getDegreeType();
+            
+            SortedSet<Degree> current = degreeAndTypes.get(type);
+            if (current == null) {
+                current = new TreeSet<Degree>(Degree.COMPARATOR_BY_NAME_AND_ID);
+                degreeAndTypes.put(type, current);
+            }
+            
+            current.add(degree);
+        }
+        
+        SortedSet<DegreeType> types = new TreeSet<DegreeType>(degreeAndTypes.keySet());
+        request.setAttribute("types", types);
+        
+        for (DegreeType type : types) {
+            request.setAttribute(type.getName(), degreeAndTypes.get(type));
+        }
+
+        return mapping.findForward("department-degrees");
+    }
+    
 }

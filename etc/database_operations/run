@@ -30,3 +30,4 @@ function executeWithTempFile() {
 executeWithTempFile "Resources and Resources Allocation Refactorization" alterTableSpaceOccupation.sql
 execute "Creating new functionalities for events and announcements" changes-20070423193745.sql
 execute "Adding Functionalities to research unit site" createResearchUnitFunctionalities.sql
+execute "Reorganize DepartmentSite sections and fields" ChangeDepartmentSite.sql

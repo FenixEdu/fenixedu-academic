@@ -907,6 +907,7 @@
                 type="net.sourceforge.fenixedu.presentationTier.Action.publico.department.PublicDepartmentSiteDA">
             <forward name="department-presentation" path="department-presentation"/>
             <forward name="department-employees" path="department-employees"/>
+            <forward name="department-degrees" path="department-degrees"/>
             <forward name="site-section" path="department-section"/>
             <forward name="site-section-deny" path="department-section-deny"/>
             <forward name="site-section-adviseLogin" path="department-section-adviseLogin"/>
@@ -916,6 +917,7 @@
         </action>
 
         <action path="/department/departmentEmployees" forward="/department/departmentSite.do?method=employees"/>
+        <action path="/department/degrees" forward="/department/departmentSite.do?method=degrees"/>
 
         <action path="/department/announcements"
                 parameter="method"

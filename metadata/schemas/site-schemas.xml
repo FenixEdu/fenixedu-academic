@@ -53,9 +53,6 @@
     <slot name="showSectionCourses" layout="radio" key="label.departmentSite.showSectionCourses">
         <property name="classes" value="liinline nobullet"/>
     </slot>
-    <slot name="showSectionStudents" layout="radio" key="label.departmentSite.showSectionStudents">
-        <property name="classes" value="liinline nobullet"/>
-    </slot>
     <slot name="showSectionDegrees" layout="radio" key="label.departmentSite.showSectionDegrees">
         <property name="classes" value="liinline nobullet"/>
     </slot>
