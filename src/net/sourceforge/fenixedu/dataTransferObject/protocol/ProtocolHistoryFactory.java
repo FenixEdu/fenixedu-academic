@@ -75,7 +75,7 @@ public abstract class ProtocolHistoryFactory implements Serializable, FactoryExe
 	}
 
 	public Object execute() {
-	    if (getProtocol() != null && getDuration() != null && getRenewTime() != null) {
+	    if (getProtocol() != null) {
 		YearMonthDay beginDate = getProtocol().getLastProtocolHistory().getEndDate();
 		YearMonthDay endDate = beginDate;
 		if (getRenewTime().equals(RenewTime.YEARS)) {

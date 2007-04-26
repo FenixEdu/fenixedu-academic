@@ -18,7 +18,7 @@
 </fr:hasMessages>
 <p>
 	<span class="error0">
-		<html:messages id="dateMessage" name="errorDateMessage" message="true" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<html:messages id="dateMessage" property="errorDateMessage" message="true" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
 			<bean:write name="dateMessage" />
 		</html:messages>
 	</span>
@@ -32,8 +32,8 @@
 
 <p>
 	<span class="error0">
-		<html:errors bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
-		<html:messages id="message" name="errorMessage" message="true" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<html:errors/>
+		<html:messages id="message" property="errorMessage" message="true" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
 			<bean:write name="message" />
 		</html:messages>
 	</span>

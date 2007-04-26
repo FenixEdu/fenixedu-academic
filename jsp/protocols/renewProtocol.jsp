@@ -29,6 +29,7 @@
 			<fr:edit name="protocolHistoryFactory" id="protocolHistoryFactory" schema="renew.protocolHistoryFactory">
 				<fr:layout name="flow">
 					<fr:property name="labelExcluded" value="true"/>
+					<fr:property name="validatorClasses" value="error0"/>
 				</fr:layout>
 			</fr:edit>
 		</td>

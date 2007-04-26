@@ -343,11 +343,11 @@
 </schema>
 
 <schema name="renew.protocolHistoryFactory" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolHistoryFactory">
-	<slot name="duration" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+	<slot name="duration" bundle="SCIENTIFIC_COUNCIL_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
 		<property name="maxLength" value="2"/>
-		<property name="size" value="4"/>
+		<property name="size" value="3"/>
 	</slot>
-	<slot name="renewTime" layout="option-select" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+	<slot name="renewTime" layout="option-select" bundle="SCIENTIFIC_COUNCIL_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 </schema>
 
 <schema name="edit.protocolHistoryFactory" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolHistoryFactory">
