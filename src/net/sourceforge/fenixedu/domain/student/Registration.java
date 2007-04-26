@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -406,7 +407,7 @@ public class Registration extends Registration_Base {
     }
 
     @Override
-    public Integer getFinalAverage() {
+    final public Integer getFinalAverage() {
 	if (!isConcluded()) {
 	    throw new DomainException(
 		    "Registration.getting.final.average.mean.from.non.concluded.registration");
@@ -414,6 +415,14 @@ public class Registration extends Registration_Base {
 
 	return super.getFinalAverage() != null ? super.getFinalAverage() : new StudentCurriculum(this)
 		.getRoundedAverage(null, false).intValue();
+    }
+
+    final public String getFinalAverageDescription() {
+	return ResourceBundle.getBundle("resources.EnumerationResources").getString(getFinalAverage().toString());
+    }
+
+    final public String getFinalAverageQualified() {
+	return getDegreeType().getGradeScale().getQualifiedName(getFinalAverage().toString());
     }
 
     public boolean isInFinalDegreeYear() {
