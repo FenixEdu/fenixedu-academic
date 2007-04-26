@@ -21,7 +21,7 @@
 </div>
 
 <logic:empty name="banners">
-    <div>
+    <div class="mtop2">
         <em><bean:message key="message.site.banners.empty" bundle="WEBSITEMANAGER_RESOURCES"/></em>
     </div>
 </logic:empty>

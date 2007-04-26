@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 
 public class DepartmentSite extends DepartmentSite_Base {
@@ -36,9 +37,21 @@ public class DepartmentSite extends DepartmentSite_Base {
     }
     
     @Override
+    @Checked("UnitSitePredicates.managers")
+    public void setShowSectionTeachers(Boolean showSectionTeachers) {
+        super.setShowSectionTeachers(showSectionTeachers);
+    }
+    
+    @Override
     public Boolean getShowSectionEmployees() {
         Boolean value = super.getShowSectionEmployees();
         return value == null ? true : value;
+    }
+    
+    @Override
+    @Checked("UnitSitePredicates.managers")
+    public void setShowSectionEmployees(Boolean showSectionEmployees) {
+        super.setShowSectionEmployees(showSectionEmployees);
     }
     
     @Override
@@ -48,9 +61,21 @@ public class DepartmentSite extends DepartmentSite_Base {
     }
     
     @Override
+    @Checked("UnitSitePredicates.managers")
+    public void setShowSectionCourses(Boolean showSectionCourses) {
+        super.setShowSectionCourses(showSectionCourses);
+    }
+    
+    @Override
     public Boolean getShowSectionDegrees() {
         Boolean value = super.getShowSectionDegrees();
         return value == null ? true : value;
+    }
+    
+    @Override
+    @Checked("UnitSitePredicates.managers")
+    public void setShowSectionDegrees(Boolean showSectionDegrees) {
+        super.setShowSectionDegrees(showSectionDegrees);
     }
     
     public Department getDepartment() {

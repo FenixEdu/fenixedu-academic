@@ -6,7 +6,7 @@
 
 <jsp:include page="../commons/edit-configuration.jsp"/>
 
-<div class="mtop15 mbottom1">
+<div class="mtop15">
     <strong><bean:message key="title.site.configuration.sections" bundle="WEBSITEMANAGER_RESOURCES"/>:</strong>
 </div>
 

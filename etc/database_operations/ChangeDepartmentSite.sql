@@ -43,3 +43,17 @@ WHERE AI.`KEY_FUNCTIONALITY` = F.`ID_INTERNAL` AND F.`UUID` = '3bd0759b-edca-4ff
 
 UPDATE `ACCESSIBLE_ITEM` AS AI, `ACCESSIBLE_ITEM` AS F SET AI.`SECTION_ORDER` = 6
 WHERE AI.`KEY_FUNCTIONALITY` = F.`ID_INTERNAL` AND F.`UUID` = '85372e2e-ffe0-48ff-a758-1017a11c797f';
+
+-- 
+--  Change availability of "Anúncios" e "Eventos"
+-- 
+
+--  ID: 26327 UUID: 'c113952d-6c49-44c0-b30b-d56ab1d2d047'
+UPDATE `ACCESSIBLE_ITEM` AS own SET own.`KEY_AVAILABILITY_POLICY` = NULL WHERE own.`UUID` = 'c113952d-6c49-44c0-b30b-d56ab1d2d047';
+INSERT INTO `AVAILABILITY_POLICY` (`OJB_CONCRETE_CLASS`, `KEY_ROOT_DOMAIN_OBJECT`, `KEY_ACCESSIBLE_ITEM`, `EXPRESSION`, `TARGET_GROUP`) SELECT 'net.sourceforge.fenixedu.domain.functionalities.ExpressionGroupAvailability', 1, `ID_INTERNAL`, 'ifTrue($I(selectedDepartmentUnitID, \'organizationalStructure.DepartmentUnit\').site.showAnnouncements)', 'ifTrue($I(selectedDepartmentUnitID, \'organizationalStructure.DepartmentUnit\').site.showAnnouncements)' FROM `ACCESSIBLE_ITEM` WHERE `UUID` = 'c113952d-6c49-44c0-b30b-d56ab1d2d047';
+UPDATE `ACCESSIBLE_ITEM` AS f, `AVAILABILITY_POLICY` AS ap SET f.`KEY_AVAILABILITY_POLICY` = ap.`ID_INTERNAL` WHERE f.`UUID` = 'c113952d-6c49-44c0-b30b-d56ab1d2d047' AND ap.`KEY_ACCESSIBLE_ITEM` = f.`ID_INTERNAL`;
+
+--  ID: 108069 UUID: '931438dc-b0e2-4d2a-b017-1a449adf59e3'
+UPDATE `ACCESSIBLE_ITEM` AS own SET own.`KEY_AVAILABILITY_POLICY` = NULL WHERE own.`UUID` = '931438dc-b0e2-4d2a-b017-1a449adf59e3';
+INSERT INTO `AVAILABILITY_POLICY` (`OJB_CONCRETE_CLASS`, `KEY_ROOT_DOMAIN_OBJECT`, `KEY_ACCESSIBLE_ITEM`, `EXPRESSION`, `TARGET_GROUP`) SELECT 'net.sourceforge.fenixedu.domain.functionalities.ExpressionGroupAvailability', 1, `ID_INTERNAL`, 'ifTrue($I(selectedDepartmentUnitID, \'organizationalStructure.DepartmentUnit\').site.showEvents)', 'ifTrue($I(selectedDepartmentUnitID, \'organizationalStructure.DepartmentUnit\').site.showEvents)' FROM `ACCESSIBLE_ITEM` WHERE `UUID` = '931438dc-b0e2-4d2a-b017-1a449adf59e3';
+UPDATE `ACCESSIBLE_ITEM` AS f, `AVAILABILITY_POLICY` AS ap SET f.`KEY_AVAILABILITY_POLICY` = ap.`ID_INTERNAL` WHERE f.`UUID` = '931438dc-b0e2-4d2a-b017-1a449adf59e3' AND ap.`KEY_ACCESSIBLE_ITEM` = f.`ID_INTERNAL`;

@@ -5,6 +5,8 @@ import java.util.Comparator;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 
+import net.sourceforge.fenixedu.injectionCode.Checked;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 import net.sourceforge.fenixedu.util.domain.InverseOrderedRelationAdapter;
 
 public class UnitSiteLink extends UnitSiteLink_Base {
@@ -41,6 +43,18 @@ public class UnitSiteLink extends UnitSiteLink_Base {
         super();
         
         setRootDomainObject(RootDomainObject.getInstance());
+    }
+    
+    @Override
+    @Checked("UnitSitePredicates.linkSiteManagers")
+    public void setUrl(String url) {
+        super.setUrl(url);
+    }
+    
+    @Override
+    @Checked("UnitSitePredicates.linkSiteManagers")
+    public void setLabel(MultiLanguageString label) {
+        super.setLabel(label);
     }
     
     public void delete() {

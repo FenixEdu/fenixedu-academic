@@ -67,6 +67,7 @@ public class AnnouncementsDA extends AnnouncementManagement {
     }
     
     public ActionForward viewBoards(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        DepartmentSite site = getSite(request);
         Unit unit = getUnit(request);
         
         if (unit == null || unit.getBoards().isEmpty()) {
@@ -81,7 +82,7 @@ public class AnnouncementsDA extends AnnouncementManagement {
                 AnnouncementBoard board = boards.get(0);
                 
                 ActionForward forward = new ActionForward(mapping.findForward("viewAnnouncementsRedirect"));
-                forward.setPath(forward.getPath() + String.format("&announcementBoardId=%s", board.getIdInternal()));
+                forward.setPath(forward.getPath() + String.format("&announcementBoardId=%s&oid=", board.getIdInternal(), site.getIdInternal()));
                 forward.setRedirect(true);
                 
                 return forward;

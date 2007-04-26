@@ -50,10 +50,10 @@
     <slot name="showSectionEmployees" layout="radio" key="label.departmentSite.showSectionEmployees">
         <property name="classes" value="liinline nobullet"/>
     </slot>
-    <slot name="showSectionCourses" layout="radio" key="label.departmentSite.showSectionCourses">
+    <slot name="showSectionDegrees" layout="radio" key="label.departmentSite.showSectionDegrees">
         <property name="classes" value="liinline nobullet"/>
     </slot>
-    <slot name="showSectionDegrees" layout="radio" key="label.departmentSite.showSectionDegrees">
+    <slot name="showSectionCourses" layout="radio" key="label.departmentSite.showSectionCourses">
         <property name="classes" value="liinline nobullet"/>
     </slot>
 </schema>

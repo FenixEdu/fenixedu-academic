@@ -6,6 +6,8 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.injectionCode.Checked;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 import dml.runtime.RelationAdapter;
 
 public abstract class UnitSite extends UnitSite_Base {
@@ -24,6 +26,48 @@ public abstract class UnitSite extends UnitSite_Base {
         setShowEvents(true);
     }
 
+    @Override
+    @Checked("UnitSitePredicates.managers")
+    public void setDescription(MultiLanguageString description) {
+        super.setDescription(description);
+    }
+    
+    @Override
+    @Checked("UnitSitePredicates.managers")
+    public void setSideBanner(MultiLanguageString sideBanner) {
+        super.setSideBanner(sideBanner);
+    }
+    
+    @Override
+    @Checked("UnitSitePredicates.managers")
+    public void setShowAnnouncements(Boolean showAnnouncements) {
+        super.setShowAnnouncements(showAnnouncements);
+    }
+    
+    @Override
+    @Checked("UnitSitePredicates.managers")
+    public void setShowEvents(Boolean showEvents) {
+        super.setShowEvents(showEvents);
+    }
+    
+    @Override
+    @Checked("UnitSitePredicates.managers")
+    public void setShowBanner(Boolean showBanner) {
+        super.setShowBanner(showBanner);
+    }
+    
+    @Override
+    @Checked("UnitSitePredicates.managers")
+    public void setShowIntroduction(Boolean showIntroduction) {
+        super.setShowIntroduction(showIntroduction);
+    }
+
+    @Override
+    @Checked("UnitSitePredicates.managers")
+    public void setPersonalizedLogo(Boolean personalizedLogo) {
+        super.setPersonalizedLogo(personalizedLogo);
+    }
+    
     public boolean isDefaultLogoUsed() {
     	Boolean bool = getPersonalizedLogo();
     	return (bool==null) ? true : !bool;
