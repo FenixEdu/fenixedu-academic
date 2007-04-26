@@ -1721,7 +1721,7 @@ public class Person extends Person_Base {
     public List<Event> getEventsWithPayments() {
 	final List<Event> result = new ArrayList<Event>();
 	for (final Event event : getEventsSet()) {
-	    if (event.hasAnyNonAdjustingAccountingTransactions()) {
+	    if (event.hasAnyPayments()) {
 		result.add(event);
 	    }
 	}
@@ -2381,10 +2381,8 @@ public class Person extends Person_Base {
     private Phone getPersonWorkPhone() {
 	final List<Phone> partyContacts = (List<Phone>) getPartyContacts(Phone.class,
 		PartyContactType.WORK);
-	return partyContacts.isEmpty() ? null : (Phone) partyContacts.get(0); // actually
-	// exists
-	// only
-	// one
+	// actually exists only one
+	return partyContacts.isEmpty() ? null : (Phone) partyContacts.get(0); 
     }
 
     @Deprecated
@@ -2429,13 +2427,8 @@ public class Person extends Person_Base {
     private EmailAddress getInstitutionalEmailAddress() {
 	final List<EmailAddress> partyContacts = (List<EmailAddress>) getPartyContacts(
 		EmailAddress.class, PartyContactType.INSTITUTIONAL);
-	return partyContacts.isEmpty() ? null : (EmailAddress) partyContacts.get(0); // actually
-	// exists
-	// only
-	// one
-	// (protected
-	// in
-	// domain)
+	// actually exists only one (protected in domain)
+	return partyContacts.isEmpty() ? null : (EmailAddress) partyContacts.get(0); 
     }
 
     public Boolean getHasInstitutionalEmail() {
