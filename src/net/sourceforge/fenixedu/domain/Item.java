@@ -96,6 +96,8 @@ public class Item extends Item_Base {
 
     @Override
     public void disconnect() {
+        super.disconnect();
+        
         removeRootDomainObject();
         removeSection();
     }
