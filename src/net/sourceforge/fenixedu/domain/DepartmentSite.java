@@ -19,7 +19,6 @@ public class DepartmentSite extends DepartmentSite_Base {
         setShowSectionTeachers(true);
         setShowSectionEmployees(true);
         setShowSectionCourses(true);
-        setShowSectionStudents(true);
         setShowSectionDegrees(true);
         
         Unit unit = department.getDepartmentUnit();
@@ -45,12 +44,6 @@ public class DepartmentSite extends DepartmentSite_Base {
     @Override
     public Boolean getShowSectionCourses() {
         Boolean value = super.getShowSectionCourses();
-        return value == null ? true : value;
-    }
-    
-    @Override
-    public Boolean getShowSectionStudents() {
-        Boolean value = super.getShowSectionStudents();
         return value == null ? true : value;
     }
     
