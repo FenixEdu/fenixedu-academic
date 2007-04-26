@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
 import net.sourceforge.fenixedu.domain.person.PersonName;
 import net.sourceforge.fenixedu.domain.protocols.Protocol;
 import net.sourceforge.fenixedu.domain.protocols.ProtocolFile;
+import net.sourceforge.fenixedu.domain.protocols.ProtocolHistory;
 import net.sourceforge.fenixedu.domain.protocols.util.ProtocolAction;
 import net.sourceforge.fenixedu.domain.protocols.util.ProtocolActionType;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
@@ -92,6 +93,8 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
 
     private DomainReference<ProtocolFile> fileToDelete;
 
+    private DomainListReference<ProtocolHistory> protocolHistories;
+    
     private transient InputStream inputStream;
 
     private String fileName;
@@ -109,7 +112,7 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
         setObservations(protocol.getObservations());
         setRenewable(protocol.getRenewable());
         setActive(protocol.getActive());
-        //setProtocolHistories(protocol.getProtocolHistories());
+        setProtocolHistories(protocol.getProtocolHistories());
         setProtocolAction(protocol.getProtocolAction());
         setOtherActionTypes(protocol.getProtocolAction().getOtherTypes());
         setActionTypes(protocol.getProtocolAction().getProcotolActionTypes());
@@ -449,6 +452,13 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
         }
     }
 
+    public void addISTUnit(Unit unit) {
+        if (getUnits() == null) {
+            setUnits(new DomainListReference<Unit>());
+        }
+        getUnits().add(unit);
+    }
+    
     public void addPartnerUnit(Unit unit) {
         if (getPartnerUnits() == null) {
             setPartnerUnits(new DomainListReference<Unit>());
@@ -486,6 +496,10 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
         setInputStream(null);
     }
 
+    public ProtocolHistory getActualProtocolHistory(){
+        return getProtocol().getActualProtocolHistory();
+    }
+    
     public Person getResponsibleToAdd() {
         return responsibleToAdd != null ? responsibleToAdd.getObject() : null;
     }
@@ -567,5 +581,13 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
 
     public void setCountry(Country country) {
         this.country = country != null ? new DomainReference<Country>(country) : null;
+    }
+    
+    public List<ProtocolHistory> getProtocolHistories() {
+        return protocolHistories;
+    }
+
+    public void setProtocolHistories(List<ProtocolHistory> protocolHistories) {
+        this.protocolHistories = new DomainListReference<ProtocolHistory>(protocolHistories);
     }
 }

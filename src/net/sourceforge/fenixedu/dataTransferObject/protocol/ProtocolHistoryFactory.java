@@ -30,8 +30,7 @@ public abstract class ProtocolHistoryFactory implements Serializable, FactoryExe
 	}
 
 	public Object execute() {
-	    if (getProtocol() != null && getBeginDate() != null && getEndDate() != null
-		    && getBeginDate().isBefore(getEndDate())) {
+	    if (getProtocol() != null && getBeginDate().isBefore(getEndDate())) {
 		ProtocolHistory protocolHistory = getProtocol().getLastProtocolHistory();
 		if (getProtocol().getProtocolHistories().size() <= 1
 			|| getBeginDate().isAfter(getProtocol().getLastProtocolHistory().getBeginDate())) {

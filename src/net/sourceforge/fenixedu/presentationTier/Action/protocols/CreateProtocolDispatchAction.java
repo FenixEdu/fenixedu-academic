@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.domain.protocols.Protocol;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
@@ -38,12 +39,34 @@ public class CreateProtocolDispatchAction extends FenixDispatchAction {
         }
         if (isProtocolNumberValid(protocolFactory)) {
             protocolFactory.resetSearches();
-            return mapping.findForward("prepareCreate-protocol-responsibles");
+            if (validateDates(protocolFactory, request)) {
+                return mapping.findForward("prepareCreate-protocol-responsibles");
+            } else {
+                return mapping.findForward("prepareCreate-protocol-data");
+            }
         } else {
+            validateDates(protocolFactory, request);
             setError(request, "errorMessage", (ActionMessage) new ActionMessage(
                     "error.protocol.number.alreadyExists"));
             return mapping.findForward("prepareCreate-protocol-data");
         }
+    }
+
+    private boolean validateDates(ProtocolFactory protocolFactory, HttpServletRequest request) {
+        if (protocolFactory.getBeginDate() != null && protocolFactory.getEndDate() != null) {
+            if (!protocolFactory.getBeginDate().isBefore(protocolFactory.getEndDate())) {
+                setError(request, "errorMessage", (ActionMessage) new ActionMessage(
+                        "error.protocol.dates.notContinuous"));
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public ActionForward invalidProtocolData(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) {
+        request.setAttribute("protocolFactory", (ProtocolFactory) getRenderedObject());
+        return mapping.findForward("prepareCreate-protocol-data");
     }
 
     public ActionForward insertResponsible(ActionMapping mapping, ActionForm actionForm,
@@ -144,6 +167,7 @@ public class CreateProtocolDispatchAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         ProtocolFactory protocolFactory = (ProtocolFactory) getRenderedObject();
         protocolFactory.resetSearches();
+        protocolFactory.addISTUnit(UnitUtils.readInstitutionUnit());
         request.setAttribute("protocolFactory", protocolFactory);
         return mapping.findForward("prepareCreate-protocol-units");
     }
@@ -226,8 +250,8 @@ public class CreateProtocolDispatchAction extends FenixDispatchAction {
             return mapping.findForward("prepareCreate-protocol-units");
         }
 
-        Unit externalUnit = (Unit) executeService("CreateExternalUnitByNameAndCountry",
-                new Object[] { protocolFactory.getUnitName(), protocolFactory.getCountry() });
+        Unit externalUnit = (Unit) executeService("CreateExternalUnitByNameAndCountry", new Object[] {
+                protocolFactory.getUnitName(), protocolFactory.getCountry() });
         protocolFactory.addPartnerUnit(externalUnit);
         request.setAttribute("protocolFactory", protocolFactory);
         return mapping.findForward("prepareCreate-protocol-units");

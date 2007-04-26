@@ -32,8 +32,8 @@ import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 public class Protocol extends Protocol_Base {
 
     public Protocol() {
-	super();
-	setRootDomainObject(RootDomainObject.getInstance());
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
     }
 
     public Protocol(ProtocolFactory protocolFactory) {
@@ -56,33 +56,33 @@ public class Protocol extends Protocol_Base {
     }
 
     public Protocol(String protocolNumber, YearMonthDay signedDate, Boolean renewable, Boolean active,
-	    String scientificAreas, String observations, ProtocolHistory protocolHistory,
-	    ProtocolAction protocolAction, Person responsible, List<Unit> unitList,
-	    List<Unit> partnersList) {
-	setRootDomainObject(RootDomainObject.getInstance());
-	setProtocolNumber(protocolNumber);
-	setRenewable(renewable);
-	setActive(active);
-	setSignedDate(signedDate);
-	addProtocolHistories(protocolHistory);
-	setProtocolAction(protocolAction);
-	setObservations(observations);
-	setScientificAreas(scientificAreas);
-	if (responsible != null) {
-	    getResponsibles().add(responsible);
-	}
-	if (unitList != null && unitList.size() != 0) {
-	    getUnits().addAll(unitList);
-	}
-	if (partnersList != null && partnersList.size() != 0) {
-	    getPartners().addAll(partnersList);
-	}
+            String scientificAreas, String observations, ProtocolHistory protocolHistory,
+            ProtocolAction protocolAction, Person responsible, List<Unit> unitList,
+            List<Unit> partnersList) {
+        setRootDomainObject(RootDomainObject.getInstance());
+        setProtocolNumber(protocolNumber);
+        setRenewable(renewable);
+        setActive(active);
+        setSignedDate(signedDate);
+        addProtocolHistories(protocolHistory);
+        setProtocolAction(protocolAction);
+        setObservations(observations);
+        setScientificAreas(scientificAreas);
+        if (responsible != null) {
+            getResponsibles().add(responsible);
+        }
+        if (unitList != null && unitList.size() != 0) {
+            getUnits().addAll(unitList);
+        }
+        if (partnersList != null && partnersList.size() != 0) {
+            getPartners().addAll(partnersList);
+        }
     }
 
     private void setDates(ProtocolFactory protocolFactory) {
-	ProtocolHistory protocolHistory = new ProtocolHistory(protocolFactory.getBeginDate(),
-		protocolFactory.getEndDate());
-	getProtocolHistories().add(protocolHistory);
+        ProtocolHistory protocolHistory = new ProtocolHistory(protocolFactory.getBeginDate(),
+                protocolFactory.getEndDate());
+        getProtocolHistories().add(protocolHistory);
     }
 
     private void writeFiles(List<ProtocolFileBean> files) {
@@ -94,145 +94,196 @@ public class Protocol extends Protocol_Base {
     }
 
     private void writeFile(VirtualPath filePath, InputStream inputStream, String fileName,
-	    FilePermissionType filePermissionType) {
-	final FileDescriptor fileDescriptor = FileManagerFactory.getFactoryInstance().getFileManager()
-		.saveFile(filePath, fileName, false, null, fileName, inputStream);
+            FilePermissionType filePermissionType) {
+        final FileDescriptor fileDescriptor = FileManagerFactory.getFactoryInstance().getFileManager()
+                .saveFile(filePath, fileName, false, null, fileName, inputStream);
 
-	final ProtocolFile protocolFile = new ProtocolFile(fileName, fileName, fileDescriptor
-		.getMimeType(), fileDescriptor.getChecksum(), fileDescriptor.getChecksumAlgorithm(),
-		fileDescriptor.getSize(), fileDescriptor.getUniqueId(), getGroup(filePermissionType));
-	getProtocolFiles().add(protocolFile);
+        final ProtocolFile protocolFile = new ProtocolFile(fileName, fileName, fileDescriptor
+                .getMimeType(), fileDescriptor.getChecksum(), fileDescriptor.getChecksumAlgorithm(),
+                fileDescriptor.getSize(), fileDescriptor.getUniqueId(), getGroup(filePermissionType));
+        getProtocolFiles().add(protocolFile);
     }
 
     protected VirtualPath getFilePath() {
-	final VirtualPath filePath = new VirtualPath();
-	filePath.addNode(new VirtualPathNode("ProtocolFiles", "Protocol Files"));
-	filePath.addNode(new VirtualPathNode("Protocol" + getIdInternal(), getProtocolNumber()));
-	return filePath;
+        final VirtualPath filePath = new VirtualPath();
+        filePath.addNode(new VirtualPathNode("ProtocolFiles", "Protocol Files"));
+        filePath.addNode(new VirtualPathNode("Protocol" + getIdInternal(), getProtocolNumber()));
+        return filePath;
     }
 
     private Group getGroup(FilePermissionType filePermissionType) {
-	if (filePermissionType.equals(FilePermissionType.RESPONSIBLES_AND_SCIENTIFIC_COUNCIL)) {
-	    Group unionGroup = null;
-	    for (Person responsible : getResponsibles()) {
-		PersonGroup personGroup = new PersonGroup(responsible);
-		if (unionGroup == null) {
-		    unionGroup = new GroupUnion(personGroup, personGroup);
-		} else {
-		    unionGroup = new GroupUnion(unionGroup, personGroup);
-		}
-	    }
-	    final RoleGroup roleGroup = new RoleGroup(Role
-		    .getRoleByRoleType(RoleType.SCIENTIFIC_COUNCIL));
-	    return new GroupUnion(unionGroup, roleGroup);
-	} else if (filePermissionType.equals(FilePermissionType.IST_PEOPLE)) {
-	    return new InternalPersonGroup();
-	}
-	return null;
+        if (filePermissionType.equals(FilePermissionType.RESPONSIBLES_AND_SCIENTIFIC_COUNCIL)) {
+            Group unionGroup = null;
+            for (Person responsible : getResponsibles()) {
+                PersonGroup personGroup = new PersonGroup(responsible);
+                if (unionGroup == null) {
+                    unionGroup = new GroupUnion(personGroup, personGroup);
+                } else {
+                    unionGroup = new GroupUnion(unionGroup, personGroup);
+                }
+            }
+            final RoleGroup roleGroup = new RoleGroup(Role
+                    .getRoleByRoleType(RoleType.SCIENTIFIC_COUNCIL));
+            return new GroupUnion(unionGroup, roleGroup);
+        } else if (filePermissionType.equals(FilePermissionType.IST_PEOPLE)) {
+            return new InternalPersonGroup();
+        }
+        return null;
     }
 
     private void setResponsables(List<Person> responsibles) {
-	if (responsibles != null) {
-	    getResponsibles().addAll(responsibles);
-	}
+        if (responsibles != null) {
+            getResponsibles().addAll(responsibles);
+        }
     }
 
     private void setPartnerResponsibles(List<Person> partnerResponsibles) {
-	if (partnerResponsibles != null) {
-	    getPartnerResponsibles().addAll(partnerResponsibles);
-	}
+        if (partnerResponsibles != null) {
+            getPartnerResponsibles().addAll(partnerResponsibles);
+        }
     }
 
     private void setUnits(DomainListReference<Unit> units) {
-	if (units != null) {
-	    getUnits().addAll(units);
-	}
+        if (units != null) {
+            getUnits().addAll(units);
+        }
     }
 
     private void setPartnerUnits(DomainListReference<Unit> partnerUnits) {
-	if (partnerUnits != null) {
-	    getPartners().addAll(partnerUnits);
-	}
+        if (partnerUnits != null) {
+            getPartners().addAll(partnerUnits);
+        }
     }
 
     public void editData(ProtocolFactory protocolFactory) {
-	setProtocolNumber(protocolFactory.getProtocolNumber());
-	setSignedDate(protocolFactory.getSignedDate());
-	setProtocolAction(new ProtocolAction(protocolFactory.getActionTypes(), protocolFactory
-		.getOtherActionTypes()));
-	setObservations(protocolFactory.getObservations());
+        setProtocolNumber(protocolFactory.getProtocolNumber());
+        setSignedDate(protocolFactory.getSignedDate());
+        setProtocolAction(new ProtocolAction(protocolFactory.getActionTypes(), protocolFactory
+                .getOtherActionTypes()));
+        setObservations(protocolFactory.getObservations());
+        setScientificAreas(protocolFactory.getScientificAreas());
+        setActive(protocolFactory.getActive());
+        for (ProtocolHistory protocolHistory : protocolFactory.getProtocolHistories()) {
+            setProtocolHistory(protocolHistory);
+        }
+    }
+
+    private void setProtocolHistory(ProtocolHistory protocolHistory) {
+        for (ProtocolHistory originalProtocolHistory : getProtocolHistories()) {
+            if (protocolHistory.getIdInternal().equals(originalProtocolHistory.getIdInternal())) {
+                originalProtocolHistory.setBeginDate(protocolHistory.getBeginDate());
+                originalProtocolHistory.setEndDate(protocolHistory.getEndDate());
+            }
+        }
     }
 
     public void addResponsible(ProtocolFactory protocolFactory) {
-	if (protocolFactory.getIstResponsible()) {
-	    getResponsibles().add(protocolFactory.getResponsibleToAdd());
-	} else {
-	    getPartnerResponsibles().add(protocolFactory.getResponsibleToAdd());
-	}
+        if (protocolFactory.getIstResponsible()) {
+            getResponsibles().add(protocolFactory.getResponsibleToAdd());
+        } else {
+            getPartnerResponsibles().add(protocolFactory.getResponsibleToAdd());
+        }
     }
 
     public void removeResponsible(ProtocolFactory protocolFactory) {
-	if (protocolFactory.getIstResponsible()) {
-	    getResponsibles().remove(protocolFactory.getResponsibleToRemove());
-	} else {
-	    getPartnerResponsibles().remove(protocolFactory.getResponsibleToRemove());
-	}
+        if (protocolFactory.getIstResponsible()) {
+            getResponsibles().remove(protocolFactory.getResponsibleToRemove());
+        } else {
+            getPartnerResponsibles().remove(protocolFactory.getResponsibleToRemove());
+        }
     }
 
     public void addUnit(ProtocolFactory protocolFactory) {
-	if (protocolFactory.getInternalUnit()) {
-	    getUnits().add(protocolFactory.getUnitToAdd());
-	} else {
-	    getPartners().add(protocolFactory.getUnitToAdd());
-	}
+        if (protocolFactory.getInternalUnit()) {
+            getUnits().add(protocolFactory.getUnitToAdd());
+        } else {
+            getPartners().add(protocolFactory.getUnitToAdd());
+        }
     }
 
     public void removeUnit(ProtocolFactory protocolFactory) {
-	if (protocolFactory.getInternalUnit()) {
-	    getUnits().remove(protocolFactory.getUnitToRemove());
-	} else {
-	    getPartners().remove(protocolFactory.getUnitToRemove());
-	}
+        if (protocolFactory.getInternalUnit()) {
+            getUnits().remove(protocolFactory.getUnitToRemove());
+        } else {
+            getPartners().remove(protocolFactory.getUnitToRemove());
+        }
     }
 
     public void addFile(ProtocolFactory protocolFactory) {
-	writeFile(getFilePath(), protocolFactory.getInputStream(), protocolFactory.getFileName(),
-		protocolFactory.getFilePermissionType());
+        writeFile(getFilePath(), protocolFactory.getInputStream(), protocolFactory.getFileName(),
+                protocolFactory.getFilePermissionType());
     }
 
     public void deleteFile(ProtocolFactory protocolFactory) {
-	for (ProtocolFile protocolFile : getProtocolFiles()) {
-	    if (protocolFile == protocolFactory.getFileToDelete()) {
-		protocolFile.delete();
-		break;
-	    }
-	}
+        for (ProtocolFile protocolFile : getProtocolFiles()) {
+            if (protocolFile == protocolFactory.getFileToDelete()) {
+                protocolFile.delete();
+                break;
+            }
+        }
     }
 
     public ProtocolHistory getLastProtocolHistory() {
-	ProtocolHistory protocolHistoryToReturn = null;
-	for (ProtocolHistory protocolHistory : getProtocolHistories()) {
-	    if (protocolHistory.getEndDate() == null) {
-		return protocolHistory;
-	    } else if (protocolHistoryToReturn == null
-		    || protocolHistoryToReturn.getEndDate().isBefore(protocolHistory.getEndDate())) {
-		protocolHistoryToReturn = protocolHistory;
-	    }
-	}
-	return protocolHistoryToReturn;
+        ProtocolHistory protocolHistoryToReturn = null;
+        for (ProtocolHistory protocolHistory : getProtocolHistories()) {
+            if (protocolHistory.getEndDate() == null) {
+                return protocolHistory;
+            } else if (protocolHistoryToReturn == null
+                    || protocolHistoryToReturn.getEndDate().isBefore(protocolHistory.getEndDate())) {
+                protocolHistoryToReturn = protocolHistory;
+            }
+        }
+        return protocolHistoryToReturn;
     }
 
     public List<ProtocolHistory> getOrderedProtocolHistories() {
-	List<ProtocolHistory> protocolHistoryListToReturn = new ArrayList<ProtocolHistory>(
-		getProtocolHistories());
-	Collections.sort(protocolHistoryListToReturn, new BeanComparator("beginDate"));
-	return protocolHistoryListToReturn;
+        List<ProtocolHistory> protocolHistoryListToReturn = new ArrayList<ProtocolHistory>(
+                getProtocolHistories());
+        Collections.sort(protocolHistoryListToReturn, new BeanComparator("beginDate"));
+        return protocolHistoryListToReturn;
     }
 
     public List<ProtocolHistory> getOrderedProtocolHistoriesMinusLast() {
-	List<ProtocolHistory> protocolHistoryListToReturn = new ArrayList<ProtocolHistory>(
-		getProtocolHistories());
-	Collections.sort(protocolHistoryListToReturn, new BeanComparator("beginDate"));
-	return getOrderedProtocolHistories().subList(0, protocolHistoryListToReturn.size() - 1);
+        List<ProtocolHistory> protocolHistoryListToReturn = new ArrayList<ProtocolHistory>(
+                getProtocolHistories());
+        Collections.sort(protocolHistoryListToReturn, new BeanComparator("beginDate"));
+        return getOrderedProtocolHistories().subList(0, protocolHistoryListToReturn.size() - 1);
+    }
+
+    public ProtocolHistory getActualProtocolHistory() {
+        YearMonthDay today = new YearMonthDay();
+        for (ProtocolHistory protocolHistory : getProtocolHistories()) {
+            if (protocolHistory.getBeginDate() != null) {
+                if (!today.isBefore(protocolHistory.getBeginDate())) {
+                    if (protocolHistory.getEndDate() != null) {
+                        if (!today.isAfter(protocolHistory.getEndDate())) {
+                            return protocolHistory;
+                        }
+                    } else {
+                        return protocolHistory;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    public boolean isActive() {
+        if (getActive()) {
+            return true;
+        } else {
+            ProtocolHistory protocolHistory = getActualProtocolHistory();
+            if (protocolHistory != null) {
+                YearMonthDay today = new YearMonthDay();
+                if (!today.isBefore(protocolHistory.getBeginDate())
+                        && (protocolHistory.getEndDate() == null || !today.isAfter(protocolHistory
+                                .getEndDate()))) {
+                    return true;
+                }
+            } else {
+                return false;
+            }
+        }
+        return false;
     }
 }

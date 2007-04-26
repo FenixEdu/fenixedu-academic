@@ -40,6 +40,10 @@ public class ProtocolSearch implements Serializable {
     private String partnerNameString;
 
     private DomainReference<Country> country;
+    
+    private boolean actives;
+    
+    private boolean inactives;
 
     public ProtocolSearch() {
 	super();
@@ -206,6 +210,22 @@ public class ProtocolSearch implements Serializable {
 
     public void setCountry(Country country) {
 	this.country = new DomainReference<Country>(country);
+    }
+
+    public boolean isActives() {
+        return actives;
+    }
+
+    public void setActives(boolean actives) {
+        this.actives = actives;
+    }
+
+    public boolean isInactives() {
+        return inactives;
+    }
+
+    public void setInactives(boolean inactives) {
+        this.inactives = inactives;
     }
 
 }

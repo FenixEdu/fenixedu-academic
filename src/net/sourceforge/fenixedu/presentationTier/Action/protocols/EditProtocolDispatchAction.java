@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.protocols.Protocol;
 import net.sourceforge.fenixedu.domain.protocols.ProtocolFile;
+import net.sourceforge.fenixedu.domain.protocols.ProtocolHistory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
@@ -52,17 +53,35 @@ public class EditProtocolDispatchAction extends FenixDispatchAction {
             return mapping.findForward("view-protocol");
         }
         if (isProtocolNumberValid(protocolFactory)) {
-            protocolFactory.setEditProtocolAction(EditProtocolAction.EDIT_PROTOCOL_DATA);
-            Protocol protocol = (Protocol) executeService(request, "ExecuteFactoryMethod",
-                    new Object[] { protocolFactory });
-            request.setAttribute("protocolFactory", new ProtocolFactory(protocol));
-            return mapping.findForward("view-protocol");
+            if (validateDates(protocolFactory, request)) {
+                protocolFactory.setEditProtocolAction(EditProtocolAction.EDIT_PROTOCOL_DATA);
+                Protocol protocol = (Protocol) executeService(request, "ExecuteFactoryMethod",
+                        new Object[] { protocolFactory });
+                request.setAttribute("protocolFactory", new ProtocolFactory(protocol));
+                return mapping.findForward("view-protocol");
+            } else {
+                request.setAttribute("protocolFactory", protocolFactory);
+                return mapping.findForward("edit-protocol-data");
+            }
         } else {
             request.setAttribute("protocolFactory", protocolFactory);
+            validateDates(protocolFactory, request);
             setError(request, "errorMessage", (ActionMessage) new ActionMessage(
                     "error.protocol.number.alreadyExists"));
             return mapping.findForward("edit-protocol-data");
         }
+    }
+
+    private boolean validateDates(ProtocolFactory protocolFactory, HttpServletRequest request) {
+        for (ProtocolHistory protocolHistory : protocolFactory.getProtocolHistories()) {
+            if (protocolHistory.getBeginDate() != null && protocolHistory.getEndDate() != null
+                    && !protocolHistory.getBeginDate().isBefore(protocolHistory.getEndDate())) {
+                setError(request, "errorDateMessage", (ActionMessage) new ActionMessage(
+                        "error.protocol.dates.notContinuous"));
+                return false;
+            }
+        }
+        return true;
     }
 
     private boolean isProtocolNumberValid(ProtocolFactory protocolFactory) {
@@ -296,6 +315,7 @@ public class EditProtocolDispatchAction extends FenixDispatchAction {
         protocolFactory.setIstResponsible(false);
         Protocol protocol = (Protocol) executeService(request, "ExecuteFactoryMethod",
                 new Object[] { protocolFactory });
+        RenderUtils.invalidateViewState();
         request.setAttribute("protocolFactory", new ProtocolFactory(protocol));
         return mapping.findForward("edit-protocol-responsibles");
     }

@@ -5,22 +5,34 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <html:xhtml/>
+<em><bean:message key="title.scientificCouncil.portalTitle" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></em>
 <h2><bean:message key="link.editDates" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></h2>
-<span class="error0 mtop0">
-	<html:messages id="message" message="true" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
-	<bean:write name="message" />
-	</html:messages>
-</span>
 
 <fr:form action="/protocols.do?method=editProtocolHistory">
 
-<fr:view name="protocolHistoryFactory" property="protocol.orderedProtocolHistoriesMinusLast" schema="show.protocolHistories">
+<p class="mtop15">
+	<span class="error0">
+		<html:messages id="message" message="true" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<bean:write name="message" />
+		</html:messages>
+	</span>
+</p>
+
+<logic:notEmpty name="protocolHistoryFactory" property="protocol.orderedProtocolHistoriesMinusLast">
+	<fr:view name="protocolHistoryFactory" property="protocol.orderedProtocolHistoriesMinusLast" schema="show.protocolHistories">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle1 thlight thright" />
+		</fr:layout>
+	</fr:view> 
+</logic:notEmpty>
+
+<fr:edit name="protocolHistoryFactory" id="protocolHistoryFactory" schema="edit.protocolHistoryFactory">
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle1 printborder tdleft" />
+		<fr:property name="classes" value="tstyle5 thlight thright" />
+		<fr:property name="columnClasses" value=",,tderror1 tdclear" />
 	</fr:layout>
-</fr:view> 
-<br/>
-<fr:edit name="protocolHistoryFactory" id="protocolHistoryFactory" schema="edit.protocolHistoryFactory" layout="tabular"/>
+
+</fr:edit>
 
 <p>
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">

@@ -25,11 +25,12 @@
 	</span>
 </p>
 
-<fr:edit name="protocolFactory" schema="create.protocol">
+<fr:edit id="protocolData" name="protocolFactory" schema="create.protocol">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle5 thright thlight mtop05"/>
-		<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+		<fr:property name="columnClasses" value=",,tdclear tderror1"/>		
 	</fr:layout>
+	<fr:destination name="invalid" path="/createProtocol.do?method=invalidProtocolData"/>
 </fr:edit>
 
 <p>

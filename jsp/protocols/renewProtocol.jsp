@@ -5,6 +5,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <html:xhtml/>
+<em><bean:message key="title.scientificCouncil.portalTitle" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></em>
 <h2><bean:message key="title.protocols.renew" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></h2>
 <span class="error0 mtop0">
 	<html:messages id="message" message="true" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
@@ -15,16 +16,24 @@
 
 <fr:view name="protocolHistoryFactory" property="protocol.orderedProtocolHistories" schema="show.protocolHistories">
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle1 printborder tdleft" />
+		<fr:property name="classes" value="tstyle1 tdcenter" />
 	</fr:layout>
 </fr:view> 
-<br/>
-<bean:message key="label.renewDuring" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
-<fr:edit name="protocolHistoryFactory" id="protocolHistoryFactory" schema="renew.protocolHistoryFactory">
-	<fr:layout name="flow">
-		<fr:property name="labelExcluded" value="true"/>
-	</fr:layout>
-</fr:edit>
+
+<table class="tstyle5">
+	<tr>
+		<td>
+			<bean:message key="label.renewDuring" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>:
+		</td>
+		<td>
+			<fr:edit name="protocolHistoryFactory" id="protocolHistoryFactory" schema="renew.protocolHistoryFactory">
+				<fr:layout name="flow">
+					<fr:property name="labelExcluded" value="true"/>
+				</fr:layout>
+			</fr:edit>
+		</td>
+	</tr>
+</table>
 
 <p>
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">

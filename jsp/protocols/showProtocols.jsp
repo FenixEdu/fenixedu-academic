@@ -13,6 +13,16 @@
 	</li>
 </ul>
 
+<fr:form action="/protocols.do?method=showProtocols">
+	<fr:edit id="active" name="protocolSearch" schema="edit.protocolSearch.active">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle5 thlight"/>
+			<fr:property name="columnClasses" value=",,tdclear"/>
+		</fr:layout>
+		<fr:destination name="postBack" path="/protocols.do?method=showProtocols"/>
+	</fr:edit>	
+</fr:form>
+
 <logic:notEmpty name="protocols">
 	<fr:view name="protocols" schema="show.protocol.toList">
 		<fr:layout name="tabular">
