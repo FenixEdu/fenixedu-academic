@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.predicates;
 
 import net.sourceforge.fenixedu.domain.space.Blueprint;
+import net.sourceforge.fenixedu.domain.space.RoomClassification;
 import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.space.SpaceInformation;
 import net.sourceforge.fenixedu.domain.space.SpaceOccupation;
@@ -23,6 +24,12 @@ public class SpacePredicates {
 	    return true;
 	}
     };
+    
+    public static final AccessControlPredicate<RoomClassification> checkIfLoggedPersonHasPermissionsToManageRoomClassifications = new AccessControlPredicate<RoomClassification>() {
+	public boolean evaluate(RoomClassification roomClassification) {
+	    return Space.personIsSpacesAdministrator(AccessControl.getPerson());	    
+	}
+    };    
     
     public static final AccessControlPredicate<SpaceOccupation> checkPermissionsToManageOccupations = new AccessControlPredicate<SpaceOccupation>() {
 	public boolean evaluate(SpaceOccupation spaceOccupation) {

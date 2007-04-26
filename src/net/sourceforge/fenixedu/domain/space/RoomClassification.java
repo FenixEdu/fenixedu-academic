@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
+import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.injectionCode.FenixDomainObjectActionLogAnnotation;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
@@ -28,7 +29,7 @@ public class RoomClassification extends RoomClassification_Base {
 
     public static final Comparator<RoomClassification> COMPARATORY_BY_PARENT_ROOM_CLASSIFICATION_AND_CODE = new BeanComparator("absoluteCode");
     
-    
+    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageRoomClassifications")
     @FenixDomainObjectActionLogAnnotation(actionName = "Created room classification", parameters = {
 	    "parentRoomClassification", "code", "name" })
     public RoomClassification(final RoomClassification parentRoomClassification, final Integer code,
@@ -38,6 +39,7 @@ public class RoomClassification extends RoomClassification_Base {
 	edit(parentRoomClassification, code, name);
     }
 
+    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageRoomClassifications")
     @FenixDomainObjectActionLogAnnotation(actionName = "Edited room classification", parameters = {
 	    "parentRoomClassification", "code", "name" })
     public void edit(final RoomClassification parentRoomClassification, final Integer code,
@@ -73,6 +75,7 @@ public class RoomClassification extends RoomClassification_Base {
 	}
     }
     
+    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageRoomClassifications")
     @FenixDomainObjectActionLogAnnotation(actionName = "Deleted room classification", parameters = {})
     public void delete() {
 	if (getChildRoomClassificationsSet().isEmpty()) {	    
