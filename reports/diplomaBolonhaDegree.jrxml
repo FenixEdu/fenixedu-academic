@@ -77,7 +77,7 @@
 						positionType="Float"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single">
-						<font fontName="Quadraat-Italic" pdfFontName="QUAD____.ttf" size="21" isBold="true" isItalic="false" isPdfEmbedded ="true"/>
+						<font fontName="Quadraat-BoldItalic" pdfFontName="QUAD____.ttf" size="21" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{name}]]></textFieldExpression>
 				</textField>
@@ -199,7 +199,7 @@
 						positionType="Float"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Center" lineSpacing="Single">
-						<font fontName="Quadraat-Regular" pdfFontName="QUAD____.ttf" size="11" isBold="true" isItalic="false" isPdfEmbedded ="true"/>
+						<font fontName="Quadraat-Bold" pdfFontName="QUAD____.ttf" size="11" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{conclusionDate}]]></textFieldExpression>
 				</textField>
@@ -227,7 +227,7 @@
 						positionType="Float"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Center" lineSpacing="Single">
-						<font fontName="Quadraat-Regular" pdfFontName="QUAD____.ttf" size="15" isBold="true" isItalic="false" isPdfEmbedded ="true"/>
+						<font fontName="Quadraat-Bold" pdfFontName="QUAD____.ttf" size="15" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{institutionName}]]></textFieldExpression>
 				</textField>
@@ -254,7 +254,7 @@
 						positionType="Float"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Center" lineSpacing="Single">
-						<font fontName="Quadraat-Italic" pdfFontName="QUAD____.ttf" size="20" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
+						<font fontName="Quadraat-BoldItalic" pdfFontName="QUAD____.ttf" size="20" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{registration}.getDegreeType().getSeniorTitle()]]></textFieldExpression>
 				</textField>
@@ -281,7 +281,7 @@
 						positionType="Float"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Center" lineSpacing="Single">
-						<font fontName="Quadraat-Regular" pdfFontName="QUAD____.ttf" size="12" isBold="true" isItalic="false" isPdfEmbedded ="true"/>
+						<font fontName="Quadraat-Bold" pdfFontName="QUAD____.ttf" size="12" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{registration}.getFinalAverageDescription() + " Valores (" + $P{registration}.getFinalAverageQualified() + ")"]]></textFieldExpression>
 				</textField>
