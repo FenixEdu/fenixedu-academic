@@ -41,6 +41,8 @@ public class AdministrativeOfficeDocument extends FenixReport {
 		return new EnrolmentDeclaration(documentRequest);
 	    case IRS_DECLARATION:
 		return new IRSDeclaration(documentRequest);
+	    case DIPLOMA_REQUEST:
+		return new Diploma(documentRequest);
 	    default:
 		return new AdministrativeOfficeDocument(documentRequest);
 	    }
