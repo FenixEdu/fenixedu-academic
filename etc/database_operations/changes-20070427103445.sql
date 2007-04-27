@@ -21,4 +21,11 @@ UPDATE `ACCESSIBLE_ITEM` AS own SET own.`KEY_AVAILABILITY_POLICY` = NULL WHERE o
 INSERT INTO `AVAILABILITY_POLICY` (`OJB_CONCRETE_CLASS`, `KEY_ROOT_DOMAIN_OBJECT`, `KEY_ACCESSIBLE_ITEM`, `EXPRESSION`, `TARGET_GROUP`) SELECT 'net.sourceforge.fenixedu.domain.functionalities.ExpressionGroupAvailability', 1, `ID_INTERNAL`, 'ifTrue($I(siteID, \'UnitSite\').showAnnouncements)', 'ifTrue($I(siteID, \'UnitSite\').showAnnouncements)' FROM `ACCESSIBLE_ITEM` WHERE `UUID` = '8481d1a7-1b95-43f6-b091-e0d582aa86e5';
 UPDATE `ACCESSIBLE_ITEM` AS f, `AVAILABILITY_POLICY` AS ap SET f.`KEY_AVAILABILITY_POLICY` = ap.`ID_INTERNAL` WHERE f.`UUID` = '8481d1a7-1b95-43f6-b091-e0d582aa86e5' AND ap.`KEY_ACCESSIBLE_ITEM` = f.`ID_INTERNAL`;
 
+--  ID: 116867 UUID: 'e9ab1a2b-cfd2-4c6d-9476-27c7c3caf4c6'
+UPDATE `ACCESSIBLE_ITEM` AS own SET own.`PATH` = '/manageResearchUnitAnnouncements.do?method=viewEvents' WHERE own.`UUID` = 'e9ab1a2b-cfd2-4c6d-9476-27c7c3caf4c6';
+
+--  ID: 116868 UUID: '8481d1a7-1b95-43f6-b091-e0d582aa86e5'
+UPDATE `ACCESSIBLE_ITEM` AS own SET own.`PATH` = '/manageResearchUnitAnnouncements.do?method=viewAnnouncements' WHERE own.`UUID` = '8481d1a7-1b95-43f6-b091-e0d582aa86e5';
+
+
 COMMIT;

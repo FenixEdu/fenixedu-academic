@@ -10,14 +10,18 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.ResearchUnitSite;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.messaging.PartyAnnouncementBoard;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.Action.messaging.AnnouncementManagement;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import sun.security.action.GetBooleanAction;
 
 public class ManageResearchUnitAnnoucementsDA extends AnnouncementManagement {
 
@@ -39,6 +43,14 @@ public class ManageResearchUnitAnnoucementsDA extends AnnouncementManagement {
 				: "listAnnouncementBoards");
 	}
 
+	public ActionForward viewEvents(ActionMapping mapping,
+			ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+	
+		this.viewAnnouncements(mapping, form, request, response);
+		return mapping.findForward("listEvents");
+	}
+	
 	public ActionForward viewEvent(ActionMapping mapping,
 			ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -64,6 +76,28 @@ public class ManageResearchUnitAnnoucementsDA extends AnnouncementManagement {
 		}
 	}
 
+	@Override
+    protected AnnouncementBoard getRequestedAnnouncementBoard(HttpServletRequest request) {
+        UnitSite site = getSite(request);
+        Unit unit = site.getUnit();
+        
+        if (unit == null) {
+            return null;
+        }
+        else {
+        	String method = request.getParameter("method");
+        	// double autch :'-(
+            String name = (method.equals("viewAnnouncements") ? "Anúncios" : "Eventos");
+            for (AnnouncementBoard board : unit.getBoards()) {
+                if (board.getReaders() == null && board.getName().equals(name)) {
+                    return board;
+                }
+            }
+            
+            return null;
+        }
+    }
+	
 	@Override
 	protected Collection<AnnouncementBoard> boardsToView(
 			HttpServletRequest request) throws Exception {
@@ -129,4 +163,12 @@ public class ManageResearchUnitAnnoucementsDA extends AnnouncementManagement {
 		request.setAttribute("returnMethod", "viewAnnouncements");
 	}
 
+	@Override
+	public ActionForward viewArchive(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		super.viewArchive(mapping, form, request, response);
+		/*
+		 * Major refactor needed :-(
+		 */
+		return mapping.findForward(this.getRequestedAnnouncementBoard(request).getName().equals("Anúncios") ? "listAnnouncements" : "listEvents"); 
+	}
 }

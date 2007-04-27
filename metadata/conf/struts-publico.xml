@@ -957,7 +957,8 @@
 	   parameter="method">
             <forward name="viewAnnouncement" path="research-view-announcement"/>
             <forward name="viewEvent" path="research-view-event"/>
-            <forward name="listAnnouncements" path="/researchSite/viewResearchUnitSite.do?method=listAnnouncements"/>
+			<forward name="listEvents" path="show-research-unit-board-events"/>
+            <forward name="listAnnouncements" path="show-research-unit-board-announcements"/>
       </action>
      </action-mappings>
     

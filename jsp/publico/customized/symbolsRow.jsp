@@ -20,11 +20,22 @@
 	<logic:equal name="site" property="defaultLogoUsed" value="false">
 	<logic:present name="site" property="logo">
 		<bean:define id="logoFile" type="net.sourceforge.fenixedu.domain.UnitSiteFile" name="site" property="logo"/>
-				<img alt="Logo" src="<%= logoFile.getDownloadUrl() %>"/>
+			<img alt="Logo" src="<%= logoFile.getDownloadUrl() %>"/>
 	</logic:present>
 	</logic:equal>
 
 </div>
+
+
+	<logic:notPresent name="site" property="logo">
+		<div style="position: absolute; left: 60px; top: 45px;">
+			<h1 class="unitname">
+				<span><fr:view name="site" property="unit.acronym"/></span>
+				<br/><span class=""><fr:view name="site" property="unit.name"/></span>
+			</h1>
+		</div>
+	</logic:notPresent>
+	
 
 <div id="header_links">
 	<a href="<%= loginUrl %>">

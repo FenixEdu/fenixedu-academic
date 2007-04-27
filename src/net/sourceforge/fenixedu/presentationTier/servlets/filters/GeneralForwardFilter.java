@@ -25,6 +25,8 @@ import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.PathElementsProvider;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.PathProcessor;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.ProcessingContext;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.ResearchProcessor;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.ResearchUnitProcessor;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.ScheduleProcessor;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.SchoolClassProcessor;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.SectionProcessor;
@@ -50,6 +52,7 @@ public class GeneralForwardFilter implements Filter {
         String degreeSiteURI = config.getInitParameter("degreeSiteURI");
         String departmentSiteURI = config.getInitParameter("departmentSiteURI");
         String departmentsURI = config.getInitParameter("departmentsURI");
+        String researchURI = config.getInitParameter("researchURI");
         
         DegreeProcessor degreeProcessor = new DegreeProcessor(degreeURI, degreeSiteURI);
         ExecutionCoursesProcessor executionCourses = new ExecutionCoursesProcessor(siteListURI);
@@ -65,6 +68,8 @@ public class GeneralForwardFilter implements Filter {
         HomepageProcessor homepage = new HomepageProcessor(homepageSiteURI);
         DepartmentsProcessor departments = new DepartmentsProcessor(departmentsURI);
         DepartmentProcessor department = new DepartmentProcessor(departmentSiteURI);
+        ResearchProcessor research = new ResearchProcessor();
+        ResearchUnitProcessor researchUnit = new ResearchUnitProcessor(researchURI);
         
         SectionProcessor sectionAndItem = section.add(item);
         
@@ -92,6 +97,7 @@ public class GeneralForwardFilter implements Filter {
         
         processors.add(homepage.add(sectionAndItem));
         processors.add(departments.add(department.add(sectionAndItem)));
+        processors.add(research.add(researchUnit.add(sectionAndItem)));
     }
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)

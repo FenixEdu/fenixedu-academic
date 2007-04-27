@@ -44,30 +44,7 @@ public class ViewResearchUnitSiteDA extends SiteVisualizationDA {
 		return mapping.findForward(redirect);
 	}
 
-	public ActionForward showEvents(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
 
-		ResearchUnitSite site = getSite(request);
-		List<Announcement> announcements = getEventAnnouncements(site);
-
-		request.setAttribute("announcements", announcements);
-		return mapping.findForward("showBoardEvents");
-	}
-
-	public ActionForward listAnnouncements(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		String boardID = request.getParameter("announcementBoardId");
-		ResearchUnitSite site = getSite(request);
-		ResearchUnit unit = site.getUnit();
-		if(getEventBoards(unit).getIdInternal() == Integer.valueOf(boardID)) {
-			return showEvents(mapping, form, request, response);
-		}
-		if(getAnnouncementBoards(unit).getIdInternal() == Integer.valueOf(boardID)) {
-			return showAnnouncements(mapping, form, request, response);
-		}
-		return null;
-	}
-	
 	private List<Announcement> getEventAnnouncements(ResearchUnitSite site) {
 		PartyAnnouncementBoard eventBoard = getEventBoards(site.getUnit());
 		List<Announcement> announcements = (eventBoard != null) ? eventBoard.getAnnouncements()
@@ -75,15 +52,7 @@ public class ViewResearchUnitSiteDA extends SiteVisualizationDA {
 		return announcements;
 	}
 
-	public ActionForward showAnnouncements(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) {
-		ResearchUnitSite site = getSite(request);
-		List<Announcement> announcements = getAnnouncements(site);
-
-		request.setAttribute("announcements", announcements);
-		return mapping.findForward("showBoardAnnouncements");
-	}
-
+	
 	private List<Announcement> getAnnouncements(ResearchUnitSite site) {
 		PartyAnnouncementBoard announcementBoard = getAnnouncementBoards(site.getUnit());
 		List<Announcement> announcements = (announcementBoard != null) ? announcementBoard

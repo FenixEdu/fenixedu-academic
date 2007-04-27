@@ -20,12 +20,26 @@
     </p>
 </div>
 
-<div>
-    <strong><bean:message key="title.site.configuration.visualization" bundle="WEBSITEMANAGER_RESOURCES"/>:</strong>
+
+<div class="mtop15 mbottom05">
+    <strong>Opções de Internacionalização:</strong>
 </div>
 
+<table class="tstyle5 thlight thright mtop05">
+	<tr>
+		<th>Mostrar bandeiras:</th>
+		<td>Sim / Não</td>
+	</tr>
+</table>
+
+
+
+<p>
+    <strong><bean:message key="title.site.configuration.visualization" bundle="WEBSITEMANAGER_RESOURCES"/>:</strong>
+</p>
+
 <logic:present name="visualizationChanged">
-    <p>
+    <p class="mbottom05">
         <span class="success0">
             <bean:message key="message.site.configuration.visualization.changed" bundle="WEBSITEMANAGER_RESOURCES"/>
         </span>
@@ -44,6 +58,7 @@
         <bean:message key="button.save"/>
     </html:submit>
 </fr:form>
+
 
 <div class="mtop15 mbottom1">
     <strong><bean:message key="title.site.configuration.layout" bundle="WEBSITEMANAGER_RESOURCES"/>:</strong>

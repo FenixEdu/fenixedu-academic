@@ -125,6 +125,10 @@
             <param-name>departmentsURI</param-name>
             <param-value>/publico/department/showDepartments.faces</param-value>
         </init-param>
+        <init-param>
+        	<param-name>researchURI</param-name>
+        	<param-value>/publico/researchSite/viewResearchUnitSite.do?siteID=%s&amp;method=%s</param-value>
+        </init-param>
     </filter>
 	<filter>
 		<filter-name>CASFilter</filter-name>

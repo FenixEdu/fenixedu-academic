@@ -53,7 +53,7 @@
 				<bean:define id="announcementID" name="announcement" property="idInternal"/>
 				<bean:define id="siteID" name="site" property="idInternal"/>
 				<p class="mtop025 mbottom15">
-					<html:link page="<%= announcementAction + "?method=viewAnnouncement&amp;" + context +  "&amp;announcementId=" + announcementID%>"><bean:message key="link.more"/></html:link><br/>				</p>
+					<html:link page="<%= announcementAction + "?method=viewAnnouncement&amp;" + context +  "&amp;announcementId=" + announcementID%>"><bean:message key="link.viewMore"/></html:link><br/>				</p>
 			</logic:iterate>
 			</logic:notEmpty>
 			<logic:empty name="announcements">
@@ -91,7 +91,7 @@
 				<bean:define id="announcementID" name="announcement" property="idInternal"/>
 				<bean:define id="siteID" name="site" property="idInternal"/>
 				<p class="mtop025 mbottom15">
-					<html:link page="<%= eventAction + "?method=viewEvent&amp;" + context + "&amp;announcementId=" + announcementID%>"><bean:message key="link.more"/></html:link><br/>
+					<html:link page="<%= eventAction + "?method=viewEvent&amp;" + context + "&amp;announcementId=" + announcementID%>"><bean:message key="link.viewMore"/></html:link><br/>
 				</p>
 			</logic:iterate>
 			</logic:notEmpty>
