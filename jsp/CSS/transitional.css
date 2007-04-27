@@ -1414,7 +1414,7 @@ color: #333;
 background: #fff;
 vertical-align: top;
 border-right: 1px solid #ccc;
-padding: 5px 10px 5px 10px;
+padding: 15px 10px 5px 10px;
 }
 
 .usitechannels td div.usitebody p {
@@ -1428,13 +1428,16 @@ text-align: center;
 }
 
 /* ? */
-#version {
-padding: 1em;
+
+#main #version { /* istLayout.jsp flag */
+padding: 0;
+width: auto;
+}
+.usitemain #version { /* unitSiteLayout.jsp flag */
+padding: 1.85em 2.7em !important;
 float: right;
 width: 100px;
 }
-
-#main #version { /* fixes public flag padding */
-padding: 0;
-width: auto;
+.usitebanner #version {
+padding: 1.85em 0.27em !important;
 }

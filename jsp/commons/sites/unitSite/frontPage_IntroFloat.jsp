@@ -6,17 +6,20 @@
 
 
 <logic:equal name="site" property="showBanner" value="true">
+<bean:define id="style" value="width: 100%; float: left;" toScope="request"/>
 
-<bean:define id="style" type="java.lang.String" value="width: 100%; float: left;" toScope="request"/>
+ <logic:present name="site" property="currentBanner">
+	<bean:define id="style" type="java.lang.String" value="width: 100%; float: left;" toScope="request"/>
  
-<bean:define id="banner" type="net.sourceforge.fenixedu.domain.UnitSiteBanner" name="site" property="currentBanner" toScope="request"/>
+	<bean:define id="banner" type="net.sourceforge.fenixedu.domain.UnitSiteBanner" name="site" property="currentBanner" toScope="request"/>
 
-<logic:notEmpty name="site" property="banners">
- <bean:define id="banner" name="site" property="currentBanner" type="net.sourceforge.fenixedu.domain.UnitSiteBanner" toScope="request"/>
- <bean:define id="style" type="java.lang.String" value="<%= "width: 100%; float: left; " +  ((banner.getColor()!=null) ? "background-color: " + banner.getColor() + ";" : "") + (banner.hasBackgroundImage() ? " background-image: url('" + banner.getBackgroundImage().getDownloadUrl() +"'); background-repeat: repeat-x;" : "") %>" toScope="request"/>
-</logic:notEmpty>
+	<logic:notEmpty name="site" property="banners">
+		 <bean:define id="banner" name="site" property="currentBanner" type="net.sourceforge.fenixedu.domain.UnitSiteBanner" toScope="request"/>
+		 <bean:define id="style" type="java.lang.String" value="<%= "width: 100%; float: left; " +  ((banner.getColor()!=null) ? "background-color: " + banner.getColor() + ";" : "") + (banner.hasBackgroundImage() ? " background-image: url('" + banner.getBackgroundImage().getDownloadUrl() +"'); background-repeat: repeat-x;" : "") %>" toScope="request"/>
+	</logic:notEmpty>
+ </logic:present>
 
-<div class="usitebanner" style="<%=  style %>">
+<div class="usitebanner" style="<fr:view name="style"/>">
 	<div id="version" style="width: 100px; position: absolute; top: 0; right: 0;">
 		<html:form action="/changeLocaleTo.do">
 					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.windowLocation" property="windowLocation" value=""/>
@@ -41,13 +44,30 @@
 			</html:form>
 	</div>
 	<logic:equal name="site" property="showIntroduction" value="true">
+		<logic:present name="site" property="description">
 		<div class="usiteintrofloated">
 			<fr:view name="site"  property="description" layout="html"/>
 		</div>
+		</logic:present>
+		<logic:notPresent name="site" property="description">
+			<div class="usiteintrofloated" style="background-color: #eeeeee; height: 150px;">
+
+			</div>
+	</logic:notPresent>
 	</logic:equal>
+	
+<logic:present name="site" property="currentBanner">
 	<logic:present name="banner" >
+		<bean:define id="banner" name="banner" type="net.sourceforge.fenixedu.domain.UnitSiteBanner"/>
 		<img src="<%= banner.getMainImage().getDownloadUrl() %>"/>
 	</logic:present>
+</logic:present>
+<logic:notPresent name="site" property="currentBanner">
+	<div style="background-color: #ffffff; height: 150px;">
+
+	</div>
+	
+</logic:notPresent>
 </div>
 <div style="clear: both;"></div>
 
@@ -55,9 +75,16 @@
 
 <logic:notEqual name="site" property="showBanner" value="true">
 	<logic:equal name="site" property="showIntroduction" value="true">
+	<logic:present name="site" property="description">
 		<div class="usiteintro">
 			<fr:view name="site"  property="description" layout="html"/>
 		</div>
+	</logic:present>
+	<logic:notPresent name="site" property="description">
+		<div style="background-color: #eeeeee; height: 150px;">
+
+		</div>
+	</logic:notPresent>
 	</logic:equal>
 </logic:notEqual>
 

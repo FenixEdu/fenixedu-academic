@@ -175,4 +175,19 @@ public class MultiLanguageString implements Serializable, Comparable<MultiLangua
             
         	return getContent().compareTo(languageString.getContent());
     }
+    
+    public class I18N {
+    	public I18N add(String language, String text) {
+    		MultiLanguageString.this.setContent(Language.valueOf(language), text);
+    		return this;
+    	}
+    	
+    	public MultiLanguageString finish() {
+    		return MultiLanguageString.this;
+    	}
+    }
+    
+    public static I18N i18n() {
+        return new MultiLanguageString().new I18N();
+    }
 }

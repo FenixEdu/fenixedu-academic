@@ -10,6 +10,7 @@
 
 <bean:define id="action" name="announcementActionVariable" toScope="request"/>
 
+<logic:present name="announcement">
 <bean:define id="announcementID" name="announcement" property="idInternal"/>
 
 <h3 class="mvert025">
@@ -18,7 +19,9 @@
 
 <p class="mvert025 smalltxt greytxt2">
 	<img src="<%= request.getContextPath() + "/images/dotist_post.gif"%>"/>
-	De
+	<logic:present name="announcement" property="referedSubjectBegin">
+		<bean:message key="label.listAnnouncements.event.occurs.from" bundle="MESSAGING_RESOURCES"/>
+	</logic:present>
 	<fr:view name="announcement" property="referedSubjectBegin" type="org.joda.time.DateTime" layout="no-time" />
 	<logic:present name="announcement" property="referedSubjectEnd">
 		<bean:message key="label.listAnnouncements.event.occurs.to" bundle="MESSAGING_RESOURCES"/>
@@ -37,3 +40,17 @@
 		<html:link target="blank" href="<%= request.getContextPath() + "/homepage/" + userName %>"><fr:view name="announcement" property="creator.nickname"/></html:link>
 	</em>
 </p>
+</logic:present>
+
+<logic:notPresent name="announcement">
+	<bean:message key="error.cannot.display.announcement" bundle="MESSAGING_RESOURCES"/><br/>
+	<bean:message key="error.not.allowed.to.view.announcement.possible.causes" bundle="MESSAGING_RESOURCES"/>
+	<ul>
+		<li>
+			<bean:message key="error.not.allowed.to.view.announcement" bundle="MESSAGING_RESOURCES"/>
+		</li>
+		<li>
+			<bean:message key="error.invisible.view.announcement" bundle="MESSAGING_RESOURCES"/>
+		</li>
+	</ul>
+</logic:notPresent>

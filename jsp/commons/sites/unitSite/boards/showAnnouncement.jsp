@@ -10,6 +10,7 @@
 
 <bean:define id="action" name="announcementActionVariable" toScope="request"/>
 
+<logic:present name="announcement">
 <bean:define id="announcementID" name="announcement" property="idInternal"/>
 
 <p class="mvert025 smalltxt greytxt2">
@@ -38,4 +39,18 @@
 		<html:link target="blank" href="<%= request.getContextPath() + "/homepage/" + userName %>"><fr:view name="announcement" property="creator.nickname"/></html:link>
 	</em>
 </p>
+</logic:present>
+
+<logic:notPresent name="announcement">
+	<bean:message key="error.cannot.display.announcement" bundle="MESSAGING_RESOURCES"/><br/>
+	<bean:message key="error.not.allowed.to.view.announcement.possible.causes" bundle="MESSAGING_RESOURCES"/>
+	<ul>
+		<li>
+			<bean:message key="error.not.allowed.to.view.announcement" bundle="MESSAGING_RESOURCES"/>
+		</li>
+		<li>
+			<bean:message key="error.invisible.view.announcement" bundle="MESSAGING_RESOURCES"/>
+		</li>
+	</ul>
+</logic:notPresent>
 

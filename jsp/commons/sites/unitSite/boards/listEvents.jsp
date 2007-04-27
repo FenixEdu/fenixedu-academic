@@ -10,6 +10,11 @@
 
 <bean:define id="action" name="announcementActionVariable" toScope="request"/>
 
+<logic:empty name="announcements">
+	<p><em><bean:message key="label.noEventAnnouncements" bundle="MESSAGING_RESOURCES"/></em></p>
+</logic:empty>
+
+<logic:notEmpty name="announcements">
 <logic:iterate id="announcement" name="announcements">
 <bean:define id="announcementID" name="announcement" property="idInternal"/>
 
@@ -24,7 +29,9 @@
 
 <p class="mvert025 smalltxt greytxt2">
 	<img src="<%= request.getContextPath() + "/images/dotist_post.gif"%>"/>
-	De
+	<logic:present name="announcement" property="referedSubjectBegin">
+		<bean:message key="label.listAnnouncements.event.occurs.from" bundle="MESSAGING_RESOURCES"/>
+	</logic:present>
 	<fr:view name="announcement" property="referedSubjectBegin" type="org.joda.time.DateTime" layout="no-time" />
 	<logic:present name="announcement" property="referedSubjectEnd">
 		<bean:message key="label.listAnnouncements.event.occurs.to" bundle="MESSAGING_RESOURCES"/>
@@ -46,3 +53,4 @@
 	</p>
 
 </logic:iterate>
+</logic:notEmpty>

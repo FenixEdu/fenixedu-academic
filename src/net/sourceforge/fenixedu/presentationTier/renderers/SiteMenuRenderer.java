@@ -36,6 +36,7 @@ public class SiteMenuRenderer extends OutputRenderer {
     private boolean moduleRelative;
     private String sectionUrl;
     private String contextParam;
+    private String empty;
 
     public SiteMenuRenderer() {
         super();
@@ -98,7 +99,20 @@ public class SiteMenuRenderer extends OutputRenderer {
         this.contextParam = contextParam;
     }
 
-    @Override
+    public String getEmpty() {
+		return empty;
+	}
+
+    /**
+     * Decides what to show when there are no sections to include in the menu.
+     * 
+     * @property
+     */
+	public void setEmpty(String empty) {
+		this.empty = empty;
+	}
+
+	@Override
     protected Layout getLayout(Object object, Class type) {
         return new Layout() {
 
@@ -118,12 +132,21 @@ public class SiteMenuRenderer extends OutputRenderer {
                   
                 Site site = (Site) object;
                 List<Section> sections = getSections(site);
-                addSiteSections(context, site, sections, list);
                 
-                return list;
+                if (sections.isEmpty()) {
+                	return generateEmpty();
+                }
+                else {
+                	addSiteSections(context, site, sections, list);
+                    return list;
+                }
             }
 
-            private void addSiteSections(FunctionalityContext context,
+            private HtmlComponent generateEmpty() {		
+				return new HtmlText(getEmpty(), false);
+			}
+
+			private void addSiteSections(FunctionalityContext context,
                     Site site, List<Section> sections, HtmlList list) {
 
                 for (Section section : sections) {

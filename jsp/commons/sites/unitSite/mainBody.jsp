@@ -8,20 +8,21 @@
 
 <table class="usitechannels">
 	<tr>
-		<logic:present name="announcements">
+		<logic:equal name="site" property="showAnnouncements" value="true"> 
 			<th class="usitechannel1">
 				<bean:message key="label.announcements"/>
 			</th>
-		</logic:present>
-		<logic:present name="eventAnnouncements">
+		</logic:equal>
+		<logic:equal name="site" property="showEvents" value="true">
 			<th class="usitechannel2">
 			<bean:message key="label.events"/>
 			</th>
-		</logic:present>
+		</logic:equal>
 	</tr>
 	<tr>
-	<logic:present name="announcements">
+	<logic:equal name="site" property="showAnnouncements" value="true">
 		<td>
+			<logic:notEmpty name="announcements">
 			<logic:iterate id="announcement" name="announcements">
 				<h3 class="mvert025"><fr:view name="announcement" property="subject"/></h3>
 				<p class="mtop025 mbottom05" style="color: #888;"><fr:view name="announcement" property="creationDate" layout="no-time"/></p>
@@ -38,14 +39,22 @@
 				<p class="mtop025 mbottom15">
 					<html:link page="<%= action + "?method=viewAnnouncement&amp;siteID=" + siteID + "&amp;announcementId=" + announcementID%>"><bean:message key="link.more"/></html:link><br/>				</p>
 			</logic:iterate>
+			</logic:notEmpty>
+			<logic:empty name="announcements">
+				<em><bean:message key="label.noAnnouncements" bundle="MESSAGING_RESOURCES"/></em>
+			</logic:empty>
 		</td>
-	</logic:present>
-	<logic:present name="eventAnnouncements">
+	</logic:equal>
+	<logic:equal name="site" property="showEvents" value="true">
 		<td>
+			<logic:notEmpty name="eventAnnouncements">
 			<logic:iterate id="announcement" name="eventAnnouncements">
 			
 				<h3 class="mvert025"><fr:view name="announcement" property="subject"/></h3>
 				<p class="mtop025 mbottom05" style="color: #888;">
+					<logic:present name="announcement" property="referedSubjectBegin">
+					<bean:message key="label.listAnnouncements.event.occurs.from" bundle="MESSAGING_RESOURCES"/>
+					</logic:present>
 					<fr:view name="announcement" property="referedSubjectBegin" type="org.joda.time.DateTime" layout="no-time" />
 					<logic:present name="announcement" property="referedSubjectEnd">
 						<bean:message key="label.listAnnouncements.event.occurs.to" bundle="MESSAGING_RESOURCES"/>
@@ -66,8 +75,12 @@
 					<html:link page="<%= action + "?method=viewEvent&amp;siteID=" + siteID + "&amp;announcementId=" + announcementID%>"><bean:message key="link.more"/></html:link><br/>
 				</p>
 			</logic:iterate>
+			</logic:notEmpty>
+			<logic:empty name="eventAnnouncements">
+				<em><bean:message key="label.noEventAnnouncements" bundle="MESSAGING_RESOURCES"/></em>
+			</logic:empty>
 		</td>
-	</logic:present>
+	</logic:equal>
 	</tr>
 </table>
 

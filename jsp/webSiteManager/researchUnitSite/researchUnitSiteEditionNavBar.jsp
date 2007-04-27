@@ -19,11 +19,6 @@
 		</html:link>
 	</li>
 	<li>
-		<html:link page="<%= "/manageResearchUnitSite.do?method=sections&amp;oid=" + siteID %>">
-			<bean:message bundle="WEBSITEMANAGER_RESOURCES" key="link.site.sectionsManagement"/>
-		</html:link>
-	</li>
-	<li>
         <html:link page="<%= "/manageResearchUnitSite.do?method=introduction&amp;oid=" + siteID %>">
             <bean:message key="link.site.introduction" bundle="WEBSITEMANAGER_RESOURCES"/>
         </html:link>
@@ -58,6 +53,11 @@
             <bean:message key="link.site.footerNavigation" bundle="WEBSITEMANAGER_RESOURCES"/>
         </html:link>
     </li>
+	<li>
+		<html:link page="<%= "/manageResearchUnitSite.do?method=sections&amp;oid=" + siteID %>">
+			<bean:message bundle="WEBSITEMANAGER_RESOURCES" key="link.site.sectionsManagement"/>
+		</html:link>
+	</li>
 	<li>
 		<html:link page="<%= "/manageResearchUnitAnnouncements.do?method=editAnnouncementBoards&amp;oid=" + siteID %>">
 			<bean:message bundle="WEBSITEMANAGER_RESOURCES" key="link.site.announcements"/>

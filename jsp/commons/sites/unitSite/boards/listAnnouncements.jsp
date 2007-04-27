@@ -10,6 +10,11 @@
 
 <bean:define id="action" name="announcementActionVariable" toScope="request"/>
 
+<logic:empty name="announcements">
+	<p><em><bean:message key="label.noAnnouncements" bundle="MESSAGING_RESOURCES"/></em></p>
+</logic:empty>
+
+<logic:notEmpty name="announcements">
 <logic:iterate id="announcement" name="announcements">
 	<bean:define id="announcementID" name="announcement" property="idInternal"/>
 	
@@ -44,3 +49,4 @@
 		</p>
 	</div>
 </logic:iterate>
+</logic:notEmpty>
