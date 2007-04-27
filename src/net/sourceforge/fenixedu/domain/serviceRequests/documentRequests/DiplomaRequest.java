@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
@@ -26,6 +27,7 @@ public class DiplomaRequest extends DiplomaRequest_Base {
 	final Set<AdministrativeOfficeType> result = new HashSet<AdministrativeOfficeType>();
 	
 	result.add(AdministrativeOfficeType.DEGREE);
+	result.add(AdministrativeOfficeType.MASTER_DEGREE);
 	
 	return result;
     }
@@ -37,12 +39,26 @@ public class DiplomaRequest extends DiplomaRequest_Base {
 
     @Override
     public String getDocumentTemplateKey() {
-	return getClass().getName();
+	return getClass().getName() + "." +  getDegreeType().getName();
     }
 
     @Override
-    public EventType getEventType() {
-	return EventType.DIPLOMA_REQUEST;
+    final public EventType getEventType() {
+
+// TODO uncomment once diploma accounting is implemented 
+//	
+//	switch (getDegreeType()) {
+//	case BOLONHA_DEGREE:
+//	    return EventType.BOLONHA_DEGREE_DIPLOMA_REQUEST;
+//	case BOLONHA_MASTER_DEGREE:
+//	    return EventType.BOLONHA_MASTER_DEGREE_DIPLOMA_REQUEST;
+//	case BOLONHA_PHD_PROGRAM:
+//	    return EventType.BOLONHA_PHD_PROGRAM_DIPLOMA_REQUEST;
+//	default:
+//	    throw new DomainException("DiplomaRequest.not.available.for.given.degree.type");
+//	}
+
+	return null;
     }
 
     @Override
@@ -56,7 +72,8 @@ public class DiplomaRequest extends DiplomaRequest_Base {
 
 	if (academicServiceRequestSituationType == AcademicServiceRequestSituationType.CONCLUDED) {
 	    if (!isFree()) {
-		//new DiplomaRequestEvent(getAdministrativeOffice(), getEventType(), getRegistration().getPerson(), this);
+		// TODO uncomment once diploma accounting is implemented
+		//DiplomaRequestEvent.create(getAdministrativeOffice(), getRegistration().getPerson(), this);
 	    }
 	}
     }
