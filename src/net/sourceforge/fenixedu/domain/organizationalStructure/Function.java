@@ -79,7 +79,7 @@ public class Function extends Function_Base {
     }
 
     public List<PersonFunction> getPersonFunctions() {
-	List<PersonFunction> personFunctions = new ArrayList();
+	List<PersonFunction> personFunctions = new ArrayList<PersonFunction>();
 	for (Accountability accountability : getAccountabilities()) {
 	    if (accountability.isPersonFunction()) {
 		personFunctions.add((PersonFunction) accountability);
