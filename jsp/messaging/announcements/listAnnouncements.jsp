@@ -133,12 +133,7 @@ if (month != null && year!=null)
 			<%	
 				} else if (!request.getRequestURI().contains("public") && announcement.getAnnouncementBoard().hasWriter(person)) {
 			%>
-				<%= request.getServletPath() %>, 
-                <%= request.getRequestURL() %>, 
-                <%= request.getRequestURI() %>, 
-                <%= request.getPathTranslated() %>, 
-                <%= request.getPathInfo() %>, 
-				y<bean:message key="label.permissions" bundle="MESSAGING_RESOURCES"/>:
+				<bean:message key="label.permissions" bundle="MESSAGING_RESOURCES"/>:
 				<html:link action="<%= "/announcements/manage" + announcement.getAnnouncementBoard().getClass().getSimpleName() + ".do?method=viewAnnouncements" + "&amp;announcementBoardId=" + announcement.getAnnouncementBoard().getIdInternal() + "&amp;tabularVersion=true&amp;" + extraParameters %>">
 				  	<bean:message bundle="MESSAGING_RESOURCES" key="messaging.write.link"/>
 				</html:link>
