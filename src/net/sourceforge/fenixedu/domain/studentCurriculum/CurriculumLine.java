@@ -73,6 +73,10 @@ public abstract class CurriculumLine extends CurriculumLine_Base {
     public void setCurricularCourse(CurricularCourse curricularCourse) {
     	setDegreeModule(curricularCourse);
     }
+    
+    public boolean hasCurricularCourse() {
+	return hasDegreeModule();
+    }
 
     @Override
     public Enrolment findEnrolmentFor(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
