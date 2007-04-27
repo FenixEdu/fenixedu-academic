@@ -268,6 +268,19 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends
 
     }
 
+    public Money getInsurancePayedAmountFor(int civilYear) {
+	Money result = Money.ZERO;
+
+	for (final AccountingTransaction transaction : getNonAdjustingTransactions()) {
+	    if (transaction.getToAccountEntry().getEntryType() == EntryType.INSURANCE_FEE
+		    && transaction.isPayed(civilYear)) {
+		result = result.add(transaction.getToAccountEntry().getAmountWithAdjustment());
+	    }
+	}
+
+	return result;
+    }
+
     public Money getAdministrativeOfficeFeePayedAmount() {
 	Money result = Money.ZERO;
 
@@ -276,7 +289,20 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends
 		result = result.add(transaction.getToAccountEntry().getAmountWithAdjustment());
 	    }
 	}
-	
+
+	return result;
+    }
+
+    public Money getAdministrativeOfficeFeePayedAmountFor(int civilYear) {
+	Money result = Money.ZERO;
+
+	for (final AccountingTransaction transaction : getNonAdjustingTransactions()) {
+	    if (transaction.getToAccountEntry().getEntryType() == EntryType.ADMINISTRATIVE_OFFICE_FEE
+		    && transaction.isPayed(civilYear)) {
+		result = result.add(transaction.getToAccountEntry().getAmountWithAdjustment());
+	    }
+	}
+
 	return result;
     }
 

@@ -314,9 +314,7 @@ public abstract class Event extends Event_Base {
 	    }
 	}
 
-	final Money maxAmountForCivilYear = amountForCivilYear.subtract(getExtraPayedAmount());
-
-	return maxAmountForCivilYear.isPositive() ? maxAmountForCivilYear : amountForCivilYear;
+	return amountForCivilYear;
 
     }
 
