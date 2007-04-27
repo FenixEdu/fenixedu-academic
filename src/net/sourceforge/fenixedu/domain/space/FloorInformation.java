@@ -67,6 +67,17 @@ public class FloorInformation extends FloorInformation_Base {
 
     @Override
     public String getPresentationName() {
+	Space suroundingSpace = getSpace().getSuroundingSpace();		
+	if(suroundingSpace != null && suroundingSpace.isFloor()) {	    
+	    FloorInformation suroundingSpaceInformation = ((Floor)suroundingSpace).getSpaceInformation();
+	    if(getLevel().intValue() == 0) {
+		return suroundingSpaceInformation.getPresentationName();		
+	    } else if(getLevel().intValue() == 1 && suroundingSpaceInformation.getPresentationName().contains("i")) {
+		return suroundingSpaceInformation.getPresentationName().replace("i", "s");
+	    } else if(getLevel().intValue() == 1 && !suroundingSpaceInformation.getPresentationName().contains("i")) {
+		return suroundingSpaceInformation.getPresentationName().concat("i");
+	    } 
+	}	
 	return String.valueOf(getLevel());
     }
 }
