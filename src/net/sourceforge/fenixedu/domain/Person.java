@@ -1723,7 +1723,7 @@ public class Person extends Person_Base {
     public List<Event> getEventsWithPayments() {
 	final List<Event> result = new ArrayList<Event>();
 	for (final Event event : getEventsSet()) {
-	    if (event.hasAnyPayments()) {
+	    if (!event.isCancelled() && event.hasAnyPayments()) {
 		result.add(event);
 	    }
 	}
