@@ -4,6 +4,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.messaging;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -244,14 +245,21 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
 	return Integer.valueOf(request.getParameter("selectedYear"));
     }
 
-    public ActionForward viewArchive(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	AnnouncementArchive archive = this.buildArchive(this.getRequestedAnnouncementBoard(request),
+    public ActionForward viewArchive(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        Integer selectedArchiveYear = this.getSelectedArchiveYear(request);
+        Integer selectedArchiveMonth = this.getSelectedArchiveMonth(request);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.MONTH, selectedArchiveMonth - 1);
+        calendar.set(Calendar.YEAR, selectedArchiveYear);
+        request.setAttribute("archiveDate", calendar.getTime());
+        
+        AnnouncementArchive archive = this.buildArchive(this.getRequestedAnnouncementBoard(request),
 		request);
 	this.viewAnnouncements(mapping, form, request, response);
-	request.setAttribute("announcements", archive.getEntries().get(
-		this.getSelectedArchiveYear(request)).getEntries().get(
-		(this.getSelectedArchiveMonth(request))).getAnnouncements());
+    request.setAttribute("announcements", archive.getEntries().get(
+		selectedArchiveYear).getEntries().get(
+		(selectedArchiveMonth)).getAnnouncements());
 
 	return mapping.findForward("listAnnouncements");
     }

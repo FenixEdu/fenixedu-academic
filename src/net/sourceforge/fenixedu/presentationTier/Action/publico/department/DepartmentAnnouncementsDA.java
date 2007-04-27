@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.publico.department;
 
+import javax.servlet.http.HttpServletRequest;
+
 public class DepartmentAnnouncementsDA extends DepartmentBoardsDA {
 
     // TODO: change literal
@@ -9,5 +11,13 @@ public class DepartmentAnnouncementsDA extends DepartmentBoardsDA {
     protected String getBoardName() {
         return NAME;
     }
-    
+
+    @Override
+    protected String getContextInformation(HttpServletRequest request) {
+        String path = "/department/announcements.do";
+        
+        request.setAttribute("announcementActionVariable", path);
+        return path;
+    }
+
 }

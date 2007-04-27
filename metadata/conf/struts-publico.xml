@@ -905,7 +905,9 @@
         <action path="/department/departmentSite"
                 parameter="method"
                 type="net.sourceforge.fenixedu.presentationTier.Action.publico.department.PublicDepartmentSiteDA">
-            <forward name="department-presentation" path="department-presentation"/>
+            <forward name="frontPage-BANNER_INTRO" path="department-site-front-page-banner-intro"/>
+            <forward name="frontPage-INTRO_BANNER" path="department-site-front-page-intro-banner"/>
+            <forward name="frontPage-BANNER_INTRO_COLLAPSED" path="department-site-front-page-intro-float"/>
             <forward name="department-employees" path="department-employees"/>
             <forward name="department-degrees" path="department-degrees"/>
             <forward name="site-section" path="department-section"/>
@@ -930,7 +932,7 @@
                 parameter="method"
                 type="net.sourceforge.fenixedu.presentationTier.Action.publico.department.DepartmentEventsDA">
             <forward name="listAnnouncements" path="public-department-list-events"/>
-            <forward name="viewAnnouncement" path="department-view-announcement"/>
+            <forward name="viewAnnouncement" path="department-view-event"/>
         </action>
  
        <!-- ===== ResearchUnit Site Visualization ===== -->

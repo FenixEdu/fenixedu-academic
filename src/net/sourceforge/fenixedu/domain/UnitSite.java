@@ -29,7 +29,7 @@ public abstract class UnitSite extends UnitSite_Base {
     @Override
     @Checked("UnitSitePredicates.managers")
     public void setDescription(MultiLanguageString description) {
-        super.setDescription(description);
+        super.setDescription(description == null || description.isEmpty() ? null : description);
     }
     
     @Override
@@ -75,6 +75,12 @@ public abstract class UnitSite extends UnitSite_Base {
     
     public void setDefaultLogoUsed(boolean bool) {
     	setPersonalizedLogo(!bool);
+    }
+    
+    @Override
+    public UnitSiteLayoutType getLayout() {
+        UnitSiteLayoutType layout = super.getLayout();
+        return layout == null ? UnitSiteLayoutType.BANNER_INTRO : layout;
     }
     
     @Override

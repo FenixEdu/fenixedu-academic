@@ -7,4 +7,4 @@
 <bean:define id="siteContextParamValue" name="site" property="idInternal" toScope="request"/>
 <bean:define id="site" name="site" toScope="request"/>
 <bean:define id="announcementActionVariable" value="/researchSite/manageResearchUnitAnnouncements.do" toScope="request"/>
-
+<bean:define id="eventActionVariable" value="/researchSite/manageResearchUnitAnnouncements.do" toScope="request"/>

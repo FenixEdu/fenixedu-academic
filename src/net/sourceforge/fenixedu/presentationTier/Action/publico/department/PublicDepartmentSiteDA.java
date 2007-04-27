@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.DepartmentSite;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
@@ -31,7 +32,9 @@ import org.apache.struts.util.RequestUtils;
 
 public class PublicDepartmentSiteDA extends SiteVisualizationDA {
 
-    public static int ANNOUNCEMENTS_NUMBER = 3;
+    public static final int ANNOUNCEMENTS_NUMBER = 3;
+    public static final String ANNOUNCEMENTS_NAME = "Anúncios";
+    public static final String EVENTS_NAME = "Eventos";
     
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -44,27 +47,12 @@ public class PublicDepartmentSiteDA extends SiteVisualizationDA {
             
             DepartmentSite site = (DepartmentSite) unit.getSite();
             request.setAttribute("site", site);
-            if (site.getDescription() == null || site.getDescription().getAllLanguages().isEmpty()) {
-                request.setAttribute("noDescription", true);
-            }
-
-            AnnouncementBoard board = null;
-            for (AnnouncementBoard unitBoard : unit.getBoards()) {
-                if (unitBoard.isPublicToRead()) {
-                    board = unitBoard;
-                    break;
-                }
-            }
-            
-            if (board != null) {
-                List<Announcement> announcements = board.getActiveAnnouncements();
-                announcements = announcements.subList(0, Math.min(announcements.size(), ANNOUNCEMENTS_NUMBER));
-                request.setAttribute("announcements", announcements);
-            }
         }
-        else {
-            request.setAttribute("noDescription", true);
-        }
+        
+        request.setAttribute("announcementActionVariable", "/department/announcements.do");
+        request.setAttribute("eventActionVariable", "/department/events.do");
+        request.setAttribute("siteContextParam", "selectedDepartmentUnitID");
+        request.setAttribute("siteContextParamValue", id);
         
         return super.execute(mapping, actionForm, request, response);
     }
@@ -85,7 +73,35 @@ public class PublicDepartmentSiteDA extends SiteVisualizationDA {
     }
 
     public ActionForward presentation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
-        return mapping.findForward("department-presentation");
+        Unit unit = getUnit(request);
+        UnitSite site = unit.getSite();
+        
+        AnnouncementBoard announcementsBoard = null;
+        AnnouncementBoard eventsBoard = null;
+        
+        for (AnnouncementBoard unitBoard : unit.getBoards()) {
+            if (unitBoard.isPublicToRead() && unitBoard.getName().equals(ANNOUNCEMENTS_NAME)) {
+                announcementsBoard = unitBoard;
+            }
+
+            if (unitBoard.isPublicToRead() && unitBoard.getName().equals(EVENTS_NAME)) {
+                eventsBoard = unitBoard;
+            }
+        }
+        
+        if (announcementsBoard != null) {
+            List<Announcement> announcements = announcementsBoard.getActiveAnnouncements();
+            announcements = announcements.subList(0, Math.min(announcements.size(), ANNOUNCEMENTS_NUMBER));
+            request.setAttribute("announcements", announcements);
+        }
+        
+        if (eventsBoard != null) {
+            List<Announcement> announcements = eventsBoard.getActiveAnnouncements();
+            announcements = announcements.subList(0, Math.min(announcements.size(), ANNOUNCEMENTS_NUMBER));
+            request.setAttribute("eventAnnouncements", announcements);
+        }
+
+        return mapping.findForward("frontPage-" + site.getLayout());
     }
     
     private Department getDepartment(HttpServletRequest request) {

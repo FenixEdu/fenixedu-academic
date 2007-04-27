@@ -4,7 +4,12 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
-<bean:define id="action" name="announcementActionVariable" toScope="request"/>
+<bean:define id="announcementAction" name="announcementActionVariable" toScope="request"/>
+<bean:define id="eventAction" name="eventActionVariable" toScope="request"/>
+
+<bean:define id="contextParam" name="siteContextParam"/>
+<bean:define id="contextParamValue" name="siteContextParamValue"/>
+<bean:define id="context" value="<%= contextParam + "=" + contextParamValue %>"/>
 
 <table class="usitechannels">
 	<tr>
@@ -20,6 +25,16 @@
 		</logic:equal>
 	</tr>
 	<tr>
+    
+    <bean:define id="textLength" value="350" toScope="request"/>
+    
+	<logic:notEqual name="site" property="showAnnouncements" value="true">
+        <bean:define id="textLength" value="700" toScope="request"/>
+    </logic:notEqual>
+	<logic:notEqual name="site" property="showEvents" value="true">
+        <bean:define id="textLength" value="700" toScope="request"/>
+    </logic:notEqual>
+    
 	<logic:equal name="site" property="showAnnouncements" value="true">
 		<td>
 			<logic:notEmpty name="announcements">
@@ -27,9 +42,10 @@
 				<h3 class="mvert025"><fr:view name="announcement" property="subject"/></h3>
 				<p class="mtop025 mbottom05" style="color: #888;"><fr:view name="announcement" property="creationDate" layout="no-time"/></p>
 				<div class="usitebody mvert025">
+                    <bean:define id="length" name="textLength"/>
 					<fr:view name="announcement" property="body">
 						<fr:layout name="short-html">
-							<fr:property name="length" value="350"/>
+							<fr:property name="length" value="<%= String.valueOf(length) %>"/>
 							<fr:property name="tooltipShown" value="false"/>
 						</fr:layout>
 					</fr:view>
@@ -37,11 +53,13 @@
 				<bean:define id="announcementID" name="announcement" property="idInternal"/>
 				<bean:define id="siteID" name="site" property="idInternal"/>
 				<p class="mtop025 mbottom15">
-					<html:link page="<%= action + "?method=viewAnnouncement&amp;siteID=" + siteID + "&amp;announcementId=" + announcementID%>"><bean:message key="link.more"/></html:link><br/>				</p>
+					<html:link page="<%= announcementAction + "?method=viewAnnouncement&amp;" + context +  "&amp;announcementId=" + announcementID%>"><bean:message key="link.more"/></html:link><br/>				</p>
 			</logic:iterate>
 			</logic:notEmpty>
 			<logic:empty name="announcements">
-				<em><bean:message key="label.noAnnouncements" bundle="MESSAGING_RESOURCES"/></em>
+                <div class="mbottom05">
+        				<em><bean:message key="label.noAnnouncements" bundle="MESSAGING_RESOURCES"/></em>
+                </div>
 			</logic:empty>
 		</td>
 	</logic:equal>
@@ -62,9 +80,10 @@
 					</logic:present>
 				</p>
 				<div class="usitebody mvert025">
+                    <bean:define id="length" name="textLength"/>
 					<fr:view name="announcement" property="body">
-						<fr:layout name="short-html">
-								<fr:property name="length" value="350"/>
+	   					<fr:layout name="short-html">
+    		      					<fr:property name="length" value="<%= String.valueOf(length) %>"/>
 								<fr:property name="tooltipShown" value="false"/>
 							</fr:layout>
 					</fr:view>
@@ -72,12 +91,14 @@
 				<bean:define id="announcementID" name="announcement" property="idInternal"/>
 				<bean:define id="siteID" name="site" property="idInternal"/>
 				<p class="mtop025 mbottom15">
-					<html:link page="<%= action + "?method=viewEvent&amp;siteID=" + siteID + "&amp;announcementId=" + announcementID%>"><bean:message key="link.more"/></html:link><br/>
+					<html:link page="<%= eventAction + "?method=viewEvent&amp;" + context + "&amp;announcementId=" + announcementID%>"><bean:message key="link.more"/></html:link><br/>
 				</p>
 			</logic:iterate>
 			</logic:notEmpty>
 			<logic:empty name="eventAnnouncements">
-				<em><bean:message key="label.noEventAnnouncements" bundle="MESSAGING_RESOURCES"/></em>
+                <div class="mbottom05">
+        				<em><bean:message key="label.noEventAnnouncements" bundle="MESSAGING_RESOURCES"/></em>
+                </div>
 			</logic:empty>
 		</td>
 	</logic:equal>

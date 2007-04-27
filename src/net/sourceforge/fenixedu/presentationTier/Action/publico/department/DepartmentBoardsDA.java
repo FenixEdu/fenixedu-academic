@@ -34,6 +34,7 @@ public abstract class DepartmentBoardsDA extends AnnouncementManagement {
         if (department != null) {
             request.setAttribute("department", department);
             request.setAttribute("unit", department.getDepartmentUnit());
+            request.setAttribute("site", department.getDepartmentUnit().getSite());
         }
     }
 
@@ -101,11 +102,6 @@ public abstract class DepartmentBoardsDA extends AnnouncementManagement {
     }
     
     @Override
-    protected String getContextInformation(HttpServletRequest request) {
-        return "/department/announcements.do";
-    }
-
-    @Override
     protected Collection<AnnouncementBoard> boardsToView(HttpServletRequest request) throws Exception {
         Unit unit = getUnit(request);
         List<AnnouncementBoard> boards = new ArrayList<AnnouncementBoard>();
@@ -152,6 +148,7 @@ public abstract class DepartmentBoardsDA extends AnnouncementManagement {
     @Override
     public ActionForward viewAnnouncements(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
         AnnouncementBoard board = getRequestedAnnouncementBoard(request);
+
         if (board != null) {
             return super.viewAnnouncements(mapping, form, request, response);
         }
@@ -159,5 +156,9 @@ public abstract class DepartmentBoardsDA extends AnnouncementManagement {
             return mapping.findForward("listAnnouncements");
         }
     }
-    
+
+    public ActionForward viewEvent(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        return viewAnnouncement(mapping, form, request, response);
+    }
+
 }

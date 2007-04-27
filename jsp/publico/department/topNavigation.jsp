@@ -18,14 +18,18 @@
 %>
 
 
-<fr:view name="unit" property="site" type="net.sourceforge.fenixedu.domain.UnitSite" layout="unit-side-menu">
+<fr:view name="unit" property="site" type="net.sourceforge.fenixedu.domain.UnitSite" layout="unit-top-menu">
     <fr:layout>
         <fr:property name="sectionUrl" value="<%= request.getContextPath() + "/publico/department/departmentSite.do?method=section" %>"/>
         <fr:property name="contextParam" value="selectedDepartmentUnitID"/>
         <fr:property name="contextRelative" value="false"/>
+                
+        <fr:property name="empty">
+            <ul>
+                <li>
+                    <a href="#" style="visibility: hidden;">&nbps;</a>
+                </li>
+            </ul>
+        </fr:property>
     </fr:layout>
 </fr:view>
-
-<div style="margin-top: 50px;">
-    <fr:view name="site" property="sideBanner" layout="html" type="net.sourceforge.fenixedu.util.MultiLanguageString"/>
-</div>

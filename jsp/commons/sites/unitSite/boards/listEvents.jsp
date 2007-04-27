@@ -1,14 +1,32 @@
+<%@ page language="java" %>
+
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
-<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<%@ taglib uri="/WEB-INF/messaging.tld" prefix="messaging" %>
 
-<h1 class="mtop0 mbottom03 cnone"><fr:view name="site" property="unit.name"/></h1>
+<html:xhtml/>
+
+<h1 class="mbottom03 cnone"><fr:view name="site" property="unit.nameWithAcronym"/></h1>
 
 <h2 class="mtop15"><bean:message key="label.messaging.events.title" bundle="MESSAGING_RESOURCES"/></h2>
 
 <bean:define id="action" name="announcementActionVariable" toScope="request"/>
+<bean:define id="context" name="extraParameters"/>
+
+<logic:present name="archiveDate">
+    <p>
+        <span class="warning0">
+            <bean:message key="label.messaging.archive.selected" bundle="MESSAGING_RESOURCES"/>
+            <fr:view name="archiveDate">
+                <fr:layout>
+                    <fr:property name="format" value="MMMM yyyy"/>
+                </fr:layout>
+            </fr:view>
+        </span>
+    </p>
+</logic:present>
 
 <logic:empty name="announcements">
 	<p><em><bean:message key="label.noEventAnnouncements" bundle="MESSAGING_RESOURCES"/></em></p>
@@ -21,14 +39,13 @@
 <div class="announcement mtop15 mbottom25">
 
 <h3 class="mvert025">
-	<html:link page="<%= action + "?method=viewEvent&amp;siteID=" + request.getParameter("siteID") + "&amp;announcementId=" + announcementID %>">
+	<html:link page="<%= String.format("%s?method=viewEvent&amp;%s&amp;announcementId=%s", action, context, announcementID) %>">
 		<fr:view name="announcement" property="subject"/>
 	</html:link>
 </h3>
 
 
 <p class="mvert025 smalltxt greytxt2">
-	<img src="<%= request.getContextPath() + "/images/dotist_post.gif"%>"/>
 	<logic:present name="announcement" property="referedSubjectBegin">
 		<bean:message key="label.listAnnouncements.event.occurs.from" bundle="MESSAGING_RESOURCES"/>
 	</logic:present>
@@ -54,3 +71,14 @@
 
 </logic:iterate>
 </logic:notEmpty>
+
+<logic:present name="archive">
+    <logic:present name="announcementBoard">
+        <bean:define id="board" name="announcementBoard" type="net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard"/>
+
+        <div class="aarchives">
+            <messaging:archive name="archive" targetUrl="<%= request.getContextPath() + "/publico" + action + "?method=viewArchive&amp;announcementBoardId=" + board.getIdInternal() + "&amp;" + context + "&amp;" %>"/>  
+        </div>
+
+    </logic:present>
+</logic:present>
