@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.providers;
 
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -24,7 +25,14 @@ public class DegreeCurricularPlansForCreateStudentCurricularPlan implements Data
 	final SortedSet<DegreeCurricularPlan> result = new TreeSet<DegreeCurricularPlan>(
 		new BeanComparator("name"));
 	if (creator.getDegree() != null) {
-	    result.addAll(creator.getDegree().getDegreeCurricularPlansSet());
+	    Set<DegreeCurricularPlan> degreeCurricularPlans = creator.getRegistration()
+		    .getDegreeCurricularPlans();
+	    for (DegreeCurricularPlan degreeCurricularPlan : creator.getDegree()
+		    .getDegreeCurricularPlansSet()) {
+		if (!degreeCurricularPlans.contains(degreeCurricularPlan)) {
+		    result.add(degreeCurricularPlan);
+		}
+	    }
 	}
 	return result;
     }

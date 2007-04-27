@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
@@ -37,6 +38,11 @@ public class StudentCurricularPlanFactoryExecutor {
 	}
 
 	public Object execute() {
+	    
+	    if(getRegistration().getStudentCurricularPlan(getDegreeCurricularPlan()) != null){
+		throw new DomainException("error.registrationAlreadyHasSCPWithGivenDCP");
+	    }
+	    
 	    return StudentCurricularPlan.createBolonhaStudentCurricularPlan(getRegistration(),
 		    getDegreeCurricularPlan(), StudentCurricularPlanState.ACTIVE, new YearMonthDay(),
 		    ExecutionPeriod.readActualExecutionPeriod());
