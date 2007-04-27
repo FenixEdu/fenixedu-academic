@@ -318,6 +318,36 @@ public abstract class Event extends Event_Base {
 
     }
 
+    public Money getPayedAmountByPersonFor(final int civilYear) {
+	if (isCancelled()) {
+	    throw new DomainException(
+		    "error.accounting.Event.cannot.calculatePayedAmount.on.invalid.events");
+	}
+
+	Money amountForCivilYear = Money.ZERO;
+	for (final AccountingTransaction accountingTransaction : getNonAdjustingTransactions()) {
+	    if (accountingTransaction.isPayed(civilYear)) {
+		amountForCivilYear = amountForCivilYear.add(accountingTransaction.getToAccountEntry()
+			.getAmountWithAdjustment());
+	    }
+	}
+
+	final Money maxAmountForCivilYear = amountForCivilYear.subtract(getExtraPayedAmount());
+
+	return maxAmountForCivilYear.isPositive() ? maxAmountForCivilYear : amountForCivilYear;
+
+    }
+
+    public boolean hasPaymentsByPersonForCivilYear(final int civilYear) {
+	for (final AccountingTransaction transaction : getNonAdjustingTransactions()) {
+	    if (transaction.isSourceAccountFromParty(getPerson()) && transaction.isPayed(civilYear)) {
+		return true;
+	    }
+	}
+
+	return false;
+    }
+
     public boolean hasPaymentsForCivilYear(final int civilYear) {
 	for (final AccountingTransaction accountingTransaction : getNonAdjustingTransactions()) {
 	    if (accountingTransaction.isPayed(civilYear)) {
@@ -520,13 +550,14 @@ public abstract class Event extends Event_Base {
     }
 
     public Money getExtraPayedAmount() {
-	final Money extraPayedAmount = getPayedAmount().subtract(
-		calculateTotalAmountToPay(getDateToCalculateEventAmount()));
-	return extraPayedAmount.isPositive() ? extraPayedAmount : Money.ZERO;
-    }
+	if (!isClosed()) {
+	    return Money.ZERO;
+	}
 
-    private DateTime getDateToCalculateEventAmount() {
-	return !isClosed() ? new DateTime() : getEventStateDate();
+	final Money extraPayedAmount = getPayedAmount().subtract(
+		calculateTotalAmountToPay(getEventStateDate()));
+
+	return extraPayedAmount.isPositive() ? extraPayedAmount : Money.ZERO;
     }
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
@@ -637,10 +668,10 @@ public abstract class Event extends Event_Base {
 
     }
 
-    public static List<Event> readByEventsWithPaymentsForCivilYear(int civilYear) {
+    public static List<Event> readWithPaymentsByPersonForCivilYear(int civilYear) {
 	final List<Event> result = new ArrayList<Event>();
 	for (final Event event : RootDomainObject.getInstance().getAccountingEvents()) {
-	    if (event.hasPaymentsForCivilYear(civilYear)) {
+	    if (event.hasPaymentsByPersonForCivilYear(civilYear)) {
 		result.add(event);
 	    }
 	}

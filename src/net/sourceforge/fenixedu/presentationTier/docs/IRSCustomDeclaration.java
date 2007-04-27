@@ -104,7 +104,7 @@ public class IRSCustomDeclaration extends FenixReport {
 	final Map<EventType, Money> result = new HashMap<EventType, Money>();
 	for (final Event event : getEvents()) {
 	    final Money totalForEventType = getTotalForEventType(result, event.getEventType());
-	    result.put(event.getEventType(), totalForEventType.add(event.getPayedAmountFor(civilYear)));
+	    result.put(event.getEventType(), totalForEventType.add(event.getPayedAmountByPersonFor(civilYear)));
 
 	}
 
