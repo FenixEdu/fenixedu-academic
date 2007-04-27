@@ -409,8 +409,9 @@ public class Registration extends Registration_Base {
     @Override
     final public Integer getFinalAverage() {
 	if (!isConcluded()) {
-	    throw new DomainException(
-		    "Registration.getting.final.average.mean.from.non.concluded.registration");
+//	    throw new DomainException(
+//		    "Registration.getting.final.average.mean.from.non.concluded.registration");
+	    return null;
 	}
 
 	return super.getFinalAverage() != null ? super.getFinalAverage() : new StudentCurriculum(this)
@@ -1581,8 +1582,17 @@ public class Registration extends Registration_Base {
 
     @Override
     public YearMonthDay getStartDate() {
-	return super.getStartDate() != null ? super.getStartDate() : getStudentCandidacy()
-		.getActiveCandidacySituation().getSituationDate().toYearMonthDay();
+	
+	if (super.getStartDate() != null) {
+	    return super.getStartDate();
+	}
+	
+	if (hasStudentCandidacy()) {
+	    return getStudentCandidacy().getActiveCandidacySituation().getSituationDate()
+		    .toYearMonthDay();
+	}
+	
+	return null;
     }
 
     public boolean hasStudentCurricularPlanInExecutionPeriod(ExecutionPeriod executionPeriod) {
