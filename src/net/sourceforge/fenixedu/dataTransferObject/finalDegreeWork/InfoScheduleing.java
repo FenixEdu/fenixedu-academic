@@ -39,6 +39,8 @@ public class InfoScheduleing extends InfoObject {
 
     private Boolean attributionByTeachers;
 
+    private Boolean allowSimultaneousCoorientationAndCompanion;
+
     /* Construtores */
     public InfoScheduleing() {
         super();
@@ -222,5 +224,14 @@ public class InfoScheduleing extends InfoObject {
 	public void setMinimumCompletedCurricularYear(
 			Integer minimumCompletedCurricularYear) {
 		this.minimumCompletedCurricularYear = minimumCompletedCurricularYear;
+	}
+
+	public Boolean getAllowSimultaneousCoorientationAndCompanion() {
+	    return allowSimultaneousCoorientationAndCompanion;
+	}
+
+	public void setAllowSimultaneousCoorientationAndCompanion(
+		Boolean allowSimultaneousCoorientationAndCompanion) {
+	    this.allowSimultaneousCoorientationAndCompanion = allowSimultaneousCoorientationAndCompanion;
 	}
 }

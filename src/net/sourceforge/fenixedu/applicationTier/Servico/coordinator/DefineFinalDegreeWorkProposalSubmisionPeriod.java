@@ -29,6 +29,7 @@ public class DefineFinalDegreeWorkProposalSubmisionPeriod extends Service {
                     scheduleing = new Scheduleing();
                     scheduleing.setCurrentProposalNumber(new Integer(1));
                     scheduleing.setAttributionByTeachers(Boolean.FALSE);
+                    scheduleing.setAllowSimultaneousCoorientationAndCompanion(Boolean.FALSE);
                 }
 
                 scheduleing.addExecutionDegrees(executionDegree);

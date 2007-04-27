@@ -16,8 +16,10 @@ public class DefineFinalDegreeWorkCandidacyRequirements extends Service {
     public void run(Integer executionDegreeOID, Integer minimumNumberOfCompletedCourses,
     		Integer maximumCurricularYearToCountCompletedCourses,
     		Integer minimumCompletedCurricularYear,
-            Integer minimumNumberOfStudents, Integer maximumNumberOfStudents,
-            Integer maximumNumberOfProposalCandidaciesPerGroup, Boolean attributionByTeachers) throws ExcepcaoPersistencia {
+    		Integer minimumNumberOfStudents, Integer maximumNumberOfStudents,
+    		Integer maximumNumberOfProposalCandidaciesPerGroup, Boolean attributionByTeachers,
+    		Boolean allowSimultaneousCoorientationAndCompanion)
+    		throws ExcepcaoPersistencia {
 
         if (executionDegreeOID != null) {
 
@@ -39,6 +41,7 @@ public class DefineFinalDegreeWorkCandidacyRequirements extends Service {
                 scheduleing.setMaximumNumberOfStudents(maximumNumberOfStudents);
                 scheduleing.setMaximumNumberOfProposalCandidaciesPerGroup(maximumNumberOfProposalCandidaciesPerGroup);
                 scheduleing.setAttributionByTeachers(Boolean.valueOf(attributionByTeachers != null && attributionByTeachers.booleanValue()));
+                scheduleing.setAllowSimultaneousCoorientationAndCompanion(allowSimultaneousCoorientationAndCompanion != null && allowSimultaneousCoorientationAndCompanion.booleanValue());
             }
 
         }

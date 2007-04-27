@@ -35,7 +35,7 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.orientatorOID" property="orientatorOID"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.coorientatorOID" property="coorientatorOID"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.alteredField" property="alteredField"/>
-
+	<%	    boolean showCoordinator = false; 	    boolean showCompanion = false;	%>	<logic:empty name="finalWorkInformationForm" property="companionName">		<logic:empty name="finalWorkInformationForm" property="companionMail">			<logic:empty name="finalWorkInformationForm" property="companionPhone">				<logic:empty name="finalWorkInformationForm" property="companyAdress">					<logic:empty name="finalWorkInformationForm" property="companyName">						<%						    showCoordinator = true;						%>					</logic:empty>				</logic:empty>			</logic:empty>		</logic:empty>	</logic:empty>	<logic:empty name="finalWorkInformationForm" property="coResponsableTeacherName">		<%		    showCompanion = true;		%>	</logic:empty>	<%		final net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing scheduleing = (net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing) request.getAttribute("scheduling");		if (scheduleing.getAllowSimultaneousCoorientationAndCompanion().booleanValue()) {			showCoordinator = true;			showCompanion = true;		}		request.setAttribute("showCoordinator", showCoordinator);		request.setAttribute("showCompanion", showCompanion);	%>
 	<b><bean:message key="label.teacher.finalWork.title"/>:</b>
 	<br/><html:text bundle="HTMLALT_RESOURCES" altKey="text.title" property="title" size="85"/>
 	<hr/><br/>
@@ -73,13 +73,7 @@
 		</tr>
 	</table>
 	<br/><br/>
-
-	<logic:empty name="finalWorkInformationForm" property="companionName">
-	<logic:empty name="finalWorkInformationForm" property="companionMail">
-	<logic:empty name="finalWorkInformationForm" property="companionPhone">
-	<logic:empty name="finalWorkInformationForm" property="companyAdress">
-	<logic:empty name="finalWorkInformationForm" property="companyName">
-	<b><bean:message key="label.teacher.finalWork.coResponsable"/>:</b>
+	<logic:equal name="showCoordinator" value="true">	<b><bean:message key="label.teacher.finalWork.coResponsable"/>:</b>
 	<table width="100%">
 		<tr>
 			<th width="16%"><bean:message key="label.teacher.finalWork.number"/>:</th>
@@ -113,14 +107,7 @@
 		</tr>
 	</table>
 	<br/><br/>
-	</logic:empty>
-	</logic:empty>
-	</logic:empty>
-	</logic:empty>
-	</logic:empty>
-
-	<logic:empty name="finalWorkInformationForm" property="coResponsableTeacherName" >
-	<b><bean:message key="label.teacher.finalWork.companion"/>:</b>
+	</logic:equal>	<logic:equal name="showCompanion" value="true">	<b><bean:message key="label.teacher.finalWork.companion"/>:</b>
 	<table width="100%">
 		<tr>
 			<th width="9%"><bean:message key="label.teacher.finalWork.name"/>:</th>
@@ -173,9 +160,7 @@
 			</td>
 		</tr>
 	</table>
-	<br/><br/>
-	</logic:empty>
-				
+	<br/><br/>	</logic:equal>				
 	<b><bean:message key="label.teacher.finalWork.credits"/>:</b>
 	<html:text bundle="HTMLALT_RESOURCES" altKey="text.responsibleCreditsPercentage" property="responsibleCreditsPercentage" size="3" maxlength="3"/>% /
 	<html:text bundle="HTMLALT_RESOURCES" altKey="text.coResponsibleCreditsPercentage" property="coResponsibleCreditsPercentage" size="3" maxlength="3"/>%

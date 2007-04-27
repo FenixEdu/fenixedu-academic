@@ -151,18 +151,9 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 	infoFinalWorkProposal.setOrientator(new InfoPerson((Person) rootDomainObject.readPartyByOID(Integer.valueOf(orientatorOID))));
 	if (coorientatorOID != null && !coorientatorOID.equals("")) {
 	    infoFinalWorkProposal.setCoorientator(new InfoPerson((Person) rootDomainObject.readPartyByOID(Integer.valueOf(coorientatorOID))));
-	} else {
-	    if (coorientatorCreditsPercentage.intValue() != 0) {
-		ActionErrors actionErrors = new ActionErrors();
-		actionErrors
-			.add(
-				"finalWorkInformationForm.invalidCreditsPercentageDistribuition",
-				new ActionError(
-					"finalWorkInformationForm.invalidCreditsPercentageDistribuition"));
-		saveErrors(request, actionErrors);
-		return mapping.getInputForward();
-	    }
-
+	}
+	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(Integer.valueOf(degree));
+	if (!(coorientatorOID != null && !coorientatorOID.equals("")) || executionDegree.getScheduling().getAllowSimultaneousCoorientationAndCompanion().booleanValue()) {
 	    infoFinalWorkProposal.setCompanionName(companionName);
 	    infoFinalWorkProposal.setCompanionMail(companionMail);
 	    if (companionPhone != null && !companionPhone.equals("")
@@ -172,8 +163,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 	    infoFinalWorkProposal.setCompanyAdress(companyAdress);
 	    infoFinalWorkProposal.setCompanyName(companyName);
 	}
-	infoFinalWorkProposal.setExecutionDegree(new InfoExecutionDegree(rootDomainObject
-		.readExecutionDegreeByOID(Integer.valueOf(degree))));
+	infoFinalWorkProposal.setExecutionDegree(new InfoExecutionDegree(executionDegree));
 
 	if (branchList != null && branchList.length > 0) {
 	    infoFinalWorkProposal.setBranches(new ArrayList());
@@ -384,6 +374,10 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 	    return mapping.getInputForward();
         }
 
+	final Integer executionDegreeOIDString = Integer.valueOf(finalWorkForm.getString("degree"));
+	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeOIDString);
+	final Scheduleing scheduleing = executionDegree.getScheduling();
+
 	if (alteredField.equals("orientator")) {
 	    finalWorkForm.set("orientatorOID", person.getIdInternal().toString());
 	    finalWorkForm.set("responsableTeacherName", person.getName());
@@ -393,17 +387,19 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 	    }
 	} else {
 	    if (alteredField.equals("coorientator")) {
+		request.setAttribute("coorientator", person);
 		finalWorkForm.set("coorientatorOID", person.getIdInternal().toString());
 		finalWorkForm.set("coResponsableTeacherName", person.getName());
-		finalWorkForm.set("companionName", "");
-		finalWorkForm.set("companionMail", "");
-		finalWorkForm.set("companionPhone", "");
-		finalWorkForm.set("companyAdress", "");
-		finalWorkForm.set("companyName", "");
-		finalWorkForm.set("alteredField", "");
-		request.setAttribute("coorientator", person);
 		if (person == userView.getPerson()) {
 		    finalWorkForm.set("role", "coResponsable");
+		}
+		if (!scheduleing.getAllowSimultaneousCoorientationAndCompanion().booleanValue()) {
+		    finalWorkForm.set("companionName", "");
+		    finalWorkForm.set("companionMail", "");
+		    finalWorkForm.set("companionPhone", "");
+		    finalWorkForm.set("companyAdress", "");
+		    finalWorkForm.set("companyName", "");
+		    finalWorkForm.set("alteredField", "");
 		}
 	    }
 	}
@@ -422,8 +418,18 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 	String companyAdress = (String) finalWorkForm.get("companyAdress");
 	String companyName = (String) finalWorkForm.get("companyName");
 
+	final Integer executionDegreeOIDString = Integer.valueOf(finalWorkForm.getString("degree"));
+	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeOIDString);
+	final Scheduleing scheduleing = executionDegree.getScheduling();
+
 	if (alteredField.equals("companion") && companionName.equals("") && companionMail.equals("")
 		&& companionPhone.equals("") && companyAdress.equals("") && companyName.equals("")) {
+	    finalWorkForm.set("alteredField", "");
+	}
+
+	if (alteredField.equals("companion") && companionName.equals("") && companionMail.equals("")
+		&& companionPhone.equals("") && companyAdress.equals("") && companyName.equals("")
+		&& !scheduleing.getAllowSimultaneousCoorientationAndCompanion().booleanValue()) {
 	    finalWorkForm.set("coorientatorOID", "");
 	    finalWorkForm.set("coResponsableTeacherName", "");
 	    finalWorkForm.set("alteredField", "");
@@ -433,7 +439,6 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 		    || !companyAdress.equals("") || !companyName.equals("")) {
 		finalWorkForm.set("alteredField", "companion");
 	    }
-
 	}
 
 	return prepareFinalWorkInformation(mapping, form, request, response);

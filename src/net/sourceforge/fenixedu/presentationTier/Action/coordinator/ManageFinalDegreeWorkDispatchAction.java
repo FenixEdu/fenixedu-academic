@@ -283,7 +283,8 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
                             "maximumNumberOfProposalCandidaciesPerGroup", infoScheduleing
                                     .getMaximumNumberOfProposalCandidaciesPerGroup().toString());
                 }
-                finalDegreeWorkCandidacyRequirementsForm.set("attributionByTeachers", infoScheduleing.getAttributionByTeachers());                
+                finalDegreeWorkCandidacyRequirementsForm.set("attributionByTeachers", infoScheduleing.getAttributionByTeachers());
+                finalDegreeWorkCandidacyRequirementsForm.set("allowSimultaneousCoorientationAndCompanion", infoScheduleing.getAllowSimultaneousCoorientationAndCompanion());
 
                 request.setAttribute("finalDegreeWorkCandidacyRequirements",
                         finalDegreeWorkCandidacyRequirementsForm);
@@ -690,18 +691,9 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         infoFinalWorkProposal.setOrientator(new InfoPerson((Person) rootDomainObject.readPartyByOID(Integer.valueOf(orientatorOID))));
         if (coorientatorOID != null && !coorientatorOID.equals("")) {
             infoFinalWorkProposal.setCoorientator(new InfoPerson((Person) rootDomainObject.readPartyByOID(Integer.valueOf(coorientatorOID))));
-        } else {
-            if (coorientatorCreditsPercentage.intValue() != 0) {
-                ActionErrors actionErrors = new ActionErrors();
-                actionErrors
-                        .add(
-                                "finalWorkInformationForm.invalidCreditsPercentageDistribuition",
-                                new ActionError(
-                                        "finalWorkInformationForm.invalidCreditsPercentageDistribuition"));
-                saveErrors(request, actionErrors);
-                return mapping.getInputForward();
-            }
-
+        }
+	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(Integer.valueOf(degree));
+	if (!(coorientatorOID != null && !coorientatorOID.equals("")) || executionDegree.getScheduling().getAllowSimultaneousCoorientationAndCompanion().booleanValue()) {
             infoFinalWorkProposal.setCompanionName(companionName);
             infoFinalWorkProposal.setCompanionMail(companionMail);
             if (companionPhone != null && !companionPhone.equals("")
@@ -711,7 +703,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
             infoFinalWorkProposal.setCompanyAdress(companyAdress);
             infoFinalWorkProposal.setCompanyName(companyName);
         }
-        infoFinalWorkProposal.setExecutionDegree(new InfoExecutionDegree(rootDomainObject.readExecutionDegreeByOID(Integer.valueOf(degree))));
+        infoFinalWorkProposal.setExecutionDegree(new InfoExecutionDegree(executionDegree));
 
         if (branchList != null && branchList.length > 0) {
             infoFinalWorkProposal.setBranches(new ArrayList());
@@ -751,9 +743,11 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         IUserView userView = SessionUtils.getUserView(request);
 
         DynaActionForm finalWorkForm = (DynaActionForm) form;
-        String executionDegreeOIDString = (String) finalWorkForm.get("executionDegreeOID");
-        request.setAttribute("executionDegreeOID", Integer.valueOf(executionDegreeOIDString));
-        System.out.println("executionDegreeOIDString" + executionDegreeOIDString);
+	final Integer executionDegreeOID = Integer.valueOf(finalWorkForm.getString("executionDegreeOID"));
+	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeOID);
+	final Scheduleing scheduleing = executionDegree.getScheduling();
+        request.setAttribute("executionDegreeOID", executionDegreeOID);
+        System.out.println("executionDegreeOIDString" + executionDegreeOID);
         String alteredField = (String) finalWorkForm.get("alteredField");
         String number = null;
 
@@ -793,13 +787,15 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
             if (alteredField.equals("coorientator")) {
                 finalWorkForm.set("coorientatorOID", person.getIdInternal().toString());
                 finalWorkForm.set("coResponsableTeacherName", person.getName());
-                finalWorkForm.set("companionName", "");
-                finalWorkForm.set("companionMail", "");
-                finalWorkForm.set("companionPhone", "");
-                finalWorkForm.set("companyAdress", "");
-                finalWorkForm.set("companyName", "");
-                finalWorkForm.set("alteredField", "");
                 request.setAttribute("coorientator", person);
+                if (!scheduleing.getAllowSimultaneousCoorientationAndCompanion().booleanValue()) {
+                    finalWorkForm.set("companionName", "");
+                    finalWorkForm.set("companionMail", "");
+                    finalWorkForm.set("companionPhone", "");
+                    finalWorkForm.set("companyAdress", "");
+                    finalWorkForm.set("companyName", "");
+                    finalWorkForm.set("alteredField", "");
+                }
             }
         }
 
@@ -852,11 +848,20 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         String companyAdress = (String) finalWorkForm.get("companyAdress");
         String companyName = (String) finalWorkForm.get("companyName");
 
+	final Integer executionDegreeOIDString = Integer.valueOf(finalWorkForm.getString("executionDegreeOID"));
+	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeOIDString);
+	final Scheduleing scheduleing = executionDegree.getScheduling();
+
         if (alteredField.equals("companion") && companionName.equals("") && companionMail.equals("")
                 && companionPhone.equals("") && companyAdress.equals("") && companyName.equals("")) {
+            finalWorkForm.set("alteredField", "");
+        }
+
+        if (alteredField.equals("companion") && companionName.equals("") && companionMail.equals("")
+                && companionPhone.equals("") && companyAdress.equals("") && companyName.equals("")
+                && !scheduleing.getAllowSimultaneousCoorientationAndCompanion().booleanValue()) {
             finalWorkForm.set("coorientatorOID", "");
             finalWorkForm.set("coResponsableTeacherName", "");
-            finalWorkForm.set("alteredField", "");
         } else {
             if (alteredField.equals("companion") || !companionName.equals("")
                     || !companionMail.equals("") || !companionPhone.equals("")
@@ -967,6 +972,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         String maximumNumberOfProposalCandidaciesPerGroupString = (String) finalDegreeWorkScheduleingForm
                 .get("maximumNumberOfProposalCandidaciesPerGroup");
         Boolean attributionByTeachers = (Boolean) finalDegreeWorkScheduleingForm.get("attributionByTeachers");
+        Boolean allowSimultaneousCoorientationAndCompanion = (Boolean) finalDegreeWorkScheduleingForm.get("allowSimultaneousCoorientationAndCompanion");
 
         Integer minimumNumberOfCompletedCourses = null;
         if (minimumNumberOfCompletedCoursesString != null
@@ -1011,7 +1017,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
             		maximumCurricularYearToCountCompletedCourses,
             		minimumCompletedCurricularYear,
                     minimumNumberOfStudents, maximumNumberOfStudents,
-                    maximumNumberOfProposalCandidaciesPerGroup, attributionByTeachers };
+                    maximumNumberOfProposalCandidaciesPerGroup, attributionByTeachers, allowSimultaneousCoorientationAndCompanion };
             ServiceUtils.executeService(userView, "DefineFinalDegreeWorkCandidacyRequirements", args);
         } catch (NotAuthorizedFilterException e) {
             ActionErrors actionErrors = new ActionErrors();

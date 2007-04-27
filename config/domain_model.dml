@@ -2859,6 +2859,7 @@ class net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing extends net.so
 	YearMonthDay startOfProposalPeriodDateYearMonthDay;
 	HourMinuteSecond startOfCandidacyPeriodTimeHourMinuteSecond;
 	Boolean attributionByTeachers;
+	Boolean allowSimultaneousCoorientationAndCompanion;
 }
 
 

@@ -22,7 +22,39 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.coorientatorOID" property="coorientatorOID"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.alteredField" property="alteredField"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanID" property="degreeCurricularPlanID"/>
-	
+
+	<%
+	    boolean showCoordinator = false; 
+	    boolean showCompanion = false;
+	%>
+	<logic:empty name="finalDegreeWorkProposal" property="companionName">
+		<logic:empty name="finalDegreeWorkProposal" property="companionMail">
+			<logic:empty name="finalDegreeWorkProposal" property="companionPhone">
+				<logic:empty name="finalDegreeWorkProposal" property="companyAdress">
+					<logic:empty name="finalDegreeWorkProposal" property="companyName">
+						<%
+						    showCoordinator = true;
+						%>
+					</logic:empty>
+				</logic:empty>
+			</logic:empty>
+		</logic:empty>
+	</logic:empty>
+	<logic:empty name="finalDegreeWorkProposal" property="coResponsableTeacherName">
+		<%
+		    showCompanion = true;
+		%>
+	</logic:empty>
+	<%
+		final net.sourceforge.fenixedu.domain.ExecutionDegree executionDegree = net.sourceforge.fenixedu.domain.RootDomainObject.getInstance().readExecutionDegreeByOID((Integer) request.getAttribute("executionDegreeOID"));
+		final net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing scheduleing = executionDegree.getScheduling();
+		if (scheduleing.getAllowSimultaneousCoorientationAndCompanion().booleanValue()) {
+			showCoordinator = true;
+			showCompanion = true;
+		}
+		request.setAttribute("showCoordinator", showCoordinator);
+		request.setAttribute("showCompanion", showCompanion);
+	%>
 
 	<b><bean:message key="label.teacher.finalWork.title"/>:</b>
 	<br/><html:text bundle="HTMLALT_RESOURCES" altKey="text.title" property="title" size="85"/>
@@ -62,11 +94,7 @@
 	</table>
 	<br/><br/>
 
-	<logic:empty name="finalDegreeWorkProposal" property="companionName">
-	<logic:empty name="finalDegreeWorkProposal" property="companionMail">
-	<logic:empty name="finalDegreeWorkProposal" property="companionPhone">
-	<logic:empty name="finalDegreeWorkProposal" property="companyAdress">
-	<logic:empty name="finalDegreeWorkProposal" property="companyName">
+	<logic:equal name="showCoordinator" value="true">
 	<b><bean:message key="label.teacher.finalWork.coResponsable"/>:</b>
 	<table width="100%">
 		<tr>
@@ -101,13 +129,9 @@
 		</tr>
 	</table>
 	<br/><br/>
-	</logic:empty>
-	</logic:empty>
-	</logic:empty>
-	</logic:empty>
-	</logic:empty>
+	</logic:equal>
 
-	<logic:empty name="finalDegreeWorkProposal" property="coResponsableTeacherName" >
+	<logic:equal name="showCompanion" value="true">
 	<b><bean:message key="label.teacher.finalWork.companion"/>:</b>
 	<table width="100%">
 		<tr>
@@ -162,7 +186,7 @@
 		</tr>
 	</table>
 	<br/><br/>
-	</logic:empty>
+	</logic:equal>
 				
 	<b><bean:message key="label.teacher.finalWork.credits"/>:</b>
 	<html:text bundle="HTMLALT_RESOURCES" altKey="text.responsibleCreditsPercentage" property="responsibleCreditsPercentage" size="3" maxlength="3"/>% /
