@@ -35,6 +35,7 @@
 	<parameter name="universityName" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="universityPrincipalName" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="institutionName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="finalAverageDescription" isForPrompting="false" class="java.lang.String"/>
 
 		<background>
 			<band height="0"  isSplitAllowed="true" >
@@ -283,7 +284,7 @@
 					<textElement textAlignment="Center" lineSpacing="Single">
 						<font fontName="Quadraat-Bold" pdfFontName="QUAD____.ttf" size="12" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{registration}.getFinalAverageDescription() + " Valores (" + $P{registration}.getFinalAverageQualified() + ")"]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{finalAverageDescription} + " Valores (" + $P{registration}.getFinalAverageQualified() + ")"]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement

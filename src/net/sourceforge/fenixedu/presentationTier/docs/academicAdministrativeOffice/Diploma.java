@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
 
 public class Diploma extends AdministrativeOfficeDocument {
@@ -35,11 +36,11 @@ public class Diploma extends AdministrativeOfficeDocument {
 	parameters.put("name", person.getName());
 	parameters.put("nameOfFather", person.getNameOfFather());
 	parameters.put("nameOfMother", person.getNameOfMother());
-	
 	parameters.put("birthLocale", person.getDistrictOfBirth());
+
 	parameters.put("conclusionDate", registration.getConclusionDate().toString("dd 'de' MMMM 'de' yyyy", LanguageUtils.getLocale()));
 	parameters.put("institutionName", institutionUnit.getName());
-
+	parameters.put("finalAverageDescription", StringUtils.capitalize(registration.getFinalAverageDescription()));
 	parameters.put("employeeLocation", AccessControl.getPerson().getEmployee().getCurrentCampus().getLocation());
 	parameters.put("day", new YearMonthDay().toString("dd 'de' MMMM 'de' yyyy", LanguageUtils.getLocale()));
     }
