@@ -100,18 +100,18 @@ public class Dismissal extends Dismissal_Base {
     
     @Override
     public Double getEctsCredits() {
-        if(getCurricularCourse() == null) {
-            return getCredits().getGivenCredits();
-        } 
+	if (!hasCurricularCourse()) {
+	    return getCredits().getGivenCredits();
+	}
         return getCurricularCourse().isOptionalCurricularCourse() ? getEnrolmentsEcts() : getCurricularCourse().getEctsCredits();
     }
     
     private Double getEnrolmentsEcts() {
-	Double res = 0d;
-	for (IEnrolment enrolment : getCredits().getIEnrolments()) {
-	    res = res + enrolment.getEctsCredits();
+	Double result = 0d;
+	for (final IEnrolment enrolment : getCredits().getIEnrolments()) {
+	    result = result + enrolment.getEctsCredits();
 	}
-	return res;
+	return result;
     }
     
     @Override
