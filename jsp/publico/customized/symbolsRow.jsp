@@ -28,11 +28,13 @@
 
 
 	<logic:notPresent name="site" property="logo">
-		<div style="position: absolute; left: 60px; top: 45px;">
-			<h1 class="unitname">
-				<span><fr:view name="site" property="unit.acronym"/></span>
-				<br/><span class=""><fr:view name="site" property="unit.name"/></span>
+		<div class="unitname">
+			<h1>
+				<fr:view name="site" property="unit.acronym"/>
 			</h1>
+			<p>
+				<fr:view name="site" property="unit.name"/>
+			</p>
 		</div>
 	</logic:notPresent>
 	
@@ -62,7 +64,7 @@
 		<input alt="input.domains" type="hidden" name="domains" value="<%= searchDomain %>" />
 		<input alt="input.sitesearch" type="hidden" name="sitesearch" value="<%= searchSite %>" />
 		<label for="textfield">
-			<bean:message bundle="GLOBAL_RESOURCES" key="search.title"/>:
+			<bean:message bundle="GLOBAL_RESOURCES" key="search.ist.title"/>:
 			<input alt="input.q" type="text" id="textfield" name="q" size="17"/>
 		</label>
 		<input alt="input.sa" type="submit" id="submit" name="sa" value="Google" />

@@ -1442,5 +1442,22 @@ width: 100px;
 padding: 1.85em 0.27em !important;
 }
 
+div.unitname {
+position: absolute;
+left: 93px;
+top: 38px;
+}
+div.unitname h1 {
+display: inline;
+padding: 1em 0;
+color: #45556a;
+font-family: "Trebuchet MS", "Bitstream Vera Sans", Tahoma, Verdana, Arial, Helvetica, sans-serif;
+font-size: 21px;
+font-weight: bold;
+}
+div.unitname p {
+color: #7a8899;
+margin-top: 5px;
+}
 
 

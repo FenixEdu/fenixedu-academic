@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.servlet.ServletException;
 
+import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyType;
@@ -94,8 +95,13 @@ public class ResearchUnitProcessor extends PathProcessor {
 		}
 
 		public String getSiteBasePath() {
-			return String.format(this.contextURI, getResearchUnit().getIdInternal(), "%s");
+			
+			return String.format(this.contextURI, getSite().getIdInternal(), "%s");
 		}
 
 	}
+	
+	public static String getResearchUnitPath(ResearchUnit unit) {
+        return "/" + ResearchProcessor.PREFIX2 + "/" + unit.getAcronym(); 
+    }
 }

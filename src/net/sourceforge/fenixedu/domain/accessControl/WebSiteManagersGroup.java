@@ -3,11 +3,11 @@ package net.sourceforge.fenixedu.domain.accessControl;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.ResearchUnitSite;
 import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.IdOperator;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 public class WebSiteManagersGroup extends DomainBackedGroup<UnitSite> {
 
@@ -35,8 +35,8 @@ public class WebSiteManagersGroup extends DomainBackedGroup<UnitSite> {
 	public static class Builder implements GroupBuilder {
 
 		public Group build(Object[] arguments) {
-			Unit unit = (Unit) arguments[0];
-			return new WebSiteManagersGroup(unit.getSite());
+			ResearchUnitSite site = (ResearchUnitSite) arguments[0];
+			return new WebSiteManagersGroup(site);
 		}
 
 		public int getMaxArguments() {
