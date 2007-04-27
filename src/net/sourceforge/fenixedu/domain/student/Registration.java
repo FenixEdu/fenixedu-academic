@@ -1579,6 +1579,14 @@ public class Registration extends Registration_Base {
 	}
 	return null;
     }
+    
+    public Set<DegreeCurricularPlan> getDegreeCurricularPlans() {
+	Set<DegreeCurricularPlan> result = new HashSet<DegreeCurricularPlan>();
+	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
+	    result.add(studentCurricularPlan.getDegreeCurricularPlan());
+	}
+	return result;
+    }
 
     @Override
     public YearMonthDay getStartDate() {
