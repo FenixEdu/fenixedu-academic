@@ -26,3 +26,5 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+run "Modifying accessibility of research unit site items" changes-20070427103445.sql
