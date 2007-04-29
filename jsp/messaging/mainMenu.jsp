@@ -14,7 +14,14 @@
 		<html:link page="/announcements/announcementsStartPageHandler.do?method=start">
 			<bean:message bundle="MESSAGING_RESOURCES" key="messaging.menu.favourites.link"/>
 		</html:link>			
-	</li>			
+	</li>
+<!--
+	<li>
+		<html:link page="/announcements/boards.do?method=search">
+			<bean:message bundle="MESSAGING_RESOURCES" key="messaging.menu.boards.link"/>
+		</html:link>			
+	</li>
+-->
 	<li>
 		<html:link page="/announcements/announcementsStartPageHandler.do?method=handleBoardListing">
 			<bean:message bundle="MESSAGING_RESOURCES" key="messaging.menu.boards.link"/>

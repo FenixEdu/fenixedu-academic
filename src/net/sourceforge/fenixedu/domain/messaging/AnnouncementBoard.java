@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.messaging;
 
+import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
@@ -10,6 +11,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.commons.collections.Predicate;
 import org.joda.time.DateTime;
@@ -60,7 +62,7 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
     
     public static final Comparator<AnnouncementBoard> BY_NAME = new Comparator<AnnouncementBoard>() {
 	public int compare(AnnouncementBoard o1, AnnouncementBoard o2) {
-	    int result = o1.getName().compareTo(o2.getName());
+	    int result = Collator.getInstance().compare(o1.getName(), o2.getName());
 	    return (result == 0) ? o1.getIdInternal().compareTo(o2.getIdInternal()) : result;
 	}
     };
@@ -221,5 +223,25 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
     abstract public String getFullName();
 
     abstract public String getQualifiedName();
+
+    protected boolean isGroupMember(final Group group) {
+	return group == null || group.isMember(AccessControl.getPerson());
+    }
+
+    public boolean isReader() {
+	return isGroupMember(getReaders());
+    }
+
+    public boolean isWriter() {
+	return isGroupMember(getReaders());
+    }
+
+    public boolean isManager() {
+	return isGroupMember(getManagers());
+    }
+
+    public boolean isBookmarkOwner() {
+	return AccessControl.getPerson().getBookmarkedBoardsSet().contains(this);
+    }
 
 }

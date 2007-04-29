@@ -37,6 +37,8 @@
     <!ENTITY scientificCouncil SYSTEM "scientificCouncil-schemas.xml">
     <!ENTITY protocol SYSTEM "protocol-schemas.xml">
     <!ENTITY partyContacts SYSTEM "partyContacts-schemas.xml">
+    <!ENTITY boardSchemas SYSTEM "board-schemas.xml">
+    
 ]>
 
 <schemas>
@@ -702,4 +704,5 @@
     &scientificCouncil;
     &protocol;
     &partyContacts;
+    &boardSchemas;
 </schemas>

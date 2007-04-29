@@ -1,0 +1,50 @@
+<schema name="net.sourceforge.fenixedu.domain.messaging.BoardSearchBean.searchExecutionCourseBoards"
+		type="net.sourceforge.fenixedu.domain.messaging.BoardSearchBean" bundle="MESSAGING_RESOURCES">
+	<slot name="searchExecutionCourseBoards" layout="radio-postback" key="label.search" >
+		<property name="trueLabel" value="label.searchExecutionCourseBoards.true"/>
+		<property name="falseLabel" value="label.searchExecutionCourseBoards.false"/>
+		<property name="bundle" value="MESSAGING_RESOURCES"/>
+		<property name="classes" value="dinline liinline nobullet"/>
+		<property name="destination" value="search"/>
+	</slot>
+</schema>
+<schema name="net.sourceforge.fenixedu.domain.messaging.BoardSearchBean.executionCourse"
+		type="net.sourceforge.fenixedu.domain.messaging.BoardSearchBean" bundle="MESSAGING_RESOURCES">
+	<slot name="searchExecutionCourseBoards" layout="radio-postback" key="label.search" >
+		<property name="trueLabel" value="label.searchExecutionCourseBoards.true"/>
+		<property name="falseLabel" value="label.searchExecutionCourseBoards.false"/>
+		<property name="bundle" value="MESSAGING_RESOURCES"/>
+		<property name="classes" value="dinline liinline nobullet"/>
+		<property name="destination" value="search"/>
+	</slot>
+	<slot name="executionPeriod" layout="menu-select-postback" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" key="label.executionPeriod">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionPeriodsReverseOrderProvider"/>
+		<property name="format" value="${semester}º Semestre - ${executionYear.year}" />
+		<property name="destination" value="search"/>
+	</slot>
+	<slot name="executionDegree" layout="menu-select-postback" key="label.executionDegree">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionDegreeForExecutionPeriodProvider"/>
+		<property name="format" value="${degree.degreeType.localizedName} em ${degree.name} - ${degreeCurricularPlan.name}" />
+		<property name="destination" value="search"/>
+	</slot>
+</schema>
+<schema name="net.sourceforge.fenixedu.domain.messaging.BoardSearchBean.unit"
+		type="net.sourceforge.fenixedu.domain.messaging.BoardSearchBean" bundle="MESSAGING_RESOURCES">
+	<slot name="searchExecutionCourseBoards" layout="radio-postback" key="label.search" >
+		<property name="trueLabel" value="label.searchExecutionCourseBoards.true"/>
+		<property name="falseLabel" value="label.searchExecutionCourseBoards.false"/>
+		<property name="bundle" value="MESSAGING_RESOURCES"/>
+		<property name="classes" value="dinline liinline nobullet"/>
+		<property name="destination" value="search"/>
+	</slot>
+	<slot name="unitNameObject" key="label.organization" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="50"/>
+		<property name="rawSlotName" value="unitName"/>
+		<property name="labelField" value="unit.name"/>
+		<property name="indicatorShown" value="true"/>		
+		<property name="serviceName" value="SearchInternalUnits"/>
+		<property name="serviceArgs" value="slot=name,size=20"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
+		<property name="minChars" value="3"/>
+	</slot>
+</schema>

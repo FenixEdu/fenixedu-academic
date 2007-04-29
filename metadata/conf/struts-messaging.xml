@@ -46,6 +46,13 @@
         <action path="/index" type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction">
             <forward name="Success" path="/announcements/announcementsStartPageHandler.do?method=news"/>
         </action>        
+
+	 <action path="/announcements/boards"
+              type="net.sourceforge.fenixedu.presentationTier.Action.messaging.BoardsDA"
+              parameter="method"
+              >
+		  <forward name="search" path="search-boards"/>
+      </action>               
         
 	 <action path="/announcements/announcementsStartPageHandler"
               type="net.sourceforge.fenixedu.presentationTier.Action.messaging.AnnouncementsStartPageHandler"

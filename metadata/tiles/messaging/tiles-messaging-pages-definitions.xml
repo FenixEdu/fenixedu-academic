@@ -5,10 +5,14 @@
     <definition name="index" extends="definition.messaging.masterPage" >
         <put name="body" value="/messaging/welcomeScreen.jsp"/>
     </definition>
-    
+
    	<definition name="df.page.structure" extends="definition.messaging.masterPage" >
 		<put name="body"  value="/common/blank.jsp"/>
 	</definition>   
+
+	<definition name="search-boards" extends="definition.messaging.masterPage" >
+		<put name="body" value="/messaging/announcements/searchBoards.jsp" />
+	</definition>		
 
 	<definition name="add-announcement" extends="definition.messaging.masterPage" >
 		<put name="body" value="/messaging/announcements/addAnnouncement.jsp" />
