@@ -13,25 +13,38 @@ import org.joda.time.DateTime;
 
 public class CreateUnavailablePeriod extends Service {
 
-    public void run(Vigilant vigilant, DateTime begin, DateTime end, String justification)
-            throws ExcepcaoPersistencia {
+	public void run(Vigilant vigilant, DateTime begin, DateTime end, String justification)
+			throws ExcepcaoPersistencia {
 
-        new UnavailablePeriod(begin, end, justification,vigilant);
-    }
-    
-    public void run(Vigilant vigilant, DateTime begin, DateTime end, String justification, VigilantGroup group) throws ExcepcaoPersistencia {
-	run(vigilant, begin, end, justification);
-	
-	ArrayList<String> replyTos = new ArrayList<String>();
-	replyTos.add(group.getContactEmail());
-	String[] contactArray = { group.getContactEmail() };
-	
-	String beginDate = begin.getDayOfMonth() + "/" + begin.getMonthOfYear() + "/" + begin.getYear() + " - " + String.format("%02d", begin.getHourOfDay()) + ":" + String.format("%02d", begin.getMinuteOfHour());
-	String endDate = end.getDayOfMonth() + "/" + end.getMonthOfYear() + "/" + end.getYear() + " - " + end.getHourOfDay() + ":" + end.getMinuteOfHour();
-	
-	String message = "A seguinte disponilidade foi adicionada:\n\n" + vigilant.getPerson().getName() + " " + beginDate + " a " + endDate + "\nJustificação: " + justification;
+		new UnavailablePeriod(begin, end, justification, vigilant);
+		for(VigilantGroup group : vigilant.getVigilantGroups()) {
+			sendEmail(vigilant, begin, end, justification, group);
+		}
+	}
 
-	new Email(group.getName(),group.getContactEmail(),contactArray,replyTos,null,null,"Indisponibilidade",message);
-    }
+	public void run(Vigilant vigilant, DateTime begin, DateTime end, String justification,
+			VigilantGroup group) throws ExcepcaoPersistencia {
+		run(vigilant, begin, end, justification);
+		sendEmail(vigilant, begin, end, justification, group);
+	}
 
+	private void sendEmail(Vigilant vigilant, DateTime begin, DateTime end, String justification,
+			VigilantGroup group) {
+		ArrayList<String> replyTos = new ArrayList<String>();
+		replyTos.add(group.getContactEmail());
+		String[] contactArray = { group.getContactEmail() };
+
+		String beginDate = begin.getDayOfMonth() + "/" + begin.getMonthOfYear() + "/" + begin.getYear()
+				+ " - " + String.format("%02d", begin.getHourOfDay()) + ":"
+				+ String.format("%02d", begin.getMinuteOfHour()) + "h";
+		String endDate = end.getDayOfMonth() + "/" + end.getMonthOfYear() + "/" + end.getYear() + " - "
+				+ String.format("%02d", end.getHourOfDay()) + ":"
+				+ String.format("%02d", end.getMinuteOfHour()) + "h";
+
+		String message = "A seguinte disponilidade foi adicionada:\n\n" + vigilant.getPerson().getName()
+				+ " " + beginDate + " a " + endDate + "\nJustificação: " + justification;
+
+		new Email(group.getName(), group.getContactEmail(), contactArray, replyTos, null, null,
+				"Indisponibilidade", message);
+	}
 }
