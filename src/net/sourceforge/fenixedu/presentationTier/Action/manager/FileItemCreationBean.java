@@ -106,6 +106,7 @@ public class FileItemCreationBean implements Serializable {
         TABLE ("table"),
         EXAM ("exam"),
         TEST ("test"),
+        INFORMATIONS ("informations"),
         MARKSHEET ("marksheet"),
         PROJECT_SUBMISSION("projectSubmission"),
         LABORATORY_GUIDE("laboratoryGuide"),
