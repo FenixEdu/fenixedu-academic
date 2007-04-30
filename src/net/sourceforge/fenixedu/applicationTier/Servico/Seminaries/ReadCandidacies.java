@@ -137,33 +137,33 @@ public class ReadCandidacies extends Service {
 	for (SeminaryCandidacy candidacy : filteredCandidacies) {
 	    Registration registration = candidacy.getStudent();
 	    StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
-	    List enrollments = studentCurricularPlan.getEnrolments();
+	    if (studentCurricularPlan != null) {
+		List enrollments = studentCurricularPlan.getEnrolments();
 
-	    InfoCandidacyDetails candidacyDTO = new InfoCandidacyDetails();
-	    candidacyDTO.setCurricularCourse(InfoCurricularCourse.newInfoFromDomain(candidacy
-		    .getCurricularCourse()));
-	    candidacyDTO.setIdInternal(candidacy.getIdInternal());
-	    candidacyDTO.setInfoClassification(getInfoClassification(enrollments));
-	    candidacyDTO.setModality(InfoModality.newInfoFromDomain(candidacy.getModality()));
-	    candidacyDTO.setMotivation(candidacy.getMotivation());
-	    candidacyDTO.setSeminary(InfoSeminaryWithEquivalencies.newInfoFromDomain(candidacy
-		    .getSeminary()));
-	    candidacyDTO.setStudent(InfoStudent.newInfoFromDomain(registration));
-	    candidacyDTO.setTheme(InfoTheme.newInfoFromDomain(candidacy.getTheme()));
-	    List<InfoCaseStudyChoice> infos = new ArrayList<InfoCaseStudyChoice>();
-	    for (Iterator iter = candidacy.getCaseStudyChoices().iterator(); iter.hasNext();) {
-		CaseStudyChoice element = (CaseStudyChoice) iter.next();
-		infos.add(InfoCaseStudyChoice.newInfoFromDomain(element));
-
+		InfoCandidacyDetails candidacyDTO = new InfoCandidacyDetails();
+		candidacyDTO.setCurricularCourse(InfoCurricularCourse.newInfoFromDomain(candidacy
+			.getCurricularCourse()));
+		candidacyDTO.setIdInternal(candidacy.getIdInternal());
+		candidacyDTO.setInfoClassification(getInfoClassification(enrollments));
+		candidacyDTO.setModality(InfoModality.newInfoFromDomain(candidacy.getModality()));
+		candidacyDTO.setMotivation(candidacy.getMotivation());
+		candidacyDTO.setSeminary(InfoSeminaryWithEquivalencies.newInfoFromDomain(candidacy
+			.getSeminary()));
+		candidacyDTO.setStudent(InfoStudent.newInfoFromDomain(registration));
+		candidacyDTO.setTheme(InfoTheme.newInfoFromDomain(candidacy.getTheme()));
+		List<InfoCaseStudyChoice> infos = new ArrayList<InfoCaseStudyChoice>();
+		for (Iterator iter = candidacy.getCaseStudyChoices().iterator(); iter.hasNext();) {
+		    CaseStudyChoice element = (CaseStudyChoice) iter.next();
+		    infos.add(InfoCaseStudyChoice.newInfoFromDomain(element));
+		}
+		candidacyDTO.setCases(infos);
+		if (candidacy.getApproved() != null) {
+		    candidacyDTO.setApproved(candidacy.getApproved());
+		} else {
+		    candidacyDTO.setApproved(Boolean.FALSE);
+		}
+		infoCandidacies.add(candidacyDTO);
 	    }
-	    candidacyDTO.setCases(infos);
-	    if (candidacy.getApproved() != null) {
-		candidacyDTO.setApproved(candidacy.getApproved());
-	    } else {
-		candidacyDTO.setApproved(Boolean.FALSE);
-	    }
-	    infoCandidacies.add(candidacyDTO);
-
 	}
 
 	return infoCandidacies;
