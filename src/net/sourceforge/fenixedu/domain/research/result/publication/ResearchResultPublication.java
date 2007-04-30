@@ -59,14 +59,14 @@ public abstract class ResearchResultPublication extends ResearchResultPublicatio
 	removeAssociations();
 	super.delete();
     }
-
+       
     public List<Person> getAuthors() {
-	ArrayList<Person> authors = new ArrayList<Person>();
-	for (ResultParticipation participation : this.getOrderedResultParticipations()) {
-	    if (participation.getRole().equals(ResultParticipationRole.Author))
-		authors.add(participation.getPerson());
-	}
-	return authors;
+    	ArrayList<Person> authors = new ArrayList<Person>();
+    	for (ResultParticipation participation : this.getOrderedResultParticipations()) {
+    		if (participation.getRole().equals(ResultParticipationRole.Author))
+    			authors.add(participation.getPerson());
+    	}
+    	return authors;
     }
 
     public List<Person> getEditors() {

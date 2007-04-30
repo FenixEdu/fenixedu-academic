@@ -2132,7 +2132,12 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Co
 	type="net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication">
 	<slot name="title"/>
 	<slot name="localizedType" key="researcher.ResultPublication.type"/>
-	<slot name="orderedResultParticipations" layout="flowLayout" key="label.resultParticipations">
+	<slot name="orderedAuthorsResultParticipations" layout="flowLayout" key="label.authorsParticipations">
+		<property name="eachLayout" value="values"/>
+		<property name="eachSchema" value="publication.resultParticipation"/>
+		<property name="htmlSeparator" value=", "/>
+	</slot>
+	<slot name="orderedEditorsResultParticipations" layout="flowLayout" key="label.editorsParticipations">
 		<property name="eachLayout" value="values"/>
 		<property name="eachSchema" value="publication.resultParticipation"/>
 		<property name="htmlSeparator" value=", "/>
@@ -2153,7 +2158,7 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Co
  			<property name="destination" value="view.publication"/>
 			<property name="classes" value="bold"/>
 	</slot>
-	<slot name="orderedResultParticipations" layout="flowLayout" key="label.resultParticipations">
+	<slot name="orderedAuthorsResultParticipations" layout="flowLayout" key="label.resultParticipations">
 		<property name="eachLayout" value="values"/>
 		<property name="eachSchema" value="publication.resultParticipation"/>
 		<property name="htmlSeparator" value=", "/>
