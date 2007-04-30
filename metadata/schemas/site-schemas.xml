@@ -25,9 +25,14 @@
 </schema>
 
 <schema name="websiteManagement.site.choose" type="net.sourceforge.fenixedu.domain.UnitSite">
-    <slot name="unit.nameWithAcronym" key="label.site.name"/>
+    <slot name="unit.nameWithAcronym" layout="link" key="label.site.name">
+		<property name="useParent" value="true"/>
+		<property name="linkFormat" value="/manage${class.simpleName}.do?method=prepare&amp;oid=${idInternal}"/>
+		<property name="moduleRelative" value="true"/>
+		<property name="contextRelative" value="true"/>
+    </slot>
 </schema>
-
+	
 <schema name="custom.unitSite.visualization" type="net.sourceforge.fenixedu.domain.UnitSite" bundle="WEBSITEMANAGER_RESOURCES">
     <slot name="showBanner" layout="radio" key="label.site.showBanner">
         <property name="classes" value="liinline nobullet"/>

@@ -7,30 +7,33 @@
 <bean:define id="siteID" name="site" property="idInternal"/>
 
 <ul>
-	<li class="navheader"><bean:message bundle="WEBSITEMANAGER_RESOURCES" key="title.site.manage"/></li>
-	<li>
-		<html:link page="<%= "/manageResearchUnitSite.do?method=prepareAddManager&amp;oid=" + siteID%>">
-			<bean:message bundle="WEBSITEMANAGER_RESOURCES" key="link.site.addManager"/>
-		</html:link>
-	</li>
 	<li>
 		<html:link target="blank" module="/publico" page="<%= "/researchSite/viewResearchUnitSite.do?method=frontPage&amp;siteID=" + siteID%>">
 			<bean:message bundle="WEBSITEMANAGER_RESOURCES" key="link.site.view"/>
 		</html:link>
 	</li>
+	<li class="navheader"><bean:message bundle="WEBSITEMANAGER_RESOURCES" key="title.site.configuration"/></li>
 	<li>
-        <html:link page="<%= "/manageResearchUnitSite.do?method=introduction&amp;oid=" + siteID %>">
-            <bean:message key="link.site.introduction" bundle="WEBSITEMANAGER_RESOURCES"/>
-        </html:link>
-    </li>
+		<html:link page="<%= "/manageResearchUnitSite.do?method=prepareAddManager&amp;oid=" + siteID%>">
+			<bean:message bundle="WEBSITEMANAGER_RESOURCES" key="link.site.addManager"/>
+		</html:link>
+	</li>
 	 <li>
         <html:link page="<%= "/manageResearchUnitSite.do?method=manageConfiguration&amp;oid=" + siteID %>">
             <bean:message key="link.site.configuration" bundle="WEBSITEMANAGER_RESOURCES"/>
         </html:link>
     </li>
+    
+    
+	<li class="navheader"><bean:message bundle="WEBSITEMANAGER_RESOURCES" key="title.site.manageContents"/></li>
     <li>
         <html:link page="<%= "/manageResearchUnitSite.do?method=chooseLogo&amp;oid=" + siteID %>">
             <bean:message key="link.site.logo" bundle="WEBSITEMANAGER_RESOURCES"/>
+        </html:link>
+    </li>
+	<li>
+        <html:link page="<%= "/manageResearchUnitSite.do?method=introduction&amp;oid=" + siteID %>">
+            <bean:message key="link.site.introduction" bundle="WEBSITEMANAGER_RESOURCES"/>
         </html:link>
     </li>
     <li>

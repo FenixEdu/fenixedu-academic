@@ -7,28 +7,32 @@
 <bean:define id="oid" name="site" property="idInternal"/>
 
 <ul>
-    <li class="navheader">
-        <bean:message key="title.site.manage" bundle="WEBSITEMANAGER_RESOURCES"/>
-    </li>
     <li>
         <bean:define id="unitId" name="site" property="unit.idInternal"/>
         <html:link page="<%= "/department/departmentSite.do?method=presentation&amp;selectedDepartmentUnitID=" + unitId %>" module="/publico" target="_blank">
             <bean:message key="link.site.view" bundle="WEBSITEMANAGER_RESOURCES"/>
         </html:link>
     </li>
-    <li>
-        <html:link page="<%= "/manageDepartmentSite.do?method=introduction&amp;oid=" + oid %>">
-            <bean:message key="link.site.introduction" bundle="WEBSITEMANAGER_RESOURCES"/>
-        </html:link>
+    <li class="navheader">
+        <bean:message key="title.site.configuration" bundle="WEBSITEMANAGER_RESOURCES"/>
     </li>
     <li>
         <html:link page="<%= "/manageDepartmentSite.do?method=manageConfiguration&amp;oid=" + oid %>">
             <bean:message key="link.site.configuration" bundle="WEBSITEMANAGER_RESOURCES"/>
         </html:link>
     </li>
+    
+    
+	<li class="navheader"><bean:message bundle="WEBSITEMANAGER_RESOURCES" key="title.site.manageContents"/></li>
     <li>
         <html:link page="<%= "/manageDepartmentSite.do?method=chooseLogo&amp;oid=" + oid %>">
             <bean:message key="link.site.logo" bundle="WEBSITEMANAGER_RESOURCES"/>
+        </html:link>
+    </li>
+
+    <li>
+        <html:link page="<%= "/manageDepartmentSite.do?method=introduction&amp;oid=" + oid %>">
+            <bean:message key="link.site.introduction" bundle="WEBSITEMANAGER_RESOURCES"/>
         </html:link>
     </li>
     <li>

@@ -14,9 +14,6 @@
 
 <fr:view name="sites" schema="websiteManagement.site.choose">
     <fr:layout name="tabular">
-        <fr:property name="classes" value="tstyle1"/>
-        
-        <fr:property name="linkFormat(delete)" value="/manage${class.simpleName}.do?method=prepare&amp;oid=${idInternal}"/>
-        <fr:property name="key(delete)" value="link.websiteManagement.site.manage"/>
+        <fr:property name="classes" value="tstyle1 thlight"/>
     </fr:layout>
 </fr:view>

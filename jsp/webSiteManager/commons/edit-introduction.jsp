@@ -10,9 +10,8 @@
 <bean:define id="contextParamValue" name="siteContextParamValue"/>
 <bean:define id="context" value="<%= contextParam + "=" + contextParamValue %>"/>
 
-<h2>
-    <bean:message key="title.site.information" bundle="WEBSITEMANAGER_RESOURCES"/>
-</h2>
+<em><bean:message key="label.websiteManagement" bundle="MANAGER_RESOURCES"/></em>
+<h2><bean:message key="title.site.information" bundle="WEBSITEMANAGER_RESOURCES"/></h2>
 
 <div class="infoop2 mbottom15">
     <p class="mvert0">

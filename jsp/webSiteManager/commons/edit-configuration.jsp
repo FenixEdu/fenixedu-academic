@@ -10,9 +10,8 @@
 <bean:define id="contextParamValue" name="siteContextParamValue"/>
 <bean:define id="context" value="<%= contextParam + "=" + contextParamValue %>"/>
 
-<h2>
-    <bean:message key="title.site.configuration" bundle="WEBSITEMANAGER_RESOURCES"/>
-</h2>
+<em><bean:message key="label.websiteManagement" bundle="MANAGER_RESOURCES"/></em>
+<h2><bean:message key="title.site.configurationOptions" bundle="WEBSITEMANAGER_RESOURCES"/></h2>
 
 <div class="infoop2 mbottom15">
     <p class="mvert0">
@@ -21,10 +20,10 @@
 </div>
 
 
-<div class="mtop15 mbottom05">
-    <strong>Opções de Internacionalização:</strong>
-</div>
 
+<div class="mtop15 mbottom05">
+    <strong>Opções de internacionalização:</strong>
+</div>
 <table class="tstyle5 thlight thright mtop05">
 	<tr>
 		<th>Mostrar bandeiras:</th>
@@ -34,7 +33,7 @@
 
 
 
-<p>
+<p class="mbottom05">
     <strong><bean:message key="title.site.configuration.visualization" bundle="WEBSITEMANAGER_RESOURCES"/>:</strong>
 </p>
 
@@ -49,7 +48,7 @@
 <fr:form action="<%= String.format("%s?method=updateConfiguration&amp;%s", actionName, context) %>">
     <fr:edit id="visualization" name="site" schema="custom.unitSite.visualization">
         <fr:layout name="tabular">
-            <fr:property name="classes" value="tstyle5 thlight thright"/>
+            <fr:property name="classes" value="tstyle5 thlight thright mtop05"/>
             <fr:property name="columnClasses" value=",,tdclear"/>
         </fr:layout>
     </fr:edit>
@@ -60,9 +59,9 @@
 </fr:form>
 
 
-<div class="mtop15 mbottom1">
+<p class="mtop2 mbottom05">
     <strong><bean:message key="title.site.configuration.layout" bundle="WEBSITEMANAGER_RESOURCES"/>:</strong>
-</div>
+</p>
 
 <bean:define id="imageBase" value="<%= request.getContextPath() + "/images/site/layouts/" %>"/>
 

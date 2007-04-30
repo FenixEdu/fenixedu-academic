@@ -8,15 +8,14 @@
     <bean:message key="title.departmentSite.site"/>
 </h2>
 
-<strong>
-    <bean:message key="title.departmentSite.site.chooseManagers"/>
-</strong>
 
 <div class="infoop2 mbottom15">
     <p class="mvert0">
         <bean:message key="label.departmentSite.info.chooseManagers"/>
     </p>
 </div>
+
+
 
 <logic:messagesPresent message="true" property="error">
     <html:messages id="message" message="true" property="error">
@@ -25,14 +24,20 @@
 </logic:messagesPresent>
 
 <logic:empty name="managers">
-    <em><bean:message key="message.departmentSite.managers.empty"/></em>
+	<p>
+	    <em><bean:message key="message.departmentSite.managers.empty"/></em>
+    </p>
 </logic:empty>
+
+
+<p class="mbottom05">
+    <bean:message key="title.departmentSite.site.chooseManagers"/>:
+</p>
 
 <logic:notEmpty name="managers">
     <fr:view name="managers" schema="departmentSite.manager">
         <fr:layout name="tabular">
-            <fr:property name="classes" value="tstyle1"/>
-        
+            <fr:property name="classes" value="tstyle1 mtop05"/>
             <fr:property name="link(delete)" value="<%= String.format("/departmentSite.do?method=removeManager") %>"/>
             <fr:property name="param(delete)" value="idInternal/managerID"/>
             <fr:property name="key(delete)" value="link.departmentSite.managers.remove"/>
@@ -41,9 +46,12 @@
 </logic:notEmpty>
 
 <div class="mtop2">
-    <strong><bean:message key="title.departmentSite.managers.add"/></strong>
+	<p class="mbottom05">
+	    <strong><bean:message key="title.departmentSite.managers.add"/></strong>
+    </p>
     
-    <p>
+    
+    <p class="mvert05">
         <em><bean:message key="title.departmentSite.managers.add.message"/></em>
     </p>
 

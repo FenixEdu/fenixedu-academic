@@ -10,12 +10,11 @@
 <bean:define id="contextParamValue" name="siteContextParamValue"/>
 <bean:define id="context" value="<%= contextParam + "=" + contextParamValue %>"/>
 
-<h2>
-    <bean:message key="title.site.footerNavigation" bundle="WEBSITEMANAGER_RESOURCES"/>
-</h2>
+<em><bean:message key="label.websiteManagement" bundle="MANAGER_RESOURCES"/></em>
+<h2><bean:message key="title.site.footerNavigation" bundle="WEBSITEMANAGER_RESOURCES"/></h2>
 
 <div class="infoop2">
-    <p class="mvert0">
+    <p>
         <bean:message key="label.site.footerNavigation.message" bundle="WEBSITEMANAGER_RESOURCES"/>
     </p>
 </div>
@@ -45,18 +44,18 @@
             <logic:notPresent name="<%= "editLink" + linkId %>">
                 <fr:view name="link" schema="site.customLink.view">
                     <fr:layout name="tabular">
-                        <fr:property name="classes" value="tstyle1 thlight thright mtop2 mbottom05"/>
+                        <fr:property name="classes" value="tstyle1 thlight thright mbottom05"/>
                     </fr:layout>
                 </fr:view>
                 
-                <div>
+                <p class="mtop05 mbottom15">
                     <html:link page="<%= String.format("%s?method=editFooterLink&amp;linkID=%s&amp;%s#link%s", actionName, linkId, context, linkId) %>">
                         <bean:message key="link.edit"/>
                     </html:link>,
                     <html:link page="<%= String.format("%s?method=removeFooterLink&amp;linkID=%s&amp;%s", actionName, linkId, context) %>">
                         <bean:message key="link.remove"/>
                     </html:link>
-                </div>
+                </p>
             </logic:notPresent>
             
             <logic:present name="<%= "editLink" + linkId %>">
@@ -67,11 +66,11 @@
     </logic:iterate>
 </logic:notEmpty>
 
-<div class="mtop15">
+<p class="mtop2 mbottom05">
     <strong>
         <bean:message key="title.site.link.add" bundle="WEBSITEMANAGER_RESOURCES"/>
     </strong>
-</div>
+</p>
 
 <fr:create id="createLink" type="net.sourceforge.fenixedu.domain.UnitSiteLink" schema="site.customLink.edit" layout="tabular-style5"
            action="<%= String.format("%s?method=createFooterLink&amp;%s", actionName, context) %>">

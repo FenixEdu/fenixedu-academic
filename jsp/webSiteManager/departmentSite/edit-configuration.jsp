@@ -6,12 +6,12 @@
 
 <jsp:include page="../commons/edit-configuration.jsp"/>
 
-<div class="mtop15">
+<p class="mtop2 mbottom05">
     <strong><bean:message key="title.site.configuration.sections" bundle="WEBSITEMANAGER_RESOURCES"/>:</strong>
-</div>
+</p>
 
 <logic:present name="optionalSectionsChanged">
-    <p>
+    <p class="mvert1">
         <span class="success0">
             <bean:message key="message.site.configuration.visualization.changed" bundle="WEBSITEMANAGER_RESOURCES"/>
         </span>
@@ -23,7 +23,7 @@
 <fr:form action="<%= "/manageDepartmentSite.do?method=changeOptionalSections&amp;oid=" + oid %>">
     <fr:edit id="optionalSections" name="site" schema="departmentSite.optional.sections">
         <fr:layout name="tabular">
-            <fr:property name="classes" value="tstyle5 thlight thright"/>
+            <fr:property name="classes" value="tstyle5 thlight thright mtop05"/>
             <fr:property name="columnClasses" value=",,tdclear"/>
         </fr:layout>
     </fr:edit>
