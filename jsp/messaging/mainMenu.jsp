@@ -15,19 +15,18 @@
 			<bean:message bundle="MESSAGING_RESOURCES" key="messaging.menu.favourites.link"/>
 		</html:link>			
 	</li>
-<!--
 	<li>
 		<html:link page="/announcements/boards.do?method=search">
 			<bean:message bundle="MESSAGING_RESOURCES" key="messaging.menu.boards.link"/>
 		</html:link>			
 	</li>
--->
+<%--
 	<li>
 		<html:link page="/announcements/announcementsStartPageHandler.do?method=handleBoardListing">
 			<bean:message bundle="MESSAGING_RESOURCES" key="messaging.menu.boards.link"/>
 		</html:link>
 	</li>
-	
+--%>
 	<li class="navheader"><bean:message bundle="MESSAGING_RESOURCES" key="label.navheader.search"  /></li>
 	<li>
 		<html:link page="/findPerson.do?method=prepareFindPerson">

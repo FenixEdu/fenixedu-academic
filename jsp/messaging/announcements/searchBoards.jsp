@@ -39,7 +39,6 @@
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle5 thmiddle thlight mtop05 mbottom1"/>
 	  			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
-	  			<fr:destination name="search" path="/announcements/boards.do?method=search"/>
 		   	</fr:layout>	    	
 		</fr:edit>
 	</logic:notEqual>
