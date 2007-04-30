@@ -791,9 +791,10 @@ public class ExercisesManagementAction extends FenixDispatchAction {
         request.setAttribute("objectCode", executionCourseId);
         request.setAttribute("order", request.getParameter("order"));
         request.setAttribute("asc", request.getParameter("asc"));
+        Integer metadataCode = getCodeFromRequest(request, "metadataCode");
         try {
             List<LabelValueBean> result = (List<LabelValueBean>) ServiceUtils.executeService(userView,
-                    "DeleteExerciseVariation", new Object[] { executionCourseId, variationCode });
+                    "DeleteExerciseVariation", new Object[] { executionCourseId, variationCode, metadataCode });
             if (result == null || result.size() == 0) {
                 return prepareEditExercise(mapping, form, request, response);
             }
