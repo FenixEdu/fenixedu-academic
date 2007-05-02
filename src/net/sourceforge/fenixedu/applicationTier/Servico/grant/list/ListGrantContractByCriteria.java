@@ -124,7 +124,7 @@ public class ListGrantContractByCriteria extends Service {
 		List<GrantSubsidy> grantSubsidyList = grantContractRegime
 				.getGrantContract().getAssociatedGrantSubsidies();
 		for (GrantSubsidy grantSubsidy : grantSubsidyList) {
-			infoListGrantOwnerByOrder.setTotalOfGrantPayment(grantSubsidy.getValue());
+			infoListGrantOwnerByOrder.setTotalOfGrantPayment(grantSubsidy.getTotalCost());
 			for (GrantPart grantPart : rootDomainObject.getGrantParts()) {
 				if (grantSubsidy.equals(grantPart.getGrantSubsidy())) {
 					infoListGrantOwnerByOrder
