@@ -11805,5 +11805,13 @@
 		<filterChains>
 			<chain name="UnitSiteManagerAuthorization"/>
 		</filterChains>
-    </service>    
+    </service>
+	<service>
+        <name>AssociateEnrolmentsToNotNeedToEnrol</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.notNeedToEnrol.AssociateEnrolmentsToNotNeedToEnrol</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+		<filterChains>
+		</filterChains>
+    </service>            
 </serviceDefinitions>

@@ -273,6 +273,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	removeStudentCurricularPlan();
 	removeDegreeModule();
 	removeCurriculumGroup();
+	getNotNeedToEnrollCurricularCourses().clear();
 
 	Iterator<Attends> attendsIter = getAttendsIterator();
 	while (attendsIter.hasNext()) {

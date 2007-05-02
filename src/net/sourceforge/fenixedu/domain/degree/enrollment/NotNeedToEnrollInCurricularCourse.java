@@ -29,6 +29,7 @@ public class NotNeedToEnrollInCurricularCourse extends NotNeedToEnrollInCurricul
 	removeStudentCurricularPlan();
 	removeCurricularCourse();
 	removeRootDomainObject();
+	getEnrolments().clear();
 	deleteDomainObject();
     }
 

@@ -148,6 +148,13 @@
          <form-property name="selectedExternalCurricularCourses" type="java.lang.String[]" />
          <form-property name="externalEnrolmentsToDelete" type="java.lang.String[]" />
       </form-bean>
+      
+           <!-- Bean for Student Dismissal -->
+      <form-bean name="notNeedToEnrolForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+	     <form-property name="method" type="java.lang.String" />
+         <form-property name="notNeedToEnrolEnrolments" type="java.lang.Integer[]" />
+      </form-bean>
+      
 		
     </form-beans>
 
@@ -710,6 +717,19 @@
 				<forward name="editPartyContact" path="student.editPartyContact"/>
 				<forward name="editPersonalData" path="/student.do?method=prepareEditPersonalData"/>
 		</action>
+		
+		<!-- ===== End Contacts ======== -->
+		
+		<action path="/notNeedToEnrolEnrolments"
+				type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.notNeedToEnrol.NotNeedToEnrolEnrolmentsDA"
+				name="notNeedToEnrolForm"
+				parameter="method"
+				scope="request">
+				<forward name="chooseStudent" path="notNeedToEnrol.chooseStudent"/>
+				<forward name="chooseNotNeedToEnrol" path="notNeedToEnrol.chooseNotNeedToEnrol"/>
+				<forward name="showAprovedEnrolments" path="notNeedToEnrol.showAprovedEnrolments"/>
+		</action>
+		
 
     </action-mappings>
 

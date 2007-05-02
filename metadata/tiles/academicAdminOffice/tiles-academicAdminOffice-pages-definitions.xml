@@ -417,4 +417,16 @@
 	<definition name="student.enrollment.bolonha.changeSpecialSeasonCode" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/student/enrollment/bolonha/chooseSpecialSeasonCode.jsp"/>
 	</definition>		
+	
+	<!-- NotNeedToEnrol -->
+	<definition name="notNeedToEnrol.chooseStudent" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/notNeedToEnrol/chooseStudent.jsp"/>
+	</definition>
+	<definition name="notNeedToEnrol.chooseNotNeedToEnrol" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/notNeedToEnrol/chooseNotNeedToEnrol.jsp"/>
+	</definition>
+	<definition name="notNeedToEnrol.showAprovedEnrolments" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/notNeedToEnrol/showAprovedEnrolments.jsp"/>
+	</definition>	
+		
 </tiles-definitions>
