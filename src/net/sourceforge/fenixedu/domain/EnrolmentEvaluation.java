@@ -508,5 +508,15 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
     public boolean isPayed() {
 	return getImprovementOfApprovedEnrolmentEvent().isPayed();
     }
+    
+    @Override
+    public ExecutionPeriod getExecutionPeriod() {
+	if(getEnrolmentEvaluationType() == EnrolmentEvaluationType.IMPROVEMENT) {
+	    return super.getExecutionPeriod();
+	} 
+
+	return getEnrolment().getExecutionPeriod();
+    }
+    
 
 }
