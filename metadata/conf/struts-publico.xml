@@ -934,7 +934,12 @@
             <forward name="listAnnouncements" path="public-department-list-events"/>
             <forward name="viewAnnouncement" path="department-view-event"/>
         </action>
- 
+
+        <action path="/department/announcementsRSS" parameter="method"
+                type="net.sourceforge.fenixedu.presentationTier.Action.publico.department.DepartmentAnnouncementsRSS"/>
+        <action path="/department/eventsRSS" parameter="method"
+                type="net.sourceforge.fenixedu.presentationTier.Action.publico.department.DepartmentEventsRSS"/>
+
        <!-- ===== ResearchUnit Site Visualization ===== -->
        <action path="/researchSite/viewResearchUnitSite"
         parameter="method"

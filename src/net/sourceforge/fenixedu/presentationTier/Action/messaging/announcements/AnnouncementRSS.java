@@ -35,7 +35,7 @@ public class AnnouncementRSS extends RSSAction {
 
     
 
-    private String getFeedTitle(HttpServletRequest request, AnnouncementBoard board) {
+    protected String getFeedTitle(HttpServletRequest request, AnnouncementBoard board) {
         MessageResources resources = this.getResources(request, "MESSAGING_RESOURCES");
         String titlePrefix = resources.getMessage(this.getLocale(request),
                 "messaging.announcements.channelTitlePrefix");
@@ -120,6 +120,12 @@ public class AnnouncementRSS extends RSSAction {
     private String getEntryLink(HttpServletRequest request, Announcement announcement)
             throws FenixActionException {
 
+    	String actionPath = getDirectAnnouncementBaseUrl(request, announcement);
+    	
+    	if (actionPath == null) {
+    		return null;
+    	}
+    	
         String result = null;
         String scheme = request.getScheme();
         int serverPort = request.getServerPort();
@@ -127,12 +133,14 @@ public class AnnouncementRSS extends RSSAction {
         String appContext = PropertiesManager.getProperty("app.context");
         String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : "";
 
-        String actionPath = "/publico/publicAnnouncements.do?method=viewAnnouncement&announcementId=";
-
-        StringBuffer file = new StringBuffer();
-        file.append(context).append(actionPath).append(announcement.getIdInternal());
+        if (actionPath.indexOf('?') == -1) {
+        	actionPath += "?";
+        }
+        
+        actionPath += "&announcementId=" + announcement.getIdInternal();
+        
         try {
-            URL url = new URL(scheme, serverName, serverPort, file.toString());
+            URL url = new URL(scheme, serverName, serverPort, context + actionPath);
             result = url.toString();
         } catch (MalformedURLException e) {
             throw new FenixActionException(e);
@@ -141,7 +149,12 @@ public class AnnouncementRSS extends RSSAction {
         return result;
     }
 
-    @Override
+    protected String getDirectAnnouncementBaseUrl(HttpServletRequest request, Announcement announcement) {
+		return null;
+		//return "/publico/publicAnnouncements.do?method=viewAnnouncement";
+	}
+
+	@Override
     protected String getFeedTitle(HttpServletRequest request) throws Exception {
         return this.getFeedTitle(request, this.getSelectedBoard(request));
     }

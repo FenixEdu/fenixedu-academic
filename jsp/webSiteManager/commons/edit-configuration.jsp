@@ -19,8 +19,7 @@
     </p>
 </div>
 
-
-
+<%-- 
 <div class="mtop15 mbottom05">
     <strong>Opções de internacionalização:</strong>
 </div>
@@ -30,7 +29,7 @@
 		<td>Sim / Não</td>
 	</tr>
 </table>
-
+--%>
 
 
 <p class="mbottom05">

@@ -1475,3 +1475,7 @@ list-style: none;
 div#logoist img.usitelogo {
 padding-left: 10px;
 }
+
+#perfnav ul ul {
+display: none;
+}

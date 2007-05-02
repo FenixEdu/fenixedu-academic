@@ -46,6 +46,11 @@ public abstract class RSSAction extends InformaRSSAction {
             item.setCreator(syndEntry.getAuthor());
             item.setDate(syndEntry.getUpdatedDate());
             item.setFound(syndEntry.getPublishedDate());
+            
+            if (syndEntry.getLink() != null) {
+            	item.setLink(new URL(syndEntry.getLink()));
+            }
+            
             item.setGuid(syndEntry.getItemGuidIF(item));
             channel.addItem(item);
         }

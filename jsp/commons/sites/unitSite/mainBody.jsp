@@ -38,6 +38,17 @@
 	<logic:equal name="site" property="showAnnouncements" value="true">
 		<td>
 			<logic:notEmpty name="announcements">
+			
+			<logic:iterate id="announcement" name="announcements" length="1">
+				<bean:define id="rssBoard" name="announcement" property="announcementBoard"/>
+				
+				<div class="fright">
+					<html:link page="<%= String.format("/department/announcementsRSS.do?method=simple&amp;%s", context) %>" paramId="announcementBoardId" paramName="rssBoard" paramProperty="idInternal">
+						<img src="<%= request.getContextPath() %>/images/rss_ico.png"/>
+					</html:link>
+				</div>
+			</logic:iterate>
+			
 			<logic:iterate id="announcement" name="announcements">
 				<h3 class="mvert025"><fr:view name="announcement" property="subject"/></h3>
 				<p class="mtop025 mbottom05" style="color: #888;"><fr:view name="announcement" property="creationDate" layout="no-time"/></p>
@@ -56,6 +67,7 @@
 					<html:link page="<%= announcementAction + "?method=viewAnnouncement&amp;" + context +  "&amp;announcementId=" + announcementID%>"><bean:message key="link.viewMore"/></html:link><br/>				</p>
 			</logic:iterate>
 			</logic:notEmpty>
+			
 			<logic:empty name="announcements">
                 <div class="mbottom05">
         				<em><bean:message key="label.noAnnouncements" bundle="MESSAGING_RESOURCES"/></em>
@@ -66,7 +78,19 @@
 	<logic:equal name="site" property="showEvents" value="true">
 		<td>
 			<logic:notEmpty name="eventAnnouncements">
+			
+			<logic:iterate id="announcement" name="eventAnnouncements" length="1">
+				<bean:define id="rssBoard" name="announcement" property="announcementBoard"/>
+				
+				<div class="fright">
+					<html:link page="<%= String.format("/department/eventsRSS.do?method=simple&amp;%s", context) %>" paramId="announcementBoardId" paramName="rssBoard" paramProperty="idInternal">
+						<img src="<%= request.getContextPath() %>/images/rss_ico.png"/>
+					</html:link>
+				</div>
+			</logic:iterate>
+			
 			<logic:iterate id="announcement" name="eventAnnouncements">
+				<bean:define id="rssBoard" name="announcement" property="announcementBoard" toScope="request"/>
 			
 				<h3 class="mvert025"><fr:view name="announcement" property="subject"/></h3>
 				<p class="mtop025 mbottom05" style="color: #888;">
@@ -94,6 +118,7 @@
 					<html:link page="<%= eventAction + "?method=viewEvent&amp;" + context + "&amp;announcementId=" + announcementID%>"><bean:message key="link.viewMore"/></html:link><br/>
 				</p>
 			</logic:iterate>
+			
 			</logic:notEmpty>
 			<logic:empty name="eventAnnouncements">
                 <div class="mbottom05">
