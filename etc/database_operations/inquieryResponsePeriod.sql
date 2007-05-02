@@ -4,7 +4,7 @@ create table INQUIRY_RESPONSE_PERIOD (
     KEY_EXECUTION_PERIOD int(11) not null,
     BEGIN timestamp not null default '0000-00-00 00:00:00',
     END timestamp not null default '0000-00-00 00:00:00',
-    INTRODUCTION longtext default '';
+    INTRODUCTION longtext default '',
     primary key (ID_INTERNAL),
     index (KEY_ROOT_DOMAIN_OBJECT),
     index (KEY_EXECUTION_PERIOD)
