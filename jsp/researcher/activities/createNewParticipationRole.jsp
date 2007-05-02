@@ -11,17 +11,23 @@
 
 <%-- CREATION OF A NEW PARTICIPATION ROLE --%>
 	<logic:present name="participationRoleBean">
-		<p class="mtop2 mbottom05"><strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.editResearchActivityAssociations.addNewParticipationRole"/></strong></p>
-		<fr:form action="<%="/activities/editResearchActivity.do?method=createNewParticipationRole&" + parameter%>">
-			<fr:edit id="roleBean" action="<%="/activities/editResearchActivity.do?method=createNewParticipationRole&" + parameter%>" name="participationRoleBean" schema="researchctivityParticipation.newRoleCreation" >
-				<fr:destination name="invalid" path="<%="/activities/editResearchActivity.do?method=prepareCreateNewParticipationRole&" + parameter%>"/>	
-				<fr:destination name="cancel" path="<%="/activities/editResearchActivity.do?method=prepareEditParticipants&" + parameter%>"/>
-		 	    <fr:layout name="tabular">
-		    	    <fr:property name="classes" value="tstyle1 thlight thright mtop05"/>
-		        	<fr:property name="columnClasses" value=",,tdclear tderror1"/>
-			    </fr:layout>
-			</fr:edit>
-			<html:submit><bean:message key="button.add" bundle="RESEARCHER_RESOURCES"/></html:submit>
-			<html:cancel><bean:message key="button.cancel" bundle="RESEARCHER_RESOURCES"/></html:cancel>
-		</fr:form>
+		<div class="mvert15">
+			<p class="mbottom025"><strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.editResearchActivityAssociations.addNewParticipationRole"/></strong></p>
+			<fr:form action="<%="/activities/editResearchActivity.do?method=createNewParticipationRole&" + parameter%>">
+				<fr:edit id="roleBean" action="<%="/activities/editResearchActivity.do?method=createNewParticipationRole&" + parameter%>" name="participationRoleBean" schema="researchctivityParticipation.newRoleCreation" >
+					<fr:destination name="invalid" path="<%="/activities/editResearchActivity.do?method=prepareCreateNewParticipationRole&" + parameter%>"/>	
+					<fr:destination name="cancel" path="<%="/activities/editResearchActivity.do?method=prepareEditParticipants&" + parameter%>"/>
+			 	    <fr:layout name="tabular">
+			    	    <fr:property name="classes" value="tstyle5 thlight thright thmiddle mtop025 mbottom0"/>
+			        	<fr:property name="columnClasses" value="width6em,width30em,tdclear tderror1"/>
+				    </fr:layout>
+				</fr:edit>
+				<table class="tstyle5 gluetop mtop0">
+					<tr>
+						<th class="width6em"></th>
+						<td class="width30em"><html:submit><bean:message key="button.add" bundle="RESEARCHER_RESOURCES"/></html:submit> <html:cancel><bean:message key="button.cancel" bundle="RESEARCHER_RESOURCES"/></html:cancel></td>
+					</tr>
+				</table>
+			</fr:form>
+		</div>
 	</logic:present>

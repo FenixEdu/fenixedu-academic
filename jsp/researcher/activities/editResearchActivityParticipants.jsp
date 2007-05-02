@@ -23,8 +23,7 @@
 	
 	<fr:view name="loggedPerson" schema="researchActivityParticipant.participantName">
 		<fr:layout name="tabular">
-    	    <fr:property name="classes" value="tstyle5 thright thlight"/>
-			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+    	    <fr:property name="classes" value="tstyle2 thlight"/>
 	    </fr:layout>
 	</fr:view>
 	
@@ -52,9 +51,22 @@
 		
 		<%-- LIST OF EXISTING PARTICIPATIONS --%>	
 		<logic:notEmpty name="participantBeans">
-			<p class="mtop1 mbottom05">
-				<strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.editResearchActivityParticipants.editRoles"/></strong>
-			</p>
+			<div class="infoop2">
+				<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.editResearchActivityParticipants.editRoles"/>
+			</div>
+
+			<logic:notEqual name="activityType" value="Cooperation">
+				<logic:notPresent name="participationRoleBean">
+					<ul class="mvert15">
+						<li>
+							<html:link page="<%="/activities/editResearchActivity.do?method=prepareCreateNew" + activityType +"ParticipationRole&amp;" + parameter %>">
+								<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.editResearchActivityParticipants.createNewParticipationRole" />
+							</html:link>
+						</li>
+					</ul>
+				</logic:notPresent>
+			</logic:notEqual>
+		
 			<logic:notEmpty name="unableToEdit">
 				<div class="error2">
 					<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.editResearchActivityParticipants.unableToEdit"/>
@@ -67,11 +79,13 @@
 					</fr:view>
 				</div>
 			</logic:notEmpty>
+
+			<jsp:include page="createNewParticipationRole.jsp"/>
+
 			<fr:hasMessages for="participantsTable" type="validation">
-				<ul>
-					<li><span class="error0"><fr:message for="participantsTable" show="message"/></span></li>
-				</ul>
+				<p><span class="error0"><fr:message for="participantsTable" show="message"/></span></p>
 			</fr:hasMessages>
+
 			<fr:form action="<%="/activities/editResearchActivity.do?method=editParticipants&" + parameter %>">
 				<fr:edit id="participantsTable" name="participantBeans" layout="tabular-editable" schema="activityParticipants.edit-role">
 					<fr:layout>
@@ -81,26 +95,13 @@
 							<fr:property name="key(remove)" value="researcher.activity.remove"/>
 							<fr:property name="bundle(remove)" value="RESEARCHER_RESOURCES"/>
 						</logic:notEqual>
-			    	    <fr:property name="classes" value="tstyle1"/>
+			    	    <fr:property name="classes" value="tstyle1 thlight mtop05"/>
 					</fr:layout>
 					<fr:destination name="invalid" path="<%="/activities/editResearchActivity.do?method=prepareEditParticipants&amp;" + parameter %>"/>
 				</fr:edit>
 				<html:submit><bean:message key="button.change" bundle="RESEARCHER_RESOURCES"/></html:submit>
 			</fr:form>
 		</logic:notEmpty>
-		
-		<logic:notEqual name="activityType" value="Cooperation">
-			<logic:notPresent name="participationRoleBean">
-				<ul class="list5 mtop2 mbottom1">
-					<li>
-						<html:link page="<%="/activities/editResearchActivity.do?method=prepareCreateNew" + activityType +"ParticipationRole&amp;" + parameter %>">
-							<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.editResearchActivityParticipants.createNewParticipationRole" />
-						</html:link>
-					</li>
-				</ul>
-			</logic:notPresent>
-		</logic:notEqual>
-		
-		<jsp:include page="createNewParticipationRole.jsp"/>
+
 	</logic:notEqual>
 </logic:present>

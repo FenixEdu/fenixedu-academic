@@ -36,7 +36,7 @@
 		<fr:form action="/activities/createCooperation.do?method=prepareAssociateUnitToCooperation">
 			<fr:edit id="cooperationTypeBean" name="cooperationTypeBean" schema="cooperationParticipation.cooperationType">
 				<fr:layout>
-					<fr:property name="classes" value="tstyle5 thlight thleft mtop0"/>
+					<fr:property name="classes" value="tstyle5 thlight thright thmiddle thleft mtop0"/>
 					<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 				</fr:layout>
 				<fr:destination name="invalid" path="/activities/createCooperation.do?method=prepareCreateCooperationParticipation"/>			
@@ -67,7 +67,7 @@
 			<fr:layout name="tabular-nonNullValues">
 				<fr:property name="classes" value="tstyle2 thlight thtop thleft"/>
 	    	    <fr:property name="rowClasses" value="tdbold,,,,,,,,,,,,"/>
-				<fr:property name="columnClasses" value="width10em, width35em"/>
+				<fr:property name="columnClasses" value="width14em, width35em"/>
 				<fr:property name="rowClasses" value="tdbold,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,"/>
 			</fr:layout>
 		</fr:view>
@@ -88,7 +88,7 @@
 						<fr:destination name="invalid" path="/activities/createCooperation.do?method=prepareAssociateUnitToCooperation"/>
 						<fr:destination name="postback" path="/activities/createCooperation.do?method=prepareAssociateUnitToCooperation"/>				
 						<fr:layout>
-							<fr:property name="classes" value="tstyle5 thlight thleft mtop0"/>
+							<fr:property name="classes" value="tstyle5 thlight thright thmiddle mtop0"/>
 							<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 						</fr:layout>
 					</fr:edit>
@@ -109,7 +109,7 @@
 					<fr:edit id="cooperationUnitBean" name="cooperationUnitBean"  schema="<%= schema %>">
 						<fr:destination name="invalid" path="/activities/createCooperation.do?method=prepareAssociateUnitToCooperation"/>
 					<fr:layout>	
-						<fr:property name="classes" value="tstyle5 thlight thleft mtop0 mbottom0"/>
+						<fr:property name="classes" value="tstyle5 thlight thright thmiddle mtop0 mbottom0"/>
 						<fr:property name="columnClasses" value="width8em,width40em,tdclear tderror1"/>
 					</fr:layout>
 					</fr:edit>
@@ -158,7 +158,7 @@
 			<fr:layout name="tabular-nonNullValues">
 				<fr:property name="classes" value="tstyle2 thlight thtop thleft"/>
 	    	    <fr:property name="rowClasses" value="tdbold,,,,,,,,,,,,"/>
-				<fr:property name="columnClasses" value="width10em, width35em"/>
+				<fr:property name="columnClasses" value="width14em, width35em"/>
 				<fr:property name="rowClasses" value="tdbold,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,"/>
 			</fr:layout>
 		</fr:view>
@@ -171,7 +171,7 @@
 					<fr:destination name="invalid" path="/activities/createCooperation.do?method=prepareCreateParticipation"/>
 					<fr:destination name="cancel" path="/activities/activitiesManagement.do?method=listActivities" />				
 					<fr:layout>
-						<fr:property name="classes" value="tstyle5 thlight thleft mtop0"/>
+						<fr:property name="classes" value="tstyle5 thlight thright mtop0"/>
 						<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 					</fr:layout>
 				</fr:edit>

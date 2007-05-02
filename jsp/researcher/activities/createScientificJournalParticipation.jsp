@@ -12,7 +12,7 @@
 	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.createScientificJournal.useCasetitle"/></h2>
 
 	<logic:present name="journalBean">
-		<p class="mvert1 breadcumbs">
+		<p class="mvert15 breadcumbs">
 			<span class="actual"><strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.step"/> 1 : </strong>
 			<bean:message key="researcher.activity.createJournal.searchJournal" bundle="RESEARCHER_RESOURCES"/></span>
 				 > 
@@ -27,7 +27,7 @@
 				<fr:destination name="invalid" path="/activities/createScientificJournal.do?method=prepareJournalSearch"/>			
 				<fr:destination name="cancel" path="/activities/activitiesManagement.do?method=listActivities"/>				
 				<fr:layout>
-					<fr:property name="classes" value="tstyle5 thlight thleft mtop0"/>
+					<fr:property name="classes" value="tstyle5 thlight thleft mtop0 thmiddle"/>
 					<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 				</fr:layout>
 			</fr:edit>

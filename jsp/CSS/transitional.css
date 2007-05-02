@@ -107,7 +107,6 @@ ul.list7 li { margin: 0; padding: 0; } /* li without margins */
 
 
 
-
 /* lists */
 ul.liinline {
 margin: 0;
@@ -531,6 +530,7 @@ ul.indent0 { margin-left: 0; padding-left: 0; }
 .width46em { width: 46em; }
 .width50em { width: 50em; }
 .width100px { width: 100px; }
+.width125px { width: 125px; }
 .width150px { width: 150px; }
 .width250px { width: 250px; }
 .width500px { width: 550px; }
@@ -1459,6 +1459,17 @@ font-weight: bold;
 div.unitname p {
 color: #7a8899;
 margin-top: 5px;
+}
+
+ul.asdasd {
+margin-left: 0;
+padding-left: 2em;
+
+}
+ul.asdasd li {
+padding-left: 1.25em;
+background: url(../images/dotist_post.gif) left 5px no-repeat;
+list-style: none;
 }
 
 div#logoist img.usitelogo {

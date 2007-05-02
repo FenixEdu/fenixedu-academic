@@ -17,7 +17,7 @@
 	<ul class="mvert2 list5">
 		<li>
 			<html:link page="/activities/activitiesManagement.do?method=listActivities">
-				<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.showParticipations" />
+				<bean:message bundle="RESEARCHER_RESOURCES" key="label.back" />
 			</html:link>
 		</li>
 		<li>
