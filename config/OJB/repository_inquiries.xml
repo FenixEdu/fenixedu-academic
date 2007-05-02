@@ -1,136 +1,14 @@
-<!-- ******************************************************************************************************************************* -->
-<!-- Definitions for net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse -->
-<!-- ******************************************************************************************************************************* -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse"
-                  table="INQUIRIES_COURSE">
-	
-
-    
-	
-   
-   
-	
-   
-   
-	
-   
-   
-	
-   
-   
-	
-   
-   
-
-   
-
-   
-
-   
-
-   
-
-   
-
-   
-
-   
-
-   
-
-	
-
-	
-	
-	
-
-	
-
-	
-
+<class-descriptor class="net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse" table="INQUIRIES_COURSE">
 </class-descriptor>
 
-<!-- ******************************************************************************************************************************* -->
-<!-- Definitions for net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry -->
-<!-- ******************************************************************************************************************************* -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry"
-                  table="INQUIRIES_REGISTRY">
-	
-
-    
-	
-   
-   
-	
-   
-   
-	
-
-	
-
+<class-descriptor class="net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry" table="INQUIRIES_REGISTRY">
 </class-descriptor>
 
-<!-- ******************************************************************************************************************************* -->
-<!-- Definitions for net.sourceforge.fenixedu.domain.inquiries.InquiriesRoom -->
-<!-- ******************************************************************************************************************************* -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.inquiries.InquiriesRoom"
-                  table="INQUIRIES_ROOM">
-	
-
-   
-	
-      
-   
-	
-   
-   
-
-   
-
-   
-   
-	
-
+<class-descriptor class="net.sourceforge.fenixedu.domain.inquiries.InquiriesRoom" table="INQUIRIES_ROOM">
 </class-descriptor>
 
+<class-descriptor class="net.sourceforge.fenixedu.domain.inquiries.InquiriesTeacher" table="INQUIRIES_TEACHER">
+</class-descriptor>
 
-
-<!-- ******************************************************************************************************************************* -->
-<!-- Definitions for net.sourceforge.fenixedu.domain.inquiries.InquiriesTeacher -->
-<!-- ******************************************************************************************************************************* -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.inquiries.InquiriesTeacher"
-                  table="INQUIRIES_TEACHER">
-	
-
-   
-	
-      
-   
-	
-   
-   
-	
-   
-   
-
-   
-
-   
-
-   
-
-   
-
-   
-
-   
-
-   
-
-   
-
-   
-
-	
-
+<class-descriptor class="net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriod" table="INQUIRY_RESPONSE_PERIOD">
 </class-descriptor>

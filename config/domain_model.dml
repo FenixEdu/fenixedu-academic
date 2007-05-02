@@ -1730,12 +1730,11 @@ class net.sourceforge.fenixedu.domain.ExecutionPeriod extends net.sourceforge.fe
 	String name;
 	Integer semester;
     PeriodState state;
-	DateTime inquiryResponseBeginDateTime;
-	DateTime inquiryResponseEndDateTime;
     DateTime teacherCreditsPeriodBegin;
     DateTime teacherCreditsPeriodEnd;
     DateTime departmentAdmOfficeCreditsPeriodBegin;
     DateTime departmentAdmOfficeCreditsPeriodEnd;
+    Integer keyInquiryResponsePeriod;
 }
 
 
@@ -2268,6 +2267,13 @@ class net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry extends net.so
     Integer keyExecutionPeriod;
 	Integer keyExecutionCourse;
     Integer keyStudent;
+}
+
+class net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriod extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer keyExecutionPeriod;
+	DateTime begin;
+	DateTime end;
+	String introduction;
 }
 
 class net.sourceforge.fenixedu.domain.inquiries.InquiriesRoom extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -5563,6 +5569,11 @@ relation OrientationTeacher {
         multiplicity *;
     }
     net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
+}
+
+relation InquiryResponsePeriodExecutionPeriod {
+    net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriod playsRole inquiryResponsePeriod;
+    net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
 }
 
 
@@ -12837,3 +12848,11 @@ relation RootDomainObjectUnitSiteLink {
 		multiplicity *;
 	}
 }
+
+relation RootDomainObjectInquiryResponsePeriod {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriod playsRole inquiryResponsePeriods  {
+		multiplicity *;
+	}
+}
+

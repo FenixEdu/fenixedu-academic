@@ -106,11 +106,11 @@ public class InfoExecutionPeriod extends InfoObject {
 	}
 
     public Date getInquiryResponseBegin() {
-        return getExecutionPeriod().getInquiryResponseBegin();
+        return getExecutionPeriod().getInquiryResponsePeriod().getBegin().toDate();
     }
 
     public Date getInquiryResponseEnd() {
-        return getExecutionPeriod().getInquiryResponseEnd();
+        return getExecutionPeriod().getInquiryResponsePeriod().getEnd().toDate();
     }
 
     @Override

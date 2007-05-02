@@ -126,6 +126,7 @@ public class FillInquiryAction extends FenixDispatchAction {
 	// Obtaining the current execution period
 	InfoExecutionPeriod currentExecutionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService(
 		userView, "ReadCurrentExecutionPeriod", null);
+	request.setAttribute("executionPeriod", currentExecutionPeriod.getExecutionPeriod());
 	final Date inquiryResponseBegin = currentExecutionPeriod.getInquiryResponseBegin();
 	final Date inquiryResponseEnd = currentExecutionPeriod.getInquiryResponseEnd();
 	if (inquiryResponseBegin == null || inquiryResponseEnd == null) {

@@ -1,9 +1,9 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
+<html:xhtml/>
 
 <h3>
 	<bean:message key="link.inquiries.define.response.period" bundle="INQUIRIES_RESOURCES"/>
@@ -48,42 +48,28 @@
 <logic:present name="selectedExecutionPeriod">
 	<bean:message key="link.inquiries.define.response.period.information" bundle="INQUIRIES_RESOURCES"/>
 	<br/><br/>
-	<html:form action="/defineResponsePeriods">
-		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
-		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="define"/>
-		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionPeriodID" property="executionPeriodID"/>
-		<table>
-			<tr>
-				<td>
-					<bean:message key="link.inquiries.define.response.period.begin" bundle="INQUIRIES_RESOURCES"/>
-				</td>
-				<td>
-					<html:text bundle="HTMLALT_RESOURCES" altKey="text.inquiryResponseBegin" property="inquiryResponseBegin"/>
-				</td>
-				<td>
-					<bean:message key="link.inquiries.define.response.period.format" bundle="INQUIRIES_RESOURCES"/>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<bean:message key="link.inquiries.define.response.period.end" bundle="INQUIRIES_RESOURCES"/>
-				</td>
-				<td>
-					<html:text bundle="HTMLALT_RESOURCES" altKey="text.inquiryResponseEnd" property="inquiryResponseEnd"/>
-				</td>
-				<td>
-					<bean:message key="link.inquiries.define.response.period.format" bundle="INQUIRIES_RESOURCES"/>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="2">
-					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
-						<bean:message key="label.define" bundle="INQUIRIES_RESOURCES"/>
-					</html:submit>
-				</td>
-			</tr>
-   </p>
-			
-		</table>
-	</html:form>
+	<logic:present name="selectedExecutionPeriod" property="inquiryResponsePeriod">
+		<fr:edit name="selectedExecutionPeriod" property="inquiryResponsePeriod"
+				action="/defineResponsePeriods.do?method=prepare"
+				schema="net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriod.edit">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle5 thmiddle thlight mtop05 mbottom1"/>
+  				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+				<fr:destination name="search" path="/announcements/boards.do?method=search"/>
+		   	</fr:layout>	    	
+		</fr:edit>	
+	</logic:present>
+	<logic:notPresent name="selectedExecutionPeriod" property="inquiryResponsePeriod">
+		<fr:create id="selectedExecutionPeriod"
+				action="/defineResponsePeriods.do?method=prepare"
+				type="net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriod"
+				schema="net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriod.create">
+			<fr:hidden slot="executionPeriod" name="selectedExecutionPeriod"/>
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle5 thmiddle thlight mtop05 mbottom1"/>
+  				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+				<fr:destination name="search" path="/announcements/boards.do?method=search"/>
+		   	</fr:layout>
+		</fr:create>
+	</logic:notPresent>	
 </logic:present>

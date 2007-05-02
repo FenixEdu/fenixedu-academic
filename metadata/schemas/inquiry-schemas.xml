@@ -1,0 +1,23 @@
+<schema name="net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriod.edit"
+		type="net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriod" bundle="INQUIRIES_RESOURCES">
+	<slot name="begin"/>
+	<slot name="end"/>
+	<slot name="introduction" layout="rich-text">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="120"/>
+   		<property name="rows" value="40"/>
+   		<property name="config" value="advanced" />
+	</slot>
+</schema>
+<schema name="net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriod.create"
+		type="net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriod" bundle="INQUIRIES_RESOURCES">
+	<slot name="executionPeriod" hidden="true"/>
+	<slot name="begin"/>
+	<slot name="end"/>
+	<slot name="introduction" layout="rich-text">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="120"/>
+   		<property name="rows" value="40"/>
+   		<property name="config" value="advanced" />
+	</slot>
+</schema>

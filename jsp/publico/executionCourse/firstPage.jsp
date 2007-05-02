@@ -8,6 +8,29 @@
 
 <bean:define id="site" name="executionCourse" property="site"/>
 
+<logic:present name="executionCourse" property="executionPeriod.inquiryResponsePeriod">
+	<logic:equal name="executionCourse" property="availableForInquiries" value="true">
+		<logic:equal name="executionCourse" property="executionPeriod.inquiryResponsePeriod.insideResponsePeriod" value="true">
+			<br/>
+			<p>
+				<strong>
+					<bean:message key="message.inquiries.available.prefix"/>
+				</strong>
+				<logic:present role="STUDENT">
+					<bean:message key="message.inquiries.available.students"/>
+					<html:link href="<%= request.getContextPath() + "/student/fillInquiries.do?method=prepareCourses"%>">
+						<bean:message key="message.inquiries.available.at.here"/>	
+					</html:link>
+					.
+				</logic:present>
+				<logic:notPresent role="STUDENT">
+					<bean:message key="message.inquiries.available.non.students"/>
+				</logic:notPresent>				
+			</p>
+		</logic:equal>
+	</logic:equal>
+</logic:present>
+
 <logic:notEmpty name="site" property="initialStatement">
 	<div class="citation">
 		<p>

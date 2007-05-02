@@ -27,74 +27,69 @@ import org.apache.struts.util.LabelValueBean;
 
 public class DefineResponsePeriodsDA extends FenixDispatchAction {
 
-	public ActionForward prepare(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-        final DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
-        final String executionPeriodIDString = dynaActionForm.getString("executionPeriodID");
-        final Integer executionPeriodID = validInteger(executionPeriodIDString) ? Integer.valueOf(executionPeriodIDString) : null;
+    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	final DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
+	final String executionPeriodIDString = dynaActionForm.getString("executionPeriodID");
+	final Integer executionPeriodID = validInteger(executionPeriodIDString) ? Integer
+		.valueOf(executionPeriodIDString) : null;
 
-        final Collection<ExecutionPeriod> executionPeriods = rootDomainObject.getExecutionPeriodsSet();
+	final Collection<ExecutionPeriod> executionPeriods = rootDomainObject.getExecutionPeriodsSet();
 
-        ExecutionPeriod selectedExecutionPeriod = null;
-        final List<LabelValueBean> executionPeriodLVBs = new ArrayList<LabelValueBean>();
-        for (final ExecutionPeriod executionPeriod : executionPeriods) {
-            final String label = executionPeriod.getName() + " " + executionPeriod.getExecutionYear().getYear();
-            executionPeriodLVBs.add(new LabelValueBean(label, executionPeriod.getIdInternal().toString()));
+	ExecutionPeriod selectedExecutionPeriod = null;
+	final List<LabelValueBean> executionPeriodLVBs = new ArrayList<LabelValueBean>();
+	for (final ExecutionPeriod executionPeriod : executionPeriods) {
+	    final String label = executionPeriod.getName() + " " + executionPeriod.getExecutionYear().getYear(); executionPeriodLVBs
+		    .add(new LabelValueBean(label, executionPeriod.getIdInternal().toString()));
 
-            if (executionPeriodID == null && executionPeriod.getState() == PeriodState.CURRENT) {
-                selectedExecutionPeriod = executionPeriod;
-                dynaActionForm.set("executionPeriodID", selectedExecutionPeriod.getIdInternal().toString());
-            } else if (executionPeriodID != null && executionPeriod.getIdInternal().equals(executionPeriodID)) {
-                selectedExecutionPeriod = executionPeriod;
-            }
-        }
+	    if (executionPeriodID == null && executionPeriod.getState() == PeriodState.CURRENT) {
+		selectedExecutionPeriod = executionPeriod;
+		dynaActionForm.set("executionPeriodID", selectedExecutionPeriod.getIdInternal().toString());
+	    } else if (executionPeriodID != null && executionPeriod.getIdInternal().equals(executionPeriodID)) {
+		selectedExecutionPeriod = executionPeriod;
+	    }
+	}
 
-        request.setAttribute("executionPeriodLVBs", executionPeriodLVBs);
+	request.setAttribute("executionPeriodLVBs", executionPeriodLVBs);
 
-        if (selectedExecutionPeriod != null) {
-            request.setAttribute("selectedExecutionPeriod", selectedExecutionPeriod);
-            final Date inquiryResponseBegin = selectedExecutionPeriod.getInquiryResponseBegin();
-            if (inquiryResponseBegin != null) {
-                dynaActionForm.set("inquiryResponseBegin", DateFormatUtil.format("dd/MM/yyyy HH:mm", inquiryResponseBegin));
-            }
-            final Date inquiryResponseEnd = selectedExecutionPeriod.getInquiryResponseEnd();
-            if (inquiryResponseEnd != null) {
-                dynaActionForm.set("inquiryResponseEnd", DateFormatUtil.format("dd/MM/yyyy HH:mm", inquiryResponseEnd));
-            }
-        }
-		
-		return mapping.findForward("showForm");
+	request.setAttribute("selectedExecutionPeriod", selectedExecutionPeriod);
+
+	return mapping.findForward("showForm");
     }
 
     public ActionForward define(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        final IUserView userView = SessionUtils.getUserView(request);
+	final IUserView userView = SessionUtils.getUserView(request);
 
-        final DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
+	final DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
 
-        final String executionPeriodIDString = dynaActionForm.getString("executionPeriodID");
-        final String inquiryResponseBeginString = dynaActionForm.getString("inquiryResponseBegin");
-        final String inquiryResponseEndString = dynaActionForm.getString("inquiryResponseEnd");
+	final String executionPeriodIDString = dynaActionForm.getString("executionPeriodID");
+	final String inquiryResponseBeginString = dynaActionForm.getString("inquiryResponseBegin");
+	final String inquiryResponseEndString = dynaActionForm.getString("inquiryResponseEnd");
 
-        final Integer executionPeriodID = validInteger(executionPeriodIDString) ? Integer.valueOf(executionPeriodIDString) : null;
-        final Date inquiryResponseBegin = (inquiryResponseBeginString != null && inquiryResponseBeginString.length() > 0) ?
-                DateFormatUtil.parse("dd/MM/yyyy HH:mm", inquiryResponseBeginString + ":00") : null;
-        final Date inquiryResponseEnd = (inquiryResponseEndString != null && inquiryResponseEndString.length() > 0) ?
-            DateFormatUtil.parse("dd/MM/yyyy HH:mm", inquiryResponseEndString + ":00") : null;
+	final Integer executionPeriodID = validInteger(executionPeriodIDString) ? Integer
+		.valueOf(executionPeriodIDString) : null;
+	final Date inquiryResponseBegin = (inquiryResponseBeginString != null && inquiryResponseBeginString
+		.length() > 0) ? DateFormatUtil.parse("dd/MM/yyyy HH:mm", inquiryResponseBeginString
+		+ ":00") : null;
+	final Date inquiryResponseEnd = (inquiryResponseEndString != null && inquiryResponseEndString
+		.length() > 0) ? DateFormatUtil.parse("dd/MM/yyyy HH:mm", inquiryResponseEndString
+		+ ":00") : null;
 
-        final Object[] args = new Object[] { executionPeriodID, inquiryResponseBegin, inquiryResponseEnd };
-        ServiceUtils.executeService(userView, "DefineInquiryResponsePeriod", args);
+	final Object[] args = new Object[] { executionPeriodID, inquiryResponseBegin, inquiryResponseEnd };
+	ServiceUtils.executeService(userView, "DefineInquiryResponsePeriod", args);
 
-        final ActionMessages actionMessages = new ActionMessages();
-        actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("message.inquiry.response.period.defined"));
-        saveMessages(request, actionMessages);
+	final ActionMessages actionMessages = new ActionMessages();
+	actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("message.inquiry.response.period.defined"));
+	saveMessages(request, actionMessages);
 
-        return prepare(mapping, actionForm, request, response);
+	return prepare(mapping, actionForm, request, response);
     }
 
     private boolean validInteger(final String executionPeriodIDString) {
-        return executionPeriodIDString != null && executionPeriodIDString.length() > 0 && StringUtils.isNumeric(executionPeriodIDString);
+	return executionPeriodIDString != null && executionPeriodIDString.length() > 0
+		&& StringUtils.isNumeric(executionPeriodIDString);
     }
 
 }

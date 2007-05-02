@@ -38,7 +38,8 @@
     <!ENTITY protocol SYSTEM "protocol-schemas.xml">
     <!ENTITY partyContacts SYSTEM "partyContacts-schemas.xml">
     <!ENTITY boardSchemas SYSTEM "board-schemas.xml">
-    
+    <!ENTITY inquirySchemas SYSTEM "inquiry-schemas.xml">
+
 ]>
 
 <schemas>
@@ -705,4 +706,5 @@
     &protocol;
     &partyContacts;
     &boardSchemas;
+    &inquirySchemas;
 </schemas>
