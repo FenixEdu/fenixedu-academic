@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ page import="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"%>
+<%@ page import="net.sourceforge.fenixedu.domain.UnitSite"%>
 <%@ page import="net.sourceforge.fenixedu.domain.RootDomainObject"%>
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
@@ -9,12 +10,19 @@
 <%
     Integer departmentUnitId;
     Unit unit = (Unit) request.getAttribute("unit");
+
     if (unit == null) {
         departmentUnitId = new Integer(request.getParameter("selectedDepartmentUnitID"));
         unit = (Unit) RootDomainObject.getInstance().readPartyByOID(departmentUnitId);
-        
-        request.setAttribute("unit", unit);
-        request.setAttribute("site", unit.getSite());
+    }
+
+    UnitSite site = unit.getSite();
+    request.setAttribute("unit", unit);
+    request.setAttribute("site", site);
+	
+    if (site != null && site.isDefaultLogoUsed()) {
+        request.setAttribute("siteDefaultLogo", 
+        	String.format("%s/images/departments/%s.gif", request.getContextPath(), unit.getAcronym()));
     }
 %>
 

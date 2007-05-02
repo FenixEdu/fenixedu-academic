@@ -1,6 +1,6 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="net.sourceforge.fenixedu._development.PropertiesManager"%>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
@@ -18,16 +18,22 @@
 	</a>
 
 	<logic:equal name="site" property="defaultLogoUsed" value="false">
-	<logic:present name="site" property="logo">
-		<bean:define id="logoFile" type="net.sourceforge.fenixedu.domain.UnitSiteFile" name="site" property="logo"/>
-			<img alt="Logo" src="<%= logoFile.getDownloadUrl() %>"/>
-	</logic:present>
+		<logic:present name="site" property="logo">
+			<bean:define id="logoFile" type="net.sourceforge.fenixedu.domain.UnitSiteFile" name="site" property="logo"/>
+				<img alt="Logo" src="<%= logoFile.getDownloadUrl() %>" class="usitelogo"/>
+		</logic:present>
 	</logic:equal>
 
+	<logic:equal name="site" property="defaultLogoUsed" value="true">
+		<logic:present name="siteDefaultLogo">
+			<bean:define id="logoUrl" name="siteDefaultLogo" type="java.lang.String"/>
+			<img alt="Logo" src="<%= logoUrl %>" class="usitelogo"/>
+		</logic:present>
+	</logic:equal>
 </div>
 
-
-	<logic:notPresent name="site" property="logo">
+<logic:equal name="site" property="defaultLogoUsed" value="true">
+	<logic:notPresent name="siteDefaultLogo">
 		<div class="unitname">
 			<h1>
 				<fr:view name="site" property="unit.acronym"/>
@@ -37,7 +43,7 @@
 			</p>
 		</div>
 	</logic:notPresent>
-	
+</logic:equal>
 
 <div id="header_links">
 	<a href="<%= loginUrl %>">
