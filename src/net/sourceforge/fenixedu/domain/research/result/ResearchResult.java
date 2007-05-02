@@ -154,6 +154,7 @@ public abstract class ResearchResult extends ResearchResult_Base {
 		if (!hasPersonParticipation(requestingPerson)) {
 			throw new DomainException("error.researcher.Result.onlyParticipantsCanDelete");
 		}
+		
 		removeAssociations();
 		removeRootDomainObject();
 		deleteDomainObject();
@@ -304,19 +305,22 @@ public abstract class ResearchResult extends ResearchResult_Base {
 	 */
 	private void removeAssociations() {
 		super.setCountry(null);
-
-		for (ResearchResultDocumentFile documentFile : getAllResultDocumentFiles()) {
-			documentFile.delete();
+		removeCreator();
+		for (;!getAllResultDocumentFiles().isEmpty();getAllResultDocumentFiles().get(0).delete()) {
+		
 		}
 
-		for (ResultUnitAssociation association : getResultUnitAssociations()) {
-			association.delete();
+		for (;!getResultUnitAssociations().isEmpty();getResultUnitAssociations().get(0).delete()) {
+			
 		}
 
+		for(;!getResultTeachers().isEmpty();getResultTeachers().get(0).delete()) {
+			
+		}
 		// These should be the last to remove, because of access control
 		// verifications.
-		for (ResultParticipation participation : getResultParticipations()) {
-			participation.delete();
+		for (;!getResultParticipations().isEmpty();getResultParticipations().get(0).delete()) {
+			
 		}
 	}
 
