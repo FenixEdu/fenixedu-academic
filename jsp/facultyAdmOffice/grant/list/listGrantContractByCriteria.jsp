@@ -114,6 +114,11 @@
 			<bean:message key="label.list.byCriteria.grant.owner.designation"/>
 			</html:link>
         </th>
+         <th class="listClasses-header">
+			<html:link page='<%= "/listGrantContractByCriteria.do?method=prepareListGrantContractByCriteria&amp;spanNumber=" + spanNumber + "&amp;orderBy=orderByDateEndContract&amp;totalElements=" + totalElements + "&amp;argsInRequest=1&amp;filterType=" + filterType + "&amp;beginContract=" + beginContract + "&amp;endContract=" + endContract + "&amp;grantTypeId=" + grantTypeId  + "&amp;validToTheDate=" + validToTheDate %>' >
+			<bean:message key="label.list.byCriteria.grant.owner.totalOfGrantPayment"/>
+			</html:link>
+        </th>
         <th class="listClasses-header">&nbsp;</th>
     </tr>   
 
@@ -171,6 +176,12 @@
 			        <bean:write name="infoListGrantOwnerByOrder" property="designation"/>
 			    </logic:present>&nbsp;
 			</td>
+			<td class="listClasses">&nbsp;
+				<logic:present name="infoListGrantOwnerByOrder" property="totalOfGrantPayment">
+			        <bean:write name="infoListGrantOwnerByOrder" property="totalOfGrantPayment"/>
+			    </logic:present>&nbsp;
+			</td>
+			
             <td class="listClasses">
 	            <%-- Show all the information of a grant owner --%>
                 <bean:define id="idGrantOwner" name="infoListGrantOwnerByOrder" property="grantOwnerId"/>
