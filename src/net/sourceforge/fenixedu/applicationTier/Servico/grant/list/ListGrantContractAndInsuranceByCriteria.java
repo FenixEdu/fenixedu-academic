@@ -383,12 +383,7 @@ public class ListGrantContractAndInsuranceByCriteria extends Service {
 
         Collections.sort(grantList, new BeanComparator("grantContract.grantOwner.number"));
         Collections.reverse(grantList);
-        
-        
-//        ComparatorChain comparatorChain = new ComparatorChain(new BeanComparator(
-//                "grantContract.grantOwner.number"), true);
-//        Collections.sort(grantContractRegimes, comparatorChain);
-//        Collections.reverse(grantContractRegimes);
+
         for (final GrantContractRegime grantContractRegime : ((List<GrantContractRegime>) grantList)) {
             final GrantContract grantContract = grantContractRegime.getGrantContract();
 
