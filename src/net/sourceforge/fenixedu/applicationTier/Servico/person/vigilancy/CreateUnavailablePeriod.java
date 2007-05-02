@@ -41,7 +41,7 @@ public class CreateUnavailablePeriod extends Service {
 				+ String.format("%02d", end.getHourOfDay()) + ":"
 				+ String.format("%02d", end.getMinuteOfHour()) + "h";
 
-		String message = "A seguinte disponilidade foi adicionada:\n\n" + vigilant.getPerson().getName()
+		String message = "A seguinte indisponilidade foi adicionada:\n\n" + vigilant.getPerson().getName()
 				+ " " + beginDate + " a " + endDate + "\nJustificação: " + justification;
 
 		new Email(group.getName(), group.getContactEmail(), contactArray, replyTos, null, null,
