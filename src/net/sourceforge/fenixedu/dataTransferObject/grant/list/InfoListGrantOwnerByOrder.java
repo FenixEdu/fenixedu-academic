@@ -44,8 +44,18 @@ public class InfoListGrantOwnerByOrder extends InfoObject {
     private Double totalInsurance;
     
     private long totalOfDays;
+    
+    private Double totalOfGrantPayment;
 
-    public Double getTotalInsurance() {
+    public Double getTotalOfGrantPayment() {
+		return totalOfGrantPayment;
+	}
+
+	public void setTotalOfGrantPayment(Double totalOfGrantPayment) {
+		this.totalOfGrantPayment = totalOfGrantPayment;
+	}
+
+	public Double getTotalInsurance() {
 		return totalInsurance;
 	}
 
