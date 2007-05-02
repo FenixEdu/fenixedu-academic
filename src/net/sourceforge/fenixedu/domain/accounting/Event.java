@@ -300,6 +300,22 @@ public abstract class Event extends Event_Base {
 	return payedAmount;
     }
 
+    private Money getPayedAmountUntil(final int civilYear) {
+	if (isCancelled()) {
+	    throw new DomainException(
+		    "error.accounting.Event.cannot.calculatePayedAmountUntil.on.invalid.events");
+	}
+
+	Money result = Money.ZERO;
+	for (final AccountingTransaction transaction : getNonAdjustingTransactions()) {
+	    if (transaction.getWhenRegistered().getYear() <= civilYear) {
+		result = result.add(transaction.getToAccountEntry().getAmountWithAdjustment());
+	    }
+	}
+
+	return result;
+    }
+
     public Money getPayedAmountFor(final int civilYear) {
 	if (isCancelled()) {
 	    throw new DomainException(
@@ -318,24 +334,41 @@ public abstract class Event extends Event_Base {
 
     }
 
-    public Money getPayedAmountByPersonFor(final int civilYear) {
+    public Money getMaxDeductableAmountForLegalTaxes(final int civilYear) {
 	if (isCancelled()) {
 	    throw new DomainException(
-		    "error.accounting.Event.cannot.calculatePayedAmount.on.invalid.events");
+		    "error.accounting.Event.cannot.calculate.max.deductable.amount.for.legal.taxes.on.invalid.events");
 	}
 
-	Money amountForCivilYear = Money.ZERO;
-	for (final AccountingTransaction accountingTransaction : getNonAdjustingTransactions()) {
-	    if (accountingTransaction.isPayed(civilYear)) {
-		amountForCivilYear = amountForCivilYear.add(accountingTransaction.getToAccountEntry()
-			.getAmountWithAdjustment());
+	if (isOpen()) {
+	    return calculatePayedAmountByPersonFor(civilYear);
+	}
+
+	final Money maxAmountForCivilYear = calculateTotalAmountToPay(getEventStateDate()).subtract(
+		getPayedAmountUntil(civilYear - 1)).subtract(
+		calculatePayedAmountByOtherPartiesFor(civilYear));
+
+	if (maxAmountForCivilYear.isPositive()) {
+	    final Money payedAmoutForPersonOnCivilYear = calculatePayedAmountByPersonFor(civilYear);
+
+	    return payedAmoutForPersonOnCivilYear.lessOrEqualThan(maxAmountForCivilYear) ? payedAmoutForPersonOnCivilYear
+		    : maxAmountForCivilYear;
+
+	}
+
+	return Money.ZERO;
+
+    }
+
+    private Money calculatePayedAmountByPersonFor(final int civilYear) {
+	Money result = Money.ZERO;
+	for (final AccountingTransaction transaction : getNonAdjustingTransactions()) {
+	    if (transaction.isPayed(civilYear) && transaction.isSourceAccountFromParty(getPerson())) {
+		result = result.add(transaction.getToAccountEntry().getAmountWithAdjustment());
 	    }
 	}
 
-	final Money maxAmountForCivilYear = amountForCivilYear.subtract(getExtraPayedAmount());
-
-	return maxAmountForCivilYear.isPositive() ? maxAmountForCivilYear : amountForCivilYear;
-
+	return result;
     }
 
     public boolean hasPaymentsByPersonForCivilYear(final int civilYear) {
@@ -346,6 +379,17 @@ public abstract class Event extends Event_Base {
 	}
 
 	return false;
+    }
+
+    private Money calculatePayedAmountByOtherPartiesFor(final int civilYear) {
+	Money result = Money.ZERO;
+	for (final AccountingTransaction transaction : getNonAdjustingTransactions()) {
+	    if (transaction.isPayed(civilYear) && !transaction.isSourceAccountFromParty(getPerson())) {
+		result = result.add(transaction.getToAccountEntry().getAmountWithAdjustment());
+	    }
+	}
+
+	return result;
     }
 
     public boolean hasPaymentsForCivilYear(final int civilYear) {
@@ -529,6 +573,19 @@ public abstract class Event extends Event_Base {
 	return result;
     }
 
+    public static List<Event> readNotCancelled() {
+	final List<Event> result = new ArrayList<Event>();
+
+	for (final Event event : RootDomainObject.getInstance().getAccountingEvents()) {
+	    if (!event.isCancelled()) {
+		result.add(event);
+	    }
+	}
+
+	return result;
+
+    }
+
     public static List<Event> readNotPayedBy(final ExecutionYear executionYear) {
 	return readBy(executionYear, EventState.OPEN);
     }
@@ -581,15 +638,14 @@ public abstract class Event extends Event_Base {
     }
 
     public Money calculateOtherPartiesPayedAmount() {
-	Money extraPayedAmount = Money.ZERO;
+	Money result = Money.ZERO;
 	for (final AccountingTransaction accountingTransaction : getNonAdjustingTransactions()) {
 	    if (!accountingTransaction.isSourceAccountFromParty(getPerson())) {
-		extraPayedAmount = extraPayedAmount.add(accountingTransaction.getToAccountEntry()
-			.getAmountWithAdjustment());
+		result = result.add(accountingTransaction.getToAccountEntry().getAmountWithAdjustment());
 	    }
 	}
 
-	return extraPayedAmount;
+	return result;
     }
 
     public Set<Entry> getOtherPartyEntries() {
@@ -670,7 +726,7 @@ public abstract class Event extends Event_Base {
 
     public static List<Event> readWithPaymentsByPersonForCivilYear(int civilYear) {
 	final List<Event> result = new ArrayList<Event>();
-	for (final Event event : RootDomainObject.getInstance().getAccountingEvents()) {
+	for (final Event event : readNotCancelled()) {
 	    if (event.hasPaymentsByPersonForCivilYear(civilYear)) {
 		result.add(event);
 	    }

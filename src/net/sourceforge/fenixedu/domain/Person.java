@@ -1873,10 +1873,10 @@ public class Person extends Person_Base {
 	return result;
     }
 
-    public Money getPayedAmount(final EventType eventType, final int civilYear) {
+    public Money getMaxDeductableAmountForLegalTaxes(final EventType eventType, final int civilYear) {
 	Money result = Money.ZERO;
 	for (final Event event : (Set<Event>) getEventsByEventType(eventType)) {
-	    result = result.add(event.getPayedAmountByPersonFor(civilYear));
+	    result = result.add(event.getMaxDeductableAmountForLegalTaxes(civilYear));
 	}
 
 	return result;

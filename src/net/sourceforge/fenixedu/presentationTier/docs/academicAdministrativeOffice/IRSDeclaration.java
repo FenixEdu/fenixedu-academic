@@ -38,12 +38,12 @@ public class IRSDeclaration extends AdministrativeOfficeDocument {
 	final Integer civilYear = IRSDeclarationRequest.getYear();
 	parameters.put("civilYear", civilYear.toString());
 
-	Money gratuityPayedAmount = person.getPayedAmount(EventType.GRATUITY, civilYear);
-	Money officeFeeAndInsurancePayedAmount = person.getPayedAmount(EventType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE, civilYear);
+	Money gratuityPayedAmount = person.getMaxDeductableAmountForLegalTaxes(EventType.GRATUITY, civilYear);
+	Money officeFeeAndInsurancePayedAmount = person.getMaxDeductableAmountForLegalTaxes(EventType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE, civilYear);
 	Money othersPayedAmount = Money.ZERO;
 	for (final EventType eventType : EventType.values()) {
 	    if (eventType != EventType.GRATUITY && eventType != EventType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE) {
-		othersPayedAmount = othersPayedAmount.add(person.getPayedAmount(eventType, civilYear));
+		othersPayedAmount = othersPayedAmount.add(person.getMaxDeductableAmountForLegalTaxes(eventType, civilYear));
 	    }
 	}
 
