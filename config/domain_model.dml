@@ -1554,6 +1554,7 @@ class net.sourceforge.fenixedu.domain.EnrolmentEvaluation extends net.sourceforg
     Integer keyRectification;
     Integer keyRectified;
     Integer keyImprovementOfApprovedEnrolmentEvent;
+    Integer keyExecutionPeriod;
 }
 
 
@@ -6124,6 +6125,13 @@ relation EnrolmentExecutionPeriod {
 	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
 }
 
+relation EnrolmentEvaluationExecutionPeriod {
+	net.sourceforge.fenixedu.domain.EnrolmentEvaluation playsRole enrolmentEvaluations {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
+}
+
 relation EnrolmentWrapperCredits {
 	net.sourceforge.fenixedu.domain.studentCurriculum.EnrolmentWrapper playsRole enrolments {
 		multiplicity *;
@@ -7907,6 +7915,16 @@ relation StudentCurricularPlanLEICSecundaryBranch {
 
 relation StudentCurricularPlanNotNeedToEnrollInCurricularCourse {
     net.sourceforge.fenixedu.domain.StudentCurricularPlan playsRole studentCurricularPlan;
+
+    net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse playsRole notNeedToEnrollCurricularCourses {
+        multiplicity *;
+    }
+}
+
+relation EnrolmentNotNeedToEnrollInCurricularCourse {
+    net.sourceforge.fenixedu.domain.Enrolment playsRole enrolments {
+    	multiplicity *;
+    }
 
     net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse playsRole notNeedToEnrollCurricularCourses {
         multiplicity *;

@@ -27,3 +27,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Alter table ENROLMENT_EVALUATION" alterTableEnrolmentEvaluation.sql
+execute "Create table ENROLMENT_NOT_NEED_TO_ENROL" createTableEnrolmentNotNeedToEnrol.sql
