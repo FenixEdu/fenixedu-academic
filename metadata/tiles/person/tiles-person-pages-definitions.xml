@@ -147,5 +147,10 @@
 
    	<definition name="create-unavailablePeriod" extends="definition.person.masterPage" >
 		<put name="body" value="/departmentMember/vigilancy/createUnavailable.jsp" />
-    </definition>	
+    </definition>
+
+   	<definition name="df.page.validate.email" extends="definition.person.masterPage" >
+		<put name="body" value="/person/validateEmail.jsp" />
+    </definition>
+
 </tiles-definitions>

@@ -308,7 +308,14 @@
 				<forward name="editPartyContact" path="partyContacts.editPartyContact"/>
 				<forward name="visualizePersonalInformation" path="visualize.personal.information"/>
 		</action>
-		
+
+		<action path="/validateEmail"
+				type="net.sourceforge.fenixedu.presentationTier.Action.person.ValidateEmailDA"
+				parameter="method"
+				scope="request"
+				>
+			<forward name="showForm" path="df.page.validate.email"/>
+		</action>		
 	</action-mappings>
     
     <!-- ========== Controller Configuration ================================ -->

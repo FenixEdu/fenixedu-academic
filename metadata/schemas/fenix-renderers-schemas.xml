@@ -671,7 +671,13 @@
 			<property name="moduleRelative" value="false"/>
 			<property name="contextRelative" value="false"/> 
 		</slot>
-	</schema>	
+	</schema>
+
+    <schema name="validate.email" type="net.sourceforge.fenixedu.presentationTier.Action.person.ValidateEmailDA$ValidateEmailForm">
+    	<slot name="validationString"/>
+    </schema>
+
+
 	&researcher;
 	&markSheet;
 	&messaging;
