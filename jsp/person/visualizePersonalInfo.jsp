@@ -71,7 +71,7 @@
 		<th><bean:message key="label.partyContacts.Phone" />:</th>
 		<td>-</td>
 		<td class="tdclear">
-			<html:link action="/partyContacts.do?method=prepareCreatePhone" paramId="contactId" paramName="contact" paramProperty="idInternal">
+			<html:link action="/partyContacts.do?method=prepareCreatePhone">
 				<bean:message key="label.add" />
 			</html:link>
 		</td>
@@ -112,7 +112,7 @@
 		<th><bean:message key="label.partyContacts.MobilePhone" />:</th>
 		<td>-</td>
 		<td class="tdclear">
-			<html:link action="/partyContacts.do?method=prepareCreateMobilePhone" paramId="contactId" paramName="contact" paramProperty="idInternal">
+			<html:link action="/partyContacts.do?method=prepareCreateMobilePhone">
 				<bean:message key="label.add" />
 			</html:link>
 		</td>
@@ -160,7 +160,7 @@
 		<th><bean:message key="label.partyContacts.EmailAddress" />:</th>
 		<td>-</td>
 		<td class="tdclear">
-			<html:link action="/partyContacts.do?method=prepareCreateEmailAddress" paramId="contactId" paramName="contact" paramProperty="idInternal">
+			<html:link action="/partyContacts.do?method=prepareCreateEmailAddress">
 				<bean:message key="label.add" />
 			</html:link>
 		</td>
@@ -201,7 +201,7 @@
 		<th><bean:message key="label.partyContacts.WebAddress" />:</th>
 		<td>-</td>
 		<td class="tdclear">
-			<html:link action="/partyContacts.do?method=prepareCreateWebAddress" paramId="contactId" paramName="contact" paramProperty="idInternal">
+			<html:link action="/partyContacts.do?method=prepareCreateWebAddress">
 				<bean:message key="label.add" />
 			</html:link>
 		</td>
