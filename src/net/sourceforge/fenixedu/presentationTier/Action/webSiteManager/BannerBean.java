@@ -14,6 +14,7 @@ public class BannerBean implements Serializable {
     private SimpleFileBean mainImage;
     private SimpleFileBean backgroundImage;
     private String color;
+    private String link;
 
     public BannerBean() {
         super();
@@ -26,6 +27,7 @@ public class BannerBean implements Serializable {
         this();
         
         this.color = banner.getColor();
+        this.link  = banner.getLink();
     }
     
     public SimpleFileBean getBackgroundImage() {
@@ -51,5 +53,13 @@ public class BannerBean implements Serializable {
     public void setMainImage(SimpleFileBean mainImage) {
         this.mainImage = mainImage;
     }
+
+	public String getLink() {
+		return link;
+	}
+
+	public void setLink(String link) {
+		this.link = link;
+	}
 
 }

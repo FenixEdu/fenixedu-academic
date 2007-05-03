@@ -71,7 +71,7 @@ public class UnitSiteBannerFileService extends Service {
         return fileManager.saveFile(filePath, fileName, isPrivate, metaData, stream);
     }
     
-    protected void updateBanner(UnitSite site, UnitSiteBanner banner, InputStream mainStream, String mainName, InputStream backStream, String backName, String color) {
+    protected void updateBanner(UnitSite site, UnitSiteBanner banner, InputStream mainStream, String mainName, InputStream backStream, String backName, String color, String link) {
         UnitSiteBannerFile main = createBannerFile(site, mainStream, mainName);
         UnitSiteBannerFile background = createBannerFile(site, backStream, backName);
         
@@ -84,6 +84,7 @@ public class UnitSiteBannerFileService extends Service {
         }
         
         banner.setColor(color);
+        banner.setLink(link);
     }
 
 }

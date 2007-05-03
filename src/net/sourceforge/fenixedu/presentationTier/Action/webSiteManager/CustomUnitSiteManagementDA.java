@@ -185,7 +185,7 @@ public abstract class CustomUnitSiteManagementDA extends SiteManagementDA {
         SimpleFileBean main = bean.getMainImage();
         SimpleFileBean back = bean.getBackgroundImage();
         
-        executeService("UpdateUnitSiteBanner", site, banner, main.getFile(), main.getName(), back.getFile(), back.getName(), bean.getColor());
+        executeService("UpdateUnitSiteBanner", site, banner, main.getFile(), main.getName(), back.getFile(), back.getName(), bean.getColor(), bean.getLink());
         RenderUtils.invalidateViewState();
         
         return manageBanners(mapping, actionForm, request, response);
@@ -217,7 +217,7 @@ public abstract class CustomUnitSiteManagementDA extends SiteManagementDA {
         
         SimpleFileBean main = bean.getMainImage();
         SimpleFileBean background = bean.getBackgroundImage();
-        executeService("CreateUnitSiteBanner", site, main.getFile(), main.getName(), background.getFile(), background.getName(), bean.getColor());
+        executeService("CreateUnitSiteBanner", site, main.getFile(), main.getName(), background.getFile(), background.getName(), bean.getColor(), bean.getLink());
         
         return manageBanners(mapping, actionForm, request, response);
     }

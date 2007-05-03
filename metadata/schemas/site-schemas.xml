@@ -86,6 +86,9 @@
         <property name="fileContentTypeSlot" value="backgroundImage.contentType"/>
     </slot>
     <slot name="color" key="label.site.banner.color"/>
+    <slot name="link" key="label.site.banner.link">
+        <property name="size" value="40"/>
+    </slot>
 </schema>
 
 <schema name="site.banner.view" type="net.sourceforge.fenixedu.domain.UnitSiteBanner" bundle="WEBSITEMANAGER_RESOURCES">
@@ -102,6 +105,9 @@
     <slot name="color" key="label.site.banner.color" layout="null-as-label">
         <property name="label" value="-"/>
         <property name="subLayout" value="webcolor"/>
+    </slot>
+    <slot name="link" key="label.site.banner.link" layout="null-as-label">
+        <property name="label" value="-"/>
     </slot>
 </schema>
 

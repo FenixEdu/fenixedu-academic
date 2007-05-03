@@ -1435,12 +1435,14 @@ padding: 0;
 width: auto;
 }
 .usitemain #version { /* unitSiteLayout.jsp flag */
-padding: 1.85em 2.7em !important;
-float: right;
+padding: 0.5em 0.5em !important;
 width: 100px;
+position: absolute;
+top: 0;
+right: 0;
 }
 .usitebanner #version {
-padding: 1.85em 0.27em !important;
+padding: 0.5em 0.5em !important;
 }
 
 div.unitname {

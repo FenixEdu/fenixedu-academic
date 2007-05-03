@@ -131,6 +131,20 @@
                             <td class="tdclear tderror1">
                             </td>
                         </tr>
+                        <tr>
+                            <th>
+                                <bean:message key="label.site.banner.link" bundle="WEBSITEMANAGER_RESOURCES"/>:
+                            </th>
+                            <td>
+                                <fr:edit id="editBannerLink" name="editBannerBean" slot="link">
+                                    <fr:layout>
+                                    	<fr:property name="size" value="50"/>
+                                    </fr:layout>
+                                </fr:edit>
+                            </td>
+                            <td class="tdclear tderror1">
+                            </td>
+                        </tr>
                     </table>
                     
                     <html:submit>

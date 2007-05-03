@@ -7,13 +7,13 @@ import net.sourceforge.fenixedu.domain.UnitSiteBanner;
 
 public class CreateUnitSiteBanner extends UnitSiteBannerFileService {
 
-    public UnitSiteBanner run(UnitSite site, InputStream mainStream, String mainName, InputStream backStream, String backName, String color) {
+    public UnitSiteBanner run(UnitSite site, InputStream mainStream, String mainName, InputStream backStream, String backName, String color, String link) {
         if (mainStream == null || mainName == null) {
             return null;
         }
 
         UnitSiteBanner banner = new UnitSiteBanner(site);
-        updateBanner(site, banner, mainStream, mainName, backStream, backName, color);
+        updateBanner(site, banner, mainStream, mainName, backStream, backName, color, link);
         
         return banner;
     }

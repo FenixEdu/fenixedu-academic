@@ -4672,6 +4672,7 @@ class net.sourceforge.fenixedu.domain.Site extends net.sourceforge.fenixedu.doma
 		Integer keyBackgroundImage;
 	
 		String color;
+		String link;
 	}
 
 	class net.sourceforge.fenixedu.domain.UnitSiteLink extends net.sourceforge.fenixedu.domain.DomainObject {
