@@ -141,6 +141,7 @@
 			<form-property name="attributions" type="java.lang.String[]"/>
 			<form-property name="otherExecutionDegreeID" type="java.lang.String"/>
 			<form-property name="attributionByTeachers" type="java.lang.Boolean"/>
+			<form-property name="allowSimultaneousCoorientationAndCompanion" type="java.lang.Boolean"/>
 		</form-bean>
 
 		<form-bean name="finalDegreeWorkCandidacyPeriod" 
@@ -152,6 +153,7 @@
 			<form-property name="startOfCandidacyPeriodHour" type="java.lang.String"/>
 			<form-property name="endOfCandidacyPeriodDate" type="java.lang.String"/>
 			<form-property name="endOfCandidacyPeriodHour" type="java.lang.String"/>
+			<form-property name="allowSimultaneousCoorientationAndCompanion" type="java.lang.Boolean"/>
 		</form-bean>
 
 		<form-bean name="finalDegreeWorkCandidacyRequirements" 
@@ -166,6 +168,7 @@
 			<form-property name="maximumNumberOfStudents" type="java.lang.String"/>
 			<form-property name="maximumNumberOfProposalCandidaciesPerGroup" type="java.lang.String"/>
 			<form-property name="attributionByTeachers" type="java.lang.Boolean"/>
+			<form-property name="allowSimultaneousCoorientationAndCompanion" type="java.lang.Boolean"/>
 		</form-bean>
 
 		<!-- SUBMIT FINAL WORK PROPOSAL -->

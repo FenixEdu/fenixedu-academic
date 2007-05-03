@@ -259,7 +259,7 @@
 				<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.allowSimultaneousCoorientationAndCompanion" property="allowSimultaneousCoorientationAndCompanion"/>
 			</td>
 		</tr>
-		
+
 		<tr>
 			<td colspan="2">
 				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">

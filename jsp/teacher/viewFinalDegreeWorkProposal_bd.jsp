@@ -37,10 +37,10 @@
 		</tr>
 		<tr>
 			<td class="listClasses">
-				<bean:write name="finalDegreeWorkProposal" property="orientator.teacherNumber"/>
+				<bean:write name="finalDegreeWorkProposal" property="orientator.person.teacher.teacherNumber"/>
 			</td>
 			<td class="listClasses">
-				<bean:write name="finalDegreeWorkProposal" property="orientator.infoPerson.nome"/>
+				<bean:write name="finalDegreeWorkProposal" property="orientator.person.name"/>
 			</td>
 			<td class="listClasses">
 				<bean:write name="finalDegreeWorkProposal" property="orientatorsCreditsPercentage"/>
@@ -65,17 +65,17 @@
 			</tr>
 			<tr>
 				<td class="listClasses">
-					<bean:write name="finalDegreeWorkProposal" property="coorientator.teacherNumber"/>
+					<bean:write name="finalDegreeWorkProposal" property="coorientator.person.teacher.teacherNumber"/>
 				</td>
 				<td class="listClasses">
-					<bean:write name="finalDegreeWorkProposal" property="coorientator.infoPerson.nome"/>
+					<bean:write name="finalDegreeWorkProposal" property="coorientator.person.name"/>
 				</td>
 				<td class="listClasses">
 					<bean:write name="finalDegreeWorkProposal" property="coorientatorsCreditsPercentage"/>
 				</td>
 			</tr>
 		</logic:present>
-		<logic:notPresent name="finalDegreeWorkProposal" property="coorientator">
+		<logic:present name="finalDegreeWorkProposal" property="companionName">
 			<tr>
 				<td class="listClasses-supheader" colspan="3">
 					<bean:message key="label.teacher.finalWork.companion"/>
@@ -121,7 +121,7 @@
 					<bean:write name="finalDegreeWorkProposal" property="companyAdress"/>
 				</td>
 			</tr>
-		</logic:notPresent>
+		</logic:present>
 		<tr>
 			<td class="listClasses-supheader" colspan="3">
 				<bean:message key="label.teacher.finalWork.framing"/>

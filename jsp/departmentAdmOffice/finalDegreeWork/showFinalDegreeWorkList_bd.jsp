@@ -248,6 +248,14 @@
 				<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.attributionByTeachers" property="attributionByTeachers"/>
 			</td>
 		</tr>
+		<tr>
+			<th class="listClasses-header">
+				<bean:message key="finalDegreeWorkCandidacy.requirements.allowSimultaneousCoorientationAndCompanion"/>
+			</th>
+			<td class="listClasses">
+				<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.allowSimultaneousCoorientationAndCompanion" property="allowSimultaneousCoorientationAndCompanion"/>
+			</td>
+		</tr>
 
 		<tr>
 			<td colspan="2">
