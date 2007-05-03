@@ -19,6 +19,7 @@ public abstract class UnitSite extends UnitSite_Base {
     public UnitSite() {
         super();
         
+        setShowFlags(true);
         setPersonalizedLogo(false);
         setShowIntroduction(true);
         setShowBanner(true);
