@@ -515,7 +515,11 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
 	    return super.getExecutionPeriod();
 	} 
 
-	return getEnrolment().getExecutionPeriod();
+	if(getEnrolment() != null) {
+	    return getEnrolment().getExecutionPeriod();
+	}
+	
+	return null;
     }
     
 
