@@ -35,6 +35,9 @@ public class SetEmail extends FenixDispatchAction {
 	    message = "User already has email.";
 	} catch (UserDoesNotExistException ex) {
 	    message = "User does not exist.";
+	} catch (Throwable ex) {
+	    message = ex.getMessage();
+	    ex.printStackTrace();
 	} finally {
 	    final ServletOutputStream servletOutputStream = response.getOutputStream();
 	    response.setContentType("text/html");
