@@ -88,7 +88,7 @@ public class CreateScientificJournalDispatchAction extends FenixDispatchAction {
         
     	ScientificJournal journal = null;
         try {
-        	journal = (ScientificJournal) executeService(request, "CreateScientificJournal", new Object[] {bean.getScientificJournalName(), bean.getIssn(), bean.getLocationType() } );
+        	journal = (ScientificJournal) executeService(request, "CreateScientificJournal", new Object[] {bean.getScientificJournalName(), (bean.getIssn()!=null ? bean.getIssn() : ""), bean.getPublisher(), bean.getLocationType() } );
         	executeService(request,"CreateResearchActivityParticipation", new Object[] { journal, bean.getRole(), person});
         } catch (DomainException e) {
         	addActionMessage(request, e.getMessage(), null);

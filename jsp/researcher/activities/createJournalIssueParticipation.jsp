@@ -64,7 +64,9 @@
 	</fr:edit><br/>
 	<html:submit><bean:message key="button.submit" bundle="RESEARCHER_RESOURCES"/></html:submit>
 	<logic:present name="bean" property="scientificJournal">
+		<logic:notPresent name="skipNewIssueCreation">
 		<html:submit property="newIssue"><bean:message key="label.createNewIssue" bundle="RESEARCHER_RESOURCES"/></html:submit>
+		</logic:notPresent>
 	</logic:present>
 	</logic:notPresent>
 	

@@ -48,11 +48,14 @@
 		</p>
 	</logic:messagesPresent>
 
+	 
 	<bean:message key="link.edit" bundle="RESEARCHER_RESOURCES"/>: 
+	<%-- 
 	<html:link page="<%="/activities/editResearchActivity.do?method=prepareEdit" + activityType + "Data&" + parameter %>">
 			<bean:message bundle="RESEARCHER_RESOURCES" key="label.activityData" />
 	</html:link>, 
-
+	--%>
+	
 	<html:link page="<%="/activities/editResearchActivity.do?method=prepareEdit" + activityType + "Participants&" + parameter %>">
 		<logic:equal name="activityType" value="Cooperation">
 				<bean:message bundle="RESEARCHER_RESOURCES" key="label.cooperation.colaborationForm" />

@@ -70,7 +70,9 @@
 		<html:submit property="prepareCreateEvent"><bean:message key="label.createEvent" bundle="RESEARCHER_RESOURCES"/></html:submit>
 	</logic:equal>
 	<logic:present name="eventEditionBean" property="event">
+		<logic:notPresent name="skipCreateEdition">
 		<html:submit property="createEdition"><bean:message key="button.createEventEdition" bundle="RESEARCHER_RESOURCES"/></html:submit>
+		</logic:notPresent>
 	</logic:present>
 	</logic:notPresent>
 	</logic:notPresent>

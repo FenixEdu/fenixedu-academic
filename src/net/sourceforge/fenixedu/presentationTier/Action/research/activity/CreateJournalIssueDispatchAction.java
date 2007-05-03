@@ -65,6 +65,7 @@ public class CreateJournalIssueDispatchAction extends FenixDispatchAction {
 			bean.setJournalIssue(issue);
 			bean.setScientificJournal(issue.getScientificJournal());
 		}
+		request.setAttribute("skipNewIssueCreation","true");
 		request.setAttribute("bean", bean);
 		return prepare(mapping, form, request, response);
 	}
@@ -80,6 +81,7 @@ public class CreateJournalIssueDispatchAction extends FenixDispatchAction {
 		bean.setJournalIssue(issue);
 		bean.setScientificJournal(issue.getScientificJournal());
 		request.setAttribute("bean", bean);
+		request.setAttribute("skipNewIssueCreation","true");
 		return prepare(mapping, form, request, response);
 	}
 

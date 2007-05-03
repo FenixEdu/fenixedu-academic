@@ -55,20 +55,20 @@ public class CreateEventEditionDispatchAction extends FenixDispatchAction {
 		if (bean == null) {
 			return prepareEventEditionSearch(mapping, form, request, response);
 		}
-		if (bean.getEventEdition() != null) {
-			return createExistentEventEditionParticipation(mapping, form, request, response);
-		}
-		if (request.getParameter("prepareCreateEvent") != null) {
+		else if (request.getParameter("prepareCreateEvent") != null) {
 			request.setAttribute("createNewEvent", "true");
 		}
-		if (request.getParameter("newEvent") != null) {
+		else if (request.getParameter("newEvent") != null) {
 			return createInexistentEventEditionParticipation(mapping, form, request, response);
 		}
-		if (request.getParameter("createEdition") != null) {
+		else if (request.getParameter("createEdition") != null) {
 			request.setAttribute("createNewEdition", "true");
 		}
-		if (request.getParameter("newEventEdition") != null) {
+		else if (request.getParameter("newEventEdition") != null) {
 			return createNewEditionParticipation(mapping, form, request, response);
+		}
+		else if (bean.getEventEdition() != null) {
+			return createExistentEventEditionParticipation(mapping, form, request, response);
 		}
 		RenderUtils.invalidateViewState();
 		request.setAttribute("eventEditionBean", bean);
@@ -91,6 +91,7 @@ public class CreateEventEditionDispatchAction extends FenixDispatchAction {
 		}
 
 		RenderUtils.invalidateViewState();
+		request.setAttribute("skipCreateEdition","true");
 		request.setAttribute("eventEditionBean", bean);
 		return prepare(mapping, form, request, response);
 	}
@@ -114,6 +115,7 @@ public class CreateEventEditionDispatchAction extends FenixDispatchAction {
 		}
 
 		RenderUtils.invalidateViewState();
+		request.setAttribute("skipCreateEdition","true");
 		request.setAttribute("eventEditionBean", bean);
 		return prepare(mapping, form, request, response);
 	}

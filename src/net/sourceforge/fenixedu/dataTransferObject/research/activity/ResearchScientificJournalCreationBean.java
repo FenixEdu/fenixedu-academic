@@ -14,6 +14,7 @@ public class ResearchScientificJournalCreationBean implements Serializable {
     private ResearchActivityParticipationRole role;
     private ScopeType locationType;
     private String issn;
+    private String publisher;
     
     public String getIssn() {
         return issn;
@@ -59,5 +60,13 @@ public class ResearchScientificJournalCreationBean implements Serializable {
     public void setLocationType(ScopeType locationType) {
         this.locationType = locationType;
     }
+
+	public String getPublisher() {
+		return publisher;
+	}
+
+	public void setPublisher(String publisher) {
+		this.publisher = publisher;
+	}
     
 }
