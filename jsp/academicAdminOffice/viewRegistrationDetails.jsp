@@ -115,6 +115,7 @@
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle2 thright thlight thcenter"/>
 		<fr:property name="groupLinks" value="false"/>
+		
 		<fr:property name="linkFormat(enrol)" value="/studentEnrolments.do?method=prepare&amp;scpID=${idInternal}" />
 		<fr:property name="key(enrol)" value="link.student.enrolInCourses"/>
 		<fr:property name="bundle(enrol)" value="ACADEMIC_OFFICE_RESOURCES"/>
