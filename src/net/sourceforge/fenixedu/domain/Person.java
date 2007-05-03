@@ -85,6 +85,7 @@ import net.sourceforge.fenixedu.domain.sms.SentSms;
 import net.sourceforge.fenixedu.domain.sms.SmsDeliveryType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
@@ -2504,4 +2505,36 @@ public class Person extends Person_Base {
 	return proposals;
     }
 
+    public List<TeacherServiceDistribution> getTeacherServiceDistributions() {
+    	Department department = hasTeacher() ? getTeacher().getCurrentWorkingDepartment() : null;
+    	return  department == null ? Collections.EMPTY_LIST : 
+    		(List<TeacherServiceDistribution>) CollectionUtils.select(department.getTeacherServiceDistributions(), new Predicate() {
+    			public boolean evaluate(Object arg0) {
+    				TeacherServiceDistribution tsd = (TeacherServiceDistribution) arg0;
+    				return tsd.hasAnyPermission(Person.this);
+    			}
+    		});
+    }
+    
+    public List<TeacherServiceDistribution> getTeacherServiceDistributions(ExecutionPeriod period) {
+    	Department department = hasTeacher() ? getTeacher().getCurrentWorkingDepartment() : null;
+    	return  department == null ? Collections.EMPTY_LIST : 
+    		(List<TeacherServiceDistribution>) CollectionUtils.select(department.getTeacherServiceDistributionsByExecutionPeriod(period), new Predicate() {
+    			public boolean evaluate(Object arg0) {
+    				TeacherServiceDistribution tsd = (TeacherServiceDistribution) arg0;
+    				return tsd.hasAnyPermission(Person.this);
+    			}
+    		});
+    }
+    
+    public List<TeacherServiceDistribution> getTeacherServiceDistributions(ExecutionYear year) {
+    	Department department = hasTeacher() ? getTeacher().getCurrentWorkingDepartment() : null;
+    	return  department == null ? Collections.EMPTY_LIST : 
+    		(List<TeacherServiceDistribution>) CollectionUtils.select(department.getTeacherServiceDistributionsByExecutionYear(year), new Predicate() {
+    			public boolean evaluate(Object arg0) {
+    				TeacherServiceDistribution tsd = (TeacherServiceDistribution) arg0;
+    				return tsd.hasAnyPermission(Person.this);
+    			}
+    		});
+    }
 }
