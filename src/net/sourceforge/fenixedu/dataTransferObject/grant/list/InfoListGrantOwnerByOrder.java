@@ -46,6 +46,8 @@ public class InfoListGrantOwnerByOrder extends InfoObject {
     private long totalOfDays;
     
     private Double totalOfGrantPayment;
+    
+    private Double valueOfGrantPayment;
 
     public Double getTotalOfGrantPayment() {
 		return totalOfGrantPayment;
@@ -221,4 +223,12 @@ public class InfoListGrantOwnerByOrder extends InfoObject {
     public void setGrantOwnerNumber(Integer grantOwnerNumber) {
         this.grantOwnerNumber = grantOwnerNumber;
     }
+
+	public Double getValueOfGrantPayment() {
+		return valueOfGrantPayment;
+	}
+
+	public void setValueOfGrantPayment(Double valueOfGrantPayment) {
+		this.valueOfGrantPayment = valueOfGrantPayment;
+	}
 }
