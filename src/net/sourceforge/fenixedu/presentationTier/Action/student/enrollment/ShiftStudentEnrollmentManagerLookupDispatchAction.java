@@ -36,7 +36,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
 
     private Registration getAndSetRegistration(final HttpServletRequest request) {
 	final Registration registration = rootDomainObject.readRegistrationByOID(getIntegerFromRequest(request, "registrationOID"));
-	if (!getUserView(request).getPerson().getStudent().getRegistrationsToEnrolByStudent().contains(registration)) {
+	if (!getUserView(request).getPerson().getStudent().getRegistrationsToEnrolInShiftByStudent().contains(registration)) {
 	    return null;
 	}
 	

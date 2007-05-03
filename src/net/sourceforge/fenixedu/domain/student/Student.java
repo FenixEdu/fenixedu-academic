@@ -584,6 +584,15 @@ public class Student extends Student_Base {
 
     public List<Registration> getRegistrationsToEnrolByStudent() {
         final List<DegreeType> degreeTypesToEnrolByStudent = getDegreeTypesToEnrolByStudent();
+        return getRegistrationsToEnrol(degreeTypesToEnrolByStudent);
+    }
+    
+    public List<Registration> getRegistrationsToEnrolInShiftByStudent() {
+	final List<DegreeType> degreeTypesToEnrolByStudent = getDegreeTypesToEnrolInShiftsByStudent();
+	return getRegistrationsToEnrol(degreeTypesToEnrolByStudent);
+    }
+
+    private List<Registration> getRegistrationsToEnrol(List<DegreeType> degreeTypesToEnrolByStudent) {
         final List<Registration> result = new ArrayList<Registration>();
         for (final Registration registration : getRegistrations()) {
             if (registration.isActive()
@@ -605,6 +614,12 @@ public class Student extends Student_Base {
         return Arrays.asList(new DegreeType[] { DegreeType.DEGREE, DegreeType.BOLONHA_DEGREE,
                 DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE });
     }
+    
+    private List<DegreeType> getDegreeTypesToEnrolInShiftsByStudent() {
+        return Arrays.asList(new DegreeType[] { DegreeType.DEGREE, DegreeType.BOLONHA_DEGREE,
+                DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE, DegreeType.MASTER_DEGREE });
+    }
+
 
     public boolean isCurrentlyEnroled(DegreeCurricularPlan degreeCurricularPlan) {
         for (Registration registration : getRegistrations()) {

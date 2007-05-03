@@ -37,7 +37,7 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
 	    HttpServletRequest request, HttpServletResponse response) {
 
 	final Student student = getUserView(request).getPerson().getStudent();
-	final List<Registration> toEnrol = student.getRegistrationsToEnrolByStudent();
+	final List<Registration> toEnrol = student.getRegistrationsToEnrolInShiftByStudent();
 	if (toEnrol.size() == 1) {
 	    request.setAttribute("registrationOID", toEnrol.get(0).getIdInternal());
 	    return prepareStartViewWarning(mapping, form, request, response);
@@ -49,7 +49,7 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
 
     private Registration getAndSetRegistration(final HttpServletRequest request) {
 	final Registration registration = rootDomainObject.readRegistrationByOID(getIntegerFromRequest(request, "registrationOID"));
-	if (!getUserView(request).getPerson().getStudent().getRegistrationsToEnrolByStudent().contains(registration)) {
+	if (!getUserView(request).getPerson().getStudent().getRegistrationsToEnrolInShiftByStudent().contains(registration)) {
 	    return null;
 	}
 	
