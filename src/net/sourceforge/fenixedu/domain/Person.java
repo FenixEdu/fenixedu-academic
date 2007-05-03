@@ -1865,7 +1865,7 @@ public class Person extends Person_Base {
     public List<Event> getEventsWithExemptionAppliable() {
 	final List<Event> result = new ArrayList<Event>();
 	for (final Event event : getEventsSet()) {
-	    if (event.isExemptionAppliable()) {
+	    if (!event.isCancelled() && event.isExemptionAppliable()) {
 		result.add(event);
 	    }
 	}
