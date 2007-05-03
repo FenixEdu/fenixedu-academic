@@ -197,21 +197,15 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 	public ActionForward createVigilantGroup(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		VigilantGroupBean beanWithName = (VigilantGroupBean) RenderUtils.getViewState(
-				"createVigilantGroup.block1").getMetaObject().getObject();
-
-		VigilantGroupBean beanWithFirstPeriod = (VigilantGroupBean) RenderUtils.getViewState(
-				"createVigilantGroup.block2").getMetaObject().getObject();
-
-		VigilantGroupBean beanWithSecondPeriod = (VigilantGroupBean) RenderUtils.getViewState(
-				"createVigilantGroup.block3").getMetaObject().getObject();
-
-		Object[] args = { beanWithName.getName(), beanWithName.getUnit(), beanWithName.getConvokeStrategy(),
-				beanWithName.getContactEmail(), beanWithName.getRulesLink(),
-				beanWithFirstPeriod.getBeginFirstUnavailablePeriod(),
-				beanWithFirstPeriod.getEndFirstUnavailablePeriod(),
-				beanWithSecondPeriod.getBeginSecondUnavailablePeriod(),
-				beanWithSecondPeriod.getEndSecondUnavailablePeriod() };
+		VigilantGroupBean bean = (VigilantGroupBean) RenderUtils.getViewState(
+		"createVigilantGroup").getMetaObject().getObject();
+		
+		Object[] args = { bean.getName(), bean.getUnit(), bean.getConvokeStrategy(),
+				bean.getContactEmail(), bean.getRulesLink(),
+				bean.getBeginFirstUnavailablePeriod(),
+				bean.getEndFirstUnavailablePeriod(),
+				bean.getBeginSecondUnavailablePeriod(),
+				bean.getEndSecondUnavailablePeriod() };
 		executeService(request, "CreateVigilantGroup", args);
 
 		prepareManagementBean(request, ExecutionYear.readCurrentExecutionYear());

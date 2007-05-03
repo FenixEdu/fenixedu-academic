@@ -9,13 +9,16 @@
 <h2><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.newVigilantGroup.title"/></h2>
 
 <fr:form action="/vigilancy/vigilantGroupManagement.do?method=createVigilantGroup">
+
+<fr:edit id="createVigilantGroup" name="bean" visible="false"/>
+
 <fr:edit 
 		   id="createVigilantGroup.block1"
 		   type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantGroupBean" layout="tabular"
 		   name="bean"
            schema="vigilantGroup.block1" >
 	<fr:layout>
-		<fr:property name="classes" value="thlight mtop1"/>		
+		<fr:property name="classes" value="thlight mtop1 tstyle5"/>		
 	</fr:layout>
 	<fr:destination name="cancel" path="/vigilancy/vigilantGroupManagement.do?method=prepareVigilantGroupManagement"/>
 </fr:edit>
@@ -28,7 +31,7 @@
            schema="vigilantGroup.block2" 
 >
 	<fr:layout>
-		<fr:property name="classes" value="thlight"/>
+		<fr:property name="classes" value="thlight tstyle5"/>
 	</fr:layout>
 </fr:edit>
 
@@ -40,7 +43,7 @@
            schema="vigilantGroup.block3" 
 >
 	<fr:layout>
-		<fr:property name="classes" value="thlight"/>
+		<fr:property name="classes" value="thlight tstyle5"/>
 	</fr:layout>
 </fr:edit>
 
