@@ -9,8 +9,8 @@
 <bean:define id="forwardTo" name="forwardTo" scope="request" type="java.lang.String"/>
 <bean:define id="schema" name="schema" scope="request" type="java.lang.String"/>
 
-
-<ul class="asdasd">
+<div style="width: 600px;">
+<ul class="listresearch">
 	<logic:iterate id="participation" name="participations">
 		<bean:define id="participationId" name="participation" property="idInternal"/>
 		<bean:define id="parameters" value="<%= "participationId=" + participationId + "&forwardTo=" +  forwardTo%>" toScope="request" />
@@ -24,3 +24,4 @@
 		</li>
 	</logic:iterate>
 </ul>
+</div>

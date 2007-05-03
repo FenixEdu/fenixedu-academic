@@ -9,7 +9,7 @@
 
 		<bean:define id="currentSchema" name="currentSchema" scope="request" type="java.lang.String"/>
 		<div style="width: 600px;">
-			<ul>
+			<ul class="listresearch">
 			<logic:iterate id="result" name="results" scope="request">
 	 			<bean:define id="resultId" name="result" property="idInternal"/>
 					<li class="mtop1">

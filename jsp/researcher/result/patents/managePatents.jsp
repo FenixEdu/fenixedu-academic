@@ -30,9 +30,9 @@
 	</logic:empty>
 
 	<logic:notEmpty name="resultPatents">
-		<p class="mtop2 mbottom0"><strong><bean:message bundle="RESEARCHER_RESOURCES" key="label.patentList"/></strong></p>
+		<p class="separator2 mtop2 mbottom0"><bean:message bundle="RESEARCHER_RESOURCES" key="label.patentList"/></p>
 		<div style="width: 600px;">
-		<ul>
+		<ul class="listresearch">
 		<logic:iterate id="patent" name="resultPatents">
 			<bean:define id="patentId" name="patent" property="idInternal"/>
 			<li class="mtop1">
