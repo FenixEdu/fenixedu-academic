@@ -114,6 +114,11 @@
 			<bean:message key="label.list.byCriteria.grant.owner.designation"/>
 			</html:link>
         </th>
+        <th class="listClasses-header">
+			<html:link page='<%= "/listGrantContractByCriteria.do?method=prepareListGrantContractByCriteria&amp;spanNumber=" + spanNumber + "&amp;orderBy=orderByDateEndContract&amp;totalElements=" + totalElements + "&amp;argsInRequest=1&amp;filterType=" + filterType + "&amp;beginContract=" + beginContract + "&amp;endContract=" + endContract + "&amp;grantTypeId=" + grantTypeId  + "&amp;validToTheDate=" + validToTheDate %>' >
+			<bean:message key="label.list.byCriteria.grant.owner.valueOfGrantPayment"/>
+			</html:link>
+        </th>
          <th class="listClasses-header">
 			<html:link page='<%= "/listGrantContractByCriteria.do?method=prepareListGrantContractByCriteria&amp;spanNumber=" + spanNumber + "&amp;orderBy=orderByDateEndContract&amp;totalElements=" + totalElements + "&amp;argsInRequest=1&amp;filterType=" + filterType + "&amp;beginContract=" + beginContract + "&amp;endContract=" + endContract + "&amp;grantTypeId=" + grantTypeId  + "&amp;validToTheDate=" + validToTheDate %>' >
 			<bean:message key="label.list.byCriteria.grant.owner.totalOfGrantPayment"/>
@@ -174,6 +179,11 @@
 			<td class="listClasses">&nbsp;
 				<logic:present name="infoListGrantOwnerByOrder" property="designation">
 			        <bean:write name="infoListGrantOwnerByOrder" property="designation"/>
+			    </logic:present>&nbsp;
+			</td>
+			<td class="listClasses">&nbsp;
+				<logic:present name="infoListGrantOwnerByOrder" property="valueOfGrantPayment">
+			        <bean:write name="infoListGrantOwnerByOrder" property="valueOfGrantPayment"/>
 			    </logic:present>&nbsp;
 			</td>
 			<td class="listClasses">&nbsp;
