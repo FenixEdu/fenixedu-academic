@@ -5,16 +5,14 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
-<h2><bean:message key="label.notNeedToEnrol.enrolment" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
+<h2><bean:message key="label.notNeedToEnrol.chooseStudent" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
-<br/>
-<br/>
+
 <fr:form action="/notNeedToEnrolEnrolments.do?method=readNotNeedToEnrol">
-	<table>
+	<table class="thlight thmiddle mtop15">
 		<tr>
 			<td>
-				<fr:edit id="bean" name="bean" 
-					type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.notNeedToEnrol.NotNeedToEnrolEnrolmentsBean" 
+				<fr:edit id="bean" name="bean" type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.notNeedToEnrol.NotNeedToEnrolEnrolmentsBean" 
 					schema="notNeedToEnroll.choose.student.number">
 					<fr:destination name="invalid" path="/notNeedToEnrolEnrolments.do?method=prepare"/>
 				</fr:edit>

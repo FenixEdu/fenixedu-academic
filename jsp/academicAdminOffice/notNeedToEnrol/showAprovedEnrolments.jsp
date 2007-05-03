@@ -7,7 +7,6 @@
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2><bean:message key="label.notNeedToEnrol.enrolment" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
-
 <fr:form action="/notNeedToEnrolEnrolments.do">
 	<html:hidden property="method" value="editNotNeedToEnrol"/>
 	<logic:notEmpty name="bean" property="aprovedEnrolments">

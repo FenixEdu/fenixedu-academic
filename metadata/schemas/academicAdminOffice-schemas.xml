@@ -868,8 +868,9 @@
 	<slot name="studentCurricularPlan.degreeCurricularPlan.name" key="label.degreeCurricularPlan"/>
 	<slot name="curricularCourse.name" key="label.notNeedToEnrol.name"/>
 	<slot name="curricularCourse.code" key="label.notNeedToEnrol.code"/>
-	<slot name="curricularCourse.degreeCurricularPlan.name" key="label.notNeedToEnrol.degreeCurricularPlan"/>	
+	<slot name="curricularCourse.degreeCurricularPlan.name" key="label.notNeedToEnrol.degreeCurricularPlan.withbreak"/>
 	<slot name="enrolments" layout="list" key="label.notNeedToEnrol.associated.enrolments">
+		<property name="classes" value="list5 mvert0"/>
 		<property name="eachLayout" value="values" />
 		<property name="eachSchema" value="notNeedToEnroll.view.enrolment" />
 	</slot>
