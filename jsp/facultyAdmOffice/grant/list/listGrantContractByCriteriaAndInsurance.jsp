@@ -177,7 +177,7 @@
 			</td>
 			<td class="listClasses">&nbsp;
 				<logic:present name="infoListGrantOwnerByOrder" property="totalInsurance">
-			        <bean:write name="infoListGrantOwnerByOrder" property="totalInsurance"/>
+			        <bean:write name="infoListGrantOwnerByOrder" property="totalInsuranceString"/>
 			    </logic:present>&nbsp;
 			</td>
 			<td class="listClasses">&nbsp;
