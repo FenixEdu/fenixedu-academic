@@ -83,6 +83,12 @@ public class NotNeedToEnrolEnrolmentsDA extends FenixDispatchAction{
 	    notNeedToEnrolList.addAll(registration.getActiveStudentCurricularPlan().getNotNeedToEnrollCurricularCourses());
 	}
 	
+	if(notNeedToEnrolList.isEmpty()) {
+	    addActionMessage("error", request, "error.notNeedToEnrol.empty", notNeedToEnrolEnrolmentsBean.getNumber().toString());
+	    RenderUtils.invalidateViewState();
+	    return prepare(mapping, form, request, response);
+	}
+	
 	notNeedToEnrolEnrolmentsBean.setObjects(notNeedToEnrolList);
 	request.setAttribute("bean", notNeedToEnrolEnrolmentsBean);
 	
