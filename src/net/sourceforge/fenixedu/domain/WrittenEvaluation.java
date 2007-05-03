@@ -709,4 +709,13 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
 	    }
 	    return vigilancies;
 	}
+
+	public boolean hasScopeFor(final Integer year, final Integer semester) {
+	    for (final DegreeModuleScope degreeModuleScope : getDegreeModuleScopes()) {
+		if (degreeModuleScope.getCurricularYear().equals(year) && degreeModuleScope.getCurricularSemester().equals(semester)) {
+		    return true;
+		}
+	    }
+	    return false;
+	}
 }

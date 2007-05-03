@@ -59,6 +59,8 @@
 						<bean:define id="className" name="evaluation" property="class.name"/>
 						<% if (evaluationType == null || evaluationType.length() == 0 || evaluationType.equals(className)) { %>
 						<logic:equal name="className" value="net.sourceforge.fenixedu.domain.WrittenTest">
+							<bean:define id="writtenTest" name="evaluation" type="net.sourceforge.fenixedu.domain.WrittenTest"/>
+							<% if (writtenTest.hasScopeFor(year, semester)) { %>
 							<tr>
 								<td>
 									<bean:write name="executionCourse" property="nome"/>
@@ -87,8 +89,11 @@
 									</logic:iterate>
 								</td>
 							</tr>
+							<% } %>
 						</logic:equal>
 						<logic:equal name="className" value="net.sourceforge.fenixedu.domain.Exam">
+							<bean:define id="writtenTest" name="evaluation" type="net.sourceforge.fenixedu.domain.Exam"/>
+							<% if (writtenTest.hasScopeFor(year, semester)) { %>
 							<tr>
 								<td>
 									<bean:write name="executionCourse" property="nome"/>
@@ -117,6 +122,7 @@
 									</logic:iterate>
 								</td>
 							</tr>
+							<% } %>
 						</logic:equal>
 						<% } %>
 					</logic:iterate>

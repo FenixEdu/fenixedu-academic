@@ -94,7 +94,7 @@ public class WrittenEvaluationsSearchByDegreeAndYear extends FenixContextDispatc
 						return (degree1.getTipoCurso() == degree2.getTipoCurso()) ? 
 								degree1.getNome().compareTo(degree2.getNome()) :
 								degree1.getTipoCurso().compareTo(degree2.getTipoCurso());
-					}}); 
+					}});
         for (final ExecutionDegree executionDegree : executionPeriod.getExecutionYear().getExecutionDegrees()) {
             if (executionDegreeID == null || executionDegreeID.length() == 0 || executionDegreeID.equals(executionDegree.getIdInternal().toString())) {
             	final Map<Integer, Set<ExecutionCourse>> executionCoursesByCurricularYear = new TreeMap<Integer, Set<ExecutionCourse>>(new Comparator<Integer>() {
@@ -105,27 +105,26 @@ public class WrittenEvaluationsSearchByDegreeAndYear extends FenixContextDispatc
                 for (final CurricularCourse curricularCourse : executionDegree.getDegreeCurricularPlan().getCurricularCourses()) {
                 	for (final DegreeModuleScope degreeModuleScope : curricularCourse.getDegreeModuleScopes()) {
                         if(degreeModuleScope.isActiveForExecutionPeriod(executionPeriod)) {
-                    		final Integer curricularSemester = degreeModuleScope.getCurricularSemester();
-               				final Integer curricularYear = degreeModuleScope.getCurricularYear();               				
-               				if (curricularSemester.equals(executionPeriod.getSemester()) &&
-                                    (selectAllCurricularYears != null && selectAllCurricularYears.booleanValue()) || years.contains(curricularYear)) {
-               					
+                    	    final Integer curricularSemester = degreeModuleScope.getCurricularSemester();
+               		    final Integer curricularYear = degreeModuleScope.getCurricularYear();               				
+               		    if (curricularSemester.equals(executionPeriod.getSemester()) &&
+               				(selectAllCurricularYears != null && selectAllCurricularYears.booleanValue()) || years.contains(curricularYear)) {
                                 final Set<ExecutionCourse> executionCourses;
-               					if (!executionCoursesByCurricularYear.containsKey(curricularYear)) {
-               						executionCourses = new TreeSet<ExecutionCourse>(new Comparator<ExecutionCourse>() {
-    									public int compare(final ExecutionCourse executionCourse1, final ExecutionCourse executionCourse2) {
-    										return executionCourse1.getNome().compareTo(executionCourse2.getNome());
-    									}});
-               						executionCoursesByCurricularYear.put(curricularYear, executionCourses);
-               					} else {
-               						executionCourses = executionCoursesByCurricularYear.get(curricularYear);
-               					}
+                                if (!executionCoursesByCurricularYear.containsKey(curricularYear)) {
+                                    executionCourses = new TreeSet<ExecutionCourse>(new Comparator<ExecutionCourse>() {
+                                	public int compare(final ExecutionCourse executionCourse1, final ExecutionCourse executionCourse2) {
+                                	    return executionCourse1.getNome().compareTo(executionCourse2.getNome());
+                                	}});
+                                    executionCoursesByCurricularYear.put(curricularYear, executionCourses);
+                                } else {
+                                    executionCourses = executionCoursesByCurricularYear.get(curricularYear);
+                                }
                                 for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCourses()) {
-                                   	if (executionPeriod == executionCourse.getExecutionPeriod()) {
-                                   		executionCourses.add(executionCourse);
-                                   	}
-                               }
-               				}
+                                    if (executionPeriod == executionCourse.getExecutionPeriod()) {
+                                	executionCourses.add(executionCourse);
+                                    }
+                                }
+               		    }
                     	}
                     }
                 }
