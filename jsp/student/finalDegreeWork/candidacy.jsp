@@ -148,7 +148,7 @@
 					        </html:link>
 						</td>
 						<td class="listClasses">
-							<bean:write name="groupProposal" property="finalDegreeWorkProposal.orientator.infoPerson.nome"/>
+							<bean:write name="groupProposal" property="finalDegreeWorkProposal.orientator.person.name"/>
 						</td>
 						<td class="listClasses" rowspan="2">
 							<bean:write name="groupProposal" property="finalDegreeWorkProposal.companionName"/>
@@ -165,7 +165,7 @@
 					<tr>
 						<td class="listClasses">
 							<logic:present name="groupProposal" property="finalDegreeWorkProposal.coorientator">
-								<bean:write name="groupProposal" property="finalDegreeWorkProposal.coorientator.infoPerson.nome"/>
+								<bean:write name="groupProposal" property="finalDegreeWorkProposal.coorientator.person.name"/>
 							</logic:present>
 						</td>
 					</tr>
