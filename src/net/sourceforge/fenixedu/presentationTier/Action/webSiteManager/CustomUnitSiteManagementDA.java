@@ -82,6 +82,15 @@ public abstract class CustomUnitSiteManagementDA extends SiteManagementDA {
         return mapping.findForward("editConfiguration");
     }
 
+    public ActionForward updateI18n(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        IViewState viewState = RenderUtils.getViewState("i18n");
+        if (viewState != null && viewState.isValid()) {
+            request.setAttribute("i18nChanged", true);
+        }
+        
+        return mapping.findForward("editConfiguration");
+    }
+
     public ActionForward updateConfiguration(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
         IViewState viewState = RenderUtils.getViewState("visualization");
         if (viewState != null && viewState.isValid()) {

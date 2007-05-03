@@ -371,6 +371,7 @@
     
     <definition name="department-site-front-page-intro-float" extends="definition.public.department.frontPage">
         <put name="body" value="/commons/sites/unitSite/frontPage_IntroFloat.jsp"/>
+		<put name="useFlags" value="false"/>
     </definition>
 
     <definition name="department-employees" extends="definition.public.department">

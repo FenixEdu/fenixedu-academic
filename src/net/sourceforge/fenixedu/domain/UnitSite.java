@@ -68,6 +68,12 @@ public abstract class UnitSite extends UnitSite_Base {
         super.setPersonalizedLogo(personalizedLogo);
     }
     
+    @Override
+    @Checked("UnitSitePredicates.managers")
+    public void setShowFlags(Boolean showFlags) {
+    	super.setShowFlags(showFlags);
+    }
+    
     public boolean isDefaultLogoUsed() {
     	Boolean bool = getPersonalizedLogo();
     	return (bool==null) ? true : !bool;

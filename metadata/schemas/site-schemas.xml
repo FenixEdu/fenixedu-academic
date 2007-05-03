@@ -129,3 +129,10 @@
 <schema name="site.customLink.label" type="net.sourceforge.fenixedu.domain.UnitSiteLink" bundle="WEBSITEMANAGER_RESOURCES">
     <slot name="label"/>
 </schema>
+
+<schema name="custom.unitSite.i18n" type="net.sourceforge.fenixedu.domain.UnitSite" bundle="WEBSITEMANAGER_RESOURCES">
+    <slot name="showFlags" layout="radio" key="label.site.showFlags">
+        <property name="classes" value="liinline nobullet"/>
+    </slot>
+</schema>
+

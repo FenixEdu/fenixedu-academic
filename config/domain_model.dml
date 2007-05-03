@@ -4661,6 +4661,7 @@ class net.sourceforge.fenixedu.domain.Site extends net.sourceforge.fenixedu.doma
 		Boolean showIntroduction;
 		Boolean showAnnouncements;
 		Boolean showEvents;
+		Boolean showFlags;
 		UnitSiteLayoutType layout;
 		MultiLanguageString sideBanner;
 	}

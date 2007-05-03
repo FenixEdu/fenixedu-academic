@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add showFlags attribute to UnitSite" ChangeUnitSite.sql

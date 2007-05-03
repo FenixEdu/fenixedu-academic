@@ -19,20 +19,32 @@
     </p>
 </div>
 
-<%-- 
+
 <div class="mtop15 mbottom05">
-    <strong>Opções de internacionalização:</strong>
+    <strong><bean:message key="title.site.configuration.i18n" bundle="WEBSITEMANAGER_RESOURCES"/>:</strong>
 </div>
-<table class="tstyle5 thlight thright mtop05">
-	<tr>
-		<th>Mostrar bandeiras:</th>
-		<td>Sim / Não</td>
-	</tr>
-</table>
---%>
 
+<logic:present name="i18nChanged">
+    <p class="mbottom05">
+        <span class="success0">
+            <bean:message key="message.site.configuration.i18n.changed" bundle="WEBSITEMANAGER_RESOURCES"/>
+        </span>
+    </p>
+</logic:present>
 
-<p class="mbottom05">
+<fr:form action="<%= String.format("%s?method=updateI18n&amp;%s", actionName, context) %>">
+	<fr:edit id="i18n" name="site" schema="custom.unitSite.i18n">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle5 thlight thright mtop05"/>
+		</fr:layout>
+	</fr:edit>
+	
+	<html:submit>
+		<bean:message key="button.save"/>
+	</html:submit>
+</fr:form>
+
+<p class="mtop2 mbottom05">
     <strong><bean:message key="title.site.configuration.visualization" bundle="WEBSITEMANAGER_RESOURCES"/>:</strong>
 </p>
 
