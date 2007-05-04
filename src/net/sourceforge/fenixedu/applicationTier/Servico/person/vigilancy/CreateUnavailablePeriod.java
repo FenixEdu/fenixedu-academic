@@ -16,7 +16,7 @@ public class CreateUnavailablePeriod extends Service {
 	public void run(Vigilant vigilant, DateTime begin, DateTime end, String justification)
 			throws ExcepcaoPersistencia {
 
-		new UnavailablePeriod(begin, end, justification, vigilant);
+		CreateUnavailable(vigilant, begin, end,justification);
 		for(VigilantGroup group : vigilant.getVigilantGroups()) {
 			sendEmail(vigilant, begin, end, justification, group);
 		}
@@ -24,10 +24,14 @@ public class CreateUnavailablePeriod extends Service {
 
 	public void run(Vigilant vigilant, DateTime begin, DateTime end, String justification,
 			VigilantGroup group) throws ExcepcaoPersistencia {
-		run(vigilant, begin, end, justification);
+		CreateUnavailable(vigilant, begin, end,justification);
 		sendEmail(vigilant, begin, end, justification, group);
 	}
 
+	private void CreateUnavailable(Vigilant vigilant, DateTime begin, DateTime end, String justification) {
+		new UnavailablePeriod(begin, end, justification, vigilant);
+	}
+	
 	private void sendEmail(Vigilant vigilant, DateTime begin, DateTime end, String justification,
 			VigilantGroup group) {
 		ArrayList<String> replyTos = new ArrayList<String>();
