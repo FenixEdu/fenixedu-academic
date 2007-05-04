@@ -1,63 +1,55 @@
-.fenixCalendar{
-	width: 80%;
-	padding: 0;
-	border-collapse: collapse;
+.fenixCalendar {
+width: 80%;
+padding: 0;
+border-collapse: collapse;
 }
 
-.fenixCalendar_monthRow{	
-	color: #000000;
-	font-weight: 600;
-	background: #C1C1C1;
-	text-align: center;
+.fenixCalendar_monthRow {
+color: #000000;
+font-weight: 600;
+background: #bbb;
+text-align: center;
 }
 
-.fenixCalendar_weekRow{
-	border-left: 1px solid #C1C1C1; 
-	border-right: 1px solid #C1C1C1; 
-	border-bottom: 1px solid #C1C1C1; 
+.fenixCalendar_weekRow td {
+border: 1px solid #bbb;
 }
 
-.fenixCalendar_daysOfWeek{
-	color: #FFFFFF;
-	font-weight: 600;
-	text-align: center;	
-	background: #000000;
-	border-top: 1px solid #C1C1C1;
-	border-right: 1px solid #C1C1C1;
-	border-left: 1px solid #C1C1C1; 
-	border-bottom: 1px solid #C1C1C1; 
-	width: 16.7%;
+.fenixCalendar_daysOfWeek td {
+color: #ffffff;
+font-weight: 600;
+text-align: center;	
+background: #000000;
+border: 1px solid #000;
+border-bottom: 1px solid #bbb;
+width: 16.7%;
 }
 
 .fenixCalendar_defaultDay{
-	text-align: right; 
-	background: #EBECED;
-	border-left: 1px solid #C1C1C1; 
-	border-right: 1px solid #C1C1C1; 	
-	width: 16.7%;		
+text-align: right; 
+background: #eee;
+border-left: 1px solid #bbb; 
+border-right: 1px solid #bbb; 	
+width: 16.7%;		
 }
 
 .fenixCalendar_dayWithObjectOccurence{
-	text-align: right;
-	background: #BCBCBC;
-	border-left: 1px solid #C1C1C1; 
-	border-right: 1px solid #C1C1C1; 	
-	width: 16.7%;	
+text-align: right;
+background: #ddd;
+border-left: 1px solid #bbb; 
+border-right: 1px solid #bbb; 	
+width: 16.7%;	
 }
 
 .greyBorderClass {
-	background-color: #EBECED;
-	border-style: solid;
-	border-width: 1px;
-	border-color: #909090;
-	width: 100%
+background-color: #eee;
+border: 1px solid #909090;
+width: 100%
 }
 .blackBorderClass {
-	background-color: #ffffff;
-	border-style: solid;
-	border-width: 1px;
-	border-color: #909090
+background-color: #ffffff;
+border: 1px solid #909090;
 }
 .boldFontClass { 
-	font-weight: bold
+font-weight: bold
 }

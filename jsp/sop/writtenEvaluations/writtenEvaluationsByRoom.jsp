@@ -8,7 +8,7 @@
 	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 
 	<f:loadBundle basename="resources/ApplicationResourcesSOP" var="bundle"/>
-	<h:outputFormat value="<h2>#{bundle['link.writtenEvaluation.by.room']}</h2>" escape="false"/>
+	<h:outputFormat value="<h2 class='printhidden'>#{bundle['link.writtenEvaluation.by.room']}</h2>" escape="false"/>
 
 	<h:panelGroup rendered="#{writtenEvaluationsByRoom.roomsToDisplayMap == null}">
 	<h:outputFormat value="<p>#{bundle['message.writtenEvaluation.by.room']}</p>" escape="false"/>
@@ -114,7 +114,7 @@
 
 	<fc:dataRepeater value="#{writtenEvaluationsByRoom.writtenEvaluationCalendarLinksEntryList}" var="calendarLinks">
 		<h:panelGroup>
-			<h:outputFormat value=" <br style='page-break-before:always;'/> " escape="false"/>
+			<h:outputFormat value="" escape="false"/>
 			<h:panelGrid columns="6" rowClasses="listClasses-header, listClasses" width="80%">
 				<h:outputText value="#{bundle['property.room.name']}"/>
 				<h:outputText value="#{bundle['property.room.building']}"/>
