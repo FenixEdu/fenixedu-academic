@@ -37,7 +37,7 @@ public class ValidateEmailDA extends FenixDispatchAction {
 	}
 
 	final StringBuilder path = new StringBuilder();
-	path.append("https://ciist.ist.utl.pt/SomePage?hash=");
+	path.append("https://ciist.ist.utl.pt/servicos/self_service/verify.php?hash=");
 	path.append(validateEmailForm.getValidationString());
 	actionForward.setPath(path.toString());
 
