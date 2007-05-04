@@ -26,3 +26,7 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "Add showFlags attribute to UnitSite" ChangeUnitSite.sql
+execute "Add link field to Unit Site banner" AddLinkToUnitSiteBanner.sql
+execute "Add show title to items" ChangeItem.sql
