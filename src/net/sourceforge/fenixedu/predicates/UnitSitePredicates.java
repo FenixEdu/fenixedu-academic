@@ -21,7 +21,8 @@ public class UnitSitePredicates {
     public static final AccessControlPredicate<UnitSiteLink> linkSiteManagers = new AccessControlPredicate<UnitSiteLink>() {
         
         public boolean evaluate(UnitSiteLink link) {
-            return managers.evaluate(nullOr(link.getTopUnitSite(), link.getFooterUnitSite()));
+            UnitSite site = nullOr(link.getTopUnitSite(), link.getFooterUnitSite());
+			return site == null ? true : managers.evaluate(site);
         }
         
     };

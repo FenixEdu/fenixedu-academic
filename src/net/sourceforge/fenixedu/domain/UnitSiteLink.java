@@ -5,12 +5,34 @@ import java.util.Comparator;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 
+import dml.runtime.RelationAdapter;
+
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.Checked;
+import net.sourceforge.fenixedu.predicates.UnitSitePredicates;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 import net.sourceforge.fenixedu.util.domain.InverseOrderedRelationAdapter;
 
 public class UnitSiteLink extends UnitSiteLink_Base {
     
+	private static final class CheckLinkAuthorization extends RelationAdapter<UnitSiteLink, UnitSite> {
+		@Override
+		public void beforeAdd(UnitSiteLink link, UnitSite site) {
+			super.beforeAdd(link, site);
+			
+			if (link != null && site != null) {
+				if (! UnitSitePredicates.managers.evaluate(site)) {
+					throw new DomainException("unitSite.link.notAuthorized");
+				}
+			}
+		}
+	}
+
+	static {
+		UnitSiteTopLinks   .addListener(new CheckLinkAuthorization());
+		UnitSiteFooterLinks.addListener(new CheckLinkAuthorization());
+	}
+	
     public static Comparator<UnitSiteLink> COMPARATOR_BY_ORDER = new Comparator<UnitSiteLink>() {
         private ComparatorChain chain = null;
 

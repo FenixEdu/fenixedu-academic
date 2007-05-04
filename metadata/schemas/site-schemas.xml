@@ -89,6 +89,13 @@
     <slot name="link" key="label.site.banner.link">
         <property name="size" value="40"/>
     </slot>
+    <slot name="weight" key="label.site.banner.weight">
+    	<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.NumberRangeValidator">
+    		<property name="lowerBound" value="0"/>
+    		<property name="required" value="false"/>
+    	</validator>
+        <property name="size" value="10"/>
+    </slot>
 </schema>
 
 <schema name="site.banner.view" type="net.sourceforge.fenixedu.domain.UnitSiteBanner" bundle="WEBSITEMANAGER_RESOURCES">
@@ -107,6 +114,9 @@
         <property name="subLayout" value="webcolor"/>
     </slot>
     <slot name="link" key="label.site.banner.link" layout="null-as-label">
+        <property name="label" value="-"/>
+    </slot>
+    <slot name="weight" key="label.site.banner.weight" layout="null-as-label">
         <property name="label" value="-"/>
     </slot>
 </schema>

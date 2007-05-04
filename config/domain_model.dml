@@ -4673,6 +4673,7 @@ class net.sourceforge.fenixedu.domain.Site extends net.sourceforge.fenixedu.doma
 	
 		String color;
 		String link;
+		Integer weight;
 	}
 
 	class net.sourceforge.fenixedu.domain.UnitSiteLink extends net.sourceforge.fenixedu.domain.DomainObject {

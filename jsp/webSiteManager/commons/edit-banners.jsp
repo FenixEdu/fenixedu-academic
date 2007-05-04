@@ -145,6 +145,28 @@
                             <td class="tdclear tderror1">
                             </td>
                         </tr>
+                        <tr>
+                            <th>
+                                <bean:message key="label.site.banner.weight" bundle="WEBSITEMANAGER_RESOURCES"/>:
+                            </th>
+                            <td>
+                                <fr:edit id="editBannerWeight" name="editBannerBean" slot="weight">
+									<fr:validator name="net.sourceforge.fenixedu.presentationTier.renderers.validators.NumberRangeValidator">
+							    		<fr:property name="lowerBound" value="0"/>
+							    		<fr:property name="required" value="false"/>
+							    	</fr:validator>
+                                	
+                                    <fr:layout>
+                                    	<fr:property name="size" value="10"/>
+                                    </fr:layout>
+                                </fr:edit>
+                            </td>
+                            <td class="tdclear tderror1">
+                            	<fr:hasMessages for="editBannerWeight" type="validation">
+                                    <fr:message for="editBannerWeight" type="validation"/>
+                                </fr:hasMessages>
+                            </td>
+                        </tr>
                     </table>
                     
                     <html:submit>

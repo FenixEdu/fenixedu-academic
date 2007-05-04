@@ -8,10 +8,10 @@
 
 <bean:define id="style" type="java.lang.String" value="width: 100%; float: left; background-color: #019AD7; background-image: url(http://www.ist.utl.pt/img/spot/bolonha/bolonha_bck.gif); background-repeat: repeat-x;" toScope="request"/>
 
-<logic:notEmpty name="site" property="banners">
+<logic:equal name="site" property="bannerAvailable" value="true">
  	<bean:define id="banner" type="net.sourceforge.fenixedu.domain.UnitSiteBanner" name="site" property="currentBanner" toScope="request"/>
 	<bean:define id="style" type="java.lang.String" value="<%= ((banner.getColor()!=null) ? "background-color: " + banner.getColor() + ";" : "") + (banner.hasBackgroundImage() ? " background-image: url('" + banner.getBackgroundImage().getDownloadUrl() +"'); background-repeat: repeat-x;" : "") %>" toScope="request"/>
-</logic:notEmpty>
+</logic:equal>
 
 <logic:notEqual name="site" property="showBanner" value="true">
 	<logic:notEqual name="site" property="showIntroduction" value="true">

@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.UnitSiteBannerFile;
 
 public class UpdateUnitSiteBanner extends UnitSiteBannerFileService {
 
-    public void run(UnitSite site, UnitSiteBanner banner, InputStream mainStream, String mainName, InputStream backStream, String backName, String color, String link) {
+    public void run(UnitSite site, UnitSiteBanner banner, InputStream mainStream, String mainName, InputStream backStream, String backName, String color, String link, Integer weight) {
         UnitSiteBannerFile main = banner.getMainImage();
         if (main != null && mainStream != null) {
             main.delete();
@@ -19,7 +19,7 @@ public class UpdateUnitSiteBanner extends UnitSiteBannerFileService {
             background.delete();
         }
 
-        updateBanner(site, banner, mainStream, mainName, backStream, backName, color, link);
+        updateBanner(site, banner, mainStream, mainName, backStream, backName, color, link, weight);
     }
     
 }

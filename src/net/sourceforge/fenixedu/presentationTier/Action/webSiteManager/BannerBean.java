@@ -15,7 +15,8 @@ public class BannerBean implements Serializable {
     private SimpleFileBean backgroundImage;
     private String color;
     private String link;
-
+    private Integer weight;
+    
     public BannerBean() {
         super();
         
@@ -26,8 +27,9 @@ public class BannerBean implements Serializable {
     public BannerBean(UnitSiteBanner banner) {
         this();
         
-        this.color = banner.getColor();
-        this.link  = banner.getLink();
+        this.color  = banner.getColor();
+        this.link   = banner.getLink();
+        this.weight = banner.getWeight();
     }
     
     public SimpleFileBean getBackgroundImage() {
@@ -62,4 +64,12 @@ public class BannerBean implements Serializable {
 		this.link = link;
 	}
 
+	public Integer getWeight() {
+		return weight;
+	}
+
+	public void setWeight(Integer weight) {
+		this.weight = weight;
+	}
+	
 }

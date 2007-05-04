@@ -130,14 +130,66 @@ public abstract class UnitSite extends UnitSite_Base {
         return sorted;
     }
     
+    public boolean isBannerAvailable() {
+    	Integer sum = null;
+    	
+    	List<UnitSiteBanner> banners = getBanners();
+		for (UnitSiteBanner banner : banners) {
+    		Integer weight = banner.getWeight();
+    		
+			if (weight != null) {
+    			if (sum == null) {
+    				sum = weight;
+    			}
+    			else {
+    				sum += weight;
+    			}
+    		}
+    	}
+    	
+    	return !banners.isEmpty() && (sum == null || sum > 0);
+    }
+    
     public UnitSiteBanner getCurrentBanner() {
         List<UnitSiteBanner> banners = getBanners();
         
         if (banners.isEmpty()) {
             return null;
         }
+
+        boolean hasWeight = false;
+        int sum = 0;
+        int[] weights = new int[banners.size()];
         
-        return banners.get(new Random().nextInt() % banners.size());
+        for (int i = 0; i < weights.length; i++) {
+			Integer weight = banners.get(i).getWeight();
+    		weights[i] = weight == null ? 0 : weight;
+    		
+    		hasWeight = hasWeight || weight != null;
+    		sum += weights[i];
+        }
+        
+        if (! hasWeight) {
+        	return banners.get(new Random().nextInt(banners.size()));
+        }
+        else {
+        	if (sum == 0) {
+        		return null;
+        	}
+        	
+        	int pos = new Random().nextInt(sum);
+    		int partialSum = 0;
+        	
+        	for (int i = 0; i < weights.length; i++) {
+        		partialSum += weights[i];
+        		
+        		if (partialSum > pos) {
+        			return banners.get(i);
+        		}
+			}
+        }
+        
+        return null;
     }
     
     /**
