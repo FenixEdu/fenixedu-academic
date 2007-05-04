@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.enrolment.CurriculumModuleEnroledWrapper;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.log.EnrolmentLog;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
@@ -1218,6 +1219,10 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     public boolean isBefore(final Enrolment enrolment) {
 	return getExecutionPeriod().isBefore(enrolment.getExecutionPeriod());
+    }
+
+    public Proposal getDissertationProposal() {
+	return getRegistration().getDissertationProposal(getExecutionYear());
     }
 
 }

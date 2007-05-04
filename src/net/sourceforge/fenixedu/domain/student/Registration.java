@@ -52,6 +52,8 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
@@ -1874,5 +1876,32 @@ public class Registration extends Registration_Base {
 	}
 	return false;
     }
-    
+
+    public Proposal getDissertationProposal(final ExecutionYear executionYear) {
+	for (final GroupStudent groupStudent : getAssociatedGroupStudents()) {
+	    final Group group = groupStudent.getFinalDegreeDegreeWorkGroup();
+	    final Proposal proposalAttributedByCoordinator = group.getProposalAttributed();
+	    if (proposalAttributedByCoordinator != null && isProposalForExecutionYear(proposalAttributedByCoordinator, executionYear)) {
+		return proposalAttributedByCoordinator;
+	    }
+	    final Proposal proposalAttributedByTeacher = group.getProposalAttributedByTeacher();
+	    if (proposalAttributedByTeacher != null && isProposalForExecutionYear(proposalAttributedByTeacher, executionYear)) {
+		if (proposalAttributedByTeacher.isProposalConfirmedByTeacherAndStudents(group)) {
+		    return proposalAttributedByTeacher;
+		}
+	    }
+	}
+	return null;
+    }
+
+    private boolean isProposalForExecutionYear(final Proposal proposal, final ExecutionYear executionYear) {
+	final Scheduleing scheduleing = proposal.getScheduleing();
+	for (final ExecutionDegree executionDegree : scheduleing.getExecutionDegreesSet()) {
+	    if (executionDegree.getExecutionYear() == executionYear) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
 }

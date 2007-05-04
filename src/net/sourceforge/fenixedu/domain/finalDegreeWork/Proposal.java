@@ -23,4 +23,8 @@ public class Proposal extends Proposal_Base {
 	super.setTitle(title);
     }
 
+    public boolean isProposalConfirmedByTeacherAndStudents(final Group group) {
+	return getGroupAttributedByTeacher() == group && group.isConfiremByStudents(this);
+    }
+
 }
