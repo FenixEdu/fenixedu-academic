@@ -38,8 +38,9 @@ public class CourseGroup extends CourseGroup_Base {
 	}
 	return result;
     }
-    
-    static public CourseGroup createRoot(final DegreeCurricularPlan degreeCurricularPlan, final String name, final String nameEn, final DegreeType courseGroupType) {
+
+    static public CourseGroup createRoot(final DegreeCurricularPlan degreeCurricularPlan,
+	    final String name, final String nameEn, final DegreeType courseGroupType) {
 	return new CourseGroup(degreeCurricularPlan, name, nameEn, courseGroupType);
     }
 
@@ -51,27 +52,30 @@ public class CourseGroup extends CourseGroup_Base {
 	this();
 	init(name, nameEn, courseGroupType);
     }
-    
+
     protected void init(final String name, final String nameEn, final DegreeType courseGroupType) {
 	super.setName(StringFormatter.prettyPrint(name));
 	super.setNameEn(StringFormatter.prettyPrint(nameEn));
 	super.setCourseGroupType(courseGroupType);
     }
-    
-    public CourseGroup(final DegreeCurricularPlan degreeCurricularPlan, final String name, final String nameEn, final DegreeType courseGroupType) {
+
+    public CourseGroup(final DegreeCurricularPlan degreeCurricularPlan, final String name,
+	    final String nameEn, final DegreeType courseGroupType) {
 	this(name, nameEn, courseGroupType);
 	if (degreeCurricularPlan == null) {
-	    throw new DomainException("error.degreeStructure.CourseGroup.degreeCurricularPlan.cannot.be.null");
+	    throw new DomainException(
+		    "error.degreeStructure.CourseGroup.degreeCurricularPlan.cannot.be.null");
 	}
 	setParentDegreeCurricularPlan(degreeCurricularPlan);
     }
-    
+
     public CourseGroup(final CourseGroup parentCourseGroup, final String name, final String nameEn,
 	    final DegreeType courseGroupType, final ExecutionPeriod begin, final ExecutionPeriod end) {
-	
+
 	init(name, nameEn, courseGroupType);
 	if (parentCourseGroup == null) {
-	    throw new DomainException("error.degreeStructure.CourseGroup.parentCourseGroup.cannot.be.null");
+	    throw new DomainException(
+		    "error.degreeStructure.CourseGroup.parentCourseGroup.cannot.be.null");
 	}
 	parentCourseGroup.checkDuplicateChildNames(name, nameEn);
 	new Context(parentCourseGroup, this, null, begin, end);
@@ -139,7 +143,8 @@ public class CourseGroup extends CourseGroup_Base {
 	if (isRoot()) {
 	    return super.getParentDegreeCurricularPlan();
 	}
-	return hasAnyParentContexts() ? getParentContexts().get(0).getParentCourseGroup().getParentDegreeCurricularPlan() : null;
+	return hasAnyParentContexts() ? getParentContexts().get(0).getParentCourseGroup()
+		.getParentDegreeCurricularPlan() : null;
     }
 
     public List<Context> getChildContexts(Class<? extends DegreeModule> clazz) {
@@ -162,7 +167,7 @@ public class CourseGroup extends CourseGroup_Base {
 
 	return result;
     }
-    
+
     public List<Context> getChildContexts(ExecutionPeriod executionPeriod) {
 	return getChildContexts(null, executionPeriod);
     }
@@ -230,17 +235,17 @@ public class CourseGroup extends CourseGroup_Base {
     public void setName(String name) {
 	super.setName(name);
     }
-    
+
     @Override
     @Checked("CourseGroupPredicates.curricularPlanMemberWritePredicate")
     public void setNameEn(String nameEn) {
 	super.setNameEn(nameEn);
     }
-    
+
     @Override
     @Checked("CourseGroupPredicates.curricularPlanMemberWritePredicate")
     public void setCourseGroupType(DegreeType courseGroupType) {
-        super.setCourseGroupType(courseGroupType);
+	super.setCourseGroupType(courseGroupType);
     }
 
     public void checkDuplicateChildNames(final String name, final String nameEn) throws DomainException {
@@ -310,7 +315,8 @@ public class CourseGroup extends CourseGroup_Base {
 	}
     }
 
-    public Set<DegreeModule> collectAllChildDegreeModules(final Class<? extends DegreeModule> clazz, final ExecutionYear executionYear) {
+    public Set<DegreeModule> collectAllChildDegreeModules(final Class<? extends DegreeModule> clazz,
+	    final ExecutionYear executionYear) {
 	final Set<DegreeModule> result = new HashSet<DegreeModule>();
 	for (final Context context : this.getChildContexts(executionYear)) {
 	    final DegreeModule degreeModule = context.getChildDegreeModule();
@@ -324,8 +330,9 @@ public class CourseGroup extends CourseGroup_Base {
 	}
 	return result;
     }
-    
-    public Set<DegreeModule> collectAllChildDegreeModules(final Class<? extends DegreeModule> clazz, final ExecutionPeriod executionPeriod) {
+
+    public Set<DegreeModule> collectAllChildDegreeModules(final Class<? extends DegreeModule> clazz,
+	    final ExecutionPeriod executionPeriod) {
 	final Set<DegreeModule> result = new HashSet<DegreeModule>();
 	for (final Context context : getChildContexts(executionPeriod)) {
 	    final DegreeModule degreeModule = context.getChildDegreeModule();
@@ -339,7 +346,7 @@ public class CourseGroup extends CourseGroup_Base {
 	}
 	return result;
     }
-    
+
     public void collectChildDegreeModulesIncludingFullPath(Class<? extends DegreeModule> clazz,
 	    List<List<DegreeModule>> result, List<DegreeModule> previousDegreeModulesPath,
 	    ExecutionYear executionYear) {
@@ -371,18 +378,19 @@ public class CourseGroup extends CourseGroup_Base {
     }
 
     public Collection<CourseGroup> getNotOptionalChildCourseGroups(final ExecutionPeriod executionPeriod) {
-	
+
 	final Collection<DegreeModule> degreeModules = getDegreeModulesByExecutionPeriod(executionPeriod);
 	final Collection<CurricularRule> curricularRules = getCurricularRulesByExecutionPeriod(executionPeriod);
 	final DegreeModulesSelectionLimit degreeModulesSelectionLimit = getDegreeModulesSelectionLimitRule(curricularRules);
-	
+
 	if (degreeModulesSelectionLimit != null) {
-	    
-	    if (degreeModulesSelectionLimit.getMinimumLimit().equals(degreeModulesSelectionLimit.getMaximumLimit())
+
+	    if (degreeModulesSelectionLimit.getMinimumLimit().equals(
+		    degreeModulesSelectionLimit.getMaximumLimit())
 		    && degreeModulesSelectionLimit.getMaximumLimit().equals(degreeModules.size())) {
-		
+
 		return filterCourseGroups(degreeModules);
-		
+
 	    } else {
 		return Collections.EMPTY_LIST;
 	    }
@@ -400,16 +408,19 @@ public class CourseGroup extends CourseGroup_Base {
 	return result;
     }
 
-    private DegreeModulesSelectionLimit getDegreeModulesSelectionLimitRule(final Collection<CurricularRule> curricularRules) {
+    private DegreeModulesSelectionLimit getDegreeModulesSelectionLimitRule(
+	    final Collection<CurricularRule> curricularRules) {
 	for (final CurricularRule curricularRule : curricularRules) {
-	    if (curricularRule.getCurricularRuleType().equals(CurricularRuleType.DEGREE_MODULES_SELECTION_LIMIT)) {
+	    if (curricularRule.getCurricularRuleType().equals(
+		    CurricularRuleType.DEGREE_MODULES_SELECTION_LIMIT)) {
 		return (DegreeModulesSelectionLimit) curricularRule;
 	    }
 	}
 	return null;
     }
 
-    private Collection<CurricularRule> getCurricularRulesByExecutionPeriod(final ExecutionPeriod executionPeriod) {
+    private Collection<CurricularRule> getCurricularRulesByExecutionPeriod(
+	    final ExecutionPeriod executionPeriod) {
 	final Collection<CurricularRule> result = new HashSet<CurricularRule>();
 	for (final CurricularRule curricularRule : this.getCurricularRulesSet()) {
 	    if (curricularRule.isValid(executionPeriod)) {
@@ -419,7 +430,8 @@ public class CourseGroup extends CourseGroup_Base {
 	return result;
     }
 
-    private Collection<DegreeModule> getDegreeModulesByExecutionPeriod(final ExecutionPeriod executionPeriod) {
+    private Collection<DegreeModule> getDegreeModulesByExecutionPeriod(
+	    final ExecutionPeriod executionPeriod) {
 	final Collection<DegreeModule> result = new HashSet<DegreeModule>();
 	for (final Context context : this.getChildContexts()) {
 	    if (context.isValid(executionPeriod)) {
@@ -444,23 +456,23 @@ public class CourseGroup extends CourseGroup_Base {
 
     public Collection<Context> getContextsWithCurricularCourseByCurricularPeriod(
 	    final CurricularPeriod curricularPeriod, final ExecutionPeriod executionPeriod) {
-	
+
 	final Collection<Context> result = new HashSet<Context>();
-	
+
 	for (final Context context : this.getChildContextsSet()) {
-	    
-	    if (context.getChildDegreeModule().isLeaf() 
-		    && context.hasCurricularPeriod()
+
+	    if (context.getChildDegreeModule().isLeaf() && context.hasCurricularPeriod()
 		    && context.getCurricularPeriod().equals(curricularPeriod)
 		    && context.isValid(executionPeriod)) {
-		
+
 		result.add(context);
 	    }
 	}
 	return result;
     }
-    
-    public Set<DegreeModule> getOpenChildDegreeModulesByExecutionPeriod(final ExecutionPeriod executionPeriod) {
+
+    public Set<DegreeModule> getOpenChildDegreeModulesByExecutionPeriod(
+	    final ExecutionPeriod executionPeriod) {
 	final Set<DegreeModule> result = new HashSet<DegreeModule>();
 	for (final Context context : getChildContexts()) {
 	    if (context.isOpen(executionPeriod)) {
@@ -469,7 +481,7 @@ public class CourseGroup extends CourseGroup_Base {
 	}
 	return result;
     }
-    
+
     @Override
     public Double getMaxEctsCredits(final ExecutionPeriod executionPeriod) {
 	final CreditsLimit creditsLimit = getCreditsLimitRule(executionPeriod);
@@ -480,15 +492,16 @@ public class CourseGroup extends CourseGroup_Base {
 	if (modulesSelectionLimit != null) {
 	    final Collection<DegreeModule> modulesByExecutionPeriod = getOpenChildDegreeModulesByExecutionPeriod(executionPeriod);
 	    if (modulesSelectionLimit.getMaximumLimit().intValue() != modulesByExecutionPeriod.size()) {
-		return countMaxEctsCredits(modulesByExecutionPeriod, executionPeriod, modulesSelectionLimit.getMaximumLimit());
+		return countMaxEctsCredits(modulesByExecutionPeriod, executionPeriod,
+			modulesSelectionLimit.getMaximumLimit());
 	    }
 	}
-        return countAllMaxEctsCredits(executionPeriod);
+	return countAllMaxEctsCredits(executionPeriod);
     }
 
     private Double countMaxEctsCredits(final Collection<DegreeModule> modulesByExecutionPeriod,
 	    final ExecutionPeriod executionPeriod, final Integer maximumLimit) {
-	
+
 	final Set<Double> ectsCredits = new TreeSet<Double>(new ReverseComparator());
 	for (final DegreeModule degreeModule : modulesByExecutionPeriod) {
 	    ectsCredits.add(degreeModule.getMaxEctsCredits(executionPeriod));
@@ -504,7 +517,7 @@ public class CourseGroup extends CourseGroup_Base {
 	}
 	return result;
     }
-    
+
     @Override
     protected Double countAllMinEctsCredits(final ExecutionPeriod executionPeriod) {
 	double result = 0d;
@@ -513,7 +526,7 @@ public class CourseGroup extends CourseGroup_Base {
 	}
 	return result;
     }
-    
+
     @Override
     public Double getMinEctsCredits(final ExecutionPeriod executionPeriod) {
 	final CreditsLimit creditsLimit = getCreditsLimitRule(executionPeriod);
@@ -524,22 +537,23 @@ public class CourseGroup extends CourseGroup_Base {
 	if (modulesSelectionLimit != null) {
 	    final Collection<DegreeModule> modulesByExecutionPeriod = getOpenChildDegreeModulesByExecutionPeriod(executionPeriod);
 	    if (modulesSelectionLimit.getMinimumLimit().intValue() != modulesByExecutionPeriod.size()) {
-		return countMinEctsCredits(modulesByExecutionPeriod, executionPeriod, modulesSelectionLimit.getMinimumLimit());
+		return countMinEctsCredits(modulesByExecutionPeriod, executionPeriod,
+			modulesSelectionLimit.getMinimumLimit());
 	    }
 	}
-        return countAllMinEctsCredits(executionPeriod);
+	return countAllMinEctsCredits(executionPeriod);
     }
-    
+
     private Double countMinEctsCredits(final Collection<DegreeModule> modulesByExecutionPeriod,
 	    final ExecutionPeriod executionPeriod, final Integer minimumLimit) {
-	
+
 	final Set<Double> ectsCredits = new TreeSet<Double>();
 	for (final DegreeModule degreeModule : modulesByExecutionPeriod) {
 	    ectsCredits.add(degreeModule.getMinEctsCredits(executionPeriod));
 	}
 	return sumEctsCredits(ectsCredits, minimumLimit.intValue());
     }
-    
+
     private Double sumEctsCredits(final Set<Double> ectsCredits, int limit) {
 	double result = 0d;
 	final Iterator<Double> ectsCreditsIter = ectsCredits.iterator();
@@ -548,50 +562,59 @@ public class CourseGroup extends CourseGroup_Base {
 	}
 	return Double.valueOf(result);
     }
-    
+
     private CreditsLimit getCreditsLimitRule(final ExecutionPeriod executionPeriod) {
-	final List<ICurricularRule> result = getCurricularRules(CurricularRuleType.CREDITS_LIMIT, executionPeriod);
-	return result.isEmpty() ? null : (CreditsLimit) result.get(0); // must have only one 
+	final List<ICurricularRule> result = getCurricularRules(CurricularRuleType.CREDITS_LIMIT,
+		executionPeriod);
+	return result.isEmpty() ? null : (CreditsLimit) result.get(0); // must
+									// have
+									// only
+									// one
     }
 
-    private DegreeModulesSelectionLimit getDegreeModulesSelectionLimitRule(final ExecutionPeriod executionPeriod) {
-	final List<ICurricularRule> result = getCurricularRules(CurricularRuleType.DEGREE_MODULES_SELECTION_LIMIT, executionPeriod);
-	return result.isEmpty() ? null : (DegreeModulesSelectionLimit) result.get(0); // must have only one 
+    private DegreeModulesSelectionLimit getDegreeModulesSelectionLimitRule(
+	    final ExecutionPeriod executionPeriod) {
+	final List<ICurricularRule> result = getCurricularRules(
+		CurricularRuleType.DEGREE_MODULES_SELECTION_LIMIT, executionPeriod);
+	return result.isEmpty() ? null : (DegreeModulesSelectionLimit) result.get(0); // must
+											// have
+											// only
+											// one
     }
-    
+
     @Override
     public boolean hasDegreeModule(final DegreeModule degreeModule) {
-        if (super.hasDegreeModule(degreeModule)) {
-            return true;
-        }
-        for (final Context context : getChildContexts()) {
-            if (context.getChildDegreeModule().hasDegreeModule(degreeModule)) {
-        	return true;
-            }
-        }
-        return false;
+	if (super.hasDegreeModule(degreeModule)) {
+	    return true;
+	}
+	for (final Context context : getChildContexts()) {
+	    if (context.getChildDegreeModule().hasDegreeModule(degreeModule)) {
+		return true;
+	    }
+	}
+	return false;
     }
-    
+
     private boolean hasCourseGroupType(final DegreeType courseGroupType) {
 	return getCourseGroupType() == courseGroupType;
     }
-    
+
     public boolean isFirstCycle() {
 	return hasCourseGroupType(DegreeType.BOLONHA_DEGREE);
     }
-    
+
     public boolean isSecondCycle() {
 	return hasCourseGroupType(DegreeType.BOLONHA_MASTER_DEGREE);
     }
-    
+
     public CourseGroup getFirstCycleCourseGroup() {
 	return getCourseGroup(DegreeType.BOLONHA_DEGREE);
     }
-    
+
     public CourseGroup getSecondCycleCourseGroup() {
 	return getCourseGroup(DegreeType.BOLONHA_MASTER_DEGREE);
     }
-    
+
     private CourseGroup getCourseGroup(final DegreeType courseGroupType) {
 	if (hasCourseGroupType(courseGroupType)) {
 	    return this;
@@ -604,5 +627,12 @@ public class CourseGroup extends CourseGroup_Base {
 	    }
 	}
 	return null;
+    }
+
+    public void addCurricularCourse(final CurricularPeriod curricularPeriod,
+	    final CurricularCourse curricularCourse, final ExecutionPeriod start,
+	    final ExecutionPeriod end) {
+	
+	new Context(this, curricularCourse, curricularPeriod, start, end);
     }
 }

@@ -117,7 +117,10 @@ public class CurricularCourse extends CurricularCourse_Base {
 	dcp.append(tab);
 	dcp.append("[CC ").append(this.getIdInternal()).append("][");
 	dcp.append(previousContext.getCurricularPeriod().getOrderByType(CurricularPeriodType.YEAR)).append("Y,");
-	dcp.append(previousContext.getCurricularPeriod().getOrderByType(CurricularPeriodType.SEMESTER)).append("S] ");
+	dcp.append(previousContext.getCurricularPeriod().getOrderByType(CurricularPeriodType.SEMESTER)).append("S]\t");
+	dcp.append("[B:").append(previousContext.getBeginExecutionPeriod().getBeginDateYearMonthDay());
+	dcp.append(" E:").append(previousContext.hasEndExecutionPeriod() ? previousContext.getEndExecutionPeriod().getEndDateYearMonthDay() : "          ");
+	dcp.append("]\t");
 	dcp.append(this.getName()).append("\n");
     }
 

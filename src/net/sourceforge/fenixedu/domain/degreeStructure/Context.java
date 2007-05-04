@@ -113,10 +113,10 @@ public class Context extends Context_Base implements Comparable<Context> {
     
     protected void checkExecutionPeriods(ExecutionPeriod beginExecutionPeriod, ExecutionPeriod endExecutionPeriod) {
 	if (beginExecutionPeriod == null) {
-	    throw new DomainException("curricular.rule.begin.execution.period.cannot.be.null");
+	    throw new DomainException("context.begin.execution.period.cannot.be.null");
 	}
         if (endExecutionPeriod != null && beginExecutionPeriod.isAfter(endExecutionPeriod)) {
-            throw new DomainException("curricular.rule.begin.is.after.end.execution.period");
+            throw new DomainException("context.begin.is.after.end.execution.period");
         }
     }
     
