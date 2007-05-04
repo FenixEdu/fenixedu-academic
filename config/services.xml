@@ -11564,6 +11564,15 @@
         </filterChains>
     </service>
     <service>
+        <name>CreateThesisProposalWithAssignment</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.thesis.CreateThesisProposalWithAssignment</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ScientificCommissionAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
         <name>ChangeThesisPerson</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.thesis.ChangeThesisPerson</implementationClass>
         <description></description>

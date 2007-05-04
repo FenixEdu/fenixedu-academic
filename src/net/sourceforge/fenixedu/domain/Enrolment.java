@@ -9,6 +9,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
@@ -1206,14 +1208,16 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         case 1:
             return theses.iterator().next();
         default:
-            for (Thesis thesis : theses) {
-                if (!thesis.isEvaluated()) {
-                    return thesis;
-                }
-            }
+        	SortedSet<Thesis> sortedTheses = new TreeSet<Thesis>(new Comparator<Thesis>() {
 
-            logger.warn(String.format("Several thesis associated to this enrolment and no thesis is evaluated: enrolment=%s", this.getIdInternal()));
-            return null;
+				public int compare(Thesis o1, Thesis o2) {
+					return o2.getCreation().compareTo(o1.getCreation());
+				}
+        		
+        	});
+        
+        	sortedTheses.addAll(theses);
+        	return sortedTheses.iterator().next();
         }
     }
 
@@ -1222,7 +1226,13 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     public Proposal getDissertationProposal() {
-	return getRegistration().getDissertationProposal(getExecutionYear());
-    }
+		ExecutionYear previousExecutionYear = getExecutionYear().getPreviousExecutionYear();
+		
+		if (previousExecutionYear == null) {
+			return null;
+		}
+		
+		return getRegistration().getDissertationProposal(previousExecutionYear);
+	}
 
 }

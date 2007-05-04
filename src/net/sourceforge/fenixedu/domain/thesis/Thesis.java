@@ -40,7 +40,38 @@ import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.joda.time.DateTime;
 
+import dml.runtime.RelationAdapter;
+
 public class Thesis extends Thesis_Base {
+	
+	static {
+		ThesisEnrolment.addListener(new RelationAdapter<Thesis, Enrolment>() {
+
+			@Override
+			public void beforeAdd(Thesis thesis, Enrolment enrolment) {
+				super.beforeAdd(thesis, enrolment);
+				
+				if (thesis == null || enrolment == null) {
+					return;
+				}
+				
+				List<Thesis> theses = enrolment.getTheses();
+		        
+				switch (theses.size()) {
+		        case 0: // can have at least one
+		            return; 
+		        case 1: // can have another if existing is not final
+			        Thesis existing = theses.iterator().next();
+		        	if (existing.isFinalThesis() || !existing.isEvaluated()) {
+		        		throw new DomainException("thesis.enrolment.thesis.notEvaluated");
+		        	}
+		        default: // never more than 2
+		        	throw new DomainException("thesis.enrolment.hasFinalThesis");
+				}
+			}
+			
+		});
+	}
 	
 	private final static double CREDITS = 0.5; 
     
@@ -509,6 +540,15 @@ public class Thesis extends Thesis_Base {
         }
     }
 
+    /**
+	 * Indicates if thesis thesis is the last one that can be created for this
+	 * enrolment, that is, if the student can have any other thesis after this
+	 * one for the same enrolment. A student can present up to two thesis in a
+	 * single enrolment. This corresponds to 2 distinct evaluation chances:
+	 * first semester, second semester.
+	 * 
+	 * @return <code>true</code> if the student can have a second thesis
+	 */
     public boolean isFinalThesis() {
         Enrolment enrolment = getEnrolment();
         

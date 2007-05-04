@@ -30,10 +30,32 @@
     </fr:edit>
 	<p class="mtop05">
 	    <html:submit>
-	        <bean:message key="button.submit"/>
+	        <bean:message key="button.view"/>
 	    </html:submit>
     </p>
 </fr:form>
+
+<logic:present name="hasAssignment">
+	<fr:view name="proposal" schema="thesis.proposal.view">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle2 thlight thright mtop05 mbottom05"/>
+			<fr:property name="columnClasses" value="width12em,width35em,"/>
+		</fr:layout>
+	</fr:view>
+
+	<div class="warning0" style="padding: 1em;">
+		<p class="mtop0 mbottom1">
+			<bean:message key="label.coordinator.proposal.assigned"/>
+	    </p>
+
+	    <bean:define id="studentId" name="bean" property="student.idInternal"/>
+	    <fr:form action="<%= String.format("/manageThesis.do?method=prepareCreateProposal&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;studentID=%s", dcpId, executionYearId, studentId) %>">
+	        <html:submit>
+	            <bean:message key="button.coordinator.thesis.proposal.create"/>
+	        </html:submit>
+	    </fr:form>
+    </div>
+</logic:present>
 
 <logic:present name="proposeStartProcess">
 	<div class="warning0" style="padding: 1em;">

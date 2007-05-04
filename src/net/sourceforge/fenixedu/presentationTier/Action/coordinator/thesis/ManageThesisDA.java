@@ -13,18 +13,17 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisContextBean;
 import net.sourceforge.fenixedu.presentationTier.docs.thesis.ApproveJuryDocument;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.util.ReportsUtils;
@@ -169,16 +168,17 @@ public class ManageThesisDA extends FenixDispatchAction {
                     Thesis thesis = enrolment.getThesis();
                     
                     if (thesis == null) {
-//                        ProposalAssignment assignment = enrolment.getThesisProposalAssignment();
-//                        
-//                        if (assignment != null) {
-//                            request.setAttribute("assignment", assignment);
-//                            return mapping.findForward("search-student");
-//                        }
-//                        else {
+                    	Proposal proposal = enrolment.getDissertationProposal();
+                        
+                        if (proposal != null) {
+                            request.setAttribute("hasAssignment", true);
+                            request.setAttribute("proposal", proposal);
+                            return mapping.findForward("search-student");
+                        }
+                        else {
                             request.setAttribute("proposeStartProcess", true);
                             return mapping.findForward("search-student");
-//                        }
+                        }
                     }
                     else {
                         request.setAttribute("hasThesis", true);
@@ -257,13 +257,21 @@ public class ManageThesisDA extends FenixDispatchAction {
             return listThesis(mapping, actionForm, request, response);   
         }
         
-        ThesisBean bean = new ThesisBean();
-        bean.setStudent(student);
+        Enrolment enrolment = student.getDissertationEnrolment();
+        Proposal proposal = enrolment.getDissertationProposal();
         
-        request.setAttribute("bean", bean);
-        return mapping.findForward("collect-basic-information");
+        if (proposal == null) {
+	        ThesisBean bean = new ThesisBean();
+	        bean.setStudent(student);
+	        
+	        request.setAttribute("bean", bean);
+	        return mapping.findForward("collect-basic-information");
+        }
+        else {
+        	return createProposalWithAssignment(mapping, actionForm, request, response);
+        }
     }
-    
+
     public ActionForward createProposal(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
         DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
         
@@ -278,6 +286,18 @@ public class ManageThesisDA extends FenixDispatchAction {
         request.setAttribute("thesis", thesis);
         
         return editProposal(mapping, actionForm, request, response);
+    }
+    
+    public ActionForward createProposalWithAssignment(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
+    	
+    	Student student = getStudent(request);
+    	Enrolment enrolment = student.getDissertationEnrolment();
+    	
+    	Thesis thesis = (Thesis) executeService("CreateThesisProposalWithAssignment", degreeCurricularPlan, student, enrolment.getDissertationProposal());
+    	request.setAttribute("thesis", thesis);
+    	
+    	return editProposal(mapping, actionForm, request, response);
     }
     
     // Draft

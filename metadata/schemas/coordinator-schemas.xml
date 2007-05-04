@@ -247,3 +247,18 @@
     	<property name="destination" value="listThesis"/>
     </slot>
 </schema>
+
+<schema name="thesis.proposal.view" type="net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal">
+	<slot name="title" key="label.coordinator.title"/>
+	<slot name="orientator" key="label.coordinator.proposal.orientator" layout="null-as-label">
+		<property name="label" value="-"/>
+		<property name="subLayout" value="name-with-alias"/>
+	</slot>
+	<slot name="coorientator" key="label.coordinator.proposal.coorientator" layout="null-as-label">
+		<property name="label" value="-"/>
+		<property name="subLayout" value="name-with-alias"/>
+	</slot>
+	<slot name="observations" key="label.coordinator.proposal.observations" layout="null-as-label">
+		<property name="label" value="-"/>
+	</slot>
+</schema>
