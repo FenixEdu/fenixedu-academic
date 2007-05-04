@@ -114,15 +114,19 @@
 			<bean:message key="link.students.search"/>
 		</html:link>
 	</li>
-	
-		<%-- TeacherServiceDistribution entry point
-  		<li>
-		  	<html:link page="/teacherServiceDistribution.do?method=prepareTeacherServiceDistribution">
-		  		<bean:message key="link.teacherServiceDistribution"/>
-		  	</html:link>  
-		</li> 				
-		--%>
-					
+
+		<%-- Another Temporary solution :-( --%>	
+
+		<% String deecCode = "21"; %>
+		<logic:notEmpty name="userView" property="person.employee.currentDepartmentWorkingPlace">
+			<logic:equal name="userView" property="person.employee.currentDepartmentWorkingPlace.code" value="<%= deecCode %>">										
+		  		<li>
+				  	<html:link page="/teacherServiceDistribution.do?method=prepareTeacherServiceDistribution">
+				  		<bean:message key="link.teacherServiceDistribution"/>
+				  	</html:link>  
+				</li> 				
+			</logic:equal>
+		</logic:notEmpty>
 
 		<li class="navheader">
 			<strong><bean:message key="link.group.managementGroups.title"/></strong>
