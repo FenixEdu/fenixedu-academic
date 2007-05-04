@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.webSiteManager;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,307 +26,358 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.utl.ist.fenix.tools.util.FileUtils;
+
 public abstract class CustomUnitSiteManagementDA extends SiteManagementDA {
 
-    private Integer getId(String id) {
-        if (id == null || id.equals("")) {
-            return null;
+	private Integer getId(String id) {
+		if (id == null || id.equals("")) {
+			return null;
+		}
+
+		try {
+			return new Integer(id);
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@Override
+	protected String getItemLocationForFile(HttpServletRequest request, Item item, Section section) {
+		return null;
+	}
+
+	@Override
+	protected UnitSite getSite(HttpServletRequest request) {
+		Integer oid = getId(request.getParameter("oid"));
+
+		if (oid == null) {
+			return null;
+		}
+
+		return (UnitSite) RootDomainObject.getInstance().readSiteByOID(oid);
+	}
+
+	public ActionForward prepare(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		return mapping.findForward("start");
+	}
+
+	public ActionForward introduction(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		IViewState viewState = RenderUtils.getViewState();
+		if (viewState != null && viewState.isValid() && !viewState.skipUpdate()) {
+			request.setAttribute("successful", true);
+		}
+
+		return mapping.findForward("editIntroduction");
+	}
+
+	public ActionForward sideBanner(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		IViewState viewState = RenderUtils.getViewState();
+		if (viewState != null && viewState.isValid() && !viewState.skipUpdate()) {
+			request.setAttribute("successful", true);
+		}
+
+		return mapping.findForward("editSideBanner");
+	}
+
+	public ActionForward manageConfiguration(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		return mapping.findForward("editConfiguration");
+	}
+
+	public ActionForward updateI18n(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		IViewState viewState = RenderUtils.getViewState("i18n");
+		if (viewState != null && viewState.isValid()) {
+			request.setAttribute("i18nChanged", true);
+		}
+
+		return mapping.findForward("editConfiguration");
+	}
+
+	public ActionForward updateConfiguration(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		IViewState viewState = RenderUtils.getViewState("visualization");
+		if (viewState != null && viewState.isValid()) {
+			request.setAttribute("visualizationChanged", true);
+		}
+
+		return mapping.findForward("editConfiguration");
+	}
+
+	public ActionForward changeLayout(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		UnitSite site = getSite(request);
+		String layoutParamenter = request.getParameter("layout");
+
+		if (layoutParamenter == null) {
+			return mapping.findForward("editLogo");
+		}
+
+		UnitSiteLayoutType layout = UnitSiteLayoutType.valueOf(layoutParamenter);
+		executeService("ChangeUnitSiteLayout", site, layout);
+
+		return mapping.findForward("editConfiguration");
+	}
+
+	public ActionForward chooseLogo(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		IViewState viewState = RenderUtils.getViewState("personalizedLogo");
+		if (viewState != null && viewState.isValid()) {
+			request.setAttribute("successful", true);
+		}
+
+		request.setAttribute("bean", new SimpleFileBean());
+		return mapping.findForward("editLogo");
+	}
+
+	public ActionForward uploadLogo(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		UnitSite site = getSite(request);
+
+		IViewState viewState = RenderUtils.getViewState("logoUpload");
+		SimpleFileBean bean = (SimpleFileBean) ((MetaSlot) viewState.getMetaObject()).getMetaObject()
+				.getObject();
+
+		if (bean == null || bean.getFile() == null) {
+			chooseLogo(mapping, actionForm, request, response);
+		}
+
+		RenderUtils.invalidateViewState("logoUpload");
+		File file = FileUtils.copyToTemporaryFile(bean.getFile());
+		try {
+			executeService("UploadUnitSiteLogo", site, file, bean.getName());
+		} finally {
+			file.delete();
+		}
+		request.setAttribute("successful", true);
+		return chooseLogo(mapping, actionForm, request, response);
+	}
+
+	public ActionForward manageBanners(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		UnitSite site = getSite(request);
+		request.setAttribute("banners", site.getBanners());
+
+		request.setAttribute("bannerBean", new BannerBean());
+		return mapping.findForward("editBanners");
+	}
+
+	public ActionForward editBanner(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		UnitSiteBanner banner = getBanner(request);
+
+		if (banner != null) {
+			request.setAttribute("editBanner" + banner.getIdInternal(), true);
+			request.setAttribute("editBannerBean", new BannerBean(banner));
+		}
+
+		return manageBanners(mapping, actionForm, request, response);
+	}
+
+	private UnitSiteBanner getBanner(HttpServletRequest request) {
+		UnitSite site = getSite(request);
+		Integer bannerId = getId(request.getParameter("bannerID"));
+
+		for (UnitSiteBanner banner : site.getBanners()) {
+			if (banner.getIdInternal().equals(bannerId)) {
+				return banner;
+			}
+		}
+
+		return null;
+	}
+
+	public ActionForward updateBanner(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		UnitSite site = getSite(request);
+		BannerBean bean = (BannerBean) getRenderedObject("editBanner");
+
+		if (bean == null) {
+			manageBanners(mapping, actionForm, request, response);
+		}
+
+		UnitSiteBanner banner = getBanner(request);
+		SimpleFileBean main = bean.getMainImage();
+		SimpleFileBean back = bean.getBackgroundImage();
+		File mainFile = FileUtils.copyToTemporaryFile(main.getFile());
+		File backgroundFile = FileUtils.copyToTemporaryFile(back.getFile());
+
+		try {
+		executeService("UpdateUnitSiteBanner", site, banner, mainFile, main.getName(), backgroundFile,
+				back.getName(), bean.getColor(), bean.getLink(), bean.getWeight());
+		}finally {
+        	mainFile.delete();
+        	backgroundFile.delete();
         }
+		RenderUtils.invalidateViewState();
 
-        try {
-            return new Integer(id);
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-    
-    @Override
-    protected String getItemLocationForFile(HttpServletRequest request, Item item, Section section) {
-        return null;
-    }
+		return manageBanners(mapping, actionForm, request, response);
+	}
 
-    @Override
-    protected UnitSite getSite(HttpServletRequest request) {
-        Integer oid = getId(request.getParameter("oid"));
+	public ActionForward removeBanner(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		UnitSite site = getSite(request);
+		Integer bannerId = getId(request.getParameter("bannerID"));
 
-        if (oid == null) {
-            return null;
-        }
-        
-        return (UnitSite) RootDomainObject.getInstance().readSiteByOID(oid);
-    }
+		for (UnitSiteBanner banner : site.getBanners()) {
+			if (banner.getIdInternal().equals(bannerId)) {
+				executeService("DeleteUnitSiteBanner", site, banner);
+				break;
+			}
+		}
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        return mapping.findForward("start");
-    }
-    
-    public ActionForward introduction(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        IViewState viewState = RenderUtils.getViewState();
-        if (viewState != null && viewState.isValid() && !viewState.skipUpdate()) {
-            request.setAttribute("successful", true);
-        }
-        
-        return mapping.findForward("editIntroduction");
-    }
+		return manageBanners(mapping, actionForm, request, response);
+	}
 
-    public ActionForward sideBanner(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        IViewState viewState = RenderUtils.getViewState();
-        if (viewState != null && viewState.isValid() && !viewState.skipUpdate()) {
-            request.setAttribute("successful", true);
-        }
-        
-        return mapping.findForward("editSideBanner");
-    }
+	public ActionForward addBanner(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		UnitSite site = getSite(request);
+		BannerBean bean = (BannerBean) getRenderedObject("newBanner");
 
-    public ActionForward manageConfiguration(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        return mapping.findForward("editConfiguration");
-    }
+		if (bean == null || bean.getMainImage().getFile() == null) {
+			manageBanners(mapping, actionForm, request, response);
+		}
 
-    public ActionForward updateI18n(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        IViewState viewState = RenderUtils.getViewState("i18n");
-        if (viewState != null && viewState.isValid()) {
-            request.setAttribute("i18nChanged", true);
-        }
-        
-        return mapping.findForward("editConfiguration");
-    }
+		RenderUtils.invalidateViewState("newBanner");
 
-    public ActionForward updateConfiguration(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        IViewState viewState = RenderUtils.getViewState("visualization");
-        if (viewState != null && viewState.isValid()) {
-            request.setAttribute("visualizationChanged", true);
-        }
-        
-        return mapping.findForward("editConfiguration");
-    }
-    
-    public ActionForward changeLayout(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        UnitSite site = getSite(request);
-        String layoutParamenter = request.getParameter("layout");
-        
-        if (layoutParamenter == null) {
-            return mapping.findForward("editLogo");
-        }
-        
-        UnitSiteLayoutType layout = UnitSiteLayoutType.valueOf(layoutParamenter);
-        executeService("ChangeUnitSiteLayout", site, layout);
-        
-        return mapping.findForward("editConfiguration");
-    }
+		SimpleFileBean main = bean.getMainImage();
+		SimpleFileBean background = bean.getBackgroundImage();
+		File mainFile = FileUtils.copyToTemporaryFile(main.getFile());
+		File backgroundFile = FileUtils.copyToTemporaryFile(background.getFile());
+		try {
+			executeService("CreateUnitSiteBanner", site, mainFile, main.getName(), backgroundFile,
+					background.getName(), bean.getColor(), bean.getLink(), bean.getWeight());
+		} finally {
+			mainFile.delete();
+			backgroundFile.delete();
+		}
+		return manageBanners(mapping, actionForm, request, response);
+	}
 
-    public ActionForward chooseLogo(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        IViewState viewState = RenderUtils.getViewState("personalizedLogo");
-        if (viewState != null && viewState.isValid()) {
-            request.setAttribute("successful", true);
-        }
-        
-        request.setAttribute("bean", new SimpleFileBean());
-        return mapping.findForward("editLogo");
-    }
-    
-    public ActionForward uploadLogo(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        UnitSite site = getSite(request);
-        
-        IViewState viewState = RenderUtils.getViewState("logoUpload");
-        SimpleFileBean bean = (SimpleFileBean) ((MetaSlot) viewState.getMetaObject()).getMetaObject().getObject();
-        
-        if (bean == null || bean.getFile() == null) {
-            chooseLogo(mapping, actionForm, request, response);
-        }
-        
-        RenderUtils.invalidateViewState("logoUpload");
-        executeService("UploadUnitSiteLogo", site, bean.getFile(), bean.getName());
-        
-        request.setAttribute("successful", true);
-        return chooseLogo(mapping, actionForm, request, response);
-    }
+	public ActionForward topNavigation(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		UnitSite site = getSite(request);
+		request.setAttribute("customLinks", site.getSortedTopLinks());
 
-    public ActionForward manageBanners(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        UnitSite site = getSite(request);
-        request.setAttribute("banners", site.getBanners());
-        
-        request.setAttribute("bannerBean", new BannerBean());
-        return mapping.findForward("editBanners");
-    }
+		return mapping.findForward("editTopNavigation");
+	}
 
-    public ActionForward editBanner(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        UnitSiteBanner banner = getBanner(request);
-        
-        if (banner != null) {
-            request.setAttribute("editBanner" + banner.getIdInternal(), true);
-            request.setAttribute("editBannerBean", new BannerBean(banner));
-        }
-        
-        return manageBanners(mapping, actionForm, request, response);
-    }
+	public ActionForward editTopLink(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		request.setAttribute("editLink" + request.getParameter("linkID"), true);
+		return topNavigation(mapping, actionForm, request, response);
+	}
 
-    private UnitSiteBanner getBanner(HttpServletRequest request) {
-        UnitSite site = getSite(request);
-        Integer bannerId = getId(request.getParameter("bannerID"));
-        
-        for (UnitSiteBanner banner : site.getBanners()) {
-            if (banner.getIdInternal().equals(bannerId)) {
-                return banner;
-            }
-        }
-        
-        return null;
-    }
+	public ActionForward removeTopLink(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		UnitSite site = getSite(request);
+		Integer linkId = getId(request.getParameter("linkID"));
 
-    public ActionForward updateBanner(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        UnitSite site = getSite(request);
-        BannerBean bean = (BannerBean) getRenderedObject("editBanner");
-        
-        if (bean == null) {
-            manageBanners(mapping, actionForm, request, response);
-        }
-        
-        UnitSiteBanner banner = getBanner(request);
-        SimpleFileBean main = bean.getMainImage();
-        SimpleFileBean back = bean.getBackgroundImage();
-        
-        executeService("UpdateUnitSiteBanner", site, banner, main.getFile(), main.getName(), back.getFile(), back.getName(), bean.getColor(), bean.getLink(), bean.getWeight());
-        RenderUtils.invalidateViewState();
-        
-        return manageBanners(mapping, actionForm, request, response);
-    }
-    
-    public ActionForward removeBanner(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        UnitSite site = getSite(request);
-        Integer bannerId = getId(request.getParameter("bannerID"));
-        
-        for (UnitSiteBanner banner : site.getBanners()) {
-            if (banner.getIdInternal().equals(bannerId)) {
-                executeService("DeleteUnitSiteBanner", site, banner);
-                break;
-            }
-        }
-        
-        return manageBanners(mapping, actionForm, request, response);
-    }
+		for (UnitSiteLink link : site.getTopLinks()) {
+			if (link.getIdInternal().equals(linkId)) {
+				executeService("DeleteUnitSiteLink", site, link);
+				break;
+			}
+		}
 
-    public ActionForward addBanner(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        UnitSite site = getSite(request);
-        BannerBean bean = (BannerBean) getRenderedObject("newBanner");
-        
-        if (bean == null || bean.getMainImage().getFile() == null) {
-            manageBanners(mapping, actionForm, request, response);
-        }
-        
-        RenderUtils.invalidateViewState("newBanner");
-        
-        SimpleFileBean main = bean.getMainImage();
-        SimpleFileBean background = bean.getBackgroundImage();
-        executeService("CreateUnitSiteBanner", site, main.getFile(), main.getName(), background.getFile(), background.getName(), bean.getColor(), bean.getLink(), bean.getWeight());
-        
-        return manageBanners(mapping, actionForm, request, response);
-    }
+		return topNavigation(mapping, actionForm, request, response);
+	}
 
-    public ActionForward topNavigation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        UnitSite site = getSite(request);
-        request.setAttribute("customLinks", site.getSortedTopLinks());
+	public ActionForward createTopLink(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		RenderUtils.invalidateViewState();
+		return topNavigation(mapping, actionForm, request, response);
+	}
 
-        return mapping.findForward("editTopNavigation");
-    }
+	public ActionForward footerNavigation(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		UnitSite site = getSite(request);
+		request.setAttribute("customLinks", site.getSortedFooterLinks());
 
-    public ActionForward editTopLink(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        request.setAttribute("editLink" + request.getParameter("linkID"), true);
-        return topNavigation(mapping, actionForm, request, response);
-    }
-    
-    public ActionForward removeTopLink(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        UnitSite site = getSite(request);
-        Integer linkId = getId(request.getParameter("linkID"));
-        
-        for (UnitSiteLink link : site.getTopLinks()) {
-            if (link.getIdInternal().equals(linkId)) {
-                executeService("DeleteUnitSiteLink", site, link);
-                break;
-            }
-        }
-        
-        return topNavigation(mapping, actionForm, request, response);
-    }
+		return mapping.findForward("editFooterNavigation");
+	}
 
-    public ActionForward createTopLink(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        RenderUtils.invalidateViewState();
-        return topNavigation(mapping, actionForm, request, response);
-    }
-    
-    public ActionForward footerNavigation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        UnitSite site = getSite(request);
-        request.setAttribute("customLinks", site.getSortedFooterLinks());
-        
-        return mapping.findForward("editFooterNavigation");
-    }
+	public ActionForward editFooterLink(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		request.setAttribute("editLink" + request.getParameter("linkID"), true);
+		return footerNavigation(mapping, actionForm, request, response);
+	}
 
-    public ActionForward editFooterLink(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        request.setAttribute("editLink" + request.getParameter("linkID"), true);
-        return footerNavigation(mapping, actionForm, request, response);
-    }
+	public ActionForward removeFooterLink(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		UnitSite site = getSite(request);
+		Integer linkId = getId(request.getParameter("linkID"));
 
-    public ActionForward removeFooterLink(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        UnitSite site = getSite(request);
-        Integer linkId = getId(request.getParameter("linkID"));
-        
-        for (UnitSiteLink link : site.getFooterLinks()) {
-            if (link.getIdInternal().equals(linkId)) {
-                executeService("DeleteUnitSiteLink", site, link);
-                break;
-            }
-        }
-        
-        return footerNavigation(mapping, actionForm, request, response);
-    }
+		for (UnitSiteLink link : site.getFooterLinks()) {
+			if (link.getIdInternal().equals(linkId)) {
+				executeService("DeleteUnitSiteLink", site, link);
+				break;
+			}
+		}
 
-    public ActionForward createFooterLink(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        RenderUtils.invalidateViewState();
-        return footerNavigation(mapping, actionForm, request, response);
-    }
+		return footerNavigation(mapping, actionForm, request, response);
+	}
 
-    public ActionForward organizeTopLinks(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        UnitSite site = getSite(request);
-        request.setAttribute("customLinks", site.getSortedTopLinks());
-        
-        return mapping.findForward("organizeTopLinks");
-    }
+	public ActionForward createFooterLink(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		RenderUtils.invalidateViewState();
+		return footerNavigation(mapping, actionForm, request, response);
+	}
 
-    public ActionForward organizeFooterLinks(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        UnitSite site = getSite(request);
-        request.setAttribute("customLinks", site.getSortedFooterLinks());
-        
-        return mapping.findForward("organizeFooterLinks");
-    }
+	public ActionForward organizeTopLinks(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		UnitSite site = getSite(request);
+		request.setAttribute("customLinks", site.getSortedTopLinks());
 
-    public ActionForward saveTopLinksOrder(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        RenderUtils.invalidateViewState();
-        saveLinksOrder(request, true);
-        return topNavigation(mapping, actionForm, request, response);
-    }
-    
-    public ActionForward saveFooterLinksOrder(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        RenderUtils.invalidateViewState();
-        saveLinksOrder(request, false);
-        return footerNavigation(mapping, actionForm, request, response);
-    }
+		return mapping.findForward("organizeTopLinks");
+	}
 
-    protected void saveLinksOrder(HttpServletRequest request, boolean top) throws FenixFilterException, FenixServiceException {
-        UnitSite site = getSite(request);
-        String orderString = request.getParameter("linksOrder");
+	public ActionForward organizeFooterLinks(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		UnitSite site = getSite(request);
+		request.setAttribute("customLinks", site.getSortedFooterLinks());
 
-        List<UnitSiteLink> initialLinks = new ArrayList<UnitSiteLink>(top ? site.getSortedTopLinks() : site.getSortedFooterLinks());
-        List<UnitSiteLink> orderedLinks = new ArrayList<UnitSiteLink>();
+		return mapping.findForward("organizeFooterLinks");
+	}
 
-        String[] nodes = orderString.split(",");
-        for (int i = 0; i < nodes.length; i++) {
-            String[] parts = nodes[i].split("-");
+	public ActionForward saveTopLinksOrder(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		RenderUtils.invalidateViewState();
+		saveLinksOrder(request, true);
+		return topNavigation(mapping, actionForm, request, response);
+	}
 
-            Integer itemIndex = getId(parts[0]);
-            orderedLinks.add(initialLinks.get(itemIndex - 1));
-        }
+	public ActionForward saveFooterLinksOrder(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		RenderUtils.invalidateViewState();
+		saveLinksOrder(request, false);
+		return footerNavigation(mapping, actionForm, request, response);
+	}
 
-        ServiceUtils.executeService(getUserView(request), "RearrangeUnitSiteLinks", site, top, orderedLinks);
-    }
-    
+	protected void saveLinksOrder(HttpServletRequest request, boolean top) throws FenixFilterException,
+			FenixServiceException {
+		UnitSite site = getSite(request);
+		String orderString = request.getParameter("linksOrder");
+
+		List<UnitSiteLink> initialLinks = new ArrayList<UnitSiteLink>(top ? site.getSortedTopLinks()
+				: site.getSortedFooterLinks());
+		List<UnitSiteLink> orderedLinks = new ArrayList<UnitSiteLink>();
+
+		String[] nodes = orderString.split(",");
+		for (int i = 0; i < nodes.length; i++) {
+			String[] parts = nodes[i].split("-");
+
+			Integer itemIndex = getId(parts[0]);
+			orderedLinks.add(initialLinks.get(itemIndex - 1));
+		}
+
+		ServiceUtils.executeService(getUserView(request), "RearrangeUnitSiteLinks", site, top,
+				orderedLinks);
+	}
+
 }

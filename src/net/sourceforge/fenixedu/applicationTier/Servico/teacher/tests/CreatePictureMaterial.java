@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
@@ -19,14 +23,25 @@ import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 public class CreatePictureMaterial extends Service {
 
 	public NewPictureMaterial run(Teacher teacher, NewTestElement testElement, Boolean inline,
-			InputStream inputStream, String originalFilename, String displayName)
-			throws FenixServiceException, ExcepcaoPersistencia, DomainException {
+			File mainFile, String originalFilename, String displayName) throws FenixServiceException,
+			ExcepcaoPersistencia, DomainException, IOException {
 
 		final IFileManager fileManager = FileManagerFactory.getFactoryInstance().getFileManager();
 		final VirtualPath filePath = getVirtualPath();
-		
-		final FileDescriptor fileDescriptor = fileManager.saveFile(filePath, originalFilename, false,
-				teacher.getPerson().getName(), displayName == null ? originalFilename : displayName, inputStream);
+
+		InputStream is = null;
+		final FileDescriptor fileDescriptor;
+		try {
+			is = new FileInputStream(mainFile);
+			fileDescriptor = fileManager.saveFile(filePath, originalFilename, false, teacher.getPerson()
+					.getName(), displayName == null ? originalFilename : displayName, is);
+		} catch (FileNotFoundException e) {
+			throw new FenixServiceException(e.getMessage());
+		} finally {
+			if (is != null) {
+				is.close();
+			}
+		}
 		final PictureMaterialFile pictureMaterialFile = new PictureMaterialFile(fileDescriptor
 				.getFilename(), displayName, fileDescriptor.getMimeType(), fileDescriptor.getChecksum(),
 				fileDescriptor.getChecksumAlgorithm(), fileDescriptor.getSize(), fileDescriptor

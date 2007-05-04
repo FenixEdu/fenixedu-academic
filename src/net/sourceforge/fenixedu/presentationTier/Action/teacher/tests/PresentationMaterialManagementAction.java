@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.teacher.tests;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +23,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.utl.ist.fenix.tools.util.FileUtils;
+
 public class PresentationMaterialManagementAction extends FenixDispatchAction {
 
 	public ActionForward invalidPrepareCreatePresentationMaterial(ActionMapping mapping,
@@ -38,10 +42,10 @@ public class PresentationMaterialManagementAction extends FenixDispatchAction {
 
 		request.setAttribute("bean", bean);
 
-		if(bean.getPresentationMaterialType().equals(NewPresentationMaterialType.PICTURE)) {
+		if (bean.getPresentationMaterialType().equals(NewPresentationMaterialType.PICTURE)) {
 			return mapping.findForward("createPictureMaterial");
 		}
-		
+
 		return mapping.findForward("createPresentationMaterial");
 	}
 
@@ -117,9 +121,9 @@ public class PresentationMaterialManagementAction extends FenixDispatchAction {
 
 		Integer relativePosition = getCodeFromRequest(request, "relativePosition");
 
-		ServiceUtils.executeService(getUserView(request), "SwitchPosition",
-				new Object[] { presentationMaterial, relativePosition });
-		
+		ServiceUtils.executeService(getUserView(request), "SwitchPosition", new Object[] {
+				presentationMaterial, relativePosition });
+
 		request.setAttribute("bean", new PresentationMaterialBean(presentationMaterial.getTestElement(),
 				request.getParameter("returnPath"), getCodeFromRequest(request, "returnId"), request
 						.getParameter("contextKey")));
@@ -131,11 +135,11 @@ public class PresentationMaterialManagementAction extends FenixDispatchAction {
 			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
 			FenixServiceException {
 		PresentationMaterialBean bean = (PresentationMaterialBean) getMetaObject("edit-presentation-materials");
-		
+
 		bean.setPresentationMaterialType(null);
-		
+
 		RenderUtils.invalidateViewState("edit-presentation-materials");
-		
+
 		request.setAttribute("bean", bean);
 
 		return mapping.findForward("editPresentationMaterials");
@@ -143,15 +147,19 @@ public class PresentationMaterialManagementAction extends FenixDispatchAction {
 
 	public ActionForward createPictureMaterial(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-			FenixServiceException {
+			FenixServiceException, IOException {
 		PresentationMaterialBean bean = (PresentationMaterialBean) getMetaObject("create-picture-material");
-		
+
 		IUserView userView = getUserView(request);
-		
-		ServiceUtils.executeService(userView, "CreatePictureMaterial",
-				new Object[] { userView.getPerson().getTeacher(), bean.getTestElement(), bean.isInline(),
-			bean.getInputStream(), bean.getOriginalFileName(), bean.getFileName() });
-		
+
+		File file = FileUtils.copyToTemporaryFile(bean.getInputStream());
+		try {
+			executeService("CreatePictureMaterial", new Object[] { userView.getPerson().getTeacher(),
+					bean.getTestElement(), bean.isInline(), file, bean.getOriginalFileName(),
+					bean.getFileName() });
+		} finally {
+			file.delete();
+		}
 		request.setAttribute("bean", new PresentationMaterialBean(bean));
 
 		return mapping.findForward("editPresentationMaterials");
@@ -161,7 +169,7 @@ public class PresentationMaterialManagementAction extends FenixDispatchAction {
 			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
 			FenixServiceException {
 		PresentationMaterialBean bean = (PresentationMaterialBean) getMetaObject("edit-presentation-materials");
-		
+
 		request.setAttribute("bean", bean);
 
 		return mapping.findForward("createPresentationMaterial");
@@ -171,7 +179,7 @@ public class PresentationMaterialManagementAction extends FenixDispatchAction {
 			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
 			FenixServiceException {
 		PresentationMaterialBean bean = (PresentationMaterialBean) getMetaObject("create-picture-material");
-		
+
 		request.setAttribute("bean", bean);
 
 		return mapping.findForward("createPictureMaterial");

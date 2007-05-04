@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -34,6 +35,7 @@ import org.apache.struts.action.ActionMessages;
 
 import pt.ist.utl.fenix.utils.Pair;
 import pt.utl.ist.fenix.tools.file.FileManagerException;
+import pt.utl.ist.fenix.tools.util.FileUtils;
 
 /**
  * Generic action to control the management of a website.
@@ -368,11 +370,13 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
         RenderUtils.invalidateViewState();
 
         InputStream formFileInputStream = null;
+        File file = null;
         try {
             formFileInputStream = bean.getFile();
-
+            file = FileUtils.copyToTemporaryFile(formFileInputStream); 
+            
             Site site = item.getSection().getSite();
-            executeService(request, service, new Object[] { site, item, formFileInputStream, bean.getFileName(),
+            executeService(request, service, new Object[] { site, item, file, bean.getFileName(),
                     bean.getDisplayName(), bean.getPermittedGroup(), getLoggedPerson(request),
                     bean.getEducationalLearningResourceType() });
         } catch (FileManagerException e) {
@@ -384,6 +388,9 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
         } finally {
             if (formFileInputStream != null) {
                 formFileInputStream.close();
+            }
+            if(file!=null) {
+            	file.delete();
             }
         }
 
@@ -458,7 +465,8 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
 
         InputStream vcardFile = bean.getVirtualCardFile();
         InputStream formFileInputStream = null;
-
+        File file = null;
+        
         Section section = item.getSection();
         String resourceLocation = getItemLocationForFile(request, item, section);
         bean.setTechnicalLocation(resourceLocation);
@@ -470,8 +478,10 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
             }
         
             formFileInputStream = bean.getFile();
+            file = FileUtils.copyToTemporaryFile(formFileInputStream);
+            
             final Object[] args = { new CreateScormFileItemForItem.CreateScormFileItemForItemArgs(item,
-                    formFileInputStream, bean.getFileName(), displayName, bean.getPermittedGroup(), bean
+                    file, bean.getFileName(), displayName, bean.getPermittedGroup(), bean
                             .getMetaInformation(), getLoggedPerson(request),bean.getEducationalLearningResourceType()) };
 
             executeService(request, "CreateScormFileItemForItem", args);
@@ -495,6 +505,9 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
             }
             if (vcardFile != null) {
                 vcardFile.close();
+            }
+            if(file!=null) {
+            	file.delete();
             }
         }
 

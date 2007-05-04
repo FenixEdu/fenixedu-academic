@@ -1,25 +1,27 @@
 package net.sourceforge.fenixedu.applicationTier.Servico;
 
-import java.io.InputStream;
+import java.io.File;
+import java.io.IOException;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.UnitSiteBanner;
 import net.sourceforge.fenixedu.domain.UnitSiteBannerFile;
 
 public class UpdateUnitSiteBanner extends UnitSiteBannerFileService {
 
-    public void run(UnitSite site, UnitSiteBanner banner, InputStream mainStream, String mainName, InputStream backStream, String backName, String color, String link, Integer weight) {
+    public void run(UnitSite site, UnitSiteBanner banner, File mainFile, String mainName, File backFile, String backName, String color, String link, Integer weight) throws FenixServiceException, IOException {
         UnitSiteBannerFile main = banner.getMainImage();
-        if (main != null && mainStream != null) {
+        if (main != null && mainFile != null) {
             main.delete();
         }
         
         UnitSiteBannerFile background = banner.getBackgroundImage();
-        if (background != null && backStream != null) {
+        if (background != null && mainFile != null) {
             background.delete();
         }
 
-        updateBanner(site, banner, mainStream, mainName, backStream, backName, color, link, weight);
+        updateBanner(site, banner, mainFile, mainName, backFile, backName, color, link, weight);
     }
     
 }

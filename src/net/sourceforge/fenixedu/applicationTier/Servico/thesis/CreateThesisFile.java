@@ -1,11 +1,16 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.thesis;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.accessControl.CurrentDegreeCoordinatorsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
@@ -25,76 +30,89 @@ import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
 public abstract class CreateThesisFile extends Service {
 
-    public ThesisFile run(Thesis thesis, InputStream stream, String fileName, String title, String subTitle, Language language) {
+	public ThesisFile run(Thesis thesis, File fileToUpload, String fileName, String title,
+			String subTitle, Language language) throws FenixServiceException, IOException {
 
-        if (! thesis.isWaitingConfirmation()) {
-            throw new DomainException("thesis.files.submit.unavailable");
-        }
-        
-        if (! thesis.isDeclarationAccepted()) {
-            throw new DomainException("thesis.files.submit.unavailable");
-        }
-        
-        removePreviousFile(thesis);
-        
-        if (stream == null || fileName == null) {
-            return null;
-        }
-        
-        VirtualPath filePath = getVirtualPath(thesis);
-        Collection<FileSetMetaData> metaData = createMetaData(thesis, fileName);
-        
-        FileDescriptor descriptor = saveFile(filePath, fileName, true, metaData, stream);
-        
-        ThesisFile file = new ThesisFile(descriptor.getUniqueId(), fileName);
-        file.setSize(descriptor.getSize());
-        file.setMimeType(descriptor.getMimeType());
-        file.setChecksum(descriptor.getChecksum());
-        file.setChecksumAlgorithm(descriptor.getChecksumAlgorithm());
+		if (!thesis.isWaitingConfirmation()) {
+			throw new DomainException("thesis.files.submit.unavailable");
+		}
 
-        RoleTypeGroup scientificCouncil = new RoleTypeGroup(RoleType.SCIENTIFIC_COUNCIL);
-        CurrentDegreeCoordinatorsGroup coordinators = new CurrentDegreeCoordinatorsGroup(thesis.getDegree());
-        PersonGroup student = thesis.getStudent().getPerson().getPersonGroup();
-        ThesisFileReadersGroup thesisGroup = new ThesisFileReadersGroup(thesis);
-        
-        file.setPermittedGroup(new GroupUnion(scientificCouncil, coordinators, student, thesisGroup));
-        
-        updateThesis(thesis, file, title, subTitle, language);
-        
-        return file;
-    }
+		if (!thesis.isDeclarationAccepted()) {
+			throw new DomainException("thesis.files.submit.unavailable");
+		}
 
-    private VirtualPath getVirtualPath(Thesis thesis) {
-        // TODO: thesis, review path
-        
-        VirtualPathNode[] nodes = { 
-                new VirtualPathNode("Thesis", "Thesis"),
-                new VirtualPathNode("Student" + thesis.getStudent().getIdInternal(), "Student")
-        };
-        
-        VirtualPath path = new VirtualPath();
-        for (VirtualPathNode node : nodes) {
-            path.addNode(node);
-        }
-        
-        return path;
-    }
+		removePreviousFile(thesis);
 
-    private Collection<FileSetMetaData> createMetaData(Thesis thesis, String fileName) {
-        List<FileSetMetaData> metaData = new ArrayList<FileSetMetaData>();
-        
-        metaData.add(FileSetMetaData.createAuthorMeta(thesis.getStudent().getPerson().getName()));
-        metaData.add(FileSetMetaData.createTitleMeta(thesis.getTitle().getContent()));
-        
-        return metaData;
-    }
+		if (fileToUpload == null || fileName == null) {
+			return null;
+		}
 
-    private FileDescriptor saveFile(VirtualPath filePath, String fileName, boolean isPrivate, Collection<FileSetMetaData> metaData, InputStream stream) {
-        IFileManager fileManager = FileManagerFactory.getFactoryInstance().getFileManager();
-        return fileManager.saveFile(filePath, fileName, isPrivate, metaData, stream);
-    }
+		VirtualPath filePath = getVirtualPath(thesis);
+		Collection<FileSetMetaData> metaData = createMetaData(thesis, fileName);
 
-    protected abstract void removePreviousFile(Thesis thesis);
-    protected abstract void updateThesis(Thesis thesis, ThesisFile file, String title, String subTitle, Language language);
+		FileDescriptor descriptor = saveFile(filePath, fileName, true, metaData, fileToUpload);
+
+		ThesisFile file = new ThesisFile(descriptor.getUniqueId(), fileName);
+		file.setSize(descriptor.getSize());
+		file.setMimeType(descriptor.getMimeType());
+		file.setChecksum(descriptor.getChecksum());
+		file.setChecksumAlgorithm(descriptor.getChecksumAlgorithm());
+
+		RoleTypeGroup scientificCouncil = new RoleTypeGroup(RoleType.SCIENTIFIC_COUNCIL);
+		CurrentDegreeCoordinatorsGroup coordinators = new CurrentDegreeCoordinatorsGroup(thesis
+				.getDegree());
+		PersonGroup student = thesis.getStudent().getPerson().getPersonGroup();
+		ThesisFileReadersGroup thesisGroup = new ThesisFileReadersGroup(thesis);
+
+		file.setPermittedGroup(new GroupUnion(scientificCouncil, coordinators, student, thesisGroup));
+
+		updateThesis(thesis, file, title, subTitle, language);
+
+		return file;
+	}
+
+	private VirtualPath getVirtualPath(Thesis thesis) {
+		// TODO: thesis, review path
+
+		VirtualPathNode[] nodes = { new VirtualPathNode("Thesis", "Thesis"),
+				new VirtualPathNode("Student" + thesis.getStudent().getIdInternal(), "Student") };
+
+		VirtualPath path = new VirtualPath();
+		for (VirtualPathNode node : nodes) {
+			path.addNode(node);
+		}
+
+		return path;
+	}
+
+	private Collection<FileSetMetaData> createMetaData(Thesis thesis, String fileName) {
+		List<FileSetMetaData> metaData = new ArrayList<FileSetMetaData>();
+
+		metaData.add(FileSetMetaData.createAuthorMeta(thesis.getStudent().getPerson().getName()));
+		metaData.add(FileSetMetaData.createTitleMeta(thesis.getTitle().getContent()));
+
+		return metaData;
+	}
+
+	private FileDescriptor saveFile(VirtualPath filePath, String fileName, boolean isPrivate,
+			Collection<FileSetMetaData> metaData, File file) throws FenixServiceException, IOException {
+		IFileManager fileManager = FileManagerFactory.getFactoryInstance().getFileManager();
+		InputStream is = null;
+		try {
+			is = new FileInputStream(file);
+			return fileManager.saveFile(filePath, fileName, isPrivate, metaData, is);
+		} catch (FileNotFoundException e) {
+			throw new FenixServiceException(e.getMessage());
+		} finally {
+			if (is != null) {
+				is.close();
+			}
+		}
+	}
+
+	protected abstract void removePreviousFile(Thesis thesis);
+
+	protected abstract void updateThesis(Thesis thesis, ThesisFile file, String title, String subTitle,
+			Language language);
 
 }
