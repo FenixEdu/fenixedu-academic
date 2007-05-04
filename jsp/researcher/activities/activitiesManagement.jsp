@@ -21,8 +21,8 @@
 	</ul>
 
 	<logic:notEmpty name="international-events">
-		<p id='events' class="separator2 mtop2 mbottom0">
-			<span><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.eventsTitle.international" /></span>
+		<p id='events' class="mtop3 mbottom0">
+			<strong><span><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.eventsTitle.international" /></span></strong>
 		</p>
 		<bean:define id="participations" name="international-events" toScope="request"/>
 		<bean:define id="forwardTo" value="EditEvent" toScope="request"/>
@@ -31,8 +31,8 @@
 	</logic:notEmpty>
 
 	<logic:notEmpty name="national-events">
-		<p id='events' class="separator2 mtop2 mbottom0">
-			<span><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.eventsTitle.national" /></span>
+		<p id='events' class="mtop3 mbottom0">
+			<strong><span><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.eventsTitle.national" /></span></strong>
 		</p>
 		<bean:define id="participations" name="national-events" toScope="request"/>
 		<bean:define id="forwardTo" value="EditEvent" toScope="request"/>
@@ -42,8 +42,8 @@
 	</logic:notEmpty>
 	
 	<logic:notEmpty name="international-eventEditions">
-		<p id='events' class="separator2 mtop2 mbottom0">
-			<span><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.eventEditionsTitle.international" /></span>
+		<p id='events' class="mtop3 mbottom0">
+			<strong><span><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.eventEditionsTitle.international" /></span></strong>
 		</p>
 		<bean:define id="participations" name="international-eventEditions" toScope="request"/>
 		<bean:define id="forwardTo" value="EditEventEdition" toScope="request"/>
@@ -52,8 +52,8 @@
 	</logic:notEmpty>
 		
 	<logic:notEmpty name="national-eventEditions">
-		<p id='events' class="separator2 mtop2 mbottom0">
-			<span><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.eventEditionsTitle.national" /></span>
+		<p id='events' class="mtop3 mbottom0">
+			<strong><span><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.eventEditionsTitle.national" /></span></strong>
 		</p>
 		<bean:define id="participations" name="national-eventEditions" toScope="request"/>
 		<bean:define id="forwardTo" value="EditEventEdition" toScope="request"/>
@@ -63,8 +63,8 @@
 	</logic:notEmpty>
 
 	<logic:notEmpty name="international-journals">
-		<p id='scientificJournals' class="separator2 mtop2 mbottom0">
-			<span><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.scientificJournalsTitle.international" /></span>
+		<p id='scientificJournals' class="mtop3 mbottom0">
+			<strong><span><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.scientificJournalsTitle.international" /></span></strong>
 		</p>
 		<bean:define id="participations" name="international-journals" toScope="request"/>
 		<bean:define id="forwardTo" value="EditScientificJournal" toScope="request"/>
@@ -73,8 +73,8 @@
 	</logic:notEmpty>
 
 	<logic:notEmpty name="national-journals">
-		<p id='scientificJournals' class="separator2 mtop2 mbottom0">
-			<span><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.scientificJournalsTitle.national" /></span>
+		<p id='scientificJournals' class="mtop3 mbottom0">
+			<strong><span><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.scientificJournalsTitle.national" /></span></strong>
 		</p>
 		<bean:define id="participations" name="national-journals" toScope="request"/>
 		<bean:define id="forwardTo" value="EditScientificJournal" toScope="request"/>
@@ -83,8 +83,8 @@
 	</logic:notEmpty>
 	
 	<logic:notEmpty name="international-issues">
-		<p id='issues' class="separator2 mtop2 mbottom0">
-			<span><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.issueTitle.international" /></span>
+		<p id='issues' class="mtop3 mbottom0">
+			<strong><span><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.issueTitle.international" /></span></strong>
 		</p>
 		<bean:define id="participations" name="international-issues" toScope="request"/>
 		<bean:define id="forwardTo" value="EditJournalIssue" toScope="request"/>
@@ -93,8 +93,8 @@
 	</logic:notEmpty>
 		
 	<logic:notEmpty name="national-issues">
-		<p id='issues' class="separator2 mtop2 mbottom0">
-			<span><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.issueTitle.national" /></span>
+		<p id='issues' class="mtop3 mbottom0">
+			<strong><span><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.issueTitle.national" /></span></strong>
 		</p>
 		<bean:define id="participations" name="national-issues" toScope="request"/>
 		<bean:define id="forwardTo" value="EditJournalIssue" toScope="request"/>
@@ -103,8 +103,8 @@
 	</logic:notEmpty>
 	
 	<logic:notEmpty name="cooperations">
-		<p id='cooperations' class="separator2 mtop2 mbottom0">
-			<span><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.cooperationsTitle" /></span>
+		<p id='cooperations' class="mtop3 mbottom0">
+			<strong><span><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.cooperationsTitle" /></span></strong>
 		</p>
 		<bean:define id="participations" name="cooperations" toScope="request"/>
 		<bean:define id="forwardTo" value="EditCooperation" toScope="request"/>
