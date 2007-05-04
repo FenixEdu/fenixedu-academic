@@ -124,17 +124,22 @@ public class ListGrantContractByCriteria extends Service {
 		List<GrantSubsidy> grantSubsidyList = grantContractRegime
 				.getGrantContract().getAssociatedGrantSubsidies();
 		for (GrantSubsidy grantSubsidy : grantSubsidyList) {
-			infoListGrantOwnerByOrder.setTotalOfGrantPayment(grantSubsidy.getTotalCost());
-			infoListGrantOwnerByOrder.setValueOfGrantPayment(grantSubsidy.getValue());
+			infoListGrantOwnerByOrder.setTotalOfGrantPayment(grantSubsidy
+					.getTotalCost());
+			infoListGrantOwnerByOrder.setValueOfGrantPayment(grantSubsidy
+					.getValue());
 			for (GrantPart grantPart : rootDomainObject.getGrantParts()) {
 				if (grantSubsidy.equals(grantPart.getGrantSubsidy())) {
-					infoListGrantOwnerByOrder
-							.setInsurancePaymentEntity(grantPart
-									.getGrantPaymentEntity().getNumber());
-					infoListGrantOwnerByOrder.setNumberPaymentEntity(grantPart
-							.getGrantPaymentEntity().getNumber());
-					infoListGrantOwnerByOrder.setDesignation(grantPart
-							.getGrantPaymentEntity().getDesignation());
+					if (grantPart.getGrantPaymentEntity() != null) {
+						infoListGrantOwnerByOrder
+								.setInsurancePaymentEntity(grantPart
+										.getGrantPaymentEntity().getNumber());
+						infoListGrantOwnerByOrder
+								.setNumberPaymentEntity(grantPart
+										.getGrantPaymentEntity().getNumber());
+						infoListGrantOwnerByOrder.setDesignation(grantPart
+								.getGrantPaymentEntity().getDesignation());
+					}
 				}
 			}
 		}
