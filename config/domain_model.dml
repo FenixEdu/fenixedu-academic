@@ -4732,6 +4732,7 @@ class net.sourceforge.fenixedu.domain.AccessibleItem extends net.sourceforge.fen
 			Integer keySection;
 			Integer itemOrder;
 			MultiLanguageString information;
+			Boolean showName;
 		}
 	
 	class net.sourceforge.fenixedu.domain.functionalities.Functionality extends net.sourceforge.fenixedu.domain.AccessibleItem {

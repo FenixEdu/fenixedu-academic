@@ -146,4 +146,28 @@ public class Item extends Item_Base {
         FileItem.ORDERED_ADAPTER.updateOrder(this, files);
     }
 
+    /**
+     * The item's title is visible unless the manager chooses to hide it or when
+     * the item's sections has the same title as the item and the item has no siblings. 
+     * 
+     * @return <code>true</code> if the item's title is to be presented
+     */
+    public boolean isNameVisible() {
+    	Boolean show = getShowName();
+    	
+    	if (show != null && !show) {
+    		return false;
+    	}
+    	
+    	Section section = getSection();
+    	
+		String sectionName = section.getName().getContent();
+		String itemName = getName().getContent();
+		
+		if (! sectionName.equals(itemName)) {
+    		return true;
+    	}
+		
+		return section.getAssociatedItems().size() > 1;
+    }
 }

@@ -60,14 +60,16 @@
             <bean:define id="item" name="protectedItem" property="item" type="net.sourceforge.fenixedu.domain.Item"/>
             <bean:define id="available" name="protectedItem" property="available"/>
             
-       		<h3 class="mtop2 mbottom05">
-                <a name="<%= "item" + item.getIdInternal() %>" ></a>
-                <fr:view name="item" property="name"/>
-                <logic:present name="directLinkContext">
-                    <bean:define id="directLinkContext" name="directLinkContext"/>
-                    <span class="permalink1">(<a href="<%= directLinkContext + ItemProcessor.getItemPath(item) %>"><bean:message key="label.link" bundle="SITE_RESOURCES"/></a>)</span>
-                </logic:present>
-            </h3>
+            <logic:equal name="item" property="nameVisible" value="true">
+	       		<h3 class="mtop2 mbottom05">
+	                <a name="<%= "item" + item.getIdInternal() %>" ></a>
+	                <fr:view name="item" property="name"/>
+	                <logic:present name="directLinkContext">
+	                    <bean:define id="directLinkContext" name="directLinkContext"/>
+	                    <span class="permalink1">(<a href="<%= directLinkContext + ItemProcessor.getItemPath(item) %>"><bean:message key="label.link" bundle="SITE_RESOURCES"/></a>)</span>
+	                </logic:present>
+	            </h3>
+            </logic:equal>
 
             <logic:equal name="available" value="true">
               	  <logic:notEmpty name="item" property="information">

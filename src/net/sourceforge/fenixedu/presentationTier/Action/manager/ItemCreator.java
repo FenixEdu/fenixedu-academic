@@ -16,6 +16,7 @@ public class ItemCreator implements Serializable {
     private MultiLanguageString name;
     private MultiLanguageString information;
     private boolean visible;
+    private boolean showName;
 
     private DomainReference<Section> section;
     private DomainReference<Item> nextItem;
@@ -28,6 +29,7 @@ public class ItemCreator implements Serializable {
         this.section = new DomainReference<Section>(section);
         this.nextItem = new DomainReference<Item>(null);
         this.visible = true;
+        this.showName = true;
         this.permittedGroup = new EveryoneGroup();
     }
 
@@ -55,7 +57,15 @@ public class ItemCreator implements Serializable {
         this.visible = visible;
     }
 
-    public Item getNextItem() {
+	public boolean isShowName() {
+		return showName;
+	}
+
+	public void setShowName(boolean showName) {
+		this.showName = showName;
+	}
+
+	public Item getNextItem() {
         return this.nextItem.getObject();
     }
 
@@ -81,6 +91,7 @@ public class ItemCreator implements Serializable {
         item.setInformation(getInformation());
         item.setNextItem(getNextItem());
         item.setPermittedGroup(getPermittedGroup());
-        item.setVisible(true);
+        item.setVisible(isVisible());
+        item.setShowName(isShowName());
     }
 }

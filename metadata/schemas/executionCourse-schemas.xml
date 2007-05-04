@@ -290,6 +290,7 @@
    		<property name="config" value="advanced" />
 	</slot>
     <slot name="visible" bundle="SITE_RESOURCES"/>
+    <slot name="showName" bundle="SITE_RESOURCES"/>
     <slot name="permittedGroup" layout="radio-select" bundle="SITE_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
         <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionCourse.ItemGroupProvider" />
         <property name="eachSchema" value="permittedGroup.class.text"/>
@@ -317,6 +318,7 @@
    		<property name="config" value="advanced" />
 	</slot>
     <slot name="visible" bundle="SITE_RESOURCES"/>
+    <slot name="showName" bundle="SITE_RESOURCES"/>
     <slot name="permittedGroup" layout="radio-select" bundle="SITE_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
         <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionCourse.ItemGroupProvider" />
         <property name="eachSchema" value="permittedGroup.class.text"/>
