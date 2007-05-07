@@ -58,6 +58,11 @@ public class ProtocolAction implements Serializable {
 	return true;
     }
 
+    public boolean contains(ProtocolActionType protocolActionType) {
+	return (getProcotolActionTypes() == null || !getProcotolActionTypes().contains(
+		protocolActionType)) ? false : true;
+    }
+
     public String getText() {
 	StringBuilder stringBuilder = new StringBuilder();
 	ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.EnumerationResources",

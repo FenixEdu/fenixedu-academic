@@ -17,6 +17,11 @@ import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
 public class ProtocolSearch implements Serializable {
+
+    public enum SearchNationalityType {
+	NATIONAL, INTERNATIONAL, COUNTRY;
+    }
+
     private String protocolNumber;
 
     private YearMonthDay beginProtocolBeginDate;
@@ -40,13 +45,16 @@ public class ProtocolSearch implements Serializable {
     private String partnerNameString;
 
     private DomainReference<Country> country;
-    
+
     private boolean actives;
-    
+
     private boolean inactives;
+
+    private SearchNationalityType searchNationalityType;
 
     public ProtocolSearch() {
 	super();
+	setActives(true);
     }
 
     public List<Protocol> getSearch() {
@@ -60,11 +68,35 @@ public class ProtocolSearch implements Serializable {
 		    && satisfiedDates(getBeginSignedDate(), getEndSignedDate(), protocol.getSignedDate())
 		    && satisfiedOtherProtocolActionTypes(protocol)
 		    && satiefiedProtocolActionTypes(protocol) && satisfiedProtocolPartner(protocol)
-		    && satisfiedCountry(protocol)) {
+		    && satisfiedNationality(protocol) && satisfiedActivity(protocol)) {
 		protocols.add(protocol);
 	    }
 	}
 	return protocols;
+    }
+
+    public boolean satisfiedActivity(Protocol protocol) {
+	if ((protocol.isActive() && isActives()) || (isInactives() && !protocol.isActive())) {
+	    return true;
+	}
+	return false;
+    }
+
+    private boolean satisfiedNationality(Protocol protocol) {
+	if (getSearchNationalityType() == null
+		|| getSearchNationalityType().equals(SearchNationalityType.COUNTRY)) {
+	    return satisfiedCountry(protocol);
+	}
+	for (Unit partner : protocol.getPartners()) {
+	    if (partner.getNationality() != null
+		    && ((getSearchNationalityType().equals(SearchNationalityType.NATIONAL) && partner
+			    .getNationality().getName().equalsIgnoreCase("PORTUGAL")) || (getSearchNationalityType()
+			    .equals(SearchNationalityType.INTERNATIONAL) && !partner.getNationality()
+			    .getName().equalsIgnoreCase("PORTUGAL")))) {
+		return true;
+	    }
+	}
+	return false;
     }
 
     private boolean satisfiedCountry(Protocol protocol) {
@@ -72,8 +104,9 @@ public class ProtocolSearch implements Serializable {
 	    return true;
 	}
 	for (Unit partner : protocol.getPartners()) {
-	    if (partner.getNationality() != null && partner.getNationality().equals(getCountry())) {
-
+	    if (partner.getNationality() != null
+		    && partner.getNationality().getName().equals(getCountry().getName())) {
+		return true;
 	    }
 	}
 	return false;
@@ -213,19 +246,27 @@ public class ProtocolSearch implements Serializable {
     }
 
     public boolean isActives() {
-        return actives;
+	return actives;
     }
 
     public void setActives(boolean actives) {
-        this.actives = actives;
+	this.actives = actives;
     }
 
     public boolean isInactives() {
-        return inactives;
+	return inactives;
     }
 
     public void setInactives(boolean inactives) {
-        this.inactives = inactives;
+	this.inactives = inactives;
+    }
+
+    public SearchNationalityType getSearchNationalityType() {
+	return searchNationalityType;
+    }
+
+    public void setSearchNationalityType(SearchNationalityType searchNationalityType) {
+	this.searchNationalityType = searchNationalityType;
     }
 
 }
