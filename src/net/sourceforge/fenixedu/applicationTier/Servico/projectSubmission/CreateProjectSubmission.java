@@ -1,5 +1,8 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.projectSubmission;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -35,42 +38,43 @@ public class CreateProjectSubmission extends Service {
         super();
     }
 
-    public void run(CreateProjectSubmissionBean createProjectSubmissionBean)
+    public void run(java.io.File uploadFile, String filename, Attends attends,
+    		Project project, StudentGroup studentGroup, Person person) throws FenixServiceException, IOException {
+    
+    	checkPermissions(attends, person);
+    	final Group permittedGroup = createPermittedGroup(attends, studentGroup);
+    	InputStream inputStream = null;
+    	try {
+    		inputStream = new FileInputStream(uploadFile);
+    		createProjectSubmission(inputStream,filename,attends,project,studentGroup,permittedGroup);
+    	} catch (FileNotFoundException e) {
+    		new FenixServiceException(e.getMessage());
+		}finally {
+    		if (inputStream != null) {
+    			inputStream.close();
+    		}
+    	}
+    }
+    
+    private Group createPermittedGroup(Attends attends, StudentGroup studentGroup) {
+    	final ExecutionCourse executionCourse = attends.getExecutionCourse();
+    	return new GroupUnion(new ExecutionCourseTeachersGroup(executionCourse),
+        new StudentGroupStudentsGroup(studentGroup));
+	}
+
+	
+    private void checkPermissions(Attends attends, Person person) throws FenixServiceException {
+    	if(!person.getCurrentAttends().contains(attends)) {
+    		throw new FenixServiceException("error.NotAuthorized");
+    	}
+    }
+    
+    
+    private ProjectSubmission createProjectSubmission(InputStream inputStream, String filename, Attends attends,
+    		Project project, StudentGroup studentGroup, final Group permittedGroup)
             throws FenixServiceException, FileManagerException {
 
-        checkPermissions(createProjectSubmissionBean);
-        final Group permittedGroup = createPermittedGroup(createProjectSubmissionBean);
-        createProjectSubmission(createProjectSubmissionBean, permittedGroup);
 
-    }
-
-    private void checkPermissions(CreateProjectSubmissionBean createProjectSubmissionBean)
-            throws FenixServiceException {
-        final Attends attends = createProjectSubmissionBean.getAttends();
-        final Person person = createProjectSubmissionBean.getPerson();
-
-        if (!person.getCurrentAttends().contains(attends)) {
-            throw new FenixServiceException("error.NotAuthorized");
-        }
-    }
-
-    private Group createPermittedGroup(CreateProjectSubmissionBean createProjectSubmissionBean) {
-        final ExecutionCourse executionCourse = createProjectSubmissionBean.getAttends()
-                .getExecutionCourse();
-        final StudentGroup studentGroup = createProjectSubmissionBean.getStudentGroup();
-        return new GroupUnion(new ExecutionCourseTeachersGroup(executionCourse),
-                new StudentGroupStudentsGroup(studentGroup));
-    }
-
-    private ProjectSubmission createProjectSubmission(
-            final CreateProjectSubmissionBean createProjectSubmissionBean, final Group permittedGroup)
-            throws FenixServiceException, FileManagerException {
-
-        final InputStream inputStream = createProjectSubmissionBean.getInputStream();
-        final String filename = createProjectSubmissionBean.getFilename();
-        final Attends attends = createProjectSubmissionBean.getAttends();
-        final Project project = createProjectSubmissionBean.getProject();
-        final StudentGroup studentGroup = createProjectSubmissionBean.getStudentGroup();
         final String fileToDeleteExternalId = getFileToDeleteExternalId(project, studentGroup);
         final VirtualPath filePath = getVirtualPath(attends.getExecutionCourse(), project, studentGroup);
       

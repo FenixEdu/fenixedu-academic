@@ -1,5 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.Action.student;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -13,6 +16,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.projectSubmission.CreateProjectSubmissionBean;
 import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Project;
 import net.sourceforge.fenixedu.domain.ProjectSubmission;
 import net.sourceforge.fenixedu.domain.StudentGroup;
@@ -31,6 +35,7 @@ import org.apache.struts.action.ActionMessages;
 
 import pt.utl.ist.fenix.tools.file.FileManagerException;
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
+import pt.utl.ist.fenix.tools.util.FileUtils;
 
 /**
  * 
@@ -39,121 +44,131 @@ import pt.utl.ist.fenix.tools.file.FileManagerFactory;
  */
 public class ProjectSubmissionDispatchAction extends FenixDispatchAction {
 
- 
-    public ActionForward viewProjectsWithOnlineSubmission(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
-            FenixFilterException, FenixServiceException {
+	public ActionForward viewProjectsWithOnlineSubmission(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
+			FenixFilterException, FenixServiceException {
 
-        SortedSet<Attends> attendsForCurrentExecutionPeriod = new TreeSet<Attends>(
-                Attends.ATTENDS_COMPARATOR_BY_EXECUTION_COURSE_NAME);
-        attendsForCurrentExecutionPeriod.addAll(getUserView(request).getPerson().getCurrentAttends());
+		SortedSet<Attends> attendsForCurrentExecutionPeriod = new TreeSet<Attends>(
+				Attends.ATTENDS_COMPARATOR_BY_EXECUTION_COURSE_NAME);
+		attendsForCurrentExecutionPeriod.addAll(getUserView(request).getPerson().getCurrentAttends());
 
-        request.setAttribute("attendsForCurrentExecutionPeriod", attendsForCurrentExecutionPeriod);
+		request.setAttribute("attendsForCurrentExecutionPeriod", attendsForCurrentExecutionPeriod);
 
-        return mapping.findForward("viewProjectsWithOnlineSubmission");
+		return mapping.findForward("viewProjectsWithOnlineSubmission");
 
-    }
+	}
 
-    public ActionForward viewProjectSubmissions(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
-            FenixFilterException, FenixServiceException {
+	public ActionForward viewProjectSubmissions(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
+			FenixFilterException, FenixServiceException {
 
-        final Attends attends = getAttends(request);
-        final Project project = getProject(request);
-        final StudentGroup studentGroup = project.getGrouping().getStudentGroupByAttends(attends);
+		final Attends attends = getAttends(request);
+		final Project project = getProject(request);
+		final StudentGroup studentGroup = project.getGrouping().getStudentGroupByAttends(attends);
 
-        request.setAttribute("project", project);
+		request.setAttribute("project", project);
 
-        if (studentGroup != null) {
-            final List<ProjectSubmission> projectSubmissionsSortedByMostRecent = getProjectSubmissionsForStudentGroupSortedByMostRecent(
-                    project, studentGroup);
+		if (studentGroup != null) {
+			final List<ProjectSubmission> projectSubmissionsSortedByMostRecent = getProjectSubmissionsForStudentGroupSortedByMostRecent(
+					project, studentGroup);
 
-            request.setAttribute("attends", attends);
-            request.setAttribute("projectSubmissions", projectSubmissionsSortedByMostRecent);
-        } else {
-            request.setAttribute("noStudentGroupForGrouping", true);
-        }
+			request.setAttribute("attends", attends);
+			request.setAttribute("projectSubmissions", projectSubmissionsSortedByMostRecent);
+		} else {
+			request.setAttribute("noStudentGroupForGrouping", true);
+		}
 
-        return mapping.findForward("viewProjectSubmissions");
+		return mapping.findForward("viewProjectSubmissions");
 
-    }
+	}
 
-    private List<ProjectSubmission> getProjectSubmissionsForStudentGroupSortedByMostRecent(
-            final Project project, final StudentGroup studentGroup) {
-        final List<ProjectSubmission> projectSubmissionsSortedByMostRecent = new ArrayList<ProjectSubmission>(
-                project.getProjectSubmissionsByStudentGroup(studentGroup));
-        Collections.sort(projectSubmissionsSortedByMostRecent,
-                ProjectSubmission.COMPARATOR_BY_MOST_RECENT_SUBMISSION_DATE);
-        return projectSubmissionsSortedByMostRecent;
-    }
+	private List<ProjectSubmission> getProjectSubmissionsForStudentGroupSortedByMostRecent(
+			final Project project, final StudentGroup studentGroup) {
+		final List<ProjectSubmission> projectSubmissionsSortedByMostRecent = new ArrayList<ProjectSubmission>(
+				project.getProjectSubmissionsByStudentGroup(studentGroup));
+		Collections.sort(projectSubmissionsSortedByMostRecent,
+				ProjectSubmission.COMPARATOR_BY_MOST_RECENT_SUBMISSION_DATE);
+		return projectSubmissionsSortedByMostRecent;
+	}
 
-    public ActionForward prepareProjectSubmission(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
-            FenixFilterException, FenixServiceException {
+	public ActionForward prepareProjectSubmission(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
+			FenixFilterException, FenixServiceException {
 
-        Attends attends = getAttends(request);
-        Project project = getProject(request);
-        StudentGroup studentGroup = project.getGrouping().getStudentGroupByAttends(attends);
+		Attends attends = getAttends(request);
+		Project project = getProject(request);
+		StudentGroup studentGroup = project.getGrouping().getStudentGroupByAttends(attends);
 
-        request.setAttribute("attends", attends);
-        request.setAttribute("project", getProject(request));
-        request.setAttribute("studentGroup", studentGroup);
-        request.setAttribute("person", getUserView(request).getPerson());
-        request.setAttribute("projectSubmission", new CreateProjectSubmissionBean());
+		request.setAttribute("attends", attends);
+		request.setAttribute("project", getProject(request));
+		request.setAttribute("studentGroup", studentGroup);
+		request.setAttribute("person", getUserView(request).getPerson());
+		request.setAttribute("projectSubmission", new CreateProjectSubmissionBean());
 
-        return mapping.findForward("submitProject");
+		return mapping.findForward("submitProject");
 
-    }
+	}
 
-    public ActionForward submitProject(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
-            FenixFilterException, FenixServiceException {
+	public ActionForward submitProject(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
+			FenixFilterException, FenixServiceException, IOException {
 
-        final IViewState viewState = RenderUtils.getViewState("createProjectSubmission");
-        final CreateProjectSubmissionBean createProjectSubmissionBean = (CreateProjectSubmissionBean) viewState
-                .getMetaObject().getObject();
+		final IViewState viewState = RenderUtils.getViewState("createProjectSubmission");
+		final CreateProjectSubmissionBean createProjectSubmissionBean = (CreateProjectSubmissionBean) viewState
+				.getMetaObject().getObject();
 
-        try {
-            ServiceUtils.executeService(getUserView(request), "CreateProjectSubmission",
-                    new Object[] { createProjectSubmissionBean });
-        } catch (DomainException ex) {
-            saveActionMessageOnRequest(request, ex.getKey(), ex.getArgs());
+		InputStream is = createProjectSubmissionBean.getInputStream();
+		File file = null;
+		try {
+			file = FileUtils.copyToTemporaryFile(is);
+			executeService("CreateProjectSubmission", new Object[] { file,  createProjectSubmissionBean.getFilename(), createProjectSubmissionBean.getAttends(),
+			createProjectSubmissionBean.getProject(), createProjectSubmissionBean.getStudentGroup(), createProjectSubmissionBean.getPerson() });
+			
+		} catch (DomainException ex) {
+			saveActionMessageOnRequest(request, ex.getKey(), ex.getArgs());
 
-            return prepareProjectSubmission(mapping, form, request, response);
+			return prepareProjectSubmission(mapping, form, request, response);
 
-        } catch (FileManagerException ex) {
-            saveActionMessageOnRequest(request, ex.getKey(), ex.getArgs());
+		} catch (FileManagerException ex) {
+			saveActionMessageOnRequest(request, ex.getKey(), ex.getArgs());
 
-            return prepareProjectSubmission(mapping, form, request, response);
-        }
+			return prepareProjectSubmission(mapping, form, request, response);
+		} finally {
+			if (is != null) {
+				is.close();
+			}
+			if (file != null) {
+				file.delete();
+			}
+		}
 
-        return viewProjectSubmissions(mapping, form, request, response);
-    }
+		return viewProjectSubmissions(mapping, form, request, response);
+	}
 
-    private void saveActionMessageOnRequest(HttpServletRequest request, String errorKey, String[] args) {
-        ActionMessages actionMessages = new ActionMessages();
-        actionMessages.add(errorKey, new ActionMessage(errorKey, args));
-        saveMessages(request, actionMessages);
-    }
+	private void saveActionMessageOnRequest(HttpServletRequest request, String errorKey, String[] args) {
+		ActionMessages actionMessages = new ActionMessages();
+		actionMessages.add(errorKey, new ActionMessage(errorKey, args));
+		saveMessages(request, actionMessages);
+	}
 
-    private Project getProject(HttpServletRequest request) {
-        Integer projectId = getRequestParameterAsInteger(request, "projectId");
+	private Project getProject(HttpServletRequest request) {
+		Integer projectId = getRequestParameterAsInteger(request, "projectId");
 
-        if (projectId != null) {
-            return (Project) rootDomainObject.readEvaluationByOID(projectId);
-        } else {
-            return null;
-        }
-    }
+		if (projectId != null) {
+			return (Project) rootDomainObject.readEvaluationByOID(projectId);
+		} else {
+			return null;
+		}
+	}
 
-    private Attends getAttends(HttpServletRequest request) {
-        Integer attendsId = getRequestParameterAsInteger(request, "attendsId");
+	private Attends getAttends(HttpServletRequest request) {
+		Integer attendsId = getRequestParameterAsInteger(request, "attendsId");
 
-        if (attendsId != null) {
-            return rootDomainObject.readAttendsByOID(attendsId);
-        } else {
-            return null;
-        }
-    }
+		if (attendsId != null) {
+			return rootDomainObject.readAttendsByOID(attendsId);
+		} else {
+			return null;
+		}
+	}
 
 }

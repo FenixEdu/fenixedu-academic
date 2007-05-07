@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.dataTransferObject.projectSubmission;
 
+import java.io.File;
 import java.io.InputStream;
 import java.io.Serializable;
 
@@ -24,7 +25,7 @@ public class CreateProjectSubmissionBean implements Serializable {
     private transient InputStream inputStream;
 
     private String filename;
-
+    
     public StudentGroup getStudentGroup() {
         return (this.studentGroupReference != null) ? this.studentGroupReference.getObject() : null;
 

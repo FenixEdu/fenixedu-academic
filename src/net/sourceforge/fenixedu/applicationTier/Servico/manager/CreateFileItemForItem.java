@@ -46,7 +46,7 @@ public class CreateFileItemForItem extends FileItemService {
 				!isPublic(permittedGroup), metaData, file);
 
 		checkSiteQuota(site, fileDescriptor.getSize());
-		new FileItem(item, fileDescriptor.getFilename(), displayName, fileDescriptor.getMimeType(),
+		new FileItem(item, fileDescriptor.getFilename(), pt.utl.ist.fenix.tools.util.FileUtils.getFilenameOnly(displayName), fileDescriptor.getMimeType(),
 				fileDescriptor.getChecksum(), fileDescriptor.getChecksumAlgorithm(), fileDescriptor
 						.getSize(), fileDescriptor.getUniqueId(), permittedGroup);
 	}
