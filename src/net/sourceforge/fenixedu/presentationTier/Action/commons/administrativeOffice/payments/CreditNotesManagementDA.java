@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.accounting.CreateCreditNoteBean;
 import net.sourceforge.fenixedu.domain.accounting.CreditNote;
 import net.sourceforge.fenixedu.domain.accounting.CreditNoteState;
+import net.sourceforge.fenixedu.domain.accounting.Receipt;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
@@ -17,14 +18,18 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
-public abstract class CreditNotesManagementDA extends ReceiptsManagementDA {
+public abstract class CreditNotesManagementDA extends PaymentsManagementDispatchAction {
 
     public ActionForward showCreditNotes(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
 
 	request.setAttribute("receipt", getReceiptFromViewState("receipt"));
 
-	return mapping.findForward("creditNotes.list");
+	return mapping.findForward("list");
+    }
+
+    private Receipt getReceiptFromViewState(String viewStateId) {
+	return (Receipt) getObjectFromViewState(viewStateId);
     }
 
     public ActionForward showCreditNote(ActionMapping mapping, ActionForm form,
@@ -33,7 +38,7 @@ public abstract class CreditNotesManagementDA extends ReceiptsManagementDA {
 	request.setAttribute("creditNote", getCreditNote(request));
 	((DynaActionForm) form).set("creditNoteState", getCreditNote(request).getState().name());
 
-	return mapping.findForward("creditNotes.show");
+	return mapping.findForward("show");
     }
 
     private CreditNote getCreditNote(HttpServletRequest request) {
@@ -47,7 +52,7 @@ public abstract class CreditNotesManagementDA extends ReceiptsManagementDA {
 	request.setAttribute("createCreditNoteBean", new CreateCreditNoteBean(
 		getReceiptFromViewState("receipt")));
 
-	return mapping.findForward("creditNotes.create");
+	return mapping.findForward("create");
 
     }
 
@@ -66,18 +71,18 @@ public abstract class CreditNotesManagementDA extends ReceiptsManagementDA {
 	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex
 		    .getLabelFormatterArgs()));
 	    request.setAttribute("createCreditNoteBean", createCreditNoteBean);
-	    return mapping.findForward("creditNotes.create");
+	    return mapping.findForward("create");
 
 	} catch (DomainException ex) {
 	    addActionMessage(request, ex.getKey());
 	    request.setAttribute("createCreditNoteBean", createCreditNoteBean);
-	    return mapping.findForward("creditNotes.create");
+	    return mapping.findForward("create");
 
 	}
 
 	request.setAttribute("receipt", createCreditNoteBean.getReceipt());
 
-	return mapping.findForward("creditNotes.list");
+	return mapping.findForward("list");
 
     }
 
@@ -101,7 +106,7 @@ public abstract class CreditNotesManagementDA extends ReceiptsManagementDA {
 
 	request.setAttribute("creditNote", creditNote);
 
-	return mapping.findForward("creditNotes.show");
+	return mapping.findForward("show");
 
     }
 
@@ -117,7 +122,14 @@ public abstract class CreditNotesManagementDA extends ReceiptsManagementDA {
 	request.setAttribute("creditNote", getCreditNoteFromViewState());
 	request.setAttribute("currentUnit", getCurrentUnit(request));
 
-	return mapping.findForward("creditNotes.print");
+	return mapping.findForward("print");
+    }
+
+    public ActionForward prepareShowReceipt(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	return mapping.findForward("prepareShowReceipt");
+
     }
 
 }

@@ -204,9 +204,8 @@ public abstract class ReceiptsManagementDA extends PaymentsManagementDispatchAct
     }
 
     protected Receipt getReceiptFromViewState(String viewStateName) {
-	final Receipt receipt = (Receipt) RenderUtils.getViewState(viewStateName).getMetaObject()
+	return (Receipt) RenderUtils.getViewState(viewStateName).getMetaObject()
 		.getObject();
-	return receipt;
     }
 
     public ActionForward cancelReceipt(ActionMapping mapping, ActionForm form,
