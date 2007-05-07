@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.domain.accessControl;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.ResearchUnitSite;
 import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
@@ -35,7 +34,7 @@ public class WebSiteManagersGroup extends DomainBackedGroup<UnitSite> {
 	public static class Builder implements GroupBuilder {
 
 		public Group build(Object[] arguments) {
-			ResearchUnitSite site = (ResearchUnitSite) arguments[0];
+			UnitSite site = (UnitSite) arguments[0];
 			return new WebSiteManagersGroup(site);
 		}
 

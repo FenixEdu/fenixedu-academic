@@ -23,12 +23,14 @@ import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseTeachersGrou
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.IfTrueGroup;
+import net.sourceforge.fenixedu.domain.accessControl.InstitutionSiteManagers;
 import net.sourceforge.fenixedu.domain.accessControl.InternalPersonGroup;
 import net.sourceforge.fenixedu.domain.accessControl.MasterDegreeCoordinatorsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.NoOneGroup;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.accessControl.StudentGroupStudentsGroup;
+import net.sourceforge.fenixedu.domain.accessControl.TeachersAndInstitutionSiteManagersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ThesisFileReadersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.UnitEmployeesGroup;
 import net.sourceforge.fenixedu.domain.accessControl.WebSiteManagersGroup;
@@ -174,7 +176,9 @@ public class GroupBuilderRegistry {
                 AllMasterDegreesStudents.class,
                 AllDegreesStudentsGroup.class,
                 InternalPersonGroup.class,
-                ExecutionCourseResponsiblesGroup.class
+                ExecutionCourseResponsiblesGroup.class,
+                InstitutionSiteManagers.class,
+                TeachersAndInstitutionSiteManagersGroup.class
         };
         
         for (Class groupClass : groups) {
