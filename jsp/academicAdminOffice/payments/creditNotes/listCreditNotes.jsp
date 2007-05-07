@@ -32,7 +32,7 @@
 	<fr:view name="receipt" property="creditNotes" schema="CreditNote.view">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4 thlight thright" />
-			<fr:property name="linkFormat(view)" value="<%="/payments.do?creditNoteId=${idInternal}&amp;method=showCreditNote"%>"/>
+			<fr:property name="linkFormat(view)" value="<%="/creditNotes.do?creditNoteId=${idInternal}&amp;method=showCreditNote"%>"/>
 			<fr:property name="key(view)" value="label.payments.show"/>
 			<fr:property name="bundle(view)" value="ACADEMIC_OFFICE_RESOURCES"/>
 			<fr:property name="sortBy" value="year=desc,number=desc"/>
@@ -49,7 +49,7 @@
 
 
 <bean:define id="receiptId" name="receipt" property="idInternal" />
-<html:form action="<%="/payments.do?personId=" + personId + "&amp;receiptID=" + receiptId%>">
+<html:form action="<%="/creditNotes.do?personId=" + personId + "&amp;receiptID=" + receiptId%>">
 	<p class="mtop15">
 		<fr:edit id="receipt" name="receipt" visible="false" />
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value=""/>

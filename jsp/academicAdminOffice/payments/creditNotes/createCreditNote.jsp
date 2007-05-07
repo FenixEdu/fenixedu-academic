@@ -10,9 +10,16 @@
 	<bean:define id="receiptNumber" name="createCreditNoteBean" property="receipt.number"/>
 	<h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.creditNotes" arg0="<%=receiptNumber.toString()%>" arg1="<%=receiptYear.toString()%>" /></h2>
 
-	<logic:messagesPresent message="true">
-		<ul>
-			<html:messages id="messages" message="true">
+	<logic:messagesPresent message="true" property="context">
+	<ul class="nobullet list6">
+		<html:messages id="messages" message="true" property="context" bundle="ACADEMIC_OFFICE_RESOURCES">
+			<li><span class="error0"><bean:write name="messages" /></span></li>
+		</html:messages>
+	</ul>
+	</logic:messagesPresent>
+	<logic:messagesPresent message="true"  property="<%=org.apache.struts.action.ActionMessages.GLOBAL_MESSAGE%>">
+		<ul class="nobullet list6">
+			<html:messages id="messages" message="true" property="<%=org.apache.struts.action.ActionMessages.GLOBAL_MESSAGE%>"  bundle="APPLICATION_RESOURCES">
 				<li><span class="error0"><bean:write name="messages" /></span></li>
 			</html:messages>
 		</ul>
@@ -34,8 +41,7 @@
 		</fr:layout>
 	</fr:view>
 
-
-	<fr:form action="/payments.do">
+	<fr:form action="/creditNotes.do">
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value=""/>
 		<fr:edit id="receipt" name="createCreditNoteBean" property="receipt" visible="false" nested="true"/>
 		<logic:notEmpty name="createCreditNoteBean" property="creditNoteEntryDTOs">

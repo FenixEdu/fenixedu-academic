@@ -53,7 +53,7 @@
 		bundle="ENUMERATION_RESOURCES" />
 
 	<logic:equal name="creditNote" property="allowedToChangeState" value="true">
-		<html:form action="/payments.do?method=changeCreditNoteState">
+		<html:form action="/creditNotes.do?method=changeCreditNoteState">
 			<fr:edit id="receipt" name="creditNote" property="receipt" visible="false" />
 			<fr:edit id="creditNote" name="creditNote" visible="false" />
 			<table class="tstyle5">
@@ -76,7 +76,7 @@
 		<table>
 			<tr>
 				<td>
-					<html:form action="/payments.do?method=printCreditNote" target="_blank">
+					<html:form action="/creditNotes.do?method=printCreditNote" target="_blank">
 						<fr:edit id="receipt" name="creditNote" property="receipt" visible="false" />
 						<fr:edit id="creditNote" name="creditNote" visible="false" /><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
 							<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.payments.print" />
@@ -84,7 +84,7 @@
 					</html:form>
 				</td>
 				<td>
-					<html:form action="/payments.do?method=showCreditNotes">
+					<html:form action="/creditNotes.do?method=showCreditNotes">
 						<fr:edit id="receipt" name="creditNote" property="receipt" visible="false" />
 						<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
 							<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.payments.back" />
@@ -101,7 +101,7 @@
 		  <tr>
 		    <td>
 		    	<logic:notEqual name="creditNote" property="cancelled" value="true">
-					<html:form action="/payments.do?method=printCreditNote" target="_blank">
+					<html:form action="/creditNotes.do?method=printCreditNote" target="_blank">
 						<fr:edit id="receipt" name="creditNote" property="receipt" visible="false" />
 						<fr:edit id="creditNote" name="creditNote" visible="false" />
 						<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
@@ -111,7 +111,7 @@
 			</logic:notEqual>
 		    </td>
 		    <td>
-				<html:form action="/payments.do?method=showCreditNotes">
+				<html:form action="/creditNotes.do?method=showCreditNotes">
 					<fr:edit id="receipt" name="creditNote" property="receipt" visible="false" />
 					<fr:edit id="creditNote" name="creditNote" visible="false" />
 					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
