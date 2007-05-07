@@ -76,16 +76,16 @@
 						<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.print"/></html:submit>
 				</html:form>
 			</td>
-			<%--
+<%--
 			<td>
-				<html:form action="<%="/receipts.do?method=showCreditNotes&amp;personId=" + personId%>">
+				<html:form action="<%="/creditNotes.do?method=showCreditNotes&amp;personId=" + personId%>">
 					<fr:edit id="receipt" name="receipt" visible="false" />
 					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
 						<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.payments.creditNotes"/>
 					</html:submit>
 				</html:form>
 			</td>
-			--%>
+--%>
 			<td>
 				<html:form action="<%="/receipts.do?method=showReceipts&amp;personId=" + personId%>">
 					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
