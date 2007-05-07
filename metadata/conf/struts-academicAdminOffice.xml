@@ -373,14 +373,8 @@
 		 	    
    		 	    <forward name="preparePrintGuide" path="/guides.do?method=preparePrintGuide"/>		 	    
    		 	    <forward name="preparePrintGuideWithInstallments" path="/guides.do?method=preparePrintGuideWithInstallments"/>
-		 	    
+		 	    		 	    
 		 	    <!-- 		 	    		 	    	 	    
-   		 	    <forward name="creditNotes.list" path="payments.management.creditNotes.list"/> 
-		 	    <forward name="creditNotes.create" path="payments.management.creditNotes.create"/>
-		 	    <forward name="creditNotes.show" path="payments.management.creditNotes.show"/>
-		 	    <forward name="creditNotes.print" path="/payments/creditNotes/printCreditNote.jsp"/>
-		 	    
-		 	    
 		 	    <forward name="otherPartyPayment.showEvents" path="payments.management.otherPartyPayment.showEvents"/>
 		 	    <forward name="otherPartyPayment.showPaymentsForEvent" path="payments.management.otherPartyPayment.showPaymentsForEvent"/>
 		 	    <forward name="otherPartyPayment.prepareCreate" path="payments.management.otherPartyPayment.prepareCreate"/>
@@ -434,6 +428,21 @@
 		 	    <forward name="createInstallmentPenaltyExemption" path="payments.management.exemptions.penalty.createInstallmentExemption"/>
 		 	    <forward name="createImprovementOfApprovedEnrolmentPenaltyExemption" path="payments.management.exemptions.penalty.createImprovementOfApprovedEnrolmentExemption"/>
 		 	    <forward name="createAdministrativeOfficeFeeAndInsurancePenaltyExemption" path="payments.management.exemptions.penalty.createAdministrativeOfficeFeeAndInsuranceExemption"/>
+		</action>
+		
+		<action path="/creditNotes"
+				parameter="method"
+		        type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.payments.AcademicAdminOfficeCreditNotesManagementDA"
+		 		name="paymentsForm"
+		 		scope="request">
+		 		
+   		 	    <forward name="list" path="payments.management.creditNotes.list"/> 
+		 	    <forward name="create" path="payments.management.creditNotes.create"/>
+		 	    <forward name="show" path="payments.management.creditNotes.show"/>
+		 	    <forward name="print" path="/payments/creditNotes/printCreditNote.jsp"/>
+		 	    <forward name="prepareShowReceipt" path="/receipts.do?method=prepareShowReceipt"/>
+		 	    
+
 		</action>
 		
 		<!-- End Payments -->
