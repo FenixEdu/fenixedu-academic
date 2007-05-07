@@ -74,7 +74,6 @@ public class GratuityWithPaymentPlanPR extends GratuityWithPaymentPlanPR_Base {
 	final Map<Installment, Money> amountsByInstallment = getPaymentPlan(event)
 		.calculateInstallmentRemainingAmounts(event, when, getDiscountPercentage(event),
 			getInstallmentsWithoutPenalty(event));
-	Money totalAmount = Money.ZERO;
 
 	for (final Installment installment : getPaymentPlan(event).getInstallmentsSortedByEndDate()) {
 	    final Money installmentAmount = amountsByInstallment.get(installment);
@@ -86,12 +85,11 @@ public class GratuityWithPaymentPlanPR extends GratuityWithPaymentPlanPR_Base {
 	    result.add(new EntryWithInstallmentDTO(EntryType.GRATUITY_FEE, event, installmentAmount,
 		    event.getDescriptionForEntryType(getEntryType()), installment));
 
-	    totalAmount = totalAmount.add(installmentAmount);
 	}
 
-	if (needsTotalAmountEntry(getPaymentPlan(event), result)) {
+	if (needsTotalAmountEntry(getPaymentPlan(event), result, event, when)) {
 	    final Money amountToPay = event.calculateAmountToPay(when);
-	    result.add(new EntryDTO(EntryType.GRATUITY_FEE, event, totalAmount, event.getPayedAmount(),
+	    result.add(new EntryDTO(EntryType.GRATUITY_FEE, event, amountToPay, event.getPayedAmount(),
 		    amountToPay, event.getDescriptionForEntryType(getEntryType()), amountToPay));
 	}
 
@@ -102,9 +100,26 @@ public class GratuityWithPaymentPlanPR extends GratuityWithPaymentPlanPR_Base {
 	return ((GratuityEventWithPaymentPlan) event).getInstallmentsWithoutPenalty();
     }
 
-    private boolean needsTotalAmountEntry(final PaymentPlan paymentPlan, List<EntryDTO> result) {
-	return paymentPlan.getInstallmentsCount() != 1
-		&& paymentPlan.getInstallmentsCount() == result.size();
+    private boolean needsTotalAmountEntry(final PaymentPlan paymentPlan, List<EntryDTO> result,
+	    final Event event, final DateTime when) {
+	return (paymentPlan.getInstallmentsCount() != 1 && paymentPlan.getInstallmentsCount() == result
+		.size())
+		|| hasRemainingAmountAndNoInstallmentsLeft(event, when);
+    }
+
+    private boolean hasRemainingAmountAndNoInstallmentsLeft(final Event event, final DateTime when) {
+	Money calculateAmountToPay = event.calculateAmountToPay(when);
+	if (!calculateAmountToPay.isPositive()) {
+	    return false;
+	}
+
+	for (final Installment installment : getPaymentPlan(event).getInstallmentsSortedByEndDate()) {
+	    if (!event.hasAccountingTransactionFor(installment)) {
+		return false;
+	    }
+	}
+
+	return true;
     }
 
     @Override
