@@ -186,7 +186,7 @@ public class Entry extends Entry_Base {
     }
 
     public boolean isReimbursementAppliable() {
-	return isAdjustmentAppliable();
+	return isAdjustmentAppliable() && getAmountWithAdjustment().isPositive();
     }
 
     private Person getPersonFromEvent() {
