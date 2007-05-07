@@ -34,7 +34,6 @@
 					type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory"
 					schema="edit.employeeCorrectionType">
 					<fr:destination name="justificationMotivePostBack" path="/employeeAssiduousness.do?method=chooseJustificationMotivePostBack" />
-					<fr:hidden slot="modifiedBy" name="UserView" property="person.employee" />
 					<fr:hidden slot="year" name="year" />
 					<fr:hidden slot="month" value="<%=month.toString()%>" />
 					<fr:layout>
@@ -47,6 +46,7 @@
 						<fr:edit id="editEmployeeDayJustificationType" name="employeeJustificationFactory"
 							type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory"
 							schema="edit.employeeDayJustificationType">
+							<fr:hidden slot="modifiedBy" name="UserView" property="person.employee" />
 							<fr:destination name="justificationMotivePostBack" path="/employeeAssiduousness.do?method=chooseJustificationMotivePostBack" />
 							<fr:layout>
 								<fr:property name="classes" value="tstyle5 thlight mvert0 thright thmiddle"/>
@@ -134,6 +134,7 @@
 						<fr:edit id="editEmployeeJustificationMotive" name="employeeJustificationFactory"
 							type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory"
 							schema="edit.employeeRegularization">
+							<fr:hidden slot="modifiedBy" name="UserView" property="person.employee" />
 							<fr:layout>
 								<fr:property name="classes" value="tstyle5 thlight mvert0 thright thmiddle"/>
 								<fr:property name="columnClasses" value="width8em,width40em,tdclear"/>

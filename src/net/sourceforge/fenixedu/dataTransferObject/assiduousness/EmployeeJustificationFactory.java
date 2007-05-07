@@ -781,7 +781,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 				    .getFirstPeriodDuration();
 			    dateTime = getBeginDate().toDateTime(
 				    workSchedule.getWorkScheduleType().getNormalWorkPeriod()
-					    .getSecondPeriod());
+					    .getFirstPeriod());
 			    if ((workSchedule.getWorkScheduleType() instanceof ContinuousSchedule)) {
 				duration = new Duration(workSchedule.getWorkScheduleType()
 					.getNormalWorkPeriod().getWorkPeriodDuration().getMillis() / 2);
@@ -797,6 +797,9 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 				    result.append("<br/>");
 				    continue;
 				}
+				dateTime = getBeginDate().toDateTime(
+					workSchedule.getWorkScheduleType().getNormalWorkPeriod()
+						.getSecondPeriod());
 				duration = workSchedule.getWorkScheduleType().getNormalWorkPeriod()
 					.getSecondPeriodDuration();
 			    }

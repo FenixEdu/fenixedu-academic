@@ -456,7 +456,6 @@
 		<property name="eachLayout" value="this-does-not-exist" />
 		<property name="destination" value="justificationMotivePostBack"/>
 	</slot>
-	<slot name="modifiedBy" hidden="true"/>
 	<slot name="month" hidden="true"/>
 	<slot name="year" hidden="true"/>
 </schema>
@@ -467,6 +466,7 @@
 		<property name="eachLayout" value="this-does-not-exist" />
 		<property name="destination" value="justificationMotivePostBack"/>
 	</slot>
+	<slot name="modifiedBy" hidden="true"/>	
 </schema>
 
 <schema name="edit.employeeJustificationType" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory">
@@ -580,6 +580,7 @@
 		<property name="inputFormat" value="H:m" />
 		<property name="formatText" value="hh:mm" />
 	</slot>
+	<slot name="modifiedBy" hidden="true"/>	
 </schema>
 
 <schema name="edit.employeeMonthRegularization" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.RegularizationMonthFactory">
