@@ -77,7 +77,7 @@
 	<bean:message key="label.vigilancy.showConvokesByEvaluation" bundle="VIGILANCY_RESOURCES"/>
 	</html:link>,
 	<span>
-		<html:link target="_blank" page="<%= "/vigilancy/convokeManagement.do?method=exportVigilancyTable&showIncompatibilities=" + bean.isShowIncompatibilities() + "&showUnavailables=" + bean.isShowUnavailables() + "&showBoundsJustification=" + bean.isShowBoundsJustification() + "&showConvokeInfo=" + bean.isShowAllVigilancyInfo() + "&showNotActiveConvokes=" + bean.isShowNotActiveConvokes() + "&whatToShow=vigilants" + ((bean.getSelectedVigilantGroup()!=null) ? "&gid=" + bean.getSelectedVigilantGroup().getIdInternal().toString() : "") %>">
+		<html:link target="_blank" page="<%= "/vigilancy/convokeManagement.do?method=exportVigilancyTable&showIncompatibilities=" + bean.isShowIncompatibilities() + "&showPointsWeight=" + bean.isShowPointsWeight() + "&showStartPoints=" + bean.isShowStartPoints() + "&showUnavailables=" + bean.isShowUnavailables() + "&showBoundsJustification=" + bean.isShowBoundsJustification() + "&showConvokeInfo=" + bean.isShowAllVigilancyInfo() + "&showNotActiveConvokes=" + bean.isShowNotActiveConvokes() + "&whatToShow=vigilants" + ((bean.getSelectedVigilantGroup()!=null) ? "&gid=" + bean.getSelectedVigilantGroup().getIdInternal().toString() : "") %>">
 			<bean:message key="label.vigilancy.exportVigilantTable" bundle="VIGILANCY_RESOURCES"/>
 		</html:link>
 	</span>

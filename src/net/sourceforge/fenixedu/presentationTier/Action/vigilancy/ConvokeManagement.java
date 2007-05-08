@@ -354,7 +354,6 @@ public class ConvokeManagement extends FenixDispatchAction {
     private void recoverBeanFromRequest(HttpServletRequest request) throws FenixFilterException,
 	    FenixServiceException {
 	ConvokeBean bean = new ConvokeBean();
-	String temporalInformation = request.getParameter("temporalInformation");
 	String vigilantGroup = request.getParameter("gid");
 	String incompatiblities = request.getParameter("showIncompatibilities");
 	String unavailables = request.getParameter("showUnavailables");
@@ -362,6 +361,8 @@ public class ConvokeManagement extends FenixDispatchAction {
 	String whatToShow = request.getParameter("whatToShow");
 	String bounds = request.getParameter("showBoundsJustification");
 	String notActiveConvokes = request.getParameter("showNotActiveConvokes");
+	String startPoints = request.getParameter("showStartPoints");
+	String pointsWeight = request.getParameter("showPointsWeight");
 	bean.setShowInformationByVigilant((whatToShow != null) ? whatToShow.equals("vigilants")
 		: Boolean.TRUE);
 	bean.setShowIncompatibilities((incompatiblities != null) ? Boolean.valueOf(incompatiblities)
@@ -371,6 +372,10 @@ public class ConvokeManagement extends FenixDispatchAction {
 	bean.setShowAllVigilancyInfo((convokeInfo != null) ? Boolean.valueOf(convokeInfo) : Boolean.FALSE);
 	bean.setShowNotActiveConvokes((notActiveConvokes != null) ? Boolean.valueOf(notActiveConvokes)
 		: Boolean.FALSE);
+	bean.setShowStartPoints((startPoints != null) ? Boolean.valueOf(startPoints)
+			: Boolean.FALSE);
+	bean.setShowPointsWeight((pointsWeight != null) ? Boolean.valueOf(pointsWeight)
+			: Boolean.FALSE);
 	ExamCoordinator coordinator = getCoordinatorForCurrentYear(request);
 	bean.setExamCoordinator(coordinator);
 	bean.setVigilantGroups(coordinator.getVigilantGroups());
