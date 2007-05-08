@@ -40,6 +40,12 @@ public abstract class MergeResearchActivityDA extends FenixDispatchAction {
 	return setObjects(mapping, form, request, response, mergeResearchActivityPageContainerBean);
     }
     
+    public ActionForward prepareMerge(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	MergeResearchActivityPageContainerBean mergeResearchActivityPageContainerBean = (MergeResearchActivityPageContainerBean) request.getAttribute("mergeBean");
+	return setObjects(mapping, form, request, response, mergeResearchActivityPageContainerBean);
+    }
+    
     public ActionForward addToMergeList(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	MergeResearchActivityPageContainerBean mergeResearchActivityPageContainerBean = (MergeResearchActivityPageContainerBean) getRenderedObject("mergeListNotVisible");
@@ -68,7 +74,7 @@ public abstract class MergeResearchActivityDA extends FenixDispatchAction {
     
     protected ActionForward setObjects(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response, MergeResearchActivityPageContainerBean mergeResearchActivityPageContainerBean) {
-	mergeResearchActivityPageContainerBean.setObjects(getObjects());
+	mergeResearchActivityPageContainerBean.setObjects(getObjects(mergeResearchActivityPageContainerBean));
 	request.setAttribute("mergeBean", mergeResearchActivityPageContainerBean);
 	return mapping.findForward("show-research-activity-merge-page");
     }
@@ -102,7 +108,8 @@ public abstract class MergeResearchActivityDA extends FenixDispatchAction {
 	
 	executeService(request, getServiceName(), new Object[] { researchActivityPageContainerBean });
 	
-	return setObjects(mapping, form, request, response, getNewBean());
+	researchActivityPageContainerBean.reset();
+	return setObjects(mapping, form, request, response, researchActivityPageContainerBean);
     }
     
     public ActionForward back(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -114,7 +121,7 @@ public abstract class MergeResearchActivityDA extends FenixDispatchAction {
     }
 
 
-    protected abstract List getObjects();
+    protected abstract List getObjects(MergeResearchActivityPageContainerBean researchActivityPageContainerBean);
     
     protected abstract MergeResearchActivityPageContainerBean getNewBean();
     

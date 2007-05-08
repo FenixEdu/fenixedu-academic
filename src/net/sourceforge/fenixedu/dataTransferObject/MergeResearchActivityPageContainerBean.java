@@ -65,5 +65,10 @@ public abstract class MergeResearchActivityPageContainerBean extends PageContain
 	    setSelected(null);
 	}
     }
+    
+    public void reset() {
+	setSelected(null);
+	selectedObjects = new ArrayList<DomainReference<DomainObject>>();
+    }
 
 }

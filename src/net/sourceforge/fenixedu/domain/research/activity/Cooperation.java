@@ -66,4 +66,17 @@ public class Cooperation extends Cooperation_Base implements ParticipationsInter
     public boolean canBeEditedByCurrentUser() {
 	return canBeEditedByUser(AccessControl.getPerson());
     }
+
+    public void addUniqueParticipation(Participation participation) {
+	if(participation instanceof CooperationParticipation) {
+	    CooperationParticipation cooperationParticipation = (CooperationParticipation) participation;
+	    for (CooperationParticipation cooperationParticipation2 : getParticipationsSet()) {
+		if(cooperationParticipation2.getParty().equals(cooperationParticipation.getParty()) &&
+			cooperationParticipation2.getRole().equals(cooperationParticipation.getRole())) {
+		    return;
+		}
+	    }
+	    addParticipations(cooperationParticipation);
+	}
+    }
 }

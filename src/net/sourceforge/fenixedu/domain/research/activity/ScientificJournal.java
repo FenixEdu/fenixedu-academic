@@ -86,4 +86,17 @@ public class ScientificJournal extends ScientificJournal_Base implements Partici
     public boolean canBeEditedByCurrentUser() {
 	return canBeEditedByUser(AccessControl.getPerson());
     }
+
+    public void addUniqueParticipation(Participation participation) {
+	if(participation instanceof ScientificJournalParticipation) {
+	    ScientificJournalParticipation scientificJournalParticipation = (ScientificJournalParticipation) participation;
+	    for (ScientificJournalParticipation scientificJournalParticipation2 : getParticipationsSet()) {
+		if(scientificJournalParticipation2.getParty().equals(scientificJournalParticipation.getParty()) &&
+			scientificJournalParticipation2.getRole().equals(scientificJournalParticipation.getRole())) {
+		    return;
+		}
+	    }
+	    addParticipations(scientificJournalParticipation);
+	}
+    }
 }

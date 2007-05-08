@@ -11680,6 +11680,15 @@
 			<chain name="ManagerOrCientificCouncilAuthentication" />
 		</filterChains>
     </service>
+	<service>
+        <name>MergeJournalIssues</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.researchActivity.MergeJournalIssues</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+		<filterChains>
+			<chain name="ManagerOrCientificCouncilAuthentication" />
+		</filterChains>
+    </service>
    	<service>
         <name>MergeEvents</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.researchActivity.MergeEvents</implementationClass>
@@ -11689,6 +11698,15 @@
 			<chain name="ManagerOrCientificCouncilAuthentication" />
 		</filterChains>
     </service>
+	<service>
+        <name>MergeEventEditions</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.researchActivity.MergeEventEditions</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+		<filterChains>
+			<chain name="ManagerOrCientificCouncilAuthentication" />
+		</filterChains>
+    </service>    
 	<service>
         <name>AddScientificCommission</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.coordinator.AddScientificCommission</implementationClass>

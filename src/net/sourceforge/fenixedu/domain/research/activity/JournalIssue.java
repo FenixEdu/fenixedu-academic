@@ -133,4 +133,17 @@ public class JournalIssue extends JournalIssue_Base implements ParticipationsInt
     public String getPublisher() {
 	return this.getScientificJournal().getPublisher();
     }
+
+    public void addUniqueParticipation(Participation participation) {
+	if(participation instanceof JournalIssueParticipation) {
+	    JournalIssueParticipation journalIssueParticipation = (JournalIssueParticipation) participation;
+	    for (JournalIssueParticipation journalIssueParticipation2 : getParticipationsSet()) {
+		if(journalIssueParticipation2.getParty().equals(journalIssueParticipation.getParty()) &&
+			journalIssueParticipation2.getRole().equals(journalIssueParticipation.getRole())) {
+		    return;
+		}
+	    }
+	    addParticipations(journalIssueParticipation);
+	}		
+    }
 }

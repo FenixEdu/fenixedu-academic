@@ -54,7 +54,7 @@ public class MergeScientificJournalDA extends MergeResearchActivityDA {
     }
     
     @Override
-    protected List getObjects() {
+    protected List getObjects(MergeResearchActivityPageContainerBean researchActivityPageContainerBean) {
 	List<ScientificJournal> scientificJournals = new ArrayList<ScientificJournal>(rootDomainObject.getScientificJournals());
 	Collections.sort(scientificJournals, new BeanComparator("name", Collator.getInstance()));
         return scientificJournals;

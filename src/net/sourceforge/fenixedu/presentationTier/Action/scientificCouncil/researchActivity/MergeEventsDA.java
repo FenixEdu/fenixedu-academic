@@ -53,7 +53,7 @@ public class MergeEventsDA extends MergeResearchActivityDA {
     }
 
     @Override
-    protected List getObjects() {
+    protected List getObjects(MergeResearchActivityPageContainerBean researchActivityPageContainerBean) {
 	List<Event> events = new ArrayList<Event>(rootDomainObject.getEvents());
 	Collections.sort(events, new BeanComparator("name", Collator.getInstance()));
 	return events;

@@ -85,6 +85,7 @@
 	<slot name="issn" key="label.scientific.journal.issn"/>
 </schema>
 
+
 <schema name="scientific.journal.merge.list.full" type="net.sourceforge.fenixedu.domain.research.activity.ScientificJournal" 
 	bundle="SCIENTIFIC_COUNCIL_RESOURCES">
 	<slot name="name" layout="scientific-journal-stage">
@@ -189,6 +190,93 @@
 	<slot name="locationType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" key="label.scientific.journal.locationType"/>
 	<slot name="stage" key="label.research.activity.stage" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 </schema>
+
+<schema name="journal.issue.merge.list"  type="net.sourceforge.fenixedu.domain.research.activity.JournalIssue" 
+	bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+	<slot name="volume" key="label.volume"/>	
+	<slot name="number" key="label.number"/>
+	<slot name="year"/>
+</schema>
+
+<schema name="journal.issue.merge.list.full" type="net.sourceforge.fenixedu.domain.research.activity.JournalIssue" 
+	bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+	<slot name="volume" key="label.volume" />	
+	<slot name="number" key="label.number"/>
+	<slot name="year" />
+	<slot name="month" key="label.month"/>
+	<slot name="url" key="label.scientific.journal.url"/>
+	<slot name="specialIssue" key="label.specialIssue"/>
+	<slot name="specialIssueComment" key="label.specialIssueComment"/>
+</schema>
+
+<schema name="journal.issue.new.properties" type="net.sourceforge.fenixedu.dataTransferObject.MergeJournalIssuePageContainerBean" 
+	bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+	<slot name="volume" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" key="label.volume">
+		<property name="size" value="10"/>
+	</slot>
+	<slot name="number" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" key="label.number">
+		<property name="size" value="10"/>
+	</slot>
+	<slot name="year" validator="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>	
+	<slot name="month" key="label.month"/>
+	<slot name="url" key="label.scientific.journal.url">
+		<property name="size" value="80"/>
+		<validator name="net.sourceforge.fenixedu.renderers.validators.UrlValidator">
+			<property name="required" value="false"/>
+		</validator>
+	</slot>
+	<slot name="specialIssue" key="label.specialIssue"/>
+	<slot name="specialIssueComment" layout="longText" key="label.specialIssueComment">
+		<property name="columns" value="50"/>
+		<property name="rows" value="5"/>
+	</slot>
+</schema>
+
+<schema name="event.edition.merge.list"  type="net.sourceforge.fenixedu.domain.research.activity.EventEdition" 
+	bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+	<slot name="edition" key="label.edition"/>	
+	<slot name="eventLocation" key="label.event.eventLocation"/>
+</schema>
+
+<schema name="event.edition.merge.list.full" type="net.sourceforge.fenixedu.domain.research.activity.JournalIssue" 
+	bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+	<slot name="edition" key="label.edition"/>	
+	<slot name="eventLocation" key="label.event.eventLocation"/>
+	<slot name="startDate" key="label.event.startDate"/>
+	<slot name="endDate" key="label.event.endDate"/>
+	<slot name="url" key="label.scientific.journal.url"/>
+	<slot name="organization" key="label.organization"/>
+</schema>
+
+<schema name="event.edition.new.properties" type="net.sourceforge.fenixedu.dataTransferObject.MergeEventEditionPageContainerBean" 
+	bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+	<slot name="edition" key="label.edition" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="50"/>
+	</slot>
+	<slot name="startDate" key="label.event.startDate" layout="year-month-day">
+		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+			<property name="dateFormat" value="dd/MM/yyyy"/>
+		</validator>
+		<property name="size" value="10"/>
+	</slot>
+	<slot name="endDate" key="label.event.endDate" layout="year-month-day">
+		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+			<property name="required" value="false"/>
+			<property name="dateFormat" value="dd/MM/yyyy"/>
+		</validator>
+		<property name="size" value="10"/>
+	</slot>
+	<slot name="organization" key="label.organization">
+		<property name="size" value="40"/>
+	</slot>
+	<slot name="eventLocation" key="label.event.eventLocation">
+			<property name="size" value="40"/>
+	</slot>
+	<slot name="url" key="label.scientific.journal.url">
+			<property name="size" value="50"/>
+	</slot>
+</schema>
+
 
 <schema name="thesis.jury.proposal.person.loginInfo" type="net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant">
     <slot name="personNameWithLogin" key="label.person.name"/>

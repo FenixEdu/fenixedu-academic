@@ -85,4 +85,18 @@ public class Event extends Event_Base implements ParticipationsInterface {
     public boolean canBeEditedByCurrentUser() {
 	return canBeEditedByUser(AccessControl.getPerson());
     }
+
+    public void addUniqueParticipation(Participation participation) {
+	if(participation instanceof EventParticipation) {
+	    EventParticipation eventParticipation = (EventParticipation) participation;
+	    for (EventParticipation eventParticipation2 : getParticipationsSet()) {
+		if(eventParticipation2.getParty().equals(eventParticipation.getParty()) &&
+			eventParticipation2.getRole().equals(eventParticipation.getRole())) {
+		    return;
+		}
+	    }
+	    addParticipations(eventParticipation);
+	}
+	
+    }
 }

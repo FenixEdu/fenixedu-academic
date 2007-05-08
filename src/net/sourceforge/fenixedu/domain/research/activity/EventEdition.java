@@ -138,5 +138,24 @@ public class EventEdition extends EventEdition_Base implements ParticipationsInt
 	return people;
     }
 
+    public void setParticipations(List<EventEditionParticipation> participations) {
+	getParticipations().clear();
+	getParticipations().addAll(participations);
+	
+    }
+
+    public void addUniqueParticipation(Participation participation) {
+	if(participation instanceof EventEditionParticipation) {
+	    EventEditionParticipation eventEditionParticipation = (EventEditionParticipation) participation;
+	    for (EventEditionParticipation eventEditionParticipation2 : getParticipationsSet()) {
+		if(eventEditionParticipation2.getParty().equals(eventEditionParticipation.getParty()) &&
+			eventEditionParticipation2.getRole().equals(eventEditionParticipation.getRole())) {
+		    return;
+		}
+	    }
+	    addParticipations(eventEditionParticipation);
+	}	
+    }
+
 
 }
