@@ -386,33 +386,18 @@ public class Unit extends Unit_Base {
 	return (Collection<ExternalContract>) getChildAccountabilities(AccountabilityTypeEnum.EMPLOYEE_CONTRACT, ExternalContract.class);
     }
     
-    public Collection<Contract> getEmployeeContracts() {
-	return (Collection<Contract>) getChildAccountabilities(AccountabilityTypeEnum.EMPLOYEE_CONTRACT, Contract.class);
-    }
-
     public List<Contract> getWorkingContracts(YearMonthDay begin, YearMonthDay end) {
 	List<Contract> contracts = new ArrayList<Contract>();
-	for (Contract contract : getEmployeeContracts()) {
-	    if (contract.getClass().equals(EmployeeWorkingContract.class) 
-		    && contract.belongsToPeriod(begin, end)) {
+	for (Contract contract : getWorkingContracts()) {
+	    if (contract.belongsToPeriod(begin, end)) {
 		contracts.add(contract);
 	    }
 	}
 	return contracts;
     }
 
-    public List<Contract> getWorkingContracts() {
-	return getContractsByContractType(EmployeeWorkingContract.class);
-    }
-    
-    public List<Contract> getContractsByContractType(Class<? extends Contract> contractClass) {
-	List<Contract> contracts = new ArrayList<Contract>();
-	for (Contract contract : getEmployeeContracts()) {
-	    if (contract.getClass().equals(contractClass)) {
-		contracts.add(contract);
-	    }
-	}
-	return contracts;
+    public Collection<Contract> getWorkingContracts() {
+	return (Collection<Contract>) getChildAccountabilities(AccountabilityTypeEnum.EMPLOYEE_CONTRACT, EmployeeWorkingContract.class);	
     }
 
     public List<Teacher> getAllTeachers() {
