@@ -18,8 +18,8 @@ import net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule;
 import net.sourceforge.fenixedu.domain.assiduousness.util.DayType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationGroup;
 import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
+import net.sourceforge.fenixedu.domain.organizationalStructure.EmployeeMailingContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.util.ContractType;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 
 import org.joda.time.DateMidnight;
@@ -57,12 +57,10 @@ public class ReadAssiduousnessWorkSheet extends Service {
             YearMonthDay beginDate, YearMonthDay endDate) {
         EmployeeWorkSheet employeeWorkSheet = new EmployeeWorkSheet();
         employeeWorkSheet.setEmployee(assiduousness.getEmployee());
-        Unit unit = assiduousness.getEmployee().getLastWorkingPlace(beginDate, endDate);
-        if (assiduousness.getEmployee().getLastContractByContractType(ContractType.MAILING) != null
-                && assiduousness.getEmployee().getLastContractByContractType(ContractType.MAILING)
-                        .getMailingUnit() != null) {
-            unit = assiduousness.getEmployee().getLastContractByContractType(ContractType.MAILING)
-                    .getMailingUnit();
+        Unit unit = assiduousness.getEmployee().getLastWorkingPlace(beginDate, endDate);        
+        EmployeeMailingContract lastMailingContract = (EmployeeMailingContract) assiduousness.getEmployee().getLastContractByContractType(EmployeeMailingContract.class);
+        if (lastMailingContract != null && lastMailingContract.getMailingUnit() != null) {
+            unit = lastMailingContract.getMailingUnit();
         }
         employeeWorkSheet.setUnit(unit);
         if (unit != null) {
@@ -180,13 +178,11 @@ public class ReadAssiduousnessWorkSheet extends Service {
         EmployeeWorkSheet employeeWorkSheet = new EmployeeWorkSheet();
         employeeWorkSheet.setWorkDaySheetList(workSheet);
         employeeWorkSheet.setEmployee(assiduousness.getEmployee());
-        Unit unit = assiduousness.getEmployee().getLastWorkingPlace(beginDate, endDate);
-        if (assiduousness.getEmployee().getLastContractByContractType(ContractType.MAILING) != null
-                && assiduousness.getEmployee().getLastContractByContractType(ContractType.MAILING)
-                        .getMailingUnit() != null) {
-            unit = assiduousness.getEmployee().getLastContractByContractType(ContractType.MAILING)
-                    .getMailingUnit();
-        }
+        Unit unit = assiduousness.getEmployee().getLastWorkingPlace(beginDate, endDate);       
+        EmployeeMailingContract lastMailingContract = (EmployeeMailingContract) assiduousness.getEmployee().getLastContractByContractType(EmployeeMailingContract.class);
+        if (lastMailingContract != null && lastMailingContract.getMailingUnit() != null) {
+            unit = lastMailingContract.getMailingUnit();
+        }        
         employeeWorkSheet.setUnit(unit);
         if (unit != null) {
             employeeWorkSheet.setUnitCode((new DecimalFormat("0000")).format(unit.getCostCenterCode()));

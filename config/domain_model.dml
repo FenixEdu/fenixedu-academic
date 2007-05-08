@@ -116,7 +116,6 @@ valueType org.joda.time.Interval                                                
 valueType org.joda.time.Period                                                               					as Period;
 valueType org.joda.time.TimeOfDay                                                               				as TimeOfDay;
 valueType org.joda.time.Partial                                                                					as Partial;
-valueType net.sourceforge.fenixedu.util.ContractType  		                                					as ContractType;
 valueType net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences    							as BibliographicReferences;
 valueType net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType    								as CurricularRuleType;
 valueType net.sourceforge.fenixedu.domain.util.LogicOperators   												as LogicOperators;
@@ -3578,11 +3577,17 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Accountability ext
 	}  
 	  	  
 	class net.sourceforge.fenixedu.domain.organizationalStructure.Contract extends net.sourceforge.fenixedu.domain.organizationalStructure.Accountability {
-		ContractType contractType;
-	}  
-	
-	class net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract extends net.sourceforge.fenixedu.domain.organizationalStructure.Accountability {
-	}
+			
+	}  	
+		class net.sourceforge.fenixedu.domain.organizationalStructure.EmployeeWorkingContract extends net.sourceforge.fenixedu.domain.organizationalStructure.Contract {
+			
+		}		
+		class net.sourceforge.fenixedu.domain.organizationalStructure.EmployeeMailingContract extends net.sourceforge.fenixedu.domain.organizationalStructure.Contract {
+			
+		}				
+		class net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract extends net.sourceforge.fenixedu.domain.organizationalStructure.Contract {
+		
+		}
 
 	class net.sourceforge.fenixedu.domain.organizationalStructure.Invitation extends net.sourceforge.fenixedu.domain.organizationalStructure.Accountability {
 		Integer keyResponsible;		

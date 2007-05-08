@@ -34,7 +34,6 @@ import net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation;
 import net.sourceforge.fenixedu.domain.util.FunctionalityPrinters;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
-import net.sourceforge.fenixedu.util.ContractType;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
@@ -394,7 +393,8 @@ public class Unit extends Unit_Base {
     public List<Contract> getWorkingContracts(YearMonthDay begin, YearMonthDay end) {
 	List<Contract> contracts = new ArrayList<Contract>();
 	for (Contract contract : getEmployeeContracts()) {
-	    if (contract.getContractType().equals(ContractType.WORKING) && contract.belongsToPeriod(begin, end)) {
+	    if (contract.getClass().equals(EmployeeWorkingContract.class) 
+		    && contract.belongsToPeriod(begin, end)) {
 		contracts.add(contract);
 	    }
 	}
@@ -402,13 +402,13 @@ public class Unit extends Unit_Base {
     }
 
     public List<Contract> getWorkingContracts() {
-	return getContractsByContractType(ContractType.WORKING);
+	return getContractsByContractType(EmployeeWorkingContract.class);
     }
     
-    public List<Contract> getContractsByContractType(ContractType contractType) {
+    public List<Contract> getContractsByContractType(Class<? extends Contract> contractClass) {
 	List<Contract> contracts = new ArrayList<Contract>();
 	for (Contract contract : getEmployeeContracts()) {
-	    if (contract.getContractType().equals(contractType)) {
+	    if (contract.getClass().equals(contractClass)) {
 		contracts.add(contract);
 	    }
 	}

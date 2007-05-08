@@ -531,7 +531,8 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	    if (insert) {			
 		for (YearMonthDay lessonDate : lesson.getAllLessonDates()) {
 		    if((calendarViewType.equals(LessonCalendarViewType.ALL_LESSONS))
-			    || (calendarViewType.equals(LessonCalendarViewType.PAST_LESSON) && lesson.isTimeValidToInsertSummary(new HourMinuteSecond(), lessonDate))
+			    || (calendarViewType.equals(LessonCalendarViewType.PAST_LESSON) 
+				    && lesson.isTimeValidToInsertSummary(new HourMinuteSecond(), lessonDate))
 			    || (calendarViewType.equals(LessonCalendarViewType.PAST_LESSON_WITHOUT_SUMMARY) 
 				    && lesson.getSummaryByDate(lessonDate) == null) 
 				    && lesson.isTimeValidToInsertSummary(new HourMinuteSecond(), lessonDate)) {

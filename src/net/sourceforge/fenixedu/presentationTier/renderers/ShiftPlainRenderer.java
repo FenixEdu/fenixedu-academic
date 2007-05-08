@@ -1,5 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
+import java.util.Set;
+import java.util.TreeSet;
+
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
@@ -20,10 +23,15 @@ public class ShiftPlainRenderer extends OutputRenderer {
         	if (object == null) {
                     return new HtmlText();
                 }               
-                Shift shift = (Shift) object;
+                
+        	Shift shift = (Shift) object;
                 final StringBuilder lessonsLabel = new StringBuilder();
                 int index = 0;
-                for (Lesson lesson : shift.getAssociatedLessonsSet()) {
+                                
+                Set<Lesson> shiftLessons = new TreeSet<Lesson>(Lesson.LESSON_COMPARATOR_BY_WEEKDAY_AND_STARTTIME);
+                shiftLessons.addAll(shift.getAssociatedLessons());
+                
+                for (Lesson lesson : shiftLessons) {
                     index++;
                     lessonsLabel.append(lesson.getDiaSemana().toString()).append(" (");
                     lessonsLabel.append(DateFormatUtil.format("HH:mm", lesson.getInicio().getTime())).append("-");
@@ -37,6 +45,7 @@ public class ShiftPlainRenderer extends OutputRenderer {
                         lessonsLabel.append(" ");
                     }
                 }
+                
                 return new HtmlText(lessonsLabel.toString());                               
             }            
         };

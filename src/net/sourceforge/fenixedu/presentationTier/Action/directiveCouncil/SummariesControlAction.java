@@ -143,33 +143,31 @@ public class SummariesControlAction extends FenixDispatchAction {
             TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
             for (Professorship professorship : teacher.getProfessorships()) {       	
         	
-                BigDecimal lessonHours = EMPTY, summaryHours = EMPTY, courseDifference = EMPTY;
-                BigDecimal shiftDifference = EMPTY, courseSummaryHours = EMPTY;
+                BigDecimal lessonHours = EMPTY, shiftHours = EMPTY, courseDifference = EMPTY;
+                BigDecimal shiftDifference = EMPTY, courseHours = EMPTY;
 
                 if (professorship.belongsToExecutionPeriod(executionPeriod) && !professorship.getExecutionCourse().isMasterDegreeDFAOrDEAOnly()) {
 
                     for (Shift shift : professorship.getExecutionCourse().getAssociatedShifts()) {
 
                         DegreeTeachingService degreeTeachingService = readDegreeTeachingService(teacherService, shift, professorship);                                                
-                        if (degreeTeachingService != null) {
-                            
+                        if (degreeTeachingService != null) {                           
                             // GET LESSON HOURS
-                            lessonHours = readLessonHours(degreeTeachingService.getPercentage(), shift, lessonHours);
+                            lessonHours = readDeclaredLessonHours(degreeTeachingService.getPercentage(), shift, lessonHours);
                             
                             // GET SHIFT SUMMARIES HOURS
-                            summaryHours = readSummaryHours(professorship, shift, summaryHours);                            
+                            shiftHours = readSummaryHours(professorship, shift, shiftHours);                            
                         }
-
                         // GET COURSE SUMMARY HOURS
-                        courseSummaryHours = readSummaryHours(professorship, shift, courseSummaryHours);
+                        courseHours = readSummaryHours(professorship, shift, courseHours);
                     }                  
                     
-                    summaryHours = summaryHours.setScale(2, RoundingMode.HALF_UP);
+                    shiftHours = shiftHours.setScale(2, RoundingMode.HALF_UP);
                     lessonHours = lessonHours.setScale(2, RoundingMode.HALF_UP);
-                    courseSummaryHours = courseSummaryHours.setScale(2, RoundingMode.HALF_UP);
+                    courseHours = courseHours.setScale(2, RoundingMode.HALF_UP);
 
-                    shiftDifference = getDifference(lessonHours, summaryHours);
-                    courseDifference = getDifference(lessonHours, courseSummaryHours);
+                    shiftDifference = getDifference(lessonHours, shiftHours);
+                    courseDifference = getDifference(lessonHours, courseHours);
 
                     Category category = teacher.getCategory();
                     String categoryName = (category != null) ? category.getCode() : "";
@@ -177,8 +175,8 @@ public class SummariesControlAction extends FenixDispatchAction {
 
                     SummariesControlElementDTO listElementDTO = new SummariesControlElementDTO(teacher
                             .getPerson().getName(), professorship.getExecutionCourse().getNome(),
-                            teacher.getTeacherNumber(), categoryName, lessonHours, summaryHours,
-                            courseSummaryHours, shiftDifference, courseDifference, siglas);
+                            teacher.getTeacherNumber(), categoryName, lessonHours, shiftHours,
+                            courseHours, shiftDifference, courseDifference, siglas);
 
                     allListElements.add(listElementDTO);
                 }
@@ -199,7 +197,7 @@ public class SummariesControlAction extends FenixDispatchAction {
         return degreeTeachingService;
     }
 
-    private BigDecimal readLessonHours(Double percentage, Shift shift, BigDecimal lessonHours) {                                     
+    private BigDecimal readDeclaredLessonHours(Double percentage, Shift shift, BigDecimal lessonHours) {                                     
         BigDecimal shiftLessonHoursSum = EMPTY;
 	for (Lesson lesson : shift.getAssociatedLessons()) {
 	    shiftLessonHoursSum = shiftLessonHoursSum.add(BigDecimal.valueOf(lesson.getAllLessonDates().size() * lesson.hours()));
@@ -228,7 +226,7 @@ public class SummariesControlAction extends FenixDispatchAction {
         if (difference.isNaN() || difference.isInfinite()) {
             difference = 0.0;
         }        
-        return  BigDecimal.valueOf(difference).setScale(2, RoundingMode.HALF_UP);
+        return BigDecimal.valueOf(difference).setScale(2, RoundingMode.HALF_UP);
     }
       
     private String getSiglas(Professorship professorship) {

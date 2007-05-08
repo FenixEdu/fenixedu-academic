@@ -20,13 +20,13 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
+import net.sourceforge.fenixedu.domain.organizationalStructure.EmployeeWorkingContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequest.ParkingRequestFactoryCreator;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.util.ContractType;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -184,7 +184,7 @@ public class ParkingParty extends ParkingParty_Base {
 	    Employee employee = person.getEmployee();
 	    if (employee != null && person.getPersonRole(RoleType.TEACHER) == null
 		    && person.getPersonRole(RoleType.EMPLOYEE) != null
-		    && employee.getCurrentContractByContractType(ContractType.WORKING) != null) {
+		    && employee.getCurrentContractByContractType(EmployeeWorkingContract.class) != null) {
 		roles.add(RoleType.EMPLOYEE);
 	    }
 	    Student student = person.getStudent();
@@ -230,7 +230,7 @@ public class ParkingParty extends ParkingParty_Base {
 	    Employee employee = person.getEmployee();
 	    if (employee != null && person.getPersonRole(RoleType.TEACHER) == null
 		    && person.getPersonRole(RoleType.EMPLOYEE) != null
-		    && employee.getCurrentContractByContractType(ContractType.WORKING) != null) {
+		    && employee.getCurrentContractByContractType(EmployeeWorkingContract.class) != null) {
 		Unit currentUnit = employee.getCurrentWorkingPlace();
 		if (currentUnit != null) {
 		    occupations.add("<strong>Funcionário</strong><br/> Nº "

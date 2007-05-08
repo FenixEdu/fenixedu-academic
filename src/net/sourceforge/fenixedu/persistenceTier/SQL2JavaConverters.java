@@ -42,8 +42,7 @@ public class SQL2JavaConverters {
     public static FieldConversion JavaPeriodState2SqlPeriodState = new net.sourceforge.fenixedu.persistenceTier.Conversores.JavaPeriodState2SqlPeriodState();
     public static FieldConversion JavaDocumentType2SqlDocumentTypeFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.JavaDocumentType2SqlDocumentTypeFieldConversion();
     public static FieldConversion AdviseType2SqlAdviseTypeFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.AdviseType2SqlAdviseTypeFieldConversion();
-    public static FieldConversion JavaDegreeCurricularPlanState2SqlDegreeCurricularPlanStateFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.JavaDegreeCurricularPlanState2SqlDegreeCurricularPlanStateFieldConversion();
-    public static FieldConversion ContractType2SqlContractTypeConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.ContractType2SqlContractTypeConversion();
+    public static FieldConversion JavaDegreeCurricularPlanState2SqlDegreeCurricularPlanStateFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.JavaDegreeCurricularPlanState2SqlDegreeCurricularPlanStateFieldConversion();    
     public static FieldConversion DelegateYearTypeFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.DelegateYearTypeFieldConversion();
     public static FieldConversion PublicationTypeFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.PublicationTypeFieldConversion();
     public static FieldConversion ServiceExemptionTypeFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.ServiceExemptionTypeFieldConversion();

@@ -71,8 +71,7 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.organizationalStructure.Accountability -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.Accountability" table="ACCOUNTABILITY">	
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction"/>	
-	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Contract"/>	     
-	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract"/>	  
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Contract"/>	       
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Invitation"/>	     
 </class-descriptor>
 
@@ -83,13 +82,25 @@
 
 <!-- Definitions for class net.sourceforge.fenixedu.domain.organizationalStructure.Contract -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.Contract" table="ACCOUNTABILITY">
-
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.EmployeeWorkingContract"/>	
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.EmployeeMailingContract"/>
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract"/>	
 </class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract" table="ACCOUNTABILITY">
                
-</class-descriptor>  
+</class-descriptor>
+
+<!-- Definitions for net.sourceforge.fenixedu.domain.organizationalStructure.EmployeeMailingContract -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.EmployeeMailingContract" table="ACCOUNTABILITY">
+               
+</class-descriptor>
+
+<!-- Definitions for net.sourceforge.fenixedu.domain.organizationalStructure.EmployeeWorkingContract -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.EmployeeWorkingContract" table="ACCOUNTABILITY">
+               
+</class-descriptor> 
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.organizationalStructure.Invitation -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.Invitation" table="ACCOUNTABILITY">

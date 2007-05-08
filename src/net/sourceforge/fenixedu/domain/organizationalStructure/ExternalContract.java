@@ -14,43 +14,23 @@ import org.joda.time.YearMonthDay;
 
 public class ExternalContract extends ExternalContract_Base {
 
-    private ExternalContract() {
-	super();
-    }
-
-    /***********************************************************************
-         * BUSINESS SERVICES *
-         **********************************************************************/
-
     public ExternalContract(Person person, Unit institution, YearMonthDay beginDate, YearMonthDay endDate) {
-	this();
+	super();
 	
-	checkIfPersonAlreadyIsExternalPerson(person);
-	AccountabilityType accountabilityType = AccountabilityType
-		.readAccountabilityTypeByType(AccountabilityTypeEnum.EMPLOYEE_CONTRACT);
-
+	if(person.hasExternalPerson()) {
+	    throw new DomainException("error.externalContract.person.already.is.externalPerson");
+	}
+	
+	super.init(person, beginDate, endDate, institution);	
+	AccountabilityType accountabilityType = AccountabilityType.readAccountabilityTypeByType(AccountabilityTypeEnum.EMPLOYEE_CONTRACT);
 	setAccountabilityType(accountabilityType);
-	setChildParty(person);
-	setParentParty(institution);
-	setOccupationInterval(beginDate, endDate);
-    
+	    
         PersonName personName = person.getPersonName();
         if (personName != null) {
             personName.setIsExternalPerson(true);
         }
     }  
-
-    private void setOccupationInterval(YearMonthDay beginDate, YearMonthDay endDate) {
-	if (beginDate == null) {
-	    throw new DomainException("error.contract.no.beginDate");
-	}
-	if (endDate != null && endDate.isBefore(beginDate)) {
-	    throw new DomainException("error.contract.endDateBeforeBeginDate");
-	}
-	setBeginDate(beginDate);
-	setEndDate(endDate);
-    }
-
+    
     public void edit(String name, String address, String phone, String mobile, String homepage,
 	    String email, Unit institution) {
 
@@ -68,10 +48,6 @@ public class ExternalContract extends ExternalContract_Base {
 	person.delete();
     }
 
-    public Person getPerson() {
-	return (Person) getChildParty();
-    }
-
     public Unit getInstitutionUnit() {
 	return (Unit) getParentParty();
     }
@@ -82,12 +58,6 @@ public class ExternalContract extends ExternalContract_Base {
 
     public boolean hasInstitutionUnit() {
 	return getParentParty() != null;
-    }
-
-    private void checkIfPersonAlreadyIsExternalPerson(Person person) {
-	if(person.hasExternalPerson()) {
-	    throw new DomainException("error.externalContract.person.already.is.externalPerson");
-	}	
     }
     
     private boolean externalPersonsAlreadyExists(final String name, final String address, final Unit institution) {

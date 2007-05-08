@@ -112,6 +112,8 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.AdministrativeOff
 import net.sourceforge.fenixedu.domain.organizationalStructure.Contract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DegreeUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.EmployeeMailingContract;
+import net.sourceforge.fenixedu.domain.organizationalStructure.EmployeeWorkingContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -139,7 +141,6 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
-import net.sourceforge.fenixedu.util.ContractType;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 import net.sourceforge.fenixedu.util.MarkType;
@@ -498,9 +499,8 @@ public class CreateTestData {
         person.addPersonRoleByRoleType(RoleType.TEACHER);
         final Login login = person.getUser().readUserLoginIdentification();
         login.openLoginIfNecessary(RoleType.TEACHER);
-        new Contract(person, new YearMonthDay().minusYears(2), new YearMonthDay().plusYears(2), RootDomainObject.getInstance().getInstitutionUnit(), ContractType.WORKING);
-        new Contract(person, new YearMonthDay().minusYears(2), new YearMonthDay().plusYears(2), RootDomainObject.getInstance().getInstitutionUnit(), ContractType.SALARY);
-        new Contract(person, new YearMonthDay().minusYears(2), new YearMonthDay().plusYears(2), RootDomainObject.getInstance().getInstitutionUnit(), ContractType.MAILING);
+        new EmployeeWorkingContract(person, new YearMonthDay().minusYears(2), new YearMonthDay().plusYears(2), RootDomainObject.getInstance().getInstitutionUnit());
+        new EmployeeMailingContract(person, new YearMonthDay().minusYears(2), new YearMonthDay().plusYears(2), RootDomainObject.getInstance().getInstitutionUnit());       
         person.addPersonRoleByRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE);
         person.addPersonRoleByRoleType(RoleType.TIME_TABLE_MANAGER);
         person.addPersonRoleByRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE);

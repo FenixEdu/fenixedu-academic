@@ -220,7 +220,7 @@ abstract public class Party extends Party_Base {
 	final Set<Accountability> result = new HashSet<Accountability>();
 	for (final Accountability accountability : getParentsSet()) {
 	    if (accountability.getAccountabilityType().getType() == accountabilityTypeEnum
-		    && accountability.getClass().equals(accountabilityClass)) {
+		    && accountabilityClass.isAssignableFrom(accountability.getClass())) {
 		result.add(accountability);
 	    }
 	}
@@ -231,7 +231,7 @@ abstract public class Party extends Party_Base {
 	final Set<Accountability> result = new HashSet<Accountability>();
 	for (final Accountability accountability : getChildsSet()) {
 	    if (accountability.getAccountabilityType().getType() == accountabilityTypeEnum
-		    && accountability.getClass().equals(accountabilityClass)) {
+		    && accountabilityClass.isAssignableFrom(accountability.getClass())) {
 		result.add(accountability);
 	    }
 	}
