@@ -34,7 +34,7 @@ public class ChangeConvokeActive extends Service {
 		String groupEmail = group.getContactEmail();
 		String[] replyTo;
 		
-		if (groupEmail != null) {
+		if (groupEmail != null && person.isExamCoordinatorForVigilantGroup(group)) {
 			tos.add(groupEmail);
 			replyTo = new String[] { groupEmail };
 		} else {
@@ -51,7 +51,7 @@ public class ChangeConvokeActive extends Service {
 
 		String subject = RenderUtils.getResourceString("VIGILANCY_RESOURCES", "email.convoke.subject",
 				new Object[] { writtenEvaluation.getName(), group.getName(), beginDateString, time });
-		new Email(person.getName(), (groupEmail != null) ? groupEmail : person.getEmail(), replyTo,
+		new Email(person.getName(), (groupEmail != null && person.isExamCoordinatorForVigilantGroup(group)) ? groupEmail : person.getEmail(), replyTo,
 				tos, null, null, subject, emailMessage);
 	}
 
