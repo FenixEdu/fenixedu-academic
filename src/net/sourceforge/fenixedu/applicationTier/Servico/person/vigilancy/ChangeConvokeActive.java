@@ -34,9 +34,14 @@ public class ChangeConvokeActive extends Service {
 		String groupEmail = group.getContactEmail();
 		String[] replyTo;
 		
-		if (groupEmail != null && person.isExamCoordinatorForVigilantGroup(group)) {
+		if (groupEmail != null) {
 			tos.add(groupEmail);
-			replyTo = new String[] { groupEmail };
+			if(person.isExamCoordinatorForVigilantGroup(group)) {
+				replyTo = new String[] { groupEmail };
+			}
+			else {
+				replyTo = new String[] { person.getEmail() };	
+			}
 		} else {
 			replyTo = new String[] { person.getEmail() };
 		}
