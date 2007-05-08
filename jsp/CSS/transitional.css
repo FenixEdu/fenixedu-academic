@@ -445,7 +445,6 @@ padding-right: 0.5em;
 .ptop0 { padding-top: 0; }
 .pbottom0 { padding-bottom: 0em; }
 .pbottom05 { padding-bottom: 0.5em; }
-.pbottom05 { padding-bottom: 0.5em; }
 .pbottom075 { padding-bottom: 0.75em; }
 .pbottom1 { padding-bottom: 1em; }
 .pbottom2 { padding-bottom: 2em; }
@@ -469,7 +468,7 @@ padding-right: 0.5em;
 .mtop3 { margin-top: 3em;}
 .mbottom0 { margin-bottom: 0;}
 .mbottom025 { margin-bottom: 0.25em;}
-.mbottom05 { margin-bottom: 0.5em;}
+.mbottom05 { margin-bottom: 0.5em !important; }
 .mbottom1 { margin-bottom: 1em;}
 .mbottom15 { margin-bottom: 1.5em;}
 .mbottom2 { margin-bottom: 2em;}

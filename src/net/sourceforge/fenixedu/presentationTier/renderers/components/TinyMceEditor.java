@@ -162,4 +162,8 @@ public class TinyMceEditor extends HtmlTextArea {
         }
     }
 
+	public void disable() {
+		setClasses("mceNoEditor");
+	}
+
 }

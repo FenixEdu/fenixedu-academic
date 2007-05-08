@@ -240,7 +240,11 @@ public class MultiLanguageStringInputRenderer extends InputRenderer {
         return new MultiLanguageStringInputLayout();
     }
 
-    protected class MultiLanguageStringInputLayout extends Layout {
+    protected HtmlBlockContainer getTopContainer() {
+		return new HtmlBlockContainer();
+	}
+
+	protected class MultiLanguageStringInputLayout extends Layout {
         private static final String STATE_MAP_NAME = "mlsMap";
         private static final String STATE_INDEX = "lastIndex";
 
@@ -275,7 +279,7 @@ public class MultiLanguageStringInputRenderer extends InputRenderer {
             MultiLanguageString mls = (MultiLanguageString) object;
             
             MetaSlotKey key = ((MetaSlot) getInputContext().getMetaObject()).getKey();
-            HtmlBlockContainer container = new HtmlBlockContainer();
+            HtmlBlockContainer container = getTopContainer();
 
             // hidden field with real value
             HtmlHiddenField hiddenField = new HtmlHiddenField();
