@@ -165,7 +165,9 @@ public class Department extends Department_Base {
 	}
     }
     
-    public TeacherPersonalExpectationPeriod getTeacherPersonalExpectationPeriodForExecutionYear(ExecutionYear executionYear, Class clazz) {
+    public TeacherPersonalExpectationPeriod getTeacherPersonalExpectationPeriodForExecutionYear(ExecutionYear executionYear,
+	    Class<? extends TeacherPersonalExpectationPeriod> clazz) {
+	
 	if(executionYear != null) {
             for (TeacherPersonalExpectationPeriod period : getTeacherPersonalExpectationPeriods()) {
                 if (period.getExecutionYear().equals(executionYear) && period.getClass().equals(clazz)) {

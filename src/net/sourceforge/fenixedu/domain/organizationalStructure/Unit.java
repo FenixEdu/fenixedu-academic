@@ -385,6 +385,10 @@ public class Unit extends Unit_Base {
     public Collection<ExternalContract> getExternalPersons() {
 	return (Collection<ExternalContract>) getChildAccountabilities(AccountabilityTypeEnum.EMPLOYEE_CONTRACT, ExternalContract.class);
     }
+
+    public Collection<Contract> getWorkingContracts() {
+	return (Collection<Contract>) getChildAccountabilities(AccountabilityTypeEnum.EMPLOYEE_CONTRACT, EmployeeWorkingContract.class);	
+    }
     
     public List<Contract> getWorkingContracts(YearMonthDay begin, YearMonthDay end) {
 	List<Contract> contracts = new ArrayList<Contract>();
@@ -395,11 +399,7 @@ public class Unit extends Unit_Base {
 	}
 	return contracts;
     }
-
-    public Collection<Contract> getWorkingContracts() {
-	return (Collection<Contract>) getChildAccountabilities(AccountabilityTypeEnum.EMPLOYEE_CONTRACT, EmployeeWorkingContract.class);	
-    }
-
+ 
     public List<Teacher> getAllTeachers() {
 	List<Teacher> teachers = new ArrayList<Teacher>();
 	List<Employee> employees = getAllWorkingEmployees();

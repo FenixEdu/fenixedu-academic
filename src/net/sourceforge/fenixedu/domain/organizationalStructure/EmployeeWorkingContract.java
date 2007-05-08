@@ -23,4 +23,5 @@ public class EmployeeWorkingContract extends EmployeeWorkingContract_Base {
     public Employee getEmployee() {
 	return getPerson().getEmployee();
     }
+    
 }

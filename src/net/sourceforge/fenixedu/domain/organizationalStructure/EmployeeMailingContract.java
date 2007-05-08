@@ -23,4 +23,5 @@ public class EmployeeMailingContract extends EmployeeMailingContract_Base {
     public Employee getEmployee() {
 	return getPerson().getEmployee();
     }
+    
 }
