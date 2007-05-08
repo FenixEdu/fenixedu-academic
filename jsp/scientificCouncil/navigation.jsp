@@ -82,6 +82,17 @@
 		  		<bean:message key="link.research.activity.merge.event"/>
 		  	</html:link>
 		</li>
+		<%-- <li>
+			<html:link page="/editScientificJournalMergeJournalIssues.do?method=prepare">
+		  		<bean:message key="link.research.activity.merge.journal.issues"/>
+		  	</html:link>
+		</li>
+		<li>
+			<html:link page="/editEventMergeEventEditions.do?method=prepare">
+		  		<bean:message key="link.research.activity.merge.event.editions"/>
+		  	</html:link>
+		</li>		
+		--%>	
 		<%net.sourceforge.fenixedu.applicationTier.IUserView user = (net.sourceforge.fenixedu.applicationTier.IUserView) session
                     .getAttribute(net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants.U_VIEW);
             if (net.sourceforge.fenixedu.domain.ManagementGroups.isProtocolManagerMember(user.getPerson())) {
