@@ -128,7 +128,7 @@ public class PagesRenderer extends InputRenderer {
 	if(this.pagedValue && getPageContainerBean().getNumberOfPages(getDefaultObjectsPerPage()) > 0) {
 	    if(getPageContainerBean().hasPreviousPage(getDefaultObjectsPerPage())) {
 		HtmlSubmitButton previousButton = new HtmlSubmitButton();
-		previousButton.setText(RenderUtils.getResourceString(getBundle(), "button.previous"));
+		previousButton.setText(RenderUtils.getResourceString(getBundle(), "pages.button.previous"));
 		previousButton.setName(getLocalName(previousName));
 		previousButton.setController(new PreviousController(page));
 		container.addChild(previousButton);
@@ -138,7 +138,7 @@ public class PagesRenderer extends InputRenderer {
 	    
 	    if(getPageContainerBean().hasNextPage(getDefaultObjectsPerPage())) {
 		HtmlSubmitButton nextButton = new HtmlSubmitButton();
-		nextButton.setText(RenderUtils.getResourceString(getBundle(), "button.next"));
+		nextButton.setText(RenderUtils.getResourceString(getBundle(), "pages.button.next"));
 		nextButton.setName(getLocalName(nextName));
 		nextButton.setController(new NextController(page));
 		container.addChild(nextButton);
