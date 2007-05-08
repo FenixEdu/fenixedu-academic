@@ -25,7 +25,7 @@ public class TeachersAndInstitutionSiteManagersGroup extends LeafGroup {
 		super();
 		
 		RoleTypeGroup teachers = new RoleTypeGroup(RoleType.TEACHER);
-		WebSiteManagersGroup websiteManagers = new InstitutionSiteManagers();
+		InstitutionSiteManagers websiteManagers = new InstitutionSiteManagers();
 		
 		this.group = new GroupUnion(teachers, websiteManagers);
 	}
