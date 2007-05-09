@@ -79,6 +79,8 @@
 				<fr:property name="key(view)" value="label.viewForum.viewThread"/>
 				<fr:property name="bundle(view)" value="MESSAGING_RESOURCES"/>
 		    </fr:layout>
+		    
+		    <fr:destination name="viewForum" path="<%= contextPrefix + "method=viewThread&amp;forumId=${forum.idInternal}&amp;threadId=${idInternal}" %>"/>
 		</fr:view>
 	</logic:notEmpty>
 			

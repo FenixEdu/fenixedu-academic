@@ -20,7 +20,10 @@
 </schema>
 
 <schema bundle="MESSAGING_RESOURCES" name="conversationThread.view-full" type="net.sourceforge.fenixedu.domain.messaging.ConversationThread">
-   	<slot name="subject" key="label.net.sourceforge.fenixedu.domain.messaging.ConversationThread.subject"/>
+   	<slot name="subject" key="label.net.sourceforge.fenixedu.domain.messaging.ConversationThread.subject" layout="link">
+   		<property name="useParent" value="true"/>
+   		<property name="destination" value="viewForum"/>
+   	</slot>
    	<slot name="creator" key="label.net.sourceforge.fenixedu.domain.messaging.ConversationThread.creator" layout="person-email-identity">
 		<property name="collapsed" value="true"/>
 		<property name="text" value="name"/>

@@ -1,9 +1,12 @@
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.renderers.OutputRenderer;
 import net.sourceforge.fenixedu.renderers.components.HtmlBlockContainer;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
@@ -107,6 +110,10 @@ public class TreeRenderer extends OutputRenderer {
     private Map<String, String> imagesMap;
 
     private LevelDecorator decorator;
+    
+    private String current;
+    private String currentClasses;
+    private String currentStyle;
     
     public TreeRenderer() {
         super();
@@ -570,7 +577,40 @@ public class TreeRenderer extends OutputRenderer {
         this.includeImage = includeImage;
     }
 
-    @Override
+    public String getCurrent() {
+		return current;
+	}
+
+    /**
+     * @property
+     */
+	public void setCurrent(String current) {
+		this.current = current;
+	}
+
+	public String getCurrentClasses() {
+		return currentClasses;
+	}
+
+	/**
+	 * @property
+	 */
+	public void setCurrentClasses(String currentClasses) {
+		this.currentClasses = currentClasses;
+	}
+
+	public String getCurrentStyle() {
+		return currentStyle;
+	}
+
+	/**
+	 * @property
+	 */
+	public void setCurrentStyle(String currentStyle) {
+		this.currentStyle = currentStyle;
+	}
+
+	@Override
     protected Layout getLayout(Object object, Class type) {
         return new TreeLayout();
     }
@@ -599,7 +639,7 @@ public class TreeRenderer extends OutputRenderer {
 
         @Override
         public HtmlComponent createComponent(Object object, Class type) {
-            HtmlList list = createList((Collection) object);
+            HtmlList list = createList(new ArrayList<HtmlListItem>(), (Collection) object);
             
             if (isDraggable()) {
                 return createScript(list, true);
@@ -699,7 +739,7 @@ public class TreeRenderer extends OutputRenderer {
             return script.toString();
         }
 
-        public HtmlList createList(Collection collection) {
+        public HtmlList createList(List<HtmlListItem> itemPath, Collection collection) {
             HtmlList list = new HtmlList();
             
             list.setClasses(getListClass());
@@ -757,6 +797,21 @@ public class TreeRenderer extends OutputRenderer {
                     item.addChild(linksContainer);
                 }
                 
+                boolean current = false;
+                if (getCurrent() != null) {
+                	DomainObject domainObject = (DomainObject) object;
+                	if (domainObject.getIdInternal().toString().equals(getCurrent())) {
+                		current = true;
+
+                		for (HtmlListItem level : itemPath) {
+                			level.setAttribute("expanded", "true");
+                		}
+                		
+                		component.setClasses(getCurrentClasses());
+                		component.setStyle(getCurrentStyle());
+                	}
+                }
+                
                 try {
                     String children = getChildrenFor(object);
                     boolean noChildren = getNoChildrenFor(object) != null;
@@ -765,7 +820,18 @@ public class TreeRenderer extends OutputRenderer {
                         Collection subCollection = (Collection) RendererPropertyUtils.getProperty(object, children, false);
                         
                         if (subCollection != null && ! subCollection.isEmpty()) {
-                            item.addChild(createList(subCollection));
+                        	try {
+	                        	itemPath.add(item);
+
+	                        	if (current) {
+	                        		item.setAttribute("expanded", "true");
+	                        	}
+	                        	
+	                            item.addChild(createList(itemPath, subCollection));
+                        	}
+                        	finally {
+                        		itemPath.remove(item);
+                        	}
                         }
                     }
                     else {

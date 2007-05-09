@@ -55,10 +55,11 @@ public class EmailIdentityRenderer extends OutputRenderer {
 		    emailHtml.setText(email);
 		    HtmlInlineContainer container = new HtmlInlineContainer();
 		    container.addChild(nameHtml);
-		    container.addChild(new HtmlText("<", true));
+		    container.addChild(new HtmlText(" <", true));
 		    container.addChild(emailHtml);
 		    container.addChild(new HtmlText(">", true));
-
+		    container.setIndented(false);
+		    
 		    return container;
 		} else {
 		    emailHtml.setText(name);

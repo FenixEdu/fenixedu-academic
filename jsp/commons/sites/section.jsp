@@ -144,6 +144,7 @@
     </fr:form>
 </div>
 
+<%--
 <logic:empty name="section" property="orderedSubSections">
     <p class="mtop2">
         <em>
@@ -151,16 +152,17 @@
         </em>
     </p>
 </logic:empty>
+--%>
 
-<logic:notEmpty name="section" property="orderedSubSections">
+<logic:notEmpty name="site" property="topLevelSections">
     <fr:form action="<%= actionName + "?method=saveSectionsOrder&amp;" + context + "&amp;sectionID=" + sectionId %>">
         <input alt="input.sectionsOrder" id="sections-order" type="hidden" name="sectionsOrder" value=""/>
     </fr:form>
     
-    <% String treeId = "sectionTree" + sectionId; %>
+    <% String treeId = "subSectionTree" + site.getIdInternal(); %>
         
     <div style="background: #FAFAFF; border: 1px solid #EEE; margin: 10px 0px 10px 0px; padding: 10px 10px 10px 10px;">
-        <fr:view name="section" property="orderedSubSections">
+        <fr:view name="site" property="orderedTopLevelSections">
             <fr:layout name="tree">
                 <fr:property name="treeId" value="<%= treeId %>"/>
                 <fr:property name="fieldId" value="sections-order"/>
@@ -168,6 +170,9 @@
                 <fr:property name="eachLayout" value="values"/>
                 <fr:property name="schemaFor(Section)" value="site.section.name"/>
                 <fr:property name="childrenFor(Section)" value="orderedSubSections"/>
+
+                <fr:property name="current" value="<%= sectionId.toString() %>"/>
+                <fr:property name="currentClasses" value="highlight1"/>
             </fr:layout>
             <fr:destination name="section.view" path="<%= actionName + "?method=section&sectionID=${idInternal}&" + context %>"/>
         </fr:view>
@@ -399,3 +404,4 @@
 <script type="text/javascript">
     switchGlobal();
 </script>
+

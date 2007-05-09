@@ -125,6 +125,11 @@
 		       ( (secure) ? ";secure" : ""); 
 		    document.cookie = cookieString; 
 		} 
+		,debugmsg : function(text) {
+			var area = document.getElementById("ddtree:debug");
+			if (area)
+				area.value += new Date().getTime() + ": " + text + "\n";
+		}
 		,setMaximumDepth : function(maxDepth)
 		{
 			this.maximumDepth = maxDepth;	
@@ -302,6 +307,8 @@
 		/* Initialize drag */
 		initDrag : function(e)
 		{
+			JSTreeObj.debugmsg("initDrag");
+			
 			if(document.all)e = event;	
 			
 			var subs = JSTreeObj.floatingContainer.getElementsByTagName('LI');
@@ -651,6 +658,9 @@
 			var nodeId = 0;
 			var dhtmlgoodies_tree = document.getElementById(this.idOfTree);
 			var menuItems = dhtmlgoodies_tree.getElementsByTagName('LI');	// Get an array of all menu items
+			
+			var initialExpandedNodes = ",";
+			
 			for(var no=0;no<menuItems.length;no++){
 				menuItems[no].style.listStyleType = 'none';
 			
@@ -668,7 +678,7 @@
 				if (! JSTreeObj.allowDrag) {
 					noDrag = true;
 				}
-						 
+
 				nodeId++;
 				var subItems = menuItems[no].getElementsByTagName('UL');
 				var img = document.createElement('IMG');
@@ -692,6 +702,11 @@
 					}
 				}
 				
+				// should expand
+				var tmpVar = menuItems[no].getAttribute('expanded');
+				if(!tmpVar)tmpVar = menuItems[no].expanded;
+				if(tmpVar=='true') initialExpandedNodes += nodeId + ","
+
 				//aTag.onclick = JSTreeObj.showHideNode;
 				if(!noDrag)aTag.onmousedown = JSTreeObj.initDrag;
 				aTag.onmousemove = JSTreeObj.moveDragableNodes;
@@ -752,6 +767,17 @@
 					if(nodes[no])this.showHideNode(false,nodes[no]);	
 				}			
 			}			
+
+			// initially expanded nodes
+			if(initialExpandedNodes){
+				var nodes = initialExpandedNodes.split(',');
+				for(var no=0;no<nodes.length;no++){
+					if (initExpandedNodes && initExpandedNodes.indexOf(',' + nodes[no]) >= 0)
+						continue; // already expanded
+						
+					if(nodes[no])this.showHideNode(false,nodes[no]);	
+				}
+			}		
 			
 			document.documentElement.onmousemove = JSTreeObj.moveDragableNodes;	
 			document.documentElement.onmouseup = JSTreeObj.dropDragableNodes;

@@ -620,7 +620,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
         Site site = getSite(request);
 
         Section parentSection = getSection(request);
-        List<Section> initialOrder = flattenSection(site, parentSection);
+        List<Section> initialOrder = flattenSection(site, /* parentSection */ null);
 
         List<Pair<Section, Section>> hierarchy = new ArrayList<Pair<Section, Section>>();
 
