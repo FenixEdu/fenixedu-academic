@@ -37,6 +37,10 @@
 	</p>
 </logic:present>
 
+
+<p class="color888"><bean:message bundle="RESEARCHER_RESOURCES" key="label.chooseEvent.firstInstructions"/></p>
+
+
 <bean:define id="promptForCreation" value="false"/>
 
 <logic:notPresent name="createNewEvent">
@@ -58,22 +62,22 @@
 <fr:form action="/activities/createEventEdition.do?method=prepareCreateEventEditionParticipation">
 	<logic:notPresent name="createNewEvent">
 	<logic:notPresent name="createNewEdition">
-	<fr:edit name="eventEditionBean" schema="<%= schema %>" >
-	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle5 dinline"/>
-        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
-	</fr:layout>
-	</fr:edit>
-	<br/>
-	<html:submit><bean:message key="button.submit" bundle="RESEARCHER_RESOURCES"/></html:submit>
-	<logic:equal name="promptForCreation" value="true">
-		<html:submit property="prepareCreateEvent"><bean:message key="label.createEvent" bundle="RESEARCHER_RESOURCES"/></html:submit>
-	</logic:equal>
-	<logic:present name="eventEditionBean" property="event">
-		<logic:notPresent name="skipCreateEdition">
-		<html:submit property="createEdition"><bean:message key="button.createEventEdition" bundle="RESEARCHER_RESOURCES"/></html:submit>
-		</logic:notPresent>
-	</logic:present>
+		<fr:edit name="eventEditionBean" schema="<%= schema %>" >
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle5 thright thlight thmiddle dinline"/>
+	        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
+		</fr:layout>
+		</fr:edit>
+		<br/>
+		<html:submit><bean:message key="button.submit" bundle="RESEARCHER_RESOURCES"/></html:submit>
+		<logic:equal name="promptForCreation" value="true">
+			<html:submit property="prepareCreateEvent"><bean:message key="label.createEvent" bundle="RESEARCHER_RESOURCES"/></html:submit>
+		</logic:equal>
+		<logic:present name="eventEditionBean" property="event">
+			<logic:notPresent name="skipCreateEdition">
+			<html:submit property="createEdition"><bean:message key="button.createEventEdition" bundle="RESEARCHER_RESOURCES"/></html:submit>
+			</logic:notPresent>
+		</logic:present>
 	</logic:notPresent>
 	</logic:notPresent>
 	
@@ -101,7 +105,7 @@
 	</logic:present>
 	<logic:present name="createNewEdition">
 		<fr:edit id="editionBean" name="eventEditionBean" visible="false"/>
-		<strong><bean:message key="label.event" bundle="RESEARCHER_RESOURCES"/></strong>: <fr:view name="eventEditionBean" property="event.name"/>
+		<strong><bean:message key="label.event" bundle="RESEARCHER_RESOURCES"/>:</strong> <fr:view name="eventEditionBean" property="event.name"/>
 		<br/>
 		<br/>
 		<fr:edit id="editionData" name="eventEditionBean" schema="eventEditionCreation.fullInfo">

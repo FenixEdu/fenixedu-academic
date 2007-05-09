@@ -38,7 +38,7 @@
 				</logic:equal>
 				<fr:edit id="author" name="publicationBean" schema="<%= publicationBean.getParticipationSchema() %>" nested="true">
 					<fr:layout name="tabular">
-						<fr:property name="classes" value="tstyle5 thright thlight"/>
+						<fr:property name="classes" value="tstyle1 thright thlight"/>
 						<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 					</fr:layout>
 			   		<fr:destination name="invalid" path="/resultPublications/prepareCreate.do"/>
@@ -104,17 +104,16 @@
 			<logic:notPresent name="publicationBean" property="scientificJournal">
 				<p class="mbottom05"><strong><bean:message key="label.articleJournal" bundle="RESEARCHER_RESOURCES"/></strong></p>
 
+				<p class="color888 mvert05"><bean:message key="label.chooseJournal.instructions" bundle="RESEARCHER_RESOURCES"/></p>
+				
 				<logic:present name="publicationBean" property="scientificJournalName">
 					<div class="warning0">
 						<p style="margin:0; padding: 0.5em 0.75em;">
-							<b><bean:message key="label.attention" bundle="RESEARCHER_RESOURCES"/></b><br/>
+							<b><bean:message key="label.attention" bundle="RESEARCHER_RESOURCES"/>:</b><br/>
 							<bean:message key="label.informationForCreateMagazine" bundle="RESEARCHER_RESOURCES"/>
 						</p>
 					</div>
 				</logic:present>				
-				
-				<p class="color888 mvert05"><bean:message key="label.chooseJournal.instructions" bundle="RESEARCHER_RESOURCES"/></p>
-		
 				
 				<div class="dinline forminline">						
 					<fr:form action="/resultPublications/createWrapper.do">
@@ -178,11 +177,11 @@
 					<fr:edit id="publicationBean" name="publicationBean" visible="false"/>
 					<fr:edit id="createMagazine" name="issueBean" visible="false"/>
 					
-					<p class="mtop15 mbottom05"><strong><bean:message key="label.journal" bundle="RESEARCHER_RESOURCES"/></strong></p>
+					<p class="mtop15 mbottom025"><strong><bean:message key="label.journal" bundle="RESEARCHER_RESOURCES"/></strong></p>
 					<logic:equal name="issueBean" property="journalAlreadyChosen" value="false">
 					<fr:edit id="journalInfo" name="issueBean" schema="result.publication.create.Article.createMagazine">
 						<fr:layout name="tabular">
-						 <fr:property name="classes" value="tstyle5 thright thlight thtop mtop05"/>
+							<fr:property name="classes" value="tstyle5 thright thlight thtop mtop025"/>
 		        		<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 						</fr:layout>
 					</fr:edit>

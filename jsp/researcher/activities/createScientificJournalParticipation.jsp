@@ -19,9 +19,8 @@
 			<span><strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.step"/> 2 : </strong>
 			<bean:message key="researcher.activity.createJournal.createParticipation" bundle="RESEARCHER_RESOURCES"/></span>
 	 	</p>
-		<p class="mtop2 mbottom1">
-			<strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.createJournalUseCase.searchJournal"/></strong>
-		</p>
+
+		<p class="color888"><bean:message bundle="RESEARCHER_RESOURCES" key="label.chooseJournal.instructions.small"/></p>
 		<fr:form action="/activities/createScientificJournal.do?method=prepareCreateScientificJournalParticipation" >
 			<fr:edit id="journalBean" name="journalBean"  schema="<%= schema  %>">
 				<fr:destination name="invalid" path="/activities/createScientificJournal.do?method=prepareJournalSearch"/>			

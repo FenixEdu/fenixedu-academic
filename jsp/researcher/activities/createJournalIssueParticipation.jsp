@@ -8,8 +8,8 @@
 
 <logic:present role="RESEARCHER">
 
-	<em><bean:message bundle="RESEARCHER_RESOURCES" key="label.researchPortal"/></em> 
-	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.createIssues.useCasetitle"/></h2>
+<em><bean:message bundle="RESEARCHER_RESOURCES" key="label.researchPortal"/></em> 
+<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.createIssues.useCasetitle"/></h2>
 
 
 <bean:define id="schema" value="journalIssueCreation" type="java.lang.String"/>
@@ -21,8 +21,8 @@
 <logic:notPresent name="newJournal">
 	<logic:notPresent name="bean" property="scientificJournal">
 		<p class="mvert15 breadcumbs">
-			<span class="actual"><strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.step"/> 1 : </strong>	Escolher Revista</span>	 > 
-			<span><strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.step"/> 2 : </strong> Escolher Volume/Número e Adicionar Participação</span>
+			<span class="actual"><strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.step"/> 1 : </strong>	<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.createJournal.searchJournal"/></span> > 
+			<span><strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.step"/> 2 : </strong> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.createJournal.createParticipation"/></span>
 		</p>
 	</logic:notPresent>
 	<logic:present name="bean" property="scientificJournal">
@@ -33,6 +33,9 @@
 		<bean:define id="schema" value="journalIssueCreation.journalSelected" type="java.lang.String"/>
 	</logic:present>
 </logic:notPresent>
+
+
+<p class="color888"><bean:message bundle="RESEARCHER_RESOURCES" key="label.activities.chooseJournal.instructions"/></p>
 
 <bean:define id="createJournal" value="false"/>
 
@@ -78,6 +81,7 @@
 			<fr:edit id="issueJournalData" name="issueBean" schema="result.publication.create.Article.createMagazine">
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="tstyle5 thlight thright thmiddle dinline"/>
+			        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
 				</fr:layout>
 			</fr:edit>
 		</logic:notPresent>

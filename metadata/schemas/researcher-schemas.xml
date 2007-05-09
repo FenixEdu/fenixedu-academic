@@ -518,7 +518,7 @@ extends="eventCreation">
 	<slot name="scientificJournalName" key="label.scientificJournal.name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="75"/>
 	</slot>
-	<slot name="issn" validator="net.sourceforge.fenixedu.renderers.validators.ISSNValidator"/>
+	<slot name="issn" validator="net.sourceforge.fenixedu.renderers.validators.ISSNValidator" layout="input-with-comment"/>
 	<slot name="publisher"/>
 	<slot name="locationType" key="label.scientificJournal.locationType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="role" key="label.activityRole" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
@@ -1350,7 +1350,11 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Cr
 	<slot name="scientificJournalName" key="label.journal.name">
 		<property name="size" value="70"/>
 	</slot>
-	<slot name="issn" validator="net.sourceforge.fenixedu.renderers.validators.ISSNValidator"/>
+	<slot name="issn" validator="net.sourceforge.fenixedu.renderers.validators.ISSNValidator" layout="input-with-comment">
+		<property name="bundle" value="RESEARCHER_RESOURCES"/>
+		<property name="comment" value="label.issn.explanation"/>
+		<property name="commentClasses" value="smalltxt color555"/>
+	</slot>
 	<slot name="location" key="label.scope"/>
 	<slot name="publisher">
 		<property name="size" value="40"/>
