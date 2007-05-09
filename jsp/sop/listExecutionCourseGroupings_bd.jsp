@@ -7,12 +7,16 @@
 <html:form action="/listExecutionCourseGroupings">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="selectExecutionPeriod"/>
 
-	<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionPeriodID" property="executionPeriodID" onchange="this.form.submit();">
-		<logic:notPresent name="executionPeriod">
-			<html:option value=""></html:option>
-		</logic:notPresent>
-		<html:options collection="executionPeriods" labelProperty="qualifiedName" property="idInternal"/>
-	</html:select>
+	<h2><bean:message key="label.execution.course.groupings" bundle="SOP_RESOURCES"/></h2>
+
+	<p class="mtop2">
+		<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionPeriodID" property="executionPeriodID" onchange="this.form.submit();">
+			<logic:notPresent name="executionPeriod">
+				<html:option value=""></html:option>
+			</logic:notPresent>
+			<html:options collection="executionPeriods" labelProperty="qualifiedName" property="idInternal"/>
+		</html:select>
+	</p>
 	<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
 		<bean:message key="button.submit"/>
 	</html:submit>
