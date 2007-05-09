@@ -58,10 +58,11 @@
 	<logic:notPresent name="issueBean">
 	<fr:edit id="createParticipation" name="bean" schema="<%= schema %>">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle5 dinline"/>
+			<fr:property name="classes" value="tstyle5 thlight thright thmiddle dinline"/>
 	        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
 		</fr:layout>
-	</fr:edit><br/>
+	</fr:edit>
+	<br/>
 	<html:submit><bean:message key="button.submit" bundle="RESEARCHER_RESOURCES"/></html:submit>
 	<logic:present name="bean" property="scientificJournal">
 		<logic:notPresent name="skipNewIssueCreation">
@@ -73,10 +74,10 @@
 	<logic:present name="issueBean">
 		<fr:edit id="issueBean" name="issueBean" visible="false"/>
 		<logic:notPresent name="newIssue">
-		<p><strong><bean:message key="label.journal" bundle="RESEARCHER_RESOURCES"/>:</strong></p>	
+			<p><strong><bean:message key="label.journal" bundle="RESEARCHER_RESOURCES"/>:</strong></p>	
 			<fr:edit id="issueJournalData" name="issueBean" schema="result.publication.create.Article.createMagazine">
 				<fr:layout name="tabular">
-					<fr:property name="classes" value="tstyle5 dinline"/>
+					<fr:property name="classes" value="tstyle5 thlight thright thmiddle dinline"/>
 				</fr:layout>
 			</fr:edit>
 		</logic:notPresent>

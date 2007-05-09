@@ -85,6 +85,11 @@ border-bottom: 2px solid #eed;
 padding: 0.25em;
 }
 
+.separator3 {
+font-weight: bold;
+padding: 0.25em;
+}
+
 /* ----------------------
  ---- Lists ------------
 ----------------------- */

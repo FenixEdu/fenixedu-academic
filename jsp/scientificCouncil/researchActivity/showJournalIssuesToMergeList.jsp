@@ -16,7 +16,7 @@
 	<fr:edit id="mergeList" name="mergeList" 
 		type="net.sourceforge.fenixedu.dataTransferObject.PageContainerBean">
 		<fr:layout name="pages">
-			<fr:property name="classes" value="tstyle1 mtop05"/>
+			<fr:property name="classes" value="tstyle1 tdcenter mtop05"/>
 			<fr:property name="paged" value="false"/>
 			<fr:property name="subSchema" value="journal.issue.merge.list.full"/>
 			<fr:property name="buttonLabel" value="button.researchActivity.choose"/>
