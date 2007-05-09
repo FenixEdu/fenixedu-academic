@@ -110,7 +110,7 @@ public abstract class PartyContact extends PartyContact_Base {
 	return false;
     }
     
-    public void deleteWihtoutCheckRules() {
+    public void deleteWithoutCheckRules() {
 	processDelete();
     }
     

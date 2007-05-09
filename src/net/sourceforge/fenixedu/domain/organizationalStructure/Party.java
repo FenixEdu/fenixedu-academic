@@ -261,7 +261,7 @@ abstract public class Party extends Party_Base {
     public Collection<? extends Accountability> getChildAccountabilitiesByAccountabilityClass(Class<? extends Accountability> accountabilityClass) {
 	final Set<Accountability> result = new HashSet<Accountability>();
 	for (final Accountability accountability : getChildsSet()) {
-	    if (accountability.getClass().equals(accountabilityClass)) {
+	    if (accountabilityClass.isAssignableFrom(accountability.getClass())) {
 		result.add(accountability);
 	    }
 	}
@@ -270,7 +270,7 @@ abstract public class Party extends Party_Base {
 
     protected void delete() {
 	for (; !getAccounts().isEmpty(); getAccounts().get(0).delete());
-	for (; hasAnyPartyContacts(); getPartyContacts().get(0).deleteWihtoutCheckRules());
+	for (; hasAnyPartyContacts(); getPartyContacts().get(0).deleteWithoutCheckRules());
 	removePartyType();
 	removeRootDomainObject();
 	deleteDomainObject();

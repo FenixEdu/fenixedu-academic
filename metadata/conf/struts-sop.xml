@@ -530,12 +530,10 @@
     		scope="request"
     		>
   		<forward name="showForm" path="/chooseExecutionPeriod.jsp"/>
-  		<forward name="choose" path="/commonNavLocalBeforeSop.jsp"/>
+  		<forward name="choose" path="/chooseExecutionPeriod.jsp"/>
   		<forward name="viewRoom" path="/sopViewRoom.jsp"/>
 	</action>
-
-      <action path="/beforeSop" forward="/commonNavLocalBeforeSop.jsp"/>
-      
+     
 	  <!-- Choose Context for Timetables Management-->
       <action path="/prepararEscolherContexto"
               type="net.sourceforge.fenixedu.presentationTier.Action.sop.PrepararEscolherContextoFormAction"

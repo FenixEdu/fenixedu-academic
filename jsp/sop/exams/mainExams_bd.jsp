@@ -1,23 +1,23 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<h2>Gest&atilde;o de Exames</h2>
-<p>Seleccione a op&ccedil;&atilde;o pretendida para criar, editar ou visualisar a calendariza&ccedil&atilde;o dos exames. <br />
+<h2>Gest&atilde;o de Avaliações Escritas</h2>
+<p>Seleccione a op&ccedil;&atilde;o pretendida para criar, editar ou visualisar a calendariza&ccedil&atilde;o das avaliações escritas. <br />
 Pode alterar em baixo o período de execu&ccedil&atilde;o seleccionado.</p>
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 <html:form action="/mainExamsNew">
-<table border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td nowrap="nowrap" width="125"><bean:message key="property.executionPeriod"/>:</td>
-    <td nowrap="nowrap"><jsp:include page="../selectExecutionPeriodList.jsp"/></td>
-  </tr>
-</table>
-<br />
-<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="choose"/>
-<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
-<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
-<bean:message key="label.choose"/>
-</html:submit>
+	<table border="0" cellspacing="0" cellpadding="0">
+	  <tr>
+	    <td nowrap="nowrap" width="125"><bean:message key="property.executionPeriod"/>:</td>
+	    <td nowrap="nowrap"><jsp:include page="../selectExecutionPeriodList.jsp"/></td>
+	  </tr>
+	</table>
+	<br />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="choose"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
+		<bean:message key="label.choose"/>
+	</html:submit>
 </html:form>
 
 <br/>
@@ -29,11 +29,11 @@ Pode alterar em baixo o período de execu&ccedil&atilde;o seleccionado.</p>
 				 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"/>
 
 	<bean:message key="publish.exams.map" />
-	<br/>
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 		<bean:message key="label.change.published.state"/>
 	</html:submit>
-	<br />
+	
+	<br /><br />
 
 	<logic:present name="executionDegrees">
 		<table>

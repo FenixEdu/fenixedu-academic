@@ -54,7 +54,8 @@ public class WrittenEvaluationsSearchByDegreeAndYear extends FenixContextDispatc
                     " ",
                     messages.getMessage(getLocale(request), "public.degree.information.label.in"),
                     " ",
-                    degree.getNome()),
+                    degree.getNome(),
+                    addAnotherInfoToLabel(executionDegree, executionPeriod) ? " - " + executionDegree.getDegreeCurricularPlan().getName() : ""),
                     executionDegree.getIdInternal().toString()));
         }
         Collections.sort(executionDegreeLabelValueBeans, new BeanComparator("label"));
@@ -63,6 +64,16 @@ public class WrittenEvaluationsSearchByDegreeAndYear extends FenixContextDispatc
         return mapping.findForward("showForm");
     }
 
+    private boolean addAnotherInfoToLabel(ExecutionDegree executionDegreeToTest, ExecutionPeriod executionPeriod) {
+	Degree degreeToTest = executionDegreeToTest.getDegree();
+        for (ExecutionDegree executionDegree : executionPeriod.getExecutionYear().getExecutionDegrees()) {
+            if (degreeToTest.equals(executionDegree.getDegree()) && !(executionDegreeToTest.equals(executionDegree))) {
+        	return true;
+            }
+        }
+        return false;
+    }
+    
     public ActionForward choose(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         

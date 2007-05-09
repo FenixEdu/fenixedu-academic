@@ -7,6 +7,7 @@ import java.util.Comparator;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.resource.Resource;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.injectionCode.FenixDomainObjectActionLogAnnotation;
@@ -55,6 +56,18 @@ public class Building extends Building_Base {
     @Override
     public boolean isBuilding() {
 	return true;
+    }
+    
+    public static Building readBuildingByName(String name) {
+	for (Resource resource : RootDomainObject.getInstance().getResources()) {
+	    if(resource.getClass().equals(Building.class)) {
+		Building building = (Building) resource;			
+		if(building.getSpaceInformation().getName().equals(name)) {
+		    return building; 		  	
+		}
+	    }
+	}
+	return null;
     }
 
     public static abstract class BuildingFactory implements Serializable, FactoryExecutor {

@@ -18,7 +18,8 @@ import net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule;
 import net.sourceforge.fenixedu.domain.assiduousness.util.DayType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationGroup;
 import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
-import net.sourceforge.fenixedu.domain.organizationalStructure.EmployeeMailingContract;
+import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
+import net.sourceforge.fenixedu.domain.organizationalStructure.EmployeeContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 
@@ -53,12 +54,11 @@ public class ReadAssiduousnessWorkSheet extends Service {
                 endDate, new YearMonthDay());
     }
 
-    private EmployeeWorkSheet getEmployeeWorkSheetBalanceFree(Assiduousness assiduousness,
-            YearMonthDay beginDate, YearMonthDay endDate) {
+    private EmployeeWorkSheet getEmployeeWorkSheetBalanceFree(Assiduousness assiduousness, YearMonthDay beginDate, YearMonthDay endDate) {
         EmployeeWorkSheet employeeWorkSheet = new EmployeeWorkSheet();
         employeeWorkSheet.setEmployee(assiduousness.getEmployee());
         Unit unit = assiduousness.getEmployee().getLastWorkingPlace(beginDate, endDate);        
-        EmployeeMailingContract lastMailingContract = (EmployeeMailingContract) assiduousness.getEmployee().getLastContractByContractType(EmployeeMailingContract.class);
+        EmployeeContract lastMailingContract = (EmployeeContract) assiduousness.getEmployee().getLastContractByContractType(AccountabilityTypeEnum.MAILING_CONTRACT);
         if (lastMailingContract != null && lastMailingContract.getMailingUnit() != null) {
             unit = lastMailingContract.getMailingUnit();
         }
@@ -179,7 +179,7 @@ public class ReadAssiduousnessWorkSheet extends Service {
         employeeWorkSheet.setWorkDaySheetList(workSheet);
         employeeWorkSheet.setEmployee(assiduousness.getEmployee());
         Unit unit = assiduousness.getEmployee().getLastWorkingPlace(beginDate, endDate);       
-        EmployeeMailingContract lastMailingContract = (EmployeeMailingContract) assiduousness.getEmployee().getLastContractByContractType(EmployeeMailingContract.class);
+        EmployeeContract lastMailingContract = (EmployeeContract) assiduousness.getEmployee().getLastContractByContractType(AccountabilityTypeEnum.MAILING_CONTRACT);
         if (lastMailingContract != null && lastMailingContract.getMailingUnit() != null) {
             unit = lastMailingContract.getMailingUnit();
         }        

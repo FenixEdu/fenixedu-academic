@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
-import net.sourceforge.fenixedu.domain.organizationalStructure.EmployeeWorkingContract;
+import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequest.ParkingRequestFactoryCreator;
@@ -184,7 +184,7 @@ public class ParkingParty extends ParkingParty_Base {
 	    Employee employee = person.getEmployee();
 	    if (employee != null && person.getPersonRole(RoleType.TEACHER) == null
 		    && person.getPersonRole(RoleType.EMPLOYEE) != null
-		    && employee.getCurrentContractByContractType(EmployeeWorkingContract.class) != null) {
+		    && employee.getCurrentContractByContractType(AccountabilityTypeEnum.WORKING_CONTRACT) != null) {
 		roles.add(RoleType.EMPLOYEE);
 	    }
 	    Student student = person.getStudent();
@@ -230,7 +230,7 @@ public class ParkingParty extends ParkingParty_Base {
 	    Employee employee = person.getEmployee();
 	    if (employee != null && person.getPersonRole(RoleType.TEACHER) == null
 		    && person.getPersonRole(RoleType.EMPLOYEE) != null
-		    && employee.getCurrentContractByContractType(EmployeeWorkingContract.class) != null) {
+		    && employee.getCurrentContractByContractType(AccountabilityTypeEnum.WORKING_CONTRACT) != null) {
 		Unit currentUnit = employee.getCurrentWorkingPlace();
 		if (currentUnit != null) {
 		    occupations.add("<strong>Funcionário</strong><br/> Nº "

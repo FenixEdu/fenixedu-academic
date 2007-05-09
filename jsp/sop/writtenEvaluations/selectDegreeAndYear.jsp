@@ -51,7 +51,7 @@
 		<html:option key="label.tests" value="net.sourceforge.fenixedu.domain.WrittenTest"/>
     </html:select>
 
-	<br/>
+	<br/><br/>
 
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 		<bean:message key="label.choose"/>

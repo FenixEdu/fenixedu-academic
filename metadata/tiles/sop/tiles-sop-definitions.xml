@@ -6,7 +6,7 @@
 	<definition name="definition.sop.executionCourses" extends="df.layout.two-column">
 	  <put name="title" value="SOP" type="string" />
 	  <put name="serviceName" value="Serviço de Organização Pedagógica" type="string" />
-	  <put name="navGeral" value="/sop/commonNavGeralSopExecutionCourse.jsp" />
+	  <put name="navGeral" value="/commons/commonGeneralNavigationBar.jsp" />	  
 	  <put name="navLocal" value="/sop/commonNavLocalExecutionCourses.jsp" />
 	  <put name="body-context" value="/commons/blank.jsp"/>
       <put name="body" value="/commons/blank.jsp" />
@@ -16,7 +16,7 @@
 	  <put name="title" value="SOP" type="string" />
 	  <put name="serviceName" value="Serviço de Organização Pedagógica" type="string" />
 	  <put name="navLocal" value="/sop/exams/commonNavLocalExamsSop.jsp" />
-	  <put name="navGeral" value="/sop/commonNavGeralSopExam.jsp" />
+	  <put name="navGeral" value="/commons/commonGeneralNavigationBar.jsp" />	 
 	  <put name="body-context" value="/commons/blank.jsp"/>
       <put name="body" value="/commons/blank.jsp" />
       <put name="footer" value="/copyright.jsp" />
@@ -26,35 +26,33 @@
 	  <put name="head" value="/commons/blank.jsp"/>
 	  <put name="serviceName" value="Serviço de Organização Pedagógica" type="string" />
 	  <put name="navLocal" value="/sop/exams/commonNavLocalExamsSop.jsp" />
-	  <put name="navGeral" value="/sop/commonNavGeralSopExam.jsp" />
+	  <put name="navGeral" value="/commons/commonGeneralNavigationBar.jsp" />
 	  <put name="body-context" value="/commons/blank.jsp"/>
       <put name="body" value="/commons/blank.jsp" />
       <put name="body-inline" value="" />
       <put name="footer" value="/copyright.jsp" />
 	</definition>
-	<definition name="definition.sop.foto" extends="df.layout.two-column-photo">
+	<definition name="definition.sop.foto" extends="df.layout.two-column">
 	  <put name="title" value="SOP" type="string" />
 	  <put name="serviceName" value="Serviço de Organização Pedagógica" type="string" />
-	  <put name="navGeral" value="/sop/commonNavGeralSopSchedule.jsp" />
-	  <put name="photos" value="/sop/commonEntrPhotosSop.jsp" />
+	  <put name="navGeral" value="/commons/commonGeneralNavigationBar.jsp" />	  
 	  <put name="body-context" value="/commons/blank.jsp"/>
       <put name="body" value="/commons/blank.jsp" />
       <put name="footer" value="/copyright.jsp" />
 	</definition>
-	<definition name="definition.sop.curriculumHistoric" extends="df.layout.two-column-photo">
+	<definition name="definition.sop.curriculumHistoric" extends="df.layout.two-column">
 	  <put name="title" value="SOP" type="string"/>
-	  <put name="serviceName" value="Serviço de Organização Pedagógica" type="string" />
-	  <put name="navGeral" value="/sop/commonNavGeralSopCurriculumHistoric.jsp" />
-	  <put name="photos" value="/sop/commonEntrPhotosSop.jsp" />
+	  <put name="serviceName" value="Serviço de Organização Pedagógica" type="string" />	  
+	  <put name="navGeral" value="/commons/commonGeneralNavigationBar.jsp" />	  
+	  <put name="navLocal" value="/sop/navLocalSop.jsp" />
 	  <put name="body-context" value="/commons/blank.jsp"/>
       <put name="body" value="/commons/blank.jsp" />
       <put name="footer" value="/copyright.jsp" />
-	</definition>
-	
+	</definition>	
 	<definition name="definition.sop.roomsManagement" extends="df.layout.two-column">
 	  <put name="title" value="SOP" />
 	  <put name="serviceName" value="Serviço de Organização Pedagógica" />
-	  <put name="navGeral" value="/sop/commonNavGeralSopRoom.jsp" />
+	  <put name="navGeral" value="/commons/commonGeneralNavigationBar.jsp" />	 
 	  <put name="navLocal" value="/sop/commonNavLocalSalasSop.jsp" />
 	  <put name="body-context" value="/commons/blank.jsp"/>  
 	  <put name="body" value="/sop/principalSalas_bd.jsp" />

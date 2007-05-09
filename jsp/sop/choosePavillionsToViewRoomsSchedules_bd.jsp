@@ -16,10 +16,10 @@
 			<td class="infoop"><bean:message key="label.select.pavillions" /></td>
         </tr>
     </table>
+	
 	<br />
    	<bean:message key="property.context.pavillion"/>:
-   	<br />
-	<br />
+   	<br /><br />
 	
 	<logic:present name="<%= SessionConstants.PAVILLIONS_NAMES_LIST %>" scope="request">
 		<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.selectAllPavillions" property="selectAllPavillions">

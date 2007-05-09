@@ -48,7 +48,7 @@ function invertSelect(){
 <logic:present name="<%= SessionConstants.EXECUTION_COURSE %>" scope="request">
 	<bean:write name="<%= SessionConstants.EXECUTION_COURSE %>" property="nome"/>
 </logic:present> 
-<br />
+<br /><br />
 Turno: <bean:write name="shiftName"/>
 <br />
 <br />

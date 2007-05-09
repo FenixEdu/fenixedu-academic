@@ -22,7 +22,7 @@ public class ExternalContract extends ExternalContract_Base {
 	}
 	
 	super.init(person, beginDate, endDate, institution);	
-	AccountabilityType accountabilityType = AccountabilityType.readAccountabilityTypeByType(AccountabilityTypeEnum.EMPLOYEE_CONTRACT);
+	AccountabilityType accountabilityType = AccountabilityType.readAccountabilityTypeByType(AccountabilityTypeEnum.WORKING_CONTRACT);
 	setAccountabilityType(accountabilityType);
 	    
         PersonName personName = person.getPersonName();
@@ -42,6 +42,14 @@ public class ExternalContract extends ExternalContract_Base {
 	}
     }
 
+    @Override
+    public void setAccountabilityType(AccountabilityType accountabilityType) {
+        super.setAccountabilityType(accountabilityType);
+        if(!accountabilityType.getType().equals(AccountabilityTypeEnum.WORKING_CONTRACT)) {
+            throw new DomainException("error.ExternalContract.invalid.accountabilityType");
+        }
+    }
+    
     public void delete() {
 	Person person = getPerson();
 	super.delete();

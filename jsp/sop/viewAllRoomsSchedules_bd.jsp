@@ -17,6 +17,7 @@
 			<table class="break-before" width="100%" cellspacing="0">
 		</logic:notEqual>
 
+		<br/>
 		<table width="100%" cellspacing="0">
 			<tr>
 				<td class="infoselected">
@@ -28,8 +29,8 @@
 		         </td>
 		    </tr>
 		</table>
-		<br />
-		<br />
+		<br /><br />
+		
 		<bean:define id="infoRoom" name="viewRoomSchedule" property="infoRoom"/>		
         <table width="100%">
         	<tr>

@@ -3578,13 +3578,10 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Accountability ext
 	  	  
 	class net.sourceforge.fenixedu.domain.organizationalStructure.Contract extends net.sourceforge.fenixedu.domain.organizationalStructure.Accountability {
 			
-	}  	
-		class net.sourceforge.fenixedu.domain.organizationalStructure.EmployeeWorkingContract extends net.sourceforge.fenixedu.domain.organizationalStructure.Contract {
-			
-		}		
-		class net.sourceforge.fenixedu.domain.organizationalStructure.EmployeeMailingContract extends net.sourceforge.fenixedu.domain.organizationalStructure.Contract {
-			
-		}				
+	}  						
+		class net.sourceforge.fenixedu.domain.organizationalStructure.EmployeeContract extends net.sourceforge.fenixedu.domain.organizationalStructure.Contract {
+		
+		}
 		class net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract extends net.sourceforge.fenixedu.domain.organizationalStructure.Contract {
 		
 		}

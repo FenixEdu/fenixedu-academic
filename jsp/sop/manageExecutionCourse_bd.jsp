@@ -14,14 +14,10 @@
 	</tr>
 </table>
 
-<h2>Gestão de Disciplinas</h2>
-<br />
+<h2><bean:message key="link.courses.management" bundle="SOP_RESOURCES"/></h2>
+
 <span class="error"><!-- Error messages go here --><html:errors /></span>
-<br />
-Aviso: A alteração das cargas horárias pode tornar os dados incoerentes.
-Sempre que se altere as cargas ï¿½ necessário confirmar que os turnos da disciplina
-obdecem ï¿½ nova carga definida.
-<br />
+<br/><bean:message key="label.manage.execution.course.note" bundle="SOP_RESOURCES"/><br/>
 <html:form action="/manageExecutionCourse" focus="theoreticalHours">
 
 	<html:hidden alt="<%= SessionConstants.EXECUTION_PERIOD_OID %>" property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
@@ -98,8 +94,7 @@ obdecem ï¿½ nova carga definida.
 	</html:submit>
 </html:form>
 
-
-<br />
+<br/><bean:message key="label.execution.course.classes" bundle="SOP_RESOURCES"/><br/>
 <logic:present name="<%= SessionConstants.LIST_INFOCLASS %>" scope="request">
 	<table>
 		<tr>

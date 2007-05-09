@@ -2,7 +2,7 @@
 <tiles:insert page="/layout/fenixLayout_2col_photo.jsp" flush="true">
   <tiles:put name="title" value="SOP" />
   <tiles:put name="serviceName" value="SOP - Serviço de Organização Pedagógica" />
-  <tiles:put name="navGeral" value="/sop/commonNavGeralSopSchedule.jsp" />
+  <tiles:put name="navGeral" value="/commons/commonGeneralNavigationBar.jsp" />
   <tiles:put name="photos" value="/sop/commonEntrPhotosSop.jsp" />
   <tiles:put name="body" value="/sop/escolherContexto_bd.jsp" />
   <tiles:put name="body-context" value="/commons/blank.jsp" />  

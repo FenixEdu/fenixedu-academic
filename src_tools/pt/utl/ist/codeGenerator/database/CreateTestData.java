@@ -112,8 +112,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.AdministrativeOff
 import net.sourceforge.fenixedu.domain.organizationalStructure.Contract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DegreeUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.EmployeeMailingContract;
-import net.sourceforge.fenixedu.domain.organizationalStructure.EmployeeWorkingContract;
+import net.sourceforge.fenixedu.domain.organizationalStructure.EmployeeContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -499,8 +498,8 @@ public class CreateTestData {
         person.addPersonRoleByRoleType(RoleType.TEACHER);
         final Login login = person.getUser().readUserLoginIdentification();
         login.openLoginIfNecessary(RoleType.TEACHER);
-        new EmployeeWorkingContract(person, new YearMonthDay().minusYears(2), new YearMonthDay().plusYears(2), RootDomainObject.getInstance().getInstitutionUnit());
-        new EmployeeMailingContract(person, new YearMonthDay().minusYears(2), new YearMonthDay().plusYears(2), RootDomainObject.getInstance().getInstitutionUnit());       
+        new EmployeeContract(person, new YearMonthDay().minusYears(2), new YearMonthDay().plusYears(2), RootDomainObject.getInstance().getInstitutionUnit(), AccountabilityTypeEnum.WORKING_CONTRACT);
+        new EmployeeContract(person, new YearMonthDay().minusYears(2), new YearMonthDay().plusYears(2), RootDomainObject.getInstance().getInstitutionUnit(), AccountabilityTypeEnum.MAILING_CONTRACT);       
         person.addPersonRoleByRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE);
         person.addPersonRoleByRoleType(RoleType.TIME_TABLE_MANAGER);
         person.addPersonRoleByRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE);

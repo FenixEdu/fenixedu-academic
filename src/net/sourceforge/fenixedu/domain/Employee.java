@@ -13,8 +13,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Contract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.EmployeeMailingContract;
-import net.sourceforge.fenixedu.domain.organizationalStructure.EmployeeWorkingContract;
+import net.sourceforge.fenixedu.domain.organizationalStructure.EmployeeContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -66,17 +65,13 @@ public class Employee extends Employee_Base {
 	}
     }
 
-    public Collection<Contract> getEmployeeContracts() {
-	return (Collection<Contract>) getPerson().getParentAccountabilities(AccountabilityTypeEnum.EMPLOYEE_CONTRACT, Contract.class);
+    public Collection<Contract> getContractsByContractType(AccountabilityTypeEnum contractType) {	
+	return (Collection<Contract>) getPerson().getParentAccountabilities(contractType, EmployeeContract.class);	
     }
 
-    public Collection<Contract> getContractsByContractType(Class<? extends Contract> contractClass) {	
-	return (Collection<Contract>) getPerson().getParentAccountabilities(AccountabilityTypeEnum.EMPLOYEE_CONTRACT, contractClass);	
-    }
-
-    public List<Contract> getContractsByContractType(Class<? extends Contract> contractClass, YearMonthDay begin, YearMonthDay end) {
+    public List<Contract> getContractsByContractType(AccountabilityTypeEnum contractType, YearMonthDay begin, YearMonthDay end) {
 	final List<Contract> contracts = new ArrayList<Contract>();
-	for (final Contract accountability : getContractsByContractType(contractClass)) {
+	for (final Contract accountability : getContractsByContractType(contractType)) {
 	    if (accountability.belongsToPeriod(begin, end)) {
 		contracts.add(accountability);
 	    }
@@ -84,9 +79,9 @@ public class Employee extends Employee_Base {
 	return contracts;
     }
 
-    public Contract getCurrentContractByContractType(Class<? extends Contract> contractClass) {
+    public Contract getCurrentContractByContractType(AccountabilityTypeEnum contractType) {
 	YearMonthDay current = new YearMonthDay();
-	for (final Contract accountability : getContractsByContractType(contractClass)) {
+	for (final Contract accountability : getContractsByContractType(contractType)) {
 	    if (accountability.isActive(current)) {
 		return accountability;
 	    }
@@ -94,10 +89,10 @@ public class Employee extends Employee_Base {
 	return null;
     }
 
-    public Contract getLastContractByContractType(Class<? extends Contract> contractClass) {
+    public Contract getLastContractByContractType(AccountabilityTypeEnum contractType) {
 	YearMonthDay date = null, current = new YearMonthDay();
 	Contract contractToReturn = null;
-	for (Contract contract : getContractsByContractType(contractClass)) {
+	for (Contract contract : getContractsByContractType(contractType)) {
 	    if (!contract.getBeginDate().isAfter(current)) {
 		if (contract.isActive(current)) {
 		    return contract;
@@ -111,10 +106,10 @@ public class Employee extends Employee_Base {
 
     }
 
-    public Contract getLastContractByContractType(Class<? extends Contract> contractClass, YearMonthDay begin, YearMonthDay end) {
+    public Contract getLastContractByContractType(AccountabilityTypeEnum contractType, YearMonthDay begin, YearMonthDay end) {
 	YearMonthDay date = null, current = new YearMonthDay();
 	Contract contractToReturn = null;
-	for (Contract contract : getContractsByContractType(contractClass, begin, end)) {
+	for (Contract contract : getContractsByContractType(contractType, begin, end)) {
 	    if (!contract.getBeginDate().isAfter(current)) {
 		if (contract.isActive(current)) {
 		    return contract;
@@ -129,13 +124,13 @@ public class Employee extends Employee_Base {
 
     public List<Contract> getWorkingContracts() {
 	List<Contract> workingContracts = new ArrayList<Contract>();
-	workingContracts.addAll(getContractsByContractType(EmployeeWorkingContract.class));
+	workingContracts.addAll(getContractsByContractType(AccountabilityTypeEnum.WORKING_CONTRACT));
 	return workingContracts;
     }
 
     public List<Contract> getWorkingContracts(YearMonthDay begin, YearMonthDay end) {
 	final List<Contract> contracts = new ArrayList<Contract>();
-	for (final Contract accountability : getContractsByContractType(EmployeeWorkingContract.class)) {
+	for (final Contract accountability : getContractsByContractType(AccountabilityTypeEnum.WORKING_CONTRACT)) {
 	    if (accountability.belongsToPeriod(begin, end)) {
 		contracts.add(accountability);
 	    }
@@ -144,11 +139,11 @@ public class Employee extends Employee_Base {
     }
 
     public Contract getCurrentWorkingContract() {
-	return getCurrentContractByContractType(EmployeeWorkingContract.class);
+	return getCurrentContractByContractType(AccountabilityTypeEnum.WORKING_CONTRACT);
     }
 
     public Contract getLastWorkingContract() {
-	return getLastContractByContractType(EmployeeWorkingContract.class);
+	return getLastContractByContractType(AccountabilityTypeEnum.WORKING_CONTRACT);
     }
 
     public Unit getCurrentWorkingPlace() {
@@ -162,18 +157,18 @@ public class Employee extends Employee_Base {
     }
 
     public Unit getCurrentMailingPlace() {
-	Contract contract = getCurrentContractByContractType(EmployeeMailingContract.class);
+	Contract contract = getCurrentContractByContractType(AccountabilityTypeEnum.MAILING_CONTRACT);
 	return (contract != null) ? contract.getMailingUnit() : null;
     }
     
     public Unit getLastWorkingPlace(YearMonthDay beginDate, YearMonthDay endDate) {
-	Contract lastContract = getLastContractByContractType(EmployeeWorkingContract.class, beginDate, endDate);
+	Contract lastContract = getLastContractByContractType(AccountabilityTypeEnum.WORKING_CONTRACT, beginDate, endDate);
 	return lastContract != null ? lastContract.getWorkingUnit() : null;
     }
 
     public List<Unit> getWorkingPlaces(YearMonthDay beginDate, YearMonthDay endDate) {
 	List<Unit> units = new ArrayList<Unit>();
-	for (final Contract contract : getContractsByContractType(EmployeeWorkingContract.class)) {
+	for (final Contract contract : getContractsByContractType(AccountabilityTypeEnum.WORKING_CONTRACT)) {
 	    if (contract.belongsToPeriod(beginDate, endDate)) {
 		units.add(contract.getWorkingUnit());
 	    }
@@ -187,7 +182,7 @@ public class Employee extends Employee_Base {
     }
 
     public Department getLastDepartmentWorkingPlace() {
-	Contract contract = getLastContractByContractType(EmployeeWorkingContract.class);
+	Contract contract = getLastContractByContractType(AccountabilityTypeEnum.WORKING_CONTRACT);
 	return (contract != null && contract.getWorkingUnit() != null) ? getEmployeeDepartmentUnit(contract.getWorkingUnit(), false) : null;
     }
 
