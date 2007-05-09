@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors;
 
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -124,7 +125,12 @@ public class ExecutionCourseProcessor extends PathProcessor {
     public static String getExecutionCourseAbsolutePath(ExecutionCourse executionCourse) {
         String format = "/%s/%s/%s/%s/%s/%s-semestre";
         
-        CurricularCourse course = executionCourse.getAssociatedCurricularCourses().get(0);
+        Iterator<CurricularCourse> iterator = executionCourse.getAssociatedCurricularCourses().iterator();
+        if (! iterator.hasNext()) {
+        	return null;
+        }
+        
+		CurricularCourse course = iterator.next();
 
         Degree degree = course.getDegree();
         DegreeCurricularPlan curricularPlan = course.getDegreeCurricularPlan();

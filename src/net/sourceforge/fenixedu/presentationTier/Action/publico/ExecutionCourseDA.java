@@ -52,7 +52,13 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
     protected String getDirectLinkContext(HttpServletRequest request) {
         ExecutionCourse executionCourse = getExecutionCourse(request);
         try {
-            return RequestUtils.absoluteURL(request, ExecutionCourseProcessor.getExecutionCourseAbsolutePath(executionCourse)).toString();
+            String path = ExecutionCourseProcessor.getExecutionCourseAbsolutePath(executionCourse);
+            
+            if (path == null) {
+            	return null;
+            }
+            
+			return RequestUtils.absoluteURL(request, path).toString();
         } catch (MalformedURLException e) {
             return null;
         }

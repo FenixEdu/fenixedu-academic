@@ -36,7 +36,13 @@ public class ManageExecutionCourseSiteDA extends SiteManagementDA {
     protected String getDirectLinkContext(HttpServletRequest request) {
         ExecutionCourse executionCourse = getExecutionCourse(request);
         try {
-            return RequestUtils.absoluteURL(request, ExecutionCourseProcessor.getExecutionCourseAbsolutePath(executionCourse)).toString();
+            String path = ExecutionCourseProcessor.getExecutionCourseAbsolutePath(executionCourse);
+            
+            if (path == null) {
+            	return null;
+            }
+            
+			return RequestUtils.absoluteURL(request, path).toString();
         } catch (MalformedURLException e) {
             return null;
         }
@@ -102,7 +108,12 @@ public class ManageExecutionCourseSiteDA extends SiteManagementDA {
     protected String getItemLocationForFile(HttpServletRequest request, Item item, Section section) {
         ExecutionCourse executionCourse = ((ExecutionCourseSite)section.getSite()).getExecutionCourse();
         
-        String resourceLocation = request.getScheme() + "://" + request.getServerName() + request.getContextPath() + ExecutionCourseProcessor.getExecutionCourseAbsolutePath(executionCourse) + ItemProcessor.getItemPath(item);
+        String path = ExecutionCourseProcessor.getExecutionCourseAbsolutePath(executionCourse);
+        if (path == null) {
+        	return null;
+        }
+        
+		String resourceLocation = request.getScheme() + "://" + request.getServerName() + request.getContextPath() + path + ItemProcessor.getItemPath(item);
         return resourceLocation;
     }
 
