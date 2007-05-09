@@ -3,6 +3,8 @@ package net.sourceforge.fenixedu.domain.student.curriculum;
 import java.util.Collection;
 import java.util.HashSet;
 
+import net.sourceforge.fenixedu.domain.CreditsInAnySecundaryArea;
+import net.sourceforge.fenixedu.domain.CreditsInScientificArea;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -32,6 +34,7 @@ public class SimpleStudentCurriculum extends StudentCurriculumBase {
 
         addNotNeedToEnrols(curriculumEntries, studentCurricularPlan);
         addDismissals(curriculumEntries, studentCurricularPlan);
+        //addCredits(curriculumEntries, studentCurricularPlan);
 
         return curriculumEntries;
     }
@@ -57,6 +60,16 @@ public class SimpleStudentCurriculum extends StudentCurriculumBase {
             final CurricularCourse curricularCourse = notNeedToEnrollInCurricularCourse.getCurricularCourse();
             curriculumEntries.add(new NotNeedToEnrolCurriculumEntry(curricularCourse, notNeedToEnrollInCurricularCourse));
         }
+    }
+    
+    private void addCredits(Collection<CurriculumEntry> curriculumEntries, StudentCurricularPlan studentCurricularPlan) {
+	for (final CreditsInAnySecundaryArea creditsInAnySecundaryArea : studentCurricularPlan.getCreditsInAnySecundaryAreasSet()) {
+	    curriculumEntries.add(new CreditsInAnySecundaryAreaCurriculumEntry(creditsInAnySecundaryArea));
+	}
+	
+	for (CreditsInScientificArea creditsInScientificArea : studentCurricularPlan.getCreditsInScientificAreasSet()) {
+	    curriculumEntries.add(new CreditsInScientificAreaCurriculumEntry(creditsInScientificArea));
+	}
     }
     
     private void addDismissals(Collection<CurriculumEntry> curriculumEntries, StudentCurricularPlan studentCurricularPlan) {
