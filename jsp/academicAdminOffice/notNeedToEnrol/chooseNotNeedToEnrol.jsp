@@ -7,6 +7,12 @@
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2><bean:message key="label.notNeedToEnrol.list" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
+<fr:view name="bean" schema="notNeedToEnroll.student.info">
+	<fr:layout name="tabular">
+		<fr:property name="classes" value="tstyle2 thlight thright mvert15"/>
+	</fr:layout>
+</fr:view>
+
 <fr:form action="/notNeedToEnrolEnrolments.do?method=chooseNotNeedToEnrol">
 	<fr:edit id="showNotNeedToEnrol" name="bean" type="net.sourceforge.fenixedu.dataTransferObject.PageContainerBean">
 		<fr:layout name="pages">

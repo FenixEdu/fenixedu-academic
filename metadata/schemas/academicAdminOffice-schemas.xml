@@ -865,10 +865,10 @@
 
 <schema name="notNeedToEnroll.view.notNeedToEnroll" 
 	type="net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="studentCurricularPlan.degreeCurricularPlan.name" key="label.degreeCurricularPlan"/>
-	<slot name="curricularCourse.name" key="label.notNeedToEnrol.name"/>
-	<slot name="curricularCourse.code" key="label.notNeedToEnrol.code"/>
 	<slot name="curricularCourse.degreeCurricularPlan.name" key="label.notNeedToEnrol.degreeCurricularPlan.withbreak"/>
+	<slot name="curricularCourse.code" key="label.notNeedToEnrol.code..withbreak"/>	
+	<slot name="curricularCourse.name" key="label.notNeedToEnrol.name"/>
+	<slot name="studentCurricularPlan.degreeCurricularPlan.name" key="label.degreeCurricularPlan"/>
 	<slot name="enrolments" layout="list" key="label.notNeedToEnrol.associated.enrolments">
 		<property name="classes" value="list5 mvert0"/>
 		<property name="eachLayout" value="values" />
@@ -888,4 +888,20 @@
 	<slot name="aprovedEnrolment.studentCurricularPlan.name" read-only="true" key="label.degreeCurricularPlan"/>
 	<slot name="aprovedEnrolment.curricularCourse.name" read-only="true" key="label.curricularCourse.name"/>
 	<slot name="aprovedEnrolment.curricularCourse.code" read-only="true" key="label.curricularCourse.code"/>
+</schema>
+
+<schema name="notNeedToEnroll.student.info" 
+	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.notNeedToEnrol.NotNeedToEnrolEnrolmentsBean" 
+	bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="student.number" key="label.studentNumber"/>
+	<slot name="student.person.name" key="label.student.name"/>
+</schema>
+
+<schema name="notNeedToEnroll.info" 
+	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.notNeedToEnrol.NotNeedToEnrolEnrolmentsBean" 
+	bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="student.number" key="label.studentNumber"/>
+	<slot name="student.person.name" key="label.student.name"/>
+	<slot name="selected.curricularCourse.code" key="label.notNeedToEnrol.code"/>
+	<slot name="selected.curricularCourse.name" key="label.notNeedToEnrol.name"/>
 </schema>

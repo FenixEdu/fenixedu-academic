@@ -6,7 +6,11 @@
 
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2><bean:message key="label.notNeedToEnrol.enrolment" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
-
+<fr:view name="bean" schema="notNeedToEnroll.info">
+	<fr:layout name="tabular">
+		<fr:property name="classes" value="tstyle2 thlight thright mvert15"/>
+	</fr:layout>
+</fr:view>
 <fr:form action="/notNeedToEnrolEnrolments.do">
 	<html:hidden property="method" value="editNotNeedToEnrol"/>
 	<logic:notEmpty name="bean" property="aprovedEnrolments">
