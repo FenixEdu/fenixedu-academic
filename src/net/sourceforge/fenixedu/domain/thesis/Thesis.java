@@ -348,10 +348,7 @@ public class Thesis extends Thesis_Base {
     }
     
     public boolean hasCredits() {
-    	if (this.getState() == ThesisState.CONFIRMED ||
-    			this.getState() == ThesisState.APPROVED ||
-    			this.getState() == ThesisState.REVISION ||
-    			this.getState() == ThesisState.EVALUATED) {
+    	if (isEvaluated() && hasFinalEnrolmentEvaluation()) {
     		return true;
     	}
     	else {
