@@ -67,6 +67,8 @@ function switchGlobal() {
 function hideButtons()
 {
 	if (document.getElementById("javascriptButtonID") != null) document.getElementById("javascriptButtonID").style.display="none";
+	if (document.getElementById("javascriptButtonID0") != null) document.getElementById("javascriptButtonID0").style.display="none";
+	if (document.getElementById("javascriptButtonID1") != null) document.getElementById("javascriptButtonID1").style.display="none";
 	if (document.getElementById("javascriptButtonID2") != null) document.getElementById("javascriptButtonID2").style.display="none";
 	if (document.getElementById("javascriptButtonID3") != null) document.getElementById("javascriptButtonID3").style.display="none";
 	if (document.getElementById("javascriptButtonID4") != null) document.getElementById("javascriptButtonID4").style.display="none";

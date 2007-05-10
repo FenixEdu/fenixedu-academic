@@ -92,7 +92,7 @@
 					        </html:link>
 						</td>
 						<td class="listClasses">
-							<bean:write name="groupProposal" property="finalDegreeWorkProposal.orientator.infoPerson.nome"/>
+							<bean:write name="groupProposal" property="finalDegreeWorkProposal.orientator.person.name"/>
 						</td>
 						<td class="listClasses" rowspan="2">
 							<bean:write name="groupProposal" property="finalDegreeWorkProposal.companionName"/>
@@ -103,7 +103,7 @@
 							</html:multibox>
 						</td>
 						<logic:present name="infoGroup" property="groupStudents">
-							<logic:iterate id="groupStudent" name="infoGroup" property="groupStudents">
+							<logic:iterate id="groupStudent" indexId="i" name="infoGroup" property="groupStudents">
 								<td class="listClasses" rowspan="2">
 									<bean:define id="username"><%= net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils.getUserView(request).getUtilizador() %></bean:define>
 									<logic:equal name="groupStudent" property="student.infoPerson.username" value="<%= username %>">
@@ -113,9 +113,11 @@
 										<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.confirmAttributions" property="confirmAttributions" onchange='<%= onChange.toString() %>'>
 											<bean:write name="groupProposal" property="finalDegreeWorkProposal.idInternal"/><bean:write name="groupStudent" property="student.idInternal"/>
 										</html:multibox>
-										<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+<!--
+										<html:submit styleId="<%= "javascriptButtonID" + i %>" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
 											<bean:message key="button.submit"/>
 										</html:submit>
+-->
 									</logic:equal>
 									<logic:notEqual name="groupStudent" property="student.infoPerson.username" value="<%= username %>">
 										<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.confirmAttributions" property="confirmAttributions" disabled="true">
@@ -129,7 +131,7 @@
 					<tr>
 						<td class="listClasses">
 							<logic:present name="groupProposal" property="finalDegreeWorkProposal.coorientator">
-								<bean:write name="groupProposal" property="finalDegreeWorkProposal.coorientator.infoPerson.nome"/>
+								<bean:write name="groupProposal" property="finalDegreeWorkProposal.coorientator.person.name"/>
 							</logic:present>
 						</td>
 					</tr>

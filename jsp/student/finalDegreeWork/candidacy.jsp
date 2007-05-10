@@ -134,9 +134,11 @@
 									   value='<%= groupProposalOrderOfPreference.toString() %>'
 									   onchange='<%= onChange.toString() %>'
 								/>
+<!--
 							<html:submit styleId="javascriptButtonID2" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
 								<bean:message key="button.submit"/>
 							</html:submit>
+-->
 						</td>
 						<td class="listClasses" rowspan="2">
 							<bean:write name="groupProposal" property="finalDegreeWorkProposal.proposalNumber"/>
