@@ -26,3 +26,7 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "alter Table Project Access" alterTableProjectAccess.sql
+executeWithTempFile "Updated Accountability and AccountabilityType table" alterAccountabilityTable.sql
+execute"Updated Accountability and AccountabilityType table 2" alterAccountabilityTable2.sql
