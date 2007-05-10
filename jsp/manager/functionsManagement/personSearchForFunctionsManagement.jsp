@@ -86,7 +86,7 @@
 			<c:url var="url" value="/manager/functionsManagement/listPersonFunctions.faces?personID=${person.idInternal}" />
 			<c:out value="<li>" escapeXml="false"/>
 			<a href=" <c:out value="${url}"/> ">
-				<c:out value="${person.nome}" />
+				<c:out value="${person.name}" />
 			</a>
 			<c:out value="</li>" escapeXml="false"/>										
 		</c:forEach>
