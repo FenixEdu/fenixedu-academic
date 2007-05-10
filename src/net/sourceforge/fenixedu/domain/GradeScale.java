@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.ResourceBundle;
 
+import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.EvaluationType;
 import net.sourceforge.fenixedu.util.LanguageUtils;
@@ -65,6 +66,39 @@ public enum GradeScale {
 	    }
 	}
 	
+	@Override
+	protected boolean isNotEvaluated(String grade) {
+	    if (grade == null) {
+		return true;
+	    }
+	    
+	    grade = grade.trim();
+	    return grade.equals("") || grade.equals("0") || grade.equals(GradeScale.NA);
+	}
+	
+	@Override
+	protected boolean isNotApproved(final String grade) {
+	    if (grade.equals(GradeScale.RE)) {
+		return true;
+	    }
+
+	    try {
+		return Integer.valueOf(grade) < 10;
+	    } catch (NumberFormatException e) {
+		throw new DomainException("GradeScale.unable.to.get.enrolment.state");
+	    }
+	}
+	
+	@Override
+	protected boolean isApproved(String grade) {
+	    try {
+		final int gradeValue = Integer.valueOf(grade);
+		return 10 <= gradeValue && gradeValue <= 20;
+	    } catch (NumberFormatException e) {
+		throw new DomainException("GradeScale.unable.to.get.enrolment.state");
+	    }
+	}
+	
     },
 
     TYPE5 {
@@ -122,6 +156,39 @@ public enum GradeScale {
 	    }
 	}
 	
+	@Override
+	protected boolean isNotEvaluated(String grade) {
+	    if (grade == null) {
+		return true;
+	    }
+	    
+	    grade = grade.trim();
+	    return grade.equals("") || grade.equals("0") || grade.equals(GradeScale.NA);
+	}
+	
+	@Override
+	protected boolean isNotApproved(String grade) {
+	    if (grade.equals(GradeScale.RE)) {
+		return true;
+	    }
+
+	    try {
+		return Integer.valueOf(grade) < 3;
+	    } catch (NumberFormatException e) {
+		throw new DomainException("GradeScale.unable.to.get.enrolment.state");
+	    }
+	}
+	
+	@Override
+	protected boolean isApproved(String grade) {
+	    try {
+		final int gradeValue = Integer.valueOf(grade);
+		return 3 <= gradeValue && gradeValue <= 5;
+	    } catch (NumberFormatException e) {
+		throw new DomainException("GradeScale.unable.to.get.enrolment.state");
+	    }
+	}
+	
     },
 
     TYPEAP {
@@ -154,7 +221,27 @@ public enum GradeScale {
 		throw new DomainException("GradeScale.unable.to.qualify.given.grade");
 	    }
 	}
-    
+	
+	@Override
+	protected boolean isNotEvaluated(String grade) {
+	    if (grade == null) {
+		return true;
+	    }
+	    
+	    grade = grade.trim();
+	    return grade.equals("") || grade.equals("0") || grade.equals(GradeScale.NA);
+	}
+	
+	@Override
+	protected boolean isNotApproved(String grade) {
+	    return grade.equals(GradeScale.RE);
+	}
+	
+	@Override
+	protected boolean isApproved(String grade) {
+	    return grade.equals(GradeScale.AP);
+	}
+	
     };
 
     static final public String NA = "NA";
@@ -180,12 +267,30 @@ public enum GradeScale {
     abstract protected boolean checkNotFinal(final String mark);
 
     abstract protected String qualify(final String grade);
+    
+    abstract protected boolean isNotEvaluated(final String grade);
+
+    abstract protected boolean isNotApproved(final String grade);
+
+    abstract protected boolean isApproved(final String grade);
 
     final public String getQualifiedName(final String grade) {
-	if (checkFinal(grade)) {
+	if (isApproved(grade)) {
 	    return qualify(grade);
 	} else {
 	    throw new DomainException("GradeScale.unable.to.qualify.given.grade");
+	}
+    }
+
+    final protected EnrollmentState getEnrolmentState(String grade) {
+	if (isNotEvaluated(grade)) {
+	    return EnrollmentState.NOT_EVALUATED;
+	} else if (isNotApproved(grade)) {
+	    return EnrollmentState.NOT_APROVED;
+	} else if (isApproved(grade)) {
+	    return EnrollmentState.APROVED;
+	} else {
+	    throw new DomainException("GradeScale.unable.to.get.enrolment.state");
 	}
     }
     
