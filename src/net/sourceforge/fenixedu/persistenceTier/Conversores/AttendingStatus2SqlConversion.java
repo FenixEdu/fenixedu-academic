@@ -7,7 +7,12 @@ import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
 public class AttendingStatus2SqlConversion implements FieldConversion {
 
-    public Object javaToSql(Object source) throws ConversionException {
+    /**
+	 * Serial version id.
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public Object javaToSql(Object source) throws ConversionException {
         if (source == null) {
             return null;
         }
@@ -17,7 +22,7 @@ public class AttendingStatus2SqlConversion implements FieldConversion {
     }
 
     public Object sqlToJava(Object source) throws ConversionException {
-        if (source == null && source.equals("")) {
+        if (source == null || source.equals("")) {
             return null;
         }
         else {

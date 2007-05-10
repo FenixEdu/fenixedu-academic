@@ -27,11 +27,11 @@ public class OtherCourseVigilancy extends OtherCourseVigilancy_Base {
 	if (currentDate.isBefore(this.getBeginDate()))
 	    return this.POINTS_WON_FOR_CONVOKE_YET_TO_HAPPEN;
 
+	if (!isActive() || isStatusUndefined()) {
+		return getAssociatedVigilantGroup().getPointsForDisconvoked();
+	}
 	if (isDismissed()) {
 	    return getAssociatedVigilantGroup().getPointsForDismissed();
-	}
-	if (!isActive()) {
-	    return getAssociatedVigilantGroup().getPointsForDisconvoked();
 	}
 	if (!hasPointsAttributed()) {
 	    // no vigilancy has been yet setted to attended so maybe the

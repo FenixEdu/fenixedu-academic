@@ -60,6 +60,9 @@ public abstract class Vigilancy extends Vigilancy_Base {
 	if (!canBeChangedByUser()) {
 	    throw new DomainException("vigilancy.error.notAuthorized");
 	} else {
+		if (bool == null || !bool) {
+			setStatus(null);
+		}
 	    super.setActive(bool);
 	}
     }
@@ -220,6 +223,16 @@ public abstract class Vigilancy extends Vigilancy_Base {
 	super.setStatus(AttendingStatus.NOT_ATTENDED);
     }
 
+    /**
+	 * A vigilancy initialy starts as active and {@value AttendingStatus#NOT_ATTENDED}. 
+	 * However when a vigilant is diconvoked the status becomes undefined.
+	 * 
+	 * @return <code>true</code> if the status is undefined and should not be considered
+	 */
+    public boolean isStatusUndefined() {
+    	return getStatus() == null;
+    }
+    
     public abstract int getPoints();
     public abstract int getEstimatedPoints();
 }

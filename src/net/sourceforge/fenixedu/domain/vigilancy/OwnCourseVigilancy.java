@@ -21,7 +21,7 @@ public class OwnCourseVigilancy extends OwnCourseVigilancy_Base {
     
     @Override
     public int getPoints() {
-	if (isActive()) {
+	if (isActive() && !isStatusUndefined()) {
 	    return isAttended() ? getAssociatedVigilantGroup().getPointsForTeacher()
 		    : (isDismissed() ? getAssociatedVigilantGroup().getPointsForDismissed() : (hasPointsAttributed() ? getAssociatedVigilantGroup().getPointsForMissing() : this.POINTS_WON_FOR_CONVOKE_YET_TO_HAPPEN));
 	}
