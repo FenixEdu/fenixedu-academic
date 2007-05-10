@@ -25,7 +25,8 @@ public class ReadOpeningProjectFileReport extends Service {
         if (userNumber != null
                 && projectCode != null
                 && (p.getIPersistentProject().isUserProject(new Integer(userNumber), projectCode) || ProjectAccess
-                        .getByUsernameAndProjectCode(username, projectCode) != null)) {
+                        .getByUsernameAndProjectCode(username, projectCode) != null)
+                        || (costCenter!=null && ProjectAccess.getAllByPersonUsernameAndDatesAndCostCenter(username, costCenter)!= null)) {
 
             IPersistentOpeningProjectFileReport persistentOpeningProjectFile = p
                     .getIPersistentOpeningProjectFileReport();

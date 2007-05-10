@@ -23,40 +23,47 @@ import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
  */
 public class ReadSummaryReport extends Service {
 
-    public InfoCoordinatorReport run(String username, String costCenter, Integer coordinatorCode, String userNumber) throws ExcepcaoPersistencia {
-        InfoCoordinatorReport infoReport = new InfoCoordinatorReport();
+    public InfoCoordinatorReport run(String username, String costCenter, Integer coordinatorCode,
+	    String userNumber) throws ExcepcaoPersistencia {
+	InfoCoordinatorReport infoReport = new InfoCoordinatorReport();
 
-        PersistentSuportOracle p = PersistentSuportOracle.getInstance();
-        if (coordinatorCode == null)
-            coordinatorCode = new Integer(userNumber);
-        List lines = null;
-        if (Integer.valueOf(userNumber).equals(coordinatorCode)) {
-            lines = p.getIPersistentSummaryReport().readByCoordinatorCode(ReportType.SUMMARY, coordinatorCode);
-        } else {
-            List<Integer> projectCodes = new ArrayList<Integer>();
-            
-            List<ProjectAccess> accesses = ProjectAccess.getAllByPersonUsernameAndCoordinator(username, coordinatorCode, false);
-            for (ProjectAccess access : accesses) {
-                Integer keyProject = access.getKeyProject();
-                
-                if (! projectCodes.contains(keyProject)) {
-                    projectCodes.add(keyProject);
-                }
-            }
-            
-            if (projectCodes != null && projectCodes.size() != 0)
-                lines = p.getIPersistentSummaryReport().readByCoordinatorAndProjectCodes(ReportType.SUMMARY, coordinatorCode, projectCodes);
-        }
-        if (lines != null) {
-            infoReport.setInfoCoordinator(InfoRubric.newInfoFromDomain(p.getIPersistentProjectUser().readProjectCoordinator(coordinatorCode)));
-            List<IReportLine> infoLines = new ArrayList<IReportLine>();
+	PersistentSuportOracle p = PersistentSuportOracle.getInstance();
+	if (coordinatorCode == null)
+	    coordinatorCode = new Integer(userNumber);
+	List lines = null;
+	if (Integer.valueOf(userNumber).equals(coordinatorCode)) {
+	    lines = p.getIPersistentSummaryReport().readByCoordinatorCode(ReportType.SUMMARY,
+		    coordinatorCode);
+	} else {
+	    List<Integer> projectCodes = new ArrayList<Integer>();
 
-            for (int line = 0; line < lines.size(); line++)
-                infoLines.add(InfoSummaryReportLine.newInfoFromDomain((ISummaryReportLine) lines.get(line)));
-            infoReport.setLines(infoLines);
-        }
+	    List<ProjectAccess> accesses = ProjectAccess.getAllByPersonUsernameAndCoordinator(username,
+		    coordinatorCode, false);
+	    for (ProjectAccess access : accesses) {
+		Integer keyProject = access.getKeyProject();
+		if (keyProject == null && access.getCostCenter()) {
+		    projectCodes = null;
+		    break;
+		} else if (!projectCodes.contains(keyProject)) {
+		    projectCodes.add(keyProject);
+		}
+	    }
+	    lines = p.getIPersistentSummaryReport().readByCoordinatorAndProjectCodes(ReportType.SUMMARY,
+		    coordinatorCode, projectCodes);
 
-        return infoReport;
+	}
+	if (lines != null) {
+	    infoReport.setInfoCoordinator(InfoRubric.newInfoFromDomain(p.getIPersistentProjectUser()
+		    .readProjectCoordinator(coordinatorCode)));
+	    List<IReportLine> infoLines = new ArrayList<IReportLine>();
+
+	    for (int line = 0; line < lines.size(); line++)
+		infoLines.add(InfoSummaryReportLine.newInfoFromDomain((ISummaryReportLine) lines
+			.get(line)));
+	    infoReport.setLines(infoLines);
+	}
+
+	return infoReport;
     }
 
 }

@@ -37,7 +37,8 @@ public class ReadExpensesReport extends Service {
         if (coordID != null
                 && projectCode != null
                 && (p.getIPersistentProject().isUserProject(coordID, projectCode) 
-                        || ProjectAccess.getByUsernameAndProjectCode(username, projectCode) != null)) {
+                        || ProjectAccess.getByUsernameAndProjectCode(username, projectCode) != null
+                        || (costCenter!=null && ProjectAccess.getAllByPersonUsernameAndDatesAndCostCenter(username, costCenter)!= null))){
             List infoLines = new ArrayList();
             infoReport.setInfoProject(InfoProject.newInfoFromDomain(p.getIPersistentProject().readProject(projectCode)));
             List lines = null;

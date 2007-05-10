@@ -35,7 +35,8 @@ public class ReadReport extends Service {
                
         PersistentSuportOracle p = PersistentSuportOracle.getInstance();
         if (projectCode != null
-                && (p.getIPersistentProject().isUserProject(new Integer(userNumber), projectCode) || ProjectAccess.getByUsernameAndProjectCode(userView, projectCode) != null)) {
+                && (p.getIPersistentProject().isUserProject(new Integer(userNumber), projectCode) || ProjectAccess.getByUsernameAndProjectCode(userView, projectCode) != null)
+                || (costCenter!=null && ProjectAccess.getAllByPersonUsernameAndDatesAndCostCenter(userView, costCenter)!= null)) {
             infoReport.setInfoProject(InfoProject.newInfoFromDomain(p.getIPersistentProject().readProject(projectCode)));
             if (reportType.equals(ReportType.REVENUE)) {
                 List<IRevenueReportLine> lines = p.getIPersistentRevenueReport().getCompleteReport(reportType, projectCode);
