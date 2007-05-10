@@ -27,4 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Updated Accountability and AccountabilityType table" alterAccountabilityTable.sql
+executeWithTempFile "Updated Accountability and AccountabilityType table" alterAccountabilityTable.sql
