@@ -3,9 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
-
-
-<br/>
+<p><h2><bean:message key="title.execution.course.merge" bundle="SOP_RESOURCES"/></h2></p>
 
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 

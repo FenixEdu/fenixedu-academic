@@ -2315,6 +2315,7 @@
 	<!-- ========== Message Resources Definitions ============================ -->
     <message-resources parameter="resources.ApplicationResources" key="DEFAULT" null="false"/>
 	<message-resources parameter="resources.ManagerResources" key="MANAGER_RESOURCES" null="false"/>
+	<message-resources parameter="resources.ApplicationResourcesSOP" key="SOP_RESOURCES" null="false"/>
 	<message-resources parameter="resources.CandidateResources" key="CANDIDATE_RESOURCES" null="false"/>
     <message-resources parameter="resources.FunctionalityResources" key="FUNCTIONALITY_RESOURCES" null="false"/>
 	<message-resources parameter="resources.MessagingResources" key="MESSAGING_RESOURCES" null="false"/>

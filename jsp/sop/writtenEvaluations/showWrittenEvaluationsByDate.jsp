@@ -6,7 +6,7 @@
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
 
-<h2><bean:message key="title.written.evaluations.search.by.date"/></h2>
+<h2><bean:message key="link.written.evaluations.search.by.date"/></h2>
 
 <html:form action="/searchWrittenEvaluationsByDate" focus="day">
 

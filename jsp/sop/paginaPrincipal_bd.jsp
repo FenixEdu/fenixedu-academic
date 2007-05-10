@@ -9,18 +9,6 @@
   <tr>
     <td nowrap="nowrap" class="infoIcons"><img height="15" src="<%= request.getContextPath() %>/images/info.gif" alt="<bean:message key="info" bundle="IMAGE_RESOURCES" />" width="15" /> 
     </td>
-    <td class="infoop"><strong><html:link page="/manageExecutionCourses.do?method=prepareSearch&amp;page=0"><bean:message key="link.courses.management" bundle="SOP_RESOURCES"/></html:link></strong></td>
-  </tr>
-</table>
-<p>Na &aacute;rea da Gest&atilde;o de Disciplinas pode efectuar algumas opera&ccedil;&otilde;es sobre <strong>disciplinas de execu&ccedil;&atilde;o</strong> 
-	(agrupar disciplinas de execu&ccedil;&atilde;o e gerir cargas horárias).</p>
-
-<br />
-
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td nowrap="nowrap" class="infoIcons"><img height="15" src="<%= request.getContextPath() %>/images/info.gif" alt="<bean:message key="info" bundle="IMAGE_RESOURCES" />" width="15" /> 
-    </td>
     <td class="infoop"><strong><html:link page="/chooseExecutionPeriod.do?method=prepare"><bean:message key="link.schedules.management" bundle="SOP_RESOURCES"/></html:link></strong></td>
   </tr>
 </table>
@@ -51,6 +39,18 @@ e alterar aulas).</p>
   </tr>
 </table>
 <p><bean:message key="introduction.writtenEvaluation.management"/></p>
+
+<br />
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td nowrap="nowrap" class="infoIcons"><img height="15" src="<%= request.getContextPath() %>/images/info.gif" alt="<bean:message key="info" bundle="IMAGE_RESOURCES" />" width="15" /> 
+    </td>
+    <td class="infoop"><strong><html:link page="/manageExecutionCourses.do?method=prepareSearch&amp;page=0"><bean:message key="link.courses.management" bundle="SOP_RESOURCES"/></html:link></strong></td>
+  </tr>
+</table>
+<p>Na &aacute;rea da Gest&atilde;o de Disciplinas pode efectuar algumas opera&ccedil;&otilde;es sobre <strong>disciplinas de execu&ccedil;&atilde;o</strong> 
+	(agrupar disciplinas de execu&ccedil;&atilde;o e gerir cargas horárias).</p>
 
 <br />
 
