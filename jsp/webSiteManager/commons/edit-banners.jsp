@@ -10,7 +10,7 @@
 <bean:define id="contextParamValue" name="siteContextParamValue"/>
 <bean:define id="context" value="<%= contextParam + "=" + contextParamValue %>"/>
 
-<em><bean:message key="label.websiteManagement" bundle="MANAGER_RESOURCES"/></em>
+
 <h2><bean:message key="title.site.banners" bundle="WEBSITEMANAGER_RESOURCES"/></h2>
 
 <div class="infoop2">
@@ -141,6 +141,7 @@
                                     	<fr:property name="size" value="50"/>
                                     </fr:layout>
                                 </fr:edit>
+                                <p class="mvert05 smalltxt color888">O URL deve ser inserido com o protocolo, exemplo: "http://www.ist.utl.pt" e não "www.ist.utl.pt"</p>
                             </td>
                             <td class="tdclear tderror1">
                             </td>
@@ -199,7 +200,6 @@
             <fr:property name="classes" value="tstyle5 thlight thright"/>
             <fr:property name="columnClasses" value=",,tdclear tderror1"/>
         </fr:layout>
-
         <fr:destination name="invalid" path="<%= String.format("%s?method=manageBanners&amp;%s", actionName, context) %>"/>
     </fr:edit>
     

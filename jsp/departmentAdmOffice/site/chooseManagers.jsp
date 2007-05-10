@@ -23,21 +23,21 @@
     </html:messages>
 </logic:messagesPresent>
 
+
+<p class="mbottom05">
+    <strong><bean:message key="title.departmentSite.site.chooseManagers"/>:</strong>
+</p>
+
 <logic:empty name="managers">
 	<p>
 	    <em><bean:message key="message.departmentSite.managers.empty"/></em>
     </p>
 </logic:empty>
 
-
-<p class="mbottom05">
-    <bean:message key="title.departmentSite.site.chooseManagers"/>:
-</p>
-
 <logic:notEmpty name="managers">
     <fr:view name="managers" schema="departmentSite.manager">
         <fr:layout name="tabular">
-            <fr:property name="classes" value="tstyle1 mtop05"/>
+            <fr:property name="classes" value="tstyle1 thlight mtop05"/>
             <fr:property name="link(delete)" value="<%= String.format("/departmentSite.do?method=removeManager") %>"/>
             <fr:property name="param(delete)" value="idInternal/managerID"/>
             <fr:property name="key(delete)" value="link.departmentSite.managers.remove"/>

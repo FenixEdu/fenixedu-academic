@@ -86,8 +86,11 @@
         <property name="fileContentTypeSlot" value="backgroundImage.contentType"/>
     </slot>
     <slot name="color" key="label.site.banner.color"/>
-    <slot name="link" key="label.site.banner.link">
+    <slot name="link" key="label.site.banner.link" layout="input-with-comment">
         <property name="size" value="40"/>
+		<property name="bundle" value="WEBSITEMANAGER_RESOURCES"/>
+		<property name="comment" value="label.url.explanation"/>
+		<property name="commentClasses" value="smalltxt color555"/>
     </slot>
     <slot name="weight" key="label.site.banner.weight">
     	<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.NumberRangeValidator">
