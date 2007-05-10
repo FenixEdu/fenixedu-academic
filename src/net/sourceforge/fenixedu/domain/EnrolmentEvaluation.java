@@ -236,27 +236,12 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         return getEnrollmentStateByGrade(getGrade());
     }
 
+    public GradeScale getGradeScale() {
+	return getDegreeCurricularPlan().getGradeScaleChain();
+    }
+    
     private EnrollmentState getEnrollmentStateByGrade(String grade) {
-        if (grade == null) {
-            return EnrollmentState.NOT_EVALUATED;
-        }
-        grade = grade.trim();
-        if (grade.equals("")) {
-            return EnrollmentState.NOT_EVALUATED;
-        }
-        if (grade.equals("0")) {
-            return EnrollmentState.NOT_EVALUATED;
-        }
-        if (grade.equals(GradeScale.NA)) {
-            return EnrollmentState.NOT_EVALUATED;
-        }
-        if (grade.equals(GradeScale.RE)) {
-            return EnrollmentState.NOT_APROVED;
-        }
-        if (grade.equals(GradeScale.AP)) {
-            return EnrollmentState.APROVED;
-        }
-        return EnrollmentState.APROVED;
+	return getGradeScale().getEnrolmentState(grade);
     }
 
     public boolean isNormal() {
