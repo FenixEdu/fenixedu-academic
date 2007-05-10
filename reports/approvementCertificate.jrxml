@@ -38,7 +38,7 @@
 	<parameter name="baseAmountPlusAmountForUnits" isForPrompting="false" class="net.sourceforge.fenixedu.util.Money"/>
 	<parameter name="urgencyAmount" isForPrompting="false" class="net.sourceforge.fenixedu.util.Money"/>
 	<parameter name="approvementsInfo" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="employeeLocation" isForPrompting="false" class="java.lang.String"/>	
+	<parameter name="employeeLocation" isForPrompting="false" class="java.lang.String"/>
 
 		<background>
 			<band height="0"  isSplitAllowed="true" >
@@ -64,7 +64,9 @@
 						width="58"
 						height="11"
 						key="staticText-11"
-						stretchType="RelativeToTallestObject"/>
+						stretchType="RelativeToTallestObject">
+							<printWhenExpression><![CDATA[Boolean.valueOf($P{documentRequest}.hasEvent())]]></printWhenExpression>
+						</reportElement>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement lineSpacing="Single">
 						<font pdfFontName="Courier-Oblique" size="8" isItalic="true"/>
@@ -78,7 +80,9 @@
 						width="62"
 						height="11"
 						key="staticText-12"
-						stretchType="RelativeToTallestObject"/>
+						stretchType="RelativeToTallestObject">
+							<printWhenExpression><![CDATA[Boolean.valueOf($P{documentRequest}.hasEvent())]]></printWhenExpression>
+						</reportElement>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement lineSpacing="Single">
 						<font pdfFontName="Courier-Oblique" size="8" isItalic="true"/>
@@ -92,7 +96,9 @@
 						width="58"
 						height="11"
 						key="staticText-13"
-						stretchType="RelativeToTallestObject"/>
+						stretchType="RelativeToTallestObject">
+							<printWhenExpression><![CDATA[Boolean.valueOf($P{documentRequest}.hasEvent())]]></printWhenExpression>
+						</reportElement>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement lineSpacing="Single">
 						<font pdfFontName="Courier-Oblique" size="8" isItalic="true"/>
@@ -106,7 +112,9 @@
 						width="25"
 						height="11"
 						key="staticText-14"
-						stretchType="RelativeToTallestObject"/>
+						stretchType="RelativeToTallestObject">
+							<printWhenExpression><![CDATA[Boolean.valueOf($P{documentRequest}.hasEvent())]]></printWhenExpression>
+						</reportElement>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement lineSpacing="Single">
 						<font pdfFontName="Courier-Oblique" size="8" isItalic="true"/>
@@ -119,7 +127,9 @@
 						y="113"
 						width="50"
 						height="11"
-						key="textField-25"/>
+						key="textField-25">
+							<printWhenExpression><![CDATA[Boolean.valueOf($P{documentRequest}.hasEvent())]]></printWhenExpression>
+						</reportElement>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Right">
 						<font pdfFontName="Courier-Oblique" size="8" isItalic="true"/>
@@ -132,7 +142,9 @@
 						y="124"
 						width="50"
 						height="11"
-						key="textField-26"/>
+						key="textField-26">
+							<printWhenExpression><![CDATA[Boolean.valueOf($P{documentRequest}.hasEvent())]]></printWhenExpression>
+						</reportElement>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Right">
 						<font pdfFontName="Courier-Oblique" size="8" isItalic="true"/>
@@ -145,7 +157,9 @@
 						y="135"
 						width="50"
 						height="11"
-						key="textField-27"/>
+						key="textField-27">
+							<printWhenExpression><![CDATA[Boolean.valueOf($P{documentRequest}.hasEvent())]]></printWhenExpression>
+						</reportElement>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Right">
 						<font pdfFontName="Courier-Oblique" size="8" isItalic="true"/>
@@ -185,7 +199,9 @@
 						y="146"
 						width="50"
 						height="11"
-						key="textField-29"/>
+						key="textField-29">
+							<printWhenExpression><![CDATA[Boolean.valueOf($P{documentRequest}.hasEvent())]]></printWhenExpression>
+						</reportElement>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Right">
 						<font pdfFontName="Courier-Oblique" size="8" isItalic="true"/>
