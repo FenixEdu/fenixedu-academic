@@ -81,7 +81,9 @@
                             </td>
                             <td class="tdclear tderror1">
                                 <fr:hasMessages for="editBannerMainImage" type="validation">
-                                    <bean:message key="message.site.image.type.validation"/>
+                                	<span>
+	                                    <bean:message key="message.site.image.type.validation"/>
+                                    </span>
                                 </fr:hasMessages>
                             </td>
                         </tr>
@@ -114,7 +116,9 @@
                             </td>
                             <td class="tdclear tderror1">
                                 <fr:hasMessages for="editBannerBackgroundImage" type="validation">
-                                    <bean:message key="message.site.image.type.validation"/>
+                                	<span>
+	                                    <bean:message key="message.site.image.type.validation"/>
+                                    </span>
                                 </fr:hasMessages>
                             </td>
                         </tr>
@@ -164,7 +168,9 @@
                             </td>
                             <td class="tdclear tderror1">
                             	<fr:hasMessages for="editBannerWeight" type="validation">
-                                    <fr:message for="editBannerWeight" type="validation"/>
+                            		<span>
+	                                    <fr:message for="editBannerWeight" type="validation"/>
+                                    </span>
                                 </fr:hasMessages>
                             </td>
                         </tr>

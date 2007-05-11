@@ -204,16 +204,22 @@ public abstract class CustomUnitSiteManagementDA extends SiteManagementDA {
 		UnitSiteBanner banner = getBanner(request);
 		SimpleFileBean main = bean.getMainImage();
 		SimpleFileBean back = bean.getBackgroundImage();
-		File mainFile = FileUtils.copyToTemporaryFile(main.getFile());
-		File backgroundFile = FileUtils.copyToTemporaryFile(back.getFile());
+		File mainFile = main.getFile() == null ? null : FileUtils.copyToTemporaryFile(main.getFile());
+		File backgroundFile = back.getFile() == null ? null : FileUtils.copyToTemporaryFile(back.getFile());
 
 		try {
-		executeService("UpdateUnitSiteBanner", site, banner, mainFile, main.getName(), backgroundFile,
-				back.getName(), bean.getColor(), bean.getLink(), bean.getWeight());
-		}finally {
-        	mainFile.delete();
-        	backgroundFile.delete();
+			executeService("UpdateUnitSiteBanner", site, banner, mainFile, main.getName(), backgroundFile, back.getName(), bean.getColor(), bean.getLink(), bean.getWeight());
+		}
+		finally {
+			if (mainFile != null) {
+				mainFile.delete();
+			}
+			
+			if (backgroundFile != null) {
+				backgroundFile.delete();
+			}
         }
+		
 		RenderUtils.invalidateViewState();
 
 		return manageBanners(mapping, actionForm, request, response);
@@ -248,13 +254,18 @@ public abstract class CustomUnitSiteManagementDA extends SiteManagementDA {
 		SimpleFileBean main = bean.getMainImage();
 		SimpleFileBean background = bean.getBackgroundImage();
 		File mainFile = FileUtils.copyToTemporaryFile(main.getFile());
-		File backgroundFile = FileUtils.copyToTemporaryFile(background.getFile());
+		File backgroundFile = background.getFile() == null ? null : FileUtils.copyToTemporaryFile(background.getFile());
 		try {
 			executeService("CreateUnitSiteBanner", site, mainFile, main.getName(), backgroundFile,
 					background.getName(), bean.getColor(), bean.getLink(), bean.getWeight());
 		} finally {
-			mainFile.delete();
-			backgroundFile.delete();
+			if (mainFile != null) {
+				mainFile.delete();
+			}
+			
+			if (backgroundFile != null) {
+				backgroundFile.delete();
+			}
 		}
 		return manageBanners(mapping, actionForm, request, response);
 	}

@@ -119,8 +119,8 @@
     <slot name="link" key="label.site.banner.link" layout="null-as-label">
         <property name="label" value="-"/>
     </slot>
-    <slot name="weight" key="label.site.banner.weight" layout="null-as-label">
-        <property name="label" value="-"/>
+    <slot name="weight" key="label.site.banner.weight" layout="banner-weight">
+    	<property name="percentClass" value="mleft1"/>
     </slot>
 </schema>
 

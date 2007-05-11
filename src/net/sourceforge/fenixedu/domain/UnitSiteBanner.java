@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.List;
+
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.predicates.UnitSitePredicates;
 import dml.runtime.RelationAdapter;
@@ -64,4 +66,32 @@ public class UnitSiteBanner extends UnitSiteBanner_Base {
         
         deleteDomainObject();
     }
+
+	public float getWeightPercentage() {
+		Integer weight = getWeight();
+		List<UnitSiteBanner> banners = getSite().getBanners();
+		
+		if (weight == null) {
+			for (UnitSiteBanner banner : banners) {
+				if (banner.getWeight() != null) {
+					return 0.0f;
+				}
+			}
+			
+			return 100f / banners.size();
+		}
+		else {
+			int total = 0;
+			for (UnitSiteBanner banner : banners) {
+				Integer w = banner.getWeight();
+				
+				if (w != null) {
+					total += w;
+				}
+			}
+			
+			return weight * 100f / total;
+		}
+		
+	}
 }
