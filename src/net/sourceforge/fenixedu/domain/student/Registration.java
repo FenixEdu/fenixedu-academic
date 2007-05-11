@@ -1928,4 +1928,14 @@ public class Registration extends Registration_Base {
 	return false;
     }
 
+    public boolean hasState(final RegistrationStateType stateType) {
+	for (final RegistrationState registrationState : getRegistrationStates()) {
+	    if (registrationState.getStateType() == stateType) {
+		return true;
+	    }
+	}
+
+	return false;
+    }
+
 }

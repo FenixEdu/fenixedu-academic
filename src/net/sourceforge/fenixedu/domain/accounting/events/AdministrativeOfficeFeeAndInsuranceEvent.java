@@ -40,7 +40,7 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends
 	PersonAccountingEvent.addListener(new RelationAdapter<Event, Person>() {
 	    @Override
 	    public void beforeAdd(Event event, Person person) {
-		if (event instanceof AdministrativeOfficeFeeAndInsuranceEvent) {
+		if (event instanceof AdministrativeOfficeFeeAndInsuranceEvent && person != null) {
 		    final AdministrativeOfficeFeeAndInsuranceEvent administrativeOfficeFeeAndInsuranceEvent = (AdministrativeOfficeFeeAndInsuranceEvent) event;
 		    if (person
 			    .hasAdministrativeOfficeFeeInsuranceEventFor(administrativeOfficeFeeAndInsuranceEvent

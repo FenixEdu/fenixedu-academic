@@ -52,23 +52,17 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
 
     protected void init(AdministrativeOffice administrativeOffice, Person person,
 	    StudentCurricularPlan studentCurricularPlan, ExecutionYear executionYear) {
-	super.init(administrativeOffice, EventType.GRATUITY, person);
-	checkParameters(administrativeOffice, studentCurricularPlan, executionYear);
-	super.setExecutionYear(executionYear);
+	super.init(administrativeOffice, EventType.GRATUITY, person, executionYear);
+	checkParameters(administrativeOffice, studentCurricularPlan);
 	super.setStudentCurricularPlan(studentCurricularPlan);
 
     }
 
     private void checkParameters(AdministrativeOffice administrativeOffice,
-	    StudentCurricularPlan studentCurricularPlan, ExecutionYear executionYear) {
+	    StudentCurricularPlan studentCurricularPlan) {
 	if (studentCurricularPlan == null) {
 	    throw new DomainException(
 		    "error.accounting.events.gratuity.GratuityEvent.studentCurricularPlan.cannot.be.null");
-	}
-
-	if (executionYear == null) {
-	    throw new DomainException(
-		    "error.accounting.events.gratuity.GratuityEvent.executionYear.cannot.be.null");
 	}
 
 	if (administrativeOffice == null) {
@@ -127,12 +121,6 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
 
     public Registration getRegistration() {
 	return getStudentCurricularPlan().getRegistration();
-    }
-
-    @Override
-    public void setExecutionYear(ExecutionYear executionYear) {
-	throw new DomainException(
-		"error.accounting.events.gratuity.GratuityEvent.cannot.modify.executionYear");
     }
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
@@ -208,7 +196,6 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
     @Override
     public void delete() {
 
-	super.setExecutionYear(null);
 	super.setStudentCurricularPlan(null);
 
 	super.delete();

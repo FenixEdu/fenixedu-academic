@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.domain.accounting.PostingRule;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.injectionCode.Checked;
 
 import org.joda.time.DateTime;
 
@@ -45,13 +46,27 @@ public abstract class AnnualEvent extends AnnualEvent_Base {
     }
 
     @Override
+    public void setExecutionYear(ExecutionYear executionYear) {
+	throw new DomainException("error.accounting.events.AnnualEvent.cannot.modify.executionYear");
+    }
+
+    @Override
     public PostingRule getPostingRule() {
 	return getServiceAgreementTemplate().findPostingRuleBy(getEventType(), getStartDate(),
 		getEndDate());
     }
-    
+
     public boolean isFor(final ExecutionYear executionYear) {
-        return super.getExecutionYear() == executionYear;
+	return super.getExecutionYear() == executionYear;
+    }
+
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Override
+    public void delete() {
+
+	super.setExecutionYear(null);
+
+	super.delete();
     }
 
     abstract protected ServiceAgreementTemplate getServiceAgreementTemplate();
