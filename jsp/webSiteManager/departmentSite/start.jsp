@@ -4,4 +4,4 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <h2><fr:view name="site" property="unit.nameWithAcronym"/></h2>
-<p><bean:message key="message.webSiteManagement.departmentSite.start" bundle="WEBSITEMANAGER_RESOURCES"/></p>
+<p><bean:message key="message.webSiteManagement.researchUnitSite.start" bundle="WEBSITEMANAGER_RESOURCES"/></p>

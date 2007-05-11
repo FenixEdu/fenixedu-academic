@@ -12,7 +12,7 @@
 </div>
 
 <p class="mtop15 mbottom05">
-	<bean:message key="label.webSiteManagers" bundle="MANAGER_RESOURCES"/>:
+	<strong><bean:message key="label.webSiteManagers" bundle="MANAGER_RESOURCES"/>:</strong>
 </p>
 
 <logic:notEmpty name="site" property="managers">
