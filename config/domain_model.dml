@@ -3355,24 +3355,41 @@ class net.sourceforge.fenixedu.domain.Teacher extends net.sourceforge.fenixedu.d
 	Integer keyPublicationsNumber;
 	Integer keyWeeklyOcupation;
 }
-class net.sourceforge.fenixedu.domain.teacher.TeacherLegalRegimen extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer keyCategory;
-	Integer keyTeacher;
-	Integer percentage;
-	Integer lessonHours;
-	Double totalHours;	
+
+class net.sourceforge.fenixedu.domain.LegalRegimen extends net.sourceforge.fenixedu.domain.DomainObject {
+	String ojbConcreteClass;	
 	LegalRegimenType legalRegimenType;
 	RegimenType regimenType;
 	YearMonthDay beginDateYearMonthDay;
 	YearMonthDay endDateYearMonthDay;
 }
 
-class net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption extends net.sourceforge.fenixedu.domain.DomainObject {
+class net.sourceforge.fenixedu.domain.teacher.TeacherLegalRegimen extends net.sourceforge.fenixedu.domain.LegalRegimen {
 	Integer keyTeacher;
+	Integer keyCategory;
+	Integer percentage;
+	Integer lessonHours;
+	Double totalHours;		
+}
+
+class net.sourceforge.fenixedu.domain.EmployeeLegalRegimen extends net.sourceforge.fenixedu.domain.LegalRegimen {
+	Integer keyEmployee;	
+}
+
+class net.sourceforge.fenixedu.domain.ServiceExemption extends net.sourceforge.fenixedu.domain.DomainObject {
+	String ojbConcreteClass;
 	ServiceExemptionType type;
 	String institution;
 	YearMonthDay startYearMonthDay;
-	YearMonthDay endYearMonthDay;
+	YearMonthDay endYearMonthDay;	
+}
+
+class net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption extends net.sourceforge.fenixedu.domain.ServiceExemption {
+	Integer keyTeacher;		
+}
+
+class net.sourceforge.fenixedu.domain.EmployeeServiceExemption extends net.sourceforge.fenixedu.domain.ServiceExemption {
+	Integer keyEmployee;		
 }
 
 class net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -3381,7 +3398,6 @@ class net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProj
     Integer keyExecutionPeriod;
     Double percentage;
 }
-
 
 class net.sourceforge.fenixedu.domain.teacher.workTime.TeacherInstitutionWorkTime extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyTeacher;
@@ -8171,13 +8187,13 @@ relation TeacherOtherTypeCreditLine {
     }
 }
 
-
 relation TeacherProfessorship {
 	net.sourceforge.fenixedu.domain.Professorship playsRole professorships {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
 }
+
 
 relation TeacherTeacherServiceExemption {
     net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
@@ -8186,6 +8202,12 @@ relation TeacherTeacherServiceExemption {
     }
 }
 
+relation EmployeeEmployeeServiceExemption {
+    net.sourceforge.fenixedu.domain.Employee playsRole employee;
+    net.sourceforge.fenixedu.domain.EmployeeServiceExemption playsRole serviceExemptionSituations {
+        multiplicity *;
+    }
+}
 
 relation TeacherSummary {
 	net.sourceforge.fenixedu.domain.Summary playsRole associatedSummaries {
@@ -8473,6 +8495,13 @@ relation TeacherLegalRegimenTeacher {
 		multiplicity *;
     }
     net.sourceforge.fenixedu.domain.Teacher playsRole teacher;    
+}
+
+relation EmployeeLegalRegimenEmployee {
+	net.sourceforge.fenixedu.domain.EmployeeLegalRegimen playsRole legalRegimens {
+		multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.Employee playsRole employee;    
 }
 
 relation UnitFunction {
@@ -10506,9 +10535,9 @@ relation RootDomainObjectProjectSubmissionLog {
 	}
 }
 
-relation RootDomainObjectTeacherServiceExemption {
+relation RootDomainObjectServiceExemption {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption playsRole teacherServiceExemptions {
+	net.sourceforge.fenixedu.domain.ServiceExemption playsRole serviceExemptions {
 		multiplicity *;
 	}
 }
@@ -10611,9 +10640,9 @@ relation RootDomainObjectDepartment {
 	}
 }
 
-relation RootDomainObjectTeacherLegalRegimen {
+relation RootDomainObjectLegalRegimen {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.teacher.TeacherLegalRegimen playsRole teacherLegalRegimens {
+	net.sourceforge.fenixedu.domain.LegalRegimen playsRole legalRegimens {
 		multiplicity *;
 	}
 }

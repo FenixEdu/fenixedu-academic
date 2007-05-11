@@ -29,3 +29,6 @@ function executeWithTempFile() {
 
 execute "Remove invalid vowel participations" cleanupThesisParticipations.sql
 execute "Clean status of inactive vigilancies" resetConvokeStatus.sql
+
+execute "Alter TeacherLegalRegimen to LegalRegimem" alterTeacherLegalRegimenTable.sql
+execute "Alter TeacherServiceExemption to ServiceExemption" alterTeacherServiceExemptionTable.sql 

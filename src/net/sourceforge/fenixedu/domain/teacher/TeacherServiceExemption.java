@@ -8,7 +8,6 @@ import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -28,31 +27,9 @@ public class TeacherServiceExemption extends TeacherServiceExemption_Base {
 
     public TeacherServiceExemption(Teacher teacher, YearMonthDay beginDate, YearMonthDay endDate,
 	    ServiceExemptionType type, String institution) {
-
-	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-	setTeacher(teacher);
-	setType(type);
-	setInstitution(institution);
-	setOccupationInterval(beginDate, endDate);
-    }
-
-    @Override
-    public void setStartYearMonthDay(YearMonthDay beginDate) {
-	checkTeacherServiceExemptionsDatesIntersection(getTeacher(), beginDate, getEndYearMonthDay(), getType());
-	super.setStartYearMonthDay(beginDate);
-    }
-
-    @Override
-    public void setEndYearMonthDay(YearMonthDay endDate) {
-	checkTeacherServiceExemptionsDatesIntersection(getTeacher(), getStartYearMonthDay(), endDate, getType());
-	super.setEndYearMonthDay(endDate);
-    }
-
-    public void setOccupationInterval(YearMonthDay beginDate, YearMonthDay endDate) {
-	checkTeacherServiceExemptionsDatesIntersection(getTeacher(), beginDate, endDate, getType());
-	super.setStartYearMonthDay(beginDate);
-	super.setEndYearMonthDay(endDate);
+	super();	
+	super.init(beginDate, endDate, type, institution);
+	setTeacher(teacher);	
     }
 
     @Override
@@ -62,30 +39,17 @@ public class TeacherServiceExemption extends TeacherServiceExemption_Base {
 	}
 	super.setTeacher(teacher);
     }
-
+    
     @Override
-    public void setType(ServiceExemptionType type) {
-	if (type == null) {
-	    throw new DomainException("error.serviceExemption.no.type");
-	}
-	super.setType(type);
-    }
-
     public void delete() {
 	super.setTeacher(null);
-	removeRootDomainObject();
-	super.deleteDomainObject();
+	super.delete();
     }
-
-    public boolean belongsToPeriod(YearMonthDay beginDate, YearMonthDay endDate) {
-	return ((endDate == null || !this.getStartYearMonthDay().isAfter(endDate)) && (this
-		.getEndYearMonthDay() == null || !this.getEndYearMonthDay().isBefore(beginDate)));
-    }
-    
+      
     public boolean isLongDuration() {
 	Integer daysBetween = null;
 	if (getEndYearMonthDay() != null) {
-	    daysBetween = new Interval(getStartYearMonthDay().toDateMidnight(), 
+	    daysBetween = new Interval(getStartYearMonthDay().toDateMidnight(),
 		    getEndYearMonthDay().toDateMidnight()).toPeriod(PeriodType.days()).getDays();
 	}
 	return (daysBetween == null || daysBetween > 90);
@@ -142,34 +106,5 @@ public class TeacherServiceExemption extends TeacherServiceExemption_Base {
 		|| getType().equals(ServiceExemptionType.INCAPACITY_FOR_TOGETHER_DOCTOR_OF_THE_CGA)
 		|| getType().equals(ServiceExemptionType.FUNCTIONS_MANAGEMENT_SERVICE_EXEMPTION) 
 		|| getType().equals(ServiceExemptionType.PUBLIC_MANAGER));
-    }
-    
-    private void checkTeacherServiceExemptionsDatesIntersection(Teacher teacher, YearMonthDay begin,
-	    YearMonthDay end, ServiceExemptionType type) {
-
-	checkBeginDateAndEndDate(begin, end);
-	// for (TeacherServiceExemption serviceExemption :
-	// teacher.getServiceExemptionSituations()) {
-	// if (serviceExemption.getType().equals(type)
-	// && serviceExemption.checkDatesIntersections(begin, end)) {
-	// System.out.println("Teacher Number: " + teacher.getTeacherNumber());
-	// throw new
-	// DomainException("error.teacherLegalRegimen.dates.intersection");
-	// }
-	// }
-    }
-
-    private void checkBeginDateAndEndDate(YearMonthDay beginDate, YearMonthDay endDate) {
-	if (beginDate == null) {
-	    throw new DomainException("error.serviceExemption.no.beginDate");
-	}
-	if (endDate != null && endDate.isBefore(beginDate)) {
-	    throw new DomainException("error.serviceExemption.endDateBeforeBeginDate");
-	}
-    }
-
-    private boolean checkDatesIntersections(YearMonthDay begin, YearMonthDay end) {
-	return ((end == null || this.getStartYearMonthDay().isBefore(end)) && (this.getEndYearMonthDay() == null || this
-		.getEndYearMonthDay().isAfter(begin)));
-    }
+    }    
 }

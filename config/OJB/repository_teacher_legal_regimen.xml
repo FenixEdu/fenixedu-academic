@@ -1,4 +1,9 @@
-<!-- Definitions for net.sourceforge.fenixedu.domain.teacher.TeacherLegalRegimen -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.teacher.LegalRegimen -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.LegalRegimen" table="LEGAL_REGIMEN">
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.teacher.TeacherLegalRegimen"/>
+</class-descriptor>
 
-<class-descriptor class="net.sourceforge.fenixedu.domain.teacher.TeacherLegalRegimen" table="TEACHER_LEGAL_REGIMEM">
+<!-- Definitions for net.sourceforge.fenixedu.domain.teacher.TeacherLegalRegimen -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.teacher.TeacherLegalRegimen" table="LEGAL_REGIMEN">
+
 </class-descriptor>

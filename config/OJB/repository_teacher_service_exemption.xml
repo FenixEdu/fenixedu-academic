@@ -1,4 +1,9 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.ServiceExemption" table="SERVICE_EXEMPTION">
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption"/>
+</class-descriptor>
 
-<class-descriptor class="net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption" table="TEACHER_SERVICE_EXEMPTION">      
+<!-- Definitions for net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption" table="SERVICE_EXEMPTION">
+      
 </class-descriptor>
