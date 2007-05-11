@@ -85,17 +85,21 @@ public enum GradeScale {
 	    try {
 		return Integer.valueOf(grade) < 10;
 	    } catch (NumberFormatException e) {
-		throw new DomainException("GradeScale.unable.to.get.enrolment.state");
+		return false;
 	    }
 	}
 	
 	@Override
 	protected boolean isApproved(String grade) {
+	    if (grade.equals(GradeScale.AP)) {
+		return true;
+	    }
+	    
 	    try {
 		final int gradeValue = Integer.valueOf(grade);
 		return 10 <= gradeValue && gradeValue <= 20;
 	    } catch (NumberFormatException e) {
-		throw new DomainException("GradeScale.unable.to.get.enrolment.state");
+		return false;
 	    }
 	}
 	
@@ -175,7 +179,7 @@ public enum GradeScale {
 	    try {
 		return Integer.valueOf(grade) < 3;
 	    } catch (NumberFormatException e) {
-		throw new DomainException("GradeScale.unable.to.get.enrolment.state");
+		return false;
 	    }
 	}
 	
@@ -185,7 +189,7 @@ public enum GradeScale {
 		final int gradeValue = Integer.valueOf(grade);
 		return 3 <= gradeValue && gradeValue <= 5;
 	    } catch (NumberFormatException e) {
-		throw new DomainException("GradeScale.unable.to.get.enrolment.state");
+		return false;
 	    }
 	}
 	
