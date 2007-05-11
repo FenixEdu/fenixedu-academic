@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.assiduousness;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
@@ -12,6 +13,12 @@ import org.joda.time.YearMonthDay;
 
 public class ClosedMonth extends ClosedMonth_Base {
 
+    static final public Comparator<ClosedMonth> COMPARATOR_BY_DATE = new Comparator<ClosedMonth>() {
+        public int compare(final ClosedMonth o1, final ClosedMonth o2) {
+            return o1.getClosedYearMonth().compareTo(o2.getClosedYearMonth());
+        }
+    };
+    
     public static final int dayOfMonthToCloseLastMonth = 4;
 
     public ClosedMonth(Partial closedYearMonth) {

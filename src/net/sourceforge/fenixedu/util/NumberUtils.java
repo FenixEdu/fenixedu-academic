@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.util;
 
+import java.text.DecimalFormat;
 import java.text.FieldPosition;
 import java.text.NumberFormat;
 
@@ -40,4 +41,10 @@ public class NumberUtils extends FenixUtil {
         return numberToFormat;
     }
 
+    public static Double formatDoubleWithoutRound(Double number, int numberOfDecimalPlaces) {
+        DecimalFormat decimalFormat = new DecimalFormat("0.00000");
+        int position = decimalFormat.format(number).lastIndexOf(".");
+        return new Double(decimalFormat.format(number)
+                .substring(0, position + numberOfDecimalPlaces + 1));
+    }
 }

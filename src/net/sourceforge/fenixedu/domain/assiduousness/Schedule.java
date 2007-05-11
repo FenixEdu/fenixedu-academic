@@ -2,8 +2,10 @@ package net.sourceforge.fenixedu.domain.assiduousness;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeScheduleFactory;
@@ -21,6 +23,7 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Duration;
 import org.joda.time.Partial;
+import org.joda.time.PeriodType;
 import org.joda.time.YearMonthDay;
 
 public class Schedule extends Schedule_Base {
@@ -385,6 +388,30 @@ public class Schedule extends Schedule_Base {
             }
         }
         return workPeriodDuration;
+    }
+
+    public Duration getAverageWorkPeriodDuration() {
+        Map<Integer, Duration> weekDurations = new HashMap<Integer, Duration>();
+        for (WorkSchedule workSchedule : getWorkSchedules()) {
+            Duration workScheduleTypeWorkDuration = workSchedule.getWorkScheduleType()
+                    .getNormalWorkPeriod().getWorkPeriodDuration();
+            Duration weekDuration = weekDurations.get(workSchedule.getPeriodicity().getWorkWeekNumber());
+            if (weekDuration != null) {
+                weekDuration.plus(workScheduleTypeWorkDuration.getMillis()
+                        * workSchedule.getWorkWeek().getDays().size());
+            } else {
+                weekDurations.put(workSchedule.getPeriodicity().getWorkWeekNumber(), new Duration(
+                        workScheduleTypeWorkDuration.getMillis()
+                                * workSchedule.getWorkWeek().getDays().size()));
+            }
+        }
+        long average = 0;
+        for (Duration weekDuration : weekDurations.values()) {
+            if(average < weekDuration.getMillis()/5){
+                average = weekDuration.getMillis()/5;
+            }
+        }
+        return new Duration(average);
     }
 
     public boolean getIsEditable() {

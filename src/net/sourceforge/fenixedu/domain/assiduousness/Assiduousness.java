@@ -40,9 +40,9 @@ public class Assiduousness extends Assiduousness_Base {
 
     public static final TimeOfDay defaultEndNightWorkDay = new TimeOfDay(7, 0, 0, 0);
 
-    public static final Duration normalWorkDayDuration = new Duration(25200000); // 7
-
-    // hours
+    public static final Duration normalWorkDayDuration = new Duration(25200000); // 7 hours
+    
+    public static final Duration IST_TOLERANCE_TIME = new Duration(3540000); //59 minutes
 
     public Assiduousness(Employee employee) {
         super();
@@ -91,6 +91,16 @@ public class Assiduousness extends Assiduousness_Base {
         }
     }
 
+    public List<Schedule> getSchedules(YearMonthDay beginDate, YearMonthDay endDate) {
+        List<Schedule> scheduleList = new ArrayList<Schedule>();
+        for (Schedule schedule : getSchedules()) {
+            if (schedule.isDefinedInInterval(new DateInterval(beginDate,endDate))) {
+                scheduleList.add(schedule);
+            }
+        }
+        return scheduleList;
+    }
+    
     public HashMap<YearMonthDay, WorkSchedule> getWorkSchedulesBetweenDates(YearMonthDay beginDate,
             YearMonthDay endDate) {
         HashMap<YearMonthDay, WorkSchedule> workScheduleMap = new HashMap<YearMonthDay, WorkSchedule>();
