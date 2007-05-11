@@ -38,7 +38,7 @@
 </logic:present>
 
 
-<p class="color888"><bean:message bundle="RESEARCHER_RESOURCES" key="label.chooseEvent.firstInstructions"/></p>
+<p class="color555"><bean:message bundle="RESEARCHER_RESOURCES" key="label.chooseEvent.firstInstructions"/></p>
 
 
 <bean:define id="promptForCreation" value="false"/>
