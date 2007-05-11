@@ -28,3 +28,4 @@ function executeWithTempFile() {
 }
 
 run "Delete Thesis Participations whithout Thesis" deleteLooseThesisParticipations.sql
+run "Increase restriction of 255 charactes in the proposal title" increaseThesisProposalTitleSize.sql
