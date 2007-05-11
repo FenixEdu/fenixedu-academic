@@ -102,6 +102,7 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriod;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.messaging.Forum;
@@ -618,10 +619,8 @@ public class CreateTestData {
         new OccupationPeriod(executionPeriod2.getEndDateYearMonthDay().minusDays(31), executionPeriod2.getEndDateYearMonthDay());
         new OccupationPeriod(executionPeriod2.getEndDateYearMonthDay().plusDays(31), executionPeriod2.getEndDateYearMonthDay().plusDays(46));
 
-        executionPeriod1.setInquiryResponseBeginDateTime(executionPeriod1.getBeginDateYearMonthDay().toDateTimeAtMidnight());
-        executionPeriod1.setInquiryResponseEndDateTime(executionPeriod1.getEndDateYearMonthDay().toDateTimeAtMidnight());
-        executionPeriod2.setInquiryResponseBeginDateTime(executionPeriod2.getBeginDateYearMonthDay().toDateTimeAtMidnight());
-        executionPeriod2.setInquiryResponseEndDateTime(executionPeriod2.getEndDateYearMonthDay().toDateTimeAtMidnight());
+        new InquiryResponsePeriod(executionPeriod1, executionPeriod1.getBeginDate(), executionPeriod1.getEndDate()); 
+        new InquiryResponsePeriod(executionPeriod2, executionPeriod2.getBeginDate(), executionPeriod2.getEndDate());
 
         createOtherExecutionYears(executionYear, executionPeriod1, executionPeriod2, 1, "2005/2006");
         createOtherExecutionYears(executionYear, executionPeriod1, executionPeriod2, 2, "2004/2005");
