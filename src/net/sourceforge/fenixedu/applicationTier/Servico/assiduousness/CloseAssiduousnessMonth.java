@@ -123,13 +123,13 @@ public class CloseAssiduousnessMonth extends Service {
 			    } else {
 				vacations = vacations + 1;
 			    }
-			} else if (leave.getJustificationMotive().equals("TOL")) {
+			} else if (leave.getJustificationMotive().getAcronym().equals("TOL")) {
 			    tolerance = tolerance + 1;
-			} else if (leave.getJustificationMotive().equals("A17")) {
+			} else if (leave.getJustificationMotive().getAcronym().equals("A17")) {
 			    article17 = article17 + 1;
-			} else if (leave.getJustificationMotive().equals("A66")) {
+			} else if (leave.getJustificationMotive().getAcronym().equals("A66")) {
 			    article66 = article66 + 1;
-			} else if (leave.getJustificationMotive().equals("1/2A66")) {
+			} else if (leave.getJustificationMotive().getAcronym().equals("1/2A66")) {
 			    article66 = article66 + 0.5;
 			}
 
