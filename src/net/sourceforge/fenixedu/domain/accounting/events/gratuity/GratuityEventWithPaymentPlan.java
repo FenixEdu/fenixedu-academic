@@ -104,6 +104,7 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
 	for (final AccountingEventPaymentCode paymentCode : getNonProcessedPaymentCodes()) {
 	    final EntryDTO entryDTO = findEntryDTOForPaymentCode(entryDTOs, paymentCode);
 	    if (entryDTO == null) {
+		paymentCode.cancel();
 		continue;
 	    }
 
@@ -270,8 +271,7 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
 
     private boolean installmentIsInDebt(Installment installment) {
 	return getGratuityPaymentPlan().isInstallmentInDebt(installment, this, new DateTime(),
-		calculateDiscountPercentage(getGratuityPaymentPlan().calculateOriginalTotalAmount()),
-		getInstallmentsWithoutPenalty());
+		calculateDiscountPercentage(getGratuityPaymentPlan().calculateOriginalTotalAmount()));
     }
 
     @Override
@@ -305,21 +305,9 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
 
 	return false;
     }
-    
+
     public List<Installment> getInstallments() {
 	return getGratuityPaymentPlan().getInstallmentsSortedByEndDate();
-    }
-
-    public Set<Installment> getInstallmentsWithoutPenalty() {
-	final Set<Installment> result = new HashSet<Installment>();
-	for (final Exemption exemption : getExemptionsSet()) {
-	    if (exemption instanceof InstallmentPenaltyExemption) {
-		result.add(((InstallmentPenaltyExemption) exemption).getInstallment());
-	    }
-	}
-
-	return result;
-
     }
 
     @Override
@@ -336,6 +324,11 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
 	}
 
 	return result;
+    }
+
+    @Override
+    public boolean isOtherPartiesPaymentsSupported() {
+	return true;
     }
 
 }

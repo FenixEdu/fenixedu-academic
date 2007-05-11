@@ -203,4 +203,14 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
 	return hasGratuityExemption() ? getGratuityExemption().calculateDiscountPercentage(amount)
 		: BigDecimal.ZERO;
     }
+
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Override
+    public void delete() {
+
+	super.setExecutionYear(null);
+	super.setStudentCurricularPlan(null);
+
+	super.delete();
+    }
 }

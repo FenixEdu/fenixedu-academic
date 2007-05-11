@@ -185,8 +185,4 @@ public class DFAGratuityPR extends DFAGratuityPR_Base {
 	return ((DfaGratuityEvent) event).calculateDiscountPercentage(amount);
     }
 
-    @Override
-    public boolean isOtherPartiesPaymentsSupported() {
-	return true;
-    }
 }

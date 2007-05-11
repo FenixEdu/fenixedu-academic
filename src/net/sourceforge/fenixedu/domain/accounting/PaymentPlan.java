@@ -11,7 +11,6 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.accounting.accountingTransactions.InstallmentAccountingTransaction;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.Money;
 
@@ -151,80 +150,109 @@ public abstract class PaymentPlan extends PaymentPlan_Base {
 	return result;
     }
 
-    public Map<Installment, Money> calculateInstallmentRemainingAmounts(final Event event,
-	    final DateTime when, final BigDecimal discountPercentage,
-	    final Set<Installment> installmentsWithoutPenalty) {
+    public Money calculateTotalAmount(final Event event, final DateTime when,
+	    final BigDecimal discountPercentage) {
 
-	final Map<Installment, Money> result = new HashMap<Installment, Money>();
-	Money totalPayedAmount = event.getPayedAmount();
-	Money remainingAmountAfterPayed = Money.ZERO;
-	Installment lastInstallmentToBePayed = null;
-
-	for (final Installment installment : getInstallmentsSortedByEndDate()) {
-
-	    final InstallmentAccountingTransaction accountingTransaction = event
-		    .getAccountingTransactionFor(installment);
-	    final Money installmentAmount = calculateInstallmentAmount(when, discountPercentage,
-		    installment, accountingTransaction, !installmentsWithoutPenalty
-			    .contains(installment));
-	    final Money amountToDiscount = calculateTransportAmountToDiscount(totalPayedAmount,
-		    installmentAmount);
-	    final Money installmentFinalAmount = installmentAmount.subtract(amountToDiscount);
-
-	    if (accountingTransaction == null) {
-		result.put(installment, installmentFinalAmount);
-		lastInstallmentToBePayed = installment;
-
-	    } else if (installmentFinalAmount.isPositive()) {
-		remainingAmountAfterPayed = remainingAmountAfterPayed.add(installmentFinalAmount);
-	    }
-
-	    totalPayedAmount = totalPayedAmount.subtract(amountToDiscount);
-
+	Money result = Money.ZERO;
+	for (final Money amount : calculateInstallmentTotalAmounts(event, when, discountPercentage)
+		.values()) {
+	    result = result.add(amount);
 	}
 
-	if (lastInstallmentToBePayed != null && remainingAmountAfterPayed.isPositive()) {
-	    result.put(lastInstallmentToBePayed, result.get(lastInstallmentToBePayed).add(
-		    remainingAmountAfterPayed));
+	return result;
+    }
+
+    private Map<Installment, Money> calculateInstallmentTotalAmounts(final Event event,
+	    final DateTime when, final BigDecimal discountPercentage) {
+
+	final Map<Installment, Money> result = new HashMap<Installment, Money>();
+	final List<AccountingTransaction> transactions = event.getSortedNonAdjustingTransactions();
+
+	for (final Installment installment : getInstallmentsSortedByEndDate()) {
+	    final Iterator<AccountingTransaction> iterator = transactions.iterator();
+	    boolean installmentPayed = false;
+	    Money payedAmount = Money.ZERO;
+	    while (iterator.hasNext()) {
+		final AccountingTransaction transaction = iterator.next();
+		iterator.remove();
+		final Money installmentAmount = installment.calculateAmount(transaction
+			.getWhenRegistered(), discountPercentage, isToApplyPenalty(event, installment));
+		payedAmount = payedAmount.add(transaction.getAmountWithAdjustment());
+		if (payedAmount.greaterOrEqualThan(installmentAmount)) {
+		    installmentPayed = true;
+		    result.put(installment, installmentAmount);
+		    break;
+		}
+	    }
+
+	    if (!installmentPayed) {
+		final Money amountToPay = installment.calculateAmount(when, discountPercentage,
+			isToApplyPenalty(event, installment));
+
+		result.put(installment, amountToPay);
+
+	    }
 	}
 
 	return result;
 
     }
 
-    private Money calculateInstallmentAmount(final DateTime when, final BigDecimal discountPercentage,
-	    final Installment installment,
-	    final InstallmentAccountingTransaction installmentAccountingTransaction,
-	    final boolean applyPenalty) {
-	final DateTime whenToCalculate = (installmentAccountingTransaction != null) ? installmentAccountingTransaction
-		.getWhenRegistered()
-		: when;
-	return installment.calculateAmount(whenToCalculate, discountPercentage, applyPenalty);
+    public Map<Installment, Money> calculateInstallmentRemainingAmounts(final Event event,
+	    final DateTime when, final BigDecimal discountPercentage) {
+
+	final Map<Installment, Money> result = new HashMap<Installment, Money>();
+	final List<AccountingTransaction> transactions = event.getSortedNonAdjustingTransactions();
+
+	Money payedAmount = Money.ZERO;
+	for (final Installment installment : getInstallmentsSortedByEndDate()) {
+	    final Iterator<AccountingTransaction> iterator = transactions.iterator();
+	    boolean installmentPayed = false;
+	    while (iterator.hasNext()) {
+		final AccountingTransaction transaction = iterator.next();
+		iterator.remove();
+		final Money installmentAmount = installment.calculateAmount(transaction
+			.getWhenRegistered(), discountPercentage, isToApplyPenalty(event, installment));
+		payedAmount = payedAmount.add(transaction.getAmountWithAdjustment());
+		if (payedAmount.greaterOrEqualThan(installmentAmount)) {
+		    payedAmount = payedAmount.subtract(installmentAmount);
+		    installmentPayed = true;
+		    break;
+		}
+	    }
+
+	    if (!installmentPayed) {
+		final Money amountToPay = installment.calculateAmount(when, discountPercentage,
+			isToApplyPenalty(event, installment));
+
+		result.put(installment, amountToPay.subtract(payedAmount));
+
+		payedAmount = Money.ZERO;
+	    }
+	}
+
+	return result;
+
     }
 
-    private Money calculateTransportAmountToDiscount(Money installmentTransportAmount,
-	    final Money installmentAmount) {
-	return installmentTransportAmount.lessOrEqualThan(installmentAmount) ? installmentTransportAmount
-		: installmentAmount;
+    protected boolean isToApplyPenalty(final Event event, final Installment installment) {
+	return true;
     }
 
     public Money calculateRemainingAmountFor(final Installment installment, final Event event,
-	    final DateTime when, final BigDecimal discountPercentage,
-	    final Set<Installment> installmentsWithoutPenalty) {
+	    final DateTime when, final BigDecimal discountPercentage) {
 
 	final Map<Installment, Money> amountsByInstallment = calculateInstallmentRemainingAmounts(event,
-		when, discountPercentage, installmentsWithoutPenalty);
+		when, discountPercentage);
 	final Money installmentAmount = amountsByInstallment.get(installment);
 
 	return (installmentAmount != null) ? installmentAmount : Money.ZERO;
     }
 
     public boolean isInstallmentInDebt(final Installment installment, final Event event,
-	    final DateTime when, final BigDecimal discountPercentage,
-	    final Set<Installment> installmentsWithoutPenalty) {
+	    final DateTime when, final BigDecimal discountPercentage) {
 
-	return calculateRemainingAmountFor(installment, event, when, discountPercentage,
-		installmentsWithoutPenalty).isPositive();
+	return calculateRemainingAmountFor(installment, event, when, discountPercentage).isPositive();
 
     }
 

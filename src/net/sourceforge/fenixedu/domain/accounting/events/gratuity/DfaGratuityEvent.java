@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.accounting.events.gratuity;
 
-import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -128,12 +127,14 @@ public class DfaGratuityEvent extends DfaGratuityEvent_Base {
     }
 
     @Override
-    public void internalRecalculateState(DateTime whenRegistered) {
+    protected void internalRecalculateState(DateTime whenRegistered) {
+	// We can safely change event state and date because the are no
+	// penalties
 	if (canCloseEvent(whenRegistered)) {
 	    closeNonProcessedCodes();
 	    closeEvent();
 	} else {
-	    if (!isOpen()) {
+	    if (getCurrentEventState() != EventState.OPEN) {
 		changeState(EventState.OPEN, new DateTime());
 		reopenCancelledCodes();
 	    }
@@ -147,6 +148,11 @@ public class DfaGratuityEvent extends DfaGratuityEvent_Base {
 	for (final AccountingEventPaymentCode paymentCode : getCancelledPaymentCodes()) {
 	    paymentCode.setState(PaymentCodeState.NEW);
 	}
-    }  
+    }
+
+    @Override
+    public boolean isOtherPartiesPaymentsSupported() {
+	return true;
+    }
 
 }

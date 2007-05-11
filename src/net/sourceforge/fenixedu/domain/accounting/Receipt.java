@@ -62,7 +62,7 @@ public class Receipt extends Receipt_Base {
     private void init(Employee employee, Person person, Party contributor, Unit creatorUnit,
 	    Unit ownerUnit, List<Entry> entries) {
 	checkParameters(employee, person, contributor, creatorUnit, ownerUnit, entries);
-	checkRulesToCreate(entries);
+	checkRulesToCreate(person, entries);
 	super.setPerson(person);
 	super.setContributorParty(contributor);
 	changeState(employee, ReceiptState.ACTIVE);
@@ -74,12 +74,16 @@ public class Receipt extends Receipt_Base {
 	}
     }
 
-    private void checkRulesToCreate(List<Entry> entries) {
+    private void checkRulesToCreate(final Person person, final List<Entry> entries) {
 	final int year = getYear();
 	for (final Entry entry : entries) {
 	    if (entry.getWhenRegistered().getYear() != year) {
 		throw new DomainException(
 			"error.accounting.Receipt.entries.must.belong.to.receipt.civil.year");
+	    }
+
+	    if (!entry.getAccountingTransaction().isSourceAccountFromParty(person)) {
+		throw new DomainException("error.accounting.Receipt.entries.must.belong.to.person");
 	    }
 	}
     }

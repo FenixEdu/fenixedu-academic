@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
@@ -39,11 +40,19 @@ public abstract class GenericSingleEntryTypePR extends GenericSingleEntryTypePR_
     }
 
     @Override
-    public void internalAddOtherPartyAmount(User responsibleUser, Event event, Account fromAcount, Account toAccount,
-	    Money amount, AccountingTransactionDetailDTO transactionDetailDTO) {
+    public void internalAddOtherPartyAmount(User responsibleUser, Event event, Account fromAcount,
+	    Account toAccount, Money amount, AccountingTransactionDetailDTO transactionDetailDTO) {
 	makeAccountingTransaction(responsibleUser, event, fromAcount, toAccount, getEntryType(), amount,
 		transactionDetailDTO);
     }
-    
+
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Override
+    public void depositAmount(User responsibleUser, Event event, Account fromAcount, Account toAccount,
+	    Money amount, AccountingTransactionDetailDTO transactionDetailDTO) {
+	makeAccountingTransaction(responsibleUser, event, fromAcount, toAccount, getEntryType(), amount,
+		transactionDetailDTO);
+
+    }
 
 }

@@ -58,6 +58,7 @@
 		<form-bean name="paymentsForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="method" type="java.lang.String" />
 			<form-property name="creditNoteState" type="java.lang.String" />
+			<form-property name="errorForward" type="java.lang.String" />
 	    </form-bean>
 	    
        	<!-- Receipts -->
@@ -372,16 +373,7 @@
 		 	    <forward name="paymentConfirmed" path="payments.management.paymentConfirmed"/> 
 		 	    
    		 	    <forward name="preparePrintGuide" path="/guides.do?method=preparePrintGuide"/>		 	    
-   		 	    <forward name="preparePrintGuideWithInstallments" path="/guides.do?method=preparePrintGuideWithInstallments"/>
-		 	    		 	    
-		 	    <!-- 		 	    		 	    	 	    
-		 	    <forward name="otherPartyPayment.showEvents" path="payments.management.otherPartyPayment.showEvents"/>
-		 	    <forward name="otherPartyPayment.showPaymentsForEvent" path="payments.management.otherPartyPayment.showPaymentsForEvent"/>
-		 	    <forward name="otherPartyPayment.prepareCreate" path="payments.management.otherPartyPayment.prepareCreate"/>
-		 	    <forward name="otherPartyPayment.confirmCreate" path="payments.management.otherPartyPayment.confirmCreate"/>
-		 	    <forward name="otherPartyPayment.showGuide" path="payments.management.otherPartyPayment.showGuide"/>
-		 	    <forward name="otherPartyPayment.printGuide" path="/payments/otherPartyPayment/printGuideForOtherPartyPayment.jsp"/>
-		 	   -->	    
+   		 	    <forward name="preparePrintGuideWithInstallments" path="/guides.do?method=preparePrintGuideWithInstallments"/>  
 		 	   
 		</action>
 		
@@ -442,6 +434,22 @@
 		 	    <forward name="print" path="/payments/creditNotes/printCreditNote.jsp"/>
 		 	    <forward name="prepareShowReceipt" path="/receipts.do?method=prepareShowReceipt"/>
 		 	    
+
+		</action>
+		
+		<action path="/otherPartyPayments"
+				parameter="method"
+		        type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.payments.AcademicAdminOfficeOtherPartyPaymentsManagementDA"
+		 		name="paymentsForm"
+		 		scope="request">
+		 		 		 	    		 	    	 	    
+		 	    <forward name="showEvents" path="payments.management.otherPartyPayment.showEvents"/>
+		 	    <forward name="showPaymentsForEvent" path="payments.management.otherPartyPayment.showPaymentsForEvent"/>
+		 	    <forward name="prepareCreate" path="payments.management.otherPartyPayment.prepareCreate"/>
+		 	    <forward name="confirmCreate" path="payments.management.otherPartyPayment.confirmCreate"/>
+		 	    <forward name="showGuide" path="payments.management.otherPartyPayment.showGuide"/>
+		 	    <forward name="printGuide" path="/payments/otherPartyPayment/printGuideForOtherPartyPayment.jsp"/>
+		 	    <forward name="showOperations" path="/payments.do?method=showOperations"/>		 	    
 
 		</action>
 		

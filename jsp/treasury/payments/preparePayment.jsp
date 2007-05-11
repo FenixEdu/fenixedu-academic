@@ -10,6 +10,8 @@
 <bean:define id="administrativeOfficeId" name="administrativeOffice" property="idInternal" />
 <bean:define id="administrativeOfficeUnitId" name="administrativeOfficeUnit" property="idInternal" />
 <fr:form action="<%="/payments.do?personId=" + personId + "&amp;administrativeOfficeId=" + administrativeOfficeId + "&amp;administrativeOfficeUnitId=" + administrativeOfficeUnitId%>">
+
+	<html:hidden property="errorForward" name="paymentsForm"/>
 	
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" name="paymentsForm" property="method" />
 	<h2><bean:message bundle="TREASURY_RESOURCES" key="label.payments.preparePayment" /></h2>

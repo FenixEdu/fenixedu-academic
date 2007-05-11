@@ -84,6 +84,10 @@ public abstract class Event extends Event_Base {
 		"error.net.sourceforge.fenixedu.domain.accounting.Event.dot.not.call.this.method.directly.use.isInState.instead");
     }
 
+    protected EventState getCurrentEventState() {
+	return super.getEventState();
+    }
+
     public boolean isInState(final EventState eventState) {
 	return super.getEventState() == eventState;
     }
@@ -245,6 +249,10 @@ public abstract class Event extends Event_Base {
     public Set<Entry> getEntriesWithoutReceipt() {
 	final Set<Entry> result = new HashSet<Entry>();
 	for (final AccountingTransaction transaction : getNonAdjustingTransactions()) {
+	    if (!transaction.isSourceAccountFromParty(getPerson())) {
+		continue;
+	    }
+
 	    final Entry entry = transaction.getToAccountEntry();
 	    if (!entry.isAssociatedToAnyActiveReceipt() && entry.isPositiveAmount()) {
 		result.add(entry);
@@ -265,6 +273,13 @@ public abstract class Event extends Event_Base {
 
 	return result;
 
+    }
+
+    public List<AccountingTransaction> getSortedNonAdjustingTransactions() {
+	final List<AccountingTransaction> result = getNonAdjustingTransactions();
+	Collections.sort(result, AccountingTransaction.COMPARATOR_BY_WHEN_REGISTERED);
+
+	return result;
     }
 
     public boolean hasNonAdjustingAccountingTransactions(
@@ -412,7 +427,7 @@ public abstract class Event extends Event_Base {
     }
 
     protected void internalRecalculateState(final DateTime whenRegistered) {
-	if (canCloseEvent(whenRegistered)) {
+	if (isOpen() && canCloseEvent(whenRegistered)) {
 	    closeNonProcessedCodes();
 	    closeEvent();
 	}
@@ -481,9 +496,6 @@ public abstract class Event extends Event_Base {
 		getToAccount(), transactionDetail);
     }
 
-    public boolean hasAccountingTransactionFor(final Installment installment) {
-	return getAccountingTransactionFor(installment) != null;
-    }
 
     public InstallmentAccountingTransaction getAccountingTransactionFor(final Installment installment) {
 	for (final AccountingTransaction accountingTransaction : getNonAdjustingTransactions()) {
@@ -606,7 +618,7 @@ public abstract class Event extends Event_Base {
 	return new YearMonthDay(nextMonth.getYear(), nextMonth.getMonthOfYear(), 1).minusDays(1);
     }
 
-    public Money getExtraPayedAmount() {
+    public Money getReimbursableAmount() {
 	if (!isClosed()) {
 	    return Money.ZERO;
 	}
@@ -614,7 +626,26 @@ public abstract class Event extends Event_Base {
 	final Money extraPayedAmount = getPayedAmount().subtract(
 		calculateTotalAmountToPay(getEventStateDate()));
 
-	return extraPayedAmount.isPositive() ? extraPayedAmount : Money.ZERO;
+	if (extraPayedAmount.isPositive()) {
+	    final Money amountPayedByPerson = calculatePayedAmountByPerson();
+	    return amountPayedByPerson.lessOrEqualThan(extraPayedAmount) ? amountPayedByPerson
+		    : extraPayedAmount;
+	}
+
+	return Money.ZERO;
+
+    }
+
+    private Money calculatePayedAmountByPerson() {
+	Money result = Money.ZERO;
+
+	for (final AccountingTransaction transaction : getNonAdjustingTransactions()) {
+	    if (transaction.isSourceAccountFromParty(getPerson())) {
+		result = result.add(transaction.getToAccountEntry().getAmountWithAdjustment());
+	    }
+	}
+
+	return result;
     }
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
@@ -628,13 +659,27 @@ public abstract class Event extends Event_Base {
     }
 
     public boolean isOtherPartiesPaymentsSupported() {
-	return getPostingRule().isOtherPartiesPaymentsSupported();
+	return false;
     }
 
-    public void addOtherPartyAmount(User responsibleUser, Party party, Money amount,
+    public final void addOtherPartyAmount(User responsibleUser, Party party, Money amount,
 	    AccountingTransactionDetailDTO transactionDetailDTO) {
+
 	getPostingRule().addOtherPartyAmount(responsibleUser, this,
 		party.getAccountBy(AccountType.EXTERNAL), getToAccount(), amount, transactionDetailDTO);
+
+	recalculateState(transactionDetailDTO.getWhenRegistered());
+    }
+
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    public final void depositAmount(User responsibleUser, Money amount,
+	    AccountingTransactionDetailDTO transactionDetailDTO) {
+
+	getPostingRule().depositAmount(responsibleUser, this,
+		getPerson().getAccountBy(AccountType.EXTERNAL), getToAccount(), amount,
+		transactionDetailDTO);
+
+	recalculateState(transactionDetailDTO.getWhenRegistered());
     }
 
     public Money calculateOtherPartiesPayedAmount() {

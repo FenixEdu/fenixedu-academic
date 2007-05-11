@@ -26,7 +26,7 @@
 </fr:view>
 
 <br/>
-<html:form action="/payments.do" target="_blank">
+<html:form action="/otherPartyPayments.do" target="_blank">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" />
 	<fr:edit id="createOtherPartyPayment" name="createOtherPartyPayment" visible="false"/>
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='printGuideForOtherParty';"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.print"/></html:submit>

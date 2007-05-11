@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.CreateOtherPartyPaymentBean;
-import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
@@ -14,14 +13,14 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-public abstract class OtherPartyPaymentManagementDA extends ReceiptsManagementDA {
+public abstract class OtherPartyPaymentManagementDA extends PaymentsManagementDispatchAction {
 
     public ActionForward showEventsForOtherPartyPayment(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
 
 	request.setAttribute("person", getPerson(request));
 
-	return mapping.findForward("otherPartyPayment.showEvents");
+	return mapping.findForward("showEvents");
 
     }
 
@@ -30,7 +29,7 @@ public abstract class OtherPartyPaymentManagementDA extends ReceiptsManagementDA
 
 	request.setAttribute("event", getEvent(request));
 
-	return mapping.findForward("otherPartyPayment.showPaymentsForEvent");
+	return mapping.findForward("showPaymentsForEvent");
     }
 
     public ActionForward prepareCreateOtherPartyPayment(ActionMapping mapping, ActionForm form,
@@ -41,7 +40,7 @@ public abstract class OtherPartyPaymentManagementDA extends ReceiptsManagementDA
 
 	request.setAttribute("createOtherPartyPaymentBean", createOtherPartyPaymentBean);
 
-	return mapping.findForward("otherPartyPayment.prepareCreate");
+	return mapping.findForward("prepareCreate");
     }
 
     public ActionForward confirmCreateOtherPartyPayment(ActionMapping mapping, ActionForm form,
@@ -50,7 +49,7 @@ public abstract class OtherPartyPaymentManagementDA extends ReceiptsManagementDA
 	request.setAttribute("createOtherPartyPaymentBean",
 		getCreateOtherPartyBeanFromViewState("createOtherPartyPayment"));
 
-	return mapping.findForward("otherPartyPayment.confirmCreate");
+	return mapping.findForward("confirmCreate");
 
     }
 
@@ -68,7 +67,7 @@ public abstract class OtherPartyPaymentManagementDA extends ReceiptsManagementDA
 
 	    request.setAttribute("createOtherPartyPaymentBean", createOtherPartyPaymentBean);
 
-	    return mapping.findForward("otherPartyPayment.prepareCreate");
+	    return mapping.findForward("prepareCreate");
 	}
 
 	return showEventsForOtherPartyPayment(mapping, form, request, response);
@@ -84,7 +83,8 @@ public abstract class OtherPartyPaymentManagementDA extends ReceiptsManagementDA
 
 	request.setAttribute("createOtherPartyPayment",
 		getObjectFromViewState("createOtherPartyPayment"));
-	return mapping.findForward("otherPartyPayment.showGuide");
+
+	return mapping.findForward("showGuide");
     }
 
     public ActionForward printGuideForOtherParty(ActionMapping mapping, ActionForm form,
@@ -94,7 +94,7 @@ public abstract class OtherPartyPaymentManagementDA extends ReceiptsManagementDA
 	request.setAttribute("createOtherPartyPayment",
 		getObjectFromViewState("createOtherPartyPayment"));
 
-	return mapping.findForward("otherPartyPayment.printGuide");
+	return mapping.findForward("printGuide");
     }
 
     public ActionForward prepareCreateOtherPartyPaymentInvalid(ActionMapping mapping, ActionForm form,
@@ -102,6 +102,24 @@ public abstract class OtherPartyPaymentManagementDA extends ReceiptsManagementDA
 
 	request.setAttribute("createOtherPartyPaymentBean",
 		getObjectFromViewState("createOtherPartyPayment"));
-	return mapping.findForward("otherPartyPayment.prepareCreate");
+
+	return mapping.findForward("prepareCreate");
     }
+
+    @Override
+    public ActionForward backToShowOperations(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	final ActionForward actionForward = new ActionForward(mapping.findForward("showOperations")
+		.getPath()
+		+ "&" + buildContextParameters(request));
+
+	actionForward.setRedirect(true);
+
+	return actionForward;
+    }
+
+    protected String buildContextParameters(final HttpServletRequest request) {
+	return "personId=" + getPerson(request).getIdInternal();
+    }
+
 }

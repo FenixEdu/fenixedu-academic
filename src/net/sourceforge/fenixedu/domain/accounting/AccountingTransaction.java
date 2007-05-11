@@ -253,7 +253,7 @@ public class AccountingTransaction extends AccountingTransaction_Base {
     }
 
     private boolean canApplyReimbursement(final Money amount) {
-	final Money extraAmount = getEvent().getExtraPayedAmount();
+	final Money extraAmount = getEvent().getReimbursableAmount();
 	return extraAmount.greaterOrEqualThan(amount);
     }
 
@@ -263,17 +263,23 @@ public class AccountingTransaction extends AccountingTransaction_Base {
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
     protected void delete() {
-	
+
 	super.setAdjustedTransaction(null);
-	for (;!getAdjustmentTransactions().isEmpty();getAdjustmentTransactions().get(0).delete());
-	
+	for (; !getAdjustmentTransactions().isEmpty(); getAdjustmentTransactions().get(0).delete())
+	    ;
+
 	getTransactionDetail().delete();
-	for (; !getEntries().isEmpty();getEntries().get(0).delete());
-	
+	for (; !getEntries().isEmpty(); getEntries().get(0).delete())
+	    ;
+
 	super.setResponsibleUser(null);
 	super.setEvent(null);
 	removeRootDomainObject();
-	
+
 	super.deleteDomainObject();
+    }
+
+    public Money getAmountWithAdjustment() {
+	return getToAccountEntry().getAmountWithAdjustment();
     }
 }

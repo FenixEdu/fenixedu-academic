@@ -185,6 +185,10 @@ public abstract class PaymentCode extends PaymentCode_Base {
     public boolean isCancelled() {
 	return getState() == PaymentCodeState.CANCELLED;
     }
+    
+    public void cancel() {
+	setState(PaymentCodeState.CANCELLED);
+    }
 
     public boolean isAvailableForReuse() {
 	return !isNew();

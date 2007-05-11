@@ -23,7 +23,7 @@
 				
 				<fr:property name="classes" value="tstyle4" />
 				
-				<fr:property name="linkFormat(view)" value="/payments.do?eventId=${idInternal}&amp;method=showOtherPartyPaymentsForEvent" />
+				<fr:property name="linkFormat(view)" value="/otherPartyPayments.do?eventId=${idInternal}&amp;method=showOtherPartyPaymentsForEvent" />
 				<fr:property name="key(view)" value="label.view" />
 				<fr:property name="bundle(view)" value="ACADEMIC_OFFICE_RESOURCES" />
 							

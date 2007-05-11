@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.accounting.accountingTransactions.detail.SibsTransactionDetail;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
@@ -49,15 +50,15 @@ public abstract class PostingRule extends PostingRule_Base {
 
 		    private void checkIfPostingRuleOverlapsExisting(
 			    ServiceAgreementTemplate serviceAgreementTemplate, PostingRule postingRule) {
-                        if (serviceAgreementTemplate != null) {
-                            for (final PostingRule existingPostingRule : serviceAgreementTemplate
-                                    .getPostingRules()) {
-                                if (postingRule.overlaps(existingPostingRule)) {
-                                    throw new DomainException(
-                                    "error.accounting.agreement.ServiceAgreementTemplate.postingRule.overlaps.existing.one");
-                                }
-                            }
-                        }
+			if (serviceAgreementTemplate != null) {
+			    for (final PostingRule existingPostingRule : serviceAgreementTemplate
+				    .getPostingRules()) {
+				if (postingRule.overlaps(existingPostingRule)) {
+				    throw new DomainException(
+					    "error.accounting.agreement.ServiceAgreementTemplate.postingRule.overlaps.existing.one");
+				}
+			    }
+			}
 		    }
 
 		});
@@ -173,9 +174,9 @@ public abstract class PostingRule extends PostingRule_Base {
     }
 
     public final void delete() {
-        super.setServiceAgreementTemplate(null);
-        removeRootDomainObject();
-        deleteDomainObject();
+	super.setServiceAgreementTemplate(null);
+	removeRootDomainObject();
+	deleteDomainObject();
     }
 
     @Override
@@ -217,15 +218,12 @@ public abstract class PostingRule extends PostingRule_Base {
 	return calculateTotalAmountToPay(event, when, true);
     }
 
-    public boolean isOtherPartiesPaymentsSupported() {
-	return false;
-    }
-
     public void addOtherPartyAmount(User responsibleUser, Event event, Account fromAcount,
 	    Account toAccount, Money amount, AccountingTransactionDetailDTO transactionDetailDTO) {
 
-	if (!isOtherPartiesPaymentsSupported()) {
-	    throw new DomainException("error.accounting.PostingRule.is.not.allowed.to.add.extra.amount");
+	if (!event.isOtherPartiesPaymentsSupported()) {
+	    throw new DomainException(
+		    "error.accounting.PostingRule.event.does.not.support.other.party.payments");
 	}
 
 	checkRulesToAddOtherPartyAmount(event, amount);
@@ -248,14 +246,6 @@ public abstract class PostingRule extends PostingRule_Base {
 		"error.accounting.PostingRule.does.not.implement.internal.other.party.amount");
     }
 
-    public abstract Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount);
-
-    public abstract List<EntryDTO> calculateEntries(Event event, DateTime when);
-
-    protected abstract Set<AccountingTransaction> internalProcess(User user, List<EntryDTO> entryDTOs,
-	    Event event, Account fromAccount, Account toAccount,
-	    AccountingTransactionDetailDTO transactionDetail);
-
     public boolean isActiveForPeriod(DateTime startDate, DateTime endDate) {
 	if (getStartDate().isAfter(endDate)) {
 	    return false;
@@ -269,4 +259,17 @@ public abstract class PostingRule extends PostingRule_Base {
 
     }
 
+    public void depositAmount(final User responsibleUser, final Event event, final Account fromAcount,
+	    final Account toAccount, final Money amount,
+	    final AccountingTransactionDetailDTO transactionDetailDTO) {
+	throw new DomainException("error.accounting.PostingRule.does.not.implement.deposit.amount");
+    }
+
+    abstract public Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount);
+
+    abstract public List<EntryDTO> calculateEntries(Event event, DateTime when);
+
+    abstract protected Set<AccountingTransaction> internalProcess(User user, List<EntryDTO> entryDTOs,
+	    Event event, Account fromAccount, Account toAccount,
+	    AccountingTransactionDetailDTO transactionDetail);
 }

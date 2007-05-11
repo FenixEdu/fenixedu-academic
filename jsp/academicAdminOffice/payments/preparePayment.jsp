@@ -8,6 +8,8 @@
 
 <bean:define id="personId" name="paymentsManagementDTO" property="person.idInternal"/>
 <fr:form action="<%="/payments.do?personId=" + personId %>">
+
+	<html:hidden property="errorForward" name="paymentsForm"/>
 	
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" name="paymentsForm" property="method" />
 	<em><bean:message key="label.payments" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>

@@ -30,14 +30,14 @@
 	
 	<bean:define id="eventId" name="createOtherPartyPaymentBean" property="event.idInternal" />
 	<bean:define id="personId" name="person" property="idInternal" />
-	<fr:form action="<%="/payments.do?personId=" + personId + "&amp;eventId=" + eventId%>">
+	<fr:form action="<%="/otherPartyPayments.do?personId=" + personId + "&amp;eventId=" + eventId%>">
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" name="paymentsForm" property="method" value=""/>
 		<fr:edit id="createOtherPartyPayment" name="createOtherPartyPaymentBean" schema="CreateOtherPartyPaymentBean.edit">
 			<fr:layout name="tabular-editable">
 				<fr:property name="classes" value="tstyle5 thmiddle thlight thright" />
 				<fr:property name="columnClasses" value=",,tdclear tderror1" />
 			</fr:layout>
-			<fr:destination name="invalid" path="/payments.do?method=prepareCreateOtherPartyPaymentInvalid"/>
+			<fr:destination name="invalid" path="/otherPartyPayments.do?method=prepareCreateOtherPartyPaymentInvalid"/>
 		</fr:edit>
 		<p>
 			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='preparePrintGuideForOtherParty';">

@@ -31,6 +31,7 @@ import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.DynaActionForm;
 import org.joda.time.DateTime;
 
 public abstract class PaymentsManagementDispatchAction extends FenixDispatchAction {
@@ -78,25 +79,26 @@ public abstract class PaymentsManagementDispatchAction extends FenixDispatchActi
     public ActionForward preparePayment(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
 
-	return internalPreparePayment(mapping, request, "showEvents");
+	return internalPreparePayment(mapping, request,(DynaActionForm) form, "showEvents");
 
     }
 
     public ActionForward preparePaymentWithInstallments(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
 
-	return internalPreparePayment(mapping, request, "showEventsWithInstallments");
+	return internalPreparePayment(mapping, request,(DynaActionForm) form, "showEventsWithInstallments");
 
     }
 
     private ActionForward internalPreparePayment(ActionMapping mapping, HttpServletRequest request,
-	    String errorForward) {
+	    DynaActionForm form, String errorForward) {
 	final PaymentsManagementDTO paymentsManagementDTO = (PaymentsManagementDTO) RenderUtils
 		.getViewState("paymentsManagementDTO").getMetaObject().getObject();
 
 	paymentsManagementDTO.setPaymentDate(new DateTime());
 
 	request.setAttribute("paymentsManagementDTO", paymentsManagementDTO);
+	form.set("errorForward", errorForward);
 
 	if (paymentsManagementDTO.getSelectedEntries().isEmpty()) {
 	    addActionMessage("context", request, "error.payments.payment.entries.selection.is.required");
@@ -118,7 +120,7 @@ public abstract class PaymentsManagementDispatchAction extends FenixDispatchActi
 	    addActionMessage("context", request, "error.payments.payment.entries.selection.is.required");
 	    request.setAttribute("paymentsManagementDTO", paymentsManagementDTO);
 
-	    return mapping.findForward("showEvents");
+	    return mapping.findForward(getErrorForwardFromRequest(request));
 	}
 
 	try {
@@ -138,14 +140,18 @@ public abstract class PaymentsManagementDispatchAction extends FenixDispatchActi
 	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex
 		    .getLabelFormatterArgs()));
 	    request.setAttribute("paymentsManagementDTO", paymentsManagementDTO);
-	    return mapping.findForward("showEvents");
+	    return mapping.findForward(getErrorForwardFromRequest(request));
 	} catch (DomainException ex) {
 
 	    addActionMessage(request, ex.getKey(), ex.getArgs());
 	    request.setAttribute("paymentsManagementDTO", paymentsManagementDTO);
-	    return mapping.findForward("showEvents");
+	    return mapping.findForward(getErrorForwardFromRequest(request));
 	}
 
+    }
+
+    private String getErrorForwardFromRequest(HttpServletRequest request) {
+	return (String) getFromRequest(request, "errorForward");
     }
 
     protected Person getPerson(HttpServletRequest request) {
@@ -213,7 +219,8 @@ public abstract class PaymentsManagementDispatchAction extends FenixDispatchActi
     }
 
     protected Event getEvent(HttpServletRequest request) {
-	return (Event) RootDomainObject.readDomainObjectByOID(Event.class, getIntegerFromRequest(request, "eventId"));
+	return (Event) RootDomainObject.readDomainObjectByOID(Event.class, getIntegerFromRequest(
+		request, "eventId"));
     }
 
     public ActionForward preparePrintGuide(ActionMapping mapping, ActionForm actionForm,

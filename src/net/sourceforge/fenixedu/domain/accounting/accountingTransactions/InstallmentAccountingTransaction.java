@@ -1,33 +1,13 @@
 package net.sourceforge.fenixedu.domain.accounting.accountingTransactions;
 
 import net.sourceforge.fenixedu.domain.User;
-import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
 import net.sourceforge.fenixedu.domain.accounting.AccountingTransactionDetail;
 import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.Installment;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import dml.runtime.RelationAdapter;
 
 public class InstallmentAccountingTransaction extends InstallmentAccountingTransaction_Base {
-
-    static {
-	AccountingTransactionEvent.addListener(new RelationAdapter<AccountingTransaction, Event>() {
-
-	    @Override
-	    public void beforeAdd(AccountingTransaction accountingTransaction, Event event) {
-		if (accountingTransaction instanceof InstallmentAccountingTransaction) {
-		    InstallmentAccountingTransaction installmentAccountingTransaction = (InstallmentAccountingTransaction) accountingTransaction;
-		    if (event != null && event.hasAccountingTransactionFor(installmentAccountingTransaction
-			    .getInstallment())) {
-			throw new DomainException(
-				"error.accounting.accountingTransactions.InstallmentAccountingTransaction.event.already.has.accounting.transaction.for.same.installment");
-		    }
-		}
-	    }
-
-	});
-    }
 
     protected InstallmentAccountingTransaction() {
 	super();
@@ -58,10 +38,10 @@ public class InstallmentAccountingTransaction extends InstallmentAccountingTrans
 	throw new DomainException(
 		"error.accounting.accountingTransactions.InstallmentAccountingTransaction.cannot.modify.installment");
     }
-    
+
     @Override
     public void delete() {
-        super.setInstallment(null);
-        super.delete();
+	super.setInstallment(null);
+	super.delete();
     }
 }

@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.candidacy.DFACandidacy;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.util.workflow.StateMachine;
+import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
 import org.joda.time.DateTime;
@@ -122,6 +123,14 @@ public class DFACandidacyEvent extends DFACandidacyEvent_Base {
 	labelFormatter.appendLabel(getDegree().getName()).appendLabel(" - ");
 	labelFormatter.appendLabel(getExecutionYear().getYear());
 	return labelFormatter;
+    }
+
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Override
+    public void delete() {
+	super.setCandidacy(null);
+
+	super.delete();
     }
 
 }

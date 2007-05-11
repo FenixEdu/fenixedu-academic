@@ -145,10 +145,10 @@ public class Registration extends Registration_Base {
 	    StudentCandidacy studentCandidacy) {
 	this();
 	if (person.hasStudent()) {
-	    setStudent(person.getStudent());	    
+	    setStudent(person.getStudent());
 	} else {
-	    setStudent(new Student(person, registrationNumber));	    
-	}	
+	    setStudent(new Student(person, registrationNumber));
+	}
 	setNumber(registrationNumber);
 	setPayedTuition(true);
 	setStudentCandidacy(studentCandidacy);
@@ -196,6 +196,13 @@ public class Registration extends Registration_Base {
 		    "error.student.Registration.cannot.delete.because.is.associated.to.dfa.registration.event");
 	}
     }
+
+    /**
+     * @deprecated
+     * @see getLastStudentCurricularPlan
+     * 
+     * 
+     */
 
     public StudentCurricularPlan getActiveStudentCurricularPlan() {
 	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlans()) {
@@ -411,8 +418,8 @@ public class Registration extends Registration_Base {
     @Override
     final public Integer getFinalAverage() {
 	if (!isConcluded()) {
-//	    throw new DomainException(
-//		    "Registration.getting.final.average.mean.from.non.concluded.registration");
+	    // throw new DomainException(
+	    // "Registration.getting.final.average.mean.from.non.concluded.registration");
 	    return null;
 	}
 
@@ -421,7 +428,8 @@ public class Registration extends Registration_Base {
     }
 
     final public String getFinalAverageDescription() {
-	return ResourceBundle.getBundle("resources.EnumerationResources").getString(getFinalAverage().toString());
+	return ResourceBundle.getBundle("resources.EnumerationResources").getString(
+		getFinalAverage().toString());
     }
 
     final public String getFinalAverageQualified() {
@@ -514,7 +522,8 @@ public class Registration extends Registration_Base {
     }
 
     public Collection<Enrolment> getLatestCurricularCoursesEnrolments(final ExecutionYear executionYear) {
-	return getStudentCurricularPlan(executionYear).getLatestCurricularCoursesEnrolments(executionYear);
+	return getStudentCurricularPlan(executionYear).getLatestCurricularCoursesEnrolments(
+		executionYear);
     }
 
     public Collection<Enrolment> getApprovedEnrolments() {
@@ -529,7 +538,7 @@ public class Registration extends Registration_Base {
 
     public Collection<CurricularCourse> getCurricularCoursesApprovedByEnrolment() {
 	final Collection<CurricularCourse> result = new HashSet<CurricularCourse>();
-	
+
 	for (final Enrolment enrolment : getApprovedEnrolments()) {
 	    result.add(enrolment.getCurricularCourse());
 	}
@@ -731,7 +740,7 @@ public class Registration extends Registration_Base {
 	}
 	return registrations;
     }
-    
+
     public static List<Registration> readByNumberAndDegreeType(Integer number, DegreeType degreeType) {
 	final List<Registration> registrations = new ArrayList<Registration>();
 	for (RegistrationNumber registrationNumber : RootDomainObject.getInstance()
@@ -1427,6 +1436,10 @@ public class Registration extends Registration_Base {
 	return getActiveStateType() == RegistrationStateType.FLUNKED;
     }
 
+    public boolean isInMobilityState() {
+	return getActiveStateType() == RegistrationStateType.MOBILITY;
+    }
+
     public double getEctsCredits() {
 	return new StudentCurriculum(this).getTotalEctsCredits(null);
     }
@@ -1581,7 +1594,7 @@ public class Registration extends Registration_Base {
 	}
 	return null;
     }
-    
+
     public Set<DegreeCurricularPlan> getDegreeCurricularPlans() {
 	Set<DegreeCurricularPlan> result = new HashSet<DegreeCurricularPlan>();
 	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
@@ -1592,16 +1605,16 @@ public class Registration extends Registration_Base {
 
     @Override
     public YearMonthDay getStartDate() {
-	
+
 	if (super.getStartDate() != null) {
 	    return super.getStartDate();
 	}
-	
+
 	if (hasStudentCandidacy()) {
 	    return getStudentCandidacy().getActiveCandidacySituation().getSituationDate()
 		    .toYearMonthDay();
 	}
-	
+
 	return null;
     }
 
@@ -1638,8 +1651,16 @@ public class Registration extends Registration_Base {
 	return totalEctsCredits;
     }
 
+    /**
+     * @deprecated
+     * @see getLastDegreeCurricularPlan
+     */
     public DegreeCurricularPlan getActiveDegreeCurricularPlan() {
 	return getActiveStudentCurricularPlan().getDegreeCurricularPlan();
+    }
+
+    public DegreeCurricularPlan getLastDegreeCurricularPlan() {
+	return getLastStudentCurricularPlan().getDegreeCurricularPlan();
     }
 
     private boolean hasAnyNotPayedGratuityEvents() {
@@ -1663,7 +1684,8 @@ public class Registration extends Registration_Base {
     }
 
     public boolean hasToPayGratuityOrInsurance() {
-	return getInterruptedStudies() ? false : getRegistrationAgreement() == RegistrationAgreement.NORMAL;  
+	return getInterruptedStudies() ? false
+		: getRegistrationAgreement() == RegistrationAgreement.NORMAL;
     }
 
     public RegistrationState getStateInDate(DateTime dateTime) {
@@ -1866,7 +1888,7 @@ public class Registration extends Registration_Base {
 		&& !hasExternalRegistrationData()) {
 	    new ExternalRegistrationData(this);
 	}
-	}
+    }
 
     public boolean hasGratuityEvent(final ExecutionYear executionYear) {
 	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlans()) {
@@ -1881,11 +1903,13 @@ public class Registration extends Registration_Base {
 	for (final GroupStudent groupStudent : getAssociatedGroupStudents()) {
 	    final Group group = groupStudent.getFinalDegreeDegreeWorkGroup();
 	    final Proposal proposalAttributedByCoordinator = group.getProposalAttributed();
-	    if (proposalAttributedByCoordinator != null && isProposalForExecutionYear(proposalAttributedByCoordinator, executionYear)) {
+	    if (proposalAttributedByCoordinator != null
+		    && isProposalForExecutionYear(proposalAttributedByCoordinator, executionYear)) {
 		return proposalAttributedByCoordinator;
 	    }
 	    final Proposal proposalAttributedByTeacher = group.getProposalAttributedByTeacher();
-	    if (proposalAttributedByTeacher != null && isProposalForExecutionYear(proposalAttributedByTeacher, executionYear)) {
+	    if (proposalAttributedByTeacher != null
+		    && isProposalForExecutionYear(proposalAttributedByTeacher, executionYear)) {
 		if (proposalAttributedByTeacher.isProposalConfirmedByTeacherAndStudents(group)) {
 		    return proposalAttributedByTeacher;
 		}

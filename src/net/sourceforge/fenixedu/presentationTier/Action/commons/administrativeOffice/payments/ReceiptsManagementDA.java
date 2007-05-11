@@ -152,6 +152,7 @@ public abstract class ReceiptsManagementDA extends PaymentsManagementDispatchAct
 
     }
 
+    @Override
     public ActionForward backToShowOperations(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 	final ActionForward actionForward = new ActionForward(mapping.findForward("showOperations")

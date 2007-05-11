@@ -44,22 +44,8 @@ public class GratuityWithPaymentPlanPR extends GratuityWithPaymentPlanPR_Base {
 
 	final BigDecimal discountPercentage = applyDiscount ? getDiscountPercentage(event)
 		: BigDecimal.ZERO;
-	Money result = Money.ZERO;
-	for (final Installment installment : getPaymentPlan(event).getInstallmentsSortedByEndDate()) {
-	    final InstallmentAccountingTransaction installmentAccountingTransaction = event
-		    .getAccountingTransactionFor(installment);
-	    final DateTime whenToCalculate = (installmentAccountingTransaction != null) ? installmentAccountingTransaction
-		    .getWhenRegistered()
-		    : when;
-	    result = result.add(installment.calculateAmount(whenToCalculate, discountPercentage,
-		    isToApplyPenaltyFor(event, installment)));
-	}
 
-	return result;
-    }
-
-    private boolean isToApplyPenaltyFor(final Event event, final Installment installment) {
-	return !((GratuityEventWithPaymentPlan) event).hasPenaltyExemptionFor(installment);
+	return getPaymentPlan(event).calculateTotalAmount(event, when, discountPercentage);
 
     }
 
@@ -72,8 +58,7 @@ public class GratuityWithPaymentPlanPR extends GratuityWithPaymentPlanPR_Base {
     public List<EntryDTO> calculateEntries(Event event, DateTime when) {
 	final List<EntryDTO> result = new ArrayList<EntryDTO>();
 	final Map<Installment, Money> amountsByInstallment = getPaymentPlan(event)
-		.calculateInstallmentRemainingAmounts(event, when, getDiscountPercentage(event),
-			getInstallmentsWithoutPenalty(event));
+		.calculateInstallmentRemainingAmounts(event, when, getDiscountPercentage(event));
 
 	for (final Installment installment : getPaymentPlan(event).getInstallmentsSortedByEndDate()) {
 	    final Money installmentAmount = amountsByInstallment.get(installment);
@@ -96,30 +81,10 @@ public class GratuityWithPaymentPlanPR extends GratuityWithPaymentPlanPR_Base {
 	return result;
     }
 
-    private Set<Installment> getInstallmentsWithoutPenalty(Event event) {
-	return ((GratuityEventWithPaymentPlan) event).getInstallmentsWithoutPenalty();
-    }
-
     private boolean needsTotalAmountEntry(final PaymentPlan paymentPlan, List<EntryDTO> result,
 	    final Event event, final DateTime when) {
 	return (paymentPlan.getInstallmentsCount() != 1 && paymentPlan.getInstallmentsCount() == result
-		.size())
-		|| hasRemainingAmountAndNoInstallmentsLeft(event, when);
-    }
-
-    private boolean hasRemainingAmountAndNoInstallmentsLeft(final Event event, final DateTime when) {
-	Money calculateAmountToPay = event.calculateAmountToPay(when);
-	if (!calculateAmountToPay.isPositive()) {
-	    return false;
-	}
-
-	for (final Installment installment : getPaymentPlan(event).getInstallmentsSortedByEndDate()) {
-	    if (!event.hasAccountingTransactionFor(installment)) {
-		return false;
-	    }
-	}
-
-	return true;
+		.size());
     }
 
     @Override
@@ -190,8 +155,7 @@ public class GratuityWithPaymentPlanPR extends GratuityWithPaymentPlanPR_Base {
     private void checkIfCanAddAmountForInstallment(EntryWithInstallmentDTO entryDTO,
 	    DateTime whenRegistered, Event event) {
 	final Money installmentAmount = getPaymentPlan(event).calculateRemainingAmountFor(
-		entryDTO.getInstallment(), event, whenRegistered, getDiscountPercentage(event),
-		getInstallmentsWithoutPenalty(event));
+		entryDTO.getInstallment(), event, whenRegistered, getDiscountPercentage(event));
 	if (entryDTO.getAmountToPay().compareTo(installmentAmount) < 0) {
 	    throw new DomainExceptionWithLabelFormatter(
 		    "error.accounting.postingRules.gratuity.GratuityWithPaymentPlanPR.amount.to.pay.must.match.value",
@@ -215,11 +179,6 @@ public class GratuityWithPaymentPlanPR extends GratuityWithPaymentPlanPR_Base {
 	return new InstallmentAccountingTransaction(responsibleUser, event, makeEntry(entryType, amount
 		.negate(), from), makeEntry(entryType, amount, to), installment,
 		makeAccountingTransactionDetail(transactionDetail));
-    }
-
-    @Override
-    public boolean isOtherPartiesPaymentsSupported() {
-	return true;
     }
 
 }
