@@ -8,8 +8,45 @@
 <logic:present role="RESEARCHER">		
 	<em><bean:message bundle="RESEARCHER_RESOURCES" key="label.researchPortal"/></em> 
   	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.mainTitle"/></h2>
-		
-		
+
+
+	<script language="JavaScript">	
+	function check(e,v){
+		if (e.className == "dnone")
+	  	{
+		  e.className = "dblock";
+		  v.value = "-";
+		}
+		else {
+		  e.className = "dnone";
+	  	  v.value = "+";
+		}
+	}
+	</script>
+
+
+	<p class="dblock" id="instructionsButton"><a href="#"  onclick="javascript:check(document.getElementById('instructions'), document.getElementById('instructionsButton')); return false;">Ver tipos de actividades existentes no sistema</a></p>
+	<div id="instructions" class="dblock">
+		<div class="mtop025">
+			<table class="tstyle1 thlight mtop05">
+				<tr><th class="width12em"><bean:message bundle="RESEARCHER_RESOURCES" key="label.types" /></th><th><bean:message bundle="RESEARCHER_RESOURCES" key="label.subTypes" /></th><th><bean:message bundle="RESEARCHER_RESOURCES" key="label.roles" /></th></tr>
+				<tr><td class="acenter highlight5"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.eventEditions" /></td><td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.eventEditions.types" /></td><td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.eventEditions.roles" /></td></tr>
+				<tr><td class="acenter highlight5"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.scientificJournals" /></td><td style="text-align: center;">-</th><td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.scientificJournals.roles" /></td></tr>
+				<tr><td class="acenter highlight5"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.journalIssues" /></td><td style="text-align: center;">-</td><td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.journalIssues.roles" /></td></tr>
+				<tr><td class="acenter highlight5"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.cooperations" /></td><td style="text-align: center;">-</th><td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.cooperations.roles" /></td></tr>
+			</table>
+		</div>
+
+	</div>
+
+	<script>
+		check(document.getElementById('instructions'), document.getElementById('instructionsButton'));
+		document.getElementById('instructionsButton').className="dblock";
+	</script>
+
+
+
+
 	<ul class="mtop15 mbottom1 list5">
 		<li> <bean:message key="researcher.activity.activitiesManagement.createParticipation" bundle="RESEARCHER_RESOURCES"/>: 
 			<%-- <html:link page="/activities/createEvent.do?method=prepareEventSearch"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.events" /></html:link>,  --%>
@@ -19,7 +56,7 @@
 			<html:link page="/activities/createCooperation.do?method=prepareCreateCooperationParticipation"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.cooperations" /></html:link>
 		</li>
 	</ul>
-
+	
 	<logic:notEmpty name="international-events">
 		<p id='events' class="mtop3 mbottom0">
 			<strong><span><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.eventsTitle.international" /></span></strong>
