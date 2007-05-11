@@ -26,3 +26,5 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+run "Delete Thesis Participations whithout Thesis" deleteLooseThesisParticipations.sql
