@@ -254,8 +254,9 @@ public class Thesis extends Thesis_Base {
         
         for (; !getParticipations().isEmpty(); getParticipations().iterator().next().delete()); 
 
-        removeDissertation();
-        removeExtendedAbstract();
+        // Unnecessary, the student could not submit files while in draft
+        //removeDissertation();
+        //removeExtendedAbstract();
         
         removeDegree();
         removeEnrolment();

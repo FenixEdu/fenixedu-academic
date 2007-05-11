@@ -364,6 +364,11 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	    equivalence.delete();
 	}
 
+	Iterator<Thesis> theses = getThesesIterator();
+	while (theses.hasNext()) {
+		theses.next().delete();
+	}
+	
 	super.delete();
 
     }
