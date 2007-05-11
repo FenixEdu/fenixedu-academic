@@ -7,14 +7,19 @@
 <html:xhtml/>
 
 <logic:present role="PERSON">
-	<h2>
-		<bean:message key="label.validate.email"/>
-	</h2>
-	<table class="mtop15" width="100%" cellpadding="0" cellspacing="0">
-		<tr>
-			<td class="infoop"><strong><bean:message key="message.validate.email.prefix"/></strong></td>
-		</tr>
-	</table>
+
+	<em><bean:message key="label.person.main.title" /></em>
+	<h2><bean:message key="label.validate.email"/></h2>
+
+
+	<div class="infoop2 mtop1">
+		<bean:message key="message.validate.email"/>
+	</div>
+			
+
+	<p class="mtop2"><strong><bean:message key="message.validate.email.prefix"/></strong></p>
+	
+	
 	<fr:form action="/validateEmail.do?method=redirect">
 		<fr:create id="validateEmail" schema="validate.email"
 				type="net.sourceforge.fenixedu.presentationTier.Action.person.ValidateEmailDA$ValidateEmailForm">
@@ -24,15 +29,10 @@
 				<fr:destination name="search" path="/announcements/boards.do?method=search"/>
 		   	</fr:layout>
 		</fr:create>
-		<table>
-			<tr>
-				<td><html:submit><bean:message key="label.submit"/></html:submit></td>
-				<td></td>
-			</tr>
-		</table>		
+		
+	<html:submit><bean:message key="label.submit"/></html:submit>
+	
 	</fr:form>
-	<br/>
-	<div class="infoop2 mtop1">
-		<bean:message key="message.validate.email"/>
-	</div>
+	
+	
 </logic:present>
