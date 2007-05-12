@@ -32,6 +32,10 @@ public class StyledExcelSpreadsheet {
 	return workbook;
     }
 
+    public HSSFSheet getSheet() {
+        return sheet;
+    }
+
     public void addHeader(String value) {
 	if (currentRow == null) {
 	    newHeaderRow();
