@@ -397,8 +397,9 @@ public class Schedule extends Schedule_Base {
                     .getNormalWorkPeriod().getWorkPeriodDuration();
             Duration weekDuration = weekDurations.get(workSchedule.getPeriodicity().getWorkWeekNumber());
             if (weekDuration != null) {
-                weekDuration.plus(workScheduleTypeWorkDuration.getMillis()
+                weekDuration = weekDuration.plus(workScheduleTypeWorkDuration.getMillis()
                         * workSchedule.getWorkWeek().getDays().size());
+                weekDurations.put(workSchedule.getPeriodicity().getWorkWeekNumber(),weekDuration);
             } else {
                 weekDurations.put(workSchedule.getPeriodicity().getWorkWeekNumber(), new Duration(
                         workScheduleTypeWorkDuration.getMillis()

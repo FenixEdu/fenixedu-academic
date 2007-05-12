@@ -55,9 +55,10 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
 
     public double getTotalUnjustifiedPercentage() {
         double unjustified = 0;
-        if (getBalance().isLongerThan(Duration.ZERO)) {
+        Duration balanceWithoutDiscount = getBalance().plus(getBalanceToDiscount());
+        if (balanceWithoutDiscount.isLongerThan(Duration.ZERO)) {
             unjustified = getUnjustifiedPercentage(getAssiduousnessExtraWorks());
-        } else if (getBalance().isShorterThan(Duration.ZERO)) {
+        } else if (balanceWithoutDiscount.isShorterThan(Duration.ZERO)) {
             Duration unjustifiedTotalDuration = Duration.ZERO;
             for (AssiduousnessExtraWork extraWork : getAssiduousnessExtraWorks()) {
                 unjustifiedTotalDuration = unjustifiedTotalDuration.plus(extraWork.getUnjustified());
@@ -76,9 +77,9 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
             }
             averageWorkTimeDuration = new Duration(averageWorkTimeDuration.getMillis()
                     / schedules.size());
-            long balanceToProcess = Math.abs(getBalance().getMillis()) > unjustifiedTotalDuration
-                    .getMillis() ? Math.abs(getBalance().getMillis()) : unjustifiedTotalDuration
-                    .getMillis();
+            long balanceToProcess = Math.abs(balanceWithoutDiscount.getMillis()) > unjustifiedTotalDuration
+                    .getMillis() ? Math.abs(balanceWithoutDiscount.getMillis())
+                    : unjustifiedTotalDuration.getMillis();
             long balanceAfterTolerance = balanceToProcess - Assiduousness.IST_TOLERANCE_TIME.getMillis();
             if (balanceAfterTolerance > 0) {
                 unjustified = (double) balanceAfterTolerance
@@ -90,15 +91,18 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
 
     private double getUnjustifiedPercentage(List<AssiduousnessExtraWork> assiduousnessExtraWorks) {
         double unjustified = 0;
+        long tempIstTorelanceTime = Assiduousness.IST_TOLERANCE_TIME.getMillis();
         for (AssiduousnessExtraWork extraWork : assiduousnessExtraWorks) {
             if (extraWork.getUnjustified().isLongerThan(Duration.ZERO)) {
                 long unjustifiedAfterTolerance = extraWork.getUnjustified().getMillis()
-                        - Assiduousness.IST_TOLERANCE_TIME.getMillis();
+                        - tempIstTorelanceTime;
                 if (unjustifiedAfterTolerance > 0) {
                     unjustified += ((double) unjustifiedAfterTolerance / (double) extraWork
                             .getWorkScheduleType().getNormalWorkPeriod().getWorkPeriodDuration()
                             .getMillis());
                 }
+                tempIstTorelanceTime = unjustifiedAfterTolerance > 0 ? 0 : tempIstTorelanceTime
+                        - extraWork.getUnjustified().getMillis();
             }
         }
         return unjustified;

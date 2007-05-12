@@ -43,6 +43,10 @@ public class Assiduousness extends Assiduousness_Base {
     public static final Duration normalWorkDayDuration = new Duration(25200000); // 7 hours
     
     public static final Duration IST_TOLERANCE_TIME = new Duration(3540000); //59 minutes
+    
+    private static final int MAX_A66_PER_MONTH = 2;
+
+    private static final int MAX_A66_PER_YEAR = 13;
 
     public Assiduousness(Employee employee) {
         super();
