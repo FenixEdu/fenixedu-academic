@@ -343,7 +343,7 @@ public class ExportClosedExtraWorkMonth extends Service {
 
     private JustificationMotive getUnjustifiedJustificationMotive() {
 	for (JustificationMotive justificationMotive : rootDomainObject.getJustificationMotives()) {
-	    if (justificationMotive.getAcronym().equalsIgnoreCase("A66")) {
+	    if (justificationMotive.getAcronym().equalsIgnoreCase("FINJUST")) {
 		return justificationMotive;
 	    }
 	}
