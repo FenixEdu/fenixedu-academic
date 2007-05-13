@@ -13,14 +13,13 @@ import net.sourceforge.fenixedu.domain.assiduousness.util.Attributes;
 import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.TimePoint;
 import net.sourceforge.fenixedu.domain.assiduousness.util.Timeline;
+import net.sourceforge.fenixedu.util.WeekDay;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.Interval;
 import org.joda.time.Partial;
-import org.joda.time.Period;
-import org.joda.time.PeriodType;
 import org.joda.time.TimeOfDay;
 import org.joda.time.YearMonthDay;
 
@@ -113,7 +112,7 @@ public class Leave extends Leave_Base {
     }
 
     public Interval getTotalInterval() {
-	return new Interval(getDate().getMillis(), getEndDate().getMillis());
+	return new Interval(getDate().getMillis(), getEndDate().getMillis() + 1);
     }
 
     // Check if the Leave occured in a particular date
@@ -162,6 +161,19 @@ public class Leave extends Leave_Base {
     @Override
     public boolean isLeave() {
 	return true;
+    }
+
+    public int getUtilDaysBetween(Interval interval) {
+	int days = 0;
+	for (YearMonthDay thisDay = interval.getStart().toYearMonthDay(); !thisDay.isAfter(interval
+		.getEnd().toYearMonthDay()); thisDay = thisDay.plusDays(1)) {
+	    WeekDay dayOfWeek = WeekDay.fromJodaTimeToWeekDay(thisDay.toDateTimeAtMidnight());
+	    if ((!dayOfWeek.equals(WeekDay.SATURDAY)) && (!dayOfWeek.equals(WeekDay.SUNDAY))
+		    && (!getAssiduousness().isHoliday(thisDay))) {
+		days++;
+	    }
+	}
+	return days;
     }
 
 }
