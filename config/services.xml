@@ -11849,5 +11849,12 @@
         <isTransactional>true</isTransactional>  
 		<filterChains>
 		</filterChains>
-    </service>            
+    </service>
+	<service>
+		<name>OpenExtraWorkClosedMonth</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.OpenExtraWorkClosedMonth</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains />
+	</service>    
 </serviceDefinitions>

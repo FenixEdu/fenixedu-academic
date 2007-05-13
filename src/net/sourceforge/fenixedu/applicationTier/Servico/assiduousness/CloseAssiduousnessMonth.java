@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.domain.assiduousness.util.ScheduleClockingType;
 
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeFieldType;
 import org.joda.time.Duration;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
@@ -139,6 +138,11 @@ public class CloseAssiduousnessMonth extends Service {
                             totalBalanceToDiscount = totalBalanceToDiscount.plus(workDaySheet
                                     .getWorkSchedule().getWorkScheduleType().getNormalWorkPeriod()
                                     .getWorkPeriodDuration());
+                        } else if(leave.getJustificationMotive().getJustificationType().equals(
+                                JustificationType.HALF_MULTIPLE_MONTH_BALANCE)){
+                            totalBalanceToDiscount = totalBalanceToDiscount.plus(workDaySheet
+                                    .getWorkSchedule().getWorkScheduleType().getNormalWorkPeriod()
+                                    .getWorkPeriodDuration().getMillis()/2);
                         }
                     }
                     Duration thisDayBalance = workDaySheet.getBalanceTime().toDurationFrom(
@@ -162,13 +166,13 @@ public class CloseAssiduousnessMonth extends Service {
         
         AssiduousnessClosedMonth assiduousnessClosedMonth = new AssiduousnessClosedMonth(assiduousness,
                 closedMonth, totalBalance, totalComplementaryWeeklyRestBalance, totalWeeklyRestBalance,
-                holidayRest, totalBalanceToDiscount, vacations, tolerance, article17, article66);        
+                holidayRest, totalBalanceToDiscount, vacations, tolerance, article17, article66);                       
         
         for (JustificationMotive justificationMotive : justificationsDuration.keySet()) {
             new ClosedMonthJustification(assiduousnessClosedMonth, justificationMotive,
                     justificationsDuration.get(justificationMotive));
-        }
-
+        }        
+        
         Set<WorkScheduleType> workScheduleTypeSet = new HashSet<WorkScheduleType>(extra25Map.keySet());
         workScheduleTypeSet.addAll(extra125Map.keySet());
         workScheduleTypeSet.addAll(extra150Map.keySet());
@@ -182,7 +186,8 @@ public class CloseAssiduousnessMonth extends Service {
             new AssiduousnessExtraWork(assiduousnessClosedMonth, workScheduleType, totalExtra25,
                     totalExtra125, totalExtra150, totalUnjustified);
         }
-        return;
+        
+        assiduousnessClosedMonth.setAllUnjustifiedAndAccumulatedArticle66();
     }
 
     private HashMap<YearMonthDay, List<Leave>> getLeavesMap(
