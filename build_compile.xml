@@ -408,6 +408,16 @@
 				<replacefilter token="@db.projectManagement.alias@"
 							   property="db.projectManagement.alias"/>
 			</replace>
+			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
+					 propertyFile="build.properties">
+				<include name="giaf.properties"/>
+				<replacefilter token="@db.giaf.user@"
+							   property="db.giaf.user"/>
+				<replacefilter token="@db.giaf.pass@"
+							   property="db.giaf.pass"/>
+				<replacefilter token="@db.giaf.alias@"
+							   property="db.giaf.alias"/>
+			</replace>
 			
 			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
 								 propertyFile="build.properties">
