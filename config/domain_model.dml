@@ -3906,6 +3906,9 @@ class net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedMonth ext
 	Double tolerance;
 	Double article17;
 	Double article66;
+	Integer unjustifiedDays;
+	Double accumulatedArticle66;
+	Double accumulatedUnjustified;
 }
 
 class net.sourceforge.fenixedu.domain.assiduousness.ClosedMonthJustification extends net.sourceforge.fenixedu.domain.DomainObject {

@@ -1,14 +1,16 @@
 package net.sourceforge.fenixedu.domain.assiduousness;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.util.NumberUtils;
 
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Duration;
+import org.joda.time.Partial;
 import org.joda.time.YearMonthDay;
 
 public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
@@ -29,6 +31,8 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
         setTolerance(tolerance);
         setArticle17(article17);
         setArticle66(article66);
+
+        setAllUnjustifiedAndAccumulatedArticle66();
     }
 
     public HashMap<JustificationMotive, Duration> getPastJustificationsDurations() {
@@ -53,7 +57,7 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
         return pastJustificationsDurations;
     }
 
-    public double getTotalUnjustifiedPercentage() {
+    public double getTotalUnjustifiedPercentage(YearMonthDay beginDate, YearMonthDay endDate) {
         double unjustified = 0;
         Duration balanceWithoutDiscount = getBalance().plus(getBalanceToDiscount());
         if (balanceWithoutDiscount.isLongerThan(Duration.ZERO)) {
@@ -63,12 +67,6 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
             for (AssiduousnessExtraWork extraWork : getAssiduousnessExtraWorks()) {
                 unjustifiedTotalDuration = unjustifiedTotalDuration.plus(extraWork.getUnjustified());
             }
-            YearMonthDay beginDate = new YearMonthDay(getClosedMonth().getClosedYearMonth().get(
-                    DateTimeFieldType.year()), getClosedMonth().getClosedYearMonth().get(
-                    DateTimeFieldType.monthOfYear()), 01);
-            YearMonthDay endDate = new YearMonthDay(getClosedMonth().getClosedYearMonth().get(
-                    DateTimeFieldType.year()), getClosedMonth().getClosedYearMonth().get(
-                    DateTimeFieldType.monthOfYear()), beginDate.dayOfMonth().getMaximumValue());
             List<Schedule> schedules = getAssiduousness().getSchedules(beginDate, endDate);
             Duration averageWorkTimeDuration = Duration.ZERO;
             for (Schedule schedule : schedules) {
@@ -124,5 +122,82 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
             closedMonthJustification.delete();
         }
         deleteDomainObject();
+    }
+
+    public void setAllUnjustifiedAndAccumulatedArticle66() {
+        //TODO quando estiver tudo normalizado, chamar o ultimo mes fechado e tornar este método privado
+        AssiduousnessClosedMonth lastAssiduousnessClosedMonth = getPreviousAssiduousnessClosedMonth();
+        double unjustified = 0;
+        double a66 = 0;
+        double previousAccumulatedA66 = 0;
+        double previousA66 = 0;
+        double previousUnjustified = 0;
+
+        if (lastAssiduousnessClosedMonth != null) {
+            previousAccumulatedA66 = lastAssiduousnessClosedMonth.getAccumulatedArticle66();
+            previousA66 = lastAssiduousnessClosedMonth.getArticle66();
+            previousUnjustified = lastAssiduousnessClosedMonth.getAccumulatedUnjustified();
+        }
+        YearMonthDay beginDate = new YearMonthDay(getClosedMonth().getClosedYearMonth().get(
+                DateTimeFieldType.year()), getClosedMonth().getClosedYearMonth().get(
+                DateTimeFieldType.monthOfYear()), 01);
+        YearMonthDay endDate = new YearMonthDay(getClosedMonth().getClosedYearMonth().get(
+                DateTimeFieldType.year()), getClosedMonth().getClosedYearMonth().get(
+                DateTimeFieldType.monthOfYear()), beginDate.dayOfMonth().getMaximumValue());
+        unjustified = getTotalUnjustifiedPercentage(beginDate, endDate);
+        unjustified = NumberUtils.formatDoubleWithoutRound(unjustified, 1);
+
+        boolean isToProcess = false;
+
+        //only for permanent staff
+        for (AssiduousnessStatusHistory assiduousnessStatusHistory : getAssiduousness()
+                .getStatusBetween(beginDate, endDate)) {
+            String status = assiduousnessStatusHistory.getAssiduousnessStatus().getDescription();
+            if (!status.equalsIgnoreCase("Contrato a termo certo")) {
+                isToProcess = true;
+                break;
+            }
+        }
+        if (isToProcess && getArticle66() < Assiduousness.MAX_A66_PER_MONTH
+                && (previousAccumulatedA66 + previousA66) < Assiduousness.MAX_A66_PER_YEAR
+                && unjustified > 0) {
+            double remaining = Assiduousness.MAX_A66_PER_MONTH - getArticle66();
+            if (unjustified <= remaining) {
+                a66 = unjustified;
+                unjustified = 0;
+            } else {
+                unjustified -= remaining;
+                a66 = remaining;
+            }
+        }
+        a66 = NumberUtils.formatDoubleWithoutRound(a66, 1);
+        setAccumulatedArticle66(previousAccumulatedA66 + a66);
+        setAccumulatedUnjustified(previousUnjustified + unjustified);
+
+        int countUnjustifiedLeaves = 0;
+        for (Leave leave : getAssiduousness().getLeaves(beginDate, endDate)) {
+            if (leave.getJustificationMotive().getAcronym().equalsIgnoreCase("FINJUST")) {
+                countUnjustifiedLeaves++;
+            }
+        }
+        setUnjustifiedDays(countUnjustifiedLeaves);
+    }
+
+    public AssiduousnessClosedMonth getPreviousAssiduousnessClosedMonth() {
+        Partial partial = getClosedMonth().getClosedYearMonth();
+        int previousMonth = partial.get(DateTimeFieldType.monthOfYear()) - 1;
+        if (previousMonth <= 0) {
+            return null;
+        }
+        ClosedMonth previousClosedMonth = ClosedMonth.getClosedMonth(new YearMonth(partial
+                .get(DateTimeFieldType.year()), previousMonth));
+        if (previousClosedMonth != null) {
+            AssiduousnessClosedMonth assiduousnessClosedMonth = previousClosedMonth
+                    .getAssiduousnessClosedMonth(getAssiduousness());
+            if (assiduousnessClosedMonth != null) {
+                return assiduousnessClosedMonth;
+            }
+        }
+        return null;
     }
 }
